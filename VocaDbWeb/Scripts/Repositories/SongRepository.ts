@@ -44,6 +44,16 @@ module vdb.repositories {
 
         private get: (relative: string, params: any, callback: any) => void;
 
+	    public getByNames(names: string[], ignoreIds: number[], songTypes?: cls.songs.SongType[]) {
+
+		    const url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs/by-names");
+			const jqueryPromise = $.getJSON(url, { names: names, songTypes: songTypes, lang: this.languagePreferenceStr, ignoreIds: ignoreIds });
+
+		    const promise = Promise.resolve(jqueryPromise);
+		    return promise as Promise<dc.SongApiContract[]>;
+
+	    }
+
 		public getComments = (songId: number, callback: (contract: dc.CommentContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/comments"), callback);
@@ -73,21 +83,39 @@ module vdb.repositories {
 			$.getJSON(url, { fields: 'AdditionalNames', lang: this.languagePreferenceStr }, callback);         
 		}
 
+		public getListByParams(params: SongQueryParams, callback) {
+
+			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/songs");
+			const jqueryPromise = $.getJSON(url, params);
+
+			const promise = Promise.resolve(jqueryPromise);
+
+			return promise as Promise<dc.PartialFindResultContract<dc.SongApiContract>>;
+
+			//jqueryPromise.then(result => promise.)
+
+		}
+
 		public getList = (paging: dc.PagingProperties, lang: string,
 			query: string,
 			sort: string,
 			songTypes: string,
+			afterDate: Date,
+			beforeDate: Date,
 			tagIds: number[],
 			childTags: boolean,
+			unifyTypesAndTags: boolean,
 			artistIds: number[],
 			artistParticipationStatus: string,
 			childVoicebanks: boolean,
 			includeMembers: boolean,
+			eventId: number,
 			onlyWithPvs: boolean,
 			pvServices: string,
 			since: number,
 			minScore: number,
 			userCollectionId: number,
+			parentSongId: number,
 			fields: string,
 			status: string,
 			advancedFilters: viewModels.search.AdvancedSearchFilter[],
@@ -98,17 +126,22 @@ module vdb.repositories {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				query: query, fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort,
 				songTypes: songTypes,
+				afterDate: this.getDate(afterDate),
+				beforeDate: this.getDate(beforeDate),
 				tagId: tagIds,
 				childTags: childTags,
+				unifyTypesAndTags: unifyTypesAndTags || undefined,
 				artistId: artistIds,
 				artistParticipationStatus: artistParticipationStatus || undefined,
 				childVoicebanks: childVoicebanks || undefined,
 				includeMembers: includeMembers || undefined,
+				releaseEventId: eventId,
 				onlyWithPvs: onlyWithPvs,
 				pvServices: pvServices,
 				since: since,
 				minScore: minScore,
 				userCollectionId: userCollectionId,
+				parentSongId: parentSongId || undefined,
 				status: status,
 				advancedFilters: advancedFilters
 			};
@@ -130,6 +163,10 @@ module vdb.repositories {
 		public getRatings = (songId: number, callback: (ratings: dc.RatedSongForUserForApiContract[]) => void) => {
 			return $.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/ratings"), { userFields: 'MainPicture' }, callback);			
 		}
+
+	    public getTagSuggestions = (songId: number, callback: (contract: dc.tags.TagUsageForApiContract[]) => void) => {
+			$.getJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/tagSuggestions"), callback);
+	    }
 
         // Maps a relative URL to an absolute one.
         private mapUrl: (relative: string) => string;
@@ -224,6 +261,8 @@ module vdb.repositories {
 	}
 
 	export interface SongQueryParams extends CommonQueryParams {
+
+		sort?: string;
 
 		songTypes?: string;
 

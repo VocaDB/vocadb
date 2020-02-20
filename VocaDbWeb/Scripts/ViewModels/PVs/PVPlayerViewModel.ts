@@ -8,7 +8,7 @@ module vdb.viewModels.pvs {
 
 	export class PVPlayerViewModel {
 		
-		public static autoplayPVServicesString = "File, LocalFile, SoundCloud, Youtube";
+		public static autoplayPVServicesString = "File, LocalFile, NicoNicoDouga, SoundCloud, Youtube";
 
 		constructor(
 			private urlMapper: UrlMapper,
@@ -170,6 +170,9 @@ module vdb.viewModels.pvs {
 
 		// Called when the currently playing song has finished playing. This will only be called if the player was attached.
 		songFinishedCallback?: () => void;
+
+		// Start playing the video.
+		// pvId: ID of the PV being played. Note: this can be undefined, in which case the player should be attached and started playback without loading a new PV.
 		play: (pvId?: string) => void;
 		service: cls.pvs.PVService;
 

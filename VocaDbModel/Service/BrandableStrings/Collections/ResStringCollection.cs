@@ -1,4 +1,5 @@
-﻿using System.Resources;
+using System.Resources;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.BrandableStrings.Collections {
 
@@ -10,9 +11,9 @@ namespace VocaDb.Model.Service.BrandableStrings.Collections {
 
 		public ResourceManager ResourceManager { get; }
 
-		protected string GetString(string name) {
-			return ResourceManager.GetString(name);
-		}
+		protected string GetString(string name) => ResourceManager.GetString(name);
+
+		protected string GetString(string name, string fallback) => GetString(name).EmptyToNull() ?? fallback;
 
 	}
 

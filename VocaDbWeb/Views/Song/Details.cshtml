@@ -5,6 +5,7 @@
 @using VocaDb.Model.DataContracts.PVs
 @using VocaDb.Model.DataContracts.Songs
 @using VocaDb.Model.Domain.Globalization
+@using VocaDb.Model.Domain.PVs
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Models;
@@ -68,6 +69,7 @@
 	<link rel="alternate" type="text/xml+oembed" href="@(VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("OEmbed", "Ext", new { url = VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("Details", "Song", new { Model.Id }), format = "xml" }))" title="@Model.Name" />
 	<link rel="canonical" href="@url" />
 	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
+	<link href="@Url.Content("~/Scripts/MediaElement/mediaelementplayer.min.css")" rel="stylesheet" type="text/css" />	
 }
 
 @section Toolbar {
@@ -98,15 +100,19 @@
 	<a data-bind="jqButton: { disabled: true, icon: 'ui-icon-star' }" href="#">@ViewRes.Song.DetailsStrings.AddToCustomList</a>	
 }
 
-<a data-bind="jqButton: { disabled: @ToJS(!Model.CanEdit), icon: 'ui-icon-wrench' }" href="@Url.Action("Edit", new { id = Model.Id })">@ViewRes.SharedStrings.Edit</a>	
+<a data-bind="jqButton: { disabled: @ToJS(!Model.CanEdit), icon: 'ui-icon-wrench' }" href="@Url.Action("Edit", new { id = Model.Id, albumId = Model.BrowsedAlbumId })">@ViewRes.SharedStrings.Edit</a>	
 
 @Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
 
 <a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
-
+	
+@if (UserContext.HasPermission(PermissionToken.AccessManageMenu)) {
+	<a data-bind="jqButton: { icon: 'ui-icon-wrench' }, click: function() { maintenanceDialogVisible(true); }" id="maintenanceActions" href="#">Maintenance actions</a>			 
+}
+	
 @Helpers.EntryStatusMessage(Model.Status)
 
-@Helpers.AjaxLoader("pvLoader")	
+@Helpers.AjaxLoader("pvLoader")		
 }
 
 @if (Model.Deleted) {
@@ -144,13 +150,27 @@
 			</tr>
 			@if (Model.Performers.Any()) {
 			<tr>
-				<td>@ViewRes.Song.DetailsStrings.Vocalists</td>
+				<td>
+					@if (Model.SongType != SongType.Illustration) {
+						@ViewRes.Song.DetailsStrings.Vocalists						
+					} else {
+						@:Subject
+					}
+				</td>
 				<td class="artistList">
 					@ArtistHelpers.ArtistList(Model.Performers, showType: true)
 				</td>
 			</tr>
    }
 
+			@if (Model.Subject != null && Model.Subject.Any()) {
+				<tr>
+					<td>@EntryRes.Subject</td>
+					<td class="artistList">
+						@ArtistHelpers.ArtistList(Model.Subject, showRoles: false)
+					</td>
+				</tr>
+			}			
 			@if (Model.Producers.Any()) {
 			<tr>
 				<td>@ViewRes.Song.DetailsStrings.Producers</td>
@@ -159,6 +179,14 @@
 				</td>
 			</tr>
    }
+			@if (Model.Illustrators != null && Model.Illustrators.Any()) {
+				<tr>
+					<td>Illustrators</td>
+					<td class="artistList">
+						@ArtistHelpers.ArtistList(Model.Illustrators, showRoles: false)
+					</td>
+				</tr>
+			}			
    
 			@if (Model.Bands.Any()) {
 				<tr>
@@ -192,7 +220,11 @@
 				<td>@ViewRes.SharedStrings.Type</td>
 				<td>
 					@SongHelpers.SongTypeLabel(Model.SongType)
-					@Html.ActionLink(Translate.SongTypeNames[Model.SongType], "Index", "Search", UrlMapper.Search.Songs(songType: Model.SongType), null)
+					@if (Model.SongTypeTag != null) {
+						<a href="@Url.TagDetails(Model.SongTypeTag)" data-bind="tagToolTip: @Model.SongTypeTag.Id">@Translate.SongTypeNames[Model.SongType]</a>
+					} else {
+						<a href="@Url.TagUrlForEntryType(VocaDb.Model.Domain.EntryType.Song, Model.SongType)">@Translate.SongTypeNames[Model.SongType]</a>
+					}
 				</td>
 			</tr>
 			
@@ -220,7 +252,7 @@
 					<div data-bind="with: tagUsages" class="entry-tag-usages">
 						@{ Html.RenderPartial("Partials/_TagList"); }
 					</div>
-					<a data-bind="jqButton: { disabled: @ToJS(!Login.Manager.IsLoggedIn), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
+					<a data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
 					@if (Model.CanRemoveTagUsages) {
 						@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new { id = Model.Id }, new { id = "manageTags" })
 					}
@@ -462,7 +494,7 @@
 		</div>
 		<div>
 			@R.DetailsStrings.Embed<br />
-			<textarea class="input-xxlarge" rows="3">@(string.Format("<iframe style=\"overflow: hidden;\" src=\"http://vocadb.net/Ext/EmbedSong?songId={0}&lang={1}\" height=\"400\" width=\"570\" frameborder=\"0\" scrolling=\"no\"></iframe>", Model.Id, Login.Manager.LanguagePreference))</textarea>
+			<textarea class="input-xxlarge" rows="3">@(string.Format("<iframe style=\"overflow: hidden;\" src=\"{0}?songId={1}&lang={2}\" height=\"400\" width=\"570\" frameborder=\"0\" scrolling=\"no\"></iframe>", UrlMapper.FullAbsolute("/Ext/EmbedSong"), Model.Id, Login.Manager.LanguagePreference))</textarea>
 		</div>
 	</div>
 
@@ -485,6 +517,23 @@
 @{ Html.RenderPartial("Partials/_SongInListsDialog"); }
 
 @EntryDetailsHelpers.ReportEntryPopupKnockout()
+
+<div 
+	data-bind="
+		dialog: {
+			autoOpen: false, width: 400,
+			position: { my: 'left top', at: 'left bottom', of: $('#maintenanceActions') }
+		},
+		dialogVisible: maintenanceDialogVisible"
+	title="Maintenance actions" style="display: none;">
+	
+	<div>			
+		<p><a data-bind="jqButton" href="@Url.Action("UpdateArtistString", new { id = Model.Id})" >Refresh artist string</a></p>
+		<p><a data-bind="jqButton" href="@Url.Action("UpdateThumbUrl", new { id = Model.Id})">Refresh thumbnail</a></p>
+		<p><a data-bind="jqButton" href="@Url.Action("RefreshPVMetadatas", new { id = Model.Id})">Refresh PV metadata</a></p>
+	</div>
+
+</div>
 
 @section BodyScripts {
 	@Scripts.Render("~/bundles/Song/Details")
@@ -540,8 +589,17 @@
 		</a>
 		if (VideoServiceHelper.ShowExternalSiteLink(pv.Service)) {
 			@Html.Raw("&nbsp;")
-			@("(")<a href="@pv.Url" onclick="vdb.functions.trackOutboundLink(event)">@Res.ViewExternal</a>@(")")			 
+			<a href="@pv.Url" onclick="vdb.functions.trackOutboundLink(event)" target="_blank">
+				<i class="icon-eye-open"></i>
+				@Res.ViewExternal
+			</a>
 		}
+		if (pv.Service == PVService.NicoNicoDouga) {
+			 <a href="http://nicodata.vocaloid.eu/?NicoUrl=@pv.Url" target="_blank">
+				 <i class="icon-info-sign"></i>
+				 @Res.ViewInfo
+			 </a>
+		 }
 		<br />
 	}
 

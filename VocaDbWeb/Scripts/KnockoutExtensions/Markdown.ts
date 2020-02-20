@@ -11,23 +11,20 @@ interface KnockoutBindingHandlers {
 // Renders an observable as HTML processed by Markdown (marked library, https://github.com/chjj/marked). 
 // Read-only - the resulted markdown cannot be edited.
 ko.bindingHandlers.markdown = {
-	update: (element: HTMLElement, valueAccessor: () => KnockoutObservable<string>) => {
+	update: (element: HTMLElement, valueAccessor: () => KnockoutObservable<string>, allBindingsAccessor: () => any) => {
 
-		var val: string = ko.unwrap(valueAccessor());
+		const val: string = ko.unwrap(valueAccessor());
+		const maxLength: number | null = allBindingsAccessor()?.maxLength;
+		const truncated = maxLength ? _.truncate(val, { 'length': maxLength }) : val;
 
 		if (!val) {
 			$(element).text(val);
 			return;
 		}
 
-		// Using GitHub-flavored markdown with simple line breaks and HTML sanitation.
-		marked(val, { gfm: true, breaks: true, sanitize: true }, (error, content: string) => {
-
-			if (error)
-				$(element).val(error);
-			else
-				$(element).html(content);
-
+		vdb.helpers.HtmlHelper.formatMarkdown(truncated, (err, content) => {
+			const text: string = err ?? content;
+			$(element).html(text);
 		});
 
 	}

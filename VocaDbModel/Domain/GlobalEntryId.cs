@@ -1,10 +1,10 @@
-﻿namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain {
 
 	/// <summary>
 	/// Entry identifier that is a combination of entry type and primary key ID.
 	/// This combination is unique site-wide.
 	/// </summary>
-	public struct GlobalEntryId {
+	public readonly struct GlobalEntryId {
 
 		public static readonly GlobalEntryId Empty = new GlobalEntryId();
 
@@ -31,7 +31,7 @@
 		}
 
 		public override bool Equals(object obj) {
-			if (ReferenceEquals(null, obj)) return false;
+			if (obj is null) return false;
 			return obj is GlobalEntryId && Equals((GlobalEntryId) obj);
 		}
 
@@ -41,13 +41,9 @@
 			}
 		}
 
-		public static bool operator ==(GlobalEntryId left, GlobalEntryId right) {
-			return left.Equals(right);
-		}
+		public static bool operator ==(GlobalEntryId left, GlobalEntryId right) => left.Equals(right);
 
-		public static bool operator !=(GlobalEntryId left, GlobalEntryId right) {
-			return !left.Equals(right);
-		}
+		public static bool operator !=(GlobalEntryId left, GlobalEntryId right) => !left.Equals(right);
 
 	}
 }

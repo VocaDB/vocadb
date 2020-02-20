@@ -1,14 +1,21 @@
-﻿using System;
+using System;
 using System.Linq;
+using System.Linq.Expressions;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.Search;
-using VocaDb.Model.Service.Search.Tags;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
+	/// <summary>
+	/// Extensions for <see cref="IQueryable{Tag}"/>.
+	/// </summary>
 	public static class TagQueryableExtender {
 
+		/// <summary>
+		/// Order query by <see cref="TagSortRule"/>.
+		/// </summary>
 		public static IQueryable<Tag> OrderBy(this IQueryable<Tag> query, TagSortRule sortRule, ContentLanguagePreference languagePreference) {
 
 			switch (sortRule) {
@@ -24,6 +31,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		/// <summary>
+		/// Order query by <see cref="EntrySortRule"/>.
+		/// </summary>
 		public static IQueryable<Tag> OrderBy(
 			this IQueryable<Tag> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference) {
 
@@ -35,6 +45,43 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			}
 
 			return query;
+
+		}
+
+		/// <summary>
+		/// Order query by usages of specific entry type.
+		/// </summary>
+		public static IQueryable<Tag> OrderByUsageCount(this IQueryable<Tag> query, EntryType? usageType) {
+
+			Expression<Func<Tag, int>> sortExpression;
+
+			switch (usageType) {
+				case null:
+					sortExpression = t => t.UsageCount;
+					break;
+				case EntryType.Album:
+					sortExpression = t => t.AllAlbumTagUsages.Count;
+					break;
+				case EntryType.Artist:
+					sortExpression = t => t.AllArtistTagUsages.Count;
+					break;
+				case EntryType.ReleaseEvent:
+					sortExpression = t => t.AllEventTagUsages.Count;
+					break;
+				case EntryType.ReleaseEventSeries:
+					sortExpression = t => t.AllEventSeriesTagUsages.Count;
+					break;
+				case EntryType.Song:
+					sortExpression = t => t.AllSongTagUsages.Count;
+					break;
+				case EntryType.SongList:
+					sortExpression = t => t.AllSongListTagUsages.Count;
+					break;
+				default:
+					throw new ArgumentException("Unrecognized sort field: " + usageType);
+			}
+
+			return query.OrderByDescending(sortExpression);
 
 		}
 
@@ -88,8 +135,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			names = names ?? new string[0];
 
-			var predicate = names.Aggregate(PredicateBuilder.False<Tag>(), (nameExp, name) => nameExp.Or(q => q.Names.Names.Any(n => n.Value == name)));
-			return query.Where(predicate);
+			var queries = names.Select(n => SearchTextQuery.Create(n, NameMatchMode.Exact));
+			return query.WhereHasNameGeneric<Tag, TagName>(queries);
 
 		}
 

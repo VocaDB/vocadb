@@ -1,14 +1,17 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Service;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Tests.TestData;
 
@@ -22,15 +25,32 @@ namespace VocaDb.Tests.Domain.Songs {
 
 		private class SpecialTags : ISpecialTags {
 			public int ChangedLyrics { get; set; }
+		}
+
+		private class EntryTypeTags : IEntryTypeTagRepository {
+			public int Cover { get; set; }
 			public int Instrumental { get; set; }
+			public int Remix { get; set; }
+			public int SongTypeTagId(SongType songType) => 0;
+			public Tag GetTag<TSubType>(EntryType entryType, TSubType subType) where TSubType : Enum => null;
+			public Tag GetTag(EntryTypeAndSubType fullEntryType) => null;
 		}
 
 		private Artist artist;
+		private readonly List<Artist> artists = new List<Artist>();
 		private Tag changedLyricsTag;
+		private EntryTypeTags entryTypeTags;
 		private Tag instrumentalTag;
 		private LyricsForSong lyrics;
 		private Song song;
 		private SpecialTags specialTags;	
+		private Artist vocalist;
+
+		private Func<ArtistForSongContract, Artist> artistFunc;
+
+		private IList<LyricsForSong> CallGetLyricsFromParents(Song song) {
+			return song.GetLyricsFromParents(specialTags, entryTypeTags);
+		}
 
 		private PVForSong CreatePV(PVService service = PVService.Youtube, PVType pvType = PVType.Original, DateTime? publishDate = null) {
 			return song.CreatePV(new PVContract { Service = service, PVId = "test", Name = "test", PublishDate = publishDate, PVType = pvType });
@@ -48,14 +68,20 @@ namespace VocaDb.Tests.Domain.Songs {
 		public void Setup() {
 
 			artist = new Artist(TranslatedString.Create("Minato")) { Id = 1, ArtistType = ArtistType.Producer };
+			vocalist = CreateEntry.Vocalist(39);
+			artists.Add(artist);
+			artists.Add(vocalist);
 			song = new Song(new LocalizedString("Soar", ContentLanguageSelection.English));
 			lyrics = song.CreateLyrics("Miku!", "miku", string.Empty, TranslationType.Original, "ja");
 			instrumentalTag = CreateEntry.Tag("instrumental", 1);
 			changedLyricsTag = CreateEntry.Tag("changed lyrics", 2);
 			specialTags = new SpecialTags {
-				Instrumental = instrumentalTag.Id,
 				ChangedLyrics = changedLyricsTag.Id
 			};
+			entryTypeTags = new EntryTypeTags {
+				Instrumental = instrumentalTag.Id,
+			};
+			artistFunc = (contract => artists.FirstOrDefault(a => a.Id == contract.Artist?.Id));
 
 		}
 
@@ -103,7 +129,7 @@ namespace VocaDb.Tests.Domain.Songs {
 		[TestMethod]
 		public void LyricsFromParents_NoLyrics() {
 
-			var result = new Song().GetLyricsFromParents(specialTags);
+			var result = CallGetLyricsFromParents(new Song());
 
 			Assert.AreEqual(0, result.Count, "no lyrics");
 
@@ -112,7 +138,7 @@ namespace VocaDb.Tests.Domain.Songs {
 		[TestMethod]
 		public void LyricsFromParents_NoParent() {
 
-			var result = song.GetLyricsFromParents(specialTags);
+			var result = CallGetLyricsFromParents(song);
 
 			Assert.AreEqual(1, result.Count, "one entry");
 			Assert.AreSame(lyrics, result.First(), "returned lyrics from entry");
@@ -127,7 +153,7 @@ namespace VocaDb.Tests.Domain.Songs {
 				OriginalVersion = song
 			};
 
-			var result = derived.GetLyricsFromParents(specialTags);
+			var result = CallGetLyricsFromParents(derived);
 			Assert.AreEqual(0, result.Count, "No lyrics inherited for instrumental");
 
 		}
@@ -138,7 +164,7 @@ namespace VocaDb.Tests.Domain.Songs {
 			var derived = new Song {
 				OriginalVersion = song
 			};
-			var result = derived.GetLyricsFromParents(specialTags);
+			var result = CallGetLyricsFromParents(derived);
 
 			Assert.AreEqual(1, result.Count, "one entry");
 			Assert.AreSame(lyrics, result.First(), "returned lyrics from entry");
@@ -158,7 +184,7 @@ namespace VocaDb.Tests.Domain.Songs {
 				OriginalVersion = instrumental
 			};
 
-			var result = derived.GetLyricsFromParents(specialTags);
+			var result = CallGetLyricsFromParents(derived);
 			Assert.AreSame(lyrics, result.FirstOrDefault(), "returned lyrics from entry");
 
 		}
@@ -191,6 +217,25 @@ namespace VocaDb.Tests.Domain.Songs {
 
 			Assert.AreEqual(2, song.AllArtists.Count, "artists count");
 			Assert.IsTrue(song.HasArtistLink(link), "Still has the extra artist");
+
+		}
+
+		[TestMethod]
+		public void SyncArtists_CustomName() {
+
+			var contract = new ArtistForSongContract {
+				Artist = new ArtistContract(artist, ContentLanguagePreference.Default), 
+				Name = "RyuuseiP", 
+				IsCustomName = true
+			};
+
+			song.SyncArtists(new [] { contract, new ArtistForSongContract(new ArtistContract(vocalist, ContentLanguagePreference.Default)) }, artistFunc);
+
+			Assert.AreEqual(2, song.Artists.Count(), "Number of artists");
+			var producerLink = song.Artists.FirstOrDefault(a => a.Artist?.Id == artist.Id);
+			Assert.IsNotNull(producerLink, "Artist link was added");
+			Assert.AreEqual("RyuuseiP", producerLink.Name, "Added link name");
+			Assert.AreEqual("RyuuseiP feat. Hatsune Miku", song.ArtistString.Default, "Artist string");
 
 		}
 

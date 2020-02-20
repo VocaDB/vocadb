@@ -19,7 +19,7 @@ namespace ViewRes.User {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class CreateStrings {
@@ -84,6 +84,15 @@ namespace ViewRes.User {
         public static string DoRegister {
             get {
                 return ResourceManager.GetString("DoRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please note that making multiple accounts in order to boost ratings is forbidden and will result in account termination. If you forget your password, reset it or contact a staff member..
+        /// </summary>
+        public static string DuplicateUserWarning {
+            get {
+                return ResourceManager.GetString("DuplicateUserWarning", resourceCulture);
             }
         }
         

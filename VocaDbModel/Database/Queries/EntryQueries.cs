@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
@@ -35,12 +35,12 @@ namespace VocaDb.Model.Database.Queries {
 			string[] tags,
 			bool childTags,
 			EntryStatus? status,
+			EntryTypes? entryTypes,
 			int start, int maxResults, bool getTotalCount,
 			EntrySortRule sort,
 			NameMatchMode nameMatchMode,
 			EntryOptionalFields fields,
 			ContentLanguagePreference lang,
-			bool ssl,
 			bool searchTags = false,
 			bool searchEvents = false
 			) {
@@ -52,7 +52,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				// Get all applicable names per entry type
 				var artistQuery = ctx.OfType<Artist>().Query()
-					.Where(a => !a.Deleted)
+					.WhereEntryTypeIsIncluded(entryTypes, EntryType.Artist)
+					.WhereNotDeleted()
 					.WhereHasName_Canonized(artistTextQuery)
 					.WhereHasTags(tagIds, childTags)
 					.WhereHasTags(tags)
@@ -65,7 +66,8 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray();
 
 				var albumQuery = ctx.OfType<Album>().Query()
-					.Where(a => !a.Deleted)
+					.WhereEntryTypeIsIncluded(entryTypes, EntryType.Album)
+					.WhereNotDeleted()
 					.WhereHasName(textQuery)
 					.WhereHasTags(tagIds, childTags)
 					.WhereHasTags(tags)
@@ -78,7 +80,8 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray();
 
 				var songQuery = ctx.OfType<Song>().Query()
-					.Where(a => !a.Deleted)
+					.WhereEntryTypeIsIncluded(entryTypes, EntryType.Song)
+					.WhereNotDeleted()
 					.WhereHasName(textQuery)
 					.WhereHasTags(tagIds, childTags)
 					.WhereHasTags(tags)
@@ -91,6 +94,8 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray();
 
 				var eventQuery = searchEvents ? ctx.OfType<ReleaseEvent>().Query()
+					.WhereEntryTypeIsIncluded(entryTypes, EntryType.ReleaseEvent)
+					.WhereNotDeleted()
 					.WhereHasName(textQuery)
 					.WhereHasTags(tagIds, childTags)
 					.WhereStatusIs(status) : null;
@@ -102,6 +107,8 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray() : null;
 
 				var tagQuery = searchTags ? ctx.OfType<Tag>().Query()
+					.WhereEntryTypeIsIncluded(entryTypes, EntryType.Tag)
+					.WhereNotDeleted()
 					.WhereHasName(textQuery)
 					.WhereStatusIs(status) : null;
 
@@ -132,12 +139,12 @@ namespace VocaDb.Model.Database.Queries {
 				var artists = artistIds.Any() ? ctx.OfType<Artist>().Query()
 					.Where(a => artistIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, ssl, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, fields)) : new EntryForApiContract[0];
 
 				var albums = albumIds.Any() ? ctx.OfType<Album>().Query()
 					.Where(a => albumIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, ssl, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, fields)) : new EntryForApiContract[0];
 
 				var songs = songIds.Any() ? ctx.OfType<Song>().Query()
 					.Where(a => songIds.Contains(a.Id))
@@ -147,12 +154,12 @@ namespace VocaDb.Model.Database.Queries {
 				var searchedTags = searchTags && searchedTagIds.Any() ? ctx.OfType<Tag>().Query()
 					.Where(a => searchedTagIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryImagePersisterOld, ssl, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, entryImagePersisterOld, fields)) : new EntryForApiContract[0];
 
 				var events = searchEvents && eventIds.Any() ? ctx.OfType<ReleaseEvent>().Query()
 					.Where(a => eventIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, ssl, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, fields)) : new EntryForApiContract[0];
 
 				// Merge and sort the final list
 				var entries = artists.Concat(albums).Concat(songs).Concat(searchedTags).Concat(events);

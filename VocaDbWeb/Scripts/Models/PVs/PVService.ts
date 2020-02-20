@@ -1,4 +1,4 @@
-﻿
+
 module vdb.models.pvs {
 	
 	export enum PVService {
@@ -19,7 +19,9 @@ module vdb.models.pvs {
 
 		LocalFile		= 128,
 
-		Creofuga		= 256
+		Creofuga		= 256,
+
+		Bandcamp		= 512
 
 	}
 

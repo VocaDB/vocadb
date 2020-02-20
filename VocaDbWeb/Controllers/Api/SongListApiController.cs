@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model;
@@ -46,6 +47,29 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Deletes a song list.
+		/// </summary>
+		/// <param name="id">ID of the list to be deleted.</param>
+		/// <param name="notes">Notes.</param>
+		/// <param name="hardDelete">
+		/// If true, the entry is hard deleted. Hard deleted entries cannot be restored normally, but they will be moved to trash.
+		/// If false, the entry is soft deleted, meaning it can still be restored.
+		/// </param>
+		[Route("{id:int}")]
+		[Authorize]
+		public void Delete(int id, string notes = "", bool hardDelete = false) {
+
+			notes = notes ?? string.Empty;
+
+			if (hardDelete) {
+				queries.MoveToTrash(id);
+			} else {
+				queries.Delete(id, notes);
+			}
+
+		}
+
+		/// <summary>
 		/// Deletes a comment.
 		/// </summary>
 		/// <param name="commentId">ID of the comment to be deleted.</param>
@@ -85,6 +109,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets a list of featured song lists.
 		/// </summary>
 		/// <param name="query">Song list name query (optional).</param>
+		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
+		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
 		/// <param name="nameMatchMode">Match mode for list name (optional, defaults to Auto).</param>
 		/// <param name="featuredCategory">Filter by a specific featured category. If empty, all categories are returned.</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
@@ -95,16 +121,24 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("featured")]
 		public PartialFindResult<SongListForApiContract> GetFeaturedLists(
 			string query = "",
+			[FromUri] int[] tagId = null,
+			bool childTags = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongListSortRule sort = SongListSortRule.Name) {
 			
-			var ssl = WebHelper.IsSSL(Request);
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+			var queryParams = new SongListQueryParams {
+				TextQuery = textQuery,
+				FeaturedCategory = featuredCategory,
+				Paging = new PagingProperties(start, maxResults, getTotalCount),
+				SortRule = sort,
+				TagIds = tagId,
+				ChildTags = childTags
+			};
 
-			return queries.Find(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, ssl, SongListOptionalFields.MainPicture),
-				textQuery, featuredCategory, start, maxResults, getTotalCount, sort);
+			return queries.Find(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, SongListOptionalFields.MainPicture), queryParams);
 
 		}
 
@@ -127,6 +161,7 @@ namespace VocaDb.Web.Controllers.Api {
 			return queries.HandleQuery(ctx => {
 
 				return ctx.Query()
+					.WhereNotDeleted()
 					.WhereHasFeaturedCategory(featuredCategory, false)
 					.WhereHasName(textQuery)
 					.Select(l => l.Name)
@@ -181,7 +216,7 @@ namespace VocaDb.Web.Controllers.Api {
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
 			return queries.GetSongsInList(
-				new SongListQueryParams {
+				new SongInListQueryParams {
 					TextQuery = SearchTextQuery.Create(query, nameMatchMode),
 					ListId = listId, 
 					Paging = new PagingProperties(start, maxResults, getTotalCount),
@@ -199,10 +234,10 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[ApiExplorerSettings(IgnoreApi=true)]
 		[Route("import")]
-		public ImportedSongListContract GetImport(string url, bool parseAll = true) {
+		public async Task<ImportedSongListContract> GetImport(string url, bool parseAll = true) {
 
 			try {
-				return queries.Import(url, parseAll);
+				return await queries.Import(url, parseAll);
 			} catch (UnableToImportException x) {
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = x.Message });				
 			}
@@ -211,10 +246,10 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[ApiExplorerSettings(IgnoreApi=true)]
 		[Route("import-songs")]
-		public PartialImportedSongs GetImportSongs(string url, string pageToken, int maxResults = 20, bool parseAll = true) {
+		public async Task<PartialImportedSongs> GetImportSongs(string url, string pageToken, int maxResults = 20, bool parseAll = true) {
 
 			try {
-				return queries.ImportSongs(url, pageToken, maxResults, parseAll);
+				return await queries.ImportSongs(url, pageToken, maxResults, parseAll);
 			} catch (UnableToImportException x) {
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = x.Message });
 			}

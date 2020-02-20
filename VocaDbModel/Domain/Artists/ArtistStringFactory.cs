@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
@@ -15,14 +16,17 @@ namespace VocaDb.Model.Domain.Artists {
 		/// Determines the order the artist appear in the list.
 		/// </summary>
 		/// <param name="artistLink">Artist link. Cannot be null.</param>
-		/// <param name="isAnimation">Whether the album is animation (video).</param>
+		/// <param name="focus">Album focus.</param>
 		/// <returns>Sort order, 0-based.</returns>
-		private int GetSortOrderForArtistString(IArtistLinkWithRoles artistLink, bool isAnimation) {
+		private int GetSortOrderForArtistString(IArtistLinkWithRoles artistLink, ContentFocus focus) {
 
 			var categories = ArtistHelper.GetCategories(artistLink);
 
 			// Animator appears first for animation discs.
-			if (isAnimation && categories.HasFlag(ArtistCategories.Animator))
+			if (focus == ContentFocus.Video && categories.HasFlag(ArtistCategories.Animator))
+				return 0;
+
+			if (focus == ContentFocus.Illustration && categories.HasFlag(ArtistCategories.Illustrator))
 				return 0;
 
 			// Composer role always appears first
@@ -48,15 +52,15 @@ namespace VocaDb.Model.Domain.Artists {
 			this.allowRepeatingProducerAsPerformer = allowRepeatingProducerAsPerformer;
 		}
 
-		public TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, bool isAnimation) {
+		public TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus) {
 
 			ParamIs.NotNull(() => artists);
 
 			var matched = artists.Where(ArtistHelper.IsValidCreditableArtist).ToArray();
 
 			var producers = matched
-				.Where(a => ArtistHelper.IsProducerRole(a, isAnimation))
-				.OrderBy(a => GetSortOrderForArtistString(a, isAnimation))
+				.Where(a => ArtistHelper.IsProducerRole(a, focus))
+				.OrderBy(a => GetSortOrderForArtistString(a, focus))
 				.ToArray();
 
 			var performers = matched

@@ -1,11 +1,11 @@
-﻿using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.Domain.Users {
 
 	/// <summary>
 	/// User following a tag.
 	/// </summary>
-	public class TagForUser {
+	public class TagForUser : IEntryWithIntId {
 
 		private Tag tag;
 		private User user;

@@ -65,7 +65,7 @@ module vdb.viewModels {
                         if (name.length == 0)
                             response({});
                         else
-							$.getJSON("/api/users/names", { query: name, startsWith: true }, response);
+							$.getJSON("/api/users/names", { query: name, startsWith: true } as any, response);
                     },
                     focus: function () {
                         // prevent value inserted on focus

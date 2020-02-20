@@ -1,4 +1,5 @@
-﻿using NHibernate;
+using NHibernate;
+using System.Threading.Tasks;
 
 namespace VocaDb.Model.Database.Repositories.NHibernate {
 
@@ -11,17 +12,13 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 			this.tx = tx;
 		}
 
-		public void Dispose() {
-			tx.Dispose();
-		}
+		public void Dispose() => tx.Dispose();
 
-		public void Commit() {
-			tx.Commit();
-		}
+		public void Commit() => tx.Commit();
 
-		public void Rollback() {
-			tx.Rollback();
-		}
+		public Task CommitAsync() => tx.CommitAsync();
+
+		public void Rollback() => tx.Rollback();
 
 	}
 }

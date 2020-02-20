@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using NLog;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -20,6 +21,18 @@ namespace VocaDb.Model.Database.Queries.Partial {
 	/// </remarks>
 	public class UpdateEventNamesQuery {
 
+		private static readonly ILogger log = LogManager.GetCurrentClassLogger();
+
+		/// <summary>
+		/// Checks for duplicate event names.
+		/// </summary>
+		/// <param name="ctx">Database context. Cannot be null.</param>
+		/// <param name="names">List of given names for an event. Cannot be null.</param>
+		/// <param name="eventId">ID of event to be updated.</param>
+		/// <exception cref="DuplicateEventNameException">If duplicate names were detected.</exception>
+		/// <remarks>
+		/// Duplicate names are not allowed in the list of given names for a single event, and no two events may have the same name.
+		/// </remarks>
 		public void CheckDuplicateName(IDatabaseContext ctx, string[] names, int eventId) {
 
 			var duplicateName = names
@@ -29,14 +42,16 @@ namespace VocaDb.Model.Database.Queries.Partial {
 				.FirstOrDefault();
 
 			if (duplicateName != null) {
-				throw new DuplicateEventNameException(duplicateName);
+				log.Info($"Duplicate name '{duplicateName}' for event {eventId}.");
+				throw new DuplicateEventNameException(duplicateName, eventId);
 			}
 
 			var duplicate = ctx.Query<EventName>()
 				.FirstOrDefault(e => e.Entry.Id != eventId && names.Contains(e.Value));
 
 			if (duplicate != null) {
-				throw new DuplicateEventNameException(duplicate.Value);
+				log.Info($"Duplicate name '{duplicateName}' for event {eventId}. Also used for {duplicate.Entry}.");
+				throw new DuplicateEventNameException(duplicate.Value, duplicate.Entry.Id);
 			}
 
 		}
@@ -73,6 +88,23 @@ namespace VocaDb.Model.Database.Queries.Partial {
 
 		}
 
+		/// <summary>
+		/// Synchronizes names for an event, including possible names inherited from the series.
+		/// </summary>
+		/// <param name="ctx">Database context. Cannot be null.</param>
+		/// <param name="ev">Event to be updated. Cannot be null.</param>
+		/// <param name="seriesLink">Linked series. Can be null.</param>
+		/// <param name="customName">Whether event uses custom name.</param>
+		/// <param name="seriesNumber">Series number.</param>
+		/// <param name="seriesSuffix">Series suffix.</param>
+		/// <param name="nameContracts">Given names for event.</param>
+		/// <returns>True if the names were changed, otherwise false.</returns>
+		/// <exception cref="DuplicateEventNameException">If duplicate names are detected.</exception>
+		/// <remarks>
+		/// If series is specified and custom name setting is disabled, then event names are generated based on series names.
+		/// If custom name is enabled or no series is specified, given names are used.
+		/// Default name language is inherited from series as well, but that setting is not touched by this method.
+		/// </remarks>
 		public bool UpdateNames(IDatabaseContext ctx, ReleaseEvent ev, IEntryWithIntId seriesLink, 
 			bool customName, int seriesNumber, string seriesSuffix, IEnumerable<ILocalizedString> nameContracts) {
 

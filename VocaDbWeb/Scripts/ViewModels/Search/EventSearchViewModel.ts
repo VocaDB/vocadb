@@ -1,4 +1,4 @@
-﻿
+
 namespace vdb.viewModels.search {
 
 	import dc = vdb.dataContracts;
@@ -26,7 +26,9 @@ namespace vdb.viewModels.search {
 			if (category)
 				this.category(category);
 
+			this.afterDate.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
+			this.beforeDate.subscribe(this.updateResultsWithTotalCount);
 			this.category.subscribe(this.updateResultsWithTotalCount);
 			this.onlyMyEvents.subscribe(this.updateResultsWithTotalCount);
 			this.sort.subscribe(this.updateResultsWithTotalCount);
@@ -41,6 +43,8 @@ namespace vdb.viewModels.search {
 					artistId: this.artistFilters.artistIds(),
 					childVoicebanks: this.artistFilters.childVoicebanks(),
 					includeMembers: this.artistFilters.includeMembers(),
+					afterDate: this.afterDate(),
+					beforeDate: this.beforeDate(),
 					status: status,
 					fields: "AdditionalNames,MainPicture,Series"
 				}, callback);
@@ -53,8 +57,10 @@ namespace vdb.viewModels.search {
 
 		}
 
+		public afterDate = ko.observable<Date>(null);		
 		public allowAliases = ko.observable(false);
 		public artistFilters: ArtistFilters;
+		public beforeDate = ko.observable<Date>(null);
 		public category = ko.observable("");
 		public onlyMyEvents = ko.observable(false);
 		public sort = ko.observable("Name");

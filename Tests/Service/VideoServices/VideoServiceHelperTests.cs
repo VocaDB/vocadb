@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.VideoServices;
@@ -65,6 +65,19 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 		}
 
+		[TestMethod]
+		public void GetThumbUrl_HasOtherWithThumb() {
+
+			originalWithThumb.ThumbUrl = string.Empty;
+			reprintWithThumb.PVType = PVType.Other;
+			var pvs = new[] { reprintWithThumb, originalWithThumb };
+
+			var result = VideoServiceHelper.GetThumbUrl(pvs);
+
+			Assert.AreEqual("reprint", result, "result");
+
+		}
+
 		/// <summary>
 		/// PV Id with default thumbnail path will be used as fallback when there's no PVs with thumbnail URL.
 		/// </summary>
@@ -79,6 +92,31 @@ namespace VocaDb.Tests.Service.VideoServices {
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
 			Assert.AreEqual(nicoThumb, result, "result");
+
+		}
+
+		[TestMethod]
+		public void GetThumbUrl_Disabled() {
+
+			originalWithThumb.Disabled = true;
+			var pvs = new[] { reprintWithThumb, originalWithThumb };
+
+			var result = VideoServiceHelper.GetThumbUrl(pvs);
+
+			Assert.AreEqual("reprint", result, "result");
+
+		}
+
+		[TestMethod]
+		public void GetThumbUrl_OnlyDisabledWithThumb() {
+
+			originalWithThumb.ThumbUrl = string.Empty;
+			reprintWithThumb.Disabled = true;
+			var pvs = new[] { reprintWithThumb, originalWithThumb };
+
+			var result = VideoServiceHelper.GetThumbUrl(pvs);
+
+			Assert.AreEqual("reprint", result, "result");
 
 		}
 

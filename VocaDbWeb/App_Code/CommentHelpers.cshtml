@@ -1,8 +1,9 @@
-﻿@using VocaDb.Model.DataContracts
+@using VocaDb.Model.DataContracts
 @using VocaDb.Model.DataContracts.Api
 @using VocaDb.Model.DataContracts.Comments
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Helpers
+@using VocaDb.Model.Service.Helpers
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Code
 @inherits VocaDb.Web.Code.HelperPage
@@ -49,7 +50,7 @@
 	<form data-bind="visible: $parent.editCommentModel() === $data, submit: $parent.saveEditedComment">
 		<textarea data-bind="textInput: editedMessage" rows="6" cols="60" maxlength="3000" class="comment-text-edit" required></textarea>
 		<button type="submit" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
-		<button data-bind="click: $parent.cancelEditComment" class="btn">Cancel</button>
+		<button data-bind="click: $parent.cancelEditComment" class="btn">@ViewRes.SharedStrings.Cancel</button>
 	</form>
 }
 
@@ -79,7 +80,7 @@
 
 @helper CommentEntryItem(EntryForApiContract entry) {
 		
-	var thumbUrl = (entry.MainPicture != null ? entry.MainPicture.UrlTinyThumb ?? entry.MainPicture.UrlSmallThumb : null);
+	var thumbUrl = (entry.MainPicture != null ? UrlHelper.UpgradeToHttps(entry.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb)) : null);
 	
 	<div class="media">
 		@if (!string.IsNullOrEmpty(thumbUrl)) {

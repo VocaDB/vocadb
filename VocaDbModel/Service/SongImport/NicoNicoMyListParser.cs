@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 using NLog;
 using Rss;
@@ -17,11 +18,16 @@ namespace VocaDb.Model.Service.SongImport {
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private static readonly Regex wvrIdRegex = new Regex(@"#(\d{3})");
 
-		public PartialImportedSongs GetSongs(string url, string nextPageToken, int maxResults, bool parseAll) {
+		public Task<PartialImportedSongs> GetSongsAsync(string url, string nextPageToken, int maxResults, bool parseAll) {
 			throw new NotSupportedException();
 		}
 
-		public ImportedSongListContract Parse(string url, bool parseAll) {
+		private bool IsRankingsItem(RssItem item) {
+			var node = HtmlNode.CreateNode($"<div>{item.Description}</div>");
+			return node.InnerText.Any() && char.IsDigit(node.InnerText, 0);
+		}
+
+		public Task<ImportedSongListContract> ParseAsync(string url, bool parseAll) {
 
 			if (string.IsNullOrEmpty(url))
 				throw new UnableToImportException("Feed URL cannot be empty");
@@ -59,9 +65,7 @@ namespace VocaDb.Model.Service.SongImport {
 
 			foreach (var item in channel.Items.Cast<RssItem>()) {
 
-				var node = HtmlNode.CreateNode(item.Description);
-
-				if (parseAll || (node.InnerText.Any() && char.IsDigit(node.InnerText, 0))) {
+				if (parseAll || IsRankingsItem(item)) {
 
 					var nicoId = VideoService.NicoNicoDouga.GetIdByUrl(item.Link.ToString());
 					songs.Add(new ImportedSongInListContract(PVService.NicoNicoDouga, nicoId) {
@@ -74,7 +78,7 @@ namespace VocaDb.Model.Service.SongImport {
 			}
 
 			result.Songs = new PartialImportedSongs(songs.ToArray(), songs.Count, null);
-			return result;
+			return Task.FromResult(result);
 
 		}
 

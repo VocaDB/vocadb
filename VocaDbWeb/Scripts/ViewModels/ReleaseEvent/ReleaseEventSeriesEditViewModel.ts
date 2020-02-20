@@ -49,9 +49,17 @@ module vdb.viewModels.releaseEvents {
         public webLinks: WebLinksEditViewModel;
 
 		public deleteViewModel = new DeleteEntryViewModel(notes => {
-			this.eventRepository.deleteSeries(this.id, notes, () => {
+			this.eventRepository.deleteSeries(this.id, notes, false, () => {
 				window.location.href = this.urlMapper.mapRelative(utils.EntryUrlMapper.details(models.EntryType.ReleaseEventSeries, this.id));
 			});
+		});
+
+		private redirectToRoot = () => {
+			window.location.href = this.urlMapper.mapRelative("Event");
+		}
+
+		public trashViewModel = new DeleteEntryViewModel(notes => {
+			this.eventRepository.deleteSeries(this.id, notes, true, this.redirectToRoot);
 		});
 
 		private isNew = () => !this.id;

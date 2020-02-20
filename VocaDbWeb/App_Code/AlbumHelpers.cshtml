@@ -1,4 +1,4 @@
-﻿@using System.Web.Mvc;
+@using System.Web.Mvc;
 @using System.Web.Mvc.Html
 @using System.Web.Routing
 @using VocaDb.Model.DataContracts.Albums;
@@ -6,6 +6,7 @@
 @using VocaDb.Model.Service.Search.AlbumSearch
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Images;
+@using VocaDb.Model.Utils
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper AlbumIconLink(AlbumContract album) {
@@ -82,12 +83,12 @@
 			
 }
 
-@helper AlbumThumbs(IEnumerable<AlbumContract> albums) {
+@helper AlbumThumbs(IEnumerable<AlbumForApiContract> albums) {
 	
 	<ul class="smallThumbs">
 		@foreach (var album in albums) {
 			@Helpers.ThumbItem(Url.Action("Details", "Album", new { id = album.Id }),
-                Url.ImageThumb(album, ImageSize.SmallThumb), album.Name, album)	  
+				Url.ImageThumb(album.MainPicture, ImageSize.SmallThumb), album.Name, album)
 		}
 	</ul>
 	
@@ -115,7 +116,7 @@
 }
 
 @helper DiscTypesDropdownKnockout(string binding) {
-	@KnockoutHelpers.CheckBoxButtons(Translate.DiscTypeNames.ValuesAndNamesStrings, binding)
+	@KnockoutHelpers.CheckBoxButtons(Translate.DiscTypeNames.GetValuesAndNamesStrings(AppConfig.AlbumTypes), binding)
 }
 
 @helper EditCollectionDialog(PurchaseStatus purchaseStatus, MediaType mediaType) {

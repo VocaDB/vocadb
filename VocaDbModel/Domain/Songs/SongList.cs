@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts.Songs;
@@ -8,13 +8,17 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class SongList : IEntryWithNames, IEntryWithComments<SongListComment> {
+	public class SongList : IEntryWithNames, 
+		IEntryWithVersions<ArchivedSongListVersion, SongListEditableFields>, 
+		IEntryWithComments<SongListComment>, IEntryWithStatus,
+		IEntryWithTags<SongListTagUsage> {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
@@ -33,6 +37,7 @@ namespace VocaDb.Model.Domain.Songs {
 		private IList<ReleaseEvent> events = new List<ReleaseEvent>();
 		private string name;
 		private IList<SongInList> songs = new List<SongInList>();
+		private TagManager<SongListTagUsage> tags = new TagManager<SongListTagUsage>();
 
 		public SongList() {
 			CreateDate = DateTime.Now;
@@ -54,6 +59,10 @@ namespace VocaDb.Model.Domain.Songs {
 				songs = value;
 			}
 		}
+
+		public virtual bool AllowNotifications => FeaturedList;
+
+		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
 		public virtual ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> ArchivedVersionsManager {
 			get => archivedVersions;
@@ -98,7 +107,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 		string IEntryBase.DefaultName => Name;
 
-		public virtual bool Deleted => false;
+		public virtual bool Deleted { get; set; }
 
 		public virtual string Description {
 			get => description;
@@ -141,6 +150,16 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public virtual EntryStatus Status { get; set; }
+
+		public virtual TagManager<SongListTagUsage> Tags {
+			get => tags;
+			set {
+				ParamIs.NotNull(() => value);
+				tags = value;
+			}
+		}
+
+		ITagManager IEntryWithTags.Tags => Tags;
 
 		/// <summary>
 		/// Entry thumbnail picture. Can be null.

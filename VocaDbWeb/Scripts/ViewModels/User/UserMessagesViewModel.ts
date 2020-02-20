@@ -6,7 +6,11 @@ module vdb.viewModels {
 
 	export class UserMessagesViewModel {
 
-		constructor(private userRepository: vdb.repositories.UserRepository, private userId: number, inboxType: rep.UserInboxType, selectedMessageId?: number,
+		constructor(
+			private readonly userRepository: vdb.repositories.UserRepository,
+			private readonly userId: number,
+			inboxType: rep.UserInboxType,
+			selectedMessageId?: number,
 			receiverName?: string) {
 
             this.notifications = new UserMessageFolderViewModel(userRepository, rep.UserInboxType.Notifications, userId, inboxType !== rep.UserInboxType.Notifications);
@@ -132,7 +136,10 @@ module vdb.viewModels {
 
     export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageViewModel> {
 
-        constructor(private userRepo: rep.UserRepository, public inbox: rep.UserInboxType, private userId,
+		constructor(
+			private readonly userRepo: rep.UserRepository,
+			public readonly inbox: rep.UserInboxType,
+			private readonly userId,
 			getMessageCount: boolean) {
 
 			super();

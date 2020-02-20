@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -14,6 +14,7 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
@@ -28,11 +29,13 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Artists;
+using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
+using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -42,7 +45,7 @@ namespace VocaDb.Web.Controllers.Api {
 	[RoutePrefix("api/users")]
 	public class UserApiController : ApiController {
 
-		private const int absoluteMax = 50;
+		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly UserMessageQueries messageQueries;
 		private readonly IUserPermissionContext permissionContext;
@@ -102,6 +105,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Filter by a comma-separated list of purchase statuses (optional). Possible values are Nothing, Wishlisted, Ordered, Owned, and all combinations of these.
 		/// </param>
 		/// <param name="releaseEventId">Filter by release event. Optional.</param>
+		/// <param name="albumTypes">Filter by album type (optional).</param>
 		/// <param name="advancedFilters">List of advanced filters (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
@@ -126,6 +130,7 @@ namespace VocaDb.Web.Controllers.Api {
 			int? artistId = null,
 			[FromUri] PurchaseStatuses? purchaseStatuses = null,
 			int releaseEventId = 0,
+			DiscType albumTypes = DiscType.Unknown,
 			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0, 
 			int maxResults = defaultMax,
@@ -137,9 +142,9 @@ namespace VocaDb.Web.Controllers.Api {
 		
 			maxResults = Math.Min(maxResults, absoluteMax);
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
-			var ssl = WebHelper.IsSSL(Request);
 
 			var queryParams = new AlbumCollectionQueryParams(id, new PagingProperties(start, maxResults, getTotalCount)) {
+				AlbumType = albumTypes,
 				ArtistId = artistId ?? 0,
 				FilterByStatus = purchaseStatuses != null ? purchaseStatuses.Value.ToIndividualSelections().ToArray() : null,
 				TextQuery = textQuery,
@@ -151,7 +156,7 @@ namespace VocaDb.Web.Controllers.Api {
 			};
 
 			var albums = queries.GetAlbumCollection(queryParams, (afu, shouldShowCollectionStatus) => 
-				new AlbumForUserForApiContract(afu, lang, thumbPersister, ssl, fields, shouldShowCollectionStatus));
+				new AlbumForUserForApiContract(afu, lang, thumbPersister, fields, shouldShowCollectionStatus));
 
 			return albums;
 
@@ -190,8 +195,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Gets a list of artists followed by a user.
 		/// </summary>
-		/// <param name="query">Artist name query (optional).</param>
 		/// <param name="id">ID of the user whose followed artists are to be browsed.</param>
+		/// <param name="query">Artist name query (optional).</param>
+		/// <param name="tagId">Filter by tag Id (optional). This filter can be specified multiple times.</param>
 		/// <param name="artistType">Filter by artist type.</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
@@ -205,6 +211,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<ArtistForUserForApiContract> GetFollowedArtists(
 			int id,
 			string query = "",
+			[FromUri] int[] tagId = null,
 			ArtistType artistType = ArtistType.Unknown,
 			int start = 0, 
 			int maxResults = defaultMax,
@@ -215,7 +222,6 @@ namespace VocaDb.Web.Controllers.Api {
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
 			maxResults = Math.Min(maxResults, absoluteMax);
-			var ssl = WebHelper.IsSSL(Request);
 			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
 
 			var queryParams = new FollowedArtistQueryParams {
@@ -223,11 +229,12 @@ namespace VocaDb.Web.Controllers.Api {
 				ArtistType = artistType,
 				Paging = new PagingProperties(start, maxResults, getTotalCount),
 				SortRule = sort,
+				TagIds = tagId,
 				TextQuery = textQuery
 			};
 
 			var artists = queries.GetArtists(queryParams, afu => 
-				new ArtistForUserForApiContract(afu, lang, thumbPersister, ssl, fields));
+				new ArtistForUserForApiContract(afu, lang, thumbPersister, fields));
 
 			return artists;
 
@@ -405,6 +412,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="tagName">Filter by tag name (optional).</param>
 		/// <param name="artistId">Filter by song artist (optional).</param>
 		/// <param name="childVoicebanks">Include child voicebanks, if the artist being filtered by has any.</param>
+		/// <param name="artistGrouping">Logical grouping for artists.</param>
 		/// <param name="rating">Filter songs by given rating (optional).</param>
 		/// <param name="songListId">Filter songs by song list (optional).</param>
 		/// <param name="groupByRating">Group results by rating so that highest rated are first.</param>
@@ -428,6 +436,7 @@ namespace VocaDb.Web.Controllers.Api {
 			[FromUri] int[] tagId = null,
 			[FromUri] int[] artistId = null,
 			bool childVoicebanks = false,
+			LogicalGrouping artistGrouping = LogicalGrouping.And,
 			SongVoteRating? rating = null,
 			int? songListId = null,
 			bool groupByRating = true,
@@ -446,6 +455,7 @@ namespace VocaDb.Web.Controllers.Api {
 				TextQuery = textQuery,
 				SortRule = sort ?? RatedSongForUserSortRule.Name,
 				ArtistIds = artistId,
+				ArtistGrouping = artistGrouping,
 				ChildVoicebanks = childVoicebanks,
 				FilterByRating = rating ?? SongVoteRating.Nothing,
 				GroupByRating = groupByRating,
@@ -466,6 +476,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="id">User whose song lists are to be loaded.</param>
 		/// <param name="query">Song list name query (optional).</param>
+		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
+		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</p
 		/// <param name="nameMatchMode">Match mode for song name (optional, defaults to Auto).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
@@ -477,15 +489,23 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<SongListForApiContract> GetSongLists(
 			int id,
 			string query = "",
+			[FromUri] int[] tagId = null,
+			bool childTags = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongListSortRule sort = SongListSortRule.Name,
 			SongListOptionalFields? fields = null) {
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+			var queryParams = new SongListQueryParams {
+				TextQuery = textQuery,
+				SortRule = sort,
+				Paging = new PagingProperties(start, maxResults, getTotalCount),
+				TagIds = tagId,
+				ChildTags = childTags
+			};
 
-			return queries.GetCustomSongLists(id, textQuery, WebHelper.IsSSL(Request), sort, 
-				new PagingProperties(start, maxResults, getTotalCount), fields ?? SongListOptionalFields.None);
+			return queries.GetCustomSongLists(id, queryParams, fields ?? SongListOptionalFields.None);
 
 		}
 
@@ -562,6 +582,15 @@ namespace VocaDb.Web.Controllers.Api {
 		public TagSelectionContract[] GetEventSeriesTags(int seriesId) {
 
 			return queries.GetEventSeriesTagSelections(seriesId, permissionContext.LoggedUserId);
+
+		}
+
+		[Route("current/songListTags/{songListId:int}")]
+		[Authorize]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public TagSelectionContract[] GetSongListTags(int songListId) {
+
+			return queries.GetSongListTagSelections(songListId, permissionContext.LoggedUserId);
 
 		}
 
@@ -645,12 +674,12 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Message data.</returns>
 		[Route("{id:int}/messages")]
 		[Authorize]
-		public UserMessageContract PostNewMessage(int id, UserMessageContract contract) {
+		public async Task<UserMessageContract> PostNewMessage(int id, UserMessageContract contract) {
 
 			var mySettingsUrl = VocaUriBuilder.CreateAbsolute("User/MySettings").ToString();
 			var messagesUrl = VocaUriBuilder.CreateAbsolute("User/Messages").ToString();
 
-			return queries.SendMessage(contract, mySettingsUrl, messagesUrl);
+			return await queries.SendMessage(contract, mySettingsUrl, messagesUrl);
 
 		}
 
@@ -664,6 +693,19 @@ namespace VocaDb.Web.Controllers.Api {
 		public void PostRefreshEntryEdit(EntryType entryType, int entryId) {
 
 			ConcurrentEntryEditManager.CheckConcurrentEdits(new EntryRef(entryType, entryId), permissionContext.LoggedUser);
+
+		}
+
+		public class CreateReportModel {
+			public UserReportType ReportType { get; set; }
+			public string Reason { get; set; }
+		}
+
+		[Authorize]
+		[Route("{id:int}/reports")]
+		public bool PostReport(int id, [FromBody] CreateReportModel model) {
+
+			return queries.CreateReport(id, model.ReportType, WebHelper.GetRealHost(Request), model.Reason).created;
 
 		}
 
@@ -754,6 +796,18 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("current/songListTags/{songListId:int}")]
+		[Authorize]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public TagUsageForApiContract[] PutSongListTags(int songListId, TagBaseContract[] tags) {
+
+			if (tags == null)
+				throw new HttpBadRequestException();
+
+			return queries.SaveSongListTags(songListId, tags, false);
+
+		}
+
 		/// <summary>
 		/// Appends tags for a song, by the currently logged in user.
 		/// </summary>
@@ -830,6 +884,20 @@ namespace VocaDb.Web.Controllers.Api {
 
 			if (permissionContext.IsLoggedIn)
 				queries.UpdateUserSetting(setting);
+
+		}
+
+		public class PostStatusLimitedModel {
+			public bool CreateReport { get; set; }
+			public string Reason { get; set; }
+		}
+
+		[Authorize]
+		[Route("{id:int}/status-limited")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public void PostStatusLimited(int id, [FromBody] PostStatusLimitedModel model) {
+
+			queries.SetUserToLimited(id, model.Reason, WebHelper.GetRealHost(Request), model.CreateReport);
 
 		}
 

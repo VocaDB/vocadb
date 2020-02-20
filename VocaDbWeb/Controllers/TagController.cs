@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Web.Mvc;
 using NLog;
 using ViewRes.Tag;
@@ -19,9 +19,8 @@ using VocaDb.Web.Models.Search;
 using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Tag;
 
-namespace VocaDb.Web.Controllers
-{
-    public class TagController : ControllerBase {
+namespace VocaDb.Web.Controllers {
+	public class TagController : ControllerBase {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEnumTranslations enumTranslations;
@@ -89,6 +88,22 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return RedirectToActionPermanent("DetailsById", new { id = tagId, slug = id });
+
+		}
+
+		/// <summary>
+		/// Redirects to entry type tag based on entry type and possible sub-type.
+		/// As fallback, redirects to tags index if no tag is found.
+		/// </summary>
+		public ActionResult DetailsByEntryType(EntryType entryType, string subType = "") {
+
+			var tag = queries.FindTagForEntryType(new EntryTypeAndSubType(entryType, subType), (tag, lang) => new TagBaseContract(tag, lang));
+
+			if (tag != null) { 
+				return RedirectToAction("DetailsById", new { id = tag.Id, slug = tag.UrlSlug });
+			} else {
+				return RedirectToAction("Index");
+			}
 
 		}
 
@@ -224,7 +239,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return HttpNotFound();
 
-			var tag = queries.LoadTag(id, t => new TagForApiContract(t, entryThumbPersister, WebHelper.IsSSL(Request),
+			var tag = queries.LoadTag(id, t => new TagForApiContract(t, entryThumbPersister,
 				lang, TagOptionalFields.AdditionalNames | TagOptionalFields.Description | TagOptionalFields.MainPicture));
 			return PartialView("_TagPopupContent", tag);
 

@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.DataContracts.Songs;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class LyricsForSong : IEquatable<LyricsForSong> {
+	public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject {
 
 		private OptionalCultureCode cultureCode;
 		private string notes;

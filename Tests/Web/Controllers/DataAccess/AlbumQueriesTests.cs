@@ -1,6 +1,7 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -19,6 +20,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
@@ -85,11 +87,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			}		
 		}
 
-		private void Save<T>(params T[] entity) {
+		private void Save<T>(params T[] entity) where T : class, IDatabaseObject {
 			repository.Save(entity);
 		}
 
-		private T Save<T>(T entity) {
+		private T Save<T>(T entity) where T : class, IDatabaseObject {
 			return repository.Save(entity);
 		}
 
@@ -131,7 +133,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			imagePersister = new InMemoryImagePersister();
 			mailer = new FakeUserMessageMailer();
 			queries = new AlbumQueries(repository, permissionContext, entryLinkFactory, imagePersister, imagePersister, mailer, 
-				new FakeUserIconFactory(), new EnumTranslations());
+				new FakeUserIconFactory(), new EnumTranslations(), new FakePVParser(),
+				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()), new InMemoryImagePersister(),
+				new FakeObjectCache());
 
 		}
 
@@ -253,6 +257,27 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var result = queries.GetAlbumDetails(album.Id, "miku@vocaloid.eu");
 			Assert.IsNotNull(result, "result");
+
+		}
+
+		[TestMethod]
+		public async Task GetTagSuggestions() {
+
+			void AddTagUsages(Song[] songs, string[] tagNames) {
+				var (tags, tagUsages, tagVotes) = CreateEntry.TagUsages(songs, tagNames, user, new SongTagUsageFactory(repository.CreateContext(), song));
+				repository.Save(tags);
+				repository.Save(tagUsages);
+				repository.Save(tagVotes);
+			}
+
+			AddTagUsages(new [] { song, song2 }, new[] { "vocarock", "techno" });
+
+			repository.Save(album.AddSong(song, 1, 1), album.AddSong(song2, 2, 1));
+
+			var result = await queries.GetTagSuggestions(album.Id);
+
+			Assert.AreEqual(2, result.Length, "Number of tag suggestions");
+			Assert.IsTrue(result.Any(r => r.Tag.Name == "vocarock"), "First tag was returned");
 
 		}
 

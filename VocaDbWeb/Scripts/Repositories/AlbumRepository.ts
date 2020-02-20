@@ -33,6 +33,13 @@ module vdb.repositories {
 
 		}
 
+		public createOrUpdateReview(albumId: number, reviewContract: dc.albums.AlbumReviewContract) {
+
+			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews");
+			return this.handleJqueryPromise<dc.albums.AlbumReviewContract>($.post(url, reviewContract, null, 'json'));
+
+		}
+
 		public createReport = (albumId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
 
 			$.post(this.urlMapper.mapRelative("/Album/CreateReport"),
@@ -43,6 +50,13 @@ module vdb.repositories {
 		public deleteComment = (commentId: number, callback?: () => void) => {
 
 			$.ajax(this.urlMapper.mapRelative("/api/albums/comments/" + commentId), { type: 'DELETE', success: callback });
+
+		}
+
+		public deleteReview(albumId: number, reviewId: number) {
+
+			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews/" + reviewId);
+			return this.handleJqueryPromise($.ajax(url, { type: 'DELETE' }));
 
 		}
 
@@ -109,8 +123,25 @@ module vdb.repositories {
 
 		}
 
+		public async getReviews(albumId: number) {
+
+			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews");
+			return await this.getJsonPromise<dc.albums.AlbumReviewContract[]>(url);
+
+		}
+
 		public getTagSuggestions = (albumId: number, callback: (contract: dc.tags.TagUsageForApiContract[]) => void) => {
 			$.getJSON(this.urlMapper.mapRelative("/api/albums/" + albumId + "/tagSuggestions"), callback);
+		}
+
+		public async getUserCollections(albumId: number) {
+
+			const url = vdb.functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/user-collections");
+			const jqueryPromise = $.getJSON(url);
+
+			const promise = Promise.resolve(jqueryPromise);
+			return promise as Promise<dc.AlbumForUserForApiContract[]>;
+
 		}
 
 		public updateComment = (commentId: number, contract: dc.CommentContract, callback?: () => void) => {

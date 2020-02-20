@@ -1,5 +1,7 @@
-﻿using System.Net;
+using System;
+using System.Net;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using System.Web;
 using NLog;
 
@@ -11,7 +13,7 @@ namespace VocaDb.Model.Helpers {
 		private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 		private const string VerifyApi = "https://www.google.com/recaptcha/api/siteverify";
 
-		public static ValidateCaptchaResponse Validate(HttpRequestBase request, string privateKey) {
+		public static async Task<ValidateCaptchaResponse> ValidateAsync(HttpRequestBase request, string privateKey) {
 			
 			var userResponse = request.Form[ResponseFieldName];
 
@@ -26,7 +28,7 @@ namespace VocaDb.Model.Helpers {
 			VerifyResponse verifyResponse;
 
 			try {
-				verifyResponse = JsonRequest.ReadObject<VerifyResponse>(requestUrl);
+				verifyResponse = await JsonRequest.ReadObjectAsync<VerifyResponse>(requestUrl);
 			} catch (WebException x) {
 				log.Error(x, "Unable to get response from ReCAPTCHA");
 				return new ValidateCaptchaResponse(false);

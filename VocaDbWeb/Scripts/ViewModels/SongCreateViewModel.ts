@@ -71,6 +71,11 @@ module vdb.viewModels {
 			 
 		}
 
+		private getSongTypeTag = async (songType: string) => {
+			const tag = await this.tagRepository.getEntryTypeTag(cls.EntryType.Song, songType);
+			this.songTypeTag(tag);
+		}
+
         dupeEntries = ko.observableArray<dc.DuplicateEntryResultContract>([]);
 
         isDuplicatePV: KnockoutComputed<boolean>;
@@ -86,7 +91,11 @@ module vdb.viewModels {
 
         pv1 = ko.observable("");
         pv2 = ko.observable("");
-        songType = ko.observable("Original");
+		songType = ko.observable("Original");
+		songTypeTag = ko.observable<dc.TagApiContract>(null);
+		songTypeName = ko.computed(() => this.songTypeTag()?.name);
+		songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
+		songTypeTagUrl = ko.computed(() => vdb.utils.EntryUrlMapper.details_tag_contract(this.songTypeTag()));
 
 		canHaveOriginalVersion = ko.computed(() => cls.songs.SongType[this.songType()] !== cls.songs.SongType.Original);
 
@@ -105,7 +114,11 @@ module vdb.viewModels {
 
         removeArtist: (artist: dc.ArtistContract) => void;
 
-        constructor(private songRepository: vdb.repositories.SongRepository, artistRepository: vdb.repositories.ArtistRepository, data?) {
+		constructor(
+			private readonly songRepository: vdb.repositories.SongRepository,
+			artistRepository: vdb.repositories.ArtistRepository,
+			private readonly tagRepository: vdb.repositories.TagRepository,
+			data?) {
 
             if (data) {
                 this.nameOriginal(data.nameOriginal || "");
@@ -162,7 +175,10 @@ module vdb.viewModels {
             
             if (this.pv1()) {
                 this.checkDuplicatesAndPV();
-            }
+			}
+
+			this.songType.subscribe(this.getSongTypeTag);
+			this.getSongTypeTag(this.songType());
 
         }
     

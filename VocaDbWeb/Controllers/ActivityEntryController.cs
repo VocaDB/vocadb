@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Web.Mvc;
-using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 
 namespace VocaDb.Web.Controllers
@@ -12,17 +11,15 @@ namespace VocaDb.Web.Controllers
 
 		private readonly ActivityFeedService service;
 
-		private ActivityFeedService Service {
-			get { return service; }
-		}
+		private ActivityFeedService Service => service;
 
-		public ActivityEntryController(ActivityFeedService service) {
+	    public ActivityEntryController(ActivityFeedService service) {
 			this.service = service;
 		}
 
 		public ActionResult FollowedArtistActivity() {
 
-			var result = Service.GetFollowedArtistActivity(entriesPerPage, Request.IsSSL());
+			var result = Service.GetFollowedArtistActivity(entriesPerPage);
 			return View(result.Items);
 
 		}

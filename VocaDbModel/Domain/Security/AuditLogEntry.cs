@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Security {
 
-	public class AuditLogEntry {
+	public class AuditLogEntry : IEntryWithLongId {
 
 		public const int MaxActionLength = 400;
 
@@ -16,7 +16,7 @@ namespace VocaDb.Model.Domain.Security {
 			Time = DateTime.Now;
 		}
 
-		public AuditLogEntry(AgentLoginData agentLoginData, string action, AuditLogCategory category)
+		public AuditLogEntry(AgentLoginData agentLoginData, string action, AuditLogCategory category, GlobalEntryId entryId)
 			: this() {
 			
 			ParamIs.NotNull(() => agentLoginData);
@@ -26,6 +26,7 @@ namespace VocaDb.Model.Domain.Security {
 			AgentName = agentLoginData.Name;
 			Category = category;
 			User = agentLoginData.User;
+			EntryId = entryId;
 
 		}
 
@@ -46,6 +47,8 @@ namespace VocaDb.Model.Domain.Security {
 		}
 
 		public virtual AuditLogCategory Category { get; set; }
+
+		public virtual GlobalEntryId EntryId { get; set; }
 
 		public virtual long Id { get; set; }
 

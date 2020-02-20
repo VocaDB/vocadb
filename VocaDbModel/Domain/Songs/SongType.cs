@@ -16,17 +16,21 @@ namespace VocaDb.Model.Domain.Songs {
 
 		Cover			= 8,
 
-		Instrumental	= 16,
+		Arrangement		= 16,
 
-		Mashup			= 32,
+		Instrumental	= 32,
 
-		MusicPV			= 64,
+		Mashup			= 64,
 
-		DramaPV			= 128,
+		MusicPV			= 128,
 
-		Live			= 256,
+		DramaPV			= 256,
 
-		Other			= 512
+		Live			= 512,
+
+		Illustration	= 1024,
+
+		Other			= 2048
 
 	}
 
@@ -53,7 +57,9 @@ namespace VocaDb.Model.Domain.Songs {
 
 		Live			= 256,
 
-		Other			= 512
+		Illustration	= 512,
+
+		Other           = 1024,
 
 	}
 

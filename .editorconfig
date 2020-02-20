@@ -4,3 +4,17 @@ root = true
 end_of_line = crlf
 indent_style = tab
 tab_width = 4
+charset = utf-8
+
+# .cshtml files should be with BOM by default
+# https://docs.microsoft.com/en-us/dotnet/api/system.web.configuration.globalizationsection.fileencoding?view=netframework-4.8
+[*.cshtml]
+charset = utf-8-bom
+
+# Code file formatting
+# https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-formatting-conventions?view=vs-2019
+[*.{cs,cshtml}]
+csharp_new_line_before_open_brace = none
+csharp_new_line_before_else = false
+csharp_new_line_before_catch = false
+csharp_new_line_before_finally = false

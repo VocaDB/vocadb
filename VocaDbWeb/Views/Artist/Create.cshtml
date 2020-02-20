@@ -49,7 +49,7 @@
 				@Html.LabelFor(m => m.ArtistType)
 			</div>
 			<div class="editor-field">
-				@Html.ArtistTypeDropDownListFor(m => m.ArtistType)
+				@Html.DropdownForKnockout(m => m.ArtistType, ViewHelper.CreateArtistTypesList(null), "value: artistType")
 			</div>
 
 			<div class="editor-label">
@@ -115,6 +115,13 @@
 			</div>
 
 			@{ Html.RenderPartial("KnockoutPartials/_DuplicateEntriesMessage"); }
+
+			<div class="alert alert-info js-cloak" visible="{{artistTypeInfo}}" data-bind="show">				
+				<h3>
+					<a href="{{artistTypeTagUrl}}">{{artistTypeName}}</a>
+				</h3>
+				<span data-bind="markdown: artistTypeInfo, maxLength: 500"></span>
+			</div>
 		</div>
 		
 	</div>	
@@ -126,10 +133,12 @@
     <script type="text/javascript">
 
 		$(document).ready(function () {
+			ko.punches.enableAll();
 			var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
 			var repo = repoFactory.artistRepository();
+			var tagRepo = repoFactory.tagRepository();
             var json = @Html.Raw(JsonHelpers.Serialize(Model));
-            ko.applyBindings(new vdb.viewModels.ArtistCreateViewModel(repo, json));
+            ko.applyBindings(new vdb.viewModels.ArtistCreateViewModel(repo, tagRepo, json));
         });
 
     </script>

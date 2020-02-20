@@ -1,17 +1,173 @@
-﻿using System;
 using System.Data;
 using FluentMigrator;
 
 namespace VocaDb.Migrations {
 
-	public class EventVenues : AutoReversingMigration {
+	// Migration version format: YYYY_MM_DD_HHmm
+
+	[Migration(2020_02_08_1800)]
+	public class IPRuleAddressUniqueIndex : AutoReversingMigration {
 		public override void Up() {
-			Create.Table("EventVenues")
+			Create.Index("UX_IPRules_Address").OnTable(TableNames.IPRules).OnColumn("Address").Ascending().WithOptions().Unique();
+		}
+	}
+
+	[Migration(2020_02_07_2000)]
+	public class UserCustomTitle : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("CustomTitle").OnTable(TableNames.UserOptions).AsString(200).NotNullable().WithDefaultValue(string.Empty);
+		}
+	}
+
+	[Migration(2020_02_05_1900)]
+	public class EventDescriptionLength : Migration {
+
+		public override void Up() {
+			Delete.DefaultConstraint().OnTable(TableNames.AlbumReleaseEvents).OnColumn("Description");
+			Alter.Column("Description").OnTable(TableNames.AlbumReleaseEvents).AsString(int.MaxValue).NotNullable().WithDefaultValue(string.Empty);
+			Delete.DefaultConstraint().OnTable(TableNames.AlbumReleaseEventSeries).OnColumn("Description");
+			Alter.Column("Description").OnTable(TableNames.AlbumReleaseEventSeries).AsString(int.MaxValue).NotNullable().WithDefaultValue(string.Empty);
+		}
+
+		public override void Down() {}
+
+	}
+
+	[Migration(2020_01_05_1600)]
+	public class TagRelatedEntries : AutoReversingMigration {
+		public override void Up() {
+			var tableName = "EntryTypeToTagMappings";
+			Create.Table(tableName)
+				.WithColumn(ColumnNames.Id).AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("EntryType").AsString(20).NotNullable()
+				.WithColumn("SubType").AsString(30).NotNullable()
+				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, ColumnNames.Id).OnDelete(Rule.Cascade);
+
+			Create.Index("UX_EntryTypeToTagMappings_EntryType").OnTable(tableName)
+				.OnColumn("EntryType").Ascending()
+				.OnColumn("SubType").Ascending()
+				.WithOptions().Unique();
+
+			Create.Index("UX_EntryTypeToTagMappings_Tag").OnTable(tableName)
+				.OnColumn("Tag").Ascending()
+				.WithOptions().Unique();
+		}
+	}
+
+	[Migration(2019_11_17_0100)]
+	public class SongListTags : AutoReversingMigration {
+
+		public override void Up() {
+			Create.Table("SongListTagUsages")
+				.WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Count").AsInt32().NotNullable()
+				.WithColumn("SongList").AsInt32().NotNullable().ForeignKey(TableNames.SongLists, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id")
+				.WithColumn("Date").AsDateTime().NotNullable();
+			Create.Table("SongListTagVotes")
+				.WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Usage").AsInt64().NotNullable().ForeignKey("SongListTagUsages", "Id").OnDelete(Rule.Cascade)
+				.WithColumn("[User]").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id");
+			Create.Index("UX_SongListTagUsages").OnTable("SongListTagUsages").OnColumn("SongList").Ascending()
+				.OnColumn("Tag").Ascending().WithOptions().Unique();
+			Create.Index("IX_SongListTagUsages_Tag").OnTable("SongListTagUsages").OnColumn("Tag").Ascending();
+		}
+
+	}
+
+	[Migration(2019_04_14_1300)]
+	public class ArchivedEntryVersionChangedFieldsLength : AutoReversingMigration {
+		public override void Up() {
+			Alter.Column("ChangedFields").OnTable(TableNames.ArchivedAlbumVersions).AsAnsiString(1000).NotNullable().WithDefaultValue(string.Empty);
+			Alter.Column("ChangedFields").OnTable(TableNames.ArchivedArtistVersions).AsAnsiString(1000).NotNullable().WithDefaultValue(string.Empty);
+			Alter.Column("ChangedFields").OnTable(TableNames.ArchivedSongVersions).AsAnsiString(1000).NotNullable().WithDefaultValue(string.Empty);
+		}
+	}
+
+	[Migration(2019_03_12_2100)]
+	public class SongNameIndex : AutoReversingMigration {
+		public override void Up() {
+			if (!Schema.Table(TableNames.SongNames).Index("IX_SongNames").Exists()) {
+				Create.Index("IX_SongNames").OnTable(TableNames.SongNames).OnColumn("Song").Ascending();
+			}
+		}
+	}
+
+	[Migration(2019_01_27_1700)]
+	public class AlbumReviews : AutoReversingMigration {
+		public override void Up() {
+			Create.Table(TableNames.AlbumReviews)
 				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
-				.WithColumn("Address").AsString().NotNullable().WithDefaultValue(string.Empty)
-				.WithColumn("JapaneseName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
-				.WithColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
-				.WithColumn("EnglishName").AsString(255).NotNullable().WithDefaultValue(string.Empty);
+				.WithColumn("Album").AsInt32().NotNullable().ForeignKey(TableNames.Albums, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("[Date]").AsDateTime().NotNullable()
+				.WithColumn("LanguageCode").AsString(8).NotNullable()
+				.WithColumn("Text").AsString(4000).NotNullable()
+				.WithColumn("Title").AsString(200).NotNullable()
+				.WithColumn("[User]").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id").OnDelete(Rule.Cascade);
+			Create.Index("UX_AlbumReviews").OnTable(TableNames.AlbumReviews)
+				.OnColumn("Album").Ascending()
+				.OnColumn("[User]").Ascending()
+				.OnColumn("LanguageCode").Ascending()
+				.WithOptions().Unique();			
+		}
+	}
+
+	[Migration(2019_01_17_2200)]
+	public class AuditLogEntryEntryLink : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("EntryId").OnTable(TableNames.AuditLogEntries).AsInt32().NotNullable().WithDefaultValue(0);
+			Create.Column("EntryType").OnTable(TableNames.AuditLogEntries).AsString(20).Nullable();
+		}
+	}
+
+	[Migration(2018_11_03_2000)]
+	public class EventNameExtend : AutoReversingMigration {
+		public override void Up() {
+			Alter.Column("EnglishName").OnTable(TableNames.AlbumReleaseEvents).AsString(255).NotNullable();
+			Alter.Column("EnglishName").OnTable(TableNames.AlbumReleaseEventSeries).AsString(255).NotNullable();
+		}
+	}
+
+	[Migration(2018_07_19_1900)]
+	public class LyricsUrlExtend : AutoReversingMigration {
+		public override void Up() {
+			Alter.Column("URL").OnTable(TableNames.LyricsForSongs).AsString(500).NotNullable();
+		}
+	}
+
+	[Migration(2018_07_18_1900)]
+	public class EntryReportCloseDate : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("ClosedAt").OnTable(TableNames.EntryReports).AsDateTime().Nullable();
+		}
+	}
+
+	[Migration(2017_12_10_1900)]
+	public class PublishDateForAllPVs : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("PublishDate").OnTable(TableNames.PVsForAlbums).AsDateTime().Nullable();
+			Create.Column("PublishDate").OnTable(TableNames.PVsForEvents).AsDateTime().Nullable();
+		}
+	}
+
+	[Migration(2017_11_12_2100)]
+	public class TagMappingCreateDate : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("CreateDate").OnTable(TableNames.TagMappings).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+		}
+	}
+
+	[Migration(2017_10_01_1400)]
+	public class UserStandAlone : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("Standalone").OnTable(TableNames.UserOptions).AsBoolean().NotNullable().WithDefaultValue(false);
+		}
+	}
+
+	[Migration(2017_09_17_2200)]
+	public class SongListDeleted : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("Deleted").OnTable(TableNames.SongLists).AsBoolean().NotNullable().WithDefaultValue(false);
 		}
 	}
 
@@ -869,7 +1025,9 @@ namespace VocaDb.Migrations {
 				.OnColumn("Author").Ascending()
 				.OnColumn("EditEvent").Ascending(); // Include EditEvent column because it's used for filtering
 
-			Delete.Index("IX_FavoriteSongsForUsers_3").OnTable(TableNames.FavoriteSongsForUsers);
+			if (Schema.Table(TableNames.FavoriteSongsForUsers).Index("IX_FavoriteSongsForUsers_3").Exists()) {
+				Delete.Index("IX_FavoriteSongsForUsers_3").OnTable(TableNames.FavoriteSongsForUsers);
+			}
 
 			Create.Index("IX_FavoriteSongsForUsers_3").OnTable(TableNames.FavoriteSongsForUsers)
 				.OnColumn("[User]").Ascending()

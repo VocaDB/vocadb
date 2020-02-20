@@ -1,7 +1,7 @@
 ﻿interface KnockoutExtenders {
 
 	// Parses the value as integer, converting it to null if it's not a valid number.
-	parseInteger: KnockoutBindingHandler;
+	parseInteger: (target: any) => KnockoutComputed<any>;
 
 }
 

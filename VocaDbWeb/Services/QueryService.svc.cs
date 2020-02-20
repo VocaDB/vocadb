@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.ServiceModel;
 using VocaDb.Model.Database.Queries;
@@ -84,7 +84,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public PartialFindResult<EntryForApiContract> FindAll(string term, int maxResults, ContentLanguagePreference languagePreference) {
 
-			return entryQueries.GetList(term, null, null, false, null, 0, maxResults, true, EntrySortRule.Name, 
+			return entryQueries.GetList(term, null, null, false, null, null, 0, maxResults, true, EntrySortRule.Name, 
 				NameMatchMode.Auto, EntryOptionalFields.AdditionalNames, languagePreference, false);
 
 		}
@@ -99,7 +99,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public NewSongCheckResultContract FindDuplicate(string[] names, string[] pvs, int[] artistIds, bool getPVInfo = false) {
 
-			return songQueries.FindDuplicates(names, pvs, artistIds, getPVInfo);
+			return songQueries.FindDuplicates(names, pvs, artistIds, getPVInfo).Result;
 
 		}
 

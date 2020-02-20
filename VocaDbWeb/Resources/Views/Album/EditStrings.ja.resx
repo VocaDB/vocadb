@@ -199,7 +199,7 @@
     <value>サービス</value>
   </data>
   <data name="PvSupportedServices" xml:space="preserve">
-    <value>対応サービス：Youtube、ニコニコ動画、Vimeo、SoundCloud、ピアプロ、Bilibili</value>
+    <value>対応サービス：Youtube、ニコニコ、Vimeo、SoundCloud、ピアプロ、Bilibili</value>
   </data>
   <data name="PvType" xml:space="preserve">
     <value>タイプ</value>

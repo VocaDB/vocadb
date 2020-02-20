@@ -10,6 +10,8 @@
 
 	public class YoutubeVideoSnippet : Snippet {
 
+		public string ChannelId { get; set; }
+
 		public string ChannelTitle { get; set; }
 
 		public YoutubeVideoThumbnails Thumbnails { get; set; }

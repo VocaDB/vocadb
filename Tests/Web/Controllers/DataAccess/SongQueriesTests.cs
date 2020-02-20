@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -27,6 +28,7 @@ using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
 using VocaDb.Model.Service;
 using VocaDb.Web.Helpers;
+using FluentAssertions;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
@@ -36,6 +38,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 	[TestClass]
 	public class SongQueriesTests {
 
+		private const int shortVersionTagId = 4717;
 		private EntryAnchorFactory entryLinkFactory;
 		private FakeUserMessageMailer mailer;
 		private CreateSongContract newSongContract;
@@ -53,14 +56,23 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private Artist vocalist;
 		private Artist vocalist2;
 
-		private SongContract CallCreate() {
+		private Task<SongContract> CallCreate() {
 			return queries.Create(newSongContract);
 		}
 
-		private NewSongCheckResultContract CallFindDuplicates(string[] anyName = null, string[] anyPv = null, int[] artistIds = null, bool getPvInfo = true) {
+		private Task<NewSongCheckResultContract> CallFindDuplicates(string[] anyName = null, string[] anyPv = null, int[] artistIds = null, bool getPvInfo = true) {
 			
 			return queries.FindDuplicates(anyName ?? new string[0], anyPv ?? new string[0], artistIds ?? new int[0], getPvInfo);
 
+		}
+
+		private (bool created, SongReport report) CallCreateReport(SongReportType reportType, int? versionNumber = null, Song song = null, DateTime? created = null) {
+			song ??= this.song;
+			var result = queries.CreateReport(song.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
+			var report = repository.Load<SongReport>(result.reportId);
+			if (created != null)
+				report.Created = created.Value;
+			return (result.created, report);
 		}
 
 		private SongForEditContract EditContract() {
@@ -80,7 +92,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				return new ArtistForSongContract { Name = artistName, Roles = roles };
 		}
 
-		private T Save<T>(T entry) {
+		private T Save<T>(T entry) where T : class, IDatabaseObject {
 			return repository.Save(entry);
 		}
 
@@ -107,7 +119,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Add(producer, vocalist);
 
 			tag = new Tag("vocarock");
-			repository.Add(tag, new Tag("vocaloud"));
+			repository.Save(tag, new Tag("vocaloud"));
 
 			releaseEvent = repository.Save(CreateEntry.ReleaseEvent("Comiket 39"));
 
@@ -129,19 +141,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			pvParser = new FakePVParser();
 			pvParser.ResultFunc = (url, getMeta) => 
 				VideoUrlParseResult.CreateOk(url, PVService.NicoNicoDouga, "sm393939", 
-				getMeta ? VideoTitleParseResult.CreateSuccess("Resistance", "Tripshots", "testimg.jpg", 39) : VideoTitleParseResult.Empty);
+				getMeta ? VideoTitleParseResult.CreateSuccess("Resistance", "Tripshots", null, "testimg.jpg", 39) : VideoTitleParseResult.Empty);
 
 			mailer = new FakeUserMessageMailer();
 
 			queries = new SongQueries(repository, permissionContext, entryLinkFactory, pvParser, mailer, 				
-				new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(), new FakeObjectCache(), new Model.Utils.Config.VdbConfigManager());
+				new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(), new FakeObjectCache(), new Model.Utils.Config.VdbConfigManager(), new EntrySubTypeNameFactory(),
+				new FollowedArtistNotifier(new FakeEntryLinkFactory(), mailer, new EnumTranslations(), new EntrySubTypeNameFactory()));
 
 		}
 
 		[TestMethod]
-		public void Create() {
+		public async Task Create() {
 
-			var result = CallCreate();
+			var result = await CallCreate();
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual("Resistance", result.Name, "Name");
@@ -283,11 +296,30 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create_NoPV() {
+		public async Task Create_Tags_IgnoreCoverIfSongTypeIsCover() {
+
+			var coverTag = repository.Save(CreateEntry.Tag("cover"));
+			repository.Save(new TagMapping(coverTag, "cover"));
+			repository.Save(new EntryTypeToTagMapping(EntryTypeAndSubType.Create(EntryType.Song, SongType.Cover), coverTag));
+
+			pvParser.ResultFunc = (url, meta) => CreateEntry.VideoUrlParseResultWithTitle(tags: new[] { "cover" });
+			newSongContract.SongType = SongType.Cover;
+
+			var id = (await CallCreate()).Id;
+
+			song = repository.Load(id);
+
+			Assert.AreEqual(SongType.Cover, song.SongType, "SongType");
+			Assert.AreEqual(0, song.Tags.Tags.Count(), "No tags added");
+
+		}
+
+		[TestMethod]
+		public async Task Create_NoPV() {
 
 			newSongContract.PVUrls = new string[0];
 
-			var result = CallCreate();
+			var result = await CallCreate();
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual(PVServices.Nothing, result.PVServices, "PVServices");
@@ -295,37 +327,41 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create_EmptyPV() {
+		public async Task Create_EmptyPV() {
 
 			newSongContract.PVUrls = new[] { string.Empty };
 
-			var result = CallCreate();
+			var result = await CallCreate();
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual(PVServices.Nothing, result.PVServices, "PVServices");
 
 		}
 
+		/// <summary>
+		/// Basic report, no existing reports.
+		/// </summary>
 		[TestMethod]
 		public void CreateReport() {
 			
-			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
+			var (created, report) = CallCreateReport(SongReportType.InvalidInfo);
 
-			var report = repository.List<SongReport>().FirstOrDefault();
-
-			Assert.IsNotNull(report, "Report was saved");
+			Assert.IsTrue(created, "Report was created");
 			Assert.AreEqual(song.Id, report.EntryBase.Id, "Entry Id");
 			Assert.AreEqual(user, report.User, "Report author");
 			Assert.AreEqual(SongReportType.InvalidInfo, report.ReportType, "Report type");
 
 		}
 
+		/// <summary>
+		/// Report specific version.
+		/// </summary>
 		[TestMethod]
 		public void CreateReport_Version() {
 			
 			var version = ArchivedSongVersion.Create(song, new SongDiff(), new AgentLoginData(user), SongArchiveReason.PropertiesUpdated, String.Empty);
 			repository.Save(version);
-			queries.CreateReport(song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", version.Version);
+			CallCreateReport(SongReportType.Other, version.Version);
 
 			var report = repository.List<SongReport>().First();
 
@@ -343,24 +379,103 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
+		/// <summary>
+		/// Open report exists for another entry.
+		/// </summary>
+		[TestMethod]
+		public void CreateReport_OtherEntry() {
+
+			var song2 = repository.Save(CreateEntry.Song());
+			CallCreateReport(SongReportType.InvalidInfo, song: song2);
+			var secondResult = CallCreateReport(SongReportType.Other);
+
+			var reports = repository.List<SongReport>();
+
+			Assert.AreEqual(2, reports.Count, "Number of reports");
+			Assert.IsTrue(secondResult.created, "Second report was created");
+
+		}
+
+		/// <summary>
+		/// Duplicate report exists: skip.
+		/// </summary>
 		[TestMethod]
 		public void CreateReport_Duplicate() {
-			
-			queries.CreateReport(song.Id, SongReportType.InvalidInfo, "39.39.39.39", "It's Miku, not Rin", null);
-			queries.CreateReport(song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", null);
+		
+			var (_, report) = CallCreateReport(SongReportType.InvalidInfo);
+			var secondResult = CallCreateReport(SongReportType.Other);
 
 			var reports = repository.List<SongReport>();
 
 			Assert.AreEqual(1, reports.Count, "Number of reports");
-			Assert.AreEqual(SongReportType.InvalidInfo, reports.First().ReportType, "Report type");
+			Assert.AreEqual(SongReportType.InvalidInfo, report.ReportType, "Report type");
+			Assert.IsFalse(secondResult.created, "Second report was not created");
 
 		}
 
+		/// <summary>
+		/// Duplicate report exists, but it closed.
+		/// </summary>
+		[TestMethod]
+		public void CreateReport_Duplicate_Closed() {
+			
+			var(_, report) = CallCreateReport(SongReportType.InvalidInfo);
+			report.Status = ReportStatus.Closed;
+			var(secondCreated, _) = CallCreateReport(SongReportType.Other);
+
+			var reports = repository.List<SongReport>();
+
+			Assert.AreEqual(2, reports.Count, "Number of reports");
+			Assert.IsTrue(secondCreated, "Second report was created");
+
+		}
+
+		/// <summary>
+		/// Duplicate report exists. It is closed, but current user is not logged in. Skip.
+		/// </summary>
+		[TestMethod]
+		public void CreateReport_Duplicate_Closed_NotLoggedIn() {
+			
+			permissionContext.LoggedUser = null;
+			var (_, report) = CallCreateReport(SongReportType.InvalidInfo);
+			report.Status = ReportStatus.Closed;
+			var (secondCreated, _) = CallCreateReport(SongReportType.Other);
+
+			var reports = repository.List<SongReport>();
+
+			Assert.AreEqual(1, reports.Count, "Number of reports");
+			Assert.IsFalse(secondCreated, "Second report was not created");
+
+		}
+
+		/// <summary>
+		/// Duplicate reports exist. One is closed, the other one open.
+		/// Skip creating third report because of open report.
+		/// </summary>
+		[TestMethod]
+		public void CreateReport_Duplicate_Closed_Then_Open() {
+			
+			var(_, report) = CallCreateReport(SongReportType.InvalidInfo, created: DateTime.UtcNow.AddDays(-2));
+			report.Status = ReportStatus.Closed;
+			CallCreateReport(SongReportType.Other, created: DateTime.UtcNow.AddDays(-1));
+			var (thirdCreated, _) = CallCreateReport(SongReportType.Other);
+
+			var reports = repository.List<SongReport>();
+
+			reports.Should().HaveCount(2);
+			Assert.IsFalse(thirdCreated, "Third report was not created");
+
+		}
+
+		/// <summary>
+		/// Create report when not logged in.
+		/// Report is created using hostname.
+		/// </summary>
 		[TestMethod]
 		public void CreateReport_NotLoggedIn() {
 			
 			permissionContext.LoggedUser = null;
-			queries.CreateReport(song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", null);
+			CallCreateReport(SongReportType.Other);
 
 			var report = repository.List<SongReport>().FirstOrDefault();
 
@@ -425,18 +540,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		// Two PVs, no matches, parse song info from the NND PV.
 		[TestMethod]
-		public void FindDuplicates_NoMatches_ParsePVInfo() {
+		public async Task FindDuplicates_NoMatches_ParsePVInfo() {
 
-			// Note: for now only NNDPV will be used for song metadata parsing.
+			// Note: Nico will be preferred, if available
 			pvParser.MatchedPVs.Add("http://youtu.be/123456567",
 				VideoUrlParseResult.CreateOk("http://youtu.be/123456567", PVService.Youtube, "123456567", 
-				VideoTitleParseResult.CreateSuccess("Resistance", "Tripshots", "testimg2.jpg", 33)));
+				VideoTitleParseResult.CreateSuccess("anger PV", "Tripshots", null, "testimg2.jpg", 33)));
 
 			pvParser.MatchedPVs.Add("http://www.nicovideo.jp/watch/sm3183550",
 				VideoUrlParseResult.CreateOk("http://www.nicovideo.jp/watch/sm3183550", PVService.NicoNicoDouga, "sm3183550", 
-				VideoTitleParseResult.CreateSuccess("anger", "Tripshots", "testimg.jpg", 39)));
+				VideoTitleParseResult.CreateSuccess("【初音ミク】anger【VOCALOID3DPV】", "Tripshots", null, "testimg.jpg", 39)));
 
-			var result = CallFindDuplicates(new []{ "【初音ミク】anger PV EDIT【VOCALOID3DPV】"}, new []{ "http://youtu.be/123456567", "http://www.nicovideo.jp/watch/sm3183550" });
+			var result = await CallFindDuplicates(new []{ "【初音ミク】anger【VOCALOID3DPV】"}, new []{ "http://youtu.be/123456567", "http://www.nicovideo.jp/watch/sm3183550" });
 
 			Assert.AreEqual("anger", result.Title, "Title"); // Title from PV
 			Assert.AreEqual(0, result.Matches.Length, "No matches");
@@ -444,9 +559,30 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void FindDuplicates_MatchName() {
+		public async Task FindDuplicates_ParsePVInfo_YouTube() {
 
-			var result = CallFindDuplicates(new []{ "Nebula"});
+			var artist = repository.Save(CreateEntry.Artist(ArtistType.Producer, name: "Clean Tears"));
+			repository.Save(artist.CreateWebLink("YouTube", "https://www.youtube.com/channel/UCnHGCQ0pwnRFF5Oe2YTeOcA", WebLinkCategory.Official));
+
+			var titleParseResult = VideoTitleParseResult.CreateSuccess("Clean Tears - Ruby", "Clean Tears", null, "http://tn.smilevideo.jp/smile?i=32347786", 39);
+			titleParseResult.Author = "Clean Tears";
+			titleParseResult.AuthorId = "UCnHGCQ0pwnRFF5Oe2YTeOcA";
+
+			pvParser.MatchedPVs.Add("https://youtu.be/aJKY_EeAeYc",
+				VideoUrlParseResult.CreateOk("https://youtu.be/aJKY_EeAeYc", PVService.Youtube, "aJKY_EeAeYc", titleParseResult));
+
+			var result = await CallFindDuplicates(new string[0], new[] { "https://youtu.be/aJKY_EeAeYc" });
+
+			Assert.AreEqual("Clean Tears - Ruby", result.Title, "Title"); // Title from PV
+			Assert.AreEqual(1, result.Artists.Length, "Number of matched artists");
+			Assert.AreEqual(artist.Id, result.Artists[0].Id, "Matched artist");
+
+		}
+
+		[TestMethod]
+		public async Task FindDuplicates_MatchName() {
+
+			var result = await CallFindDuplicates(new []{ "Nebula"});
 
 			Assert.AreEqual(1, result.Matches.Length, "Matches");
 			var match = result.Matches.First();
@@ -456,13 +592,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void FindDuplicates_MatchNameAndArtist() {
+		public async Task FindDuplicates_MatchNameAndArtist() {
 
 			var producer2 = Save(CreateEntry.Artist(ArtistType.Producer, name: "minato"));
 			var song2 = repository.Save(CreateEntry.Song(name: "Nebula"));
 			Save(song2.AddArtist(producer2));
 
-			var result = CallFindDuplicates(new []{ "Nebula"}, artistIds: new[] { producer2.Id });
+			var result = await CallFindDuplicates(new []{ "Nebula"}, artistIds: new[] { producer2.Id });
 
 			// 2 songs, the one with both artist and title match appears first
 			Assert.AreEqual(2, result.Matches.Length, "Matches");
@@ -473,9 +609,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void FindDuplicates_SkipPVInfo() {
+		public async Task FindDuplicates_SkipPVInfo() {
 
-			var result = CallFindDuplicates(new []{ "Anger"}, new []{ "http://www.nicovideo.jp/watch/sm393939" }, getPvInfo: false);
+			var result = await CallFindDuplicates(new []{ "Anger"}, new []{ "http://www.nicovideo.jp/watch/sm393939" }, getPvInfo: false);
 
 			Assert.IsNull(result.Title, "Title");
 			Assert.AreEqual(0, result.Matches.Length, "No matches");
@@ -483,12 +619,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void FindDuplicates_MatchPV() {
+		public async Task FindDuplicates_MatchPV() {
 
 			pvParser.MatchedPVs.Add("http://youtu.be/hoLu7c2XZYU",
 				VideoUrlParseResult.CreateOk("http://youtu.be/hoLu7c2XZYU", PVService.Youtube, "hoLu7c2XZYU", VideoTitleParseResult.Empty));
 
-			var result = CallFindDuplicates(anyPv: new []{ "http://youtu.be/hoLu7c2XZYU"});
+			var result = await CallFindDuplicates(anyPv: new []{ "http://youtu.be/hoLu7c2XZYU"});
 
 			Assert.AreEqual(1, result.Matches.Length, "Matches");
 			var match = result.Matches.First();
@@ -498,13 +634,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void FindDuplicates_CoverInSongTitle_CoverType() {
+		public async Task FindDuplicates_CoverInSongTitle_CoverType() {
 
 			pvParser.MatchedPVs.Add("http://www.nicovideo.jp/watch/sm27114783",
 				VideoUrlParseResult.CreateOk("http://www.nicovideo.jp/watch/sm27114783", PVService.NicoNicoDouga, "123456567",
-				VideoTitleParseResult.CreateSuccess("【GUMI】 光(宇多田ヒカル) 【アレンジカバー】", string.Empty, "testimg2.jpg", 33)));
+				VideoTitleParseResult.CreateSuccess("【GUMI】 光(宇多田ヒカル) 【アレンジカバー】", string.Empty, null, "testimg2.jpg", 33)));
 
-			var result = CallFindDuplicates(anyPv: new[] { "http://www.nicovideo.jp/watch/sm27114783" });
+			var result = await CallFindDuplicates(anyPv: new[] { "http://www.nicovideo.jp/watch/sm27114783" });
 
 			Assert.AreEqual(SongType.Cover, result.SongType, "SongType is cover because of the 'cover' in title");
 
@@ -518,7 +654,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Save(song.AddTag(tag).Result);
 			var matchingTag = Save(CreateEntry.Song());
-			Save(matchingTag.AddTag(tag));
+			Save(matchingTag.AddTag(tag).Result);
 
 			Save(user.AddSongToFavorites(song, SongVoteRating.Like));
 			var matchingLike = Save(CreateEntry.Song());
@@ -556,6 +692,62 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual(relEvent.Id, result.AlbumEventId, "AlbumEventId");
+
+		}
+
+		[TestMethod]
+		public async Task GetTagSuggestions() {
+
+			var tag2 = repository.Save(CreateEntry.Tag("metalcore"));
+			repository.Save(new TagMapping(tag, "vocarock"));
+			repository.Save(new TagMapping(tag2, "vocacore"));
+
+			pvParser.ResultFunc = (url, getMeta) =>
+				VideoUrlParseResult.CreateOk(url, PVService.NicoNicoDouga, "sm393939",
+					getMeta ? VideoTitleParseResult.CreateSuccess("Resistance", "Tripshots", null, "testimg.jpg", tags: new [] { "vocarock", "vocacore" }) : VideoTitleParseResult.Empty);
+
+			song.AddTag(tag);
+			song.PVs.Add(new PVForSong(song, new PVContract { Service = PVService.NicoNicoDouga, PVType = PVType.Original, PVId = "sm393939" }));
+			
+			var result = await queries.GetTagSuggestionsAsync(song.Id);
+
+			Assert.AreEqual(1, result.Count, "One suggestion");
+			Assert.AreEqual("metalcore", result[0].Tag.Name, "Tag name");
+
+		}
+
+		[TestMethod]
+		public async Task GetTagSuggestions_IgnoreCoverTagIfTypeIsCover() {
+
+			var coverTag = repository.Save(CreateEntry.Tag("cover"));
+			repository.Save(new TagMapping(coverTag, "cover"));
+			repository.Save(new EntryTypeToTagMapping(EntryTypeAndSubType.Create(EntryType.Song, SongType.Cover), coverTag));
+
+			pvParser.ResultFunc = (url, meta) => CreateEntry.VideoUrlParseResultWithTitle(tags: new[] { "cover" });
+			song.SongType = SongType.Cover;
+			song.PVs.Add(new PVForSong(song, new PVContract { Service = PVService.NicoNicoDouga, PVType = PVType.Original, PVId = "sm393939" }));
+
+			var result = await queries.GetTagSuggestionsAsync(song.Id);
+
+			Assert.AreEqual(0, result.Count, "Cover tag suggestion ignored");
+
+		}
+
+		[TestMethod]
+		public async Task GetTagSuggestions_ShortVersion() {
+
+			var shortVersionTag = repository.Save(CreateEntry.Tag("short version", shortVersionTagId));
+
+			song.LengthSeconds = 3939;
+
+			var remix = repository.Save(CreateEntry.Song());
+			remix.SongType = SongType.Remix;
+			remix.LengthSeconds = 39;
+			remix.SetOriginalVersion(song);
+
+			var result = await queries.GetTagSuggestionsAsync(remix.Id);
+
+			Assert.AreEqual("short version", result.FirstOrDefault()?.Tag.Name, "Short version tag was returned");
 
 		}
 
@@ -609,6 +801,38 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Save(song2);
 
 			queries.Merge(song.Id, song2.Id);
+
+		}
+
+		[TestMethod]
+		public void Revert() {
+
+			user.GroupId = UserGroupId.Moderator;
+			permissionContext.RefreshLoggedUser(repository);
+			SongForEditContract Contract() {
+				return new SongForEditContract(song, ContentLanguagePreference.English);
+			}
+
+			queries.UpdateBasicProperties(Contract());
+
+			// Remove all artists
+			var contract = Contract();
+			contract.Artists = new ArtistForSongContract[0];
+			queries.UpdateBasicProperties(contract);
+
+			var latestVersionBeforeRevert = song.ArchivedVersionsManager.GetLatestVersion();
+			Assert.IsNotNull(latestVersionBeforeRevert, "latestVersion");
+			Assert.AreEqual(2, song.Version, "Version number before revert");
+
+			queries.RevertToVersion(latestVersionBeforeRevert.Id);
+
+			Assert.AreEqual(3, song.Version, "Version was incremented");
+			Assert.AreEqual(2, song.Artists.Count(), "Artist links were restored");
+			Assert.AreNotEqual(song.ArtistString?.Default, string.Empty, "Artist string was restored");
+
+			var latestVersion = song.ArchivedVersionsManager.GetLatestVersion();
+			Assert.AreEqual(SongArchiveReason.Reverted, latestVersion.Reason, "Reason");
+			Assert.IsTrue(latestVersion.IsIncluded(SongEditableFields.Artists), "Artists are included in diff");
 
 		}
 

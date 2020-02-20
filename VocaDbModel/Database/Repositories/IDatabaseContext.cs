@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
+using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Database.Repositories {
 
@@ -11,7 +13,13 @@ namespace VocaDb.Model.Database.Repositories {
 		/// </summary>
 		IAuditLogger AuditLogger { get; }
 
-		IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel);
+		/// <summary>
+		/// Begins an explicit transaction.
+		/// The transaction object must be committed and disposed upon successful completion.
+		/// </summary>
+		/// <param name="isolationLevel">Isolation level.</param>
+		/// <returns>Transaction object.</returns>
+		IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadUncommitted);
 
 		void Flush();
 
@@ -21,13 +29,13 @@ namespace VocaDb.Model.Database.Repositories {
 		/// </summary>
 		/// <typeparam name="T2">New entity type.</typeparam>
 		/// <returns>Child context for that entity type. Cannot be null.</returns>
-		IDatabaseContext<T2> OfType<T2>();
+		IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject;
 
 		/// <summary>
 		/// LINQ query against the repository.
 		/// </summary>
 		/// <returns>Queryable interface. Cannot be null.</returns>
-		IQueryable<T2> Query<T2>();
+		IQueryable<T2> Query<T2>() where T2 : class, IDatabaseObject;
 
 	}
 
@@ -43,7 +51,7 @@ namespace VocaDb.Model.Database.Repositories {
 	/// 
 	/// This might change later with Session Per Request model.
 	/// </remarks>
-	public interface IDatabaseContext<T> : IDatabaseContext {
+	public interface IDatabaseContext<T> : IDatabaseContext, IEntityLoader<T> {
 
 		/// <summary>
 		/// Deletes an entity from the repository.
@@ -51,12 +59,7 @@ namespace VocaDb.Model.Database.Repositories {
 		/// <param name="entity">Entity to be deleted. Cannot be null.</param>
 		void Delete(T entity);
 
-		/// <summary>
-		/// Loads an entity from the repository, checking whether the entity exists.
-		/// </summary>
-		/// <param name="id">Entity Id.</param>
-		/// <returns>The loaded entity. Null if not found.</returns>
-		T Get(object id);
+		Task DeleteAsync(T entity);
 
 		/// <summary>
 		/// Loads an entity from the repository, assuming the entity exists.
@@ -67,8 +70,8 @@ namespace VocaDb.Model.Database.Repositories {
 		/// This method returns a proxy that will be loaded when it's first accessed. 
 		/// Accessing the proxy throws a NHibernate exception if the entity is not found.
 		/// </remarks>
-		T Load(object id);
-			
+		Task<T> LoadAsync(object id);
+
 		/// <summary>
 		/// LINQ query against the repository.
 		/// </summary>
@@ -81,11 +84,15 @@ namespace VocaDb.Model.Database.Repositories {
 		/// <param name="obj">Entity to be saved. Cannot be null.</param>
 		T Save(T obj);
 
+		Task<T> SaveAsync(T obj);
+
 		/// <summary>
 		/// Updates an existing entity in the repository.
 		/// </summary>
 		/// <param name="obj">Entity to be updated. Cannot be null.</param>
 		void Update(T obj);
+
+		Task UpdateAsync(T obj);
 
 	}
 

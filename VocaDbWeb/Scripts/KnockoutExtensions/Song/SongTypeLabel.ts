@@ -12,6 +12,11 @@ module vdb.knockoutExtensions.song {
 	}
 
 	var songTypeLabelInfos = {
+		Arrangement: {
+			addClass: "",
+			removeClasses: "label-important label-inverse label-info label-success",
+			content: "A"
+		},
 		Cover: {
 			addClass: "",
 			removeClasses: "label-important label-inverse label-info label-success",

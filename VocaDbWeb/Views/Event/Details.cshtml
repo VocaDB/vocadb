@@ -103,7 +103,11 @@
 
 			<p>
 				@ViewRes.Event.DetailsStrings.Category:
-				@Html.ActionLink(Translate.ReleaseEventCategoryNames[Model.InheritedCategory], "Index", "Search", UrlMapper.Search.Events(category: Model.InheritedCategory), null)
+				@if (Model.InheritedCategoryTag != null) {
+					<a href="@Url.TagDetails(Model.InheritedCategoryTag)" data-bind="tagToolTip: @Model.InheritedCategoryTag.Id">@Translate.ReleaseEventCategoryNames[Model.InheritedCategory]</a>
+				} else {
+					<a href="@Url.TagUrlForEntryType(VocaDb.Model.Domain.EntryType.ReleaseEvent, Model.InheritedCategory)">@Translate.ReleaseEventCategoryNames[Model.InheritedCategory]</a>
+				}
 			</p>
 
 			@if (!string.IsNullOrEmpty(Model.Description)) {
@@ -120,7 +124,7 @@
 				<div data-bind="with: tagUsages" class="entry-tag-usages inline-block">
 					@{ Html.RenderPartial("Partials/_TagList"); }
 				</div>
-				<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.Manager.IsLoggedIn), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
+				<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
 				@if (Model.CanRemoveTagUsages) {
 					@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new {id = Model.Id}, new {id = "manageTags"})
 				}
@@ -168,7 +172,7 @@
 
 @if (Model.Songs.Any()) {
 	<h3 class="withMargin">
-		@Res.Songs
+		@Html.ActionLink(Res.Songs, "Index", "Search", UrlMapper.Search.Songs(eventId: Model.Id), null)
 		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Songs.Length)</small>
 	</h3>
 	@SongHelpers.SongGrid(Model.Songs, 2, true, false)
@@ -232,7 +236,8 @@
 		$("#manageTags").button({ icons: { primary: 'ui-icon-wrench' } });
 
 		var loggedUserId = @UserContext.LoggedUserId;
-		var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
+		var rootPath = '@RootPath';
+		var urlMapper = new vdb.UrlMapper(rootPath);
 		var eventRepo = new vdb.repositories.ReleaseEventRepository(urlMapper);
 		var userRepo = new vdb.repositories.UserRepository(urlMapper, loggedUserId);
 		var latestComments = @ToJS(Model.LatestComments);

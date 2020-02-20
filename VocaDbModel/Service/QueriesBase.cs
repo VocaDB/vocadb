@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
@@ -16,7 +16,9 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Service {
 
-	public abstract class QueriesBase<TRepo, TEntity> where TRepo : class, IRepository<TEntity> {
+	public abstract class QueriesBase<TRepo, TEntity> 
+		where TRepo : class, IRepository<TEntity> 
+		where TEntity : class, IDatabaseObject {
 
 		protected readonly IUserPermissionContext permissionContext;
 		protected readonly TRepo repository;

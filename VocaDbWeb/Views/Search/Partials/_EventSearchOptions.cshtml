@@ -1,0 +1,34 @@
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Resources.Domain
+@using Res = ViewRes.Search.IndexStrings;
+@using EventRes = ViewRes.Event.DetailsStrings;
+
+<!-- EventSearchViewModel -->
+
+<div data-bind="visible: showEventSearch, with: eventSearchViewModel">
+	<div class="control-group">
+		<div class="control-label">@Res.EventCategory</div>
+		<div class="controls">
+			<div class="input-append">
+				@KnockoutHelpers.DropdownList(Translate.ReleaseEventCategoryNames.ValuesAndNamesStrings, "category")
+			</div>
+		</div>
+	</div>
+		
+	<div class="control-group">
+		<div class="control-label">@EntryTypeNames.Artist</div>
+		<div class="controls" data-bind="with: artistFilters">
+			@KnockoutHelpers.ArtistFilters(artistParticipationStatus: false)
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<div class="control-label">@EventRes.OccurrenceDate</div>
+		<div class="controls">
+			<input type="text" data-bind="datepicker: { value: afterDate, dateFormat: 'yy-mm-dd' }" class="input-small" maxlength="10" placeholder="Begin" />
+			-
+			<input type="text" data-bind="datepicker: { value: beforeDate, dateFormat: 'yy-mm-dd' }" class="input-small" maxlength="10" placeholder="End" />
+			<button class="btn" data-bind="click: function() { afterDate(new Date()); }">@Res.Today</button>
+		</div>
+	</div>
+</div>

@@ -1,4 +1,4 @@
-﻿
+
 module vdb.helpers {
 	
 	export class HtmlHelper {
@@ -19,6 +19,13 @@ module vdb.helpers {
 			// Encode parts before match, the match itself and after match.
 			return HtmlHelper.htmlEncode(text.substr(0, index)) + "<b>" + HtmlHelper.htmlEncode(actualTerm) + "</b>" + HtmlHelper.htmlEncode(text.substr(index + term.length));
 
+		}
+
+		public static formatMarkdown(value: string, callback?: (err, content: string) => void) {
+			if (!value)
+				callback(null, "");
+			// Using GitHub-flavored markdown with simple line breaks and HTML sanitation.
+			marked(value, { gfm: true, breaks: true, sanitize: true }, callback);
 		}
 
 		public static htmlEncode(value: string) {

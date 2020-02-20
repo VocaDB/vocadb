@@ -1,4 +1,4 @@
-﻿
+
 interface KnockoutBindingHandlers {
 	artistTypeLabel: KnockoutBindingHandler;
 }
@@ -43,12 +43,16 @@ var artistTypeInfos = {
 };
 
 ko.bindingHandlers.artistTypeLabel = {
-	init: (element: HTMLElement, valueAccessor: () => string) => {
+	init: (element: HTMLElement, valueAccessor: () => string, allBindingsAccessor: () => any) => {
 		var val = valueAccessor();
 
 		if (!val) {
 			$(element).removeClass("label");
 			return;
+		}
+
+		if (allBindingsAccessor().typeLabelShowTitle) {
+			$(element).attr("title", val);
 		}
 
 		var typeInfo: ArtistTypeInfo = artistTypeInfos[val];

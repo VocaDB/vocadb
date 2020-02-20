@@ -19,7 +19,7 @@ namespace ViewRes.User {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class MySettingsStrings {
@@ -79,7 +79,7 @@ namespace ViewRes.User {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Access key can be used to log in to your VocaDB account from various other services without revealing your actual password.
+        ///   Looks up a localized string similar to Access key can be used to log in to your account from various other services without revealing your actual password.
         ///				You can regenerate your access key at any time - this will invalidate the previous access key.
         ///				Keep your access key secret! If you suspect your access key has been discovered by someone else, please reset it immediately..
         /// </summary>

@@ -1,4 +1,4 @@
-﻿using System.Web.Optimization;
+using System.Web.Optimization;
 
 namespace VocaDb.Web.App_Start {
 
@@ -61,6 +61,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/Bootstrap/Tooltip.js",
 				"~/Scripts/KnockoutExtensions/qTip.js",
 				"~/Scripts/KnockoutExtensions/TagAutoComplete.js",
+				"~/Scripts/KnockoutExtensions/Filters/Truncate.js",
 				"~/Scripts/Models/Songs/SongType.js",
 				"~/Scripts/Models/NameMatchMode.js",
 				"~/Scripts/Models/Artists/ArtistType.js",
@@ -69,6 +70,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Models/Globalization/ContentLanguagePreference.js",
 				"~/Scripts/Models/EntryOptionalFields.js",
 				"~/Scripts/Models/Artists/ArtistRoles.js",
+				"~/Scripts/Models/ContentFocus.js",
+				"~/Scripts/Models/ResourcesManager.js",
 				"~/Scripts/Helpers/ArtistHelper.js", // Depends on ArtistType, ArtistRoles
 				"~/Scripts/Repositories/EntryCommentRepository.js",
 				"~/Scripts/Repositories/BaseRepository.js",
@@ -76,6 +79,9 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Repositories/AdminRepository.js",
 				"~/Scripts/Repositories/SongRepository.js",
 				"~/Scripts/Repositories/ArtistRepository.js",
+				"~/Scripts/Repositories/TagRepository.js",
+				"~/Scripts/Repositories/ResourceRepository.js",
+				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/CommentViewModel.js",
 				"~/Scripts/ViewModels/EditableCommentsViewModel.js",
 				"~/Scripts/ViewModels/PagedItemsViewModel.js",
@@ -91,6 +97,8 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/Models/WebLinkCategory.js",
 				"~/Scripts/Models/EntryStatus.js",
 				"~/Scripts/Models/Globalization/ContentLanguageSelection.js",
+				"~/Scripts/Models/Albums/AlbumType.js",
+				"~/Scripts/Models/Events/EventCategory.js",
 				"~/Scripts/Shared/WebLinkMatcher.js",
 				"~/Scripts/Shared/DialogService.js",
 				"~/Scripts/Helpers/SearchTextQueryHelper.js",
@@ -98,7 +106,6 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/WebLinkEditViewModel.js",
 				"~/Scripts/ViewModels/WebLinksEditViewModel.js",
 				"~/Scripts/ViewModels/Globalization/EnglishTranslatedStringEditViewModel.js",
-				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/SongAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/FocusOut.js",
@@ -119,8 +126,6 @@ namespace VocaDb.Web.App_Start {
 			bundles.Add(new ScriptBundle("~/bundles/ActivityEntry/Index").Include(
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
 				"~/Scripts/Models/ActivityEntries/EntryEditEvent.js",
-				"~/Scripts/Models/ResourcesManager.js",
-				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/ViewModels/ActivityEntry/ActivityEntryListViewModel.js"
 			));
 
@@ -132,8 +137,8 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/Album/Details").Include(
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
+				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
-				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
 				"~/Scripts/ViewModels/Album/AlbumDetailsViewModel.js",
@@ -144,7 +149,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ParseInteger.js",
 				"~/Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
-				"~/Scripts/Models/Albums/AlbumType.js",
+				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/Helpers/KnockoutHelper.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
 				"~/Scripts/Repositories/PVRepository.js",
@@ -158,6 +163,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/EntryPictureFileListEditViewModel.js",
 				"~/Scripts/ViewModels/Artist/ArtistRolesEditViewModel.js",
 				"~/Scripts/ViewModels/ArtistForAlbumEditViewModel.js",
+				"~/Scripts/ViewModels/CustomNameEditViewModel.js",
 				"~/Scripts/ViewModels/SongInAlbumEditViewModel.js",
 				"~/Scripts/ViewModels/Album/AlbumDiscPropertiesEditViewModel.js",
                 "~/Scripts/ViewModels/Album/AlbumEditViewModel.js",
@@ -178,8 +184,6 @@ namespace VocaDb.Web.App_Start {
 			bundles.Add(new ScriptBundle("~/bundles/Artist/Details").Include(
 				"~/Scripts/soundcloud-api.js",				
 				"~/Scripts/Repositories/AlbumRepository.js",
-				"~/Scripts/Repositories/ResourceRepository.js",
-				"~/Scripts/Models/ResourcesManager.js",
 				"~/Scripts/Models/Aggregate/TimeUnit.js",
 				"~/Scripts/Helpers/PVHelper.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
@@ -189,6 +193,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerNico.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerViewModel.js",
@@ -285,17 +290,19 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/SlideVisible.js",				
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
-				"~/Scripts/Models/ResourcesManager.js",
+				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
+				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
+				"~/Scripts/KnockoutExtensions/SongAutoComplete.js",
 				"~/Scripts/Models/Tags/Tag.js",
 				"~/Scripts/Helpers/PVHelper.js",
+				"~/Scripts/Helpers/SearchTextQueryHelper.js",
 				"~/Scripts/Repositories/AlbumRepository.js",
 				"~/Scripts/Repositories/EntryRepository.js",
 				"~/Scripts/Repositories/ReleaseEventRepository.js",
-				"~/Scripts/Repositories/ResourceRepository.js",
-				"~/Scripts/Repositories/TagRepository.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerNico.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerViewModel.js",
@@ -318,13 +325,14 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Create").Include(
+				"~/Scripts/KnockoutExtensions/Artist/ArtistTypeLabel.js",
 				"~/Scripts/Helpers/SongHelper.js",
 				"~/Scripts/ViewModels/SongCreateViewModel.js"
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Song/Details").Include(
+				"~/Scripts/MediaElement/mediaelement-and-player.min.js",
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
-				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
 				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
 				"~/Scripts/ViewModels/Song/SongDetailsViewModel.js",
@@ -347,6 +355,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",
 				"~/Scripts/ViewModels/Artist/ArtistRolesEditViewModel.js",
 				"~/Scripts/ViewModels/ArtistForAlbumEditViewModel.js",
+				"~/Scripts/ViewModels/CustomNameEditViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVEditViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVListEditViewModel.js",
 				"~/Scripts/ViewModels/Song/LyricsForSongEditViewModel.js",
@@ -374,9 +383,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/Helpers/PVHelper.js",
-				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/Repositories/SongListRepository.js",
-				"~/Scripts/Models/ResourcesManager.js",
 				"~/Scripts/ViewModels/Search/ArtistFilter.js",
 				"~/Scripts/ViewModels/Search/ArtistFilters.js",
 				"~/Scripts/ViewModels/Search/TagFilter.js",
@@ -386,11 +393,14 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerNico.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerViewModel.js",
 				"~/Scripts/ViewModels/Song/PlayList/PlayListViewModel.js",
 				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositoryForSongListAdapter.js",
+				"~/Scripts/ViewModels/Tag/TagListViewModel.js",
+				"~/Scripts/ViewModels/Tag/TagsEditViewModel.js",
 				"~/Scripts/ViewModels/SongList/SongListViewModel.js"
 			));
 
@@ -404,6 +414,8 @@ namespace VocaDb.Web.App_Start {
 			bundles.Add(new ScriptBundle("~/bundles/SongList/Featured").Include(
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/Repositories/SongListRepository.js",
+				"~/Scripts/ViewModels/Search/TagFilter.js",
+				"~/Scripts/ViewModels/Search/TagFilters.js",
 				"~/Scripts/ViewModels/SongList/SongListsBaseViewModel.js",
                 "~/Scripts/ViewModels/SongList/FeaturedSongListsViewModel.js"
 			));
@@ -414,14 +426,12 @@ namespace VocaDb.Web.App_Start {
 
 			bundles.Add(new ScriptBundle("~/bundles/Tag/Details").Include(
 				"~/Scripts/KnockoutExtensions/MomentJsTimeAgo.js",
-				"~/Scripts/Repositories/TagRepository.js",
 				"~/Scripts/ViewModels/Tag/TagDetailsViewModel.js",
 				"~/Scripts/Tag/Details.js"
 			));
 		
 			bundles.Add(new ScriptBundle("~/bundles/Tag/Edit").Include(
 				"~/Scripts/KnockoutExtensions/Tag/TagCategoryAutoComplete.js",
-				"~/Scripts/Repositories/TagRepository.js",
 				"~/Scripts/Helpers/KnockoutHelper.js",
 				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
 				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",
@@ -430,20 +440,17 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Tag/Index").Include(
-				"~/Scripts/Repositories/TagRepository.js",
 				"~/Scripts/ViewModels/Tag/TagCreateViewModel.js"
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/Tag/Merge").Include(
 				"~/Scripts/Helpers/EntryMergeValidationHelper.js",
-				"~/Scripts/Repositories/TagRepository.js",
 				"~/Scripts/ViewModels/Tag/TagMergeViewModel.js"
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/User/AlbumCollection").Include(
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete.js",
-				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/ViewModels/Search/AdvancedSearchFilter.js",
 				"~/Scripts/ViewModels/Search/AdvancedSearchFilters.js",
 				"~/Scripts/ViewModels/User/AlbumCollectionViewModel.js"
@@ -461,11 +468,10 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/Helpers/HighchartsHelper.js",				
 				"~/Scripts/Helpers/PVHelper.js",
-				"~/Scripts/Repositories/ResourceRepository.js",
-				"~/Scripts/Repositories/TagRepository.js",
-				"~/Scripts/ViewModels/BasicEntryLinkViewModel.js",
+				"~/Scripts/ViewModels/DeleteEntryViewModel.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerNico.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerViewModel.js",
@@ -487,8 +493,6 @@ namespace VocaDb.Web.App_Start {
 			));
 
 			bundles.Add(new ScriptBundle("~/bundles/User/Index").Include(
-				"~/Scripts/Repositories/ResourceRepository.js",
-				"~/Scripts/Models/ResourcesManager.js",
 				"~/Scripts/ViewModels/User/ListUsersViewModel.js"
 			));
 
@@ -507,9 +511,9 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/ArtistAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/ScrollEnd.js",
 				"~/Scripts/Helpers/PVHelper.js",
-				"~/Scripts/Repositories/ResourceRepository.js",
 				"~/Scripts/ViewModels/PVs/PVPlayersFactory.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerFile.js",
+				"~/Scripts/ViewModels/PVs/PVPlayerNico.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerYoutube.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerSoundCloud.js",
 				"~/Scripts/ViewModels/PVs/PVPlayerViewModel.js",

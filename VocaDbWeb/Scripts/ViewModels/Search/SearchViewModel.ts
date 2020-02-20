@@ -1,4 +1,4 @@
-﻿
+
 module vdb.viewModels.search {
 
 	import dc = vdb.dataContracts;
@@ -25,6 +25,7 @@ module vdb.viewModels.search {
 			artistId: number[],
 			childTags: boolean,
 			childVoicebanks: boolean,
+			eventId: number,
 			artistType: string,
 			albumType: string,
 			songType: string,
@@ -63,7 +64,8 @@ module vdb.viewModels.search {
 			this.eventSearchViewModel = new EventSearchViewModel(this, models.globalization.ContentLanguagePreference[languageSelection], eventRepo, artistRepo,
 				loggedUserId, sort, artistId, eventCategory);
 
-			this.songSearchViewModel = new SongSearchViewModel(this, urlMapper, languageSelection, songRepo, artistRepo, userRepo,
+			this.songSearchViewModel = new SongSearchViewModel(this, urlMapper, languageSelection,
+				songRepo, artistRepo, userRepo, eventRepo,
 				resourceRepo,
 				cultureCode,
 				loggedUserId,
@@ -71,6 +73,7 @@ module vdb.viewModels.search {
 				isSong ? artistId : null,
 				isSong ? childVoicebanks : null,
 				songType,
+				eventId,
 				onlyWithPVs,
 				onlyRatedSongs,
 				since,
@@ -82,7 +85,7 @@ module vdb.viewModels.search {
 
 			this.tagSearchViewModel = new TagSearchViewModel(this, models.globalization.ContentLanguagePreference[languageSelection], tagRepo);
 
-			if (tagIds != null || artistId != null || artistType || albumType || songType || eventCategory || onlyWithPVs != null || since || minScore)
+			if (tagIds != null || !!artistId || !!eventId || artistType || albumType || songType || eventCategory || onlyWithPVs != null || since || minScore)
 				this.showAdvancedFilters(true);
 
 			if (searchType)
@@ -124,7 +127,7 @@ module vdb.viewModels.search {
 				this.updateResults();
 			});
 
-			tagRepo.getTopTags(languageSelection, models.tags.Tag.commonCategory_Genres, result => {
+			tagRepo.getTopTags(languageSelection, models.tags.Tag.commonCategory_Genres, null, result => {
 				this.genreTags(result);
 			});
 

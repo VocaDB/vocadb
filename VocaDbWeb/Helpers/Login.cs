@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Service.Security;
@@ -29,6 +29,8 @@ namespace VocaDb.Web.Helpers {
 				return Manager.HasPermission(PermissionToken.ManageDatabase);
 			}
 		}
+		
+		public static bool CanEditTags => Manager.HasPermission(PermissionToken.EditTags);
 
 		public static bool CanManageEntryReports {
 			get {

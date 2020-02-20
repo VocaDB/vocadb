@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch {
 
@@ -14,9 +15,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 			this.names = names.ToArray();
 		}
 
-		public QueryCost Cost {
-			get { return QueryCost.Medium; }
-		}
+		public QueryCost Cost => QueryCost.Medium;
 
 		/*public void FilterResults(List<Album> albums, ISession session) {
 
@@ -38,16 +37,13 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session) {
 
-			return query.SelectMany(a => FindHelpers.AddEntryNameFilter(a.Names.Names.AsQueryable(), new SearchTextQuery(string.Empty, NameMatchMode.Words, string.Empty, names))).Select(n => n.Album);
+			return query.WhereHasNameGeneric<Album, AlbumName>(SearchTextQuery.Create(names, NameMatchMode.Words));
 
 		}
 
 		public IQueryable<Album> Query(IDatabaseContext session) {
 
-			var q = session.Query<AlbumName>();
-
-			return FindHelpers.AddEntryNameFilter(q, new SearchTextQuery(string.Empty, NameMatchMode.Words, string.Empty, names))
-				.Select(n => n.Album);
+			return session.Query<Album>().WhereHasName(new SearchTextQuery(string.Empty, NameMatchMode.Words, string.Empty, names));
 
 		}
 

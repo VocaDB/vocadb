@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Songs;
@@ -19,16 +19,16 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public FrontPageContract() { }
 
 		public FrontPageContract(IEnumerable<ActivityEntry> activityEntries,
-			AlbumContract[] newAlbums,
+			AlbumForApiContract[] newAlbums,
 			ReleaseEventForApiContract[] newEvents, 
-			IEnumerable<EntryWithCommentsContract> recentComments, 
-			AlbumContract[] topAlbums, Song[] newSongs,
+			IEnumerable<EntryWithCommentsContract> recentComments,
+			AlbumForApiContract[] topAlbums, Song[] newSongs,
 			SongVoteRating firstSongRating,
-			ContentLanguagePreference languagePreference, bool ssl, IUserIconFactory userIconFactory, IUserPermissionContext permissionContext, 
+			ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory, IUserPermissionContext permissionContext, 
 			EntryForApiContractFactory entryForApiContractFactory) {
 
 			ActivityEntries = activityEntries.Select(e => new ActivityEntryForApiContract(e,
-				entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, languagePreference, ssl), 
+				entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, languagePreference), 
 				 userIconFactory, permissionContext, ActivityEntryOptionalFields.None)).ToArray();
 			NewAlbums = newAlbums;
 			NewSongs = newSongs.Select(s => new SongWithPVAndVoteContract(s, SongVoteRating.Nothing, languagePreference)).ToArray();
@@ -44,7 +44,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		public SongWithPVAndVoteContract FirstSong { get; set; }
 
-		public AlbumContract[] NewAlbums { get; set; }	
+		public AlbumForApiContract[] NewAlbums { get; set; }	
 
 		public ReleaseEventForApiContract[] NewEvents { get; set; }
 
@@ -52,7 +52,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		public EntryWithCommentsContract[] RecentComments { get; set; }
 
-		public AlbumContract[] TopAlbums { get; set; }
+		public AlbumForApiContract[] TopAlbums { get; set; }
 
 	}
 }

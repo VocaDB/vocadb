@@ -121,6 +121,6 @@
     <value>このアルバムに関わったプロデューサーとボーカリスト。</value>
   </data>
   <data name="NewAlbumInfo" xml:space="preserve">
-    <value>注：VocaDBはUtaiteDBではありません。&lt;strong&gt;VocaDBに登録するアルバムには最低１トラック、ボーカロイド（UTAUなど他音声ソフト含）をボーカルに使った曲が必要です。&lt;/strong&gt;又、非公式ファン作成コンピ（ブートレッグ）などの登録も禁止しております。詳しくは"Help/Guidlines"を参照ください。</value>
+    <value>注：VocaDBはUtaiteDBではありません。&lt;strong&gt;VocaDBに登録するアルバムには最低１トラック、ボーカロイド（UTAUなど他音声ソフト含）をボーカルに使った曲が必要です。&lt;/strong&gt;又、非公式ファン作成コンピ（ブートレッグ）などの登録も禁止しております。詳しくは「サポート / DBについて」を参照ください。</value>
   </data>
 </root>

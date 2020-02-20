@@ -1,4 +1,4 @@
-﻿using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.Mapping.Artists {
@@ -104,7 +104,7 @@ namespace VocaDb.Model.Mapping.Artists {
 			References(m => m.Author);
 
 			Component(m => m.Diff, c => {
-				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
+				c.Map(m => m.ChangedFieldsString, ClassConventions.EscapeColumn("ChangedFields")).Length(1000).Not.Nullable();
 				c.Map(m => m.IsSnapshot).Not.Nullable();
 			});
 

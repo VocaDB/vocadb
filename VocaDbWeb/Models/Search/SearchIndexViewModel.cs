@@ -33,6 +33,8 @@ namespace VocaDb.Web.Models.Search {
 
 		public EventCategory? EventCategory { get; set; }
 
+		public int? EventId { get; set; }
+
 		public string Filter { get; set; }
 
 		public int? MinScore { get; set; }

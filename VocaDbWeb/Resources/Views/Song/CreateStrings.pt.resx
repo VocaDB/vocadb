@@ -142,13 +142,13 @@
     <value>Não introduza nomes de artistas no campo de nome. Utilize a lista de artistas.</value>
   </data>
   <data name="OriginalPV" xml:space="preserve">
-    <value>URL do PV original (NicoNicoDouga, YouTube, etc)</value>
+    <value>URL do PV original (NicoNico, YouTube, etc)</value>
   </data>
   <data name="OriginalSuggestionsTitle" xml:space="preserve">
     <value>Alguns destes são a versão original?</value>
   </data>
   <data name="ReprintPV" xml:space="preserve">
-    <value>URL para o reprint do PV (como NicoNicoDouga ou YouTube)</value>
+    <value>URL para o reprint do PV (como NicoNico ou YouTube)</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Selecionar</value>

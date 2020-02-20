@@ -44,7 +44,7 @@
 				</a>
 			</td>
 			<td>
-				<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('Album', id), title: $data.additionalNames }" href="#"></a>
+				<a data-bind="text: ko.filters.truncate(name, 150), attr: { href: vdb.utils.EntryUrlMapper.details('Album', id), title: $data.additionalNames }" href="#"></a>
 				@KnockoutHelpers.DraftIcon("status")
 				<br />
 				<small class="extraInfo" data-bind="text: artistString"></small><br />

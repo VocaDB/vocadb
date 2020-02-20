@@ -1,12 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Caching;
+using System.Threading.Tasks;
 using System.Web;
 using NHibernate;
+using NHibernate.Criterion;
 using NHibernate.Linq;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
@@ -22,9 +25,11 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -37,6 +42,7 @@ using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Model.Service.Translations;
+using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Database.Queries {
 
@@ -45,16 +51,18 @@ namespace VocaDb.Model.Database.Queries {
 	/// </summary>
 	public class AlbumQueries : QueriesBase<IAlbumRepository, Album> {
 
+		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEntryThumbPersister entryThumbPersister;
 		private readonly IEnumTranslations enumTranslations;
+		private readonly IFollowedArtistNotifier followedArtistNotifier;
 		private readonly IEntryThumbPersister imagePersister;
 		private readonly IEntryPictureFilePersister pictureFilePersister;
 		private readonly IUserMessageMailer mailer;
+		private readonly IPVParser pvParser;
 		private readonly IUserIconFactory userIconFactory;
 
-		private IEntryLinkFactory EntryLinkFactory {
-			get { return entryLinkFactory; }
-		}
+		private IEntryLinkFactory EntryLinkFactory => entryLinkFactory;
 
 		private ArchivedSongVersion ArchiveSong(IDatabaseContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
 
@@ -72,6 +80,28 @@ namespace VocaDb.Model.Database.Queries {
 
 		private AlbumMergeRecord GetMergeRecord(IDatabaseContext session, int sourceId) {
 			return session.Query<AlbumMergeRecord>().FirstOrDefault(s => s.Source == sourceId);
+		}
+
+		/// <summary>
+		/// Stats shared for all users. These are cached for 1 hour.
+		/// </summary>
+		private SharedAlbumStatsContract GetSharedAlbumStats(IDatabaseContext ctx, Album album) {
+
+			var key = string.Format("AlbumQueries.SharedAlbumStatsContract.{0}", album.Id);
+			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () => {
+
+				var latestReview = album.LastReview;
+				var latestRatingScore = latestReview != null ? album.UserCollections.FirstOrDefault(uc => uc.User.Equals(latestReview.User)) : null;
+
+				return new SharedAlbumStatsContract {
+					ReviewCount = album.Reviews.Count,
+					LatestReview = latestReview != null ? new AlbumReviewContract(latestReview, userIconFactory) : null,
+					LatestReviewRatingScore = latestRatingScore?.Rating ?? 0,
+					OwnedCount = album.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Owned),
+					WishlistCount = album.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Wishlisted),
+				};
+			});
+
 		}
 
 		private ArtistForAlbum RestoreArtistRef(Album album, Artist artist, ArchivedArtistForAlbumContract albumRef) {
@@ -127,7 +157,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer, 
-			IUserIconFactory userIconFactory, IEnumTranslations enumTranslations)
+			IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IPVParser pvParser,
+			IFollowedArtistNotifier followedArtistNotifier, IEntryThumbPersister entryThumbPersister, ObjectCache cache)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -136,6 +167,99 @@ namespace VocaDb.Model.Database.Queries {
 			this.mailer = mailer;
 			this.userIconFactory = userIconFactory;
 			this.enumTranslations = enumTranslations;
+			this.pvParser = pvParser;
+			this.followedArtistNotifier = followedArtistNotifier;
+			this.entryThumbPersister = entryThumbPersister;
+			this.cache = cache;
+
+		}
+
+		public AlbumReviewContract AddReview(int albumId, AlbumReviewContract contract) {
+
+			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
+
+			return HandleTransaction(ctx => {
+
+				AlbumReview review = null;
+
+				if (contract.Id != 0) {
+					review = ctx.Load<AlbumReview>(contract.Id);
+					if (!review.User.Equals(PermissionContext.LoggedUser)) {
+						PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
+					}
+				} else {
+					review = ctx.Query<AlbumReview>().FirstOrDefault(r => r.Album.Id == albumId && r.User.Id == PermissionContext.LoggedUserId && r.LanguageCode == contract.LanguageCode);
+				}
+
+				// Create
+				if (review == null) {
+					var album = ctx.Load<Album>(albumId);
+					review = new AlbumReview(album, ctx.OfType<User>().GetLoggedUser(PermissionContext), contract.Title, contract.Text, contract.LanguageCode);					
+					album.Reviews.Add(review);
+					ctx.Save(review);
+				} else { // Update
+					review.LanguageCode = contract.LanguageCode;
+					review.Text = contract.Text;
+					review.Title = contract.Title;
+					ctx.Update(review);
+				}
+
+				ctx.AuditLogger.AuditLog(string.Format("submitted review for {0}", entryLinkFactory.CreateEntryLink(review.Album)));
+
+				return new AlbumReviewContract(review, userIconFactory);
+
+			});
+
+		}
+
+		public void DeleteReview(int reviewId) {
+
+			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
+
+			repository.HandleTransaction(ctx => {
+
+				var review = ctx.Load<AlbumReview>(reviewId);
+
+				if (!review.User.Equals(PermissionContext.LoggedUser)) {
+					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
+				}
+
+				review.Album.Reviews.Remove(review);
+				ctx.Delete(review);
+
+			});
+
+		}
+
+		public async Task<IEnumerable<AlbumReviewContract>> GetReviews(int albumId, string languageCode) {
+
+			return await repository.HandleQueryAsync(async ctx => {
+
+				var album = await ctx.LoadAsync(albumId);
+
+				return album.Reviews
+					.Where(review => string.IsNullOrEmpty(languageCode) || review.LanguageCode == languageCode)
+					.OrderBy(review => review.Date)
+					.Select(review => new AlbumReviewContract(review, userIconFactory))
+					.ToArray();
+
+			});
+
+		}
+
+		public async Task<IEnumerable<AlbumForUserForApiContract>> GetUserCollections(int albumId, ContentLanguagePreference languagePreference) {
+
+			return await repository.HandleQueryAsync(async ctx => {
+
+				var album = await ctx.LoadAsync(albumId);
+
+				return album.UserCollections
+					.Select(uc => new AlbumForUserForApiContract(uc, languagePreference, entryThumbPersister, AlbumOptionalFields.None,
+						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection, 
+						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection))
+					.ToArray();
+
+			});
 
 		}
 
@@ -190,8 +314,7 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.AuditLogger.AuditLog(string.Format("created album {0} ({1})", entryLinkFactory.CreateEntryLink(album), album.DiscType));
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), album, EntryEditEvent.Created, archived);
 
-				new FollowedArtistNotifier().SendNotifications(ctx, album, album.ArtistList, PermissionContext.LoggedUser, 
-					entryLinkFactory, mailer, enumTranslations);
+				followedArtistNotifier.SendNotifications(ctx, album, album.ArtistList, PermissionContext.LoggedUser);
 
 				return new AlbumContract(album, PermissionContext.LanguagePreference);
 
@@ -205,14 +328,14 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public bool CreateReport(int albumId, AlbumReportType reportType, string hostname, string notes, int? versionNumber) {
+		public (bool created, int reportId) CreateReport(int albumId, AlbumReportType reportType, string hostname, string notes, int? versionNumber) {
 
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
 			return HandleTransaction(ctx => {
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
-					entryLinkFactory, report => report.Entry.Id == albumId, 
+					entryLinkFactory,
 					(album, reporter, notesTruncated) => new AlbumReport(album, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != AlbumReportType.Other ? enumTranslations.AlbumReportTypeNames[reportType] : null,
 					albumId, reportType, hostname, notes);
@@ -237,10 +360,8 @@ namespace VocaDb.Model.Database.Queries {
 				var stats = session.Query<Album>()
 					.Where(a => a.Id == id)
 					.Select(a => new {
-						OwnedCount = a.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Owned),
-						WishlistedCount = a.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Wishlisted),
 						CommentCount = a.Comments.Count,
-						Hits = a.Hits.Count
+						Hits = a.Hits.Count,
 					})
 					.FirstOrDefault();
 
@@ -253,11 +374,11 @@ namespace VocaDb.Model.Database.Queries {
 					return user != null && song != null ? (SongVoteRating?) session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).Select(r => r.Rating).FirstOrDefault() : null;
 				}
 
-				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imagePersister, pictureFilePersister, GetRatingFunc) {
-					OwnedCount = stats.OwnedCount,
-					WishlistCount = stats.WishlistedCount,
+				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imagePersister, pictureFilePersister, GetRatingFunc,
+					discTypeTag: new EntryTypeTags(session).GetTag(EntryType.Album, album.DiscType)) {
 					CommentCount = stats.CommentCount,
-					Hits = stats.Hits
+					Hits = stats.Hits,
+					Stats = GetSharedAlbumStats(session, album)
 				};
 
 				if (user != null) {
@@ -392,39 +513,60 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagUsageForApiContract[] GetTagSuggestions(int albumId) {
+		public Task<TagUsageForApiContract[]> GetTagSuggestions(int albumId) {
 
-			return repository.HandleQuery(ctx => {
+			var maxResults = 3;
 
-				var albumTags = ctx.Load<Album>(albumId).Tags.Tags.Select(t => t.Id);
+			return repository.HandleQueryAsync(async ctx => {
+
+				var album = ctx.Load<Album>(albumId);
+				var albumTags = album.Tags.Tags.Select(t => t.Id);
 
 				var songUsages = ctx.Query<SongTagUsage>()
 					.Where(u => !albumTags.Contains(u.Tag.Id)
 						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions
-						&& u.Song.AllAlbums.Any(a => a.Album.Id == albumId))
+						&& u.Entry.AllAlbums.Any(a => a.Album.Id == albumId))
 					.WhereTagHasTarget(TagTargetTypes.Album)
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
 					.Where(t => t.Count > 1)
 					.OrderByDescending(t => t.Count)
-					.Take(3)
+					.Take(maxResults)
 					.ToArray();
 
 				var tags = ctx.LoadMultiple<Tag>(songUsages.Select(t => t.TagId)).ToDictionary(t => t.Id);
 
-				return songUsages.Select(t => new TagUsageForApiContract(tags[t.TagId], t.Count, LanguagePreference)).ToArray();
+				var results = songUsages.Select(t => new TagUsageForApiContract(tags[t.TagId], t.Count, LanguagePreference));
+
+				if (songUsages.Length < 3) {
+
+					var pvResults = await pvParser.ParseByUrlsAsync(album.PVs
+						.Where(pv => pv.Service == PVService.NicoNicoDouga)
+						.Select(pv => pv.Url), true, permissionContext);
+
+					var nicoTags = pvResults.SelectMany(pv => pv.Tags).Distinct().ToArray();
+					var mappedTags = new TagMapper().MapTags(ctx, nicoTags)
+						.Where(tag => !albumTags.Contains(tag.Id) && !tags.ContainsKey(tag.Id));
+
+					results = results
+						.Concat(mappedTags.Select(tag => new TagUsageForApiContract(tag, 0, LanguagePreference)))
+						.Take(maxResults);
+
+				}
+
+				return results.ToArray();
 
 			});
 
 		}
 
-		public IEnumerable<Dictionary<string, string>> GetTracksFormatted(int id, string[] fields, ContentLanguagePreference lang) {
+		public IEnumerable<Dictionary<string, string>> GetTracksFormatted(int id, int? discNumber, string[] fields, ContentLanguagePreference lang) {
 
 			if (fields == null || fields.Length == 0)
 				fields = new[] { "id", "title" };
 
-			return HandleQuery(db => new TagFormatter(entryLinkFactory).ApplyFormatDict(db.Load(id), fields, lang));
+			return HandleQuery(db => new AlbumSongFormatter(entryLinkFactory).ApplyFormatDict(db.Load(id), fields, discNumber, lang));
 
 		}
 
@@ -791,7 +933,7 @@ namespace VocaDb.Model.Database.Queries {
 						session.Sync(songArtistDiff);
 
 						var archived = ArchiveSong(session.OfType<Song>(), song, songDiff, SongArchiveReason.Created,
-							string.Format("Created for album '{0}'", album.DefaultName));
+							string.Format("Created for album '{0}'", album.DefaultName.TruncateWithEllipsis(100)));
 
 						session.AuditLogger.AuditLog(string.Format("created {0} for {1}",
 							entryLinkFactory.CreateEntryLink(song), entryLinkFactory.CreateEntryLink(album)));
@@ -855,7 +997,7 @@ namespace VocaDb.Model.Database.Queries {
 					var addedArtists = artistsDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 
 					if (addedArtists.Any()) {
-						new FollowedArtistNotifier().SendNotifications(session, album, addedArtists, PermissionContext.LoggedUser, entryLinkFactory, mailer, enumTranslations);											
+						followedArtistNotifier.SendNotifications(session, album, addedArtists, PermissionContext.LoggedUser);
 					}
 
 				}

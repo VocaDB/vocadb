@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.VideoServices;
+using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Service.VideoServices {
@@ -54,76 +55,6 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 		private NicoTitleParseResult CallParseTitle(string title) {
 			return NicoHelper.ParseTitle(title, ArtistFunc);
-		}
-
-		[TestInitialize]
-		public void SetUp() {
-			
-		}
-
-		[TestMethod]
-		public void GetResponse_Ok() {
-			
-			NicoResponse response;
-			using (var stream = ResourceHelper.GetFileStream("NicoResponse_Ok.xml")) {
-				response = NicoHelper.GetResponse(stream);
-			}
-
-			var result = NicoHelper.ParseResponse(response);
-
-			Assert.IsTrue(result.Success, "Success");
-			Assert.AreEqual("【初音ミク】１７：００【オリジナル曲】", result.Title, "Title");
-			Assert.AreEqual("http://tn-skr1.smilevideo.jp/smile?i=12464004", result.ThumbUrl, "ThumbUrl");
-			Assert.IsNotNull(result.UploadDate, "UploadDate");
-			Assert.AreEqual(new DateTime(2010, 10, 17).Date, result.UploadDate.Value.Date, "UploadDate");
-			Assert.AreEqual(178, result.LengthSeconds, "LengthSeconds");
-			Assert.AreEqual("14270239", result.AuthorId, "AuthorId");
-			Assert.AreEqual("ProjectDIVAチャンネル", result.Author, "Author");
-			Assert.AreEqual(11, result.Tags.Length, "Tags.Length");
-			Assert.IsTrue(result.Tags.Contains("VOCALOID"), "Found tag");
-
-		}
-
-		[TestMethod]
-		public void GetResponse_Error() {
-			
-			NicoResponse response;
-			using (var stream = ResourceHelper.GetFileStream("NicoResponse_Error.xml")) {
-				response = NicoHelper.GetResponse(stream);
-			}
-
-			var result = NicoHelper.ParseResponse(response);
-
-			Assert.IsFalse(result.Success, "Success");
-			Assert.AreEqual("NicoVideo (error): not found or invalid", result.Error, "Error");
-
-		}
-
-		[TestMethod]
-		public void ParseLength_LessThan10Mins() {
-
-			var result = NicoHelper.ParseLength("3:09");
-
-			Assert.AreEqual(189, result, "result");
-
-		}
-
-		[TestMethod]
-		public void ParseLength_MoreThan10Mins() {
-
-			var result = NicoHelper.ParseLength("39:39");
-
-			Assert.AreEqual(2379, result, "result");
-
-		}
-
-		[TestMethod]
-		public void ParseLength_MoreThan60Mins() {
-
-			var result = NicoHelper.ParseLength("339:39");
-
-			Assert.AreEqual(20379, result, "result");
-
 		}
 
 		/// <summary>
@@ -204,6 +135,22 @@ namespace VocaDb.Tests.Service.VideoServices {
 			Assert.AreEqual("MEIKO", result.Artists.First().DefaultName, "artist");
 			Assert.AreEqual("libido / L.A.M.B", result.Title, "title");
 			Assert.AreEqual(SongType.Original, result.SongType, "song type");
+
+		}
+
+		[TestMethod]
+		public void ParseTitle_EmptyParts() {
+
+			// "オリジナル・PV" lead to an empty artist name being searched. 
+			// The database collation matches this with an invalid artist, so empty artist searches are ignored.
+			var result = NicoHelper.ParseTitle("【初音ミク】心闇【オリジナル・PV】", val => {
+				if (string.IsNullOrEmpty(val)) {
+					Assert.Fail("Empty name not allowed");
+				}
+				return CreateEntry.Artist(ArtistType.Producer, name: val);
+			});
+
+			Assert.AreEqual(2, result.Artists.Count, "Number of parsed artists");
 
 		}
 

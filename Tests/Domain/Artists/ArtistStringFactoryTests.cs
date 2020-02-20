@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -37,12 +38,12 @@ namespace VocaDb.Tests.Domain.Artists {
 		}
 
 		private string GetArtistString(params IArtistLinkWithRoles[] artists) {
-			return artistStringFactory.GetArtistString(artists, false).Default;
+			return artistStringFactory.GetArtistString(artists, ContentFocus.Music).Default;
         }
 
 		private void TestGetArtistString(int producerCount, int vocalistCount, string expected, string message = "artist string as expected") {
 
-			var result = artistStringFactory.GetArtistString(producers.Take(producerCount).Concat(vocalists.Take(vocalistCount)), false);
+			var result = artistStringFactory.GetArtistString(producers.Take(producerCount).Concat(vocalists.Take(vocalistCount)), ContentFocus.Music);
 
 			Assert.AreEqual(expected, result.Default, message);
 
@@ -126,7 +127,7 @@ namespace VocaDb.Tests.Domain.Artists {
 		[TestMethod]
 		public void GetArtistString_OneProducerAndCircle_ProducerFirst() {
 
-			var result = ArtistHelper.GetArtistString(new[] { circle, producer }, false);
+			var result = ArtistHelper.GetArtistString(new[] { circle, producer }, ContentFocus.Music);
 
 			Assert.AreEqual(GetNames(producer, circle), result.Default, "Producer is shown first");
 
@@ -142,7 +143,7 @@ namespace VocaDb.Tests.Domain.Artists {
 		[TestMethod]
 		public void GetArtistString_OneProducerAndAnimator_NotVideo() {
 
-			var result = ArtistHelper.GetArtistString(new[] { producer, animator }, false);
+			var result = ArtistHelper.GetArtistString(new[] { producer, animator }, ContentFocus.Music);
 
 			Assert.AreEqual(producer.Artist.DefaultName, result.Default, "artist string has one producer");
 
@@ -154,7 +155,7 @@ namespace VocaDb.Tests.Domain.Artists {
 		[TestMethod]
 		public void GetArtistString_OneProducerAndAnimator_IsVideo() {
 
-			var result = ArtistHelper.GetArtistString(new[] { producer, animator }, true);
+			var result = ArtistHelper.GetArtistString(new[] { producer, animator }, ContentFocus.Video);
 
 			Assert.AreEqual(GetNames(animator, producer), result.Default, "artist string has one producer and animator");
 

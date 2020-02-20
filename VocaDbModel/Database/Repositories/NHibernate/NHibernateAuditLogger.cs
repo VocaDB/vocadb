@@ -1,4 +1,5 @@
-﻿using NLog;
+using NLog;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
@@ -70,7 +71,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 
 			SysLog(doingWhat, who.Name);
 
-			var entry = new AuditLogEntry(who, doingWhat, category);
+			var entry = new AuditLogEntry(who, doingWhat, category, GlobalEntryId.Empty);
 
 			Ctx.Save(entry);
 
@@ -81,17 +82,17 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 			SysLog(doingWhat, who);
 
 			var agentLoginData = new AgentLoginData(who);
-			var entry = new AuditLogEntry(agentLoginData, doingWhat, category);
+			var entry = new AuditLogEntry(agentLoginData, doingWhat, category, GlobalEntryId.Empty);
 
 			Ctx.Save(entry);
 
 		}
 
-		public void AuditLog(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified) {
+		public void AuditLog(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null) {
 
 			var agentLoginData = CreateAgentLoginData(Ctx, PermissionContext, user);
 			SysLog(doingWhat, agentLoginData.Name);
-			var entry = new AuditLogEntry(agentLoginData, doingWhat, category);
+			var entry = new AuditLogEntry(agentLoginData, doingWhat, category, entryId ?? GlobalEntryId.Empty);
 
 			Ctx.Save(entry);
 

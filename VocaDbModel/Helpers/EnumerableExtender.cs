@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain;
@@ -43,21 +43,10 @@ namespace VocaDb.Model.Helpers {
 
 		} 
 
-		public static T MinOrDefault<T>(this IEnumerable<T> source) {
-			try {
-				return source.Min();
-			} catch (InvalidOperationException) {
-				return default(T);
-			}
-        }
-
-		public static T? MinOrNull<T>(this IEnumerable<T> source) where T : struct {
-			try {
-				return source.Min();
-			} catch (InvalidOperationException) {
-				return null;
-			}
-		}
+		/// <summary>
+		/// See https://stackoverflow.com/a/2165611
+		/// </summary>
+		public static T? MinOrNull<T>(this IEnumerable<T> source) where T : struct => source.Cast<T?>().Min();
 
 		public static T[] OrderByIds<T>(this IEnumerable<T> entries, int[] idList) where T : IEntryWithIntId {
 			return CollectionHelper.SortByIds(entries, idList);
@@ -73,6 +62,12 @@ namespace VocaDb.Model.Helpers {
 
 			return vals;
 
+		}
+
+		public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T> enumerable) => enumerable.Where(i => i != null);
+
+		public static IEnumerable<string> WhereIsNotNullOrEmpty(this IEnumerable<string> enumerable) {
+			return enumerable.Where(s => !string.IsNullOrEmpty(s));
 		}
 
 	}

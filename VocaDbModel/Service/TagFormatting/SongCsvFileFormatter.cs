@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -30,7 +30,7 @@ namespace VocaDb.Model.Service.TagFormatting {
 
 		private string GetProducerStr(Song song, ContentLanguagePreference languagePreference) {
 
-			return string.Join(", ", ArtistHelper.GetProducerNames(song.Artists, SongHelper.IsAnimation(song.SongType), languagePreference));
+			return string.Join(", ", ArtistHelper.GetProducerNames(song.Artists, SongHelper.GetContentFocus(song.SongType), languagePreference));
 
 		}
 
@@ -50,7 +50,6 @@ namespace VocaDb.Model.Service.TagFormatting {
 			switch (fieldName) {
 				// Artists for song, both producers and vocalists
 				case "artist":
-					return song.ArtistString[languagePreference];
 				case "track artist": // foobar style
 					return song.ArtistString[languagePreference];
 
@@ -79,6 +78,12 @@ namespace VocaDb.Model.Service.TagFormatting {
 					return GetPvUrl(song, PVType.Reprint, EnumVal<PVServices>.All);
 				case "title":
 					return song.Names.SortNames[languagePreference];
+				case "title.en":
+					return song.Names.SortNames.English;
+				case "title.romanized":
+					return song.Names.SortNames.Romaji;
+				case "title.original":
+					return song.Names.SortNames.Japanese;
 				case "url":
 					return entryLinkFactory.GetFullEntryUrl(EntryType.Song, song.Id);
 

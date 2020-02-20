@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Database.Repositories {
@@ -11,19 +12,20 @@ namespace VocaDb.Model.Database.Repositories {
 		public static void RestoreObjectRefs<TExisting, TEntry>(IDatabaseContext<TEntry> session, IList<string> warnings, IEnumerable<TExisting> existing,
 			IEnumerable<ObjectRefContract> objRefs, Func<TExisting, ObjectRefContract, bool> equality,
 			Func<TEntry, TExisting> createEntryFunc, Action<TExisting> deleteFunc)
-			where TEntry : class where TExisting : class {
+			where TEntry : class, IDatabaseObject
+			where TExisting : class, IDatabaseObject {
 
 			RestoreObjectRefs<TExisting, TEntry, ObjectRefContract>(session, warnings, existing, objRefs, equality, (entry, ex)
 				=> createEntryFunc(entry), deleteFunc);
 
 		}
 
-		public static void RestoreObjectRefs<TExisting, TEntry, TObjRef>(IDatabaseContext<TEntry> session, IList<string> warnings, IEnumerable<TExisting> existing,
+		public static CollectionDiff<TExisting, TObjRef> RestoreObjectRefs<TExisting, TEntry, TObjRef>(IDatabaseContext<TEntry> session, IList<string> warnings, IEnumerable<TExisting> existing,
 			IEnumerable<TObjRef> objRefs, Func<TExisting, TObjRef, bool> equality,
 			Func<TEntry, TObjRef, TExisting> createEntryFunc, Action<TExisting> deleteFunc)
 			where TObjRef : ObjectRefContract 
-			where TEntry : class 
-			where TExisting : class {
+			where TEntry : class, IDatabaseObject
+			where TExisting : class, IDatabaseObject {
 
 			if (objRefs == null)
 				objRefs = Enumerable.Empty<TObjRef>();
@@ -64,6 +66,7 @@ namespace VocaDb.Model.Database.Repositories {
 				session.Delete(removed);
 			}
 
+			return diff;
 
 		}
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -55,6 +55,7 @@ namespace VocaDb.Web.Controllers.Api {
 			{ "entryTypeNames", Resources.Domain.EntryTypeNames.ResourceManager },
 			{ "eventCategoryNames", EventCategoryNames.ResourceManager },
 			{ "eventSortRuleNames", EventSortRuleNames.ResourceManager },
+			{ "songListSortRuleNames", Resources.Views.SongList.SongListSortRuleNames.ResourceManager },
 			{ "songSortRuleNames", global::Resources.SongSortRuleNames.ResourceManager },
 			{ "songTypeNames", Model.Resources.Songs.SongTypeNames.ResourceManager },
 			{ "userGroupNames", global::Resources.UserGroupNames.ResourceManager },
@@ -95,7 +96,7 @@ namespace VocaDb.Web.Controllers.Api {
 			if (culture == null)
 				culture = CultureInfo.GetCultureInfo("en-US");
 
-			var sets = setNames.ToDictionary(s => s, s => GetResources(s, culture));
+			var sets = setNames.Distinct().ToDictionary(s => s, s => GetResources(s, culture));
 			return sets;
 
 		} 

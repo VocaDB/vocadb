@@ -166,7 +166,7 @@
     <value>Erscheinungsdatum:</value>
   </data>
   <data name="ReleaseEvent" xml:space="preserve">
-    <value>Release-Event</value>
+    <value>Erscheinungs Event</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>

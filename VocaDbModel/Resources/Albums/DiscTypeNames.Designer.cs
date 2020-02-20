@@ -19,7 +19,7 @@ namespace VocaDb.Model.Resources.Albums {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class DiscTypeNames {
@@ -70,6 +70,15 @@ namespace VocaDb.Model.Resources.Albums {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Artbook.
+        /// </summary>
+        public static string Artbook {
+            get {
+                return ResourceManager.GetString("Artbook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compilation.
         /// </summary>
         public static string Compilation {
@@ -84,6 +93,33 @@ namespace VocaDb.Model.Resources.Albums {
         public static string EP {
             get {
                 return ResourceManager.GetString("EP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fanmade/doujin.
+        /// </summary>
+        public static string Fanmade {
+            get {
+                return ResourceManager.GetString("Fanmade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game.
+        /// </summary>
+        public static string Game {
+            get {
+                return ResourceManager.GetString("Game", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instrumental.
+        /// </summary>
+        public static string Instrumental {
+            get {
+                return ResourceManager.GetString("Instrumental", resourceCulture);
             }
         }
         

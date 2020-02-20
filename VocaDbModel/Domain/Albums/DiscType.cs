@@ -7,6 +7,9 @@
 
 		Unknown		= 0,
 
+		/// <summary>
+		/// Original album (default)
+		/// </summary>
 		Album		= 1,
 
 		Single		= 2,
@@ -19,7 +22,21 @@
 
 		Video		= 32,
 
-		Other		= 64
+		Artbook		= 64,
+
+		/// <summary>
+		/// For TouhouDB
+		/// </summary>
+		Game		= 128,
+
+		/// <summary>
+		/// For TouhouDB
+		/// </summary>
+		Fanmade		= 256,
+
+		Instrumental = 512,
+
+		Other		= 1024
 
 	}
 

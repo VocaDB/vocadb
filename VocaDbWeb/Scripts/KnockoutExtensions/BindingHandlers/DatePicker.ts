@@ -1,4 +1,4 @@
-﻿
+
 interface KnockoutBindingHandlers {
 	datepicker: KnockoutBindingHandler;
 }
@@ -19,13 +19,13 @@ ko.bindingHandlers.datepicker = {
 		$(element).datepicker({ dateFormat: options.dateFormat });
 
 		if (value) {
-			$(element).datepicker('setDate', vdb.helpers.DateTimeHelper.converToLocal(value));
+			$(element).datepicker('setDate', vdb.helpers.DateTimeHelper.convertToLocal(value));
 		}
 
 		if (ko.isObservable(options.value)) {
 			var subscription = options.value.subscribe((newValue: Date) => {
 				// datepicker displays time in local time, so we convert it back to local
-				$(element).datepicker('setDate', vdb.helpers.DateTimeHelper.converToLocal(newValue));
+				$(element).datepicker('setDate', vdb.helpers.DateTimeHelper.convertToLocal(newValue));
 			});
 
 			ko.utils.domNodeDisposal.addDisposeCallback(element, () => {

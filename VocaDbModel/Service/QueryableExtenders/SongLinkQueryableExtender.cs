@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
@@ -55,6 +57,61 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static Expression<Func<TEntry, bool>> GetChildHasNameExpression<TEntry>(SearchTextQuery textQuery)
+			where TEntry : ISongLink {
+
+			var nameFilter = textQuery.Query;
+
+			switch (textQuery.MatchMode) {
+
+				case NameMatchMode.Exact:
+					return m => m.Song.Names.Names.Any(n => n.Value == nameFilter);
+
+				case NameMatchMode.Partial:
+					return m => m.Song.Names.Names.Any(n => n.Value.Contains(nameFilter));
+
+				case NameMatchMode.StartsWith:
+					return m => m.Song.Names.Names.Any(n => n.Value.StartsWith(nameFilter));
+
+				case NameMatchMode.Words:
+					var words = textQuery.Words;
+
+					Expression<Func<TEntry, bool>> exp = (q => q.Song.Names.Names.Any(n => n.Value.Contains(words[0])));
+
+					foreach (var word in words.Skip(1).Take(10)) {
+						var temp = word;
+						exp = exp.And((q => q.Song.Names.Names.Any(n => n.Value.Contains(temp))));
+					}
+
+					return exp;
+
+			}
+
+			return m => true;
+
+		}
+
+		/// <summary>
+		/// Filters a song link query by a name query.
+		/// </summary>
+		/// <param name="query">Song query. Cannot be null.</param>
+		/// <param name="nameFilter">Name filter string. If null or empty, no filtering is done.</param>
+		/// <param name="matchMode">Desired mode for matching names.</param>
+		/// <param name="words">
+		/// List of words for the words search mode. 
+		/// Can be null, in which case the words list will be parsed from <paramref name="nameFilter"/>.
+		/// </param>
+		/// <returns>Filtered query. Cannot be null.</returns>
+		public static IQueryable<T> WhereChildHasName<T>(this IQueryable<T> query, SearchTextQuery textQuery) 
+			where T : ISongLink {
+
+			if (textQuery.IsEmpty)
+				return query;
+
+			return query.Where(GetChildHasNameExpression<T>(textQuery));
+
+		}
+
 		public static IQueryable<T> WhereSongHasArtist<T>(this IQueryable<T> query, int artistId, bool childVoicebanks)
 			where T : ISongLink {
 			
@@ -67,6 +124,23 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				return query.Where(s => s.Song.AllArtists.Any(a => a.Artist.Id == artistId 
 					|| a.Artist.BaseVoicebank.Id == artistId || a.Artist.BaseVoicebank.BaseVoicebank.Id == artistId 
 					|| a.Artist.BaseVoicebank.BaseVoicebank.BaseVoicebank.Id == artistId));
+
+		}
+
+		public static IQueryable<T> WhereSongHasArtists<T>(this IQueryable<T> query, EntryIdsCollection artistIds, bool childVoicebanks, LogicalGrouping grouping)
+			where T : ISongLink {
+
+			return grouping == LogicalGrouping.And ? WhereSongHasArtists(query, artistIds, childVoicebanks) : WhereSongHasAnyArtist(query, artistIds, childVoicebanks);
+
+		}
+
+		public static IQueryable<T> WhereSongHasAnyArtist<T>(this IQueryable<T> query, EntryIdsCollection artistIds, bool childVoicebanks)
+			where T : ISongLink {
+
+			if (!artistIds.HasAny)
+				return query;
+
+			return query.Where(s => s.Song.AllArtists.Any(a => artistIds.Ids.Contains(a.Artist.Id)));
 
 		}
 
@@ -177,6 +251,21 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<T> WhereSongPublishDateIsBetween<T>(this IQueryable<T> query, DateTime? begin, DateTime? end) where T : ISongLink {
+
+			if (begin.HasValue && end.HasValue)
+				return query.Where(e => e.Song.PublishDate.DateTime != null && e.Song.PublishDate.DateTime >= begin && e.Song.PublishDate.DateTime < end);
+
+			if (begin.HasValue)
+				return query.Where(e => e.Song.PublishDate.DateTime != null && e.Song.PublishDate.DateTime >= begin);
+
+			if (end.HasValue)
+				return query.Where(e => e.Song.PublishDate.DateTime != null && e.Song.PublishDate.DateTime < end);
+
+			return query;
+
+		}
+
 		public static IQueryable<T> WhereMatchFilter<T>(this IQueryable<T> query, AdvancedSearchFilter filter)
 			where T : ISongLink {
 
@@ -187,6 +276,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case AdvancedFilterType.ArtistType: {
 					var param = EnumVal<ArtistType>.Parse(filter.Param);
 					return WhereSongHasArtistWithType(query, param);
+				}
+				case AdvancedFilterType.HasAlbum: {
+					return filter.Negate ? query.Where(s => !s.Song.AllAlbums.Any()) : query.Where(s => s.Song.AllAlbums.Any());
 				}
 				case AdvancedFilterType.HasOriginalMedia: {
 					return query.Where(s => filter.Negate != s.Song.PVs.PVs.Any(pv => !pv.Disabled && pv.PVType == PVType.Original));

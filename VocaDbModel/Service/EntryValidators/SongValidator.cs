@@ -36,7 +36,7 @@ namespace VocaDb.Model.Service.EntryValidators {
 				&& !ArtistHelper.GetVocalists(song.Artists.ToArray()).Any())
 				errors.Add(SongValidationErrors.NonInstrumentalSongNeedsVocalists);
 
-			if (!song.Artists.Any(a => a.Artist != null && ArtistHelper.IsProducerRole(a, SongHelper.IsAnimation(song.SongType))))
+			if (!song.Artists.Any(a => a.Artist != null && ArtistHelper.IsProducerRole(a, SongHelper.GetContentFocus(song.SongType))))
 				errors.Add(SongValidationErrors.NeedProducer);
 
 			if (song.Artists.GroupBy(a => (a.Artist != null ? a.Artist.Id.ToString() : a.Name) + a.IsSupport).Any(a => a.Count() > 1))

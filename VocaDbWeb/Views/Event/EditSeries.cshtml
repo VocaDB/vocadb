@@ -33,6 +33,9 @@
 		} else {
 			@Html.ActionLink(EditRes.Restore, "RestoreSeries", new { id = Model.Id }, new { id = "restoreLink" })								
 		}
+		if (Login.CanMoveToTrash) {
+			<a href="#" id="trashLink" data-bind="click: trashViewModel.show">@EditRes.MoveToTrash</a>
+		}
 	}
 }
 
@@ -78,7 +81,7 @@
 		@Html.LabelFor(m => m.Description)
 	</div>
 	<div class="editor-field">
-		@Html.TextAreaForKnockout(m => m.Description, "initialValue, textInput: description", cols: 60, rows: 4, cssClass: "span4")
+		@Html.TextAreaForKnockout(m => m.Description, "initialValue, textInput: description", cols: 60, rows: 4, maxLength: 1000, cssClass: "span4")
 		
 		Live preview
 		<div data-bind="markdown: description"></div>
@@ -135,6 +138,7 @@
 </form>
 
 @EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
+@EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/EventSeries/Edit")

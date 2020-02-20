@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -287,5 +287,8 @@
   </data>
   <data name="PVUnavailable" xml:space="preserve">
     <value>(PV is unavailable)</value>
+  </data>
+  <data name="ViewInfo" xml:space="preserve">
+    <value>View info</value>
   </data>
 </root>

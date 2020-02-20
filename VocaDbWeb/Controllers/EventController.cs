@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -42,6 +42,15 @@ namespace VocaDb.Web.Controllers
 			this.enumTranslations = enumTranslations;
 			this.entryLinkFactory = entryLinkFactory;
 			this.thumbPersister = thumbPersister;
+		}
+
+		public ActionResult ArchivedSeriesVersionXml(int id) {
+
+			var doc = queries.GetSeriesVersionXml(id);
+			var contract = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
+
+			return Xml(contract);
+
 		}
 
 	    public ActionResult ArchivedVersionXml(int id) {
@@ -133,7 +142,12 @@ namespace VocaDb.Web.Controllers
 			}
 
 	        var pictureData = ParsePicture(pictureUpload, "pictureUpload");
-	        int id;
+
+			if (!ModelState.IsValid) {
+				return RenderEdit();
+			}
+
+			int id;
 
 	        try {
 				id = queries.Update(model.ToContract(), pictureData).Id;
@@ -218,7 +232,7 @@ namespace VocaDb.Web.Controllers
 
 			var events = queries.Find(e =>
 				new ReleaseEventForApiContract(e, PermissionContext.LanguagePreference, 
-					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, thumbPersister, WebHelper.IsSSL(Request)),
+					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, thumbPersister),
 				queryParams);
 
 			return View(events.Items);
@@ -310,6 +324,14 @@ namespace VocaDb.Web.Controllers
 			var contract = Service.GetReleaseEventSeriesWithArchivedVersions(id);
 
 			return View(new Versions<ReleaseEventSeriesContract>(contract, enumTranslations));
+
+		}
+
+		public ActionResult ViewSeriesVersion(int id, int? ComparedVersionId) {
+
+			var contract = queries.GetSeriesVersionDetails(id, ComparedVersionId ?? 0);
+
+			return View(new ViewVersion<ArchivedEventSeriesVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
 
 		}
 

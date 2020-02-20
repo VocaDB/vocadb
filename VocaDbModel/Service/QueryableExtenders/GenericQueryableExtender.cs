@@ -1,6 +1,11 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
+using NHibernate.Linq;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
@@ -60,6 +65,52 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			return query.Select(Expression.Lambda<Func<TSource, TResult>>(memberInit, param));
 
 		}
+
+		public static Task<int> VdbCountAsync<TSource>(this IQueryable<TSource> source) {
+
+			if (source.Provider is INhQueryProvider) {
+				return source.CountAsync();
+			}
+
+			return Task.FromResult(source.Count());
+
+		}
+
+		public static Task<TSource> VdbFirstOrDefaultAsync<TSource>(this IQueryable<TSource> source) {
+
+			if (source.Provider is INhQueryProvider) {
+				return source.FirstOrDefaultAsync();
+			}
+
+			return Task.FromResult(source.FirstOrDefault());
+
+		}
+
+		/// <summary>
+		/// Executes the query and returns its result as <see cref="IList{T}"/>.
+		/// To be used instead of the NHibernate extension method to make the query testable.
+		/// Calls NHibernate's method when supported, otherwise non-async version.
+		/// </summary>
+		public static Task<List<TSource>> VdbToListAsync<TSource>(this IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken)) {
+
+			// Note: ToListAsync only supports INhQueryProvider
+			if (source.Provider is INhQueryProvider) {
+				return source.ToListAsync();
+			}
+
+			return Task.FromResult(source.ToList());
+
+		}
+
+		public static IQueryable<T> WhereEntryTypeIsIncluded<T>(this IQueryable<T> source, EntryTypes? entryTypes, EntryType entryType)
+		{
+			if (entryTypes == null || entryTypes.Value.HasFlag((EntryTypes)entryType))
+				return source;
+			return new List<T>().AsQueryable();
+		}
+
+		public static IQueryable<T> WhereIdIn<T>(this IQueryable<T> query, IEnumerable<int> ids) where T : IEntryWithIntId 
+			=> query.Where(e => ids.Contains(e.Id));
 
 	}
 

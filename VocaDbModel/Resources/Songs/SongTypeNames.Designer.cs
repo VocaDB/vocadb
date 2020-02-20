@@ -19,7 +19,7 @@ namespace VocaDb.Model.Resources.Songs {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class SongTypeNames {
@@ -61,6 +61,15 @@ namespace VocaDb.Model.Resources.Songs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arrangement.
+        /// </summary>
+        public static string Arrangement {
+            get {
+                return ResourceManager.GetString("Arrangement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cover.
         /// </summary>
         public static string Cover {
@@ -75,6 +84,15 @@ namespace VocaDb.Model.Resources.Songs {
         public static string DramaPV {
             get {
                 return ResourceManager.GetString("DramaPV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Illustration.
+        /// </summary>
+        public static string Illustration {
+            get {
+                return ResourceManager.GetString("Illustration", resourceCulture);
             }
         }
         

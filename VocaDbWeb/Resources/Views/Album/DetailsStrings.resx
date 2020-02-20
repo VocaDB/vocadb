@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -239,5 +239,41 @@
   </data>
   <data name="HiddenCollections" xml:space="preserve">
     <value>+ {0} hidden</value>
+  </data>
+  <data name="Illustrators" xml:space="preserve">
+    <value>Illustrators</value>
+  </data>
+  <data name="ReviewAlreadySubmitted" xml:space="preserve">
+    <value>You have already submitted a review in this language. Multiple reviews in the same language are not allowed.</value>
+  </data>
+  <data name="ReviewLanguage" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="ReviewPost" xml:space="preserve">
+    <value>Post</value>
+  </data>
+  <data name="ReviewPreview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="ReviewText" xml:space="preserve">
+    <value>Review (minimum 50 characters)</value>
+  </data>
+  <data name="ReviewTitle" xml:space="preserve">
+    <value>Title (optional)</value>
+  </data>
+  <data name="ReviewWrite" xml:space="preserve">
+    <value>Write review</value>
+  </data>
+  <data name="ReviewLoginToReview" xml:space="preserve">
+    <value>Log in to post a review</value>
+  </data>
+  <data name="LatestReview" xml:space="preserve">
+    <value>Latest review</value>
+  </data>
+  <data name="ReviewsTab" xml:space="preserve">
+    <value>Reviews</value>
+  </data>
+  <data name="ViewAllReviews" xml:space="preserve">
+    <value>View all reviews ({0})</value>
   </data>
 </root>

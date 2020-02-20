@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts {
@@ -15,13 +15,13 @@ namespace VocaDb.Model.DataContracts {
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryThumbForApiContract {
 
-		public static EntryThumbForApiContract Create(IEntryImageInformation image, IEntryImagePersister thumbPersister, bool ssl,
+		public static EntryThumbForApiContract Create(IEntryImageInformation image, IEntryImagePersister thumbPersister,
 			ImageSizes sizes = ImageSizes.All) {
 
 			if (thumbPersister == null || string.IsNullOrEmpty(image?.Mime))
 				return null;
 
-			return new EntryThumbForApiContract(image, thumbPersister, ssl, sizes);
+			return new EntryThumbForApiContract(image, thumbPersister, sizes);
 
 		}
 
@@ -32,27 +32,34 @@ namespace VocaDb.Model.DataContracts {
 		/// </summary>
 		/// <param name="image">Image information. Cannot be null.</param>
 		/// <param name="thumbPersister">Thumb persister. Cannot be null.</param>
-		/// <param name="ssl">Whether to generate SSL URLs.</param>
 		/// <param name="sizes">Sizes to generate. If Nothing, no image URLs will be generated.</param>
-		public EntryThumbForApiContract(IEntryImageInformation image, IEntryImagePersister thumbPersister, bool ssl,
+		public EntryThumbForApiContract(IEntryImageInformation image, IEntryImagePersister thumbPersister,
 			ImageSizes sizes = ImageSizes.All) {
 
 			ParamIs.NotNull(() => image);
 			ParamIs.NotNull(() => thumbPersister);
 
+			Mime = image.Mime;
+
 			if (string.IsNullOrEmpty(image.Mime) && sizes != ImageSizes.Nothing)
 				return;
 
 			if (sizes.HasFlag(ImageSizes.SmallThumb))
-				UrlSmallThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.SmallThumb, ssl);
+				UrlSmallThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.SmallThumb);
 
 			if (sizes.HasFlag(ImageSizes.Thumb))
-				UrlThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.Thumb, ssl);
+				UrlThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.Thumb);
 
 			if (sizes.HasFlag(ImageSizes.TinyThumb))
-				UrlTinyThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.TinyThumb, ssl);				
+				UrlTinyThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.TinyThumb);				
 
 		}
+
+		/// <summary>
+		/// MIME type, for example "image/jpeg".
+		/// </summary>
+		[DataMember]
+		public string Mime { get; set;}
 
 		/// <summary>
 		/// URL to small thumbnail.

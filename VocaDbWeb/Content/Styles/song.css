@@ -13,3 +13,6 @@
 .user-with-rating {
   padding-top: 5px;
 }
+.mejs__container {
+  background-color: #2D9693 !important;
+}

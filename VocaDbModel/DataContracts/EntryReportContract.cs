@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -13,6 +13,7 @@ namespace VocaDb.Model.DataContracts {
 
 			ParamIs.NotNull(() => report);
 
+			ClosedAt = report.ClosedAt;
 			ClosedBy = report.ClosedBy != null ? new UserForApiContract(report.ClosedBy, userIconFactory, UserOptionalFields.MainPicture) : null;
 			Created = report.Created;
 			Entry = entry;
@@ -26,6 +27,8 @@ namespace VocaDb.Model.DataContracts {
 		}
 
 		public UserForApiContract ClosedBy { get; set;}
+
+		public DateTime? ClosedAt { get; set; }
 
 		public DateTime Created { get; set; }
 

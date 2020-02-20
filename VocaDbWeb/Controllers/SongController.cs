@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
 using System.Web.Mvc;
@@ -21,8 +21,10 @@ using VocaDb.Model.Service.VideoServices;
 using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Song;
 using System;
+using System.Threading.Tasks;
 using System.Web;
 using VocaDb.Model.Database.Queries;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Web.Code;
@@ -175,7 +177,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Create(Create model) {
+		public async Task<ActionResult> Create(Create model) {
 
 			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji) && string.IsNullOrWhiteSpace(model.NameEnglish))
 				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
@@ -189,7 +191,7 @@ namespace VocaDb.Web.Controllers
 			var contract = model.ToContract();
 
 			try {
-				var song = queries.Create(contract);
+				var song = await queries.Create(contract);
 				return RedirectToAction("Edit", new { id = song.Id });
 			} catch (VideoParseException x) {
 				ModelState.AddModelError("PVUrl", x.Message);
@@ -197,17 +199,19 @@ namespace VocaDb.Web.Controllers
 			}
 
 		}
+
+		private int InstrumentalTagId => queries.HandleQuery(ctx => new EntryTypeTags(ctx).Instrumental);
        
         //
         // GET: /Song/Edit/5 
         [Authorize]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, int? albumId = null)
         {
 
 			CheckConcurrentEdit(EntryType.Song, id);
 
 			var model = Service.GetSong(id, song => new SongEditViewModel(new SongContract(song, PermissionContext.LanguagePreference, false), 
-				PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song)));
+				PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), InstrumentalTagId, albumId: albumId));
 
 			return View(model);
 
@@ -221,7 +225,7 @@ namespace VocaDb.Web.Controllers
         {
 
 			// Unable to continue if viewmodel is null because we need the ID at least
-			if (viewModel == null || viewModel.EditedSong == null) {
+			if (viewModel?.EditedSong == null) {
 				log.Warn("Viewmodel was null");
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");				
 			}
@@ -245,12 +249,12 @@ namespace VocaDb.Web.Controllers
 
 			if (!ModelState.IsValid) {
 				return View(Service.GetSong(model.Id, song => new SongEditViewModel(new SongContract(song, PermissionContext.LanguagePreference, false), 
-					PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), model)));
+					PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), InstrumentalTagId, model)));
 			}
 
 			queries.UpdateBasicProperties(model);
 
-			return RedirectToAction("Details", new { id = model.Id });
+			return RedirectToAction("Details", new { id = model.Id, albumId = viewModel.AlbumId });
 
         }
 
@@ -502,7 +506,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult RevertToVersion(int archivedSongVersionId) {
 
-			var result = Service.RevertToVersion(archivedSongVersionId);
+			var result = queries.RevertToVersion(archivedSongVersionId);
 
 			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
 
@@ -518,6 +522,56 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult TopRated() {
 			return RedirectToActionPermanent("Rankings");
+		}
+
+		[Authorize]
+		public ActionResult UpdateArtistString(int id) {
+
+			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
+
+			queries.HandleTransaction(ctx => {
+				var song = ctx.Load(id);
+				song.UpdateArtistString();
+				ctx.Update(song);
+				ctx.AuditLogger.SysLog("Updated artist string for " + song);
+			});
+
+			TempData.SetSuccessMessage("Artist string refreshed");
+
+			return RedirectToAction("Details", new { id });
+
+		}
+
+		[Authorize]
+		public ActionResult UpdateThumbUrl(int id) {
+
+			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
+
+			queries.HandleTransaction(ctx => {
+				var song = ctx.Load(id);
+				song.UpdateThumbUrl();
+				ctx.Update(song);
+				ctx.AuditLogger.SysLog("Updated thumbnail URL for " + song);
+			});
+
+			TempData.SetSuccessMessage("Thumbnail refreshed");
+
+			return RedirectToAction("Details", new { id });
+
+		}
+
+		/// <summary>
+		/// Refresh PV metadata.
+		/// </summary>
+		[Authorize]
+		public async Task<ActionResult> RefreshPVMetadatas(int id) {
+
+			await queries.RefreshPVMetadatas(id);
+
+			TempData.SetSuccessMessage("PV metadata refreshed");
+
+			return RedirectToAction("Details", new { id });
+
 		}
 
 		public ActionResult Versions(int id = invalidId) {

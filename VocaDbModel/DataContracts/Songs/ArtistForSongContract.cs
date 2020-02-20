@@ -21,8 +21,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Categories = artistForSong.ArtistCategories;
 			EffectiveRoles = artistForSong.EffectiveRoles;
 			Id = artistForSong.Id;
+			IsCustomName = !string.IsNullOrEmpty(artistForSong.Name);
 			IsSupport = artistForSong.IsSupport;
-			Name = (Artist != null ? Artist.Name : artistForSong.Name);
+			Name = (Artist != null && !IsCustomName ? Artist.Name : artistForSong.Name);
 			Roles = artistForSong.Roles;
 
 		}
@@ -56,6 +57,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public int Id { get; set; }
+
+		[DataMember]
+		public bool IsCustomName { get; set;}
 
 		[DataMember]
 		public bool IsSupport { get; set; }

@@ -36,32 +36,6 @@ module vdb.views.artist {
 			viewModel.initSongs();
 		}
 
-		$("#addToUserLink").click(function () {
-
-			$.post(urlMapper.mapRelative("/User/AddArtistForUser"), { artistId: artistId }, function (result) {
-
-				$("#removeFromUserSplitBtn").show();
-				$("#addToUserLink").hide();
-
-			});
-
-			return false;
-
-		});
-
-		$("#removeFromUserLink").click(function () {
-
-			$.post(urlMapper.mapRelative("/User/RemoveArtistFromUser"), { artistId: artistId }, function (result) {
-
-				$("#addToUserLink").show();
-				$("#removeFromUserSplitBtn").hide();
-
-			});
-
-			return false;
-
-		});
-
 		$("#newAlbums img").vdbAlbumToolTip();
 		$("#topAlbums img").vdbAlbumToolTip();
 		$("#baseVoicebank a").vdbArtistToolTip();

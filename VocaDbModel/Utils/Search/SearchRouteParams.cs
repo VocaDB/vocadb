@@ -21,6 +21,8 @@ namespace VocaDb.Model.Utils.Search {
 
 		public EventCategory? eventCategory { get; set; }
 
+		public int? eventId { get; set; }
+
 		public string filter { get; set; }
 
 		public bool? onlyRatedSongs { get; set; }
@@ -83,13 +85,16 @@ namespace VocaDb.Model.Utils.Search {
 		}
 
 		public SearchRouteParams Songs(
-			int? artistId = null, 
+			int? artistId = null,
+			int? eventId = null,
 			SongType? songType = null, 
 			object sort = null, 
 			int? tagId = null) {
 			
 			return new SearchRouteParams(EntryType.Song) {
-				artistId = artistId, songType =  songType, 
+				artistId = artistId, 
+				eventId = eventId,
+				songType =  songType, 
 				sort = sort,
 				tagId = tagId
 			};

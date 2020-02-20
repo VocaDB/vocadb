@@ -26,9 +26,9 @@
 }
 
 @section Toolbar {
-	<a href="#" id="addToUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")" style="@(Model.IsAdded ? "display: none;" : "")">@ViewRes.Artist.DetailsStrings.Follow</a>
-	<span id="removeFromUserSplitBtn" style="@(Model.IsAdded ? "" : "display: none;")">
-		<a href="#" id="removeFromUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")">@ViewRes.Artist.DetailsStrings.Unfollow</a>
+	<a href="#" id="addToUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")" data-bind="visible: !hasArtistSubscription(), click: addFollowedArtist">@ViewRes.Artist.DetailsStrings.Follow</a>
+	<span id="removeFromUserSplitBtn" data-bind="visible: hasArtistSubscription">
+		<a href="#" id="removeFromUserLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")" data-bind="click: removeFollowedArtist">@ViewRes.Artist.DetailsStrings.Unfollow</a>
 		<a data-bind="click: customizeSubscriptionDialog.show" href="#" id="customizeSubscription">@R.DetailsStrings.Customize</a>
 	</span>
 
@@ -126,16 +126,21 @@
 									
 				@ArtistListRow(Res.Illustrator, Model.Illustrators, false)
 				@ArtistListRow(Res.IllustratorOf, Model.IllustratorOf, true, releaseYear: true)
-				@ArtistRow(Res.VoiceProvider, Model.VoiceProvider, false)
+				@ArtistListRow(Res.VoiceProvider, Model.VoiceProviders, false)
 				@ArtistListRow(Res.VoiceProviderOf, Model.Voicebanks, true, releaseYear: true)
 				@ArtistRow(Res.ManagedBy, Model.Manager, false)
 				@ArtistRow(Res.CharacterDesigner, Model.CharacterDesigner, false)
+				@ArtistListRow(Res.CharacterDesignerOf, Model.CharacterDesignerOf, typeLabel: true)
 
 				<tr>
 					<td>@ViewRes.SharedStrings.Type</td>
 					<td>
 						@ArtistHelpers.ArtistTypeLabel(Model.ArtistType)
-						@Html.ActionLink(Translate.ArtistTypeName(Model.ArtistType), "Index", new { artistType = Model.ArtistType })<br />
+						@if (Model.ArtistTypeTag != null) {
+							<a href="@Url.TagDetails(Model.ArtistTypeTag)" data-bind="tagToolTip: @Model.ArtistTypeTag.Id">@Translate.ArtistTypeName(Model.ArtistType)</a>
+						} else {
+							<a href="@Url.TagUrlForEntryType(EntryType.Artist, Model.ArtistType)">@Translate.ArtistTypeName(Model.ArtistType)</a>
+						}
 					</td>
 				</tr>
 
@@ -145,7 +150,7 @@
 						<div data-bind="with: tagUsages" class="entry-tag-usages">
 							@{ Html.RenderPartial("Partials/_TagList"); }
 						</div>
-						<a data-bind="jqButton: { disabled: @ToJS(!Login.Manager.IsLoggedIn), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
+						<a data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
 						@if (Model.CanRemoveTagUsages) {
 							@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new { id = Model.Id }, new { id = "manageTags" })
 						}
@@ -453,6 +458,7 @@
 
 			var viewModel = new vdb.viewModels.ArtistDetailsViewModel(artistRepo, @Model.Id,
 				tagUsages,
+				@ToJS(Model.IsAdded),
 				@ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications),
 				@ToJS(Model.Description.HasEnglish),
 				unknownPictureUrl,

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Xml.Linq;
 using NLog;
@@ -165,7 +165,7 @@ namespace VocaDb.Model.Service {
 					.Select(l => l.Entry)
 					.Distinct()
 					.ToArray()
-					.Select(a => new ArtistForApiContract(a, languagePreference, null, false, ArtistOptionalFields.WebLinks))
+					.Select(a => new ArtistForApiContract(a, languagePreference, null, ArtistOptionalFields.WebLinks))
 					.ToArray();
 
 				return contracts;

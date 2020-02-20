@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -130,7 +130,7 @@
     <value>Song should have at least one producer (composer, arranger or animator) role.</value>
   </data>
   <data name="NeedReferences" xml:space="preserve">
-    <value>Songs needs notes, PVs or links for reference.</value>
+    <value>Song needs notes, PVs or links for reference.</value>
   </data>
   <data name="NeedType" xml:space="preserve">
     <value>Song type needs to be specified.</value>
@@ -140,6 +140,9 @@
   </data>
   <data name="RedundantEvent" xml:space="preserve">
     <value>The same release event does not need to be specified for both the song and album.</value>
+  </data>
+  <data name="RedundantRoles" xml:space="preserve">
+    <value>Producer's roles do not need to be specified when that producer is the only one.</value>
   </data>
   <data name="UnspecifiedNames" xml:space="preserve">
     <value>Song needs a primary name.</value>

@@ -6,6 +6,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public SongListDiff() : base(true) {}
 
+		public SongListDiff(bool snapshot) : base(snapshot) { }
+
 		public EnumFieldAccessor<SongListEditableFields> Description => Field(SongListEditableFields.Description);
 
 		public EnumFieldAccessor<SongListEditableFields> FeaturedCategory => Field(SongListEditableFields.FeaturedCategory);

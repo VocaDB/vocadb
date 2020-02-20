@@ -7,6 +7,7 @@ using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Helpers;
@@ -18,7 +19,7 @@ namespace VocaDb.Web.Models.Album {
 
 		public AlbumEditViewModel() {
 			
-			AllDiscTypes = Translate.DiscTypeNames.ValuesAndNamesStrings;
+			AllDiscTypes = Translate.DiscTypeNames.GetValuesAndNamesStrings(AppConfig.AlbumTypes);
 
 			DiscTypeDescriptions = ViewRes.Album.EditStrings.BaDiscTypeExplanation 
 			                       + "<br /><br /><ul>" + string.Join("", 

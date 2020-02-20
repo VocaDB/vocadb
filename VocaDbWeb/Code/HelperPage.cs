@@ -1,4 +1,4 @@
-﻿using System.Web;
+using System.Web;
 using System.Web.WebPages;
 using System.Web.Mvc;
 using VocaDb.Model.Domain.Security;
@@ -18,7 +18,7 @@ namespace VocaDb.Web.Code {
 
 		public static MarkdownParser MarkdownParser => DependencyResolver.Current.GetService<MarkdownParser>();
 
-		public static string RequestUrlScheme => WebHelper.IsSSL(Request) ? "https" : "http";
+		public static string RequestUrlScheme => "https";
 
 		public static IHtmlString ToJS(bool val) {
 			return new HtmlString(val ? "true" : "false");
@@ -30,7 +30,7 @@ namespace VocaDb.Web.Code {
 
 		public static UrlHelper Url => ((WebViewPage)WebPageContext.Current.Page).Url;
 
-		public static VocaUrlMapper UrlMapper => new VocaUrlMapper(WebHelper.IsSSL(Request));
+		public static VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
 		public static IUserPermissionContext UserContext => DependencyResolver.Current.GetService<IUserPermissionContext>();
 

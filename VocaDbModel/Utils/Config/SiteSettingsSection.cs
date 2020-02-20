@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+using System.Configuration;
 
 namespace VocaDb.Model.Utils.Config {
 
@@ -7,12 +7,21 @@ namespace VocaDb.Model.Utils.Config {
 		public SiteSettingsSection() {
 		}
 
-		[ConfigurationProperty("blogUrl", DefaultValue = "blog.vocadb.net")]
+		[ConfigurationProperty("bannerUrl", DefaultValue = "")]
+		public string BannerUrl {
+			get => (string)this["bannerUrl"];
+			set => this["bannerUrl"] = value;
+		}
+
+		[ConfigurationProperty("blogUrl", DefaultValue = "")]
 		public string BlogUrl {
 			get => (string)this["blogUrl"];
 			set => this["blogUrl"] = value;
 		}
 
+		/// <summary>
+		/// Default stylesheet, if any. Name of the CSS file, for example "TetoDB.css".
+		/// </summary>
 		[ConfigurationProperty("defaultStylesheet", DefaultValue = null)]
 		public string DefaultStylesheet => (string)this["defaultStylesheet"];
 
@@ -20,6 +29,12 @@ namespace VocaDb.Model.Utils.Config {
 		public string IRCUrl {
 			get => (string)this["ircUrl"];
 			set => this["ircUrl"] = value;
+		}
+
+		[ConfigurationProperty("minAlbumYear", DefaultValue = 2000)]
+		public int MinAlbumYear {
+			get => (int)this["minAlbumYear"];
+			set => this["minAlbumYear"] = value;
 		}
 
 		[ConfigurationProperty("openSearchPath", DefaultValue = "/opensearch.xml")]
@@ -52,6 +67,9 @@ namespace VocaDb.Model.Utils.Config {
 			set => this["sitewideAnnouncement"] = value;
 		}
 
+		/// <summary>
+		/// Comma-separated list of stylesheets with extensions, for example "TetoDB.css,DarkAngel.css"
+		/// </summary>
 		[ConfigurationProperty("stylesheets", DefaultValue = null)]
 		public string Stylesheets => (string)this["stylesheets"];
 

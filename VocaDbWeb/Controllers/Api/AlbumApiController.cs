@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
@@ -9,6 +10,7 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
@@ -16,7 +18,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
-using VocaDb.Web.Helpers;
+using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -26,16 +28,22 @@ namespace VocaDb.Web.Controllers.Api {
 	[RoutePrefix("api/albums")]
 	public class AlbumApiController : ApiController {
 
-		private const int absoluteMax = 50;
+		private const int hourInSeconds = 3600;
+		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly IEntryThumbPersister thumbPersister;
+		private readonly OtherService otherService;
 		private readonly AlbumQueries queries;
 		private readonly AlbumService service;
 
-		public AlbumApiController(AlbumQueries queries, AlbumService service, IEntryThumbPersister thumbPersister) {			
+		public AlbumApiController(AlbumQueries queries, AlbumService service, 
+			OtherService otherService, IEntryThumbPersister thumbPersister) {		
+			
 			this.queries = queries;
 			this.service = service;
+			this.otherService = otherService;
 			this.thumbPersister = thumbPersister;
+
 		}
 
 		/// <summary>
@@ -101,7 +109,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Optional fields for tracks, if included (optional).
 		/// </param>
 		/// <param name="lang">Content language preference (optional).</param>
-		/// <example>http://vocadb.net/api/albums/1</example>
+		/// <example>https://vocadb.net/api/albums/1</example>
 		/// <returns>Album data.</returns>
 		[Route("{id:int}")]
 		public AlbumForApiContract GetOne(
@@ -110,8 +118,7 @@ namespace VocaDb.Web.Controllers.Api {
 			SongOptionalFields songFields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
-			var ssl = WebHelper.IsSSL(Request);
-			var album = queries.GetAlbumWithMergeRecord(id, (a, m) => new AlbumForApiContract(a, m, lang, thumbPersister, ssl, fields, songFields));
+			var album = queries.GetAlbumWithMergeRecord(id, (a, m) => new AlbumForApiContract(a, m, lang, thumbPersister, fields, songFields));
 
 			return album;
 
@@ -154,14 +161,18 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Requires a text query. Does not support pagination.
 		/// This is mostly useful for autocomplete boxes.
 		/// </param>
-		/// <param name="deleted">Whether to search for deleted entries. If this is true, only deleted entries will be returned.</param>
+		/// <param name="deleted">
+		/// Whether to search for deleted entries.
+		/// If this is true, only deleted entries will be returned.
+		/// If this is false (default), deleted entries are not returned.
+		/// </param>
 		/// <param name="nameMatchMode">Match mode for artist name (optional, defaults to Exact).</param>
 		/// <param name="fields">
 		/// Optional fields (optional). Possible values are artists, names, pvs, tags, tracks, webLinks.
 		/// </param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of albums.</returns>
-		/// <example>http://vocadb.net/api/albums?query=Synthesis&amp;discTypes=Album</example>
+		/// <example>https://vocadb.net/api/albums?query=Synthesis&amp;discTypes=Album</example>
 		[Route("")]
 		public PartialFindResult<AlbumForApiContract> GetList(
 			string query = "", 
@@ -209,9 +220,7 @@ namespace VocaDb.Web.Controllers.Api {
 			};
 			queryParams.Common.EntryStatus = status;
 
-			var ssl = WebHelper.IsSSL(Request);
-
-			var entries = service.Find(a => new AlbumForApiContract(a, null, lang, thumbPersister, ssl, fields, SongOptionalFields.None), queryParams);
+			var entries = service.Find(a => new AlbumForApiContract(a, null, lang, thumbPersister, fields, SongOptionalFields.None), queryParams);
 			
 			return entries;
 
@@ -231,9 +240,64 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		/// <summary>
+		/// Gets list of upcoming or recent albums, same as front page.
+		/// </summary>
+		/// <remarks>
+		/// Output is cached for 1 hour.
+		/// </remarks>
+		[Route("new")]
+		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
+		public IEnumerable<AlbumForApiContract> GetNewAlbums(
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
+			AlbumOptionalFields fields = AlbumOptionalFields.None) {
+
+			return otherService.GetRecentAlbums(languagePreference, fields);
+
+		}
+
+		[Route("{id:int}/reviews")]
+		public Task<IEnumerable<AlbumReviewContract>> GetReviews(int id, string languageCode = null) {
+			return queries.GetReviews(id, languageCode);
+		}
+
+		[Route("{id:int}/user-collections")]
+		public Task<IEnumerable<AlbumForUserForApiContract>> GetUserCollections(int id, ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
+			return queries.GetUserCollections(id, languagePreference);
+		}
+
+		[Authorize]
+		[Route("{id:int}/reviews")]
+		public AlbumReviewContract PostReview(int id, AlbumReviewContract reviewContract) {
+			return queries.AddReview(id, reviewContract);
+		}
+
+		[Authorize]
+		[Route("{id:int}/reviews/{reviewId:int}")]
+		public void DeleteReview(int reviewId) {
+			queries.DeleteReview(reviewId);
+		}
+
+		/// <summary>
+		/// Gets list of top rated albums, same as front page.
+		/// </summary>
+		/// <remarks>
+		/// Output is cached for 1 hour.
+		/// </remarks>
+		[Route("top")]
+		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
+		public IEnumerable<AlbumForApiContract> GetTopAlbums(
+			int[] ignoreIds,
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
+			AlbumOptionalFields fields = AlbumOptionalFields.None) {
+
+			return otherService.GetTopAlbums(languagePreference, fields, ignoreIds ?? new int[0]);
+
+		}
+
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Route("{id:int}/tagSuggestions")]
-		public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) {
+		public Task<TagUsageForApiContract[]> GetTagSuggestions(int id) {
 			return queries.GetTagSuggestions(id);
 		}
 
@@ -246,7 +310,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of tracks for the album.</returns>
-		/// <example>http://vocadb.net/api/albums/1/tracks</example>
+		/// <example>https://vocadb.net/api/albums/1/tracks</example>
 		[Route("{id:int}/tracks")]
 		public SongInAlbumForApiContract[] GetTracks(
 			int id, 
@@ -264,12 +328,16 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="id">Album ID.</param>
 		/// <param name="field">Field to be included, for example "featvocalists" or "url". Can be specified multiple times.</param>
+        /// <param name="discNumber">Disc number to filter by. If not specified, all discs are included.</param>
 		/// <param name="lang">Language preference.</param>
 		/// <returns>List of songs with the specified fields.</returns>
+		/// <example>https://vocadb.net/api/albums/5111/tracks/fields?field=title&field=featvocalists</example>
 		[Route("{id:int}/tracks/fields")]
-		public IEnumerable<Dictionary<string, string>> GetTracksFormatted(int id, [FromUri] string[] field = null, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+		public IEnumerable<Dictionary<string, string>> GetTracksFields(int id, [FromUri] string[] field = null,
+			int? discNumber = null,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			return queries.GetTracksFormatted(id, field, lang);
+			return queries.GetTracksFormatted(id, discNumber, field, lang);
 
 		}
 

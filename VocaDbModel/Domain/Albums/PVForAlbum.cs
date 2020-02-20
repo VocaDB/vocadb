@@ -1,9 +1,9 @@
-﻿using VocaDb.Model.DataContracts.PVs;
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Domain.Albums {
 
-	public class PVForAlbum : PV {
+	public class PVForAlbum : PV, IEntryWithIntId {
 
 		private Album album;
 

@@ -1,5 +1,7 @@
 ﻿@using R = ViewRes.User.DetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Users.UserDetailsContract>
+
+<!-- UserSongListsViewModel -->
 	
 @{ var ownProfile = UserContext.IsLoggedIn && UserContext.LoggedUserId == Model.Id && UserContext.LoggedUser.Active; }
 

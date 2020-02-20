@@ -14,22 +14,23 @@ namespace VocaDb.Model.Helpers {
 
 		public static TranslatedString GetTranslatedName(IArtistLinkWithRoles link) {
 
-			return (link.Artist != null ? link.Artist.TranslatedName : TranslatedString.Create(link.Name));
+			return (link.Artist != null && string.IsNullOrEmpty(link.Name) ? link.Artist.TranslatedName : TranslatedString.Create(link.Name));
 
 		}
 
-		public static bool IsProducerRole(IArtistLinkWithRoles link, bool isAnimation) {
+		public static bool IsProducerRole(IArtistLinkWithRoles link, ContentFocus focus) {
 
-			return IsProducerRole(GetCategories(link), isAnimation);
+			return IsProducerRole(GetCategories(link), focus);
 
 		}
 
-		private static bool IsProducerRole(ArtistCategories categories, bool isAnimation) {
+		private static bool IsProducerRole(ArtistCategories categories, ContentFocus focus) {
 
 			return (categories.HasFlag(ArtistCategories.Producer) 
 				|| categories.HasFlag(ArtistCategories.Circle) 
 				|| categories.HasFlag(ArtistCategories.Band) 
-				|| (isAnimation && categories.HasFlag(ArtistCategories.Animator)));
+				|| (focus == ContentFocus.Video && categories.HasFlag(ArtistCategories.Animator))
+				|| (focus == ContentFocus.Illustration && categories.HasFlag(ArtistCategories.Illustrator)));
 
 		}
 
@@ -46,9 +47,10 @@ namespace VocaDb.Model.Helpers {
 
 		public static readonly Dictionary<ArtistType, ArtistCategories> CategoriesForTypes = new Dictionary<ArtistType, ArtistCategories> {
 			{ ArtistType.Animator, ArtistCategories.Animator },
+			{ ArtistType.Character, ArtistCategories.Subject },
 			{ ArtistType.Circle, ArtistCategories.Circle },
 			{ ArtistType.Band, ArtistCategories.Band },
-			{ ArtistType.Illustrator, ArtistCategories.Other },
+			{ ArtistType.Illustrator, ArtistCategories.Illustrator },
 			{ ArtistType.Label, ArtistCategories.Label },
 			{ ArtistType.Lyricist, ArtistCategories.Other },
 			{ ArtistType.OtherGroup, ArtistCategories.Circle },
@@ -61,6 +63,7 @@ namespace VocaDb.Model.Helpers {
 			{ ArtistType.UTAU, ArtistCategories.Vocalist },
 			{ ArtistType.CeVIO, ArtistCategories.Vocalist },
 			{ ArtistType.Vocaloid, ArtistCategories.Vocalist },
+			{ ArtistType.Vocalist, ArtistCategories.Vocalist }
 		};
 
 		/// <summary>
@@ -69,7 +72,7 @@ namespace VocaDb.Model.Helpers {
 		public static readonly ArtistType[] CustomizableTypes = {
 			ArtistType.Animator, ArtistType.OtherGroup, ArtistType.OtherIndividual, 
 			ArtistType.OtherVocalist, ArtistType.Producer, ArtistType.Illustrator, ArtistType.Lyricist, 
-			ArtistType.Utaite, ArtistType.Band, ArtistType.Unknown
+			ArtistType.Utaite, ArtistType.Band, ArtistType.Vocalist, ArtistType.Unknown
 		};
 
 		public static readonly ArtistType[] GroupTypes = {
@@ -93,11 +96,12 @@ namespace VocaDb.Model.Helpers {
 		public static readonly ArtistType[] SongArtistTypes = {
 			ArtistType.Unknown, ArtistType.OtherGroup, ArtistType.OtherVocalist,
 			ArtistType.Producer, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.Vocaloid, ArtistType.Animator, ArtistType.Illustrator,
-			ArtistType.Lyricist, ArtistType.OtherIndividual
+			ArtistType.Lyricist, ArtistType.OtherIndividual, ArtistType.Character
 		};
 
 		public static readonly ArtistType[] VocalistTypes = {
-			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVocalist, ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite
+			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVocalist, 
+			ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite, ArtistType.Vocalist
 		};
 
 		/// <summary>
@@ -127,9 +131,9 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, bool isAnimation) {
+		public static TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus) {
 
-			return new ArtistStringFactory().GetArtistString(artists, isAnimation);
+			return new ArtistStringFactory().GetArtistString(artists, focus);
 
 		}
 
@@ -180,6 +184,9 @@ namespace VocaDb.Model.Helpers {
 				if (roles.HasFlag(ArtistRoles.Animator))
 					cat |= ArtistCategories.Animator;
 
+				if (roles.HasFlag(ArtistRoles.Illustrator))
+					cat |= ArtistCategories.Illustrator;
+
 				//if (roles.HasFlag(ArtistRoles.Illustrator) || roles.HasFlag(ArtistRoles.Lyricist) || roles.HasFlag(ArtistRoles.Mastering))
 				//	cat |= ArtistCategories.Other;
 
@@ -214,11 +221,11 @@ namespace VocaDb.Model.Helpers {
 		/// Here main circle is defined as the circle in which all the producers of the album belong to.
 		/// </summary>
 		/// <param name="artists">List of artists. Cannot be null.</param>
-		/// <param name="isAnimation">Whether animation producers should be considered as well.</param>
+		/// <param name="focus">Determines types of producers to consider.</param>
 		/// <returns>The main circle, or null if there is none.</returns>
-		public static Artist GetMainCircle(IList<IArtistLinkWithRoles> artists, bool isAnimation) {
+		public static Artist GetMainCircle(IList<IArtistLinkWithRoles> artists, ContentFocus focus) {
 
-			var producers = GetProducers(artists.Where(a => !a.IsSupport), isAnimation).ToArray();
+			var producers = GetProducers(artists.Where(a => !a.IsSupport), focus).ToArray();
 
 			// Find the circle in which all the producers belong to
 			var circle = artists.FirstOrDefault(a => a.Artist != null 
@@ -244,14 +251,14 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static IEnumerable<IArtistLinkWithRoles> GetProducers(IEnumerable<IArtistLinkWithRoles> artists, bool isAnimation) {
-			return artists.Where(a => IsProducerRole(a, isAnimation));
+		public static IEnumerable<IArtistLinkWithRoles> GetProducers(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus) {
+			return artists.Where(a => IsProducerRole(a, focus));
 		}
 
-		public static string[] GetProducerNames(IEnumerable<IArtistLinkWithRoles> artists, bool isAnimation, ContentLanguagePreference languagePreference) {
+		public static string[] GetProducerNames(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus, ContentLanguagePreference languagePreference) {
 
 			var matched = artists.Where(IsValidCreditableArtist).ToArray();
-			var producers = matched.Where(a => IsProducerRole(a, isAnimation)).ToArray();
+			var producers = matched.Where(a => IsProducerRole(a, focus)).ToArray();
 			var names = producers.Select(p => GetTranslatedName(p).GetBestMatch(languagePreference)).ToArray();
 
 			return names;

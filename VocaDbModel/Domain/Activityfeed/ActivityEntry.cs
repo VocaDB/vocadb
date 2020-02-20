@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 
@@ -11,7 +11,7 @@ namespace VocaDb.Model.Domain.Activityfeed {
 	/// Entry-specific subclasses contain more detailed information about the activity.
 	/// Consecutive activity entries by the same user for the same entry are merged.
 	/// </summary>
-	public abstract class ActivityEntry {
+	public abstract class ActivityEntry : IEntryWithIntId {
 
 		private User author;
 

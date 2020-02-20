@@ -1,4 +1,4 @@
-﻿
+
 module vdb.viewModels.songs {
 	
 	import cls = vdb.models;
@@ -10,17 +10,22 @@ module vdb.viewModels.songs {
 			private query: KnockoutObservable<string>,
 			private sort: KnockoutObservable<string>,
 			private songType: KnockoutObservable<string>,
+			private afterDate: KnockoutObservable<Date>,
+			private beforeDate: () => Date,
 			private tagIds: KnockoutObservable<number[]>,
 			private childTags: KnockoutObservable<boolean>,
+			private unifyTypesAndTags: KnockoutObservable<boolean>,
 			private artistIds: KnockoutComputed<number[]>,
 			private artistParticipationStatus: KnockoutObservable<string>,
 			private childVoicebanks: KnockoutObservable<boolean>,
 			private includeMembers: KnockoutObservable<boolean>,
+			private eventId: KnockoutComputed<number>,
 			private onlyWithPvs: KnockoutObservable<boolean>,
 			private since: KnockoutObservable<number>,
 			private minScore: KnockoutObservable<number>,
 			private onlyRatedSongs: KnockoutObservable<boolean>,
 			private userCollectionId: number,
+			private parentVersionId: KnockoutComputed<number>,
 			private fields: KnockoutObservable<string>,
 			private draftsOnly: KnockoutObservable<boolean>,
 			private advancedFilters: KnockoutObservableArray<search.AdvancedSearchFilter>) { }
@@ -34,17 +39,22 @@ module vdb.viewModels.songs {
 
 			this.songRepo.getList(paging, cls.globalization.ContentLanguagePreference[lang], this.query(), this.sort(),
 				this.songType() != cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
+				this.afterDate(),
+				this.beforeDate(),
 				this.tagIds(),
 				this.childTags(),
+				this.unifyTypesAndTags(),
 				this.artistIds(),
 				this.artistParticipationStatus(),
 				this.childVoicebanks(),
 				this.includeMembers(),
+				this.eventId(),
 				this.onlyWithPvs(),
 				pvServices,
 				this.since(),
 				this.minScore(),
 				this.onlyRatedSongs() ? this.userCollectionId : null,
+				this.parentVersionId(),
 				this.fields(),
 				this.draftsOnly() ? "Draft" : null,
 				this.advancedFilters ? this.advancedFilters() : null,

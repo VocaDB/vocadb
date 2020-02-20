@@ -22,6 +22,8 @@ module vdb.viewModels {
 
 		public personalDescription: SelfDescriptionViewModel;
 
+		public reviewsViewModel: AlbumReviewsViewModel;
+
 		public tagsEditViewModel: tags.TagsEditViewModel;
 
 		public tagUsages: tags.TagListViewModel;
@@ -82,6 +84,8 @@ module vdb.viewModels {
 
 			});
 
+			this.reviewsViewModel = new AlbumReviewsViewModel(repo, this.id, canDeleteAllComments, canDeleteAllComments, loggedUserId);
+
         }
 
     }
@@ -125,6 +129,163 @@ module vdb.viewModels {
             this.formatString = ko.observable(formatString)
         }
 
-    }
+	}
+
+	export class AlbumReviewsViewModel {
+
+		constructor(
+			private readonly albumRepository: rep.AlbumRepository,
+			private readonly albumId: number,
+			private readonly canDeleteAllComments: boolean,
+			private readonly canEditAllComments: boolean,
+			private readonly loggedUserId?: number) {
+
+		}
+
+		public beginEditReview = (review: AlbumReviewViewModel) => {
+
+			review.beginEdit();
+			this.editReviewModel(review);
+
+		}
+
+		public cancelEditReview = () => {
+			this.editReviewModel(null);
+		}
+
+		private canDeleteReview = (comment: dc.albums.AlbumReviewContract) => {
+			// If one can edit they can also delete
+			return (this.canDeleteAllComments || this.canEditAllComments || (comment.user && comment.user.id === this.loggedUserId));
+		}
+
+		private canEditReview = (comment: dc.albums.AlbumReviewContract) => {
+			return (this.canEditAllComments || (comment.user && comment.user.id === this.loggedUserId));
+		}
+
+		public async createNewReview() {
+			const contract = {
+				date: new Date().toLocaleDateString(),
+				languageCode: this.languageCode(),
+				text: this.newReviewText(),
+				title: this.newReviewTitle(),
+				user: { id: this.loggedUserId }
+			};
+			this.newReviewText("");
+			this.newReviewTitle("");
+			this.showCreateNewReview(false);
+			this.languageCode("");
+			const result = await this.albumRepository.createOrUpdateReview(this.albumId, contract);
+			this.reviews.push(new AlbumReviewViewModel(result, this.canDeleteReview(result), this.canEditReview(result)));
+		}
+
+		public deleteReview = (review: AlbumReviewViewModel) => {
+
+			this.reviews.remove(review);
+
+			this.albumRepository.deleteReview(this.albumId, review.id);
+
+		}
+
+		public getRatingForUser(userId: number): number {
+			return _.chain(this.userRatings())
+				.filter(rating => rating.user && rating.user.id === userId && rating.rating)
+				.map(rating => rating.rating)
+				.take(1)
+				.value()
+				[0];
+		}
+
+		public ratingStars(userRating: number) {
+
+			var ratings = _.map([1, 2, 3, 4, 5], rating => { return { enabled: (Math.round(userRating) >= rating) } });
+			return ratings;
+
+		}
+
+		public saveEditedReview = () => {
+
+			if (!this.editReviewModel())
+				return;
+
+			this.editReviewModel().saveChanges();
+			var editedContract = this.editReviewModel().toContract();
+
+			this.albumRepository.createOrUpdateReview(this.albumId, editedContract);
+
+			this.editReviewModel(null);
+
+		}
+
+		public async loadReviews() {
+			const [reviews, ratings] = await Promise.all([this.albumRepository.getReviews(this.albumId), this.albumRepository.getUserCollections(this.albumId)]);
+			const reviewViewModels = _.map(reviews, review => new AlbumReviewViewModel(review, this.canDeleteReview(review), this.canEditReview(review)));
+			this.reviews(reviewViewModels);
+			this.userRatings(ratings);
+		}
+
+		public editReviewModel = ko.observable<AlbumReviewViewModel>(null);
+
+		public languageCode = ko.observable("");
+
+		public newReviewText = ko.observable("");
+
+		public newReviewTitle = ko.observable("");
+
+		public reviews = ko.observableArray<AlbumReviewViewModel>();
+
+		public showCreateNewReview = ko.observable(false);
+
+		public writeReview = ko.observable(false);
+
+		public reviewAlreadySubmitted = ko.computed(() => {
+			return _.some(this.reviews(), review => review.user.id === this.loggedUserId && review.languageCode() === this.languageCode());
+		});
+
+		private userRatings = ko.observableArray<dc.AlbumForUserForApiContract>();
+
+	}
+
+	export class AlbumReviewViewModel {
+
+		constructor(contract: dc.albums.AlbumReviewContract, public canBeDeleted: boolean, public canBeEdited: boolean) {
+			this.date = new Date(contract.date);
+			this.id = contract.id;
+			this.languageCode = ko.observable(contract.languageCode);
+			this.text = ko.observable(contract.text);
+			this.title = ko.observable(contract.title);
+			this.user = contract.user;
+		}
+
+		public beginEdit = () => {
+			this.editedTitle(this.title());
+			this.editedText(this.text());
+		}
+
+		public saveChanges = () => {
+			this.text(this.editedText());
+			this.title(this.editedTitle());
+		}
+
+		public toContract: () => dc.albums.AlbumReviewContract = () => {
+			return { date: this.date.toISOString(), id: this.id, languageCode: this.languageCode(), text: this.text(), title: this.title(), user: this.user };
+		}
+
+		public date: Date;
+
+		public editedTitle = ko.observable("");
+
+		public editedText = ko.observable("");
+
+		public id?: number;
+
+		public languageCode: KnockoutObservable<string>;
+
+		public text: KnockoutObservable<string>;
+
+		public title: KnockoutObservable<string>;
+
+		public user: dc.user.UserApiContract;
+
+	}
 
 }

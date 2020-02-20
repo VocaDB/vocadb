@@ -1,6 +1,6 @@
-﻿namespace VocaDb.Model.Helpers {
+namespace VocaDb.Model.Helpers {
 
-	public struct CollectionAddResult<T> {
+	public readonly struct CollectionAddResult<T> {
 
 		public CollectionAddResult(T result, bool isNew)
 			: this() {
@@ -10,18 +10,14 @@
 
 		} 
 
-		public bool IsNew { get; private set; }
+		public bool IsNew { get; }
 
-		public T Result { get; private set; }
+		public T Result { get; }
 
 	}
 
-	public static class CollectionAddResult {
-	
-		public static CollectionAddResult<T> Create<T>(T result, bool isNew) {
-			return new CollectionAddResult<T>(result, isNew);
-		}
-	
+	public static class CollectionAddResult {	
+		public static CollectionAddResult<T> Create<T>(T result, bool isNew) => new CollectionAddResult<T>(result, isNew);
 	}
 
 }

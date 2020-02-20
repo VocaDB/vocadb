@@ -1,4 +1,4 @@
-﻿using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Mapping.Security {
@@ -14,6 +14,11 @@ namespace VocaDb.Model.Mapping.Security {
 			Map(m => m.AgentName).Length(100).Not.Nullable();
 			Map(m => m.Time).Not.Nullable();
 			References(m => m.User).Nullable();
+
+			Component(m => m.EntryId, c => {
+				c.Map(m => m.EntryType, "EntryType");
+				c.Map(m => m.Id, "EntryId");
+			});
 
 		}
 

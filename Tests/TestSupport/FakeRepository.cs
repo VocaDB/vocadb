@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
@@ -13,7 +14,8 @@ namespace VocaDb.Tests.TestSupport {
 	/// Fake in-memory repository for testing.
 	/// </summary>
 	/// <typeparam name="T">Type of entities this repository contains.</typeparam>
-	public class FakeRepository<T> : IRepository<T> {
+	public class FakeRepository<T> : IRepository<T> 
+		where T : class, IDatabaseObject {
 
 		protected readonly QuerySourceList querySource;
 
@@ -30,29 +32,34 @@ namespace VocaDb.Tests.TestSupport {
 			this.querySource = querySource;
 		}
 
+		public int AbortedTransactionCount => querySource.AbortedTransactionCount;
+		public int CommittedTransactionCount => querySource.CommittedTransactionCount;
+
 		/// <summary>
 		/// Adds a list of entities to the repository without performing any additional persisting logic.
 		/// For example, Ids will not be generated this way.
 		/// </summary>
 		/// <typeparam name="TEntity">Type of entities to be added.</typeparam>
 		/// <param name="entities">List of entities to be added. Cannot be null.</param>
-		public void Add<TEntity>(params TEntity[] entities) {
+		public void Add<TEntity>(params TEntity[] entities) where TEntity : class, IDatabaseObject {
 			querySource.AddRange(entities);
 		}
 
-		public bool Contains<TEntity>(TEntity entity) {
-			return querySource.List<TEntity>().Contains(entity);
-		}
+		public bool Contains<TEntity>(TEntity entity) where TEntity : class, IDatabaseObject 
+			=> querySource.List<TEntity>().Contains(entity);
 
-		public int Count<TEntity>() {
-			return querySource.List<TEntity>().Count;
-		}
+		public int Count<TEntity>() where TEntity : class, IDatabaseObject 
+			=> querySource.List<TEntity>().Count;
 
 		public virtual ListDatabaseContext<T> CreateContext() {
 			return new ListDatabaseContext<T>(querySource);
 		}
 
 		public TResult HandleQuery<TResult>(Func<IDatabaseContext<T>, TResult> func, string failMsg = "Unexpected database error") {
+			return func(CreateContext());
+		}
+
+		public Task<TResult> HandleQueryAsync<TResult>(Func<IDatabaseContext<T>, Task<TResult>> func, string failMsg = "Unexpected database error") {
 			return func(CreateContext());
 		}
 
@@ -64,23 +71,30 @@ namespace VocaDb.Tests.TestSupport {
 			return func(CreateContext());
 		}
 
-		public List<TEntity> List<TEntity>() {
-			return querySource.List<TEntity>();
+		public Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext<T>, Task<TResult>> func, string failMsg = "Unexpected database error") {
+			return func(CreateContext());
 		}
 
-		public T Load(int id) {
-			return HandleQuery(ctx => ctx.Load(id));
+		public Task HandleTransactionAsync(Func<IDatabaseContext<T>, Task> func, string failMsg = "Unexpected database error") {
+			return func(CreateContext());
 		}
 
-		public T Load(object id) {
-			return HandleQuery(ctx => ctx.Load(id));
-		}
+		/// <summary>
+		/// Tests that an object was saved to database during an active transaction and the transaction was committed.
+		/// </summary>
+		public bool IsCommitted<T2>(T2 entity) where T2 : class, IDatabaseObject 
+			=> querySource.IsCommitted(entity);
 
-		public T2 Load<T2>(object id) {
-			return OfType<T2>().Load(id);
-		}
+		public List<TEntity> List<TEntity>() where TEntity : class, IDatabaseObject 
+			=> querySource.List<TEntity>();
 
-		public FakeRepository<T2> OfType<T2>() {
+		public T Load(int id) => HandleQuery(ctx => ctx.Load(id));
+
+		public T Load(object id) => HandleQuery(ctx => ctx.Load(id));
+
+		public T2 Load<T2>(object id) where T2 : class, IDatabaseObject => OfType<T2>().Load(id);
+
+		public FakeRepository<T2> OfType<T2>() where T2 : class, IDatabaseObject {
 			return new FakeRepository<T2>(querySource);
 		}
 
@@ -90,7 +104,12 @@ namespace VocaDb.Tests.TestSupport {
 		/// </summary>
 		/// <typeparam name="T2">Type of entity to be saved.</typeparam>
 		/// <param name="objs">Entity to be saved. Cannot be null.</param>
-		public void Save<T2>(params T2[] objs) {
+		public void Save<T2>(params T2[] objs) where T2 : class, IDatabaseObject {
+			foreach (var obj in objs)
+				CreateContext().Save(obj);
+		}
+
+		public void Save<T2>(ICollection<T2> objs) where T2 : class, IDatabaseObject {
 			foreach (var obj in objs)
 				CreateContext().Save(obj);
 		}
@@ -101,7 +120,7 @@ namespace VocaDb.Tests.TestSupport {
 		/// </summary>
 		/// <typeparam name="T2">Type of entity to be saved.</typeparam>
 		/// <param name="obj">Entity to be saved. Cannot be null.</param>
-		public T2 Save<T2>(T2 obj) {
+		public T2 Save<T2>(T2 obj) where T2 : class, IDatabaseObject {
 			CreateContext().Save(obj);
 			return obj;
 		}
@@ -126,7 +145,9 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public TEntry SaveWithNames<TEntry, TName>(TEntry entry) where TEntry : IEntryWithNames<TName> where TName : LocalizedStringWithId {
+		public TEntry SaveWithNames<TEntry, TName>(TEntry entry) 
+			where TEntry : class, IEntryWithNames<TName> 
+			where TName : LocalizedStringWithId {
 
 			CreateContext().Save(entry);
 			SaveNames(entry);
@@ -135,26 +156,24 @@ namespace VocaDb.Tests.TestSupport {
 		}
 	}
 
-	public class ListDatabaseContext<T> : IDatabaseContext<T> {
+	public class ListDatabaseContext<T> : IDatabaseContext<T> 
+		where T : class, IDatabaseObject {
 
 		private static readonly bool isEntityWithId = typeof(IEntryWithIntId).IsAssignableFrom(typeof(T)) || typeof(IEntryWithLongId).IsAssignableFrom(typeof(T));
 
-		protected bool IsEntityWithId {
-			get { return isEntityWithId; }
-		}
+		protected bool IsEntityWithId => isEntityWithId;
 
 		// Get next Id
 		private void AssignNewId(T obj) {
 
-			var entityInt = obj as IEntryWithIntId;
+			switch (obj) {
+				case IEntryWithIntId entityInt when entityInt.Id == 0:
+					entityInt.Id = (Query().Any() ? Query().Max(o => ((IEntryWithIntId)o).Id) + 1 : 1);
+					break;
 
-			if (entityInt != null && entityInt.Id == 0) {
-				entityInt.Id = (Query().Any() ? Query().Max(o => ((IEntryWithIntId)o).Id) + 1 : 1);
-			}
-
-			var entityLong = obj as IEntryWithLongId;
-			if (entityLong != null && entityLong.Id == 0) {
-				entityLong.Id = (Query().Any() ? Query().Max(o => ((IEntryWithLongId)o).Id) + 1 : 1);
+				case IEntryWithLongId entityLong when entityLong.Id == 0:
+					entityLong.Id = (Query().Any() ? Query().Max(o => ((IEntryWithLongId)o).Id) + 1 : 1);
+					break;
 			}
 
 		}
@@ -188,11 +207,12 @@ namespace VocaDb.Tests.TestSupport {
 		/// <returns>Entity Id. Cannot be null (Id can never be null)</returns>
 		protected virtual object GetId(T entity) {
 			
-			if (entity is IEntryWithIntId)
-				return ((IEntryWithIntId)entity).Id;
-
-			if (entity is IEntryWithLongId)
-				return ((IEntryWithLongId)entity).Id;
+			switch (entity) {
+				case IEntryWithIntId id:
+					return id.Id;
+				case IEntryWithLongId longId:
+					return longId.Id;
+			}
 
 			if (typeof(T).GetProperty("Id") == null)
 				throw new NotSupportedException("Id property not found. You need to override GetId method for this repository.");
@@ -208,18 +228,15 @@ namespace VocaDb.Tests.TestSupport {
 			this.querySource = querySource;
 		}
 
-		public IAuditLogger AuditLogger {
-			get {
-				return new FakeAuditLogger();
-			}
-		}
+		public IAuditLogger AuditLogger => new FakeAuditLogger();
 
-		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) {
-			return new FakeTransaction();
-		}
+		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) => querySource.BeginTransaction(isolationLevel);
 
-		public void Delete(T entity) {
-			querySource.List<T>().Remove(entity);
+		public void Delete(T entity) => querySource.List<T>().Remove(entity);
+
+		public Task DeleteAsync(T entity) {
+			Delete(entity);
+			return Task.CompletedTask;
 		}
 
 		public void Dispose() {
@@ -248,17 +265,14 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public virtual IDatabaseContext<T2> OfType<T2>() {
-			return new ListDatabaseContext<T2>(querySource);
-		}
+		public Task<T> LoadAsync(object id) => Task.FromResult(Load(id));
 
-		public IQueryable<T> Query() {
-			return querySource.Query<T>();
-		}
+		public virtual IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject
+			=> new ListDatabaseContext<T2>(querySource);
 
-		public IQueryable<T2> Query<T2>() {
-			return OfType<T2>().Query();
-		}
+		public IQueryable<T> Query() => querySource.Query<T>();
+
+		public IQueryable<T2> Query<T2>() where T2 : class, IDatabaseObject => OfType<T2>().Query();
 
 		public T Save(T obj) {
 
@@ -271,6 +285,8 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
+		public Task<T> SaveAsync(T obj) => Task.FromResult(Save(obj));
+
 		public virtual void Update(T obj) {
 
 			var existing = Load(GetId(obj));
@@ -279,6 +295,10 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
+		public Task UpdateAsync(T obj) {
+			Update(obj);
+			return Task.CompletedTask;
+		}
 	}
 
 }

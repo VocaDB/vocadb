@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -15,7 +15,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			ArchivedVersion = new ArchivedEventVersionContract(archived);
 			ComparedVersion = comparedVersion != null ? new ArchivedEventVersionContract(comparedVersion) : null;
-			ComparedVersionId = comparedVersion != null ? comparedVersion.Id : 0;
 			ReleaseEvent = new ReleaseEventContract(archived.ReleaseEvent, languagePreference);
 			Name = ReleaseEvent.Name;
 

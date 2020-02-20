@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using HtmlAgilityPack;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -42,7 +44,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			var date = ParseDate(doc.DocumentNode.SelectSingleNode("//div[@class = 'audio-main-content-info-heading']")?.InnerText);
 			var author = doc.DocumentNode.SelectSingleNode("//a[@class = 'user-info-icon']")?.Attributes["title"]?.Value; // <a class="user-info-icon" title="ERIGON" href="/erigon">
 
-			return VideoTitleParseResult.CreateSuccess(title, author, thumb, length, uploadDate: date);
+			return VideoTitleParseResult.CreateSuccess(title, author, null, thumb, length, uploadDate: date);
 
 		}
 
@@ -52,17 +54,9 @@ namespace VocaDb.Model.Service.VideoServices {
 			return this.ParseDocument(doc, url);
 		}
 
-		public VideoTitleParseResult GetTitle(string id) {
-
+		public Task<VideoTitleParseResult> GetTitleAsync(string id) {
 			var url = string.Format("https://creofuga.net/audios/{0}", id);
-
-			var request = WebRequest.Create(url);
-
-			using (var response = request.GetResponse())
-			using (var stream = response.GetResponseStream()) {
-				return ParseByHtmlStream(stream, Encoding.UTF8, url);
-			}
-				
+			return HtmlRequestHelper.GetStreamAsync(url, stream => ParseByHtmlStream(stream, Encoding.UTF8, url));
 		}
 
 	}

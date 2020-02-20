@@ -22,6 +22,26 @@ namespace VocaDb.Web.Helpers {
 				Data = points.Select(p => new object[] { ToEpochTime(p.Item1), p.Item2 }).ToArray()
 			};
 
+			var series = (average ? new[] {
+					dataSeries,
+					new Series {
+						Type = SeriesType.Spline,
+						Name = "Average",
+						Data = averages.Select(p => new object[] { ToEpochTime(p.Item1), p.Item2 }).ToArray(),
+						Marker = new {
+							enabled = false
+						},
+						LineWidth = 4
+					}
+				}
+				: new[] { dataSeries });
+
+			return DateLineChart(title, pointsTitle, yAxisTitle, series);
+
+		}
+
+		public static Highchart DateLineChart(string title, string pointsTitle, string yAxisTitle, ICollection<Series> series) {
+
 			return new Highchart {
 				Chart = new Chart {
 					Height = 600
@@ -44,27 +64,15 @@ namespace VocaDb.Web.Helpers {
 					}
 				},
 				Legend = new {
-						Layout = "vertical",
-						Align = "left",
-						X = 120,
-						VerticalAlign = "top",
-						Y = 100,
-						Floating = true,
-						BackgroundColor = "#FFFFFF"
+					Layout = "vertical",
+					Align = "left",
+					X = 120,
+					VerticalAlign = "top",
+					Y = 100,
+					Floating = true,
+					BackgroundColor = "#FFFFFF"
 				},
-				Series = (average ? new[] {
-					dataSeries,
-					new Series {
-						Type = SeriesType.Spline,
-						Name = "Average",
-						Data = averages.Select(p => new object[] { ToEpochTime(p.Item1), p.Item2 }).ToArray(),
-						Marker = new {
-							enabled = false
-						},
-						LineWidth = 4
-					}
-				}
-				: new[] { dataSeries })
+				Series = series
 			};
 
 		}

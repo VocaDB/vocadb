@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
@@ -25,6 +25,8 @@ namespace VocaDb.Model.Service.Search.User {
 		}
 
 		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+
+		public LogicalGrouping ArtistGrouping { get; set; }
 
 		public int[] ArtistIds { get; set; }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts;
@@ -62,19 +62,26 @@ namespace VocaDb.Model.Domain.Security {
 		public static readonly PermissionToken EditProfile =			New("4f79b01a-7154-4a7f-bc87-a8a9259a9905", "EditProfile");
 		public static readonly PermissionToken LockEntries =			New("eb02e92e-207f-4330-a763-6bafd2cedde1", "LockEntries");
 		public static readonly PermissionToken ManageDatabase =			New("d762d720-79ef-4e60-8397-1d638c26d82b", "ManageDatabase");
+		public static readonly PermissionToken EditTags =               New("2ab6da19-bc5a-4a28-86d4-8ddce399ca0b", "EditTags");
 		public static readonly PermissionToken ManageEntryReports =		New("f9eb1d22-9142-4a04-9238-f4ebe5f1fc17", "ManageEntryReports");
 		[Obsolete]
 		public static readonly PermissionToken ManageEventSeries =		New("cf39509b-b9c5-4efc-9b13-2743ffec9aac", "ManageEventSeries");
 		public static readonly PermissionToken ManageIPRules =			New("f125fe5b-6474-4d52-823f-955c7d19f7c8", "ManageIPRules");
 		public static readonly PermissionToken ManageUserPermissions =	New("c0eb147e-10f5-4fea-9b19-b412ef613479", "ManageUserPermissions");
+		public static readonly PermissionToken ManageTagMappings =		New("c93667a9-a270-486d-ab00-db3ff390dd83", nameof(ManageTagMappings));
 		public static readonly PermissionToken MergeEntries =			New("eb336a5b-8455-4048-bc3a-8003dc522dc5", "MergeEntries");
 		public static readonly PermissionToken MikuDbImport =			New("0b879c57-5eba-462a-b842-d9f7dd0befd8", "MikuDbImport");
 		public static readonly PermissionToken MoveToTrash =			New("99c333a2-ea0a-4a7b-91cb-ceef6f667389", "MoveToTrash");
+		public static readonly PermissionToken ReportUser =				New("85c730a1-402c-4922-b617-6c6068f5f98e", nameof(ReportUser));
 		public static readonly PermissionToken RemoveEditPermission =	New("6b258b3e-97a1-4cf7-9c4f-80787c2d2266", "RemoveEditPermission");
 		public static readonly PermissionToken RemoveTagUsages =		New("135aaf49-08d5-42bb-b8ed-ef1ceb910a69", "RemoveTagUsages");
 		public static readonly PermissionToken RestoreRevisions =		New("e99a1e1c-1742-48c1-877b-17cb2964e8bc", "RestoreRevisions");
 		public static readonly PermissionToken UploadMedia =			New("be1a2f04-6dc2-4d63-b34e-4499f6389231", "UploadMedia");
 		public static readonly PermissionToken ViewAuditLog	=			New("8d3d5395-12c9-440a-8120-4911034b9a7e", "ViewAuditLog");
+		/// <summary>
+		/// View ratings by users whose ratings are normally hidden.
+		/// </summary>
+		public static readonly PermissionToken ViewHiddenRatings =		New("47bcc523-5667-403d-bd20-d2728e1f9c5f", nameof(ViewHiddenRatings));
 
 		/// <summary>
 		/// All tokens except Nothing

@@ -15,6 +15,12 @@ module vdb.repositories {
 			$.post(this.urlMapper.mapRelative("/api/users/current/followedTags/" + tagId), callback);
 		}
 
+		public createArtistSubscription = (artistId: number, callback?: () => void) => {
+
+			$.post(this.mapUrl("/AddArtistForUser"), { artistId: artistId }, callback);
+
+		};
+
 		public createComment = (userId: number, contract: dc.CommentContract, callback: (contract: dc.CommentContract) => void) => {
 
 			$.post(this.urlMapper.mapRelative("/api/users/" + userId + "/profileComments"), contract, callback, 'json');
@@ -25,6 +31,12 @@ module vdb.repositories {
 
 			return $.post(this.urlMapper.mapRelative("/api/users/" + userId + "/messages"), contract, callback, 'json');
 			
+		}
+
+		public deleteArtistSubscription = (artistId: number, callback?: () => void) => {
+
+			$.post(this.mapUrl("/RemoveArtistFromUser"), { artistId: artistId }, callback);
+
 		}
 
 		public deleteComment = (commentId: number, callback: () => void) => {
@@ -62,6 +74,7 @@ module vdb.repositories {
 			userId: number,
 			paging: dc.PagingProperties, lang: string, query: string,
 			tag: number,
+			albumType: string,
 			artistId: number,
 			purchaseStatuses: string,
 			releaseEventId: number,
@@ -74,6 +87,7 @@ module vdb.repositories {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				query: query,
 				tagId: tag,
+				albumTypes: albumType,
 				artistId: artistId,
 				purchaseStatuses: purchaseStatuses,
 				releaseEventId: releaseEventId || undefined,
@@ -110,13 +124,18 @@ module vdb.repositories {
 		public getFollowedArtistsList = (
 			userId: number,
 			paging: dc.PagingProperties, lang: string,
+			tagIds: number[],
 			artistType: string,
 			callback) => {
 
 			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/followedArtists");
 			var data = {
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
-				fields: "AdditionalNames,MainPicture", lang: lang, nameMatchMode: 'Auto', artistType: artistType
+				tagId: tagIds,
+				fields: "AdditionalNames,MainPicture",
+				lang: lang,
+				nameMatchMode: 'Auto',
+				artistType: artistType
 			};
 
 			$.getJSON(url, data, callback);
@@ -220,13 +239,20 @@ module vdb.repositories {
 
 		}
 
-		public getSongLists = (userId: number, query: string, paging: dc.PagingProperties, sort: string, fields: string,
+		public getSongLists = (
+			userId: number,
+			query: string,
+			paging: dc.PagingProperties,
+			tagIds: number[],
+			sort: string,
+			fields: string,
 			callback: (result: dc.PartialFindResultContract<dc.SongListContract>) => void) => {
 	    
 			var url = this.urlMapper.mapRelative("/api/users/" + userId + "/songLists");
 			$.getJSON(url, {
 				query: query,
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
+				tagId: tagIds,
 				sort: sort,
 				fields: fields
 			}, callback);
@@ -272,6 +298,12 @@ module vdb.repositories {
 		public getEventSeriesTagSelections = (seriesId: number, callback: (tags: dc.tags.TagSelectionContract[]) => void) => {
 
 			$.getJSON(this.urlMapper.mapRelative("/api/users/current/eventSeriesTags/" + seriesId), callback);
+
+		}
+
+		public getSongListTagSelections = (songListId: number, callback: (tags: dc.tags.TagSelectionContract[]) => void) => {
+
+			$.getJSON(this.urlMapper.mapRelative("/api/users/current/songListTags/" + songListId), callback);
 
 		}
 
@@ -332,6 +364,12 @@ module vdb.repositories {
 
 		public updateEventSeriesTags = (seriesId: number, tags: dc.TagBaseContract[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
 			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/eventSeriesTags/" + seriesId), tags, callback);
+		}
+
+		public updateSongListTags = (songListId: number, tags: dc.TagBaseContract[], callback: (usages: dc.tags.TagUsageForApiContract[]) => void) => {
+
+			helpers.AjaxHelper.putJSON(this.urlMapper.mapRelative("/api/users/current/songListTags/" + songListId), tags, callback);
+
 		}
 
         // Updates rating score for a song.

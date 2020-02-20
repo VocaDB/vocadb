@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
@@ -18,6 +18,7 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Web.Models {
 
@@ -49,26 +50,30 @@ namespace VocaDb.Web.Models {
 			Description = contract.Description;
 			Deleted = contract.Deleted;
 			DiscType = contract.DiscType;
+			DiscTypeTypeTag = contract.DiscTypeTypeTag;
 			Draft = contract.Status == EntryStatus.Draft;
 			Hits = contract.Hits;
 			Id = contract.Id;
 			LatestComments = contract.LatestComments;
+			LatestReview = contract.Stats.LatestReview;
+			LatestReviewRatingScore = contract.Stats.LatestReviewRatingScore;
 			MergedTo = contract.MergedTo;
 			Name = contract.Name;
-			OwnedBy = contract.OwnedCount;
+			OwnedBy = contract.Stats.OwnedCount;
 			PersonalDescriptionText = contract.PersonalDescriptionText;
 			PersonalDescriptionAuthor = contract.PersonalDescriptionAuthor;
 			Pictures = contract.Pictures;
 			PVs = contract.PVs;
 			RatingAverage = contract.RatingAverage;
 			RatingCount = contract.RatingCount;
+			ReviewCount = contract.Stats.ReviewCount;
 			Status = contract.Status;
 			Tags = contract.Tags;
 			TotalLength = contract.TotalLength;
 			UserHasAlbum = contract.AlbumForUser != null;
 			Version = contract.Version;
 			WebLinks = contract.WebLinks;
-			WishlistedBy = contract.WishlistCount;
+			WishlistedBy = contract.Stats.WishlistCount;
 			mime = contract.CoverPictureMime;
 
 			var songsByDiscs = contract.Songs.GroupBy(s => s.DiscNumber);
@@ -92,13 +97,18 @@ namespace VocaDb.Web.Models {
 			}
 
 			var artists = contract.ArtistLinks;
+			ContentFocus = AlbumHelper.GetContentFocus(DiscType);
 
 			Bands = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Band)).ToArray();
 			Circles = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Circle)).ToArray();
+			Illustrators = ContentFocus == ContentFocus.Illustration ? artists.Where(a => a.Categories.HasFlag(ArtistCategories.Illustrator)).ToArray() : null;
 			Labels = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Label)).ToArray();
 			Producers = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Producer)).ToArray();
 			Vocalists = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Vocalist)).ToArray();
-			OtherArtists = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Other) || a.Categories.HasFlag(ArtistCategories.Animator)).ToArray();
+			Subject = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Subject)).ToArray();
+			OtherArtists = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Other) 
+				|| a.Categories.HasFlag(ArtistCategories.Animator) 
+				|| (ContentFocus != ContentFocus.Illustration && a.Categories.HasFlag(ArtistCategories.Illustrator))).ToArray();
 
 			PrimaryPV = PVHelper.PrimaryPV(PVs);
 
@@ -128,6 +138,8 @@ namespace VocaDb.Web.Models {
 
 		public int CommentCount { get; set; }
 
+		public ContentFocus ContentFocus { get; set; }
+
 		public DateTime CreateDate { get; set; }
 
 		public bool Deleted { get; set; }
@@ -138,6 +150,8 @@ namespace VocaDb.Web.Models {
 
 		public DiscType DiscType { get; set; }
 
+		public TagBaseContract DiscTypeTypeTag { get; set; }
+
 		public bool Draft { get; set; }
 
 		public DateTime? FullReleaseDate { get; set; }
@@ -145,6 +159,8 @@ namespace VocaDb.Web.Models {
 		public int Hits { get; set; }
 
 		public int Id { get; set; }
+
+		public ArtistForAlbumContract[] Illustrators { get; set; }
 
 		public string Json {
 			get {
@@ -155,6 +171,10 @@ namespace VocaDb.Web.Models {
 		public ArtistForAlbumContract[] Labels { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }
+
+		public AlbumReviewContract LatestReview { get; set; }
+
+		public int LatestReviewRatingScore { get; set; }
 
 		public AlbumContract MergedTo { get; set; }
 
@@ -202,6 +222,8 @@ namespace VocaDb.Web.Models {
 			}
 		}
 
+		public int ReviewCount { get; set; }
+
 		public bool ShowProducerRoles {
 			get {
 				// Show producer roles if more than one producer and other roles besides just composer.
@@ -210,6 +232,8 @@ namespace VocaDb.Web.Models {
 		}
 
 		public EntryStatus Status { get; set; }
+
+		public ArtistForAlbumContract[] Subject { get; set; }
 
 		public TagUsageForApiContract[] Tags { get; set; }
 

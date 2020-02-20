@@ -19,7 +19,7 @@ namespace VocaDb.Model.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class SongValidationErrors {
@@ -97,7 +97,7 @@ namespace VocaDb.Model.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Songs needs notes, PVs or links for reference..
+        ///   Looks up a localized string similar to Song needs notes, PVs or links for reference..
         /// </summary>
         public static string NeedReferences {
             get {
@@ -129,6 +129,15 @@ namespace VocaDb.Model.Resources {
         public static string RedundantEvent {
             get {
                 return ResourceManager.GetString("RedundantEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Producer&apos;s roles do not need to be specified when that producer is the only one..
+        /// </summary>
+        public static string RedundantRoles {
+            get {
+                return ResourceManager.GetString("RedundantRoles", resourceCulture);
             }
         }
         

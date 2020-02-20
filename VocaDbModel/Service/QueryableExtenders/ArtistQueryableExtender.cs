@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
@@ -25,7 +26,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			} else {
 
-				return FindHelpers.AddEntryNameFilter(query, textQuery);
+				return query.WhereEntryNameIs(textQuery);
 
 			}
 
@@ -109,8 +110,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			if (string.IsNullOrEmpty(extLinkUrl) || extLinkUrl.Length <= 1)
 				return query;
 
-			var withoutSlash = extLinkUrl.EndsWith("/") ? extLinkUrl.Substring(0, extLinkUrl.Length - 1) : extLinkUrl;
-			return query.Where(a => a.WebLinks.Any(link => link.Url == withoutSlash || link.Url == withoutSlash + "/"));
+			return query.WhereHasLink<Artist, ArtistWebLink>(extLinkUrl, WebLinkVariationTypes.All);
 
 		} 
 

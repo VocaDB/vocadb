@@ -1,6 +1,12 @@
 ﻿
 function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 
+	function initMediaPlayer() {
+		$('audio').mediaelementplayer({
+			pluginPath: 'https://cdnjs.com/libraries/mediaelement/'
+		});
+	}
+
     $(".js-ratingButtons").buttonset();
 	$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
 	$("#manageTags").button({ icons: { primary: 'ui-icon-wrench' } });
@@ -36,6 +42,7 @@ function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 		var id = getId(this);
 		$.post(urlMapper.mapRelative("/Song/PVForSong"), { pvId: id }, function (content) {
 			$("#pvPlayer").html(content);
+			initMediaPlayer();
 		});
 
 		return false;
@@ -44,5 +51,6 @@ function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
 
 	$("td.artistList a").vdbArtistToolTip();
 	$("#albumList a").vdbAlbumWithCoverToolTip();
+	initMediaPlayer();
 
 }

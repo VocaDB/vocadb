@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using System.Runtime.Serialization;
@@ -40,28 +40,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			RatingAverage = album.RatingAverage;
 			RatingCount = album.RatingCount;
 			ReleaseDate = new OptionalDateTimeContract(album.OriginalReleaseDate);
-			ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, null, false) : null;
-			Status = album.Status;
-			Version = album.Version;
-
-		}
-
-		public AlbumContract(TranslatedAlbumContract album, ContentLanguagePreference languagePreference) {
-
-			ParamIs.NotNull(() => album);
-
-			AdditionalNames = album.Names.GetAdditionalNamesStringForLanguage(languagePreference);
-			ArtistString = album.TranslatedArtistString.GetBestMatch(languagePreference);
-			CoverPictureMime = album.CoverPictureMime;
-			CreateDate = album.CreateDate;
-			Deleted = album.Deleted;
-			DiscType = album.DiscType;
-			Id = album.Id;
-			Name = album.Names.SortNames[languagePreference];
-			RatingAverage = album.RatingAverage;
-			RatingCount = album.RatingCount;
-			ReleaseDate = album.ReleaseDate;
-			ReleaseEvent = album.ReleaseEvent;
+			ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, null) : null;
 			Status = album.Status;
 			Version = album.Version;
 

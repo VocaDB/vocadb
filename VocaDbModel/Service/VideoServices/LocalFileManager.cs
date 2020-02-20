@@ -20,7 +20,18 @@ namespace VocaDb.Model.Service.VideoServices {
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		public const int MaxMediaSizeMB = 20;
 		public const int MaxMediaSizeBytes = MaxMediaSizeMB * 1024 * 1024;
-		public static readonly string[] MimeTypes = { "audio/mp3", "audio/mpeg" };
+		public static readonly string[] Extensions = { ".mp3", ".jpg", ".png" };
+		public static readonly string[] MimeTypes = { "audio/mp3", "audio/mpeg", "image/jpeg", "image/png" };
+
+		public static bool IsAudio(string filename) {
+			return !IsImage(filename);
+		}
+
+		public static bool IsImage(string filename) {
+			string[] imageExtensions = { ".jpg", ".png" };
+			var ext = Path.GetExtension(filename);
+			return imageExtensions.Contains(ext);
+		}
 
 		public PVContract CreatePVContract(HttpPostedFileBase file, IIdentity user, IUser loggedInUser) {
 
@@ -49,6 +60,23 @@ namespace VocaDb.Model.Service.VideoServices {
 			return Path.Combine(AppConfig.StaticContentPath + "\\media\\", pvId);
         }
 
+		private void CreateThumbnail(string oldFull, string pvId, PVForSong pv) {
+
+			if (!IsImage(oldFull))
+				return;
+
+			var path = Path.Combine(AppConfig.StaticContentPath + "\\media-thumb\\", pvId);
+
+			using (var stream = new FileStream(oldFull, FileMode.Open))
+			using (var original = ImageHelper.OpenImage(stream)) {
+				var thumb = ImageHelper.ResizeToFixedSize(original, 560, 315);
+				thumb.Save(path);
+				pv.ThumbUrl = VocaUriBuilder.StaticResource("/media-thumb/" + pvId);
+				pv.Song.UpdateThumbUrl();
+			}
+
+		}
+
 		public void SyncLocalFilePVs(CollectionDiff<PVForSong, PVForSong> diff, int songId) {
 
 			var addedLocalMedia = diff.Added.Where(m => m.Service == PVService.LocalFile);
@@ -59,7 +87,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				if (Path.GetDirectoryName(oldFull) != Path.GetDirectoryName(Path.GetTempPath()))
 					throw new InvalidOperationException("File folder doesn't match with temporary folder");
 
-				if (Path.GetExtension(oldFull) != ".mp3")
+				if (!Extensions.Contains(Path.GetExtension(oldFull)))
 					throw new InvalidOperationException("Invalid extension");
 
 				var newId = string.Format("{0}-S{1}-{2}", pv.Author, songId, pv.PVId);
@@ -74,6 +102,8 @@ namespace VocaDb.Model.Service.VideoServices {
 					var fs = File.GetAccessControl(newFull);
 					fs.SetAccessRuleProtection(false, false);
 					File.SetAccessControl(newFull, fs);
+
+					CreateThumbnail(newFull, newId, pv);
 
 				} catch (IOException x) {
 					log.Error(x, "Unable to move local media file: " + oldFull);

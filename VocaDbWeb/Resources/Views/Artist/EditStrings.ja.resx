@@ -123,6 +123,9 @@
   <data name="BaDescription" xml:space="preserve">
     <value>概要</value>
   </data>
+  <data name="BaGroups" xml:space="preserve">
+    <value>サークルとグループs</value>
+  </data>
   <data name="BaMainPicture" xml:space="preserve">
     <value>主な絵</value>
   </data>
@@ -131,5 +134,8 @@
   </data>
   <data name="PiPicturesNote" xml:space="preserve">
     <value>このアーティストに関連する絵だけアップロードしてください。</value>
+  </data>
+  <data name="TabAdditionalPictures" xml:space="preserve">
+    <value>その他の絵</value>
   </data>
 </root>

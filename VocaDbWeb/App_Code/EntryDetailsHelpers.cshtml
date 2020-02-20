@@ -21,6 +21,7 @@
 
 @helper EntryDeletePopupBase(string confirmText, string viewModelBindingName,  string deleteButtonId, string title, string deleteButtonText) {
 
+	<!-- Viewmodel: DeleteEntryViewModel -->
 	<div style="display:none;" title="@title"
 		data-bind="
 		dialog: {
@@ -29,7 +30,7 @@
 		},
 		dialogVisible: @(viewModelBindingName).dialogVisible,
 		dialogButtons: [
-			{ text: '@deleteButtonText', click: @(viewModelBindingName).deleteEntry }, 
+			{ text: '@deleteButtonText', click: @(viewModelBindingName).deleteEntry, disabled: !@(viewModelBindingName).isValid() }, 
 			{ text: '@ViewRes.SharedStrings.Cancel', click: function() { @(viewModelBindingName).dialogVisible(false); } }
 		]
 		">
@@ -38,7 +39,7 @@
 			@confirmText
 		</p>
 
-		<textarea data-bind="textInput: @(viewModelBindingName).notes" class="input-xlarge" maxlength="200"></textarea>
+		<textarea data-bind="textInput: @(viewModelBindingName).notes, attr: { required: @(viewModelBindingName).notesRequired }" class="input-xlarge" maxlength="200"></textarea>
 
 	</div>
 
@@ -109,6 +110,7 @@
 
 @helper ReportEntryPopupKnockout(string viewModelBindingName = "reportViewModel", string reportButtonId = "reportEntryLink") {
 
+	<!-- Viewmodel: ReportEntryViewModel -->
 	<div style="display:none;" title="@ViewRes.EntryDetailsStrings.ReportAnError"
 		 data-bind="
 			with: @viewModelBindingName,

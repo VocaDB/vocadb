@@ -5,6 +5,8 @@ module vdb.dataContracts {
 
 		additionalNames: string;
 
+		artistType: string;
+
 		mainPicture: EntryThumbContract;
 
 	}

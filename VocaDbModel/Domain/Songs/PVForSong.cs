@@ -1,11 +1,14 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class PVForSong : PV, IPVWithThumbnail, ISongLink {
+	public class PVForSong : PV, IPVWithThumbnail, ISongLink, IEntryWithIntId {
 
 		private Song song;
 		private string thumbUrl;
@@ -20,8 +23,8 @@ namespace VocaDb.Model.Domain.Songs {
 			Song = song;
 			Length = contract.Length;
 			ThumbUrl = contract.ThumbUrl ?? string.Empty;
-			PublishDate = contract.PublishDate;
 			CreatedBy = contract.CreatedBy;
+			Disabled = contract.Disabled;
 
 		}
 
@@ -37,8 +40,6 @@ namespace VocaDb.Model.Domain.Songs {
 		/// Length in seconds.
 		/// </summary>
 		public virtual int Length { get; set; }
-
-		public virtual DateTime? PublishDate { get; set; }
 
 		public virtual Song Song {
 			get => song;
@@ -98,6 +99,19 @@ namespace VocaDb.Model.Domain.Songs {
 			Song.UpdateNicoId();
 			Song.UpdatePVServices();
 
+		}
+
+		/// <summary>
+		/// Refresh PV metadata, mainly extended metadata and thumbnail URL, from source.
+		/// Title is not refreshed here.
+		/// </summary>
+		/// <param name="pvParser">PV parser. Cannot be null.</param>
+		/// <param name="permissionContext">Permission context. Cannot be null.</param>
+		public virtual async Task RefreshMetadata(IPVParser pvParser, IUserPermissionContext permissionContext) {
+			var result = await pvParser.ParseByUrlAsync(Url, true, permissionContext);
+			Author = result.Author;
+			ExtendedMetadata = result.ExtendedMetadata;
+			ThumbUrl = result.ThumbUrl;
 		}
 
 		public override string ToString() {

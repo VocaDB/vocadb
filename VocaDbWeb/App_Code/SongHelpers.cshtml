@@ -1,4 +1,4 @@
-﻿@inherits VocaDb.Web.Code.HelperPage
+@inherits VocaDb.Web.Code.HelperPage
 @using System.Globalization
 @using System.Web.Mvc;
 @using System.Web.Mvc.Html;
@@ -61,7 +61,8 @@
 	<div data-bind="slideVisible: preview, complete: destroyPV" class="pvPreview" style="display: none;">
 		<div data-bind="with: ratingButtons" class="pull-right">
 			@{ Html.RenderPartial("Partials/_PVRatingButtonsForIndex"); }
-
+			
+			<!-- Binding context: SongWithPreviewViewModel -->
 			@* PV service switcher *@
 			<div class="btn-toolbar">
 				<div class="btn-group">
@@ -88,13 +89,13 @@
 
 @helper SongIconLink(SongContract song, int? albumId = null) {
 	<a href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(song, albumId))">
-		<img src="@song.ThumbUrl" alt="Cover" class="coverPicThumb" />
+		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" />
 	</a>		
 }
 
 @helper SongIconLink(SongForApiContract song) {
 	<a href="@Url.SongDetails(song)">
-		<img src="@song.ThumbUrl" alt="Cover" class="coverPicThumb" />
+		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" />
 	</a>
 }
 
@@ -195,6 +196,10 @@
 
 @helper SongTypeLabel(SongType songType) {
 	switch (songType) {
+		case SongType.Arrangement:
+			<span class="label" title="@Translate.SongTypeNames[songType]">A</span>
+			break;
+
 		case SongType.Cover:
 			<span class="label" title="@Translate.SongTypeNames[songType]">C</span>
 			break;

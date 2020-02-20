@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Users;
 
@@ -11,10 +11,10 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public GenericTagUsage() { }
 
-		public GenericTagUsage(TEntry song, Tag tag)
+		public GenericTagUsage(TEntry entry, Tag tag)
 			: base(tag) {
 
-			Entry = song;
+			Entry = entry;
 
 		}
 

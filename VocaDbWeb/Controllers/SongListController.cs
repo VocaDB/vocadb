@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web.Mvc;
@@ -25,14 +25,6 @@ namespace VocaDb.Web.Controllers
 		public SongListController(SongListQueries queries, IEntryLinkFactory entryLinkFactory) {
 			this.queries = queries;
 			this.entryLinkFactory = entryLinkFactory;
-		}
-
-		public ActionResult Delete(int id) {
-
-			queries.DeleteSongList(id);
-
-			return RedirectToAction("Profile", "User", new { id = PermissionContext.LoggedUser.Name });
-
 		}
 
 		public ActionResult Details(int id = invalidId) {
@@ -127,9 +119,9 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult Featured() {
+		public ActionResult Featured(FeaturedViewModel viewModel) {
 
-			return View();
+			return View(viewModel);
 
 		}
 

@@ -6,8 +6,14 @@ namespace VocaDb.Model.Service.Security.StopForumSpam {
 	[DataContract]
 	public class SFSResponseContract {
 
+		/// <summary>
+		/// Confidence threshold when user is considered spammer.
+		/// </summary>
 		public const double confidenceTreshold = 75d;
 
+		/// <summary>
+		/// IP/email appears in SFS database.
+		/// </summary>
 		[DataMember]
 		public bool Appears { get; set; }
 
@@ -21,9 +27,16 @@ namespace VocaDb.Model.Service.Security.StopForumSpam {
 			}
 		}
 
+		/// <summary>
+		/// Conficence percentage that user is a spammer.
+		/// Range 0-100.
+		/// </summary>
 		[DataMember]
 		public double Confidence { get; set; }
 
+		/// <summary>
+		/// Number of times IP/email has been recorded in SFS database.
+		/// </summary>
 		[DataMember]
 		public int Frequency { get; set; }
 

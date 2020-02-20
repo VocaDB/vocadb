@@ -128,11 +128,11 @@ Prefer merging the later entry to the earlier one, unless the new entry is final
     <value>This action cannot be undone! Please make sure the entries really need to be merged before proceeding.</value>
   </data>
   <data name="ValidationErrorTargetIsLessComplete" xml:space="preserve">
-    <value>The selected entry seems to be draft while the the one being merged from is not.
-Prefer merging from less complete entry to the more complete entry.</value>
+    <value>The selected entry seems to be draft while the one being merged from is not.
+Prefer merging from the less complete entry to the more complete entry.</value>
   </data>
   <data name="ValidationErrorTargetIsNewer" xml:space="preserve">
-    <value>The selected entry seems to be newer then the one being merged from.
+    <value>The selected entry seems to be newer than the one being merged from.
 Prefer merging from newer entry to the older entry.</value>
   </data>
 </root>

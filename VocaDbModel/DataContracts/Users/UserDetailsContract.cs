@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
@@ -22,12 +22,14 @@ namespace VocaDb.Model.DataContracts.Users {
 			: base(user, permissionContext.LanguagePreference, getPublicCollection: true) {
 
 			AboutMe = user.Options.AboutMe;
+			CustomTitle = user.Options.CustomTitle;
 			EmailVerified = user.Options.EmailVerified;
 			LastLogin = user.LastLogin;
 			LastLoginAddress = user.Options.LastLoginAddress;
 			Location = user.Options.Location;
 			KnownLanguages = user.KnownLanguages.OrderByDescending(l => l.Proficiency).Select(l => new UserKnownLanguageContract(l)).ToArray();
 			OldUsernames = user.OldUsernames.Select(n => new OldUsernameContract(n)).ToArray();
+			Standalone = user.Options.Standalone;
 			TwitterName = user.Options.TwitterName;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
 
@@ -41,11 +43,13 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		public int CommentCount { get; set; }
 
+		public string CustomTitle { get; set; }
+
 		public bool EmailVerified { get; set; }
 
 		public int EditCount { get; set; }
 
-		public AlbumContract[] FavoriteAlbums { get; set;}
+		public AlbumForApiContract[] FavoriteAlbums { get; set;}
 
 		public int FavoriteSongCount { get; set; }
 
@@ -81,6 +85,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		public bool PossibleProducerAccount { get; set; }
 
 		public SongListContract[] SongLists { get; set; }
+
+		public bool Standalone { get; set; }
 
 		public int SubmitCount { get; set; }
 

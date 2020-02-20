@@ -1,4 +1,4 @@
-﻿using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 
@@ -81,6 +81,7 @@ namespace VocaDb.Model.Mapping.Albums {
 			HasMany(m => m.Identifiers).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.OtherArtists).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.PVs).Inverse().Cascade.AllDeleteOrphan();
+			HasMany(m => m.Reviews).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.UserCollections).Inverse().Cache.ReadWrite();
 			HasMany(m => m.WebLinks).Table("AlbumWebLinks").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 
@@ -99,7 +100,7 @@ namespace VocaDb.Model.Mapping.Albums {
 			Id(m => m.Id);
 
 			Map(m => m.IsSupport).Not.Nullable();
-			Map(m => m.Name).Nullable();
+			Map(m => m.Name).Length(250).Nullable();
 			Map(m => m.Roles).CustomType(typeof(ArtistRoles)).Not.Nullable();
 			References(m => m.Album).Not.Nullable();
 			References(m => m.Artist).Nullable();
@@ -131,7 +132,7 @@ namespace VocaDb.Model.Mapping.Albums {
 			});
 
 			Component(m => m.Diff, c => {
-				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
+				c.Map(m => m.ChangedFieldsString, ClassConventions.EscapeColumn("ChangedFields")).Length(1000).Not.Nullable();
 				c.Map(m => m.IsSnapshot).Not.Nullable();
 			});
 

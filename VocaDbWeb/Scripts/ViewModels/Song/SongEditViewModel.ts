@@ -20,6 +20,7 @@ module vdb.viewModels {
 		public canHaveOriginalVersion: KnockoutComputed<boolean>;
 		public defaultNameLanguage: KnockoutObservable<string>;
 		public deleted: boolean;
+		public editedArtistLink = new CustomNameEditViewModel();
 		public eventDate: KnockoutComputed<moment.Moment>;
 		public firstPvDate: KnockoutComputed<moment.Moment>;
 		public id: number;
@@ -30,6 +31,7 @@ module vdb.viewModels {
 		public notes: globalization.EnglishTranslatedStringEditViewModel;
 		public originalVersion: BasicEntryLinkViewModel<dc.SongContract>;
 		public originalVersionSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams;
+		public originalVersionSuggestions = ko.observableArray<dc.SongContract>();
 		public publishDate: KnockoutObservable<Date>;
 		public pvs: pvs.PVListEditViewModel;
 		public releaseEvent: BasicEntryLinkViewModel<dc.ReleaseEventContract>;
@@ -95,6 +97,10 @@ module vdb.viewModels {
 				
 		}
 
+		public customizeName = (artistLink: ArtistForAlbumEditViewModel) => {
+			this.editedArtistLink.open(artistLink);
+		}
+
 		public deleteViewModel = new DeleteEntryViewModel(notes => {
 			$.ajax(this.urlMapper.mapRelative("api/songs/" + this.id + "?notes=" + encodeURIComponent(notes)), { type: 'DELETE', success: () => {
 				window.location.href = this.urlMapper.mapRelative("/Song/Details/" + this.id);
@@ -105,12 +111,29 @@ module vdb.viewModels {
 			this.artistRolesEditViewModel.show(artist);
 		}
 
+		public async findOriginalSongSuggestions() {
+
+			this.originalVersionSuggestions.removeAll();
+
+			const names = _.map(this.names.getPrimaryNames().length ? this.names.getPrimaryNames() : this.names.getAllNames(), n => n.value());
+			const [all, originals] = await Promise.all([this.songRepository.getByNames(names, [this.id]), this.songRepository.getByNames(names, [this.id], [cls.songs.SongType.Original, cls.songs.SongType.Remaster])]);
+
+			const suggestions = _.chain(originals).unionBy(all, i => i.id).take(3).value();
+
+			this.originalVersionSuggestions(suggestions);
+
+		}
+
 		public hasAlbums: boolean;
 
 		// Removes an artist from this album.
 		public removeArtist = (artist: ArtistForAlbumEditViewModel) => {
 			this.artistLinks.remove(artist);
 		};
+
+		public selectOriginalVersion = (song: dc.SongContract) => {
+			this.originalVersion.entry(song);
+		}
 
 		public submit = () => {
 
@@ -165,11 +188,11 @@ module vdb.viewModels {
 		public validationError_needReferences: KnockoutComputed<boolean>;
 		public validationError_needType: KnockoutComputed<boolean>;
 		public validationError_nonInstrumentalSongNeedsVocalists: KnockoutComputed<boolean>;
-		public validationError_redundantEvent: KnockoutComputed<boolean>;
+	    public validationError_redundantEvent: KnockoutComputed<boolean>;
 		public validationError_unspecifiedNames: KnockoutComputed<boolean>;
 
 		constructor(
-			songRepository: rep.SongRepository,
+			private songRepository: rep.SongRepository,
 			private artistRepository: rep.ArtistRepository,
 			pvRepository: rep.PVRepository,
 			userRepository: rep.UserRepository,
@@ -218,7 +241,7 @@ module vdb.viewModels {
 			this.originalVersionSearchParams = {
 				acceptSelection: this.originalVersion.id,
 				extraQueryParams: {
-					songTypes: "Unspecified,Original,Remaster,Remix,Cover,Mashup,DramaPV,Other"
+					songTypes: "Unspecified,Original,Remaster,Remix,Cover,Arrangement,Mashup,DramaPV,Other"
 				},
 				ignoreId: this.id,
 				height: 250
@@ -250,7 +273,7 @@ module vdb.viewModels {
 			this.showLyricsNote = ko.computed(() => this.songType() !== cls.songs.SongType.Instrumental && !this.originalVersion.isEmpty());
 
 			this.validationError_duplicateArtist = ko.computed(() => {
-				return _.some(_.groupBy(this.artistLinks(), a => (a.artist ? a.artist.id.toString() : a.name) + a.isSupport()), a => a.length > 1);
+				return _.some(_.groupBy(this.artistLinks(), (a: ArtistForAlbumEditViewModel) => a.artist ? a.artist.id.toString() : a.name()), a => a.length > 1);
 			});
 
 			this.validationError_needArtist = ko.computed(() => !_.some(this.artistLinks(), a => a.artist != null));
@@ -258,14 +281,14 @@ module vdb.viewModels {
 			this.validationError_needOriginal = ko.computed(() => {
 				
 				var songType = models.songs.SongType;
-				var derivedTypes = [songType.Remaster, songType.Cover, songType.Instrumental, songType.MusicPV, songType.Other, songType.Remix];
+				var derivedTypes = [songType.Remaster, songType.Cover, songType.Instrumental, songType.MusicPV, songType.Other, songType.Remix, songType.Arrangement];
 				return (this.notes.original() === null || this.notes.original() === "")
 					&& this.originalVersion.entry() == null
 					&& _.includes(derivedTypes, this.songType());
 
 			});
 
-			this.validationError_needProducer = ko.computed(() => !this.validationError_needArtist() && !_.some(this.artistLinks(), a => a.artist != null && hel.ArtistHelper.isProducerRole(a.artist, a.rolesArray(), hel.SongHelper.isAnimation(this.songType()))));
+			this.validationError_needProducer = ko.computed(() => !this.validationError_needArtist() && !_.some(this.artistLinks(), a => a.artist != null && hel.ArtistHelper.isProducerRole(a.artist, a.rolesArrayTyped(), hel.SongHelper.getContentFocus(this.songType()))));
 
 			this.validationError_needReferences = ko.computed(() =>
 				!this.hasAlbums
@@ -279,8 +302,9 @@ module vdb.viewModels {
 
 				return (!this.validationError_needArtist()
 					&& !hel.SongHelper.isInstrumental(this.songType())
+					&& this.songType() !== models.songs.SongType.Arrangement // Arrangements are considered possible instrumentals in this context
 					&& !_.some(this.tags, t => t === this.instrumentalTagId))
-					&& !_.some(this.artistLinks(), a => hel.ArtistHelper.isVocalistRole(a.artist, a.rolesArray()));
+					&& !_.some(this.artistLinks(), a => hel.ArtistHelper.isVocalistRole(a.artist, a.rolesArrayTyped()));
 
 			});
 

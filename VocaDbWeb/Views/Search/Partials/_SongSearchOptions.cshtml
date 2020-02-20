@@ -4,11 +4,21 @@
 @using Res = ViewRes.Search.IndexStrings;
 
 <!-- Song search options -->
+<!-- Viewmodel: SongSearchViewModel -->
+
 <div data-bind="visible: showSongSearch, with: songSearchViewModel">
 	<div class="control-group">
 		<div class="control-label">@Res.SongType</div>
 		<div class="controls">
-			@SongHelpers.SongTypesDropdownKnockout("songType")
+			<div class="control-group">
+				@SongHelpers.SongTypesDropdownKnockout("songType")
+			</div>
+			<div class="control-group" data-bind="visible: showUnifyEntryTypesAndTags">
+				<label class="checkbox" >
+					<input type="checkbox" data-bind="checked: unifyEntryTypesAndTags" />
+					Also search associated tag
+				</label>
+			</div>
 		</div>
 	</div>
 
@@ -43,7 +53,29 @@
 			<input type="number" data-bind="textInput: minScore" maxlength="10" min="0" class="input-small" />
 		</div>
 	</div>
+
+	<div class="control-group">
+		<div class="control-label">@Res.ReleaseEvent</div>
+		<div class="controls">
+			@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("releaseEventAutoComplete", "releaseEvent")
+		</div>
+	</div>
 	
+	<div class="control-group">
+		<div class="control-label">@Res.ReleaseDate</div>
+		<div class="controls">
+			<input type="number" data-bind="textInput: dateYear" class="input-small" maxlength="4" max="2100" min="1900" placeholder="Year" />
+			<input type="number" data-bind="textInput: dateMonth, visible: dateYear" class="input-small" maxlength="2" max="12" min="1" placeholder="Month" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@Res.ParentVersion</div>
+		<div class="controls">
+			@KnockoutHelpers.SongLockingAutoComplete("parentVersion")
+		</div>
+	</div>
+
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">

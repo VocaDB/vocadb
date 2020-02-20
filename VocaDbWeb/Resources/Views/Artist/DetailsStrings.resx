@@ -138,6 +138,9 @@
   <data name="CharacterDesigner" xml:space="preserve">
     <value>Character designer</value>
   </data>
+  <data name="CharacterDesignerOf" xml:space="preserve">
+    <value>Designer of</value>
+  </data>
   <data name="ChildVoicebanks" xml:space="preserve">
     <value>Derived voicebanks</value>
   </data>

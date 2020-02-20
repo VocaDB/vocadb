@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,23 +10,19 @@ using Newtonsoft.Json.Converters;
 namespace VocaDb.Model.Service.Translations {
 
 	public class TranslateableEnum<TEnum> : ITranslateableEnum, IEnumerable<TranslateableEnumField<TEnum>> 
-		where TEnum : struct, IConvertible {
+		where TEnum : struct, Enum {
 
 		private readonly Func<ResourceManager> resourceManager;
 
 		internal ResourceManager ResourceManager => resourceManager();
 
-		internal virtual string GetName(string val, ResourceManager res) {
-			return res.GetString(val);
-		}
+		internal virtual string GetName(string val, ResourceManager res) => res.GetString(val);
 
 		internal virtual string GetName(string val, ResourceManager res, CultureInfo cultureInfo) {
 			return res.GetString(val, cultureInfo);
 		}
 
-		private string GetName(TEnum val, ResourceManager res) {
-			return GetName(val.ToString(), res);
-		}
+		private string GetName(TEnum val, ResourceManager res) => GetName(val.ToString(), res);
 
 		private string GetName(TEnum val, ResourceManager res, CultureInfo cultureInfo) {
 			return GetName(val.ToString(), res, cultureInfo);
@@ -62,26 +58,18 @@ namespace VocaDb.Model.Service.Translations {
 
 		}
 
-		IEnumerator IEnumerable.GetEnumerator() {
-			return GetEnumerator();
-		}
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-		public IEnumerator<TranslateableEnumField<TEnum>> GetEnumerator() {
-			return AllFields.GetEnumerator();
-		}
+		public IEnumerator<TranslateableEnumField<TEnum>> GetEnumerator() => AllFields.GetEnumerator();
 
 		public IEnumerable<TranslateableEnumField<TEnum>> GetTranslatedFields(params TEnum[] values) {
 			var res = ResourceManager;
 			return values.Select(t => new TranslateableEnumField<TEnum>(t, GetName(t, res)));
 		}
 
-		public string GetName(TEnum val) {
-			return GetName(val, ResourceManager);
-		}
+		public string GetName(TEnum val) => GetName(val, ResourceManager);
 
-		public string GetName(TEnum val, CultureInfo cultureInfo) {
-			return GetName(val, ResourceManager, cultureInfo);
-		}
+		public string GetName(TEnum val, CultureInfo cultureInfo) => GetName(val, ResourceManager, cultureInfo);
 
 		public Dictionary<TEnum, string> GetValuesAndNames(TEnum[] values) {
 			var res = ResourceManager;
@@ -99,7 +87,7 @@ namespace VocaDb.Model.Service.Translations {
 		
 	}
 
-	public struct TranslateableEnumField<T> where T : struct, IConvertible {
+	public readonly struct TranslateableEnumField<T> where T : struct, IConvertible {
 
 		public TranslateableEnumField(T id, string translation) {
 			Id = id;
@@ -111,10 +99,7 @@ namespace VocaDb.Model.Service.Translations {
 
 		public string Name { get; }
 
-		public KeyValuePair<T, string> ToKeyValuePair() {
-			return new KeyValuePair<T, string>(Id, Name);
-		}
-
+		public KeyValuePair<T, string> ToKeyValuePair() => new KeyValuePair<T, string>(Id, Name);
 	}
 
 }

@@ -1,6 +1,8 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
 using NHibernate;
 using NLog;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Database.Repositories.NHibernate {
@@ -34,6 +36,21 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 			}
 		}
 
+		public async Task<TResult> HandleQueryAsync<TResult>(Func<IDatabaseContext, Task<TResult>> func, string failMsg = "Unexpected database error") {
+			try {
+				using (var ctx = OpenSessionForContext()) {
+					// Note: async/await is needed here because of using statement
+					return await func(ctx);
+				}
+			} catch (ObjectNotFoundException x) {
+				log.Error(x.Message);
+				throw;
+			} catch (HibernateException x) {
+				log.Error(x, failMsg);
+				throw;
+			}
+		}
+
 		public TResult HandleTransaction<TResult>(Func<IDatabaseContext, TResult> func, string failMsg = "Unexpected NHibernate error") {
 
 			try {
@@ -44,6 +61,39 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 					tx.Commit();
 					return val;
 
+				}
+			} catch (HibernateException x) {
+				log.Error(x, failMsg);
+				throw;
+			}
+
+		}
+
+		public async Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext, Task<TResult>> func, string failMsg = "Unexpected NHibernate error") {
+
+			try {
+				using (var ctx = OpenSessionForContext())
+				using (var tx = ctx.Session.BeginTransaction()) {
+
+					var val = await func(ctx);
+					await tx.CommitAsync();
+					return val;
+
+				}
+			} catch (HibernateException x) {
+				log.Error(x, failMsg);
+				throw;
+			}
+
+		}
+
+		public async Task HandleTransactionAsync(Func<IDatabaseContext, Task> func, string failMsg = "Unexpected database error") {
+			
+			try {
+				using (var ctx = OpenSessionForContext())
+				using (var tx = ctx.Session.BeginTransaction()) {
+					await func(ctx);
+					await tx.CommitAsync();
 				}
 			} catch (HibernateException x) {
 				log.Error(x, failMsg);
@@ -71,7 +121,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 
 	}
 
-	public abstract class NHibernateRepository<T> : IRepository<T> {
+	public abstract class NHibernateRepository<T> : IRepository<T> where T : class, IDatabaseObject {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		public IUserPermissionContext PermissionContext { get; private set; }
@@ -90,6 +140,21 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 			try {
 				using (var ctx = OpenSessionForContext()) {
 					return func(ctx);
+				}
+			} catch (ObjectNotFoundException x) {
+				log.Error(x.Message);
+				throw;
+			} catch (HibernateException x) {
+				log.Error(x, failMsg);
+				throw;
+			}
+		}
+
+		public async Task<TResult> HandleQueryAsync<TResult>(Func<IDatabaseContext<T>, Task<TResult>> func, string failMsg = "Unexpected database error") {
+			try {
+				using (var ctx = OpenSessionForContext()) {
+					// Note: async/await is needed here because of using statement
+					return await func(ctx);
 				}
 			} catch (ObjectNotFoundException x) {
 				log.Error(x.Message);
@@ -132,6 +197,39 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 				log.Error(x, failMsg);
 				throw;
 			}
+
+		}
+
+		public async Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext<T>, Task<TResult>> func, string failMsg = "Unexpected NHibernate error") {
+
+			try {
+				using (var ctx = OpenSessionForContext())
+				using (var tx = ctx.Session.BeginTransaction()) {
+
+					var val = await func(ctx);
+					await tx.CommitAsync();
+					return val;
+
+				}
+			} catch (HibernateException x) {
+				log.Error(x, failMsg);
+				throw;
+			}
+
+		}
+
+		public async Task HandleTransactionAsync(Func<IDatabaseContext<T>, Task> func, string failMsg = "Unexpected database error") {
+
+			try {
+				using (var ctx = OpenSessionForContext())
+				using (var tx = ctx.Session.BeginTransaction()) {
+					await func(ctx);
+					await tx.CommitAsync();
+				}
+			} catch (HibernateException x) {
+				log.Error(x, failMsg);
+				throw;
+			}			
 
 		}
 
