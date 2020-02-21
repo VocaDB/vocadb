@@ -1,4 +1,4 @@
-using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.Database.Repositories {
 

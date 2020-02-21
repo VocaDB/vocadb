@@ -1,6 +1,6 @@
 using NHibernate;
-using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.Database.Repositories.NHibernate {
 

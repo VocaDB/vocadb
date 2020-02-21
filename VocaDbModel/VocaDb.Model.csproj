@@ -331,6 +331,7 @@
     <Compile Include="DataContracts\Users\UserMessageContract.cs" />
     <Compile Include="DataContracts\Users\UserWithEmailContract.cs" />
     <Compile Include="DataContracts\Users\UserWithPermissionsContract.cs" />
+    <Compile Include="DataContracts\Venues\ArchivedVenueContract.cs" />
     <Compile Include="DataContracts\Versioning\ArchivedObjectVersionForApiContract.cs" />
     <Compile Include="DataContracts\Versioning\ArchivedObjectVersionWithFieldsContract.cs" />
     <Compile Include="DataContracts\Versioning\ComparedVersionsContract.cs" />
@@ -454,7 +455,8 @@
     <Compile Include="Domain\ReleaseEvents\ReleaseEventSeriesEditableFields.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventSeriesWebLink.cs" />
     <Compile Include="Domain\ReleaseEvents\ReleaseEventWebLink.cs" />
-    <Compile Include="Domain\ReleaseEvents\Venue.cs" />
+    <Compile Include="Domain\Venues\ArchivedVenueVersion.cs" />
+    <Compile Include="Domain\Venues\Venue.cs" />
     <Compile Include="Domain\Security\AuditLogCategory.cs" />
     <Compile Include="Domain\Security\EntryPermissionManager.cs" />
     <Compile Include="Domain\Security\IPRule.cs" />
@@ -514,6 +516,10 @@
     <Compile Include="Domain\Users\UserReport.cs" />
     <Compile Include="Domain\Users\UserOptions.cs" />
     <Compile Include="Domain\Users\UserWebLink.cs" />
+    <Compile Include="Domain\Venues\VenueDiff.cs" />
+    <Compile Include="Domain\Venues\VenueEditableFields.cs" />
+    <Compile Include="Domain\Venues\VenueName.cs" />
+    <Compile Include="Domain\Venues\VenueWebLink.cs" />
     <Compile Include="Domain\Versioning\ArchivedVersionManager.cs" />
     <Compile Include="Domain\Artists\ArtistArchiveReason.cs" />
     <Compile Include="Domain\Artists\ArtistComment.cs" />
