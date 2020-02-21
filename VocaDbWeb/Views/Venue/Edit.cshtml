@@ -1,1 +1,115 @@
-﻿
+﻿@using System.Web.Optimization
+@using VocaDb.Web.Helpers
+@using EditRes = ViewRes.EntryEditStrings
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Venue.VenueEditViewModel>
+
+@{
+
+	var isNew = (Model.Id == 0);
+
+	if (!isNew) {
+		PageProperties.Title = "Edit venue - " + Model.Name;
+	} else {
+		PageProperties.Title = "Create a new venue";
+	}
+
+}
+
+@using(Html.BeginForm("Edit", "Venue", FormMethod.Post, new { enctype = "multipart/form-data", data_bind = "submit: submit" })) {
+	
+	<p>
+		<button type="submit" class="btn btn-primary" data-bind="disable: submitting">
+			<i class="icon-ok icon-white"></i>
+			&nbsp;@HelperRes.HelperStrings.SaveChanges
+		</button>	
+	</p>
+	
+	<div class="editor-label">
+		<label class="helpTip" data-bind="qTip" title="@EditRes.DefaultLanguageHelp">
+			@EditRes.DefaultLanguageSelection
+		</label>
+	</div>
+	<div class="editor-field">
+		@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
+		@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
+	</div>
+
+	<div class="editor-label">
+		@Html.LabelFor(m => m.Names)
+	</div>
+	<div class="editor-field">
+		<table>			
+			<tr>
+				<td data-bind="with: names">
+					@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
+					@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
+				</td>
+				<td style="vertical-align: top">
+					<div class="alert" data-bind="visible: duplicateName" style="display: none;">
+						Series already exists with name
+						<span data-bind="text: duplicateName"></span>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>	
+
+	<div class="editor-label">
+		@Html.LabelFor(m => m.Description)
+	</div>
+	<div class="editor-field">
+		@Html.TextAreaForKnockout(m => m.Description, "initialValue, textInput: description", cols: 60, rows: 4, maxLength: 1000, cssClass: "span4")
+		
+		Live preview
+		<div data-bind="markdown: description"></div>
+	</div>
+		
+	<div class="editor-label">
+		<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
+			@EditRes.WebLinks
+		</label>
+	</div>
+	<div class="editor-field" data-bind="with: webLinks">
+		@KnockoutHelpers.WebLinksEditViewKnockout(false)
+		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(webLinks)")
+	</div>
+	
+	<div class="editor-label">
+		@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
+	</div>
+	<div class="editor-field">
+		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
+	</div>
+
+	<br />
+	<p>
+		<button type="submit" class="btn btn-primary" data-bind="disable: submitting">
+			<i class="icon-ok icon-white"></i>
+			&nbsp;@HelperRes.HelperStrings.SaveChanges
+		</button>	
+	</p>
+
+}
+
+@section BodyScripts {
+@Scripts.Render("~/bundles/shared/edit", "~/bundles/Venue/Edit")
+<script type="text/javascript">
+
+	$(function () {
+		
+		var model = @ToJS(new {
+			 DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
+			 Model.Id,
+			 Model.Names,
+			 Model.WebLinks
+		});
+
+		var vm = new vdb.viewModels.venues.VenueEditViewModel(model.defaultNameLanguage, model.names, model.webLinks);
+		ko.applyBindings(vm);
+
+		initPage();
+
+	});
+
+</script>
+}

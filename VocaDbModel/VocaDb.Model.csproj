@@ -332,6 +332,11 @@
     <Compile Include="DataContracts\Users\UserWithEmailContract.cs" />
     <Compile Include="DataContracts\Users\UserWithPermissionsContract.cs" />
     <Compile Include="DataContracts\Venues\ArchivedVenueContract.cs" />
+    <Compile Include="DataContracts\Venues\ArchivedVenueVersionContract.cs" />
+    <Compile Include="DataContracts\Venues\VenueContract.cs" />
+    <Compile Include="DataContracts\Venues\VenueDetailsContract.cs" />
+    <Compile Include="DataContracts\Venues\VenueForEditContract.cs" />
+    <Compile Include="DataContracts\Venues\VenueWithArchivedVersionsContract.cs" />
     <Compile Include="DataContracts\Versioning\ArchivedObjectVersionForApiContract.cs" />
     <Compile Include="DataContracts\Versioning\ArchivedObjectVersionWithFieldsContract.cs" />
     <Compile Include="DataContracts\Versioning\ComparedVersionsContract.cs" />

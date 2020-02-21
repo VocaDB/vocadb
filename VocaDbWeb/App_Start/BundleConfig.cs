@@ -522,6 +522,14 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/User/RatedSongsSearchViewModel.js"
 			));
+			
+			bundles.Add(new ScriptBundle("~/bundles/Venue/Edit").Include(
+				"~/Scripts/Helpers/KnockoutHelper.js",
+				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
+				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",
+				"~/Scripts/ViewModels/Venue/VenueEditViewModel.js",
+				"~/Scripts/Venue/Edit.js"
+			));
 
 
 #if DEBUG

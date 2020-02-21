@@ -1,34 +1,55 @@
 using System.Web.Mvc;
 using VocaDb.Model.Database.Queries;
+using VocaDb.Model.DataContracts.Venues;
+using VocaDb.Model.Service.Translations;
+using VocaDb.Web.Models.Venue;
 
 namespace VocaDb.Web.Controllers {
 
 	public class VenueController : ControllerBase {
 
+		private readonly IEnumTranslations enumTranslations;
 		private readonly VenueQueries queries;
 
-		public VenueController(VenueQueries queries) {
+		public VenueController(VenueQueries queries, IEnumTranslations enumTranslations) {
 
 			this.queries = queries;
+			this.enumTranslations = enumTranslations;
 
 		}
 
 		public ActionResult Details(int id = invalidId) {
 
-			return View();
+			var venue = queries.GetDetails(id);
+
+			PageProperties.Title = venue.Name;
+			PageProperties.Subtitle = ViewRes.Venue.DetailsStrings.Venue;
+
+			return View(venue);
 
 		}
 
 		[Authorize]
 		public ActionResult Edit(int? id) {
 
-			return View();
+			var contract = id.HasValue ? queries.GetForEdit(id.Value) : new VenueForEditContract();
+			return View(new VenueEditViewModel(contract, PermissionContext));
+
+		}
+
+		[HttpPost]
+		[Authorize]
+		public ActionResult Edit(VenueEditViewModel model) {
+
+			throw new System.NotImplementedException();
 
 		}
 
 		public ActionResult Versions(int id = invalidId) {
 
-			return View();
+			var contract = queries.GetWithArchivedVersions(id);
+
+			return View(new Versions(contract, enumTranslations));
 
 		}
 

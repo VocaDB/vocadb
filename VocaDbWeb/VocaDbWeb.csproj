@@ -607,6 +607,8 @@
     <Compile Include="Controllers\VenueController.cs" />
     <Compile Include="Models\Shared\EnglishTranslatedStringViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
+    <Compile Include="Models\Venue\VenueEditViewModel.cs" />
+    <Compile Include="Models\Venue\Versions.cs" />
     <Compile Include="Resources\Domain\EntryTypeNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1762,6 +1764,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RequestVerificationStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\Venue\DetailsStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DetailsStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\QueryService.svc.cs">
       <DependentUpon>QueryService.svc</DependentUpon>
     </Compile>
@@ -2461,6 +2468,10 @@
     <EmbeddedResource Include="Resources\Views\Song\RankingsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\RequestVerificationStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Views\Venue\DetailsStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <TypeScriptCompile Include="Scripts\Album\Details.ts" />
     <TypeScriptCompile Include="Scripts\Artist\Details.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ActivityEntry\ActivityEntryContract.ts" />
@@ -3367,6 +3378,8 @@
     <TypeScriptCompile Include="Scripts\ViewModels\User\UserDetailsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\UserMessagesViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\WebLinksEditViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Venue\VenueEditViewModel.ts" />
+    <Content Include="Scripts\Venue\Edit.js" />
     <Content Include="Scripts\VocaDb.js" />
     <Content Include="Services\QueryService.svc" />
     <Content Include="sitemap.xml">

@@ -1,0 +1,41 @@
+using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Venues;
+
+namespace VocaDb.Model.DataContracts.Venues {
+
+	public class VenueContract : IEntryWithStatus {
+
+		EntryType IEntryBase.EntryType => EntryType.Venue;
+		string IEntryBase.DefaultName => Name;
+
+		public bool Deleted { get; set; }
+
+		public string Description { get; set; } = string.Empty;
+
+		public int Id { get; set; }
+
+		public string Name { get; set; }
+
+		public EntryStatus Status { get; set; }
+
+		public int Version { get; set; }
+
+		public VenueContract() { }
+
+		public VenueContract(Venue venue, ContentLanguagePreference languagePreference) {
+
+			ParamIs.NotNull(() => venue);
+
+			Deleted = venue.Deleted;
+			Description = venue.Description;
+			Id = venue.Id;
+			Name = venue.TranslatedName[languagePreference];
+			Status = venue.Status;
+			Version = venue.Version;
+
+		}
+
+	}
+
+}

@@ -1,1 +1,9 @@
-﻿
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Venue.Versions>
+
+@{
+	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Entry.Name;
+}
+
+@ArchivedEntryHelpers.CurrentVersionMessage(Model.Entry.Version, Model.Entry.Status)
+
+@ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions, id => Url.Action("ViewVersion", new { id }))

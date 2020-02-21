@@ -1,1 +1,18 @@
-﻿
+﻿@using VocaDb.Web.Helpers;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Venues.VenueDetailsContract>
+
+@section Toolbar {
+	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editVenueLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
+	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	@Helpers.EntryStatusMessage(Model.Status)
+}
+
+@section BodyScripts {
+<script type="text/javascript">
+	$(function () {
+		$("#editVenueLink").button({ disabled: $("#editVenueLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });
+		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
+		$("#manageTags").button({ icons: { primary: 'ui-icon-wrench' } });
+	});
+</script>
+}
