@@ -604,6 +604,7 @@
     <Compile Include="Controllers\Api\CommentApiController.cs" />
     <Compile Include="Controllers\Api\EntryTypesApiController.cs" />
     <Compile Include="Controllers\Api\IPRuleApiController.cs" />
+    <Compile Include="Controllers\VenueController.cs" />
     <Compile Include="Models\Shared\EnglishTranslatedStringViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
     <Compile Include="Resources\Domain\EntryTypeNames.de.designer.cs">
@@ -3616,6 +3617,10 @@
     <Content Include="Views\Ext\OEmbedResponsive.cshtml" />
     <Content Include="Views\Search\Partials\_EventSearchOptions.cshtml" />
     <Content Include="Views\Event\ViewSeriesVersion.cshtml" />
+    <Content Include="Views\Venue\Details.cshtml" />
+    <Content Include="Views\Venue\Edit.cshtml" />
+    <Content Include="Views\Venue\Versions.cshtml" />
+    <Content Include="Views\Venue\ViewVersion.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
