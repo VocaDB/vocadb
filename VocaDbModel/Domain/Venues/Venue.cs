@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.ExtLinks;
@@ -22,6 +24,22 @@ namespace VocaDb.Model.Domain.Venues {
 		private IList<VenueWebLink> webLinks = new List<VenueWebLink>();
 
 		public Venue() { }
+		
+		public Venue(ContentLanguageSelection defaultLanguage, ICollection<ILocalizedString> names, string description) : this() {
+
+			ParamIs.NotNull(() => names);
+
+			if (!names.Any()) {
+				throw new ArgumentException("Need at least one name", nameof(names));
+			}
+
+			TranslatedName.DefaultLanguage = defaultLanguage;
+			Description = description;
+
+			foreach (var a in names)
+				CreateName(a);
+
+		}
 
 		public virtual string Address { get; set; }
 
@@ -48,7 +66,7 @@ namespace VocaDb.Model.Domain.Venues {
 
 		public virtual int Id { get; set; }
 
-		public NameManager<VenueName> Names {
+		public virtual NameManager<VenueName> Names {
 			get => names;
 			set {
 				ParamIs.NotNull(() => value);

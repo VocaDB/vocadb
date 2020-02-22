@@ -595,6 +595,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RatedSongForUserSortRuleNames.pt.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\VenueEditableFieldNames.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VenueEditableFieldNames.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\WebLinkCategoryNames.pt.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2206,6 +2211,10 @@
     <Content Include="App_GlobalResources\EntryStatusNames.pt.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryStatusNames.pt.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="App_GlobalResources\VenueEditableFieldNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>VenueEditableFieldNames.Designer.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Resources\Domain\EntryTypeNames.pt.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
