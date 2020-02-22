@@ -65,6 +65,7 @@ namespace VocaDb.Model.Mapping.Venues {
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Data);
 			Map(m => m.Notes).Length(200).Not.Nullable();
+			Map(m => m.Status).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();
 
 			References(m => m.Author).Not.Nullable();
@@ -72,6 +73,7 @@ namespace VocaDb.Model.Mapping.Venues {
 
 			Component(m => m.Diff, c => {
 				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
+				c.Map(m => m.IsSnapshot).Not.Nullable();
 			});
 
 		}
