@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Web.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Venues;
@@ -41,7 +42,18 @@ namespace VocaDb.Web.Controllers {
 		[Authorize]
 		public ActionResult Edit(VenueEditViewModel model) {
 
-			throw new System.NotImplementedException();
+			// Note: name is allowed to be whitespace, but not empty.
+			if (model.Names == null || model.Names.All(n => string.IsNullOrEmpty(n?.Value))) {
+				ModelState.AddModelError("Names", "Name cannot be empty");
+			}
+
+			if (!ModelState.IsValid) {
+				return View(new VenueEditViewModel(model.ToContract(), PermissionContext));
+			}
+
+			var id = queries.Update(model.ToContract());
+
+			return RedirectToAction("Details", new { id });
 
 		}
 

@@ -29,6 +29,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public int Update(VenueForEditContract contract) {
+
+			return 0/* TODO */;
+
+		}
+
 	}
 
 }

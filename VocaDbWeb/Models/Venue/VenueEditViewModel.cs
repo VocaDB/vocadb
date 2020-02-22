@@ -5,9 +5,11 @@ using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Venue {
 
+	[PropertyModelBinder]
 	public class VenueEditViewModel {
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
@@ -20,10 +22,12 @@ namespace VocaDb.Web.Models.Venue {
 
 		public string Name { get; set; }
 
+		[FromJson]
 		public LocalizedStringWithIdContract[] Names { get; set; }
 
 		public EntryStatus Status { get; set; }
 
+		[FromJson]
 		public WebLinkContract[] WebLinks { get; set; }
 
 		public VenueEditViewModel() { }
