@@ -41,6 +41,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public ArchivedVenueVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
+
+			return HandleQuery(session =>
+				new ArchivedVenueVersionDetailsContract(session.Load<ArchivedVenueVersion>(id),
+					comparedVersionId != 0 ? session.Load<ArchivedVenueVersion>(comparedVersionId) : null,
+					PermissionContext.LanguagePreference));
+
+		}
+
 		public VenueWithArchivedVersionsContract GetWithArchivedVersions(int id) {
 
 			return HandleQuery(ctx => new VenueWithArchivedVersionsContract(ctx.Load(id), LanguagePreference));

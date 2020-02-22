@@ -1,1 +1,14 @@
-﻿
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.Venues.ArchivedVenueVersionDetailsContract>>
+
+@{
+
+	PageProperties.Title = "Revision " + Model.Entry.ArchivedVersion.Version + " for " + Model.Entry.Name;
+
+}
+
+@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Model.Version(Model.Entry.ArchivedVersion), 
+	Model.Version(Model.Entry.ComparedVersion))
+
+@VenueHelpers.PrintArchivedVenueData(Model.Entry.Versions)
+
+@EntryDetailsHelpers.ReportEntryVersionPopupKnockout()

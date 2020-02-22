@@ -333,6 +333,8 @@
     <Compile Include="DataContracts\Users\UserWithPermissionsContract.cs" />
     <Compile Include="DataContracts\Venues\ArchivedVenueContract.cs" />
     <Compile Include="DataContracts\Venues\ArchivedVenueVersionContract.cs" />
+    <Compile Include="DataContracts\Venues\ArchivedVenueVersionDetailsContract.cs" />
+    <Compile Include="DataContracts\Venues\ComparedVenueContract.cs" />
     <Compile Include="DataContracts\Venues\VenueContract.cs" />
     <Compile Include="DataContracts\Venues\VenueDetailsContract.cs" />
     <Compile Include="DataContracts\Venues\VenueForEditContract.cs" />

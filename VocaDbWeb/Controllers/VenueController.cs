@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Service.Translations;
+using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Venue;
 
 namespace VocaDb.Web.Controllers {
@@ -67,7 +68,9 @@ namespace VocaDb.Web.Controllers {
 
 		public ActionResult ViewVersion(int id, int? ComparedVersionId) {
 
-			return View();
+			var contract = queries.GetVersionDetails(id, ComparedVersionId ?? 0);
+
+			return View(new ViewVersion<ArchivedVenueVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
 
 		}
 

@@ -9,6 +9,8 @@ namespace VocaDb.Model.DataContracts.Venues {
 		EntryType IEntryBase.EntryType => EntryType.Venue;
 		string IEntryBase.DefaultName => Name;
 
+		public string AdditionalNames { get; set; }
+
 		public bool Deleted { get; set; }
 
 		public string Description { get; set; } = string.Empty;
@@ -27,6 +29,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 			ParamIs.NotNull(() => venue);
 
+			AdditionalNames = venue.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			Deleted = venue.Deleted;
 			Description = venue.Description;
 			Id = venue.Id;

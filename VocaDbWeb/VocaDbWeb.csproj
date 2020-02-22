@@ -2478,8 +2478,9 @@
     <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\RequestVerificationStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Resources\Views\Venue\DetailsStrings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Venue</CustomToolNamespace>
     </EmbeddedResource>
     <TypeScriptCompile Include="Scripts\Album\Details.ts" />
     <TypeScriptCompile Include="Scripts\Artist\Details.ts" />
@@ -2612,6 +2613,7 @@
     <Content Include="App_Code\PVHelpers.cshtml" />
     <Content Include="App_Code\SearchHelpers.cshtml" />
     <Content Include="App_Code\EventHelpers.cshtml" />
+    <Content Include="App_Code\VenueHelpers.cshtml" />
     <None Include="compilerconfig.json" />
     <Content Include="Content\Styles\song.less" />
     <None Include="compilerconfig.json.defaults">
