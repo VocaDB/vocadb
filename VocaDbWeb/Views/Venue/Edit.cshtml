@@ -12,14 +12,14 @@
 		PageProperties.Title = "Edit venue - " + Model.Name;
 		backAction = Url.Action("Details", new { id = Model.Id });
 		ViewBag.Parents = new[] {
-			Html.ActionLink("Events", "Index"),
+			Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenues", "Event"),
 			Html.ActionLink(Model.Name, "Details", new { id = Model.Id })
 		};
 	} else {
 		PageProperties.Title = "Create a new venue";
-		backAction = Url.Action("Index", "Event");
+		backAction = Url.Action("EventsByVenues", "Event");
 		ViewBag.Parents = new[] {
-			Html.ActionLink("Events", "Index")
+			Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenues", "Event")
 		};
 	}
 

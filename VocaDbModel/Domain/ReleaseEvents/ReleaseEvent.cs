@@ -367,6 +367,17 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
+		public virtual void SetVenue(Venue newVenue) {
+
+			if (Equals(Venue, newVenue))
+				return;
+
+			Venue?.AllEvents.Remove(this);
+			newVenue?.AllEvents.Add(this);
+			Venue = newVenue;
+
+		}
+
 		public virtual CollectionDiffWithValue<ArtistForEvent, ArtistForEvent> SyncArtists(
 			IList<ArtistForEventContract> newArtists, Func<int, Artist> artistGetter) {
 

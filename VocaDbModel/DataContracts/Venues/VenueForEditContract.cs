@@ -10,15 +10,12 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 		public LocalizedStringWithIdContract[] Names { get; set; }
 
-		public WebLinkContract[] WebLinks { get; set; }
-
 		public VenueForEditContract() { }
 
-		public VenueForEditContract(Venue venue, ContentLanguagePreference languagePreference) : base(venue, languagePreference) {
+		public VenueForEditContract(Venue venue, ContentLanguagePreference languagePreference) : base(venue, languagePreference, true) {
 
 			DefaultNameLanguage = venue.TranslatedName.DefaultLanguage;
 			Names = venue.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
-			WebLinks = venue.WebLinks.Select(l => new WebLinkContract(l)).ToArray();
 
 		}
 

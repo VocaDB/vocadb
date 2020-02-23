@@ -38,7 +38,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			SongList = ObjectHelper.Convert(ev.SongList, s => new SongListBaseContract(s));
 			Status = ev.Status;
 			UrlSlug = ev.UrlSlug;
-			Venue = ObjectHelper.Convert(ev.Venue, v => new VenueContract(v, languagePreference));
+			Venue = ObjectHelper.Convert(ev.Venue, v => new VenueContract(v, languagePreference, includeSeriesLinks));
 			VenueName = ev.VenueName;
 			Version = ev.Version;
 

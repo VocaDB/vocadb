@@ -26,10 +26,11 @@ namespace VocaDb.Web.Models.Event {
 			Description = SeriesSuffix = string.Empty;
 		}
 
-		public EventEdit(ReleaseEventSeriesContract seriesContract, IUserPermissionContext userContext)
+		public EventEdit(ReleaseEventSeriesContract seriesContract, VenueContract venueContract, IUserPermissionContext userContext)
 			: this() {
 
 			Series = seriesContract;
+			Venue = venueContract;
 
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(userContext).ToArray();
 

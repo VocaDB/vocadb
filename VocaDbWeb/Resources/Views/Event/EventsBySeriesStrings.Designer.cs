@@ -106,6 +106,15 @@ namespace ViewRes.Event {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All by venues.
+        /// </summary>
+        public static string ViewByVenues {
+            get {
+                return ResourceManager.GetString("ViewByVenues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upcoming.
         /// </summary>
         public static string ViewList {

@@ -340,6 +340,7 @@
     <Compile Include="DataContracts\Venues\VenueForApiContract.cs" />
     <Compile Include="DataContracts\Venues\VenueForEditContract.cs" />
     <Compile Include="DataContracts\Venues\VenueWithArchivedVersionsContract.cs" />
+    <Compile Include="DataContracts\Venues\VenueWithEventsContract.cs" />
     <Compile Include="DataContracts\Versioning\ArchivedObjectVersionForApiContract.cs" />
     <Compile Include="DataContracts\Versioning\ArchivedObjectVersionWithFieldsContract.cs" />
     <Compile Include="DataContracts\Versioning\ComparedVersionsContract.cs" />

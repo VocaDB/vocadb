@@ -6,7 +6,7 @@
 @{
 	
 	ViewBag.Parents = new[] {
-		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index", "Event")
+		Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenues", "Event")
 	};
 
 	var descriptionHtml = MarkdownParser.GetHtml(Model.Description);
@@ -19,6 +19,9 @@
 @section Toolbar {
 	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editVenueLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	@if (Login.CanManageDb) {
+		<a href="@Url.Action("Edit", "Event", new { venueId = Model.Id != 0 ? (int?)Model.Id : null }, null)" id="createEventLink">@ViewRes.Event.EventsBySeriesStrings.CreateEvent</a>
+	}
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 	@Helpers.EntryStatusMessage(Model.Status)
 }
@@ -46,6 +49,18 @@
 	}
 </div>
 
+<h3>@ViewRes.SharedStrings.ReleaseEvents</h3>
+<ul>
+	@foreach (var ev in Model.Events) {
+		<li>
+			@Html.ActionLink(ev.Name, "Details", "Event", new { id = ev.Id }, null)
+			@if (ev.Date != null) {
+				<small>(@ev.Date.Value.ToString("d"))</small>
+			}
+		</li>
+	}
+</ul>
+
 @EntryDetailsHelpers.ReportEntryPopupKnockout()
 
 @section BodyScripts {
@@ -55,6 +70,7 @@
 
 		$("#editVenueLink").button({ disabled: $("#editVenueLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });
 		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
+		$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
 		$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert' } });
 		
 		var loggedUserId = @UserContext.LoggedUserId;

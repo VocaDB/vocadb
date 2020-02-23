@@ -6,13 +6,13 @@
 	
 	if (Model.Entry.Venue != null) {
 		ViewBag.Parents = new[] {
-			Html.ActionLink("Events", "Index"),
+			Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenues", "Event"),
 			Html.ActionLink(Model.Entry.Venue.Name, "Details", new { id = Model.Entry.Venue.Id }),
 			Html.ActionLink("Revisions", "Versions", new { id = Model.Entry.Venue.Id })
 		};
 	} else {
 		ViewBag.Parents = new[] {
-			Html.ActionLink("Events", "Index"),
+			Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenues", "Event"),
 		};
 	}
 

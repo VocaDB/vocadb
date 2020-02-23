@@ -1,6 +1,6 @@
 ﻿@using VocaDb.Web.Helpers;
 @using Res = ViewRes.Event.EventsBySeriesStrings
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesWithEventsContract[]>
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Venues.VenueWithEventsContract[]>
 
 @{
 	PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
@@ -12,10 +12,10 @@
 		<li>
 			@Html.ActionLink(Res.ViewList, "Index")
 		</li>
-		<li class="active">
+		<li>
 			@Html.ActionLink(Res.ViewBySeries, "EventsBySeries")
 		</li>
-		<li>
+		<li class="active">
 			@Html.ActionLink(Res.ViewByVenues, "EventsByVenues")
 		</li>
 		<li>
@@ -32,31 +32,26 @@
 	}	
 }
 
-@foreach (var series in Model) {
+@foreach (var venue in Model) {
 
 	<div class="media withMargin">
-		@if (!string.IsNullOrEmpty(series.PictureMime)) {
-			<a class="pull-left" href="@Url.Action("SeriesDetails", new { id = series.Id })">
-				<img class="media-object" src="@Url.ImageThumb(series, VocaDb.Model.Domain.Images.ImageSize.TinyThumb)" alt="Thumb" />
-			</a>
-		}
 		<div class="media-body">
 			<h3 class="media-heading">
-				@if (!string.IsNullOrEmpty(series.Name)) {
-					@Html.ActionLink(series.Name, "SeriesDetails", new { id = series.Id })
+				@if (!string.IsNullOrEmpty(venue.Name)) {
+					@Html.ActionLink(venue.Name, "Details", "Venue", new { id = venue.Id }, null)
 				} else {
 					<text>@ViewRes.SharedStrings.Unsorted</text>
 				}
 			</h3>
 						
-			@if (!string.IsNullOrEmpty(series.Description)) {
-				<p>@HtmlHelpers.FormatMarkdown(series.Description)</p>
+			@if (!string.IsNullOrEmpty(venue.Description)) {
+				<p>@HtmlHelpers.FormatMarkdown(venue.Description)</p>
 			}
 		</div>
 	</div>
 	
 	<ul>
-	@foreach (var ev in series.Events) {
+	@foreach (var ev in venue.Events) {
 		<li>
 			@Html.ActionLink(ev.Name, "Details", new { id = ev.Id, slug = ev.UrlSlug })
 		</li>
@@ -64,7 +59,7 @@
 	</ul>
 	
 	if (Login.CanManageDb) {
-		@Html.ActionLink(Res.CreateEvent, "Edit", new { seriesId = series.Id != 0 ? (int?)series.Id : null }, new { @class = "textLink addLink" })
+		@Html.ActionLink(Res.CreateEvent, "Edit", new { venueId = venue.Id != 0 ? (int?)venue.Id : null }, new { @class = "textLink addLink" })
 	}
 	
 }

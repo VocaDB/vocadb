@@ -155,6 +155,11 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.AuditLogger.SysLog(string.Format("moving {0} to trash", entry));
 
 				CreateTrashedEntry(ctx, entry, notes);
+				
+				var allEvents = entry.AllEvents.ToArray();
+				foreach (var ev in allEvents) {
+					ev.SetVenue(null);
+				}
 
 				var ctxActivity = ctx.OfType<VenueActivityEntry>();
 				var activityEntries = ctxActivity.Query().Where(a => a.Entry.Id == id).ToArray();

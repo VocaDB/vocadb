@@ -1,11 +1,11 @@
-﻿using System.Linq;
+using System.Linq;
 using NHibernate;
-using NHibernate.Linq;
-using VocaDb.Model.Domain.Security;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Venues;
+using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.ReleaseEvents;
-using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service {
@@ -28,6 +28,25 @@ namespace VocaDb.Model.Service {
 
 				return seriesContracts.Concat(new[] { new ReleaseEventSeriesWithEventsContract { 
 					Name = string.Empty, 
+					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray() } }).ToArray();
+
+			});
+
+		}
+
+		public VenueWithEventsContract[] GetReleaseEventsByVenues() {
+
+			return HandleQuery(session => {
+
+				var allEvents = session.Query<ReleaseEvent>().Where(e => !e.Deleted).ToArray();
+				var venues = session.Query<Venue>().Where(e => !e.Deleted).OrderByName(LanguagePreference).ToArray();
+
+				var venueContracts = venues.Select(v =>
+					new VenueWithEventsContract(v, allEvents.Where(e => v.Equals(e.Venue)), PermissionContext.LanguagePreference));
+				var ungrouped = allEvents.Where(e => e.Venue == null).OrderBy(e => e.TranslatedName[LanguagePreference]);
+
+				return venueContracts.Concat(new[] { new VenueWithEventsContract {
+					Name = string.Empty,
 					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray() } }).ToArray();
 
 			});
@@ -59,6 +78,12 @@ namespace VocaDb.Model.Service {
 		public ReleaseEventSeriesForEditContract GetReleaseEventSeriesForEdit(int id) {
 
 			return HandleQuery(session => new ReleaseEventSeriesForEditContract(session.Load<ReleaseEventSeries>(id), LanguagePreference));
+
+		}
+
+		public VenueForEditContract GetVenueForEdit(int id) {
+
+			return HandleQuery(session => new VenueForEditContract(session.Load<Venue>(id), LanguagePreference));
 
 		}
 

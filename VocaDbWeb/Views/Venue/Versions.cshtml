@@ -3,7 +3,7 @@
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Entry.Name;
 	ViewBag.Parents = new[] { 
-		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index"), 
+		Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenues", "Event"), 
 		Html.ActionLink(Model.Entry.Name, "Details", new { id = Model.Entry.Id }) 
 	};
 }

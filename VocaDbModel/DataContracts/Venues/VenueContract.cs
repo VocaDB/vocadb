@@ -1,3 +1,4 @@
+using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Venues;
@@ -23,9 +24,11 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 		public int Version { get; set; }
 
+		public WebLinkContract[] WebLinks { get; set; }
+
 		public VenueContract() { }
 
-		public VenueContract(Venue venue, ContentLanguagePreference languagePreference) {
+		public VenueContract(Venue venue, ContentLanguagePreference languagePreference, bool includeLinks = false) {
 
 			ParamIs.NotNull(() => venue);
 
@@ -36,6 +39,10 @@ namespace VocaDb.Model.DataContracts.Venues {
 			Name = venue.TranslatedName[languagePreference];
 			Status = venue.Status;
 			Version = venue.Version;
+
+			if (includeLinks) {
+				WebLinks = venue.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
+			}
 
 		}
 

@@ -59,10 +59,15 @@ namespace VocaDb.Model.Domain.Venues {
 
 		public virtual EntryType EntryType => EntryType.Venue;
 
-		public virtual IList<ReleaseEvent> Events {
+		public virtual IList<ReleaseEvent> AllEvents {
 			get => events;
-			set => events = value;
+			set {
+				ParamIs.NotNull(() => value);
+				events = value;
+			}
 		}
+
+		public virtual IEnumerable<ReleaseEvent> Events => AllEvents.Where(e => !e.Deleted);
 
 		public virtual int Id { get; set; }
 
