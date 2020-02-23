@@ -79,6 +79,15 @@ namespace ViewRes.Event {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create venue.
+        /// </summary>
+        public static string CreateVenue {
+            get {
+                return ResourceManager.GetString("CreateVenue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All by date.
         /// </summary>
         public static string ViewByDate {

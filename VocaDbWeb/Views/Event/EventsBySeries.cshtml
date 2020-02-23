@@ -24,6 +24,8 @@
 		@Html.ActionLink(Res.CreateEvent, "Edit", null, new { id = "createEventLink" })
 		@:
 		@Html.ActionLink(Res.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
+		@:
+		@Html.ActionLink(Res.CreateVenue, "Edit", "Venue", null, new { id = "createVenueLink" })
 	}	
 }
 
@@ -70,6 +72,7 @@
 		$(function () {
 			$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
 			$("#createSeriesLink").button({ icons: { primary: 'ui-icon-plus' } });
+			$("#createVenueLink").button({ icons: { primary: 'ui-icon-plus' } });
 		});
 
 	</script>

@@ -4,6 +4,10 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Venues.VenueDetailsContract>
 
 @{
+	
+	ViewBag.Parents = new[] {
+		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index", "Event")
+	};
 
 	var descriptionHtml = MarkdownParser.GetHtml(Model.Description);
 	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);

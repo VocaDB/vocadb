@@ -6,11 +6,21 @@
 @{
 
 	var isNew = (Model.Id == 0);
+	string backAction;
 
 	if (!isNew) {
 		PageProperties.Title = "Edit venue - " + Model.Name;
+		backAction = Url.Action("Details", new { id = Model.Id });
+		ViewBag.Parents = new[] {
+			Html.ActionLink("Events", "Index"),
+			Html.ActionLink(Model.Name, "Details", new { id = Model.Id })
+		};
 	} else {
 		PageProperties.Title = "Create a new venue";
+		backAction = Url.Action("Index", "Event");
+		ViewBag.Parents = new[] {
+			Html.ActionLink("Events", "Index")
+		};
 	}
 
 }
@@ -32,12 +42,7 @@
 
 @using(Html.BeginForm("Edit", "Venue", FormMethod.Post, new { enctype = "multipart/form-data", data_bind = "submit: submit" })) {
 	
-	<p>
-		<button type="submit" class="btn btn-primary" data-bind="disable: submitting">
-			<i class="icon-ok icon-white"></i>
-			&nbsp;@HelperRes.HelperStrings.SaveChanges
-		</button>	
-	</p>
+	@Helpers.SaveAndBackBtn(backAction)
 	
 	<div class="editor-label">
 		<label class="helpTip" data-bind="qTip" title="@EditRes.DefaultLanguageHelp">
@@ -97,12 +102,7 @@
 	</div>
 
 	<br />
-	<p>
-		<button type="submit" class="btn btn-primary" data-bind="disable: submitting">
-			<i class="icon-ok icon-white"></i>
-			&nbsp;@HelperRes.HelperStrings.SaveChanges
-		</button>	
-	</p>
+	@Helpers.SaveAndBackBtn(backAction)
 
 }
 

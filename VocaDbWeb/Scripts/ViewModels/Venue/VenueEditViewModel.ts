@@ -53,7 +53,7 @@ module vdb.viewModels.venues {
 		}
 
 		private redirectToRoot = () => {
-			window.location.href = this.urlMapper.mapRelative(""/* TODO */);
+			window.location.href = this.urlMapper.mapRelative("Event");
 		}
 
 		public submitting = ko.observable(false);
