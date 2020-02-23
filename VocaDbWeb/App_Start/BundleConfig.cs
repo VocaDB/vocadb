@@ -523,8 +523,14 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/User/RatedSongsSearchViewModel.js"
 			));
 			
+			bundles.Add(new ScriptBundle("~/bundles/Venue/Details").Include(
+				"~/Scripts/Repositories/VenueRepository.js",
+				"~/Scripts/ViewModels/Venue/VenueDetailsViewModel.js"
+			));
+
 			bundles.Add(new ScriptBundle("~/bundles/Venue/Edit").Include(
 				"~/Scripts/Helpers/KnockoutHelper.js",
+				"~/Scripts/Repositories/VenueRepository.js",
 				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
 				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",
 				"~/Scripts/ViewModels/Venue/VenueEditViewModel.js",

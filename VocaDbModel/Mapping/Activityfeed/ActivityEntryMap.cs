@@ -1,4 +1,4 @@
-﻿using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 
@@ -95,6 +95,19 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 
 			References(m => m.ArchivedVersion).Column("[ArchivedTagVersion]").Nullable();
 			References(m => m.Entry).Column("[Tag]").Nullable();
+
+		}
+
+	}
+
+	public class VenueActivityEntryMap : SubclassMap<VenueActivityEntry> {
+
+		public VenueActivityEntryMap() {
+
+			DiscriminatorValue("Venue");
+
+			References(m => m.ArchivedVersion).Column("[ArchivedVenueVersion]").Nullable();
+			References(m => m.Entry).Column("[Venue]").Nullable();
 
 		}
 

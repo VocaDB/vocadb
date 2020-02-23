@@ -16,6 +16,8 @@ namespace VocaDb.Web.Models.Venue {
 
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
+		public bool Deleted { get; set; }
+
 		public string Description { get; set; }
 
 		public int Id { get; set; }
@@ -37,6 +39,7 @@ namespace VocaDb.Web.Models.Venue {
 			ParamIs.NotNull(() => contract);
 
 			DefaultNameLanguage = contract.DefaultNameLanguage;
+			Deleted = contract.Deleted;
 			Description = contract.Description;
 			Id = contract.Id;
 			Name = contract.Name;

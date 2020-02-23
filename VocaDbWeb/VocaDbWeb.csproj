@@ -609,6 +609,7 @@
     <Compile Include="Controllers\Api\CommentApiController.cs" />
     <Compile Include="Controllers\Api\EntryTypesApiController.cs" />
     <Compile Include="Controllers\Api\IPRuleApiController.cs" />
+    <Compile Include="Controllers\Api\VenueApiController.cs" />
     <Compile Include="Controllers\VenueController.cs" />
     <Compile Include="Models\Shared\EnglishTranslatedStringViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
@@ -2525,6 +2526,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagUsageForApiContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserApiContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserKnownLanguageContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Venue\VenueForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Versioning\ArchivedVersionContract.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\AjaxHelper.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\ArtistHelper.ts" />
@@ -2554,6 +2556,7 @@
       <DependentUpon>UserBaseContract.ts</DependentUpon>
     </Content>
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserMessageSummaryContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Venue\VenueForApiContract.ts" />
     <Content Include="Scripts\Event\Edit.js" />
     <Content Include="Scripts\Event\SeriesEdit.js" />
     <Content Include="Scripts\highcharts\4.2.0\adapters\standalone-framework.js" />
@@ -3013,6 +3016,7 @@
     <TypeScriptCompile Include="Scripts\Repositories\RepositoryFactory.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\SongListRepository.ts" />
     <TypeScriptCompile Include="Scripts\Models\EntryOptionalFields.ts" />
+    <TypeScriptCompile Include="Scripts\Repositories\VenueRepository.ts" />
     <TypeScriptCompile Include="Scripts\Shared\DialogService.ts" />
     <TypeScriptCompile Include="Scripts\Shared\EntryAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\Shared\MessagesTyped.ts" />
@@ -3379,6 +3383,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\User\ListUsersViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\MySettingsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\RatedSongsSearchViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Venue\VenueDetailsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\WebLinkEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\SongEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongInAlbumEditViewModel.ts" />

@@ -337,6 +337,7 @@
     <Compile Include="DataContracts\Venues\ComparedVenueContract.cs" />
     <Compile Include="DataContracts\Venues\VenueContract.cs" />
     <Compile Include="DataContracts\Venues\VenueDetailsContract.cs" />
+    <Compile Include="DataContracts\Venues\VenueForApiContract.cs" />
     <Compile Include="DataContracts\Venues\VenueForEditContract.cs" />
     <Compile Include="DataContracts\Venues\VenueWithArchivedVersionsContract.cs" />
     <Compile Include="DataContracts\Versioning\ArchivedObjectVersionForApiContract.cs" />
@@ -526,6 +527,7 @@
     <Compile Include="Domain\Venues\VenueDiff.cs" />
     <Compile Include="Domain\Venues\VenueEditableFields.cs" />
     <Compile Include="Domain\Venues\VenueName.cs" />
+    <Compile Include="Domain\Venues\VenueReport.cs" />
     <Compile Include="Domain\Venues\VenueWebLink.cs" />
     <Compile Include="Domain\Versioning\ArchivedVersionManager.cs" />
     <Compile Include="Domain\Artists\ArtistArchiveReason.cs" />
@@ -952,6 +954,7 @@
     <Compile Include="Database\Repositories\NHibernate\SongListNHibernateRepository.cs" />
     <Compile Include="Database\Repositories\NHibernate\UserMessageNHibernateRepository.cs" />
     <Compile Include="Database\Repositories\NHibernate\UserNHibernateRepository.cs" />
+    <Compile Include="Service\QueryableExtenders\VenueQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\WebLinkQueryableExtender.cs" />
     <Compile Include="Service\Search\AdvancedFilterType.cs" />
     <Compile Include="Service\Search\AdvancedSearchFilter.cs" />

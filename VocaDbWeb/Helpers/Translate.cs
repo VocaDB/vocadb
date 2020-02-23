@@ -184,6 +184,9 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<VenueEditableFields> VenueEditableFieldNames =
 			new TranslateableEnum<VenueEditableFields>(() => global::Resources.VenueEditableFieldNames.ResourceManager);
 
+		public static readonly TranslateableEnum<VenueReportType> VenueReportTypeNames =
+			new TranslateableEnum<VenueReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
+
 		public static readonly TranslateableEnum<WebLinkCategory> WebLinkCategoryNames =
 			new TranslateableEnum<WebLinkCategory>(() => global::Resources.WebLinkCategoryNames.ResourceManager);
 

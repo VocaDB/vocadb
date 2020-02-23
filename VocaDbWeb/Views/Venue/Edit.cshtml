@@ -15,6 +15,19 @@
 
 }
 
+@section Toolbar {
+	@if (!isNew && Login.CanDeleteEntries) {
+		if (!Model.Deleted) {
+			<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>			
+		} else {
+			@Html.ActionLink(EditRes.Restore, "Restore", new { id = Model.Id }, new { id = "restoreLink" })					
+		}
+		if (Login.CanMoveToTrash) {
+			<a href="#" id="trashLink" data-bind="click: trashViewModel.show">@EditRes.MoveToTrash</a>
+		}
+	}
+}
+
 @Helpers.ValidationSymmaryPanel("Unable to save properties.")
 
 @using(Html.BeginForm("Edit", "Venue", FormMethod.Post, new { enctype = "multipart/form-data", data_bind = "submit: submit" })) {
@@ -93,20 +106,27 @@
 
 }
 
+@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
+@EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)
+
 @section BodyScripts {
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/Venue/Edit")
 <script type="text/javascript">
 
 	$(function () {
 		
-		var model = @ToJS(new {
+		var urlMapper = new vdb.UrlMapper('@RootPath');
+		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var venueRepo = repoFactory.venueRepository();
+		var userRepo = repoFactory.userRepository();
+		var contract = @ToJS(new {
 			 DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
 			 Model.Id,
 			 Model.Names,
 			 Model.WebLinks
 		});
 
-		var vm = new vdb.viewModels.venues.VenueEditViewModel(model.defaultNameLanguage, model.names, model.webLinks);
+		var vm = new vdb.viewModels.venues.VenueEditViewModel(venueRepo, userRepo, urlMapper, contract);
 		ko.applyBindings(vm);
 
 		initPage();

@@ -2,6 +2,7 @@ using System.Linq;
 using System.Web.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Venues;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Venue;
@@ -34,6 +35,10 @@ namespace VocaDb.Web.Controllers {
 		[Authorize]
 		public ActionResult Edit(int? id) {
 
+			if (id.HasValue) {
+				CheckConcurrentEdit(EntryType.Venue, id.Value);
+			}
+
 			var contract = id.HasValue ? queries.GetForEdit(id.Value) : new VenueForEditContract();
 			return View(new VenueEditViewModel(contract, PermissionContext));
 
@@ -57,6 +62,14 @@ namespace VocaDb.Web.Controllers {
 			return RedirectToAction("Details", new { id });
 
 		}
+		
+		public ActionResult Restore(int id) {
+
+		    queries.Restore(id);
+
+		    return RedirectToAction("Edit", new { id });
+
+	    }
 
 		public ActionResult Versions(int id = invalidId) {
 

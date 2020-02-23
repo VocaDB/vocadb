@@ -6,9 +6,32 @@
 
 }
 
+@section Toolbar {
+	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
+}
+
 @ArchivedEntryHelpers.ArchivedObjectVersionProperties(Model.Version(Model.Entry.ArchivedVersion), 
 	Model.Version(Model.Entry.ComparedVersion))
 
 @VenueHelpers.PrintArchivedVenueData(Model.Entry.Versions)
 
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
+
+@section BodyScripts {
+	<script src="@Url.Content("~/Scripts/Repositories/VenueRepository.js")"></script>
+	<script src="@Url.Content("~/Scripts/ViewModels/ArchivedEntryViewModel.js")"></script>
+	<script type="text/javascript">
+
+		$(function () {
+
+			$("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
+			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
+
+			var rep = new vdb.repositories.VenueRepository(new vdb.UrlMapper('@RootPath'));
+			var viewModel = new vdb.viewModels.ArchivedEntryViewModel(@Model.Entry.Venue.Id, @Model.Entry.ArchivedVersion.Version, rep);
+			ko.applyBindings(viewModel);
+
+		});
+
+	</script>
+}
