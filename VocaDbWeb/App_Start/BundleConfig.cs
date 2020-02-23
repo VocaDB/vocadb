@@ -269,6 +269,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 				"~/Scripts/KnockoutExtensions/ReleaseEventSeriesAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/SongListAutoComplete.js",
+				"~/Scripts/KnockoutExtensions/BindingHandlers/VenueAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
 				"~/Scripts/Repositories/PVRepository.js",

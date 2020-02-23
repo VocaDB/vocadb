@@ -1,4 +1,4 @@
-﻿
+
 module vdb.viewModels.releaseEvents {
 
 	import dc = vdb.dataContracts;
@@ -40,6 +40,7 @@ module vdb.viewModels.releaseEvents {
 			});
 
 			this.songList = new BasicEntryLinkViewModel(contract.songList, null);
+			this.venue = new BasicEntryLinkViewModel(contract.venue, null);
 			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
 			this.artistLinkContracts = ko.computed(() => ko.toJS(this.artistLinks()));
@@ -158,6 +159,8 @@ module vdb.viewModels.releaseEvents {
 		public trashViewModel = new DeleteEntryViewModel(notes => {
 			this.repo.delete(this.id, notes, true, this.redirectToRoot);
 		});
+
+		public venue: BasicEntryLinkViewModel<dc.VenueForApiContract>;
 
         public webLinks: WebLinksEditViewModel;
 
