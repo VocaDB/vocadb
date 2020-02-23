@@ -7,6 +7,7 @@ using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.DataContracts.Venues {
 
+	[DataContract(Namespace = Schemas.VocaDb)]
 	public class VenueForApiContract {
 		
 		/// <summary>

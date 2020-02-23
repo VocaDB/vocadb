@@ -56,6 +56,7 @@ namespace VocaDb.Web.Models.Event {
 			SeriesSuffix = contract.SeriesSuffix;
 			SongList = contract.SongList;
 			Status = contract.Status;
+			Venue = contract.Venue;
 			VenueName = contract.VenueName;
 			WebLinks = contract.WebLinks;
 
@@ -161,6 +162,7 @@ namespace VocaDb.Web.Models.Event {
 				SeriesSuffix = this.SeriesSuffix ?? string.Empty,
 				SongList = SongList,
 				Status = Status,
+				Venue = Venue,
 				VenueName = VenueName,
 				WebLinks = this.WebLinks
 			};

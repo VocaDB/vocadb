@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -62,6 +63,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 			if (fields.HasFlag(ReleaseEventOptionalFields.SongList) && rel.SongList != null) {
 				SongList = new SongListBaseContract(rel.SongList);
+			}
+
+			if (fields.HasFlag(ReleaseEventOptionalFields.Venue) && rel.Venue != null) {
+				Venue = new VenueForApiContract(rel.Venue, languagePreference, VenueOptionalFields.None);
 			}
 
 			if (fields.HasFlag(ReleaseEventOptionalFields.WebLinks)) {
@@ -139,6 +144,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public string UrlSlug { get; set; }
 
 		[DataMember]
+		public VenueForApiContract Venue { get; set; }
+
+		[DataMember]
 		public string VenueName { get; set; }
 
 		[DataMember]
@@ -160,7 +168,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		Names = 16,
 		Series = 32,
 		SongList = 64,
-		WebLinks = 128
+		Venue = 128,
+		WebLinks = 256
 
 	}
 
