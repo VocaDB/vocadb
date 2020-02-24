@@ -4,7 +4,7 @@ using VocaDb.Model.Domain;
 namespace VocaDb.Model.DataContracts {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class OptionalGeoPointContract {
+	public class OptionalGeoPointContract : IOptionalGeoPoint {
 
 		[DataMember]
 		public string Formatted { get; set; }

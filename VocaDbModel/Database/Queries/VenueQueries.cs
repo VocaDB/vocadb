@@ -208,6 +208,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (contract.Id == 0) {
 
 					venue = new Venue(contract.DefaultNameLanguage, contract.Names, contract.Description) {
+						Coordinates = (contract.Coordinates != null) ? new OptionalGeoPoint(contract.Coordinates) : new OptionalGeoPoint(),
 						Status = contract.Status
 					};
 					ctx.Save(venue);
@@ -215,6 +216,10 @@ namespace VocaDb.Model.Database.Queries {
 					var diff = new VenueDiff(VenueEditableFields.OriginalName | VenueEditableFields.Names);
 
 					diff.Description.Set(!string.IsNullOrEmpty(contract.Description));
+
+					if (contract.Coordinates != null) {
+						diff.Coordinates.Set();
+					}
 
 					var weblinksDiff = WebLink.Sync(venue.WebLinks, contract.WebLinks, venue);
 
@@ -251,6 +256,11 @@ namespace VocaDb.Model.Database.Queries {
 					if (venue.Description != contract.Description) {
 						diff.Description.Set();
 						venue.Description = contract.Description;
+					}
+
+					if (!venue.Coordinates.Equals(contract.Coordinates)) {
+						diff.Coordinates.Set();
+						venue.Coordinates = (contract.Coordinates != null) ? new OptionalGeoPoint(contract.Coordinates) : new OptionalGeoPoint();
 					}
 
 					if (venue.Status != contract.Status) {
