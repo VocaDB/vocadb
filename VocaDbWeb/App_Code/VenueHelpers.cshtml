@@ -12,6 +12,7 @@
 			@ArchivedEntryHelpers.TranslatedNameRow(comparedVenues, d => d.TranslatedName)
 			@ArchivedEntryHelpers.DataRowList("Names", comparedVenues, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
 			@ArchivedEntryHelpers.DataRow("Description", comparedVenues, d => d.Description)
+			@ArchivedEntryHelpers.DataRow("Coordinates", comparedVenues, d => ((d.Coordinates != null) && d.Coordinates.HasValue) ? d.Coordinates.Formatted : string.Empty)
 			@ArchivedEntryHelpers.DataRowList("External links", comparedVenues, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
 		</table>
 

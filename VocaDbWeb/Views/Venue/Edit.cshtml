@@ -92,7 +92,7 @@
 				<label>@Res.Latitude</label>
 			</div>
 			<div class="editor-field">
-				<input type="text" data-bind="textInput: latitude" class="input-medium" />
+				@Html.TextBoxForKnockout(m => m.Coordinates.Latitude, "textInput: latitude", cssClass: "input-medium")
 			</div>				
 		</td>
 		<td>
@@ -100,7 +100,7 @@
 				<label>@Res.Longitude</label>
 			</div>
 			<div class="editor-field">
-				<input type="text" data-bind="textInput: longitude" class="input-medium" />
+				@Html.TextBoxForKnockout(m => m.Coordinates.Longitude, "textInput: longitude", cssClass: "input-medium")
 			</div>				
 		</td>
 		@Html.HiddenForKnockout(m => m.Coordinates, "value: ko.toJSON(coordinates)")
