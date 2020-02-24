@@ -451,7 +451,7 @@ namespace VocaDb.Model.Database.Queries {
 					ev.EndDate = contract.EndDate;
 					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
 					ev.Status = contract.Status;
-					ev.Venue = session.NullSafeLoad<Venue>(contract.Venue);
+					ev.SetVenue(session.NullSafeLoad<Venue>(contract.Venue));
 					ev.VenueName = contract.VenueName;
 
 					if (contract.SongList != null) {
@@ -566,7 +566,7 @@ namespace VocaDb.Model.Database.Queries {
 					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
 					ev.Status = contract.Status;
 					ev.TranslatedName.DefaultLanguage = inheritedLanguage;
-					ev.Venue = session.NullSafeLoad<Venue>(contract.Venue);
+					ev.SetVenue(session.NullSafeLoad<Venue>(contract.Venue));
 					ev.VenueName = contract.VenueName;
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
