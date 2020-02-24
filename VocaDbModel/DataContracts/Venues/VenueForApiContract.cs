@@ -16,6 +16,9 @@ namespace VocaDb.Model.DataContracts.Venues {
 		[DataMember(EmitDefaultValue = false)]
 		public string AdditionalNames { get; set; }
 
+		[DataMember]
+		public OptionalGeoPointContract Coordinates { get; set; }
+
 		[DataMember(EmitDefaultValue = false)]
 		public string Description { get; set; }
 
@@ -45,6 +48,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 		public VenueForApiContract(Venue venue, ContentLanguagePreference languagePreference, VenueOptionalFields fields) {
 
 			Id = venue.Id;
+			Coordinates = new OptionalGeoPointContract(venue.Coordinates);
 			Name = venue.TranslatedName[languagePreference];
 			Status = venue.Status;
 			Version = venue.Version;
