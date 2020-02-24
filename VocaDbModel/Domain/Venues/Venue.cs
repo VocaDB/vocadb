@@ -19,6 +19,7 @@ namespace VocaDb.Model.Domain.Venues {
 		INameManager<VenueName> IEntryWithNames<VenueName>.Names => Names;
 
 		private ArchivedVersionManager<ArchivedVenueVersion, VenueEditableFields> archivedVersions = new ArchivedVersionManager<ArchivedVenueVersion, VenueEditableFields>();
+		private OptionalGeoPoint coordinates;
 		private IList<ReleaseEvent> events = new List<ReleaseEvent>();
 		private NameManager<VenueName> names = new NameManager<VenueName>();
 		private IList<VenueWebLink> webLinks = new List<VenueWebLink>();
@@ -49,6 +50,11 @@ namespace VocaDb.Model.Domain.Venues {
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
 			}
+		}
+
+		public virtual OptionalGeoPoint Coordinates {
+			get => coordinates ?? (coordinates = new OptionalGeoPoint());
+			set => coordinates = value;
 		}
 
 		public virtual string DefaultName => TranslatedName.Default;

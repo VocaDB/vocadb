@@ -12,6 +12,8 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 		public string AdditionalNames { get; set; }
 
+		public OptionalGeoPointContract Coordinates { get; set; }
+
 		public bool Deleted { get; set; }
 
 		public string Description { get; set; } = string.Empty;
@@ -33,6 +35,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 			ParamIs.NotNull(() => venue);
 
 			AdditionalNames = venue.Names.GetAdditionalNamesStringForLanguage(languagePreference);
+			Coordinates = new OptionalGeoPointContract(venue.Coordinates);
 			Deleted = venue.Deleted;
 			Description = venue.Description;
 			Id = venue.Id;

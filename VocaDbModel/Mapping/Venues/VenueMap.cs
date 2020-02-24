@@ -19,6 +19,11 @@ namespace VocaDb.Model.Mapping.Venues {
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("Venue").Inverse().Cascade.All().OrderBy("Created DESC"));
 
+			Component(m => m.Coordinates, c => {
+				c.Map(m => m.Latitude).Nullable();
+				c.Map(m => m.Longitude).Nullable();
+			});
+
 			Component(m => m.Names, c => {
 				c.Map(m => m.AdditionalNamesString).Not.Nullable().Length(1024);
 				c.HasMany(m => m.Names).Table("VenueNames").KeyColumn("Venue").Inverse().Cascade.All().Cache.ReadWrite();

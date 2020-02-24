@@ -10,6 +10,9 @@ namespace VocaDb.Model.DataContracts.Venues {
 	public class ArchivedVenueContract {
 
 		[DataMember]
+		public OptionalGeoPointContract Coordinates { get; set; }
+
+		[DataMember]
 		public string Description { get; set; }
 
 		[DataMember]
@@ -30,6 +33,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 			ParamIs.NotNull(() => venue);
 
+			Coordinates = new OptionalGeoPointContract(venue.Coordinates);
 			Description = venue.Description;
 			Id = venue.Id;
 			Names = diff.IncludeNames ? venue.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
@@ -55,6 +59,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 			var xmlCache = new XmlCache<ArchivedVenueContract>();
 			var thisVersion = version.Data != null ? xmlCache.Deserialize(version.Version, version.Data) : new ArchivedVenueContract();
 
+			data.Coordinates = thisVersion.Coordinates;
 			data.Description = thisVersion.Description;
 			data.Id = thisVersion.Id;
 			data.TranslatedName = thisVersion.TranslatedName;
