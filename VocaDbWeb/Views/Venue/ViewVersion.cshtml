@@ -1,4 +1,5 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.Venues.ArchivedVenueVersionDetailsContract>>
+﻿@using VocaDb.Web.Helpers;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.Venues.ArchivedVenueVersionDetailsContract>>
 
 @{
 
@@ -20,6 +21,13 @@
 
 @section Toolbar {
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
+}
+
+@if (Model.Entry.ComparableVersions.Any()) {
+	using (Html.BeginForm("ViewVersion", "Venue", FormMethod.Post, new { @class = "form form-inline" })) {
+		@:Compare to: @Html.DropDownListFor(m => m.ComparedVersionId, ViewHelper.CreateSelectList(Model.Entry.ComparableVersions, i => i.Id, i => i.Version + " (" + i.TranslateChangedFields(Model.EnumTranslations) + " by " + i.AgentName + ")", Model.Entry.ComparedVersionId), new { @class = "input-xlarge", onchange = "$(this).closest('form').submit();" })
+		<button type="submit" class="btn btn-primary">Compare</button>
+	}
 }
 
 @ArchivedEntryHelpers.ArchivedObjectVersionProperties(Model.Version(Model.Entry.ArchivedVersion), 
