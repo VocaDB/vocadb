@@ -11,8 +11,17 @@ module vdb.viewModels.venues {
 
 			this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
 			this.id = contract.id;
+			this.latitude = ko.observable(contract.coordinates?.latitude ?? null);
+			this.longitude = ko.observable(contract.coordinates?.longitude ?? null);
 			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
-			this.webLinks = new WebLinksEditViewModel(contract.webLinks);			
+			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
+
+			this.coordinates = ko.computed(() => {
+				return {
+					latitude: this.latitude(),
+					longitude: this.longitude()
+				};
+			});
 			
 			if (contract.id) {
 				window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Venue, contract.id), 10000);				
@@ -36,6 +45,8 @@ module vdb.viewModels.venues {
 			});
 
 		}
+
+		public coordinates: KnockoutComputed<dc.OptionalGeoPointContract>;
 		
 		public defaultNameLanguage: KnockoutObservable<string>;
 		
@@ -46,6 +57,8 @@ module vdb.viewModels.venues {
 		public description = ko.observable<string>();
 		public duplicateName = ko.observable<string>();
 		private id: number;
+		public latitude: KnockoutObservable<number>;
+		public longitude: KnockoutObservable<number>;
 		public names: globalization.NamesEditViewModel;
 		
 		private redirectToDetails = () => {

@@ -30,6 +30,10 @@
 	@EntryDetailsHelpers.DeletedBanner(null)
 }
 
+@if (Model.Coordinates.HasValue) {
+	<iframe src="https://maps.google.com/maps?q=@(Model.Coordinates.Latitude),@(Model.Coordinates.Longitude)&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="600" height="450"></iframe>
+}
+
 <div class="media">
 	<div class="media-body">
 		@if (!string.IsNullOrEmpty(Model.Description)) {

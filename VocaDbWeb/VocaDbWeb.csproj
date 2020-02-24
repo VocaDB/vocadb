@@ -1775,6 +1775,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DetailsStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\Venue\EditStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\QueryService.svc.cs">
       <DependentUpon>QueryService.svc</DependentUpon>
     </Compile>
@@ -2483,6 +2488,11 @@
       <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes.Venue</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\Venue\EditStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Venue</CustomToolNamespace>
+    </EmbeddedResource>
     <TypeScriptCompile Include="Scripts\Album\Details.ts" />
     <TypeScriptCompile Include="Scripts\Artist\Details.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ActivityEntry\ActivityEntryContract.ts" />
@@ -2502,6 +2512,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Globalization\EnglishTranslatedStringContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Globalization\LocalizedStringContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Globalization\LocalizedStringWithIdContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\OptionalGeoPointContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\PartialFindResultContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\PVs\PVContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ReleaseEvents\ArtistForEventContract.ts" />

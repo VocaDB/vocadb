@@ -14,6 +14,9 @@ namespace VocaDb.Web.Models.Venue {
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
 
+		[FromJson]
+		public OptionalGeoPointContract Coordinates { get; set; }
+
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		public bool Deleted { get; set; }
@@ -38,6 +41,7 @@ namespace VocaDb.Web.Models.Venue {
 
 			ParamIs.NotNull(() => contract);
 
+			Coordinates = contract.Coordinates;
 			DefaultNameLanguage = contract.DefaultNameLanguage;
 			Deleted = contract.Deleted;
 			Description = contract.Description;
@@ -52,6 +56,7 @@ namespace VocaDb.Web.Models.Venue {
 		}
 
 		public VenueForEditContract ToContract() => new VenueForEditContract {
+			Coordinates = Coordinates,
 			DefaultNameLanguage = DefaultNameLanguage,
 			Description = Description ?? string.Empty,
 			Id = Id,
