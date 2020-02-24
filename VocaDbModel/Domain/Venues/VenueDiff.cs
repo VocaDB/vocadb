@@ -8,6 +8,7 @@ namespace VocaDb.Model.Domain.Venues {
 		public VenueDiff(bool isSnapshot) : base(isSnapshot) { }
 		public VenueDiff(VenueEditableFields changedFields) : base(changedFields) { }
 
+		public EnumFieldAccessor<VenueEditableFields> Coordinates => Field(VenueEditableFields.Coordinates);
 		public EnumFieldAccessor<VenueEditableFields> Description => Field(VenueEditableFields.Description);
 		public EnumFieldAccessor<VenueEditableFields> OriginalName => Field(VenueEditableFields.OriginalName);
 		public EnumFieldAccessor<VenueEditableFields> Names => Field(VenueEditableFields.Names);
