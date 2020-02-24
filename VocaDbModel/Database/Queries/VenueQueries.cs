@@ -14,6 +14,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.Venues;
 using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Database.Queries {
@@ -86,20 +87,14 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 		
-		public PartialFindResult<VenueForApiContract> Find(SearchTextQuery textQuery, PagingProperties paging,
-			ContentLanguagePreference lang, VenueOptionalFields fields = VenueOptionalFields.None) {
-			return Find(s => new VenueForApiContract(s, lang, fields), textQuery, paging);
-		}
-
-		public PartialFindResult<TResult> Find<TResult>(Func<Venue, TResult> fac, 
-			SearchTextQuery textQuery, PagingProperties paging) {
+		public PartialFindResult<TResult> Find<TResult>(Func<Venue, TResult> fac, VenueQueryParams queryParams) {
 
 			return HandleQuery(ctx => {
 
 				var q = ctx.Query<Venue>()
 					.WhereNotDeleted()
-					.WhereHasName(textQuery)
-					.Paged(paging);
+					.WhereHasName(queryParams.TextQuery)
+					.Paged(queryParams.Paging);
 
 				var entries = q
 					.OrderByEntryName(PermissionContext.LanguagePreference)
@@ -107,7 +102,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Select(fac)
 					.ToArray();
 
-				var count = paging.GetTotalCount ? q.Count() : 0;
+				var count = queryParams.Paging.GetTotalCount ? q.Count() : 0;
 
 				return PartialFindResult.Create(entries, count);
 

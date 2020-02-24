@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.Venues;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 
@@ -68,7 +69,13 @@ namespace VocaDb.Web.Controllers.Api {
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			return queries.Find(SearchTextQuery.Create(query, nameMatchMode), new PagingProperties(start, maxResults, getTotalCount), lang, fields);
+			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+			var queryParams = new VenueQueryParams {
+				Paging = new PagingProperties(start, maxResults, getTotalCount),
+				TextQuery = textQuery
+			};
+
+			return queries.Find(v => new VenueForApiContract(v, lang, fields), queryParams);
 
 		}
 
