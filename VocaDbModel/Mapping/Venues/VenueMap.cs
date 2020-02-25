@@ -17,7 +17,7 @@ namespace VocaDb.Model.Mapping.Venues {
 			Map(m => m.Version).Not.Nullable();
 
 			Component(m => m.ArchivedVersionsManager,
-				c => c.HasMany(m => m.Versions).KeyColumn("Venue").Inverse().Cascade.All().OrderBy("Created DESC"));
+				c => c.HasMany(m => m.Versions).KeyColumn("[Venue]").Inverse().Cascade.All().OrderBy("Created DESC"));
 
 			Component(m => m.Coordinates, c => {
 				c.Map(m => m.Latitude).Nullable();
@@ -26,7 +26,7 @@ namespace VocaDb.Model.Mapping.Venues {
 
 			Component(m => m.Names, c => {
 				c.Map(m => m.AdditionalNamesString).Not.Nullable().Length(1024);
-				c.HasMany(m => m.Names).Table("VenueNames").KeyColumn("Venue").Inverse().Cascade.All().Cache.ReadWrite();
+				c.HasMany(m => m.Names).Table("VenueNames").KeyColumn("[Venue]").Inverse().Cascade.All().Cache.ReadWrite();
 				c.Component(m => m.SortNames, c2 => {
 					c2.Map(m => m.DefaultLanguage, "DefaultNameLanguage");
 					c2.Map(m => m.Japanese, "JapaneseName");
@@ -35,8 +35,8 @@ namespace VocaDb.Model.Mapping.Venues {
 				});
 			});
 
-			HasMany(m => m.AllEvents).OrderBy("SeriesNumber").KeyColumn("VenueEntry").Inverse().Cache.ReadWrite();
-			HasMany(m => m.WebLinks).KeyColumn("Venue").Inverse().Cascade.All().Cache.ReadWrite();
+			HasMany(m => m.AllEvents).OrderBy("SeriesNumber").KeyColumn("[VenueEntry]").Inverse().Cache.ReadWrite();
+			HasMany(m => m.WebLinks).KeyColumn("[Venue]").Inverse().Cascade.All().Cache.ReadWrite();
 
 		}
 
@@ -52,7 +52,7 @@ namespace VocaDb.Model.Mapping.Venues {
 
 			Map(m => m.Language).Not.Nullable();
 			Map(m => m.Value).Length(255).Not.Nullable();
-			References(m => m.Entry).Column("Venue").Not.Nullable();
+			References(m => m.Entry).Column("[Venue]").Not.Nullable();
 
 		}
 
@@ -75,7 +75,7 @@ namespace VocaDb.Model.Mapping.Venues {
 			Map(m => m.Version).Not.Nullable();
 
 			References(m => m.Author).Not.Nullable();
-			References(m => m.Entry).Column("Venue").Not.Nullable();
+			References(m => m.Entry).Column("[Venue]").Not.Nullable();
 
 			Component(m => m.Diff, c => {
 				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();

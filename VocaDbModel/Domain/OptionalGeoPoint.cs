@@ -38,7 +38,7 @@ namespace VocaDb.Model.Domain {
 
 		}
 
-		public override string ToString() => HasValue ? $"({Latitude}, {Longitude})" : string.Empty;
+		public override string ToString() => HasValue ? $"{Latitude}, {Longitude}" : string.Empty;
 
 	}
 

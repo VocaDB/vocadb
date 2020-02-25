@@ -42,6 +42,8 @@
 @Helpers.ValidationSymmaryPanel("Unable to save properties.")
 
 @using(Html.BeginForm("Edit", "Venue", FormMethod.Post, new { enctype = "multipart/form-data", data_bind = "submit: submit" })) {
+	@Html.HiddenFor(m => m.Id)
+	@Html.HiddenFor(m => m.Name)
 	
 	@Helpers.SaveAndBackBtn(backAction)
 	

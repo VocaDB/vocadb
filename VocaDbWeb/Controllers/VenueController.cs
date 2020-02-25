@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Venue;
@@ -54,7 +55,8 @@ namespace VocaDb.Web.Controllers {
 			}
 
 			if (!ModelState.IsValid) {
-				return View(new VenueEditViewModel(model.ToContract(), PermissionContext));
+				model.AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(PermissionContext).ToArray();
+				return View(model);
 			}
 
 			var id = queries.Update(model.ToContract());

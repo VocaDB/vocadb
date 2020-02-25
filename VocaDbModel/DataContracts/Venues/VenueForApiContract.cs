@@ -47,6 +47,8 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 		public VenueForApiContract(Venue venue, ContentLanguagePreference languagePreference, VenueOptionalFields fields) {
 
+			ParamIs.NotNull(() => venue);
+
 			Id = venue.Id;
 			Coordinates = new OptionalGeoPointContract(venue.Coordinates);
 			Name = venue.TranslatedName[languagePreference];

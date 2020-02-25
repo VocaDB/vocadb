@@ -49,6 +49,8 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 		}
 
+		public override string ToString() => $"venue '{Name}' [{Id}]";
+
 	}
 
 }

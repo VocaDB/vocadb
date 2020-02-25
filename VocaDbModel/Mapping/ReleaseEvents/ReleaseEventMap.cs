@@ -32,7 +32,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 
 			References(m => m.Series).Nullable();
 			References(m => m.SongList).Nullable();
-			References(m => m.Venue).Column("VenueEntry").Nullable();
+			References(m => m.Venue).Column("[VenueEntry]").Nullable();
 
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Event]").Inverse().Cascade.All().OrderBy("Created DESC"));
