@@ -1,3 +1,5 @@
+using System;
+
 namespace VocaDb.Model.Domain {
 
 	public interface IOptionalGeoPoint {
@@ -20,8 +22,34 @@ namespace VocaDb.Model.Domain {
 
 			ParamIs.NotNull(() => geoPoint);
 
+			Validate(geoPoint.Latitude, geoPoint.Longitude);
 			Latitude = geoPoint.Latitude;
 			Longitude = geoPoint.Longitude;
+
+		}
+
+		public static bool IsValid(double? latitude, double? longitude) {
+
+			if (!latitude.HasValue && !longitude.HasValue)
+				return true;
+
+			if (!latitude.HasValue || !longitude.HasValue)
+				return false;
+
+			if (latitude.Value < -90.0 || latitude.Value > 90.0)
+				return false;
+
+			if (longitude.Value < -180.0 || longitude.Value > 180.0)
+				return false;
+
+			return true;
+
+		}
+
+		public static void Validate(double? latitude, double? longitude) {
+
+			if (!IsValid(latitude, longitude))
+				throw new FormatException("Invalid coordinates");
 
 		}
 
@@ -37,6 +65,10 @@ namespace VocaDb.Model.Domain {
 			return (Latitude == other.Latitude) && (Longitude == other.Longitude);
 
 		}
+
+		public override int GetHashCode() => ToString().GetHashCode();
+
+		public override bool Equals(object obj) => (obj is OptionalGeoPoint) && Equals((OptionalGeoPoint)obj);
 
 		public override string ToString() => HasValue ? $"{Latitude}, {Longitude}" : string.Empty;
 

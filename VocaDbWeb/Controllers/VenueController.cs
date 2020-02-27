@@ -54,6 +54,10 @@ namespace VocaDb.Web.Controllers {
 				ModelState.AddModelError("Names", "Name cannot be empty");
 			}
 
+			if ((model.Coordinates != null) && !OptionalGeoPoint.IsValid(model.Coordinates.Latitude, model.Coordinates.Longitude)) {
+				ModelState.AddModelError("Coordinates", "Invalid coordinates");
+			}
+
 			if (!ModelState.IsValid) {
 				model.AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(PermissionContext).ToArray();
 				return View(model);
