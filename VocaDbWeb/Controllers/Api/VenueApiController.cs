@@ -5,6 +5,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Venues;
 using VocaDb.Web.Code.WebApi;
@@ -49,7 +50,7 @@ namespace VocaDb.Web.Controllers.Api {
 			}
 
 		}
-		
+
 		/// <summary>
 		/// Gets a page of event venue.
 		/// </summary>
@@ -60,6 +61,11 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="getTotalCount">Whether to load total number of items (optional).</param>
 		/// <param name="nameMatchMode">Match mode for event name (optional).</param>
 		/// <param name="lang">Content language preference (optional).</param>
+		/// <param name="sortRule">Sort rule (optional, defaults to Name). Possible values are None, Name, Distance.</param>
+		/// <param name="latitude">Latitude (optional).</param>
+		/// <param name="longitude">Longitude (optional).</param>
+		/// <param name="radius">Radius (optional).</param>
+		/// <param name="distanceUnit">Unit of length (optional). Possible values are Kilometers, Miles.</param>
 		/// <returns>Page of venue.</returns>
 		[Route("")]
 		public PartialFindResult<VenueForApiContract> GetList(
@@ -67,11 +73,17 @@ namespace VocaDb.Web.Controllers.Api {
 			VenueOptionalFields fields = VenueOptionalFields.None,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+			ContentLanguagePreference lang = ContentLanguagePreference.Default,
+			VenueSortRule sortRule = VenueSortRule.Name,
+			double? latitude = null, double? longitude = null, double? radius = null, DistanceUnit distanceUnit = DistanceUnit.Kilometers) {
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var queryParams = new VenueQueryParams {
+				Coordinates = new GeoPointQueryParams(latitude, longitude),
+				DistanceUnit = distanceUnit,
 				Paging = new PagingProperties(start, maxResults, getTotalCount),
+				Radius = radius,
+				SortRule = sortRule,
 				TextQuery = textQuery
 			};
 

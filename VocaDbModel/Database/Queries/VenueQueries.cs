@@ -91,10 +91,11 @@ namespace VocaDb.Model.Database.Queries {
 				var q = ctx.Query<Venue>()
 					.WhereNotDeleted()
 					.WhereHasName(queryParams.TextQuery)
+					.WhereInCircle(queryParams.Coordinates, queryParams.Radius, queryParams.DistanceUnit)
 					.Paged(queryParams.Paging);
 
 				var entries = q
-					.OrderByEntryName(PermissionContext.LanguagePreference)
+					.OrderBy(queryParams.SortRule, PermissionContext.LanguagePreference, queryParams.Coordinates, queryParams.DistanceUnit)
 					.ToArray()
 					.Select(fac)
 					.ToArray();
