@@ -17,10 +17,15 @@ module vdb.viewModels.venues {
 			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
 			this.coordinates = ko.computed(() => {
+
+				if (!this.latitude() || !this.longitude())
+					return null;
+
 				return {
-					latitude: this.latitude(),
-					longitude: this.longitude()
+					latitude: !isNaN(this.latitude()) ? this.latitude() : null,
+					longitude: !isNaN(this.longitude()) ? this.longitude() : null
 				};
+
 			});
 			
 			if (contract.id) {
