@@ -4,6 +4,18 @@ using FluentMigrator;
 namespace VocaDb.Migrations {
 
 	// Migration version format: YYYY_MM_DD_HHmm
+
+	[Migration(2020_02_28_1700)]
+	public class AlbumReleaseEvents_RenameVenue : AutoReversingMigration {
+
+		public override void Up() {
+
+			Rename.Column("[Venue]").OnTable(TableNames.AlbumReleaseEvents).To("VenueName");
+			Rename.Column("[VenueEntry]").OnTable(TableNames.AlbumReleaseEvents).To("Venue");
+
+		}
+
+	}
 	
 	[Migration(2020_02_27_2100)]
 	public class EventVenues : AutoReversingMigration {

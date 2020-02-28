@@ -35,7 +35,7 @@ namespace VocaDb.Model.Mapping.Venues {
 				});
 			});
 
-			HasMany(m => m.AllEvents).OrderBy("SeriesNumber").KeyColumn("[VenueEntry]").Inverse().Cache.ReadWrite();
+			HasMany(m => m.AllEvents).OrderBy("SeriesNumber").KeyColumn("[Venue]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.WebLinks).KeyColumn("[Venue]").Inverse().Cascade.All().Cache.ReadWrite();
 
 		}
