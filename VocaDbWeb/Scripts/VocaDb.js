@@ -1,4 +1,4 @@
-﻿
+
 function getId(elem) {
 
 	if ($(elem) == null || $(elem).attr('id') == null)
@@ -45,7 +45,7 @@ vdb.functions.showLoginPopup = function() {
                 content: {
                     text: 'Loading...',
                     ajax: {
-                    	url: vdb.functions.mapFullUrl('/Artist/PopupContent'),
+						url: vdb.functions.mapAbsoluteUrl('/Artist/PopupContent'),
                         type: 'GET',
                         data: { id: $(elem).data("entryId") }
                     }
@@ -72,7 +72,7 @@ vdb.functions.showLoginPopup = function() {
                 content: {
                     text: 'Loading...',
                     ajax: {
-                    	url: vdb.functions.mapFullUrl('/Album/PopupContent'),
+						url: vdb.functions.mapAbsoluteUrl('/Album/PopupContent'),
                         type: 'GET',
                         data: { id: $(elem).data("entryId") }
                     }
@@ -96,7 +96,7 @@ vdb.functions.showLoginPopup = function() {
 				content: {
 					text: 'Loading...',
 					ajax: {
-						url: vdb.functions.mapFullUrl('/Album/PopupWithCoverContent'),
+						url: vdb.functions.mapAbsoluteUrl('/Album/PopupWithCoverContent'),
 						type: 'GET',
 						data: { id: $(elem).data("entryId") }
 					}

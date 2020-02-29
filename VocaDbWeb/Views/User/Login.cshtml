@@ -1,5 +1,4 @@
-@using VocaDb.Model.Utils;
-@using Res = ViewRes.User.LoginStrings;
+﻿@using Res = ViewRes.User.LoginStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.LoginModel>
 
 @{
@@ -8,7 +7,8 @@
 
 @Helpers.ValidationSymmaryDiv(Res.UnableToLogin)
 
-<form action="@VocaUriBuilder.Absolute(Url.Action("Login", "User"))" method="POST">
+@using (Html.BeginForm("Login", "User", FormMethod.Post))
+{
 	@Html.HiddenFor(m => m.ReturnToMainSite)
 	@Html.HiddenFor(m => m.ReturnUrl)
 
@@ -42,7 +42,7 @@
 		
 	</div>
 
-</form>
+}
 
 @Res.NoAccount @Html.ActionLink(Res.RegisterHere, "Create")@ViewRes.SharedStrings.Period<br />
 
