@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Songs;
@@ -18,7 +18,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ReleaseEventForApiContract() { }
 
-		public ReleaseEventForApiContract(ReleaseEvent rel, ContentLanguagePreference languagePreference, ReleaseEventOptionalFields fields, IEntryThumbPersister thumbPersister, bool ssl) {
+		public ReleaseEventForApiContract(ReleaseEvent rel, ContentLanguagePreference languagePreference, ReleaseEventOptionalFields fields, IEntryThumbPersister thumbPersister) {
 
 			Category = rel.Category;
 			Date = rel.Date;
@@ -49,7 +49,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			}
 
 			if (thumbPersister != null && fields.HasFlag(ReleaseEventOptionalFields.MainPicture)) {
-				MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(rel) ?? EntryThumb.Create(rel.Series), thumbPersister, ssl);
+				MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(rel) ?? EntryThumb.Create(rel.Series), thumbPersister);
 			}
 
 			if (fields.HasFlag(ReleaseEventOptionalFields.Names)) {
@@ -129,7 +129,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		[DataMember]
 		public string SeriesSuffix { get; set; }
 
-		[DataMember]
+		[DataMember(EmitDefaultValue = false)]
 		public SongListBaseContract SongList { get; set; }
 
 		[DataMember]
@@ -144,7 +144,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		[DataMember]
 		public int Version { get; set; }
 
-		[DataMember]
+		[DataMember(EmitDefaultValue = false)]
 		public WebLinkForApiContract[] WebLinks { get; set; }
 
 	}

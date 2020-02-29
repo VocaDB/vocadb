@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
@@ -49,6 +49,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="tagId">Filter by tag Id (optional).</param>
 		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
 		/// <param name="status">Filter by entry status (optional).</param>
+        /// <param name="entryTypes">Included entry types (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 30).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
@@ -64,6 +65,7 @@ namespace VocaDb.Web.Controllers.Api {
 			[FromUri] string[] tagName = null,
 			[FromUri] int[] tagId = null,
 			bool childTags = false,
+			EntryTypes? entryTypes = null,
 			EntryStatus? status = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			EntrySortRule sort = EntrySortRule.Name,
@@ -72,10 +74,10 @@ namespace VocaDb.Web.Controllers.Api {
 			ContentLanguagePreference lang = ContentLanguagePreference.Default
 			) {
 			
-			var ssl = WebHelper.IsSSL(Request);
 			maxResults = GetMaxResults(maxResults);
 
-			return queries.GetList(query, tagId, tagName, childTags, status, start, maxResults, getTotalCount, sort, nameMatchMode, fields, lang, ssl, searchEvents: true);
+			return queries.GetList(query, tagId, tagName, childTags, status, entryTypes, 
+				start, maxResults, getTotalCount, sort, nameMatchMode, fields, lang, searchEvents: true);
 
 		}
 

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 
@@ -24,8 +25,16 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static bool IsAnimation(SongType songType) {
-			return (songType == SongType.DramaPV || songType == SongType.MusicPV);
+		public static ContentFocus GetContentFocus(SongType songType) {
+			switch (songType) {
+				case SongType.DramaPV:
+				case SongType.MusicPV:
+					return ContentFocus.Video;
+				case SongType.Illustration:
+					return ContentFocus.Illustration;
+				default:
+					return ContentFocus.Music;
+			}
 		}
 
 	}

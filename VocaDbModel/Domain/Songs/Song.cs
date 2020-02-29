@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -19,7 +19,9 @@ using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.VideoServices;
+using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
+using VocaDb.Model.Service;
 
 namespace VocaDb.Model.Domain.Songs {
 
@@ -119,6 +121,8 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		public virtual bool AllowNotifications => true;
+
 		/// <summary>
 		/// List of alternate (derived) song versions. Does not include deleted songs.
 		/// </summary>
@@ -143,10 +147,13 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		/// <summary>
+		/// List of artist links. Does not include deleted artists.
+		/// </summary>
 		public virtual IEnumerable<ArtistForSong> Artists => AllArtists.Where(a => a.Artist == null || !a.Artist.Deleted);
 
 		public virtual TranslatedStringWithDefault ArtistString {
-			get { return artistString; }
+			get => artistString;
 			set {
 				ParamIs.NotNull(() => value);
 				artistString = value;
@@ -154,7 +161,7 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public virtual IList<SongComment> Comments {
-			get { return comments; }
+			get => comments;
 			set {
 				ParamIs.NotNull(() => value);
 				comments = value;
@@ -181,7 +188,7 @@ namespace VocaDb.Model.Domain.Songs {
 			get {
 
 				// Sanity check
-				var minDateLimit = new DateTime(2000, 1, 1);
+				var minDateLimit = new DateTime(AppConfig.SiteSettings.MinAlbumYear, 1, 1);
 
 				return Albums
 					.Where(a => a.Album != null && a.Album.OriginalReleaseDate.IsFullDate)
@@ -226,6 +233,34 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		public virtual IEnumerable<ArtistForSong> GetCharactersFromParents() {
+
+			if (!AppConfig.EnableArtistInheritance || OriginalVersion == null)
+				return Enumerable.Empty<ArtistForSong>();
+
+			return OriginalVersion.GetCharactersFromParents(0);
+
+		}
+
+		private IEnumerable<ArtistForSong> GetCharactersFromParents(int levels) {
+
+			int maxLevels = 10;
+
+			if (levels > maxLevels)
+				return Enumerable.Empty<ArtistForSong>();
+
+			var characters = Artists.Where(a => a.ArtistCategories == ArtistCategories.Subject).ToArray();
+
+			if (characters.Any())
+				return characters;
+
+			if (OriginalVersion != null)
+				return OriginalVersion.GetCharactersFromParents(levels + 1);
+
+			return Enumerable.Empty<ArtistForSong>();
+
+		}
+
 		/// <summary>
 		/// Lyrics for this song, either from the song entry itself, or its original version.
 		/// </summary>
@@ -235,20 +270,21 @@ namespace VocaDb.Model.Domain.Songs {
 		/// This is mostly the case when the instrumental version is in the middle, for example original -> instrumental -> cover (with lyrics)
 		/// </param>
 		/// <param name="levels">Current level of traversing the parent chain.</param>
-		private IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags, bool allowInstrumental, int levels) {
+		private IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags, IEntryTypeTagRepository entryTypeTags, bool allowInstrumental, int levels) {
 
 			int maxLevels = 10;
 
 			if (specialTags != null 
+				&& entryTypeTags != null
 				&& (allowInstrumental || SongType != SongType.Instrumental)
 				&& HasOriginalVersion 
 				&& !OriginalVersion.Deleted
 				&& !Lyrics.Any()
 				&& !Tags.HasTag(specialTags.ChangedLyrics)
-				&& (allowInstrumental || !Tags.HasTag(specialTags.Instrumental))
+				&& (allowInstrumental || !Tags.HasTag(entryTypeTags.Instrumental))
 				&& levels < maxLevels) {
 
-				return OriginalVersion.GetLyricsFromParents(specialTags, true, levels + 1);
+				return OriginalVersion.GetLyricsFromParents(specialTags, entryTypeTags, true, levels + 1);
 
 			}
 
@@ -260,9 +296,9 @@ namespace VocaDb.Model.Domain.Songs {
 		/// Lyrics for this song, either from the song entry itself, or its original version.
 		/// </summary>
 		/// <param name="specialTags">Special tags. Can be null, which will cause no lyrics to be inherited.</param>
-		public virtual IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags) {
+		public virtual IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags, IEntryTypeTagRepository entryTypeTags) {
 
-			return GetLyricsFromParents(specialTags, false, 0);
+			return GetLyricsFromParents(specialTags, entryTypeTags, false, 0);
 
 		}
 
@@ -726,6 +762,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 					if (!HasArtist(artist)) {
 						l = artist.AddSong(this, newEntry.IsSupport, newEntry.Roles);
+						l.Name = newEntry.IsCustomName ? newEntry.Name : null;
 						created.Add(l);
 					}
 
@@ -744,6 +781,7 @@ namespace VocaDb.Model.Domain.Songs {
 				if (!linkEntry.ContentEquals(newEntry)) {
 					linkEntry.IsSupport = newEntry.IsSupport;
 					linkEntry.Roles = newEntry.Roles;
+					linkEntry.Name = newEntry.IsCustomName ? newEntry.Name : null;
 					edited.Add(linkEntry);
 				}
 
@@ -823,7 +861,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual void UpdateArtistString() {
 
-			ArtistString = ArtistHelper.GetArtistString(Artists, SongHelper.IsAnimation(SongType));
+			ArtistString = ArtistHelper.GetArtistString(Artists, SongHelper.GetContentFocus(SongType));
 
 		}
 
@@ -847,7 +885,7 @@ namespace VocaDb.Model.Domain.Songs {
 				return;
 
 			// Sanity check
-			var minDateLimit = new DateTime(2000, 1, 1); 
+			var minDateLimit = new DateTime(AppConfig.SiteSettings.MinAlbumYear, 1, 1); 
 
 			// Original PVs that have a publish date
 			var pvsWithDate = PVs.Where(p => p.PVType == PVType.Original && p.PublishDate.HasValue && p.PublishDate > minDateLimit).ToArray();

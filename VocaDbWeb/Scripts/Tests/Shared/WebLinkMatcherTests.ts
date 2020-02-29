@@ -2,13 +2,13 @@
 /// <reference path="../../Models/WebLinkCategory.ts" />
 /// <reference path="../../Shared/WebLinkMatcher.ts" />
 
-module vdb.tests.utils {
+namespace vdb.tests.utils {
 
     import uti = vdb.utils;
 
     QUnit.module("WebLinkMatcher");
 
-    test("matchWebLink match", () => {
+    QUnit.test("matchWebLink match", () => {
 
         var result = uti.WebLinkMatcher.matchWebLink("http://www.youtube.com/user/tripshots");
 
@@ -18,7 +18,7 @@ module vdb.tests.utils {
 
     });
 
-    test("matchWebLink no match", () => {
+	QUnit.test("matchWebLink no match", () => {
 
         var result = uti.WebLinkMatcher.matchWebLink("http://www.google.com");
 

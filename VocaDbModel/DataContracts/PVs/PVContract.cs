@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -23,6 +23,7 @@ namespace VocaDb.Model.DataContracts.PVs {
 			Name = pv.Name;
 			PVId = pv.PVId;
 			Service = pv.Service;
+			PublishDate = pv.PublishDate;
 			PVType = pv.PVType;
 			Url = pv.Url;
 
@@ -47,7 +48,6 @@ namespace VocaDb.Model.DataContracts.PVs {
 			Disabled = pv.Disabled;
 			Length = pv.Length;
 			ThumbUrl = pv.ThumbUrl;
-			PublishDate = pv.PublishDate;
 
 		}
 
@@ -65,7 +65,7 @@ namespace VocaDb.Model.DataContracts.PVs {
 			ThumbUrl = parseResult.ThumbUrl;
 			PVType = type;
 
-			Url = PV.GetUrl(Service, PVId);
+			Url = PV.GetUrl(Service, PVId, ExtendedMetadata);
 			
 		}
 

@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.Search {
@@ -41,6 +43,10 @@ namespace VocaDb.Model.Service.Search {
 			var parsedQuery = FindHelpers.GetMatchModeAndQueryForSearch(query, ref selectedMode, defaultMode);
 			return new SearchTextQuery(parsedQuery, selectedMode, query);
 
+		}
+
+		public static IEnumerable<SearchTextQuery> Create(IEnumerable<string> names, NameMatchMode selectedMode = NameMatchMode.Auto, NameMatchMode defaultMode = NameMatchMode.Words) {
+			return names.Select(n => Create(n, selectedMode, defaultMode));
 		}
 
 		public SearchTextQuery() {

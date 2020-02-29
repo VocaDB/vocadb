@@ -62,7 +62,7 @@
 		@Html.ActionLink(R.Messages, "Messages", null, new { id = "messagesLink" });
 	}
 
-	@if (UserContext.IsLoggedIn && UserContext.LoggedUserId != Model.Id && Login.User.Active) {
+	@if (UserContext.IsLoggedIn && UserContext.LoggedUserId != Model.Id && Login.User.Active && !Model.Standalone) {
 		@Html.ActionLink(R.ComposeMessage, "Messages", null, null, null, "composeTab", new { receiverName = Model.Name }, new { id = "composeMessageLink" });
 	}
 
@@ -70,9 +70,13 @@
 		@Html.Raw("&nbsp;")
 		@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editUserLink" });
 	}
+	@if (Login.Manager.HasPermission(PermissionToken.ReportUser) && UserContext.LoggedUserId != Model.Id && Model.Active) {
+		@Html.Raw("&nbsp;")
+		<a href="" id="reportUserLink" data-bind="click: function() { reportUserViewModel.show(); }">@Res.ReportSpamming</a>
+	}
 	@if (Login.Manager.HasPermission(PermissionToken.RemoveEditPermission) && UserContext.LoggedUserId != Model.Id && Model.GroupId != UserGroupId.Limited && Model.Active && EntryPermissionManager.CanEditUser(Login.Manager, Model.GroupId)) {
 		@Html.Raw("&nbsp;")
-		@Html.ActionLink(ViewRes.SharedStrings.SetToLimited, "SetToLimited", new { id = Model.Id }, new { id = "setToLimitedLink" });
+		<a href="" id="setToLimitedLink" data-bind="click: function() { limitedUserViewModel.show(); }">@ViewRes.SharedStrings.SetToLimited</a>
 	}
 	@if (Login.Manager.HasPermission(PermissionToken.DisableUsers) && UserContext.LoggedUserId != Model.Id && Model.Active) {
 		@Html.Raw("&nbsp;")
@@ -147,6 +151,9 @@
 				@if (Model.IsVeteran) {
 					<span class="label label-success">@string.Format(R.Veteran, BrandableStrings.Layout.SiteName)</span>
 				}
+				@if (!string.IsNullOrEmpty(Model.CustomTitle)) {
+					<span class="label label-info">@Model.CustomTitle</span>
+				}
 				@if (!Model.Active)
 				{
 					<span class="label">@R.AccountDisabled</span>
@@ -219,12 +226,8 @@
 				<ul class="user-known-languages">
 				@foreach (var lang in Model.KnownLanguages) {
 					<li>
-						@if (!string.IsNullOrEmpty(lang.CultureCode)) {
-							<img src="@Url.StaticResource("/img/languageFlags/" + lang.CultureCode + ".png")" alt="@lang.CultureCode" title="@lang.CultureCode" />
-						} else {
-							<img src="@Url.StaticResource("/img/languageFlags/unknown.png")" alt="@InterfaceLanguageStrings.Other" title="@InterfaceLanguageStrings.Other" />
-						}
-						@GetLanguageName(lang) 
+						@HtmlHelpers.LanguageFlag(lang.CultureCode)
+						@GetLanguageName(lang)
 						@if (lang.Proficiency != UserLanguageProficiency.Nothing) {
 							@:(@Translate.UserLanguageProficiencyNames[lang.Proficiency])
 						}
@@ -379,7 +382,7 @@
 			</a>
 		</h3>
 		<div data-bind="with: comments">
-			@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
+			@CommentHelpers.EditableComments(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
 			<!-- ko ifnot: comments().length -->
 			<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 			<!-- /ko -->
@@ -388,35 +391,38 @@
 	</div>
 </div>
 
-<div data-bind="visible: view() == 'Artists', with: followedArtistsViewModel">
+<div data-bind="visible: view() == 'Artists', with: followedArtistsViewModel, show" class="js-cloak">
 	@{ Html.RenderPartial("Partials/_FollowedArtists"); }
 </div>
 
-<div data-bind="visible: view() == 'Albums', with: albumCollectionViewModel">
+<div data-bind="visible: view() == 'Albums', with: albumCollectionViewModel, show" class="js-cloak">
 	@{ Html.RenderPartial("Partials/_AlbumCollection"); }
 </div>
 
-<div data-bind="visible: view() == 'Songs', with: ratedSongsViewModel">
+<div data-bind="visible: view() == 'Songs', with: ratedSongsViewModel, show" class="js-cloak">
 	@{ Html.RenderPartial("Partials/_RatedSongs"); }
 </div>
 
-<div data-bind="visible: view() == 'CustomLists', with: songLists">
+<div data-bind="visible: view() == 'CustomLists', with: songLists, show" class="js-cloak">
 	@{ Html.RenderPartial("Partials/_SongLists"); }
 </div>
 
-<div data-bind="visible: view() == 'Comments'" class="well well-transparent">
+<div data-bind="visible: view() == 'Comments', show" class="well well-transparent js-cloak">
 	<div data-bind="with: comments">
-		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)	
-	</div>	
+		@CommentHelpers.EditableComments(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false)
+	</div>
 </div>
 
-<div data-bind="visible: view() == 'Events'">
+<div data-bind="visible: view() == 'Events', show" class="js-cloak">
 	@{ Html.RenderPartial("Partials/_Events"); }
 </div>
 
 @if (Login.CanManageUsers) {
 	<div id="sfsCheckDialog" title="StopForumSpam check"></div>
 }
+
+@EntryDetailsHelpers.EntryDeletePopupBase("Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional).", "limitedUserViewModel", "setToLimitedLink", "Remove editing permissions", "Confirm")
+@EntryDetailsHelpers.EntryDeletePopupBase("Please confirm that you wish to report user. Please provide additional explanation below.", "reportUserViewModel", "reportUserLink", "Report user", "Confirm")
 
 @section Head {
 	@Styles.Render("~/Scripts/jqwidgets27/styles/css")
@@ -461,7 +467,7 @@
 			var sort = 'RatingDate';
 			var groupByRating = true;
 
-			var followedArtistsViewModel = new vdb.viewModels.user.FollowedArtistsViewModel(userRepo, resourceRepo, languageSelection, userId, cultureCode);
+			var followedArtistsViewModel = new vdb.viewModels.user.FollowedArtistsViewModel(userRepo, resourceRepo, tagRepo, languageSelection, userId, cultureCode);
 
 			var albumCollectionViewModel = new vdb.viewModels.user.AlbumCollectionViewModel(userRepo, artistRepo, resourceRepo, languageSelection, userId, cultureCode,
 				publicCollection, false);
@@ -470,8 +476,8 @@
 				languageSelection, userId, cultureCode,
 				sort, groupByRating, pvPlayersFactory, false, artistId, childVoicebanks);
 
-			var viewModel = new vdb.viewModels.user.UserDetailsViewModel(userId, loggedUserId, lastLoginAddress, canDeleteComments, urlMapper, 
-				userRepo, adminRepo, followedArtistsViewModel, albumCollectionViewModel, ratedSongsViewModel, latestComments);
+			var viewModel = new vdb.viewModels.user.UserDetailsViewModel(userId, cultureCode, loggedUserId, lastLoginAddress, canDeleteComments, urlMapper, 
+				userRepo, adminRepo, resourceRepo, tagRepo, languageSelection, followedArtistsViewModel, albumCollectionViewModel, ratedSongsViewModel, latestComments);
 			ko.applyBindings(viewModel);
 
 			if (window.location.hash && window.location.hash.length >= 1) {

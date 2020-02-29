@@ -102,7 +102,7 @@
 			if (showType) {
 				@ArtistTypeLabel(artist.Artist.ArtistType)
 			}			
-			@ArtistLink(artist.Artist)
+			@ArtistLink(artist.Artist, name: artist.Name)
 		} else {
 			@artist.Name
 		}
@@ -128,7 +128,7 @@
 			if (showType) {
 				@ArtistTypeLabel(artist.Artist.ArtistType)
 			}			
-			@ArtistLink(artist.Artist)
+			@ArtistLink(artist.Artist, name: artist.Name)
 		} else {
 			@artist.Name
 		}

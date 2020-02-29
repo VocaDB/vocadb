@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
+using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
@@ -9,15 +10,35 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Service.Helpers {
 
+	public interface IFollowedArtistNotifier {
+		User[] SendNotifications(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator);
+	}
+
 	/// <summary>
 	/// Sends notifications to users based on artists they're following.
 	/// 
 	/// Notifications will not be sent to users with too many unread messages in their inbox.
 	/// This is to prevent flooding users with too many notifications.
 	/// </summary>
-	public class FollowedArtistNotifier {
+	public class FollowedArtistNotifier : IFollowedArtistNotifier {
 
-		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, IEntryLinkFactory entryLinkFactory, bool markdown, 
+		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IUserMessageMailer mailer;
+		private readonly IEnumTranslations enumTranslations;
+		private readonly IEntrySubTypeNameFactory entrySubTypeNameFactory;
+
+		public FollowedArtistNotifier(IEntryLinkFactory entryLinkFactory, IUserMessageMailer mailer, 
+			IEnumTranslations enumTranslations, IEntrySubTypeNameFactory entrySubTypeNameFactory) {
+
+			this.entryLinkFactory = entryLinkFactory;
+			this.mailer = mailer;
+			this.enumTranslations = enumTranslations;
+			this.entrySubTypeNameFactory = entrySubTypeNameFactory;
+
+		}
+
+		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, bool markdown, 
 			string entryTypeName) {
 			
 			var entryName = entry.Names.SortNames[user.DefaultLanguageSelection];
@@ -57,11 +78,7 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="entry">Entry that was created. Cannot be null.</param>
 		/// <param name="artists">List of artists for the entry. Cannot be null.</param>
 		/// <param name="creator">User who created the entry. The creator will be excluded from all notifications. Cannot be null.</param>
-		/// <param name="entryLinkFactory">Factory for creating links to entries. Cannot be null.</param>
-		/// <param name="mailer">Mailer for user email messages. Cannot be null.</param>
-		public User[] SendNotifications(IDatabaseContext ctx, IEntryWithNames entry, 
-			IEnumerable<Artist> artists, IUser creator, IEntryLinkFactory entryLinkFactory,
-			IUserMessageMailer mailer, IEnumTranslations enumTranslations) {
+		public User[] SendNotifications(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator) {
 
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => entry);
@@ -72,6 +89,8 @@ namespace VocaDb.Model.Service.Helpers {
 
 			var coll = artists.ToArray();
 			var artistIds = coll.Select(a => a.Id).ToArray();
+
+			log.Info("Sending notifications for {0} artists", artistIds.Length);
 
 			// Get users with less than maximum number of unread messages, following any of the artists
 			var usersWithArtists = ctx.OfType<ArtistForUser>()
@@ -91,6 +110,8 @@ namespace VocaDb.Model.Service.Helpers {
 
 			var userIds = usersWithArtists.Keys;
 
+			log.Debug("Found {0} users subscribed to artists", userIds.Count);
+
 			if (!userIds.Any())
 				return new User[0];
 
@@ -107,8 +128,15 @@ namespace VocaDb.Model.Service.Helpers {
 
 				string title;
 
-				var entryTypeName = entryTypeNames.GetName(entry.EntryType, CultureHelper.GetCultureOrDefault(user.LanguageOrLastLoginCulture)).ToLowerInvariant();
-				var msg = CreateMessageBody(followedArtists, user, entry, entryLinkFactory, true, entryTypeName);
+				var culture = CultureHelper.GetCultureOrDefault(user.LanguageOrLastLoginCulture);
+				var entryTypeName = entryTypeNames.GetName(entry.EntryType, culture).ToLowerInvariant();
+				var entrySubType = entrySubTypeNameFactory.GetEntrySubTypeName(entry, enumTranslations, culture)?.ToLowerInvariant();
+
+				if (!string.IsNullOrEmpty(entrySubType)) {
+					entryTypeName += $" ({entrySubType})";
+				}
+
+				var msg = CreateMessageBody(followedArtists, user, entry, true, entryTypeName);
 
 				if (followedArtists.Length == 1) {
 
@@ -128,7 +156,7 @@ namespace VocaDb.Model.Service.Helpers {
 				if (user.EmailOptions != UserEmailOptions.NoEmail && !string.IsNullOrEmpty(user.Email) 
 					&& followedArtists.Any(a => a.Users.Any(u => u.User.Equals(user) && u.EmailNotifications))) {
 					
-					mailer.SendEmail(user.Email, user.Name, title, CreateMessageBody(followedArtists, user, entry, entryLinkFactory, false, entryTypeName));
+					mailer.SendEmail(user.Email, user.Name, title, CreateMessageBody(followedArtists, user, entry, false, entryTypeName));
 
 				}
 

@@ -19,7 +19,7 @@ namespace ViewRes.User {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class DetailsStrings {
@@ -241,7 +241,7 @@ namespace ViewRes.User {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import from YouTube or NicoNicoDouga.
+        ///   Looks up a localized string similar to Import from YouTube or NicoNico.
         /// </summary>
         public static string ImportSongList {
             get {
@@ -373,6 +373,15 @@ namespace ViewRes.User {
         public static string Power {
             get {
                 return ResourceManager.GetString("Power", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report user for spamming.
+        /// </summary>
+        public static string ReportSpamming {
+            get {
+                return ResourceManager.GetString("ReportSpamming", resourceCulture);
             }
         }
         

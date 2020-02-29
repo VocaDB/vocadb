@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using NHibernate;
@@ -11,47 +11,6 @@ namespace VocaDb.Model.Service.Helpers {
 	public static class FindHelpers {
 
 		public const int MaxSearchWords = 10;
-
-		/// <summary>
-		/// Adds a filter for a list of names.
-		/// </summary>
-		/// <typeparam name="T">Entry name type</typeparam>
-		/// <param name="query">Entry name query. Cannot be null.</param>
-		/// <param name="textQuery">Name query filter. Cannot be null.</param>
-		/// <returns>Filtered query. Cannot be null.</returns>
-		public static IQueryable<T> AddEntryNameFilter<T>(IQueryable<T> query, SearchTextQuery textQuery)
-			where T : LocalizedString {
-
-			if (textQuery.IsEmpty)
-				return query;
-
-			var nameFilter = textQuery.Query;
-
-			switch (textQuery.MatchMode) {
-				case NameMatchMode.Exact:
-					return query.Where(m => m.Value == nameFilter);
-
-				case NameMatchMode.Partial:
-					return query.Where(m => m.Value.Contains(nameFilter));
-
-				case NameMatchMode.StartsWith:
-					return query.Where(m => m.Value.StartsWith(nameFilter));
-
-				case NameMatchMode.Words:
-					var words = textQuery.Words;
-
-					foreach (var word in words.Take(MaxSearchWords)) {
-						var temp = word;
-						query = query.Where(q => q.Value.Contains(temp));
-					}
-
-					return query;
-
-			}
-
-			return query;
-
-		}
 
 		private static Expression<Func<T, string>> OrderByExpression<T>(ContentLanguagePreference languagePreference) where T : IEntryWithNames {
 			switch (languagePreference) {

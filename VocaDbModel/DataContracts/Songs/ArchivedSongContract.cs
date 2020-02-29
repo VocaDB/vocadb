@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Linq;
@@ -69,6 +69,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			data.SongType = thisVersion.SongType;
 			data.TranslatedName = thisVersion.TranslatedName;
 
+			DoIfExists(version, SongEditableFields.Albums, xmlCache, v => data.Albums = v.Albums);
 			DoIfExists(version, SongEditableFields.Artists, xmlCache, (v, doc) => SetArtists(data, v, doc));
 			DoIfExists(version, SongEditableFields.Lyrics, xmlCache, v => data.Lyrics = v.Lyrics);
 			DoIfExists(version, SongEditableFields.Names, xmlCache, v => data.Names = v.Names);
@@ -86,6 +87,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			ParamIs.NotNull(() => song);
 			ParamIs.NotNull(() => diff);
 
+			Albums = diff.IncludeAlbums ? song.Albums.Select(a => new AlbumForSongRefContract(a)).ToArray() : null;
 			Artists = (diff.IncludeArtists ? song.Artists.Select(a => new ArchivedArtistForSongContract(a)).ToArray() : null);
 			Id = song.Id;
 			LengthSeconds = song.LengthSeconds;
@@ -103,6 +105,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 			WebLinks = (diff.IncludeWebLinks ? song.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null);
 			
 		}
+
+		[DataMember]
+		public AlbumForSongRefContract[] Albums { get; set; }
 
 		[DataMember]
 		public ArchivedArtistForSongContract[] Artists { get; set; }

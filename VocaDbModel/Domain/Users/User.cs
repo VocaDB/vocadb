@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net.Mail;
 using VocaDb.Model.DataContracts;
@@ -117,6 +117,9 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		/// <summary>
+		/// User account is active. Setting this to false will prevent them from logging in.
+		/// </summary>
 		public virtual bool Active { get; set; }
 
 		/// <summary>
@@ -195,6 +198,9 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		/// <summary>
+		/// Date when user account was created (signed up).
+		/// </summary>
 		public virtual DateTime CreateDate { get; set; }
 
 		/// <summary>
@@ -218,6 +224,10 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual bool Deleted => !Active;
 
+		/// <summary>
+		/// All currently effective permissions, considering user status,
+		/// group and given additional permissions.
+		/// </summary>
 		public virtual PermissionCollection EffectivePermissions {
 			get {
 
@@ -265,6 +275,8 @@ namespace VocaDb.Model.Domain.Users {
 				favoriteSongs = value;
 			}
 		}
+
+		public  virtual GlobalEntryId GlobalId => new GlobalEntryId(EntryType.User, Id);
 
 		public virtual bool HasPassword => !string.IsNullOrEmpty(Password);
 
@@ -391,8 +403,6 @@ namespace VocaDb.Model.Domain.Users {
 				receivedMessages = value;
 			}
 		}
-
-		public virtual RoleTypes Roles { get; set; }
 
 		/// <summary>
 		/// Per-user password salt. Applied to password hash.

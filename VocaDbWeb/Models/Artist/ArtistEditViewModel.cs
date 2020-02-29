@@ -42,7 +42,7 @@ namespace VocaDb.Web.Models.Artist {
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
 
-		private IEnumerable<ArtistLinkType> AllowedLinkTypes => EnumVal<ArtistLinkType>.Values.Where(t => t != ArtistLinkType.Group && t != ArtistLinkType.VoiceProvider);
+		private IEnumerable<ArtistLinkType> AllowedLinkTypes => EnumVal<ArtistLinkType>.Values.Where(t => t != ArtistLinkType.Group);
 
 		public Dictionary<string, string> AssociatedArtistTypes => Translate.ArtistLinkTypeNames.GetValuesAndNamesStrings(AllowedLinkTypes);
 

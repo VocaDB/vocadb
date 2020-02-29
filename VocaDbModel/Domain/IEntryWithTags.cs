@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.Domain {
 

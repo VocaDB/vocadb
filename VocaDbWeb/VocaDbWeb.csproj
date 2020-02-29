@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VocaDb.Web</RootNamespace>
     <AssemblyName>VocaDb.Web</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <FileUpgradeFlags>
@@ -22,15 +22,16 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
     <TargetFrameworkProfile />
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressSSLPort>39390</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
+    <TypeScriptToolsVersion>3.7</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +44,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -54,34 +56,35 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Antlr3.Runtime.3.5.1\lib\net40-client\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac, Version=4.6.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.6.1\lib\net45\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.5.0.0\lib\net461\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    <Reference Include="Autofac.Integration.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.5.0.0\lib\net461\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Integration.Wcf, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.Wcf.4.0.0\lib\net45\Autofac.Integration.Wcf.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Autofac.Integration.Wcf, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Wcf.5.0.0\lib\net461\Autofac.Integration.Wcf.dll</HintPath>
     </Reference>
-    <Reference Include="Autofac.Integration.WebApi, Version=4.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.WebApi2.4.1.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    <Reference Include="Autofac.Integration.WebApi, Version=5.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.5.0.0\lib\net461\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
     <Reference Include="DotNetOpenAuth">
       <HintPath>..\packages\DotNetOpenAuth.Ultimate.4.1.0.12182\lib\net40-full\DotNetOpenAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Iesi.Collections.4.0.4\lib\net461\Iesi.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="MarkdownSharp">
-      <HintPath>..\packages\MarkdownSharp.1.13.0.0\lib\35\MarkdownSharp.dll</HintPath>
+    <Reference Include="MarkdownSharp, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MarkdownSharp.2.0.5\lib\net40\MarkdownSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -91,19 +94,24 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHibernate.4.0.3.4000\lib\net40\NHibernate.dll</HintPath>
+    <Reference Include="NHibernate, Version=5.2.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.5.2.7\lib\net461\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Caches.SysCache2, Version=5.6.0.0, Culture=neutral, PublicKeyToken=6876f2ea66c9f443, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.Caches.SysCache2.5.6.0\lib\net461\NHibernate.Caches.SysCache2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NHibernate.Caches.SysCache2, Version=3.1.0.4000, Culture=neutral, PublicKeyToken=6876f2ea66c9f443, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NHibernate.Caches.SysCache2.4.0.0.4000\lib\net40\NHibernate.Caches.SysCache2.dll</HintPath>
-    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.5.6\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq.EagerFetching, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.EagerFetching.2.2.0\lib\net45\Remotion.Linq.EagerFetching.dll</HintPath>
     </Reference>
     <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
       <HintPath>..\packages\Swashbuckle.Core.5.2.2\lib\net40\Swashbuckle.Core.dll</HintPath>
@@ -113,34 +121,29 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Bcl.Immutable.1.0.34\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activation" />
     <Reference Include="System.ServiceModel.Web" />
-    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.6\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -152,38 +155,38 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Http.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.6\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.6\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.6\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.6\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.6\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -227,6 +230,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumArchiveReasonNames.ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\AlbumArchiveReasonNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumArchiveReasonNames.pt.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\AlbumCollectionStatusNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -236,6 +244,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumCollectionStatusNames.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\AlbumCollectionStatusNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumCollectionStatusNames.pt.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\AlbumCollectionStatusNames.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
@@ -257,6 +270,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumEditableFieldNames.ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\AlbumEditableFieldNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumEditableFieldNames.pt.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\AlbumMediaTypeNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -266,6 +284,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumMediaTypeNames.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\AlbumMediaTypeNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumMediaTypeNames.pt.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\AlbumMediaTypeNames.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
@@ -282,6 +305,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumDiscMediaTypeNames.es.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Albums\AlbumDiscMediaTypeNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumDiscMediaTypeNames.pt.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\Albums\AlbumSortRuleNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -296,6 +324,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AlbumSortRuleNames.ja.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Albums\AlbumSortRuleNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlbumSortRuleNames.pt.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\Albums\AlbumSortRuleNames.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
@@ -317,6 +350,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DiscTypeDescriptions.ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Albums\DiscTypeDescriptions.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DiscTypeDescriptions.pt.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\ArtistArchiveReasonNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -331,6 +369,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ArtistArchiveReasonNames.ja.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ArtistArchiveReasonNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistArchiveReasonNames.pt.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\ArtistEditableFieldNames.de.designer.cs">
       <AutoGen>True</AutoGen>
@@ -347,6 +390,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ArtistEditableFieldNames.ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\ArtistEditableFieldNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistEditableFieldNames.pt.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\ArtistRoleNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -356,6 +404,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ArtistRoleNames.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ArtistRoleNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistRoleNames.pt.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\ArtistRoleNames.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
@@ -377,6 +430,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ArtistSortRuleNames.ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\Artists\ArtistSortRuleNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtistSortRuleNames.pt.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\CommonMessages.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -391,6 +449,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonMessages.ja.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\CommonMessages.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommonMessages.pt.resx</DependentUpon>
     </Compile>
     <Compile Include="App_GlobalResources\CommonMessages.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
@@ -412,6 +475,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContentLanguageSelectionNames.ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\ContentLanguageSelectionNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContentLanguageSelectionNames.pt.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\ContentLanguageSelectionNames.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -432,6 +500,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryEditEventNames.ja.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\EntryEditEventNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryEditEventNames.pt.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\EntryStatusNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -442,13 +515,97 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryStatusNames.es.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\EntryStatusNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EntryStatusNames.pt.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\EntryStatusNames.zh-Hans.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EntryStatusNames.zh-Hans.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\PermissionTokenNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PermissionTokenNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\PVTypeDescriptions.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PVTypeDescriptions.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\PVTypeNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PVTypeNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\ReleaseEventEditableFieldNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReleaseEventEditableFieldNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\SongArchiveReasonNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongArchiveReasonNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\SongEditableFieldNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongEditableFieldNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\SongListFeaturedCategoryNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongListFeaturedCategoryNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Songs\SongListEditableFieldNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongListEditableFieldNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Songs\SongSortRuleNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongSortRuleNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Songs\SongVoteRatingNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongVoteRatingNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\TagEditableFieldNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TagEditableFieldNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UserEmailOptionsNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserEmailOptionsNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\UserGroupNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserGroupNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\Users\RatedSongForUserSortRuleNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RatedSongForUserSortRuleNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\WebLinkCategoryNames.pt.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WebLinkCategoryNames.pt.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Code\EntrySubTypeNameFactory.cs" />
     <Compile Include="Controllers\Api\CommentApiController.cs" />
+    <Compile Include="Controllers\Api\EntryTypesApiController.cs" />
+    <Compile Include="Controllers\Api\IPRuleApiController.cs" />
     <Compile Include="Models\Shared\EnglishTranslatedStringViewModel.cs" />
+    <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
     <Compile Include="Resources\Domain\EntryTypeNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1140,7 +1297,6 @@
     <Compile Include="Code\PagePropertiesData.cs" />
     <Compile Include="Code\PropertyModelBinder.cs" />
     <Compile Include="Code\Security\StopForumSpam\StopForumSpamClient.cs" />
-    <Compile Include="Code\Security\IPRuleManager.cs" />
     <Compile Include="Code\Security\InMemoryTokenManager.cs" />
     <Compile Include="Code\Security\LogFileReader.cs" />
     <Compile Include="Code\Security\Membership\VocaDbMembershipProvider.cs" />
@@ -1630,10 +1786,13 @@
     <Content Include="Content\banners\vocaloidism-180px.png" />
     <Content Include="Content\banners\vo_small.png" />
     <Content Include="Content\banners\vuslogo.png" />
+    <Content Include="Content\banners\mikupa_ru.jpg" />
     <Content Include="Content\barcode.png" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\ExtIcons\aboutme.png" />
+    <Content Include="Content\ExtIcons\akibahobby.png" />
+    <Content Include="Content\ExtIcons\akibaoo.png" />
     <Content Include="Content\ExtIcons\alicebooks.png" />
     <Content Include="Content\ExtIcons\amazon.png" />
     <Content Include="Content\ExtIcons\ameblo.png" />
@@ -1652,28 +1811,40 @@
     <Content Include="Content\ExtIcons\exittunes.png" />
     <Content Include="Content\ExtIcons\facebook.png" />
     <Content Include="Content\ExtIcons\facebook32.png" />
+    <Content Include="Content\ExtIcons\google_plus.png" />
     <Content Include="Content\ExtIcons\Fasic.png" />
     <Content Include="Content\ExtIcons\google-play.png" />
     <Content Include="Content\ExtIcons\hmv.png" />
+    <Content Include="Content\ExtIcons\instagram.png" />
     <Content Include="Content\ExtIcons\itunes.png" />
     <Content Include="Content\ExtIcons\karent.png" />
     <Content Include="Content\ExtIcons\lastfm.png" />
+    <Content Include="Content\ExtIcons\linemusic.png" />
+    <Content Include="Content\ExtIcons\listography.png" />
     <Content Include="Content\ExtIcons\listenjapan.png" />
+    <Content Include="Content\ExtIcons\ma.png" />
     <Content Include="Content\ExtIcons\melonbooks.png" />
     <Content Include="Content\ExtIcons\mikudb.png" />
     <Content Include="Content\ExtIcons\mikustar.png" />
     <Content Include="Content\ExtIcons\mmdwiki.png" />
     <Content Include="Content\ExtIcons\mora.png" />
+    <Content Include="Content\ExtIcons\musicbrainz.png" />
     <Content Include="Content\ExtIcons\nicochokuhan.png" />
     <Content Include="Content\ExtIcons\nicopedia.png" />
     <Content Include="Content\ExtIcons\piapro.png" />
+    <Content Include="Content\ExtIcons\poppro.png" />
     <Content Include="Content\ExtIcons\pixiv.png" />
     <Content Include="Content\ExtIcons\playasia.png" />
     <Content Include="Content\ExtIcons\rakuten.png" />
     <Content Include="Content\ExtIcons\reddit32.png" />
     <Content Include="Content\ExtIcons\spotify.png" />
+    <Content Include="Content\ExtIcons\tanocstore.png" />
     <Content Include="Content\ExtIcons\three.png" />
+    <Content Include="Content\ExtIcons\sonicwire.png" />
+    <Content Include="Content\ExtIcons\itemtaobao.png" />
     <Content Include="Content\ExtIcons\tora.png" />
+    <Content Include="Content\ExtIcons\touhoudb.png" />
+    <Content Include="Content\ExtIcons\touhouwiki.png" />
     <Content Include="Content\ExtIcons\towerrecords.png" />
     <Content Include="Content\ExtIcons\tsutaya.png" />
     <Content Include="Content\ExtIcons\tumblr.png" />
@@ -1683,13 +1854,16 @@
     <Content Include="Content\ExtIcons\utaitedb.png" />
     <Content Include="Content\ExtIcons\utaitewikia.png" />
     <Content Include="Content\ExtIcons\vgmdb.png" />
+    <Content Include="Content\ExtIcons\villagevanguard.png" />
     <Content Include="Content\ExtIcons\vimeo.png" />
     <Content Include="Content\ExtIcons\vk.png" />
     <Content Include="Content\ExtIcons\vo.png" />
     <Content Include="Content\ExtIcons\vocadb.png" />
     <Content Include="Content\ExtIcons\vocallective.png" />
+    <Content Include="Content\ExtIcons\vocaloidshop.png" />
     <Content Include="Content\ExtIcons\vocastore.png" />
     <Content Include="Content\ExtIcons\vocawiki.png" />
+    <Content Include="Content\ExtIcons\wikia.png" />
     <Content Include="Content\ExtIcons\weibo.png" />
     <Content Include="Content\ExtIcons\yesasia.png" />
     <Content Include="Content\Icons\accept.png" />
@@ -1726,6 +1900,9 @@
     <Content Include="Content\star_disabled.png" />
     <Content Include="Content\Styles\base.css">
       <DependentUpon>base.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\DarkAngel.css">
+      <DependentUpon>DarkAngel.less</DependentUpon>
     </Content>
     <Content Include="Content\Styles\discussions.css">
       <DependentUpon>discussions.less</DependentUpon>
@@ -1764,6 +1941,7 @@
     <Content Include="Content\Styles\songlist.css">
       <DependentUpon>songlist.less</DependentUpon>
     </Content>
+    <Content Include="Content\Styles\TetoDB.css" />
     <Content Include="Content\Styles\userpage.css">
       <DependentUpon>userpage.less</DependentUpon>
     </Content>
@@ -2265,11 +2443,24 @@
     <EmbeddedResource Include="Resources\Swagger\styles.css" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\Album\Edit.js" />
-    <Content Include="Scripts\Album\Details.js" />
     <Content Include="Scripts\Artist\Edit.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EmbeddedResource Include="Resources\Views\ActivityEntry\IndexStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Artist\EditStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Discussion\IndexStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryMergeStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryMergeStrings.ja.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryMergeStrings.ru.resx" />
+    <EmbeddedResource Include="Resources\Views\Shared\EntryMergeStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Views\SongList\EditStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\SongList\FeaturedStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\SongList\SongListSortRuleNames.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Song\EditStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\Song\RankingsStrings.de.resx" />
+    <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\RequestVerificationStrings.zh-Hans.resx" />
+    <TypeScriptCompile Include="Scripts\Album\Details.ts" />
     <TypeScriptCompile Include="Scripts\Artist\Details.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ActivityEntry\ActivityEntryContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Aggregate\CountPerDayContract.ts" />
@@ -2277,6 +2468,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumForApiContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumReleaseContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Album\AlbumReviewContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Artist\ArtistForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Artist\ArtistForArtistContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Base\EntryWithTagUsagesContract.ts" />
@@ -2292,6 +2484,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\ReleaseEvents\ArtistForEventContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ReleaseEvents\EventSeriesContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ReleaseEvents\ReleaseEventContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\ReleaseEvents\ReleaseEventSeriesForApiContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ResourcesContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\SongList\ImportedSongInListContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\SongList\ImportedSongListContract.ts" />
@@ -2303,6 +2496,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongInListEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongListForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongWithPVAndVoteContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Tag\EntryTagMappingContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagBaseContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagMappingContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagSelectionContract.ts" />
@@ -2725,6 +2919,7 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\UserAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Bootstrap\Tooltip.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ConfirmClick.ts" />
+    <TypeScriptCompile Include="Scripts\KnockoutExtensions\Filters\Truncate.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\FormatDateFilter.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\FormatLengthSecondsFilter.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Highcharts.ts" />
@@ -2738,8 +2933,6 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Show.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\SlideVisible.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ArtistAutoComplete.ts" />
-    <Content Include="Scripts\knockout-3.4.0.debug.js" />
-    <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\knockout-3.4.1.debug.js" />
     <Content Include="Scripts\knockout-3.4.1.js" />
     <Content Include="Scripts\knockout-sortable.js" />
@@ -2761,6 +2954,8 @@
     <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\marked.js" />
     <Content Include="Scripts\marked.min.js" />
+    <Content Include="Scripts\MediaElement\mediaelement.min.js" />
+    <Content Include="Scripts\MediaElement\mediaelementplayer.min.css" />
     <Content Include="Scripts\MikuDbAlbums\PrepareForImport.js" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\TagAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Tag\TagCategoryAutoComplete.ts" />
@@ -2771,8 +2966,11 @@
     <TypeScriptCompile Include="Scripts\Models\Artists\ArtistRoles.ts" />
     <TypeScriptCompile Include="Scripts\Models\Artists\ArtistType.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\CommonEntryContract.ts" />
+    <TypeScriptCompile Include="Scripts\Models\ContentFocus.ts" />
     <TypeScriptCompile Include="Scripts\Models\EntryStatus.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\EntryTypeAndSubTypeContract.ts" />
     <TypeScriptCompile Include="Scripts\Models\Events\ArtistEventRoles.ts" />
+    <TypeScriptCompile Include="Scripts\Models\Events\EventCategory.ts" />
     <TypeScriptCompile Include="Scripts\Models\Globalization\ContentLanguagePreference.ts" />
     <TypeScriptCompile Include="Scripts\Models\Globalization\TranslationType.ts" />
     <TypeScriptCompile Include="Scripts\Models\IEntryWithIdAndName.ts" />
@@ -2824,6 +3022,7 @@
     <TypeScriptCompile Include="Scripts\typings\youtube\youtube.d.ts" />
     <TypeScriptCompile Include="Scripts\User\Details.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\ActivityEntry\ActivityEntryListViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Admin\ManageEntryTagMappingsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Admin\ManageTagMappingsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumDiscPropertiesEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Album\AlbumMergeViewModel.ts" />
@@ -2836,6 +3035,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\BasicEntryLinkViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\BasicListEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\CommentViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\CustomNameEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\DeleteEntryViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Discussion\DiscussionIndexViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Discussion\DiscussionTopicViewModel.ts" />
@@ -2884,6 +3084,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVListEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerFile.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerNico.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayersFactory.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerSoundCloud.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\PVs\PVPlayerViewModel.ts" />
@@ -3314,9 +3515,12 @@
     <Content Include="Views\Error\IPForbidden.cshtml" />
     <Content Include="Views\Admin\ManageTagMappings.cshtml" />
     <Content Include="Views\Admin\ActiveEdits.cshtml" />
+    <Content Include="Content\Styles\DarkAngel.less" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Album\Partials\_AlbumReviews.cshtml" />
+    <Content Include="Views\Admin\ManageEntryTagMappings.cshtml" />
     <None Include="Views\Event\EditSeries.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
     <Content Include="Views\Event\SeriesDetails.cshtml" />
@@ -3408,6 +3612,10 @@
     <Content Include="Views\Search\Partials\_EventSearchList.cshtml" />
     <Content Include="Views\Event\ViewVersion.cshtml" />
     <Content Include="Views\Event\ManageTagUsages.cshtml" />
+    <Content Include="Views\Shared\Partials\_CustomNameEdit.cshtml" />
+    <Content Include="Views\Ext\OEmbedResponsive.cshtml" />
+    <Content Include="Views\Search\Partials\_EventSearchOptions.cshtml" />
+    <Content Include="Views\Event\ViewSeriesVersion.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -4672,7 +4880,7 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <TypeScriptToolsVersion Condition="'$(TypeScriptToolsVersion)'==''">2.2</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion Condition="'$(TypeScriptToolsVersion)'==''">2.6</TypeScriptToolsVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -4694,7 +4902,7 @@
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>39390</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:39390/</IISUrl>
+          <IISUrl>https://localhost:44399/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -4707,13 +4915,25 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptIncludeComments>false</TypeScriptIncludeComments>
-    <TypeScriptSourceMap>false</TypeScriptSourceMap>
-    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+    <TypeScriptLib>es2015,dom</TypeScriptLib>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptIncludeComments>false</TypeScriptIncludeComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
+    <TypeScriptLib>es2015,dom</TypeScriptLib>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" />
 </Project>

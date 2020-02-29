@@ -1,12 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Runtime.Caching;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using NHibernate;
+using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -22,6 +24,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
+using VocaDb.Model.Domain.Exceptions;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -40,6 +43,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Service.Security.StopForumSpam;
@@ -115,6 +119,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		private UserReport CreateReport(IDatabaseContext ctx, User reportedUser, UserReportType reportType, string hostname, string notes) {
+			var report = new UserReport(reportedUser, reportType, ctx.OfType<User>().GetLoggedUser(PermissionContext), hostname, notes);
+			ctx.Save(report);
+			return report;
+		}
+
 		private int[] GetFavoriteTagIds(IDatabaseContext<User> ctx, User user) {
 
 			/* 
@@ -128,7 +138,7 @@ namespace VocaDb.Model.Database.Queries {
 				.Where(t => t.CategoryName != TagCommonCategoryNames.Lyrics && t.CategoryName != TagCommonCategoryNames.Distribution)
 				.Select(t => new {
 					Id = t.Id,
-					Count = t.AllSongTagUsages.Count(u => u.Song.UserFavorites.Any(f => f.User.Id == user.Id))
+					Count = t.AllSongTagUsages.Count(u => u.Entry.UserFavorites.Any(f => f.User.Id == user.Id))
 				})
 				.ToArray()
 				.Where(t => t.Count > 0)
@@ -210,7 +220,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void SendPrivateMessageNotification(string mySettingsUrl, string messagesUrl, UserMessage message) {
+		private async Task SendPrivateMessageNotification(string mySettingsUrl, string messagesUrl, UserMessage message) {
 
 			ParamIs.NotNull(() => message);
 
@@ -222,7 +232,7 @@ namespace VocaDb.Model.Database.Queries {
 				"If you do not wish to receive more email notifications such as this, you can adjust your settings at {2}.",
 				message.Sender.Name, messagesUrl, mySettingsUrl);
 
-			mailer.SendEmail(message.Receiver.Email, message.Receiver.Name, subject, body);
+			await mailer.SendEmailAsync(message.Receiver.Email, message.Receiver.Name, subject, body);
 
 		}
 
@@ -248,7 +258,7 @@ namespace VocaDb.Model.Database.Queries {
 				.Select(a => a.Album)
 				.Take(7)
 				.ToArray()
-				.Select(c => new AlbumContract(c, LanguagePreference))
+				.Select(c => new AlbumForApiContract(c, LanguagePreference, entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
 				.ToArray();
 
 			details.FollowedArtists = session.Query<ArtistForUser>()
@@ -321,17 +331,21 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void SendEmailVerificationRequest(IDatabaseContext<User> ctx, User user, string resetUrl, string subject) {
+		private async Task SendEmailVerificationRequest(IDatabaseContext<User> ctx, User user, string resetUrl, string subject) {
 			
 			var request = new PasswordResetRequest(user);
-			ctx.Save(request);
-
+			await ctx.SaveAsync(request);
 			var body = string.Format(UserAccountStrings.VerifyEmailBody, brandableStringsManager.Layout.SiteName, resetUrl, request.Id);
 
-			mailer.SendEmail(request.User.Email, request.User.Name, subject, body);
+			await mailer.SendEmailAsync(request.User.Email, request.User.Name, subject, body);
 
 		}
 
+		/// <summary>
+		/// Validates email address.
+		/// </summary>
+		/// <param name="email">Email to be validated.</param>
+		/// <exception cref="InvalidEmailFormatException">If <paramref name="email"/> is not valid email.</exception>
 		private void ValidateEmail(string email) {
 			
 			try {
@@ -511,6 +525,59 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public (bool created, int reportId) CreateReport(int userId, UserReportType reportType, string hostname, string notes,
+			int reportCountDisable = 10, int reportCountLimit = 5) {
+
+			PermissionContext.VerifyPermission(PermissionToken.ReportUser);
+
+			if (string.IsNullOrEmpty(notes)) {
+				log.Error("Notes are required");
+				return (false, 0);
+			}
+
+			return repository.HandleTransaction(ctx => {
+				var user = ctx.Load(userId);
+
+				ctx.AuditLogger.SysLog($"reporting {user} as {reportType}");
+
+				var existing = ctx.Query<UserReport>()
+					.FirstOrDefault(ur => ur.Entry.Id == userId && ur.Status == ReportStatus.Open && ur.User.Id == PermissionContext.LoggedUserId);
+
+				if (existing != null) {
+					log.Info("Report already exists");
+					return (false, existing.Id);
+				}
+
+				var report = CreateReport(ctx, user, reportType, hostname, notes);
+
+				if (user.GroupId <= UserGroupId.Regular && reportType == UserReportType.Spamming) {
+					var activeReportCount = ctx.Query<UserReport>()
+						.Where(ur => ur.Entry.Id == userId 
+							&& ur.Status == ReportStatus.Open 
+							&& ur.ReportType == UserReportType.Spamming
+							&& ur.User != null)
+						.ToArray()
+						.Distinct(ur => ur.User.Id)
+						.Count();
+					if (activeReportCount >= reportCountDisable) {
+						log.Info("User disabled");
+						user.Active = false;
+						ctx.Update(user);
+					} else if (activeReportCount >= reportCountLimit) {
+						log.Info("User set to limited");
+						user.GroupId = UserGroupId.Limited;
+						ctx.Update(user);
+					}
+				}
+
+				ctx.AuditLogger.AuditLog($"reported {user} as {reportType}");
+
+				return (true, report.Id);
+
+			});
+
+		}
+
 		/// <summary>
 		/// Disconnects Twitter account for the currently logged in user.
 		/// Twitter account can NOT be disconnected if the user has not set a VocaDB password.
@@ -555,9 +622,11 @@ namespace VocaDb.Model.Database.Queries {
 		/// Staff members cannot be cleared.
 		/// </summary>
 		/// <param name="id">User Id.</param>
-		public void ClearRatings(int id) {
-			
+		public void ClearRatings(int id, EntryTypes? entryTypes = null) {			
+
 			PermissionContext.VerifyPermission(PermissionToken.DisableUsers);
+
+			var entryTypeFlags = entryTypes ?? EnumVal<EntryTypes>.All;
 
 			repository.HandleTransaction(ctx => {
 				
@@ -568,21 +637,21 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.AuditLogger.AuditLog(string.Format("clearing ratings by {0}", user));
 
-				while (user.AllAlbums.Any()) {
+				while (entryTypeFlags.HasFlag(EntryTypes.Album) && user.AllAlbums.Any()) {
 					var albumLink = user.AllAlbums[0];
 					albumLink.Delete();		
 					ctx.Delete(albumLink);
 					ctx.Update(albumLink.Album); // Update album ratings
 				}
 
-				while (user.FavoriteSongs.Any()) {
+				while (entryTypeFlags.HasFlag(EntryTypes.Song) && user.FavoriteSongs.Any()) {
 					var songLink = user.FavoriteSongs[0];
 					songLink.Delete();
 					ctx.Delete(songLink);
 					ctx.Update(songLink.Song); // Update song ratings
 				}
 
-				while (user.AllArtists.Any()) {
+				while (entryTypeFlags.HasFlag(EntryTypes.Artist) && user.AllArtists.Any()) {
 					var artistLink = user.AllArtists[0];
 					ctx.Delete(artistLink);
 					artistLink.Delete();
@@ -597,7 +666,8 @@ namespace VocaDb.Model.Database.Queries {
 		/// <param name="name">User name. Must be unique. Cannot be null or empty.</param>
 		/// <param name="pass">Password. Cannot be null or empty.</param>
 		/// <param name="email">Email address. Must be unique if specified. Cannot be null.</param>
-		/// <param name="hostname">Host name where the registration is from.</param>
+		/// <param name="hostname">Host name (usually IP address) where the registration is from.</param>
+		/// <param name="userAgent">User agent. Can be empty.</param>
 		/// <param name="culture">User culture name. Can be empty.</param>
 		/// <param name="timeSpan">Time in which the user filled the registration form.</param>
 		/// <param name="softbannedIPs">List of application's soft-banned IPs. Soft-banned IPs are cleared when the application restarts.</param>
@@ -607,10 +677,12 @@ namespace VocaDb.Model.Database.Queries {
 		/// <exception cref="UserNameAlreadyExistsException">If the user name was already taken.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken.</exception>
 		/// <exception cref="TooFastRegistrationException">If the user registered too fast.</exception>
-		public UserContract Create(string name, string pass, string email, string hostname, 
+		/// <exception cref="RestrictedIPException">User's IP was banned, or determined to be malicious.</exception>
+		public async Task<UserContract> Create(string name, string pass, string email, string hostname, 
+			string userAgent,
 			string culture,
 			TimeSpan timeSpan,
-			HostCollection softbannedIPs, string verifyEmailUrl) {
+			IPRuleManager ipRuleManager, string verifyEmailUrl) {
 
 			ParamIs.NotNullOrEmpty(() => name);
 			ParamIs.NotNullOrEmpty(() => pass);
@@ -621,18 +693,18 @@ namespace VocaDb.Model.Database.Queries {
 				log.Warn("Suspicious registration form fill time ({0}) from {1}.", timeSpan, hostname);
 
 				if (timeSpan < TimeSpan.FromSeconds(2)) {
-					softbannedIPs.Add(hostname);
+					ipRuleManager.AddTempBannedIP(hostname, "Suspicious registration form fill time");
 				}
 
 				throw new TooFastRegistrationException();
 
 			}
 
-			return repository.HandleTransaction(ctx => {
+			return await repository.HandleQueryAsync(async ctx => {
 
 				// Verification
 				var lc = name.ToLowerInvariant();
-				var existing = ctx.Query().FirstOrDefault(u => u.NameLC == lc);
+				var existing = await ctx.Query().Where(u => u.NameLC == lc).VdbFirstOrDefaultAsync();
 
 				if (existing != null)
 					throw new UserNameAlreadyExistsException();
@@ -641,44 +713,69 @@ namespace VocaDb.Model.Database.Queries {
 
 					ValidateEmail(email);
 
-					existing = ctx.Query().FirstOrDefault(u => u.Active && u.Email == email);
+					existing = await ctx.Query().Where(u => u.Active && u.Email == email).VdbFirstOrDefaultAsync();
 
 					if (existing != null)
 						throw new UserEmailAlreadyExistsException();
 
 				}
 
-				// All ok, create user
-				var sfsCheckResult = sfsClient.CallApi(hostname);
+				var confidenceAutoban = 90;
+				var sfsCheckResult = await sfsClient.CallApiAsync(hostname) ?? new SFSResponseContract();
 				var sfsStr = GetSFSCheckStr(sfsCheckResult);
 
-				var user = new User(name, pass, email, PasswordHashAlgorithms.Default);
-				user.UpdateLastLogin(hostname, culture);
-				ctx.Save(user);
-
-				if (sfsCheckResult != null && sfsCheckResult.Conclusion == SFSCheckResultType.Malicious) {
-
-					var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname, 
-						string.Format("Confidence {0} %, Frequency {1}, Last seen {2}.", 
-						sfsCheckResult.Confidence, sfsCheckResult.Frequency, sfsCheckResult.LastSeen.ToShortDateString()));
-
-					ctx.OfType<UserReport>().Save(report);
-
-					user.GroupId = UserGroupId.Limited;
-					ctx.Update(user);
-
+				if (sfsCheckResult.Appears && sfsCheckResult.Confidence >= confidenceAutoban) {
+					using (var tx = ctx.BeginTransaction()) {
+						ctx.AuditLogger.AuditLog($"flagged by SFS, conficence {sfsCheckResult.Confidence}%, user banned", name);
+						ipRuleManager.AddPermBannedIP(ctx, hostname, $"SFS: {name}");
+						await tx.CommitAsync();
+					}
+					throw new RestrictedIPException();
 				}
 
-				if (!string.IsNullOrEmpty(user.Email)) {
-					var subject = string.Format(UserAccountStrings.AccountCreatedSubject, brandableStringsManager.Layout.SiteName);
-					SendEmailVerificationRequest(ctx, user, verifyEmailUrl, subject);					
+				// All ok, create user
+				User user;
+				using (var tx = ctx.BeginTransaction()) {
+					user = await CreateUser(ctx, name, pass, email, hostname, culture, sfsCheckResult, verifyEmailUrl);
+					ctx.AuditLogger.AuditLog(string.Format("registered from {0} in {1} (SFS check {2}, UA '{3}').", MakeGeoIpToolLink(hostname), timeSpan, sfsStr, userAgent), user);
+					await tx.CommitAsync();
 				}
-
-				ctx.AuditLogger.AuditLog(string.Format("registered from {0} in {1} (SFS check {2}).", MakeGeoIpToolLink(hostname), timeSpan, sfsStr), user);
 
 				return new UserContract(user);
 
 			});
+
+		}
+
+		private async Task<User> CreateUser(IDatabaseContext<User> ctx, string name, string pass, string email, string hostname, string culture,
+			SFSResponseContract sfsCheckResult, string verifyEmailUrl) {
+
+			var confidenceLimited = 60;
+
+			var user = new User(name, pass, email, PasswordHashAlgorithms.Default);
+			user.UpdateLastLogin(hostname, culture);
+			await ctx.SaveAsync(user);
+
+			if (sfsCheckResult.Appears) {
+
+				var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname, 
+					string.Format("Confidence {0} %, Frequency {1}, Last seen {2}. Conclusion {3}.", 
+					sfsCheckResult.Confidence, sfsCheckResult.Frequency, sfsCheckResult.LastSeen.ToShortDateString(), sfsCheckResult.Conclusion));
+
+				await ctx.OfType<UserReport>().SaveAsync(report);
+
+				if (sfsCheckResult.Confidence >= confidenceLimited) { 
+					user.GroupId = UserGroupId.Limited;
+					await ctx.UpdateAsync(user);
+				}
+			}
+
+			if (!string.IsNullOrEmpty(user.Email)) {
+				var subject = string.Format(UserAccountStrings.AccountCreatedSubject, brandableStringsManager.Layout.SiteName);
+				await SendEmailVerificationRequest(ctx, user, verifyEmailUrl, subject);					
+			}
+
+			return user;
 
 		}
 
@@ -803,7 +900,8 @@ namespace VocaDb.Model.Database.Queries {
 					.WhereHasReleaseEvent(queryParams.ReleaseEventId)
 					.WhereAlbumHasTag(queryParams.TagId)
 					.WhereAlbumHasTag(queryParams.Tag)
-					.WhereAlbumMatchFilters(queryParams.AdvancedFilters);
+					.WhereAlbumMatchFilters(queryParams.AdvancedFilters)
+					.WhereAlbumHasType(queryParams.AlbumType);
 
 				var albums = query
 					.OrderBy(queryParams.Sort, PermissionContext.LanguagePreference)
@@ -840,7 +938,8 @@ namespace VocaDb.Model.Database.Queries {
 				var query = ctx.OfType<ArtistForUser>().Query()
 					.Where(a => !a.Artist.Deleted && a.User.Id == queryParams.UserId)
 					.WhereArtistHasName(queryParams.TextQuery)
-					.WhereArtistHasType(queryParams.ArtistType);
+					.WhereArtistHasType(queryParams.ArtistType)
+					.WhereArtistHasTags(queryParams.TagIds);
 
 				var artists = query
 					.OrderBy(queryParams.SortRule, LanguagePreference)
@@ -865,7 +964,7 @@ namespace VocaDb.Model.Database.Queries {
 				return user.Events
 					.Where(e => !e.ReleaseEvent.Deleted && e.RelationshipType == relationshipType)
 					.OrderByDescending(e => e.ReleaseEvent.Date.DateTime)
-					.Select(e => new ReleaseEventForApiContract(e.ReleaseEvent, LanguagePreference, fields, entryThumbPersister, true))
+					.Select(e => new ReleaseEventForApiContract(e.ReleaseEvent, LanguagePreference, fields, entryThumbPersister))
 					.ToArray();
 
 			});
@@ -905,7 +1004,7 @@ namespace VocaDb.Model.Database.Queries {
 				var q = session.OfType<FavoriteSongForUser>().Query()
 					.Where(a => !a.Song.Deleted && a.User.Id == queryParams.UserId)
 					.WhereChildHasName(queryParams.TextQuery)
-					.WhereSongHasArtists(queryParams.ArtistIds, queryParams.ChildVoicebanks)
+					.WhereSongHasArtists(queryParams.ArtistIds, queryParams.ChildVoicebanks, queryParams.ArtistGrouping)
 					.WhereHasRating(queryParams.FilterByRating)
 					.WhereSongIsInList(queryParams.SonglistId)
 					.WhereSongHasTags(queryParams.TagIds)
@@ -953,7 +1052,7 @@ namespace VocaDb.Model.Database.Queries {
 				var genres = ctx
 					.OfType<SongTagUsage>()
 					.Query()
-					.Where(u => u.Song.UserFavorites.Any(f => f.User.Id == userId) && u.Tag.CategoryName == TagCommonCategoryNames.Genres)
+					.Where(u => u.Entry.UserFavorites.Any(f => f.User.Id == userId) && u.Tag.CategoryName == TagCommonCategoryNames.Genres)
 					// NH doesn't support ? operator, instead casting ID to nullable works
 					.GroupBy(s => new { TagId = s.Tag.Id, Parent = (int?)s.Tag.Parent.Id })
 					.Select(g => new {
@@ -1009,20 +1108,22 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<SongListForApiContract> GetCustomSongLists(int userId, SearchTextQuery textQuery, bool ssl, SongListSortRule sort, PagingProperties paging, SongListOptionalFields fields) {
+		public PartialFindResult<SongListForApiContract> GetCustomSongLists(int userId, SongListQueryParams queryParams, SongListOptionalFields fields) {
 			
 			return HandleQuery(ctx => { 
 				
 				var query = ctx.Query<SongList>()
+					.WhereNotDeleted()
 					.Where(s => s.Author.Id == userId && s.FeaturedCategory == SongListFeaturedCategory.Nothing)
-					.WhereHasName(textQuery);
+					.WhereHasName(queryParams.TextQuery)
+					.WhereHasTags(queryParams.TagIds, queryParams.ChildTags);
 
-				var items = query.OrderBy(sort)
-					.Paged(paging)
-					.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, ssl, fields))
+				var items = query.OrderBy(queryParams.SortRule)
+					.Paged(queryParams.Paging)
+					.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, fields))
 					.ToArray();
 
-				var count = paging.GetTotalCount ? query.Count() : 0;
+				var count = queryParams.Paging.GetTotalCount ? query.Count() : 0;
 
 				return new PartialFindResult<SongListForApiContract>(items, count);
 
@@ -1050,8 +1151,8 @@ namespace VocaDb.Model.Database.Queries {
 
 			return HandleQuery(session => {
 
-				var tagsInUse = session.Query<AlbumTagUsage>().Where(a => a.Album.Id == albumId && !a.Tag.Deleted).ToArray();
-				var tagVotes = session.Query<AlbumTagVote>().Where(a => a.User.Id == userId && a.Usage.Album.Id == albumId).ToArray();
+				var tagsInUse = session.Query<AlbumTagUsage>().Where(a => a.Entry.Id == albumId && !a.Tag.Deleted).ToArray();
+				var tagVotes = session.Query<AlbumTagVote>().Where(a => a.User.Id == userId && a.Usage.Entry.Id == albumId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
 					new TagSelectionContract(t.Tag, LanguagePreference, t.Votes.Any(v => tagVotes.Any(v.Equals))));
@@ -1066,8 +1167,8 @@ namespace VocaDb.Model.Database.Queries {
 
 			return HandleQuery(session => {
 
-				var tagsInUse = session.Query<ArtistTagUsage>().Where(a => a.Artist.Id == artistId && !a.Tag.Deleted).ToArray();
-				var tagVotes = session.Query<ArtistTagVote>().Where(a => a.User.Id == userId && a.Usage.Artist.Id == artistId).ToArray();
+				var tagsInUse = session.Query<ArtistTagUsage>().Where(a => a.Entry.Id == artistId && !a.Tag.Deleted).ToArray();
+				var tagVotes = session.Query<ArtistTagVote>().Where(a => a.User.Id == userId && a.Usage.Entry.Id == artistId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
 					new TagSelectionContract(t.Tag, LanguagePreference, t.Votes.Any(v => tagVotes.Any(v.Equals))));
@@ -1086,12 +1187,16 @@ namespace VocaDb.Model.Database.Queries {
 			return GetTagSelections<ReleaseEventSeries, EventSeriesTagUsage, EventSeriesTagVote>(seriesId, userId);
 		}
 
+		public TagSelectionContract[] GetSongListTagSelections(int songListId, int userId) {
+			return GetTagSelections<SongList, SongListTagUsage, SongListTagVote>(songListId, userId);
+		}
+
 		public TagSelectionContract[] GetSongTagSelections(int songId, int userId) {
 
 			return HandleQuery(session => {
 
-				var tagsInUse = session.Query<SongTagUsage>().Where(a => a.Song.Id == songId && !a.Tag.Deleted).ToArray();
-				var tagVotes = session.Query<SongTagVote>().Where(a => a.User.Id == userId && a.Usage.Song.Id == songId).ToArray();
+				var tagsInUse = session.Query<SongTagUsage>().Where(a => a.Entry.Id == songId && !a.Tag.Deleted).ToArray();
+				var tagVotes = session.Query<SongTagVote>().Where(a => a.User.Id == userId && a.Usage.Entry.Id == songId).ToArray();
 
 				var tagSelections = tagsInUse.Select(t =>
 					new TagSelectionContract(t.Tag, LanguagePreference, t.Votes.Any(v => tagVotes.Any(v.Equals))));
@@ -1146,7 +1251,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				if (!queryParams.IncludeDisabled) {
-					usersQuery = usersQuery.Where(u => u.Active);
+					usersQuery = usersQuery.Where(u => u.Active && !u.Options.Standalone);
 				}
 
 				if (queryParams.OnlyVerifiedArtists) {
@@ -1193,16 +1298,16 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void RequestEmailVerification(int userId, string resetUrl) {
+		public async Task RequestEmailVerification(int userId, string resetUrl) {
 
-			repository.HandleTransaction(ctx => {
+			await repository.HandleTransactionAsync(async ctx => {
 
-				var user = ctx.Load(userId);
+				var user = await ctx.LoadAsync(userId);
 				ctx.AuditLogger.SysLog(string.Format("requesting email verification ({0})", user.Email), user.Name);
 
-				var subject = "Verify your email at VocaDB.";
+				var subject = string.Format(UserAccountStrings.VerifyEmailSubject, brandableStringsManager.Layout.SiteName);
 
-				SendEmailVerificationRequest(ctx, user, resetUrl, subject);
+				await SendEmailVerificationRequest(ctx, user, resetUrl, subject);
 
 			});
 
@@ -1216,16 +1321,16 @@ namespace VocaDb.Model.Database.Queries {
 		/// <param name="email">User email. Must belong to that user. Cannot be null or empty.</param>
 		/// <param name="resetUrl">Password reset URL. Cannot be null or empty.</param>
 		/// <exception cref="UserNotFoundException">If no active user matching the email was found.</exception>
-		public void RequestPasswordReset(string username, string email, string resetUrl) {
+		public async Task RequestPasswordReset(string username, string email, string resetUrl) {
 
 			ParamIs.NotNullOrEmpty(() => username);
 			ParamIs.NotNullOrEmpty(() => email);
 
 			var lc = username.ToLowerInvariant();
 
-			repository.HandleTransaction(ctx => {
+			await repository.HandleTransactionAsync(async ctx => {
 
-				var user = ctx.Query().FirstOrDefault(u => u.Active && u.NameLC.Equals(lc) && email.Equals(u.Email));
+				var user = await ctx.Query().Where(u => u.Active && u.NameLC.Equals(lc) && email.Equals(u.Email)).VdbFirstOrDefaultAsync();
 
 				if (user == null) {
 					log.Info("User not found or not active: {0}", username);
@@ -1233,15 +1338,15 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var request = new PasswordResetRequest(user);
-				ctx.Save(request);
+				await ctx.SaveAsync(request);
 
 				var resetFullUrl = string.Format("{0}/{1}", resetUrl, request.Id);
 				var subject = UserAccountStrings.PasswordResetSubject;
 				var body = string.Format(UserAccountStrings.PasswordResetBody, resetFullUrl);
 
-				mailer.SendEmail(request.User.Email, request.User.Name, subject, body);
+				await mailer.SendEmailAsync(request.User.Email, request.User.Name, subject, body);
 
-				ctx.AuditLogger.SysLog("requested password reset", username);
+				ctx.AuditLogger.SysLog($"requested password reset with ID {CryptoHelper.HashSHA1(request.Id.ToString())}", username);
 
 			});
 
@@ -1253,10 +1358,14 @@ namespace VocaDb.Model.Database.Queries {
 
 			return repository.HandleTransaction(ctx => {
 
+				ctx.AuditLogger.SysLog($"resetting password with ID {CryptoHelper.HashSHA1(requestId.ToString())}");
+
 				var request = ctx.OfType<PasswordResetRequest>().Load(requestId);
 
-				if (!request.IsValid)
+				if (!request.IsValid) {
+					ctx.AuditLogger.SysLog("request has expired");
 					throw new RequestNotValidException("Request has expired");
+				}
 
 				var user = request.User;
 
@@ -1310,6 +1419,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public TagUsageForApiContract[] SaveSongListTags(int songListId, TagBaseContract[] tags, bool onlyAdd) {
+
+			return new TagUsageQueries(permissionContext).AddTags<SongList, SongListTagUsage>(
+				songListId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
+				songList => songList.Tags,
+				(songList, ctx) => new SongListTagUsageFactory(ctx, songList));
+
+		}
+
 		public TagUsageForApiContract[] SaveSongTags(int songId, TagBaseContract[] tags, bool onlyAdd) {
 			
 			return new TagUsageQueries(PermissionContext).AddTags<Song, SongTagUsage>(
@@ -1319,24 +1437,39 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public UserMessageContract SendMessage(UserMessageContract contract, string mySettingsUrl, string messagesUrl) {
+		public async Task<UserMessageContract> SendMessage(UserMessageContract contract, string mySettingsUrl, string messagesUrl) {
 
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			return HandleTransaction(session => {
+			return await repository.HandleTransactionAsync(async session => {
 
-				var receiver = session.Query().FirstOrDefault(u => u.Name.Equals(contract.Receiver.Name));
+				var receiver = await session.Query().Where(u => u.Name.Equals(contract.Receiver.Name)).VdbFirstOrDefaultAsync();
 
 				if (receiver == null)
 					throw new UserNotFoundException();
 
-				var sender = session.Load(contract.Sender.Id);
+				if (receiver.Options.Standalone) {
+					throw new UserNotFoundException();
+				}
+
+				var sender = await session.LoadAsync(contract.Sender.Id);
 
 				VerifyResourceAccess(sender);
 
 				session.AuditLogger.SysLog("sending message from " + sender + " to " + receiver);
+
+				if (sender.CreateDate >= DateTime.Now.AddDays(-7)) {
+					var cutoffTime = DateTime.Now.AddHours(-1);
+					var sentMessageCount = await session.Query<UserMessage>()
+						.Where(msg => msg.Sender.Id == sender.Id && msg.Created >= cutoffTime)
+						.VdbCountAsync();
+					log.Debug($"Sent messages count for sender {sender} is {sentMessageCount}");
+					if (sentMessageCount > 10) {
+						throw new RateLimitException("Too many messages");
+					}
+				}
 
 				var messages = sender.SendMessage(receiver, contract.Subject, contract.Body, contract.HighPriority);
 
@@ -1344,12 +1477,12 @@ namespace VocaDb.Model.Database.Queries {
 					|| (receiver.EmailOptions == UserEmailOptions.PrivateMessagesFromAdmins
 						&& sender.EffectivePermissions.Has(PermissionToken.DesignatedStaff))) {
 
-					SendPrivateMessageNotification(mySettingsUrl, messagesUrl, messages.Received);
+					await SendPrivateMessageNotification(mySettingsUrl, messagesUrl, messages.Received);
 
 				}
 
-				session.Save(messages.Received);
-				session.Save(messages.Sent);
+				await session.SaveAsync(messages.Received);
+				await session.SaveAsync(messages.Sent);
 
 				return new UserMessageContract(messages.Received, userIconFactory);
 
@@ -1384,7 +1517,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void SetUserToLimited(int userId) {
+		public void SetUserToLimited(int userId, string reason, string hostname, bool createReport) {
 
 			repository.UpdateEntity<User, IDatabaseContext<User>>(userId, (session, user) => {
 
@@ -1392,7 +1525,15 @@ namespace VocaDb.Model.Database.Queries {
 
 				user.GroupId = UserGroupId.Limited;
 
-			}, PermissionToken.RemoveEditPermission, PermissionContext);
+				if (createReport) {
+					CreateReport(session, user, UserReportType.RemovePermissions, hostname, reason);
+				}
+
+				var reasonText = !string.IsNullOrEmpty(reason) ? ": " + reason : string.Empty;
+				var message = string.Format("updated user {0} by removing edit permissions{1}", EntryLinkFactory.CreateEntryLink(user), reasonText);
+				session.AuditLogger.AuditLog(message, entryId: user.GlobalId);
+
+			}, PermissionToken.RemoveEditPermission, PermissionContext, skipLog: true);
 
 		}
 
@@ -1435,7 +1576,7 @@ namespace VocaDb.Model.Database.Queries {
 				user.Options.Poisoned = contract.Poisoned;
 				user.Options.Supporter = contract.Supporter;
 
-				session.AuditLogger.AuditLog(string.Format("updated user {0}", EntryLinkFactory.CreateEntryLink(user)));
+				session.AuditLogger.AuditLog(string.Format("updated user {0}", EntryLinkFactory.CreateEntryLink(user)), entryId: user.GlobalId);
 
 			}, PermissionToken.ManageUserPermissions, PermissionContext, skipLog: true);
 
@@ -1736,9 +1877,9 @@ namespace VocaDb.Model.Database.Queries {
 	public class AlbumTagUsageFactory : ITagUsageFactory<AlbumTagUsage> {
 
 		private readonly Album album;
-		private readonly IDatabaseContext<AlbumTagUsage> session;
+		private readonly IDatabaseContext session;
 
-		public AlbumTagUsageFactory(IDatabaseContext<AlbumTagUsage> session, Album album) {
+		public AlbumTagUsageFactory(IDatabaseContext session, Album album) {
 			this.session = session;
 			this.album = album;
 		}
@@ -1754,7 +1895,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public AlbumTagUsage CreateTagUsage(Tag tag, AlbumTagUsage oldUsage) {
 
-			var usage = new AlbumTagUsage(oldUsage.Album, tag);
+			var usage = new AlbumTagUsage(oldUsage.Entry, tag);
 			session.Save(usage);
 
 			return usage;
@@ -1766,9 +1907,9 @@ namespace VocaDb.Model.Database.Queries {
 	public class ArtistTagUsageFactory : ITagUsageFactory<ArtistTagUsage> {
 
 		private readonly Artist artist;
-		private readonly IDatabaseContext<ArtistTagUsage> session;
+		private readonly IDatabaseContext session;
 
-		public ArtistTagUsageFactory(IDatabaseContext<ArtistTagUsage> session, Artist artist) {
+		public ArtistTagUsageFactory(IDatabaseContext session, Artist artist) {
 			this.session = session;
 			this.artist = artist;
 		}
@@ -1784,7 +1925,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ArtistTagUsage CreateTagUsage(Tag tag, ArtistTagUsage oldUsage) {
 
-			var usage = new ArtistTagUsage(oldUsage.Artist, tag);
+			var usage = new ArtistTagUsage(oldUsage.Entry, tag);
 			session.Save(usage);
 
 			return usage;
@@ -1853,12 +1994,42 @@ namespace VocaDb.Model.Database.Queries {
 
 	}
 
+	public class SongListTagUsageFactory : ITagUsageFactory<SongListTagUsage> {
+
+		private readonly SongList songList;
+		private readonly IDatabaseContext ctx;
+
+		public SongListTagUsageFactory(IDatabaseContext ctx, SongList songList) {
+			this.ctx = ctx;
+			this.songList = songList;
+		}
+
+		public SongListTagUsage CreateTagUsage(Tag tag) {
+
+			var usage = new SongListTagUsage(songList, tag);
+			ctx.Save(usage);
+
+			return usage;
+
+		}
+
+		public SongListTagUsage CreateTagUsage(Tag tag, SongListTagUsage oldUsage) {
+
+			var usage = new SongListTagUsage(oldUsage.Entry, tag);
+			ctx.Save(usage);
+
+			return usage;
+
+		}
+
+	}
+
 	public class SongTagUsageFactory : ITagUsageFactory<SongTagUsage> {
 
 		private readonly Song song;
-		private readonly IDatabaseContext<SongTagUsage> ctx;
+		private readonly IDatabaseContext ctx;
 
-		public SongTagUsageFactory(IDatabaseContext<SongTagUsage> ctx, Song song) {
+		public SongTagUsageFactory(IDatabaseContext ctx, Song song) {
 			this.ctx = ctx;
 			this.song = song;
 		}
@@ -1874,7 +2045,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public SongTagUsage CreateTagUsage(Tag tag, SongTagUsage oldUsage) {
 
-			var usage = new SongTagUsage(oldUsage.Song, tag);
+			var usage = new SongTagUsage(oldUsage.Entry, tag);
 			ctx.Save(usage);
 
 			return usage;

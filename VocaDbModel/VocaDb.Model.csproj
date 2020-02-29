@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VocaDb.Model</RootNamespace>
     <AssemblyName>VocaDb.Model</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -25,6 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,19 +35,20 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentNHibernate, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentNHibernate.2.0.3.0\lib\net40\FluentNHibernate.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr3.Runtime.3.5.1\lib\net40-client\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="FluentNHibernate, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentNHibernate.2.1.2\lib\net461\FluentNHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.9.2.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.9.2\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Iesi.Collections.4.0.4\lib\net461\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="IvanAkcheurov.Commons">
       <HintPath>..\packages\IvanAkcheurov.NTextCat.Lib.0.2.1.1\lib\net40\IvanAkcheurov.Commons.dll</HintPath>
@@ -57,26 +59,37 @@
     <Reference Include="IvanAkcheurov.NTextCat.Lib">
       <HintPath>..\packages\IvanAkcheurov.NTextCat.Lib.0.2.1.1\lib\net40\IvanAkcheurov.NTextCat.Lib.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHibernate.4.0.3.4000\lib\net40\NHibernate.dll</HintPath>
+    <Reference Include="NHibernate, Version=5.2.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.5.2.7\lib\net461\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Caches.SysCache2, Version=5.6.0.0, Culture=neutral, PublicKeyToken=6876f2ea66c9f443, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.Caches.SysCache2.5.6.0\lib\net461\NHibernate.Caches.SysCache2.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NHibernate.Caches.SysCache2, Version=4.0.0.4000, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NHibernate.Caches.SysCache2.4.0.0.4000\lib\net40\NHibernate.Caches.SysCache2.dll</HintPath>
+    <Reference Include="NicoApiClient, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NicoApiClient.1.0.1\lib\netstandard2.0\NicoApiClient.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.5.6\lib\net45\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="PiaproClient, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PiaproClient.1.2.0.0\lib\net45\PiaproClient.dll</HintPath>
+    <Reference Include="NYoutubeDL, Version=0.10.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NYoutubeDL.0.10.5\lib\netstandard2.0\NYoutubeDL.dll</HintPath>
+    </Reference>
+    <Reference Include="PiaproClient, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PiaproClient.2.2.0\lib\netstandard2.0\PiaproClient.dll</HintPath>
     </Reference>
     <Reference Include="policy.2.0.taglib-sharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
       <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq.EagerFetching, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.EagerFetching.2.2.0\lib\net45\Remotion.Linq.EagerFetching.dll</HintPath>
     </Reference>
     <Reference Include="RSS.NET">
       <HintPath>..\Libs\RSS.NET.dll</HintPath>
@@ -89,14 +102,14 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -128,15 +141,18 @@
     <Compile Include="Database\Queries\UserMessageQueries.cs" />
     <Compile Include="Database\Queries\UserQueries.cs" />
     <Compile Include="Database\Repositories\DatabaseContextHelper.cs" />
+    <Compile Include="Database\Repositories\IEntityLoader.cs" />
     <Compile Include="Database\Repositories\NHibernate\NHibernateSessionPerRequestContext.cs" />
     <Compile Include="Database\Repositories\NHibernate\NHibernateSessionPerRequestRepository.cs" />
     <Compile Include="Database\Repositories\NHibernate\TagNHibernateSessionPerRequestRepository.cs" />
     <Compile Include="DataContracts\Activityfeed\ActivityEntryForApiContract.cs" />
     <Compile Include="DataContracts\Aggregate\CountPerDayContract.cs" />
+    <Compile Include="DataContracts\Aggregate\CountPerDayContractExtender.cs" />
     <Compile Include="DataContracts\Albums\AlbumDiscPropertiesContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumForApiContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumIdentifierContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumReleaseContract.cs" />
+    <Compile Include="DataContracts\Albums\AlbumReviewContract.cs" />
     <Compile Include="DataContracts\Albums\AlbumWithArchivedVersions.cs" />
     <Compile Include="DataContracts\Albums\ArchivedAlbumContract.cs" />
     <Compile Include="DataContracts\Albums\ArchivedAlbumReleaseContract.cs" />
@@ -163,22 +179,27 @@
     <Compile Include="DataContracts\Globalization\EnglishTranslatedStringContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ArchivedArtistForEventContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ArchivedEventSeriesVersionContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ArchivedEventSeriesVersionDetailsContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ArchivedEventVersionDetailsContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ArtistForEventContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ComparedEventsContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ComparedEventSeriesContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForApiContract.cs" />
     <Compile Include="DataContracts\ReleaseEvents\ReleaseEventForEditContract.cs" />
+    <Compile Include="DataContracts\ReleaseEvents\ReleaseEventSeriesForApiContract.cs" />
     <Compile Include="DataContracts\SongImport\PartialImportedSongs.cs" />
     <Compile Include="DataContracts\SongLists\SongListDetailsContract.cs" />
     <Compile Include="DataContracts\SongLists\SongListForApiContract.cs" />
     <Compile Include="DataContracts\Songs\ArchivedSongListVersionContract.cs" />
     <Compile Include="DataContracts\Songs\RelatedSongsContract.cs" />
     <Compile Include="DataContracts\Songs\SongInAlbumForApiContract.cs" />
+    <Compile Include="DataContracts\Songs\AlbumForSongRefContract.cs" />
     <Compile Include="DataContracts\Songs\SongInListForApiContract.cs" />
     <Compile Include="DataContracts\Songs\SongListWithArchivedVersionsContract.cs" />
     <Compile Include="DataContracts\Tags\ArchivedTagVersionDetailsContract.cs" />
     <Compile Include="DataContracts\Tags\ComparedTagsContract.cs" />
     <Compile Include="DataContracts\Tags\TagBaseContract.cs" />
+    <Compile Include="DataContracts\Tags\TagEntryMappingContract.cs" />
     <Compile Include="DataContracts\Tags\TagForApiContract.cs" />
     <Compile Include="DataContracts\Tags\TagMappingContract.cs" />
     <Compile Include="DataContracts\Tags\TagUsageForApiContract.cs" />
@@ -317,6 +338,7 @@
     <Compile Include="Domain\Albums\AlbumDiff.cs" />
     <Compile Include="Domain\Albums\AlbumDiscProperties.cs" />
     <Compile Include="Domain\Albums\AlbumEditableFields.cs" />
+    <Compile Include="Domain\ContentFocus.cs" />
     <Compile Include="Domain\Albums\AlbumHit.cs" />
     <Compile Include="Domain\Albums\AlbumIdentifier.cs" />
     <Compile Include="Domain\Albums\AlbumMergeRecord.cs" />
@@ -325,10 +347,18 @@
     <Compile Include="Domain\Albums\AlbumTagUsage.cs" />
     <Compile Include="Domain\Albums\AlbumTagVote.cs" />
     <Compile Include="Domain\Artists\ArtistHit.cs" />
+    <Compile Include="Domain\EntryTypeAndSubType.cs" />
+    <Compile Include="Domain\Exceptions\RateLimitException.cs" />
+    <Compile Include="Domain\ExtLinks\WebLinkCategory.cs" />
+    <Compile Include="Domain\ExtLinks\WebLinkVariationTypes.cs" />
+    <Compile Include="Domain\ExtLinks\WebLinkVariationsFactory.cs" />
     <Compile Include="Domain\Globalization\CultureCollection.cs" />
     <Compile Include="Domain\Globalization\LanguageCodeAndName.cs" />
     <Compile Include="Domain\Globalization\OptionalCultureCode.cs" />
     <Compile Include="Domain\Globalization\TranslationType.cs" />
+    <Compile Include="Domain\IDatabaseObject.cs" />
+    <Compile Include="Domain\IEntryLink.cs" />
+    <Compile Include="Domain\IEntrySubTypeNameFactory.cs" />
     <Compile Include="Domain\IEntryWithArtists.cs" />
     <Compile Include="Domain\Images\ImageSize.cs" />
     <Compile Include="Domain\PVs\GenericPV.cs" />
@@ -429,6 +459,7 @@
     <Compile Include="Domain\Security\PermissionToken.cs" />
     <Compile Include="Domain\Security\IUserPermissionContextExtender.cs" />
     <Compile Include="Domain\Security\UserSetting.cs" />
+    <Compile Include="Domain\Security\UserSettingCulture.cs" />
     <Compile Include="Domain\Songs\ArchivedSongListVersion.cs" />
     <Compile Include="Domain\Songs\ISongLink.cs" />
     <Compile Include="Domain\Songs\SongComment.cs" />
@@ -439,12 +470,15 @@
     <Compile Include="Domain\Songs\SongListDiff.cs" />
     <Compile Include="Domain\Songs\SongListEditableFields.cs" />
     <Compile Include="Domain\Songs\SongListFeaturedCategory.cs" />
+    <Compile Include="Domain\Songs\SongListTagUsage.cs" />
+    <Compile Include="Domain\Songs\SongListTagVote.cs" />
     <Compile Include="Domain\Songs\SongMergeRecord.cs" />
     <Compile Include="Domain\Songs\SongReport.cs" />
     <Compile Include="Domain\Songs\SongTagUsage.cs" />
     <Compile Include="Domain\Songs\SongTagVote.cs" />
     <Compile Include="Domain\Songs\SongVoteRating.cs" />
     <Compile Include="Domain\Tags\ArchivedTagVersion.cs" />
+    <Compile Include="Domain\Tags\EntryTypeToTagMapping.cs" />
     <Compile Include="Domain\Tags\GenericTagUsage.cs" />
     <Compile Include="Domain\Tags\GenericTagVote.cs" />
     <Compile Include="Domain\Tags\IEntryWithTags.cs" />
@@ -462,6 +496,8 @@
     <Compile Include="Domain\Tags\TagTargetTypes.cs" />
     <Compile Include="Domain\Tags\TagWebLink.cs" />
     <Compile Include="Domain\TrashedEntry.cs" />
+    <Compile Include="Domain\Albums\AlbumReview.cs" />
+    <Compile Include="Domain\Users\UserAuditEvent.cs" />
     <Compile Include="Domain\Users\ArtistForUser.cs" />
     <Compile Include="Domain\Users\EventForUser.cs" />
     <Compile Include="Domain\Users\IUser.cs" />
@@ -533,7 +569,6 @@
     <Compile Include="Domain\PictureData.cs" />
     <Compile Include="Domain\Security\AuditLogEntry.cs" />
     <Compile Include="Domain\Security\NotAllowedException.cs" />
-    <Compile Include="Domain\Security\RoleTypes.cs" />
     <Compile Include="Domain\Songs\PVForSong.cs" />
     <Compile Include="Domain\PVs\PVService.cs" />
     <Compile Include="Domain\PVs\PVType.cs" />
@@ -565,7 +600,6 @@
     <Compile Include="Helpers\EnumerableExtender.cs" />
     <Compile Include="Helpers\HtmlHelperFunctions.cs" />
     <Compile Include="Helpers\HtmlRequestHelper.cs" />
-    <Compile Include="Helpers\HttpRequestExtensions.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\ImpersonateUICulture.cs" />
     <Compile Include="Helpers\JsonRequest.cs" />
@@ -578,13 +612,16 @@
     <Compile Include="Helpers\OtherHelper.cs" />
     <Compile Include="Helpers\PrimitiveParseHelper.cs" />
     <Compile Include="Helpers\ReCaptcha2.cs" />
+    <Compile Include="Helpers\RelatedSitesHelper.cs" />
     <Compile Include="Helpers\SongHelper.cs" />
     <Compile Include="Helpers\StreamHelper.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Helpers\TagMapper.cs" />
     <Compile Include="Helpers\UrlValidator.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Helpers\XmlHelper.cs" />
+    <Compile Include="Helpers\XmlRequest.cs" />
     <Compile Include="Mapping\Activityfeed\ActivityEntryMap.cs" />
     <Compile Include="Mapping\Albums\AlbumCommentMap.cs" />
     <Compile Include="Mapping\Albums\AlbumDiscPropertiesMap.cs" />
@@ -592,6 +629,7 @@
     <Compile Include="Mapping\Albums\AlbumMergeRecordMap.cs" />
     <Compile Include="Mapping\Albums\AlbumNameMap.cs" />
     <Compile Include="Mapping\Albums\AlbumPictureFileMap.cs" />
+    <Compile Include="Mapping\Albums\AlbumReviewMap.cs" />
     <Compile Include="Mapping\Albums\AlbumTagUsageMap.cs" />
     <Compile Include="Mapping\Albums\AlbumTagVoteMap.cs" />
     <Compile Include="Mapping\Albums\AlbumWebLinkMap.cs" />
@@ -621,6 +659,9 @@
     <Compile Include="Mapping\Discussions\DiscussionTopicMap.cs" />
     <Compile Include="Mapping\EntryReportMap.cs" />
     <Compile Include="Mapping\ReleaseEvents\ReleaseEventSeriesMap.cs" />
+    <Compile Include="Mapping\Songs\SongListTagUsageMap.cs" />
+    <Compile Include="Mapping\Songs\SongListTagVoteMap.cs" />
+    <Compile Include="Mapping\Tags\EntryTypeToTagMappingMap.cs" />
     <Compile Include="Mapping\Tags\TagMappingMap.cs" />
     <Compile Include="Mapping\Tags\TagMergeRecordMap.cs" />
     <Compile Include="Mapping\Users\EventForUserMap.cs" />
@@ -776,6 +817,7 @@
     <Compile Include="Service\BrandableStrings\Collections\UserStrings.cs" />
     <Compile Include="Service\BrandableStrings\IBrandedStringsAssemblyHeader.cs" />
     <Compile Include="Service\EntrySortRule.cs" />
+    <Compile Include="Service\EntryTypeTags.cs" />
     <Compile Include="Service\EntryUrlFriendlyNameFactory.cs" />
     <Compile Include="Service\EntryUrlParser.cs" />
     <Compile Include="Service\EntryValidators\ArtistValidator.cs" />
@@ -786,12 +828,16 @@
     <Compile Include="Service\Exceptions\NoPasswordException.cs" />
     <Compile Include="Service\Exceptions\RequestNotValidException.cs" />
     <Compile Include="Service\Exceptions\DuplicateTagNameException.cs" />
+    <Compile Include="Service\Exceptions\RestrictedIPException.cs" />
     <Compile Include="Service\Exceptions\TooFastRegistrationException.cs" />
+    <Compile Include="Service\Expressions\AlbumLinkExpressions.cs" />
     <Compile Include="Service\ExtSites\AlbumDescriptionGenerator.cs" />
     <Compile Include="Service\ExtSites\ArtistDescriptionGenerator.cs" />
     <Compile Include="Service\ExtSites\SongDescriptionGenerator.cs" />
     <Compile Include="Service\Helpers\EntryReportNotifier.cs" />
     <Compile Include="Service\Helpers\FollowedTagNotifier.cs" />
+    <Compile Include="Service\LogicalGrouping.cs" />
+    <Compile Include="Service\MaybeOrderedQueryable.cs" />
     <Compile Include="Service\NameMatchMode.cs" />
     <Compile Include="Service\PredicateBuilder.cs" />
     <Compile Include="Service\QueriesBase.cs" />
@@ -805,6 +851,8 @@
     <Compile Include="Service\Helpers\ArtistExternalUrlParser.cs" />
     <Compile Include="Service\QueryableExtenders\ArtistLinkWithRolesQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\ArtistParticipationQueryParams.cs" />
+    <Compile Include="Service\QueryableExtenders\EntryReportQueryableExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\EntryTypeToTagMappingQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithArtistsQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithLinksQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\EntryWithNamesQueryableExtender.cs" />
@@ -816,6 +864,7 @@
     <Compile Include="Service\Helpers\MarkdownHelper.cs" />
     <Compile Include="Service\QueryableExtenders\OtherEntryQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\ReleaseEventSeriesQueryableExtender.cs" />
+    <Compile Include="Service\QueryableExtenders\SongInAlbumEnumerableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\SongInListQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\SongListQueryableExtender.cs" />
     <Compile Include="Service\QueryableExtenders\TagLinkQueryableExtender.cs" />
@@ -886,6 +935,7 @@
     <Compile Include="Database\Repositories\NHibernate\SongListNHibernateRepository.cs" />
     <Compile Include="Database\Repositories\NHibernate\UserMessageNHibernateRepository.cs" />
     <Compile Include="Database\Repositories\NHibernate\UserNHibernateRepository.cs" />
+    <Compile Include="Service\QueryableExtenders\WebLinkQueryableExtender.cs" />
     <Compile Include="Service\Search\AdvancedFilterType.cs" />
     <Compile Include="Service\Search\AdvancedSearchFilter.cs" />
     <Compile Include="Service\Search\AdvancedSearchFilters.cs" />
@@ -895,11 +945,13 @@
     <Compile Include="Service\Search\Artists\ArtistSearchTextQuery.cs" />
     <Compile Include="Service\Search\Artists\ParsedArtistQuery.cs" />
     <Compile Include="Service\Search\EntryIdsCollection.cs" />
+    <Compile Include="Service\Search\EntryTypeAndTagCollection.cs" />
     <Compile Include="Service\Search\Events\EventQueryParams.cs" />
     <Compile Include="Service\Search\QueryProcessor.cs" />
     <Compile Include="Service\Search\ReleaseEventSearch.cs" />
     <Compile Include="Service\Search\SearchTextQuery.cs" />
     <Compile Include="Service\Search\SongSearch\ParsedSongQuery.cs" />
+    <Compile Include="Service\Search\SongSearch\SongInListQueryParams.cs" />
     <Compile Include="Service\Search\SongSearch\SongListQueryParams.cs" />
     <Compile Include="Service\Search\Tags\TagQueryParams.cs" />
     <Compile Include="Service\Search\Tags\TagSearch.cs" />
@@ -908,6 +960,7 @@
     <Compile Include="Service\Search\User\UserQueryParams.cs" />
     <Compile Include="Service\Security\HostCollection.cs" />
     <Compile Include="Service\Security\IPasswordHashAlgorithm.cs" />
+    <Compile Include="Service\Security\IPRuleManager.cs" />
     <Compile Include="Service\Security\PasswordHashAlgorithms.cs" />
     <Compile Include="Service\Security\HMICSHA1PasswordHashAlgorithm.cs" />
     <Compile Include="Service\Security\SHA1PasswordHashAlgorithm.cs" />
@@ -954,7 +1007,7 @@
     <Compile Include="Service\Search\User\AlbumCollectionQueryParams.cs" />
     <Compile Include="Service\Search\User\RatedSongQueryParams.cs" />
     <Compile Include="Service\Security\CryptoHelper.cs" />
-    <Compile Include="Service\TagFormatting\TagFormatter.cs" />
+    <Compile Include="Service\TagFormatting\AlbumSongFormatter.cs" />
     <Compile Include="Service\VideoServices\IPVParser.cs" />
     <Compile Include="Service\VideoServices\IVideoService.cs" />
     <Compile Include="Service\VideoServices\IVideoServiceParser.cs" />
@@ -965,6 +1018,7 @@
     <Compile Include="Service\Helpers\SessionHelper.cs" />
     <Compile Include="Service\VideoServices\VideoParseException.cs" />
     <Compile Include="Service\VideoServices\VideoService.cs" />
+    <Compile Include="Service\VideoServices\VideoServiceBandcamp.cs" />
     <Compile Include="Service\VideoServices\VideoServiceBilibili.cs" />
     <Compile Include="Service\VideoServices\CreofugaParser.cs" />
     <Compile Include="Service\VideoServices\VideoServiceHelper.cs" />
@@ -992,8 +1046,10 @@
     <Compile Include="Service\VideoServices\Youtube\YoutubeVideoResponse.cs" />
     <Compile Include="Utils\AppConfig.cs" />
     <Compile Include="Utils\Config\AffiliatesSection.cs" />
+    <Compile Include="Utils\Config\AssetsSection.cs" />
     <Compile Include="Utils\Config\GlobalLinksSection.cs" />
     <Compile Include="Utils\Config\SiteSettingsSection.cs" />
+    <Compile Include="Utils\Config\SlogansSection.cs" />
     <Compile Include="Utils\Config\SpecialTagsSection.cs" />
     <Compile Include="Utils\Config\VdbConfigManager.cs" />
     <Compile Include="Utils\Search\SearchRouteParams.cs" />
@@ -1163,10 +1219,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SongRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\UserRes.ja.resx" />
     <EmbeddedResource Include="Resources\Views\UserRes.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UserRes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\UserRes.zh-Hans.resx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Shared\" />

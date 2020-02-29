@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System.IO;
 
 namespace VocaDb.Model.Domain.Images {
@@ -18,7 +18,7 @@ namespace VocaDb.Model.Domain.Images {
 			return File.OpenRead(GetPath(picture, size));
 		}
 
-		public abstract string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size, bool ssl);
+		public abstract string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size);
 
 		public bool HasImage(IEntryImageInformation picture, ImageSize size) {
 			return File.Exists(GetPath(picture, size));

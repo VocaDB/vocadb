@@ -25,12 +25,6 @@ module vdb.functions {
 
     };
 
-    export function mapFullUrl(relative: string) {
-
-        return mergeUrls(vdb.values.hostAddress, relative);
-
-    };
-
     export function mergeUrls(base: string, relative: string) {
         
         if (base.charAt(base.length - 1) == "/" && relative.charAt(0) == "/")

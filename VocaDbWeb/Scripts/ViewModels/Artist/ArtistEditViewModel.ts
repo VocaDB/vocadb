@@ -146,7 +146,11 @@ module vdb.viewModels {
 		public validationError_unnecessaryPName: KnockoutComputed<boolean>;
 		public validationError_unspecifiedNames: KnockoutComputed<boolean>;
 		public voiceProvider: BasicEntryLinkViewModel<dc.ArtistContract>;
-        public webLinks: WebLinksEditViewModel;
+		public webLinks: WebLinksEditViewModel;
+
+		private canHaveBaseVoicebank(at: cls.artists.ArtistType) {
+			return (helpers.ArtistHelper.isVocalistType(at) || at === cls.artists.ArtistType.OtherIndividual) && at !== cls.artists.ArtistType.Vocalist;
+		}
 
         constructor(
 			private artistRepo: rep.ArtistRepository,
@@ -158,7 +162,7 @@ module vdb.viewModels {
 
 			this.artistTypeStr = ko.observable(data.artistType);
 			this.artistType = ko.computed(() => cls.artists.ArtistType[this.artistTypeStr()]);
-			this.allowBaseVoicebank = ko.computed(() => helpers.ArtistHelper.isVocalistType(this.artistType()) || this.artistType() == cls.artists.ArtistType.OtherIndividual);
+			this.allowBaseVoicebank = ko.computed(() => this.canHaveBaseVoicebank(this.artistType()));
 			this.associatedArtists = ko.observableArray(_.map(data.associatedArtists, a => new ArtistForArtistEditViewModel(a)));
 			this.baseVoicebank = new BasicEntryLinkViewModel(data.baseVoicebank, artistRepo.getOne);
 			this.description = new globalization.EnglishTranslatedStringEditViewModel(data.description);
@@ -185,7 +189,7 @@ module vdb.viewModels {
 			});
 
 			this.canHaveRelatedArtists = ko.computed(() => {
-				return helpers.ArtistHelper.isVocalistType(this.artistType());
+				return helpers.ArtistHelper.canHaveChildVoicebanks(this.artistType());
 			});
 
 			this.canHaveReleaseDate = ko.computed(() => {

@@ -150,4 +150,7 @@
   <data name="Live" xml:space="preserve">
     <value>ライブ収録</value>
   </data>
+  <data name="Arrangement" xml:space="preserve">
+    <value>編曲</value>
+  </data>
 </root>

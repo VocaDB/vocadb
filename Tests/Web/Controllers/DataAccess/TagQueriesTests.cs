@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
@@ -185,8 +185,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Save(new TagReport(tag, TagReportType.InvalidInfo, user, "test", "test", null));
 			repository.Save(new TagReport(tag2, TagReportType.InvalidInfo, user, "test", "test", null));			
 			var song = repository.Save(CreateEntry.Song());
-			var tagUsage = repository.Save(song.AddTag(tag));
-			tag.AllSongTagUsages.Add(tagUsage.Result);
+			var tagUsage = repository.Save(song.AddTag(tag).Result);
+			tag.AllSongTagUsages.Add(tagUsage);
 
 			queries.MoveToTrash(tag.Id, "test");
 
@@ -256,7 +256,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(3, target.AllSongTagUsages.Count, "Number of song tag usages");
 			Assert.AreEqual(1, song.Tags.Usages.Count, "Number of usages for the first song");
 
-			var usage = target.AllSongTagUsages.FirstOrDefault(s => s.Song == song);
+			var usage = target.AllSongTagUsages.FirstOrDefault(s => s.Entry == song);
 			Assert.IsNotNull(usage, "Found usage");
 			Assert.AreEqual(1, usage.Votes.Count, "Number of votes");
 			Assert.IsTrue(song.Tags.Usages.Contains(usage), "Same usage was added to song");
@@ -344,6 +344,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.AreEqual(2, target.TagsForUsers.Count, "Followed tags were migrated");
 			Assert.IsTrue(target.TagsForUsers.Any(t => t.User == user), "Follow was migrated");
+
+		}
+
+		[TestMethod]
+		public void Merge_TagMappings() {
+
+			repository.Save(tag.CreateMapping("ApiMiku"));
+			var target = repository.Save(new Tag("target"));
+			queries.Merge(tag.Id, target.Id);
+
+			Assert.IsTrue(target.Mappings.Any(m => m.SourceTag == "ApiMiku"), "Mapping was moved to target tag");
+			Assert.IsTrue(repository.List<TagMapping>().Any(m => m.SourceTag == "ApiMiku" && m.Tag.Equals(target)), "Mapped was saved to DB");
 
 		}
 
@@ -479,6 +491,38 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.AreEqual(tag2, tag.Parent, "Parent");
 			Assert.IsTrue(tag2.Children.Contains(tag), "Parent contains child tag");
+
+		}
+
+		[TestMethod]
+		public void UpdateMappings_Add() {
+
+			queries.UpdateMappings(new[] { 
+				new TagMappingContract {
+					SourceTag = "apimiku",
+					Tag = new TagBaseContract(tag, ContentLanguagePreference.Default)
+				}
+			});
+
+			var mappings = repository.List<TagMapping>();
+			Assert.AreEqual(1, mappings.Count, "Mapping was saved");
+			Assert.AreEqual(tag, mappings[0].Tag, "Tag");
+			Assert.AreEqual("apimiku", mappings[0].SourceTag, "SourceTag");
+
+		}
+
+		[TestMethod]
+		public void UpdateMappings_Remove() {
+
+			repository.Save(tag.CreateMapping("apimiku"));
+
+			Assert.AreEqual(1, repository.List<TagMapping>().Count, "Precondition: mapping exists in database");
+			Assert.AreEqual(1, tag.Mappings.Count, "Precondition: mapping exists for tag");
+
+			queries.UpdateMappings(new TagMappingContract[0]);
+
+			Assert.AreEqual(0, repository.List<TagMapping>().Count, "Mapping was deleted");
+			Assert.AreEqual(0, tag.Mappings.Count, "Mapping was removed from tag");
 
 		}
 

@@ -1,4 +1,4 @@
-﻿@using VocaDb.Model.Domain
+@using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Models.Song
@@ -26,7 +26,7 @@
 <div class="span2 menu">
 	<div class="well">
 		<a href="@Url.Action("Index", "Home")">
-			<img src="@VocaUrlHelper.StaticResource("/img/vocaDB-title.png")" class="site-logo" alt="@BrandableStrings.Layout.SiteName" title="@BrandableStrings.Layout.SiteName" />
+			<img src="@(BannerUrl ?? VocaUrlHelper.StaticResource("/img/vocaDB-title.png"))" class="site-logo" alt="@BrandableStrings.Layout.SiteName" title="@BrandableStrings.Layout.SiteName" />
 		</a>
 		<p class="slogan">@VocaDb.Web.Code.SloganGenerator.Generate()</p>
 	</div>
@@ -54,8 +54,6 @@
 			@foreach (var link in SocialLinks) {
 				@SocialLink(link.Title, link.Url, link.BannerImg)
 			}
-			<br />
-			@Html.ActionLink(ViewRes._LayoutStrings.IRCLink, "Chat", "Home")
 		</div>
 
 		<br />

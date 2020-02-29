@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -31,7 +31,7 @@ namespace VocaDb.Web.Controllers {
 		protected const int statsCacheDurationSec = 24 * 60 * 60;
 
 		protected ControllerBase() {
-			PageProperties.OpenGraph.Image = VocaUriBuilder.CreateAbsolute("/Content/vocaDB-title-large.png").ToString();			
+			PageProperties.OpenGraph.Image = VocaUriBuilder.StaticResource("/img/vocaDB-title-large.png");
 		}
 
 		protected string Hostname => WebHelper.GetRealHost(Request);
@@ -232,15 +232,6 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		protected ActionResult Object<T>(T obj, DataFormat format) where T : class {
-
-			if (format == DataFormat.Xml)
-				return Xml(obj);
-			else
-				return Json(obj);
-
-		}
-
 		protected string RenderPartialViewToString(string viewName, object model) {
 
 			if (string.IsNullOrEmpty(viewName))
@@ -293,21 +284,7 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		protected VocaUrlMapper UrlMapper {
-			get {
-				return new VocaUrlMapper(WebHelper.IsSSL(Request));
-			}
-		}
-
-		protected ActionResult Xml<T>(T obj) where T : class {
-
-			if (obj == null)
-				return new EmptyResult();
-
-			var content = XmlHelper.SerializeToUTF8XmlString(obj);
-			return Xml(content);
-
-		}
+		protected VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
 		protected ActionResult Xml(string content) {
 

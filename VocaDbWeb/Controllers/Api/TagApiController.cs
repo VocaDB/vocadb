@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,6 +7,7 @@ using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Tags;
@@ -29,7 +30,7 @@ namespace VocaDb.Web.Controllers.Api {
 	[RoutePrefix("api/tags")]
 	public class TagApiController : ApiController {
 
-		private const int absoluteMax = 50;
+		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly TagQueries queries;
 		private readonly IEntryImagePersisterOld thumbPersister;
@@ -89,7 +90,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{id:int}")]
 		public TagForApiContract GetById(int id, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			var tag = queries.LoadTag(id, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), lang, fields));
+			var tag = queries.LoadTag(id, t => new TagForApiContract(t, thumbPersister, lang, fields));
 			return tag;
 
 		}
@@ -108,7 +109,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Obsolete]
 		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
-			var tag = queries.GetTagByName(name, t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), lang, fields));
+			var tag = queries.GetTagByName(name, t => new TagForApiContract(t, thumbPersister, lang, fields));
 
 			return tag;
 
@@ -139,7 +140,7 @@ namespace VocaDb.Web.Controllers.Api {
 			TagOptionalFields fields = TagOptionalFields.None, 
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			return queries.HandleQuery(ctx => ctx.Load(tagId).Children.Select(t => new TagForApiContract(t, thumbPersister, WebHelper.IsSSL(Request), lang, fields)).ToArray());
+			return queries.HandleQuery(ctx => ctx.Load(tagId).Children.Select(t => new TagForApiContract(t, thumbPersister, lang, fields)).ToArray());
 
 		}
 
@@ -191,7 +192,6 @@ namespace VocaDb.Web.Controllers.Api {
 			TagTargetTypes target = TagTargetTypes.All) {
 			
 			maxResults = Math.Min(maxResults, fields != TagOptionalFields.None ? absoluteMax : int.MaxValue);
-			var ssl = WebHelper.IsSSL(Request);
 			var queryParams = new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(query, nameMatchMode), false, preferAccurateMatches),
 				new PagingProperties(start, maxResults, getTotalCount)) {
 					AllowChildren = allowChildren,
@@ -201,16 +201,25 @@ namespace VocaDb.Web.Controllers.Api {
 					Target = target
 			};
 
-			var tags = queries.Find(queryParams, fields, ssl, lang);
+			var tags = queries.Find(queryParams, fields, lang);
 
 			return tags;
 
 		}
 
+		[Route("entry-type-mappings")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public TagEntryMappingContract[] GetEntryMappings() {
+			return queries.GetEntryMappings();
+		}
+
 		[Route("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public IEnumerable<TagMappingContract> GetMappings() {
-			return queries.GetMappings();
+		public PartialFindResult<TagMappingContract> GetMappings(
+			int start = 0, int maxEntries = defaultMax, bool getTotalCount = false) {
+
+			return queries.GetMappings(new PagingProperties(start, maxEntries, getTotalCount));
+
 		}
 
 		/// <summary>
@@ -240,18 +249,23 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets the most common tags in a category.
 		/// </summary>
 		/// <param name="categoryName">Tag category, for example "Genres". Optional - if not specified, no filtering is done.</param>
+		/// <param name="entryType">Tag usage entry type. Optional - if not specified, all entry types are included.</param>
+		/// <param name="maxResults">Maximum number of tags to return.</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of names of the most commonly used tags in that category.</returns>
 		[Route("top")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
-		public TagBaseContract[] GetTopTags(string categoryName = null, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+		public TagBaseContract[] GetTopTags(string categoryName = null, EntryType? entryType = null,
+			int maxResults = 15, 
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			return queries.Find(t => new TagBaseContract(t, lang), new TagQueryParams(new CommonSearchParams(), new PagingProperties(0, 15, false)) {
-				CategoryName = categoryName,
-				SortRule = TagSortRule.UsageCount,
-				LanguagePreference = lang
-			})
-			.Items.OrderBy(t => t.Name).ToArray();
+			return queries.HandleQuery(ctx => ctx.Query<Tag>()
+				.WhereHasCategoryName(categoryName)
+				.OrderByUsageCount(entryType)
+				.Paged(new PagingProperties(0, maxResults, false))
+				.Select(t => new TagBaseContract(t, lang, false, false))
+				.ToArray())
+				.OrderBy(t => t.Name).ToArray();
 
 		}
 
@@ -315,6 +329,19 @@ namespace VocaDb.Web.Controllers.Api {
 		public CommentForApiContract PostNewComment(int tagId, CommentForApiContract contract) {
 
 			return queries.CreateComment(tagId, contract);
+
+		}
+
+		[Authorize]
+		[Route("entry-type-mappings")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public void PutEntryMappings(IEnumerable<TagEntryMappingContract> mappings) {
+
+			if (mappings == null) {
+				throw new HttpBadRequestException("Mappings cannot be null");
+			}
+
+			queries.UpdateEntryMappings(mappings.ToArray());
 
 		}
 

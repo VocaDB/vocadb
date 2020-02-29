@@ -13,3 +13,6 @@ ko.bindingHandlers.stopBinding = {
         return { controlsDescendantBindings: true };
     }
 };
+
+// https://knockoutjs.com/documentation/custom-bindings-for-virtual-elements.html
+ko.virtualElements.allowedBindings.stopBinding = true;

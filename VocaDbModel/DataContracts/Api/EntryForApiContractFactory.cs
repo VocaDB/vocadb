@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.Domain;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 
@@ -17,9 +17,9 @@ namespace VocaDb.Model.DataContracts.Api {
 			this.thumbPersister = thumbPersister;
 		}
 
-		public EntryForApiContract Create(IEntryWithNames entry, EntryOptionalFields includedFields, ContentLanguagePreference languagePreference, bool ssl) {
+		public EntryForApiContract Create(IEntryWithNames entry, EntryOptionalFields includedFields, ContentLanguagePreference languagePreference) {
 			
-			return EntryForApiContract.Create(entry, languagePreference, thumbPersister, imagePersisterOld, ssl, includedFields);
+			return EntryForApiContract.Create(entry, languagePreference, thumbPersister, imagePersisterOld, includedFields);
 
 		}
 

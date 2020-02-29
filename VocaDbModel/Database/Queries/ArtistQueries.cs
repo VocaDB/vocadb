@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -55,6 +55,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		/// <summary>
+		/// Advanced/less important statistics.
+		/// These are cached for 24 hours.
+		/// </summary>
 		private AdvancedArtistStatsContract GetAdvancedStats(IDatabaseContext<Artist> ctx, Artist artist) {
 			
 			if (artist.ArtistType != ArtistType.Producer)
@@ -81,6 +85,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		/// <summary>
+		/// Stats related to logged in user.
+		/// These stats are cached for 1 hour.
+		/// </summary>
 		private PersonalArtistStatsContract GetPersonalArtistStats(IDatabaseContext<Artist> ctx, Artist artist) {
 			
 			if (!PermissionContext.IsLoggedIn)
@@ -99,6 +107,9 @@ namespace VocaDb.Model.Database.Queries {
 			
 		}
 
+		/// <summary>
+		/// Stats shared for all users. These are cached for 1 hour.
+		/// </summary>
 		private SharedArtistStatsContract GetSharedArtistStats(IDatabaseContext<Artist> ctx, Artist artist) {
 			
 			var key = string.Format("ArtistQueries.SharedArtistStatsContract.{0}", artist.Id);
@@ -246,17 +257,17 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public bool CreateReport(int artistId, ArtistReportType reportType, string hostname, string notes, int? versionNumber) {
+		public (bool created, int reportId) CreateReport(int artistId, ArtistReportType reportType, string hostname, string notes, int? versionNumber) {
 
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
 			return HandleTransaction(ctx => {
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
-					entryLinkFactory, report => report.Entry.Id == artistId, 
+					entryLinkFactory,
 					(artist, reporter, notesTruncated) => new ArtistReport(artist, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != ArtistReportType.Other ? enumTranslations.ArtistReportTypeNames[reportType] : null,
-					artistId, reportType, hostname, notes);
+					artistId, reportType, hostname, notes, reportType != ArtistReportType.OwnershipClaim);
 			});
 
 		}
@@ -264,7 +275,6 @@ namespace VocaDb.Model.Database.Queries {
 		public EntryRefWithCommonPropertiesContract[] FindDuplicates(string[] anyName, string url) {
 
 			var names = anyName.Where(n => !string.IsNullOrWhiteSpace(n)).Select(n => n.Trim()).ToArray();
-			var urlTrimmed = url != null ? url.Trim() : null;
 
 			if (!names.Any() && string.IsNullOrEmpty(url))
 				return new EntryRefWithCommonPropertiesContract[] { };
@@ -280,9 +290,9 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray()
 					.Distinct() : new Artist[] { });
 
-				var linkMatches = !string.IsNullOrEmpty(urlTrimmed) ?
-					session.Query<ArtistWebLink>()
-					.Where(w => w.Url == urlTrimmed && !w.Entry.Deleted)
+				var linkMatches = !string.IsNullOrWhiteSpace(url) ? session.Query<ArtistWebLink>()				
+					.Where(w => !w.Entry.Deleted)
+					.WhereUrlIs(url, WebLinkVariationTypes.IgnoreScheme)
 					.Select(w => w.Entry)
 					.Take(10)
 					.ToArray()
@@ -332,7 +342,8 @@ namespace VocaDb.Model.Database.Queries {
 				if (stats == null)
 					EntityNotFoundException.Throw<Artist>(id);
 
-				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, imagePersister) {
+				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, imagePersister,
+					new EntryTypeTags(session).GetTag(EntryType.Artist, artist.ArtistType)) {
 					CommentCount = stats.CommentCount,
 					SharedStats = GetSharedArtistStats(session, artist),
 					PersonalStats = GetPersonalArtistStats(session, artist),
@@ -418,13 +429,14 @@ namespace VocaDb.Model.Database.Queries {
 
 			return repository.HandleQuery(ctx => {
 
-				var artistTags = ctx.Load<Artist>(artistId).Tags.Tags.Select(t => t.Id);
+				var artist = ctx.Load<Artist>(artistId);
+				var artistTags = artist.Tags.Tags.Select(t => t.Id);
 
 				var albumUsages = ctx.Query<AlbumTagUsage>()
 					.Where(u => !artistTags.Contains(u.Tag.Id) 
 						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions 
-						&& u.Album.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
+						&& u.Entry.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
 					.WhereTagHasTarget(TagTargetTypes.Artist)
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
@@ -437,7 +449,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(u => !artistTags.Contains(u.Tag.Id)
 						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions
-						&& u.Song.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
+						&& u.Entry.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
 					.WhereTagHasTarget(TagTargetTypes.Artist)
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
@@ -628,7 +640,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (webLinkDiff.Changed)
 					diff.WebLinks.Set();
 
-				if (diff.ArtistType.IsChanged || diff.Names.IsChanged) {
+				if (diff.ArtistType.IsChanged || diff.Names.IsChanged || diff.OriginalName.IsChanged) {
 
 					foreach (var song in artist.Songs) {
 						song.Song.UpdateArtistString();

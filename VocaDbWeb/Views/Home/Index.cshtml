@@ -1,4 +1,4 @@
-﻿@using System.Web.Optimization
+@using System.Web.Optimization
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Utils.Search
@@ -25,7 +25,9 @@
 					@foreach (var song in Model.NewSongs.Skip(i * 4).Take(4)) {
 						<div class="scrollable-item alignTop" id="@("#songPV_" + PVHelper.PrimaryPV(song.PVs).Id)">
 							<input type="hidden" class="js-songId" value="@song.Id" />
-							<img src="@song.ThumbUrl" alt="Cover" class="coverPicThumb" />
+							@if (!string.IsNullOrEmpty(song.ThumbUrl)) {
+								<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" />
+							}
 							<strong class="songName">@song.Name</strong>
 							<span class="songArtists">@song.ArtistString</span>
 						</div>
@@ -45,15 +47,19 @@
 
 <br />
 
-<h3 class="withMargin">@Res.NewAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
-<div id="newAlbums">
-	@AlbumHelpers.AlbumThumbs(Model.NewAlbums)
-</div>
+@if (Model.NewAlbums.Any()) {
+	<h3 class="withMargin">@Res.NewAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
+	<div id="newAlbums">
+		@AlbumHelpers.AlbumThumbs(Model.NewAlbums)
+	</div>	
+}
 
-<h3 class="withMargin">@Res.TopAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
-<div id="topAlbums">
-	@AlbumHelpers.AlbumThumbs(Model.TopAlbums)
-</div>
+@if (Model.TopAlbums.Any()) {
+	<h3 class="withMargin">@Res.TopAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
+	<div id="topAlbums">
+		@AlbumHelpers.AlbumThumbs(Model.TopAlbums)
+	</div>	
+}
 	
 @if (Model.NewEvents.Any()) {
 	<h3 class="withMargin">@Res.RecentEvents</h3>

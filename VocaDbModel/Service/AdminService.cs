@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -26,6 +26,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Service.DataSharing;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Utils;
 
@@ -225,6 +226,7 @@ namespace VocaDb.Model.Service {
 						EntryLinkFactory.CreateEntryLink(report.EntryBase)), session);
 					report.Status = ReportStatus.Closed;
 					report.ClosedBy = GetLoggedUser(session);
+					report.ClosedAt = DateTime.UtcNow;
 					session.Update(report);
 				}
 
@@ -286,7 +288,7 @@ namespace VocaDb.Model.Service {
 				var entryLoader = new Queries.EntryQueries();
 				return editors
 					.Select(i => 
-						(EntryForApiContract.Create(entryLoader.Load(i.Key, db), LanguagePreference, null, null, true, EntryOptionalFields.None), 
+						(EntryForApiContract.Create(entryLoader.Load(i.Key, db), LanguagePreference, null, null, EntryOptionalFields.None), 
 						new UserContract(ctx.Load<User>(i.Value.UserId)),
 						i.Value.Time))
 					.ToArray();
@@ -304,11 +306,11 @@ namespace VocaDb.Model.Service {
 				var reports = session
 					.Query<EntryReport>()
 					.Where(r => r.Status == status)
-					.OrderByDescending(r => r.Created)
+					.OrderBy(EntryReportSortRule.CloseDate)
 					.Take(200)
 					.ToArray();
 				var fac = new EntryForApiContractFactory(null, null);
-				return reports.Select(r => new EntryReportContract(r, fac.Create(r.EntryBase, EntryOptionalFields.AdditionalNames, LanguagePreference, false), 
+				return reports.Select(r => new EntryReportContract(r, fac.Create(r.EntryBase, EntryOptionalFields.AdditionalNames, LanguagePreference), 
 					enumTranslations, userIconFactory)).ToArray();
 
 			});
@@ -551,13 +553,13 @@ namespace VocaDb.Model.Service {
 
 			HandleTransaction(session => {
 
-				var artistUsages = session.Query<ArtistTagUsage>().Where(a => !a.Artist.Deleted).ToArray();
+				var artistUsages = session.Query<ArtistTagUsage>().Where(a => !a.Entry.Deleted).ToArray();
 				UpdateVoteCounts(session, artistUsages, ref count);
 
-				var albumUsages = session.Query<AlbumTagUsage>().Where(a => !a.Album.Deleted).ToArray();
+				var albumUsages = session.Query<AlbumTagUsage>().Where(a => !a.Entry.Deleted).ToArray();
 				UpdateVoteCounts(session, albumUsages, ref count);
 
-				var songUsages = session.Query<SongTagUsage>().Where(a => !a.Song.Deleted).ToArray();
+				var songUsages = session.Query<SongTagUsage>().Where(a => !a.Entry.Deleted).ToArray();
 				UpdateVoteCounts(session, songUsages, ref count);
 
 			});

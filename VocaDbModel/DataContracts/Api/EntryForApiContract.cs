@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.PVs;
@@ -19,26 +19,26 @@ namespace VocaDb.Model.DataContracts.Api {
 	public class EntryForApiContract : IEntryWithIntId {
 
 		public static EntryForApiContract Create(IEntryWithNames entry, ContentLanguagePreference languagePreference, 
-			IEntryThumbPersister thumbPersister, IEntryImagePersisterOld imagePersisterOld, bool ssl,
+			IEntryThumbPersister thumbPersister, IEntryImagePersisterOld imagePersisterOld,
 			EntryOptionalFields includedFields) {
 			
 			ParamIs.NotNull(() => entry);
 
 			switch (entry.EntryType) {
 				case EntryType.Album:
-					return new EntryForApiContract((Album)entry, languagePreference, thumbPersister, ssl, includedFields);
+					return new EntryForApiContract((Album)entry, languagePreference, thumbPersister, includedFields);
 				case EntryType.Artist:
-					return new EntryForApiContract((Artist)entry, languagePreference, thumbPersister, ssl, includedFields);
+					return new EntryForApiContract((Artist)entry, languagePreference, thumbPersister, includedFields);
 				case EntryType.DiscussionTopic:
 					return new EntryForApiContract((DiscussionTopic)entry, languagePreference);
 				case EntryType.ReleaseEvent:
-					return new EntryForApiContract((ReleaseEvent)entry, languagePreference, thumbPersister, ssl, includedFields);
+					return new EntryForApiContract((ReleaseEvent)entry, languagePreference, thumbPersister, includedFields);
 				case EntryType.Song:
 					return new EntryForApiContract((Song)entry, languagePreference, includedFields);
 				case EntryType.SongList:
-					return new EntryForApiContract((SongList)entry, imagePersisterOld, ssl, includedFields);
+					return new EntryForApiContract((SongList)entry, imagePersisterOld, includedFields);
 				case EntryType.Tag:
-					return new EntryForApiContract((Tag)entry, languagePreference, imagePersisterOld, ssl, includedFields);
+					return new EntryForApiContract((Tag)entry, languagePreference, imagePersisterOld, includedFields);
 			}
 
 			return new EntryForApiContract(entry, languagePreference, includedFields);
@@ -61,7 +61,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		}
 
-		public EntryForApiContract(Artist artist, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, bool ssl, 
+		public EntryForApiContract(Artist artist, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, 
 			EntryOptionalFields includedFields)
 			: this(artist, languagePreference, includedFields) {
 
@@ -71,7 +71,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			Status = artist.Status;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && artist.Picture != null) {
-				MainPicture = EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime), thumbPersister, ssl);					
+				MainPicture = EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime), thumbPersister);					
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.Names)) {
@@ -88,7 +88,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		}
 
-		public EntryForApiContract(Album album, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, bool ssl, 
+		public EntryForApiContract(Album album, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, 
 			EntryOptionalFields includedFields)
 			: this(album, languagePreference, includedFields) {
 
@@ -99,7 +99,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			Status = album.Status;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && album.CoverPictureData != null) {
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister, ssl);					
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister);					
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.Names)) {
@@ -121,7 +121,7 @@ namespace VocaDb.Model.DataContracts.Api {
 		}
 
 		public EntryForApiContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, 
-			bool ssl, EntryOptionalFields includedFields)
+			EntryOptionalFields includedFields)
 			: this(releaseEvent, languagePreference, includedFields) {
 
 			ActivityDate = releaseEvent.Date.DateTime;
@@ -131,7 +131,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			UrlSlug = releaseEvent.UrlSlug;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture)) {
-				MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(releaseEvent) ?? EntryThumb.Create(releaseEvent.Series), thumbPersister, ssl);
+				MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(releaseEvent) ?? EntryThumb.Create(releaseEvent.Series), thumbPersister);
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {
@@ -185,7 +185,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		}
 
-		public EntryForApiContract(SongList songList, IEntryImagePersisterOld thumbPersister, bool ssl, 
+		public EntryForApiContract(SongList songList, IEntryImagePersisterOld thumbPersister, 
 			EntryOptionalFields includedFields)
 			: this(songList, ContentLanguagePreference.Default, includedFields) {
 
@@ -194,12 +194,12 @@ namespace VocaDb.Model.DataContracts.Api {
 			SongListFeaturedCategory = songList.FeaturedCategory;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && songList.Thumb != null) {
-				MainPicture = new EntryThumbForApiContract(songList.Thumb, thumbPersister, ssl, SongList.ImageSizes);					
+				MainPicture = new EntryThumbForApiContract(songList.Thumb, thumbPersister, SongList.ImageSizes);					
 			}
 
 		}
 
-		public EntryForApiContract(Tag tag, ContentLanguagePreference languagePreference, IEntryImagePersisterOld thumbPersister, bool ssl, 
+		public EntryForApiContract(Tag tag, ContentLanguagePreference languagePreference, IEntryImagePersisterOld thumbPersister, 
 			EntryOptionalFields includedFields)
 			: this(tag, languagePreference, includedFields) {
 
@@ -208,7 +208,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			TagCategoryName = tag.CategoryName;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && tag.Thumb != null) {
-				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, ssl, Tag.ImageSizes);					
+				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, Tag.ImageSizes);					
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {

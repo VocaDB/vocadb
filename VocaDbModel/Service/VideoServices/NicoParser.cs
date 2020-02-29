@@ -1,27 +1,22 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 using HtmlAgilityPack;
+using NicoApi;
 using NLog;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.VideoServices {
 
 	public class NicoParser : IVideoServiceParser {
-
-		public VideoTitleParseResult GetTitle(string id) {
-
-			return NicoHelper.GetTitleAPI(id);
-
-		}
-
+		public Task<VideoTitleParseResult> GetTitleAsync(string id) => NicoHelper.GetTitleAPIAsync(id);
 	}
 
 	public static class NicoHelper {
@@ -45,7 +40,11 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public static string GetUserName(string userId) {
+		/// <summary>
+		/// Legacy method for retrieving user name using HTML parsing.
+		/// This should be included in the API now.
+		/// </summary>
+		private static string GetUserName(string userId) {
 
 			var url = string.Format("http://ext.nicovideo.jp/thumb_user/{0}", userId);
 
@@ -72,8 +71,11 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public static string GetUserProfileUrlById(string userId) {
-			return string.Format("http://www.nicovideo.jp/user/{0}", userId);
+		public static IEnumerable<string> GetUserProfileUrlById(string userId) {
+			return new [] {
+				string.Format("http://www.nicovideo.jp/user/{0}", userId),
+				string.Format("https://www.nicovideo.jp/user/{0}", userId),
+			};
 		}
 
 		public static NicoResponse GetResponse(Stream stream) {
@@ -81,54 +83,29 @@ namespace VocaDb.Model.Service.VideoServices {
 			return (NicoResponse)serializer.Deserialize(stream);
 		}
 
-		public static VideoTitleParseResult ParseResponse(NicoResponse nicoResponse) {
-			
-			if (nicoResponse.Status == "fail") {
-				var err = (nicoResponse.Error != null ? nicoResponse.Error.Description : "empty response");
-				return VideoTitleParseResult.CreateError("NicoVideo (error): " + err);
-			}
+		public static VideoTitleParseResult ParseResponse(VideoDataResult nicoResponse) {
 
-			var title = HtmlEntity.DeEntitize(nicoResponse.Thumb.Title);
-			var thumbUrl = nicoResponse.Thumb.Thumbnail_Url ?? string.Empty;
-			var userId = nicoResponse.Thumb.User_Id ?? string.Empty;
-			var length = ParseLength(nicoResponse.Thumb.Length);
-			var author = nicoResponse.Thumb.User_Nickname;
-			var publishDate = DateTimeHelper.ParseDateTimeOffsetAsDate(nicoResponse.Thumb.First_Retrieve);
-
+			string author = nicoResponse.Author;
+			string userId = nicoResponse.AuthorId;
 			if (string.IsNullOrEmpty(author))
 				author = GetUserName(userId);
 
-			var result = VideoTitleParseResult.CreateSuccess(title, author, thumbUrl, length, uploadDate: publishDate);
-			result.AuthorId = userId;
-			result.Tags = nicoResponse.Thumb.Tags;
+			var result = VideoTitleParseResult.CreateSuccess(nicoResponse.Title, author, userId, nicoResponse.ThumbUrl, nicoResponse.LengthSeconds, uploadDate: nicoResponse.UploadDate?.Date);
+			result.Tags = nicoResponse.Tags.Select(tag => tag.Name).ToArray();
 
 			return result;
 
 		}
 
-		public static VideoTitleParseResult GetTitleAPI(string id) {
+		public static async Task<VideoTitleParseResult> GetTitleAPIAsync(string id) {
 
-			var url = string.Format("http://ext.nicovideo.jp/api/getthumbinfo/{0}", id);
-
-			var request = WebRequest.Create(url);
-			request.Timeout = 10000;
-
-			NicoResponse nicoResponse;
-
+			VideoDataResult result;
 			try {
-				using (var response = request.GetResponse())
-				using (var stream = response.GetResponseStream()) {
-					nicoResponse = GetResponse(stream);
-				}
-			} catch (WebException x) {
+				result = await new NicoApiClient(HtmlEntity.DeEntitize).GetTitleAPIAsync(id);
+			} catch (NicoApiException x) {
 				return VideoTitleParseResult.CreateError("NicoVideo (error): " + x.Message);
-			} catch (XmlException x) {
-				return VideoTitleParseResult.CreateError("NicoVideo (error): " + x.Message);
-			} catch (IOException x) {
-				return VideoTitleParseResult.CreateError("NicoVideo (error): " + x.Message);				
 			}
-
-			return ParseResponse(nicoResponse);
+			return ParseResponse(result);
 
 		}
 
@@ -142,26 +119,6 @@ namespace VocaDb.Model.Service.VideoServices {
 			} catch (ArgumentException) {
 				return Encoding.UTF8;
 			}
-
-		}
-
-		public static int? ParseLength(string lengthStr) {
-
-			if (string.IsNullOrEmpty(lengthStr))
-				return null;
-
-			var parts = lengthStr.Split(':');
-
-			if (parts.Length != 2)
-				return null;
-
-			int min, sec;
-			if (!int.TryParse(parts[0], out min) || !int.TryParse(parts[1], out sec))
-				return null;
-
-			var totalSec = min*60 + sec;
-
-			return totalSec;
 
 		}
 
@@ -212,7 +169,7 @@ namespace VocaDb.Model.Service.VideoServices {
 						
 						var parts = content.Split('･', '・', '×');
 
-						foreach (var part in parts) {
+						foreach (var part in parts.Where(p => p != string.Empty)) {
 							
 							a = artistFunc(part);
 
@@ -238,59 +195,6 @@ namespace VocaDb.Model.Service.VideoServices {
 			return new NicoTitleParseResult(title.Trim(), artists, songType);
 
 		}
-
-	}
-
-	[XmlRoot(ElementName = "nicovideo_thumb_response", Namespace = "")]
-	public class NicoResponse {
-		
-		[XmlElement("error")]
-		public NicoResponseError Error { get; set; }
-
-		[XmlAttribute("status")]
-		public string Status { get; set; }
-
-		[XmlElement("thumb")]
-		public NicoResponseThumb Thumb { get; set; }
-
-	}
-
-	public class NicoResponseError {
-		
-		[XmlElement("code")]
-		public string Code { get; set; }
-
-		[XmlElement("description")]
-		public string Description { get; set; }
-
-	}
-
-	public class NicoResponseThumb {
-		
-		[XmlElement("first_retrieve")]
-		public string First_Retrieve { get; set; }
-
-		[XmlElement("length")]
-		public string Length { get; set; }
-
-		[XmlArray("tags")]
-		[XmlArrayItem("tag")]
-		public string[] Tags { get; set; }
-
-		[XmlElement("thumbnail_url")]
-		public string Thumbnail_Url { get; set; }
-
-		[XmlElement("title")]
-		public string Title { get; set; }
-
-		[XmlElement("user_id")]
-		public string User_Id { get; set; }
-
-		[XmlElement("user_nickname")]
-		public string User_Nickname { get; set; }
-
-		[XmlElement("video_id")]
-		public string Video_Id { get; set; }
 
 	}
 

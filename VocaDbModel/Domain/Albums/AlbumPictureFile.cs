@@ -1,8 +1,8 @@
-﻿using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Albums {
 
-	public class AlbumPictureFile : EntryPictureFile {
+	public class AlbumPictureFile : EntryPictureFile, IEntryWithIntId {
 
 		private Album album;
 

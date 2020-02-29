@@ -1,4 +1,4 @@
-﻿
+
 module vdb.dataContracts {
 	
 	export interface AlbumForUserForApiContract {
@@ -10,6 +10,8 @@ module vdb.dataContracts {
 		purchaseStatus: string;
 
 		rating: number;
+
+		user?: user.UserApiContract;
 
 	}
 

@@ -13,6 +13,7 @@ module vdb.viewModels.pvs {
 			var players: { [index: string]: IPVPlayer; } = {
 				File: <IPVPlayer>new PVPlayerFile(this.playerElementId, this.wrapperElement, songFinishedCallback),
 				LocalFile: <IPVPlayer>new PVPlayerFile(this.playerElementId, this.wrapperElement, songFinishedCallback, models.pvs.PVService.LocalFile),
+				NicoNicoDouga: <IPVPlayer>new PVPlayerNico(this.playerElementId, this.wrapperElement, songFinishedCallback),
 				Youtube: <IPVPlayer>new PVPlayerYoutube(this.playerElementId, this.wrapperElement, songFinishedCallback),
 				SoundCloud: <IPVPlayer>new PVPlayerSoundCloud(this.playerElementId, this.wrapperElement, songFinishedCallback)
 			};

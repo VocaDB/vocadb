@@ -47,8 +47,12 @@
       "enabled": false
     }
   },
-	{
-		"outputFile": "Content/Styles/Search.css",
-		"inputFile": "Content/Styles/Search.less"
-	}
+  {
+    "outputFile": "Content/Styles/Search.css",
+    "inputFile": "Content/Styles/Search.less"
+  },
+  {
+    "outputFile": "Content/Styles/DarkAngel.css",
+    "inputFile": "Content/Styles/DarkAngel.less"
+  }
 ]

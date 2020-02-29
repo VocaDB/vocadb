@@ -162,4 +162,10 @@
   <data name="OtherVoiceSynthesizer" xml:space="preserve">
     <value>その他のボーカル音源</value>
   </data>
+  <data name="Character" xml:space="preserve">
+    <value>人物</value>
+  </data>
+  <data name="Vocalist" xml:space="preserve">
+    <value>ボーカリスト</value>
+  </data>
 </root>

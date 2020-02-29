@@ -1,4 +1,4 @@
-﻿
+
 module vdb.viewModels.globalization {
 
 	import cls = vdb.models;
@@ -22,13 +22,15 @@ module vdb.viewModels.globalization {
 
 		public getAllNames = () => {
 			return _.filter(
-				this.getPrimaryNames().concat(this.aliases()),
+				this.getAllPrimaryNames().concat(this.aliases()),
 				name => name && name.value && name.value());
 		}
 
-		private getPrimaryNames: () => LocalizedStringWithIdEditViewModel[] = () => {
+		private getAllPrimaryNames: () => LocalizedStringWithIdEditViewModel[] = () => {
 			return [this.originalName, this.romajiName, this.englishName];
 		}
+
+		public getPrimaryNames = () => _.filter(this.getAllPrimaryNames(), n => n && n.value && n.value());
 
 		// Whether the primary name is specified (in any language). This excludes aliases.
 		public hasPrimaryName = () => {

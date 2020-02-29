@@ -178,7 +178,7 @@
     <value>Followed artists</value>
   </data>
   <data name="ImportSongList" xml:space="preserve">
-    <value>Import from YouTube or NicoNicoDouga</value>
+    <value>Import from YouTube or NicoNico</value>
   </data>
   <data name="Interested" xml:space="preserve">
     <value>Interested</value>
@@ -222,6 +222,9 @@ If so, please see the {0}.</value>
   </data>
   <data name="Power" xml:space="preserve">
     <value>Power</value>
+  </data>
+  <data name="ReportSpamming" xml:space="preserve">
+    <value>Report user for spamming</value>
   </data>
   <data name="SetAvatar" xml:space="preserve">
     <value>Set your avatar at gravatar.com</value>

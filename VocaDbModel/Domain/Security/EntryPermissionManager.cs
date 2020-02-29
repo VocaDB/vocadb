@@ -173,6 +173,13 @@ namespace VocaDb.Model.Domain.Security {
 			return (topic.Author != null && topic.Author.IsTheSameUser(permissionContext.LoggedUser));
 
 		}
+		
+	///	public static bool CanEditTags(IUserPermissionContext userContext, IEntryBase entry) {
+
+	///		return permissionContext.HasPermission(PermissionToken.EditTags);	???
+
+	///	}
+		
 
 		/// <summary>
 		/// Tests whether the user can edit a specific entry.

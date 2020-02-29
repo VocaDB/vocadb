@@ -392,6 +392,7 @@
 						<th>@R.EditStrings.PvService</th>
 						<th>@R.EditStrings.PvType</th>
 						<th colspan="2">@R.EditStrings.PvName</th>
+						<th>Date</th>
 						<th>@R.EditStrings.PvAuthor</th>
 						<th></th>
 					</tr>
@@ -431,6 +432,10 @@
 <div data-bind="with: artistRolesEditViewModel">
 	@{ Html.RenderPartial("Partials/_ArtistRolesEditViewModel"); }
 </div>	
+
+<div data-bind="with: editedArtistLink">
+	@{ Html.RenderPartial("Partials/_CustomNameEdit"); }
+</div>
 
 <div data-bind="dialog: {autoOpen: false, modal: true, width: 550 }, dialogButtons: trackPropertiesDialogButtons, dialogVisible: trackPropertiesDialogVisible" style="display:none;" title="@R.EditStrings.TrackPropertiesTitle">
 

@@ -1,8 +1,8 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Http;
 using System.Web.Http.Controllers;
 using NLog;
-using VocaDb.Web.Code.Security;
+using VocaDb.Model.Service.Security;
 using VocaDb.Web.Helpers;
 using ActionFilterAttribute = System.Web.Http.Filters.ActionFilterAttribute;
 

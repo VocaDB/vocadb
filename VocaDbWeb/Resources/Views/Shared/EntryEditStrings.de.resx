@@ -139,6 +139,10 @@ Kommerziell: autorisierter Vertriebe wie Amazon und CDJapan.&lt;br /&gt;
 Referenz: Fanseiten mit nützlichen Informationen wie etwa Wikis.&lt;br /&gt;
 Anderes: Für alle anderen, die nicht in die obigen Kategorien passen.&lt;br /&gt;</value>
   </data>
+  <data name="LivePreview" xml:space="preserve">
+    <value>Aktuelle Vorschau</value>
+    <comment>For Markdown live rendering</comment>
+  </data>
   <data name="Merge" xml:space="preserve">
     <value>Vereinigen</value>
   </data>

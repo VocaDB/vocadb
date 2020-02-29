@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Utils;
@@ -15,6 +16,8 @@ namespace VocaDb.Model.Service.VideoServices {
 		}
 
 		public override string GetThumbUrlById(string id) {
+			if (LocalFileManager.IsImage(id))
+				return VocaUriBuilder.StaticResource("/media-thumb/" + id);
 			return string.Empty;
 		}
 
@@ -22,20 +25,20 @@ namespace VocaDb.Model.Service.VideoServices {
 			return string.Empty;
 		}
 
-		public override string GetUrlById(string id) {
+		public override string GetUrlById(string id, PVExtendedMetadata _) {
 			return VocaUriBuilder.StaticResource("/media/" + id);
 		}
 
-		public override VideoTitleParseResult GetVideoTitle(string id) {
+		public override Task<VideoTitleParseResult> GetVideoTitleAsync(string id) {
 			throw new NotSupportedException();
 		}
 
-		public override VideoUrlParseResult ParseByUrl(string url, bool getTitle) {
+		public override Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 			throw new NotSupportedException();
 		}
 
-		protected override VideoUrlParseResult ParseById(string id, string url, bool getMeta) {
-			return ParseByUrl(url, getMeta);
+		protected override Task<VideoUrlParseResult> ParseByIdAsync(string id, string url, bool getMeta) {
+			return ParseByUrlAsync(url, getMeta);
 		}
 
 	}

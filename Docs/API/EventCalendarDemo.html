@@ -64,7 +64,7 @@
 						right: 'swapVocalendar month,basicWeek,basicDay'
 					},			
 					googleCalendarApiKey: calendarApiKey,
-					defaultView: 'basicWeek',
+					defaultView: 'month',
 					events: {
 						color: 'darkgreen',
 						textColor: 'white',
@@ -75,13 +75,13 @@
 							color: 'teal',
 							textColor: 'white',
 							events: function (start, end, timezone, callback) {
-								$.getJSON("http://vocadb.net/api/releaseEvents", { afterDate: start.toJSON(), beforeDate: end.toJSON() }, function (result) {
+								$.getJSON("https://vocadb.net/api/releaseEvents", { afterDate: start.toJSON(), beforeDate: end.toJSON(), maxResults: 50 }, function (result) {
 									var events = [];
 									$(result.items).each(function () {
 										events.push({
 											title: this.name,
 											start: this.date,
-											url: 'http://vocadb.net/E/' + this.id,
+											url: 'https://vocadb.net/E/' + this.id,
 											allDay: true
 										});
 									});
@@ -93,13 +93,13 @@
 							color: 'darkblue',
 							textColor: 'white',
 							events: function (start, end, timezone, callback) {
-								$.getJSON("http://vocadb.net/api/albums", { releaseDateAfter: start.toJSON(), releaseDateBefore: end.toJSON() }, function (result) {
+								$.getJSON("https://vocadb.net/api/albums", { releaseDateAfter: start.toJSON(), releaseDateBefore: end.toJSON() }, function (result) {
 									var events = [];
 									$(result.items).each(function () {
 										events.push({
 											title: this.name,
 											start: moment({ year: this.releaseDate.year, month: this.releaseDate.month - 1, day: this.releaseDate.day }),
-											url: 'http://vocadb.net/Al/' + this.id,
+											url: 'https://vocadb.net/Al/' + this.id,
 											allDay: true
 										});
 									});

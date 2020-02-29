@@ -19,7 +19,7 @@ namespace ViewRes {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class EntryMergeStrings {
@@ -89,8 +89,8 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The selected entry seems to be draft while the the one being merged from is not.
-        ///Prefer merging from less complete entry to the more complete entry..
+        ///   Looks up a localized string similar to The selected entry seems to be draft while the one being merged from is not.
+        ///Prefer merging from the less complete entry to the more complete entry..
         /// </summary>
         public static string ValidationErrorTargetIsLessComplete {
             get {
@@ -99,7 +99,7 @@ namespace ViewRes {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The selected entry seems to be newer then the one being merged from.
+        ///   Looks up a localized string similar to The selected entry seems to be newer than the one being merged from.
         ///Prefer merging from newer entry to the older entry..
         /// </summary>
         public static string ValidationErrorTargetIsNewer {

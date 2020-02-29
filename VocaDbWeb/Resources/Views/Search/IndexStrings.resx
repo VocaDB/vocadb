@@ -216,4 +216,13 @@
   <data name="EventCategory" xml:space="preserve">
     <value>Category</value>
   </data>
+  <data name="ReleaseEvent" xml:space="preserve">
+    <value>Release event</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="ParentVersion" xml:space="preserve">
+    <value>Parent version</value>
+  </data>
 </root>

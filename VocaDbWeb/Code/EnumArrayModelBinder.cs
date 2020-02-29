@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reflection;
 using System.Web.Http.Controllers;
 using System.Web.Http.ModelBinding;
@@ -47,7 +47,7 @@ namespace VocaDb.Web.Code {
 
 	}
 
-	public class EnumArrayModelBinder<TEnum> : IModelBinder where TEnum : struct, IConvertible {
+	public class EnumArrayModelBinder<TEnum> : IModelBinder where TEnum : struct, Enum {
 
 		public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext) {
 		

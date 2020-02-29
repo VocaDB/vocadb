@@ -1,5 +1,5 @@
-﻿using System.Configuration;
-using VocaDb.Model.Domain.Tags;
+using System;
+using System.Configuration;
 
 namespace VocaDb.Model.Utils.Config {
 
@@ -15,12 +15,6 @@ namespace VocaDb.Model.Utils.Config {
 			set { this["changedLyrics"] = value; }
 		}
 
-		[ConfigurationProperty("cover")]
-		public int Cover {
-			get { return TagId("cover"); }
-			set { this["cover"] = value; }
-		}
-
 		[ConfigurationProperty("free")]
 		public int Free
 		{
@@ -28,33 +22,16 @@ namespace VocaDb.Model.Utils.Config {
 			set { this["free"] = value; }
 		}
 
-		[ConfigurationProperty("instrumental")]
-		public int Instrumental
-		{
-			get { return TagId("instrumental"); }
-			set { this["instrumental"] = value; }
-		}
-
-		public int GetSpecialTagId(SpecialTagType specialTag) {
-
-			switch (specialTag) {
-				case SpecialTagType.ChangedLyrics:
-					return ChangedLyrics;
-				case SpecialTagType.Free:
-					return Free;
-				case SpecialTagType.Instrumental:
-					return Instrumental;
-				default:
-					return 0;
-			}
-
+		[ConfigurationProperty("shortVersion")]
+		public int ShortVersion {
+			get { return TagId("shortVersion"); }
+			set { this["shortVersion"] = value; }
 		}
 
 	}
 
 	public interface ISpecialTags {
 		int ChangedLyrics { get; }
-		int Instrumental { get; }
 	}
 
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.Artists;
@@ -25,6 +25,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagDetailsContract(Tag tag, 
 			IEnumerable<Artist> artists, int artistCount, IEnumerable<Album> albums, int albumCount,
+			IEnumerable<SongList> songLists, int songListCount,
 			IEnumerable<Song> songs, int songCount,
 			IEnumerable<ReleaseEventSeries> eventSeries, int eventSeriesCount,
 			IEnumerable<ReleaseEvent> events, int eventCount, 
@@ -56,13 +57,16 @@ namespace VocaDb.Model.DataContracts.Tags {
 			EventSeries = eventSeries.Select(a => new ReleaseEventSeriesContract(a, languagePreference, false)).ToArray();
 			EventSeriesCount = eventSeriesCount;
 
-			Events = events.Select(a => new ReleaseEventForApiContract(a, languagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture, thumbStore, true)).ToArray();
+			Events = events.Select(a => new ReleaseEventForApiContract(a, languagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture, thumbStore)).ToArray();
 			EventCount = eventCount;
 
 			Siblings = tag.Siblings
 				.Select(a => new TagBaseContract(a, languagePreference))
 				.OrderBy(t => t.Name)
 				.ToArray();
+
+			SongLists = songLists.Select(a => new SongListBaseContract(a)).ToArray();
+			SongListCount = songListCount;
 
 			Songs = songs.Select(a => new SongForApiContract(a, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
 			SongCount = songCount;
@@ -74,6 +78,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 		}
 
 		public int AlbumCount { get; set; }
+
+		public int AllUsageCount => ArtistCount + AlbumCount + SongCount + EventCount + SongListCount;
 
 		public int ArtistCount { get; set; }
 
@@ -103,9 +109,15 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public string[] MappedNicoTags { get; set; }
 
+		public EntryTypeAndSubType RelatedEntryType { get; set; }
+
 		public TagBaseContract[] RelatedTags { get; set; }
 
 		public TagBaseContract[] Siblings { get; set; }
+
+		public int SongListCount { get; set; }
+
+		public SongListBaseContract[] SongLists { get; set; }
 
 		public SongForApiContract[] Songs { get; set; }
 
@@ -116,6 +128,15 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public string Translations { get; set; }
 
 		public WebLinkContract[] WebLinks { get; set; }
+
+		public object JsonModel => new {
+			Name, 
+			Parent, 
+			Children = Children.Take(20),
+			Siblings = Siblings.Take(20),
+			HasMoreChildren = Children.Length > 20,
+			HasMoreSiblings = Siblings.Length > 20
+		};
 
 	}
 

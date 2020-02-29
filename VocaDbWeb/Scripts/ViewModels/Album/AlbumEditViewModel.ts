@@ -76,6 +76,10 @@ module vdb.viewModels {
 
 		}
 
+	    public customizeName = (artistLink: ArtistForAlbumEditViewModel) => {
+		    this.editedArtistLink.open(artistLink);
+		}
+
 		public defaultNameLanguage: KnockoutObservable<string>;
 
 		public deleteViewModel = new DeleteEntryViewModel(notes => {
@@ -97,6 +101,8 @@ module vdb.viewModels {
 		public editArtistRoles = (artist: ArtistForAlbumEditViewModel) => {
 			this.artistRolesEditViewModel.show(artist);
 		}
+
+	    public editedArtistLink = new CustomNameEditViewModel();
 
         // Begins editing properties for multiple tracks. Opens the properties dialog.
         public editMultipleTrackProperties: () => void;
@@ -251,7 +257,7 @@ module vdb.viewModels {
 			this.discTypeStr = ko.observable(data.discType);
 			this.discType = ko.computed(() => cls.albums.AlbumType[this.discTypeStr()]);
 			this.id = data.id;
-			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, data.pvs, canBulkDeletePVs, false, false);
+			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, data.pvs, canBulkDeletePVs, true, false);
 			this.releaseDay = ko.observable(data.originalRelease.releaseDate.day).extend({ parseInteger: {} });
 			this.releaseMonth = ko.observable(data.originalRelease.releaseDate.month).extend({ parseInteger: {} });
 			this.releaseYear = ko.observable(data.originalRelease.releaseDate.year).extend({ parseInteger: {} });
@@ -405,7 +411,7 @@ module vdb.viewModels {
 
             this.tracks.subscribe(() => this.updateTrackNumbers());
 
-			var songTypes = "Unspecified,Original,Remaster,Remix,Cover,Mashup,Other,Instrumental,Live";
+			var songTypes = "Unspecified,Original,Remaster,Remix,Cover,Arrangement,Mashup,Other,Instrumental,Live,Illustration";
             
             if (data.discType == "Video")
                 songTypes += ",MusicPV,DramaPV";
@@ -444,7 +450,7 @@ module vdb.viewModels {
             this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
             
 			this.validationError_duplicateArtist = ko.computed(() => {
-				return _.some(_.groupBy(this.artistLinks(), a => (a.artist ? a.artist.id.toString() : a.name) + a.isSupport()), a => a.length > 1);
+				return _.some(_.groupBy(this.artistLinks(), a => (a.artist ? a.artist.id.toString() : a.name()) + a.isSupport()), a => a.length > 1);
 			});
 
 			this.validationError_needArtist = ko.computed(() => _.isEmpty(this.artistLinks()));
@@ -459,7 +465,7 @@ module vdb.viewModels {
 				var num = !_.isNumber(this.releaseYear()) || this.releaseYear() == null;
 				return num;
 			});
-			this.validationError_needTracks = ko.computed(() => _.isEmpty(this.tracks()));
+			this.validationError_needTracks = ko.computed(() => this.discType() !== cls.albums.AlbumType.Artbook && _.isEmpty(this.tracks()));
 			this.validationError_needType = ko.computed(() => this.discType() === cls.albums.AlbumType.Unknown);
 			this.validationError_unspecifiedNames = ko.computed(() => !this.names.hasPrimaryName());
 

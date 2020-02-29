@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+using System.Configuration;
+using NHibernate.Linq.Functions;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Utils.Config;
@@ -7,6 +9,7 @@ namespace VocaDb.Model.Utils {
 
 	public static class AppConfig {
 
+		private static DiscType[] albumTypes;
 		private static ArtistType[] artistTypes;
 		private static ArtistRoles[] artistRoles;
 		private static SongType[] songTypes;
@@ -33,6 +36,18 @@ namespace VocaDb.Model.Utils {
 			Domain.Artists.ArtistRoles.Other
 		};
 
+		private static readonly DiscType[] DefaultDiscTypes = {
+			DiscType.Unknown,
+			DiscType.Album,
+			DiscType.Single,
+			DiscType.EP,
+			DiscType.SplitAlbum,
+			DiscType.Compilation,
+			DiscType.Video,
+			DiscType.Artbook,
+			DiscType.Other
+		};
+
 		private static readonly SongType[] DefaultSongTypes = {
 			SongType.Unspecified,
 			SongType.Original,
@@ -53,12 +68,30 @@ namespace VocaDb.Model.Utils {
 		private static bool Val(string key, bool def) {
 
 			var val = Val(key);
-			bool boolVal;
-			if (bool.TryParse(val, out boolVal))
-				return boolVal;
-			else
-				return def;
+			return (bool.TryParse(val, out var boolVal)) ? boolVal : def;
 			
+		}
+
+		private static int Val(string key, int def) {
+
+			var val = Val(key);
+			return (int.TryParse(val, out var boolVal)) ? boolVal : def;
+
+		}
+
+		public static bool AllowCustomArtistName => Val("AllowCustomArtistName", false);
+
+		public static DiscType[] AlbumTypes {
+			get {
+
+				if (albumTypes == null) {
+					var val = Val("AlbumTypes");
+					albumTypes = !string.IsNullOrEmpty(val) ? EnumVal<DiscType>.ParseMultiple(val) : DefaultDiscTypes;
+				}
+
+				return albumTypes;
+
+			}
 		}
 
 		public static bool AllowCustomTracks => Val("AllowCustomTracks", false);
@@ -107,11 +140,19 @@ namespace VocaDb.Model.Utils {
 
 		public static string DbDumpFolder => Val("DbDumpFolder");
 
-		public static string ExternalHelpPath => Val("ExternalHelpPath");
+		/// <summary>
+		/// Enable inheriting artists for certain situations.
+		/// Currently only Subject artist type is inherited.
+		/// </summary>
+		public static bool EnableArtistInheritance => Val(nameof(EnableArtistInheritance), false);
 
-		public static string GAAccountId => Val("GAAccountId");
+		public static string ExternalHelpPath => Val(nameof(ExternalHelpPath));
 
-		public static string GADomain => Val("GADomain");
+		public static int FilteredArtistId => Val("FilteredArtistId", 0);
+
+		public static string GAAccountId => Val(nameof(GAAccountId));
+
+		public static string GADomain => Val(nameof(GADomain));
 
 		public static GlobalLinksSection GetGlobalLinksSection() {
 		
@@ -124,18 +165,15 @@ namespace VocaDb.Model.Utils {
 
 		}
 
-		/// <summary>
-		/// Host address of the main site, contains full path to the web application's root, including hostname.
-		/// Could be either HTTP or HTTPS.
-		/// For example http://vocadb.net
-		/// </summary>
-		public static string HostAddress => Val("HostAddress");
+		public static SlogansSection GetSlogansSection() {
+			return (SlogansSection)ConfigurationManager.GetSection("vocaDb/slogans");
+		}
 
 		/// <summary>
-		/// Host address of the SSL site, used for sensitive actions such as logging in.
+		/// Host address of the main site, contains full path to the web application's root, including hostname.
 		/// For example https://vocadb.net
 		/// </summary>
-		public static string HostAddressSecure => Val("HostAddressSecure");
+		public static string HostAddress => Val("HostAddress");
 
 		public static string LockdownMessage => Val("LockdownMessage");
 
@@ -149,6 +187,15 @@ namespace VocaDb.Model.Utils {
 				return !string.IsNullOrEmpty(val) ? EnumVal<ArtistType>.ParseMultiple(val) : new ArtistType[0];
 			}
 		}
+
+		/// <summary>
+		/// Path to Python.exe.
+		/// Virtual paths are supported.
+		/// For example "C:\Program Files\Python\python.exe" or "~\App_Data\python.exe"
+		/// Python is required for NYoutubeDL to work on Windows Server.
+		/// See https://gitlab.com/BrianAllred/NYoutubeDL/issues/25
+		/// </summary>
+		public static string PythonPath => Val(nameof(PythonPath));
 
 		public static string ReCAPTCHAKey => Val("ReCAPTCHAKey");
 
@@ -175,13 +222,18 @@ namespace VocaDb.Model.Utils {
 
 		public static string StaticContentHost => Val("StaticContentHost");
 
-		public static string StaticContentHostSSL => Val("StaticContentHostSSL");
-
 		public static string TwitterConsumerKey => Val("TwitterConsumerKey");
 
 		public static string TwitterConsumerSecret => Val("TwitterConsumerSecret");
 
 		public static string YoutubeApiKey => Val("YoutubeApiKey");
+
+		/// <summary>
+		/// Path to youtube-dl (either .exe or Python file).
+		/// Virtual paths are supported.
+		/// For example "C:\Tools\youtube-dl\youtube-dl.py" or "~\App_Data\youtube-dl.py"
+		/// </summary>
+		public static string YoutubeDLPath => Val(nameof(YoutubeDLPath));
 
 	}
 }

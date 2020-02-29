@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -24,6 +24,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -67,6 +68,35 @@ namespace VocaDb.Model.Database.Queries {
 				.OrderByDescending(t => t.Count)
 				.ThenByDescending(createDateExpression)
 				.Select(selectExpression)
+				.Take(maxCount)
+				.ToArray();
+
+			var usageCount = q.Count();
+
+			return new TagTopUsagesAndCount<TEntry> {
+				TopUsages = topUsages, TotalCount = usageCount
+			};
+
+		}
+
+		private TagTopUsagesAndCount<TEntry> GetTopUsagesAndCount<TUsage, TEntry, TSort, TSubType>(
+			IDatabaseContext<Tag> ctx, int tagId, 
+			EntryType entryType,
+			Func<IQueryable<TEntry>, EntryTypeAndTagCollection<TSubType>, IQueryable<TEntry>> whereExpression, 
+			int maxCount = 12)
+			where TEntry : class, IEntryBase, IEntryWithTags<TUsage>
+			where TUsage: TagUsage
+			where TSubType : struct, Enum {
+			
+			var typeAndTag = EntryTypeAndTagCollection<TSubType>.Create(entryType, tagId, ctx, allowAllTags: true);
+
+			var q = ctx.Query<TEntry>()
+				.WhereNotDeleted();
+
+			q = whereExpression(q, typeAndTag);
+
+			var topUsages = q
+				.OrderByTagUsage<TEntry, TUsage>(tagId)
 				.Take(maxCount)
 				.ToArray();
 
@@ -186,14 +216,14 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public bool CreateReport(int tagId, TagReportType reportType, string hostname, string notes, int? versionNumber) {
+		public (bool created, int reportId) CreateReport(int tagId, TagReportType reportType, string hostname, string notes, int? versionNumber) {
 
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
 			return HandleTransaction(ctx => {
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
-					entryLinkFactory, report => report.Entry.Id == tagId,
+					entryLinkFactory,
 					(song, reporter, notesTruncated) => new TagReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != TagReportType.Other ? enumTranslations.Translation(reportType) : null,
 					tagId, reportType, hostname, notes);
@@ -250,11 +280,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<TagForApiContract> Find(TagQueryParams queryParams, TagOptionalFields optionalFields, bool ssl,
+		public PartialFindResult<TagForApiContract> Find(TagQueryParams queryParams, TagOptionalFields optionalFields,
 			ContentLanguagePreference lang) {
 
 			return Find(tag => new TagForApiContract(
-				tag, imagePersister, ssl, lang, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
+				tag, imagePersister, lang, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
 
 		}
 
@@ -295,6 +325,34 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public TResult FindTagForEntryType<TResult>(EntryTypeAndSubType entryType, Func<Tag, ContentLanguagePreference, TResult> fac, bool exactOnly = false) {
+
+			return HandleQuery(ctx => {
+
+				var tag = ctx.Query<EntryTypeToTagMapping>()
+					.Where(m => m.EntryType == entryType.EntryType && m.SubType == entryType.SubType)				
+					.Select(m => m.Tag)
+					.FirstOrDefault();
+
+				if (tag == null && !exactOnly) {
+					tag = ctx.Query<EntryTypeToTagMapping>()
+						.Where(m => m.EntryType == entryType.EntryType && m.SubType == "")
+						.Select(m => m.Tag)
+						.FirstOrDefault();
+				}
+
+				if (tag == null && !exactOnly) {
+					tag = ctx.Query<EntryTypeToTagMapping>()
+						.Where(m => m.EntryType == EntryType.Undefined)				
+						.Select(m => m.Tag)
+						.FirstOrDefault();
+				}
+
+				return tag != null ? fac(tag, LanguagePreference) : default;
+			});
+
+		}
+
 		public CommentForApiContract[] GetComments(int tagId) {
 
 			return HandleQuery(ctx => Comments(ctx).GetAll(tagId));
@@ -307,9 +365,10 @@ namespace VocaDb.Model.Database.Queries {
 
 				var tag = LoadTagById(ctx, tagId);
 
-				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Artist.Deleted, t => t.Artist.Id, t => t.Artist);
-				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(ctx, tagId, t => !t.Album.Deleted, t => t.Album.RatingTotal, t => t.Album);
-				var songs = GetTopUsagesAndCount<SongTagUsage, Song, int>(ctx, tagId, t => !t.Song.Deleted, t => t.Song.RatingScore, t => t.Song);
+				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
+				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingTotal, t => t.Entry);
+				var songLists = GetTopUsagesAndCount<SongListTagUsage, SongList, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
+				var songs = GetTopUsagesAndCount<SongTagUsage, Song, int, SongType>(ctx, tagId, EntryType.Song, (query, etm) => query.WhereHasTypeOrTag(etm));
 				var eventSeries = GetTopUsagesAndCount<EventSeriesTagUsage, ReleaseEventSeries, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry, maxCount: 6);
 				var seriesIds = eventSeries.TopUsages.Select(e => e.Id).ToArray();
 
@@ -319,9 +378,12 @@ namespace VocaDb.Model.Database.Queries {
 				var latestComments = Comments(ctx).GetList(tag.Id, 3);
 				var followerCount = ctx.Query<TagForUser>().Count(t => t.Tag.Id == tagId);
 
+				var entryTypeMapping = ctx.Query<EntryTypeToTagMapping>().FirstOrDefault(etm => etm.Tag == tag);
+
 				return new TagDetailsContract(tag,
 					artists.TopUsages, artists.TotalCount,
 					albums.TopUsages, albums.TotalCount,
+					songLists.TopUsages, songLists.TotalCount,
 					songs.TopUsages, songs.TotalCount,
 					eventSeries.TopUsages, eventSeries.TotalCount,
 					events.TopUsages, events.TotalCount,
@@ -330,16 +392,43 @@ namespace VocaDb.Model.Database.Queries {
 					CommentCount = Comments(ctx).GetCount(tag.Id),
 					FollowerCount = followerCount,
 					LatestComments = latestComments,
-					IsFollowing = permissionContext.IsLoggedIn && ctx.Query<TagForUser>().Any(t => t.Tag.Id == tagId && t.User.Id == permissionContext.LoggedUserId)
+					IsFollowing = permissionContext.IsLoggedIn && ctx.Query<TagForUser>().Any(t => t.Tag.Id == tagId && t.User.Id == permissionContext.LoggedUserId),
+					RelatedEntryType = entryTypeMapping?.EntryTypeAndSubType ?? new EntryTypeAndSubType()
 				};
 				
 			});
 
 		}
 
-		public TagMappingContract[] GetMappings() {
+		public TagEntryMappingContract[] GetEntryMappings() {
 
-			return HandleQuery(ctx => ctx.Query<TagMapping>().ToArray().Select(t => new TagMappingContract(t, LanguagePreference)).ToArray());
+			return HandleQuery(ctx => {
+				return ctx.Query<EntryTypeToTagMapping>()
+					.ToArray()
+					.OrderBy(t => t.EntryType)
+					.ThenBy(t => t.SubType)
+					.Select(t => new TagEntryMappingContract(t, LanguagePreference))
+					.ToArray();
+			});
+
+		}
+
+		public PartialFindResult<TagMappingContract> GetMappings(PagingProperties paging) {
+
+			return HandleQuery(ctx => {
+
+				var query = ctx.Query<TagMapping>();
+
+				var result = query
+					.OrderByName(LanguagePreference)
+					.Paged(paging)
+					.ToArray()
+					.Select(t => new TagMappingContract(t, LanguagePreference))
+					.ToArray();
+
+				return PartialFindResult.Create(result, paging.GetTotalCount ? query.Count() : 0);
+
+			});
 
 		}
 
@@ -425,9 +514,9 @@ namespace VocaDb.Model.Database.Queries {
 
 			return HandleQuery(session => {
 
-				var inUse = session.Query<ArtistTagUsage>().Any(a => a.Tag.Id == id && !a.Artist.Deleted) ||
-					session.Query<AlbumTagUsage>().Any(a => a.Tag.Id == id && !a.Album.Deleted) ||
-					session.Query<SongTagUsage>().Any(a => a.Tag.Id == id && !a.Song.Deleted);
+				var inUse = session.Query<ArtistTagUsage>().Any(a => a.Tag.Id == id && !a.Entry.Deleted) ||
+					session.Query<AlbumTagUsage>().Any(a => a.Tag.Id == id && !a.Entry.Deleted) ||
+					session.Query<SongTagUsage>().Any(a => a.Tag.Id == id && !a.Entry.Deleted);
 
 				var contract = new TagForEditContract(LoadTagById(session, id), !inUse, PermissionContext);
 
@@ -542,8 +631,15 @@ namespace VocaDb.Model.Database.Queries {
 					diff.WebLinks.Set();
 				}
 
+				// Followed tags
 				foreach (var user in source.TagsForUsers.Select(r => r.User).Where(u => !target.TagsForUsers.Any(r2 => r2.User.Equals(u)))) {
 					var link = user.AddTag(target);
+					ctx.Save(link);
+				}
+
+				// Tag mappings
+				foreach (var mapping in source.Mappings.Select(r => r.SourceTag).Where(r => target.Mappings.All(r2 => r2.SourceTag != r))) {
+					var link = target.CreateMapping(mapping);
 					ctx.Save(link);
 				}
 
@@ -676,7 +772,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			ParamIs.NotNull(() => contract);
 
-			PermissionContext.VerifyPermission(PermissionToken.ManageDatabase);
+			PermissionContext.VerifyPermission(PermissionToken.EditTags);
 
 			return repository.HandleTransaction(ctx => {
 
@@ -762,11 +858,35 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public void UpdateEntryMappings(TagEntryMappingContract[] mappings) {
+
+			PermissionContext.VerifyPermission(PermissionToken.ManageTagMappings);
+
+			HandleTransaction(ctx => {
+
+				ctx.AuditLogger.SysLog("updating entry type / tag mappings");
+
+				var existing = ctx.Query<EntryTypeToTagMapping>().ToList();
+				var diff = CollectionHelper.Sync(existing, mappings, (m, m2) => m.EntryTypeAndSubType.Equals(m2.EntryType) && m.Tag.IdEquals(m2.Tag), 
+					create: t => new EntryTypeToTagMapping(t.EntryType, ctx.Load<Tag>(t.Tag.Id)));
+
+				ctx.Sync(diff);
+
+				ctx.AuditLogger.AuditLog(string.Format("updated entry type / tag mappings ({0} additions, {1} deletions)", diff.Added.Length, diff.Removed.Length));
+				ctx.AuditLogger.SysLog(string.Format("added [{0}], deleted [{1}]", string.Join(", ", diff.Added.Select(t => t.Tag.DefaultName)), string.Join(", ", diff.Removed.Select(t => t.Tag.DefaultName))));
+
+			});
+
+
+		}
+
 		public void UpdateMappings(TagMappingContract[] mappings) {
 
-			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
+			TagMapping CreateMapping(IDatabaseContext<Tag> ctx, TagMappingContract contract) {
+				return ctx.LoadEntry<Tag>(contract.Tag).CreateMapping(contract.SourceTag);
+			}
 
-			//mappings = mappings.Distinct(m => m.SourceTag).ToArray();
+			PermissionContext.VerifyPermission(PermissionToken.ManageTagMappings);
 
 			HandleTransaction(ctx => {
 
@@ -774,7 +894,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var existing = ctx.Query<TagMapping>().ToList();
 				var diff = CollectionHelper.Sync(existing, mappings, (m, m2) => m.SourceTag == m2.SourceTag && m.Tag.IdEquals(m2.Tag), 
-					create: t => new TagMapping(ctx.NullSafeLoad(t.Tag), t.SourceTag), remove: t => ctx.Delete(t));
+					create: t => CreateMapping(ctx, t), remove: mapping => mapping.Delete());
 
 				ctx.Sync(diff);
 

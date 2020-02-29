@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Artists {
 
@@ -19,26 +20,31 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		public ArtistDetailsContract() {}
 
-		public ArtistDetailsContract(Artist artist, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IEntryImagePersister imageStore)
+		public ArtistDetailsContract(Artist artist, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, 
+			IEntryImagePersister imageStore, Tag artistTypeTag = null)
 			: base(artist, languagePreference) {
 
 			AllNames = string.Join(", ", artist.AllNames.Where(n => n != Name));
+			ArtistTypeTag = artistTypeTag != null ? new TagBaseContract(artistTypeTag, languagePreference) : null;
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, artist);
 			CreateDate = artist.CreateDate;
 			Description =  artist.Description;
 			Draft = artist.Status == EntryStatus.Draft;
 			TranslatedName = new TranslatedStringContract(artist.TranslatedName);
-			LatestAlbums = new AlbumContract[] {};
+			LatestAlbums = new AlbumForApiContract[] {};
 			LatestSongs = new SongForApiContract[] {};
 			OwnerUsers = artist.OwnerUsers.Select(u => new UserContract(u.User)).ToArray();
 			Pictures = artist.Pictures.Select(p => new EntryPictureFileContract(p, imageStore)).ToArray();
-			TopAlbums = new AlbumContract[] {};
+			TopAlbums = new AlbumForApiContract[] {};
 			TopSongs = new SongForApiContract[] {};
 			WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 			CharacterDesigner = artist.ArtistLinksOfType(ArtistLinkType.CharacterDesigner, LinkDirection.ManyToOne, allowInheritance: true)
 				.Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
+
+			CharacterDesignerOf = artist.ArtistLinksOfType(ArtistLinkType.CharacterDesigner, LinkDirection.OneToMany)
+				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
 
 			if (artist.CanHaveChildVoicebanks) {
 
@@ -77,8 +83,8 @@ namespace VocaDb.Model.DataContracts.Artists {
 				.Select(u => new TagUsageForApiContract(u, languagePreference))
 				.OrderByDescending(t => t.Count).ToArray();
 
-			VoiceProvider = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne, allowInheritance: true)
-				.Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
+			VoiceProviders = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne, allowInheritance: true)
+				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
 
 			Voicebanks = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, LinkDirection.OneToMany)
 				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
@@ -92,12 +98,18 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public string AllNames { get; set; }
 
 		[DataMember]
+		public TagBaseContract ArtistTypeTag { get; set; }
+
+		[DataMember]
 		public ArtistContract BaseVoicebank { get; set; }
 
 		public bool CanRemoveTagUsages { get; set; }
 
 		[DataMember]
 		public ArtistContract CharacterDesigner { get; set; }
+
+		[DataMember]
+		public ArtistContract[] CharacterDesignerOf { get; set; }
 
 		[DataMember]
 		public ArtistContract[] ChildVoicebanks { get; set; }
@@ -148,7 +160,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public ArtistContract MergedTo { get; set; }
 
 		[DataMember]
-		public AlbumContract[] LatestAlbums { get; set; }
+		public AlbumForApiContract[] LatestAlbums { get; set; }
 
 		[DataMember]
 		public ReleaseEventForApiContract[] LatestEvents { get; set; } = new ReleaseEventForApiContract[0];
@@ -179,7 +191,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public TagUsageForApiContract[] Tags { get; set; }
 
 		[DataMember]
-		public AlbumContract[] TopAlbums { get; set; }
+		public AlbumForApiContract[] TopAlbums { get; set; }
 
 		[DataMember]
 		public SongForApiContract[] TopSongs { get; set; }
@@ -191,7 +203,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public ArtistContract[] Voicebanks { get; set; }
 
 		[DataMember]
-		public ArtistContract VoiceProvider { get; set; }
+		public ArtistContract[] VoiceProviders { get; set; }
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }

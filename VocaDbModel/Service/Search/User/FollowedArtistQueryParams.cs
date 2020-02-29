@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search.Artists;
 
@@ -14,6 +14,8 @@ namespace VocaDb.Model.Service.Search.User {
 		public PagingProperties Paging { get; set; }
 
 		public ArtistSortRule SortRule { get; set; }
+
+		public int[] TagIds { get; set; }
 
 		public ArtistSearchTextQuery TextQuery { get; set; }
 

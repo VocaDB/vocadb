@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,6 +13,8 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Security;
 using VocaDb.Tests.TestSupport;
 
@@ -29,6 +31,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private FakeSongListRepository repository;
 		private SongListForEditContract songListContract;
 		private SongListQueries queries;
+		private Song song1;
+		private Song song2;
 		private User userWithSongList;
 
 		private SongInListEditContract[] SongInListEditContracts(params Song[] songs) {
@@ -49,8 +53,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			imagePersister = new InMemoryImagePersister();
 			queries = new SongListQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, new FakeUserIconFactory());
 
-			var song1 = new Song(TranslatedString.Create("Project Diva desu.")) { Id = 1};
-			var song2 = new Song(TranslatedString.Create("World is Mine")) { Id = 2};
+			song1 = new Song(TranslatedString.Create("Project Diva desu.")) { Id = 1};
+			song2 = new Song(TranslatedString.Create("World is Mine")) { Id = 2};
 
 			repository.Add(userWithSongList);
 			repository.Add(song1, song2);
@@ -86,11 +90,38 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var archived = repository.Save(list.CreateArchivedVersion(new SongListDiff(), new AgentLoginData(userWithSongList), EntryEditEvent.Created, string.Empty));
 			repository.Save(new SongListActivityEntry(list, EntryEditEvent.Created, userWithSongList, archived)); // Note: activity entries are generally only created for featured song lists.
 
-			queries.DeleteSongList(list.Id);
+			queries.MoveToTrash(list.Id);
 
 			Assert.AreEqual(0, repository.Count<SongList>(), "Song list was removed");
 			Assert.AreEqual(0, repository.Count<ArchivedSongListVersion>(), "Song list archived version was removed");
 			Assert.AreEqual(0, repository.Count<SongListActivityEntry>(), "Activity entry was deleted");
+
+		}
+
+		[TestMethod]
+		public void GetSongsInList_ByName() {
+
+			var list = repository.Save(new SongList("Mikulist", userWithSongList));
+			repository.Save(list.AddSong(song1));
+			repository.Save(list.AddSong(song2));
+
+			var result = queries.GetSongsInList(new SongInListQueryParams { ListId = list.Id, TextQuery = SearchTextQuery.Create("Diva") });
+
+			Assert.AreEqual(1, result.Items.Length);
+			Assert.AreEqual(song1.DefaultName, result.Items[0].Song.Name);
+
+		}
+
+		[TestMethod]
+		public void GetSongsInList_ByDescription() {
+
+			var list = repository.Save(new SongList("Mikulist", userWithSongList));
+			repository.Save(list.AddSong(song1, 1, "encore"));
+			repository.Save(list.AddSong(song2, 2, "encore"));
+
+			var result = queries.GetSongsInList(new SongInListQueryParams { ListId = list.Id, TextQuery = SearchTextQuery.Create("enc") });
+
+			Assert.AreEqual(2, result.Items.Length);
 
 		}
 

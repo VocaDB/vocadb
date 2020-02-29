@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using VocaDb.Model.DataContracts.PVs;
 
 namespace VocaDb.Model.Domain.PVs {
 
-	public abstract class GenericPV<TEntry> : PV where TEntry : class {
+	public abstract class GenericPV<TEntry> : PV, IEntryWithIntId
+		where TEntry : class {
 
 		private TEntry entry;
 
@@ -32,8 +33,6 @@ namespace VocaDb.Model.Domain.PVs {
 		/// </summary>
 		public virtual int Length { get; set; }
 
-		public virtual DateTime? PublishDate { get; set; }
-
 		public virtual bool Equals(GenericPV<TEntry> another) {
 
 			if (another == null)
@@ -58,7 +57,7 @@ namespace VocaDb.Model.Domain.PVs {
 		}
 
 		public override string ToString() {
-			return string.Format("PV '{0}' [{1}] for {2}", PVId, Id, Entry);
+			return string.Format("PV '{0}' on {1} [{2}] for {3}", PVId, Service, Id, Entry);
 		}
 
 	}

@@ -1,18 +1,22 @@
-﻿using System;
+using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Exceptions;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
+using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess {
@@ -25,7 +29,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		private Album album;
 		private ReleaseEvent existingEvent;
-		private FakeUserMessageMailer mailer = new FakeUserMessageMailer();
+		private readonly FakeUserMessageMailer mailer = new FakeUserMessageMailer();
 		private FakePermissionContext permissionContext;
 		private FakeEventRepository repository;
 		private EventQueries queries;
@@ -37,6 +41,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var result = queries.Update(contract, null);
 			return repository.Load(result.Id);
 
+		}
+
+		private ReleaseEventForEditContract Contract(ReleaseEvent releaseEvent) {
+			return new ReleaseEventForEditContract(releaseEvent, ContentLanguagePreference.Default, permissionContext, null);
 		}
 
 		private LocalizedStringWithIdContract[] Names(string name) {
@@ -63,7 +71,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			user = CreateEntry.User(group: UserGroupId.Trusted);
 			repository.Save(user);
 			permissionContext = new FakePermissionContext(user);
-			queries = new EventQueries(repository, new FakeEntryLinkFactory(), permissionContext, new InMemoryImagePersister(), new FakeUserIconFactory(), new EnumTranslations(), mailer);
+			queries = new EventQueries(repository, new FakeEntryLinkFactory(), permissionContext, new InMemoryImagePersister(), new FakeUserIconFactory(), new EnumTranslations(), mailer, 
+				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()));
 
 		}
 
@@ -148,6 +157,23 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsTrue(result.Names.HasName("コミケ 39"), "Found Japanese name");
 			Assert.AreEqual("Comiket 39", result.TranslatedName.English, "English name");
 			Assert.AreEqual("コミケ 39", result.TranslatedName.Japanese, "Japanese name");
+
+		}
+
+		[TestMethod]
+		public void Create_WithCustomArtists() {
+			
+			var artist = repository.Save(CreateEntry.Artist(ArtistType.Producer));
+			var contract = new ReleaseEventForEditContract {
+				Description = string.Empty,
+				SeriesSuffix = string.Empty,
+				Artists = new [] {
+					new ArtistForEventContract { Artist = new ArtistContract(artist, ContentLanguagePreference.Default) },
+					new ArtistForEventContract { Name = "Miku!" }
+				}
+			};
+
+			CallUpdate(contract);
 
 		}
 
@@ -246,6 +272,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public void Update_ChangeToSeriesEvent() {
+
+			var releaseEvent = repository.Save(CreateEntry.ReleaseEvent("M3 39"));
+			var contract = Contract(releaseEvent);
+			contract.Series = new ReleaseEventSeriesContract(series, ContentLanguagePreference.Default);
+
+			queries.Update(contract, null);
+
+			Assert.AreEqual(series, releaseEvent.Series, "Series");
+			Assert.IsTrue(series.AllEvents.Contains(releaseEvent), "Series contains event");
+
+		}
+
+		[TestMethod]
 		public void UpdateSeries_Create() {
 
 			var contract = new ReleaseEventSeriesForEditContract {
@@ -281,6 +321,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.AreEqual(1, existingEvent.Names.Names.Count, "Number of event names");
 			Assert.AreEqual("M3.9 2013 Spring", existingEvent.Names.Names[0].Value, "Event name value");
+
+		}
+
+		/// <summary>
+		/// Updates series default language selection, inherited language to events is updated as well.
+		/// </summary>
+		[TestMethod]
+		public void UpdateSeries_UpdateDefaultLanguage_EventsUpdated() {
+
+			var contract = new ReleaseEventSeriesForEditContract(series, ContentLanguagePreference.English) {
+				DefaultNameLanguage = ContentLanguageSelection.Japanese
+			};
+
+			var result = queries.UpdateSeries(contract, null);
+			Assert.AreEqual(ContentLanguageSelection.Japanese, existingEvent.TranslatedName.DefaultLanguage, "Default language");
 
 		}
 

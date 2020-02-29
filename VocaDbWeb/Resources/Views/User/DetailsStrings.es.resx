@@ -162,6 +162,9 @@
   <data name="Email" xml:space="preserve">
     <value>correo electrónico</value>
   </data>
+	<data name="Events" xml:space="preserve">
+    <value>Eventos</value>
+  </data>
   <data name="FavoriteSongsTab" xml:space="preserve">
     <value>Canciones gustadas</value>
   </data>
@@ -172,7 +175,7 @@
     <value>Artistas seguidos</value>
   </data>
   <data name="ImportSongList" xml:space="preserve">
-    <value>Importar de YouTube o NicoNicoDouga</value>
+    <value>Importar de YouTube o NicoNico</value>
   </data>
   <data name="LastLogin" xml:space="preserve">
     <value>Ultima sesión</value>

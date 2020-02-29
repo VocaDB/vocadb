@@ -216,6 +216,9 @@
   <data name="Stats" xml:space="preserve">
     <value>Statistics</value>
   </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
   <data name="ViewAllComments" xml:space="preserve">
     <value>View all comments</value>
   </data>

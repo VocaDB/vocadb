@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using System.Web.SessionState;
@@ -11,6 +11,7 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
@@ -32,6 +33,25 @@ namespace VocaDb.Web.Controllers
 		private readonly EventQueries eventQueries;
 		private readonly SongQueries songService;
 		private readonly TagQueries tagQueries;
+
+		protected ActionResult Object<T>(T obj, DataFormat format) where T : class {
+
+			if (format == DataFormat.Xml)
+				return Xml(obj);
+			else
+				return Json(obj);
+
+		}
+
+		protected ActionResult Xml<T>(T obj) where T : class {
+
+			if (obj == null)
+				return new EmptyResult();
+
+			var content = XmlHelper.SerializeToUTF8XmlString(obj);
+			return base.Xml(content);
+
+		}
 
 		public ExtController(IEntryUrlParser entryUrlParser, IEntryImagePersisterOld entryThumbPersister, 
 			AlbumService albumService, ArtistService artistService, EventQueries eventQueries, SongQueries songService, TagQueries tagQueries) {
@@ -98,14 +118,14 @@ namespace VocaDb.Web.Controllers
 					data = RenderPartialViewToString("ArtistPopupContent", artistService.GetArtist(id));
 					break;
 				case EntryType.ReleaseEvent:
-					data = RenderPartialViewToString("_EventPopupContent", eventQueries.GetOne(id, ContentLanguagePreference.Default, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, WebHelper.IsSSL(Request)));
+					data = RenderPartialViewToString("_EventPopupContent", eventQueries.GetOne(id, ContentLanguagePreference.Default, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series));
 					break;
 				case EntryType.Song:
 					data = RenderPartialViewToString("SongPopupContent", songService.GetSong(id));
 					break;
 				case EntryType.Tag:
 					data = RenderPartialViewToString("_TagPopupContent", tagQueries.LoadTag(id, t => 
-						new TagForApiContract(t, entryThumbPersister, WebHelper.IsSSL(Request), ContentLanguagePreference.Default, TagOptionalFields.AdditionalNames | TagOptionalFields.MainPicture)));
+						new TagForApiContract(t, entryThumbPersister, ContentLanguagePreference.Default, TagOptionalFields.AdditionalNames | TagOptionalFields.MainPicture)));
 					break;
 			}
 
@@ -113,7 +133,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult OEmbed(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json) {
+		public ActionResult OEmbed(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json, bool responsiveWrapper = false) {
 
 			if (string.IsNullOrEmpty(url))
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "URL must be specified");
@@ -130,13 +150,30 @@ namespace VocaDb.Web.Controllers
 
 			var id = entryId.Id;
 
-			var song = songService.GetSong(entryId.Id);
-			var html = string.Format("<iframe src=\"{0}\" width=\"{1}\" height=\"{2}\"></iframe>",
-				VocaUriBuilder.CreateAbsolute(Url.Action("EmbedSong", new {songId = id})), maxwidth, maxheight);
+			var song = songService.GetSongForApi(entryId.Id, SongOptionalFields.ThumbUrl);
+			var src = VocaUriBuilder.CreateAbsolute(Url.Action("EmbedSong", new { songId = id })).ToString();
+			string html;
+
+			if (responsiveWrapper) {
+				html = RenderPartialViewToString("OEmbedResponsive", new OEmbedParams { Width = maxwidth, Height = maxheight, Src = src });
+			} else {
+				html = string.Format("<iframe src=\"{0}\" width=\"{1}\" height=\"{2}\"></iframe>", src, maxwidth, maxheight);
+			}
 
 			return Object(new SongOEmbedResponse(song, maxwidth, maxheight, html), format);
 
 		}
 
-    }
+		public ActionResult OEmbedResponsive(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json) {
+			return OEmbed(url, maxwidth, maxheight, format, true);
+		}
+
+	}
+
+	public class OEmbedParams {
+		public int Height { get; set; }
+		public int Width { get; set; }
+		public string Src { get; set; }
+	}
+
 }

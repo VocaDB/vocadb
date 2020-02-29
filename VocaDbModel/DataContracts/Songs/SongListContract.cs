@@ -21,6 +21,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 			Author = new UserWithEmailContract(list.Author);
 			CanEdit = EntryPermissionManager.CanEdit(permissionContext, list);
+			Deleted = list.Deleted;
 			Description = list.Description;
 			EventDate = list.EventDate;
 			Status = list.Status;
@@ -34,6 +35,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public bool CanEdit { get; set; }
+
+		[DataMember]
+		public bool Deleted { get; set; }
 
 		[DataMember]
 		public string Description { get; set; }

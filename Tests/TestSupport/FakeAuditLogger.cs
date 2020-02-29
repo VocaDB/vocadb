@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using VocaDb.Model;
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
@@ -23,7 +24,7 @@ namespace VocaDb.Tests.TestSupport {
 			SysLog(doingWhat, who);
 		}
 
-		public void AuditLog(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified) {
+		public void AuditLog(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null) {
 			SysLog(doingWhat, user != null ? user.Name : "Unknown");
 		}
 

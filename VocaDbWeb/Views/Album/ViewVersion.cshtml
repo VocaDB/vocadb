@@ -1,4 +1,4 @@
-﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Album;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Albums.ArchivedAlbumVersionDetailsContract>
 
@@ -21,7 +21,7 @@
 }
 
 @section Toolbar {
-@if (Login.CanRevertEntryVersions) {
+@if (Login.CanRevertEntryVersions && Model.CanBeReverted) {
 	@Html.ActionLink("Revert to this version", "RevertToVersion", new { archivedAlbumVersionId = Model.ArchivedVersion.Id }, new { id = "revertLink", onclick = "return confirm(\"Are you sure you want to revert to this version?\");" })
 }
 &nbsp;

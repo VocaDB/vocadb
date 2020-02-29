@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 
 namespace VocaDb.Model.Domain.Security {
 
-	public class IPRule {
+	public class IPRule : IEntryWithIntId {
 
 		private string address;
 		private string notes;
@@ -13,6 +13,12 @@ namespace VocaDb.Model.Domain.Security {
 			Created = DateTime.Now;
 			Notes = string.Empty;
 
+		}
+
+		public IPRule(string address, string notes = "") {
+			Address = address;
+			Notes = notes;
+			Created = DateTime.Now;
 		}
 
 		public virtual string Address {
@@ -33,6 +39,10 @@ namespace VocaDb.Model.Domain.Security {
 				ParamIs.NotNull(() => value);
 				notes = value; 
 			}
+		}
+
+		public override string ToString() {
+			return $"IPRule for {Address}, created at {Created}, notes {Notes}";
 		}
 	}
 }

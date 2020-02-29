@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Database.Repositories {
 
@@ -30,15 +32,20 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
-		public static void Delete<T>(this IDatabaseContext ctx, T obj) {
+		public static void Delete<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject {
 			ctx.OfType<T>().Delete(obj);
 		}
 
-		public static void Delete<T, T2>(this IDatabaseContext<T> ctx, T2 obj) {
+		public static Task DeleteAsync<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject {
+			return ctx.OfType<T>().DeleteAsync(obj);
+		}
+
+		public static void Delete<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject {
 			ctx.OfType<T2>().Delete(obj);
 		}
 
-		public static void DeleteAll<T, T2>(this IDatabaseContext<T> ctx, IEnumerable<T2> objs) {
+		public static void DeleteAll<T, T2>(this IDatabaseContext<T> ctx, IEnumerable<T2> objs) 
+			where T2 : class, IDatabaseObject {
 
 			var ctxTyped = ctx.OfType<T2>();
 
@@ -61,17 +68,20 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
-		public static T2 Load<T2>(this IDatabaseContext ctx, object id) {
-			return ctx.OfType<T2>().Load(id);
-		}
+		public static T2 Load<T2>(this IDatabaseContext ctx, object id) where T2 : class, IDatabaseObject 
+			=> ctx.OfType<T2>().Load(id);
 
-		public static T2 Load<T, T2>(this IDatabaseContext<T> ctx, object id) {
-			return ctx.OfType<T2>().Load(id);
-		}
+		public static Task<T2> LoadAsync<T2>(this IDatabaseContext ctx, object id) where T2 : class, IDatabaseObject
+			=> ctx.OfType<T2>().LoadAsync(id);
 
-		public static IQueryable<T2> LoadMultiple<T2>(this IDatabaseContext ctx, IEnumerable<int> ids) where T2 : IEntryWithIntId {
-			return ctx.OfType<T2>().Query().Where(e => ids.Contains(e.Id));
-		}
+		public static T2 Load<T, T2>(this IDatabaseContext<T> ctx, object id) where T2 : class, IDatabaseObject
+			=> ctx.OfType<T2>().Load(id);
+
+		public static T LoadEntry<T>(this IDatabaseContext ctx, IEntryWithIntId entry) where T : class, IDatabaseObject
+			=> ctx.Load<T>(entry.Id);
+
+		public static IQueryable<T2> LoadMultiple<T2>(this IDatabaseContext ctx, IEnumerable<int> ids) where T2 : class, IEntryWithIntId
+			=> ctx.OfType<T2>().Query().WhereIdIn(ids);
 
 		/// <summary>
 		/// Loads an entry based on a reference, or returns null if the reference is null or points to an entry that shouldn't exist (Id is 0).
@@ -85,11 +95,15 @@ namespace VocaDb.Model.Database.Repositories {
 		}
 
 		public static T NullSafeLoad<T>(this IDatabaseContext<T> ctx, int id) {
-			return id != 0 ? ctx.Load(id) : default(T);
+			return id != 0 ? ctx.Load(id) : default;
 		}
 
-		public static T NullSafeLoad<T>(this IDatabaseContext ctx, IEntryWithIntId entry) {
-			return entry != null && entry.Id != 0 ? ctx.Load<T>(entry.Id) : default(T);
+		public static T NullSafeLoad<T>(this IDatabaseContext ctx, int id) where T : class, IDatabaseObject {
+			return id != 0 ? ctx.Load<T>(id) : default;
+		}
+
+		public static T NullSafeLoad<T>(this IDatabaseContext ctx, IEntryWithIntId entry) where T : class, IDatabaseObject {
+			return entry != null && entry.Id != 0 ? ctx.Load<T>(entry.Id) : default;
 		}
 
 		public static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff) {
@@ -108,7 +122,17 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
-		public static CollectionDiff<T2, T2> Sync<T, T2>(this IDatabaseContext<T> ctx, CollectionDiff<T2, T2> diff) {
+		/// <summary>
+		/// Synchronizes the given changes to database, meaning calls
+		/// insert, update and delete as appropriate.
+		/// </summary>
+		/// <typeparam name="T">Context type.</typeparam>
+		/// <typeparam name="T2">Element type.</typeparam>
+		/// <param name="ctx">Database context.</param>
+		/// <param name="diff">Element diff.</param>
+		/// <returns><paramref name="diff"/></returns>
+		public static CollectionDiff<T2, T2> Sync<T, T2>(this IDatabaseContext<T> ctx, CollectionDiff<T2, T2> diff)
+			where T2 : class, IDatabaseObject {
 
 			ParamIs.NotNull(() => ctx);
 
@@ -133,21 +157,23 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
-		public static T2 Save<T, T2>(this IDatabaseContext<T> ctx, T2 obj) {
-			return ctx.OfType<T2>().Save(obj);
-		}
+		public static T2 Save<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject => 
+			ctx.OfType<T2>().Save(obj);
 
-		public static T Save<T>(this IDatabaseContext ctx, T obj) {
-			return ctx.OfType<T>().Save(obj);
-		}
+		public static Task<T2> SaveAsync<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject => 
+			ctx.OfType<T2>().SaveAsync(obj);
 
-		public static void Update<T>(this IDatabaseContext ctx, T obj) {
-			ctx.OfType<T>().Update(obj);
-		}
+		public static T Save<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
+			=> ctx.OfType<T>().Save(obj);
 
-		public static void Update<T, T2>(this IDatabaseContext<T> ctx, T2 obj) {
-			ctx.OfType<T2>().Update(obj);
-		}
+		public static void Update<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
+			=> ctx.OfType<T>().Update(obj);
+
+		public static void Update<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject
+			=> ctx.OfType<T2>().Update(obj);
+
+		public static Task UpdateAsync<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject
+			=> ctx.OfType<T2>().UpdateAsync(obj);
 
 	}
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
@@ -39,6 +39,8 @@ namespace VocaDb.Model.Domain.Images {
 		}
 
 		public override string GetPath(IEntryImageInformation picture, ImageSize size) {
+			if (string.IsNullOrEmpty(staticRoot))
+				return string.Empty;
 			var relative = string.Format(@"img\{0}\main{1}\{2}{3}", picture.EntryType, GetDir(size), picture.Id, ImageHelper.GetExtensionFromMime(picture.Mime));
 			return Path.Combine(staticRoot, relative);
 		}
@@ -49,8 +51,8 @@ namespace VocaDb.Model.Domain.Images {
 
 		}
 
-		public override string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size, bool ssl) {
-			return VocaUriBuilder.StaticResource(GetRelativeUrl(picture, size), ssl);
+		public override string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size) {
+			return VocaUriBuilder.StaticResource(GetRelativeUrl(picture, size));
 		}
 
 	}

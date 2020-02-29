@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts.Users;
@@ -10,7 +10,7 @@ namespace VocaDb.Model.Domain.Users {
 	/// <summary>
 	/// User is a verified owner of an artist entry.
 	/// </summary>
-	public class OwnedArtistForUser {
+	public class OwnedArtistForUser : IEntryWithIntId {
 
 		public static CollectionDiff<OwnedArtistForUser, OwnedArtistForUser> Sync(
 			IList<OwnedArtistForUser> oldLinks, IEnumerable<ArtistForUserContract> newLinks, Func<ArtistForUserContract, OwnedArtistForUser> fac) {

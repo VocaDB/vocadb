@@ -196,7 +196,7 @@
     <value>网站</value>
   </data>
   <data name="PvSupportedServices" xml:space="preserve">
-    <value>目前仅支持以下网站：YouTube，Niconico动画，Vimeo，SoundCloud，Piapro以及Bilibili。</value>
+    <value>目前仅支持以下网站：YouTube，NicoNico，Vimeo，SoundCloud，Piapro以及Bilibili。</value>
   </data>
   <data name="PvType" xml:space="preserve">
     <value>类别</value>

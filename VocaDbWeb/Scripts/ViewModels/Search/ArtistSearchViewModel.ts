@@ -8,8 +8,8 @@ module vdb.viewModels.search {
 	export class ArtistSearchViewModel extends SearchCategoryBaseViewModel<dc.ArtistApiContract> {
 
 		constructor(searchViewModel: SearchViewModel, lang: string,
-			private artistRepo: rep.ArtistRepository,
-			private loggedUserId: number,
+			private readonly artistRepo: rep.ArtistRepository,
+			private readonly loggedUserId: number,
 			artistType: string) {
 
 			super(searchViewModel);
@@ -35,6 +35,10 @@ module vdb.viewModels.search {
 
 			}
 
+		}
+
+		public artistTypeName = (artist: dc.ArtistApiContract) => {
+			return this.searchViewModel.resources().artistTypeNames[artist.artistType];
 		}
 
 		public artistType = ko.observable("Unknown");

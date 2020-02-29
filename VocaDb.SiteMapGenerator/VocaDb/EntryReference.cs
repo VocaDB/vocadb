@@ -1,7 +1,7 @@
-﻿
+
 namespace VocaDb.SiteMapGenerator.VocaDb {
 
-	public struct EntryReference {
+	public readonly struct EntryReference {
 		
 		public EntryReference(int id, string urlSlug = null) 
 			: this() {
@@ -9,8 +9,8 @@ namespace VocaDb.SiteMapGenerator.VocaDb {
 			UrlSlug = urlSlug;
 		}
 
-		public int Id { get; set; }
-		public string UrlSlug { get; set; }
+		public int Id { get; }
+		public string UrlSlug { get; }
 
 	}
 

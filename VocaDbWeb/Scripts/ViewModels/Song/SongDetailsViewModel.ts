@@ -8,7 +8,8 @@ module vdb.viewModels {
 
 	import cls = models;
     import dc = vdb.dataContracts;
-    import rep = vdb.repositories;
+	import rep = vdb.repositories;
+	import SongType = cls.songs.SongType;
 
     // View model for the song details view.
     export class SongDetailsViewModel {
@@ -17,27 +18,39 @@ module vdb.viewModels {
 
 		public comments: EditableCommentsViewModel;
 
+		public getMatchedSite = (page: string) => {
+
+			// http://utaitedb.net/S/1234 or http://utaitedb.net/Song/Details/1234
+			const regex = /(http(?:s)?:\/\/(?:(?:utaitedb\.net)|(?:vocadb\.net)|(?:touhoudb\.com))\/)(?:(?:Song)\/Details|(?:S))\/(\d+)/g;
+			const match = regex.exec(page);
+
+			if (!match || match.length < 3)
+				return null;
+
+			const siteUrl = match[1].replace("http://", "https://"); // either http://utaitedb.net/ or http://vocadb.net/
+			const id = parseInt(match[2]);
+
+			return { siteUrl: siteUrl, id: id };
+
+		}
+
 		private getOriginal = (linkedPages: string[]) => {
 			
 			if (linkedPages == null || !linkedPages.length)
 				return;
 
-			// http://utaitedb.net/S/1234 or http://utaitedb.net/Song/Details/1234
-			const regex = /(http:\/\/(?:(?:utaitedb\.net)|(?:vocadb\.net))\/)(?:(?:Song)\/Details|(?:S))\/(\d+)/g;
 			const page = linkedPages[0];
+			const match = this.getMatchedSite(page);
 
-			const match = regex.exec(page);
-
-			if (!match || match.length < 3)
+			if (!match)
 				return;
 
-			const siteUrl = match[1]; // either http://utaitedb.net/ or http://vocadb.net/
-			const id = parseInt(match[2]);
+			const {siteUrl, id} = match;
 
 			const repo = new rep.SongRepository(siteUrl, this.languagePreference);
 			// TODO: this should be cached, but first we need to make sure the other instances are not cached.
 			repo.getOneWithComponents(id, 'Nothing', null, song => {
-				if (song.songType === "Original")
+				if (song.songType === SongType[SongType.Original])
 					this.originalVersion({ entry: song, url: page, domain: siteUrl });
 			});
 
@@ -54,6 +67,8 @@ module vdb.viewModels {
 			}
 
 		}
+
+		public maintenanceDialogVisible = ko.observable(false);
 
 		public originalVersion: KnockoutObservable<SongLinkWithUrl>;
 
@@ -142,11 +157,11 @@ module vdb.viewModels {
 			this.tagsEditViewModel = new tags.TagsEditViewModel({
 				getTagSelections: callback => userRepository.getSongTagSelections(this.id, callback),
 				saveTagSelections: tags => userRepository.updateSongTags(this.id, tags, this.tagUsages.updateTagUsages)
-			}, cls.EntryType.Song);
+			}, cls.EntryType.Song, callback => repository.getTagSuggestions(this.id, callback));
 
 			this.tagUsages = new tags.TagListViewModel(data.tagUsages);
 
-			if (data.songType !== 'Original' && this.originalVersion().entry == null) {
+			if (data.songType !== SongType[SongType.Original] && this.originalVersion().entry == null) {
 				this.getOriginal(data.linkedPages);
 			}
 
@@ -184,9 +199,9 @@ module vdb.viewModels {
 
     export class SongListsViewModel {
         
-		private tabName_Personal = "Personal";
-		private tabName_Featured = "Featured";
-		private tabName_New = "New";
+		public static readonly tabName_Personal = "Personal";
+		public static readonly tabName_Featured = "Featured";
+		public static readonly tabName_New = "New";
 
         public addedToList: () => void;
 
@@ -206,9 +221,9 @@ module vdb.viewModels {
 
         public showSongLists: () => void;
 
-		public tabName = ko.observable(this.tabName_Personal);
+		public tabName = ko.observable(SongListsViewModel.tabName_Personal);
 
-        public songLists = ko.computed(() => this.tabName() === this.tabName_Personal ? this.personalLists() : this.featuredLists());
+		public songLists = ko.computed(() => this.tabName() === SongListsViewModel.tabName_Personal ? this.personalLists() : this.featuredLists());
 
         constructor(repository: rep.SongRepository, resources: SongDetailsResources, songId: number) {
             
@@ -217,8 +232,9 @@ module vdb.viewModels {
             };
 
             this.addSongToList = () => {
-                if (isValid()) {
-                    repository.addSongToList(this.selectedListId() || 0, songId, this.notes(), this.newListName(), () => {
+				if (isValid()) {
+					const listId = this.tabName() !== SongListsViewModel.tabName_New ? this.selectedListId() || 0 : 0;
+					repository.addSongToList(listId, songId, this.notes(), this.newListName(), () => {
 
 						this.notes("");
                         this.dialogVisible(false);
@@ -240,11 +256,11 @@ module vdb.viewModels {
 					this.featuredLists(featuredLists);
 
 					if (personalLists.length)
-						this.tabName(this.tabName_Personal);
+						this.tabName(SongListsViewModel.tabName_Personal);
 					else if (featuredLists.length)
-						this.tabName(this.tabName_Featured);
+						this.tabName(SongListsViewModel.tabName_Featured);
 					else
-						this.tabName(this.tabName_New);
+						this.tabName(SongListsViewModel.tabName_New);
 
                     this.newListName("");
                     this.selectedListId(this.songLists().length > 0 ? this.songLists()[0].id : null);

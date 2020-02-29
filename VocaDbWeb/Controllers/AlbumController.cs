@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web.Mvc;
@@ -164,7 +164,7 @@ namespace VocaDb.Web.Controllers
 
         }
 
-		public ActionResult DownloadTags(int id = invalidId, string formatString = "", bool setFormatString = false, bool includeHeader = false) {
+		public ActionResult DownloadTags(int id = invalidId, string formatString = "", int? discNumber = null, bool setFormatString = false, bool includeHeader = false) {
 
 			if (id == invalidId)
 				return NoId();
@@ -176,10 +176,10 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (string.IsNullOrEmpty(formatString))
-				formatString = TagFormatter.TagFormatStrings[0];
+				formatString = AlbumSongFormatter.TagFormatStrings[0];
 
 			var album = Service.GetAlbum(id);
-			var tagString = Service.GetAlbumTagString(id, formatString, includeHeader);
+			var tagString = Service.GetAlbumTagString(id, formatString, discNumber, includeHeader);
 
 			var enc = new UTF8Encoding(true);
 			var data = enc.GetPreamble().Concat(enc.GetBytes(tagString)).ToArray();

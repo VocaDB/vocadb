@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -9,7 +9,6 @@ using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
-using VocaDb.Model.Service.Search.AlbumSearch;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
 
@@ -83,11 +82,20 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static IQueryable<Album> WhereHasArtist(this IQueryable<Album> query, int artistId) {
+
+			if (artistId == 0)
+				return query;
+
+			return query.WhereHasArtist<Album, ArtistForAlbum>(artistId, false, false);
+
+		}
+
 		public static IQueryable<Album> WhereHasArtistParticipationStatus(
 			this IQueryable<Album> query, 
 			ArtistParticipationQueryParams queryParams,
 			EntryIdsCollection artistIds,
-			Func<int, Artist> artistGetter) {
+			IEntityLoader<Artist> artistGetter) {
 
 			var various = Model.Helpers.ArtistHelper.VariousArtists;
 			var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;
@@ -132,38 +140,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				return query;
 
 			var nameFilter = textQuery.Query;
+			var expression = EntryWithNamesQueryableExtender.WhereHasNameExpression<Album, AlbumName>(textQuery);
 
-			switch (textQuery.MatchMode) {
-				case NameMatchMode.Exact:
-					return query.Where(m => m.Names.Names.Any(n => n.Value == nameFilter));
-
-				case NameMatchMode.Partial:
-					return query.Where(m => 
-						(allowCatNum && m.OriginalRelease.CatNum != null && m.OriginalRelease.CatNum.Contains(nameFilter)) ||
-						m.Names.Names.Any(n => n.Value.Contains(nameFilter)));
-
-				case NameMatchMode.StartsWith:
-					return query.Where(m => 
-						(allowCatNum && m.OriginalRelease.CatNum != null && m.OriginalRelease.CatNum.StartsWith(nameFilter)) ||
-						m.Names.Names.Any(n => n.Value.StartsWith(nameFilter)));
-
-				case NameMatchMode.Words:
-					var words = textQuery.Words;
-
-					Expression<Func<Album, bool>> catNumExp = (q => allowCatNum && q.OriginalRelease.CatNum != null && q.OriginalRelease.CatNum.Contains(nameFilter));
-
-					Expression<Func<Album, bool>> nameExp = (q => q.Names.Names.Any(n => n.Value.Contains(words[0])));
-
-					foreach (var word in words.Skip(1).Take(FindHelpers.MaxSearchWords)) {
-						var temp = word;
-						nameExp = nameExp.And((q => q.Names.Names.Any(n => n.Value.Contains(temp))));
-					}
-
-					return query.Where(catNumExp.Or(nameExp));
-
+			if (allowCatNum) {
+				expression = expression.Or(q => q.OriginalRelease.CatNum != null && q.OriginalRelease.CatNum.Contains(nameFilter));
 			}
 
-			return query;
+			return query.Where(expression);
 
 		}
 

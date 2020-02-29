@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -36,6 +36,15 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				return query;
 
 			return query.Where(s => s.Album.Tags.Usages.Any(t => t.Tag.Id == tagId));
+
+		}
+
+		public static IQueryable<T> WhereAlbumHasType<T>(this IQueryable<T> query, DiscType albumType) where T : IAlbumLink {
+
+			if (albumType == DiscType.Unknown)
+				return query;
+
+			return query.Where(m => m.Album.DiscType == albumType);
 
 		}
 

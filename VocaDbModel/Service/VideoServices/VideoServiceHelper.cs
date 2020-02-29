@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading.Tasks;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 
@@ -10,6 +11,7 @@ namespace VocaDb.Model.Service.VideoServices {
 	public static class VideoServiceHelper {
 
 		private static readonly VideoService[] services = {
+			VideoService.Bandcamp,
  			VideoService.Bilibili,
 			VideoService.NicoNicoDouga,
 			VideoService.Piapro,
@@ -67,11 +69,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public static string GetThumbUrl(IPVWithThumbnail pv) {
-
-			return Services[pv.Service].GetThumbUrlById(pv.PVId);
-
-		}
+		public static string GetThumbUrl(IPVWithThumbnail pv) => Services[pv.Service].GetThumbUrlById(pv.PVId);
 
 		public static string GetThumbUrl<T>(IList<T> pvs) where T: class, IPVWithThumbnail {
 
@@ -80,16 +78,13 @@ namespace VocaDb.Model.Service.VideoServices {
 			if (!pvs.Any())
 				return string.Empty;
 
-			var pv = pvs.FirstOrDefault(p => p.PVType == PVType.Original && !string.IsNullOrEmpty(p.ThumbUrl));
+			var pvsWithThumb = pvs.Where(p => !string.IsNullOrEmpty(p.ThumbUrl)).OrderBy(p => (int)p.PVType);
 
-			if (pv == null)
-				pv = pvs.FirstOrDefault(p => p.PVType == PVType.Reprint && !string.IsNullOrEmpty(p.ThumbUrl));
-
-			if (pv == null)
-				pv = pvs.FirstOrDefault(p => p.PVType == PVType.Original);
-
-			if (pv == null)
-				pv = pvs.FirstOrDefault();
+			var pv = 
+				pvsWithThumb.Where(p => !p.Disabled).FirstOrDefault() ??
+				pvsWithThumb.FirstOrDefault() ??
+				pvs.FirstOrDefault(p => p.PVType == PVType.Original) ??
+			    pvs.FirstOrDefault();
 
 			return (pv != null ? (!string.IsNullOrEmpty(pv.ThumbUrl) ? pv.ThumbUrl : GetThumbUrl(pv)) : string.Empty);
 
@@ -109,13 +104,13 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			var notNico = pvs.Where(p => p.Service != PVService.NicoNicoDouga).ToArray();
 
-			var pv = notNico.FirstOrDefault(p => !string.IsNullOrEmpty(p.ThumbUrl) && (p.PVType == PVType.Original || p.PVType == PVType.Reprint));
+			var pv = notNico.FirstOrDefault(p => !string.IsNullOrEmpty(p.ThumbUrl) && (p.PVType == PVType.Original || p.PVType == PVType.Reprint) && !p.Disabled);
 
 			if (pv == null)
-				pv = notNico.FirstOrDefault(p => !string.IsNullOrEmpty(p.ThumbUrl));
+				pv = notNico.FirstOrDefault(p => !string.IsNullOrEmpty(p.ThumbUrl) && !p.Disabled);
 
 			if (pv == null)
-				pv = pvs.FirstOrDefault(p => !string.IsNullOrEmpty(p.ThumbUrl));
+				pv = pvs.FirstOrDefault(p => !string.IsNullOrEmpty(p.ThumbUrl) && !p.Disabled);
 
 			if (pv == null)
 				pv = pvs.FirstOrDefault();
@@ -155,21 +150,19 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public static VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext) {
-
-			return ParseByUrl(url, getTitle, permissionContext, services);
-
+		public static Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext permissionContext) {
+			return ParseByUrlAsync(url, getTitle, permissionContext, services);
 		}
 
-		public static VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext, params VideoService[] testServices) {
+		public static Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext permissionContext, params VideoService[] testServices) {
 
 			var service = testServices.FirstOrDefault(s => s.IsAuthorized(permissionContext) && s.IsValidFor(url));
 
 			if (service == null) {
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.NoMatcher);
+				return Task.FromResult(VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.NoMatcher));
 			}
 
-			return service.ParseByUrl(url, getTitle);
+			return service.ParseByUrlAsync(url, getTitle);
 
 		}
 

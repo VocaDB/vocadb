@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Aggregate;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -17,34 +18,18 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code.Highcharts;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers {
 
-	internal static class StatsExtensions {
-			
-		public static IEnumerable<TResult> CumulativeSelect<TSource, TResult>(this IEnumerable<TSource> sequence, Func<TSource, TResult, TResult> func)
-		{
-			var previous = default(TResult);
-			foreach(var item in sequence)
-			{
-				var res = func(item, previous);
-				previous = res;
-				yield return res;
-			}        
-		}
-
-		public static Tuple<DateTime, int>[] CumulativeSum(this IEnumerable<CountPerDayContract> sequence) {
-			return sequence.CumulativeSelect<CountPerDayContract, Tuple<DateTime, int>>((v, previous) => {
-				return Tuple.Create(v.ToDateTime(), (previous != null ? previous.Item2 : 0) + v.Count);
-			}).ToArray();
-		}
-
-		public static Tuple<DateTime, int>[] ToDatePoints(this IEnumerable<CountPerDayContract> sequence) {
-			return sequence.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
-		}
+	class EntryWithIdAndData<T> : IEntryWithIntId {
+		public T Entry { get; set; }
+		public int Id { get; set; }
+		public IEnumerable<CountPerDayContract> Data { get; set; }
 	}
 
 	class SongsPerArtistPerDate {
@@ -68,6 +53,7 @@ namespace VocaDb.Web.Controllers {
 	public class StatsController : ControllerBase {
 
 		private const int clientCacheDurationSec = 86400;
+		private readonly VdbConfigManager config;
 		private readonly SongAggregateQueries songAggregateQueries;
 
 		private T GetCachedReport<T>() where T : class {
@@ -253,7 +239,8 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		private ActionResult SimpleBarChart<T>(Func<IQueryable<T>, IQueryable<LocalizedValue>> func, string title, string seriesName) {
+		private ActionResult SimpleBarChart<T>(Func<IQueryable<T>, IQueryable<LocalizedValue>> func, string title, string seriesName)
+			where T : class, IDatabaseObject {
 
 			var values = GetTopValues(func);
 
@@ -310,7 +297,8 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		private LocalizedValue[] GetTopValues<T>(Func<IQueryable<T>, IQueryable<LocalizedValue>> func) {
+		private LocalizedValue[] GetTopValues<T>(Func<IQueryable<T>, IQueryable<LocalizedValue>> func)
+			where T : class, IDatabaseObject {
 			
 			var cached = GetCachedReport<LocalizedValue[]>();
 
@@ -337,14 +325,17 @@ namespace VocaDb.Web.Controllers {
 		private readonly IRepository repository;
 		private readonly IUserRepository userRepository;
 
+		private DateTime DefaultMinDate => new DateTime(config.SiteSettings.MinAlbumYear, 1, 1);
+
 		public StatsController(IUserRepository userRepository, IRepository repository, IUserPermissionContext permissionContext, SongAggregateQueries songAggregateQueries,
-			HttpContextBase context) {
+			HttpContextBase context, VdbConfigManager config) {
 
 			this.userRepository = userRepository;
 			this.repository = repository;
 			this.permissionContext = permissionContext;
 			this.songAggregateQueries = songAggregateQueries;
 			this.context = context;
+			this.config = config;
 
 		}
 
@@ -449,13 +440,18 @@ namespace VocaDb.Web.Controllers {
 		}
 
 		[OutputCache(Duration = clientCacheDurationSec)]
-		public ActionResult ArtistsPerMonth() {
+		public ActionResult ArtistsPerMonth(DateTime? cutoff = null) {
+
+			cutoff = cutoff ?? DefaultMinDate;
+			var end = DateTime.Now.AddMonths(-1);
 
 			// TODO: report not verified
 			var values = repository.HandleQuery(ctx => {
 
 				return ctx.Query<ArtistForSong>()
-					.Where(a => a.Artist.ArtistType == ArtistType.Producer && !a.Song.Deleted && a.Song.PublishDate.DateTime != null)
+					.WhereSongHasPublishDate(true)
+					.WhereSongPublishDateIsBetween(cutoff, end)
+					.Where(a => a.Artist.ArtistType == ArtistType.Producer && !a.Song.Deleted)
 					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
 					.ThenBy(a => a.Song.PublishDate.DateTime.Value.Month)
 					.GroupBy(a => new { // Note: we want to do count distinct here, but it's not supported by NHibernate LINQ, so doing a second group by in memory
@@ -493,6 +489,7 @@ namespace VocaDb.Web.Controllers {
 			var values = userRepository.HandleQuery(ctx => {
 
 				return ctx.Query<Album>()
+					.WhereNotDeleted()
 					.WhereHasReleaseDate()
 					.OrderByReleaseDate(SortDirection.Ascending)
 					.GroupBy(a => new {
@@ -659,6 +656,7 @@ namespace VocaDb.Web.Controllers {
 		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "unit")]
 		public ActionResult SongsPublishedPerDay(DateTime? cutoff = null, TimeUnit unit = TimeUnit.Day) {
 			
+			cutoff = cutoff ?? DefaultMinDate;
 			var values = songAggregateQueries.SongsOverTime(unit, false, cutoff, s => s.PublishDate.DateTime <= DateTime.Now, null)[0];
 
 			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
@@ -765,6 +763,48 @@ namespace VocaDb.Web.Controllers {
 		}
 
 		[OutputCache(Duration = clientCacheDurationSec)]
+		public ActionResult GetSongsPerVoicebankTypeOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007) {
+
+			if (vocalistTypes == null)
+				vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
+
+			var data = repository.HandleQuery(ctx => {
+
+				// Note: the same song may be included multiple times for different artists
+				var points = ctx.Query<ArtistForSong>()
+					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null && s.Song.PublishDate.DateTime.Value.Year >= startYear && vocalistTypes.Contains(s.Artist.ArtistType))
+					.FilterIfNotNull(cutoff, s => s.Song.PublishDate.DateTime > cutoff)
+					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
+					.GroupBy(s => new {
+						s.Song.PublishDate.DateTime.Value.Year,
+						s.Song.PublishDate.DateTime.Value.Month,
+						ArtistType = s.Artist.ArtistType
+					})
+					.Select(s => new {
+						s.Key.Year,
+						s.Key.Month,
+						s.Key.ArtistType,
+						Count = s.Count()
+					})
+					.ToArray()
+					.Select(s => new { Date = new DateTime(s.Year, s.Month, 1), s.ArtistType, s.Count})
+					.GroupBy(s => s.ArtistType)
+					.ToArray();
+
+				return points;
+
+			});
+
+			var dataSeries = data.Select(ser => new Series {
+				Name = Translate.ArtistTypeName(ser.Key),
+				Data = Series.DateData(ser, p => p.Date, p => p.Count)
+			}).ToArray();
+
+			return AreaChart("Songs per vocalist type over time", dataSeries);
+
+		}
+
+		[OutputCache(Duration = clientCacheDurationSec)]
 		public ActionResult SongsWithoutPVOverTime() {
 
 			var data = songAggregateQueries.SongsOverTime(TimeUnit.Month, false, null, a => a.PVs.PVs.Any(), a => a.PVs.PVs.Count == 0);
@@ -852,30 +892,182 @@ namespace VocaDb.Web.Controllers {
 
 				var ids = idsAndHits.Select(i => i.Id).ToArray();
 
-				var albums = ctx.OfType<Song>().Query()
-					.Where(a => ids.Contains(a.Id))
-					.Select(a => new LocalizedValue {
-						Name = new TranslatedString {			
-							DefaultLanguage = a.Names.SortNames.DefaultLanguage,
-							English = a.Names.SortNames.English, 
-							Romaji = a.Names.SortNames.Romaji, 
-							Japanese = a.Names.SortNames.Japanese, 
-						},
-						EntryId = a.Id
-					}).ToArray();
+				var songs = GetSongsWithNames(ctx, ids).Values;
 
 				foreach (var hit in idsAndHits)
-					albums.First(a => a.EntryId == hit.Id).Value = hit.Count;
+					songs.First(a => a.EntryId == hit.Id).Value = hit.Count;
 
-				return albums.OrderByDescending(a => a.Value);
+				return songs.OrderByDescending(a => a.Value);
 
 			});
 
 			var categories = values.Select(p => p.Name[permissionContext.LanguagePreference]).ToArray();
 			var data = values.Select(p => p.Value).ToArray();
 
-			return SimpleBarChart("Hits per song", "Hits", categories, data);
+			return SimpleBarChart("Views per song", "Hits", categories, data);
 
+		}
+
+		public ActionResult HitsPerSongOverTime(DateTime? cutoff) {
+
+			var data = repository.HandleQuery(ctx => {
+
+				var topSongIds = ctx.Query<SongHit>()
+					.Where(s => !s.Entry.Deleted && s.Entry.PublishDate.DateTime != null)
+					.FilterIfNotNull(cutoff, s => s.Entry.PublishDate.DateTime > cutoff)
+					.GroupBy(s => new {
+						SongId = s.Entry.Id,
+					})
+					.Select(s => new {
+						s.Key.SongId,
+						TotalCount = s.Count()
+					})
+					.OrderByDescending(s => s.TotalCount)
+					.Take(20)
+					.ToArray()
+					.Select(s => s.SongId)
+					.ToArray();
+
+				// Note: the same song may be included multiple times for different artists
+				var points = ctx.Query<SongHit>()
+					.Where(s => topSongIds.Contains(s.Entry.Id))
+					.OrderBy(a => a.Date.Year)
+					.ThenBy(a => a.Date.Month)
+					.ThenBy(a => a.Date.Day)
+					.GroupBy(s => new {
+						Year = s.Date.Year,
+						Month = s.Date.Month,
+						Day = s.Date.Day,
+						SongId = s.Entry.Id,
+					})
+					.Select(s => new {
+						s.Key.Year,
+						s.Key.Month,
+						s.Key.Day,
+						s.Key.SongId,
+						Count = s.Count()
+					})
+					.ToArray()
+					.Select(s => new {
+						s.SongId,
+						Data = new CountPerDayContract(s.Year, s.Month, s.Day, s.Count),
+					})
+					.ToArray();
+
+				var songs = GetSongsWithNames(ctx, topSongIds);
+
+				var bySong = points.GroupBy(p => p.SongId).Select(p => new EntryWithIdAndData<LocalizedValue> {
+					Id = p.Key,
+					Entry = songs[p.Key],
+					Data = p.Select(d => d.Data).ToArray()
+				}).OrderByIds(topSongIds);
+				return bySong;
+
+			});
+
+			var dataSeries = data.Select(ser => new Series {
+				Name = ser.Entry.Name.English,
+				Data = Series.DateData(ser.Data.CumulativeSumContract())
+			}).ToArray();
+
+			return LowercaseJson(HighchartsHelper.DateLineChart("Views per song over time", "Songs", "Views", dataSeries));
+
+		}
+
+		public ActionResult ScorePerSongOverTime(DateTime? cutoff) {
+
+			var data = repository.HandleQuery(ctx => {
+
+				var topSongIds = ctx.Query<FavoriteSongForUser>()
+					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null)
+					.FilterIfNotNull(cutoff, s => s.Song.PublishDate.DateTime > cutoff)
+					.GroupBy(s => new {
+						SongId = s.Song.Id,
+					})
+					.Select(s => new {
+						s.Key.SongId,
+						TotalCount = s.Sum(s2 => (int)s2.Rating)
+					})
+					.OrderByDescending(s => s.TotalCount)
+					.Take(20)
+					.ToArray()
+					.Select(s => s.SongId)
+					.ToArray();
+
+				// Note: the same song may be included multiple times for different artists
+				var points = ctx.Query<FavoriteSongForUser>()
+					.Where(s => topSongIds.Contains(s.Song.Id))
+					.OrderBy(a => a.Date.Year)
+					.ThenBy(a => a.Date.Month)
+					.ThenBy(a => a.Date.Day)
+					.GroupBy(s => new {
+						Year = s.Date.Year,
+						Month = s.Date.Month,
+						Day = s.Date.Day,
+						SongId = s.Song.Id,
+					})
+					.Select(s => new {
+						s.Key.Year,
+						s.Key.Month,
+						s.Key.Day,
+						s.Key.SongId,
+						Count = s.Sum(s2 => (int)s2.Rating)
+					})
+					.ToArray()
+					.Select(s => new {
+						s.SongId,
+						Data = new CountPerDayContract(s.Year, s.Month, s.Day, s.Count),
+					})
+					.ToArray();
+
+				var songs = GetSongsWithNames(ctx, topSongIds);
+
+				var bySong = points.GroupBy(p => p.SongId).Select(p => new EntryWithIdAndData<LocalizedValue> {
+					Id = p.Key,
+					Entry = songs[p.Key],
+					Data = p.Select(d => d.Data).ToArray().AddPreviousValues(true, TimeUnit.Day, DateTime.Now).ToArray()
+				}).OrderByIds(topSongIds);
+				return bySong;
+
+			});
+
+			var dataSeries = data.Select(ser => new Series {
+				Name = ser.Entry.Name.English,
+				Data = Series.DateData(ser.Data.CumulativeSumContract())
+			}).ToArray();
+
+			return LowercaseJson(HighchartsHelper.DateLineChart("Score per song over time", "Songs", "Score", dataSeries));
+
+		}
+
+		private static Dictionary<int, LocalizedValue> GetSongsWithNames(IDatabaseContext ctx, int[] topSongIds) {
+			var songs = ctx.OfType<Song>().Query()
+				.Where(a => topSongIds.Contains(a.Id))
+				.Select(a => new LocalizedValue {
+					Name = new TranslatedString {
+						DefaultLanguage = a.Names.SortNames.DefaultLanguage,
+						English = a.Names.SortNames.English,
+						Romaji = a.Names.SortNames.Romaji,
+						Japanese = a.Names.SortNames.Japanese,
+					},
+					EntryId = a.Id
+				}).ToDictionary(s => s.EntryId);
+			return songs;
+		}
+
+		private static Dictionary<int, LocalizedValue> GetSongsWithNamesAndArtists(IDatabaseContext ctx, int[] topSongIds) {
+			var songs = ctx.OfType<Song>().Query()
+				.Where(a => topSongIds.Contains(a.Id))
+				.Select(a => new LocalizedValue {
+					Name = new TranslatedString {
+						DefaultLanguage = a.Names.SortNames.DefaultLanguage,
+						English = a.Names.SortNames.English + " (" + a.ArtistString.English + ")",
+						Romaji = a.Names.SortNames.Romaji + " (" + a.ArtistString.Romaji + ")",
+						Japanese = a.Names.SortNames.Japanese + " (" + a.ArtistString.Japanese + ")",
+					},
+					EntryId = a.Id
+				}).ToDictionary(s => s.EntryId);
+			return songs;
 		}
 
 		public ActionResult UsersPerLanguage() {

@@ -46,23 +46,11 @@ namespace VocaDb.Model.Domain.Albums {
 
 		public virtual Artist Artist { get; set; }
 
-		public virtual ArtistCategories ArtistCategories {
-			get {
-				return ArtistHelper.GetCategories(this);
-			}
-		}
+		public virtual ArtistCategories ArtistCategories => ArtistHelper.GetCategories(this);
 
-		public virtual string ArtistToStringOrName {
-			get {
-				return Artist != null ? Artist.ToString() : Name;
-			}
-		}
+		public virtual string ArtistToStringOrName => Artist?.ToString() ?? Name;
 
-		public virtual ArtistRoles EffectiveRoles {
-			get {
-				return (Roles != ArtistRoles.Default || Artist == null) ? Roles : ArtistHelper.GetOtherArtistRoles(Artist.ArtistType);
-			}
-		}
+		public virtual ArtistRoles EffectiveRoles => (Roles != ArtistRoles.Default || Artist == null) ? Roles : ArtistHelper.GetOtherArtistRoles(Artist.ArtistType);
 
 		public virtual int Id { get; set; }
 
@@ -71,7 +59,7 @@ namespace VocaDb.Model.Domain.Albums {
 		public virtual string Name { get; set; }
 
 		public virtual string Notes {
-			get { return notes; }
+			get => notes;
 			set {
 				ParamIs.NotNull(() => value);
 				notes = value; 
@@ -94,7 +82,9 @@ namespace VocaDb.Model.Domain.Albums {
 			if (contract == null)
 				return false;
 
-			return (IsSupport == contract.IsSupport && Roles == contract.Roles);
+			var realNewName = contract.IsCustomName ? contract.Name : null;
+
+			return (IsSupport == contract.IsSupport && Roles == contract.Roles && Name == realNewName);
 
 		}
 

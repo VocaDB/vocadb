@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Web.Http;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -43,6 +43,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Deletes a comment.
 		/// </summary>
+		/// <param name="entryType">Entry type.</param>
 		/// <param name="commentId">ID of the comment to be deleted.</param>
 		/// <remarks>
 		/// Normal users can delete their own comments, moderators can delete all comments.
@@ -59,6 +60,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Gets a list of comments for an entry.
 		/// </summary>
+		/// <param name="entryType">Entry type.</param>
 		/// <param name="entryId">ID of the entry whose comments to load.</param>
 		/// <returns>List of comments in no particular order.</returns>
 		[Route("{entryType}-comments")]
@@ -71,6 +73,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Updates a comment.
 		/// </summary>
+		/// <param name="entryType">Entry type.</param>
 		/// <param name="commentId">ID of the comment to be edited.</param>
 		/// <param name="contract">New comment data. Only message can be edited.</param>
 		/// <remarks>
@@ -88,6 +91,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <summary>
 		/// Posts a new comment.
 		/// </summary>
+		/// <param name="entryType">Entry type.</param>
 		/// <param name="contract">Comment data. Message, entry and author must be specified. Author must match the logged in user.</param>
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[Route("{entryType}-comments")]

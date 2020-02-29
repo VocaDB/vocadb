@@ -65,7 +65,7 @@ module vdb.utils {
 			return EntryUrlMapper.details(cls.EntryType.Tag, id, slug);
 		}
 
-		public static details_tag_contract(tag: dc.TagBaseContract) {
+		public static details_tag_contract(tag: dc.TagBaseContract | dc.TagApiContract) {
 
 			if (!tag)
 				return null;

@@ -27,7 +27,11 @@ module vdb.viewModels.songList {
 
 	export class SongListEditViewModel {
 
-		constructor(private songListRepo: rep.SongListRepository, private songRepo: rep.SongRepository, id: number) {
+		constructor(
+			private readonly songListRepo: rep.SongListRepository,
+			private readonly songRepo: rep.SongRepository,
+			private readonly urlMapper: vdb.UrlMapper,
+			id: number) {
 
 			this.id = id;
 			this.songLinks = ko.observableArray([]);
@@ -47,6 +51,10 @@ module vdb.viewModels.songList {
 		}
 
 		public currentName: string;
+
+		public deleteViewModel = new DeleteEntryViewModel(notes => {
+			this.songListRepo.delete(this.id, notes, false, this.redirectToDetails);
+		});
 
 		public description: KnockoutObservable<string>;
 
@@ -99,6 +107,14 @@ module vdb.viewModels.songList {
 
 		public name: KnockoutObservable<string>;
 
+		private redirectToDetails = () => {
+			window.location.href = this.urlMapper.mapRelative(utils.EntryUrlMapper.details(models.EntryType.SongList, this.id));
+		}
+
+		private redirectToRoot = () => {
+			window.location.href = this.urlMapper.mapRelative("SongList/Featured");
+		}
+
 		public removeSong = (songLink: SongInListEditViewModel) => {
 			this.songLinks.remove(songLink);
 		};
@@ -117,6 +133,10 @@ module vdb.viewModels.songList {
 		}
 
 		public submitting = ko.observable(false);
+
+		public trashViewModel = new DeleteEntryViewModel(notes => {
+			this.songListRepo.delete(this.id, notes, true, this.redirectToRoot);
+		});
 
 		public updateNotes = ko.observable("");
 

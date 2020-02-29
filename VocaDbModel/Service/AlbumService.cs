@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Xml.Linq;
 using NLog;
 using NHibernate;
@@ -219,10 +219,10 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public string GetAlbumTagString(int id, string format, bool includeHeader) {
+		public string GetAlbumTagString(int id, string format, int? discNumber, bool includeHeader) {
 
-			return GetAlbum(id, a => new TagFormatter(EntryLinkFactory)
-				.ApplyFormat(a, format, PermissionContext.LanguagePreference, includeHeader));
+			return GetAlbum(id, a => new AlbumSongFormatter(EntryLinkFactory)
+				.ApplyFormat(a, format, discNumber, PermissionContext.LanguagePreference, includeHeader));
 
 		}
 
@@ -280,7 +280,7 @@ namespace VocaDb.Model.Service {
 					.UserCollections
 			        .Where(a => a.PurchaseStatus != PurchaseStatus.Nothing)
 					.OrderBy(u => u.User.Name)
-					.Select(u => new AlbumForUserContract(u, LanguagePreference, u.User.Options.PublicAlbumCollection)).ToArray());
+					.Select(u => new AlbumForUserContract(u, LanguagePreference, includeUser: u.User.Options.PublicAlbumCollection)).ToArray());
 
 		}
 

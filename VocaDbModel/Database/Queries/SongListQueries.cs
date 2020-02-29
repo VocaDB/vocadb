@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -12,6 +13,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Queries;
@@ -59,12 +61,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private PartialFindResult<T> GetSongsInList<T>(IDatabaseContext<SongList> session, SongListQueryParams queryParams,
+		private PartialFindResult<T> GetSongsInList<T>(IDatabaseContext<SongList> session, SongInListQueryParams queryParams,
 			Func<SongInList, T> fac) {
 
 			var q = session.OfType<SongInList>().Query()
 				.Where(a => !a.Song.Deleted && a.List.Id == queryParams.ListId)
-				.WhereChildHasName(queryParams.TextQuery)
+				.WhereSongHasName(queryParams.TextQuery, true)
 				.WhereSongHasPVService(queryParams.PVServices)
 				.WhereSongHasArtists(queryParams.ArtistIds, queryParams.ChildVoicebanks)
 				.WhereSongHasTags(queryParams.TagIds)
@@ -144,7 +146,28 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void DeleteSongList(int listId) {
+		public void Delete(int listId, string notes) {
+
+			permissionContext.VerifyManageDatabase();
+
+			repository.HandleTransaction(ctx => {
+
+				var entry = ctx.Load(listId);
+
+				PermissionContext.VerifyEntryDelete(entry);
+
+				entry.Deleted = true;
+				ctx.Update(entry);
+
+				Archive(ctx, entry, new SongListDiff(false), EntryEditEvent.Deleted, notes);
+
+				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
+
+			});
+
+		}
+
+		public void MoveToTrash(int listId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
@@ -172,20 +195,21 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<TResult> Find<TResult>(Func<SongList, TResult> fac, SearchTextQuery textQuery, SongListFeaturedCategory? featuredCategory,
-			int start, int maxResults, bool getTotalCount, SongListSortRule sort) {
+		public PartialFindResult<TResult> Find<TResult>(Func<SongList, TResult> fac, SongListQueryParams queryParams) {
 
 			return HandleQuery(ctx => {
 
 				var listQuery = ctx.Query()
-					.WhereHasFeaturedCategory(featuredCategory, false)
-					.WhereHasName(textQuery);
+					.WhereNotDeleted()
+					.WhereHasFeaturedCategory(queryParams.FeaturedCategory, false)
+					.WhereHasName(queryParams.TextQuery)
+					.WhereHasTags(queryParams.TagIds, queryParams.ChildTags);
 
-				var count = getTotalCount ? listQuery.Count() : 0;
+				var count = queryParams.Paging.GetTotalCount ? listQuery.Count() : 0;
 
 				return new PartialFindResult<TResult>(listQuery
-					.OrderBy(sort)
-					.Paged(new PagingProperties(start, maxResults, getTotalCount))
+					.OrderBy(queryParams.SortRule)
+					.Paged(queryParams.Paging)
 					.ToArray()
 					.Select(s => fac(s))
 					.ToArray(), count);
@@ -210,13 +234,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<SongInListContract> GetSongsInList(SongListQueryParams queryParams) {
+		public PartialFindResult<SongInListContract> GetSongsInList(SongInListQueryParams queryParams) {
 
 			return repository.HandleQuery(session => GetSongsInList(session, queryParams, s => new SongInListContract(s, PermissionContext.LanguagePreference)));
 
 		}
 
-		public PartialFindResult<T> GetSongsInList<T>(SongListQueryParams queryParams, Func<SongInList, T> fac) {
+		public PartialFindResult<T> GetSongsInList<T>(SongInListQueryParams queryParams, Func<SongInList, T> fac) {
 
 			return repository.HandleQuery(ctx => GetSongsInList(ctx, queryParams, fac));
 
@@ -240,9 +264,9 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public ImportedSongListContract Import(string url, bool parseAll) {
+		public async Task<ImportedSongListContract> Import(string url, bool parseAll) {
 
-			var parsed = new SongListImporters().Parse(url, parseAll);
+			var parsed = await new SongListImporters().Parse(url, parseAll);
 
 			FindSongs(parsed.Songs);
 
@@ -250,9 +274,9 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialImportedSongs ImportSongs(string url, string pageToken, int maxResults, bool parseAll) {
+		public async Task<PartialImportedSongs> ImportSongs(string url, string pageToken, int maxResults, bool parseAll) {
 
-			var songs = new SongListImporters().GetSongs(url, pageToken, maxResults, parseAll);
+			var songs = await new SongListImporters().GetSongs(url, pageToken, maxResults, parseAll);
 			return FindSongs(songs);
 
 		}

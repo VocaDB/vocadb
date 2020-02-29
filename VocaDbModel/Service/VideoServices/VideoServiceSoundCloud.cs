@@ -1,7 +1,9 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NLog;
 using VocaDb.Model.Domain.PVs;
@@ -32,6 +34,8 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			public string Avatar_url { get; set; }
 
+			public string Permalink { get; set; }
+
 			public string Username { get; set; }
 
 		}
@@ -41,18 +45,18 @@ namespace VocaDb.Model.Service.VideoServices {
 		public VideoServiceSoundCloud(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers) 
 			: base(service, parser, linkMatchers) {}
 
-		public override string GetUrlById(string id) {
+		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null) {
 
 			var compositeId = new SoundCloudId(id);
 			var matcher = linkMatchers.First();
-			return "http://" + matcher.MakeLinkFromId(compositeId.SoundCloudUrl);
+			return $"http://{matcher.MakeLinkFromId(compositeId.SoundCloudUrl)}";
 
 		}
 
-		public VideoUrlParseResult ParseBySoundCloudUrl(string url) {
+		public async Task<VideoUrlParseResult> ParseBySoundCloudUrl(string url) {
 
 			var apikey = AppConfig.SoundCloudClientId;
-			var apiUrl = string.Format("http://api.soundcloud.com/resolve?url=http://soundcloud.com/{0}&client_id={1}", url, apikey);
+			var apiUrl = string.Format("https://api.soundcloud.com/resolve?url=http://soundcloud.com/{0}&client_id={1}", url, apikey);
 
 			SoundCloudResult result;
 
@@ -65,7 +69,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			}
 
 			try {
-				result = JsonRequest.ReadObject<SoundCloudResult>(apiUrl, timeoutMs: 10000);
+				result = await JsonRequest.ReadObjectAsync<SoundCloudResult>(apiUrl, timeoutMs: 10000);
 			} catch (WebException x) when (HasStatusCode(x, HttpStatusCode.Forbidden)) {
 				// Forbidden most likely means the artist has prevented API access to their tracks, http://stackoverflow.com/a/36529330
 				return ReturnError(x, "This track cannot be embedded");
@@ -96,17 +100,25 @@ namespace VocaDb.Model.Service.VideoServices {
 			var uploadDate = result.Created_at;
 
 			var id = new SoundCloudId(trackId, url);
+			var authorId = result.User.Permalink; // Using permalink because that's the public URL
 
-			return VideoUrlParseResult.CreateOk(url, PVService.SoundCloud, id.ToString(), VideoTitleParseResult.CreateSuccess(title, author, thumbUrl, length, uploadDate: uploadDate));
+			return VideoUrlParseResult.CreateOk(url, PVService.SoundCloud, id.ToString(), VideoTitleParseResult.CreateSuccess(title, author, authorId, thumbUrl, length, uploadDate: uploadDate));
 
 		}
 
-		public override VideoUrlParseResult ParseByUrl(string url, bool getTitle) {
+		public override Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 
 			var soundCloudUrl = linkMatchers[0].GetId(url);
 
 			return ParseBySoundCloudUrl(soundCloudUrl);
 
+		}
+
+		public override IEnumerable<string> GetUserProfileUrls(string authorId) {
+			return new[] { 
+				string.Format("http://soundcloud.com/{0}", authorId),
+				string.Format("https://soundcloud.com/{0}", authorId),
+			};
 		}
 
 	}
@@ -116,13 +128,19 @@ namespace VocaDb.Model.Service.VideoServices {
 	/// </summary>
 	public class SoundCloudId {
 
+		/// <summary>
+		/// Remove query string.
+		/// See https://github.com/VocaDB/vocadb/issues/459
+		/// </summary>
+		private string CleanUrl(string url) => url.Split('?')[0];
+
 		public SoundCloudId(string trackId, string soundCloudUrl) {
 
 			ParamIs.NotNullOrEmpty(() => trackId);
 			ParamIs.NotNullOrEmpty(() => soundCloudUrl);
 
 			TrackId = trackId;
-			SoundCloudUrl = soundCloudUrl;
+			SoundCloudUrl = CleanUrl(soundCloudUrl);
 
 		}
 

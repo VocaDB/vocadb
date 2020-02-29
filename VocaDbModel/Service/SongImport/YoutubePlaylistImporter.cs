@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using NLog;
 using VocaDb.Model.DataContracts.SongImport;
 using VocaDb.Model.Domain.PVs;
@@ -42,7 +43,7 @@ namespace VocaDb.Model.Service.SongImport {
 
 		}
 
-		private PartialImportedSongs GetSongsById(string playlistId, string pageToken, int maxResults, bool parseAll) {
+		private async Task<PartialImportedSongs> GetSongsById(string playlistId, string pageToken, int maxResults, bool parseAll) {
 			
 			var songs = new List<ImportedSongInListContract>();
 
@@ -51,7 +52,7 @@ namespace VocaDb.Model.Service.SongImport {
 			YoutubePlaylistItemResponse result;
 
 			try {
-				result = JsonRequest.ReadObject<YoutubePlaylistItemResponse>(requestUrl);
+				result = await JsonRequest.ReadObjectAsync<YoutubePlaylistItemResponse>(requestUrl);
 			} catch (Exception x) {
 				log.Warn(x, "Unable to read Youtube playlist");
 				throw new UnableToImportException("Unable to read Youtube playlist", x);
@@ -70,11 +71,11 @@ namespace VocaDb.Model.Service.SongImport {
 
 		}
 
-		public PartialImportedSongs GetSongs(string url, string nextPageToken, int maxResults, bool parseAll) {
+		public Task<PartialImportedSongs> GetSongsAsync(string url, string nextPageToken, int maxResults, bool parseAll) {
 			return GetSongsById(GetId(url), nextPageToken, maxResults, parseAll);
 		}
 
-		public ImportedSongListContract Parse(string url, bool parseAll) {
+		public async Task<ImportedSongListContract> ParseAsync(string url, bool parseAll) {
 			
 			var id = GetId(url);
 
@@ -82,7 +83,7 @@ namespace VocaDb.Model.Service.SongImport {
 			YoutubePlaylistResponse result;
 			
 			try {
-				result = JsonRequest.ReadObject<YoutubePlaylistResponse>(requestUrl);
+				result = await JsonRequest.ReadObjectAsync<YoutubePlaylistResponse>(requestUrl);
 			} catch (Exception x) {
 				log.Warn(x, "Unable to read Youtube playlist");
 				throw new UnableToImportException("Unable to read Youtube playlist");
@@ -97,7 +98,7 @@ namespace VocaDb.Model.Service.SongImport {
 			var description = result.Items[0].Snippet.Description;
 			var created = (result.Items[0].Snippet.PublishedAt ?? DateTimeOffset.Now).DateTime;
 
-			var songs = GetSongsById(id, null, 10, parseAll);
+			var songs = await GetSongsById(id, null, 10, parseAll);
 
 			return new ImportedSongListContract { Name = name, Description = description, CreateDate = created, Songs = songs };
 

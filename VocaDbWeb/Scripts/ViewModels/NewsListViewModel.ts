@@ -5,14 +5,14 @@ module vdb.viewModels {
 
     export class NewsListViewModel {
 
-        constructor(blogUrl: string) {
+        constructor(readonly blogUrl: string) {
 
 			if (!blogUrl) {
 				this.loaded(true);
 				return;
 			}
 
-			var url = UrlMapper.buildUrl("https://public-api.wordpress.com/rest/v1.1/sites/", blogUrl, "/posts/");
+			const url = UrlMapper.buildUrl("https://public-api.wordpress.com/rest/v1.1/sites/", blogUrl, "/posts/");
 
             $.ajax({ dataType: 'json', url: url, data: { number: 3 } }).done((response: WordpressResponse) => {
 

@@ -14,6 +14,8 @@ namespace VocaDb.Model.Utils.Config {
 			}
 		}
 
+		public AssetsSection Assets => (AssetsSection)WebConfigurationManager.GetSection("vocaDb/assets") ?? new AssetsSection();
+
 		public SiteSettingsSection SiteSettings => (SiteSettingsSection)WebConfigurationManager.GetSection("vocaDb/siteSettings") ?? new SiteSettingsSection();
 
 		public SpecialTagsSection SpecialTags

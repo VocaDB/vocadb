@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service.Helpers;
@@ -90,6 +90,26 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				return query;
 
 			return query.Where(m => artistTypes.Contains(m.Artist.ArtistType));
+
+		}
+
+		public static IQueryable<T> WhereArtistHasTag<T>(this IQueryable<T> query, int tagId)
+			where T : IArtistLink {
+
+			if (tagId == 0)
+				return query;
+
+			return query.Where(a => a.Artist.Tags.Usages.Any(t => t.Tag.Id == tagId));
+
+		}
+
+		public static IQueryable<T> WhereArtistHasTags<T>(this IQueryable<T> query, int[] tagIds)
+		 where T : IArtistLink {
+
+			if (tagIds == null || !tagIds.Any())
+				return query;
+
+			return tagIds.Aggregate(query, WhereArtistHasTag);
 
 		}
 

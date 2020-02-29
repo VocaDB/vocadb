@@ -52,9 +52,12 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
 
+		public DateTime? AfterDate { get; set; }
 		public ArtistParticipationQueryParams ArtistParticipation { get; set; } = new ArtistParticipationQueryParams();
 
 		public string[] ArtistNames { get; set; }
+
+		public DateTime? BeforeDate { get; set; }
 
 		public bool ChildTags { get; set; }
 
@@ -86,7 +89,19 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		public PagingProperties Paging { get; set; }
 
+		/// <summary>
+		/// ID of parent song to filter.
+		/// 0 = no filter.
+		/// </summary>
+		public int ParentSongId { get; set; }
+
 		public PVServices? PVServices { get; set; }
+
+		/// <summary>
+		/// Filter by release event.
+		/// 0 = no filter.
+		/// </summary>
+		public int ReleaseEventId { get; set; }
 
 		/// <summary>
 		/// List of song types that should be searched for. Cannot be null.
@@ -106,6 +121,11 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		public int[] TagIds { get; set; }
 
 		public TimeSpan TimeFilter { get; set; }
+
+		/// <summary>
+		/// When searching by entry type, search also by associated tag and vice versa.
+		/// </summary>
+		public bool UnifyEntryTypesAndTags { get; set; }
 
 		/// <summary>
 		/// Filter to include only songs rated by the specified user.

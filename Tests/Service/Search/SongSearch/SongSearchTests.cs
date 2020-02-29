@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Songs;
@@ -25,7 +25,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch {
 			var repo = new FakeSongRepository();
 			songSearch = new Model.Service.Search.SongSearch.SongSearch(repo.CreateContext(), 
 				Model.Domain.Globalization.ContentLanguagePreference.Default, 
-				new EntryUrlParser("http://test.vocadb.net", "http://test.vocadb.net"));
+				new EntryUrlParser("https://test.vocadb.net"));
 
 			repo.Save(
 				CreateEntry.Song(name: "Nebula"),

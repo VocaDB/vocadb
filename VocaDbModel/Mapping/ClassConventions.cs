@@ -1,13 +1,11 @@
-﻿using FluentNHibernate.Conventions;
+using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Instances;
 
 namespace VocaDb.Model.Mapping {
 
 	public class ClassConventions : IClassConvention, IIdConvention, IReferenceConvention, IPropertyConvention, IHasManyConvention {
 
-		public static string EscapeColumn(string col) {
-			return string.Format("[{0}]", col);
-		}
+		public static string EscapeColumn(string col) => string.Format("[{0}]", col);
 
 		public void Apply(IClassInstance instance) {
 		

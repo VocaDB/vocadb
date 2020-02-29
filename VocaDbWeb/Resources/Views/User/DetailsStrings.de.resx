@@ -129,10 +129,16 @@
   <data name="AdditionalPermissions" xml:space="preserve">
     <value>Zusätzliche Berechtigungen</value>
   </data>
+  <data name="Attending" xml:space="preserve">
+    <value>Nehme Teil</value>
+  </data>
   <data name="CollectionTab" xml:space="preserve">
     <value>Sammlung</value>
   </data>
   <data name="Comments" xml:space="preserve">
+    <value>Kommentare</value>
+  </data>
+  <data name="CommentsMade" xml:space="preserve">
     <value>Kommentare</value>
   </data>
   <data name="ComposeMessage" xml:space="preserve">
@@ -164,6 +170,12 @@
   </data>
   <data name="FollowedArtistsTab" xml:space="preserve">
     <value>Künstler, denen ich folge:</value>
+  </data>
+  <data name="Interested" xml:space="preserve">
+    <value>Interessiert</value>
+  </data>
+  <data name="LanguagesIKnow" xml:space="preserve">
+    <value>Sprachen, die ich spreche</value>
   </data>
   <data name="LastLogin" xml:space="preserve">
     <value>Letzter Login</value>

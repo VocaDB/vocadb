@@ -3,14 +3,20 @@
 
 module vdb.tests.testSupport {
 
-    import dc = vdb.dataContracts;
+	import dc = vdb.dataContracts;
+
+	export interface SongInList {
+		listId: number;
+		songId: number;
+		notes: string;
+	}
 
     export class FakeSongRepository extends vdb.repositories.SongRepository {
 
-        addedSongId: number;
         results: dc.NewSongCheckResultContract = null;
         song: dc.SongApiContract = null;
-        songLists: dc.SongListBaseContract[] = [];
+		songLists: dc.SongListBaseContract[] = [];
+		songsInLists: SongInList[] = [];
 
         constructor() {
             
@@ -18,7 +24,13 @@ module vdb.tests.testSupport {
 
             this.addSongToList = (listId, songId, notes, newListName, callback?) => {
 
-                this.addedSongId = songId;
+				if (listId !== 0) {
+					this.songsInLists.push({ listId: listId, songId: songId, notes: notes });
+				} else {
+					const nextListId = (_.max(_.map(this.songLists, sl => sl.id)) || 0) + 1;
+					this.songLists.push({ id: nextListId, name: newListName });
+					this.songsInLists.push({ listId: nextListId, songId: songId, notes: notes });
+				}
 
                 if (callback)
                     callback();

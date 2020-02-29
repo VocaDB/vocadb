@@ -1,8 +1,8 @@
-﻿using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.Albums;
 
 namespace VocaDb.Model.Domain.Albums {
 
-	public class AlbumDiscProperties {
+	public class AlbumDiscProperties : IEntryWithIntId {
 
 		private Album album;
 		private string name;

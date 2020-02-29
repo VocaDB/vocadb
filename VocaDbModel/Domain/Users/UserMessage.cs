@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace VocaDb.Model.Domain.Users {
 
@@ -22,7 +22,6 @@ namespace VocaDb.Model.Domain.Users {
 
 		private string message;
 		private User receiver;
-		private User sender;
 		private string subject;
 
 		public UserMessage() {
@@ -62,6 +61,9 @@ namespace VocaDb.Model.Domain.Users {
 
 		}
 
+		/// <summary>
+		/// Timestamp when message was created (sent).
+		/// </summary>
 		public virtual DateTime Created { get; set; }
 
 		public virtual bool HighPriority { get; set; }
@@ -77,8 +79,12 @@ namespace VocaDb.Model.Domain.Users {
 		/// </remarks>
 		public virtual UserInboxType Inbox { get; set; }
 
+		/// <summary>
+		/// Message body. May contain Markdown markup.
+		/// Cannot be null or empty.
+		/// </summary>
 		public virtual string Message {
-			get { return message; }
+			get => message;
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				message = value;
@@ -91,7 +97,7 @@ namespace VocaDb.Model.Domain.Users {
 		/// Receiver of this message. Cannot be null.
 		/// </summary>
 		public virtual User Receiver {
-			get { return receiver; }
+			get => receiver;
 			set {
 				ParamIs.NotNull(() => value);
 				receiver = value;
@@ -101,13 +107,10 @@ namespace VocaDb.Model.Domain.Users {
 		/// <summary>
 		/// Sender of this message. Can be null, in which case it's a notification.
 		/// </summary>
-		public virtual User Sender {
-			get { return sender; }
-			set { sender = value; }
-		}
+		public virtual User Sender { get; set; }
 
 		public virtual string Subject {
-			get { return subject; }
+			get => subject;
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				subject = value;

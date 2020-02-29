@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Caching;
 using VocaDb.Model.Database.Repositories;
@@ -27,7 +27,7 @@ namespace VocaDb.Model.Service.Queries {
 		private readonly IEntryThumbPersister entryThumbPersister;
 		private readonly ContentLanguagePreference languagePreference;
 
-		private AlbumContract[] GetLatestAlbums(IDatabaseContext session, Artist artist) {
+		private AlbumForApiContract[] GetLatestAlbums(IDatabaseContext session, Artist artist) {
 			
 			var id = artist.Id;
 
@@ -45,7 +45,7 @@ namespace VocaDb.Model.Service.Queries {
 				.Select(s => s.Album)
 				.OrderByReleaseDate(SortDirection.Descending)
 				.Take(6).ToArray()
-				.Select(s => new AlbumContract(s, languagePreference))
+				.Select(s => new AlbumForApiContract(s, languagePreference, entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
 				.ToArray();
 
 		}
@@ -55,16 +55,17 @@ namespace VocaDb.Model.Service.Queries {
 			var id = artist.Id;
 
 			return session.Query<ReleaseEvent>()
+				.WhereNotDeleted()
 				.Where(e => e.AllArtists.Any(a => a.Artist.Id == id))
 				.OrderByDate(SortDirection.Descending)
 				.Take(3).ToArray()
 				.Select(s => new ReleaseEventForApiContract(s, languagePreference, 
-					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, entryThumbPersister, true))
+					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, entryThumbPersister))
 				.ToArray();
 
 		}
 
-		private AlbumContract[] GetTopAlbums(IDatabaseContext session, Artist artist, int[] latestAlbumIds) {
+		private AlbumForApiContract[] GetTopAlbums(IDatabaseContext session, Artist artist, int[] latestAlbumIds) {
 			
 			var id = artist.Id;
 
@@ -84,7 +85,7 @@ namespace VocaDb.Model.Service.Queries {
 				.OrderByDescending(s => s.RatingAverageInt)
 				.ThenByDescending(s => s.RatingCount)
 				.Take(6).ToArray()
-				.Select(s => new AlbumContract(s, languagePreference))
+				.Select(s => new AlbumForApiContract(s, languagePreference, entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
 				.ToArray();
 
 		}

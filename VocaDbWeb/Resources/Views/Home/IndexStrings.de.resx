@@ -126,6 +126,9 @@
   <data name="RecentActivity" xml:space="preserve">
     <value>Letzte Aktivität</value>
   </data>
+  <data name="RecentEvents" xml:space="preserve">
+    <value>Findet statt</value>
+  </data>
   <data name="RecentSongs" xml:space="preserve">
     <value>PV Highlights</value>
   </data>

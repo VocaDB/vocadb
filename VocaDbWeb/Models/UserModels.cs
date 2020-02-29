@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -60,16 +60,12 @@ namespace VocaDb.Web.Models {
 
 	public class LoginModel {
 
-		public LoginModel() {
-			this.SecureLogin = true;			
-		}
+		public LoginModel() {}
 
-		public LoginModel(string returnUrl, bool returnToMainSite, bool secureLogin)
-			: this() {
+		public LoginModel(string returnUrl, bool returnToMainSite) {
 
 			this.ReturnUrl = returnUrl;
 			this.ReturnToMainSite = returnToMainSite;
-			this.SecureLogin = secureLogin;
 
 		}
 
@@ -100,11 +96,6 @@ namespace VocaDb.Web.Models {
 		public bool ReturnToMainSite { get; set; }
 
 		public string ReturnUrl { get; set; }
-
-		/// <summary>
-		/// Whether to use the secure (HTTPS) site for logging in (default is true).
-		/// </summary>
-		public bool SecureLogin { get; set; }
 
 	}
 
@@ -218,6 +209,7 @@ namespace VocaDb.Web.Models {
 		// Note: no validation here because of legacy usernames
 		[Display(Name = "Username")]
 		[Required]
+		[StringLength(100, MinimumLength = 3)]
 		public string Username { get; set; }
 
 		[FromJson]
@@ -243,7 +235,7 @@ namespace VocaDb.Web.Models {
 
 		public string TwitterName { get; set; }
 
-		[Range(1, 100)]
+		[Range(1, 390)]
 		public int UnreadNotificationsToKeep { get; set; }
 
 		public UpdateUserSettingsContract ToContract() {

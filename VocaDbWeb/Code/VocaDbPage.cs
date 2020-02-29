@@ -1,4 +1,4 @@
-﻿using System.Web;
+using System.Web;
 using System.Web.Mvc;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.BrandableStrings;
@@ -57,7 +57,7 @@ namespace VocaDb.Web.Code {
 			return new HtmlString(JsonHelpers.Serialize(obj));
 		}
 
-		public VocaUrlMapper UrlMapper => new VocaUrlMapper(WebHelper.IsSSL(Request));
+		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
 		public IUserPermissionContext UserContext => DependencyResolver.Current.GetService<IUserPermissionContext>();
 
@@ -95,7 +95,7 @@ namespace VocaDb.Web.Code {
 			return new HtmlString(JsonHelpers.Serialize(obj));
 		}
 
-		public VocaUrlMapper UrlMapper => new VocaUrlMapper(WebHelper.IsSSL(Request));
+		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
 		public IUserPermissionContext UserContext => DependencyResolver.Current.GetService<IUserPermissionContext>();
 

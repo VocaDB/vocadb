@@ -19,7 +19,7 @@ namespace VocaDb.Web.Resources.Views.SongList {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ImportStrings {
@@ -133,7 +133,7 @@ namespace VocaDb.Web.Resources.Views.SongList {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Include only ranked songs (from NicoNicoDouga rankings).
+        ///   Looks up a localized string similar to Include only ranked songs (from NicoNico rankings).
         /// </summary>
         public static string OnlyRanked {
             get {
@@ -205,7 +205,7 @@ namespace VocaDb.Web.Resources.Views.SongList {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create song list from NicoNicoDouga MyList or YouTube playlist.
+        ///   Looks up a localized string similar to Create song list from NicoNico MyList or YouTube playlist.
         /// </summary>
         public static string Title {
             get {
@@ -232,7 +232,7 @@ namespace VocaDb.Web.Resources.Views.SongList {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can be any NicoNicoDouga MyList, for example http://www.nicovideo.jp/mylist/1234567, or YouTube playlist, for example https://www.youtube.com/playlist?list=MIKUMIKU3939.
+        ///   Looks up a localized string similar to Can be any NicoNico MyList, for example http://www.nicovideo.jp/mylist/1234567, or YouTube playlist, for example https://www.youtube.com/playlist?list=MIKUMIKU3939.
         /// </summary>
         public static string UrlDescription {
             get {

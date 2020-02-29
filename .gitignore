@@ -24,4 +24,7 @@ VocaDb.Migrations/bin/
 *.vspx
 .vs/config/applicationhost.config
 TestResults/
-/.vs/VocaDb/v15/sqlite3/storage.ide
+/.vs
+VocaDb.TouhouDb.Resources/bin/
+VocaDb.TouhouDb.Resources/obj/
+*.exe

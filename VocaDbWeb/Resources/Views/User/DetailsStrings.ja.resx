@@ -210,6 +210,9 @@
   <data name="Email" xml:space="preserve">
     <value>メール</value>
   </data>
+  <data name="Events" xml:space="preserve">
+    <value>イベント</value>
+  </data>
   <data name="LastLogin" xml:space="preserve">
     <value>最後のログイン</value>
   </data>

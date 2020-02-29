@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model;
@@ -9,6 +10,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Aggregate;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -35,9 +37,11 @@ namespace VocaDb.Web.Controllers.Api {
 	[System.Web.Http.RoutePrefix("api/songs")]
 	public class SongApiController : ApiController {
 
-		private const int absoluteMax = 50;
+		private const int hourInSeconds = 3600;
+		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly OtherService otherService;
 		private readonly SongQueries queries;
 		private readonly SongService service;
 		private readonly SongAggregateQueries songAggregateQueries;
@@ -48,13 +52,17 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Initializes controller.
 		/// </summary>
 		public SongApiController(SongService service, SongQueries queries, SongAggregateQueries songAggregateQueries, 
-			IEntryLinkFactory entryLinkFactory, IUserPermissionContext userPermissionContext, UserService userService) {
+			IEntryLinkFactory entryLinkFactory, IUserPermissionContext userPermissionContext, 
+			UserService userService, OtherService otherService) {
+
 			this.service = service;
 			this.queries = queries;
 			this.userService = userService;
 			this.songAggregateQueries = songAggregateQueries;
 			this.entryLinkFactory = entryLinkFactory;
 			this.userPermissionContext = userPermissionContext;
+			this.otherService = otherService;
+
 		}
 
 		/// <summary>
@@ -104,9 +112,9 @@ namespace VocaDb.Web.Controllers.Api {
 		[System.Web.Http.Route("findDuplicate")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[System.Web.Http.HttpGet]
-		public NewSongCheckResultContract GetFindDuplicate([FromUri] string[] term = null, [FromUri] string[] pv = null, [FromUri] int[] artistIds = null, bool getPVInfo = false) {
+		public async Task<NewSongCheckResultContract> GetFindDuplicate([FromUri] string[] term = null, [FromUri] string[] pv = null, [FromUri] int[] artistIds = null, bool getPVInfo = false) {
 
-			var result = queries.FindDuplicates(
+			var result = await queries.FindDuplicates(
 				(term ?? new string[0]).Where(p => p != null).ToArray(),
 				(pv ?? new string[0]).Where(p => p != null).ToArray(),
 				artistIds, getPVInfo);
@@ -166,6 +174,22 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		/// <summary>
+		/// Gets list of highlighted songs, same as front page.
+		/// </summary>
+		/// <remarks>
+		/// Output is cached for 1 hour.
+		/// </remarks>
+		[Route("highlighted")]
+		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
+		public async Task<IEnumerable<SongForApiContract>> GetHighlightedSongs(
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default, 
+			SongOptionalFields fields = SongOptionalFields.None) {
+
+			return await otherService.GetHighlightedSongs(languagePreference, fields);
+
+		}
+
+		/// <summary>
 		/// Get ratings for a song.
 		/// </summary>
 		/// <param name="id">Song ID.</param>
@@ -203,6 +227,14 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("by-names")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public SongForApiContract[] GetByNames([FromUri] string[] names, [FromUri] int[] ignoreIds, ContentLanguagePreference lang, [FromUri] SongType[] songTypes = null, int maxResults = 3) {
+
+			return queries.GetByNames(names, songTypes, ignoreIds, lang, maxResults);
+
+		}
+
 		/// <summary>
 		/// Gets related songs.
 		/// </summary>
@@ -225,9 +257,12 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Filtered song types (optional). 
 		/// Possible values are Original, Remaster, Remix, Cover, Instrumental, Mashup, MusicPV, DramaPV, Other.
 		/// </param>
+		/// <param name="afterDate">Filter by songs published after this date (inclusive).</param>
+		/// <param name="beforeDate">Filter by songs published before this date (exclusive).</param>
 		/// <param name="tagName">Filter by one or more tag names (optional).</param>
 		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
 		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
+		/// <param name="unifyTypesAndTags">When searching by song type, search by associated tag as well, and vice versa.</param>
 		/// <param name="artistId">Filter by artist Id.</param>
 		/// <param name="artistParticipationStatus">
 		/// Filter by artist participation status. Only valid if artistId is specified.
@@ -242,6 +277,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="since">Allow only entries that have been created at most this many hours ago. By default there is no filtering.</param>
 		/// <param name="minScore">Minimum rating score. Optional.</param>
 		/// <param name="userCollectionId">Filter by user's rated songs. By default there is no filtering.</param>
+		/// <param name="releaseEventId">Filter by release event. By default there is no filtering.</param>
+		/// <param name="parentSongId">Filter by parent song. By default there is no filtering.</param>
 		/// <param name="status">Filter by entry status (optional).</param>
 		/// <param name="advancedFilters">List of advanced filters (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
@@ -265,9 +302,12 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<SongForApiContract> GetList(
 			string query = "", 
 			string songTypes = null,
+			DateTime? afterDate = null,
+			DateTime? beforeDate = null,
 			[FromUri] string[] tagName = null,
 			[FromUri] int[] tagId = null,
 			bool childTags = false,
+			bool unifyTypesAndTags = false,
 			[FromUri] int[] artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
@@ -277,6 +317,8 @@ namespace VocaDb.Web.Controllers.Api {
 			int? since = null,
 			int? minScore = null,
 			int? userCollectionId = null,
+			int? releaseEventId = null,
+			int? parentSongId = null,
 			EntryStatus? status = null,
 			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
@@ -296,14 +338,19 @@ namespace VocaDb.Web.Controllers.Api {
 					ChildVoicebanks = childVoicebanks,
 					IncludeMembers = includeMembers
 				},
+                AfterDate = afterDate,
+                BeforeDate = beforeDate,
 				TagIds = tagId,
 				Tags = tagName, 
 				ChildTags = childTags,
+				UnifyEntryTypesAndTags = unifyTypesAndTags,
 				OnlyWithPVs = onlyWithPvs,
 				TimeFilter = since.HasValue ? TimeSpan.FromHours(since.Value) : TimeSpan.Zero,
 				MinScore = minScore ?? 0,
 				PVServices = pvServices,
 				UserCollectionId = userCollectionId ?? 0,
+				ReleaseEventId = releaseEventId ?? 0,
+				ParentSongId = parentSongId ?? 0,
 				AdvancedFilters = advancedFilters,
 				LanguagePreference = lang
 			};
@@ -402,6 +449,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[ApiExplorerSettings(IgnoreApi = true)]
+		[Route("{id:int}/tagSuggestions")]
+		public async Task<IEnumerable<TagUsageForApiContract>> GetTagSuggestions(int id) {
+			return await queries.GetTagSuggestionsAsync(id);
+		}
+
 		/// <summary>
 		/// Gets top rated songs.
 		/// </summary>
@@ -437,6 +490,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 					if (!startDate.HasValue) {
 						startDate = DateTime.Now - timeSpan;
+						endDate = DateTime.Now.AddDays(1);
 					} else {
 						endDate = startDate + timeSpan;
 					}
@@ -520,7 +574,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[HttpPost]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
-		public SongContract PostNewSong(CreateSongContract contract) {
+		public Task<SongContract> PostNewSong(CreateSongContract contract) {
 
 			if (contract == null)
 				throw new HttpBadRequestException("Message was empty");

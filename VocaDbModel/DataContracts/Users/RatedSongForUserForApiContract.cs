@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 
@@ -12,11 +13,12 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		public RatedSongForUserForApiContract() { }
 
-		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, IUserIconFactory userIconFactory, UserOptionalFields userFields) {
+		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, IUserIconFactory userIconFactory, UserOptionalFields userFields,
+			IUserPermissionContext userPermissionContext) {
 
 			this.Date = ratedSong.Date;
 			this.Rating = ratedSong.Rating;
-			if (ratedSong.User.Options.PublicRatings) {
+			if (ratedSong.User.Options.PublicRatings || userPermissionContext.HasPermission(PermissionToken.ViewHiddenRatings)) {
 				User = new UserForApiContract(ratedSong.User, userIconFactory, userFields);
 			}
 

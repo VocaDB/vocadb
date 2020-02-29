@@ -50,7 +50,11 @@ namespace VocaDb.Model.Domain.Artists {
 
 		Utaite,
 
-		Band
+		Band,
+
+		Vocalist,
+
+		Character
 
 	}
 
@@ -91,7 +95,11 @@ namespace VocaDb.Model.Domain.Artists {
 
 		Utaite = 8192,
 
-		Band = 16384
+		Band = 16384,
+
+		Vocalist = 32768,
+
+		Character = 65536
 
 	}
 

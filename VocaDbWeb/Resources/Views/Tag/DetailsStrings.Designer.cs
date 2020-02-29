@@ -19,7 +19,7 @@ namespace ViewRes.Tag {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class DetailsStrings {
@@ -115,11 +115,29 @@ namespace ViewRes.Tag {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All song lists.
+        /// </summary>
+        public static string AllSongLists {
+            get {
+                return ResourceManager.GetString("AllSongLists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All songs.
         /// </summary>
         public static string AllSongs {
             get {
                 return ResourceManager.GetString("AllSongs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Associated entry type.
+        /// </summary>
+        public static string AssociatedEntryType {
+            get {
+                return ResourceManager.GetString("AssociatedEntryType", resourceCulture);
             }
         }
         
@@ -169,7 +187,7 @@ namespace ViewRes.Tag {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The following NicoNicoDouga tags are mapped to this tag.
+        ///   Looks up a localized string similar to The following NicoNico tags are mapped to this tag.
         /// </summary>
         public static string MappedTags {
             get {

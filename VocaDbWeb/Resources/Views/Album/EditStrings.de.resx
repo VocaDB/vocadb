@@ -151,7 +151,7 @@
     <value>Tag</value>
   </data>
   <data name="BaReleaseEvent" xml:space="preserve">
-    <value>Release-Event</value>
+    <value>Erscheinungs Event</value>
   </data>
   <data name="BaReleaseMonth" xml:space="preserve">
     <value>Monat</value>
@@ -244,7 +244,7 @@
     <value>Dienst</value>
   </data>
   <data name="PvSupportedServices" xml:space="preserve">
-    <value>Unterstützte Dienste: Youtube, NicoNicoDouga, Vimeo, SoundCloud, Piapro und Bilibili.</value>
+    <value>Unterstützte Dienste: Youtube, NicoNico, Vimeo, SoundCloud, Piapro und Bilibili.</value>
   </data>
   <data name="PvType" xml:space="preserve">
     <value>Typ</value>
@@ -260,5 +260,8 @@
   </data>
   <data name="BaDiscTypeExplanation" xml:space="preserve">
     <value>Wenn du unsicher bist, welchen Typen du verwenden willst, versuche herauszufinden wie die Künstler selbst das Album bezeichnen. Für weitere ausführliche Beschreibungen, besuche bitte Wikipedia, Discogs oder Musicbrainz.</value>
+  </data>
+  <data name="DiAddRow" xml:space="preserve">
+    <value>Neue Zeile hinzufügen</value>
   </data>
 </root>

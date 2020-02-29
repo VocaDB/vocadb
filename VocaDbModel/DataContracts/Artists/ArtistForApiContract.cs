@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -22,13 +22,13 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public ArtistForApiContract(Artist artist, 
 			ContentLanguagePreference languagePreference, 
 			IEntryThumbPersister thumbPersister,
-			bool ssl,
 			ArtistOptionalFields includedFields) {
 
 			ArtistType = artist.ArtistType;
 			CreateDate = artist.CreateDate;
 			DefaultName = artist.DefaultName;
 			DefaultNameLanguage = artist.Names.SortNames.DefaultLanguage;
+			Deleted = artist.Deleted;
 			Id = artist.Id;
 			Name = artist.Names.SortNames[languagePreference];				
 			PictureMime = artist.PictureMime;
@@ -60,7 +60,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 			if (thumbPersister != null && includedFields.HasFlag(ArtistOptionalFields.MainPicture) && !string.IsNullOrEmpty(artist.PictureMime)) {
 				
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(artist, artist.PictureMime), thumbPersister, ssl);
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(artist, artist.PictureMime), thumbPersister);
 
 			}
 
@@ -119,6 +119,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 		/// </summary>
 		[DataMember]
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public bool Deleted { get; set; }
 
 		/// <summary>
 		/// Description. Optional field.
@@ -206,7 +209,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 	public class ArtistRelationsForApi {
 
 		[DataMember(EmitDefaultValue = false)]
-		public AlbumContract[] LatestAlbums { get; set; }
+		public AlbumForApiContract[] LatestAlbums { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public ReleaseEventForApiContract[] LatestEvents { get; set; }
@@ -215,7 +218,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public SongForApiContract[] LatestSongs { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public AlbumContract[] PopularAlbums { get; set; }
+		public AlbumForApiContract[] PopularAlbums { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public SongForApiContract[] PopularSongs { get; set; }

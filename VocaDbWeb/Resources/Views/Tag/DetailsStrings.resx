@@ -135,8 +135,14 @@
   <data name="AllEvents" xml:space="preserve">
     <value>All events</value>
   </data>
+  <data name="AllSongLists" xml:space="preserve">
+    <value>All song lists</value>
+  </data>
   <data name="AllSongs" xml:space="preserve">
     <value>All songs</value>
+  </data>
+  <data name="AssociatedEntryType" xml:space="preserve">
+    <value>Associated entry type</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>Category</value>
@@ -154,7 +160,7 @@
     <value>Follow tag</value>
   </data>
   <data name="MappedTags" xml:space="preserve">
-    <value>The following NicoNicoDouga tags are mapped to this tag</value>
+    <value>The following NicoNico tags are mapped to this tag</value>
   </data>
   <data name="Overview" xml:space="preserve">
     <value>Overview</value>

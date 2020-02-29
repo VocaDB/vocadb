@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -34,6 +34,8 @@ using VocaDb.Web.Models;
 using VocaDb.Web.Models.User;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Code.Exceptions;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers
 {
@@ -194,9 +196,10 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult ForgotPassword(ForgotPassword model) {
+		public async Task<ActionResult> ForgotPassword(ForgotPassword model) {
 
-			if (!ReCaptcha2.Validate(Request, AppConfig.ReCAPTCHAKey).Success)
+			var captchaResult = await ReCaptcha2.ValidateAsync(Request, AppConfig.ReCAPTCHAKey);
+			if (!captchaResult.Success)
 				ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
 
 			if (!ModelState.IsValid) {
@@ -204,7 +207,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			try {
-				Data.RequestPasswordReset(model.Username, model.Email, AppConfig.HostAddress + Url.Action("ResetPassword", "User"));
+				await Data.RequestPasswordReset(model.Username, model.Email, AppConfig.HostAddress + Url.Action("ResetPassword", "User"));
 			} catch (UserNotFoundException) {}
 
 			TempData.SetStatusMessage(ViewRes.User.ForgotPasswordStrings.MessageSent);
@@ -285,18 +288,18 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[RestrictBannedIP]
-		public ActionResult Login(string returnUrl, bool secureLogin = true)
+		public ActionResult Login(string returnUrl = null)
         {
 
 			RestoreErrorsFromTempData();
 
-            return View(new LoginModel(returnUrl, !WebHelper.IsSSL(Request), secureLogin));
+            return View(new LoginModel(returnUrl, false));
         }
 
 		[RestrictBannedIP]
-		public PartialViewResult LoginForm(string returnUrl, bool secureLogin = true) {
+		public PartialViewResult LoginForm(string returnUrl) {
 
-		   return PartialView("Login", new LoginModel(returnUrl, !WebHelper.IsSSL(Request), secureLogin));
+		   return PartialView("Login", new LoginModel(returnUrl, false));
 
 		}
 
@@ -342,7 +345,7 @@ namespace VocaDb.Web.Controllers
 						targetUrl = Url.Action("Index", "Home");
 
 					if (model.ReturnToMainSite)
-						targetUrl = VocaUriBuilder.AbsoluteFromUnknown(targetUrl, preserveAbsolute: true, ssl: false);
+						targetUrl = VocaUriBuilder.AbsoluteFromUnknown(targetUrl, preserveAbsolute: true);
 
 					return Redirect(targetUrl);
 
@@ -352,7 +355,7 @@ namespace VocaDb.Web.Controllers
 
 			if (model.ReturnToMainSite) {
 				SaveErrorsToTempData();
-				return Redirect(VocaUriBuilder.Absolute(Url.Action("Login", new { model.ReturnUrl, model.SecureLogin }), false));				
+				return Redirect(VocaUriBuilder.Absolute(Url.Action("Login", new { model.ReturnUrl })));				
 			}
 
         	return View(model);
@@ -361,6 +364,8 @@ namespace VocaDb.Web.Controllers
 
 		[RestrictBannedIP]
 		public ActionResult LoginTwitter(string returnUrl) {
+
+			log.Info($"{WebHelper.GetRealHost(Request)} login via Twitter");
 			
 			// Make sure session ID is initialized
 // ReSharper disable UnusedVariable
@@ -371,6 +376,10 @@ namespace VocaDb.Web.Controllers
 
 			var targetUrl = Url.Action("LoginTwitterComplete", new { returnUrl });
 			var uri = new Uri(new Uri(AppConfig.HostAddress), targetUrl);
+
+			// https://twittercommunity.com/t/removing-support-for-legacy-tls-versions-1-0-1-1-on-twitter/126648
+			// TODO: TLS 1.2 should already be default in .NET 4.8. Figure out why not.
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13;
 
 			UserAuthorizationRequest request;
 
@@ -402,14 +411,14 @@ namespace VocaDb.Web.Controllers
 
 			if (!string.IsNullOrEmpty(param)) {
 				TempData.SetStatusMessage(ViewRes.User.LoginUsingAuthStrings.SignInCancelled);
-				return View("Login", new LoginModel(string.Empty, !WebHelper.IsSSL(Request), true));
+				return View("Login", new LoginModel(string.Empty, false));
 			}
 
 			var response = new TwitterConsumer().ProcessUserAuthorization(Hostname);
 
 			if (response == null) {
 				ModelState.AddModelError("Authentication", ViewRes.User.LoginUsingAuthStrings.AuthError);
-				return View("Login", new LoginModel(string.Empty, !WebHelper.IsSSL(Request), true));
+				return View("Login", new LoginModel(string.Empty, false));
 			}
 
 			var culture = WebHelper.GetInterfaceCultureName(Request);
@@ -427,7 +436,7 @@ namespace VocaDb.Web.Controllers
 			string targetUrl;
 
 			if (!string.IsNullOrEmpty(returnUrl))
-				targetUrl = VocaUriBuilder.AbsoluteFromUnknown(returnUrl, preserveAbsolute: true, ssl: false);
+				targetUrl = VocaUriBuilder.AbsoluteFromUnknown(returnUrl, preserveAbsolute: true);
 			else
 				targetUrl = Url.Action("Index", "Home");
 
@@ -499,7 +508,7 @@ namespace VocaDb.Web.Controllers
         // POST: /User/Create
 
         [HttpPost]
-        public ActionResult Create(RegisterModel model) {
+        public async Task<ActionResult> Create(RegisterModel model) {
 
 			string restrictedErr = "Sorry, access from your host is restricted. It is possible this restriction is no longer valid. If you think this is the case, please contact support.";
 
@@ -513,7 +522,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError(string.Empty, "Signups are disabled");
 			}
 
-			var recaptchaResult = ReCaptcha2.Validate(Request, AppConfig.ReCAPTCHAKey);
+			var recaptchaResult = await ReCaptcha2.ValidateAsync(Request, AppConfig.ReCAPTCHAKey);
 			if (!recaptchaResult.Success) {
 
 				ErrorLogger.LogMessage(Request, string.Format("Invalid CAPTCHA (error {0})", recaptchaResult.Error), LogLevel.Warn);
@@ -537,33 +546,29 @@ namespace VocaDb.Web.Controllers
 	        try {
 
 				var url = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User")).ToString();
-				var user = Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname, 
+				var user = await Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname,
+					Request.UserAgent,
 					WebHelper.GetInterfaceCultureName(Request),
-					time, ipRuleManager.TempBannedIPs, url);
+					time, ipRuleManager, url);
 				FormsAuthentication.SetAuthCookie(user.Name, false);
 		        return RedirectToAction("Index", "Home");
 
 	        } catch (UserNameAlreadyExistsException) {
-
 		        ModelState.AddModelError("UserName", ViewRes.User.CreateStrings.UsernameTaken);
 		        return View(model);
-
 	        } catch (UserEmailAlreadyExistsException) {
-
 				ModelState.AddModelError("Email", ViewRes.User.CreateStrings.EmailTaken);
-				return View(model);
-      
+				return View(model);   
 	        } catch (InvalidEmailFormatException) {
-
 				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
 				return View(model);
-
 	        } catch (TooFastRegistrationException) {
-
 				ModelState.AddModelError("Restricted", restrictedErr);
 				return View(model);
-
-	        }
+	        } catch (RestrictedIPException) {
+				ModelState.AddModelError("Restricted", restrictedErr);
+				return View(model);
+			}
 
         }
 
@@ -718,10 +723,10 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public void RequestEmailVerification() {
+		public async Task RequestEmailVerification() {
 			
 			var url = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User"));
-			Data.RequestEmailVerification(LoggedUserId, url.ToString());
+			await Data.RequestEmailVerification(LoggedUserId, url.ToString());
 
 		}
 
@@ -853,15 +858,6 @@ namespace VocaDb.Web.Controllers
 			TempData.SetSuccessMessage("Twitter login disconnected");
 
 			return RedirectToAction("MySettings");
-
-		}
-
-		[Authorize]
-		public ActionResult SetToLimited(int id) {
-
-			Data.SetUserToLimited(id);
-
-			return RedirectToAction("Details", new { id });
 
 		}
 

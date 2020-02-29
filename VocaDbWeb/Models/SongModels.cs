@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -37,6 +37,7 @@ namespace VocaDb.Web.Models {
 			Albums = contract.Albums;
 			AlternateVersions = contract.AlternateVersions.Where(a => a.SongType != SongType.Original).ToArray();
 			ArtistString = contract.ArtistString;
+			BrowsedAlbumId = contract.Album?.Id;
 			CanEdit = EntryPermissionManager.CanEdit(userContext, contract.Song);
 			CanEditPersonalDescription = contract.CanEditPersonalDescription;
 			CanRemoveTagUsages = contract.CanRemoveTagUsages;
@@ -66,19 +67,25 @@ namespace VocaDb.Web.Models {
 			PersonalDescriptionText = contract.PersonalDescriptionText;
 			PersonalDescriptionAuthor = contract.PersonalDescriptionAuthor;
 			SongType = contract.Song.SongType;
+			SongTypeTag = contract.SongTypeTag;
 			Status = contract.Song.Status;
 			Suggestions = contract.Suggestions;
 			Tags = contract.Tags;
 			UserRating = contract.UserRating;
 			WebLinks = contract.WebLinks.ToList();
+			ContentFocus = SongHelper.GetContentFocus(SongType);
 
 			Animators = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Animator)).ToArray();
 			Bands = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Band)).ToArray();
+			Illustrators = ContentFocus == ContentFocus.Illustration ? contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Illustrator)).ToArray() : null;
 			Performers = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Vocalist)).ToArray();
 			Producers = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Producer)).ToArray();
+			var subjectsForThis = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Subject)).ToArray();
+			Subject = subjectsForThis.Any() ? subjectsForThis : contract.SubjectsFromParents;
 			OtherArtists = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Circle)  
 				|| a.Categories.HasFlag(ArtistCategories.Label) 
-				|| a.Categories.HasFlag(ArtistCategories.Other)).ToArray();
+				|| a.Categories.HasFlag(ArtistCategories.Other)
+			    || (ContentFocus != ContentFocus.Illustration && a.Categories.HasFlag(ArtistCategories.Illustrator))).ToArray();
 
 			var pvs = contract.PVs;
 
@@ -120,6 +127,8 @@ namespace VocaDb.Web.Models {
 
 		public ArtistForSongContract[] Bands { get; set; }
 
+		public int? BrowsedAlbumId { get; set; }
+
 		public bool CanEdit { get; set; }
 
 		public bool CanEditPersonalDescription { get; set; }
@@ -127,6 +136,8 @@ namespace VocaDb.Web.Models {
 		public bool CanRemoveTagUsages { get; set; }
 
 		public int CommentCount { get; set; }
+
+		public ContentFocus ContentFocus { get; set; }
 
 		public SongDetailsContract Contract { get; set; }
 
@@ -143,6 +154,8 @@ namespace VocaDb.Web.Models {
 		public int Hits { get; set; }
 
 		public int Id { get; set; }
+
+		public ArtistForSongContract[] Illustrators { get; set; }
 
 		public bool IsFavorited { get; set; }
 
@@ -195,7 +208,11 @@ namespace VocaDb.Web.Models {
 
 		public SongType SongType { get; set; }
 
+		public TagBaseContract SongTypeTag { get; set; }
+
 		public EntryStatus Status { get; set; }
+
+		public ArtistForSongContract[] Subject { get; set; }
 
 		public SongForApiContract[] Suggestions { get; set; }
 
@@ -228,8 +245,7 @@ namespace VocaDb.Web.Models {
 			SongType = model.SongType;
 			TagUsages = model.Tags;
 
-			var domains = new[] { "http://vocadb.net/", "http://utaitedb.net/" };
-			LinkedPages = model.WebLinks.Where(w => domains.Any(d => w.Url.StartsWith(d, StringComparison.InvariantCultureIgnoreCase))).Select(w => w.Url).ToArray();
+			LinkedPages = model.WebLinks.Select(w => w.Url).Where(RelatedSitesHelper.IsRelatedSite).ToArray();
 
 		}
 

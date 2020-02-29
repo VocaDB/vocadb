@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts.Albums;
@@ -60,6 +60,7 @@ namespace VocaDb.Model.Domain.Albums {
 		private IList<OtherArtistForAlbum> otherArtists = new List<OtherArtistForAlbum>();
 		private EntryPictureFileManager<AlbumPictureFile> pictureManager = new EntryPictureFileManager<AlbumPictureFile>(); 
 		private IList<PVForAlbum> pvs = new List<PVForAlbum>();
+		private IList<AlbumReview> reviews = new List<AlbumReview>();
 		private IList<SongInAlbum> songs = new List<SongInAlbum>();
 		private TagManager<AlbumTagUsage> tags = new TagManager<AlbumTagUsage>();
 		private IList<AlbumForUser> userCollections = new List<AlbumForUser>();
@@ -113,6 +114,8 @@ namespace VocaDb.Model.Domain.Albums {
 				songs = value;
 			}
 		}
+
+		public virtual bool AllowNotifications => true;
 
 		public virtual ArchivedVersionManager<ArchivedAlbumVersion, AlbumEditableFields> ArchivedVersionsManager {
 			get { return archivedVersions; }
@@ -208,6 +211,11 @@ namespace VocaDb.Model.Domain.Albums {
 		}
 
 		/// <summary>
+		/// Album's artist string is "various artists".
+		/// </summary>
+		public virtual bool IsVariousArtists => ArtistString.Default == ArtistHelper.VariousArtists;
+
+		/// <summary>
 		/// Gets the ordinal number of the last disc for this album, starting from 1.
 		/// </summary>
 		public virtual int LastDiscNumber {
@@ -215,6 +223,8 @@ namespace VocaDb.Model.Domain.Albums {
 				return (Songs.Any() ? Songs.Max(s => s.DiscNumber) : 1);
 			}
 		}
+
+		public virtual AlbumReview LastReview => Reviews.OrderByDescending(r => r.Date).FirstOrDefault();
 
 		public virtual TranslatedString TranslatedName {
 			get { return Names.SortNames; }
@@ -327,6 +337,14 @@ namespace VocaDb.Model.Domain.Albums {
 		public virtual int RatingCount { get; set; }
 
 		public virtual int RatingTotal { get; set; }
+
+		public virtual IList<AlbumReview> Reviews {
+			get => reviews;
+			set {
+				ParamIs.NotNull(() => value);
+				reviews = value;
+			}
+		}
 
 		public virtual IEnumerable<SongInAlbum> Songs {
 			get {
@@ -705,6 +723,7 @@ namespace VocaDb.Model.Domain.Albums {
 
 					if (!HasArtist(artist)) {
 						link = AddArtist(artist, contract.IsSupport, contract.Roles);
+						link.Name = contract.IsCustomName ? contract.Name : null;
 					}
 
 				} else {
@@ -724,6 +743,7 @@ namespace VocaDb.Model.Domain.Albums {
 				if (!old.ContentEquals(newEntry)) {
 					old.IsSupport = newEntry.IsSupport;
 					old.Roles = newEntry.Roles;
+					old.Name = newEntry.IsCustomName ? newEntry.Name : null;
 					return true;
 				} else {
 					return false;
@@ -882,7 +902,7 @@ namespace VocaDb.Model.Domain.Albums {
 
 		public virtual void UpdateArtistString() {
 
-			ArtistString = ArtistHelper.GetArtistString(Artists, AlbumHelper.IsAnimation(DiscType));
+			ArtistString = ArtistHelper.GetArtistString(Artists, AlbumHelper.GetContentFocus(DiscType));
 
 		}
 

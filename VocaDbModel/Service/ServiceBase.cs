@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -14,6 +14,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Service.Helpers;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -139,7 +140,7 @@ namespace VocaDb.Model.Service {
 
 			SysLog(doingWhat, who.Name);
 
-			var entry = new AuditLogEntry(who, doingWhat, category);
+			var entry = new AuditLogEntry(who, doingWhat, category, GlobalEntryId.Empty);
 
 			session.Save(entry);
 
@@ -152,7 +153,7 @@ namespace VocaDb.Model.Service {
 			SysLog(doingWhat, who);
 
 			var agentLoginData = new AgentLoginData(who);
-			var entry = new AuditLogEntry(agentLoginData, doingWhat, category);
+			var entry = new AuditLogEntry(agentLoginData, doingWhat, category, GlobalEntryId.Empty);
 
 			session.Save(entry);
 
@@ -164,7 +165,7 @@ namespace VocaDb.Model.Service {
 
 			var agentLoginData = SessionHelper.CreateAgentLoginData(session, PermissionContext, user);
 			SysLog(doingWhat, agentLoginData.Name);
-			var entry = new AuditLogEntry(agentLoginData, doingWhat, category);
+			var entry = new AuditLogEntry(agentLoginData, doingWhat, category, GlobalEntryId.Empty);
 
 			session.Save(entry);
 
@@ -210,7 +211,23 @@ namespace VocaDb.Model.Service {
 			}
 
 		}
-		
+
+		protected async Task<T> HandleQueryAsync<T>(Func<ISession, Task<T>> func, string failMsg = "Unexpected NHibernate error") {
+
+			try {
+				using (var session = OpenSession()) {
+					return await func(session);
+				}
+			} catch (ObjectNotFoundException x) {
+				log.Error(x.Message);
+				throw;
+			} catch (HibernateException x) {
+				log.Error(x, failMsg);
+				throw;
+			}
+
+		}
+
 		protected T HandleTransaction<T>(Func<ISession, T> func, string failMsg = "Unexpected NHibernate error") {
 
 			try {

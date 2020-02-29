@@ -19,7 +19,11 @@ namespace VocaDb.Model.Domain.Artists {
 
 		Other		= 32,
 
-		Band		= 64
+		Band		= 64,
+
+		Illustrator = 128,
+
+		Subject		= 256
 
 	}
 

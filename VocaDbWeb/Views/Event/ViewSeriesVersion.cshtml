@@ -1,0 +1,57 @@
+﻿@using VocaDb.Web.Helpers;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.ReleaseEvents.ArchivedEventSeriesVersionDetailsContract>>
+
+@{
+
+	PageProperties.Title = "Revision " + Model.Entry.ArchivedVersion.Version + " for " + Model.Entry.Name;
+
+	if (Model.Entry.ReleaseEventSeries != null) {
+		ViewBag.Parents = new[] {
+			Html.ActionLink("Events", "Index"),
+			Html.ActionLink(Model.Entry.ReleaseEventSeries.Name, "SeriesDetails", new { id = Model.Entry.ReleaseEventSeries.Id }),
+			Html.ActionLink("Revisions", "SeriesVersions", new { id = Model.Entry.ReleaseEventSeries.Id })
+		};
+	} else {
+		ViewBag.Parents = new[] {
+			Html.ActionLink("Events", "Index"),
+		};
+	}
+
+}
+
+@section Toolbar {
+	<a href="@Url.Action("ArchivedSeriesVersionXml", new { id = Model.Entry.ArchivedVersion.Id })" id="downloadXmlLink">Download XML</a>
+}
+
+@if (Model.Entry.ComparableVersions.Any()) {
+	using (Html.BeginForm("ViewSeriesVersion", "Event", FormMethod.Post, new { @class = "form form-inline" })) {
+		@:Compare to: @Html.DropDownListFor(m => m.ComparedVersionId, ViewHelper.CreateSelectList(Model.Entry.ComparableVersions, i => i.Id, i => i.Version + " (" + i.TranslateChangedFields(Model.EnumTranslations) + " by " + i.AgentName + ")", Model.Entry.ComparedVersionId), new { @class = "input-xlarge", onchange = "$(this).closest('form').submit();" })
+		<button type="submit" class="btn btn-primary">Compare</button>
+	}
+}
+
+@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Model.Version(Model.Entry.ArchivedVersion),
+	Model.Version(Model.Entry.ComparedVersion))
+
+@EventHelpers.PrintArchivedEventSeriesData(Model.Entry.Versions)
+
+@EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
+
+@section BodyScripts {
+	<script src="@Url.Content("~/Scripts/Repositories/ReleaseEventRepository.js")"></script>
+	<script src="@Url.Content("~/Scripts/ViewModels/ArchivedEntryViewModel.js")"></script>
+	<script type="text/javascript">
+
+		$(function () {
+
+			$("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
+			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
+
+			var rep = new vdb.repositories.ReleaseEventRepository(new vdb.UrlMapper('@RootPath'));
+			var viewModel = new vdb.viewModels.ArchivedEntryViewModel(@Model.Entry.ReleaseEventSeries.Id, @Model.Entry.ArchivedVersion.Version, rep);
+			ko.applyBindings(viewModel);
+
+		});
+
+	</script>
+}

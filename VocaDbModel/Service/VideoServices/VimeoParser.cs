@@ -1,12 +1,13 @@
-﻿using System;
+using System;
 using System.Net;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace VocaDb.Model.Service.VideoServices {
 
 	public class VimeoParser : IVideoServiceParser {
 
-		public VideoTitleParseResult GetTitle(string id) {
+		private VideoTitleParseResult GetTitle(string id) {
 
 			var url = string.Format("http://vimeo.com/api/v2/video/{0}.xml", id);
 
@@ -32,9 +33,11 @@ namespace VocaDb.Model.Service.VideoServices {
 			var length = result.Video.Duration;
 			var date = Convert.ToDateTime(result.Video.Upload_Date); // xmlserializer can't parse the date
 
-			return VideoTitleParseResult.CreateSuccess(result.Video.Title, author, thumbUrl, length, uploadDate: date);
+			return VideoTitleParseResult.CreateSuccess(result.Video.Title, author, null, thumbUrl, length, uploadDate: date);
 
 		}
+
+		public Task<VideoTitleParseResult> GetTitleAsync(string id) => Task.FromResult(GetTitle(id));
 
 	}
 

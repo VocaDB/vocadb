@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -99,11 +99,8 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<ContentLanguageSelection> ContentLanguageSelectionNames =
 			new TranslateableEnum<ContentLanguageSelection>(() => global::Resources.ContentLanguageSelectionNames.ResourceManager);
 
-		public static TranslateableEnum<DiscType> DiscTypeNames {
-			get {
-				return new TranslateableEnum<DiscType>(() => Model.Resources.Albums.DiscTypeNames.ResourceManager);
-			}
-		}			
+		public static TranslateableEnum<DiscType> DiscTypeNames = 
+			new TranslateableEnum<DiscType>(() => Model.Resources.Albums.DiscTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<EntryEditEvent> EntryEditEventNames =
 			new TranslateableEnum<EntryEditEvent>(() => global::Resources.EntryEditEventNames.ResourceManager);
@@ -150,6 +147,7 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<SongSortRule> SongSortRuleNames =
 			new TranslateableEnum<SongSortRule>(() => global::Resources.SongSortRuleNames.ResourceManager, new[] {
 				SongSortRule.Name, SongSortRule.AdditionDate, SongSortRule.PublishDate, SongSortRule.RatingScore, SongSortRule.FavoritedTimes,
+				SongSortRule.TagUsageCount
 			});
 
 		public static readonly DerivedTranslateableEnum<RatedSongForUserSortRule, SongSortRule> RatedSongForUserSortRuleNames =
@@ -245,6 +243,17 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
+		public static string EntrySubTypeName(EntryTypeAndSubType fullEntryType) {
+			return fullEntryType.EntryType switch
+			{
+				EntryType.Album => DiscTypeName(EnumVal<DiscType>.Parse(fullEntryType.SubType)),
+				EntryType.Artist => ArtistTypeName(EnumVal<ArtistType>.Parse(fullEntryType.SubType)),
+				EntryType.ReleaseEvent => ReleaseEventCategoryNames[EnumVal<EventCategory>.Parse(fullEntryType.SubType)],
+				EntryType.Song => SongTypeNames[EnumVal<SongType>.Parse(fullEntryType.SubType)],
+				_ => string.Empty,
+			};
+		}
+
 		public static string SongArchiveReason(SongArchiveReason reason) {
 
 			return SongArchiveReasonNames.ResourceManager.GetString(reason.ToString());
@@ -268,7 +277,7 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static TranslateableEnum<TEnum> Translations<TEnum>() where TEnum : struct, IConvertible {
+		public static TranslateableEnum<TEnum> Translations<TEnum>() where TEnum : struct, Enum {
 			return (TranslateableEnum<TEnum>)allResourceManagers[typeof(TEnum)];
 		}
 

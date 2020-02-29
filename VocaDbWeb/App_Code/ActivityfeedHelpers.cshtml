@@ -1,4 +1,4 @@
-﻿@inherits VocaDb.Web.Code.HelperPage
+@inherits VocaDb.Web.Code.HelperPage
 @using System.Web.Mvc.Html;
 @using HelperRes
 @using VocaDb.Web.Code
@@ -6,6 +6,7 @@
 @using VocaDb.Model.DataContracts.Activityfeed;
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Activityfeed;
+@using VocaDb.Model.Service.Helpers
 
 @helper EntryType(ActivityEntryForApiContract entry) {
 	@EntryType(entry.EditEvent, entry.Entry.EntryType)
@@ -34,7 +35,7 @@
 }
 
 @helper ActivityEntry(ActivityEntryForApiContract entry, bool showDetails = false) {
-	var thumbUrl = entry.Entry.MainPicture != null ? entry.Entry.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb) : null;
+	var thumbUrl = entry.Entry.MainPicture != null ? UrlHelper.UpgradeToHttps(entry.Entry.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb)) : null;
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
 		@if (entry.Author != null) {
 			@UserHelpers.UserIconLink(entry.Author, userInfo: true)

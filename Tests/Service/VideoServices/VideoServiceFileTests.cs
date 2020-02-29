@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Tests.Service.VideoServices {
@@ -8,8 +9,9 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 		private VideoServiceFile videoService;
 
-		private void TestGetVideoTitle(string url, string expected) {
-			Assert.AreEqual(expected, videoService.GetVideoTitle(url).Title);			
+		private async Task TestGetVideoTitle(string url, string expected) {
+			var actual = await videoService.GetVideoTitleAsync(url);
+			Assert.AreEqual(expected, actual.Title);			
 		}
 
 		private void TestIsValidFor(string url, bool expected) {
@@ -22,16 +24,16 @@ namespace VocaDb.Tests.Service.VideoServices {
 		}
 
 		[TestMethod]
-		public void GetVideoTitle_Simple() {
+		public async Task GetVideoTitle_Simple() {
 			
-			TestGetVideoTitle("http://caress.airtv.org/audio/car.ess - 2 UFO'r'IA.mp3", "car.ess - 2 UFO'r'IA.mp3");
+			await TestGetVideoTitle("http://caress.airtv.org/audio/car.ess - 2 UFO'r'IA.mp3", "car.ess - 2 UFO'r'IA.mp3");
 
 		}
 
 		[TestMethod]
-		public void GetVideoTitle_WithParam() {
+		public async Task GetVideoTitle_WithParam() {
 			
-			TestGetVideoTitle("http://caress.airtv.org/audio/car.ess - 2 UFO'r'IA.mp3?miku=39", "car.ess - 2 UFO'r'IA.mp3");
+			await TestGetVideoTitle("http://caress.airtv.org/audio/car.ess - 2 UFO'r'IA.mp3?miku=39", "car.ess - 2 UFO'r'IA.mp3");
 
 		}
 

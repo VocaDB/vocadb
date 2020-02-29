@@ -1,48 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class SongTagUsage : TagUsage {
-
-		private Song song;
-		private IList<SongTagVote> votes = new List<SongTagVote>();
+	public class SongTagUsage : GenericTagUsage<Song, SongTagVote> {
 
 		public SongTagUsage() { }
 
-		public SongTagUsage(Song song, Tag tag)
-			: base(tag) {
-
-			Song = song;
-
-		}
-
-		public virtual Song Song {
-			get { return song; }
-			set {
-				ParamIs.NotNull(() => value);
-				song = value;
-			}
-		}
-
-		public override IEntryBase EntryBase {
-			get { return Song; }
-		}
-
-		public virtual IList<SongTagVote> Votes {
-			get { return votes; }
-			set {
-				ParamIs.NotNull(() => value);
-				votes = value;
-			}
-		}
-
-		public override IEnumerable<TagVote> VotesBase {
-			get { return Votes; }
-		}
-
+		public SongTagUsage(Song song, Tag tag) : base(song, tag) { }
+		
 		public override TagVote CreateVote(User user) {
 
 			if (FindVote(user) != null)
@@ -60,15 +26,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 			base.Delete();
 
-			Song.Tags.Usages.Remove(this);
+			Entry.Tags.Usages.Remove(this);
 			Tag.AllSongTagUsages.Remove(this);
-			Votes.Clear();
-
-		}
-
-		public virtual SongTagVote FindVote(User user) {
-
-			return Votes.FirstOrDefault(v => v.User.Equals(user));
 
 		}
 
@@ -81,27 +40,13 @@ namespace VocaDb.Model.Domain.Songs {
 
 			// TODO: have to make a clone because of NH reparenting issues, see http://stackoverflow.com/questions/28114508/nhibernate-change-parent-deleted-object-would-be-re-saved-by-cascade
 			Tag.AllSongTagUsages.Remove(this);
-			Song.Tags.Usages.Remove(this);
+			Entry.Tags.Usages.Remove(this);
 
-			var newUsage = new SongTagUsage(Song, target);
+			var newUsage = new SongTagUsage(Entry, target);
 			target.AllSongTagUsages.Add(newUsage);
-			Song.Tags.Usages.Add(newUsage);
+			Entry.Tags.Usages.Add(newUsage);
 
 			return newUsage;
-
-		}
-
-		public override TagVote RemoveVote(User user) {
-
-			var vote = FindVote(user);
-
-			if (vote == null)
-				return null;
-
-			Votes.Remove(vote);
-			Count--;
-
-			return vote;
 
 		}
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
@@ -15,15 +15,24 @@ using VocaDb.Model.Domain.Images;
 namespace VocaDb.Model.DataContracts.Albums {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class AlbumForApiContract {
+	public class AlbumForApiContract : IEntryBase {
+
+		EntryType IEntryBase.EntryType => EntryType.Album;
 
 		public AlbumForApiContract() { }
+
+		public AlbumForApiContract(
+			Album album,
+			ContentLanguagePreference languagePreference, 
+			IEntryThumbPersister thumbPersister,
+			AlbumOptionalFields fields,
+			SongOptionalFields songFields = SongOptionalFields.None) : 
+			this(album, null, languagePreference, thumbPersister, fields, songFields) {}
 
 		public AlbumForApiContract(
 			Album album, AlbumMergeRecord mergeRecord, 
 			ContentLanguagePreference languagePreference, 
 			IEntryThumbPersister thumbPersister,
-			bool ssl,
 			AlbumOptionalFields fields,
 			SongOptionalFields songFields) {
 
@@ -63,7 +72,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 			if (thumbPersister != null && fields.HasFlag(AlbumOptionalFields.MainPicture) && !string.IsNullOrEmpty(album.CoverPictureMime)) {
 				
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister, ssl);
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister);
 
 			}
 
@@ -76,7 +85,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			}
 
 			if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent)) {
-				ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, thumbPersister, ssl) : null;
+				ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, thumbPersister) : null;
 			}
 
 			if (fields.HasFlag(AlbumOptionalFields.Tags)) {
@@ -93,6 +102,36 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
+
+		}
+
+		public AlbumForApiContract(TranslatedAlbumContract album, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, AlbumOptionalFields fields) {
+
+			ParamIs.NotNull(() => album);
+
+			ArtistString = album.TranslatedArtistString.GetBestMatch(languagePreference);
+			CreateDate = album.CreateDate;
+			Deleted = album.Deleted;
+			DiscType = album.DiscType;
+			Id = album.Id;
+			Name = album.Names.SortNames[languagePreference];
+			RatingAverage = album.RatingAverage;
+			RatingCount = album.RatingCount;
+			ReleaseDate = album.ReleaseDate;
+			Status = album.Status;
+			Version = album.Version;
+
+			if (fields.HasFlag(AlbumOptionalFields.AdditionalNames)) {
+				AdditionalNames = album.Names.GetAdditionalNamesStringForLanguage(languagePreference);
+			}
+
+			if (fields.HasFlag(AlbumOptionalFields.MainPicture)) {
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister);
+			}
+
+			if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent)) {
+				ReleaseEvent = album.ReleaseEvent;
+			}
 
 		}
 
@@ -137,6 +176,9 @@ namespace VocaDb.Model.DataContracts.Albums {
 		/// </summary>
 		[DataMember]
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public bool Deleted { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public string Description { get; set; }

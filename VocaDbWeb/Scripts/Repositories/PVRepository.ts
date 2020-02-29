@@ -1,11 +1,11 @@
-﻿
+
 module vdb.repositories {
 
 	import dc = vdb.dataContracts;
 
 	export class PVRepository {
 		
-		constructor(private urlMapper: vdb.UrlMapper) { }
+		constructor(private readonly  urlMapper: vdb.UrlMapper) { }
 
 		public getPVByUrl = (pvUrl: string, type: string, success: (pv: dc.pvs.PVContract) => void) => {
 

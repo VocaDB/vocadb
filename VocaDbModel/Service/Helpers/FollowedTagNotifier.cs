@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Tags;
@@ -10,6 +11,8 @@ using VocaDb.Model.Service.Translations;
 namespace VocaDb.Model.Service.Helpers {
 
 	public class FollowedTagNotifier {
+
+		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private string CreateMessageBody(Tag[] followedArtists, User user, IEntryWithNames entry, IEntryLinkFactory entryLinkFactory, bool markdown, 
 			string entryTypeName) {
@@ -65,6 +68,8 @@ namespace VocaDb.Model.Service.Helpers {
 			var coll = tags.Distinct().ToArray();
 			var tagIds = coll.Select(a => a.Id).ToArray();
 
+			log.Info("Sending notifications for {0} tags", tagIds.Length);
+
 			// Get users with less than maximum number of unread messages, following any of the tags
 			var usersWithTags = ctx.OfType<TagForUser>()
 				.Query()
@@ -82,6 +87,8 @@ namespace VocaDb.Model.Service.Helpers {
 				.ToDictionary(afu => afu.Key, afu => afu.Select(a => a.TagId));
 
 			var userIds = usersWithTags.Keys;
+
+			log.Debug("Found {0} users subscribed to tags", userIds.Count);
 
 			if (!userIds.Any())
 				return;

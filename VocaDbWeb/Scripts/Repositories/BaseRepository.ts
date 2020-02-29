@@ -1,9 +1,23 @@
-﻿
+
 module vdb.repositories {
 
 	import cls = vdb.models;
 
 	export class BaseRepository {
+
+		protected handleJqueryPromise<T>(jqueryPromise: JQueryXHR) {
+			const promise = Promise.resolve(jqueryPromise);
+			return promise as Promise<T>;
+		}
+
+		protected getDate(date?: Date) {
+			return date ? date.toISOString() : undefined;
+		}
+
+		protected getJsonPromise<T>(url: string, data?: any) {
+			const jqueryPromise = $.getJSON(url, data);
+			return this.handleJqueryPromise<T>(jqueryPromise);
+		}
 
 		// todo: protected
 		public languagePreferenceStr: string;

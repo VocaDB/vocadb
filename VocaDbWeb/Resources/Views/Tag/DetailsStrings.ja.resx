@@ -135,6 +135,9 @@
   <data name="Category" xml:space="preserve">
     <value>カテゴリー</value>
   </data>
+  <data name="FollowTag" xml:space="preserve">
+    <value>タグをフォロー</value>
+  </data>
   <data name="MappedTags" xml:space="preserve">
     <value>このタグに当たるニコニコ動画用のタグ</value>
   </data>
@@ -161,6 +164,9 @@
   </data>
   <data name="Translations" xml:space="preserve">
     <value>他言語の名前</value>
+  </data>
+  <data name="UnfollowTag" xml:space="preserve">
+    <value>フォローを取り消す</value>
   </data>
   <data name="ValidFor" xml:space="preserve">
     <value>対応</value>

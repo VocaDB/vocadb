@@ -1,6 +1,9 @@
-﻿using System;
+using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.Caching;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using NHibernate;
 using VocaDb.Model.DataContracts.Songs;
@@ -9,6 +12,7 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.Security;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Helpers;
@@ -61,11 +65,11 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult CheckSFS(string ip) {
+		public async Task<ActionResult> CheckSFS(string ip) {
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
-			var result = new StopForumSpamClient().CallApi(ip);
+			var result = await new StopForumSpamClient().CallApiAsync(ip);
 
 			if (result == null)
 				return new EmptyResult();
@@ -190,11 +194,10 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ManageTagMappings() {
+		public ActionResult ManageEntryTagMappings() => View();
 
-			return View();
-
-		}
+		[Authorize]
+		public ActionResult ManageTagMappings() => View();
 
 		public ActionResult PVAuthorNames(string term) {
 
@@ -285,6 +288,19 @@ namespace VocaDb.Web.Controllers
 
 			var count = Service.UpdateTagVoteCounts();
 			TempData.SetStatusMessage(string.Format("Updated tag vote counts, {0} corrections made", count));
+			return RedirectToAction("Index");
+
+		}
+
+		[Authorize]
+		public ActionResult DeployWebsite() {
+
+			PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+			var deployFile = Path.Combine(Server.MapPath("~"), "..", "..", "deploy.cmd");
+
+			Process.Start(deployFile, "doNotPause");
+
 			return RedirectToAction("Index");
 
 		}

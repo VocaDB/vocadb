@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
@@ -14,13 +14,12 @@ namespace VocaDb.Model.Domain.Tags {
 
 		private ISet<T> tags = new HashSet<T>();
 
+		/// <summary>
+		/// Usages of tags that are not deleted.
+		/// </summary>
 		public virtual IEnumerable<T> ActiveUsages => Usages.Where(t => !t.Tag.Deleted);
 
-		public virtual IEnumerable<Tag> Tags {
-			get {
-				return Usages.Select(t => t.Tag);
-			}
-		}
+		public virtual IEnumerable<Tag> Tags => Usages.Select(t => t.Tag);
 
 		/// <summary>
 		/// Tags sorted descending by the number of votes. Cannot be null.
@@ -33,6 +32,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		/// <summary>
 		/// List of all tag usages. Cannot be null.
+		/// This property is mapped to database.
 		/// </summary>
 		public virtual ISet<T> Usages {
 			get { return tags; }
@@ -67,11 +67,7 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
-		public virtual bool HasTag(int tagId) {
-
-			return Usages.Any(u => u.Tag.Id == tagId);
-
-		}
+		public virtual bool HasTag(int tagId) => Usages.Any(u => u.Tag.Id == tagId);
 
 		public virtual Tag[] SyncVotes(User user, Tag[] tags, ITagUsageFactory<T> tagUsageFactory,
 			bool onlyAdd = false) {

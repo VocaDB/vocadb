@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="InMemoryTokenManager.cs" company="Outercurve Foundation">
 //     Copyright (c) Outercurve Foundation. All rights reserved.
 // </copyright>
@@ -25,7 +25,7 @@ namespace VocaDb.Web.Code.Security {
 	internal class InMemoryTokenManager : IConsumerTokenManager, IOpenIdOAuthTokenManager {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private Dictionary<string, string> tokensAndSecrets = new Dictionary<string, string>();
+		private readonly Dictionary<string, string> tokensAndSecrets = new Dictionary<string, string>();
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="InMemoryTokenManager"/> class.
@@ -82,7 +82,7 @@ namespace VocaDb.Web.Code.Security {
 		/// method.
 		/// </remarks>
 		public void StoreNewRequestToken(UnauthorizedTokenRequest request, ITokenSecretContainingMessage response) {
-			log.Info("Storing token " + response.Token);
+			log.Info($"Storing token {response.Token}");
 			this.tokensAndSecrets[response.Token] = response.TokenSecret;
 		}
 
