@@ -16,12 +16,12 @@ namespace VocaDb.Migrations {
 		}
 
 	}
-	
+
 	[Migration(2020_02_27_2100)]
 	public class EventVenues : AutoReversingMigration {
-	
+
 		public override void Up() {
-		
+
 			Create.Table("Venues")
 				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
 				.WithColumn("Description").AsString(int.MaxValue).NotNullable().WithDefaultValue(string.Empty)
@@ -62,9 +62,9 @@ namespace VocaDb.Migrations {
 				.WithColumn("Description").AsString(512).NotNullable()
 				.WithColumn("Venue").AsInt32().NotNullable().ForeignKey(TableNames.Venues, "Id").OnDelete(Rule.Cascade)
 				.WithColumn("Url").AsString(512).NotNullable();
-				
+
 			Alter.Table(TableNames.EntryReports).AddColumn("Venue").AsInt32().Nullable().ForeignKey(TableNames.Venues, "Id").OnDelete(Rule.Cascade);
-			
+
 			Create.Column("Venue").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
 				.ForeignKey(TableNames.Venues, "Id").OnDelete(Rule.Cascade);
 
@@ -74,7 +74,7 @@ namespace VocaDb.Migrations {
 			Create.Column("VenueEntry").OnTable(TableNames.AlbumReleaseEvents).AsInt32().Nullable().ForeignKey(TableNames.Venues, "Id").OnDelete(Rule.SetNull);
 
 		}
-		
+
 	}
 
 	[Migration(2020_02_08_1800)]
