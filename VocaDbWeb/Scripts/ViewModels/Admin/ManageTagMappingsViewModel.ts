@@ -42,7 +42,7 @@ namespace vdb.viewModels.admin {
 		}
 
 		public getTagUrl = (tag: EditTagMappingViewModel) => {
-			return vdb.functions.mapFullUrl(utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
+			return vdb.functions.mapAbsoluteUrl(utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
 		}
 
 		private loadMappings = async () => {

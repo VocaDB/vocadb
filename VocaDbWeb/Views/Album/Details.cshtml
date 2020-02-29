@@ -355,8 +355,8 @@
 				@EntryRes.PersonalDescription
 			</h3>
 			<div class="media" data-bind="with: personalDescription">
-				<a data-bind="visible: !author.isEmpty(), attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
-					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !author.isEmpty() ? author.entry().mainPicture.urlSmallThumb : null }" />
+				<a data-bind="visible: !author.isEmpty() && author.entry().mainPicture, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
+					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !author.isEmpty() && author.entry().mainPicture ? author.entry().mainPicture.urlSmallThumb : null }" />
 				</a>
 
 				<div class="media-body">
