@@ -72,7 +72,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			}
 
-			// HACK: do not use GeoPointQueryParams.HasValue here, otherwise NHibernate.QueryException will be thrown.
+			// HACK: do not use OptionalGeoPoint.HasValue here, otherwise NHibernate.QueryException will be thrown.
 			return query.Where(v => v.Coordinates.Latitude.HasValue && v.Coordinates.Longitude.HasValue);
 
 		}
