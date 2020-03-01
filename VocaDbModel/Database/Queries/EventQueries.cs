@@ -1,14 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using NHibernate;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -240,6 +239,25 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ReleaseEventForApiContract GetOne(int id, ContentLanguagePreference lang, ReleaseEventOptionalFields fields) {
 			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imagePersister));
+		}
+		
+		public VenueWithEventsContract[] GetReleaseEventsByVenues() {
+
+			return HandleQuery(session => {
+
+				var allEvents = session.Query<ReleaseEvent>().Where(e => !e.Deleted).ToArray();
+				var venues = session.Query<Venue>().Where(e => !e.Deleted).OrderByName(LanguagePreference).ToArray();
+
+				var venueContracts = venues.Select(v =>
+					new VenueWithEventsContract(v, allEvents.Where(e => v.Equals(e.Venue)), PermissionContext.LanguagePreference));
+				var ungrouped = allEvents.Where(e => e.Venue == null).OrderBy(e => e.TranslatedName[LanguagePreference]);
+
+				return venueContracts.Concat(new[] { new VenueWithEventsContract {
+					Name = string.Empty,
+					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray() } }).ToArray();
+
+			});
+
 		}
 
 		public ReleaseEventSeriesForApiContract GetOneSeries(int id, ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields) {

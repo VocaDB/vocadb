@@ -223,7 +223,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult EventsByVenues() {
 
-			var events = Service.GetReleaseEventsByVenues();
+			var events = queries.GetReleaseEventsByVenues();
 			return View(events);
 
 		}
