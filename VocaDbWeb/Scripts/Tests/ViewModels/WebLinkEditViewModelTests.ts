@@ -1,7 +1,3 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/WebLinkCategory.ts" />
-/// <reference path="../../ViewModels/WebLinkEditViewModel.ts" />
-
 import WebLinkEditViewModel from '../../ViewModels/WebLinkEditViewModel';
 
 //module vdb.tests.viewModels {

@@ -1,5 +1,3 @@
-/// <reference path="../typings/knockout/knockout.d.ts" />
-
 import DeleteEntryViewModel from './DeleteEntryViewModel';
 import EnglishTranslatedStringEditViewModel from './Globalization/EnglishTranslatedStringEditViewModel';
 import EntryType from '../Models/EntryType';

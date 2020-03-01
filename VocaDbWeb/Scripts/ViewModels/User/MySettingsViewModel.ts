@@ -1,6 +1,3 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-/// <reference path="../WebLinksEditViewModel.ts" />
-
 import ui from '../../Shared/MessagesTyped';
 import UserKnownLanguageContract from '../../DataContracts/User/UserKnownLanguageContract';
 import UserRepository from '../../Repositories/UserRepository';

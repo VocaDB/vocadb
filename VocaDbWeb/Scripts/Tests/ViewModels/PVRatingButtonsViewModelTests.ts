@@ -1,7 +1,3 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../ViewModels/PVRatingButtonsViewModel.ts" />
-/// <reference path="../TestSupport/FakeUserRepository.ts" />
-
 import FakeUserRepository from '../TestSupport/FakeUserRepository';
 import PVRatingButtonsViewModel from '../../ViewModels/PVRatingButtonsViewModel';
 import SongVoteRating from '../../Models/SongVoteRating';

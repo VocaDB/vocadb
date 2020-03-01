@@ -1,4 +1,3 @@
-/// <reference path="../typings/highcharts/highcharts.d.ts" />
 
 declare global {
 	interface KnockoutBindingHandlers {

@@ -1,9 +1,3 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-/// <reference path="../../DataContracts/SongListBaseContract.ts" />
-/// <reference path="../../Repositories/SongRepository.ts" />
-/// <reference path="../../Repositories/UserRepository.ts" />
-/// <reference path="../PVRatingButtonsViewModel.ts" />
-
 import ArtistApiContract from '../../DataContracts/Artist/ArtistApiContract';
 import ArtistHelper from '../../Helpers/ArtistHelper';
 import ArtistRepository from '../../Repositories/ArtistRepository';

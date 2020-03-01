@@ -1,6 +1,3 @@
-/// <reference path="../../DataContracts/NewSongCheckResultContract.ts" />
-/// <reference path="../../Repositories/SongRepository.ts" />
-
 import NewSongCheckResultContract from '../../DataContracts/NewSongCheckResultContract';
 import SongApiContract from '../../DataContracts/Song/SongApiContract';
 import SongListBaseContract from '../../DataContracts/SongListBaseContract';

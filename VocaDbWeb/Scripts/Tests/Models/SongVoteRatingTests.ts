@@ -1,6 +1,3 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/SongVoteRating.ts" />
-
 import { parseSongVoteRating } from '../../Models/SongVoteRating';
 import SongVoteRating from '../../Models/SongVoteRating';
 

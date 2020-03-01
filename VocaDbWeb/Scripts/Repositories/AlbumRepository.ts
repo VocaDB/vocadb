@@ -1,6 +1,3 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../Shared/GlobalFunctions.ts" />
-
 import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
 import AlbumContract from '../DataContracts/Album/AlbumContract';
 import AlbumForApiContract from '../DataContracts/Album/AlbumForApiContract';

@@ -1,5 +1,3 @@
-/// <reference path="../../Repositories/UserRepository.ts" />
-
 import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
 import SongVoteRating from '../../Models/SongVoteRating';
 import UrlMapper from '../../Shared/UrlMapper';

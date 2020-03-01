@@ -1,8 +1,3 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-/// <reference path="../../Repositories/SongRepository.ts" />
-/// <reference path="../../Repositories/UserRepository.ts" />
-/// <reference path="../PVRatingButtonsViewModel.ts" />
-
 import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
 import PVService from '../../Models/PVs/PVService';
 import SongRepository from '../../Repositories/SongRepository';

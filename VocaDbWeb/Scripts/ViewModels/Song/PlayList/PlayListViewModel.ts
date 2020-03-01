@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/youtube/youtube.d.ts" />
-
 import ContentLanguagePreference from '../../../Models/Globalization/ContentLanguagePreference';
 import DateTimeHelper from '../../../Helpers/DateTimeHelper';
 import { IPVPlayerSong } from '../../PVs/PVPlayerViewModel';

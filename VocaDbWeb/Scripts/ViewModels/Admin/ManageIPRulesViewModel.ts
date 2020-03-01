@@ -1,6 +1,3 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-/// <reference path="../../Shared/GlobalFunctions.ts" />
-
 import AdminRepository from '../../Repositories/AdminRepository';
 import ui from '../../Shared/MessagesTyped';
 

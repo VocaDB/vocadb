@@ -1,8 +1,3 @@
-/// <reference path="../../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../TestSupport/FakeSongRepository.ts" />
-/// <reference path="../../TestSupport/FakeUserRepository.ts" />
-/// <reference path="../../../ViewModels/Song/SongDetailsViewModel.ts" />
-
 import ContentLanguagePreference from '../../../Models/Globalization/ContentLanguagePreference';
 import FakeSongRepository from '../../TestSupport/FakeSongRepository';
 import FakeUserRepository from '../../TestSupport/FakeUserRepository';

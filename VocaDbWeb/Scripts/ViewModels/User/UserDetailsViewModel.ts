@@ -1,6 +1,3 @@
-/// <reference path="../../typings/jquery/jquery.d.ts" />
-/// <reference path="../../Repositories/AdminRepository.ts" />
-
 import AdminRepository from '../../Repositories/AdminRepository';
 import AlbumCollectionViewModel from './AlbumCollectionViewModel';
 import CommentContract from '../../DataContracts/CommentContract';

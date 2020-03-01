@@ -1,5 +1,3 @@
-/// <reference path="GlobalFunctions.ts" />
-
 import functions from "./GlobalFunctions";
 
 //module vdb {

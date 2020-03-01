@@ -1,5 +1,3 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-
 import AlbumRepository from '../../Repositories/AlbumRepository';
 import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';

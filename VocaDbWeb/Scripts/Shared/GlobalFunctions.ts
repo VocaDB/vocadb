@@ -1,4 +1,3 @@
-/// <reference path="GlobalValues.ts" />
 
 //module vdb.functions {
 export default class functions {

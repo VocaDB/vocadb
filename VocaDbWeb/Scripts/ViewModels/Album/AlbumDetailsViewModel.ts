@@ -1,7 +1,3 @@
-/// <reference path="../../typings/jquery/jquery.d.ts" />
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-/// <reference path="../../Shared/GlobalFunctions.ts" />
-
 import AlbumForUserForApiContract from '../../DataContracts/User/AlbumForUserForApiContract';
 import AlbumReviewContract from '../../DataContracts/Album/AlbumReviewContract';
 import AlbumRepository from '../../Repositories/AlbumRepository';

@@ -1,11 +1,3 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../DataContracts/NewSongCheckResultContract.ts" />
-/// <reference path="../DataContracts/Song/SongContract.ts" />
-/// <reference path="../DataContracts/SongListBaseContract.ts" />
-/// <reference path="../DataContracts/Song/SongListContract.ts" />
-/// <reference path="../DataContracts/Song/SongWithPVPlayerAndVoteContract.ts" />
-/// <reference path="../Shared/GlobalFunctions.ts" />
-
 import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import BaseRepository from './BaseRepository';

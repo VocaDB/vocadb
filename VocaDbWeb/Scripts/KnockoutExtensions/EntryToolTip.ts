@@ -1,8 +1,3 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../typings/knockout/knockout.d.ts" />
-/// <reference path="../Shared/GlobalFunctions.ts" />
-/// <reference path="../DataContracts/EntryRefContract.ts" />
-
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import EntryRefContract from '../DataContracts/EntryRefContract';
 import functions from '../Shared/GlobalFunctions';

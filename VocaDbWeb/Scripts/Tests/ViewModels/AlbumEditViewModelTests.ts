@@ -1,9 +1,3 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/WebLinkCategory.ts" />
-/// <reference path="../TestSupport/FakeAlbumRepository.ts" />
-/// <reference path="../TestSupport/FakeSongRepository.ts" />
-/// <reference path="../../ViewModels/Album/AlbumEditViewModel.ts" />
-
 import AlbumForEditContract from '../../DataContracts/Album/AlbumForEditContract';
 import AlbumEditViewModel from '../../ViewModels/Album/AlbumEditViewModel';
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';

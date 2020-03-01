@@ -1,8 +1,3 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../ViewModels/TopBarViewModel.ts" />
-/// <reference path="../TestSupport/FakeEntryReportRepository.ts" />
-/// <reference path="../TestSupport/FakeUserRepository.ts" />
-
 import FakeEntryReportRepository from '../TestSupport/FakeEntryReportRepository';
 import FakeUserRepository from '../TestSupport/FakeUserRepository';
 import TopBarViewModel from '../../ViewModels/TopBarViewModel';

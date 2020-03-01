@@ -1,6 +1,3 @@
-/// <reference path="../typings/knockout/knockout.d.ts" />
-/// <reference path="../typings/jquery/jquery.d.ts" />
-
 import UrlMapper from '../Shared/UrlMapper';
 
 //module vdb.viewModels {

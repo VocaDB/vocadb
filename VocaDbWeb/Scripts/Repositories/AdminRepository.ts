@@ -1,6 +1,3 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../Shared/UrlMapper.ts" />
-
 import { IPRuleContract } from '../ViewModels/Admin/ManageIPRulesViewModel';
 import UrlMapper from '../Shared/UrlMapper';
 

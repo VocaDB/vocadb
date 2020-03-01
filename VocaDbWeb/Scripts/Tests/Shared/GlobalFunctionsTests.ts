@@ -1,6 +1,3 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Shared/GlobalFunctions.ts" />
-
 import functions from "../../Shared/GlobalFunctions";
 
 //module vdb.tests.functions {

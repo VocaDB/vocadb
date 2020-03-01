@@ -1,7 +1,3 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/WebLinkCategory.ts" />
-/// <reference path="../../ViewModels/Song/SongEditViewModel.ts" />
-
 import ArtistForAlbumEditViewModel from '../../ViewModels/ArtistForAlbumEditViewModel';
 import ArtistHelper from '../../Helpers/ArtistHelper';
 import ArtistRoles from '../../Models/Artists/ArtistRoles';

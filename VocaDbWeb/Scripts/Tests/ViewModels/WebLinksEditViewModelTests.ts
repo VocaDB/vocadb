@@ -1,8 +1,3 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/WebLinkCategory.ts" />
-/// <reference path="../../DataContracts/TranslatedEnumField.ts" />
-/// <reference path="../../ViewModels/WebLinksEditViewModel.ts" />
-
 import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
 import WebLinksEditViewModel from '../../ViewModels/WebLinksEditViewModel';
 

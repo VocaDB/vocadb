@@ -1,5 +1,3 @@
-/// <reference path="EntryRefContract.ts" />
-
 import EntryRefContract from './EntryRefContract';
 
 //module vdb.dataContracts {

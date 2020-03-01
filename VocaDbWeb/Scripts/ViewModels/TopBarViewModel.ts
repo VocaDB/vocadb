@@ -1,8 +1,3 @@
-/// <reference path="../typings/knockout/knockout.d.ts" />
-/// <reference path="../DataContracts/User/UserMessageSummaryContract.ts" />
-/// <reference path="../Repositories/EntryReportRepository.ts" />
-/// <reference path="../Repositories/UserRepository.ts" />
-
 import EntryReportRepository from '../Repositories/EntryReportRepository';
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
 import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummaryContract';

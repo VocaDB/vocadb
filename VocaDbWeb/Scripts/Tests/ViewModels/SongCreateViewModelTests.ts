@@ -1,9 +1,3 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/WebLinkCategory.ts" />
-/// <reference path="../../ViewModels/SongCreateViewModel.ts" />
-/// <reference path="../TestSupport/FakeSongRepository.ts" />
-/// <reference path="../TestSupport/FakeArtistRepository.ts" />
-
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
 import FakeSongRepository from '../TestSupport/FakeSongRepository';

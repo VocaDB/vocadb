@@ -1,7 +1,3 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../Shared/GlobalFunctions.ts" />
-/// <reference path="../DataContracts/DuplicateEntryResultContract.ts" />
-
 import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
 import ArtistApiContract from '../DataContracts/Artist/ArtistApiContract';
 import ArtistContract from '../DataContracts/Artist/ArtistContract';

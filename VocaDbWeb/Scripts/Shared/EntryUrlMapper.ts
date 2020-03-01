@@ -1,6 +1,3 @@
-/// <reference path="../DataContracts/EntryRefContract.ts" />
-/// <reference path="GlobalFunctions.ts" />
-
 import EntryRefContract from '../DataContracts/EntryRefContract';
 import EntryType from '../Models/EntryType';
 import functions from './GlobalFunctions';

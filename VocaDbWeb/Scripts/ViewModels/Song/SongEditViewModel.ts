@@ -1,7 +1,3 @@
-/// <reference path="../../DataContracts/TranslatedEnumField.ts" />
-/// <reference path="../../DataContracts/WebLinkContract.ts" />
-/// <reference path="../WebLinksEditViewModel.ts" />
-
 import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel'
 import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
 import ArtistForAlbumContract from '../../DataContracts/ArtistForAlbumContract';

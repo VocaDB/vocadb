@@ -1,6 +1,3 @@
-/// <reference path="../../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../TestSupport/FakeUserRepository.ts" />
-
 import FakeUserRepository from '../../TestSupport/FakeUserRepository';
 import PartialFindResultContract from '../../../DataContracts/PartialFindResultContract';
 import UserApiContract from '../../../DataContracts/User/UserApiContract';

@@ -1,8 +1,3 @@
-/// <reference path="../typings/knockout/knockout.d.ts" />
-/// <reference path="../Shared/GlobalFunctions.ts" />
-/// <reference path="../Shared/EntryAutoComplete.ts" />
-/// <reference path="AutoCompleteParams.ts" />
-
 import { ArtistAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';

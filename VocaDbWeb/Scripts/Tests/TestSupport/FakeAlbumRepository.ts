@@ -1,5 +1,3 @@
-/// <reference path="../../Repositories/AlbumRepository.ts" />
-
 import AlbumRepository from '../../Repositories/AlbumRepository';
 
 //module vdb.tests.testSupport {

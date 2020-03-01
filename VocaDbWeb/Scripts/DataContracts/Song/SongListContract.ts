@@ -1,6 +1,3 @@
-/// <reference path="../SongListBaseContract.ts" />
-/// <reference path="../User/UserBaseContract.ts" />
-
 import SongListBaseContract from '../SongListBaseContract';
 import UserBaseContract from '../User/UserBaseContract';
 

@@ -1,5 +1,3 @@
-/// <reference path="../../typings/soundcloud/soundcloud.d.ts" />
-
 import { IPVPlayer } from './PVPlayerViewModel';
 import PVService from '../../Models/PVs/PVService';
 

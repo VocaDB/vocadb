@@ -1,8 +1,3 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../DataContracts/DuplicateEntryResultContract.ts" />
-/// <reference path="../Repositories/ArtistRepository.ts" />
-/// <reference path="WebLinkEditViewModel.ts" />
-
 import ArtistRepository from '../Repositories/ArtistRepository';
 import ArtistType from '../Models/Artists/ArtistType';
 import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';

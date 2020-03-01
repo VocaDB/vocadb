@@ -1,5 +1,3 @@
-/// <reference path="../../Repositories/ArtistRepository.ts" />
-
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import ArtistRepository from '../../Repositories/ArtistRepository';
 

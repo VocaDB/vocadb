@@ -1,5 +1,3 @@
-/// <reference path="../typings/knockout/knockout.d.ts" />
-/// <reference path="../typings/jqueryui/jqueryui.d.ts" />
 
 interface KnockoutBindingHandlers {
     dialog: KnockoutBindingHandler;

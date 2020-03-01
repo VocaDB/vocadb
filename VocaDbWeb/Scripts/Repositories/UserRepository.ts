@@ -1,7 +1,3 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../DataContracts/User/UserMessageSummaryContract.ts" />
-/// <reference path="../Models/SongVoteRating.ts" />
-
 import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
 import AjaxHelper from '../Helpers/AjaxHelper';
 import CommentContract from '../DataContracts/CommentContract';
