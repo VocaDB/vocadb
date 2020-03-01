@@ -30,7 +30,9 @@ namespace VocaDb.Model.Service.Search {
 			if (tagIds.Any()) {
 
 				var songTypesAndTagsFromTags = ctx.Query<EntryTypeToTagMapping>()
-					.Where(etm => etm.EntryType == entryType && tagIds.Contains(etm.Tag.Id))
+					.WhereEntryTypeIs(entryType)
+					.WhereHasSubType()
+					.Where(etm => tagIds.Contains(etm.Tag.Id))
 					.Select(etm => new { TagId = etm.Tag.Id, etm.SubType })
 					.ToArray();
 

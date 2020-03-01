@@ -220,7 +220,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void SendPrivateMessageNotification(string mySettingsUrl, string messagesUrl, UserMessage message) {
+		private async Task SendPrivateMessageNotification(string mySettingsUrl, string messagesUrl, UserMessage message) {
 
 			ParamIs.NotNull(() => message);
 
@@ -232,7 +232,7 @@ namespace VocaDb.Model.Database.Queries {
 				"If you do not wish to receive more email notifications such as this, you can adjust your settings at {2}.",
 				message.Sender.Name, messagesUrl, mySettingsUrl);
 
-			mailer.SendEmail(message.Receiver.Email, message.Receiver.Name, subject, body);
+			await mailer.SendEmailAsync(message.Receiver.Email, message.Receiver.Name, subject, body);
 
 		}
 
@@ -1437,15 +1437,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public UserMessageContract SendMessage(UserMessageContract contract, string mySettingsUrl, string messagesUrl) {
+		public async Task<UserMessageContract> SendMessage(UserMessageContract contract, string mySettingsUrl, string messagesUrl) {
 
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			return HandleTransaction(session => {
+			return await repository.HandleTransactionAsync(async session => {
 
-				var receiver = session.Query().FirstOrDefault(u => u.Name.Equals(contract.Receiver.Name));
+				var receiver = await session.Query().Where(u => u.Name.Equals(contract.Receiver.Name)).VdbFirstOrDefaultAsync();
 
 				if (receiver == null)
 					throw new UserNotFoundException();
@@ -1454,7 +1454,7 @@ namespace VocaDb.Model.Database.Queries {
 					throw new UserNotFoundException();
 				}
 
-				var sender = session.Load(contract.Sender.Id);
+				var sender = await session.LoadAsync(contract.Sender.Id);
 
 				VerifyResourceAccess(sender);
 
@@ -1462,8 +1462,9 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (sender.CreateDate >= DateTime.Now.AddDays(-7)) {
 					var cutoffTime = DateTime.Now.AddHours(-1);
-					var sentMessageCount = session.Query<UserMessage>()
-						.Count(msg => msg.Sender.Id == sender.Id && msg.Created >= cutoffTime);
+					var sentMessageCount = await session.Query<UserMessage>()
+						.Where(msg => msg.Sender.Id == sender.Id && msg.Created >= cutoffTime)
+						.VdbCountAsync();
 					log.Debug($"Sent messages count for sender {sender} is {sentMessageCount}");
 					if (sentMessageCount > 10) {
 						throw new RateLimitException("Too many messages");
@@ -1476,12 +1477,12 @@ namespace VocaDb.Model.Database.Queries {
 					|| (receiver.EmailOptions == UserEmailOptions.PrivateMessagesFromAdmins
 						&& sender.EffectivePermissions.Has(PermissionToken.DesignatedStaff))) {
 
-					SendPrivateMessageNotification(mySettingsUrl, messagesUrl, messages.Received);
+					await SendPrivateMessageNotification(mySettingsUrl, messagesUrl, messages.Received);
 
 				}
 
-				session.Save(messages.Received);
-				session.Save(messages.Sent);
+				await session.SaveAsync(messages.Received);
+				await session.SaveAsync(messages.Sent);
 
 				return new UserMessageContract(messages.Received, userIconFactory);
 

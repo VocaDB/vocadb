@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using NLog;
@@ -123,6 +123,8 @@ namespace VocaDb.Model.Domain.Artists {
 				songs = value;
 			}
 		}
+
+		public virtual bool AllowNotifications => true;
 
 		public virtual ArchivedVersionManager<ArchivedArtistVersion, ArtistEditableFields> ArchivedVersionsManager {
 			get => archivedVersions;

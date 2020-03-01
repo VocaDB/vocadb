@@ -17,42 +17,6 @@ namespace VocaDb.Web.Code.Security {
 		private const string apiUrl = "https://www.stopforumspam.com/api?ip={0}&confidence&f=json";
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		public SFSResponseContract CallApi(string ip) {
-
-			if (string.IsNullOrEmpty(ip))
-				return null;
-
-			if (WebHelper.IsLocalhost(ip))
-				return new SFSResponseContract();
-
-			var url = string.Format(apiUrl, ip);
-
-			var request = WebRequest.Create(url);
-			request.Timeout = 10000;
-			string data;
-			try {
-				using (var response = request.GetResponse())
-				using (var stream = response.GetResponseStream())
-				using (var reader = new StreamReader(stream)) {
-					data = reader.ReadToEnd();
-				}
-			} catch (WebException x) {
-				log.Warn(x, "Unable to get response");
-				return null;
-			}
-
-			var result = JsonConvert.DeserializeObject<SFSResultContract>(data);
-
-			if (!result.Success) {
-				log.Warn("Request was not successful");
-				return null;
-			}
-
-			result.IP.IP = ip;
-			return result.IP;
-
-		}
-
 		public async Task<SFSResponseContract> CallApiAsync(string ip) {
 			
 			if (string.IsNullOrEmpty(ip))
@@ -80,19 +44,6 @@ namespace VocaDb.Web.Code.Security {
 
 			result.IP.IP = ip;
 			return result.IP;
-
-		}
-
-		public bool IsMalicious(string ip) {
-
-			var result = CallApi(ip);
-
-			if (result == null || !result.Appears)
-				return false;
-
-			double confidenceTreshold = 75d;
-
-			return (result.Confidence > confidenceTreshold);
 
 		}
 

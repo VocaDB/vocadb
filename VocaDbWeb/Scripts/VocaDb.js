@@ -27,7 +27,7 @@ vdb.functions.showLoginPopup = function() {
                 content: {
                     text: 'Loading...',
                     ajax: {
-                    	url: app.functions.mapFullUrl('/Artist/PopupContent'),
+						url: app.functions.mapAbsoluteUrl('/Artist/PopupContent'),
                         type: 'GET',
                         data: { id: $(elem).data("entryId") }
                     }
@@ -54,7 +54,7 @@ vdb.functions.showLoginPopup = function() {
                 content: {
                     text: 'Loading...',
                     ajax: {
-						url: app.functions.mapFullUrl('/Album/PopupContent'),
+						url: app.functions.mapAbsoluteUrl('/Album/PopupContent'),
                         type: 'GET',
                         data: { id: $(elem).data("entryId") }
                     }
@@ -78,7 +78,7 @@ vdb.functions.showLoginPopup = function() {
 				content: {
 					text: 'Loading...',
 					ajax: {
-						url: app.functions.mapFullUrl('/Album/PopupWithCoverContent'),
+						url: app.functions.mapAbsoluteUrl('/Album/PopupWithCoverContent'),
 						type: 'GET',
 						data: { id: $(elem).data("entryId") }
 					}

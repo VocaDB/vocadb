@@ -95,7 +95,10 @@ namespace VocaDb.Model.Service.Queries {
 					entryLinkFactory.CreateEntryLink(entry), string.Join(", ", tagNames)), user);
 
 				var addedTags = appliedTags.Except(entry.Tags.Tags).ToArray();
-				new FollowedTagNotifier().SendNotifications(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
+
+				if (entry.AllowNotifications) {
+					new FollowedTagNotifier().SendNotifications(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
+				}
 
 				var updatedTags = tagFunc(entry).SyncVotes(user, appliedTags, tagUsageFactory, onlyAdd: onlyAdd);
 				var tagCtx = ctx.OfType<Tag>();
