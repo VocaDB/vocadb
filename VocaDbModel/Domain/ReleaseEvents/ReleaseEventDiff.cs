@@ -21,8 +21,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public EnumFieldAccessor<ReleaseEventEditableFields> SeriesSuffix => Field(ReleaseEventEditableFields.SeriesSuffix);
 		public EnumFieldAccessor<ReleaseEventEditableFields> SongList => Field(ReleaseEventEditableFields.SongList);
 		public EnumFieldAccessor<ReleaseEventEditableFields> Status => Field(ReleaseEventEditableFields.Status);
-		public EnumFieldAccessor<ReleaseEventEditableFields> Venue => Field(ReleaseEventEditableFields.VenueEntry);
-		public EnumFieldAccessor<ReleaseEventEditableFields> VenueName => Field(ReleaseEventEditableFields.Venue);
+		public EnumFieldAccessor<ReleaseEventEditableFields> Venue => Field(ReleaseEventEditableFields.Venue);
+		public EnumFieldAccessor<ReleaseEventEditableFields> VenueName => Field(ReleaseEventEditableFields.VenueName);
 		public EnumFieldAccessor<ReleaseEventEditableFields> WebLinks => Field(ReleaseEventEditableFields.WebLinks);
 
 		public virtual bool IncludeArtists => IsSnapshot || Artists.IsChanged;

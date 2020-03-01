@@ -178,7 +178,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Venue name.
+        ///   Looks up a localized string similar to Venue.
         /// </summary>
         internal static string Venue {
             get {
@@ -187,11 +187,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Venue.
+        ///   Looks up a localized string similar to Venue name.
         /// </summary>
-        internal static string VenueEntry {
+        internal static string VenueName {
             get {
-                return ResourceManager.GetString("VenueEntry", resourceCulture);
+                return ResourceManager.GetString("VenueName", resourceCulture);
             }
         }
         

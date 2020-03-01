@@ -38,8 +38,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		Venue			= 16384,
 
-		VenueEntry		= 32768,
-
+		VenueName		= 32768,
+		
 		WebLinks		= 65536
 
 	}

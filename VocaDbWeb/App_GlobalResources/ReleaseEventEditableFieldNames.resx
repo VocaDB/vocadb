@@ -157,10 +157,10 @@
     <value>Status</value>
   </data>
   <data name="Venue" xml:space="preserve">
-    <value>Venue name</value>
-  </data>
-  <data name="VenueEntry" xml:space="preserve">
     <value>Venue</value>
+  </data>
+  <data name="VenueName" xml:space="preserve">
+    <value>Venue name</value>
   </data>
   <data name="WebLinks" xml:space="preserve">
     <value>External links</value>
