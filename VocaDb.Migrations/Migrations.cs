@@ -5,6 +5,17 @@ namespace VocaDb.Migrations {
 
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2020_03_01_1000)]
+	public class VenuesCreateDate : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Column("CreateDate").OnTable(TableNames.Venues).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+
+		}
+
+	}
+
 	[Migration(2020_02_28_1700)]
 	public class AlbumReleaseEvents_RenameVenue : AutoReversingMigration {
 

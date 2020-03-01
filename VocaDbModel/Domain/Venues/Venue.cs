@@ -57,6 +57,8 @@ namespace VocaDb.Model.Domain.Venues {
 			set => coordinates = value;
 		}
 
+		public virtual DateTime CreateDate { get; set; } = DateTime.Now;
+
 		public virtual string DefaultName => TranslatedName.Default;
 
 		public virtual bool Deleted { get; set; }
