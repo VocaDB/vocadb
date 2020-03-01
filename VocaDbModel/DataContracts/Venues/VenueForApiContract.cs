@@ -68,7 +68,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 			}
 
 			if (fields.HasFlag(VenueOptionalFields.WebLinks)) {
-				WebLinks = venue.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
+				WebLinks = venue.WebLinks.Links.Select(w => new WebLinkForApiContract(w)).ToArray();
 			}
 
 		}

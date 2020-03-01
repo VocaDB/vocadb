@@ -44,7 +44,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 			Version = venue.Version;
 
 			if (includeLinks) {
-				WebLinks = venue.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
+				WebLinks = venue.WebLinks.Links.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 			}
 
 		}

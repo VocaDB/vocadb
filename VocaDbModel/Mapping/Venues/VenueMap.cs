@@ -34,9 +34,12 @@ namespace VocaDb.Model.Mapping.Venues {
 					c2.Map(m => m.Romaji, "RomajiName");
 				});
 			});
+			
+			Component(m => m.WebLinks, c => {
+				c.HasMany(m => m.Links).Table("VenueWebLinks").KeyColumn("[Venue]").Inverse().Cascade.All().Cache.ReadWrite();
+			});
 
 			HasMany(m => m.AllEvents).OrderBy("SeriesNumber").KeyColumn("[Venue]").Inverse().Cache.ReadWrite();
-			HasMany(m => m.WebLinks).KeyColumn("[Venue]").Inverse().Cascade.All().Cache.ReadWrite();
 
 		}
 

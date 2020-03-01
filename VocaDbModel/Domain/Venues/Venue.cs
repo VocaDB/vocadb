@@ -22,7 +22,7 @@ namespace VocaDb.Model.Domain.Venues {
 		private OptionalGeoPoint coordinates;
 		private IList<ReleaseEvent> events = new List<ReleaseEvent>();
 		private NameManager<VenueName> names = new NameManager<VenueName>();
-		private IList<VenueWebLink> webLinks = new List<VenueWebLink>();
+		private WebLinkManager<VenueWebLink> webLinks = new WebLinkManager<VenueWebLink>();
 
 		public Venue() { }
 		
@@ -91,7 +91,7 @@ namespace VocaDb.Model.Domain.Venues {
 
 		public virtual int Version { get; set; }
 
-		public virtual IList<VenueWebLink> WebLinks {
+		public virtual WebLinkManager<VenueWebLink> WebLinks {
 			get => webLinks;
 			set {
 				ParamIs.NotNull(() => value);
@@ -130,7 +130,7 @@ namespace VocaDb.Model.Domain.Venues {
 			ParamIs.NotNullOrEmpty(() => url);
 
 			var link = new VenueWebLink(this, description, url, category);
-			WebLinks.Add(link);
+			WebLinks.Links.Add(link);
 
 			return link;
 

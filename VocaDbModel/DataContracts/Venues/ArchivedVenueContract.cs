@@ -38,7 +38,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 			Id = venue.Id;
 			Names = diff.IncludeNames ? venue.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
 			TranslatedName = new ArchivedTranslatedStringContract(venue.TranslatedName);
-			WebLinks = diff.IncludeWebLinks ? venue.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
+			WebLinks = diff.IncludeWebLinks ? venue.WebLinks.Links.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
 		}
 

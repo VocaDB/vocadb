@@ -214,12 +214,11 @@ namespace VocaDb.Model.Database.Queries {
 						diff.Coordinates.Set();
 					}
 
-					var weblinksDiff = WebLink.Sync(venue.WebLinks, contract.WebLinks, venue);
+					var webLinkDiff = venue.WebLinks.Sync(contract.WebLinks, venue);
+					ctx.OfType<VenueWebLink>().Sync(webLinkDiff);
 
-					if (weblinksDiff.Changed) {
+					if (webLinkDiff.Changed)
 						diff.WebLinks.Set();
-						ctx.OfType<VenueWebLink>().Sync(weblinksDiff);
-					}
 
 					ctx.Update(venue);
 
@@ -261,12 +260,11 @@ namespace VocaDb.Model.Database.Queries {
 						venue.Status = contract.Status;
 					}
 
-					var weblinksDiff = WebLink.Sync(venue.WebLinks, contract.WebLinks, venue);
+					var webLinkDiff = venue.WebLinks.Sync(contract.WebLinks, venue);
+					ctx.OfType<VenueWebLink>().Sync(webLinkDiff);
 
-					if (weblinksDiff.Changed) {
+					if (webLinkDiff.Changed)
 						diff.WebLinks.Set();
-						ctx.Sync(weblinksDiff);
-					}
 
 					ctx.Update(venue);
 
