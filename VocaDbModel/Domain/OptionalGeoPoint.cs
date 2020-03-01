@@ -10,6 +10,9 @@ namespace VocaDb.Model.Domain {
 
 	}
 
+	/// <remarks>
+	/// If Latitude or Longitude is specified, the other one needs to be specified too, but it's okay for both to be empty.
+	/// </remarks>
 	public class OptionalGeoPoint : IOptionalGeoPoint {
 
 		public virtual double? Latitude { get; set; }
