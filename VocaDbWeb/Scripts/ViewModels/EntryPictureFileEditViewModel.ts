@@ -1,4 +1,3 @@
-
 import EntryPictureFileContract from '../DataContracts/EntryPictureFileContract';
 
 //module vdb.viewModels {

@@ -1,4 +1,3 @@
-
 import AdvancedSearchFilter from './AdvancedSearchFilter';
 
 //namespace vdb.viewModels.search {

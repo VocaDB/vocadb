@@ -1,4 +1,3 @@
-
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import EntryUrlMapper from '../../Shared/EntryUrlMapper';
 import functions from '../../Shared/GlobalFunctions';

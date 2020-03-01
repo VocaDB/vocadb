@@ -1,4 +1,3 @@
-
 import CommonEntryContract from '../DataContracts/CommonEntryContract';
 import EntryStatus from '../Models/EntryStatus';
 

@@ -1,4 +1,3 @@
-
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
 
 //module vdb.viewModels {

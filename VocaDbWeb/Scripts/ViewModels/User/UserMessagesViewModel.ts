@@ -1,4 +1,3 @@
-
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import PagedItemsViewModel from '../PagedItemsViewModel';
 import UserApiContract from '../../DataContracts/User/UserApiContract';

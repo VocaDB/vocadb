@@ -1,4 +1,3 @@
-
 import ArtistDetailsViewModel from '../ViewModels/Artist/ArtistDetailsViewModel';
 import SongRepository from '../Repositories/SongRepository';
 

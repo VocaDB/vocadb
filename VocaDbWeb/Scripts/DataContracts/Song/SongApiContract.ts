@@ -1,4 +1,3 @@
-
 import ArtistForAlbumContract from '../ArtistForAlbumContract';
 import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
 import LocalizedStringContract from '../Globalization/LocalizedStringContract';

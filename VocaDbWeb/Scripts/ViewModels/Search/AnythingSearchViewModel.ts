@@ -1,4 +1,3 @@
-
 import EntryContract from '../../DataContracts/EntryContract';
 import EntryRepository from '../../Repositories/EntryRepository';
 import EntryType from '../../Models/EntryType';

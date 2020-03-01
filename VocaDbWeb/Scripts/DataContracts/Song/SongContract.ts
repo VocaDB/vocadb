@@ -1,4 +1,3 @@
-
 import CommonEntryContract from '../CommonEntryContract';
 
 //module vdb.dataContracts {

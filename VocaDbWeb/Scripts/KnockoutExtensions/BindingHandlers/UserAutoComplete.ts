@@ -1,4 +1,3 @@
-
 import { EntryAutoCompleteParams } from '../../Shared/EntryAutoComplete';
 import functions from '../../Shared/GlobalFunctions';
 import { initEntrySearch } from '../../Shared/EntryAutoComplete';

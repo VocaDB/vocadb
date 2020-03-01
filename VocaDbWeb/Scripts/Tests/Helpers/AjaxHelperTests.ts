@@ -1,4 +1,3 @@
-
 import AjaxHelper from '../../Helpers/AjaxHelper';
 
 //module vdb.tests.helpers {

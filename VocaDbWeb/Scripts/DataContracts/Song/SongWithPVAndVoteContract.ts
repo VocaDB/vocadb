@@ -1,4 +1,3 @@
-
 import SongContract from './SongContract';
 
 //module vdb.dataContracts.songs {

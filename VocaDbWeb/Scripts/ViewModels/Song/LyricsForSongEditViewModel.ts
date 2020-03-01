@@ -1,4 +1,3 @@
-
 import BasicListEditViewModel from '../BasicListEditViewModel';
 import ContentLanguageSelection from '../../Models/Globalization/ContentLanguageSelection';
 import LyricsForSongContract from '../../DataContracts/Song/LyricsForSongContract';

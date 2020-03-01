@@ -1,4 +1,3 @@
-
 import ArtistFilters from './ArtistFilters';
 import ArtistRepository from '../../Repositories/ArtistRepository';
 import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';

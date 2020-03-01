@@ -1,4 +1,3 @@
-
 import AlbumDiscPropertiesContract from '../../DataContracts/Album/AlbumDiscPropertiesContract';
 import BasicListEditViewModel from '../BasicListEditViewModel';
 

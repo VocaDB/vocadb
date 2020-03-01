@@ -1,4 +1,3 @@
-
 import ResourceRepository from '../../Repositories/ResourceRepository';
 import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
 import SongListContract from '../../DataContracts/Song/SongListContract';

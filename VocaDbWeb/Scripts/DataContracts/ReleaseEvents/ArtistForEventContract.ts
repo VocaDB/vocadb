@@ -1,4 +1,3 @@
-
 import ArtistContract from '../Artist/ArtistContract';
 
 //namespace vdb.dataContracts.events {

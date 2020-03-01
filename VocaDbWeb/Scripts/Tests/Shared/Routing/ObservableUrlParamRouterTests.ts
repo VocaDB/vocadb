@@ -1,4 +1,3 @@
-
 import ObservableUrlParamRouter from '../../../Shared/Routing/ObservableUrlParamRouter';
 
 //module vdb.tests.shared.routing {

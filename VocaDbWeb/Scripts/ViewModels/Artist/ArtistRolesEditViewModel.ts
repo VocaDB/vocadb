@@ -1,4 +1,3 @@
-
 import ArtistRoles from '../../Models/Artists/ArtistRoles';
 import { IEditableArtistWithSupport } from '../ArtistForAlbumEditViewModel';
 

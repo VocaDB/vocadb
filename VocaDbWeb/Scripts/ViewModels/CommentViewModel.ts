@@ -1,4 +1,3 @@
-
 import CommentContract from '../DataContracts/CommentContract';
 import UserApiContract from '../DataContracts/User/UserApiContract';
 

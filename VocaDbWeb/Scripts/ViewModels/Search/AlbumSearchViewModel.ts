@@ -1,4 +1,3 @@
-
 import AlbumContract from '../../DataContracts/Album/AlbumContract';
 import AlbumRepository from '../../Repositories/AlbumRepository';
 import ArtistFilters from './ArtistFilters';

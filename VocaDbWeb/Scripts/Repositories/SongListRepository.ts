@@ -1,4 +1,3 @@
-
 import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import EntryCommentRepository from './EntryCommentRepository';

@@ -1,4 +1,3 @@
-
 import HtmlHelper from '../../Helpers/HtmlHelper';
 
 //module vdb.tests.helpers {

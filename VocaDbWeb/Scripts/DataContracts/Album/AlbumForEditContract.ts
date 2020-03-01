@@ -1,4 +1,3 @@
-
 import AlbumDiscPropertiesContract from './AlbumDiscPropertiesContract';
 import AlbumReleaseContract from './AlbumReleaseContract';
 import ArtistForAlbumContract from '../ArtistForAlbumContract';

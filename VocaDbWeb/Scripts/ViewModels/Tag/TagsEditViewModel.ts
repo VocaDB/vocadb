@@ -1,4 +1,3 @@
-
 import EntryType from '../../Models/EntryType';
 import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 import TagSelectionContract from '../../DataContracts/Tag/TagSelectionContract';

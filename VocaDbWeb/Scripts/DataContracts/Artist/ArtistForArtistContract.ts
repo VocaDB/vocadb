@@ -1,4 +1,3 @@
-
 import ArtistContract from './ArtistContract';
 
 //module vdb.dataContracts.artists {

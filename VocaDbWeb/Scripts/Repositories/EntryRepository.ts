@@ -1,4 +1,3 @@
-
 import functions from '../Shared/GlobalFunctions';
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
 

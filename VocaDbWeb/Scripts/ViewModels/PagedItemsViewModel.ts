@@ -1,4 +1,3 @@
-
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
 
 //module vdb.viewModels {

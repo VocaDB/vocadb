@@ -1,4 +1,3 @@
-
 import EntryType from '../../Models/EntryType';
 import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
 import TagListViewModel from '../Tag/TagListViewModel';

@@ -1,4 +1,3 @@
-
 import ArtistForAlbumContract from '../ArtistForAlbumContract';
 import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';

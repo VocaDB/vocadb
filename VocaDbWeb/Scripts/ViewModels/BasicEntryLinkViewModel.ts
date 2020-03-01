@@ -1,4 +1,3 @@
-
 import IEntryWithIdAndName from '../Models/IEntryWithIdAndName';
 
 //module vdb.viewModels {

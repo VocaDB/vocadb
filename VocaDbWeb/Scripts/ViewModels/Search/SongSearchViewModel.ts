@@ -1,4 +1,3 @@
-
 import ArtistFilters from './ArtistFilters';
 import ArtistRepository from '../../Repositories/ArtistRepository';
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';

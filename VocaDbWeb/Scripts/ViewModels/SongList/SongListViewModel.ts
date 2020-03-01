@@ -1,4 +1,3 @@
-
 import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
 import ArtistFilters from '../Search/ArtistFilters';
 import ArtistRepository from '../../Repositories/ArtistRepository';

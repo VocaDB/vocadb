@@ -1,4 +1,3 @@
-
 import SongWithPVAndVoteContract from './SongWithPVAndVoteContract';
 
 //module vdb.dataContracts.songs {

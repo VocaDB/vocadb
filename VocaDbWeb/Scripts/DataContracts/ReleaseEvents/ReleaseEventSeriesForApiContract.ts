@@ -1,4 +1,3 @@
-
 import EntryThumbContract from "../EntryThumbContract";
 import LocalizedStringWithIdContract from "../Globalization/LocalizedStringWithIdContract";
 import WebLinkContract from "../WebLinkContract";

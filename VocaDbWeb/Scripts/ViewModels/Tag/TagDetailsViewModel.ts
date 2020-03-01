@@ -1,4 +1,3 @@
-
 import CommentContract from '../../DataContracts/CommentContract';
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';

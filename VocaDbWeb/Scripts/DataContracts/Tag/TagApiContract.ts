@@ -1,4 +1,3 @@
-
 import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
 import EntryThumbContract from '../EntryThumbContract';
 import EntryType from '../../Models/EntryType';

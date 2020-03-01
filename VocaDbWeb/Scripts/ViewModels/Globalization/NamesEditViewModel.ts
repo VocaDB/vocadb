@@ -1,4 +1,3 @@
-
 import ContentLanguageSelection from '../../Models/Globalization/ContentLanguageSelection';
 import LocalizedStringWithIdContract from '../../DataContracts/Globalization/LocalizedStringWithIdContract';
 import LocalizedStringWithIdEditViewModel from './LocalizedStringWithIdEditViewModel';

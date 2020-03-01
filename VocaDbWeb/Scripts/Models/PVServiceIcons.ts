@@ -1,4 +1,3 @@
-
 import UrlMapper from '../Shared/UrlMapper';
 
 //module vdb.models {

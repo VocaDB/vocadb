@@ -1,4 +1,3 @@
-
 import CommentContract from '../../DataContracts/CommentContract';
 import CommentRepository from '../../Repositories/CommentRepository';
 import EditableCommentsViewModel from '../EditableCommentsViewModel';

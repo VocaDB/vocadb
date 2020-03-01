@@ -1,4 +1,3 @@
-
 import EntryThumbContract from '../EntryThumbContract';
 import UserBaseContract from './UserBaseContract';
 

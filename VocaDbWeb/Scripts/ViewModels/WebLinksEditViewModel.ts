@@ -1,4 +1,3 @@
-
 import BasicListEditViewModel from './BasicListEditViewModel';
 import TranslatedEnumField from '../DataContracts/TranslatedEnumField';
 import WebLinkContract from '../DataContracts/WebLinkContract';

@@ -1,4 +1,3 @@
-
 import { ArtistAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import ArtistForAlbumContract from '../DataContracts/ArtistForAlbumContract';

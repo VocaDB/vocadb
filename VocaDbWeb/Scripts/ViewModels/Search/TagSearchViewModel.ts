@@ -1,4 +1,3 @@
-
 import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';

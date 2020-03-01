@@ -1,4 +1,3 @@
-
 import EnglishTranslatedStringContract from '../../DataContracts/Globalization/EnglishTranslatedStringContract';
 
 //module vdb.viewModels.globalization {

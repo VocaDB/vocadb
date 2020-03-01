@@ -1,4 +1,3 @@
-
 import EntryThumbContract from '../EntryThumbContract';
 import IEntryWithIdAndName from '../../Models/IEntryWithIdAndName';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';

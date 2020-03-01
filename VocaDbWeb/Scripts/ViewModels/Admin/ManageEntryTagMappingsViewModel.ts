@@ -1,4 +1,3 @@
-
 import AlbumType from "../../Models/Albums/AlbumType";
 import ArtistType from "../../Models/Artists/ArtistType";
 import BasicEntryLinkViewModel from "../BasicEntryLinkViewModel";

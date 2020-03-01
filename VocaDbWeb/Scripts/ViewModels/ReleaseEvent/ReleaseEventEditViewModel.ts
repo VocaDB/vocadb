@@ -1,4 +1,3 @@
-
 import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
 import ArtistEventRoles from '../../Models/Events/ArtistEventRoles';
 import ArtistForEventContract from '../../DataContracts/ReleaseEvents/ArtistForEventContract';

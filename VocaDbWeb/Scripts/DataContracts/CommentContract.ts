@@ -1,4 +1,3 @@
-
 import EntryRefContract from './EntryRefContract';
 import UserApiContract from './User/UserApiContract';
 

@@ -1,4 +1,3 @@
-
 import OptionalDateTimeContract from '../OptionalDateTimeContract';
 import ReleaseEventContract from '../ReleaseEvents/ReleaseEventContract';
 

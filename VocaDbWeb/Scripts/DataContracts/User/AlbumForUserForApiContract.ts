@@ -1,4 +1,3 @@
-
 import AlbumContract from '../Album/AlbumContract';
 import UserApiContract from './UserApiContract';
 

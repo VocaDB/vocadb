@@ -1,4 +1,3 @@
-
 import ResourceRepository from '../../Repositories/ResourceRepository';
 import ResourcesManager from '../../Models/ResourcesManager';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';

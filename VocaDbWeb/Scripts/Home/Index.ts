@@ -1,4 +1,3 @@
-
 import PVRatingButtonsViewModel from '../ViewModels/PVRatingButtonsViewModel';
 import ui from '../Shared/MessagesTyped';
 import UrlMapper from '../Shared/UrlMapper';

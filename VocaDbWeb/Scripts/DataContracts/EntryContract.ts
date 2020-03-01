@@ -1,4 +1,3 @@
-
 import EntryThumbContract from './EntryThumbContract';
 import EntryWithTagUsagesContract from './Base/EntryWithTagUsagesContract';
 

@@ -1,4 +1,3 @@
-
 import CountPerDayContract from '../DataContracts/Aggregate/CountPerDayContract';
 
 //module vdb.helpers {

@@ -1,4 +1,3 @@
-
 import LocalizedStringContract from './LocalizedStringContract';
 
 //namespace vdb.dataContracts.globalization {

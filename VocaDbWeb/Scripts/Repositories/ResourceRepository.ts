@@ -1,4 +1,3 @@
-
 import functions from '../Shared/GlobalFunctions';
 import ResourcesContract from '../DataContracts/ResourcesContract';
 

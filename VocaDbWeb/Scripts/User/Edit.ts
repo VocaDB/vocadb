@@ -1,4 +1,3 @@
-
 import ArtistContract from "../DataContracts/Artist/ArtistContract";
 import ContentLanguagePreference from "../Models/Globalization/ContentLanguagePreference";
 import functions from "../Shared/GlobalFunctions";

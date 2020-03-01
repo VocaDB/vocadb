@@ -1,4 +1,3 @@
-
 import ContentLanguageSelection from '../../../Models/Globalization/ContentLanguageSelection';
 import LocalizedStringWithIdEditViewModel from '../../../ViewModels/Globalization/LocalizedStringWithIdEditViewModel';
 import NamesEditViewModel from '../../../ViewModels/Globalization/NamesEditViewModel';

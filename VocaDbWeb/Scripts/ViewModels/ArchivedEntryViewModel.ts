@@ -1,4 +1,3 @@
-
 import ReportEntryViewModel from './ReportEntryViewModel';
 import ui from '../Shared/MessagesTyped';
 

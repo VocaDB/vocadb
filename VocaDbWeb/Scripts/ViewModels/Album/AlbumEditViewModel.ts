@@ -1,4 +1,3 @@
-
 import AlbumForEditContract from '../../DataContracts/Album/AlbumForEditContract';
 import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
 import { AlbumDiscPropertiesListEditViewModel } from './AlbumDiscPropertiesEditViewModel';

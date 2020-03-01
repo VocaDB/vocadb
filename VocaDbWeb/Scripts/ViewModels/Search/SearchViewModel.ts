@@ -1,4 +1,3 @@
-
 import AlbumRepository from '../../Repositories/AlbumRepository';
 import AlbumSearchViewModel from './AlbumSearchViewModel';
 import AnythingSearchViewModel from './AnythingSearchViewModel';

@@ -1,4 +1,3 @@
-
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import ArtistForAlbumContract from '../DataContracts/ArtistForAlbumContract';
 import ArtistRoles from '../Models/Artists/ArtistRoles';

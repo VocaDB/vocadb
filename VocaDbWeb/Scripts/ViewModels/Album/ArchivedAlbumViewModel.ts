@@ -1,4 +1,3 @@
-
 import AlbumRepository from '../../Repositories/AlbumRepository';
 import ReportEntryViewModel from '../ReportEntryViewModel';
 import ui from '../../Shared/MessagesTyped';

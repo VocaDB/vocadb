@@ -1,4 +1,3 @@
-
 import TagUsageForApiContract from '../Tag/TagUsageForApiContract';
 
 //module vdb.dataContracts {

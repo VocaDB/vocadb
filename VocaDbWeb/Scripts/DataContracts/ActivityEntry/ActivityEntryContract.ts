@@ -1,4 +1,3 @@
-
 import ArchivedVersionContract from '../Versioning/ArchivedVersionContract';
 import EntryContract from '../EntryContract';
 import UserApiContract from '../User/UserApiContract';

@@ -1,4 +1,3 @@
-
 import ArtistType from '../../Models/Artists/ArtistType';
 
 //module vdb.viewModels.search {

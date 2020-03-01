@@ -1,4 +1,3 @@
-
 import EntryUrlMapper from '../../Shared/EntryUrlMapper';
 import NameMatchMode from '../../Models/NameMatchMode';
 import TagRepository from '../../Repositories/TagRepository';

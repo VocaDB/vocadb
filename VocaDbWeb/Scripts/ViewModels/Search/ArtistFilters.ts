@@ -1,4 +1,3 @@
-
 import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
 import ArtistFilter from './ArtistFilter';
 import ArtistHelper from '../../Helpers/ArtistHelper';

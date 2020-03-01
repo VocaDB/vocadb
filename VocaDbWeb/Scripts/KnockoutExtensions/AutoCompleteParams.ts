@@ -1,4 +1,3 @@
-
 import AlbumContract from '../DataContracts/Album/AlbumContract';
 import { AlbumQueryParams } from '../Repositories/AlbumRepository';
 import ArtistContract from '../DataContracts/Artist/ArtistContract';

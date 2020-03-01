@@ -1,4 +1,3 @@
-
 import ActivityEntryContract from '../../DataContracts/ActivityEntry/ActivityEntryContract';
 import ArchivedVersionContract from '../../DataContracts/Versioning/ArchivedVersionContract';
 import EntryContract from '../../DataContracts/EntryContract';

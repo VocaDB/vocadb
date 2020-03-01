@@ -1,4 +1,3 @@
-
 import CommentContract from '../CommentContract';
 import UserApiContract from '../User/UserApiContract';
 

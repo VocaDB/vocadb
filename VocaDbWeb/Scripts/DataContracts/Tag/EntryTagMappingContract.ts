@@ -1,4 +1,3 @@
-
 import EntryTypeAndSubTypeContract from "../EntryTypeAndSubTypeContract";
 import TagBaseContract from "./TagBaseContract";
 

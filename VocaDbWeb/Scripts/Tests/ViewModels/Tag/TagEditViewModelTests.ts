@@ -1,4 +1,3 @@
-
 import EntryType from '../../../Models/EntryType';
 import FakeUserRepository from '../../TestSupport/FakeUserRepository';
 import TagApiContract from '../../../DataContracts/Tag/TagApiContract';

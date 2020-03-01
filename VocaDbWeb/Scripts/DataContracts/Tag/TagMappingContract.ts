@@ -1,4 +1,3 @@
-
 import TagBaseContract from './TagBaseContract';
 
 //namespace vdb.dataContracts.tags {

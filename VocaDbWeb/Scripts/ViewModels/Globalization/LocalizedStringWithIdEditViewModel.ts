@@ -1,4 +1,3 @@
-
 import ContentLanguageSelection from '../../Models/Globalization/ContentLanguageSelection';
 import KnockoutHelper from '../../Helpers/KnockoutHelper';
 import LocalizedStringWithIdContract from '../../DataContracts/Globalization/LocalizedStringWithIdContract';

@@ -1,4 +1,3 @@
-
 import CommentContract from '../DataContracts/CommentContract';
 
 //module vdb.repositories {

@@ -1,4 +1,3 @@
-
 import ResourceRepository from '../Repositories/ResourceRepository';
 import ResourcesContract from '../DataContracts/ResourcesContract';
 

@@ -1,4 +1,3 @@
-
 import CommentContract from '../DataContracts/CommentContract';
 import ICommentRepository from './ICommentRepository';
 import UrlMapper from '../Shared/UrlMapper';

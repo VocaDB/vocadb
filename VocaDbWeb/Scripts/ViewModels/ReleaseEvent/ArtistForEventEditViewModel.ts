@@ -1,4 +1,3 @@
-
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import ArtistForEventContract from '../../DataContracts/ReleaseEvents/ArtistForEventContract';
 

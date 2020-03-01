@@ -1,4 +1,3 @@
-
 import AdvancedSearchFilters from './AdvancedSearchFilters';
 import EntryContract from '../../DataContracts/EntryContract';
 import EntryWithTagUsagesContract from '../../DataContracts/Base/EntryWithTagUsagesContract';

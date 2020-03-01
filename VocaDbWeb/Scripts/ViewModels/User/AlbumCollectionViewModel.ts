@@ -1,4 +1,3 @@
-
 import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
 import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
 import ArtistRepository from '../../Repositories/ArtistRepository';

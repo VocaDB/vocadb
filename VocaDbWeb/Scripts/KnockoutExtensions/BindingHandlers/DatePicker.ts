@@ -1,4 +1,3 @@
-
 import DateTimeHelper from '../../Helpers/DateTimeHelper';
 
 declare global {

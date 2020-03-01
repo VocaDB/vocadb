@@ -1,4 +1,3 @@
-
 import ArtistApiContract from '../DataContracts/Artist/ArtistApiContract';
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import ArtistRepository from '../Repositories/ArtistRepository';

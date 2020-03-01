@@ -1,4 +1,3 @@
-
 import BaseRepository from './BaseRepository';
 import CommentContract from '../DataContracts/CommentContract';
 import EntryType from '../Models/EntryType';

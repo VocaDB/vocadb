@@ -1,4 +1,3 @@
-
 import EntryPictureFileContract from '../DataContracts/EntryPictureFileContract';
 import EntryPictureFileEditViewModel from './EntryPictureFileEditViewModel';
 

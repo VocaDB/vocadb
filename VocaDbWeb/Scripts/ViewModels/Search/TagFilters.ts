@@ -1,4 +1,3 @@
-
 import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 import TagFilter from './TagFilter';
 import TagRepository from '../../Repositories/TagRepository';

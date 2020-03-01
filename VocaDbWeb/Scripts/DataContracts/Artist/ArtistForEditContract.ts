@@ -1,4 +1,3 @@
-
 import ArtistContract from './ArtistContract';
 import ArtistForArtistContract from './ArtistForArtistContract';
 import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';

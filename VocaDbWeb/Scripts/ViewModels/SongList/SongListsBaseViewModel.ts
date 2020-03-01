@@ -1,4 +1,3 @@
-
 import PagedItemsViewModel from '../PagedItemsViewModel';
 import ResourceRepository from '../../Repositories/ResourceRepository';
 import ResourcesContract from '../../DataContracts/ResourcesContract';

@@ -1,4 +1,3 @@
-
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
 import EntryType from '../../Models/EntryType';
 import EntryUrlMapper from '../../Shared/EntryUrlMapper';

@@ -1,4 +1,3 @@
-
 import UserApiContract from './UserApiContract';
 
 //module vdb.dataContracts {

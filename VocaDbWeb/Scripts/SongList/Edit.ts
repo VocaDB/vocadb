@@ -1,4 +1,3 @@
-
 import SongListEditViewModel from "../ViewModels/SongList/SongListEditViewModel";
 
 export function initPage(repoFactory, urlMapper, listId) {

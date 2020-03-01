@@ -1,4 +1,3 @@
-
 import { AlbumAutoCompleteParams } from './AutoCompleteParams';
 import AlbumContract from '../DataContracts/Album/AlbumContract';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';

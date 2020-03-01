@@ -1,4 +1,3 @@
-
 import ArtistForEventContract from './ArtistForEventContract';
 import EntryThumbContract from '../EntryThumbContract';
 import EventSeriesContract from './EventSeriesContract';

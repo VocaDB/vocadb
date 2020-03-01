@@ -1,4 +1,3 @@
-
 import DiscussionRepository from '../../Repositories/DiscussionRepository';
 import DiscussionFolderContract from '../../DataContracts/Discussion/DiscussionFolderContract';
 import DiscussionTopicContract from '../../DataContracts/Discussion/DiscussionTopicContract';

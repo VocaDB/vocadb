@@ -1,4 +1,3 @@
-
 import AjaxHelper from '../Helpers/AjaxHelper';
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';

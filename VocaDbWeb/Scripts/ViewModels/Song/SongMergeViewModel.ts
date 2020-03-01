@@ -1,4 +1,3 @@
-
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper';
 import { SongAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';

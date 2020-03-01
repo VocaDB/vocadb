@@ -1,4 +1,3 @@
-
 import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 
 //module vdb.viewModels.search {

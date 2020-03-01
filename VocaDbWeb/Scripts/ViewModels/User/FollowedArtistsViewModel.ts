@@ -1,4 +1,3 @@
-
 import RatedSongForUserForApiContract from '../../DataContracts/User/RatedSongForUserForApiContract';
 import ResourceRepository from '../../Repositories/ResourceRepository';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
