@@ -24,8 +24,6 @@ import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract'
 import TimeUnit from '../Models/Aggregate/TimeUnit';
 import UrlMapper from '../Shared/UrlMapper';
 
-//module vdb.repositories {
-
     // Repository for managing songs and related objects.
     // Corresponds to the SongController class.
     export default class SongRepository extends BaseRepository implements ICommentRepository {
@@ -282,5 +280,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		songTypes?: string;
 
 	}
-
-//}

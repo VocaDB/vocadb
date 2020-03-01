@@ -1,7 +1,5 @@
 import UrlMapper from '../Shared/UrlMapper';
 
-//module vdb.repositories {
-
     export default class EntryReportRepository {
 
         public getNewReportCount = (callback: (count) => void) => {
@@ -12,5 +10,3 @@ import UrlMapper from '../Shared/UrlMapper';
         constructor(private urlMapper: UrlMapper) {}
 
     }
-
-//}

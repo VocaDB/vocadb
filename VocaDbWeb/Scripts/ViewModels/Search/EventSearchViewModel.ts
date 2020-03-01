@@ -6,8 +6,6 @@ import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 
-//namespace vdb.viewModels.search {
-
 	export default class EventSearchViewModel extends SearchCategoryBaseViewModel<ReleaseEventContract> {
 
 		constructor(
@@ -83,5 +81,3 @@ import SearchViewModel from './SearchViewModel';
 		}
 
 	}
-
-//}

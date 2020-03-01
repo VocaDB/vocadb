@@ -1,8 +1,6 @@
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import SongInAlbumEditContract from '../DataContracts/Song/SongInAlbumEditContract';
 
-//module vdb.viewModels {
-
     export default class SongInAlbumEditViewModel {
         
         public artists: KnockoutObservableArray<ArtistContract>;
@@ -50,5 +48,3 @@ import SongInAlbumEditContract from '../DataContracts/Song/SongInAlbumEditContra
         }
 
     }
-
-//}

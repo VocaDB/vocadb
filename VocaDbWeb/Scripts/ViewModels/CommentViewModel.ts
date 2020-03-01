@@ -1,8 +1,6 @@
 import CommentContract from '../DataContracts/CommentContract';
 import UserApiContract from '../DataContracts/User/UserApiContract';
 
-//module vdb.viewModels {
-	
 	export default class CommentViewModel {
 		
 		constructor(contract: CommentContract, public canBeDeleted: boolean, public canBeEdited: boolean) {
@@ -42,5 +40,3 @@ import UserApiContract from '../DataContracts/User/UserApiContract';
 		}
 
 	}
-
-//} 

@@ -1,7 +1,5 @@
 import DateTimeHelper from '../../Helpers/DateTimeHelper';
 
-//module vdb.tests.helpers {
-
 	QUnit.module("DateTimeHelper");
 
 	QUnit.test("convertToLocal", () => {
@@ -40,5 +38,3 @@ import DateTimeHelper from '../../Helpers/DateTimeHelper';
 		QUnit.equal(result, null, "result");
 
 	});
-
-//}

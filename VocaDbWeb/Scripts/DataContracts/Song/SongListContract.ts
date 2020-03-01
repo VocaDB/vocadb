@@ -1,8 +1,6 @@
 import SongListBaseContract from '../SongListBaseContract';
 import UserBaseContract from '../User/UserBaseContract';
 
-//module vdb.dataContracts {
-
     export default interface SongListContract extends SongListBaseContract {
         
         author: UserBaseContract;
@@ -16,5 +14,3 @@ import UserBaseContract from '../User/UserBaseContract';
 		status: string;
 
     }
-
-//}

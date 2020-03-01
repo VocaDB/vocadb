@@ -2,8 +2,6 @@ import AlbumRepository from '../../Repositories/AlbumRepository';
 import ReportEntryViewModel from '../ReportEntryViewModel';
 import ui from '../../Shared/MessagesTyped';
 
-//module vdb.viewModels.albums {
-
 	export default class ArchivedAlbumViewModel {
 
 		constructor(albumId: number, versionNumber: number, private repository: AlbumRepository) {
@@ -21,5 +19,3 @@ import ui from '../../Shared/MessagesTyped';
 		public reportViewModel: ReportEntryViewModel;
 
 	}
-
-//} 

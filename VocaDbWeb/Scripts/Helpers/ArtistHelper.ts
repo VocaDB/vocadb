@@ -4,8 +4,6 @@ import ArtistRoles from '../Models/Artists/ArtistRoles';
 import ArtistType from '../Models/Artists/ArtistType';
 import ContentFocus from '../Models/ContentFocus';
 
-//module vdb.helpers {
-
 	export default class ArtistHelper {
 		
 		/// <summary>
@@ -167,5 +165,3 @@ import ContentFocus from '../Models/ContentFocus';
 		}
 
 	}
-
-//}

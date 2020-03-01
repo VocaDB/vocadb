@@ -1,8 +1,6 @@
 import CommentContract from '../CommentContract';
 import UserApiContract from '../User/UserApiContract';
 
-//module vdb.dataContracts.discussions {
-	
 	export default interface DiscussionTopicContract {
 		
 		author: UserApiContract;
@@ -30,5 +28,3 @@ import UserApiContract from '../User/UserApiContract';
 		name: string;
 
 	}
-
-//} 

@@ -7,8 +7,6 @@ import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels.pvs {
-
 	export default class PVPlayerViewModel {
 		
 		public static autoplayPVServicesString = "File, LocalFile, NicoNicoDouga, SoundCloud, Youtube";
@@ -180,5 +178,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		service: PVService;
 
 	}
-
-//}

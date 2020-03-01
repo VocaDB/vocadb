@@ -4,8 +4,6 @@ import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 import UserRepository from '../../Repositories/UserRepository';
 
-//namespace vdb.viewModels.releaseEvents {
-
 	export default class EventSeriesDetailsViewModel {
 
 		constructor(
@@ -28,5 +26,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		public tagUsages: TagListViewModel;
 
 	}
-
-//}

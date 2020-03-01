@@ -9,8 +9,6 @@ import SongListForEditContract from '../DataContracts/Song/SongListForEditContra
 import { SongOptionalFields } from '../Models/EntryOptionalFields';
 import UrlMapper from '../Shared/UrlMapper';
 
-//module vdb.repositories {
-
 	export default class SongListRepository {
 
 		constructor(private readonly urlMapper: UrlMapper) {}
@@ -86,5 +84,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		};
 
 	}
-
-//}

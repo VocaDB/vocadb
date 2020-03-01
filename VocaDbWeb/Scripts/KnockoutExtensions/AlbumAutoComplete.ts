@@ -11,8 +11,6 @@ declare global {
 	}
 }
 
-//module vdb.knockoutExtensions {
-	
 	export function albumAutoComplete(element: HTMLElement, valueAccessor) {
 
 		var properties: AlbumAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
@@ -56,8 +54,6 @@ declare global {
 
 
 	}
-
-//}
 
 ko.bindingHandlers.albumAutoComplete = {
 	init: albumAutoComplete

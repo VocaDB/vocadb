@@ -1,8 +1,6 @@
 import ArtistRoles from '../../Models/Artists/ArtistRoles';
 import { IEditableArtistWithSupport } from '../ArtistForAlbumEditViewModel';
 
-//module vdb.viewModels.artists {
-
 	export default class ArtistRolesEditViewModel {
 		
 		constructor(
@@ -74,5 +72,3 @@ import { IEditableArtistWithSupport } from '../ArtistForAlbumEditViewModel';
 		selected: KnockoutObservable<boolean>;
 
 	}
-
-//} 

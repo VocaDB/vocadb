@@ -12,8 +12,6 @@ import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 import UserRepository from '../../Repositories/UserRepository';
 
-//namespace vdb.viewModels.user {
-	
 	export default class AlbumCollectionViewModel {
 
 		constructor(private userRepo: UserRepository, private artistRepo: ArtistRepository,
@@ -134,5 +132,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		}
 
 	}
-
-//}

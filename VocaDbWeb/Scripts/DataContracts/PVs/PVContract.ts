@@ -1,6 +1,4 @@
 
-//module vdb.dataContracts.pvs {
-	
 	export default interface PVContract {
 
 		author?: string;
@@ -30,5 +28,3 @@
 		url?: string;
 
 	}
-
-//}

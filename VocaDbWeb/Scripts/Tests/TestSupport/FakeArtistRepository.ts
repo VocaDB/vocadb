@@ -1,8 +1,6 @@
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import ArtistRepository from '../../Repositories/ArtistRepository';
 
-//module vdb.tests.testSupport {
-
     export default class FakeArtistRepository extends ArtistRepository {
 
         result: ArtistContract = null;
@@ -19,5 +17,3 @@ import ArtistRepository from '../../Repositories/ArtistRepository';
         }
 
     }
-
-//}

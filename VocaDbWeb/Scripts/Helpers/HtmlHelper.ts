@@ -1,6 +1,4 @@
 
-//module vdb.helpers {
-	
 	export default class HtmlHelper {
 		
 		// Bolds and HTML encodes a term
@@ -35,5 +33,3 @@
 		}
 
 	}
-
-//}

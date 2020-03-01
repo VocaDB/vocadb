@@ -3,8 +3,6 @@ import SongApiContract from '../../DataContracts/Song/SongApiContract';
 import SongListBaseContract from '../../DataContracts/SongListBaseContract';
 import SongRepository from '../../Repositories/SongRepository';
 
-//module vdb.tests.testSupport {
-
 	export interface SongInList {
 		listId: number;
 		songId: number;
@@ -60,5 +58,3 @@ import SongRepository from '../../Repositories/SongRepository';
         }
 
     }
-
-//}

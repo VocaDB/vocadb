@@ -1,7 +1,5 @@
 import ArtistForAlbumEditViewModel from './ArtistForAlbumEditViewModel';
 
-//namespace vdb.viewModels {
-
 	export default class CustomNameEditViewModel {
 
 		public artistLink = ko.observable<ArtistForAlbumEditViewModel>();
@@ -30,5 +28,3 @@ import ArtistForAlbumEditViewModel from './ArtistForAlbumEditViewModel';
 		}
 
 	}
-
-//}

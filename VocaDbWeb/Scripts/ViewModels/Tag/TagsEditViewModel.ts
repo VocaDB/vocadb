@@ -3,8 +3,6 @@ import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 import TagSelectionContract from '../../DataContracts/Tag/TagSelectionContract';
 import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
 
-//module vdb.viewModels.tags {
-
 	export default class TagsEditViewModel {
 
 		constructor(private readonly repo: ITagSelectionsRepository, 
@@ -124,5 +122,3 @@ import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContra
 		saveTagSelections(tags: TagBaseContract[]): void;
 
 	}
-
-//} 

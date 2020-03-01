@@ -13,8 +13,6 @@ import TagRepository from './TagRepository';
 import UrlMapper from '../Shared/UrlMapper';
 import UserRepository from './UserRepository';
 
-//module vdb.repositories {
-
 	export default class RepositoryFactory {
 		
 		constructor(
@@ -71,5 +69,3 @@ import UserRepository from './UserRepository';
 		}
 
 	}
-
-//}

@@ -12,8 +12,6 @@ declare global {
 	}
 }
 
-//module vdb.knockoutExtensions {
-
 	export function artistAutoComplete(element: HTMLElement, valueAccessor) {
 
 		var properties: ArtistAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
@@ -57,7 +55,6 @@ declare global {
 		initEntrySearch(element, functions.mapAbsoluteUrl("/api/artists"), params);
 
 	}
-//}
 
 ko.bindingHandlers.artistAutoComplete = {
     init: artistAutoComplete

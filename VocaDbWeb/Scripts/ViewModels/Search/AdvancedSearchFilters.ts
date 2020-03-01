@@ -1,7 +1,5 @@
 import AdvancedSearchFilter from './AdvancedSearchFilter';
 
-//namespace vdb.viewModels.search {
-
 	export default class AdvancedSearchFilters {
 
 		public add = (filter: string, param: string, description: string, negate?: boolean) => {
@@ -16,5 +14,3 @@ import AdvancedSearchFilter from './AdvancedSearchFilter';
 		}
 
 	}
-
-//}

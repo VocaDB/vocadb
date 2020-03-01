@@ -2,8 +2,6 @@ import CommentContract from '../DataContracts/CommentContract';
 import ICommentRepository from './ICommentRepository';
 import UrlMapper from '../Shared/UrlMapper';
 
-//module vdb.repositories {
-	
 	export default class EntryCommentRepository implements ICommentRepository {
 
 		private baseUrl: string;
@@ -41,5 +39,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		}
 
 	}
-
-//}

@@ -18,8 +18,6 @@ import UserApiContract from '../DataContracts/User/UserApiContract';
 import UserEventRelationshipType from '../Models/Users/UserEventRelationshipType';
 import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummaryContract';
 
-//module vdb.repositories {
-
     // Repository for managing users and related objects.
     // Corresponds to the UserController class.
 	export default class UserRepository implements ICommentRepository {
@@ -432,5 +430,3 @@ import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummary
 		Sent,
 		Notifications			
 	}
-
-//}

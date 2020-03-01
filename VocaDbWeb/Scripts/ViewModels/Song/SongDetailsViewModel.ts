@@ -24,8 +24,6 @@ import ui from '../../Shared/MessagesTyped';
 import UserApiContract from '../../DataContracts/User/UserApiContract';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels {
-
     // View model for the song details view.
     export default class SongDetailsViewModel {
         
@@ -397,5 +395,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		domain?: string;
 
 	}
-
-//}

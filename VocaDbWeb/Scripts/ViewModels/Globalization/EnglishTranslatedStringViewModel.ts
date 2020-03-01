@@ -1,6 +1,4 @@
 
-//module vdb.viewModels.globalization {
-	
 	export default class EnglishTranslatedStringViewModel {
 
 		constructor(showTranslatedDescription: boolean) {
@@ -16,5 +14,3 @@
 		public showTranslatedDescription: KnockoutObservable<boolean>;
 
 	}
-
-//}

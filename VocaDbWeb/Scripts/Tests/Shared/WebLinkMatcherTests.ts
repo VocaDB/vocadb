@@ -1,8 +1,6 @@
 import WebLinkCategory from '../../Models/WebLinkCategory';
 import WebLinkMatcher from '../../Shared/WebLinkMatcher';
 
-//namespace vdb.tests.utils {
-
     QUnit.module("WebLinkMatcher");
 
     QUnit.test("matchWebLink match", () => {
@@ -22,5 +20,3 @@ import WebLinkMatcher from '../../Shared/WebLinkMatcher';
         equal(result, null, "result");
 
     });
-
-//}

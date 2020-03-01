@@ -13,8 +13,6 @@ import PagingProperties from '../DataContracts/PagingPropertiesContract';
 import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
 import UrlMapper from '../Shared/UrlMapper';
 
-//module vdb.repositories {
-
     // Repository for managing artists and related objects.
     // Corresponds to the ArtistController class.
     export default class ArtistRepository extends BaseRepository implements ICommentRepository {
@@ -135,5 +133,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		artistTypes: string;
 
 	}
-
-//}

@@ -1,6 +1,4 @@
 
-//module vdb.dataContracts {
-	
 	// Note: matches C# class EntryThumbForApiContract
 	export default interface EntryThumbContract {
 
@@ -11,5 +9,3 @@
 		urlThumb?: string;
 
 	}
-
-//}

@@ -9,8 +9,6 @@ import UrlMapper from '../Shared/UrlMapper';
 import UserRepository from '../Repositories/UserRepository';
 import WebLinksEditViewModel from './WebLinksEditViewModel';
 
-//namespace vdb.viewModels.tags {
-
 	export default class TagEditViewModel {
 
 		// Bitmask for all possible entry types (all bits 1)
@@ -114,5 +112,3 @@ import WebLinksEditViewModel from './WebLinksEditViewModel';
 			});
 		});
 	}
-
-//}

@@ -1,8 +1,6 @@
 import AdminRepository from '../../Repositories/AdminRepository';
 import ui from '../../Shared/MessagesTyped';
 
-//module vdb.viewModels {
-
     export default class ManageIPRulesViewModel {
 
         public add = () => {
@@ -93,5 +91,3 @@ import ui from '../../Shared/MessagesTyped';
         }
 
     };
-
-//}

@@ -1,7 +1,5 @@
 import IEntryWithIdAndName from '../../Models/IEntryWithIdAndName';
 
-//module vdb.dataContracts {
-
 	export default interface UserBaseContract extends IEntryWithIdAndName {
         
         id: number;
@@ -9,5 +7,3 @@ import IEntryWithIdAndName from '../../Models/IEntryWithIdAndName';
         name?: string;
     
     }
-
-//}

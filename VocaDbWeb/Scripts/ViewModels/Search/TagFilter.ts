@@ -1,7 +1,5 @@
 import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 
-//module vdb.viewModels.search {
-
 	export default class TagFilter {
 
 		public static fromContract = (tag: TagBaseContract) => {
@@ -18,5 +16,3 @@ import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 		public urlSlug = ko.observable<string>(null);
 
 	}
-
-//} 

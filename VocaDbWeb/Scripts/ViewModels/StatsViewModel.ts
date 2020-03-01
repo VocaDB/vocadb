@@ -1,6 +1,4 @@
 
-//module vdb.viewModels {
-	
 	export default class StatsViewModel {
 
 		public categories: IReportCategory[];
@@ -108,5 +106,3 @@
 		url: string;
 
 	}
-
-//} 

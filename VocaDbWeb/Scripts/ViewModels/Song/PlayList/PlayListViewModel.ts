@@ -14,8 +14,6 @@ import SongRepository from '../../../Repositories/SongRepository';
 import UrlMapper from '../../../Shared/UrlMapper';
 import UserRepository from '../../../Repositories/UserRepository';
 
-//module vdb.viewModels.songs {
-
 	export default class PlayListViewModel {
 
 		constructor(
@@ -235,5 +233,3 @@ import UserRepository from '../../../Repositories/UserRepository';
 			callback: (result: PartialFindResultContract<ISongForPlayList>) => void): void;
 
 	}
-
-//}

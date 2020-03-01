@@ -5,8 +5,6 @@ import ArtistType from '../../Models/Artists/ArtistType';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 
-//module vdb.viewModels.search {
-
 	export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<ArtistApiContract> {
 
 		constructor(searchViewModel: SearchViewModel, lang: string,
@@ -55,5 +53,3 @@ import SearchViewModel from './SearchViewModel';
 		public fields = ko.computed(() => this.searchViewModel.showTags() ? "AdditionalNames,MainPicture,Tags" : "AdditionalNames,MainPicture");
 
 	}
-
-//}

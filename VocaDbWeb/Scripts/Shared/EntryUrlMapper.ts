@@ -5,8 +5,6 @@ import SongApiContract from '../DataContracts/Song/SongApiContract';
 import TagApiContract from '../DataContracts/Tag/TagApiContract';
 import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 
-//module vdb.utils {
-
     // Maps view URLs for common entry types.
     export default class EntryUrlMapper {
     
@@ -82,5 +80,3 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 			return functions.mapAbsoluteUrl("/Profile/" + name);
 		}
     }
-
-//}

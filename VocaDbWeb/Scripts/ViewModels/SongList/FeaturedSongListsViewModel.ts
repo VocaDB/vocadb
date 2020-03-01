@@ -5,8 +5,6 @@ import SongListRepository from '../../Repositories/SongListRepository';
 import SongListsBaseViewModel from './SongListsBaseViewModel';
 import TagRepository from '../../Repositories/TagRepository';
 
-//module vdb.viewModels.songList {
-	
 	export default class FeaturedSongListsViewModel {
 
 		constructor(listRepo: SongListRepository,
@@ -47,5 +45,3 @@ import TagRepository from '../../Repositories/TagRepository';
 		};
 
 	}
-
-//}

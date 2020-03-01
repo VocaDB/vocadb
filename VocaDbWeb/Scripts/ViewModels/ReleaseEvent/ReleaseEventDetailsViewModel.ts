@@ -14,8 +14,6 @@ import UserBaseContract from '../../DataContracts/User/UserBaseContract';
 import UserEventRelationshipType from '../../Models/Users/UserEventRelationshipType';
 import UserRepository from '../../Repositories/UserRepository';
 
-//namespace vdb.viewModels.releaseEvents {
-
 	export default class ReleaseEventDetailsViewModel {
 
 		constructor(
@@ -93,5 +91,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		public usersAttending: KnockoutObservableArray<UserBaseContract>;
 
 	}
-
-//}

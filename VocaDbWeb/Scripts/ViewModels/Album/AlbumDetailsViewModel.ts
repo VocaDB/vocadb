@@ -20,8 +20,6 @@ import ui from '../../Shared/MessagesTyped';
 import UserApiContract from '../../DataContracts/User/UserApiContract';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels {
-
     export default class AlbumDetailsViewModel {
 
 		public comments: EditableCommentsViewModel;
@@ -301,5 +299,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		public user: UserApiContract;
 
 	}
-
-//}

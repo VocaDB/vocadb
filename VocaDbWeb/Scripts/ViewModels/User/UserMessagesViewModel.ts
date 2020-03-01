@@ -5,8 +5,6 @@ import { UserInboxType } from '../../Repositories/UserRepository';
 import UserMessageSummaryContract from '../../DataContracts/User/UserMessageSummaryContract';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels {
-
 	export default class UserMessagesViewModel {
 
 		constructor(
@@ -285,5 +283,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		};
 
 	}
-
-//}

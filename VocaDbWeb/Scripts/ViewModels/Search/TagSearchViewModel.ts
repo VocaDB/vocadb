@@ -4,8 +4,6 @@ import SearchViewModel from './SearchViewModel';
 import TagApiContract from '../../DataContracts/Tag/TagApiContract';
 import TagRepository from '../../Repositories/TagRepository';
 
-//module vdb.viewModels.search {
-
 	export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagApiContract> {
 
 		constructor(searchViewModel: SearchViewModel,
@@ -34,5 +32,3 @@ import TagRepository from '../../Repositories/TagRepository';
 		public sort = ko.observable("Name");
 
 	}
-
-//}

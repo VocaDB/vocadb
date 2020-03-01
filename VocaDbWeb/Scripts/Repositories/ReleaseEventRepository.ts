@@ -8,8 +8,6 @@ import ReleaseEventContract from '../DataContracts/ReleaseEvents/ReleaseEventCon
 import ReleaseEventSeriesForApiContract from '../DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
 import UrlMapper from '../Shared/UrlMapper';
 
-//module vdb.repositories {
-
 	export default class ReleaseEventRepository extends BaseRepository {
 
 		constructor(private readonly urlMapper: UrlMapper) {
@@ -111,5 +109,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		userCollectionId?: number;
 
 	}
-
-//}

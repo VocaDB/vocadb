@@ -2,8 +2,6 @@ import FakeUserRepository from '../TestSupport/FakeUserRepository';
 import PVRatingButtonsViewModel from '../../ViewModels/PVRatingButtonsViewModel';
 import SongVoteRating from '../../Models/SongVoteRating';
 
-//module vdb.tests.viewModels {
-
     var repository = new FakeUserRepository();
 
     QUnit.module("PVRatingButtonsViewModel");
@@ -36,5 +34,3 @@ import SongVoteRating from '../../Models/SongVoteRating';
         equal(repository.rating, SongVoteRating.Like, "repository.rating");
 
     });
-
-//}

@@ -1,8 +1,6 @@
 import TagsEditViewModel from '../../../ViewModels/Tag/TagsEditViewModel';
 import { TagSelectionViewModel } from '../../../ViewModels/Tag/TagsEditViewModel';
 
-//namespace vdb.tests.viewModels.tags {
-	
 	var viewModel: TagsEditViewModel;
 
 	QUnit.module("TagsEditViewModel", {
@@ -41,5 +39,3 @@ import { TagSelectionViewModel } from '../../../ViewModels/Tag/TagsEditViewModel
 		QUnit.equal(selection.selected(), true, "selection.selected");
 
 	});
-
-//} 

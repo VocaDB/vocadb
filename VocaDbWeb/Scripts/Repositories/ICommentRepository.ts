@@ -1,7 +1,5 @@
 import CommentContract from '../DataContracts/CommentContract';
 
-//module vdb.repositories {
-	
 	// Repository for managing comments
 	export default interface ICommentRepository {
 		
@@ -14,5 +12,3 @@ import CommentContract from '../DataContracts/CommentContract';
 		updateComment(commentId: number, contract: CommentContract, callback?: () => void): void;
 
 	}
-
-//} 

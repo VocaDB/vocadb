@@ -3,8 +3,6 @@ import CommentViewModel from './CommentViewModel';
 import ICommentRepository from '../Repositories/ICommentRepository';
 import ServerSidePagingViewModel from './ServerSidePagingViewModel';
 
-//module vdb.viewModels {
-	
 	// Viewmodel for a list of comments where comments can be edited and new comments posted (with sufficient permissions).
 	export default class EditableCommentsViewModel {
 
@@ -159,5 +157,3 @@ import ServerSidePagingViewModel from './ServerSidePagingViewModel';
 		public topComments: KnockoutComputed<CommentViewModel[]>;
 
 	}
-
-//} 

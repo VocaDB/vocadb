@@ -4,8 +4,6 @@ import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import ArtistRepository from '../../Repositories/ArtistRepository';
 import DuplicateEntryResultContract from '../../DataContracts/DuplicateEntryResultContract';
 
-//module vdb.viewModels {
-
     export default class AlbumCreateViewModel {
 
 		constructor(private albumRepo: AlbumRepository, private artistRepo: ArtistRepository) {
@@ -58,5 +56,3 @@ import DuplicateEntryResultContract from '../../DataContracts/DuplicateEntryResu
         public submitting = ko.observable(false);
 
     }
-
-//}

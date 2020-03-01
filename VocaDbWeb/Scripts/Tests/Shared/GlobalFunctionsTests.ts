@@ -1,7 +1,5 @@
 import functions from "../../Shared/GlobalFunctions";
 
-//module vdb.tests.functions {
-
     QUnit.module("GlobalFunctions");
 
     test("mergeUrls bothWithSlash", () => {
@@ -35,4 +33,3 @@ import functions from "../../Shared/GlobalFunctions";
         equal(result, "/Song", "result")
 
     });
-//}

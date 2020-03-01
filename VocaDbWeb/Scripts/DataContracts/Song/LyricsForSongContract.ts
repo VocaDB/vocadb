@@ -1,6 +1,4 @@
 
-//module vdb.dataContracts.songs {
-	
 	export default interface LyricsForSongContract {
 
 		cultureCode?: string;
@@ -18,5 +16,3 @@
 		value?: string;
 
 	}
-
-//}

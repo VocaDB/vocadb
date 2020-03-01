@@ -3,8 +3,6 @@ import ContentLanguageSelection from '../../Models/Globalization/ContentLanguage
 import LyricsForSongContract from '../../DataContracts/Song/LyricsForSongContract';
 import TranslationType from '../../Models/Globalization/TranslationType';
 
-//namespace vdb.viewModels.songs {
-
 	export default class LyricsForSongEditViewModel {
 
 		constructor(contract?: LyricsForSongContract) {
@@ -118,5 +116,3 @@ import TranslationType from '../../Models/Globalization/TranslationType';
 		}
 
 	}
-
-//}

@@ -2,8 +2,6 @@ import EntryUrlMapper from '../../Shared/EntryUrlMapper';
 import NameMatchMode from '../../Models/NameMatchMode';
 import TagRepository from '../../Repositories/TagRepository';
 
-//module vdb.viewModels.tags {
-	
 	export default class TagCreateViewModel {
 
 		constructor(private tagRepo: TagRepository) {
@@ -35,5 +33,3 @@ import TagRepository from '../../Repositories/TagRepository';
 		public isValid = ko.computed(() => this.newTagName() && !this.duplicateName());
 
 	}
-
-//}

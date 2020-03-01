@@ -1,7 +1,5 @@
 import WebLinkEditViewModel from '../../ViewModels/WebLinkEditViewModel';
 
-//module vdb.tests.viewModels {
-
     var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
 
     QUnit.module("WebLinkEditViewModel");
@@ -26,5 +24,3 @@ import WebLinkEditViewModel from '../../ViewModels/WebLinkEditViewModel';
         equal(target.description(), "NND MyList", "description");
 
     });
-
-//}

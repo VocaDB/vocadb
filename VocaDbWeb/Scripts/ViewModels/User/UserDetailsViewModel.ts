@@ -15,8 +15,6 @@ import UrlMapper from '../../Shared/UrlMapper';
 import UserEventRelationshipType from '../../Models/Users/UserEventRelationshipType';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels.user {
-
     export default class UserDetailsViewModel {
 
 		private static overview = "Overview";
@@ -201,5 +199,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		}
 
 	}
-
-//}

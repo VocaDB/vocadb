@@ -4,8 +4,6 @@ import TagApiContract from '../../DataContracts/Tag/TagApiContract';
 import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 import TagRepository from '../../Repositories/TagRepository';
 
-//module vdb.viewModels.tags {
-
 	export default class TagMergeViewModel {
 
 		constructor(tagRepo: TagRepository, private base: TagBaseContract) {
@@ -32,5 +30,3 @@ import TagRepository from '../../Repositories/TagRepository';
 		public validationError_targetIsNewer = ko.observable(false);
 
 	}
-
-//}

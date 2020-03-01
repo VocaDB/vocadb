@@ -22,8 +22,6 @@ import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels {
-
 	export default class ArtistDetailsViewModel {
 
 		constructor(
@@ -191,5 +189,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		};
 
 	}
-
-//}

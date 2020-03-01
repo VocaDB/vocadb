@@ -12,8 +12,6 @@ import { TrackPropertiesViewModel } from '../../ViewModels/Album/AlbumEditViewMo
 import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
 import UrlMapper from '../../Shared/UrlMapper';
 
-//module vdb.tests.viewModels {
-
     var rep = new FakeAlbumRepository();
 	var songRep: FakeSongRepository;
 	var artistRep: FakeArtistRepository;
@@ -433,5 +431,3 @@ import UrlMapper from '../../Shared/UrlMapper';
         equal(vocalistSelection.visible(), false, "vocalistSelection.visible");
 
     });
-
-//}

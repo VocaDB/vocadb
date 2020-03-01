@@ -1,7 +1,5 @@
 import functions from "./GlobalFunctions";
 
-//module vdb {
-
     export default class UrlMapper {
 
 		public static buildUrl = (...args: string[]): string => {
@@ -32,5 +30,3 @@ import functions from "./GlobalFunctions";
         }
 
     }
-
-//}

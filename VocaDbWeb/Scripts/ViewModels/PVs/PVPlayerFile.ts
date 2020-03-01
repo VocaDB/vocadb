@@ -1,8 +1,6 @@
 import { IPVPlayer } from './PVPlayerViewModel';
 import PVService from '../../Models/PVs/PVService';
 
-//module vdb.viewModels.pvs {
-
 	export default class PVPlayerFile implements IPVPlayer {
 
 		constructor(
@@ -69,5 +67,3 @@ import PVService from '../../Models/PVs/PVService';
 		public service: PVService;
 
 	}
-
-//}

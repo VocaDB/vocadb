@@ -21,8 +21,6 @@ import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels.search {
-
 	export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
 
 		constructor(
@@ -219,5 +217,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		previewViewModel?: SongWithPreviewViewModel;
 
 	}
-
-//}

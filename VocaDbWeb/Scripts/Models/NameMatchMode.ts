@@ -1,6 +1,4 @@
 
-//module vdb.models {
-	
 	enum NameMatchMode {
 		
 		// Automatically choose match mode based on query term length.
@@ -23,5 +21,3 @@
 	}
 
 	export default NameMatchMode;
-
-//}

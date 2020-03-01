@@ -6,8 +6,6 @@ import PVContract from '../PVs/PVContract';
 import SongListBaseContract from '../SongListBaseContract';
 import WebLinkContract from '../WebLinkContract';
 
-//namespace vdb.dataContracts {
-
 	// Matches ReleaseEventForApiContract
 	export default interface ReleaseEventContract {
 
@@ -38,5 +36,3 @@ import WebLinkContract from '../WebLinkContract';
 		webLinks: WebLinkContract[];
 
 	}
-
-//}

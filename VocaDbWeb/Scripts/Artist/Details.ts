@@ -1,8 +1,6 @@
 import ArtistDetailsViewModel from '../ViewModels/Artist/ArtistDetailsViewModel';
 import SongRepository from '../Repositories/SongRepository';
 
-//module vdb.views.artist {
-
 	export function initPage(artistId: number, saveStr, urlMapper, viewModel: ArtistDetailsViewModel, songRepo: SongRepository) {
 
 		$("#addToUserLink").button({ disabled: $("#addToUserLink").hasClass("disabled"), icons: { primary: 'ui-icon-heart' } });
@@ -46,5 +44,3 @@ import SongRepository from '../Repositories/SongRepository';
 		$(".artistLink").vdbArtistToolTip();
 
 	}
-
-//}

@@ -30,8 +30,6 @@ import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels.songList {
-
 	export default class SongListViewModel {
 
 		constructor(
@@ -208,5 +206,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		}
 
 	}
-
-//}

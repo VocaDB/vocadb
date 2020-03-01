@@ -9,8 +9,6 @@ import SongListRepository from '../../Repositories/SongListRepository';
 import SongRepository from '../../Repositories/SongRepository';
 import UrlMapper from '../../Shared/UrlMapper';
 
-//module vdb.viewModels.songList {
-
 	export class SongInListEditViewModel {
 		
 		constructor(data: SongInListEditContract) {
@@ -148,6 +146,3 @@ import UrlMapper from '../../Shared/UrlMapper';
 		public updateNotes = ko.observable("");
 
 	};
-
-
-//}

@@ -5,8 +5,6 @@ import { UserInboxType } from '../../Repositories/UserRepository';
 import UserMessageSummaryContract from '../../DataContracts/User/UserMessageSummaryContract';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.tests.testSupport {
-
     export default class FakeUserRepository extends UserRepository {
 
         public message: UserMessageSummaryContract;
@@ -48,5 +46,3 @@ import UserRepository from '../../Repositories/UserRepository';
         }
     
     }
-
-//}

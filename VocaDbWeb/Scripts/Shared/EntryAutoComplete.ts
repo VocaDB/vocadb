@@ -2,8 +2,6 @@ import EntryWithTagUsagesContract from '../DataContracts/Base/EntryWithTagUsages
 import HtmlHelper from '../Helpers/HtmlHelper';
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
 
-//module vdb {
-
 	export interface EntryAutoCompleteParams<TContract> {
 
 		acceptSelection: (entryId?: number, name?: string, entryType?: string, data?: TContract) => void;
@@ -161,5 +159,3 @@ import PartialFindResultContract from '../DataContracts/PartialFindResultContrac
 		}
 
 	}
-
-//}

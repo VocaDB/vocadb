@@ -1,7 +1,5 @@
 import functions from "../../Shared/GlobalFunctions";
 
-//module vdb.viewModels {
-
     export default class ViewAuditLogViewModel {
 
         public excludeUsers = ko.observable("");
@@ -97,5 +95,3 @@ import functions from "../../Shared/GlobalFunctions";
         userName: string;
 
     }
-
-//}

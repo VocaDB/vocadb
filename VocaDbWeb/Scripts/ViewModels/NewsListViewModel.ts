@@ -1,7 +1,5 @@
 import UrlMapper from '../Shared/UrlMapper';
 
-//module vdb.viewModels {
-
     export default class NewsListViewModel {
 
         constructor(readonly blogUrl: string) {
@@ -70,5 +68,3 @@ import UrlMapper from '../Shared/UrlMapper';
         name: string;
 
     }
-
-//}

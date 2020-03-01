@@ -1,5 +1,4 @@
 
-//module vdb.functions {
 export default class functions {
 
 	public static getId(elem: HTMLElement) {

@@ -5,8 +5,6 @@ import SongListContract from '../../DataContracts/Song/SongListContract';
 import TagFilters from '../Search/TagFilters';
 import TagRepository from '../../Repositories/TagRepository';
 
-//module vdb.viewModels.songList {
-
 	export default class SongListsBaseViewModel extends PagedItemsViewModel<SongListContract> {
 
 		constructor(resourceRepo: ResourceRepository,
@@ -73,5 +71,3 @@ import TagRepository from '../../Repositories/TagRepository';
 		Date,
 		CreateDate
 	}
-
-//}

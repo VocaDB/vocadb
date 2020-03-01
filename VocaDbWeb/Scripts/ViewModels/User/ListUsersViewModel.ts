@@ -4,8 +4,6 @@ import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import UserApiContract from '../../DataContracts/User/UserApiContract';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels.user {
-	
 	export default class ListUsersViewModel {
 		
 		constructor(
@@ -82,5 +80,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		}
 
 	}
-
-//}

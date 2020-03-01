@@ -2,8 +2,6 @@ import ContentLanguageSelection from '../../../Models/Globalization/ContentLangu
 import LocalizedStringWithIdEditViewModel from '../../../ViewModels/Globalization/LocalizedStringWithIdEditViewModel';
 import NamesEditViewModel from '../../../ViewModels/Globalization/NamesEditViewModel';
 
-//module vdb.tests.viewModels.globalization {
-
 	QUnit.module("NamesEditViewModelTests");
 
 	QUnit.test("primary name and aliases", assert => {
@@ -53,5 +51,3 @@ import NamesEditViewModel from '../../../ViewModels/Globalization/NamesEditViewM
 		assert.equal(viewModel.hasPrimaryName(), false, "hasPrimaryName");
 
 	});
-
-//} 

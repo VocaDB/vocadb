@@ -6,8 +6,6 @@ import DiscussionTopicViewModel from './DiscussionTopicViewModel';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import UrlMapper from '../../Shared/UrlMapper';
 
-//module vdb.viewModels.discussions {
-	
 	export default class DiscussionIndexViewModel {
 		
 		constructor(private readonly repo: DiscussionRepository,
@@ -196,5 +194,3 @@ import UrlMapper from '../../Shared/UrlMapper';
 		public topics = ko.observableArray<DiscussionTopicContract>([]);
 
 	}
-
-//} 

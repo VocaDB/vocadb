@@ -4,8 +4,6 @@ import ArtistRepository from '../../Repositories/ArtistRepository';
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper';
 
-//module vdb.viewModels.artists {
-
 	export default class ArtistMergeViewModel {
 
 		constructor(repo: ArtistRepository, id: number) {
@@ -38,5 +36,3 @@ import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper
 		public validationError_targetIsNewer = ko.observable(false);
 
 	}
-
-//} 

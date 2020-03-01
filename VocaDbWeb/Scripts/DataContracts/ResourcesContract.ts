@@ -1,6 +1,4 @@
 
-//module vdb.dataContracts {
-	
 	// From ResourcesApiController
 	export default interface ResourcesContract {
 
@@ -29,5 +27,3 @@
 		userGroupNames?: { [key: string]: string; }
 
 	}
-
-//}

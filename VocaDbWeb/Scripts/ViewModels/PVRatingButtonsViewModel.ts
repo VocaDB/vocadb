@@ -2,8 +2,6 @@ import { parseSongVoteRating } from '../Models/SongVoteRating';
 import SongVoteRating from '../Models/SongVoteRating';
 import UserRepository from '../Repositories/UserRepository';
 
-//module vdb.viewModels {
-
     // Knockout view model for PV rating buttons
     export default class PVRatingButtonsViewModel {
 
@@ -58,5 +56,3 @@ import UserRepository from '../Repositories/UserRepository';
         vote: string;
     
     }
-
-//}

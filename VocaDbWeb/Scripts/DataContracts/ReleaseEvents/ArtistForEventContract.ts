@@ -1,7 +1,5 @@
 import ArtistContract from '../Artist/ArtistContract';
 
-//namespace vdb.dataContracts.events {
-
 	export default interface ArtistForEventContract {
 
 		artist?: ArtistContract;
@@ -13,5 +11,3 @@ import ArtistContract from '../Artist/ArtistContract';
 		roles: string;
 
 	}
-
-//}

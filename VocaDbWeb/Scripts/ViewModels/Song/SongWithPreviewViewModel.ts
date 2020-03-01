@@ -3,8 +3,6 @@ import PVService from '../../Models/PVs/PVService';
 import SongRepository from '../../Repositories/SongRepository';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels {
-
     // View model for song with PV preview and rating buttons (for example, on front page and song index page).
     export default class SongWithPreviewViewModel {
         
@@ -70,5 +68,3 @@ import UserRepository from '../../Repositories/UserRepository';
         }
     
     }
-
-//}

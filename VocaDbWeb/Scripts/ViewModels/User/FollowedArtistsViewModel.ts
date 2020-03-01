@@ -5,8 +5,6 @@ import TagFilters from '../Search/TagFilters'
 import TagRepository from '../../Repositories/TagRepository';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels.user {
-
 	export default class FollowedArtistsViewModel {
 
 		constructor(private userRepo: UserRepository,
@@ -80,5 +78,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		}
 
 	}
-
-//}

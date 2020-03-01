@@ -1,7 +1,5 @@
 import ObservableUrlParamRouter from '../../../Shared/Routing/ObservableUrlParamRouter';
 
-//module vdb.tests.shared.routing {
-
 	interface HistoryEntry {
 		data: any;
 		url: string;
@@ -103,4 +101,3 @@ import ObservableUrlParamRouter from '../../../Shared/Routing/ObservableUrlParam
 		QUnit.equal(testObject.song(), "Becoming Round", "testObject.song");
 
 	});
-//}

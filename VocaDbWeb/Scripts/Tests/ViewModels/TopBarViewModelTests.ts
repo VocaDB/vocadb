@@ -2,8 +2,6 @@ import FakeEntryReportRepository from '../TestSupport/FakeEntryReportRepository'
 import FakeUserRepository from '../TestSupport/FakeUserRepository';
 import TopBarViewModel from '../../ViewModels/TopBarViewModel';
 
-//module vdb.tests.viewModels {
-
     var entryTypeTranslations;
     var entryReportRepo: FakeEntryReportRepository;
     var userRepo: FakeUserRepository;
@@ -56,5 +54,3 @@ import TopBarViewModel from '../../ViewModels/TopBarViewModel';
         equal(target.unreadMessages()[0].subject, "New message!");
 
     });
-
-//}

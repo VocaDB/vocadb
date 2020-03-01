@@ -28,8 +28,6 @@ import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
-//module vdb.viewModels {
-
     // Edit view model for album.
     export default class AlbumEditViewModel {
         
@@ -584,5 +582,3 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
         }
     
     }
-
-//}

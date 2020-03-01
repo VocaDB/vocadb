@@ -1,8 +1,6 @@
 import DateTimeHelper from '../../Helpers/DateTimeHelper';
 import PVContract from '../../DataContracts/PVs/PVContract';
 
-//module vdb.viewModels.pvs {
-
 	export default class PVEditViewModel {
 		
 		constructor(contract: PVContract, pvType?: string) {
@@ -54,5 +52,3 @@ import PVContract from '../../DataContracts/PVs/PVContract';
 		url: string;
 
 	}
-
-//}

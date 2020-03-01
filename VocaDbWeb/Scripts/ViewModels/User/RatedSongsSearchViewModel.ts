@@ -21,8 +21,6 @@ import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels.user {
-
 	export default class RatedSongsSearchViewModel {
 		
 		constructor(
@@ -206,5 +204,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		rating?: string;
 
 	}
-
-//}

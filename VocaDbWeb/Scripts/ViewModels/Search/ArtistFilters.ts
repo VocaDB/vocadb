@@ -4,8 +4,6 @@ import ArtistHelper from '../../Helpers/ArtistHelper';
 import ArtistRepository from '../../Repositories/ArtistRepository';
 import ArtistType from '../../Models/Artists/ArtistType';
 
-//namespace vdb.viewModels.search {
-	
 	// Manages artist filters for search
 	// These can be used wherever artist filtering is needed - search page, rated songs page, song list page
 	export default class ArtistFilters {
@@ -74,5 +72,3 @@ import ArtistType from '../../Models/Artists/ArtistType';
 		public showMembers: KnockoutComputed<boolean>;
 
 	}
-
-//}

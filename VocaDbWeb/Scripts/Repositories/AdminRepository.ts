@@ -1,8 +1,6 @@
 import { IPRuleContract } from '../ViewModels/Admin/ManageIPRulesViewModel';
 import UrlMapper from '../Shared/UrlMapper';
 
-//module vdb.repositories {
-
     export default class AdminRepository {
 
         constructor(private urlMapper: UrlMapper) { }
@@ -22,5 +20,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		}
 
     }
-
-//}

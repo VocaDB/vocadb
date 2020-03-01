@@ -1,8 +1,6 @@
 import { parseSongVoteRating } from '../../Models/SongVoteRating';
 import SongVoteRating from '../../Models/SongVoteRating';
 
-//module vdb.tests.models {
-
     QUnit.module("SongVoteRating");
 
     test("parseSongVoteRating nothing", () => {
@@ -20,5 +18,3 @@ import SongVoteRating from '../../Models/SongVoteRating';
         equal(result, SongVoteRating.Like, "result");
 
     });
-
-//}

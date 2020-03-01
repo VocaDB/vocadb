@@ -4,8 +4,6 @@ import DiscussionRepository from '../../Repositories/DiscussionRepository';
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import UserApiContract from '../../DataContracts/User/UserApiContract';
 
-//module vdb.viewModels.discussions {
-	
 	export default class DiscussionTopicViewModel {
 
 		constructor(private repo: DiscussionRepository, private loggedUserId: number,
@@ -91,5 +89,3 @@ import UserApiContract from '../../DataContracts/User/UserApiContract';
 		}
 
 	}
-
-//} 

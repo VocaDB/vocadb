@@ -2,8 +2,6 @@ import AlbumContract from '../../DataContracts/Album/AlbumContract';
 import AlbumRepository from '../../Repositories/AlbumRepository';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 
-//module vdb.viewModels {
-
 	export default class DeletedAlbumsViewModel {
 
 		constructor(private albumRepo: AlbumRepository) {
@@ -43,5 +41,3 @@ import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 		}
 
 	}
-
-//} 

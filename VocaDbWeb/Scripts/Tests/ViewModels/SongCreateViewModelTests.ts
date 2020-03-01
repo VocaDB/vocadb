@@ -4,8 +4,6 @@ import FakeSongRepository from '../TestSupport/FakeSongRepository';
 import SongCreateViewModel from '../../ViewModels/SongCreateViewModel';
 import TagRepository from '../../Repositories/TagRepository';
 
-//module vdb.tests.viewModels {
-
     var repository = new FakeSongRepository();
 	var artistRepository = new FakeArtistRepository();
 	var tagRepository: TagRepository = null;
@@ -75,5 +73,3 @@ import TagRepository from '../../Repositories/TagRepository';
         equal(target.nameOriginal(), "Overridden title", "nameOriginal");
 
     });
-
-//}

@@ -1,8 +1,6 @@
 import { IPVPlayer } from './PVPlayerViewModel';
 import PVService from '../../Models/PVs/PVService';
 
-//module vdb.viewModels.pvs {
-
 	/*
 		Note: I'm not terrible happy about the implementation for now.
 		Can't seem to find a way to attach to already loaded player, so we're always loading a new player.
@@ -110,8 +108,6 @@ import PVService from '../../Models/PVs/PVService';
 		public service = PVService.NicoNicoDouga;
 
 	}
-
-//}
 
 declare global {
 	interface Window {

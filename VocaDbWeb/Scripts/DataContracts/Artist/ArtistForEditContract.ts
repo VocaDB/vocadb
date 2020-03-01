@@ -5,8 +5,6 @@ import EntryPictureFileContract from '../EntryPictureFileContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
 import WebLinkContract from '../WebLinkContract';
 
-//module vdb.dataContracts.artists {
-	
 	export default interface ArtistForEditContract {
 
 		artistType: string;
@@ -42,5 +40,3 @@ import WebLinkContract from '../WebLinkContract';
 		webLinks: WebLinkContract[];
 
 	}
-
-//}

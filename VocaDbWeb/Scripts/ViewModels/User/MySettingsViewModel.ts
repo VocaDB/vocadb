@@ -4,8 +4,6 @@ import UserRepository from '../../Repositories/UserRepository';
 import WebLinkContract from '../../DataContracts/WebLinkContract';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
-//namespace vdb.viewModels {
-
 	// User my settings view model
 	export default class MySettingsViewModel {
 
@@ -66,5 +64,3 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		public proficiency: KnockoutObservable<string>;
 
 	}
-
-//}

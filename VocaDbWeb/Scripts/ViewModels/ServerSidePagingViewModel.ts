@@ -1,7 +1,5 @@
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
 
-//module vdb.viewModels {
-
 	export default class ServerSidePagingViewModel {
 		
 		constructor(pageSize: number = 10) {
@@ -79,5 +77,3 @@ import PagingProperties from '../DataContracts/PagingPropertiesContract';
 		}
 
 	}
-
-//} 

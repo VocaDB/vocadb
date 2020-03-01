@@ -4,8 +4,6 @@ import { SongAutoCompleteParams } from '../../KnockoutExtensions/AutoCompletePar
 import SongContract from '../../DataContracts/Song/SongContract';
 import SongRepository from '../../Repositories/SongRepository';
 
-//module vdb.viewModels.songs {
-
 	export default class SongMergeViewModel {
 
 		constructor(songRepo: SongRepository, private base: SongContract) {
@@ -43,5 +41,3 @@ import SongRepository from '../../Repositories/SongRepository';
 		//public validationError_targetIsNewer: KnockoutObservable<boolean>;
 
 	}
-
-//}

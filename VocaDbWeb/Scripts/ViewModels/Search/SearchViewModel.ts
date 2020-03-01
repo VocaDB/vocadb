@@ -22,8 +22,6 @@ import TagSearchViewModel from './TagSearchViewModel';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels.search {
-
 	export default class SearchViewModel {
 
 		constructor(
@@ -223,5 +221,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		public static Song = "Song";
 		public static Tag = "Tag";
 	}
-
-//}

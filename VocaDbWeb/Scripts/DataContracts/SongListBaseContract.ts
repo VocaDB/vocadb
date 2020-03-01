@@ -1,6 +1,4 @@
 
-//module vdb.dataContracts {
-
     export default interface SongListBaseContract {
         
 		featuredCategory?: string;
@@ -10,5 +8,3 @@
         name: string;
 
     }
-
-//}

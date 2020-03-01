@@ -7,8 +7,6 @@ import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 import TagFilter from './TagFilter';
 
-//module vdb.viewModels.search {
-
 	export interface ISearchCategoryBaseViewModel {
 
 		updateResultsWithTotalCount: () => void;
@@ -130,5 +128,3 @@ import TagFilter from './TagFilter';
 		};
 
 	}
-
-//}

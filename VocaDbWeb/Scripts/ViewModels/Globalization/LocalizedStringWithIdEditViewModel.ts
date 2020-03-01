@@ -2,8 +2,6 @@ import ContentLanguageSelection from '../../Models/Globalization/ContentLanguage
 import KnockoutHelper from '../../Helpers/KnockoutHelper';
 import LocalizedStringWithIdContract from '../../DataContracts/Globalization/LocalizedStringWithIdContract';
 
-//module vdb.viewModels.globalization {
-
 	export default class LocalizedStringWithIdEditViewModel {
 
 		public id: number;
@@ -24,5 +22,3 @@ import LocalizedStringWithIdContract from '../../DataContracts/Globalization/Loc
 		}
 
 	}
-
-//}

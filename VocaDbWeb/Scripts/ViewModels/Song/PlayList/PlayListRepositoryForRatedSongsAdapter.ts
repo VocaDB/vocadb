@@ -8,8 +8,6 @@ import RatedSongForUserForApiContract from '../../../DataContracts/User/RatedSon
 import { SongOptionalFields } from '../../../Models/EntryOptionalFields';
 import UserRepository from '../../../Repositories/UserRepository';
 
-//module vdb.viewModels.songs {
-
 	export default class PlayListRepositoryForRatedSongsAdapter implements IPlayListRepository {
 
 		constructor(private userRepo: UserRepository,
@@ -61,5 +59,3 @@ import UserRepository from '../../../Repositories/UserRepository';
 		}
 
 	}
-
-//} 

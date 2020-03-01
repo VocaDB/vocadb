@@ -7,8 +7,6 @@ import TagMappingContract from '../../DataContracts/Tag/TagMappingContract';
 import TagRepository from '../../Repositories/TagRepository';
 import ui from '../../Shared/MessagesTyped';
 
-//namespace vdb.viewModels.admin {
-
 	export default class ManageTagMappingsViewModel {
 
 		constructor(
@@ -108,5 +106,3 @@ import ui from '../../Shared/MessagesTyped';
 		public deleteMapping = () => this.isDeleted(true);
 
 	}
-
-//}

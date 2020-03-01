@@ -1,7 +1,5 @@
 import AlbumRepository from '../../Repositories/AlbumRepository';
 
-//module vdb.tests.testSupport {
-
     export default class FakeAlbumRepository extends AlbumRepository {
 
         public deletedId: number;
@@ -14,5 +12,3 @@ import AlbumRepository from '../../Repositories/AlbumRepository';
         }
 
     }
-
-//}

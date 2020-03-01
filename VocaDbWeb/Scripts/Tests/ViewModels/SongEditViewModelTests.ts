@@ -10,8 +10,6 @@ import SongForEditContract from '../../DataContracts/Song/SongForEditContract';
 import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
 import UrlMapper from '../../Shared/UrlMapper';
 
-//module vdb.tests.viewModels {
-
 	var categories: TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
 	var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
 	var data: SongForEditContract;
@@ -149,5 +147,3 @@ import UrlMapper from '../../Shared/UrlMapper';
 		equal(target.validationError_duplicateArtist(), true, "validationError_duplicateArtist");
 
 	});
-
-//}

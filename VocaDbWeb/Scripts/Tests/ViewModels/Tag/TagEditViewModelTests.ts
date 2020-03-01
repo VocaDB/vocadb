@@ -3,8 +3,6 @@ import FakeUserRepository from '../../TestSupport/FakeUserRepository';
 import TagApiContract from '../../../DataContracts/Tag/TagApiContract';
 import TagEditViewModel from '../../../ViewModels/TagEditViewModel';
 
-//namespace vdb.tests.viewModels.tags {
-
 	var viewModel: TagEditViewModel;
 
 	QUnit.module("TagEditViewModel", {
@@ -41,5 +39,3 @@ import TagEditViewModel from '../../../ViewModels/TagEditViewModel';
 		viewModel.hasTargetType(EntryType.ReleaseEvent)(true);
 		QUnit.equal(viewModel.targets(), TagEditViewModel.allEntryTypes, "targets"); // When all entry types are selected, flags mask is set to all
 	});
-
-//}

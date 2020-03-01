@@ -2,8 +2,6 @@ import WebLinkCategory from '../Models/WebLinkCategory';
 import WebLinkContract from '../DataContracts/WebLinkContract';
 import WebLinkMatcher from '../Shared/WebLinkMatcher';
 
-//module vdb.viewModels {
-
     export default class WebLinkEditViewModel {
         
         public category: KnockoutObservable<string>;
@@ -50,5 +48,3 @@ import WebLinkMatcher from '../Shared/WebLinkMatcher';
         }
     
     }
-
-//}

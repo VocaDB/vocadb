@@ -5,8 +5,6 @@ declare global {
 	}
 }
 
-//module vdb.knockoutExtensions.highcharts {
-
 	export function setHighcharts(element: HTMLElement, result: HighchartsOptions) {
 	
 		if (result && result.series && result.series.length && result.series[0].data && result.series[0].data.length) {
@@ -16,8 +14,6 @@ declare global {
 			$(element).hide();
 			
 	}
-
-//}
 
 ko.bindingHandlers.highcharts = {
 	update: (element: HTMLElement, valueAccessor) => {

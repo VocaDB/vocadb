@@ -1,8 +1,6 @@
 import functions from '../Shared/GlobalFunctions';
 import ResourcesContract from '../DataContracts/ResourcesContract';
 
-//module vdb.repositories {
-
 	export default class ResourceRepository {
 		
 		constructor(private baseUrl: string) {}
@@ -15,5 +13,3 @@ import ResourcesContract from '../DataContracts/ResourcesContract';
 		}
 
 	}
-
-//} 

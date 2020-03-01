@@ -14,8 +14,6 @@ declare global {
 	}
 }
 
-//module vdb.knockoutExtensions {
-
 	export function songAutoComplete(element: HTMLElement, valueAccessor) {
 		
 		var properties: SongAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
@@ -61,8 +59,6 @@ declare global {
 			});
 
 	}
-
-//}
 
 ko.bindingHandlers.songAutoComplete = {
 	init: songAutoComplete

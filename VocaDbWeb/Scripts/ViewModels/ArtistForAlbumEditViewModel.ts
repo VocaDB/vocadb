@@ -4,8 +4,6 @@ import ArtistForAlbumContract from '../DataContracts/ArtistForAlbumContract';
 import ArtistHelper from '../Helpers/ArtistHelper';
 import ArtistRoles from '../Models/Artists/ArtistRoles';
 
-//namespace vdb.viewModels {
-
     // View model for editing artist for album link.
     export default class ArtistForAlbumEditViewModel implements IEditableArtistWithSupport {
         
@@ -79,5 +77,3 @@ import ArtistRoles from '../Models/Artists/ArtistRoles';
 		rolesArray: KnockoutObservableArray<string>;
 
 	}
-
-//}

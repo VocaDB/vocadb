@@ -1,7 +1,5 @@
 import PVService from '../Models/PVs/PVService';
 
-//module vdb.helpers {
-
 	export default class PVHelper {
 		
 		public static pvServicesArrayFromString = (pvServices: string) => {
@@ -17,5 +15,3 @@ import PVService from '../Models/PVs/PVService';
 		}
 
 	}
-
-//}

@@ -1,8 +1,6 @@
 import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
 import WebLinksEditViewModel from '../../ViewModels/WebLinksEditViewModel';
 
-//module vdb.tests.viewModels {
-
     var categories: TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
     var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
 
@@ -36,5 +34,3 @@ import WebLinksEditViewModel from '../../ViewModels/WebLinksEditViewModel';
 		equal(target.items().length, 0, "webLinks.length");
 
     });
-
-//}

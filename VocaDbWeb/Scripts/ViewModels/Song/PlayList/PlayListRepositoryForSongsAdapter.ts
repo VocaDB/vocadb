@@ -9,8 +9,6 @@ import SongApiContract from '../../../DataContracts/Song/SongApiContract';
 import SongRepository from '../../../Repositories/SongRepository';
 import SongType from '../../../Models/Songs/SongType';
 
-//module vdb.viewModels.songs {
-	
 	export default class PlayListRepositoryForSongsAdapter implements IPlayListRepository {
 
 		constructor(private songRepo: SongRepository,
@@ -82,5 +80,3 @@ import SongType from '../../../Models/Songs/SongType';
 		}
 
 	}
-
-//}

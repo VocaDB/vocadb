@@ -5,8 +5,6 @@ import PVRepository from '../../Repositories/PVRepository';
 import PVServiceIcons from '../../Models/PVServiceIcons';
 import UrlMapper from '../../Shared/UrlMapper';
 
-//module vdb.viewModels.pvs {
-
 	export default class PVListEditViewModel {
 
 		constructor(
@@ -110,5 +108,3 @@ import UrlMapper from '../../Shared/UrlMapper';
 		}
 
 	}
-
-//}

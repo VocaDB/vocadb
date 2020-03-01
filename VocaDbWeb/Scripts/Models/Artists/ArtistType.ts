@@ -1,6 +1,4 @@
 
-//module vdb.models.artists {
-	
 	enum ArtistType {
 		
 		Unknown,
@@ -51,5 +49,3 @@
 	}
 
 	export default ArtistType;
-
-//}

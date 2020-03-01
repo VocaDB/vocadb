@@ -19,8 +19,6 @@ import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
-//module vdb.viewModels.releaseEvents {
-
 	export default class ReleaseEventEditViewModel {
 
 		constructor(
@@ -187,5 +185,3 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		}
 
 	}
-
-//}

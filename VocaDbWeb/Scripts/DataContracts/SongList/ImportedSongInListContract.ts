@@ -1,7 +1,5 @@
 import SongApiContract from '../Song/SongApiContract';
 
-//module vdb.dataContracts.songList {
-	
 	export default interface ImportedSongInListContract {
 
 		matchedSong: SongApiContract;
@@ -17,5 +15,3 @@ import SongApiContract from '../Song/SongApiContract';
 		url: string;
 		
 	}
-
-//}

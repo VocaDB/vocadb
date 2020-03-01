@@ -1,7 +1,5 @@
 import TagBaseContract from './TagBaseContract';
 
-//module vdb.dataContracts.tags {
-	
 	export default interface TagSelectionContract {
 
 		selected?: boolean;
@@ -9,5 +7,3 @@ import TagBaseContract from './TagBaseContract';
 		tag: TagBaseContract;
 
 	}
-
-//}

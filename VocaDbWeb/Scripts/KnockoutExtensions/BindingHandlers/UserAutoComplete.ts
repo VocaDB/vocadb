@@ -9,8 +9,6 @@ declare global {
 	}
 }
 
-//module vdb.knockoutExtensions.bindingHandlers {
-
 	export function userAutocomplete(element: HTMLElement, valueAccessor: () => any) {
 
 		const params: EntryAutoCompleteParams<UserApiContract> = {
@@ -27,8 +25,6 @@ declare global {
 		initEntrySearch(element, functions.mapAbsoluteUrl("/api/users"), params);
 
 	}
-
-//}
 
 ko.bindingHandlers.userAutocomplete = {
 	init: userAutocomplete

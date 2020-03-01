@@ -1,7 +1,5 @@
 import EntryRefContract from './EntryRefContract';
 
-//module vdb.dataContracts {
-
     export default interface DuplicateEntryResultContract {
 
         entry: EntryRefWithNameContract;
@@ -32,5 +30,3 @@ import EntryRefContract from './EntryRefContract';
         entryTypeName: string;
 
     }
-
-//}

@@ -14,8 +14,6 @@ declare global {
 	}
 }
 
-//module vdb.knockoutExtensions {
-
 	export function initToolTip(element: HTMLElement, relativeUrl: string, id: number, params?: any, foreignDomain?: string) {
 
 		const whitelistedDomains = ["http://vocadb.net", "https://vocadb.net", "http://utaitedb.net", "https://utaitedb.net", "https://touhoudb.com"];
@@ -47,8 +45,6 @@ declare global {
 		toolTipDomain?: string;
 		version?: number;
 	}
-
-//}
 
 ko.bindingHandlers.entryToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<EntryRefContract>) => {

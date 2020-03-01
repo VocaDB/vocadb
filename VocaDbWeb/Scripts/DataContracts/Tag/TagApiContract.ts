@@ -5,8 +5,6 @@ import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithI
 import TagBaseContract from './TagBaseContract';
 import WebLinkContract from '../WebLinkContract';
 
-//module vdb.dataContracts {
-
 	export default interface TagApiContract {
 
 		additionalNames?: string;
@@ -42,5 +40,3 @@ import WebLinkContract from '../WebLinkContract';
 		webLinks: WebLinkContract[];
 
 	}
-
-//} 

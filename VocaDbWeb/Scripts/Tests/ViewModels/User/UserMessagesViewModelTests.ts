@@ -5,8 +5,6 @@ import { UserInboxType } from '../../../Repositories/UserRepository';
 import UserMessageSummaryContract from '../../../DataContracts/User/UserMessageSummaryContract';
 import UserMessagesViewModel from '../../../ViewModels/User/UserMessagesViewModel';
 
-//module vdb.tests.viewModels {
-
     var receiver: UserApiContract;
     var data: PartialFindResultContract<UserMessageSummaryContract>;
     var sender: UserApiContract;
@@ -85,5 +83,3 @@ import UserMessagesViewModel from '../../../ViewModels/User/UserMessagesViewMode
         equal(message2.selected(), true, "message2.selected()");
 
     });
-
-//}

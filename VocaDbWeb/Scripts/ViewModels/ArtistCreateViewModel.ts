@@ -7,8 +7,6 @@ import TagApiContract from '../DataContracts/Tag/TagApiContract';
 import TagRepository from '../Repositories/TagRepository';
 import WebLinkEditViewModel from './WebLinkEditViewModel';
 
-//module vdb.viewModels {
-
     export default class ArtistCreateViewModel {
 
 		artistType = ko.observable(ArtistType[ArtistType.Producer]);
@@ -69,5 +67,3 @@ import WebLinkEditViewModel from './WebLinkEditViewModel';
         }
     
     }
-
-//}

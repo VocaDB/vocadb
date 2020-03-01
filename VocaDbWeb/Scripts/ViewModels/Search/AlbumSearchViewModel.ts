@@ -7,8 +7,6 @@ import ResourcesManager from '../../Models/ResourcesManager';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 
-//module vdb.viewModels.search {
-
 	export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<AlbumContract> {
 
 		constructor(searchViewModel: SearchViewModel,
@@ -89,5 +87,3 @@ import SearchViewModel from './SearchViewModel';
 		};
 
 	}
-
-//}

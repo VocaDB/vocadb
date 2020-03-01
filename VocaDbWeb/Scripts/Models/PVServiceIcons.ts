@@ -1,7 +1,5 @@
 import UrlMapper from '../Shared/UrlMapper';
 
-//module vdb.models {
-	
 	// Class for getting URLs of PV service icons.
 	export default class PVServiceIcons {
 
@@ -48,5 +46,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		}
 
 	}
-
-//}

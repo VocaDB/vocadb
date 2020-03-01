@@ -10,8 +10,6 @@ import UserRepository from '../../Repositories/UserRepository';
 import WebLinkContract from '../../DataContracts/WebLinkContract';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
-//module vdb.viewModels.releaseEvents {
-
 	export default class ReleaseEventSeriesEditViewModel {
 
 		constructor(
@@ -79,5 +77,3 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		}
 
 	}
-
-//}

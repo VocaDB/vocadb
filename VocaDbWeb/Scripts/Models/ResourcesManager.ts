@@ -1,8 +1,6 @@
 import ResourceRepository from '../Repositories/ResourceRepository';
 import ResourcesContract from '../DataContracts/ResourcesContract';
 
-//namespace vdb.models {
-
 	export default class ResourcesManager {
 
 		constructor(private resourcesRepo: ResourceRepository,
@@ -87,5 +85,3 @@ import ResourcesContract from '../DataContracts/ResourcesContract';
 		public static userGroupNames = "userGroupNames";
 
 	}
-
-//}

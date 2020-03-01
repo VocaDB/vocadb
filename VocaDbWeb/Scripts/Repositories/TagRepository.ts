@@ -14,8 +14,6 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 import TagMappingContract from '../DataContracts/Tag/TagMappingContract';
 import UrlMapper from '../Shared/UrlMapper';
 
-//module vdb.repositories {
-
 	export default class TagRepository extends BaseRepository {
 
 		private readonly urlMapper: UrlMapper;
@@ -111,5 +109,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		sort?: string;
 
 	}
-
-//}

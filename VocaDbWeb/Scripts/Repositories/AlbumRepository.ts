@@ -16,8 +16,6 @@ import PartialFindResultContract from '../DataContracts/PartialFindResultContrac
 import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
 import UrlMapper from '../Shared/UrlMapper';
 
-//module vdb.repositories {
-
     // Repository for managing albums and related objects.
     // Corresponds to the AlbumController class.
     export default class AlbumRepository extends BaseRepository {
@@ -175,5 +173,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		discTypes: string;
 
 	}
-
-//}

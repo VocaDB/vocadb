@@ -1,7 +1,5 @@
 import ImportedSongInListContract from './ImportedSongInListContract';
 
-//module vdb.dataContracts.songList {
-	
 	export default interface PartialImportedSongs {
 
 		items: ImportedSongInListContract[];
@@ -11,5 +9,3 @@ import ImportedSongInListContract from './ImportedSongInListContract';
 		totalCount: number;
 		
 	}
-
-//} 

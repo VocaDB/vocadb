@@ -1,8 +1,6 @@
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import NameMatchMode from '../Models/NameMatchMode';
 
-//module vdb.repositories {
-
 	export default class BaseRepository {
 
 		protected handleJqueryPromise<T>(jqueryPromise: JQueryXHR) {
@@ -45,5 +43,3 @@ import NameMatchMode from '../Models/NameMatchMode';
 		query?: string;
 
 	}
-
-//}

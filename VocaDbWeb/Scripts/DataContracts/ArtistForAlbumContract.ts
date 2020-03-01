@@ -1,7 +1,5 @@
 import ArtistContract from './Artist/ArtistContract';
 
-//module vdb.dataContracts {
-
     export default interface ArtistForAlbumContract {
 
         artist: ArtistContract;
@@ -17,5 +15,3 @@ import ArtistContract from './Artist/ArtistContract';
         roles: string;
 
     }
-
-//}

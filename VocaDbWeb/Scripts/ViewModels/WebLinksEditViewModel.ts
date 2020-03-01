@@ -3,8 +3,6 @@ import TranslatedEnumField from '../DataContracts/TranslatedEnumField';
 import WebLinkContract from '../DataContracts/WebLinkContract';
 import WebLinkEditViewModel from './WebLinkEditViewModel';
 
-//module vdb.viewModels {
-
     export default class WebLinksEditViewModel extends BasicListEditViewModel<WebLinkEditViewModel, WebLinkContract> {
 
         constructor(webLinkContracts: WebLinkContract[], public categories?: TranslatedEnumField[]) {
@@ -12,6 +10,3 @@ import WebLinkEditViewModel from './WebLinkEditViewModel';
         }
 
     }
-
-//}
-

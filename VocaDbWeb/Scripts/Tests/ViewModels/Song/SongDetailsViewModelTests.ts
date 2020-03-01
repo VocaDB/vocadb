@@ -7,8 +7,6 @@ import SongDetailsViewModel from '../../../ViewModels/Song/SongDetailsViewModel'
 import { SongListsViewModel } from '../../../ViewModels/Song/SongDetailsViewModel';
 import SongVoteRating from '../../../Models/SongVoteRating';
 
-//module vdb.tests.viewModels {
-
     var rep: FakeSongRepository;
     var userRep = new FakeUserRepository();
     var res: SongDetailsResources = { createNewList: "Create new list" };
@@ -155,5 +153,3 @@ import SongVoteRating from '../../../Models/SongVoteRating';
 		equal(result.id, "3939", "id");
 
 	});
-
-//}

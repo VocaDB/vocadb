@@ -3,8 +3,6 @@ import PartialFindResultContract from '../DataContracts/PartialFindResultContrac
 import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummaryContract';
 import UserRepository from '../Repositories/UserRepository';
 
-//module vdb.viewModels {
-
     // View model for the top bar.
     export default class TopBarViewModel {
 
@@ -70,5 +68,3 @@ import UserRepository from '../Repositories/UserRepository';
         }
 
     }
-
-//}
