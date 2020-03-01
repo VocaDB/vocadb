@@ -252,9 +252,10 @@ namespace VocaDb.Model.Database.Queries {
 					new VenueWithEventsContract(v, allEvents.Where(e => v.Equals(e.Venue)), PermissionContext.LanguagePreference));
 				var ungrouped = allEvents.Where(e => e.Venue == null).OrderBy(e => e.TranslatedName[LanguagePreference]);
 
-				return venueContracts.Concat(new[] { new VenueWithEventsContract {
+				return venueContracts.Append(new VenueWithEventsContract {
 					Name = string.Empty,
-					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray() } }).ToArray();
+					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray()
+				}).ToArray();
 
 			});
 

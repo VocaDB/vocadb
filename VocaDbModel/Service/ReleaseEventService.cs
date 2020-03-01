@@ -26,9 +26,10 @@ namespace VocaDb.Model.Service {
 					new ReleaseEventSeriesWithEventsContract(s, allEvents.Where(e => s.Equals(e.Series)), PermissionContext.LanguagePreference));
 				var ungrouped = allEvents.Where(e => e.Series == null).OrderBy(e => e.TranslatedName[LanguagePreference]);
 
-				return seriesContracts.Concat(new[] { new ReleaseEventSeriesWithEventsContract { 
+				return seriesContracts.Append(new ReleaseEventSeriesWithEventsContract { 
 					Name = string.Empty, 
-					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray() } }).ToArray();
+					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray()
+				}).ToArray();
 
 			});
 
