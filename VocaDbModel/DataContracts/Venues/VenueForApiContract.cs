@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Venues;
@@ -8,8 +9,11 @@ using VocaDb.Model.Domain.Venues;
 namespace VocaDb.Model.DataContracts.Venues {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class VenueForApiContract {
+	public class VenueForApiContract : IEntryWithStatus {
 		
+		EntryType IEntryBase.EntryType => EntryType.Venue;
+		string IEntryBase.DefaultName => Name;
+
 		/// <summary>
 		/// Comma-separated list of all other names that aren't the display name.
 		/// </summary>
@@ -19,8 +23,13 @@ namespace VocaDb.Model.DataContracts.Venues {
 		[DataMember]
 		public OptionalGeoPointContract Coordinates { get; set; }
 
+		public bool Deleted { get; set; }
+
 		[DataMember(EmitDefaultValue = false)]
 		public string Description { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public ReleaseEventContract[] Events { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }
@@ -51,6 +60,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 			Id = venue.Id;
 			Coordinates = new OptionalGeoPointContract(venue.Coordinates);
+			Deleted = venue.Deleted;
 			Name = venue.TranslatedName[languagePreference];
 			Status = venue.Status;
 			Version = venue.Version;
@@ -63,12 +73,16 @@ namespace VocaDb.Model.DataContracts.Venues {
 				Description = venue.Description;
 			}
 
+			if (fields.HasFlag(VenueOptionalFields.Events)) {
+				Events = venue.Events.OrderBy(e => e.SeriesNumber).ThenBy(e => e.Date.DateTime).Select(e => new ReleaseEventContract(e, languagePreference)).ToArray();
+			}
+
 			if (fields.HasFlag(VenueOptionalFields.Names)) {
 				Names = venue.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 			}
 
 			if (fields.HasFlag(VenueOptionalFields.WebLinks)) {
-				WebLinks = venue.WebLinks.Links.Select(w => new WebLinkForApiContract(w)).ToArray();
+				WebLinks = venue.WebLinks.Links.Select(w => new WebLinkForApiContract(w, WebLinkOptionalFields.DescriptionOrUrl)).ToArray();
 			}
 
 		}
@@ -81,8 +95,9 @@ namespace VocaDb.Model.DataContracts.Venues {
 		None = 0,
 		AdditionalNames = 1,
 		Description = 2,
-		Names = 4,
-		WebLinks = 8
+		Events = 4,
+		Names = 8,
+		WebLinks = 16
 
 	}
 

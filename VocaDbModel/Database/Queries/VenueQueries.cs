@@ -108,9 +108,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public VenueDetailsContract GetDetails(int id) {
+		public VenueForApiContract GetDetails(int id) {
 
-			return HandleQuery(ctx => new VenueDetailsContract(ctx.Load(id), LanguagePreference));
+			return HandleQuery(ctx => new VenueForApiContract(
+				ctx.Load(id),
+				LanguagePreference,
+				VenueOptionalFields.AdditionalNames | VenueOptionalFields.Description | VenueOptionalFields.Events | VenueOptionalFields.Names | VenueOptionalFields.WebLinks));
 
 		}
 
