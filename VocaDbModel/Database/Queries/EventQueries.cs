@@ -241,18 +241,20 @@ namespace VocaDb.Model.Database.Queries {
 			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imagePersister));
 		}
 		
-		public VenueWithEventsContract[] GetReleaseEventsByVenues() {
+		public VenueForApiContract[] GetReleaseEventsByVenues() {
 
 			return HandleQuery(session => {
 
 				var allEvents = session.Query<ReleaseEvent>().Where(e => !e.Deleted).ToArray();
 				var venues = session.Query<Venue>().Where(e => !e.Deleted).OrderByName(LanguagePreference).ToArray();
 
-				var venueContracts = venues.Select(v =>
-					new VenueWithEventsContract(v, allEvents.Where(e => v.Equals(e.Venue)), PermissionContext.LanguagePreference));
+				var venueContracts = venues.Select(v => new VenueForApiContract(
+					v,
+					PermissionContext.LanguagePreference,
+					VenueOptionalFields.AdditionalNames | VenueOptionalFields.Description | VenueOptionalFields.Events | VenueOptionalFields.Names | VenueOptionalFields.WebLinks));
 				var ungrouped = allEvents.Where(e => e.Venue == null).OrderBy(e => e.TranslatedName[LanguagePreference]);
 
-				return venueContracts.Append(new VenueWithEventsContract {
+				return venueContracts.Append(new VenueForApiContract {
 					Name = string.Empty,
 					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray()
 				}).ToArray();
