@@ -17,7 +17,7 @@ namespace VocaDb.Migrations {
 	}
 
 	[Migration(2020_02_28_1700)]
-	public class AlbumReleaseEvents_RenameVenue : AutoReversingMigration {
+	public class AlbumReleaseEventsRenameVenue : AutoReversingMigration {
 
 		public override void Up() {
 
