@@ -35,8 +35,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			var earthRadius = GetEarthRadius(distanceUnit);
 
-			// HACK: calculate the Haversine distance.
-			// TODO: do something.
+			// HACK: calculate the distance between two points on a sphere by using the haversine formula.
 			return query.OrderBy(v => earthRadius * 2 * Math.Asin(Math.Sqrt(
 				Math.Pow(Math.Sin((coordinates.Latitude.Value - Math.Abs(v.Coordinates.Latitude.Value)) * Math.PI / 180 / 2), 2)
 				+ Math.Cos(coordinates.Latitude.Value * Math.PI / 180)
@@ -62,8 +61,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 				var earthRadius = GetEarthRadius(distanceUnit);
 
-				// HACK: calculate the Haversine distance.
-				// TODO: do something.
+				// HACK: calculate the distance between two points on a sphere by using the haversine formula.
 				query = query.Where(v => earthRadius * 2 * Math.Asin(Math.Sqrt(
 					Math.Pow(Math.Sin((queryParams.Latitude.Value - Math.Abs(v.Coordinates.Latitude.Value)) * Math.PI / 180 / 2), 2)
 					+ Math.Cos(queryParams.Latitude.Value * Math.PI / 180)
