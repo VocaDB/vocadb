@@ -9,7 +9,7 @@ namespace VocaDb.Migrations {
 	public class ArchivedEventVersionsRenameVenue : Migration {
 
 		public override void Up() {
-			Execute.Sql("UPDATE [ArchivedEventVersions] SET ChangedFields = REPLACE(ChangedFields, 'Venue', 'VenueName') WHERE ChangedFields LIKE '%Venue%'");
+			Execute.Sql("UPDATE [ArchivedEventVersions] SET ChangedFields = REPLACE(ChangedFields, 'Venue', 'VenueName') WHERE ChangedFields LIKE '%Venue%' AND NOT ChangedFields LIKE '%VenueName%'");
 		}
 
 		public override void Down() {
