@@ -187,11 +187,13 @@
 				@Html.HiddenForKnockout(m => m.Venue, "value: ko.toJSON(venue)")
 			</div>
 
-			<div class="editor-label">
-				@Helpers.HelpLabel("Venue", "Can be either a physical location such as concert hall, or a virtual location (website).")
-			</div>
-			<div class="editor-field">
-				@Html.TextBoxFor(m => m.VenueName, new { size = 40, @class = "span3", maxlength = 1000 })<br />
+			<div data-bind="visible: !venue.entry()">
+				<div class="editor-label">
+					@Helpers.HelpLabel("Venue name", "Can be either a physical location such as concert hall, or a virtual location (website).")
+				</div>
+				<div class="editor-field">
+					@Html.TextBoxFor(m => m.VenueName, new { size = 40, @class = "span3", maxlength = 1000 })<br />
+				</div>
 			</div>
 	
 			<div class="editor-label">
