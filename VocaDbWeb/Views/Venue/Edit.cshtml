@@ -1,4 +1,5 @@
-﻿@using System.Web.Optimization
+﻿@using VocaDb.Model.Domain.Globalization
+@using System.Web.Optimization
 @using VocaDb.Web.Helpers
 @using Res = ViewRes.Venue.EditStrings;
 @using EditRes = ViewRes.EntryEditStrings
@@ -107,7 +108,25 @@
 		</td>
 		@Html.HiddenForKnockout(m => m.Coordinates, "value: ko.toJSON(coordinates)")
 	</tr></table>
-			
+
+	<div class="editor-label">
+		<label>
+			@Res.Country
+		</label>
+	</div>
+	<div class="editor-field">
+		@Html.DropDownListFor(m => m.RegionCode, new SelectList(new RegionCollection(RegionCollection.RegionCodes).ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "Key", "Value", Model.RegionCode))
+	</div>
+
+	<div class="editor-label">
+		<label>
+			@Res.Address
+		</label>
+	</div>
+	<div class="editor-field">
+		@Html.TextBoxFor(m => m.Address, new { @class = "input-xlarge" })
+	</div>
+
 	<div class="editor-label">
 		<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
 			@EditRes.WebLinks

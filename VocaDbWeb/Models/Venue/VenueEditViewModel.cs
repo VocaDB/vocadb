@@ -12,6 +12,8 @@ namespace VocaDb.Web.Models.Venue {
 	[PropertyModelBinder]
 	public class VenueEditViewModel {
 
+		public string Address { get; set; }
+
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
 
 		[FromJson]
@@ -30,6 +32,8 @@ namespace VocaDb.Web.Models.Venue {
 		[FromJson]
 		public LocalizedStringWithIdContract[] Names { get; set; }
 
+		public string RegionCode { get; set; }
+
 		public EntryStatus Status { get; set; }
 
 		[FromJson]
@@ -41,6 +45,7 @@ namespace VocaDb.Web.Models.Venue {
 
 			ParamIs.NotNull(() => contract);
 
+			Address = contract.Address;
 			Coordinates = contract.Coordinates;
 			DefaultNameLanguage = contract.DefaultNameLanguage;
 			Deleted = contract.Deleted;
@@ -48,6 +53,7 @@ namespace VocaDb.Web.Models.Venue {
 			Id = contract.Id;
 			Name = contract.Name;
 			Names = contract.Names;
+			RegionCode = contract.RegionCode;
 			Status = contract.Status;
 			WebLinks = contract.WebLinks;
 
@@ -56,12 +62,14 @@ namespace VocaDb.Web.Models.Venue {
 		}
 
 		public VenueForEditContract ToContract() => new VenueForEditContract {
+			Address = Address,
 			Coordinates = Coordinates,
 			DefaultNameLanguage = DefaultNameLanguage,
 			Description = Description ?? string.Empty,
 			Id = Id,
 			Name = Name,
 			Names = Names,
+			RegionCode = RegionCode,
 			Status = Status,
 			WebLinks = WebLinks
 		};

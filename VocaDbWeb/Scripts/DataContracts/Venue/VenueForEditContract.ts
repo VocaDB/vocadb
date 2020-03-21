@@ -3,6 +3,8 @@ module vdb.dataContracts {
 
 	export interface VenueForEditContract {
 
+		address: string;
+
 		coordinates: OptionalGeoPointContract;
 
 		defaultNameLanguage: string;
@@ -10,6 +12,8 @@ module vdb.dataContracts {
 		id: number;
 
 		names?: globalization.LocalizedStringWithIdContract[];
+
+		regionCode: string;
 
 		webLinks: WebLinkContract[];
 
