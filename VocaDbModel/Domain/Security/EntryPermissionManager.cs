@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Immutable;
 using System.Linq;
 using VocaDb.Model.Domain.Comments;
@@ -245,6 +245,14 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
+		/// <summary>
+		/// Verifies that user passes an access check for an entry.
+		/// </summary>
+		/// <typeparam name="T">Entry type.</typeparam>
+		/// <param name="permissionContext">User's permission context.</param>
+		/// <param name="entry">Entry to be checked.</param>
+		/// <param name="accessCheck">Access check to perform. Returns true if user has access, otherwise false.</param>
+		/// <exception cref="NotAllowedException">If user does not have access (<paramref name="accessCheck"/> returns false).</exception>
 		public static void VerifyAccess<T>(IUserPermissionContext permissionContext, T entry, Func<IUserPermissionContext, T, bool> accessCheck) where T : class {
 
 			ParamIs.NotNull(() => entry);
@@ -254,6 +262,9 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
+		/// <summary>
+		/// Verifies that user is allowed to delete an entry.
+		/// </summary>
 		public static void VerifyDelete<TEntry>(IUserPermissionContext permissionContext, TEntry entry)
 			where TEntry: class, IEntryWithVersions, IEntryWithStatus {
 
@@ -261,12 +272,18 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
+		/// <summary>
+		/// Verifies that user is allowed to edit a <see cref="SongList"/>.
+		/// </summary>
 		public static void VerifyEdit(IUserPermissionContext permissionContext, SongList entry) {
 
 			VerifyAccess(permissionContext, entry, CanEdit);
 
 		}
 
+		/// <summary>
+		/// Verifies that user is allowed to edit an entry.
+		/// </summary>
 		public static void VerifyEdit(IUserPermissionContext permissionContext, IEntryWithStatus entry) {
 
 			VerifyAccess(permissionContext, entry, CanEdit);

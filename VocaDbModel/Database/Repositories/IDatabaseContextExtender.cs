@@ -91,7 +91,7 @@ namespace VocaDb.Model.Database.Repositories {
 		/// <param name="entry">Entry reference. Can be null in which case null is returned.</param>
 		/// <returns>Reference to the loaded entry. Can be null if <paramref name="entry"/> is null or Id is 0.</returns>
 		public static T NullSafeLoad<T>(this IDatabaseContext<T> ctx, IEntryWithIntId entry) {
-			return entry != null && entry.Id != 0 ? ctx.Load(entry.Id) : default(T);
+			return entry != null && entry.Id != 0 ? ctx.Load(entry.Id) : default;
 		}
 
 		public static T NullSafeLoad<T>(this IDatabaseContext<T> ctx, int id) {
