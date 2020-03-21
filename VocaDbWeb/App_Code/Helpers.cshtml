@@ -53,7 +53,7 @@
 
 @helper EmbedGoogleMaps(OptionalGeoPointContract coordinates) {
 	<div>
-		<iframe src="https://maps.google.com/maps?q=@(coordinates.Latitude),@(coordinates.Longitude)&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="600" height="450"></iframe>
+		<iframe src="https://maps.google.com/maps?q=@(coordinates.Latitude.Value.ToString(CultureHelper.EnUS)),@(coordinates.Longitude.Value.ToString(CultureHelper.EnUS))&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="600" height="450"></iframe>
 	</div>
 }
 
