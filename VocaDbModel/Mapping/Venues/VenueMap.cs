@@ -11,9 +11,11 @@ namespace VocaDb.Model.Mapping.Venues {
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
+			Map(m => m.Address).Not.Nullable();
 			Map(m => m.CreateDate).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Description).Length(1000).Not.Nullable();
+			Map(m => m.RegionCode).Length(10).Not.Nullable();
 			Map(m => m.Status).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();
 

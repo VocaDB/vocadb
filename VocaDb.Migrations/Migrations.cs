@@ -5,6 +5,15 @@ namespace VocaDb.Migrations {
 
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2020_03_22_0000)]
+	public class VenuesRegionCode : AutoReversingMigration {
+
+		public override void Up() {
+			Create.Column("RegionCode").OnTable(TableNames.Venues).AsString(10).NotNullable().WithDefaultValue(string.Empty);
+		}
+
+	}
+
 	[Migration(2020_03_01_1300)]
 	public class ArchivedEventVersionsRenameVenue : Migration {
 
