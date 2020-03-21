@@ -1,14 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using NHibernate;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -20,6 +19,7 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
@@ -240,6 +240,28 @@ namespace VocaDb.Model.Database.Queries {
 		public ReleaseEventForApiContract GetOne(int id, ContentLanguagePreference lang, ReleaseEventOptionalFields fields) {
 			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imagePersister));
 		}
+		
+		public VenueForApiContract[] GetReleaseEventsByVenues() {
+
+			return HandleQuery(session => {
+
+				var allEvents = session.Query<ReleaseEvent>().Where(e => !e.Deleted).ToArray();
+				var venues = session.Query<Venue>().Where(e => !e.Deleted).OrderByName(LanguagePreference).ToArray();
+
+				var venueContracts = venues.Select(v => new VenueForApiContract(
+					v,
+					PermissionContext.LanguagePreference,
+					VenueOptionalFields.AdditionalNames | VenueOptionalFields.Description | VenueOptionalFields.Events | VenueOptionalFields.Names | VenueOptionalFields.WebLinks));
+				var ungrouped = allEvents.Where(e => e.Venue == null).OrderBy(e => e.TranslatedName[LanguagePreference]);
+
+				return venueContracts.Append(new VenueForApiContract {
+					Name = string.Empty,
+					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray()
+				}).ToArray();
+
+			});
+
+		}
 
 		public ReleaseEventSeriesForApiContract GetOneSeries(int id, ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields) {
 			return repository.HandleQuery(ctx => new ReleaseEventSeriesForApiContract(ctx.Load<ReleaseEventSeries>(id), lang, fields, imagePersister));
@@ -450,14 +472,19 @@ namespace VocaDb.Model.Database.Queries {
 					ev.EndDate = contract.EndDate;
 					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
 					ev.Status = contract.Status;
+					ev.SetVenue(session.NullSafeLoad<Venue>(contract.Venue));
 					ev.VenueName = contract.VenueName;
 
 					if (contract.SongList != null) {
 						diff.SongList.Set();
 					}
 
-					if (!string.IsNullOrEmpty(contract.VenueName)) {
+					if (contract.Venue != null) {
 						diff.Venue.Set();
+					}
+
+					if (!string.IsNullOrEmpty(contract.VenueName)) {
+						diff.VenueName.Set();
 					}
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
@@ -540,9 +567,13 @@ namespace VocaDb.Model.Database.Queries {
 
 					if (ev.Status != contract.Status)
 						diff.Status.Set();
+					
+					if (!ev.Venue.NullSafeIdEquals(contract.Venue)) {
+						diff.Venue.Set();
+					}
 
 					if (!string.Equals(ev.VenueName, contract.VenueName)) {
-						diff.Venue.Set();
+						diff.VenueName.Set();
 					}
 
 					ev.SetSeries(session.NullSafeLoad<ReleaseEventSeries>(contract.Series));
@@ -556,6 +587,7 @@ namespace VocaDb.Model.Database.Queries {
 					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
 					ev.Status = contract.Status;
 					ev.TranslatedName.DefaultLanguage = inheritedLanguage;
+					ev.SetVenue(session.NullSafeLoad<Venue>(contract.Venue));
 					ev.VenueName = contract.VenueName;
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);

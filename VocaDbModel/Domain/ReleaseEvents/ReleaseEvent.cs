@@ -17,6 +17,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 
@@ -363,6 +364,17 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Series?.AllEvents.Remove(this);
 			newSeries?.AllEvents.Add(this);
 			Series = newSeries;
+
+		}
+
+		public virtual void SetVenue(Venue newVenue) {
+
+			if (Equals(Venue, newVenue))
+				return;
+
+			Venue?.AllEvents.Remove(this);
+			newVenue?.AllEvents.Add(this);
+			Venue = newVenue;
 
 		}
 

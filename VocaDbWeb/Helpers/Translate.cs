@@ -8,6 +8,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.Globalization;
 using Resources;
 using VocaDb.Model;
@@ -180,6 +181,12 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<UserReportType> UserReportTypeNames =
 			new TranslateableEnum<UserReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
+		public static readonly TranslateableEnum<VenueEditableFields> VenueEditableFieldNames =
+			new TranslateableEnum<VenueEditableFields>(() => global::Resources.VenueEditableFieldNames.ResourceManager);
+
+		public static readonly TranslateableEnum<VenueReportType> VenueReportTypeNames =
+			new TranslateableEnum<VenueReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
+
 		public static readonly TranslateableEnum<WebLinkCategory> WebLinkCategoryNames =
 			new TranslateableEnum<WebLinkCategory>(() => global::Resources.WebLinkCategoryNames.ResourceManager);
 
@@ -265,6 +272,8 @@ namespace VocaDb.Web.Helpers {
 			return SongEditableFieldNames[field];
 
 		}
+
+		public static string VenueEditableField(VenueEditableFields field) => VenueEditableFieldNames[field];
 
 		public static string PermissionTokenName(IPermissionToken token) {
 

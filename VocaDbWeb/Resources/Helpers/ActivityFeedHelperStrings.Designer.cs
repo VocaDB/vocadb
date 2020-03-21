@@ -133,6 +133,15 @@ namespace HelperRes {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to venue.
+        /// </summary>
+        public static string EntryVenue {
+            get {
+                return ResourceManager.GetString("EntryVenue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A contributor.
         /// </summary>
         public static string Someone {

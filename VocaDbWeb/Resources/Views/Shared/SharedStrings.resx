@@ -229,4 +229,7 @@
   <data name="Users" xml:space="preserve">
     <value>Users</value>
   </data>
+  <data name="Venues" xml:space="preserve">
+    <value>Venues</value>
+  </data>
 </root>

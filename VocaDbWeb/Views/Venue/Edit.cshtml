@@ -1,0 +1,162 @@
+﻿@using System.Web.Optimization
+@using VocaDb.Web.Helpers
+@using Res = ViewRes.Venue.EditStrings;
+@using EditRes = ViewRes.EntryEditStrings
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Venue.VenueEditViewModel>
+
+@{
+
+	var isNew = (Model.Id == 0);
+	string backAction;
+
+	if (!isNew) {
+		PageProperties.Title = "Edit venue - " + Model.Name;
+		backAction = Url.Action("Details", new { id = Model.Id });
+		ViewBag.Parents = new[] {
+			Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenues", "Event"),
+			Html.ActionLink(Model.Name, "Details", new { id = Model.Id })
+		};
+	} else {
+		PageProperties.Title = "Create a new venue";
+		backAction = Url.Action("EventsByVenues", "Event");
+		ViewBag.Parents = new[] {
+			Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenues", "Event")
+		};
+	}
+
+}
+
+@section Toolbar {
+	@if (!isNew && Login.CanDeleteEntries) {
+		if (!Model.Deleted) {
+			<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>			
+		} else {
+			@Html.ActionLink(EditRes.Restore, "Restore", new { id = Model.Id }, new { id = "restoreLink" })					
+		}
+		if (Login.CanMoveToTrash) {
+			<a href="#" id="trashLink" data-bind="click: trashViewModel.show">@EditRes.MoveToTrash</a>
+		}
+	}
+}
+
+@Helpers.ValidationSymmaryPanel("Unable to save properties.")
+
+@using(Html.BeginForm("Edit", "Venue", FormMethod.Post, new { enctype = "multipart/form-data", data_bind = "submit: submit" })) {
+	@Html.HiddenFor(m => m.Id)
+	@Html.HiddenFor(m => m.Name)
+	
+	@Helpers.SaveAndBackBtn(backAction)
+	
+	<div class="editor-label">
+		<label class="helpTip" data-bind="qTip" title="@EditRes.DefaultLanguageHelp">
+			@EditRes.DefaultLanguageSelection
+		</label>
+	</div>
+	<div class="editor-field">
+		@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
+		@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
+	</div>
+
+	<div class="editor-label">
+		@Html.LabelFor(m => m.Names)
+	</div>
+	<div class="editor-field">
+		<table>			
+			<tr>
+				<td data-bind="with: names">
+					@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
+					@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
+				</td>
+				<td style="vertical-align: top">
+					<div class="alert" data-bind="visible: duplicateName" style="display: none;">
+						Venue already exists with name
+						<span data-bind="text: duplicateName"></span>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>	
+
+	<div class="editor-label">
+		@Html.LabelFor(m => m.Description)
+	</div>
+	<div class="editor-field">
+		@Html.TextAreaForKnockout(m => m.Description, "initialValue, textInput: description", cols: 60, rows: 4, maxLength: 1000, cssClass: "span4")
+		
+		Live preview
+		<div data-bind="markdown: description"></div>
+	</div>
+		
+	<table><tr>
+		<td>@Res.Coordinates</td>
+		<td>
+			<div class="editor-label">
+				<label>@Res.Latitude</label>
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxForKnockout(m => m.Coordinates.Latitude, "textInput: latitude", cssClass: "input-medium")
+			</div>				
+		</td>
+		<td>
+			<div class="editor-label">
+				<label>@Res.Longitude</label>
+			</div>
+			<div class="editor-field">
+				@Html.TextBoxForKnockout(m => m.Coordinates.Longitude, "textInput: longitude", cssClass: "input-medium")
+			</div>				
+		</td>
+		@Html.HiddenForKnockout(m => m.Coordinates, "value: ko.toJSON(coordinates)")
+	</tr></table>
+			
+	<div class="editor-label">
+		<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
+			@EditRes.WebLinks
+		</label>
+	</div>
+	<div class="editor-field" data-bind="with: webLinks">
+		@KnockoutHelpers.WebLinksEditViewKnockout(false)
+		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(webLinks)")
+	</div>
+	
+	<div class="editor-label">
+		@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
+	</div>
+	<div class="editor-field">
+		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
+	</div>
+
+	<br />
+	@Helpers.SaveAndBackBtn(backAction)
+
+}
+
+@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
+@EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)
+
+@section BodyScripts {
+@Scripts.Render("~/bundles/shared/edit", "~/bundles/Venue/Edit")
+<script type="text/javascript">
+
+	$(function () {
+		
+		var urlMapper = new vdb.UrlMapper('@RootPath');
+		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var venueRepo = repoFactory.venueRepository();
+		var userRepo = repoFactory.userRepository();
+		var contract = @ToJS(new {
+			Model.Coordinates,
+			DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
+			Model.Id,
+			Model.Names,
+			Model.WebLinks
+		});
+
+		var vm = new vdb.viewModels.venues.VenueEditViewModel(venueRepo, userRepo, urlMapper, contract);
+		ko.applyBindings(vm);
+
+		initPage();
+
+	});
+
+</script>
+}

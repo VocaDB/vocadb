@@ -79,6 +79,15 @@ namespace ViewRes.Event {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create venue.
+        /// </summary>
+        public static string CreateVenue {
+            get {
+                return ResourceManager.GetString("CreateVenue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All by date.
         /// </summary>
         public static string ViewByDate {
@@ -93,6 +102,15 @@ namespace ViewRes.Event {
         public static string ViewBySeries {
             get {
                 return ResourceManager.GetString("ViewBySeries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All by venues.
+        /// </summary>
+        public static string ViewByVenues {
+            get {
+                return ResourceManager.GetString("ViewByVenues", resourceCulture);
             }
         }
         

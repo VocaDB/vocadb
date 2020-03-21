@@ -23,6 +23,9 @@
 			@Html.ActionLink(Res.ViewBySeries, "EventsBySeries")
 		</li>
 		<li>
+			@Html.ActionLink(Res.ViewByVenues, "EventsByVenues")
+		</li>
+		<li>
 			@Html.ActionLink(Res.ViewByDate, "EventsByDate")
 		</li>
 	</ul>
@@ -31,6 +34,8 @@
 		@Html.ActionLink(Res.CreateEvent, "Edit", null, new { id = "createEventLink" })
 		@:
 		@Html.ActionLink(Res.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
+		@:
+		@Html.ActionLink(Res.CreateVenue, "Edit", "Venue", null, new { id = "createVenueLink" })
 	}
 }
 
@@ -41,6 +46,7 @@
 		$(function () {
 			$("#createSeriesLink").button({ icons: { primary: 'ui-icon-plus' } });
 			$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
+			$("#createVenueLink").button({ icons: { primary: 'ui-icon-plus' } });
 		});
 	</script>
 }
