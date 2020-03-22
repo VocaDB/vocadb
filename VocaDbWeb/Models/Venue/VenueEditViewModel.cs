@@ -62,14 +62,14 @@ namespace VocaDb.Web.Models.Venue {
 		}
 
 		public VenueForEditContract ToContract() => new VenueForEditContract {
-			Address = Address,
+			Address = Address ?? string.Empty,
 			Coordinates = Coordinates,
 			DefaultNameLanguage = DefaultNameLanguage,
 			Description = Description ?? string.Empty,
 			Id = Id,
 			Name = Name,
 			Names = Names,
-			RegionCode = RegionCode,
+			RegionCode = RegionCode ?? string.Empty,
 			Status = Status,
 			WebLinks = WebLinks
 		};

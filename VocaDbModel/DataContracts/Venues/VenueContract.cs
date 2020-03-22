@@ -12,7 +12,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 		public string AdditionalNames { get; set; }
 
-		public string Address { get; set; }
+		public string Address { get; set; } = string.Empty;
 
 		public OptionalGeoPointContract Coordinates { get; set; }
 
@@ -24,7 +24,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 		public string Name { get; set; }
 
-		public string RegionCode { get; set; }
+		public string RegionCode { get; set; } = string.Empty;
 
 		public EntryStatus Status { get; set; }
 
