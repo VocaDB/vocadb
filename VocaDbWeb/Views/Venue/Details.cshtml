@@ -1,4 +1,5 @@
-﻿@using System.Web.Optimization;
+﻿@using System.Globalization;
+@using System.Web.Optimization;
 @using VocaDb.Model.Domain.Venues;
 @using VocaDb.Web.Helpers;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Venues.VenueForApiContract>
@@ -50,6 +51,18 @@
 		<p>
 			@ViewRes.Venue.DetailsStrings.Aliases: @Model.AdditionalNames
 		</p>		
+	}
+
+	@if (!string.IsNullOrEmpty(Model.RegionCode)) {
+		<p>
+			@ViewRes.Venue.DetailsStrings.Country: @(new RegionInfo(Model.RegionCode).DisplayName)
+		</p>
+	}
+
+	@if (!string.IsNullOrEmpty(Model.Address)) { 
+		<p>
+			@ViewRes.Venue.DetailsStrings.Address: @Model.Address
+		</p>
 	}
 </div>
 
