@@ -368,6 +368,7 @@
     <Compile Include="Domain\Globalization\CultureConstants.cs" />
     <Compile Include="Domain\Globalization\LanguageCodeAndName.cs" />
     <Compile Include="Domain\Globalization\OptionalCultureCode.cs" />
+    <Compile Include="Domain\Globalization\RegionCollection.cs" />
     <Compile Include="Domain\Globalization\TranslationType.cs" />
     <Compile Include="Domain\IDatabaseObject.cs" />
     <Compile Include="Domain\IEntryLink.cs" />

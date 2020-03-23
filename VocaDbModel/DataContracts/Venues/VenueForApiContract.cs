@@ -20,6 +20,18 @@ namespace VocaDb.Model.DataContracts.Venues {
 		[DataMember(EmitDefaultValue = false)]
 		public string AdditionalNames { get; set; }
 
+		/// <summary>
+		/// Venue address, without country, for example "2-1, Nakase, Mihama-ku, Chiba-city, 261-8550".
+		/// </summary>
+		[DataMember]
+		public string Address { get; set; }
+
+		/// <summary>
+		/// The two-letter code defined in ISO 3166 for the country/region.
+		/// </summary>
+		[DataMember]
+		public string AddressCountryCode { get; set; }
+
 		[DataMember]
 		public OptionalGeoPointContract Coordinates { get; set; }
 
@@ -59,6 +71,8 @@ namespace VocaDb.Model.DataContracts.Venues {
 			ParamIs.NotNull(() => venue);
 
 			Id = venue.Id;
+			Address = venue.Address;
+			AddressCountryCode = venue.AddressCountryCode;
 			Coordinates = new OptionalGeoPointContract(venue.Coordinates);
 			Deleted = venue.Deleted;
 			Name = venue.TranslatedName[languagePreference];

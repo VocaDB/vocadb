@@ -42,7 +42,9 @@ namespace VocaDb.Model.Domain.Venues {
 
 		}
 
-		public virtual string Address { get; set; }
+		public virtual string Address { get; set; } = string.Empty;
+
+		public virtual string AddressCountryCode { get; set; } = string.Empty;
 
 		public virtual ArchivedVersionManager<ArchivedVenueVersion, VenueEditableFields> ArchivedVersionsManager {
 			get => archivedVersions;

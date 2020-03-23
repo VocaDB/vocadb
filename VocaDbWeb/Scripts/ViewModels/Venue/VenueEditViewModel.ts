@@ -9,6 +9,8 @@ module vdb.viewModels.venues {
 			private readonly urlMapper: vdb.UrlMapper,
 			contract: dc.VenueForEditContract) {
 
+			this.address = ko.observable(contract.address);
+			this.addressCountryCode = ko.observable(contract.addressCountryCode);
 			this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
 			this.id = contract.id;
 			this.latitude = ko.observable(contract.coordinates?.latitude ?? null);
@@ -37,6 +39,9 @@ module vdb.viewModels.venues {
 			}
 
 		}
+
+		public address: KnockoutObservable<string>;
+		public addressCountryCode: KnockoutObservable<string>;
 		
 		private checkName = (value: string) => {
 

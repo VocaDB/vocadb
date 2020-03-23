@@ -7,17 +7,21 @@ namespace VocaDb.Model.Domain.Venues {
 
 		Nothing = 0,
 
-		Coordinates = 1,
+		Address = 1,
 
-		Description = 2,
+		AddressCountryCode = 2,
 
-		Names = 4,
+		Coordinates = 4,
 
-		OriginalName = 8,
+		Description = 8,
 
-		Status = 16,
+		Names = 16,
 
-		WebLinks = 32
+		OriginalName = 32,
+
+		Status = 64,
+
+		WebLinks = 128
 
 	}
 

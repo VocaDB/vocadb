@@ -12,6 +12,10 @@ namespace VocaDb.Web.Models.Venue {
 	[PropertyModelBinder]
 	public class VenueEditViewModel {
 
+		public string Address { get; set; }
+
+		public string AddressCountryCode { get; set; }
+
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
 
 		[FromJson]
@@ -41,6 +45,8 @@ namespace VocaDb.Web.Models.Venue {
 
 			ParamIs.NotNull(() => contract);
 
+			Address = contract.Address;
+			AddressCountryCode = contract.AddressCountryCode;
 			Coordinates = contract.Coordinates;
 			DefaultNameLanguage = contract.DefaultNameLanguage;
 			Deleted = contract.Deleted;
@@ -56,6 +62,8 @@ namespace VocaDb.Web.Models.Venue {
 		}
 
 		public VenueForEditContract ToContract() => new VenueForEditContract {
+			Address = Address ?? string.Empty,
+			AddressCountryCode = AddressCountryCode ?? string.Empty,
 			Coordinates = Coordinates,
 			DefaultNameLanguage = DefaultNameLanguage,
 			Description = Description ?? string.Empty,
