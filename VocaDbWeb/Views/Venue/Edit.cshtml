@@ -124,7 +124,7 @@
 		</label>
 	</div>
 	<div class="editor-field">
-		@Html.TextBoxFor(m => m.Address, new { @class = "input-xlarge" })
+		@Html.TextBoxFor(m => m.Address, new { @class = "input-xlarge", maxLength = 255 })
 	</div>
 
 	<div class="editor-label">
