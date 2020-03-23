@@ -24,7 +24,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 		public string Name { get; set; }
 
-		public string RegionCode { get; set; } = string.Empty;
+		public string AddressCountryCode { get; set; } = string.Empty;
 
 		public EntryStatus Status { get; set; }
 
@@ -45,7 +45,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 			Description = venue.Description;
 			Id = venue.Id;
 			Name = venue.TranslatedName[languagePreference];
-			RegionCode = venue.RegionCode;
+			AddressCountryCode = venue.AddressCountryCode;
 			Status = venue.Status;
 			Version = venue.Version;
 

@@ -120,6 +120,9 @@
   <data name="Address" xml:space="preserve">
     <value>Address</value>
   </data>
+  <data name="AddressCountryCode" xml:space="preserve">
+    <value>Country/Region</value>
+  </data>
   <data name="Coordinates" xml:space="preserve">
     <value>Coordinates</value>
   </data>
@@ -131,9 +134,6 @@
   </data>
   <data name="OriginalName" xml:space="preserve">
     <value>Default name language</value>
-  </data>
-  <data name="RegionCode" xml:space="preserve">
-    <value>Country/Region</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>

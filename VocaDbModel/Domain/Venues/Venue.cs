@@ -87,7 +87,7 @@ namespace VocaDb.Model.Domain.Venues {
 			}
 		}
 
-		public virtual string RegionCode { get; set; } = string.Empty;
+		public virtual string AddressCountryCode { get; set; } = string.Empty;
 
 		public virtual EntryStatus Status { get; set; } = EntryStatus.Draft;
 

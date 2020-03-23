@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain.Venues {
 		public EnumFieldAccessor<VenueEditableFields> Description => Field(VenueEditableFields.Description);
 		public EnumFieldAccessor<VenueEditableFields> OriginalName => Field(VenueEditableFields.OriginalName);
 		public EnumFieldAccessor<VenueEditableFields> Names => Field(VenueEditableFields.Names);
-		public EnumFieldAccessor<VenueEditableFields> RegionCode => Field(VenueEditableFields.RegionCode);
+		public EnumFieldAccessor<VenueEditableFields> AddressCountryCode => Field(VenueEditableFields.AddressCountryCode);
 		public EnumFieldAccessor<VenueEditableFields> Status => Field(VenueEditableFields.Status);
 		public EnumFieldAccessor<VenueEditableFields> WebLinks => Field(VenueEditableFields.WebLinks);
 

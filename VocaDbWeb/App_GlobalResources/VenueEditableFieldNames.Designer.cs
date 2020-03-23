@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Country/Region.
+        /// </summary>
+        internal static string AddressCountryCode {
+            get {
+                return ResourceManager.GetString("AddressCountryCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Coordinates.
         /// </summary>
         internal static string Coordinates {
@@ -102,15 +111,6 @@ namespace Resources {
         internal static string OriginalName {
             get {
                 return ResourceManager.GetString("OriginalName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Country/Region.
-        /// </summary>
-        internal static string RegionCode {
-            get {
-                return ResourceManager.GetString("RegionCode", resourceCulture);
             }
         }
         

@@ -13,7 +13,7 @@ module vdb.dataContracts {
 
 		names?: globalization.LocalizedStringWithIdContract[];
 
-		regionCode: string;
+		addressCountryCode: string;
 
 		webLinks: WebLinkContract[];
 

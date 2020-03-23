@@ -47,7 +47,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 		public LocalizedStringContract[] Names { get; set; }
 
 		[DataMember]
-		public string RegionCode { get; set; }
+		public string AddressCountryCode { get; set; }
 
 		[DataMember]
 		public EntryStatus Status { get; set; }
@@ -69,7 +69,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 			Coordinates = new OptionalGeoPointContract(venue.Coordinates);
 			Deleted = venue.Deleted;
 			Name = venue.TranslatedName[languagePreference];
-			RegionCode = venue.RegionCode;
+			AddressCountryCode = venue.AddressCountryCode;
 			Status = venue.Status;
 			Version = venue.Version;
 

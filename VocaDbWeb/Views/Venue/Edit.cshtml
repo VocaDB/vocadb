@@ -115,7 +115,7 @@
 		</label>
 	</div>
 	<div class="editor-field">
-		@Html.DropDownListFor(m => m.RegionCode, new SelectList(new RegionCollection(RegionCollection.RegionCodes).ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "Key", "Value", Model.RegionCode))
+		@Html.DropDownListFor(m => m.AddressCountryCode, new SelectList(new RegionCollection(RegionCollection.RegionCodes).ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "Key", "Value", Model.AddressCountryCode))
 	</div>
 
 	<div class="editor-label">

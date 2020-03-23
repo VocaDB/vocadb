@@ -53,9 +53,9 @@
 		</p>		
 	}
 
-	@if (!string.IsNullOrEmpty(Model.RegionCode)) {
+	@if (!string.IsNullOrEmpty(Model.AddressCountryCode)) {
 		<p>
-			@ViewRes.Venue.DetailsStrings.Country: @(new RegionInfo(Model.RegionCode).DisplayName)
+			@ViewRes.Venue.DetailsStrings.Country: @(new RegionInfo(Model.AddressCountryCode).DisplayName)
 		</p>
 	}
 

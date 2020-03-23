@@ -206,7 +206,7 @@ namespace VocaDb.Model.Database.Queries {
 					venue = new Venue(contract.DefaultNameLanguage, contract.Names, contract.Description) {
 						Address = contract.Address,
 						Coordinates = (contract.Coordinates != null) ? new OptionalGeoPoint(contract.Coordinates) : new OptionalGeoPoint(),
-						RegionCode = contract.RegionCode,
+						AddressCountryCode = contract.AddressCountryCode,
 						Status = contract.Status
 					};
 					ctx.Save(venue);
@@ -215,7 +215,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					diff.Address.Set(!string.IsNullOrEmpty(contract.Address));
 					diff.Description.Set(!string.IsNullOrEmpty(contract.Description));
-					diff.RegionCode.Set(!string.IsNullOrEmpty(contract.RegionCode));
+					diff.AddressCountryCode.Set(!string.IsNullOrEmpty(contract.AddressCountryCode));
 
 					if (contract.Coordinates != null) {
 						diff.Coordinates.Set();
@@ -262,9 +262,9 @@ namespace VocaDb.Model.Database.Queries {
 						venue.Description = contract.Description;
 					}
 
-					if (venue.RegionCode != contract.RegionCode) {
-						diff.RegionCode.Set();
-						venue.RegionCode = contract.RegionCode;
+					if (venue.AddressCountryCode != contract.AddressCountryCode) {
+						diff.AddressCountryCode.Set();
+						venue.AddressCountryCode = contract.AddressCountryCode;
 					}
 
 					if (!venue.Coordinates.Equals(contract.Coordinates)) {

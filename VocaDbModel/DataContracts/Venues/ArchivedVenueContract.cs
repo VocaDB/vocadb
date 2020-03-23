@@ -25,7 +25,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 		public LocalizedStringContract[] Names { get; set; }
 
 		[DataMember]
-		public string RegionCode { get; set; }
+		public string AddressCountryCode { get; set; }
 
 		[DataMember]
 		public ArchivedTranslatedStringContract TranslatedName { get; set; }
@@ -44,7 +44,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 			Description = venue.Description;
 			Id = venue.Id;
 			Names = diff.IncludeNames ? venue.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
-			RegionCode = venue.RegionCode;
+			AddressCountryCode = venue.AddressCountryCode;
 			TranslatedName = new ArchivedTranslatedStringContract(venue.TranslatedName);
 			WebLinks = diff.IncludeWebLinks ? venue.WebLinks.Links.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
@@ -71,7 +71,7 @@ namespace VocaDb.Model.DataContracts.Venues {
 			data.Coordinates = thisVersion.Coordinates;
 			data.Description = thisVersion.Description;
 			data.Id = thisVersion.Id;
-			data.RegionCode = thisVersion.RegionCode;
+			data.AddressCountryCode = thisVersion.AddressCountryCode;
 			data.TranslatedName = thisVersion.TranslatedName;
 
 			DoIfExists(version, VenueEditableFields.Names, xmlCache, v => data.Names = v.Names);

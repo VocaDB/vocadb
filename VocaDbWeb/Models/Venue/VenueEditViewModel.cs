@@ -32,7 +32,7 @@ namespace VocaDb.Web.Models.Venue {
 		[FromJson]
 		public LocalizedStringWithIdContract[] Names { get; set; }
 
-		public string RegionCode { get; set; }
+		public string AddressCountryCode { get; set; }
 
 		public EntryStatus Status { get; set; }
 
@@ -53,7 +53,7 @@ namespace VocaDb.Web.Models.Venue {
 			Id = contract.Id;
 			Name = contract.Name;
 			Names = contract.Names;
-			RegionCode = contract.RegionCode;
+			AddressCountryCode = contract.AddressCountryCode;
 			Status = contract.Status;
 			WebLinks = contract.WebLinks;
 
@@ -69,7 +69,7 @@ namespace VocaDb.Web.Models.Venue {
 			Id = Id,
 			Name = Name,
 			Names = Names,
-			RegionCode = RegionCode ?? string.Empty,
+			AddressCountryCode = AddressCountryCode ?? string.Empty,
 			Status = Status,
 			WebLinks = WebLinks
 		};

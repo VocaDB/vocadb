@@ -14,7 +14,7 @@
 			@ArchivedEntryHelpers.DataRowList("Names", comparedVenues, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
 			@ArchivedEntryHelpers.DataRow("Description", comparedVenues, d => d.Description)
 			@ArchivedEntryHelpers.DataRow("Coordinates", comparedVenues, d => ((d.Coordinates != null) && d.Coordinates.HasValue) ? d.Coordinates.Formatted : string.Empty)
-			@ArchivedEntryHelpers.DataRow("Country/Region", comparedVenues, d => !string.IsNullOrEmpty(d.RegionCode) ? new RegionInfo(d.RegionCode).DisplayName : string.Empty)
+			@ArchivedEntryHelpers.DataRow("Country/Region", comparedVenues, d => !string.IsNullOrEmpty(d.AddressCountryCode) ? new RegionInfo(d.AddressCountryCode).DisplayName : string.Empty)
 			@ArchivedEntryHelpers.DataRow("Address", comparedVenues, d => d.Address)
 			@ArchivedEntryHelpers.DataRowList("External links", comparedVenues, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
 		</table>

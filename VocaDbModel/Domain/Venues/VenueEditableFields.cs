@@ -9,15 +9,15 @@ namespace VocaDb.Model.Domain.Venues {
 
 		Address = 1,
 
-		Coordinates = 2,
+		AddressCountryCode = 2,
 
-		Description = 4,
+		Coordinates = 4,
 
-		Names = 8,
+		Description = 8,
 
-		OriginalName = 16,
+		Names = 16,
 
-		RegionCode = 32,
+		OriginalName = 32,
 
 		Status = 64,
 
