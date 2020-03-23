@@ -10,12 +10,12 @@ module vdb.viewModels.venues {
 			contract: dc.VenueForEditContract) {
 
 			this.address = ko.observable(contract.address);
+			this.addressCountryCode = ko.observable(contract.addressCountryCode);
 			this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
 			this.id = contract.id;
 			this.latitude = ko.observable(contract.coordinates?.latitude ?? null);
 			this.longitude = ko.observable(contract.coordinates?.longitude ?? null);
 			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
-			this.addressCountryCode = ko.observable(contract.addressCountryCode);
 			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
 			this.coordinates = ko.computed(() => {
@@ -41,6 +41,7 @@ module vdb.viewModels.venues {
 		}
 
 		public address: KnockoutObservable<string>;
+		public addressCountryCode: KnockoutObservable<string>;
 		
 		private checkName = (value: string) => {
 
@@ -78,7 +79,6 @@ module vdb.viewModels.venues {
 			window.location.href = this.urlMapper.mapRelative("Event");
 		}
 
-		public addressCountryCode: KnockoutObservable<string>;
 		public submitting = ko.observable(false);
         public webLinks: WebLinksEditViewModel;
 

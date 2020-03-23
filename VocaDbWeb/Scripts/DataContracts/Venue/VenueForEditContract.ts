@@ -5,6 +5,8 @@ module vdb.dataContracts {
 
 		address: string;
 
+		addressCountryCode: string;
+
 		coordinates: OptionalGeoPointContract;
 
 		defaultNameLanguage: string;
@@ -12,8 +14,6 @@ module vdb.dataContracts {
 		id: number;
 
 		names?: globalization.LocalizedStringWithIdContract[];
-
-		addressCountryCode: string;
 
 		webLinks: WebLinkContract[];
 

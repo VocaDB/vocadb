@@ -44,6 +44,8 @@ namespace VocaDb.Model.Domain.Venues {
 
 		public virtual string Address { get; set; } = string.Empty;
 
+		public virtual string AddressCountryCode { get; set; } = string.Empty;
+
 		public virtual ArchivedVersionManager<ArchivedVenueVersion, VenueEditableFields> ArchivedVersionsManager {
 			get => archivedVersions;
 			set {
@@ -86,8 +88,6 @@ namespace VocaDb.Model.Domain.Venues {
 				names = value;
 			}
 		}
-
-		public virtual string AddressCountryCode { get; set; } = string.Empty;
 
 		public virtual EntryStatus Status { get; set; } = EntryStatus.Draft;
 
