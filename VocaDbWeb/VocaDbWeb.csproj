@@ -2954,6 +2954,7 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\ReleaseEventAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\SongListAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\UserAutoComplete.ts" />
+    <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\VenueAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Bootstrap\Tooltip.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ConfirmClick.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Filters\Truncate.ts" />
