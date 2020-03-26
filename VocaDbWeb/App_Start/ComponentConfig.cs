@@ -102,6 +102,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<TagNHibernateRepository>().As<ITagRepository>();
 			builder.RegisterType<UserNHibernateRepository>().As<IUserRepository>();
 			builder.RegisterType<UserMessageNHibernateRepository>().As<IUserMessageRepository>();
+			builder.RegisterType<VenueNHibernateRepository>().As<IVenueRepository>();
 			builder.RegisterType<AlbumQueries>().AsSelf();
 			builder.RegisterType<ArtistQueries>().AsSelf();
 			builder.RegisterType<DiscussionQueries>().AsSelf();
@@ -114,6 +115,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<TagQueries>().AsSelf();
 			builder.RegisterType<UserQueries>().AsSelf();
 			builder.RegisterType<UserMessageQueries>().AsSelf();
+			builder.RegisterType<VenueQueries>().AsSelf();
 
 			// Enable DI for action filters
 			builder.Register(c => new RestrictBlockedIPAttribute(c.Resolve<IPRuleManager>()))

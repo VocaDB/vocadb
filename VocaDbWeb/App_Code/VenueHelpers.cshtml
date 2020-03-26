@@ -1,0 +1,24 @@
+﻿@using System.Globalization
+@using VocaDb.Model.DataContracts.Venues
+@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.HelperPage
+
+@helper PrintArchivedVenueData(ComparedVenueContract comparedVenues) {
+
+	<div class="well well-transparent archived-entry-contents">
+		<h4>Content</h4>
+
+		<table class="table table-bordered">
+			@ArchivedEntryHelpers.DataRow("Id", comparedVenues.FirstData.Id)
+			@ArchivedEntryHelpers.TranslatedNameRow(comparedVenues, d => d.TranslatedName)
+			@ArchivedEntryHelpers.DataRowList("Names", comparedVenues, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+			@ArchivedEntryHelpers.DataRow("Description", comparedVenues, d => d.Description)
+			@ArchivedEntryHelpers.DataRow("Coordinates", comparedVenues, d => ((d.Coordinates != null) && d.Coordinates.HasValue) ? d.Coordinates.Formatted : string.Empty)
+			@ArchivedEntryHelpers.DataRow("Country/Region", comparedVenues, d => !string.IsNullOrEmpty(d.AddressCountryCode) ? new RegionInfo(d.AddressCountryCode).DisplayName : string.Empty)
+			@ArchivedEntryHelpers.DataRow("Address", comparedVenues, d => d.Address)
+			@ArchivedEntryHelpers.DataRowList("External links", comparedVenues, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+		</table>
+
+	</div>
+
+}

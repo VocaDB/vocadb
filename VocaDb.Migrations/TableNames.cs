@@ -17,6 +17,7 @@ namespace VocaDb.Migrations {
 		public const string ArchivedSongVersions = "ArchivedSongVersions";
 		public const string ArchivedSongListVersions = "ArchivedSongListVersions";
 		public const string ArchivedTagVersions = "ArchivedTagVersions";
+		public const string ArchivedVenueVersions = "ArchivedVenueVersions";
 		public const string ArtistNames = nameof(ArtistNames);
 		public const string Artists = "Artists";
 		public const string ArtistTagUsages = "ArtistTagUsages";
@@ -49,6 +50,7 @@ namespace VocaDb.Migrations {
 		public const string UserOptions = "UserOptions";
 		public const string UserMessages = "UserMessages";
 		public const string Users = "Users";
+		public const string Venues = "Venues";
 
 	}
 

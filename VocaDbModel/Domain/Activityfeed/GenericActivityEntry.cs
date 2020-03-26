@@ -1,9 +1,10 @@
-﻿using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Activityfeed {
@@ -102,6 +103,15 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 		public TagActivityEntry(Tag tag, EntryEditEvent editEvent, User author, ArchivedTagVersion archivedVersion)
 			: base(tag, editEvent, author, archivedVersion) { }
+
+	}
+
+	public class VenueActivityEntry : GenericActivityEntry<Venue, ArchivedVenueVersion> {
+
+		public VenueActivityEntry() { }
+
+		public VenueActivityEntry(Venue venue, EntryEditEvent editEvent, User author, ArchivedVenueVersion archivedVersion)
+			: base(venue, editEvent, author, archivedVersion) { }
 
 	}
 

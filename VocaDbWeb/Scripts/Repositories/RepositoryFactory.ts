@@ -58,6 +58,10 @@ module vdb.repositories {
 			return new UserRepository(this.urlMapper, this.loggedUserId);
 		}
 
+		public venueRepository = () => {
+			return new VenueRepository(this.urlMapper);
+		}
+
 	}
 
 }

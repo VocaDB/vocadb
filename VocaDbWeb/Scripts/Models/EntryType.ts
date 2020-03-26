@@ -25,7 +25,9 @@ module vdb.models {
 
 		Tag					= 256,
 
-		User                = 512
+		User                = 512,
+
+		Venue               = 1024
 		
     }
 

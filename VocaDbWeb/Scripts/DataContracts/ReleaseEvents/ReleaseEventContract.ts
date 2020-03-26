@@ -1,4 +1,4 @@
-﻿
+
 namespace vdb.dataContracts {
 
 	// Matches ReleaseEventForApiContract
@@ -27,6 +27,8 @@ namespace vdb.dataContracts {
 		series?: EventSeriesContract;
 
 		songList?: SongListBaseContract;
+
+		venue?: VenueForApiContract;
 
 		webLinks: WebLinkContract[];
 

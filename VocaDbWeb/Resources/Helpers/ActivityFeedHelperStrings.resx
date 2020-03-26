@@ -141,6 +141,9 @@
   <data name="EntryTag" xml:space="preserve">
     <value>tag</value>
   </data>
+  <data name="EntryVenue" xml:space="preserve">
+    <value>venue</value>
+  </data>
   <data name="Someone" xml:space="preserve">
     <value>A contributor</value>
   </data>

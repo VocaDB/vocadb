@@ -269,6 +269,7 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/KnockoutExtensions/BindingHandlers/DatePicker.js",
 				"~/Scripts/KnockoutExtensions/ReleaseEventSeriesAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/BindingHandlers/SongListAutoComplete.js",
+				"~/Scripts/KnockoutExtensions/BindingHandlers/VenueAutoComplete.js",
 				"~/Scripts/KnockoutExtensions/FormatDateFilter.js",
 				"~/Scripts/KnockoutExtensions/FormatLengthSecondsFilter.js",
 				"~/Scripts/Repositories/PVRepository.js",
@@ -521,6 +522,20 @@ namespace VocaDb.Web.App_Start {
 				"~/Scripts/ViewModels/Song/PlayList/PlayListRepositoryForRatedSongsAdapter.js",
 				"~/Scripts/ViewModels/Song/SongWithPreviewViewModel.js",
 				"~/Scripts/ViewModels/User/RatedSongsSearchViewModel.js"
+			));
+			
+			bundles.Add(new ScriptBundle("~/bundles/Venue/Details").Include(
+				"~/Scripts/Repositories/VenueRepository.js",
+				"~/Scripts/ViewModels/Venue/VenueDetailsViewModel.js"
+			));
+
+			bundles.Add(new ScriptBundle("~/bundles/Venue/Edit").Include(
+				"~/Scripts/Helpers/KnockoutHelper.js",
+				"~/Scripts/Repositories/VenueRepository.js",
+				"~/Scripts/ViewModels/Globalization/LocalizedStringWithIdEditViewModel.js",
+				"~/Scripts/ViewModels/Globalization/NamesEditViewModel.js",
+				"~/Scripts/ViewModels/Venue/VenueEditViewModel.js",
+				"~/Scripts/Venue/Edit.js"
 			));
 
 

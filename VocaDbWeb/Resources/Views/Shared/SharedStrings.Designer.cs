@@ -392,5 +392,14 @@ namespace ViewRes {
                 return ResourceManager.GetString("Users", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Venues.
+        /// </summary>
+        public static string Venues {
+            get {
+                return ResourceManager.GetString("Venues", resourceCulture);
+            }
+        }
     }
 }
