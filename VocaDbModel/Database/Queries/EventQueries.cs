@@ -241,7 +241,7 @@ namespace VocaDb.Model.Database.Queries {
 			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imagePersister));
 		}
 		
-		public VenueForApiContract[] GetReleaseEventsByVenues() {
+		public VenueForApiContract[] GetReleaseEventsByVenue() {
 
 			return HandleQuery(session => {
 
