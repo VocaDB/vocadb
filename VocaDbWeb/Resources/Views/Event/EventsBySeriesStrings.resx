@@ -132,8 +132,8 @@
   <data name="ViewBySeries" xml:space="preserve">
     <value>All by series</value>
   </data>
-  <data name="ViewByVenues" xml:space="preserve">
-    <value>All by venues</value>
+  <data name="ViewByVenue" xml:space="preserve">
+    <value>All by venue</value>
   </data>
   <data name="ViewList" xml:space="preserve">
     <value>Upcoming</value>
