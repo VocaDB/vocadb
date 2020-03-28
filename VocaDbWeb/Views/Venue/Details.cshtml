@@ -7,7 +7,7 @@
 @{
 	
 	ViewBag.Parents = new[] {
-		Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenues", "Event")
+		Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenue", "Event")
 	};
 
 	var descriptionHtml = MarkdownParser.GetHtml(Model.Description);
