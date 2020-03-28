@@ -1,13 +1,22 @@
-
-module vdb.viewModels.venues {
+import DeleteEntryViewModel from "../DeleteEntryViewModel";
+import EntryType from "../../Models/EntryType";
+import EntryUrlMapper from "../../Shared/EntryUrlMapper";
+import NameMatchMode from "../../Models/NameMatchMode";
+import NamesEditViewModel from "../Globalization/NamesEditViewModel";
+import OptionalGeoPointContract from "../../DataContracts/OptionalGeoPointContract";
+import UrlMapper from "../../Shared/UrlMapper";
+import UserRepository from "../../Repositories/UserRepository";
+import VenueForEditContract from "../../DataContracts/Venue/VenueForEditContract";
+import VenueRepository from "../../Repositories/VenueRepository";
+import WebLinksEditViewModel from "../WebLinksEditViewModel";
 
 	export class VenueEditViewModel {
 
 		constructor(
-			private readonly repo: rep.VenueRepository,
-			userRepository: rep.UserRepository,
-			private readonly urlMapper: vdb.UrlMapper,
-			contract: dc.VenueForEditContract) {
+			private readonly repo: VenueRepository,
+			userRepository: UserRepository,
+			private readonly urlMapper: UrlMapper,
+			contract: VenueForEditContract) {
 
 			this.address = ko.observable(contract.address);
 			this.addressCountryCode = ko.observable(contract.addressCountryCode);
@@ -15,7 +24,7 @@ module vdb.viewModels.venues {
 			this.id = contract.id;
 			this.latitude = ko.observable(contract.coordinates?.latitude ?? null);
 			this.longitude = ko.observable(contract.coordinates?.longitude ?? null);
-			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
+			this.names = NamesEditViewModel.fromContracts(contract.names);
 			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
 			this.coordinates = ko.computed(() => {
@@ -31,7 +40,7 @@ module vdb.viewModels.venues {
 			});
 			
 			if (contract.id) {
-				window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Venue, contract.id), 10000);				
+				window.setInterval(() => userRepository.refreshEntryEdit(EntryType.Venue, contract.id), 10000);				
 			} else {
 				_.forEach([this.names.originalName, this.names.romajiName, this.names.englishName], name => {
 					ko.computed(() => name.value()).extend({ rateLimit: 500 }).subscribe(this.checkName);
@@ -50,13 +59,13 @@ module vdb.viewModels.venues {
 				return;				
 			}
 
-			this.repo.getList(value, vdb.models.NameMatchMode.Exact, 1, result => {				
+			this.repo.getList(value, NameMatchMode.Exact, 1, result => {				
 				this.duplicateName(result.items.length ? value : null);
 			});
 
 		}
 
-		public coordinates: KnockoutComputed<dc.OptionalGeoPointContract>;
+		public coordinates: KnockoutComputed<OptionalGeoPointContract>;
 		
 		public defaultNameLanguage: KnockoutObservable<string>;
 		
@@ -69,10 +78,10 @@ module vdb.viewModels.venues {
 		private id: number;
 		public latitude: KnockoutObservable<number>;
 		public longitude: KnockoutObservable<number>;
-		public names: globalization.NamesEditViewModel;
+		public names: NamesEditViewModel;
 		
 		private redirectToDetails = () => {
-			window.location.href = this.urlMapper.mapRelative(utils.EntryUrlMapper.details(models.EntryType.Venue, this.id));
+			window.location.href = this.urlMapper.mapRelative(EntryUrlMapper.details(EntryType.Venue, this.id));
 		}
 
 		private redirectToRoot = () => {
@@ -86,11 +95,9 @@ module vdb.viewModels.venues {
 			this.submitting(true);
 			return true;
 		}
-		
+
 		public trashViewModel = new DeleteEntryViewModel(notes => {
 			this.repo.delete(this.id, notes, true, this.redirectToRoot);
 		});
 
 	}
-
-}

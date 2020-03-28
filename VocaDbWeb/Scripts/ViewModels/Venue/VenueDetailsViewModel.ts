@@ -1,17 +1,19 @@
-
-namespace vdb.viewModels.venues {
+import { IEntryReportType } from "../ReportEntryViewModel";
+import ReportEntryViewModel from "../ReportEntryViewModel";
+import ui from '../../Shared/MessagesTyped';
+import VenueRepository from "../../Repositories/VenueRepository";
 
 	export class VenueDetailsViewModel {
 
 		constructor(
-			repo: rep.VenueRepository,
+			repo: VenueRepository,
 			reportTypes: IEntryReportType[],
 			public loggedUserId: number,
 			venueId: number) {
 
 			this.reportViewModel = new ReportEntryViewModel(reportTypes, (reportType, notes) => {
 				repo.createReport(venueId, reportType, notes, null);
-				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 			});
 
 		}
@@ -19,5 +21,3 @@ namespace vdb.viewModels.venues {
 		public reportViewModel: ReportEntryViewModel;
 
 	}
-
-}

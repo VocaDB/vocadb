@@ -12,6 +12,7 @@ import SongRepository from './SongRepository';
 import TagRepository from './TagRepository';
 import UrlMapper from '../Shared/UrlMapper';
 import UserRepository from './UserRepository';
+import VenueRepository from './VenueRepository';
 
 	export default class RepositoryFactory {
 		

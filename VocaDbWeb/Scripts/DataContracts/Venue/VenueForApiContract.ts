@@ -1,16 +1,14 @@
+import LocalizedStringWithIdContract from "../Globalization/LocalizedStringWithIdContract";
+import WebLinkContract from "../WebLinkContract";
 
-namespace vdb.dataContracts {
-
-	export interface VenueForApiContract {
+	export default interface VenueForApiContract {
 
 		id: number;
 
 		name: string;
 
-		names?: globalization.LocalizedStringWithIdContract[];
+		names?: LocalizedStringWithIdContract[];
 
 		webLinks: WebLinkContract[];
 
 	}
-
-}

@@ -17,6 +17,7 @@ import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
 import SongListBaseContract from '../../DataContracts/SongListBaseContract';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
+import VenueForApiContract from '../../DataContracts/Venue/VenueForApiContract';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
 	export default class ReleaseEventEditViewModel {
@@ -175,7 +176,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 			this.repo.delete(this.id, notes, true, this.redirectToRoot);
 		});
 
-		public venue: BasicEntryLinkViewModel<dc.VenueForApiContract>;
+		public venue: BasicEntryLinkViewModel<VenueForApiContract>;
 
         public webLinks: WebLinksEditViewModel;
 

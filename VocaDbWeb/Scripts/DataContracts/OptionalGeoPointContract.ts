@@ -1,7 +1,5 @@
 
-module vdb.dataContracts {
-
-	export interface OptionalGeoPointContract {
+	export default interface OptionalGeoPointContract {
 
 		formatted?: string;
 
@@ -10,5 +8,3 @@ module vdb.dataContracts {
 		longitude?: number;
 
 	}
-
-} 
