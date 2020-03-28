@@ -98,7 +98,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="reportType">Report type.</param>
 		/// <param name="notes">Notes. Optional.</param>
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
-		[Route("{venueId:int}/reports")]
+		[Route("{id:int}/reports")]
 		[RestrictBannedIP]
 		public void PostReport(int id, VenueReportType reportType, string notes, int? versionNumber) {
 
