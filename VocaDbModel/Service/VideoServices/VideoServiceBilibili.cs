@@ -98,6 +98,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public override IEnumerable<string> GetUserProfileUrls(string authorId) {
 			return new[] {
+				string.Format("https://space.bilibili.com/{0}", authorId),
 				string.Format("http://space.bilibili.com/{0}", authorId),
 				string.Format("http://space.bilibili.com/{0}/#!/index", authorId)
 			};
