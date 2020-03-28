@@ -3,7 +3,7 @@ import ReportEntryViewModel from "../ReportEntryViewModel";
 import ui from '../../Shared/MessagesTyped';
 import VenueRepository from "../../Repositories/VenueRepository";
 
-	export class VenueDetailsViewModel {
+	export default class VenueDetailsViewModel {
 
 		constructor(
 			repo: VenueRepository,

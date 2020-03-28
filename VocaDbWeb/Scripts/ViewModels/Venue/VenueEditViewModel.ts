@@ -10,7 +10,7 @@ import VenueForEditContract from "../../DataContracts/Venue/VenueForEditContract
 import VenueRepository from "../../Repositories/VenueRepository";
 import WebLinksEditViewModel from "../WebLinksEditViewModel";
 
-	export class VenueEditViewModel {
+	export default class VenueEditViewModel {
 
 		constructor(
 			private readonly repo: VenueRepository,
