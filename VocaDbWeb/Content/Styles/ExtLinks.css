@@ -29,12 +29,8 @@ a.extLink[href^="https://www5.atwiki.jp/hmiku/"],
 a.extLink[href^="https://w.atwiki.jp/hmiku/"] {
   background-image: url("/Content/ExtIcons/atwiki.png");
 }
-a.extLink[href^="http://space.bilibili.tv/"],
-a.extLink[href^="http://www.bilibili.tv/"],
-a.extLink[href^="http://space.bilibili.com/"],
-a.extLink[href^="https://space.bilibili.tv/"],
-a.extLink[href^="https://www.bilibili.tv/"],
-a.extLink[href^="https://space.bilibili.com/"] {
+a.extLink[href*="bilibili.tv/"],
+a.extLink[href*="bilibili.com/"]{
   background-image: url("/Content/ExtIcons/bilibili.png");
 }
 a.extLink[href*="booth.pm/"] {
