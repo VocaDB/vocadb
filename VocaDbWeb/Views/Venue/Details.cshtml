@@ -81,7 +81,7 @@
 @EntryDetailsHelpers.ReportEntryPopupKnockout()
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/Venue/Details")
+@LaravelMixHelper.RenderScripts("~/bundles/Venue/Details.js")
 <script type="text/javascript">
 	$(function () {
 
@@ -92,12 +92,12 @@
 		
 		var loggedUserId = @UserContext.LoggedUserId;
 		var rootPath = '@RootPath';
-		var urlMapper = new vdb.UrlMapper(rootPath);
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var urlMapper = new app.UrlMapper(rootPath);
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var venueRepo = repoFactory.venueRepository();
 		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.VenueReportTypeNames, VenueReport.ReportTypesWithRequiredNotes));
 
-		var vm = new vdb.viewModels.venues.VenueDetailsViewModel(venueRepo, reportTypes, loggedUserId, @Model.Id);
+		var vm = new app.VenueDetailsViewModel(venueRepo, reportTypes, loggedUserId, @Model.Id);
 		ko.applyBindings(vm);
 
 	});

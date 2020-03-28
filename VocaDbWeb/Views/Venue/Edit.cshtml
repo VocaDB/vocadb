@@ -153,13 +153,13 @@
 @EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/shared/edit", "~/bundles/Venue/Edit")
+@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Venue/Edit.js")
 <script type="text/javascript">
 
 	$(function () {
 		
-		var urlMapper = new vdb.UrlMapper('@RootPath');
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var urlMapper = new app.UrlMapper('@RootPath');
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var venueRepo = repoFactory.venueRepository();
 		var userRepo = repoFactory.userRepository();
 		var contract = @ToJS(new {
@@ -170,7 +170,7 @@
 			Model.WebLinks
 		});
 
-		var vm = new vdb.viewModels.venues.VenueEditViewModel(venueRepo, userRepo, urlMapper, contract);
+		var vm = new app.VenueEditViewModel(venueRepo, userRepo, urlMapper, contract);
 		ko.applyBindings(vm);
 
 		initPage();
