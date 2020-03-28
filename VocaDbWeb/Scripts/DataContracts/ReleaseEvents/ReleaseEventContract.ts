@@ -33,6 +33,8 @@ import WebLinkContract from '../WebLinkContract';
 
 		songList?: SongListBaseContract;
 
+		venue?: VenueForApiContract;
+
 		webLinks: WebLinkContract[];
 
 	}

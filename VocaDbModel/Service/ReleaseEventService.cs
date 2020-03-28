@@ -1,11 +1,11 @@
-﻿using System.Linq;
+using System.Linq;
 using NHibernate;
-using NHibernate.Linq;
-using VocaDb.Model.Domain.Security;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.DataContracts.Venues;
+using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.ReleaseEvents;
-using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service {
@@ -26,9 +26,10 @@ namespace VocaDb.Model.Service {
 					new ReleaseEventSeriesWithEventsContract(s, allEvents.Where(e => s.Equals(e.Series)), PermissionContext.LanguagePreference));
 				var ungrouped = allEvents.Where(e => e.Series == null).OrderBy(e => e.TranslatedName[LanguagePreference]);
 
-				return seriesContracts.Concat(new[] { new ReleaseEventSeriesWithEventsContract { 
+				return seriesContracts.Append(new ReleaseEventSeriesWithEventsContract { 
 					Name = string.Empty, 
-					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray() } }).ToArray();
+					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray()
+				}).ToArray();
 
 			});
 
@@ -59,6 +60,12 @@ namespace VocaDb.Model.Service {
 		public ReleaseEventSeriesForEditContract GetReleaseEventSeriesForEdit(int id) {
 
 			return HandleQuery(session => new ReleaseEventSeriesForEditContract(session.Load<ReleaseEventSeries>(id), LanguagePreference));
+
+		}
+
+		public VenueForEditContract GetVenueForEdit(int id) {
+
+			return HandleQuery(session => new VenueForEditContract(session.Load<Venue>(id), LanguagePreference));
 
 		}
 

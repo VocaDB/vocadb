@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.Helpers {
@@ -6,6 +6,7 @@ namespace VocaDb.Model.Helpers {
 	public static class CultureHelper {
 
 		public static CultureInfo Default => CultureInfo.InvariantCulture;
+		public static CultureInfo EnUS => CultureConstants.EnUS;
 
 		/// <summary>
 		/// Gets the culture with the specific name, or the application default culture (English basically).

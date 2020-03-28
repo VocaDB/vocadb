@@ -1,0 +1,13 @@
+﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Venue.Versions>
+
+@{
+	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Entry.Name;
+	ViewBag.Parents = new[] { 
+		Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenues", "Event"), 
+		Html.ActionLink(Model.Entry.Name, "Details", new { id = Model.Entry.Id }) 
+	};
+}
+
+@ArchivedEntryHelpers.CurrentVersionMessage(Model.Entry.Version, Model.Entry.Status)
+
+@ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions, id => Url.Action("ViewVersion", new { id }))

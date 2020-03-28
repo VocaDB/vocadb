@@ -41,6 +41,9 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 				case EntryType.Tag:
 					prefix = functions.mapAbsoluteUrl("/T/" + id);
 					break;
+				case cls.EntryType.Venue:
+					prefix = vdb.functions.mapAbsoluteUrl("/Venue/Details/" + id);
+					break;
 				default:
 					prefix = functions.mapAbsoluteUrl("/" + typeName + "/Details/" + id);
 					break;

@@ -12,6 +12,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Service {
@@ -85,6 +86,14 @@ namespace VocaDb.Model.Service {
 		protected void AddEntryEditedEntry(IDatabaseContext<ActivityEntry> ctx, Tag entry, EntryEditEvent editEvent, ArchivedTagVersion archivedVersion) {
 
 			new Queries.ActivityEntryQueries(ctx, PermissionContext).AddEntryEditedEntry(entry, editEvent, archivedVersion);
+
+		}
+		
+		protected void AddEntryEditedEntry(IDatabaseContext<ActivityEntry> ctx, Venue entry, EntryEditEvent editEvent, ArchivedVenueVersion archivedVersion) {
+
+			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
+			var activityEntry = new VenueActivityEntry(entry, editEvent, user, archivedVersion);
+			AddActivityfeedEntry(ctx, activityEntry);
 
 		}
 

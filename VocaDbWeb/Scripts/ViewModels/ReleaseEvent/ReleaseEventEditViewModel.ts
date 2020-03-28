@@ -55,6 +55,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 			});
 
 			this.songList = new BasicEntryLinkViewModel(contract.songList, null);
+			this.venue = new BasicEntryLinkViewModel(contract.venue, null);
 			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
 			this.artistLinkContracts = ko.computed(() => ko.toJS(this.artistLinks()));
@@ -173,6 +174,8 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		public trashViewModel = new DeleteEntryViewModel(notes => {
 			this.repo.delete(this.id, notes, true, this.redirectToRoot);
 		});
+
+		public venue: BasicEntryLinkViewModel<dc.VenueForApiContract>;
 
         public webLinks: WebLinksEditViewModel;
 

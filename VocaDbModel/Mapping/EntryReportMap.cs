@@ -6,6 +6,7 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.Mapping {
 
@@ -113,4 +114,19 @@ namespace VocaDb.Model.Mapping {
 		}
 
 	}
+
+	public class VenueReportMap : SubclassMap<VenueReport> {
+
+		public VenueReportMap() {
+
+			DiscriminatorValue("Venue");
+
+			Map(m => m.ReportType).Not.Nullable();
+
+			References(m => m.Entry).Column("Venue").Not.Nullable();
+
+		}
+
+	}
+
 }

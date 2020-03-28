@@ -20,7 +20,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.SeriesNumber).Not.Nullable();
 			Map(m => m.SeriesSuffix).Length(50).Not.Nullable();
 			Map(m => m.Status).Not.Nullable();
-			Map(m => m.VenueName).Column("Venue").Length(1000).Nullable();
+			Map(m => m.VenueName).Column("VenueName").Length(1000).Nullable();
 			Map(m => m.Version).Not.Nullable();
 
 			HasMany(m => m.AllAlbums).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
@@ -32,6 +32,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 
 			References(m => m.Series).Nullable();
 			References(m => m.SongList).Nullable();
+			References(m => m.Venue).Column("[Venue]").Nullable();
 
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Event]").Inverse().Cascade.All().OrderBy("Created DESC"));

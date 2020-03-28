@@ -1,0 +1,105 @@
+﻿@using System.Globalization;
+@using System.Web.Optimization;
+@using VocaDb.Model.Domain.Venues;
+@using VocaDb.Web.Helpers;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Venues.VenueForApiContract>
+
+@{
+	
+	ViewBag.Parents = new[] {
+		Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenues", "Event")
+	};
+
+	var descriptionHtml = MarkdownParser.GetHtml(Model.Description);
+	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);
+
+	PageProperties.Description = descriptionStripped;
+
+}
+
+@section Toolbar {
+	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editVenueLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
+	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	@if (Login.CanManageDb) {
+		<a href="@Url.Action("Edit", "Event", new { venueId = Model.Id != 0 ? (int?)Model.Id : null }, null)" id="createEventLink">@ViewRes.Event.EventsBySeriesStrings.CreateEvent</a>
+	}
+	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
+	@Helpers.EntryStatusMessage(Model.Status)
+}
+
+@if (Model.Deleted) {
+	@EntryDetailsHelpers.DeletedBanner(null)
+}
+
+@if (Model.Coordinates.HasValue) {
+	@Helpers.EmbedGoogleMaps(Model.Coordinates)
+}
+
+<div class="media">
+	<div class="media-body">
+		@if (!string.IsNullOrEmpty(Model.Description)) {
+			<p>@Html.Raw(descriptionHtml)</p>
+		}
+	</div>
+	
+	@if (Model.WebLinks.Any()) {
+		@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
+		<br />
+	}
+	
+	@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
+		<p>
+			@ViewRes.Venue.DetailsStrings.Aliases: @Model.AdditionalNames
+		</p>		
+	}
+
+	@if (!string.IsNullOrEmpty(Model.AddressCountryCode)) {
+		<p>
+			@ViewRes.Venue.DetailsStrings.Country: @(new RegionInfo(Model.AddressCountryCode).DisplayName)
+		</p>
+	}
+
+	@if (!string.IsNullOrEmpty(Model.Address)) { 
+		<p>
+			@ViewRes.Venue.DetailsStrings.Address: @Model.Address
+		</p>
+	}
+</div>
+
+<h3>@ViewRes.SharedStrings.ReleaseEvents</h3>
+<ul>
+	@foreach (var ev in Model.Events) {
+		<li>
+			@Html.ActionLink(ev.Name, "Details", "Event", new { id = ev.Id }, null)
+			@if (ev.Date != null) {
+				<small>(@ev.Date.Value.ToString("d"))</small>
+			}
+		</li>
+	}
+</ul>
+
+@EntryDetailsHelpers.ReportEntryPopupKnockout()
+
+@section BodyScripts {
+@Scripts.Render("~/bundles/Venue/Details")
+<script type="text/javascript">
+	$(function () {
+
+		$("#editVenueLink").button({ disabled: $("#editVenueLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });
+		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
+		$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
+		$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert' } });
+		
+		var loggedUserId = @UserContext.LoggedUserId;
+		var rootPath = '@RootPath';
+		var urlMapper = new vdb.UrlMapper(rootPath);
+		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var venueRepo = repoFactory.venueRepository();
+		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.VenueReportTypeNames, VenueReport.ReportTypesWithRequiredNotes));
+
+		var vm = new vdb.viewModels.venues.VenueDetailsViewModel(venueRepo, reportTypes, loggedUserId, @Model.Id);
+		ko.applyBindings(vm);
+
+	});
+</script>
+}

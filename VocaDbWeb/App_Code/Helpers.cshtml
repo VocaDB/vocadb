@@ -1,4 +1,4 @@
-@inherits VocaDb.Web.Code.HelperPage
+﻿@inherits VocaDb.Web.Code.HelperPage
 @using System.Web.Mvc.Html;
 @using System.Web.Routing
 @using VocaDb.Model
@@ -49,6 +49,12 @@
 
 @helper EntryLink(EntryBaseContract entry) {
 	@Html.ActionLink(entry.DefaultName, "Details", entry.EntryType.ToString(), new { id = entry.Id }, null)	
+}
+
+@helper EmbedGoogleMaps(OptionalGeoPointContract coordinates) {
+	<div>
+		<iframe src="https://maps.google.com/maps?q=@(coordinates.Latitude.Value.ToString(CultureHelper.EnUS)),@(coordinates.Longitude.Value.ToString(CultureHelper.EnUS))&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" width="600" height="450"></iframe>
+	</div>
 }
 
 @helper EmbedPVThumb(VocaDb.Model.DataContracts.PVs.PVContract pv, int width = 340, int height = 200) {	

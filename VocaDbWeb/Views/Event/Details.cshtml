@@ -161,6 +161,19 @@
 	}
 }
 
+@if (Model.Venue != null) {
+	<h3 class="withMargin">@Res.Venue: <a href="@Url.Action("Details", "Venue", new { id = Model.Venue.Id }, null)" title="@Model.Venue.AdditionalNames">@Model.Venue.Name</a></h3>
+
+	if (Model.Venue.Coordinates.HasValue) {
+		@Helpers.EmbedGoogleMaps(Model.Venue.Coordinates)
+	}
+
+	if (!string.IsNullOrEmpty(Model.Venue.Description)) {
+		@HtmlHelpers.FormatMarkdown(Model.Venue.Description);
+	}
+	@EntryDetailsHelpers.ExternalLinksList(Model.Venue.WebLinks, false)
+}
+
 @if (Model.Albums.Any()) {
 	<h3 class="withMargin">
 		@Res.Albums

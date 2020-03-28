@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.PVs;
@@ -37,6 +37,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			data.SeriesNumber = thisVersion.SeriesNumber;
 			data.SongList = thisVersion.SongList;
 			data.TranslatedName = thisVersion.TranslatedName;
+			data.Venue = thisVersion.Venue;
 			data.VenueName = thisVersion.VenueName;
 
 			DoIfExists(version, ReleaseEventEditableFields.Artists, xmlCache, v => data.Artists = v.Artists);
@@ -67,6 +68,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			SeriesNumber = ev.SeriesNumber;
 			SongList = ObjectRefContract.Create(ev.SongList);
 			TranslatedName = new ArchivedTranslatedStringContract(ev.TranslatedName);
+			Venue = ObjectRefContract.Create(ev.Venue);
 			VenueName = ev.VenueName;
 			WebLinks = diff.IncludeWebLinks ? ev.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 
@@ -110,6 +112,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		[DataMember]
 		public ArchivedTranslatedStringContract TranslatedName { get; set; }
+
+		[DataMember]
+		public ObjectRefContract Venue { get; set; }
 
 		[DataMember]
 		public string VenueName { get; set; }

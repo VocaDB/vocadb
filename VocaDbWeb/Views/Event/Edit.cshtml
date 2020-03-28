@@ -179,10 +179,20 @@
 			</div>
 	
 			<div class="editor-label">
-				@Helpers.HelpLabel("Venue", "Can be either a physical location such as concert hall, or a virtual location (website).")
+				Venue
 			</div>
 			<div class="editor-field">
-				@Html.TextBoxFor(m => m.Venue, new { size = 40, @class = "span3", maxlength = 1000 })<br />
+				@KnockoutHelpers.LockingAutoComplete("venueAutoComplete", "venue.entry", "venue.name")
+				@Html.HiddenForKnockout(m => m.Venue, "value: ko.toJSON(venue)")
+			</div>
+
+			<div data-bind="visible: !venue.entry()">
+				<div class="editor-label">
+					@Helpers.HelpLabel("Venue name", "Can be either a physical location such as concert hall, or a virtual location (website).")
+				</div>
+				<div class="editor-field">
+					@Html.TextBoxFor(m => m.VenueName, new { size = 40, @class = "span3", maxlength = 1000 })<br />
+				</div>
 			</div>
 	
 			<div class="editor-label">
@@ -340,7 +350,9 @@
 			Model.Names,
 			pvs = Model.PVs,
 			Model.Series,
-			Model.SongList, Model.WebLinks
+			Model.SongList,
+			Model.WebLinks,
+			Model.Venue
 		});
 
 		var vm = new app.ReleaseEventEditViewModel(eventRepo, userRepo, pvRepo, artistRepo, urlMapper, artistRoleJson, contract);
