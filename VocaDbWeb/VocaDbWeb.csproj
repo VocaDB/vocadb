@@ -3387,7 +3387,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\User\UserMessagesViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\WebLinksEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Venue\VenueEditViewModel.ts" />
-    <Content Include="Scripts\Venue\Edit.js" />
+    <TypeScriptCompile Include="Scripts\Venue\Edit.ts" />
     <Content Include="Scripts\VocaDb.js" />
     <Content Include="Services\QueryService.svc" />
     <Content Include="sitemap.xml">

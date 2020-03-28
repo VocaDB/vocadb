@@ -176,7 +176,7 @@
 	</div>
 	<div class="editor-field" data-bind="with: webLinks">
 		@KnockoutHelpers.WebLinksEditViewKnockout(false)
-		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(webLinks)")
+		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(items)")
 	</div>
 
 	<div class="editor-label">
