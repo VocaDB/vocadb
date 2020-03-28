@@ -3646,7 +3646,7 @@
     <Content Include="Views\Venue\Edit.cshtml" />
     <Content Include="Views\Venue\Versions.cshtml" />
     <Content Include="Views\Venue\ViewVersion.cshtml" />
-    <Content Include="Views\Event\EventsByVenues.cshtml" />
+    <Content Include="Views\Event\EventsByVenue.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -221,9 +221,9 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult EventsByVenues() {
+		public ActionResult EventsByVenue() {
 
-			var events = queries.GetReleaseEventsByVenues();
+			var events = queries.GetReleaseEventsByVenue();
 			return View(events);
 
 		}
