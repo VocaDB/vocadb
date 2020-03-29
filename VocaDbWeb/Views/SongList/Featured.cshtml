@@ -22,14 +22,14 @@
 
 <ul class="nav nav-pills">
 	@foreach (var cat in categories) {
-		<li data-bind="css: { active: view() == '@cat.Id' }">
-			<a href="@("#" + cat.Id)" data-bind="click: function() { setView('@cat.Id'); }">@cat.Name</a>
+		<li data-bind="css: { active: category() == '@cat.Id' }">
+			<a href="@("#" + cat.Id)" data-bind="click: function() { setCategory('@cat.Id'); }">@cat.Name</a>
 		</li>
 	}
 </ul>
 
 @foreach (var cat in categories) {
-<div data-bind="visible: view() == '@cat.Id', with: categories['@cat.Id'], show" class="js-cloak">
+<div data-bind="visible: category() == '@cat.Id', with: categories['@cat.Id'], show" class="js-cloak">
 		
 	@{ Html.RenderPartial("Partials/_SongListsFilters"); }
 
@@ -67,7 +67,7 @@
 		ko.applyBindings(viewModel);
 
 		if (window.location.hash && window.location.hash.length >= 1) {
-			viewModel.setView(window.location.hash.substr(1));
+			viewModel.setCategory(window.location.hash.substr(1));
 		}
 
 	});

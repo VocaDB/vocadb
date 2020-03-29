@@ -20,23 +20,23 @@ module vdb.viewModels.songList {
 
 			window.onhashchange = () => {
 				if (window.location.hash && window.location.hash.length >= 1)
-					this.setView(window.location.hash.substr(1));
+					this.setCategory(window.location.hash.substr(1));
 			};
 
 		}
 
 		public categories: { [index: string]: FeaturedSongListCategoryViewModel; } = {};
 
-		public view = ko.observable("Concerts");
+		public category = ko.observable("Concerts");
 
-		public setView = (viewName: string) => {
+		public setCategory = (categoryName: string) => {
 
-			if (!viewName)
-				viewName = "Concerts";
+			if (!categoryName)
+				categoryName = "Concerts";
 
 			window.scrollTo(0, 0);
-			window.location.hash = viewName;
-			this.view(viewName);
+			window.location.hash = categoryName;
+			this.category(categoryName);
 
 		}
 
