@@ -5,6 +5,15 @@ namespace VocaDb.Migrations {
 
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2020_03_30_2300)]
+	public class UserNormalizedEmail : AutoReversingMigration {
+
+		public override void Up() {
+			Create.Column("NormalizedEmail").OnTable(TableNames.Users).AsString(50).NotNullable().WithDefaultValue(string.Empty);
+		}
+
+	}
+
 	[Migration(2020_03_22_0000)]
 	public class VenuesAddressCountryCode : AutoReversingMigration {
 
