@@ -662,6 +662,7 @@ namespace VocaDb.Model.Domain.Users {
 
 			if (!string.Equals(Email, newEmail, StringComparison.InvariantCultureIgnoreCase)) {
 				Email = newEmail;
+				NormalizedEmail = !string.IsNullOrEmpty(newEmail) ? MailAddressNormalizer.Normalize(newEmail) : string.Empty;
 				Options.EmailVerified = false;				
 			}
 

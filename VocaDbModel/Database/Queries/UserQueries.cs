@@ -713,7 +713,8 @@ namespace VocaDb.Model.Database.Queries {
 
 					ValidateEmail(email);
 
-					existing = await ctx.Query().Where(u => u.Active && u.Email == email).VdbFirstOrDefaultAsync();
+					var normalizedEmail = await MailAddressNormalizer.NormalizeAsync(email);
+					existing = await ctx.Query().Where(u => u.Active && u.NormalizedEmail == normalizedEmail).VdbFirstOrDefaultAsync();
 
 					if (existing != null)
 						throw new UserEmailAlreadyExistsException();
@@ -810,7 +811,8 @@ namespace VocaDb.Model.Database.Queries {
 
 					ValidateEmail(email);
 
-					existing = ctx.Query().FirstOrDefault(u => u.Active && u.Email == email);
+					var normalizedEmail = MailAddressNormalizer.Normalize(email);
+					existing = ctx.Query().FirstOrDefault(u => u.Active && u.NormalizedEmail == normalizedEmail);
 
 					if (existing != null)
 						throw new UserEmailAlreadyExistsException();
@@ -1573,6 +1575,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				user.Active = contract.Active;
 				user.Email = contract.Email;
+				user.NormalizedEmail = !string.IsNullOrEmpty(contract.Email) ? MailAddressNormalizer.Normalize(contract.Email) : string.Empty;
 				user.Options.Poisoned = contract.Poisoned;
 				user.Options.Supporter = contract.Supporter;
 
@@ -1773,7 +1776,8 @@ namespace VocaDb.Model.Database.Queries {
 
 					ValidateEmail(email);
 
-					var existing = ctx.Query().FirstOrDefault(u => u.Active && u.Id != user.Id && u.Email == email);
+					var normalizedEmail = MailAddressNormalizer.Normalize(email);
+					var existing = ctx.Query().FirstOrDefault(u => u.Active && u.Id != user.Id && u.NormalizedEmail == normalizedEmail);
 
 					if (existing != null)
 						throw new UserEmailAlreadyExistsException();
