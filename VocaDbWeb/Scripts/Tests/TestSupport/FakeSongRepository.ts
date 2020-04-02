@@ -1,12 +1,7 @@
-/// <reference path="../../DataContracts/NewSongCheckResultContract.ts" />
-/// <reference path="../../Repositories/SongRepository.ts" />
-
 import NewSongCheckResultContract from '../../DataContracts/NewSongCheckResultContract';
 import SongApiContract from '../../DataContracts/Song/SongApiContract';
 import SongListBaseContract from '../../DataContracts/SongListBaseContract';
 import SongRepository from '../../Repositories/SongRepository';
-
-//module vdb.tests.testSupport {
 
 	export interface SongInList {
 		listId: number;
@@ -63,5 +58,3 @@ import SongRepository from '../../Repositories/SongRepository';
         }
 
     }
-
-//}

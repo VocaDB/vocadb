@@ -1,4 +1,3 @@
-
 import UrlMapper from '../Shared/UrlMapper';
 import UserRepository from '../Repositories/UserRepository';
 
@@ -7,7 +6,7 @@ $(() => {
 	$("#globalSearchTerm").autocomplete({
 		source: (request, response: (items: string[]) => void) => {
 
-			var urlMapper = new UrlMapper(vdb.values.hostAddress);
+			var urlMapper = new UrlMapper(vdb.values.baseAddress);
 			var term: string = request.term;
 			var entryType = $("#globalSearchObjectType").val();
 			var endpoint: string = null;

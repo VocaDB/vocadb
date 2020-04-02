@@ -1,4 +1,3 @@
-
 import ArtistForAlbumContract from '../ArtistForAlbumContract';
 import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
@@ -8,8 +7,6 @@ import ReleaseEventContract from '../ReleaseEvents/ReleaseEventContract';
 import SongContract from './SongContract';
 import WebLinkContract from '../WebLinkContract';
 
-//module vdb.dataContracts.songs {
-	
 	export default interface SongForEditContract {
 
 		albumEventId?: number;
@@ -54,5 +51,3 @@ import WebLinkContract from '../WebLinkContract';
 		webLinks: WebLinkContract[];
 
 	}
-
-//}

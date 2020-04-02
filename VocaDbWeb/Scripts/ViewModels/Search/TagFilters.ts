@@ -1,10 +1,7 @@
-
 import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 import TagFilter from './TagFilter';
 import TagRepository from '../../Repositories/TagRepository';
 
-//module vdb.viewModels.search {
-	
 	// Manages tag filters for search
 	export default class TagFilters {
 
@@ -64,5 +61,3 @@ import TagRepository from '../../Repositories/TagRepository';
 		public tagIds: KnockoutComputed<number[]>;
 
 	}
-
-//}

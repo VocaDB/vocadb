@@ -1,4 +1,3 @@
-
 import AdminRepository from './AdminRepository';
 import AlbumRepository from './AlbumRepository';
 import ArtistRepository from './ArtistRepository';
@@ -13,8 +12,7 @@ import SongRepository from './SongRepository';
 import TagRepository from './TagRepository';
 import UrlMapper from '../Shared/UrlMapper';
 import UserRepository from './UserRepository';
-
-//module vdb.repositories {
+import VenueRepository from './VenueRepository';
 
 	export default class RepositoryFactory {
 		
@@ -71,6 +69,8 @@ import UserRepository from './UserRepository';
 			return new UserRepository(this.urlMapper, this.loggedUserId);
 		}
 
-	}
+		public venueRepository = () => {
+			return new VenueRepository(this.urlMapper);
+		}
 
-//}
+	}

@@ -1,8 +1,5 @@
-
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
 
-//module vdb.viewModels {
-	
 	// Generic viewmodel that supports simple paging by loading more items
 	export default class PagedItemsViewModel<TModel> {
 		
@@ -47,5 +44,3 @@ import PartialFindResultContract from '../DataContracts/PartialFindResultContrac
 		public start = 0;
 
 	}
-
-//} 

@@ -1,4 +1,3 @@
-
 import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
 import ArtistEventRoles from '../../Models/Events/ArtistEventRoles';
 import ArtistForEventContract from '../../DataContracts/ReleaseEvents/ArtistForEventContract';
@@ -18,9 +17,8 @@ import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
 import SongListBaseContract from '../../DataContracts/SongListBaseContract';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
+import VenueForApiContract from '../../DataContracts/Venue/VenueForApiContract';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
-
-//module vdb.viewModels.releaseEvents {
 
 	export default class ReleaseEventEditViewModel {
 
@@ -58,6 +56,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 			});
 
 			this.songList = new BasicEntryLinkViewModel(contract.songList, null);
+			this.venue = new BasicEntryLinkViewModel(contract.venue, null);
 			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
 			this.artistLinkContracts = ko.computed(() => ko.toJS(this.artistLinks()));
@@ -177,6 +176,8 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 			this.repo.delete(this.id, notes, true, this.redirectToRoot);
 		});
 
+		public venue: BasicEntryLinkViewModel<VenueForApiContract>;
+
         public webLinks: WebLinksEditViewModel;
 
 	}
@@ -188,5 +189,3 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		}
 
 	}
-
-//}

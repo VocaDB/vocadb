@@ -1,9 +1,4 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../Shared/UrlMapper.ts" />
-
 import UrlMapper from '../Shared/UrlMapper';
-
-//module vdb.repositories {
 
     export default class EntryReportRepository {
 
@@ -15,5 +10,3 @@ import UrlMapper from '../Shared/UrlMapper';
         constructor(private urlMapper: UrlMapper) {}
 
     }
-
-//}

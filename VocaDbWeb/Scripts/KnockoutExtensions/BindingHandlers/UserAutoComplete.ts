@@ -1,4 +1,3 @@
-
 import { EntryAutoCompleteParams } from '../../Shared/EntryAutoComplete';
 import functions from '../../Shared/GlobalFunctions';
 import { initEntrySearch } from '../../Shared/EntryAutoComplete';
@@ -9,8 +8,6 @@ declare global {
 		userAutocomplete: KnockoutBindingHandler;
 	}
 }
-
-//module vdb.knockoutExtensions.bindingHandlers {
 
 	export function userAutocomplete(element: HTMLElement, valueAccessor: () => any) {
 
@@ -28,8 +25,6 @@ declare global {
 		initEntrySearch(element, functions.mapAbsoluteUrl("/api/users"), params);
 
 	}
-
-//}
 
 ko.bindingHandlers.userAutocomplete = {
 	init: userAutocomplete

@@ -1,8 +1,5 @@
-
 import IEntryWithIdAndName from '../Models/IEntryWithIdAndName';
 
-//module vdb.viewModels {
-	
 	// Basic link to an entry with ID and name.
 	// Allows changing the link by setting the ID.
 	// Works well with LockingAutoComplete.
@@ -47,5 +44,3 @@ import IEntryWithIdAndName from '../Models/IEntryWithIdAndName';
 		public subscribe = (callback: (newValue: number) => void) => this.id.subscribe(callback);
 
 	}
-
-//}

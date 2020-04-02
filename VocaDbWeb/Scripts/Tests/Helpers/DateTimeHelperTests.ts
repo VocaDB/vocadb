@@ -1,7 +1,4 @@
-
 import DateTimeHelper from '../../Helpers/DateTimeHelper';
-
-//module vdb.tests.helpers {
 
 	QUnit.module("DateTimeHelper");
 
@@ -41,5 +38,3 @@ import DateTimeHelper from '../../Helpers/DateTimeHelper';
 		QUnit.equal(result, null, "result");
 
 	});
-
-//}

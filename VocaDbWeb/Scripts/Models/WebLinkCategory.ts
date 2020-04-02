@@ -1,6 +1,4 @@
 
-//module vdb.models {
-
     enum WebLinkCategory {
         Official,
         Commercial,
@@ -20,5 +18,3 @@
         }
 
     }
-
-//}

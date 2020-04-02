@@ -1,7 +1,4 @@
-
 import AdvancedSearchFilter from './AdvancedSearchFilter';
-
-//namespace vdb.viewModels.search {
 
 	export default class AdvancedSearchFilters {
 
@@ -17,5 +14,3 @@ import AdvancedSearchFilter from './AdvancedSearchFilter';
 		}
 
 	}
-
-//}

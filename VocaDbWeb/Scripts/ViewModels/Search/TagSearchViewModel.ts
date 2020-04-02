@@ -1,11 +1,8 @@
-
 import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
 import TagApiContract from '../../DataContracts/Tag/TagApiContract';
 import TagRepository from '../../Repositories/TagRepository';
-
-//module vdb.viewModels.search {
 
 	export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagApiContract> {
 
@@ -35,5 +32,3 @@ import TagRepository from '../../Repositories/TagRepository';
 		public sort = ko.observable("Name");
 
 	}
-
-//}

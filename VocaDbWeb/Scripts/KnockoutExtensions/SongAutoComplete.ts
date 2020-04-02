@@ -1,8 +1,3 @@
-/// <reference path="../typings/knockout/knockout.d.ts" />
-/// <reference path="../Shared/GlobalFunctions.ts" />
-/// <reference path="../Shared/EntryAutoComplete.ts" />
-/// <reference path="AutoCompleteParams.ts" />
-
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import functions from '../Shared/GlobalFunctions';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
@@ -18,8 +13,6 @@ declare global {
 		songAutoComplete: KnockoutBindingHandler;
 	}
 }
-
-//module vdb.knockoutExtensions {
 
 	export function songAutoComplete(element: HTMLElement, valueAccessor) {
 		
@@ -66,8 +59,6 @@ declare global {
 			});
 
 	}
-
-//}
 
 ko.bindingHandlers.songAutoComplete = {
 	init: songAutoComplete

@@ -1,10 +1,5 @@
-/// <reference path="../SongListBaseContract.ts" />
-/// <reference path="../User/UserBaseContract.ts" />
-
 import SongListBaseContract from '../SongListBaseContract';
 import UserBaseContract from '../User/UserBaseContract';
-
-//module vdb.dataContracts {
 
     export default interface SongListContract extends SongListBaseContract {
         
@@ -19,5 +14,3 @@ import UserBaseContract from '../User/UserBaseContract';
 		status: string;
 
     }
-
-//}

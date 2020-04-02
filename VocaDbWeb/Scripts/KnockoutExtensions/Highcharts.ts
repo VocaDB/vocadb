@@ -1,12 +1,9 @@
-/// <reference path="../typings/highcharts/highcharts.d.ts" />
 
 declare global {
 	interface KnockoutBindingHandlers {
 		highcharts: KnockoutBindingHandler;
 	}
 }
-
-//module vdb.knockoutExtensions.highcharts {
 
 	export function setHighcharts(element: HTMLElement, result: HighchartsOptions) {
 	
@@ -17,8 +14,6 @@ declare global {
 			$(element).hide();
 			
 	}
-
-//}
 
 ko.bindingHandlers.highcharts = {
 	update: (element: HTMLElement, valueAccessor) => {

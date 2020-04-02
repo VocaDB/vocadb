@@ -1,8 +1,3 @@
-/// <reference path="../../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../TestSupport/FakeSongRepository.ts" />
-/// <reference path="../../TestSupport/FakeUserRepository.ts" />
-/// <reference path="../../../ViewModels/Song/SongDetailsViewModel.ts" />
-
 import ContentLanguagePreference from '../../../Models/Globalization/ContentLanguagePreference';
 import FakeSongRepository from '../../TestSupport/FakeSongRepository';
 import FakeUserRepository from '../../TestSupport/FakeUserRepository';
@@ -11,8 +6,6 @@ import { SongDetailsResources } from '../../../ViewModels/Song/SongDetailsViewMo
 import SongDetailsViewModel from '../../../ViewModels/Song/SongDetailsViewModel';
 import { SongListsViewModel } from '../../../ViewModels/Song/SongDetailsViewModel';
 import SongVoteRating from '../../../Models/SongVoteRating';
-
-//module vdb.tests.viewModels {
 
     var rep: FakeSongRepository;
     var userRep = new FakeUserRepository();
@@ -160,5 +153,3 @@ import SongVoteRating from '../../../Models/SongVoteRating';
 		equal(result.id, "3939", "id");
 
 	});
-
-//}

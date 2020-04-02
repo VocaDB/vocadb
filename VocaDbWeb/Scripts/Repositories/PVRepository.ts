@@ -1,8 +1,5 @@
-
 import PVContract from '../DataContracts/PVs/PVContract';
 import UrlMapper from '../Shared/UrlMapper';
-
-//module vdb.repositories {
 
 	export default class PVRepository {
 		
@@ -16,5 +13,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		}
 
 	}
-
-//}

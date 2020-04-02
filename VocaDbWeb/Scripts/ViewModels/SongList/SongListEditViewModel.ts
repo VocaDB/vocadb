@@ -1,4 +1,3 @@
-
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
 import EntryType from '../../Models/EntryType';
 import EntryUrlMapper from '../../Shared/EntryUrlMapper';
@@ -9,8 +8,6 @@ import SongInListEditContract from '../../DataContracts/Song/SongInListEditContr
 import SongListRepository from '../../Repositories/SongListRepository';
 import SongRepository from '../../Repositories/SongRepository';
 import UrlMapper from '../../Shared/UrlMapper';
-
-//module vdb.viewModels.songList {
 
 	export class SongInListEditViewModel {
 		
@@ -149,6 +146,3 @@ import UrlMapper from '../../Shared/UrlMapper';
 		public updateNotes = ko.observable("");
 
 	};
-
-
-//}

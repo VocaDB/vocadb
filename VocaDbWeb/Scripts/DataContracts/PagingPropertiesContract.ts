@@ -1,6 +1,4 @@
 
-//module vdb.dataContracts {
-	
 	export default interface PagingProperties {
 
 		getTotalCount?: boolean;
@@ -10,5 +8,3 @@
 		start?: number;
 
 	}
-
-//}

@@ -1,7 +1,3 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../Shared/GlobalFunctions.ts" />
-/// <reference path="../DataContracts/DuplicateEntryResultContract.ts" />
-
 import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
 import ArtistApiContract from '../DataContracts/Artist/ArtistApiContract';
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
@@ -16,8 +12,6 @@ import ICommentRepository from './ICommentRepository';
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
 import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
 import UrlMapper from '../Shared/UrlMapper';
-
-//module vdb.repositories {
 
     // Repository for managing artists and related objects.
     // Corresponds to the ArtistController class.
@@ -139,5 +133,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		artistTypes: string;
 
 	}
-
-//}

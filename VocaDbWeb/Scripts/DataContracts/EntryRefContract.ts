@@ -1,4 +1,3 @@
-//module vdb.dataContracts {
 
     // Matches .NET class EntryRefContract.
     export default interface EntryRefContract {
@@ -8,5 +7,3 @@
         id: number;
 
     }
-
-//}

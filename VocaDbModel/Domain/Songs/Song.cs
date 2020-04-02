@@ -121,6 +121,8 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		public virtual bool AllowNotifications => true;
+
 		/// <summary>
 		/// List of alternate (derived) song versions. Does not include deleted songs.
 		/// </summary>

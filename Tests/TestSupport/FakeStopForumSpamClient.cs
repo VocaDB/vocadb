@@ -1,5 +1,5 @@
-﻿using VocaDb.Model.Service.Security.StopForumSpam;
-using VocaDb.Web.Code.Security;
+using System.Threading.Tasks;
+using VocaDb.Model.Service.Security.StopForumSpam;
 
 namespace VocaDb.Tests.TestSupport {
 
@@ -11,11 +11,13 @@ namespace VocaDb.Tests.TestSupport {
 
 		public SFSResponseContract Response { get; set; }
 
-		public SFSResponseContract CallApi(string ip) {
+		private SFSResponseContract CallApi(string ip) {
 			if (Response != null)
 				Response.IP = ip;
 			return Response;
 		}
+
+		public Task<SFSResponseContract> CallApiAsync(string ip) => Task.FromResult(CallApi(ip));
 
 	}
 

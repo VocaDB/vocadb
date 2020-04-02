@@ -1,8 +1,4 @@
-/// <reference path="EntryRefContract.ts" />
-
 import EntryRefContract from './EntryRefContract';
-
-//module vdb.dataContracts {
 
     export default interface DuplicateEntryResultContract {
 
@@ -34,5 +30,3 @@ import EntryRefContract from './EntryRefContract';
         entryTypeName: string;
 
     }
-
-//}

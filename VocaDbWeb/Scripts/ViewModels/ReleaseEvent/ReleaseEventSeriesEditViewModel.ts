@@ -1,4 +1,3 @@
-
 import DeleteEntryViewModel from '../DeleteEntryViewModel';
 import EntryType from '../../Models/EntryType';
 import EntryUrlMapper from '../../Shared/EntryUrlMapper';
@@ -10,8 +9,6 @@ import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 import WebLinkContract from '../../DataContracts/WebLinkContract';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
-
-//module vdb.viewModels.releaseEvents {
 
 	export default class ReleaseEventSeriesEditViewModel {
 
@@ -80,5 +77,3 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		}
 
 	}
-
-//}

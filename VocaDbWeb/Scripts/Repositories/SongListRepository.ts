@@ -1,4 +1,3 @@
-
 import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import EntryCommentRepository from './EntryCommentRepository';
@@ -9,8 +8,6 @@ import SongListContract from '../DataContracts/Song/SongListContract';
 import SongListForEditContract from '../DataContracts/Song/SongListForEditContract';
 import { SongOptionalFields } from '../Models/EntryOptionalFields';
 import UrlMapper from '../Shared/UrlMapper';
-
-//module vdb.repositories {
 
 	export default class SongListRepository {
 
@@ -87,5 +84,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		};
 
 	}
-
-//}

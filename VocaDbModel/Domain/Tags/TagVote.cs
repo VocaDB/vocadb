@@ -5,7 +5,7 @@ namespace VocaDb.Model.Domain.Tags {
 	/// <summary>
 	/// User's vote for a particular tag for a particular entry.
 	/// </summary>
-	public abstract class TagVote {
+	public abstract class TagVote : IEntryWithLongId {
 
 		private User user;
 

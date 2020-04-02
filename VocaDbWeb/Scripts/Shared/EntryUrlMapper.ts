@@ -1,14 +1,9 @@
-/// <reference path="../DataContracts/EntryRefContract.ts" />
-/// <reference path="GlobalFunctions.ts" />
-
 import EntryRefContract from '../DataContracts/EntryRefContract';
 import EntryType from '../Models/EntryType';
 import functions from './GlobalFunctions';
 import SongApiContract from '../DataContracts/Song/SongApiContract';
 import TagApiContract from '../DataContracts/Tag/TagApiContract';
 import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
-
-//module vdb.utils {
 
     // Maps view URLs for common entry types.
     export default class EntryUrlMapper {
@@ -45,6 +40,9 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 					break;
 				case EntryType.Tag:
 					prefix = functions.mapAbsoluteUrl("/T/" + id);
+					break;
+				case EntryType.Venue:
+					prefix = functions.mapAbsoluteUrl("/Venue/Details/" + id);
 					break;
 				default:
 					prefix = functions.mapAbsoluteUrl("/" + typeName + "/Details/" + id);
@@ -85,5 +83,3 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 			return functions.mapAbsoluteUrl("/Profile/" + name);
 		}
     }
-
-//}

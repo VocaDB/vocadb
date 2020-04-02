@@ -1,8 +1,5 @@
-
 import functions from '../Shared/GlobalFunctions';
 import ResourcesContract from '../DataContracts/ResourcesContract';
-
-//module vdb.repositories {
 
 	export default class ResourceRepository {
 		
@@ -16,5 +13,3 @@ import ResourcesContract from '../DataContracts/ResourcesContract';
 		}
 
 	}
-
-//} 

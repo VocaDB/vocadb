@@ -1,4 +1,3 @@
-
 import CommentContract from '../../DataContracts/CommentContract';
 import CommentRepository from '../../Repositories/CommentRepository';
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
@@ -14,8 +13,6 @@ import UrlMapper from '../../Shared/UrlMapper';
 import UserBaseContract from '../../DataContracts/User/UserBaseContract';
 import UserEventRelationshipType from '../../Models/Users/UserEventRelationshipType';
 import UserRepository from '../../Repositories/UserRepository';
-
-//namespace vdb.viewModels.releaseEvents {
 
 	export default class ReleaseEventDetailsViewModel {
 
@@ -94,5 +91,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		public usersAttending: KnockoutObservableArray<UserBaseContract>;
 
 	}
-
-//}

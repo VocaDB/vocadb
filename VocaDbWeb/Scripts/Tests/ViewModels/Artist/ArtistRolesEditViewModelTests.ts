@@ -1,9 +1,6 @@
-
 import { AlbumArtistRolesEditViewModel } from '../../../ViewModels/Artist/ArtistRolesEditViewModel';
 import { IEditableArtistWithSupport } from '../../../ViewModels/ArtistForAlbumEditViewModel';
 
-//module vdb.tests.viewModels.artists {
-	
 	var roleNames: { [key: string]: string; } = { 'Arranger': 'Arranger', 'Composer': 'Composer', 'VoiceManipulator': 'Voice manipulator' };
 	var viewModel: AlbumArtistRolesEditViewModel;
 	var artist: IEditableArtistWithSupport = { rolesArray: ko.observableArray<string>(['Arranger']) };
@@ -39,5 +36,3 @@ import { IEditableArtistWithSupport } from '../../../ViewModels/ArtistForAlbumEd
 		QUnit.equal(arrangerRole.selected(), true, "arrangerRole.selected");
 
 	});
-
-//} 

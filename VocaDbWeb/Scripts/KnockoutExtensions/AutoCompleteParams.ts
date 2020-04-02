@@ -1,12 +1,9 @@
-
 import AlbumContract from '../DataContracts/Album/AlbumContract';
 import { AlbumQueryParams } from '../Repositories/AlbumRepository';
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import { ArtistQueryParams } from '../Repositories/ArtistRepository';
 import SongContract from '../DataContracts/Song/SongContract';
 import { SongQueryParams } from '../Repositories/SongRepository';
-
-//module vdb.knockoutExtensions {
 
     export interface AutoCompleteParams {
 
@@ -41,6 +38,3 @@ import { SongQueryParams } from '../Repositories/SongRepository';
 	export interface ArtistAutoCompleteParams extends AutoCompleteParamsGeneric<ArtistContract, ArtistQueryParams> { }
 
 	export interface SongAutoCompleteParams extends AutoCompleteParamsGeneric<SongContract, SongQueryParams> { }
-
-//}
-

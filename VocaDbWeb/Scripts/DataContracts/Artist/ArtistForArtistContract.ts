@@ -1,8 +1,5 @@
-
 import ArtistContract from './ArtistContract';
 
-//module vdb.dataContracts.artists {
-	
 	export default interface ArtistForArtistContract {
 
 		parent: ArtistContract;
@@ -13,5 +10,3 @@ import ArtistContract from './ArtistContract';
 		linkType?: string;
 
 	}
-
-//}

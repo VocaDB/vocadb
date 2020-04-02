@@ -98,7 +98,7 @@ namespace VocaDb.Web.Controllers
 		}
 
         [Authorize]
-        public ActionResult Edit(int? id, int? seriesId)
+        public ActionResult Edit(int? id, int? seriesId, int? venueId)
         {
 
 			if (id != null) {
@@ -106,7 +106,10 @@ namespace VocaDb.Web.Controllers
 			}
 
 			var model = (id != null ? new EventEdit(queries.GetEventForEdit(id.Value), PermissionContext) 
-				: new EventEdit(seriesId != null ? Service.GetReleaseEventSeriesForEdit(seriesId.Value) : null, PermissionContext));
+				: new EventEdit(
+					seriesId.HasValue ? Service.GetReleaseEventSeriesForEdit(seriesId.Value) : null,
+					venueId.HasValue ? service.GetVenueForEdit(venueId.Value) : null,
+					PermissionContext));
 
 			return View(model);
 
@@ -214,6 +217,13 @@ namespace VocaDb.Web.Controllers
 		public ActionResult EventsBySeries() {
 
 			var events = Service.GetReleaseEventsBySeries();
+			return View(events);
+
+		}
+
+		public ActionResult EventsByVenue() {
+
+			var events = queries.GetReleaseEventsByVenue();
 			return View(events);
 
 		}

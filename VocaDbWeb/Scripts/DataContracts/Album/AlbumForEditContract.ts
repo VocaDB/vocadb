@@ -1,4 +1,3 @@
-
 import AlbumDiscPropertiesContract from './AlbumDiscPropertiesContract';
 import AlbumReleaseContract from './AlbumReleaseContract';
 import ArtistForAlbumContract from '../ArtistForAlbumContract';
@@ -9,8 +8,6 @@ import PVContract from '../PVs/PVContract';
 import SongInAlbumEditContract from '../Song/SongInAlbumEditContract';
 import WebLinkContract from '../WebLinkContract';
 
-//module vdb.dataContracts.albums {
-	
 	export default interface AlbumForEditContract {
 
 		artistLinks: ArtistForAlbumContract[];
@@ -46,5 +43,3 @@ import WebLinkContract from '../WebLinkContract';
 		webLinks: WebLinkContract[];
 
 	}
-
-//}

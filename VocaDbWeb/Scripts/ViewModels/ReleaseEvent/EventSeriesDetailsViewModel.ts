@@ -1,11 +1,8 @@
-
 import EntryType from '../../Models/EntryType';
 import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
 import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 import UserRepository from '../../Repositories/UserRepository';
-
-//namespace vdb.viewModels.releaseEvents {
 
 	export default class EventSeriesDetailsViewModel {
 
@@ -29,5 +26,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		public tagUsages: TagListViewModel;
 
 	}
-
-//}

@@ -1,8 +1,3 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../typings/knockout/knockout.d.ts" />
-/// <reference path="../Shared/GlobalFunctions.ts" />
-/// <reference path="../DataContracts/EntryRefContract.ts" />
-
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import EntryRefContract from '../DataContracts/EntryRefContract';
 import functions from '../Shared/GlobalFunctions';
@@ -18,8 +13,6 @@ declare global {
 		userToolTip: KnockoutBindingHandler;
 	}
 }
-
-//module vdb.knockoutExtensions {
 
 	export function initToolTip(element: HTMLElement, relativeUrl: string, id: number, params?: any, foreignDomain?: string) {
 
@@ -52,8 +45,6 @@ declare global {
 		toolTipDomain?: string;
 		version?: number;
 	}
-
-//}
 
 ko.bindingHandlers.entryToolTip = {
 	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<EntryRefContract>) => {

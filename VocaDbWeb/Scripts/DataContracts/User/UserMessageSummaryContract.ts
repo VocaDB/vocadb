@@ -1,7 +1,4 @@
-
 import UserApiContract from './UserApiContract';
-
-//module vdb.dataContracts {
 
     export default interface UserMessageSummaryContract {
 
@@ -28,5 +25,3 @@ import UserApiContract from './UserApiContract';
         subject: string;
 
     }
-
-//}

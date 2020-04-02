@@ -1,4 +1,3 @@
-
 import AlbumType from "../../Models/Albums/AlbumType";
 import ArtistType from "../../Models/Artists/ArtistType";
 import BasicEntryLinkViewModel from "../BasicEntryLinkViewModel";
@@ -14,8 +13,6 @@ import SongType from "../../Models/Songs/SongType";
 import TagBaseContract from "../../DataContracts/Tag/TagBaseContract";
 import TagRepository from "../../Repositories/TagRepository";
 import ui from '../../Shared/MessagesTyped';
-
-//namespace vdb.viewModels.admin {
 
 	export default class ManageEntryTagMappingsViewModel {
 
@@ -48,7 +45,7 @@ import ui from '../../Shared/MessagesTyped';
 		}
 
 		public getTagUrl = (tag: EditTagMappingViewModel) => {
-			return functions.mapFullUrl(EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
+			return functions.mapAbsoluteUrl(EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
 		}
 
 		private loadMappings = async () => {
@@ -108,5 +105,3 @@ import ui from '../../Shared/MessagesTyped';
 		public deleteMapping = () => this.isDeleted(true);
 
 	}
-
-//}

@@ -115,6 +115,8 @@ namespace VocaDb.Model.Domain.Albums {
 			}
 		}
 
+		public virtual bool AllowNotifications => true;
+
 		public virtual ArchivedVersionManager<ArchivedAlbumVersion, AlbumEditableFields> ArchivedVersionsManager {
 			get { return archivedVersions; }
 			set {

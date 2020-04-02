@@ -1,5 +1,3 @@
-/// <reference path="../typings/knockout/knockout.d.ts" />
-
 import DeleteEntryViewModel from './DeleteEntryViewModel';
 import EnglishTranslatedStringEditViewModel from './Globalization/EnglishTranslatedStringEditViewModel';
 import EntryType from '../Models/EntryType';
@@ -10,8 +8,6 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 import UrlMapper from '../Shared/UrlMapper';
 import UserRepository from '../Repositories/UserRepository';
 import WebLinksEditViewModel from './WebLinksEditViewModel';
-
-//namespace vdb.viewModels.tags {
 
 	export default class TagEditViewModel {
 
@@ -116,5 +112,3 @@ import WebLinksEditViewModel from './WebLinksEditViewModel';
 			});
 		});
 	}
-
-//}

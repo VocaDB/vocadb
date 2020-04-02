@@ -1,8 +1,5 @@
-
 import CountPerDayContract from '../DataContracts/Aggregate/CountPerDayContract';
 
-//module vdb.helpers {
-	
 	export interface Tuple2<T1, T2> {
 		item1: T1;
 		item2: T2;
@@ -107,5 +104,3 @@ import CountPerDayContract from '../DataContracts/Aggregate/CountPerDayContract'
 		}
 
 	}
-
-//}

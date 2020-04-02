@@ -1,6 +1,4 @@
 
-//module vdb.dataContracts.albums {
-	
 	export default interface AlbumDiscPropertiesContract {
 
 		discNumber: number;
@@ -12,5 +10,3 @@
 		name: string;
 		
 	}
-
-//}

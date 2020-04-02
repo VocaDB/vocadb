@@ -1,4 +1,3 @@
-
 import { AlbumAutoCompleteParams } from './AutoCompleteParams';
 import AlbumContract from '../DataContracts/Album/AlbumContract';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
@@ -12,8 +11,6 @@ declare global {
 	}
 }
 
-//module vdb.knockoutExtensions {
-	
 	export function albumAutoComplete(element: HTMLElement, valueAccessor) {
 
 		var properties: AlbumAutoCompleteParams = ko.utils.unwrapObservable(valueAccessor());
@@ -57,8 +54,6 @@ declare global {
 
 
 	}
-
-//}
 
 ko.bindingHandlers.albumAutoComplete = {
 	init: albumAutoComplete

@@ -1,9 +1,6 @@
-
 import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import ArtistRepository from '../../Repositories/ArtistRepository';
-
-//module vdb.viewModels {
 
     export default class RequestVerificationViewModel {
     
@@ -31,5 +28,3 @@ import ArtistRepository from '../../Repositories/ArtistRepository';
         };
       
     }
-
-//}

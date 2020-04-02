@@ -1,7 +1,4 @@
-
 import PVService from '../Models/PVs/PVService';
-
-//module vdb.helpers {
 
 	export default class PVHelper {
 		
@@ -18,5 +15,3 @@ import PVService from '../Models/PVs/PVService';
 		}
 
 	}
-
-//}

@@ -1,7 +1,3 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/WebLinkCategory.ts" />
-/// <reference path="../../ViewModels/Song/SongEditViewModel.ts" />
-
 import ArtistForAlbumEditViewModel from '../../ViewModels/ArtistForAlbumEditViewModel';
 import ArtistHelper from '../../Helpers/ArtistHelper';
 import ArtistRoles from '../../Models/Artists/ArtistRoles';
@@ -13,8 +9,6 @@ import SongEditViewModel from '../../ViewModels/Song/SongEditViewModel';
 import SongForEditContract from '../../DataContracts/Song/SongForEditContract';
 import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
 import UrlMapper from '../../Shared/UrlMapper';
-
-//module vdb.tests.viewModels {
 
 	var categories: TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
 	var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
@@ -153,5 +147,3 @@ import UrlMapper from '../../Shared/UrlMapper';
 		equal(target.validationError_duplicateArtist(), true, "validationError_duplicateArtist");
 
 	});
-
-//}

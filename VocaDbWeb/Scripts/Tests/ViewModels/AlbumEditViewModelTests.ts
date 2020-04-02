@@ -1,9 +1,3 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/WebLinkCategory.ts" />
-/// <reference path="../TestSupport/FakeAlbumRepository.ts" />
-/// <reference path="../TestSupport/FakeSongRepository.ts" />
-/// <reference path="../../ViewModels/Album/AlbumEditViewModel.ts" />
-
 import AlbumForEditContract from '../../DataContracts/Album/AlbumForEditContract';
 import AlbumEditViewModel from '../../ViewModels/Album/AlbumEditViewModel';
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
@@ -17,8 +11,6 @@ import SongInAlbumEditViewModel from '../../ViewModels/SongInAlbumEditViewModel'
 import { TrackPropertiesViewModel } from '../../ViewModels/Album/AlbumEditViewModel';
 import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
 import UrlMapper from '../../Shared/UrlMapper';
-
-//module vdb.tests.viewModels {
 
     var rep = new FakeAlbumRepository();
 	var songRep: FakeSongRepository;
@@ -439,5 +431,3 @@ import UrlMapper from '../../Shared/UrlMapper';
         equal(vocalistSelection.visible(), false, "vocalistSelection.visible");
 
     });
-
-//}

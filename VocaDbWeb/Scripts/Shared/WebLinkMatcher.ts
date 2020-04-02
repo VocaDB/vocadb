@@ -1,7 +1,4 @@
-
 import WebLinkCategory from '../Models/WebLinkCategory';
-
-//module vdb.utils {
 
     export default class WebLinkMatcher {
         
@@ -135,5 +132,3 @@ import WebLinkCategory from '../Models/WebLinkCategory';
         constructor(public url: string, public desc: string, public cat: WebLinkCategory) {}
     
     }
-
-//}

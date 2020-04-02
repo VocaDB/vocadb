@@ -1,4 +1,3 @@
-
 import EntryUrlMapper from '../../Shared/EntryUrlMapper';
 import ImportedSongInListContract from '../../DataContracts/SongList/ImportedSongInListContract';
 import ImportedSongListContract from '../../DataContracts/SongList/ImportedSongListContract';
@@ -6,8 +5,6 @@ import PartialImportedSongs from '../../DataContracts/SongList/PartialImportedSo
 import SongListForEditContract from '../../DataContracts/Song/SongListForEditContract';
 import UrlMapper from '../../Shared/UrlMapper';
 
-//module vdb.viewModels.songList {
-	
 	export default class ImportSongListViewModel {
 		
 		constructor(private urlMapper: UrlMapper) {}
@@ -101,5 +98,3 @@ import UrlMapper from '../../Shared/UrlMapper';
 		public wvrNumber = ko.observable(0);
 
 	}
-
-//} 

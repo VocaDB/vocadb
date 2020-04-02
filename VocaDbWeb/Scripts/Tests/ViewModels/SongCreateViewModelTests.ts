@@ -1,16 +1,8 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/WebLinkCategory.ts" />
-/// <reference path="../../ViewModels/SongCreateViewModel.ts" />
-/// <reference path="../TestSupport/FakeSongRepository.ts" />
-/// <reference path="../TestSupport/FakeArtistRepository.ts" />
-
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
 import FakeSongRepository from '../TestSupport/FakeSongRepository';
 import SongCreateViewModel from '../../ViewModels/SongCreateViewModel';
 import TagRepository from '../../Repositories/TagRepository';
-
-//module vdb.tests.viewModels {
 
     var repository = new FakeSongRepository();
 	var artistRepository = new FakeArtistRepository();
@@ -81,5 +73,3 @@ import TagRepository from '../../Repositories/TagRepository';
         equal(target.nameOriginal(), "Overridden title", "nameOriginal");
 
     });
-
-//}

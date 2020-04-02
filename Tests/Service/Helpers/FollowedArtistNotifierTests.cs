@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -36,7 +37,7 @@ namespace VocaDb.Tests.Service.Helpers {
 
 		}
 
-		private T Save<T>(T entry) {
+		private T Save<T>(T entry) where T : class, IDatabaseObject {
 			return repository.Save(entry);
 		}
 

@@ -1,10 +1,7 @@
-
 import ArtistApiContract from '../DataContracts/Artist/ArtistApiContract';
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import ArtistRepository from '../Repositories/ArtistRepository';
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
-
-//namespace vdb.viewModels {
 
 	export default class SelfDescriptionViewModel {
 
@@ -59,5 +56,3 @@ import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
 		public text: KnockoutObservable<string>;
 
 	}
-
-//}

@@ -5,8 +5,6 @@ declare global {
 	}
 }
 
-//module vdb.knockoutExtensions.song {
-
 	interface SongTypeLabelInfo {
 		addClass: string;
 		removeClasses: string;
@@ -83,8 +81,6 @@ declare global {
 		}
 
 	}
-
-//}
 
 ko.bindingHandlers.songTypeLabel = {
 	init: songTypeLabel

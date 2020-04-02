@@ -1,6 +1,4 @@
 
-//module vdb.viewModels {
-	
 	export default class ReportEntryViewModel {
 		
 		constructor(
@@ -46,5 +44,3 @@
 		notesRequired: boolean;
 
 	}
-
-//} 

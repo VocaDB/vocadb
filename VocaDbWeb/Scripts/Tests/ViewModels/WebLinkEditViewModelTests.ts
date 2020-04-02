@@ -1,10 +1,4 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/WebLinkCategory.ts" />
-/// <reference path="../../ViewModels/WebLinkEditViewModel.ts" />
-
 import WebLinkEditViewModel from '../../ViewModels/WebLinkEditViewModel';
-
-//module vdb.tests.viewModels {
 
     var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
 
@@ -30,5 +24,3 @@ import WebLinkEditViewModel from '../../ViewModels/WebLinkEditViewModel';
         equal(target.description(), "NND MyList", "description");
 
     });
-
-//}

@@ -1,7 +1,4 @@
-
 import AjaxHelper from '../../Helpers/AjaxHelper';
-
-//module vdb.tests.helpers {
 
 	QUnit.module("AjaxHelper");
 
@@ -17,5 +14,3 @@ import AjaxHelper from '../../Helpers/AjaxHelper';
 	QUnit.test("multiple params", () => {
 		testCreateUrl({ vocaloid: ["miku"], song: ["Nebula"] }, "vocaloid=miku&song=Nebula");
 	});
-
-//}

@@ -187,6 +187,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Venue name.
+        /// </summary>
+        internal static string VenueName {
+            get {
+                return ResourceManager.GetString("VenueName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to External links.
         /// </summary>
         internal static string WebLinks {

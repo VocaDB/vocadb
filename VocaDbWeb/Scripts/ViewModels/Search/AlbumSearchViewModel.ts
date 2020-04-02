@@ -1,4 +1,3 @@
-
 import AlbumContract from '../../DataContracts/Album/AlbumContract';
 import AlbumRepository from '../../Repositories/AlbumRepository';
 import ArtistFilters from './ArtistFilters';
@@ -7,8 +6,6 @@ import ResourceRepository from '../../Repositories/ResourceRepository';
 import ResourcesManager from '../../Models/ResourcesManager';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
-
-//module vdb.viewModels.search {
 
 	export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<AlbumContract> {
 
@@ -90,5 +87,3 @@ import SearchViewModel from './SearchViewModel';
 		};
 
 	}
-
-//}

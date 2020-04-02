@@ -1,4 +1,3 @@
-
 import AlbumRepository from '../../Repositories/AlbumRepository';
 import AlbumSearchViewModel from './AlbumSearchViewModel';
 import AnythingSearchViewModel from './AnythingSearchViewModel';
@@ -22,8 +21,6 @@ import TagRepository from '../../Repositories/TagRepository';
 import TagSearchViewModel from './TagSearchViewModel';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
-
-//module vdb.viewModels.search {
 
 	export default class SearchViewModel {
 
@@ -224,5 +221,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		public static Song = "Song";
 		public static Tag = "Tag";
 	}
-
-//}

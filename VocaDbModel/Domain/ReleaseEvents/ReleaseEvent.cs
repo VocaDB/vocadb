@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -17,6 +17,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 
@@ -113,6 +114,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 				songs = value;
 			}
 		}
+
+		public virtual bool AllowNotifications => true;
 
 		public virtual ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> ArchivedVersionsManager {
 			get => archivedVersions;
@@ -230,6 +233,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 				users = value;
 			}
 		}
+
+		public virtual Venue Venue { get; set; }
 
 		public virtual string VenueName { get; set; }
 
@@ -359,6 +364,17 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Series?.AllEvents.Remove(this);
 			newSeries?.AllEvents.Add(this);
 			Series = newSeries;
+
+		}
+
+		public virtual void SetVenue(Venue newVenue) {
+
+			if (Equals(Venue, newVenue))
+				return;
+
+			Venue?.AllEvents.Remove(this);
+			newVenue?.AllEvents.Add(this);
+			Venue = newVenue;
 
 		}
 

@@ -1,13 +1,6 @@
-/// <reference path="../typings/knockout/knockout.d.ts" />
-/// <reference path="../DataContracts/WebLinkContract.ts" />
-/// <reference path="../Models/WebLinkCategory.ts" />
-/// <reference path="../Shared/WebLinkMatcher.ts" />
-
 import WebLinkCategory from '../Models/WebLinkCategory';
 import WebLinkContract from '../DataContracts/WebLinkContract';
 import WebLinkMatcher from '../Shared/WebLinkMatcher';
-
-//module vdb.viewModels {
 
     export default class WebLinkEditViewModel {
         
@@ -55,5 +48,3 @@ import WebLinkMatcher from '../Shared/WebLinkMatcher';
         }
     
     }
-
-//}

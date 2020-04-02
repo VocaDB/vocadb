@@ -1,4 +1,3 @@
-
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import EntryUrlMapper from '../../Shared/EntryUrlMapper';
 import functions from '../../Shared/GlobalFunctions';
@@ -7,8 +6,6 @@ import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 import TagMappingContract from '../../DataContracts/Tag/TagMappingContract';
 import TagRepository from '../../Repositories/TagRepository';
 import ui from '../../Shared/MessagesTyped';
-
-//namespace vdb.viewModels.admin {
 
 	export default class ManageTagMappingsViewModel {
 
@@ -48,7 +45,7 @@ import ui from '../../Shared/MessagesTyped';
 		}
 
 		public getTagUrl = (tag: EditTagMappingViewModel) => {
-			return functions.mapFullUrl(EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
+			return functions.mapAbsoluteUrl(EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
 		}
 
 		private loadMappings = async () => {
@@ -109,5 +106,3 @@ import ui from '../../Shared/MessagesTyped';
 		public deleteMapping = () => this.isDeleted(true);
 
 	}
-
-//}

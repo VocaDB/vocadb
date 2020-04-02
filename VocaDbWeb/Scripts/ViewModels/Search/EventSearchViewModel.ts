@@ -1,4 +1,3 @@
-
 import ArtistFilters from './ArtistFilters';
 import ArtistRepository from '../../Repositories/ArtistRepository';
 import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
@@ -6,8 +5,6 @@ import ReleaseEventContract from '../../DataContracts/ReleaseEvents/ReleaseEvent
 import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
-
-//namespace vdb.viewModels.search {
 
 	export default class EventSearchViewModel extends SearchCategoryBaseViewModel<ReleaseEventContract> {
 
@@ -84,5 +81,3 @@ import SearchViewModel from './SearchViewModel';
 		}
 
 	}
-
-//}

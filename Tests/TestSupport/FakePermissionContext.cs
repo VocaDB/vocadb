@@ -1,5 +1,6 @@
-﻿using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
@@ -56,7 +57,7 @@ namespace VocaDb.Tests.TestSupport {
 		/// </summary>
 		/// <typeparam name="T">Repository type.</typeparam>
 		/// <param name="repository">Repository. Cannot be null.</param>
-		public void RefreshLoggedUser<T>(IRepository<T> repository) {
+		public void RefreshLoggedUser<T>(IRepository<T> repository) where T : class, IDatabaseObject {
 			LoggedUser = repository.HandleQuery(ctx => new UserWithPermissionsContract(ctx.OfType<User>().Load(LoggedUserId), ContentLanguagePreference.Default));
 		}
 

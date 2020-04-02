@@ -1,4 +1,3 @@
-
 import EntryUrlMapper from '../../Shared/EntryUrlMapper';
 import ObservableUrlParamRouter from '../../Shared/Routing/ObservableUrlParamRouter';
 import PVServiceIcons from '../../Models/PVServiceIcons'
@@ -10,8 +9,6 @@ import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels.songs {
-	
 	export default class RankingsViewModel {
 		
 		constructor(private urlMapper: UrlMapper, private songRepo: SongRepository,
@@ -82,5 +79,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		public vocalistSelection = ko.observable<string>(null);
 
 	}
-
-//}

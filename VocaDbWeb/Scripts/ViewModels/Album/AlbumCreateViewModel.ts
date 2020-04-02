@@ -1,12 +1,8 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-
 import AlbumRepository from '../../Repositories/AlbumRepository';
 import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import ArtistRepository from '../../Repositories/ArtistRepository';
 import DuplicateEntryResultContract from '../../DataContracts/DuplicateEntryResultContract';
-
-//module vdb.viewModels {
 
     export default class AlbumCreateViewModel {
 
@@ -60,5 +56,3 @@ import DuplicateEntryResultContract from '../../DataContracts/DuplicateEntryResu
         public submitting = ko.observable(false);
 
     }
-
-//}

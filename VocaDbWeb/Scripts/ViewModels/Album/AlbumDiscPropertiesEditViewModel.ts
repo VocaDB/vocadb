@@ -1,9 +1,6 @@
-
 import AlbumDiscPropertiesContract from '../../DataContracts/Album/AlbumDiscPropertiesContract';
 import BasicListEditViewModel from '../BasicListEditViewModel';
 
-//module vdb.viewModels.albums {
-	
 	export default class AlbumDiscPropertiesEditViewModel {
 		
 		constructor(contract: AlbumDiscPropertiesContract) {
@@ -34,5 +31,3 @@ import BasicListEditViewModel from '../BasicListEditViewModel';
 		}
 
 	}
-
-//}

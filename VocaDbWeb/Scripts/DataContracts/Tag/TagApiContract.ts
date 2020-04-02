@@ -1,12 +1,9 @@
-
 import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
 import EntryThumbContract from '../EntryThumbContract';
 import EntryType from '../../Models/EntryType';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
 import TagBaseContract from './TagBaseContract';
 import WebLinkContract from '../WebLinkContract';
-
-//module vdb.dataContracts {
 
 	export default interface TagApiContract {
 
@@ -43,5 +40,3 @@ import WebLinkContract from '../WebLinkContract';
 		webLinks: WebLinkContract[];
 
 	}
-
-//} 

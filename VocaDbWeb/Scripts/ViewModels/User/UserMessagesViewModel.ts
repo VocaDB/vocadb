@@ -1,12 +1,9 @@
-
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import PagedItemsViewModel from '../PagedItemsViewModel';
 import UserApiContract from '../../DataContracts/User/UserApiContract';
 import { UserInboxType } from '../../Repositories/UserRepository';
 import UserMessageSummaryContract from '../../DataContracts/User/UserMessageSummaryContract';
 import UserRepository from '../../Repositories/UserRepository';
-
-//module vdb.viewModels {
 
 	export default class UserMessagesViewModel {
 
@@ -286,5 +283,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		};
 
 	}
-
-//}

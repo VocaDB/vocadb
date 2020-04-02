@@ -1,8 +1,5 @@
-
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import SongInAlbumEditContract from '../DataContracts/Song/SongInAlbumEditContract';
-
-//module vdb.viewModels {
 
     export default class SongInAlbumEditViewModel {
         
@@ -51,5 +48,3 @@ import SongInAlbumEditContract from '../DataContracts/Song/SongInAlbumEditContra
         }
 
     }
-
-//}

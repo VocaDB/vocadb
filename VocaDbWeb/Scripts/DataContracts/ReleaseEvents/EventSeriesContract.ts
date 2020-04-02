@@ -1,10 +1,7 @@
-
 import EntryThumbContract from '../EntryThumbContract';
 import IEntryWithIdAndName from '../../Models/IEntryWithIdAndName';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
 import WebLinkContract from '../WebLinkContract';
-
-//namespace vdb.dataContracts {
 
 	// Matches ReleaseEventForApiContract
 	export default interface EventSeriesContract extends IEntryWithIdAndName {
@@ -22,5 +19,3 @@ import WebLinkContract from '../WebLinkContract';
 		webLinks: WebLinkContract[];
 
 	}
-
-//}

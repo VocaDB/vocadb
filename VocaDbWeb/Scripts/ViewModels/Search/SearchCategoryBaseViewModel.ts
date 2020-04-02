@@ -1,4 +1,3 @@
-
 import AdvancedSearchFilters from './AdvancedSearchFilters';
 import EntryContract from '../../DataContracts/EntryContract';
 import EntryWithTagUsagesContract from '../../DataContracts/Base/EntryWithTagUsagesContract';
@@ -7,8 +6,6 @@ import SearchViewModel from './SearchViewModel';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 import TagFilter from './TagFilter';
-
-//module vdb.viewModels.search {
 
 	export interface ISearchCategoryBaseViewModel {
 
@@ -131,5 +128,3 @@ import TagFilter from './TagFilter';
 		};
 
 	}
-
-//}

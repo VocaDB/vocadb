@@ -1,9 +1,6 @@
-
 import ReportEntryViewModel from '../ReportEntryViewModel';
 import SongRepository from '../../Repositories/SongRepository';
 import ui from '../../Shared/MessagesTyped';
-
-//module vdb.viewModels.songs {
 
 	export default class ArchivedSongViewModel {
 		
@@ -22,5 +19,3 @@ import ui from '../../Shared/MessagesTyped';
 		public reportViewModel: ReportEntryViewModel;
 
 	}
-
-//} 

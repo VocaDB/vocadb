@@ -1,13 +1,6 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../ViewModels/TopBarViewModel.ts" />
-/// <reference path="../TestSupport/FakeEntryReportRepository.ts" />
-/// <reference path="../TestSupport/FakeUserRepository.ts" />
-
 import FakeEntryReportRepository from '../TestSupport/FakeEntryReportRepository';
 import FakeUserRepository from '../TestSupport/FakeUserRepository';
 import TopBarViewModel from '../../ViewModels/TopBarViewModel';
-
-//module vdb.tests.viewModels {
 
     var entryTypeTranslations;
     var entryReportRepo: FakeEntryReportRepository;
@@ -61,5 +54,3 @@ import TopBarViewModel from '../../ViewModels/TopBarViewModel';
         equal(target.unreadMessages()[0].subject, "New message!");
 
     });
-
-//}

@@ -1,12 +1,9 @@
-
 import ArtistForAlbumContract from '../ArtistForAlbumContract';
 import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
 import LocalizedStringContract from '../Globalization/LocalizedStringContract';
 import PVService from '../../Models/PVs/PVService';
 import SongContract from './SongContract';
 
-//module vdb.dataContracts {
-	
 	export default interface SongApiContract extends SongContract, EntryWithTagUsagesContract {
 
 		artists?: ArtistForAlbumContract[];
@@ -19,5 +16,3 @@ import SongContract from './SongContract';
 		urlFriendlyName?: string;
 
 	}
-
-//}

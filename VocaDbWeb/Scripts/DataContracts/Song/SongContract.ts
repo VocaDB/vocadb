@@ -1,7 +1,4 @@
-
 import CommonEntryContract from '../CommonEntryContract';
-
-//module vdb.dataContracts {
 
     export default interface SongContract extends CommonEntryContract {
 
@@ -23,6 +20,3 @@ import CommonEntryContract from '../CommonEntryContract';
 		thumbUrl?: string;
 
     }
-
-//}
-

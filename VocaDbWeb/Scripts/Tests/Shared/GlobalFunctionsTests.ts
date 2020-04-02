@@ -1,9 +1,4 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Shared/GlobalFunctions.ts" />
-
 import functions from "../../Shared/GlobalFunctions";
-
-//module vdb.tests.functions {
 
     QUnit.module("GlobalFunctions");
 
@@ -38,4 +33,3 @@ import functions from "../../Shared/GlobalFunctions";
         equal(result, "/Song", "result")
 
     });
-//}

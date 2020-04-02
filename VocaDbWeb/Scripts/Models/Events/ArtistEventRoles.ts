@@ -1,6 +1,4 @@
 
-//namespace vdb.models.events {
-	
 	enum ArtistEventRoles {
 		
 		Default = 0,
@@ -46,5 +44,3 @@
 	}
 
 	export default ArtistEventRoles;
-
-//}

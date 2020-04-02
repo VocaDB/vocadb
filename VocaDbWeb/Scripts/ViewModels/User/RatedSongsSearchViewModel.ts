@@ -1,4 +1,3 @@
-
 import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
 import ArtistFilters from '../Search/ArtistFilters';
 import ArtistRepository from '../../Repositories/ArtistRepository';
@@ -21,8 +20,6 @@ import TagRepository from '../../Repositories/TagRepository';
 import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
-
-//module vdb.viewModels.user {
 
 	export default class RatedSongsSearchViewModel {
 		
@@ -207,5 +204,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		rating?: string;
 
 	}
-
-//}

@@ -1,6 +1,3 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../Shared/GlobalFunctions.ts" />
-
 import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
 import AlbumContract from '../DataContracts/Album/AlbumContract';
 import AlbumForApiContract from '../DataContracts/Album/AlbumForApiContract';
@@ -18,8 +15,6 @@ import PagingProperties from '../DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
 import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
 import UrlMapper from '../Shared/UrlMapper';
-
-//module vdb.repositories {
 
     // Repository for managing albums and related objects.
     // Corresponds to the AlbumController class.
@@ -178,5 +173,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		discTypes: string;
 
 	}
-
-//}

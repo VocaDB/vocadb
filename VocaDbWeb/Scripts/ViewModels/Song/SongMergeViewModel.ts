@@ -1,11 +1,8 @@
-
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper';
 import { SongAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
 import SongContract from '../../DataContracts/Song/SongContract';
 import SongRepository from '../../Repositories/SongRepository';
-
-//module vdb.viewModels.songs {
 
 	export default class SongMergeViewModel {
 
@@ -44,5 +41,3 @@ import SongRepository from '../../Repositories/SongRepository';
 		//public validationError_targetIsNewer: KnockoutObservable<boolean>;
 
 	}
-
-//}

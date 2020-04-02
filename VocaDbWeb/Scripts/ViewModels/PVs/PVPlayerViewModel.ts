@@ -1,4 +1,3 @@
-
 import PVPlayersFactory from './PVPlayersFactory';
 import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
 import PVService from '../../Models/PVs/PVService';
@@ -7,8 +6,6 @@ import SongRepository from '../../Repositories/SongRepository';
 import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
-
-//module vdb.viewModels.pvs {
 
 	export default class PVPlayerViewModel {
 		
@@ -181,5 +178,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		service: PVService;
 
 	}
-
-//}

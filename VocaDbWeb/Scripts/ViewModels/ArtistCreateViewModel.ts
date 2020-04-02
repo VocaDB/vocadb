@@ -1,8 +1,3 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../DataContracts/DuplicateEntryResultContract.ts" />
-/// <reference path="../Repositories/ArtistRepository.ts" />
-/// <reference path="WebLinkEditViewModel.ts" />
-
 import ArtistRepository from '../Repositories/ArtistRepository';
 import ArtistType from '../Models/Artists/ArtistType';
 import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
@@ -11,8 +6,6 @@ import EntryUrlMapper from '../Shared/EntryUrlMapper';
 import TagApiContract from '../DataContracts/Tag/TagApiContract';
 import TagRepository from '../Repositories/TagRepository';
 import WebLinkEditViewModel from './WebLinkEditViewModel';
-
-//module vdb.viewModels {
 
     export default class ArtistCreateViewModel {
 
@@ -74,5 +67,3 @@ import WebLinkEditViewModel from './WebLinkEditViewModel';
         }
     
     }
-
-//}

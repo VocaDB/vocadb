@@ -1,11 +1,8 @@
-
 import BaseRepository from './BaseRepository';
 import CommentContract from '../DataContracts/CommentContract';
 import EntryType from '../Models/EntryType';
 import ICommentRepository from './ICommentRepository';
 import UrlMapper from '../Shared/UrlMapper';
-
-//namespace vdb.repositories {
 
 	export default class CommentRepository extends BaseRepository implements ICommentRepository {
 
@@ -42,5 +39,3 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		}
 	}
-
-//}

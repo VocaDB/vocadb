@@ -1,12 +1,6 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../ViewModels/PVRatingButtonsViewModel.ts" />
-/// <reference path="../TestSupport/FakeUserRepository.ts" />
-
 import FakeUserRepository from '../TestSupport/FakeUserRepository';
 import PVRatingButtonsViewModel from '../../ViewModels/PVRatingButtonsViewModel';
 import SongVoteRating from '../../Models/SongVoteRating';
-
-//module vdb.tests.viewModels {
 
     var repository = new FakeUserRepository();
 
@@ -40,5 +34,3 @@ import SongVoteRating from '../../Models/SongVoteRating';
         equal(repository.rating, SongVoteRating.Like, "repository.rating");
 
     });
-
-//}

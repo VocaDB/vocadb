@@ -1,10 +1,7 @@
-
 import CommonEntryContract from '../CommonEntryContract';
 import EntryThumbContract from '../EntryThumbContract';
 import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
 import OptionalDateTimeContract from '../OptionalDateTimeContract';
-
-//module vdb.dataContracts {
 
 	export default interface AlbumContract extends CommonEntryContract, EntryWithTagUsagesContract {
 
@@ -23,5 +20,3 @@ import OptionalDateTimeContract from '../OptionalDateTimeContract';
 		releaseDate: OptionalDateTimeContract;
 
 	}
-
-//} 

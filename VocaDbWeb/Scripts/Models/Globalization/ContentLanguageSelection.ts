@@ -1,6 +1,4 @@
 
-//module vdb.models.globalization {
-	
 	enum ContentLanguageSelection {
 
 		Unspecified	= 0,
@@ -14,5 +12,3 @@
 	}
 
 	export default ContentLanguageSelection;
-
-//} 

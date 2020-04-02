@@ -1,13 +1,11 @@
-
 import ArtistForEventContract from './ArtistForEventContract';
 import EntryThumbContract from '../EntryThumbContract';
 import EventSeriesContract from './EventSeriesContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
 import PVContract from '../PVs/PVContract';
 import SongListBaseContract from '../SongListBaseContract';
+import VenueForApiContract from '../Venue/VenueForApiContract';
 import WebLinkContract from '../WebLinkContract';
-
-//namespace vdb.dataContracts {
 
 	// Matches ReleaseEventForApiContract
 	export default interface ReleaseEventContract {
@@ -36,8 +34,8 @@ import WebLinkContract from '../WebLinkContract';
 
 		songList?: SongListBaseContract;
 
+		venue?: VenueForApiContract;
+
 		webLinks: WebLinkContract[];
 
 	}
-
-//}

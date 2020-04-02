@@ -1,4 +1,4 @@
-@inherits VocaDb.Web.Code.VocaDbPage<EntryReportContract[]>
+﻿@inherits VocaDb.Web.Code.VocaDbPage<EntryReportContract[]>
 @using VocaDb.Model.DataContracts
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
@@ -55,7 +55,9 @@
 					}
 				</td>
 				<td>@r.ReportTypeName</td>
-				<td>@r.Notes</td>
+				<td>
+					<div class="entry-report-notes">@r.Notes</div>
+				</td>
 				@if (status == ReportStatus.Open) {
 					<td>
 						<a href="@Url.Action("DeleteEntryReport", new {id = r.Id})" class="textLink deleteLink">Close</a>						

@@ -1,7 +1,4 @@
-
 import TagBaseContract from './TagBaseContract';
-
-//namespace vdb.dataContracts.tags {
 
 	export default interface TagMappingContract {
 
@@ -9,5 +6,3 @@ import TagBaseContract from './TagBaseContract';
 		tag: TagBaseContract;
 
 	}
-
-//}

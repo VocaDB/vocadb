@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/youtube/youtube.d.ts" />
-
 import ContentLanguagePreference from '../../../Models/Globalization/ContentLanguagePreference';
 import DateTimeHelper from '../../../Helpers/DateTimeHelper';
 import { IPVPlayerSong } from '../../PVs/PVPlayerViewModel';
@@ -15,8 +13,6 @@ import { SongOptionalFields } from '../../../Models/EntryOptionalFields';
 import SongRepository from '../../../Repositories/SongRepository';
 import UrlMapper from '../../../Shared/UrlMapper';
 import UserRepository from '../../../Repositories/UserRepository';
-
-//module vdb.viewModels.songs {
 
 	export default class PlayListViewModel {
 
@@ -237,5 +233,3 @@ import UserRepository from '../../../Repositories/UserRepository';
 			callback: (result: PartialFindResultContract<ISongForPlayList>) => void): void;
 
 	}
-
-//}

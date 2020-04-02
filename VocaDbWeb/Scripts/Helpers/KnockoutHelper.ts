@@ -1,6 +1,4 @@
 
-//module vdb.helpers {
-	
 	export default class KnockoutHelper {
 
 		public static stringEnum<T>(observable: KnockoutObservable<T>, enumType: any): KnockoutComputed<string> {
@@ -16,5 +14,3 @@
 		}
 
 	}
-
-//}

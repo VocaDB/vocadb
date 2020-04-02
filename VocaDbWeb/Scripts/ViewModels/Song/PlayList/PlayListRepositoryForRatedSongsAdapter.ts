@@ -1,4 +1,3 @@
-
 import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
 import ContentLanguagePreference from '../../../Models/Globalization/ContentLanguagePreference';
 import { IPlayListRepository } from './PlayListViewModel';
@@ -8,8 +7,6 @@ import PartialFindResultContract from '../../../DataContracts/PartialFindResultC
 import RatedSongForUserForApiContract from '../../../DataContracts/User/RatedSongForUserForApiContract';
 import { SongOptionalFields } from '../../../Models/EntryOptionalFields';
 import UserRepository from '../../../Repositories/UserRepository';
-
-//module vdb.viewModels.songs {
 
 	export default class PlayListRepositoryForRatedSongsAdapter implements IPlayListRepository {
 
@@ -62,5 +59,3 @@ import UserRepository from '../../../Repositories/UserRepository';
 		}
 
 	}
-
-//} 

@@ -61,8 +61,20 @@
             @("(")@Translate.WebLinkCategoryNames[link.Category]@(")")
         }
         <br />
-	}		
-    	    
+	}
+
+}
+
+@helper ExternalLinksList(IEnumerable<WebLinkForApiContract> webLinks, bool showCategory = false) {
+    
+    foreach (var link in webLinks) {
+        <a class="extLink" href="@VocaDb.Model.Service.Helpers.UrlHelper.MakePossileAffiliateLink(link.Url)" onclick="vdb.functions.trackOutboundLink(event)">@link.DescriptionOrUrl</a>
+        if (showCategory) {
+            @("(")@Translate.WebLinkCategoryNames[link.Category]@(")")
+        }
+        <br />
+	}
+
 }
 
 @helper ExternalLinksRows(ICollection<WebLinkContract> webLinks) {

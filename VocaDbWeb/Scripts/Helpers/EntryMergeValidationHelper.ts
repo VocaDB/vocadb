@@ -1,9 +1,6 @@
-
 import CommonEntryContract from '../DataContracts/CommonEntryContract';
 import EntryStatus from '../Models/EntryStatus';
 
-//module vdb.helpers {
-	
 	export default class EntryMergeValidationHelper {
 
 		private static toEnum(statusStr: string | EntryStatus): EntryStatus {
@@ -47,5 +44,3 @@ import EntryStatus from '../Models/EntryStatus';
 		validationError_targetIsLessComplete: boolean;
 		validationError_targetIsNewer: boolean;
 	}
-
-//}

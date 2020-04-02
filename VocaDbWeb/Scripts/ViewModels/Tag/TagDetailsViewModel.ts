@@ -1,4 +1,3 @@
-
 import CommentContract from '../../DataContracts/CommentContract';
 import EditableCommentsViewModel from '../EditableCommentsViewModel';
 import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
@@ -8,8 +7,6 @@ import TagRepository from '../../Repositories/TagRepository';
 import ui from '../../Shared/MessagesTyped';
 import UserRepository from '../../Repositories/UserRepository';
 
-//module vdb.viewModels.tags {
-	
 	export default class TagDetailsViewModel {
 		
 		constructor(
@@ -62,5 +59,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		public description: EnglishTranslatedStringViewModel;
 
 	}
-
-//}

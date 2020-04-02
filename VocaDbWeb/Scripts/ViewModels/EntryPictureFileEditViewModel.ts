@@ -1,7 +1,4 @@
-
 import EntryPictureFileContract from '../DataContracts/EntryPictureFileContract';
-
-//module vdb.viewModels {
 
 	export default class EntryPictureFileEditViewModel {
 
@@ -26,5 +23,3 @@ import EntryPictureFileContract from '../DataContracts/EntryPictureFileContract'
 		public thumbUrl: string;
 
 	}
-
-//}

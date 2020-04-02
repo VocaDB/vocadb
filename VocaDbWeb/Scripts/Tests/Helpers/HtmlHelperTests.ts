@@ -1,8 +1,5 @@
-
 import HtmlHelper from '../../Helpers/HtmlHelper';
 
-//module vdb.tests.helpers {
-	
 	QUnit.module("HtmlHelper");
 
 	var testBoldAndHtmlEncode = (text: string, term: string, expected: string) => {
@@ -39,5 +36,3 @@ import HtmlHelper from '../../Helpers/HtmlHelper';
 		testBoldAndHtmlEncode("Sentaku <love or dead>", "<love", "Sentaku <b>&lt;love</b> or dead&gt;");
 
 	});
-
-//}

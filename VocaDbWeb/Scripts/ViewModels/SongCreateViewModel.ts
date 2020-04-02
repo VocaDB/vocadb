@@ -1,4 +1,3 @@
-
 import { ArtistAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import ArtistForAlbumContract from '../DataContracts/ArtistForAlbumContract';
@@ -15,8 +14,6 @@ import SongRepository from '../Repositories/SongRepository';
 import SongType from '../Models/Songs/SongType';
 import TagApiContract from '../DataContracts/Tag/TagApiContract';
 import TagRepository from '../Repositories/TagRepository';
-
-//module vdb.viewModels {
 
     // View model for song creation view
     export default class SongCreateViewModel {
@@ -197,5 +194,3 @@ import TagRepository from '../Repositories/TagRepository';
         }
     
     }
-
-//}

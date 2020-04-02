@@ -4,7 +4,7 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Security {
 
-	public class AuditLogEntry {
+	public class AuditLogEntry : IEntryWithLongId {
 
 		public const int MaxActionLength = 400;
 

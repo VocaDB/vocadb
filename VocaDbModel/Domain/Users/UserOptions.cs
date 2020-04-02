@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.Domain.Users {
 
@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Users {
 	/// Various additional properties for user that are not needed in most cases.
 	/// For example, for authentication and user profile.
 	/// </summary>
-	public class UserOptions {
+	public class UserOptions : IDatabaseObject {
 
 		private string aboutMe;
 		private string albumFormatString;
@@ -26,7 +26,8 @@ namespace VocaDb.Model.Domain.Users {
 				= AlbumFormatString
 				= Location
 				= Realname
-				= TwitterName = TwitterOAuthToken = TwitterOAuthTokenSecret 
+				= TwitterName = TwitterOAuthToken = TwitterOAuthTokenSecret
+				= CustomTitle
 				= string.Empty;
 
 			LastLoginCulture = OptionalCultureCode.Empty;
@@ -60,6 +61,8 @@ namespace VocaDb.Model.Domain.Users {
 				albumFormatString = value;
 			}
 		}
+
+		public virtual string CustomTitle { get; set; }
 
 		public virtual bool EmailVerified { get; set; }
 

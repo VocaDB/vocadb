@@ -1,10 +1,5 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/SongVoteRating.ts" />
-
 import { parseSongVoteRating } from '../../Models/SongVoteRating';
 import SongVoteRating from '../../Models/SongVoteRating';
-
-//module vdb.tests.models {
 
     QUnit.module("SongVoteRating");
 
@@ -23,5 +18,3 @@ import SongVoteRating from '../../Models/SongVoteRating';
         equal(result, SongVoteRating.Like, "result");
 
     });
-
-//}

@@ -1,4 +1,3 @@
-
 import ActivityEntryContract from '../../DataContracts/ActivityEntry/ActivityEntryContract';
 import ArchivedVersionContract from '../../DataContracts/Versioning/ArchivedVersionContract';
 import EntryContract from '../../DataContracts/EntryContract';
@@ -11,8 +10,6 @@ import ResourcesManager from '../../Models/ResourcesManager';
 import { ResourceSetNames } from '../../Models/ResourcesManager';
 import UrlMapper from '../../Shared/UrlMapper';
 
-//module vdb.viewModels.activityEntry {
-	
 	export default class ActivityEntryListViewModel {
 		
 		constructor(private urlMapper: UrlMapper,
@@ -167,5 +164,3 @@ import UrlMapper from '../../Shared/UrlMapper';
 		public resources: ResourcesManager;
 
 	}
-
-//} 

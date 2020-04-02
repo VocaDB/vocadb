@@ -1,11 +1,5 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/WebLinkCategory.ts" />
-/// <reference path="../../Shared/WebLinkMatcher.ts" />
-
 import WebLinkCategory from '../../Models/WebLinkCategory';
 import WebLinkMatcher from '../../Shared/WebLinkMatcher';
-
-//namespace vdb.tests.utils {
 
     QUnit.module("WebLinkMatcher");
 
@@ -26,5 +20,3 @@ import WebLinkMatcher from '../../Shared/WebLinkMatcher';
         equal(result, null, "result");
 
     });
-
-//}

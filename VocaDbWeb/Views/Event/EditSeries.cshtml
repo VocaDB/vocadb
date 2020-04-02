@@ -80,7 +80,7 @@
 		@Html.LabelFor(m => m.Description)
 	</div>
 	<div class="editor-field">
-		@Html.TextAreaForKnockout(m => m.Description, "initialValue, textInput: description", cols: 60, rows: 4, cssClass: "span4")
+		@Html.TextAreaForKnockout(m => m.Description, "initialValue, textInput: description", cols: 60, rows: 4, maxLength: 1000, cssClass: "span4")
 		
 		Live preview
 		<div data-bind="markdown: description"></div>
@@ -121,7 +121,7 @@
 	</div>
 	<div class="editor-field" data-bind="with: webLinks">
 		@KnockoutHelpers.WebLinksEditViewKnockout(false)
-		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(webLinks)")
+		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(items)")
 	</div>
 	
 	<div class="editor-label">

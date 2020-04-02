@@ -1,11 +1,8 @@
-
 import AlbumContract from '../../DataContracts/Album/AlbumContract';
 import AlbumRepository from '../../Repositories/AlbumRepository';
 import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper';
-
-//module vdb.viewModels.albums {
 
 	export default class AlbumMergeViewModel {
 
@@ -40,5 +37,3 @@ import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper
 		public validationError_targetIsNewer = ko.observable(false);
 
 	}
-
-//} 

@@ -8,7 +8,7 @@ using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class PVForSong : PV, IPVWithThumbnail, ISongLink {
+	public class PVForSong : PV, IPVWithThumbnail, ISongLink, IEntryWithIntId {
 
 		private Song song;
 		private string thumbUrl;

@@ -1,8 +1,5 @@
-
 import ContentFocus from '../Models/ContentFocus';
 import SongType from '../Models/Songs/SongType';
-
-//module vdb.helpers {
 
 	export default class SongHelper {
 
@@ -23,5 +20,3 @@ import SongType from '../Models/Songs/SongType';
 		}
 
 	}
-
-//}

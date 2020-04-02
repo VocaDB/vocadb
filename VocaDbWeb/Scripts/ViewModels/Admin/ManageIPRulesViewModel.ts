@@ -1,10 +1,5 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-/// <reference path="../../Shared/GlobalFunctions.ts" />
-
 import AdminRepository from '../../Repositories/AdminRepository';
 import ui from '../../Shared/MessagesTyped';
-
-//module vdb.viewModels {
 
     export default class ManageIPRulesViewModel {
 
@@ -96,5 +91,3 @@ import ui from '../../Shared/MessagesTyped';
         }
 
     };
-
-//}

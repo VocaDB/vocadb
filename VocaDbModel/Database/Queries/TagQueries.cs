@@ -84,7 +84,7 @@ namespace VocaDb.Model.Database.Queries {
 			EntryType entryType,
 			Func<IQueryable<TEntry>, EntryTypeAndTagCollection<TSubType>, IQueryable<TEntry>> whereExpression, 
 			int maxCount = 12)
-			where TEntry : IEntryBase, IEntryWithTags<TUsage>
+			where TEntry : class, IEntryBase, IEntryWithTags<TUsage>
 			where TUsage: TagUsage
 			where TSubType : struct, Enum {
 			

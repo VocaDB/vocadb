@@ -181,7 +181,13 @@ mix
 
 	.scripts([
 		"Scripts/soundcloud-api.js"	// REVIEW
-	], "bundles/User/RatedSongs.js");
+	], "bundles/User/RatedSongs.js")
+
+	.scripts([
+	], "bundles/Venue/Details.js")
+
+	.scripts([
+	], "bundles/Venue/Edit.js");
 
 
 if (mix.inProduction()) {

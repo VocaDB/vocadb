@@ -27,7 +27,9 @@ namespace VocaDb.Model.Domain {
 
 		Tag					= 256,
 
-		User				= 512
+		User				= 512,
+
+		Venue				= 1024
 
 	}
 
@@ -43,7 +45,8 @@ namespace VocaDb.Model.Domain {
 		Song				= EntryType.Song,
 		SongList			= EntryType.SongList,
 		Tag					= EntryType.Tag,
-		User				= EntryType.User
+		User				= EntryType.User,
+		Venue				= EntryType.Venue
 	}
 
 }

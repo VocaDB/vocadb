@@ -1,4 +1,3 @@
-
 import AjaxHelper from '../Helpers/AjaxHelper';
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
@@ -14,8 +13,6 @@ import TagApiContract from '../DataContracts/Tag/TagApiContract';
 import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 import TagMappingContract from '../DataContracts/Tag/TagMappingContract';
 import UrlMapper from '../Shared/UrlMapper';
-
-//module vdb.repositories {
 
 	export default class TagRepository extends BaseRepository {
 
@@ -112,5 +109,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		sort?: string;
 
 	}
-
-//}

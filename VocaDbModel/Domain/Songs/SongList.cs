@@ -60,6 +60,8 @@ namespace VocaDb.Model.Domain.Songs {
 			}
 		}
 
+		public virtual bool AllowNotifications => FeaturedList;
+
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
 		public virtual ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> ArchivedVersionsManager {

@@ -232,7 +232,7 @@
 			</div>
 			<div class="editor-field" data-bind="with: webLinksViewModel">
 				@KnockoutHelpers.WebLinksEditViewKnockout(false)
-				<input type="hidden" name="webLinks" data-bind="value: ko.toJSON(webLinks)" />
+				<input type="hidden" name="webLinks" data-bind="value: ko.toJSON(items)" />
 			</div>
 
 		</div>

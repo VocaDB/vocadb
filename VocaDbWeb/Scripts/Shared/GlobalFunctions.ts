@@ -1,6 +1,4 @@
-/// <reference path="GlobalValues.ts" />
 
-//module vdb.functions {
 export default class functions {
 
 	public static getId(elem: HTMLElement) {
@@ -26,13 +24,7 @@ export default class functions {
 
     };
 
-	public static mapFullUrl(relative: string) {
-
-        return functions.mergeUrls(vdb.values.hostAddress, relative);
-
-    };
-
-	public static mergeUrls(base: string, relative: string) {
+    public static mergeUrls(base: string, relative: string) {
         
         if (base.charAt(base.length - 1) == "/" && relative.charAt(0) == "/")
             return base + relative.substr(1);

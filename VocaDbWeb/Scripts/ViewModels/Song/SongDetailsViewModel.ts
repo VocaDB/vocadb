@@ -1,9 +1,3 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-/// <reference path="../../DataContracts/SongListBaseContract.ts" />
-/// <reference path="../../Repositories/SongRepository.ts" />
-/// <reference path="../../Repositories/UserRepository.ts" />
-/// <reference path="../PVRatingButtonsViewModel.ts" />
-
 import ArtistApiContract from '../../DataContracts/Artist/ArtistApiContract';
 import ArtistHelper from '../../Helpers/ArtistHelper';
 import ArtistRepository from '../../Repositories/ArtistRepository';
@@ -29,8 +23,6 @@ import TagsEditViewModel from '../Tag/TagsEditViewModel';
 import ui from '../../Shared/MessagesTyped';
 import UserApiContract from '../../DataContracts/User/UserApiContract';
 import UserRepository from '../../Repositories/UserRepository';
-
-//module vdb.viewModels {
 
     // View model for the song details view.
     export default class SongDetailsViewModel {
@@ -403,5 +395,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		domain?: string;
 
 	}
-
-//}

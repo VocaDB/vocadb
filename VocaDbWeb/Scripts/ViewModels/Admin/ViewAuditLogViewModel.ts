@@ -1,10 +1,4 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-/// <reference path="../../typings/jqueryui/jqueryui.d.ts" />
-/// <reference path="../../Shared/GlobalFunctions.ts" />
-
 import functions from "../../Shared/GlobalFunctions";
-
-//module vdb.viewModels {
 
     export default class ViewAuditLogViewModel {
 
@@ -101,5 +95,3 @@ import functions from "../../Shared/GlobalFunctions";
         userName: string;
 
     }
-
-//}

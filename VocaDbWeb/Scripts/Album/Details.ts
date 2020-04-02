@@ -1,4 +1,3 @@
-
 import AlbumDetailsViewModel from '../ViewModels/Album/AlbumDetailsViewModel';
 import ui from '../Shared/MessagesTyped';
 import UrlMapper from '../Shared/UrlMapper';

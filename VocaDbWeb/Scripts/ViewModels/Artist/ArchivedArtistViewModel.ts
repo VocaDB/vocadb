@@ -1,9 +1,6 @@
-
 import ArtistRepository from '../../Repositories/ArtistRepository';
 import ReportEntryViewModel from '../ReportEntryViewModel';
 import ui from '../../Shared/MessagesTyped';
-
-//module vdb.viewModels.artists {
 
 	export default class ArchivedArtistViewModel {
 
@@ -22,5 +19,3 @@ import ui from '../../Shared/MessagesTyped';
 		public reportViewModel: ReportEntryViewModel;
 
 	}
-
-//} 

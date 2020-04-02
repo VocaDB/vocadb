@@ -1,9 +1,6 @@
-
 import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper';
 import EntryStatus from '../../Models/EntryStatus';
 
-//module vdb.tests.helpers {
-	
 	QUnit.module("EntryMergeValidationHelper");
 
 	function testValidate(expectedLessComplete: boolean, expectedNewer: boolean, baseStatus: EntryStatus, targetStatus: EntryStatus, baseDate: moment.Moment, targetDate: moment.Moment) {
@@ -47,5 +44,3 @@ import EntryStatus from '../../Models/EntryStatus';
 	QUnit.test("target is newer and draft, show only 'target is newer' warning", () => {
 		testValidate(false, true, EntryStatus.Finished, EntryStatus.Draft, moment(39), moment(3939));
 	});
-
-//}

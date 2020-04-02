@@ -1,7 +1,3 @@
-/// <reference path="../../typings/jquery/jquery.d.ts" />
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-/// <reference path="../../Shared/GlobalFunctions.ts" />
-
 import AlbumForUserForApiContract from '../../DataContracts/User/AlbumForUserForApiContract';
 import AlbumReviewContract from '../../DataContracts/Album/AlbumReviewContract';
 import AlbumRepository from '../../Repositories/AlbumRepository';
@@ -23,8 +19,6 @@ import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContra
 import ui from '../../Shared/MessagesTyped';
 import UserApiContract from '../../DataContracts/User/UserApiContract';
 import UserRepository from '../../Repositories/UserRepository';
-
-//module vdb.viewModels {
 
     export default class AlbumDetailsViewModel {
 
@@ -305,5 +299,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		public user: UserApiContract;
 
 	}
-
-//}

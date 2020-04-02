@@ -1,8 +1,5 @@
-
 import { IPVPlayer } from './PVPlayerViewModel';
 import PVService from '../../Models/PVs/PVService';
-
-//module vdb.viewModels.pvs {
 
 	/*
 		Note: I'm not terrible happy about the implementation for now.
@@ -111,8 +108,6 @@ import PVService from '../../Models/PVs/PVService';
 		public service = PVService.NicoNicoDouga;
 
 	}
-
-//}
 
 declare global {
 	interface Window {

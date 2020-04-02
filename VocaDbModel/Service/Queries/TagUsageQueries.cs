@@ -47,7 +47,8 @@ namespace VocaDb.Model.Service.Queries {
 			IEnumTranslations enumTranslations,
 			Func<TEntry, TagManager<TTag>> tagFunc,
 			Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory) 
-			where TEntry : IEntryWithNames, IEntryWithTags where TTag : TagUsage {
+			where TEntry : class, IEntryWithNames, IEntryWithTags 
+			where TTag : TagUsage {
 			
 			ParamIs.NotNull(() => tags);
 
@@ -94,7 +95,10 @@ namespace VocaDb.Model.Service.Queries {
 					entryLinkFactory.CreateEntryLink(entry), string.Join(", ", tagNames)), user);
 
 				var addedTags = appliedTags.Except(entry.Tags.Tags).ToArray();
-				new FollowedTagNotifier().SendNotifications(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
+
+				if (entry.AllowNotifications) {
+					new FollowedTagNotifier().SendNotifications(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
+				}
 
 				var updatedTags = tagFunc(entry).SyncVotes(user, appliedTags, tagUsageFactory, onlyAdd: onlyAdd);
 				var tagCtx = ctx.OfType<Tag>();
@@ -112,7 +116,9 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		public int RemoveTagUsage<TUsage, TEntry>(long tagUsageId, IRepository<TEntry> repository) where TUsage : TagUsage {
+		public int RemoveTagUsage<TUsage, TEntry>(long tagUsageId, IRepository<TEntry> repository) 
+			where TUsage : TagUsage 
+			where TEntry : class, IDatabaseObject {
 
 			return repository.HandleTransaction(ctx => {
 

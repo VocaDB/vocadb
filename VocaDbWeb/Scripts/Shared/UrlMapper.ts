@@ -1,8 +1,4 @@
-/// <reference path="GlobalFunctions.ts" />
-
 import functions from "./GlobalFunctions";
-
-//module vdb {
 
     export default class UrlMapper {
 
@@ -34,5 +30,3 @@ import functions from "./GlobalFunctions";
         }
 
     }
-
-//}

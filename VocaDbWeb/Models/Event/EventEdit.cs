@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using VocaDb.Model;
@@ -6,6 +6,7 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -25,10 +26,11 @@ namespace VocaDb.Web.Models.Event {
 			Description = SeriesSuffix = string.Empty;
 		}
 
-		public EventEdit(ReleaseEventSeriesContract seriesContract, IUserPermissionContext userContext)
+		public EventEdit(ReleaseEventSeriesContract seriesContract, VenueContract venueContract, IUserPermissionContext userContext)
 			: this() {
 
 			Series = seriesContract;
+			Venue = venueContract;
 
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(userContext).ToArray();
 
@@ -55,7 +57,8 @@ namespace VocaDb.Web.Models.Event {
 			SeriesSuffix = contract.SeriesSuffix;
 			SongList = contract.SongList;
 			Status = contract.Status;
-			Venue = contract.VenueName;
+			Venue = contract.Venue;
+			VenueName = contract.VenueName;
 			WebLinks = contract.WebLinks;
 
 			CopyNonEditableProperties(contract, userContext);
@@ -80,7 +83,7 @@ namespace VocaDb.Web.Models.Event {
 
 		public bool Deleted { get; set; }
 
-		[StringLength(400)]
+		[StringLength(1000)]
 		public string Description { get; set; }
 
 		[FromJson]
@@ -117,7 +120,10 @@ namespace VocaDb.Web.Models.Event {
 
 		public string UrlSlug { get; set; }
 
-		public string Venue { get; set; }
+		[FromJson]
+		public VenueContract Venue { get; set; }
+
+		public string VenueName { get; set; }
 
 		public int Version { get; set; }
 
@@ -157,7 +163,8 @@ namespace VocaDb.Web.Models.Event {
 				SeriesSuffix = this.SeriesSuffix ?? string.Empty,
 				SongList = SongList,
 				Status = Status,
-				VenueName = Venue,
+				Venue = Venue,
+				VenueName = VenueName,
 				WebLinks = this.WebLinks
 			};
 

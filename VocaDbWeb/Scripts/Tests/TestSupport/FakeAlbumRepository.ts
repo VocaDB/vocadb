@@ -1,8 +1,4 @@
-/// <reference path="../../Repositories/AlbumRepository.ts" />
-
 import AlbumRepository from '../../Repositories/AlbumRepository';
-
-//module vdb.tests.testSupport {
 
     export default class FakeAlbumRepository extends AlbumRepository {
 
@@ -16,5 +12,3 @@ import AlbumRepository from '../../Repositories/AlbumRepository';
         }
 
     }
-
-//}

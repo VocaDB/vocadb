@@ -1,8 +1,5 @@
-
 import EnglishTranslatedStringContract from '../../DataContracts/Globalization/EnglishTranslatedStringContract';
 
-//module vdb.viewModels.globalization {
-	
 	export default class EnglishTranslatedStringEditViewModel {
 		
 		constructor(contract: EnglishTranslatedStringContract) {
@@ -29,5 +26,3 @@ import EnglishTranslatedStringContract from '../../DataContracts/Globalization/E
 		}
 
 	}
-
-//} 

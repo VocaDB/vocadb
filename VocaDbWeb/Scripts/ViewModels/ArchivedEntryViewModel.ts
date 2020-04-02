@@ -1,8 +1,5 @@
-
 import ReportEntryViewModel from './ReportEntryViewModel';
 import ui from '../Shared/MessagesTyped';
-
-//module vdb.viewModels {
 
 	export default class ArchivedEntryViewModel {
 		
@@ -25,5 +22,3 @@ import ui from '../Shared/MessagesTyped';
 	export interface IEntryReportsRepository {
 		createReport(entryId: number, reportType: string, notes: string, version?: number);
 	}
-
-//} 

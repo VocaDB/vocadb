@@ -1,13 +1,8 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-/// <reference path="../WebLinksEditViewModel.ts" />
-
 import ui from '../../Shared/MessagesTyped';
 import UserKnownLanguageContract from '../../DataContracts/User/UserKnownLanguageContract';
 import UserRepository from '../../Repositories/UserRepository';
 import WebLinkContract from '../../DataContracts/WebLinkContract';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
-
-//namespace vdb.viewModels {
 
 	// User my settings view model
 	export default class MySettingsViewModel {
@@ -69,5 +64,3 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		public proficiency: KnockoutObservable<string>;
 
 	}
-
-//}

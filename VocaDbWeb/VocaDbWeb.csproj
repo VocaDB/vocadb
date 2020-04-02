@@ -596,6 +596,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RatedSongForUserSortRuleNames.pt.resx</DependentUpon>
     </Compile>
+    <Compile Include="App_GlobalResources\VenueEditableFieldNames.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VenueEditableFieldNames.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_GlobalResources\WebLinkCategoryNames.pt.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -605,8 +610,13 @@
     <Compile Include="Controllers\Api\CommentApiController.cs" />
     <Compile Include="Controllers\Api\EntryTypesApiController.cs" />
     <Compile Include="Helpers\LaravelMixHelper.cs" />
+    <Compile Include="Controllers\Api\IPRuleApiController.cs" />
+    <Compile Include="Controllers\Api\VenueApiController.cs" />
+    <Compile Include="Controllers\VenueController.cs" />
     <Compile Include="Models\Shared\EnglishTranslatedStringViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
+    <Compile Include="Models\Venue\VenueEditViewModel.cs" />
+    <Compile Include="Models\Venue\Versions.cs" />
     <Compile Include="Resources\Domain\EntryTypeNames.de.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1298,7 +1308,6 @@
     <Compile Include="Code\PagePropertiesData.cs" />
     <Compile Include="Code\PropertyModelBinder.cs" />
     <Compile Include="Code\Security\StopForumSpam\StopForumSpamClient.cs" />
-    <Compile Include="Code\Security\IPRuleManager.cs" />
     <Compile Include="Code\Security\InMemoryTokenManager.cs" />
     <Compile Include="Code\Security\LogFileReader.cs" />
     <Compile Include="Code\Security\Membership\VocaDbMembershipProvider.cs" />
@@ -1763,6 +1772,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RequestVerificationStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Views\Venue\DetailsStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DetailsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Views\Venue\EditStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EditStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\QueryService.svc.cs">
       <DependentUpon>QueryService.svc</DependentUpon>
     </Compile>
@@ -2191,6 +2210,10 @@
     <Content Include="Scripts\libs.js" />
     <Content Include="webpack.css.js" />
     <Content Include="webpack.mix.js" />
+    <Content Include="App_GlobalResources\VenueEditableFieldNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>VenueEditableFieldNames.Designer.cs</LastGenOutput>
+    </Content>
     <EmbeddedResource Include="Resources\Domain\EntryTypeNames.pt.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>EntryTypeNames.pt.designer.cs</LastGenOutput>
@@ -2450,6 +2473,16 @@
     <EmbeddedResource Include="Resources\Views\Song\RankingsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\RatedSongsStrings.de.resx" />
     <EmbeddedResource Include="Resources\Views\User\RequestVerificationStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources\Views\Venue\DetailsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Venue</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Views\Venue\EditStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Venue</CustomToolNamespace>
+    </EmbeddedResource>
     <TypeScriptCompile Include="Scripts\Album\Details.ts" />
     <TypeScriptCompile Include="Scripts\App.ts" />
     <TypeScriptCompile Include="Scripts\Artist\Details.ts" />
@@ -2470,6 +2503,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Globalization\EnglishTranslatedStringContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Globalization\LocalizedStringContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Globalization\LocalizedStringWithIdContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\OptionalGeoPointContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\PartialFindResultContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\PVs\PVContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ReleaseEvents\ArtistForEventContract.ts" />
@@ -2494,6 +2528,7 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Tag\TagUsageForApiContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserApiContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserKnownLanguageContract.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Venue\VenueForEditContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Versioning\ArchivedVersionContract.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\AjaxHelper.ts" />
     <TypeScriptCompile Include="Scripts\Helpers\ArtistHelper.ts" />
@@ -2525,6 +2560,9 @@
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserMessageSummaryContract.ts" />
     <TypeScriptCompile Include="Scripts\Event\Edit.ts" />
     <TypeScriptCompile Include="Scripts\Event\SeriesEdit.ts" />
+    <TypeScriptCompile Include="Scripts\DataContracts\Venue\VenueForApiContract.ts" />
+    <Content Include="Scripts\Event\Edit.js" />
+    <Content Include="Scripts\Event\SeriesEdit.js" />
     <Content Include="Scripts\highcharts\4.2.0\adapters\standalone-framework.js" />
     <Content Include="Scripts\highcharts\4.2.0\adapters\standalone-framework.src.js" />
     <Content Include="Scripts\highcharts\4.2.0\highcharts-3d.js" />
@@ -2582,6 +2620,7 @@
     <Content Include="App_Code\PVHelpers.cshtml" />
     <Content Include="App_Code\SearchHelpers.cshtml" />
     <Content Include="App_Code\EventHelpers.cshtml" />
+    <Content Include="App_Code\VenueHelpers.cshtml" />
     <None Include="compilerconfig.json" />
     <Content Include="Content\Styles\song.less" />
     <None Include="compilerconfig.json.defaults">
@@ -2904,6 +2943,7 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\ReleaseEventAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\SongListAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\UserAutoComplete.ts" />
+    <TypeScriptCompile Include="Scripts\KnockoutExtensions\BindingHandlers\VenueAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Bootstrap\Tooltip.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ConfirmClick.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Filters\Truncate.ts" />
@@ -2968,6 +3008,7 @@
     <TypeScriptCompile Include="Scripts\Repositories\RepositoryFactory.ts" />
     <TypeScriptCompile Include="Scripts\Repositories\SongListRepository.ts" />
     <TypeScriptCompile Include="Scripts\Models\EntryOptionalFields.ts" />
+    <TypeScriptCompile Include="Scripts\Repositories\VenueRepository.ts" />
     <TypeScriptCompile Include="Scripts\Shared\DialogService.ts" />
     <TypeScriptCompile Include="Scripts\Shared\EntryAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\Shared\MessagesTyped.ts" />
@@ -3334,6 +3375,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\User\ListUsersViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\MySettingsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\RatedSongsSearchViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Venue\VenueDetailsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\WebLinkEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Song\SongEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongInAlbumEditViewModel.ts" />
@@ -3344,6 +3386,8 @@
     <TypeScriptCompile Include="Scripts\ViewModels\User\UserDetailsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\User\UserMessagesViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\WebLinksEditViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\ViewModels\Venue\VenueEditViewModel.ts" />
+    <TypeScriptCompile Include="Scripts\Venue\Edit.ts" />
     <Content Include="Scripts\VocaDb.js" />
     <Content Include="Services\QueryService.svc" />
     <Content Include="sitemap.xml">
@@ -3598,6 +3642,11 @@
     <Content Include="Views\Ext\OEmbedResponsive.cshtml" />
     <Content Include="Views\Search\Partials\_EventSearchOptions.cshtml" />
     <Content Include="Views\Event\ViewSeriesVersion.cshtml" />
+    <Content Include="Views\Venue\Details.cshtml" />
+    <Content Include="Views\Venue\Edit.cshtml" />
+    <Content Include="Views\Venue\Versions.cshtml" />
+    <Content Include="Views\Venue\ViewVersion.cshtml" />
+    <Content Include="Views\Event\EventsByVenue.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

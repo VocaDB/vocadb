@@ -282,3 +282,13 @@ import './KnockoutExtensions/ScrollEnd';
 
 // ~/bundles/User/RequestVerification
 export { default as RequestVerificationViewModel } from './ViewModels/User/RequestVerificationViewModel';
+
+// ~/bundles/Venue/Details
+export { default as VenueDetailsViewModel } from './ViewModels/Venue/VenueDetailsViewModel';
+
+// ~/bundles/Venue/Edit
+export { default as VenueEditViewModel } from './ViewModels/Venue/VenueEditViewModel';
+export { initPage as initVenueEditPage } from './Venue/Edit';
+
+// ~/bundles/Venue/ViewVersion
+export { default as VenueRepository } from './Repositories/VenueRepository';

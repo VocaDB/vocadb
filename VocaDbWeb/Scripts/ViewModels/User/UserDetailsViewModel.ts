@@ -1,6 +1,3 @@
-/// <reference path="../../typings/jquery/jquery.d.ts" />
-/// <reference path="../../Repositories/AdminRepository.ts" />
-
 import AdminRepository from '../../Repositories/AdminRepository';
 import AlbumCollectionViewModel from './AlbumCollectionViewModel';
 import CommentContract from '../../DataContracts/CommentContract';
@@ -17,8 +14,6 @@ import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserEventRelationshipType from '../../Models/Users/UserEventRelationshipType';
 import UserRepository from '../../Repositories/UserRepository';
-
-//module vdb.viewModels.user {
 
     export default class UserDetailsViewModel {
 
@@ -204,5 +199,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		}
 
 	}
-
-//}

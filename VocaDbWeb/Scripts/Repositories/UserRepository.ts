@@ -1,7 +1,3 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../DataContracts/User/UserMessageSummaryContract.ts" />
-/// <reference path="../Models/SongVoteRating.ts" />
-
 import AdvancedSearchFilter from '../ViewModels/Search/AdvancedSearchFilter';
 import AjaxHelper from '../Helpers/AjaxHelper';
 import CommentContract from '../DataContracts/CommentContract';
@@ -21,8 +17,6 @@ import UrlMapper from '../Shared/UrlMapper';
 import UserApiContract from '../DataContracts/User/UserApiContract';
 import UserEventRelationshipType from '../Models/Users/UserEventRelationshipType';
 import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummaryContract';
-
-//module vdb.repositories {
 
     // Repository for managing users and related objects.
     // Corresponds to the UserController class.
@@ -436,5 +430,3 @@ import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummary
 		Sent,
 		Notifications			
 	}
-
-//}

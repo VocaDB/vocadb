@@ -1,8 +1,5 @@
-
 import functions from '../Shared/GlobalFunctions';
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
-
-//module vdb.repositories {
 
 	// Repository for finding base class of common entry types.
 	// Corresponds to the EntryApiController.
@@ -35,5 +32,3 @@ import PagingProperties from '../DataContracts/PagingPropertiesContract';
 		}
 
     }
-
-//}

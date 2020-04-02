@@ -1,14 +1,9 @@
-/// <reference path="../../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../TestSupport/FakeUserRepository.ts" />
-
 import FakeUserRepository from '../../TestSupport/FakeUserRepository';
 import PartialFindResultContract from '../../../DataContracts/PartialFindResultContract';
 import UserApiContract from '../../../DataContracts/User/UserApiContract';
 import { UserInboxType } from '../../../Repositories/UserRepository';
 import UserMessageSummaryContract from '../../../DataContracts/User/UserMessageSummaryContract';
 import UserMessagesViewModel from '../../../ViewModels/User/UserMessagesViewModel';
-
-//module vdb.tests.viewModels {
 
     var receiver: UserApiContract;
     var data: PartialFindResultContract<UserMessageSummaryContract>;
@@ -88,5 +83,3 @@ import UserMessagesViewModel from '../../../ViewModels/User/UserMessagesViewMode
         equal(message2.selected(), true, "message2.selected()");
 
     });
-
-//}

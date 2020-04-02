@@ -1,4 +1,3 @@
-
 import CommentContract from '../DataContracts/CommentContract';
 import DiscussionFolderContract from '../DataContracts/Discussion/DiscussionFolderContract';
 import DiscussionTopicContract from '../DataContracts/Discussion/DiscussionTopicContract';
@@ -7,8 +6,6 @@ import PagingProperties from '../DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
 import UrlMapper from '../Shared/UrlMapper';
 
-//module vdb.repositories {
-	
 	export default class DiscussionRepository implements ICommentRepository {
 		
 		constructor(private urlMapper: UrlMapper) { }
@@ -88,5 +85,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		}
 
 	}
-
-//} 

@@ -1,10 +1,7 @@
-
 import BasicListEditViewModel from '../BasicListEditViewModel';
 import ContentLanguageSelection from '../../Models/Globalization/ContentLanguageSelection';
 import LyricsForSongContract from '../../DataContracts/Song/LyricsForSongContract';
 import TranslationType from '../../Models/Globalization/TranslationType';
-
-//namespace vdb.viewModels.songs {
 
 	export default class LyricsForSongEditViewModel {
 
@@ -119,5 +116,3 @@ import TranslationType from '../../Models/Globalization/TranslationType';
 		}
 
 	}
-
-//}

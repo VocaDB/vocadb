@@ -1,4 +1,3 @@
-
 import AdvancedSearchFilters from '../Search/AdvancedSearchFilters';
 import ArtistFilters from '../Search/ArtistFilters';
 import ArtistRepository from '../../Repositories/ArtistRepository';
@@ -30,8 +29,6 @@ import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContra
 import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
-
-//module vdb.viewModels.songList {
 
 	export default class SongListViewModel {
 
@@ -209,5 +206,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		}
 
 	}
-
-//}

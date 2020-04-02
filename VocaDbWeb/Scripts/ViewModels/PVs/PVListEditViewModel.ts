@@ -1,12 +1,9 @@
-
 import DateTimeHelper from '../../Helpers/DateTimeHelper';
 import PVContract from '../../DataContracts/PVs/PVContract';
 import PVEditViewModel from './PVEditViewModel';
 import PVRepository from '../../Repositories/PVRepository';
 import PVServiceIcons from '../../Models/PVServiceIcons';
 import UrlMapper from '../../Shared/UrlMapper';
-
-//module vdb.viewModels.pvs {
 
 	export default class PVListEditViewModel {
 
@@ -111,5 +108,3 @@ import UrlMapper from '../../Shared/UrlMapper';
 		}
 
 	}
-
-//}

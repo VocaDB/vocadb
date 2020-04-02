@@ -1,6 +1,4 @@
 
-//module vdb {
-	
 	export default class ui {
 
 		public static showSuccessMessage = (message?: string) => {
@@ -68,5 +66,3 @@
 		}
 
 	}
-
-//} 

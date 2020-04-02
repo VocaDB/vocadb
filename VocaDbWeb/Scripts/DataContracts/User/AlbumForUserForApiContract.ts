@@ -1,9 +1,6 @@
-
 import AlbumContract from '../Album/AlbumContract';
 import UserApiContract from './UserApiContract';
 
-//module vdb.dataContracts {
-	
 	export default interface AlbumForUserForApiContract {
 
 		album: AlbumContract;
@@ -17,5 +14,3 @@ import UserApiContract from './UserApiContract';
 		user?: UserApiContract;
 
 	}
-
-//}

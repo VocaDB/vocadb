@@ -1,7 +1,3 @@
-/// <reference path="../../DataContracts/TranslatedEnumField.ts" />
-/// <reference path="../../DataContracts/WebLinkContract.ts" />
-/// <reference path="../WebLinksEditViewModel.ts" />
-
 import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import ArtistForArtistContract from '../../DataContracts/Artist/ArtistForArtistContract';
@@ -20,8 +16,6 @@ import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
-
-//module vdb.viewModels {
 
     export default class ArtistEditViewModel {
 
@@ -261,5 +255,3 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		}
 
 	}
-
-//}

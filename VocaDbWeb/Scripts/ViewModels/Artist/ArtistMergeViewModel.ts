@@ -1,11 +1,8 @@
-
 import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import ArtistRepository from '../../Repositories/ArtistRepository';
 import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
 import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper';
-
-//module vdb.viewModels.artists {
 
 	export default class ArtistMergeViewModel {
 
@@ -39,5 +36,3 @@ import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper
 		public validationError_targetIsNewer = ko.observable(false);
 
 	}
-
-//} 

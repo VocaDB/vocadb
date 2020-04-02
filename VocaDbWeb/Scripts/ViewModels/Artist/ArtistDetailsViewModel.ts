@@ -1,6 +1,3 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" /> 
-/// <reference path="../../Repositories/UserRepository.ts" />
-
 import AlbumRepository from '../../Repositories/AlbumRepository';
 import AlbumSearchViewModel from '../Search/AlbumSearchViewModel';
 import ArtistRepository from '../../Repositories/ArtistRepository';
@@ -24,8 +21,6 @@ import TimeUnit from '../../Models/Aggregate/TimeUnit';
 import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
-
-//module vdb.viewModels {
 
 	export default class ArtistDetailsViewModel {
 
@@ -194,5 +189,3 @@ import UserRepository from '../../Repositories/UserRepository';
 		};
 
 	}
-
-//}

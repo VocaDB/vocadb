@@ -1,8 +1,5 @@
-
 import ArtistType from '../../Models/Artists/ArtistType';
 
-//module vdb.viewModels.search {
-	
 	export default class ArtistFilter {
 		
 		constructor(public id: number) {}
@@ -12,5 +9,3 @@ import ArtistType from '../../Models/Artists/ArtistType';
 		name = ko.observable<string>(null);
 
 	}
-
-//} 

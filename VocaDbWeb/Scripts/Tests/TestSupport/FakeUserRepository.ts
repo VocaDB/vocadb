@@ -1,13 +1,9 @@
-/// <reference path="../../Repositories/UserRepository.ts" />
-
 import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
 import SongVoteRating from '../../Models/SongVoteRating';
 import UrlMapper from '../../Shared/UrlMapper';
 import { UserInboxType } from '../../Repositories/UserRepository';
 import UserMessageSummaryContract from '../../DataContracts/User/UserMessageSummaryContract';
 import UserRepository from '../../Repositories/UserRepository';
-
-//module vdb.tests.testSupport {
 
     export default class FakeUserRepository extends UserRepository {
 
@@ -50,5 +46,3 @@ import UserRepository from '../../Repositories/UserRepository';
         }
     
     }
-
-//}

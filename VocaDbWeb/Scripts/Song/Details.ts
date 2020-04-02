@@ -1,4 +1,3 @@
-
 import functions from "../Shared/GlobalFunctions";
 
 export function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {

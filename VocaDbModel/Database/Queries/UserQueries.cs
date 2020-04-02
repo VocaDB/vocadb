@@ -5,8 +5,10 @@ using System.Net.Mail;
 using System.Runtime.Caching;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using NHibernate;
+using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -218,7 +220,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void SendPrivateMessageNotification(string mySettingsUrl, string messagesUrl, UserMessage message) {
+		private async Task SendPrivateMessageNotification(string mySettingsUrl, string messagesUrl, UserMessage message) {
 
 			ParamIs.NotNull(() => message);
 
@@ -230,7 +232,7 @@ namespace VocaDb.Model.Database.Queries {
 				"If you do not wish to receive more email notifications such as this, you can adjust your settings at {2}.",
 				message.Sender.Name, messagesUrl, mySettingsUrl);
 
-			mailer.SendEmail(message.Receiver.Email, message.Receiver.Name, subject, body);
+			await mailer.SendEmailAsync(message.Receiver.Email, message.Receiver.Name, subject, body);
 
 		}
 
@@ -329,14 +331,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void SendEmailVerificationRequest(IDatabaseContext<User> ctx, User user, string resetUrl, string subject) {
+		private async Task SendEmailVerificationRequest(IDatabaseContext<User> ctx, User user, string resetUrl, string subject) {
 			
 			var request = new PasswordResetRequest(user);
-			ctx.Save(request);
-
+			await ctx.SaveAsync(request);
 			var body = string.Format(UserAccountStrings.VerifyEmailBody, brandableStringsManager.Layout.SiteName, resetUrl, request.Id);
 
-			mailer.SendEmail(request.User.Email, request.User.Name, subject, body);
+			await mailer.SendEmailAsync(request.User.Email, request.User.Name, subject, body);
 
 		}
 
@@ -676,11 +677,12 @@ namespace VocaDb.Model.Database.Queries {
 		/// <exception cref="UserNameAlreadyExistsException">If the user name was already taken.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken.</exception>
 		/// <exception cref="TooFastRegistrationException">If the user registered too fast.</exception>
-		public UserContract Create(string name, string pass, string email, string hostname, 
+		/// <exception cref="RestrictedIPException">User's IP was banned, or determined to be malicious.</exception>
+		public async Task<UserContract> Create(string name, string pass, string email, string hostname, 
 			string userAgent,
 			string culture,
 			TimeSpan timeSpan,
-			HostCollection softbannedIPs, string verifyEmailUrl) {
+			IPRuleManager ipRuleManager, string verifyEmailUrl) {
 
 			ParamIs.NotNullOrEmpty(() => name);
 			ParamIs.NotNullOrEmpty(() => pass);
@@ -691,18 +693,18 @@ namespace VocaDb.Model.Database.Queries {
 				log.Warn("Suspicious registration form fill time ({0}) from {1}.", timeSpan, hostname);
 
 				if (timeSpan < TimeSpan.FromSeconds(2)) {
-					softbannedIPs.Add(hostname);
+					ipRuleManager.AddTempBannedIP(hostname, "Suspicious registration form fill time");
 				}
 
 				throw new TooFastRegistrationException();
 
 			}
 
-			return repository.HandleTransaction(ctx => {
+			return await repository.HandleQueryAsync(async ctx => {
 
 				// Verification
 				var lc = name.ToLowerInvariant();
-				var existing = ctx.Query().FirstOrDefault(u => u.NameLC == lc);
+				var existing = await ctx.Query().Where(u => u.NameLC == lc).VdbFirstOrDefaultAsync();
 
 				if (existing != null)
 					throw new UserNameAlreadyExistsException();
@@ -711,46 +713,69 @@ namespace VocaDb.Model.Database.Queries {
 
 					ValidateEmail(email);
 
-					existing = ctx.Query().FirstOrDefault(u => u.Active && u.Email == email);
+					existing = await ctx.Query().Where(u => u.Active && u.Email == email).VdbFirstOrDefaultAsync();
 
 					if (existing != null)
 						throw new UserEmailAlreadyExistsException();
 
 				}
 
-				// All ok, create user
-				var sfsCheckResult = sfsClient.CallApi(hostname);
+				var confidenceAutoban = 90;
+				var sfsCheckResult = await sfsClient.CallApiAsync(hostname) ?? new SFSResponseContract();
 				var sfsStr = GetSFSCheckStr(sfsCheckResult);
 
-				var user = new User(name, pass, email, PasswordHashAlgorithms.Default);
-				user.UpdateLastLogin(hostname, culture);
-				ctx.Save(user);
-
-				if (sfsCheckResult != null && sfsCheckResult.Appears) {
-
-					var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname, 
-						string.Format("Confidence {0} %, Frequency {1}, Last seen {2}. Conclusion {3}.", 
-						sfsCheckResult.Confidence, sfsCheckResult.Frequency, sfsCheckResult.LastSeen.ToShortDateString(), sfsCheckResult.Conclusion));
-
-					ctx.OfType<UserReport>().Save(report);
-
-					if (sfsCheckResult.Conclusion == SFSCheckResultType.Malicious) {
-						user.GroupId = UserGroupId.Limited;
-						ctx.Update(user);
+				if (sfsCheckResult.Appears && sfsCheckResult.Confidence >= confidenceAutoban) {
+					using (var tx = ctx.BeginTransaction()) {
+						ctx.AuditLogger.AuditLog($"flagged by SFS, conficence {sfsCheckResult.Confidence}%, user banned", name);
+						ipRuleManager.AddPermBannedIP(ctx, hostname, $"SFS: {name}");
+						await tx.CommitAsync();
 					}
-
+					throw new RestrictedIPException();
 				}
 
-				if (!string.IsNullOrEmpty(user.Email)) {
-					var subject = string.Format(UserAccountStrings.AccountCreatedSubject, brandableStringsManager.Layout.SiteName);
-					SendEmailVerificationRequest(ctx, user, verifyEmailUrl, subject);					
+				// All ok, create user
+				User user;
+				using (var tx = ctx.BeginTransaction()) {
+					user = await CreateUser(ctx, name, pass, email, hostname, culture, sfsCheckResult, verifyEmailUrl);
+					ctx.AuditLogger.AuditLog(string.Format("registered from {0} in {1} (SFS check {2}, UA '{3}').", MakeGeoIpToolLink(hostname), timeSpan, sfsStr, userAgent), user);
+					await tx.CommitAsync();
 				}
-
-				ctx.AuditLogger.AuditLog(string.Format("registered from {0} in {1} (SFS check {2}, UA '{3}').", MakeGeoIpToolLink(hostname), timeSpan, sfsStr, userAgent), user);
 
 				return new UserContract(user);
 
 			});
+
+		}
+
+		private async Task<User> CreateUser(IDatabaseContext<User> ctx, string name, string pass, string email, string hostname, string culture,
+			SFSResponseContract sfsCheckResult, string verifyEmailUrl) {
+
+			var confidenceLimited = 60;
+
+			var user = new User(name, pass, email, PasswordHashAlgorithms.Default);
+			user.UpdateLastLogin(hostname, culture);
+			await ctx.SaveAsync(user);
+
+			if (sfsCheckResult.Appears) {
+
+				var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname, 
+					string.Format("Confidence {0} %, Frequency {1}, Last seen {2}. Conclusion {3}.", 
+					sfsCheckResult.Confidence, sfsCheckResult.Frequency, sfsCheckResult.LastSeen.ToShortDateString(), sfsCheckResult.Conclusion));
+
+				await ctx.OfType<UserReport>().SaveAsync(report);
+
+				if (sfsCheckResult.Confidence >= confidenceLimited) { 
+					user.GroupId = UserGroupId.Limited;
+					await ctx.UpdateAsync(user);
+				}
+			}
+
+			if (!string.IsNullOrEmpty(user.Email)) {
+				var subject = string.Format(UserAccountStrings.AccountCreatedSubject, brandableStringsManager.Layout.SiteName);
+				await SendEmailVerificationRequest(ctx, user, verifyEmailUrl, subject);					
+			}
+
+			return user;
 
 		}
 
@@ -1273,16 +1298,16 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void RequestEmailVerification(int userId, string resetUrl) {
+		public async Task RequestEmailVerification(int userId, string resetUrl) {
 
-			repository.HandleTransaction(ctx => {
+			await repository.HandleTransactionAsync(async ctx => {
 
-				var user = ctx.Load(userId);
+				var user = await ctx.LoadAsync(userId);
 				ctx.AuditLogger.SysLog(string.Format("requesting email verification ({0})", user.Email), user.Name);
 
 				var subject = string.Format(UserAccountStrings.VerifyEmailSubject, brandableStringsManager.Layout.SiteName);
 
-				SendEmailVerificationRequest(ctx, user, resetUrl, subject);
+				await SendEmailVerificationRequest(ctx, user, resetUrl, subject);
 
 			});
 
@@ -1296,16 +1321,16 @@ namespace VocaDb.Model.Database.Queries {
 		/// <param name="email">User email. Must belong to that user. Cannot be null or empty.</param>
 		/// <param name="resetUrl">Password reset URL. Cannot be null or empty.</param>
 		/// <exception cref="UserNotFoundException">If no active user matching the email was found.</exception>
-		public void RequestPasswordReset(string username, string email, string resetUrl) {
+		public async Task RequestPasswordReset(string username, string email, string resetUrl) {
 
 			ParamIs.NotNullOrEmpty(() => username);
 			ParamIs.NotNullOrEmpty(() => email);
 
 			var lc = username.ToLowerInvariant();
 
-			repository.HandleTransaction(ctx => {
+			await repository.HandleTransactionAsync(async ctx => {
 
-				var user = ctx.Query().FirstOrDefault(u => u.Active && u.NameLC.Equals(lc) && email.Equals(u.Email));
+				var user = await ctx.Query().Where(u => u.Active && u.NameLC.Equals(lc) && email.Equals(u.Email)).VdbFirstOrDefaultAsync();
 
 				if (user == null) {
 					log.Info("User not found or not active: {0}", username);
@@ -1313,13 +1338,13 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var request = new PasswordResetRequest(user);
-				ctx.Save(request);
+				await ctx.SaveAsync(request);
 
 				var resetFullUrl = string.Format("{0}/{1}", resetUrl, request.Id);
 				var subject = UserAccountStrings.PasswordResetSubject;
 				var body = string.Format(UserAccountStrings.PasswordResetBody, resetFullUrl);
 
-				mailer.SendEmail(request.User.Email, request.User.Name, subject, body);
+				await mailer.SendEmailAsync(request.User.Email, request.User.Name, subject, body);
 
 				ctx.AuditLogger.SysLog($"requested password reset with ID {CryptoHelper.HashSHA1(request.Id.ToString())}", username);
 
@@ -1412,15 +1437,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public UserMessageContract SendMessage(UserMessageContract contract, string mySettingsUrl, string messagesUrl) {
+		public async Task<UserMessageContract> SendMessage(UserMessageContract contract, string mySettingsUrl, string messagesUrl) {
 
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			return HandleTransaction(session => {
+			return await repository.HandleTransactionAsync(async session => {
 
-				var receiver = session.Query().FirstOrDefault(u => u.Name.Equals(contract.Receiver.Name));
+				var receiver = await session.Query().Where(u => u.Name.Equals(contract.Receiver.Name)).VdbFirstOrDefaultAsync();
 
 				if (receiver == null)
 					throw new UserNotFoundException();
@@ -1429,7 +1454,7 @@ namespace VocaDb.Model.Database.Queries {
 					throw new UserNotFoundException();
 				}
 
-				var sender = session.Load(contract.Sender.Id);
+				var sender = await session.LoadAsync(contract.Sender.Id);
 
 				VerifyResourceAccess(sender);
 
@@ -1437,8 +1462,9 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (sender.CreateDate >= DateTime.Now.AddDays(-7)) {
 					var cutoffTime = DateTime.Now.AddHours(-1);
-					var sentMessageCount = session.Query<UserMessage>()
-						.Count(msg => msg.Sender.Id == sender.Id && msg.Created >= cutoffTime);
+					var sentMessageCount = await session.Query<UserMessage>()
+						.Where(msg => msg.Sender.Id == sender.Id && msg.Created >= cutoffTime)
+						.VdbCountAsync();
 					log.Debug($"Sent messages count for sender {sender} is {sentMessageCount}");
 					if (sentMessageCount > 10) {
 						throw new RateLimitException("Too many messages");
@@ -1451,12 +1477,12 @@ namespace VocaDb.Model.Database.Queries {
 					|| (receiver.EmailOptions == UserEmailOptions.PrivateMessagesFromAdmins
 						&& sender.EffectivePermissions.Has(PermissionToken.DesignatedStaff))) {
 
-					SendPrivateMessageNotification(mySettingsUrl, messagesUrl, messages.Received);
+					await SendPrivateMessageNotification(mySettingsUrl, messagesUrl, messages.Received);
 
 				}
 
-				session.Save(messages.Received);
-				session.Save(messages.Sent);
+				await session.SaveAsync(messages.Received);
+				await session.SaveAsync(messages.Sent);
 
 				return new UserMessageContract(messages.Received, userIconFactory);
 

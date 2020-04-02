@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Database.Repositories {
 
@@ -12,7 +13,13 @@ namespace VocaDb.Model.Database.Repositories {
 		/// </summary>
 		IAuditLogger AuditLogger { get; }
 
-		IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel);
+		/// <summary>
+		/// Begins an explicit transaction.
+		/// The transaction object must be committed and disposed upon successful completion.
+		/// </summary>
+		/// <param name="isolationLevel">Isolation level.</param>
+		/// <returns>Transaction object.</returns>
+		IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadUncommitted);
 
 		void Flush();
 
@@ -22,13 +29,13 @@ namespace VocaDb.Model.Database.Repositories {
 		/// </summary>
 		/// <typeparam name="T2">New entity type.</typeparam>
 		/// <returns>Child context for that entity type. Cannot be null.</returns>
-		IDatabaseContext<T2> OfType<T2>();
+		IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject;
 
 		/// <summary>
 		/// LINQ query against the repository.
 		/// </summary>
 		/// <returns>Queryable interface. Cannot be null.</returns>
-		IQueryable<T2> Query<T2>();
+		IQueryable<T2> Query<T2>() where T2 : class, IDatabaseObject;
 
 	}
 
@@ -51,6 +58,8 @@ namespace VocaDb.Model.Database.Repositories {
 		/// </summary>
 		/// <param name="entity">Entity to be deleted. Cannot be null.</param>
 		void Delete(T entity);
+
+		Task DeleteAsync(T entity);
 
 		/// <summary>
 		/// Loads an entity from the repository, assuming the entity exists.

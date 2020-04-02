@@ -1,9 +1,6 @@
-
 import EntryUrlMapper from '../../Shared/EntryUrlMapper';
 import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
 
-//module vdb.viewModels.tags {
-	
 	export default class TagListViewModel {
 		
 		private static maxDisplayedTags = 4;
@@ -37,5 +34,3 @@ import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContra
 		}
 
 	}
-
-//} 

@@ -1,6 +1,4 @@
 
-//namespace vdb.models.events {
-
 	enum EventCategory {
 		Unspecified = 0,		
 		AlbumRelease = 1,
@@ -13,5 +11,3 @@
 	}
 
 	export default EventCategory;
-
-//}

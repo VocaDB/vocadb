@@ -1,8 +1,5 @@
-
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import ArtistForEventContract from '../../DataContracts/ReleaseEvents/ArtistForEventContract';
-
-//namespace vdb.viewModels.events {
 
 	// View model for editing artist for album link.
 	export default class ArtistForEventEditViewModel implements IEditableArtistWithSupport {
@@ -57,5 +54,3 @@ import ArtistForEventContract from '../../DataContracts/ReleaseEvents/ArtistForE
 		rolesArray: KnockoutObservableArray<string>;
 
 	}
-
-//}

@@ -1,4 +1,3 @@
-
 import AjaxHelper from '../Helpers/AjaxHelper';
 import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
@@ -8,8 +7,6 @@ import PartialFindResultContract from '../DataContracts/PartialFindResultContrac
 import ReleaseEventContract from '../DataContracts/ReleaseEvents/ReleaseEventContract';
 import ReleaseEventSeriesForApiContract from '../DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
 import UrlMapper from '../Shared/UrlMapper';
-
-//module vdb.repositories {
 
 	export default class ReleaseEventRepository extends BaseRepository {
 
@@ -112,5 +109,3 @@ import UrlMapper from '../Shared/UrlMapper';
 		userCollectionId?: number;
 
 	}
-
-//}

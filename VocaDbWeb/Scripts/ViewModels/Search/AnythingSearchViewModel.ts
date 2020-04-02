@@ -1,12 +1,9 @@
-
 import EntryContract from '../../DataContracts/EntryContract';
 import EntryRepository from '../../Repositories/EntryRepository';
 import EntryType from '../../Models/EntryType';
 import EntryUrlMapper from '../../Shared/EntryUrlMapper';
 import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
 import SearchViewModel from './SearchViewModel';
-
-//module vdb.viewModels.search {
 
 	export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel<EntryContract> {
 
@@ -45,5 +42,3 @@ import SearchViewModel from './SearchViewModel';
 		public fields = ko.computed(() => this.searchViewModel.showTags() ? "AdditionalNames,MainPicture,Tags" : "AdditionalNames,MainPicture");
 
 	}
-
-//}
