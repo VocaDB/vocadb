@@ -24,6 +24,7 @@ namespace VocaDb.Model.Service.VideoServices {
 		public static readonly RegexLinkMatcher[] Matchers =
 			{
 				new RegexLinkMatcher("acg.tv/av{0}", @"www.bilibili.com/video/av(\d+)"),
+				new RegexLinkMatcher("acg.tv/av{0}", @"www.bilibili.com/video/(BV\w+)"),
 				new RegexLinkMatcher("acg.tv/av{0}", @"acg.tv/av(\d+)"),
 				new RegexLinkMatcher("acg.tv/av{0}", @"www.bilibili.tv/video/av(\d+)"),
 				new RegexLinkMatcher("acg.tv/av{0}", @"bilibili.kankanews.com/video/av(\d+)")
@@ -53,18 +54,19 @@ namespace VocaDb.Model.Service.VideoServices {
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 
 			var id = GetIdByUrl(url);
+			var aid = id.StartsWith("BV") ? BilibiliHelper.Decode(id).ToString() : id;
 
-			if (string.IsNullOrEmpty(id))
+			if (string.IsNullOrEmpty(aid))
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.NoMatcher, "No matcher");
 
 			if (!getTitle) {
-				return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, id, VideoTitleParseResult.Empty);
+				return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, aid, VideoTitleParseResult.Empty);
 			}
 
-			var paramStr = string.Format("appkey={0}&id={1}&type=json{2}", AppConfig.BilibiliAppKey, id, AppConfig.BilibiliSecretKey);
+			var paramStr = string.Format("appkey={0}&id={1}&type=json{2}", AppConfig.BilibiliAppKey, aid, AppConfig.BilibiliSecretKey);
 			var paramStrMd5 = CryptoHelper.HashString(paramStr, CryptoHelper.MD5).ToLowerInvariant();
 
-			var requestUrl = string.Format("https://api.bilibili.com/view?appkey={0}&id={1}&type=json&sign={2}", AppConfig.BilibiliAppKey, id, paramStrMd5);
+			var requestUrl = string.Format("https://api.bilibili.com/view?appkey={0}&id={1}&type=json&sign={2}", AppConfig.BilibiliAppKey, aid, paramStrMd5);
 
 			BilibiliResponse response;
 
@@ -85,13 +87,13 @@ namespace VocaDb.Model.Service.VideoServices {
 			var thumb = response.Pic ?? string.Empty;
 			var author = response.Author ?? string.Empty;
 			var created = response.CreatedAt;
-			var length = await GetLength(id);
+			var length = await GetLength(aid);
 
 			var metadata = new PVExtendedMetadata(new BiliMetadata {
 				Cid = cid
 			});
 
-			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, id, 
+			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, aid, 
 				VideoTitleParseResult.CreateSuccess(title, author, authorId, thumb, length: length, uploadDate: created, extendedMetadata: metadata));
 
 		}
