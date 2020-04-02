@@ -20,26 +20,25 @@
 	}
 }
 
-<div id="tabs" class="js-cloak" data-bind="show">
-	<ul>
-		@foreach (var cat in categories) {
-			<li><a href="@("#" + cat.Id + "Tab")">@cat.Name</a></li>
-		}
-	</ul>	
-
+<ul class="nav nav-pills">
 	@foreach (var cat in categories) {
-	<div id="@(cat.Id + "Tab")" style="padding:10px;" data-bind="with: categories['@cat.Id']">
-		
-		@{ Html.RenderPartial("Partials/_SongListsFilters"); }
-
-		@SongHelpers.SongListsKnockout("items", groupByYear: true)
-
-		<h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
-
-	</div>
+		<li data-bind="css: { active: category() == '@cat.Id' }">
+			<a href="@("#" + cat.Id)" data-bind="click: function() { setCategory('@cat.Id'); }">@cat.Name</a>
+		</li>
 	}
+</ul>
+
+@foreach (var cat in categories) {
+<div data-bind="visible: category() == '@cat.Id', with: categories['@cat.Id'], show" class="js-cloak">
+		
+	@{ Html.RenderPartial("Partials/_SongListsFilters"); }
+
+	@SongHelpers.SongListsKnockout("items", groupByYear: true)
+
+	<h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
 
 </div>
+}
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/SongList/Featured")
@@ -52,7 +51,6 @@
 
 		$("#createLink").button({ icons: { primary: 'ui-icon-plusthick' } });
 		$("#importLink").button({ icons: { primary: 'ui-icon-plusthick' } });
-		$("#tabs").tabs();
 		
 		var cultureCode = '@UICulture';
 		var tagIds = @ToJS(Model.TagId);
@@ -67,6 +65,10 @@
 		var categories = @ToJS(categories.Select(c => c.Id.ToString()));
 		var viewModel = new vdb.viewModels.songList.FeaturedSongListsViewModel(songListRepo, resourceRepo, tagRepo, languageSelection, cultureCode, tagIds, categories);
 		ko.applyBindings(viewModel);
+
+		if (window.location.hash && window.location.hash.length >= 1) {
+			viewModel.setCategory(window.location.hash.substr(1));
+		}
 
 	});
 

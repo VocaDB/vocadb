@@ -18,9 +18,27 @@ module vdb.viewModels.songList {
 				this.categories[categoryName] = new FeaturedSongListCategoryViewModel(listRepo, resourceRepo, tagRepo, languageSelection, cultureCode, tagIds, categoryName);
 			});
 
+			window.onhashchange = () => {
+				if (window.location.hash && window.location.hash.length >= 1)
+					this.setCategory(window.location.hash.substr(1));
+			};
+
 		}
 
 		public categories: { [index: string]: FeaturedSongListCategoryViewModel; } = {};
+
+		public category = ko.observable("Concerts");
+
+		public setCategory = (categoryName: string) => {
+
+			if (!categoryName)
+				categoryName = "Concerts";
+
+			window.scrollTo(0, 0);
+			window.location.hash = categoryName;
+			this.category(categoryName);
+
+		}
 
 	}
 

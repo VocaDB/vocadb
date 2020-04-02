@@ -18,7 +18,7 @@
 	} else {
 		var categoryName = Translate.SongListFeaturedCategoryNames[Model.SongList.FeaturedCategory];
 		ViewBag.Parents = new[] {
-			Html.ActionLink(categoryName, "Featured", "SongList")
+			Html.ActionLink(categoryName, "Featured", "SongList", null, null, Model.SongList.FeaturedCategory.ToString(), null, null)
 		};
 	}
 

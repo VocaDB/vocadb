@@ -56,7 +56,7 @@ module vdb.viewModels.songList {
 
 		}
 
-		public query = ko.observable("");
+		public query = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public resources = ko.observable<dc.ResourcesContract>();
 		public sort = ko.observable(SongListSortRule[SongListSortRule.Date]);
 		public sortName = ko.computed(() => this.resources() != null ? this.resources().songListSortRuleNames[this.sort()] : "");
