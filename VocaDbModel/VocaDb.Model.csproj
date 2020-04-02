@@ -614,6 +614,7 @@
     <Compile Include="Helpers\AlbumHelper.cs" />
     <Compile Include="Helpers\AlphaPassGenerator.cs" />
     <Compile Include="Helpers\ArtistHelper.cs" />
+    <Compile Include="Helpers\BilibiliHelper.cs" />
     <Compile Include="Helpers\CollectionAddResult.cs" />
     <Compile Include="Helpers\CollectionHelper.cs" />
     <Compile Include="Helpers\CultureHelper.cs" />
