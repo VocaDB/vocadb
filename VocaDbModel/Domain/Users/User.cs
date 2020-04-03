@@ -362,7 +362,7 @@ namespace VocaDb.Model.Domain.Users {
 		}
 
 		/// <summary>
-		/// Normalized email address.
+		/// Normalized email address (email address without "+" and/or dots).
 		/// </summary>
 		public virtual string NormalizedEmail {
 			get => normalizedEmail;
