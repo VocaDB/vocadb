@@ -594,6 +594,25 @@ namespace VocaDb.Model.Service {
 
 		}
 
+		public void UpdateNormalizedEmailAddresses() {
+
+			PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+			HandleTransaction(session => {
+
+				AuditLog("updating normalized email addresses", session);
+
+				var users = session.Query<User>().ToArray();
+
+				foreach (var user in users) {
+					user.NormalizedEmail = !string.IsNullOrEmpty(user.Email) ? MailAddressNormalizer.Normalize(user.Email) : string.Empty;
+					session.Update(user);
+				}
+
+			});
+
+		}
+
 		public void UpdatePVIcons() {
 
 			VerifyAdmin();
