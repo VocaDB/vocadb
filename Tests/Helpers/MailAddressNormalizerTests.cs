@@ -14,71 +14,75 @@ namespace VocaDb.Tests.Helpers {
 			return await MailAddressNormalizer.NormalizeAsync(address, options);
 		}
 
-		[TestMethod]
-		public async Task OnlySupportedDomains() {
-			Assert.AreEqual("a.b.c+tag@example.com", await NormalizedAddress("a.b.c+tag@example.com"));
+		private async void TestNormalizedEmail(string expected, string given, MailAddressNormalizerOptions options = MailAddressNormalizerOptions.None) {
+			Assert.AreEqual(expected, await NormalizedAddress(given, options));
 		}
 
 		[TestMethod]
-		public async Task GmailDots() {Assert.AreEqual("abc@gmail.com", await NormalizedAddress("a.b.c@gmail.com"));
-			Assert.AreEqual("a.b.c@yahoo.com", await NormalizedAddress("a.b.c@yahoo.com"));
+		public void OnlySupportedDomains() {
+			TestNormalizedEmail("a.b.c+tag@example.com", "a.b.c+tag@example.com");
 		}
 
 		[TestMethod]
-		public async Task Plus() {
-			Assert.AreEqual("abc@gmail.com", await NormalizedAddress("a.b.c+tag@gmail.com"));
-			Assert.AreEqual("a.b.c+tag@yahoo.com", await NormalizedAddress("a.b.c+tag@yahoo.com"));
+		public void GmailDots() {TestNormalizedEmail("abc@gmail.com", "a.b.c@gmail.com");
+			TestNormalizedEmail("a.b.c@yahoo.com", "a.b.c@yahoo.com");
 		}
 
 		[TestMethod]
-		public async Task NonStandardTlds() {
-			Assert.AreEqual("a.b.c+tag@something.co.uk", await NormalizedAddress("a.b.c+tag@something.co.uk"));
-			Assert.AreEqual("abc@something.co.uk", await NormalizedAddress("a.b.c+tag@something.co.uk", MailAddressNormalizerOptions.ForceRemoveDots | MailAddressNormalizerOptions.ForceRemoveTags));
+		public void Plus() {
+			TestNormalizedEmail("abc@gmail.com", "a.b.c+tag@gmail.com");
+			TestNormalizedEmail("a.b.c+tag@yahoo.com", "a.b.c+tag@yahoo.com");
 		}
 
 		[TestMethod]
-		public async Task Yahoo() {
-			Assert.AreEqual("a.b.c+tag@yahoo.com", await NormalizedAddress("a.b.c+tag@yahoo.com"));
-			Assert.AreEqual("a.b.c@yahoo.com", await NormalizedAddress("a.b.c-tag@yahoo.com"));
-			Assert.AreEqual("a.b.c@yahoo.co.uk", await NormalizedAddress("a.b.c-tag@yahoo.co.uk"));
-			Assert.AreEqual("a@yahoo.ro", await NormalizedAddress("a-b.c-tag@yahoo.ro"));
+		public void NonStandardTlds() {
+			TestNormalizedEmail("a.b.c+tag@something.co.uk", "a.b.c+tag@something.co.uk");
+			TestNormalizedEmail("abc@something.co.uk", "a.b.c+tag@something.co.uk", MailAddressNormalizerOptions.ForceRemoveDots | MailAddressNormalizerOptions.ForceRemoveTags);
 		}
 
 		[TestMethod]
-		public async Task Microsoft() {
-			Assert.AreEqual("a.b.c@outlook.com", await NormalizedAddress("a.b.c+tag@outlook.com"));
-			Assert.AreEqual("a.b.c-tag@hotmail.com", await NormalizedAddress("a.b.c-tag@hotmail.com"));
-			Assert.AreEqual("a.b.c-tag@outlook.co.uk", await NormalizedAddress("a.b.c-tag@outlook.co.uk"));
-			Assert.AreEqual("a.b.c@live.com", await NormalizedAddress("a.b.c+d@live.com"));
+		public void Yahoo() {
+			TestNormalizedEmail("a.b.c+tag@yahoo.com", "a.b.c+tag@yahoo.com");
+			TestNormalizedEmail("a.b.c@yahoo.com", "a.b.c-tag@yahoo.com");
+			TestNormalizedEmail("a.b.c@yahoo.co.uk", "a.b.c-tag@yahoo.co.uk");
+			TestNormalizedEmail("a@yahoo.ro", "a-b.c-tag@yahoo.ro");
 		}
 
 		[TestMethod]
-		public async Task GoogleAppsForWork() {
-			Assert.AreEqual("a.b.c+tag@idorecall.com", await NormalizedAddress("a.b.c+tag@idorecall.com"));
-			Assert.AreEqual("abc@blueseed.com", await NormalizedAddress("a.b.c+tag@blueseed.com", MailAddressNormalizerOptions.DetectProvider));
+		public void Microsoft() {
+			TestNormalizedEmail("a.b.c@outlook.com", "a.b.c+tag@outlook.com");
+			TestNormalizedEmail("a.b.c-tag@hotmail.com", "a.b.c-tag@hotmail.com");
+			TestNormalizedEmail("a.b.c-tag@outlook.co.uk", "a.b.c-tag@outlook.co.uk");
+			TestNormalizedEmail("a.b.c@live.com", "a.b.c+d@live.com");
 		}
 
 		[TestMethod]
-		public async Task Fastmail() {
-			Assert.AreEqual("a.b.c@fastmail.com", await NormalizedAddress("a.b.c+tag@fastmail.com"));
-			Assert.AreEqual("a.b.c@fastmail.fm", await NormalizedAddress("a.b.c+tag@fastmail.fm"));
+		public void GoogleAppsForWork() {
+			TestNormalizedEmail("a.b.c+tag@idorecall.com", "a.b.c+tag@idorecall.com");
+			TestNormalizedEmail("abc@blueseed.com", "a.b.c+tag@blueseed.com", MailAddressNormalizerOptions.DetectProvider);
+		}
+
+		[TestMethod]
+		public void Fastmail() {
+			TestNormalizedEmail("a.b.c@fastmail.com", "a.b.c+tag@fastmail.com");
+			TestNormalizedEmail("a.b.c@fastmail.fm", "a.b.c+tag@fastmail.fm");
 			// http://outcoldman.com/en/archive/2014/05/08/fastmail/
-			Assert.AreEqual("denis+tag@outcoldman.com", await NormalizedAddress("denis+tag@outcoldman.com"));
+			TestNormalizedEmail("denis+tag@outcoldman.com", "denis+tag@outcoldman.com");
 		}
 
 		[TestMethod]
-		public async Task AsyncTestGoogleAppsForWork() {
-			Assert.AreEqual("abc@blueseed.com", await NormalizedAddress("a.b.c+tag@blueseed.com", MailAddressNormalizerOptions.DetectProvider));
+		public void AsyncTestGoogleAppsForWork() {
+			TestNormalizedEmail("abc@blueseed.com", "a.b.c+tag@blueseed.com", MailAddressNormalizerOptions.DetectProvider);
 		}
 
 		[TestMethod]
-		public async Task AsyncTestFastmail() {
-			Assert.AreEqual("notpublic@denis.gladkikh.email", await NormalizedAddress("notpublic+tag@denis.gladkikh.email", MailAddressNormalizerOptions.DetectProvider));
+		public void AsyncTestFastmail() {
+			TestNormalizedEmail("notpublic@denis.gladkikh.email", "notpublic+tag@denis.gladkikh.email", MailAddressNormalizerOptions.DetectProvider);
 		}
 
 		[TestMethod]
-		public async Task AsyncTestNoSpecialProvider() {
-			Assert.AreEqual("ad.missions+impossible@stanford.edu", await NormalizedAddress("ad.missions+impossible@stanford.edu", MailAddressNormalizerOptions.DetectProvider));
+		public void AsyncTestNoSpecialProvider() {
+			TestNormalizedEmail("ad.missions+impossible@stanford.edu", "ad.missions+impossible@stanford.edu", MailAddressNormalizerOptions.DetectProvider);
 		}
 
 	}
