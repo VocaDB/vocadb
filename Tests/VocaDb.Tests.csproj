@@ -176,7 +176,6 @@
     <Compile Include="Domain\Versioning\ArchivedVersionManagerTests.cs" />
     <Compile Include="Domain\WebLinkTests.cs" />
     <Compile Include="Helpers\ArtistHelperTests.cs" />
-    <Compile Include="Helpers\BilibiliHelperTests.cs" />
     <Compile Include="Helpers\CollectionHelperTests.cs" />
     <Compile Include="Helpers\ConcurrentEntryEditManagerTests.cs" />
     <Compile Include="Domain\Images\ImageThumbGeneratorTests.cs" />
