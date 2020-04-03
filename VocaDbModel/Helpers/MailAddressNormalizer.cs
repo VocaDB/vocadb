@@ -1,20 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using DnsClient;
 
 namespace VocaDb.Model.Helpers {
-
-	[Flags]
-	public enum MailAddressNormalizerOptions {
-		None = 0,
-		ForceRemoveDots = 1,
-		ForceRemoveTags = 2,
-		DetectProvider = 4
-	}
 
 	/// <summary>
 	/// Code from https://github.com/iDoRecall/email-normalize/blob/0938e0a4710c6fc076c50dd42ea2886b2984e219/email.js
@@ -83,53 +71,23 @@ namespace VocaDb.Model.Helpers {
 			{ "yahoo.com.vn", '-' }
 		};
 
-		public static string Normalize(MailAddress address, MailAddressNormalizerOptions options = MailAddressNormalizerOptions.None) => NormalizeAsync(address, options).Result;
-
-		public static string Normalize(string address, MailAddressNormalizerOptions options = MailAddressNormalizerOptions.None) => NormalizeAsync(address, options).Result;
-
-		public static async Task<string> NormalizeAsync(MailAddress address, MailAddressNormalizerOptions options = MailAddressNormalizerOptions.None) {
+		public static string Normalize(MailAddress address) {
 			var user = address.User;
 			var host = address.Host.ToLower();
 
-			if (options.HasFlag(MailAddressNormalizerOptions.ForceRemoveTags))
-				user = Regex.Replace(user, @"[-+=].*", "");
-			else {
-				if (hostsWithTags.TryGetValue(host, out var separator))
-					user = user.Split(separator)[0];
-			}
+			if (hostsWithTags.TryGetValue(host, out var separator))
+				user = user.Split(separator)[0];
 
-			if (options.HasFlag(MailAddressNormalizerOptions.ForceRemoveDots) || Regex.IsMatch(host, @"^(gmail|googlemail|google)\.com$"))
+			if (Regex.IsMatch(host, @"^(gmail|googlemail|google)\.com$"))
 				user = Regex.Replace(user, @"\.", "");
 
 			if (host == "googlemail.com")
 				host = "gmail.com";
 
-			if (options.HasFlag(MailAddressNormalizerOptions.DetectProvider)) {
-				// Detect custom domain email hosting providers TODO providers from https://news.ycombinator.com/item?id=8533588
-
-				static string ProcessMXRecords(DnsString exchange, string user) {
-					if (Regex.IsMatch(exchange.Value, @"aspmx.*google.*\.com\.?$", RegexOptions.IgnoreCase))
-						return Regex.Replace(user.Split('+')[0], @"\.", "");
-
-					if (Regex.IsMatch(exchange.Value, @"\.messagingengine\.com\.?$", RegexOptions.IgnoreCase))
-						return user.Split('+')[0];
-
-					return user;
-				}
-
-				var client = new LookupClient();
-				var result = await client.QueryAsync(host, QueryType.MX);
-
-				foreach (var record in result.Answers.MxRecords())
-					user = ProcessMXRecords(record.Exchange, user);
-
-				return user + "@" + host;
-			}
-
 			return user + "@" + host;
 		}
 
-		public static async Task<string> NormalizeAsync(string address, MailAddressNormalizerOptions options = MailAddressNormalizerOptions.None) => await NormalizeAsync(new MailAddress(address), options);
+		public static string Normalize(string address) => Normalize(new MailAddress(address));
 
 	}
 

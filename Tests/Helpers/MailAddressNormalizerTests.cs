@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Helpers;
 
@@ -10,12 +9,12 @@ namespace VocaDb.Tests.Helpers {
 	[TestClass]
 	public class MailAddressNormalizerTests {
 
-		private async Task<string> NormalizedAddress(string address, MailAddressNormalizerOptions options = MailAddressNormalizerOptions.None) {
-			return await MailAddressNormalizer.NormalizeAsync(address, options);
+		private string NormalizedAddress(string address) {
+			return MailAddressNormalizer.Normalize(address);
 		}
 
-		private async void TestNormalizedEmail(string expected, string given, MailAddressNormalizerOptions options = MailAddressNormalizerOptions.None) {
-			Assert.AreEqual(expected, await NormalizedAddress(given, options));
+		private void TestNormalizedEmail(string expected, string given) {
+			Assert.AreEqual(expected, NormalizedAddress(given));
 		}
 
 		[TestMethod]
@@ -37,7 +36,6 @@ namespace VocaDb.Tests.Helpers {
 		[TestMethod]
 		public void NonStandardTlds() {
 			TestNormalizedEmail("a.b.c+tag@something.co.uk", "a.b.c+tag@something.co.uk");
-			TestNormalizedEmail("abc@something.co.uk", "a.b.c+tag@something.co.uk", MailAddressNormalizerOptions.ForceRemoveDots | MailAddressNormalizerOptions.ForceRemoveTags);
 		}
 
 		[TestMethod]
@@ -59,7 +57,6 @@ namespace VocaDb.Tests.Helpers {
 		[TestMethod]
 		public void GoogleAppsForWork() {
 			TestNormalizedEmail("a.b.c+tag@idorecall.com", "a.b.c+tag@idorecall.com");
-			TestNormalizedEmail("abc@blueseed.com", "a.b.c+tag@blueseed.com", MailAddressNormalizerOptions.DetectProvider);
 		}
 
 		[TestMethod]
@@ -68,21 +65,6 @@ namespace VocaDb.Tests.Helpers {
 			TestNormalizedEmail("a.b.c@fastmail.fm", "a.b.c+tag@fastmail.fm");
 			// http://outcoldman.com/en/archive/2014/05/08/fastmail/
 			TestNormalizedEmail("denis+tag@outcoldman.com", "denis+tag@outcoldman.com");
-		}
-
-		[TestMethod]
-		public void AsyncTestGoogleAppsForWork() {
-			TestNormalizedEmail("abc@blueseed.com", "a.b.c+tag@blueseed.com", MailAddressNormalizerOptions.DetectProvider);
-		}
-
-		[TestMethod]
-		public void AsyncTestFastmail() {
-			TestNormalizedEmail("notpublic@denis.gladkikh.email", "notpublic+tag@denis.gladkikh.email", MailAddressNormalizerOptions.DetectProvider);
-		}
-
-		[TestMethod]
-		public void AsyncTestNoSpecialProvider() {
-			TestNormalizedEmail("ad.missions+impossible@stanford.edu", "ad.missions+impossible@stanford.edu", MailAddressNormalizerOptions.DetectProvider);
 		}
 
 	}

@@ -713,7 +713,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					ValidateEmail(email);
 
-					var normalizedEmail = await MailAddressNormalizer.NormalizeAsync(email);
+					var normalizedEmail = MailAddressNormalizer.Normalize(email);
 					existing = await ctx.Query().Where(u => u.Active && u.NormalizedEmail == normalizedEmail).VdbFirstOrDefaultAsync();
 
 					if (existing != null)
