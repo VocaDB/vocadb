@@ -175,7 +175,7 @@ namespace VocaDb.Model.Service {
 					.ToArray();
 
 				var entryContracts = recentEvents.Select(i => 
-					new ReleaseEventForApiContract(i, LanguagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, 
+					new ReleaseEventForApiContract(i, LanguagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue,
 					thumbPersister));
 
 				return entryContracts.ToArray();

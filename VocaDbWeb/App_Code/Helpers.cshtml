@@ -180,7 +180,14 @@
 							}
 						</small>						
 					}
-					@if (!string.IsNullOrEmpty(ev.VenueName)) {
+					@if (ev.Venue != null) {
+						<br />
+						<small class="extraInfo">
+							<a href="@Url.EntryDetails(ev.Venue)" title="@ev.Venue.AdditionalNames">
+								@(ev.Venue.Name)
+							</a>
+						</small>
+					} else if (!string.IsNullOrEmpty(ev.VenueName)) {
 						<br />
 						<small class="extraInfo">@(ev.VenueName)</small>
 					}
