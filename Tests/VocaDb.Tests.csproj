@@ -181,6 +181,7 @@
     <Compile Include="Domain\Images\ImageThumbGeneratorTests.cs" />
     <Compile Include="Helpers\EnumerableExtenderTests.cs" />
     <Compile Include="Helpers\LyricsHelperTests.cs" />
+    <Compile Include="Helpers\MailAddressNormalizerTests.cs" />
     <Compile Include="Helpers\RelatedSitesHelperTests.cs" />
     <Compile Include="Helpers\StringExtensionsTests.cs" />
     <Compile Include="Helpers\StringHelperTests.cs" />

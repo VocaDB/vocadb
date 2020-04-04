@@ -5,8 +5,17 @@ namespace VocaDb.Migrations {
 
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2020_03_30_2300)]
+	public class UserNormalizedEmail : AutoReversingMigration {
+
+		public override void Up() {
+			Create.Column("NormalizedEmail").OnTable(TableNames.Users).AsString(50).NotNullable().WithDefaultValue(string.Empty);
+		}
+
+	}
+
 	[Migration(2020_03_22_0000)]
-	public class VenuesAddressCountryCode : AutoReversingMigration {
+	public class VenueAddressCountryCode : AutoReversingMigration {
 
 		public override void Up() {
 			Create.Column("AddressCountryCode").OnTable(TableNames.Venues).AsString(10).NotNullable().WithDefaultValue(string.Empty);
@@ -15,7 +24,7 @@ namespace VocaDb.Migrations {
 	}
 
 	[Migration(2020_03_01_1300)]
-	public class ArchivedEventVersionsRenameVenue : Migration {
+	public class ArchivedReleaseEventRenameVenue : Migration {
 
 		public override void Up() {
 			Execute.Sql("UPDATE [ArchivedEventVersions] SET ChangedFields = REPLACE(ChangedFields, 'Venue', 'VenueName') WHERE ChangedFields LIKE '%Venue%' AND NOT ChangedFields LIKE '%VenueName%'");
@@ -28,7 +37,7 @@ namespace VocaDb.Migrations {
 	}
 
 	[Migration(2020_03_01_1000)]
-	public class VenuesCreateDate : AutoReversingMigration {
+	public class VenueCreateDate : AutoReversingMigration {
 
 		public override void Up() {
 			Create.Column("CreateDate").OnTable(TableNames.Venues).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
@@ -37,7 +46,7 @@ namespace VocaDb.Migrations {
 	}
 
 	[Migration(2020_02_28_1700)]
-	public class AlbumReleaseEventsRenameVenue : AutoReversingMigration {
+	public class ReleaseEventRenameVenue : AutoReversingMigration {
 
 		public override void Up() {
 			Rename.Column("[Venue]").OnTable(TableNames.AlbumReleaseEvents).To("VenueName");
