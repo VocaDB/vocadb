@@ -27,7 +27,7 @@
 			<tr>
 				<td style="width: 80px">
 					<a data-bind="visible: $data.mainPicture && mainPicture.urlTinyThumb, attr: { href: $parent.entryUrl($data), title: $data.additionalNames }" href="#" class="coverPicThumb">
-						<img data-bind="attr: { src: ($data.mainPicture ? mainPicture.urlTinyThumb : '') }" title="Cover picture" class="coverPicThumb img-rounded" />
+						<img data-bind="attr: { src: ($data.mainPicture ? mainPicture.urlTinyThumb : '') }" title="Cover picture" class="coverPicThumb img-rounded" referrerpolicy="same-origin"/>
 					</a>
 				</td>
 				<td>
