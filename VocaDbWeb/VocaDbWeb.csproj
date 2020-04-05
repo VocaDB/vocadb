@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -32,6 +32,9 @@
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
     <TypeScriptToolsVersion>3.7</TypeScriptToolsVersion>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <RuntimeIdentifiers>win</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,6 +61,62 @@
     <NoWarn>1591</NoWarn>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Antlr" Version="3.5.0.2" />
+    <PackageReference Include="Antlr3.Runtime" Version="3.5.1" />
+    <PackageReference Include="Autofac" Version="5.0.0" />
+    <PackageReference Include="Autofac.Mvc5" Version="5.0.0" />
+    <PackageReference Include="Autofac.Wcf" Version="5.0.0" />
+    <PackageReference Include="Autofac.WebApi2" Version="5.0.0" />
+    <PackageReference Include="DotNetOpenAuth.Ultimate" Version="4.1.0.12182" />
+    <PackageReference Include="google.analytics.TypeScript.DefinitelyTyped" Version="0.3.8" />
+    <PackageReference Include="highcharts.js" Version="4.2.0.0" />
+    <PackageReference Include="highcharts.TypeScript.DefinitelyTyped" Version="0.3.7" />
+    <PackageReference Include="Iesi.Collections" Version="4.0.4" />
+    <PackageReference Include="jQuery" Version="2.2.1" />
+    <PackageReference Include="jquery.TypeScript.DefinitelyTyped" Version="2.2.8" />
+    <PackageReference Include="jQuery.UI.Combined" Version="1.8.11" />
+    <PackageReference Include="jqueryui.TypeScript.DefinitelyTyped" Version="0.4.1" />
+    <PackageReference Include="knockout.TypeScript.DefinitelyTyped" Version="0.8.2" />
+    <PackageReference Include="knockoutjs" Version="3.4.1" />
+    <PackageReference Include="lodash" Version="4.17.3" />
+    <PackageReference Include="lodash.TypeScript.DefinitelyTyped" Version="2.4.9" />
+    <PackageReference Include="MarkdownSharp" Version="2.0.5" />
+    <PackageReference Include="marked" Version="0.3.3" />
+    <PackageReference Include="marked.TypeScript.DefinitelyTyped" Version="0.1.0" />
+    <PackageReference Include="Microsoft.AspNet.Cors" Version="5.2.6" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
+    <PackageReference Include="Microsoft.AspNet.Razor" Version="3.2.6" />
+    <PackageReference Include="Microsoft.AspNet.Web.Optimization" Version="1.1.3" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.6" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.6" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.6" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.2.6" />
+    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.6" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Bcl.Immutable" Version="1.0.34" />
+    <PackageReference Include="Microsoft.Web.Infrastructure" Version="1.0.0.0" />
+    <PackageReference Include="Moment.js" Version="2.17.0" />
+    <PackageReference Include="moment.TypeScript.DefinitelyTyped" Version="1.8.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="NHibernate" Version="5.2.7" />
+    <PackageReference Include="NHibernate.Caches.SysCache2" Version="5.6.0" />
+    <PackageReference Include="NLog" Version="4.5.6" />
+    <PackageReference Include="NLog.Schema" Version="4.4.12" />
+    <PackageReference Include="qunit.TypeScript.DefinitelyTyped" Version="0.1.7" />
+    <PackageReference Include="Remotion.Linq" Version="2.2.0" />
+    <PackageReference Include="Remotion.Linq.EagerFetching" Version="2.2.0" />
+    <PackageReference Include="Strathweb.CacheOutput.WebApi2" Version="0.10.0" />
+    <PackageReference Include="Swashbuckle" Version="5.2.2" />
+    <PackageReference Include="Swashbuckle.Core" Version="5.2.2" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.2" />
+    <PackageReference Include="Twitter.Bootstrap" Version="2.0.3" />
+    <PackageReference Include="WebActivatorEx" Version="2.2.0" />
+    <PackageReference Include="WebApiContrib.Formatting.Jsonp" Version="3.0.2" />
+    <PackageReference Include="WebGrease" Version="1.6.0" />
+    <PackageReference Include="youtube.TypeScript.DefinitelyTyped" Version="0.2.0" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr3.Runtime.3.5.1\lib\net40-client\Antlr3.Runtime.dll</HintPath>
@@ -3435,11 +3494,6 @@
     <Folder Include="Views\Integration\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
     <Folder Include="Views\Shared\KnockoutTemplates\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.config">
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj">
