@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -8,7 +7,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VocaDb.Tests</RootNamespace>
     <AssemblyName>VocaDb.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFramework>net48</TargetFramework>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -17,7 +16,6 @@
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
     <TargetFrameworkProfile />
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
   </PropertyGroup>
@@ -55,8 +53,11 @@
     <PackageReference Include="Microsoft.AspNet.Razor" Version="3.2.6" />
     <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.6" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="Microsoft.Web.Infrastructure" Version="1.0.0.0" />
     <PackageReference Include="Moq" Version="4.7.99" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
     <PackageReference Include="NHibernate" Version="5.2.7" />
     <PackageReference Include="NHibernate.Logging" Version="4.0.3" />
     <PackageReference Include="Remotion.Linq" Version="2.2.0" />
@@ -78,142 +79,6 @@
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
-  <Choose>
-    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
-  <ItemGroup>
-    <Compile Include="DatabaseTests\DatabaseTestContext.cs" />
-    <Compile Include="DatabaseTests\Queries\EventQueriesDatabaseTests.cs" />
-    <Compile Include="DatabaseTests\Queries\SongQueriesDatabaseTests.cs" />
-    <Compile Include="DatabaseTests\Queries\TagQueriesDatabaseTests.cs" />
-    <Compile Include="DatabaseTests\QueryableExtenders\TagQueryableExtenderDatabaseTests.cs" />
-    <Compile Include="DatabaseTests\Search\SongSearch\SongSearchDatabaseTests.cs" />
-    <Compile Include="DatabaseTests\Search\Tags\TagSearchDatabaseTests.cs" />
-    <Compile Include="DatabaseTests\TestDatabase.cs" />
-    <Compile Include="Database\Queries\CountPerDayContractExtenderTests.cs" />
-    <Compile Include="DataContracts\UseCases\ArtistForEditContractTests.cs" />
-    <Compile Include="Domain\Albums\AlbumTests.cs" />
-    <Compile Include="Domain\Albums\ArtistForAlbumTests.cs" />
-    <Compile Include="Domain\Artists\ArtistStringFactoryTests.cs" />
-    <Compile Include="Domain\Artists\ArtistTests.cs" />
-    <Compile Include="Domain\DateTests.cs" />
-    <Compile Include="Domain\Globalization\EnglishTranslatedStringTests.cs" />
-    <Compile Include="Domain\Globalization\InterfaceLanguageTests.cs" />
-    <Compile Include="Domain\Globalization\NameManagerTests.cs" />
-    <Compile Include="Domain\Globalization\TranslatedStringTests.cs" />
-    <Compile Include="Domain\OptionalDateTimeTests.cs" />
-    <Compile Include="Domain\OptionalGeoPointTests.cs" />
-    <Compile Include="Domain\PVs\PVManagerTests.cs" />
-    <Compile Include="Domain\Security\EntryPermissionManagerTests.cs" />
-    <Compile Include="Domain\Songs\SongTests.cs" />
-    <Compile Include="Domain\Tags\TagManagerTests.cs" />
-    <Compile Include="Domain\Tags\TagTests.cs" />
-    <Compile Include="Domain\Users\FavoriteSongForUserTests.cs" />
-    <Compile Include="Domain\Users\OwnedArtistForUserTests.cs" />
-    <Compile Include="Domain\Users\UserTests.cs" />
-    <Compile Include="Domain\Versioning\ArchivedVersionManagerTests.cs" />
-    <Compile Include="Domain\WebLinkTests.cs" />
-    <Compile Include="Helpers\ArtistHelperTests.cs" />
-    <Compile Include="Helpers\CollectionHelperTests.cs" />
-    <Compile Include="Helpers\ConcurrentEntryEditManagerTests.cs" />
-    <Compile Include="Domain\Images\ImageThumbGeneratorTests.cs" />
-    <Compile Include="Helpers\EnumerableExtenderTests.cs" />
-    <Compile Include="Helpers\LyricsHelperTests.cs" />
-    <Compile Include="Helpers\MailAddressNormalizerTests.cs" />
-    <Compile Include="Helpers\RelatedSitesHelperTests.cs" />
-    <Compile Include="Helpers\StringExtensionsTests.cs" />
-    <Compile Include="Helpers\StringHelperTests.cs" />
-    <Compile Include="Helpers\XmlHelperTests.cs" />
-    <Compile Include="Service\EntryUrlParserTests.cs" />
-    <Compile Include="Service\ExtSites\AffiliateLinkGeneratorTests.cs" />
-    <Compile Include="Service\Helpers\ArtistExternalUrlParserTests.cs" />
-    <Compile Include="Service\Helpers\FindHelpersTests.cs" />
-    <Compile Include="Service\Helpers\FollowedArtistNotifierTests.cs" />
-    <Compile Include="Service\Helpers\UserCommentNotifierTests.cs" />
-    <Compile Include="Service\Queries\ArtistRelationsQueryTests.cs" />
-    <Compile Include="Service\Queries\TagUsageQueriesTests.cs" />
-    <Compile Include="Service\QueryableExtenders\EntryWithNamesQueryableExtenderTests.cs" />
-    <Compile Include="Service\QueryableExtenders\GenericQueryableExtenderTests.cs" />
-    <Compile Include="Service\Search\Artists\ArtistSearchTests.cs" />
-    <Compile Include="Service\Search\SearchParserTests.cs" />
-    <Compile Include="Service\Search\Tags\TagSearchTests.cs" />
-    <Compile Include="Service\UserServiceTests.cs" />
-    <Compile Include="Service\VideoServices\SoundCloudIdTests.cs" />
-    <Compile Include="Service\VideoServices\VideoServiceFileTests.cs" />
-    <Compile Include="TestData\CreateEntry.cs" />
-    <Compile Include="TestSupport\DatabaseContextAsRepositoryWrapper.cs" />
-    <Compile Include="TestSupport\FakeArtistRepository.cs" />
-    <Compile Include="TestSupport\FakeDiscussionFolderRepository.cs" />
-    <Compile Include="TestSupport\FakeEventRepository.cs" />
-    <Compile Include="TestSupport\FakeFollowedArtistNotifier.cs" />
-    <Compile Include="TestSupport\FakeLanguageDetector.cs" />
-    <Compile Include="TestSupport\FakeObjectCache.cs" />
-    <Compile Include="TestSupport\FakePVParser.cs" />
-    <Compile Include="TestSupport\FakeSongRepository.cs" />
-    <Compile Include="TestSupport\FakeTransaction.cs" />
-    <Compile Include="TestSupport\FakeUserIconFactory.cs" />
-    <Compile Include="TestSupport\FakeUserMessageMailer.cs" />
-    <Compile Include="TestSupport\InMemoryImagePersister.cs" />
-    <Compile Include="TestSupport\QuerySourceList.cs" />
-    <Compile Include="TestSupport\TestCategories.cs" />
-    <Compile Include="TestSupport\TestContainerFactory.cs" />
-    <Compile Include="TestSupport\TestDatabaseFactory.cs" />
-    <Compile Include="TestSupport\VocaDbAssert.cs" />
-    <Compile Include="TestSupport\FakeAlbumRepository.cs" />
-    <Compile Include="TestSupport\FakeAuditLogger.cs" />
-    <Compile Include="TestSupport\FakeEntryLinkFactory.cs" />
-    <Compile Include="TestSupport\FakePermissionContext.cs" />
-    <Compile Include="TestSupport\FakeSongListRepository.cs" />
-    <Compile Include="TestSupport\FakeStopForumSpamClient.cs" />
-    <Compile Include="TestSupport\FakeTagRepository.cs" />
-    <Compile Include="TestSupport\FakeUserMessageRepository.cs" />
-    <Compile Include="TestSupport\FakeUserRepository.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\AlbumImport\KarenTAlbumImporterTests.cs" />
-    <Compile Include="Service\ArtistQueryableExtenderTests.cs" />
-    <Compile Include="Service\BBCode\EntryLinkTransformerTests.cs" />
-    <Compile Include="Service\EntryValidators\SongValidatorTests.cs" />
-    <Compile Include="Service\Helpers\UrlHelperTests.cs" />
-    <Compile Include="Service\Search\AlbumSearch\AlbumSearchTests.cs" />
-    <Compile Include="Service\Search\ReleaseEventSearchTests.cs" />
-    <Compile Include="Service\Search\SongSearch\SongSearchTests.cs" />
-    <Compile Include="Service\TagFormatting\AlbumSongFormatterTests.cs" />
-    <Compile Include="Service\VideoServices\NicoHelperTests.cs" />
-    <Compile Include="Service\VideoServices\VideoServiceHelperTests.cs" />
-    <Compile Include="TestSupport\FakeRepository.cs" />
-    <Compile Include="TestSupport\PictureDownloaderStub.cs" />
-    <Compile Include="TestSupport\ResourceHelper.cs" />
-    <Compile Include="Utils\UrlFriendlyNameFactoryTests.cs" />
-    <Compile Include="Web\Code\EntryAnchorFactoryTests.cs" />
-    <Compile Include="Web\Code\MarkdownParserTests.cs" />
-    <Compile Include="Web\Code\TimeAgoStringBuilderTests.cs" />
-    <Compile Include="Web\Controllers\AlbumControllerTests.cs" />
-    <Compile Include="Web\Controllers\ArtistControllerTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\AlbumQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\ArtistQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\DiscussionQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\EntryQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\EventQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\SongListQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\SongQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\TagQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\UserMessageQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\UserQueriesTests.cs" />
-    <Compile Include="Web\Controllers\EventControllerTests.cs" />
-    <Compile Include="Web\Controllers\SongControllerTests.cs" />
-    <Compile Include="Web\Controllers\SongListControllerTests.cs" />
-    <Compile Include="Web\Controllers\UserControllerTests.cs" />
-    <Compile Include="Web\Helpers\WebHelperTests.cs" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj">
       <Project>{024d07df-f669-46e9-9514-3ab8094f74ac}</Project>
@@ -233,9 +98,6 @@
     <EmbeddedResource Include="TestData\KarenT_SystemindParadox.htm" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Mocks\" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="TestData\yokohma_bay_concert.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -249,26 +111,6 @@
   <ItemGroup>
     <EmbeddedResource Include="TestData\vocadb_favicon.png" />
   </ItemGroup>
-  <Choose>
-    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
