@@ -68,6 +68,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			var length = response.Data.Duration;
 
 			var metadata = new PVExtendedMetadata(new BiliMetadata {
+				Aid = aid,
 				Bvid = bvid,
 				Cid = cid
 			});
@@ -91,6 +92,8 @@ namespace VocaDb.Model.Service.VideoServices {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class BiliMetadata {
+		[DataMember]
+		public int Aid { get; set; }
 		[DataMember]
 		public string Bvid { get; set; }
 		[DataMember]
