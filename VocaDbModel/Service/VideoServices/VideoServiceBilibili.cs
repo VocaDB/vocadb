@@ -38,10 +38,6 @@ namespace VocaDb.Model.Service.VideoServices {
 			if (string.IsNullOrEmpty(id))
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.NoMatcher, "No matcher");
 
-			if (!getTitle) {
-				return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, id, VideoTitleParseResult.Empty);
-			}
-
 			var requestUrl = "https://api.bilibili.com/x/web-interface/view?" + (id.StartsWith("BV") ? $"bvid={id}" : $"aid={id}");
 
 			BilibiliResponse response;
@@ -57,6 +53,10 @@ namespace VocaDb.Model.Service.VideoServices {
 			var aid = response.Data.Aid;
 			var bvid = response.Data.Bvid;
 			var cid = response.Data.Cid;
+
+			if (!getTitle) {
+				return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, aid.ToString(), VideoTitleParseResult.Empty);
+			}
 
 			if (string.IsNullOrEmpty(response.Data.Title))
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "No title element");
