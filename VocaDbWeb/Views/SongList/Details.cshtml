@@ -89,13 +89,13 @@
 							@ev.Name
 						</a>
 						@if (ev.Date.HasValue) {
-							if (ev.Venue != null || !string.IsNullOrEmpty(ev.VenueName)) {
+							if (ev.HasVenueOrVenueName) {
 								<small>(@ev.Date.Value.ToString("d"), @EventHelpers.VenueLinkOrVenueName(ev))</small>
 							}
 						} else if (ev.Date.HasValue) {
 							<small>(@ev.Date.Value.ToString("d"))</small>
 						} else {
-							if (ev.Venue != null || !string.IsNullOrEmpty(ev.VenueName)) {
+							if (ev.HasVenueOrVenueName) {
 								<small>(@EventHelpers.VenueLinkOrVenueName(ev))</small>
 							}
 						}
