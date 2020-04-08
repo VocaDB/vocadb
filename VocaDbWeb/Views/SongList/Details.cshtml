@@ -89,18 +89,14 @@
 							@ev.Name
 						</a>
 						@if (ev.Date.HasValue) {
-							if (ev.Venue != null) {
-								<small>(@ev.Date.Value.ToString("d"), <a href="@Url.EntryDetails(ev.Venue)">@ev.Venue.Name</a>)</small>
-							} else if (!string.IsNullOrEmpty(ev.VenueName)) {
-								<small>(@ev.Date.Value.ToString("d"), @ev.VenueName)</small>
+							if (ev.Venue != null || !string.IsNullOrEmpty(ev.VenueName)) {
+								<small>(@ev.Date.Value.ToString("d"), @EventHelpers.VenueLinkOrVenueName(ev))</small>
 							}
 						} else if (ev.Date.HasValue) {
 							<small>(@ev.Date.Value.ToString("d"))</small>
 						} else {
-							if (ev.Venue != null) {
-								<small>(<a href="@Url.EntryDetails(ev.Venue)">@ev.Venue.Name</a>)</small>
-							} else if (!string.IsNullOrEmpty(ev.VenueName)) {
-								<small>(@ev.VenueName)</small>
+							if (ev.Venue != null || !string.IsNullOrEmpty(ev.VenueName)) {
+								<small>(@EventHelpers.VenueLinkOrVenueName(ev))</small>
 							}
 						}
 					</li>

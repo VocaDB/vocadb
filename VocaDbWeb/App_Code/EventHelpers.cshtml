@@ -47,3 +47,19 @@
 	</div>
 
 }
+
+@helper VenueLinkOrVenueName(ReleaseEventContract ev) {
+	if (ev.Venue != null) {
+		@VenueHelpers.VenueLink(ev.Venue)
+	} else if (!string.IsNullOrEmpty(ev.VenueName)) {
+		@ev.VenueName
+	}
+}
+
+@helper VenueLinkOrVenueName(ReleaseEventForApiContract ev) {
+	if (ev.Venue != null) {
+		@VenueHelpers.VenueLink(ev.Venue)
+	} else if (!string.IsNullOrEmpty(ev.VenueName)) {
+		@ev.VenueName
+	}
+}
