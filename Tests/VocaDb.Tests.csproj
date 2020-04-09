@@ -66,14 +66,8 @@
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj">
-      <Project>{024d07df-f669-46e9-9514-3ab8094f74ac}</Project>
-      <Name>VocaDb.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VocaDbWeb\VocaDbWeb.csproj">
-      <Project>{543cb31e-8641-44aa-95d4-df0e06d41d02}</Project>
-      <Name>VocaDbWeb</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj" />
+    <ProjectReference Include="..\VocaDbWeb\VocaDbWeb.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

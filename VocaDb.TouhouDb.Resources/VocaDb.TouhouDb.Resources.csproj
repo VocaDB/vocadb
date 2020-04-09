@@ -31,10 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj">
-      <Project>{024d07df-f669-46e9-9514-3ab8094f74ac}</Project>
-      <Name>VocaDb.Model</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
