@@ -295,3 +295,15 @@ a.extLink[href^="http://vocaloid.wikia.com/wiki/"],
 a.extLink[href^="https://vocaloid.fandom.com/wiki/"] {
   background: url("/Content/ExtIcons/vocawiki.png") no-repeat left 50%;
 }
+a.extLink[href*=".moegirl.org/"] {
+  background: url("/Content/ExtIcons/moegirl.png");
+}
+a.extLink[href*="music.163.com/"] {
+  background: url("/Content/ExtIcons/ncm.png");
+}
+a.extLink[href*="5sing.kugou.com/"] {
+  background: url("/Content/ExtIcons/5sing.png");
+}
+a.extLink[href*=".lofter.com/"] {
+  background: url("/Content/ExtIcons/lofter.png");
+}
