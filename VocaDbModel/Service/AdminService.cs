@@ -605,7 +605,9 @@ namespace VocaDb.Model.Service {
 				var users = session.Query<User>().ToArray();
 
 				foreach (var user in users) {
-					user.NormalizedEmail = !string.IsNullOrEmpty(user.Email) ? MailAddressNormalizer.Normalize(user.Email) : string.Empty;
+					try {
+						user.NormalizedEmail = !string.IsNullOrEmpty(user.Email) ? MailAddressNormalizer.Normalize(user.Email) : string.Empty;
+					} catch (FormatException) {}
 					session.Update(user);
 				}
 
