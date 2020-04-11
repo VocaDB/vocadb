@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		public AlbumDetailsContract() { }
 
-		public AlbumDetailsContract(Album album, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IEntryThumbPersister thumbPersister,
+		public AlbumDetailsContract(Album album, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IAggregatedEntryImageUrlFactory thumbPersister,
 			IEntryImagePersister imageStoreOld, Func<Song, SongVoteRating?> getSongRating = null, Tag discTypeTag = null)
 			: base(album, languagePreference) {
 

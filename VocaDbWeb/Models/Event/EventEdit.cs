@@ -21,6 +21,7 @@ namespace VocaDb.Web.Models.Event {
 
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEvent;
 		string IEntryImageInformation.Mime => PictureMime;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 
 		public EventEdit() {
 			Description = SeriesSuffix = string.Empty;

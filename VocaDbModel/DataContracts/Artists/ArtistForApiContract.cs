@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		public ArtistForApiContract(Artist artist, 
 			ContentLanguagePreference languagePreference, 
-			IEntryThumbPersister thumbPersister,
+			IAggregatedEntryImageUrlFactory thumbPersister,
 			ArtistOptionalFields includedFields) {
 
 			ArtistType = artist.ArtistType;

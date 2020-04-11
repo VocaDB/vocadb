@@ -2,7 +2,9 @@
 namespace VocaDb.Model.Domain.Images {
 
 	/// <summary>
-	/// Provides information about an entry image (both original full size images and thumbnails).
+	/// Provides information about an entry image (both original full size images and thumbnails)
+	/// that is saved on the website. 
+	/// External images such as song thumbnails are not supported by this.
 	/// </summary>
 	public interface IEntryImageInformation {
 
@@ -27,6 +29,9 @@ namespace VocaDb.Model.Domain.Images {
 		/// </summary>
 		string Mime { get; }
 
+		/// <summary>
+		/// Image purpose. Main or additional.
+		/// </summary>
 		ImagePurpose Purpose { get; }
 
 		/// <summary>

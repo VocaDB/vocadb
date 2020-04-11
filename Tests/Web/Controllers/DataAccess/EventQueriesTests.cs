@@ -71,8 +71,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			user = CreateEntry.User(group: UserGroupId.Trusted);
 			repository.Save(user);
 			permissionContext = new FakePermissionContext(user);
-			queries = new EventQueries(repository, new FakeEntryLinkFactory(), permissionContext, new InMemoryImagePersister(), new FakeUserIconFactory(), new EnumTranslations(), mailer, 
-				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()));
+			var imageStore = new InMemoryImagePersister();
+			queries = new EventQueries(repository, new FakeEntryLinkFactory(), permissionContext, imageStore, new FakeUserIconFactory(), new EnumTranslations(), mailer, 
+				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()), imageStore);
 
 		}
 

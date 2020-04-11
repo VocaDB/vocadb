@@ -73,7 +73,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			imagePersister = new InMemoryImagePersister();
 
 			queries = new ArtistQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, imagePersister, MemoryCache.Default, 
-				new FakeUserIconFactory(), new EnumTranslations());
+				new FakeUserIconFactory(), new EnumTranslations(), imagePersister);
 
 			newArtistContract = new CreateArtistContract {
 				ArtistType = ArtistType.Producer,
@@ -430,7 +430,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsNull(artistFromRepo.Picture.Thumb250, "Thumb bytes not saved anymore");
 			Assert.AreEqual(MediaTypeNames.Image.Jpeg, artistFromRepo.PictureMime, "Picture.Mime");
 
-			var thumbData = new EntryThumb(artistFromRepo, artistFromRepo.PictureMime);
+			var thumbData = new EntryThumb(artistFromRepo, artistFromRepo.PictureMime, ImagePurpose.Main);
 			Assert.IsFalse(imagePersister.HasImage(thumbData, ImageSize.Original), "Original file was not created"); // Original saved in Picture.Bytes
 			Assert.IsTrue(imagePersister.HasImage(thumbData, ImageSize.Thumb), "Thumbnail file was saved");
 

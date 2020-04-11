@@ -46,6 +46,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryThumbPersister imagePersister;
+		private readonly IAggregatedEntryImageUrlFactory imageUrlFactory;
 		private readonly IEntryPictureFilePersister pictureFilePersister;
 		private readonly IUserIconFactory userIconFactory;
 
@@ -68,7 +69,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			var cached = cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () => {
 
-				var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, cache, imagePersister).GetTopVoicebanks(artist);
+				var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, cache, imageUrlFactory).GetTopVoicebanks(artist);
 
 				return new CachedAdvancedArtistStatsContract {
 					TopVocaloids = topVocaloids
@@ -158,7 +159,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ArtistQueries(IArtistRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister,
-			ObjectCache cache, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations)
+			ObjectCache cache, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IAggregatedEntryImageUrlFactory imageUrlFactory)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -167,6 +168,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.cache = cache;
 			this.userIconFactory = userIconFactory;
 			this.enumTranslations = enumTranslations;
+			this.imageUrlFactory = imageUrlFactory;
 
 		}
 
@@ -364,7 +366,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				var relations = (new ArtistRelationsQuery(session, LanguagePreference, cache, imagePersister)).GetRelations(artist, ArtistRelationsFields.All);
+				var relations = (new ArtistRelationsQuery(session, LanguagePreference, cache, imageUrlFactory)).GetRelations(artist, ArtistRelationsFields.All);
 				contract.LatestAlbums = relations.LatestAlbums;
 				contract.TopAlbums = relations.PopularAlbums;
 				contract.LatestSongs = relations.LatestSongs;

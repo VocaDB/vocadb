@@ -26,13 +26,11 @@ namespace VocaDb.Web.Models {
 
 		private readonly string mime;
 
-		public EntryType EntryType {
-			get { return EntryType.Album; }
-		}
+		public EntryType EntryType => EntryType.Album;
 
-		public string Mime {
-			get { return mime; }
-		}
+		public string Mime => mime;
+
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 
 		public AlbumDetails() { }
 

@@ -37,8 +37,7 @@ namespace VocaDb.Web.Code {
 		}
 
 		public bool IsSupported(IEntryImageInformation picture, ImageSize size) {
-			return (picture.Purpose == ImagePurpose.Main || picture.Purpose == ImagePurpose.Unspesified)
-				&& (picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album);
+			return picture.PurposeMainOrUnspecified() && (picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album);
 		}
 	}
 

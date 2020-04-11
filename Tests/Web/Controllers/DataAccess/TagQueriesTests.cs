@@ -383,7 +383,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				queries.Update(updated, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });			
 			}
 
-			var thumb = new EntryThumb(tag, MediaTypeNames.Image.Jpeg);
+			var thumb = new EntryThumb(tag, MediaTypeNames.Image.Jpeg, ImagePurpose.Main);
 			Assert.IsTrue(imagePersister.HasImage(thumb, ImageSize.Original), "Original image was saved");
 			Assert.IsTrue(imagePersister.HasImage(thumb, ImageSize.SmallThumb), "Small thumbnail was saved");
 

@@ -24,7 +24,7 @@ namespace VocaDb.Model.Service.Queries {
 		private static readonly SongOptionalFields songFields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl;
 		private readonly ObjectCache cache;
 		private readonly IDatabaseContext ctx;
-		private readonly IEntryThumbPersister entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
 		private readonly ContentLanguagePreference languagePreference;
 
 		private AlbumForApiContract[] GetLatestAlbums(IDatabaseContext session, Artist artist) {
@@ -153,7 +153,7 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		public ArtistRelationsQuery(IDatabaseContext ctx, ContentLanguagePreference languagePreference, ObjectCache cache, IEntryThumbPersister entryThumbPersister) {
+		public ArtistRelationsQuery(IDatabaseContext ctx, ContentLanguagePreference languagePreference, ObjectCache cache, IAggregatedEntryImageUrlFactory entryThumbPersister) {
 			this.ctx = ctx;
 			this.languagePreference = languagePreference;
 			this.cache = cache;

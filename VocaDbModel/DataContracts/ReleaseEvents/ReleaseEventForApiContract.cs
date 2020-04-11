@@ -19,7 +19,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ReleaseEventForApiContract() { }
 
-		public ReleaseEventForApiContract(ReleaseEvent rel, ContentLanguagePreference languagePreference, ReleaseEventOptionalFields fields, IEntryThumbPersister thumbPersister) {
+		public ReleaseEventForApiContract(ReleaseEvent rel, ContentLanguagePreference languagePreference, ReleaseEventOptionalFields fields, IAggregatedEntryImageUrlFactory thumbPersister) {
 
 			Category = rel.Category;
 			Date = rel.Date;

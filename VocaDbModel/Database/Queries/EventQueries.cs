@@ -38,6 +38,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IFollowedArtistNotifier followedArtistNotifier;
+		private readonly IAggregatedEntryImageUrlFactory imageUrlFactory;
 		private readonly IEntryThumbPersister imagePersister;
 		private readonly IUserMessageMailer mailer;
 		private readonly IUserIconFactory userIconFactory;
@@ -62,7 +63,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public EventQueries(IEventRepository eventRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext,
 			IEntryThumbPersister imagePersister, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, 
-			IUserMessageMailer mailer, IFollowedArtistNotifier followedArtistNotifier)
+			IUserMessageMailer mailer, IFollowedArtistNotifier followedArtistNotifier, IAggregatedEntryImageUrlFactory imageUrlFactory)
 			: base(eventRepository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -71,6 +72,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.enumTranslations = enumTranslations;
 			this.mailer = mailer;
 			this.followedArtistNotifier = followedArtistNotifier;
+			this.imageUrlFactory = imageUrlFactory;
 
 		}
 
@@ -169,7 +171,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public PartialFindResult<ReleaseEventSeriesForApiContract> FindSeries(SearchTextQuery textQuery, PagingProperties paging,
 			ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None) {
-			return FindSeries(s => new ReleaseEventSeriesForApiContract(s, lang, fields, imagePersister), textQuery, paging);
+			return FindSeries(s => new ReleaseEventSeriesForApiContract(s, lang, fields, imageUrlFactory), textQuery, paging);
 		}
 
 		public PartialFindResult<TResult> FindSeries<TResult>(Func<ReleaseEventSeries, TResult> fac, 
@@ -238,7 +240,7 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public ReleaseEventForApiContract GetOne(int id, ContentLanguagePreference lang, ReleaseEventOptionalFields fields) {
-			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imagePersister));
+			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imageUrlFactory));
 		}
 		
 		public VenueForApiContract[] GetReleaseEventsByVenue() {
@@ -264,7 +266,7 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public ReleaseEventSeriesForApiContract GetOneSeries(int id, ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields) {
-			return repository.HandleQuery(ctx => new ReleaseEventSeriesForApiContract(ctx.Load<ReleaseEventSeries>(id), lang, fields, imagePersister));
+			return repository.HandleQuery(ctx => new ReleaseEventSeriesForApiContract(ctx.Load<ReleaseEventSeries>(id), lang, fields, imageUrlFactory));
 		}
 
 		public ArchivedEventSeriesVersionDetailsContract GetSeriesVersionDetails(int id, int comparedVersionId) {
@@ -306,7 +308,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ReleaseEventForApiContract Load(int id, ReleaseEventOptionalFields fields) {
 
-			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), LanguagePreference, fields, imagePersister));
+			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), LanguagePreference, fields, imageUrlFactory));
 
 		}
 

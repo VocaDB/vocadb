@@ -53,7 +53,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IEntryThumbPersister entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IFollowedArtistNotifier followedArtistNotifier;
 		private readonly IEntryThumbPersister imagePersister;
@@ -158,7 +158,7 @@ namespace VocaDb.Model.Database.Queries {
 		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer, 
 			IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IPVParser pvParser,
-			IFollowedArtistNotifier followedArtistNotifier, IEntryThumbPersister entryThumbPersister, ObjectCache cache)
+			IFollowedArtistNotifier followedArtistNotifier, IAggregatedEntryImageUrlFactory entryThumbPersister, ObjectCache cache)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -374,7 +374,7 @@ namespace VocaDb.Model.Database.Queries {
 					return user != null && song != null ? (SongVoteRating?) session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).Select(r => r.Rating).FirstOrDefault() : null;
 				}
 
-				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imagePersister, pictureFilePersister, GetRatingFunc,
+				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, entryThumbPersister, pictureFilePersister, GetRatingFunc,
 					discTypeTag: new EntryTypeTags(session).GetTag(EntryType.Album, album.DiscType)) {
 					CommentCount = stats.CommentCount,
 					Hits = stats.Hits,

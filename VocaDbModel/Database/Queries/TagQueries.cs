@@ -41,7 +41,7 @@ namespace VocaDb.Model.Database.Queries {
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
-		private readonly IEntryThumbPersister thumbStore;
+		private readonly IAggregatedEntryImageUrlFactory thumbStore;
 		private readonly IEntryImagePersisterOld imagePersister;
 		private readonly IUserIconFactory userIconFactory;
 
@@ -152,7 +152,7 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public TagQueries(ITagRepository repository, IUserPermissionContext permissionContext,
-			IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister, IEntryThumbPersister thumbStore, IUserIconFactory userIconFactory,
+			IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister, IAggregatedEntryImageUrlFactory thumbStore, IUserIconFactory userIconFactory,
 			IEnumTranslations enumTranslations)
 			: base(repository, permissionContext) {
 
@@ -284,7 +284,7 @@ namespace VocaDb.Model.Database.Queries {
 			ContentLanguagePreference lang) {
 
 			return Find(tag => new TagForApiContract(
-				tag, imagePersister, lang, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
+				tag, thumbStore, lang, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
 
 		}
 

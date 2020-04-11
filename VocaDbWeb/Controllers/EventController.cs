@@ -29,14 +29,14 @@ namespace VocaDb.Web.Controllers
 		
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IEntryThumbPersister thumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 		private readonly EventQueries queries;
 		private readonly ReleaseEventService service;
 
 		private ReleaseEventService Service => service;
 
 	    public EventController(EventQueries queries, ReleaseEventService service, IEnumTranslations enumTranslations, IEntryLinkFactory entryLinkFactory,
-			IEntryThumbPersister thumbPersister) {
+			IAggregatedEntryImageUrlFactory thumbPersister) {
 			this.queries = queries;
 			this.service = service;
 			this.enumTranslations = enumTranslations;

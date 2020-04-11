@@ -15,7 +15,7 @@ namespace VocaDb.Model.DataContracts.Users {
 		public AlbumForUserForApiContract(
 			AlbumForUser albumForUser, 
 			ContentLanguagePreference languagePreference, 
-			IEntryThumbPersister thumbPersister,
+			IAggregatedEntryImageUrlFactory thumbPersister,
 			AlbumOptionalFields fields,
 			bool shouldShowCollectionStatus,
 			bool includeUser = false) {

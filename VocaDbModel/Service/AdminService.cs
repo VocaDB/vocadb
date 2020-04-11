@@ -288,7 +288,7 @@ namespace VocaDb.Model.Service {
 				var entryLoader = new Queries.EntryQueries();
 				return editors
 					.Select(i => 
-						(EntryForApiContract.Create(entryLoader.Load(i.Key, db), LanguagePreference, null, null, EntryOptionalFields.None), 
+						(EntryForApiContract.Create(entryLoader.Load(i.Key, db), LanguagePreference, null, EntryOptionalFields.None), 
 						new UserContract(ctx.Load<User>(i.Value.UserId)),
 						i.Value.Time))
 					.ToArray();
@@ -309,7 +309,7 @@ namespace VocaDb.Model.Service {
 					.OrderBy(EntryReportSortRule.CloseDate)
 					.Take(200)
 					.ToArray();
-				var fac = new EntryForApiContractFactory(null, null);
+				var fac = new EntryForApiContractFactory(null);
 				return reports.Select(r => new EntryReportContract(r, fac.Create(r.EntryBase, EntryOptionalFields.AdditionalNames, LanguagePreference), 
 					enumTranslations, userIconFactory)).ToArray();
 

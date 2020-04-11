@@ -41,7 +41,7 @@ namespace VocaDb.Web.App_Start {
 
 		private static string[] LoadBlockedIPs(IComponentContext componentContext) {
 
-			return componentContext.Resolve<OtherService>().GetIPRules().Select(i => i.Address).ToArray();
+			return componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());
 
 		}
 
@@ -66,6 +66,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<DynamicImageUrlFactory>().As<IDynamicImageUrlFactory>();
 			builder.RegisterType<ServerEntryImagePersisterOld>().As<IEntryImagePersisterOld>().As<IEntryPictureFilePersister>();
 			builder.RegisterType<ServerEntryThumbPersister>().As<IEntryThumbPersister>();
+			builder.RegisterType<ServerEntryImageFactoryAggregator>().As<IAggregatedEntryImageUrlFactory>();
 			builder.RegisterType<NTextCatLibLanguageDetector>().As<ILanguageDetector>();
 			builder.RegisterType<BrandableStringsManager>().AsSelf().SingleInstance();
 			builder.RegisterType<VdbConfigManager>().AsSelf().SingleInstance();

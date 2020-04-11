@@ -15,7 +15,7 @@ namespace VocaDb.Model.DataContracts {
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryThumbForApiContract {
 
-		public static EntryThumbForApiContract Create(IEntryImageInformation image, IEntryImageUrlFactory thumbPersister,
+		public static EntryThumbForApiContract Create(IEntryImageInformation image, IAggregatedEntryImageUrlFactory thumbPersister,
 			ImageSizes sizes = ImageSizes.All) {
 
 			if (thumbPersister == null || string.IsNullOrEmpty(image?.Mime))
@@ -33,7 +33,7 @@ namespace VocaDb.Model.DataContracts {
 		/// <param name="image">Image information. Cannot be null.</param>
 		/// <param name="thumbPersister">Thumb persister. Cannot be null.</param>
 		/// <param name="sizes">Sizes to generate. If Nothing, no image URLs will be generated.</param>
-		public EntryThumbForApiContract(IEntryImageInformation image, IEntryImageUrlFactory thumbPersister,
+		public EntryThumbForApiContract(IEntryImageInformation image, IAggregatedEntryImageUrlFactory thumbPersister,
 			ImageSizes sizes = ImageSizes.All) {
 
 			ParamIs.NotNull(() => image);

@@ -31,13 +31,13 @@ namespace VocaDb.Web.Controllers.Api {
 		private const int hourInSeconds = 3600;
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
-		private readonly IEntryThumbPersister thumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 		private readonly OtherService otherService;
 		private readonly AlbumQueries queries;
 		private readonly AlbumService service;
 
 		public AlbumApiController(AlbumQueries queries, AlbumService service, 
-			OtherService otherService, IEntryThumbPersister thumbPersister) {		
+			OtherService otherService, IAggregatedEntryImageUrlFactory thumbPersister) {		
 			
 			this.queries = queries;
 			this.service = service;

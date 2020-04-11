@@ -53,7 +53,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var permissionContext = new FakePermissionContext();
 			var thumbPersister = new InMemoryImagePersister();
 
-			queries = new EntryQueries(repository, permissionContext, thumbPersister, thumbPersister);
+			queries = new EntryQueries(repository, permissionContext, thumbPersister);
 
 			var group = CreateEntry.Artist(ArtistType.OtherGroup, name: "1640mP");
 			var artist = CreateEntry.Producer(name: "40mP");
