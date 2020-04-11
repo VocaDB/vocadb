@@ -460,7 +460,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (album.CoverPictureData == null || string.IsNullOrEmpty(album.CoverPictureMime) || album.CoverPictureData.HasThumb(size))
 					return EntryForPictureDisplayContract.Create(album, PermissionContext.LanguagePreference, size);
 
-				var data = new EntryThumb(album, album.CoverPictureMime);
+				var data = new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main);
 
 				if (imagePersister.HasImage(data, ImageSize.Thumb)) {
 					using (var stream = imagePersister.GetReadStream(data, ImageSize.Thumb)) {
@@ -735,7 +735,7 @@ namespace VocaDb.Model.Database.Queries {
 
 						var thumbGenerator = new ImageThumbGenerator(imagePersister);
 						using (var stream = new MemoryStream(versionWithPic.CoverPicture.Bytes)) {
-							var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime);
+							var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime, ImagePurpose.Main);
 							thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 						}
 

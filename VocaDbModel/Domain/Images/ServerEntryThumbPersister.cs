@@ -55,6 +55,12 @@ namespace VocaDb.Model.Domain.Images {
 			return VocaUriBuilder.StaticResource(GetRelativeUrl(picture, size));
 		}
 
+		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) {
+			return picture.EntryType == EntryType.ReleaseEvent || picture.EntryType == EntryType.ReleaseEventSeries
+				|| ((picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album) 
+					&& picture.PurposeMainOrUnspecified()
+					&& size != ImageSize.Original);
+		}
 	}
 
 }

@@ -21,6 +21,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		string IEntryBase.DefaultName => TranslatedName.Default;
 		string IEntryImageInformation.Mime => PictureMime;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<EventSeriesName> IEntryWithNames<EventSeriesName>.Names => Names;
 

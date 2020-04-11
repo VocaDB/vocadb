@@ -3,10 +3,7 @@ using System.IO;
 
 namespace VocaDb.Model.Domain.Images {
 
-	/// <summary>
-	/// Writes entry images to a store (such as disk) and loads them back as needed.
-	/// </summary>
-	public interface IEntryImagePersister {
+	public interface IEntryImageUrlFactory {
 
 		/// <summary>
 		/// Gets an absolute URL for internal and external access to an image.
@@ -20,20 +17,29 @@ namespace VocaDb.Model.Domain.Images {
 		string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size);
 
 		/// <summary>
-		/// Gets stream for reading an image from the store.
-		/// </summary>
-		/// <param name="picture">Image information. Cannot be null.</param>
-		/// <param name="size">Image size.</param>
-		/// <returns>Stream for reading the image. Cannot be null.</returns>
-		Stream GetReadStream(IEntryImageInformation picture, ImageSize size);
-
-		/// <summary>
 		/// Checks whether a specific image exists in the store.
 		/// </summary>
 		/// <param name="picture">Image information. Cannot be null.</param>
 		/// <param name="size">Image size.</param>
 		/// <returns>True if the image exists, otherwise false.</returns>
 		bool HasImage(IEntryImageInformation picture, ImageSize size);
+
+		bool IsSupported(IEntryImageInformation picture, ImageSize size);
+
+	}
+
+	/// <summary>
+	/// Writes entry images to a store (such as disk) and loads them back as needed.
+	/// </summary>
+	public interface IEntryImagePersister : IEntryImageUrlFactory {
+
+		/// <summary>
+		/// Gets stream for reading an image from the store.
+		/// </summary>
+		/// <param name="picture">Image information. Cannot be null.</param>
+		/// <param name="size">Image size.</param>
+		/// <returns>Stream for reading the image. Cannot be null.</returns>
+		Stream GetReadStream(IEntryImageInformation picture, ImageSize size);
 
 		/// <summary>
 		/// Writes an image file stream to the store.
@@ -55,9 +61,9 @@ namespace VocaDb.Model.Domain.Images {
 	}
 
 	/// <summary>
-	/// Extensions to <see cref="IEntryImagePersister"/>.
+	/// Extensions to <see cref="IEntryImageUrlFactory"/>.
 	/// </summary>
-	public static class IEntryImagePersisterExtender {
+	public static class IEntryImageUrlFactoryExtender {
 
 		/// <summary>
 		/// Gets absolute URL to image, optionally verifying that it exists.
@@ -70,7 +76,7 @@ namespace VocaDb.Model.Domain.Images {
 		/// Absolute URL to image, if image exists or <paramref name="checkExists"/> is false. 
 		/// If <paramref name="checkExists"/> is true and image does not exist, this will be null.
 		/// </returns>
-		public static string GetUrlAbsolute(this IEntryImagePersister persister, IEntryImageInformation picture, ImageSize size, bool checkExists) {
+		public static string GetUrlAbsolute(this IEntryImageUrlFactory persister, IEntryImageInformation picture, ImageSize size, bool checkExists) {
 
 			if (checkExists && !persister.HasImage(picture, size))
 				return null;

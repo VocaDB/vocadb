@@ -91,7 +91,7 @@ namespace VocaDb.Model.Service {
 
 					foreach (var artist in artists) {
 
-						var data = new EntryThumb(artist, artist.PictureMime);
+						var data = new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main);
 
 						if (artist.Picture.Bytes == null || imagePersister.HasImage(data, ImageSize.Thumb))
 							continue;

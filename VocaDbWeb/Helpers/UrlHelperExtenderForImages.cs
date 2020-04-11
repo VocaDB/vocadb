@@ -105,10 +105,10 @@ namespace VocaDb.Web.Helpers {
 
 			// Use MVC dynamic actions (instead of static file) when requesting original or an image that doesn't exist on disk.
 			bool useDynamicUrl = size == ImageSize.Original || (shouldExist && !imagePersister.HasImage(imageInfo, size));
-			string dynamicUrl = useDynamicUrl ? GetDynamicImageUrlFactory(urlHelper).GetRelativeDynamicUrl(imageInfo, size) : null;
+			string dynamicUrl = useDynamicUrl ? GetDynamicImageUrlFactory(urlHelper).GetUrlAbsolute(imageInfo, size) : null;
 
 			if (dynamicUrl != null) {				
-				return fullUrl ? VocaUriBuilder.Absolute(dynamicUrl) : dynamicUrl;
+				return dynamicUrl;
 			}
 
 			if (!shouldExist) {

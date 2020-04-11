@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
@@ -9,6 +9,7 @@ namespace VocaDb.Model.DataContracts {
 	public class EntryPictureFileContract : IEntryPictureFile {
 
 		int IEntryImageInformation.Version => 0;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Unspesified;
 
 		public EntryPictureFileContract() { }
 

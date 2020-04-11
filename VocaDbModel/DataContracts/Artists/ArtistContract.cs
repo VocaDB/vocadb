@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
@@ -17,8 +17,8 @@ namespace VocaDb.Model.DataContracts.Artists {
 		EntryType IEntryBase.EntryType => EntryType.Artist;
 
 		EntryType IEntryImageInformation.EntryType => EntryType.Artist;
-
 		string IEntryImageInformation.Mime => PictureMime;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 
 		public ArtistContract() {}
 

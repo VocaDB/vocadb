@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
@@ -21,9 +21,8 @@ namespace VocaDb.Model.Domain {
 	public abstract class EntryPictureFile : IEntryPictureFile {
 
 		// Not versioned.
-		int IEntryImageInformation.Version {
-			get { return 0; }
-		}
+		int IEntryImageInformation.Version => 0;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Additional;
 
 		private User author;
 		private string mime;

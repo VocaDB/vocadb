@@ -71,7 +71,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			Status = artist.Status;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && artist.Picture != null) {
-				MainPicture = EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime), thumbPersister);					
+				MainPicture = EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main), thumbPersister);					
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.Names)) {
@@ -99,7 +99,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			Status = album.Status;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && album.CoverPictureData != null) {
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister);					
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister);					
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.Names)) {

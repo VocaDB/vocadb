@@ -27,6 +27,8 @@ namespace VocaDb.Model.Domain.Images {
 		/// </summary>
 		string Mime { get; }
 
+		ImagePurpose Purpose { get; }
+
 		/// <summary>
 		/// Image/entry version.
 		/// This is appended to the URL for caching.
@@ -39,10 +41,13 @@ namespace VocaDb.Model.Domain.Images {
 
 	public static class EntryImageInformationExtensions {
 
+		public static bool PurposeMainOrUnspecified(this IEntryImageInformation image) => image.Purpose == ImagePurpose.Main || image.Purpose == ImagePurpose.Unspesified;
+
 		/// <summary>
 		/// Tests whether image file should exist.
 		/// Image file is assumed to exist if it has MIME type.
 		/// However, it is still not guaranteed, if the file is removed from disk.
+		/// Additionally, it is not guaranteed that all sizes are available.
 		/// </summary>
 		/// <param name="image">Image information.</param>
 		/// <returns>True if image is assumed to exist. Otherwise false.</returns>
