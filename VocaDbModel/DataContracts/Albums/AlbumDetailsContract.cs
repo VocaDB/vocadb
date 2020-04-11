@@ -22,7 +22,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public AlbumDetailsContract() { }
 
 		public AlbumDetailsContract(Album album, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IAggregatedEntryImageUrlFactory thumbPersister,
-			IEntryImagePersister imageStoreOld, Func<Song, SongVoteRating?> getSongRating = null, Tag discTypeTag = null)
+			Func<Song, SongVoteRating?> getSongRating = null, Tag discTypeTag = null)
 			: base(album, languagePreference) {
 
 			ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
@@ -32,7 +32,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			Discs = album.Songs.Any(s => s.DiscNumber > 1) ? album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToDictionary(a => a.DiscNumber) : new Dictionary<int, AlbumDiscPropertiesContract>(0);
 			DiscTypeTypeTag = discTypeTag != null ? new TagBaseContract(discTypeTag, languagePreference) : null;
 			OriginalRelease = (album.OriginalRelease != null ? new AlbumReleaseContract(album.OriginalRelease, languagePreference) : null);
-			Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p, imageStoreOld)).ToArray();
+			Pictures = album.Pictures.Select(p => new EntryPictureFileContract(p, thumbPersister)).ToArray();
 			PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 			Songs = album.Songs
 				.OrderBy(s => s.DiscNumber).ThenBy(s => s.TrackNumber)

@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public ArtistDetailsContract() {}
 
 		public ArtistDetailsContract(Artist artist, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, 
-			IEntryImagePersister imageStore, Tag artistTypeTag = null)
+			IAggregatedEntryImageUrlFactory imageStore, Tag artistTypeTag = null)
 			: base(artist, languagePreference) {
 
 			AllNames = string.Join(", ", artist.AllNames.Where(n => n != Name));

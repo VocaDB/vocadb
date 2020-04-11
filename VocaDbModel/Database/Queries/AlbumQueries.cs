@@ -53,7 +53,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory imageUrlFactory;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IFollowedArtistNotifier followedArtistNotifier;
 		private readonly IEntryThumbPersister imagePersister;
@@ -169,7 +169,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.enumTranslations = enumTranslations;
 			this.pvParser = pvParser;
 			this.followedArtistNotifier = followedArtistNotifier;
-			this.entryThumbPersister = entryThumbPersister;
+			this.imageUrlFactory = entryThumbPersister;
 			this.cache = cache;
 
 		}
@@ -254,7 +254,7 @@ namespace VocaDb.Model.Database.Queries {
 				var album = await ctx.LoadAsync(albumId);
 
 				return album.UserCollections
-					.Select(uc => new AlbumForUserForApiContract(uc, languagePreference, entryThumbPersister, AlbumOptionalFields.None,
+					.Select(uc => new AlbumForUserForApiContract(uc, languagePreference, imageUrlFactory, AlbumOptionalFields.None,
 						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection, 
 						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection))
 					.ToArray();
@@ -374,7 +374,7 @@ namespace VocaDb.Model.Database.Queries {
 					return user != null && song != null ? (SongVoteRating?) session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).Select(r => r.Rating).FirstOrDefault() : null;
 				}
 
-				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, entryThumbPersister, pictureFilePersister, GetRatingFunc,
+				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imageUrlFactory, GetRatingFunc,
 					discTypeTag: new EntryTypeTags(session).GetTag(EntryType.Album, album.DiscType)) {
 					CommentCount = stats.CommentCount,
 					Hits = stats.Hits,
@@ -479,7 +479,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			return
 				HandleQuery(session =>
-					new AlbumForEditContract(session.Load<Album>(id), PermissionContext.LanguagePreference, pictureFilePersister));
+					new AlbumForEditContract(session.Load<Album>(id), PermissionContext.LanguagePreference, imageUrlFactory));
 
 		}
 
@@ -1002,7 +1002,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				return new AlbumForEditContract(album, PermissionContext.LanguagePreference, pictureFilePersister);
+				return new AlbumForEditContract(album, PermissionContext.LanguagePreference, imageUrlFactory);
 
 			});
 

@@ -19,7 +19,7 @@ namespace VocaDb.Model.DataContracts {
 			Purpose = purpose;
 		}
 
-		public EntryPictureFileContract(EntryPictureFile picture, IEntryImagePersister imageStore) {
+		public EntryPictureFileContract(EntryPictureFile picture, IAggregatedEntryImageUrlFactory imageStore) {
 
 			ParamIs.NotNull(() => picture);
 
