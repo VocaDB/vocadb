@@ -50,7 +50,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private ArtistForEditContract CallUpdate(Stream image, string mime = MediaTypeNames.Image.Jpeg) {
 			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English, new InMemoryImagePersister());
 			using (var stream = image) {
-				contract.Id = queries.Update(contract, new EntryPictureFileContract { UploadedFile = stream, ContentLength = (int)stream.Length, Mime = mime }, permissionContext);
+				contract.Id = queries.Update(contract, new EntryPictureFileContract(stream, mime, (int)stream.Length, ImagePurpose.Main), permissionContext);
 			}		
 			return contract;
 		}

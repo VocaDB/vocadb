@@ -9,9 +9,15 @@ namespace VocaDb.Model.DataContracts {
 	public class EntryPictureFileContract : IEntryPictureFile {
 
 		int IEntryImageInformation.Version => 0;
-		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Unspesified;
 
 		public EntryPictureFileContract() { }
+
+		public EntryPictureFileContract(Stream uploadedFile, string mime, int contentLength = 0, ImagePurpose purpose = ImagePurpose.Unspesified) {
+			UploadedFile = uploadedFile;
+			Mime = mime ?? string.Empty;
+			ContentLength = contentLength;
+			Purpose = purpose;
+		}
 
 		public EntryPictureFileContract(EntryPictureFile picture, IEntryImagePersister imageStore) {
 
@@ -23,6 +29,7 @@ namespace VocaDb.Model.DataContracts {
 			Name = picture.Name;
 			OwnerEntryId = picture.OwnerEntryId;
 			ThumbUrl = imageStore.GetUrlAbsolute(picture, ImageSize.Thumb, true);
+			Purpose = picture.Purpose;
 
 		}
 
@@ -45,6 +52,8 @@ namespace VocaDb.Model.DataContracts {
 
 		[DataMember]
 		public int OwnerEntryId { get; set; }
+
+		public ImagePurpose Purpose { get; set; }
 
 		[DataMember]
 		public string ThumbUrl { get; set;}

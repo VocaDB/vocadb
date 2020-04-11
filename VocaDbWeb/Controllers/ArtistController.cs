@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -21,6 +21,7 @@ using VocaDb.Web.Helpers;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Web.Code.Security;
+using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Web.Controllers
 {
@@ -197,7 +198,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError("Description", ViewRes.Artist.CreateStrings.NeedWebLinkOrDescription);
 
 			var coverPicUpload = Request.Files["pictureUpload"];
-			var pictureData = ParsePicture(coverPicUpload, "Picture");
+			var pictureData = ParsePicture(coverPicUpload, "Picture", ImagePurpose.Main);
 
 			if (!ModelState.IsValid)
 				return View(model);
@@ -260,7 +261,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			var coverPicUpload = Request.Files["pictureUpload"];
-			var pictureData = ParsePicture(coverPicUpload, "Picture");
+			var pictureData = ParsePicture(coverPicUpload, "Picture", ImagePurpose.Main);
 
 			ParseAdditionalPictures(coverPicUpload, model.Pictures);
 

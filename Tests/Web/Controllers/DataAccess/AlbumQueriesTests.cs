@@ -83,7 +83,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private AlbumForEditContract CallUpdate(Stream image) {
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			using (var stream = image) {
-				return queries.UpdateBasicProperties(contract, new EntryPictureFileContract { UploadedFile = stream, Mime = MediaTypeNames.Image.Jpeg });
+				return queries.UpdateBasicProperties(contract, new EntryPictureFileContract(stream, MediaTypeNames.Image.Jpeg, purpose: ImagePurpose.Main));
 			}		
 		}
 

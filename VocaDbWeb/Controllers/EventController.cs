@@ -144,7 +144,7 @@ namespace VocaDb.Web.Controllers
 				return RenderEdit();
 			}
 
-	        var pictureData = ParsePicture(pictureUpload, "pictureUpload");
+	        var pictureData = ParsePicture(pictureUpload, "pictureUpload", ImagePurpose.Main);
 
 			if (!ModelState.IsValid) {
 				return RenderEdit();
@@ -194,7 +194,7 @@ namespace VocaDb.Web.Controllers
 				return RenderEdit();
 			}
 
-			var pictureData = ParsePicture(pictureUpload, "Picture");
+			var pictureData = ParsePicture(pictureUpload, "Picture", ImagePurpose.Main);
 
 	        int id;
 	        try {

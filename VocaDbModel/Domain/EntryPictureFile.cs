@@ -22,7 +22,6 @@ namespace VocaDb.Model.Domain {
 
 		// Not versioned.
 		int IEntryImageInformation.Version => 0;
-		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Additional;
 
 		private User author;
 		private string mime;
@@ -99,6 +98,8 @@ namespace VocaDb.Model.Domain {
 		}
 
 		public abstract int OwnerEntryId { get; }
+
+		public virtual ImagePurpose Purpose => ImagePurpose.Additional;
 
 		/// <summary>
 		/// Uploaded file. This field is not mapped, only used for uploading.
