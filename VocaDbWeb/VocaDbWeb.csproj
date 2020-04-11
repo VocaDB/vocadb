@@ -543,6 +543,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WebLinkCategoryNames.pt.resx</DependentUpon>
     </Compile>
+    <Compile Include="Code\DynamicImageUrlFactory.cs" />
     <Compile Include="Code\EntrySubTypeNameFactory.cs" />
     <Compile Include="Controllers\Api\CommentApiController.cs" />
     <Compile Include="Controllers\Api\EntryTypesApiController.cs" />
