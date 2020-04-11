@@ -97,7 +97,7 @@ a.extLink[href^="http://sonicwire.com"],
 a.extLink[href^="https://sonicwire.com"] {
   background-image: url("/Content/ExtIcons/sonicwire.png");
 }
-a.extLink[href^="https://item.taobao.com"] {
+a.extLink[href*=".taobao.com"] {
   background-image: url("/Content/ExtIcons/itemtaobao.png");
 }
 a.extLink[href^="http://www.toranoana.jp/"],
