@@ -89,13 +89,13 @@
 
 @helper SongIconLink(SongContract song, int? albumId = null) {
 	<a href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(song, albumId))">
-		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" />
+		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin"/>
 	</a>		
 }
 
 @helper SongIconLink(SongForApiContract song) {
 	<a href="@Url.SongDetails(song)">
-		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" />
+		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin"/>
 	</a>
 }
 

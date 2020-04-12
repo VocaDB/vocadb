@@ -1,12 +1,11 @@
 using System.IO;
-using System.Web;
 using System.Web.Mvc;
 using VocaDb.Model.DataContracts;
-using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
+using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Helpers {
 
@@ -15,17 +14,13 @@ namespace VocaDb.Web.Helpers {
 	/// </summary>
 	public static class UrlHelperExtenderForImages {
 
+		private static IDynamicImageUrlFactory GetDynamicImageUrlFactory(UrlHelper urlHelper) => new DynamicImageUrlFactory(urlHelper);
 		private static readonly IEntryThumbPersister imagePersister = new ServerEntryThumbPersister();
 
 		private static ServerEntryImagePersisterOld EntryImagePersisterOld => new ServerEntryImagePersisterOld();
 
 		private static string GetUnknownImageUrl(UrlHelper urlHelper) {
 			return urlHelper.Content("~/Content/unknown.png");
-		}
-
-		private static bool ShouldExist(IEntryImageInformation imageInfo) {
-			// Image should have MIME type, otherwise it's assumed not to exist.
-			return !string.IsNullOrEmpty(imageInfo.Mime);
 		}
 
 		/// <summary>
@@ -106,25 +101,11 @@ namespace VocaDb.Web.Helpers {
 			if (imageInfo == null)
 				return null;
 
-			var shouldExist = ShouldExist(imageInfo);
-			string dynamicUrl = null;
+			var shouldExist = imageInfo.ShouldExist();
 
 			// Use MVC dynamic actions (instead of static file) when requesting original or an image that doesn't exist on disk.
-			if (imageInfo.EntryType == EntryType.Album) {
-
-				if (size == ImageSize.Original)
-					dynamicUrl = urlHelper.Action("CoverPicture", "Album", new { id = imageInfo.Id, v = imageInfo.Version });
-				else if (shouldExist && !imagePersister.HasImage(imageInfo, size))
-					dynamicUrl = urlHelper.Action("CoverPictureThumb", "Album", new { id = imageInfo.Id, v = imageInfo.Version });
-
-			} else if (imageInfo.EntryType == EntryType.Artist) {
-				
-				if (size == ImageSize.Original)
-					dynamicUrl = urlHelper.Action("Picture", "Artist", new { id = imageInfo.Id, v = imageInfo.Version });
-				else if (shouldExist && !imagePersister.HasImage(imageInfo, size))
-					dynamicUrl = urlHelper.Action("PictureThumb", "Artist", new { id = imageInfo.Id, v = imageInfo.Version });
-
-			}
+			bool useDynamicUrl = size == ImageSize.Original || (shouldExist && !imagePersister.HasImage(imageInfo, size));
+			string dynamicUrl = useDynamicUrl ? GetDynamicImageUrlFactory(urlHelper).GetRelativeDynamicUrl(imageInfo, size) : null;
 
 			if (dynamicUrl != null) {				
 				return fullUrl ? VocaUriBuilder.Absolute(dynamicUrl) : dynamicUrl;

@@ -267,6 +267,14 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		public ActionResult UpdateNormalizedEmailAddresses() {
+
+			Service.UpdateNormalizedEmailAddresses();
+
+			return RedirectToAction("Index");
+
+		}
+
 		public ActionResult UpdatePVIcons() {
 
 			Service.UpdatePVIcons();

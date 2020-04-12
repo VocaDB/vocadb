@@ -1,4 +1,4 @@
-﻿
+
 namespace VocaDb.Model.Domain.Images {
 
 	/// <summary>
@@ -34,6 +34,21 @@ namespace VocaDb.Model.Domain.Images {
 		/// If the image does not support versioning this will always be 0.
 		/// </summary>
 		int Version { get; }
+
+	}
+
+	public static class EntryImageInformationExtensions {
+
+		/// <summary>
+		/// Tests whether image file should exist.
+		/// Image file is assumed to exist if it has MIME type.
+		/// However, it is still not guaranteed, if the file is removed from disk.
+		/// </summary>
+		/// <param name="image">Image information.</param>
+		/// <returns>True if image is assumed to exist. Otherwise false.</returns>
+		public static bool ShouldExist(this IEntryImageInformation image) {
+			return image != null && !string.IsNullOrEmpty(image.Mime);
+		}
 
 	}
 

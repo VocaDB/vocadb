@@ -50,6 +50,7 @@ namespace VocaDb.Model.Domain.Users {
 		private IList<UserMessage> messages = new List<UserMessage>();
 		private string name;
 		private string nameLc;
+		private string normalizedEmail;
 		private IList<OldUsername> oldUsernames = new List<OldUsername>();
 		private UserOptions options;
 		private IList<OwnedArtistForUser> ownedArtists = new List<OwnedArtistForUser>(); 
@@ -78,6 +79,7 @@ namespace VocaDb.Model.Domain.Users {
 			Culture = string.Empty;
 			DefaultLanguageSelection = ContentLanguagePreference.Default;
 			Email = string.Empty;
+			NormalizedEmail = string.Empty;
 			EmailOptions = UserEmailOptions.PrivateMessagesFromAll;
 			GroupId = UserGroupId.Regular;
 			Language = OptionalCultureCode.Empty;
@@ -102,6 +104,7 @@ namespace VocaDb.Model.Domain.Users {
 			Name = name;
 			NameLC = name.ToLowerInvariant();
 			Email = email;
+			NormalizedEmail = !string.IsNullOrEmpty(email) ? MailAddressNormalizer.Normalize(email) : string.Empty;
 
 			UpdatePassword(pass, passwordHashAlgorithm);
 
@@ -355,6 +358,17 @@ namespace VocaDb.Model.Domain.Users {
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				nameLc = value;
+			}
+		}
+
+		/// <summary>
+		/// Normalized email address (email address without "+" and/or dots).
+		/// </summary>
+		public virtual string NormalizedEmail {
+			get => normalizedEmail;
+			set {
+				ParamIs.NotNull(() => value);
+				normalizedEmail = value;
 			}
 		}
 
@@ -648,6 +662,7 @@ namespace VocaDb.Model.Domain.Users {
 
 			if (!string.Equals(Email, newEmail, StringComparison.InvariantCultureIgnoreCase)) {
 				Email = newEmail;
+				NormalizedEmail = !string.IsNullOrEmpty(newEmail) ? MailAddressNormalizer.Normalize(newEmail) : string.Empty;
 				Options.EmailVerified = false;				
 			}
 

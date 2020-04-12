@@ -58,7 +58,7 @@ import TagRepository from '../../Repositories/TagRepository';
 
 		}
 
-		public query = ko.observable("");
+		public query = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public resources = ko.observable<ResourcesContract>();
 		public sort = ko.observable(SongListSortRule[SongListSortRule.Date]);
 		public sortName = ko.computed(() => this.resources() != null ? this.resources().songListSortRuleNames[this.sort()] : "");
