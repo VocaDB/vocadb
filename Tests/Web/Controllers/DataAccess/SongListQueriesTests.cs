@@ -155,7 +155,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var songList = repository.Load(id);
 
-			var thumb = new EntryThumb(songList, MediaTypeNames.Image.Jpeg);
+			var thumb = new EntryThumb(songList, MediaTypeNames.Image.Jpeg, ImagePurpose.Main);
 			Assert.IsTrue(imagePersister.HasImage(thumb, ImageSize.Original), "Original image was saved");
 			Assert.IsTrue(imagePersister.HasImage(thumb, ImageSize.SmallThumb), "Thumbnail was saved");
 

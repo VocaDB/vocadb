@@ -58,6 +58,8 @@ namespace VocaDb.Model.Domain.Images {
 
 		}
 
+		public abstract bool IsSupported(IEntryImageInformation picture, ImageSize size);
+
 	}
 
 }

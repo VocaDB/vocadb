@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
@@ -13,6 +13,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		string IEntryBase.DefaultName => Name;		
 		EntryType IEntryBase.EntryType => EntryType.ReleaseEventSeries;
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEventSeries;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 		string IEntryImageInformation.Mime => PictureMime;
 
 		public ReleaseEventSeriesContract() {

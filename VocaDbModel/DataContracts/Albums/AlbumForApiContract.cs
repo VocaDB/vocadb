@@ -24,7 +24,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public AlbumForApiContract(
 			Album album,
 			ContentLanguagePreference languagePreference, 
-			IEntryThumbPersister thumbPersister,
+			IAggregatedEntryImageUrlFactory thumbPersister,
 			AlbumOptionalFields fields,
 			SongOptionalFields songFields = SongOptionalFields.None) : 
 			this(album, null, languagePreference, thumbPersister, fields, songFields) {}
@@ -32,7 +32,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public AlbumForApiContract(
 			Album album, AlbumMergeRecord mergeRecord, 
 			ContentLanguagePreference languagePreference, 
-			IEntryThumbPersister thumbPersister,
+			IAggregatedEntryImageUrlFactory thumbPersister,
 			AlbumOptionalFields fields,
 			SongOptionalFields songFields) {
 
@@ -72,7 +72,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 			if (thumbPersister != null && fields.HasFlag(AlbumOptionalFields.MainPicture) && !string.IsNullOrEmpty(album.CoverPictureMime)) {
 				
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister);
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister);
 
 			}
 
@@ -105,7 +105,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		}
 
-		public AlbumForApiContract(TranslatedAlbumContract album, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, AlbumOptionalFields fields) {
+		public AlbumForApiContract(TranslatedAlbumContract album, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister, AlbumOptionalFields fields) {
 
 			ParamIs.NotNull(() => album);
 
@@ -126,7 +126,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 			}
 
 			if (fields.HasFlag(AlbumOptionalFields.MainPicture)) {
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister);
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister);
 			}
 
 			if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent)) {

@@ -11,7 +11,7 @@ namespace VocaDb.Tests.TestSupport {
 	/// <summary>
 	/// In-memory image persisting system (virtual filesystem), for testing.
 	/// </summary>
-	public class InMemoryImagePersister : IEntryImagePersisterOld, IEntryThumbPersister, IEntryPictureFilePersister {
+	public class InMemoryImagePersister : IAggregatedEntryImageUrlFactory, IEntryImagePersisterOld, IEntryThumbPersister, IEntryPictureFilePersister {
 
 		private readonly Dictionary<string, byte[]> images = new Dictionary<string, byte[]>();
 
@@ -62,6 +62,10 @@ namespace VocaDb.Tests.TestSupport {
 				Write(picture, size, stream);
 			}
 
+		}
+
+		public bool IsSupported(IEntryImageInformation picture, ImageSize size) {
+			return true;
 		}
 	}
 

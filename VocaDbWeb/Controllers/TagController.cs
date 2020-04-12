@@ -27,10 +27,10 @@ namespace VocaDb.Web.Controllers {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly MarkdownParser markdownParser;
 		private readonly TagQueries queries;
-		private readonly IEntryImagePersisterOld entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
 
 		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory, IEnumTranslations enumTranslations, MarkdownParser markdownParser,
-			IEntryImagePersisterOld entryThumbPersister) {
+			IAggregatedEntryImageUrlFactory entryThumbPersister) {
 
 			this.queries = queries;
 			this.entryLinkFactory = entryLinkFactory;

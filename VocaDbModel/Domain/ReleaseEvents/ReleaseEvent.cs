@@ -31,6 +31,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<EventName> IEntryWithNames<EventName>.Names => Names;
 		string IEntryImageInformation.Mime => PictureMime;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 
 		private IList<Album> albums = new List<Album>();
 		private ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> archivedVersions

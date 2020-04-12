@@ -55,5 +55,10 @@ namespace VocaDb.Model.Domain.Images {
 			return HttpContext.Current.Server.MapPath(string.Format("~\\EntryImg\\{0}\\{1}", picture.EntryType, GetFileName(picture, size)));
 		}
 
+		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) {
+			return picture.EntryType == EntryType.SongList || picture.EntryType == EntryType.Tag
+				|| ((picture.EntryType == EntryType.Album || picture.EntryType == EntryType.Artist) && picture.Purpose == ImagePurpose.Additional);
+		}
+
 	}
 }

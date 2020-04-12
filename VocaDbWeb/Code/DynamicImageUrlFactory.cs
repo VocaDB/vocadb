@@ -1,6 +1,7 @@
 using System.Web.Mvc;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Web.Code {
 
@@ -12,7 +13,7 @@ namespace VocaDb.Web.Code {
 
 		private readonly UrlHelper urlHelper;
 
-		public string GetRelativeDynamicUrl(IEntryImageInformation imageInfo, ImageSize size) {
+		public string GetUrlAbsolute(IEntryImageInformation imageInfo, ImageSize size) {
 			
 			string dynamicUrl = null;
 			if (imageInfo.EntryType == EntryType.Album) {
@@ -27,10 +28,19 @@ namespace VocaDb.Web.Code {
 					dynamicUrl = urlHelper.Action("PictureThumb", "Artist", new { id = imageInfo.Id, v = imageInfo.Version });
 			}
 
-			return dynamicUrl;
+			return !string.IsNullOrEmpty(dynamicUrl) ? VocaUriBuilder.Absolute(dynamicUrl) : null;
 
 		}
 
+		public bool HasImage(IEntryImageInformation picture, ImageSize size) {
+			return (picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album) 
+				&& picture.PurposeMainOrUnspecified() 
+				&& picture.ShouldExist();
+		}
+
+		public bool IsSupported(IEntryImageInformation picture, ImageSize size) {
+			return picture.PurposeMainOrUnspecified() && (picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album);
+		}
 	}
 
 }

@@ -53,7 +53,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IEntryThumbPersister entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory imageUrlFactory;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IFollowedArtistNotifier followedArtistNotifier;
 		private readonly IEntryThumbPersister imagePersister;
@@ -158,7 +158,7 @@ namespace VocaDb.Model.Database.Queries {
 		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer, 
 			IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IPVParser pvParser,
-			IFollowedArtistNotifier followedArtistNotifier, IEntryThumbPersister entryThumbPersister, ObjectCache cache)
+			IFollowedArtistNotifier followedArtistNotifier, IAggregatedEntryImageUrlFactory entryThumbPersister, ObjectCache cache)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -169,7 +169,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.enumTranslations = enumTranslations;
 			this.pvParser = pvParser;
 			this.followedArtistNotifier = followedArtistNotifier;
-			this.entryThumbPersister = entryThumbPersister;
+			this.imageUrlFactory = entryThumbPersister;
 			this.cache = cache;
 
 		}
@@ -254,7 +254,7 @@ namespace VocaDb.Model.Database.Queries {
 				var album = await ctx.LoadAsync(albumId);
 
 				return album.UserCollections
-					.Select(uc => new AlbumForUserForApiContract(uc, languagePreference, entryThumbPersister, AlbumOptionalFields.None,
+					.Select(uc => new AlbumForUserForApiContract(uc, languagePreference, imageUrlFactory, AlbumOptionalFields.None,
 						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection, 
 						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection))
 					.ToArray();
@@ -374,7 +374,7 @@ namespace VocaDb.Model.Database.Queries {
 					return user != null && song != null ? (SongVoteRating?) session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).Select(r => r.Rating).FirstOrDefault() : null;
 				}
 
-				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imagePersister, pictureFilePersister, GetRatingFunc,
+				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imageUrlFactory, GetRatingFunc,
 					discTypeTag: new EntryTypeTags(session).GetTag(EntryType.Album, album.DiscType)) {
 					CommentCount = stats.CommentCount,
 					Hits = stats.Hits,
@@ -460,7 +460,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (album.CoverPictureData == null || string.IsNullOrEmpty(album.CoverPictureMime) || album.CoverPictureData.HasThumb(size))
 					return EntryForPictureDisplayContract.Create(album, PermissionContext.LanguagePreference, size);
 
-				var data = new EntryThumb(album, album.CoverPictureMime);
+				var data = new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main);
 
 				if (imagePersister.HasImage(data, ImageSize.Thumb)) {
 					using (var stream = imagePersister.GetReadStream(data, ImageSize.Thumb)) {
@@ -479,7 +479,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			return
 				HandleQuery(session =>
-					new AlbumForEditContract(session.Load<Album>(id), PermissionContext.LanguagePreference, pictureFilePersister));
+					new AlbumForEditContract(session.Load<Album>(id), PermissionContext.LanguagePreference, imageUrlFactory));
 
 		}
 
@@ -735,7 +735,7 @@ namespace VocaDb.Model.Database.Queries {
 
 						var thumbGenerator = new ImageThumbGenerator(imagePersister);
 						using (var stream = new MemoryStream(versionWithPic.CoverPicture.Bytes)) {
-							var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime);
+							var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime, ImagePurpose.Main);
 							thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 						}
 
@@ -1002,7 +1002,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				return new AlbumForEditContract(album, PermissionContext.LanguagePreference, pictureFilePersister);
+				return new AlbumForEditContract(album, PermissionContext.LanguagePreference, imageUrlFactory);
 
 			});
 

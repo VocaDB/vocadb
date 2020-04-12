@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
@@ -16,7 +16,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		public AlbumForEditContract() {}
 
-		public AlbumForEditContract(Album album, ContentLanguagePreference languagePreference, IEntryImagePersister imageStore)
+		public AlbumForEditContract(Album album, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory imageStore)
 			: base(album, languagePreference) {
 
 			ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
