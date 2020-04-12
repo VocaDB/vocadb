@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using VocaDb.Model.Utils;
 
@@ -9,7 +10,7 @@ namespace VocaDb.Model.Domain {
 	/// Can be absolute or relative.
 	/// </summary>
 	[DebuggerDisplay("{DebugString}")]
-	public class VocaDbUrl {
+	public class VocaDbUrl : IEquatable<VocaDbUrl> {
 
 		public static VocaDbUrl Empty { get; } = new VocaDbUrl(string.Empty, UrlDomain.Main, UriKind.Absolute);
 
@@ -50,6 +51,19 @@ namespace VocaDb.Model.Domain {
 		public VocaDbUrl ToAbsoluteIfNotMain() => Domain == UrlDomain.Main ? this : ToAbsolute();
 
 		public override string ToString() => Url;
+
+		public bool Equals(VocaDbUrl other) {
+			return other != null && other.Domain == Domain && other.Url == Url;
+		}
+
+		public override bool Equals(object obj) => Equals(obj as VocaDbUrl);
+
+		public override int GetHashCode() {
+			int hashCode = -120357769;
+			hashCode = hashCode * -1521134295 + Domain.GetHashCode();
+			hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Url);
+			return hashCode;
+		}
 
 	}
 

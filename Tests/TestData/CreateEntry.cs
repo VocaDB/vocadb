@@ -18,8 +18,8 @@ namespace VocaDb.Tests.TestData {
 
 	public static class CreateEntry {
 
-		public static Album Album(int id = 0, string name = "Synthesis") {
-			return new Album(new LocalizedString(name, ContentLanguageSelection.Unspecified)) { Id = id };
+		public static Album Album(int id = 0, string name = "Synthesis", string coverPictureMime = null) {
+			return new Album(new LocalizedString(name, ContentLanguageSelection.Unspecified)) { Id = id, CoverPictureMime = coverPictureMime };
 		}
 
 		public static AlbumDiscProperties AlbumDisc(Album album, int id = 0, string name = "") {

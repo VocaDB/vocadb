@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts;
@@ -17,9 +17,7 @@ namespace VocaDb.Tests.Domain.Images {
 		private InMemoryImagePersister persister;
 		private ImageThumbGenerator target;
 
-		private Stream TestImage() {
-			return ResourceHelper.GetFileStream("yokohma_bay_concert.jpg");
-		}
+		private Stream TestImage() => ResourceHelper.TestImage();
 
 		private void AssertDimensions(IEntryImageInformation imageInfo, ImageSize size, int width, int height) {
 
