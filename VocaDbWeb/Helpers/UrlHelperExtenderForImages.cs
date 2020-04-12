@@ -50,8 +50,8 @@ namespace VocaDb.Web.Helpers {
 		public static string ImageThumb(this UrlHelper urlHelper, IEntryImageInformation imageInfo, ImageSize size, bool fullUrl = false) {
 			
 			var unknown = GetUnknownImageUrl(urlHelper);
-			var url = ImageUrlFactory.GetUrlWithFallback(imageInfo, size, unknown);
-			return fullUrl || url.Domain == UrlDomain.Static ? url.ToAbsolute().Url : url.Url;
+			var url = ImageUrlFactory.GetUrlWithFallback(imageInfo, size, unknown).ToAbsoluteIfNotMain();
+			return fullUrl ? url.ToAbsolute().Url : url.Url;
 
 		}
 

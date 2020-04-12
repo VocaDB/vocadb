@@ -37,13 +37,17 @@ namespace VocaDb.Model.Domain {
 					return new VocaDbUrl(VocaUriBuilder.StaticResource(Url), Domain, UriKind.Absolute);
 				case UriKind.RelativeOrAbsolute when Domain == UrlDomain.Main:
 					return new VocaDbUrl(VocaUriBuilder.AbsoluteFromUnknown(Url, true), Domain, UriKind.Absolute);
+				case UriKind.Relative when Domain == UrlDomain.External:
 				case UriKind.RelativeOrAbsolute when Domain == UrlDomain.Static:
-					throw new NotSupportedException(Url);
+				case UriKind.RelativeOrAbsolute when Domain == UrlDomain.External:
+					throw new NotSupportedException($"No way to convert to absolute URL: {DebugString}");
 				default:
 					throw new InvalidOperationException(DebugString);
 			}
 
 		}
+
+		public VocaDbUrl ToAbsoluteIfNotMain() => Domain == UrlDomain.Main ? this : ToAbsolute();
 
 		public override string ToString() => Url;
 
@@ -57,6 +61,10 @@ namespace VocaDb.Model.Domain {
 		/// <summary>
 		/// https://static.vocadb.net
 		/// </summary>
-		Static
+		Static,
+		/// <summary>
+		/// External website
+		/// </summary>
+		External
 	}
 }
