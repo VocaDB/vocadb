@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Images {
 
@@ -9,6 +8,7 @@ namespace VocaDb.Model.Domain.Images {
 	/// Supports generating image URL for any type of entry supported by <see cref="IEntryImageInformation"/>.
 	/// Automatically chooses the appropriate implementation.
 	/// Use this always when you need to generate image URLs for <see cref="IEntryImageInformation"/>.
+	/// TODO: write tests for this.
 	/// </summary>
 	public interface IAggregatedEntryImageUrlFactory : IEntryImageUrlFactory { }
 
@@ -19,20 +19,21 @@ namespace VocaDb.Model.Domain.Images {
 
 		public ServerEntryImageFactoryAggregator(IDynamicImageUrlFactory dynamicImageUrlFactory, IEntryThumbPersister thumbPersister, IEntryImagePersisterOld entryImagePersisterOld) {
 			factories = new IEntryImageUrlFactory[] {
-				dynamicImageUrlFactory,
 				thumbPersister,
-				entryImagePersisterOld
+				entryImagePersisterOld,
+				dynamicImageUrlFactory
 			};
 		}
 
 		private IEnumerable<IEntryImageUrlFactory> Factories(IEntryImageInformation imageInfo, ImageSize size) =>
 			factories.Where(f => f.IsSupported(imageInfo, size));
 
+		private IEnumerable<IEntryImageUrlFactory> FactoriesCheckExist(IEntryImageInformation imageInfo, ImageSize size) =>
+			Factories(imageInfo, size).Where(f => f.HasImage(imageInfo, size));
+
 		public VocaDbUrl GetUrl(IEntryImageInformation imageInfo, ImageSize size) {
-			return Factories(imageInfo, size)
-				.Select(f => f.GetUrl(imageInfo, size))
-				.Where(u => !u.IsEmpty)
-				.FirstOrDefault()
+			return FactoriesCheckExist(imageInfo, size).Select(f => f.GetUrl(imageInfo, size)).FirstOrDefault() 
+				?? Factories(imageInfo, size).Select(f => f.GetUrl(imageInfo, size)).FirstOrDefault()
 				?? throw new ArgumentException($"Could not find URL factory for {imageInfo}", nameof(imageInfo));
 		}
 

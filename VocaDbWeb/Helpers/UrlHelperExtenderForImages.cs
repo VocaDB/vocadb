@@ -51,7 +51,7 @@ namespace VocaDb.Web.Helpers {
 			
 			var unknown = GetUnknownImageUrl(urlHelper);
 			var url = ImageUrlFactory.GetUrlWithFallback(imageInfo, size, unknown);
-			return fullUrl ? url.ToAbsolute().Url : url.Url;
+			return fullUrl || url.Domain == UrlDomain.Static ? url.ToAbsolute().Url : url.Url;
 
 		}
 
