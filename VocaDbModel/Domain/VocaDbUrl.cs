@@ -6,13 +6,15 @@ using VocaDb.Model.Utils;
 namespace VocaDb.Model.Domain {
 
 	/// <summary>
-	/// URL object with domain information (either main or static).
+	/// URL object with domain information (either main, static or external).
 	/// Can be absolute or relative.
+	/// URLs are immutable.
 	/// </summary>
 	[DebuggerDisplay("{DebugString}")]
 	public class VocaDbUrl : IEquatable<VocaDbUrl> {
 
 		public static VocaDbUrl Empty { get; } = new VocaDbUrl(string.Empty, UrlDomain.Main, UriKind.Absolute);
+		public static VocaDbUrl External(string url) => new VocaDbUrl(url, UrlDomain.External, UriKind.Absolute);
 
 		public VocaDbUrl(string url, UrlDomain domain, UriKind kind) {
 			Url = url;
