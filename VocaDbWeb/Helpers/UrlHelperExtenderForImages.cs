@@ -3,7 +3,6 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
-using VocaDb.Model.Utils;
 
 namespace VocaDb.Web.Helpers {
 
@@ -51,7 +50,8 @@ namespace VocaDb.Web.Helpers {
 		public static string ImageThumb(this UrlHelper urlHelper, IEntryImageInformation imageInfo, ImageSize size, bool fullUrl = false) {
 			
 			var unknown = GetUnknownImageUrl(urlHelper);
-			return ImageUrlFactory.GetUrlWithFallback(imageInfo, size, fullUrl ? unknown.ToAbsolute() : unknown).Url;
+			var url = ImageUrlFactory.GetUrlWithFallback(imageInfo, size, unknown);
+			return fullUrl ? url.ToAbsolute().Url : url.Url;
 
 		}
 
