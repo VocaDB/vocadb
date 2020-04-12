@@ -64,8 +64,8 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<StopForumSpamClient>().As<IStopForumSpamClient>();
 			builder.RegisterType<PVParser>().As<IPVParser>();
 			builder.RegisterType<DynamicImageUrlFactory>().As<IDynamicImageUrlFactory>();
-			builder.RegisterType<ServerEntryImagePersisterOld>().As<IEntryImagePersisterOld>().As<IEntryPictureFilePersister>();
-			builder.RegisterType<ServerEntryThumbPersister>().As<IEntryThumbPersister>();
+			builder.RegisterType<ServerEntryImagePersisterOld>().As<IEntryImagePersisterOld>().As<IEntryPictureFilePersister>().SingleInstance();
+			builder.RegisterType<ServerEntryThumbPersister>().As<IEntryThumbPersister>().SingleInstance();
 			builder.RegisterType<ServerEntryImageFactoryAggregator>().As<IAggregatedEntryImageUrlFactory>();
 			builder.RegisterType<NTextCatLibLanguageDetector>().As<ILanguageDetector>();
 			builder.RegisterType<BrandableStringsManager>().AsSelf().SingleInstance();
