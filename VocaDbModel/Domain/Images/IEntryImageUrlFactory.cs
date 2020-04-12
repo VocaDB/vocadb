@@ -11,7 +11,7 @@ namespace VocaDb.Model.Domain.Images {
 		/// Absolute URL to the image, for example "https://static.vocadb.net/img/Album/Orig/Full/123.jpg".
 		/// Cannot be null, but not guaranteed to exist (use <see cref="HasImage"/> to make sure file exists).
 		/// </returns>
-		string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size);
+		VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size);
 
 		/// <summary>
 		/// Checks whether a specific image exists in the store.
@@ -30,33 +30,37 @@ namespace VocaDb.Model.Domain.Images {
 	/// </summary>
 	public static class IEntryImageUrlFactoryExtender {
 
-		public static string GetUrlAbsoluteWithFallback(this IEntryImageUrlFactory urlFactory, IEntryImageInformation imageInfo, ImageSize size, string fallbackUrl) {
+		public static VocaDbUrl GetUrlWithFallback(this IEntryImageUrlFactory urlFactory, IEntryImageInformation imageInfo, ImageSize size, VocaDbUrl fallbackUrl) {
 
 			if (imageInfo == null || !imageInfo.ShouldExist() || !urlFactory.HasImage(imageInfo, size))
 				return fallbackUrl;
 
-			return urlFactory.GetUrlAbsolute(imageInfo, size);
+			return urlFactory.GetUrl(imageInfo, size);
 
 		}
 
 		/// <summary>
-		/// Gets absolute URL to image, optionally verifying that it exists.
+		/// Gets URL to image, optionally verifying that it exists.
 		/// </summary>
 		/// <param name="persister">Persister. Cannot be null.</param>
 		/// <param name="picture">Image information. Cannot be null.</param>
 		/// <param name="size">Image size.</param>
 		/// <param name="checkExists">If true, verify that the image exists. If false, no verification is done.</param>
 		/// <returns>
-		/// Absolute URL to image, if image exists or <paramref name="checkExists"/> is false. 
-		/// If <paramref name="checkExists"/> is true and image does not exist, this will be null.
+		/// URL to image, if image exists or <paramref name="checkExists"/> is false. 
+		/// If <paramref name="checkExists"/> is true and image does not exist, this will be <see cref="VocaDbUrl.Empty"/>.
 		/// </returns>
-		public static string GetUrlAbsolute(this IEntryImageUrlFactory persister, IEntryImageInformation picture, ImageSize size, bool checkExists) {
+		public static VocaDbUrl GetUrl(this IEntryImageUrlFactory persister, IEntryImageInformation picture, ImageSize size, bool checkExists) {
 
 			if (checkExists && !persister.HasImage(picture, size))
-				return null;
+				return VocaDbUrl.Empty;
 
-			return persister.GetUrlAbsolute(picture, size);
+			return persister.GetUrl(picture, size);
 
+		}
+
+		public static string GetUrlAbsolute(this IEntryImageUrlFactory persister, IEntryImageInformation picture, ImageSize size, bool checkExists = false) {
+			return persister.GetUrl(picture, size, checkExists).Url;
 		}
 
 	}

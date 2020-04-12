@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net.Mime;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
 
@@ -30,23 +31,24 @@ namespace VocaDb.Tests.TestSupport {
 			}
 		}
 
-		public string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size) {
-			return picture.EntryType + "/" + picture.Id + "/" + size;
+		public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size) {
+			// For testing it's really doesn't matter if it's absolute or relative, it just needs to be unique.
+			return new VocaDbUrl(picture.EntryType + "/" + picture.Id + "/" + size, UrlDomain.Main, System.UriKind.Absolute);
 		}
 
 		public Stream GetReadStream(IEntryImageInformation picture, ImageSize size) {
-			return new MemoryStream(images[GetUrlAbsolute(picture, size)]);
+			return new MemoryStream(images[GetUrl(picture, size).Url]);
 		}
 
 		public bool HasImage(IEntryImageInformation picture, ImageSize size) {
-			return images.ContainsKey(GetUrlAbsolute(picture, size));
+			return images.ContainsKey(GetUrl(picture, size).Url);
 		}
 
 		public void Write(IEntryImageInformation picture, ImageSize size, Stream stream) {
 
 			var bytes = StreamHelper.ReadStream(stream);
 
-			var url = GetUrlAbsolute(picture, size);
+			var url = GetUrl(picture, size).Url;
 
 			if (images.ContainsKey(url))
 				images[url] = bytes;

@@ -28,10 +28,10 @@ namespace VocaDb.Model.Domain.Images {
 		private IEnumerable<IEntryImageUrlFactory> Factories(IEntryImageInformation imageInfo, ImageSize size) =>
 			factories.Where(f => f.IsSupported(imageInfo, size));
 
-		public string GetUrlAbsolute(IEntryImageInformation imageInfo, ImageSize size) {
+		public VocaDbUrl GetUrl(IEntryImageInformation imageInfo, ImageSize size) {
 			return Factories(imageInfo, size)
-				.Select(f => f.GetUrlAbsolute(imageInfo, size))
-				.WhereIsNotNullOrEmpty()
+				.Select(f => f.GetUrl(imageInfo, size))
+				.Where(u => !u.IsEmpty)
 				.FirstOrDefault()
 				?? throw new ArgumentException($"Could not find URL factory for {imageInfo}", nameof(imageInfo));
 		}

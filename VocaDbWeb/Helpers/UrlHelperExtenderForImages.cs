@@ -1,5 +1,6 @@
 using System.Web.Mvc;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
@@ -13,8 +14,8 @@ namespace VocaDb.Web.Helpers {
 
 		private static IAggregatedEntryImageUrlFactory ImageUrlFactory => DependencyResolver.Current.GetService<IAggregatedEntryImageUrlFactory>();
 
-		private static string GetUnknownImageUrl(UrlHelper urlHelper) {
-			return urlHelper.Content("~/Content/unknown.png");
+		private static VocaDbUrl GetUnknownImageUrl(UrlHelper urlHelper) {
+			return new VocaDbUrl(urlHelper.Content("~/Content/unknown.png"), UrlDomain.Main, System.UriKind.Relative);
 		}
 
 		/// <summary>
@@ -26,7 +27,7 @@ namespace VocaDb.Web.Helpers {
 		/// <returns>URL to the image thumbnail (may be placeholder).</returns>
 		public static string ImageThumb(this UrlHelper urlHelper, EntryThumbForApiContract imageInfo, ImageSize size) {
 
-			return imageInfo?.GetSmallestThumb(size).EmptyToNull() ?? GetUnknownImageUrl(urlHelper);
+			return imageInfo?.GetSmallestThumb(size).EmptyToNull() ?? GetUnknownImageUrl(urlHelper).Url;
 
 		}
 
@@ -50,7 +51,7 @@ namespace VocaDb.Web.Helpers {
 		public static string ImageThumb(this UrlHelper urlHelper, IEntryImageInformation imageInfo, ImageSize size, bool fullUrl = false) {
 			
 			var unknown = GetUnknownImageUrl(urlHelper);
-			return ImageUrlFactory.GetUrlAbsoluteWithFallback(imageInfo, size, fullUrl ? VocaUriBuilder.Absolute(unknown) : unknown);
+			return ImageUrlFactory.GetUrlWithFallback(imageInfo, size, fullUrl ? unknown.ToAbsolute() : unknown).Url;
 
 		}
 
