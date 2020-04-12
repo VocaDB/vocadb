@@ -101,11 +101,13 @@ namespace VocaDb.Model.DataContracts {
 			
 			switch (preferLargerThan) {
 				case ImageSize.TinyThumb:
-					return UrlTinyThumb ?? UrlSmallThumb ?? UrlThumb;
+					return UrlTinyThumb ?? UrlSmallThumb ?? UrlThumb ?? UrlOriginal;
 				case ImageSize.SmallThumb:
-					return UrlSmallThumb ?? UrlThumb ?? UrlTinyThumb;
+					return UrlSmallThumb ?? UrlThumb ?? UrlTinyThumb ?? UrlOriginal;
+				case ImageSize.Thumb:
+					return UrlThumb ?? UrlSmallThumb ?? UrlTinyThumb ?? UrlOriginal;
 				default:
-					return UrlThumb ?? UrlSmallThumb ?? UrlTinyThumb;
+					return UrlOriginal ?? UrlThumb ?? UrlSmallThumb ?? UrlTinyThumb;
 			}				
 
 		}
