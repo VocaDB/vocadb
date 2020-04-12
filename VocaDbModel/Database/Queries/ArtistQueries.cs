@@ -403,7 +403,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public EntryForPictureDisplayContract GetPictureThumb(int artistId) {
 			
-			var size = new Size(ImageHelper.DefaultThumbSize, ImageHelper.DefaultThumbSize);
+			var size = ImageSize.Thumb;
 
 			return repository.HandleQuery(ctx => {
 				
@@ -415,10 +415,8 @@ namespace VocaDb.Model.Database.Queries {
 				var data = new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main);
 
 				if (imagePersister.HasImage(data, ImageSize.Thumb)) {
-					using (var stream = imagePersister.GetReadStream(data, ImageSize.Thumb)) {
-						var bytes = StreamHelper.ReadStream(stream);
-						return EntryForPictureDisplayContract.Create(artist, data.Mime, bytes, PermissionContext.LanguagePreference);
-					}
+					var bytes = imagePersister.ReadBytes(data, size);
+					return EntryForPictureDisplayContract.Create(artist, data.Mime, bytes, PermissionContext.LanguagePreference);
 				}
 
 				return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference, size);

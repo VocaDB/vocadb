@@ -1,8 +1,9 @@
-﻿using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using System.Drawing;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.UseCases {
 
@@ -17,7 +18,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		}
 
-		public static EntryForPictureDisplayContract Create(Album album, ContentLanguagePreference languagePreference, Size requestedSize) {
+		public static EntryForPictureDisplayContract Create(Album album, ContentLanguagePreference languagePreference, ImageSize requestedSize) {
 
 			ParamIs.NotNull(() => album);
 
@@ -38,14 +39,14 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			PictureContract pic = null;
 
 			if (versionWithPic != null && versionWithPic.CoverPicture != null)
-				pic = new PictureContract(versionWithPic.CoverPicture, versionWithPic.CoverPictureMime, Size.Empty);
+				pic = new PictureContract(versionWithPic.CoverPicture, versionWithPic.CoverPictureMime, ImageSize.Original);
 
 			return new EntryForPictureDisplayContract(
 				EntryType.Album, archivedVersion.Album.Id, name, archivedVersion.Version, pic);
 
 		}
 
-		public static EntryForPictureDisplayContract Create(Artist artist, ContentLanguagePreference languagePreference, Size requestedSize) {
+		public static EntryForPictureDisplayContract Create(Artist artist, ContentLanguagePreference languagePreference, ImageSize requestedSize) {
 
 			ParamIs.NotNull(() => artist);
 
@@ -66,7 +67,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			PictureContract pic = null;
 
 			if (versionWithPic != null && versionWithPic.Picture != null)
-				pic = new PictureContract(versionWithPic.Picture, versionWithPic.PictureMime, Size.Empty);
+				pic = new PictureContract(versionWithPic.Picture, versionWithPic.PictureMime, ImageSize.Original);
 
 			return new EntryForPictureDisplayContract(EntryType.Artist, archivedVersion.Artist.Id, name, archivedVersion.Version, pic);
 

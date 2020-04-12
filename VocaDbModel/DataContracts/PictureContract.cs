@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
-using System.Drawing;
+using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts {
 
@@ -16,7 +16,7 @@ namespace VocaDb.Model.DataContracts {
 			Mime = mime;
 		}
 
-		public PictureContract(PictureData pictureData, string mime, Size requestedSize) {
+		public PictureContract(PictureData pictureData, string mime, ImageSize requestedSize) {
 
 			ParamIs.NotNull(() => pictureData);
 

@@ -22,6 +22,7 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.TagFormatting;
+using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.Service {
 
@@ -254,7 +255,7 @@ namespace VocaDb.Model.Service {
 		/// <param name="id">Album Id.</param>
 		/// <param name="requestedSize">Requested size. If Empty, original size will be returned.</param>
 		/// <returns>Data contract for the picture. Can be null if there is no picture.</returns>
-		public EntryForPictureDisplayContract GetCoverPicture(int id, Size requestedSize) {
+		public EntryForPictureDisplayContract GetCoverPicture(int id, ImageSize requestedSize) {
 
 			return HandleQuery(session =>
 				EntryForPictureDisplayContract.Create(session.Load<Album>(id), PermissionContext.LanguagePreference, requestedSize));

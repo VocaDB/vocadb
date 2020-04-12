@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using VocaDb.Model.DataContracts;
 using System.Drawing;
+using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.Domain {
 
@@ -43,7 +44,7 @@ namespace VocaDb.Model.Domain {
 		/// </summary>
 		/// <param name="requestedSize">Requested size. Can be Empty in which case the original size is returned.</param>
 		/// <returns></returns>
-		public virtual Byte[] GetBytes(Size requestedSize) {
+		public virtual Byte[] GetBytes(ImageSize requestedSize) {
 
 			if (HasThumb(requestedSize))
 				return Thumb250.Bytes;
@@ -52,64 +53,21 @@ namespace VocaDb.Model.Domain {
 
 		}
 
-		public virtual bool HasThumb(Size requestedSize) {
-
-			return requestedSize != Size.Empty && Thumb250 != null && Thumb250.IsValidFor(requestedSize);
-
-		}
+		public virtual bool HasThumb(ImageSize size) => size == ImageSize.Thumb && Thumb250 != null && Thumb250.Bytes != null;
 
 		public virtual bool IsEmpty => Bytes == null || Bytes.Length == 0;
 
 	}
 
-	public class PictureThumb {
-
-		public PictureThumb() { }
-
-		public PictureThumb(byte[] bytes, int size) {
-
-			Bytes = bytes;
-			Size = size;
-
-		}
-
-		public PictureThumb(PictureThumbContract contract) {
-			
-			ParamIs.NotNull(() => contract);
-
-			Bytes = contract.Bytes;
-			Size = contract.Size;
-
-		}
-
-		public virtual Byte[] Bytes { get; set; }
-
-		public virtual int Size { get; set; }
-
-		public virtual bool IsValidFor(Size requestedSize) {
-
-			return (Bytes != null && requestedSize.Height <= Size && requestedSize.Width <= Size);
-
-		}
-
-	}
-
-	public class PictureThumb250 : PictureThumb {
+	public class PictureThumb250 {
 		
 		public PictureThumb250() {}
 
-		public PictureThumb250(byte[] bytes)
-			: base(bytes, 250) {}
-
-		public PictureThumb250(PictureThumbContract contract)
-			: base(contract) {
-			
+		public PictureThumb250(byte[] bytes) {
+			Bytes = bytes;	
 		}
 
-		public override int Size {
-			get { return 250; }
-			set { base.Size = value; }
-		}
+		public virtual Byte[] Bytes { get; set; }
 
 	}
 }

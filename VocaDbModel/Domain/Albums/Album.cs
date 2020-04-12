@@ -157,8 +157,17 @@ namespace VocaDb.Model.Domain.Albums {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
+		/// <summary>
+		/// Album cover picture (main picture) as database BLOB.
+		/// Also contains optional thumbnail.
+		/// Can be null if there is no picture.
+		/// </summary>
 		public virtual PictureData CoverPictureData { get; set; }
 
+		/// <summary>
+		/// Album cover picture (main picture) MIME.
+		/// Can be null if there is no picture.
+		/// </summary>
 		public virtual string CoverPictureMime { get; set; }
 
 		public virtual DateTime CreateDate { get; set; }

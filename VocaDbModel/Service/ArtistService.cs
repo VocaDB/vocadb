@@ -15,6 +15,7 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Artists;
+using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.Service {
 
@@ -140,7 +141,7 @@ namespace VocaDb.Model.Service {
 		/// <param name="id">Artist Id.</param>
 		/// <param name="requestedSize">Requested size. If Empty, original size will be returned.</param>
 		/// <returns>Data contract for the picture. Can be null if there is no picture.</returns>
-		public EntryForPictureDisplayContract GetArtistPicture(int id, Size requestedSize) {
+		public EntryForPictureDisplayContract GetArtistPicture(int id, ImageSize requestedSize) {
 
 			return HandleQuery(session => 
 				EntryForPictureDisplayContract.Create(session.Load<Artist>(id), PermissionContext.LanguagePreference, requestedSize));

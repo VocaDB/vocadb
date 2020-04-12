@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.IO;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Images {
 
@@ -33,6 +34,14 @@ namespace VocaDb.Model.Domain.Images {
 		/// <param name="image">Image object. Cannot be null.</param>
 		void Write(IEntryImageInformation picture, ImageSize size, Image image);
 
+	}
+
+	public static class EntryImagePersisterExtensions {
+		public static byte[] ReadBytes(this IEntryImagePersister persister, IEntryImageInformation imageInfo, ImageSize size) {
+			using (var stream = persister.GetReadStream(imageInfo, size)) {
+				return StreamHelper.ReadStream(stream);
+			}
+		}
 	}
 
 }

@@ -451,24 +451,25 @@ namespace VocaDb.Model.Database.Queries {
 
 		public EntryForPictureDisplayContract GetCoverPictureThumb(int albumId) {
 			
-			var size = new Size(ImageHelper.DefaultThumbSize, ImageHelper.DefaultThumbSize);
+			var size = ImageSize.Thumb;
 
+			// TODO: this all should be moved to DynamicImageUrlFactory
 			return repository.HandleQuery(ctx => {
 				
 				var album = ctx.Load(albumId);
 
+				// Return database saved thumbnail if it exists. If there is no picture, return empty.
 				if (album.CoverPictureData == null || string.IsNullOrEmpty(album.CoverPictureMime) || album.CoverPictureData.HasThumb(size))
 					return EntryForPictureDisplayContract.Create(album, PermissionContext.LanguagePreference, size);
 
+				// Try to read thumbnail from file system.
 				var data = new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main);
-
 				if (imagePersister.HasImage(data, ImageSize.Thumb)) {
-					using (var stream = imagePersister.GetReadStream(data, ImageSize.Thumb)) {
-						var bytes = StreamHelper.ReadStream(stream);
-						return EntryForPictureDisplayContract.Create(album, data.Mime, bytes, PermissionContext.LanguagePreference);
-					}
+					var bytes = imagePersister.ReadBytes(data, size);
+					return EntryForPictureDisplayContract.Create(album, data.Mime, bytes, PermissionContext.LanguagePreference);
 				}
 
+				// This should return the original image.
 				return EntryForPictureDisplayContract.Create(album, PermissionContext.LanguagePreference, size);
 
 			});
