@@ -30,6 +30,15 @@ namespace VocaDb.Model.Domain.Images {
 	/// </summary>
 	public static class IEntryImageUrlFactoryExtender {
 
+		public static string GetUrlAbsoluteWithFallback(this IEntryImageUrlFactory urlFactory, IEntryImageInformation imageInfo, ImageSize size, string fallbackUrl) {
+
+			if (imageInfo == null || !imageInfo.ShouldExist() || !urlFactory.HasImage(imageInfo, size))
+				return fallbackUrl;
+
+			return urlFactory.GetUrlAbsolute(imageInfo, size);
+
+		}
+
 		/// <summary>
 		/// Gets absolute URL to image, optionally verifying that it exists.
 		/// </summary>

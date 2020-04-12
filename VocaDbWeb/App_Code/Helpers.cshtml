@@ -77,8 +77,8 @@
 }
 
 @helper EntryPictureFileLink(IEntryPictureFile entryPictureFile) {
-	<a href="@Url.EntryPictureFile(entryPictureFile, ImageSize.Original)">
-		<img src="@Url.EntryPictureFile(entryPictureFile, ImageSize.Thumb)" alt="Preview" class="coverPic" />
+	<a href="@Url.ImageThumb(entryPictureFile, ImageSize.Original)">
+		<img src="@Url.ImageThumb(entryPictureFile, ImageSize.Thumb)" alt="Preview" class="coverPic" />
 	</a>
 }
 

@@ -53,8 +53,8 @@ namespace VocaDb.Web.Controllers
 
 			var viewModel = new SongListDetailsViewModel(contract);
 
-			viewModel.SmallThumbUrl = Url.EntryImageOld(contract.Thumb, ImageSize.SmallThumb);
-			var thumbUrl = viewModel.ThumbUrl = Url.EntryImageOld(contract.Thumb, ImageSize.Original) ?? Url.EntryImageOld(contract.Thumb, ImageSize.Thumb);
+			viewModel.SmallThumbUrl = Url.ImageThumb(contract.Thumb, ImageSize.SmallThumb);
+			var thumbUrl = viewModel.ThumbUrl = Url.ImageThumb(contract.Thumb, ImageSize.Original) ?? Url.ImageThumb(contract.Thumb, ImageSize.Thumb);
 			if (!string.IsNullOrEmpty(thumbUrl)) {
 				PageProperties.OpenGraph.Image = thumbUrl;
 			}

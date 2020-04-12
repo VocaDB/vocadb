@@ -6,7 +6,6 @@ namespace VocaDb.Model.DataContracts {
 	/// <summary>
 	/// Entry thumbnail for API.
 	/// Contains URLs to thumbnails of different sizes.
-	/// Does not include URL to original picture at the moment because that is loaded differently.
 	/// </summary>
 	/// <remarks>
 	/// Default sizes are described in <see cref="ImageSize"/>, but the sizes might vary depending on entry type.

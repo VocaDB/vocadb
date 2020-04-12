@@ -125,7 +125,7 @@ namespace VocaDb.Web.Controllers {
 
 			var prop = PageProperties;
 
-			var thumbUrl = Url.EntryImageOld(contract.Thumb, ImageSize.Original);
+			var thumbUrl = Url.ImageThumb(contract.Thumb, ImageSize.Original);
 			if (!string.IsNullOrEmpty(thumbUrl)) {
 				PageProperties.OpenGraph.Image = thumbUrl;
 			}

@@ -40,7 +40,7 @@ namespace VocaDb.Model.Domain.Images {
 			return Factories(picture, size).Any(f => f.HasImage(picture, size));
 		}
 
-		public bool IsSupported(IEntryImageInformation picture, ImageSize size) => factories.Any(f => f.IsSupported(picture, size));
+		public bool IsSupported(IEntryImageInformation picture, ImageSize size) => Factories(picture, size).Any();
 
 	}
 }
