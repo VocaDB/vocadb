@@ -46,10 +46,11 @@ namespace VocaDb.Web.Helpers {
 		/// or relative (such as /Album/CoverPicture/123).
 		/// Usually this should be set to true if the image is to be referred from another domain.
 		/// </param>
+		/// <param name="useUnknownImage">Use unknown image as fallback if image does not exist.</param>
 		/// <returns>URL to the image thumbnail.</returns>
-		public static string ImageThumb(this UrlHelper urlHelper, IEntryImageInformation imageInfo, ImageSize size, bool fullUrl = false) {
+		public static string ImageThumb(this UrlHelper urlHelper, IEntryImageInformation imageInfo, ImageSize size, bool fullUrl = false, bool useUnknownImage = true) {
 			
-			var unknown = GetUnknownImageUrl(urlHelper);
+			var unknown = useUnknownImage ? GetUnknownImageUrl(urlHelper) : VocaDbUrl.Empty;
 			var url = ImageUrlFactory.GetUrlWithFallback(imageInfo, size, unknown).ToAbsoluteIfNotMain();
 			return fullUrl ? url.ToAbsolute().Url : url.Url;
 

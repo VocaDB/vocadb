@@ -80,7 +80,7 @@ namespace VocaDb.Tests.TestData {
 		public static Tag Tag(string name, int id = 0, string pictureMime = "") {
 			var tag = new Tag(name) { Id = id };
 			if (!string.IsNullOrEmpty(pictureMime))
-				tag.Thumb = new Model.Domain.EntryThumb() { Entry = tag, Mime = pictureMime };
+				tag.Thumb = new Model.Domain.EntryThumbMain(tag, pictureMime);
 			return tag;
 		}
 

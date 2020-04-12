@@ -41,4 +41,16 @@ namespace VocaDb.Model.Domain {
 		public int Version => Entry.Version;
 
 	}
+
+	public class EntryThumbMain : EntryThumb {
+
+		public EntryThumbMain() {
+			Purpose = ImagePurpose.Main;
+		}
+
+		public EntryThumbMain(IEntryBase entry, string mime) 
+			: base(entry, mime, ImagePurpose.Main) {}
+
+	}
+
 }
