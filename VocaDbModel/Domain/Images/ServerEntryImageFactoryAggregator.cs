@@ -32,6 +32,8 @@ namespace VocaDb.Model.Domain.Images {
 			Factories(imageInfo, size).Where(f => f.HasImage(imageInfo, size));
 
 		public VocaDbUrl GetUrl(IEntryImageInformation imageInfo, ImageSize size) {
+			// Logic: try to get URL from source where it exists.
+			// If it seems the file doesn't exist, try a secondary source and finally fall back to accepting source where the file doesn't exist.
 			return FactoriesCheckExist(imageInfo, size).Select(f => f.GetUrl(imageInfo, size)).FirstOrDefault() 
 				?? Factories(imageInfo, size).Select(f => f.GetUrl(imageInfo, size)).FirstOrDefault()
 				?? throw new ArgumentException($"Could not find URL factory for {imageInfo}", nameof(imageInfo));
