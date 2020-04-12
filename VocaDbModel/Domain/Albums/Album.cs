@@ -373,6 +373,8 @@ namespace VocaDb.Model.Domain.Albums {
 
 		ITagManager IEntryWithTags.Tags => Tags;
 
+		public virtual EntryThumb Thumb => !string.IsNullOrEmpty(CoverPictureMime) ? new EntryThumb(this, CoverPictureMime, Images.ImagePurpose.Main) : null;
+
 		public virtual IList<AlbumForUser> UserCollections {
 			get { return userCollections; }
 			set {

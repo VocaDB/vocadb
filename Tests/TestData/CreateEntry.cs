@@ -77,8 +77,11 @@ namespace VocaDb.Tests.TestData {
 
 		}
 
-		public static Tag Tag(string name, int id = 0) {
-			return new Tag(name) { Id = id };
+		public static Tag Tag(string name, int id = 0, string pictureMime = "") {
+			var tag = new Tag(name) { Id = id };
+			if (!string.IsNullOrEmpty(pictureMime))
+				tag.Thumb = new Model.Domain.EntryThumb() { Entry = tag, Mime = pictureMime };
+			return tag;
 		}
 
 		public static (ICollection<Tag> tags, ICollection<TUsage> usages, ICollection<TagVote> votes) TagUsages<TUsage>(IEntryWithTags[] songs, string[] tagNames, User user, ITagUsageFactory<TUsage> usageFactory) where TUsage: TagUsage {

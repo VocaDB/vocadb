@@ -77,7 +77,7 @@ namespace VocaDb.Tests.Domain.Images {
 		[TestMethod]
 		public void GetUrl_AlbumOriginalImageMissing() {
 
-			var albumContract2 = new AlbumContract(CreateEntry.Album(2, "Another Dimensions"), ContentLanguagePreference.Default);
+			var albumContract2 = AlbumContract(CreateEntry.Album(2, "Another Dimensions"));
 			var url = urlFactory.GetUrl(albumContract2, ImageSize.Original);
 			AssertImageDatabase(url, albumContract2, ImageSize.Original, because: "Original album image always loaded from database");
 
@@ -86,9 +86,28 @@ namespace VocaDb.Tests.Domain.Images {
 		[TestMethod]
 		public void GetUrl_AlbumOriginalThumbnailMissing() {
 
-			var albumContract2 = new AlbumContract(CreateEntry.Album(2, "Another Dimensions"), ContentLanguagePreference.Default);
+			var albumContract2 = AlbumContract(CreateEntry.Album(2, "Another Dimensions"));
 			var url = urlFactory.GetUrl(albumContract2, ImageSize.Thumb);
 			AssertImageFileSystem(url, albumContract2, ImageSize.Thumb, because: "Missing thumbnail attempted to be loaded from primary location on disk");
+
+		}
+
+		[TestMethod]
+		public void GetUrl_TagOriginalImageExistsOnDisk() {
+
+			var tag = CreateEntry.Tag("trance", pictureMime: "image/png");
+			AddImage(tag.Thumb, ImageSize.Original);
+			var url = urlFactory.GetUrl(tag.Thumb, ImageSize.Original);
+			AssertImageFileSystem(url, tag.Thumb, ImageSize.Original, because: "Tag images are always on disk");
+
+		}
+
+		[TestMethod]
+		public void GetUrl_TagOriginalImageMissingFromDisk() {
+
+			var tag = CreateEntry.Tag("trance", pictureMime: "image/png");
+			var url = urlFactory.GetUrl(tag.Thumb, ImageSize.Original);
+			AssertImageFileSystem(url, tag.Thumb, ImageSize.Original, because: "Tag images are always on disk");
 
 		}
 

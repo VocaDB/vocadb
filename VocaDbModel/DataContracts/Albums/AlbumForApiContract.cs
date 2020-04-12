@@ -70,10 +70,8 @@ namespace VocaDb.Model.DataContracts.Albums {
 				Identifiers = album.Identifiers.Select(i => new AlbumIdentifierContract(i)).ToArray();
 			}
 
-			if (thumbPersister != null && fields.HasFlag(AlbumOptionalFields.MainPicture) && !string.IsNullOrEmpty(album.CoverPictureMime)) {
-				
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister);
-
+			if (thumbPersister != null && fields.HasFlag(AlbumOptionalFields.MainPicture) && album.Thumb != null) {				
+				MainPicture = new EntryThumbForApiContract(album.Thumb, thumbPersister);
 			}
 
 			if (fields.HasFlag(AlbumOptionalFields.Names)) {
