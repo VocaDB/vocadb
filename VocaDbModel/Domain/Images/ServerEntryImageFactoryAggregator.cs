@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Images {
 
@@ -23,17 +25,19 @@ namespace VocaDb.Model.Domain.Images {
 			};
 		}
 
-		private IEntryImageUrlFactory Choose(IEntryImageInformation imageInfo, ImageSize size) {
-			return factories.FirstOrDefault(f => f.IsSupported(imageInfo, size))
+		private IEnumerable<IEntryImageUrlFactory> Factories(IEntryImageInformation imageInfo, ImageSize size) =>
+			factories.Where(f => f.IsSupported(imageInfo, size));
+
+		public string GetUrlAbsolute(IEntryImageInformation imageInfo, ImageSize size) {
+			return Factories(imageInfo, size)
+				.Select(f => f.GetUrlAbsolute(imageInfo, size))
+				.WhereIsNotNullOrEmpty()
+				.FirstOrDefault()
 				?? throw new ArgumentException($"Could not find URL factory for {imageInfo}", nameof(imageInfo));
 		}
 
-		public string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size) {
-			return Choose(picture, size).GetUrlAbsolute(picture, size);
-		}
-
 		public bool HasImage(IEntryImageInformation picture, ImageSize size) {
-			return Choose(picture, size).HasImage(picture, size);
+			return Factories(picture, size).Any(f => f.HasImage(picture, size));
 		}
 
 		public bool IsSupported(IEntryImageInformation picture, ImageSize size) => factories.Any(f => f.IsSupported(picture, size));
