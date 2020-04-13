@@ -58,9 +58,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 			if (includedFields.HasFlag(ArtistOptionalFields.Tags))
 				Tags = artist.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 
-			if (thumbPersister != null && includedFields.HasFlag(ArtistOptionalFields.MainPicture) && !string.IsNullOrEmpty(artist.PictureMime)) {
+			if (thumbPersister != null && includedFields.HasFlag(ArtistOptionalFields.MainPicture) && artist.Thumb != null) {
 				
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main), thumbPersister);
+				MainPicture = new EntryThumbForApiContract(artist.Thumb, thumbPersister);
 
 			}
 

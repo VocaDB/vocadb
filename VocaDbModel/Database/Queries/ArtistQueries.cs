@@ -412,9 +412,9 @@ namespace VocaDb.Model.Database.Queries {
 				if (artist.Picture == null || string.IsNullOrEmpty(artist.PictureMime) || artist.Picture.HasThumb(size))
 					return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference, size);
 
-				var data = new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main);
+				var data = artist.Thumb;
 
-				if (imagePersister.HasImage(data, ImageSize.Thumb)) {
+				if (imagePersister.HasImage(data, size)) {
 					var bytes = imagePersister.ReadBytes(data, size);
 					return EntryForPictureDisplayContract.Create(artist, data.Mime, bytes, PermissionContext.LanguagePreference);
 				}

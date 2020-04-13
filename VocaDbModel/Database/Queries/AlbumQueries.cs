@@ -463,8 +463,8 @@ namespace VocaDb.Model.Database.Queries {
 					return EntryForPictureDisplayContract.Create(album, PermissionContext.LanguagePreference, size);
 
 				// Try to read thumbnail from file system.
-				var data = new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main);
-				if (imagePersister.HasImage(data, ImageSize.Thumb)) {
+				var data = album.Thumb;
+				if (imagePersister.HasImage(data, size)) {
 					var bytes = imagePersister.ReadBytes(data, size);
 					return EntryForPictureDisplayContract.Create(album, data.Mime, bytes, PermissionContext.LanguagePreference);
 				}
