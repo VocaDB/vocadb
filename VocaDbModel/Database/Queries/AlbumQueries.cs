@@ -882,7 +882,7 @@ namespace VocaDb.Model.Database.Queries {
 					pictureData.Id = album.Id;
 					pictureData.EntryType = EntryType.Album;
 					var thumbGenerator = new ImageThumbGenerator(imagePersister);
-					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
+					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.AllThumbs);
 
 					diff.Cover.Set();
 
