@@ -29,6 +29,12 @@ namespace VocaDb.Model.Domain {
 		public string DebugString => $"{Url} ({Domain})";
 		public bool IsEmpty => string.IsNullOrEmpty(Url);
 
+		/// <summary>
+		/// Converts URL to absolute (with scheme and domain), if possible.
+		/// External URLs cannot be converted.
+		/// </summary>
+		/// <returns>Absolute URL. Cannot be null.</returns>
+		/// <exception cref="NotSupportedException">URL cannot be converted to absolute.</exception>
 		public VocaDbUrl ToAbsolute() {
 
 			switch (Kind) {

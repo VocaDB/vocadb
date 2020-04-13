@@ -60,7 +60,7 @@ namespace VocaDb.Model.Domain.Images {
 		}
 
 		public static string GetUrlAbsolute(this IEntryImageUrlFactory persister, IEntryImageInformation picture, ImageSize size, bool checkExists = false) {
-			return persister.GetUrl(picture, size, checkExists).Url;
+			return persister.GetUrl(picture, size, checkExists).ToAbsolute().Url;
 		}
 
 	}
