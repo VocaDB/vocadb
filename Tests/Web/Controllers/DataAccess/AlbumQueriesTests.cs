@@ -546,7 +546,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			Assert.IsNotNull(albumFromRepo.CoverPictureData, "CoverPictureData");
 			Assert.IsNotNull(albumFromRepo.CoverPictureData.Bytes, "Original bytes are saved");
-			Assert.IsNull(albumFromRepo.CoverPictureData.Thumb250, "Thumb bytes not saved anymore");
 			Assert.AreEqual(MediaTypeNames.Image.Jpeg, albumFromRepo.CoverPictureMime, "CoverPictureData.Mime");
 
 			var thumbData = new EntryThumb(albumFromRepo, albumFromRepo.CoverPictureMime, ImagePurpose.Main);

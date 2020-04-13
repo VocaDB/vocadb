@@ -18,12 +18,12 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		}
 
-		public static EntryForPictureDisplayContract Create(Album album, ContentLanguagePreference languagePreference, ImageSize requestedSize) {
+		public static EntryForPictureDisplayContract Create(Album album, ContentLanguagePreference languagePreference) {
 
 			ParamIs.NotNull(() => album);
 
 			var name = album.TranslatedName[languagePreference];
-			var pic = (album.CoverPictureData != null ? new PictureContract(album.CoverPictureData, album.CoverPictureMime, requestedSize) : null);
+			var pic = (album.CoverPictureData != null ? new PictureContract(album.CoverPictureData, album.CoverPictureMime) : null);
 
 			return new EntryForPictureDisplayContract(EntryType.Album, album.Id, name, album.Version, pic);
 
@@ -39,19 +39,19 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			PictureContract pic = null;
 
 			if (versionWithPic != null && versionWithPic.CoverPicture != null)
-				pic = new PictureContract(versionWithPic.CoverPicture, versionWithPic.CoverPictureMime, ImageSize.Original);
+				pic = new PictureContract(versionWithPic.CoverPicture, versionWithPic.CoverPictureMime);
 
 			return new EntryForPictureDisplayContract(
 				EntryType.Album, archivedVersion.Album.Id, name, archivedVersion.Version, pic);
 
 		}
 
-		public static EntryForPictureDisplayContract Create(Artist artist, ContentLanguagePreference languagePreference, ImageSize requestedSize) {
+		public static EntryForPictureDisplayContract Create(Artist artist, ContentLanguagePreference languagePreference) {
 
 			ParamIs.NotNull(() => artist);
 
 			var name = artist.TranslatedName[languagePreference];
-			var pic = (artist.Picture != null ? new PictureContract(artist.Picture, artist.PictureMime, requestedSize) : null);
+			var pic = (artist.Picture != null ? new PictureContract(artist.Picture, artist.PictureMime) : null);
 
 			return new EntryForPictureDisplayContract(EntryType.Artist, artist.Id, name, artist.Version, pic);
 
@@ -67,7 +67,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			PictureContract pic = null;
 
 			if (versionWithPic != null && versionWithPic.Picture != null)
-				pic = new PictureContract(versionWithPic.Picture, versionWithPic.PictureMime, ImageSize.Original);
+				pic = new PictureContract(versionWithPic.Picture, versionWithPic.PictureMime);
 
 			return new EntryForPictureDisplayContract(EntryType.Artist, archivedVersion.Artist.Id, name, archivedVersion.Version, pic);
 

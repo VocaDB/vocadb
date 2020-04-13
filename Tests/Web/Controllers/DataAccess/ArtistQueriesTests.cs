@@ -427,7 +427,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var artistFromRepo = repository.Load(contract.Id);
 
 			Assert.IsFalse(PictureData.IsNullOrEmpty(artist.Picture), "Picture was saved");
-			Assert.IsNull(artistFromRepo.Picture.Thumb250, "Thumb bytes not saved anymore");
 			Assert.AreEqual(MediaTypeNames.Image.Jpeg, artistFromRepo.PictureMime, "Picture.Mime");
 
 			var thumbData = new EntryThumb(artistFromRepo, artistFromRepo.PictureMime, ImagePurpose.Main);

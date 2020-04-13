@@ -458,9 +458,9 @@ namespace VocaDb.Model.Database.Queries {
 				
 				var album = ctx.Load(albumId);
 
-				// Return database saved thumbnail if it exists. If there is no picture, return empty.
-				if (album.CoverPictureData == null || string.IsNullOrEmpty(album.CoverPictureMime) || album.CoverPictureData.HasThumb(size))
-					return EntryForPictureDisplayContract.Create(album, PermissionContext.LanguagePreference, size);
+				// If there is no picture, return empty.
+				if (album.CoverPictureData == null || string.IsNullOrEmpty(album.CoverPictureMime))
+					return EntryForPictureDisplayContract.Create(album, PermissionContext.LanguagePreference);
 
 				// Try to read thumbnail from file system.
 				var data = album.Thumb;
@@ -470,7 +470,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				// This should return the original image.
-				return EntryForPictureDisplayContract.Create(album, PermissionContext.LanguagePreference, size);
+				return EntryForPictureDisplayContract.Create(album, PermissionContext.LanguagePreference);
 
 			});
 

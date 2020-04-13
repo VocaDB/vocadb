@@ -195,7 +195,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return HttpNotFound();
 
-			var album = Service.GetCoverPicture(id, ImageSize.Original);
+			var album = Service.GetCoverPicture(id);
 
 			return Picture(album);
 

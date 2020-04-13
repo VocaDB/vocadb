@@ -513,7 +513,7 @@ namespace VocaDb.Model.Service {
 				var album = session.Load<MikuDbAlbum>(id);
 
 				if (album.CoverPicture != null)
-					return new PictureContract(album.CoverPicture, album.CoverPictureMime, Domain.Images.ImageSize.Original);
+					return new PictureContract(album.CoverPicture, album.CoverPictureMime);
 				else
 					return null;
 

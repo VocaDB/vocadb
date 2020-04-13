@@ -139,12 +139,11 @@ namespace VocaDb.Model.Service {
 		/// Gets the picture for a <see cref="Artist"/>.
 		/// </summary>
 		/// <param name="id">Artist Id.</param>
-		/// <param name="requestedSize">Requested size. If Empty, original size will be returned.</param>
 		/// <returns>Data contract for the picture. Can be null if there is no picture.</returns>
-		public EntryForPictureDisplayContract GetArtistPicture(int id, ImageSize requestedSize) {
+		public EntryForPictureDisplayContract GetArtistPicture(int id) {
 
 			return HandleQuery(session => 
-				EntryForPictureDisplayContract.Create(session.Load<Artist>(id), PermissionContext.LanguagePreference, requestedSize));
+				EntryForPictureDisplayContract.Create(session.Load<Artist>(id), PermissionContext.LanguagePreference));
 
 		}
 

@@ -255,10 +255,10 @@ namespace VocaDb.Model.Service {
 		/// <param name="id">Album Id.</param>
 		/// <param name="requestedSize">Requested size. If Empty, original size will be returned.</param>
 		/// <returns>Data contract for the picture. Can be null if there is no picture.</returns>
-		public EntryForPictureDisplayContract GetCoverPicture(int id, ImageSize requestedSize) {
+		public EntryForPictureDisplayContract GetCoverPicture(int id) {
 
 			return HandleQuery(session =>
-				EntryForPictureDisplayContract.Create(session.Load<Album>(id), PermissionContext.LanguagePreference, requestedSize));
+				EntryForPictureDisplayContract.Create(session.Load<Album>(id), PermissionContext.LanguagePreference));
 
 		}
 

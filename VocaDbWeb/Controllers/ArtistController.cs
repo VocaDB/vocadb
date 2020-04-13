@@ -155,7 +155,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return NoId();
 
-			var artist = Service.GetArtistPicture(id, ImageSize.Original);
+			var artist = Service.GetArtistPicture(id);
 
 			return Picture(artist);
 

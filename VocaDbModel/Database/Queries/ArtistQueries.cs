@@ -409,8 +409,8 @@ namespace VocaDb.Model.Database.Queries {
 				
 				var artist = ctx.Load(artistId);
 
-				if (artist.Picture == null || string.IsNullOrEmpty(artist.PictureMime) || artist.Picture.HasThumb(size))
-					return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference, size);
+				if (artist.Picture == null || string.IsNullOrEmpty(artist.PictureMime))
+					return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference);
 
 				var data = artist.Thumb;
 
@@ -419,7 +419,7 @@ namespace VocaDb.Model.Database.Queries {
 					return EntryForPictureDisplayContract.Create(artist, data.Mime, bytes, PermissionContext.LanguagePreference);
 				}
 
-				return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference, size);
+				return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference);
 
 			});
 

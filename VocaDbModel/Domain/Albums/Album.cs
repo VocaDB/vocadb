@@ -160,7 +160,9 @@ namespace VocaDb.Model.Domain.Albums {
 		/// <summary>
 		/// Album cover picture (main picture) as database BLOB.
 		/// Also contains optional thumbnail.
+		/// This field is lazy-loaded.
 		/// Can be null if there is no picture.
+		/// Try to avoid accessing this field directly to confirm whether picture exists. Instead, check the MIME.
 		/// </summary>
 		public virtual PictureData CoverPictureData { get; set; }
 
