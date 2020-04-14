@@ -37,7 +37,7 @@
 }
 
 @section Toolbar {
-	@if (Model.SongList.CanEdit) {
+	@if (Model.CanEdit) {
 		@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.SongList.Id }, new { id = "editListLink" })
 		@:
 		@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.SongList.Id }, new { id = "viewVersions" })
