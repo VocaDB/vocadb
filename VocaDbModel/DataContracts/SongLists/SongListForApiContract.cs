@@ -35,7 +35,7 @@ namespace VocaDb.Model.DataContracts.SongLists {
 			}
 
 			if (fields.HasFlag(SongListOptionalFields.Events)) {
-				Events = list.Events.Select(e => new ReleaseEventContract(e, languagePreference)).OrderBy(e => e.Date).ThenBy(e => e.Name).ToArray();
+				Events = list.Events.Select(e => new ReleaseEventForApiContract(e, languagePreference, ReleaseEventOptionalFields.Venue, imagePersister)).OrderBy(e => e.Date).ThenBy(e => e.Name).ToArray();
 			}
 
 			if (fields.HasFlag(SongListOptionalFields.MainPicture)) {
@@ -61,7 +61,7 @@ namespace VocaDb.Model.DataContracts.SongLists {
 		public DateTime? EventDate { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public ReleaseEventContract[] Events { get; set; }
+		public ReleaseEventForApiContract[] Events { get; set; }
 
 		public bool FeaturedList => FeaturedCategory != SongListFeaturedCategory.Nothing;
 
