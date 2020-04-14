@@ -24,10 +24,6 @@
 
 }
 
-@helper VenueLink(VenueContract venue) {
-	@Html.ActionLink(venue.Name, "Details", "Venue", new { id = venue.Id }, new { title = venue.AdditionalNames })
-}
-
 @helper VenueLink(VenueForApiContract venue) {
 	@Html.ActionLink(venue.Name, "Details", "Venue", new { id = venue.Id }, new { title = venue.AdditionalNames })
 }
