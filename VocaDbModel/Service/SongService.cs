@@ -64,7 +64,7 @@ namespace VocaDb.Model.Service {
 				if (items.Any())
 					order = items.Max(s => s.Order) + 1;
 
-				EntryPermissionManager.VerifyEdit(PermissionContext, list);
+				EntryPermissionManager.VerifyEdit(PermissionContext, (ISongList)list);
 
 				var song = session.Load<Song>(songId);
 

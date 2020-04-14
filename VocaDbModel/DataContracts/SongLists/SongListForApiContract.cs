@@ -9,11 +9,14 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.SongLists {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongListForApiContract : SongListBaseContract {
+	public class SongListForApiContract : SongListBaseContract, ISongList {
+
+		IUser ISongList.Author => Author;
 
 		public SongListForApiContract() { }
 
@@ -59,6 +62,8 @@ namespace VocaDb.Model.DataContracts.SongLists {
 
 		[DataMember(EmitDefaultValue = false)]
 		public ReleaseEventContract[] Events { get; set; }
+
+		public bool FeaturedList => FeaturedCategory != SongListFeaturedCategory.Nothing;
 
 		[DataMember(EmitDefaultValue = false)]
 		public CommentForApiContract[] LatestComments { get; set; }

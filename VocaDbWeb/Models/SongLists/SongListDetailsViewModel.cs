@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts.SongLists;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Web.Helpers;
 
@@ -10,7 +11,8 @@ namespace VocaDb.Web.Models.SongLists {
 
 		public SongListDetailsViewModel() { }
 
-		public SongListDetailsViewModel(SongListForApiContract songList) {
+		public SongListDetailsViewModel(SongListForApiContract songList, IUserPermissionContext permissionContext) {
+			CanEdit = EntryPermissionManager.CanEdit(permissionContext, songList);
 			SongList = songList;
 		}
 

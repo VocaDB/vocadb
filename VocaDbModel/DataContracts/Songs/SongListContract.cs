@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -20,7 +20,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			ParamIs.NotNull(() => list);
 
 			Author = new UserWithEmailContract(list.Author);
-			CanEdit = EntryPermissionManager.CanEdit(permissionContext, list);
+			CanEdit = EntryPermissionManager.CanEdit(permissionContext, (ISongList)list);
 			Deleted = list.Deleted;
 			Description = list.Description;
 			EventDate = list.EventDate;
