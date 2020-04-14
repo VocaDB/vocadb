@@ -23,6 +23,7 @@ namespace VocaDb.Model.Mapping.Users {
 			Map(m => m.LastLogin).Not.Nullable();
 			Map(m => m.Name).Length(100).Not.Nullable();
 			Map(m => m.NameLC).Length(100).Not.Nullable();
+			Map(m => m.NormalizedEmail).Length(50).Not.Nullable();
 			Map(m => m.Password).Length(50).Not.Nullable();
 			Map(m => m.PasswordHashAlgorithm).Not.Nullable();
 			Map(m => m.PreferredVideoService).Not.Nullable();

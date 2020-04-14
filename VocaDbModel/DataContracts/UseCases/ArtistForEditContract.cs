@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -15,7 +15,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		public ArtistForEditContract() { }
 
-		public ArtistForEditContract(Artist artist, ContentLanguagePreference languagePreference, IEntryImagePersister imageStore)
+		public ArtistForEditContract(Artist artist, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory imageStore)
 			: base(artist, languagePreference) {
 
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;

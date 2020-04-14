@@ -91,8 +91,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly BrandableStringsManager brandableStringsManager;
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IEntryImagePersisterOld entryImagePersister;
-		private readonly IEntryThumbPersister entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory entryImagePersister;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IUserMessageMailer mailer;
 		private readonly IStopForumSpamClient sfsClient;
@@ -258,7 +257,7 @@ namespace VocaDb.Model.Database.Queries {
 				.Select(a => a.Album)
 				.Take(7)
 				.ToArray()
-				.Select(c => new AlbumForApiContract(c, LanguagePreference, entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
+				.Select(c => new AlbumForApiContract(c, LanguagePreference, entryImagePersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
 				.ToArray();
 
 			details.FollowedArtists = session.Query<ArtistForUser>()
@@ -379,7 +378,7 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public UserQueries(IUserRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IStopForumSpamClient sfsClient,
-			IUserMessageMailer mailer, IUserIconFactory userIconFactory, IEntryImagePersisterOld entryImagePersister, IEntryThumbPersister entryThumbPersister, 
+			IUserMessageMailer mailer, IUserIconFactory userIconFactory, IAggregatedEntryImageUrlFactory entryImagePersister, 
 			ObjectCache cache, 
 			BrandableStringsManager brandableStringsManager, IEnumTranslations enumTranslations)
 			: base(repository, permissionContext) {
@@ -395,7 +394,6 @@ namespace VocaDb.Model.Database.Queries {
 			this.mailer = mailer;
 			this.userIconFactory = userIconFactory;
 			this.entryImagePersister = entryImagePersister;
-			this.entryThumbPersister = entryThumbPersister;
 			this.cache = cache;
 			this.brandableStringsManager = brandableStringsManager;
 			this.enumTranslations = enumTranslations;
@@ -713,7 +711,8 @@ namespace VocaDb.Model.Database.Queries {
 
 					ValidateEmail(email);
 
-					existing = await ctx.Query().Where(u => u.Active && u.Email == email).VdbFirstOrDefaultAsync();
+					var normalizedEmail = MailAddressNormalizer.Normalize(email);
+					existing = await ctx.Query().Where(u => u.Active && u.NormalizedEmail == normalizedEmail).VdbFirstOrDefaultAsync();
 
 					if (existing != null)
 						throw new UserEmailAlreadyExistsException();
@@ -810,7 +809,8 @@ namespace VocaDb.Model.Database.Queries {
 
 					ValidateEmail(email);
 
-					existing = ctx.Query().FirstOrDefault(u => u.Active && u.Email == email);
+					var normalizedEmail = MailAddressNormalizer.Normalize(email);
+					existing = ctx.Query().FirstOrDefault(u => u.Active && u.NormalizedEmail == normalizedEmail);
 
 					if (existing != null)
 						throw new UserEmailAlreadyExistsException();
@@ -964,7 +964,7 @@ namespace VocaDb.Model.Database.Queries {
 				return user.Events
 					.Where(e => !e.ReleaseEvent.Deleted && e.RelationshipType == relationshipType)
 					.OrderByDescending(e => e.ReleaseEvent.Date.DateTime)
-					.Select(e => new ReleaseEventForApiContract(e.ReleaseEvent, LanguagePreference, fields, entryThumbPersister))
+					.Select(e => new ReleaseEventForApiContract(e.ReleaseEvent, LanguagePreference, fields, entryImagePersister))
 					.ToArray();
 
 			});
@@ -1573,6 +1573,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				user.Active = contract.Active;
 				user.Email = contract.Email;
+				user.NormalizedEmail = !string.IsNullOrEmpty(contract.Email) ? MailAddressNormalizer.Normalize(contract.Email) : string.Empty;
 				user.Options.Poisoned = contract.Poisoned;
 				user.Options.Supporter = contract.Supporter;
 
@@ -1773,7 +1774,8 @@ namespace VocaDb.Model.Database.Queries {
 
 					ValidateEmail(email);
 
-					var existing = ctx.Query().FirstOrDefault(u => u.Active && u.Id != user.Id && u.Email == email);
+					var normalizedEmail = MailAddressNormalizer.Normalize(email);
+					var existing = ctx.Query().FirstOrDefault(u => u.Active && u.Id != user.Id && u.NormalizedEmail == normalizedEmail);
 
 					if (existing != null)
 						throw new UserEmailAlreadyExistsException();

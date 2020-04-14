@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			TagOptionalFields optionalFields) : this(tag, null, languagePreference, optionalFields) { }
 
 		public TagForApiContract(Tag tag, 
-			IEntryImagePersisterOld thumbPersister,
+			IAggregatedEntryImageUrlFactory thumbPersister,
 			ContentLanguagePreference languagePreference,
 			TagOptionalFields optionalFields) {
 

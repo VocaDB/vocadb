@@ -25,6 +25,7 @@ using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
+using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Web.Controllers
 {
@@ -194,7 +195,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return HttpNotFound();
 
-			var album = Service.GetCoverPicture(id, Size.Empty);
+			var album = Service.GetCoverPicture(id);
 
 			return Picture(album);
 
@@ -279,7 +280,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError("ReleaseYear", "Invalid date");
 
 			var coverPicUpload = Request.Files["coverPicUpload"];
-			var pictureData = ParsePicture(coverPicUpload, "CoverPicture");
+			var pictureData = ParsePicture(coverPicUpload, "CoverPicture", ImagePurpose.Main);
 
 			if (coverPicUpload == null) {
 				AddFormSubmissionError("Cover picture was null");

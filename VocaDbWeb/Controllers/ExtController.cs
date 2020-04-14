@@ -28,7 +28,7 @@ namespace VocaDb.Web.Controllers
 
 		private readonly AlbumService albumService;
 		private readonly ArtistService artistService;
-		private readonly IEntryImagePersisterOld entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
 		private readonly IEntryUrlParser entryUrlParser;
 		private readonly EventQueries eventQueries;
 		private readonly SongQueries songService;
@@ -53,7 +53,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ExtController(IEntryUrlParser entryUrlParser, IEntryImagePersisterOld entryThumbPersister, 
+		public ExtController(IEntryUrlParser entryUrlParser, IAggregatedEntryImageUrlFactory entryThumbPersister, 
 			AlbumService albumService, ArtistService artistService, EventQueries eventQueries, SongQueries songService, TagQueries tagQueries) {
 			this.entryUrlParser = entryUrlParser;
 			this.entryThumbPersister = entryThumbPersister;

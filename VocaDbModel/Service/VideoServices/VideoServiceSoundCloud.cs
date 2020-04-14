@@ -69,7 +69,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			}
 
 			try {
-				result = await JsonRequest.ReadObjectAsync<SoundCloudResult>(apiUrl, timeoutMs: 10000);
+				result = await JsonRequest.ReadObjectAsync<SoundCloudResult>(apiUrl, timeout: TimeSpan.FromSeconds(10));
 			} catch (WebException x) when (HasStatusCode(x, HttpStatusCode.Forbidden)) {
 				// Forbidden most likely means the artist has prevented API access to their tracks, http://stackoverflow.com/a/36529330
 				return ReturnError(x, "This track cannot be embedded");

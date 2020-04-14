@@ -12,7 +12,7 @@ namespace VocaDb.Model.DataContracts.SongLists {
 
 		public SongListForApiContract() {}
 
-		public SongListForApiContract(SongList list, IUserIconFactory userIconFactory, IEntryImagePersister imagePersister,
+		public SongListForApiContract(SongList list, IUserIconFactory userIconFactory, IAggregatedEntryImageUrlFactory imagePersister,
 			SongListOptionalFields fields) : base(list) {
 			
 			ParamIs.NotNull(() => list);

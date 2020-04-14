@@ -19,14 +19,11 @@ namespace VocaDb.Model.Database.Queries {
 
 	public class EntryQueries : QueriesBase<IAlbumRepository, Album> {
 
-		private readonly IEntryImagePersisterOld entryImagePersisterOld;
-		private readonly IEntryThumbPersister entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
 
-		public EntryQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryThumbPersister entryThumbPersister,
-			IEntryImagePersisterOld entryImagePersisterOld) 
+		public EntryQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IAggregatedEntryImageUrlFactory entryThumbPersister) 
 			: base(repository, permissionContext) {
 			this.entryThumbPersister = entryThumbPersister;
-			this.entryImagePersisterOld = entryImagePersisterOld;
 		}
 
 		public PartialFindResult<EntryForApiContract> GetList(
@@ -154,7 +151,7 @@ namespace VocaDb.Model.Database.Queries {
 				var searchedTags = searchTags && searchedTagIds.Any() ? ctx.OfType<Tag>().Query()
 					.Where(a => searchedTagIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryImagePersisterOld, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, fields)) : new EntryForApiContract[0];
 
 				var events = searchEvents && eventIds.Any() ? ctx.OfType<ReleaseEvent>().Query()
 					.Where(a => eventIds.Contains(a.Id))

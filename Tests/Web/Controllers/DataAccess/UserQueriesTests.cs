@@ -99,7 +99,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			stopForumSpamClient = new FakeStopForumSpamClient();
 			mailer = new FakeUserMessageMailer();
 			data = new UserQueries(repository, permissionContext, new FakeEntryLinkFactory(), stopForumSpamClient, mailer, 
-				new FakeUserIconFactory(), null, new InMemoryImagePersister(), new FakeObjectCache(), new Model.Service.BrandableStrings.BrandableStringsManager(), new EnumTranslations());
+				new FakeUserIconFactory(), new InMemoryImagePersister(), new FakeObjectCache(), new Model.Service.BrandableStrings.BrandableStringsManager(), new EnumTranslations());
 
 			request = new PasswordResetRequest(userWithEmail) { Id = Guid.NewGuid() };
 			repository.Add(request);

@@ -30,7 +30,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			IEnumerable<ReleaseEventSeries> eventSeries, int eventSeriesCount,
 			IEnumerable<ReleaseEvent> events, int eventCount, 
 			ContentLanguagePreference languagePreference,
-			IEntryThumbPersister thumbStore)
+			IAggregatedEntryImageUrlFactory thumbStore)
 			: base(tag, languagePreference) {
 
 			AdditionalNames = tag.Names.AdditionalNamesString;

@@ -177,25 +177,6 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static string EntryThumbUrl(this UrlHelper url, IEntryImageInformation imageInfo, string songThumbUrl) {
-
-			switch (imageInfo.EntryType) {
-				case EntryType.Album:
-					return url.ImageThumb(imageInfo, ImageSize.TinyThumb);
-				case EntryType.Artist:
-					return url.ImageThumb(imageInfo, ImageSize.TinyThumb);
-				case EntryType.Song:
-					return songThumbUrl;
-				case EntryType.SongList:
-					return url.EntryImageOld(imageInfo, ImageSize.SmallThumb);
-				case EntryType.Tag:
-					return url.EntryImageOld(imageInfo, ImageSize.SmallThumb);
-				default:
-					return string.Empty;
-			}
-
-		}
-
 		public static int GetComparedEntryId(ArchivedObjectVersionContract archivedVersion, int comparedEntryId, 
 			IEnumerable<ArchivedObjectVersionContract> allVersions) {
 

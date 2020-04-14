@@ -1,20 +1,13 @@
 using System.Drawing;
 using System.IO;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Images {
 
 	/// <summary>
 	/// Writes entry images to a store (such as disk) and loads them back as needed.
 	/// </summary>
-	public interface IEntryImagePersister {
-
-		/// <summary>
-		/// Gets an absolute URL to an image.
-		/// </summary>
-		/// <param name="picture">Image information. Cannot be null.</param>
-		/// <param name="size">Image size.</param>
-		/// <returns>Absolute URL to the image, for example "http://static.vocadb.net/img/Album/Orig/Full/123.jpg"</returns>
-		string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size);
+	public interface IEntryImagePersister : IEntryImageUrlFactory {
 
 		/// <summary>
 		/// Gets stream for reading an image from the store.
@@ -23,14 +16,6 @@ namespace VocaDb.Model.Domain.Images {
 		/// <param name="size">Image size.</param>
 		/// <returns>Stream for reading the image. Cannot be null.</returns>
 		Stream GetReadStream(IEntryImageInformation picture, ImageSize size);
-
-		/// <summary>
-		/// Checks whether a specific image exists in the store.
-		/// </summary>
-		/// <param name="picture">Image information. Cannot be null.</param>
-		/// <param name="size">Image size.</param>
-		/// <returns>True if the image exists, otherwise false.</returns>
-		bool HasImage(IEntryImageInformation picture, ImageSize size);
 
 		/// <summary>
 		/// Writes an image file stream to the store.
@@ -51,17 +36,12 @@ namespace VocaDb.Model.Domain.Images {
 
 	}
 
-	public static class IEntryImagePersisterExtender {
-
-		public static string GetUrlAbsolute(this IEntryImagePersister persister, IEntryImageInformation picture, ImageSize size, bool checkExists) {
-
-			if (checkExists && !persister.HasImage(picture, size))
-				return null;
-
-			return persister.GetUrlAbsolute(picture, size);
-
+	public static class EntryImagePersisterExtensions {
+		public static byte[] ReadBytes(this IEntryImagePersister persister, IEntryImageInformation imageInfo, ImageSize size) {
+			using (var stream = persister.GetReadStream(imageInfo, size)) {
+				return StreamHelper.ReadStream(stream);
+			}
 		}
-
 	}
 
 }

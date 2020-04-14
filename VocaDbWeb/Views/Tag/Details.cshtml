@@ -15,8 +15,8 @@
 
 	ViewBag.Parents = new[] { Html.ActionLink(SharedRes.Tags, "Index") };
 
-	var smallThumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
-	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.Original);
+	var smallThumbUrl = Url.ImageThumb(Model.Thumb, ImageSize.SmallThumb, useUnknownImage: false);
+	var thumbUrl = Url.ImageThumb(Model.Thumb, ImageSize.Original, useUnknownImage: false);
 
 	var url = PageProperties.CanonicalUrl;
 

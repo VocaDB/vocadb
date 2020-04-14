@@ -1,4 +1,4 @@
-﻿namespace VocaDb.Model.Domain.Images {
+namespace VocaDb.Model.Domain.Images {
 
 	/// <summary>
 	/// Persister for album/artist additional images and tag/songlist images.

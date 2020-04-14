@@ -56,7 +56,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly ObjectCache cache;
 		private readonly VdbConfigManager config;
 		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IEntryThumbPersister entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IFollowedArtistNotifier followedArtistNotifier;
 		private readonly ILanguageDetector languageDetector;
@@ -284,7 +284,7 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public SongQueries(ISongRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IPVParser pvParser, IUserMessageMailer mailer,
-			ILanguageDetector languageDetector, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IEntryThumbPersister entryThumbPersister, 
+			ILanguageDetector languageDetector, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IAggregatedEntryImageUrlFactory entryThumbPersister, 
 			ObjectCache cache, VdbConfigManager config, IEntrySubTypeNameFactory entrySubTypeNameFactory, IFollowedArtistNotifier followedArtistNotifier)
 			: base(repository, permissionContext) {
 

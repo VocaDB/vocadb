@@ -164,7 +164,7 @@ namespace VocaDb.Model.Domain.Songs {
 		/// <summary>
 		/// Entry thumbnail picture. Can be null.
 		/// </summary>
-		public virtual EntryThumb Thumb { get; set; }
+		public virtual EntryThumbMain Thumb { get; set; }
 
 		public virtual int Version { get; set; }
 

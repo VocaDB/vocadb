@@ -34,9 +34,9 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly ObjectCache cache;
 		private readonly ArtistQueries queries;
 		private readonly ArtistService service;
-		private readonly IEntryThumbPersister thumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 
-		public ArtistApiController(ArtistQueries queries, ArtistService service, IEntryThumbPersister thumbPersister, ObjectCache cache) {
+		public ArtistApiController(ArtistQueries queries, ArtistService service, IAggregatedEntryImageUrlFactory thumbPersister, ObjectCache cache) {
 			this.queries = queries;
 			this.service = service;
 			this.thumbPersister = thumbPersister;

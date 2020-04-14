@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System.IO;
 using VocaDb.Model.Helpers;
 
@@ -8,7 +8,7 @@ namespace VocaDb.Model.Domain.Images {
 
 		private readonly IEntryImagePersister persister;
 
-		public const int Unlimited = 0;
+		public const int Unlimited = ImageHelper.ImageSizeUnlimited;
 
 		public ImageThumbGenerator(IEntryImagePersister persister) {
 			

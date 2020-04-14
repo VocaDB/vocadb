@@ -18,7 +18,7 @@ namespace VocaDb.Model.Domain.Images {
 			return File.OpenRead(GetPath(picture, size));
 		}
 
-		public abstract string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size);
+		public abstract VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size);
 
 		public bool HasImage(IEntryImageInformation picture, ImageSize size) {
 			return File.Exists(GetPath(picture, size));
@@ -57,6 +57,8 @@ namespace VocaDb.Model.Domain.Images {
 			image.Save(path);	
 
 		}
+
+		public abstract bool IsSupported(IEntryImageInformation picture, ImageSize size);
 
 	}
 

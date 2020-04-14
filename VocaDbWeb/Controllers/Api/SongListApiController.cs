@@ -24,7 +24,6 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.SongImport;
 using VocaDb.Web.Code.Exceptions;
-using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -38,9 +37,9 @@ namespace VocaDb.Web.Controllers.Api {
 		private const int defaultMax = 10;
 		private readonly SongListQueries queries;
 		private readonly IUserIconFactory userIconFactory;
-		private readonly IEntryImagePersisterOld entryImagePersister;
+		private readonly IAggregatedEntryImageUrlFactory entryImagePersister;
 
-		public SongListApiController(SongListQueries queries, IUserIconFactory userIconFactory, IEntryImagePersisterOld entryImagePersister) {
+		public SongListApiController(SongListQueries queries, IUserIconFactory userIconFactory, IAggregatedEntryImageUrlFactory entryImagePersister) {
 			this.queries = queries;
 			this.userIconFactory = userIconFactory;
 			this.entryImagePersister = entryImagePersister;

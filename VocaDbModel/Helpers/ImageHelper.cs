@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -25,6 +25,7 @@ namespace VocaDb.Model.Helpers {
 		public const int UserThumbSize = 80;
 		public const int UserSmallThumbSize = 40;
 		public const int UserTinyThumbSize = 20;
+		public const int ImageSizeUnlimited = 0;
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
@@ -76,6 +77,23 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
+		public static int GetDefaultImageSizePx(ImageSize size) {
+
+			switch (size) {
+				case ImageSize.Thumb:
+					return DefaultThumbSize;
+				case ImageSize.SmallThumb:
+					return DefaultSmallThumbSize;
+				case ImageSize.TinyThumb:
+					return DefaultTinyThumbSize;
+				default:
+					return ImageSizeUnlimited;
+			}
+		}
+
+		/// <summary>
+		/// Gets the size in pixels for user's profile picture.
+		/// </summary>
 		public static int GetUserImageSizePx(ImageSize size) {
 
 			switch (size) {
