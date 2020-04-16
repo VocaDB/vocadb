@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Service.VideoServices.Youtube;
 using VocaDb.Model.Utils;
 
@@ -45,7 +46,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			}
 
 			var video = result.Items.First();
-			var thumbUrl = video.Snippet.Thumbnails.Default != null ? video.Snippet.Thumbnails.Default.Url : string.Empty;
+			var thumbUrl = video.Snippet.Thumbnails.Default != null ? VocaDbUrl.External(video.Snippet.Thumbnails.Default.Url) : VocaDbUrl.Empty;
 			var length = GetLength(video);
 			var author = video.Snippet.ChannelTitle;
 			var authorId = video.Snippet.ChannelId;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -9,23 +10,23 @@ namespace VocaDb.Model.Service.VideoServices {
 		public VideoServiceYoutube(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers) 
 			: base(service, parser, linkMatchers) {}
 
-		public override string GetThumbUrlById(string id) {
+		public override VocaDbUrl GetThumbUrlById(string id) {
 
 			const string url = "https://img.youtube.com/vi/{0}/default.jpg";
-			return string.Format(url, id);
+			return VocaDbUrl.External(string.Format(url, id));
 
 		}
 
-		public override string GetMaxSizeThumbUrlById(string id) {
+		public override VocaDbUrl GetMaxSizeThumbUrlById(string id) {
 		
 			const string url = "https://img.youtube.com/vi/{0}/hqdefault.jpg";
-			return string.Format(url, id);
+			return VocaDbUrl.External(string.Format(url, id));
 	
 		}
 
-		public override string GetUrlById(string id, PVExtendedMetadata _) {
+		public override VocaDbUrl GetUrlById(string id, PVExtendedMetadata _) {
 			var matcher = linkMatchers.First();
-			return string.Format("https://{0}", matcher.MakeLinkFromId(id));
+			return matcher.MakeLinkFromId(id).EnsureScheme();
 		}
 
 		public override IEnumerable<string> GetUserProfileUrls(string authorId) {

@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -39,7 +40,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			var title = doc.DocumentNode.SelectSingleNode("//meta[@name = 'twitter:title']")?.Attributes["content"]?.Value;
 			title = !string.IsNullOrEmpty(title) ? title.Substring(0, title.Length - 1) : title;
-			var thumb = doc.DocumentNode.SelectSingleNode("//meta[@name = 'twitter:image']")?.Attributes["content"]?.Value;
+			var thumb = VocaDbUrl.External(doc.DocumentNode.SelectSingleNode("//meta[@name = 'twitter:image']")?.Attributes["content"]?.Value);
 			var length = ParseLength(doc.DocumentNode.SelectSingleNode("//p[contains(@class, 'dummy_current_time_label')]")?.InnerText.Trim());
 			var date = ParseDate(doc.DocumentNode.SelectSingleNode("//div[@class = 'audio-main-content-info-heading']")?.InnerText);
 			var author = doc.DocumentNode.SelectSingleNode("//a[@class = 'user-info-icon']")?.Attributes["title"]?.Value; // <a class="user-info-icon" title="ERIGON" href="/erigon">

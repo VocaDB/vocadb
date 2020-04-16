@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -18,17 +19,17 @@ namespace VocaDb.Model.Service.VideoServices {
 			return new VideoTitleParseResult(false, error, null, null, null, null);
 		}
 
-		public static VideoTitleParseResult CreateSuccess(string title, string author, string authorId, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null, PVExtendedMetadata extendedMetadata = null) {
+		public static VideoTitleParseResult CreateSuccess(string title, string author, string authorId, VocaDbUrl thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null, PVExtendedMetadata extendedMetadata = null) {
 			return new VideoTitleParseResult(true, null, title, author, authorId, thumbUrl, length, tags, uploadDate, extendedMetadata);
 		}
 
-		public VideoTitleParseResult(bool success, string error, string title, string author, string authorId, string thumbUrl, int? length = null, string[] tags = null, DateTime? uploadDate = null, PVExtendedMetadata extendedMetadata = null) {
+		public VideoTitleParseResult(bool success, string error, string title, string author, string authorId, VocaDbUrl thumbUrl = null, int? length = null, string[] tags = null, DateTime? uploadDate = null, PVExtendedMetadata extendedMetadata = null) {
 			Error = error;
 			Success = success;
 			Title = title ?? string.Empty;
 			Author = author ?? string.Empty;
 			AuthorId = authorId ?? string.Empty;
-			ThumbUrl = thumbUrl ?? string.Empty;
+			ThumbUrl = thumbUrl ?? VocaDbUrl.Empty;
 			LengthSeconds = length;
 			UploadDate = uploadDate;
 			ExtendedMetadata = extendedMetadata;
@@ -81,7 +82,7 @@ namespace VocaDb.Model.Service.VideoServices {
 		/// </summary>
 		public string Title { get; set; }
 
-		public string ThumbUrl { get; set; }
+		public VocaDbUrl ThumbUrl { get; set; }
 
 		public DateTime? UploadDate { get; set; }
 

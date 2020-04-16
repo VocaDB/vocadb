@@ -62,10 +62,10 @@ namespace VocaDb.Model.DataContracts.PVs {
 			PVId = parseResult.Id;
 			PublishDate = parseResult.UploadDate;
 			Service = parseResult.Service;
-			ThumbUrl = parseResult.ThumbUrl;
+			ThumbUrl = parseResult.ThumbUrl.ToAbsolute().Url;
 			PVType = type;
 
-			Url = PV.GetUrl(Service, PVId, ExtendedMetadata);
+			Url = PV.GetUrl(Service, PVId, ExtendedMetadata).ToAbsolute().Url;
 			
 		}
 

@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NLog;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Helpers;
 
@@ -31,7 +32,7 @@ namespace VocaDb.Model.Service.VideoServices {
 		public VideoServiceBilibili() 
 			: base(PVService.Bilibili, null, Matchers) {}
 
-		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
+		public override async Task<VideoUrlParseResult> ParseByUrlAsync(VocaDbUrl url, bool getTitle) {
 
 			var id = GetIdByUrl(url);
 
@@ -62,7 +63,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "No title element");
 
 			var title = HtmlEntity.DeEntitize(response.Data.Title);
-			var thumb = response.Data.Pic ?? string.Empty;
+			var thumb = VocaDbUrl.External(response.Data.Pic);
 			var author = response.Data.Owner.Name ?? string.Empty;
 			var created = response.Data.PubDate;
 			var length = response.Data.Duration;
@@ -86,7 +87,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			};
 		}
 
-		public override string GetUrlById(string id, PVExtendedMetadata _) => $"https://www.bilibili.com/video/av{id}";
+		public override VocaDbUrl GetUrlById(string id, PVExtendedMetadata _) => VocaDbUrl.External($"https://www.bilibili.com/video/av{id}");
 
 	}
 

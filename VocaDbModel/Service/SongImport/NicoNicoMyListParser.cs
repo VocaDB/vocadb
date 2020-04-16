@@ -8,6 +8,7 @@ using HtmlAgilityPack;
 using NLog;
 using Rss;
 using VocaDb.Model.DataContracts.SongImport;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Service.VideoServices;
 
@@ -67,7 +68,7 @@ namespace VocaDb.Model.Service.SongImport {
 
 				if (parseAll || IsRankingsItem(item)) {
 
-					var nicoId = VideoService.NicoNicoDouga.GetIdByUrl(item.Link.ToString());
+					var nicoId = VideoService.NicoNicoDouga.GetIdByUrl(VocaDbUrl.External(item.Link.ToString()));
 					songs.Add(new ImportedSongInListContract(PVService.NicoNicoDouga, nicoId) {
 						SortIndex = order, Name = item.Title, Url = item.Link.ToString()
 					});

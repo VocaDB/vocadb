@@ -8,6 +8,7 @@ using HtmlAgilityPack;
 using NLog;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.MikuDb;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.VideoServices;
 
@@ -40,7 +41,7 @@ namespace VocaDb.Model.Service.AlbumImport {
 
 		}
 
-		public MikuDbAlbumContract GetAlbumData(HtmlDocument doc, string url) {
+		public MikuDbAlbumContract GetAlbumData(HtmlDocument doc, VocaDbUrl url) {
 
 			var data = new ImportedAlbumDataContract();
 
@@ -77,7 +78,7 @@ namespace VocaDb.Model.Service.AlbumImport {
 				coverPic = DownloadCoverPicture("https://karent.jp" + coverElem.Attributes["src"].Value);
 			}
 
-			return new MikuDbAlbumContract(data) { CoverPicture = coverPic, SourceUrl = url };
+			return new MikuDbAlbumContract(data) { CoverPicture = coverPic, SourceUrl = url.Url };
 
 		}
 
@@ -182,12 +183,12 @@ namespace VocaDb.Model.Service.AlbumImport {
 
 		}
 
-		public AlbumImportResult ImportOne(string url) {
+		public AlbumImportResult ImportOne(VocaDbUrl url) {
 
 			HtmlDocument doc;
 
 			try {
-				doc = HtmlRequestHelper.Download(url, "en-US");
+				doc = HtmlRequestHelper.Download(url.Url, "en-US");
 			} catch (WebException x) {
 				log.Warn("Unable to download album post '" + url + "'", x);
 				throw;
@@ -199,9 +200,7 @@ namespace VocaDb.Model.Service.AlbumImport {
 
 		}
 
-		public bool IsValidFor(string url) {
-			return matcher.IsMatch(url);
-		}
+		public bool IsValidFor(VocaDbUrl url) => matcher.IsMatch(url);
 
 		public string ServiceName {
 			get { return "KarenT"; }

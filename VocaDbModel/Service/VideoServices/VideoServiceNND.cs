@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -13,14 +14,14 @@ namespace VocaDb.Model.Service.VideoServices {
 			: base(service, parser, linkMatchers) {}
 
 
-		public override string GetThumbUrlById(string id) {
+		public override VocaDbUrl GetThumbUrlById(string id) {
 
 			var numId = numIdRegex.Match(id);
 
 			if (!numId.Success)
 				return null;
 
-			return string.Format("https://tn.smilevideo.jp/smile?i={0}", numId.Value);
+			return VocaDbUrl.External(string.Format("https://tn.smilevideo.jp/smile?i={0}", numId.Value));
 
 		}
 

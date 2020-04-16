@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 
@@ -69,14 +70,14 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public static string GetThumbUrl(IPVWithThumbnail pv) => Services[pv.Service].GetThumbUrlById(pv.PVId);
+		public static VocaDbUrl GetThumbUrl(IPVWithThumbnail pv) => Services[pv.Service].GetThumbUrlById(pv.PVId);
 
-		public static string GetThumbUrl<T>(IList<T> pvs) where T: class, IPVWithThumbnail {
+		public static VocaDbUrl GetThumbUrl<T>(IList<T> pvs) where T: class, IPVWithThumbnail {
 
 			ParamIs.NotNull(() => pvs);
 
 			if (!pvs.Any())
-				return string.Empty;
+				return VocaDbUrl.Empty;
 
 			var pvsWithThumb = pvs.Where(p => !string.IsNullOrEmpty(p.ThumbUrl)).OrderBy(p => (int)p.PVType);
 
@@ -86,7 +87,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				pvs.FirstOrDefault(p => p.PVType == PVType.Original) ??
 			    pvs.FirstOrDefault();
 
-			return (pv != null ? (!string.IsNullOrEmpty(pv.ThumbUrl) ? pv.ThumbUrl : GetThumbUrl(pv)) : string.Empty);
+			return (pv != null ? (!pv.VocaDbThumbUrl().IsEmpty ? pv.VocaDbThumbUrl() : GetThumbUrl(pv)) : VocaDbUrl.Empty);
 
 		}
 
@@ -95,12 +96,12 @@ namespace VocaDb.Model.Service.VideoServices {
 		/// </summary>
 		/// <param name="pvs">List of PVs. Cannot be null.</param>
 		/// <returns>Thumb URL. Cannot be null. Can be empty if there's no PV.</returns>
-		public static string GetThumbUrlPreferNotNico<T>(IList<T> pvs) where T : class, IPVWithThumbnail {
+		public static VocaDbUrl GetThumbUrlPreferNotNico<T>(IList<T> pvs) where T : class, IPVWithThumbnail {
 
 			ParamIs.NotNull(() => pvs);
 
 			if (!pvs.Any())
-				return string.Empty;
+				return VocaDbUrl.Empty;
 
 			var notNico = pvs.Where(p => p.Service != PVService.NicoNicoDouga).ToArray();
 
@@ -115,11 +116,11 @@ namespace VocaDb.Model.Service.VideoServices {
 			if (pv == null)
 				pv = pvs.FirstOrDefault();
 
-			return (pv != null ? (!string.IsNullOrEmpty(pv.ThumbUrl) ? pv.ThumbUrl : GetThumbUrl(pv)) : string.Empty);
+			return (pv != null ? (!pv.VocaDbThumbUrl().IsEmpty ? pv.VocaDbThumbUrl() : GetThumbUrl(pv)) : VocaDbUrl.Empty);
 
 		}
 
-		public static string GetMaxSizeThumbUrl<T>(IList<T> pvs)  where T : class, IPVWithThumbnail {
+		public static VocaDbUrl GetMaxSizeThumbUrl<T>(IList<T> pvs)  where T : class, IPVWithThumbnail {
 
 			ParamIs.NotNull(() => pvs);
 
@@ -132,7 +133,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				return VideoService.Youtube.GetMaxSizeThumbUrlById(pv.PVId);				
 			}
 
-			return null;		
+			return VocaDbUrl.Empty;		
 
 		}
 
@@ -150,11 +151,11 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public static Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext permissionContext) {
+		public static Task<VideoUrlParseResult> ParseByUrlAsync(VocaDbUrl url, bool getTitle, IUserPermissionContext permissionContext) {
 			return ParseByUrlAsync(url, getTitle, permissionContext, services);
 		}
 
-		public static Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext permissionContext, params VideoService[] testServices) {
+		public static Task<VideoUrlParseResult> ParseByUrlAsync(VocaDbUrl url, bool getTitle, IUserPermissionContext permissionContext, params VideoService[] testServices) {
 
 			var service = testServices.FirstOrDefault(s => s.IsAuthorized(permissionContext) && s.IsValidFor(url));
 

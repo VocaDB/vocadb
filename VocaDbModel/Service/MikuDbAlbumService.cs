@@ -521,7 +521,7 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public int ImportNew() {
+		/*public int ImportNew() {
 
 			PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
 
@@ -555,7 +555,7 @@ namespace VocaDb.Model.Service {
 
 			});
 
-		}
+		}*/
 
 		public int ImportFromFile(Stream stream) {
 

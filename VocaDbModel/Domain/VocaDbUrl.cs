@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Domain {
@@ -13,11 +15,12 @@ namespace VocaDb.Model.Domain {
 	[DebuggerDisplay("{DebugString}")]
 	public class VocaDbUrl : IEquatable<VocaDbUrl> {
 
-		public static VocaDbUrl Empty { get; } = new VocaDbUrl(string.Empty, UrlDomain.Main, UriKind.Absolute);
+		public static readonly VocaDbUrl Empty = new VocaDbUrl(string.Empty, UrlDomain.Main, UriKind.Absolute);
 		public static VocaDbUrl External(string url) => new VocaDbUrl(url, UrlDomain.External, UriKind.Absolute);
+		public static IEnumerable<VocaDbUrl> External(IEnumerable<string> urls) => urls?.Select(url => External(url));
 
 		public VocaDbUrl(string url, UrlDomain domain, UriKind kind) {
-			Url = url;
+			Url = url ?? string.Empty;
 			Domain = domain;
 			Kind = kind;
 		}
@@ -28,6 +31,12 @@ namespace VocaDb.Model.Domain {
 
 		public string DebugString => $"{Url} ({Domain})";
 		public bool IsEmpty => string.IsNullOrEmpty(Url);
+
+		/// <summary>
+		/// Ensures that URL starts with scheme (http/https).
+		/// </summary>
+		/// <returns></returns>
+		public VocaDbUrl EnsureScheme() => new VocaDbUrl(UrlHelper.MakeLink(Url), Domain, Kind);
 
 		/// <summary>
 		/// Converts URL to absolute (with scheme and domain), if possible.
@@ -57,6 +66,10 @@ namespace VocaDb.Model.Domain {
 		}
 
 		public VocaDbUrl ToAbsoluteIfNotMain() => Domain == UrlDomain.Main ? this : ToAbsolute();
+
+		public Uri ToUri() => new Uri(Url, Kind);
+
+		public void Validate() { ToUri(); }
 
 		public override string ToString() => Url;
 

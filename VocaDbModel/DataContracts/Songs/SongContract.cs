@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -22,7 +22,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			: this(song, languagePreference, string.Empty) {
 
 			if (getThumbUrl) {
-				ThumbUrl = song.GetThumbUrl();
+				ThumbUrl = song.GetThumbUrl().ToAbsolute().Url;
 			}
 
 		}

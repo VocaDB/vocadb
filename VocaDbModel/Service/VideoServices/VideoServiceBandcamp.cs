@@ -11,6 +11,7 @@ using NLog;
 using NYoutubeDL;
 using NYoutubeDL.Models;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Utils;
 
@@ -31,7 +32,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			return path.Contains("~") ? HttpContext.Current.Server.MapPath(path) : path;
 		}
 
-		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
+		public override async Task<VideoUrlParseResult> ParseByUrlAsync(VocaDbUrl url, bool getTitle) {
 
 			var youtubeDl = new YoutubeDL {
 				RetrieveAllInfo = true,
@@ -41,7 +42,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			DownloadInfo result;
 			try {
-				result = await youtubeDl.GetDownloadInfoAsync(url);
+				result = await youtubeDl.GetDownloadInfoAsync(url.Url);
 			} catch (TaskCanceledException) {
 				var warnings = GetErrorString(youtubeDl.Info);
 				_log.Error("Timeout. Error list: {0}", warnings);
@@ -69,14 +70,14 @@ namespace VocaDb.Model.Service.VideoServices {
 				Url = info.WebpageUrl
 			});
 
-			var meta = VideoTitleParseResult.CreateSuccess(info.Title, info.Uploader, info.UploaderId, info.Thumbnail, (int?)info.Duration, uploadDate: date, extendedMetadata: bandcampMetadata);
+			var meta = VideoTitleParseResult.CreateSuccess(info.Title, info.Uploader, info.UploaderId, VocaDbUrl.External(info.Thumbnail), (int?)info.Duration, uploadDate: date, extendedMetadata: bandcampMetadata);
 			return VideoUrlParseResult.CreateOk(url, PVService.Bandcamp, info.Id, meta);
 
 		}
 
-		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null) {
+		public override VocaDbUrl GetUrlById(string id, PVExtendedMetadata extendedMetadata = null) {
 			var bandcampMetadata = extendedMetadata?.GetExtendedMetadata<BandcampMetadata>();
-			return bandcampMetadata?.Url ?? base.GetUrlById(id, extendedMetadata);
+			return bandcampMetadata?.Url != null ? VocaDbUrl.External(bandcampMetadata.Url) : base.GetUrlById(id, extendedMetadata);
 		}
 
 		public VideoServiceBandcamp() : base(PVService.Bandcamp, null, Matchers) {}

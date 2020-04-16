@@ -1,12 +1,14 @@
-﻿namespace VocaDb.Model.Service.AlbumImport {
+using VocaDb.Model.Domain;
+
+namespace VocaDb.Model.Service.AlbumImport {
 
 	public interface IAlbumImporter {
 
 		string ServiceName { get; }
 
-		AlbumImportResult ImportOne(string url);
+		AlbumImportResult ImportOne(VocaDbUrl url);
 
-		bool IsValidFor(string url);
+		bool IsValidFor(VocaDbUrl url);
 
 	}
 

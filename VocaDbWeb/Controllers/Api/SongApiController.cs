@@ -116,7 +116,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 			var result = await queries.FindDuplicates(
 				(term ?? new string[0]).Where(p => p != null).ToArray(),
-				(pv ?? new string[0]).Where(p => p != null).ToArray(),
+				VocaDbUrl.External(pv ?? new string[0]).Where(p => !p.IsEmpty).ToArray(),
 				artistIds, getPVInfo);
 
 			return result;

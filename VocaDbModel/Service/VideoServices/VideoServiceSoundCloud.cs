@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NLog;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
@@ -45,15 +46,15 @@ namespace VocaDb.Model.Service.VideoServices {
 		public VideoServiceSoundCloud(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers) 
 			: base(service, parser, linkMatchers) {}
 
-		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null) {
+		public override VocaDbUrl GetUrlById(string id, PVExtendedMetadata extendedMetadata = null) {
 
 			var compositeId = new SoundCloudId(id);
 			var matcher = linkMatchers.First();
-			return $"http://{matcher.MakeLinkFromId(compositeId.SoundCloudUrl)}";
+			return matcher.MakeLinkFromId(compositeId.SoundCloudUrl).EnsureScheme();
 
 		}
 
-		public async Task<VideoUrlParseResult> ParseBySoundCloudUrl(string url) {
+		public async Task<VideoUrlParseResult> ParseBySoundCloudUrl(VocaDbUrl url) {
 
 			var apikey = AppConfig.SoundCloudClientId;
 			var apiUrl = string.Format("https://api.soundcloud.com/resolve?url=http://soundcloud.com/{0}&client_id={1}", url, apikey);
@@ -99,16 +100,16 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			var uploadDate = result.Created_at;
 
-			var id = new SoundCloudId(trackId, url);
+			var id = new SoundCloudId(trackId, url.Url);
 			var authorId = result.User.Permalink; // Using permalink because that's the public URL
 
-			return VideoUrlParseResult.CreateOk(url, PVService.SoundCloud, id.ToString(), VideoTitleParseResult.CreateSuccess(title, author, authorId, thumbUrl, length, uploadDate: uploadDate));
+			return VideoUrlParseResult.CreateOk(url, PVService.SoundCloud, id.ToString(), VideoTitleParseResult.CreateSuccess(title, author, authorId, VocaDbUrl.External(thumbUrl), length, uploadDate: uploadDate));
 
 		}
 
-		public override Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
+		public override Task<VideoUrlParseResult> ParseByUrlAsync(VocaDbUrl url, bool getTitle) {
 
-			var soundCloudUrl = linkMatchers[0].GetId(url);
+			var soundCloudUrl = VocaDbUrl.External(linkMatchers[0].GetId(url));
 
 			return ParseBySoundCloudUrl(soundCloudUrl);
 

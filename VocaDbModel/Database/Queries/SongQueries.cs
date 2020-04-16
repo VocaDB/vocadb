@@ -243,13 +243,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private Task<VideoUrlParseResult[]> ParsePVs(IDatabaseContext<PVForSong> ctx, string[] urls) {
+		private Task<VideoUrlParseResult[]> ParsePVs(IDatabaseContext<PVForSong> ctx, VocaDbUrl[] urls) {
 			return Task.WhenAll(urls.Select(url => ParsePV(ctx, url)));
 		}
 
-		private async Task<VideoUrlParseResult> ParsePV(IDatabaseContext<PVForSong> ctx, string url) {
+		private async Task<VideoUrlParseResult> ParsePV(IDatabaseContext<PVForSong> ctx, VocaDbUrl url) {
 
-			if (string.IsNullOrEmpty(url))
+			if (url.IsEmpty)
 				return null;
 
 			var pvResult = await pvParser.ParseByUrlAsync(url, true, PermissionContext);
@@ -331,8 +331,8 @@ namespace VocaDb.Model.Database.Queries {
 
 			return repository.HandleTransactionAsync(async ctx => {
 
-				var pvResults = (await ParsePVs(ctx.OfType<PVForSong>(), contract.PVUrls)).Where(p => p != null).ToArray() ?? new VideoUrlParseResult[0];
-				var reprintPvResult = await ParsePV(ctx.OfType<PVForSong>(), contract.ReprintPVUrl);
+				var pvResults = (await ParsePVs(ctx.OfType<PVForSong>(), VocaDbUrl.External(contract.PVUrls).ToArray())).Where(p => p != null).ToArray() ?? new VideoUrlParseResult[0];
+				var reprintPvResult = await ParsePV(ctx.OfType<PVForSong>(), VocaDbUrl.External(contract.ReprintPVUrl));
 
 				ctx.AuditLogger.SysLog(string.Format("creating a new song with name '{0}'", contract.Names.First().Value));
 
@@ -612,7 +612,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var pvResults = await pvParser.ParseByUrlsAsync(song.PVs
 					.Where(pv => pv.PVType == PVType.Original && pv.Service == PVService.NicoNicoDouga)
-					.Select(pv => pv.Url), true, permissionContext);
+					.Select(pv => VocaDbUrl.External(pv.Url)), true, permissionContext);
 
 				var tagMapper = new TagMapper();
 				var nicoTags = pvResults.Where(p => p != null).SelectMany(pv => pv.Tags).Distinct().ToArray();
@@ -724,13 +724,13 @@ namespace VocaDb.Model.Database.Queries {
 		/// If this is false, only matching for duplicates is done (PV duplicates are still checked).
 		/// </param>
 		/// <returns>Result of the check. Cannot be null.</returns>
-		public async Task<NewSongCheckResultContract> FindDuplicates(string[] anyName, string[] anyPv, int[] artistIds, bool getPVInfo) {
+		public async Task<NewSongCheckResultContract> FindDuplicates(string[] anyName, VocaDbUrl[] anyPv, int[] artistIds, bool getPVInfo) {
 
 			var names = anyName.Where(n => !string.IsNullOrWhiteSpace(n)).Select(n => n.Trim()).ToArray();
 			var checkedPV = getPVInfo ? anyPv.FirstOrDefault(p => VideoService.NicoNicoDouga.IsValidFor(p)) ?? anyPv.FirstOrDefault() : null; // For downloading video info
 
 			// Parse PV URLs (gets ID and service for each PV). Metadata will be parsed only for the first Nico PV, and only if it's needed.
-			var pvs = await Task.WhenAll(anyPv.Select(p => pvParser.ParseByUrlAsync(p, getPVInfo && p == checkedPV, PermissionContext)));
+			var pvs = await Task.WhenAll(anyPv.Select(p => pvParser.ParseByUrlAsync(p, getPVInfo && p.Equals(checkedPV), PermissionContext)));
 			pvs = pvs.Where(p => p.IsOk).ToArray();
 
 			if (!names.Any() && !pvs.Any())

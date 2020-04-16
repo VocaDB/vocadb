@@ -108,10 +108,10 @@ namespace VocaDb.Model.Domain.Songs {
 		/// <param name="pvParser">PV parser. Cannot be null.</param>
 		/// <param name="permissionContext">Permission context. Cannot be null.</param>
 		public virtual async Task RefreshMetadata(IPVParser pvParser, IUserPermissionContext permissionContext) {
-			var result = await pvParser.ParseByUrlAsync(Url, true, permissionContext);
+			var result = await pvParser.ParseByUrlAsync(VocaDbUrl, true, permissionContext);
 			Author = result.Author;
 			ExtendedMetadata = result.ExtendedMetadata;
-			ThumbUrl = result.ThumbUrl;
+			ThumbUrl = result.ThumbUrl.ToAbsolute().Url;
 		}
 
 		public override string ToString() {

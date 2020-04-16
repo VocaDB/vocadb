@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 
@@ -65,7 +66,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public PVService Service { get; private set; }
 
-		public virtual string GetIdByUrl(string url) {
+		public virtual string GetIdByUrl(VocaDbUrl url) {
 
 			var matcher = linkMatchers.FirstOrDefault(m => m.IsMatch(url));
 
@@ -76,18 +77,14 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public virtual string GetThumbUrlById(string id) {
+		public virtual VocaDbUrl GetThumbUrlById(string id) => VocaDbUrl.Empty;
 
-			return null;
+		public virtual VocaDbUrl GetMaxSizeThumbUrlById(string id) => GetThumbUrlById(id);
 
-		}
-
-		public virtual string GetMaxSizeThumbUrlById(string id) => GetThumbUrlById(id);
-
-		public virtual string GetUrlById(string id, PVExtendedMetadata extendedMetadata) {
+		public virtual VocaDbUrl GetUrlById(string id, PVExtendedMetadata extendedMetadata) {
 
 			var matcher = linkMatchers.First();
-			return string.Format("http://{0}", matcher.MakeLinkFromId(id));
+			return VocaDbUrl.External(string.Format("http://{0}", matcher.MakeLinkFromId(id)));
 
 		}
 
@@ -104,13 +101,9 @@ namespace VocaDb.Model.Service.VideoServices {
 			return true;
 		}
 
-		public virtual bool IsValidFor(string url) {
+		public virtual bool IsValidFor(VocaDbUrl url) => linkMatchers.Any(m => m.IsMatch(url));
 
-			return linkMatchers.Any(m => m.IsMatch(url));
-
-		}
-
-		public virtual Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
+		public virtual Task<VideoUrlParseResult> ParseByUrlAsync(VocaDbUrl url, bool getTitle) {
 
 			var id = GetIdByUrl(url);
 
@@ -122,7 +115,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		protected virtual async Task<VideoUrlParseResult> ParseByIdAsync(string id, string url, bool getMeta) {
+		protected virtual async Task<VideoUrlParseResult> ParseByIdAsync(string id, VocaDbUrl url, bool getMeta) {
 
 			var meta = (getMeta ? await GetVideoTitleAsync(id) : VideoTitleParseResult.Empty) ?? VideoTitleParseResult.Empty;
 

@@ -544,7 +544,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					var pvResults = await pvParser.ParseByUrlsAsync(album.PVs
 						.Where(pv => pv.Service == PVService.NicoNicoDouga)
-						.Select(pv => pv.Url), true, permissionContext);
+						.Select(pv => pv.VocaDbUrl), true, permissionContext);
 
 					var nicoTags = pvResults.SelectMany(pv => pv.Tags).Distinct().ToArray();
 					var mappedTags = new TagMapper().MapTags(ctx, nicoTags)

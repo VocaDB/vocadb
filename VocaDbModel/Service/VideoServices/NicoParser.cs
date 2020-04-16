@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 using HtmlAgilityPack;
 using NicoApi;
 using NLog;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 
@@ -90,7 +91,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			if (string.IsNullOrEmpty(author))
 				author = GetUserName(userId);
 
-			var result = VideoTitleParseResult.CreateSuccess(nicoResponse.Title, author, userId, nicoResponse.ThumbUrl, nicoResponse.LengthSeconds, uploadDate: nicoResponse.UploadDate?.Date);
+			var result = VideoTitleParseResult.CreateSuccess(nicoResponse.Title, author, userId, VocaDbUrl.External(nicoResponse.ThumbUrl), nicoResponse.LengthSeconds, uploadDate: nicoResponse.UploadDate?.Date);
 			result.Tags = nicoResponse.Tags.Select(tag => tag.Name).ToArray();
 
 			return result;

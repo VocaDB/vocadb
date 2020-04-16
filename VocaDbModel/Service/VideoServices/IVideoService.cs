@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -8,9 +9,9 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		IEnumerable<string> GetUserProfileUrls(string authorId);
 
-		bool IsValidFor(string url);
+		bool IsValidFor(VocaDbUrl url);
 
-		Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle);
+		Task<VideoUrlParseResult> ParseByUrlAsync(VocaDbUrl url, bool getTitle);
 
 	}
 

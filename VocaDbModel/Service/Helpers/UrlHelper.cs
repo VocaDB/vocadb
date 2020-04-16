@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils.Config;
 
@@ -88,13 +89,13 @@ namespace VocaDb.Model.Service.Helpers {
 
 			var httpUpgradeMatch = httpUpgradeMatchers
 				.Select(m => new {
-					Success = m.TryGetLinkFromUrl(url, out var formattedUrl),
+					Success = m.TryGetLinkFromUrl(VocaDbUrl.External(url), out var formattedUrl),
 					FormattedUrl = formattedUrl
 				})
 				.FirstOrDefault(m => m.Success);
 
 			if (httpUpgradeMatch != null)
-				url = httpUpgradeMatch.FormattedUrl;
+				url = httpUpgradeMatch.FormattedUrl.Url;
 
 			return url;
 

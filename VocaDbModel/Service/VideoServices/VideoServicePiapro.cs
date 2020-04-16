@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using NLog;
 using PiaproClient;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -16,7 +17,7 @@ namespace VocaDb.Model.Service.VideoServices {
 		public VideoServicePiapro(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers) 
 			: base(service, parser, linkMatchers) {}
 
-		private VideoUrlParseResult Parse(PostQueryResult result, string url) {
+		private VideoUrlParseResult Parse(PostQueryResult result, VocaDbUrl url) {
 
 			if (result.PostType != PostType.Audio) {
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException("Content type indicates this isn't an audio post"));
@@ -27,16 +28,16 @@ namespace VocaDb.Model.Service.VideoServices {
 			});
 
 			return VideoUrlParseResult.CreateOk(url, PVService.Piapro, result.Id,
-				VideoTitleParseResult.CreateSuccess(result.Title, result.Author, result.AuthorId, result.ArtworkUrl, result.LengthSeconds, uploadDate: result.Date, extendedMetadata: piaproMetadata));
+				VideoTitleParseResult.CreateSuccess(result.Title, result.Author, result.AuthorId, VocaDbUrl.External(result.ArtworkUrl), result.LengthSeconds, uploadDate: result.Date, extendedMetadata: piaproMetadata));
 
 		}
 
-		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
+		public override async Task<VideoUrlParseResult> ParseByUrlAsync(VocaDbUrl url, bool getTitle) {
 
 			PostQueryResult result;
 			var client = new PiaproClient.PiaproClient { RequestTimeout = TimeSpan.FromMilliseconds(3900) /* Value chosen after careful consideration */ };
 			try {
-				result = await client.ParseByUrlAsync(url);
+				result = await client.ParseByUrlAsync(url.Url);
 			} catch (PiaproException x) {
 				log.Warn(x, "Unable to load Piapro URL {0}", url);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(x.Message, x));

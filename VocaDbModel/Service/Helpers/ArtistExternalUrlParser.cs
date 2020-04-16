@@ -1,4 +1,5 @@
 using System.Linq;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.Helpers {
@@ -50,12 +51,12 @@ namespace VocaDb.Model.Service.Helpers {
 			// Regex matching ignores case.
 			var match = linkMatchers
 				.Select(matcher => new {
-					Success = matcher.TryGetLinkFromUrl(possibleUrl, out var formattedUrl),
+					Success = matcher.TryGetLinkFromUrl(VocaDbUrl.External(possibleUrl), out var formattedUrl),
 					FormattedUrl = formattedUrl
 				})
 				.FirstOrDefault(m => m.Success);
 
-			return match?.FormattedUrl;
+			return match?.FormattedUrl.Url;
 
 		}
 

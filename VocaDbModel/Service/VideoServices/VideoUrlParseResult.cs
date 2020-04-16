@@ -1,11 +1,12 @@
-﻿using System;
+using System;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices {
 
 	public class VideoUrlParseResult {
 
-		public static VideoParseException GetException(VideoUrlParseResultType resultType, string url) {
+		public static VideoParseException GetException(VideoUrlParseResultType resultType, VocaDbUrl url) {
 
 			switch (resultType) {
 				case VideoUrlParseResultType.NoMatcher:
@@ -26,7 +27,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		private VideoUrlParseResult(VideoUrlParseResultType resultType, string url, VideoParseException exception) {
+		private VideoUrlParseResult(VideoUrlParseResultType resultType, VocaDbUrl url, VideoParseException exception) {
 
 			ResultType = resultType;
 			Url = url;
@@ -34,7 +35,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		private VideoUrlParseResult(string url, PVService service, string id, VideoTitleParseResult meta) {
+		private VideoUrlParseResult(VocaDbUrl url, PVService service, string id, VideoTitleParseResult meta) {
 
 			Url = url;
 			Service = service;
@@ -43,7 +44,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			Author = meta.Author ?? string.Empty;
 			AuthorId = meta.AuthorId ?? string.Empty;
 			ExtendedMetadata = meta.ExtendedMetadata;
-			ThumbUrl = meta.ThumbUrl ?? string.Empty;
+			ThumbUrl = meta.ThumbUrl ?? VocaDbUrl.Empty;
 			LengthSeconds = meta.LengthSeconds;
 			Tags = meta.Tags;
 			UploadDate = meta.UploadDate;
@@ -52,19 +53,19 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public static VideoUrlParseResult CreateError(string url, VideoUrlParseResultType resultType, VideoParseException exception = null) {
+		public static VideoUrlParseResult CreateError(VocaDbUrl url, VideoUrlParseResultType resultType, VideoParseException exception = null) {
 
 			return new VideoUrlParseResult(resultType, url, exception);
 
 		}
 
-		public static VideoUrlParseResult CreateError(string url, VideoUrlParseResultType resultType, string message) {
+		public static VideoUrlParseResult CreateError(VocaDbUrl url, VideoUrlParseResultType resultType, string message) {
 
 			return CreateError(url, resultType, new VideoParseException(message));
 
 		}
 
-		public static VideoUrlParseResult CreateOk(string url, PVService service, string id, VideoTitleParseResult meta) {
+		public static VideoUrlParseResult CreateOk(VocaDbUrl url, PVService service, string id, VideoTitleParseResult meta) {
 
 			return new VideoUrlParseResult(url, service, id, meta);
 
@@ -95,9 +96,9 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public string Title { get; set; }
 
-		public string ThumbUrl { get; set; }
+		public VocaDbUrl ThumbUrl { get; set; }
 
-		public string Url { get; set; }
+		public VocaDbUrl Url { get; set; }
 
 		public DateTime? UploadDate { get; set; }
 

@@ -159,10 +159,11 @@ namespace VocaDb.Model.DataContracts.Api {
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture)) {
 
-				var thumb = song.GetThumbUrl();
+				var thumb = song.GetThumbUrl().ToAbsolute();
 
-				if (!string.IsNullOrEmpty(thumb)) {
-					MainPicture = new EntryThumbForApiContract { UrlSmallThumb = thumb, UrlThumb = thumb, UrlTinyThumb = thumb };
+				if (!thumb.IsEmpty) {
+					var thumbStr = thumb.Url;
+					MainPicture = new EntryThumbForApiContract { UrlSmallThumb = thumbStr, UrlThumb = thumbStr, UrlTinyThumb = thumbStr };
 				}
 
 			}

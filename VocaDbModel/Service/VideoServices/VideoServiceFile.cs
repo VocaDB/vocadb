@@ -7,9 +7,9 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using NLog;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -23,31 +23,30 @@ namespace VocaDb.Model.Service.VideoServices {
 				new RegexLinkMatcher("{0}", @"(.+\.mp3$)"),
 			}) {}
 
-		public override string GetIdByUrl(string url) {
-			return url;
+		public override string GetIdByUrl(VocaDbUrl url) {
+			return url.Url;
 		}
 
-		public override string GetThumbUrlById(string id) {
-			return string.Empty;
+		public override VocaDbUrl GetThumbUrlById(string id) {
+			return VocaDbUrl.Empty;
 		}
 
-		public override string GetMaxSizeThumbUrlById(string id) {
-			return string.Empty;
+		public override VocaDbUrl GetMaxSizeThumbUrlById(string id) {
+			return VocaDbUrl.Empty;
 		}
 
-		public override string GetUrlById(string id, PVExtendedMetadata _) {
-			return id;
+		public override VocaDbUrl GetUrlById(string id, PVExtendedMetadata _) {
+			return VocaDbUrl.External(id);
 		}
 
 		private VideoTitleParseResult GetVideoTitle(string id) {
 
-			Uri uri;
 			string name = string.Empty;
-			if (Uri.TryCreate(id, UriKind.Absolute, out uri)) {
+			if (Uri.TryCreate(id, UriKind.Absolute, out var uri)) {
 				name = HttpUtility.UrlDecode(uri.Segments.Last());
 			}
 
-			return VideoTitleParseResult.CreateSuccess(name, string.Empty, string.Empty, string.Empty);
+			return VideoTitleParseResult.CreateSuccess(name, string.Empty, string.Empty, VocaDbUrl.Empty);
 
 		}
 
@@ -59,20 +58,19 @@ namespace VocaDb.Model.Service.VideoServices {
 			return permissionContext != null && permissionContext.HasPermission(PermissionToken.AddRawFileMedia);
 		}
 
-		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
+		public override async Task<VideoUrlParseResult> ParseByUrlAsync(VocaDbUrl url, bool getTitle) {
 			
-			url = UrlHelper.MakeLink(url);
+			url = url.EnsureScheme().ToAbsolute();
 
-			Uri parsedUri;
 			try {
-				parsedUri = new Uri(url, UriKind.Absolute);
+				url.Validate();
 			} catch (UriFormatException x) {
 				var msg = string.Format("{0} could not be parsed as a valid URL.", url);
 				log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));							
 			}
 
-			var request = new HttpRequestMessage(HttpMethod.Head, url);
+			var request = new HttpRequestMessage(HttpMethod.Head, url.Url);
 			request.Headers.UserAgent.Add(new ProductInfoHeaderValue("VocaDB", "1.0"));
 
 			try {
@@ -100,11 +98,11 @@ namespace VocaDb.Model.Service.VideoServices {
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));			
 			}
 
-			return VideoUrlParseResult.CreateOk(url, PVService.File, url, await GetVideoTitleAsync(url));
+			return VideoUrlParseResult.CreateOk(url, PVService.File, url.Url, await GetVideoTitleAsync(url.Url));
 
 		}
 
-		protected override Task<VideoUrlParseResult> ParseByIdAsync(string id, string url, bool getMeta) {
+		protected override Task<VideoUrlParseResult> ParseByIdAsync(string id, VocaDbUrl url, bool getMeta) {
 			return ParseByUrlAsync(url, getMeta);
 		}
 

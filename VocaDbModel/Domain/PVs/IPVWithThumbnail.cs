@@ -1,4 +1,4 @@
-﻿namespace VocaDb.Model.Domain.PVs {
+namespace VocaDb.Model.Domain.PVs {
 
 	/// <summary>
 	/// PV with thumbnail.
@@ -10,6 +10,10 @@
 		/// </summary>
 		string ThumbUrl { get; }
 
+	}
+
+	public static class IPVWithThumbnailExtensions {
+		public static VocaDbUrl VocaDbThumbUrl(this IPVWithThumbnail pv) => VocaDbUrl.External(pv.ThumbUrl);
 	}
 
 }

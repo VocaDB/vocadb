@@ -615,8 +615,8 @@ namespace VocaDb.Model.Domain.Songs {
 		/// Absolute URL to song thumbnail. For example, http://tn-skr1.smilevideo.jp/smile?i=12849032. 
 		/// Can be null or empty if no thumbnail is available.
 		/// </returns>
-		public virtual string GetThumbUrl() {
-			return !string.IsNullOrEmpty(ThumbUrl) ? ThumbUrl : VideoServiceHelper.GetThumbUrl(PVs.PVs);
+		public virtual VocaDbUrl GetThumbUrl() {
+			return !string.IsNullOrEmpty(ThumbUrl) ? VocaDbUrl.External(ThumbUrl) : VideoServiceHelper.GetThumbUrl(PVs.PVs);
 		}
 
 		public virtual bool HasArtist(Artist artist) {
@@ -915,7 +915,7 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public virtual void UpdateThumbUrl() {
-			ThumbUrl = VideoServiceHelper.GetThumbUrl(PVs.PVs);			
+			ThumbUrl = VideoServiceHelper.GetThumbUrl(PVs.PVs).ToAbsolute().Url;			
 		}
 
 	}
