@@ -20,7 +20,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			ParamIs.NotNull(() => list);
 
 			Author = new UserWithEmailContract(list.Author);
-			CanEdit = EntryPermissionManager.CanEdit(permissionContext, (ISongList)list);
+			CanEdit = EntryPermissionManager.CanEditSongList(permissionContext, list);
 			Deleted = list.Deleted;
 			Description = list.Description;
 			EventDate = list.EventDate;

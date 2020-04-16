@@ -138,7 +138,7 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public static bool CanEdit(IUserPermissionContext permissionContext, ISongList songList) {
+		public static bool CanEditSongList(IUserPermissionContext permissionContext, ISongList songList) {
 
 			if (songList.FeaturedList && CanManageFeaturedLists(permissionContext))
 				return true;
@@ -273,11 +273,11 @@ namespace VocaDb.Model.Domain.Security {
 		}
 
 		/// <summary>
-		/// Verifies that user is allowed to edit a <see cref="ISongList"/>.
+		/// Verifies that user is allowed to edit a <see cref="SongList"/>.
 		/// </summary>
-		public static void VerifyEdit(IUserPermissionContext permissionContext, ISongList entry) {
+		public static void VerifyEdit(IUserPermissionContext permissionContext, SongList entry) {
 
-			VerifyAccess(permissionContext, entry, CanEdit);
+			VerifyAccess(permissionContext, entry, CanEditSongList);
 
 		}
 

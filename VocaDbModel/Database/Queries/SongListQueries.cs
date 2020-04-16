@@ -180,7 +180,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.AuditLogger.SysLog(string.Format("deleting {0}", list.ToString()));
 
-				EntryPermissionManager.VerifyEdit(PermissionContext, (ISongList)list);
+				EntryPermissionManager.VerifyEdit(PermissionContext, list);
 
 				var archivedVersions = list.ArchivedVersionsManager.Versions;
 				ctx.DeleteAll(archivedVersions);
@@ -303,7 +303,7 @@ namespace VocaDb.Model.Database.Queries {
 					list = ctx.Load(contract.Id);
 					var diff = new SongListDiff();
 
-					EntryPermissionManager.VerifyEdit(PermissionContext, (ISongList)list);
+					EntryPermissionManager.VerifyEdit(PermissionContext, list);
 
 					if (list.Description != contract.Description) {
 						diff.Description.Set();

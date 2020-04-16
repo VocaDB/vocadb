@@ -12,7 +12,7 @@ namespace VocaDb.Web.Models.SongLists {
 		public SongListDetailsViewModel() { }
 
 		public SongListDetailsViewModel(SongListForApiContract songList, IUserPermissionContext permissionContext) {
-			CanEdit = EntryPermissionManager.CanEdit(permissionContext, songList);
+			CanEdit = EntryPermissionManager.CanEditSongList(permissionContext, songList);
 			SongList = songList;
 		}
 
