@@ -1120,7 +1120,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var items = query.OrderBy(queryParams.SortRule)
 					.Paged(queryParams.Paging)
-					.Select(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, fields))
+					.Select(s => new SongListForApiContract(s, LanguagePreference, userIconFactory, entryImagePersister, fields))
 					.ToArray();
 
 				var count = queryParams.Paging.GetTotalCount ? query.Count() : 0;

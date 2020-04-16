@@ -15,10 +15,12 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class SongList : IEntryWithNames, 
+	public class SongList : IEntryWithNames, ISongList,
 		IEntryWithVersions<ArchivedSongListVersion, SongListEditableFields>, 
 		IEntryWithComments<SongListComment>, IEntryWithStatus,
 		IEntryWithTags<SongListTagUsage> {
+
+		IUser ISongList.Author => Author;
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 

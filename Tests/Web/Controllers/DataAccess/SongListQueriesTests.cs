@@ -51,7 +51,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(userWithSongList, ContentLanguagePreference.Default));
 
 			imagePersister = new InMemoryImagePersister();
-			queries = new SongListQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, new FakeUserIconFactory());
+			queries = new SongListQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, imagePersister, new FakeUserIconFactory());
 
 			song1 = new Song(TranslatedString.Create("Project Diva desu.")) { Id = 1};
 			song2 = new Song(TranslatedString.Create("World is Mine")) { Id = 2};
