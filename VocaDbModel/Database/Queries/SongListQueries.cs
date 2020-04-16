@@ -28,6 +28,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private readonly IAggregatedEntryImageUrlFactory thumbStore;
 		private readonly IEntryImagePersisterOld imagePersister;
 		private readonly IUserIconFactory userIconFactory;
 
@@ -127,11 +128,12 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public SongListQueries(ISongListRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
-			IEntryImagePersisterOld imagePersister, IUserIconFactory userIconFactory)
+			IEntryImagePersisterOld imagePersister, IAggregatedEntryImageUrlFactory thumbStore, IUserIconFactory userIconFactory)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
+			this.thumbStore = thumbStore;
 			this.userIconFactory = userIconFactory;
 
 		}
@@ -224,10 +226,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public SongListDetailsContract GetDetails(int listId) {
+		public SongListForApiContract GetDetails(int listId) {
 
 			return repository.HandleQuery(ctx => {
-				return new SongListDetailsContract(ctx.Load(listId), PermissionContext) {
+				return new SongListForApiContract(ctx.Load(listId), LanguagePreference, userIconFactory, thumbStore, SongListOptionalFields.Description | SongListOptionalFields.Events | SongListOptionalFields.MainPicture | SongListOptionalFields.Tags) {
 					LatestComments = Comments(ctx).GetList(listId, 3)
 				};
             });

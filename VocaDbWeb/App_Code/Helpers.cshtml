@@ -180,9 +180,11 @@
 							}
 						</small>						
 					}
-					@if (!string.IsNullOrEmpty(ev.VenueName)) {
+					@if (ev.HasVenueOrVenueName) {
 						<br />
-						<small class="extraInfo">@(ev.VenueName)</small>
+						<small class="extraInfo">
+							@EventHelpers.VenueLinkOrVenueName(ev)
+						</small>
 					}
 				</div>
 			</div>

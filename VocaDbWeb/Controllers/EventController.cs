@@ -242,7 +242,7 @@ namespace VocaDb.Web.Controllers
 
 			var events = queries.Find(e =>
 				new ReleaseEventForApiContract(e, PermissionContext.LanguagePreference, 
-					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, thumbPersister),
+					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue, thumbPersister),
 				queryParams);
 
 			return View(events.Items);

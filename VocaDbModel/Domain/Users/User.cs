@@ -628,15 +628,6 @@ namespace VocaDb.Model.Domain.Users {
 			return NameLC.GetHashCode();
 		}
 
-		public virtual bool IsTheSameUser(UserContract contract) {
-
-			if (contract == null)
-				return false;
-
-			return (Id == contract.Id);
-
-		}
-
 		public virtual (UserMessage Received, UserMessage Sent) SendMessage(User to, string subject, string body, bool highPriority) {
 
 			ParamIs.NotNull(() => to);

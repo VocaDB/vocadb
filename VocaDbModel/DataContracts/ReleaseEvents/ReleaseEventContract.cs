@@ -63,6 +63,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public DateTime? EndDate { get; set; }
 
+		public bool HasVenueOrVenueName => Venue != null || !string.IsNullOrEmpty(VenueName);
+
 		public int Id { get; set; }
 
 		public EventCategory InheritedCategory => Series?.Category ?? Category;

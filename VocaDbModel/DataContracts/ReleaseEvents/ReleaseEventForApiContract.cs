@@ -103,6 +103,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		[DataMember]
 		public DateTime? EndDate { get; set; }
 
+		public bool HasVenueOrVenueName => Venue != null || !string.IsNullOrEmpty(VenueName);
+
 		[DataMember]
 		public int Id { get; set; }
 

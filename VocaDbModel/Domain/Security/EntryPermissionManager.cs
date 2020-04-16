@@ -138,7 +138,7 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public static bool CanEdit(IUserPermissionContext permissionContext, SongList songList) {
+		public static bool CanEditSongList(IUserPermissionContext permissionContext, ISongList songList) {
 
 			if (songList.FeaturedList && CanManageFeaturedLists(permissionContext))
 				return true;
@@ -146,7 +146,7 @@ namespace VocaDb.Model.Domain.Security {
 			if (permissionContext.HasPermission(PermissionToken.EditAllSongLists))
 				return true;
 
-			return (songList.Author.IsTheSameUser(permissionContext.LoggedUser));
+			return songList.Author.IsTheSameUser(permissionContext.LoggedUser);
 
 		}
 
@@ -277,7 +277,7 @@ namespace VocaDb.Model.Domain.Security {
 		/// </summary>
 		public static void VerifyEdit(IUserPermissionContext permissionContext, SongList entry) {
 
-			VerifyAccess(permissionContext, entry, CanEdit);
+			VerifyAccess(permissionContext, entry, CanEditSongList);
 
 		}
 

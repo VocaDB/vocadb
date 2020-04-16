@@ -60,7 +60,7 @@ namespace VocaDb.Model.Service.Queries {
 				.OrderByDate(SortDirection.Descending)
 				.Take(3).ToArray()
 				.Select(s => new ReleaseEventForApiContract(s, languagePreference, 
-					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, entryThumbPersister))
+					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue, entryThumbPersister))
 				.ToArray();
 
 		}
