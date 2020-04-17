@@ -27,10 +27,10 @@ namespace VocaDb.Web.Controllers {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly MarkdownParser markdownParser;
 		private readonly TagQueries queries;
-		private readonly IEntryImagePersisterOld entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
 
 		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory, IEnumTranslations enumTranslations, MarkdownParser markdownParser,
-			IEntryImagePersisterOld entryThumbPersister) {
+			IAggregatedEntryImageUrlFactory entryThumbPersister) {
 
 			this.queries = queries;
 			this.entryLinkFactory = entryLinkFactory;
@@ -125,7 +125,7 @@ namespace VocaDb.Web.Controllers {
 
 			var prop = PageProperties;
 
-			var thumbUrl = Url.EntryImageOld(contract.Thumb, ImageSize.Original);
+			var thumbUrl = Url.ImageThumb(contract.Thumb, ImageSize.Original);
 			if (!string.IsNullOrEmpty(thumbUrl)) {
 				PageProperties.OpenGraph.Image = thumbUrl;
 			}

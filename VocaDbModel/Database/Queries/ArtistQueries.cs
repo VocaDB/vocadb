@@ -46,6 +46,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryThumbPersister imagePersister;
+		private readonly IAggregatedEntryImageUrlFactory imageUrlFactory;
 		private readonly IEntryPictureFilePersister pictureFilePersister;
 		private readonly IUserIconFactory userIconFactory;
 
@@ -68,7 +69,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			var cached = cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () => {
 
-				var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, cache, imagePersister).GetTopVoicebanks(artist);
+				var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, cache, imageUrlFactory).GetTopVoicebanks(artist);
 
 				return new CachedAdvancedArtistStatsContract {
 					TopVocaloids = topVocaloids
@@ -158,7 +159,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ArtistQueries(IArtistRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister,
-			ObjectCache cache, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations)
+			ObjectCache cache, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IAggregatedEntryImageUrlFactory imageUrlFactory)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -167,6 +168,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.cache = cache;
 			this.userIconFactory = userIconFactory;
 			this.enumTranslations = enumTranslations;
+			this.imageUrlFactory = imageUrlFactory;
 
 		}
 
@@ -316,7 +318,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			return
 				HandleQuery(session =>
-					new ArtistForEditContract(session.Load<Artist>(id), PermissionContext.LanguagePreference, pictureFilePersister));
+					new ArtistForEditContract(session.Load<Artist>(id), PermissionContext.LanguagePreference, imageUrlFactory));
 
 		}
 
@@ -342,7 +344,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (stats == null)
 					EntityNotFoundException.Throw<Artist>(id);
 
-				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, imagePersister,
+				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, imageUrlFactory,
 					new EntryTypeTags(session).GetTag(EntryType.Artist, artist.ArtistType)) {
 					CommentCount = stats.CommentCount,
 					SharedStats = GetSharedArtistStats(session, artist),
@@ -364,7 +366,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				var relations = (new ArtistRelationsQuery(session, LanguagePreference, cache, imagePersister)).GetRelations(artist, ArtistRelationsFields.All);
+				var relations = (new ArtistRelationsQuery(session, LanguagePreference, cache, imageUrlFactory)).GetRelations(artist, ArtistRelationsFields.All);
 				contract.LatestAlbums = relations.LatestAlbums;
 				contract.TopAlbums = relations.PopularAlbums;
 				contract.LatestSongs = relations.LatestSongs;
@@ -401,25 +403,23 @@ namespace VocaDb.Model.Database.Queries {
 
 		public EntryForPictureDisplayContract GetPictureThumb(int artistId) {
 			
-			var size = new Size(ImageHelper.DefaultThumbSize, ImageHelper.DefaultThumbSize);
+			var size = ImageSize.Thumb;
 
 			return repository.HandleQuery(ctx => {
 				
 				var artist = ctx.Load(artistId);
 
-				if (artist.Picture == null || string.IsNullOrEmpty(artist.PictureMime) || artist.Picture.HasThumb(size))
-					return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference, size);
+				if (artist.Picture == null || string.IsNullOrEmpty(artist.PictureMime))
+					return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference);
 
-				var data = new EntryThumb(artist, artist.PictureMime);
+				var data = artist.Thumb;
 
-				if (imagePersister.HasImage(data, ImageSize.Thumb)) {
-					using (var stream = imagePersister.GetReadStream(data, ImageSize.Thumb)) {
-						var bytes = StreamHelper.ReadStream(stream);
-						return EntryForPictureDisplayContract.Create(artist, data.Mime, bytes, PermissionContext.LanguagePreference);
-					}
+				if (imagePersister.HasImage(data, size)) {
+					var bytes = imagePersister.ReadBytes(data, size);
+					return EntryForPictureDisplayContract.Create(artist, data.Mime, bytes, PermissionContext.LanguagePreference);
 				}
 
-				return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference, size);
+				return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference);
 
 			});
 
@@ -518,7 +518,7 @@ namespace VocaDb.Model.Database.Queries {
 
 						var thumbGenerator = new ImageThumbGenerator(imagePersister);
 						using (var stream = new MemoryStream(versionWithPic.Picture.Bytes)) {
-							var thumb = new EntryThumb(artist, versionWithPic.PictureMime);
+							var thumb = new EntryThumb(artist, versionWithPic.PictureMime, ImagePurpose.Main);
 							thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 						}
 

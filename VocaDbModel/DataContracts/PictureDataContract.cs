@@ -1,5 +1,4 @@
-﻿using System;
-using VocaDb.Model.Domain;
+using System;
 using System.Runtime.Serialization;
 
 namespace VocaDb.Model.DataContracts {
@@ -22,36 +21,7 @@ namespace VocaDb.Model.DataContracts {
 		public string Mime { get; set; }
 
 		[DataMember]
-		public PictureThumbContract Thumb250 { get; set; }
-
-	}
-
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class PictureThumbContract {
-
-		public PictureThumbContract() {}
-
-		public PictureThumbContract(byte[] bytes, int size) {
-
-			Bytes = bytes;
-			Size = size;
-
-		}
-
-		public PictureThumbContract(PictureThumb thumb) {
-			
-			ParamIs.NotNull(() => thumb);
-
-			Bytes = thumb.Bytes;
-			Size = thumb.Size;
-
-		}
-
-		[DataMember]
-		public virtual Byte[] Bytes { get; set; }
-
-		[DataMember]
-		public virtual int Size { get; set; }
+		public Byte[] Thumb250 { get; set; }
 
 	}
 

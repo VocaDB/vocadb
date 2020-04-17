@@ -12,7 +12,7 @@ namespace VocaDb.Web.Code {
 
 		private readonly UrlHelper urlHelper;
 
-		public string GetRelativeDynamicUrl(IEntryImageInformation imageInfo, ImageSize size) {
+		public VocaDbUrl GetUrl(IEntryImageInformation imageInfo, ImageSize size) {
 			
 			string dynamicUrl = null;
 			if (imageInfo.EntryType == EntryType.Album) {
@@ -27,10 +27,15 @@ namespace VocaDb.Web.Code {
 					dynamicUrl = urlHelper.Action("PictureThumb", "Artist", new { id = imageInfo.Id, v = imageInfo.Version });
 			}
 
-			return dynamicUrl;
+			return !string.IsNullOrEmpty(dynamicUrl) ? new VocaDbUrl(dynamicUrl, UrlDomain.Main, System.UriKind.Relative) : VocaDbUrl.Empty;
 
 		}
 
+		public bool HasImage(IEntryImageInformation picture, ImageSize size) => IsSupported(picture, size) && picture.ShouldExist();
+
+		public bool IsSupported(IEntryImageInformation picture, ImageSize size) {
+			return picture.PurposeMainOrUnspecified() && (picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album);
+		}
 	}
 
 }

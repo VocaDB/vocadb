@@ -3,13 +3,14 @@ import WebLinkCategory from '../Models/WebLinkCategory';
     export default class WebLinkMatcher {
         
 		static matchers: WebLinkMatcher[] = [
-			{ url: "www.5sing.com/", desc: "5SING", cat: WebLinkCategory.Official },
+			{ url: "5sing.kugou.com/", desc: "5SING", cat: WebLinkCategory.Official },
 			{ url: "about.me/", desc: "about.me", cat: WebLinkCategory.Official },
 			{ url: "www.akibaoo.com/", desc: "Akibaoo", cat: WebLinkCategory.Commercial },
             { url: "alice-books.com/", desc: "Alice Books", cat: WebLinkCategory.Commercial },
             { url: "www.amazon.co.jp/", desc: "Amazon", cat: WebLinkCategory.Commercial },
             { url: "www.amazon.com/", desc: "Amazon", cat: WebLinkCategory.Commercial },
             { url: "ameblo.jp/", desc: "Blog", cat: WebLinkCategory.Official },
+			{ url: "lofter.com/", desc: "Blog on Lofter", cat: WebLinkCategory.Official },
             { url: "www.amiami.com/", desc: "AmiAmi", cat: WebLinkCategory.Commercial },
             { url: "anidb.net/", desc: "AniDB", cat: WebLinkCategory.Reference },
             { url: "www.animate-onlineshop.jp/", desc: "Animate Online Shop", cat: WebLinkCategory.Commercial },
@@ -55,6 +56,10 @@ import WebLinkCategory from '../Models/WebLinkCategory';
             { url: "musicbrainz.org/", desc: "MusicBrainz", cat: WebLinkCategory.Reference },
 			{ url: "www.muzie.ne.jp/", desc: "Muzie", cat: WebLinkCategory.Official },
 			{ url: "myfigurecollection.net/", desc: "MyFigureCollection", cat: WebLinkCategory.Reference },
+			{ url: "music.163.com/#/user/home", desc: "NCM User Homepage", cat: WebLinkCategory.Official },
+			{ url: "music.163.com/#/artist", desc: "NCM Artist Entry", cat: WebLinkCategory.Official },
+			{ url: "music.163.com/#/album", desc: "NCM Album Release", cat: WebLinkCategory.Official },
+			{ url: "music.163.com/#/song", desc: "NCM Song Release", cat: WebLinkCategory.Official },
             { url: "chokuhan.nicovideo.jp/", desc: "NicoNico Chokuhan", cat: WebLinkCategory.Commercial },
             { url: "dic.nicovideo.jp/", desc: "NicoNicoPedia", cat: WebLinkCategory.Reference },
             { url: "nicovideo.jp/user/", desc: "NND Account", cat: WebLinkCategory.Official },
@@ -64,7 +69,7 @@ import WebLinkCategory from '../Models/WebLinkCategory';
 			{ url: "otoyapage.jp/user/", desc: "Otoya Page", cat: WebLinkCategory.Official },
 			{ url: "www.patreon.com/", desc: "Patreon", cat: WebLinkCategory.Official },
             { url: "piapro.jp/", desc: "Piapro", cat: WebLinkCategory.Official },
-			{ url: "www.poppro.cn/", desc: "Poppro", cat: WebLinkCategory.Official },
+			{ url: "poppro.cn/", desc: "Poppro", cat: WebLinkCategory.Official },
             { url: "www.pixiv.net/", desc: "Pixiv", cat: WebLinkCategory.Official },
             { url: "books.rakuten.co.jp/", desc: "Rakuten", cat: WebLinkCategory.Commercial },
 			{ url: "spotify.com/", desc: "Spotify", cat: WebLinkCategory.Commercial },
@@ -73,7 +78,7 @@ import WebLinkCategory from '../Models/WebLinkCategory';
 			{ url: "synthv.fandom.com/wiki/", desc: "SynthV Wiki", cat: WebLinkCategory.Reference },
 			{ url: "item.taobao.com/item.htm", desc: "Taobao", cat: WebLinkCategory.Commercial },
 			{ url: "www.lagoa.jp/", desc: "THREE!", cat: WebLinkCategory.Commercial }, /* UtaiteDB */
-			{ url: "item.taobao.com", desc: "Taobao", cat: WebLinkCategory.Commercial },
+			{ url: ".taobao.com", desc: "Taobao", cat: WebLinkCategory.Commercial },
 			{ url: "thwiki.cc/", desc: "THBWiki", cat: WebLinkCategory.Reference }, /* TouhouDB */
             { url: "toranoana.jp/mailorder/article/", desc: "Toranoana", cat: WebLinkCategory.Commercial },
 			{ url: "touhoudb.com/", desc: "TouhouDB", cat: WebLinkCategory.Reference },
@@ -115,6 +120,8 @@ import WebLinkCategory from '../Models/WebLinkCategory';
 			{ url: "en.wikipedia.org/wiki/", desc: "Wikipedia (EN)", cat: WebLinkCategory.Reference },
 			{ url: "ja.wikipedia.org/wiki/", desc: "Wikipedia (JP)", cat: WebLinkCategory.Reference },
 			{ url: "wikipedia.org/wiki/", desc: "Wikipedia", cat: WebLinkCategory.Reference },
+			{ url: "zh.moegirl.org/", desc: "Moegirlpedia (zh-cn)", cat: WebLinkCategory.Reference },
+			{ url: "en.moegirl.org/", desc: "Moegirlpedia (EN)", cat: WebLinkCategory.Reference },
 			{ url: "wixsite.com/", desc: "Website", cat: WebLinkCategory.Official },
             { url: "www.yesasia.com/", desc: "YesAsia", cat: WebLinkCategory.Commercial },
             { url: "youtube.com/channel/", desc: "YouTube Channel", cat: WebLinkCategory.Official },

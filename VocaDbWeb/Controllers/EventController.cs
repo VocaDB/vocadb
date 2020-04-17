@@ -29,14 +29,14 @@ namespace VocaDb.Web.Controllers
 		
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IEntryThumbPersister thumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 		private readonly EventQueries queries;
 		private readonly ReleaseEventService service;
 
 		private ReleaseEventService Service => service;
 
 	    public EventController(EventQueries queries, ReleaseEventService service, IEnumTranslations enumTranslations, IEntryLinkFactory entryLinkFactory,
-			IEntryThumbPersister thumbPersister) {
+			IAggregatedEntryImageUrlFactory thumbPersister) {
 			this.queries = queries;
 			this.service = service;
 			this.enumTranslations = enumTranslations;
@@ -144,7 +144,7 @@ namespace VocaDb.Web.Controllers
 				return RenderEdit();
 			}
 
-	        var pictureData = ParsePicture(pictureUpload, "pictureUpload");
+	        var pictureData = ParsePicture(pictureUpload, "pictureUpload", ImagePurpose.Main);
 
 			if (!ModelState.IsValid) {
 				return RenderEdit();
@@ -194,7 +194,7 @@ namespace VocaDb.Web.Controllers
 				return RenderEdit();
 			}
 
-			var pictureData = ParsePicture(pictureUpload, "Picture");
+			var pictureData = ParsePicture(pictureUpload, "Picture", ImagePurpose.Main);
 
 	        int id;
 	        try {
@@ -242,7 +242,7 @@ namespace VocaDb.Web.Controllers
 
 			var events = queries.Find(e =>
 				new ReleaseEventForApiContract(e, PermissionContext.LanguagePreference, 
-					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, thumbPersister),
+					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue, thumbPersister),
 				queryParams);
 
 			return View(events.Items);

@@ -44,7 +44,7 @@
 			<tr data-bind="css: { active: ($parent.pvPlayerViewModel.selectedSong() && $parent.pvPlayerViewModel.selectedSong().song.id == song.id) }, click: $parent.pvPlayerViewModel.selectedSong">
 				<td style="width: 30px;">
 					<a data-bind="visible: song.thumbUrl, attr: { href: app.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#">
-						<img data-bind="attr: { src: song.thumbUrl }" title="Cover picture" class="coverPicIcon img-rounded" />
+						<img data-bind="attr: { src: song.thumbUrl }" title="Cover picture" class="coverPicIcon img-rounded" referrerpolicy="same-origin" />
 					</a>
 				</td>
 				<td>

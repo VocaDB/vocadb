@@ -20,8 +20,8 @@ namespace VocaDb.Model.DataContracts.Albums {
 		EntryType IEntryBase.EntryType => EntryType.Album;
 
 		EntryType IEntryImageInformation.EntryType => EntryType.Album;
-
 		string IEntryImageInformation.Mime => CoverPictureMime;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 
 		public AlbumContract() { }
 

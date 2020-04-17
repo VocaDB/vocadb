@@ -14,6 +14,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEvent;
 		EntryType IEntryBase.EntryType => EntryType.ReleaseEvent;
 		string IEntryImageInformation.Mime => PictureMime;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 		string IEntryBase.DefaultName => Name;
 
 		public ReleaseEventContract() {
@@ -61,6 +62,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public string Description { get; set; }
 
 		public DateTime? EndDate { get; set; }
+
+		public bool HasVenueOrVenueName => Venue != null || !string.IsNullOrEmpty(VenueName);
 
 		public int Id { get; set; }
 

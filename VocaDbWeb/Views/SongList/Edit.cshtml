@@ -21,7 +21,7 @@
 		parentUrl = Url.Action("Featured");
 	}
 	
-	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
+	var thumbUrl = Url.ImageThumb(Model.Thumb, ImageSize.SmallThumb, useUnknownImage: false);
 	
 }
 

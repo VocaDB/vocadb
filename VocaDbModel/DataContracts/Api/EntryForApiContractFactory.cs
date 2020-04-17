@@ -9,17 +9,15 @@ namespace VocaDb.Model.DataContracts.Api {
 	/// </summary>
 	public class EntryForApiContractFactory {
 
-		private readonly IEntryImagePersisterOld imagePersisterOld;
-		private readonly IEntryThumbPersister thumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 
-		public EntryForApiContractFactory(IEntryImagePersisterOld imagePersisterOld, IEntryThumbPersister thumbPersister) {
-			this.imagePersisterOld = imagePersisterOld;
+		public EntryForApiContractFactory(IAggregatedEntryImageUrlFactory thumbPersister) {
 			this.thumbPersister = thumbPersister;
 		}
 
 		public EntryForApiContract Create(IEntryWithNames entry, EntryOptionalFields includedFields, ContentLanguagePreference languagePreference) {
 			
-			return EntryForApiContract.Create(entry, languagePreference, thumbPersister, imagePersisterOld, includedFields);
+			return EntryForApiContract.Create(entry, languagePreference, thumbPersister, includedFields);
 
 		}
 

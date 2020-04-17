@@ -1,11 +1,8 @@
-using System.IO;
 using System.Web.Mvc;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
-using VocaDb.Model.Utils;
-using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Helpers {
 
@@ -14,56 +11,10 @@ namespace VocaDb.Web.Helpers {
 	/// </summary>
 	public static class UrlHelperExtenderForImages {
 
-		private static IDynamicImageUrlFactory GetDynamicImageUrlFactory(UrlHelper urlHelper) => new DynamicImageUrlFactory(urlHelper);
-		private static readonly IEntryThumbPersister imagePersister = new ServerEntryThumbPersister();
+		private static IAggregatedEntryImageUrlFactory ImageUrlFactory => DependencyResolver.Current.GetService<IAggregatedEntryImageUrlFactory>();
 
-		private static ServerEntryImagePersisterOld EntryImagePersisterOld => new ServerEntryImagePersisterOld();
-
-		private static string GetUnknownImageUrl(UrlHelper urlHelper) {
-			return urlHelper.Content("~/Content/unknown.png");
-		}
-
-		/// <summary>
-		/// Generates an URL to <see cref="IEntryPictureFile" /> that are used as additional images for albums and artists.
-		/// </summary>
-		/// <param name="urlHelper">URL helper.</param>
-		/// <param name="imageInfo">Image information. Can be null.</param>
-		/// <param name="size">Desired image size.</param>
-		/// <returns>Absolute URL to the image, or null if not found.</returns>
-		public static string EntryPictureFile(this UrlHelper urlHelper, IEntryPictureFile imageInfo, ImageSize size) {
-			
-			return EntryImageOld(urlHelper, imageInfo, size);
-
-		}
-
-		/// <summary>
-		/// Generates an URL to an entry image using the old folder structure for images.
-		/// These are used for song lists and tags, and should eventually be migrated to the newer folder structure.
-		/// </summary>
-		/// <param name="urlHelper">URL helper.</param>
-		/// <param name="imageInfo">Image information. Can be null.</param>
-		/// <param name="size">Desired image size.</param>
-		/// <param name="checkExists">
-		/// Whether to check that the image actually exists on disk. 
-		/// If this is true and the image doesn't exist, null will be returned.
-		/// </param>
-		/// <returns>Absolute URL to the image, or null if not found.</returns>
-		public static string EntryImageOld(this UrlHelper urlHelper, IEntryImageInformation imageInfo, ImageSize size, bool checkExists = true) {
-			
-			if (imageInfo == null)
-				return null;
-
-			if (checkExists) {
-
-				var path = EntryImagePersisterOld.GetPath(imageInfo, size);
-
-				if (!File.Exists(path))
-					return null;
-
-			}
-
-			return EntryImagePersisterOld.GetUrlAbsolute(imageInfo, size);
-
+		private static VocaDbUrl GetUnknownImageUrl(UrlHelper urlHelper) {
+			return new VocaDbUrl(urlHelper.Content("~/Content/unknown.png"), UrlDomain.Main, System.UriKind.Relative);
 		}
 
 		/// <summary>
@@ -75,7 +26,7 @@ namespace VocaDb.Web.Helpers {
 		/// <returns>URL to the image thumbnail (may be placeholder).</returns>
 		public static string ImageThumb(this UrlHelper urlHelper, EntryThumbForApiContract imageInfo, ImageSize size) {
 
-			return imageInfo?.GetSmallestThumb(size).EmptyToNull() ?? GetUnknownImageUrl(urlHelper);
+			return imageInfo?.GetSmallestThumb(size).EmptyToNull() ?? GetUnknownImageUrl(urlHelper).Url;
 
 		}
 
@@ -95,29 +46,13 @@ namespace VocaDb.Web.Helpers {
 		/// or relative (such as /Album/CoverPicture/123).
 		/// Usually this should be set to true if the image is to be referred from another domain.
 		/// </param>
+		/// <param name="useUnknownImage">Use unknown image as fallback if image does not exist.</param>
 		/// <returns>URL to the image thumbnail.</returns>
-		public static string ImageThumb(this UrlHelper urlHelper, IEntryImageInformation imageInfo, ImageSize size, bool fullUrl = false) {
+		public static string ImageThumb(this UrlHelper urlHelper, IEntryImageInformation imageInfo, ImageSize size, bool fullUrl = false, bool useUnknownImage = true) {
 			
-			if (imageInfo == null)
-				return null;
-
-			var shouldExist = imageInfo.ShouldExist();
-
-			// Use MVC dynamic actions (instead of static file) when requesting original or an image that doesn't exist on disk.
-			bool useDynamicUrl = size == ImageSize.Original || (shouldExist && !imagePersister.HasImage(imageInfo, size));
-			string dynamicUrl = useDynamicUrl ? GetDynamicImageUrlFactory(urlHelper).GetRelativeDynamicUrl(imageInfo, size) : null;
-
-			if (dynamicUrl != null) {				
-				return fullUrl ? VocaUriBuilder.Absolute(dynamicUrl) : dynamicUrl;
-			}
-
-			if (!shouldExist) {
-				var unknown = GetUnknownImageUrl(urlHelper);
-				return fullUrl ? VocaUriBuilder.Absolute(unknown) : unknown;
-			}
-
-			// For all other cases use the static file
-			return imagePersister.GetUrlAbsolute(imageInfo, size);
+			var unknown = useUnknownImage ? GetUnknownImageUrl(urlHelper) : VocaDbUrl.Empty;
+			var url = ImageUrlFactory.GetUrlWithFallback(imageInfo, size, unknown).ToAbsoluteIfNotMain();
+			return fullUrl ? url.ToAbsolute().Url : url.Url;
 
 		}
 

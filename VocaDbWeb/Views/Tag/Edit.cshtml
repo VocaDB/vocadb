@@ -12,7 +12,7 @@
 		Html.ActionLink(Model.CurrentName, "DetailsById", new { id = Model.Id, slug = Model.UrlSlug })
 	};
 
-	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
+	var thumbUrl = Url.ImageThumb(Model.Thumb, ImageSize.SmallThumb);
 
 	var validationErrors = new Dictionary<string, string> {
 		{ "validationError_needDescription", Res.ValidationNeedDescription }

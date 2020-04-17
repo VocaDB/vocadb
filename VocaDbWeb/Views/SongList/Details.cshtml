@@ -36,7 +36,7 @@
 }
 
 @section Toolbar {
-	@if (Model.SongList.CanEdit) {
+	@if (Model.CanEdit) {
 		@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.SongList.Id }, new { id = "editListLink" })
 		@:
 		@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.SongList.Id }, new { id = "viewVersions" })
@@ -87,12 +87,16 @@
 						<a href="@Url.EntryDetails(ev, ev.UrlSlug)">
 							@ev.Name
 						</a>
-						@if (ev.Date.HasValue && !string.IsNullOrEmpty(ev.VenueName)) {
-							<small>(@ev.Date.Value.ToString("d"), @ev.VenueName)</small>
-						} else if (ev.Date.HasValue) {
-							<small>(@ev.Date.Value.ToString("d"))</small>
-						} else if (!string.IsNullOrEmpty(ev.VenueName)) {
-							<small>(@ev.VenueName)</small>
+						@if (ev.Date.HasValue) {
+							if (ev.HasVenueOrVenueName) {
+								<small>(@ev.Date.Value.ToString("d"), @EventHelpers.VenueLinkOrVenueName(ev))</small>
+							} else {
+								<small>(@ev.Date.Value.ToString("d"))</small>
+							}
+						} else {
+							if (ev.HasVenueOrVenueName) {
+								<small>(@EventHelpers.VenueLinkOrVenueName(ev))</small>
+							}
 						}
 					</li>
 				}

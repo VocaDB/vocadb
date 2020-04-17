@@ -106,7 +106,7 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/sonicwire.png"));
 	}
 
-	&[href^="https://item.taobao.com"] {
+	&[href*=".taobao.com"] {
 		.extLink(url("/Content/ExtIcons/itemtaobao.png"));
 	}
 
@@ -172,6 +172,26 @@ a.extLink {
 
 	&[href^="https://www.vocaloid.com/"] {
 		.extLink(url("/Content/ExtIcons/vocaloidshop.png"));
+	}
+
+	&[href^="https://zh.moegirl.org/"],
+	&[href^="https://en.moegirl.org/"],
+	&[href^="https://ja.moegirl.org/"] {
+		background-image: url("/Content/ExtIcons/moegirl.png");
+	}
+
+	&[href^="http://music.163.com/"],
+	&[href^="https://music.163.com/"] {
+		background-image: url("/Content/ExtIcons/ncm.png");
+	}
+
+	&[href^="http://5sing.kugou.com/"],
+	&[href^="https://5sing.kugou.com/"] {
+		background-image: url("/Content/ExtIcons/5sing.png");
+	}
+
+	&[href*=".lofter.com/"] {
+		background-image: url("/Content/ExtIcons/lofter.png");
 	}
 }
 

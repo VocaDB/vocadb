@@ -12,7 +12,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ReleaseEventSeriesForApiContract() { }
 
-		public ReleaseEventSeriesForApiContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference, ReleaseEventSeriesOptionalFields fields, IEntryThumbPersister thumbPersister) {
+		public ReleaseEventSeriesForApiContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference, ReleaseEventSeriesOptionalFields fields, IAggregatedEntryImageUrlFactory thumbPersister) {
 
 			Category = series.Category;
 			Id = series.Id;

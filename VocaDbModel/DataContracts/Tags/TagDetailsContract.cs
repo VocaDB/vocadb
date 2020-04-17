@@ -30,7 +30,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			IEnumerable<ReleaseEventSeries> eventSeries, int eventSeriesCount,
 			IEnumerable<ReleaseEvent> events, int eventCount, 
 			ContentLanguagePreference languagePreference,
-			IEntryThumbPersister thumbStore)
+			IAggregatedEntryImageUrlFactory thumbStore)
 			: base(tag, languagePreference) {
 
 			AdditionalNames = tag.Names.AdditionalNamesString;
@@ -57,7 +57,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 			EventSeries = eventSeries.Select(a => new ReleaseEventSeriesContract(a, languagePreference, false)).ToArray();
 			EventSeriesCount = eventSeriesCount;
 
-			Events = events.Select(a => new ReleaseEventForApiContract(a, languagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture, thumbStore)).ToArray();
+			Events = events.Select(a => new ReleaseEventForApiContract(a, languagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Venue, thumbStore)).ToArray();
 			EventCount = eventCount;
 
 			Siblings = tag.Siblings

@@ -77,8 +77,8 @@
 }
 
 @helper EntryPictureFileLink(IEntryPictureFile entryPictureFile) {
-	<a href="@Url.EntryPictureFile(entryPictureFile, ImageSize.Original)">
-		<img src="@Url.EntryPictureFile(entryPictureFile, ImageSize.Thumb)" alt="Preview" class="coverPic" />
+	<a href="@Url.ImageThumb(entryPictureFile, ImageSize.Original)">
+		<img src="@Url.ImageThumb(entryPictureFile, ImageSize.Thumb)" alt="Preview" class="coverPic" />
 	</a>
 }
 
@@ -180,9 +180,11 @@
 							}
 						</small>						
 					}
-					@if (!string.IsNullOrEmpty(ev.VenueName)) {
+					@if (ev.HasVenueOrVenueName) {
 						<br />
-						<small class="extraInfo">@(ev.VenueName)</small>
+						<small class="extraInfo">
+							@EventHelpers.VenueLinkOrVenueName(ev)
+						</small>
 					}
 				</div>
 			</div>

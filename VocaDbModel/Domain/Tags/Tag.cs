@@ -247,7 +247,7 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <summary>
 		/// Entry thumbnail picture. Can be null.
 		/// </summary>
-		public virtual EntryThumb Thumb { get; set; }
+		public virtual EntryThumbMain Thumb { get; set; }
 
 		public virtual TranslatedString TranslatedName => Names.SortNames;
 

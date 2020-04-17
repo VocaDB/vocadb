@@ -24,7 +24,6 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.SongImport;
 using VocaDb.Web.Code.Exceptions;
-using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -38,9 +37,9 @@ namespace VocaDb.Web.Controllers.Api {
 		private const int defaultMax = 10;
 		private readonly SongListQueries queries;
 		private readonly IUserIconFactory userIconFactory;
-		private readonly IEntryImagePersisterOld entryImagePersister;
+		private readonly IAggregatedEntryImageUrlFactory entryImagePersister;
 
-		public SongListApiController(SongListQueries queries, IUserIconFactory userIconFactory, IEntryImagePersisterOld entryImagePersister) {
+		public SongListApiController(SongListQueries queries, IUserIconFactory userIconFactory, IAggregatedEntryImageUrlFactory entryImagePersister) {
 			this.queries = queries;
 			this.userIconFactory = userIconFactory;
 			this.entryImagePersister = entryImagePersister;
@@ -117,6 +116,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="sort">List sort rule. Possible values are Nothing, Date, CreateDate, Name.</param>
+		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of song lists.</returns>
 		[Route("featured")]
 		public PartialFindResult<SongListForApiContract> GetFeaturedLists(
@@ -126,7 +126,8 @@ namespace VocaDb.Web.Controllers.Api {
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
-			SongListSortRule sort = SongListSortRule.Name) {
+			SongListSortRule sort = SongListSortRule.Name,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var queryParams = new SongListQueryParams {
@@ -138,7 +139,7 @@ namespace VocaDb.Web.Controllers.Api {
 				ChildTags = childTags
 			};
 
-			return queries.Find(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, SongListOptionalFields.MainPicture), queryParams);
+			return queries.Find(s => new SongListForApiContract(s, lang, userIconFactory, entryImagePersister, SongListOptionalFields.MainPicture), queryParams);
 
 		}
 
@@ -208,9 +209,8 @@ namespace VocaDb.Web.Controllers.Api {
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
-			SongOptionalFields fields = SongOptionalFields.None, 
-			ContentLanguagePreference lang = ContentLanguagePreference.Default
-			) {
+			SongOptionalFields fields = SongOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
 			maxResults = Math.Min(maxResults, absoluteMax);
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);

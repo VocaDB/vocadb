@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
@@ -12,7 +12,14 @@ namespace VocaDb.Model.DataContracts {
 
 		public EntryPictureFileContract() { }
 
-		public EntryPictureFileContract(EntryPictureFile picture, IEntryImagePersister imageStore) {
+		public EntryPictureFileContract(Stream uploadedFile, string mime, int contentLength = 0, ImagePurpose purpose = ImagePurpose.Unspesified) {
+			UploadedFile = uploadedFile;
+			Mime = mime ?? string.Empty;
+			ContentLength = contentLength;
+			Purpose = purpose;
+		}
+
+		public EntryPictureFileContract(EntryPictureFile picture, IAggregatedEntryImageUrlFactory imageStore) {
 
 			ParamIs.NotNull(() => picture);
 
@@ -22,6 +29,7 @@ namespace VocaDb.Model.DataContracts {
 			Name = picture.Name;
 			OwnerEntryId = picture.OwnerEntryId;
 			ThumbUrl = imageStore.GetUrlAbsolute(picture, ImageSize.Thumb, true);
+			Purpose = picture.Purpose;
 
 		}
 
@@ -44,6 +52,8 @@ namespace VocaDb.Model.DataContracts {
 
 		[DataMember]
 		public int OwnerEntryId { get; set; }
+
+		public ImagePurpose Purpose { get; set; }
 
 		[DataMember]
 		public string ThumbUrl { get; set;}
