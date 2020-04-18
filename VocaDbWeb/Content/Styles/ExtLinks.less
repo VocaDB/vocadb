@@ -173,6 +173,26 @@ a.extLink {
 	&[href^="https://www.vocaloid.com/"] {
 		.extLink(url("/Content/ExtIcons/vocaloidshop.png"));
 	}
+
+	&[href^="https://zh.moegirl.org/"],
+	&[href^="https://en.moegirl.org/"],
+	&[href^="https://ja.moegirl.org/"] {
+		background-image: url("/Content/ExtIcons/moegirl.png");
+	}
+
+	&[href^="http://music.163.com/"],
+	&[href^="https://music.163.com/"] {
+		background-image: url("/Content/ExtIcons/ncm.png");
+	}
+
+	&[href^="http://5sing.kugou.com/"],
+	&[href^="https://5sing.kugou.com/"] {
+		background-image: url("/Content/ExtIcons/5sing.png");
+	}
+
+	&[href*=".lofter.com/"] {
+		background-image: url("/Content/ExtIcons/lofter.png");
+	}
 }
 
 a.extLink[href^="mailto:"] {
@@ -320,20 +340,4 @@ a.extLink[href^="https://youtu.be/"] {
 a.extLink[href^="http://vocaloid.wikia.com/wiki/"],
 a.extLink[href^="https://vocaloid.fandom.com/wiki/"] {
 	background: url("/Content/ExtIcons/vocawiki.png") no-repeat left 50%;
-}
-a.extLink[href^="https://zh.moegirl.org/"],
-a.extLink[href^="https://en.moegirl.org/"],
-a.extLink[href^="https://ja.moegirl.org/"] {
-  background: url("/Content/ExtIcons/moegirl.png");
-}
-a.extLink[href^="http://music.163.com/"],
-a.extLink[href^="https://music.163.com/"] {
-  background: url("/Content/ExtIcons/ncm.png");
-}
-a.extLink[href^="http://5sing.kugou.com/"],
-a.extLink[href^="https://5sing.kugou.com/"] {
-  background: url("/Content/ExtIcons/5sing.png");
-}
-a.extLink[href*=".lofter.com/"] {
-  background: url("/Content/ExtIcons/lofter.png");
 }
