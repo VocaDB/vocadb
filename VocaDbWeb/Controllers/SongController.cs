@@ -514,12 +514,6 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public string ThumbUrl(int id) {
-
-			return queries.GetSong(id, s => s.GetThumbUrl());
-
-		}
-
 		public ActionResult TopRated() {
 			return RedirectToActionPermanent("Rankings");
 		}

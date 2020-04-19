@@ -119,11 +119,11 @@ namespace VocaDb.Model.Service {
 			}
 
 			// Add link if not already added a link to that service
-			var sourceUrl = acceptedAlbum.ImportedAlbum.SourceUrl;
-			if (importer != null && !string.IsNullOrEmpty(sourceUrl)) {
+			var sourceUrl = VocaDbUrl.External(acceptedAlbum.ImportedAlbum.SourceUrl);
+			if (importer != null && !sourceUrl.IsEmpty) {
 
-				if (album.WebLinks.All(w => !string.Equals(w.Url, sourceUrl, StringComparison.InvariantCultureIgnoreCase) && !importer.IsValidFor(w.Url))) {
-					album.CreateWebLink(importer.ServiceName, sourceUrl, WebLinkCategory.Reference);
+				if (album.WebLinks.All(w => !string.Equals(w.Url, sourceUrl.Url, StringComparison.InvariantCultureIgnoreCase) && !importer.IsValidFor(w.VocaDbUrl))) {
+					album.CreateWebLink(importer.ServiceName, sourceUrl.Url, WebLinkCategory.Reference);
 					diff.WebLinks.Set();
 				}
 				
@@ -453,7 +453,7 @@ namespace VocaDb.Model.Service {
 			return HandleTransaction(session => {
 
 				var inspected = Inspect(session, importedAlbum);
-				var importer = new AlbumImporters().FindImporter(inspected.ImportedAlbum.SourceUrl);
+				var importer = new AlbumImporters().FindImporter(VocaDbUrl.External(inspected.ImportedAlbum.SourceUrl));
 				var album = AcceptImportedAlbum(session, importer, importedAlbum.SelectedLanguage, inspected, selectedSongIds);
 
 				return album;
@@ -473,7 +473,7 @@ namespace VocaDb.Model.Service {
 				foreach (var importedAlbum in importedAlbumIds) {
 
 					var inspected = Inspect(session, importedAlbum);
-					var importer = new AlbumImporters().FindImporter(inspected.ImportedAlbum.SourceUrl);
+					var importer = new AlbumImporters().FindImporter(VocaDbUrl.External(inspected.ImportedAlbum.SourceUrl));
 					var album = AcceptImportedAlbum(session, importer, importedAlbum.SelectedLanguage, inspected, selectedSongIds);
 
 					importedAlbums.Add(album);
@@ -577,11 +577,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public AlbumImportResult ImportOne(string url) {
+		public AlbumImportResult ImportOne(VocaDbUrl url) {
 
 			PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
 
-			var existing = HandleQuery(session => session.Query<MikuDbAlbum>().FirstOrDefault(a => a.SourceUrl == url));
+			var existing = HandleQuery(session => session.Query<MikuDbAlbum>().FirstOrDefault(a => a.SourceUrl == url.Url));
 
 			if (existing != null)
 				return new AlbumImportResult {Message = "Album with that URL has already been imported"};

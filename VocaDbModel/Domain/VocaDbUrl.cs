@@ -16,6 +16,13 @@ namespace VocaDb.Model.Domain {
 	public class VocaDbUrl : IEquatable<VocaDbUrl> {
 
 		public static readonly VocaDbUrl Empty = new VocaDbUrl(string.Empty, UrlDomain.Main, UriKind.Absolute);
+
+		/// <summary>
+		/// Creates an external URL.
+		/// External URLs are always absolute.
+		/// </summary>
+		/// <param name="url">External URL, should be absolute. For example "https://nicovideo.cdn.nimg.jp/thumbnails/393939"</param>
+		/// <returns>URL object.</returns>
 		public static VocaDbUrl External(string url) => new VocaDbUrl(url, UrlDomain.External, UriKind.Absolute);
 		public static IEnumerable<VocaDbUrl> External(IEnumerable<string> urls) => urls?.Select(url => External(url));
 
@@ -31,6 +38,8 @@ namespace VocaDb.Model.Domain {
 
 		public string DebugString => $"{Url} ({Domain})";
 		public bool IsEmpty => string.IsNullOrEmpty(Url);
+
+		public VocaDbUrl NullIfEmpty => IsEmpty ? null : this;
 
 		/// <summary>
 		/// Ensures that URL starts with scheme (http/https).
@@ -69,6 +78,10 @@ namespace VocaDb.Model.Domain {
 
 		public Uri ToUri() => new Uri(Url, Kind);
 
+		/// <summary>
+		/// Validates current URL.
+		/// </summary>
+		/// <exception cref="UriFormatException">If the URL is not valid.</exception>
 		public void Validate() { ToUri(); }
 
 		public override string ToString() => Url;

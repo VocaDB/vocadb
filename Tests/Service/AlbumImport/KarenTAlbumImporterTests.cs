@@ -3,6 +3,7 @@ using System.Text;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.MikuDb;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Service.AlbumImport;
 using VocaDb.Tests.TestSupport;
 
@@ -33,7 +34,7 @@ namespace VocaDb.Tests.Service.AlbumImport {
 		public void SetUp() {
 			karenTDoc = ResourceHelper.ReadHtmlDocument("KarenT_SystemindParadox.htm");
 			importer = new KarenTAlbumImporter(new PictureDownloaderStub());
-			importedAlbum = importer.GetAlbumData(karenTDoc, "http://");
+			importedAlbum = importer.GetAlbumData(karenTDoc, VocaDbUrl.External("http://"));
 			importedData = importedAlbum.Data;
 		}
 

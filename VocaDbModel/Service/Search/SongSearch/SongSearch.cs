@@ -162,7 +162,7 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			} else if (trimmed.StartsWith("http", StringComparison.InvariantCultureIgnoreCase)) {
 
 				// Test PV URL with services that don't require a web call
-				var videoParseResult = VideoServiceHelper.ParseByUrlAsync(query, false, null,
+				var videoParseResult = VideoServiceHelper.ParseByUrlAsync(VocaDbUrl.External(query), false, null,
 					VideoService.NicoNicoDouga, VideoService.Youtube, VideoService.Bilibili, VideoService.File, VideoService.LocalFile, VideoService.Vimeo).Result;
 
 				if (videoParseResult.IsOk) {

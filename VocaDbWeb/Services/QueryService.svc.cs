@@ -15,16 +15,15 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Search.Tags;
 using VocaDb.Model.Service.Search.User;
+using VocaDb.Model.Domain;
 
 namespace VocaDb.Web.Services {
 
@@ -99,7 +98,7 @@ namespace VocaDb.Web.Services {
 		[OperationContract]
 		public NewSongCheckResultContract FindDuplicate(string[] names, string[] pvs, int[] artistIds, bool getPVInfo = false) {
 
-			return songQueries.FindDuplicates(names, pvs, artistIds, getPVInfo).Result;
+			return songQueries.FindDuplicates(names, VocaDbUrl.External(pvs).ToArray(), artistIds, getPVInfo).Result;
 
 		}
 

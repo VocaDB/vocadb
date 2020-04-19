@@ -1,4 +1,5 @@
-﻿using System.Linq;
+using System.Linq;
+using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Service.AlbumImport {
 
@@ -13,11 +14,11 @@ namespace VocaDb.Model.Service.AlbumImport {
 			importers = new IAlbumImporter[] { new KarenTAlbumImporter(pictureDownloader) };
 		}
 
-		public IAlbumImporter FindImporter(string url) {
+		public IAlbumImporter FindImporter(VocaDbUrl url) {
 			return importers.FirstOrDefault(i => i.IsValidFor(url));
 		}
 
-		public AlbumImportResult ImportOne(string url) {
+		public AlbumImportResult ImportOne(VocaDbUrl url) {
 
 			var importer = FindImporter(url);
 

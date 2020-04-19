@@ -132,6 +132,8 @@ namespace VocaDb.Model.Domain.ExtLinks
 			}
 		}
 
+		public virtual VocaDbUrl VocaDbUrl => VocaDbUrl.External(Url);
+
 		public virtual bool ContentEquals(IWebLink another) {
 
 			if (another == null)

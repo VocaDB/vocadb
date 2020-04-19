@@ -96,6 +96,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			return repository.Save(entry);
 		}
 
+		private VocaDbUrl Url(string url) => VocaDbUrl.External(url);
+
 		[TestInitialize]
 		public void SetUp() {
 
@@ -141,7 +143,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			pvParser = new FakePVParser();
 			pvParser.ResultFunc = (url, getMeta) => 
 				VideoUrlParseResult.CreateOk(url, PVService.NicoNicoDouga, "sm393939", 
-				getMeta ? VideoTitleParseResult.CreateSuccess("Resistance", "Tripshots", null, "testimg.jpg", 39) : VideoTitleParseResult.Empty);
+				getMeta ? VideoTitleParseResult.CreateSuccess("Resistance", "Tripshots", null, Url("testimg.jpg"), 39) : VideoTitleParseResult.Empty);
 
 			mailer = new FakeUserMessageMailer();
 
@@ -543,13 +545,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public async Task FindDuplicates_NoMatches_ParsePVInfo() {
 
 			// Note: Nico will be preferred, if available
-			pvParser.MatchedPVs.Add("http://youtu.be/123456567",
-				VideoUrlParseResult.CreateOk("http://youtu.be/123456567", PVService.Youtube, "123456567", 
-				VideoTitleParseResult.CreateSuccess("anger PV", "Tripshots", null, "testimg2.jpg", 33)));
+			pvParser.AddResult(
+				VideoUrlParseResult.CreateOk(Url("http://youtu.be/123456567"), PVService.Youtube, "123456567", 
+				VideoTitleParseResult.CreateSuccess("anger PV", "Tripshots", null, Url("testimg2.jpg"), 33)));
 
-			pvParser.MatchedPVs.Add("http://www.nicovideo.jp/watch/sm3183550",
-				VideoUrlParseResult.CreateOk("http://www.nicovideo.jp/watch/sm3183550", PVService.NicoNicoDouga, "sm3183550", 
-				VideoTitleParseResult.CreateSuccess("【初音ミク】anger【VOCALOID3DPV】", "Tripshots", null, "testimg.jpg", 39)));
+			pvParser.AddResult(
+				VideoUrlParseResult.CreateOk(Url("http://www.nicovideo.jp/watch/sm3183550"), PVService.NicoNicoDouga, "sm3183550", 
+				VideoTitleParseResult.CreateSuccess("【初音ミク】anger【VOCALOID3DPV】", "Tripshots", null, Url("testimg.jpg"), 39)));
 
 			var result = await CallFindDuplicates(new []{ "【初音ミク】anger【VOCALOID3DPV】"}, new []{ "http://youtu.be/123456567", "http://www.nicovideo.jp/watch/sm3183550" });
 
@@ -564,12 +566,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var artist = repository.Save(CreateEntry.Artist(ArtistType.Producer, name: "Clean Tears"));
 			repository.Save(artist.CreateWebLink("YouTube", "https://www.youtube.com/channel/UCnHGCQ0pwnRFF5Oe2YTeOcA", WebLinkCategory.Official));
 
-			var titleParseResult = VideoTitleParseResult.CreateSuccess("Clean Tears - Ruby", "Clean Tears", null, "http://tn.smilevideo.jp/smile?i=32347786", 39);
+			var titleParseResult = VideoTitleParseResult.CreateSuccess("Clean Tears - Ruby", "Clean Tears", null, Url("http://tn.smilevideo.jp/smile?i=32347786"), 39);
 			titleParseResult.Author = "Clean Tears";
 			titleParseResult.AuthorId = "UCnHGCQ0pwnRFF5Oe2YTeOcA";
 
-			pvParser.MatchedPVs.Add("https://youtu.be/aJKY_EeAeYc",
-				VideoUrlParseResult.CreateOk("https://youtu.be/aJKY_EeAeYc", PVService.Youtube, "aJKY_EeAeYc", titleParseResult));
+			pvParser.AddResult(VideoUrlParseResult.CreateOk(Url("https://youtu.be/aJKY_EeAeYc"), PVService.Youtube, "aJKY_EeAeYc", titleParseResult));
 
 			var result = await CallFindDuplicates(new string[0], new[] { "https://youtu.be/aJKY_EeAeYc" });
 
@@ -621,8 +622,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public async Task FindDuplicates_MatchPV() {
 
-			pvParser.MatchedPVs.Add("http://youtu.be/hoLu7c2XZYU",
-				VideoUrlParseResult.CreateOk("http://youtu.be/hoLu7c2XZYU", PVService.Youtube, "hoLu7c2XZYU", VideoTitleParseResult.Empty));
+			pvParser.AddResult(VideoUrlParseResult.CreateOk(Url("http://youtu.be/hoLu7c2XZYU"), PVService.Youtube, "hoLu7c2XZYU", VideoTitleParseResult.Empty));
 
 			var result = await CallFindDuplicates(anyPv: new []{ "http://youtu.be/hoLu7c2XZYU"});
 
@@ -636,9 +636,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public async Task FindDuplicates_CoverInSongTitle_CoverType() {
 
-			pvParser.MatchedPVs.Add("http://www.nicovideo.jp/watch/sm27114783",
-				VideoUrlParseResult.CreateOk("http://www.nicovideo.jp/watch/sm27114783", PVService.NicoNicoDouga, "123456567",
-				VideoTitleParseResult.CreateSuccess("【GUMI】 光(宇多田ヒカル) 【アレンジカバー】", string.Empty, null, "testimg2.jpg", 33)));
+			pvParser.AddResult(
+				VideoUrlParseResult.CreateOk(Url("http://www.nicovideo.jp/watch/sm27114783"), PVService.NicoNicoDouga, "123456567",
+				VideoTitleParseResult.CreateSuccess("【GUMI】 光(宇多田ヒカル) 【アレンジカバー】", string.Empty, null, Url("testimg2.jpg"), 33)));
 
 			var result = await CallFindDuplicates(anyPv: new[] { "http://www.nicovideo.jp/watch/sm27114783" });
 
@@ -704,7 +704,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			pvParser.ResultFunc = (url, getMeta) =>
 				VideoUrlParseResult.CreateOk(url, PVService.NicoNicoDouga, "sm393939",
-					getMeta ? VideoTitleParseResult.CreateSuccess("Resistance", "Tripshots", null, "testimg.jpg", tags: new [] { "vocarock", "vocacore" }) : VideoTitleParseResult.Empty);
+					getMeta ? VideoTitleParseResult.CreateSuccess("Resistance", "Tripshots", null, Url("testimg.jpg"), tags: new [] { "vocarock", "vocacore" }) : VideoTitleParseResult.Empty);
 
 			song.AddTag(tag);
 			song.PVs.Add(new PVForSong(song, new PVContract { Service = PVService.NicoNicoDouga, PVType = PVType.Original, PVId = "sm393939" }));

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -129,7 +130,7 @@ namespace VocaDb.Tests.TestData {
 			int? length = null,
 			string[] tags = null) {
 			
-			return VideoUrlParseResult.CreateOk(url, service, id, VideoTitleParseResult.CreateSuccess(title, author, null, thumbUrl, length, tags));
+			return VideoUrlParseResult.CreateOk(VocaDbUrl.External(url), service, id, VideoTitleParseResult.CreateSuccess(title, author, null, VocaDbUrl.External(thumbUrl), length, tags));
 
 		}
 

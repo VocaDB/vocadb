@@ -59,8 +59,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 				var thumb = song.GetThumbUrl();
 
-				if (!string.IsNullOrEmpty(thumb)) {
-					MainPicture = new EntryThumbForApiContract { UrlThumb = thumb };
+				if (!thumb.IsEmpty) {
+					MainPicture = new EntryThumbForApiContract { UrlThumb = thumb.ToAbsolute().Url };
 				}
 
 			}
@@ -82,7 +82,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 				Tags = song.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 
 			if (fields.HasFlag(SongOptionalFields.ThumbUrl))
-				ThumbUrl = song.GetThumbUrl();
+				ThumbUrl = song.GetThumbUrl().ToAbsolute().Url;
 
 			if (fields.HasFlag(SongOptionalFields.WebLinks))
 				WebLinks = song.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();

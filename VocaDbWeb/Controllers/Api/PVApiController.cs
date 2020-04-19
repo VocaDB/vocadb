@@ -8,6 +8,7 @@ using System.Web.Http.Description;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
@@ -83,7 +84,7 @@ namespace VocaDb.Web.Controllers.Api {
 			if (string.IsNullOrEmpty(pvUrl))
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-			var result = await pvParser.ParseByUrlAsync(pvUrl, getTitle, permissionContext);
+			var result = await pvParser.ParseByUrlAsync(VocaDbUrl.External(pvUrl), getTitle, permissionContext);
 
 			if (!result.IsOk) {
 				var msg = result.Exception.Message;

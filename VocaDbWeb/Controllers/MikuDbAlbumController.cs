@@ -1,6 +1,7 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Web.Mvc;
 using VocaDb.Model.DataContracts.MikuDb;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.MikuDb;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
@@ -86,7 +87,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult ImportOne(string AlbumUrl) {
 			
-			var result = Service.ImportOne(AlbumUrl);
+			var result = Service.ImportOne(VocaDbUrl.External(AlbumUrl));
 
 			if (result.AlbumContract != null) {
 				TempData.SetSuccessMessage("Album was imported successfully and is ready to be processed.");
@@ -99,6 +100,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		/*
 		[Authorize]
 		public ActionResult ImportNew() {
 
@@ -112,7 +114,7 @@ namespace VocaDb.Web.Controllers
 
 			return RedirectToAction("Index");
 
-		}
+		}*/
 
 		[HttpPost]
 		[Authorize]

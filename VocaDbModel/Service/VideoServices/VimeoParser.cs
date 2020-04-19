@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -29,7 +30,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			}
 
 			var author = result.Video.User_Name;
-			var thumbUrl = result.Video.Thumbnail_Small;
+			var thumbUrl = VocaDbUrl.External(result.Video.Thumbnail_Small);
 			var length = result.Video.Duration;
 			var date = Convert.ToDateTime(result.Video.Upload_Date); // xmlserializer can't parse the date
 

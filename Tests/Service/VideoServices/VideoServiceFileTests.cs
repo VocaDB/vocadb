@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Tests.Service.VideoServices {
@@ -15,7 +16,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 		}
 
 		private void TestIsValidFor(string url, bool expected) {
-			Assert.AreEqual(expected, videoService.IsValidFor(url));
+			Assert.AreEqual(expected, videoService.IsValidFor(VocaDbUrl.External(url)));
 		}
 
 		[TestInitialize]

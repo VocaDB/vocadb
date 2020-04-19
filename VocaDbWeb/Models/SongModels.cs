@@ -92,8 +92,8 @@ namespace VocaDb.Web.Models {
 			OriginalPVs = pvs.Where(p => p.PVType == PVType.Original).ToArray();
 			OtherPVs = pvs.Where(p => p.PVType != PVType.Original).ToArray();
 			PrimaryPV = PVHelper.PrimaryPV(pvs);
-			ThumbUrl = VideoServiceHelper.GetThumbUrlPreferNotNico(pvs);
-			ThumbUrlMaxSize = VideoServiceHelper.GetMaxSizeThumbUrl(pvs) ?? ThumbUrl;
+			ThumbUrl = VideoServiceHelper.GetThumbUrlPreferNotNico(pvs).ToAbsolute().Url;
+			ThumbUrlMaxSize = VideoServiceHelper.GetMaxSizeThumbUrl(pvs).NullIfEmpty?.Url ?? ThumbUrl;
 
 			if (PrimaryPV == null && !string.IsNullOrEmpty(NicoId))
 				PrimaryPV = new PVContract { PVId = NicoId, Service = PVService.NicoNicoDouga };
