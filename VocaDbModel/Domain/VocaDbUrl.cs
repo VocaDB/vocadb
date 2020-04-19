@@ -99,7 +99,18 @@ namespace VocaDb.Model.Domain {
 
 		public bool Equals(string other) => ToString() == (other ?? string.Empty);
 
-		public override bool Equals(object obj) => Equals(obj as VocaDbUrl);
+		public override bool Equals(object obj) {
+			switch (obj) {
+				case VocaDbUrl other:
+					return Equals(other);
+				case Uri other:
+					return Equals(other);
+				case string other:
+					return Equals(other);
+				default:
+					return false;
+			}
+		}
 
 		public override int GetHashCode() {
 			int hashCode = -120357769;
