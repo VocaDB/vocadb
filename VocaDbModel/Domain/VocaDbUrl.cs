@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain {
 	/// URLs are immutable.
 	/// </summary>
 	[DebuggerDisplay("{DebugString}")]
-	public class VocaDbUrl : IEquatable<VocaDbUrl> {
+	public sealed class VocaDbUrl : IEquatable<VocaDbUrl> {
 
 		public static readonly VocaDbUrl Empty = new VocaDbUrl(string.Empty, UrlDomain.Main, UriKind.Absolute);
 
@@ -44,7 +44,6 @@ namespace VocaDb.Model.Domain {
 		/// <summary>
 		/// Ensures that URL starts with scheme (http/https).
 		/// </summary>
-		/// <returns></returns>
 		public VocaDbUrl EnsureScheme() => new VocaDbUrl(UrlHelper.MakeLink(Url), Domain, Kind);
 
 		/// <summary>
@@ -76,6 +75,10 @@ namespace VocaDb.Model.Domain {
 
 		public VocaDbUrl ToAbsoluteIfNotMain() => Domain == UrlDomain.Main ? this : ToAbsolute();
 
+		/// <summary>
+		/// Convert to <see cref="Uri"/>.
+		/// </summary>
+		/// <exception cref="UriFormatException">If <see cref="Url"/> does not represent valid <see cref="Uri"/>.</exception>
 		public Uri ToUri() => new Uri(Url, Kind);
 
 		/// <summary>
