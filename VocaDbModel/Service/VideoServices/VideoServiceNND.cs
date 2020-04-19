@@ -19,7 +19,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			var numId = numIdRegex.Match(id);
 
 			if (!numId.Success)
-				return null;
+				return VocaDbUrl.Empty;
 
 			return VocaDbUrl.External(string.Format("https://tn.smilevideo.jp/smile?i={0}", numId.Value));
 

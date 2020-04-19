@@ -27,7 +27,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 			var result = VideoServiceHelper.GetThumbUrl(new IPVWithThumbnail[0]);
 
-			Assert.AreEqual(string.Empty, result, "result");
+			Assert.AreEqual(string.Empty, result.Url, "result");
 
 		}
 
@@ -38,7 +38,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
-			Assert.AreEqual("original", result, "result");
+			Assert.AreEqual("original", result.Url, "result");
 
 		}
 
@@ -49,7 +49,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
-			Assert.AreEqual("reprint", result, "result");
+			Assert.AreEqual("reprint", result.Url, "result");
 
 		}
 
@@ -61,7 +61,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
-			Assert.AreEqual("reprint", result, "result");
+			Assert.AreEqual("reprint", result.Url, "result");
 
 		}
 
@@ -74,7 +74,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
-			Assert.AreEqual("reprint", result, "result");
+			Assert.AreEqual("reprint", result.Url, "result");
 
 		}
 
@@ -103,7 +103,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
-			Assert.AreEqual("reprint", result, "result");
+			Assert.AreEqual("reprint", result.Url, "result");
 
 		}
 
@@ -116,7 +116,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
-			Assert.AreEqual("reprint", result, "result");
+			Assert.AreEqual("reprint", result.Url, "result");
 
 		}
 
@@ -127,7 +127,7 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 			var result = VideoServiceHelper.GetThumbUrlPreferNotNico(pvs);
 
-			Assert.AreEqual("reprint", result, "result");
+			Assert.AreEqual("reprint", result.Url, "result");
 
 		}
 

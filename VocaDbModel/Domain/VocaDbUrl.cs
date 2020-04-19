@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain {
 	/// URLs are immutable.
 	/// </summary>
 	[DebuggerDisplay("{DebugString}")]
-	public sealed class VocaDbUrl : IEquatable<VocaDbUrl> {
+	public sealed class VocaDbUrl : IEquatable<VocaDbUrl>, IEquatable<Uri>, IEquatable<string> {
 
 		public static readonly VocaDbUrl Empty = new VocaDbUrl(string.Empty, UrlDomain.Main, UriKind.Absolute);
 
@@ -92,6 +92,12 @@ namespace VocaDb.Model.Domain {
 		public bool Equals(VocaDbUrl other) {
 			return other != null && other.Domain == Domain && other.Url == Url;
 		}
+
+		public bool Equals(Uri other) {
+			return other != null && (Kind == UriKind.Absolute) == other.IsAbsoluteUri && other.ToString() == Url;
+		}
+
+		public bool Equals(string other) => ToString() == (other ?? string.Empty);
 
 		public override bool Equals(object obj) => Equals(obj as VocaDbUrl);
 
