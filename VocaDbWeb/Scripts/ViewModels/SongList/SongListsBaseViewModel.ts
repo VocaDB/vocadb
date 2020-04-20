@@ -23,6 +23,7 @@ module vdb.viewModels.songList {
 				this.tagFilters.addTags(tagIds);
 
 			this.query.subscribe(this.clear);
+			this.showTags.subscribe(this.clear);
 			this.sort.subscribe(this.clear);
 			this.tagFilters.tags.subscribe(this.clear);
 
@@ -58,9 +59,19 @@ module vdb.viewModels.songList {
 
 		public query = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 		public resources = ko.observable<dc.ResourcesContract>();
+
+		public selectTag = (tag: dc.TagBaseContract) => {
+			this.tagFilters.tags([viewModels.search.TagFilter.fromContract(tag)]);
+		}
+
+		public showTags = ko.observable(false);
 		public sort = ko.observable(SongListSortRule[SongListSortRule.Date]);
 		public sortName = ko.computed(() => this.resources() != null ? this.resources().songListSortRuleNames[this.sort()] : "");
 		public tagFilters: viewModels.search.TagFilters;
+		
+		public fields = ko.computed(() => {
+			return "MainPicture" + (this.showTags() ? ",Tags" : "");
+		});
 
 	}
 
