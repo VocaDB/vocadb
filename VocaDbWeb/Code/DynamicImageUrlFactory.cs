@@ -10,6 +10,8 @@ namespace VocaDb.Web.Code {
 			this.urlHelper = urlHelper;
 		}
 
+		public DynamicImageUrlFactory() { }
+
 		private readonly UrlHelper urlHelper;
 
 		public VocaDbUrl GetUrl(IEntryImageInformation imageInfo, ImageSize size) {
