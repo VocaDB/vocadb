@@ -1,3 +1,4 @@
+using System;
 using System.Web.Mvc;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
@@ -6,16 +7,15 @@ namespace VocaDb.Web.Code {
 
 	public class DynamicImageUrlFactory : IDynamicImageUrlFactory {
 
-		public DynamicImageUrlFactory(UrlHelper urlHelper) {
-			this.urlHelper = urlHelper;
+		public DynamicImageUrlFactory(Lazy<UrlHelper> urlHelper) {
+			this.urlHelperAccessor = urlHelper;
 		}
 
-		public DynamicImageUrlFactory() { }
-
-		private readonly UrlHelper urlHelper;
+		private readonly Lazy<UrlHelper> urlHelperAccessor;
 
 		public VocaDbUrl GetUrl(IEntryImageInformation imageInfo, ImageSize size) {
 			
+			var urlHelper = urlHelperAccessor.Value;
 			string dynamicUrl = null;
 			if (imageInfo.EntryType == EntryType.Album) {
 				if (size == ImageSize.Original)
