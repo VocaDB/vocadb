@@ -82,7 +82,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(user, ContentLanguagePreference.Default));
 
 			imagePersister = new InMemoryImagePersister();
-			queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, imagePersister, new FakeUserIconFactory(), new EnumTranslations());
+			queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, imagePersister, new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());
 
 		}
 
@@ -109,7 +109,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		public void GetDetails_RecentEvents() {
 			
 			void AssertContainsEvent(TagDetailsContract details, ReleaseEvent releaseEvent) {
-				Assert.IsTrue(details.Events.Any(e => e.Id == releaseEvent.Id), "Contains " + releaseEvent);
+				Assert.IsTrue(details.Stats.Events.Any(e => e.Id == releaseEvent.Id), "Contains " + releaseEvent);
 			}
 
 			var standaloneEvent = CreateEntry.ReleaseEvent("Miku party");
@@ -128,13 +128,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var result = queries.GetDetails(tag.Id);
 
-			Assert.AreEqual(2, result.EventCount, "EventCount");
-			Assert.AreEqual(2, result.Events.Length, "Events.Length");
-			Assert.AreEqual(1, result.EventSeriesCount, "EventSeriesCount");
-			Assert.AreEqual(1, result.EventSeries.Length, "EventSeries.Length");
+			Assert.AreEqual(2, result.Stats.EventCount, "EventCount");
+			Assert.AreEqual(2, result.Stats.Events.Length, "Events.Length");
+			Assert.AreEqual(1, result.Stats.EventSeriesCount, "EventSeriesCount");
+			Assert.AreEqual(1, result.Stats.EventSeries.Length, "EventSeries.Length");
 			AssertContainsEvent(result, standaloneEvent);
 			AssertContainsEvent(result, recentSeriesEvent);
-			Assert.IsTrue(result.EventSeries.Any(e => e.Id == eventSeries.Id), "Contains " + eventSeries);
+			Assert.IsTrue(result.Stats.EventSeries.Any(e => e.Id == eventSeries.Id), "Contains " + eventSeries);
 
 		}
 

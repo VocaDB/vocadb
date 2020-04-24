@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Caching;
 using System.Xml.Linq;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
@@ -13,6 +15,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -39,6 +42,7 @@ namespace VocaDb.Model.Database.Queries {
 	public class TagQueries : QueriesBase<ITagRepository, Tag> {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IAggregatedEntryImageUrlFactory thumbStore;
@@ -95,12 +99,21 @@ namespace VocaDb.Model.Database.Queries {
 
 			q = whereExpression(q, typeAndTag);
 
-			var topUsages = q
-				.OrderByTagUsage<TEntry, TUsage>(tagId)
-				.Take(maxCount)
-				.ToArray();
+			TEntry[] topUsages;
+			int usageCount;
 
-			var usageCount = q.Count();
+			try {
+				topUsages = q
+					.OrderByTagUsage<TEntry, TUsage>(tagId)
+					.Take(maxCount)
+					.ToArray();
+
+				usageCount = q.Count();
+			} catch (SqlException x) {
+				log.Warn(x, "Unable to get tag usages");
+				topUsages = new TEntry[0];
+				usageCount = 0;
+			}
 
 			return new TagTopUsagesAndCount<TEntry> {
 				TopUsages = topUsages, TotalCount = usageCount
@@ -153,7 +166,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public TagQueries(ITagRepository repository, IUserPermissionContext permissionContext,
 			IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister, IAggregatedEntryImageUrlFactory thumbStore, IUserIconFactory userIconFactory,
-			IEnumTranslations enumTranslations)
+			IEnumTranslations enumTranslations, ObjectCache cache)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -161,6 +174,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.thumbStore = thumbStore;
 			this.userIconFactory = userIconFactory;
 			this.enumTranslations = enumTranslations;
+			this.cache = cache;
 
 		}
 
@@ -359,11 +373,10 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagDetailsContract GetDetails(int tagId) {
+		private TagStatsContract GetStats(IDatabaseContext<Tag> ctx, int tagId) {
 
-			return HandleQuery(ctx => {
-
-				var tag = LoadTagById(ctx, tagId);
+			var key = string.Format("TagQueries.GetStats.{0}.{1}", tagId, LanguagePreference);
+			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () => {
 
 				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
 				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingTotal, t => t.Entry);
@@ -373,24 +386,40 @@ namespace VocaDb.Model.Database.Queries {
 				var seriesIds = eventSeries.TopUsages.Select(e => e.Id).ToArray();
 
 				var eventDateCutoff = DateTime.Now.AddDays(-7);
-				var events = GetTopUsagesAndCount<EventTagUsage, ReleaseEvent, int>(ctx, tagId, t => !t.Entry.Deleted 
+				var events = GetTopUsagesAndCount<EventTagUsage, ReleaseEvent, int>(ctx, tagId, t => !t.Entry.Deleted
 					&& (t.Entry.Series == null || (t.Entry.Date.DateTime != null && t.Entry.Date.DateTime >= eventDateCutoff) || !seriesIds.Contains(t.Entry.Series.Id)), t => t.Entry.Id, t => t.Entry, maxCount: 6);
-				var latestComments = Comments(ctx).GetList(tag.Id, 3);
 				var followerCount = ctx.Query<TagForUser>().Count(t => t.Tag.Id == tagId);
 
-				var entryTypeMapping = ctx.Query<EntryTypeToTagMapping>().FirstOrDefault(etm => etm.Tag == tag);
-
-				return new TagDetailsContract(tag,
+				var stats = new TagStatsContract(LanguagePreference, thumbStore, 
 					artists.TopUsages, artists.TotalCount,
 					albums.TopUsages, albums.TotalCount,
 					songLists.TopUsages, songLists.TotalCount,
 					songs.TopUsages, songs.TotalCount,
 					eventSeries.TopUsages, eventSeries.TotalCount,
 					events.TopUsages, events.TotalCount,
-					PermissionContext.LanguagePreference,
-					thumbStore) {
+					followerCount);
+
+				return stats;
+
+			});
+
+		}
+
+		public TagDetailsContract GetDetails(int tagId) {
+
+			return HandleQuery(ctx => {
+
+				var tag = LoadTagById(ctx, tagId);
+				var stats = GetStats(ctx, tagId);
+
+				var latestComments = Comments(ctx).GetList(tagId, 3);
+
+				var entryTypeMapping = ctx.Query<EntryTypeToTagMapping>().FirstOrDefault(etm => etm.Tag == tag);
+
+				return new TagDetailsContract(tag,
+					stats,
+					PermissionContext.LanguagePreference) {
 					CommentCount = Comments(ctx).GetCount(tag.Id),
-					FollowerCount = followerCount,
 					LatestComments = latestComments,
 					IsFollowing = permissionContext.IsLoggedIn && ctx.Query<TagForUser>().Any(t => t.Tag.Id == tagId && t.User.Id == permissionContext.LoggedUserId),
 					RelatedEntryType = entryTypeMapping?.EntryTypeAndSubType ?? new EntryTypeAndSubType()
