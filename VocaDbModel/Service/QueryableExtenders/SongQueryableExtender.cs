@@ -291,6 +291,9 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			if (entryTypeAndTagCollection == null || entryTypeAndTagCollection.IsEmpty)
 				return query;
 
+			if (!entryTypeAndTagCollection.SubTypes.Any())
+				return query.Where(song => song.Tags.Usages.Any(u => entryTypeAndTagCollection.TagIds.Contains(u.Tag.Id)));
+
 			return query.Where(song => entryTypeAndTagCollection.SubTypes.Contains(song.SongType) 
 				|| song.Tags.Usages.Any(u => entryTypeAndTagCollection.TagIds.Contains(u.Tag.Id)));
 
