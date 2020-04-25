@@ -66,7 +66,7 @@ namespace vdb.viewModels.search {
 		public sort = ko.observable("Name");
 		public sortName: KnockoutComputed<string>;
 		
-		public fields = ko.computed(() => this.searchViewModel.showTags() ? "AdditionalNames,MainPicture,Series,Tags" : "AdditionalNames,MainPicture,Series");
+		public fields = ko.computed(() => this.searchViewModel.showTags() ? "AdditionalNames,MainPicture,Series,Venue,Tags" : "AdditionalNames,MainPicture,Series,Venue");
 
 		public getCategoryName = (event: dc.ReleaseEventContract) => {
 

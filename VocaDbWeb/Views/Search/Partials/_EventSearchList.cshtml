@@ -35,6 +35,12 @@
 				<span class="sortDirection_down" data-bind="visible: sort() == 'SeriesName'"></span>
 			</a>
 		</th>
+		<th>
+			<a data-bind="click: function() { sort('VenueName') }" href="#">
+				@EventRes.Venue
+				<span class="sortDirection_down" data-bind="visible: sort() == 'VenueName'"></span>
+			</a>
+		</th>
 	</tr>
 	</thead>
 	<tbody data-bind="foreach: page">
@@ -65,6 +71,10 @@
 		</td>
 		<td>
 			<a data-bind="visible: $data.series, text: $data.series ? series.name : null, attr: { href: vdb.utils.EntryUrlMapper.details(@((int)EntryType.ReleaseEventSeries), $data.seriesId, $data.series ? series.urlSlug : null) }"></a>
+		</td>
+		<td>
+			<a data-bind="visible: $data.venue, text: $data.venue ? venue.name : null, attr: { href: vdb.utils.EntryUrlMapper.details(@((int)EntryType.Venue), $data.venue ? $data.venue.id : null) }"></a>
+			<span data-bind="visible: !$data.venue && $data.venueName, text: $data.venueName"></span>
 		</td>
 	</tr>
 	</tbody>
