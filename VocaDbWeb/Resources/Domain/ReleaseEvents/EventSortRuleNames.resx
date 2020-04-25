@@ -129,7 +129,7 @@
   <data name="SeriesName" xml:space="preserve">
     <value>Series</value>
   </data>
-  <data name="Venue" xml:space="preserve">
+  <data name="VenueName" xml:space="preserve">
     <value>Venue</value>
   </data>
 </root>

@@ -30,8 +30,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return query.OrderByName(languagePreference);
 				case EventSortRule.SeriesName:
 					return query.OrderBySeriesName(languagePreference);
-				case EventSortRule.Venue:
-					return query.OrderByVenue(languagePreference);
+				case EventSortRule.VenueName:
+					return query.OrderByVenueName(languagePreference);
 			}
 
 			return query;
@@ -78,7 +78,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IOrderedQueryable<ReleaseEvent> OrderByVenue(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference) {
+		public static IOrderedQueryable<ReleaseEvent> OrderByVenueName(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference) {
 
 			var ordered = languagePreference switch
 			{
@@ -167,7 +167,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		SeriesName,
 
-		Venue
+		VenueName
 
 	}
 

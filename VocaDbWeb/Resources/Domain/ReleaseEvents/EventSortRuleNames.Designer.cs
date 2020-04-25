@@ -99,9 +99,9 @@ namespace VocaDb.Web.Resources.Domain.ReleaseEvents {
         /// <summary>
         ///   Looks up a localized string similar to Venue.
         /// </summary>
-        public static string Venue {
+        public static string VenueName {
             get {
-                return ResourceManager.GetString("Venue", resourceCulture);
+                return ResourceManager.GetString("VenueName", resourceCulture);
             }
         }
     }
