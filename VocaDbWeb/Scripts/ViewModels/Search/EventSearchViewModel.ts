@@ -46,7 +46,7 @@ namespace vdb.viewModels.search {
 					afterDate: this.afterDate(),
 					beforeDate: this.beforeDate(),
 					status: status,
-					fields: "AdditionalNames,MainPicture,Series"
+					fields: "AdditionalNames,MainPicture,Series,Venue"
 				}, callback);
 
 			}

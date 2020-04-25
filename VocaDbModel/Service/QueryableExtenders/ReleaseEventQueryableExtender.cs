@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -30,6 +30,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 					return query.OrderByName(languagePreference);
 				case EventSortRule.SeriesName:
 					return query.OrderBySeriesName(languagePreference);
+				case EventSortRule.Venue:
+					return query.OrderByVenue(languagePreference);
 			}
 
 			return query;
@@ -73,6 +75,19 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			}
 
 			return ordered.ThenBy(e => e.SeriesNumber);
+
+		}
+
+		public static IOrderedQueryable<ReleaseEvent> OrderByVenue(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference) {
+
+			var ordered = languagePreference switch
+			{
+				ContentLanguagePreference.English => query.OrderBy(e => e.Venue.Names.SortNames.English),
+				ContentLanguagePreference.Romaji => query.OrderBy(e => e.Venue.Names.SortNames.Romaji),
+				_ => query.OrderBy(e => e.Venue.Names.SortNames.Japanese)
+			};
+
+			return ordered.ThenBy(e => e.VenueName);
 
 		}
 
@@ -150,7 +165,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		AdditionDate,
 
-		SeriesName
+		SeriesName,
+
+		Venue
 
 	}
 
