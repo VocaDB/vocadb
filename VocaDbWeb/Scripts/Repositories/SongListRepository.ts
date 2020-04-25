@@ -19,6 +19,7 @@ module vdb.repositories {
 			category: string,
 			paging: dc.PagingProperties,
 			tagIds: number[],
+			fields: string,
 			sort: string,
 			callback: (result: dc.PartialFindResultContract<dc.SongListContract>) => void) => {
 			
@@ -28,6 +29,7 @@ module vdb.repositories {
 				featuredCategory: category,
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				tagId: tagIds,
+				fields: fields,
 				sort: sort
 			}, callback);
 

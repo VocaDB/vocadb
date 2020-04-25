@@ -116,6 +116,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="sort">List sort rule. Possible values are Nothing, Date, CreateDate, Name.</param>
+		/// <param name="fields">List of optional fields (optional).</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of song lists.</returns>
 		[Route("featured")]
@@ -127,6 +128,7 @@ namespace VocaDb.Web.Controllers.Api {
 			SongListFeaturedCategory? featuredCategory = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongListSortRule sort = SongListSortRule.Name,
+			SongListOptionalFields fields = SongListOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
@@ -139,7 +141,7 @@ namespace VocaDb.Web.Controllers.Api {
 				ChildTags = childTags
 			};
 
-			return queries.Find(s => new SongListForApiContract(s, lang, userIconFactory, entryImagePersister, SongListOptionalFields.MainPicture), queryParams);
+			return queries.Find(s => new SongListForApiContract(s, lang, userIconFactory, entryImagePersister, fields), queryParams);
 
 		}
 
