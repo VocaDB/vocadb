@@ -20,6 +20,9 @@
 				<span class="sortDirection_down" data-bind="visible: sort() == 'Name'"></span>
 			</a>
 		</th>
+		<th data-bind="if: $parent.showTags">
+			@SharedRes.Tags
+		</th>
 		<th>
 			<a data-bind="click: function() { sort('Date') }" href="#">
 				@EventRes.OccurrenceDate
@@ -48,6 +51,14 @@
 				
 			<br />
 			<small class="extraInfo" data-bind="text: $parent.getCategoryName($data)"></small>
+		</td>
+		<td data-bind="if: $parents[1].showTags() && $data.tags" class="search-tags-column">
+			<div data-bind="visible: tags.length">
+				<i class="icon icon-tags"></i>
+				<!-- ko foreach: tags -->
+				<a href="#" data-bind="text: tag.name, click: function() { $parents[1].selectTag(tag); return false; }"></a><span data-bind="visible: $data != _.last($parent.tags)">,</span>
+				<!-- /ko -->
+			</div>
 		</td>
 		<td>
 			<span data-bind="visible: $data.date, text: $parent.formatDate($data.date)"></span>
