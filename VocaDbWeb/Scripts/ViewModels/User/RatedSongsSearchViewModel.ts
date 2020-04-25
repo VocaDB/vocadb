@@ -74,6 +74,11 @@ module vdb.viewModels.user {
 		public rating = ko.observable("Nothing");
 		public resources = ko.observable<any>();
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
+
+		public selectTag = (tag: dc.TagBaseContract) => {
+			this.tagFilters.tags([viewModels.search.TagFilter.fromContract(tag)]);
+		}
+
 		public showTags = ko.observable(false);
 		public songListId = ko.observable<number>(undefined);
 		public songLists = ko.observableArray<dc.SongListBaseContract>([]);

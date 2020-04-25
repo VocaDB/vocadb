@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -31,7 +31,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 			return context.RunTest(repository => {
 
 				var queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), new InMemoryImagePersister(), new InMemoryImagePersister(),
-					new FakeUserIconFactory(), new EnumTranslations());
+					new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());
 
 				queries.Merge(sourceId, targetId);
 
@@ -50,7 +50,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 			return context.RunTest(repository => {
 
 				var queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), new InMemoryImagePersister(), new InMemoryImagePersister(),
-					new FakeUserIconFactory(), new EnumTranslations());
+					new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());
 
 				var updated = queries.Update(contract, null);
 

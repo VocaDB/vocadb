@@ -217,7 +217,7 @@
     <value>If the PV is deleted or hidden by the author and thus unplayable, it should be marked as "Unavailable" here.</value>
   </data>
   <data name="PvSupportedServices" xml:space="preserve">
-    <value>Supported services: YouTube, NicoNico, Vimeo, SoundCloud, Piapro, Bilibili and Creofuga.</value>
+    <value>Supported services: YouTube, NicoNico, Vimeo, SoundCloud, Piapro, Bilibili, Creofuga and Bandcamp (tracks only).</value>
   </data>
   <data name="PvType" xml:space="preserve">
     <value>Type</value>

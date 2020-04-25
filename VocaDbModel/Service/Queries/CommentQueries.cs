@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -8,6 +9,7 @@ using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Queries {
 
@@ -21,7 +23,11 @@ namespace VocaDb.Model.Service.Queries {
 
 		int GetCount(int entryId);
 
+		Task<int> GetCountAsync(int entryId);
+
 		CommentForApiContract[] GetList(int entryId, int count);
+
+		Task<CommentForApiContract[]> GetListAsync(int entryId, int count);
 
 		void Update(int commentId, IComment contract);
 
@@ -108,6 +114,10 @@ namespace VocaDb.Model.Service.Queries {
 			return ctx.Query<T>().Count(c => c.EntryForComment.Id == entryId);
 		}
 
+		public async Task<int> GetCountAsync(int entryId) {
+			return await ctx.Query<T>().Where(c => c.EntryForComment.Id == entryId).VdbCountAsync();
+		}
+
 		public CommentForApiContract[] GetList(int entryId, int count) {
 
 			return ctx.Query<T>().Where(c => c.EntryForComment.Id == entryId)
@@ -116,6 +126,19 @@ namespace VocaDb.Model.Service.Queries {
 				.ToArray();
 
         }
+
+		public async Task<CommentForApiContract[]> GetListAsync(int entryId, int count) {
+
+			var comments = await ctx.Query<T>()
+				.Where(c => c.EntryForComment.Id == entryId)
+				.OrderByDescending(c => c.Created).Take(count)
+				.VdbToListAsync();
+
+			return comments
+				.Select(c => new CommentForApiContract(c, userIconFactory))
+				.ToArray();
+
+		}
 
 		public void Update(int commentId, IComment contract) {
 

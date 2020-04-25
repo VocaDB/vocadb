@@ -1,17 +1,7 @@
-using System.Collections.Generic;
 using System.Linq;
-using VocaDb.Model.DataContracts.Albums;
-using VocaDb.Model.DataContracts.Artists;
-using VocaDb.Model.DataContracts.ReleaseEvents;
-using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Images;
-using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.Tags {
 
@@ -24,23 +14,12 @@ namespace VocaDb.Model.DataContracts.Tags {
 		public TagDetailsContract() { }
 
 		public TagDetailsContract(Tag tag, 
-			IEnumerable<Artist> artists, int artistCount, IEnumerable<Album> albums, int albumCount,
-			IEnumerable<SongList> songLists, int songListCount,
-			IEnumerable<Song> songs, int songCount,
-			IEnumerable<ReleaseEventSeries> eventSeries, int eventSeriesCount,
-			IEnumerable<ReleaseEvent> events, int eventCount, 
-			ContentLanguagePreference languagePreference,
-			IAggregatedEntryImageUrlFactory thumbStore)
+			TagStatsContract stats,
+			ContentLanguagePreference languagePreference)
 			: base(tag, languagePreference) {
 
 			AdditionalNames = tag.Names.AdditionalNamesString;
 			Translations = tag.Names.GetTranslationsString(languagePreference);
-
-			Albums = albums.Select(a => new AlbumContract(a, languagePreference)).ToArray();
-			AlbumCount = albumCount;
-
-			Artists = artists.Select(a => new ArtistContract(a, languagePreference)).ToArray();
-			ArtistCount = artistCount;
 
 			Description = tag.Description;
 			RelatedTags = tag.RelatedTags
@@ -54,52 +33,26 @@ namespace VocaDb.Model.DataContracts.Tags {
 				.OrderBy(t => t.Name)
 				.ToArray();
 
-			EventSeries = eventSeries.Select(a => new ReleaseEventSeriesContract(a, languagePreference, false)).ToArray();
-			EventSeriesCount = eventSeriesCount;
-
-			Events = events.Select(a => new ReleaseEventForApiContract(a, languagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Venue, thumbStore)).ToArray();
-			EventCount = eventCount;
-
 			Siblings = tag.Siblings
 				.Select(a => new TagBaseContract(a, languagePreference))
 				.OrderBy(t => t.Name)
 				.ToArray();
 
-			SongLists = songLists.Select(a => new SongListBaseContract(a)).ToArray();
-			SongListCount = songListCount;
-
-			Songs = songs.Select(a => new SongForApiContract(a, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
-			SongCount = songCount;
-
 			Thumb = (tag.Thumb != null ? new EntryThumbContract(tag.Thumb) : null);
 			WebLinks = tag.WebLinks.Links.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 			MappedNicoTags = tag.Mappings.Select(t => t.SourceTag).ToArray();
 
+			Stats = stats;
+
 		}
 
-		public int AlbumCount { get; set; }
-
-		public int AllUsageCount => ArtistCount + AlbumCount + SongCount + EventCount + SongListCount;
-
-		public int ArtistCount { get; set; }
-
-		public AlbumContract[] Albums { get; set; }
-
-		public ArtistContract[] Artists { get; set; }
+		public int AllUsageCount => Stats.ArtistCount + Stats.AlbumCount + Stats.SongCount + Stats.EventCount + Stats.SongListCount;
 
 		public TagBaseContract[] Children { get; set; }
 
 		public int CommentCount { get; set; }
 
 		public new EnglishTranslatedString Description { get; set; }
-
-		public int EventCount { get; set; }
-
-		public int EventSeriesCount { get; set; }
-
-		public ReleaseEventForApiContract[] Events { get; set; }
-
-		public ReleaseEventSeriesContract[] EventSeries { get; set; }
 
 		public int FollowerCount { get; set; }
 
@@ -115,13 +68,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagBaseContract[] Siblings { get; set; }
 
-		public int SongListCount { get; set; }
-
-		public SongListBaseContract[] SongLists { get; set; }
-
-		public SongForApiContract[] Songs { get; set; }
-
-		public int SongCount { get; set; }
+		public TagStatsContract Stats { get; set; }
 
 		public EntryThumbContract Thumb { get; set; }
 
