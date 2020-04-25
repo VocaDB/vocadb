@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -106,7 +107,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetDetails_RecentEvents() {
+		public async Task GetDetails_RecentEvents() {
 			
 			void AssertContainsEvent(TagDetailsContract details, ReleaseEvent releaseEvent) {
 				Assert.IsTrue(details.Stats.Events.Any(e => e.Id == releaseEvent.Id), "Contains " + releaseEvent);
@@ -126,7 +127,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Save(eventSeries);
 			repository.Save(CreateTagUsage(tag, standaloneEvent), CreateTagUsage(tag, oldSeriesEvent), CreateTagUsage(tag, recentSeriesEvent));
 
-			var result = queries.GetDetailsAsync(tag.Id);
+			var result = await queries.GetDetailsAsync(tag.Id);
 
 			Assert.AreEqual(2, result.Stats.EventCount, "EventCount");
 			Assert.AreEqual(2, result.Stats.Events.Length, "Events.Length");

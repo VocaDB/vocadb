@@ -416,7 +416,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var entryTypeMapping = await ctx.Query<EntryTypeToTagMapping>().Where(etm => etm.Tag == tag).VdbFirstOrDefaultAsync();
 				var commentCount = await Comments(ctx).GetCountAsync(tag.Id);
-				var isFollowing = permissionContext.IsLoggedIn && (await ctx.Query<TagForUser>().AnyAsync(t => t.Tag.Id == tagId && t.User.Id == permissionContext.LoggedUserId));
+				var isFollowing = permissionContext.IsLoggedIn && (await ctx.Query<TagForUser>().Where(t => t.Tag.Id == tagId && t.User.Id == permissionContext.LoggedUserId).VdbAnyAsync());
 
 				return new TagDetailsContract(tag,
 					stats,
