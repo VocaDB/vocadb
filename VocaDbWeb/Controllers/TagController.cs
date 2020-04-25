@@ -122,7 +122,7 @@ namespace VocaDb.Web.Controllers {
 				return RedirectToActionPermanent("DetailsById", new { id, slug = tagName });
 			}
 
-			var contract = await queries.GetDetails(id);
+			var contract = await queries.GetDetailsAsync(id);
 
 			var prop = PageProperties;
 

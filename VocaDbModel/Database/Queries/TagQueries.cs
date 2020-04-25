@@ -53,13 +53,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		private class TagTopUsagesAndCount<T> {
 
-			public T[] TopUsages { get; set; }
+			public IReadOnlyCollection<T> TopUsages { get; set; }
 
 			public int TotalCount { get; set; }
 
 		}
 
-		private TagTopUsagesAndCount<TEntry> GetTopUsagesAndCount<TUsage, TEntry, TSort>(
+		private async Task<TagTopUsagesAndCount<TEntry>> GetTopUsagesAndCountAsync<TUsage, TEntry, TSort>(
 			IDatabaseContext<Tag> ctx, int tagId, 
 			Expression<Func<TUsage, bool>> whereExpression, 
 			Expression<Func<TUsage, TSort>> createDateExpression,
@@ -70,14 +70,14 @@ namespace VocaDb.Model.Database.Queries {
 			var q = TagUsagesQuery<TUsage>(ctx, tagId)
 				.Where(whereExpression);
 
-			var topUsages = q
+			var topUsages = await q
 				.OrderByDescending(t => t.Count)
 				.ThenByDescending(createDateExpression)
 				.Select(selectExpression)
 				.Take(maxCount)
-				.ToArray();
+				.VdbToListAsync();
 
-			var usageCount = q.Count();
+			var usageCount = await q.VdbCountAsync();
 
 			return new TagTopUsagesAndCount<TEntry> {
 				TopUsages = topUsages, TotalCount = usageCount
@@ -85,7 +85,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private TagTopUsagesAndCount<TEntry> GetTopUsagesAndCount<TUsage, TEntry, TSort, TSubType>(
+		private async Task<TagTopUsagesAndCount<TEntry>> GetTopUsagesAndCountAsync<TUsage, TEntry, TSort, TSubType>(
 			IDatabaseContext<Tag> ctx, int tagId, 
 			EntryType entryType,
 			Func<IQueryable<TEntry>, EntryTypeAndTagCollection<TSubType>, IQueryable<TEntry>> whereExpression, 
@@ -101,16 +101,16 @@ namespace VocaDb.Model.Database.Queries {
 
 			q = whereExpression(q, typeAndTag);
 
-			TEntry[] topUsages;
+			IReadOnlyCollection<TEntry> topUsages;
 			int usageCount;
 
 			try {
-				topUsages = q
+				topUsages = await q
 					.OrderByTagUsage<TEntry, TUsage>(tagId)
 					.Take(maxCount)
-					.ToArray();
+					.VdbToListAsync();
 
-				usageCount = q.Count();
+				usageCount = await q.VdbCountAsync();
 			} catch (SqlException x) {
 				log.Warn(x, "Unable to get tag usages");
 				topUsages = new TEntry[0];
@@ -373,22 +373,22 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private TagStatsContract GetStats(IDatabaseContext<Tag> ctx, int tagId) {
+		private async Task<TagStatsContract> GetStatsAsync(IDatabaseContext<Tag> ctx, int tagId) {
 
 			var key = string.Format("TagQueries.GetStats.{0}.{1}", tagId, LanguagePreference);
-			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () => {
+			return await cache.GetOrInsertAsync(key, CachePolicy.AbsoluteExpiration(1), async () => {
 
-				var artists = GetTopUsagesAndCount<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
-				var albums = GetTopUsagesAndCount<AlbumTagUsage, Album, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingTotal, t => t.Entry);
-				var songLists = GetTopUsagesAndCount<SongListTagUsage, SongList, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
-				var songs = GetTopUsagesAndCount<SongTagUsage, Song, int, SongType>(ctx, tagId, EntryType.Song, (query, etm) => query.WhereHasTypeOrTag(etm));
-				var eventSeries = GetTopUsagesAndCount<EventSeriesTagUsage, ReleaseEventSeries, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry, maxCount: 6);
+				var artists = await GetTopUsagesAndCountAsync<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
+				var albums = await GetTopUsagesAndCountAsync<AlbumTagUsage, Album, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingTotal, t => t.Entry);
+				var songLists = await GetTopUsagesAndCountAsync<SongListTagUsage, SongList, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
+				var songs = await GetTopUsagesAndCountAsync<SongTagUsage, Song, int, SongType>(ctx, tagId, EntryType.Song, (query, etm) => query.WhereHasTypeOrTag(etm));
+				var eventSeries = await GetTopUsagesAndCountAsync<EventSeriesTagUsage, ReleaseEventSeries, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry, maxCount: 6);
 				var seriesIds = eventSeries.TopUsages.Select(e => e.Id).ToArray();
 
 				var eventDateCutoff = DateTime.Now.AddDays(-7);
-				var events = GetTopUsagesAndCount<EventTagUsage, ReleaseEvent, int>(ctx, tagId, t => !t.Entry.Deleted
+				var events = await GetTopUsagesAndCountAsync<EventTagUsage, ReleaseEvent, int>(ctx, tagId, t => !t.Entry.Deleted
 					&& (t.Entry.Series == null || (t.Entry.Date.DateTime != null && t.Entry.Date.DateTime >= eventDateCutoff) || !seriesIds.Contains(t.Entry.Series.Id)), t => t.Entry.Id, t => t.Entry, maxCount: 6);
-				var followerCount = ctx.Query<TagForUser>().Count(t => t.Tag.Id == tagId);
+				var followerCount = await ctx.Query<TagForUser>().Where(t => t.Tag.Id == tagId).VdbCountAsync();
 
 				var stats = new TagStatsContract(LanguagePreference, thumbStore, 
 					artists.TopUsages, artists.TotalCount,
@@ -405,12 +405,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public async Task<TagDetailsContract> GetDetails(int tagId) {
+		public async Task<TagDetailsContract> GetDetailsAsync(int tagId) {
 
 			return await repository.HandleQueryAsync(async ctx => {
 
 				var tag = await ctx.LoadAsync(tagId);
-				var stats = GetStats(ctx, tagId);
+				var stats = await GetStatsAsync(ctx, tagId);
 
 				var latestComments = await Comments(ctx).GetListAsync(tagId, 3);
 
@@ -420,7 +420,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				return new TagDetailsContract(tag,
 					stats,
-					PermissionContext.LanguagePreference) {
+					LanguagePreference) {
 					CommentCount = commentCount,
 					LatestComments = latestComments,
 					IsFollowing = isFollowing,

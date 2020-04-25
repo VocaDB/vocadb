@@ -126,7 +126,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Save(eventSeries);
 			repository.Save(CreateTagUsage(tag, standaloneEvent), CreateTagUsage(tag, oldSeriesEvent), CreateTagUsage(tag, recentSeriesEvent));
 
-			var result = queries.GetDetails(tag.Id);
+			var result = queries.GetDetailsAsync(tag.Id);
 
 			Assert.AreEqual(2, result.Stats.EventCount, "EventCount");
 			Assert.AreEqual(2, result.Stats.Events.Length, "Events.Length");
