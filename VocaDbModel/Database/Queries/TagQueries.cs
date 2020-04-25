@@ -4,7 +4,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Caching;
+using System.Threading.Tasks;
 using System.Xml.Linq;
+using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
@@ -143,9 +145,7 @@ namespace VocaDb.Model.Database.Queries {
 		/// Assumes the tag exists - throws an exception if it doesn't.
 		/// </summary>
 		private Tag LoadTagById(IDatabaseContext<Tag> ctx, int tagId) {
-
 			return ctx.Load(tagId);
-
 		}
 
 		private void CreateTrashedEntry(IDatabaseContext<Tag> ctx, Tag tag, string notes) {
@@ -405,23 +405,25 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagDetailsContract GetDetails(int tagId) {
+		public async Task<TagDetailsContract> GetDetails(int tagId) {
 
-			return HandleQuery(ctx => {
+			return await repository.HandleQueryAsync(async ctx => {
 
-				var tag = LoadTagById(ctx, tagId);
+				var tag = await ctx.LoadAsync(tagId);
 				var stats = GetStats(ctx, tagId);
 
-				var latestComments = Comments(ctx).GetList(tagId, 3);
+				var latestComments = await Comments(ctx).GetListAsync(tagId, 3);
 
-				var entryTypeMapping = ctx.Query<EntryTypeToTagMapping>().FirstOrDefault(etm => etm.Tag == tag);
+				var entryTypeMapping = await ctx.Query<EntryTypeToTagMapping>().Where(etm => etm.Tag == tag).VdbFirstOrDefaultAsync();
+				var commentCount = await Comments(ctx).GetCountAsync(tag.Id);
+				var isFollowing = permissionContext.IsLoggedIn && (await ctx.Query<TagForUser>().AnyAsync(t => t.Tag.Id == tagId && t.User.Id == permissionContext.LoggedUserId));
 
 				return new TagDetailsContract(tag,
 					stats,
 					PermissionContext.LanguagePreference) {
-					CommentCount = Comments(ctx).GetCount(tag.Id),
+					CommentCount = commentCount,
 					LatestComments = latestComments,
-					IsFollowing = permissionContext.IsLoggedIn && ctx.Query<TagForUser>().Any(t => t.Tag.Id == tagId && t.User.Id == permissionContext.LoggedUserId),
+					IsFollowing = isFollowing,
 					RelatedEntryType = entryTypeMapping?.EntryTypeAndSubType ?? new EntryTypeAndSubType()
 				};
 				
@@ -587,9 +589,14 @@ namespace VocaDb.Model.Database.Queries {
 		/// Loads a tag assuming that the tag exists - throws an exception if it doesn't.
 		/// </summary>
 		public T LoadTag<T>(int id, Func<Tag, T> fac) {
-
 			return HandleQuery(ctx => fac(LoadTagById(ctx, id)));
+		}
 
+		public async Task<T> LoadTagAsync<T>(int id, Func<Tag, T> fac) {
+			return await repository.HandleQueryAsync(async ctx => {
+				var tag = await ctx.LoadAsync(id);
+				return fac(tag);
+			});
 		}
 
 		private void MergeTagUsages(Tag source, Tag target) {
