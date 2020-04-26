@@ -57,9 +57,16 @@ import TagRepository from '../../Repositories/TagRepository';
 			super(resourceRepo, tagRepo, languageSelection, cultureCode, tagIds, category === "Concerts" || category === "VocaloidRanking");
 
 		}
-
+		
 		public loadMoreItems = (callback: (result: PartialFindResultContract<SongListContract>) => void) => {
-			this.listRepo.getFeatured(this.query(), this.category, { start: this.start, maxEntries: 50, getTotalCount: true }, this.tagFilters.tagIds(), this.sort(), callback);
+			this.listRepo.getFeatured(
+				this.query(),
+				this.category,
+				{ start: this.start, maxEntries: 50, getTotalCount: true },
+				this.tagFilters.tagIds(),
+				this.fields(),
+				this.sort(),
+				callback);
 		};
 
 	}

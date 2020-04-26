@@ -193,9 +193,16 @@ import UserRepository from '../../Repositories/UserRepository';
 			cultureCode: string) {
 			super(resourceRepo, tagRepo, languageSelection, cultureCode, [], true);
 		}
-
+		
 		public loadMoreItems = (callback) => {
-			this.userRepo.getSongLists(this.userId, this.query(), { start: this.start, maxEntries: 50, getTotalCount: true }, this.tagFilters.tagIds(), this.sort(), 'MainPicture', callback);
+			this.userRepo.getSongLists(
+				this.userId,
+				this.query(),
+				{ start: this.start, maxEntries: 50, getTotalCount: true },
+				this.tagFilters.tagIds(),
+				this.sort(),
+				this.fields(),
+				callback);
 		}
 
 	}
