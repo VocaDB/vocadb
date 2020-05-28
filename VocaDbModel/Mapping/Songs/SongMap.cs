@@ -45,7 +45,7 @@ namespace VocaDb.Model.Mapping.Songs {
 			});
 
 			Component(m => m.Notes, c => {
-				c.Map(m => m.Original).Column("Notes").Not.Nullable().Length(2000);
+				c.Map(m => m.Original).Column("Notes").Not.Nullable().Length(int.MaxValue);
 				c.Map(m => m.English).Column("NotesEng").Not.Nullable().Length(int.MaxValue);
 			});
 

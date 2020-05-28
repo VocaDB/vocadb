@@ -5,6 +5,19 @@ namespace VocaDb.Migrations {
 
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2020_05_28_2100)]
+	public class SongNotesLength : Migration {
+		public override void Up() {
+			Delete.DefaultConstraint().OnTable(TableNames.Songs).OnColumn("Notes");
+			Alter.Table(TableNames.Songs).AlterColumn("Notes").AsString(int.MaxValue).NotNullable().WithDefaultValue("");
+		}
+
+		public override void Down() {
+			Delete.DefaultConstraint().OnTable(TableNames.Songs).OnColumn("Notes");
+			Alter.Table(TableNames.Songs).AlterColumn("Notes").AsString(2000).NotNullable().WithDefaultValue("");
+		}
+	}
+
 	[Migration(2020_03_30_2300)]
 	public class UserNormalizedEmail : AutoReversingMigration {
 
