@@ -198,6 +198,8 @@ namespace VocaDb.Model.Service.Helpers {
 
 			}
 
+			log.Info($"Sent notifications to {users.Length} users");
+
 			return users;
 
 		}
@@ -289,6 +291,8 @@ namespace VocaDb.Model.Service.Helpers {
 				}
 
 			}
+
+			log.Info($"Sent notifications to {users.Count} users");
 
 			return users;
 
