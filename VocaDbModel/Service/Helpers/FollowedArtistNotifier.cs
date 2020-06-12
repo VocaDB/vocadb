@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using NHibernate.Exceptions;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
@@ -79,6 +81,17 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="artists">List of artists for the entry. Cannot be null.</param>
 		/// <param name="creator">User who created the entry. The creator will be excluded from all notifications. Cannot be null.</param>
 		public User[] SendNotifications(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator) {
+
+			try {
+				return DoSendNotifications(ctx, entry, artists, creator);
+			} catch (GenericADOException x) {
+				log.Error("Unable to send notifications", x);
+				return new User[0];
+			}
+
+		}
+
+		private User[] DoSendNotifications(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator) {
 
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => entry);
