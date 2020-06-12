@@ -8,6 +8,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Service.Helpers {
@@ -110,9 +111,8 @@ namespace VocaDb.Model.Service.Helpers {
 				.Query()
 				.Where(afu => 
 					artistIds.Contains(afu.Artist.Id) 
-					&& afu.User.Id != creator.Id && afu.User.Active
-					&& afu.SiteNotifications
-					&& afu.User.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < afu.User.Options.UnreadNotificationsToKeep)
+					&& afu.User.Id != creator.Id
+					&& afu.SiteNotifications)
 				.Select(afu => new {
 					UserId = afu.User.Id, 
 					ArtistId = afu.Artist.Id
@@ -129,7 +129,11 @@ namespace VocaDb.Model.Service.Helpers {
 				return new User[0];
 
 			var entryTypeNames = enumTranslations.Translations<EntryType>();
-			var users = ctx.OfType<User>().Query().Where(u => userIds.Contains(u.Id)).ToArray();
+			var users = ctx.Query<User>()
+				.WhereNotDeleted()
+				.WhereIdIn(userIds)
+				.Where(u => u.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < u.Options.UnreadNotificationsToKeep)
+				.ToArray();
 
 			foreach (var user in users) {
 
