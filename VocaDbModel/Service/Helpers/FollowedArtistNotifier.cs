@@ -86,7 +86,7 @@ namespace VocaDb.Model.Service.Helpers {
 			try {
 				return DoSendNotifications(ctx, entry, artists, creator);
 			} catch (GenericADOException x) {
-				log.Error("Unable to send notifications", x);
+				log.Error(x, "Unable to send notifications");
 				return new User[0];
 			}
 

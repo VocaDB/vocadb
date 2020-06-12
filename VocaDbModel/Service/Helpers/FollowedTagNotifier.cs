@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
+using NHibernate.Exceptions;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Service.Helpers {
@@ -59,6 +61,18 @@ namespace VocaDb.Model.Service.Helpers {
 			IEnumerable<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
 			IEnumTranslations enumTranslations) {
 
+			try {
+				DoSendNotifications(ctx, entry, tags, ignoreUsers, entryLinkFactory, enumTranslations);
+			} catch (GenericADOException x) {
+				log.Error(x, "Unable to send notifications");
+			}
+
+		}
+
+		private void DoSendNotifications(IDatabaseContext ctx, IEntryWithNames entry,
+			IEnumerable<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
+			IEnumTranslations enumTranslations) {
+
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => entry);
 			ParamIs.NotNull(() => tags);
@@ -74,10 +88,7 @@ namespace VocaDb.Model.Service.Helpers {
 			var usersWithTags = ctx.OfType<TagForUser>()
 				.Query()
 				.Where(afu =>
-					tagIds.Contains(afu.Tag.Id)
-					&& afu.User.Active
-					&& !ignoreUsers.Contains(afu.User.Id)
-					&& afu.User.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < afu.User.Options.UnreadNotificationsToKeep)
+					tagIds.Contains(afu.Tag.Id))
 				.Select(afu => new {
 					UserId = afu.User.Id,
 					TagId = afu.Tag.Id
@@ -86,15 +97,19 @@ namespace VocaDb.Model.Service.Helpers {
 				.GroupBy(afu => afu.UserId)
 				.ToDictionary(afu => afu.Key, afu => afu.Select(a => a.TagId));
 
-			var userIds = usersWithTags.Keys;
+			var userIds = usersWithTags.Keys.Except(ignoreUsers).ToArray();
 
-			log.Debug("Found {0} users subscribed to tags", userIds.Count);
+			log.Debug("Found {0} users subscribed to tags", userIds.Length);
 
 			if (!userIds.Any())
 				return;
 
 			var entryTypeNames = enumTranslations.Translations<EntryType>();
-			var users = ctx.OfType<User>().Query().Where(u => userIds.Contains(u.Id)).ToArray();
+			var users = ctx.Query<User>()
+				.WhereIsActive()
+				.WhereIdIn(userIds)
+				.Where(u => u.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < u.Options.UnreadNotificationsToKeep)
+				.ToArray();
 
 			foreach (var user in users) {
 
