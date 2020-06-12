@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Search;
 
@@ -25,6 +25,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			return query;
 
 		}
+
+		public static IQueryable<User> WhereIsActive(this IQueryable<User> query) => query.Where(u => u.Active);
 
 		public static IQueryable<User> WhereKnowsLanguage(this IQueryable<User> query, string langCode) {
 
