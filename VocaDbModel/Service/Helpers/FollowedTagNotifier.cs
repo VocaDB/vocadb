@@ -140,6 +140,8 @@ namespace VocaDb.Model.Service.Helpers {
 
 			}
 
+			log.Info($"Sent notifications to {users.Length} users");
+
 		}
 
 	}
