@@ -130,7 +130,7 @@ namespace VocaDb.Model.Service.Helpers {
 
 			var entryTypeNames = enumTranslations.Translations<EntryType>();
 			var users = ctx.Query<User>()
-				.WhereNotDeleted()
+				.WhereIsActive()
 				.WhereIdIn(userIds)
 				.Where(u => u.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < u.Options.UnreadNotificationsToKeep)
 				.ToArray();
