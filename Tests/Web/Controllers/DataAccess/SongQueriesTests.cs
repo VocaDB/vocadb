@@ -805,7 +805,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Revert() {
+		public async Task Revert() {
 
 			user.GroupId = UserGroupId.Moderator;
 			permissionContext.RefreshLoggedUser(repository);
@@ -813,12 +813,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				return new SongForEditContract(song, ContentLanguagePreference.English);
 			}
 
-			queries.UpdateBasicProperties(Contract());
+			await queries.UpdateBasicProperties(Contract());
 
 			// Remove all artists
 			var contract = Contract();
 			contract.Artists = new ArtistForSongContract[0];
-			queries.UpdateBasicProperties(contract);
+			await queries.UpdateBasicProperties(contract);
 
 			var latestVersionBeforeRevert = song.ArchivedVersionsManager.GetLatestVersion();
 			Assert.IsNotNull(latestVersionBeforeRevert, "latestVersion");
@@ -837,13 +837,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Names() {
+		public async Task Update_Names() {
 			
 			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
 			contract.Names.First().Value = "Replaced name";
 			contract.UpdateNotes = "Updated song";
 
-			contract = queries.UpdateBasicProperties(contract);
+			contract = await queries.UpdateBasicProperties(contract);
 
 			var songFromRepo = repository.Load(contract.Id);
 			Assert.AreEqual("Replaced name", songFromRepo.DefaultName);
@@ -867,7 +867,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Artists() {
+		public async Task Update_Artists() {
 			
 			var newSong = CreateEntry.Song(name: "Anger");
 
@@ -883,7 +883,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				CreateArtistForSongContract(artistName: "Goomeh", roles: ArtistRoles.Vocalist),
 			};
 
-			contract = queries.UpdateBasicProperties(contract);
+			contract = await queries.UpdateBasicProperties(contract);
 
 			var songFromRepo = repository.Load(contract.Id);
 
@@ -901,7 +901,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Artists_Notify() {
+		public async Task Update_Artists_Notify() {
 			
 			repository.Save(user2.AddArtist(vocalist2));
 			repository.Save(vocalist2);
@@ -909,7 +909,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
 			contract.Artists = contract.Artists.Concat(new [] { CreateArtistForSongContract(vocalist2.Id)}).ToArray();
 
-			queries.UpdateBasicProperties(contract);
+			await queries.UpdateBasicProperties(contract);
 
 			var notification = repository.List<UserMessage>().FirstOrDefault();
 
@@ -919,7 +919,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Artists_RemoveDeleted() {
+		public async Task Update_Artists_RemoveDeleted() {
 			
 			repository.Save(vocalist2);
 			repository.Save(song.AddArtist(vocalist2));
@@ -927,21 +927,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
 
-			queries.UpdateBasicProperties(contract);
+			await queries.UpdateBasicProperties(contract);
 
 			Assert.IsFalse(song.AllArtists.Any(a => Equals(vocalist2, a.Artist)), "vocalist2 was removed from song");
 
 		}
 
 		[TestMethod]
-		public void Update_Lyrics() {
+		public async Task Update_Lyrics() {
 
 			var contract = EditContract();
 			contract.Lyrics = new[] {
 				CreateEntry.LyricsForSongContract(cultureCode: OptionalCultureCode.LanguageCode_English, translationType: TranslationType.Original)
 			};
 
-			queries.UpdateBasicProperties(contract);
+			await queries.UpdateBasicProperties(contract);
 
 			Assert.AreEqual(1, song.Lyrics.Count, "Lyrics were added");
 			var lyrics = song.Lyrics.First();
@@ -950,7 +950,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_PublishDate_From_PVs() {
+		public async Task Update_PublishDate_From_PVs() {
 			
 			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
 			contract.PVs = new[] {
@@ -958,7 +958,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				CreateEntry.PVContract(id: 2, pvId: "mikumikumiku", pvType: PVType.Original, publishDate: new DateTime(2015, 4, 9, 16, 0, 0))
 			};
 
-			contract = queries.UpdateBasicProperties(contract);
+			contract = await queries.UpdateBasicProperties(contract);
 
 			var songFromRepo = repository.Load(contract.Id);
 			Assert.AreEqual(2, songFromRepo.PVs.PVs.Count, "Number of PVs");
@@ -967,14 +967,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Weblinks() {
+		public async Task Update_Weblinks() {
 
 			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
 			contract.WebLinks = new[] {
 				new WebLinkContract("http://vocadb.net", "VocaDB", WebLinkCategory.Reference)
 			};
 
-			contract = queries.UpdateBasicProperties(contract);
+			contract = await queries.UpdateBasicProperties(contract);
 			var songFromRepo = repository.Load(contract.Id);
 			Assert.AreEqual(1, songFromRepo.WebLinks.Count, "Number of weblinks");
 			Assert.AreEqual("http://vocadb.net", songFromRepo.WebLinks[0].Url, "Weblink URL");
@@ -982,14 +982,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Weblinks_SkipWhitespace() {
+		public async Task Update_Weblinks_SkipWhitespace() {
 
 			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
 			contract.WebLinks = new[] {
 				new WebLinkContract(" ", "VocaDB", WebLinkCategory.Reference)
 			};
 
-			contract = queries.UpdateBasicProperties(contract);
+			contract = await queries.UpdateBasicProperties(contract);
 			var songFromRepo = repository.Load(contract.Id);
 			Assert.AreEqual(0, songFromRepo.WebLinks.Count, "Number of weblinks");
 
@@ -999,12 +999,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// User has selected the event
 		/// </summary>
 		[TestMethod]
-		public void Update_ReleaseEvent_ExistingEvent_Selected() {
+		public async Task Update_ReleaseEvent_ExistingEvent_Selected() {
 
 			var contract = EditContract();
 			contract.ReleaseEvent = new ReleaseEventContract(releaseEvent, ContentLanguagePreference.English);
 
-			queries.UpdateBasicProperties(contract);
+			await queries.UpdateBasicProperties(contract);
 
 			Assert.AreSame(releaseEvent, song.ReleaseEvent, "ReleaseEvent");
 
@@ -1014,24 +1014,24 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// User typed an event name, and there's a name match
 		/// </summary>
 		[TestMethod]
-		public void Update_ReleaseEvent_ExistingEvent_MatchByName() {
+		public async Task Update_ReleaseEvent_ExistingEvent_MatchByName() {
 
 			var contract = EditContract();
 			contract.ReleaseEvent = new ReleaseEventContract { Name = releaseEvent.DefaultName };
 
-			queries.UpdateBasicProperties(contract);
+			await queries.UpdateBasicProperties(contract);
 
 			Assert.AreSame(releaseEvent, song.ReleaseEvent, "ReleaseEvent");
 
 		}
 
 		[TestMethod]
-		public void Update_ReleaseEvent_NewEvent_Standalone() {
+		public async Task Update_ReleaseEvent_NewEvent_Standalone() {
 
 			var contract = EditContract();
 			contract.ReleaseEvent = new ReleaseEventContract { Name = "Comiket 40" };
 
-			queries.UpdateBasicProperties(contract);
+			await queries.UpdateBasicProperties(contract);
 
 			Assert.IsNotNull(song.ReleaseEvent, "ReleaseEvent");
 			Assert.AreSame("Comiket 40", song.ReleaseEvent.DefaultName, "ReleaseEvent.Name");
@@ -1041,13 +1041,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_ReleaseEvent_NewEvent_SeriesEvent() {
+		public async Task Update_ReleaseEvent_NewEvent_SeriesEvent() {
 
 			var series = repository.Save(CreateEntry.EventSeries("Comiket"));
 			var contract = EditContract();
 			contract.ReleaseEvent = new ReleaseEventContract { Name = "Comiket 40" };
 
-			queries.UpdateBasicProperties(contract);
+			await queries.UpdateBasicProperties(contract);
 
 			Assert.IsNotNull(song.ReleaseEvent, "ReleaseEvent");
 			Assert.AreEqual(series, song.ReleaseEvent.Series, "Series");
@@ -1056,7 +1056,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_SendNotificationsForNewPVs() {
+		public async Task Update_SendNotificationsForNewPVs() {
 
 			song.PVs.PVs.Clear();
 			song.CreateDate = DateTime.Now - TimeSpan.FromDays(30);
@@ -1064,7 +1064,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var contract = EditContract();
 			contract.PVs = new[] { CreateEntry.PVContract(pvType: PVType.Original) };
 
-			queries.UpdateBasicProperties(contract);
+			await queries.UpdateBasicProperties(contract);
 
 			var notifications = repository.List<UserMessage>();
 			Assert.AreEqual(1, notifications.Count, "Notification was sent");
@@ -1074,7 +1074,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_DoNotSendNotificationsForReprints() {
+		public async Task Update_DoNotSendNotificationsForReprints() {
 
 			song.PVs.PVs.Clear();
 			song.CreateDate = DateTime.Now - TimeSpan.FromDays(30);
@@ -1082,7 +1082,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var contract = EditContract();
 			contract.PVs = new[] { CreateEntry.PVContract(pvType: PVType.Reprint) };
 
-			queries.UpdateBasicProperties(contract);
+			await queries.UpdateBasicProperties(contract);
 
 			Assert.AreEqual(0, repository.Count<UserMessage>(), "No notification was sent");
 

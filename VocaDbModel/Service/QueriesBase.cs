@@ -215,6 +215,9 @@ namespace VocaDb.Model.Service {
 			return repository.HandleTransaction(func, failMsg);
 		}
 
+		public Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext<TEntity>, Task<TResult>> func, string failMsg = "Unexpected database error") {
+			return repository.HandleTransactionAsync(func, failMsg);
+		}
 	}
 
 }

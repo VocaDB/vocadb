@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
 using System.Transactions;
 using Autofac;
 using NHibernate;
@@ -31,18 +32,58 @@ namespace VocaDb.Tests.DatabaseTests {
 
 		}
 
+		public async Task RunTestAsync(Func<TTarget, Task> func) {
+
+			// Make sure session factory is built outside of transaction
+			Container.Resolve<ISessionFactory>();
+
+			// Wrap inside transaction scope to make the test atomic
+			using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+			using (var lifetimeScope = Container.BeginLifetimeScope()) {
+
+				var target = lifetimeScope.Resolve<TTarget>();
+
+				await func(target);
+
+				DatabaseHelper.ClearSecondLevelCache(lifetimeScope.Resolve<ISessionFactory>());
+
+			}
+
+		}
+
 		public TResult RunTest<TResult>(Func<TTarget, TResult> func) {
 
 			// Make sure session factory is built outside of transaction
 			Container.Resolve<ISessionFactory>();
 
 			// Wrap inside transaction scope to make the test atomic
-			using (new TransactionScope())
+			using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 			using (var lifetimeScope = Container.BeginLifetimeScope()) {
 				
 				var target = lifetimeScope.Resolve<TTarget>();
 
 				var result = func(target);
+
+				DatabaseHelper.ClearSecondLevelCache(lifetimeScope.Resolve<ISessionFactory>());
+
+				return result;
+
+			}
+
+		}
+
+		public async Task<TResult> RunTestAsync<TResult>(Func<TTarget, Task<TResult>> func) {
+
+			// Make sure session factory is built outside of transaction
+			Container.Resolve<ISessionFactory>();
+
+			// Wrap inside transaction scope to make the test atomic
+			using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+			using (var lifetimeScope = Container.BeginLifetimeScope()) {
+
+				var target = lifetimeScope.Resolve<TTarget>();
+
+				var result = await func(target);
 
 				DatabaseHelper.ClearSecondLevelCache(lifetimeScope.Resolve<ISessionFactory>());
 
