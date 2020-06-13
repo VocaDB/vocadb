@@ -828,7 +828,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			return await repository.HandleTransactionAsync(async session => {
 
-				var album = session.Load(properties.Id);
+				var album = await session.LoadAsync(properties.Id);
 
 				VerifyEntryEdit(album);
 
@@ -858,7 +858,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var validNames = properties.Names;
 				var nameDiff = album.Names.Sync(validNames, album);
-				session.OfType<AlbumName>().Sync(nameDiff);
+				await session.SyncAsync(nameDiff);
 
 				album.Names.UpdateSortNames();
 
@@ -905,11 +905,11 @@ namespace VocaDb.Model.Database.Queries {
 					diff.Status.Set();
 				}
 
-				var artistGetter = new Func<ArtistContract, Artist>(artist => 
-					session.OfType<Artist>().Load(artist.Id));
+				var artistGetter = new Func<ArtistContract, Task<Artist>>(artist => 
+					session.LoadAsync<Artist>(artist.Id));
 
-				var artistsDiff = album.SyncArtists(properties.ArtistLinks, artistGetter);
-				session.OfType<ArtistForAlbum>().Sync(artistsDiff);
+				var artistsDiff = await album.SyncArtists(properties.ArtistLinks, artistGetter);
+				await session.OfType<ArtistForAlbum>().SyncAsync(artistsDiff);
 
 				if (artistsDiff.Changed)
 					diff.Artists.Set();

@@ -17,6 +17,7 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.ReleaseEvents;
+using System.Threading.Tasks;
 
 namespace VocaDb.Model.Domain.Albums {
 
@@ -723,16 +724,16 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public virtual CollectionDiffWithValue<ArtistForAlbum, ArtistForAlbum> SyncArtists(
-			IEnumerable<ArtistForAlbumContract> newArtists, Func<ArtistContract, Artist> artistGetter) {
+		public virtual async Task<CollectionDiffWithValue<ArtistForAlbum, ArtistForAlbum>> SyncArtists(
+			IEnumerable<ArtistForAlbumContract> newArtists, Func<ArtistContract, Task<Artist>> artistGetter) {
 
-			var create = new Func<ArtistForAlbumContract, ArtistForAlbum>(contract => {
+			var create = new Func<ArtistForAlbumContract, Task<ArtistForAlbum>>(async contract => {
 				
 				ArtistForAlbum link = null;
 
 				if (contract.Artist != null) {
 
-					var artist = artistGetter(contract.Artist);
+					var artist = await artistGetter(contract.Artist);
 
 					if (!HasArtist(artist)) {
 						link = AddArtist(artist, contract.IsSupport, contract.Roles);
@@ -747,24 +748,25 @@ namespace VocaDb.Model.Domain.Albums {
 
 			});
 
-			var delete = new Action<ArtistForAlbum>(link => {				
+			var delete = new Func<ArtistForAlbum, Task>(link => {				
 				link.Delete();
+				return Task.CompletedTask;
 			});
 
-			var update = new Func<ArtistForAlbum, ArtistForAlbumContract, bool>((old, newEntry) => {
+			var update = new Func<ArtistForAlbum, ArtistForAlbumContract, Task<bool>>((old, newEntry) => {
 			
 				if (!old.ContentEquals(newEntry)) {
 					old.IsSupport = newEntry.IsSupport;
 					old.Roles = newEntry.Roles;
 					old.Name = newEntry.IsCustomName ? newEntry.Name : null;
-					return true;
+					return Task.FromResult(true);
 				} else {
-					return false;
+					return Task.FromResult(false);
 				}
 				
 			});
 
-			var diff = CollectionHelper.SyncWithContent(AllArtists, newArtists.ToArray(), (a1, a2) => a1.Id == a2.Id, create, update, delete);
+			var diff = await CollectionHelper.SyncWithContentAsync(AllArtists, newArtists.ToArray(), (a1, a2) => a1.Id == a2.Id, create, update, delete);
 
 			if (diff.Changed) {
 				UpdateArtistString();				

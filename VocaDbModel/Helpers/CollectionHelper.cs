@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Helpers {
@@ -156,6 +157,9 @@ namespace VocaDb.Model.Helpers {
 		/// <returns>Diff for the two collections. Cannot be null.</returns>
 		public static CollectionDiff<T> Sync<T>(IList<T> oldItems, IList<T> newItems, IEqualityComparer<T> equality, Action<T> remove = null) => Sync(oldItems, newItems, equality.Equals, t => t, remove);
 
+		public static Task<CollectionDiff<T>> SyncAsync<T>(IList<T> oldItems, IList<T> newItems, IEqualityComparer<T> equality, Func<T, Task<T>> remove = null) 
+			=> SyncAsync(oldItems, newItems, equality.Equals, t => Task.FromResult(t), remove);
+
 		/// <summary>
 		/// Syncs items in one collection with a new set (create and delete, CD).
 		/// Removes missing items from the old collection and adds missing new items.
@@ -191,6 +195,32 @@ namespace VocaDb.Model.Helpers {
 
 			foreach (var linkEntry in diff.Added) {
 				var link = create(linkEntry);
+
+				if (link != null)
+					created.Add(link);
+			}
+
+			return new CollectionDiff<T>(created, diff.Removed, diff.Unchanged);
+
+		}
+
+		public static async Task<CollectionDiff<T>> SyncAsync<T, T2>(ICollection<T> old, IEnumerable<T2> newItems, Func<T, T2, bool> equality, Func<T2, Task<T>> create, Func<T, Task> remove = null) {
+
+			var diff = Diff(old, newItems, equality);
+			var created = new List<T>();
+
+			foreach (var removed in diff.Removed) {
+
+				if (remove != null)
+					await remove(removed);
+
+				// Note: this removes the item from the source collection directly, but not from any other collections.
+				old.Remove(removed);
+
+			}
+
+			foreach (var linkEntry in diff.Added) {
+				var link = await create(linkEntry);
 
 				if (link != null)
 					created.Add(link);
@@ -257,6 +287,29 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
+		public static async Task<CollectionDiffWithValue<T, T>> SyncWithContentAsync<T, T2>(IList<T> oldItems, IList<T2> newItems,
+			Func<T, T2, bool> identityEquality, Func<T2, Task<T>> create, Func<T, T2, Task<bool>> update, Func<T, Task> remove) where T : class {
+
+			ParamIs.NotNull(() => oldItems);
+			ParamIs.NotNull(() => newItems);
+			ParamIs.NotNull(() => identityEquality);
+
+			var diff = await SyncAsync(oldItems, newItems, identityEquality, create, remove);
+			var edited = new List<T>();
+
+			foreach (var oldItem in diff.Unchanged) {
+
+				var newItem = newItems.First(i => identityEquality(oldItem, i));
+
+				if (await update(oldItem, newItem)) {
+					edited.Add(oldItem);
+				}
+
+			}
+
+			return new CollectionDiffWithValue<T, T>(diff.Added, diff.Removed, diff.Unchanged, edited);
+
+		}
 	}
 
 	/// <summary>
