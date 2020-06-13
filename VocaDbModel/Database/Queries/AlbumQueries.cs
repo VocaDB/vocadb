@@ -73,9 +73,9 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private Artist[] GetArtists(IDatabaseContext<Album> ctx, ArtistContract[] artistContracts) {
+		private async Task<List<Artist>> GetArtists(IDatabaseContext<Album> ctx, ArtistContract[] artistContracts) {
 			var ids = artistContracts.Select(a => a.Id).ToArray();
-			return ctx.OfType<Artist>().Query().Where(a => ids.Contains(a.Id)).ToArray();			
+			return await ctx.Query<Artist>().WhereIdIn(ids).VdbToListAsync();			
 		}
 
 		private AlbumMergeRecord GetMergeRecord(IDatabaseContext session, int sourceId) {
@@ -132,9 +132,9 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void UpdateSongArtists(IDatabaseContext<Album> ctx, Song song, ArtistContract[] artistContracts) {
+		private async Task UpdateSongArtists(IDatabaseContext<Album> ctx, Song song, ArtistContract[] artistContracts) {
 
-			var artistDiff = song.SyncArtists(artistContracts, 
+			var artistDiff = await song.SyncArtists(artistContracts, 
 				addedArtistContracts => GetArtists(ctx, addedArtistContracts));
 
 			ctx.Sync(artistDiff);
@@ -935,7 +935,7 @@ namespace VocaDb.Model.Database.Queries {
 
 						var songDiff = new SongDiff();
 						songDiff.Names.Set();
-						var songArtistDiff = song.SyncArtists(contract.Artists, 
+						var songArtistDiff = await song.SyncArtists(contract.Artists, 
 							addedArtistContracts => GetArtists(session, addedArtistContracts));
 
 						if (songArtistDiff.Changed) {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -35,11 +36,11 @@ namespace VocaDb.Tests.Domain.Albums {
 			return new SongInAlbumEditContract { SongInAlbumId = id, IsCustomTrack = true, SongName = name, TrackNumber = trackNum, DiscNumber = 1, Artists = new ArtistContract[0] };
 		}
 
-		private Artist[] GetArtists(ArtistContract[] contracts) {
+		private Task<List<Artist>> GetArtists(ArtistContract[] contracts) {
 
-			return contracts
+			return Task.FromResult(contracts
 				.Select(a => a.Id == vocalist.Id ? vocalist : new Artist(TranslatedString.Create(a.Name)) {Id = a.Id})
-				.ToArray();
+				.ToList());
 
 		}
 
