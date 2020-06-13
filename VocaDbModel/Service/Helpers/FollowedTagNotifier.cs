@@ -51,19 +51,6 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
-		[Obsolete]
-		public void SendNotifications(IDatabaseContext ctx, IEntryWithNames entry,
-			IEnumerable<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
-			IEnumTranslations enumTranslations) {
-
-			try {
-				DoSendNotifications(ctx, entry, tags, ignoreUsers, entryLinkFactory, enumTranslations);
-			} catch (GenericADOException x) {
-				log.Error(x, "Unable to send notifications");
-			}
-
-		}
-
 		/// <summary>
 		/// Sends notifications
 		/// </summary>
@@ -81,81 +68,6 @@ namespace VocaDb.Model.Service.Helpers {
 			} catch (GenericADOException x) {
 				log.Error(x, "Unable to send notifications");
 			}
-
-		}
-
-		private void DoSendNotifications(IDatabaseContext ctx, IEntryWithNames entry,
-			IEnumerable<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
-			IEnumTranslations enumTranslations) {
-
-			ParamIs.NotNull(() => ctx);
-			ParamIs.NotNull(() => entry);
-			ParamIs.NotNull(() => tags);
-			ParamIs.NotNull(() => ignoreUsers);
-			ParamIs.NotNull(() => entryLinkFactory);
-
-			var coll = tags.Distinct().ToArray();
-			var tagIds = coll.Select(a => a.Id).ToArray();
-
-			log.Info("Sending notifications for {0} tags", tagIds.Length);
-
-			// Get users with less than maximum number of unread messages, following any of the tags
-			var usersWithTags = ctx.OfType<TagForUser>()
-				.Query()
-				.Where(afu =>
-					tagIds.Contains(afu.Tag.Id))
-				.Select(afu => new {
-					UserId = afu.User.Id,
-					TagId = afu.Tag.Id
-				})
-				.ToArray()
-				.GroupBy(afu => afu.UserId)
-				.ToDictionary(afu => afu.Key, afu => afu.Select(a => a.TagId));
-
-			var userIds = usersWithTags.Keys.Except(ignoreUsers).ToArray();
-
-			log.Debug("Found {0} users subscribed to tags", userIds.Length);
-
-			if (!userIds.Any())
-				return;
-
-			var entryTypeNames = enumTranslations.Translations<EntryType>();
-			var users = ctx.Query<User>()
-				.WhereIsActive()
-				.WhereIdIn(userIds)
-				.Where(u => u.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < u.Options.UnreadNotificationsToKeep)
-				.ToArray();
-
-			foreach (var user in users) {
-
-				var tagIdsForUser = new HashSet<int>(usersWithTags[user.Id]);
-				var followedTags = coll.Where(a => tagIdsForUser.Contains(a.Id)).ToArray();
-
-				if (followedTags.Length == 0)
-					continue;
-
-				string title;
-
-				var entryTypeName = entryTypeNames.GetName(entry.EntryType, CultureHelper.GetCultureOrDefault(user.LanguageOrLastLoginCulture)).ToLowerInvariant();
-				var msg = CreateMessageBody(followedTags, user, entry, entryLinkFactory, true, entryTypeName);
-
-				if (followedTags.Length == 1) {
-
-					var artistName = followedTags.First().TranslatedName[user.DefaultLanguageSelection];
-					title = string.Format("New {0} tagged with {1}", entryTypeName, artistName);
-
-				} else {
-
-					title = string.Format("New {0}", entryTypeName);
-
-				}
-
-				var notification = user.CreateNotification(title, msg);
-				ctx.Save(notification);
-
-			}
-
-			log.Info($"Sent notifications to {users.Length} users");
 
 		}
 

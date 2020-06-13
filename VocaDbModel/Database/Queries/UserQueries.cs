@@ -1383,54 +1383,54 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public TagUsageForApiContract[] SaveAlbumTags(int albumId, TagBaseContract[] tags, bool onlyAdd) {
+		public async Task<TagUsageForApiContract[]> SaveAlbumTags(int albumId, TagBaseContract[] tags, bool onlyAdd) {
 			
-			return new TagUsageQueries(PermissionContext).AddTags<Album, AlbumTagUsage>(
+			return await new TagUsageQueries(PermissionContext).AddTags<Album, AlbumTagUsage>(
 				albumId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
 				album => album.Tags, 
 				(album, ctx) => new AlbumTagUsageFactory(ctx, album));
 
 		}
 
-		public TagUsageForApiContract[] SaveArtistTags(int artistId, TagBaseContract[] tags, bool onlyAdd) {
+		public async Task<TagUsageForApiContract[]> SaveArtistTags(int artistId, TagBaseContract[] tags, bool onlyAdd) {
 			
-			return new TagUsageQueries(PermissionContext).AddTags<Artist, ArtistTagUsage>(
+			return await new TagUsageQueries(PermissionContext).AddTags<Artist, ArtistTagUsage>(
 				artistId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
 				artist => artist.Tags, 
 				(artist, ctx) => new ArtistTagUsageFactory(ctx, artist));
 
 		}
 
-		public TagUsageForApiContract[] SaveEventTags(int eventId, TagBaseContract[] tags, bool onlyAdd) {
+		public async Task<TagUsageForApiContract[]> SaveEventTags(int eventId, TagBaseContract[] tags, bool onlyAdd) {
 
-			return new TagUsageQueries(PermissionContext).AddTags<ReleaseEvent, EventTagUsage>(
+			return await new TagUsageQueries(PermissionContext).AddTags<ReleaseEvent, EventTagUsage>(
 				eventId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
 				releaseEvent => releaseEvent.Tags,
 				(releaseEvent, ctx) => new EventTagUsageFactory(ctx, releaseEvent));
 
 		}
 
-		public TagUsageForApiContract[] SaveEventSeriesTags(int seriesId, TagBaseContract[] tags, bool onlyAdd) {
+		public async Task<TagUsageForApiContract[]> SaveEventSeriesTags(int seriesId, TagBaseContract[] tags, bool onlyAdd) {
 
-			return new TagUsageQueries(PermissionContext).AddTags<ReleaseEventSeries, EventSeriesTagUsage>(
+			return await new TagUsageQueries(PermissionContext).AddTags<ReleaseEventSeries, EventSeriesTagUsage>(
 				seriesId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
 				releaseEvent => releaseEvent.Tags,
 				(releaseEvent, ctx) => new EventSeriesTagUsageFactory(ctx, releaseEvent));
 
 		}
 
-		public TagUsageForApiContract[] SaveSongListTags(int songListId, TagBaseContract[] tags, bool onlyAdd) {
+		public async Task<TagUsageForApiContract[]> SaveSongListTags(int songListId, TagBaseContract[] tags, bool onlyAdd) {
 
-			return new TagUsageQueries(permissionContext).AddTags<SongList, SongListTagUsage>(
+			return await new TagUsageQueries(permissionContext).AddTags<SongList, SongListTagUsage>(
 				songListId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
 				songList => songList.Tags,
 				(songList, ctx) => new SongListTagUsageFactory(ctx, songList));
 
 		}
 
-		public TagUsageForApiContract[] SaveSongTags(int songId, TagBaseContract[] tags, bool onlyAdd) {
+		public async Task<TagUsageForApiContract[]> SaveSongTags(int songId, TagBaseContract[] tags, bool onlyAdd) {
 			
-			return new TagUsageQueries(PermissionContext).AddTags<Song, SongTagUsage>(
+			return await new TagUsageQueries(PermissionContext).AddTags<Song, SongTagUsage>(
 				songId, tags, onlyAdd, repository, entryLinkFactory, enumTranslations,
 				song => song.Tags, 
 				(song, ctx) => new SongTagUsageFactory(ctx, song));

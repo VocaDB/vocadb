@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -16,8 +17,8 @@ namespace VocaDb.Tests.Domain.Tags {
 
 			private readonly Song song = new Song();
 
-			public Tag CreateTag(string name) {
-				return new Tag(name);
+			public Task<Tag> CreateTagAsync(string name) {
+				return Task.FromResult(new Tag(name));
 			}
 
 			public SongTagUsage CreateTagUsage(Tag tag) {

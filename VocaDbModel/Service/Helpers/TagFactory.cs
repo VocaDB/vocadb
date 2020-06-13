@@ -1,4 +1,5 @@
-﻿using VocaDb.Model.Database.Repositories;
+using System.Threading.Tasks;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
@@ -17,21 +18,20 @@ namespace VocaDb.Model.Service.Helpers {
 			this.loginData = loginData;
 		}
 
-		public Tag CreateTag(string englishName) {
+		public async Task<Tag> CreateTagAsync(string englishName) {
 
 			var tag = new Tag(new LocalizedString(englishName, ContentLanguageSelection.English));
-			ctx.Save(tag);
+			await ctx.SaveAsync(tag);
 
 			var archived = ArchivedTagVersion.Create(tag, new TagDiff(), loginData, EntryEditEvent.Created, string.Empty);
-			ctx.Save(archived);
+			await ctx.SaveAsync(archived);
 
 			var activityEntry = new TagActivityEntry(tag, EntryEditEvent.Created, loginData.User, archived);
-			new ActivityEntryQueries(ctx.OfType<ActivityEntry>(), null).AddActivityfeedEntry(activityEntry);
+			await new ActivityEntryQueries(ctx.OfType<ActivityEntry>(), null).AddActivityfeedEntryAsync(activityEntry);
 
 			return tag;
 
 		}
-
 	}
 
 }

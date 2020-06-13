@@ -197,26 +197,27 @@ namespace VocaDb.Model.Database.Queries {
 		/// <param name="name">Tag English name. Cannot be null or empty. Must be unique.</param>
 		/// <returns>The created tag. Cannot be null.</returns>
 		/// <exception cref="DuplicateTagNameException">If a tag with the specified name already exists.</exception>
-		public TagBaseContract Create(string name) {
+		public async Task<TagBaseContract> Create(string name) {
 
 			ParamIs.NotNullOrWhiteSpace(() => name);
 
 			PermissionContext.VerifyManageDatabase();
 
-			return repository.HandleTransaction(ctx => {
+			return await repository.HandleTransactionAsync(async ctx => {
 
-				var duplicateName = ctx.Query<TagName>()
+				var duplicateName = await ctx.Query<TagName>()
 					.Select(t => t.Value)
-					.FirstOrDefault(t => t == name);
+					.Where(t => t == name)
+					.VdbFirstOrDefaultAsync();
 
 				if (duplicateName != null) {
 					throw new DuplicateTagNameException(duplicateName);
 				}
 
 				var factory = new TagFactoryRepository(ctx, ctx.CreateAgentLoginData(PermissionContext));
-				var tag = factory.CreateTag(name);
+				var tag = await factory.CreateTagAsync(name);
 
-				ctx.AuditLogger.AuditLog(string.Format("created tag {0}", entryLinkFactory.CreateEntryLink(tag)));
+				await ctx.AuditLogger.AuditLogAsync(string.Format("created tag {0}", entryLinkFactory.CreateEntryLink(tag)));
 
 				return new TagBaseContract(tag, PermissionContext.LanguagePreference);
 
