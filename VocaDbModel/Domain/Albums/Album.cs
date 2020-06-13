@@ -776,7 +776,7 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public virtual CollectionDiffWithValue<AlbumDiscProperties, AlbumDiscProperties> SyncDiscs(AlbumDiscPropertiesContract[] newDiscs) {
+		public virtual async Task<CollectionDiffWithValue<AlbumDiscProperties, AlbumDiscProperties>> SyncDiscs(AlbumDiscPropertiesContract[] newDiscs) {
 
 			for (var i = 0; i < newDiscs.Length; ++i) {
 				newDiscs[i].DiscNumber = i + 1;
@@ -785,25 +785,26 @@ namespace VocaDb.Model.Domain.Albums {
 			Func<AlbumDiscProperties, AlbumDiscPropertiesContract, bool> idEquality = ((i1, i2) => i1.Id == i2.Id);
 			Func<AlbumDiscProperties, AlbumDiscPropertiesContract, bool> valueEquality = ((i1, i2) => i1.DiscNumber.Equals(i2.DiscNumber) && string.Equals(i1.Name, i2.Name) && i1.MediaType.Equals(i2.MediaType));
 
-			Func<AlbumDiscPropertiesContract, AlbumDiscProperties> create = (data => {
+			Func<AlbumDiscPropertiesContract, Task<AlbumDiscProperties>> create = (data => {
 				var disc = new AlbumDiscProperties(this, data);
 				Discs.Add(disc);
-				return disc;
+				return Task.FromResult(disc);
 			});
 
-			Func<AlbumDiscProperties, AlbumDiscPropertiesContract, bool> update = ((disc, data) => {
+			Func<AlbumDiscProperties, AlbumDiscPropertiesContract, Task<bool>> update = ((disc, data) => {
 				if (!valueEquality(disc, data)) {
 					disc.CopyContentFrom(data);
-					return true;
+					return Task.FromResult(true);
 				}
-				return false;
+				return Task.FromResult(false);
 			});
 
-			Action<AlbumDiscProperties> remove = (disc => {
+			Func<AlbumDiscProperties, Task> remove = (disc => {
 				Discs.Remove(disc);
+				return Task.CompletedTask;
 			});
 
-			var diff = CollectionHelper.SyncWithContent(Discs, newDiscs, idEquality, create, update, remove);
+			var diff = await CollectionHelper.SyncWithContentAsync(Discs, newDiscs, idEquality, create, update, remove);
 			return diff;
 
 		}
@@ -857,8 +858,8 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public virtual CollectionDiffWithValue<SongInAlbum, SongInAlbum> SyncSongs(
-			IEnumerable<SongInAlbumEditContract> newTracks, Func<SongInAlbumEditContract, Song> songGetter, Action<Song, ArtistContract[]> updateArtistsFunc) {
+		public virtual async Task<CollectionDiffWithValue<SongInAlbum, SongInAlbum>> SyncSongs(
+			IEnumerable<SongInAlbumEditContract> newTracks, Func<SongInAlbumEditContract, Task<Song>> songGetter, Action<Song, ArtistContract[]> updateArtistsFunc) {
 
 			var diff = CollectionHelper.Diff(Songs, newTracks, (n1, n2) => n1.Id == n2.SongInAlbumId);
 			var created = new List<SongInAlbum>();
@@ -874,7 +875,7 @@ namespace VocaDb.Model.Domain.Albums {
 
 				if (!newEntry.IsCustomTrack) {
 
-					var song = songGetter(newEntry);
+					var song = await songGetter(newEntry);
 
 					if (!TrackArtistsEqual(song, newEntry))
 						updateArtistsFunc(song, newEntry.Artists);

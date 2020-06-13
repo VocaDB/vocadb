@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Caching;
+using System.Threading.Tasks;
 using NHibernate;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
@@ -193,7 +194,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public ArtistContract Create(CreateArtistContract contract) {
+		public async Task<ArtistContract> Create(CreateArtistContract contract) {
 
 			ParamIs.NotNull(() => contract);
 
@@ -205,7 +206,7 @@ namespace VocaDb.Model.Database.Queries {
 			var diff = new ArtistDiff();
 			diff.Names.Set();
 
-			return repository.HandleTransaction(ctx => {
+			return await repository.HandleTransactionAsync(async ctx => {
 
 				ctx.AuditLogger.SysLog(string.Format("creating a new artist with name '{0}'", contract.Names.First().Value));
 
@@ -223,7 +224,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				artist.Status = (contract.Draft || !(new ArtistValidator().IsValid(artist))) ? EntryStatus.Draft : EntryStatus.Finished;
 
-				ctx.Save(artist);
+				await ctx.SaveAsync(artist);
 
 				if (contract.PictureData != null) {
 
@@ -242,10 +243,10 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var archived = Archive(ctx, artist, diff, ArtistArchiveReason.Created);
-				ctx.Update(artist);
+				await ctx.UpdateAsync(artist);
 
-				ctx.AuditLogger.AuditLog(string.Format("created artist {0} ({1})", entryLinkFactory.CreateEntryLink(artist), artist.ArtistType));
-				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Created, archived);
+				await ctx.AuditLogger.AuditLogAsync(string.Format("created artist {0} ({1})", entryLinkFactory.CreateEntryLink(artist), artist.ArtistType));
+				await AddEntryEditedEntryAsync(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Created, archived);
 
 				return new ArtistContract(artist, PermissionContext.LanguagePreference);
 
@@ -562,14 +563,14 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public int Update(ArtistForEditContract properties, EntryPictureFileContract pictureData, IUserPermissionContext permissionContext) {
+		public async Task<int> Update(ArtistForEditContract properties, EntryPictureFileContract pictureData, IUserPermissionContext permissionContext) {
 			
 			ParamIs.NotNull(() => properties);
 			ParamIs.NotNull(() => permissionContext);
 
-			return repository.HandleTransaction(ctx => {
+			return await repository.HandleTransactionAsync(async ctx => {
 
-				var artist = ctx.Load(properties.Id);
+				var artist = await ctx.LoadAsync(properties.Id);
 
 				VerifyEntryEdit(artist);
 
@@ -613,7 +614,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var nameDiff = artist.Names.Sync(properties.Names, artist);
-				ctx.OfType<ArtistName>().Sync(nameDiff);
+				await ctx.OfType<ArtistName>().SyncAsync(nameDiff);
 
 				if (nameDiff.Changed)
 					diff.Names.Set();
@@ -635,7 +636,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var webLinkDiff = WebLink.Sync(artist.WebLinks, properties.WebLinks, artist);
-				ctx.OfType<ArtistWebLink>().Sync(webLinkDiff);
+				await ctx.OfType<ArtistWebLink>().SyncAsync(webLinkDiff);
 
 				if (webLinkDiff.Changed)
 					diff.WebLinks.Set();
@@ -644,7 +645,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					foreach (var song in artist.Songs) {
 						song.Song.UpdateArtistString();
-						ctx.Update(song);
+						await ctx.UpdateAsync(song);
 					}
 
 				}
@@ -663,12 +664,12 @@ namespace VocaDb.Model.Database.Queries {
 
 				foreach (var grp in groupsDiff.Removed) {
 					grp.Delete();
-					ctx.Delete(grp);
+					await ctx.DeleteAsync(grp);
 				}
 
 				foreach (var grp in groupsDiff.Added) {
 					var link = artist.AddGroup(ctx.Load(grp.Parent.Id), grp.LinkType);
-					ctx.Save(link);
+					await ctx.SaveAsync(link);
 				}
 
 				if (groupsDiff.Changed)
@@ -687,10 +688,10 @@ namespace VocaDb.Model.Database.Queries {
 					.Truncate(400);
 
 				var archived = Archive(ctx, artist, diff, ArtistArchiveReason.PropertiesUpdated, properties.UpdateNotes);
-				ctx.Update(artist);
+				await ctx.UpdateAsync(artist);
 
-				ctx.AuditLogger.AuditLog(logStr);
-				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Updated, archived);
+				await ctx.AuditLogger.AuditLogAsync(logStr);
+				await AddEntryEditedEntryAsync(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Updated, archived);
 
 				return artist.Id;
 

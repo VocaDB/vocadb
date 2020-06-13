@@ -52,6 +52,13 @@ namespace VocaDb.Model.Service {
 
 		}
 
+		protected async Task AddActivityfeedEntryAsync(IDatabaseContext<ActivityEntry> ctx, Func<User, ActivityEntry> entryFunc) {
+
+			var user = await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext);
+			await AddActivityfeedEntryAsync(ctx, entryFunc(user));
+
+		}
+
 		protected void AddEntryEditedEntry(IDatabaseContext<ActivityEntry> ctx, Album entry, EntryEditEvent editEvent, ArchivedAlbumVersion archivedVersion) {
 
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
@@ -60,17 +67,31 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		protected void AddEntryEditedEntry(IDatabaseContext<ActivityEntry> ctx, Artist entry, EntryEditEvent editEvent, ArchivedArtistVersion archivedVersion) {
+		protected async Task AddEntryEditedEntryAsync(IDatabaseContext<ActivityEntry> ctx, Album entry, EntryEditEvent editEvent, ArchivedAlbumVersion archivedVersion) {
 
-			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
+			var user = await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext);
+			var activityEntry = new AlbumActivityEntry(entry, editEvent, user, archivedVersion);
+			await AddActivityfeedEntryAsync(ctx, activityEntry);
+
+		}
+
+		protected async Task AddEntryEditedEntryAsync(IDatabaseContext<ActivityEntry> ctx, Artist entry, EntryEditEvent editEvent, ArchivedArtistVersion archivedVersion) {
+
+			var user = await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext);
 			var activityEntry = new ArtistActivityEntry(entry, editEvent, user, archivedVersion);
-			AddActivityfeedEntry(ctx, activityEntry);
+			await AddActivityfeedEntryAsync(ctx, activityEntry);
 
 		}
 
 		protected void AddEntryEditedEntry(IDatabaseContext<ActivityEntry> ctx, ArchivedReleaseEventVersion archivedVersion) {
 
 			AddActivityfeedEntry(ctx, user => new ReleaseEventActivityEntry(archivedVersion.ReleaseEvent, archivedVersion.EditEvent, user, archivedVersion));
+
+		}
+
+		protected async Task AddEntryEditedEntryAsync(IDatabaseContext<ActivityEntry> ctx, ArchivedReleaseEventVersion archivedVersion) {
+
+			await AddActivityfeedEntryAsync(ctx, user => new ReleaseEventActivityEntry(archivedVersion.ReleaseEvent, archivedVersion.EditEvent, user, archivedVersion));
 
 		}
 
