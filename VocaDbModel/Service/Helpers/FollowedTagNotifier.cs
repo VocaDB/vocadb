@@ -104,8 +104,10 @@ namespace VocaDb.Model.Service.Helpers {
 
 			log.Debug("Found {0} users subscribed to tags", userIds.Length);
 
-			if (!userIds.Any())
+			if (!userIds.Any()) {
+				log.Info("No users subscribed to tags - skipping.");
 				return;
+			}
 
 			var entryTypeNames = enumTranslations.Translations<EntryType>();
 			var users = await ctx.Query<User>()
