@@ -21,6 +21,7 @@ using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Event;
 using VocaDb.Web.Models.Shared;
+using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers
 {
@@ -117,7 +118,7 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
         [Authorize]
-        public ActionResult Edit(EventEdit model, HttpPostedFileBase pictureUpload = null) {
+        public async Task<ActionResult> Edit(EventEdit model, HttpPostedFileBase pictureUpload = null) {
 
 	        ActionResult RenderEdit() {
 
@@ -153,7 +154,7 @@ namespace VocaDb.Web.Controllers
 			int id;
 
 	        try {
-				id = queries.Update(model.ToContract(), pictureData).Id;
+				id = (await queries.Update(model.ToContract(), pictureData)).Id;
 	        } catch (DuplicateEventNameException x) {
 		        ModelState.AddModelError("Names", x.Message);
 		        return RenderEdit();

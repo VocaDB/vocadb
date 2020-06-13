@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
@@ -447,13 +448,13 @@ namespace VocaDb.Model.Database.Queries {
 		/// <param name="contract">Updated contract. Cannot be null.</param>
 		/// <returns>Updated release event data. Cannot be null.</returns>
 		/// <exception cref="DuplicateEventNameException">If the event name is already in use.</exception>
-		public ReleaseEventContract Update(ReleaseEventForEditContract contract, EntryPictureFileContract pictureData) {
+		public async Task<ReleaseEventContract> Update(ReleaseEventForEditContract contract, EntryPictureFileContract pictureData) {
 
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyManageDatabase();
 
-			return repository.HandleTransaction(session => {
+			return await repository.HandleTransactionAsync(async session => {
 
 				ReleaseEvent ev;
 
@@ -524,7 +525,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					session.AuditLogger.AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(ev)));
 
-					followedArtistNotifier.SendNotifications(session, ev, ev.Artists.Where(a => a?.Artist != null).Select(a => a.Artist), PermissionContext.LoggedUser);
+					await followedArtistNotifier.SendNotificationsAsync(session, ev, ev.Artists.Where(a => a?.Artist != null).Select(a => a.Artist), PermissionContext.LoggedUser);
 
 				} else {
 
@@ -629,7 +630,7 @@ namespace VocaDb.Model.Database.Queries {
 						var addedArtists = artistDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 
 						if (addedArtists.Any()) {
-							followedArtistNotifier.SendNotifications(session, ev, addedArtists, PermissionContext.LoggedUser);
+							await followedArtistNotifier.SendNotificationsAsync(session, ev, addedArtists, PermissionContext.LoggedUser);
 						}
 
 					}
