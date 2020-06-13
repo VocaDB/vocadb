@@ -155,8 +155,6 @@ namespace VocaDb.Model.Helpers {
 		/// Can be null.
 		/// </param>
 		/// <returns>Diff for the two collections. Cannot be null.</returns>
-		public static CollectionDiff<T> Sync<T>(IList<T> oldItems, IList<T> newItems, IEqualityComparer<T> equality, Action<T> remove = null) => Sync(oldItems, newItems, equality.Equals, t => t, remove);
-
 		public static Task<CollectionDiff<T>> SyncAsync<T>(IList<T> oldItems, IList<T> newItems, IEqualityComparer<T> equality, Func<T, Task<T>> remove = null) 
 			=> SyncAsync(oldItems, newItems, equality.Equals, t => Task.FromResult(t), remove);
 
@@ -263,30 +261,6 @@ namespace VocaDb.Model.Helpers {
 		/// Can be null.
 		/// </param>
 		/// <returns>Diff for the two collections. Cannot be null.</returns>
-		public static CollectionDiffWithValue<T, T> SyncWithContent<T, T2>(IList<T> oldItems, IList<T2> newItems, 
-			Func<T, T2, bool> identityEquality, Func<T2, T> create, Func<T, T2, bool> update, Action<T> remove) where T : class {
-
-			ParamIs.NotNull(() => oldItems);
-			ParamIs.NotNull(() => newItems);
-			ParamIs.NotNull(() => identityEquality);
-
-			var diff = Sync(oldItems, newItems, identityEquality, create, remove);
-			var edited = new List<T>();
-
-			foreach (var oldItem in diff.Unchanged) {
-
-				var newItem = newItems.First(i => identityEquality(oldItem, i));
-
-				if (update(oldItem, newItem)) {
-					edited.Add(oldItem);
-				}
-
-			}
-
-			return new CollectionDiffWithValue<T, T>(diff.Added, diff.Removed, diff.Unchanged, edited);
-
-		}
-
 		public static async Task<CollectionDiffWithValue<T, T>> SyncWithContentAsync<T, T2>(IList<T> oldItems, IList<T2> newItems,
 			Func<T, T2, bool> identityEquality, Func<T2, Task<T>> create, Func<T, T2, Task<bool>> update, Func<T, Task> remove) where T : class {
 
