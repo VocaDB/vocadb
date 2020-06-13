@@ -255,7 +255,7 @@ namespace VocaDb.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(AlbumEditViewModel viewModel)
+        public async Task<ActionResult> Edit(AlbumEditViewModel viewModel)
         {
 
 			// Unable to continue if viewmodel is null because we need the ID at least
@@ -300,7 +300,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			try {
-				queries.UpdateBasicProperties(model, pictureData);				
+				await queries.UpdateBasicProperties(model, pictureData);				
 			} catch (InvalidPictureException) {
 				ModelState.AddModelError("ImageError", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
 				return View(CreateAlbumEditViewModel(model.Id, model));

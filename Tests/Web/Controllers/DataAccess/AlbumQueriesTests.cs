@@ -76,14 +76,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
-		private AlbumForEditContract CallUpdate(AlbumForEditContract contract) {
+		private Task<AlbumForEditContract> CallUpdate(AlbumForEditContract contract) {
 			return queries.UpdateBasicProperties(contract, null);
 		}
 
-		private AlbumForEditContract CallUpdate(Stream image) {
+		private async Task<AlbumForEditContract> CallUpdate(Stream image) {
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			using (var stream = image) {
-				return queries.UpdateBasicProperties(contract, new EntryPictureFileContract(stream, MediaTypeNames.Image.Jpeg, purpose: ImagePurpose.Main));
+				return await queries.UpdateBasicProperties(contract, new EntryPictureFileContract(stream, MediaTypeNames.Image.Jpeg, purpose: ImagePurpose.Main));
 			}		
 		}
 
@@ -207,9 +207,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetCoverPictureThumb() {
+		public async Task GetCoverPictureThumb() {
 			
-			var contract = CallUpdate(ResourceHelper.TestImage());
+			var contract = await CallUpdate(ResourceHelper.TestImage());
 
 			var result = queries.GetCoverPictureThumb(contract.Id);
 
@@ -403,10 +403,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// Old version has no image, image will be removed.
 		/// </summary>
 		[TestMethod]
-		public void Revert_RemoveImage() {
+		public async Task Revert_RemoveImage() {
 
 			var oldVer = repository.HandleTransaction(ctx => queries.Archive(ctx, album, AlbumArchiveReason.PropertiesUpdated));
-			CallUpdate(ResourceHelper.TestImage());
+			await CallUpdate(ResourceHelper.TestImage());
 
 			var result = queries.RevertToVersion(oldVer.Id);
 
@@ -423,14 +423,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Names() {
+		public async Task Update_Names() {
 			
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 
 			contract.Names.First().Value = "Replaced name";
 			contract.UpdateNotes = "Updated album";
 
-			contract = CallUpdate(contract);
+			contract = await CallUpdate(contract);
 			Assert.AreEqual(album.Id, contract.Id, "Update album Id as expected");
 
 			var albumFromRepo = repository.Load(contract.Id);
@@ -476,7 +476,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Tracks() {
+		public async Task Update_Tracks() {
 			
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			var existingSong = CreateEntry.Song(name: "Nebula");
@@ -487,7 +487,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				CreateSongInAlbumEditContract(2, songName: "Anger")
 			};
 
-			contract = CallUpdate(contract);
+			contract = await CallUpdate(contract);
 
 			var albumFromRepo = repository.Load(contract.Id);
 
@@ -507,7 +507,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Discs() {
+		public async Task Update_Discs() {
 
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			repository.Save(CreateEntry.AlbumDisc(album));
@@ -517,7 +517,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				new AlbumDiscPropertiesContract { Id = 2, Name = "Present" }
 			};
 
-			contract = CallUpdate(contract);
+			contract = await CallUpdate(contract);
 
 			var albumFromRepo = repository.Load(contract.Id);
 			Assert.AreEqual(2, albumFromRepo.Discs.Count, "Number of discs");
@@ -538,9 +538,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_CoverPicture() {
+		public async Task Update_CoverPicture() {
 			
-			var contract = CallUpdate(ResourceHelper.TestImage());
+			var contract = await CallUpdate(ResourceHelper.TestImage());
 
 			var albumFromRepo = repository.Load(contract.Id);
 
@@ -560,7 +560,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Artists() {
+		public async Task Update_Artists() {
 			
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			contract.ArtistLinks = new [] {
@@ -568,7 +568,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				CreateArtistForAlbumContract(artistId: vocalist.Id)
 			};
 
-			contract = CallUpdate(contract);
+			contract = await CallUpdate(contract);
 
 			var albumFromRepo = repository.Load(contract.Id);
 
@@ -586,14 +586,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Artists_CustomArtist() {
+		public async Task Update_Artists_CustomArtist() {
 			
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			contract.ArtistLinks = new [] {
 				CreateArtistForAlbumContract(customArtistName: "Custom artist", roles: ArtistRoles.Composer)
 			};
 
-			contract = CallUpdate(contract);
+			contract = await CallUpdate(contract);
 
 			var albumFromRepo = repository.Load(contract.Id);
 
@@ -609,14 +609,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Artists_Notify() {
+		public async Task Update_Artists_Notify() {
 			
 			Save(user2.AddArtist(vocalist));
 
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.Default, new InMemoryImagePersister());
 			contract.ArtistLinks = contract.ArtistLinks.Concat(new [] { CreateArtistForAlbumContract(vocalist.Id)}).ToArray();
 
-			queries.UpdateBasicProperties(contract, null);
+			await queries.UpdateBasicProperties(contract, null);
 
 			var notification = repository.List<UserMessage>().FirstOrDefault();
 

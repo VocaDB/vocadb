@@ -822,11 +822,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public AlbumForEditContract UpdateBasicProperties(AlbumForEditContract properties, EntryPictureFileContract pictureData) {
+		public async Task<AlbumForEditContract> UpdateBasicProperties(AlbumForEditContract properties, EntryPictureFileContract pictureData) {
 
 			ParamIs.NotNull(() => properties);
 
-			return repository.HandleTransaction(session => {
+			return await repository.HandleTransactionAsync(async session => {
 
 				var album = session.Load(properties.Id);
 
@@ -1010,7 +1010,7 @@ namespace VocaDb.Model.Database.Queries {
 					var addedArtists = artistsDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 
 					if (addedArtists.Any()) {
-						followedArtistNotifier.SendNotifications(session, album, addedArtists, PermissionContext.LoggedUser);
+						await followedArtistNotifier.SendNotificationsAsync(session, album, addedArtists, PermissionContext.LoggedUser);
 					}
 
 				}
