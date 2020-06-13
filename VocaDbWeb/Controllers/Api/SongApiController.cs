@@ -592,25 +592,25 @@ namespace VocaDb.Web.Controllers.Api {
 		[System.Web.Http.Route("{id:int}/pvs")]
 		[System.Web.Http.Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public void PostPVs(int id, PVContract[] pvs) {
+		public async Task PostPVs(int id, PVContract[] pvs) {
 
-			queries.HandleTransaction(ctx => {
+			await queries.HandleTransaction(async ctx => {
 
-				var song = ctx.Load(id);
+				var song = await ctx.LoadAsync(id);
 
 				EntryPermissionManager.VerifyEdit(userPermissionContext, song);
 
 				var diff = new SongDiff();
 
-				var pvDiff = queries.UpdatePVs(ctx, song, diff, pvs);
+				var pvDiff = await queries.UpdatePVs(ctx, song, diff, pvs);
 
 				if (pvDiff.Changed) {
 
 					var logStr = string.Format("updated PVs for song {0}", entryLinkFactory.CreateEntryLink(song)).Truncate(400);
 
-					queries.Archive(ctx, song, diff, SongArchiveReason.PropertiesUpdated, string.Empty);
-					ctx.Update(song);
-					ctx.AuditLogger.AuditLog(logStr);
+					await queries.ArchiveAsync(ctx, song, diff, SongArchiveReason.PropertiesUpdated, string.Empty);
+					await ctx.UpdateAsync(song);
+					await ctx.AuditLogger.AuditLogAsync(logStr);
 
 				}
 

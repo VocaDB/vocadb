@@ -1067,11 +1067,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public CollectionDiffWithValue<PVForSong, PVForSong> UpdatePVs(IDatabaseContext<Song> ctx, Song song, SongDiff diff, IList<PVContract> pvs) {
+		public async Task<CollectionDiffWithValue<PVForSong, PVForSong>> UpdatePVs(IDatabaseContext<Song> ctx, Song song, SongDiff diff, IList<PVContract> pvs) {
 
 			var oldPublishDate = song.PublishDate;
 			var pvDiff = song.SyncPVs(pvs);
-			ctx.OfType<PVForSong>().Sync(pvDiff);
+			await ctx.OfType<PVForSong>().SyncAsync(pvDiff);
 
 			if (pvDiff.Changed) {
 				diff.PVs.Set();
@@ -1086,15 +1086,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public SongForEditContract UpdateBasicProperties(SongForEditContract properties) {
+		public async Task<SongForEditContract> UpdateBasicProperties(SongForEditContract properties) {
 
 			ParamIs.NotNull(() => properties);
 
 			VerifyManageDatabase();
 
-			return repository.HandleTransaction(ctx => {
+			return await repository.HandleTransactionAsync(async ctx => {
 
-				var song = ctx.Load(properties.Id);
+				var song = await ctx.LoadAsync(properties.Id);
 
 				VerifyEntryEdit(song);
 
@@ -1128,13 +1128,13 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var nameDiff = song.Names.Sync(properties.Names, song);
-				ctx.OfType<SongName>().Sync(nameDiff);
+				await ctx.OfType<SongName>().SyncAsync(nameDiff);
 
 				if (nameDiff.Changed)
 					diff.Names.Set();
 
 				var webLinkDiff = WebLink.Sync(song.WebLinks, properties.WebLinks, song);
-				ctx.OfType<SongWebLink>().Sync(webLinkDiff);
+				await ctx.OfType<SongWebLink>().SyncAsync(webLinkDiff);
 
 				if (webLinkDiff.Changed)
 					diff.WebLinks.Set();
@@ -1164,10 +1164,10 @@ namespace VocaDb.Model.Database.Queries {
 					diff.PublishDate.Set();
 				}
 
-				UpdatePVs(ctx, song, diff, properties.PVs);
+				await UpdatePVs(ctx, song, diff, properties.PVs);
 
 				var lyricsDiff = song.SyncLyrics(properties.Lyrics);
-				ctx.OfType<LyricsForSong>().Sync(lyricsDiff);
+				await ctx.OfType<LyricsForSong>().SyncAsync(lyricsDiff);
 
 				if (lyricsDiff.Changed)
 					diff.Lyrics.Set();
@@ -1177,14 +1177,14 @@ namespace VocaDb.Model.Database.Queries {
 					.Truncate(400);
 
 				var archived = Archive(ctx, song, diff, SongArchiveReason.PropertiesUpdated, properties.UpdateNotes);
-				ctx.Update(song);
+				await ctx.UpdateAsync(song);
 
-				ctx.AuditLogger.AuditLog(logStr);
+				await ctx.AuditLogger.AuditLogAsync(logStr);
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Updated, archived);
 
 				var newPVCutoff = TimeSpan.FromDays(7);
 				if (oldPvCount == 0 && song.PVs.OfType(PVType.Original).Any() && song.CreateDate <= DateTime.Now - newPVCutoff) {
-					followedArtistNotifier.SendNotifications(ctx, song, song.ArtistList, PermissionContext.LoggedUser);
+					await followedArtistNotifier.SendNotificationsAsync(ctx, song, song.ArtistList, PermissionContext.LoggedUser);
 				}
 
 				var newSongCutoff = TimeSpan.FromHours(1);
@@ -1193,7 +1193,7 @@ namespace VocaDb.Model.Database.Queries {
 					var addedArtists = artistsDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 
 					if (addedArtists.Any()) {
-						followedArtistNotifier.SendNotifications(ctx, song, addedArtists, PermissionContext.LoggedUser);
+						await followedArtistNotifier.SendNotificationsAsync(ctx, song, addedArtists, PermissionContext.LoggedUser);
 					}
 
 				}

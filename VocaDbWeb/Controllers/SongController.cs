@@ -221,7 +221,7 @@ namespace VocaDb.Web.Controllers
         // POST: /Song/Edit/5
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(SongEditViewModel viewModel)
+        public async Task<ActionResult> Edit(SongEditViewModel viewModel)
         {
 
 			// Unable to continue if viewmodel is null because we need the ID at least
@@ -252,7 +252,7 @@ namespace VocaDb.Web.Controllers
 					PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), InstrumentalTagId, model)));
 			}
 
-			queries.UpdateBasicProperties(model);
+			await queries.UpdateBasicProperties(model);
 
 			return RedirectToAction("Details", new { id = model.Id, albumId = viewModel.AlbumId });
 

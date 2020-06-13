@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.ReleaseEvents;
@@ -35,13 +36,13 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()));
 		}
 
-		private SongForEditContract Update(SongForEditContract contract) {
+		private async Task<SongForEditContract> Update(SongForEditContract contract) {
 
-			return context.RunTest(repository => {
+			return await context.RunTestAsync(async repository => {
 
 				var queries = Queries(repository);
 
-				var updated = queries.UpdateBasicProperties(contract);
+				var updated = await queries.UpdateBasicProperties(contract);
 
 				return queries.GetSongForEdit(updated.Id);
 
@@ -51,7 +52,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void Update_ReleaseEvent_Remove() {
+		public async Task Update_ReleaseEvent_Remove() {
 
 			// Preconditions (arrange)
 			Assert.IsNotNull(Db.Song.ReleaseEvent, "ReleaseEvent");
@@ -62,11 +63,11 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 				ReleaseEvent = null
 			};
 
-			context.RunTest(repository => {
+			await context.RunTestAsync(async repository => {
 
 				var queries = Queries(repository);
 
-				var updated = queries.UpdateBasicProperties(contract);
+				var updated = await queries.UpdateBasicProperties(contract);
 
 				// Assert
 				Assert.IsNull(updated.ReleaseEvent, "Release event was cleared");
@@ -79,9 +80,9 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void Update_ReleaseEvent_Change() {
+		public async Task Update_ReleaseEvent_Change() {
 
-			context.RunTest(repository => {
+			await context.RunTestAsync(async repository => {
 
 				var queries = Queries(repository);
 
@@ -92,7 +93,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 					ReleaseEvent = newEvent
 				};
 
-				var updated = queries.UpdateBasicProperties(contract);
+				var updated = await queries.UpdateBasicProperties(contract);
 
 				// Assert
 				Assert.AreEqual(newEvent.Id, updated.ReleaseEvent?.Id, "Release event was changed");
@@ -105,13 +106,13 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void Update_Lyrics() {
+		public async Task Update_Lyrics() {
 
 			var contract = new SongForEditContract(Db.Song2, ContentLanguagePreference.English) {
 				Lyrics = new[] { CreateEntry.LyricsForSongContract(TranslationType.Original) }
 			};
 
-			var song = Update(contract);
+			var song = await Update(contract);
 
 			Assert.AreEqual(1, song.Lyrics.Length, "Lyrics created");
 
