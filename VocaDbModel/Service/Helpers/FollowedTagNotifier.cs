@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NHibernate.Exceptions;
 using NLog;
 using VocaDb.Model.Database.Repositories;
@@ -49,6 +51,19 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
+		[Obsolete]
+		public void SendNotifications(IDatabaseContext ctx, IEntryWithNames entry,
+			IEnumerable<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
+			IEnumTranslations enumTranslations) {
+
+			try {
+				DoSendNotifications(ctx, entry, tags, ignoreUsers, entryLinkFactory, enumTranslations);
+			} catch (GenericADOException x) {
+				log.Error(x, "Unable to send notifications");
+			}
+
+		}
+
 		/// <summary>
 		/// Sends notifications
 		/// </summary>
@@ -57,12 +72,12 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="artists">List of artists for the entry. Cannot be null.</param>
 		/// <param name="creator">User who created the entry. The creator will be excluded from all notifications. Cannot be null.</param>
 		/// <param name="entryLinkFactory">Factory for creating links to entries. Cannot be null.</param>
-		public void SendNotifications(IDatabaseContext ctx, IEntryWithNames entry,
+		public async Task SendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry,
 			IEnumerable<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
 			IEnumTranslations enumTranslations) {
 
 			try {
-				DoSendNotifications(ctx, entry, tags, ignoreUsers, entryLinkFactory, enumTranslations);
+				await DoSendNotificationsAsync(ctx, entry, tags, ignoreUsers, entryLinkFactory, enumTranslations);
 			} catch (GenericADOException x) {
 				log.Error(x, "Unable to send notifications");
 			}
@@ -141,6 +156,82 @@ namespace VocaDb.Model.Service.Helpers {
 			}
 
 			log.Info($"Sent notifications to {users.Length} users");
+
+		}
+
+		private async Task DoSendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry,
+			IEnumerable<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
+			IEnumTranslations enumTranslations) {
+
+			ParamIs.NotNull(() => ctx);
+			ParamIs.NotNull(() => entry);
+			ParamIs.NotNull(() => tags);
+			ParamIs.NotNull(() => ignoreUsers);
+			ParamIs.NotNull(() => entryLinkFactory);
+
+			var coll = tags.Distinct().ToArray();
+			var tagIds = coll.Select(a => a.Id).ToArray();
+
+			log.Info("Sending notifications for {0} tags", tagIds.Length);
+
+			// Get users with less than maximum number of unread messages, following any of the tags
+			var usersWithTagsArr = await ctx.Query<TagForUser>()
+				.Where(afu =>
+					tagIds.Contains(afu.Tag.Id))
+				.Select(afu => new {
+					UserId = afu.User.Id,
+					TagId = afu.Tag.Id
+				})
+				.VdbToListAsync();
+
+			var usersWithTags = usersWithTagsArr
+				.GroupBy(afu => afu.UserId)
+				.ToDictionary(afu => afu.Key, afu => afu.Select(a => a.TagId));
+
+			var userIds = usersWithTags.Keys.Except(ignoreUsers).ToArray();
+
+			log.Debug("Found {0} users subscribed to tags", userIds.Length);
+
+			if (!userIds.Any())
+				return;
+
+			var entryTypeNames = enumTranslations.Translations<EntryType>();
+			var users = await ctx.Query<User>()
+				.WhereIsActive()
+				.WhereIdIn(userIds)
+				.Where(u => u.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < u.Options.UnreadNotificationsToKeep)
+				.VdbToListAsync();
+
+			foreach (var user in users) {
+
+				var tagIdsForUser = new HashSet<int>(usersWithTags[user.Id]);
+				var followedTags = coll.Where(a => tagIdsForUser.Contains(a.Id)).ToArray();
+
+				if (followedTags.Length == 0)
+					continue;
+
+				string title;
+
+				var entryTypeName = entryTypeNames.GetName(entry.EntryType, CultureHelper.GetCultureOrDefault(user.LanguageOrLastLoginCulture)).ToLowerInvariant();
+				var msg = CreateMessageBody(followedTags, user, entry, entryLinkFactory, true, entryTypeName);
+
+				if (followedTags.Length == 1) {
+
+					var artistName = followedTags.First().TranslatedName[user.DefaultLanguageSelection];
+					title = string.Format("New {0} tagged with {1}", entryTypeName, artistName);
+
+				} else {
+
+					title = string.Format("New {0}", entryTypeName);
+
+				}
+
+				var notification = user.CreateNotification(title, msg);
+				await ctx.SaveAsync(notification);
+
+			}
+
+			log.Info($"Sent notifications to {users.Count} users");
 
 		}
 
