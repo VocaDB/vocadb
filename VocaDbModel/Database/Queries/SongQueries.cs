@@ -423,7 +423,7 @@ namespace VocaDb.Model.Database.Queries {
 				var notifiedUsers = await followedArtistNotifier.SendNotificationsAsync(ctx, song, song.ArtistList, user);
 
 				if (addedTags != null && addedTags.Length > 0) {
-					new FollowedTagNotifier().SendNotifications(ctx, song, addedTags, notifiedUsers.Select(u => u.Id).Concat(new[] { user.Id }).ToArray(), entryLinkFactory, enumTranslations);
+					await new FollowedTagNotifier().SendNotificationsAsync(ctx, song, addedTags, notifiedUsers.Select(u => u.Id).Concat(new[] { user.Id }).ToArray(), entryLinkFactory, enumTranslations);
 				}
 
 				return new SongContract(song, PermissionContext.LanguagePreference);

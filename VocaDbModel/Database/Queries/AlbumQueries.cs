@@ -272,10 +272,21 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public async Task<ArchivedAlbumVersion> ArchiveAsync(IDatabaseContext<Album> ctx, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "") {
+
+			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
+			var archived = ArchivedAlbumVersion.Create(album, diff, agentLoginData, reason, notes);
+			await ctx.SaveAsync(archived);
+			return archived;
+
+		}
+
 		public ArchivedAlbumVersion Archive(IDatabaseContext<Album> ctx, Album album, AlbumArchiveReason reason, string notes = "") {
-
 			return Archive(ctx, album, new AlbumDiff(), reason, notes);
+		}
 
+		public async Task<ArchivedAlbumVersion> ArchiveAsync(IDatabaseContext<Album> ctx, Album album, AlbumArchiveReason reason, string notes = "") {
+			return await ArchiveAsync(ctx, album, new AlbumDiff(), reason, notes);
 		}
 
 		public ICommentQueries Comments(IDatabaseContext<Album> ctx) {
@@ -309,10 +320,10 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				album.UpdateArtistString();
-				var archived = Archive(ctx, album, AlbumArchiveReason.Created);
+				var archived = await ArchiveAsync(ctx, album, AlbumArchiveReason.Created);
 				await ctx.UpdateAsync(album);
 
-				ctx.AuditLogger.AuditLog(string.Format("created album {0} ({1})", entryLinkFactory.CreateEntryLink(album), album.DiscType));
+				await ctx.AuditLogger.AuditLogAsync(string.Format("created album {0} ({1})", entryLinkFactory.CreateEntryLink(album), album.DiscType));
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), album, EntryEditEvent.Created, archived);
 
 				await followedArtistNotifier.SendNotificationsAsync(ctx, album, album.ArtistList, PermissionContext.LoggedUser);
