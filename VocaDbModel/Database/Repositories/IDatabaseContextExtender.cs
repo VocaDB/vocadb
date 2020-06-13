@@ -62,6 +62,14 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
+		public static async Task<User> GetLoggedUserAsync(this IDatabaseContext<User> ctx, IUserPermissionContext permissionContext) {
+
+			permissionContext.VerifyLogin();
+
+			return await ctx.LoadAsync(permissionContext.LoggedUserId);
+
+		}
+
 		public static User GetLoggedUserOrNull(this IDatabaseContext<User> ctx, IUserPermissionContext permissionContext) {
 
 			return (permissionContext.LoggedUser != null ? ctx.Load(permissionContext.LoggedUser.Id) : null);
@@ -122,6 +130,22 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
+		public static async Task SyncAsync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff) {
+
+			ParamIs.NotNull(() => ctx);
+			ParamIs.NotNull(() => diff);
+
+			foreach (var n in diff.Removed)
+				await ctx.DeleteAsync(n);
+
+			foreach (var n in diff.Added)
+				await ctx.SaveAsync(n);
+
+			foreach (var n in diff.Unchanged)
+				await ctx.UpdateAsync(n);
+
+		}
+
 		/// <summary>
 		/// Synchronizes the given changes to database, meaning calls
 		/// insert, update and delete as appropriate.
@@ -141,6 +165,16 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
+		public static async Task<CollectionDiff<T2, T2>> SyncAsync<T, T2>(this IDatabaseContext<T> ctx, CollectionDiff<T2, T2> diff)
+			where T2 : class, IDatabaseObject {
+
+			ParamIs.NotNull(() => ctx);
+
+			await SyncAsync<T2>(ctx.OfType<T2>(), diff);
+			return diff;
+
+		}
+
 		public static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiffWithValue<T, T> diff) {
 
 			ParamIs.NotNull(() => ctx);
@@ -154,6 +188,22 @@ namespace VocaDb.Model.Database.Repositories {
 
 			foreach (var n in diff.Edited)
 				ctx.Update(n);
+
+		}
+
+		public static async Task SyncAsync<T>(this IDatabaseContext<T> ctx, CollectionDiffWithValue<T, T> diff) {
+
+			ParamIs.NotNull(() => ctx);
+			ParamIs.NotNull(() => diff);
+
+			foreach (var n in diff.Removed)
+				await ctx.DeleteAsync(n);
+
+			foreach (var n in diff.Added)
+				await ctx.SaveAsync(n);
+
+			foreach (var n in diff.Edited)
+				await ctx.UpdateAsync(n);
 
 		}
 

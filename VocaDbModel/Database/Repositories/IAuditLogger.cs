@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
@@ -27,6 +28,8 @@ namespace VocaDb.Model.Database.Repositories {
 		void AuditLog(string doingWhat, string who, AuditLogCategory category = AuditLogCategory.Unspecified);
 
 		void AuditLog(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null);
+
+		Task AuditLogAsync(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null);
 
 	}
 }

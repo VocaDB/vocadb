@@ -1,4 +1,5 @@
 using NLog;
+using System.Threading.Tasks;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
@@ -95,6 +96,16 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 			var entry = new AuditLogEntry(agentLoginData, doingWhat, category, entryId ?? GlobalEntryId.Empty);
 
 			Ctx.Save(entry);
+
+		}
+
+		public async Task AuditLogAsync(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null) {
+
+			var agentLoginData = CreateAgentLoginData(Ctx, PermissionContext, user);
+			SysLog(doingWhat, agentLoginData.Name);
+			var entry = new AuditLogEntry(agentLoginData, doingWhat, category, entryId ?? GlobalEntryId.Empty);
+
+			await Ctx.SaveAsync(entry);
 
 		}
 

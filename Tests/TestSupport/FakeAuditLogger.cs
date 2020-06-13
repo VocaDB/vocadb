@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using VocaDb.Model;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
@@ -34,6 +35,11 @@ namespace VocaDb.Tests.TestSupport {
 
 		public void SysLog(string doingWhat, string who) {
 			Console.WriteLine(GetAuditLogMessage(doingWhat, who));
+		}
+
+		public Task AuditLogAsync(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null) {
+			AuditLog(doingWhat, user, category, entryId);
+			return Task.CompletedTask;
 		}
 
 	}

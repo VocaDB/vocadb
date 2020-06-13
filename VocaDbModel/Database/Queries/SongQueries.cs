@@ -314,6 +314,15 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public async Task<ArchivedSongVersion> ArchiveAsync(IDatabaseContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
+
+			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
+			var archived = ArchivedSongVersion.Create(song, diff, agentLoginData, reason, notes);
+			await ctx.SaveAsync(archived);
+			return archived;
+
+		}
+
 		public ArchivedSongVersion Archive(IDatabaseContext<Song> ctx, Song song, SongArchiveReason reason, string notes = "") {
 
 			return Archive(ctx, song, new SongDiff(), reason, notes);
@@ -347,16 +356,17 @@ namespace VocaDb.Model.Database.Queries {
 
 				song.Names.Init(contract.Names, song);
 
-				ctx.Save(song);
+				await ctx.SaveAsync(song);
 
 				foreach (var artistContract in contract.Artists) {
 
 					if (artistContract.Artist != null) {
-						var artist = ctx.OfType<Artist>().Load(artistContract.Artist.Id);
-						if (!song.HasArtist(artist))
-							ctx.OfType<ArtistForSong>().Save(song.AddArtist(artist, artistContract.IsSupport, artistContract.Roles));
+						var artist = await ctx.LoadAsync<Artist>(artistContract.Artist.Id);
+						if (!song.HasArtist(artist)) {
+							await ctx.SaveAsync(song.AddArtist(artist, artistContract.IsSupport, artistContract.Roles));
+						}
 					} else {
-						ctx.OfType<ArtistForSong>().Save(song.AddArtist(artistContract.Name, artistContract.IsSupport, artistContract.Roles));
+						await ctx.SaveAsync(song.AddArtist(artistContract.Name, artistContract.IsSupport, artistContract.Roles));
 					}
 
 				}
@@ -379,11 +389,11 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var pvDiff = song.SyncPVs(pvs);
-				ctx.OfType<PVForSong>().Sync(pvDiff);
+				await ctx.SyncAsync(pvDiff);
 				diff.PVs.Set(pvs.Any());
 
 				if (contract.WebLinks != null) {
-					var weblinksDiff = ctx.Sync(WebLink.Sync(song.WebLinks, contract.WebLinks, song));
+					var weblinksDiff = await ctx.SyncAsync(WebLink.Sync(song.WebLinks, contract.WebLinks, song));
 					diff.WebLinks.Set(weblinksDiff.Changed);
 				}
 
@@ -397,20 +407,20 @@ namespace VocaDb.Model.Database.Queries {
 
 				song.UpdateArtistString();
 
-				var archived = Archive(ctx, song, diff, SongArchiveReason.Created, contract.UpdateNotes ?? string.Empty);
-				ctx.Update(song);
+				var archived = await ArchiveAsync(ctx, song, diff, SongArchiveReason.Created, contract.UpdateNotes ?? string.Empty);
+				await ctx.UpdateAsync(song);
 
 				var logStr = string.Format("created song {0} of type {1} ({2})", entryLinkFactory.CreateEntryLink(song), song.SongType, diff.ChangedFieldsString)
 					+ (!string.IsNullOrEmpty(contract.UpdateNotes) ? " " + HttpUtility.HtmlEncode(contract.UpdateNotes) : string.Empty)
 					.Truncate(400);
 
-				ctx.AuditLogger.AuditLog(logStr);
-				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Created, archived);
+				await ctx.AuditLogger.AuditLogAsync(logStr);
+				await AddEntryEditedEntryAsync(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Created, archived);
 
 				var user = PermissionContext.LoggedUser;
 
 				// Send notifications. Avoid sending notification to the same users twice.
-				var notifiedUsers = followedArtistNotifier.SendNotifications(ctx, song, song.ArtistList, user);
+				var notifiedUsers = await followedArtistNotifier.SendNotificationsAsync(ctx, song, song.ArtistList, user);
 
 				if (addedTags != null && addedTags.Length > 0) {
 					new FollowedTagNotifier().SendNotifications(ctx, song, addedTags, notifiedUsers.Select(u => u.Id).Concat(new[] { user.Id }).ToArray(), entryLinkFactory, enumTranslations);

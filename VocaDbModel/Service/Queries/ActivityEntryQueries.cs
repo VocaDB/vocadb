@@ -1,9 +1,11 @@
-﻿using System.Linq;
+using System.Linq;
+using System.Threading.Tasks;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Queries {
 
@@ -28,6 +30,20 @@ namespace VocaDb.Model.Service.Queries {
 				return;
 
 			ctx.Save(entry);
+
+		}
+
+		public async Task AddActivityfeedEntryAsync(ActivityEntry entry) {
+
+			var latestEntries = await ctx.Query()
+				.OrderByDescending(a => a.CreateDate)
+				.Take(10)   // time cutoff would be better instead of an arbitrary number of activity entries
+				.VdbToListAsync();
+
+			if (latestEntries.Any(e => e.IsDuplicate(entry)))
+				return;
+
+			await ctx.SaveAsync(entry);
 
 		}
 
