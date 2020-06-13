@@ -324,7 +324,7 @@ namespace VocaDb.Model.Database.Queries {
 				await ctx.UpdateAsync(album);
 
 				await ctx.AuditLogger.AuditLogAsync(string.Format("created album {0} ({1})", entryLinkFactory.CreateEntryLink(album), album.DiscType));
-				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), album, EntryEditEvent.Created, archived);
+				await AddEntryEditedEntryAsync(ctx.OfType<ActivityEntry>(), album, EntryEditEvent.Created, archived);
 
 				await followedArtistNotifier.SendNotificationsAsync(ctx, album, album.ArtistList, PermissionContext.LoggedUser);
 

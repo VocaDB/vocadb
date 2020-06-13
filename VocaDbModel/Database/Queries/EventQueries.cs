@@ -473,9 +473,9 @@ namespace VocaDb.Model.Database.Queries {
 
 					ev.Category = contract.Category;
 					ev.EndDate = contract.EndDate;
-					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
+					ev.SongList = await session.NullSafeLoadAsync<SongList>(contract.SongList);
 					ev.Status = contract.Status;
-					ev.SetVenue(session.NullSafeLoad<Venue>(contract.Venue));
+					ev.SetVenue(await session.NullSafeLoadAsync<Venue>(contract.Venue));
 					ev.VenueName = contract.VenueName;
 
 					if (contract.SongList != null) {
@@ -579,7 +579,7 @@ namespace VocaDb.Model.Database.Queries {
 						diff.VenueName.Set();
 					}
 
-					ev.SetSeries(session.NullSafeLoad<ReleaseEventSeries>(contract.Series));
+					ev.SetSeries(await session.NullSafeLoadAsync<ReleaseEventSeries>(contract.Series));
 					ev.Category = contract.Category;
 					ev.CustomName = contract.CustomName;
 					ev.Date = contract.Date;
@@ -587,10 +587,10 @@ namespace VocaDb.Model.Database.Queries {
 					ev.EndDate = contract.EndDate > contract.Date ? contract.EndDate : null;
 					ev.SeriesNumber = contract.SeriesNumber;
 					ev.SeriesSuffix = contract.SeriesSuffix;
-					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
+					ev.SongList = await session.NullSafeLoadAsync<SongList>(contract.SongList);
 					ev.Status = contract.Status;
 					ev.TranslatedName.DefaultLanguage = inheritedLanguage;
-					ev.SetVenue(session.NullSafeLoad<Venue>(contract.Venue));
+					ev.SetVenue(await session.NullSafeLoadAsync<Venue>(contract.Venue));
 					ev.VenueName = contract.VenueName;
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
