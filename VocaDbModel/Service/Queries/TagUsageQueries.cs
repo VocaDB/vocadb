@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Tags;
@@ -39,7 +40,7 @@ namespace VocaDb.Model.Service.Queries {
 			this.permissionContext = permissionContext;
 		}
 
-		public TagUsageForApiContract[] AddTags<TEntry, TTag>(int entryId, 
+		public async Task<TagUsageForApiContract[]> AddTags<TEntry, TTag>(int entryId, 
 			TagBaseContract[] tags, 
 			bool onlyAdd,
 			IRepository<User> repository,
@@ -59,7 +60,7 @@ namespace VocaDb.Model.Service.Queries {
 			if (onlyAdd && !tags.Any())
 				return new TagUsageForApiContract[0];
 
-			return repository.HandleTransaction(ctx => {
+			return await repository.HandleTransactionAsync(async ctx => {
 				
 				// Tags are primarily added by Id, secondarily by translated name.
 				// First separate given tags for tag IDs and tag names
@@ -67,18 +68,18 @@ namespace VocaDb.Model.Service.Queries {
 				var translatedTagNames = tags.Where(t => !HasId(t) && !string.IsNullOrEmpty(t.Name)).Select(t => t.Name).ToArray();
 
 				// Load existing tags by name and ID.
-				var tagsFromIds = ctx.Query<Tag>().Where(t => tagIds.Contains(t.Id)).ToArray();
+				var tagsFromIds = await ctx.Query<Tag>().Where(t => tagIds.Contains(t.Id)).VdbToListAsync();
 
-				var tagsFromNames = ctx.Query<Tag>().WhereHasName(translatedTagNames).ToArray();
+				var tagsFromNames = await ctx.Query<Tag>().WhereHasName(translatedTagNames).VdbToListAsync();
 
 				// Figure out tags that don't exist yet (no ID and no matching name).
 				var newTagNames = translatedTagNames.Except(tagsFromNames.SelectMany(t => t.Names.AllValues), StringComparer.InvariantCultureIgnoreCase).ToArray();
 
-				var user = ctx.OfType<User>().GetLoggedUser(permissionContext);
+				var user = await ctx.OfType<User>().GetLoggedUserAsync(permissionContext);
 				var tagFactory = new TagFactoryRepository(ctx.OfType<Tag>(), new AgentLoginData(user));
-				var newTags = newTagNames.Select(t => tagFactory.CreateTag(t)).ToArray();
+				var newTags = await tagFactory.CreateTagsAsync(newTagNames);
 
-				var entry = ctx.OfType<TEntry>().Load(entryId);
+				var entry = await ctx.LoadAsync<TEntry>(entryId);
 
 				// Get the final list of tag names with translations
 				var appliedTags = tagsFromNames
@@ -91,20 +92,20 @@ namespace VocaDb.Model.Service.Queries {
 				var tagUsageFactory = tagUsageFactoryFactory(entry, ctx.OfType<TTag>());
 
 				var tagNames = appliedTags.Select(t => t.DefaultName);
-				ctx.AuditLogger.AuditLog(string.Format("tagging {0} with {1}",
+				await ctx.AuditLogger.AuditLogAsync(string.Format("tagging {0} with {1}",
 					entryLinkFactory.CreateEntryLink(entry), string.Join(", ", tagNames)), user);
 
 				var addedTags = appliedTags.Except(entry.Tags.Tags).ToArray();
 
 				if (entry.AllowNotifications) {
-					new FollowedTagNotifier().SendNotifications(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
+					await new FollowedTagNotifier().SendNotificationsAsync(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
 				}
 
 				var updatedTags = tagFunc(entry).SyncVotes(user, appliedTags, tagUsageFactory, onlyAdd: onlyAdd);
 				var tagCtx = ctx.OfType<Tag>();
 
 				foreach (var tag in updatedTags)
-					tagCtx.Update(tag);
+					await tagCtx.UpdateAsync(tag);
 
 				RecomputeTagUsagesCounts(tagCtx, updatedTags);
 

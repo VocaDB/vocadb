@@ -88,9 +88,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create() {
+		public async Task Create() {
 
-			var result = queries.Create("Apimiku");
+			var result = await queries.Create("Apimiku");
 
 			Assert.AreEqual("Apimiku", result.Name, "Created tag name");
 			var tagFromRepo = repository.Load(result.Id);
@@ -100,9 +100,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateTagNameException))]
-		public void Create_Duplicate() {
+		public async Task Create_Duplicate() {
 
-			queries.Create("Appearance Miku");
+			await queries.Create("Appearance Miku");
 
 		}
 

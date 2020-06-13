@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
@@ -293,10 +294,10 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <response code="400">If tag name is already in use</response>
 		[Route("")]
 		[Authorize]
-		public TagBaseContract PostNewTag(string name) {
+		public async Task<TagBaseContract> PostNewTag(string name) {
 
 			try {
-				return queries.Create(name);				
+				return await queries.Create(name);				
 			} catch (DuplicateTagNameException) {
 				throw new HttpBadRequestException("Tag name is already in use");
 			}

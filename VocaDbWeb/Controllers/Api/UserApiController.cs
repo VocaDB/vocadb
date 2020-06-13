@@ -751,7 +751,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("current/albumTags/{albumId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public TagUsageForApiContract[] PutAlbumTags(int albumId, TagBaseContract[] tags) {
+		public Task<TagUsageForApiContract[]> PutAlbumTags(int albumId, TagBaseContract[] tags) {
 			
 			if (tags == null)
 				throw new HttpBadRequestException();
@@ -763,7 +763,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("current/artistTags/{artistId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public TagUsageForApiContract[] PutArtistTags(int artistId, TagBaseContract[] tags) {
+		public Task<TagUsageForApiContract[]> PutArtistTags(int artistId, TagBaseContract[] tags) {
 			
 			if (tags == null)
 				throw new HttpBadRequestException();
@@ -775,7 +775,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("current/eventTags/{eventId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public TagUsageForApiContract[] PutEventTags(int eventId, TagBaseContract[] tags) {
+		public Task<TagUsageForApiContract[]> PutEventTags(int eventId, TagBaseContract[] tags) {
 
 			if (tags == null)
 				throw new HttpBadRequestException();
@@ -787,7 +787,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("current/eventSeriesTags/{seriesId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public TagUsageForApiContract[] PutEventSeriesTags(int seriesId, TagBaseContract[] tags) {
+		public Task<TagUsageForApiContract[]> PutEventSeriesTags(int seriesId, TagBaseContract[] tags) {
 
 			if (tags == null)
 				throw new HttpBadRequestException();
@@ -799,7 +799,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("current/songListTags/{songListId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public TagUsageForApiContract[] PutSongListTags(int songListId, TagBaseContract[] tags) {
+		public Task<TagUsageForApiContract[]> PutSongListTags(int songListId, TagBaseContract[] tags) {
 
 			if (tags == null)
 				throw new HttpBadRequestException();
@@ -821,19 +821,19 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("current/songTags/{songId:int}")]
 		[Authorize]
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
-		public void PostSongTags(int songId, TagBaseContract[] tags) {
+		public Task PostSongTags(int songId, TagBaseContract[] tags) {
 			
 			if (tags == null)
 				throw new HttpBadRequestException();
 
-			queries.SaveSongTags(songId, tags, true);
+			return queries.SaveSongTags(songId, tags, true);
 
 		}
 
 		[Route("current/songTags/{songId:int}")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public TagUsageForApiContract[] PutSongTags(int songId, TagBaseContract[] tags) {
+		public Task<TagUsageForApiContract[]> PutSongTags(int songId, TagBaseContract[] tags) {
 			
 			if (tags == null)
 				throw new HttpBadRequestException();
