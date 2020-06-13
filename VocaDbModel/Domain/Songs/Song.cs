@@ -22,6 +22,7 @@ using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Model.Service;
+using System.Threading.Tasks;
 
 namespace VocaDb.Model.Domain.Songs {
 
@@ -711,7 +712,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual CollectionDiff<ArtistForSong, ArtistForSong> SyncArtists(IEnumerable<ArtistContract> newArtists, Func<ArtistContract[], Artist[]> artistGetter) {
+		public virtual async Task<CollectionDiff<ArtistForSong, ArtistForSong>> SyncArtists(IEnumerable<ArtistContract> newArtists, Func<ArtistContract[], Task<List<Artist>>> artistGetter) {
 
 			var realArtists = Artists.Where(a => a.Artist != null).ToArray();
 			var artistDiff = CollectionHelper.Diff(realArtists, newArtists, (a, a2) => a.Artist.Id == a2.Id);
@@ -719,7 +720,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 			if (artistDiff.Added.Any()) {
 
-				var addedArtists = artistGetter(artistDiff.Added);
+				var addedArtists = await artistGetter(artistDiff.Added);
 
 				foreach (var artist in addedArtists) {
 					if (!HasArtist(artist)) {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.PVs;
@@ -208,12 +209,12 @@ namespace VocaDb.Tests.Domain.Songs {
 		/// Extra artists (just name, no entry) will not be removed when syncing with real artists.
 		/// </summary>
 		[TestMethod]
-		public void SyncArtists_WillNotRemoveExtraArtists() {
+		public async Task SyncArtists_WillNotRemoveExtraArtists() {
 
 			var link = song.AddArtist("Extra artist", false, ArtistRoles.Composer);
 			var newArtists = new[] { new ArtistContract(artist, ContentLanguagePreference.Default) };
 
-			song.SyncArtists(newArtists, ac => new[] { artist });
+			await song.SyncArtists(newArtists, ac => Task.FromResult(new List<Artist> { artist }));
 
 			Assert.AreEqual(2, song.AllArtists.Count, "artists count");
 			Assert.IsTrue(song.HasArtistLink(link), "Still has the extra artist");
