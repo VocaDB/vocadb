@@ -26,6 +26,7 @@ using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
 using VocaDb.Model.Domain.Images;
+using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers
 {
@@ -219,7 +220,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Create(Create model) {
+		public async Task<ActionResult> Create(Create model) {
 
 			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji) 
 				&& string.IsNullOrWhiteSpace(model.NameEnglish))
@@ -233,7 +234,7 @@ namespace VocaDb.Web.Controllers
 
 			var contract = model.ToContract();
 
-			var album = queries.Create(contract);
+			var album = await queries.Create(contract);
 			return RedirectToAction("Edit", new { id = album.Id });
 
 		}

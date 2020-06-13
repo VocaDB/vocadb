@@ -140,9 +140,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create() {
+		public async Task Create() {
 
-			var result = queries.Create(newAlbumContract);
+			var result = await queries.Create(newAlbumContract);
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual("Another Dimensions", result.Name, "Name");
@@ -172,12 +172,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void Create_NoPermission() {
+		public async Task Create_NoPermission() {
 
 			user.GroupId = UserGroupId.Limited;
 			permissionContext.RefreshLoggedUser(repository);
 
-			queries.Create(newAlbumContract);
+			await queries.Create(newAlbumContract);
 
 		}
 

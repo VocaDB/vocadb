@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
@@ -38,6 +39,12 @@ namespace VocaDb.Model.Service {
 
 		}
 
+		protected async Task AddActivityfeedEntryAsync(IDatabaseContext<ActivityEntry> ctx, ActivityEntry entry) {
+
+			await new Queries.ActivityEntryQueries(ctx, PermissionContext).AddActivityfeedEntryAsync(entry);
+
+		}
+
 		protected void AddActivityfeedEntry(IDatabaseContext<ActivityEntry> ctx, Func<User, ActivityEntry> entryFunc) {
 
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
@@ -72,6 +79,14 @@ namespace VocaDb.Model.Service {
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
 			var activityEntry = new SongActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(ctx, activityEntry);
+
+		}
+
+		protected async Task AddEntryEditedEntryAsync(IDatabaseContext<ActivityEntry> ctx, Song entry, EntryEditEvent editEvent, ArchivedSongVersion archivedVersion) {
+
+			var user = await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext);
+			var activityEntry = new SongActivityEntry(entry, editEvent, user, archivedVersion);
+			await AddActivityfeedEntryAsync(ctx, activityEntry);
 
 		}
 

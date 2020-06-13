@@ -282,7 +282,7 @@ namespace VocaDb.Model.Database.Queries {
 			return new CommentQueries<AlbumComment, Album>(ctx.OfType<AlbumComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
-		public AlbumContract Create(CreateAlbumContract contract) {
+		public async Task<AlbumContract> Create(CreateAlbumContract contract) {
 
 			ParamIs.NotNull(() => contract);
 
@@ -291,7 +291,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			VerifyManageDatabase();
 
-			return repository.HandleTransaction(ctx => {
+			return await repository.HandleTransactionAsync(async ctx => {
 
 				ctx.AuditLogger.SysLog(string.Format("creating a new album with name '{0}'", contract.Names.First().Value));
 
@@ -299,22 +299,23 @@ namespace VocaDb.Model.Database.Queries {
 
 				album.Names.Init(contract.Names, album);
 
-				ctx.Save(album);
+				await ctx.SaveAsync(album);
 
 				foreach (var artistContract in contract.Artists) {
-					var artist = ctx.OfType<Artist>().Load(artistContract.Id);
-					if (!album.HasArtist(artist))
-						ctx.OfType<ArtistForAlbum>().Save(ctx.OfType<Artist>().Load(artist.Id).AddAlbum(album));
+					var artist = await ctx.LoadAsync<Artist>(artistContract.Id);
+					if (!album.HasArtist(artist)) {
+						await ctx.SaveAsync(artist.AddAlbum(album));
+					}
 				}
 
 				album.UpdateArtistString();
 				var archived = Archive(ctx, album, AlbumArchiveReason.Created);
-				ctx.Update(album);
+				await ctx.UpdateAsync(album);
 
 				ctx.AuditLogger.AuditLog(string.Format("created album {0} ({1})", entryLinkFactory.CreateEntryLink(album), album.DiscType));
 				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), album, EntryEditEvent.Created, archived);
 
-				followedArtistNotifier.SendNotifications(ctx, album, album.ArtistList, PermissionContext.LoggedUser);
+				await followedArtistNotifier.SendNotificationsAsync(ctx, album, album.ArtistList, PermissionContext.LoggedUser);
 
 				return new AlbumContract(album, PermissionContext.LanguagePreference);
 
