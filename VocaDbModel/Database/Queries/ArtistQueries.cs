@@ -574,7 +574,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				VerifyEntryEdit(artist);
 
-				var diff = new ArtistDiff(DoSnapshot(artist.GetLatestVersion(), ctx.OfType<User>().GetLoggedUser(permissionContext)));
+				var diff = new ArtistDiff(DoSnapshot(artist.GetLatestVersion(), await ctx.OfType<User>().GetLoggedUserAsync(permissionContext)));
 
 				ctx.AuditLogger.SysLog(string.Format("updating properties for {0}", artist));
 
@@ -621,11 +621,11 @@ namespace VocaDb.Model.Database.Queries {
 
 				if (!artist.BaseVoicebank.NullSafeIdEquals(properties.BaseVoicebank)) {
 					
-					var newBase = ctx.NullSafeLoad(properties.BaseVoicebank);
+					var newBase = await ctx.NullSafeLoadAsync(properties.BaseVoicebank);
 
 					if (artist.IsValidBaseVoicebank(newBase)) {
 						diff.BaseVoicebank.Set();
-						artist.SetBaseVoicebank(ctx.NullSafeLoad(properties.BaseVoicebank));
+						artist.SetBaseVoicebank(await ctx.NullSafeLoadAsync(properties.BaseVoicebank));
 					}
 
 				}

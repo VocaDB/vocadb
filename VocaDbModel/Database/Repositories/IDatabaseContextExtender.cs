@@ -102,6 +102,10 @@ namespace VocaDb.Model.Database.Repositories {
 			return entry != null && entry.Id != 0 ? ctx.Load(entry.Id) : default;
 		}
 
+		public static async Task<T> NullSafeLoadAsync<T>(this IDatabaseContext<T> ctx, IEntryWithIntId entry) {
+			return entry != null && entry.Id != 0 ? await ctx.LoadAsync(entry.Id) : default;
+		}
+
 		public static T NullSafeLoad<T>(this IDatabaseContext<T> ctx, int id) {
 			return id != 0 ? ctx.Load(id) : default;
 		}
@@ -112,6 +116,10 @@ namespace VocaDb.Model.Database.Repositories {
 
 		public static T NullSafeLoad<T>(this IDatabaseContext ctx, IEntryWithIntId entry) where T : class, IDatabaseObject {
 			return entry != null && entry.Id != 0 ? ctx.Load<T>(entry.Id) : default;
+		}
+
+		public static async Task<T> NullSafeLoadAsync<T>(this IDatabaseContext ctx, IEntryWithIntId entry) where T : class, IDatabaseObject {
+			return entry != null && entry.Id != 0 ? await ctx.LoadAsync<T>(entry.Id) : default;
 		}
 
 		public static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff) {
