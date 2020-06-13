@@ -124,6 +124,10 @@ namespace VocaDb.Model.Service {
 			session.AuditLogger.AuditLog(doingWhat, user, category);
 		}
 
+		protected Task AuditLogAsync(string doingWhat, IDatabaseContext<TEntity> session, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified) {
+			return session.AuditLogger.AuditLogAsync(doingWhat, user, category);
+		}
+
 		protected bool DoSnapshot(IEntryWithVersions entry, IDatabaseContext ctx) {
 
 			var latestVersion = entry.ArchivedVersionsManager.GetLatestVersion();

@@ -106,9 +106,9 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult RevertToVersion(int archivedArtistVersionId) {
+		public async Task<ActionResult> RevertToVersion(int archivedArtistVersionId) {
 
-			var result = queries.RevertToVersion(archivedArtistVersionId);
+			var result = await queries.RevertToVersion(archivedArtistVersionId);
 
 			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
 

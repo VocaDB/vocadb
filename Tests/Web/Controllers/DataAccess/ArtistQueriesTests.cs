@@ -269,7 +269,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			// Arrange
 			artist.Description.English = "Original";
-			var oldVer = repository.HandleTransaction(ctx => queries.Archive(ctx, artist, ArtistArchiveReason.PropertiesUpdated));
+			var oldVer = await repository.HandleTransactionAsync(ctx => queries.ArchiveAsync(ctx, artist, ArtistArchiveReason.PropertiesUpdated));
 			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English, new InMemoryImagePersister());
 			contract.Description.English = "Updated";
 			await CallUpdate(contract);
@@ -278,7 +278,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual("Updated", entryFromRepo.Description.English, "Description was updated");
 
 			// Act
-			var result = queries.RevertToVersion(oldVer.Id);			
+			var result = await queries.RevertToVersion(oldVer.Id);			
 
 			// Assert
 			Assert.AreEqual(0, result.Warnings.Length, "Number of warnings");
@@ -299,10 +299,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		[TestMethod]
 		public async Task Revert_RemoveImage() {
 
-			var oldVer = repository.HandleTransaction(ctx => queries.Archive(ctx, artist, ArtistArchiveReason.PropertiesUpdated));
+			var oldVer = await repository.HandleTransactionAsync(ctx => queries.ArchiveAsync(ctx, artist, ArtistArchiveReason.PropertiesUpdated));
 			await CallUpdate(ResourceHelper.TestImage());
 
-			var result = queries.RevertToVersion(oldVer.Id);
+			var result = await queries.RevertToVersion(oldVer.Id);
 
 			var entryFromRepo = repository.Load<Artist>(result.Id);
 			Assert.IsTrue(PictureData.IsNullOrEmpty(entryFromRepo.Picture), "Picture data was removed");
@@ -334,7 +334,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.IsNotNull(oldVer, "Old version was found");
 
 			// Act
-			var result = queries.RevertToVersion(oldVer.Id);
+			var result = await queries.RevertToVersion(oldVer.Id);
 
 			// Assert
 			entryFromRepo = repository.Load<Artist>(result.Id);
@@ -351,13 +351,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void Revert_NotAllowed() {
+		public async Task Revert_NotAllowed() {
 
 			// Regular users can't revert
 			user.GroupId = UserGroupId.Regular;
 			permissionContext.RefreshLoggedUser(repository);
 
-			queries.RevertToVersion(0);
+			await queries.RevertToVersion(0);
 
 		}
 

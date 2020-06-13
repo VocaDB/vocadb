@@ -32,6 +32,24 @@ namespace VocaDb.Model.Database.Repositories {
 
 		}
 
+		public static async Task<AgentLoginData> CreateAgentLoginDataAsync<T>(this IDatabaseContext<T> ctx, IUserPermissionContext permissionContext, User user = null) {
+
+			if (user != null)
+				return new AgentLoginData(user);
+
+			if (permissionContext.IsLoggedIn) {
+
+				user = await ctx.OfType<User>().GetLoggedUserAsync(permissionContext);
+				return new AgentLoginData(user);
+
+			} else {
+
+				return new AgentLoginData(permissionContext.Name);
+
+			}
+
+		}
+
 		public static void Delete<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject {
 			ctx.OfType<T>().Delete(obj);
 		}

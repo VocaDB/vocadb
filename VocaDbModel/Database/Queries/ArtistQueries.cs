@@ -177,21 +177,19 @@ namespace VocaDb.Model.Database.Queries {
 			return new CommentQueries<ArtistComment, Artist>(ctx.OfType<ArtistComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
-		public ArchivedArtistVersion Archive(IDatabaseContext<Artist> ctx, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "") {
+		public async Task<ArchivedArtistVersion> ArchiveAsync(IDatabaseContext<Artist> ctx, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "") {
 
 			ctx.AuditLogger.SysLog("Archiving " + artist);
 
-			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
+			var agentLoginData = await ctx.CreateAgentLoginDataAsync(PermissionContext);
 			var archived = ArchivedArtistVersion.Create(artist, diff, agentLoginData, reason, notes);
-			ctx.Save(archived);
+			await ctx.SaveAsync(archived);
 			return archived;
 
 		}
 
-		public ArchivedArtistVersion Archive(IDatabaseContext<Artist> ctx, Artist artist, ArtistArchiveReason reason, string notes = "") {
-
-			return Archive(ctx, artist, new ArtistDiff(), reason, notes);
-
+		public Task<ArchivedArtistVersion> ArchiveAsync(IDatabaseContext<Artist> ctx, Artist artist, ArtistArchiveReason reason, string notes = "") {
+			return ArchiveAsync(ctx, artist, new ArtistDiff(), reason, notes);
 		}
 
 		public async Task<ArtistContract> Create(CreateArtistContract contract) {
@@ -242,7 +240,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				var archived = Archive(ctx, artist, diff, ArtistArchiveReason.Created);
+				var archived = await ArchiveAsync(ctx, artist, diff, ArtistArchiveReason.Created);
 				await ctx.UpdateAsync(artist);
 
 				await ctx.AuditLogger.AuditLogAsync(string.Format("created artist {0} ({1})", entryLinkFactory.CreateEntryLink(artist), artist.ArtistType));
@@ -486,13 +484,13 @@ namespace VocaDb.Model.Database.Queries {
 		/// <param name="archivedArtistVersionId">Id of the archived version to be restored.</param>
 		/// <returns>Result of the revert operation, with possible warnings if any. Cannot be null.</returns>
 		/// <remarks>Requires the RestoreRevisions permission.</remarks>
-		public EntryRevertedContract RevertToVersion(int archivedArtistVersionId) {
+		public async Task<EntryRevertedContract> RevertToVersion(int archivedArtistVersionId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.RestoreRevisions);
 
-			return HandleTransaction(session => {
+			return await HandleTransactionAsync(async session => {
 
-				var archivedVersion = session.Load<ArchivedArtistVersion>(archivedArtistVersionId);
+				var archivedVersion = await session.LoadAsync<ArchivedArtistVersion>(archivedArtistVersionId);
 				var artist = archivedVersion.Artist;
 
 				session.AuditLogger.SysLog("reverting " + artist + " to version " + archivedVersion.Version);
@@ -545,17 +543,17 @@ namespace VocaDb.Model.Database.Queries {
 				// Names
 				if (fullProperties.Names != null) {
 					var nameDiff = artist.Names.SyncByContent(fullProperties.Names, artist);
-					session.Sync(nameDiff);
+					await session.SyncAsync(nameDiff);
 				}
 
 				// Weblinks
 				if (fullProperties.WebLinks != null) {
 					var webLinkDiff = WebLink.SyncByValue(artist.WebLinks, fullProperties.WebLinks, artist);
-					session.Sync(webLinkDiff);
+					await session.SyncAsync(webLinkDiff);
 				}
 
-				Archive(session, artist, diff, ArtistArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
-				AuditLog(string.Format("reverted {0} to revision {1}", entryLinkFactory.CreateEntryLink(artist), archivedVersion.Version), session);
+				await ArchiveAsync(session, artist, diff, ArtistArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
+				await AuditLogAsync(string.Format("reverted {0} to revision {1}", entryLinkFactory.CreateEntryLink(artist), archivedVersion.Version), session);
 
 				return new EntryRevertedContract(artist, warnings);
 
@@ -687,7 +685,7 @@ namespace VocaDb.Model.Database.Queries {
 					+ (properties.UpdateNotes != string.Empty ? " " + properties.UpdateNotes : string.Empty)
 					.Truncate(400);
 
-				var archived = Archive(ctx, artist, diff, ArtistArchiveReason.PropertiesUpdated, properties.UpdateNotes);
+				var archived = await ArchiveAsync(ctx, artist, diff, ArtistArchiveReason.PropertiesUpdated, properties.UpdateNotes);
 				await ctx.UpdateAsync(artist);
 
 				await ctx.AuditLogger.AuditLogAsync(logStr);
