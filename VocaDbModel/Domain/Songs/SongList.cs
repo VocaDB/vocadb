@@ -15,10 +15,12 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Songs {
 
-	public class SongList : IEntryWithNames, 
+	public class SongList : IEntryWithNames, ISongList,
 		IEntryWithVersions<ArchivedSongListVersion, SongListEditableFields>, 
 		IEntryWithComments<SongListComment>, IEntryWithStatus,
 		IEntryWithTags<SongListTagUsage> {
+
+		IUser ISongList.Author => Author;
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
@@ -164,7 +166,7 @@ namespace VocaDb.Model.Domain.Songs {
 		/// <summary>
 		/// Entry thumbnail picture. Can be null.
 		/// </summary>
-		public virtual EntryThumb Thumb { get; set; }
+		public virtual EntryThumbMain Thumb { get; set; }
 
 		public virtual int Version { get; set; }
 

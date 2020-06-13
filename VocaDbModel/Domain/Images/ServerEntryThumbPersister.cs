@@ -51,10 +51,16 @@ namespace VocaDb.Model.Domain.Images {
 
 		}
 
-		public override string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size) {
-			return VocaUriBuilder.StaticResource(GetRelativeUrl(picture, size));
+		public override VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size) {
+			return new VocaDbUrl(GetRelativeUrl(picture, size), UrlDomain.Static, UriKind.Relative);
 		}
 
+		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) {
+			return picture.EntryType == EntryType.ReleaseEvent || picture.EntryType == EntryType.ReleaseEventSeries
+				|| ((picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album) 
+					&& picture.PurposeMainOrUnspecified()
+					&& size != ImageSize.Original);
+		}
 	}
 
 }

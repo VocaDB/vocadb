@@ -7,7 +7,7 @@ namespace VocaDb.Model.DataContracts.Users {
 
 	public class EventForUserContract {
 
-		public static EventForUserContract CreateForUser(EventForUser link, ContentLanguagePreference languagePreference, ReleaseEventOptionalFields releaseEventFields, IEntryThumbPersister entryThumbPersister) {
+		public static EventForUserContract CreateForUser(EventForUser link, ContentLanguagePreference languagePreference, ReleaseEventOptionalFields releaseEventFields, IAggregatedEntryImageUrlFactory entryThumbPersister) {
 
 			return new EventForUserContract {
 				RelationshipType = link.RelationshipType,

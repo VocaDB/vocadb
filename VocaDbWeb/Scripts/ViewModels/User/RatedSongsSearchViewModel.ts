@@ -15,6 +15,8 @@ import SongApiContract from '../../DataContracts/Song/SongApiContract';
 import SongListBaseContract from '../../DataContracts/SongListBaseContract';
 import SongRepository from '../../Repositories/SongRepository';
 import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
+import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
+import TagFilter from '../Search/TagFilter';
 import TagFilters from '../Search/TagFilters';
 import TagRepository from '../../Repositories/TagRepository';
 import ui from '../../Shared/MessagesTyped';
@@ -90,6 +92,11 @@ import UserRepository from '../../Repositories/UserRepository';
 		public rating = ko.observable("Nothing");
 		public resources = ko.observable<any>();
 		public searchTerm = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
+
+		public selectTag = (tag: TagBaseContract) => {
+			this.tagFilters.tags([TagFilter.fromContract(tag)]);
+		}
+
 		public showTags = ko.observable(false);
 		public songListId = ko.observable<number>(undefined);
 		public songLists = ko.observableArray<SongListBaseContract>([]);

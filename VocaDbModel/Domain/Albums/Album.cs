@@ -157,8 +157,19 @@ namespace VocaDb.Model.Domain.Albums {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
+		/// <summary>
+		/// Album cover picture (main picture) as database BLOB.
+		/// Also contains optional thumbnail.
+		/// This field is lazy-loaded.
+		/// Can be null if there is no picture.
+		/// Try to avoid accessing this field directly to confirm whether picture exists. Instead, check the MIME.
+		/// </summary>
 		public virtual PictureData CoverPictureData { get; set; }
 
+		/// <summary>
+		/// Album cover picture (main picture) MIME.
+		/// Can be null if there is no picture.
+		/// </summary>
 		public virtual string CoverPictureMime { get; set; }
 
 		public virtual DateTime CreateDate { get; set; }
@@ -363,6 +374,8 @@ namespace VocaDb.Model.Domain.Albums {
 		}
 
 		ITagManager IEntryWithTags.Tags => Tags;
+
+		public virtual EntryThumbMain Thumb => !string.IsNullOrEmpty(CoverPictureMime) ? new EntryThumbMain(this, CoverPictureMime) : null;
 
 		public virtual IList<AlbumForUser> UserCollections {
 			get { return userCollections; }

@@ -19,9 +19,27 @@ import TagRepository from '../../Repositories/TagRepository';
 				this.categories[categoryName] = new FeaturedSongListCategoryViewModel(listRepo, resourceRepo, tagRepo, languageSelection, cultureCode, tagIds, categoryName);
 			});
 
+			window.onhashchange = () => {
+				if (window.location.hash && window.location.hash.length >= 1)
+					this.setCategory(window.location.hash.substr(1));
+			};
+
 		}
 
 		public categories: { [index: string]: FeaturedSongListCategoryViewModel; } = {};
+
+		public category = ko.observable("Concerts");
+
+		public setCategory = (categoryName: string) => {
+
+			if (!categoryName)
+				categoryName = "Concerts";
+
+			window.scrollTo(0, 0);
+			window.location.hash = categoryName;
+			this.category(categoryName);
+
+		}
 
 	}
 
@@ -39,9 +57,16 @@ import TagRepository from '../../Repositories/TagRepository';
 			super(resourceRepo, tagRepo, languageSelection, cultureCode, tagIds, category === "Concerts" || category === "VocaloidRanking");
 
 		}
-
+		
 		public loadMoreItems = (callback: (result: PartialFindResultContract<SongListContract>) => void) => {
-			this.listRepo.getFeatured(this.query(), this.category, { start: this.start, maxEntries: 50, getTotalCount: true }, this.tagFilters.tagIds(), this.sort(), callback);
+			this.listRepo.getFeatured(
+				this.query(),
+				this.category,
+				{ start: this.start, maxEntries: 50, getTotalCount: true },
+				this.tagFilters.tagIds(),
+				this.fields(),
+				this.sort(),
+				callback);
 		};
 
 	}

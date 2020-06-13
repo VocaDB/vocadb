@@ -35,7 +35,6 @@ namespace VocaDb.Model.Mapping.Albums {
 
 			Component(m => m.CoverPictureData, c => {
 				c.Map(m => m.Bytes, "CoverPictureBytes").Length(int.MaxValue);
-				c.Component(m => m.Thumb250, c2 => c2.Map(m => m.Bytes, "CoverPictureThumb250Bytes").Length(int.MaxValue));
 			}).LazyLoad();
 
 			Component(m => m.Description, c => {

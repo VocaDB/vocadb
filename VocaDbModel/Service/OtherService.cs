@@ -54,7 +54,7 @@ namespace VocaDb.Model.Service {
 		private readonly ObjectCache cache;
 		private readonly IUserIconFactory userIconFactory;
 		private readonly EntryForApiContractFactory entryForApiContractFactory;
-		private readonly IEntryThumbPersister thumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 
 		public AlbumForApiContract[] GetTopAlbums(ContentLanguagePreference languagePreference, AlbumOptionalFields fields, int[] ignoreIds) {
 			return HandleQuery(session => GetTopAlbums(session, ignoreIds, languagePreference, fields));
@@ -175,7 +175,7 @@ namespace VocaDb.Model.Service {
 					.ToArray();
 
 				var entryContracts = recentEvents.Select(i => 
-					new ReleaseEventForApiContract(i, LanguagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, 
+					new ReleaseEventForApiContract(i, LanguagePreference, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue,
 					thumbPersister));
 
 				return entryContracts.ToArray();
@@ -347,7 +347,7 @@ namespace VocaDb.Model.Service {
 		}
 
 		public OtherService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
-			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory, ObjectCache cache, IEntryThumbPersister thumbPersister) 
+			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory, ObjectCache cache, IAggregatedEntryImageUrlFactory thumbPersister) 
 			: base(sessionFactory, permissionContext, entryLinkFactory) {
 			
 			this.userIconFactory = userIconFactory;

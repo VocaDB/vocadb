@@ -24,6 +24,7 @@ import UrlMapper from '../Shared/UrlMapper';
 			category: string,
 			paging: PagingProperties,
 			tagIds: number[],
+			fields: string,
 			sort: string,
 			callback: (result: PartialFindResultContract<SongListContract>) => void) => {
 			
@@ -33,6 +34,7 @@ import UrlMapper from '../Shared/UrlMapper';
 				featuredCategory: category,
 				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
 				tagId: tagIds,
+				fields: fields,
 				sort: sort
 			}, callback);
 

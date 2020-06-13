@@ -6,7 +6,6 @@ namespace VocaDb.Model.DataContracts {
 	/// <summary>
 	/// Entry thumbnail for API.
 	/// Contains URLs to thumbnails of different sizes.
-	/// Does not include URL to original picture at the moment because that is loaded differently.
 	/// </summary>
 	/// <remarks>
 	/// Default sizes are described in <see cref="ImageSize"/>, but the sizes might vary depending on entry type.
@@ -15,7 +14,7 @@ namespace VocaDb.Model.DataContracts {
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryThumbForApiContract {
 
-		public static EntryThumbForApiContract Create(IEntryImageInformation image, IEntryImagePersister thumbPersister,
+		public static EntryThumbForApiContract Create(IEntryImageInformation image, IAggregatedEntryImageUrlFactory thumbPersister,
 			ImageSizes sizes = ImageSizes.All) {
 
 			if (thumbPersister == null || string.IsNullOrEmpty(image?.Mime))
@@ -33,7 +32,7 @@ namespace VocaDb.Model.DataContracts {
 		/// <param name="image">Image information. Cannot be null.</param>
 		/// <param name="thumbPersister">Thumb persister. Cannot be null.</param>
 		/// <param name="sizes">Sizes to generate. If Nothing, no image URLs will be generated.</param>
-		public EntryThumbForApiContract(IEntryImageInformation image, IEntryImagePersister thumbPersister,
+		public EntryThumbForApiContract(IEntryImageInformation image, IAggregatedEntryImageUrlFactory thumbPersister,
 			ImageSizes sizes = ImageSizes.All) {
 
 			ParamIs.NotNull(() => image);
@@ -43,6 +42,9 @@ namespace VocaDb.Model.DataContracts {
 
 			if (string.IsNullOrEmpty(image.Mime) && sizes != ImageSizes.Nothing)
 				return;
+
+			if (sizes.HasFlag(ImageSizes.Original))
+				UrlOriginal = thumbPersister.GetUrlAbsolute(image, ImageSize.Original);
 
 			if (sizes.HasFlag(ImageSizes.SmallThumb))
 				UrlSmallThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.SmallThumb);
@@ -59,7 +61,13 @@ namespace VocaDb.Model.DataContracts {
 		/// MIME type, for example "image/jpeg".
 		/// </summary>
 		[DataMember]
-		public string Mime { get; set;}
+		public string Mime { get; set; }
+
+		/// <summary>
+		/// URL to original image.
+		/// </summary>
+		[DataMember]
+		public string UrlOriginal { get; set; }
 
 		/// <summary>
 		/// URL to small thumbnail.
@@ -93,11 +101,13 @@ namespace VocaDb.Model.DataContracts {
 			
 			switch (preferLargerThan) {
 				case ImageSize.TinyThumb:
-					return UrlTinyThumb ?? UrlSmallThumb ?? UrlThumb;
+					return UrlTinyThumb ?? UrlSmallThumb ?? UrlThumb ?? UrlOriginal;
 				case ImageSize.SmallThumb:
-					return UrlSmallThumb ?? UrlThumb ?? UrlTinyThumb;
+					return UrlSmallThumb ?? UrlThumb ?? UrlTinyThumb ?? UrlOriginal;
+				case ImageSize.Thumb:
+					return UrlThumb ?? UrlSmallThumb ?? UrlTinyThumb ?? UrlOriginal;
 				default:
-					return UrlThumb ?? UrlSmallThumb ?? UrlTinyThumb;
+					return UrlOriginal ?? UrlThumb ?? UrlSmallThumb ?? UrlTinyThumb;
 			}				
 
 		}

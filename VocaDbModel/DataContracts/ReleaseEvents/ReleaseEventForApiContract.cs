@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
@@ -19,7 +20,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ReleaseEventForApiContract() { }
 
-		public ReleaseEventForApiContract(ReleaseEvent rel, ContentLanguagePreference languagePreference, ReleaseEventOptionalFields fields, IEntryThumbPersister thumbPersister) {
+		public ReleaseEventForApiContract(ReleaseEvent rel, ContentLanguagePreference languagePreference, ReleaseEventOptionalFields fields, IAggregatedEntryImageUrlFactory thumbPersister) {
 
 			Category = rel.Category;
 			Date = rel.Date;
@@ -65,6 +66,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 				SongList = new SongListBaseContract(rel.SongList);
 			}
 
+			if (fields.HasFlag(ReleaseEventOptionalFields.Tags)) {
+				Tags = rel.Tags.ActiveUsages.Select(t => new TagUsageForApiContract(t, languagePreference)).ToArray();
+			}
+
 			if (fields.HasFlag(ReleaseEventOptionalFields.Venue) && rel.Venue != null) {
 				Venue = new VenueForApiContract(rel.Venue, languagePreference, VenueOptionalFields.None);
 			}
@@ -103,6 +108,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		[DataMember]
 		public DateTime? EndDate { get; set; }
 
+		public bool HasVenueOrVenueName => Venue != null || !string.IsNullOrEmpty(VenueName);
+
 		[DataMember]
 		public int Id { get; set; }
 
@@ -140,6 +147,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		[DataMember]
 		public EntryStatus Status { get; set; }
 
+		[DataMember(EmitDefaultValue = false)]
+		public TagUsageForApiContract[] Tags { get; set; }
+
 		[DataMember]
 		public string UrlSlug { get; set; }
 
@@ -168,8 +178,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		Names = 16,
 		Series = 32,
 		SongList = 64,
-		Venue = 128,
-		WebLinks = 256
+		Tags = 128,
+		Venue = 256,
+		WebLinks = 512
 
 	}
 

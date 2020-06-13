@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using NLog;
 using ViewRes.Tag;
@@ -27,10 +28,10 @@ namespace VocaDb.Web.Controllers {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly MarkdownParser markdownParser;
 		private readonly TagQueries queries;
-		private readonly IEntryImagePersisterOld entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
 
 		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory, IEnumTranslations enumTranslations, MarkdownParser markdownParser,
-			IEntryImagePersisterOld entryThumbPersister) {
+			IAggregatedEntryImageUrlFactory entryThumbPersister) {
 
 			this.queries = queries;
 			this.entryLinkFactory = entryLinkFactory;
@@ -107,7 +108,7 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		public ActionResult DetailsById(int id = invalidId, string slug = null) {
+		public async Task<ActionResult> DetailsById(int id = invalidId, string slug = null) {
 
 			if (id == invalidId)
 				return NoId();
@@ -115,17 +116,17 @@ namespace VocaDb.Web.Controllers {
 			// TODO: write test for null slug
 			slug = slug ?? string.Empty;
 
-			var tagName = queries.LoadTag(id, t => t.UrlSlug ?? string.Empty);
+			var tagName = await queries.LoadTagAsync(id, t => t.UrlSlug ?? string.Empty);
 
 			if (slug != tagName) {
 				return RedirectToActionPermanent("DetailsById", new { id, slug = tagName });
 			}
 
-			var contract = queries.GetDetails(id);
+			var contract = await queries.GetDetailsAsync(id);
 
 			var prop = PageProperties;
 
-			var thumbUrl = Url.EntryImageOld(contract.Thumb, ImageSize.Original);
+			var thumbUrl = Url.ImageThumb(contract.Thumb, ImageSize.Original);
 			if (!string.IsNullOrEmpty(thumbUrl)) {
 				PageProperties.OpenGraph.Image = thumbUrl;
 			}

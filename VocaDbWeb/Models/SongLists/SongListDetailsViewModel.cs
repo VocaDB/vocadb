@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts.SongLists;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Web.Helpers;
 
@@ -10,15 +11,18 @@ namespace VocaDb.Web.Models.SongLists {
 
 		public SongListDetailsViewModel() { }
 
-		public SongListDetailsViewModel(SongListDetailsContract songList) {
+		public SongListDetailsViewModel(SongListForApiContract songList, IUserPermissionContext permissionContext) {
+			CanEdit = EntryPermissionManager.CanEditSongList(permissionContext, songList);
 			SongList = songList;
 		}
+
+		public bool CanEdit { get; set; }
 
 		public bool IsFeatured => SongList.FeaturedCategory != SongListFeaturedCategory.Nothing;
 
 		public string SmallThumbUrl { get; set; }
 
-		public SongListDetailsContract SongList { get; set; }
+		public SongListForApiContract SongList { get; set; }
 
 		public Dictionary<string, string> SortRules {
 			get {

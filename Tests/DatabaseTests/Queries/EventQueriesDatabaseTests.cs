@@ -33,7 +33,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 			return context.RunTest(repository => {
 
 				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations, mailer, 
-					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()));
+					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()), imageStore);
 
 				var updated = queries.Update(contract, null);
 
@@ -57,7 +57,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 				var id = Db.ReleaseEvent.Id;
 				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations, mailer, 
-					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()));
+					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()),imageStore);
 
 				queries.MoveToTrash(id, "Deleted");
 

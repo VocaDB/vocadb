@@ -85,7 +85,7 @@
 	<div class="media">
 		@if (!string.IsNullOrEmpty(thumbUrl)) {
 		<a class="pull-left" href="@Url.EntryDetails(entry)" title="@entry.AdditionalNames">
-			<img src="@thumbUrl" alt="thumb" class="coverPicThumb" />
+			<img src="@thumbUrl" alt="thumb" class="coverPicThumb" referrerpolicy="same-origin" />
 		</a>
 		}
 		

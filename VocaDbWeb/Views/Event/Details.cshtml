@@ -92,7 +92,7 @@
 				</p>
 			}
 
-			@if (!string.IsNullOrEmpty(Model.VenueName)) {
+			@if (Model.Venue == null && !string.IsNullOrEmpty(Model.VenueName)) {
 				<p>@Res.Venue: @Model.VenueName</p>
 			}
 

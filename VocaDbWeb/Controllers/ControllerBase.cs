@@ -17,6 +17,7 @@ using VocaDb.Model;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
+using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Web.Controllers {
 
@@ -151,13 +152,14 @@ namespace VocaDb.Web.Controllers {
 				if (i >= newPics.Length)
 					break;
 
-				var contract = ParsePicture(additionalPics[i], "Pictures");
+				var contract = ParsePicture(additionalPics[i], "Pictures", ImagePurpose.Additional);
 
 				if (contract != null) {
 					newPics[i].OriginalFileName = contract.OriginalFileName;
 					newPics[i].UploadedFile = contract.UploadedFile;
 					newPics[i].Mime = contract.Mime;		
 					newPics[i].ContentLength = contract.ContentLength;
+					newPics[i].Purpose = contract.Purpose;
 				}
 
 			}
@@ -166,7 +168,7 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		protected EntryPictureFileContract ParsePicture(HttpPostedFileBase pictureUpload, string fieldName) {
+		protected EntryPictureFileContract ParsePicture(HttpPostedFileBase pictureUpload, string fieldName, ImagePurpose purpose) {
 
 			EntryPictureFileContract pictureData = null;
 
@@ -182,11 +184,8 @@ namespace VocaDb.Web.Controllers {
 					return null;
 				}
 
-				pictureData = new EntryPictureFileContract();
+				pictureData = new EntryPictureFileContract(pictureUpload.InputStream, pictureUpload.ContentType, pictureUpload.ContentLength, purpose);
 				pictureData.OriginalFileName = pictureUpload.FileName;
-				pictureData.UploadedFile = pictureUpload.InputStream;
-				pictureData.Mime = pictureUpload.ContentType ?? string.Empty;
-				pictureData.ContentLength = pictureUpload.ContentLength;
 
 			}
 

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net.Mime;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
 
@@ -11,7 +12,7 @@ namespace VocaDb.Tests.TestSupport {
 	/// <summary>
 	/// In-memory image persisting system (virtual filesystem), for testing.
 	/// </summary>
-	public class InMemoryImagePersister : IEntryImagePersisterOld, IEntryThumbPersister, IEntryPictureFilePersister {
+	public class InMemoryImagePersisterStore {
 
 		private readonly Dictionary<string, byte[]> images = new Dictionary<string, byte[]>();
 
@@ -30,28 +31,25 @@ namespace VocaDb.Tests.TestSupport {
 			}
 		}
 
-		public string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size) {
-			return picture.EntryType + "/" + picture.Id + "/" + size;
+		public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size) {
+			// For testing it's really doesn't matter if it's absolute or relative, it just needs to be unique.
+			return new VocaDbUrl($"https://static.vocadb.net/img/{picture.EntryType}/{picture.Id}/{size}", UrlDomain.Main, System.UriKind.Absolute);
 		}
 
 		public Stream GetReadStream(IEntryImageInformation picture, ImageSize size) {
-			return new MemoryStream(images[GetUrlAbsolute(picture, size)]);
+			return new MemoryStream(images[GetUrl(picture, size).Url]);
 		}
 
 		public bool HasImage(IEntryImageInformation picture, ImageSize size) {
-			return images.ContainsKey(GetUrlAbsolute(picture, size));
+			return images.ContainsKey(GetUrl(picture, size).Url);
 		}
 
 		public void Write(IEntryImageInformation picture, ImageSize size, Stream stream) {
 
 			var bytes = StreamHelper.ReadStream(stream);
 
-			var url = GetUrlAbsolute(picture, size);
-
-			if (images.ContainsKey(url))
-				images[url] = bytes;
-			else
-				images.Add(url, bytes);
+			var url = GetUrl(picture, size).Url;
+			images[url] = bytes;
 
 		}
 
@@ -63,6 +61,55 @@ namespace VocaDb.Tests.TestSupport {
 			}
 
 		}
+
+	}
+
+	public abstract class InMemoryImagePersisterBase : IEntryImagePersister {
+
+		public InMemoryImagePersisterBase() : this(new InMemoryImagePersisterStore()) {}
+
+		public InMemoryImagePersisterBase(InMemoryImagePersisterStore store) {
+			this.store = store;
+		}
+
+		private readonly InMemoryImagePersisterStore store;
+
+		public Stream GetReadStream(IEntryImageInformation picture, ImageSize size) => store.GetReadStream(picture, size);
+
+		public void Write(IEntryImageInformation picture, ImageSize size, Stream stream) => store.Write(picture, size, stream);
+
+		public void Write(IEntryImageInformation picture, ImageSize size, Image image) => store.Write(picture, size, image);
+
+		public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size) => store.GetUrl(picture, size);
+
+		public bool HasImage(IEntryImageInformation picture, ImageSize size) => store.HasImage(picture, size);
+
+		public abstract bool IsSupported(IEntryImageInformation picture, ImageSize size);
+
+	}
+
+	public class InMemoryImagePersister : InMemoryImagePersisterBase, IAggregatedEntryImageUrlFactory, IEntryImagePersisterOld, IEntryThumbPersister, IEntryPictureFilePersister {
+		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) => true;
+	}
+
+	public class InMemoryEntryThumbPersister : InMemoryImagePersisterBase, IEntryThumbPersister {
+
+		public InMemoryEntryThumbPersister(InMemoryImagePersisterStore store) : base(store) {}
+
+		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) {
+			return new ServerEntryThumbPersister().IsSupported(picture, size);
+		}
+
+	}
+
+	public class InMemoryEntryImagePersisterOld : InMemoryImagePersisterBase, IEntryImagePersisterOld {
+
+		public InMemoryEntryImagePersisterOld(InMemoryImagePersisterStore store) : base(store) {}
+
+		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) {
+			return new ServerEntryImagePersisterOld().IsSupported(picture, size);
+		}
+
 	}
 
 }

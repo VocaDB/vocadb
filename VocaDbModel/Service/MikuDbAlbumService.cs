@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -513,7 +513,7 @@ namespace VocaDb.Model.Service {
 				var album = session.Load<MikuDbAlbum>(id);
 
 				if (album.CoverPicture != null)
-					return new PictureContract(album.CoverPicture, album.CoverPictureMime, Size.Empty);
+					return new PictureContract(album.CoverPicture, album.CoverPictureMime);
 				else
 					return null;
 

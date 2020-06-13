@@ -66,6 +66,16 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static Task<bool> VdbAnyAsync<TSource>(this IQueryable<TSource> source) {
+
+			if (source.Provider is INhQueryProvider) {
+				return source.AnyAsync();
+			}
+
+			return Task.FromResult(source.Any());
+
+		}
+
 		public static Task<int> VdbCountAsync<TSource>(this IQueryable<TSource> source) {
 
 			if (source.Provider is INhQueryProvider) {

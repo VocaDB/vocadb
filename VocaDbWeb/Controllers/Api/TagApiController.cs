@@ -33,9 +33,9 @@ namespace VocaDb.Web.Controllers.Api {
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly TagQueries queries;
-		private readonly IEntryImagePersisterOld thumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 
-		public TagApiController(TagQueries queries, IEntryImagePersisterOld thumbPersister) {
+		public TagApiController(TagQueries queries, IAggregatedEntryImageUrlFactory thumbPersister) {
 			this.queries = queries;
 			this.thumbPersister = thumbPersister;
 		}

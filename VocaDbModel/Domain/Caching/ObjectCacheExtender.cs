@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Runtime.Caching;
+using System.Threading.Tasks;
 
 namespace VocaDb.Model.Domain.Caching {
 
@@ -36,6 +37,23 @@ namespace VocaDb.Model.Domain.Caching {
 
 			if (addCache) {
 				cache.Add(key, item, cacheItemPolicy);
+			}
+
+			return item;
+
+		}
+
+		public static async Task<T> GetOrInsertAsync<T>(this ObjectCache cache, string key, CacheItemPolicy policy, Func<Task<T>> func, Func<T, bool> allowCaching = null) {
+
+			if (cache.Contains(key))
+				return (T)cache.Get(key);
+
+			var item = await func();
+
+			var addCache = allowCaching == null || allowCaching(item);
+
+			if (addCache) {
+				cache.Add(key, item, policy);
 			}
 
 			return item;

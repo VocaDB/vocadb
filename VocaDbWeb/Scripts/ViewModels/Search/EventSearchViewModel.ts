@@ -49,7 +49,7 @@ import SearchViewModel from './SearchViewModel';
 					afterDate: this.afterDate(),
 					beforeDate: this.beforeDate(),
 					status: status,
-					fields: "AdditionalNames,MainPicture,Series"
+					fields: this.fields()
 				}, callback);
 
 			}
@@ -68,6 +68,8 @@ import SearchViewModel from './SearchViewModel';
 		public onlyMyEvents = ko.observable(false);
 		public sort = ko.observable("Name");
 		public sortName: KnockoutComputed<string>;
+		
+		public fields = ko.computed(() => this.searchViewModel.showTags() ? "AdditionalNames,MainPicture,Series,Venue,Tags" : "AdditionalNames,MainPicture,Series,Venue");
 
 		public getCategoryName = (event: ReleaseEventContract) => {
 

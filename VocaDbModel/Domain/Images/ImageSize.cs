@@ -52,7 +52,9 @@ namespace VocaDb.Model.Domain.Images {
 		/// </summary>
 		TinyThumb = 8,
 
-		All = (Original | Thumb | SmallThumb | TinyThumb)
+		AllThumbs = Thumb | SmallThumb | TinyThumb,
+
+		All = Original | Thumb | SmallThumb | TinyThumb
 
 	}
 

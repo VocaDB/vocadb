@@ -25,7 +25,7 @@
 						<div class="scrollable-item alignTop" id="@("#songPV_" + PVHelper.PrimaryPV(song.PVs).Id)">
 							<input type="hidden" class="js-songId" value="@song.Id" />
 							@if (!string.IsNullOrEmpty(song.ThumbUrl)) {
-								<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" />
+								<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin" />
 							}
 							<strong class="songName">@song.Name</strong>
 							<span class="songArtists">@song.ArtistString</span>
