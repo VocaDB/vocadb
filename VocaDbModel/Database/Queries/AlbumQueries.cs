@@ -914,16 +914,16 @@ namespace VocaDb.Model.Database.Queries {
 				if (artistsDiff.Changed)
 					diff.Artists.Set();
 
-				var discsDiff = album.SyncDiscs(properties.Discs);
-				session.OfType<AlbumDiscProperties>().Sync(discsDiff);
+				var discsDiff = await album.SyncDiscs(properties.Discs);
+				await session.OfType<AlbumDiscProperties>().SyncAsync(discsDiff);
 
 				if (discsDiff.Changed)
 					diff.Discs.Set();
 
-				var songGetter = new Func<SongInAlbumEditContract, Song>(contract => {
+				var songGetter = new Func<SongInAlbumEditContract, Task<Song>>(async contract => {
 
 					if (contract.SongId != 0)
-						return session.Load<Album, Song>(contract.SongId);
+						return await session.LoadAsync<Song>(contract.SongId);
 					else {
 
 						var songName = StringHelper.TrimIfNotWhitespace(contract.SongName);
@@ -931,7 +931,7 @@ namespace VocaDb.Model.Database.Queries {
 						session.AuditLogger.SysLog(string.Format("creating a new song '{0}' to {1}", songName, album));
 
 						var song = new Song(new LocalizedString(songName, ContentLanguageSelection.Unspecified));
-						session.Save(song);
+						await session.SaveAsync(song);
 
 						var songDiff = new SongDiff();
 						songDiff.Names.Set();
@@ -940,17 +940,17 @@ namespace VocaDb.Model.Database.Queries {
 
 						if (songArtistDiff.Changed) {
 							songDiff.Artists.Set();
-							session.Update(song);
+							await session.UpdateAsync(song);
 						}
 
-						session.Sync(songArtistDiff);
+						await session.SyncAsync(songArtistDiff);
 
 						var archived = ArchiveSong(session.OfType<Song>(), song, songDiff, SongArchiveReason.Created,
 							string.Format("Created for album '{0}'", album.DefaultName.TruncateWithEllipsis(100)));
 
-						session.AuditLogger.AuditLog(string.Format("created {0} for {1}",
+						await session.AuditLogger.AuditLogAsync(string.Format("created {0} for {1}",
 							entryLinkFactory.CreateEntryLink(song), entryLinkFactory.CreateEntryLink(album)));
-						AddEntryEditedEntry(session.OfType<ActivityEntry>(), song, EntryEditEvent.Created, archived);
+						await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), song, EntryEditEvent.Created, archived);
 
 						return song;
 
@@ -958,10 +958,10 @@ namespace VocaDb.Model.Database.Queries {
 
 				});
 
-				var tracksDiff = album.SyncSongs(properties.Songs, songGetter, 
+				var tracksDiff = await album.SyncSongs(properties.Songs, songGetter, 
 					(song, artistContracts) => UpdateSongArtists(session, song, artistContracts));
 
-				session.OfType<SongInAlbum>().Sync(tracksDiff);
+				await session.OfType<SongInAlbum>().SyncAsync(tracksDiff);
 
 				if (tracksDiff.Changed) {
 
@@ -972,14 +972,14 @@ namespace VocaDb.Model.Database.Queries {
 					var str = string.Format("edited tracks (added: {0}, removed: {1}, reordered: {2})", add, rem, edit)
 						.Truncate(300);
 
-					session.AuditLogger.AuditLog(str);
+					await session.AuditLogger.AuditLogAsync(str);
 
 					diff.Tracks.Set();
 
 				}
 
 				var picsDiff = album.Pictures.SyncPictures(properties.Pictures, session.OfType<User>().GetLoggedUser(PermissionContext), album.CreatePicture);
-				session.OfType<AlbumPictureFile>().Sync(picsDiff);
+				await session.OfType<AlbumPictureFile>().SyncAsync(picsDiff);
 				var entryPictureFileThumbGenerator = new ImageThumbGenerator(pictureFilePersister);
 				album.Pictures.GenerateThumbsAndMoveImage(entryPictureFileThumbGenerator, picsDiff.Added, ImageSizes.Original | ImageSizes.Thumb);
 
@@ -987,7 +987,7 @@ namespace VocaDb.Model.Database.Queries {
 					diff.Pictures.Set();
 
 				var pvDiff = album.SyncPVs(properties.PVs);
-				session.OfType<PVForAlbum>().Sync(pvDiff);
+				await session.OfType<PVForAlbum>().SyncAsync(pvDiff);
 
 				if (pvDiff.Changed)
 					diff.PVs.Set();
@@ -997,12 +997,12 @@ namespace VocaDb.Model.Database.Queries {
 					+ (properties.UpdateNotes != string.Empty ? " " + properties.UpdateNotes : string.Empty)
 					.Truncate(400);
 
-				session.AuditLogger.AuditLog(logStr);
+				await session.AuditLogger.AuditLogAsync(logStr);
 
 				var archivedAlbum = Archive(session, album, diff, AlbumArchiveReason.PropertiesUpdated, properties.UpdateNotes);
-				session.Update(album);
+				await session.UpdateAsync(album);
 
-				AddEntryEditedEntry(session.OfType<ActivityEntry>(), album, EntryEditEvent.Updated, archivedAlbum);
+				await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), album, EntryEditEvent.Updated, archivedAlbum);
 
 				var newSongCutoff = TimeSpan.FromHours(1);
 				if (artistsDiff.Added.Any() && album.CreateDate >= DateTime.Now - newSongCutoff) {

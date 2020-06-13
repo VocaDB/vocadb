@@ -463,7 +463,7 @@ namespace VocaDb.Model.Database.Queries {
 					var diff = new ReleaseEventDiff();
 
 					if (!contract.Series.IsNullOrDefault()) {
-						var series = session.OfType<ReleaseEventSeries>().Load(contract.Series.Id);
+						var series = await session.LoadAsync<ReleaseEventSeries>(contract.Series.Id);
 						ev = new ReleaseEvent(contract.Description, contract.Date, series, contract.SeriesNumber, contract.SeriesSuffix, 
 							contract.DefaultNameLanguage, contract.CustomName);
 						series.AllEvents.Add(ev);
@@ -497,39 +497,39 @@ namespace VocaDb.Model.Database.Queries {
 					}
 
 					var pvDiff = ev.PVs.Sync(contract.PVs, ev.CreatePV);
-					session.OfType<PVForAlbum>().Sync(pvDiff);
+					await session.OfType<PVForAlbum>().SyncAsync(pvDiff);
 
 					if (pvDiff.Changed)
 						diff.PVs.Set();
 
-					var artistDiff = ev.SyncArtists(contract.Artists, artistId => session.Load<Artist>(artistId));
+					var artistDiff = await ev.SyncArtists(contract.Artists, artistId => session.LoadAsync<Artist>(artistId));
 
 					if (artistDiff.Changed)
 						diff.Artists.Set();
 
-					session.Save(ev);
+					await session.SaveAsync(ev);
 
 					var namesChanged = new UpdateEventNamesQuery().UpdateNames(session, ev, contract.Series, contract.CustomName, contract.SeriesNumber, contract.SeriesSuffix, contract.Names);
 					if (namesChanged) {
-						session.Update(ev);
+						await session.UpdateAsync(ev);
 					}
 
 					if (pictureData != null) {
 						diff.MainPicture.Set();
 						SaveImage(ev, pictureData);
-						session.Update(ev);
+						await session.UpdateAsync(ev);
 					}
 
 					var archived = Archive(session, ev, diff, EntryEditEvent.Created, string.Empty);
-					AddEntryEditedEntry(session.OfType<ActivityEntry>(), archived);
+					await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), archived);
 
-					session.AuditLogger.AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(ev)));
+					await session.AuditLogger.AuditLogAsync(string.Format("created {0}", entryLinkFactory.CreateEntryLink(ev)));
 
 					await followedArtistNotifier.SendNotificationsAsync(session, ev, ev.Artists.Where(a => a?.Artist != null).Select(a => a.Artist), PermissionContext.LoggedUser);
 
 				} else {
 
-					ev = session.Load(contract.Id);
+					ev = await session.LoadAsync(contract.Id);
 					permissionContext.VerifyEntryEdit(ev);
 
 					var diff = new ReleaseEventDiff(DoSnapshot(ev, session));
@@ -597,16 +597,16 @@ namespace VocaDb.Model.Database.Queries {
 
 					if (weblinksDiff.Changed) {
 						diff.WebLinks.Set();
-						session.OfType<ReleaseEventWebLink>().Sync(weblinksDiff);
+						await session.OfType<ReleaseEventWebLink>().SyncAsync(weblinksDiff);
 					}
 
 					var pvDiff = ev.PVs.Sync(contract.PVs, ev.CreatePV);
-					session.OfType<PVForAlbum>().Sync(pvDiff);
+					await session.OfType<PVForAlbum>().SyncAsync(pvDiff);
 
 					if (pvDiff.Changed)
 						diff.PVs.Set();
 
-					var artistDiff = ev.SyncArtists(contract.Artists, artistId => session.Load<Artist>(artistId));
+					var artistDiff = await ev.SyncArtists(contract.Artists, artistId => session.LoadAsync<Artist>(artistId));
 
 					if (artistDiff.Changed)
 						diff.Artists.Set();
@@ -616,13 +616,13 @@ namespace VocaDb.Model.Database.Queries {
 						SaveImage(ev, pictureData);
 					}
 
-					session.Update(ev);
+					await session.UpdateAsync(ev);
 
 					var archived = Archive(session, ev, diff, EntryEditEvent.Updated, string.Empty);
-					AddEntryEditedEntry(session.OfType<ActivityEntry>(), archived);
+					await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), archived);
 
 					var logStr = string.Format("updated properties for {0} ({1})", entryLinkFactory.CreateEntryLink(ev), diff.ChangedFieldsString);
-					session.AuditLogger.AuditLog(logStr);
+					await session.AuditLogger.AuditLogAsync(logStr);
 
 					var newSongCutoff = TimeSpan.FromHours(1);
 					if (artistDiff.Added.Any() && ev.CreateDate >= DateTime.Now - newSongCutoff) {

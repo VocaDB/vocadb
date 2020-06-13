@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
@@ -332,7 +333,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			return Id.GetHashCode();
 		}
 
-		private ArtistForEvent AddArtist(ArtistForEventContract contract, Func<int, Artist> artistGetter) {
+		private async Task<ArtistForEvent> AddArtist(ArtistForEventContract contract, Func<int, Task<Artist>> artistGetter) {
 
 			ArtistForEvent link;
 
@@ -342,7 +343,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 					Roles = contract.Roles
 				};
 			} else {
-				var artist = artistGetter(contract.Artist.Id);
+				var artist = await artistGetter(contract.Artist.Id);
 				link = new ArtistForEvent(this, artist) {
 					Roles = contract.Roles
 				};
@@ -379,20 +380,20 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
-		public virtual CollectionDiffWithValue<ArtistForEvent, ArtistForEvent> SyncArtists(
-			IList<ArtistForEventContract> newArtists, Func<int, Artist> artistGetter) {
+		public virtual async Task<CollectionDiffWithValue<ArtistForEvent, ArtistForEvent>> SyncArtists(
+			IList<ArtistForEventContract> newArtists, Func<int, Task<Artist>> artistGetter) {
 
 			ParamIs.NotNull(() => newArtists);
 
-			bool Update(ArtistForEvent old, ArtistForEventContract newArtist) {
+			Task<bool> Update(ArtistForEvent old, ArtistForEventContract newArtist) {
 				if (old.Roles == newArtist.Roles) {
-					return false;
+					return Task.FromResult(false);
 				}
 				old.Roles = newArtist.Roles;
-				return true;
+				return Task.FromResult(true);
 			}
 
-			var diff = CollectionHelper.SyncWithContent(AllArtists, newArtists, (a1, a2) => a1.Id == a2.Id, a => AddArtist(a, artistGetter), Update, null);
+			var diff = await CollectionHelper.SyncWithContentAsync(AllArtists, newArtists, (a1, a2) => a1.Id == a2.Id, async a => await AddArtist(a, artistGetter), Update, null);
 			return diff;
 
 		}

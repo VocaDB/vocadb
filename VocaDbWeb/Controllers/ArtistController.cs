@@ -22,6 +22,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Web.Code.Security;
 using VocaDb.Model.Domain.Images;
+using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers
 {
@@ -189,7 +190,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Create(Create model) {
+		public async Task<ActionResult> Create(Create model) {
 
 			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji) && string.IsNullOrWhiteSpace(model.NameEnglish))
 				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
@@ -208,7 +209,7 @@ namespace VocaDb.Web.Controllers
 
 			ArtistContract artist;
 			try {
-				artist = queries.Create(contract);
+				artist = await queries.Create(contract);
 			} catch (InvalidPictureException) {
 				ModelState.AddModelError("Picture", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
 				return View(model);
