@@ -14,7 +14,7 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		private readonly IHttpContext context;
 
-		private string LanguageFilePath => context.MapPath("~/App_Data/Core14.profile.xml");
+		private string LanguageFilePath => context.ServerPathMapper.MapPath("~/App_Data/Core14.profile.xml");
 
 		public ContentLanguageSelection Detect(string str, ContentLanguageSelection def = ContentLanguageSelection.Unspecified) {
 			

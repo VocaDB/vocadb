@@ -3,12 +3,12 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using System.Web;
 using NLog;
 using NYoutubeDL;
 using NYoutubeDL.Models;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.VideoServices {
@@ -25,7 +25,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		private string GetPath(string path) {
 			// TODO: inject this.
-			return path.Contains("~") ? HttpContext.Current.Server.MapPath(path) : path;
+			return path.Contains("~") ? GlobalServerPathMapper.ServerPathMapper.MapPath(path) : path;
 		}
 
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {

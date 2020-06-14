@@ -5,7 +5,7 @@ using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Web {
 
-	public class AspNetHttpContext : IHttpContext {
+	public class AspNetHttpContext : IHttpContext, IServerPathMapper {
 
 		public AspNetHttpContext(HttpContext context) {
 			this.context = context;
@@ -23,6 +23,8 @@ namespace VocaDb.Web {
 			get => context.User;
 			set => context.User = value; 
 		}
+
+		public IServerPathMapper ServerPathMapper => this;
 
 		public string MapPath(string relative) => context.Server.MapPath(relative);
 

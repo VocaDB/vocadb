@@ -60,7 +60,7 @@ namespace VocaDb.Model.Domain.Images {
 		}
 
 		public override string GetPath(IEntryImageInformation picture, ImageSize size) {
-			return context.MapPath(string.Format("~\\EntryImg\\{0}\\{1}", picture.EntryType, GetFileName(picture, size)));
+			return context.ServerPathMapper.MapPath(string.Format("~\\EntryImg\\{0}\\{1}", picture.EntryType, GetFileName(picture, size)));
 		}
 
 		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) {

@@ -7,9 +7,13 @@ namespace VocaDb.Model.Domain.Web {
 
 	public interface IHttpContext {
         System.Collections.IDictionary Items { get; }
+		IServerPathMapper ServerPathMapper { get; }
 		IHttpRequest Request { get; }
         IHttpResponse Response { get; }
         IPrincipal User { get; set; }
+	}
+
+	public interface IServerPathMapper {
 		string MapPath(string relative);
 	}
 
