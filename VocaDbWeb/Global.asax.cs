@@ -32,7 +32,7 @@ namespace VocaDb.Web {
 
 		}
 
-		public static LoginManager LoginManager => new LoginManager();
+		public static LoginManager LoginManager => new LoginManager(new AspNetHttpContext(HttpContext.Current));
 
 		protected void Application_AuthenticateRequest(object sender, EventArgs e) {
 

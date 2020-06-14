@@ -545,8 +545,10 @@
     </Compile>
     <Compile Include="Code\DynamicImageUrlFactory.cs" />
     <Compile Include="Code\EntrySubTypeNameFactory.cs" />
-    <Compile Include="Code\Web\HttpPostedFile.cs" />
-    <Compile Include="Code\Web\HttpRequest.cs" />
+    <Compile Include="Code\Web\AspNetHttpContext.cs" />
+    <Compile Include="Code\Web\AspNetHttpPostedFile.cs" />
+    <Compile Include="Code\Web\AspNetHttpRequest.cs" />
+    <Compile Include="Code\Web\AspNetHttpResponse.cs" />
     <Compile Include="Controllers\Api\CommentApiController.cs" />
     <Compile Include="Controllers\Api\EntryTypesApiController.cs" />
     <Compile Include="Controllers\Api\IPRuleApiController.cs" />

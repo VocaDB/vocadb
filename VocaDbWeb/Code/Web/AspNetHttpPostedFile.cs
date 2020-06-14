@@ -3,9 +3,9 @@ using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Web {
 
-	public class HttpPostedFile : IHttpPostedFile {
+	public class AspNetHttpPostedFile : IHttpPostedFile {
 
-		public HttpPostedFile(HttpPostedFileBase file) {
+		public AspNetHttpPostedFile(HttpPostedFileBase file) {
 			this.file = file;
 		}
 

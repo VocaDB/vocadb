@@ -201,7 +201,7 @@ namespace VocaDb.Web.Controllers
 		[HttpPost]
 		public async Task<ActionResult> ForgotPassword(ForgotPassword model) {
 
-			var captchaResult = await ReCaptcha2.ValidateAsync(new HttpRequest(Request), AppConfig.ReCAPTCHAKey);
+			var captchaResult = await ReCaptcha2.ValidateAsync(new AspNetHttpRequest(Request), AppConfig.ReCAPTCHAKey);
 			if (!captchaResult.Success)
 				ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
 
@@ -523,7 +523,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError(string.Empty, "Signups are disabled");
 			}
 
-			var recaptchaResult = await ReCaptcha2.ValidateAsync(new HttpRequest(Request), AppConfig.ReCAPTCHAKey);
+			var recaptchaResult = await ReCaptcha2.ValidateAsync(new AspNetHttpRequest(Request), AppConfig.ReCAPTCHAKey);
 			if (!recaptchaResult.Success) {
 
 				ErrorLogger.LogMessage(Request, string.Format("Invalid CAPTCHA (error {0})", recaptchaResult.Error), LogLevel.Warn);
