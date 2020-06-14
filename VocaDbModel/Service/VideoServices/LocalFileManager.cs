@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Security.Principal;
 using NLog;
 using TagLib;
@@ -99,9 +100,10 @@ namespace VocaDb.Model.Service.VideoServices {
 					File.Move(oldFull, newFull);
 
 					// Remove copied permissions, reset to inherited http://stackoverflow.com/a/2930969
-					var fs = File.GetAccessControl(newFull);
+					var newFullFileInfo = new FileInfo(newFull);
+					var fs = newFullFileInfo.GetAccessControl();
 					fs.SetAccessRuleProtection(false, false);
-					File.SetAccessControl(newFull, fs);
+					newFullFileInfo.SetAccessControl(fs);
 
 					CreateThumbnail(newFull, newId, pv);
 
