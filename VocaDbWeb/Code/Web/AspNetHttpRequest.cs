@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Net;
 using System.Web;
 using VocaDb.Model.Domain.Web;
 
@@ -18,7 +20,7 @@ namespace VocaDb.Web {
 
 		private readonly HttpRequestBase request;
 
-		public IDictionary<string, ICookie> Cookies => throw new NotImplementedException();
+		public IReadOnlyDictionary<string, ICookie> Cookies => request.Cookies.Cast<HttpCookie>().ToDictionary(c => c.Name, c => (ICookie)new ReadOnlyCookie(c.Value));
 		public NameValueCollection Form => request.Form;
 		public NameValueCollection Params => request.Params;
 		public NameValueCollection QueryString => request.QueryString;
