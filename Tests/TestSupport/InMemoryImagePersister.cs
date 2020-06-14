@@ -107,7 +107,7 @@ namespace VocaDb.Tests.TestSupport {
 		public InMemoryEntryImagePersisterOld(InMemoryImagePersisterStore store) : base(store) {}
 
 		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) {
-			return new ServerEntryImagePersisterOld().IsSupported(picture, size);
+			return new ServerEntryImagePersisterOld(null).IsSupported(picture, size);
 		}
 
 	}

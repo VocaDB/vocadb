@@ -24,6 +24,8 @@ namespace VocaDb.Web {
 			set => context.User = value; 
 		}
 
+		public string MapPath(string relative) => context.Server.MapPath(relative);
+
 	}
 
 }

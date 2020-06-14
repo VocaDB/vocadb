@@ -10,6 +10,7 @@ namespace VocaDb.Model.Domain.Web {
 		IHttpRequest Request { get; }
         IHttpResponse Response { get; }
         IPrincipal User { get; set; }
+		string MapPath(string relative);
 	}
 
 	public interface IHttpRequest {

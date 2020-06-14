@@ -1,8 +1,6 @@
-using System;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using System.Web;
 using NLog;
 using VocaDb.Model.Domain.Web;
 
