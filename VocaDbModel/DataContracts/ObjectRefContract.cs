@@ -1,8 +1,13 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.DataContracts {
 
+	/// <summary>
+	/// Serializable data contract with (Int32) Id of the referred object
+	/// and the referred object's current name.
+	/// Used for serializing archived versions.
+	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ObjectRefContract : IEntryWithIntId {
 

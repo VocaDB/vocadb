@@ -31,13 +31,13 @@ namespace VocaDb.Web.Controllers.Api {
 		private const int hourInSeconds = 3600;
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
-		private readonly IEntryThumbPersister thumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 		private readonly OtherService otherService;
 		private readonly AlbumQueries queries;
 		private readonly AlbumService service;
 
 		public AlbumApiController(AlbumQueries queries, AlbumService service, 
-			OtherService otherService, IEntryThumbPersister thumbPersister) {		
+			OtherService otherService, IAggregatedEntryImageUrlFactory thumbPersister) {		
 			
 			this.queries = queries;
 			this.service = service;
@@ -109,7 +109,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Optional fields for tracks, if included (optional).
 		/// </param>
 		/// <param name="lang">Content language preference (optional).</param>
-		/// <example>http://vocadb.net/api/albums/1</example>
+		/// <example>https://vocadb.net/api/albums/1</example>
 		/// <returns>Album data.</returns>
 		[Route("{id:int}")]
 		public AlbumForApiContract GetOne(
@@ -172,7 +172,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of albums.</returns>
-		/// <example>http://vocadb.net/api/albums?query=Synthesis&amp;discTypes=Album</example>
+		/// <example>https://vocadb.net/api/albums?query=Synthesis&amp;discTypes=Album</example>
 		[Route("")]
 		public PartialFindResult<AlbumForApiContract> GetList(
 			string query = "", 
@@ -310,7 +310,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of tracks for the album.</returns>
-		/// <example>http://vocadb.net/api/albums/1/tracks</example>
+		/// <example>https://vocadb.net/api/albums/1/tracks</example>
 		[Route("{id:int}/tracks")]
 		public SongInAlbumForApiContract[] GetTracks(
 			int id, 
@@ -328,12 +328,16 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <param name="id">Album ID.</param>
 		/// <param name="field">Field to be included, for example "featvocalists" or "url". Can be specified multiple times.</param>
+        /// <param name="discNumber">Disc number to filter by. If not specified, all discs are included.</param>
 		/// <param name="lang">Language preference.</param>
 		/// <returns>List of songs with the specified fields.</returns>
+		/// <example>https://vocadb.net/api/albums/5111/tracks/fields?field=title&field=featvocalists</example>
 		[Route("{id:int}/tracks/fields")]
-		public IEnumerable<Dictionary<string, string>> GetTracksFormatted(int id, [FromUri] string[] field = null, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+		public IEnumerable<Dictionary<string, string>> GetTracksFields(int id, [FromUri] string[] field = null,
+			int? discNumber = null,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			return queries.GetTracksFormatted(id, field, lang);
+			return queries.GetTracksFormatted(id, discNumber, field, lang);
 
 		}
 

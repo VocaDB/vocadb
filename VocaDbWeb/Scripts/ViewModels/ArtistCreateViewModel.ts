@@ -5,13 +5,25 @@
 
 module vdb.viewModels {
 
+	import cls = models;
     import dc = vdb.dataContracts;
 
     export class ArtistCreateViewModel {
-        
+
+		artistType = ko.observable(cls.artists.ArtistType[cls.artists.ArtistType.Producer]);
+		artistTypeTag = ko.observable<dc.TagApiContract>(null);
+		artistTypeName = ko.computed(() => this.artistTypeTag()?.name);
+		artistTypeInfo = ko.computed(() => this.artistTypeTag()?.description);
+		artistTypeTagUrl = ko.computed(() => vdb.utils.EntryUrlMapper.details_tag_contract(this.artistTypeTag()));
+
         public checkDuplicates: () => void;
         
         public dupeEntries = ko.observableArray<dc.DuplicateEntryResultContract>([]);
+
+		private getArtistTypeTag = async (artistType: string) => {
+			const tag = await this.tagRepository.getEntryTypeTag(cls.EntryType.Artist, artistType);
+			this.artistTypeTag(tag);
+		}
 
         public nameOriginal = ko.observable("");
         public nameRomaji = ko.observable("");
@@ -26,7 +38,10 @@ module vdb.viewModels {
 
         public webLink: WebLinkEditViewModel = new WebLinkEditViewModel();
 
-        constructor(artistRepository: vdb.repositories.ArtistRepository, data?) {
+		constructor(
+			artistRepository: vdb.repositories.ArtistRepository,
+			private readonly tagRepository: vdb.repositories.TagRepository,
+			data?) {
             
             if (data) {
                 this.nameOriginal(data.nameOriginal || "");
@@ -46,6 +61,9 @@ module vdb.viewModels {
                 });
 
             }
+
+			this.artistType.subscribe(this.getArtistTypeTag);
+			this.getArtistTypeTag(this.artistType());
 
         }
     

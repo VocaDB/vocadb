@@ -1,4 +1,4 @@
-﻿
+
 module vdb.repositories {
 
 	import cls = vdb.models;
@@ -51,11 +51,15 @@ module vdb.repositories {
 		}
 
 		public tagRepository = () => {
-			return new TagRepository(this.urlMapper.baseUrl);
+			return new TagRepository(this.urlMapper.baseUrl, this.lang);
 		}
 
 		public userRepository = () => {
 			return new UserRepository(this.urlMapper, this.loggedUserId);
+		}
+
+		public venueRepository = () => {
+			return new VenueRepository(this.urlMapper);
 		}
 
 	}

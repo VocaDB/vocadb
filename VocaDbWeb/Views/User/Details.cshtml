@@ -1,4 +1,4 @@
-@using System.Globalization
+﻿@using System.Globalization
 @using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Users;
 @using VocaDb.Model.Domain.Globalization
@@ -69,6 +69,10 @@
 	@if (Login.CanManageUsers && EntryPermissionManager.CanEditUser(UserContext, Model.GroupId)) {
 		@Html.Raw("&nbsp;")
 		@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editUserLink" });
+	}
+	@if (Login.Manager.HasPermission(PermissionToken.ReportUser) && UserContext.LoggedUserId != Model.Id && Model.Active) {
+		@Html.Raw("&nbsp;")
+		<a href="" id="reportUserLink" data-bind="click: function() { reportUserViewModel.show(); }">@Res.ReportSpamming</a>
 	}
 	@if (Login.Manager.HasPermission(PermissionToken.RemoveEditPermission) && UserContext.LoggedUserId != Model.Id && Model.GroupId != UserGroupId.Limited && Model.Active && EntryPermissionManager.CanEditUser(Login.Manager, Model.GroupId)) {
 		@Html.Raw("&nbsp;")
@@ -146,6 +150,9 @@
 				}
 				@if (Model.IsVeteran) {
 					<span class="label label-success">@string.Format(R.Veteran, BrandableStrings.Layout.SiteName)</span>
+				}
+				@if (!string.IsNullOrEmpty(Model.CustomTitle)) {
+					<span class="label label-info">@Model.CustomTitle</span>
 				}
 				@if (!Model.Active)
 				{
@@ -415,6 +422,7 @@
 }
 
 @EntryDetailsHelpers.EntryDeletePopupBase("Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional).", "limitedUserViewModel", "setToLimitedLink", "Remove editing permissions", "Confirm")
+@EntryDetailsHelpers.EntryDeletePopupBase("Please confirm that you wish to report user. Please provide additional explanation below.", "reportUserViewModel", "reportUserLink", "Report user", "Confirm")
 
 @section Head {
 	@Styles.Render("~/Scripts/jqwidgets27/styles/css")
@@ -459,7 +467,7 @@
 			var sort = 'RatingDate';
 			var groupByRating = true;
 
-			var followedArtistsViewModel = new vdb.viewModels.user.FollowedArtistsViewModel(userRepo, resourceRepo, languageSelection, userId, cultureCode);
+			var followedArtistsViewModel = new vdb.viewModels.user.FollowedArtistsViewModel(userRepo, resourceRepo, tagRepo, languageSelection, userId, cultureCode);
 
 			var albumCollectionViewModel = new vdb.viewModels.user.AlbumCollectionViewModel(userRepo, artistRepo, resourceRepo, languageSelection, userId, cultureCode,
 				publicCollection, false);
@@ -468,8 +476,8 @@
 				languageSelection, userId, cultureCode,
 				sort, groupByRating, pvPlayersFactory, false, artistId, childVoicebanks);
 
-			var viewModel = new vdb.viewModels.user.UserDetailsViewModel(userId, loggedUserId, lastLoginAddress, canDeleteComments, urlMapper, 
-				userRepo, adminRepo, followedArtistsViewModel, albumCollectionViewModel, ratedSongsViewModel, latestComments);
+			var viewModel = new vdb.viewModels.user.UserDetailsViewModel(userId, cultureCode, loggedUserId, lastLoginAddress, canDeleteComments, urlMapper, 
+				userRepo, adminRepo, resourceRepo, tagRepo, languageSelection, followedArtistsViewModel, albumCollectionViewModel, ratedSongsViewModel, latestComments);
 			ko.applyBindings(viewModel);
 
 			if (window.location.hash && window.location.hash.length >= 1) {

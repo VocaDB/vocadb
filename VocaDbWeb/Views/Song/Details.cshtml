@@ -1,4 +1,4 @@
-@inherits VocaDb.Web.Code.VocaDbPage<SongDetails>
+﻿@inherits VocaDb.Web.Code.VocaDbPage<SongDetails>
 @using System.Globalization
 @using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Albums
@@ -220,7 +220,11 @@
 				<td>@ViewRes.SharedStrings.Type</td>
 				<td>
 					@SongHelpers.SongTypeLabel(Model.SongType)
-					@Html.ActionLink(Translate.SongTypeNames[Model.SongType], "Index", "Search", UrlMapper.Search.Songs(songType: Model.SongType), null)
+					@if (Model.SongTypeTag != null) {
+						<a href="@Url.TagDetails(Model.SongTypeTag)" data-bind="tagToolTip: @Model.SongTypeTag.Id">@Translate.SongTypeNames[Model.SongType]</a>
+					} else {
+						<a href="@Url.TagUrlForEntryType(VocaDb.Model.Domain.EntryType.Song, Model.SongType)">@Translate.SongTypeNames[Model.SongType]</a>
+					}
 				</td>
 			</tr>
 			
@@ -400,7 +404,7 @@
 			</h3>
 			<div class="media" data-bind="with: personalDescription">
 				<a data-bind="visible: !author.isEmpty() && author.entry().mainPicture, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
-					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !author.isEmpty() && author.entry().mainPicture ? author.entry().mainPicture.urlSmallThumb : null }" />
+					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !author.isEmpty() && author.entry().mainPicture ? author.entry().mainPicture.urlSmallThumb : null }" referrerpolicy="same-origin" />
 				</a>
 
 				<div class="media-body">

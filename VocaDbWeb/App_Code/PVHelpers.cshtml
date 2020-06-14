@@ -24,12 +24,16 @@
 	}
 }
 
-@helper EmbedBili(PVContract pv, string widthStr, string heightStr) {
+@helper EmbedBili(PVContract pv, int width, int height) {
 	var meta = pv.ExtendedMetadata != null ? pv.ExtendedMetadata.GetExtendedMetadata<BiliMetadata>() : null;
-	if (meta != null && meta.Cid != 0) {
-		<iframe src="https://player.bilibili.com/player.html?aid=@pv.PVId&cid=@meta.Cid&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="@widthStr" height="@heightStr"></iframe>
+		var widthStr = (width > 0 ? width.ToString() : "");
+	if (height >= 274 && width >= 480) {
+		var unmaskedHeight = height + 115;
+		var unmaskedHeightStr = (height > 0 ? unmaskedHeight.ToString() : "");
+		<div style="overflow:hidden; width:max-content; height:max-content"><iframe src="https://player.bilibili.com/player.html?aid=@pv.PVId&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="@widthStr" height="@unmaskedHeightStr" style="margin-top:-48px; margin-bottom:-38px; width:@(widthStr)px; height:@(unmaskedHeightStr)px; position: relative"></iframe></div>
 	} else {
-		<embed height="@heightStr" width="@widthStr" quality="high" allowfullscreen="true" type="application/x-shockwave-flash" src="https://static.hdslb.com/miniloader.swf" flashvars="aid=@pv.PVId&page=1" pluginspage="https://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" />
+		var heightStr = (width > 0 ? width.ToString() : "");
+		<iframe src="https://player.bilibili.com/player.html?aid=@pv.PVId&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="@widthStr" height="@heightStr"></iframe>
 	}
 }
 
@@ -44,7 +48,7 @@
 			break;
 
 		case PVService.Bilibili:
-			@EmbedBili(pv, widthStr, heightStr)
+			@EmbedBili(pv, width, height)
 			break;
 
 		case PVService.File:

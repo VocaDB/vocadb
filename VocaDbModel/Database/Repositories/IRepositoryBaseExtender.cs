@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Database.Repositories {
@@ -7,7 +8,9 @@ namespace VocaDb.Model.Database.Repositories {
 
 		public static void UpdateEntity<TEntity, TRepositoryContext>(this IRepositoryBase<TRepositoryContext> repository, int id, 
 			Action<TRepositoryContext, TEntity> func, PermissionToken permissionFlags, IUserPermissionContext permissionContext, 
-			bool skipLog = false) where TRepositoryContext : IDatabaseContext {
+			bool skipLog = false)
+			where TEntity : class, IDatabaseObject
+			where TRepositoryContext : IDatabaseContext {
 
 			var typeName = typeof(TEntity).Name;
 

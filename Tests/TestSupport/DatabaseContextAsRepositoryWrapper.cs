@@ -1,9 +1,14 @@
 using System;
 using System.Threading.Tasks;
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.Domain;
 
 namespace VocaDb.Tests.TestSupport {
 
+	/// <summary>
+	/// Wraps <see cref="IDatabaseContext"/> as <see cref="IRepository"/>.
+	/// TODO: maybe remove this.
+	/// </summary>
 	public class DatabaseContextAsRepositoryWrapper : IRepository {
 
 		private readonly IDatabaseContext dbContext;
@@ -38,7 +43,8 @@ namespace VocaDb.Tests.TestSupport {
 
 	}
 
-	public class DatabaseContextAsRepositoryWrapper<TRepo> : IRepository<TRepo> {
+	public class DatabaseContextAsRepositoryWrapper<TRepo> : IRepository<TRepo> 
+		where TRepo : class, IDatabaseObject {
 
 		private readonly IDatabaseContext<TRepo> dbContext;
 

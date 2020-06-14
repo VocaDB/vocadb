@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.Domain.Versioning;
+using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Songs {
 
@@ -21,6 +21,7 @@ namespace VocaDb.Model.Domain.Songs {
 		public EnumFieldAccessor<SongEditableFields> Status => Field(SongEditableFields.Status);
 		public EnumFieldAccessor<SongEditableFields> WebLinks => Field(SongEditableFields.WebLinks);
 
+		public virtual bool IncludeAlbums => IsSnapshot;
 		public virtual bool IncludeArtists => IsSnapshot || Artists.IsChanged;
 		public virtual bool IncludeLyrics => IsSnapshot || Lyrics.IsChanged;
 		public virtual bool IncludeNames => IsSnapshot || Names.IsChanged;

@@ -1,8 +1,8 @@
-﻿using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Artists {
 
-	public class ArtistPictureFile : EntryPictureFile {
+	public class ArtistPictureFile : EntryPictureFile, IEntryWithIntId {
 
 		private Artist artist;
 

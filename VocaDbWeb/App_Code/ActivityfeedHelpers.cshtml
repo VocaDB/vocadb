@@ -52,7 +52,7 @@
 		<div class="media">
 			@if (!string.IsNullOrEmpty(thumbUrl)) {
 				<a class="pull-left" href="@Url.EntryDetails(entry.Entry)" title="@entry.Entry.AdditionalNames">
-					<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" />
+					<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" referrerpolicy="same-origin"/>
 				</a>
 			}
 			<div class="media-body">
@@ -93,7 +93,7 @@
 
 		<div class="media">
 			<a class="pull-left" visible="{{ entry.mainPicture && (entry.mainPicture.urlTinyThumb || entry.mainPicture.urlSmallThumb) }}" href="{{ $parent.getEntryUrl(entry) }}" title="{{ entry.additionalNames }}">
-				<img attr.src="{{ entry.mainPicture ? (entry.mainPicture.urlTinyThumb || entry.mainPicture.urlSmallThumb) : '' }}" alt="thumb" class="media-object coverPicThumb" />
+				<img attr.src="{{ entry.mainPicture ? (entry.mainPicture.urlTinyThumb || entry.mainPicture.urlSmallThumb) : '' }}" alt="thumb" class="media-object coverPicThumb" referrerpolicy="same-origin" />
 			</a>
 			<div class="media-body">
 				<h4 class="media-heading">

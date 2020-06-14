@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -82,14 +83,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(user, ContentLanguagePreference.Default));
 
 			imagePersister = new InMemoryImagePersister();
-			queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, imagePersister, new FakeUserIconFactory(), new EnumTranslations());
+			queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, imagePersister, new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());
 
 		}
 
 		[TestMethod]
-		public void Create() {
+		public async Task Create() {
 
-			var result = queries.Create("Apimiku");
+			var result = await queries.Create("Apimiku");
 
 			Assert.AreEqual("Apimiku", result.Name, "Created tag name");
 			var tagFromRepo = repository.Load(result.Id);
@@ -99,17 +100,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateTagNameException))]
-		public void Create_Duplicate() {
+		public async Task Create_Duplicate() {
 
-			queries.Create("Appearance Miku");
+			await queries.Create("Appearance Miku");
 
 		}
 
 		[TestMethod]
-		public void GetDetails_RecentEvents() {
+		public async Task GetDetails_RecentEvents() {
 			
 			void AssertContainsEvent(TagDetailsContract details, ReleaseEvent releaseEvent) {
-				Assert.IsTrue(details.Events.Any(e => e.Id == releaseEvent.Id), "Contains " + releaseEvent);
+				Assert.IsTrue(details.Stats.Events.Any(e => e.Id == releaseEvent.Id), "Contains " + releaseEvent);
 			}
 
 			var standaloneEvent = CreateEntry.ReleaseEvent("Miku party");
@@ -126,15 +127,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Save(eventSeries);
 			repository.Save(CreateTagUsage(tag, standaloneEvent), CreateTagUsage(tag, oldSeriesEvent), CreateTagUsage(tag, recentSeriesEvent));
 
-			var result = queries.GetDetails(tag.Id);
+			var result = await queries.GetDetailsAsync(tag.Id);
 
-			Assert.AreEqual(2, result.EventCount, "EventCount");
-			Assert.AreEqual(2, result.Events.Length, "Events.Length");
-			Assert.AreEqual(1, result.EventSeriesCount, "EventSeriesCount");
-			Assert.AreEqual(1, result.EventSeries.Length, "EventSeries.Length");
+			Assert.AreEqual(2, result.Stats.EventCount, "EventCount");
+			Assert.AreEqual(2, result.Stats.Events.Length, "Events.Length");
+			Assert.AreEqual(1, result.Stats.EventSeriesCount, "EventSeriesCount");
+			Assert.AreEqual(1, result.Stats.EventSeries.Length, "EventSeries.Length");
 			AssertContainsEvent(result, standaloneEvent);
 			AssertContainsEvent(result, recentSeriesEvent);
-			Assert.IsTrue(result.EventSeries.Any(e => e.Id == eventSeries.Id), "Contains " + eventSeries);
+			Assert.IsTrue(result.Stats.EventSeries.Any(e => e.Id == eventSeries.Id), "Contains " + eventSeries);
 
 		}
 
@@ -185,8 +186,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Save(new TagReport(tag, TagReportType.InvalidInfo, user, "test", "test", null));
 			repository.Save(new TagReport(tag2, TagReportType.InvalidInfo, user, "test", "test", null));			
 			var song = repository.Save(CreateEntry.Song());
-			var tagUsage = repository.Save(song.AddTag(tag));
-			tag.AllSongTagUsages.Add(tagUsage.Result);
+			var tagUsage = repository.Save(song.AddTag(tag).Result);
+			tag.AllSongTagUsages.Add(tagUsage);
 
 			queries.MoveToTrash(tag.Id, "test");
 
@@ -256,7 +257,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual(3, target.AllSongTagUsages.Count, "Number of song tag usages");
 			Assert.AreEqual(1, song.Tags.Usages.Count, "Number of usages for the first song");
 
-			var usage = target.AllSongTagUsages.FirstOrDefault(s => s.Song == song);
+			var usage = target.AllSongTagUsages.FirstOrDefault(s => s.Entry == song);
 			Assert.IsNotNull(usage, "Found usage");
 			Assert.AreEqual(1, usage.Votes.Count, "Number of votes");
 			Assert.IsTrue(song.Tags.Usages.Contains(usage), "Same usage was added to song");
@@ -383,7 +384,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				queries.Update(updated, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });			
 			}
 
-			var thumb = new EntryThumb(tag, MediaTypeNames.Image.Jpeg);
+			var thumb = new EntryThumb(tag, MediaTypeNames.Image.Jpeg, ImagePurpose.Main);
 			Assert.IsTrue(imagePersister.HasImage(thumb, ImageSize.Original), "Original image was saved");
 			Assert.IsTrue(imagePersister.HasImage(thumb, ImageSize.SmallThumb), "Small thumbnail was saved");
 

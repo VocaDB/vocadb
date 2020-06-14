@@ -1,10 +1,10 @@
-﻿
+
 $(() => {
 
 	$("#globalSearchTerm").autocomplete({
 		source: (request, response: (items: string[]) => void) => {
 
-			var urlMapper = new vdb.UrlMapper(vdb.values.hostAddress);
+			var urlMapper = new vdb.UrlMapper(vdb.values.baseAddress);
 			var term: string = request.term;
 			var entryType = $("#globalSearchObjectType").val();
 			var endpoint: string = null;

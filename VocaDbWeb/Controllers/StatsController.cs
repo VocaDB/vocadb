@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -239,7 +239,8 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		private ActionResult SimpleBarChart<T>(Func<IQueryable<T>, IQueryable<LocalizedValue>> func, string title, string seriesName) {
+		private ActionResult SimpleBarChart<T>(Func<IQueryable<T>, IQueryable<LocalizedValue>> func, string title, string seriesName)
+			where T : class, IDatabaseObject {
 
 			var values = GetTopValues(func);
 
@@ -296,7 +297,8 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		private LocalizedValue[] GetTopValues<T>(Func<IQueryable<T>, IQueryable<LocalizedValue>> func) {
+		private LocalizedValue[] GetTopValues<T>(Func<IQueryable<T>, IQueryable<LocalizedValue>> func)
+			where T : class, IDatabaseObject {
 			
 			var cached = GetCachedReport<LocalizedValue[]>();
 
@@ -757,6 +759,48 @@ namespace VocaDb.Web.Controllers {
 			}).ToArray();
 
 			return AreaChart("Songs per voicebank over time", dataSeries);
+
+		}
+
+		[OutputCache(Duration = clientCacheDurationSec)]
+		public ActionResult GetSongsPerVoicebankTypeOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007) {
+
+			if (vocalistTypes == null)
+				vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
+
+			var data = repository.HandleQuery(ctx => {
+
+				// Note: the same song may be included multiple times for different artists
+				var points = ctx.Query<ArtistForSong>()
+					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null && s.Song.PublishDate.DateTime.Value.Year >= startYear && vocalistTypes.Contains(s.Artist.ArtistType))
+					.FilterIfNotNull(cutoff, s => s.Song.PublishDate.DateTime > cutoff)
+					.OrderBy(a => a.Song.PublishDate.DateTime.Value.Year)
+					.GroupBy(s => new {
+						s.Song.PublishDate.DateTime.Value.Year,
+						s.Song.PublishDate.DateTime.Value.Month,
+						ArtistType = s.Artist.ArtistType
+					})
+					.Select(s => new {
+						s.Key.Year,
+						s.Key.Month,
+						s.Key.ArtistType,
+						Count = s.Count()
+					})
+					.ToArray()
+					.Select(s => new { Date = new DateTime(s.Year, s.Month, 1), s.ArtistType, s.Count})
+					.GroupBy(s => s.ArtistType)
+					.ToArray();
+
+				return points;
+
+			});
+
+			var dataSeries = data.Select(ser => new Series {
+				Name = Translate.ArtistTypeName(ser.Key),
+				Data = Series.DateData(ser, p => p.Date, p => p.Count)
+			}).ToArray();
+
+			return AreaChart("Songs per vocalist type over time", dataSeries);
 
 		}
 

@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 
 namespace VocaDb.Model.Domain.Artists {
 
-	public class ArtistForArtist {
+	public class ArtistForArtist : IEntryWithIntId {
 
 		private Artist parent;
 		private Artist member;

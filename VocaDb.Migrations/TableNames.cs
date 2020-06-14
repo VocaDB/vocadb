@@ -17,6 +17,7 @@ namespace VocaDb.Migrations {
 		public const string ArchivedSongVersions = "ArchivedSongVersions";
 		public const string ArchivedSongListVersions = "ArchivedSongListVersions";
 		public const string ArchivedTagVersions = "ArchivedTagVersions";
+		public const string ArchivedVenueVersions = "ArchivedVenueVersions";
 		public const string ArtistNames = nameof(ArtistNames);
 		public const string Artists = "Artists";
 		public const string ArtistTagUsages = "ArtistTagUsages";
@@ -26,6 +27,7 @@ namespace VocaDb.Migrations {
 		public const string EventSeriesNames = nameof(EventSeriesNames);
 		public const string FavoriteSongsForUsers = "FavoriteSongsForUsers";
 		public const string GroupsForArtists = "GroupsForArtists";
+		public const string IPRules = nameof(IPRules);
 		public const string LyricsForSongs = "LyricsForSongs";
 		public const string OldUsernames = "OldUsernames";
 		public const string PVsForAlbums = "PVsForAlbums";
@@ -48,7 +50,12 @@ namespace VocaDb.Migrations {
 		public const string UserOptions = "UserOptions";
 		public const string UserMessages = "UserMessages";
 		public const string Users = "Users";
+		public const string Venues = "Venues";
 
+	}
+
+	public static class ColumnNames {
+		public const string Id = nameof(Id);
 	}
 
 }

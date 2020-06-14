@@ -29,9 +29,9 @@ namespace VocaDb.Web.Controllers.Api {
 		private const int defaultMax = 10;
 		private readonly EventQueries queries;
 		private readonly IEventRepository repository;
-		private readonly IEntryThumbPersister thumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 
-		public ReleaseEventApiController(EventQueries queries, IEventRepository repository, IEntryThumbPersister thumbPersister) {
+		public ReleaseEventApiController(EventQueries queries, IEventRepository repository, IAggregatedEntryImageUrlFactory thumbPersister) {
 			this.queries = queries;
 			this.repository = repository;
 			this.thumbPersister = thumbPersister;

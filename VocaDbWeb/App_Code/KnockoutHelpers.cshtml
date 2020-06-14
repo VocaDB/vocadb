@@ -1,4 +1,6 @@
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Model.Domain
+@using VocaDb.Model.Domain.Songs
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper ArtistFilters(bool artistParticipationStatus) {
@@ -149,9 +151,14 @@
 @* 
 	Autocomplete box that allows selection of one item. When an item is selected, "clear" button will be displayed.
 *@
-@helper LockingAutoComplete(string bindingHandler, string binding, string textBinding = null, string valBinding = null, string extraBindings = null) {
+@helper LockingAutoComplete(string bindingHandler, string binding, string textBinding = null, string valBinding = null, string extraBindings = null, EntryType entryType = EntryType.Undefined) {
 	<input type="text" class="input-large" data-bind="@bindingHandler: @binding, visible: !@(valBinding ?? binding)()@(!string.IsNullOrEmpty(extraBindings) ? ", " + extraBindings : "")" placeholder="@ViewRes.SharedStrings.Search" />
 	<div class="input-append" data-bind="visible: @(valBinding ?? binding)()" style="display: none;">
+		@if (entryType != EntryType.Undefined) {
+			<a href="#" class="btn btn-nomargin" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('@entryType', @(valBinding ?? binding)()) }">
+				<i class="icon icon-info-sign"></i>
+			</a>
+		}
 		<input type="text" class="input-large" readonly data-bind="value: @(textBinding ?? binding)" />
 		<button type="button" class="btn btn-danger" data-bind="click: function() { @(valBinding ?? binding)(null); }">@ViewRes.SharedStrings.Clear</button>
 	</div>
@@ -220,7 +227,15 @@
 
 }
 
+<!-- Locking autocomplete for song selection. Allows selection of one (existing) song. When song is selected, clear button is displayed. -->
+@helper SongLockingAutoComplete(string binding, SongTypes songTypes = SongTypes.Unspecified, int ignoreId = 0) {
+	var songTypesStr = songTypes != SongTypes.Unspecified ? string.Join(",", songTypes.ToIndividualSelections().Select(t => t.ToString())) : "";
+	@LockingAutoComplete("songAutoComplete", "{ acceptSelection: " + binding + ".id, extraQueryParams: { songTypes: '" + songTypesStr + "' }, ignoreId: " + ignoreId + " }", textBinding: binding + ".name", valBinding: binding + ".id", entryType: EntryType.Song)
+}
+
 @helper TagFilters(bool topGenres = false) {
+
+	<!-- Viewmodel: TagFilters -->
 
 	<!-- ko foreach: tags -->
 	<div class="control-group">

@@ -1,4 +1,4 @@
-﻿
+
 module vdb.viewModels.search {
 
 	import dc = vdb.dataContracts;
@@ -127,7 +127,7 @@ module vdb.viewModels.search {
 				this.updateResults();
 			});
 
-			tagRepo.getTopTags(languageSelection, models.tags.Tag.commonCategory_Genres, result => {
+			tagRepo.getTopTags(languageSelection, models.tags.Tag.commonCategory_Genres, null, result => {
 				this.genreTags(result);
 			});
 

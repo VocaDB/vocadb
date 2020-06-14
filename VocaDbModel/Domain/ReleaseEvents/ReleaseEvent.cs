@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.ReleaseEvents;
@@ -17,6 +18,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 
@@ -30,6 +32,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<EventName> IEntryWithNames<EventName>.Names => Names;
 		string IEntryImageInformation.Mime => PictureMime;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 
 		private IList<Album> albums = new List<Album>();
 		private ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> archivedVersions
@@ -113,6 +116,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 				songs = value;
 			}
 		}
+
+		public virtual bool AllowNotifications => true;
 
 		public virtual ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> ArchivedVersionsManager {
 			get => archivedVersions;
@@ -231,6 +236,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			}
 		}
 
+		public virtual Venue Venue { get; set; }
+
 		public virtual string VenueName { get; set; }
 
 		public virtual int Version { get; set; }
@@ -326,7 +333,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			return Id.GetHashCode();
 		}
 
-		private ArtistForEvent AddArtist(ArtistForEventContract contract, Func<int, Artist> artistGetter) {
+		private async Task<ArtistForEvent> AddArtist(ArtistForEventContract contract, Func<int, Task<Artist>> artistGetter) {
 
 			ArtistForEvent link;
 
@@ -336,7 +343,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 					Roles = contract.Roles
 				};
 			} else {
-				var artist = artistGetter(contract.Artist.Id);
+				var artist = await artistGetter(contract.Artist.Id);
 				link = new ArtistForEvent(this, artist) {
 					Roles = contract.Roles
 				};
@@ -362,20 +369,31 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
-		public virtual CollectionDiffWithValue<ArtistForEvent, ArtistForEvent> SyncArtists(
-			IList<ArtistForEventContract> newArtists, Func<int, Artist> artistGetter) {
+		public virtual void SetVenue(Venue newVenue) {
+
+			if (Equals(Venue, newVenue))
+				return;
+
+			Venue?.AllEvents.Remove(this);
+			newVenue?.AllEvents.Add(this);
+			Venue = newVenue;
+
+		}
+
+		public virtual async Task<CollectionDiffWithValue<ArtistForEvent, ArtistForEvent>> SyncArtists(
+			IList<ArtistForEventContract> newArtists, Func<int, Task<Artist>> artistGetter) {
 
 			ParamIs.NotNull(() => newArtists);
 
-			bool Update(ArtistForEvent old, ArtistForEventContract newArtist) {
+			Task<bool> Update(ArtistForEvent old, ArtistForEventContract newArtist) {
 				if (old.Roles == newArtist.Roles) {
-					return false;
+					return Task.FromResult(false);
 				}
 				old.Roles = newArtist.Roles;
-				return true;
+				return Task.FromResult(true);
 			}
 
-			var diff = CollectionHelper.SyncWithContent(AllArtists, newArtists, (a1, a2) => a1.Id == a2.Id, a => AddArtist(a, artistGetter), Update, null);
+			var diff = await CollectionHelper.SyncWithContentAsync(AllArtists, newArtists, (a1, a2) => a1.Id == a2.Id, async a => await AddArtist(a, artistGetter), Update, null);
 			return diff;
 
 		}

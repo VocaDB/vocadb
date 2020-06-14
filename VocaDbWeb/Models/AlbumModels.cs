@@ -26,13 +26,11 @@ namespace VocaDb.Web.Models {
 
 		private readonly string mime;
 
-		public EntryType EntryType {
-			get { return EntryType.Album; }
-		}
+		public EntryType EntryType => EntryType.Album;
 
-		public string Mime {
-			get { return mime; }
-		}
+		public string Mime => mime;
+
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 
 		public AlbumDetails() { }
 
@@ -50,6 +48,7 @@ namespace VocaDb.Web.Models {
 			Description = contract.Description;
 			Deleted = contract.Deleted;
 			DiscType = contract.DiscType;
+			DiscTypeTypeTag = contract.DiscTypeTypeTag;
 			Draft = contract.Status == EntryStatus.Draft;
 			Hits = contract.Hits;
 			Id = contract.Id;
@@ -148,6 +147,8 @@ namespace VocaDb.Web.Models {
 		public AlbumDisc[] Discs { get; set; }
 
 		public DiscType DiscType { get; set; }
+
+		public TagBaseContract DiscTypeTypeTag { get; set; }
 
 		public bool Draft { get; set; }
 

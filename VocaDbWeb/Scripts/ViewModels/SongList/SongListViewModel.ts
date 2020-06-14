@@ -1,4 +1,4 @@
-﻿
+
 module vdb.viewModels.songList {
 
 	import cls = vdb.models;
@@ -20,6 +20,7 @@ module vdb.viewModels.songList {
 			private languageSelection: cls.globalization.ContentLanguagePreference,
 			cultureCode: string,
 			private listId: number,
+			tagUsages: dc.tags.TagUsageForApiContract[],
 			pvPlayersFactory: pvs.PVPlayersFactory,
 			canDeleteAllComments: boolean) {
 
@@ -57,7 +58,15 @@ module vdb.viewModels.songList {
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
 			this.songType.subscribe(this.updateResultsWithTotalCount);
+
+			this.tagsEditViewModel = new tags.TagsEditViewModel({
+				getTagSelections: callback => userRepo.getSongListTagSelections(this.listId, callback),
+				saveTagSelections: tags => userRepo.updateSongListTags(this.listId, tags, this.tagUsages.updateTagUsages)
+			}, cls.EntryType.SongList);
+
 			this.tags.subscribe(this.updateResultsWithTotalCount);
+
+			this.tagUsages = new tags.TagListViewModel(tagUsages);
 
 			this.sort.subscribe(() => this.updateCurrentMode(true));
 			this.playlistMode.subscribe(() => this.updateCurrentMode(true));
@@ -94,8 +103,10 @@ module vdb.viewModels.songList {
 		public sort = ko.observable("");
 		public sortName: KnockoutComputed<string>;
 		public songType = ko.observable(models.songs.SongType[models.songs.SongType.Unspecified]);
+		public tagsEditViewModel: tags.TagsEditViewModel;
 		public tags = ko.observableArray<viewModels.search.TagFilter>();
 		public tagIds: KnockoutComputed<number[]>;
+		public tagUsages: tags.TagListViewModel;
 
 		public updateResultsWithTotalCount = () => this.updateResults(true);
 		public updateResultsWithoutTotalCount = () => this.updateResults(false);

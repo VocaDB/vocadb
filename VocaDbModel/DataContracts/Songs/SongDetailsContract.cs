@@ -10,6 +10,8 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Service;
 using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.DataContracts.Songs {
@@ -20,7 +22,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public SongDetailsContract() {}
 
 		public SongDetailsContract(Song song, ContentLanguagePreference languagePreference,
-			SongListBaseContract[] pools, ISpecialTags specialTags, IUserPermissionContext userContext, IEntryThumbPersister thumbPersister) {
+			SongListBaseContract[] pools, ISpecialTags specialTags, IEntryTypeTagRepository entryTypeTags, IUserPermissionContext userContext, 
+			IAggregatedEntryImageUrlFactory thumbPersister, Tag songTypeTag = null) {
 
 			Song = new SongContract(song, languagePreference);
 
@@ -34,7 +37,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			CreateDate = song.CreateDate;
 			Deleted = song.Deleted;
 			LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
-			LyricsFromParents = song.GetLyricsFromParents(specialTags).Select(l => new LyricsForSongContract(l, false)).ToArray();
+			LyricsFromParents = song.GetLyricsFromParents(specialTags, entryTypeTags).Select(l => new LyricsForSongContract(l, false)).ToArray();
 			Notes = song.Notes;
 			OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ? 
 				new SongForApiContract(song.OriginalVersion, null, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl) : null);
@@ -44,6 +47,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			PersonalDescriptionText = song.PersonalDescriptionText;
 			var author = song.PersonalDescriptionAuthor;
 			PersonalDescriptionAuthor = author != null ? new ArtistForApiContract(author, languagePreference, thumbPersister, ArtistOptionalFields.MainPicture) : null;
+			SongTypeTag = songTypeTag != null ? new TagBaseContract(songTypeTag, languagePreference) : null;
 			SubjectsFromParents = song.GetCharactersFromParents().Select(c => new ArtistForSongContract(c, languagePreference)).ToArray();
 			Tags = song.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(t => t.Count).ToArray();
 			TranslatedName = new TranslatedStringContract(song.TranslatedName);
@@ -147,6 +151,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public SongContract Song { get; set; }
+
+		[DataMember]
+		public TagBaseContract SongTypeTag { get; set; }
 
 		[DataMember]
 		public ArtistForSongContract[] SubjectsFromParents { get; set; }

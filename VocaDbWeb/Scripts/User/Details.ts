@@ -1,4 +1,4 @@
-﻿import rep = vdb.repositories;
+import rep = vdb.repositories;
 
 function initPage(confirmDisableStr: string) {
 
@@ -7,6 +7,7 @@ function initPage(confirmDisableStr: string) {
 	$("#composeMessageLink").button({ icons: { primary: 'ui-icon-mail-closed' } });
 	$("#editUserLink").button({ icons: { primary: 'ui-icon-wrench' } });
 	$("#disableUserLink").button({ icons: { primary: 'ui-icon-close' } });
+    $("#reportUserLink").button({ icons: { primary: 'ui-icon-alert' } });
 	$("#setToLimitedLink").button({ icons: { primary: 'ui-icon-close' } });
 	$("#avatar").tooltip(<any>{ placement: "bottom" });
 

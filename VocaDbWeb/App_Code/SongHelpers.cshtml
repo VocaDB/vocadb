@@ -1,4 +1,4 @@
-@inherits VocaDb.Web.Code.HelperPage
+﻿@inherits VocaDb.Web.Code.HelperPage
 @using System.Globalization
 @using System.Web.Mvc;
 @using System.Web.Mvc.Html;
@@ -89,13 +89,13 @@
 
 @helper SongIconLink(SongContract song, int? albumId = null) {
 	<a href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(song, albumId))">
-		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" />
+		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin"/>
 	</a>		
 }
 
 @helper SongIconLink(SongForApiContract song) {
 	<a href="@Url.SongDetails(song)">
-		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" />
+		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin"/>
 	</a>
 }
 
@@ -158,7 +158,7 @@
 		<tbody data-bind="foreach: @Html.Raw(binding)">
 			<!-- ko if: @(groupByYear ? "true" : "false") && $parent.isFirstForYear($data, $index()) -->
 			<tr>
-				<td colspan="2">
+				<td colspan="3">
 					<h3 class="song-list-year">{{ $data.eventDate | formatDate: 'YYYY' }}</h3>
 				</td>
 			</tr>
@@ -173,6 +173,14 @@
 					<a href="#" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('SongList', id) }">{{ name }}</a>
 					<div visible="{{ $data.eventDate }}">
 						<small>{{ $data.eventDate | formatDate: 'l' }}</small>
+					</div>
+				</td>
+				<td data-bind="if: $parent.showTags() && $data.tags" class="search-tags-column">
+					<div data-bind="visible: tags.length">
+						<i class="icon icon-tags fix-icon-margin"></i>
+						<!-- ko foreach: tags -->
+						<a href="#" data-bind="text: tag.name, click: function() { $parents[1].selectTag(tag); return false; }"></a><span data-bind="visible: $data != _.last($parent.tags)">,</span>
+						<!-- /ko -->
 					</div>
 				</td>
 			</tr>

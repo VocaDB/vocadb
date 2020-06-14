@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Database.Repositories {
 
@@ -65,7 +66,7 @@ namespace VocaDb.Model.Database.Repositories {
 	/// Interface for running "units of work" against the database.
 	/// </summary>
 	/// <typeparam name="T">Type of entity.</typeparam>
-	public interface IRepository<T> : IRepositoryBase<IDatabaseContext<T>> {
+	public interface IRepository<T> : IRepositoryBase<IDatabaseContext<T>> where T : class, IDatabaseObject {
 
 	}
 

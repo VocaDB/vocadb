@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web.Mvc;
@@ -152,6 +152,44 @@ namespace VocaDb.Web.Helpers {
 
 			if (!string.IsNullOrEmpty(placeholder))
 				htmlAttributes.Add("placeholder", placeholder);
+
+			return htmlHelper.TextBoxFor(expression, htmlAttributes);
+
+		}
+
+		public static MvcHtmlString NumericTextBoxForKnockout<TModel, TProperty>(
+			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, 
+			string binding, string cssClass = null, string id = null, int? size = null,
+			string placeholder = null, decimal? step = null, int? min = null, int? max = null) {
+
+			ParamIs.NotNull(() => htmlHelper);
+			ParamIs.NotNull(() => expression);
+			ParamIs.NotNull(() => binding);
+
+			var htmlAttributes = new Dictionary<string, object>(3) { { "data-bind", binding } };
+
+			htmlAttributes.Add("type", "number");
+
+			if (!string.IsNullOrEmpty(cssClass))
+				htmlAttributes.Add("class", cssClass);
+
+			if (!string.IsNullOrEmpty(id))
+				htmlAttributes.Add("id", id);
+
+			if (size.HasValue)
+				htmlAttributes.Add("size", size.Value);
+
+			if (!string.IsNullOrEmpty(placeholder))
+				htmlAttributes.Add("placeholder", placeholder);
+
+			if (step != null)
+				htmlAttributes.Add("step", step);
+
+			if (min != null)
+				htmlAttributes.Add("min", min);
+
+			if (max != null)
+				htmlAttributes.Add("max", max);
 
 			return htmlHelper.TextBoxFor(expression, htmlAttributes);
 

@@ -41,7 +41,7 @@ namespace VocaDb.Web.App_Start {
 
 		private static string[] LoadBlockedIPs(IComponentContext componentContext) {
 
-			return componentContext.Resolve<OtherService>().GetIPRules().Select(i => i.Address).ToArray();
+			return componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());
 
 		}
 
@@ -63,8 +63,10 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<UserMessageMailer>().As<IUserMessageMailer>();
 			builder.RegisterType<StopForumSpamClient>().As<IStopForumSpamClient>();
 			builder.RegisterType<PVParser>().As<IPVParser>();
-			builder.RegisterType<ServerEntryImagePersisterOld>().As<IEntryImagePersisterOld>().As<IEntryPictureFilePersister>();
-			builder.RegisterType<ServerEntryThumbPersister>().As<IEntryThumbPersister>();
+			builder.RegisterType<DynamicImageUrlFactory>().As<IDynamicImageUrlFactory>();
+			builder.RegisterType<ServerEntryImagePersisterOld>().As<IEntryImagePersisterOld>().As<IEntryPictureFilePersister>().SingleInstance();
+			builder.RegisterType<ServerEntryThumbPersister>().As<IEntryThumbPersister>().SingleInstance();
+			builder.RegisterType<ServerEntryImageFactoryAggregator>().As<IAggregatedEntryImageUrlFactory>();
 			builder.RegisterType<NTextCatLibLanguageDetector>().As<ILanguageDetector>();
 			builder.RegisterType<BrandableStringsManager>().AsSelf().SingleInstance();
 			builder.RegisterType<VdbConfigManager>().AsSelf().SingleInstance();
@@ -102,6 +104,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<TagNHibernateRepository>().As<ITagRepository>();
 			builder.RegisterType<UserNHibernateRepository>().As<IUserRepository>();
 			builder.RegisterType<UserMessageNHibernateRepository>().As<IUserMessageRepository>();
+			builder.RegisterType<VenueNHibernateRepository>().As<IVenueRepository>();
 			builder.RegisterType<AlbumQueries>().AsSelf();
 			builder.RegisterType<ArtistQueries>().AsSelf();
 			builder.RegisterType<DiscussionQueries>().AsSelf();
@@ -114,6 +117,7 @@ namespace VocaDb.Web.App_Start {
 			builder.RegisterType<TagQueries>().AsSelf();
 			builder.RegisterType<UserQueries>().AsSelf();
 			builder.RegisterType<UserMessageQueries>().AsSelf();
+			builder.RegisterType<VenueQueries>().AsSelf();
 
 			// Enable DI for action filters
 			builder.Register(c => new RestrictBlockedIPAttribute(c.Resolve<IPRuleManager>()))

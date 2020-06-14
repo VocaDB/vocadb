@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -36,9 +37,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private ReleaseEventSeries series;
 		private User user;
 
-		private ReleaseEvent CallUpdate(ReleaseEventForEditContract contract) {
+		private async Task<ReleaseEvent> CallUpdate(ReleaseEventForEditContract contract) {
 			
-			var result = queries.Update(contract, null);
+			var result = await queries.Update(contract, null);
 			return repository.Load(result.Id);
 
 		}
@@ -71,20 +72,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			user = CreateEntry.User(group: UserGroupId.Trusted);
 			repository.Save(user);
 			permissionContext = new FakePermissionContext(user);
-			queries = new EventQueries(repository, new FakeEntryLinkFactory(), permissionContext, new InMemoryImagePersister(), new FakeUserIconFactory(), new EnumTranslations(), mailer, 
-				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()));
+			var imageStore = new InMemoryImagePersister();
+			queries = new EventQueries(repository, new FakeEntryLinkFactory(), permissionContext, imageStore, new FakeUserIconFactory(), new EnumTranslations(), mailer, 
+				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()), imageStore);
 
 		}
 
 		[TestMethod]
-		public void Create_NoSeries() {
+		public async Task Create_NoSeries() {
 			
 			var contract = new ReleaseEventForEditContract {
 				Description = string.Empty,
 				Names = Names("Vocaloid Paradise")
 			};
 
-			var result = CallUpdate(contract);
+			var result = await CallUpdate(contract);
 
 			Assert.IsTrue(repository.Contains(result), "Event was saved to repository");
 			Assert.AreEqual("Vocaloid Paradise", result.DefaultName, "Name");
@@ -93,7 +95,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create_WithSeriesAndSuffix() {
+		public async Task Create_WithSeriesAndSuffix() {
 			
 			var contract = new ReleaseEventForEditContract {
 				Description = string.Empty,
@@ -102,7 +104,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				SeriesSuffix = "Spring",
 			};
 
-			var result = CallUpdate(contract);
+			var result = await CallUpdate(contract);
 
 			Assert.IsTrue(repository.Contains(result), "Event was saved to repository");
 			Assert.AreEqual("M3 2014 Spring", result.DefaultName, "Name");
@@ -115,7 +117,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create_WithSeriesNoSuffix() {
+		public async Task Create_WithSeriesNoSuffix() {
 			
 			var contract = new ReleaseEventForEditContract {
 				Description = string.Empty,
@@ -124,7 +126,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				SeriesSuffix = string.Empty,
 			};
 
-			var result = CallUpdate(contract);
+			var result = await CallUpdate(contract);
 
 			Assert.IsTrue(repository.Contains(result), "Event was saved to repository");
 			Assert.AreEqual("M3 2014", result.DefaultName, "Name");
@@ -135,7 +137,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create_SeriesHasMultipleNames() {
+		public async Task Create_SeriesHasMultipleNames() {
 
 			series.Names.Names = new[] {
 				series.CreateName("Comiket", ContentLanguageSelection.English),
@@ -150,7 +152,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				SeriesSuffix = string.Empty,
 			};
 
-			var result = CallUpdate(contract);
+			var result = await CallUpdate(contract);
 
 			Assert.AreEqual(3, result.Names.Names.Count, "Number of names");
 			Assert.IsTrue(result.Names.HasName("Comiket 39"), "Found English name");
@@ -161,7 +163,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create_WithCustomArtists() {
+		public async Task Create_WithCustomArtists() {
 			
 			var artist = repository.Save(CreateEntry.Artist(ArtistType.Producer));
 			var contract = new ReleaseEventForEditContract {
@@ -173,7 +175,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				}
 			};
 
-			CallUpdate(contract);
+			await CallUpdate(contract);
 
 		}
 
@@ -190,12 +192,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_ChangeSeriesSuffix() {
+		public async Task Update_ChangeSeriesSuffix() {
 			
 			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, permissionContext, null);
 			contract.SeriesSuffix = "Fall";
 
-			var result = CallUpdate(contract);
+			var result = await CallUpdate(contract);
 
 			Assert.AreEqual(2013, contract.SeriesNumber, "SeriesNumber");
 			Assert.AreEqual("Fall", contract.SeriesSuffix, "SeriesSuffix");
@@ -210,13 +212,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_ChangeName_CustomName() {
+		public async Task Update_ChangeName_CustomName() {
 
 			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, permissionContext, null);
 			contract.CustomName = true;
 			contract.Names[0].Value = "M3 2013 Fall X2";
 
-			var result = CallUpdate(contract);
+			var result = await CallUpdate(contract);
 
 			Assert.AreEqual("M3 2013 Fall X2", result.DefaultName, "Name was updated");
 
@@ -227,13 +229,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_ChangeName_UseSeriesName() {
+		public async Task Update_ChangeName_UseSeriesName() {
 
 			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, permissionContext, null);
 			contract.Names[0].Value = "New name";
 			contract.DefaultNameLanguage = ContentLanguageSelection.Romaji;
 
-			var result = CallUpdate(contract);
+			var result = await CallUpdate(contract);
 
 			Assert.AreEqual("M3 2013 Spring", result.DefaultName, "Name was not updated");
 			Assert.AreEqual(ContentLanguageSelection.English, result.TranslatedName.DefaultLanguage, "Default language was not updated");
@@ -246,18 +248,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateEventNameException))]
-		public void Update_ChangeName_DuplicateOfAnotherEvent() {
+		public async Task Update_ChangeName_DuplicateOfAnotherEvent() {
 
 			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, permissionContext, null);
 			contract.Id = 0; // Simulate new event
 
-			queries.Update(contract, null);
+			await queries.Update(contract, null);
 
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateEventNameException))]
-		public void Update_ChangeName_DuplicateForSameEvent() {
+		public async Task Update_ChangeName_DuplicateForSameEvent() {
 
 			var releaseEvent = repository.Save(CreateEntry.ReleaseEvent("Comiket 39"));
 			var contract = new ReleaseEventForEditContract(releaseEvent, ContentLanguagePreference.Default, permissionContext, null) {
@@ -267,18 +269,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				}
 			};
 
-			queries.Update(contract, null);
+			await queries.Update(contract, null);
 
 		}
 
 		[TestMethod]
-		public void Update_ChangeToSeriesEvent() {
+		public async Task Update_ChangeToSeriesEvent() {
 
 			var releaseEvent = repository.Save(CreateEntry.ReleaseEvent("M3 39"));
 			var contract = Contract(releaseEvent);
 			contract.Series = new ReleaseEventSeriesContract(series, ContentLanguagePreference.Default);
 
-			queries.Update(contract, null);
+			await queries.Update(contract, null);
 
 			Assert.AreEqual(series, releaseEvent.Series, "Series");
 			Assert.IsTrue(series.AllEvents.Contains(releaseEvent), "Series contains event");

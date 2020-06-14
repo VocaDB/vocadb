@@ -3,7 +3,7 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Albums {
 
-	public class AlbumReview : IAlbumLink {
+	public class AlbumReview : IAlbumLink, IEntryWithIntId {
 
 		public AlbumReview() { }
 

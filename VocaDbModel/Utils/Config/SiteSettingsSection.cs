@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+using System.Configuration;
 
 namespace VocaDb.Model.Utils.Config {
 
@@ -13,7 +13,7 @@ namespace VocaDb.Model.Utils.Config {
 			set => this["bannerUrl"] = value;
 		}
 
-		[ConfigurationProperty("blogUrl", DefaultValue = "blog.vocadb.net")]
+		[ConfigurationProperty("blogUrl", DefaultValue = "")]
 		public string BlogUrl {
 			get => (string)this["blogUrl"];
 			set => this["blogUrl"] = value;
@@ -60,6 +60,12 @@ namespace VocaDb.Model.Utils.Config {
 			get => (bool)this["signupsDisabled"];
 			set => this["signupsDisabled"] = value;
 		}
+
+		[ConfigurationProperty("siteName", DefaultValue = null)]
+		public string SiteName => (string)this["siteName"];
+
+		[ConfigurationProperty("siteTitle", DefaultValue = null)]
+		public string SiteTitle => (string)this["siteTitle"];
 
 		[ConfigurationProperty("sitewideAnnouncement", DefaultValue = "")]
 		public string SitewideAnnouncement {

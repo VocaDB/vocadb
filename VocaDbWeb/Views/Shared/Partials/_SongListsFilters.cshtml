@@ -1,22 +1,47 @@
-﻿@using Res = ViewRes.SongList.FeaturedStrings;
+﻿<div class="form-horizontal well well-transparent" data-bind="visible: true" style="display: none;">
+	
+	<div class="pull-right">
+		<div class="inline-block">
+			@ViewRes.EntryIndexStrings.SortBy
+			@* TODO: use KnockoutHelpers.Dropdown *@
+			<div class="btn-group">
+				<button class="btn dropdown-toggle" data-toggle="dropdown">
+					<span data-bind="text: sortName"></span>
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a data-bind="click: function() { sort('Date'); }" visible="{{ showEventDateSort }}" href="#">@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.Date</a></li>
+					<li><a data-bind="click: function() { sort('CreateDate'); }" href="#">@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.CreateDate</a></li>
+					<li><a data-bind="click: function() { sort('Name'); }" href="#">@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.Name</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<a data-bind="css: { active: showTags() }, toggleClick: showTags" class="btn btn-nomargin" href="#" title="@ViewRes.Search.IndexStrings.ShowTags">
+			<i class="icon-tags"></i>
+		</a>
+	</div>
 
-<div class="clearfix song-lists-filters">
-	<div class="pull-left">
-		<span>@Res.SortBy</span>
-		<div class="btn-group">
-			<a data-bind="click: function() { sort('Date'); }, css: { active: sort() == 'Date' }" visible="{{ showEventDateSort }}" class="btn" href="#">
-				@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.Date
-			</a>
-			<a data-bind="click: function() { sort('CreateDate'); }, css: { active: sort() == 'CreateDate' }" class="btn" href="#">
-				@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.CreateDate
-			</a>
-			<a data-bind="click: function() { sort('Name'); }, css: { active: sort() == 'Name' }" class="btn" href="#">
-				@VocaDb.Web.Resources.Views.SongList.SongListSortRuleNames.Name
-			</a>
+	<div class="control-label">
+		<i class="icon-search"></i>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<div class="input-append">
+				<input type="text" data-bind="textInput: query" class="input-xlarge" placeholder="@ViewRes.Search.IndexStrings.TypeSomething" />
+				<button class="btn btn-danger" data-bind="click: function() { query(''); }, visible: query">@ViewRes.SharedStrings.Clear</button>
+			</div>
 		</div>
 	</div>
-	<div class="pull-left song-lists-text-query">
-		<i class="icon-search"></i>
-		<input type="text" data-bind="textInput: query" placeholder="@ViewRes.SharedStrings.Search" maxlength="200" />
+	
+	<div class="control-group">
+		<div class="control-label">@ViewRes.SharedStrings.Tag</div>
+		<div class="controls" data-bind="with: tagFilters">
+			@{ Html.RenderPartial("Partials/_TagFilters"); }
+			<div>
+				<input type="text" class="input-large" data-bind="tagAutoComplete: addTag" placeholder="@ViewRes.SharedStrings.Search" />
+			</div>
+		</div>
 	</div>
+	
 </div>

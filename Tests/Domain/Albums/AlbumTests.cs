@@ -1,4 +1,6 @@
-﻿using System.Linq;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
@@ -34,20 +36,20 @@ namespace VocaDb.Tests.Domain.Albums {
 			return new SongInAlbumEditContract { SongInAlbumId = id, IsCustomTrack = true, SongName = name, TrackNumber = trackNum, DiscNumber = 1, Artists = new ArtistContract[0] };
 		}
 
-		private Artist[] GetArtists(ArtistContract[] contracts) {
+		private Task<List<Artist>> GetArtists(ArtistContract[] contracts) {
 
-			return contracts
+			return Task.FromResult(contracts
 				.Select(a => a.Id == vocalist.Id ? vocalist : new Artist(TranslatedString.Create(a.Name)) {Id = a.Id})
-				.ToArray();
+				.ToList());
 
 		}
 
-		private Song GetSong(SongInAlbumEditContract contract) {
+		private Task<Song> GetSong(SongInAlbumEditContract contract) {
 
 			if (contract.SongId == song1.Id)
-				return song1;
+				return Task.FromResult(song1);
 
-			return new Song(new LocalizedString(contract.SongName, ContentLanguageSelection.Unspecified));
+			return Task.FromResult(new Song(new LocalizedString(contract.SongName, ContentLanguageSelection.Unspecified)));
 
 		}
 
@@ -55,7 +57,7 @@ namespace VocaDb.Tests.Domain.Albums {
 			song.SyncArtists(artists, GetArtists);
 		}
 
-		private CollectionDiffWithValue<SongInAlbum, SongInAlbum> SyncSongs(SongInAlbumEditContract[] newSongs) {
+		private Task<CollectionDiffWithValue<SongInAlbum, SongInAlbum>> SyncSongs(SongInAlbumEditContract[] newSongs) {
 			return album.SyncSongs(newSongs, GetSong, UpdateSongArtists);
 		}
 
@@ -107,11 +109,11 @@ namespace VocaDb.Tests.Domain.Albums {
 		}
 
 		[TestMethod]
-		public void SyncSongs_NoExistingLinks() {
+		public async Task SyncSongs_NoExistingLinks() {
 
 			var newSongs = new[] { songInAlbumContract };
 
-			var result = SyncSongs(newSongs);
+			var result = await SyncSongs(newSongs);
 
 			Assert.IsNotNull(result, "result is not null");
 			Assert.IsTrue(result.Changed, "is changed");
@@ -125,12 +127,12 @@ namespace VocaDb.Tests.Domain.Albums {
 		}
 
 		[TestMethod]
-		public void SyncSongs_NotChanged() {
+		public async Task SyncSongs_NotChanged() {
 
 			album.AddSong(song1, 1, 1);
 			var newSongs = new[] { songInAlbumContract };
 
-			var result = SyncSongs(newSongs);
+			var result = await SyncSongs(newSongs);
 
 			Assert.IsNotNull(result, "result is not null");
 			Assert.IsFalse(result.Changed, "is not changed");
@@ -146,13 +148,13 @@ namespace VocaDb.Tests.Domain.Albums {
 		/// Edited track properties other than artists.
 		/// </summary>
 		[TestMethod]
-		public void SyncSongs_EditedProperties() {
+		public async Task SyncSongs_EditedProperties() {
 
 			album.AddSong(song1, 1, 1);
 			songInAlbumContract.TrackNumber = 2;
 			var newSongs = new[] { songInAlbumContract };
 
-			var result = SyncSongs(newSongs);
+			var result = await SyncSongs(newSongs);
 
 			Assert.IsNotNull(result, "result is not null");
 			Assert.IsTrue(result.Changed, "is changed");
@@ -169,13 +171,13 @@ namespace VocaDb.Tests.Domain.Albums {
 		/// Edited track artists list.
 		/// </summary>
 		[TestMethod]
-		public void SyncSongs_EditedArtists() {
+		public async Task SyncSongs_EditedArtists() {
 
 			album.AddSong(song1, 1, 1);
 			songInAlbumContract.Artists = new[] { producerContract, vocalistContract };
 			var newSongs = new[] { songInAlbumContract };
 
-			var result = SyncSongs(newSongs);
+			var result = await SyncSongs(newSongs);
 
 			Assert.IsNotNull(result, "result is not null");
 			Assert.AreEqual(1, result.Unchanged.Length, "1 unchanged");
@@ -185,12 +187,12 @@ namespace VocaDb.Tests.Domain.Albums {
 		}
 
 		[TestMethod]
-		public void SyncSongs_Removed() {
+		public async Task SyncSongs_Removed() {
 
 			album.AddSong(song1, 1, 1);
 			var newSongs = new SongInAlbumEditContract[0];
 
-			var result = SyncSongs(newSongs);
+			var result = await SyncSongs(newSongs);
 
 			Assert.IsNotNull(result, "result is not null");
 			Assert.IsTrue(result.Changed, "is changed");
@@ -203,7 +205,7 @@ namespace VocaDb.Tests.Domain.Albums {
 		}
 
 		[TestMethod]
-		public void SyncSongs_AddCustom() {
+		public async Task SyncSongs_AddCustom() {
 			
 			var link = album.AddSong("Track 1", 1, 1);
 			link.Id = 1;
@@ -213,7 +215,7 @@ namespace VocaDb.Tests.Domain.Albums {
 				CreateSongInAlbumEditContract(0, "Track 2", 2),
 			};
 
-			var result = SyncSongs(newSongs);
+			var result = await SyncSongs(newSongs);
 
 			Assert.AreEqual(1, result.Added.Length, "Added");
 			Assert.AreEqual(1, result.Unchanged.Length, "Edited");

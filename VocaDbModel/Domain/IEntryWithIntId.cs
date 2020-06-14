@@ -1,10 +1,18 @@
-﻿namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain {
 
-	public interface IEntryWithIntId {
+	/// <summary>
+	/// Base interface for database objects with Int32 ID.
+	/// Applies to both root entities and child entities.
+	/// </summary>
+	public interface IEntryWithIntId : IDatabaseObject {
 		int Id { get; set; }	
 	}
 
-	public interface IEntryWithLongId {
+	/// <summary>
+	/// Base interface for database objects with Int64 ID.
+	/// Applies to both root entities and child entities.
+	/// </summary>
+	public interface IEntryWithLongId : IDatabaseObject {
 		long Id { get; set; }
 	}
 

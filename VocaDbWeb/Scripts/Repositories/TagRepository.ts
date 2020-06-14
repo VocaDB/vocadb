@@ -1,14 +1,15 @@
 
 module vdb.repositories {
 
+	import cls = vdb.models;
 	import dc = vdb.dataContracts;
 
 	export class TagRepository extends BaseRepository {
 
 		private readonly urlMapper: UrlMapper;
 
-		constructor(baseUrl: string) {
-			super(baseUrl);
+		constructor(baseUrl: string, lang?: cls.globalization.ContentLanguagePreference) {
+			super(baseUrl, lang);
 			this.urlMapper = new UrlMapper(baseUrl);
 		}
 
@@ -31,6 +32,11 @@ module vdb.repositories {
 
 		public getComments = () => new EntryCommentRepository(new UrlMapper(this.baseUrl), "/tags/");
 
+		public getEntryTypeTag = (entryType: cls.EntryType, subType: string = "") => {
+			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/entry-types/" + cls.EntryType[entryType] + "/" + subType + "/tag");
+			return this.getJsonPromise<dc.TagApiContract>(url, { fields: "Description", lang: this.languagePreferenceStr });
+		}
+
 		public getList = (queryParams: TagQueryParams,
 			callback?: (result: dc.PartialFindResultContract<dc.TagApiContract>) => void) => {
 
@@ -52,17 +58,26 @@ module vdb.repositories {
 
 		}
 
+		public getEntryTagMappings = (): Promise<dc.tags.EntryTagMappingContract[]> => {
+			return this.getJsonPromise(this.urlMapper.mapRelative("/api/tags/entry-type-mappings"));
+		}
+
 		public getMappings = (paging: dc.PagingProperties): Promise<dc.PartialFindResultContract<dc.tags.TagMappingContract>> => {
 			return this.getJsonPromise(this.urlMapper.mapRelative("/api/tags/mappings"), paging);
 		}
 
-		public getTopTags = (lang: string, categoryName?: string, callback?: (tags: dc.TagBaseContract[]) => void) => {
+		public getTopTags = (lang: string, categoryName?: string, entryType?: cls.EntryType, callback?: (tags: dc.TagBaseContract[]) => void) => {
 			
 			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/tags/top");
-			var data = { lang: lang, categoryName: categoryName };
+			var data = { lang: lang, categoryName: categoryName, entryType: entryType || undefined };
 
 			$.getJSON(url, data, callback);
 
+		}
+
+		public saveEntryMappings = (mappings: dc.tags.EntryTagMappingContract[]): Promise<any> => {
+			var url = this.urlMapper.mapRelative("/api/tags/entry-type-mappings");
+			return Promise.resolve(helpers.AjaxHelper.putJSON(url, mappings));
 		}
 
 		public saveMappings = (mappings: dc.tags.TagMappingContract[]): Promise<any> => {

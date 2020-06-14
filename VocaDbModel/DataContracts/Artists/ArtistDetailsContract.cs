@@ -11,6 +11,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Artists {
 
@@ -19,10 +20,12 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		public ArtistDetailsContract() {}
 
-		public ArtistDetailsContract(Artist artist, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IEntryImagePersister imageStore)
+		public ArtistDetailsContract(Artist artist, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, 
+			IAggregatedEntryImageUrlFactory imageStore, Tag artistTypeTag = null)
 			: base(artist, languagePreference) {
 
 			AllNames = string.Join(", ", artist.AllNames.Where(n => n != Name));
+			ArtistTypeTag = artistTypeTag != null ? new TagBaseContract(artistTypeTag, languagePreference) : null;
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, artist);
 			CreateDate = artist.CreateDate;
@@ -93,6 +96,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		[DataMember]
 		public string AllNames { get; set; }
+
+		[DataMember]
+		public TagBaseContract ArtistTypeTag { get; set; }
 
 		[DataMember]
 		public ArtistContract BaseVoicebank { get; set; }

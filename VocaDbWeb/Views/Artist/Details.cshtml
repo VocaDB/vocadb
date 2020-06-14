@@ -1,4 +1,4 @@
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Artists;
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Artists
@@ -136,7 +136,11 @@
 					<td>@ViewRes.SharedStrings.Type</td>
 					<td>
 						@ArtistHelpers.ArtistTypeLabel(Model.ArtistType)
-						@Html.ActionLink(Translate.ArtistTypeName(Model.ArtistType), "Index", new { artistType = Model.ArtistType })<br />
+						@if (Model.ArtistTypeTag != null) {
+							<a href="@Url.TagDetails(Model.ArtistTypeTag)" data-bind="tagToolTip: @Model.ArtistTypeTag.Id">@Translate.ArtistTypeName(Model.ArtistType)</a>
+						} else {
+							<a href="@Url.TagUrlForEntryType(EntryType.Artist, Model.ArtistType)">@Translate.ArtistTypeName(Model.ArtistType)</a>
+						}
 					</td>
 				</tr>
 
@@ -337,7 +341,7 @@
 				Url.Action("PictureThumb", "Artist", new { id = Model.Id }),
 				ViewRes.Album.DetailsStrings.CoverPicture)
 			@foreach (var pic in Model.Pictures) {
-				@Helpers.ThumbItem(Url.EntryPictureFile(pic, ImageSize.Original), Url.EntryPictureFile(pic, ImageSize.Thumb), pic.Name)
+				@Helpers.ThumbItem(Url.ImageThumb(pic, ImageSize.Original), Url.ImageThumb(pic, ImageSize.Thumb), pic.Name)
 			}
 		</ul>
 

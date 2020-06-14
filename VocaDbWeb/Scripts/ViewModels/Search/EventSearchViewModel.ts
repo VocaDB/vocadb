@@ -46,7 +46,7 @@ namespace vdb.viewModels.search {
 					afterDate: this.afterDate(),
 					beforeDate: this.beforeDate(),
 					status: status,
-					fields: "AdditionalNames,MainPicture,Series"
+					fields: this.fields()
 				}, callback);
 
 			}
@@ -65,6 +65,8 @@ namespace vdb.viewModels.search {
 		public onlyMyEvents = ko.observable(false);
 		public sort = ko.observable("Name");
 		public sortName: KnockoutComputed<string>;
+		
+		public fields = ko.computed(() => this.searchViewModel.showTags() ? "AdditionalNames,MainPicture,Series,Venue,Tags" : "AdditionalNames,MainPicture,Series,Venue");
 
 		public getCategoryName = (event: dc.ReleaseEventContract) => {
 

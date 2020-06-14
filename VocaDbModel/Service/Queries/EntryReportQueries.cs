@@ -1,8 +1,10 @@
+using NLog;
 using System;
 using System.Linq;
 using System.Web;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
@@ -17,6 +19,8 @@ namespace VocaDb.Model.Service.Queries {
 	/// Note: this class is tested through <see cref="SongQueriesTests"/>.
 	/// </remarks>
 	public class EntryReportQueries {
+
+		private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
 		/// Creates entry report.
@@ -43,7 +47,8 @@ namespace VocaDb.Model.Service.Queries {
 			int entryId, 
 			TReportType reportType, 
 			string hostname, 
-			string notes)
+			string notes,
+			bool allowNotification = true)
 			where TEntry : class, IEntryWithVersions, IEntryWithNames
 			where TReport : GenericEntryReport<TEntry, TReportType>
 			where TReportType: struct, Enum {
@@ -56,15 +61,17 @@ namespace VocaDb.Model.Service.Queries {
 
 			var loggedUserId = permissionContext.LoggedUserId;
 			var existing = ctx.Query<TReport>()				
-				.Where(r => r.Entry.Id == entryId && (loggedUserId != 0 && r.User.Id == loggedUserId) || r.Hostname == hostname)
+				.Where(r => r.Entry.Id == entryId && ((loggedUserId != 0 && r.User.Id == loggedUserId) || r.Hostname == hostname))
 				.OrderByDescending(r => r.Created)
 				.ThenByDescending(r => r.Id)
 				.FirstOrDefault();
 
 			var duplicate = existing != null;
 
-			if (duplicate && (!permissionContext.IsLoggedIn || existing.Status == ReportStatus.Open))
+			if (duplicate && (!permissionContext.IsLoggedIn || existing.Status == ReportStatus.Open)) {
+				log.Info("Report already exists: {0}", existing);
 				return (false, existing.Id);
+			}
 
 			var entry = ctx.Load(entryId);
 			var reporter = ctx.OfType<User>().GetLoggedUserOrNull(permissionContext);
@@ -97,7 +104,9 @@ namespace VocaDb.Model.Service.Queries {
 				}				
 			}
 
-			new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), versionForReport, notes, entryLinkFactory, reportName);
+			if (allowNotification) {
+				new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), versionForReport, notes, entryLinkFactory, reportName);
+			}
 
 			msg =  string.Format("reported {0} as {1} ({2})", entryLinkFactory.CreateEntryLink(entry), reportType, HttpUtility.HtmlEncode(notes));
 			ctx.AuditLogger.AuditLog(msg.Truncate(200), new AgentLoginData(reporter, hostname));

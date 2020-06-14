@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text.RegularExpressions;
+using System.Linq;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.Helpers {
@@ -11,21 +10,9 @@ namespace VocaDb.Model.Service.Helpers {
 	/// </summary>
 	public class ArtistExternalUrlParser {
 
-		private class Matcher {
-
-			public Matcher(string template, string regex) {
-				Template = template;
-				Regex = new Regex(regex);
-			}
-
-			public string Template { get; }
-			public Regex Regex { get; }
-
-		}
-
-		private static readonly Matcher[] linkMatchers = {
-			new Matcher("http://www.nicovideo.jp/{0}/{1}", @"^(?:http://www.nicovideo.jp)?/?(user|mylist)/(\d+)"),
-			new Matcher("https://twitter.com/{0}", @"^https://twitter\.com/(\w+)")
+		private static readonly RegexLinkMatcher[] linkMatchers = {
+			new RegexLinkMatcher("https://www.nicovideo.jp/{0}/{1}", @"^(?:http(?:s)?://www.nicovideo.jp)?/?(user|mylist)/(\d+)"),
+			new RegexLinkMatcher("https://twitter.com/{0}", @"^http(?:s)?://twitter\.com/(\w+)")
 		};
 
 		private static readonly string[] whitelistedUrls = {
@@ -33,7 +20,7 @@ namespace VocaDb.Model.Service.Helpers {
 		};
 
 		/// <summary>
-		/// Get full external URL from a possible external URL fragment.
+		/// Attempts to identify a string as possible artist URL and gets full external URL.
 		/// For example both /mylist/6667938 and http://www.nicovideo.jp/mylist/6667938 will be identified as http://www.nicovideo.jp/mylist/6667938
 		/// </summary>
 		/// <param name="possibleUrl">
@@ -41,9 +28,14 @@ namespace VocaDb.Model.Service.Helpers {
 		/// Can be null or empty, but obviously those don't match anything.
 		/// </param>
 		/// <returns>
-		/// Full external URL, if matched. For example, http://www.nicovideo.jp/mylist/6667938.
+		/// Full external URL, if matched. For example, https://www.nicovideo.jp/mylist/6667938.
 		/// Can be null if there was no match.
 		/// </returns>
+		/// <remarks>
+		/// This is generally needed if it's uncertain whether <paramref name="possibleUrl"/> is a URL or something else
+		/// (such as artist name).
+		/// For internal URLs <see cref="EntryUrlParser"/> can be used.
+		/// </remarks>
 		public string GetExternalUrl(string possibleUrl) {
 			
 			if (string.IsNullOrEmpty(possibleUrl))
@@ -54,18 +46,16 @@ namespace VocaDb.Model.Service.Helpers {
 				return possibleUrl;
 			}
 
+			// For now keep original case, although database collation is case-insensitive, so lowercase should work too
+			// Regex matching ignores case.
 			var match = linkMatchers
 				.Select(matcher => new {
-					matcher.Template,
-					Result = matcher.Regex.Match(possibleUrl)
+					Success = matcher.TryGetLinkFromUrl(possibleUrl, out var formattedUrl),
+					FormattedUrl = formattedUrl
 				})
-				.FirstOrDefault(m => m.Result.Success);
+				.FirstOrDefault(m => m.Success);
 
-			if (match == null)
-				return null;
-
-			var values = match.Result.Groups.Cast<Group>().Skip(1).Select(g => g.Value).ToArray();
-			return string.Format(match.Template, values);
+			return match?.FormattedUrl;
 
 		}
 

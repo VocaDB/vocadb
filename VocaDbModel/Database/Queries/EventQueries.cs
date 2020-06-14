@@ -1,14 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
-using NHibernate;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
@@ -20,6 +20,7 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
@@ -38,6 +39,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IFollowedArtistNotifier followedArtistNotifier;
+		private readonly IAggregatedEntryImageUrlFactory imageUrlFactory;
 		private readonly IEntryThumbPersister imagePersister;
 		private readonly IUserMessageMailer mailer;
 		private readonly IUserIconFactory userIconFactory;
@@ -62,7 +64,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public EventQueries(IEventRepository eventRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext,
 			IEntryThumbPersister imagePersister, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, 
-			IUserMessageMailer mailer, IFollowedArtistNotifier followedArtistNotifier)
+			IUserMessageMailer mailer, IFollowedArtistNotifier followedArtistNotifier, IAggregatedEntryImageUrlFactory imageUrlFactory)
 			: base(eventRepository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -71,6 +73,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.enumTranslations = enumTranslations;
 			this.mailer = mailer;
 			this.followedArtistNotifier = followedArtistNotifier;
+			this.imageUrlFactory = imageUrlFactory;
 
 		}
 
@@ -167,6 +170,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public PartialFindResult<ReleaseEventSeriesForApiContract> FindSeries(SearchTextQuery textQuery, PagingProperties paging,
+			ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None) {
+			return FindSeries(s => new ReleaseEventSeriesForApiContract(s, lang, fields, imageUrlFactory), textQuery, paging);
+		}
+
 		public PartialFindResult<TResult> FindSeries<TResult>(Func<ReleaseEventSeries, TResult> fac, 
 			SearchTextQuery textQuery, PagingProperties paging) {
 
@@ -204,7 +212,8 @@ namespace VocaDb.Model.Database.Queries {
 						.FirstOrDefault();
 				}
 
-				return new ReleaseEventDetailsContract(ctx.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, PermissionContext, userIconFactory) {	
+				return new ReleaseEventDetailsContract(ctx.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, PermissionContext, userIconFactory,
+					new EntryTypeTags(ctx)) {	
 					EventAssociationType = eventAssociation,
 					LatestComments = new CommentQueries<ReleaseEventComment, ReleaseEvent>(
 						ctx, PermissionContext, userIconFactory, entryLinkFactory).GetList(id, 3)
@@ -232,7 +241,41 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public ReleaseEventForApiContract GetOne(int id, ContentLanguagePreference lang, ReleaseEventOptionalFields fields) {
-			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imagePersister));
+			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imageUrlFactory));
+		}
+		
+		public VenueForApiContract[] GetReleaseEventsByVenue() {
+
+			return HandleQuery(session => {
+
+				var allEvents = session.Query<ReleaseEvent>().Where(e => !e.Deleted).ToArray();
+				var venues = session.Query<Venue>().Where(e => !e.Deleted).OrderByName(LanguagePreference).ToArray();
+
+				var venueContracts = venues.Select(v => new VenueForApiContract(
+					v,
+					PermissionContext.LanguagePreference,
+					VenueOptionalFields.AdditionalNames | VenueOptionalFields.Description | VenueOptionalFields.Events | VenueOptionalFields.Names | VenueOptionalFields.WebLinks));
+				var ungrouped = allEvents.Where(e => e.Venue == null).OrderBy(e => e.TranslatedName[LanguagePreference]);
+
+				return venueContracts.Append(new VenueForApiContract {
+					Name = string.Empty,
+					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray()
+				}).ToArray();
+
+			});
+
+		}
+
+		public ReleaseEventSeriesForApiContract GetOneSeries(int id, ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields) {
+			return repository.HandleQuery(ctx => new ReleaseEventSeriesForApiContract(ctx.Load<ReleaseEventSeries>(id), lang, fields, imageUrlFactory));
+		}
+
+		public ArchivedEventSeriesVersionDetailsContract GetSeriesVersionDetails(int id, int comparedVersionId) {
+
+			return HandleQuery(session =>
+				new ArchivedEventSeriesVersionDetailsContract(session.Load<ArchivedReleaseEventSeriesVersion>(id),
+					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventSeriesVersion>(comparedVersionId) : null,
+					PermissionContext.LanguagePreference));
 		}
 
 		public ArchivedEventVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
@@ -242,6 +285,10 @@ namespace VocaDb.Model.Database.Queries {
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventVersion>(comparedVersionId) : null,
 					PermissionContext.LanguagePreference));
 
+		}
+
+		public XDocument GetSeriesVersionXml(int id) {
+			return HandleQuery(ctx => ctx.Load<ArchivedReleaseEventSeriesVersion>(id).Data);
 		}
 
 		public XDocument GetVersionXml(int id) {
@@ -262,7 +309,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ReleaseEventForApiContract Load(int id, ReleaseEventOptionalFields fields) {
 
-			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), LanguagePreference, fields, imagePersister));
+			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), LanguagePreference, fields, imageUrlFactory));
 
 		}
 
@@ -401,13 +448,13 @@ namespace VocaDb.Model.Database.Queries {
 		/// <param name="contract">Updated contract. Cannot be null.</param>
 		/// <returns>Updated release event data. Cannot be null.</returns>
 		/// <exception cref="DuplicateEventNameException">If the event name is already in use.</exception>
-		public ReleaseEventContract Update(ReleaseEventForEditContract contract, EntryPictureFileContract pictureData) {
+		public async Task<ReleaseEventContract> Update(ReleaseEventForEditContract contract, EntryPictureFileContract pictureData) {
 
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyManageDatabase();
 
-			return repository.HandleTransaction(session => {
+			return await repository.HandleTransactionAsync(async session => {
 
 				ReleaseEvent ev;
 
@@ -416,7 +463,7 @@ namespace VocaDb.Model.Database.Queries {
 					var diff = new ReleaseEventDiff();
 
 					if (!contract.Series.IsNullOrDefault()) {
-						var series = session.OfType<ReleaseEventSeries>().Load(contract.Series.Id);
+						var series = await session.LoadAsync<ReleaseEventSeries>(contract.Series.Id);
 						ev = new ReleaseEvent(contract.Description, contract.Date, series, contract.SeriesNumber, contract.SeriesSuffix, 
 							contract.DefaultNameLanguage, contract.CustomName);
 						series.AllEvents.Add(ev);
@@ -426,16 +473,21 @@ namespace VocaDb.Model.Database.Queries {
 
 					ev.Category = contract.Category;
 					ev.EndDate = contract.EndDate;
-					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
+					ev.SongList = await session.NullSafeLoadAsync<SongList>(contract.SongList);
 					ev.Status = contract.Status;
+					ev.SetVenue(await session.NullSafeLoadAsync<Venue>(contract.Venue));
 					ev.VenueName = contract.VenueName;
 
 					if (contract.SongList != null) {
 						diff.SongList.Set();
 					}
 
-					if (!string.IsNullOrEmpty(contract.VenueName)) {
+					if (contract.Venue != null) {
 						diff.Venue.Set();
+					}
+
+					if (!string.IsNullOrEmpty(contract.VenueName)) {
+						diff.VenueName.Set();
 					}
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
@@ -445,39 +497,39 @@ namespace VocaDb.Model.Database.Queries {
 					}
 
 					var pvDiff = ev.PVs.Sync(contract.PVs, ev.CreatePV);
-					session.OfType<PVForAlbum>().Sync(pvDiff);
+					await session.OfType<PVForAlbum>().SyncAsync(pvDiff);
 
 					if (pvDiff.Changed)
 						diff.PVs.Set();
 
-					var artistDiff = ev.SyncArtists(contract.Artists, artistId => session.Load<Artist>(artistId));
+					var artistDiff = await ev.SyncArtists(contract.Artists, artistId => session.LoadAsync<Artist>(artistId));
 
 					if (artistDiff.Changed)
 						diff.Artists.Set();
 
-					session.Save(ev);
+					await session.SaveAsync(ev);
 
 					var namesChanged = new UpdateEventNamesQuery().UpdateNames(session, ev, contract.Series, contract.CustomName, contract.SeriesNumber, contract.SeriesSuffix, contract.Names);
 					if (namesChanged) {
-						session.Update(ev);
+						await session.UpdateAsync(ev);
 					}
 
 					if (pictureData != null) {
 						diff.MainPicture.Set();
 						SaveImage(ev, pictureData);
-						session.Update(ev);
+						await session.UpdateAsync(ev);
 					}
 
 					var archived = Archive(session, ev, diff, EntryEditEvent.Created, string.Empty);
-					AddEntryEditedEntry(session.OfType<ActivityEntry>(), archived);
+					await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), archived);
 
-					session.AuditLogger.AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(ev)));
+					await session.AuditLogger.AuditLogAsync(string.Format("created {0}", entryLinkFactory.CreateEntryLink(ev)));
 
-					followedArtistNotifier.SendNotifications(session, ev, ev.Artists.Where(a => a?.Artist != null).Select(a => a.Artist), PermissionContext.LoggedUser);
+					await followedArtistNotifier.SendNotificationsAsync(session, ev, ev.Artists.Where(a => a?.Artist != null).Select(a => a.Artist), PermissionContext.LoggedUser);
 
 				} else {
 
-					ev = session.Load(contract.Id);
+					ev = await session.LoadAsync(contract.Id);
 					permissionContext.VerifyEntryEdit(ev);
 
 					var diff = new ReleaseEventDiff(DoSnapshot(ev, session));
@@ -518,12 +570,16 @@ namespace VocaDb.Model.Database.Queries {
 
 					if (ev.Status != contract.Status)
 						diff.Status.Set();
-
-					if (!string.Equals(ev.VenueName, contract.VenueName)) {
+					
+					if (!ev.Venue.NullSafeIdEquals(contract.Venue)) {
 						diff.Venue.Set();
 					}
 
-					ev.SetSeries(session.NullSafeLoad<ReleaseEventSeries>(contract.Series));
+					if (!string.Equals(ev.VenueName, contract.VenueName)) {
+						diff.VenueName.Set();
+					}
+
+					ev.SetSeries(await session.NullSafeLoadAsync<ReleaseEventSeries>(contract.Series));
 					ev.Category = contract.Category;
 					ev.CustomName = contract.CustomName;
 					ev.Date = contract.Date;
@@ -531,25 +587,26 @@ namespace VocaDb.Model.Database.Queries {
 					ev.EndDate = contract.EndDate > contract.Date ? contract.EndDate : null;
 					ev.SeriesNumber = contract.SeriesNumber;
 					ev.SeriesSuffix = contract.SeriesSuffix;
-					ev.SongList = session.NullSafeLoad<SongList>(contract.SongList);
+					ev.SongList = await session.NullSafeLoadAsync<SongList>(contract.SongList);
 					ev.Status = contract.Status;
 					ev.TranslatedName.DefaultLanguage = inheritedLanguage;
+					ev.SetVenue(await session.NullSafeLoadAsync<Venue>(contract.Venue));
 					ev.VenueName = contract.VenueName;
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
 
 					if (weblinksDiff.Changed) {
 						diff.WebLinks.Set();
-						session.OfType<ReleaseEventWebLink>().Sync(weblinksDiff);
+						await session.OfType<ReleaseEventWebLink>().SyncAsync(weblinksDiff);
 					}
 
 					var pvDiff = ev.PVs.Sync(contract.PVs, ev.CreatePV);
-					session.OfType<PVForAlbum>().Sync(pvDiff);
+					await session.OfType<PVForAlbum>().SyncAsync(pvDiff);
 
 					if (pvDiff.Changed)
 						diff.PVs.Set();
 
-					var artistDiff = ev.SyncArtists(contract.Artists, artistId => session.Load<Artist>(artistId));
+					var artistDiff = await ev.SyncArtists(contract.Artists, artistId => session.LoadAsync<Artist>(artistId));
 
 					if (artistDiff.Changed)
 						diff.Artists.Set();
@@ -559,13 +616,13 @@ namespace VocaDb.Model.Database.Queries {
 						SaveImage(ev, pictureData);
 					}
 
-					session.Update(ev);
+					await session.UpdateAsync(ev);
 
 					var archived = Archive(session, ev, diff, EntryEditEvent.Updated, string.Empty);
-					AddEntryEditedEntry(session.OfType<ActivityEntry>(), archived);
+					await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), archived);
 
 					var logStr = string.Format("updated properties for {0} ({1})", entryLinkFactory.CreateEntryLink(ev), diff.ChangedFieldsString);
-					session.AuditLogger.AuditLog(logStr);
+					await session.AuditLogger.AuditLogAsync(logStr);
 
 					var newSongCutoff = TimeSpan.FromHours(1);
 					if (artistDiff.Added.Any() && ev.CreateDate >= DateTime.Now - newSongCutoff) {
@@ -573,7 +630,7 @@ namespace VocaDb.Model.Database.Queries {
 						var addedArtists = artistDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 
 						if (addedArtists.Any()) {
-							followedArtistNotifier.SendNotifications(session, ev, addedArtists, PermissionContext.LoggedUser);
+							await followedArtistNotifier.SendNotificationsAsync(session, ev, addedArtists, PermissionContext.LoggedUser);
 						}
 
 					}
@@ -659,7 +716,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					series = session.Load<ReleaseEventSeries>(contract.Id);
 					permissionContext.VerifyEntryEdit(series);
-					var diff = new ReleaseEventSeriesDiff(ReleaseEventSeriesEditableFields.Nothing);
+					var diff = new ReleaseEventSeriesDiff(DoSnapshot(series, session));
 
 					if (series.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage) {
 						series.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
@@ -698,7 +755,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					if (weblinksDiff.Changed) {
 						diff.WebLinks.Set();
-						session.OfType<ReleaseEventWebLink>().Sync(weblinksDiff);
+						session.Sync(weblinksDiff);
 					}
 
 					session.Update(series);

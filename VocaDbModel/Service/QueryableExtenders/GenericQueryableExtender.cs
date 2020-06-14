@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using NHibernate.Linq;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.QueryableExtenders {
@@ -65,6 +66,36 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
+		public static Task<bool> VdbAnyAsync<TSource>(this IQueryable<TSource> source) {
+
+			if (source.Provider is INhQueryProvider) {
+				return source.AnyAsync();
+			}
+
+			return Task.FromResult(source.Any());
+
+		}
+
+		public static Task<int> VdbCountAsync<TSource>(this IQueryable<TSource> source) {
+
+			if (source.Provider is INhQueryProvider) {
+				return source.CountAsync();
+			}
+
+			return Task.FromResult(source.Count());
+
+		}
+
+		public static Task<TSource> VdbFirstOrDefaultAsync<TSource>(this IQueryable<TSource> source) {
+
+			if (source.Provider is INhQueryProvider) {
+				return source.FirstOrDefaultAsync();
+			}
+
+			return Task.FromResult(source.FirstOrDefault());
+
+		}
+
 		/// <summary>
 		/// Executes the query and returns its result as <see cref="IList{T}"/>.
 		/// To be used instead of the NHibernate extension method to make the query testable.
@@ -80,6 +111,16 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			return Task.FromResult(source.ToList());
 
 		}
+
+		public static IQueryable<T> WhereEntryTypeIsIncluded<T>(this IQueryable<T> source, EntryTypes? entryTypes, EntryType entryType)
+		{
+			if (entryTypes == null || entryTypes.Value.HasFlag((EntryTypes)entryType))
+				return source;
+			return new List<T>().AsQueryable();
+		}
+
+		public static IQueryable<T> WhereIdIn<T>(this IQueryable<T> query, IEnumerable<int> ids) where T : IEntryWithIntId 
+			=> query.Where(e => ids.Contains(e.Id));
 
 	}
 

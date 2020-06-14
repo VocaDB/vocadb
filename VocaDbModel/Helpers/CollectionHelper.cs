@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Helpers {
@@ -61,17 +61,9 @@ namespace VocaDb.Model.Helpers {
 
 		} 
 
-		public static IEnumerable<T> MoveToTop<T>(IEnumerable<T> source, T top) {
+		public static IEnumerable<T> MoveToTop<T>(IEnumerable<T> source, T top) => Enumerable.Repeat(top, 1).Concat(source.Except(Enumerable.Repeat(top, 1)));
 
-			return Enumerable.Repeat(top, 1).Concat(source.Except(Enumerable.Repeat(top, 1)));
-
-		}
-
-		public static IEnumerable<T> MoveToTop<T>(IEnumerable<T> source, T[] top) {
-
-			return top.Concat(source.Except(top));
-
-		}
+		public static IEnumerable<T> MoveToTop<T>(IEnumerable<T> source, T[] top) => top.Concat(source.Except(top));
 
 		/// <summary>
 		/// Randomly sort a list.
@@ -121,23 +113,11 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static IEnumerable<T> RemovedItems<T>(IEnumerable<T> old, IEnumerable<T> newItems) {
+		public static IEnumerable<T> RemovedItems<T>(IEnumerable<T> old, IEnumerable<T> newItems) => old.Where(i => !newItems.Contains(i));
 
-			return old.Where(i => !newItems.Contains(i));
+		public static IEnumerable<T> RemovedItems<T, T2>(IEnumerable<T> old, IEnumerable<T2> newItems, Func<T, T2, bool> equality) => old.Where(i => !newItems.Any(i2 => equality(i, i2)));
 
-		}
-
-		public static IEnumerable<T> RemovedItems<T, T2>(IEnumerable<T> old, IEnumerable<T2> newItems, Func<T, T2, bool> equality) {
-
-			return old.Where(i => !newItems.Any(i2 => equality(i, i2)));
-
-		}
-
-		public static IEnumerable<T> SkipNull<T>(params T[] items) where T : class {
-
-			return items.Where(i => i != null);
-
-		}
+		public static IEnumerable<T> SkipNull<T>(params T[] items) where T : class => items.WhereNotNull();
 
 		public static T[] SortByIds<T>(IEnumerable<T> entries, int[] idList) where T : IEntryWithIntId {
 			
@@ -175,11 +155,8 @@ namespace VocaDb.Model.Helpers {
 		/// Can be null.
 		/// </param>
 		/// <returns>Diff for the two collections. Cannot be null.</returns>
-		public static CollectionDiff<T> Sync<T>(IList<T> oldItems, IList<T> newItems, IEqualityComparer<T> equality, Action<T> remove = null) {
-
-			return Sync(oldItems, newItems, equality.Equals, t => t, remove);
-
-		}
+		public static Task<CollectionDiff<T>> SyncAsync<T>(IList<T> oldItems, IList<T> newItems, IEqualityComparer<T> equality, Func<T, Task<T>> remove = null) 
+			=> SyncAsync(oldItems, newItems, equality.Equals, t => Task.FromResult(t), remove);
 
 		/// <summary>
 		/// Syncs items in one collection with a new set (create and delete, CD).
@@ -207,8 +184,7 @@ namespace VocaDb.Model.Helpers {
 
 			foreach (var removed in diff.Removed) {
 
-				if (remove != null)
-					remove(removed);
+				remove?.Invoke(removed);
 
 				// Note: this removes the item from the source collection directly, but not from any other collections.
 				old.Remove(removed);
@@ -217,7 +193,35 @@ namespace VocaDb.Model.Helpers {
 
 			foreach (var linkEntry in diff.Added) {
 				var link = create(linkEntry);
-				created.Add(link);
+
+				if (link != null)
+					created.Add(link);
+			}
+
+			return new CollectionDiff<T>(created, diff.Removed, diff.Unchanged);
+
+		}
+
+		public static async Task<CollectionDiff<T>> SyncAsync<T, T2>(ICollection<T> old, IEnumerable<T2> newItems, Func<T, T2, bool> equality, Func<T2, Task<T>> create, Func<T, Task> remove = null) {
+
+			var diff = Diff(old, newItems, equality);
+			var created = new List<T>();
+
+			foreach (var removed in diff.Removed) {
+
+				if (remove != null)
+					await remove(removed);
+
+				// Note: this removes the item from the source collection directly, but not from any other collections.
+				old.Remove(removed);
+
+			}
+
+			foreach (var linkEntry in diff.Added) {
+				var link = await create(linkEntry);
+
+				if (link != null)
+					created.Add(link);
 			}
 
 			return new CollectionDiff<T>(created, diff.Removed, diff.Unchanged);
@@ -257,49 +261,29 @@ namespace VocaDb.Model.Helpers {
 		/// Can be null.
 		/// </param>
 		/// <returns>Diff for the two collections. Cannot be null.</returns>
-		public static CollectionDiffWithValue<T, T> SyncWithContent<T, T2>(IList<T> oldItems, IList<T2> newItems, 
-			Func<T, T2, bool> identityEquality, Func<T2, T> create, Func<T, T2, bool> update, Action<T> remove) where T : class {
+		public static async Task<CollectionDiffWithValue<T, T>> SyncWithContentAsync<T, T2>(IList<T> oldItems, IList<T2> newItems,
+			Func<T, T2, bool> identityEquality, Func<T2, Task<T>> create, Func<T, T2, Task<bool>> update, Func<T, Task> remove) where T : class {
 
 			ParamIs.NotNull(() => oldItems);
 			ParamIs.NotNull(() => newItems);
 			ParamIs.NotNull(() => identityEquality);
 
-			var diff = Diff(oldItems, newItems, identityEquality);
-			var created = new List<T>();
+			var diff = await SyncAsync(oldItems, newItems, identityEquality, create, remove);
 			var edited = new List<T>();
-
-			foreach (var removed in diff.Removed) {
-
-				if (remove != null)
-					remove(removed);
-
-				oldItems.Remove(removed);
-
-			}
-
-			foreach (var added in diff.Added) {
-
-				var newObject = create(added);
-
-				if (newObject != null)
-					created.Add(newObject);
-
-			}
 
 			foreach (var oldItem in diff.Unchanged) {
 
 				var newItem = newItems.First(i => identityEquality(oldItem, i));
 
-				if (update(oldItem, newItem)) {
+				if (await update(oldItem, newItem)) {
 					edited.Add(oldItem);
 				}
 
 			}
 
-			return new CollectionDiffWithValue<T, T>(created, diff.Removed, diff.Unchanged, edited);
+			return new CollectionDiffWithValue<T, T>(diff.Added, diff.Removed, diff.Unchanged, edited);
 
 		}
-
 	}
 
 	/// <summary>
@@ -329,11 +313,7 @@ namespace VocaDb.Model.Helpers {
 		/// <summary>
 		/// Whether the contents of the sets were changed.
 		/// </summary>
-		public virtual bool Changed {
-			get {
-				return (Added.Any() || Removed.Any());
-			}
-		}
+		public virtual bool Changed => Added.Any() || Removed.Any();
 
 		/// <summary>
 		/// Entries that existed in the old set but not in the new.
@@ -376,11 +356,7 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public override bool Changed {
-			get {
-				return (base.Changed || Edited.Any());
-			}
-		}
+		public override bool Changed => base.Changed || Edited.Any();
 
 		/// <summary>
 		/// Entries that existed in both old and new sets AND whose contents were changed.

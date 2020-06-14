@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using NLog;
 using ViewRes.Tag;
@@ -19,19 +20,18 @@ using VocaDb.Web.Models.Search;
 using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Tag;
 
-namespace VocaDb.Web.Controllers
-{
-    public class TagController : ControllerBase {
+namespace VocaDb.Web.Controllers {
+	public class TagController : ControllerBase {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly MarkdownParser markdownParser;
 		private readonly TagQueries queries;
-		private readonly IEntryImagePersisterOld entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
 
 		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory, IEnumTranslations enumTranslations, MarkdownParser markdownParser,
-			IEntryImagePersisterOld entryThumbPersister) {
+			IAggregatedEntryImageUrlFactory entryThumbPersister) {
 
 			this.queries = queries;
 			this.entryLinkFactory = entryLinkFactory;
@@ -92,7 +92,23 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult DetailsById(int id = invalidId, string slug = null) {
+		/// <summary>
+		/// Redirects to entry type tag based on entry type and possible sub-type.
+		/// As fallback, redirects to tags index if no tag is found.
+		/// </summary>
+		public ActionResult DetailsByEntryType(EntryType entryType, string subType = "") {
+
+			var tag = queries.FindTagForEntryType(new EntryTypeAndSubType(entryType, subType), (tag, lang) => new TagBaseContract(tag, lang));
+
+			if (tag != null) { 
+				return RedirectToAction("DetailsById", new { id = tag.Id, slug = tag.UrlSlug });
+			} else {
+				return RedirectToAction("Index");
+			}
+
+		}
+
+		public async Task<ActionResult> DetailsById(int id = invalidId, string slug = null) {
 
 			if (id == invalidId)
 				return NoId();
@@ -100,17 +116,17 @@ namespace VocaDb.Web.Controllers
 			// TODO: write test for null slug
 			slug = slug ?? string.Empty;
 
-			var tagName = queries.LoadTag(id, t => t.UrlSlug ?? string.Empty);
+			var tagName = await queries.LoadTagAsync(id, t => t.UrlSlug ?? string.Empty);
 
 			if (slug != tagName) {
 				return RedirectToActionPermanent("DetailsById", new { id, slug = tagName });
 			}
 
-			var contract = queries.GetDetails(id);
+			var contract = await queries.GetDetailsAsync(id);
 
 			var prop = PageProperties;
 
-			var thumbUrl = Url.EntryImageOld(contract.Thumb, ImageSize.Original);
+			var thumbUrl = Url.ImageThumb(contract.Thumb, ImageSize.Original);
 			if (!string.IsNullOrEmpty(thumbUrl)) {
 				PageProperties.OpenGraph.Image = thumbUrl;
 			}

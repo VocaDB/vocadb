@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using VocaDb.Model.DataContracts.PVs;
 
 namespace VocaDb.Model.Domain.PVs {
 
-	public abstract class GenericPV<TEntry> : PV where TEntry : class {
+	public abstract class GenericPV<TEntry> : PV, IEntryWithIntId
+		where TEntry : class {
 
 		private TEntry entry;
 

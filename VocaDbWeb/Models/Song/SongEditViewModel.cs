@@ -26,6 +26,7 @@ namespace VocaDb.Web.Models.Song {
 
 		public SongEditViewModel(SongContract song, IUserPermissionContext permissionContext,
 			bool canDelete,
+			int instrumentalTagId,
 			SongForEditContract editedSong = null, int? albumId = null)
 			: this() {
 
@@ -34,6 +35,7 @@ namespace VocaDb.Web.Models.Song {
 			Song = song;
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
 			CanDelete = canDelete;
+			InstrumentalTagId = instrumentalTagId;
 			EditedSong = editedSong;
 			AlbumId = albumId;
 
@@ -66,6 +68,8 @@ namespace VocaDb.Web.Models.Song {
 		public int Id {
 			get { return Song != null ? Song.Id : 0; }
 		}
+
+		public int InstrumentalTagId { get; set; }
 
 		public string Name {
 			get { return Song != null ? Song.Name : null; }

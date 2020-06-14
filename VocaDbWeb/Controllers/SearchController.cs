@@ -64,7 +64,7 @@ namespace VocaDb.Web.Controllers
 			switch (searchType) {
 				
 				case EntryType.Undefined: {
-					var result = entryQueries.GetList(filter, null, null, false, null, 0, 1, true, EntrySortRule.Name, 
+					var result = entryQueries.GetList(filter, null, null, false, null, null, 0, 1, true, EntrySortRule.Name, 
 						NameMatchMode.Auto, Model.DataContracts.Api.EntryOptionalFields.None, Model.Domain.Globalization.ContentLanguagePreference.Default, 
 						searchTags: true, searchEvents: true);
 
@@ -130,7 +130,7 @@ namespace VocaDb.Web.Controllers
 					break;
 
 				case EntryType.SongList:
-					var list = songListQueries.Find(s => s.Id, textQuery, null, 0, 2, false, SongListSortRule.Name);
+					var list = songListQueries.Find(s => s.Id, new SongListQueryParams { TextQuery = textQuery, Paging = new PagingProperties(0, 2, false), SortRule = SongListSortRule.Name });
 					if (list.Items.Length == 1) {
 						return RedirectToSongList(list.Items[0]);
 					}

@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -13,6 +14,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEvent;
 		EntryType IEntryBase.EntryType => EntryType.ReleaseEvent;
 		string IEntryImageInformation.Mime => PictureMime;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 		string IEntryBase.DefaultName => Name;
 
 		public ReleaseEventContract() {
@@ -37,6 +39,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			SongList = ObjectHelper.Convert(ev.SongList, s => new SongListBaseContract(s));
 			Status = ev.Status;
 			UrlSlug = ev.UrlSlug;
+			Venue = ObjectHelper.Convert(ev.Venue, v => new VenueContract(v, languagePreference, includeSeriesLinks));
 			VenueName = ev.VenueName;
 			Version = ev.Version;
 
@@ -60,6 +63,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public DateTime? EndDate { get; set; }
 
+		public bool HasVenueOrVenueName => Venue != null || !string.IsNullOrEmpty(VenueName);
+
 		public int Id { get; set; }
 
 		public EventCategory InheritedCategory => Series?.Category ?? Category;
@@ -75,6 +80,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public EntryStatus Status { get; set; }
 
 		public string UrlSlug { get; set; }
+
+		public VenueContract Venue { get; set; }
 
 		public string VenueName { get; set; }
 

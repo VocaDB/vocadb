@@ -1,4 +1,4 @@
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Domain.Songs
@@ -195,7 +195,11 @@
 				<tr>
 					<td>@ViewRes.SharedStrings.Type</td>
 					<td>
-						@Html.ActionLink(Translate.DiscTypeName(Model.DiscType), "Index", new { discType = Model.DiscType })<br />
+						@if (Model.DiscTypeTypeTag != null) {
+							<a href="@Url.TagDetails(Model.DiscTypeTypeTag)" data-bind="tagToolTip: @Model.DiscTypeTypeTag.Id">@Translate.DiscTypeName(Model.DiscType)</a>
+						} else {
+							<a href="@Url.TagUrlForEntryType(EntryType.Album, Model.DiscType)">@Translate.DiscTypeName(Model.DiscType)</a>
+						}
 					</td>
 				</tr>
 
@@ -351,8 +355,8 @@
 				@EntryRes.PersonalDescription
 			</h3>
 			<div class="media" data-bind="with: personalDescription">
-				<a data-bind="visible: !author.isEmpty(), attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
-					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !author.isEmpty() ? author.entry().mainPicture.urlSmallThumb : null }" />
+				<a data-bind="visible: !author.isEmpty() && author.entry().mainPicture, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
+					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !author.isEmpty() && author.entry().mainPicture ? author.entry().mainPicture.urlSmallThumb : null }" />
 				</a>
 
 				<div class="media-body">
@@ -412,7 +416,7 @@
 							<h4 class="album-review-title">@Model.LatestReview.Title</h4>
 						}
 
-						<p>@HtmlHelpers.FormatMarkdown(Model.LatestReview.Text)</p>
+						<div>@HtmlHelpers.FormatMarkdown(Model.LatestReview.Text)</div>
 					</div>
 				</div>
 			</div>
@@ -439,7 +443,7 @@
 				Url.ImageThumb(Model, ImageSize.Thumb),
 				ViewRes.Album.DetailsStrings.CoverPicture)
 			@foreach (var pic in Model.Pictures) {
-				@Helpers.ThumbItem(Url.EntryPictureFile(pic, ImageSize.Original), Url.EntryPictureFile(pic, ImageSize.Thumb), pic.Name)
+				@Helpers.ThumbItem(Url.ImageThumb(pic, ImageSize.Original), Url.ImageThumb(pic, ImageSize.Thumb), pic.Name)
 			}
 		</ul>
 

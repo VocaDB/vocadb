@@ -135,4 +135,7 @@
   <data name="RatingScore" xml:space="preserve">
     <value>Rating score</value>
   </data>
+  <data name="TagUsageCount" xml:space="preserve">
+    <value>Tag usage count</value>
+  </data>
 </root>

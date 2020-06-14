@@ -10,7 +10,15 @@
 	<div class="control-group">
 		<div class="control-label">@Res.SongType</div>
 		<div class="controls">
-			@SongHelpers.SongTypesDropdownKnockout("songType")
+			<div class="control-group">
+				@SongHelpers.SongTypesDropdownKnockout("songType")
+			</div>
+			<div class="control-group" data-bind="visible: showUnifyEntryTypesAndTags">
+				<label class="checkbox" >
+					<input type="checkbox" data-bind="checked: unifyEntryTypesAndTags" />
+					Also search associated tag
+				</label>
+			</div>
 		</div>
 	</div>
 
@@ -50,6 +58,21 @@
 		<div class="control-label">@Res.ReleaseEvent</div>
 		<div class="controls">
 			@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("releaseEventAutoComplete", "releaseEvent")
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<div class="control-label">@Res.ReleaseDate</div>
+		<div class="controls">
+			<input type="number" data-bind="textInput: dateYear" class="input-small" maxlength="4" max="2100" min="1900" placeholder="Year" />
+			<input type="number" data-bind="textInput: dateMonth, visible: dateYear" class="input-small" maxlength="2" max="12" min="1" placeholder="Month" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@Res.ParentVersion</div>
+		<div class="controls">
+			@KnockoutHelpers.SongLockingAutoComplete("parentVersion")
 		</div>
 	</div>
 

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -27,6 +28,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private readonly IAggregatedEntryImageUrlFactory thumbStore;
 		private readonly IEntryImagePersisterOld imagePersister;
 		private readonly IUserIconFactory userIconFactory;
 
@@ -60,7 +62,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private PartialFindResult<T> GetSongsInList<T>(IDatabaseContext<SongList> session, SongListQueryParams queryParams,
+		private PartialFindResult<T> GetSongsInList<T>(IDatabaseContext<SongList> session, SongInListQueryParams queryParams,
 			Func<SongInList, T> fac) {
 
 			var q = session.OfType<SongInList>().Query()
@@ -116,7 +118,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			if (uploadedFile != null) {
 
-				var thumb = new EntryThumb(list, uploadedFile.Mime);
+				var thumb = new EntryThumbMain(list, uploadedFile.Mime);
 				list.Thumb = thumb;
 				var thumbGenerator = new ImageThumbGenerator(imagePersister);
 				thumbGenerator.GenerateThumbsAndMoveImage(uploadedFile.Stream, thumb, SongList.ImageSizes, originalSize: Constants.RestrictedImageOriginalSize);
@@ -126,11 +128,12 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public SongListQueries(ISongListRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
-			IEntryImagePersisterOld imagePersister, IUserIconFactory userIconFactory)
+			IEntryImagePersisterOld imagePersister, IAggregatedEntryImageUrlFactory thumbStore, IUserIconFactory userIconFactory)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
+			this.thumbStore = thumbStore;
 			this.userIconFactory = userIconFactory;
 
 		}
@@ -194,21 +197,21 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialFindResult<TResult> Find<TResult>(Func<SongList, TResult> fac, SearchTextQuery textQuery, SongListFeaturedCategory? featuredCategory,
-			int start, int maxResults, bool getTotalCount, SongListSortRule sort) {
+		public PartialFindResult<TResult> Find<TResult>(Func<SongList, TResult> fac, SongListQueryParams queryParams) {
 
 			return HandleQuery(ctx => {
 
 				var listQuery = ctx.Query()
 					.WhereNotDeleted()
-					.WhereHasFeaturedCategory(featuredCategory, false)
-					.WhereHasName(textQuery);
+					.WhereHasFeaturedCategory(queryParams.FeaturedCategory, false)
+					.WhereHasName(queryParams.TextQuery)
+					.WhereHasTags(queryParams.TagIds, queryParams.ChildTags);
 
-				var count = getTotalCount ? listQuery.Count() : 0;
+				var count = queryParams.Paging.GetTotalCount ? listQuery.Count() : 0;
 
 				return new PartialFindResult<TResult>(listQuery
-					.OrderBy(sort)
-					.Paged(new PagingProperties(start, maxResults, getTotalCount))
+					.OrderBy(queryParams.SortRule)
+					.Paged(queryParams.Paging)
 					.ToArray()
 					.Select(s => fac(s))
 					.ToArray(), count);
@@ -223,23 +226,23 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public SongListDetailsContract GetDetails(int listId) {
+		public SongListForApiContract GetDetails(int listId) {
 
 			return repository.HandleQuery(ctx => {
-				return new SongListDetailsContract(ctx.Load(listId), PermissionContext) {
+				return new SongListForApiContract(ctx.Load(listId), LanguagePreference, userIconFactory, thumbStore, SongListOptionalFields.Description | SongListOptionalFields.Events | SongListOptionalFields.MainPicture | SongListOptionalFields.Tags) {
 					LatestComments = Comments(ctx).GetList(listId, 3)
 				};
             });
 
 		}
 
-		public PartialFindResult<SongInListContract> GetSongsInList(SongListQueryParams queryParams) {
+		public PartialFindResult<SongInListContract> GetSongsInList(SongInListQueryParams queryParams) {
 
 			return repository.HandleQuery(session => GetSongsInList(session, queryParams, s => new SongInListContract(s, PermissionContext.LanguagePreference)));
 
 		}
 
-		public PartialFindResult<T> GetSongsInList<T>(SongListQueryParams queryParams, Func<SongInList, T> fac) {
+		public PartialFindResult<T> GetSongsInList<T>(SongInListQueryParams queryParams, Func<SongInList, T> fac) {
 
 			return repository.HandleQuery(ctx => GetSongsInList(ctx, queryParams, fac));
 
@@ -263,9 +266,9 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public ImportedSongListContract Import(string url, bool parseAll) {
+		public async Task<ImportedSongListContract> Import(string url, bool parseAll) {
 
-			var parsed = new SongListImporters().Parse(url, parseAll);
+			var parsed = await new SongListImporters().Parse(url, parseAll);
 
 			FindSongs(parsed.Songs);
 
@@ -273,9 +276,9 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public PartialImportedSongs ImportSongs(string url, string pageToken, int maxResults, bool parseAll) {
+		public async Task<PartialImportedSongs> ImportSongs(string url, string pageToken, int maxResults, bool parseAll) {
 
-			var songs = new SongListImporters().GetSongs(url, pageToken, maxResults, parseAll);
+			var songs = await new SongListImporters().GetSongs(url, pageToken, maxResults, parseAll);
 			return FindSongs(songs);
 
 		}

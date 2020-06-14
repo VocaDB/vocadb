@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
@@ -12,11 +13,14 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Service {
 
-	public abstract class QueriesBase<TRepo, TEntity> where TRepo : class, IRepository<TEntity> {
+	public abstract class QueriesBase<TRepo, TEntity> 
+		where TRepo : class, IRepository<TEntity> 
+		where TEntity : class, IDatabaseObject {
 
 		protected readonly IUserPermissionContext permissionContext;
 		protected readonly TRepo repository;
@@ -35,32 +39,38 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		protected void AddActivityfeedEntry(IDatabaseContext<ActivityEntry> ctx, Func<User, ActivityEntry> entryFunc) {
+		protected async Task AddActivityfeedEntryAsync(IDatabaseContext<ActivityEntry> ctx, ActivityEntry entry) {
 
-			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
-			AddActivityfeedEntry(ctx, entryFunc(user));
+			await new Queries.ActivityEntryQueries(ctx, PermissionContext).AddActivityfeedEntryAsync(entry);
 
 		}
 
-		protected void AddEntryEditedEntry(IDatabaseContext<ActivityEntry> ctx, Album entry, EntryEditEvent editEvent, ArchivedAlbumVersion archivedVersion) {
+		protected async Task AddActivityfeedEntryAsync(IDatabaseContext<ActivityEntry> ctx, Func<User, ActivityEntry> entryFunc) {
 
-			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
+			var user = await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext);
+			await AddActivityfeedEntryAsync(ctx, entryFunc(user));
+
+		}
+
+		protected async Task AddEntryEditedEntryAsync(IDatabaseContext<ActivityEntry> ctx, Album entry, EntryEditEvent editEvent, ArchivedAlbumVersion archivedVersion) {
+
+			var user = await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext);
 			var activityEntry = new AlbumActivityEntry(entry, editEvent, user, archivedVersion);
-			AddActivityfeedEntry(ctx, activityEntry);
+			await AddActivityfeedEntryAsync(ctx, activityEntry);
 
 		}
 
-		protected void AddEntryEditedEntry(IDatabaseContext<ActivityEntry> ctx, Artist entry, EntryEditEvent editEvent, ArchivedArtistVersion archivedVersion) {
+		protected async Task AddEntryEditedEntryAsync(IDatabaseContext<ActivityEntry> ctx, Artist entry, EntryEditEvent editEvent, ArchivedArtistVersion archivedVersion) {
 
-			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
+			var user = await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext);
 			var activityEntry = new ArtistActivityEntry(entry, editEvent, user, archivedVersion);
-			AddActivityfeedEntry(ctx, activityEntry);
+			await AddActivityfeedEntryAsync(ctx, activityEntry);
 
 		}
 
-		protected void AddEntryEditedEntry(IDatabaseContext<ActivityEntry> ctx, ArchivedReleaseEventVersion archivedVersion) {
+		protected async Task AddEntryEditedEntryAsync(IDatabaseContext<ActivityEntry> ctx, ArchivedReleaseEventVersion archivedVersion) {
 
-			AddActivityfeedEntry(ctx, user => new ReleaseEventActivityEntry(archivedVersion.ReleaseEvent, archivedVersion.EditEvent, user, archivedVersion));
+			await AddActivityfeedEntryAsync(ctx, user => new ReleaseEventActivityEntry(archivedVersion.ReleaseEvent, archivedVersion.EditEvent, user, archivedVersion));
 
 		}
 
@@ -69,6 +79,14 @@ namespace VocaDb.Model.Service {
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
 			var activityEntry = new SongActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(ctx, activityEntry);
+
+		}
+
+		protected async Task AddEntryEditedEntryAsync(IDatabaseContext<ActivityEntry> ctx, Song entry, EntryEditEvent editEvent, ArchivedSongVersion archivedVersion) {
+
+			var user = await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext);
+			var activityEntry = new SongActivityEntry(entry, editEvent, user, archivedVersion);
+			await AddActivityfeedEntryAsync(ctx, activityEntry);
 
 		}
 
@@ -85,6 +103,14 @@ namespace VocaDb.Model.Service {
 			new Queries.ActivityEntryQueries(ctx, PermissionContext).AddEntryEditedEntry(entry, editEvent, archivedVersion);
 
 		}
+		
+		protected void AddEntryEditedEntry(IDatabaseContext<ActivityEntry> ctx, Venue entry, EntryEditEvent editEvent, ArchivedVenueVersion archivedVersion) {
+
+			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
+			var activityEntry = new VenueActivityEntry(entry, editEvent, user, archivedVersion);
+			AddActivityfeedEntry(ctx, activityEntry);
+
+		}
 
 		protected void AuditLog(string doingWhat, IDatabaseContext<TEntity> session, AgentLoginData who, AuditLogCategory category = AuditLogCategory.Unspecified) {
 			session.AuditLogger.AuditLog(doingWhat, who, category);
@@ -96,6 +122,10 @@ namespace VocaDb.Model.Service {
 
 		protected void AuditLog(string doingWhat, IDatabaseContext<TEntity> session, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified) {
 			session.AuditLogger.AuditLog(doingWhat, user, category);
+		}
+
+		protected Task AuditLogAsync(string doingWhat, IDatabaseContext<TEntity> session, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified) {
+			return session.AuditLogger.AuditLogAsync(doingWhat, user, category);
 		}
 
 		protected bool DoSnapshot(IEntryWithVersions entry, IDatabaseContext ctx) {
@@ -189,6 +219,9 @@ namespace VocaDb.Model.Service {
 			return repository.HandleTransaction(func, failMsg);
 		}
 
+		public Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext<TEntity>, Task<TResult>> func, string failMsg = "Unexpected database error") {
+			return repository.HandleTransactionAsync(func, failMsg);
+		}
 	}
 
 }

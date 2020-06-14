@@ -1,4 +1,5 @@
-﻿using NHibernate;
+using NHibernate;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Database.Repositories.NHibernate {
@@ -7,7 +8,8 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 	/// NHibernate repository which supports the session per request pattern, meaning the database session is persisted during the HTTP request.
 	/// </summary>
 	/// <typeparam name="T">Entity type.</typeparam>
-	public class NHibernateSessionPerRequestRepository<T> : NHibernateRepository<T> {
+	public class NHibernateSessionPerRequestRepository<T> : NHibernateRepository<T> 
+		where T : class, IDatabaseObject {
 
 		private readonly ISession session;
 

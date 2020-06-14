@@ -50,6 +50,7 @@ namespace VocaDb.Model.Domain.Users {
 		private IList<UserMessage> messages = new List<UserMessage>();
 		private string name;
 		private string nameLc;
+		private string normalizedEmail;
 		private IList<OldUsername> oldUsernames = new List<OldUsername>();
 		private UserOptions options;
 		private IList<OwnedArtistForUser> ownedArtists = new List<OwnedArtistForUser>(); 
@@ -78,6 +79,7 @@ namespace VocaDb.Model.Domain.Users {
 			Culture = string.Empty;
 			DefaultLanguageSelection = ContentLanguagePreference.Default;
 			Email = string.Empty;
+			NormalizedEmail = string.Empty;
 			EmailOptions = UserEmailOptions.PrivateMessagesFromAll;
 			GroupId = UserGroupId.Regular;
 			Language = OptionalCultureCode.Empty;
@@ -102,6 +104,7 @@ namespace VocaDb.Model.Domain.Users {
 			Name = name;
 			NameLC = name.ToLowerInvariant();
 			Email = email;
+			NormalizedEmail = !string.IsNullOrEmpty(email) ? MailAddressNormalizer.Normalize(email) : string.Empty;
 
 			UpdatePassword(pass, passwordHashAlgorithm);
 
@@ -117,6 +120,9 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		/// <summary>
+		/// User account is active. Setting this to false will prevent them from logging in.
+		/// </summary>
 		public virtual bool Active { get; set; }
 
 		/// <summary>
@@ -195,6 +201,9 @@ namespace VocaDb.Model.Domain.Users {
 			}
 		}
 
+		/// <summary>
+		/// Date when user account was created (signed up).
+		/// </summary>
 		public virtual DateTime CreateDate { get; set; }
 
 		/// <summary>
@@ -218,6 +227,10 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual bool Deleted => !Active;
 
+		/// <summary>
+		/// All currently effective permissions, considering user status,
+		/// group and given additional permissions.
+		/// </summary>
 		public virtual PermissionCollection EffectivePermissions {
 			get {
 
@@ -345,6 +358,17 @@ namespace VocaDb.Model.Domain.Users {
 			set {
 				ParamIs.NotNullOrEmpty(() => value);
 				nameLc = value;
+			}
+		}
+
+		/// <summary>
+		/// Normalized email address (email address without "+" and/or dots).
+		/// </summary>
+		public virtual string NormalizedEmail {
+			get => normalizedEmail;
+			set {
+				ParamIs.NotNull(() => value);
+				normalizedEmail = value;
 			}
 		}
 
@@ -604,15 +628,6 @@ namespace VocaDb.Model.Domain.Users {
 			return NameLC.GetHashCode();
 		}
 
-		public virtual bool IsTheSameUser(UserContract contract) {
-
-			if (contract == null)
-				return false;
-
-			return (Id == contract.Id);
-
-		}
-
 		public virtual (UserMessage Received, UserMessage Sent) SendMessage(User to, string subject, string body, bool highPriority) {
 
 			ParamIs.NotNull(() => to);
@@ -638,6 +653,7 @@ namespace VocaDb.Model.Domain.Users {
 
 			if (!string.Equals(Email, newEmail, StringComparison.InvariantCultureIgnoreCase)) {
 				Email = newEmail;
+				NormalizedEmail = !string.IsNullOrEmpty(newEmail) ? MailAddressNormalizer.Normalize(newEmail) : string.Empty;
 				Options.EmailVerified = false;				
 			}
 

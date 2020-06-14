@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html lang="@InterfaceLanguage.GetAvailableLanguageCode(CultureInfo.CurrentUICulture)">
 <head>
-    <title>@(!string.IsNullOrEmpty(PageProperties.PageTitle) ? PageProperties.PageTitle + " - " : "")@BrandableStrings.Layout.SiteTitle</title>
+    <title>@(!string.IsNullOrEmpty(PageProperties.PageTitle) ? PageProperties.PageTitle + " - " : "")@BrandableStrings.SiteTitle</title>
 	<meta name="description" content="@PageProperties.SummarizedDescription" />	
 	<meta name="keywords" content="@BrandableStrings.Layout.Keywords" />
 	<meta name="og:image" content="@PageProperties.OpenGraph.Image"/>
@@ -32,7 +32,7 @@
 	<link href="@Url.Content("~/Content/Styles/Icons.css")" rel="stylesheet" type="text/css" />	
 	<link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.10.1.custom.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Scripts/qTip/jquery.qtip.css")" rel="stylesheet" type="text/css" />
-	<link rel="search" type="application/opensearchdescription+xml" title="@BrandableStrings.Layout.SiteName" href="@Config.SiteSettings.OpenSearchPath" />
+	<link rel="search" type="application/opensearchdescription+xml" title="@BrandableStrings.SiteName" href="@Config.SiteSettings.OpenSearchPath" />
 	
 	<!-- prevent flashing content while loading the page -->
 	<style type="text/css">

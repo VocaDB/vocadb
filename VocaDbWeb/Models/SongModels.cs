@@ -67,6 +67,7 @@ namespace VocaDb.Web.Models {
 			PersonalDescriptionText = contract.PersonalDescriptionText;
 			PersonalDescriptionAuthor = contract.PersonalDescriptionAuthor;
 			SongType = contract.Song.SongType;
+			SongTypeTag = contract.SongTypeTag;
 			Status = contract.Song.Status;
 			Suggestions = contract.Suggestions;
 			Tags = contract.Tags;
@@ -206,6 +207,8 @@ namespace VocaDb.Web.Models {
 		public string PersonalDescriptionText { get; set; }
 
 		public SongType SongType { get; set; }
+
+		public TagBaseContract SongTypeTag { get; set; }
 
 		public EntryStatus Status { get; set; }
 

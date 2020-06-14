@@ -8,6 +8,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.Globalization;
 using Resources;
 using VocaDb.Model;
@@ -147,6 +148,7 @@ namespace VocaDb.Web.Helpers {
 		public static readonly TranslateableEnum<SongSortRule> SongSortRuleNames =
 			new TranslateableEnum<SongSortRule>(() => global::Resources.SongSortRuleNames.ResourceManager, new[] {
 				SongSortRule.Name, SongSortRule.AdditionDate, SongSortRule.PublishDate, SongSortRule.RatingScore, SongSortRule.FavoritedTimes,
+				SongSortRule.TagUsageCount
 			});
 
 		public static readonly DerivedTranslateableEnum<RatedSongForUserSortRule, SongSortRule> RatedSongForUserSortRuleNames =
@@ -178,6 +180,12 @@ namespace VocaDb.Web.Helpers {
 
 		public static readonly TranslateableEnum<UserReportType> UserReportTypeNames =
 			new TranslateableEnum<UserReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
+
+		public static readonly TranslateableEnum<VenueEditableFields> VenueEditableFieldNames =
+			new TranslateableEnum<VenueEditableFields>(() => global::Resources.VenueEditableFieldNames.ResourceManager);
+
+		public static readonly TranslateableEnum<VenueReportType> VenueReportTypeNames =
+			new TranslateableEnum<VenueReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<WebLinkCategory> WebLinkCategoryNames =
 			new TranslateableEnum<WebLinkCategory>(() => global::Resources.WebLinkCategoryNames.ResourceManager);
@@ -242,6 +250,17 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
+		public static string EntrySubTypeName(EntryTypeAndSubType fullEntryType) {
+			return fullEntryType.EntryType switch
+			{
+				EntryType.Album => DiscTypeName(EnumVal<DiscType>.Parse(fullEntryType.SubType)),
+				EntryType.Artist => ArtistTypeName(EnumVal<ArtistType>.Parse(fullEntryType.SubType)),
+				EntryType.ReleaseEvent => ReleaseEventCategoryNames[EnumVal<EventCategory>.Parse(fullEntryType.SubType)],
+				EntryType.Song => SongTypeNames[EnumVal<SongType>.Parse(fullEntryType.SubType)],
+				_ => string.Empty,
+			};
+		}
+
 		public static string SongArchiveReason(SongArchiveReason reason) {
 
 			return SongArchiveReasonNames.ResourceManager.GetString(reason.ToString());
@@ -253,6 +272,8 @@ namespace VocaDb.Web.Helpers {
 			return SongEditableFieldNames[field];
 
 		}
+
+		public static string VenueEditableField(VenueEditableFields field) => VenueEditableFieldNames[field];
 
 		public static string PermissionTokenName(IPermissionToken token) {
 

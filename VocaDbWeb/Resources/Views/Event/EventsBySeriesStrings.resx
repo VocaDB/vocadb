@@ -123,11 +123,17 @@
   <data name="CreateSeries" xml:space="preserve">
     <value>Create series</value>
   </data>
+  <data name="CreateVenue" xml:space="preserve">
+    <value>Create venue</value>
+  </data>
   <data name="ViewByDate" xml:space="preserve">
     <value>All by date</value>
   </data>
   <data name="ViewBySeries" xml:space="preserve">
     <value>All by series</value>
+  </data>
+  <data name="ViewByVenue" xml:space="preserve">
+    <value>All by venue</value>
   </data>
   <data name="ViewList" xml:space="preserve">
     <value>Upcoming</value>

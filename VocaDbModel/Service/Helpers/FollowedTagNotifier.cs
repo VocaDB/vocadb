@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using NHibernate.Exceptions;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Service.Helpers {
@@ -55,7 +59,19 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="artists">List of artists for the entry. Cannot be null.</param>
 		/// <param name="creator">User who created the entry. The creator will be excluded from all notifications. Cannot be null.</param>
 		/// <param name="entryLinkFactory">Factory for creating links to entries. Cannot be null.</param>
-		public void SendNotifications(IDatabaseContext ctx, IEntryWithNames entry,
+		public async Task SendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry,
+			IEnumerable<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
+			IEnumTranslations enumTranslations) {
+
+			try {
+				await DoSendNotificationsAsync(ctx, entry, tags, ignoreUsers, entryLinkFactory, enumTranslations);
+			} catch (GenericADOException x) {
+				log.Error(x, "Unable to send notifications");
+			}
+
+		}
+
+		private async Task DoSendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry,
 			IEnumerable<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
 			IEnumTranslations enumTranslations) {
 
@@ -71,30 +87,34 @@ namespace VocaDb.Model.Service.Helpers {
 			log.Info("Sending notifications for {0} tags", tagIds.Length);
 
 			// Get users with less than maximum number of unread messages, following any of the tags
-			var usersWithTags = ctx.OfType<TagForUser>()
-				.Query()
+			var usersWithTagsArr = await ctx.Query<TagForUser>()
 				.Where(afu =>
-					tagIds.Contains(afu.Tag.Id)
-					&& afu.User.Active
-					&& !ignoreUsers.Contains(afu.User.Id)
-					&& afu.User.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < afu.User.Options.UnreadNotificationsToKeep)
+					tagIds.Contains(afu.Tag.Id))
 				.Select(afu => new {
 					UserId = afu.User.Id,
 					TagId = afu.Tag.Id
 				})
-				.ToArray()
+				.VdbToListAsync();
+
+			var usersWithTags = usersWithTagsArr
 				.GroupBy(afu => afu.UserId)
 				.ToDictionary(afu => afu.Key, afu => afu.Select(a => a.TagId));
 
-			var userIds = usersWithTags.Keys;
+			var userIds = usersWithTags.Keys.Except(ignoreUsers).ToArray();
 
-			log.Debug("Found {0} users subscribed to tags", userIds.Count);
+			log.Debug("Found {0} users subscribed to tags", userIds.Length);
 
-			if (!userIds.Any())
+			if (!userIds.Any()) {
+				log.Info("No users subscribed to tags - skipping.");
 				return;
+			}
 
 			var entryTypeNames = enumTranslations.Translations<EntryType>();
-			var users = ctx.OfType<User>().Query().Where(u => userIds.Contains(u.Id)).ToArray();
+			var users = await ctx.Query<User>()
+				.WhereIsActive()
+				.WhereIdIn(userIds)
+				.Where(u => u.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < u.Options.UnreadNotificationsToKeep)
+				.VdbToListAsync();
 
 			foreach (var user in users) {
 
@@ -121,9 +141,11 @@ namespace VocaDb.Model.Service.Helpers {
 				}
 
 				var notification = user.CreateNotification(title, msg);
-				ctx.Save(notification);
+				await ctx.SaveAsync(notification);
 
 			}
+
+			log.Info($"Sent notifications to {users.Count} users");
 
 		}
 

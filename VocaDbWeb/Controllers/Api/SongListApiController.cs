@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model;
@@ -23,7 +24,6 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.SongImport;
 using VocaDb.Web.Code.Exceptions;
-using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -37,9 +37,9 @@ namespace VocaDb.Web.Controllers.Api {
 		private const int defaultMax = 10;
 		private readonly SongListQueries queries;
 		private readonly IUserIconFactory userIconFactory;
-		private readonly IEntryImagePersisterOld entryImagePersister;
+		private readonly IAggregatedEntryImageUrlFactory entryImagePersister;
 
-		public SongListApiController(SongListQueries queries, IUserIconFactory userIconFactory, IEntryImagePersisterOld entryImagePersister) {
+		public SongListApiController(SongListQueries queries, IUserIconFactory userIconFactory, IAggregatedEntryImageUrlFactory entryImagePersister) {
 			this.queries = queries;
 			this.userIconFactory = userIconFactory;
 			this.entryImagePersister = entryImagePersister;
@@ -108,25 +108,40 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets a list of featured song lists.
 		/// </summary>
 		/// <param name="query">Song list name query (optional).</param>
+		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
+		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
 		/// <param name="nameMatchMode">Match mode for list name (optional, defaults to Auto).</param>
 		/// <param name="featuredCategory">Filter by a specific featured category. If empty, all categories are returned.</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 50).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="sort">List sort rule. Possible values are Nothing, Date, CreateDate, Name.</param>
+		/// <param name="fields">List of optional fields (optional).</param>
+		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of song lists.</returns>
 		[Route("featured")]
 		public PartialFindResult<SongListForApiContract> GetFeaturedLists(
 			string query = "",
+			[FromUri] int[] tagId = null,
+			bool childTags = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
-			SongListSortRule sort = SongListSortRule.Name) {
+			SongListSortRule sort = SongListSortRule.Name,
+			SongListOptionalFields fields = SongListOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+			var queryParams = new SongListQueryParams {
+				TextQuery = textQuery,
+				FeaturedCategory = featuredCategory,
+				Paging = new PagingProperties(start, maxResults, getTotalCount),
+				SortRule = sort,
+				TagIds = tagId,
+				ChildTags = childTags
+			};
 
-			return queries.Find(s => new SongListForApiContract(s, userIconFactory, entryImagePersister, SongListOptionalFields.MainPicture),
-				textQuery, featuredCategory, start, maxResults, getTotalCount, sort);
+			return queries.Find(s => new SongListForApiContract(s, lang, userIconFactory, entryImagePersister, fields), queryParams);
 
 		}
 
@@ -196,15 +211,14 @@ namespace VocaDb.Web.Controllers.Api {
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			SongSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
-			SongOptionalFields fields = SongOptionalFields.None, 
-			ContentLanguagePreference lang = ContentLanguagePreference.Default
-			) {
+			SongOptionalFields fields = SongOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 			
 			maxResults = Math.Min(maxResults, absoluteMax);
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
 			return queries.GetSongsInList(
-				new SongListQueryParams {
+				new SongInListQueryParams {
 					TextQuery = SearchTextQuery.Create(query, nameMatchMode),
 					ListId = listId, 
 					Paging = new PagingProperties(start, maxResults, getTotalCount),
@@ -222,10 +236,10 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[ApiExplorerSettings(IgnoreApi=true)]
 		[Route("import")]
-		public ImportedSongListContract GetImport(string url, bool parseAll = true) {
+		public async Task<ImportedSongListContract> GetImport(string url, bool parseAll = true) {
 
 			try {
-				return queries.Import(url, parseAll);
+				return await queries.Import(url, parseAll);
 			} catch (UnableToImportException x) {
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = x.Message });				
 			}
@@ -234,10 +248,10 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[ApiExplorerSettings(IgnoreApi=true)]
 		[Route("import-songs")]
-		public PartialImportedSongs GetImportSongs(string url, string pageToken, int maxResults = 20, bool parseAll = true) {
+		public async Task<PartialImportedSongs> GetImportSongs(string url, string pageToken, int maxResults = 20, bool parseAll = true) {
 
 			try {
-				return queries.ImportSongs(url, pageToken, maxResults, parseAll);
+				return await queries.ImportSongs(url, pageToken, maxResults, parseAll);
 			} catch (UnableToImportException x) {
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = x.Message });
 			}

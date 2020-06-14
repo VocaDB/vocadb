@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Xml.Linq;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain {
 
-	public class TrashedEntry {
+	public class TrashedEntry : IEntryWithIntId {
 
 		private XDocument data;
 		private string name;

@@ -1,8 +1,202 @@
-using System;
 using System.Data;
 using FluentMigrator;
 
 namespace VocaDb.Migrations {
+
+	// Migration version format: YYYY_MM_DD_HHmm
+
+	[Migration(2020_05_28_2100)]
+	public class SongNotesLength : Migration {
+		public override void Up() {
+			Delete.DefaultConstraint().OnTable(TableNames.Songs).OnColumn("Notes");
+			Alter.Table(TableNames.Songs).AlterColumn("Notes").AsString(int.MaxValue).NotNullable().WithDefaultValue("");
+		}
+
+		public override void Down() {
+			Delete.DefaultConstraint().OnTable(TableNames.Songs).OnColumn("Notes");
+			Alter.Table(TableNames.Songs).AlterColumn("Notes").AsString(2000).NotNullable().WithDefaultValue("");
+		}
+	}
+
+	[Migration(2020_03_30_2300)]
+	public class UserNormalizedEmail : AutoReversingMigration {
+
+		public override void Up() {
+			Create.Column("NormalizedEmail").OnTable(TableNames.Users).AsString(50).NotNullable().WithDefaultValue(string.Empty);
+		}
+
+	}
+
+	[Migration(2020_03_22_0000)]
+	public class VenueAddressCountryCode : AutoReversingMigration {
+
+		public override void Up() {
+			Create.Column("AddressCountryCode").OnTable(TableNames.Venues).AsString(10).NotNullable().WithDefaultValue(string.Empty);
+		}
+
+	}
+
+	[Migration(2020_03_01_1300)]
+	public class ArchivedReleaseEventRenameVenue : Migration {
+
+		public override void Up() {
+			Execute.Sql("UPDATE [ArchivedEventVersions] SET ChangedFields = REPLACE(ChangedFields, 'Venue', 'VenueName') WHERE ChangedFields LIKE '%Venue%' AND NOT ChangedFields LIKE '%VenueName%'");
+		}
+
+		public override void Down() {
+			Execute.Sql("UPDATE [ArchivedEventVersions] SET ChangedFields = REPLACE(ChangedFields, 'VenueName', 'Venue') WHERE ChangedFields LIKE '%VenueName%'");
+		}
+
+	}
+
+	[Migration(2020_03_01_1000)]
+	public class VenueCreateDate : AutoReversingMigration {
+
+		public override void Up() {
+			Create.Column("CreateDate").OnTable(TableNames.Venues).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
+		}
+
+	}
+
+	[Migration(2020_02_28_1700)]
+	public class ReleaseEventRenameVenue : AutoReversingMigration {
+
+		public override void Up() {
+			Rename.Column("[Venue]").OnTable(TableNames.AlbumReleaseEvents).To("VenueName");
+			Rename.Column("[VenueEntry]").OnTable(TableNames.AlbumReleaseEvents).To("Venue");
+		}
+
+	}
+
+	[Migration(2020_02_27_2100)]
+	public class EventVenues : AutoReversingMigration {
+
+		public override void Up() {
+
+			Create.Table("Venues")
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Description").AsString(int.MaxValue).NotNullable().WithDefaultValue(string.Empty)
+				.WithColumn("Version").AsInt32().NotNullable().WithDefaultValue(0)
+				.WithColumn("Deleted").AsBoolean().NotNullable().WithDefaultValue(false)
+				.WithColumn("Status").AsString(10).NotNullable().WithDefaultValue("Draft")
+				.WithColumn("Address").AsString().NotNullable().WithDefaultValue(string.Empty)
+				.WithColumn("DefaultNameLanguage").AsString(20).NotNullable().WithDefaultValue("English")
+				.WithColumn("JapaneseName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
+				.WithColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
+				.WithColumn("EnglishName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
+				.WithColumn("AdditionalNamesString").AsString(1024).NotNullable().WithDefaultValue(string.Empty)
+				.WithColumn("Latitude").AsDouble().Nullable()
+				.WithColumn("Longitude").AsDouble().Nullable();
+
+			Create.Table("ArchivedVenueVersions")
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Author").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id")
+				.WithColumn("ChangedFields").AsAnsiString(100).NotNullable()
+				.WithColumn("CommonEditEvent").AsAnsiString(30).NotNullable()
+				.WithColumn("Created").AsDateTime().NotNullable()
+				.WithColumn("Data").AsXml().NotNullable()
+				.WithColumn("Venue").AsInt32().NotNullable().ForeignKey(TableNames.Venues, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("IsSnapshot").AsBoolean().NotNullable().WithDefaultValue(true)
+				.WithColumn("Notes").AsString(200).NotNullable()
+				.WithColumn("Status").AsString(10).NotNullable().WithDefaultValue("Draft")
+				.WithColumn("Version").AsInt32().NotNullable();
+
+			Create.Table("VenueNames")
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Venue").AsInt32().NotNullable().ForeignKey(TableNames.Venues, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Language").AsString(16).NotNullable()
+				.WithColumn("Value").AsString().NotNullable();
+
+			Create.Table("VenueWebLinks")
+				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Category").AsAnsiString(20).NotNullable()
+				.WithColumn("Description").AsString(512).NotNullable()
+				.WithColumn("Venue").AsInt32().NotNullable().ForeignKey(TableNames.Venues, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Url").AsString(512).NotNullable();
+
+			Alter.Table(TableNames.EntryReports).AddColumn("Venue").AsInt32().Nullable().ForeignKey(TableNames.Venues, "Id").OnDelete(Rule.Cascade);
+
+			Create.Column("Venue").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
+				.ForeignKey(TableNames.Venues, "Id").OnDelete(Rule.Cascade);
+
+			Create.Column("ArchivedVenueVersion").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
+				.ForeignKey(TableNames.ArchivedVenueVersions, "Id").OnDelete(Rule.None);
+
+			Create.Column("VenueEntry").OnTable(TableNames.AlbumReleaseEvents).AsInt32().Nullable().ForeignKey(TableNames.Venues, "Id").OnDelete(Rule.SetNull);
+
+		}
+
+	}
+
+	[Migration(2020_02_08_1800)]
+	public class IPRuleAddressUniqueIndex : AutoReversingMigration {
+		public override void Up() {
+			Create.Index("UX_IPRules_Address").OnTable(TableNames.IPRules).OnColumn("Address").Ascending().WithOptions().Unique();
+		}
+	}
+
+	[Migration(2020_02_07_2000)]
+	public class UserCustomTitle : AutoReversingMigration {
+		public override void Up() {
+			Create.Column("CustomTitle").OnTable(TableNames.UserOptions).AsString(200).NotNullable().WithDefaultValue(string.Empty);
+		}
+	}
+
+	[Migration(2020_02_05_1900)]
+	public class EventDescriptionLength : Migration {
+
+		public override void Up() {
+			Delete.DefaultConstraint().OnTable(TableNames.AlbumReleaseEvents).OnColumn("Description");
+			Alter.Column("Description").OnTable(TableNames.AlbumReleaseEvents).AsString(int.MaxValue).NotNullable().WithDefaultValue(string.Empty);
+			Delete.DefaultConstraint().OnTable(TableNames.AlbumReleaseEventSeries).OnColumn("Description");
+			Alter.Column("Description").OnTable(TableNames.AlbumReleaseEventSeries).AsString(int.MaxValue).NotNullable().WithDefaultValue(string.Empty);
+		}
+
+		public override void Down() {}
+
+	}
+
+	[Migration(2020_01_05_1600)]
+	public class TagRelatedEntries : AutoReversingMigration {
+		public override void Up() {
+			var tableName = "EntryTypeToTagMappings";
+			Create.Table(tableName)
+				.WithColumn(ColumnNames.Id).AsInt32().NotNullable().PrimaryKey().Identity()
+				.WithColumn("EntryType").AsString(20).NotNullable()
+				.WithColumn("SubType").AsString(30).NotNullable()
+				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, ColumnNames.Id).OnDelete(Rule.Cascade);
+
+			Create.Index("UX_EntryTypeToTagMappings_EntryType").OnTable(tableName)
+				.OnColumn("EntryType").Ascending()
+				.OnColumn("SubType").Ascending()
+				.WithOptions().Unique();
+
+			Create.Index("UX_EntryTypeToTagMappings_Tag").OnTable(tableName)
+				.OnColumn("Tag").Ascending()
+				.WithOptions().Unique();
+		}
+	}
+
+	[Migration(2019_11_17_0100)]
+	public class SongListTags : AutoReversingMigration {
+
+		public override void Up() {
+			Create.Table("SongListTagUsages")
+				.WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Count").AsInt32().NotNullable()
+				.WithColumn("SongList").AsInt32().NotNullable().ForeignKey(TableNames.SongLists, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id")
+				.WithColumn("Date").AsDateTime().NotNullable();
+			Create.Table("SongListTagVotes")
+				.WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
+				.WithColumn("Usage").AsInt64().NotNullable().ForeignKey("SongListTagUsages", "Id").OnDelete(Rule.Cascade)
+				.WithColumn("[User]").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id");
+			Create.Index("UX_SongListTagUsages").OnTable("SongListTagUsages").OnColumn("SongList").Ascending()
+				.OnColumn("Tag").Ascending().WithOptions().Unique();
+			Create.Index("IX_SongListTagUsages_Tag").OnTable("SongListTagUsages").OnColumn("Tag").Ascending();
+		}
+
+	}
 
 	[Migration(2019_04_14_1300)]
 	public class ArchivedEntryVersionChangedFieldsLength : AutoReversingMigration {

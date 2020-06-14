@@ -1,4 +1,4 @@
-﻿namespace VocaDb.Model.Domain.Users {
+namespace VocaDb.Model.Domain.Users {
 
 	public class UserReport : GenericEntryReport<User, UserReportType> {
 
@@ -14,9 +14,19 @@
 		/// <summary>
 		/// Found a match on StopForumSpam, identifying the user as malicious.
 		/// </summary>
-		MaliciousIP = 1,
+		MaliciousIP			= 1,
 
-		Other = 2
+		/// <summary>
+		/// Other users reported for spamming.
+		/// </summary>
+		Spamming			= 2,
+
+		/// <summary>
+		/// User's editing permissions were removed by a staff member.
+		/// </summary>
+		RemovePermissions	= 4,
+
+		Other				= 8
 
 	}
 }

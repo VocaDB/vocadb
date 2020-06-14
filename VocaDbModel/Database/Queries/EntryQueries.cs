@@ -19,14 +19,11 @@ namespace VocaDb.Model.Database.Queries {
 
 	public class EntryQueries : QueriesBase<IAlbumRepository, Album> {
 
-		private readonly IEntryImagePersisterOld entryImagePersisterOld;
-		private readonly IEntryThumbPersister entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
 
-		public EntryQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryThumbPersister entryThumbPersister,
-			IEntryImagePersisterOld entryImagePersisterOld) 
+		public EntryQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IAggregatedEntryImageUrlFactory entryThumbPersister) 
 			: base(repository, permissionContext) {
 			this.entryThumbPersister = entryThumbPersister;
-			this.entryImagePersisterOld = entryImagePersisterOld;
 		}
 
 		public PartialFindResult<EntryForApiContract> GetList(
@@ -35,6 +32,7 @@ namespace VocaDb.Model.Database.Queries {
 			string[] tags,
 			bool childTags,
 			EntryStatus? status,
+			EntryTypes? entryTypes,
 			int start, int maxResults, bool getTotalCount,
 			EntrySortRule sort,
 			NameMatchMode nameMatchMode,
@@ -51,7 +49,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				// Get all applicable names per entry type
 				var artistQuery = ctx.OfType<Artist>().Query()
-					.Where(a => !a.Deleted)
+					.WhereEntryTypeIsIncluded(entryTypes, EntryType.Artist)
+					.WhereNotDeleted()
 					.WhereHasName_Canonized(artistTextQuery)
 					.WhereHasTags(tagIds, childTags)
 					.WhereHasTags(tags)
@@ -64,7 +63,8 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray();
 
 				var albumQuery = ctx.OfType<Album>().Query()
-					.Where(a => !a.Deleted)
+					.WhereEntryTypeIsIncluded(entryTypes, EntryType.Album)
+					.WhereNotDeleted()
 					.WhereHasName(textQuery)
 					.WhereHasTags(tagIds, childTags)
 					.WhereHasTags(tags)
@@ -77,7 +77,8 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray();
 
 				var songQuery = ctx.OfType<Song>().Query()
-					.Where(a => !a.Deleted)
+					.WhereEntryTypeIsIncluded(entryTypes, EntryType.Song)
+					.WhereNotDeleted()
 					.WhereHasName(textQuery)
 					.WhereHasTags(tagIds, childTags)
 					.WhereHasTags(tags)
@@ -90,6 +91,7 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray();
 
 				var eventQuery = searchEvents ? ctx.OfType<ReleaseEvent>().Query()
+					.WhereEntryTypeIsIncluded(entryTypes, EntryType.ReleaseEvent)
 					.WhereNotDeleted()
 					.WhereHasName(textQuery)
 					.WhereHasTags(tagIds, childTags)
@@ -102,6 +104,7 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray() : null;
 
 				var tagQuery = searchTags ? ctx.OfType<Tag>().Query()
+					.WhereEntryTypeIsIncluded(entryTypes, EntryType.Tag)
 					.WhereNotDeleted()
 					.WhereHasName(textQuery)
 					.WhereStatusIs(status) : null;
@@ -148,7 +151,7 @@ namespace VocaDb.Model.Database.Queries {
 				var searchedTags = searchTags && searchedTagIds.Any() ? ctx.OfType<Tag>().Query()
 					.Where(a => searchedTagIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryImagePersisterOld, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, fields)) : new EntryForApiContract[0];
 
 				var events = searchEvents && eventIds.Any() ? ctx.OfType<ReleaseEvent>().Query()
 					.Where(a => eventIds.Contains(a.Id))

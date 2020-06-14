@@ -38,6 +38,7 @@ module vdb.viewModels {
 						{ name: 'Songs by Vocaloid', url: 'songsPerVocaloid', allowTimespan: true },
 						{ name: 'Albums by Vocaloid', url: 'albumsPerVocaloid', allowTimespan: true },
 						{ name: 'Songs by voicebank over time', url: 'songsPerVocaloidOverTime', allowTimespan: true },
+						{ name: 'Songs by voicebank type over time', url: 'GetSongsPerVoicebankTypeOverTime', allowTimespan: true },
 						{ name: 'Songs by UTAU over time', url: 'songsPerVocaloidOverTime?vocalistTypes=UTAU', allowTimespan: true }
 					]
 				},

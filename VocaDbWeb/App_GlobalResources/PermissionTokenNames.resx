@@ -213,4 +213,7 @@
   <data name="ViewAuditLog" xml:space="preserve">
     <value>View event log</value>
   </data>
+  <data name="ViewHiddenRatings" xml:space="preserve">
+    <value>View hidden ratings</value>
+  </data>
 </root>

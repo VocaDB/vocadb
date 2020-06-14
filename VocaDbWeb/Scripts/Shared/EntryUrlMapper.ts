@@ -42,6 +42,9 @@ module vdb.utils {
 				case cls.EntryType.Tag:
 					prefix = vdb.functions.mapAbsoluteUrl("/T/" + id);
 					break;
+				case cls.EntryType.Venue:
+					prefix = vdb.functions.mapAbsoluteUrl("/Venue/Details/" + id);
+					break;
 				default:
 					prefix = vdb.functions.mapAbsoluteUrl("/" + typeName + "/Details/" + id);
 					break;
@@ -65,7 +68,7 @@ module vdb.utils {
 			return EntryUrlMapper.details(cls.EntryType.Tag, id, slug);
 		}
 
-		public static details_tag_contract(tag: dc.TagBaseContract) {
+		public static details_tag_contract(tag: dc.TagBaseContract | dc.TagApiContract) {
 
 			if (!tag)
 				return null;

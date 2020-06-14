@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Tags;
@@ -32,9 +34,9 @@ namespace VocaDb.Web.Controllers.Api {
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly TagQueries queries;
-		private readonly IEntryImagePersisterOld thumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 
-		public TagApiController(TagQueries queries, IEntryImagePersisterOld thumbPersister) {
+		public TagApiController(TagQueries queries, IAggregatedEntryImageUrlFactory thumbPersister) {
 			this.queries = queries;
 			this.thumbPersister = thumbPersister;
 		}
@@ -206,6 +208,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		}
 
+		[Route("entry-type-mappings")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public TagEntryMappingContract[] GetEntryMappings() {
+			return queries.GetEntryMappings();
+		}
+
 		[Route("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public PartialFindResult<TagMappingContract> GetMappings(
@@ -242,19 +250,23 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Gets the most common tags in a category.
 		/// </summary>
 		/// <param name="categoryName">Tag category, for example "Genres". Optional - if not specified, no filtering is done.</param>
+		/// <param name="entryType">Tag usage entry type. Optional - if not specified, all entry types are included.</param>
 		/// <param name="maxResults">Maximum number of tags to return.</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of names of the most commonly used tags in that category.</returns>
 		[Route("top")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
-		public TagBaseContract[] GetTopTags(string categoryName = null, int maxResults = 15, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+		public TagBaseContract[] GetTopTags(string categoryName = null, EntryType? entryType = null,
+			int maxResults = 15, 
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
 
-			return queries.Find(t => new TagBaseContract(t, lang), new TagQueryParams(new CommonSearchParams(), new PagingProperties(0, maxResults, false)) {
-				CategoryName = categoryName,
-				SortRule = TagSortRule.UsageCount,
-				LanguagePreference = lang
-			})
-			.Items.OrderBy(t => t.Name).ToArray();
+			return queries.HandleQuery(ctx => ctx.Query<Tag>()
+				.WhereHasCategoryName(categoryName)
+				.OrderByUsageCount(entryType)
+				.Paged(new PagingProperties(0, maxResults, false))
+				.Select(t => new TagBaseContract(t, lang, false, false))
+				.ToArray())
+				.OrderBy(t => t.Name).ToArray();
 
 		}
 
@@ -282,10 +294,10 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <response code="400">If tag name is already in use</response>
 		[Route("")]
 		[Authorize]
-		public TagBaseContract PostNewTag(string name) {
+		public async Task<TagBaseContract> PostNewTag(string name) {
 
 			try {
-				return queries.Create(name);				
+				return await queries.Create(name);				
 			} catch (DuplicateTagNameException) {
 				throw new HttpBadRequestException("Tag name is already in use");
 			}
@@ -318,6 +330,19 @@ namespace VocaDb.Web.Controllers.Api {
 		public CommentForApiContract PostNewComment(int tagId, CommentForApiContract contract) {
 
 			return queries.CreateComment(tagId, contract);
+
+		}
+
+		[Authorize]
+		[Route("entry-type-mappings")]
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public void PutEntryMappings(IEnumerable<TagEntryMappingContract> mappings) {
+
+			if (mappings == null) {
+				throw new HttpBadRequestException("Mappings cannot be null");
+			}
+
+			queries.UpdateEntryMappings(mappings.ToArray());
 
 		}
 

@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Helpers;
@@ -40,17 +43,17 @@ namespace VocaDb.Tests.Helpers {
 			return val.ToString();
 		}
 
-		private Entity FacEntity(EntityProto val) {
-			return new Entity { Val = val.Val.ToString() };
+		private Task<Entity> FacEntity(EntityProto val) {
+			return Task.FromResult(new Entity { Val = val.Val.ToString() });
 		}
 
-		private bool Update(Entity old, EntityProto val) {
+		private Task<bool> Update(Entity old, EntityProto val) {
 
 			if (old.Val == val.Val.ToString())
-				return false;
+				return Task.FromResult(false);
 
 			old.Val = val.Val.ToString();
-			return true;
+			return Task.FromResult(true);
 
 		}
 
@@ -68,11 +71,11 @@ namespace VocaDb.Tests.Helpers {
 			return new List<string>(str);
 		}
 
-		private CollectionDiffWithValue<Entity, Entity> TestSyncWithValue(Entity[] oldItems, EntityProto[] newItems, 
+		private async Task<CollectionDiffWithValue<Entity, Entity>> TestSyncWithValue(Entity[] oldItems, EntityProto[] newItems, 
 			int addedCount = 0, int removedCount = 0, int editedCount = 0, int unchangedCount = 0) {
 			
 			var list = oldItems.ToList();
-			var result = CollectionHelper.SyncWithContent(list, newItems, EqualityEntity, FacEntity, Update, null);
+			var result = await CollectionHelper.SyncWithContentAsync(list, newItems, EqualityEntity, FacEntity, Update, null);
 
 			Assert.IsNotNull(result, "result is not null");
 			Assert.AreEqual(addedCount > 0 || removedCount > 0 || editedCount > 0, result.Changed, "is changed");
@@ -90,13 +93,31 @@ namespace VocaDb.Tests.Helpers {
 			var entries = EntityList("Meiko", "Rin", "Miku", "Luka", "Kaito");
 			var idList = new[] { 1, 5, 3, 2, 4 }; // Meiko, Kaito, Miku, Rin, Luka
 
-			var result = CollectionHelper.SortByIds(entries, idList);
+			var result = CollectionHelper.SortByIds(entries, idList).Select(e => e?.Val);
 
-			Assert.AreEqual("Meiko", result[0].Val);
-			Assert.AreEqual("Kaito", result[1].Val);
-			Assert.AreEqual("Miku", result[2].Val);
-			Assert.AreEqual("Rin", result[3].Val);
-			Assert.AreEqual("Luka", result[4].Val);
+			result.Should().ContainInOrder("Meiko", "Kaito", "Miku", "Rin", "Luka");
+
+		}
+
+		[TestMethod]
+		public void SortByIds_EntryNotFound() {
+			
+			var entries = EntityList("Meiko", "Rin", "Miku", "Luka");
+			var idList = new[] { 1, 5, 3, 2, 4 }; // Meiko, (not found), Miku, Rin, Luka
+
+			var result = CollectionHelper.SortByIds(entries, idList).Select(e => e?.Val);
+
+			result.Should().ContainInOrder("Meiko", null, "Miku", "Rin", "Luka");
+
+		}
+
+		[TestMethod]
+		public void SortByIds_IdNotFound() {
+			
+			var entries = EntityList("Meiko", "Rin", "Miku", "Luka", "Kaito");
+			var idList = new[] { 1, 5, 3, 2 }; // Meiko, Kaito, Miku, Rin
+
+			this.Invoking(_ => CollectionHelper.SortByIds(entries, idList)).Should().Throw<InvalidOperationException>();
 
 		}
 
@@ -170,46 +191,46 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void SyncWithContent_Added() {
+		public async Task SyncWithContent_Added() {
 			
-			var result = TestSyncWithValue(EntityList(), EntityProtoList(39), addedCount: 1);
+			var result = await TestSyncWithValue(EntityList(), EntityProtoList(39), addedCount: 1);
 			Assert.AreEqual("39", result.Added.First().Val, "Added entity matches prototype");
 
 		}
 
 		[TestMethod]
-		public void SyncWithContent_Removed() {
+		public async Task SyncWithContent_Removed() {
 			
-			var result = TestSyncWithValue(EntityList("39"), EntityProtoList(), removedCount: 1);
+			var result = await TestSyncWithValue(EntityList("39"), EntityProtoList(), removedCount: 1);
 			Assert.AreEqual("39", result.Removed.First().Val, "Removed entity matches prototype");
 
 		}
 
 		[TestMethod]
-		public void SyncWithContent_Unchanged() {
+		public async Task SyncWithContent_Unchanged() {
 			
-			var result = TestSyncWithValue(EntityList("39"), EntityProtoList(39), unchangedCount: 1);
+			var result = await TestSyncWithValue(EntityList("39"), EntityProtoList(39), unchangedCount: 1);
 			Assert.AreEqual("39", result.Unchanged.First().Val, "Unchanged entity matches prototype");
 
 		}
 
 		[TestMethod]
-		public void SyncWithContent_Edited() {
+		public async Task SyncWithContent_Edited() {
 			
-			var result = TestSyncWithValue(EntityList("39"), EntityProtoList(3939), editedCount: 1, unchangedCount: 1);
+			var result = await TestSyncWithValue(EntityList("39"), EntityProtoList(3939), editedCount: 1, unchangedCount: 1);
 			Assert.AreEqual("3939", result.Edited.First().Val, "Edited entity matches prototype");
 
 		}
 
 		// Replace the entity in the list with a completely new one.
 		[TestMethod]
-		public void SyncWithContent_Replaced() {
+		public async Task SyncWithContent_Replaced() {
 			
 			var oldList = EntityList("39");
 			var newList = EntityProtoList(3939);
 			newList.First().Id = 2;
 
-			var result = TestSyncWithValue(oldList, newList, addedCount: 1, removedCount: 1);
+			var result = await TestSyncWithValue(oldList, newList, addedCount: 1, removedCount: 1);
 			Assert.AreEqual("3939", result.Added.First().Val, "Added entity matches prototype");
 			Assert.AreEqual("39", result.Removed.First().Val, "Removed entity matches prototype");
 

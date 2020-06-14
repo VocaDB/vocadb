@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Caching;
+using System.Threading.Tasks;
 using NHibernate;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
@@ -46,6 +47,7 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryThumbPersister imagePersister;
+		private readonly IAggregatedEntryImageUrlFactory imageUrlFactory;
 		private readonly IEntryPictureFilePersister pictureFilePersister;
 		private readonly IUserIconFactory userIconFactory;
 
@@ -68,7 +70,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			var cached = cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () => {
 
-				var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, cache, imagePersister).GetTopVoicebanks(artist);
+				var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, cache, imageUrlFactory).GetTopVoicebanks(artist);
 
 				return new CachedAdvancedArtistStatsContract {
 					TopVocaloids = topVocaloids
@@ -158,7 +160,7 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ArtistQueries(IArtistRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
 			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister,
-			ObjectCache cache, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations)
+			ObjectCache cache, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IAggregatedEntryImageUrlFactory imageUrlFactory)
 			: base(repository, permissionContext) {
 
 			this.entryLinkFactory = entryLinkFactory;
@@ -167,6 +169,7 @@ namespace VocaDb.Model.Database.Queries {
 			this.cache = cache;
 			this.userIconFactory = userIconFactory;
 			this.enumTranslations = enumTranslations;
+			this.imageUrlFactory = imageUrlFactory;
 
 		}
 
@@ -174,24 +177,22 @@ namespace VocaDb.Model.Database.Queries {
 			return new CommentQueries<ArtistComment, Artist>(ctx.OfType<ArtistComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
-		public ArchivedArtistVersion Archive(IDatabaseContext<Artist> ctx, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "") {
+		public async Task<ArchivedArtistVersion> ArchiveAsync(IDatabaseContext<Artist> ctx, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "") {
 
 			ctx.AuditLogger.SysLog("Archiving " + artist);
 
-			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
+			var agentLoginData = await ctx.CreateAgentLoginDataAsync(PermissionContext);
 			var archived = ArchivedArtistVersion.Create(artist, diff, agentLoginData, reason, notes);
-			ctx.Save(archived);
+			await ctx.SaveAsync(archived);
 			return archived;
 
 		}
 
-		public ArchivedArtistVersion Archive(IDatabaseContext<Artist> ctx, Artist artist, ArtistArchiveReason reason, string notes = "") {
-
-			return Archive(ctx, artist, new ArtistDiff(), reason, notes);
-
+		public Task<ArchivedArtistVersion> ArchiveAsync(IDatabaseContext<Artist> ctx, Artist artist, ArtistArchiveReason reason, string notes = "") {
+			return ArchiveAsync(ctx, artist, new ArtistDiff(), reason, notes);
 		}
 
-		public ArtistContract Create(CreateArtistContract contract) {
+		public async Task<ArtistContract> Create(CreateArtistContract contract) {
 
 			ParamIs.NotNull(() => contract);
 
@@ -203,7 +204,7 @@ namespace VocaDb.Model.Database.Queries {
 			var diff = new ArtistDiff();
 			diff.Names.Set();
 
-			return repository.HandleTransaction(ctx => {
+			return await repository.HandleTransactionAsync(async ctx => {
 
 				ctx.AuditLogger.SysLog(string.Format("creating a new artist with name '{0}'", contract.Names.First().Value));
 
@@ -221,7 +222,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				artist.Status = (contract.Draft || !(new ArtistValidator().IsValid(artist))) ? EntryStatus.Draft : EntryStatus.Finished;
 
-				ctx.Save(artist);
+				await ctx.SaveAsync(artist);
 
 				if (contract.PictureData != null) {
 
@@ -239,11 +240,11 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				var archived = Archive(ctx, artist, diff, ArtistArchiveReason.Created);
-				ctx.Update(artist);
+				var archived = await ArchiveAsync(ctx, artist, diff, ArtistArchiveReason.Created);
+				await ctx.UpdateAsync(artist);
 
-				ctx.AuditLogger.AuditLog(string.Format("created artist {0} ({1})", entryLinkFactory.CreateEntryLink(artist), artist.ArtistType));
-				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Created, archived);
+				await ctx.AuditLogger.AuditLogAsync(string.Format("created artist {0} ({1})", entryLinkFactory.CreateEntryLink(artist), artist.ArtistType));
+				await AddEntryEditedEntryAsync(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Created, archived);
 
 				return new ArtistContract(artist, PermissionContext.LanguagePreference);
 
@@ -267,7 +268,7 @@ namespace VocaDb.Model.Database.Queries {
 					entryLinkFactory,
 					(artist, reporter, notesTruncated) => new ArtistReport(artist, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != ArtistReportType.Other ? enumTranslations.ArtistReportTypeNames[reportType] : null,
-					artistId, reportType, hostname, notes);
+					artistId, reportType, hostname, notes, reportType != ArtistReportType.OwnershipClaim);
 			});
 
 		}
@@ -275,7 +276,6 @@ namespace VocaDb.Model.Database.Queries {
 		public EntryRefWithCommonPropertiesContract[] FindDuplicates(string[] anyName, string url) {
 
 			var names = anyName.Where(n => !string.IsNullOrWhiteSpace(n)).Select(n => n.Trim()).ToArray();
-			var urlTrimmed = url != null ? UrlHelper.RemoveScheme(url.Trim()) : null;
 
 			if (!names.Any() && string.IsNullOrEmpty(url))
 				return new EntryRefWithCommonPropertiesContract[] { };
@@ -291,9 +291,9 @@ namespace VocaDb.Model.Database.Queries {
 					.ToArray()
 					.Distinct() : new Artist[] { });
 
-				var linkMatches = !string.IsNullOrEmpty(urlTrimmed) ?
-					session.Query<ArtistWebLink>()
-					.Where(w => !w.Entry.Deleted && (w.Url == urlTrimmed || w.Url == "http://" + urlTrimmed || w.Url == "https://" + urlTrimmed))
+				var linkMatches = !string.IsNullOrWhiteSpace(url) ? session.Query<ArtistWebLink>()				
+					.Where(w => !w.Entry.Deleted)
+					.WhereUrlIs(url, WebLinkVariationTypes.IgnoreScheme)
 					.Select(w => w.Entry)
 					.Take(10)
 					.ToArray()
@@ -317,7 +317,7 @@ namespace VocaDb.Model.Database.Queries {
 
 			return
 				HandleQuery(session =>
-					new ArtistForEditContract(session.Load<Artist>(id), PermissionContext.LanguagePreference, pictureFilePersister));
+					new ArtistForEditContract(session.Load<Artist>(id), PermissionContext.LanguagePreference, imageUrlFactory));
 
 		}
 
@@ -343,7 +343,8 @@ namespace VocaDb.Model.Database.Queries {
 				if (stats == null)
 					EntityNotFoundException.Throw<Artist>(id);
 
-				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, imagePersister) {
+				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, imageUrlFactory,
+					new EntryTypeTags(session).GetTag(EntryType.Artist, artist.ArtistType)) {
 					CommentCount = stats.CommentCount,
 					SharedStats = GetSharedArtistStats(session, artist),
 					PersonalStats = GetPersonalArtistStats(session, artist),
@@ -364,7 +365,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				var relations = (new ArtistRelationsQuery(session, LanguagePreference, cache, imagePersister)).GetRelations(artist, ArtistRelationsFields.All);
+				var relations = (new ArtistRelationsQuery(session, LanguagePreference, cache, imageUrlFactory)).GetRelations(artist, ArtistRelationsFields.All);
 				contract.LatestAlbums = relations.LatestAlbums;
 				contract.TopAlbums = relations.PopularAlbums;
 				contract.LatestSongs = relations.LatestSongs;
@@ -401,25 +402,23 @@ namespace VocaDb.Model.Database.Queries {
 
 		public EntryForPictureDisplayContract GetPictureThumb(int artistId) {
 			
-			var size = new Size(ImageHelper.DefaultThumbSize, ImageHelper.DefaultThumbSize);
+			var size = ImageSize.Thumb;
 
 			return repository.HandleQuery(ctx => {
 				
 				var artist = ctx.Load(artistId);
 
-				if (artist.Picture == null || string.IsNullOrEmpty(artist.PictureMime) || artist.Picture.HasThumb(size))
-					return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference, size);
+				if (artist.Picture == null || string.IsNullOrEmpty(artist.PictureMime))
+					return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference);
 
-				var data = new EntryThumb(artist, artist.PictureMime);
+				var data = artist.Thumb;
 
-				if (imagePersister.HasImage(data, ImageSize.Thumb)) {
-					using (var stream = imagePersister.GetReadStream(data, ImageSize.Thumb)) {
-						var bytes = StreamHelper.ReadStream(stream);
-						return EntryForPictureDisplayContract.Create(artist, data.Mime, bytes, PermissionContext.LanguagePreference);
-					}
+				if (imagePersister.HasImage(data, size)) {
+					var bytes = imagePersister.ReadBytes(data, size);
+					return EntryForPictureDisplayContract.Create(artist, data.Mime, bytes, PermissionContext.LanguagePreference);
 				}
 
-				return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference, size);
+				return EntryForPictureDisplayContract.Create(artist, PermissionContext.LanguagePreference);
 
 			});
 
@@ -436,7 +435,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(u => !artistTags.Contains(u.Tag.Id) 
 						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions 
-						&& u.Album.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
+						&& u.Entry.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
 					.WhereTagHasTarget(TagTargetTypes.Artist)
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
@@ -449,7 +448,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Where(u => !artistTags.Contains(u.Tag.Id)
 						&& !u.Tag.Deleted
 						&& !u.Tag.HideFromSuggestions
-						&& u.Song.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
+						&& u.Entry.AllArtists.Any(a => !a.IsSupport && a.Artist.Id == artistId))
 					.WhereTagHasTarget(TagTargetTypes.Artist)
 					.GroupBy(t => t.Tag.Id)
 					.Select(t => new { TagId = t.Key, Count = t.Count() })
@@ -485,13 +484,13 @@ namespace VocaDb.Model.Database.Queries {
 		/// <param name="archivedArtistVersionId">Id of the archived version to be restored.</param>
 		/// <returns>Result of the revert operation, with possible warnings if any. Cannot be null.</returns>
 		/// <remarks>Requires the RestoreRevisions permission.</remarks>
-		public EntryRevertedContract RevertToVersion(int archivedArtistVersionId) {
+		public async Task<EntryRevertedContract> RevertToVersion(int archivedArtistVersionId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.RestoreRevisions);
 
-			return HandleTransaction(session => {
+			return await HandleTransactionAsync(async session => {
 
-				var archivedVersion = session.Load<ArchivedArtistVersion>(archivedArtistVersionId);
+				var archivedVersion = await session.LoadAsync<ArchivedArtistVersion>(archivedArtistVersionId);
 				var artist = archivedVersion.Artist;
 
 				session.AuditLogger.SysLog("reverting " + artist + " to version " + archivedVersion.Version);
@@ -518,7 +517,7 @@ namespace VocaDb.Model.Database.Queries {
 
 						var thumbGenerator = new ImageThumbGenerator(imagePersister);
 						using (var stream = new MemoryStream(versionWithPic.Picture.Bytes)) {
-							var thumb = new EntryThumb(artist, versionWithPic.PictureMime);
+							var thumb = new EntryThumb(artist, versionWithPic.PictureMime, ImagePurpose.Main);
 							thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 						}
 
@@ -544,17 +543,17 @@ namespace VocaDb.Model.Database.Queries {
 				// Names
 				if (fullProperties.Names != null) {
 					var nameDiff = artist.Names.SyncByContent(fullProperties.Names, artist);
-					session.Sync(nameDiff);
+					await session.SyncAsync(nameDiff);
 				}
 
 				// Weblinks
 				if (fullProperties.WebLinks != null) {
 					var webLinkDiff = WebLink.SyncByValue(artist.WebLinks, fullProperties.WebLinks, artist);
-					session.Sync(webLinkDiff);
+					await session.SyncAsync(webLinkDiff);
 				}
 
-				Archive(session, artist, diff, ArtistArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
-				AuditLog(string.Format("reverted {0} to revision {1}", entryLinkFactory.CreateEntryLink(artist), archivedVersion.Version), session);
+				await ArchiveAsync(session, artist, diff, ArtistArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
+				await AuditLogAsync(string.Format("reverted {0} to revision {1}", entryLinkFactory.CreateEntryLink(artist), archivedVersion.Version), session);
 
 				return new EntryRevertedContract(artist, warnings);
 
@@ -562,18 +561,18 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public int Update(ArtistForEditContract properties, EntryPictureFileContract pictureData, IUserPermissionContext permissionContext) {
+		public async Task<int> Update(ArtistForEditContract properties, EntryPictureFileContract pictureData, IUserPermissionContext permissionContext) {
 			
 			ParamIs.NotNull(() => properties);
 			ParamIs.NotNull(() => permissionContext);
 
-			return repository.HandleTransaction(ctx => {
+			return await repository.HandleTransactionAsync(async ctx => {
 
-				var artist = ctx.Load(properties.Id);
+				var artist = await ctx.LoadAsync(properties.Id);
 
 				VerifyEntryEdit(artist);
 
-				var diff = new ArtistDiff(DoSnapshot(artist.GetLatestVersion(), ctx.OfType<User>().GetLoggedUser(permissionContext)));
+				var diff = new ArtistDiff(DoSnapshot(artist.GetLatestVersion(), await ctx.OfType<User>().GetLoggedUserAsync(permissionContext)));
 
 				ctx.AuditLogger.SysLog(string.Format("updating properties for {0}", artist));
 
@@ -613,18 +612,18 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var nameDiff = artist.Names.Sync(properties.Names, artist);
-				ctx.OfType<ArtistName>().Sync(nameDiff);
+				await ctx.OfType<ArtistName>().SyncAsync(nameDiff);
 
 				if (nameDiff.Changed)
 					diff.Names.Set();
 
 				if (!artist.BaseVoicebank.NullSafeIdEquals(properties.BaseVoicebank)) {
 					
-					var newBase = ctx.NullSafeLoad(properties.BaseVoicebank);
+					var newBase = await ctx.NullSafeLoadAsync(properties.BaseVoicebank);
 
 					if (artist.IsValidBaseVoicebank(newBase)) {
 						diff.BaseVoicebank.Set();
-						artist.SetBaseVoicebank(ctx.NullSafeLoad(properties.BaseVoicebank));
+						artist.SetBaseVoicebank(await ctx.NullSafeLoadAsync(properties.BaseVoicebank));
 					}
 
 				}
@@ -635,7 +634,7 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				var webLinkDiff = WebLink.Sync(artist.WebLinks, properties.WebLinks, artist);
-				ctx.OfType<ArtistWebLink>().Sync(webLinkDiff);
+				await ctx.OfType<ArtistWebLink>().SyncAsync(webLinkDiff);
 
 				if (webLinkDiff.Changed)
 					diff.WebLinks.Set();
@@ -644,7 +643,7 @@ namespace VocaDb.Model.Database.Queries {
 
 					foreach (var song in artist.Songs) {
 						song.Song.UpdateArtistString();
-						ctx.Update(song);
+						await ctx.UpdateAsync(song);
 					}
 
 				}
@@ -663,12 +662,12 @@ namespace VocaDb.Model.Database.Queries {
 
 				foreach (var grp in groupsDiff.Removed) {
 					grp.Delete();
-					ctx.Delete(grp);
+					await ctx.DeleteAsync(grp);
 				}
 
 				foreach (var grp in groupsDiff.Added) {
 					var link = artist.AddGroup(ctx.Load(grp.Parent.Id), grp.LinkType);
-					ctx.Save(link);
+					await ctx.SaveAsync(link);
 				}
 
 				if (groupsDiff.Changed)
@@ -686,11 +685,11 @@ namespace VocaDb.Model.Database.Queries {
 					+ (properties.UpdateNotes != string.Empty ? " " + properties.UpdateNotes : string.Empty)
 					.Truncate(400);
 
-				var archived = Archive(ctx, artist, diff, ArtistArchiveReason.PropertiesUpdated, properties.UpdateNotes);
-				ctx.Update(artist);
+				var archived = await ArchiveAsync(ctx, artist, diff, ArtistArchiveReason.PropertiesUpdated, properties.UpdateNotes);
+				await ctx.UpdateAsync(artist);
 
-				ctx.AuditLogger.AuditLog(logStr);
-				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Updated, archived);
+				await ctx.AuditLogger.AuditLogAsync(logStr);
+				await AddEntryEditedEntryAsync(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Updated, archived);
 
 				return artist.Id;
 

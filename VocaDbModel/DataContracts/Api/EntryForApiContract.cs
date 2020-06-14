@@ -19,7 +19,7 @@ namespace VocaDb.Model.DataContracts.Api {
 	public class EntryForApiContract : IEntryWithIntId {
 
 		public static EntryForApiContract Create(IEntryWithNames entry, ContentLanguagePreference languagePreference, 
-			IEntryThumbPersister thumbPersister, IEntryImagePersisterOld imagePersisterOld,
+			IAggregatedEntryImageUrlFactory thumbPersister,
 			EntryOptionalFields includedFields) {
 			
 			ParamIs.NotNull(() => entry);
@@ -36,9 +36,9 @@ namespace VocaDb.Model.DataContracts.Api {
 				case EntryType.Song:
 					return new EntryForApiContract((Song)entry, languagePreference, includedFields);
 				case EntryType.SongList:
-					return new EntryForApiContract((SongList)entry, imagePersisterOld, includedFields);
+					return new EntryForApiContract((SongList)entry, thumbPersister, includedFields);
 				case EntryType.Tag:
-					return new EntryForApiContract((Tag)entry, languagePreference, imagePersisterOld, includedFields);
+					return new EntryForApiContract((Tag)entry, languagePreference, thumbPersister, includedFields);
 			}
 
 			return new EntryForApiContract(entry, languagePreference, includedFields);
@@ -61,7 +61,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		}
 
-		public EntryForApiContract(Artist artist, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, 
+		public EntryForApiContract(Artist artist, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister, 
 			EntryOptionalFields includedFields)
 			: this(artist, languagePreference, includedFields) {
 
@@ -71,7 +71,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			Status = artist.Status;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && artist.Picture != null) {
-				MainPicture = EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime), thumbPersister);					
+				MainPicture = EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main), thumbPersister);					
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.Names)) {
@@ -88,7 +88,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		}
 
-		public EntryForApiContract(Album album, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, 
+		public EntryForApiContract(Album album, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister, 
 			EntryOptionalFields includedFields)
 			: this(album, languagePreference, includedFields) {
 
@@ -99,7 +99,7 @@ namespace VocaDb.Model.DataContracts.Api {
 			Status = album.Status;
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && album.CoverPictureData != null) {
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime), thumbPersister);					
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister);					
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.Names)) {
@@ -120,7 +120,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		}
 
-		public EntryForApiContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IEntryThumbPersister thumbPersister, 
+		public EntryForApiContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister, 
 			EntryOptionalFields includedFields)
 			: this(releaseEvent, languagePreference, includedFields) {
 
@@ -185,7 +185,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		}
 
-		public EntryForApiContract(SongList songList, IEntryImagePersisterOld thumbPersister, 
+		public EntryForApiContract(SongList songList, IAggregatedEntryImageUrlFactory thumbPersister, 
 			EntryOptionalFields includedFields)
 			: this(songList, ContentLanguagePreference.Default, includedFields) {
 
@@ -199,7 +199,7 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		}
 
-		public EntryForApiContract(Tag tag, ContentLanguagePreference languagePreference, IEntryImagePersisterOld thumbPersister, 
+		public EntryForApiContract(Tag tag, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister, 
 			EntryOptionalFields includedFields)
 			: this(tag, languagePreference, includedFields) {
 

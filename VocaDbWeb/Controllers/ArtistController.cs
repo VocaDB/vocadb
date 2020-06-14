@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -21,6 +21,8 @@ using VocaDb.Web.Helpers;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Web.Code.Security;
+using VocaDb.Model.Domain.Images;
+using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers
 {
@@ -104,9 +106,9 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult RevertToVersion(int archivedArtistVersionId) {
+		public async Task<ActionResult> RevertToVersion(int archivedArtistVersionId) {
 
-			var result = queries.RevertToVersion(archivedArtistVersionId);
+			var result = await queries.RevertToVersion(archivedArtistVersionId);
 
 			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
 
@@ -154,7 +156,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return NoId();
 
-			var artist = Service.GetArtistPicture(id, Size.Empty);
+			var artist = Service.GetArtistPicture(id);
 
 			return Picture(artist);
 
@@ -188,7 +190,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Create(Create model) {
+		public async Task<ActionResult> Create(Create model) {
 
 			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji) && string.IsNullOrWhiteSpace(model.NameEnglish))
 				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
@@ -197,7 +199,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError("Description", ViewRes.Artist.CreateStrings.NeedWebLinkOrDescription);
 
 			var coverPicUpload = Request.Files["pictureUpload"];
-			var pictureData = ParsePicture(coverPicUpload, "Picture");
+			var pictureData = ParsePicture(coverPicUpload, "Picture", ImagePurpose.Main);
 
 			if (!ModelState.IsValid)
 				return View(model);
@@ -207,7 +209,7 @@ namespace VocaDb.Web.Controllers
 
 			ArtistContract artist;
 			try {
-				artist = queries.Create(contract);
+				artist = await queries.Create(contract);
 			} catch (InvalidPictureException) {
 				ModelState.AddModelError("Picture", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
 				return View(model);
@@ -260,7 +262,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			var coverPicUpload = Request.Files["pictureUpload"];
-			var pictureData = ParsePicture(coverPicUpload, "Picture");
+			var pictureData = ParsePicture(coverPicUpload, "Picture", ImagePurpose.Main);
 
 			ParseAdditionalPictures(coverPicUpload, model.Pictures);
 

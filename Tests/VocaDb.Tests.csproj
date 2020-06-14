@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -8,7 +7,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VocaDb.Tests</RootNamespace>
     <AssemblyName>VocaDb.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFramework>net48</TargetFramework>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -17,6 +16,8 @@
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
     <TargetFrameworkProfile />
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <RuntimeIdentifiers>win</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,243 +39,43 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Antlr3.Runtime.3.5.1\lib\net40-client\Antlr3.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="Castle.Core, Version=4.1.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.4.1.1\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Common.Logging.NLog40, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.NLog40.3.3.1\lib\net40\Common.Logging.NLog40.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FluentNHibernate, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentNHibernate.2.1.2\lib\net461\FluentNHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.9.2.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.9.2\lib\Net45\HtmlAgilityPack.dll</HintPath>
-    </Reference>
-    <Reference Include="Iesi.Collections, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Iesi.Collections.4.0.4\lib\net461\Iesi.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Moq, Version=4.7.99.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.7.99\lib\net45\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate, Version=5.2.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHibernate.5.2.1\lib\net461\NHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate.Logging.CommonLogging, Version=4.0.3.4000, Culture=neutral, PublicKeyToken=63d83fd55b02701d, processorArchitecture=MSIL">
-      <HintPath>..\packages\NHibernate.Logging.4.0.3\lib\net45\NHibernate.Logging.CommonLogging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="Remotion.Linq.EagerFetching, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Remotion.Linq.EagerFetching.2.2.0\lib\net45\Remotion.Linq.EagerFetching.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.6\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.6\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.XML" />
-    <Reference Include="System.Xml.Linq" />
-  </ItemGroup>
-  <Choose>
-    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
-  <ItemGroup>
-    <Compile Include="DatabaseTests\DatabaseTestContext.cs" />
-    <Compile Include="DatabaseTests\Queries\EventQueriesDatabaseTests.cs" />
-    <Compile Include="DatabaseTests\Queries\SongQueriesDatabaseTests.cs" />
-    <Compile Include="DatabaseTests\Queries\TagQueriesDatabaseTests.cs" />
-    <Compile Include="DatabaseTests\QueryableExtenders\TagQueryableExtenderDatabaseTests.cs" />
-    <Compile Include="DatabaseTests\Search\SongSearch\SongSearchDatabaseTests.cs" />
-    <Compile Include="DatabaseTests\Search\Tags\TagSearchDatabaseTests.cs" />
-    <Compile Include="DatabaseTests\TestDatabase.cs" />
-    <Compile Include="Database\Queries\CountPerDayContractExtenderTests.cs" />
-    <Compile Include="DataContracts\UseCases\ArtistForEditContractTests.cs" />
-    <Compile Include="Domain\Albums\AlbumTests.cs" />
-    <Compile Include="Domain\Albums\ArtistForAlbumTests.cs" />
-    <Compile Include="Domain\Artists\ArtistStringFactoryTests.cs" />
-    <Compile Include="Domain\Artists\ArtistTests.cs" />
-    <Compile Include="Domain\DateTests.cs" />
-    <Compile Include="Domain\Globalization\EnglishTranslatedStringTests.cs" />
-    <Compile Include="Domain\Globalization\InterfaceLanguageTests.cs" />
-    <Compile Include="Domain\Globalization\NameManagerTests.cs" />
-    <Compile Include="Domain\Globalization\TranslatedStringTests.cs" />
-    <Compile Include="Domain\OptionalDateTimeTests.cs" />
-    <Compile Include="Domain\PVs\PVManagerTests.cs" />
-    <Compile Include="Domain\Security\EntryPermissionManagerTests.cs" />
-    <Compile Include="Domain\Songs\SongTests.cs" />
-    <Compile Include="Domain\Tags\TagManagerTests.cs" />
-    <Compile Include="Domain\Tags\TagTests.cs" />
-    <Compile Include="Domain\Users\FavoriteSongForUserTests.cs" />
-    <Compile Include="Domain\Users\OwnedArtistForUserTests.cs" />
-    <Compile Include="Domain\Users\UserTests.cs" />
-    <Compile Include="Domain\Versioning\ArchivedVersionManagerTests.cs" />
-    <Compile Include="Domain\WebLinkTests.cs" />
-    <Compile Include="Helpers\ArtistHelperTests.cs" />
-    <Compile Include="Helpers\CollectionHelperTests.cs" />
-    <Compile Include="Helpers\ConcurrentEntryEditManagerTests.cs" />
-    <Compile Include="Domain\Images\ImageThumbGeneratorTests.cs" />
-    <Compile Include="Helpers\EnumerableExtenderTests.cs" />
-    <Compile Include="Helpers\LyricsHelperTests.cs" />
-    <Compile Include="Helpers\RelatedSitesHelperTests.cs" />
-    <Compile Include="Helpers\StringExtensionsTests.cs" />
-    <Compile Include="Helpers\StringHelperTests.cs" />
-    <Compile Include="Helpers\XmlHelperTests.cs" />
-    <Compile Include="Service\EntryUrlParserTests.cs" />
-    <Compile Include="Service\ExtSites\AffiliateLinkGeneratorTests.cs" />
-    <Compile Include="Service\Helpers\ArtistExternalUrlParserTests.cs" />
-    <Compile Include="Service\Helpers\FindHelpersTests.cs" />
-    <Compile Include="Service\Helpers\FollowedArtistNotifierTests.cs" />
-    <Compile Include="Service\Helpers\UserCommentNotifierTests.cs" />
-    <Compile Include="Service\Queries\ArtistRelationsQueryTests.cs" />
-    <Compile Include="Service\Queries\TagUsageQueriesTests.cs" />
-    <Compile Include="Service\QueryableExtenders\EntryWithNamesQueryableExtenderTests.cs" />
-    <Compile Include="Service\QueryableExtenders\GenericQueryableExtenderTests.cs" />
-    <Compile Include="Service\Search\Artists\ArtistSearchTests.cs" />
-    <Compile Include="Service\Search\SearchParserTests.cs" />
-    <Compile Include="Service\Search\Tags\TagSearchTests.cs" />
-    <Compile Include="Service\UserServiceTests.cs" />
-    <Compile Include="Service\VideoServices\SoundCloudIdTests.cs" />
-    <Compile Include="Service\VideoServices\VideoServiceFileTests.cs" />
-    <Compile Include="TestData\CreateEntry.cs" />
-    <Compile Include="TestSupport\DatabaseContextAsRepositoryWrapper.cs" />
-    <Compile Include="TestSupport\FakeArtistRepository.cs" />
-    <Compile Include="TestSupport\FakeDiscussionFolderRepository.cs" />
-    <Compile Include="TestSupport\FakeEventRepository.cs" />
-    <Compile Include="TestSupport\FakeFollowedArtistNotifier.cs" />
-    <Compile Include="TestSupport\FakeLanguageDetector.cs" />
-    <Compile Include="TestSupport\FakeObjectCache.cs" />
-    <Compile Include="TestSupport\FakePVParser.cs" />
-    <Compile Include="TestSupport\FakeSongRepository.cs" />
-    <Compile Include="TestSupport\FakeTransaction.cs" />
-    <Compile Include="TestSupport\FakeUserIconFactory.cs" />
-    <Compile Include="TestSupport\FakeUserMessageMailer.cs" />
-    <Compile Include="TestSupport\InMemoryImagePersister.cs" />
-    <Compile Include="TestSupport\QuerySourceList.cs" />
-    <Compile Include="TestSupport\TestCategories.cs" />
-    <Compile Include="TestSupport\TestContainerFactory.cs" />
-    <Compile Include="TestSupport\TestDatabaseFactory.cs" />
-    <Compile Include="TestSupport\VocaDbAssert.cs" />
-    <Compile Include="TestSupport\FakeAlbumRepository.cs" />
-    <Compile Include="TestSupport\FakeAuditLogger.cs" />
-    <Compile Include="TestSupport\FakeEntryLinkFactory.cs" />
-    <Compile Include="TestSupport\FakePermissionContext.cs" />
-    <Compile Include="TestSupport\FakeSongListRepository.cs" />
-    <Compile Include="TestSupport\FakeStopForumSpamClient.cs" />
-    <Compile Include="TestSupport\FakeTagRepository.cs" />
-    <Compile Include="TestSupport\FakeUserMessageRepository.cs" />
-    <Compile Include="TestSupport\FakeUserRepository.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\AlbumImport\KarenTAlbumImporterTests.cs" />
-    <Compile Include="Service\ArtistQueryableExtenderTests.cs" />
-    <Compile Include="Service\BBCode\EntryLinkTransformerTests.cs" />
-    <Compile Include="Service\EntryValidators\SongValidatorTests.cs" />
-    <Compile Include="Service\Helpers\UrlHelperTests.cs" />
-    <Compile Include="Service\Search\AlbumSearch\AlbumSearchTests.cs" />
-    <Compile Include="Service\Search\ReleaseEventSearchTests.cs" />
-    <Compile Include="Service\Search\SongSearch\SongSearchTests.cs" />
-    <Compile Include="Service\TagFormatting\TagFormatterTests.cs" />
-    <Compile Include="Service\VideoServices\NicoHelperTests.cs" />
-    <Compile Include="Service\VideoServices\VideoServiceHelperTests.cs" />
-    <Compile Include="TestSupport\FakeRepository.cs" />
-    <Compile Include="TestSupport\PictureDownloaderStub.cs" />
-    <Compile Include="TestSupport\ResourceHelper.cs" />
-    <Compile Include="Utils\UrlFriendlyNameFactoryTests.cs" />
-    <Compile Include="Web\Code\EntryAnchorFactoryTests.cs" />
-    <Compile Include="Web\Code\MarkdownParserTests.cs" />
-    <Compile Include="Web\Code\TimeAgoStringBuilderTests.cs" />
-    <Compile Include="Web\Controllers\AlbumControllerTests.cs" />
-    <Compile Include="Web\Controllers\ArtistControllerTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\AlbumQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\ArtistQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\DiscussionQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\EntryQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\EventQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\SongListQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\SongQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\TagQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\UserMessageQueriesTests.cs" />
-    <Compile Include="Web\Controllers\DataAccess\UserQueriesTests.cs" />
-    <Compile Include="Web\Controllers\EventControllerTests.cs" />
-    <Compile Include="Web\Controllers\SongControllerTests.cs" />
-    <Compile Include="Web\Controllers\SongListControllerTests.cs" />
-    <Compile Include="Web\Controllers\UserControllerTests.cs" />
-    <Compile Include="Web\Helpers\WebHelperTests.cs" />
+    <PackageReference Include="Antlr3.Runtime" Version="3.5.1" />
+    <PackageReference Include="Autofac" Version="5.0.0" />
+    <PackageReference Include="Castle.Core" Version="4.1.1" />
+    <PackageReference Include="Common.Logging" Version="3.3.1" />
+    <PackageReference Include="Common.Logging.Core" Version="3.3.1" />
+    <PackageReference Include="Common.Logging.NLog40" Version="3.3.1" />
+    <PackageReference Include="FluentAssertions" Version="5.9.0" />
+    <PackageReference Include="FluentNHibernate" Version="2.1.2" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.9.2" />
+    <PackageReference Include="Iesi.Collections" Version="4.0.4" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
+    <PackageReference Include="Microsoft.AspNet.Razor" Version="3.2.6" />
+    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.6" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Microsoft.Web.Infrastructure" Version="1.0.0.0" />
+    <PackageReference Include="Moq" Version="4.7.99" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
+    <PackageReference Include="NHibernate" Version="5.2.7" />
+    <PackageReference Include="NHibernate.Logging" Version="4.0.3" />
+    <PackageReference Include="Remotion.Linq" Version="2.2.0" />
+    <PackageReference Include="Remotion.Linq.EagerFetching" Version="2.2.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.2" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj">
-      <Project>{024d07df-f669-46e9-9514-3ab8094f74ac}</Project>
-      <Name>VocaDb.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VocaDbWeb\VocaDbWeb.csproj">
-      <Project>{543cb31e-8641-44aa-95d4-df0e06d41d02}</Project>
-      <Name>VocaDbWeb</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj" />
+    <ProjectReference Include="..\VocaDbWeb\VocaDbWeb.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TestData\KarenT_SystemindParadox.htm" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mocks\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TestData\yokohma_bay_concert.jpg" />
@@ -290,26 +91,6 @@
   <ItemGroup>
     <EmbeddedResource Include="TestData\vocadb_favicon.png" />
   </ItemGroup>
-  <Choose>
-    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

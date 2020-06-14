@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -21,6 +21,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		string IEntryBase.DefaultName => TranslatedName.Default;
 		string IEntryImageInformation.Mime => PictureMime;
+		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<EventSeriesName> IEntryWithNames<EventSeriesName>.Names => Names;
 
@@ -63,6 +64,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 				events = value;
 			}
 		}
+
+		public virtual bool AllowNotifications => true;
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 

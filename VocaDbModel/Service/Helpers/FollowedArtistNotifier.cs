@@ -1,17 +1,30 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using NHibernate.Exceptions;
 using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Service.Helpers {
 
 	public interface IFollowedArtistNotifier {
-		User[] SendNotifications(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator);
+
+		/// <summary>
+		/// Sends notifications
+		/// </summary>
+		/// <param name="ctx">Repository context. Cannot be null.</param>
+		/// <param name="entry">Entry that was created. Cannot be null.</param>
+		/// <param name="artists">List of artists for the entry. Cannot be null.</param>
+		/// <param name="creator">User who created the entry. The creator will be excluded from all notifications. Cannot be null.</param>
+		Task<IReadOnlyCollection<User>> SendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator);
+
 	}
 
 	/// <summary>
@@ -71,14 +84,18 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
-		/// <summary>
-		/// Sends notifications
-		/// </summary>
-		/// <param name="ctx">Repository context. Cannot be null.</param>
-		/// <param name="entry">Entry that was created. Cannot be null.</param>
-		/// <param name="artists">List of artists for the entry. Cannot be null.</param>
-		/// <param name="creator">User who created the entry. The creator will be excluded from all notifications. Cannot be null.</param>
-		public User[] SendNotifications(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator) {
+		public async Task<IReadOnlyCollection<User>> SendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator) {
+
+			try {
+				return await DoSendNotificationsAsync(ctx, entry, artists, creator);
+			} catch (GenericADOException x) {
+				log.Error(x, "Unable to send notifications");
+				return new User[0];
+			}
+
+		}
+
+		private async Task<IReadOnlyCollection<User>> DoSendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator) {
 
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => entry);
@@ -93,18 +110,18 @@ namespace VocaDb.Model.Service.Helpers {
 			log.Info("Sending notifications for {0} artists", artistIds.Length);
 
 			// Get users with less than maximum number of unread messages, following any of the artists
-			var usersWithArtists = ctx.OfType<ArtistForUser>()
-				.Query()
-				.Where(afu => 
-					artistIds.Contains(afu.Artist.Id) 
-					&& afu.User.Id != creator.Id && afu.User.Active
-					&& afu.SiteNotifications
-					&& afu.User.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < afu.User.Options.UnreadNotificationsToKeep)
+			var usersWithArtistsArr = await ctx.Query<ArtistForUser>()
+				.Where(afu =>
+					artistIds.Contains(afu.Artist.Id)
+					&& afu.User.Id != creator.Id
+					&& afu.SiteNotifications)
 				.Select(afu => new {
-					UserId = afu.User.Id, 
+					UserId = afu.User.Id,
 					ArtistId = afu.Artist.Id
 				})
-				.ToArray()
+				.VdbToListAsync();
+
+			var usersWithArtists = usersWithArtistsArr
 				.GroupBy(afu => afu.UserId)
 				.ToDictionary(afu => afu.Key, afu => afu.Select(a => a.ArtistId));
 
@@ -112,11 +129,17 @@ namespace VocaDb.Model.Service.Helpers {
 
 			log.Debug("Found {0} users subscribed to artists", userIds.Count);
 
-			if (!userIds.Any())
+			if (!userIds.Any()) {
+				log.Info("No users found - skipping.");
 				return new User[0];
+			}
 
 			var entryTypeNames = enumTranslations.Translations<EntryType>();
-			var users = ctx.OfType<User>().Query().Where(u => userIds.Contains(u.Id)).ToArray();
+			var users = await ctx.Query<User>()
+				.WhereIsActive()
+				.WhereIdIn(userIds)
+				.Where(u => u.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < u.Options.UnreadNotificationsToKeep)
+				.VdbToListAsync();
 
 			foreach (var user in users) {
 
@@ -151,16 +174,18 @@ namespace VocaDb.Model.Service.Helpers {
 
 				var notification = new UserMessage(user, title, msg, false);
 				user.Messages.Add(notification);
-				ctx.Save(notification);
+				await ctx.SaveAsync(notification);
 
-				if (user.EmailOptions != UserEmailOptions.NoEmail && !string.IsNullOrEmpty(user.Email) 
+				if (user.EmailOptions != UserEmailOptions.NoEmail && !string.IsNullOrEmpty(user.Email)
 					&& followedArtists.Any(a => a.Users.Any(u => u.User.Equals(user) && u.EmailNotifications))) {
-					
-					mailer.SendEmail(user.Email, user.Name, title, CreateMessageBody(followedArtists, user, entry, false, entryTypeName));
+
+					await mailer.SendEmailAsync(user.Email, user.Name, title, CreateMessageBody(followedArtists, user, entry, false, entryTypeName));
 
 				}
 
 			}
+
+			log.Info($"Sent notifications to {users.Count} users");
 
 			return users;
 

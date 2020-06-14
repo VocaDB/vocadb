@@ -1,14 +1,21 @@
 /* External links */
 .extLink (@linkUrl) {
-	background: @linkUrl no-repeat left 50%;
+	background-image: @linkUrl;
 }
 
 a.extLink {
-	.extLink(url("/Content/Icons/world.png"));
 	padding: 2px 0 2px 20px;
+	background: url("/Content/Icons/world.png");
+	background-repeat: no-repeat;
+	background-position-x: left;
+	background-position-y: 50%;
 
 	&[href^="http://about.me/"], &[href^="https://about.me/"] {
 		.extLink(url("/Content/ExtIcons/aboutme.png"));
+	}
+
+	&[href^="http://ec.akbh.jp/products/detail.php"], &[href^="https://ec.akbh.jp/products/detail.php"] {
+		background-image: url("/Content/ExtIcons/akibahobby.png");
 	}
 
 	&[href^="http://www.amazon.co.jp/"], &[href^="https://www.amazon.co.jp/"], &[href^="http://www.amazon.com/"], &[href^="https://www.amazon.com/"] {
@@ -19,11 +26,11 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/animate.png"));
 	}
 
-	&[href^="http://www5.atwiki.jp/hmiku/"], &[href^="https://www5.atwiki.jp/hmiku/"] {
-		.extLink(url("/Content/ExtIcons/atwiki.png"));
+	&[href^="http://www5.atwiki.jp/hmiku/"], &[href^="https://www5.atwiki.jp/hmiku/"], &[href^="https://w.atwiki.jp/hmiku/"] {
+		background-image: url("/Content/ExtIcons/atwiki.png");
 	}
 
-	&[href^="http://space.bilibili.tv/"], &[href^="http://www.bilibili.tv/"], &[href^="http://space.bilibili.com/"], &[href^="https://space.bilibili.tv/"], &[href^="https://www.bilibili.tv/"], &[href^="https://space.bilibili.com/"] {
+	&[href*=".bilibili.tv/"], &[href*=".bilibili.com/"] {
 		.extLink(url("/Content/ExtIcons/bilibili.png"));
 	}
 
@@ -99,7 +106,7 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/sonicwire.png"));
 	}
 
-	&[href^="https://item.taobao.com"] {
+	&[href*=".taobao.com"] {
 		.extLink(url("/Content/ExtIcons/itemtaobao.png"));
 	}
 
@@ -165,6 +172,26 @@ a.extLink {
 
 	&[href^="https://www.vocaloid.com/"] {
 		.extLink(url("/Content/ExtIcons/vocaloidshop.png"));
+	}
+
+	&[href^="https://zh.moegirl.org/"],
+	&[href^="https://en.moegirl.org/"],
+	&[href^="https://ja.moegirl.org/"] {
+		background-image: url("/Content/ExtIcons/moegirl.png");
+	}
+
+	&[href^="http://music.163.com/"],
+	&[href^="https://music.163.com/"] {
+		background-image: url("/Content/ExtIcons/ncm.png");
+	}
+
+	&[href^="http://5sing.kugou.com/"],
+	&[href^="https://5sing.kugou.com/"] {
+		background-image: url("/Content/ExtIcons/5sing.png");
+	}
+
+	&[href*=".lofter.com/"] {
+		background-image: url("/Content/ExtIcons/lofter.png");
 	}
 }
 
@@ -280,7 +307,7 @@ a.extLink[href*="twitter.com/"] {
 	background: url("/Content/ExtIcons/twitter.png") no-repeat left 50%;
 }
 
-a.extLink[href^="http://www24.atwiki.jp/utauuuta/pages/"], a.extLink[href^="https://www24.atwiki.jp/utauuuta/pages/"] {
+a.extLink[href^="http://www24.atwiki.jp/utauuuta/pages/"], a.extLink[href^="https://www24.atwiki.jp/utauuuta/pages/"], a.extLink[href^="https://w.atwiki.jp/utauuuta/pages/"] {
 	background: url("/Content/ExtIcons/atwiki.png") no-repeat left 50%;
 }
 

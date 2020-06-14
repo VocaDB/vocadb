@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.ExtLinks {
+namespace VocaDb.Model.Domain.ExtLinks
+{
 
 	public class WebLink : IWebLink, IEntryWithIntId {
 
@@ -153,18 +154,6 @@ namespace VocaDb.Model.Domain.ExtLinks {
 		string Description { get; set; }
 
 		string Url { get; set; }
-
-	}
-
-	public enum WebLinkCategory {
-
-		Official,
-
-		Commercial,
-
-		Reference,
-
-		Other
 
 	}
 

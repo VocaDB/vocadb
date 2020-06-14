@@ -15,8 +15,8 @@
 
 	ViewBag.Parents = new[] { Html.ActionLink(SharedRes.Tags, "Index") };
 
-	var smallThumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.SmallThumb);
-	var thumbUrl = Url.EntryImageOld(Model.Thumb, ImageSize.Original);
+	var smallThumbUrl = Url.ImageThumb(Model.Thumb, ImageSize.SmallThumb, useUnknownImage: false);
+	var thumbUrl = Url.ImageThumb(Model.Thumb, ImageSize.Original, useUnknownImage: false);
 
 	var url = PageProperties.CanonicalUrl;
 
@@ -43,11 +43,11 @@
 
 		$(function () {
 
-			var urlMapper = new vdb.UrlMapper('@UrlMapper.HostAddress');
-			var jsonModel = @ToJS(new { Model.Name, Model.Parent, Model.Children, Model.Siblings });
+			var urlMapper = new vdb.UrlMapper('@RootPath');
+			var jsonModel = @ToJS(Model.JsonModel);
 			var vm;
 
-			initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children);
+			initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children, jsonModel.hasMoreSiblings, jsonModel.hasMoreChildren);
 
 			var repo = new vdb.repositories.TagRepository('@RootPath');
 			var userRepo = new vdb.repositories.UserRepository(urlMapper);
@@ -134,7 +134,14 @@
 					@Res.ValidFor: @string.Join(", ", EnumVal<EntryType>.Values.Where(e => e != EntryType.Undefined && Model.Targets.HasFlag((TagTargetTypes)e)))
 				</p>
 			}
-			
+
+			@if (Model.RelatedEntryType.HasValue) {
+				var text = Translate.EntryTypeNames[Model.RelatedEntryType.EntryType] + (Model.RelatedEntryType.HasSubType ? " (" + Translate.EntrySubTypeName(Model.RelatedEntryType) + ")" : "");
+				<p>
+					@Res.AssociatedEntryType: <a href="@Url.EntryIndex(Model.RelatedEntryType)">@text</a>
+				</p>
+			}
+
 			<p>@string.Format(Res.FollowCount, Model.FollowerCount)</p>
 
 			<p>@ViewRes.EntryDetailsStrings.AdditionDate: @Helpers.UniversalTimeLabel(Model.CreateDate)</p>
@@ -142,77 +149,83 @@
 			<br />
 
 			<div>
-				@Html.ActionLink(Res.AllEntries + " (" + (Model.ArtistCount + Model.AlbumCount + Model.SongCount + Model.EventCount) + ")", "Index", "Search", UrlMapper.Search.Entries(tagId: Model.Id), null)
+				@Html.ActionLink(Res.AllEntries + " (" + Model.AllUsageCount + ")", "Index", "Search", UrlMapper.Search.Entries(tagId: Model.Id), null)
 			</div>
 
-			@if (Model.ArtistCount > 0) {
+			@if (Model.Stats.ArtistCount > 0) {
 				<div>
-					@Html.ActionLink(Res.AllArtists + " (" + Model.ArtistCount + ")", "Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id), null)
+					@Html.ActionLink(Res.AllArtists + " (" + Model.Stats.ArtistCount + ")", "Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id), null)
 				</div>
 			}
 
-			@if (Model.AlbumCount > 0) {
+			@if (Model.Stats.AlbumCount > 0) {
 				<div>
-					@Html.ActionLink(Res.AllAlbums + " (" + Model.AlbumCount + ")", "Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id), null)
+					@Html.ActionLink(Res.AllAlbums + " (" + Model.Stats.AlbumCount + ")", "Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id), null)
 				</div>
 			}
 
-			@if (Model.SongCount > 0) {
+			@if (Model.Stats.SongCount > 0) {
 				<div>
-					@Html.ActionLink(Res.AllSongs + " (" + Model.SongCount + ")", "Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id), null)
+					@Html.ActionLink(Res.AllSongs + " (" + Model.Stats.SongCount + ")", "Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id), null)
 				</div>
 			}
 			
-			@if (Model.EventCount > 0) {
+			@if (Model.Stats.EventCount > 0) {
 				<div>
-					@Html.ActionLink(Res.AllEvents + " (" + Model.EventCount + ")", "Index", "Search", UrlMapper.Search.Events(tagId: Model.Id), null)
+					@Html.ActionLink(Res.AllEvents + " (" + Model.Stats.EventCount + ")", "Index", "Search", UrlMapper.Search.Events(tagId: Model.Id), null)
+				</div>
+			}
+
+			@if (Model.Stats.SongListCount > 0) {
+				<div>
+					@Html.ActionLink(Res.AllSongLists + " (" + Model.Stats.SongListCount + ")", "Featured", "SongList", new { tagId = Model.Id }, null)
 				</div>
 			}
 		</div>
 	</div>
 </div>
 
-@if (Model.Artists.Any()) {
+@if (Model.Stats.Artists.Any()) {
 	<div class="well well-transparent">
 		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id)))
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id))">
 				@Res.TopArtists
-				<small>(@Model.ArtistCount @SharedRes.Total)</small>
+				<small>(@Model.Stats.ArtistCount @SharedRes.Total)</small>
 			</a>
 		</h3>
-		@ArtistHelpers.ArtistGrid(Model.Artists.Select(a => a), 2, true)
+		@ArtistHelpers.ArtistGrid(Model.Stats.Artists.Select(a => a), 2, true)
 	</div>
 }
 
-@if (Model.Albums.Any()) {
+@if (Model.Stats.Albums.Any()) {
 	<div class="well well-transparent">
 		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id)))
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id))">
 				@Res.TopAlbums
-				<small>(@Model.AlbumCount @SharedRes.Total)</small>
+				<small>(@Model.Stats.AlbumCount @SharedRes.Total)</small>
 			</a>
 		</h3>
-		@AlbumHelpers.AlbumGrid(Model.Albums.Select(a => a), 2, false, false, true)
+		@AlbumHelpers.AlbumGrid(Model.Stats.Albums.Select(a => a), 2, false, false, true)
 	</div>
 }
 
-@if (Model.Songs.Any()) {
+@if (Model.Stats.Songs.Any()) {
 	<div class="well well-transparent">
 		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id)))
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id))">
 				@Res.TopSongs
-				<small>(@Model.SongCount @SharedRes.Total)</small>
+				<small>(@Model.Stats.SongCount @SharedRes.Total)</small>
 			</a>
 		</h3>
-		@SongHelpers.SongGrid(Model.Songs.Select(s => s), 2, true)
+		@SongHelpers.SongGrid(Model.Stats.Songs.Select(s => s), 2, true)
 	</div>
 }
 
 
-@if (Model.EventSeries.Any()) {
+@if (Model.Stats.EventSeries.Any()) {
 	<div class="well well-transparent">
 		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id)))
 		<h3>
@@ -220,20 +233,20 @@
 				@Res.EventSeries
 			</a>
 		</h3>
-		@Helpers.EventSeriesThumbs(Model.EventSeries)
+		@Helpers.EventSeriesThumbs(Model.Stats.EventSeries)
 	</div>
 }
 
-@if (Model.Events.Any()) {
+@if (Model.Stats.Events.Any()) {
 	<div class="well well-transparent">
 		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id)))
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))">
 				@Res.TopEvents
-				<small>(@Model.EventCount @SharedRes.Total)</small>
+				<small>(@Model.Stats.EventCount @SharedRes.Total)</small>
 			</a>
 		</h3>
-		@Helpers.EventThumbs(Model.Events, ImageSize.TinyThumb)
+		@Helpers.EventThumbs(Model.Stats.Events, ImageSize.TinyThumb)
 	</div>
 }
 

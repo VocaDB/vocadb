@@ -21,6 +21,7 @@ using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Event;
 using VocaDb.Web.Models.Shared;
+using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers
 {
@@ -29,19 +30,28 @@ namespace VocaDb.Web.Controllers
 		
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IEntryThumbPersister thumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 		private readonly EventQueries queries;
 		private readonly ReleaseEventService service;
 
 		private ReleaseEventService Service => service;
 
 	    public EventController(EventQueries queries, ReleaseEventService service, IEnumTranslations enumTranslations, IEntryLinkFactory entryLinkFactory,
-			IEntryThumbPersister thumbPersister) {
+			IAggregatedEntryImageUrlFactory thumbPersister) {
 			this.queries = queries;
 			this.service = service;
 			this.enumTranslations = enumTranslations;
 			this.entryLinkFactory = entryLinkFactory;
 			this.thumbPersister = thumbPersister;
+		}
+
+		public ActionResult ArchivedSeriesVersionXml(int id) {
+
+			var doc = queries.GetSeriesVersionXml(id);
+			var contract = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
+
+			return Xml(contract);
+
 		}
 
 	    public ActionResult ArchivedVersionXml(int id) {
@@ -89,7 +99,7 @@ namespace VocaDb.Web.Controllers
 		}
 
         [Authorize]
-        public ActionResult Edit(int? id, int? seriesId)
+        public ActionResult Edit(int? id, int? seriesId, int? venueId)
         {
 
 			if (id != null) {
@@ -97,7 +107,10 @@ namespace VocaDb.Web.Controllers
 			}
 
 			var model = (id != null ? new EventEdit(queries.GetEventForEdit(id.Value), PermissionContext) 
-				: new EventEdit(seriesId != null ? Service.GetReleaseEventSeriesForEdit(seriesId.Value) : null, PermissionContext));
+				: new EventEdit(
+					seriesId.HasValue ? Service.GetReleaseEventSeriesForEdit(seriesId.Value) : null,
+					venueId.HasValue ? service.GetVenueForEdit(venueId.Value) : null,
+					PermissionContext));
 
 			return View(model);
 
@@ -105,7 +118,7 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
         [Authorize]
-        public ActionResult Edit(EventEdit model, HttpPostedFileBase pictureUpload = null) {
+        public async Task<ActionResult> Edit(EventEdit model, HttpPostedFileBase pictureUpload = null) {
 
 	        ActionResult RenderEdit() {
 
@@ -132,7 +145,7 @@ namespace VocaDb.Web.Controllers
 				return RenderEdit();
 			}
 
-	        var pictureData = ParsePicture(pictureUpload, "pictureUpload");
+	        var pictureData = ParsePicture(pictureUpload, "pictureUpload", ImagePurpose.Main);
 
 			if (!ModelState.IsValid) {
 				return RenderEdit();
@@ -141,7 +154,7 @@ namespace VocaDb.Web.Controllers
 			int id;
 
 	        try {
-				id = queries.Update(model.ToContract(), pictureData).Id;
+				id = (await queries.Update(model.ToContract(), pictureData)).Id;
 	        } catch (DuplicateEventNameException x) {
 		        ModelState.AddModelError("Names", x.Message);
 		        return RenderEdit();
@@ -182,7 +195,7 @@ namespace VocaDb.Web.Controllers
 				return RenderEdit();
 			}
 
-			var pictureData = ParsePicture(pictureUpload, "Picture");
+			var pictureData = ParsePicture(pictureUpload, "Picture", ImagePurpose.Main);
 
 	        int id;
 	        try {
@@ -209,6 +222,13 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		public ActionResult EventsByVenue() {
+
+			var events = queries.GetReleaseEventsByVenue();
+			return View(events);
+
+		}
+
         //
         // GET: /Event/
 
@@ -223,7 +243,7 @@ namespace VocaDb.Web.Controllers
 
 			var events = queries.Find(e =>
 				new ReleaseEventForApiContract(e, PermissionContext.LanguagePreference, 
-					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series, thumbPersister),
+					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue, thumbPersister),
 				queryParams);
 
 			return View(events.Items);
@@ -315,6 +335,14 @@ namespace VocaDb.Web.Controllers
 			var contract = Service.GetReleaseEventSeriesWithArchivedVersions(id);
 
 			return View(new Versions<ReleaseEventSeriesContract>(contract, enumTranslations));
+
+		}
+
+		public ActionResult ViewSeriesVersion(int id, int? ComparedVersionId) {
+
+			var contract = queries.GetSeriesVersionDetails(id, ComparedVersionId ?? 0);
+
+			return View(new ViewVersion<ArchivedEventSeriesVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
 
 		}
 

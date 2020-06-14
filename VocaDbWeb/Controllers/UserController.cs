@@ -34,6 +34,8 @@ using VocaDb.Web.Models;
 using VocaDb.Web.Models.User;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Code.Exceptions;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers
 {
@@ -194,9 +196,10 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult ForgotPassword(ForgotPassword model) {
+		public async Task<ActionResult> ForgotPassword(ForgotPassword model) {
 
-			if (!ReCaptcha2.Validate(Request, AppConfig.ReCAPTCHAKey).Success)
+			var captchaResult = await ReCaptcha2.ValidateAsync(Request, AppConfig.ReCAPTCHAKey);
+			if (!captchaResult.Success)
 				ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
 
 			if (!ModelState.IsValid) {
@@ -204,7 +207,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			try {
-				Data.RequestPasswordReset(model.Username, model.Email, AppConfig.HostAddress + Url.Action("ResetPassword", "User"));
+				await Data.RequestPasswordReset(model.Username, model.Email, AppConfig.HostAddress + Url.Action("ResetPassword", "User"));
 			} catch (UserNotFoundException) {}
 
 			TempData.SetStatusMessage(ViewRes.User.ForgotPasswordStrings.MessageSent);
@@ -374,6 +377,8 @@ namespace VocaDb.Web.Controllers
 			var targetUrl = Url.Action("LoginTwitterComplete", new { returnUrl });
 			var uri = new Uri(new Uri(AppConfig.HostAddress), targetUrl);
 
+			SslHelper.ForceStrongTLS();
+
 			UserAuthorizationRequest request;
 
 			try {
@@ -501,7 +506,7 @@ namespace VocaDb.Web.Controllers
         // POST: /User/Create
 
         [HttpPost]
-        public ActionResult Create(RegisterModel model) {
+        public async Task<ActionResult> Create(RegisterModel model) {
 
 			string restrictedErr = "Sorry, access from your host is restricted. It is possible this restriction is no longer valid. If you think this is the case, please contact support.";
 
@@ -515,7 +520,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError(string.Empty, "Signups are disabled");
 			}
 
-			var recaptchaResult = ReCaptcha2.Validate(Request, AppConfig.ReCAPTCHAKey);
+			var recaptchaResult = await ReCaptcha2.ValidateAsync(Request, AppConfig.ReCAPTCHAKey);
 			if (!recaptchaResult.Success) {
 
 				ErrorLogger.LogMessage(Request, string.Format("Invalid CAPTCHA (error {0})", recaptchaResult.Error), LogLevel.Warn);
@@ -539,33 +544,29 @@ namespace VocaDb.Web.Controllers
 	        try {
 
 				var url = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User")).ToString();
-				var user = Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname, 
+				var user = await Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname,
+					Request.UserAgent,
 					WebHelper.GetInterfaceCultureName(Request),
-					time, ipRuleManager.TempBannedIPs, url);
+					time, ipRuleManager, url);
 				FormsAuthentication.SetAuthCookie(user.Name, false);
 		        return RedirectToAction("Index", "Home");
 
 	        } catch (UserNameAlreadyExistsException) {
-
 		        ModelState.AddModelError("UserName", ViewRes.User.CreateStrings.UsernameTaken);
 		        return View(model);
-
 	        } catch (UserEmailAlreadyExistsException) {
-
 				ModelState.AddModelError("Email", ViewRes.User.CreateStrings.EmailTaken);
-				return View(model);
-      
+				return View(model);   
 	        } catch (InvalidEmailFormatException) {
-
 				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
 				return View(model);
-
 	        } catch (TooFastRegistrationException) {
-
 				ModelState.AddModelError("Restricted", restrictedErr);
 				return View(model);
-
-	        }
+	        } catch (RestrictedIPException) {
+				ModelState.AddModelError("Restricted", restrictedErr);
+				return View(model);
+			}
 
         }
 
@@ -720,10 +721,10 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public void RequestEmailVerification() {
+		public async Task RequestEmailVerification() {
 			
 			var url = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User"));
-			Data.RequestEmailVerification(LoggedUserId, url.ToString());
+			await Data.RequestEmailVerification(LoggedUserId, url.ToString());
 
 		}
 

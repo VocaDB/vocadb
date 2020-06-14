@@ -39,6 +39,8 @@ namespace VocaDb.Model.Domain.Images {
 		}
 
 		public override string GetPath(IEntryImageInformation picture, ImageSize size) {
+			if (string.IsNullOrEmpty(staticRoot))
+				return string.Empty;
 			var relative = string.Format(@"img\{0}\main{1}\{2}{3}", picture.EntryType, GetDir(size), picture.Id, ImageHelper.GetExtensionFromMime(picture.Mime));
 			return Path.Combine(staticRoot, relative);
 		}
@@ -49,10 +51,16 @@ namespace VocaDb.Model.Domain.Images {
 
 		}
 
-		public override string GetUrlAbsolute(IEntryImageInformation picture, ImageSize size) {
-			return VocaUriBuilder.StaticResource(GetRelativeUrl(picture, size));
+		public override VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size) {
+			return new VocaDbUrl(GetRelativeUrl(picture, size), UrlDomain.Static, UriKind.Relative);
 		}
 
+		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) {
+			return picture.EntryType == EntryType.ReleaseEvent || picture.EntryType == EntryType.ReleaseEventSeries
+				|| ((picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album) 
+					&& picture.PurposeMainOrUnspecified()
+					&& size != ImageSize.Original);
+		}
 	}
 
 }

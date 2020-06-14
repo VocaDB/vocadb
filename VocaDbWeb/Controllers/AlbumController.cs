@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web.Mvc;
@@ -25,6 +25,8 @@ using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
+using VocaDb.Model.Domain.Images;
+using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers
 {
@@ -164,7 +166,7 @@ namespace VocaDb.Web.Controllers
 
         }
 
-		public ActionResult DownloadTags(int id = invalidId, string formatString = "", bool setFormatString = false, bool includeHeader = false) {
+		public ActionResult DownloadTags(int id = invalidId, string formatString = "", int? discNumber = null, bool setFormatString = false, bool includeHeader = false) {
 
 			if (id == invalidId)
 				return NoId();
@@ -176,10 +178,10 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (string.IsNullOrEmpty(formatString))
-				formatString = TagFormatter.TagFormatStrings[0];
+				formatString = AlbumSongFormatter.TagFormatStrings[0];
 
 			var album = Service.GetAlbum(id);
-			var tagString = Service.GetAlbumTagString(id, formatString, includeHeader);
+			var tagString = Service.GetAlbumTagString(id, formatString, discNumber, includeHeader);
 
 			var enc = new UTF8Encoding(true);
 			var data = enc.GetPreamble().Concat(enc.GetBytes(tagString)).ToArray();
@@ -194,7 +196,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return HttpNotFound();
 
-			var album = Service.GetCoverPicture(id, Size.Empty);
+			var album = Service.GetCoverPicture(id);
 
 			return Picture(album);
 
@@ -218,7 +220,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Create(Create model) {
+		public async Task<ActionResult> Create(Create model) {
 
 			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji) 
 				&& string.IsNullOrWhiteSpace(model.NameEnglish))
@@ -232,7 +234,7 @@ namespace VocaDb.Web.Controllers
 
 			var contract = model.ToContract();
 
-			var album = queries.Create(contract);
+			var album = await queries.Create(contract);
 			return RedirectToAction("Edit", new { id = album.Id });
 
 		}
@@ -253,7 +255,7 @@ namespace VocaDb.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(AlbumEditViewModel viewModel)
+        public async Task<ActionResult> Edit(AlbumEditViewModel viewModel)
         {
 
 			// Unable to continue if viewmodel is null because we need the ID at least
@@ -279,7 +281,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError("ReleaseYear", "Invalid date");
 
 			var coverPicUpload = Request.Files["coverPicUpload"];
-			var pictureData = ParsePicture(coverPicUpload, "CoverPicture");
+			var pictureData = ParsePicture(coverPicUpload, "CoverPicture", ImagePurpose.Main);
 
 			if (coverPicUpload == null) {
 				AddFormSubmissionError("Cover picture was null");
@@ -298,7 +300,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			try {
-				queries.UpdateBasicProperties(model, pictureData);				
+				await queries.UpdateBasicProperties(model, pictureData);				
 			} catch (InvalidPictureException) {
 				ModelState.AddModelError("ImageError", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
 				return View(CreateAlbumEditViewModel(model.Id, model));

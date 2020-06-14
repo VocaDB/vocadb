@@ -18,7 +18,7 @@
 	} else {
 		var categoryName = Translate.SongListFeaturedCategoryNames[Model.SongList.FeaturedCategory];
 		ViewBag.Parents = new[] {
-			Html.ActionLink(categoryName, "Featured", "SongList")
+			Html.ActionLink(categoryName, "Featured", "SongList", null, null, Model.SongList.FeaturedCategory.ToString(), null, null)
 		};
 	}
 
@@ -37,7 +37,7 @@
 }
 
 @section Toolbar {
-	@if (Model.SongList.CanEdit) {
+	@if (Model.CanEdit) {
 		@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.SongList.Id }, new { id = "editListLink" })
 		@:
 		@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.SongList.Id }, new { id = "viewVersions" })
@@ -70,6 +70,15 @@
 		@if (!string.IsNullOrWhiteSpace(Model.SongList.Description)) {
 			@Html.Raw(descriptionHtml)
 		}
+	
+		<p>
+			<div class="inline-block">@ViewRes.SharedStrings.Tags:</div>
+			<div data-bind="with: tagUsages" class="entry-tag-usages inline-block">
+				@{ Html.RenderPartial("Partials/_TagList"); }
+			</div>
+			<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>	
+		</p>
+
 		@if (Model.SongList.Events.Any()) {
 			<p>
 				<h4>@Res.Events</h4>				
@@ -79,12 +88,16 @@
 						<a href="@Url.EntryDetails(ev, ev.UrlSlug)">
 							@ev.Name
 						</a>
-						@if (ev.Date.HasValue && !string.IsNullOrEmpty(ev.VenueName)) {
-							<small>(@ev.Date.Value.ToString("d"), @ev.VenueName)</small>
-						} else if (ev.Date.HasValue) {
-							<small>(@ev.Date.Value.ToString("d"))</small>
-						} else if (!string.IsNullOrEmpty(ev.VenueName)) {
-							<small>(@ev.VenueName)</small>
+						@if (ev.Date.HasValue) {
+							if (ev.HasVenueOrVenueName) {
+								<small>(@ev.Date.Value.ToString("d"), @EventHelpers.VenueLinkOrVenueName(ev))</small>
+							} else {
+								<small>(@ev.Date.Value.ToString("d"))</small>
+							}
+						} else {
+							if (ev.HasVenueOrVenueName) {
+								<small>(@EventHelpers.VenueLinkOrVenueName(ev))</small>
+							}
 						}
 					</li>
 				}
@@ -170,7 +183,7 @@
 			<tr>
 				<td style="width: 75px">
 					<a data-bind="visible: song.thumbUrl, attr: { href: vdb.utils.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#">
-						<img data-bind="attr: { src: song.thumbUrl }" title="Cover picture" class="coverPicThumb img-rounded" />
+						<img data-bind="attr: { src: song.thumbUrl }" title="Cover picture" class="coverPicThumb img-rounded" referrerpolicy="same-origin" />
 					</a>
 				</td>
 				<td>
@@ -231,6 +244,10 @@
 
 @CommentHelpers.LatestCommentsKnockout()
 
+<div data-bind="with: tagsEditViewModel">
+	@{ Html.RenderPartial("Partials/_TagsEdit"); }
+</div>
+
 @section BodyScripts {
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
@@ -260,9 +277,23 @@
 			var pvPlayersFactory = new vdb.viewModels.pvs.PVPlayersFactory(pvPlayerElem);
 			var latestComments = @ToJS(Model.SongList.LatestComments);
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+			var tagUsages = @ToJS(Model.SongList.Tags);
 
-			var vm = new vdb.viewModels.songList.SongListViewModel(urlMapper, songListRepo, songRepo, userRepo, artistRepo,
-				resourceRepo, defaultSortRuleName, latestComments, @UserContext.LoggedUserId, languageSelection, cultureCode, listId, pvPlayersFactory,
+			var vm = new vdb.viewModels.songList.SongListViewModel(
+				urlMapper,
+				songListRepo,
+				songRepo,
+				userRepo,
+				artistRepo,
+				resourceRepo,
+				defaultSortRuleName,
+				latestComments,
+				@UserContext.LoggedUserId,
+				languageSelection,
+				cultureCode,
+				listId,
+				tagUsages,
+				pvPlayersFactory,
 				canDeleteAllComments);
 			ko.applyBindings(vm);
 

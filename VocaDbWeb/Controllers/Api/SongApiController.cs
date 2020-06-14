@@ -257,9 +257,12 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Filtered song types (optional). 
 		/// Possible values are Original, Remaster, Remix, Cover, Instrumental, Mashup, MusicPV, DramaPV, Other.
 		/// </param>
+		/// <param name="afterDate">Filter by songs published after this date (inclusive).</param>
+		/// <param name="beforeDate">Filter by songs published before this date (exclusive).</param>
 		/// <param name="tagName">Filter by one or more tag names (optional).</param>
 		/// <param name="tagId">Filter by one or more tag Ids (optional).</param>
 		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
+		/// <param name="unifyTypesAndTags">When searching by song type, search by associated tag as well, and vice versa.</param>
 		/// <param name="artistId">Filter by artist Id.</param>
 		/// <param name="artistParticipationStatus">
 		/// Filter by artist participation status. Only valid if artistId is specified.
@@ -275,6 +278,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="minScore">Minimum rating score. Optional.</param>
 		/// <param name="userCollectionId">Filter by user's rated songs. By default there is no filtering.</param>
 		/// <param name="releaseEventId">Filter by release event. By default there is no filtering.</param>
+		/// <param name="parentSongId">Filter by parent song. By default there is no filtering.</param>
 		/// <param name="status">Filter by entry status (optional).</param>
 		/// <param name="advancedFilters">List of advanced filters (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
@@ -298,9 +302,12 @@ namespace VocaDb.Web.Controllers.Api {
 		public PartialFindResult<SongForApiContract> GetList(
 			string query = "", 
 			string songTypes = null,
+			DateTime? afterDate = null,
+			DateTime? beforeDate = null,
 			[FromUri] string[] tagName = null,
 			[FromUri] int[] tagId = null,
 			bool childTags = false,
+			bool unifyTypesAndTags = false,
 			[FromUri] int[] artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
@@ -311,6 +318,7 @@ namespace VocaDb.Web.Controllers.Api {
 			int? minScore = null,
 			int? userCollectionId = null,
 			int? releaseEventId = null,
+			int? parentSongId = null,
 			EntryStatus? status = null,
 			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
@@ -330,15 +338,19 @@ namespace VocaDb.Web.Controllers.Api {
 					ChildVoicebanks = childVoicebanks,
 					IncludeMembers = includeMembers
 				},
+                AfterDate = afterDate,
+                BeforeDate = beforeDate,
 				TagIds = tagId,
 				Tags = tagName, 
 				ChildTags = childTags,
+				UnifyEntryTypesAndTags = unifyTypesAndTags,
 				OnlyWithPVs = onlyWithPvs,
 				TimeFilter = since.HasValue ? TimeSpan.FromHours(since.Value) : TimeSpan.Zero,
 				MinScore = minScore ?? 0,
 				PVServices = pvServices,
 				UserCollectionId = userCollectionId ?? 0,
 				ReleaseEventId = releaseEventId ?? 0,
+				ParentSongId = parentSongId ?? 0,
 				AdvancedFilters = advancedFilters,
 				LanguagePreference = lang
 			};
@@ -478,6 +490,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 					if (!startDate.HasValue) {
 						startDate = DateTime.Now - timeSpan;
+						endDate = DateTime.Now.AddDays(1);
 					} else {
 						endDate = startDate + timeSpan;
 					}
@@ -579,25 +592,25 @@ namespace VocaDb.Web.Controllers.Api {
 		[System.Web.Http.Route("{id:int}/pvs")]
 		[System.Web.Http.Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public void PostPVs(int id, PVContract[] pvs) {
+		public async Task PostPVs(int id, PVContract[] pvs) {
 
-			queries.HandleTransaction(ctx => {
+			await queries.HandleTransaction(async ctx => {
 
-				var song = ctx.Load(id);
+				var song = await ctx.LoadAsync(id);
 
 				EntryPermissionManager.VerifyEdit(userPermissionContext, song);
 
 				var diff = new SongDiff();
 
-				var pvDiff = queries.UpdatePVs(ctx, song, diff, pvs);
+				var pvDiff = await queries.UpdatePVs(ctx, song, diff, pvs);
 
 				if (pvDiff.Changed) {
 
 					var logStr = string.Format("updated PVs for song {0}", entryLinkFactory.CreateEntryLink(song)).Truncate(400);
 
-					queries.Archive(ctx, song, diff, SongArchiveReason.PropertiesUpdated, string.Empty);
-					ctx.Update(song);
-					ctx.AuditLogger.AuditLog(logStr);
+					await queries.ArchiveAsync(ctx, song, diff, SongArchiveReason.PropertiesUpdated, string.Empty);
+					await ctx.UpdateAsync(song);
+					await ctx.AuditLogger.AuditLogAsync(logStr);
 
 				}
 

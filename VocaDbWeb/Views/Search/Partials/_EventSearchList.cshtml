@@ -20,6 +20,9 @@
 				<span class="sortDirection_down" data-bind="visible: sort() == 'Name'"></span>
 			</a>
 		</th>
+		<th data-bind="if: $parent.showTags">
+			@SharedRes.Tags
+		</th>
 		<th>
 			<a data-bind="click: function() { sort('Date') }" href="#">
 				@EventRes.OccurrenceDate
@@ -32,13 +35,19 @@
 				<span class="sortDirection_down" data-bind="visible: sort() == 'SeriesName'"></span>
 			</a>
 		</th>
+		<th>
+			<a data-bind="click: function() { sort('VenueName') }" href="#">
+				@EventRes.Venue
+				<span class="sortDirection_down" data-bind="visible: sort() == 'VenueName'"></span>
+			</a>
+		</th>
 	</tr>
 	</thead>
 	<tbody data-bind="foreach: page">
 	<tr>
 		<td style="width: 80px">
 			<a data-bind="visible: $data.mainPicture && mainPicture.urlSmallThumb, attr: { href: vdb.utils.EntryUrlMapper.details(@((int)EntryType.ReleaseEvent), id, $data.urlSlug), title: $data.additionalNames }" href="#">
-				<img data-bind="attr: { src: ($data.mainPicture ? mainPicture.urlSmallThumb : '') }" title="Cover picture" class="coverPicThumb img-rounded" />
+				<img data-bind="attr: { src: ($data.mainPicture ? mainPicture.urlSmallThumb : '') }" title="Cover picture" class="coverPicThumb img-rounded" referrerpolicy="same-origin" />
 			</a>			
 		</td>
 		<td>
@@ -49,11 +58,23 @@
 			<br />
 			<small class="extraInfo" data-bind="text: $parent.getCategoryName($data)"></small>
 		</td>
+		<td data-bind="if: $parents[1].showTags() && $data.tags" class="search-tags-column">
+			<div data-bind="visible: tags.length">
+				<i class="icon icon-tags"></i>
+				<!-- ko foreach: tags -->
+				<a href="#" data-bind="text: tag.name, click: function() { $parents[1].selectTag(tag); return false; }"></a><span data-bind="visible: $data != _.last($parent.tags)">,</span>
+				<!-- /ko -->
+			</div>
+		</td>
 		<td>
 			<span data-bind="visible: $data.date, text: $parent.formatDate($data.date)"></span>
 		</td>
 		<td>
 			<a data-bind="visible: $data.series, text: $data.series ? series.name : null, attr: { href: vdb.utils.EntryUrlMapper.details(@((int)EntryType.ReleaseEventSeries), $data.seriesId, $data.series ? series.urlSlug : null) }"></a>
+		</td>
+		<td>
+			<a data-bind="visible: $data.venue, text: $data.venue ? venue.name : null, attr: { href: vdb.utils.EntryUrlMapper.details(@((int)EntryType.Venue), $data.venue ? $data.venue.id : null) }"></a>
+			<span data-bind="visible: !$data.venue && $data.venueName, text: $data.venueName"></span>
 		</td>
 	</tr>
 	</tbody>

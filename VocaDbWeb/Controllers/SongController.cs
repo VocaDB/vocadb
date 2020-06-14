@@ -199,6 +199,8 @@ namespace VocaDb.Web.Controllers
 			}
 
 		}
+
+		private int InstrumentalTagId => queries.HandleQuery(ctx => new EntryTypeTags(ctx).Instrumental);
        
         //
         // GET: /Song/Edit/5 
@@ -209,7 +211,7 @@ namespace VocaDb.Web.Controllers
 			CheckConcurrentEdit(EntryType.Song, id);
 
 			var model = Service.GetSong(id, song => new SongEditViewModel(new SongContract(song, PermissionContext.LanguagePreference, false), 
-				PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), albumId: albumId));
+				PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), InstrumentalTagId, albumId: albumId));
 
 			return View(model);
 
@@ -219,7 +221,7 @@ namespace VocaDb.Web.Controllers
         // POST: /Song/Edit/5
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(SongEditViewModel viewModel)
+        public async Task<ActionResult> Edit(SongEditViewModel viewModel)
         {
 
 			// Unable to continue if viewmodel is null because we need the ID at least
@@ -247,10 +249,10 @@ namespace VocaDb.Web.Controllers
 
 			if (!ModelState.IsValid) {
 				return View(Service.GetSong(model.Id, song => new SongEditViewModel(new SongContract(song, PermissionContext.LanguagePreference, false), 
-					PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), model)));
+					PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), InstrumentalTagId, model)));
 			}
 
-			queries.UpdateBasicProperties(model);
+			await queries.UpdateBasicProperties(model);
 
 			return RedirectToAction("Details", new { id = model.Id, albumId = viewModel.AlbumId });
 

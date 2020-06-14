@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using NHibernate;
 using NLog;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Database.Repositories.NHibernate {
@@ -120,7 +121,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 
 	}
 
-	public abstract class NHibernateRepository<T> : IRepository<T> {
+	public abstract class NHibernateRepository<T> : IRepository<T> where T : class, IDatabaseObject {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		public IUserPermissionContext PermissionContext { get; private set; }

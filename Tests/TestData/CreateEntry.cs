@@ -18,8 +18,8 @@ namespace VocaDb.Tests.TestData {
 
 	public static class CreateEntry {
 
-		public static Album Album(int id = 0, string name = "Synthesis") {
-			return new Album(new LocalizedString(name, ContentLanguageSelection.Unspecified)) { Id = id };
+		public static Album Album(int id = 0, string name = "Synthesis", string coverPictureMime = null) {
+			return new Album(new LocalizedString(name, ContentLanguageSelection.Unspecified)) { Id = id, CoverPictureMime = coverPictureMime };
 		}
 
 		public static AlbumDiscProperties AlbumDisc(Album album, int id = 0, string name = "") {
@@ -77,8 +77,11 @@ namespace VocaDb.Tests.TestData {
 
 		}
 
-		public static Tag Tag(string name, int id = 0) {
-			return new Tag(name) { Id = id };
+		public static Tag Tag(string name, int id = 0, string pictureMime = "") {
+			var tag = new Tag(name) { Id = id };
+			if (!string.IsNullOrEmpty(pictureMime))
+				tag.Thumb = new Model.Domain.EntryThumbMain(tag, pictureMime);
+			return tag;
 		}
 
 		public static (ICollection<Tag> tags, ICollection<TUsage> usages, ICollection<TagVote> votes) TagUsages<TUsage>(IEntryWithTags[] songs, string[] tagNames, User user, ITagUsageFactory<TUsage> usageFactory) where TUsage: TagUsage {

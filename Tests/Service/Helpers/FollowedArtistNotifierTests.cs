@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -28,15 +30,16 @@ namespace VocaDb.Tests.Service.Helpers {
 		private User user;
 		private Artist vocalist;
 
-		private void CallSendNotifications(IUser creator) {
+		private Task CallSendNotifications(IUser creator) {
 
-			repository.HandleTransaction(ctx => {
-				new FollowedArtistNotifier(entryLinkFactory, mailer, new EnumTranslations(), new EntrySubTypeNameFactory()).SendNotifications(ctx, album, new[] { producer, vocalist }, creator);
+			return repository.HandleTransactionAsync(ctx => {
+				return new FollowedArtistNotifier(entryLinkFactory, mailer, new EnumTranslations(), new EntrySubTypeNameFactory())
+					.SendNotificationsAsync(ctx, album, new[] { producer, vocalist }, creator);
 			});
 
 		}
 
-		private T Save<T>(T entry) {
+		private T Save<T>(T entry) where T : class, IDatabaseObject {
 			return repository.Save(entry);
 		}
 
@@ -58,10 +61,10 @@ namespace VocaDb.Tests.Service.Helpers {
 		}
 
 		[TestMethod]
-		public void SendNotifications() {
+		public async Task SendNotifications() {
 			
 
-			CallSendNotifications(creator);
+			await CallSendNotifications(creator);
 
 			var notification = repository.List<UserMessage>().FirstOrDefault();
 
@@ -72,12 +75,12 @@ namespace VocaDb.Tests.Service.Helpers {
 		}
 
 		[TestMethod]
-		public void SendNotifications_Email() {
+		public async Task SendNotifications_Email() {
 			
 			user.Email = "miku@vocadb.net";
 			user.AllArtists.First().EmailNotifications = true;
 
-			CallSendNotifications(creator);
+			await CallSendNotifications(creator);
 
 			Assert.IsNotNull(mailer.Body, "Body");
 			Assert.AreEqual(user.Name, mailer.ReceiverName, "ReceiverName");
@@ -86,30 +89,30 @@ namespace VocaDb.Tests.Service.Helpers {
 		}
 
 		[TestMethod]
-		public void SendNotifications_SameUser() {
+		public async Task SendNotifications_SameUser() {
 
-			CallSendNotifications(user);
+			await CallSendNotifications(user);
 
 			Assert.IsFalse(repository.List<UserMessage>().Any(), "No notification created");
 
 		}
 
 		[TestMethod]
-		public void SendNotifications_DisabledUser() {
+		public async Task SendNotifications_DisabledUser() {
 
 			user.Active = false;
-			CallSendNotifications(creator);
+			await CallSendNotifications(creator);
 
 			Assert.IsFalse(repository.List<UserMessage>().Any(), "No notification created");
 
 		}
 
 		[TestMethod]
-		public void SendNotifications_MultipleFollowedArtists() {
+		public async Task SendNotifications_MultipleFollowedArtists() {
 
 			Save(user.AddArtist(vocalist));
 
-			CallSendNotifications(creator);
+			await CallSendNotifications(creator);
 
 			var notification = repository.List<UserMessage>().FirstOrDefault();
 
@@ -120,13 +123,13 @@ namespace VocaDb.Tests.Service.Helpers {
 
 		// User has too many unread notifications
 		[TestMethod]	
-		public void TooManyUnreadMessages() {
+		public async Task TooManyUnreadMessages() {
 
 			for (int i = 0; i < 10; ++i) {
 				user.ReceivedMessages.Add(repository.Save(new UserMessage(user, "New message!", i.ToString(), false)));
 			}
 
-			CallSendNotifications(creator);
+			await CallSendNotifications(creator);
 
 			Assert.AreEqual(10, repository.List<UserMessage>().Count, "No notification created");
 			Assert.IsTrue(repository.List<UserMessage>().All(m => m.Subject == "New message!"), "No notification created");
@@ -135,7 +138,7 @@ namespace VocaDb.Tests.Service.Helpers {
 
 		// Too many messages limit only counts notifications
 		[TestMethod]
-		public void OnlyCountNotifications() {
+		public async Task OnlyCountNotifications() {
 
 			// Not counted since the messages are not notifications
 			for (int i = 0; i < 5; ++i) {
@@ -145,7 +148,7 @@ namespace VocaDb.Tests.Service.Helpers {
 
 			Assert.AreEqual(10, repository.List<UserMessage>().Count, "Number of messages before sending");
 
-			CallSendNotifications(creator);
+			await CallSendNotifications(creator);
 
 			Assert.AreEqual(11, repository.List<UserMessage>().Count, "Number of messages after sending");
 

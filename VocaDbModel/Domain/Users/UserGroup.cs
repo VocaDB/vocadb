@@ -18,6 +18,7 @@ namespace VocaDb.Model.Domain.Users {
 			PermissionToken.CreateComments, 
 			PermissionToken.ManageDatabase,
 			PermissionToken.EditTags,  
+			PermissionToken.ReportUser,
 			PermissionToken.ManageEventSeries
 		);
 
@@ -50,6 +51,7 @@ namespace VocaDb.Model.Domain.Users {
 			PermissionToken.MoveToTrash, 
 			PermissionToken.RestoreRevisions, 
 			PermissionToken.ViewAuditLog,
+			PermissionToken.ViewHiddenRatings,
 			PermissionToken.UploadMedia
 		);
 

@@ -1,0 +1,57 @@
+﻿@using VocaDb.Web.Helpers;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.Venues.ArchivedVenueVersionDetailsContract>>
+
+@{
+
+	PageProperties.Title = "Revision " + Model.Entry.ArchivedVersion.Version + " for " + Model.Entry.Name;
+	
+	if (Model.Entry.Venue != null) {
+		ViewBag.Parents = new[] {
+			Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenue", "Event"),
+			Html.ActionLink(Model.Entry.Venue.Name, "Details", new { id = Model.Entry.Venue.Id }),
+			Html.ActionLink("Revisions", "Versions", new { id = Model.Entry.Venue.Id })
+		};
+	} else {
+		ViewBag.Parents = new[] {
+			Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenue", "Event"),
+		};
+	}
+
+}
+
+@section Toolbar {
+	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
+}
+
+@if (Model.Entry.ComparableVersions.Any()) {
+	using (Html.BeginForm("ViewVersion", "Venue", FormMethod.Post, new { @class = "form form-inline" })) {
+		@:Compare to: @Html.DropDownListFor(m => m.ComparedVersionId, ViewHelper.CreateSelectList(Model.Entry.ComparableVersions, i => i.Id, i => i.Version + " (" + i.TranslateChangedFields(Model.EnumTranslations) + " by " + i.AgentName + ")", Model.Entry.ComparedVersionId), new { @class = "input-xlarge", onchange = "$(this).closest('form').submit();" })
+		<button type="submit" class="btn btn-primary">Compare</button>
+	}
+}
+
+@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Model.Version(Model.Entry.ArchivedVersion), 
+	Model.Version(Model.Entry.ComparedVersion))
+
+@VenueHelpers.PrintArchivedVenueData(Model.Entry.Versions)
+
+@EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
+
+@section BodyScripts {
+	<script src="@Url.Content("~/Scripts/Repositories/VenueRepository.js")"></script>
+	<script src="@Url.Content("~/Scripts/ViewModels/ArchivedEntryViewModel.js")"></script>
+	<script type="text/javascript">
+
+		$(function () {
+
+			$("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
+			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
+
+			var rep = new vdb.repositories.VenueRepository(new vdb.UrlMapper('@RootPath'));
+			var viewModel = new vdb.viewModels.ArchivedEntryViewModel(@Model.Entry.Venue.Id, @Model.Entry.ArchivedVersion.Version, rep);
+			ko.applyBindings(viewModel);
+
+		});
+
+	</script>
+}
