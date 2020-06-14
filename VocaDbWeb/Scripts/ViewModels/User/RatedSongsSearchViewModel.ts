@@ -15,13 +15,13 @@ import SongApiContract from '../../DataContracts/Song/SongApiContract';
 import SongListBaseContract from '../../DataContracts/SongListBaseContract';
 import SongRepository from '../../Repositories/SongRepository';
 import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
-import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 import TagFilter from '../Search/TagFilter';
 import TagFilters from '../Search/TagFilters';
 import TagRepository from '../../Repositories/TagRepository';
 import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
+import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 
 	export default class RatedSongsSearchViewModel {
 		
