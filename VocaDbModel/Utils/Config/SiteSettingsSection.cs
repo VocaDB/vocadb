@@ -61,6 +61,12 @@ namespace VocaDb.Model.Utils.Config {
 			set => this["signupsDisabled"] = value;
 		}
 
+		[ConfigurationProperty("siteName", DefaultValue = null)]
+		public string SiteName => (string)this["siteName"];
+
+		[ConfigurationProperty("siteTitle", DefaultValue = null)]
+		public string SiteTitle => (string)this["siteTitle"];
+
 		[ConfigurationProperty("sitewideAnnouncement", DefaultValue = "")]
 		public string SitewideAnnouncement {
 			get => (string)this["sitewideAnnouncement"];
