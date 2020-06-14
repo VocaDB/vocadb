@@ -50,6 +50,7 @@ namespace VocaDb.Web.Controllers
 		private readonly VdbConfigManager config;
 		private UserQueries Data { get; set; }
 		private readonly IPRuleManager ipRuleManager;
+		private readonly LoginManager loginManager;
 		private readonly MarkdownParser markdownParser;
 		private readonly UserMessageQueries messageQueries;
 		private readonly OtherService otherService;
@@ -76,7 +77,8 @@ namespace VocaDb.Web.Controllers
 
 		public UserController(UserService service, UserQueries data, ArtistService artistService, ArtistQueries artistQueries, OtherService otherService, 
 			IRepository repository,
-			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config, MarkdownParser markdownParser) {
+			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config, MarkdownParser markdownParser,
+			LoginManager loginManager) {
 
 			Service = service;
 			Data = data;
@@ -88,6 +90,7 @@ namespace VocaDb.Web.Controllers
 			this.ipRuleManager = ipRuleManager;
 			this.config = config;
 			this.markdownParser = markdownParser;
+			this.loginManager = loginManager;
 
 		}
 
@@ -198,7 +201,7 @@ namespace VocaDb.Web.Controllers
 		[HttpPost]
 		public async Task<ActionResult> ForgotPassword(ForgotPassword model) {
 
-			var captchaResult = await ReCaptcha2.ValidateAsync(Request, AppConfig.ReCAPTCHAKey);
+			var captchaResult = await ReCaptcha2.ValidateAsync(new HttpRequest(Request), AppConfig.ReCAPTCHAKey);
 			if (!captchaResult.Success)
 				ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
 
@@ -520,7 +523,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError(string.Empty, "Signups are disabled");
 			}
 
-			var recaptchaResult = await ReCaptcha2.ValidateAsync(Request, AppConfig.ReCAPTCHAKey);
+			var recaptchaResult = await ReCaptcha2.ValidateAsync(new HttpRequest(Request), AppConfig.ReCAPTCHAKey);
 			if (!recaptchaResult.Success) {
 
 				ErrorLogger.LogMessage(Request, string.Format("Invalid CAPTCHA (error {0})", recaptchaResult.Error), LogLevel.Warn);
@@ -679,7 +682,7 @@ namespace VocaDb.Web.Controllers
 
 			try {
 				newUser = Data.UpdateUserSettings(contract);
-				LoginManager.SetLoggedUser(newUser);
+				loginManager.SetLoggedUser(newUser);
 				PermissionContext.LanguagePreferenceSetting.Value = model.DefaultLanguageSelection;
 			} catch (InvalidPasswordException x) {
 				ModelState.AddModelError("OldPass", x.Message);
