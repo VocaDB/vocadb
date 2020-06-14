@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using NLog;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.BrandableStrings.Collections;
 using VocaDb.Model.Utils;
+using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Service.BrandableStrings {
 
@@ -48,7 +50,9 @@ namespace VocaDb.Model.Service.BrandableStrings {
 
 		}
 
-		public BrandableStringsManager() {
+		public BrandableStringsManager(VdbConfigManager config) {
+
+			this.config = config;
 
 			if (!LoadBrandedStrings()) {
 				Album = new AlbumStrings(Resources.Views.AlbumRes.ResourceManager);				
@@ -61,6 +65,8 @@ namespace VocaDb.Model.Service.BrandableStrings {
 
 		}
 
+		private readonly VdbConfigManager config;
+
 		public AlbumStrings Album { get; private set; }
 
 		public ArtistStrings Artist { get; private set; }
@@ -72,6 +78,9 @@ namespace VocaDb.Model.Service.BrandableStrings {
 		public SongStrings Song { get; private set; }
 
 		public UserStrings User { get; private set; }
+
+		public string SiteName => config.SiteSettings.SiteName.EmptyToNull() ?? Layout.SiteName;
+		public string SiteTitle => config.SiteSettings.SiteTitle.EmptyToNull() ?? Layout.SiteTitle;
 
 	}
 }
