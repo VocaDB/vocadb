@@ -18,7 +18,7 @@ namespace VocaDb.Web {
 
 		private readonly HttpRequestBase request;
 
-		public IReadOnlyDictionary<string, ICookie> Cookies => request.Cookies.Cast<HttpCookie>().ToDictionary(c => c.Name, c => (ICookie)new ReadOnlyCookie(c.Value));
+		public IReadOnlyDictionary<string, ICookie> Cookies => request.Cookies.AllKeys.ToDictionary(c => c, c => (ICookie)new ReadOnlyCookie(request.Cookies[c].Value));
 		public NameValueCollection Form => request.Form;
 		public NameValueCollection Params => request.Params;
 		public NameValueCollection QueryString => request.QueryString;
