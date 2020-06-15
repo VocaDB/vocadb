@@ -275,7 +275,7 @@ namespace VocaDb.Web.Controllers
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "File too large");
 			}
 
-			var pv = new LocalFileManager().CreatePVContract(file, User.Identity, PermissionContext.LoggedUser);
+			var pv = new LocalFileManager().CreatePVContract(new AspNetHttpPostedFile(file), User.Identity, PermissionContext.LoggedUser);
 
 			return LowercaseJson(pv);
 

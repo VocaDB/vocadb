@@ -1,9 +1,8 @@
-using System;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using System.Web;
 using NLog;
+using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Model.Helpers {
 
@@ -13,7 +12,7 @@ namespace VocaDb.Model.Helpers {
 		private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 		private const string VerifyApi = "https://www.google.com/recaptcha/api/siteverify";
 
-		public static async Task<ValidateCaptchaResponse> ValidateAsync(HttpRequestBase request, string privateKey) {
+		public static async Task<ValidateCaptchaResponse> ValidateAsync(IHttpRequest request, string privateKey) {
 			
 			var userResponse = request.Form[ResponseFieldName];
 

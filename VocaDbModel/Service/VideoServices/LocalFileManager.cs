@@ -1,14 +1,15 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Security.Principal;
-using System.Web;
 using NLog;
 using TagLib;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 using File = System.IO.File;
@@ -33,7 +34,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			return imageExtensions.Contains(ext);
 		}
 
-		public PVContract CreatePVContract(HttpPostedFileBase file, IIdentity user, IUser loggedInUser) {
+		public PVContract CreatePVContract(IHttpPostedFile file, IIdentity user, IUser loggedInUser) {
 
 			var tempFile = Path.ChangeExtension(Path.GetTempFileName(), ImageHelper.GetExtensionFromMime(file.ContentType));
 			file.SaveAs(tempFile);
@@ -99,9 +100,10 @@ namespace VocaDb.Model.Service.VideoServices {
 					File.Move(oldFull, newFull);
 
 					// Remove copied permissions, reset to inherited http://stackoverflow.com/a/2930969
-					var fs = File.GetAccessControl(newFull);
+					var newFullFileInfo = new FileInfo(newFull);
+					var fs = newFullFileInfo.GetAccessControl();
 					fs.SetAccessRuleProtection(false, false);
-					File.SetAccessControl(newFull, fs);
+					newFullFileInfo.SetAccessControl(fs);
 
 					CreateThumbnail(newFull, newId, pv);
 
