@@ -1,6 +1,8 @@
 packages/
 VocaDbWeb/bin/
 VocaDbWeb/obj/
+VocaDbWeb.Core/bin/
+VocaDbWeb.Core/obj/
 Tests/bin/
 Tests/obj/
 VocaDb.UtaiteDbResources/obj/
