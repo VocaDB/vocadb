@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace VocaDbWeb.Core
+namespace VocaDb.Web
 {
     public class Program
     {

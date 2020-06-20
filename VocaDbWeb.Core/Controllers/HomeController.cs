@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using VocaDbWeb.Core.Models;
+using VocaDb.Web.Models;
 
-namespace VocaDbWeb.Core.Controllers
+namespace VocaDb.Web.Controllers
 {
     public class HomeController : Controller
     {

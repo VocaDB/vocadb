@@ -1,6 +1,6 @@
 using System;
 
-namespace VocaDbWeb.Core.Models
+namespace VocaDb.Web.Models
 {
     public class ErrorViewModel
     {
