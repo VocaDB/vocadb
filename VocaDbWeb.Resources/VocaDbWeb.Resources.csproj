@@ -550,128 +550,159 @@
 
   <ItemGroup>
     <EmbeddedResource Update="App_GlobalResources\AlbumArchiveReasonNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumArchiveReasonNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\AlbumCollectionStatusNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumCollectionStatusNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\AlbumEditableFieldNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumEditableFieldNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\AlbumMediaTypeNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumMediaTypeNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\Albums\AlbumDiscMediaTypeNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumDiscMediaTypeNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\Albums\AlbumSortRuleNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumSortRuleNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\Albums\DiscTypeDescriptions.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DiscTypeDescriptions.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\ArtistArchiveReasonNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArtistArchiveReasonNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\ArtistEditableFieldNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArtistEditableFieldNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\ArtistRoleNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArtistRoleNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\Artists\ArtistSortRuleNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArtistSortRuleNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\CommonMessages.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CommonMessages.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\ContentLanguageSelectionNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ContentLanguageSelectionNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\EntryEditEventNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryEditEventNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\EntryStatusNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EntryStatusNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\PermissionTokenNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PermissionTokenNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\PVTypeDescriptions.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PVTypeDescriptions.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\PVTypeNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PVTypeNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\ReleaseEventEditableFieldNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ReleaseEventEditableFieldNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\SongArchiveReasonNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SongArchiveReasonNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\SongEditableFieldNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SongEditableFieldNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\SongListFeaturedCategoryNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SongListFeaturedCategoryNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\Songs\SongListEditableFieldNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SongListEditableFieldNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\Songs\SongSortRuleNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SongSortRuleNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\Songs\SongVoteRatingNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SongVoteRatingNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\TagEditableFieldNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TagEditableFieldNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\UserEmailOptionsNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UserEmailOptionsNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\UserGroupNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UserGroupNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\Users\RatedSongForUserSortRuleNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RatedSongForUserSortRuleNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\VenueEditableFieldNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>VenueEditableFieldNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\WebLinkCategoryNames.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>WebLinkCategoryNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Ajax\AlbumStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -696,7 +727,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Controllers\TagControllerStrings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TagControllerStrings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
