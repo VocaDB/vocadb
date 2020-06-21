@@ -5,4 +5,1076 @@
     <RootNamespace>VocaDb.Web</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Update="App_GlobalResources\AlbumArchiveReasonNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AlbumArchiveReasonNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\AlbumCollectionStatusNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AlbumCollectionStatusNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\AlbumEditableFieldNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AlbumEditableFieldNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\AlbumMediaTypeNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AlbumMediaTypeNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\Albums\AlbumDiscMediaTypeNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AlbumDiscMediaTypeNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\Albums\AlbumSortRuleNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AlbumSortRuleNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\Albums\DiscTypeDescriptions.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DiscTypeDescriptions.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\ArtistArchiveReasonNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ArtistArchiveReasonNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\ArtistEditableFieldNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ArtistEditableFieldNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\ArtistRoleNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ArtistRoleNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\Artists\ArtistSortRuleNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ArtistSortRuleNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\CommonMessages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CommonMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\ContentLanguageSelectionNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ContentLanguageSelectionNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\EntryEditEventNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntryEditEventNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\EntryStatusNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntryStatusNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\PermissionTokenNames.designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PermissionTokenNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\PVTypeDescriptions.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PVTypeDescriptions.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\PVTypeNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PVTypeNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\ReleaseEventEditableFieldNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ReleaseEventEditableFieldNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\SongArchiveReasonNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SongArchiveReasonNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\SongEditableFieldNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SongEditableFieldNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\SongListFeaturedCategoryNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SongListFeaturedCategoryNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\Songs\SongListEditableFieldNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SongListEditableFieldNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\Songs\SongSortRuleNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SongSortRuleNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\Songs\SongVoteRatingNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SongVoteRatingNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\TagEditableFieldNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TagEditableFieldNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\UserEmailOptionsNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UserEmailOptionsNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\UserGroupNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UserGroupNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\Users\RatedSongForUserSortRuleNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RatedSongForUserSortRuleNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\VenueEditableFieldNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>VenueEditableFieldNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="App_GlobalResources\WebLinkCategoryNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>WebLinkCategoryNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Ajax\AlbumStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AlbumStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Ajax\EntryIndexStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntryIndexStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Ajax\SharedStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SharedStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Ajax\SongStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SongStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Controllers\TagControllerStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TagControllerStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Domain\Artists\ArtistLinkTypeNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ArtistLinkTypeNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Domain\EntryReportTypeNames.designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntryReportTypeNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Domain\EntryTypeNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntryTypeNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Domain\Globalization\InterfaceLanguageStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>InterfaceLanguageStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Domain\Globalization\TranslationTypeNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TranslationTypeNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Domain\ReleaseEvents\ArtistEventRoleNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ArtistEventRoleNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Domain\ReleaseEvents\EventCategoryNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EventCategoryNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Domain\ReleaseEvents\EventSortRuleNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EventSortRuleNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Domain\ReleaseEvents\ReleaseEventSeriesEditableFieldNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ReleaseEventSeriesEditableFieldNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Domain\Users\UserLanguageProficiencyNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UserLanguageProficiencyNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Helpers\ActivityFeedHelperStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ActivityFeedHelperStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Helpers\AlbumHelpersStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AlbumHelpersStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Helpers\HelperStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>HelperStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Helpers\SongHelpersStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SongHelpersStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Other\PagedListStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PagedListStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\ActivityEntry\IndexStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IndexStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Album\ArtistForAlbumEditRowStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ArtistForAlbumEditRowStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Album\CreateStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CreateStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Album\DetailsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DetailsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Album\EditStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EditStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Album\TopRatedStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TopRatedStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Artist\CreateStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CreateStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Artist\DetailsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DetailsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Artist\EditStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EditStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Comment\IndexStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IndexStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Discussion\IndexStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IndexStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Event\DetailsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DetailsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Event\EventsBySeriesStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EventsBySeriesStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Event\FindStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FindStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Event\SeriesDetailsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SeriesDetailsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Home\IndexStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IndexStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Search\IndexStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IndexStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\ArchivedObjectVersionsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ArchivedObjectVersionsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\DiscussionContentStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DiscussionContentStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\EntryCreateStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntryCreateStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\EntryDetailsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntryDetailsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\EntryEditStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntryEditStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\EntryIndexStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntryIndexStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\EntryMergeStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntryMergeStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\MiscStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MiscStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\Partials\EnglishTranslatedStringStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EnglishTranslatedStringStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\Partials\PlayListStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PlayListStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\SharedStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SharedStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\TagSelectionsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TagSelectionsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\TimeStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TimeStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\TopBarStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TopBarStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\_LayoutStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>_LayoutStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\SongList\DetailsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DetailsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\SongList\EditStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EditStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\SongList\FeaturedStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FeaturedStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\SongList\ImportStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ImportStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\SongList\SongListSortRuleNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SongListSortRuleNames.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Song\CreateStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CreateStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Song\DetailsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DetailsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Song\EditStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EditStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Song\RankingsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RankingsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Tag\DetailsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DetailsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Tag\EditStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EditStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\User\AlbumCollectionStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AlbumCollectionStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\User\CreateStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CreateStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\User\DetailsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DetailsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\User\FavoriteSongsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FavoriteSongsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\User\ForgotPasswordStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ForgotPasswordStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\User\IndexStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IndexStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\User\LoginStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LoginStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\User\LoginUsingAuthStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LoginUsingAuthStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\User\MessagesStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MessagesStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\User\MySettingsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MySettingsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\User\RatedSongsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RatedSongsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\User\RequestVerificationStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RequestVerificationStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Venue\DetailsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DetailsStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Venue\EditStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EditStrings.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="App_GlobalResources\AlbumArchiveReasonNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumArchiveReasonNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\AlbumCollectionStatusNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumCollectionStatusNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\AlbumEditableFieldNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumEditableFieldNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\AlbumMediaTypeNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumMediaTypeNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\Albums\AlbumDiscMediaTypeNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumDiscMediaTypeNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\Albums\AlbumSortRuleNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>AlbumSortRuleNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\Albums\DiscTypeDescriptions.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>DiscTypeDescriptions.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\ArtistArchiveReasonNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ArtistArchiveReasonNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\ArtistEditableFieldNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ArtistEditableFieldNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\ArtistRoleNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ArtistRoleNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\Artists\ArtistSortRuleNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ArtistSortRuleNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\CommonMessages.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>CommonMessages.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\ContentLanguageSelectionNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ContentLanguageSelectionNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\EntryEditEventNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EntryEditEventNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\EntryStatusNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>EntryStatusNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\PermissionTokenNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PermissionTokenNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\PVTypeDescriptions.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PVTypeDescriptions.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\PVTypeNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>PVTypeNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\ReleaseEventEditableFieldNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ReleaseEventEditableFieldNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\SongArchiveReasonNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongArchiveReasonNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\SongEditableFieldNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongEditableFieldNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\SongListFeaturedCategoryNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongListFeaturedCategoryNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\Songs\SongListEditableFieldNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongListEditableFieldNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\Songs\SongSortRuleNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongSortRuleNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\Songs\SongVoteRatingNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SongVoteRatingNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\TagEditableFieldNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>TagEditableFieldNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\UserEmailOptionsNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UserEmailOptionsNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\UserGroupNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>UserGroupNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\Users\RatedSongForUserSortRuleNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RatedSongForUserSortRuleNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\VenueEditableFieldNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>VenueEditableFieldNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\WebLinkCategoryNames.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>WebLinkCategoryNames.designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Ajax\AlbumStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AlbumStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>AjaxRes</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Ajax\EntryIndexStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EntryIndexStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>AjaxRes</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Ajax\SharedStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>AjaxRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Ajax\SongStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SongStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>AjaxRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Controllers\TagControllerStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TagControllerStrings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Domain\Artists\ArtistLinkTypeNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArtistLinkTypeNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Domain\EntryReportTypeNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EntryReportTypeNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Domain\EntryTypeNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EntryTypeNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Domain\Globalization\InterfaceLanguageStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InterfaceLanguageStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Domain\Globalization\TranslationTypeNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TranslationTypeNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Domain\ReleaseEvents\ArtistEventRoleNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArtistEventRoleNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Domain\ReleaseEvents\EventCategoryNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EventCategoryNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Domain\ReleaseEvents\EventSortRuleNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EventSortRuleNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Domain\ReleaseEvents\ReleaseEventSeriesEditableFieldNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ReleaseEventSeriesEditableFieldNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Domain\Users\UserLanguageProficiencyNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UserLanguageProficiencyNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Helpers\ActivityFeedHelperStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ActivityFeedHelperStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>HelperRes</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Helpers\AlbumHelpersStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AlbumHelpersStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>HelperRes</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Helpers\HelperStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HelperStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>HelperRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Helpers\SongHelpersStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SongHelpersStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>HelperRes</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Other\PagedListStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PagedListStrings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\ActivityEntry\IndexStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndexStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Album\ArtistForAlbumEditRowStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArtistForAlbumEditRowStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Album</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Album\CreateStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CreateStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Album</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Album\DetailsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Album</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Album\EditStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Album</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Album\TopRatedStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TopRatedStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Album</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Artist\CreateStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CreateStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Artist</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Artist\DetailsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Artist</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Artist\EditStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Artist</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Comment\IndexStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndexStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Comment</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Discussion\IndexStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndexStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Discussion</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Event\DetailsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Event</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Event\EventsBySeriesStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EventsBySeriesStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Event</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Event\FindStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FindStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Event</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Event\SeriesDetailsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SeriesDetailsStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Home\IndexStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndexStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Home</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Search\IndexStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndexStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Search</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\ArchivedObjectVersionsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArchivedObjectVersionsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\DiscussionContentStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DiscussionContentStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\EntryCreateStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EntryCreateStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\EntryDetailsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EntryDetailsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\EntryEditStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EntryEditStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\EntryIndexStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EntryIndexStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\EntryMergeStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EntryMergeStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\MiscStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MiscStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\Partials\EnglishTranslatedStringStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EnglishTranslatedStringStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\Partials\PlayListStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PlayListStrings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\SharedStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\TagSelectionsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TagSelectionsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\TimeStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TimeStrings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\TopBarStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TopBarStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\_LayoutStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>_LayoutStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\SongList\DetailsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.SongList</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\SongList\EditStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.SongList</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\SongList\FeaturedStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FeaturedStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.SongList</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\SongList\ImportStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ImportStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\SongList\SongListSortRuleNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SongListSortRuleNames.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Song\CreateStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CreateStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Song</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Song\DetailsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Song</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Song\EditStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Song</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Song\RankingsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RankingsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Song</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Tag\DetailsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Tag</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Tag\EditStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\AlbumCollectionStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AlbumCollectionStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\CreateStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CreateStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\DetailsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\FavoriteSongsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FavoriteSongsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\ForgotPasswordStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ForgotPasswordStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\IndexStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndexStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\LoginStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LoginStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\LoginUsingAuthStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LoginUsingAuthStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\MessagesStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MessagesStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\MySettingsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MySettingsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\RatedSongsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RatedSongsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\RequestVerificationStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RequestVerificationStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Venue\DetailsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Venue</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Venue\EditStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.Venue</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

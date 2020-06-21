@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AllAlbums" xml:space="preserve">
+    <value>All albums</value>
+  </data>
+  <data name="AllSongs" xml:space="preserve">
+    <value>All songs</value>
+  </data>
+  <data name="ArtistDetails" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="ArtistPicture" xml:space="preserve">
+    <value>Artist picture</value>
+  </data>
+  <data name="AverageAlbumRating" xml:space="preserve">
+    <value>(average album rating is {0}).</value>
+  </data>
+  <data name="BaseVoicebank" xml:space="preserve">
+    <value>Base voicebank</value>
+  </data>
+  <data name="CharacterDesigner" xml:space="preserve">
+    <value>Character designer</value>
+  </data>
+  <data name="CharacterDesignerOf" xml:space="preserve">
+    <value>Designer of</value>
+  </data>
+  <data name="ChildVoicebanks" xml:space="preserve">
+    <value>Derived voicebanks</value>
+  </data>
+  <data name="CollaborationAlbums" xml:space="preserve">
+    <value>Collaborations</value>
+  </data>
+  <data name="Customize" xml:space="preserve">
+    <value>Customize</value>
+  </data>
+  <data name="CustomizeSubscriptionTitle" xml:space="preserve">
+    <value>Customize subscription</value>
+  </data>
+  <data name="Follow" xml:space="preserve">
+    <value>Follow</value>
+  </data>
+  <data name="FollowCount" xml:space="preserve">
+    <value>Followed by {0} user(s).</value>
+  </data>
+  <data name="Groups" xml:space="preserve">
+    <value>Groups and labels</value>
+  </data>
+  <data name="GroupsHelp" xml:space="preserve">
+    <value>Circles, labels and other groups</value>
+  </data>
+  <data name="Illustrator" xml:space="preserve">
+    <value>Illustrated by</value>
+  </data>
+  <data name="IllustratorOf" xml:space="preserve">
+    <value>Illustrator of</value>
+  </data>
+  <data name="MainAlbums" xml:space="preserve">
+    <value>Main albums</value>
+  </data>
+  <data name="ManagedBy" xml:space="preserve">
+    <value>Managed by</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Members</value>
+  </data>
+  <data name="MostlyUses" xml:space="preserve">
+    <value>Mostly uses:</value>
+  </data>
+  <data name="RatedAlbums" xml:space="preserve">
+    <value>{0} rated album(s)</value>
+  </data>
+  <data name="RatedSongs" xml:space="preserve">
+    <value>{0} rated song(s).</value>
+  </data>
+  <data name="RatedSongsTotal" xml:space="preserve">
+    <value>{0} rated songs total</value>
+  </data>
+  <data name="RecentAlbums" xml:space="preserve">
+    <value>Recent albums</value>
+  </data>
+  <data name="RecentEvents" xml:space="preserve">
+    <value>Recent events</value>
+  </data>
+  <data name="RecentSongs" xml:space="preserve">
+    <value>Recent songs / PVs</value>
+  </data>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>Release date</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="SongsPerMonth" xml:space="preserve">
+    <value>Songs per month</value>
+  </data>
+  <data name="SubscriptionEmail" xml:space="preserve">
+    <value>Notify me both on-site and by email.</value>
+  </data>
+  <data name="SubscriptionNoNotification" xml:space="preserve">
+    <value>No notifications.</value>
+  </data>
+  <data name="SubscriptionOnSite" xml:space="preserve">
+    <value>Notify me on-site.</value>
+  </data>
+  <data name="SubscriptionOptions" xml:space="preserve">
+    <value>Notifications for new songs and albums.</value>
+  </data>
+  <data name="TopAlbums" xml:space="preserve">
+    <value>Popular albums</value>
+  </data>
+  <data name="TopSongs" xml:space="preserve">
+    <value>Popular songs</value>
+  </data>
+  <data name="Unfollow" xml:space="preserve">
+    <value>Unfollow</value>
+  </data>
+  <data name="ViewModeDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="ViewModePlayList" xml:space="preserve">
+    <value>Playlist</value>
+  </data>
+  <data name="ViewModeTiles" xml:space="preserve">
+    <value>Tiles</value>
+  </data>
+  <data name="VoiceProvider" xml:space="preserve">
+    <value>Voice provider</value>
+  </data>
+  <data name="VoiceProviderOf" xml:space="preserve">
+    <value>Voice provider of</value>
+  </data>
+  <data name="YouHaveRatedSongs" xml:space="preserve">
+    <value>You have rated {0} song(s) by this artist.</value>
+  </data>
+</root>
