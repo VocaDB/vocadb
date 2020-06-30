@@ -9,7 +9,10 @@
 	var br = BrandableStrings.Home;
 }
 
-<h1 class="page-title">@br.Welcome <small>@br.WelcomeSubtitle</small></h1>
+<h1 class="page-title home-title">
+	@br.Welcome
+	<small>@br.WelcomeSubtitle</small>
+</h1>
 
 @if (Model.NewSongs.Any()) {
 <h3 class="withMargin">@Res.RecentSongs (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null))</h3>
