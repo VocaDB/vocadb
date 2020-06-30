@@ -131,6 +131,9 @@ body {
   margin-bottom: 10px;
   font-size: 24px;
 }
+.home-title small {
+  display: block;
+}
 .pre-line {
   white-space: pre-line;
 }
