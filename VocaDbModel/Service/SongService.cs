@@ -397,7 +397,7 @@ namespace VocaDb.Model.Service {
 			return HandleQuery(session =>
 				new ArchivedSongVersionDetailsContract(session.Load<ArchivedSongVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedSongVersion>(comparedVersionId) : null, 
-					PermissionContext.LanguagePreference));
+					PermissionContext));
 
 		}
 

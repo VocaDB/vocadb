@@ -578,7 +578,7 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(session =>
 				new ArchivedTagVersionDetailsContract(session.Load<ArchivedTagVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedTagVersion>(comparedVersionId) : null,
-					PermissionContext.LanguagePreference));
+					PermissionContext));
 
 		}
 

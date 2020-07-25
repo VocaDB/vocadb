@@ -1,6 +1,6 @@
 using System.Linq;
 using VocaDb.Model.DataContracts.Versioning;
-using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags {
@@ -9,18 +9,18 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public ArchivedTagVersionDetailsContract() { }
 
-		public ArchivedTagVersionDetailsContract(ArchivedTagVersion archived, ArchivedTagVersion comparedVersion, ContentLanguagePreference languagePreference) {
+		public ArchivedTagVersionDetailsContract(ArchivedTagVersion archived, ArchivedTagVersion comparedVersion, IUserPermissionContext permissionContext) {
 
 			ParamIs.NotNull(() => archived);
 
 			ArchivedVersion = new ArchivedTagVersionContract(archived);
 			ComparedVersion = comparedVersion != null ? new ArchivedTagVersionContract(comparedVersion) : null;
 			ComparedVersionId = comparedVersion != null ? comparedVersion.Id : 0;
-			Tag = new TagContract(archived.Tag, languagePreference);
+			Tag = new TagContract(archived.Tag, permissionContext.LanguagePreference);
 			Name = Tag.Name;
 
 			ComparableVersions = archived.Tag.ArchivedVersionsManager
-				.GetPreviousVersions(archived)
+				.GetPreviousVersions(archived, permissionContext)
 				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields.Value, a.CommonEditEvent))
 				.ToArray();
 

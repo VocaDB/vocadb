@@ -1,23 +1,23 @@
 using System.Linq;
 using VocaDb.Model.DataContracts.Versioning;
-using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.DataContracts.Venues {
 
 	public class ArchivedVenueVersionDetailsContract {
 
-		public ArchivedVenueVersionDetailsContract(ArchivedVenueVersion archived, ArchivedVenueVersion comparedVersion, ContentLanguagePreference languagePreference) {
+		public ArchivedVenueVersionDetailsContract(ArchivedVenueVersion archived, ArchivedVenueVersion comparedVersion, IUserPermissionContext permissionContext) {
 
 			ParamIs.NotNull(() => archived);
 
 			ArchivedVersion = new ArchivedVenueVersionContract(archived);
 			ComparedVersion = comparedVersion != null ? new ArchivedVenueVersionContract(comparedVersion) : null;
-			Venue = new VenueContract(archived.Entry, languagePreference);
+			Venue = new VenueContract(archived.Entry, permissionContext.LanguagePreference);
 			Name = Venue.Name;
 			
 			ComparableVersions = archived.Entry.ArchivedVersionsManager
-				.GetPreviousVersions(archived)
+				.GetPreviousVersions(archived, permissionContext)
 				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields.Value, a.CommonEditEvent))
 				.ToArray();
 

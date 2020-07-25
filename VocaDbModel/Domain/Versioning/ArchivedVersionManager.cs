@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Domain.Versioning {
 
@@ -84,12 +85,14 @@ namespace VocaDb.Model.Domain.Versioning {
 		/// </summary>
 		/// <param name="beforeVer">Version to be compared. Can be null in which case all versions are returned.</param>
 		/// <returns>Versions whose number is lower than the compared version. Cannot be null.</returns>
-		public virtual IEnumerable<TVersion> GetPreviousVersions(TVersion beforeVer) {
+		public virtual IEnumerable<TVersion> GetPreviousVersions(TVersion beforeVer, IUserPermissionContext permissionContext) {
 
 			if (beforeVer == null)
 				return Versions;
 
-			return Versions.Where(a => a.Version < beforeVer.Version);
+			return Versions
+				.Where(a => a.Version < beforeVer.Version)
+				.Where(v => permissionContext.HasPermission(PermissionToken.ViewHiddenRevisions) || !v.Hidden);
 
 		}
 

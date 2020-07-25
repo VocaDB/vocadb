@@ -1,7 +1,7 @@
 using System.Linq;
 using VocaDb.Model.DataContracts.Versioning;
-using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
@@ -9,17 +9,17 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ArchivedEventVersionDetailsContract() { }
 
-		public ArchivedEventVersionDetailsContract(ArchivedReleaseEventVersion archived, ArchivedReleaseEventVersion comparedVersion, ContentLanguagePreference languagePreference) {
+		public ArchivedEventVersionDetailsContract(ArchivedReleaseEventVersion archived, ArchivedReleaseEventVersion comparedVersion, IUserPermissionContext permissionContext) {
 
 			ParamIs.NotNull(() => archived);
 
 			ArchivedVersion = new ArchivedEventVersionContract(archived);
 			ComparedVersion = comparedVersion != null ? new ArchivedEventVersionContract(comparedVersion) : null;
-			ReleaseEvent = new ReleaseEventContract(archived.ReleaseEvent, languagePreference);
+			ReleaseEvent = new ReleaseEventContract(archived.ReleaseEvent, permissionContext.LanguagePreference);
 			Name = ReleaseEvent.Name;
 
 			ComparableVersions = archived.ReleaseEvent.ArchivedVersionsManager
-				.GetPreviousVersions(archived)
+				.GetPreviousVersions(archived, permissionContext)
 				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields.Value, a.CommonEditEvent))
 				.ToArray();
 

@@ -275,7 +275,7 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(session =>
 				new ArchivedEventSeriesVersionDetailsContract(session.Load<ArchivedReleaseEventSeriesVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventSeriesVersion>(comparedVersionId) : null,
-					PermissionContext.LanguagePreference));
+					PermissionContext));
 		}
 
 		public ArchivedEventVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
@@ -283,7 +283,7 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(session =>
 				new ArchivedEventVersionDetailsContract(session.Load<ArchivedReleaseEventVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventVersion>(comparedVersionId) : null,
-					PermissionContext.LanguagePreference));
+					PermissionContext));
 
 		}
 

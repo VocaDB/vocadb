@@ -1,7 +1,7 @@
 using System.Linq;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Globalization;
+using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Albums {
 
@@ -10,17 +10,17 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public ArchivedAlbumVersionDetailsContract() { }
 
 		public ArchivedAlbumVersionDetailsContract(ArchivedAlbumVersion archived, ArchivedAlbumVersion comparedVersion, 
-			ContentLanguagePreference languagePreference) {
+			IUserPermissionContext permissionContext) {
 
 			ParamIs.NotNull(() => archived);
 
-			Album = new AlbumContract(archived.Album, languagePreference);
+			Album = new AlbumContract(archived.Album, permissionContext.LanguagePreference);
 			ArchivedVersion = new ArchivedAlbumVersionContract(archived);
 			ComparedVersion = comparedVersion != null ? new ArchivedAlbumVersionContract(comparedVersion) : null; 
 			Name = Album.Name;
 
 			ComparableVersions = archived.Album.ArchivedVersionsManager
-				.GetPreviousVersions(archived)
+				.GetPreviousVersions(archived, permissionContext)
 				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields.Value, a.Reason))
 				.ToArray();
 

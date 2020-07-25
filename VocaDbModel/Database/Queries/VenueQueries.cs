@@ -128,7 +128,7 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleQuery(session =>
 				new ArchivedVenueVersionDetailsContract(session.Load<ArchivedVenueVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedVenueVersion>(comparedVersionId) : null,
-					PermissionContext.LanguagePreference));
+					PermissionContext));
 
 		}
 
