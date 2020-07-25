@@ -7,22 +7,6 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 	public class ArchivedVenueVersionDetailsContract {
 
-		public ArchivedVenueVersionContract ArchivedVersion { get; set; }
-		
-		public ArchivedObjectVersionContract[] ComparableVersions { get; set; }
-
-		public ArchivedObjectVersionContract ComparedVersion { get; set; }
-
-		public int ComparedVersionId { get; set; }
-
-		public bool Hidden => ArchivedVersion.Hidden || (ComparedVersion != null && ComparedVersion.Hidden);
-
-		public string Name { get; set; }
-
-		public VenueContract Venue { get; set; }
-
-		public ComparedVenueContract Versions { get; set; }
-
 		public ArchivedVenueVersionDetailsContract(ArchivedVenueVersion archived, ArchivedVenueVersion comparedVersion, ContentLanguagePreference languagePreference) {
 
 			ParamIs.NotNull(() => archived);
@@ -42,6 +26,22 @@ namespace VocaDb.Model.DataContracts.Venues {
 			ComparedVersionId = Versions.SecondId;
 
 		}
+
+		public ArchivedVenueVersionContract ArchivedVersion { get; set; }
+
+		public ArchivedObjectVersionContract[] ComparableVersions { get; set; }
+
+		public ArchivedObjectVersionContract ComparedVersion { get; set; }
+
+		public int ComparedVersionId { get; set; }
+
+		public bool Hidden => ArchivedVersion.Hidden || (ComparedVersion != null && ComparedVersion.Hidden);
+
+		public string Name { get; set; }
+
+		public VenueContract Venue { get; set; }
+
+		public ComparedVenueContract Versions { get; set; }
 
 	}
 
