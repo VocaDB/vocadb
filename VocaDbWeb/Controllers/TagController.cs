@@ -9,6 +9,7 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
@@ -259,6 +260,10 @@ namespace VocaDb.Web.Controllers {
 		public ActionResult ViewVersion(int id, int? ComparedVersionId) {
 
 			var contract = queries.GetVersionDetails(id, ComparedVersionId ?? 0);
+
+			if (contract.Hidden) {
+				PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+			}
 
 			return View(new ViewVersion<ArchivedTagVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
 
