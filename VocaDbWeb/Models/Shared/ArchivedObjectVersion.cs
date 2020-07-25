@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Helpers;
@@ -19,6 +19,7 @@ namespace VocaDb.Web.Models.Shared {
 		public ArchivedObjectVersion(ArchivedObjectVersionContract contract, string reasonName, string changeMessage, bool anythingChanged = true) {
 
 			Contract = contract;
+			Hidden = contract.Hidden;
 			Id = contract.Id;
 			Notes = contract.Notes;
 			Reason = reasonName;
@@ -31,6 +32,7 @@ namespace VocaDb.Web.Models.Shared {
 		public ArchivedObjectVersion(ArchivedObjectVersionContract contract, string changeMessage, bool anythingChanged = true) {
 
 			Contract = contract;
+			Hidden = contract.Hidden;
 			Id = contract.Id;
 			Notes = contract.Notes;
 			Reason = Translate.EntryEditEventNames[contract.EditEvent];
@@ -45,6 +47,8 @@ namespace VocaDb.Web.Models.Shared {
 		public string ChangeMessage { get; set; }
 
 		public ArchivedObjectVersionContract Contract { get; set; }
+
+		public bool Hidden { get; set; }
 
 		public int Id { get; set; }
 

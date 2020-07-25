@@ -1,4 +1,4 @@
-@using System.Web.Mvc;
+﻿@using System.Web.Mvc;
 @using VocaDb.Model.DataContracts;
 @using VocaDb.Model.DataContracts.PVs;
 @using VocaDb.Model.DataContracts.Versioning
@@ -108,7 +108,7 @@
 			var style = (ver.AnythingChanged ? "" : "muted");
 			<tr>
 				<td>
-					@if (linkFunc != null) {
+					@if (linkFunc != null && (Login.CanViewHiddenRevisions || !ver.Hidden)) {
 						<a href="@linkFunc(ver.Id)" class="@style">
 							@ver.Contract.Version
 							(@Translate.EntryStatusNames[ver.Status])
