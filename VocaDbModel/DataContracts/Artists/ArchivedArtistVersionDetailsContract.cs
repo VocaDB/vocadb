@@ -43,6 +43,8 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		public int ComparedVersionId { get; set; }
 
+		public bool Hidden => ArchivedVersion.Hidden || (ComparedVersion != null && ComparedVersion.Hidden);
+
 		public string Name { get; set; }
 
 		public ComparedArtistsContract Versions { get; set; }

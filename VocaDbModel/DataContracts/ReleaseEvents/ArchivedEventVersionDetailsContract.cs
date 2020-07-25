@@ -39,6 +39,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ReleaseEventContract ReleaseEvent { get; set; }
 
+		public bool Hidden => ArchivedVersion.Hidden || (ComparedVersion != null && ComparedVersion.Hidden);
+
 		public string Name { get; set; }
 
 		public ComparedEventsContract Versions { get; set; }
