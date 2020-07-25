@@ -106,5 +106,14 @@ namespace Resources {
                 return ResourceManager.GetString("NameLanguageHelp", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This page revision has been hidden..
+        /// </summary>
+        internal static string RevisionHidden {
+            get {
+                return ResourceManager.GetString("RevisionHidden", resourceCulture);
+            }
+        }
     }
 }
