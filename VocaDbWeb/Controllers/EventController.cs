@@ -342,10 +342,6 @@ namespace VocaDb.Web.Controllers
 
 			var contract = queries.GetSeriesVersionDetails(id, ComparedVersionId ?? 0);
 
-			if (contract.Hidden) {
-				PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
-			}
-
 			return View(new ViewVersion<ArchivedEventSeriesVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
 
 		}
@@ -364,10 +360,6 @@ namespace VocaDb.Web.Controllers
 	    public ActionResult ViewVersion(int id, int? ComparedVersionId) {
 
 		    var contract = queries.GetVersionDetails(id, ComparedVersionId ?? 0);
-
-			if (contract.Hidden) {
-				PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
-			}
 
 		    return View(new ViewVersion<ArchivedEventVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
 

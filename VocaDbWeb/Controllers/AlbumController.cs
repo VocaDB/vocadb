@@ -418,10 +418,6 @@ namespace VocaDb.Web.Controllers
 
 			var contract = Service.GetVersionDetails(id, ComparedVersionId ?? 0);
 
-			if (contract.Hidden) {
-				PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
-			}
-
 			return View(contract);
 
 		}
