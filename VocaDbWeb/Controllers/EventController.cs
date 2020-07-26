@@ -338,6 +338,22 @@ namespace VocaDb.Web.Controllers
 
 		}
 
+		public ActionResult UpdateSeriesVersionVisibility(int archivedVersionId, bool hidden) {
+
+			queries.UpdateSeriesVersionVisibility(archivedVersionId, hidden);
+
+			return RedirectToAction("ViewSeriesVersion", new { id = archivedVersionId });
+
+		}
+
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden) {
+
+			queries.UpdateVersionVisibility(archivedVersionId, hidden);
+
+			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
+
+		}
+
 		public ActionResult ViewSeriesVersion(int id, int? ComparedVersionId) {
 
 			var contract = queries.GetSeriesVersionDetails(id, ComparedVersionId ?? 0);

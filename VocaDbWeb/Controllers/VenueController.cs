@@ -75,7 +75,15 @@ namespace VocaDb.Web.Controllers {
 
 		    return RedirectToAction("Edit", new { id });
 
-	    }
+		}
+
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden) {
+
+			queries.UpdateVersionVisibility(archivedVersionId, hidden);
+
+			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
+
+		}
 
 		public ActionResult Versions(int id = invalidId) {
 
