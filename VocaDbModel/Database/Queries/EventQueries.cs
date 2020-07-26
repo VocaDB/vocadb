@@ -272,27 +272,69 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ArchivedEventSeriesVersionDetailsContract GetSeriesVersionDetails(int id, int comparedVersionId) {
 
-			return HandleQuery(session =>
-				new ArchivedEventSeriesVersionDetailsContract(session.Load<ArchivedReleaseEventSeriesVersion>(id),
+			return HandleQuery(session => {
+
+				var contract = new ArchivedEventSeriesVersionDetailsContract(session.Load<ArchivedReleaseEventSeriesVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventSeriesVersion>(comparedVersionId) : null,
-					PermissionContext));
+					PermissionContext);
+
+				if (contract.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
+
+			});
 		}
 
 		public ArchivedEventVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
 
-			return HandleQuery(session =>
-				new ArchivedEventVersionDetailsContract(session.Load<ArchivedReleaseEventVersion>(id),
+			return HandleQuery(session => {
+
+				var contract = new ArchivedEventVersionDetailsContract(session.Load<ArchivedReleaseEventVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventVersion>(comparedVersionId) : null,
-					PermissionContext));
+					PermissionContext);
+
+				if (contract.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
+
+			});
 
 		}
 
 		public XDocument GetSeriesVersionXml(int id) {
-			return HandleQuery(ctx => ctx.Load<ArchivedReleaseEventSeriesVersion>(id).Data);
+
+			return HandleQuery(ctx => {
+
+				var archivedVersion = ctx.Load<ArchivedReleaseEventSeriesVersion>(id);
+
+				if (archivedVersion.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return archivedVersion.Data;
+
+			});
+
 		}
 
 		public XDocument GetVersionXml(int id) {
-			return HandleQuery(ctx => ctx.Load<ArchivedReleaseEventVersion>(id).Data);
+
+			return HandleQuery(ctx => {
+
+				var archivedVersion = ctx.Load<ArchivedReleaseEventVersion>(id);
+
+				if (archivedVersion.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return archivedVersion.Data;
+
+			});
+
 		}
 
 		public ReleaseEventContract[] List(EventSortRule sortRule, SortDirection sortDirection, bool includeSeries = false) {

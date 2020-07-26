@@ -287,14 +287,35 @@ namespace VocaDb.Model.Service {
 
 		public ArchivedAlbumVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
 
-			return HandleQuery(session =>
-				new ArchivedAlbumVersionDetailsContract(session.Load<ArchivedAlbumVersion>(id), 
-					(comparedVersionId != 0 ? session.Load<ArchivedAlbumVersion>(comparedVersionId) : null), PermissionContext));
+			return HandleQuery(session => {
+
+				var contract = new ArchivedAlbumVersionDetailsContract(session.Load<ArchivedAlbumVersion>(id),
+					(comparedVersionId != 0 ? session.Load<ArchivedAlbumVersion>(comparedVersionId) : null), PermissionContext);
+
+				if (contract.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
+
+			});
 
 		}
 
 		public XDocument GetVersionXml(int id) {
-			return HandleQuery(session => session.Load<ArchivedAlbumVersion>(id).Data);
+
+			return HandleQuery(session => {
+
+				var archivedVersion = session.Load<ArchivedAlbumVersion>(id);
+
+				if (archivedVersion.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return archivedVersion.Data;
+
+			});
+
 		}
 
 		public void Restore(int albumId) {
