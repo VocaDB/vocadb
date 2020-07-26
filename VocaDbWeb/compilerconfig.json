@@ -1,55 +1,10 @@
-﻿[
-  {
-    "outputFile": "Content/Styles/base.css",
-    "inputFile": "Content/Styles/base.less",
-    "minify": {
-      "enabled": false
-    },
-    "options": {
-      "strictMath": true
-    }
-  },
-  {
-    "outputFile": "Content/Styles/song.css",
-    "inputFile": "Content/Styles/song.less",
-    "minify": {
-      "enabled": false
-    },
-    "options": {
-      "strictMath": true
-    }
-  },
-  {
-    "outputFile": "Content/Styles/ExtLinks.css",
-    "inputFile": "Content/Styles/ExtLinks.less",
-    "minify": {
-      "enabled": false
-    }
-  },
+[
   {
     "outputFile": "Content/Styles/songlist.css",
     "inputFile": "Content/Styles/songlist.less",
     "minify": {
       "enabled": false
     }
-  },
-  {
-    "outputFile": "Content/Styles/PVViewer_Black.css",
-    "inputFile": "Content/Styles/PVViewer_Black.less",
-    "minify": {
-      "enabled": false
-    }
-  },
-  {
-    "outputFile": "Content/Styles/Overrides.css",
-    "inputFile": "Content/Styles/Overrides.less",
-    "minify": {
-      "enabled": false
-    }
-  },
-  {
-    "outputFile": "Content/Styles/Search.css",
-    "inputFile": "Content/Styles/Search.less"
   },
   {
     "outputFile": "Content/Styles/DarkAngel.css",

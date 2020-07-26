@@ -1862,9 +1862,6 @@
     <Content Include="Content\Site-teto.css" />
     <Content Include="Content\star.png" />
     <Content Include="Content\star_disabled.png" />
-    <Content Include="Content\Styles\base.css">
-      <DependentUpon>base.less</DependentUpon>
-    </Content>
     <Content Include="Content\Styles\DarkAngel.css">
       <DependentUpon>DarkAngel.less</DependentUpon>
     </Content>
@@ -1874,41 +1871,14 @@
     <Content Include="Content\Styles\embedSong.css">
       <DependentUpon>embedSong.less</DependentUpon>
     </Content>
-    <Content Include="Content\Styles\ExtLinks.css">
-      <DependentUpon>ExtLinks.less</DependentUpon>
-    </Content>
     <Content Include="Content\Styles\Icons.css" />
     <Content Include="Content\nico.png" />
     <Content Include="Content\star5.png" />
-    <Content Include="Content\Styles\Overrides.css">
-      <DependentUpon>Overrides.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Styles\Overrides.min.css">
-      <DependentUpon>Overrides.css</DependentUpon>
-    </Content>
     <Content Include="Content\Styles\Pager.css" />
-    <Content Include="Content\Styles\PVViewer_Black.css">
-      <DependentUpon>PVViewer_Black.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Styles\PVViewer_Blue.css">
-      <DependentUpon>PVViewer_Blue.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Styles\Search.css">
-      <DependentUpon>Search.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Styles\Snow2013.css">
-      <DependentUpon>Snow2013.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Styles\song.css">
-      <DependentUpon>song.less</DependentUpon>
-    </Content>
     <Content Include="Content\Styles\songlist.css">
       <DependentUpon>songlist.less</DependentUpon>
     </Content>
     <Content Include="Content\Styles\TetoDB.css" />
-    <Content Include="Content\Styles\userpage.css">
-      <DependentUpon>userpage.less</DependentUpon>
-    </Content>
     <Content Include="Content\teto.jpg" />
     <Content Include="Content\tetoDB-title.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_55_fbec88_40x100.png" />
