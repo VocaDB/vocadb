@@ -1,4 +1,4 @@
-@using VocaDb.Web.Helpers;
+﻿@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Artist;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Artists.ArchivedArtistVersionDetailsContract>
 
@@ -20,6 +20,10 @@
 &nbsp;
 <a href="@Url.Action("ArchivedVersionXml", new { id = Model.ArchivedVersion.Id })" id="downloadXmlLink">Download XML</a>
 <a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
+}
+
+@if (Model.ArchivedVersion.Hidden) {
+	@EntryDetailsHelpers.HiddenBanner()
 }
 
 @if (Model.ComparableVersions.Any()) {
