@@ -110,14 +110,30 @@
 				<td>
 					@if (linkFunc != null && (Login.CanViewHiddenRevisions || !ver.Hidden)) {
 						<a href="@linkFunc(ver.Id)" class="@style">
-							@ver.Contract.Version
-							(@Translate.EntryStatusNames[ver.Status])
+							@if (ver.Hidden) {
+								<s>
+									@ver.Contract.Version
+									(@Translate.EntryStatusNames[ver.Status])
+								</s>
+							} else {
+								<text>
+								@ver.Contract.Version
+								(@Translate.EntryStatusNames[ver.Status])
+								</text>
+							}
 						</a>
 					} else {
-						<text>
-							@ver.Contract.Version
-							(@Translate.EntryStatusNames[ver.Status])
-						</text>
+						if (ver.Hidden) {
+							<s>
+								@ver.Contract.Version
+								(@Translate.EntryStatusNames[ver.Status])
+							</s>
+						} else {
+							<text>
+								@ver.Contract.Version
+								(@Translate.EntryStatusNames[ver.Status])
+							</text>
+						}
 					}
 				</td>
 				<td>
