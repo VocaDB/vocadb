@@ -305,38 +305,6 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public XDocument GetSeriesVersionXml(int id) {
-
-			return HandleQuery(ctx => {
-
-				var archivedVersion = ctx.Load<ArchivedReleaseEventSeriesVersion>(id);
-
-				if (archivedVersion.Hidden) {
-					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
-				}
-
-				return archivedVersion.Data;
-
-			});
-
-		}
-
-		public XDocument GetVersionXml(int id) {
-
-			return HandleQuery(ctx => {
-
-				var archivedVersion = ctx.Load<ArchivedReleaseEventVersion>(id);
-
-				if (archivedVersion.Hidden) {
-					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
-				}
-
-				return archivedVersion.Data;
-
-			});
-
-		}
-
 		public ReleaseEventContract[] List(EventSortRule sortRule, SortDirection sortDirection, bool includeSeries = false) {
 			
 			return repository.HandleQuery(ctx => ctx

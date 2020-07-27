@@ -591,22 +591,6 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public XDocument GetVersionXml(int id) {
-
-			return HandleQuery(ctx => {
-
-				var archivedVersion = ctx.Load<ArchivedTagVersion>(id);
-
-				if (archivedVersion.Hidden) {
-					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
-				}
-
-				return archivedVersion.Data;
-
-			});
-
-		}
-
 		/// <summary>
 		/// Loads a tag assuming that the tag exists - throws an exception if it doesn't.
 		/// </summary>

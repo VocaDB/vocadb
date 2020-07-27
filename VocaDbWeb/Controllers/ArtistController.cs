@@ -63,7 +63,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return NoId();
 
-			var doc = Service.GetVersionXml(id);
+			var doc = queries.GetVersionXml<ArchivedArtistVersion>(id);
 			var content = XmlHelper.SerializeToUTF8XmlString(doc);
 
 			return Xml(content);

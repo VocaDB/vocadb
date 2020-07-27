@@ -70,7 +70,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult ArchivedVersionXml(int id) {
 
-			var doc = Service.GetVersionXml(id);
+			var doc = queries.GetVersionXml<ArchivedAlbumVersion>(id);
 			var content = XmlHelper.SerializeToUTF8XmlString(doc);
 
 			return Xml(content);

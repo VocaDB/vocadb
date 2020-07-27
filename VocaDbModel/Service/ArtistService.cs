@@ -202,22 +202,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public XDocument GetVersionXml(int id) {
-
-			return HandleQuery(session => {
-
-				var archivedVersion = session.Load<ArchivedArtistVersion>(id);
-
-				if (archivedVersion.Hidden) {
-					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
-				}
-
-				return archivedVersion.Data;
-
-			});
-
-		}
-
 		public void Merge(int sourceId, int targetId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.MergeEntries);

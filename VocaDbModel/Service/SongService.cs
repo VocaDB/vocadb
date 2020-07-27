@@ -410,22 +410,6 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public XDocument GetVersionXml(int id) {
-
-			return HandleQuery(session => {
-
-				var archivedVersion = session.Load<ArchivedSongVersion>(id);
-
-				if (archivedVersion.Hidden) {
-					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
-				}
-
-				return archivedVersion.Data;
-
-			});
-
-		}
-
 		public void Restore(int songId) {
 
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);

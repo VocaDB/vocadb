@@ -47,7 +47,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult ArchivedSeriesVersionXml(int id) {
 
-			var doc = queries.GetSeriesVersionXml(id);
+			var doc = queries.GetVersionXml<ArchivedReleaseEventSeriesVersion>(id);
 			var contract = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
 
 			return Xml(contract);
@@ -56,7 +56,7 @@ namespace VocaDb.Web.Controllers
 
 	    public ActionResult ArchivedVersionXml(int id) {
 
-		    var doc = queries.GetVersionXml(id);
+		    var doc = queries.GetVersionXml<ArchivedReleaseEventVersion>(id);
 		    var content = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
 
 		    return Xml(content);

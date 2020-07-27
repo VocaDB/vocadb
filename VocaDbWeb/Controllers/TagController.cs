@@ -44,7 +44,7 @@ namespace VocaDb.Web.Controllers {
 
 		public ActionResult ArchivedVersionXml(int id) {
 
-			var doc = queries.GetVersionXml(id);
+			var doc = queries.GetVersionXml<ArchivedTagVersion>(id);
 			var content = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
 
 			return Xml(content);
