@@ -222,6 +222,23 @@ namespace VocaDb.Model.Service {
 		public Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext<TEntity>, Task<TResult>> func, string failMsg = "Unexpected database error") {
 			return repository.HandleTransactionAsync(func, failMsg);
 		}
+
+		public void UpdateVersionVisibility<TArchivedVersion>(int archivedVersionId, bool hidden) where TArchivedVersion : class, IArchivedObjectVersion {
+
+			permissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+
+			repository.HandleTransaction(session => {
+
+				var archivedVersion = session.Load<TArchivedVersion>(archivedVersionId);
+
+				archivedVersion.Hidden = hidden;
+
+				AuditLog($"updated version visibility for {archivedVersion} to Hidden = {hidden}", session);
+
+			});
+
+		}
+
 	}
 
 }

@@ -823,38 +823,6 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void UpdateSeriesVersionVisibility(int archivedVersionId, bool hidden) {
-
-			permissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
-
-			repository.HandleTransaction(session => {
-
-				var archivedVersion = session.Load<ArchivedReleaseEventSeriesVersion>(archivedVersionId);
-
-				archivedVersion.Hidden = hidden;
-
-				AuditLog($"updated version visibility for {archivedVersion} to Hidden = {hidden}", session);
-
-			});
-
-		}
-
-		public void UpdateVersionVisibility(int archivedVersionId, bool hidden) {
-
-			permissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
-
-			repository.HandleTransaction(session => {
-
-				var archivedVersion = session.Load<ArchivedReleaseEventVersion>(archivedVersionId);
-
-				archivedVersion.Hidden = hidden;
-
-				AuditLog($"updated version visibility for {archivedVersion} to Hidden = {hidden}", session);
-
-			});
-
-		}
-
 	}
 
 }

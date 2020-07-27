@@ -391,7 +391,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden) {
 
-			queries.UpdateVersionVisibility(archivedVersionId, hidden);
+			queries.UpdateVersionVisibility<ArchivedAlbumVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 

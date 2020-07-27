@@ -340,7 +340,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult UpdateSeriesVersionVisibility(int archivedVersionId, bool hidden) {
 
-			queries.UpdateSeriesVersionVisibility(archivedVersionId, hidden);
+			queries.UpdateVersionVisibility<ArchivedReleaseEventSeriesVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewSeriesVersion", new { id = archivedVersionId });
 
@@ -348,7 +348,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden) {
 
-			queries.UpdateVersionVisibility(archivedVersionId, hidden);
+			queries.UpdateVersionVisibility<ArchivedReleaseEventVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 

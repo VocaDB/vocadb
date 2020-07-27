@@ -9,6 +9,7 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
@@ -248,7 +249,7 @@ namespace VocaDb.Web.Controllers {
 
 		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden) {
 
-			queries.UpdateVersionVisibility(archivedVersionId, hidden);
+			queries.UpdateVersionVisibility<ArchivedTagVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 

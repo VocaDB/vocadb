@@ -4,6 +4,7 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Models.Shared;
 using VocaDb.Web.Models.Venue;
@@ -79,7 +80,7 @@ namespace VocaDb.Web.Controllers {
 
 		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden) {
 
-			queries.UpdateVersionVisibility(archivedVersionId, hidden);
+			queries.UpdateVersionVisibility<ArchivedVenueVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 
