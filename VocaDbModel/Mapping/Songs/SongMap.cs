@@ -89,6 +89,7 @@ namespace VocaDb.Model.Mapping.Songs {
 			Map(m => m.AgentName).Length(100).Not.Nullable();
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Data).Not.Nullable();
+			Map(m => m.Hidden).Not.Nullable();
 			Map(m => m.Notes).Length(200).Not.Nullable();
 			Map(m => m.Reason).Length(30).Not.Nullable();
 			Map(m => m.Status).Not.Nullable();

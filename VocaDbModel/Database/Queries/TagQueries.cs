@@ -575,15 +575,20 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ArchivedTagVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
 
-			return HandleQuery(session =>
-				new ArchivedTagVersionDetailsContract(session.Load<ArchivedTagVersion>(id),
+			return HandleQuery(session => {
+
+				var contract = new ArchivedTagVersionDetailsContract(session.Load<ArchivedTagVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedTagVersion>(comparedVersionId) : null,
-					PermissionContext.LanguagePreference));
+					PermissionContext);
 
-		}
+				if (contract.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
 
-		public XDocument GetVersionXml(int id) {
-			return HandleQuery(ctx => ctx.Load<ArchivedTagVersion>(id).Data);
+				return contract;
+
+			});
+
 		}
 
 		/// <summary>

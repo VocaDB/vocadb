@@ -63,7 +63,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return NoId();
 
-			var doc = Service.GetVersionXml(id);
+			var doc = queries.GetVersionXml<ArchivedArtistVersion>(id);
 			var content = XmlHelper.SerializeToUTF8XmlString(doc);
 
 			return Xml(content);
@@ -309,6 +309,14 @@ namespace VocaDb.Web.Controllers
 
 			var contract = Service.GetArtist(id);
 			return Content(contract.Name);
+
+		}
+
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden) {
+
+			queries.UpdateVersionVisibility<ArchivedArtistVersion>(archivedVersionId, hidden);
+
+			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 
 		}
 

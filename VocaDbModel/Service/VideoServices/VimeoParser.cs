@@ -1,3 +1,4 @@
+using NLog;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -6,6 +7,8 @@ using System.Xml.Serialization;
 namespace VocaDb.Model.Service.VideoServices {
 
 	public class VimeoParser : IVideoServiceParser {
+
+		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private VideoTitleParseResult GetTitle(string id) {
 
@@ -21,6 +24,10 @@ namespace VocaDb.Model.Service.VideoServices {
 					result = (VimeoResult)serializer.Deserialize(stream);					
 				}
 			} catch (WebException x) {
+				log.Warn(x, "Unable to load Vimeo URL {0}", url);
+				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
+			} catch (InvalidOperationException x) {
+				log.Warn(x, "Unable to load Vimeo URL {0}", url);
 				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
 			}
 

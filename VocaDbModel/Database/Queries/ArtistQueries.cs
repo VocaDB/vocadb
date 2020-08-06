@@ -491,6 +491,11 @@ namespace VocaDb.Model.Database.Queries {
 			return await HandleTransactionAsync(async session => {
 
 				var archivedVersion = await session.LoadAsync<ArchivedArtistVersion>(archivedArtistVersionId);
+
+				if (archivedVersion.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
 				var artist = archivedVersion.Artist;
 
 				session.AuditLogger.SysLog("reverting " + artist + " to version " + archivedVersion.Version);

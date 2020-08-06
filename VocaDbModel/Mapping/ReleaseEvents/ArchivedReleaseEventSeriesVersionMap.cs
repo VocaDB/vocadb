@@ -1,4 +1,4 @@
-﻿using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Mapping.ReleaseEvents {
@@ -13,6 +13,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.CommonEditEvent).Length(30).Not.Nullable();
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Data).Not.Nullable();
+			Map(m => m.Hidden).Not.Nullable();
 			Map(m => m.Notes).Length(200).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();
 

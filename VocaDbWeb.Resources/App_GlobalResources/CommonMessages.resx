@@ -134,4 +134,7 @@ Approved = The entry has been inspected and approved by a trusted user. Approved
   <data name="NameLanguageHelp" xml:space="preserve">
     <value>Choose the language for this name. "Original" is the name in original language that isn't English, for example Japanese. If the original language is English, do not input a name in the "Original" language.</value>
   </data>
+  <data name="RevisionHidden" xml:space="preserve">
+    <value>This page revision has been hidden.</value>
+  </data>
 </root>

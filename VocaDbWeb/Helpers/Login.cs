@@ -73,6 +73,8 @@ namespace VocaDb.Web.Helpers {
 			}
 		}
 
+		public static bool CanViewHiddenRevisions => Manager.HasPermission(PermissionToken.ViewHiddenRevisions);
+
 		public static bool IsLoggedIn {
 			get {
 				return Manager.IsLoggedIn;

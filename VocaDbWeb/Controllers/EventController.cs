@@ -47,7 +47,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult ArchivedSeriesVersionXml(int id) {
 
-			var doc = queries.GetSeriesVersionXml(id);
+			var doc = queries.GetVersionXml<ArchivedReleaseEventSeriesVersion>(id);
 			var contract = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
 
 			return Xml(contract);
@@ -56,7 +56,7 @@ namespace VocaDb.Web.Controllers
 
 	    public ActionResult ArchivedVersionXml(int id) {
 
-		    var doc = queries.GetVersionXml(id);
+		    var doc = queries.GetVersionXml<ArchivedReleaseEventVersion>(id);
 		    var content = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
 
 		    return Xml(content);
@@ -335,6 +335,22 @@ namespace VocaDb.Web.Controllers
 			var contract = Service.GetReleaseEventSeriesWithArchivedVersions(id);
 
 			return View(new Versions<ReleaseEventSeriesContract>(contract, enumTranslations));
+
+		}
+
+		public ActionResult UpdateSeriesVersionVisibility(int archivedVersionId, bool hidden) {
+
+			queries.UpdateVersionVisibility<ArchivedReleaseEventSeriesVersion>(archivedVersionId, hidden);
+
+			return RedirectToAction("ViewSeriesVersion", new { id = archivedVersionId });
+
+		}
+
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden) {
+
+			queries.UpdateVersionVisibility<ArchivedReleaseEventVersion>(archivedVersionId, hidden);
+
+			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 
 		}
 

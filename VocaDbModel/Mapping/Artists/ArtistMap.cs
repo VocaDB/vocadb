@@ -93,6 +93,7 @@ namespace VocaDb.Model.Mapping.Artists {
 			Map(m => m.AgentName).Not.Nullable();
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Data).Not.Nullable();
+			Map(m => m.Hidden).Not.Nullable();
 			Map(m => m.Notes).Length(200).Not.Nullable();
 			Map(m => m.PictureMime).Length(32).Nullable();
 			Map(m => m.Reason).Length(30).Not.Nullable();

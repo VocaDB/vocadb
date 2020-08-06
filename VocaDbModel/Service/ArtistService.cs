@@ -187,14 +187,19 @@ namespace VocaDb.Model.Service {
 
 		public ArchivedArtistVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
 
-			return HandleQuery(session =>
-				new ArchivedArtistVersionDetailsContract(session.Load<ArchivedArtistVersion>(id),
-					comparedVersionId != 0 ? session.Load<ArchivedArtistVersion>(comparedVersionId) : null, PermissionContext.LanguagePreference));
+			return HandleQuery(session => {
 
-		}
+				var contract = new ArchivedArtistVersionDetailsContract(session.Load<ArchivedArtistVersion>(id),
+					comparedVersionId != 0 ? session.Load<ArchivedArtistVersion>(comparedVersionId) : null, PermissionContext);
 
-		public XDocument GetVersionXml(int id) {
-			return HandleQuery(session => session.Load<ArchivedArtistVersion>(id).Data);
+				if (contract.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
+
+			});
+
 		}
 
 		public void Merge(int sourceId, int targetId) {

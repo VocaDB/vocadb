@@ -52,6 +52,7 @@ namespace VocaDb.Model.Domain.Users {
 			PermissionToken.RestoreRevisions, 
 			PermissionToken.ViewAuditLog,
 			PermissionToken.ViewHiddenRatings,
+			PermissionToken.ViewHiddenRevisions,
 			PermissionToken.UploadMedia
 		);
 

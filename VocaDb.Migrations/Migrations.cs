@@ -5,6 +5,22 @@ namespace VocaDb.Migrations {
 
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2020_07_19_2000)]
+	public class ArchivedEntryVersionHidden : AutoReversingMigration {
+
+		public override void Up() {
+			Create.Column("Hidden").OnTable(TableNames.ArchivedAlbumVersions).AsBoolean().NotNullable().WithDefaultValue(false);
+			Create.Column("Hidden").OnTable(TableNames.ArchivedArtistVersions).AsBoolean().NotNullable().WithDefaultValue(false);
+			Create.Column("Hidden").OnTable(TableNames.ArchivedEventSeriesVersions).AsBoolean().NotNullable().WithDefaultValue(false);
+			Create.Column("Hidden").OnTable(TableNames.ArchivedEventVersions).AsBoolean().NotNullable().WithDefaultValue(false);
+			Create.Column("Hidden").OnTable(TableNames.ArchivedSongListVersions).AsBoolean().NotNullable().WithDefaultValue(false);
+			Create.Column("Hidden").OnTable(TableNames.ArchivedSongVersions).AsBoolean().NotNullable().WithDefaultValue(false);
+			Create.Column("Hidden").OnTable(TableNames.ArchivedTagVersions).AsBoolean().NotNullable().WithDefaultValue(false);
+			Create.Column("Hidden").OnTable(TableNames.ArchivedVenueVersions).AsBoolean().NotNullable().WithDefaultValue(false);
+		}
+
+	}
+
 	[Migration(2020_05_28_2100)]
 	public class SongNotesLength : Migration {
 		public override void Up() {
