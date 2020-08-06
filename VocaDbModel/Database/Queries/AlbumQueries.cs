@@ -723,6 +723,11 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleTransaction(session => {
 
 				var archivedVersion = session.Load<ArchivedAlbumVersion>(archivedAlbumVersionId);
+
+				if (archivedVersion.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
 				var album = archivedVersion.Album;
 
 				session.AuditLogger.SysLog("reverting " + album + " to version " + archivedVersion.Version);

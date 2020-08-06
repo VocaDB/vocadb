@@ -356,5 +356,14 @@ namespace Resources {
                 return ResourceManager.GetString("ViewHiddenRatings", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View hidden revisions.
+        /// </summary>
+        internal static string ViewHiddenRevisions {
+            get {
+                return ResourceManager.GetString("ViewHiddenRevisions", resourceCulture);
+            }
+        }
     }
 }

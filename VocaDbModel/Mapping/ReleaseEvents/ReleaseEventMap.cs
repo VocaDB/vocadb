@@ -99,6 +99,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			Map(m => m.CommonEditEvent).Length(30).Not.Nullable();
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Data); // Some old events have null data
+			Map(m => m.Hidden).Not.Nullable();
 			Map(m => m.Notes).Length(200).Not.Nullable();
 			Map(m => m.Version).Not.Nullable();
 

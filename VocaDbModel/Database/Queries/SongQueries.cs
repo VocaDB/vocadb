@@ -974,6 +974,11 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleTransaction(session => {
 
 				var archivedVersion = session.Load<ArchivedSongVersion>(archivedSongVersionId);
+
+				if (archivedVersion.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
 				var song = archivedVersion.Song;
 
 				session.AuditLogger.SysLog("reverting " + song + " to version " + archivedVersion.Version);

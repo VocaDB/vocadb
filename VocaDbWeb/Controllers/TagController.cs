@@ -9,6 +9,7 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
@@ -43,7 +44,7 @@ namespace VocaDb.Web.Controllers {
 
 		public ActionResult ArchivedVersionXml(int id) {
 
-			var doc = queries.GetVersionXml(id);
+			var doc = queries.GetVersionXml<ArchivedTagVersion>(id);
 			var content = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
 
 			return Xml(content);
@@ -243,6 +244,14 @@ namespace VocaDb.Web.Controllers {
 			var tag = queries.LoadTag(id, t => new TagForApiContract(t, entryThumbPersister,
 				lang, TagOptionalFields.AdditionalNames | TagOptionalFields.Description | TagOptionalFields.MainPicture));
 			return PartialView("_TagPopupContent", tag);
+
+		}
+
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden) {
+
+			queries.UpdateVersionVisibility<ArchivedTagVersion>(archivedVersionId, hidden);
+
+			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 
 		}
 

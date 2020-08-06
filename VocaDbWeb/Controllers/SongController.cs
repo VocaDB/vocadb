@@ -79,7 +79,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult ArchivedVersionXml(int id) {
 
-			var doc = Service.GetVersionXml(id);
+			var doc = queries.GetVersionXml<ArchivedSongVersion>(id);
 			var content = XmlHelper.SerializeToUTF8XmlString(doc);
 
 			return Xml(content);
@@ -557,6 +557,14 @@ namespace VocaDb.Web.Controllers
 			TempData.SetSuccessMessage("Thumbnail refreshed");
 
 			return RedirectToAction("Details", new { id });
+
+		}
+
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden) {
+
+			queries.UpdateVersionVisibility<ArchivedSongVersion>(archivedVersionId, hidden);
+
+			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 
 		}
 
