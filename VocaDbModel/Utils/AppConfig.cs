@@ -235,5 +235,7 @@ namespace VocaDb.Model.Utils {
 		/// </summary>
 		public static string YoutubeDLPath => Val(nameof(YoutubeDLPath));
 
+		public static string VimeoApiKey => Val("VimeoApiKey");
+
 	}
 }

@@ -39,7 +39,8 @@ namespace VocaDb.Model.Helpers {
 		public static Task<T> GetStreamAsync<T>(string url, Func<Stream, T> func) => GetStreamAsync(url, func, TimeSpan.FromSeconds(30));
 
 		/// <exception cref="HttpRequestException">If the request failed</exception>
-		public static async Task<T> GetStreamAsync<T>(string url, Func<Stream, T> func, TimeSpan timeout, string userAgent = "") {
+		public static async Task<T> GetStreamAsync<T>(string url, Func<Stream, T> func, TimeSpan timeout, string userAgent = "",
+			Action<HttpRequestHeaders> headers = null) {
 
 			var uri = new Uri(url);
 
@@ -51,6 +52,8 @@ namespace VocaDb.Model.Helpers {
 					client.DefaultRequestHeaders.Add("User-Agent", userAgent);
 				}
 				client.Timeout = timeout;
+
+				headers?.Invoke(client.DefaultRequestHeaders);
 
 				using (var response = await client.GetAsync(uri)) {
 					response.EnsureSuccessStatusCode();

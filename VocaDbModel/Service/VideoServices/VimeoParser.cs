@@ -1,8 +1,14 @@
+using Newtonsoft.Json;
 using NLog;
 using System;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.Security;
+using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.VideoServices {
 
@@ -10,68 +16,81 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		private VideoTitleParseResult GetTitle(string id) {
+		public async Task<VideoTitleParseResult> GetTitleAsync(string id) {
 
-			var url = string.Format("http://vimeo.com/api/v2/video/{0}.xml", id);
+			static void SetHeaders(HttpRequestHeaders headers) {
+				var apiKey = AppConfig.VimeoApiKey;
+				headers.Authorization = new AuthenticationHeaderValue("bearer", apiKey);
+			}
 
-			var request = WebRequest.Create(url);
-			var serializer = new XmlSerializer(typeof(VimeoResult));
+			var url = string.Format("https://api.vimeo.com/videos/{0}", id);
+
 			VimeoResult result;
 
+			SslHelper.ForceStrongTLS();
+
 			try {
-				using (var response = request.GetResponse())
-				using (var stream = response.GetResponseStream()) {
-					result = (VimeoResult)serializer.Deserialize(stream);					
-				}
+				result = await JsonRequest.ReadObjectAsync<VimeoResult>(url, TimeSpan.FromSeconds(100), headers: SetHeaders);
 			} catch (WebException x) {
 				log.Warn(x, "Unable to load Vimeo URL {0}", url);
 				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
-			} catch (InvalidOperationException x) {
+			} catch (HttpRequestException x) {
+				log.Warn(x, "Unable to load Vimeo URL {0}", url);
+				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
+			} catch (JsonSerializationException x) {
 				log.Warn(x, "Unable to load Vimeo URL {0}", url);
 				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
 			}
 
-			if (result == null || result.Video == null || string.IsNullOrEmpty(result.Video.Title)) {
+			var title = result.Name;
+
+			if (string.IsNullOrEmpty(title)) {
 				return VideoTitleParseResult.CreateError("Vimeo (error): title element not found");
 			}
 
-			var author = result.Video.User_Name;
-			var thumbUrl = result.Video.Thumbnail_Small;
-			var length = result.Video.Duration;
-			var date = Convert.ToDateTime(result.Video.Upload_Date); // xmlserializer can't parse the date
+			var author = result.User?.Name ?? "";
+			var thumbUrl = result.Pictures.Sizes.Any() ? result.Pictures.Sizes.OrderBy(p => p.Width).First().Link : "";
+			var length = result.Duration;
+			var date = result.CreatedTime; // Convert.ToDateTime(result.Video.Upload_Date); // xmlserializer can't parse the date
 
-			return VideoTitleParseResult.CreateSuccess(result.Video.Title, author, null, thumbUrl, length, uploadDate: date);
+			return VideoTitleParseResult.CreateSuccess(title, author, null, thumbUrl, length, uploadDate: date);
 
 		}
 
-		public Task<VideoTitleParseResult> GetTitleAsync(string id) => Task.FromResult(GetTitle(id));
-
 	}
 
-	[XmlRoot("videos", Namespace = "")]
 	public class VimeoResult {
+
+		public int Duration { get; set; }	
 		
-		[XmlElement("video")]
-		public VimeoVideo Video { get; set; }
+		public string Name { get; set; }
+
+		[JsonProperty("created_time")]
+		public DateTime CreatedTime { get; set; }
+
+		public VimeoPictures Pictures { get; set; }
+
+		public VimeoUser User { get; set; }
 
 	}
 
-	public class VimeoVideo {
-		
-		[XmlElement("duration")]
-		public int Duration { get; set; }
+	public class VimeoPictures {
 
-		[XmlElement("thumbnail_small")]
-		public string Thumbnail_Small { get; set; }
+		public VimeoPicture[] Sizes { get; set; }
 
-		[XmlElement("title")]
-		public string Title { get; set; }
+	}
 
-		[XmlElement("upload_date")]
-		public string Upload_Date { get; set; }
+	public class VimeoPicture {
 
-		[XmlElement("user_name")]
-		public string User_Name { get; set; }
+		public string Link { get; set; }
+
+		public int Width { get; set; }
+
+	}
+
+	public class VimeoUser {
+
+		public string Name { get; set; }
 
 	}
 
