@@ -92,7 +92,7 @@
 	@Html.LinkList(artists, a => new MvcHtmlString(ArtistLink(a, typeLabel, releaseYear: releaseYear).ToString()))
 }
 
-@helper ArtistList(IEnumerable<ArtistForAlbumContract> artists, bool showRoles = false, bool showType = false) {
+@helper ArtistList(IEnumerable<IArtistLinkContract> artists, ShowRolesMode showRoles = ShowRolesMode.Never, bool showType = false) {
 	var ordered = artists.OrderBy(a => a.IsSupport).ToArray();
 	foreach (var artist in ordered) {
 		if (artist.IsSupport) {
@@ -106,33 +106,7 @@
 		} else {
 			@artist.Name
 		}
-		if (showRoles && artist.EffectiveRoles != ArtistRoles.Default) {
-			@Html.Raw("&nbsp;<small class='muted'>(" + Translate.ArtistRoleNames.GetAllNameNames(artist.EffectiveRoles, ArtistRoles.Default) + ")</small>")
-		}
-		if (artist.IsSupport) {
-			@(")")
-		}
-		if (artist != ordered.Last()) {
-			@(", ")
-		}
-	}
-}
-
-@helper ArtistList(IEnumerable<ArtistForSongContract> artists, bool showRoles = false, bool showType = false) {
-	var ordered = artists.OrderBy(a => a.IsSupport).ToArray();
-	foreach (var artist in ordered) {
-		if (artist.IsSupport) {
-			@("(")
-		}
-		if (artist.Artist != null) {
-			if (showType) {
-				@ArtistTypeLabel(artist.Artist.ArtistType)
-			}			
-			@ArtistLink(artist.Artist, name: artist.Name)
-		} else {
-			@artist.Name
-		}
-		if (showRoles && artist.EffectiveRoles != ArtistRoles.Default) {
+		if (ShowRoles(artist, showRoles)) {
 			@Html.Raw("&nbsp;<small class='muted'>(" + Translate.ArtistRoleNames.GetAllNameNames(artist.EffectiveRoles, ArtistRoles.Default) + ")</small>")
 		}
 		if (artist.IsSupport) {
@@ -176,4 +150,35 @@
 			<option value="@artistType.Id">@artistType.Name</option>
 		}
 	</select>
+}
+
+@functions {
+	public enum ShowRolesMode
+	{
+		Never,
+		/// <summary>
+		/// Show roles if role is not "Default"
+		/// </summary>
+		IfNotDefault,
+		/// <summary>
+		/// Show roles if role is not "Default" or "Vocalist"
+		/// </summary>
+		IfNotVocalist
+	}
+
+	public static bool ShowRoles(IArtistLinkContract artist, ShowRolesMode showRoles)
+	{
+		switch (showRoles)
+		{
+			case ShowRolesMode.IfNotDefault:
+				return artist.EffectiveRoles != ArtistRoles.Default;
+			case ShowRolesMode.IfNotVocalist:
+				return artist.EffectiveRoles != ArtistRoles.Default
+					&& artist.EffectiveRoles != ArtistRoles.Vocalist
+					&& !artist.Categories.HasFlag(ArtistCategories.Subject)
+					&& !artist.Categories.HasFlag(ArtistCategories.Producer);
+			default:
+				return false;
+		}
+	}
 }

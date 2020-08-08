@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain;
@@ -34,12 +34,19 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
+		/// <summary>
+		/// Whether artist should appear in artist string.
+		/// </summary>
 		public static bool IsValidCreditableArtist(IArtistLinkWithRoles artist) {
 
 			if (artist.IsSupport)
 				return false;
 
 			var cat = GetCategories(artist);
+
+			// Chorus role is vocalist category, but will not be credited on its own.
+			if (artist.Roles.HasFlag(ArtistRoles.Chorus) && !artist.Roles.HasFlag(ArtistRoles.Vocalist) && cat == ArtistCategories.Vocalist)
+				return false;
 
 			return (cat != ArtistCategories.Nothing && cat != ArtistCategories.Label);
 
