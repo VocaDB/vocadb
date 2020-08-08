@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.DataContracts.Artists;
@@ -9,7 +9,7 @@ using VocaDb.Model.Domain.Artists;
 namespace VocaDb.Model.DataContracts.Songs {
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistForSongContract {
+	public class ArtistForSongContract : IArtistLinkContract {
 
 		public ArtistForSongContract() { }
 
