@@ -28,8 +28,8 @@ namespace VocaDb.Model.Helpers {
 			ParamIs.NotNull(() => newItems);
 			ParamIs.NotNull(() => equality);
 
-			var removed = old.Where(i => !newItems.Any(i2 => equality(i, i2)));
-			var added = newItems.Where(i => !old.Any(i2 => equality(i2, i)));
+			var removed = old.Where(i => !newItems.Any(i2 => equality(i, i2))).ToArray();
+			var added = newItems.Where(i => !old.Any(i2 => equality(i2, i))).ToArray();
 			var unchanged = old.Except(removed);	// FIXME: possible error, can't use default equality?
 
 			return new CollectionDiff<T, T2>(added, removed, unchanged);

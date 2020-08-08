@@ -905,7 +905,7 @@ namespace VocaDb.Model.Domain.Albums {
 				}
 
 				if (!TrackArtistsEqual(linkEntry.Song, newEntry))
-					updateArtistsFunc(linkEntry.Song, newEntry.Artists);
+					await updateArtistsFunc(linkEntry.Song, newEntry.Artists);
 
 			}
 
