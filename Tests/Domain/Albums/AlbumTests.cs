@@ -54,7 +54,7 @@ namespace VocaDb.Tests.Domain.Albums {
 		}
 
 		private Task UpdateSongArtists(Song song, ArtistContract[] artists) {
-			return song.SyncArtists(artists, GetArtists);
+			return song.SyncArtistsAsync(artists, GetArtists);
 		}
 
 		private Task<CollectionDiffWithValue<SongInAlbum, SongInAlbum>> SyncSongs(SongInAlbumEditContract[] newSongs) {
