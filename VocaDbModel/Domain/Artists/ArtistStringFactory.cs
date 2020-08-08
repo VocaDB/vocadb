@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
@@ -64,8 +64,10 @@ namespace VocaDb.Model.Domain.Artists {
 				.ToArray();
 
 			var performers = matched
-				.Where(a => ArtistHelper.GetCategories(a).HasFlag(ArtistCategories.Vocalist) && 
-					(!producers.Contains(a) || allowRepeatingProducerAsPerformer)).ToArray();
+				.Where(a => ArtistHelper.GetCategories(a).HasFlag(ArtistCategories.Vocalist) 
+					&& (!producers.Contains(a) || allowRepeatingProducerAsPerformer)
+					&& (a.Roles.HasFlag(ArtistRoles.Vocalist) || !a.Roles.HasFlag(ArtistRoles.Chorus)))
+				.ToArray();
 
 			const string various = ArtistHelper.VariousArtists;
 

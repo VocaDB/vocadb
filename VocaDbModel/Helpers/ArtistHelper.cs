@@ -44,10 +44,6 @@ namespace VocaDb.Model.Helpers {
 
 			var cat = GetCategories(artist);
 
-			// Chorus role is vocalist category, but will not be credited on its own.
-			if (artist.Roles.HasFlag(ArtistRoles.Chorus) && !artist.Roles.HasFlag(ArtistRoles.Vocalist) && cat == ArtistCategories.Vocalist)
-				return false;
-
 			return (cat != ArtistCategories.Nothing && cat != ArtistCategories.Label);
 
 		}
