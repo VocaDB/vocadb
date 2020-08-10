@@ -28,6 +28,8 @@ TestResults/
 VocaDb.TouhouDb.Resources/bin/
 VocaDb.TouhouDb.Resources/obj/
 *.exe
+VocaDbWeb.Resources/bin/
+VocaDbWeb.Resources/obj/
 *.mdf
 *.ldf
 *.ndf

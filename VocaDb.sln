@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.28721.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDbWeb", "VocaDbWeb\VocaDbWeb.csproj", "{543CB31E-8641-44AA-95D4-DF0E06D41D02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDb.Model", "VocaDbModel\VocaDb.Model.csproj", "{024D07DF-F669-46E9-9514-3AB8094F74AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.Model", "VocaDbModel\VocaDb.Model.csproj", "{024D07DF-F669-46E9-9514-3AB8094F74AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDb.Tests", "Tests\VocaDb.Tests.csproj", "{BEB958BD-DA22-4597-B492-4F943328CBB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.Tests", "Tests\VocaDb.Tests.csproj", "{BEB958BD-DA22-4597-B492-4F943328CBB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDb.UtaiteDb.Resources", "VocaDb.UtaiteDbResources\VocaDb.UtaiteDb.Resources.csproj", "{C5A20185-136F-45B0-81C4-84102D3F2A80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.UtaiteDb.Resources", "VocaDb.UtaiteDbResources\VocaDb.UtaiteDb.Resources.csproj", "{C5A20185-136F-45B0-81C4-84102D3F2A80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDb.SiteMapGenerator", "VocaDb.SiteMapGenerator\VocaDb.SiteMapGenerator.csproj", "{AA29FF8E-8EC1-4EA7-BA82-C5210272EFD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.SiteMapGenerator", "VocaDb.SiteMapGenerator\VocaDb.SiteMapGenerator.csproj", "{AA29FF8E-8EC1-4EA7-BA82-C5210272EFD2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5AC41811-E9D4-40B2-8514-3825882A72E4}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,9 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Docs\API\VocaDBTooltips.ts = Docs\API\VocaDBTooltips.ts
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDb.Migrations", "VocaDb.Migrations\VocaDb.Migrations.csproj", "{69130140-2978-4843-84BF-348A71B44616}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.Migrations", "VocaDb.Migrations\VocaDb.Migrations.csproj", "{69130140-2978-4843-84BF-348A71B44616}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDb.TouhouDb.Resources", "VocaDb.TouhouDb.Resources\VocaDb.TouhouDb.Resources.csproj", "{BF02D394-4900-4DFB-9348-C9A39762614A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.TouhouDb.Resources", "VocaDb.TouhouDb.Resources\VocaDb.TouhouDb.Resources.csproj", "{BF02D394-4900-4DFB-9348-C9A39762614A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDbWeb.Resources", "VocaDbWeb.Resources\VocaDbWeb.Resources.csproj", "{A08B80F0-5124-4674-86DC-D128ECC7A885}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{BF02D394-4900-4DFB-9348-C9A39762614A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF02D394-4900-4DFB-9348-C9A39762614A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF02D394-4900-4DFB-9348-C9A39762614A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A08B80F0-5124-4674-86DC-D128ECC7A885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A08B80F0-5124-4674-86DC-D128ECC7A885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A08B80F0-5124-4674-86DC-D128ECC7A885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A08B80F0-5124-4674-86DC-D128ECC7A885}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
