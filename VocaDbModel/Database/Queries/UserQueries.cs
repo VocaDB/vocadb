@@ -749,13 +749,14 @@ namespace VocaDb.Model.Database.Queries {
 		private async Task<User> CreateUser(IDatabaseContext<User> ctx, string name, string pass, string email, string hostname, string culture,
 			SFSResponseContract sfsCheckResult, string verifyEmailUrl) {
 
+			var confidenceReport = 1;
 			var confidenceLimited = 60;
 
 			var user = new User(name, pass, email, PasswordHashAlgorithms.Default);
 			user.UpdateLastLogin(hostname, culture);
 			await ctx.SaveAsync(user);
 
-			if (sfsCheckResult.Appears) {
+			if (sfsCheckResult.Appears && sfsCheckResult.Confidence >= confidenceReport) {
 
 				var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname, 
 					string.Format("Confidence {0} %, Frequency {1}, Last seen {2}. Conclusion {3}.", 
