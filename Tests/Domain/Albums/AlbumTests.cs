@@ -53,8 +53,8 @@ namespace VocaDb.Tests.Domain.Albums {
 
 		}
 
-		private void UpdateSongArtists(Song song, ArtistContract[] artists) {
-			song.SyncArtists(artists, GetArtists);
+		private Task UpdateSongArtists(Song song, ArtistContract[] artists) {
+			return song.SyncArtistsAsync(artists, GetArtists);
 		}
 
 		private Task<CollectionDiffWithValue<SongInAlbum, SongInAlbum>> SyncSongs(SongInAlbumEditContract[] newSongs) {

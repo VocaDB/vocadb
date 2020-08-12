@@ -859,7 +859,8 @@ namespace VocaDb.Model.Domain.Albums {
 		}
 
 		public virtual async Task<CollectionDiffWithValue<SongInAlbum, SongInAlbum>> SyncSongs(
-			IEnumerable<SongInAlbumEditContract> newTracks, Func<SongInAlbumEditContract, Task<Song>> songGetter, Action<Song, ArtistContract[]> updateArtistsFunc) {
+			IEnumerable<SongInAlbumEditContract> newTracks, Func<SongInAlbumEditContract, Task<Song>> songGetter, 
+			Func<Song, ArtistContract[], Task> updateArtistsFunc) {
 
 			var diff = CollectionHelper.Diff(Songs, newTracks, (n1, n2) => n1.Id == n2.SongInAlbumId);
 			var created = new List<SongInAlbum>();
@@ -878,7 +879,7 @@ namespace VocaDb.Model.Domain.Albums {
 					var song = await songGetter(newEntry);
 
 					if (!TrackArtistsEqual(song, newEntry))
-						updateArtistsFunc(song, newEntry.Artists);
+						await updateArtistsFunc(song, newEntry.Artists);
 
 					link = AddSong(song, newEntry.TrackNumber, newEntry.DiscNumber);
 
@@ -904,7 +905,7 @@ namespace VocaDb.Model.Domain.Albums {
 				}
 
 				if (!TrackArtistsEqual(linkEntry.Song, newEntry))
-					updateArtistsFunc(linkEntry.Song, newEntry.Artists);
+					await updateArtistsFunc(linkEntry.Song, newEntry.Artists);
 
 			}
 

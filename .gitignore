@@ -33,3 +33,8 @@ VocaDbWeb/Content/css.css
 VocaDbWeb/Content/embedSong.css
 VocaDbWeb/Scripts/jqwidgets27/styles/css.css
 VocaDbWeb/mix-manifest.json
+VocaDbWeb.Resources/bin/
+VocaDbWeb.Resources/obj/
+*.mdf
+*.ldf
+*.ndf

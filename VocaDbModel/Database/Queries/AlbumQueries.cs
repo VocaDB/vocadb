@@ -64,16 +64,16 @@ namespace VocaDb.Model.Database.Queries {
 
 		private IEntryLinkFactory EntryLinkFactory => entryLinkFactory;
 
-		private ArchivedSongVersion ArchiveSong(IDatabaseContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
+		private async Task<ArchivedSongVersion> ArchiveSongAsync(IDatabaseContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
 
-			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
+			var agentLoginData = await ctx.CreateAgentLoginDataAsync(PermissionContext);
 			var archived = ArchivedSongVersion.Create(song, diff, agentLoginData, reason, notes);
-			ctx.OfType<ArchivedSongVersion>().Save(archived);
+			await ctx.OfType<ArchivedSongVersion>().SaveAsync(archived);
 			return archived;
 
 		}
 
-		private async Task<List<Artist>> GetArtists(IDatabaseContext<Album> ctx, ArtistContract[] artistContracts) {
+		private async Task<List<Artist>> GetArtistsAsync(IDatabaseContext<Album> ctx, ArtistContract[] artistContracts) {
 			var ids = artistContracts.Select(a => a.Id).ToArray();
 			return await ctx.Query<Artist>().WhereIdIn(ids).VdbToListAsync();			
 		}
@@ -132,12 +132,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private async Task UpdateSongArtists(IDatabaseContext<Album> ctx, Song song, ArtistContract[] artistContracts) {
+		private async Task UpdateSongArtistsAsync(IDatabaseContext<Album> ctx, Song song, ArtistContract[] artistContracts) {
 
-			var artistDiff = await song.SyncArtists(artistContracts, 
-				addedArtistContracts => GetArtists(ctx, addedArtistContracts));
+			var artistDiff = await song.SyncArtistsAsync(artistContracts, 
+				addedArtistContracts => GetArtistsAsync(ctx, addedArtistContracts));
 
-			ctx.Sync(artistDiff);
+			await ctx.SyncAsync(artistDiff);
 
 			if (artistDiff.Changed) {
 
@@ -145,11 +145,11 @@ namespace VocaDb.Model.Database.Queries {
 				diff.Artists.Set();
 
 				song.UpdateArtistString();
-				var archived = ArchiveSong(ctx.OfType<Song>(), song, diff, SongArchiveReason.PropertiesUpdated);
-				ctx.Update(song);
+				var archived = await ArchiveSongAsync(ctx.OfType<Song>(), song, diff, SongArchiveReason.PropertiesUpdated);
+				await ctx.UpdateAsync(song);
 
-				ctx.AuditLogger.AuditLog("updated artists for " + entryLinkFactory.CreateEntryLink(song));
-				AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Updated, archived);
+				await ctx.AuditLogger.AuditLogAsync("updated artists for " + entryLinkFactory.CreateEntryLink(song));
+				await AddEntryEditedEntryAsync(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Updated, archived);
 
 			}
 			
@@ -723,6 +723,11 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleTransaction(session => {
 
 				var archivedVersion = session.Load<ArchivedAlbumVersion>(archivedAlbumVersionId);
+
+				if (archivedVersion.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
 				var album = archivedVersion.Album;
 
 				session.AuditLogger.SysLog("reverting " + album + " to version " + archivedVersion.Version);
@@ -935,8 +940,8 @@ namespace VocaDb.Model.Database.Queries {
 
 						var songDiff = new SongDiff();
 						songDiff.Names.Set();
-						var songArtistDiff = await song.SyncArtists(contract.Artists, 
-							addedArtistContracts => GetArtists(session, addedArtistContracts));
+						var songArtistDiff = await song.SyncArtistsAsync(contract.Artists, 
+							addedArtistContracts => GetArtistsAsync(session, addedArtistContracts));
 
 						if (songArtistDiff.Changed) {
 							songDiff.Artists.Set();
@@ -945,7 +950,7 @@ namespace VocaDb.Model.Database.Queries {
 
 						await session.SyncAsync(songArtistDiff);
 
-						var archived = ArchiveSong(session.OfType<Song>(), song, songDiff, SongArchiveReason.Created,
+						var archived = await ArchiveSongAsync(session.OfType<Song>(), song, songDiff, SongArchiveReason.Created,
 							string.Format("Created for album '{0}'", album.DefaultName.TruncateWithEllipsis(100)));
 
 						await session.AuditLogger.AuditLogAsync(string.Format("created {0} for {1}",
@@ -959,7 +964,7 @@ namespace VocaDb.Model.Database.Queries {
 				});
 
 				var tracksDiff = await album.SyncSongs(properties.Songs, songGetter, 
-					(song, artistContracts) => UpdateSongArtists(session, song, artistContracts));
+					(song, artistContracts) => UpdateSongArtistsAsync(session, song, artistContracts));
 
 				await session.OfType<SongInAlbum>().SyncAsync(tracksDiff);
 

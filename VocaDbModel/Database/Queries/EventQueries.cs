@@ -272,27 +272,37 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ArchivedEventSeriesVersionDetailsContract GetSeriesVersionDetails(int id, int comparedVersionId) {
 
-			return HandleQuery(session =>
-				new ArchivedEventSeriesVersionDetailsContract(session.Load<ArchivedReleaseEventSeriesVersion>(id),
+			return HandleQuery(session => {
+
+				var contract = new ArchivedEventSeriesVersionDetailsContract(session.Load<ArchivedReleaseEventSeriesVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventSeriesVersion>(comparedVersionId) : null,
-					PermissionContext.LanguagePreference));
+					PermissionContext);
+
+				if (contract.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
+
+			});
 		}
 
 		public ArchivedEventVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
 
-			return HandleQuery(session =>
-				new ArchivedEventVersionDetailsContract(session.Load<ArchivedReleaseEventVersion>(id),
+			return HandleQuery(session => {
+
+				var contract = new ArchivedEventVersionDetailsContract(session.Load<ArchivedReleaseEventVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventVersion>(comparedVersionId) : null,
-					PermissionContext.LanguagePreference));
+					PermissionContext);
 
-		}
+				if (contract.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
 
-		public XDocument GetSeriesVersionXml(int id) {
-			return HandleQuery(ctx => ctx.Load<ArchivedReleaseEventSeriesVersion>(id).Data);
-		}
+				return contract;
 
-		public XDocument GetVersionXml(int id) {
-			return HandleQuery(ctx => ctx.Load<ArchivedReleaseEventVersion>(id).Data);
+			});
+
 		}
 
 		public ReleaseEventContract[] List(EventSortRule sortRule, SortDirection sortDirection, bool includeSeries = false) {

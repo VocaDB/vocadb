@@ -19,6 +19,12 @@
 	</div>
 }
 
+@helper HiddenBanner() {
+	<div class="alert">
+		@Resources.CommonMessages.RevisionHidden
+	</div>
+}
+
 @helper EntryDeletePopupBase(string confirmText, string viewModelBindingName,  string deleteButtonId, string title, string deleteButtonText) {
 
 	<!-- Viewmodel: DeleteEntryViewModel -->

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
@@ -222,6 +223,39 @@ namespace VocaDb.Model.Service {
 		public Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext<TEntity>, Task<TResult>> func, string failMsg = "Unexpected database error") {
 			return repository.HandleTransactionAsync(func, failMsg);
 		}
+
+		public XDocument GetVersionXml<TArchivedVersion>(int id) where TArchivedVersion : class, IArchivedObjectVersion {
+
+			return HandleQuery(ctx => {
+
+				var archivedVersion = ctx.Load<TArchivedVersion>(id);
+
+				if (archivedVersion.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return archivedVersion.Data;
+
+			});
+
+		}
+
+		public void UpdateVersionVisibility<TArchivedVersion>(int archivedVersionId, bool hidden) where TArchivedVersion : class, IArchivedObjectVersion {
+
+			permissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+
+			repository.HandleTransaction(session => {
+
+				var archivedVersion = session.Load<TArchivedVersion>(archivedVersionId);
+
+				archivedVersion.Hidden = hidden;
+
+				AuditLog($"updated version visibility for {archivedVersion} to Hidden = {hidden}", session);
+
+			});
+
+		}
+
 	}
 
 }

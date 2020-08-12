@@ -63,7 +63,7 @@ namespace VocaDb.Web.Controllers
 			if (id == invalidId)
 				return NoId();
 
-			var doc = Service.GetVersionXml(id);
+			var doc = queries.GetVersionXml<ArchivedArtistVersion>(id);
 			var content = XmlHelper.SerializeToUTF8XmlString(doc);
 
 			return Xml(content);
@@ -239,7 +239,7 @@ namespace VocaDb.Web.Controllers
         // POST: /Artist/Edit/5
         [HttpPost]
         [Authorize]
-        public ActionResult Edit(ArtistEditViewModel viewModel)
+        public async Task<ActionResult> Edit(ArtistEditViewModel viewModel)
         {
 
 			// Unable to continue if viewmodel is null because we need the ID at least
@@ -271,7 +271,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			try {
-				queries.Update(model, pictureData, PermissionContext);	
+				await queries.Update(model, pictureData, PermissionContext);	
 			} catch (InvalidPictureException) {
 				ModelState.AddModelError("ImageError", "The uploaded image could not processed, it might be broken. Please check the file and try again.");				
 				return View("Edit", CreateArtistEditViewModel(model.Id, model));
@@ -309,6 +309,14 @@ namespace VocaDb.Web.Controllers
 
 			var contract = Service.GetArtist(id);
 			return Content(contract.Name);
+
+		}
+
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden) {
+
+			queries.UpdateVersionVisibility<ArchivedArtistVersion>(archivedVersionId, hidden);
+
+			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 
 		}
 

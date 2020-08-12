@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -21,7 +22,8 @@ namespace VocaDb.Model.Helpers {
 		/// <exception cref="WebException">If a web request error occurred.</exception>
 		/// <exception cref="JsonSerializationException">If the response wasn't valid JSON.</exception>
 		/// <exception cref="HttpRequestException">If the request failed.</exception>
-		public static async Task<T> ReadObjectAsync<T>(string url, TimeSpan timeout, string userAgent = "") {
+		public static async Task<T> ReadObjectAsync<T>(string url, TimeSpan timeout, string userAgent = "",
+			Action<HttpRequestHeaders> headers = null) {
 
 			return await HtmlRequestHelper.GetStreamAsync(url, stream => {
 				using (var streamReader = new StreamReader(stream))
@@ -29,7 +31,7 @@ namespace VocaDb.Model.Helpers {
 					var serializer = new JsonSerializer();
 					return serializer.Deserialize<T>(jsonReader);
 				}
-			}, timeout: timeout, userAgent: userAgent);
+			}, timeout: timeout, userAgent: userAgent, headers: headers);
 
 		}
 

@@ -285,6 +285,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
+		public async Task Create_FlaggedUser_NotReported() {
+
+			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 0.5d, Frequency = 1 };
+			var result = await CallCreate();
+
+			result.Should().NotBeNull();
+			repository.List<UserReport>().Should().BeEmpty(because: "Confidence too low");
+
+		}
+
+		[TestMethod]
 		public async Task Create_LikelyMaliciousIP_Limited() {
 
 			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 60d, Frequency = 100 };

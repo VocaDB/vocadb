@@ -468,7 +468,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>List of sorts, sorted by the rating position.</returns>
 		[System.Web.Http.Route("top-rated")]
 		[CacheOutput(ClientTimeSpan = 600, ServerTimeSpan = 600)]
-		public IEnumerable<SongForApiContract> GetTopSongs(
+		public async Task<IEnumerable<SongForApiContract>> GetTopSongs(
 			int? durationHours = null, 
 			DateTime? startDate = null,
 			TopSongsDateFilterType? filterBy = null,
@@ -477,64 +477,7 @@ namespace VocaDb.Web.Controllers.Api {
 			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
 			
-			return queries.HandleQuery(ctx => {			
-
-				var query = ctx.Query()
-					.Where(s => !s.Deleted && s.RatingScore > 0)
-					.WhereHasVocalist(vocalist ?? SongVocalistSelection.Nothing);
-
-				if (durationHours.HasValue) {
-
-					var timeSpan = TimeSpan.FromHours(durationHours.Value);
-					DateTime? endDate = null;
-
-					if (!startDate.HasValue) {
-						startDate = DateTime.Now - timeSpan;
-						endDate = DateTime.Now.AddDays(1);
-					} else {
-						endDate = startDate + timeSpan;
-					}
-
-					switch (filterBy) {
-						case TopSongsDateFilterType.PublishDate: {
-							startDate = startDate?.Date;
-							endDate = endDate?.Date;
-							query = query.WherePublishDateIsBetween(startDate, endDate);
-							break;
-						}
-						case TopSongsDateFilterType.CreateDate: {
-							query = query.Where(s => s.CreateDate >= startDate);
-							break;		
-						}
-						case TopSongsDateFilterType.Popularity: {
-							// Sort by number of ratings and hits during that time
-							// Older songs get more hits so value them even less
-							query = query.OrderByDescending(s => s.UserFavorites
-								.Where(f => f.Date >= startDate)
-								.Sum(f => (int)f.Rating) + (s.Hits.Count(h => h.Date >= startDate) / 100));
-							break;
-						}
-					}
-						
-					if (filterBy != TopSongsDateFilterType.Popularity) {
-						query = query.OrderByDescending(s => s.RatingScore + (s.Hits.Count / 30));
-					}
-
-				} else {
-					query = query.OrderByDescending(s => s.RatingScore);			
-				}
-					
-				var songs = query
-					.Take(maxResults)
-					.ToArray();
-
-				var contracts = songs
-					.Select(s => new SongForApiContract(s, null, languagePreference, fields))
-					.ToArray();
-
-				return contracts;
-
-			});
+			return await queries.GetTopRated(durationHours, startDate, filterBy, vocalist, maxResults, fields, languagePreference);
 
 		}
 
@@ -625,12 +568,6 @@ namespace VocaDb.Web.Controllers.Api {
 			queries.UpdatePersonalDescription(id, data);
 		}
 
-	}
-
-	public enum TopSongsDateFilterType {
-		CreateDate,
-		PublishDate,
-		Popularity
 	}
 
 }

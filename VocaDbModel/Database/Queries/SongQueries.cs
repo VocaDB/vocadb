@@ -654,6 +654,76 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public async Task<SongForApiContract[]> GetTopRated(
+			int? durationHours,
+			DateTime? startDate,
+			TopSongsDateFilterType? filterBy,
+			SongVocalistSelection? vocalist,
+			int maxResults,
+			SongOptionalFields fields,
+			ContentLanguagePreference languagePreference) {
+
+			return await repository.HandleQueryAsync(async ctx => {
+
+				var query = ctx.Query()
+					.Where(s => !s.Deleted && s.RatingScore > 0)
+					.WhereHasVocalist(vocalist ?? SongVocalistSelection.Nothing);
+
+				if (durationHours.HasValue) {
+
+					var timeSpan = TimeSpan.FromHours(durationHours.Value);
+					DateTime? endDate = null;
+
+					if (!startDate.HasValue) {
+						startDate = DateTime.Now - timeSpan;
+						endDate = DateTime.Now.AddDays(1);
+					} else {
+						endDate = startDate + timeSpan;
+					}
+
+					switch (filterBy) {
+						case TopSongsDateFilterType.PublishDate: {
+								startDate = startDate?.Date;
+								endDate = endDate?.Date;
+								query = query.WherePublishDateIsBetween(startDate, endDate);
+								break;
+							}
+						case TopSongsDateFilterType.CreateDate: {
+								query = query.Where(s => s.CreateDate >= startDate);
+								break;
+							}
+						case TopSongsDateFilterType.Popularity: {
+								// Sort by number of ratings and hits during that time
+								// Older songs get more hits so value them even less
+								query = query.OrderByDescending(s => s.UserFavorites
+									.Where(f => f.Date >= startDate)
+									.Sum(f => (int)f.Rating) + (s.Hits.Count(h => h.Date >= startDate) / 100));
+								break;
+							}
+					}
+
+					if (filterBy != TopSongsDateFilterType.Popularity) {
+						query = query.OrderByDescending(s => s.RatingScore + (s.Hits.Count / 30));
+					}
+
+				} else {
+					query = query.OrderByDescending(s => s.RatingScore);
+				}
+
+				var songs = await query
+					.Take(maxResults)
+					.VdbToListAsync();
+
+				var contracts = songs
+					.Select(s => new SongForApiContract(s, null, languagePreference, fields))
+					.ToArray();
+
+				return contracts;
+
+			});
+
+		}
+
 		private IEnumerable<(Song song, SongMatchProperty property)> GetNameMatches(IDatabaseContext<Song> ctx, string[] names, int[] artistIds) {
 			
 			if (names == null || !names.Any())
@@ -974,6 +1044,11 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleTransaction(session => {
 
 				var archivedVersion = session.Load<ArchivedSongVersion>(archivedSongVersionId);
+
+				if (archivedVersion.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
 				var song = archivedVersion.Song;
 
 				session.AuditLogger.SysLog("reverting " + song + " to version " + archivedVersion.Version);
@@ -1224,6 +1299,12 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+	}
+
+	public enum TopSongsDateFilterType {
+		CreateDate,
+		PublishDate,
+		Popularity
 	}
 
 }
