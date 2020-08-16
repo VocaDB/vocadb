@@ -69,11 +69,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(int commentId) {
-			
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Delete(commentId));
-
-		}
+		public void DeleteComment(int commentId) => queries.DeleteComment(commentId);
 
 		/// <summary>
 		/// Gets a list of comments for an album.
@@ -342,18 +338,8 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[Route("ids")]
-		[ApiExplorerSettings(IgnoreApi=true)]
-		public IEnumerable<int> GetIds() {
-
-			var versions = queries
-				.HandleQuery(ctx => ctx.Query()
-					.Where(a => !a.Deleted)
-					.Select(v => v.Id)
-					.ToArray());
-
-			return versions;
-
-		}
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public IEnumerable<int> GetIds() => queries.GetIds();
 
 		/// <summary>
 		/// Gets a complete list of album versions and Ids.
@@ -361,20 +347,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </summary>
 		/// <returns>List of album IDs with versions.</returns>
 		[Route("versions")]
-		[ApiExplorerSettings(IgnoreApi=true)]
-		public EntryIdAndVersionContract[] GetVersions() {
-
-			var versions = queries
-				.HandleQuery(ctx => ctx.Query()
-					.Where(a => !a.Deleted)
-					.Select(a => new { a.Id, a.Version })
-					.ToArray()
-					.Select(v => new EntryIdAndVersionContract(v.Id, v.Version))
-					.ToArray());
-
-			return versions;
-
-		}
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public EntryIdAndVersionContract[] GetVersions() => queries.GetVersions();
 
 		/// <summary>
 		/// Updates a comment.
@@ -387,11 +361,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) {
-			
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
-
-		}
+		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.PostEditComment(commentId, contract);
 
 		/// <summary>
 		/// Posts a new comment.

@@ -1,4 +1,7 @@
-﻿using VocaDb.Model.Database.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Discussions;
 using VocaDb.Model.DataContracts.Users;
@@ -7,12 +10,15 @@ using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Queries;
+using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Database.Queries {
 
 	public class DiscussionQueries : QueriesBase<IDiscussionFolderRepository, DiscussionFolder> {
 
+		private const int defaultMax = 10;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IUserIconFactory userIconFactory;
 
@@ -160,6 +166,79 @@ namespace VocaDb.Model.Database.Queries {
 
 				ctx.Update(topic);
 				ctx.AuditLogger.AuditLog("updated " + topic);
+
+			});
+
+		}
+
+		public IEnumerable<DiscussionFolderContract> GetFolders(
+			DiscussionFolderOptionalFields fields = DiscussionFolderOptionalFields.None) {
+
+			return HandleQuery(ctx => {
+
+				return ctx.Query()
+					.Where(f => !f.Deleted)
+					.OrderBy(f => f.SortIndex)
+					.ThenBy(f => f.Name)
+					.ToArray()
+					.Select(f => new DiscussionFolderContract(f, fields, userIconFactory))
+					.ToArray();
+
+			});
+
+		}
+
+		public PartialFindResult<DiscussionTopicContract> GetTopics(
+			int? folderId = null,
+			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+ 			DiscussionTopicSortRule sort = DiscussionTopicSortRule.DateCreated,
+			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) {
+
+			return HandleQuery(ctx => {
+
+				var query = ctx.OfType<DiscussionTopic>()
+					.Query()
+					.WhereNotDeleted()
+					.WhereIsInFolder(folderId);
+
+				var topics = query
+					.OrderBy(sort)
+					.Paged(new PagingProperties(start, maxResults, getTotalCount))
+					.ToArray()
+					.Select(f => new DiscussionTopicContract(f, userIconFactory, fields))
+					.ToArray();
+
+				var count = (getTotalCount ? query.Count() : 0);
+
+				return PartialFindResult.Create(topics, count);
+
+			});
+
+		}
+
+		[Obsolete]
+		public IEnumerable<DiscussionTopicContract> GetTopicsForFolder(int folderId,
+			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) {
+
+			return HandleQuery(ctx => {
+
+				var folder = ctx.Load(folderId);
+
+				return folder.Topics
+					.Select(t => new DiscussionTopicContract(t, userIconFactory, fields))
+					.OrderByDescending(t => t.LastComment != null ? t.LastComment.Created : t.Created)
+					.ToArray();
+
+			});
+
+		}
+
+		public DiscussionTopicContract GetTopic(int topicId,
+			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) {
+
+			return HandleQuery(ctx => {
+
+				return new DiscussionTopicContract(ctx.OfType<DiscussionTopic>().Load(topicId), userIconFactory, fields);
 
 			});
 

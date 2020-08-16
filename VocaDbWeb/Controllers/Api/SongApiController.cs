@@ -18,7 +18,6 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
@@ -75,11 +74,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[System.Web.Http.Route("comments/{commentId:int}")]
 		[System.Web.Http.Authorize]
-		public void DeleteComment(int commentId) {
-			
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Delete(commentId));
-
-		}
+		public void DeleteComment(int commentId) => queries.DeleteComment(commentId);
 
 		/// <summary>
 		/// Deletes a song.
@@ -138,13 +133,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Pagination and sorting might be added later.
 		/// </remarks>
 		[System.Web.Http.Route("{id:int}/derived")]
-		public IEnumerable<SongForApiContract> GetDerived(int id, SongOptionalFields fields = SongOptionalFields.None, 
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-			
-			var songs = queries.HandleQuery(s => s.Load(id).AlternateVersions.Select(child => new SongForApiContract(child, null, lang, fields)).ToArray());
-			return songs;
-
-		}
+		public IEnumerable<SongForApiContract> GetDerived(int id, SongOptionalFields fields = SongOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetDerived(id, fields, lang);
 
 		[System.Web.Http.Route("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi=true)]
@@ -418,18 +408,8 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[System.Web.Http.Route("ids")]
-		[ApiExplorerSettings(IgnoreApi=true)]
-		public IEnumerable<int> GetIds() {
-
-			var versions = queries
-				.HandleQuery(ctx => ctx.Query()
-					.Where(a => !a.Deleted)
-					.Select(v => v.Id)
-					.ToArray());
-
-			return versions;
-
-		}
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public IEnumerable<int> GetIds() => queries.GetIds();
 
 		[System.Web.Http.Route("{id:int}/pvs")]
 		[ApiExplorerSettings(IgnoreApi=true)]
@@ -492,11 +472,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[System.Web.Http.Route("comments/{commentId:int}")]
 		[System.Web.Http.Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) {
-			
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
-
-		}
+		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.PostEditComment(commentId, contract);
 
 		/// <summary>
 		/// Posts a new comment.
@@ -535,31 +511,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[System.Web.Http.Route("{id:int}/pvs")]
 		[System.Web.Http.Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task PostPVs(int id, PVContract[] pvs) {
-
-			await queries.HandleTransaction(async ctx => {
-
-				var song = await ctx.LoadAsync(id);
-
-				EntryPermissionManager.VerifyEdit(userPermissionContext, song);
-
-				var diff = new SongDiff();
-
-				var pvDiff = await queries.UpdatePVs(ctx, song, diff, pvs);
-
-				if (pvDiff.Changed) {
-
-					var logStr = string.Format("updated PVs for song {0}", entryLinkFactory.CreateEntryLink(song)).Truncate(400);
-
-					await queries.ArchiveAsync(ctx, song, diff, SongArchiveReason.PropertiesUpdated, string.Empty);
-					await ctx.UpdateAsync(song);
-					await ctx.AuditLogger.AuditLogAsync(logStr);
-
-				}
-
-			});
-
-		}
+		public async Task PostPVs(int id, PVContract[] pvs) => await queries.PostPVs(id, pvs);
 
 		[Route("{id:int}/personal-description")]
 		[ApiExplorerSettings(IgnoreApi = true)]

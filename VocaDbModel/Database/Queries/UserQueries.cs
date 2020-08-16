@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Runtime.Caching;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -1874,6 +1873,17 @@ namespace VocaDb.Model.Database.Queries {
 			});
 
 		}
+
+		public UserForApiContract GetOne(int id, UserOptionalFields fields = UserOptionalFields.None) => HandleQuery(ctx => new UserForApiContract(ctx.Load(id), userIconFactory, fields));
+
+		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
+
+		public bool IsNotification(int messageId, UserWithPermissionsContract user) => HandleQuery(ctx => {
+
+			return ctx.Query<UserMessage>()
+				.Any(m => m.Id == messageId && m.User.Id == user.Id && m.Inbox == UserInboxType.Notifications);
+
+		});
 
 	}
 

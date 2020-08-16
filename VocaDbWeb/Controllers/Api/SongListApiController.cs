@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -78,11 +77,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(int commentId) {
-
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Delete(commentId));
-
-		}
+		public void DeleteComment(int commentId) => queries.DeleteComment(commentId);
 
 		/// <summary>
 		/// Gets a list of comments for a song list.
@@ -154,27 +149,10 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="maxResults">Maximum number of results.</param>
 		/// <returns>List of list names.</returns>
 		[Route("featured/names")]
-		public IEnumerable<string> GetFeaturedListNames(string query = "", 
+		public IEnumerable<string> GetFeaturedListNames(string query = "",
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
-			int maxResults = 10) {
-
-			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
-
-			return queries.HandleQuery(ctx => {
-
-				return ctx.Query()
-					.WhereNotDeleted()
-					.WhereHasFeaturedCategory(featuredCategory, false)
-					.WhereHasName(textQuery)
-					.Select(l => l.Name)
-					.OrderBy(n => n)
-					.Take(maxResults)
-					.ToArray();
-
-			});
-
-		}
+			int maxResults = 10) => queries.GetFeaturedListNames(query, nameMatchMode, featuredCategory, maxResults);
 
 		/// <summary>
 		/// Gets a list of songs in a song list.
@@ -285,11 +263,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[System.Web.Http.Route("comments/{commentId:int}")]
 		[System.Web.Http.Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) {
-
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
-
-		}
+		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.PostEditComment(commentId, contract);
 
 		/// <summary>
 		/// Posts a new comment.

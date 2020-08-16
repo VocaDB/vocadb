@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -28,18 +29,15 @@ using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
+using VocaDb.Web.Helpers;
 using VocaDb.Web.Models;
 using VocaDb.Web.Models.User;
-using VocaDb.Web.Helpers;
-using VocaDb.Web.Code.Exceptions;
-using System.Net;
-using System.Threading.Tasks;
 
-namespace VocaDb.Web.Controllers
-{
-    public class UserController : ControllerBase
+namespace VocaDb.Web.Controllers {
+	public class UserController : ControllerBase
     {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
@@ -632,8 +630,7 @@ namespace VocaDb.Web.Controllers
 
 			if (messageId.HasValue) {
 
-				var isNotification = Data.HandleQuery(ctx => ctx.Query<UserMessage>().Any(
-					m => m.Id == messageId && m.User.Id == user.Id && m.Inbox == UserInboxType.Notifications));
+				var isNotification = Data.IsNotification(messageId.Value, user);
 
 				if (isNotification)
 					inbox = UserInboxType.Notifications;

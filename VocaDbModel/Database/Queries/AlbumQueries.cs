@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web;
 using NHibernate;
-using NHibernate.Criterion;
 using NHibernate.Linq;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
@@ -1045,6 +1043,38 @@ namespace VocaDb.Model.Database.Queries {
 			});
 
 		}
+
+		public void DeleteComment(int commentId) => HandleTransaction(ctx => Comments(ctx).Delete(commentId));
+
+		public IEnumerable<int> GetIds() {
+
+			return HandleQuery(ctx => {
+
+				return ctx.Query()
+					.Where(a => !a.Deleted)
+					.Select(v => v.Id)
+					.ToArray();
+
+			});
+
+		}
+
+		public EntryIdAndVersionContract[] GetVersions() {
+
+			return HandleQuery(ctx => {
+
+				return ctx.Query()
+					.Where(a => !a.Deleted)
+					.Select(a => new { a.Id, a.Version })
+					.ToArray()
+					.Select(v => new EntryIdAndVersionContract(v.Id, v.Version))
+					.ToArray();
+
+			});
+
+		}
+
+		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
 
 	}
 }
