@@ -45,6 +45,7 @@ namespace VocaDb.Web.Controllers
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private const int clientCacheDurationSec = 86400;
 
+		private readonly ActivityEntryQueries activityEntryQueries;
 		private readonly ArtistQueries artistQueries;
 		private readonly ArtistService artistService;
 		private readonly VdbConfigManager config;
@@ -76,10 +77,11 @@ namespace VocaDb.Web.Controllers
 
 		public UserController(UserService service, UserQueries data, ArtistService artistService, ArtistQueries artistQueries, OtherService otherService, 
 			IRepository repository,
-			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config, MarkdownParser markdownParser) {
+			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config, MarkdownParser markdownParser, ActivityEntryQueries activityEntryQueries) {
 
 			Service = service;
 			Data = data;
+			this.activityEntryQueries = activityEntryQueries;
 			this.artistQueries = artistQueries;
 			this.artistService = artistService;
 			this.repository = repository;
@@ -609,7 +611,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = clientCacheDurationSec)]
 		public ActionResult Stats_EditsPerDay(int id) {
 			
-			var points = new ActivityEntryQueries(repository).GetEditsPerDay(id, null);
+			var points = activityEntryQueries.GetEditsPerDay(id, null);
 
 			return LowercaseJson(HighchartsHelper.DateLineChartWithAverage("Edits per day", "Edits", "Number of edits", points));
 

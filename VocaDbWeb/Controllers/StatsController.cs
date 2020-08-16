@@ -54,6 +54,7 @@ namespace VocaDb.Web.Controllers {
 
 		private const int clientCacheDurationSec = 86400;
 		private readonly VdbConfigManager config;
+		private readonly ActivityEntryQueries activityEntryQueries;
 		private readonly SongAggregateQueries songAggregateQueries;
 
 		private T GetCachedReport<T>() where T : class {
@@ -328,11 +329,12 @@ namespace VocaDb.Web.Controllers {
 		private DateTime DefaultMinDate => new DateTime(config.SiteSettings.MinAlbumYear, 1, 1);
 
 		public StatsController(IUserRepository userRepository, IRepository repository, IUserPermissionContext permissionContext, SongAggregateQueries songAggregateQueries,
-			HttpContextBase context, VdbConfigManager config) {
+			HttpContextBase context, VdbConfigManager config, ActivityEntryQueries activityEntryQueries) {
 
 			this.userRepository = userRepository;
 			this.repository = repository;
 			this.permissionContext = permissionContext;
+			this.activityEntryQueries = activityEntryQueries;
 			this.songAggregateQueries = songAggregateQueries;
 			this.context = context;
 			this.config = config;
@@ -527,7 +529,7 @@ namespace VocaDb.Web.Controllers {
 		[OutputCache(Duration = clientCacheDurationSec, VaryByParam = "cutoff")]
 		public ActionResult EditsPerDay(DateTime? cutoff) {
 			
-			var points = new ActivityEntryQueries(repository).GetEditsPerDay(null, cutoff);
+			var points = activityEntryQueries.GetEditsPerDay(null, cutoff);
 
 			return DateLineChartWithAverage("Edits per day", "Edits", "Number of edits", points);
 
