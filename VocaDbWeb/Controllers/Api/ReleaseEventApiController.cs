@@ -1,8 +1,6 @@
 using System;
-using System.Linq;
 using System.Web.Http;
 using VocaDb.Model.Database.Queries;
-using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
@@ -28,12 +26,10 @@ namespace VocaDb.Web.Controllers.Api {
 
 		private const int defaultMax = 10;
 		private readonly EventQueries queries;
-		private readonly IEventRepository repository;
 		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 
-		public ReleaseEventApiController(EventQueries queries, IEventRepository repository, IAggregatedEntryImageUrlFactory thumbPersister) {
+		public ReleaseEventApiController(EventQueries queries, IAggregatedEntryImageUrlFactory thumbPersister) {
 			this.queries = queries;
-			this.repository = repository;
 			this.thumbPersister = thumbPersister;
 		}
 
@@ -68,18 +64,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="lang">Content language preference.</param>
 		/// <returns>List of albums.</returns>
 		[Route("{eventId:int}/albums")]
-		public AlbumForApiContract[] GetAlbums(int eventId, 
-			AlbumOptionalFields fields = AlbumOptionalFields.None, 
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-			
-			return repository.HandleQuery(ctx => {
-				
-				var ev = ctx.Load(eventId);
-				return ev.Albums.Select(a => new AlbumForApiContract(a, null, lang, thumbPersister, fields, SongOptionalFields.None)).ToArray();
-
-			});
-
-		}
+		public AlbumForApiContract[] GetAlbums(int eventId,
+			AlbumOptionalFields fields = AlbumOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetAlbums(eventId, fields, lang);
 
 		/// <summary>
 		/// Gets a list of songs for a specific event.
@@ -91,14 +78,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{eventId:int}/published-songs")]
 		public SongForApiContract[] GetPublishedSongs(int eventId,
 			SongOptionalFields fields = SongOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			return repository.HandleQuery(ctx => {
-				var ev = ctx.Load(eventId);
-				return ev.Songs.Select(a => new SongForApiContract(a, lang, fields)).ToArray();
-			});
-
-		}
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetPublishedSongs(eventId, fields, lang);
 
 		/// <summary>
 		/// Gets a page of events.
@@ -187,20 +167,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("names")]
 		public string[] GetNames(
 			string query = "",
-			int maxResults = 10) {
-			
-			return repository.HandleQuery(ctx => {
-
-				return ctx.Query<EventName>()
-					.Where(n => !n.Entry.Deleted && n.Value.Contains(query))
-					.OrderBy(n => n.Value)
-					.Take(maxResults)
-					.Select(r => r.Value)
-					.ToArray();
-				
-			});
-
-		}
+			int maxResults = 10) => queries.GetNames(query, maxResults);
 
 		[Route("{id:int}")]
 		public ReleaseEventForApiContract GetOne(int id, 
