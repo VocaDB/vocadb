@@ -60,8 +60,17 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="creator">User who created the entry. The creator will be excluded from all notifications. Cannot be null.</param>
 		/// <param name="entryLinkFactory">Factory for creating links to entries. Cannot be null.</param>
 		public async Task SendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry,
-			IEnumerable<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
+			IReadOnlyCollection<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
 			IEnumTranslations enumTranslations) {
+
+			ParamIs.NotNull(() => ctx);
+			ParamIs.NotNull(() => entry);
+			ParamIs.NotNull(() => tags);
+			ParamIs.NotNull(() => ignoreUsers);
+			ParamIs.NotNull(() => entryLinkFactory);
+
+			if (!tags.Any())
+				return;
 
 			try {
 				await DoSendNotificationsAsync(ctx, entry, tags, ignoreUsers, entryLinkFactory, enumTranslations);
@@ -72,14 +81,8 @@ namespace VocaDb.Model.Service.Helpers {
 		}
 
 		private async Task DoSendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry,
-			IEnumerable<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
+			IReadOnlyCollection<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
 			IEnumTranslations enumTranslations) {
-
-			ParamIs.NotNull(() => ctx);
-			ParamIs.NotNull(() => entry);
-			ParamIs.NotNull(() => tags);
-			ParamIs.NotNull(() => ignoreUsers);
-			ParamIs.NotNull(() => entryLinkFactory);
 
 			var coll = tags.Distinct().ToArray();
 			var tagIds = coll.Select(a => a.Id).ToArray();
