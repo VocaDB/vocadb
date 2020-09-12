@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -24,7 +23,7 @@ using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api {
-	
+
 	/// <summary>
 	/// API queries for tags.
 	/// </summary>
@@ -72,11 +71,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="commentId">ID of the comment to be deleted.</param>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(int commentId) {
-
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Delete(commentId));
-
-		}
+		public void DeleteComment(int commentId) => queries.DeleteComment(commentId);
 
 		/// <summary>
 		/// Gets a tag by ID.
@@ -137,13 +132,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>List of child tags.</returns>
 		/// <example>http://vocadb.net/api/tags/481/children</example>
 		[Route("{tagId:int}/children")]
-		public TagForApiContract[] GetChildTags(int tagId, 
-			TagOptionalFields fields = TagOptionalFields.None, 
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			return queries.HandleQuery(ctx => ctx.Load(tagId).Children.Select(t => new TagForApiContract(t, thumbPersister, lang, fields)).ToArray());
-
-		}
+		public TagForApiContract[] GetChildTags(int tagId,
+			TagOptionalFields fields = TagOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetChildTags(tagId, fields, lang);
 
 		/// <summary>
 		/// Gets a list of comments for a tag.
@@ -257,18 +248,8 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("top")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
 		public TagBaseContract[] GetTopTags(string categoryName = null, EntryType? entryType = null,
-			int maxResults = 15, 
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			return queries.HandleQuery(ctx => ctx.Query<Tag>()
-				.WhereHasCategoryName(categoryName)
-				.OrderByUsageCount(entryType)
-				.Paged(new PagingProperties(0, maxResults, false))
-				.Select(t => new TagBaseContract(t, lang, false, false))
-				.ToArray())
-				.OrderBy(t => t.Name).ToArray();
-
-		}
+			int maxResults = 15,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetTopTags(categoryName, entryType, maxResults, lang);
 
 		/// <summary>
 		/// Creates a new report.
@@ -313,11 +294,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="contract">New comment data. Only message can be edited.</param>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) {
-
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
-
-		}
+		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.PostEditComment(commentId, contract);
 
 		/// <summary>
 		/// Posts a new comment.

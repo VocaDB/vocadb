@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -15,27 +15,26 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.Search;
-using VocaDb.Model.Service.Search.User;
-using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Domain.PVs;
-using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
+using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
-using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -297,9 +296,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="fields">Optional fields.</param>
 		/// <returns>User properties.</returns>
 		[Route("{id:int}")]
-		public UserForApiContract GetOne(int id, UserOptionalFields fields = UserOptionalFields.None) {
-			return queries.HandleQuery(ctx => new UserForApiContract(ctx.Load(id), userIconFactory, fields));
-		}
+		public UserForApiContract GetOne(int id, UserOptionalFields fields = UserOptionalFields.None) => queries.GetOne(id, fields);
 
 		/// <summary>
 		/// Gets a user message.
@@ -649,11 +646,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("profileComments/{commentId:int}")]
 		[Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) {
-			
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
-
-		}
+		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.PostEditComment(commentId, contract);
 
 		public class UserEventAssociation {
 			public UserEventRelationshipType AssociationType { get; set; }

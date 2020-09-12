@@ -1,14 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Discussions;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Web.Controllers.Api {
@@ -46,80 +43,23 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("folders")]
 		public IEnumerable<DiscussionFolderContract> GetFolders(
-			DiscussionFolderOptionalFields fields = DiscussionFolderOptionalFields.None) {
-			
-			return queries.HandleQuery(ctx => {
-				
-				return ctx.Query()
-					.Where(f => !f.Deleted)
-					.OrderBy(f => f.SortIndex)
-					.ThenBy(f => f.Name)
-					.ToArray()
-					.Select(f => new DiscussionFolderContract(f, fields, userIconFactory))
-					.ToArray();
-
-			});
-
-		}
+			DiscussionFolderOptionalFields fields = DiscussionFolderOptionalFields.None) => queries.GetFolders(fields);
 
 		[Route("topics")]
 		public PartialFindResult<DiscussionTopicContract> GetTopics(
 			int? folderId = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
  			DiscussionTopicSortRule sort = DiscussionTopicSortRule.DateCreated,
-			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) {
-			
-			return queries.HandleQuery(ctx => {
-
-				var query = ctx.OfType<DiscussionTopic>()
-					.Query()
-					.WhereNotDeleted()
-					.WhereIsInFolder(folderId);
-
-				var topics = query
-					.OrderBy(sort)
-					.Paged(new PagingProperties(start, maxResults, getTotalCount))
-					.ToArray()
-					.Select(f => new DiscussionTopicContract(f, userIconFactory, fields))
-					.ToArray();
-
-				var count = (getTotalCount ? query.Count() : 0);
-
-				return PartialFindResult.Create(topics, count);
-
-			});
-
-		}
+			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) => queries.GetTopics(folderId, start, maxResults, getTotalCount, sort, fields);
 
 		[Route("folders/{folderId:int}/topics")]
 		[Obsolete]
-		public IEnumerable<DiscussionTopicContract> GetTopicsForFolder(int folderId, 
-			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) {
-			
-			return queries.HandleQuery(ctx => {
-				
-				var folder = ctx.Load(folderId);
+		public IEnumerable<DiscussionTopicContract> GetTopicsForFolder(int folderId,
+			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) => queries.GetTopicsForFolder(folderId, fields);
 
-				return folder.Topics
-					.Select(t => new DiscussionTopicContract(t, userIconFactory, fields))
-					.OrderByDescending(t => t.LastComment != null ? t.LastComment.Created : t.Created)
-					.ToArray();
-
-			});
-
-		}
-		
 		[Route("topics/{topicId:int}")]
-		public DiscussionTopicContract GetTopic(int topicId, 
-			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) {
-			
-			return queries.HandleQuery(ctx => {
-				
-				return new DiscussionTopicContract(ctx.OfType<DiscussionTopic>().Load(topicId), userIconFactory, fields);
-			
-			});
-
-		}
+		public DiscussionTopicContract GetTopic(int topicId,
+			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) => queries.GetTopic(topicId, fields);
 	
 		[Route("comments/{commentId:int}")]
 		[Authorize]

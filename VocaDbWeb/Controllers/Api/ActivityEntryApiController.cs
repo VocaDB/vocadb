@@ -1,15 +1,11 @@
 using System;
-using System.Linq;
 using System.Web.Http;
-using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Activityfeed;
 using VocaDb.Model.DataContracts.Api;
-using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
-using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -19,21 +15,11 @@ namespace VocaDb.Web.Controllers.Api {
 	[RoutePrefix("api/activityEntries")]
 	public class ActivityEntryApiController : ApiController {
 
-		private const int absoluteMax = 500;
 		private const int defaultMax = 50;
-		private readonly IRepository repository;
-		private readonly IUserIconFactory userIconFactory;
-		private readonly IUserPermissionContext permissionContext;
-		private readonly EntryForApiContractFactory entryForApiContractFactory;
+		private readonly ActivityEntryQueries queries;
 
-		public ActivityEntryApiController(IRepository repository, IUserIconFactory userIconFactory, 
-			IUserPermissionContext permissionContext, EntryForApiContractFactory entryForApiContractFactory) {
-
-			this.repository = repository;
-			this.userIconFactory = userIconFactory;
-			this.permissionContext = permissionContext;
-			this.entryForApiContractFactory = entryForApiContractFactory;
-
+		public ActivityEntryApiController(ActivityEntryQueries queries) {
+			this.queries = queries;
 		}
 
 		/// <summary>
@@ -58,56 +44,12 @@ namespace VocaDb.Web.Controllers.Api {
 			DateTime? before = null,
 			DateTime? since = null,
  			int? userId = null,
-			EntryEditEvent? editEvent = null, 
-			int maxResults = defaultMax, 
+			EntryEditEvent? editEvent = null,
+			int maxResults = defaultMax,
 			bool getTotalCount = false,
 			ActivityEntryOptionalFields fields = ActivityEntryOptionalFields.None,
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-			
-			maxResults = Math.Min(maxResults, absoluteMax);
-
-			return repository.HandleQuery(ctx => {
-				
-				var query = ctx.Query<ActivityEntry>();
-
-				if (before.HasValue && !since.HasValue) {
-					query = query.Where(a => a.CreateDate < before.Value);
-				}
-
-				if (!before.HasValue && since.HasValue) {
-					query = query.Where(a => a.CreateDate > since.Value);
-				}
-
-				if (before.HasValue && since.HasValue) {
-					query = query.Where(a => a.CreateDate > since.Value && a.CreateDate < before.Value);
-				}
-
-				if (userId.HasValue) {
-					query = query.Where(a => a.Author.Id == userId.Value);
-				}
-
-				if (editEvent.HasValue) {
-					query = query.Where(a => a.EditEvent == editEvent.Value);
-				}
-
-				var activityEntries = query
-					.OrderByDescending(a => a.CreateDate)
-					.Take(maxResults)
-					.ToArray()
-					.Where(a => !a.EntryBase.Deleted)
-					.Select(a => new ActivityEntryForApiContract(a, 
-						fields.HasFlag(ActivityEntryOptionalFields.Entry) ? entryForApiContractFactory.Create(a.EntryBase, entryFields, lang) : null, 
-						userIconFactory, permissionContext, fields))
-					.ToArray();
-
-				var count = getTotalCount ? query.Count() : 0;
-
-				return PartialFindResult.Create(activityEntries, count);
-
-			});
-
-		}
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetList(before, since, userId, editEvent, maxResults, getTotalCount, fields, entryFields, lang);
 
 	}
 

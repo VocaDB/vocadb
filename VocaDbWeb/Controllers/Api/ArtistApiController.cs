@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -19,7 +18,6 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
-using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -82,11 +80,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(int commentId) {
-			
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Delete(commentId));
-
-		}
+		public void DeleteComment(int commentId) => queries.DeleteComment(commentId);
 
 		/// <summary>
 		/// Gets a list of comments for an artist.
@@ -197,18 +191,8 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[Route("ids")]
-		[ApiExplorerSettings(IgnoreApi=true)]
-		public IEnumerable<int> GetIds() {
-
-			var versions = queries
-				.HandleQuery(ctx => ctx.Query()
-					.Where(a => !a.Deleted)
-					.Select(v => v.Id)
-					.ToArray());
-
-			return versions;
-
-		}
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public IEnumerable<int> GetIds() => queries.GetIds();
 
 		/// <summary>
 		/// Gets a list of artist names. Ideal for autocomplete boxes.
@@ -231,18 +215,8 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[Route("versions")]
-		[ApiExplorerSettings(IgnoreApi=true)]
-		public EntryIdAndVersionContract[] GetVersions() {
-
-			var versions = queries
-				.HandleQuery(ctx => ctx.Query()
-					.Where(a => !a.Deleted)
-					.Select(a => new EntryIdAndVersionContract { Id = a.Id, Version = a.Version })
-					.ToArray());
-
-			return versions;
-
-		}
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public EntryIdAndVersionContract[] GetVersions() => queries.GetVersions();
 
 		/// <summary>
 		/// Updates a comment.
@@ -255,11 +229,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) {
-			
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
-
-		}
+		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.PostEditComment(commentId, contract);
 
 		/// <summary>
 		/// Posts a new comment.

@@ -195,7 +195,7 @@ namespace VocaDb.Model.Service {
 		/// <param name="func">Function running the unit of work. Cannot be null.</param>
 		/// <param name="failMsg">Failure message. Cannot be null.</param>
 		/// <returns>Result. Can be null.</returns>
-		public TResult HandleQuery<TResult>(Func<IDatabaseContext<TEntity>, TResult> func, string failMsg = "Unexpected database error") {
+		protected TResult HandleQuery<TResult>(Func<IDatabaseContext<TEntity>, TResult> func, string failMsg = "Unexpected database error") {
 			return repository.HandleQuery(func, failMsg);
 		}
 
@@ -205,7 +205,7 @@ namespace VocaDb.Model.Service {
 		/// <param name="func">Function running the unit of work. Cannot be null.</param>
 		/// <param name="failMsg">Failure message. Cannot be null.</param>
 		/// <returns>Result. Can be null.</returns>
-		public void HandleTransaction(Action<IDatabaseContext<TEntity>> func, string failMsg = "Unexpected database error") {
+		protected void HandleTransaction(Action<IDatabaseContext<TEntity>> func, string failMsg = "Unexpected database error") {
 			repository.HandleTransaction(func, failMsg);
 		}
 
@@ -216,11 +216,11 @@ namespace VocaDb.Model.Service {
 		/// <param name="func">Function running the unit of work. Cannot be null.</param>
 		/// <param name="failMsg">Failure message. Cannot be null.</param>
 		/// <returns>Result. Can be null.</returns>
-		public TResult HandleTransaction<TResult>(Func<IDatabaseContext<TEntity>, TResult> func, string failMsg = "Unexpected database error") {
+		protected TResult HandleTransaction<TResult>(Func<IDatabaseContext<TEntity>, TResult> func, string failMsg = "Unexpected database error") {
 			return repository.HandleTransaction(func, failMsg);
 		}
 
-		public Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext<TEntity>, Task<TResult>> func, string failMsg = "Unexpected database error") {
+		protected Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext<TEntity>, Task<TResult>> func, string failMsg = "Unexpected database error") {
 			return repository.HandleTransactionAsync(func, failMsg);
 		}
 

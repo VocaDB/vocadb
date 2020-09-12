@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -28,23 +29,21 @@ using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code;
+using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
+using VocaDb.Web.Helpers;
 using VocaDb.Web.Models;
 using VocaDb.Web.Models.User;
-using VocaDb.Web.Helpers;
-using VocaDb.Web.Code.Exceptions;
-using System.Net;
-using System.Threading.Tasks;
 
-namespace VocaDb.Web.Controllers
-{
-    public class UserController : ControllerBase
+namespace VocaDb.Web.Controllers {
+	public class UserController : ControllerBase
     {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private const int clientCacheDurationSec = 86400;
 
+		private readonly ActivityEntryQueries activityEntryQueries;
 		private readonly ArtistQueries artistQueries;
 		private readonly ArtistService artistService;
 		private readonly VdbConfigManager config;
@@ -76,10 +75,11 @@ namespace VocaDb.Web.Controllers
 
 		public UserController(UserService service, UserQueries data, ArtistService artistService, ArtistQueries artistQueries, OtherService otherService, 
 			IRepository repository,
-			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config, MarkdownParser markdownParser) {
+			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config, MarkdownParser markdownParser, ActivityEntryQueries activityEntryQueries) {
 
 			Service = service;
 			Data = data;
+			this.activityEntryQueries = activityEntryQueries;
 			this.artistQueries = artistQueries;
 			this.artistService = artistService;
 			this.repository = repository;
@@ -609,7 +609,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = clientCacheDurationSec)]
 		public ActionResult Stats_EditsPerDay(int id) {
 			
-			var points = new ActivityEntryQueries(repository).GetEditsPerDay(id, null);
+			var points = activityEntryQueries.GetEditsPerDay(id, null);
 
 			return LowercaseJson(HighchartsHelper.DateLineChartWithAverage("Edits per day", "Edits", "Number of edits", points));
 
@@ -630,8 +630,7 @@ namespace VocaDb.Web.Controllers
 
 			if (messageId.HasValue) {
 
-				var isNotification = Data.HandleQuery(ctx => ctx.Query<UserMessage>().Any(
-					m => m.Id == messageId && m.User.Id == user.Id && m.Inbox == UserInboxType.Notifications));
+				var isNotification = Data.IsNotification(messageId.Value, user);
 
 				if (isNotification)
 					inbox = UserInboxType.Notifications;

@@ -28,7 +28,7 @@ namespace VocaDb.Web.Controllers
 				return View("External");
 
 			ViewBag.FreeTagId = config.SpecialTags.Free;
-			ViewBag.InstrumentalTagId = tagQueries.HandleQuery(ctx => new EntryTypeTags(ctx).Instrumental);
+			ViewBag.InstrumentalTagId = tagQueries.InstrumentalTagId;
 
 			switch (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName) {
 				case "ja":
