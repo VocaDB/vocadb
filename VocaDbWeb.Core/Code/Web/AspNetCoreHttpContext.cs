@@ -11,26 +11,26 @@ namespace VocaDb.Web {
 
 	public class AspNetCoreHttpContext : IHttpContext, IServerPathMapper {
 
-		private readonly HttpContext context;
-		private readonly IWebHostEnvironment webHostEnvironment;
+		private readonly HttpContext _context;
+		private readonly IWebHostEnvironment _webHostEnvironment;
 
 		public AspNetCoreHttpContext(IHttpContextAccessor contextAccessor, IWebHostEnvironment webHostEnvironment) {
-			context = contextAccessor.HttpContext;
-			this.webHostEnvironment = webHostEnvironment;
+			_context = contextAccessor.HttpContext;
+			_webHostEnvironment = webHostEnvironment;
 		}
 
-		public IDictionary Items => new Dictionary<object, object>(context.Items);
-		public IHttpRequest Request => new AspNetCoreHttpRequest(context.Request);
-		public IHttpResponse Response => new AspNetCoreHttpResponse(context.Response);
+		public IDictionary Items => new Dictionary<object, object>(_context.Items);
+		public IHttpRequest Request => new AspNetCoreHttpRequest(_context.Request);
+		public IHttpResponse Response => new AspNetCoreHttpResponse(_context.Response);
 
 		public IPrincipal User {
-			get => context.User;
-			set => context.User = value as ClaimsPrincipal;
+			get => _context.User;
+			set => _context.User = value as ClaimsPrincipal;
 		}
 
 		public IServerPathMapper ServerPathMapper => this;
 
-		public string MapPath(string relative) => Path.Combine(webHostEnvironment.WebRootPath, relative.TrimStart('~', '/'));
+		public string MapPath(string relative) => Path.Combine(_webHostEnvironment.WebRootPath, relative.TrimStart('~', '/'));
 
 	}
 
