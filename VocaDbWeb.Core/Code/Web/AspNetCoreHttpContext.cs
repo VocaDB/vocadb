@@ -11,21 +11,23 @@ namespace VocaDb.Web {
 
 	public class AspNetCoreHttpContext : IHttpContext, IServerPathMapper {
 
-		private readonly HttpContext _context;
+		private readonly IHttpContextAccessor _contextAccessor;
 		private readonly IWebHostEnvironment _webHostEnvironment;
 
 		public AspNetCoreHttpContext(IHttpContextAccessor contextAccessor, IWebHostEnvironment webHostEnvironment) {
-			_context = contextAccessor.HttpContext;
+			_contextAccessor = contextAccessor;
 			_webHostEnvironment = webHostEnvironment;
 		}
 
-		public IDictionary Items => new Dictionary<object, object>(_context.Items);
-		public IHttpRequest Request => new AspNetCoreHttpRequest(_context.Request);
-		public IHttpResponse Response => new AspNetCoreHttpResponse(_context.Response);
+		private HttpContext Context => _contextAccessor.HttpContext;
+
+		public IDictionary Items => new Dictionary<object, object>(Context.Items);
+		public IHttpRequest Request => new AspNetCoreHttpRequest(Context.Request);
+		public IHttpResponse Response => new AspNetCoreHttpResponse(Context.Response);
 
 		public IPrincipal User {
-			get => _context.User;
-			set => _context.User = value as ClaimsPrincipal;
+			get => Context.User;
+			set => Context.User = value as ClaimsPrincipal;
 		}
 
 		public IServerPathMapper ServerPathMapper => this;
