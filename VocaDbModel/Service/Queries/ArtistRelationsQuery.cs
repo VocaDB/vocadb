@@ -57,6 +57,7 @@ namespace VocaDb.Model.Service.Queries {
 			return session.Query<ReleaseEvent>()
 				.WhereNotDeleted()
 				.Where(e => e.AllArtists.Any(a => a.Artist.Id == id))
+				.WhereDateIsBetween(begin: null, end: DateTime.Today.AddMonths(6))
 				.OrderByDate(SortDirection.Descending)
 				.Take(3).ToArray()
 				.Select(s => new ReleaseEventForApiContract(s, languagePreference, 
