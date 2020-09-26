@@ -44,10 +44,15 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			DownloadInfo result;
 			try {
-				result = await youtubeDl.GetDownloadInfoAsync(url);
+				var task = youtubeDl.GetDownloadInfoAsync(url);
+				result = await TimeoutAfter(task, 10000);
 			} catch (TaskCanceledException) {
 				var warnings = GetErrorString(youtubeDl.Info);
 				_log.Error("Timeout. Error list: {0}", warnings);
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Timeout");
+			} catch (TimeoutException) {
+				youtubeDl.CancelDownload();
+				_log.Error("Timeout");
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Timeout");
 			}
 
@@ -75,6 +80,18 @@ namespace VocaDb.Model.Service.VideoServices {
 			var meta = VideoTitleParseResult.CreateSuccess(info.Title, info.Uploader, info.UploaderId, info.Thumbnail, (int?)info.Duration, uploadDate: date, extendedMetadata: bandcampMetadata);
 			return VideoUrlParseResult.CreateOk(url, PVService.Bandcamp, info.Id, meta);
 
+		}
+
+		/// <summary>
+		/// Add timeout to task.
+		/// Code from https://devblogs.microsoft.com/pfxteam/crafting-a-task-timeoutafter-method/
+		/// </summary>
+		/// <exception cref="TimeoutException">If task timed out.</exception>
+		private static async Task<T> TimeoutAfter<T>(Task<T> task, int millisecondsTimeout) {
+			if (task == await Task.WhenAny(task, Task.Delay(millisecondsTimeout)))
+				return await task;
+			else
+				throw new TimeoutException();
 		}
 
 		private void StandardErrorEvent(object sender, string e) => _log.Debug($"Bandcamp:{e}");
