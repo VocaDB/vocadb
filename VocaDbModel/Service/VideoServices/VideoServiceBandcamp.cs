@@ -39,6 +39,9 @@ namespace VocaDb.Model.Service.VideoServices {
 				PythonPath = GetPath(AppConfig.PythonPath)
 			};
 
+			youtubeDl.StandardOutputEvent += StandardOutputEvent;
+			youtubeDl.StandardErrorEvent += StandardErrorEvent;
+
 			DownloadInfo result;
 			try {
 				result = await youtubeDl.GetDownloadInfoAsync(url);
@@ -73,6 +76,10 @@ namespace VocaDb.Model.Service.VideoServices {
 			return VideoUrlParseResult.CreateOk(url, PVService.Bandcamp, info.Id, meta);
 
 		}
+
+		private void StandardErrorEvent(object sender, string e) => _log.Debug($"Bandcamp:{e}");
+
+		private void StandardOutputEvent(object sender, string e) => _log.Error($"Bandcamp: {e}");
 
 		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null) {
 			var bandcampMetadata = extendedMetadata?.GetExtendedMetadata<BandcampMetadata>();
