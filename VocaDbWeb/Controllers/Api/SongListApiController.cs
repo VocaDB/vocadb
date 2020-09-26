@@ -85,19 +85,11 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="listId">ID of the list whose comments to load.</param>
 		/// <returns>List of comments in no particular order.</returns>
 		[Route("{listId:int}/comments")]
-		public PartialFindResult<CommentForApiContract> GetComments(int listId) {
-
-			return new PartialFindResult<CommentForApiContract>(queries.GetComments(listId), 0);
-
-		}
+		public PartialFindResult<CommentForApiContract> GetComments(int listId) => new PartialFindResult<CommentForApiContract>(queries.GetComments(listId), 0);
 
 		[Route("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi=true)]
-		public SongListForEditContract GetForEdit(int id) {
-			
-			return queries.GetSongListForEdit(id);
-
-		}
+		public SongListForEditContract GetForEdit(int id) => queries.GetSongListForEdit(id);
 
 		/// <summary>
 		/// Gets a list of featured song lists.
@@ -273,11 +265,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[Route("{listId:int}/comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(int listId, CommentForApiContract contract) {
-
-			return queries.CreateComment(listId, contract);
-
-		}
+		public CommentForApiContract PostNewComment(int listId, CommentForApiContract contract) => queries.CreateComment(listId, contract);
 
 	}
 

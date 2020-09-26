@@ -172,9 +172,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{id:int}")]
 		public ReleaseEventForApiContract GetOne(int id, 
 			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None, 
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-			return queries.GetOne(id, lang, fields);
-		}
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetOne(id, lang, fields);
 
 		/// <summary>
 		/// Creates a new report.
@@ -185,11 +183,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
 		[Route("{eventId:int}/reports")]
 		[RestrictBannedIP]
-		public void PostReport(int eventId, EventReportType reportType, string notes, int? versionNumber) {
-
-			queries.CreateReport(eventId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
-
-		}
+		public void PostReport(int eventId, EventReportType reportType, string notes, int? versionNumber) => queries.CreateReport(eventId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 
 	}
 

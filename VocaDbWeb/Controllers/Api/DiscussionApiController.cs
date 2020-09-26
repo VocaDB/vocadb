@@ -27,19 +27,11 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(int commentId) {
-			
-			queries.DeleteComment(commentId);
-
-		}
+		public void DeleteComment(int commentId) => queries.DeleteComment(commentId);
 
 		[Route("topics/{topicId:int}")]
 		[Authorize]
-		public void DeleteTopic(int topicId) {
-			
-			queries.DeleteTopic(topicId);
-
-		}
+		public void DeleteTopic(int topicId) => queries.DeleteTopic(topicId);
 
 		[Route("folders")]
 		public IEnumerable<DiscussionFolderContract> GetFolders(
@@ -63,43 +55,23 @@ namespace VocaDb.Web.Controllers.Api {
 	
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) {
-			
-			queries.UpdateComment(commentId, contract);
-
-		}
+		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.UpdateComment(commentId, contract);
 
 		[Route("topics/{topicId:int}")]
 		[Authorize]
-		public void PostEditTopic(int topicId, DiscussionTopicContract contract) {
-			
-			queries.UpdateTopic(topicId, contract);
-
-		}
+		public void PostEditTopic(int topicId, DiscussionTopicContract contract) => queries.UpdateTopic(topicId, contract);
 
 		[Route("topics/{topicId:int}/comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(int topicId, CommentForApiContract contract) {
-			
-			return queries.CreateComment(topicId, contract);
-
-		}
+		public CommentForApiContract PostNewComment(int topicId, CommentForApiContract contract) => queries.CreateComment(topicId, contract);
 
 		[Route("folders")]
 		[Authorize]
-		public DiscussionFolderContract PostNewFolder(DiscussionFolderContract contract) {
-			
-			return queries.CreateFolder(contract);
-
-		}
+		public DiscussionFolderContract PostNewFolder(DiscussionFolderContract contract) => queries.CreateFolder(contract);
 
 		[Route("folders/{folderId:int}/topics")]
 		[Authorize]
-		public DiscussionTopicContract PostNewTopic(int folderId, DiscussionTopicContract contract) {
-			
-			return queries.CreateTopic(folderId, contract);
-
-		}
+		public DiscussionTopicContract PostNewTopic(int folderId, DiscussionTopicContract contract) => queries.CreateTopic(folderId, contract);
 
 	}
 
