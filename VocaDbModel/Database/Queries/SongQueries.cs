@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web;
-using NHibernate;
 using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.PVs;
-using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
@@ -28,7 +25,6 @@ using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
-using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -1295,6 +1291,80 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.Update(song);
 				ctx.AuditLogger.AuditLog(string.Format("updated personal description for {0}", entryLinkFactory.CreateEntryLink(song)));
 
+			});
+
+		}
+
+		public void DeleteComment(int commentId) => HandleTransaction(ctx => Comments(ctx).Delete(commentId));
+
+		public IEnumerable<SongForApiContract> GetDerived(int id, SongOptionalFields fields = SongOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => HandleQuery(s => s.Load(id).AlternateVersions.Select(child => new SongForApiContract(child, null, lang, fields)).ToArray());
+
+		public IEnumerable<int> GetIds() {
+
+			return HandleQuery(ctx => {
+
+				return ctx.Query()
+					.Where(a => !a.Deleted)
+					.Select(v => v.Id)
+					.ToArray();
+
+			});
+
+		}
+
+		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
+
+		public async Task PostPVs(int id, PVContract[] pvs) {
+
+			await HandleTransaction(async ctx => {
+
+				var song = await ctx.LoadAsync(id);
+
+				EntryPermissionManager.VerifyEdit(PermissionContext, song);
+
+				var diff = new SongDiff();
+
+				var pvDiff = await UpdatePVs(ctx, song, diff, pvs);
+
+				if (pvDiff.Changed) {
+
+					var logStr = string.Format("updated PVs for song {0}", entryLinkFactory.CreateEntryLink(song)).Truncate(400);
+
+					await ArchiveAsync(ctx, song, diff, SongArchiveReason.PropertiesUpdated, string.Empty);
+					await ctx.UpdateAsync(song);
+					await ctx.AuditLogger.AuditLogAsync(logStr);
+
+				}
+
+			});
+
+		}
+
+		public int InstrumentalTagId => HandleQuery(ctx => new EntryTypeTags(ctx).Instrumental);
+
+		public void UpdateArtistString(int id) {
+
+			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
+
+			HandleTransaction(ctx => {
+				var song = ctx.Load(id);
+				song.UpdateArtistString();
+				ctx.Update(song);
+				ctx.AuditLogger.SysLog("Updated artist string for " + song);
+			});
+
+		}
+
+		public void UpdateThumbUrl(int id) {
+
+			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
+
+			HandleTransaction(ctx => {
+				var song = ctx.Load(id);
+				song.UpdateThumbUrl();
+				ctx.Update(song);
+				ctx.AuditLogger.SysLog("Updated thumbnail URL for " + song);
 			});
 
 		}

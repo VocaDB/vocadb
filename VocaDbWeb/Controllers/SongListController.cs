@@ -8,14 +8,12 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.SongLists;
 
-namespace VocaDb.Web.Controllers
-{
-    public class SongListController : ControllerBase
+namespace VocaDb.Web.Controllers {
+	public class SongListController : ControllerBase
     {
 
 		public const int SongsPerPage = 50;
@@ -110,7 +108,7 @@ namespace VocaDb.Web.Controllers
 
 			var songList = queries.GetSongList(id);
 			var formatString = "%notes%;%publishdate%;%title%;%url%;%pv.original.niconicodouga%;%pv.original.!niconicodouga%;%pv.reprint%";
-			var tagString = queries.HandleQuery(ctx => new SongListFormatter(entryLinkFactory).ApplyFormat(ctx.Load(id), formatString, PermissionContext.LanguagePreference, true));
+			var tagString = queries.GetTagString(id, formatString);
 
 			var enc = new UTF8Encoding(true);
 			var data = enc.GetPreamble().Concat(enc.GetBytes(tagString)).ToArray();

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -24,7 +23,7 @@ using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api {
-	
+
 	/// <summary>
 	/// API queries for tags.
 	/// </summary>
@@ -72,11 +71,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="commentId">ID of the comment to be deleted.</param>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(int commentId) {
-
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Delete(commentId));
-
-		}
+		public void DeleteComment(int commentId) => queries.DeleteComment(commentId);
 
 		/// <summary>
 		/// Gets a tag by ID.
@@ -89,12 +84,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <example>http://vocadb.net/api/tags/1</example>
 		/// <returns>Tag data.</returns>
 		[Route("{id:int}")]
-		public TagForApiContract GetById(int id, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			var tag = queries.LoadTag(id, t => new TagForApiContract(t, thumbPersister, lang, fields));
-			return tag;
-
-		}
+		public TagForApiContract GetById(int id, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default)
+			=> queries.LoadTag(id, t => new TagForApiContract(t, thumbPersister, lang, fields));
 
 		/// <summary>
 		/// DEPRECATED. Gets a tag by name.
@@ -108,24 +99,15 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Tag data.</returns>
 		[Route("byName/{name}")]
 		[Obsolete]
-		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-			
-			var tag = queries.GetTagByName(name, t => new TagForApiContract(t, thumbPersister, lang, fields));
-
-			return tag;
-
-		}
+		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default)
+			=> queries.GetTagByName(name, t => new TagForApiContract(t, thumbPersister, lang, fields));
 
 		/// <summary>
 		/// Gets a list of tag category names.
 		/// </summary>
 		[Route("categoryNames")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
-		public string[] GetCategoryNamesList(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto) {
-		
-			return queries.FindCategories(SearchTextQuery.Create(query, nameMatchMode));
-
-		}
+		public string[] GetCategoryNamesList(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto) => queries.FindCategories(SearchTextQuery.Create(query, nameMatchMode));
 
 		/// <summary>
 		/// Gets a list of child tags for a tag.
@@ -137,13 +119,9 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>List of child tags.</returns>
 		/// <example>http://vocadb.net/api/tags/481/children</example>
 		[Route("{tagId:int}/children")]
-		public TagForApiContract[] GetChildTags(int tagId, 
-			TagOptionalFields fields = TagOptionalFields.None, 
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			return queries.HandleQuery(ctx => ctx.Load(tagId).Children.Select(t => new TagForApiContract(t, thumbPersister, lang, fields)).ToArray());
-
-		}
+		public TagForApiContract[] GetChildTags(int tagId,
+			TagOptionalFields fields = TagOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetChildTags(tagId, fields, lang);
 
 		/// <summary>
 		/// Gets a list of comments for a tag.
@@ -152,11 +130,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="tagId">ID of the tag whose comments to load.</param>
 		/// <returns>List of comments in no particular order.</returns>
 		[Route("{tagId:int}/comments")]
-		public PartialFindResult<CommentForApiContract> GetComments(int tagId) {
-
-			return new PartialFindResult<CommentForApiContract>(queries.GetComments(tagId), 0);
-
-		}
+		public PartialFindResult<CommentForApiContract> GetComments(int tagId) => new PartialFindResult<CommentForApiContract>(queries.GetComments(tagId), 0);
 
 		/// <summary>
 		/// Find tags.
@@ -210,18 +184,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("entry-type-mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public TagEntryMappingContract[] GetEntryMappings() {
-			return queries.GetEntryMappings();
-		}
+		public TagEntryMappingContract[] GetEntryMappings() => queries.GetEntryMappings();
 
 		[Route("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public PartialFindResult<TagMappingContract> GetMappings(
-			int start = 0, int maxEntries = defaultMax, bool getTotalCount = false) {
-
-			return queries.GetMappings(new PagingProperties(start, maxEntries, getTotalCount));
-
-		}
+			int start = 0, int maxEntries = defaultMax, bool getTotalCount = false) => queries.GetMappings(new PagingProperties(start, maxEntries, getTotalCount));
 
 		/// <summary>
 		/// Find tag names by a part of name.
@@ -240,11 +208,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("names")]
 		public string[] GetNames(
 			string query = "", bool allowAliases = true,
-			int maxResults = 10) {
-			
-			return queries.FindNames(TagSearchTextQuery.Create(query), allowAliases, maxResults);
-
-		}
+			int maxResults = 10) => queries.FindNames(TagSearchTextQuery.Create(query), allowAliases, maxResults);
 
 		/// <summary>
 		/// Gets the most common tags in a category.
@@ -257,18 +221,8 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("top")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
 		public TagBaseContract[] GetTopTags(string categoryName = null, EntryType? entryType = null,
-			int maxResults = 15, 
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			return queries.HandleQuery(ctx => ctx.Query<Tag>()
-				.WhereHasCategoryName(categoryName)
-				.OrderByUsageCount(entryType)
-				.Paged(new PagingProperties(0, maxResults, false))
-				.Select(t => new TagBaseContract(t, lang, false, false))
-				.ToArray())
-				.OrderBy(t => t.Name).ToArray();
-
-		}
+			int maxResults = 15,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetTopTags(categoryName, entryType, maxResults, lang);
 
 		/// <summary>
 		/// Creates a new report.
@@ -279,11 +233,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
 		[Route("{tagId:int}/reports")]
 		[RestrictBannedIP]
-		public void PostReport(int tagId, TagReportType reportType, string notes, int? versionNumber) {
-
-			queries.CreateReport(tagId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
-
-		}
+		public void PostReport(int tagId, TagReportType reportType, string notes, int? versionNumber) => queries.CreateReport(tagId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 
 		/// <summary>
 		/// Creates a new tag.
@@ -313,11 +263,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="contract">New comment data. Only message can be edited.</param>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) {
-
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
-
-		}
+		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.PostEditComment(commentId, contract);
 
 		/// <summary>
 		/// Posts a new comment.
@@ -327,11 +273,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[Route("{tagId:int}/comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(int tagId, CommentForApiContract contract) {
-
-			return queries.CreateComment(tagId, contract);
-
-		}
+		public CommentForApiContract PostNewComment(int tagId, CommentForApiContract contract) => queries.CreateComment(tagId, contract);
 
 		[Authorize]
 		[Route("entry-type-mappings")]

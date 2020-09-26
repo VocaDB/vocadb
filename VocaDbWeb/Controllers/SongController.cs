@@ -1,40 +1,38 @@
+using System;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using NLog;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Resources;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.ExtSites;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
+using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Search;
+using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Feeds;
-using VocaDb.Web.Models;
-using VocaDb.Model.Service.VideoServices;
-using VocaDb.Web.Models.Shared;
-using VocaDb.Web.Models.Song;
-using System;
-using System.Threading.Tasks;
-using System.Web;
-using VocaDb.Model.Database.Queries;
-using VocaDb.Model.Database.Repositories;
-using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Service.ExtSites;
-using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Helpers;
+using VocaDb.Web.Models;
+using VocaDb.Web.Models.Shared;
+using VocaDb.Web.Models.Song;
 
-namespace VocaDb.Web.Controllers
-{
-    public class SongController : ControllerBase
+namespace VocaDb.Web.Controllers {
+	public class SongController : ControllerBase
     {
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
@@ -200,7 +198,7 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		private int InstrumentalTagId => queries.HandleQuery(ctx => new EntryTypeTags(ctx).Instrumental);
+		private int InstrumentalTagId => queries.InstrumentalTagId;
        
         //
         // GET: /Song/Edit/5 
@@ -527,14 +525,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult UpdateArtistString(int id) {
 
-			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
-
-			queries.HandleTransaction(ctx => {
-				var song = ctx.Load(id);
-				song.UpdateArtistString();
-				ctx.Update(song);
-				ctx.AuditLogger.SysLog("Updated artist string for " + song);
-			});
+			queries.UpdateArtistString(id);
 
 			TempData.SetSuccessMessage("Artist string refreshed");
 
@@ -545,14 +536,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult UpdateThumbUrl(int id) {
 
-			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
-
-			queries.HandleTransaction(ctx => {
-				var song = ctx.Load(id);
-				song.UpdateThumbUrl();
-				ctx.Update(song);
-				ctx.AuditLogger.SysLog("Updated thumbnail URL for " + song);
-			});
+			queries.UpdateThumbUrl(id);
 
 			TempData.SetSuccessMessage("Thumbnail refreshed");
 
