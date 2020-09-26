@@ -183,7 +183,7 @@
 			</div>
 			<div class="editor-field">
 				@KnockoutHelpers.LockingAutoComplete("venueAutoComplete", "venue.entry", "venue.name")
-				@Html.HiddenForKnockout(m => m.Venue, "value: ko.toJSON(venue)")
+				@Html.HiddenForKnockout(m => m.Venue, "value: ko.toJSON(venue.entry())")
 			</div>
 
 			<div data-bind="visible: !venue.entry()">

@@ -1,11 +1,12 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Venues;
@@ -272,27 +273,37 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ArchivedEventSeriesVersionDetailsContract GetSeriesVersionDetails(int id, int comparedVersionId) {
 
-			return HandleQuery(session =>
-				new ArchivedEventSeriesVersionDetailsContract(session.Load<ArchivedReleaseEventSeriesVersion>(id),
+			return HandleQuery(session => {
+
+				var contract = new ArchivedEventSeriesVersionDetailsContract(session.Load<ArchivedReleaseEventSeriesVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventSeriesVersion>(comparedVersionId) : null,
-					PermissionContext.LanguagePreference));
+					PermissionContext);
+
+				if (contract.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
+				return contract;
+
+			});
 		}
 
 		public ArchivedEventVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
 
-			return HandleQuery(session =>
-				new ArchivedEventVersionDetailsContract(session.Load<ArchivedReleaseEventVersion>(id),
+			return HandleQuery(session => {
+
+				var contract = new ArchivedEventVersionDetailsContract(session.Load<ArchivedReleaseEventVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventVersion>(comparedVersionId) : null,
-					PermissionContext.LanguagePreference));
+					PermissionContext);
 
-		}
+				if (contract.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
 
-		public XDocument GetSeriesVersionXml(int id) {
-			return HandleQuery(ctx => ctx.Load<ArchivedReleaseEventSeriesVersion>(id).Data);
-		}
+				return contract;
 
-		public XDocument GetVersionXml(int id) {
-			return HandleQuery(ctx => ctx.Load<ArchivedReleaseEventVersion>(id).Data);
+			});
+
 		}
 
 		public ReleaseEventContract[] List(EventSortRule sortRule, SortDirection sortDirection, bool includeSeries = false) {
@@ -776,6 +787,47 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				return series.Id;
+
+			});
+
+		}
+
+		public AlbumForApiContract[] GetAlbums(int eventId,
+			AlbumOptionalFields fields = AlbumOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+
+			return repository.HandleQuery(ctx => {
+
+				var ev = ctx.Load(eventId);
+				return ev.Albums.Select(a => new AlbumForApiContract(a, null, lang, imageUrlFactory, fields, SongOptionalFields.None)).ToArray();
+
+			});
+
+		}
+
+		public SongForApiContract[] GetPublishedSongs(int eventId,
+			SongOptionalFields fields = SongOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+
+			return repository.HandleQuery(ctx => {
+				var ev = ctx.Load(eventId);
+				return ev.Songs.Select(a => new SongForApiContract(a, lang, fields)).ToArray();
+			});
+
+		}
+
+		public string[] GetNames(
+			string query = "",
+			int maxResults = 10) {
+
+			return repository.HandleQuery(ctx => {
+
+				return ctx.Query<EventName>()
+					.Where(n => !n.Entry.Deleted && n.Value.Contains(query))
+					.OrderBy(n => n.Value)
+					.Take(maxResults)
+					.Select(r => r.Value)
+					.ToArray();
 
 			});
 

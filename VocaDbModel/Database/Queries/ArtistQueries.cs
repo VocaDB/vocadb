@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Caching;
@@ -30,7 +29,6 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.EntryValidators;
 using VocaDb.Model.Service.Exceptions;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Translations;
@@ -491,6 +489,11 @@ namespace VocaDb.Model.Database.Queries {
 			return await HandleTransactionAsync(async session => {
 
 				var archivedVersion = await session.LoadAsync<ArchivedArtistVersion>(archivedArtistVersionId);
+
+				if (archivedVersion.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
 				var artist = archivedVersion.Artist;
 
 				session.AuditLogger.SysLog("reverting " + artist + " to version " + archivedVersion.Version);
@@ -696,6 +699,36 @@ namespace VocaDb.Model.Database.Queries {
 			});
 
 		}
+
+		public void DeleteComment(int commentId) => HandleTransaction(ctx => Comments(ctx).Delete(commentId));
+
+		public IEnumerable<int> GetIds() {
+
+			return HandleQuery(ctx => {
+
+				return ctx.Query()
+					.Where(a => !a.Deleted)
+					.Select(v => v.Id)
+					.ToArray();
+
+			});
+
+		}
+
+		public EntryIdAndVersionContract[] GetVersions() {
+
+			return HandleQuery(ctx => {
+
+				return ctx.Query()
+					.Where(a => !a.Deleted)
+					.Select(a => new EntryIdAndVersionContract { Id = a.Id, Version = a.Version })
+					.ToArray();
+
+			});
+
+		}
+
+		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
 
 	}
 

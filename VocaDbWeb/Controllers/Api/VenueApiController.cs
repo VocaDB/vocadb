@@ -100,11 +100,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
 		[Route("{id:int}/reports")]
 		[RestrictBannedIP]
-		public void PostReport(int id, VenueReportType reportType, string notes, int? versionNumber) {
-
-			queries.CreateReport(id, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
-
-		}
+		public void PostReport(int id, VenueReportType reportType, string notes, int? versionNumber) => queries.CreateReport(id, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 
 	}
 

@@ -712,7 +712,7 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual async Task<CollectionDiff<ArtistForSong, ArtistForSong>> SyncArtists(IEnumerable<ArtistContract> newArtists, Func<ArtistContract[], Task<List<Artist>>> artistGetter) {
+		public virtual async Task<CollectionDiff<ArtistForSong, ArtistForSong>> SyncArtistsAsync(IEnumerable<ArtistContract> newArtists, Func<ArtistContract[], Task<List<Artist>>> artistGetter) {
 
 			var realArtists = Artists.Where(a => a.Artist != null).ToArray();
 			var artistDiff = CollectionHelper.Diff(realArtists, newArtists, (a, a2) => a.Artist.Id == a2.Id);

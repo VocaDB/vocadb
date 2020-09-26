@@ -1,17 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.VideoServices;
 
@@ -25,12 +22,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		private readonly IPVParser pvParser;
 		private readonly IUserPermissionContext permissionContext;
-		private readonly IRepository repository;
+		private readonly PVQueries queries;
 
-		public PVApiController(IPVParser pvParser, IUserPermissionContext permissionContext, IRepository repository) {
+		public PVApiController(IPVParser pvParser, IUserPermissionContext permissionContext, PVQueries queries) {
 			this.pvParser = pvParser;
 			this.permissionContext = permissionContext;
-			this.repository = repository;
+			this.queries = queries;
 		}
 
 		/// <summary>
@@ -44,37 +41,10 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of PVs.</returns>
 		[Route("for-songs")]
-		public PartialFindResult<PVForSongContract> GetList(string name = null, string author = null, 
+		public PartialFindResult<PVForSongContract> GetList(string name = null, string author = null,
 			PVService? service = null,
-			int maxResults = 10, bool getTotalCount = false, 
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			return repository.HandleQuery(db => {
-
-				var query = db.Query<PVForSong>();
-
-				if (!string.IsNullOrEmpty(name)) {
-					query = query.Where(pv => pv.Name == name);
-				}
-
-				if (!string.IsNullOrEmpty(author)) {
-					query = query.Where(pv => pv.Author == author);
-				}
-
-				if (service.HasValue) {
-					query = query.Where(pv => pv.Service == service);
-				}
-
-				var count = getTotalCount ? query.Count() : 0;
-
-				query = query.Take(maxResults);
-
-				var results = query.Select(p => new PVForSongContract(p, lang)).ToArray();
-				return PartialFindResult.Create(results, count);
-
-			});
-
-		}
+			int maxResults = 10, bool getTotalCount = false,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetList(name, author, service, maxResults, getTotalCount, lang);
 
 		[Route("")]
 		[ApiExplorerSettings(IgnoreApi = true)]

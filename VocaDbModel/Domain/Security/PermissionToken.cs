@@ -82,6 +82,7 @@ namespace VocaDb.Model.Domain.Security {
 		/// View ratings by users whose ratings are normally hidden.
 		/// </summary>
 		public static readonly PermissionToken ViewHiddenRatings =		New("47bcc523-5667-403d-bd20-d2728e1f9c5f", nameof(ViewHiddenRatings));
+		public static readonly PermissionToken ViewHiddenRevisions =	New("c3b753d0-7aa8-4c03-8bca-5311fb2bdd2d", nameof(ViewHiddenRevisions));
 
 		/// <summary>
 		/// All tokens except Nothing

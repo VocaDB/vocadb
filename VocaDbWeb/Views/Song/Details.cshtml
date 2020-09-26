@@ -157,7 +157,7 @@
 					}
 				</td>
 				<td class="artistList">
-					@ArtistHelpers.ArtistList(Model.Performers, showType: true)
+					@ArtistHelpers.ArtistList(Model.Performers, showRoles: ArtistHelpers.ShowRolesMode.IfNotVocalist, showType: true)
 				</td>
 			</tr>
    }
@@ -166,7 +166,7 @@
 				<tr>
 					<td>@EntryRes.Subject</td>
 					<td class="artistList">
-						@ArtistHelpers.ArtistList(Model.Subject, showRoles: false)
+						@ArtistHelpers.ArtistList(Model.Subject)
 					</td>
 				</tr>
 			}			
@@ -174,7 +174,7 @@
 			<tr>
 				<td>@ViewRes.Song.DetailsStrings.Producers</td>
 				<td class="artistList">
-					@ArtistHelpers.ArtistList(Model.Producers, showRoles: (Model.Producers.Length > 1))
+					@ArtistHelpers.ArtistList(Model.Producers, showRoles: (Model.Producers.Length > 1) ? ArtistHelpers.ShowRolesMode.IfNotDefault : ArtistHelpers.ShowRolesMode.Never)
 				</td>
 			</tr>
    }
@@ -182,7 +182,7 @@
 				<tr>
 					<td>Illustrators</td>
 					<td class="artistList">
-						@ArtistHelpers.ArtistList(Model.Illustrators, showRoles: false)
+						@ArtistHelpers.ArtistList(Model.Illustrators)
 					</td>
 				</tr>
 			}			
@@ -210,7 +210,7 @@
 			<tr>
 				<td>@ViewRes.Song.DetailsStrings.OtherArtists</td>
 				<td class="artistList">
-					@ArtistHelpers.ArtistList(Model.OtherArtists, true)
+					@ArtistHelpers.ArtistList(Model.OtherArtists, showRoles: ArtistHelpers.ShowRolesMode.IfNotDefault)
 				</td>
 			</tr>
    }

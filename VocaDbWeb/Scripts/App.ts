@@ -144,6 +144,7 @@ export { default as ReleaseEventDetailsViewModel } from './ViewModels/ReleaseEve
 import './KnockoutExtensions/BindingHandlers/DatePicker';
 import './KnockoutExtensions/ReleaseEventSeriesAutoComplete';
 import './KnockoutExtensions/BindingHandlers/SongListAutoComplete';
+import './KnockoutExtensions/BindingHandlers/VenueAutoComplete';
 import './KnockoutExtensions/FormatDateFilter';
 import './KnockoutExtensions/FormatLengthSecondsFilter';
 export { default as ReleaseEventEditViewModel } from './ViewModels/ReleaseEvent/ReleaseEventEditViewModel';

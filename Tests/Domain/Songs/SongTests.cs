@@ -214,7 +214,7 @@ namespace VocaDb.Tests.Domain.Songs {
 			var link = song.AddArtist("Extra artist", false, ArtistRoles.Composer);
 			var newArtists = new[] { new ArtistContract(artist, ContentLanguagePreference.Default) };
 
-			await song.SyncArtists(newArtists, ac => Task.FromResult(new List<Artist> { artist }));
+			await song.SyncArtistsAsync(newArtists, ac => Task.FromResult(new List<Artist> { artist }));
 
 			Assert.AreEqual(2, song.AllArtists.Count, "artists count");
 			Assert.IsTrue(song.HasArtistLink(link), "Still has the extra artist");

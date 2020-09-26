@@ -5,8 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
-using System.Xml.Linq;
-using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
@@ -575,15 +573,20 @@ namespace VocaDb.Model.Database.Queries {
 
 		public ArchivedTagVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
 
-			return HandleQuery(session =>
-				new ArchivedTagVersionDetailsContract(session.Load<ArchivedTagVersion>(id),
+			return HandleQuery(session => {
+
+				var contract = new ArchivedTagVersionDetailsContract(session.Load<ArchivedTagVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedTagVersion>(comparedVersionId) : null,
-					PermissionContext.LanguagePreference));
+					PermissionContext);
 
-		}
+				if (contract.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
 
-		public XDocument GetVersionXml(int id) {
-			return HandleQuery(ctx => ctx.Load<ArchivedTagVersion>(id).Data);
+				return contract;
+
+			});
+
 		}
 
 		/// <summary>
@@ -941,6 +944,36 @@ namespace VocaDb.Model.Database.Queries {
 			});
 
 		}
+
+		public void DeleteComment(int commentId) => HandleTransaction(ctx => Comments(ctx).Delete(commentId));
+
+		public TagForApiContract[] GetChildTags(int tagId,
+			TagOptionalFields fields = TagOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => HandleQuery(ctx => ctx.Load(tagId).Children.Select(t => new TagForApiContract(t, thumbStore, lang, fields)).ToArray());
+
+		public TagBaseContract[] GetTopTags(string categoryName = null, EntryType? entryType = null,
+			int maxResults = 15,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
+
+			return
+				HandleQuery(ctx => {
+
+					return ctx.Query<Tag>()
+						.WhereHasCategoryName(categoryName)
+						.OrderByUsageCount(entryType)
+						.Paged(new PagingProperties(0, maxResults, false))
+						.Select(t => new TagBaseContract(t, lang, false, false))
+						.ToArray();
+
+				})
+				.OrderBy(t => t.Name)
+				.ToArray();
+
+		}
+
+		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
+
+		public int InstrumentalTagId => HandleQuery(ctx => new EntryTypeTags(ctx).Instrumental);
 
 	}
 

@@ -13,6 +13,7 @@ namespace VocaDb.Migrations {
 		public const string AlbumTagUsages = "AlbumTagUsages";
 		public const string ArchivedAlbumVersions = "ArchivedAlbumVersions";
 		public const string ArchivedArtistVersions = "ArchivedArtistVersions";
+		public const string ArchivedEventSeriesVersions = "ArchivedEventSeriesVersions";
 		public const string ArchivedEventVersions = "ArchivedEventVersions";
 		public const string ArchivedSongVersions = "ArchivedSongVersions";
 		public const string ArchivedSongListVersions = "ArchivedSongListVersions";

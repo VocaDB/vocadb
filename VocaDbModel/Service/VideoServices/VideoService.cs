@@ -127,6 +127,7 @@ namespace VocaDb.Model.Service.VideoServices {
 			var meta = (getMeta ? await GetVideoTitleAsync(id) : VideoTitleParseResult.Empty) ?? VideoTitleParseResult.Empty;
 
 			// Note that even if meta lookup failed, we're returning Ok here, because for example NND API doesn't support all PVs.
+			// Metadata is optional. We should only return an error if the metadata is mandatory or there was a fatal unhandled error.
 
 			return VideoUrlParseResult.CreateOk(url, Service, id, meta);
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Runtime.Caching;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -749,13 +748,14 @@ namespace VocaDb.Model.Database.Queries {
 		private async Task<User> CreateUser(IDatabaseContext<User> ctx, string name, string pass, string email, string hostname, string culture,
 			SFSResponseContract sfsCheckResult, string verifyEmailUrl) {
 
+			var confidenceReport = 1;
 			var confidenceLimited = 60;
 
 			var user = new User(name, pass, email, PasswordHashAlgorithms.Default);
 			user.UpdateLastLogin(hostname, culture);
 			await ctx.SaveAsync(user);
 
-			if (sfsCheckResult.Appears) {
+			if (sfsCheckResult.Appears && sfsCheckResult.Confidence >= confidenceReport) {
 
 				var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname, 
 					string.Format("Confidence {0} %, Frequency {1}, Last seen {2}. Conclusion {3}.", 
@@ -1873,6 +1873,17 @@ namespace VocaDb.Model.Database.Queries {
 			});
 
 		}
+
+		public UserForApiContract GetOne(int id, UserOptionalFields fields = UserOptionalFields.None) => HandleQuery(ctx => new UserForApiContract(ctx.Load(id), userIconFactory, fields));
+
+		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
+
+		public bool IsNotification(int messageId, UserWithPermissionsContract user) => HandleQuery(ctx => {
+
+			return ctx.Query<UserMessage>()
+				.Any(m => m.Id == messageId && m.User.Id == user.Id && m.Inbox == UserInboxType.Notifications);
+
+		});
 
 	}
 

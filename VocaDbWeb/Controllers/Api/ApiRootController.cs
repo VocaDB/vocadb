@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
@@ -10,11 +10,7 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[System.Web.Http.Route("")]
 		[ApiExplorerSettings(IgnoreApi=true)]
-		public RedirectResult Get() {
-			
-			return Redirect(new Uri("/swagger", UriKind.Relative));
-
-		}
+		public RedirectResult Get() => Redirect(new Uri("/swagger", UriKind.Relative));
 
 	}
 

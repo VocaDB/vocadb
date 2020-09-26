@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NLog;
@@ -13,14 +14,13 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.SongImport;
+using VocaDb.Model.Service.TagFormatting;
 
 namespace VocaDb.Model.Database.Queries {
 
@@ -361,6 +361,34 @@ namespace VocaDb.Model.Database.Queries {
 			});
 
 		}
+
+		public void DeleteComment(int commentId) => HandleTransaction(ctx => Comments(ctx).Delete(commentId));
+
+		public IEnumerable<string> GetFeaturedListNames(string query = "",
+			NameMatchMode nameMatchMode = NameMatchMode.Auto,
+			SongListFeaturedCategory? featuredCategory = null,
+			int maxResults = 10) {
+
+			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
+
+			return HandleQuery(ctx => {
+
+				return ctx.Query()
+					.WhereNotDeleted()
+					.WhereHasFeaturedCategory(featuredCategory, false)
+					.WhereHasName(textQuery)
+					.Select(l => l.Name)
+					.OrderBy(n => n)
+					.Take(maxResults)
+					.ToArray();
+
+			});
+
+		}
+
+		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
+
+		public string GetTagString(int id, string formatString) => HandleQuery(ctx => new SongListFormatter(entryLinkFactory).ApplyFormat(ctx.Load(id), formatString, PermissionContext.LanguagePreference, true));
 
 	}
 

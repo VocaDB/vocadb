@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -19,7 +18,6 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
-using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.Api {
 
@@ -66,11 +64,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="notes">Notes.</param>
 		[Route("{id:int}")]
 		[Authorize]
-		public void Delete(int id, string notes = "") {
-			
-			service.Delete(id, notes ?? string.Empty);
-
-		}
+		public void Delete(int id, string notes = "") => service.Delete(id, notes ?? string.Empty);
 
 		/// <summary>
 		/// Deletes a comment.
@@ -82,11 +76,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(int commentId) {
-			
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Delete(commentId));
-
-		}
+		public void DeleteComment(int commentId) => queries.DeleteComment(commentId);
 
 		/// <summary>
 		/// Gets a list of comments for an artist.
@@ -97,19 +87,11 @@ namespace VocaDb.Web.Controllers.Api {
 		/// Pagination and sorting might be added later.
 		/// </remarks>
 		[Route("{id:int}/comments")]
-		public IEnumerable<CommentForApiContract> GetComments(int id) {
-			
-			return queries.GetComments(id);
-
-		}
+		public IEnumerable<CommentForApiContract> GetComments(int id) => queries.GetComments(id);
 
 		[Route("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi=true)]
-		public ArtistForEditContract GetForEdit(int id) {
-			
-			return queries.GetArtistForEdit(id);
-
-		}
+		public ArtistForEditContract GetForEdit(int id) => queries.GetArtistForEdit(id);
 
 		/// <summary>
 		/// Gets an artist by Id.
@@ -124,13 +106,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public ArtistForApiContract GetOne(int id,
 			ArtistOptionalFields fields = ArtistOptionalFields.None,
 			ArtistRelationsFields relations = ArtistRelationsFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			var artist = queries.GetWithMergeRecord(id, (a, m, ctx) => GetArtist(a, m, fields, relations, lang, ctx));
-
-			return artist;
-
-		}
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetWithMergeRecord(id, (a, m, ctx) => GetArtist(a, m, fields, relations, lang, ctx));
 
 		/// <summary>
 		/// Find artists.
@@ -197,18 +173,8 @@ namespace VocaDb.Web.Controllers.Api {
 		}
 
 		[Route("ids")]
-		[ApiExplorerSettings(IgnoreApi=true)]
-		public IEnumerable<int> GetIds() {
-
-			var versions = queries
-				.HandleQuery(ctx => ctx.Query()
-					.Where(a => !a.Deleted)
-					.Select(v => v.Id)
-					.ToArray());
-
-			return versions;
-
-		}
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public IEnumerable<int> GetIds() => queries.GetIds();
 
 		/// <summary>
 		/// Gets a list of artist names. Ideal for autocomplete boxes.
@@ -218,31 +184,15 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="maxResults">Maximum number of results.</param>
 		/// <returns>List of artist names.</returns>
 		[Route("names")]
-		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 15) {
-			
-			return service.FindNames(ArtistSearchTextQuery.Create(query, nameMatchMode), maxResults);
-
-		}
+		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 15) => service.FindNames(ArtistSearchTextQuery.Create(query, nameMatchMode), maxResults);
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Route("{id:int}/tagSuggestions")]
-		public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) {
-			return queries.GetTagSuggestions(id);
-		}
+		public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) => queries.GetTagSuggestions(id);
 
 		[Route("versions")]
-		[ApiExplorerSettings(IgnoreApi=true)]
-		public EntryIdAndVersionContract[] GetVersions() {
-
-			var versions = queries
-				.HandleQuery(ctx => ctx.Query()
-					.Where(a => !a.Deleted)
-					.Select(a => new EntryIdAndVersionContract { Id = a.Id, Version = a.Version })
-					.ToArray());
-
-			return versions;
-
-		}
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public EntryIdAndVersionContract[] GetVersions() => queries.GetVersions();
 
 		/// <summary>
 		/// Updates a comment.
@@ -255,11 +205,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) {
-			
-			queries.HandleTransaction(ctx => queries.Comments(ctx).Update(commentId, contract));
-
-		}
+		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.PostEditComment(commentId, contract);
 
 		/// <summary>
 		/// Posts a new comment.
@@ -269,11 +215,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[Route("{id:int}/comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) {
-			
-			return queries.CreateComment(id, contract);
-
-		}
+		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) => queries.CreateComment(id, contract);
 
 	}
 

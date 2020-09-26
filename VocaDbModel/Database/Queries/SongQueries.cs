@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web;
-using NHibernate;
 using NHibernate.Linq;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.PVs;
-using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
@@ -28,7 +25,6 @@ using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
-using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
@@ -654,6 +650,76 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public async Task<SongForApiContract[]> GetTopRated(
+			int? durationHours,
+			DateTime? startDate,
+			TopSongsDateFilterType? filterBy,
+			SongVocalistSelection? vocalist,
+			int maxResults,
+			SongOptionalFields fields,
+			ContentLanguagePreference languagePreference) {
+
+			return await repository.HandleQueryAsync(async ctx => {
+
+				var query = ctx.Query()
+					.Where(s => !s.Deleted && s.RatingScore > 0)
+					.WhereHasVocalist(vocalist ?? SongVocalistSelection.Nothing);
+
+				if (durationHours.HasValue) {
+
+					var timeSpan = TimeSpan.FromHours(durationHours.Value);
+					DateTime? endDate = null;
+
+					if (!startDate.HasValue) {
+						startDate = DateTime.Now - timeSpan;
+						endDate = DateTime.Now.AddDays(1);
+					} else {
+						endDate = startDate + timeSpan;
+					}
+
+					switch (filterBy) {
+						case TopSongsDateFilterType.PublishDate: {
+								startDate = startDate?.Date;
+								endDate = endDate?.Date;
+								query = query.WherePublishDateIsBetween(startDate, endDate);
+								break;
+							}
+						case TopSongsDateFilterType.CreateDate: {
+								query = query.Where(s => s.CreateDate >= startDate);
+								break;
+							}
+						case TopSongsDateFilterType.Popularity: {
+								// Sort by number of ratings and hits during that time
+								// Older songs get more hits so value them even less
+								query = query.OrderByDescending(s => s.UserFavorites
+									.Where(f => f.Date >= startDate)
+									.Sum(f => (int)f.Rating) + (s.Hits.Count(h => h.Date >= startDate) / 100));
+								break;
+							}
+					}
+
+					if (filterBy != TopSongsDateFilterType.Popularity) {
+						query = query.OrderByDescending(s => s.RatingScore + (s.Hits.Count / 30));
+					}
+
+				} else {
+					query = query.OrderByDescending(s => s.RatingScore);
+				}
+
+				var songs = await query
+					.Take(maxResults)
+					.VdbToListAsync();
+
+				var contracts = songs
+					.Select(s => new SongForApiContract(s, null, languagePreference, fields))
+					.ToArray();
+
+				return contracts;
+
+			});
+
+		}
+
 		private IEnumerable<(Song song, SongMatchProperty property)> GetNameMatches(IDatabaseContext<Song> ctx, string[] names, int[] artistIds) {
 			
 			if (names == null || !names.Any())
@@ -974,6 +1040,11 @@ namespace VocaDb.Model.Database.Queries {
 			return HandleTransaction(session => {
 
 				var archivedVersion = session.Load<ArchivedSongVersion>(archivedSongVersionId);
+
+				if (archivedVersion.Hidden) {
+					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+				}
+
 				var song = archivedVersion.Song;
 
 				session.AuditLogger.SysLog("reverting " + song + " to version " + archivedVersion.Version);
@@ -1224,6 +1295,86 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
+		public void DeleteComment(int commentId) => HandleTransaction(ctx => Comments(ctx).Delete(commentId));
+
+		public IEnumerable<SongForApiContract> GetDerived(int id, SongOptionalFields fields = SongOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => HandleQuery(s => s.Load(id).AlternateVersions.Select(child => new SongForApiContract(child, null, lang, fields)).ToArray());
+
+		public IEnumerable<int> GetIds() {
+
+			return HandleQuery(ctx => {
+
+				return ctx.Query()
+					.Where(a => !a.Deleted)
+					.Select(v => v.Id)
+					.ToArray();
+
+			});
+
+		}
+
+		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
+
+		public async Task PostPVs(int id, PVContract[] pvs) {
+
+			await HandleTransaction(async ctx => {
+
+				var song = await ctx.LoadAsync(id);
+
+				EntryPermissionManager.VerifyEdit(PermissionContext, song);
+
+				var diff = new SongDiff();
+
+				var pvDiff = await UpdatePVs(ctx, song, diff, pvs);
+
+				if (pvDiff.Changed) {
+
+					var logStr = string.Format("updated PVs for song {0}", entryLinkFactory.CreateEntryLink(song)).Truncate(400);
+
+					await ArchiveAsync(ctx, song, diff, SongArchiveReason.PropertiesUpdated, string.Empty);
+					await ctx.UpdateAsync(song);
+					await ctx.AuditLogger.AuditLogAsync(logStr);
+
+				}
+
+			});
+
+		}
+
+		public int InstrumentalTagId => HandleQuery(ctx => new EntryTypeTags(ctx).Instrumental);
+
+		public void UpdateArtistString(int id) {
+
+			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
+
+			HandleTransaction(ctx => {
+				var song = ctx.Load(id);
+				song.UpdateArtistString();
+				ctx.Update(song);
+				ctx.AuditLogger.SysLog("Updated artist string for " + song);
+			});
+
+		}
+
+		public void UpdateThumbUrl(int id) {
+
+			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
+
+			HandleTransaction(ctx => {
+				var song = ctx.Load(id);
+				song.UpdateThumbUrl();
+				ctx.Update(song);
+				ctx.AuditLogger.SysLog("Updated thumbnail URL for " + song);
+			});
+
+		}
+
+	}
+
+	public enum TopSongsDateFilterType {
+		CreateDate,
+		PublishDate,
+		Popularity
 	}
 
 }

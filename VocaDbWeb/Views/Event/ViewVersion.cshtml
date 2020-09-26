@@ -22,6 +22,17 @@
 @section Toolbar {
 	<a href="@Url.Action("ArchivedVersionXml", new { id = Model.Entry.ArchivedVersion.Id })" id="downloadXmlLink">Download XML</a>
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
+	@if (Login.CanViewHiddenRevisions) {
+		if (Model.Entry.ArchivedVersion.Hidden) {
+			@Html.ActionLink("Show this version", "UpdateVersionVisibility", new { archivedVersionId = Model.Entry.ArchivedVersion.Id, hidden = false }, new { id = "showLink", onclick = "return confirm(\"Are you sure you want to show this version?\");" })
+		} else {
+			@Html.ActionLink("Hide this version", "UpdateVersionVisibility", new { archivedVersionId = Model.Entry.ArchivedVersion.Id, hidden = true }, new { id = "hideLink", onclick = "return confirm(\"Are you sure you want to hide this version?\");" })
+		}
+	}
+}
+
+@if (Model.Entry.ArchivedVersion.Hidden) {
+	@EntryDetailsHelpers.HiddenBanner()
 }
 
 @if (Model.Entry.ComparableVersions.Any()) {
@@ -44,7 +55,9 @@
 		$(function () {
 
 			$("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
-			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
+			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert' } });
+			$("#showLink").button({ icons: { primary: 'ui-icon-unlocked' } });
+			$("#hideLink").button({ icons: { primary: 'ui-icon-locked' } });
 
 			var rep = new app.ReleaseEventRepository(new app.UrlMapper('@RootPath'));
 			var viewModel = new app.ArchivedEntryViewModel(@Model.Entry.ReleaseEvent.Id, @Model.Entry.ArchivedVersion.Version, rep);

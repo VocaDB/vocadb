@@ -70,7 +70,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult ArchivedVersionXml(int id) {
 
-			var doc = Service.GetVersionXml(id);
+			var doc = queries.GetVersionXml<ArchivedAlbumVersion>(id);
 			var content = XmlHelper.SerializeToUTF8XmlString(doc);
 
 			return Xml(content);
@@ -250,18 +250,17 @@ namespace VocaDb.Web.Controllers
 
         }
 
-        //
-        // POST: /Album/Edit/5
+		//
+		// POST: /Album/Edit/5
 
-        [HttpPost]
-        [Authorize]
-        public async Task<ActionResult> Edit(AlbumEditViewModel viewModel)
-        {
+		[HttpPost]
+		[Authorize]
+		public async Task<ActionResult> Edit(AlbumEditViewModel viewModel) {
 
 			// Unable to continue if viewmodel is null because we need the ID at least
 			if (viewModel == null || viewModel.EditedAlbum == null) {
 				log.Warn("Viewmodel was null");
-				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");				
+				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");
 			}
 
 			try {
@@ -292,7 +291,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (coverPicUpload != null && model.Pictures != null) {
-				ParseAdditionalPictures(coverPicUpload, model.Pictures);				
+				ParseAdditionalPictures(coverPicUpload, model.Pictures);
 			}
 
 			if (!ModelState.IsValid) {
@@ -300,15 +299,15 @@ namespace VocaDb.Web.Controllers
 			}
 
 			try {
-				await queries.UpdateBasicProperties(model, pictureData);				
+				await queries.UpdateBasicProperties(model, pictureData);
 			} catch (InvalidPictureException) {
 				ModelState.AddModelError("ImageError", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
 				return View(CreateAlbumEditViewModel(model.Id, model));
 			}
 
-        	return RedirectToAction("Details", new { id = model.Id });
+			return RedirectToAction("Details", new { id = model.Id });
 
-        }
+		}
 
 		public ActionResult Related(int id = invalidId) {
 
@@ -387,6 +386,14 @@ namespace VocaDb.Web.Controllers
 			TempData.SetStatusMessage("Entry moved to trash");
 
 			return RedirectToAction("Deleted");
+
+		}
+
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden) {
+
+			queries.UpdateVersionVisibility<ArchivedAlbumVersion>(archivedVersionId, hidden);
+
+			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 
 		}
 

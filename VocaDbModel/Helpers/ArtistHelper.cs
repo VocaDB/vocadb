@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain;
@@ -34,6 +34,9 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
+		/// <summary>
+		/// Whether artist should appear in artist string.
+		/// </summary>
 		public static bool IsValidCreditableArtist(IArtistLinkWithRoles artist) {
 
 			if (artist.IsSupport)

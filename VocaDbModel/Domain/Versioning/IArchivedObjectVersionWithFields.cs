@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 
 namespace VocaDb.Model.Domain.Versioning {
 
-	public interface IArchivedObjectVersionWithFields<TField> where TField : struct, IConvertible {
+	public interface IArchivedObjectVersionWithFields<TField> : IArchivedObjectVersion where TField : struct, IConvertible {
 
 		/// <summary>
 		/// Checks whether a specific field is included in this diff.

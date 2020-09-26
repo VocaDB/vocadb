@@ -49,6 +49,8 @@ namespace VocaDb.Model.Domain.Versioning {
 
 		public abstract IEntryWithNames EntryBase { get; }
 
+		public virtual bool Hidden { get; set; }
+
 		public virtual int Id { get; protected set; }
 
 		public virtual string Notes {

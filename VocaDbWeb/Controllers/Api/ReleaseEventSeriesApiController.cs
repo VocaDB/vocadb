@@ -61,12 +61,7 @@ namespace VocaDb.Web.Controllers.Api {
 			ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			return queries.FindSeries(SearchTextQuery.Create(query, nameMatchMode), 
-				new PagingProperties(start, maxResults, getTotalCount), lang, fields);
-
-		}
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.FindSeries(SearchTextQuery.Create(query, nameMatchMode), new PagingProperties(start, maxResults, getTotalCount), lang, fields);
 
 		/// <summary>
 		/// Gets single event series by ID.
@@ -75,9 +70,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public ReleaseEventSeriesForApiContract GetOne(
 			int id,
 			ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-			return queries.GetOneSeries(id, lang, fields);
-		}
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetOneSeries(id, lang, fields);
 
 	}
 
