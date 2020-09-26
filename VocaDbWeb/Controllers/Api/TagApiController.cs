@@ -84,12 +84,8 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <example>http://vocadb.net/api/tags/1</example>
 		/// <returns>Tag data.</returns>
 		[Route("{id:int}")]
-		public TagForApiContract GetById(int id, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			var tag = queries.LoadTag(id, t => new TagForApiContract(t, thumbPersister, lang, fields));
-			return tag;
-
-		}
+		public TagForApiContract GetById(int id, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default)
+			=> queries.LoadTag(id, t => new TagForApiContract(t, thumbPersister, lang, fields));
 
 		/// <summary>
 		/// DEPRECATED. Gets a tag by name.
@@ -103,24 +99,15 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Tag data.</returns>
 		[Route("byName/{name}")]
 		[Obsolete]
-		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-			
-			var tag = queries.GetTagByName(name, t => new TagForApiContract(t, thumbPersister, lang, fields));
-
-			return tag;
-
-		}
+		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default)
+			=> queries.GetTagByName(name, t => new TagForApiContract(t, thumbPersister, lang, fields));
 
 		/// <summary>
 		/// Gets a list of tag category names.
 		/// </summary>
 		[Route("categoryNames")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
-		public string[] GetCategoryNamesList(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto) {
-		
-			return queries.FindCategories(SearchTextQuery.Create(query, nameMatchMode));
-
-		}
+		public string[] GetCategoryNamesList(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto) => queries.FindCategories(SearchTextQuery.Create(query, nameMatchMode));
 
 		/// <summary>
 		/// Gets a list of child tags for a tag.
@@ -143,11 +130,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="tagId">ID of the tag whose comments to load.</param>
 		/// <returns>List of comments in no particular order.</returns>
 		[Route("{tagId:int}/comments")]
-		public PartialFindResult<CommentForApiContract> GetComments(int tagId) {
-
-			return new PartialFindResult<CommentForApiContract>(queries.GetComments(tagId), 0);
-
-		}
+		public PartialFindResult<CommentForApiContract> GetComments(int tagId) => new PartialFindResult<CommentForApiContract>(queries.GetComments(tagId), 0);
 
 		/// <summary>
 		/// Find tags.
@@ -201,18 +184,12 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("entry-type-mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public TagEntryMappingContract[] GetEntryMappings() {
-			return queries.GetEntryMappings();
-		}
+		public TagEntryMappingContract[] GetEntryMappings() => queries.GetEntryMappings();
 
 		[Route("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public PartialFindResult<TagMappingContract> GetMappings(
-			int start = 0, int maxEntries = defaultMax, bool getTotalCount = false) {
-
-			return queries.GetMappings(new PagingProperties(start, maxEntries, getTotalCount));
-
-		}
+			int start = 0, int maxEntries = defaultMax, bool getTotalCount = false) => queries.GetMappings(new PagingProperties(start, maxEntries, getTotalCount));
 
 		/// <summary>
 		/// Find tag names by a part of name.
@@ -231,11 +208,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("names")]
 		public string[] GetNames(
 			string query = "", bool allowAliases = true,
-			int maxResults = 10) {
-			
-			return queries.FindNames(TagSearchTextQuery.Create(query), allowAliases, maxResults);
-
-		}
+			int maxResults = 10) => queries.FindNames(TagSearchTextQuery.Create(query), allowAliases, maxResults);
 
 		/// <summary>
 		/// Gets the most common tags in a category.
@@ -260,11 +233,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
 		[Route("{tagId:int}/reports")]
 		[RestrictBannedIP]
-		public void PostReport(int tagId, TagReportType reportType, string notes, int? versionNumber) {
-
-			queries.CreateReport(tagId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
-
-		}
+		public void PostReport(int tagId, TagReportType reportType, string notes, int? versionNumber) => queries.CreateReport(tagId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 
 		/// <summary>
 		/// Creates a new tag.
@@ -304,11 +273,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[Route("{tagId:int}/comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(int tagId, CommentForApiContract contract) {
-
-			return queries.CreateComment(tagId, contract);
-
-		}
+		public CommentForApiContract PostNewComment(int tagId, CommentForApiContract contract) => queries.CreateComment(tagId, contract);
 
 		[Authorize]
 		[Route("entry-type-mappings")]

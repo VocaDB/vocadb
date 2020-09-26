@@ -18,12 +18,8 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly TagQueries tagQueries;
 
 		[Route("{entryType}/{subType?}/tag")]
-		public TagForApiContract GetMappedTag(EntryType entryType, string subType = null, TagOptionalFields fields = TagOptionalFields.None) {
-
-			return tagQueries.FindTagForEntryType(new EntryTypeAndSubType(entryType, subType), (tag, lang) 
-				=> new TagForApiContract(tag, lang, fields), true);
-
-		}
+		public TagForApiContract GetMappedTag(EntryType entryType, string subType = null, TagOptionalFields fields = TagOptionalFields.None)
+			=> tagQueries.FindTagForEntryType(new EntryTypeAndSubType(entryType, subType), (tag, lang) => new TagForApiContract(tag, lang, fields), true);
 
 	}
 

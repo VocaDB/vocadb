@@ -28,9 +28,7 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly OtherService otherService;
 		private readonly SongQueries songQueries;
 
-		private int GetMaxResults(int max) {
-			return Math.Min(max, absoluteMax);	
-		}
+		private int GetMaxResults(int max) => Math.Min(max, absoluteMax);	
 
 		public EntryApiController(EntryQueries queries, OtherService otherService, AlbumService albumService, ArtistService artistService, SongQueries songQueries, IEntryUrlParser entryUrlParser) {
 			this.queries = queries;
@@ -89,11 +87,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="maxResults">Maximum number of results.</param>
 		/// <returns>List of entry names.</returns>
 		[Route("names")]
-		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) {
-			
-			return otherService.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
-
-		}
+		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) => otherService.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Route("tooltip")]

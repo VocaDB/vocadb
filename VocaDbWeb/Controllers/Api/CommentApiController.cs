@@ -51,11 +51,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("{entryType}-comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(EntryType entryType, int commentId) {
-
-			db.HandleTransaction(ctx => GetComments(ctx, entryType).Delete(commentId));
-
-		}
+		public void DeleteComment(EntryType entryType, int commentId) => db.HandleTransaction(ctx => GetComments(ctx, entryType).Delete(commentId));
 
 		/// <summary>
 		/// Gets a list of comments for an entry.
@@ -64,11 +60,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="entryId">ID of the entry whose comments to load.</param>
 		/// <returns>List of comments in no particular order.</returns>
 		[Route("{entryType}-comments")]
-		public PartialFindResult<CommentForApiContract> GetComments(EntryType entryType, int entryId) {
-
-			return new PartialFindResult<CommentForApiContract>(db.HandleQuery(ctx => GetComments(ctx, entryType).GetAll(entryId)), 0);
-
-		}
+		public PartialFindResult<CommentForApiContract> GetComments(EntryType entryType, int entryId) => new PartialFindResult<CommentForApiContract>(db.HandleQuery(ctx => GetComments(ctx, entryType).GetAll(entryId)), 0);
 
 		/// <summary>
 		/// Updates a comment.
@@ -82,11 +74,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </remarks>
 		[Route("{entryType}-comments/{commentId:int}")]
 		[Authorize]
-		public void PostEditComment(EntryType entryType, int commentId, CommentForApiContract contract) {
-
-			db.HandleTransaction(ctx => GetComments(ctx, entryType).Update(commentId, contract));
-
-		}
+		public void PostEditComment(EntryType entryType, int commentId, CommentForApiContract contract) => db.HandleTransaction(ctx => GetComments(ctx, entryType).Update(commentId, contract));
 
 		/// <summary>
 		/// Posts a new comment.
@@ -96,11 +84,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[Route("{entryType}-comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(EntryType entryType, CommentForApiContract contract) {
-
-			return db.HandleTransaction(ctx => GetComments(ctx, entryType).Create(contract.Entry.Id, contract));
-
-		}
+		public CommentForApiContract PostNewComment(EntryType entryType, CommentForApiContract contract) => db.HandleTransaction(ctx => GetComments(ctx, entryType).Create(contract.Entry.Id, contract));
 
 	}
 
