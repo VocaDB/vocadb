@@ -28,6 +28,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.TouhouDb.Resources", "VocaDb.TouhouDb.Resources\VocaDb.TouhouDb.Resources.csproj", "{BF02D394-4900-4DFB-9348-C9A39762614A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDbWeb.Resources", "VocaDbWeb.Resources\VocaDbWeb.Resources.csproj", "{A08B80F0-5124-4674-86DC-D128ECC7A885}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDbWeb.Core", "VocaDbWeb.Core\VocaDbWeb.Core.csproj", "{BFADA915-6E0F-4AD1-8ECF-AF16AD9858C0}"
 EndProject
 Global
