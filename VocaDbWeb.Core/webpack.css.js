@@ -20,18 +20,18 @@ mix
 	.options({
 		processCssUrls: false
 	})
-	.setPublicPath('./')
+	.setPublicPath('./wwwroot/')
 
 
 	// Base CSS
-	.less("Content/css.less", "Content")
+	.less("../VocaDbWeb/Content/css.less", "wwwroot/Content")
 
-	.less("Content/embedSong.less", "Content")
+	.less("../VocaDbWeb/Content/embedSong.less", "wwwroot/Content")
 
 	// CSS for jqxRating
 	.styles([
-		"Scripts/jqwidgets27/styles/jqx.base.css"
-	], "Scripts/jqwidgets27/styles/css.css");
+		"../VocaDbWeb/Scripts/jqwidgets27/styles/jqx.base.css"
+	], "../VocaDbWeb/Scripts/jqwidgets27/styles/css.css");
 
 
 if (mix.inProduction()) {
