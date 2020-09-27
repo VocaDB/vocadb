@@ -40,3 +40,12 @@ VocaDbWeb.Resources/obj/
 *.mdf
 *.ldf
 *.ndf
+VocaDbWeb.Core/connections.config
+VocaDbWeb.Core/appsettings.config
+VocaDbWeb.Core/machinekey.config
+VocaDbWeb.Core/smtp.config
+VocaDbWeb.Core/node_modules/
+VocaDbWeb.Core/wwwroot/Content/css.css
+VocaDbWeb.Core/wwwroot/Content/embedSong.css
+VocaDbWeb.Core/wwwroot/Scripts/jqwidgets27/styles/css.css
+VocaDbWeb.Core/wwwroot/mix-manifest.json
