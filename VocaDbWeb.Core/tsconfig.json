@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"alwaysStrict": true,
+		"module": "es6",
+		"removeComments": true,
+		"target": "es5"
+	},
+	"include": [
+		"../VocaDbWeb/Scripts/**/*"
+	],
+	"exclude": [
+		"node_modules"
+	]
+}
