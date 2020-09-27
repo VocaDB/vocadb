@@ -701,9 +701,6 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongWithPVPlayerAndVoteContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongListContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserBaseContract.ts" />
-    <Content Include="Scripts\DataContracts\User\UserBaseContract.js">
-      <DependentUpon>UserBaseContract.ts</DependentUpon>
-    </Content>
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserMessageSummaryContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Venue\VenueForApiContract.ts" />
     <Content Include="Scripts\Event\Edit.js" />
