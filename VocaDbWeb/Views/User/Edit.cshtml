@@ -17,6 +17,8 @@
 }
 
 @using(Html.BeginForm()) {	
+	@Helpers.ValidationSymmaryDiv("Unable to edit user."/* TODO: localize */)
+	
 	@Html.HiddenFor(m => m.Id)
 
 	<fieldset>
