@@ -3,10 +3,10 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.UserEdit>
 
 @{
-	PageProperties.Title = "Edit user - " + Model.Name;
+	PageProperties.Title = "Edit user - " + Model.OldName;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink("Users", "Index"), 
-		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }) 
+		Html.ActionLink(Model.OldName, "Details", new { id = Model.Id })
 	};	
 }
 

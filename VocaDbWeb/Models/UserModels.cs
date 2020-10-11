@@ -288,7 +288,7 @@ namespace VocaDb.Web.Models {
 			Email = contract.Email;
 			GroupId = contract.GroupId;
 			Id = contract.Id;
-			Name = contract.Name;
+			Name = OldName = contract.Name;
 			OwnedArtists = contract.OwnedArtistEntries;
 			Permissions = PermissionToken.All
 				.Select(p => new PermissionFlagEntry(p, contract.AdditionalPermissions.Contains(p), contract.EffectivePermissions.Contains(p))).ToArray();
@@ -308,7 +308,10 @@ namespace VocaDb.Web.Models {
 
 		public int Id { get; set; }
 
+		[Required(ErrorMessageResourceType = typeof(ViewRes.User.CreateStrings), ErrorMessageResourceName = "UsernameIsRequired")]
 		public string Name { get; set; }
+
+		public string OldName { get; set; }
 
 		public IList<ArtistForUserContract> OwnedArtists { get; set; }
 
