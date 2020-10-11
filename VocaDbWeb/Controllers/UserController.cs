@@ -605,6 +605,9 @@ namespace VocaDb.Web.Controllers {
 			} catch (InvalidEmailFormatException) {
 				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
 				return View(model);
+			} catch (UserNameAlreadyExistsException) {
+				ModelState.AddModelError("Username", "Username is already in use.");
+				return View(model);
 			}
 
         	return RedirectToAction("Details", new {id = model.Id});
