@@ -600,7 +600,12 @@ namespace VocaDb.Web.Controllers {
 			if (permissions != null)
 				model.Permissions = permissions.ToArray();
 
-			Data.UpdateUser(model.ToContract());
+			try {
+				Data.UpdateUser(model.ToContract());
+			} catch (InvalidEmailFormatException) {
+				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
+				return View(model);
+			}
 
         	return RedirectToAction("Details", new {id = model.Id});
 
