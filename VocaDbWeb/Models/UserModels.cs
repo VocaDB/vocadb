@@ -311,6 +311,7 @@ namespace VocaDb.Web.Models {
 		[Required(ErrorMessageResourceType = typeof(ViewRes.User.CreateStrings), ErrorMessageResourceName = "UsernameIsRequired")]
 		public string Name { get; set; }
 
+		// `Name` may be replaced by the user. So we need a copy of that.
 		public string OldName { get; set; }
 
 		public IList<ArtistForUserContract> OwnedArtists { get; set; }
