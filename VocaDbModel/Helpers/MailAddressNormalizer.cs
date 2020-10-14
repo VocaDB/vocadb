@@ -1,12 +1,12 @@
+// Code from https://github.com/iDoRecall/email-normalize/blob/0938e0a4710c6fc076c50dd42ea2886b2984e219/email.js
+
+using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 
 namespace VocaDb.Model.Helpers {
 
-	/// <summary>
-	/// Code from https://github.com/iDoRecall/email-normalize/blob/0938e0a4710c6fc076c50dd42ea2886b2984e219/email.js
-	/// </summary>
 	public static class MailAddressNormalizer {
 
 		public static readonly Dictionary<string, char> hostsWithTags = new Dictionary<string, char> {
@@ -71,6 +71,12 @@ namespace VocaDb.Model.Helpers {
 			{ "yahoo.com.vn", '-' }
 		};
 
+		/// <summary>
+		/// Normalize an email address by removing the dots and address tag.
+		/// </summary>
+		/// <exception cref="ArgumentNullException">address is null.</exception>
+		/// <exception cref="ArgumentException">address is System.String.Empty ("").</exception>
+		/// <exception cref="FormatException">address is not in a recognized format.</exception>
 		public static string Normalize(MailAddress address) {
 			var user = address.User;
 			var host = address.Host.ToLower();
@@ -87,6 +93,12 @@ namespace VocaDb.Model.Helpers {
 			return user + "@" + host;
 		}
 
+		/// <summary>
+		/// Normalize an email address by removing the dots and address tag.
+		/// </summary>
+		/// <exception cref="ArgumentNullException">address is null.</exception>
+		/// <exception cref="ArgumentException">address is System.String.Empty ("").</exception>
+		/// <exception cref="FormatException">address is not in a recognized format.</exception>
 		public static string Normalize(string address) => Normalize(new MailAddress(address));
 
 	}
