@@ -597,7 +597,7 @@ namespace VocaDb.Web.Controllers {
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
-			model.OldName = Service.GetUserWithPermissions(model.Id).Name;
+			model.OldName = Service.GetUser(model.Id).Name;
 
 			if (permissions != null)
 				model.Permissions = permissions.ToArray();
