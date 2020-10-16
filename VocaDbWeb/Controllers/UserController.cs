@@ -597,10 +597,23 @@ namespace VocaDb.Web.Controllers {
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
+			model.OldName = Service.GetUser(model.Id).Name;
+
 			if (permissions != null)
 				model.Permissions = permissions.ToArray();
 
-			Data.UpdateUser(model.ToContract());
+			if (!ModelState.IsValid)
+				return View(model);
+
+			try {
+				Data.UpdateUser(model.ToContract());
+			} catch (InvalidEmailFormatException) {
+				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
+				return View(model);
+			} catch (UserNameAlreadyExistsException) {
+				ModelState.AddModelError("Username", "Username is already in use.");
+				return View(model);
+			}
 
         	return RedirectToAction("Details", new {id = model.Id});
 

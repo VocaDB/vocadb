@@ -1573,7 +1573,15 @@ namespace VocaDb.Model.Database.Queries {
 
 				user.Active = contract.Active;
 				user.Email = contract.Email;
-				user.NormalizedEmail = !string.IsNullOrEmpty(contract.Email) ? MailAddressNormalizer.Normalize(contract.Email) : string.Empty;
+
+				if (!string.IsNullOrEmpty(contract.Email)) {
+					ValidateEmail(contract.Email);
+
+					user.NormalizedEmail = MailAddressNormalizer.Normalize(contract.Email);
+				} else {
+					user.NormalizedEmail = string.Empty;
+				}
+
 				user.Options.Poisoned = contract.Poisoned;
 				user.Options.Supporter = contract.Supporter;
 
