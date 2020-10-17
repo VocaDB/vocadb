@@ -1,5 +1,4 @@
-@using System.Web.Mvc;
-@using System.Web.Mvc.Html
+﻿@using System.Web.Mvc.Html
 @using System.Web.Routing
 @using VocaDb.Model.DataContracts.Albums;
 @using VocaDb.Model.Domain.Users
@@ -139,34 +138,4 @@
 	</div>
 </div>
 	
-}
-
-@helper PrintArchivedAlbumData(ComparedAlbumsContract comparedAlbums) {
-
-	<div class="well well-transparent archived-entry-contents">
-		<h4>Content</h4>
-	
-		<table class="table table-bordered">
-			@ArchivedEntryHelpers.DataRow("Album Id", comparedAlbums.FirstData.Id)
-			@ArchivedEntryHelpers.PictureRow("Main picture", comparedAlbums, id => Url.Action("ArchivedVersionCoverPicture", "Album", new { id }))
-			@ArchivedEntryHelpers.DataRow("Main picture MIME", comparedAlbums, d => d.MainPictureMime)
-			@ArchivedEntryHelpers.TranslatedNameRow(comparedAlbums, d => d.TranslatedName)
-			@ArchivedEntryHelpers.DataRowList("Names", comparedAlbums, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
-			@ArchivedEntryHelpers.DataRow("Description", comparedAlbums, d => d.Description, preserveLineBreaks: true)
-			@ArchivedEntryHelpers.DataRow("Description (en)", comparedAlbums, d => d.DescriptionEng, preserveLineBreaks: true)
-			@ArchivedEntryHelpers.DataRow("Disc type", comparedAlbums, d => Translate.DiscTypeName(d.DiscType))
-			@ArchivedEntryHelpers.DataRow("Release date", comparedAlbums, d => d.OriginalRelease != null && d.OriginalRelease.ReleaseDate != null && !d.OriginalRelease.ReleaseDate.IsEmpty ? ArchivedEntryHelpers.FormatReleaseDate(d.OriginalRelease.ReleaseDate) : string.Empty)
-			@ArchivedEntryHelpers.DataRow("Catalog number", comparedAlbums, d => d.OriginalRelease != null ? d.OriginalRelease.CatNum : string.Empty)
-			@ArchivedEntryHelpers.DataRow("Release event", comparedAlbums, d => ArchivedEntryHelpers.ObjectRefInfo(d.OriginalRelease != null ? d.OriginalRelease.ReleaseEvent : null))
-			@ArchivedEntryHelpers.DataRowList("Barcodes", comparedAlbums, d => DataFormatUtils.GenerateHtml(d.Identifiers, d2 => new MvcHtmlString(d2.Value)))
-			@ArchivedEntryHelpers.DataRowList("External links", comparedAlbums, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
-			@ArchivedEntryHelpers.DataRowList("Artists", comparedAlbums, d => DataFormatUtils.GenerateHtml(d.Artists != null ? d.Artists.OrderBy(a => a.NameHint) : null, artist => MvcHtmlString.Create(artist.NameHint + " [" + artist.Id + "] - IsSupport: " + artist.IsSupport + ", Roles: " + artist.Roles)))
-			@ArchivedEntryHelpers.DataRowList("Discs", comparedAlbums, d => DataFormatUtils.GenerateHtml(d.Discs != null ? d.Discs.OrderBy(s => s.DiscNumber) : null, disc => MvcHtmlString.Create(disc.DiscNumber + ": " + disc.Name + " (" + disc.MediaType + ") [" + disc.Id + "]")))
-			@ArchivedEntryHelpers.DataRowList("Tracks", comparedAlbums, d => DataFormatUtils.GenerateHtml(d.Songs != null ? d.Songs.OrderBy(s => s.DiscNumber).ThenBy(s => s.TrackNumber) : null, song => MvcHtmlString.Create("(Disc " + song.DiscNumber + ") " + song.TrackNumber + ". " + song.NameHint + " [" + song.Id + "]")))
-			@ArchivedEntryHelpers.DataRowList("Pictures", comparedAlbums, d => DataFormatUtils.GenerateHtmlFromHelper(d.Pictures, ArchivedEntryHelpers.PictureFileInfo))
-			@ArchivedEntryHelpers.DataRowList("PVs", comparedAlbums, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
-		</table>	
-
-	</div>
-
 }

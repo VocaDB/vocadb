@@ -1797,6 +1797,7 @@
     <Content Include="Views\Venue\ViewVersion.cshtml" />
     <Content Include="Views\Event\EventsByVenue.cshtml" />
     <Content Include="Views\Shared\Partials\Activityfeed\_EntryType.cshtml" />
+    <Content Include="Views\Shared\Partials\Album\_PrintArchivedAlbumData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
