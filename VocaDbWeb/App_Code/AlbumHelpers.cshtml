@@ -8,12 +8,6 @@
 @using VocaDb.Model.Utils
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper AlbumIconLink(AlbumContract album) {
-	<a href="@Url.Action("Details", "Album", new { id = album.Id })">
-		<img src="@Url.ImageThumb(album, ImageSize.TinyThumb)" alt="Cover" class="coverPicThumb" />
-	</a>		
-}
-
 @helper AlbumLink(AlbumContract album) {
 	@Html.ActionLink(album.Name, "Details", "Album", new RouteValueDictionary { { "id", album.Id } }, new Dictionary<string, object> { { "title", album.AdditionalNames }, { "data-entry-id", album.Id }, { "class", "albumLink" }})
 }
@@ -25,7 +19,7 @@
 		@foreach (var album in albums) {
 		<tr>
 			<td>
-				@AlbumIconLink(album)
+				@{ Html.RenderPartial("Partials/Album/_AlbumIconLink", album); }
 			</td>
 			<td>
 				@Html.ActionLink(album.Name, "Details", "Album", new { id = album.Id }, new { title = album.AdditionalNames })
@@ -56,7 +50,7 @@
 				@Html.Raw("<tr>")
 	  }
 			<td>
-				@AlbumIconLink(album)
+				@{ Html.RenderPartial("Partials/Album/_AlbumIconLink", album); }
 			</td>
 			<td>
 				@Html.ActionLink(album.Name, "Details", "Album", new { id = album.Id }, new { title = album.AdditionalNames })
