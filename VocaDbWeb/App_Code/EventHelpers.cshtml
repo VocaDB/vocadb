@@ -2,25 +2,6 @@
 @using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper PrintArchivedEventSeriesData(ComparedEventSeriesContract comparedSeries) {
-
-	<div class="well well-transparent archived-entry-contents">
-		<h4>Content</h4>
-
-		<table class="table table-bordered">
-			@ArchivedEntryHelpers.DataRow("Id", comparedSeries.FirstData.Id)
-			@ArchivedEntryHelpers.TranslatedNameRow(comparedSeries, d => d.TranslatedName)
-			@ArchivedEntryHelpers.DataRowList("Names", comparedSeries, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
-			@ArchivedEntryHelpers.DataRow("Description", comparedSeries, d => d.Description)
-			@ArchivedEntryHelpers.DataRowList("External links", comparedSeries, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
-			@ArchivedEntryHelpers.DataRow("Category", comparedSeries, d => d.Category)
-			@ArchivedEntryHelpers.DataRow("Main picture MIME", comparedSeries, d => d.MainPictureMime)
-		</table>
-
-	</div>
-
-}
-
 @helper PrintArchivedEventData(ComparedEventsContract comparedEvents) {
 
 	<div class="well well-transparent archived-entry-contents">
