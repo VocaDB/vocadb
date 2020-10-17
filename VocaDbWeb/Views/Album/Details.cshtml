@@ -326,7 +326,7 @@
 											@SongHelpers.SongTypeLabel(song.Song.SongType)
 										}
 										@Helpers.PVServiceIcons(song.Song.PVServices)
-										@SongHelpers.RatingIcon(song.Rating ?? SongVoteRating.Nothing)
+										Html.RenderPartial("Partials/Song/_RatingIcon", song.Rating ?? SongVoteRating.Nothing);
 										<br />
 										<small class="muted">@song.Song.ArtistString</small>
 									} else {

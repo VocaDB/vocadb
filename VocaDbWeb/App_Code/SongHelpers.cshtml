@@ -49,15 +49,6 @@
 	</div>
 }
 
-@helper RatingIcon(SongVoteRating rating) {
-	if (rating == SongVoteRating.Like) {
-		<span class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>
-	}
-	if (rating == SongVoteRating.Favorite) {
-		<span class="icon heartIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Favorite]"></span>
-	}	
-}
-
 @helper SongIconLink(SongContract song, int? albumId = null) {
 	<a href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(song, albumId))">
 		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin"/>
