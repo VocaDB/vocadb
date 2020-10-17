@@ -1,11 +1,8 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
 @using System.Globalization
-@using System.Web.Mvc;
 @using System.Web.Mvc.Html;
 @using VocaDb.Model.DataContracts.Songs;
-@using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.Songs
-@using VocaDb.Model.Helpers
 @using VocaDb.Model.Service.Search.AlbumSearch
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
@@ -29,32 +26,6 @@
 	if (!string.IsNullOrEmpty(lyrics.Source)) {
 		@:(@lyrics.Source)
 	}
-}
-
-@helper PrintArchivedSongData(ComparedSongsContract comparedSongs) {
-
-	<div class="well well-transparent archived-entry-contents">
-		<h4>Content</h4>
-
-		<table class="table table-bordered">
-			@ArchivedEntryHelpers.DataRow("Id", comparedSongs.FirstData.Id)
-			@ArchivedEntryHelpers.TranslatedNameRow(comparedSongs, d => d.TranslatedName)
-			@ArchivedEntryHelpers.DataRowList("Names", comparedSongs, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
-			@ArchivedEntryHelpers.DataRow("Notes", comparedSongs, d => d.Notes, preserveLineBreaks: true)
-			@ArchivedEntryHelpers.DataRow("Notes (en)", comparedSongs, d => d.NotesEng, preserveLineBreaks: true)
-			@ArchivedEntryHelpers.DataRow("Song type", comparedSongs, d => d.SongType)
-			@ArchivedEntryHelpers.DataRow("Original version", comparedSongs, d => ArchivedEntryHelpers.ObjectRefInfo(d.OriginalVersion))
-			@ArchivedEntryHelpers.DataRow("Duration", comparedSongs, d => DateTimeUtils.FormatFromSeconds(d.LengthSeconds))
-			@ArchivedEntryHelpers.DataRow("Release event", comparedSongs, d => ArchivedEntryHelpers.ObjectRefInfo(d.ReleaseEvent))
-			@ArchivedEntryHelpers.DataRow("Publish date", comparedSongs, d => d.PublishDate)
-			@ArchivedEntryHelpers.DataRowList("External links", comparedSongs, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
-			@ArchivedEntryHelpers.DataRowList("Artists", comparedSongs, d => DataFormatUtils.GenerateHtml(d.Artists != null ? (d.Artists.OrderBy(a => a.NameHint)) : null, artist => MvcHtmlString.Create(artist.NameHint + " [" + artist.Id + "] - IsSupport: " + artist.IsSupport + ", Roles: " + artist.Roles)))
-			@ArchivedEntryHelpers.DataRowList("PVs", comparedSongs, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
-			@ArchivedEntryHelpers.DataRowList("Lyrics", comparedSongs, d => DataFormatUtils.GenerateHtmlFromHelper(d.Lyrics, LyricsInfo))
-		</table>
-
-	</div>
-
 }
 
 @helper PVPreviewKnockout(string getPvServiceIcons) {
