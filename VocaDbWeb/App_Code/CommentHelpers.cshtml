@@ -1,9 +1,8 @@
+﻿@using System.Web.Mvc.Html;
 @using VocaDb.Model.DataContracts
-@using VocaDb.Model.DataContracts.Api
 @using VocaDb.Model.DataContracts.Comments
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Helpers
-@using VocaDb.Model.Service.Helpers
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Code
 @inherits VocaDb.Web.Code.HelperPage
@@ -78,35 +77,10 @@
 	</div>		
 }
 
-@helper CommentEntryItem(EntryForApiContract entry) {
-		
-	var thumbUrl = (entry.MainPicture != null ? UrlHelper.UpgradeToHttps(entry.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb)) : null);
-	
-	<div class="media">
-		@if (!string.IsNullOrEmpty(thumbUrl)) {
-		<a class="pull-left" href="@Url.EntryDetails(entry)" title="@entry.AdditionalNames">
-			<img src="@thumbUrl" alt="thumb" class="coverPicThumb" referrerpolicy="same-origin" />
-		</a>
-		}
-		
-		<div class="media-body">
-			<h4 class="media-heading">
-				<a href="@Url.EntryDetails(entry)" title="@entry.AdditionalNames">
-					@entry.Name
-				</a>
-			</h4>
-			@if (!string.IsNullOrEmpty(entry.ArtistString)) {
-				<span>@entry.ArtistString</span>
-			}
-		</div>
-	</div>
-		
-}
-
 @helper CommentWithEntryVertical(EntryWithCommentsContract entry, int maxLength = int.MaxValue) {
 
 	<div class="well well-transparent">
-		@CommentEntryItem(entry.Entry)
+		@{ Html.RenderPartial("Partials/Comment/_CommentEntryItem", entry.Entry); }
 		@foreach (var comment in entry.Comments) {
 			@PrintComment(comment, false, maxLength: maxLength)
 			if (comment != entry.Comments.Last()) {

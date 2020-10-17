@@ -1,0 +1,28 @@
+﻿@using VocaDb.Model.DataContracts.Api
+@using VocaDb.Web.Helpers
+@model EntryForApiContract
+
+@{
+	var thumbUrl = (Model.MainPicture != null ? VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(Model.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb)) : null);
+}
+
+<div class="media">
+	@if (!string.IsNullOrEmpty(thumbUrl))
+	{
+		<a class="pull-left" href="@Url.EntryDetails(Model)" title="@Model.AdditionalNames">
+			<img src="@thumbUrl" alt="thumb" class="coverPicThumb" referrerpolicy="same-origin" />
+		</a>
+	}
+
+	<div class="media-body">
+		<h4 class="media-heading">
+			<a href="@Url.EntryDetails(Model)" title="@Model.AdditionalNames">
+				@Model.Name
+			</a>
+		</h4>
+		@if (!string.IsNullOrEmpty(Model.ArtistString))
+		{
+			<span>@Model.ArtistString</span>
+		}
+	</div>
+</div>

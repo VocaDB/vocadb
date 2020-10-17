@@ -1809,6 +1809,7 @@
     <Content Include="Views\Shared\Partials\Album\_CoverLink.cshtml" />
     <Content Include="Views\Shared\Partials\Artist\_ArtistTypeLabel.cshtml" />
     <Content Include="Views\Shared\Partials\Artist\_ArtistIconLink.cshtml" />
+    <Content Include="Views\Shared\Partials\Comment\_CommentEntryItem.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
