@@ -1,0 +1,25 @@
+﻿@using VocaDb.Model.DataContracts.Artists;
+@using VocaDb.Web.Helpers;
+@model ComparedArtistsContract
+
+<div class="well well-transparent archived-entry-contents">
+	<h4>Content</h4>
+
+	<table class="table table-bordered">
+		@ArchivedEntryHelpers.DataRow("Id", Model.FirstData.Id)
+		@ArchivedEntryHelpers.PictureRow("Main picture", Model, id => Url.Action("ArchivedVersionPicture", "Artist", new { id }))
+		@ArchivedEntryHelpers.DataRow("Main picture MIME", Model, d => d.MainPictureMime)
+		@ArchivedEntryHelpers.TranslatedNameRow(Model, d => d.TranslatedName)
+		@ArchivedEntryHelpers.DataRowList("Names", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+		@ArchivedEntryHelpers.DataRow("Description", Model, d => d.Description, preserveLineBreaks: true)
+		@ArchivedEntryHelpers.DataRow("Description (en)", Model, d => d.DescriptionEng, preserveLineBreaks: true)
+		@ArchivedEntryHelpers.DataRow("Release date", Model, d => d.ReleaseDate)
+		@ArchivedEntryHelpers.DataRow("Artist type", Model, d => Translate.ArtistTypeName(d.ArtistType))
+		@ArchivedEntryHelpers.DataRowList("External links", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+		@ArchivedEntryHelpers.DataRow("Base voicebank", Model, d => ArchivedEntryHelpers.ObjectRefInfo(d.BaseVoicebank))
+		@ArchivedEntryHelpers.DataRowList("Associated artists", Model, d => DataFormatUtils.GenerateHtml(d.Groups, g => MvcHtmlString.Create(g.NameHint + " [" + g.Id + "] (" + g.LinkType + ")")))
+		@ArchivedEntryHelpers.ObjectRefList("Members", Model, d => d.Members)
+		@ArchivedEntryHelpers.DataRowList("Pictures", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.Pictures, ArchivedEntryHelpers.PictureFileInfo))
+	</table>
+
+</div>

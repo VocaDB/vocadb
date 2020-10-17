@@ -3,12 +3,12 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Artists.ArchivedArtistVersionDetailsContract>
 
 @{
-	
-    PageProperties.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
-	ViewBag.Parents = new[] { 
-		Html.ActionLink("Artist", "Index"), 
+
+	PageProperties.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
+	ViewBag.Parents = new[] {
+		Html.ActionLink("Artist", "Index"),
 		Html.ActionLink(Model.Artist.Name, "Details", new { id = Model.Artist.Id }),
-		Html.ActionLink("Revisions", "Versions", new { id = Model.Artist.Id }) 
+		Html.ActionLink("Revisions", "Versions", new { id = Model.Artist.Id })
 	};
 
 }
@@ -40,10 +40,10 @@
 	}
 }
 
-@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Versions.CreateForArtist(Model.ArchivedVersion), 
+@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Versions.CreateForArtist(Model.ArchivedVersion),
 	Model.ComparedVersion != null ? Versions.CreateForArtist(Model.ComparedVersion) : null)
 
-@ArtistHelpers.PrintArchivedArtistData(Model.Versions)
+@{ Html.RenderPartial("Partials/Artist/_PrintArchivedArtistData", Model.Versions); }
 
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
 

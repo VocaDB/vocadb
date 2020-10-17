@@ -1798,6 +1798,7 @@
     <Content Include="Views\Event\EventsByVenue.cshtml" />
     <Content Include="Views\Shared\Partials\Activityfeed\_EntryType.cshtml" />
     <Content Include="Views\Shared\Partials\Album\_PrintArchivedAlbumData.cshtml" />
+    <Content Include="Views\Shared\Partials\Artist\_PrintArchivedArtistData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
