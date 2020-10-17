@@ -1,38 +1,10 @@
-@inherits VocaDb.Web.Code.HelperPage
+﻿@inherits VocaDb.Web.Code.HelperPage
 @using System.Web.Mvc.Html;
 @using HelperRes
 @using VocaDb.Web.Code
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.DataContracts.Activityfeed;
-@using VocaDb.Model.Domain
-@using VocaDb.Model.Domain.Activityfeed;
 @using VocaDb.Model.Service.Helpers
-
-@helper EntryType(ActivityEntryForApiContract entry) {
-	@EntryType(entry.EditEvent, entry.Entry.EntryType)
-}
-
-@helper EntryType(EntryEditEvent editEvent, EntryType entryType) {
-
-	var tr = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString(editEvent.ToString() + entryType);
-
-	if (!string.IsNullOrEmpty(tr)) {
-
-		<span>@tr</span>
-
-	} else {
-
-		var entryTypeName = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString("Entry" + entryType);
-
-		if (editEvent == EntryEditEvent.Created) {
-			<span>@string.Format(HelperRes.ActivityFeedHelperStrings.CreatedNew, entryTypeName)</span>
-		} else {
-			<span>@string.Format(HelperRes.ActivityFeedHelperStrings.Updated, entryTypeName)</span>
-		}
-
-	}
-
-}
 
 @helper ActivityEntry(ActivityEntryForApiContract entry, bool showDetails = false) {
 	var thumbUrl = entry.Entry.MainPicture != null ? UrlHelper.UpgradeToHttps(entry.Entry.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb)) : null;
@@ -43,7 +15,7 @@
 			@HelperRes.ActivityFeedHelperStrings.Someone
 		}
 
-		@EntryType(entry)
+		@{ Html.RenderPartial("Partials/Activityfeed/_EntryType", entry); }
 
 		<small class="pull-right extraInfo" title="@entry.CreateDate.ToUniversalTime().ToString("g") UTC">
 			@TimeAgoStringBuilder.FormatTimeAgo(entry.CreateDate)
