@@ -6,7 +6,6 @@
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.DataContracts.Songs;
-@using VocaDb.Model.Domain.Images;
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper ArtistGrid(IEnumerable<ArtistContract> artists, int columns,
@@ -20,7 +19,7 @@
 				@Html.Raw("<tr>")
 			}
 			<td>
-				@ArtistIconLink(artist)
+				@{ Html.RenderPartial("Partials/Artist/_ArtistIconLink", artist); }
 			</td>
 			<td>
 				@ArtistLink(artist)
@@ -42,12 +41,6 @@
 		}
 	</table>
 			
-}
-
-@helper ArtistIconLink(ArtistContract artist) {
-	<a href="@Url.Action("Details", "Artist", new { id = artist.Id })">
-		<img src="@Url.ImageThumb(artist, ImageSize.TinyThumb)" alt="Thumb" class="coverPicThumb" />
-	</a>		
 }
 
 @helper ArtistLink(ArtistContract artist, bool typeLabel = false, string name = null, bool releaseYear = false) {
