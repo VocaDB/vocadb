@@ -761,7 +761,6 @@
     <Content Include="Content\Styles\embedSong.less" />
     <Content Include="App_Code\PVHelpers.cshtml" />
     <Content Include="App_Code\SearchHelpers.cshtml" />
-    <Content Include="App_Code\EventHelpers.cshtml" />
     <Content Include="App_Code\VenueHelpers.cshtml" />
     <None Include="compilerconfig.json" />
     <Content Include="Content\Styles\song.less" />
@@ -1810,6 +1809,7 @@
     <Content Include="Views\Shared\Partials\Artist\_ArtistTypeLabel.cshtml" />
     <Content Include="Views\Shared\Partials\Artist\_ArtistIconLink.cshtml" />
     <Content Include="Views\Shared\Partials\Comment\_CommentEntryItem.cshtml" />
+    <Content Include="Views\Shared\Partials\Event\_VenueLinkOrVenueName.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
