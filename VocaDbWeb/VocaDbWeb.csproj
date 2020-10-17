@@ -1811,6 +1811,7 @@
     <Content Include="Views\Shared\Partials\Comment\_CommentEntryItem.cshtml" />
     <Content Include="Views\Shared\Partials\Event\_VenueLinkOrVenueName.cshtml" />
     <Content Include="Views\Shared\Partials\Song\_RatingIcon.cshtml" />
+    <Content Include="Views\Shared\Partials\Song\_SongIconLink.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

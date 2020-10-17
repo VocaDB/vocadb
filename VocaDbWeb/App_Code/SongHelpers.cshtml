@@ -55,12 +55,6 @@
 	</a>		
 }
 
-@helper SongIconLink(SongForApiContract song) {
-	<a href="@Url.SongDetails(song)">
-		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin"/>
-	</a>
-}
-
 @helper SongLink(SongContract song, int? albumId = null, bool tooltip = false) {
 	@Html.ActionLink(song.Name, "Details", "Song", ViewHelper.GetRouteValueDictionary(song, albumId), new Dictionary<string, object> { { "title", song.AdditionalNames }, { "data-bind", tooltip ? "songToolTip: " + song.Id : null } })
 }
@@ -87,7 +81,7 @@
 			}
 			<td>
 				@if (!string.IsNullOrEmpty(song.ThumbUrl)) {
-					@SongIconLink(song)
+					Html.RenderPartial("Partials/Song/_SongIconLink", song);
 				}
 			</td>
 			<td>
