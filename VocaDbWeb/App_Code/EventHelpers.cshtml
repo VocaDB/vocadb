@@ -1,33 +1,6 @@
 ﻿@using VocaDb.Model.DataContracts.ReleaseEvents
-@using VocaDb.Web.Helpers
+
 @inherits VocaDb.Web.Code.HelperPage
-
-@helper PrintArchivedEventData(ComparedEventsContract comparedEvents) {
-
-	<div class="well well-transparent archived-entry-contents">
-		<h4>Content</h4>
-
-		<table class="table table-bordered">
-			@ArchivedEntryHelpers.DataRow("Id", comparedEvents.FirstData.Id)
-			@ArchivedEntryHelpers.TranslatedNameRow(comparedEvents, d => d.TranslatedName)
-			@ArchivedEntryHelpers.DataRowList("Names", comparedEvents, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
-			@ArchivedEntryHelpers.DataRow("Description", comparedEvents, d => d.Description)
-			@ArchivedEntryHelpers.DataRowList("External links", comparedEvents, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
-			@ArchivedEntryHelpers.DataRow("Category", comparedEvents, d => d.Category)
-			@ArchivedEntryHelpers.DataRow("Date", comparedEvents, d => d.Date)
-			@ArchivedEntryHelpers.DataRow("Venue", comparedEvents, d => ArchivedEntryHelpers.ObjectRefInfo(d.Venue))
-			@ArchivedEntryHelpers.DataRow("Venue name", comparedEvents, d => d.VenueName)
-			@ArchivedEntryHelpers.DataRow("Main picture MIME", comparedEvents, d => d.MainPictureMime)
-			@ArchivedEntryHelpers.DataRow("Series", comparedEvents, d => ArchivedEntryHelpers.ObjectRefInfo(d.Series))
-			@ArchivedEntryHelpers.DataRow("Series number", comparedEvents, d => d.SeriesNumber)
-			@ArchivedEntryHelpers.DataRowList("Artists", comparedEvents, d => DataFormatUtils.GenerateHtmlFromHelper(d.Artists, ArchivedEntryHelpers.ObjectRefInfo))
-			@ArchivedEntryHelpers.DataRowList("PVs", comparedEvents, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
-			@ArchivedEntryHelpers.DataRow("Song list", comparedEvents, d => ArchivedEntryHelpers.ObjectRefInfo(d.SongList))
-		</table>
-
-	</div>
-
-}
 
 @helper VenueLinkOrVenueName(ReleaseEventForApiContract ev) {
 	if (ev.Venue != null) {
