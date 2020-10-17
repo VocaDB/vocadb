@@ -9,35 +9,6 @@
 @using VocaDb.Model.Domain.Images;
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper ArtistTypeLabel(ArtistType artistType) {
-	var title = Translate.ArtistTypeName(artistType);
-    switch (artistType) {
-	case ArtistType.Vocaloid:
-            <span class="label label-info" title="@title">V</span>
-			break;
-
-		case ArtistType.UTAU:
-			<span class="label label-important" title="@title">U</span>
-			break;		
-
-		case ArtistType.CeVIO:
-			<span class="label label-success" title="@title">C</span>
-			break;		
-				
-		case ArtistType.OtherVoiceSynthesizer:
-			<span class="label label-inverse" title="@title">O</span>
-			break;		
-					
-		case ArtistType.Utaite:
-			<span class="label label-info" title="@title">U</span>
-			break;
-			
-		case ArtistType.OtherVocalist:
-			<span class="label" title="@title">O</span>
-			break;		
-	}
-}
-
 @helper ArtistGrid(IEnumerable<ArtistContract> artists, int columns,
 	bool displayType = false) {
 	
@@ -81,7 +52,7 @@
 
 @helper ArtistLink(ArtistContract artist, bool typeLabel = false, string name = null, bool releaseYear = false) {
 	if (typeLabel) {
-		@ArtistTypeLabel(artist.ArtistType)	 
+		Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", artist.ArtistType);
 	}
 	@Html.ActionLink(name ?? artist.Name, "Details", "Artist", new RouteValueDictionary { { "id", artist.Id } }, new Dictionary<string, object> { { "title", artist.AdditionalNames }, { "data-entry-id", artist.Id }, { "class", "artistLink" }})
 	if (releaseYear && artist.ReleaseDate.HasValue) {<small class="muted">&nbsp;(@artist.ReleaseDate.Value.Year)</small>}
@@ -99,7 +70,7 @@
 		}
 		if (artist.Artist != null) {
 			if (showType) {
-				@ArtistTypeLabel(artist.Artist.ArtistType)
+				Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", artist.Artist.ArtistType);
 			}			
 			@ArtistLink(artist.Artist, name: artist.Name)
 		} else {
