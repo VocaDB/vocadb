@@ -76,17 +76,6 @@
 			
 }
 
-@helper AlbumThumbs(IEnumerable<AlbumForApiContract> albums) {
-	
-	<ul class="smallThumbs">
-		@foreach (var album in albums) {
-			@Helpers.ThumbItem(Url.Action("Details", "Album", new { id = album.Id }),
-				Url.ImageThumb(album.MainPicture, ImageSize.SmallThumb), album.Name, album)
-		}
-	</ul>
-	
-}
-
 @helper ArtistAlbumParticipationStatusOptionsKnockout(string binding) {
 	{
 		var options = new Dictionary<string, string> {

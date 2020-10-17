@@ -276,7 +276,7 @@
 				<small>@string.Format(ViewRes.EntryDetailsStrings.NumTotalParenthesis, Model.SharedStats.AlbumCount)</small>
 			</h3>
 			<div id="newAlbums">
-				@AlbumHelpers.AlbumThumbs(Model.LatestAlbums)
+				@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", Model.LatestAlbums); }
 			</div>
 		}
 
@@ -286,7 +286,7 @@
 				<small>(@string.Format(Res.RatedAlbums, Model.SharedStats.RatedAlbumCount))</small>
 			</h3>
 			<div id="topAlbums">
-				@AlbumHelpers.AlbumThumbs(Model.TopAlbums)
+				@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", Model.TopAlbums); }
 			</div>
 		}
 
