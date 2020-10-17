@@ -1802,6 +1802,7 @@
     <Content Include="Views\Shared\Partials\Event\_PrintArchivedEventSeriesData.cshtml" />
     <Content Include="Views\Shared\Partials\Event\_PrintArchivedEventData.cshtml" />
     <Content Include="Views\Shared\Partials\Song\_PrintArchivedSongData.cshtml" />
+    <Content Include="Views\Shared\Partials\Tag\_PrintArchivedTagData.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
