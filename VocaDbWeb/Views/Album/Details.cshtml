@@ -74,7 +74,7 @@
 				<div id="picCarousel" class="carousel slide">
 					<div class="carousel-inner">
 						<div class="active item thumbItem">
-							@AlbumHelpers.CoverLink(Model)
+							@{ Html.RenderPartial("Partials/Album/_CoverLink", Model); }
 						</div>
 						@foreach (var pic in Model.Pictures) {
 							<div class="item thumbItem" itemprop="image">

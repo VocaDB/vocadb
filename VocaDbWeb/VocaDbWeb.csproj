@@ -1806,6 +1806,7 @@
     <Content Include="Views\Shared\Partials\Venue\_PrintArchivedVenueData.cshtml" />
     <Content Include="Views\Shared\Partials\Album\_AlbumIconLink.cshtml" />
     <Content Include="Views\Shared\Partials\Album\_AlbumThumbs.cshtml" />
+    <Content Include="Views\Shared\Partials\Album\_CoverLink.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

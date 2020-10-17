@@ -4,7 +4,6 @@
 @using VocaDb.Model.Domain.Users
 @using VocaDb.Model.Service.Search.AlbumSearch
 @using VocaDb.Web.Helpers;
-@using VocaDb.Model.Domain.Images;
 @using VocaDb.Model.Utils
 @inherits VocaDb.Web.Code.HelperPage
 
@@ -85,12 +84,6 @@
 		};
 		@KnockoutHelpers.CheckBoxButtons(options, binding)
 	} 
-}
-
-@helper CoverLink(IEntryImageInformation imageInfo) {
-    <a href="@Url.ImageThumb(imageInfo, ImageSize.Original)">
-        <img src="@Url.ImageThumb(imageInfo, ImageSize.Thumb)" alt="@ViewRes.Album.DetailsStrings.CoverPicture" class="coverPic" />
-    </a>
 }
 
 @helper DetailsLink(AlbumContract album) {
