@@ -2,7 +2,6 @@
 @using System.Globalization
 @using System.Web.Mvc.Html;
 @using VocaDb.Model.DataContracts.Songs;
-@using VocaDb.Model.Domain.Songs
 @using VocaDb.Model.Service.Search.AlbumSearch
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
@@ -87,7 +86,7 @@
 			<td>
 				@SongLink(song)				
 				@if (displayType) {
-					@SongTypeLabel(song.SongType)
+					Html.RenderPartial("Partials/Song/_SongTypeLabel", song.SongType);
 				}
 				@if (displayPublishDate && song.PublishDate.HasValue) {
 					<i class="icon-calendar" title="Published: @song.PublishDate.Value.ToShortDateString()" data-bind="tooltip: { placement: 'right' }"></i>
@@ -149,56 +148,12 @@
 
 	foreach (var song in songs) {
 		if (showType) {
-			@SongTypeLabel(song.SongType)
+			Html.RenderPartial("Partials/Song/_SongTypeLabel", song.SongType);
 		}
 		@SongLink(song)
 		if (song != songs.Last()) {
 			@(", ")
 		}
-	}
-}
-
-@helper SongTypeLabel(SongType songType) {
-	switch (songType) {
-		case SongType.Arrangement:
-			<span class="label" title="@Translate.SongTypeNames[songType]">A</span>
-			break;
-
-		case SongType.Cover:
-			<span class="label" title="@Translate.SongTypeNames[songType]">C</span>
-			break;
-
-		case SongType.DramaPV:
-			<span class="label label-success" title="@Translate.SongTypeNames[songType]">D</span>
-			break;		
-			
-		case SongType.Instrumental:
-			<span class="label label-inverse" title="@Translate.SongTypeNames[songType]">I</span>
-			break;
-			
-		case SongType.Mashup:
-			<span class="label" title="@Translate.SongTypeNames[songType]">M</span>
-			break;
-			
-		case SongType.Original:
-			<span class="label label-info" title="@Translate.SongTypeNames[songType]">O</span>
-			break;
-			
-		case SongType.Other:
-			<span class="label" title="@Translate.SongTypeNames[songType]">O</span>
-			break;
-			
-		case SongType.Remaster:
-			<span class="label label-info" title="@Translate.SongTypeNames[songType]">R</span>
-			break;
-			
-		case SongType.Remix:
-			<span class="label" title="@Translate.SongTypeNames[songType]">R</span>
-			break;
-			
-		case SongType.MusicPV:
-			<span class="label label-success" title="@Translate.SongTypeNames[songType]">PV</span>
-			break;		
 	}
 }
 
