@@ -1,0 +1,7 @@
+﻿@using VocaDb.Model.Domain.Images;
+@using VocaDb.Web.Helpers;
+@model IEntryImageInformation
+
+<a href="@Url.ImageThumb(Model, ImageSize.Original)">
+	<img src="@Url.ImageThumb(Model, ImageSize.Thumb)" alt="@ViewRes.Album.DetailsStrings.CoverPicture" class="coverPic" />
+</a>

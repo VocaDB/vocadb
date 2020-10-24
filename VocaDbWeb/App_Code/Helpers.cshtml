@@ -183,7 +183,7 @@
 					@if (ev.HasVenueOrVenueName) {
 						<br />
 						<small class="extraInfo">
-							@EventHelpers.VenueLinkOrVenueName(ev)
+							@{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", ev); }
 						</small>
 					}
 				</div>

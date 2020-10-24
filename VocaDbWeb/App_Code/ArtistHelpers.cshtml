@@ -6,38 +6,7 @@
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.DataContracts.Songs;
-@using VocaDb.Model.DataContracts.Albums;
-@using VocaDb.Model.Domain.Images;
 @inherits VocaDb.Web.Code.HelperPage
-
-@helper ArtistTypeLabel(ArtistType artistType) {
-	var title = Translate.ArtistTypeName(artistType);
-    switch (artistType) {
-	case ArtistType.Vocaloid:
-            <span class="label label-info" title="@title">V</span>
-			break;
-
-		case ArtistType.UTAU:
-			<span class="label label-important" title="@title">U</span>
-			break;		
-
-		case ArtistType.CeVIO:
-			<span class="label label-success" title="@title">C</span>
-			break;		
-				
-		case ArtistType.OtherVoiceSynthesizer:
-			<span class="label label-inverse" title="@title">O</span>
-			break;		
-					
-		case ArtistType.Utaite:
-			<span class="label label-info" title="@title">U</span>
-			break;
-			
-		case ArtistType.OtherVocalist:
-			<span class="label" title="@title">O</span>
-			break;		
-	}
-}
 
 @helper ArtistGrid(IEnumerable<ArtistContract> artists, int columns,
 	bool displayType = false) {
@@ -50,7 +19,7 @@
 				@Html.Raw("<tr>")
 			}
 			<td>
-				@ArtistIconLink(artist)
+				@{ Html.RenderPartial("Partials/Artist/_ArtistIconLink", artist); }
 			</td>
 			<td>
 				@ArtistLink(artist)
@@ -74,15 +43,9 @@
 			
 }
 
-@helper ArtistIconLink(ArtistContract artist) {
-	<a href="@Url.Action("Details", "Artist", new { id = artist.Id })">
-		<img src="@Url.ImageThumb(artist, ImageSize.TinyThumb)" alt="Thumb" class="coverPicThumb" />
-	</a>		
-}
-
 @helper ArtistLink(ArtistContract artist, bool typeLabel = false, string name = null, bool releaseYear = false) {
 	if (typeLabel) {
-		@ArtistTypeLabel(artist.ArtistType)	 
+		Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", artist.ArtistType);
 	}
 	@Html.ActionLink(name ?? artist.Name, "Details", "Artist", new RouteValueDictionary { { "id", artist.Id } }, new Dictionary<string, object> { { "title", artist.AdditionalNames }, { "data-entry-id", artist.Id }, { "class", "artistLink" }})
 	if (releaseYear && artist.ReleaseDate.HasValue) {<small class="muted">&nbsp;(@artist.ReleaseDate.Value.Year)</small>}
@@ -100,7 +63,7 @@
 		}
 		if (artist.Artist != null) {
 			if (showType) {
-				@ArtistTypeLabel(artist.Artist.ArtistType)
+				Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", artist.Artist.ArtistType);
 			}			
 			@ArtistLink(artist.Artist, name: artist.Name)
 		} else {
@@ -116,32 +79,6 @@
 			@(", ")
 		}
 	}
-}
-
-@helper PrintArchivedArtistData(ComparedArtistsContract comparedArtists) {
-
-	<div class="well well-transparent archived-entry-contents">
-		<h4>Content</h4>
-
-		<table class="table table-bordered">
-			@ArchivedEntryHelpers.DataRow("Id", comparedArtists.FirstData.Id)
-			@ArchivedEntryHelpers.PictureRow("Main picture", comparedArtists, id => Url.Action("ArchivedVersionPicture", "Artist", new { id }))
-			@ArchivedEntryHelpers.DataRow("Main picture MIME", comparedArtists, d => d.MainPictureMime)
-			@ArchivedEntryHelpers.TranslatedNameRow(comparedArtists, d => d.TranslatedName)
-			@ArchivedEntryHelpers.DataRowList("Names", comparedArtists, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
-			@ArchivedEntryHelpers.DataRow("Description", comparedArtists, d => d.Description, preserveLineBreaks: true)
-			@ArchivedEntryHelpers.DataRow("Description (en)", comparedArtists, d => d.DescriptionEng, preserveLineBreaks: true)
-			@ArchivedEntryHelpers.DataRow("Release date", comparedArtists, d => d.ReleaseDate)
-			@ArchivedEntryHelpers.DataRow("Artist type", comparedArtists, d => Translate.ArtistTypeName(d.ArtistType))
-			@ArchivedEntryHelpers.DataRowList("External links", comparedArtists, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
-			@ArchivedEntryHelpers.DataRow("Base voicebank", comparedArtists, d => ArchivedEntryHelpers.ObjectRefInfo(d.BaseVoicebank))
-			@ArchivedEntryHelpers.DataRowList("Associated artists", comparedArtists, d => DataFormatUtils.GenerateHtml(d.Groups, g => MvcHtmlString.Create(g.NameHint + " [" + g.Id + "] (" + g.LinkType + ")")))
-			@ArchivedEntryHelpers.ObjectRefList("Members", comparedArtists, d => d.Members)
-			@ArchivedEntryHelpers.DataRowList("Pictures", comparedArtists, d => DataFormatUtils.GenerateHtmlFromHelper(d.Pictures, ArchivedEntryHelpers.PictureFileInfo))
-		</table>
-
-	</div>
-
 }
 
 @helper ArtistTypesDropdownKnockout(string binding) {

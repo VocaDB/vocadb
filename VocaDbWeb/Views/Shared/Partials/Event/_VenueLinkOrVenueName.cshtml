@@ -1,0 +1,11 @@
+﻿@using VocaDb.Model.DataContracts.ReleaseEvents;
+@model ReleaseEventForApiContract
+
+@if (Model.Venue != null)
+{
+	@VenueHelpers.VenueLink(Model.Venue)
+}
+else if (!string.IsNullOrEmpty(Model.VenueName))
+{
+	@Model.VenueName
+}

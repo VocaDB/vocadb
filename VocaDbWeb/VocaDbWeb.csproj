@@ -761,7 +761,6 @@
     <Content Include="Content\Styles\embedSong.less" />
     <Content Include="App_Code\PVHelpers.cshtml" />
     <Content Include="App_Code\SearchHelpers.cshtml" />
-    <Content Include="App_Code\EventHelpers.cshtml" />
     <Content Include="App_Code\VenueHelpers.cshtml" />
     <None Include="compilerconfig.json" />
     <Content Include="Content\Styles\song.less" />
@@ -1796,6 +1795,24 @@
     <Content Include="Views\Venue\Versions.cshtml" />
     <Content Include="Views\Venue\ViewVersion.cshtml" />
     <Content Include="Views\Event\EventsByVenue.cshtml" />
+    <Content Include="Views\Shared\Partials\Activityfeed\_EntryType.cshtml" />
+    <Content Include="Views\Shared\Partials\Album\_PrintArchivedAlbumData.cshtml" />
+    <Content Include="Views\Shared\Partials\Artist\_PrintArchivedArtistData.cshtml" />
+    <Content Include="Views\Shared\Partials\Event\_PrintArchivedEventSeriesData.cshtml" />
+    <Content Include="Views\Shared\Partials\Event\_PrintArchivedEventData.cshtml" />
+    <Content Include="Views\Shared\Partials\Song\_PrintArchivedSongData.cshtml" />
+    <Content Include="Views\Shared\Partials\Tag\_PrintArchivedTagData.cshtml" />
+    <Content Include="Views\Shared\Partials\Venue\_PrintArchivedVenueData.cshtml" />
+    <Content Include="Views\Shared\Partials\Album\_AlbumIconLink.cshtml" />
+    <Content Include="Views\Shared\Partials\Album\_AlbumThumbs.cshtml" />
+    <Content Include="Views\Shared\Partials\Album\_CoverLink.cshtml" />
+    <Content Include="Views\Shared\Partials\Artist\_ArtistTypeLabel.cshtml" />
+    <Content Include="Views\Shared\Partials\Artist\_ArtistIconLink.cshtml" />
+    <Content Include="Views\Shared\Partials\Comment\_CommentEntryItem.cshtml" />
+    <Content Include="Views\Shared\Partials\Event\_VenueLinkOrVenueName.cshtml" />
+    <Content Include="Views\Shared\Partials\Song\_RatingIcon.cshtml" />
+    <Content Include="Views\Shared\Partials\Song\_SongIconLink.cshtml" />
+    <Content Include="Views\Shared\Partials\Song\_SongTypeLabel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

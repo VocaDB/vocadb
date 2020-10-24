@@ -1,0 +1,25 @@
+﻿@using VocaDb.Model.DataContracts.Activityfeed;
+@using VocaDb.Model.Domain.Activityfeed
+@model ActivityEntryForApiContract
+
+@{
+	var tr = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString(Model.EditEvent.ToString() + Model.Entry.EntryType);
+}
+
+@if (!string.IsNullOrEmpty(tr))
+{
+	<span>@tr</span>
+}
+else
+{
+	var entryTypeName = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString("Entry" + Model.Entry.EntryType);
+
+	if (Model.EditEvent == EntryEditEvent.Created)
+	{
+		<span>@string.Format(HelperRes.ActivityFeedHelperStrings.CreatedNew, entryTypeName)</span>
+	}
+	else
+	{
+		<span>@string.Format(HelperRes.ActivityFeedHelperStrings.Updated, entryTypeName)</span>
+	}
+}
