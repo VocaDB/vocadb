@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.Domain;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Web.Code {
@@ -55,6 +55,8 @@ namespace VocaDb.Web.Code {
 			}
 			set => ViewBag.PageTitle = value;
 		}
+
+		public string Robots { get; set; }
 
 		/// <summary>
 		/// Short page description 
