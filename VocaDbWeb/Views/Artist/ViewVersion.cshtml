@@ -5,6 +5,7 @@
 @{
 	
     PageProperties.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
+	PageProperties.Robots = "noindex,nofollow";
 	ViewBag.Parents = new[] { 
 		Html.ActionLink("Artist", "Index"), 
 		Html.ActionLink(Model.Artist.Name, "Details", new { id = Model.Artist.Id }),

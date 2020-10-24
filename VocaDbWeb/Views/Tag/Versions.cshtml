@@ -2,6 +2,7 @@
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Entry.Name;
+	PageProperties.Robots = "noindex,nofollow";
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Tags, "Index"), 
 		Html.ActionLink(Model.Entry.Name, "DetailsById", new { id = Model.Entry.Id, slug = Model.Entry.UrlSlug }) 

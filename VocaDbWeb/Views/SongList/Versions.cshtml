@@ -6,6 +6,7 @@
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Name;
+	PageProperties.Robots = "noindex,nofollow";
 	ViewBag.Parents = new[] {
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id })
 	};

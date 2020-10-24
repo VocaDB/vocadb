@@ -2,6 +2,7 @@
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Song.Name;
+	PageProperties.Robots = "noindex,nofollow";
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null), 
 		LinkExtensions.ActionLink(Html, Model.Song.Name, "Details", new { id = Model.Song.Id }) 

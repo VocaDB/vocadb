@@ -2,6 +2,7 @@
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Album.Name;
+	PageProperties.Robots = "noindex,nofollow";
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Albums, "Index"), 
 		Html.ActionLink(Model.Album.Name, "Details", new { id = Model.Album.Id }) 

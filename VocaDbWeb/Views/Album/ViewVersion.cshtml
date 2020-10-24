@@ -5,6 +5,7 @@
 @{
 	
     PageProperties.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
+	PageProperties.Robots = "noindex,nofollow";
 	
 	if (Model.Album != null) {
 		ViewBag.Parents = new[] { 
