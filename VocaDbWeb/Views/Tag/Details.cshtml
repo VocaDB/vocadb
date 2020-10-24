@@ -29,6 +29,8 @@
 	related.AddRange(Model.Children.Select(t => Tuple.Create(t, "child")));
 	related.AddRange(Model.Siblings.Select(t => Tuple.Create(t, "sibling")));
 
+	PageProperties.Robots = Model.Deleted ? "noindex,follow" : string.Empty;
+
 }
 
 @section Head {

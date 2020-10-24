@@ -13,6 +13,7 @@
 	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);
 
 	PageProperties.Description = descriptionStripped;
+	PageProperties.Robots = Model.Deleted ? "noindex,follow" : string.Empty;
 
 	var smallThumbUrl = Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.SmallThumb);
 	var fullImageUrl = Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.Original);

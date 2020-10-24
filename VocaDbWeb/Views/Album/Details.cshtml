@@ -16,6 +16,8 @@
 @{
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Albums, "Index") };
 	var url = PageProperties.CanonicalUrl;
+
+	PageProperties.Robots = Model.Deleted ? "noindex,follow" : string.Empty;
 }
 
 @section Head {

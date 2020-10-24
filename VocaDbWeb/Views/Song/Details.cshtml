@@ -38,6 +38,8 @@
 	var eeLoveIt = Model.Name.Equals("love it!", StringComparison.InvariantCultureIgnoreCase);
 	var favoriteText = eeLoveIt ? "Love It!" : Res.AddToFavorites;
 
+	PageProperties.Robots = Model.Deleted ? "noindex,follow" : string.Empty;
+
 }
 
 @helper AlbumLink(AlbumContract album) {
