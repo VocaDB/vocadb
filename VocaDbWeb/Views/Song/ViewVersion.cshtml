@@ -8,13 +8,13 @@
 	PageProperties.Robots = "noindex,nofollow";
 	
 	if (Model.Song != null) {
-		ViewBag.Parents = new[] { 
-			Html.ActionLink("Song", "Index", "Search", UrlMapper.Search.Songs(), null), 
+		ViewBag.Parents = new[] {
+			Html.ActionLink("Song", "Index", "Search", UrlMapper.Search.Songs(), null),
 			Html.ActionLink(Model.Song.Name, "Details", new { id = Model.Song.Id }),
-			Html.ActionLink("Revisions", "Versions", new { id = Model.Song.Id }) 
+			Html.ActionLink("Revisions", "Versions", new { id = Model.Song.Id })
 		};
 	} else {
-		ViewBag.Parents = new[] { 
+		ViewBag.Parents = new[] {
 			Html.ActionLink("Song", "Index", "Search", UrlMapper.Search.Songs(), null)
 		};
 	}
@@ -48,10 +48,10 @@
 	}
 }
 
-@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Versions.CreateForSong(Model.ArchivedVersion), 
+@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Versions.CreateForSong(Model.ArchivedVersion),
 	Model.ComparedVersion != null ? Versions.CreateForSong(Model.ComparedVersion) : null)
 
-@SongHelpers.PrintArchivedSongData(Model.Versions)
+@{ Html.RenderPartial("Partials/Song/_PrintArchivedSongData", Model.Versions); }
 
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
 

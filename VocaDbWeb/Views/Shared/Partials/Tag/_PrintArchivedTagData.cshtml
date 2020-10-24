@@ -1,0 +1,21 @@
+﻿@using VocaDb.Model.DataContracts.Tags
+@using VocaDb.Web.Helpers;
+@model ComparedTagsContract
+
+<div class="well well-transparent archived-entry-contents">
+	<h4>Content</h4>
+
+	<table class="table table-bordered">
+		@ArchivedEntryHelpers.DataRow("Id", Model.FirstData.Id)
+		@ArchivedEntryHelpers.TranslatedNameRow(Model, d => d.TranslatedName)
+		@ArchivedEntryHelpers.DataRowList("Names", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+		@ArchivedEntryHelpers.DataRow("Description", Model, d => d.Description)
+		@ArchivedEntryHelpers.DataRow("Description English", Model, d => d.DescriptionEng)
+		@ArchivedEntryHelpers.ObjectRefList("Related tags", Model, d => d.RelatedTags)
+		@ArchivedEntryHelpers.DataRow("Valid for", Model, d => d.Targets)
+		@ArchivedEntryHelpers.DataRowList("External links", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+		@ArchivedEntryHelpers.DataRow("Category name", Model, d => d.CategoryName)
+		@ArchivedEntryHelpers.DataRow("Parent", Model, d => ArchivedEntryHelpers.ObjectRefInfo(d.Parent))
+	</table>
+
+</div>

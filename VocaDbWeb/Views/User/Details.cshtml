@@ -331,7 +331,7 @@
 					<small>(@string.Format(R.Total, Model.AlbumCollectionCount))</small>
 				</a>
 			</h3>
-			@AlbumHelpers.AlbumThumbs(Model.FavoriteAlbums)
+			@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", Model.FavoriteAlbums); }
 		</div>
 	}
 

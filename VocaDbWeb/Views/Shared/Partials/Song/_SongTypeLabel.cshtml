@@ -1,0 +1,46 @@
+﻿@using VocaDb.Model.Domain.Songs;
+@using VocaDb.Web.Helpers;
+@model SongType
+
+@switch (Model)
+{
+	case SongType.Arrangement:
+		<span class="label" title="@Translate.SongTypeNames[Model]">A</span>
+		break;
+
+	case SongType.Cover:
+		<span class="label" title="@Translate.SongTypeNames[Model]">C</span>
+		break;
+
+	case SongType.DramaPV:
+		<span class="label label-success" title="@Translate.SongTypeNames[Model]">D</span>
+		break;
+
+	case SongType.Instrumental:
+		<span class="label label-inverse" title="@Translate.SongTypeNames[Model]">I</span>
+		break;
+
+	case SongType.Mashup:
+		<span class="label" title="@Translate.SongTypeNames[Model]">M</span>
+		break;
+
+	case SongType.Original:
+		<span class="label label-info" title="@Translate.SongTypeNames[Model]">O</span>
+		break;
+
+	case SongType.Other:
+		<span class="label" title="@Translate.SongTypeNames[Model]">O</span>
+		break;
+
+	case SongType.Remaster:
+		<span class="label label-info" title="@Translate.SongTypeNames[Model]">R</span>
+		break;
+
+	case SongType.Remix:
+		<span class="label" title="@Translate.SongTypeNames[Model]">R</span>
+		break;
+
+	case SongType.MusicPV:
+		<span class="label label-success" title="@Translate.SongTypeNames[Model]">PV</span>
+		break;
+}

@@ -43,10 +43,10 @@
 	}
 }
 
-@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Model.Version(Model.Entry.ArchivedVersion), 
+@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Model.Version(Model.Entry.ArchivedVersion),
 	Model.Version(Model.Entry.ComparedVersion))
 
-@TagHelpers.PrintArchivedTagData(Model.Entry.Versions)
+@{ Html.RenderPartial("Partials/Tag/_PrintArchivedTagData", Model.Entry.Versions); }
 
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
 

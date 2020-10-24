@@ -1,0 +1,12 @@
+﻿@using VocaDb.Model.Domain.Songs
+@using VocaDb.Web.Helpers;
+@model SongVoteRating
+
+@if (Model == SongVoteRating.Like)
+{
+	<span class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>
+}
+@if (Model == SongVoteRating.Favorite)
+{
+	<span class="icon heartIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Favorite]"></span>
+}

@@ -1,0 +1,8 @@
+﻿@using VocaDb.Model.DataContracts.Artists;
+@using VocaDb.Model.Domain.Images;
+@using VocaDb.Web.Helpers;
+@model ArtistContract
+
+<a href="@Url.Action("Details", "Artist", new { id = Model.Id })">
+	<img src="@Url.ImageThumb(Model, ImageSize.TinyThumb)" alt="Thumb" class="coverPicThumb" />
+</a>

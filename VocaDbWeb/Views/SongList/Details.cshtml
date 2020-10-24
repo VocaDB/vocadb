@@ -91,13 +91,13 @@
 						</a>
 						@if (ev.Date.HasValue) {
 							if (ev.HasVenueOrVenueName) {
-								<small>(@ev.Date.Value.ToString("d"), @EventHelpers.VenueLinkOrVenueName(ev))</small>
+								<small>(@ev.Date.Value.ToString("d"), @{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", ev); })</small>
 							} else {
 								<small>(@ev.Date.Value.ToString("d"))</small>
 							}
 						} else {
 							if (ev.HasVenueOrVenueName) {
-								<small>(@EventHelpers.VenueLinkOrVenueName(ev))</small>
+								<small>(@{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", ev); })</small>
 							}
 						}
 					</li>

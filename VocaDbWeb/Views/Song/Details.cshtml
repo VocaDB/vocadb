@@ -53,7 +53,7 @@
 		if (alternateVersion.LengthSeconds > 0) {
 			@:(@VocaDb.Model.Helpers.DateTimeHelper.FormatMinSec(alternateVersion.LengthSeconds))
 		}
-		@SongHelpers.SongTypeLabel(alternateVersion.SongType)
+		Html.RenderPartial("Partials/Song/_SongTypeLabel", alternateVersion.SongType);
 		<br />
 		@alternateVersion.ArtistString<br />
 	}	
@@ -163,7 +163,7 @@
 					@ArtistHelpers.ArtistList(Model.Performers, showRoles: ArtistHelpers.ShowRolesMode.IfNotVocalist, showType: true)
 				</td>
 			</tr>
-   }
+			}
 
 			@if (Model.Subject != null && Model.Subject.Any()) {
 				<tr>
@@ -180,7 +180,7 @@
 					@ArtistHelpers.ArtistList(Model.Producers, showRoles: (Model.Producers.Length > 1) ? ArtistHelpers.ShowRolesMode.IfNotDefault : ArtistHelpers.ShowRolesMode.Never)
 				</td>
 			</tr>
-   }
+			}
 			@if (Model.Illustrators != null && Model.Illustrators.Any()) {
 				<tr>
 					<td>Illustrators</td>
@@ -207,7 +207,7 @@
 					@ArtistHelpers.ArtistList(Model.Animators)
 				</td>
 			</tr>
-   }
+			}
 			
 			@if (Model.OtherArtists.Any()) {
 			<tr>
@@ -216,12 +216,12 @@
 					@ArtistHelpers.ArtistList(Model.OtherArtists, showRoles: ArtistHelpers.ShowRolesMode.IfNotDefault)
 				</td>
 			</tr>
-   }
+			}
 
 			<tr>
 				<td>@ViewRes.SharedStrings.Type</td>
 				<td>
-					@SongHelpers.SongTypeLabel(Model.SongType)
+					@{ Html.RenderPartial("Partials/Song/_SongTypeLabel", Model.SongType); }
 					@if (Model.SongTypeTag != null) {
 						<a href="@Url.TagDetails(Model.SongTypeTag)" data-bind="tagToolTip: @Model.SongTypeTag.Id">@Translate.SongTypeNames[Model.SongType]</a>
 					} else {

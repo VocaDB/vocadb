@@ -8,13 +8,13 @@
 	PageProperties.Robots = "noindex,nofollow";
 	
 	if (Model.Album != null) {
-		ViewBag.Parents = new[] { 
-			Html.ActionLink("Albums", "Index"), 
+		ViewBag.Parents = new[] {
+			Html.ActionLink("Albums", "Index"),
 			Html.ActionLink(Model.Album.Name, "Details", new { id = Model.Album.Id }),
-			Html.ActionLink("Revisions", "Versions", new { id = Model.Album.Id }) 
+			Html.ActionLink("Revisions", "Versions", new { id = Model.Album.Id })
 		};
 	} else {
-		ViewBag.Parents = new[] { 
+		ViewBag.Parents = new[] {
 			Html.ActionLink("Albums", "Index")
 		};
 	}
@@ -50,7 +50,7 @@
 
 @ArchivedEntryHelpers.ArchivedObjectVersionProperties(Versions.CreateForAlbum(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForAlbum(Model.ComparedVersion) : null)
 
-@AlbumHelpers.PrintArchivedAlbumData(Model.Versions)
+@{ Html.RenderPartial("Partials/Album/_PrintArchivedAlbumData", Model.Versions); }
 
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
 

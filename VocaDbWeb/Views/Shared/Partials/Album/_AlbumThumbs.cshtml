@@ -1,0 +1,12 @@
+﻿@using VocaDb.Model.DataContracts.Albums;
+@using VocaDb.Model.Domain.Images;
+@using VocaDb.Web.Helpers;
+@model IEnumerable<AlbumForApiContract>
+
+<ul class="smallThumbs">
+	@foreach (var album in Model)
+	{
+		@Helpers.ThumbItem(Url.Action("Details", "Album", new { id = album.Id }),
+			Url.ImageThumb(album.MainPicture, ImageSize.SmallThumb), album.Name, album)
+	}
+</ul>

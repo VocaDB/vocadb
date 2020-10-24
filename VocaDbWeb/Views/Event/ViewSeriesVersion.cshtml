@@ -45,7 +45,7 @@
 @ArchivedEntryHelpers.ArchivedObjectVersionProperties(Model.Version(Model.Entry.ArchivedVersion),
 	Model.Version(Model.Entry.ComparedVersion))
 
-@EventHelpers.PrintArchivedEventSeriesData(Model.Entry.Versions)
+@{ Html.RenderPartial("Partials/Event/_PrintArchivedEventSeriesData", Model.Entry.Versions); }
 
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
 
