@@ -1,4 +1,5 @@
-﻿@model VocaDb.Model.DataContracts.Albums.RelatedAlbumsContract
+﻿@using VocaDb.Web.Models.Shared.Partials.Album;
+@model VocaDb.Model.DataContracts.Albums.RelatedAlbumsContract
 @using R = ViewRes.Album.DetailsStrings
 
 @if (!Model.Any) {
@@ -7,16 +8,16 @@
 
 @if (Model.ArtistMatches.Any()) {
 	<h3>@R.MatchingArtists</h3>
-	@AlbumHelpers.AlbumGrid(Model.ArtistMatches, 2, true, false, true)
+	Html.RenderPartial("Partials/Album/_AlbumGrid", new AlbumGridViewModel(Model.ArtistMatches, 2, true, false, true));
 	<br />
 }
 	
 @if (Model.LikeMatches.Any()) {
 	<h3>@R.MatchingLikes</h3>
-	@AlbumHelpers.AlbumGrid(Model.LikeMatches, 2, true, false, true)
+	Html.RenderPartial("Partials/Album/_AlbumGrid", new AlbumGridViewModel(Model.LikeMatches, 2, true, false, true));
 }
 
 @if (Model.TagMatches.Any()) {
 	<h3>@R.MatchingTags</h3>
-	@AlbumHelpers.AlbumGrid(Model.TagMatches, 2, true, false, true)
+	Html.RenderPartial("Partials/Album/_AlbumGrid", new AlbumGridViewModel(Model.TagMatches, 2, true, false, true));
 }

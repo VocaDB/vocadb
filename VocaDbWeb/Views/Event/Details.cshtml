@@ -1,10 +1,10 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.DataContracts.ReleaseEvents
-@using VocaDb.Model.Domain.Artists
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.ReleaseEvents
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Album;
 @using Res = ViewRes.Event.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract>
@@ -180,7 +180,7 @@
 		@Res.Albums
 		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Albums.Length)</small>
 	</h3>
-	@AlbumHelpers.AlbumGrid(Model.Albums, 2, false, false, true)
+	Html.RenderPartial("Partials/Album/_AlbumGrid", new AlbumGridViewModel(Model.Albums, 2, false, false, true));
 }
 
 @if (Model.Songs.Any()) {

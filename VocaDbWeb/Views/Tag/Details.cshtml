@@ -8,6 +8,7 @@
 @using VocaDb.Model.Domain.Tags
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared.Partials.Album;
 @using SharedRes = ViewRes.SharedStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<TagDetailsContract>
 
@@ -207,7 +208,7 @@
 				<small>(@Model.Stats.AlbumCount @SharedRes.Total)</small>
 			</a>
 		</h3>
-		@AlbumHelpers.AlbumGrid(Model.Stats.Albums.Select(a => a), 2, false, false, true)
+		@{ Html.RenderPartial("Partials/Album/_AlbumGrid", new AlbumGridViewModel(Model.Stats.Albums.Select(a => a), 2, false, false, true)); }
 	</div>
 }
 
