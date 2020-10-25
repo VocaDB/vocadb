@@ -40,7 +40,7 @@
 		break;
 
 	case PVService.Piapro:
-		@PVHelpers.EmbedPiapro(Model.PV, widthStr, heightStr)
+		Html.RenderPartial("Partials/PV/_EmbedPiapro", new EmbedPiaproViewModel(Model.PV, widthStr, heightStr));
 		break;
 
 	case PVService.SoundCloud:

@@ -2,21 +2,6 @@
 @using VocaDb.Model.Service.VideoServices
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper EmbedPiapro(PVContract pv, string widthStr, string heightStr) {
-	var meta = pv.ExtendedMetadata != null ? pv.ExtendedMetadata.GetExtendedMetadata<PiaproMetadata>() : null;
-	if (meta != null && !string.IsNullOrEmpty(meta.Timestamp)) {
-		var prefix = pv.PVId.Substring(0, 2);
-		<audio controls controlsList="nodownload" src="https://cdn.piapro.jp/mp3_a/@prefix/@(pv.PVId)_@(meta.Timestamp)_audition.mp3"></audio>
-	} else {
-	@* <object> embed instead of iframe because iframe doesn't work with flash disabled *@
-	var piaproSwf = string.Format("//piapro.jp/modpub/swf/player03_h.swf?030503&id={0}&c=1", pv.PVId);
-	<object type="application/x-shockwave-flash" width="340" height="80" style="border: 0" data="@piaproSwf">
-		<param name="movie" value="@piaproSwf" />
-		<param name="quality" value="high"/>
-	</object>
-	}
-}
-
 @helper EmbedBili(PVContract pv, int width, int height) {
 	var meta = pv.ExtendedMetadata != null ? pv.ExtendedMetadata.GetExtendedMetadata<BiliMetadata>() : null;
 		var widthStr = (width > 0 ? width.ToString() : "");
