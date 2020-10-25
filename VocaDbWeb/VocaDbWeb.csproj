@@ -167,6 +167,7 @@
     <Compile Include="Models\Shared\Partials\Artist\ArtistGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Tag\TagUsagesManageTableViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
     <Compile Include="Models\Venue\VenueEditViewModel.cs" />
     <Compile Include="Models\Venue\Versions.cs" />
@@ -1825,6 +1826,7 @@
     <Content Include="Views\Shared\Partials\Artist\_ArtistGrid.cshtml" />
     <Content Include="Views\Shared\Partials\Artist\_ArtistList.cshtml" />
     <Content Include="Views\Shared\Partials\Song\_SongGrid.cshtml" />
+    <Content Include="Views\Shared\Partials\Tag\_TagUsagesManageTable.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
