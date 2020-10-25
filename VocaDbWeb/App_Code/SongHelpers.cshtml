@@ -105,19 +105,6 @@
 
 }
 
-@helper SongsList(IList<SongContract> songs, bool showType = false) {
-
-	foreach (var song in songs) {
-		if (showType) {
-			Html.RenderPartial("Partials/Song/_SongTypeLabel", song.SongType);
-		}
-		@SongLink(song)
-		if (song != songs.Last()) {
-			@(", ")
-		}
-	}
-}
-
 @helper SongTypesDropdownKnockout(string binding) {
 	@KnockoutHelpers.CheckBoxButtons(Translate.SongTypeNames.GetValuesAndNamesStrings(AppConfig.SongTypes), binding);
 }
