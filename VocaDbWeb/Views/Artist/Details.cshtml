@@ -8,6 +8,7 @@
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Service.QueryableExtenders
 @using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared.Partials.Album
 @using R = ViewRes.Artist;
 @using Res = ViewRes.Artist.DetailsStrings
 @inherits VocaDb.Web.Code.VocaDbPage<ArtistDetailsContract>
@@ -274,7 +275,7 @@
 				<small>@string.Format(ViewRes.EntryDetailsStrings.NumTotalParenthesis, Model.SharedStats.AlbumCount)</small>
 			</h3>
 			<div id="newAlbums">
-				@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", Model.LatestAlbums); }
+				@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.LatestAlbums)); }
 			</div>
 		}
 
@@ -284,7 +285,7 @@
 				<small>(@string.Format(Res.RatedAlbums, Model.SharedStats.RatedAlbumCount))</small>
 			</h3>
 			<div id="topAlbums">
-				@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", Model.TopAlbums); }
+				@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.TopAlbums)); }
 			</div>
 		}
 

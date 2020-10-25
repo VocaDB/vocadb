@@ -163,6 +163,7 @@
     <Compile Include="Models\Shared\EnglishTranslatedStringViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Activityfeed\EntryTypeViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\AlbumIconLinkViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Album\AlbumThumbsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\PrintArchivedAlbumDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\PrintArchivedArtistDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Event\PrintArchivedEventDataViewModel.cs" />
