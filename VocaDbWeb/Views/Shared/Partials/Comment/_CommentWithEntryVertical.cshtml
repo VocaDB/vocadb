@@ -5,7 +5,7 @@
 	@{ Html.RenderPartial("Partials/Comment/_CommentEntryItem", Model.Entry.Entry); }
 	@foreach (var comment in Model.Entry.Comments)
 	{
-		@CommentHelpers.PrintComment(comment, false, maxLength: Model.MaxLength)
+		Html.RenderPartial("Partials/Comment/_PrintComment", new PrintCommentViewModel(comment, false, maxLength: Model.MaxLength));
 		if (comment != Model.Entry.Comments.Last())
 		{
 			<hr />

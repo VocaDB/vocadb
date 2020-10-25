@@ -168,6 +168,7 @@
     <Compile Include="Models\Shared\Partials\Artist\ArtistListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentBodyLargeViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentWithEntryVerticalViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Comment\PrintCommentViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagUsagesManageTableViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
@@ -1831,6 +1832,7 @@
     <Content Include="Views\Shared\Partials\Tag\_TagUsagesManageTable.cshtml" />
     <Content Include="Views\Shared\Partials\Comment\_CommentBodyLarge.cshtml" />
     <Content Include="Views\Shared\Partials\Comment\_CommentWithEntryVertical.cshtml" />
+    <Content Include="Views\Shared\Partials\Comment\_PrintComment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,10 +1,4 @@
-﻿@using System.Web.Mvc.Html;
-@using VocaDb.Model.DataContracts
-@using VocaDb.Model.DataContracts.Comments
-@using VocaDb.Model.Domain.Security
-@using VocaDb.Model.Helpers
-@using VocaDb.Web.Helpers
-@using VocaDb.Web.Code
+﻿@using VocaDb.Model.Domain.Security
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper CommentKnockout(string messageBinding, bool allowMarkdown, string deleteHandler = "$parent.deleteComment", string editHandler = null,
@@ -104,20 +98,4 @@
 		<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 		<!-- /ko -->
 	</div>
-}
-
-@helper PrintComment(CommentContract contract, bool allowDelete, bool alwaysAllowDelete = false, int maxLength = int.MaxValue) {	
-	<div class="comment">
-		<h3>
-			@UserHelpers.UserIconLink(contract.Author, 25)
-
-			@if (alwaysAllowDelete || (allowDelete && Login.CanDeleteComment(contract))) {
-				<text>-</text> <a href="#" id="deleteComment_@(contract.Id)" class="deleteComment">@ViewRes.SharedStrings.Delete</a>
-			}
-			<small class="pull-right extraInfo" title="@contract.Created.ToUniversalTime() UTC">
-				@TimeAgoStringBuilder.FormatTimeAgo(contract.Created)
-			</small>		
-		</h3>
-		@HtmlHelpers.FormatMarkdown(contract.Message.TruncateWithEllipsis(maxLength))
-	</div>	
 }
