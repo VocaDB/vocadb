@@ -2,17 +2,16 @@
 @using System.Globalization
 @using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Albums
-@using VocaDb.Model.DataContracts.PVs
 @using VocaDb.Model.DataContracts.Songs
 @using VocaDb.Model.Domain.Globalization
 @using VocaDb.Model.Domain.PVs
 @using VocaDb.Model.Domain.Songs
-@using VocaDb.Model.Utils
 @using VocaDb.Web.Models;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security;
 @using VocaDb.Model.Service.VideoServices
 @using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared.Partials.Song; 
 @using R = ViewRes.Song;
 @using Res = ViewRes.Song.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
@@ -51,7 +50,7 @@
 		if (alternateVersion.LengthSeconds > 0) {
 			@:(@VocaDb.Model.Helpers.DateTimeHelper.FormatMinSec(alternateVersion.LengthSeconds))
 		}
-		Html.RenderPartial("Partials/Song/_SongTypeLabel", alternateVersion.SongType);
+		Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(alternateVersion.SongType));
 		<br />
 		@alternateVersion.ArtistString<br />
 	}	
@@ -219,7 +218,7 @@
 			<tr>
 				<td>@ViewRes.SharedStrings.Type</td>
 				<td>
-					@{ Html.RenderPartial("Partials/Song/_SongTypeLabel", Model.SongType); }
+					@{ Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(Model.SongType)); }
 					@if (Model.SongTypeTag != null) {
 						<a href="@Url.TagDetails(Model.SongTypeTag)" data-bind="tagToolTip: @Model.SongTypeTag.Id">@Translate.SongTypeNames[Model.SongType]</a>
 					} else {

@@ -325,7 +325,7 @@
 										@:&nbsp;
 										@Helpers.DraftIcon(song.Song.Status)
 										if (song.Song.SongType != SongType.Original && song.Song.SongType != SongType.Unspecified) {
-											Html.RenderPartial("Partials/Song/_SongTypeLabel", song.Song.SongType);
+											Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.Song.SongType));
 										}
 										@Helpers.PVServiceIcons(song.Song.PVServices)
 										Html.RenderPartial("Partials/Song/_RatingIcon", new RatingIconViewModel(song.Rating ?? SongVoteRating.Nothing));

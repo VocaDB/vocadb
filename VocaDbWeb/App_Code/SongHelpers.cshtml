@@ -87,7 +87,7 @@
 			<td>
 				@SongLink(song)				
 				@if (displayType) {
-					Html.RenderPartial("Partials/Song/_SongTypeLabel", song.SongType);
+					Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.SongType));
 				}
 				@if (displayPublishDate && song.PublishDate.HasValue) {
 					<i class="icon-calendar" title="Published: @song.PublishDate.Value.ToShortDateString()" data-bind="tooltip: { placement: 'right' }"></i>
@@ -149,7 +149,7 @@
 
 	foreach (var song in songs) {
 		if (showType) {
-			Html.RenderPartial("Partials/Song/_SongTypeLabel", song.SongType);
+			Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.SongType));
 		}
 		@SongLink(song)
 		if (song != songs.Last()) {
