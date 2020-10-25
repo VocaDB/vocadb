@@ -100,34 +100,6 @@
 
 }
 
-@helper ReportEntryPopupKnockout(string viewModelBindingName = "reportViewModel", string reportButtonId = "reportEntryLink") {
-
-	<!-- Viewmodel: ReportEntryViewModel -->
-	<div style="display:none;" title="@ViewRes.EntryDetailsStrings.ReportAnError"
-		 data-bind="
-			with: @viewModelBindingName,
-			dialog: {
-				autoOpen: false, width: 315,
-				position: { my: 'left top', at: 'left bottom', of: $('#@reportButtonId') }
-			},
-			dialogVisible: @(viewModelBindingName).dialogVisible,
-			dialogButtons: [{ text: '@ViewRes.SharedStrings.Save', click: @(viewModelBindingName).send, disabled: !@(viewModelBindingName).isValid() }]">
-
-		<label>
-			@ViewRes.EntryDetailsStrings.ReportType
-		</label>
-		<select data-bind="value: reportType, options: reportTypes, optionsText: 'name'"></select>
-
-		<label>
-			@ViewRes.EntryDetailsStrings.ReportNotes
-			<span data-bind="visible: (reportType() && reportType().notesRequired)">@ViewRes.EntryDetailsStrings.ReportNotesRequired</span>
-		</label>
-		<textarea data-bind="textInput: notes" class="input-xlarge" maxlength="400"></textarea>
-
-	</div>
-
-}
-
 @helper ReportEntryVersionPopupKnockout(string viewModelBindingName = "reportViewModel", string reportButtonId = "reportEntryLink") {
 
 	<div style="display:none;" title="@ViewRes.EntryDetailsStrings.ReportAnError"

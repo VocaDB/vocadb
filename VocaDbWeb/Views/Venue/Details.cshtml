@@ -2,6 +2,7 @@
 @using System.Web.Optimization;
 @using VocaDb.Model.Domain.Venues;
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Venues.VenueForApiContract>
 
 @{
@@ -78,7 +79,7 @@
 	}
 </ul>
 
-@EntryDetailsHelpers.ReportEntryPopupKnockout()
+@{ Html.RenderPartial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel()); }
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/Venue/Details")

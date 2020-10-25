@@ -11,6 +11,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Album;
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using R = ViewRes.Album;
 @using Res = ViewRes.Album.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
@@ -486,7 +487,7 @@
 
 @{ Html.RenderPartial("Partials/Album/_EditCollectionDialog", new EditCollectionDialogViewModel(Model.AlbumPurchaseStatus, Model.AlbumMediaType)); }
 
-@EntryDetailsHelpers.ReportEntryPopupKnockout()
+@{ Html.RenderPartial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel()); }
 
 @section BodyScripts {
 	@Scripts.Render("~/bundles/Album/Details", "~/bundles/jqxRating")

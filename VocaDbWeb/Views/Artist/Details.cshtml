@@ -10,6 +10,7 @@
 @using VocaDb.Web.Models.Shared
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Shared.Partials.Song;
 @using R = ViewRes.Artist;
 @using Res = ViewRes.Artist.DetailsStrings
@@ -418,7 +419,7 @@
 	@{ Html.RenderPartial("Partials/_TagsEdit"); }
 </div>
 
-@EntryDetailsHelpers.ReportEntryPopupKnockout()
+@{ Html.RenderPartial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel()); }
 
 @if (Login.IsLoggedIn) {
 	Html.RenderPartial("Partials/_CustomizeArtistSubscriptionDialog");
