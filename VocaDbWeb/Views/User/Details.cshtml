@@ -6,6 +6,7 @@
 @using VocaDb.Model.Domain.Security;
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Models.Shared.Partials.Artist;
+@using VocaDb.Web.Models.Shared.Partials.Comment;
 @using VocaDb.Web.Models.Shared.Partials.Song;
 @using VocaDb.Web.Resources.Domain.Globalization 
 @using R = ViewRes.User.DetailsStrings;
@@ -383,7 +384,7 @@
 			</a>
 		</h3>
 		<div data-bind="with: comments">
-			@CommentHelpers.EditableComments(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)
+			@{ Html.RenderPartial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)); }
 			<!-- ko ifnot: comments().length -->
 			<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 			<!-- /ko -->
@@ -410,7 +411,7 @@
 
 <div data-bind="visible: view() == 'Comments', show" class="well well-transparent js-cloak">
 	<div data-bind="with: comments">
-		@CommentHelpers.EditableComments(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false)
+		@{ Html.RenderPartial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false)); }
 	</div>
 </div>
 

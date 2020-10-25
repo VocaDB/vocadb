@@ -1,5 +1,5 @@
 ﻿@using VocaDb.Model.Domain.Security
-@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Comment;
 @inherits VocaDb.Web.Code.VocaDbPage
 
 <div data-bind="with: selectedTopic()">
@@ -26,7 +26,7 @@
 	</form>
 	
 	<div data-bind="with: comments, visible: !contract().locked">
-		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), commentBoxEnd: true)
+		@{ Html.RenderPartial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), commentBoxEnd: true)); }
 	</div>
 	<div class="alert" data-bind="visible: contract().locked">
 		Comments have been disabled for this topic.

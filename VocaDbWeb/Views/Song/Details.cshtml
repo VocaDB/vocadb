@@ -12,6 +12,7 @@
 @using VocaDb.Model.Service.VideoServices
 @using VocaDb.Web.Models.Shared
 @using VocaDb.Web.Models.Shared.Partials.Artist
+@using VocaDb.Web.Models.Shared.Partials.Comment
 @using VocaDb.Web.Models.Shared.Partials.Song
 @using R = ViewRes.Song;
 @using Res = ViewRes.Song.DetailsStrings;
@@ -473,7 +474,7 @@
 	 }
 	 
 	<div id="discussionTab" data-bind="with: comments">
-		@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false)
+		@{ Html.RenderPartial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false)); }
 	</div>	 
 	
 	<div id="shareTab">

@@ -1,0 +1,37 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Comment;
+@model EditableCommentsViewModel
+
+@{
+	var cssClass = (Model.Well ? "well well-transparent" : "standalone");
+}
+
+<!-- binding context: EditableCommentsViewModel -->
+@if (Model.AllowCreateComment && !Model.CommentBoxEnd)
+{
+	@CommentHelpers.CreateComment(cssClass, Model.NewCommentRows)
+}
+
+@if (Model.Pagination)
+{
+	<div data-bind="with: paging, visible: paging.hasMultiplePages">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
+}
+
+<div data-bind="foreach: @Model.CommentsBinding">
+	<div class="editable-comment @cssClass">
+		@CommentHelpers.CommentKnockout("message", false, editHandler: "$parent.beginEditComment", standalone: !Model.Well, body: CommentHelpers.CommentBodyEditableKnockout("message"))
+	</div>
+</div>
+
+@if (Model.Pagination)
+{
+	<div data-bind="with: paging, visible: paging.hasMultiplePages">
+		@KnockoutHelpers.ServerSidePaging()
+	</div>
+}
+
+@if (Model.AllowCreateComment && Model.CommentBoxEnd)
+{
+	@CommentHelpers.CreateComment(cssClass, Model.NewCommentRows)
+}

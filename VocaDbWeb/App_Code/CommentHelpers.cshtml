@@ -54,37 +54,3 @@
 		</form>
 	</div>
 }
-
-@helper EditableComments(bool allowCreateComment, bool well = true, string commentsBinding = "pageOfComments", int newCommentRows = 6, bool commentBoxEnd = false, bool pagination = true) {
-
-	var cssClass = (well ? "well well-transparent" : "standalone");
-
-	<!-- binding context: EditableCommentsViewModel -->
-
-	if (allowCreateComment && !commentBoxEnd) {
-		@CreateComment(cssClass, newCommentRows)
-	}
-
-	if (pagination) {
-	<div data-bind="with: paging, visible: paging.hasMultiplePages">
-		@KnockoutHelpers.ServerSidePaging()
-	</div>
-	}
-
-	<div data-bind="foreach: @commentsBinding">
-		<div class="editable-comment @cssClass">
-			@CommentKnockout("message", false, editHandler: "$parent.beginEditComment", standalone: !well, body: CommentBodyEditableKnockout("message"))
-		</div>
-	</div>
-
-	if (pagination) {
-	<div data-bind="with: paging, visible: paging.hasMultiplePages">
-		@KnockoutHelpers.ServerSidePaging()
-	</div>
-	}
-
-	if (allowCreateComment && commentBoxEnd) {
-		@CreateComment(cssClass, newCommentRows)
-	}
-
-}
