@@ -1,5 +1,4 @@
-@using VocaDb.Model.DataContracts.PVs
-@using VocaDb.Model.Domain.PVs
+﻿@using VocaDb.Model.DataContracts.PVs
 @using VocaDb.Model.Service.VideoServices
 @inherits VocaDb.Web.Code.HelperPage
 
@@ -35,62 +34,4 @@
 		var heightStr = (width > 0 ? width.ToString() : "");
 		<iframe src="https://player.bilibili.com/player.html?aid=@pv.PVId&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="@widthStr" height="@heightStr"></iframe>
 	}
-}
-
-@helper EmbedPV(PVContract pv, int width = 560, int height = 315, bool autoplay = false, bool enableApi = false, string id = null) {
-	var widthStr = (width > 0 ? width.ToString() : "");
-	var heightStr = (height > 0 ? height.ToString() : "");
-	id = id ?? string.Empty;
-
-	switch (pv.Service) {
-		case PVService.Bandcamp:
-			<iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=@(pv.PVId)/transparent=true/" seamless></iframe>
-			break;
-
-		case PVService.Bilibili:
-			@EmbedBili(pv, width, height)
-			break;
-
-		case PVService.File:
-		case PVService.LocalFile:
-			if (LocalFileManager.IsAudio(pv.Url)) {
-				<audio id="@id" controls controlsList="nodownload" src="@pv.Url"></audio>
-			} else {				
-				<div style="width: @(widthStr + "px"); height: @(heightStr + "px")">
-					<a href="@pv.Url">
-						<img style="max-width: 100%; max-height: 100%;" src="@pv.ThumbUrl" alt="@pv.Name" />
-					</a>
-				</div>				
-			}
-			break;
-
-		case PVService.NicoNicoDouga:
-			@EmbedNico(pv.PVId, widthStr, heightStr, id, enableApi)
-			break;
-
-		case PVService.Piapro:
-			@EmbedPiapro(pv, widthStr, heightStr)
-		break;
-
-		case PVService.SoundCloud:
-			var scId = new VocaDb.Model.Service.VideoServices.SoundCloudId(pv.PVId);
-				<iframe id="@id" width="@width" height="@Math.Min(height, 166)" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F@(scId.TrackId)&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700"></iframe>
-				break;
-
-		case PVService.Youtube:
-			var apParam = (autoplay ? 1 : 0);
-			var apiParam = (enableApi ? 1 : 0);
-			var originParam = (enableApi ? VocaDb.Model.Utils.VocaUriBuilder.HostAddress : string.Empty);
-			<iframe id="@id" width="@widthStr" height="@heightStr" src="https://www.youtube.com/embed/@(pv.PVId)?autoplay=@apParam&enablejsapi=@apiParam&origin=@originParam" frameborder="0" wmode="Opaque" allowfullscreen></iframe>
-			break;
-
-		case PVService.Vimeo:
-			<iframe src="https://player.vimeo.com/video/@pv.PVId" width="@width" height="@height" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-		break;
-
-		case PVService.Creofuga:
-			<iframe width="@widthStr" height="@Math.Min(height, 120)" scrolling="no" frameborder="no" src="https://creofuga.net/audios/player?color=black&id=@pv.PVId"></iframe>
-		break;
-	}
-
 }

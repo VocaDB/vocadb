@@ -12,6 +12,7 @@
 @using VocaDb.Model.Domain.ReleaseEvents
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.PV;
 
 @functions {
 
@@ -70,7 +71,7 @@
                 break;
 				
 			default:
-				@PVHelpers.EmbedPV(pv, width, height)
+				Html.RenderPartial("Partials/PV/_EmbedPV", new EmbedPVViewModel(pv, width, height));
 				break; 
         }
     }

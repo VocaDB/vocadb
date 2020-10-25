@@ -1,6 +1,7 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.Service.Security
 @using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.PV
 @model VocaDb.Web.Models.Ext.EmbedSongViewModel
 
 @Styles.Render("~/Content/embedSong")
@@ -24,7 +25,7 @@
 	</h4>
 	<div style="height: @(Model.PlayerHeight)px" class="@("embed-pv" + (current != null ? " embed-pv-" + Model.CurrentServiceName : string.Empty))">		
 		@if (current != null) {
-			@PVHelpers.EmbedPV(current, Model.PlayerWidth, Model.PlayerHeight)
+			Html.RenderPartial("Partials/PV/_EmbedPV", new EmbedPVViewModel(current, Model.PlayerWidth, Model.PlayerHeight));
 		}
 	</div>
   
