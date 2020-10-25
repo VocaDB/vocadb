@@ -1,11 +1,11 @@
-﻿@using VocaDb.Model.DataContracts.ReleaseEvents;
-@model ReleaseEventForApiContract
+﻿@using VocaDb.Web.Models.Shared.Partials.Event;
+@model VenueLinkOrVenueNameViewModel
 
-@if (Model.Venue != null)
+@if (Model.Event.Venue != null)
 {
-	@VenueHelpers.VenueLink(Model.Venue)
+	@VenueHelpers.VenueLink(Model.Event.Venue)
 }
-else if (!string.IsNullOrEmpty(Model.VenueName))
+else if (!string.IsNullOrEmpty(Model.Event.VenueName))
 {
-	@Model.VenueName
+	@Model.Event.VenueName
 }
