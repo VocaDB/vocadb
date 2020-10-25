@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Venue;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.Venues.ArchivedVenueVersionDetailsContract>>
 
 @{
@@ -44,7 +45,7 @@
 @ArchivedEntryHelpers.ArchivedObjectVersionProperties(Model.Version(Model.Entry.ArchivedVersion),
 	Model.Version(Model.Entry.ComparedVersion))
 
-@{ Html.RenderPartial("Partials/Venue/_PrintArchivedVenueData", Model.Entry.Versions); }
+@{ Html.RenderPartial("Partials/Venue/_PrintArchivedVenueData", new PrintArchivedVenueDataViewModel(Model.Entry.Versions)); }
 
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
 

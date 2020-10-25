@@ -1,7 +1,7 @@
-﻿@using VocaDb.Model.DataContracts.Songs;
-@using VocaDb.Web.Helpers;
-@model SongForApiContract
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Song;
+@model SongIconLinkViewModel
 
-<a href="@Url.SongDetails(Model)">
-	<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(Model.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin" />
+<a href="@Url.SongDetails(Model.Song)">
+	<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(Model.Song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin" />
 </a>

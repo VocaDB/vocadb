@@ -1,20 +1,20 @@
 ﻿@using System.Globalization;
-@using VocaDb.Model.DataContracts.Venues;
 @using VocaDb.Web.Helpers;
-@model ComparedVenueContract
+@using VocaDb.Web.Models.Shared.Partials.Venue;
+@model PrintArchivedVenueDataViewModel
 
 <div class="well well-transparent archived-entry-contents">
 	<h4>Content</h4>
 
 	<table class="table table-bordered">
-		@ArchivedEntryHelpers.DataRow("Id", Model.FirstData.Id)
-		@ArchivedEntryHelpers.TranslatedNameRow(Model, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList("Names", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
-		@ArchivedEntryHelpers.DataRow("Description", Model, d => d.Description)
-		@ArchivedEntryHelpers.DataRow("Coordinates", Model, d => ((d.Coordinates != null) && d.Coordinates.HasValue) ? d.Coordinates.Formatted : string.Empty)
-		@ArchivedEntryHelpers.DataRow("Country/Region", Model, d => !string.IsNullOrEmpty(d.AddressCountryCode) ? new RegionInfo(d.AddressCountryCode).DisplayName : string.Empty)
-		@ArchivedEntryHelpers.DataRow("Address", Model, d => d.Address)
-		@ArchivedEntryHelpers.DataRowList("External links", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+		@ArchivedEntryHelpers.DataRow("Id", Model.ComparedVenues.FirstData.Id)
+		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedVenues, d => d.TranslatedName)
+		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedVenues, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+		@ArchivedEntryHelpers.DataRow("Description", Model.ComparedVenues, d => d.Description)
+		@ArchivedEntryHelpers.DataRow("Coordinates", Model.ComparedVenues, d => ((d.Coordinates != null) && d.Coordinates.HasValue) ? d.Coordinates.Formatted : string.Empty)
+		@ArchivedEntryHelpers.DataRow("Country/Region", Model.ComparedVenues, d => !string.IsNullOrEmpty(d.AddressCountryCode) ? new RegionInfo(d.AddressCountryCode).DisplayName : string.Empty)
+		@ArchivedEntryHelpers.DataRow("Address", Model.ComparedVenues, d => d.Address)
+		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedVenues, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
 	</table>
 
 </div>

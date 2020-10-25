@@ -1,28 +1,28 @@
-﻿@using VocaDb.Model.DataContracts.Api
-@using VocaDb.Web.Helpers
-@model EntryForApiContract
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Comment;
+@model CommentEntryItemViewModel
 
 @{
-	var thumbUrl = (Model.MainPicture != null ? VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(Model.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb)) : null);
+	var thumbUrl = (Model.Entry.MainPicture != null ? VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(Model.Entry.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb)) : null);
 }
 
 <div class="media">
 	@if (!string.IsNullOrEmpty(thumbUrl))
 	{
-		<a class="pull-left" href="@Url.EntryDetails(Model)" title="@Model.AdditionalNames">
+		<a class="pull-left" href="@Url.EntryDetails(Model.Entry)" title="@Model.Entry.AdditionalNames">
 			<img src="@thumbUrl" alt="thumb" class="coverPicThumb" referrerpolicy="same-origin" />
 		</a>
 	}
 
 	<div class="media-body">
 		<h4 class="media-heading">
-			<a href="@Url.EntryDetails(Model)" title="@Model.AdditionalNames">
-				@Model.Name
+			<a href="@Url.EntryDetails(Model.Entry)" title="@Model.Entry.AdditionalNames">
+				@Model.Entry.Name
 			</a>
 		</h4>
-		@if (!string.IsNullOrEmpty(Model.ArtistString))
+		@if (!string.IsNullOrEmpty(Model.Entry.ArtistString))
 		{
-			<span>@Model.ArtistString</span>
+			<span>@Model.Entry.ArtistString</span>
 		}
 	</div>
 </div>

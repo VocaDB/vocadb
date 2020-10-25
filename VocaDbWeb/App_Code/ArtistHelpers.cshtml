@@ -6,6 +6,7 @@
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.DataContracts.Songs;
+@using VocaDb.Web.Models.Shared.Partials.Artist;
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper ArtistGrid(IEnumerable<ArtistContract> artists, int columns,
@@ -19,7 +20,7 @@
 				@Html.Raw("<tr>")
 			}
 			<td>
-				@{ Html.RenderPartial("Partials/Artist/_ArtistIconLink", artist); }
+				@{ Html.RenderPartial("Partials/Artist/_ArtistIconLink", new ArtistIconLinkViewModel(artist)); }
 			</td>
 			<td>
 				@ArtistLink(artist)
@@ -45,7 +46,7 @@
 
 @helper ArtistLink(ArtistContract artist, bool typeLabel = false, string name = null, bool releaseYear = false) {
 	if (typeLabel) {
-		Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", artist.ArtistType);
+		Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", new ArtistTypeLabelViewModel(artist.ArtistType));
 	}
 	@Html.ActionLink(name ?? artist.Name, "Details", "Artist", new RouteValueDictionary { { "id", artist.Id } }, new Dictionary<string, object> { { "title", artist.AdditionalNames }, { "data-entry-id", artist.Id }, { "class", "artistLink" }})
 	if (releaseYear && artist.ReleaseDate.HasValue) {<small class="muted">&nbsp;(@artist.ReleaseDate.Value.Year)</small>}
@@ -63,7 +64,7 @@
 		}
 		if (artist.Artist != null) {
 			if (showType) {
-				Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", artist.Artist.ArtistType);
+				Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", new ArtistTypeLabelViewModel(artist.Artist.ArtistType));
 			}			
 			@ArtistLink(artist.Artist, name: artist.Name)
 		} else {

@@ -5,6 +5,7 @@
 @using VocaDb.Model.Service.Search.AlbumSearch
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 
 @helper ArtistParticipationStatusOptionsKnockout(string binding) {
 	{
@@ -80,13 +81,13 @@
 			}
 			<td>
 				@if (!string.IsNullOrEmpty(song.ThumbUrl)) {
-					Html.RenderPartial("Partials/Song/_SongIconLink", song);
+					Html.RenderPartial("Partials/Song/_SongIconLink", new SongIconLinkViewModel(song));
 				}
 			</td>
 			<td>
 				@SongLink(song)				
 				@if (displayType) {
-					Html.RenderPartial("Partials/Song/_SongTypeLabel", song.SongType);
+					Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.SongType));
 				}
 				@if (displayPublishDate && song.PublishDate.HasValue) {
 					<i class="icon-calendar" title="Published: @song.PublishDate.Value.ToShortDateString()" data-bind="tooltip: { placement: 'right' }"></i>
@@ -148,7 +149,7 @@
 
 	foreach (var song in songs) {
 		if (showType) {
-			Html.RenderPartial("Partials/Song/_SongTypeLabel", song.SongType);
+			Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.SongType));
 		}
 		@SongLink(song)
 		if (song != songs.Last()) {

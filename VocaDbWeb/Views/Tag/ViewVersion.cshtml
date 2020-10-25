@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Tag;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.Tags.ArchivedTagVersionDetailsContract>>
 
 @{
@@ -45,7 +46,7 @@
 @ArchivedEntryHelpers.ArchivedObjectVersionProperties(Model.Version(Model.Entry.ArchivedVersion),
 	Model.Version(Model.Entry.ComparedVersion))
 
-@{ Html.RenderPartial("Partials/Tag/_PrintArchivedTagData", Model.Entry.Versions); }
+@{ Html.RenderPartial("Partials/Tag/_PrintArchivedTagData", new PrintArchivedTagDataViewModel(Model.Entry.Versions)); }
 
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
 
