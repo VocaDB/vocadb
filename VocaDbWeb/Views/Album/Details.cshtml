@@ -9,6 +9,7 @@
 @using VocaDb.Web.Models;
 @using VocaDb.Web.Models.Shared
 @using VocaDb.Web.Models.Shared.Partials.Album;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 @using R = ViewRes.Album;
 @using Res = ViewRes.Album.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
@@ -327,7 +328,7 @@
 											Html.RenderPartial("Partials/Song/_SongTypeLabel", song.Song.SongType);
 										}
 										@Helpers.PVServiceIcons(song.Song.PVServices)
-										Html.RenderPartial("Partials/Song/_RatingIcon", song.Rating ?? SongVoteRating.Nothing);
+										Html.RenderPartial("Partials/Song/_RatingIcon", new RatingIconViewModel(song.Rating ?? SongVoteRating.Nothing));
 										<br />
 										<small class="muted">@song.Song.ArtistString</small>
 									} else {
