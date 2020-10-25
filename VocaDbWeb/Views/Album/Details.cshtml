@@ -9,6 +9,7 @@
 @using VocaDb.Web.Models;
 @using VocaDb.Web.Models.Shared
 @using VocaDb.Web.Models.Shared.Partials.Album;
+@using VocaDb.Web.Models.Shared.Partials.Artist;
 @using R = ViewRes.Album;
 @using Res = ViewRes.Album.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
@@ -116,7 +117,7 @@
 					<tr>
 						<td>@Res.Vocalists</td>
 						<td class="artistList">
-							@ArtistHelpers.ArtistList(Model.Vocalists, showRoles: ArtistHelpers.ShowRolesMode.IfNotVocalist, showType: true)
+							@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Vocalists, showRoles: ShowRolesMode.IfNotVocalist, showType: true)); }
 						</td>
 					</tr>
 				}
@@ -125,7 +126,7 @@
 					<tr>
 						<td>@EntryRes.Subject</td>
 						<td class="artistList">
-							@ArtistHelpers.ArtistList(Model.Subject)
+							@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Subject)); }
 						</td>
 					</tr>
 				}			
@@ -134,7 +135,7 @@
 					<tr>
 						<td>@Res.Producers</td>
 						<td class="artistList">
-							@ArtistHelpers.ArtistList(Model.Producers, showRoles: Model.ShowProducerRoles ? ArtistHelpers.ShowRolesMode.IfNotDefault : ArtistHelpers.ShowRolesMode.Never)
+							@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Producers, showRoles: Model.ShowProducerRoles ? ShowRolesMode.IfNotDefault : ShowRolesMode.Never)); }
 						</td>
 					</tr>
 				}
@@ -143,7 +144,7 @@
 					<tr>
 						<td>@Res.Illustrators</td>
 						<td class="artistList">
-							@ArtistHelpers.ArtistList(Model.Illustrators)
+							@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Illustrators)); }
 						</td>
 					</tr>
 				}
@@ -152,7 +153,7 @@
 					<tr>
 						<td>@Res.Band</td>
 						<td class="artistList">
-							@ArtistHelpers.ArtistList(Model.Bands)
+							@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Bands)); }
 						</td>
 					</tr>
 				}
@@ -161,7 +162,7 @@
 					<tr>
 						<td>@Res.Circle</td>
 						<td class="artistList">
-							@ArtistHelpers.ArtistList(Model.Circles)
+							@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Circles)); }
 						</td>
 					</tr>
 				}
@@ -170,7 +171,7 @@
 					<tr>
 						<td>@Res.Labels</td>
 						<td class="artistList">
-							@ArtistHelpers.ArtistList(Model.Labels)
+							@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Labels)); }
 						</td>
 					</tr>
 				}
@@ -179,7 +180,7 @@
 					<tr>
 						<td>@Res.OtherArtists</td>
 						<td class="artistList">
-							@ArtistHelpers.ArtistList(Model.OtherArtists, ArtistHelpers.ShowRolesMode.IfNotDefault)
+							@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.OtherArtists, ShowRolesMode.IfNotDefault)); }
 						</td>
 					</tr>
 				}

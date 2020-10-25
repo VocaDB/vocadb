@@ -165,6 +165,7 @@
     <Compile Include="Models\Shared\Partials\Album\AlbumGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\EditCollectionDialogViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistGridViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Artist\ArtistListViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
     <Compile Include="Models\Venue\VenueEditViewModel.cs" />
     <Compile Include="Models\Venue\Versions.cs" />
@@ -1821,6 +1822,7 @@
     <Content Include="Views\Shared\Partials\Album\_AlbumGrid.cshtml" />
     <Content Include="Views\Shared\Partials\Album\_EditCollectionDialog.cshtml" />
     <Content Include="Views\Shared\Partials\Artist\_ArtistGrid.cshtml" />
+    <Content Include="Views\Shared\Partials\Artist\_ArtistList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

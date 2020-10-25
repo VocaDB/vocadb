@@ -2,10 +2,8 @@
 @using System.Web.Mvc.Html;
 @using System.Web.Routing
 @using VocaDb.Model.DataContracts.Artists;
-@using VocaDb.Model.Domain.Artists
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
-@using VocaDb.Model.DataContracts.Songs;
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper ArtistLink(ArtistContract artist, bool typeLabel = false, string name = null, bool releaseYear = false) {
@@ -20,67 +18,10 @@
 	@Html.LinkList(artists, a => new MvcHtmlString(ArtistLink(a, typeLabel, releaseYear: releaseYear).ToString()))
 }
 
-@helper ArtistList(IEnumerable<IArtistLinkContract> artists, ShowRolesMode showRoles = ShowRolesMode.Never, bool showType = false) {
-	var ordered = artists.OrderBy(a => a.IsSupport).ToArray();
-	foreach (var artist in ordered) {
-		if (artist.IsSupport) {
-			@("(")
-		}
-		if (artist.Artist != null) {
-			if (showType) {
-				Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", artist.Artist.ArtistType);
-			}			
-			@ArtistLink(artist.Artist, name: artist.Name)
-		} else {
-			@artist.Name
-		}
-		if (ShowRoles(artist, showRoles)) {
-			@Html.Raw("&nbsp;<small class='muted'>(" + Translate.ArtistRoleNames.GetAllNameNames(artist.EffectiveRoles, ArtistRoles.Default) + ")</small>")
-		}
-		if (artist.IsSupport) {
-			@(")")
-		}
-		if (artist != ordered.Last()) {
-			@(", ")
-		}
-	}
-}
-
 @helper ArtistTypesDropdownKnockout(string binding) {
 	<select data-bind="value: @(binding)">
 		@foreach (var artistType in Translate.ArtistTypeNames.GetTranslatedFields(AppConfig.ArtistTypes)) {
 			<option value="@artistType.Id">@artistType.Name</option>
 		}
 	</select>
-}
-
-@functions {
-	public enum ShowRolesMode
-	{
-		Never,
-		/// <summary>
-		/// Show roles if role is not "Default"
-		/// </summary>
-		IfNotDefault,
-		/// <summary>
-		/// Show roles if role is not "Default" or "Vocalist"
-		/// </summary>
-		IfNotVocalist
-	}
-
-	public static bool ShowRoles(IArtistLinkContract artist, ShowRolesMode showRoles)
-	{
-		switch (showRoles)
-		{
-			case ShowRolesMode.IfNotDefault:
-				return artist.EffectiveRoles != ArtistRoles.Default;
-			case ShowRolesMode.IfNotVocalist:
-				return artist.EffectiveRoles != ArtistRoles.Default
-					&& artist.EffectiveRoles != ArtistRoles.Vocalist
-					&& !artist.Categories.HasFlag(ArtistCategories.Subject)
-					&& !artist.Categories.HasFlag(ArtistCategories.Producer);
-			default:
-				return false;
-		}
-	}
 }
