@@ -166,6 +166,7 @@
     <Compile Include="Models\Shared\Partials\Album\AlbumThumbsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\CoverLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\PrintArchivedAlbumDataViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Artist\ArtistTypeLabelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\PrintArchivedArtistDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Event\PrintArchivedEventDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Event\PrintArchivedEventSeriesDataViewModel.cs" />

@@ -9,6 +9,7 @@
 @using VocaDb.Model.Service.QueryableExtenders
 @using VocaDb.Web.Models.Shared
 @using VocaDb.Web.Models.Shared.Partials.Album
+@using VocaDb.Web.Models.Shared.Partials.Artist;
 @using R = ViewRes.Artist;
 @using Res = ViewRes.Artist.DetailsStrings
 @inherits VocaDb.Web.Code.VocaDbPage<ArtistDetailsContract>
@@ -134,7 +135,7 @@
 				<tr>
 					<td>@ViewRes.SharedStrings.Type</td>
 					<td>
-						@{ Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", Model.ArtistType); }
+						@{ Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", new ArtistTypeLabelViewModel(Model.ArtistType)); }
 						@if (Model.ArtistTypeTag != null) {
 							<a href="@Url.TagDetails(Model.ArtistTypeTag)" data-bind="tagToolTip: @Model.ArtistTypeTag.Id">@Translate.ArtistTypeName(Model.ArtistType)</a>
 						} else {
