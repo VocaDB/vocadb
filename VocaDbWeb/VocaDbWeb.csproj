@@ -161,6 +161,7 @@
     <Compile Include="Controllers\Api\VenueApiController.cs" />
     <Compile Include="Controllers\VenueController.cs" />
     <Compile Include="Models\Shared\EnglishTranslatedStringViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Activityfeed\EntryTypeViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
     <Compile Include="Models\Venue\VenueEditViewModel.cs" />
     <Compile Include="Models\Venue\Versions.cs" />
