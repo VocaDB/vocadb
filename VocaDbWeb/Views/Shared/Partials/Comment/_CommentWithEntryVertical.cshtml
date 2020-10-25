@@ -1,0 +1,14 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Comment;
+@model CommentWithEntryVerticalViewModel
+
+<div class="well well-transparent">
+	@{ Html.RenderPartial("Partials/Comment/_CommentEntryItem", Model.Entry.Entry); }
+	@foreach (var comment in Model.Entry.Comments)
+	{
+		@CommentHelpers.PrintComment(comment, false, maxLength: Model.MaxLength)
+		if (comment != Model.Entry.Comments.Last())
+		{
+			<hr />
+		}
+	}
+</div>

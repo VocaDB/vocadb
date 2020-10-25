@@ -53,20 +53,6 @@
 	</form>
 }
 
-@helper CommentWithEntryVertical(EntryWithCommentsContract entry, int maxLength = int.MaxValue) {
-
-	<div class="well well-transparent">
-		@{ Html.RenderPartial("Partials/Comment/_CommentEntryItem", entry.Entry); }
-		@foreach (var comment in entry.Comments) {
-			@PrintComment(comment, false, maxLength: maxLength)
-			if (comment != entry.Comments.Last()) {
-				<hr />
-			}
-		}
-	</div>
-
-}
-
 @helper CreateComment(string cssClass, int newCommentRows) {
 	<div class="create-comment @cssClass">
 		<form data-bind="submit: createComment">

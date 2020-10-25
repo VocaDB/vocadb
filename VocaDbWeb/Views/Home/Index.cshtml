@@ -2,6 +2,7 @@
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Utils.Search
+@using VocaDb.Web.Models.Shared.Partials.Comment
 @using Res = ViewRes.Home.IndexStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.UseCases.FrontPageContract>
 
@@ -85,8 +86,8 @@
         <h3 class="withMargin">@ViewRes.Comment.IndexStrings.RecentComments (@Html.ActionLink(Res.ViewMore, "Index", "Comment"))</h3>
             
         @foreach (var comment in Model.RecentComments) {
-			@CommentHelpers.CommentWithEntryVertical(comment, 400)
-        }
+			Html.RenderPartial("Partials/Comment/_CommentWithEntryVertical", new CommentWithEntryVerticalViewModel(comment, 400));
+		}
 		
 		@Html.ActionLink(Res.ViewMore, "Index", "Comment")
     </div>
