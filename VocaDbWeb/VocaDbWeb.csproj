@@ -177,6 +177,7 @@
     <Compile Include="Models\Shared\Partials\EntryDetails\LargeShareLinksViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryPopupKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryVersionPopupKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\PV\EmbedBiliViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedNicoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedPiaproViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedPVViewModel.cs" />
@@ -780,7 +781,6 @@
     <Content Include="Content\Styles\variables.less" />
     <Content Include="Content\Styles\userpage.less" />
     <Content Include="Content\Styles\embedSong.less" />
-    <Content Include="App_Code\PVHelpers.cshtml" />
     <Content Include="App_Code\SearchHelpers.cshtml" />
     <Content Include="App_Code\VenueHelpers.cshtml" />
     <None Include="compilerconfig.json" />
@@ -1856,6 +1856,7 @@
     <Content Include="Views\Shared\Partials\PV\_EmbedPV.cshtml" />
     <Content Include="Views\Shared\Partials\PV\_EmbedNico.cshtml" />
     <Content Include="Views\Shared\Partials\PV\_EmbedPiapro.cshtml" />
+    <Content Include="Views\Shared\Partials\PV\_EmbedBili.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

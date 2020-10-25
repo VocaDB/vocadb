@@ -16,7 +16,7 @@
 		break;
 
 	case PVService.Bilibili:
-		@PVHelpers.EmbedBili(Model.PV, Model.Width, Model.Height)
+		Html.RenderPartial("Partials/PV/_EmbedBili", new EmbedBiliViewModel(Model.PV, Model.Width, Model.Height));
 		break;
 
 	case PVService.File:
