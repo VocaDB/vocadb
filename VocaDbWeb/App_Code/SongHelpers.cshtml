@@ -5,6 +5,7 @@
 @using VocaDb.Model.Service.Search.AlbumSearch
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 
 @helper ArtistParticipationStatusOptionsKnockout(string binding) {
 	{
@@ -80,7 +81,7 @@
 			}
 			<td>
 				@if (!string.IsNullOrEmpty(song.ThumbUrl)) {
-					Html.RenderPartial("Partials/Song/_SongIconLink", song);
+					Html.RenderPartial("Partials/Song/_SongIconLink", new SongIconLinkViewModel(song));
 				}
 			</td>
 			<td>

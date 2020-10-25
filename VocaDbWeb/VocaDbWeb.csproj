@@ -174,6 +174,7 @@
     <Compile Include="Models\Shared\Partials\Event\PrintArchivedEventSeriesDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\PrintArchivedSongDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\RatingIconViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Song\SongIconLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\PrintArchivedTagDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Venue\PrintArchivedVenueDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Event\VenueLinkOrVenueNameViewModel.cs" />
