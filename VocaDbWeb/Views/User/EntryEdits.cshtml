@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using VocaDb.Web.Models.Shared.Partials.Activityfeed
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Users.UserBaseContract>
 
 @{
@@ -21,7 +22,7 @@
 </ul>
 
 <div data-bind="foreach: entries, show" class="js-cloak">
-	@ActivityfeedHelpers.ActivityEntryKnockout("$parent.getEntryTypeName", "$parent.getActivityFeedEventName", "$parents[1].getChangedFieldNames", true)
+	@{ Html.RenderPartial("Partials/Activityfeed/_ActivityEntryKnockout", new ActivityEntryKnockoutViewModel("$parent.getEntryTypeName", "$parent.getActivityFeedEventName", "$parents[1].getChangedFieldNames", true)); }
 </div>
 
 <hr />

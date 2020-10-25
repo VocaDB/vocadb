@@ -161,6 +161,7 @@
     <Compile Include="Controllers\Api\VenueApiController.cs" />
     <Compile Include="Controllers\VenueController.cs" />
     <Compile Include="Models\Shared\EnglishTranslatedStringViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Activityfeed\ActivityEntryKnockoutViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
     <Compile Include="Models\Venue\VenueEditViewModel.cs" />
     <Compile Include="Models\Venue\Versions.cs" />
@@ -1637,7 +1638,6 @@
     <Content Include="Views\Song\ViewVersion.cshtml" />
     <Content Include="Views\SongList\Edit.cshtml" />
     <Content Include="Views\SongList\Details.cshtml" />
-    <Content Include="App_Code\ActivityfeedHelpers.cshtml" />
     <Content Include="Views\ActivityEntry\Index.cshtml" />
     <Content Include="Views\SongList\Import.cshtml" />
     <Content Include="Views\Tag\Edit.cshtml" />
@@ -1814,6 +1814,7 @@
     <Content Include="Views\Shared\Partials\Song\_SongIconLink.cshtml" />
     <Content Include="Views\Shared\Partials\Song\_SongTypeLabel.cshtml" />
     <Content Include="Views\Shared\Partials\Activityfeed\_ActivityEntry.cshtml" />
+    <Content Include="Views\Shared\Partials\Activityfeed\_ActivityEntryKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
