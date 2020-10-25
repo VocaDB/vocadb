@@ -181,6 +181,7 @@
     <Compile Include="Models\Shared\Partials\PV\EmbedNicoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedPiaproViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedPVViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Search\AdvancedFilterViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagUsagesManageTableViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
@@ -1857,6 +1858,7 @@
     <Content Include="Views\Shared\Partials\PV\_EmbedNico.cshtml" />
     <Content Include="Views\Shared\Partials\PV\_EmbedPiapro.cshtml" />
     <Content Include="Views\Shared\Partials\PV\_EmbedBili.cshtml" />
+    <Content Include="Views\Shared\Partials\Search\_AdvancedFilter.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
