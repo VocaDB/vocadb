@@ -2,6 +2,7 @@
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Songs.SongListWithArchivedVersionsContract>
 
 @{
@@ -13,5 +14,5 @@
 
 @ArchivedEntryHelpers.CurrentVersionMessage(Model.Version, EntryStatus.Finished)
 
-@ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions.Select(
-	a => new ArchivedObjectVersion(a, Translate.SongListEditableFieldNames.GetAllNameNames(a.ChangedFields, SongListEditableFields.Nothing))))
+@{ Html.RenderPartial("Partials/ArchivedEntry/_ArchivedObjectVersions", new ArchivedObjectVersionsViewModel(Model.ArchivedVersions.Select(
+	a => new ArchivedObjectVersion(a, Translate.SongListEditableFieldNames.GetAllNameNames(a.ChangedFields, SongListEditableFields.Nothing))))); }

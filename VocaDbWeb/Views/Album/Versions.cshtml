@@ -1,4 +1,5 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Album.Versions>
+﻿@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Album.Versions>
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Album.Name;
@@ -10,4 +11,4 @@
 
 @ArchivedEntryHelpers.CurrentVersionMessage(Model.Album.Version, Model.Album.Status)
 
-@ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions, id => Url.Action("ViewVersion", new { id = id }))
+@{ Html.RenderPartial("Partials/ArchivedEntry/_ArchivedObjectVersions", new ArchivedObjectVersionsViewModel(Model.ArchivedVersions, id => Url.Action("ViewVersion", new { id = id }))); }

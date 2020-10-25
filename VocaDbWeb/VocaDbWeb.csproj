@@ -164,6 +164,7 @@
     <Compile Include="Models\Shared\Partials\Activityfeed\ActivityEntryKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\AlbumGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\EditCollectionDialogViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentBodyLargeViewModel.cs" />
@@ -1846,6 +1847,7 @@
     <Content Include="Views\Shared\Partials\EntryDetails\_ReportEntryPopupKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_ReportEntryVersionPopupKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_LargeShareLinks.cshtml" />
+    <Content Include="Views\Shared\Partials\ArchivedEntry\_ArchivedObjectVersions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

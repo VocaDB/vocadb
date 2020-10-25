@@ -1,0 +1,61 @@
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
+@model ArchivedObjectVersionsViewModel
+
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th>@ViewRes.ArchivedObjectVersionsStrings.Version</th>
+			<th>@ViewRes.ArchivedObjectVersionsStrings.Created</th>
+			<th>@ViewRes.ArchivedObjectVersionsStrings.Author</th>
+			<th>@ViewRes.ArchivedObjectVersionsStrings.Changes</th>
+			<th>@ViewRes.ArchivedObjectVersionsStrings.Notes</th>
+		</tr>
+	</thead>
+	<tbody>
+	@foreach (var ver in Model.ArchivedVersions.OrderByDescending(v => v.Contract.Version))
+	{
+		var style = (ver.AnythingChanged ? "" : "muted");
+		<tr>
+			<td>
+				@if (Model.LinkFunc != null && (Login.CanViewHiddenRevisions || !ver.Hidden))
+				{
+					<a href="@Model.LinkFunc(ver.Id)" class="@style" style="@(ver.Hidden ? "text-decoration: line-through;" : "")">
+						@ver.Contract.Version
+						(@Translate.EntryStatusNames[ver.Status])
+					</a>
+				}
+				else
+				{
+					<span style="@(ver.Hidden ? "text-decoration: line-through;" : "")">
+						@ver.Contract.Version
+						(@Translate.EntryStatusNames[ver.Status])
+					</span>
+				}
+			</td>
+			<td>
+				<span class="@style">
+					@Helpers.UniversalTimeLabel(ver.Contract.Created)
+				</span>
+			</td>
+			<td>					
+				@UserHelpers.UserIconLink(ver.Contract.Author, ver.Contract.AgentName)
+			</td>
+			<td>
+				<span class="@style">						
+					@ver.Reason
+					@if (!string.IsNullOrEmpty(ver.ChangeMessage))
+					{
+						@(" (" + ver.ChangeMessage + ")")
+					}
+				</span>
+			</td>
+			<td>
+				<span class="@style">
+					@ver.Notes
+				</span>
+			</td>
+		</tr>
+	}
+	</tbody>
+</table>	
