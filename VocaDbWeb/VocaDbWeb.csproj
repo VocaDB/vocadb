@@ -169,6 +169,7 @@
     <Compile Include="Models\Shared\Partials\Artist\ArtistIconLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistTypeLabelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\PrintArchivedArtistDataViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Comment\CommentEntryItemViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Event\PrintArchivedEventDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Event\PrintArchivedEventSeriesDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\PrintArchivedSongDataViewModel.cs" />
