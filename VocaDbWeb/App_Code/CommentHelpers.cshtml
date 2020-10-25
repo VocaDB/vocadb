@@ -53,30 +53,6 @@
 	</form>
 }
 
-@helper CommentBodyLarge(CommentContract contract, bool allowDelete, bool alwaysAllowDelete = false) {
-	<div class="comment media comment-large">
-		<a class="pull-left" href="@Url.Action("Profile", "User", new { id = contract.Author.Name })">
-			@UserHelpers.ProfileIcon(contract.Author, 70)
-		</a>
-			
-		<div class="media-body">
-			<div class="pull-right">
-				<span title="@contract.Created.ToUniversalTime().ToString("g") UTC" class="comment-date">
-					@TimeAgoStringBuilder.FormatTimeAgo(contract.Created)
-				</span>					
-				@if (alwaysAllowDelete || (allowDelete && Login.CanDeleteComment(contract))) {
-					@:&nbsp;&nbsp;
-					<a href="#" id="deleteComment_@(contract.Id)" class="deleteComment textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
-				}
-			</div>			
-			<h3 class="media-heading comment-large-header">
-				@UserHelpers.UserLink(contract.Author)
-			</h3>
-			@HtmlHelpers.FormatMarkdown(contract.Message)
-		</div>
-	</div>		
-}
-
 @helper CommentWithEntryVertical(EntryWithCommentsContract entry, int maxLength = int.MaxValue) {
 
 	<div class="well well-transparent">

@@ -1,0 +1,27 @@
+﻿@using VocaDb.Web.Code;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Comment;
+@model CommentBodyLargeViewModel
+
+<div class="comment media comment-large">
+	<a class="pull-left" href="@Url.Action("Profile", "User", new { id = Model.Contract.Author.Name })">
+		@UserHelpers.ProfileIcon(Model.Contract.Author, 70)
+	</a>
+
+	<div class="media-body">
+		<div class="pull-right">
+			<span title="@Model.Contract.Created.ToUniversalTime().ToString("g") UTC" class="comment-date">
+				@TimeAgoStringBuilder.FormatTimeAgo(Model.Contract.Created)
+			</span>
+			@if (Model.AlwaysAllowDelete || (Model.AllowDelete && Login.CanDeleteComment(Model.Contract)))
+			{
+				@:&nbsp;&nbsp;
+				<a href="#" id="deleteComment_@(Model.Contract.Id)" class="deleteComment textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
+			}
+		</div>
+		<h3 class="media-heading comment-large-header">
+			@UserHelpers.UserLink(Model.Contract.Author)
+		</h3>
+		@HtmlHelpers.FormatMarkdown(Model.Contract.Message)
+	</div>
+</div>
