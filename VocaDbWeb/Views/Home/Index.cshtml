@@ -76,8 +76,8 @@
         <h3 class="withMargin">@Res.RecentActivity (@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry"))</h3>
 
         @foreach (var entry in Model.ActivityEntries) {
-	        @ActivityfeedHelpers.ActivityEntry(entry, false)
-        }
+			Html.RenderPartial("Partials/Activityfeed/_ActivityEntry", entry);
+		}
 		
 		@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry")
     </div>

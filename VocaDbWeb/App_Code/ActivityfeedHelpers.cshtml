@@ -1,45 +1,5 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
-@using System.Web.Mvc.Html;
 @using HelperRes
-@using VocaDb.Web.Code
-@using VocaDb.Web.Helpers;
-@using VocaDb.Model.DataContracts.Activityfeed;
-@using VocaDb.Model.Service.Helpers
-
-@helper ActivityEntry(ActivityEntryForApiContract entry, bool showDetails = false) {
-	var thumbUrl = entry.Entry.MainPicture != null ? UrlHelper.UpgradeToHttps(entry.Entry.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb)) : null;
-	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
-		@if (entry.Author != null) {
-			@UserHelpers.UserIconLink(entry.Author, userInfo: true)
-		} else {
-			@HelperRes.ActivityFeedHelperStrings.Someone
-		}
-
-		@{ Html.RenderPartial("Partials/Activityfeed/_EntryType", entry); }
-
-		<small class="pull-right extraInfo" title="@entry.CreateDate.ToUniversalTime().ToString("g") UTC">
-			@TimeAgoStringBuilder.FormatTimeAgo(entry.CreateDate)
-		</small>
-
-		<div class="media">
-			@if (!string.IsNullOrEmpty(thumbUrl)) {
-				<a class="pull-left" href="@Url.EntryDetails(entry.Entry)" title="@entry.Entry.AdditionalNames">
-					<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" referrerpolicy="same-origin"/>
-				</a>
-			}
-			<div class="media-body">
-				<h4 class="media-heading">
-					<a href="@Url.EntryDetails(entry.Entry)" title="@entry.Entry.AdditionalNames">
-						<strong>@entry.Entry.Name</strong>
-					</a>
-				</h4>
-				@if (!string.IsNullOrEmpty(entry.Entry.ArtistString)) {
-					@entry.Entry.ArtistString
-				}
-			</div>
-		</div>
-	</div>
-}
 
 @helper ActivityEntryKnockout(string entryTypeNamesBinding, string activityFeedEventNamesBinding, string changedFieldNamesBinding, bool showDetails = false) {
 	<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
