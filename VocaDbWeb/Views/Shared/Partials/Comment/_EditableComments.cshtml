@@ -8,7 +8,7 @@
 <!-- binding context: EditableCommentsViewModel -->
 @if (Model.AllowCreateComment && !Model.CommentBoxEnd)
 {
-	@CommentHelpers.CreateComment(cssClass, Model.NewCommentRows)
+	Html.RenderPartial("Partials/Comment/_CreateComment", new CreateCommentViewModel(cssClass, Model.NewCommentRows));
 }
 
 @if (Model.Pagination)
@@ -33,5 +33,5 @@
 
 @if (Model.AllowCreateComment && Model.CommentBoxEnd)
 {
-	@CommentHelpers.CreateComment(cssClass, Model.NewCommentRows)
+	Html.RenderPartial("Partials/Comment/_CreateComment", new CreateCommentViewModel(cssClass, Model.NewCommentRows));
 }
