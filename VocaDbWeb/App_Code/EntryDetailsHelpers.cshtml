@@ -2,10 +2,10 @@
 @using System.Web.Mvc.Html
 @using Microsoft.Web.Helpers;
 @using VocaDb.Model.DataContracts
-@using VocaDb.Model.DataContracts.PVs
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.ExtLinks
 @using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails
 @inherits VocaDb.Web.Code.HelperPage
 	
 @helper DeletedBanner(IEntryBase mergedTo) {
@@ -25,38 +25,12 @@
 	</div>
 }
 
-@helper EntryDeletePopupBase(string confirmText, string viewModelBindingName,  string deleteButtonId, string title, string deleteButtonText) {
-
-	<!-- Viewmodel: DeleteEntryViewModel -->
-	<div style="display:none;" title="@title"
-		data-bind="
-		dialog: {
-			autoOpen: false, width: 310, modal: true,
-			position: { my: 'left top', at: 'left bottom', of: $('#@deleteButtonId') }
-		},
-		dialogVisible: @(viewModelBindingName).dialogVisible,
-		dialogButtons: [
-			{ text: '@deleteButtonText', click: @(viewModelBindingName).deleteEntry, disabled: !@(viewModelBindingName).isValid() }, 
-			{ text: '@ViewRes.SharedStrings.Cancel', click: function() { @(viewModelBindingName).dialogVisible(false); } }
-		]
-		">
-
-		<p>
-			@confirmText
-		</p>
-
-		<textarea data-bind="textInput: @(viewModelBindingName).notes, attr: { required: @(viewModelBindingName).notesRequired }" class="input-xlarge" maxlength="200"></textarea>
-
-	</div>
-
-}
-
 @helper EntryDeletePopup(string confirmText, string viewModelBindingName = "deleteViewModel", string deleteButtonId = "deleteLink") {
-	@EntryDeletePopupBase(confirmText, viewModelBindingName, deleteButtonId, ViewRes.SharedStrings.Delete, ViewRes.SharedStrings.Delete)	
+	Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel(confirmText, viewModelBindingName, deleteButtonId, ViewRes.SharedStrings.Delete, ViewRes.SharedStrings.Delete));
 }
 
 @helper EntryTrashPopup(string confirmText, string viewModelBindingName = "trashViewModel",  string deleteButtonId = "trashLink") {
-	@EntryDeletePopupBase(confirmText, viewModelBindingName, deleteButtonId, ViewRes.EntryEditStrings.MoveToTrash, ViewRes.EntryEditStrings.MoveToTrash)
+	Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel(confirmText, viewModelBindingName, deleteButtonId, ViewRes.EntryEditStrings.MoveToTrash, ViewRes.EntryEditStrings.MoveToTrash));
 }
 
 @helper ExternalLinksList(IEnumerable<WebLinkContract> webLinks, bool showCategory = false) {

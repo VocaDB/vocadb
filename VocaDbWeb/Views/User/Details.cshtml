@@ -7,6 +7,7 @@
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Shared.Partials.Song;
 @using VocaDb.Web.Resources.Domain.Globalization 
 @using R = ViewRes.User.DetailsStrings;
@@ -423,8 +424,8 @@
 	<div id="sfsCheckDialog" title="StopForumSpam check"></div>
 }
 
-@EntryDetailsHelpers.EntryDeletePopupBase("Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional).", "limitedUserViewModel", "setToLimitedLink", "Remove editing permissions", "Confirm")
-@EntryDetailsHelpers.EntryDeletePopupBase("Please confirm that you wish to report user. Please provide additional explanation below.", "reportUserViewModel", "reportUserLink", "Report user", "Confirm")
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel("Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional).", "limitedUserViewModel", "setToLimitedLink", "Remove editing permissions", "Confirm")); }
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel("Please confirm that you wish to report user. Please provide additional explanation below.", "reportUserViewModel", "reportUserLink", "Report user", "Confirm")); }
 
 @section Head {
 	@Styles.Render("~/Scripts/jqwidgets27/styles/css")
