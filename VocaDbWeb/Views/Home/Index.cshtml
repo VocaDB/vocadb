@@ -2,7 +2,8 @@
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Utils.Search
-@using VocaDb.Web.Models.Shared.Partials.Comment
+@using VocaDb.Web.Models.Shared.Partials.Activityfeed;
+@using VocaDb.Web.Models.Shared.Partials.Comment;
 @using Res = ViewRes.Home.IndexStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.UseCases.FrontPageContract>
 
@@ -77,7 +78,7 @@
         <h3 class="withMargin">@Res.RecentActivity (@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry"))</h3>
 
         @foreach (var entry in Model.ActivityEntries) {
-			Html.RenderPartial("Partials/Activityfeed/_ActivityEntry", entry);
+			Html.RenderPartial("Partials/Activityfeed/_ActivityEntry", new ActivityEntryViewModel(entry));
 		}
 		
 		@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry")

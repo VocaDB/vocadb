@@ -1,45 +1,45 @@
 ﻿@using System.Web.Mvc.Html;
 @using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
-@using VocaDb.Model.DataContracts.Activityfeed;
-@model ActivityEntryForApiContract
+@using VocaDb.Web.Models.Shared.Partials.Activityfeed;
+@model ActivityEntryViewModel
 
 @{
-	var thumbUrl = Model.Entry.MainPicture != null ? VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(Model.Entry.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb)) : null;
+	var thumbUrl = Model.Entry.Entry.MainPicture != null ? VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(Model.Entry.Entry.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb)) : null;
 }
 
 <div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
-	@if (Model.Author != null)
+	@if (Model.Entry.Author != null)
 	{
-		@UserHelpers.UserIconLink(Model.Author, userInfo: true)
+		@UserHelpers.UserIconLink(Model.Entry.Author, userInfo: true)
 	}
 	else
 	{
 		@HelperRes.ActivityFeedHelperStrings.Someone
 	}
 
-	@{ Html.RenderPartial("Partials/Activityfeed/_EntryType", Model); }
+	@{ Html.RenderPartial("Partials/Activityfeed/_EntryType", Model.Entry); }
 
-	<small class="pull-right extraInfo" title="@Model.CreateDate.ToUniversalTime().ToString("g") UTC">
-		@TimeAgoStringBuilder.FormatTimeAgo(Model.CreateDate)
+	<small class="pull-right extraInfo" title="@Model.Entry.CreateDate.ToUniversalTime().ToString("g") UTC">
+		@TimeAgoStringBuilder.FormatTimeAgo(Model.Entry.CreateDate)
 	</small>
 
 	<div class="media">
 		@if (!string.IsNullOrEmpty(thumbUrl))
 		{
-			<a class="pull-left" href="@Url.EntryDetails(Model.Entry)" title="@Model.Entry.AdditionalNames">
+			<a class="pull-left" href="@Url.EntryDetails(Model.Entry.Entry)" title="@Model.Entry.Entry.AdditionalNames">
 				<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" referrerpolicy="same-origin" />
 			</a>
 		}
 		<div class="media-body">
 			<h4 class="media-heading">
-				<a href="@Url.EntryDetails(Model.Entry)" title="@Model.Entry.AdditionalNames">
-					<strong>@Model.Entry.Name</strong>
+				<a href="@Url.EntryDetails(Model.Entry.Entry)" title="@Model.Entry.Entry.AdditionalNames">
+					<strong>@Model.Entry.Entry.Name</strong>
 				</a>
 			</h4>
-			@if (!string.IsNullOrEmpty(Model.Entry.ArtistString))
+			@if (!string.IsNullOrEmpty(Model.Entry.Entry.ArtistString))
 			{
-				@Model.Entry.ArtistString
+				@Model.Entry.Entry.ArtistString
 			}
 		</div>
 	</div>

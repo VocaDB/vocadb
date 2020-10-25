@@ -162,6 +162,7 @@
     <Compile Include="Controllers\VenueController.cs" />
     <Compile Include="Models\Shared\EnglishTranslatedStringViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Activityfeed\ActivityEntryKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Activityfeed\ActivityEntryViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\AlbumGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\EditCollectionDialogViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionPropertiesViewModel.cs" />
