@@ -12,6 +12,7 @@
 @using VocaDb.Model.Domain.ReleaseEvents
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Event;
 @using VocaDb.Web.Models.Shared.Partials.PV;
 
 @functions {
@@ -184,7 +185,7 @@
 					@if (ev.HasVenueOrVenueName) {
 						<br />
 						<small class="extraInfo">
-							@{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", ev); }
+							@{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev)); }
 						</small>
 					}
 				</div>

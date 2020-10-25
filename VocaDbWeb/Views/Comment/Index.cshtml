@@ -32,7 +32,7 @@
 
 		<div class="span5 item">
 
-			@{ Html.RenderPartial("Partials/Comment/_CommentEntryItem", entry.Entry); }
+			@{ Html.RenderPartial("Partials/Comment/_CommentEntryItem", new CommentEntryItemViewModel(entry.Entry)); }
 
 		</div>
 		    		

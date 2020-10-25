@@ -12,7 +12,7 @@
 			@Html.Raw("<tr>")
 		}
 		<td>
-			@{ Html.RenderPartial("Partials/Album/_AlbumIconLink", album); }
+			@{ Html.RenderPartial("Partials/Album/_AlbumIconLink", new AlbumIconLinkViewModel(album)); }
 		</td>
 		<td>
 			@Html.ActionLink(album.Name, "Details", "Album", new { id = album.Id }, new { title = album.AdditionalNames })

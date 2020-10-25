@@ -13,6 +13,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Shared.Partials.PV;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 @using R = ViewRes.Album;
 @using Res = ViewRes.Album.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
@@ -79,7 +80,7 @@
 				<div id="picCarousel" class="carousel slide">
 					<div class="carousel-inner">
 						<div class="active item thumbItem">
-							@{ Html.RenderPartial("Partials/Album/_CoverLink", Model); }
+							@{ Html.RenderPartial("Partials/Album/_CoverLink", new CoverLinkViewModel(Model)); }
 						</div>
 						@foreach (var pic in Model.Pictures) {
 							<div class="item thumbItem" itemprop="image">
@@ -328,10 +329,10 @@
 										@:&nbsp;
 										@Helpers.DraftIcon(song.Song.Status)
 										if (song.Song.SongType != SongType.Original && song.Song.SongType != SongType.Unspecified) {
-											Html.RenderPartial("Partials/Song/_SongTypeLabel", song.Song.SongType);
+											Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.Song.SongType));
 										}
 										@Helpers.PVServiceIcons(song.Song.PVServices)
-										Html.RenderPartial("Partials/Song/_RatingIcon", song.Rating ?? SongVoteRating.Nothing);
+										Html.RenderPartial("Partials/Song/_RatingIcon", new RatingIconViewModel(song.Rating ?? SongVoteRating.Nothing));
 										<br />
 										<small class="muted">@song.Song.ArtistString</small>
 									} else {

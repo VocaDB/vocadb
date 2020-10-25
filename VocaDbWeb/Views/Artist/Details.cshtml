@@ -8,6 +8,7 @@
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Service.QueryableExtenders
 @using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared.Partials.Album;
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
@@ -137,7 +138,7 @@
 				<tr>
 					<td>@ViewRes.SharedStrings.Type</td>
 					<td>
-						@{ Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", Model.ArtistType); }
+						@{ Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", new ArtistTypeLabelViewModel(Model.ArtistType)); }
 						@if (Model.ArtistTypeTag != null) {
 							<a href="@Url.TagDetails(Model.ArtistTypeTag)" data-bind="tagToolTip: @Model.ArtistTypeTag.Id">@Translate.ArtistTypeName(Model.ArtistType)</a>
 						} else {
@@ -278,7 +279,7 @@
 				<small>@string.Format(ViewRes.EntryDetailsStrings.NumTotalParenthesis, Model.SharedStats.AlbumCount)</small>
 			</h3>
 			<div id="newAlbums">
-				@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", Model.LatestAlbums); }
+				@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.LatestAlbums)); }
 			</div>
 		}
 
@@ -288,7 +289,7 @@
 				<small>(@string.Format(Res.RatedAlbums, Model.SharedStats.RatedAlbumCount))</small>
 			</h3>
 			<div id="topAlbums">
-				@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", Model.TopAlbums); }
+				@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.TopAlbums)); }
 			</div>
 		}
 

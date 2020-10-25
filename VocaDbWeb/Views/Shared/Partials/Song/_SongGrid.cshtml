@@ -13,14 +13,14 @@
 		<td>
 			@if (!string.IsNullOrEmpty(song.ThumbUrl))
 			{
-				Html.RenderPartial("Partials/Song/_SongIconLink", song);
+				Html.RenderPartial("Partials/Song/_SongIconLink", new SongIconLinkViewModel(song));
 			}
 		</td>
 		<td>
 			@SongHelpers.SongLink(song)
 			@if (Model.DisplayType)
 			{
-				Html.RenderPartial("Partials/Song/_SongTypeLabel", song.SongType);
+				Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.SongType));
 			}
 			@if (Model.DisplayPublishDate && song.PublishDate.HasValue)
 			{

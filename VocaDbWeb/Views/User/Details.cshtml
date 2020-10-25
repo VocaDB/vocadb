@@ -5,11 +5,12 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security;
 @using VocaDb.Model.Utils
+@using VocaDb.Web.Models.Shared.Partials.Album;
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Shared.Partials.Song;
-@using VocaDb.Web.Resources.Domain.Globalization 
+@using VocaDb.Web.Resources.Domain.Globalization
 @using R = ViewRes.User.DetailsStrings;
 @using Res = ViewRes.User.DetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<UserDetailsContract>
@@ -333,7 +334,7 @@
 					<small>(@string.Format(R.Total, Model.AlbumCollectionCount))</small>
 				</a>
 			</h3>
-			@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", Model.FavoriteAlbums); }
+			@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.FavoriteAlbums)); }
 		</div>
 	}
 
