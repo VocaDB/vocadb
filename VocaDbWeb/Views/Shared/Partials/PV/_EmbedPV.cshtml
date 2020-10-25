@@ -36,7 +36,7 @@
 		break;
 
 	case PVService.NicoNicoDouga:
-		@PVHelpers.EmbedNico(Model.PV.PVId, widthStr, heightStr, Model.Id, Model.EnableApi)
+		Html.RenderPartial("Partials/PV/_EmbedNico", new EmbedNicoViewModel(Model.PV.PVId, widthStr, heightStr, Model.Id, Model.EnableApi));
 		break;
 
 	case PVService.Piapro:

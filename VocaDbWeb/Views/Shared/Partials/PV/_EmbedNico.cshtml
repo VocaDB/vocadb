@@ -1,0 +1,6 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.PV;
+@model EmbedNicoViewModel
+
+<div id="@Model.Id">
+	<iframe width="@Model.WidthStr" height="@Model.HeightStr" allowfullscreen="allowfullscreen" style="border: none;" src="//embed.nicovideo.jp/watch/@Model.PVId?jsapi=@(Model.EnableApi ? 1 : 0)&noRelatedVideo=0&autoplay=0&defaultNoComment=0&noLinkToNiconico=0&noController=0&noHeader=0&noTags=0&noShare=0" allow="autoplay; fullscreen"></iframe>
+</div>

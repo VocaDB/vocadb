@@ -177,6 +177,7 @@
     <Compile Include="Models\Shared\Partials\EntryDetails\LargeShareLinksViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryPopupKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryVersionPopupKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\PV\EmbedNicoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedPVViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagUsagesManageTableViewModel.cs" />
@@ -1852,6 +1853,7 @@
     <Content Include="Views\Shared\Partials\ArchivedEntry\_ArchivedObjectVersions.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_ArchivedObjectVersionProperties.cshtml" />
     <Content Include="Views\Shared\Partials\PV\_EmbedPV.cshtml" />
+    <Content Include="Views\Shared\Partials\PV\_EmbedNico.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
