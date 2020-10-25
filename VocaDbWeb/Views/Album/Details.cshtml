@@ -8,6 +8,7 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models;
 @using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared.Partials.Album;
 @using R = ViewRes.Album;
 @using Res = ViewRes.Album.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
@@ -74,7 +75,7 @@
 				<div id="picCarousel" class="carousel slide">
 					<div class="carousel-inner">
 						<div class="active item thumbItem">
-							@{ Html.RenderPartial("Partials/Album/_CoverLink", Model); }
+							@{ Html.RenderPartial("Partials/Album/_CoverLink", new CoverLinkViewModel(Model)); }
 						</div>
 						@foreach (var pic in Model.Pictures) {
 							<div class="item thumbItem" itemprop="image">
