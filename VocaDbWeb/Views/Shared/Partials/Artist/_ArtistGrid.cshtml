@@ -1,0 +1,39 @@
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Artist;
+@model ArtistGridViewModel
+
+<table>
+	@{ int i = 0; }
+
+	@foreach (var artist in Model.Artists)
+	{
+		if (i % Model.Columns == 0)
+		{
+			@Html.Raw("<tr>")
+		}
+		<td>
+			@{ Html.RenderPartial("Partials/Artist/_ArtistIconLink", artist); }
+		</td>
+		<td>
+			@ArtistHelpers.ArtistLink(artist)
+			@if (Model.DisplayType)
+			{
+				@("(")@Translate.ArtistTypeName(artist.ArtistType)@(")")
+			}
+			@if (!string.IsNullOrEmpty(artist.AdditionalNames))
+			{
+				<br />
+				<span class="extraInfo">@artist.AdditionalNames</span>
+			}
+		</td>
+		{ i++; }
+		if (i % Model.Columns == 0)
+		{
+			@Html.Raw("</tr>")
+		}
+	}
+	@if (i % Model.Columns != 0)
+	{
+		@Html.Raw("</tr>")
+	}
+</table>

@@ -8,41 +8,6 @@
 @using VocaDb.Model.DataContracts.Songs;
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper ArtistGrid(IEnumerable<ArtistContract> artists, int columns,
-	bool displayType = false) {
-	
-	<table>
-		@{ int i = 0; }
-	
-		@foreach (var artist in artists) {
-			if (i % columns == 0) {
-				@Html.Raw("<tr>")
-			}
-			<td>
-				@{ Html.RenderPartial("Partials/Artist/_ArtistIconLink", artist); }
-			</td>
-			<td>
-				@ArtistLink(artist)
-				@if (displayType) {
-					@("(")@Translate.ArtistTypeName(artist.ArtistType)@(")")
-				}
-				@if (!string.IsNullOrEmpty(artist.AdditionalNames)) {
-					<br />
-					<span class="extraInfo">@artist.AdditionalNames</span>
-				}
-			</td>
-			{ i++; }
-			if (i % columns == 0) {
-				@Html.Raw("</tr>")
-			}
-		}
-		@if (i % columns != 0) {
-			@Html.Raw("</tr>")
-		}
-	</table>
-			
-}
-
 @helper ArtistLink(ArtistContract artist, bool typeLabel = false, string name = null, bool releaseYear = false) {
 	if (typeLabel) {
 		Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", artist.ArtistType);

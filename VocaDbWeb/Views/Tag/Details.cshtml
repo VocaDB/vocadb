@@ -9,6 +9,7 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared
 @using VocaDb.Web.Models.Shared.Partials.Album;
+@using VocaDb.Web.Models.Shared.Partials.Artist;
 @using SharedRes = ViewRes.SharedStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<TagDetailsContract>
 
@@ -195,7 +196,7 @@
 				<small>(@Model.Stats.ArtistCount @SharedRes.Total)</small>
 			</a>
 		</h3>
-		@ArtistHelpers.ArtistGrid(Model.Stats.Artists.Select(a => a), 2, true)
+		@{ Html.RenderPartial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.Stats.Artists.Select(a => a), 2, true)); }
 	</div>
 }
 

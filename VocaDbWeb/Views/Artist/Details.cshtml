@@ -8,6 +8,7 @@
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Service.QueryableExtenders
 @using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared.Partials.Artist; 
 @using R = ViewRes.Artist;
 @using Res = ViewRes.Artist.DetailsStrings
 @inherits VocaDb.Web.Code.VocaDbPage<ArtistDetailsContract>
@@ -258,11 +259,11 @@
 				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.Members.Length))</small>
 			</h3>
 			<div data-bind="visible: !showAllMembers()">
-				@ArtistHelpers.ArtistGrid(Model.Members.Take(6).Select(g => g), 3, true)
+				@{ Html.RenderPartial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.Members.Take(6).Select(g => g), 3, true)); }
 			</div>
 			if (Model.Members.Length > 6) {
 				<div data-bind="visible: showAllMembers">
-					@ArtistHelpers.ArtistGrid(Model.Members.Select(g => g), 3, true)
+					@{ Html.RenderPartial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.Members.Select(g => g), 3, true)); }
 				</div>
 				<a href="#" data-bind="click: function() { showAllMembers(true); }, visible: !showAllMembers()">@ViewRes.SharedStrings.ShowMore</a>
 			}

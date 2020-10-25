@@ -6,7 +6,8 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security;
 @using VocaDb.Model.Utils
-@using VocaDb.Web.Resources.Domain.Globalization
+@using VocaDb.Web.Models.Shared.Partials.Artist;
+@using VocaDb.Web.Resources.Domain.Globalization 
 @using R = ViewRes.User.DetailsStrings;
 @using Res = ViewRes.User.DetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<UserDetailsContract>
@@ -239,7 +240,7 @@
 			@if (Model.OwnedArtistEntries.Any())
 			{
 				<h4>@R.VerifiedOwner</h4>
-				@ArtistHelpers.ArtistGrid(Model.OwnedArtistEntries.Select(a => a.Artist), 3, true)
+				Html.RenderPartial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.OwnedArtistEntries.Select(a => a.Artist), 3, true));
 				<br />
 			}
 
@@ -366,7 +367,7 @@
 					<small>(@string.Format(R.Total, Model.ArtistCount))</small>
 				</a>
 			</h3>
-			@ArtistHelpers.ArtistGrid(Model.FollowedArtists, 3)
+			@{ Html.RenderPartial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.FollowedArtists, 3)); }
 		</div>
 	}
 	
