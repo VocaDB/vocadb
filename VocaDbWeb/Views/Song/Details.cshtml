@@ -11,7 +11,8 @@
 @using VocaDb.Model.Domain.Security;
 @using VocaDb.Model.Service.VideoServices
 @using VocaDb.Web.Models.Shared
-@using VocaDb.Web.Models.Shared.Partials.Artist 
+@using VocaDb.Web.Models.Shared.Partials.Artist
+@using VocaDb.Web.Models.Shared.Partials.Song
 @using R = ViewRes.Song;
 @using Res = ViewRes.Song.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
@@ -391,7 +392,7 @@
 		
 		@if (Model.Suggestions.Any()) {
 			<h3 class="withMargin">@Res.SuggestionsTitle</h3>
-			@SongHelpers.SongGrid(Model.Suggestions, 2, true, true)
+			Html.RenderPartial("Partials/Song/_SongGrid", new SongGridViewModel(Model.Suggestions, 2, true, true));
 			<p>
 				<a href="#" id="viewRelatedLink">@Res.SeeRelatedSongs</a>
 			</p>

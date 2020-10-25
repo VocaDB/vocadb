@@ -5,6 +5,7 @@
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Album;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 @using Res = ViewRes.Event.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract>
@@ -188,7 +189,7 @@
 		@Html.ActionLink(Res.Songs, "Index", "Search", UrlMapper.Search.Songs(eventId: Model.Id), null)
 		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Songs.Length)</small>
 	</h3>
-	@SongHelpers.SongGrid(Model.Songs, 2, true, false)
+	Html.RenderPartial("Partials/Song/_SongGrid", new SongGridViewModel(Model.Songs, 2, true, false));
 }
 
 @if (Model.PVs.Any()) {

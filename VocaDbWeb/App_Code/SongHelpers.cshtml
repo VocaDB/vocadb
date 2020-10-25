@@ -68,45 +68,6 @@
 	<a href="#" data-bind="attr: { href: @extUrlBinding || vdb.utils.EntryUrlMapper.details_song(@binding), title: @(binding).additionalNames }, text: @(binding).name, css: { extLink: @extUrlBinding } @(tooltip ? ", songToolTip: " + binding + ".id" : "") @(toolTipDomainBinding != null ? ", toolTipDomain: " + toolTipDomainBinding : "")"></a>
 }
 
-@helper SongGrid(IEnumerable<SongForApiContract> songs, int columns,
-	bool displayType = false, bool displayPublishDate = false) {
-
-	<table>
-		@{ int i = 0; }
-
-		@foreach (var song in songs) {
-			if (i % columns == 0) {
-				@Html.Raw("<tr>")
-			}
-			<td>
-				@if (!string.IsNullOrEmpty(song.ThumbUrl)) {
-					Html.RenderPartial("Partials/Song/_SongIconLink", song);
-				}
-			</td>
-			<td>
-				@SongLink(song)				
-				@if (displayType) {
-					Html.RenderPartial("Partials/Song/_SongTypeLabel", song.SongType);
-				}
-				@if (displayPublishDate && song.PublishDate.HasValue) {
-					<i class="icon-calendar" title="Published: @song.PublishDate.Value.ToShortDateString()" data-bind="tooltip: { placement: 'right' }"></i>
-				}
-				<br />
-				<span class="extraInfo">@song.ArtistString</span>
-			</td>
-			{ i++; }
-			if (i % columns == 0) {
-				@Html.Raw("</tr>")
-			}
-		}
-		@if (i % columns != 0) {
-			@Html.Raw("</tr>")
-		}
-	</table>
-
-}
-
-
 @helper SongListsKnockout(string binding, bool groupByYear = false) {
 	
 	<table class="table table-striped">

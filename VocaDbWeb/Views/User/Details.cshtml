@@ -1,12 +1,12 @@
 ﻿@using System.Globalization
 @using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Users;
-@using VocaDb.Model.Domain.Globalization
 @using VocaDb.Model.Domain.Users
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security;
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Models.Shared.Partials.Artist;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 @using VocaDb.Web.Resources.Domain.Globalization 
 @using R = ViewRes.User.DetailsStrings;
 @using Res = ViewRes.User.DetailsStrings;
@@ -349,7 +349,7 @@
 					<small>(@string.Format(R.Total, Model.FavoriteSongCount))</small>
 				</a>
 			</h3>
-			@SongHelpers.SongGrid(Model.LatestRatedSongs, 3)
+			@{ Html.RenderPartial("Partials/Song/_SongGrid", new SongGridViewModel(Model.LatestRatedSongs, 3)); }
 		</div>
 	}
 
