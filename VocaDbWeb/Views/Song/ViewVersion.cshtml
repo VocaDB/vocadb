@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Song;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Songs.ArchivedSongVersionDetailsContract>
@@ -48,8 +49,8 @@
 	}
 }
 
-@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Versions.CreateForSong(Model.ArchivedVersion),
-	Model.ComparedVersion != null ? Versions.CreateForSong(Model.ComparedVersion) : null)
+@{ Html.RenderPartial("Partials/ArchivedEntry/_ArchivedObjectVersionProperties", new ArchivedObjectVersionPropertiesViewModel(Versions.CreateForSong(Model.ArchivedVersion),
+	Model.ComparedVersion != null ? Versions.CreateForSong(Model.ComparedVersion) : null)); }
 
 @{ Html.RenderPartial("Partials/Song/_PrintArchivedSongData", Model.Versions); }
 
