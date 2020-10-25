@@ -166,6 +166,7 @@
     <Compile Include="Models\Shared\Partials\Artist\PrintArchivedArtistDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Event\PrintArchivedEventDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Event\PrintArchivedEventSeriesDataViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Song\PrintArchivedSongDataViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
     <Compile Include="Models\Venue\VenueEditViewModel.cs" />
     <Compile Include="Models\Venue\Versions.cs" />
