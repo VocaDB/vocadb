@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.Tags.ArchivedTagVersionDetailsContract>>
 
 @{
@@ -47,7 +48,7 @@
 
 @{ Html.RenderPartial("Partials/Tag/_PrintArchivedTagData", Model.Entry.Versions); }
 
-@EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
+@{ Html.RenderPartial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel()); }
 
 @section BodyScripts {
 	<script src="@Url.Content("~/Scripts/Repositories/TagRepository.js")"></script>

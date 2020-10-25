@@ -1,5 +1,6 @@
 ﻿@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Artist;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Artists.ArchivedArtistVersionDetailsContract>
 
 @{
@@ -45,7 +46,7 @@
 
 @{ Html.RenderPartial("Partials/Artist/_PrintArchivedArtistData", Model.Versions); }
 
-@EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
+@{ Html.RenderPartial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel()); }
 
 @section BodyScripts {
 	<script src="@Url.Content("~/Scripts/ViewModels/Artist/ArchivedArtistViewModel.js")"></script>

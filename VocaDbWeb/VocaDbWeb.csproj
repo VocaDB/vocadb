@@ -173,6 +173,7 @@
     <Compile Include="Models\Shared\Partials\Comment\PrintCommentViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\EntryDeletePopupBaseViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryPopupKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryVersionPopupKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagUsagesManageTableViewModel.cs" />
     <Compile Include="Models\SongLists\FeaturedViewModel.cs" />
@@ -1842,6 +1843,7 @@
     <Content Include="Views\Shared\Partials\Comment\_CreateComment.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_EntryDeletePopupBase.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_ReportEntryPopupKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\EntryDetails\_ReportEntryVersionPopupKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

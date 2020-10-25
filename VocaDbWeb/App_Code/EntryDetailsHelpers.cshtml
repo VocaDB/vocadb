@@ -100,31 +100,6 @@
 
 }
 
-@helper ReportEntryVersionPopupKnockout(string viewModelBindingName = "reportViewModel", string reportButtonId = "reportEntryLink") {
-
-	<div style="display:none;" title="@ViewRes.EntryDetailsStrings.ReportAnError"
-		 data-bind="
-			with: @viewModelBindingName,
-			dialog: {
-				autoOpen: false, width: 310,
-				position: { my: 'left top', at: 'left bottom', of: $('#@reportButtonId') }
-			},
-			dialogVisible: @(viewModelBindingName).dialogVisible,
-			dialogButtons: [{ text: '@ViewRes.SharedStrings.Save', click: @(viewModelBindingName).send, disabled: !@(viewModelBindingName).isValid() }]">
-		
-		<p>
-			@ViewRes.EntryDetailsStrings.ReportArchivedVersionExplanation
-		</p>
-
-		<label>
-			@ViewRes.EntryDetailsStrings.ReportArchivedVersionMessage
-		</label>
-		<textarea data-bind="textInput: notes" class="input-xlarge" maxlength="400" rows="3"></textarea>
-
-	</div>
-
-}
-
 @helper ShareLinks(string title, string url) {
 	@(ViewRes.EntryDetailsStrings.Share + ":")
 	@LinkShare.GetHtml(title, pageLinkBack: url, linkSites: new[] { LinkShareSite.Facebook, LinkShareSite.Reddit, LinkShareSite.Twitter })	
