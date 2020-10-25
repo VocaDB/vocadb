@@ -8,6 +8,7 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models;
 @using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared.Partials.Album;
 @using R = ViewRes.Album;
 @using Res = ViewRes.Album.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
@@ -481,7 +482,7 @@
 
 @{ Html.RenderPartial("Partials/_DownloadTagsDialog"); }
 
-@AlbumHelpers.EditCollectionDialog(Model.AlbumPurchaseStatus, Model.AlbumMediaType)
+@{ Html.RenderPartial("Partials/Album/_EditCollectionDialog", new EditCollectionDialogViewModel(Model.AlbumPurchaseStatus, Model.AlbumMediaType)); }
 
 @EntryDetailsHelpers.ReportEntryPopupKnockout()
 

@@ -1,0 +1,22 @@
+﻿@using VocaDb.Model.Domain.Users;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Album;
+@model EditCollectionDialogViewModel
+
+<div id="editCollectionDialog" style="display:none" title="@ViewRes.Album.DetailsStrings.EditAlbumInCollection">
+
+	@ViewRes.Album.DetailsStrings.Status:
+	@Html.EnumDropDownList("collectionStatusSelect", Translate.AlbumCollectionStatusNames, new { id = "collectionStatusSelect", @class = "input-medium" }, Model.PurchaseStatus)
+	<br />
+
+	@ViewRes.Album.DetailsStrings.MediaType:
+	@{ var fields = Translate.AlbumMediaTypeNames.GetTranslatedFields(MediaType.Other, MediaType.PhysicalDisc, MediaType.DigitalDownload); }
+	@Html.EnumDropDownList("collectionMediaSelect", fields, new { id = "collectionMediaSelect", @class = "input-medium" }, Model.MediaType)
+
+	<div>
+		@ViewRes.Album.DetailsStrings.MyRating:
+		<div id="collectionRating"></div>
+		@Html.Raw("&nbsp;")
+		<a href="#" id="removeRating" class="textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
+	</div>
+</div>

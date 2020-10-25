@@ -1,7 +1,6 @@
 ﻿@using System.Web.Mvc.Html
 @using System.Web.Routing
 @using VocaDb.Model.DataContracts.Albums;
-@using VocaDb.Model.Domain.Users
 @using VocaDb.Model.Service.Search.AlbumSearch
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Utils
@@ -28,26 +27,4 @@
 
 @helper DiscTypesDropdownKnockout(string binding) {
 	@KnockoutHelpers.CheckBoxButtons(Translate.DiscTypeNames.GetValuesAndNamesStrings(AppConfig.AlbumTypes), binding)
-}
-
-@helper EditCollectionDialog(PurchaseStatus purchaseStatus, MediaType mediaType) {
-	
-<div id="editCollectionDialog" style="display:none" title="@ViewRes.Album.DetailsStrings.EditAlbumInCollection">
-
-	@ViewRes.Album.DetailsStrings.Status: 
-	@Html.EnumDropDownList("collectionStatusSelect", Translate.AlbumCollectionStatusNames, new { id = "collectionStatusSelect", @class = "input-medium" }, purchaseStatus)
-	<br />
-
-	@ViewRes.Album.DetailsStrings.MediaType:
-	@{ var fields = Translate.AlbumMediaTypeNames.GetTranslatedFields(MediaType.Other, MediaType.PhysicalDisc, MediaType.DigitalDownload); }
-	@Html.EnumDropDownList("collectionMediaSelect", fields, new { id = "collectionMediaSelect", @class = "input-medium" }, mediaType)
-
-	<div>
-		@ViewRes.Album.DetailsStrings.MyRating: 
-		<div id="collectionRating"></div>
-		@Html.Raw("&nbsp;")
-		<a href="#" id="removeRating" class="textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
-	</div>
-</div>
-	
 }
