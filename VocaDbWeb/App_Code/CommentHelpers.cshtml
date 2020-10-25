@@ -1,5 +1,4 @@
-﻿@using VocaDb.Model.Domain.Security
-@inherits VocaDb.Web.Code.HelperPage
+﻿@inherits VocaDb.Web.Code.HelperPage
 
 @helper CommentKnockout(string messageBinding, bool allowMarkdown, string deleteHandler = "$parent.deleteComment", string editHandler = null,
 	bool standalone = true, HelperResult body = null) {
@@ -88,14 +87,4 @@
 		@CreateComment(cssClass, newCommentRows)
 	}
 
-}
-
-@helper LatestCommentsKnockout() {	
-	<h3 class="withMargin">@ViewRes.EntryDetailsStrings.LatestComments</h3>
-	<div data-bind="with: comments">
-		@EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3, pagination: false)
-		<!-- ko ifnot: comments().length -->
-		<p>@ViewRes.EntryDetailsStrings.NoComments</p>
-		<!-- /ko -->
-	</div>
 }

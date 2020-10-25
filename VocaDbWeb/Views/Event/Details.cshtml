@@ -232,7 +232,7 @@
 	</ul>
 </div>
 
-@CommentHelpers.LatestCommentsKnockout()
+@{ Html.RenderPartial("Partials/Comment/_LatestCommentsKnockout"); }
 
 <div data-bind="with: tagsEditViewModel">
 	@{ Html.RenderPartial("Partials/_TagsEdit"); }

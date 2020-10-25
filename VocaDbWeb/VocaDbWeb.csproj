@@ -1833,6 +1833,7 @@
     <Content Include="Views\Shared\Partials\Comment\_CommentBodyLarge.cshtml" />
     <Content Include="Views\Shared\Partials\Comment\_CommentWithEntryVertical.cshtml" />
     <Content Include="Views\Shared\Partials\Comment\_PrintComment.cshtml" />
+    <Content Include="Views\Shared\Partials\Comment\_LatestCommentsKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

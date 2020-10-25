@@ -1,0 +1,10 @@
+﻿@using VocaDb.Model.Domain.Security;
+@inherits VocaDb.Web.Code.VocaDbPage
+
+<h3 class="withMargin">@ViewRes.EntryDetailsStrings.LatestComments</h3>
+<div data-bind="with: comments">
+	@CommentHelpers.EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3, pagination: false)
+	<!-- ko ifnot: comments().length -->
+	<p>@ViewRes.EntryDetailsStrings.NoComments</p>
+	<!-- /ko -->
+</div>

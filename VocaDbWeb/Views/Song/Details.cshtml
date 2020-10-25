@@ -431,7 +431,7 @@
 			</div>
 		}
 
-		@CommentHelpers.LatestCommentsKnockout()
+		@{ Html.RenderPartial("Partials/Comment/_LatestCommentsKnockout"); }
 		
 		<p>
 			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>

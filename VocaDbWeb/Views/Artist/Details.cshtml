@@ -322,7 +322,7 @@
 			<div style="width: 100%; max-width: 800px; height: 300px;" data-bind="highcharts: songsOverTimeChart"></div>
 		</div>
 
-		@CommentHelpers.LatestCommentsKnockout()
+		@{ Html.RenderPartial("Partials/Comment/_LatestCommentsKnockout"); }
 
 		<p>
 			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>
