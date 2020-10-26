@@ -45,43 +45,6 @@
 	</div>
 }
 
-@helper ServerSidePaging() {
-
-	<div class="pagination" data-bind="visible: $data">
-		<ul>
-			<li data-bind="css: { disabled: isFirstPage }">
-				<a data-bind="click: goToFirstPage" href="#">&laquo;&laquo; @VocaDb.Web.Resources.Other.PagedListStrings.First</a>
-			</li>
-			<li data-bind="css: { disabled: isFirstPage }">
-				<a data-bind="click: previousPage" href="#">&laquo; @VocaDb.Web.Resources.Other.PagedListStrings.Previous</a>
-			</li>
-
-			<li data-bind="visible: showMoreBegin" class="disabled">
-				<a href="#">&hellip;</a>
-			</li>
-
-			<!-- ko foreach: pages -->
-			<li data-bind="css: { active: $data == $parent.page() }">
-				<a data-bind="click: function() { $parent.page($data) }, text: $data" href="#"></a>
-			</li>
-			<!-- /ko -->
-
-			<li data-bind="visible: showMoreEnd" class="disabled">
-				<a href="#">&hellip;</a>
-			</li>
-
-			<li data-bind="css: { disabled: isLastPage }">
-				<a data-bind="click: nextPage" href="#">@VocaDb.Web.Resources.Other.PagedListStrings.Next &raquo;</a>
-			</li>
-			<li data-bind="css: { disabled: isLastPage }">
-				<a data-bind="click: goToLastPage" href="#">@VocaDb.Web.Resources.Other.PagedListStrings.Last &raquo;&raquo;</a>
-			</li>
-
-		</ul>
-	</div>
-
-}
-
 <!-- Locking autocomplete for song selection. Allows selection of one (existing) song. When song is selected, clear button is displayed. -->
 @helper SongLockingAutoComplete(string binding, SongTypes songTypes = SongTypes.Unspecified, int ignoreId = 0) {
 	var songTypesStr = songTypes != SongTypes.Unspecified ? string.Join(",", songTypes.ToIndividualSelections().Select(t => t.ToString())) : "";

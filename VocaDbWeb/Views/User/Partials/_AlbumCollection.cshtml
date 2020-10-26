@@ -111,7 +111,7 @@
 	</div>
 
 	<div data-bind="with: paging">
-		@KnockoutHelpers.ServerSidePaging()
+		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
 	</div>
 
 	<!-- ko if: viewMode() == 'Details' -->
@@ -190,7 +190,7 @@
 	<!-- /ko -->
 
 	<div data-bind="with: paging">
-		@KnockoutHelpers.ServerSidePaging()
+		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
 	</div>
 
 </div>

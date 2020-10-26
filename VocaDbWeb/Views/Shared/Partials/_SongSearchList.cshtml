@@ -9,7 +9,7 @@
 @{ Html.RenderPartial("Partials/_EntryCountBox"); }
 
 <div data-bind="with: paging">
-	@KnockoutHelpers.ServerSidePaging()
+	@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
 </div>
 
 <table class="table table-striped" data-bind="css: { loading: loading }">
@@ -85,7 +85,7 @@
 </table>
 
 <div data-bind="with: paging">
-	@KnockoutHelpers.ServerSidePaging()
+	@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
 </div>
 <!-- /ko -->
 	

@@ -14,7 +14,7 @@
 @if (Model.Pagination)
 {
 	<div data-bind="with: paging, visible: paging.hasMultiplePages">
-		@KnockoutHelpers.ServerSidePaging()
+		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
 	</div>
 }
 
@@ -27,7 +27,7 @@
 @if (Model.Pagination)
 {
 	<div data-bind="with: paging, visible: paging.hasMultiplePages">
-		@KnockoutHelpers.ServerSidePaging()
+		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
 	</div>
 }
 

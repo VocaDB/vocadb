@@ -1895,6 +1895,7 @@
     <Content Include="Views\Shared\Partials\Knockout\_EntryValidationMessage.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_BasicEntryLinkLockingAutoComplete.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_SearchDropDown.cshtml" />
+    <Content Include="Views\Shared\Partials\Knockout\_ServerSidePaging.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

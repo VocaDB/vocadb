@@ -56,7 +56,7 @@
 	</div>
 
 	<div data-bind="with: paging">
-		@KnockoutHelpers.ServerSidePaging()
+		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
 	</div>
 
 	<table class="table table-striped">
@@ -103,7 +103,7 @@
 	</table>
 
 	<div data-bind="with: paging">
-		@KnockoutHelpers.ServerSidePaging()
+		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
 	</div>
 
 </div>
