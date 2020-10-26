@@ -5,7 +5,7 @@
 @using VocaDb.Model.Service.Search.AlbumSearch
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.Song;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 
 @helper ArtistParticipationStatusOptionsKnockout(string binding) {
 	{
@@ -14,7 +14,7 @@
 			{ ArtistAlbumParticipationStatus.OnlyMainAlbums.ToString(), "Only main songs" },
 			{ ArtistAlbumParticipationStatus.OnlyCollaborations.ToString(), "Only collaborations" },
 		};
-		@KnockoutHelpers.CheckBoxButtons(options, binding)
+		Html.RenderPartial("Partials/Knockout/_CheckBoxButtons", new CheckBoxButtonsViewModel(options, binding));
 	}
 }
 
@@ -107,5 +107,5 @@
 }
 
 @helper SongTypesDropdownKnockout(string binding) {
-	@KnockoutHelpers.CheckBoxButtons(Translate.SongTypeNames.GetValuesAndNamesStrings(AppConfig.SongTypes), binding);
+	Html.RenderPartial("Partials/Knockout/_CheckBoxButtons", new CheckBoxButtonsViewModel(Translate.SongTypeNames.GetValuesAndNamesStrings(AppConfig.SongTypes), binding));
 }

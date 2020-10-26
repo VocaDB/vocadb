@@ -7,14 +7,6 @@
 	@LockingAutoComplete("artistAutoComplete", "{ acceptSelection: " + binding + ".id, extraQueryParams: { artistTypes: '" + artistTypes + "' }, ignoreId: " + ignoreId + " }", textBinding: binding + ".name", valBinding: binding + ".id")
 }
 
-@helper CheckBoxButtons(Dictionary<string, string> options, string binding) {
-	<div style="display: inline-block;">
-		@foreach (var option in options) {
-			<button class="btn" data-bind="click: function() { @(binding)('@option.Key'); }, enable: @(binding)() != '@option.Key'">@option.Value</button>
-		}
-	</div>
-}
-
 @helper DraftIcon(string statusBinding) {
 	<img data-bind="visible: @statusBinding == 'Draft'" src="@Url.Content("~/Content/draft.png")" title="@HelperRes.HelperStrings.DraftIconTitle" alt="draft" />
 }

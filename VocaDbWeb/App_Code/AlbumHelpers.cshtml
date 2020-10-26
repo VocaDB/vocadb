@@ -3,8 +3,8 @@
 @using VocaDb.Model.DataContracts.Albums;
 @using VocaDb.Model.Service.Search.AlbumSearch
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using VocaDb.Model.Utils
-@using VocaDb.Web.Models.Shared.Partials.Album;
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper AlbumLink(AlbumContract album) {
@@ -18,7 +18,7 @@
 			{ ArtistAlbumParticipationStatus.OnlyMainAlbums.ToString(), "Only main albums" },
 			{ ArtistAlbumParticipationStatus.OnlyCollaborations.ToString(), "Only collaborations" },
 		};
-		@KnockoutHelpers.CheckBoxButtons(options, binding)
+		Html.RenderPartial("Partials/Knockout/_CheckBoxButtons", new CheckBoxButtonsViewModel(options, binding));
 	} 
 }
 
@@ -27,5 +27,5 @@
 }
 
 @helper DiscTypesDropdownKnockout(string binding) {
-	@KnockoutHelpers.CheckBoxButtons(Translate.DiscTypeNames.GetValuesAndNamesStrings(AppConfig.AlbumTypes), binding)
+	Html.RenderPartial("Partials/Knockout/_CheckBoxButtons", new CheckBoxButtonsViewModel(Translate.DiscTypeNames.GetValuesAndNamesStrings(AppConfig.AlbumTypes), binding));
 }
