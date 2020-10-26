@@ -121,7 +121,7 @@
 
 @Helpers.ValidationSymmaryDiv(R.EditStrings.UnableToSaveProperties)
 
-@KnockoutHelpers.EntryValidationMessage(Model.Draft, validationErrors, "glalbums")
+@{ Html.RenderPartial("Partials/Knockout/_EntryValidationMessage", new EntryValidationMessageViewModel(Model.Draft, validationErrors, "glalbums")); }
 
 <br />
 <form action="@Url.Action("Edit", "Album")" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">

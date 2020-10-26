@@ -48,7 +48,7 @@
 
 @Helpers.ValidationSymmaryPanel("Unable to save properties.")
 
-@KnockoutHelpers.EntryValidationMessage(Model.Draft, validationErrors, "glsongs")
+@{ Html.RenderPartial("Partials/Knockout/_EntryValidationMessage", new EntryValidationMessageViewModel(Model.Draft, validationErrors, "glsongs")); }
 
 <br />
 <form action="@Url.Action("Edit", "Song")" method="POST" data-bind="submit: submit, visible: true" style="display: none;">

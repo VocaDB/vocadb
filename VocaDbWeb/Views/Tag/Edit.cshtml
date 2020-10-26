@@ -2,6 +2,7 @@
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using Res = VocaDb.Web.Resources.Views.Tag.EditStrings;
 @using EditRes = ViewRes.EntryEditStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.TagEditViewModel>
@@ -59,7 +60,7 @@
 }
 }
 
-@KnockoutHelpers.EntryValidationMessage(Model.Draft, validationErrors, null)
+@{ Html.RenderPartial("Partials/Knockout/_EntryValidationMessage", new EntryValidationMessageViewModel(Model.Draft, validationErrors, null)); }
 
 <br />
 <form action="@Url.Action("Edit", "Tag")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">

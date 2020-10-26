@@ -40,7 +40,7 @@
 
 @Helpers.ValidationSymmaryPanel("Unable to save")
 
-@KnockoutHelpers.EntryValidationMessage(Model.Artist.Status == EntryStatus.Draft, validationErrors, "glartists")
+@{ Html.RenderPartial("Partials/Knockout/_EntryValidationMessage", new EntryValidationMessageViewModel(Model.Artist.Status == EntryStatus.Draft, validationErrors, "glartists")); }
 
 <br />
 <form action="@Url.Action("Edit", "Artist")" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
