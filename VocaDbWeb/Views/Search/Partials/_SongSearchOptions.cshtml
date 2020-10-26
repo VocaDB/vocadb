@@ -58,7 +58,7 @@
 	<div class="control-group">
 		<div class="control-label">@Res.ReleaseEvent</div>
 		<div class="controls">
-			@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("releaseEventAutoComplete", "releaseEvent")
+			@{ Html.RenderPartial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent")); }
 		</div>
 	</div>
 	

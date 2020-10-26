@@ -1,9 +1,8 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.Domain.ReleaseEvents
-@using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Helpers
-@using VocaDb.Model.Service.VideoServices
 @using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using EditRes = ViewRes.EntryEditStrings
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.EventEdit>
 
@@ -175,7 +174,7 @@
 				@Helpers.HelpLabel("Setlist", "If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here.")
 			</div>
 			<div class="editor-field">
-				@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("songListAutoComplete", "songList", "songListCategory: 'Concerts'")
+				@{ Html.RenderPartial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("songListAutoComplete", "songList", "songListCategory: 'Concerts'")); }
 				@Html.HiddenForKnockout(m => m.SongList, "value: ko.toJSON(songList.entry())")
 			</div>
 	

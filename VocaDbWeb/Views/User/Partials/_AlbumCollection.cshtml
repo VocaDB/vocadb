@@ -90,7 +90,7 @@
 				<a href="#" class="btn btn-nomargin" data-bind="visible: !releaseEvent.isEmpty(), attr: { href: releaseEventUrl() }" title="Release event information">
 					<i class="icon icon-info-sign"></i>
 				</a>
-				@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("releaseEventAutoComplete", "releaseEvent")
+				@{ Html.RenderPartial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent")); }
 			</div>
 		</div>
 	</div>

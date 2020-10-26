@@ -151,7 +151,7 @@
 				</label>
 			</div>
 			<div class="editor-field">
-				@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("releaseEventAutoComplete", "releaseEvent", "createNewItem: 'Create new event \\\'{0}\\\''")
+				@{ Html.RenderPartial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent", "createNewItem: 'Create new event \\\'{0}\\\''")); }
 			</div>
 
 			<div class="editor-label">

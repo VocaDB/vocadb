@@ -180,6 +180,7 @@
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryPopupKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryVersionPopupKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\ArtistFiltersViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Knockout\BasicEntryLinkLockingAutoCompleteViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\CheckBoxButtonsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\DropdownListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\DropdownViewModel.cs" />
@@ -1891,6 +1892,7 @@
     <Content Include="Views\Shared\Partials\Knockout\_Dropdown.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_DropdownList.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_EntryValidationMessage.cshtml" />
+    <Content Include="Views\Shared\Partials\Knockout\_BasicEntryLinkLockingAutoComplete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
