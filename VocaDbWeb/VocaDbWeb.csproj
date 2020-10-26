@@ -169,6 +169,7 @@
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistListViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Artist\ArtistTypesDropdownKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentBodyLargeViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentWithEntryVerticalViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CreateCommentViewModel.cs" />
@@ -1878,6 +1879,7 @@
     <Content Include="Views\Shared\Partials\PV\_EmbedPiapro.cshtml" />
     <Content Include="Views\Shared\Partials\PV\_EmbedBili.cshtml" />
     <Content Include="Views\Shared\Partials\Search\_AdvancedFilter.cshtml" />
+    <Content Include="Views\Shared\Partials\Artist\_ArtistTypesDropdownKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

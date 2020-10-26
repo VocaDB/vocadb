@@ -1,0 +1,11 @@
+﻿@using VocaDb.Model.Utils;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Artist;
+@model ArtistTypesDropdownKnockoutViewModel
+
+<select data-bind="value: @(Model.Binding)">
+	@foreach (var artistType in Translate.ArtistTypeNames.GetTranslatedFields(AppConfig.ArtistTypes))
+	{
+		<option value="@artistType.Id">@artistType.Name</option>
+	}
+</select>

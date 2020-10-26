@@ -1,9 +1,11 @@
-﻿<div class="form-horizontal well well-transparent" data-bind="visible: true" style="display: none;">
+﻿@using VocaDb.Web.Models.Shared.Partials.Artist;
+
+<div class="form-horizontal well well-transparent" data-bind="visible: true" style="display: none;">
 	
 	<div class="control-group">
 		<div class="control-label">@ViewRes.Search.IndexStrings.ArtistType</div>
 		<div class="controls">
-			@ArtistHelpers.ArtistTypesDropdownKnockout("artistType")
+			@{ Html.RenderPartial("Partials/Artist/_ArtistTypesDropdownKnockout", new ArtistTypesDropdownKnockoutViewModel("artistType")); }
 		</div>
 	</div>
 

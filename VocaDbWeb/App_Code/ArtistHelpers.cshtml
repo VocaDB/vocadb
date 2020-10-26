@@ -2,7 +2,6 @@
 @using System.Web.Mvc.Html;
 @using System.Web.Routing
 @using VocaDb.Model.DataContracts.Artists;
-@using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @inherits VocaDb.Web.Code.HelperPage
@@ -17,12 +16,4 @@
 	
 @helper ArtistLinkList(IEnumerable<ArtistContract> artists, bool typeLabel = false, bool releaseYear = false) {
 	@Html.LinkList(artists, a => new MvcHtmlString(ArtistLink(a, typeLabel, releaseYear: releaseYear).ToString()))
-}
-
-@helper ArtistTypesDropdownKnockout(string binding) {
-	<select data-bind="value: @(binding)">
-		@foreach (var artistType in Translate.ArtistTypeNames.GetTranslatedFields(AppConfig.ArtistTypes)) {
-			<option value="@artistType.Id">@artistType.Name</option>
-		}
-	</select>
 }
