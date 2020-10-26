@@ -45,24 +45,6 @@
 	</div>
 }
 
-@helper SearchDropDown(string visibleBinding, string viewModel, Dictionary<string, string> sortRules) {
-	<div data-bind="visible: @visibleBinding, with: @viewModel" class="inline-block search-sort-menu">
-		@ViewRes.EntryIndexStrings.SortBy
-		<div class="btn-group">
-			<button class="btn dropdown-toggle" data-toggle="dropdown">
-				<span data-bind="text: sortName"></span>
-				<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu">
-				@foreach (var sortRule in sortRules) {
-					<li><a data-bind="click: function() { sort('@sortRule.Key'); }" href="#">@sortRule.Value</a></li>
-				}
-			</ul>
-		</div>
-	</div>
-
-}
-
 @helper ServerSidePaging() {
 
 	<div class="pagination" data-bind="visible: $data">

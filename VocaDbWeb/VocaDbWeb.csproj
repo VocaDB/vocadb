@@ -185,6 +185,7 @@
     <Compile Include="Models\Shared\Partials\Knockout\DropdownListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\DropdownViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\EntryValidationMessageViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Knockout\SearchDropDownViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedBiliViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedNicoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedPiaproViewModel.cs" />
@@ -1893,6 +1894,7 @@
     <Content Include="Views\Shared\Partials\Knockout\_DropdownList.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_EntryValidationMessage.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_BasicEntryLinkLockingAutoComplete.cshtml" />
+    <Content Include="Views\Shared\Partials\Knockout\_SearchDropDown.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

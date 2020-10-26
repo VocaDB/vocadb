@@ -12,6 +12,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Knockout; 
 @using VocaDb.Web.Models.Shared.Partials.Song;
 @using R = ViewRes.Artist;
 @using Res = ViewRes.Artist.DetailsStrings
@@ -353,7 +354,7 @@
 	@helper AlbumOptions(string viewModel) {
 		<div class="clearfix">
 			<div class="pull-right">
-				@KnockoutHelpers.SearchDropDown("true", viewModel, Translate.AlbumSortRuleNames.ValuesAndNamesStrings)
+				@{ Html.RenderPartial("Partials/Knockout/_SearchDropDown", new SearchDropDownViewModel("true", viewModel, Translate.AlbumSortRuleNames.ValuesAndNamesStrings)); }
 				<div class="btn-group" data-bind="with: @viewModel">
 					<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@Res.ViewModeDetails">
 						<i class="icon-list noMargin"></i>
@@ -385,7 +386,7 @@
 	<div id="songsTab">
 		<div class="clearfix">
 			<div class="pull-right">
-				@KnockoutHelpers.SearchDropDown("true", "songsViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings)
+				@{ Html.RenderPartial("Partials/Knockout/_SearchDropDown", new SearchDropDownViewModel("true", "songsViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings)); }
 				<div class="btn-group" data-bind="with: songsViewModel">
 					<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@Res.ViewModeDetails">
 						<i class="icon-th-list noMargin"></i>
