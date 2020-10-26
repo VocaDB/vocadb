@@ -3,49 +3,6 @@
 @using VocaDb.Model.Domain.Songs
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper ArtistFilters(bool artistParticipationStatus) {
-
-	<!-- Viewmodel: ArtistFilters -->
-
-	<!-- ko foreach: artists -->
-		<div class="control-group">
-			<div style="display: inline-block;" class="input-append input-prepend">
-				<a href="#" class="btn btn-nomargin" data-bind="attr: { href: '/Ar/' + id }">
-					<i class="icon icon-info-sign"></i>
-				</a>
-				<div class="input-append">
-					<input type="text" class="input-large" readonly data-bind="value: name" />
-					<button type="button" class="btn btn-danger" data-bind="click: function() { $parent.artists.remove($data); }">Clear</button>
-				</div>
-			</div>
-			@if (artistParticipationStatus) {
-				<!-- ko if: $parent.hasSingleArtist -->
-				@SongHelpers.ArtistParticipationStatusOptionsKnockout("$parent.artistParticipationStatus")
-				<!-- /ko -->
-			}
-		</div>
-	<!-- /ko -->
-
-	<div class="control-group" data-bind="visible: showChildVoicebanks">
-		<label class="checkbox">
-			<input type="checkbox" data-bind="checked: childVoicebanks" />
-			@ViewRes.Search.IndexStrings.IncludeDerivedVoicebanks
-		</label>
-	</div>
-
-	<div class="control-group" data-bind="visible: showMembers">
-		<label class="checkbox">
-			<input type="checkbox" data-bind="checked: includeMembers" />
-			@ViewRes.Search.IndexStrings.IncludeGroupMembers
-		</label>
-	</div>
-
-	<div>
-		<input type="text" class="input-large" data-bind="artistAutoComplete: artistSearchParams" placeholder="@ViewRes.SharedStrings.Search" />
-	</div>
-
-}
-
 @helper ArtistLockingAutoComplete(string binding, string artistTypes, int ignoreId = 0) {
 	@LockingAutoComplete("artistAutoComplete", "{ acceptSelection: " + binding + ".id, extraQueryParams: { artistTypes: '" + artistTypes + "' }, ignoreId: " + ignoreId + " }", textBinding: binding + ".name", valBinding: binding + ".id")
 }

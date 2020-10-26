@@ -1,5 +1,6 @@
 ﻿@using VocaDb.Web.Helpers
 @using VocaDb.Model.Service.Search
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using VocaDb.Web.Models.Shared.Partials.Search;
 @using VocaDb.Web.Resources.Domain
 @using SharedRes = ViewRes.SharedStrings
@@ -70,7 +71,7 @@
 	<div class="control-group">
 		<div class="control-label">@EntryTypeNames.Artist</div>
 		<div class="controls" data-bind="with: artistFilters">
-			@KnockoutHelpers.ArtistFilters(artistParticipationStatus: false)
+			@{ Html.RenderPartial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: false)); }
 		</div>
 	</div>
 
