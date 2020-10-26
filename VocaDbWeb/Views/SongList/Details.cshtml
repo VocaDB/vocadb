@@ -1,11 +1,11 @@
 ﻿@using System.Web.Optimization
-@using Resources
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Service.Search
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Resources.Domain
 @using VocaDb.Web.Models.Shared.Partials.Event;
+@using VocaDb.Web.Models.Shared.Partials.Search;
 @using Res = ViewRes.SongList.DetailsStrings;
 @using SearchRes = ViewRes.Search.IndexStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.SongLists.SongListDetailsViewModel>
@@ -163,7 +163,7 @@
 		<div class="control-group">
 			<div class="control-label"></div>
 			<div class="controls">
-				@SearchHelpers.AdvancedFilters(AdvancedSearchFilters.SongFilters)
+				@{ Html.RenderPartial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters)); }
 			</div>
 		</div>
 	</div>

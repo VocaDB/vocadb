@@ -1,6 +1,6 @@
-﻿@using Resources
-@using VocaDb.Model.Service.Search
-@using VocaDb.Web.Resources.Domain
+﻿@using VocaDb.Model.Service.Search;
+@using VocaDb.Web.Models.Shared.Partials.Search;
+@using VocaDb.Web.Resources.Domain;
 @using Res = ViewRes.Search.IndexStrings;
 
 <!-- Song search options -->
@@ -79,7 +79,7 @@
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			@SearchHelpers.AdvancedFilters(AdvancedSearchFilters.SongFilters)
+			@{ Html.RenderPartial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters)); }
 		</div>
 	</div>
 </div>
