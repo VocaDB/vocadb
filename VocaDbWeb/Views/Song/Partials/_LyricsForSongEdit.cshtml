@@ -1,4 +1,5 @@
-@using VocaDb.Model.Domain.Globalization
+﻿@using VocaDb.Model.Domain.Globalization;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 
 <!-- LyricsForSongEditViewModel -->
 
@@ -16,7 +17,7 @@
 			<div>
 				<p data-bind="visible: showLanguageSelection()">
 					@Helpers.HelpLabel(ViewRes.Song.EditStrings.LyLanguage, "If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'.")
-					@KnockoutHelpers.DropdownList(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode")					
+					@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode")); }
 				</p>
 				<div>
 					@Helpers.HelpLabel("Source", "You can fill either label, URL or both")

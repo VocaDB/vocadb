@@ -1,5 +1,6 @@
-﻿@using VocaDb.Model.Domain.Globalization
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Model.Domain.Globalization;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using SharedRes = ViewRes.SharedStrings;
 @using Res = ViewRes.User.IndexStrings;
 
@@ -22,14 +23,14 @@
 	<div class="control-group">
 		<div class="control-label">@Res.Group</div>
 		<div class="controls">
-			@KnockoutHelpers.DropdownList(Translate.UserGroups.ValuesAndNamesStrings, "group")
+			@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.UserGroups.ValuesAndNamesStrings, "group")); }
 		</div>
 	</div>
 
 	<div class="control-group">
 		<div class="control-label">@Res.KnowsLanguage</div>
 		<div class="controls">
-			@KnockoutHelpers.DropdownList(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull(string.Empty), "knowsLanguage")
+			@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull(string.Empty), "knowsLanguage")); }
 		</div>
 	</div>
 

@@ -11,7 +11,7 @@
 		<div class="control-label">@Res.EventCategory</div>
 		<div class="controls">
 			<div class="input-append">
-				@KnockoutHelpers.DropdownList(Translate.ReleaseEventCategoryNames.ValuesAndNamesStrings, "category")
+				@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.ReleaseEventCategoryNames.ValuesAndNamesStrings, "category")); }
 			</div>
 		</div>
 	</div>

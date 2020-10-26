@@ -1,6 +1,8 @@
-﻿@using VocaDb.Web.Helpers
-@using VocaDb.Model.Domain
-@using VocaDb.Model.Domain.Songs
+﻿@using System.Web.Mvc.Html;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Model.Domain;
+@using VocaDb.Model.Domain.Songs;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper ArtistLockingAutoComplete(string binding, string artistTypes, int ignoreId = 0) {
@@ -9,14 +11,6 @@
 
 @helper DraftIcon(string statusBinding) {
 	<img data-bind="visible: @statusBinding == 'Draft'" src="@Url.Content("~/Content/draft.png")" title="@HelperRes.HelperStrings.DraftIconTitle" alt="draft" />
-}
-
-@helper DropdownList(Dictionary<string, string> items, string valueBinding, string cssClass = null, bool required = false) {
-	<select data-bind="value: @valueBinding" class="@cssClass" @Html.ConditionalAttribute(required, "required", string.Empty)>
-		@foreach (var item in items) {
-			<option value="@item.Key">@item.Value</option>
-		}
-	</select>
 }
 
 @helper EntryCount() {
@@ -80,7 +74,7 @@
 }
 
 @helper LanguageSelectionDropDown(string valueBinding) {
-	@DropdownList(Translate.ContentLanguageSelectionNames.ValuesAndNamesStrings, valueBinding)
+	Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.ContentLanguageSelectionNames.ValuesAndNamesStrings, valueBinding));
 }
 
 @* 

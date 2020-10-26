@@ -4,6 +4,7 @@
 @using VocaDb.Model.Service.VideoServices
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using ValidationErrors = VocaDb.Model.Resources.SongValidationErrors;
 @using Res = ViewRes.Song.EditStrings;
 @using EditRes = ViewRes.EntryEditStrings;
@@ -99,7 +100,7 @@
 			<div class="editor-field">
 				<div class="row-fluid">
 					<div class="span4">
-						@KnockoutHelpers.DropdownList(Model.AllSongTypes, "songTypeStr")
+						@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AllSongTypes, "songTypeStr")); }
 						<span data-bind="visible: validationError_needType, qTip" class="icon errorIcon" title="@ValidationErrors.NeedType"></span>
 					</div>
 				</div>
@@ -194,7 +195,7 @@
                 </label>
 			</div>
 			<div class="editor-field">
-				@KnockoutHelpers.DropdownList(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")
+				@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")); }
 			</div>
 
 		</div>
@@ -235,7 +236,7 @@
 			</p>
 			<p>
 				@Res.PvNewType
-				@KnockoutHelpers.DropdownList(Translate.PVTypeDescriptions.ValuesAndNamesStrings, "newPvType", "input-xlarge")
+				@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.PVTypeDescriptions.ValuesAndNamesStrings, "newPvType", "input-xlarge")); }
 			</p>
 
 			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>

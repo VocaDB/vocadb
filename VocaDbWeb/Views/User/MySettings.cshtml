@@ -2,6 +2,7 @@
 @using System.Web.Optimization
 @using VocaDb.Web.Models
 @using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Knockout
 @using R = ViewRes.User;
 @using Res = ViewRes.User.MySettingsStrings
 @using DetailsRes = ViewRes.User.DetailsStrings
@@ -205,10 +206,10 @@
 						<!-- ko foreach: knownLanguages -->
 							<tr>
 								<td>
-									@KnockoutHelpers.DropdownList(Model.AllUserKnownLanguages.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode", cssClass: "input-xlarge")
+									@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AllUserKnownLanguages.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode", cssClass: "input-xlarge")); }
 								</td>
 								<td>
-									@KnockoutHelpers.DropdownList(Translate.UserLanguageProficiencyNames.ValuesAndNamesStrings, "proficiency")
+									@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.UserLanguageProficiencyNames.ValuesAndNamesStrings, "proficiency")); }
 								</td>
 								<td>								
 									<a href="#" class="textLink deleteLink" data-bind="click: function() { $parent.knownLanguages.remove($data); }">@ViewRes.SharedStrings.Delete</a>

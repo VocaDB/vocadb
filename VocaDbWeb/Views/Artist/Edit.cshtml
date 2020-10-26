@@ -2,6 +2,7 @@
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using ValidationErrors = VocaDb.Model.Resources.ArtistValidationErrors;
 @using Res = ViewRes.Artist.EditStrings;
 @using EditRes = ViewRes.EntryEditStrings;
@@ -104,7 +105,7 @@
 					<label>@Res.BaArtistType</label>
 				</div>
 				<div class="editor-field">
-					@KnockoutHelpers.DropdownList(Model.AllArtistTypes, "artistTypeStr")
+					@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AllArtistTypes, "artistTypeStr")); }
 					<span data-bind="visible: validationError_needType, qTip" class="icon errorIcon" title="@ValidationErrors.NeedType"></span>
 				</div>
 				
@@ -140,7 +141,7 @@
 							<!-- ko foreach: associatedArtists -->
 								<tr>
 									<td>
-										@KnockoutHelpers.DropdownList(Model.AssociatedArtistTypes, "linkType")
+										@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AssociatedArtistTypes, "linkType")); }
 									</td>
 									<td>
 										<div class="input-append">
@@ -152,7 +153,7 @@
 							<!-- /ko -->
 							<tr>
 								<td>
-									@KnockoutHelpers.DropdownList(Model.AssociatedArtistTypes, "newAssociatedArtistType")
+									@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AssociatedArtistTypes, "newAssociatedArtistType")); }
 								</td>
 								<td>
 									@KnockoutHelpers.ArtistLockingAutoComplete("newAssociatedArtist", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual")									
@@ -220,7 +221,7 @@
 					@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
 				</div>
 				<div class="editor-field">
-					@KnockoutHelpers.DropdownList(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")
+					@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")); }
 				</div>
 
 			</div>

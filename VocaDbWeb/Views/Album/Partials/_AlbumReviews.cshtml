@@ -1,6 +1,7 @@
-@using VocaDb.Model.Domain.Globalization
-@using VocaDb.Model.Domain.Security
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Model.Domain.Globalization;
+@using VocaDb.Model.Domain.Security;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using Res = ViewRes.Album.DetailsStrings
 @inherits VocaDb.Web.Code.VocaDbPage
 
@@ -18,7 +19,7 @@
 <form visible="{{showCreateNewReview}}" submit="{{createNewReview}}">
 	<div>
 		<label>@Res.ReviewLanguage</label>
-		@KnockoutHelpers.DropdownList(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull("Choose"), "languageCode", cssClass: "input-xlarge", required: true)
+		@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull("Choose"), "languageCode", cssClass: "input-xlarge", required: true)); }
 
 		<div class="alert alert-danger" visible="{{reviewAlreadySubmitted}}">
 			@Res.ReviewAlreadySubmitted

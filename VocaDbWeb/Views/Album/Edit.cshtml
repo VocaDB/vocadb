@@ -2,6 +2,7 @@
 @using VocaDb.Model.Helpers
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using R = ViewRes.Album;
 @using Res = ViewRes.Album.EditStrings;
 @using EditRes = ViewRes.EntryEditStrings;
@@ -183,7 +184,7 @@
 			</div>
 			<div class="editor-field">
 				<div class="row-fluid">
-					@KnockoutHelpers.DropdownList(Model.AllDiscTypes, "discTypeStr")
+					@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AllDiscTypes, "discTypeStr")); }
 					<span data-bind="visible: validationError_needType, qTip" class="icon errorIcon" title="@ValidationErrors.NeedType"></span>
 				</div>
 			</div>
@@ -261,7 +262,7 @@
 				@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
 			</div>
 			<div class="editor-field">
-				@KnockoutHelpers.DropdownList(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")
+				@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")); }
 			</div>
 
 		</div>
