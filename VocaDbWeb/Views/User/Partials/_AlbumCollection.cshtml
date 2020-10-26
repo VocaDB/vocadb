@@ -1,6 +1,7 @@
 ﻿@using VocaDb.Web.Helpers
 @using Resources
 @using VocaDb.Model.Service.Search
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using VocaDb.Web.Models.Shared.Partials.Search;
 @using VocaDb.Web.Resources.Domain
 @using SharedRes = ViewRes.SharedStrings
@@ -13,7 +14,7 @@
 	<div class="pull-right">
 		<div class="inline-block">
 			@ViewRes.EntryIndexStrings.SortBy
-			@KnockoutHelpers.Dropdown(Translate.AlbumSortRuleNames.ValuesAndNamesStrings, "sort", "sortName")
+			@{ Html.RenderPartial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.AlbumSortRuleNames.ValuesAndNamesStrings, "sort", "sortName")); }
 
 			<div class="btn-group">
 				<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#">

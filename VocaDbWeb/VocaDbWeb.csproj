@@ -181,6 +181,7 @@
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryVersionPopupKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\ArtistFiltersViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\CheckBoxButtonsViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Knockout\DropdownViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedBiliViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedNicoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedPiaproViewModel.cs" />
@@ -1885,6 +1886,7 @@
     <Content Include="Views\Shared\Partials\Search\_AdvancedFilters.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_ArtistFilters.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_CheckBoxButtons.cshtml" />
+    <Content Include="Views\Shared\Partials\Knockout\_Dropdown.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

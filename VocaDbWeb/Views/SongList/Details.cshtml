@@ -126,7 +126,7 @@
 
 	<div class="inline-block songlist-sort pull-left">
 		@ViewRes.EntryIndexStrings.SortBy
-		@KnockoutHelpers.Dropdown(Model.SortRules, "sort", "sortName")
+		@{ Html.RenderPartial("Partials/Knockout/_Dropdown", new DropdownViewModel(Model.SortRules, "sort", "sortName")); }
 	</div>
 
 	<div class="pull-left songlist-text-query">

@@ -15,7 +15,7 @@
 		
 		<div class="inline-block">
 			@ViewRes.EntryIndexStrings.SortBy
-			@KnockoutHelpers.Dropdown(Translate.RatedSongForUserSortRuleNames.ValuesAndNamesStrings, "sort", "sortName")
+			@{ Html.RenderPartial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.RatedSongForUserSortRuleNames.ValuesAndNamesStrings, "sort", "sortName")); }
 		</div>
 
 		<button class="btn" data-bind="click: function() { groupByRating(!groupByRating()); }, css: { active: groupByRating }">
