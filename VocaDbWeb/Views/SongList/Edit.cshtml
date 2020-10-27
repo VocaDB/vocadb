@@ -48,7 +48,7 @@
 </script>
 }
 
-@Helpers.ValidationSymmaryPanel(Res.UnableToSave)
+@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(Res.UnableToSave)); }
 
 <form action="@Url.Action("Edit", "SongList")" id="songListForm" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
 	@Html.HiddenFor(m => m.CanCreateFeaturedLists)

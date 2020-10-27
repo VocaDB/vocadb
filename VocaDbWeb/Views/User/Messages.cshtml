@@ -1,8 +1,9 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.Messages>
-@using System.Web.Optimization
-@using VocaDb.Model.Domain.Users
+﻿@using System.Web.Optimization;
+@using VocaDb.Model.Domain.Users;
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Shared; 
 @using Res = ViewRes.User.MessagesStrings;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.Messages>
 
 @{
 	PageProperties.Title = Res.Messages;
@@ -78,7 +79,7 @@
 	</div>
 }
 
-@Helpers.ValidationSymmaryPanel(Res.MessageSendError)
+@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(Res.MessageSendError)); }
 
 <div data-bind="with: selectedMessage, visible: selectedMessage" id="viewMessage" style="display: none;">
 	@{ Html.RenderPartial("Partials/_UserMessageKnockout"); }

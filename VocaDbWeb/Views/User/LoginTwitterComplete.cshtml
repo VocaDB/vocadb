@@ -1,10 +1,11 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.RegisterOpenAuthModel>
+﻿@using VocaDb.Web.Models.Shared.Partials.Shared;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.RegisterOpenAuthModel>
 
 @{
     PageProperties.Title = ViewRes.User.LoginUsingAuthStrings.LoginUsingTwitter;
 }
 
-@Helpers.ValidationSymmaryPanel(ViewRes.User.LoginStrings.UnableToLogin)
+@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(ViewRes.User.LoginStrings.UnableToLogin)); }
 
 <p>@ViewRes.User.LoginUsingAuthStrings.AlmostDone</p>
 

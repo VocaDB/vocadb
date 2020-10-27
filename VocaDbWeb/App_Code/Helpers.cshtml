@@ -4,11 +4,11 @@
 @using VocaDb.Model
 @using VocaDb.Model.Helpers
 @using VocaDb.Model.DataContracts
-@using VocaDb.Model.Domain;
 @using VocaDb.Model.Domain.PVs
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.PV;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 
 @functions {
 
@@ -152,17 +152,6 @@
 	<span title="UTC">@dateTime.ToUniversalTime()</span>
 }
 
-@helper ValidationSymmaryPanel(string message) {
-	if (!ViewData.ModelState.IsValid) {
-		<div class="alert alert-error">
-			<h4>
-				@message
-			</h4>
-			@Html.ValidationSummary(false)
-		</div>
-	}
-}
-
 @helper ValidationSymmaryDiv(string message) {
-	@ValidationSymmaryPanel(message)
+	Html.RenderPartial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(message));
 }

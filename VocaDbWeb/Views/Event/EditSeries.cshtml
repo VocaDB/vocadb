@@ -40,7 +40,7 @@
 	}
 }
 
-@Helpers.ValidationSymmaryPanel("Unable to save properties.")
+@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save properties.")); }
 
 <form action="@Url.Action("EditSeries")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
 	@Html.HiddenFor(m => m.Id)

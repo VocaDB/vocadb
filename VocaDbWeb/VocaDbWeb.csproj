@@ -204,6 +204,7 @@
     <Compile Include="Models\Shared\Partials\Shared\SaveAndBackBtnViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\ShowMoreViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\ThumbItemViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\ValidationSummaryPanelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\PVPreviewKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagUsagesManageTableViewModel.cs" />
@@ -1929,6 +1930,7 @@
     <Content Include="Views\Shared\Partials\Shared\_SaveAndBackBtn.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_ShowMore.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_ThumbItem.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_ValidationSummaryPanel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
