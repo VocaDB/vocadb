@@ -1,0 +1,21 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Shared;
+@model ThumbItemViewModel
+
+<li>
+	<a href="@Model.Url">
+		<div class="pictureFrame">
+			@if (Model.Entry != null)
+			{
+				<img src="@Model.ThumbUrl" alt="Preview" class="coverPic" data-entry-type="@Model.Entry.EntryType" data-entry-id="@Model.Entry.Id" />
+			}
+			else
+			{
+				<img src="@Model.ThumbUrl" alt="Preview" class="coverPic" />
+			}
+		</div>
+	</a>
+	@if (!string.IsNullOrEmpty(Model.Caption))
+	{
+		<p>@Model.Caption</p>
+	}
+</li>

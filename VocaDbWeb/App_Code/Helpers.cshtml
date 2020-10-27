@@ -148,25 +148,6 @@
 }
 
 
-@helper ThumbItem(string url, string thumbUrl, string caption, IEntryBase entry = null) {
-	
-	<li>
-		<a href="@url">
-			<div class="pictureFrame">
-			    @if (entry != null) {
-				    <img src="@thumbUrl" alt="Preview" class="coverPic" data-entry-type="@entry.EntryType" data-entry-id="@entry.Id" />										           
-	   } else {
-				    <img src="@thumbUrl" alt="Preview" class="coverPic" />										
-	   }
-			</div>
-		</a>
-		@if (!string.IsNullOrEmpty(caption)) {
-			<p>@caption</p>
-  }
-	</li>
-	  	  
-}
-
 @helper UniversalTimeLabel(DateTime dateTime) {
 	<span title="UTC">@dateTime.ToUniversalTime()</span>
 }

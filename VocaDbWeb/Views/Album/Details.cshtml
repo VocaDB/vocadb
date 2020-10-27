@@ -446,11 +446,11 @@
 	<div id="picturesTab">
 
 		<ul class="thumbs">
-			@Helpers.ThumbItem(Url.Action("CoverPicture", "Album", new { id = Model.Id, v = Model.Version }),
+			@{ Html.RenderPartial("Partials/Shared/_ThumbItem", new ThumbItemViewModel(Url.Action("CoverPicture", "Album", new { id = Model.Id, v = Model.Version }),
 				Url.ImageThumb(Model, ImageSize.Thumb),
-				ViewRes.Album.DetailsStrings.CoverPicture)
+				ViewRes.Album.DetailsStrings.CoverPicture)); }
 			@foreach (var pic in Model.Pictures) {
-				@Helpers.ThumbItem(Url.ImageThumb(pic, ImageSize.Original), Url.ImageThumb(pic, ImageSize.Thumb), pic.Name)
+				Html.RenderPartial("Partials/Shared/_ThumbItem", new ThumbItemViewModel(Url.ImageThumb(pic, ImageSize.Original), Url.ImageThumb(pic, ImageSize.Thumb), pic.Name));
 			}
 		</ul>
 
