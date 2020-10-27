@@ -200,6 +200,7 @@
     <Compile Include="Models\Shared\Partials\Shared\EntryStatusMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EventSeriesThumbsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EventThumbsViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\NotificationPanelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\PVPreviewKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagUsagesManageTableViewModel.cs" />
@@ -1920,6 +1921,7 @@
     <Content Include="Views\Shared\Partials\Shared\_EventSeriesThumbs.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_EventThumbs.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_MergeEntryInfo.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_NotificationPanel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

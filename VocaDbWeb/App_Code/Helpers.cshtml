@@ -91,13 +91,6 @@
 	<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
 }
 
-@helper NotificationPanel(string message, string messageId = "") {
-	<div class="alert">
-		@NotificationIcon()
-		<span id="@messageId">@message</span>		
-	</div>   
-}
-
 @helper PVServiceIcon(PVService service) {
     
 	var iconUrl = @Html.VideoServiceLinkUrl(service);
