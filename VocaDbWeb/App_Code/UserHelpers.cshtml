@@ -1,8 +1,6 @@
-@inherits VocaDb.Web.Code.HelperPage
+﻿@inherits VocaDb.Web.Code.HelperPage
 @using System.Web.Mvc.Html;
-@using Autofac.Integration.Mvc
 @using Microsoft.Web.Helpers
-@using Resources
 @using VocaDb.Model.DataContracts.Users
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.Users
@@ -58,18 +56,6 @@
 	<div data-bind="visible: @binding" style="width: @(size)px; height: @(size)px; display: inline-block">
 		<img data-bind="attr: { src: @binding }" alt="User avatar" src="@Url.Content("~/Content/unknown.png")" />
 	</div>
-}
-
-@helper SongVoteRatingsRadioKnockout(string binding) {
-	<button class="btn" data-bind="click: function() { @(binding)('Nothing'); }, css: { active: @(binding)() == 'Nothing' }">@ViewRes.User.RatedSongsStrings.RatingAnything</button>
-	<button class="btn" data-bind="click: function() { @(binding)('Like'); }, css: { active: @(binding)() == 'Like' }">
-		<i class="icon-star"></i>
-		@SongVoteRatingNames.Like
-	</button>
-	<button class="btn" data-bind="click: function() { @(binding)('Favorite'); }, css: { active: @(binding)() == 'Favorite' }">
-		<i class="icon-heart"></i>
-		@SongVoteRatingNames.Favorite
-	</button>
 }
 
 
