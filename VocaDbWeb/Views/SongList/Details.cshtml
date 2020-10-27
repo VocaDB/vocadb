@@ -8,6 +8,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Event;
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using VocaDb.Web.Models.Shared.Partials.Search;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
 @using Res = ViewRes.SongList.DetailsStrings;
 @using SearchRes = ViewRes.Search.IndexStrings;
@@ -54,7 +55,7 @@
 }
 
 @if (Model.IsFeatured && Model.SongList.Status == EntryStatus.Draft && !Model.SongList.Deleted) {
-	@Helpers.DraftMessage(string.Empty)
+	Html.RenderPartial("Partials/Shared/_DraftMessage", new DraftMessageViewModel(string.Empty));
 }
 
 @if (Model.SongList.Deleted) {

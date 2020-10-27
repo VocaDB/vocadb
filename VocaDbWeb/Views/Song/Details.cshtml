@@ -15,6 +15,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Shared.Partials.PV;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
 @using R = ViewRes.Song;
 @using Res = ViewRes.Song.DetailsStrings;
@@ -123,7 +124,7 @@
 }
 
 @if (Model.Draft && !Model.Deleted) {
-	@Helpers.DraftMessage("glsongs")
+	Html.RenderPartial("Partials/Shared/_DraftMessage", new DraftMessageViewModel("glsongs"));
 }
 
 <div id="tabs" class="js-cloak" data-bind="show">

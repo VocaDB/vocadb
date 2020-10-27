@@ -13,6 +13,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Shared.Partials.PV;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
 @using R = ViewRes.Album;
 @using Res = ViewRes.Album.DetailsStrings;
@@ -54,7 +55,7 @@
 }
 
 @if (Model.Draft && !Model.Deleted) {
-	@Helpers.DraftMessage("glalbums")
+	Html.RenderPartial("Partials/Shared/_DraftMessage", new DraftMessageViewModel("glalbums"));
 }
 
 <div id="tabs" itemscope itemtype="http://schema.org/MusicAlbum" class="js-cloak" data-bind="show">

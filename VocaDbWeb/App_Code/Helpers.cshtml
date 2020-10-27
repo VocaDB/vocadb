@@ -37,14 +37,6 @@
 	}
 }
 
-@helper DraftMessage(string section) {
-	<div class="alert">
-		@NotificationIcon()
-		<span>@HelperRes.HelperStrings.DraftMessage</span>
-		<span>@HelperRes.HelperStrings.SeeGuidePre <a href="@(Url.Action("Index", "Help") + "?guidelines+" + section)">@HelperRes.HelperStrings.SeeGuide</a> @HelperRes.HelperStrings.SeeGuidePost</span>
-	</div>
-}
-
 @helper EntryLink(EntryRefWithNameContract entryRef) {
 	@Html.ActionLink(entryRef.Name.DisplayName, "Details", entryRef.EntryType.ToString(), new RouteValueDictionary { { "id", entryRef.Id } }, new Dictionary<string, object> { { "title", entryRef.Name.AdditionalNames }, { "data-entry-id", entryRef.Id } })
 }

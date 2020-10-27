@@ -12,7 +12,8 @@
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
-@using VocaDb.Web.Models.Shared.Partials.Knockout; 
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
 @using R = ViewRes.Artist;
 @using Res = ViewRes.Artist.DetailsStrings
@@ -67,7 +68,7 @@
 }
 
 @if (Model.Draft && !Model.Deleted) {
-	@Helpers.DraftMessage("glproducers")
+	Html.RenderPartial("Partials/Shared/_DraftMessage", new DraftMessageViewModel("glproducers"));
 }
 
 <div id="tabs" class="artist-details-page js-cloak" data-bind="show">
