@@ -69,17 +69,6 @@
 }
 
 
-@helper EntryThumbs(IEnumerable<EntryForApiContract> entries) {
-
-	<ul class="smallThumbs">
-		@foreach (var entry in entries) {
-			@ThumbItem(Url.EntryDetails(entry),
-				entry.MainPicture != null ? entry.MainPicture.GetSmallestThumb(ImageSize.SmallThumb) : Url.Content("~/Content/unknown.png"), entry.Name)
-		}
-	</ul>
-
-}
-
 @helper EventSeriesThumbs(IEnumerable<ReleaseEventSeriesContract> events) {
 	<div class="clearfix">
 		@foreach (var ev in events) {
