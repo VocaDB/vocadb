@@ -38,24 +38,6 @@
 
 }
 
-@helper ReportEntryPopup(MvcHtmlString reportTypesDropdown) {
-	
-<div id="reportEntryPopup" style="display:none;" title="@ViewRes.EntryDetailsStrings.ReportAnError">
-	
-	<label>
-		@ViewRes.EntryDetailsStrings.ReportType
-	</label>
-	@reportTypesDropdown
-	
-	<label>
-		@ViewRes.EntryDetailsStrings.ReportNotes
-	</label>
-	@Html.TextArea("reportNotes", new { id = "reportNotes", @class = "input-xlarge" })
-
-</div>
-
-}
-
 @helper ShareLinks(string title, string url) {
 	@(ViewRes.EntryDetailsStrings.Share + ":")
 	@LinkShare.GetHtml(title, pageLinkBack: url, linkSites: new[] { LinkShareSite.Facebook, LinkShareSite.Reddit, LinkShareSite.Twitter })	
