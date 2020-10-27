@@ -68,7 +68,7 @@
 
 
 @if (Model.Deleted) {
-	@EntryDetailsHelpers.DeletedBanner(null)
+	Html.RenderPartial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null));
 }
 
 <div class="well well-transparent">

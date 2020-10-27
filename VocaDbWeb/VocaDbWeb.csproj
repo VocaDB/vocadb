@@ -175,6 +175,7 @@
     <Compile Include="Models\Shared\Partials\Comment\CreateCommentViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\EditableCommentsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\PrintCommentViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\EntryDetails\DeletedBannerViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\EntryDeletePopupBaseViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\LargeShareLinksViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryPopupKnockoutViewModel.cs" />
@@ -1900,6 +1901,7 @@
     <Content Include="Views\Shared\Partials\Knockout\_ServerSidePaging.cshtml" />
     <Content Include="Views\Shared\Partials\User\_SongVoteRatingsRadioKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\User\_IconNameAndTypeLinkKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\EntryDetails\_DeletedBanner.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

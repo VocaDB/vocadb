@@ -2,22 +2,10 @@
 @using System.Web.Mvc.Html
 @using Microsoft.Web.Helpers;
 @using VocaDb.Model.DataContracts
-@using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.ExtLinks
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails
 @inherits VocaDb.Web.Code.HelperPage
-	
-@helper DeletedBanner(IEntryBase mergedTo) {
-	<div class="alert">
-		@Resources.CommonMessages.EntryDeleted
-		@if (mergedTo != null) {
-			@(Resources.CommonMessages.EntryMergedTo + " ")
-			@Helpers.EntryLink(new EntryBaseContract(mergedTo))
-			@(".")
-		}		
-	</div>
-}
 
 @helper HiddenBanner() {
 	<div class="alert">

@@ -1,6 +1,7 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Web.Helpers;
-@using VocaDb.Web.Resources.Views.Event
+﻿@using System.Web.Optimization;
+@using VocaDb.Web.Helpers;;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Resources.Views.Event;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesDetailsContract>
 
 @{
@@ -32,7 +33,7 @@
 }
 
 @if (Model.Deleted) {
-	@EntryDetailsHelpers.DeletedBanner(null)
+	Html.RenderPartial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null));
 }
 
 <div class="media">

@@ -63,7 +63,7 @@
 }
 
 @if (Model.Deleted) {
-	@EntryDetailsHelpers.DeletedBanner(Model.MergedTo)
+	Html.RenderPartial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(Model.MergedTo));
 }
 
 @if (Model.Draft && !Model.Deleted) {
