@@ -33,7 +33,7 @@
 }
 
 @if (Model.ArchivedVersion.Hidden) {
-	@EntryDetailsHelpers.HiddenBanner()
+	Html.RenderPartial("Partials/EntryDetails/_HiddenBanner");
 }
 
 @if (Model.ComparableVersions.Any()) {

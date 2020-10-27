@@ -7,12 +7,6 @@
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper HiddenBanner() {
-	<div class="alert">
-		@Resources.CommonMessages.RevisionHidden
-	</div>
-}
-
 @helper EntryDeletePopup(string confirmText, string viewModelBindingName = "deleteViewModel", string deleteButtonId = "deleteLink") {
 	Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel(confirmText, viewModelBindingName, deleteButtonId, ViewRes.SharedStrings.Delete, ViewRes.SharedStrings.Delete));
 }

@@ -1902,6 +1902,7 @@
     <Content Include="Views\Shared\Partials\User\_SongVoteRatingsRadioKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\User\_IconNameAndTypeLinkKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_DeletedBanner.cshtml" />
+    <Content Include="Views\Shared\Partials\EntryDetails\_HiddenBanner.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
