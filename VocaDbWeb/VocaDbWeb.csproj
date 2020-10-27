@@ -1919,6 +1919,7 @@
     <Content Include="Views\Shared\Partials\Shared\_EntryStatusMessage.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_EventSeriesThumbs.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_EventThumbs.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_MergeEntryInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
