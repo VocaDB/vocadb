@@ -1,5 +1,6 @@
-﻿@using VocaDb.Model.Domain.Songs
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Model.Domain.Songs;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Song; 
 @using SharedRes = ViewRes.SharedStrings;
 @using Res = ViewRes.Search.IndexStrings;
 
@@ -65,7 +66,7 @@
 				<small class="extraInfo" data-bind="text: artistString"></small>
 
 				<div data-bind="visible: pvServices, with: previewViewModel">
-					@SongHelpers.PVPreviewKnockout("$parents[2].getPVServiceIcons")
+					@{ Html.RenderPartial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].getPVServiceIcons")); }
 				</div>
 			</td>
 			<td data-bind="visible: $parent.showTags()" class="search-tags-column">

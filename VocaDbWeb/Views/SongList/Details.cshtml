@@ -8,6 +8,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Event;
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using VocaDb.Web.Models.Shared.Partials.Search;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 @using Res = ViewRes.SongList.DetailsStrings;
 @using SearchRes = ViewRes.Search.IndexStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.SongLists.SongListDetailsViewModel>
@@ -216,7 +217,7 @@
 					<small class="extraInfo" data-bind="text: song.artistString"></small>
 
 					<div data-bind="visible: song.pvServices, with: song.previewViewModel">
-						@SongHelpers.PVPreviewKnockout("$parents[2].pvServiceIcons.getIconUrls")
+						@{ Html.RenderPartial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].pvServiceIcons.getIconUrls")); }
 					</div>
 				</td>
 				<!-- ko if: $parent.showTags -->

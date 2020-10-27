@@ -194,6 +194,7 @@
     <Compile Include="Models\Shared\Partials\PV\EmbedPVViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Search\AdvancedFiltersViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Search\AdvancedFilterViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Song\PVPreviewKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagUsagesManageTableViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Activityfeed\EntryTypeViewModel.cs" />
@@ -1905,6 +1906,7 @@
     <Content Include="Views\Shared\Partials\EntryDetails\_DeletedBanner.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_HiddenBanner.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_ExternalLinksRows.cshtml" />
+    <Content Include="Views\Shared\Partials\Song\_PVPreviewKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
