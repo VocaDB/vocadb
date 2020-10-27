@@ -69,39 +69,6 @@
 }
 
 
-@helper EntryStatusMessage(EntryStatus status) {
-    switch (status) {
-        case EntryStatus.Draft:
-			<span title="@HelperRes.HelperStrings.StatusDescriptionDraft">
-				<span class="icon draftIcon"></span>
-				@Translate.EntryStatusNames[EntryStatus.Draft]
-			</span>
-            break;
-
-        case EntryStatus.Finished:
-			<span title="@HelperRes.HelperStrings.StatusDescriptionFinished">
-				<span class="icon asteriskIcon"></span>
-				@Translate.EntryStatusNames[EntryStatus.Finished]
-			</span>
-            break;
-
-        case EntryStatus.Approved:
-			<span title="@HelperRes.HelperStrings.StatusDescriptionApproved">
-				<span class="icon tickIcon"></span>
-				@Translate.EntryStatusNames[EntryStatus.Approved]
-			</span>
-            break;
-
-        case EntryStatus.Locked:
-			<span title="@HelperRes.HelperStrings.StatusDescriptionLocked">
-				<span class="icon lockIcon"></span>
-				@Translate.EntryStatusNames[EntryStatus.Locked]
-			</span>
-            break;
-
-    }	
-}
-
 @helper EntryThumbs(IEnumerable<EntryForApiContract> entries) {
 
 	<ul class="smallThumbs">

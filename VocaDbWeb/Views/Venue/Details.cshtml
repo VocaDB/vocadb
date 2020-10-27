@@ -26,7 +26,7 @@
 		<a href="@Url.Action("Edit", "Event", new { venueId = Model.Id != 0 ? (int?)Model.Id : null }, null)" id="createEventLink">@ViewRes.Event.EventsBySeriesStrings.CreateEvent</a>
 	}
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
-	@Helpers.EntryStatusMessage(Model.Status)
+	@{ Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status)); }
 }
 
 @if (Model.Deleted) {

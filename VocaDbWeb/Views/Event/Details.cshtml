@@ -48,7 +48,7 @@
 	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editEventLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
-	@Helpers.EntryStatusMessage(Model.Status)
+	@{ Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status)); }
 }
 
 @helper ArtistList(IList<ArtistForEventContract> artists, bool showRoles = false, bool showType = false) {

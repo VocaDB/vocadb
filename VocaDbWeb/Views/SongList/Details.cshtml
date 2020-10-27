@@ -50,7 +50,7 @@
 }
 	@Html.ActionLink(Res.Export, "Export", new { id = Model.SongList.Id }, new { id = "export" })
 	@if (Model.IsFeatured) {
-		@Helpers.EntryStatusMessage(Model.SongList.Status)
+		Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.SongList.Status));
 	}
 }
 

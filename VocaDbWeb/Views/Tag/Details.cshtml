@@ -12,6 +12,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
 @using SharedRes = ViewRes.SharedStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<TagDetailsContract>
@@ -77,7 +78,7 @@
 	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editTagLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
-	@Helpers.EntryStatusMessage(Model.Status)
+	@{ Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status)); }
 }
 
 @helper NicoTagLink(string nicoTag) {<a href="http://www.nicovideo.jp/tag/@nicoTag" class="extLink">@nicoTag</a>}

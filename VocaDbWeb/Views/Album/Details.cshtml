@@ -47,7 +47,7 @@
 
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 
-	@Helpers.EntryStatusMessage(Model.Status)
+	@{ Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status)); }
 }
 
 @if (Model.Deleted) {

@@ -114,7 +114,7 @@
 	<a data-bind="jqButton: { icon: 'ui-icon-wrench' }, click: function() { maintenanceDialogVisible(true); }" id="maintenanceActions" href="#">Maintenance actions</a>			 
 }
 	
-@Helpers.EntryStatusMessage(Model.Status)
+@{ Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status)); }
 
 @Helpers.AjaxLoader("pvLoader")		
 }
