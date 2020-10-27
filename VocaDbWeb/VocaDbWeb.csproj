@@ -1922,6 +1922,7 @@
     <Content Include="Views\Shared\Partials\Shared\_EventThumbs.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_MergeEntryInfo.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_NotificationPanel.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_SaveBtn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

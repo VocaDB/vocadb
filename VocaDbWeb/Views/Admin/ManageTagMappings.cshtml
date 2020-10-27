@@ -52,7 +52,7 @@
 	<br />
 	<br />
 
-	@Helpers.SaveBtn()
+	@{ Html.RenderPartial("Partials/Shared/_SaveBtn"); }
 
 	<div data-bind="with: paging">
 		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
@@ -86,7 +86,7 @@
 		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
 	</div>
 
-	@Helpers.SaveBtn()
+	@{ Html.RenderPartial("Partials/Shared/_SaveBtn"); }
 
 </form>
 

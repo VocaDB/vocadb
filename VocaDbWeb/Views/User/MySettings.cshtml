@@ -27,7 +27,7 @@
     @Html.HiddenFor(m => m.TwitterName)
 	@Html.HiddenFor(m => m.CanChangeName)
 
-	@Helpers.SaveBtn()
+	Html.RenderPartial("Partials/Shared/_SaveBtn");
 	
 	<div id="tabs">
 
@@ -274,7 +274,7 @@
 	</div>
 	
 	<br />
-	@Helpers.SaveBtn()
+	Html.RenderPartial("Partials/Shared/_SaveBtn");
 	
 }
 

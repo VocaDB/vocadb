@@ -115,15 +115,6 @@
 	<span class="required-field">*</span>	
 }
 
-@helper SaveBtn() {
-	<p>
-		<button type="submit" class="btn btn-primary">
-			<i class="icon-ok icon-white"></i>
-			&nbsp;@HelperRes.HelperStrings.SaveChanges
-		</button>	
-	</p>
-}
-
 @helper SaveAndBackBtn(string backAction) {
 	<p>
 		<button type="submit" class="btn btn-primary" data-bind="disable: submitting">
