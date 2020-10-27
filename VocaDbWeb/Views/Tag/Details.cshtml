@@ -193,7 +193,7 @@
 
 @if (Model.Stats.Artists.Any()) {
 	<div class="well well-transparent">
-		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id)))
+		@{ Html.RenderPartial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id)))); }
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id))">
 				@Res.TopArtists
@@ -206,7 +206,7 @@
 
 @if (Model.Stats.Albums.Any()) {
 	<div class="well well-transparent">
-		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id)))
+		@{ Html.RenderPartial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id)))); }
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id))">
 				@Res.TopAlbums
@@ -219,7 +219,7 @@
 
 @if (Model.Stats.Songs.Any()) {
 	<div class="well well-transparent">
-		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id)))
+		@{ Html.RenderPartial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id)))); }
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id))">
 				@Res.TopSongs
@@ -233,7 +233,7 @@
 
 @if (Model.Stats.EventSeries.Any()) {
 	<div class="well well-transparent">
-		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id)))
+		@{ Html.RenderPartial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id)))); }
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))">
 				@Res.EventSeries
@@ -245,7 +245,7 @@
 
 @if (Model.Stats.Events.Any()) {
 	<div class="well well-transparent">
-		@Helpers.ShowMore(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id)))
+		@{ Html.RenderPartial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id)))); }
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))">
 				@Res.TopEvents

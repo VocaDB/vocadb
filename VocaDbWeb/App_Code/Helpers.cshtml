@@ -115,14 +115,6 @@
 	<span class="required-field">*</span>	
 }
 
-@helper ShowMore(string js = null, string href = null) {
-	<div class="pull-right">
-		<small>
-			<a href="@(href ?? "#")" @(js != null ? "data-bind='click: function() { " + js + " }'" : "")>@ViewRes.SharedStrings.ShowMore</a>
-		</small>
-	</div>
-}
-
 @helper Stars(int current, int max) {
 	for (int i = 1; i <= max; ++i) {
 		if (current >= i) {

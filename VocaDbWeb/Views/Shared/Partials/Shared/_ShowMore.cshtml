@@ -1,0 +1,8 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Shared;
+@model ShowMoreViewModel
+
+<div class="pull-right">
+	<small>
+		<a href="@(Model.Href ?? "#")" @(Model.JS != null ? "data-bind='click: function() { " + Model.JS + " }'" : "")>@ViewRes.SharedStrings.ShowMore</a>
+	</small>
+</div>
