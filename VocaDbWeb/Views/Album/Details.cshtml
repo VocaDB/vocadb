@@ -85,7 +85,7 @@
 						</div>
 						@foreach (var pic in Model.Pictures) {
 							<div class="item thumbItem" itemprop="image">
-								@Helpers.EntryPictureFileLink(pic)
+								@{ Html.RenderPartial("Partials/Shared/_EntryPictureFileLink", new EntryPictureFileLinkViewModel(pic)); }
 								@if (!string.IsNullOrEmpty(pic.Name)) {
 									<div class="carousel-caption">
 										<h4>@pic.Name</h4>

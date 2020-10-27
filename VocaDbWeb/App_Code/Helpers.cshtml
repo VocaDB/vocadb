@@ -64,12 +64,6 @@
     }
 }
 
-@helper EntryPictureFileLink(IEntryPictureFile entryPictureFile) {
-	<a href="@Url.ImageThumb(entryPictureFile, ImageSize.Original)">
-		<img src="@Url.ImageThumb(entryPictureFile, ImageSize.Thumb)" alt="Preview" class="coverPic" />
-	</a>
-}
-
 @helper EntrySearchNameBox(string id, string cls = "input-xlarge") {
 	<input type="text" id="@id" maxlength="128" class="@cls" placeholder="@ViewRes.SharedStrings.Search" />	
 }
