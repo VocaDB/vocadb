@@ -198,6 +198,7 @@
     <Compile Include="Models\Shared\Partials\Shared\EmbedGoogleMapsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EntryPictureFileLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EntryStatusMessageViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\EventSeriesThumbsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\PVPreviewKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagUsagesManageTableViewModel.cs" />
@@ -1915,6 +1916,7 @@
     <Content Include="Views\Shared\Partials\Shared\_EmbedGoogleMaps.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_EntryPictureFileLink.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_EntryStatusMessage.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_EventSeriesThumbs.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

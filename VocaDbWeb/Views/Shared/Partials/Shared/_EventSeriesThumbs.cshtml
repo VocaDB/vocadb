@@ -1,0 +1,28 @@
+﻿@using VocaDb.Model.Domain.Images;
+@using VocaDb.Model.Domain.ReleaseEvents;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
+@model EventSeriesThumbsViewModel
+
+<div class="clearfix">
+	@foreach (var ev in Model.Events)
+	{
+		<div class="well well-transparent event-teaser-tiny">
+			@if (ev.PictureMime != null)
+			{
+				<a href="@Url.EntryDetails(ev, ev.UrlSlug)" class="event-image pull-left" title="@ev.AdditionalNames">
+					<img class="media-object" src="@Url.ImageThumb(ev, ImageSize.TinyThumb)" alt="Thumb" />
+				</a>
+			}
+			<div>
+				<a href="@Url.EntryDetails(ev, ev.UrlSlug)" title="@ev.AdditionalNames">
+					@ev.Name
+				</a>
+				@if (ev.Category != EventCategory.Unspecified && ev.Category != EventCategory.Other)
+				{
+					@:(@Translate.ReleaseEventCategoryNames[ev.Category])
+				}
+			</div>
+		</div>
+	}
+</div>

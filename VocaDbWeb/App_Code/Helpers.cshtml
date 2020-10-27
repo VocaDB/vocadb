@@ -4,7 +4,6 @@
 @using VocaDb.Model
 @using VocaDb.Model.Helpers
 @using VocaDb.Model.DataContracts
-@using VocaDb.Model.DataContracts.Api
 @using VocaDb.Model.DataContracts.ReleaseEvents
 @using VocaDb.Model.Domain;
 @using VocaDb.Model.Domain.Images
@@ -68,28 +67,6 @@
 	<input type="text" id="@id" maxlength="128" class="@cls" placeholder="@ViewRes.SharedStrings.Search" />	
 }
 
-
-@helper EventSeriesThumbs(IEnumerable<ReleaseEventSeriesContract> events) {
-	<div class="clearfix">
-		@foreach (var ev in events) {
-			<div class="well well-transparent event-teaser-tiny">
-				@if (ev.PictureMime != null) {
-					<a href="@Url.EntryDetails(ev, ev.UrlSlug)" class="event-image pull-left" title="@ev.AdditionalNames">
-						<img class="media-object" src="@Url.ImageThumb(ev, ImageSize.TinyThumb)" alt="Thumb" />
-					</a>
-				}
-				<div>
-					<a href="@Url.EntryDetails(ev, ev.UrlSlug)" title="@ev.AdditionalNames">
-						@ev.Name
-					</a>
-					@if (ev.Category != EventCategory.Unspecified && ev.Category != EventCategory.Other) {
-						@:(@Translate.ReleaseEventCategoryNames[ev.Category])
-					}
-				</div>
-			</div>
-		}
-	</div>
-}
 
 @helper EventThumbs(IEnumerable<ReleaseEventForApiContract> events, ImageSize imageSize = ImageSize.SmallThumb) {
 	var css = imageSize == ImageSize.SmallThumb ? "event-teaser" : "event-teaser-tiny";

@@ -239,7 +239,7 @@
 				@Res.EventSeries
 			</a>
 		</h3>
-		@Helpers.EventSeriesThumbs(Model.Stats.EventSeries)
+		@{ Html.RenderPartial("Partials/Shared/_EventSeriesThumbs", new EventSeriesThumbsViewModel(Model.Stats.EventSeries)); }
 	</div>
 }
 
