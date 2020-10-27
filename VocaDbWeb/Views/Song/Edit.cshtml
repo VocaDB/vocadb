@@ -5,6 +5,7 @@
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using ValidationErrors = VocaDb.Model.Resources.SongValidationErrors;
 @using Res = ViewRes.Song.EditStrings;
 @using EditRes = ViewRes.EntryEditStrings;
@@ -53,7 +54,7 @@
 <br />
 <form action="@Url.Action("Edit", "Song")" method="POST" data-bind="submit: submit, visible: true" style="display: none;">
 	@Html.HiddenFor(m => m.AlbumId)
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId }))
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId }))); }
 	
 	<div id="tabs">
 
@@ -324,7 +325,7 @@
 	<textarea data-bind="value: updateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 	
 	<br />
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId }))
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId }))); }
 	
 	<!-- JSON model to be posted to the server -->
 	@Html.HiddenForKnockout(m => m.EditedSong, "value: submittedJson")

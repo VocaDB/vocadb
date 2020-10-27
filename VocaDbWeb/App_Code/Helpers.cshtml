@@ -115,19 +115,6 @@
 	<span class="required-field">*</span>	
 }
 
-@helper SaveAndBackBtn(string backAction) {
-	<p>
-		<button type="submit" class="btn btn-primary" data-bind="disable: submitting">
-			<i class="icon-ok icon-white"></i>
-			&nbsp;@HelperRes.HelperStrings.SaveChanges
-		</button>	
-		<a class="btn btn-nomargin" href="@backAction">
-			<i class="icon-backward"></i>
-			&nbsp;@HelperRes.HelperStrings.ReturnWithoutSaving
-		</a>	
-	</p>
-}
-
 @helper ShowMore(string js = null, string href = null) {
 	<div class="pull-right">
 		<small>

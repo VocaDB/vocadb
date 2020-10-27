@@ -1,8 +1,9 @@
-﻿@using VocaDb.Model.Domain.Globalization
-@using System.Web.Optimization
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Model.Domain.Globalization;
+@using System.Web.Optimization;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using Res = ViewRes.Venue.EditStrings;
-@using EditRes = ViewRes.EntryEditStrings
+@using EditRes = ViewRes.EntryEditStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Venue.VenueEditViewModel>
 
 @{
@@ -46,7 +47,7 @@
 	@Html.HiddenFor(m => m.Id)
 	@Html.HiddenFor(m => m.Name)
 	
-	@Helpers.SaveAndBackBtn(backAction)
+	Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction));
 	
 	<div class="editor-label">
 		<label class="helpTip" data-bind="qTip" title="@EditRes.DefaultLanguageHelp">
@@ -145,7 +146,7 @@
 	</div>
 
 	<br />
-	@Helpers.SaveAndBackBtn(backAction)
+	Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction));
 
 }
 

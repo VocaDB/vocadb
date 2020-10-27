@@ -1,10 +1,10 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.Images
-@using VocaDb.Model.Helpers
+﻿@using System.Web.Optimization;
+@using VocaDb.Model.Domain.Images;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.SongLists;
 @using VocaDb.Web.Helpers;
 @using Res = ViewRes.SongList.EditStrings;
-@using EditRes = ViewRes.EntryEditStrings
+@using EditRes = ViewRes.EntryEditStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<SongListEditViewModel>
 @{
 	
@@ -53,7 +53,7 @@
 <form action="@Url.Action("Edit", "SongList")" id="songListForm" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
 	@Html.HiddenFor(m => m.CanCreateFeaturedLists)
 
-	@Helpers.SaveAndBackBtn(parentUrl)
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(parentUrl)); }
 
 	<div id="tabs">
 
@@ -165,7 +165,7 @@
 
 	<input type="hidden" name="model" data-bind="value: ko.toJSON($root)" />
 	<br />
-	@Helpers.SaveAndBackBtn(parentUrl)
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(parentUrl)); }
 
 </form>
 

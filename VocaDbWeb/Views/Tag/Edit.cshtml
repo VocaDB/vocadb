@@ -1,8 +1,9 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.Images
+﻿@using System.Web.Optimization;
+@using VocaDb.Model.Domain.Images;
 @using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using Res = VocaDb.Web.Resources.Views.Tag.EditStrings;
 @using EditRes = ViewRes.EntryEditStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.TagEditViewModel>
@@ -69,7 +70,7 @@
 	@Html.HiddenFor(m => m.Name)
 	@Html.HiddenFor(m => m.UrlSlug)
 
-	@Helpers.SaveAndBackBtn(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug }))
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug }))); }
 	
 	<div class="editor-label">
 		<label class="helpTip" data-bind="qTip">
@@ -193,7 +194,7 @@
 	<textarea name="UpdateNotes" id="UpdateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 
 	<br />
-	@Helpers.SaveAndBackBtn(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug }))
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug }))); }
 
 </form>
 
