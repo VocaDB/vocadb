@@ -319,7 +319,7 @@
 				@Html.ActionLink(Res.RecentEvents, "Index", "Search", UrlMapper.Search.Events(artistId: Model.Id, sort: EventSortRule.Date), null)
 				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.SharedStats.EventCount))</small>				
 			</h3>
-			@Helpers.EventThumbs(Model.LatestEvents)
+			Html.RenderPartial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model.LatestEvents));
 		}
 
 		<div data-bind="visible: songsOverTimeChart">

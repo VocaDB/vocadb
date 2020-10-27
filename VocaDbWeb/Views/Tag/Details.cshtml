@@ -252,7 +252,7 @@
 				<small>(@Model.Stats.EventCount @SharedRes.Total)</small>
 			</a>
 		</h3>
-		@Helpers.EventThumbs(Model.Stats.Events, ImageSize.TinyThumb)
+		@{ Html.RenderPartial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model.Stats.Events, ImageSize.TinyThumb)); }
 	</div>
 }
 

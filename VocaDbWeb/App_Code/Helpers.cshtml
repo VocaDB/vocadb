@@ -4,14 +4,10 @@
 @using VocaDb.Model
 @using VocaDb.Model.Helpers
 @using VocaDb.Model.DataContracts
-@using VocaDb.Model.DataContracts.ReleaseEvents
 @using VocaDb.Model.Domain;
-@using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.PVs
-@using VocaDb.Model.Domain.ReleaseEvents
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.Event;
 @using VocaDb.Web.Models.Shared.Partials.PV;
 
 @functions {
@@ -67,45 +63,6 @@
 	<input type="text" id="@id" maxlength="128" class="@cls" placeholder="@ViewRes.SharedStrings.Search" />	
 }
 
-
-@helper EventThumbs(IEnumerable<ReleaseEventForApiContract> events, ImageSize imageSize = ImageSize.SmallThumb) {
-	var css = imageSize == ImageSize.SmallThumb ? "event-teaser" : "event-teaser-tiny";
-	<div class="clearfix">
-		@foreach (var ev in events) {
-			var cat = ev.Series != null ? ev.Series.Category : ev.Category;
-			<div class="well well-transparent @css">
-				@if (ev.MainPicture != null) {
-					<a href="@Url.EntryDetails(ev, ev.UrlSlug)" class="event-image pull-left" title="@ev.AdditionalNames">
-						<img class="media-object" src="@ev.MainPicture.GetSmallestThumb(imageSize)" alt="Thumb" />
-					</a>
-				}
-				<div>
-					<a href="@Url.EntryDetails(ev, ev.UrlSlug)" title="@ev.AdditionalNames">
-						@ev.Name
-					</a>
-					@if (cat != EventCategory.Unspecified && cat != EventCategory.Other) {
-						@:(@Translate.ReleaseEventCategoryNames[cat])
-					}
-					@if (ev.Date.HasValue) {
-						<br />
-						<small class="extraInfo">
-							@(ev.Date.Value.ToShortDateString())
-							@if (ev.EndDate.HasValue) {
-								@:- @ev.EndDate.Value.ToShortDateString()
-							}
-						</small>						
-					}
-					@if (ev.HasVenueOrVenueName) {
-						<br />
-						<small class="extraInfo">
-							@{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev)); }
-						</small>
-					}
-				</div>
-			</div>
-		}
-	</div>
-}
 
 @helper FormatPVLink(VocaDb.Model.DataContracts.PVs.PVContract pv, bool type = true) {
 	<a href="@pv.Url"><img src="@Html.VideoServiceLinkUrl(pv.Service)" alt="@pv.Service" /> @(!string.IsNullOrEmpty(pv.Name) ? pv.Name : pv.Service.ToString())
