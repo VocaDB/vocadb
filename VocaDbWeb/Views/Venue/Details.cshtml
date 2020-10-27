@@ -3,6 +3,7 @@
 @using VocaDb.Model.Domain.Venues;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Venues.VenueForApiContract>
 
 @{
@@ -33,7 +34,7 @@
 }
 
 @if (Model.Coordinates.HasValue) {
-	@Helpers.EmbedGoogleMaps(Model.Coordinates)
+	Html.RenderPartial("Partials/Shared/_EmbedGoogleMaps", new EmbedGoogleMapsViewModel(Model.Coordinates));
 }
 
 <div class="media">
