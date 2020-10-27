@@ -161,7 +161,7 @@
 					</td>
 				</tr>
 
-				@EntryDetailsHelpers.ExternalLinksRows(Model.WebLinks)
+				@{ Html.RenderPartial("Partials/EntryDetails/_ExternalLinksRows", new ExternalLinksRowsViewModel(Model.WebLinks)); }
 
 				@if (Model.OwnerUsers.Any()) {
 					<tr>

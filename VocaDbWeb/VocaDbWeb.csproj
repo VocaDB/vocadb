@@ -177,6 +177,7 @@
     <Compile Include="Models\Shared\Partials\Comment\PrintCommentViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\DeletedBannerViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\EntryDeletePopupBaseViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\EntryDetails\ExternalLinksRowsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\LargeShareLinksViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryPopupKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryVersionPopupKnockoutViewModel.cs" />
@@ -1903,6 +1904,7 @@
     <Content Include="Views\Shared\Partials\User\_IconNameAndTypeLinkKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_DeletedBanner.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_HiddenBanner.cshtml" />
+    <Content Include="Views\Shared\Partials\EntryDetails\_ExternalLinksRows.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

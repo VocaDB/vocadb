@@ -1,0 +1,28 @@
+﻿@using VocaDb.Model.Domain.ExtLinks;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@model ExternalLinksRowsViewModel
+
+@{
+	var official = Model.WebLinks.Where(l => l.Category == WebLinkCategory.Official || l.Category == WebLinkCategory.Commercial).ToArray();
+	var other = Model.WebLinks.Where(l => !official.Contains(l)).ToArray();
+}
+
+@if (official.Any())
+{
+	<tr>
+		<td>@ViewRes.EntryDetailsStrings.OfficialLinks</td>
+		<td>
+			@EntryDetailsHelpers.ExternalLinksList(official, false)
+		</td>
+	</tr>
+}
+
+@if (other.Any())
+{
+	<tr>
+		<td>@ViewRes.EntryDetailsStrings.OtherLinks</td>
+		<td>
+			@EntryDetailsHelpers.ExternalLinksList(other, true)
+		</td>
+	</tr>
+}

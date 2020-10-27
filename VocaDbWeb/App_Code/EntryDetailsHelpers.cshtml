@@ -2,7 +2,6 @@
 @using System.Web.Mvc.Html
 @using Microsoft.Web.Helpers;
 @using VocaDb.Model.DataContracts
-@using VocaDb.Model.Domain.ExtLinks
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails
 @inherits VocaDb.Web.Code.HelperPage
@@ -39,31 +38,6 @@
 
 }
 
-@helper ExternalLinksRows(ICollection<WebLinkContract> webLinks) {
-    
-    var official = webLinks.Where(l => l.Category == WebLinkCategory.Official || l.Category == WebLinkCategory.Commercial).ToArray();
-    var other = webLinks.Where(l => !official.Contains(l)).ToArray();
-    
-    if (official.Any()) {
-        <tr>
-            <td>@ViewRes.EntryDetailsStrings.OfficialLinks</td>
-            <td>
-                @ExternalLinksList(official, false)
-            </td>	
-        </tr>
-    }    
-
-    if (other.Any()) {
-        <tr>
-            <td>@ViewRes.EntryDetailsStrings.OtherLinks</td>
-            <td>
-                @ExternalLinksList(other, true)
-            </td>	
-        </tr>
-    }    
-        
-}
-		  
 @helper ReportEntryPopup(MvcHtmlString reportTypesDropdown) {
 	
 <div id="reportEntryPopup" style="display:none;" title="@ViewRes.EntryDetailsStrings.ReportAnError">

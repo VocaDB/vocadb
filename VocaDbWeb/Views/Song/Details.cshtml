@@ -295,7 +295,7 @@
 			</tr>
    }
 			
-			@EntryDetailsHelpers.ExternalLinksRows(Model.WebLinks)
+			@{ Html.RenderPartial("Partials/EntryDetails/_ExternalLinksRows", new ExternalLinksRowsViewModel(Model.WebLinks)); }
 			
 			<tr data-bind="if: originalVersion().entry">
 				<td>@Res.OriginalVersion</td>

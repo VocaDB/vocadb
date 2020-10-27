@@ -270,7 +270,7 @@
 					</tr>
 				}
 
-				@EntryDetailsHelpers.ExternalLinksRows(Model.WebLinks)
+				@{ Html.RenderPartial("Partials/EntryDetails/_ExternalLinksRows", new ExternalLinksRowsViewModel(Model.WebLinks)); }
 
 				<tr>
 					<td>@ViewRes.EntryDetailsStrings.Stats</td>
