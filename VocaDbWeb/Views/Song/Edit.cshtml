@@ -4,6 +4,7 @@
 @using VocaDb.Model.Service.VideoServices
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
 @using ValidationErrors = VocaDb.Model.Resources.SongValidationErrors;
@@ -340,7 +341,7 @@
 	@{ Html.RenderPartial("Partials/_CustomNameEdit"); }
 </div>
 
-@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete)); }
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/Song/Edit")

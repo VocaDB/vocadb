@@ -1,6 +1,7 @@
 ﻿@using VocaDb.Model.Domain.Globalization;
 @using System.Web.Optimization;
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
 @using Res = ViewRes.Venue.EditStrings;
 @using EditRes = ViewRes.EntryEditStrings;
@@ -150,7 +151,7 @@
 
 }
 
-@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete)); }
 @EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)
 
 @section BodyScripts {
