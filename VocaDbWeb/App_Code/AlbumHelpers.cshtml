@@ -10,10 +10,6 @@
 	@Html.ActionLink(album.Name, "Details", "Album", new RouteValueDictionary { { "id", album.Id } }, new Dictionary<string, object> { { "title", album.AdditionalNames }, { "data-entry-id", album.Id }, { "class", "albumLink" }})
 }
 
-@helper DetailsLink(AlbumContract album) {
-	@Html.ActionLink(album.Name, "Details", "Album", new { id = album.Id }, new { title = album.AdditionalNames })
-}
-
 @helper DiscTypesDropdownKnockout(string binding) {
 	Html.RenderPartial("Partials/Knockout/_CheckBoxButtons", new CheckBoxButtonsViewModel(Translate.DiscTypeNames.GetValuesAndNamesStrings(AppConfig.AlbumTypes), binding));
 }
