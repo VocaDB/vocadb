@@ -1,0 +1,5 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
+@using VocaDb.Web.Helpers;
+@model CurrentVersionMessageViewModel
+
+<p>@ViewRes.ArchivedObjectVersionsStrings.CurrentVersionIs @Model.Version (@Translate.EntryStatusNames[Model.Status]).</p>	

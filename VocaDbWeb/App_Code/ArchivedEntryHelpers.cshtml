@@ -91,10 +91,6 @@
 	
 }
 
-@helper CurrentVersionMessage(int version, EntryStatus status) {
-	<p>@ViewRes.ArchivedObjectVersionsStrings.CurrentVersionIs @version (@Translate.EntryStatusNames[status]).</p>	
-}
-
 @helper DataRow(string name, object val, object compareVal = null, bool preserveLineBreaks = false) {
 	<tr class="@(compareVal != null && val != compareVal ? "changed" : "")">
 		<td>@name</td>

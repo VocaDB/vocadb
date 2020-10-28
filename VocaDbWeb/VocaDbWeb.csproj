@@ -168,6 +168,7 @@
     <Compile Include="Models\Shared\Partials\Album\EditCollectionDialogViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionPropertiesViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionsViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\ArchivedEntry\CurrentVersionMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistTypesDropdownKnockoutViewModel.cs" />
@@ -1933,6 +1934,7 @@
     <Content Include="Views\Shared\Partials\Shared\_ThumbItem.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_ValidationSummaryPanel.cshtml" />
     <Content Include="Views\Shared\Partials\Album\_DiscTypesDropdownKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\ArchivedEntry\_CurrentVersionMessage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

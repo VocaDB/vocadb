@@ -9,6 +9,6 @@
 	};
 }
 
-@ArchivedEntryHelpers.CurrentVersionMessage(Model.Entry.Version, Model.Entry.Status)
+@{ Html.RenderPartial("Partials/ArchivedEntry/_CurrentVersionMessage", new CurrentVersionMessageViewModel(Model.Entry.Version, Model.Entry.Status)); }
 
 @{ Html.RenderPartial("Partials/ArchivedEntry/_ArchivedObjectVersions", new ArchivedObjectVersionsViewModel(Model.ArchivedVersions, id => Url.Action("ViewSeriesVersion", new { id = id }))); }
