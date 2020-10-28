@@ -43,18 +43,10 @@
 	</a>
 }
 
-@helper PVServiceIcon(PVService service) {
-    
-	var iconUrl = @Html.VideoServiceLinkUrl(service);
-        
-	<img src="@iconUrl" alt="@service.ToString()" title="@service.ToString()" />
-    
-}
-
 @helper PVServiceIcons(PVServices services) {
     
 	foreach (var service in EnumVal<PVService>.Values.Where(service => services.HasFlag((PVServices)service))) {
-        @PVServiceIcon(service)           
+		Html.RenderPartial("Partials/Shared/_PVServiceIcon", new PVServiceIconViewModel(service));
 	}
     
 }
