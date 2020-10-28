@@ -34,25 +34,6 @@
 	@Html.ActionLink(entry.DefaultName, "Details", entry.EntryType.ToString(), new { id = entry.Id }, null)	
 }
 
-@helper EmbedPVThumb(VocaDb.Model.DataContracts.PVs.PVContract pv, int width = 340, int height = 200) {	
-    if (pv != null) {
-        switch (pv.Service) {
-            case VocaDb.Model.Domain.PVs.PVService.NicoNicoDouga:
-				<iframe width="@width" height="@height" src="http://ext.nicovideo.jp/thumb/@pv.PVId" scrolling="no" style="border:solid 1px #CCC;" frameborder="0"></iframe>
-                break;
-
-            case VocaDb.Model.Domain.PVs.PVService.SoundCloud:
-                var scId = new VocaDb.Model.Service.VideoServices.SoundCloudId(pv.PVId);
-				<iframe width="@width" height="@Math.Min(height, 166)" scrolling="no" frameborder="no" src="http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F@(scId.TrackId)&amp;auto_play=false&amp;show_artwork=false&amp;color=ff7700"></iframe>			
-                break;
-				
-			default:
-				Html.RenderPartial("Partials/PV/_EmbedPV", new EmbedPVViewModel(pv, width, height));
-				break; 
-        }
-    }
-}
-
 @helper EntrySearchNameBox(string id, string cls = "input-xlarge") {
 	<input type="text" id="@id" maxlength="128" class="@cls" placeholder="@ViewRes.SharedStrings.Search" />	
 }
