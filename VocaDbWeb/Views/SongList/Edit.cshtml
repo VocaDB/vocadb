@@ -95,7 +95,7 @@
 			}
 			
 			<div class="editor-label">
-				@Helpers.HelpLabel(Res.EventDate, Res.EventDateHelp)
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.EventDate, Res.EventDateHelp)); }
 			</div>
 			<div class="editor-field">
 				<input type="text" data-bind="datepicker: { value: eventDateDate, dateFormat: 'yy-mm-dd' }" class="span2" maxlength="10" />
@@ -117,7 +117,7 @@
 			</div>
 			
 			<div class="editor-label">
-				@Helpers.HelpLabel(Res.Status, Resources.CommonMessages.EntryStatusExplanation)
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.Status, Resources.CommonMessages.EntryStatusExplanation)); }
 			</div>
 			<div class="editor-field">
 				@Html.DropdownForKnockout(m => m.Status, ViewHelper.CreateEnumList(Model.AllowedEntryStatuses, Translate.EntryStatusNames.GetTranslatedFields(Model.AllowedEntryStatuses)), "value: status")

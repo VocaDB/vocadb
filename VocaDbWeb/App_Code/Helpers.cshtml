@@ -43,11 +43,6 @@
 	</a>
 }
 
-@* Displays label element with attached qTip tooltip *@
-@helper HelpLabel(string label, string title, string forElem = null) {
-	<label class="helpTip" data-bind="qTip: null" title="@title" for="@(forElem ?? "")">@label</label>			
-}
-
 @helper ImageUploadMessage() {
 	<p>
 		@string.Format(HelperRes.HelperStrings.UploadPictureInfo, string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)

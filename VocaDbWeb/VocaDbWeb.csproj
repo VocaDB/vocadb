@@ -206,6 +206,7 @@
     <Compile Include="Models\Shared\Partials\Shared\EntryStatusMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EventSeriesThumbsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EventThumbsViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\HelpLabelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\NotificationPanelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\SaveAndBackBtnViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\ShowMoreViewModel.cs" />
@@ -1943,6 +1944,7 @@
     <Content Include="Views\Shared\Partials\EntryDetails\_EntryTrashPopup.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_DraftIcon.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_EntrySearchNameBox.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_HelpLabel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -161,7 +161,7 @@
 			</div>
 
 			<div class="editor-label">
-				@Helpers.HelpLabel("Date", "Enter event begin date. For events lasting multiple days, end date can be entered as well. Both are optional, and end date does not need to be specified if it's the same as begin date.")
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Date", "Enter event begin date. For events lasting multiple days, end date can be entered as well. Both are optional, and end date does not need to be specified if it's the same as begin date.")); }
 			</div>
 			<div class="editor-field">
 				<input type="text" data-bind="datepicker: { value: date, dateFormat: 'yy-mm-dd' }" class="input-small" maxlength="10" />
@@ -173,7 +173,7 @@
 			</div>
 
 			<div class="editor-label">
-				@Helpers.HelpLabel("Setlist", "If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here.")
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Setlist", "If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here.")); }
 			</div>
 			<div class="editor-field">
 				@{ Html.RenderPartial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("songListAutoComplete", "songList", "songListCategory: 'Concerts'")); }
@@ -190,7 +190,7 @@
 
 			<div data-bind="visible: !venue.entry()">
 				<div class="editor-label">
-					@Helpers.HelpLabel("Venue name", "Can be either a physical location such as concert hall, or a virtual location (website).")
+					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Venue name", "Can be either a physical location such as concert hall, or a virtual location (website).")); }
 				</div>
 				<div class="editor-field">
 					@Html.TextBoxFor(m => m.VenueName, new { size = 40, @class = "span3", maxlength = 1000 })<br />
@@ -225,7 +225,7 @@
 			</div>
 	
 			<div class="editor-label">
-				@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)); }
 			</div>
 			<div class="editor-field">
 				@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))

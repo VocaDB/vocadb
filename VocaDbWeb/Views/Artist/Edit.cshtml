@@ -70,7 +70,7 @@
 				</div>
 
 				<div class="editor-label">
-					@Helpers.HelpLabel(Res.BaNames, ViewRes.EntryEditStrings.NameHelp)
+					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.BaNames, ViewRes.EntryEditStrings.NameHelp)); }
 					@Helpers.RequiredField()
 					<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
 				</div>
@@ -113,8 +113,8 @@
 				
 				<!-- ko if: canHaveRelatedArtists -->
 					<div class="editor-label">
-						@Helpers.HelpLabel("Associated artists", "Artists related to this voicebank. These are inherited to derived voicebanks. " +
-							"Character designer only needs to be specified if it's different from the illustrator and manager only needs to be specified if it's different from the voice provider.")
+						@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Associated artists", "Artists related to this voicebank. These are inherited to derived voicebanks. " +
+							"Character designer only needs to be specified if it's different from the illustrator and manager only needs to be specified if it's different from the voice provider.")); }
 					</div>
 					<div class="editor-field">
 						<table>
@@ -125,7 +125,7 @@
 							</tr>
 							<tr>
 								<td>
-									@Helpers.HelpLabel("Illustrator", "Person who illustrated the character design. This is inherited to derived voicebanks.")
+									@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Illustrator", "Person who illustrated the character design. This is inherited to derived voicebanks.")); }
 								</td>
 								<td>
 									@KnockoutHelpers.ArtistLockingAutoComplete("illustrator", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual")									
@@ -134,7 +134,7 @@
 							</tr>
 							<tr>
 								<td>
-									@Helpers.HelpLabel("Voice provider", "Person who provided their voice for this voicebank. This is inherited to derived voicebanks.")
+									@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Voice provider", "Person who provided their voice for this voicebank. This is inherited to derived voicebanks.")); }
 								</td>
 								<td>
 									@KnockoutHelpers.ArtistLockingAutoComplete("voiceProvider", "Unknown,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherIndividual")									
@@ -213,14 +213,14 @@
 				<!-- /ko -->		
 
 				<div class="editor-label">
-					@Helpers.HelpLabel(EditRes.WebLinks, EditRes.ExternalLinksQuickHelp)
+					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.WebLinks, EditRes.ExternalLinksQuickHelp)); }
 				</div>
 				<div class="editor-field" data-bind="with: webLinks">
 					@KnockoutHelpers.WebLinksEditViewKnockout(true)
 				</div>
 
 				<div class="editor-label">
-					@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
+					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)); }
 				</div>
 				<div class="editor-field">
 					@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")); }

@@ -1,0 +1,5 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Shared;
+@model HelpLabelViewModel
+
+@* Displays label element with attached qTip tooltip *@
+<label class="helpTip" data-bind="qTip: null" title="@Model.Title" for="@(Model.ForElem ?? "")">@Model.Label</label>

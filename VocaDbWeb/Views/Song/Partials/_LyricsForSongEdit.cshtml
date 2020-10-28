@@ -1,5 +1,6 @@
 ﻿@using VocaDb.Model.Domain.Globalization;
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 
 <!-- LyricsForSongEditViewModel -->
 
@@ -16,11 +17,11 @@
 		<div class="accordion-inner">
 			<div>
 				<p data-bind="visible: showLanguageSelection()">
-					@Helpers.HelpLabel(ViewRes.Song.EditStrings.LyLanguage, "If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'.")
+					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(ViewRes.Song.EditStrings.LyLanguage, "If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'.")); }
 					@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode")); }
 				</p>
 				<div>
-					@Helpers.HelpLabel("Source", "You can fill either label, URL or both")
+					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Source", "You can fill either label, URL or both")); }
 					<div class="inline input-prepend">
 						<span class="add-on" title="Label">
 							<i class="icon-pencil"></i>

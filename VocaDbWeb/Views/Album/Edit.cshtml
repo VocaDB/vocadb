@@ -151,7 +151,7 @@
 			</div>
 
 			<div class="editor-label">
-				@Helpers.HelpLabel(R.EditStrings.BaNames, ViewRes.EntryEditStrings.NameHelp)
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(R.EditStrings.BaNames, ViewRes.EntryEditStrings.NameHelp)); }
 				@Helpers.RequiredField()
 				<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
 			</div>
@@ -182,7 +182,7 @@
 			</div>
 
 			<div class="editor-label">
-				@Helpers.HelpLabel(R.EditStrings.BaDiscType, Model.DiscTypeDescriptions)
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(R.EditStrings.BaDiscType, Model.DiscTypeDescriptions)); }
 			</div>
 			<div class="editor-field">
 				<div class="row-fluid">
@@ -234,14 +234,14 @@
 			</button>
 
 			<div class="editor-label">
-				@Helpers.HelpLabel(R.EditStrings.BaCatNum, "Usually catalog numbers are in the format ABC-1234, please do not add extra whitespace.")
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(R.EditStrings.BaCatNum, "Usually catalog numbers are in the format ABC-1234, please do not add extra whitespace.")); }
 			</div>
 			<div class="editor-field">
 				<input type="text" data-bind="textInput: catalogNumber" />
 			</div>
 			
 			<div class="editor-label">
-				@Helpers.HelpLabel(Res.BaBarcode, "Barcodes are usually plain numbers, for example 01234567. They can be scanned from the product package.<br /><br /><img src='" + Url.Content("~/Content/barcode.png" + "' />"))
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.BaBarcode, "Barcodes are usually plain numbers, for example 01234567. They can be scanned from the product package.<br /><br /><img src='" + Url.Content("~/Content/barcode.png" + "' />"))); }
 			</div>
 			<div class="editor-field">
 				<div data-bind="foreach: identifiers">
@@ -254,14 +254,14 @@
 			</div>
 			
 			<div class="editor-label">
-				@Helpers.HelpLabel(EditRes.WebLinks, ViewRes.EntryEditStrings.ExternalLinksQuickHelp)
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.WebLinks, ViewRes.EntryEditStrings.ExternalLinksQuickHelp)); }
 			</div>
 			<div class="editor-field" data-bind="with: webLinks">
 				@KnockoutHelpers.WebLinksEditViewKnockout(true)
 			</div>
 
 			<div class="editor-label">
-				@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)); }
 			</div>
 			<div class="editor-field">
 				@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")); }
