@@ -1952,6 +1952,7 @@
     <Content Include="Views\Shared\Partials\Shared\_NotificationIcon.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_PVServiceIcon.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_PVServiceIcons.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_ReCaptcha2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

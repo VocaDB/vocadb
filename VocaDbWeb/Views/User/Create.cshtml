@@ -49,7 +49,7 @@
 					@R.Captcha
 				</div>
 				<div class="editor-field">
-					@Helpers.ReCaptcha2()
+					@{ Html.RenderPartial("Partials/Shared/_ReCaptcha2"); }
 
 					@Html.ValidationMessage("CAPTCHA")
 				</div>
