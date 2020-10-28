@@ -105,7 +105,7 @@
 			<tr data-bind="visible: webLinks && webLinks().length">
 				<th>
 					@HelperRes.HelperStrings.WebLinkUrlTitle
-					@Helpers.RequiredField()
+					@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
 				</th>
 				<th>@HelperRes.HelperStrings.WebLinkDescriptionTitle</th>
 				@if (showCategory) {

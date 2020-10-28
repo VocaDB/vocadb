@@ -87,7 +87,7 @@
 		<label class="helpTip" data-bind="qTip: null">
 			Names
 		</label>
-		@Helpers.RequiredField()
+		@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
 	</div>
 	<div class="editor-field" data-bind="with: names">
 		@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new NamesEditorViewModel()); }

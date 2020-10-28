@@ -20,7 +20,7 @@
 
 			<div class="editor-label">
 				@R.CreateStrings.Name
-				@Helpers.RequiredField()
+				@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
 			</div>
 
 			<div class="editor-field">
@@ -66,7 +66,7 @@
 				<table>
 					<tr><td class="formLabel">
 						@R.CreateStrings.WebLinkURL
-						@Helpers.RequiredField()
+						@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
 					</td><td>
 						@Html.TextBoxForKnockout(m => m.WebLinkUrl, "value: webLink.url, focusout: checkDuplicates",  "input-xlarge", maxLength: 512)     
 					</td></tr>

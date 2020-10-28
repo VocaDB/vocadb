@@ -81,7 +81,7 @@
 				<label class="helpTip" data-bind="qTip: null" title="@EditRes.NameHelp">
 					@Res.BaNames
 				</label>
-				@Helpers.RequiredField()
+				@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
 				<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
 			</div>
 			<div class="editor-field" data-bind="with: names">
