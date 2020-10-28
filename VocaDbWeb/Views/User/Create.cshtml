@@ -1,5 +1,5 @@
-﻿@using R = ViewRes.User.CreateStrings;
-
+﻿@using VocaDb.Web.Models.Shared.Partials.Shared;
+@using R = ViewRes.User.CreateStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.RegisterModel>
 
 @{
@@ -10,7 +10,7 @@
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>	
 }
 
-@Helpers.ValidationSymmaryDiv(ViewRes.User.CreateStrings.RegistrationUnsuccessful)
+@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(ViewRes.User.CreateStrings.RegistrationUnsuccessful)); }
 
 @if (Config.SiteSettings.SignupsDisabled) {
 	<div class="alert">

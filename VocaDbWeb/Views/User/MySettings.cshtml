@@ -17,7 +17,7 @@
 	};		
 }
 
-@Helpers.ValidationSymmaryDiv(R.MySettingsStrings.UnableToSave)
+@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(R.MySettingsStrings.UnableToSave)); }
 
 @using (Html.BeginForm("MySettings", "User", FormMethod.Post)) {
     

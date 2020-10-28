@@ -18,7 +18,7 @@
 }
 
 @using(Html.BeginForm()) {	
-	@Helpers.ValidationSymmaryDiv("Unable to edit user."/* TODO: localize */)
+	Html.RenderPartial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel("Unable to edit user."/* TODO: localize */));
 	
 	@Html.HiddenFor(m => m.Id)
 

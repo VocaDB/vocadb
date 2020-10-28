@@ -121,7 +121,7 @@
 }
 
 
-@Helpers.ValidationSymmaryDiv(R.EditStrings.UnableToSaveProperties)
+@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(R.EditStrings.UnableToSaveProperties)); }
 
 @{ Html.RenderPartial("Partials/Knockout/_EntryValidationMessage", new EntryValidationMessageViewModel(Model.Draft, validationErrors, "glalbums")); }
 

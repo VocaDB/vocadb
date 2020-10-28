@@ -1,6 +1,7 @@
-﻿@using VocaDb.Model.Helpers
+﻿@using System.Web.Optimization;
+@using VocaDb.Model.Helpers;
 @using VocaDb.Web.Helpers;
-@using System.Web.Optimization
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using R = ViewRes.Artist;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Artist.Create>
 
@@ -13,7 +14,7 @@
 
 <form action="@Url.Action("Create", "Artist")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
 
-	@Helpers.ValidationSymmaryDiv(R.CreateStrings.UnableToCreateArtist)
+	@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(R.CreateStrings.UnableToCreateArtist)); }
 	
 	<div class="row-fluid">
 		<div class="span5 well well-transparent">
