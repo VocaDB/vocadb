@@ -34,10 +34,6 @@
 	@Html.ActionLink(entry.DefaultName, "Details", entry.EntryType.ToString(), new { id = entry.Id }, null)	
 }
 
-@helper EntrySearchNameBox(string id, string cls = "input-xlarge") {
-	<input type="text" id="@id" maxlength="128" class="@cls" placeholder="@ViewRes.SharedStrings.Search" />	
-}
-
 
 @helper FormatPVLink(VocaDb.Model.DataContracts.PVs.PVContract pv, bool type = true) {
 	<a href="@pv.Url"><img src="@Html.VideoServiceLinkUrl(pv.Service)" alt="@pv.Service" /> @(!string.IsNullOrEmpty(pv.Name) ? pv.Name : pv.Service.ToString())

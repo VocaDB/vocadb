@@ -202,6 +202,7 @@
     <Compile Include="Models\Shared\Partials\Shared\DraftMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EmbedGoogleMapsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EntryPictureFileLinkViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\EntrySearchNameBoxViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EntryStatusMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EventSeriesThumbsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EventThumbsViewModel.cs" />
@@ -1941,6 +1942,7 @@
     <Content Include="Views\Shared\Partials\EntryDetails\_EntryDeletePopup.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_EntryTrashPopup.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_DraftIcon.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_EntrySearchNameBox.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

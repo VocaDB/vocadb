@@ -1,6 +1,7 @@
 ﻿@using VocaDb.Web.Helpers
 @using Resources
 @using VocaDb.Model.Service.Search
+@using VocaDb.Web.Models.Shared.Partials.Album;
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using VocaDb.Web.Models.Shared.Partials.Search;
 @using VocaDb.Web.Resources.Domain
@@ -70,7 +71,7 @@
 	<div class="control-group">
 		<div class="control-label">@ViewRes.Search.IndexStrings.AlbumType</div>
 		<div class="controls">
-			@AlbumHelpers.DiscTypesDropdownKnockout("albumType")
+			@{ Html.RenderPartial("Partials/Album/_DiscTypesDropdownKnockout", new DiscTypesDropdownKnockoutViewModel("albumType")); }
 		</div>
 	</div>
 
