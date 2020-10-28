@@ -164,6 +164,7 @@
     <Compile Include="Models\Shared\Partials\Activityfeed\ActivityEntryKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Activityfeed\ActivityEntryViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\AlbumGridViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Album\DiscTypesDropdownKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\EditCollectionDialogViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionPropertiesViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionsViewModel.cs" />
@@ -1931,6 +1932,7 @@
     <Content Include="Views\Shared\Partials\Shared\_ShowMore.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_ThumbItem.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_ValidationSummaryPanel.cshtml" />
+    <Content Include="Views\Shared\Partials\Album\_DiscTypesDropdownKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
