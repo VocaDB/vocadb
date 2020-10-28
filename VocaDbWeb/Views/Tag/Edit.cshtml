@@ -200,4 +200,4 @@
 </form>
 
 @{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(EditRes.ConfirmDelete)); }
-@EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash)); }

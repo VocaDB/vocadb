@@ -180,6 +180,7 @@
     <Compile Include="Models\Shared\Partials\EntryDetails\DeletedBannerViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\EntryDeletePopupBaseViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\EntryDeletePopupViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\EntryDetails\EntryTrashPopupViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ExternalLinksRowsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\LargeShareLinksViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryPopupKnockoutViewModel.cs" />
@@ -1937,6 +1938,7 @@
     <Content Include="Views\Shared\Partials\Album\_DiscTypesDropdownKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_CurrentVersionMessage.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_EntryDeletePopup.cshtml" />
+    <Content Include="Views\Shared\Partials\EntryDetails\_EntryTrashPopup.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

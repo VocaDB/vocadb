@@ -327,7 +327,7 @@
 </div>
 
 @{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete)); }
-@EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash)); }
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/ReleaseEvent/Edit")

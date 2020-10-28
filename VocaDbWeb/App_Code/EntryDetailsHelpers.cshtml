@@ -1,13 +1,7 @@
-﻿@using System.Web.Mvc.Html
-@using Microsoft.Web.Helpers;
+﻿@using Microsoft.Web.Helpers;
 @using VocaDb.Model.DataContracts
 @using VocaDb.Web.Helpers
-@using VocaDb.Web.Models.Shared.Partials.EntryDetails
 @inherits VocaDb.Web.Code.HelperPage
-
-@helper EntryTrashPopup(string confirmText, string viewModelBindingName = "trashViewModel",  string deleteButtonId = "trashLink") {
-	Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel(confirmText, viewModelBindingName, deleteButtonId, ViewRes.EntryEditStrings.MoveToTrash, ViewRes.EntryEditStrings.MoveToTrash));
-}
 
 @helper ExternalLinksList(IEnumerable<WebLinkContract> webLinks, bool showCategory = false) {
     
