@@ -1,7 +1,6 @@
 ﻿@using System.Web.Mvc.Html
 @using System.Web.Routing
 @using VocaDb.Model.DataContracts.Albums;
-@using VocaDb.Model.Service.Search.AlbumSearch
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using VocaDb.Model.Utils
@@ -9,17 +8,6 @@
 
 @helper AlbumLink(AlbumContract album) {
 	@Html.ActionLink(album.Name, "Details", "Album", new RouteValueDictionary { { "id", album.Id } }, new Dictionary<string, object> { { "title", album.AdditionalNames }, { "data-entry-id", album.Id }, { "class", "albumLink" }})
-}
-
-@helper ArtistAlbumParticipationStatusOptionsKnockout(string binding) {
-	{
-		var options = new Dictionary<string, string> {
-			{ ArtistAlbumParticipationStatus.Everything.ToString(), "Everything" },
-			{ ArtistAlbumParticipationStatus.OnlyMainAlbums.ToString(), "Only main albums" },
-			{ ArtistAlbumParticipationStatus.OnlyCollaborations.ToString(), "Only collaborations" },
-		};
-		Html.RenderPartial("Partials/Knockout/_CheckBoxButtons", new CheckBoxButtonsViewModel(options, binding));
-	} 
 }
 
 @helper DetailsLink(AlbumContract album) {
