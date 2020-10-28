@@ -60,7 +60,7 @@
 					}
 					<td data-bind="click: $root.selectMessage">
 						<span data-bind="visible: highPriority" style="display: none;">
-							@Helpers.NotificationIcon();
+							@{ Html.RenderPartial("Partials/Shared/_NotificationIcon"); }
 							&nbsp;
 						</span>
 						@if (showUnread) {
