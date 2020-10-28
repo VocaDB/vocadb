@@ -96,7 +96,7 @@
 
 				<div class="editor-label">
 					<label class="inline-block">@Res.BaDescription</label>
-					@Helpers.MarkdownNotice()
+					@{ Html.RenderPartial("Partials/Shared/_MarkdownNotice"); }
 					<span data-bind="visible: validationError_needReferences, qTip" class="icon errorIcon" title="@ValidationErrors.NeedReferences"></span>
 				</div>
 				<div class="editor-field entry-edit-description" data-bind="with: description">

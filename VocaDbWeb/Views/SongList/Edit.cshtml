@@ -74,7 +74,7 @@
 
 			<div class="editor-label">
 				@Res.Description
-				@Helpers.MarkdownNotice()
+				@{ Html.RenderPartial("Partials/Shared/_MarkdownNotice"); }
 			</div>
 			<div class="editor-field">
 				<textarea data-bind="textInput: description" rows="6" cols="60" maxlength="3000" class="input-xxlarge"></textarea>

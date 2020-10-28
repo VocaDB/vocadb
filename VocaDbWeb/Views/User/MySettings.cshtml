@@ -187,7 +187,7 @@
 			
  			<div class="editor-label">
 				@R.MySettingsStrings.AboutMe
-				@Helpers.MarkdownNotice()
+				@{ Html.RenderPartial("Partials/Shared/_MarkdownNotice"); }
 			</div>
 			<div class="editor-field">
 				@Html.TextAreaForKnockout(m => m.AboutMe, binding: "textInput: aboutMe", cssClass: "input-xxlarge", rows: 7)

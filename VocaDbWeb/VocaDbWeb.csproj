@@ -1946,6 +1946,7 @@
     <Content Include="Views\Shared\Partials\Shared\_EntrySearchNameBox.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_HelpLabel.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_ImageUploadMessage.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_MarkdownNotice.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
