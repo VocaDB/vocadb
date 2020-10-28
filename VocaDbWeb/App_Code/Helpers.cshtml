@@ -43,12 +43,6 @@
 	</a>
 }
 
-@helper ImageUploadMessage() {
-	<p>
-		@string.Format(HelperRes.HelperStrings.UploadPictureInfo, string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)
-	</p>
-}
-
 @helper MarkdownNotice() {
 	<small>(<a href="https://help.github.com/articles/github-flavored-markdown" target="_blank">@HelperRes.HelperStrings.GitHubMarkdown</a> @HelperRes.HelperStrings.IsSupportedForFormatting)</small>
 }

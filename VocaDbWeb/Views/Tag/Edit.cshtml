@@ -129,7 +129,7 @@
 				<img class="pull-left media-object" src="@thumbUrl" alt="Thumb" />
 			}
 			<div class="media-body">
-				@Helpers.ImageUploadMessage()
+				@{ Html.RenderPartial("Partials/Shared/_ImageUploadMessage"); }
 				<input type="file" id="thumbPicUpload" name="thumbPicUpload" />
 			</div>
 		</div>
