@@ -208,6 +208,7 @@
     <Compile Include="Models\Shared\Partials\Shared\EventThumbsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\HelpLabelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\NotificationPanelViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\PVServiceIconsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\PVServiceIconViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\SaveAndBackBtnViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\ShowMoreViewModel.cs" />
@@ -1950,6 +1951,7 @@
     <Content Include="Views\Shared\Partials\Shared\_MarkdownNotice.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_NotificationIcon.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_PVServiceIcon.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_PVServiceIcons.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

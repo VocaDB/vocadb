@@ -43,14 +43,6 @@
 	</a>
 }
 
-@helper PVServiceIcons(PVServices services) {
-    
-	foreach (var service in EnumVal<PVService>.Values.Where(service => services.HasFlag((PVServices)service))) {
-		Html.RenderPartial("Partials/Shared/_PVServiceIcon", new PVServiceIconViewModel(service));
-	}
-    
-}
-
 @helper ReCaptcha2() {
 	<div class="g-recaptcha" data-sitekey="@AppConfig.ReCAPTCHAPublicKey"></div>
 }

@@ -332,7 +332,7 @@
 										if (song.Song.SongType != SongType.Original && song.Song.SongType != SongType.Unspecified) {
 											Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.Song.SongType));
 										}
-										@Helpers.PVServiceIcons(song.Song.PVServices)
+										Html.RenderPartial("Partials/Shared/_PVServiceIcons", new PVServiceIconsViewModel(song.Song.PVServices));
 										Html.RenderPartial("Partials/Song/_RatingIcon", new RatingIconViewModel(song.Rating ?? SongVoteRating.Nothing));
 										<br />
 										<small class="muted">@song.Song.ArtistString</small>
