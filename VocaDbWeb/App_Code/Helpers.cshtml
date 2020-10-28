@@ -26,12 +26,6 @@
 	<img id="@id" src="@Url.Content("~/Content/ajax-loader.gif")" alt="loading..." style="display:none;" />
 }
 
-@helper DraftIcon(VocaDb.Model.Domain.EntryStatus status) {
-	if (status == VocaDb.Model.Domain.EntryStatus.Draft) {
-		<img src="@Url.Content("~/Content/draft.png")" title="@HelperRes.HelperStrings.DraftIconTitle" alt="draft" />
-	}
-}
-
 @helper EntryLink(EntryRefWithNameContract entryRef) {
 	@Html.ActionLink(entryRef.Name.DisplayName, "Details", entryRef.EntryType.ToString(), new RouteValueDictionary { { "id", entryRef.Id } }, new Dictionary<string, object> { { "title", entryRef.Name.AdditionalNames }, { "data-entry-id", entryRef.Id } })
 }

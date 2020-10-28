@@ -198,6 +198,7 @@
     <Compile Include="Models\Shared\Partials\PV\EmbedPVViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Search\AdvancedFiltersViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Search\AdvancedFilterViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\DraftIconViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\DraftMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EmbedGoogleMapsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EntryPictureFileLinkViewModel.cs" />
@@ -1939,6 +1940,7 @@
     <Content Include="Views\Shared\Partials\ArchivedEntry\_CurrentVersionMessage.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_EntryDeletePopup.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_EntryTrashPopup.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_DraftIcon.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

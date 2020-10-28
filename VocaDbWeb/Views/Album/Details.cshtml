@@ -328,7 +328,7 @@
 											@(" (" + DateTimeUtils.FormatFromSeconds(song.Song.LengthSeconds) + ")")
 										}
 										@:&nbsp;
-										@Helpers.DraftIcon(song.Song.Status)
+										Html.RenderPartial("Partials/Shared/_DraftIcon", new DraftIconViewModel(song.Song.Status));
 										if (song.Song.SongType != SongType.Original && song.Song.SongType != SongType.Unspecified) {
 											Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.Song.SongType));
 										}
