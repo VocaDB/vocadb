@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @model ArchivedObjectVersionPropertiesViewModel
 
 <div class="well well-transparent">
@@ -37,11 +38,11 @@
 		</tr>
 		<tr>
 			<td>Created</td>
-			<td>@Helpers.UniversalTimeLabel(Model.Ver.Contract.Created)</td>
+			<td>@{ Html.RenderPartial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.Ver.Contract.Created)); }</td>
 			<td>
 				@if (Model.CompareTo != null)
 				{
-					@Helpers.UniversalTimeLabel(Model.CompareTo.Contract.Created)
+					Html.RenderPartial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CompareTo.Contract.Created));
 				}
 			</td>
 		</tr>

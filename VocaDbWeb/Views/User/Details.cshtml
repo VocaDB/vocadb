@@ -9,6 +9,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
 @using VocaDb.Web.Resources.Domain.Globalization
 @using R = ViewRes.User.DetailsStrings;
@@ -288,7 +289,7 @@
 			else if (Login.CanManageUsers)
 			{
 				<h4>@R.LastLogin</h4>
-				@Helpers.UniversalTimeLabel(Model.LastLogin)
+				Html.RenderPartial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.LastLogin));
 				if (Login.CanManageUsers) {
 					@:(@Model.LastLoginAddress)
 					<a href='http://www.geoiptool.com/?IP=@Model.LastLoginAddress'>GeoIpTool</a>

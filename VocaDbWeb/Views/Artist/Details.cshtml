@@ -252,7 +252,7 @@
 				<tr>
 					<td>@ViewRes.EntryDetailsStrings.AdditionDate</td>
 					<td>
-						@Helpers.UniversalTimeLabel(Model.CreateDate)
+						@{ Html.RenderPartial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CreateDate)); }
 					</td>
 				</tr>
 

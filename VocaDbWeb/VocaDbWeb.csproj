@@ -213,6 +213,7 @@
     <Compile Include="Models\Shared\Partials\Shared\SaveAndBackBtnViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\ShowMoreViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\ThumbItemViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\UniversalTimeLabelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\ValidationSummaryPanelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\PVPreviewKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
@@ -1954,6 +1955,7 @@
     <Content Include="Views\Shared\Partials\Shared\_PVServiceIcons.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_ReCaptcha2.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_RequiredField.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_UniversalTimeLabel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

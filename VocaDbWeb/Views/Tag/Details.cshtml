@@ -150,7 +150,7 @@
 
 			<p>@string.Format(Res.FollowCount, Model.FollowerCount)</p>
 
-			<p>@ViewRes.EntryDetailsStrings.AdditionDate: @Helpers.UniversalTimeLabel(Model.CreateDate)</p>
+			<p>@ViewRes.EntryDetailsStrings.AdditionDate: @{ Html.RenderPartial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CreateDate)); }</p>
 
 			<br />
 
