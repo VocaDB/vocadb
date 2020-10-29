@@ -54,6 +54,7 @@
     <PackageReference Include="Remotion.Linq" Version="2.2.0" />
     <PackageReference Include="Remotion.Linq.EagerFetching" Version="2.2.0" />
     <PackageReference Include="taglib" Version="2.1.0.0" />
+    <PackageReference Include="VocaDb.BandcampMetadataExtractor" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="RSS.NET">
@@ -68,9 +69,6 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\VocaDb.VideoInfoExtractors\VocaDb.VideoInfoExtractors.csproj" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

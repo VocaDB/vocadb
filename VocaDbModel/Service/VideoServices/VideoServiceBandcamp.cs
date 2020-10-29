@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 using System.Web;
 using FluentNHibernate.Utils;
 using NLog;
+using VocaDb.BandcampMetadataExtractor;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Utils;
-using VocaDb.VideoInfoExtractors;
 
 namespace VocaDb.Model.Service.VideoServices {
 	public class VideoServiceBandcamp : VideoService {
@@ -57,7 +57,7 @@ namespace VocaDb.Model.Service.VideoServices {
 				_log.Error("Unexpected result from parser. Error list: {0}. Result type is {1}. Title is {2}", warnings, result.GetType().Name, result.Title);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Unexpected result from parser.");
 			}*/
-			var extractor = new BandcampInfoExtractor();
+			var extractor = new BandcampMetadataClient();
 			var info = await extractor.ExtractAsync(url);
 
 			DateTime? date = null;

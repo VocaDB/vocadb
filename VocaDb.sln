@@ -29,8 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.TouhouDb.Resources",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDbWeb.Resources", "VocaDbWeb.Resources\VocaDbWeb.Resources.csproj", "{A08B80F0-5124-4674-86DC-D128ECC7A885}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDb.VideoInfoExtractors", "VocaDb.VideoInfoExtractors\VocaDb.VideoInfoExtractors.csproj", "{576BA7F1-2E4C-477B-A593-E4E3598E57B8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,10 +67,6 @@ Global
 		{A08B80F0-5124-4674-86DC-D128ECC7A885}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A08B80F0-5124-4674-86DC-D128ECC7A885}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A08B80F0-5124-4674-86DC-D128ECC7A885}.Release|Any CPU.Build.0 = Release|Any CPU
-		{576BA7F1-2E4C-477B-A593-E4E3598E57B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{576BA7F1-2E4C-477B-A593-E4E3598E57B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{576BA7F1-2E4C-477B-A593-E4E3598E57B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{576BA7F1-2E4C-477B-A593-E4E3598E57B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
