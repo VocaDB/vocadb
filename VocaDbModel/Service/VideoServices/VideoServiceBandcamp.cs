@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 using System.Web;
 using FluentNHibernate.Utils;
 using NLog;
-using NYoutubeDL;
-using NYoutubeDL.Models;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Utils;
+using VocaDb.VideoInfoExtractors;
 
 namespace VocaDb.Model.Service.VideoServices {
 	public class VideoServiceBandcamp : VideoService {
@@ -24,7 +23,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
-		private string GetErrorString(DownloadInfo info) => info != null ? string.Join(", ", info.Warnings.Concat(info.Errors)) : string.Empty;
+		//private string GetErrorString(DownloadInfo info) => info != null ? string.Join(", ", info.Warnings.Concat(info.Errors)) : string.Empty;
 
 		private string GetPath(string path) {
 			// TODO: inject this.
@@ -33,16 +32,7 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
 
-			var youtubeDl = new YoutubeDL {
-				RetrieveAllInfo = true,
-				YoutubeDlPath = GetPath(AppConfig.YoutubeDLPath),
-				PythonPath = GetPath(AppConfig.PythonPath)
-			};
-
-			youtubeDl.StandardOutputEvent += StandardOutputEvent;
-			youtubeDl.StandardErrorEvent += StandardErrorEvent;
-
-			DownloadInfo result;
+			/*DownloadInfo result;
 			try {
 				var task = youtubeDl.GetDownloadInfoAsync(url);
 				result = await TimeoutAfter(task, 10000);
@@ -66,7 +56,9 @@ namespace VocaDb.Model.Service.VideoServices {
 				var warnings = GetErrorString(youtubeDl.Info);
 				_log.Error("Unexpected result from parser. Error list: {0}. Result type is {1}. Title is {2}", warnings, result.GetType().Name, result.Title);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, "Unexpected result from parser.");
-			}
+			}*/
+			var extractor = new BandcampInfoExtractor();
+			var info = await extractor.ExtractAsync(url);
 
 			DateTime? date = null;
 			if (DateTime.TryParseExact(info.UploadDate, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var parsedDate)) {
