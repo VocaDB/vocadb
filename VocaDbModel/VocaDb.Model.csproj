@@ -54,7 +54,7 @@
     <PackageReference Include="Remotion.Linq" Version="2.2.0" />
     <PackageReference Include="Remotion.Linq.EagerFetching" Version="2.2.0" />
     <PackageReference Include="taglib" Version="2.1.0.0" />
-    <PackageReference Include="VocaDb.BandcampMetadataExtractor" Version="1.0.0" />
+    <PackageReference Include="VocaDb.BandcampMetadataExtractor" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="RSS.NET">
