@@ -177,7 +177,7 @@
 <div data-bind="css: { loading: loading }, visible: playlistMode() == false" style="display: none;">
 
 	<div data-bind="with: paging" class="dropdown pull-right">
-		@KnockoutHelpers.EntryCount()
+		@{ Html.RenderPartial("Partials/Knockout/_EntryCount"); }
 	</div>
 
 	<div data-bind="with: paging">

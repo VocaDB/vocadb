@@ -1978,6 +1978,7 @@
     <Content Include="Views\Shared\Partials\Venue\_VenueLink.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_ArtistLockingAutoComplete.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_DraftIcon.cshtml" />
+    <Content Include="Views\Shared\Partials\Knockout\_EntryCount.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -5,18 +5,6 @@
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper EntryCount() {
-	<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-		@Html.Raw(string.Format(ViewRes.Search.IndexStrings.ShowingItemsOf, "<span data-bind='text: pageSize'></span>", "<span data-bind='text: totalItems'></span>"))
-	</a>
-	<ul class="dropdown-menu">
-		<li><a data-bind="click: function() { pageSize(10); }" href="#">@string.Format(ViewRes.Search.IndexStrings.ItemsPerPage, 10)</a></li>
-		<li><a data-bind="click: function() { pageSize(20); }" href="#">@string.Format(ViewRes.Search.IndexStrings.ItemsPerPage, 20)</a></li>
-		<li><a data-bind="click: function() { pageSize(40); }" href="#">@string.Format(ViewRes.Search.IndexStrings.ItemsPerPage, 40)</a></li>
-		<li><a data-bind="click: function() { pageSize(100); }" href="#">@string.Format(ViewRes.Search.IndexStrings.ItemsPerPage, 100)</a></li>
-	</ul>
-}
-
 @helper LanguageSelectionDropDown(string valueBinding) {
 	Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.ContentLanguageSelectionNames.ValuesAndNamesStrings, valueBinding));
 }
