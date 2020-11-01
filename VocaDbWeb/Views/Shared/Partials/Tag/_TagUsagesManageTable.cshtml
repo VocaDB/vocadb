@@ -26,7 +26,7 @@
 			@foreach (var usage in Model.TagUsages)
 			{
 				<tr>
-					<td>@TagHelpers.TagLink(usage.Tag)</td>
+					<td>@{ Html.RenderPartial("Partials/Tag/_TagLink", new TagLinkViewModel(usage.Tag)); }</td>
 					<td>@usage.Count</td>
 					@if (Login.CanManageUsers)
 					{

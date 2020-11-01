@@ -1,13 +1,9 @@
 ﻿@using System.Web.Mvc.Html;
-@using System.Web.Routing
-@using VocaDb.Model.DataContracts.Tags
-@using VocaDb.Web.Helpers
+@using VocaDb.Model.DataContracts.Tags;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Tag;
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper TagLink(TagBaseContract tag, bool tooltip = false) {
-	@Html.ActionLink(tag.Name, "DetailsById", "Tag", new RouteValueDictionary { { "id", tag.Id }, { "slug", tag.UrlSlug }}, new Dictionary<string, object> { { "title", tag.AdditionalNames }, { "data-bind", tooltip ? "tagToolTip: " + tag.Id : null } })
-}
-
 @helper TagList(TagBaseContract[] tagNames, bool tooltip = false) {
-	@Html.LinkListHtml(tagNames, t => TagLink(t, tooltip))
+	@Html.LinkListHtml(tagNames, t => Html.Partial("Partials/Tag/_TagLink", new TagLinkViewModel(t, tooltip)))
 }
