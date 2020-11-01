@@ -1,13 +1,7 @@
 ﻿@using System.Web.Mvc.Html;
-@using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain;
 @using VocaDb.Model.Domain.Songs;
-@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @inherits VocaDb.Web.Code.HelperPage
-
-@helper LanguageSelectionDropDown(string valueBinding) {
-	Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.ContentLanguageSelectionNames.ValuesAndNamesStrings, valueBinding));
-}
 
 @* 
 	Autocomplete box that allows selection of one item. When an item is selected, "clear" button will be displayed.

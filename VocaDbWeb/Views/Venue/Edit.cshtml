@@ -2,6 +2,7 @@
 @using System.Web.Optimization;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
 @using Res = ViewRes.Venue.EditStrings;
 @using EditRes = ViewRes.EntryEditStrings;
@@ -56,7 +57,7 @@
 		</label>
 	</div>
 	<div class="editor-field">
-		@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
+		@{ Html.RenderPartial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage")); }
 		@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
 	</div>
 
