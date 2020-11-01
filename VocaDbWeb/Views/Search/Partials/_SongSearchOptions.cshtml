@@ -74,7 +74,7 @@
 	<div class="control-group">
 		<div class="control-label">@Res.ParentVersion</div>
 		<div class="controls">
-			@KnockoutHelpers.SongLockingAutoComplete("parentVersion")
+			@{ Html.RenderPartial("Partials/Knockout/_SongLockingAutoComplete", new SongLockingAutoCompleteViewModel("parentVersion")); }
 		</div>
 	</div>
 
