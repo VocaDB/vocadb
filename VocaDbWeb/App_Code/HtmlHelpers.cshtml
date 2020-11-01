@@ -1,15 +1,11 @@
-﻿@inherits VocaDb.Web.Code.HelperPage
-@using VocaDb.Web.Code
-
-@helper MetaTag(string name, string content) {
-	if (!string.IsNullOrEmpty(content)) {
-		<meta name="@name" content="@content" />
-	}
-}
+﻿@using System.Web.Mvc.Html;
+@using VocaDb.Web.Code;
+@using VocaDb.Web.Models.Shared.Partials.Html;
+@inherits VocaDb.Web.Code.HelperPage
 
 @helper OpenGraphMetaTags(PagePropertiesData pageProperties) {
-	@MetaTag("og:url", pageProperties.CanonicalUrl)
-	@MetaTag("og:title", pageProperties.OpenGraph.Title)
-	@MetaTag("og:description", pageProperties.OpenGraph.Description)
-	@MetaTag("og:type", pageProperties.OpenGraph.Type)
+	Html.RenderPartial("Partials/Html/_MetaTag", new MetaTagViewModel("og:url", pageProperties.CanonicalUrl));
+	Html.RenderPartial("Partials/Html/_MetaTag", new MetaTagViewModel("og:title", pageProperties.OpenGraph.Title));
+	Html.RenderPartial("Partials/Html/_MetaTag", new MetaTagViewModel("og:description", pageProperties.OpenGraph.Description));
+	Html.RenderPartial("Partials/Html/_MetaTag", new MetaTagViewModel("og:type", pageProperties.OpenGraph.Type));
 }
