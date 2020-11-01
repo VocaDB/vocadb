@@ -35,14 +35,6 @@
 }
 
 
-@helper FormatPVLink(VocaDb.Model.DataContracts.PVs.PVContract pv, bool type = true) {
-	<a href="@pv.Url"><img src="@Html.VideoServiceLinkUrl(pv.Service)" alt="@pv.Service" /> @(!string.IsNullOrEmpty(pv.Name) ? pv.Name : pv.Service.ToString())
-	@if (type) {
-		@("(" + Translate.PVTypeNames[pv.PVType] + ")")
- }
-	</a>
-}
-
 @helper Stars(int current, int max) {
 	for (int i = 1; i <= max; ++i) {
 		if (current >= i) {

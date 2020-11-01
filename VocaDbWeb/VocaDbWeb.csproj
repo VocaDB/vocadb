@@ -216,6 +216,7 @@
     <Compile Include="Models\Shared\Partials\Shared\EntryStatusMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EventSeriesThumbsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EventThumbsViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\FormatPVLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\HelpLabelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\NotificationPanelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\PVServiceIconsViewModel.cs" />
@@ -1985,6 +1986,7 @@
     <Content Include="Views\Shared\Partials\Knockout\_LanguageSelectionDropDown.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_SongLockingAutoComplete.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_IconAndNameKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_FormatPVLink.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

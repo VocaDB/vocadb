@@ -198,7 +198,7 @@
 
 @if (Model.PVs.Any()) {
 	<h3 class="withMargin">@Res.PVs</h3>
-	@Html.LinkListHtml(Model.PVs, pv => Helpers.FormatPVLink(pv, false))
+	@Html.LinkListHtml(Model.PVs, pv => Html.Partial("Partials/Shared/_FormatPVLink", new FormatPVLinkViewModel(pv, false)))
 }	
 
 @if (primaryPV != null) {

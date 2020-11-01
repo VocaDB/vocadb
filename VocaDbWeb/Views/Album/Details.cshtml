@@ -265,7 +265,7 @@
 						<td>@Res.PVs</td>
 						<td>
 							@foreach (var pv in Model.PVs) {
-								@Helpers.FormatPVLink(pv, false)<br />
+								Html.RenderPartial("Partials/Shared/_FormatPVLink", new FormatPVLinkViewModel(pv, false));<br />
 							}
 						</td>
 					</tr>
