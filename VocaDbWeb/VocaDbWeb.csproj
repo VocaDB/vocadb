@@ -239,7 +239,6 @@
     <Compile Include="Models\Shared\Partials\Event\PrintArchivedEventSeriesDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\PrintArchivedSongDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\RatingIconViewModel.cs" />
-    <Compile Include="Models\Shared\Partials\Song\SongIconLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongTypeLabelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\PrintArchivedTagDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\IconNameAndTypeLinkKnockoutViewModel.cs" />
@@ -1892,7 +1891,6 @@
     <Content Include="Views\Shared\Partials\Comment\_CommentEntryItem.cshtml" />
     <Content Include="Views\Shared\Partials\Event\_VenueLinkOrVenueName.cshtml" />
     <Content Include="Views\Shared\Partials\Song\_RatingIcon.cshtml" />
-    <Content Include="Views\Shared\Partials\Song\_SongIconLink.cshtml" />
     <Content Include="Views\Shared\Partials\Song\_SongTypeLabel.cshtml" />
     <Content Include="Views\Shared\Partials\Activityfeed\_ActivityEntry.cshtml" />
     <Content Include="Views\Shared\Partials\Activityfeed\_ActivityEntryKnockout.cshtml" />

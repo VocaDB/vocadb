@@ -13,7 +13,7 @@
 		<td>
 			@if (!string.IsNullOrEmpty(song.ThumbUrl))
 			{
-				Html.RenderPartial("Partials/Song/_SongIconLink", new SongIconLinkViewModel(song));
+				@SongHelpers.SongIconLink(song)
 			}
 		</td>
 		<td>
