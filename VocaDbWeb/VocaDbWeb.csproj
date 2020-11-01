@@ -171,6 +171,7 @@
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\CurrentVersionMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistGridViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Artist\ArtistLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistTypesDropdownKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentBodyLargeViewModel.cs" />
@@ -1770,7 +1771,7 @@
     </None>
     <Content Include="Views\Album\Partials\_AlbumReviews.cshtml" />
     <Content Include="Views\Admin\ManageEntryTagMappings.cshtml" />
-    <Content Include="Views\Album\Partials\_AlbumLink.cshtml" />
+    <Content Include="Views\Shared\Partials\Album\_AlbumLink.cshtml" />
     <None Include="Views\Event\EditSeries.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
     <Content Include="Views\Event\SeriesDetails.cshtml" />
@@ -1959,6 +1960,7 @@
     <Content Include="Views\Shared\Partials\Shared\_RequiredField.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_UniversalTimeLabel.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_ValidationSummaryDiv.cshtml" />
+    <Content Include="Views\Shared\Partials\Artist\_ArtistLink.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

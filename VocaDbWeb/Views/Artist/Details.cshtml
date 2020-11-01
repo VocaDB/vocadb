@@ -55,12 +55,21 @@
 	}
 }
 
+@helper DataRow(string label, MvcHtmlString content) {
+	if (content != null) {
+		<tr>
+			<td>@label</td>
+			<td>@content</td>
+		</tr>
+	}
+}
+
 @helper ArtistListRow(string label, ArtistContract[] artists, bool typeLabel, bool releaseYear = false) {
 	@DataRow(label, artists.Any() ? ArtistHelpers.ArtistLinkList(artists, typeLabel: typeLabel, releaseYear: releaseYear) : null)
 }
 
 @helper ArtistRow(string label, ArtistContract artist, bool typeLabel) {
-	@DataRow(label, artist != null ? ArtistHelpers.ArtistLink(artist, typeLabel: typeLabel) : null)
+	@DataRow(label, artist != null ? Html.Partial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist, typeLabel: typeLabel)) : null)
 }
 
 @if (Model.Deleted) {
@@ -186,7 +195,7 @@
 							</span>
 						</td>
 						<td id="baseVoicebank">
-							@ArtistHelpers.ArtistLink(Model.BaseVoicebank, releaseYear: true)
+							@{ Html.RenderPartial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(Model.BaseVoicebank, releaseYear: true)); }
 						</td>
 					</tr>
 				}
@@ -200,7 +209,7 @@
 						</td>
 						<td id="childVoicebanks">
 							@foreach (var a in Model.ChildVoicebanks) {
-								@ArtistHelpers.ArtistLink(a, releaseYear: true)
+								Html.RenderPartial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(a, releaseYear: true));
 								if (a != Model.ChildVoicebanks.Last()) {
 									@(", ")
 								}
@@ -218,7 +227,7 @@
 						</td>
 						<td id="groups">
 							@foreach (var grp in Model.Groups) {
-								@ArtistHelpers.ArtistLink(grp)
+								Html.RenderPartial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(grp));
 								if (grp != Model.Groups.Last()) {
 									@(", ")
 								}

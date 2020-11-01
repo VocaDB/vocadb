@@ -5,6 +5,7 @@
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Album;
+@using VocaDb.Web.Models.Shared.Partials.Artist;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Shared.Partials.PV;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
@@ -54,7 +55,7 @@
 @helper ArtistList(IList<ArtistForEventContract> artists, bool showRoles = false, bool showType = false) {
 	foreach (var artist in artists) {
 		if (artist.Artist != null) {
-			@ArtistHelpers.ArtistLink(artist.Artist, typeLabel: showType)
+			Html.RenderPartial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist.Artist, typeLabel: showType));
 		} else {
 			@artist.Name
 		}

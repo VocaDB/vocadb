@@ -1,5 +1,7 @@
 ﻿@using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.Shared; 
+@using VocaDb.Web.Models.Shared.Partials.Album;
+@using VocaDb.Web.Models.Shared.Partials.Artist;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @model VocaDb.Model.DataContracts.MikuDb.InspectedAlbum
 
 <div>
@@ -16,7 +18,7 @@
 					<button id="updateAlbumBtn" type="submit" class="btn" name="commit" value="No">Update</button>
 					<br />
 					@if (Model.MergedAlbum != null) { 
-						<span>@AlbumHelpers.AlbumLink(Model.MergedAlbum)</span>
+						<span>@{ Html.RenderPartial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(Model.MergedAlbum)); }</span>
 					} else {
 						<span>(no match)</span>
 					}
@@ -38,7 +40,7 @@
 					<li>
 						@artist.Name: 
 						@if (artist.ExistingArtist != null) {
-							<span>@ArtistHelpers.ArtistLink(artist.ExistingArtist)</span>
+							<span>@{ Html.RenderPartial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist.ExistingArtist)); }</span>
 						} else {
 							<span>(no match)</span>
 						}

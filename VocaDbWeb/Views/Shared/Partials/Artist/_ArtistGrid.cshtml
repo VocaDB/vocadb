@@ -15,7 +15,7 @@
 			@{ Html.RenderPartial("Partials/Artist/_ArtistIconLink", new ArtistIconLinkViewModel(artist)); }
 		</td>
 		<td>
-			@ArtistHelpers.ArtistLink(artist)
+			@{ Html.RenderPartial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist)); }
 			@if (Model.DisplayType)
 			{
 				@("(")@Translate.ArtistTypeName(artist.ArtistType)@(")")

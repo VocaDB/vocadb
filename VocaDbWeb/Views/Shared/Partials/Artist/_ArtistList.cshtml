@@ -38,7 +38,7 @@
 		{
 			Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", new ArtistTypeLabelViewModel(artist.Artist.ArtistType));
 		}
-		@ArtistHelpers.ArtistLink(artist.Artist, name: artist.Name)
+		Html.RenderPartial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist.Artist, name: artist.Name));
 	}
 	else
 	{
