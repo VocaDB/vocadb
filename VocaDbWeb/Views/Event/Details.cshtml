@@ -42,7 +42,7 @@
 }
 
 @section Head {
-	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
+	@{ Html.RenderPartial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties)); }
 	<link rel="canonical" href="@PageProperties.CanonicalUrl" />
 }
 

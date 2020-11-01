@@ -193,6 +193,7 @@
     <Compile Include="Models\Shared\Partials\Html\FormatMarkdownViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Html\LanguageFlagViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Html\MetaTagViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Html\OpenGraphMetaTagsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\ArtistFiltersViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\ArtistLockingAutoCompleteViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\BasicEntryLinkLockingAutoCompleteViewModel.cs" />
@@ -1737,7 +1738,6 @@
     <Content Include="App_Code\UserHelpers.cshtml" />
     <Content Include="Views\Event\Details.cshtml" />
     <Content Include="Views\Event\EventsBySeries.cshtml" />
-    <Content Include="App_Code\HtmlHelpers.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Album\Deleted.cshtml" />
@@ -1993,6 +1993,7 @@
     <Content Include="Views\Shared\Partials\Html\_FormatMarkdown.cshtml" />
     <Content Include="Views\Shared\Partials\Html\_LanguageFlag.cshtml" />
     <Content Include="Views\Shared\Partials\Html\_MetaTag.cshtml" />
+    <Content Include="Views\Shared\Partials\Html\_OpenGraphMetaTags.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

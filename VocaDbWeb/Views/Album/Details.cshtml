@@ -27,7 +27,7 @@
 }
 
 @section Head {
-	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
+	@{ Html.RenderPartial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties)); }
 	<link rel="canonical" href="@url" />
 	@Styles.Render("~/Scripts/jqwidgets27/styles/css")
 }
@@ -51,11 +51,13 @@
 	@{ Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status)); }
 }
 
-@if (Model.Deleted) {
+@if (Model.Deleted)
+{
 	Html.RenderPartial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(Model.MergedTo));
 }
 
-@if (Model.Draft && !Model.Deleted) {
+@if (Model.Draft && !Model.Deleted)
+{
 	Html.RenderPartial("Partials/Shared/_DraftMessage", new DraftMessageViewModel("glalbums"));
 }
 
@@ -75,7 +77,7 @@
 	</ul>
 
 	<div id="basicInfoTab">
-		
+
 		<div class="clearfix">
 			<!-- Album cover picture -->
 			<div class="pull-left">
@@ -84,10 +86,12 @@
 						<div class="active item thumbItem">
 							@{ Html.RenderPartial("Partials/Album/_CoverLink", new CoverLinkViewModel(Model)); }
 						</div>
-						@foreach (var pic in Model.Pictures) {
+						@foreach (var pic in Model.Pictures)
+						{
 							<div class="item thumbItem" itemprop="image">
 								@{ Html.RenderPartial("Partials/Shared/_EntryPictureFileLink", new EntryPictureFileLinkViewModel(pic)); }
-								@if (!string.IsNullOrEmpty(pic.Name)) {
+								@if (!string.IsNullOrEmpty(pic.Name))
+								{
 									<div class="carousel-caption">
 										<h4>@pic.Name</h4>
 									</div>
@@ -95,19 +99,21 @@
 							</div>
 						}
 					</div>
-					@if (Model.Pictures.Any()) {
+					@if (Model.Pictures.Any())
+					{
 						<a class="carousel-control left" href="#picCarousel" data-slide="prev">&lsaquo;</a>
 						<a class="carousel-control right" href="#picCarousel" data-slide="next">&rsaquo;</a>
 					}
 				</div>
 
-				@if (Model.RatingCount > 0) {
+				@if (Model.RatingCount > 0)
+				{
 					<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
 						<meta itemprop="ratingValue" content="@DecimalDot(Model.RatingAverage)" />
 						@Helpers.StarsMeta(Model.RatingAverage, 5)<br />
 						(<span itemprop="ratingCount">@Model.RatingCount</span> @Res.Ratings)
 					</div>
-				}			
+				}
 			</div>
 
 			<table class="properties">
@@ -119,7 +125,8 @@
 					</td>
 				</tr>
 
-				@if (Model.Vocalists.Any()) {
+				@if (Model.Vocalists.Any())
+				{
 					<tr>
 						<td>@Res.Vocalists</td>
 						<td class="artistList">
@@ -127,17 +134,19 @@
 						</td>
 					</tr>
 				}
-				
-				@if (Model.Subject != null && Model.Subject.Any()) {
+
+				@if (Model.Subject != null && Model.Subject.Any())
+				{
 					<tr>
 						<td>@EntryRes.Subject</td>
 						<td class="artistList">
 							@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Subject)); }
 						</td>
 					</tr>
-				}			
+				}
 
-				@if (Model.Producers.Any()) {
+				@if (Model.Producers.Any())
+				{
 					<tr>
 						<td>@Res.Producers</td>
 						<td class="artistList">
@@ -145,8 +154,9 @@
 						</td>
 					</tr>
 				}
-				
-				@if (Model.Illustrators != null && Model.Illustrators.Any()) {
+
+				@if (Model.Illustrators != null && Model.Illustrators.Any())
+				{
 					<tr>
 						<td>@Res.Illustrators</td>
 						<td class="artistList">
@@ -155,7 +165,8 @@
 					</tr>
 				}
 
-				@if (Model.Bands.Any()) {
+				@if (Model.Bands.Any())
+				{
 					<tr>
 						<td>@Res.Band</td>
 						<td class="artistList">
@@ -164,7 +175,8 @@
 					</tr>
 				}
 
-				@if (Model.Circles.Any()) {
+				@if (Model.Circles.Any())
+				{
 					<tr>
 						<td>@Res.Circle</td>
 						<td class="artistList">
@@ -173,7 +185,8 @@
 					</tr>
 				}
 
-				@if (Model.Labels.Any()) {
+				@if (Model.Labels.Any())
+				{
 					<tr>
 						<td>@Res.Labels</td>
 						<td class="artistList">
@@ -182,7 +195,8 @@
 					</tr>
 				}
 
-				@if (Model.OtherArtists.Any()) {
+				@if (Model.OtherArtists.Any())
+				{
 					<tr>
 						<td>@Res.OtherArtists</td>
 						<td class="artistList">
@@ -191,7 +205,8 @@
 					</tr>
 				}
 
-				@if (!Model.Description.IsEmpty) {
+				@if (!Model.Description.IsEmpty)
+				{
 					<tr>
 						<td>@ViewRes.SharedStrings.Description</td>
 						<td class="entry-description" data-bind="with: description">
@@ -203,9 +218,12 @@
 				<tr>
 					<td>@ViewRes.SharedStrings.Type</td>
 					<td>
-						@if (Model.DiscTypeTypeTag != null) {
+						@if (Model.DiscTypeTypeTag != null)
+						{
 							<a href="@Url.TagDetails(Model.DiscTypeTypeTag)" data-bind="tagToolTip: @Model.DiscTypeTypeTag.Id">@Translate.DiscTypeName(Model.DiscType)</a>
-						} else {
+						}
+						else
+						{
 							<a href="@Url.TagUrlForEntryType(EntryType.Album, Model.DiscType)">@Translate.DiscTypeName(Model.DiscType)</a>
 						}
 					</td>
@@ -218,24 +236,29 @@
 							@{ Html.RenderPartial("Partials/_TagList"); }
 						</div>
 						<a data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
-						@if (Model.CanRemoveTagUsages) {
+						@if (Model.CanRemoveTagUsages)
+						{
 							@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new { id = Model.Id }, new { id = "manageTags" })
 						}
 					</td>
 				</tr>
 
-				@if (Model.ReleaseDate != null && !Model.ReleaseDate.IsEmpty) {
+				@if (Model.ReleaseDate != null && !Model.ReleaseDate.IsEmpty)
+				{
 					<tr>
 						<td>@Res.ReleaseDate</td>
 						<td>
 							@Model.ReleaseDate.Formatted
-							@if (Model.ReleaseDateIsInThePast) {
+							@if (Model.ReleaseDateIsInThePast)
+							{
 								<small class="muted">@Res.ReleaseDateIsInThePast</small>
 							}
-							@if (Model.ReleaseDateIsInTheNearFuture) {
+							@if (Model.ReleaseDateIsInTheNearFuture)
+							{
 								<small class="muted">@Res.ReleaseDateIsInTheNearFuture</small>
 							}
-							@if (Model.ReleaseDateIsInTheFarFuture) {
+							@if (Model.ReleaseDateIsInTheFarFuture)
+							{
 								<small class="muted">@Res.ReleaseDateIsInTheFarFuture</small>
 							}
 							<br />
@@ -243,7 +266,8 @@
 					</tr>
 				}
 
-				@if (!string.IsNullOrEmpty(Model.CatNum)) {
+				@if (!string.IsNullOrEmpty(Model.CatNum))
+				{
 					<tr>
 						<td>@Res.CatalogNumber</td>
 						<td>
@@ -252,7 +276,8 @@
 					</tr>
 				}
 
-				@if (Model.ReleaseEvent != null) {
+				@if (Model.ReleaseEvent != null)
+				{
 					<tr>
 						<td>@Res.ReleaseEvent</td>
 						<td>
@@ -261,11 +286,13 @@
 					</tr>
 				}
 
-				@if (Model.PVs.Any()) {
+				@if (Model.PVs.Any())
+				{
 					<tr>
 						<td>@Res.PVs</td>
 						<td>
-							@foreach (var pv in Model.PVs) {
+							@foreach (var pv in Model.PVs)
+							{
 								Html.RenderPartial("Partials/Shared/_FormatPVLink", new FormatPVLinkViewModel(pv, false));<br />
 							}
 						</td>
@@ -292,52 +319,65 @@
 				</tr>
 			</table>
 		</div>
-		
-		@if (Model.Discs.Any() || Model.ContentFocus != ContentFocus.Illustration) {
-		<h3>
-			@Res.Tracklist
-			@if (Model.TotalLength != TimeSpan.Zero) {
-				<small>(@string.Format(Res.TotalLength, DateTimeHelper.FormatMinSec(Model.TotalLength)))</small>
-			}
-		</h3>
+
+		@if (Model.Discs.Any() || Model.ContentFocus != ContentFocus.Illustration)
+		{
+			<h3>
+				@Res.Tracklist
+				@if (Model.TotalLength != TimeSpan.Zero)
+				{
+					<small>(@string.Format(Res.TotalLength, DateTimeHelper.FormatMinSec(Model.TotalLength)))</small>
+				}
+			</h3>
 			<div class="tracklist">
-				@foreach (var disc in Model.Discs) {
-					if (Model.Discs.Length > 1) {
+				@foreach (var disc in Model.Discs)
+				{
+					if (Model.Discs.Length > 1)
+					{
 						<h4>
 							@Res.Disc @disc.DiscNumber
-							@if (!string.IsNullOrEmpty(disc.Name)) {
+							@if (!string.IsNullOrEmpty(disc.Name))
+							{
 								@:- @disc.Name
 							}
-							@if (disc.TotalLength != TimeSpan.Zero) {
+							@if (disc.TotalLength != TimeSpan.Zero)
+							{
 								<small>(@DateTimeHelper.FormatMinSec(disc.TotalLength))</small>
 							}
-							@if (disc.IsVideo) {
+							@if (disc.IsVideo)
+							{
 								<i class="icon-film" title="@Resources.AlbumDiscMediaTypeNames.Video"></i>
 							}
 						</h4>
 					}
 					<ul>
-						@foreach (var song in disc.Songs) {
+						@foreach (var song in disc.Songs)
+						{
 							<li class="tracklist-track">
 								<div class="tracklist-trackNumber">
 									@song.TrackNumber
 								</div>
 								<div class="tracklist-trackTitle">
-									@if (song.Song != null) {
+									@if (song.Song != null)
+									{
 										@SongHelpers.SongLink(song.Song, Model.Id, tooltip: true)
-										if (song.Song.LengthSeconds > 0) {
+										if (song.Song.LengthSeconds > 0)
+										{
 											@(" (" + DateTimeUtils.FormatFromSeconds(song.Song.LengthSeconds) + ")")
 										}
 										@:&nbsp;
 										Html.RenderPartial("Partials/Shared/_DraftIcon", new DraftIconViewModel(song.Song.Status));
-										if (song.Song.SongType != SongType.Original && song.Song.SongType != SongType.Unspecified) {
+										if (song.Song.SongType != SongType.Original && song.Song.SongType != SongType.Unspecified)
+										{
 											Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.Song.SongType));
 										}
 										Html.RenderPartial("Partials/Shared/_PVServiceIcons", new PVServiceIconsViewModel(song.Song.PVServices));
 										Html.RenderPartial("Partials/Song/_RatingIcon", new RatingIconViewModel(song.Rating ?? SongVoteRating.Nothing));
 										<br />
 										<small class="muted">@song.Song.ArtistString</small>
-									} else {
+									}
+									else
+									{
 										@song.Name
 									}
 								</div>
@@ -348,17 +388,20 @@
 			</div>
 		}
 
-		@if (!Model.Discs.Any() && Model.ContentFocus != ContentFocus.Illustration) {
+		@if (!Model.Discs.Any() && Model.ContentFocus != ContentFocus.Illustration)
+		{
 			<p>@Res.NoTracklist</p>
 		}
 
-		@if (Model.PrimaryPV != null) {
+		@if (Model.PrimaryPV != null)
+		{
 			<div class="song-pv-player">
 				@{ Html.RenderPartial("Partials/PV/_EmbedPV", new EmbedPVViewModel(Model.PrimaryPV)); }
 			</div>
 		}
-		
-		@if (Model.CanEditPersonalDescription || !string.IsNullOrEmpty(Model.PersonalDescriptionText)) {
+
+		@if (Model.CanEditPersonalDescription || !string.IsNullOrEmpty(Model.PersonalDescriptionText))
+		{
 			<h3 class="withMargin helpTip" data-bind="qTip: null" title="@EntryRes.PersonalDescriptionHelp">
 				@EntryRes.PersonalDescription
 			</h3>
@@ -368,10 +411,11 @@
 				</a>
 
 				<div class="media-body">
-					@if (Model.CanEditPersonalDescription) {
-					<div class="pull-right">
-						<a data-bind="click: beginEdit" href="#" class="textLink editLink">@ViewRes.SharedStrings.Edit</a>
-					</div>
+					@if (Model.CanEditPersonalDescription)
+					{
+						<div class="pull-right">
+							<a data-bind="click: beginEdit" href="#" class="textLink editLink">@ViewRes.SharedStrings.Edit</a>
+						</div>
 					}
 					<h3 class="media-heading" data-bind="visible: !author.isEmpty()">
 						<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }, text: author.name"></a>
@@ -396,8 +440,9 @@
 		<p>
 			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>
 		</p>
-		
-		@if (Model.LatestReview != null) {
+
+		@if (Model.LatestReview != null)
+		{
 			<h3>@Res.LatestReview</h3>
 
 			<div class="media">
@@ -414,13 +459,15 @@
 					<h3 class="media-heading">
 						@UserHelpers.UserLink(Model.LatestReview.User)
 					</h3>
-					
-					@if (Model.LatestReviewRatingScore > 0) {
+
+					@if (Model.LatestReviewRatingScore > 0)
+					{
 						@Helpers.Stars(Model.LatestReviewRatingScore, 5)
 					}
 
 					<div>
-						@if (!string.IsNullOrEmpty(Model.LatestReview.Title)) {
+						@if (!string.IsNullOrEmpty(Model.LatestReview.Title))
+						{
 							<h4 class="album-review-title">@Model.LatestReview.Title</h4>
 						}
 
@@ -433,13 +480,13 @@
 				<a href="#" id="viewReviewsLink">@string.Format(Res.ViewAllReviews, Model.ReviewCount)</a>
 			</p>
 		}
-			
+
 	</div>
 
 	<div id="discussionTab" data-bind="with: comments">
 		@{ Html.RenderPartial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false)); }
 	</div>
-	
+
 	<div id="reviewsTab" data-bind="with: reviewsViewModel">
 		@{ Html.RenderPartial("Partials/_AlbumReviews"); }
 	</div>
@@ -448,9 +495,10 @@
 
 		<ul class="thumbs">
 			@{ Html.RenderPartial("Partials/Shared/_ThumbItem", new ThumbItemViewModel(Url.Action("CoverPicture", "Album", new { id = Model.Id, v = Model.Version }),
-				Url.ImageThumb(Model, ImageSize.Thumb),
-				ViewRes.Album.DetailsStrings.CoverPicture)); }
-			@foreach (var pic in Model.Pictures) {
+				  Url.ImageThumb(Model, ImageSize.Thumb),
+				  ViewRes.Album.DetailsStrings.CoverPicture)); }
+			@foreach (var pic in Model.Pictures)
+			{
 				Html.RenderPartial("Partials/Shared/_ThumbItem", new ThumbItemViewModel(Url.ImageThumb(pic, ImageSize.Original), Url.ImageThumb(pic, ImageSize.Thumb), pic.Name));
 			}
 		</ul>
@@ -464,7 +512,7 @@
 				@{ Html.RenderPartial("Partials/EntryDetails/_LargeShareLinks", new LargeShareLinksViewModel(PageProperties.Title, url)); }
 				<br /><br />
 			</label>
-		</div>		
+		</div>
 		<div>
 			@ViewRes.EntryDetailsStrings.Link<br />
 			<input type="text" value="@url" class="input-large" onclick="this.select();" />

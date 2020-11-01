@@ -6,6 +6,7 @@
 @using VocaDb.Web.Resources.Domain
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Shared.Partials.Event;
+@using VocaDb.Web.Models.Shared.Partials.Html;
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using VocaDb.Web.Models.Shared.Partials.Search;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
@@ -38,7 +39,7 @@
 }
 
 @section Head {
-	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
+	@{ Html.RenderPartial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties)); }
 	<link rel="canonical" href="@url" />
 }
 
