@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Models.Shared.Partials.Artist;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 
 <div class="form-horizontal well well-transparent" data-bind="visible: true" style="display: none;">
 	
@@ -50,7 +51,7 @@
 					<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }" href="#"></a>
 					&nbsp;
 					<span data-bind="artistTypeLabel: artistType"></span>
-					@KnockoutHelpers.DraftIcon("status")
+					@{ Html.RenderPartial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status")); }
 					<br />
 					<span data-bind="visible: $data.additionalNames">
 						<small class="extraInfo" data-bind="text: $data.additionalNames"></small><br />						

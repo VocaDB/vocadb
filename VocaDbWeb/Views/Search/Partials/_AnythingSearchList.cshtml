@@ -1,4 +1,5 @@
-﻿@using SharedRes = ViewRes.SharedStrings;
+﻿@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using SharedRes = ViewRes.SharedStrings;
 @using Res = ViewRes.Search.IndexStrings;
 
 <div data-bind="visible: showAnythingSearch, with: anythingSearchViewModel">
@@ -35,7 +36,7 @@
 					&nbsp;
 					<span data-bind="artistTypeLabel: $data.artistType"></span>
 					<span data-bind="songTypeLabel: $data.songType"></span>
-					@KnockoutHelpers.DraftIcon("status")
+					@{ Html.RenderPartial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status")); }
 					<!-- ko if: $data.artistString -->
 					<br />
 					<small class="extraInfo" data-bind="text: artistString"></small>

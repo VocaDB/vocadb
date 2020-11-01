@@ -1,4 +1,5 @@
-﻿@using SharedRes = ViewRes.SharedStrings;
+﻿@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using SharedRes = ViewRes.SharedStrings;
 @using Res = ViewRes.Search.IndexStrings;
 
 <div data-bind="visible: showTagSearch, with: tagSearchViewModel">
@@ -39,7 +40,7 @@
 				</td>
 				<td>
 					<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details_tag(id, urlSlug) }" href="#"></a>
-					@KnockoutHelpers.DraftIcon("status")
+					@{ Html.RenderPartial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status")); }
 					<br />
 					<small class="extraInfo" data-bind="text: $data.additionalNames"></small>
 				</td>

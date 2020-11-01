@@ -1,5 +1,5 @@
-﻿
-@using VocaDb.Model.Domain
+﻿@using VocaDb.Model.Domain;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using SharedRes = ViewRes.SharedStrings;
 @using EventRes = ViewRes.Event.DetailsStrings;
 
@@ -53,7 +53,7 @@
 		<td>
 			<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details(@((int)EntryType.ReleaseEvent), id, $data.urlSlug), title: $data.additionalNames }" href="#"></a>
 				
-			@KnockoutHelpers.DraftIcon("status")
+			@{ Html.RenderPartial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status")); }
 				
 			<br />
 			<small class="extraInfo" data-bind="text: $parent.getCategoryName($data)"></small>

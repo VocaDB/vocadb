@@ -151,7 +151,7 @@
 				</td>
 				<td>
 					<a data-bind="text: album.name, attr: { href: vdb.utils.EntryUrlMapper.details('Album', album.id), title: album.additionalNames }" href="#"></a><br />
-					@KnockoutHelpers.DraftIcon("status")
+					@{ Html.RenderPartial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status")); }
 					<small class="extraInfo" data-bind="text: album.artistString"></small><br />
 					<small class="extraInfo" data-bind="text: $parent.resources().discTypeNames[album.discType]"></small>
 				</td>

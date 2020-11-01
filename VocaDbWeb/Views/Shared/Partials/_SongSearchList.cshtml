@@ -1,6 +1,7 @@
 ﻿@using VocaDb.Model.Domain.Songs;
 @using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.Song; 
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 @using SharedRes = ViewRes.SharedStrings;
 @using Res = ViewRes.Search.IndexStrings;
 
@@ -58,7 +59,7 @@
 				<span data-bind="visible: $data.rating === 'Favorite'" class="icon heartIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Favorite]"></span>
 				<span data-bind="visible: $data.rating === 'Like'" class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>
 				
-				@KnockoutHelpers.DraftIcon("status")
+				@{ Html.RenderPartial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status")); }
 				
 				<i class="icon-calendar" data-bind="visible: $data.publishDate, attr: { title: ($data.publishDate ? 'Published: ' + $parent.formatDate($data.publishDate) : '') }, tooltip: { placement: 'right' }"></i>
 
