@@ -175,6 +175,7 @@
     <Compile Include="Models\Shared\Partials\Artist\ArtistLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistTypesDropdownKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Comment\CommentBodyKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentBodyLargeViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentWithEntryVerticalViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CreateCommentViewModel.cs" />
@@ -1962,6 +1963,7 @@
     <Content Include="Views\Shared\Partials\Shared\_ValidationSummaryDiv.cshtml" />
     <Content Include="Views\Shared\Partials\Artist\_ArtistLink.cshtml" />
     <Content Include="Views\Shared\Partials\Artist\_ArtistLinkList.cshtml" />
+    <Content Include="Views\Shared\Partials\Comment\_CommentBodyKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
