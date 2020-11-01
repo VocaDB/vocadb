@@ -198,6 +198,7 @@
     <Compile Include="Models\Shared\Partials\Knockout\DropdownListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\DropdownViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\EntryValidationMessageViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Knockout\IconAndNameKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\LanguageSelectionDropDownViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\SearchDropDownViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\SongLockingAutoCompleteViewModel.cs" />
@@ -1983,6 +1984,7 @@
     <Content Include="Views\Shared\Partials\Knockout\_EntryCount.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_LanguageSelectionDropDown.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_SongLockingAutoComplete.cshtml" />
+    <Content Include="Views\Shared\Partials\Knockout\_IconAndNameKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

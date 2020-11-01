@@ -30,11 +30,6 @@
 	</a>
 }
 
-@helper IconAndNameKnockout(string iconBinding, string nameBinding, int size = 20) {
-	@ProfileIconKnockout(iconBinding, size)
-	<span data-bind="text: @nameBinding"></span>
-}
-
 @helper IconAndNameLinkKnockout(int iconSize = 20, string cssClass = "") {
 	@* Has to be one line because of Razor *@
 	<a href="#" class="@cssClass" data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(name) }">@ProfileIconKnockout("$data.mainPicture != null ? $data.mainPicture.urlThumb : null", iconSize)<span data-bind="text: name"></span></a>

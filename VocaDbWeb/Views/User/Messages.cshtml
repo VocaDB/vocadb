@@ -53,10 +53,10 @@
 					</td>
 					<td data-bind="click: $root.selectMessage"><span title="UTC" data-bind="text: created"></span></td>
 					@if (colFrom) {
-						<td data-bind="click: $root.selectMessage">@UserHelpers.IconAndNameKnockout("sender.iconUrl", "sender.name")</td>
+						<td data-bind="click: $root.selectMessage">@{ Html.RenderPartial("Partials/User/_IconAndNameKnockout", new IconAndNameKnockoutViewModel("sender.iconUrl", "sender.name")); }</td>
 					}
 					@if (colTo) {
-						<td data-bind="click: $root.selectMessage">@UserHelpers.IconAndNameKnockout("receiver.iconUrl", "receiver.name")</td>
+						<td data-bind="click: $root.selectMessage">@{ Html.RenderPartial("Partials/User/_IconAndNameKnockout", new IconAndNameKnockoutViewModel("receiver.iconUrl", "receiver.name")); }</td>
 					}
 					<td data-bind="click: $root.selectMessage">
 						<span data-bind="visible: highPriority" style="display: none;">
