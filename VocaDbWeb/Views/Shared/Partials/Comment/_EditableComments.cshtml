@@ -20,7 +20,7 @@
 
 <div data-bind="foreach: @Model.CommentsBinding">
 	<div class="editable-comment @cssClass">
-		@CommentHelpers.CommentKnockout("message", false, editHandler: "$parent.beginEditComment", standalone: !Model.Well, body: CommentHelpers.CommentBodyEditableKnockout("message"))
+		@CommentHelpers.CommentKnockout("message", false, editHandler: "$parent.beginEditComment", standalone: !Model.Well, body: Html.Partial("Partials/Comment/_CommentBodyEditableKnockout", new CommentBodyEditableKnockoutViewModel("message")))
 	</div>
 </div>
 

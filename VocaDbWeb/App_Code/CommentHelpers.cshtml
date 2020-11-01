@@ -1,10 +1,11 @@
-﻿@using System.Web.Mvc.Html;
+﻿@using System.Web.Mvc;
+@using System.Web.Mvc.Html;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @inherits VocaDb.Web.Code.HelperPage
 
 
 @helper CommentKnockout(string messageBinding, bool allowMarkdown, string deleteHandler = "$parent.deleteComment", string editHandler = null,
-	bool standalone = true, HelperResult body = null) {
+	bool standalone = true, MvcHtmlString body = null) {
 	<div class="comment media @(standalone ? "comment-large" : "")">
 		<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details_user_byName(author.name) }" class="pull-left">
 			@UserHelpers.ProfileIconKnockout(VocaDb.Model.Domain.Images.ImageSize.Thumb, binding: "author", size: 70)
@@ -36,15 +37,4 @@
 			}
 		</div>
 	</div>
-}
-
-@helper CommentBodyEditableKnockout(string messageBinding) {
-	<div data-bind="visible: $parent.editCommentModel() !== $data">
-		@{ Html.RenderPartial("Partials/Comment/_CommentBodyKnockout", new CommentBodyKnockoutViewModel(messageBinding)); }
-	</div>
-	<form data-bind="visible: $parent.editCommentModel() === $data, submit: $parent.saveEditedComment">
-		<textarea data-bind="textInput: editedMessage" rows="6" cols="60" maxlength="3000" class="comment-text-edit" required></textarea>
-		<button type="submit" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
-		<button data-bind="click: $parent.cancelEditComment" class="btn">@ViewRes.SharedStrings.Cancel</button>
-	</form>
 }
