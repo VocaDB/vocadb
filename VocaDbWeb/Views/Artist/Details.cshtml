@@ -46,15 +46,6 @@
 	@{ Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status)); }
 }
 
-@helper DataRow(string label, HelperResult content) {
-	if (content != null) {
-		<tr>
-			<td>@label</td>
-			<td>@content</td>
-		</tr>
-	}
-}
-
 @helper DataRow(string label, MvcHtmlString content) {
 	if (content != null) {
 		<tr>
@@ -65,7 +56,7 @@
 }
 
 @helper ArtistListRow(string label, ArtistContract[] artists, bool typeLabel, bool releaseYear = false) {
-	@DataRow(label, artists.Any() ? ArtistHelpers.ArtistLinkList(artists, typeLabel: typeLabel, releaseYear: releaseYear) : null)
+	@DataRow(label, artists.Any() ? Html.Partial("Partials/Artist/_ArtistLinkList", new ArtistLinkListViewModel(artists, typeLabel: typeLabel, releaseYear: releaseYear)) : null)
 }
 
 @helper ArtistRow(string label, ArtistContract artist, bool typeLabel) {
@@ -252,7 +243,7 @@
 						}
 						@if (Model.AdvancedStats != null && Model.AdvancedStats.TopVocaloids.Any()) {
 							<p>
-								@Res.MostlyUses @ArtistHelpers.ArtistLinkList(Model.AdvancedStats.TopVocaloids.Select(a => a.Data), typeLabel: true).
+								@Res.MostlyUses @{ Html.RenderPartial("Partials/Artist/_ArtistLinkList", new ArtistLinkListViewModel(Model.AdvancedStats.TopVocaloids.Select(a => a.Data), typeLabel: true)); }.
 							</p>
 						}
 					</td>
