@@ -164,6 +164,7 @@
     <Compile Include="Models\Shared\Partials\Activityfeed\ActivityEntryKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Activityfeed\ActivityEntryViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\AlbumGridViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Album\AlbumLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\DiscTypesDropdownKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\EditCollectionDialogViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionPropertiesViewModel.cs" />
@@ -1705,7 +1706,6 @@
     <Content Include="Views\Tag\Details.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Album\ViewVersion.cshtml" />
-    <Content Include="App_Code\AlbumHelpers.cshtml" />
     <Content Include="App_Code\ArchivedEntryHelpers.cshtml" />
     <Content Include="App_Code\ArtistHelpers.cshtml" />
     <Content Include="Views\Artist\ViewVersion.cshtml" />
@@ -1770,6 +1770,7 @@
     </None>
     <Content Include="Views\Album\Partials\_AlbumReviews.cshtml" />
     <Content Include="Views\Admin\ManageEntryTagMappings.cshtml" />
+    <Content Include="Views\Album\Partials\_AlbumLink.cshtml" />
     <None Include="Views\Event\EditSeries.cshtml" />
     <Content Include="Views\Event\Edit.cshtml" />
     <Content Include="Views\Event\SeriesDetails.cshtml" />

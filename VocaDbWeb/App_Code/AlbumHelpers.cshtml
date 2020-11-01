@@ -1,8 +1,0 @@
-﻿@using System.Web.Mvc.Html
-@using System.Web.Routing
-@using VocaDb.Model.DataContracts.Albums;
-@inherits VocaDb.Web.Code.HelperPage
-
-@helper AlbumLink(AlbumContract album) {
-	@Html.ActionLink(album.Name, "Details", "Album", new RouteValueDictionary { { "id", album.Id } }, new Dictionary<string, object> { { "title", album.AdditionalNames }, { "data-entry-id", album.Id }, { "class", "albumLink" }})
-}

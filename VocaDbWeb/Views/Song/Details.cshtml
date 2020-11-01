@@ -10,7 +10,8 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security;
 @using VocaDb.Model.Service.VideoServices
-@using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared;
+@using VocaDb.Web.Models.Shared.Partials.Album;
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
@@ -45,7 +46,7 @@
 }
 
 @helper AlbumLink(AlbumContract album) {
-	@AlbumHelpers.AlbumLink(album)
+	Html.RenderPartial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(album));
 	if (!album.ReleaseDate.IsEmpty) {<small class="muted">&nbsp;(@album.ReleaseDate.Year)</small>}
 }
 
@@ -375,9 +376,9 @@
 				<td>
 					<p>
 						@if (Model.Contract.AlbumSong.DiscNumber > 1) {
-							@Html.Raw(string.Format(Res.TrackOnAlbumDisc, Model.Contract.AlbumSong.TrackNumber, Model.Contract.AlbumSong.DiscNumber, AlbumHelpers.AlbumLink(Model.Contract.Album)))
+							@Html.Raw(string.Format(Res.TrackOnAlbumDisc, Model.Contract.AlbumSong.TrackNumber, Model.Contract.AlbumSong.DiscNumber, Html.Partial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(Model.Contract.Album))))
 						} else {
-							@Html.Raw(string.Format(Res.TrackOnAlbum, Model.Contract.AlbumSong.TrackNumber, AlbumHelpers.AlbumLink(Model.Contract.Album)))
+							@Html.Raw(string.Format(Res.TrackOnAlbum, Model.Contract.AlbumSong.TrackNumber, Html.Partial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(Model.Contract.Album))))
 						}
 					</p>
 					@if (Model.Contract.PreviousSong != null) {
