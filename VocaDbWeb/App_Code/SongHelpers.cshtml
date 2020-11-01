@@ -1,20 +1,9 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
-@using System.Globalization
 @using System.Web.Mvc.Html;
 @using VocaDb.Model.DataContracts.Songs;
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
-
-@helper LyricsInfo(LyricsForSongContract lyrics) {
-	@:@lyrics.TranslationType
-	if (!string.IsNullOrEmpty(lyrics.CultureCode)) {
-		@:(@CultureInfo.GetCultureInfo(lyrics.CultureCode).EnglishName)
-	}
-	if (!string.IsNullOrEmpty(lyrics.Source)) {
-		@:(@lyrics.Source)
-	}
-}
 
 @helper SongIconLink(SongContract song, int? albumId = null) {
 	<a href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(song, albumId))">

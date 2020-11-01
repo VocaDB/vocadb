@@ -19,7 +19,7 @@
 		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedSongs, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
 		@ArchivedEntryHelpers.DataRowList("Artists", Model.ComparedSongs, d => DataFormatUtils.GenerateHtml(d.Artists != null ? (d.Artists.OrderBy(a => a.NameHint)) : null, artist => MvcHtmlString.Create(artist.NameHint + " [" + artist.Id + "] - IsSupport: " + artist.IsSupport + ", Roles: " + artist.Roles)))
 		@ArchivedEntryHelpers.DataRowList("PVs", Model.ComparedSongs, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
-		@ArchivedEntryHelpers.DataRowList("Lyrics", Model.ComparedSongs, d => DataFormatUtils.GenerateHtmlFromHelper(d.Lyrics, SongHelpers.LyricsInfo))
+		@ArchivedEntryHelpers.DataRowList("Lyrics", Model.ComparedSongs, d => DataFormatUtils.GenerateHtml(d.Lyrics, lyrics => Html.Partial("Partials/Song/_LyricsInfo", new LyricsInfoViewModel(lyrics))))
 	</table>
 
 </div>

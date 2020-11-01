@@ -1,0 +1,13 @@
+﻿@using System.Globalization;
+@using VocaDb.Web.Models.Shared.Partials.Song;
+@model LyricsInfoViewModel
+
+@Model.Lyrics.TranslationType
+@if (!string.IsNullOrEmpty(Model.Lyrics.CultureCode))
+{
+	@:(@CultureInfo.GetCultureInfo(Model.Lyrics.CultureCode).EnglishName)
+}
+@if (!string.IsNullOrEmpty(Model.Lyrics.Source))
+{
+	@:(@Model.Lyrics.Source)
+}

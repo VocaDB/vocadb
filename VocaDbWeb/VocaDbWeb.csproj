@@ -222,6 +222,7 @@
     <Compile Include="Models\Shared\Partials\Shared\ValidationSummaryDivViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\ValidationSummaryPanelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\ArtistParticipationStatusOptionsKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Song\LyricsInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\PVPreviewKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagUsagesManageTableViewModel.cs" />
@@ -1968,6 +1969,7 @@
     <Content Include="Views\Shared\Partials\Comment\_CommentBodyKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\Comment\_CommentBodyEditableKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\Song\_ArtistParticipationStatusOptionsKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\Song\_LyricsInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
