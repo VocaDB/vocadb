@@ -2,21 +2,9 @@
 @using System.Globalization
 @using System.Web.Mvc.Html;
 @using VocaDb.Model.DataContracts.Songs;
-@using VocaDb.Model.Service.Search.AlbumSearch
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
-
-@helper ArtistParticipationStatusOptionsKnockout(string binding) {
-	{
-		var options = new Dictionary<string, string> {
-			{ ArtistAlbumParticipationStatus.Everything.ToString(), "Everything" },
-			{ ArtistAlbumParticipationStatus.OnlyMainAlbums.ToString(), "Only main songs" },
-			{ ArtistAlbumParticipationStatus.OnlyCollaborations.ToString(), "Only collaborations" },
-		};
-		Html.RenderPartial("Partials/Knockout/_CheckBoxButtons", new CheckBoxButtonsViewModel(options, binding));
-	}
-}
 
 @helper LyricsInfo(LyricsForSongContract lyrics) {
 	@:@lyrics.TranslationType

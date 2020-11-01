@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 @model ArtistFiltersViewModel
 
 <!-- Viewmodel: ArtistFilters -->
@@ -16,7 +17,7 @@
 	@if (Model.ArtistParticipationStatus)
 	{
 		<!-- ko if: $parent.hasSingleArtist -->
-		@SongHelpers.ArtistParticipationStatusOptionsKnockout("$parent.artistParticipationStatus")
+		Html.RenderPartial("Partials/Song/_ArtistParticipationStatusOptionsKnockout", new ArtistParticipationStatusOptionsKnockoutViewModel("$parent.artistParticipationStatus"));
 		<!-- /ko -->
 	}
 </div>
