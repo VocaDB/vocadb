@@ -1,6 +1,7 @@
 ﻿@using VocaDb.Model.Service.Search;
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using VocaDb.Web.Models.Shared.Partials.Search;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 @using VocaDb.Web.Resources.Domain;
 @using Res = ViewRes.Search.IndexStrings;
 
@@ -12,7 +13,7 @@
 		<div class="control-label">@Res.SongType</div>
 		<div class="controls">
 			<div class="control-group">
-				@SongHelpers.SongTypesDropdownKnockout("songType")
+				@{ Html.RenderPartial("Partials/Song/_SongTypesDropdownKnockout", new SongTypesDropdownKnockoutViewModel("songType")); }
 			</div>
 			<div class="control-group" data-bind="visible: showUnifyEntryTypesAndTags">
 				<label class="checkbox" >

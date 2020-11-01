@@ -146,7 +146,7 @@
 		<div class="control-group">
 			<div class="control-label">@SearchRes.SongType</div>
 			<div class="controls">
-				@SongHelpers.SongTypesDropdownKnockout("songType")
+				@{ Html.RenderPartial("Partials/Song/_SongTypesDropdownKnockout", new SongTypesDropdownKnockoutViewModel("songType")); }
 			</div>
 		</div>
 

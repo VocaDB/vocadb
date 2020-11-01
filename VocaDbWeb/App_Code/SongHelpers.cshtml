@@ -1,9 +1,7 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
 @using System.Web.Mvc.Html;
 @using VocaDb.Model.DataContracts.Songs;
-@using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.Knockout;
 
 @helper SongIconLink(SongContract song, int? albumId = null) {
 	<a href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(song, albumId))">
@@ -66,8 +64,4 @@
 		</tbody>
 	</table>
 
-}
-
-@helper SongTypesDropdownKnockout(string binding) {
-	Html.RenderPartial("Partials/Knockout/_CheckBoxButtons", new CheckBoxButtonsViewModel(Translate.SongTypeNames.GetValuesAndNamesStrings(AppConfig.SongTypes), binding));
 }
