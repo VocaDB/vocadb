@@ -233,7 +233,7 @@
 				<ul class="user-known-languages">
 				@foreach (var lang in Model.KnownLanguages) {
 					<li>
-						@HtmlHelpers.LanguageFlag(lang.CultureCode)
+						@{ Html.RenderPartial("Partials/Html/_LanguageFlag", new LanguageFlagViewModel(lang.CultureCode)); }
 						@GetLanguageName(lang)
 						@if (lang.Proficiency != UserLanguageProficiency.Nothing) {
 							@:(@Translate.UserLanguageProficiencyNames[lang.Proficiency])

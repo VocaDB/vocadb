@@ -1,14 +1,5 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
 @using VocaDb.Web.Code
-@using VocaDb.Web.Helpers;
-
-@helper LanguageFlag(string languageCode) {
-	if (!string.IsNullOrEmpty(languageCode)) {
-		 <img src="@Url.StaticResource("/img/languageFlags/" + languageCode + ".png")" alt="@languageCode" title="@languageCode" />
-	} else {
-		 <img src="@Url.StaticResource("/img/languageFlags/unknown.png")" alt="@VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other" title="@VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other" />
-	}
-}
 
 @helper MetaTag(string name, string content) {
 	if (!string.IsNullOrEmpty(content)) {

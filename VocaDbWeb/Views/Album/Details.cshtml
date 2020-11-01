@@ -407,7 +407,7 @@
 
 				<div class="media-body">
 					<div class="pull-right">
-						@HtmlHelpers.LanguageFlag(Model.LatestReview.LanguageCode)
+						@{ Html.RenderPartial("Partials/Html/_LanguageFlag", new LanguageFlagViewModel(Model.LatestReview.LanguageCode)); }
 						|
 						@VocaDb.Web.Code.TimeAgoStringBuilder.FormatTimeAgo(Model.LatestReview.Date)
 					</div>
