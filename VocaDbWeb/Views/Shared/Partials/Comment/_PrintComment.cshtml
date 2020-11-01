@@ -1,7 +1,8 @@
-﻿@using VocaDb.Model.Helpers
-@using VocaDb.Web.Helpers
-@using VocaDb.Web.Code
+﻿@using VocaDb.Model.Helpers;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Code;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
+@using VocaDb.Web.Models.Shared.Partials.Html;
 @model PrintCommentViewModel
 
 <div class="comment">
@@ -16,5 +17,5 @@
 			@TimeAgoStringBuilder.FormatTimeAgo(Model.Contract.Created)
 		</small>
 	</h3>
-	@HtmlHelpers.FormatMarkdown(Model.Contract.Message.TruncateWithEllipsis(Model.MaxLength))
+	@{ Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Contract.Message.TruncateWithEllipsis(Model.MaxLength))); }
 </div>

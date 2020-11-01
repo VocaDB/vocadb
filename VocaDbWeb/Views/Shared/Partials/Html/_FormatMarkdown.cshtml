@@ -1,0 +1,11 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Html;
+@inherits VocaDb.Web.Code.VocaDbPage<FormatMarkdownViewModel>
+
+@*  Transforms Markdown-formatted text into HTML.
+	The input will be sanitized for any HTML tags first.
+	Note that markdown parser will always surround the block in <p> tags,
+	and <p> tags are not allowed inside other <p> tags.
+*@
+<!-- ko stopBinding -->
+@Html.Raw(MarkdownParser.GetHtml(Model.Text))
+<!-- /ko -->

@@ -12,6 +12,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Html;
 @using VocaDb.Web.Models.Shared.Partials.PV;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
@@ -423,7 +424,7 @@
 							<h4 class="album-review-title">@Model.LatestReview.Title</h4>
 						}
 
-						<div>@HtmlHelpers.FormatMarkdown(Model.LatestReview.Text)</div>
+						<div>@{ Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.LatestReview.Text)); }</div>
 					</div>
 				</div>
 			</div>

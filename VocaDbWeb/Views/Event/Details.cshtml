@@ -7,6 +7,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Album;
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Html;
 @using VocaDb.Web.Models.Shared.Partials.PV;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
@@ -143,7 +144,7 @@
 @if (Model.Series != null) {
 	<h3>@Res.Series: <a href="@Url.Action("SeriesDetails", new { id = Model.Series.Id, slug = Model.Series.UrlSlug })" title="@Model.Series.AdditionalNames">@Model.Series.Name</a></h3>
 	if (!string.IsNullOrEmpty(Model.Series.Description)) {
-		@HtmlHelpers.FormatMarkdown(Model.Series.Description);
+		Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Series.Description));
 	}
 	@EntryDetailsHelpers.ExternalLinksList(Model.Series.WebLinks, false)
 }
@@ -175,7 +176,7 @@
 	}
 
 	if (!string.IsNullOrEmpty(Model.Venue.Description)) {
-		@HtmlHelpers.FormatMarkdown(Model.Venue.Description);
+		Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Venue.Description));
 	}
 	@EntryDetailsHelpers.ExternalLinksList(Model.Venue.WebLinks, false)
 }
