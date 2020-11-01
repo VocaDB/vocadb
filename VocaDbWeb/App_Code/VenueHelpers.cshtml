@@ -1,7 +1,0 @@
-﻿@using System.Web.Mvc.Html
-@using VocaDb.Model.DataContracts.Venues
-@inherits VocaDb.Web.Code.HelperPage
-
-@helper VenueLink(VenueForApiContract venue) {
-	@Html.ActionLink(venue.Name, "Details", "Venue", new { id = venue.Id }, new { title = venue.AdditionalNames })
-}

@@ -1,9 +1,10 @@
 ﻿@using VocaDb.Web.Models.Shared.Partials.Event;
+@using VocaDb.Web.Models.Shared.Partials.Venue;
 @model VenueLinkOrVenueNameViewModel
 
 @if (Model.Event.Venue != null)
 {
-	@VenueHelpers.VenueLink(Model.Event.Venue)
+	Html.RenderPartial("Partials/Venue/_VenueLink", new VenueLinkViewModel(Model.Event.Venue));
 }
 else if (!string.IsNullOrEmpty(Model.Event.VenueName))
 {
