@@ -5,10 +5,6 @@
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper ArtistLockingAutoComplete(string binding, string artistTypes, int ignoreId = 0) {
-	@LockingAutoComplete("artistAutoComplete", "{ acceptSelection: " + binding + ".id, extraQueryParams: { artistTypes: '" + artistTypes + "' }, ignoreId: " + ignoreId + " }", textBinding: binding + ".name", valBinding: binding + ".id")
-}
-
 @helper DraftIcon(string statusBinding) {
 	<img data-bind="visible: @statusBinding == 'Draft'" src="@Url.Content("~/Content/draft.png")" title="@HelperRes.HelperStrings.DraftIconTitle" alt="draft" />
 }

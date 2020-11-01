@@ -128,7 +128,7 @@
 									@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Illustrator", "Person who illustrated the character design. This is inherited to derived voicebanks.")); }
 								</td>
 								<td>
-									@KnockoutHelpers.ArtistLockingAutoComplete("illustrator", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual")									
+									@{ Html.RenderPartial("Partials/Knockout/_ArtistLockingAutoComplete", new ArtistLockingAutoCompleteViewModel("illustrator", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual")); }
 								</td>
 								<td></td>
 							</tr>
@@ -137,7 +137,7 @@
 									@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Voice provider", "Person who provided their voice for this voicebank. This is inherited to derived voicebanks.")); }
 								</td>
 								<td>
-									@KnockoutHelpers.ArtistLockingAutoComplete("voiceProvider", "Unknown,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherIndividual")									
+									@{ Html.RenderPartial("Partials/Knockout/_ArtistLockingAutoComplete", new ArtistLockingAutoCompleteViewModel("voiceProvider", "Unknown,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherIndividual")); }
 								</td>
 							</tr>
 							<!-- ko foreach: associatedArtists -->
@@ -158,7 +158,7 @@
 									@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AssociatedArtistTypes, "newAssociatedArtistType")); }
 								</td>
 								<td>
-									@KnockoutHelpers.ArtistLockingAutoComplete("newAssociatedArtist", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual")									
+									@{ Html.RenderPartial("Partials/Knockout/_ArtistLockingAutoComplete", new ArtistLockingAutoCompleteViewModel("newAssociatedArtist", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual")); }
 								</td>
 							</tr>
 						</table>
