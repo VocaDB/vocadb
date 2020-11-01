@@ -1,9 +1,0 @@
-﻿@using System.Web.Mvc.Html;
-@using VocaDb.Model.DataContracts.Tags;
-@using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.Tag;
-@inherits VocaDb.Web.Code.HelperPage
-
-@helper TagList(TagBaseContract[] tagNames, bool tooltip = false) {
-	@Html.LinkListHtml(tagNames, t => Html.Partial("Partials/Tag/_TagLink", new TagLinkViewModel(t, tooltip)))
-}

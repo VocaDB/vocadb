@@ -14,6 +14,7 @@
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
+@using VocaDb.Web.Models.Shared.Partials.Tag;
 @using SharedRes = ViewRes.SharedStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<TagDetailsContract>
 
@@ -104,7 +105,7 @@
 			}
 
 			@if (Model.RelatedTags.Any()) {
-				<p>@Res.RelatedTags: @TagHelpers.TagList(Model.RelatedTags, tooltip: true)</p>
+				<p>@Res.RelatedTags: @{ Html.RenderPartial("Partials/Tag/_TagList", new TagListViewModel(Model.RelatedTags, tooltip: true)); }</p>
 			}
 
 			@if (Model.WebLinks.Any()) {
@@ -259,10 +260,10 @@
 @if (related.Any()) {
 	<div class="well well-transparent">
 		@if (Model.Siblings.Any()) {
-			<p>@Res.Siblings: @TagHelpers.TagList(Model.Siblings)</p>
+			<p>@Res.Siblings: @{ Html.RenderPartial("Partials/Tag/_TagList", new TagListViewModel(Model.Siblings)); }</p>
 		}
 		@if (Model.Children.Any()) {
-			<p>@Res.Children: @TagHelpers.TagList(Model.Children)</p>
+			<p>@Res.Children: @{ Html.RenderPartial("Partials/Tag/_TagList", new TagListViewModel(Model.Children)); }</p>
 		}
 	</div>
 }

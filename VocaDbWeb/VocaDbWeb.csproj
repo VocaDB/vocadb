@@ -227,6 +227,7 @@
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongTypesDropdownKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagLinkViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Tag\TagListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagUsagesManageTableViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Activityfeed\EntryTypeViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Album\AlbumIconLinkViewModel.cs" />
@@ -1730,7 +1731,6 @@
     <Content Include="App_Code\HtmlHelpers.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
-    <Content Include="App_Code\TagHelpers.cshtml" />
     <Content Include="Views\Album\Deleted.cshtml" />
     <Content Include="Views\Admin\AuditLogEntries.cshtml" />
     <Content Include="NLog.config">
@@ -1972,6 +1972,7 @@
     <Content Include="Views\Shared\Partials\Song\_LyricsInfo.cshtml" />
     <Content Include="Views\Shared\Partials\Song\_SongTypesDropdownKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\Tag\_TagLink.cshtml" />
+    <Content Include="Views\Shared\Partials\Tag\_TagList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

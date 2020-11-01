@@ -11,6 +11,7 @@
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
+@using VocaDb.Web.Models.Shared.Partials.Tag;
 @using VocaDb.Web.Resources.Domain.Globalization
 @using R = ViewRes.User.DetailsStrings;
 @using Res = ViewRes.User.DetailsStrings;
@@ -272,7 +273,7 @@
 			@if (Model.FavoriteTags.Any())
 			{
 				<h4>@R.FavoriteTags</h4>
-				@TagHelpers.TagList(Model.FavoriteTags)
+				Html.RenderPartial("Partials/Tag/_TagList", new TagListViewModel(Model.FavoriteTags));
 				<br />
 				<div style="width: 400px; height: 200px;" data-bind="highcharts: ratingsByGenreChart"></div>
 				<br />
