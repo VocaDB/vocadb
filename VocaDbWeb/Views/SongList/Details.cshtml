@@ -6,6 +6,7 @@
 @using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Resources.Domain
+@using VocaDb.Web.Models.Shared.Partials.Event;
 @using Res = ViewRes.SongList.DetailsStrings;
 @using SearchRes = ViewRes.Search.IndexStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.SongLists.SongListDetailsViewModel>
@@ -92,13 +93,13 @@
 						</a>
 						@if (ev.Date.HasValue) {
 							if (ev.HasVenueOrVenueName) {
-								<small>(@ev.Date.Value.ToString("d"), @{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", ev); })</small>
+								<small>(@ev.Date.Value.ToString("d"), @{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev)); })</small>
 							} else {
 								<small>(@ev.Date.Value.ToString("d"))</small>
 							}
 						} else {
 							if (ev.HasVenueOrVenueName) {
-								<small>(@{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", ev); })</small>
+								<small>(@{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev)); })</small>
 							}
 						}
 					</li>

@@ -1,26 +1,26 @@
-﻿@using VocaDb.Model.DataContracts.ReleaseEvents
-@using VocaDb.Web.Helpers
-@model ComparedEventsContract
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Event;
+@model PrintArchivedEventDataViewModel
 
 <div class="well well-transparent archived-entry-contents">
 	<h4>Content</h4>
 
 	<table class="table table-bordered">
-		@ArchivedEntryHelpers.DataRow("Id", Model.FirstData.Id)
-		@ArchivedEntryHelpers.TranslatedNameRow(Model, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList("Names", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
-		@ArchivedEntryHelpers.DataRow("Description", Model, d => d.Description)
-		@ArchivedEntryHelpers.DataRowList("External links", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
-		@ArchivedEntryHelpers.DataRow("Category", Model, d => d.Category)
-		@ArchivedEntryHelpers.DataRow("Date", Model, d => d.Date)
-		@ArchivedEntryHelpers.DataRow("Venue", Model, d => ArchivedEntryHelpers.ObjectRefInfo(d.Venue))
-		@ArchivedEntryHelpers.DataRow("Venue name", Model, d => d.VenueName)
-		@ArchivedEntryHelpers.DataRow("Main picture MIME", Model, d => d.MainPictureMime)
-		@ArchivedEntryHelpers.DataRow("Series", Model, d => ArchivedEntryHelpers.ObjectRefInfo(d.Series))
-		@ArchivedEntryHelpers.DataRow("Series number", Model, d => d.SeriesNumber)
-		@ArchivedEntryHelpers.DataRowList("Artists", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.Artists, ArchivedEntryHelpers.ObjectRefInfo))
-		@ArchivedEntryHelpers.DataRowList("PVs", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
-		@ArchivedEntryHelpers.DataRow("Song list", Model, d => ArchivedEntryHelpers.ObjectRefInfo(d.SongList))
+		@ArchivedEntryHelpers.DataRow("Id", Model.ComparedEvents.FirstData.Id)
+		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedEvents, d => d.TranslatedName)
+		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedEvents, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+		@ArchivedEntryHelpers.DataRow("Description", Model.ComparedEvents, d => d.Description)
+		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedEvents, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+		@ArchivedEntryHelpers.DataRow("Category", Model.ComparedEvents, d => d.Category)
+		@ArchivedEntryHelpers.DataRow("Date", Model.ComparedEvents, d => d.Date)
+		@ArchivedEntryHelpers.DataRow("Venue", Model.ComparedEvents, d => ArchivedEntryHelpers.ObjectRefInfo(d.Venue))
+		@ArchivedEntryHelpers.DataRow("Venue name", Model.ComparedEvents, d => d.VenueName)
+		@ArchivedEntryHelpers.DataRow("Main picture MIME", Model.ComparedEvents, d => d.MainPictureMime)
+		@ArchivedEntryHelpers.DataRow("Series", Model.ComparedEvents, d => ArchivedEntryHelpers.ObjectRefInfo(d.Series))
+		@ArchivedEntryHelpers.DataRow("Series number", Model.ComparedEvents, d => d.SeriesNumber)
+		@ArchivedEntryHelpers.DataRowList("Artists", Model.ComparedEvents, d => DataFormatUtils.GenerateHtmlFromHelper(d.Artists, ArchivedEntryHelpers.ObjectRefInfo))
+		@ArchivedEntryHelpers.DataRowList("PVs", Model.ComparedEvents, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
+		@ArchivedEntryHelpers.DataRow("Song list", Model.ComparedEvents, d => ArchivedEntryHelpers.ObjectRefInfo(d.SongList))
 	</table>
 
 </div>

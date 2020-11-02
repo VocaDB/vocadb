@@ -1,25 +1,25 @@
-﻿@using VocaDb.Model.DataContracts.Songs;
-@using VocaDb.Web.Helpers;
-@model ComparedSongsContract
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Song;
+@model PrintArchivedSongDataViewModel
 
 <div class="well well-transparent archived-entry-contents">
 	<h4>Content</h4>
 
 	<table class="table table-bordered">
-		@ArchivedEntryHelpers.DataRow("Id", Model.FirstData.Id)
-		@ArchivedEntryHelpers.TranslatedNameRow(Model, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList("Names", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
-		@ArchivedEntryHelpers.DataRow("Notes", Model, d => d.Notes, preserveLineBreaks: true)
-		@ArchivedEntryHelpers.DataRow("Notes (en)", Model, d => d.NotesEng, preserveLineBreaks: true)
-		@ArchivedEntryHelpers.DataRow("Song type", Model, d => d.SongType)
-		@ArchivedEntryHelpers.DataRow("Original version", Model, d => ArchivedEntryHelpers.ObjectRefInfo(d.OriginalVersion))
-		@ArchivedEntryHelpers.DataRow("Duration", Model, d => DateTimeUtils.FormatFromSeconds(d.LengthSeconds))
-		@ArchivedEntryHelpers.DataRow("Release event", Model, d => ArchivedEntryHelpers.ObjectRefInfo(d.ReleaseEvent))
-		@ArchivedEntryHelpers.DataRow("Publish date", Model, d => d.PublishDate)
-		@ArchivedEntryHelpers.DataRowList("External links", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
-		@ArchivedEntryHelpers.DataRowList("Artists", Model, d => DataFormatUtils.GenerateHtml(d.Artists != null ? (d.Artists.OrderBy(a => a.NameHint)) : null, artist => MvcHtmlString.Create(artist.NameHint + " [" + artist.Id + "] - IsSupport: " + artist.IsSupport + ", Roles: " + artist.Roles)))
-		@ArchivedEntryHelpers.DataRowList("PVs", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
-		@ArchivedEntryHelpers.DataRowList("Lyrics", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.Lyrics, SongHelpers.LyricsInfo))
+		@ArchivedEntryHelpers.DataRow("Id", Model.ComparedSongs.FirstData.Id)
+		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedSongs, d => d.TranslatedName)
+		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedSongs, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+		@ArchivedEntryHelpers.DataRow("Notes", Model.ComparedSongs, d => d.Notes, preserveLineBreaks: true)
+		@ArchivedEntryHelpers.DataRow("Notes (en)", Model.ComparedSongs, d => d.NotesEng, preserveLineBreaks: true)
+		@ArchivedEntryHelpers.DataRow("Song type", Model.ComparedSongs, d => d.SongType)
+		@ArchivedEntryHelpers.DataRow("Original version", Model.ComparedSongs, d => ArchivedEntryHelpers.ObjectRefInfo(d.OriginalVersion))
+		@ArchivedEntryHelpers.DataRow("Duration", Model.ComparedSongs, d => DateTimeUtils.FormatFromSeconds(d.LengthSeconds))
+		@ArchivedEntryHelpers.DataRow("Release event", Model.ComparedSongs, d => ArchivedEntryHelpers.ObjectRefInfo(d.ReleaseEvent))
+		@ArchivedEntryHelpers.DataRow("Publish date", Model.ComparedSongs, d => d.PublishDate)
+		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedSongs, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+		@ArchivedEntryHelpers.DataRowList("Artists", Model.ComparedSongs, d => DataFormatUtils.GenerateHtml(d.Artists != null ? (d.Artists.OrderBy(a => a.NameHint)) : null, artist => MvcHtmlString.Create(artist.NameHint + " [" + artist.Id + "] - IsSupport: " + artist.IsSupport + ", Roles: " + artist.Roles)))
+		@ArchivedEntryHelpers.DataRowList("PVs", Model.ComparedSongs, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
+		@ArchivedEntryHelpers.DataRowList("Lyrics", Model.ComparedSongs, d => DataFormatUtils.GenerateHtmlFromHelper(d.Lyrics, SongHelpers.LyricsInfo))
 	</table>
 
 </div>

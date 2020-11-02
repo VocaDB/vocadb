@@ -1,13 +1,13 @@
 ﻿@using System.Globalization
 @using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Users;
-@using VocaDb.Model.Domain.Globalization
 @using VocaDb.Model.Domain.Users
 @using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security;
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Resources.Domain.Globalization
+@using VocaDb.Web.Models.Shared.Partials.Album;
 @using R = ViewRes.User.DetailsStrings;
 @using Res = ViewRes.User.DetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<UserDetailsContract>
@@ -332,7 +332,7 @@
 					<small>(@string.Format(R.Total, Model.AlbumCollectionCount))</small>
 				</a>
 			</h3>
-			@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", Model.FavoriteAlbums); }
+			@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.FavoriteAlbums)); }
 		</div>
 	}
 

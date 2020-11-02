@@ -2,6 +2,7 @@
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Utils.Search
+@using VocaDb.Web.Models.Shared.Partials.Album;
 @using Res = ViewRes.Home.IndexStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.UseCases.FrontPageContract>
 
@@ -53,14 +54,14 @@
 @if (Model.NewAlbums.Any()) {
 	<h3 class="withMargin">@Res.NewAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
 	<div id="newAlbums">
-		@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", Model.NewAlbums); }
+		@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.NewAlbums)); }
 	</div>	
 }
 
 @if (Model.TopAlbums.Any()) {
 	<h3 class="withMargin">@Res.TopAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
 	<div id="topAlbums">
-		@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", Model.TopAlbums); }
+		@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.TopAlbums)); }
 	</div>	
 }
 	

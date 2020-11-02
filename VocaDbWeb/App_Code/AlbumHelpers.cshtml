@@ -5,6 +5,7 @@
 @using VocaDb.Model.Service.Search.AlbumSearch
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Utils
+@using VocaDb.Web.Models.Shared.Partials.Album;
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper AlbumLink(AlbumContract album) {
@@ -18,7 +19,7 @@
 		@foreach (var album in albums) {
 		<tr>
 			<td>
-				@{ Html.RenderPartial("Partials/Album/_AlbumIconLink", album); }
+				@{ Html.RenderPartial("Partials/Album/_AlbumIconLink", new AlbumIconLinkViewModel(album)); }
 			</td>
 			<td>
 				@Html.ActionLink(album.Name, "Details", "Album", new { id = album.Id }, new { title = album.AdditionalNames })
@@ -49,7 +50,7 @@
 				@Html.Raw("<tr>")
 	  }
 			<td>
-				@{ Html.RenderPartial("Partials/Album/_AlbumIconLink", album); }
+				@{ Html.RenderPartial("Partials/Album/_AlbumIconLink", new AlbumIconLinkViewModel(album)); }
 			</td>
 			<td>
 				@Html.ActionLink(album.Name, "Details", "Album", new { id = album.Id }, new { title = album.AdditionalNames })

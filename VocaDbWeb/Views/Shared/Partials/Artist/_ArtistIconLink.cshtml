@@ -1,8 +1,8 @@
-﻿@using VocaDb.Model.DataContracts.Artists;
-@using VocaDb.Model.Domain.Images;
+﻿@using VocaDb.Model.Domain.Images;
 @using VocaDb.Web.Helpers;
-@model ArtistContract
+@using VocaDb.Web.Models.Shared.Partials.Artist;
+@model ArtistIconLinkViewModel
 
-<a href="@Url.Action("Details", "Artist", new { id = Model.Id })">
-	<img src="@Url.ImageThumb(Model, ImageSize.TinyThumb)" alt="Thumb" class="coverPicThumb" />
+<a href="@Url.Action("Details", "Artist", new { id = Model.Artist.Id })">
+	<img src="@Url.ImageThumb(Model.Artist, ImageSize.TinyThumb)" alt="Thumb" class="coverPicThumb" />
 </a>

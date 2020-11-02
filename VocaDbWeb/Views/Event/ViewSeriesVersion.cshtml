@@ -1,5 +1,6 @@
 ﻿@using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Event;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.ReleaseEvents.ArchivedEventSeriesVersionDetailsContract>>
 
 @{
@@ -46,7 +47,7 @@
 @ArchivedEntryHelpers.ArchivedObjectVersionProperties(Model.Version(Model.Entry.ArchivedVersion),
 	Model.Version(Model.Entry.ComparedVersion))
 
-@{ Html.RenderPartial("Partials/Event/_PrintArchivedEventSeriesData", Model.Entry.Versions); }
+@{ Html.RenderPartial("Partials/Event/_PrintArchivedEventSeriesData", new PrintArchivedEventSeriesDataViewModel(Model.Entry.Versions)); }
 
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
 

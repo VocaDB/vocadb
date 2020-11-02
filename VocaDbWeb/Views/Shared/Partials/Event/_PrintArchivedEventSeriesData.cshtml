@@ -1,18 +1,18 @@
-﻿@using VocaDb.Model.DataContracts.ReleaseEvents;
-@using VocaDb.Web.Helpers;
-@model ComparedEventSeriesContract
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Event;
+@model PrintArchivedEventSeriesDataViewModel
 
 <div class="well well-transparent archived-entry-contents">
 	<h4>Content</h4>
 
 	<table class="table table-bordered">
-		@ArchivedEntryHelpers.DataRow("Id", Model.FirstData.Id)
-		@ArchivedEntryHelpers.TranslatedNameRow(Model, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList("Names", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
-		@ArchivedEntryHelpers.DataRow("Description", Model, d => d.Description)
-		@ArchivedEntryHelpers.DataRowList("External links", Model, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
-		@ArchivedEntryHelpers.DataRow("Category", Model, d => d.Category)
-		@ArchivedEntryHelpers.DataRow("Main picture MIME", Model, d => d.MainPictureMime)
+		@ArchivedEntryHelpers.DataRow("Id", Model.ComparedSeries.FirstData.Id)
+		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedSeries, d => d.TranslatedName)
+		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedSeries, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+		@ArchivedEntryHelpers.DataRow("Description", Model.ComparedSeries, d => d.Description)
+		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedSeries, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+		@ArchivedEntryHelpers.DataRow("Category", Model.ComparedSeries, d => d.Category)
+		@ArchivedEntryHelpers.DataRow("Main picture MIME", Model.ComparedSeries, d => d.MainPictureMime)
 	</table>
 
 </div>

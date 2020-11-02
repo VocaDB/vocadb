@@ -1,10 +1,10 @@
-﻿@using VocaDb.Model.DataContracts.Albums;
-@using VocaDb.Model.Domain.Images;
+﻿@using VocaDb.Model.Domain.Images;
 @using VocaDb.Web.Helpers;
-@model IEnumerable<AlbumForApiContract>
+@using VocaDb.Web.Models.Shared.Partials.Album;
+@model AlbumThumbsViewModel
 
 <ul class="smallThumbs">
-	@foreach (var album in Model)
+	@foreach (var album in Model.Albums)
 	{
 		@Helpers.ThumbItem(Url.Action("Details", "Album", new { id = album.Id }),
 			Url.ImageThumb(album.MainPicture, ImageSize.SmallThumb), album.Name, album)

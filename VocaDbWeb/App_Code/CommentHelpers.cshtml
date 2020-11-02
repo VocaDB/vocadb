@@ -5,6 +5,7 @@
 @using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Code
+@using VocaDb.Web.Models.Shared.Partials.Comment;
 @inherits VocaDb.Web.Code.HelperPage
 
 @helper CommentKnockout(string messageBinding, bool allowMarkdown, string deleteHandler = "$parent.deleteComment", string editHandler = null,
@@ -80,7 +81,7 @@
 @helper CommentWithEntryVertical(EntryWithCommentsContract entry, int maxLength = int.MaxValue) {
 
 	<div class="well well-transparent">
-		@{ Html.RenderPartial("Partials/Comment/_CommentEntryItem", entry.Entry); }
+		@{ Html.RenderPartial("Partials/Comment/_CommentEntryItem", new CommentEntryItemViewModel(entry.Entry)); }
 		@foreach (var comment in entry.Comments) {
 			@PrintComment(comment, false, maxLength: maxLength)
 			if (comment != entry.Comments.Last()) {

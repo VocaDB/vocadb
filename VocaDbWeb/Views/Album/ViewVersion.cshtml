@@ -1,6 +1,7 @@
 ﻿@using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Album;
+@using VocaDb.Web.Models.Shared.Partials.Album;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Albums.ArchivedAlbumVersionDetailsContract>
 
 @{
@@ -51,7 +52,7 @@
 
 @ArchivedEntryHelpers.ArchivedObjectVersionProperties(Versions.CreateForAlbum(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForAlbum(Model.ComparedVersion) : null)
 
-@{ Html.RenderPartial("Partials/Album/_PrintArchivedAlbumData", Model.Versions); }
+@{ Html.RenderPartial("Partials/Album/_PrintArchivedAlbumData", new PrintArchivedAlbumDataViewModel(Model.Versions)); }
 
 @EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
 
