@@ -1,4 +1,4 @@
-﻿using VocaDb.Model.Domain;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Web.Code {
@@ -7,6 +7,10 @@ namespace VocaDb.Web.Code {
 	/// Common properties for a page, to be used by the layout page.
 	/// </summary>
 	public class PagePropertiesData {
+
+		public const string Robots_Noindex_Follow = "noindex,follow";
+
+		public const string Robots_Noindex_Nofollow = "noindex,nofollow";
 
 		public static PagePropertiesData Get(dynamic viewBag) {
 
@@ -55,6 +59,8 @@ namespace VocaDb.Web.Code {
 			}
 			set => ViewBag.PageTitle = value;
 		}
+
+		public string Robots { get; set; }
 
 		/// <summary>
 		/// Short page description 

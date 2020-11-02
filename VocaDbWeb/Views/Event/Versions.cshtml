@@ -1,7 +1,9 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.Versions>
+﻿@using VocaDb.Web.Code;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.Versions>
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Entry.Name;
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index"), 
 		Html.ActionLink(Model.Entry.Name, "Details", new { id = Model.Entry.Id, slug = Model.Entry.UrlSlug }) 

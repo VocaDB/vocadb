@@ -1,11 +1,13 @@
-﻿@using VocaDb.Web.Helpers;
+﻿@using VocaDb.Web.Code;
+@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Venue;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.Venues.ArchivedVenueVersionDetailsContract>>
 
 @{
 
 	PageProperties.Title = "Revision " + Model.Entry.ArchivedVersion.Version + " for " + Model.Entry.Name;
-
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+	
 	if (Model.Entry.Venue != null) {
 		ViewBag.Parents = new[] {
 			Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenue", "Event"),

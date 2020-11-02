@@ -7,6 +7,7 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Service.QueryableExtenders
+@using VocaDb.Web.Code;
 @using VocaDb.Web.Models.Shared
 @using VocaDb.Web.Models.Shared.Partials.Album
 @using VocaDb.Web.Models.Shared.Partials.Artist;
@@ -17,6 +18,8 @@
 @{
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Artists, "Index") };
 	var url = PageProperties.CanonicalUrl;
+
+	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 }
 
 @section Head {

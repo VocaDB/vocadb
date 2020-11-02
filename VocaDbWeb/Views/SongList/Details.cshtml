@@ -3,6 +3,7 @@
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Service.Search
+@using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Resources.Domain
 @using VocaDb.Web.Models.Shared.Partials.Event;
@@ -27,6 +28,7 @@
 	var descriptionStripped = MarkdownParser.GetPlainText(Model.SongList.Description);
 
 	PageProperties.Description = descriptionStripped;
+	PageProperties.Robots = Model.SongList.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 	var url = PageProperties.CanonicalUrl;
 

@@ -1,10 +1,12 @@
-﻿@using VocaDb.Web.Helpers;
+﻿@using VocaDb.Web.Code;
+@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Tag;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.Tags.ArchivedTagVersionDetailsContract>>
 
 @{
 
 	PageProperties.Title = "Revision " + Model.Entry.ArchivedVersion.Version + " for " + Model.Entry.Name;
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
 	if (Model.Entry.Tag != null) {
 		ViewBag.Parents = new[] {
