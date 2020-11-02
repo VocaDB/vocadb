@@ -1,10 +1,10 @@
-﻿@using R = ViewRes.User.CreateStrings;
-
+﻿@using VocaDb.Web.Code;
+@using R = ViewRes.User.CreateStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.RegisterModel>
 
 @{
 	PageProperties.Title = ViewRes.User.CreateStrings.Register;
-	PageProperties.Robots = "noindex,nofollow";
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 }
 
 @section Head {

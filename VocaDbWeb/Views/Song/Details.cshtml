@@ -12,6 +12,7 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security;
 @using VocaDb.Model.Service.VideoServices
+@using VocaDb.Web.Code;
 @using VocaDb.Web.Models.Shared
 @using R = ViewRes.Song;
 @using Res = ViewRes.Song.DetailsStrings;
@@ -38,7 +39,7 @@
 	var eeLoveIt = Model.Name.Equals("love it!", StringComparison.InvariantCultureIgnoreCase);
 	var favoriteText = eeLoveIt ? "Love It!" : Res.AddToFavorites;
 
-	PageProperties.Robots = Model.Deleted ? "noindex,follow" : string.Empty;
+	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 }
 

@@ -8,6 +8,10 @@ namespace VocaDb.Web.Code {
 	/// </summary>
 	public class PagePropertiesData {
 
+		public const string Robots_Noindex_Follow = "noindex,follow";
+
+		public const string Robots_Noindex_Nofollow = "noindex,nofollow";
+
 		public static PagePropertiesData Get(dynamic viewBag) {
 
 			return viewBag.PageProperties ?? (viewBag.PageProperties = new PagePropertiesData(viewBag));

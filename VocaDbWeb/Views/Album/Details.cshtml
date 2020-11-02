@@ -5,6 +5,7 @@
 @using VocaDb.Model.Domain.Albums
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Helpers
+@using VocaDb.Web.Code; 
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models;
 @using VocaDb.Web.Models.Shared
@@ -17,7 +18,7 @@
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Albums, "Index") };
 	var url = PageProperties.CanonicalUrl;
 
-	PageProperties.Robots = Model.Deleted ? "noindex,follow" : string.Empty;
+	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 }
 
 @section Head {

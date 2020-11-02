@@ -1,4 +1,5 @@
 ﻿@using System.Web.Optimization
+@using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Resources.Views.Event
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesDetailsContract>
@@ -13,7 +14,7 @@
 	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);
 
 	PageProperties.Description = descriptionStripped;
-	PageProperties.Robots = Model.Deleted ? "noindex,follow" : string.Empty;
+	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 	var smallThumbUrl = Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.SmallThumb);
 	var fullImageUrl = Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.Original);

@@ -1,11 +1,12 @@
-﻿@using VocaDb.Web.Helpers;
+﻿@using VocaDb.Web.Code;
+@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Album;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Albums.ArchivedAlbumVersionDetailsContract>
 
 @{
 	
     PageProperties.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
-	PageProperties.Robots = "noindex,nofollow";
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 	
 	if (Model.Album != null) {
 		ViewBag.Parents = new[] {

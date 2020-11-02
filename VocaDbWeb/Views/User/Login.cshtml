@@ -1,9 +1,10 @@
-﻿@using Res = ViewRes.User.LoginStrings;
+﻿@using VocaDb.Web.Code;
+@using Res = ViewRes.User.LoginStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.LoginModel>
 
 @{
 	PageProperties.Title = Res.Login;
-	PageProperties.Robots = "noindex,nofollow";
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 }
 
 @Helpers.ValidationSymmaryDiv(Res.UnableToLogin)

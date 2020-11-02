@@ -1,10 +1,11 @@
-﻿@using VocaDb.Web.Helpers;
+﻿@using VocaDb.Web.Code;
+@using VocaDb.Web.Helpers;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.ReleaseEvents.ArchivedEventSeriesVersionDetailsContract>>
 
 @{
 
 	PageProperties.Title = "Revision " + Model.Entry.ArchivedVersion.Version + " for " + Model.Entry.Name;
-	PageProperties.Robots = "noindex,nofollow";
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 
 	if (Model.Entry.ReleaseEventSeries != null) {
 		ViewBag.Parents = new[] {
