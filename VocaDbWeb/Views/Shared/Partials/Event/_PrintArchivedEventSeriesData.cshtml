@@ -11,7 +11,7 @@
 		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedSeries, d => d.TranslatedName)
 		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedSeries, d => DataFormatUtils.GenerateHtml(d.Names, names => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(names))))
 		@ArchivedEntryHelpers.DataRow("Description", Model.ComparedSeries, d => d.Description)
-		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedSeries, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedSeries, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLinks => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLinks))))
 		@ArchivedEntryHelpers.DataRow("Category", Model.ComparedSeries, d => d.Category)
 		@ArchivedEntryHelpers.DataRow("Main picture MIME", Model.ComparedSeries, d => d.MainPictureMime)
 	</table>

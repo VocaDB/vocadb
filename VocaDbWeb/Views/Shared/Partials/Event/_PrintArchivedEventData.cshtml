@@ -11,7 +11,7 @@
 		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedEvents, d => d.TranslatedName)
 		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.Names, names => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(names))))
 		@ArchivedEntryHelpers.DataRow("Description", Model.ComparedEvents, d => d.Description)
-		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedEvents, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLinks => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLinks))))
 		@ArchivedEntryHelpers.DataRow("Category", Model.ComparedEvents, d => d.Category)
 		@ArchivedEntryHelpers.DataRow("Date", Model.ComparedEvents, d => d.Date)
 		@ArchivedEntryHelpers.DataRow("Venue", Model.ComparedEvents, d => ArchivedEntryHelpers.ObjectRefInfo(d.Venue))

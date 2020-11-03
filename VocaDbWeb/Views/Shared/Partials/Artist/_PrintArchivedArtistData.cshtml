@@ -16,7 +16,7 @@
 		@ArchivedEntryHelpers.DataRow("Description (en)", Model.ComparedArtists, d => d.DescriptionEng, preserveLineBreaks: true)
 		@ArchivedEntryHelpers.DataRow("Release date", Model.ComparedArtists, d => d.ReleaseDate)
 		@ArchivedEntryHelpers.DataRow("Artist type", Model.ComparedArtists, d => Translate.ArtistTypeName(d.ArtistType))
-		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedArtists, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLinks => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLinks))))
 		@ArchivedEntryHelpers.DataRow("Base voicebank", Model.ComparedArtists, d => ArchivedEntryHelpers.ObjectRefInfo(d.BaseVoicebank))
 		@ArchivedEntryHelpers.DataRowList("Associated artists", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.Groups, g => MvcHtmlString.Create(g.NameHint + " [" + g.Id + "] (" + g.LinkType + ")")))
 		@ArchivedEntryHelpers.ObjectRefList("Members", Model.ComparedArtists, d => d.Members)
