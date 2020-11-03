@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Helpers;;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
 @using VocaDb.Web.Models.Shared.Partials.Tag;
 @model PrintArchivedTagDataViewModel
 
@@ -8,7 +9,7 @@
 	<table class="table table-bordered">
 		@ArchivedEntryHelpers.DataRow("Id", Model.ComparedTags.FirstData.Id)
 		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedTags, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedTags, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedTags, d => DataFormatUtils.GenerateHtml(d.Names, names => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(names))))
 		@ArchivedEntryHelpers.DataRow("Description", Model.ComparedTags, d => d.Description)
 		@ArchivedEntryHelpers.DataRow("Description English", Model.ComparedTags, d => d.DescriptionEng)
 		@ArchivedEntryHelpers.ObjectRefList("Related tags", Model.ComparedTags, d => d.RelatedTags)

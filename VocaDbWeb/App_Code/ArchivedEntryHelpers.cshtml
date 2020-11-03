@@ -127,10 +127,6 @@
 	}
 }
 
-@helper NameInfo(LocalizedStringContract name) {
-	<text>@Translate.ContentLanguageSelectionName(name.Language): @name.Value</text>
-}
-
 @helper ObjectRefInfo(ObjectRefContract objRef) {
 	if (objRef != null) {
 	<text>@objRef.NameHint [@objRef.Id]</text>

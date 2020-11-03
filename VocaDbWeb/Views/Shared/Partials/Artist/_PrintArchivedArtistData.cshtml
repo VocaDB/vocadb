@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
 @using VocaDb.Web.Models.Shared.Partials.Artist;
 @model PrintArchivedArtistDataViewModel
 
@@ -10,7 +11,7 @@
 		@ArchivedEntryHelpers.PictureRow("Main picture", Model.ComparedArtists, id => Url.Action("ArchivedVersionPicture", "Artist", new { id }))
 		@ArchivedEntryHelpers.DataRow("Main picture MIME", Model.ComparedArtists, d => d.MainPictureMime)
 		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedArtists, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedArtists, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.Names, names => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(names))))
 		@ArchivedEntryHelpers.DataRow("Description", Model.ComparedArtists, d => d.Description, preserveLineBreaks: true)
 		@ArchivedEntryHelpers.DataRow("Description (en)", Model.ComparedArtists, d => d.DescriptionEng, preserveLineBreaks: true)
 		@ArchivedEntryHelpers.DataRow("Release date", Model.ComparedArtists, d => d.ReleaseDate)

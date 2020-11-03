@@ -170,6 +170,7 @@
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionPropertiesViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\CurrentVersionMessageViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\ArchivedEntry\NameInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistLinkListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistLinkViewModel.cs" />
@@ -1994,6 +1995,7 @@
     <Content Include="Views\Shared\Partials\Html\_LanguageFlag.cshtml" />
     <Content Include="Views\Shared\Partials\Html\_MetaTag.cshtml" />
     <Content Include="Views\Shared\Partials\Html\_OpenGraphMetaTags.cshtml" />
+    <Content Include="Views\Shared\Partials\ArchivedEntry\_NameInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
