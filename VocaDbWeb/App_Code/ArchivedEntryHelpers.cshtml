@@ -137,10 +137,6 @@
 	@DataRowList(name, DataFormatUtils.GenerateHtmlFromHelper(objRefs, ObjectRefInfo));
 }
 
-@helper PictureFileInfo(ArchivedEntryPictureFileContract pic) {
-	<text>@pic.Name (@pic.Mime) - @pic.Author, @pic.Created</text>
-}
-
 @helper PictureRow(string name, string url, string compareToUrl = null) {
 	<tr>
 		<td>@name</td>

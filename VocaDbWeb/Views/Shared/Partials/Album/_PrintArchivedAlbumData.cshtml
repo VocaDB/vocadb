@@ -11,7 +11,7 @@
 		@ArchivedEntryHelpers.PictureRow("Main picture", Model.ComparedAlbums, id => Url.Action("ArchivedVersionCoverPicture", "Album", new { id }))
 		@ArchivedEntryHelpers.DataRow("Main picture MIME", Model.ComparedAlbums, d => d.MainPictureMime)
 		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedAlbums, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.Names, names => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(names))))
+		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
 		@ArchivedEntryHelpers.DataRow("Description", Model.ComparedAlbums, d => d.Description, preserveLineBreaks: true)
 		@ArchivedEntryHelpers.DataRow("Description (en)", Model.ComparedAlbums, d => d.DescriptionEng, preserveLineBreaks: true)
 		@ArchivedEntryHelpers.DataRow("Disc type", Model.ComparedAlbums, d => Translate.DiscTypeName(d.DiscType))
@@ -19,11 +19,11 @@
 		@ArchivedEntryHelpers.DataRow("Catalog number", Model.ComparedAlbums, d => d.OriginalRelease != null ? d.OriginalRelease.CatNum : string.Empty)
 		@ArchivedEntryHelpers.DataRow("Release event", Model.ComparedAlbums, d => ArchivedEntryHelpers.ObjectRefInfo(d.OriginalRelease != null ? d.OriginalRelease.ReleaseEvent : null))
 		@ArchivedEntryHelpers.DataRowList("Barcodes", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.Identifiers, d2 => new MvcHtmlString(d2.Value)))
-		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLinks => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLinks))))
+		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
 		@ArchivedEntryHelpers.DataRowList("Artists", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.Artists != null ? d.Artists.OrderBy(a => a.NameHint) : null, artist => MvcHtmlString.Create(artist.NameHint + " [" + artist.Id + "] - IsSupport: " + artist.IsSupport + ", Roles: " + artist.Roles)))
 		@ArchivedEntryHelpers.DataRowList("Discs", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.Discs != null ? d.Discs.OrderBy(s => s.DiscNumber) : null, disc => MvcHtmlString.Create(disc.DiscNumber + ": " + disc.Name + " (" + disc.MediaType + ") [" + disc.Id + "]")))
 		@ArchivedEntryHelpers.DataRowList("Tracks", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.Songs != null ? d.Songs.OrderBy(s => s.DiscNumber).ThenBy(s => s.TrackNumber) : null, song => MvcHtmlString.Create("(Disc " + song.DiscNumber + ") " + song.TrackNumber + ". " + song.NameHint + " [" + song.Id + "]")))
-		@ArchivedEntryHelpers.DataRowList("Pictures", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtmlFromHelper(d.Pictures, ArchivedEntryHelpers.PictureFileInfo))
+		@ArchivedEntryHelpers.DataRowList("Pictures", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.Pictures, picture => Html.Partial("Partials/ArchivedEntry/_PictureFileInfo", new PictureFileInfoViewModel(picture))))
 		@ArchivedEntryHelpers.DataRowList("PVs", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
 	</table>
 

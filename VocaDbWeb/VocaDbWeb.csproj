@@ -171,6 +171,7 @@
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\CurrentVersionMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\NameInfoViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\ArchivedEntry\PictureFileInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\WebLinkInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistLinkListViewModel.cs" />
@@ -1998,6 +1999,7 @@
     <Content Include="Views\Shared\Partials\Html\_OpenGraphMetaTags.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_NameInfo.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_WebLinkInfo.cshtml" />
+    <Content Include="Views\Shared\Partials\ArchivedEntry\_PictureFileInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

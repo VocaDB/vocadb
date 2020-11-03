@@ -9,9 +9,9 @@
 	<table class="table table-bordered">
 		@ArchivedEntryHelpers.DataRow("Id", Model.ComparedEvents.FirstData.Id)
 		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedEvents, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.Names, names => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(names))))
+		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
 		@ArchivedEntryHelpers.DataRow("Description", Model.ComparedEvents, d => d.Description)
-		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLinks => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLinks))))
+		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
 		@ArchivedEntryHelpers.DataRow("Category", Model.ComparedEvents, d => d.Category)
 		@ArchivedEntryHelpers.DataRow("Date", Model.ComparedEvents, d => d.Date)
 		@ArchivedEntryHelpers.DataRow("Venue", Model.ComparedEvents, d => ArchivedEntryHelpers.ObjectRefInfo(d.Venue))
