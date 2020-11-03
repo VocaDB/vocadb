@@ -1,5 +1,6 @@
 ﻿@using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Songs
+@using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared
 @using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
@@ -7,6 +8,7 @@
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Name;
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 	ViewBag.Parents = new[] {
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id })
 	};

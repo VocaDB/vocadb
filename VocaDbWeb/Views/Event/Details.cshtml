@@ -3,6 +3,7 @@
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.ReleaseEvents
 @using VocaDb.Model.Domain.Security
+@using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Album;
 @using VocaDb.Web.Models.Shared.Partials.Artist;
@@ -32,6 +33,7 @@
 	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);
 
 	PageProperties.Description = descriptionStripped;
+	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 	var pictureData = !string.IsNullOrEmpty(Model.PictureMime) ? (IEntryImageInformation)Model: Model.Series;
 	var smallThumbUrl = Url.ImageThumb(pictureData, VocaDb.Model.Domain.Images.ImageSize.SmallThumb);

@@ -1,4 +1,5 @@
-﻿@using VocaDb.Web.Helpers;
+﻿@using VocaDb.Web.Code;
+@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Artist;
 @using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
 @using VocaDb.Web.Models.Shared.Partials.Artist;
@@ -6,10 +7,11 @@
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Artists.ArchivedArtistVersionDetailsContract>
 
 @{
-
-	PageProperties.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
-	ViewBag.Parents = new[] {
-		Html.ActionLink("Artist", "Index"),
+	
+    PageProperties.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+	ViewBag.Parents = new[] { 
+		Html.ActionLink("Artist", "Index"), 
 		Html.ActionLink(Model.Artist.Name, "Details", new { id = Model.Artist.Id }),
 		Html.ActionLink("Revisions", "Versions", new { id = Model.Artist.Id })
 	};

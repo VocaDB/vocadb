@@ -2,6 +2,7 @@
 @using System.Web.Optimization
 @using VocaDb.Model.DataContracts.Users;
 @using VocaDb.Model.Domain.Users
+@using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Domain.Security;
 @using VocaDb.Model.Utils
@@ -21,6 +22,7 @@
 @{
 	PageProperties.Title = Model.Name;
 	PageProperties.Subtitle = Translate.UserGroups[Model.GroupId];
+	PageProperties.Robots = !Model.Active ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 	ViewBag.Parents = new[] {
 		Html.ActionLink(ViewRes.SharedStrings.Users, "Index"),

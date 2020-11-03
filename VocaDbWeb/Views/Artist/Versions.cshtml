@@ -1,8 +1,10 @@
-﻿@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
+﻿@using VocaDb.Web.Code;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Artist.Versions>
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Artist.Name;
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Artists, "Index"), 
 		LinkExtensions.ActionLink(Html, Model.Artist.Name, "Details", new { id = Model.Artist.Id }) 

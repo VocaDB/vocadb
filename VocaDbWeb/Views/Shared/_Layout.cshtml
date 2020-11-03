@@ -22,7 +22,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	@* Default encoding in ASP.NET is UTF-8: https://msdn.microsoft.com/en-us/library/system.web.configuration.globalizationsection.responseencoding.aspx *@
 	<meta charset="utf-8" />
-	
+	@if (!string.IsNullOrEmpty(PageProperties.Robots)) {
+		<meta name="robots" content="@PageProperties.Robots"/>
+	}
+
 	@{ Html.RenderPartial("LayoutPartials/_TwitterCard", Model); }
 
 	<link rel="shortcut icon" href="@(Config.Assets.FavIconUrl.EmptyToNull() ?? Url.Content("~/Content/favicon.ico"))" type="image/x-icon" />

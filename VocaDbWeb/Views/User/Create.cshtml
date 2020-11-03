@@ -1,9 +1,11 @@
-﻿@using VocaDb.Web.Models.Shared.Partials.Shared;
+﻿@using VocaDb.Web.Code;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using R = ViewRes.User.CreateStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.RegisterModel>
 
 @{
 	PageProperties.Title = ViewRes.User.CreateStrings.Register;
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 }
 
 @section Head {
