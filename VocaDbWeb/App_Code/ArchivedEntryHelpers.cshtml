@@ -152,19 +152,6 @@
 
 }
 
-@helper PVInfo(ArchivedPVContract pv) {
-	@:@pv.Service (@pv.PVType):
-	<a href="@VocaDb.Model.Domain.PVs.PV.GetUrl(pv.Service, pv.PVId, pv.ExtendedMetadata)">@pv.PVId</a> 
-	@:by @pv.Author
-	@:(@DateTimeUtils.FormatFromSeconds(pv.Length))
-	if (pv.PublishDate != null) {
-		@:at @pv.PublishDate.Value.ToShortDateString()
-	}
-	if (pv.Disabled) {
-		@:(unavailable)
-	}
-}
-
 @helper TranslatedNameRow(TranslatedStringContract name, TranslatedStringContract compareToName = null) {
 	<tr>
 		<td>Original language:</td>

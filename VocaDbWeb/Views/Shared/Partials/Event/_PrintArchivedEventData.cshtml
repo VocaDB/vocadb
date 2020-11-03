@@ -20,7 +20,7 @@
 		@ArchivedEntryHelpers.DataRow("Series", Model.ComparedEvents, d => ArchivedEntryHelpers.ObjectRefInfo(d.Series))
 		@ArchivedEntryHelpers.DataRow("Series number", Model.ComparedEvents, d => d.SeriesNumber)
 		@ArchivedEntryHelpers.DataRowList("Artists", Model.ComparedEvents, d => DataFormatUtils.GenerateHtmlFromHelper(d.Artists, ArchivedEntryHelpers.ObjectRefInfo))
-		@ArchivedEntryHelpers.DataRowList("PVs", Model.ComparedEvents, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
+		@ArchivedEntryHelpers.DataRowList("PVs", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.PVs, pv => Html.Partial("Partials/ArchivedEntry/_PVInfo", new PVInfoViewModel(pv))))
 		@ArchivedEntryHelpers.DataRow("Song list", Model.ComparedEvents, d => ArchivedEntryHelpers.ObjectRefInfo(d.SongList))
 	</table>
 

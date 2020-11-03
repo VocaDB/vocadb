@@ -24,7 +24,7 @@
 		@ArchivedEntryHelpers.DataRowList("Discs", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.Discs != null ? d.Discs.OrderBy(s => s.DiscNumber) : null, disc => MvcHtmlString.Create(disc.DiscNumber + ": " + disc.Name + " (" + disc.MediaType + ") [" + disc.Id + "]")))
 		@ArchivedEntryHelpers.DataRowList("Tracks", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.Songs != null ? d.Songs.OrderBy(s => s.DiscNumber).ThenBy(s => s.TrackNumber) : null, song => MvcHtmlString.Create("(Disc " + song.DiscNumber + ") " + song.TrackNumber + ". " + song.NameHint + " [" + song.Id + "]")))
 		@ArchivedEntryHelpers.DataRowList("Pictures", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.Pictures, picture => Html.Partial("Partials/ArchivedEntry/_PictureFileInfo", new PictureFileInfoViewModel(picture))))
-		@ArchivedEntryHelpers.DataRowList("PVs", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtmlFromHelper(d.PVs, ArchivedEntryHelpers.PVInfo))
+		@ArchivedEntryHelpers.DataRowList("PVs", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.PVs, pv => Html.Partial("Partials/ArchivedEntry/_PVInfo", new PVInfoViewModel(pv))))
 	</table>
 
 </div>
