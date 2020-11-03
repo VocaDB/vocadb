@@ -171,6 +171,7 @@
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\CurrentVersionMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\NameInfoViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\ArchivedEntry\ObjectRefInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\PictureFileInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\PVInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\WebLinkInfoViewModel.cs" />
@@ -2002,6 +2003,7 @@
     <Content Include="Views\Shared\Partials\ArchivedEntry\_WebLinkInfo.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_PictureFileInfo.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_PVInfo.cshtml" />
+    <Content Include="Views\Shared\Partials\ArchivedEntry\_ObjectRefInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -16,7 +16,7 @@
 		@ArchivedEntryHelpers.DataRow("Valid for", Model.ComparedTags, d => d.Targets)
 		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedTags, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
 		@ArchivedEntryHelpers.DataRow("Category name", Model.ComparedTags, d => d.CategoryName)
-		@ArchivedEntryHelpers.DataRow("Parent", Model.ComparedTags, d => ArchivedEntryHelpers.ObjectRefInfo(d.Parent))
+		@ArchivedEntryHelpers.DataRow("Parent", Model.ComparedTags, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.Parent)))
 	</table>
 
 </div>

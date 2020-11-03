@@ -1,10 +1,11 @@
 ﻿@using System.Web.Mvc;
+@using System.Web.Mvc.Html;
 @using VocaDb.Model.DataContracts;
-@using VocaDb.Model.DataContracts.PVs;
 @using VocaDb.Model.DataContracts.Versioning
 @using VocaDb.Model.Domain;
 @using VocaDb.Model.Domain.Globalization
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
 @inherits VocaDb.Web.Code.HelperPage
 
 @functions {
@@ -55,7 +56,7 @@
 	public static HelperResult ObjectRefList<T>(string name, ComparedVersionsContract<T> comparedVersions, 
 		Func<T, IEnumerable<ObjectRefContract>> valGetter) where T : class {
 		
-		return DataRowList(name, comparedVersions, d => DataFormatUtils.GenerateHtmlFromHelper(valGetter(d), ObjectRefInfo));
+		return DataRowList(name, comparedVersions, d => DataFormatUtils.GenerateHtml(valGetter(d), objRef => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(objRef))));
 		
 	}
 
@@ -127,14 +128,8 @@
 	}
 }
 
-@helper ObjectRefInfo(ObjectRefContract objRef) {
-	if (objRef != null) {
-	<text>@objRef.NameHint [@objRef.Id]</text>
-	}
-}
-
 @helper ObjectRefList(string name, IEnumerable<ObjectRefContract> objRefs) {
-	@DataRowList(name, DataFormatUtils.GenerateHtmlFromHelper(objRefs, ObjectRefInfo));
+	@DataRowList(name, DataFormatUtils.GenerateHtml(objRefs, objRef => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(objRef))));
 }
 
 @helper PictureRow(string name, string url, string compareToUrl = null) {
