@@ -65,11 +65,6 @@ namespace VocaDb.Model.Service {
 			var minRatings = 2; // Minimum number of ratings
 			var sampleSize = 300; // Get this many popular albums to be rotated when cache expires
 			var albumCount = 7; // This many albums are shown, the albums are rotated when cache expires
-			var cacheKey = "OtherService.PopularAlbums." + languagePreference;
-			var item = (TranslatedAlbumContract[])cache.Get(cacheKey);
-
-			if (item != null)
-				return item.Select(a => new AlbumForApiContract(a, LanguagePreference, thumbPersister, fields)).ToArray();
 
 			// If only a small number of rated albums, reduce minimum ratings count
 			var totalRatedAlbumCount = session.Query<Album>().Count(a => !a.Deleted && a.RatingCount >= minRatings && a.RatingAverageInt >= 300);
@@ -98,17 +93,18 @@ namespace VocaDb.Model.Service {
 				.OrderByDescending(a => a.RatingAverageInt)
 				.ToArray();
 
-			var popularAlbumsCached = random
-				.Select(a => new TranslatedAlbumContract(a))
-				.ToArray();
-
 			var popularAlbumContracts = random
 				.Select(a => new AlbumForApiContract(a, null, languagePreference, thumbPersister, fields, SongOptionalFields.None))
 				.ToArray();
 
-			cache.Add(cacheKey, popularAlbumsCached, DateTime.Now + TimeSpan.FromHours(24));
-
 			return popularAlbumContracts;
+
+		}
+
+		private AlbumForApiContract[] GetTopAlbumsCached(ISession session, int[] recentIds, ContentLanguagePreference languagePreference, AlbumOptionalFields fields) {
+
+			var cacheKey = $"OtherService.PopularAlbums.{languagePreference}";
+			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromHours(24)), () => GetTopAlbums(session, recentIds, languagePreference, fields));
 
 		}
 
@@ -447,7 +443,7 @@ namespace VocaDb.Model.Service {
 				var newAlbums = GetRecentAlbums(session, LanguagePreference, AlbumOptionalFields.MainPicture);
 
 				var recentIds = newAlbums.Select(a => a.Id).ToArray();
-				var topAlbums = GetTopAlbums(session, recentIds, LanguagePreference, AlbumOptionalFields.MainPicture);
+				var topAlbums = GetTopAlbumsCached(session, recentIds, LanguagePreference, AlbumOptionalFields.MainPicture);
 
 				var newSongs = await GetHighlightedSongs(session);
 

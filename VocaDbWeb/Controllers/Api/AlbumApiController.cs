@@ -249,9 +249,12 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("top")]
 		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
 		public IEnumerable<AlbumForApiContract> GetTopAlbums(
-			int[] ignoreIds,
+			[FromUri] int[] ignoreIds = null,
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
-			AlbumOptionalFields fields = AlbumOptionalFields.None) => otherService.GetTopAlbums(languagePreference, fields, ignoreIds ?? new int[0]);
+			AlbumOptionalFields fields = AlbumOptionalFields.None) {
+			ignoreIds ??= Array.Empty<int>();
+			return otherService.GetTopAlbums(languagePreference, fields, ignoreIds);
+		}
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Route("{id:int}/tagSuggestions")]
