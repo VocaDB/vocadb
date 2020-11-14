@@ -184,18 +184,15 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private async Task<EntryWithCommentsContract[]> GetRecentCommentsAsync(ISession session) {
+		private Task<EntryWithCommentsContract[]> GetRecentCommentsAsync(ISession session) {
 			
-			var cacheKey = string.Format("OtherService.RecentComments.{0}", LanguagePreference);
-			var item = (EntryWithCommentsContract[])cache.Get(cacheKey);
+			var cacheKey = $"OtherService.RecentComments.{LanguagePreference}";
+			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromMinutes(5)), async () => {
 
-			if (item != null)
+				var item = await GetRecentCommentsAsync(session, 9);
 				return item;
 
-			item = await GetRecentCommentsAsync(session, 9);
-			cache.Add(cacheKey, item, CachePolicy.AbsoluteExpiration(TimeSpan.FromMinutes(5)));
-
-			return item;
+			});
 
 		}
 
