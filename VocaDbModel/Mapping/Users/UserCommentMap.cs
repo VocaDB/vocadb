@@ -1,19 +1,11 @@
-﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Mapping.Users {
 
-	public class UserCommentMap : ClassMap<UserComment> {
+	public class UserCommentMap : CommentMap<UserComment, User> {
 
 		public UserCommentMap() {
 
-			Cache.ReadWrite();
-			Id(m => m.Id);
-
-			Map(m => m.Created).Not.Nullable();
-			Map(m => m.Message).Length(4000).Not.Nullable();
-
-			References(m => m.Author).Not.Nullable();
 			References(m => m.EntryForComment).Column("[User]").Not.Nullable();
 
 		}
