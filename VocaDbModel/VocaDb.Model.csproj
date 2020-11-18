@@ -48,13 +48,13 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NHibernate" Version="5.2.7" />
     <PackageReference Include="NHibernate.Caches.SysCache2" Version="5.6.0" />
-    <PackageReference Include="NicoApiClient" Version="1.0.1" />
     <PackageReference Include="NLog" Version="4.5.6" />
     <PackageReference Include="PiaproClient" Version="2.2.0" />
     <PackageReference Include="Remotion.Linq" Version="2.2.0" />
     <PackageReference Include="Remotion.Linq.EagerFetching" Version="2.2.0" />
     <PackageReference Include="taglib" Version="2.1.0.0" />
     <PackageReference Include="VocaDb.BandcampMetadataExtractor" Version="1.0.1" />
+    <PackageReference Include="VocaDb.NicoApiClient" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="RSS.NET">
