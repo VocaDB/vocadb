@@ -6,6 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Swagger\index.html" />
+    <None Remove="Resources\Swagger\styles.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Swagger\index.html" />
+    <EmbeddedResource Include="Resources\Swagger\styles.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="App_GlobalResources\AlbumArchiveReasonNames.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

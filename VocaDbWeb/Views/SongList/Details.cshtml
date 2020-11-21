@@ -1,9 +1,18 @@
-﻿@using Resources
+﻿@using System.Web.Optimization
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Service.Search
+@using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Resources.Domain
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Event;
+@using VocaDb.Web.Models.Shared.Partials.Html;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Search;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
+@using VocaDb.Web.Models.Shared.Partials.Song;
+@using KnockoutDraftIconViewModel = VocaDb.Web.Models.Shared.Partials.Knockout.DraftIconViewModel;
 @using Res = ViewRes.SongList.DetailsStrings;
 @using SearchRes = ViewRes.Search.IndexStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.SongLists.SongListDetailsViewModel>
@@ -25,13 +34,14 @@
 	var descriptionStripped = MarkdownParser.GetPlainText(Model.SongList.Description);
 
 	PageProperties.Description = descriptionStripped;
+	PageProperties.Robots = Model.SongList.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
 
 	var url = PageProperties.CanonicalUrl;
 
 }
 
 @section Head {
-	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
+	@{ Html.RenderPartial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties)); }
 	<link rel="canonical" href="@url" />
 }
 
@@ -44,16 +54,16 @@
 }
 	@Html.ActionLink(Res.Export, "Export", new { id = Model.SongList.Id }, new { id = "export" })
 	@if (Model.IsFeatured) {
-		@Helpers.EntryStatusMessage(Model.SongList.Status)
+		Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.SongList.Status));
 	}
 }
 
 @if (Model.IsFeatured && Model.SongList.Status == EntryStatus.Draft && !Model.SongList.Deleted) {
-	@Helpers.DraftMessage(string.Empty)
+	Html.RenderPartial("Partials/Shared/_DraftMessage", new DraftMessageViewModel(string.Empty));
 }
 
 @if (Model.SongList.Deleted) {
-	@EntryDetailsHelpers.DeletedBanner(null)
+	Html.RenderPartial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null));
 }
 
 <div class="media">
@@ -89,13 +99,13 @@
 						</a>
 						@if (ev.Date.HasValue) {
 							if (ev.HasVenueOrVenueName) {
-								<small>(@ev.Date.Value.ToString("d"), @EventHelpers.VenueLinkOrVenueName(ev))</small>
+								<small>(@ev.Date.Value.ToString("d"), @{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev)); })</small>
 							} else {
 								<small>(@ev.Date.Value.ToString("d"))</small>
 							}
 						} else {
 							if (ev.HasVenueOrVenueName) {
-								<small>(@EventHelpers.VenueLinkOrVenueName(ev))</small>
+								<small>(@{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev)); })</small>
 							}
 						}
 					</li>
@@ -123,7 +133,7 @@
 
 	<div class="inline-block songlist-sort pull-left">
 		@ViewRes.EntryIndexStrings.SortBy
-		@KnockoutHelpers.Dropdown(Model.SortRules, "sort", "sortName")
+		@{ Html.RenderPartial("Partials/Knockout/_Dropdown", new DropdownViewModel(Model.SortRules, "sort", "sortName")); }
 	</div>
 
 	<div class="pull-left songlist-text-query">
@@ -140,14 +150,14 @@
 		<div class="control-group">
 			<div class="control-label">@SearchRes.SongType</div>
 			<div class="controls">
-				@SongHelpers.SongTypesDropdownKnockout("songType")
+				@{ Html.RenderPartial("Partials/Song/_SongTypesDropdownKnockout", new SongTypesDropdownKnockoutViewModel("songType")); }
 			</div>
 		</div>
 
 		<div class="control-group">
 			<div class="control-label">@EntryTypeNames.Artist</div>
 			<div class="controls" data-bind="with: artistFilters">
-				@KnockoutHelpers.ArtistFilters(artistParticipationStatus: false)
+				@{ Html.RenderPartial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: false)); }
 			</div>
 		</div>
 		
@@ -161,7 +171,7 @@
 		<div class="control-group">
 			<div class="control-label"></div>
 			<div class="controls">
-				@SearchHelpers.AdvancedFilters(AdvancedSearchFilters.SongFilters)
+				@{ Html.RenderPartial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters)); }
 			</div>
 		</div>
 	</div>
@@ -170,11 +180,11 @@
 <div data-bind="css: { loading: loading }, visible: playlistMode() == false" style="display: none;">
 
 	<div data-bind="with: paging" class="dropdown pull-right">
-		@KnockoutHelpers.EntryCount()
+		@{ Html.RenderPartial("Partials/Knockout/_EntryCount"); }
 	</div>
 
 	<div data-bind="with: paging">
-		@KnockoutHelpers.ServerSidePaging()
+		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
 	</div>
 
 	<table class="table table-striped">
@@ -205,14 +215,14 @@
 					<!-- ko foreach: $parent.pvServiceIcons.getIconUrls(song.pvServices) -->
 					<img data-bind="attr: { src: url, title: service }" />
 					<!-- /ko -->
-
-					@KnockoutHelpers.DraftIcon("status")
+					
+					@{ Html.RenderPartial("Partials/Knockout/_DraftIcon", new KnockoutDraftIconViewModel("status")); }
 
 					<br />
 					<small class="extraInfo" data-bind="text: song.artistString"></small>
 
 					<div data-bind="visible: song.pvServices, with: song.previewViewModel">
-						@SongHelpers.PVPreviewKnockout("$parents[2].pvServiceIcons.getIconUrls")
+						@{ Html.RenderPartial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].pvServiceIcons.getIconUrls")); }
 					</div>
 				</td>
 				<!-- ko if: $parent.showTags -->
@@ -230,7 +240,7 @@
 	</table>
 
 	<div data-bind="with: paging">
-		@KnockoutHelpers.ServerSidePaging()
+		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
 	</div>
 
 </div>
@@ -241,7 +251,7 @@
 	</div>
 </div>
 
-@CommentHelpers.LatestCommentsKnockout()
+@{ Html.RenderPartial("Partials/Comment/_LatestCommentsKnockout"); }
 
 <div data-bind="with: tagsEditViewModel">
 	@{ Html.RenderPartial("Partials/_TagsEdit"); }

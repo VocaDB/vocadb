@@ -1,5 +1,6 @@
-@using VocaDb.Web.Helpers
-@using VocaDb.Web.Resources.Domain
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Resources.Domain;
 @using Res = ViewRes.Search.IndexStrings;
 @using EventRes = ViewRes.Event.DetailsStrings;
 
@@ -10,7 +11,7 @@
 		<div class="control-label">@Res.EventCategory</div>
 		<div class="controls">
 			<div class="input-append">
-				@KnockoutHelpers.DropdownList(Translate.ReleaseEventCategoryNames.ValuesAndNamesStrings, "category")
+				@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.ReleaseEventCategoryNames.ValuesAndNamesStrings, "category")); }
 			</div>
 		</div>
 	</div>
@@ -18,7 +19,7 @@
 	<div class="control-group">
 		<div class="control-label">@EntryTypeNames.Artist</div>
 		<div class="controls" data-bind="with: artistFilters">
-			@KnockoutHelpers.ArtistFilters(artistParticipationStatus: false)
+			@{ Html.RenderPartial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: false)); }
 		</div>
 	</div>
 	

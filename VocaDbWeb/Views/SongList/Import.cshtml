@@ -1,6 +1,8 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage
-@using VocaDb.Web.Helpers
+﻿@using System.Web.Optimization;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using Res = VocaDb.Web.Resources.Views.SongList.ImportStrings;
+@inherits VocaDb.Web.Code.VocaDbPage
 
 @{
 	PageProperties.Title = Res.Title;
@@ -9,7 +11,7 @@
 <form class="form-horizontal">
 	<div class="control-group">
 		<div class="control-label">
-			@Helpers.HelpLabel(Res.UrlLabel, Res.UrlDescription)
+			@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.UrlLabel, Res.UrlDescription)); }
 		</div>
 		<div class="controls">
 			<input type="text" textInput="{{ url }}" size="60" class="input-xlarge" required />

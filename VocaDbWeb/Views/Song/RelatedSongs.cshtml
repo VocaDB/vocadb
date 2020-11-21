@@ -1,4 +1,5 @@
-﻿@model VocaDb.Model.DataContracts.Songs.RelatedSongsContract
+﻿@using VocaDb.Web.Models.Shared.Partials.Song; 
+@model VocaDb.Model.DataContracts.Songs.RelatedSongsContract
 @using R = ViewRes.Song.DetailsStrings
 
 @if (!Model.Any) {
@@ -7,17 +8,17 @@
 
 @if (Model.ArtistMatches.Any()) {
 	<h3>@R.MatchingArtists</h3>
-	@SongHelpers.SongGrid(Model.ArtistMatches, 2, true)
+	Html.RenderPartial("Partials/Song/_SongGrid", new SongGridViewModel(Model.ArtistMatches, 2, true));
 	<br />
 }
 
 @if (Model.LikeMatches.Any()) {
 	<h3>@R.MatchingLikes</h3>
-	@SongHelpers.SongGrid(Model.LikeMatches, 2, true)
+	Html.RenderPartial("Partials/Song/_SongGrid", new SongGridViewModel(Model.LikeMatches, 2, true));
 	<br />
 }
 
 @if (Model.TagMatches.Any()) {
 	<h3>@R.MatchingTags</h3>
-	@SongHelpers.SongGrid(Model.TagMatches, 2, true)
+	Html.RenderPartial("Partials/Song/_SongGrid", new SongGridViewModel(Model.TagMatches, 2, true));
 }

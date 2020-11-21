@@ -1,4 +1,6 @@
-﻿@using VocaDb.Web.Helpers;
+﻿@using System.Web.Optimization;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using R = ViewRes.Album;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Album.Create>
 
@@ -11,14 +13,14 @@
 
 <form action="@Url.Action("Create", "Album")" method="POST" data-bind="submit: submit">
 
-	@Helpers.ValidationSymmaryDiv(R.CreateStrings.UnableToCreateAlbum)
+	@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(R.CreateStrings.UnableToCreateAlbum)); }
 																								
 	<div class="row-fluid">
 		<div class="span5 well well-transparent">
 
 			<div class="editor-label">
 				@ViewRes.EntryCreateStrings.Name
-				@Helpers.RequiredField()
+				@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
 			</div>
 
 			<div class="editor-field">
@@ -52,7 +54,7 @@
 
 			<div class="editor-label">
 				<span>@R.CreateStrings.ArtistsInfo</span>
-				@Helpers.RequiredField()
+				@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
 				<br />
 				<span class="extraInfo">@BrandableStrings.Album.NewAlbumArtistDesc</span>
 			</div>

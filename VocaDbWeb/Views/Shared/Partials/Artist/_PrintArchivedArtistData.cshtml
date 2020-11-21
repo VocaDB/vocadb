@@ -1,0 +1,26 @@
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
+@using VocaDb.Web.Models.Shared.Partials.Artist;
+@model PrintArchivedArtistDataViewModel
+
+<div class="well well-transparent archived-entry-contents">
+	<h4>Content</h4>
+
+	<table class="table table-bordered">
+		@ArchivedEntryHelpers.DataRow("Id", Model.ComparedArtists.FirstData.Id)
+		@ArchivedEntryHelpers.PictureRow("Main picture", Model.ComparedArtists, id => Url.Action("ArchivedVersionPicture", "Artist", new { id }))
+		@ArchivedEntryHelpers.DataRow("Main picture MIME", Model.ComparedArtists, d => d.MainPictureMime)
+		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedArtists, d => d.TranslatedName)
+		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
+		@ArchivedEntryHelpers.DataRow("Description", Model.ComparedArtists, d => d.Description, preserveLineBreaks: true)
+		@ArchivedEntryHelpers.DataRow("Description (en)", Model.ComparedArtists, d => d.DescriptionEng, preserveLineBreaks: true)
+		@ArchivedEntryHelpers.DataRow("Release date", Model.ComparedArtists, d => d.ReleaseDate)
+		@ArchivedEntryHelpers.DataRow("Artist type", Model.ComparedArtists, d => Translate.ArtistTypeName(d.ArtistType))
+		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
+		@ArchivedEntryHelpers.DataRow("Base voicebank", Model.ComparedArtists, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.BaseVoicebank)))
+		@ArchivedEntryHelpers.DataRowList("Associated artists", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.Groups, g => MvcHtmlString.Create(g.NameHint + " [" + g.Id + "] (" + g.LinkType + ")")))
+		@ArchivedEntryHelpers.ObjectRefList("Members", Model.ComparedArtists, d => d.Members)
+		@ArchivedEntryHelpers.DataRowList("Pictures", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.Pictures, picture => Html.Partial("Partials/ArchivedEntry/_PictureFileInfo", new PictureFileInfoViewModel(picture))))
+	</table>
+
+</div>

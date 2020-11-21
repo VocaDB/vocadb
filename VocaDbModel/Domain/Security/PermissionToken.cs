@@ -27,22 +27,22 @@ namespace VocaDb.Model.Domain.Security {
 		/// </summary>
 		public static readonly PermissionToken Nothing = new PermissionToken(Guid.Empty, "Nothing");
 
-		public static readonly PermissionToken AccessManageMenu =		New("b54de61d-9341-4435-8cb1-31e5e295d577", "AccessManageMenu");
+		public static readonly PermissionToken AccessManageMenu =		New("b54de61d-9341-4435-8cb1-31e5e295d577", nameof(AccessManageMenu));
 
 		/// <summary>
 		/// Add raw media file links (such as .mp3) to songs.
 		/// </summary>
-		public static readonly PermissionToken AddRawFileMedia =		New("9c1992d8-3fca-4008-b248-7d7f2a7f15dc", "AddRawFileMedia");
-		public static readonly PermissionToken Admin =					New("1c98077f-f36f-4ef2-8cf3-cd9e347d389a", "Admin");
-		public static readonly PermissionToken ApplyAnyTag =            New("100e81ce-6bc9-4083-bff4-2a47fcfb37d3", "ApplyAnyTag");
-		public static readonly PermissionToken ApproveEntries =			New("e3b4b909-5128-4a0e-9f26-2bf1d5e497ab", "ApproveEntries");
-		public static readonly PermissionToken BulkDeletePVs =			New("caa8f4d7-322e-44f7-ad79-7de767ef1128", "BulkDeletePVs");
+		public static readonly PermissionToken AddRawFileMedia =		New("9c1992d8-3fca-4008-b248-7d7f2a7f15dc", nameof(AddRawFileMedia));
+		public static readonly PermissionToken Admin =					New("1c98077f-f36f-4ef2-8cf3-cd9e347d389a", nameof(Admin));
+		public static readonly PermissionToken ApplyAnyTag =            New("100e81ce-6bc9-4083-bff4-2a47fcfb37d3", nameof(ApplyAnyTag));
+		public static readonly PermissionToken ApproveEntries =			New("e3b4b909-5128-4a0e-9f26-2bf1d5e497ab", nameof(ApproveEntries));
+		public static readonly PermissionToken BulkDeletePVs =			New("caa8f4d7-322e-44f7-ad79-7de767ef1128", nameof(BulkDeletePVs));
 
 		/// <summary>
 		/// Can post comments, for now applies to discussion topics as well. 
 		/// Can delete own comments and topics.
 		/// </summary>
-		public static readonly PermissionToken CreateComments =			New("be2deee9-ee12-48b4-a9a5-e369915fc156", "CreateComments");
+		public static readonly PermissionToken CreateComments =			New("be2deee9-ee12-48b4-a9a5-e369915fc156", nameof(CreateComments));
 
 		/// <summary>
 		/// Delete any comment (not just own comments). 
@@ -50,34 +50,34 @@ namespace VocaDb.Model.Domain.Security {
 		/// Also allows editing and deleting any discussion topic.
 		/// Also allows moving discussion topics.
 		/// </summary>
-		public static readonly PermissionToken DeleteComments =			New("1b1dfcfa-6b96-4a8a-8aca-d76465439ffb", "DeleteComments");
+		public static readonly PermissionToken DeleteComments =			New("1b1dfcfa-6b96-4a8a-8aca-d76465439ffb", nameof(DeleteComments));
 		/// <summary>
 		/// Delete any entry (entry state still matters, meaning edit permission is required).
 		/// </summary>
-		public static readonly PermissionToken DeleteEntries =			New("cc51c6b6-be93-4942-a6e4-fdf88f4520b9", "DeleteEntries");
-		public static readonly PermissionToken DesignatedStaff =		New("b995a14b-49b4-4f1e-8fac-36a34967ddb0", "DesignatedStaff");
-		public static readonly PermissionToken DisableUsers =			New("cb46dfbe-5221-4af4-9968-53aec5faa3d4", "DisableUsers");
-		public static readonly PermissionToken EditAllSongLists =		New("b4873d98-b21f-40ee-b1d4-94102ae6e528", "EditAllSongLists");
-		public static readonly PermissionToken EditFeaturedLists =		New("a639e4a3-86fe-429a-81ea-d0aa05161e40", "EditFeaturedLists");
-		public static readonly PermissionToken EditProfile =			New("4f79b01a-7154-4a7f-bc87-a8a9259a9905", "EditProfile");
-		public static readonly PermissionToken LockEntries =			New("eb02e92e-207f-4330-a763-6bafd2cedde1", "LockEntries");
-		public static readonly PermissionToken ManageDatabase =			New("d762d720-79ef-4e60-8397-1d638c26d82b", "ManageDatabase");
-		public static readonly PermissionToken EditTags =               New("2ab6da19-bc5a-4a28-86d4-8ddce399ca0b", "EditTags");
-		public static readonly PermissionToken ManageEntryReports =		New("f9eb1d22-9142-4a04-9238-f4ebe5f1fc17", "ManageEntryReports");
+		public static readonly PermissionToken DeleteEntries =			New("cc51c6b6-be93-4942-a6e4-fdf88f4520b9", nameof(DeleteEntries));
+		public static readonly PermissionToken DesignatedStaff =		New("b995a14b-49b4-4f1e-8fac-36a34967ddb0", nameof(DesignatedStaff));
+		public static readonly PermissionToken DisableUsers =			New("cb46dfbe-5221-4af4-9968-53aec5faa3d4", nameof(DisableUsers));
+		public static readonly PermissionToken EditAllSongLists =		New("b4873d98-b21f-40ee-b1d4-94102ae6e528", nameof(EditAllSongLists));
+		public static readonly PermissionToken EditFeaturedLists =		New("a639e4a3-86fe-429a-81ea-d0aa05161e40", nameof(EditFeaturedLists));
+		public static readonly PermissionToken EditProfile =			New("4f79b01a-7154-4a7f-bc87-a8a9259a9905", nameof(EditProfile));
+		public static readonly PermissionToken LockEntries =			New("eb02e92e-207f-4330-a763-6bafd2cedde1", nameof(LockEntries));
+		public static readonly PermissionToken ManageDatabase =			New("d762d720-79ef-4e60-8397-1d638c26d82b", nameof(ManageDatabase));
+		public static readonly PermissionToken EditTags =               New("2ab6da19-bc5a-4a28-86d4-8ddce399ca0b", nameof(EditTags));
+		public static readonly PermissionToken ManageEntryReports =		New("f9eb1d22-9142-4a04-9238-f4ebe5f1fc17", nameof(ManageEntryReports));
 		[Obsolete]
-		public static readonly PermissionToken ManageEventSeries =		New("cf39509b-b9c5-4efc-9b13-2743ffec9aac", "ManageEventSeries");
-		public static readonly PermissionToken ManageIPRules =			New("f125fe5b-6474-4d52-823f-955c7d19f7c8", "ManageIPRules");
-		public static readonly PermissionToken ManageUserPermissions =	New("c0eb147e-10f5-4fea-9b19-b412ef613479", "ManageUserPermissions");
+		public static readonly PermissionToken ManageEventSeries =		New("cf39509b-b9c5-4efc-9b13-2743ffec9aac", nameof(ManageEventSeries));
+		public static readonly PermissionToken ManageIPRules =			New("f125fe5b-6474-4d52-823f-955c7d19f7c8", nameof(ManageIPRules));
+		public static readonly PermissionToken ManageUserPermissions =	New("c0eb147e-10f5-4fea-9b19-b412ef613479", nameof(ManageUserPermissions));
 		public static readonly PermissionToken ManageTagMappings =		New("c93667a9-a270-486d-ab00-db3ff390dd83", nameof(ManageTagMappings));
-		public static readonly PermissionToken MergeEntries =			New("eb336a5b-8455-4048-bc3a-8003dc522dc5", "MergeEntries");
-		public static readonly PermissionToken MikuDbImport =			New("0b879c57-5eba-462a-b842-d9f7dd0befd8", "MikuDbImport");
-		public static readonly PermissionToken MoveToTrash =			New("99c333a2-ea0a-4a7b-91cb-ceef6f667389", "MoveToTrash");
+		public static readonly PermissionToken MergeEntries =			New("eb336a5b-8455-4048-bc3a-8003dc522dc5", nameof(MergeEntries));
+		public static readonly PermissionToken MikuDbImport =			New("0b879c57-5eba-462a-b842-d9f7dd0befd8", nameof(MikuDbImport));
+		public static readonly PermissionToken MoveToTrash =			New("99c333a2-ea0a-4a7b-91cb-ceef6f667389", nameof(MoveToTrash));
 		public static readonly PermissionToken ReportUser =				New("85c730a1-402c-4922-b617-6c6068f5f98e", nameof(ReportUser));
-		public static readonly PermissionToken RemoveEditPermission =	New("6b258b3e-97a1-4cf7-9c4f-80787c2d2266", "RemoveEditPermission");
-		public static readonly PermissionToken RemoveTagUsages =		New("135aaf49-08d5-42bb-b8ed-ef1ceb910a69", "RemoveTagUsages");
-		public static readonly PermissionToken RestoreRevisions =		New("e99a1e1c-1742-48c1-877b-17cb2964e8bc", "RestoreRevisions");
-		public static readonly PermissionToken UploadMedia =			New("be1a2f04-6dc2-4d63-b34e-4499f6389231", "UploadMedia");
-		public static readonly PermissionToken ViewAuditLog	=			New("8d3d5395-12c9-440a-8120-4911034b9a7e", "ViewAuditLog");
+		public static readonly PermissionToken RemoveEditPermission =	New("6b258b3e-97a1-4cf7-9c4f-80787c2d2266", nameof(RemoveEditPermission));
+		public static readonly PermissionToken RemoveTagUsages =		New("135aaf49-08d5-42bb-b8ed-ef1ceb910a69", nameof(RemoveTagUsages));
+		public static readonly PermissionToken RestoreRevisions =		New("e99a1e1c-1742-48c1-877b-17cb2964e8bc", nameof(RestoreRevisions));
+		public static readonly PermissionToken UploadMedia =			New("be1a2f04-6dc2-4d63-b34e-4499f6389231", nameof(UploadMedia));
+		public static readonly PermissionToken ViewAuditLog =			New("8d3d5395-12c9-440a-8120-4911034b9a7e", nameof(ViewAuditLog));
 		/// <summary>
 		/// View ratings by users whose ratings are normally hidden.
 		/// </summary>

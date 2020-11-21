@@ -4,6 +4,7 @@ using System.Web.Hosting;
 using System.Web.Http;
 using VocaDb.Web;
 using Swashbuckle.Application;
+using System.Reflection;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -14,7 +15,7 @@ namespace VocaDb.Web
 
         public static void Register()
         {
-            var thisAssembly = typeof(SwaggerConfig).Assembly;
+            var resourcesAssembly = typeof(ResourcesRoot).Assembly;
 
             GlobalConfiguration.Configuration 
                 .EnableSwagger(c =>
@@ -171,7 +172,7 @@ namespace VocaDb.Web
                         // The file must be included in your project as an "Embedded Resource", and then the resource's
                         // "Logical Name" is passed to the method as shown below.
                         //
-                        c.InjectStylesheet(thisAssembly, "VocaDb.Web.Resources.Swagger.styles.css");
+                        c.InjectStylesheet(resourcesAssembly, "VocaDb.Web.Resources.Swagger.styles.css");
 
                         // Use the "InjectJavaScript" option to invoke one or more custom JavaScripts after the swagger-ui
                         // has loaded. The file must be included in your project as an "Embedded Resource", and then the resource's
@@ -203,7 +204,7 @@ namespace VocaDb.Web
                         // in your project as an "Embedded Resource", and then the resource's "Logical Name" is passed to
                         // the method as shown below.
                         //
-                        c.CustomAsset("index", thisAssembly, "VocaDb.Web.Resources.Swagger.index.html");
+                        c.CustomAsset("index", resourcesAssembly, "VocaDb.Web.Resources.Swagger.index.html");
 
                         // If your API has multiple versions and you've applied the MultipleApiVersions setting
                         // as described above, you can also enable a select box in the swagger-ui, that displays

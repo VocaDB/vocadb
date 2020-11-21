@@ -1,4 +1,6 @@
-﻿@using VocaDb.Model.Service.Search
+﻿@using VocaDb.Model.Service.Search;
+@using VocaDb.Web.Models.Shared.Partials.Artist;
+@using VocaDb.Web.Models.Shared.Partials.Search;
 @using Res = ViewRes.Search.IndexStrings
 
 <!-- Artist search options -->
@@ -6,14 +8,14 @@
 	<div class="control-group">
 		<div class="control-label">@Res.ArtistType</div>
 		<div class="controls">
-			@ArtistHelpers.ArtistTypesDropdownKnockout("artistType")
+			@{ Html.RenderPartial("Partials/Artist/_ArtistTypesDropdownKnockout", new ArtistTypesDropdownKnockoutViewModel("artistType")); }
 		</div>
 	</div>
-	
+
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			@SearchHelpers.AdvancedFilters(AdvancedSearchFilters.ArtistFilters)
+			@{ Html.RenderPartial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.ArtistFilters)); }
 		</div>
 	</div>
 </div>
