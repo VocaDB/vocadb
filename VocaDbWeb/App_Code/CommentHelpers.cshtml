@@ -1,11 +1,10 @@
-﻿@using System.Web.Mvc;
-@using System.Web.Mvc.Html;
+﻿@using System.Web.Mvc.Html;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @inherits VocaDb.Web.Code.HelperPage
 
 
 @helper CommentKnockout(string messageBinding, bool allowMarkdown, string deleteHandler = "$parent.deleteComment", string editHandler = null,
-	bool standalone = true, MvcHtmlString body = null) {
+	bool standalone = true, IHtmlString body = null) {
 	<div class="comment media @(standalone ? "comment-large" : "")">
 		<a data-bind="attr: { href: app.EntryUrlMapper.details_user_byName(author.name) }" class="pull-left">
 			@UserHelpers.ProfileIconKnockout(VocaDb.Model.Domain.Images.ImageSize.Thumb, binding: "author", size: 70)

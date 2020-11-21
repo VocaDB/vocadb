@@ -1,5 +1,4 @@
-﻿@using System.Web.Mvc;
-@using System.Web.Mvc.Html;
+﻿@using System.Web.Mvc.Html;
 @using VocaDb.Model.DataContracts;
 @using VocaDb.Model.DataContracts.Versioning
 @using VocaDb.Model.Domain;
@@ -29,7 +28,7 @@
 
 	}
 
-	public static HelperResult DataRowList<T>(string name, T primary, T compared, Func<T, IEnumerable<MvcHtmlString>> valGetter)
+	public static HelperResult DataRowList<T>(string name, T primary, T compared, Func<T, IEnumerable<IHtmlString>> valGetter)
 		where T : class {
 
 		var val1 = valGetter(primary);
@@ -39,7 +38,7 @@
 			
 	}
 
-	public static HelperResult DataRowList<T>(string name, ComparedVersionsContract<T> comparedVersions, Func<T, IEnumerable<MvcHtmlString>> valGetter)
+	public static HelperResult DataRowList<T>(string name, ComparedVersionsContract<T> comparedVersions, Func<T, IEnumerable<IHtmlString>> valGetter)
 		where T : class {
 
 		var val1 = valGetter(comparedVersions.FirstData);
@@ -102,7 +101,7 @@
 	</tr>	
 }
 
-@helper DataRowList(string name, IEnumerable<MvcHtmlString> rows, IEnumerable<MvcHtmlString> compareRows = null) {
+@helper DataRowList(string name, IEnumerable<IHtmlString> rows, IEnumerable<IHtmlString> compareRows = null) {
 	if (rows != null) {
 	<tr>
 		<td>@name</td>

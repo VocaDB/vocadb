@@ -50,11 +50,11 @@ namespace VocaDb.Web.Code {
 		}
 
 		public IHtmlString ToJS(string str) {
-			return new HtmlString(JsonHelpers.Serialize(str));
+			return new MvcHtmlString(JsonHelpers.Serialize(str));
 		}
 
 		public IHtmlString ToJS(object obj) {
-			return new HtmlString(JsonHelpers.Serialize(obj));
+			return new MvcHtmlString(JsonHelpers.Serialize(obj));
 		}
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
@@ -88,11 +88,11 @@ namespace VocaDb.Web.Code {
 		}
 
 		public IHtmlString ToJS(string str) {
-			return new HtmlString(JsonHelpers.Serialize(str));
+			return new MvcHtmlString(JsonHelpers.Serialize(str));
 		}
 
 		public IHtmlString ToJS(object obj) {
-			return new HtmlString(JsonHelpers.Serialize(obj));
+			return new MvcHtmlString(JsonHelpers.Serialize(obj));
 		}
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();

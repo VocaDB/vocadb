@@ -70,7 +70,7 @@
 				<div class="span10 rightFrame well">
                     
 							@if (ViewBag.Parents != null) {
-		   var arr = (MvcHtmlString[])ViewBag.Parents;
+		   var arr = (IHtmlString[])ViewBag.Parents;
 								<ul class="breadcrumb">
 								@foreach (var link in arr) {
 									<li>
