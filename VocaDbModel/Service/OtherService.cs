@@ -16,7 +16,6 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Caching;
@@ -114,43 +113,34 @@ namespace VocaDb.Model.Service {
 
 		private AlbumForApiContract[] GetRecentAlbums(ISession session, ContentLanguagePreference languagePreference, AlbumOptionalFields fields) {
 
-			var cacheKey = "OtherService.RecentAlbums." + languagePreference;
-			var item = (TranslatedAlbumContract[])cache.Get(cacheKey);
+			var cacheKey = $"OtherService.RecentAlbums.{languagePreference}";
+			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromHours(1)), () => {
+				var now = DateTime.Now;
 
-			if (item != null)
-				return item.Select(a => new AlbumForApiContract(a, LanguagePreference, thumbPersister, fields)).ToArray();
+				var upcoming = session.Query<Album>()
+					.WhereHasArtist(AppConfig.FilteredArtistId)
+					.Where(a => !a.Deleted)
+					.WhereHasReleaseDate()
+					.WhereReleaseDateIsAfter(now)
+					.OrderByReleaseDate(SortDirection.Ascending)
+					.Take(4)
+					.ToArray();
 
-			var now = DateTime.Now;
+				var recent = session.Query<Album>()
+					.WhereHasArtist(AppConfig.FilteredArtistId)
+					.Where(a => !a.Deleted)
+					.WhereHasReleaseDate()
+					.WhereReleaseDateIsBefore(now)
+					.OrderByReleaseDate(SortDirection.Descending)
+					.Take(3)
+					.ToArray();
 
-			var upcoming = session.Query<Album>()
-				.WhereHasArtist(AppConfig.FilteredArtistId)
-				.Where(a => !a.Deleted)
-				.WhereHasReleaseDate()
-				.WhereReleaseDateIsAfter(now)
-				.OrderByReleaseDate(SortDirection.Ascending)
-				.Take(4)
-				.ToArray();
+				var newAlbumContracts = upcoming.Reverse().Concat(recent)
+					.Select(a => new AlbumForApiContract(a, null, languagePreference, thumbPersister, fields, SongOptionalFields.None))
+					.ToArray();
 
-			var recent = session.Query<Album>()
-				.WhereHasArtist(AppConfig.FilteredArtistId)
-				.Where(a => !a.Deleted)
-				.WhereHasReleaseDate()
-				.WhereReleaseDateIsBefore(now)
-				.OrderByReleaseDate(SortDirection.Descending)
-				.Take(3)
-				.ToArray();
-
-			var newAlbums = upcoming.Reverse().Concat(recent)
-				.Select(a => new TranslatedAlbumContract(a))
-				.ToArray();
-
-			var newAlbumContracts = upcoming.Reverse().Concat(recent)
-				.Select(a => new AlbumForApiContract(a, null, languagePreference, thumbPersister, fields, SongOptionalFields.None))
-				.ToArray();
-
-			cache.Add(cacheKey, newAlbums, DateTime.Now + TimeSpan.FromHours(1));
-
-			return newAlbumContracts;
+				return newAlbumContracts;
+			});
 
 		}
 

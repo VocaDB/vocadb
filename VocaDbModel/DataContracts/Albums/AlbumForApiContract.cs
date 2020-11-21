@@ -103,36 +103,6 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		}
 
-		public AlbumForApiContract(TranslatedAlbumContract album, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister, AlbumOptionalFields fields) {
-
-			ParamIs.NotNull(() => album);
-
-			ArtistString = album.TranslatedArtistString.GetBestMatch(languagePreference);
-			CreateDate = album.CreateDate;
-			Deleted = album.Deleted;
-			DiscType = album.DiscType;
-			Id = album.Id;
-			Name = album.Names.SortNames[languagePreference];
-			RatingAverage = album.RatingAverage;
-			RatingCount = album.RatingCount;
-			ReleaseDate = album.ReleaseDate;
-			Status = album.Status;
-			Version = album.Version;
-
-			if (fields.HasFlag(AlbumOptionalFields.AdditionalNames)) {
-				AdditionalNames = album.Names.GetAdditionalNamesStringForLanguage(languagePreference);
-			}
-
-			if (fields.HasFlag(AlbumOptionalFields.MainPicture)) {
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister);
-			}
-
-			if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent)) {
-				ReleaseEvent = album.ReleaseEvent;
-			}
-
-		}
-
 		/// <summary>
 		/// Comma-separated list of all other names that aren't the display name.
 		/// </summary>
