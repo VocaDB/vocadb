@@ -21,11 +21,11 @@ namespace VocaDb.Web.Code {
 		public static string RequestUrlScheme => "https";
 
 		public static IHtmlString ToJS(bool val) {
-			return new HtmlString(val ? "true" : "false");
+			return new MvcHtmlString(val ? "true" : "false");
 		}
 
 		public static IHtmlString ToJS(string str) {
-			return new HtmlString(JsonHelpers.Serialize(str));
+			return new MvcHtmlString(JsonHelpers.Serialize(str));
 		}
 
 		public static UrlHelper Url => ((WebViewPage)WebPageContext.Current.Page).Url;
