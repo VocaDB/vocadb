@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
+using System.Web;
 
 namespace VocaDb.Web.Helpers {
 
 	public static class DataFormatUtils {
 
-		public static IEnumerable<MvcHtmlString> GenerateHtml<T>(IEnumerable<T> source, Func<T, MvcHtmlString> transform) {
+		public static IEnumerable<IHtmlString> GenerateHtml<T>(IEnumerable<T> source, Func<T, IHtmlString> transform) {
 
 			if (source == null)
 				return null;
