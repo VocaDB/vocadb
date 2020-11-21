@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.WebPages;
 
 namespace VocaDb.Web.Helpers {
 
@@ -15,13 +13,6 @@ namespace VocaDb.Web.Helpers {
 				return null;
 
 			return source.Select(transform);
-
-		}
-
-		public static IEnumerable<MvcHtmlString> GenerateHtmlFromHelper<T>(IEnumerable<T> source, Func<T, HelperResult> transform) {
-
-			source ??= Enumerable.Empty<T>();
-			return source.Select(s => MvcHtmlString.Create(transform(s).ToHtmlString()));
 
 		}
 
