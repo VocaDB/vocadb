@@ -6,12 +6,10 @@ using System.Linq.Expressions;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Routing;
-using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
@@ -113,28 +111,28 @@ namespace VocaDb.Web.Helpers {
 			return new SelectList(AppConfig.SongTypes.ToDictionary(s => s, Translate.SongTypeNames.GetName), "Key", "Value", selectedValue);
 		}
 
-		public static MvcHtmlString ArtistTypeDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlString ArtistTypeDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, ArtistType>> expression, object htmlAttributes = null, object selectedValue = null) {
 
 			return htmlHelper.DropDownListFor(expression, CreateArtistTypesList(selectedValue), htmlAttributes);
 
 		}
 
-		public static MvcHtmlString DiscTypeDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlString DiscTypeDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, DiscType>> expression, object htmlAttributes = null, object selectedValue = null) {
 
 			return htmlHelper.DropDownListFor(expression, CreateDiscTypesList(selectedValue), htmlAttributes);
 
 		}
 
-		public static MvcHtmlString EmailOptionsDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlString EmailOptionsDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, UserEmailOptions>> expression, object htmlAttributes = null, object selectedValue = null) {
 
 			return htmlHelper.DropDownListFor(expression, CreateEmailOptionsList(selectedValue), htmlAttributes);
 
 		}
 
-		public static MvcHtmlString EnumDropDownList<TEnum>(this HtmlHelper htmlHelper, string name,
+		public static IHtmlString EnumDropDownList<TEnum>(this HtmlHelper htmlHelper, string name,
 			TranslateableEnum<TEnum> enumType, object htmlAttributes = null, object selectedValue = null)
 			where TEnum : struct, Enum {
 
@@ -142,7 +140,7 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static MvcHtmlString EnumDropDownList<TEnum>(this HtmlHelper htmlHelper, string name,
+		public static IHtmlString EnumDropDownList<TEnum>(this HtmlHelper htmlHelper, string name,
 			IEnumerable<TranslateableEnumField<TEnum>> enumType, object htmlAttributes = null, object selectedValue = null)
 			where TEnum : struct, Enum {
 
@@ -150,7 +148,7 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static MvcHtmlString EnumDropDownListFor<TModel, TEnum>(this HtmlHelper<TModel> htmlHelper, 
+		public static IHtmlString EnumDropDownListFor<TModel, TEnum>(this HtmlHelper<TModel> htmlHelper, 
 			Expression<Func<TModel, TEnum>> expression,
 			TranslateableEnum<TEnum> enumType, object htmlAttributes = null, object selectedValue = null) 
 			where TEnum : struct, Enum {
@@ -159,7 +157,7 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static MvcHtmlString EnumDropDownListForDic<TModel, TEnum>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlString EnumDropDownListForDic<TModel, TEnum>(this HtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, TEnum>> expression,
 			TranslateableEnum<TEnum> enumType, IDictionary<string, object> htmlAttributes = null, object selectedValue = null)
 			where TEnum : struct, Enum {
@@ -168,7 +166,7 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static MvcHtmlString EnumDropDownListFor<TModel, TEnum>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlString EnumDropDownListFor<TModel, TEnum>(this HtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, TEnum>> expression,
 			IEnumerable<KeyValuePair<TEnum, string>> values, object htmlAttributes = null, object selectedValue = null)
 			where TEnum : struct, IConvertible {
@@ -208,7 +206,7 @@ namespace VocaDb.Web.Helpers {
 		/// <param name="contentFunc">
 		/// Provides the content for individual table cells. Return value is raw HTML. Cannot be null.</param>
 		/// <returns></returns>
-		public static MvcHtmlString Grid<T>(this HtmlHelper htmlHelper, IEnumerable<T> items, 
+		public static IHtmlString Grid<T>(this HtmlHelper htmlHelper, IEnumerable<T> items, 
 			int columns, Func<T, IHtmlString> contentFunc) {
 
 			ParamIs.NotNull(() => htmlHelper);
@@ -245,40 +243,40 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static MvcHtmlString LanguagePreferenceDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlString LanguagePreferenceDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, ContentLanguagePreference>> expression) {
 
 			return htmlHelper.DropDownListFor(expression, LanguagePreferenceList);
 
 		}
 
-		public static MvcHtmlString LanguageSelectionDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlString LanguageSelectionDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, ContentLanguageSelection>> expression, object htmlAttributes = null, bool allowUnspecified = false, object selectedValue = null) {
 
 			return htmlHelper.DropDownListFor(expression, allowUnspecified ? CreateLanguageSelectionList(selectedValue) : CreateLanguageSelectionListWithoutUnspecified(selectedValue), htmlAttributes);
 
 		}
 
-		public static MvcHtmlString LinkList<T>(this HtmlHelper htmlHelper, IEnumerable<T> list, Func<T, MvcHtmlString> linkFunc) {
+		public static IHtmlString LinkList<T>(this HtmlHelper htmlHelper, IEnumerable<T> list, Func<T, IHtmlString> linkFunc) {
 
 			return StringHelper.Join(", ", list.Select(linkFunc));
 
 		}
 
-		public static MvcHtmlString LinkListHtml<T>(this HtmlHelper htmlHelper, IEnumerable<T> list, Func<T, IHtmlString> linkFunc) {
+		public static IHtmlString LinkListHtml<T>(this HtmlHelper htmlHelper, IEnumerable<T> list, Func<T, IHtmlString> linkFunc) {
 
 			return StringHelper.Join(", ", list.Select(linkFunc));
 
 		}
 
-		public static MvcHtmlString SongTypeDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlString SongTypeDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, SongType>> expression, object htmlAttributes = null, object selectedValue = null) {
 
 			return htmlHelper.DropDownListFor(expression, CreateSongTypesList(selectedValue), htmlAttributes);
 
 		}
 
-		public static MvcHtmlString FormatMarkdown(this HtmlHelper htmlHelper, string markdown) {
+		public static IHtmlString FormatMarkdown(this HtmlHelper htmlHelper, string markdown) {
 			return new MvcHtmlString(DependencyResolver.Current.GetService<MarkdownParser>().GetHtml(markdown));
 		}
 

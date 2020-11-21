@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using VocaDb.Model;
@@ -12,7 +13,7 @@ namespace VocaDb.Web.Helpers {
 	/// </summary>
 	public static class KnockoutHtmlExtender {
 
-		public static MvcHtmlString CheckboxForKnockout<TModel>(
+		public static IHtmlString CheckboxForKnockout<TModel>(
 			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, bool>> expression,
 			string binding, string id = null) {
 
@@ -32,7 +33,7 @@ namespace VocaDb.Web.Helpers {
 		/// <summary>
 		/// Dropdown list bound to knockout model.
 		/// </summary>
-		public static MvcHtmlString DropdownForKnockout<TModel, TProperty>(
+		public static IHtmlString DropdownForKnockout<TModel, TProperty>(
 			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression,
 			SelectList selectList,
 			string binding, string cssClass = null, string id = null) {
@@ -53,7 +54,7 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static MvcHtmlString HiddenForKnockout<TModel, TProperty>(
+		public static IHtmlString HiddenForKnockout<TModel, TProperty>(
 			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression,
 			string binding, string id = null) {
 
@@ -84,7 +85,7 @@ namespace VocaDb.Web.Helpers {
 		/// <param name="rows">Rows attribute. Can be null, in which case this attribute is not specified.</param>
 		/// <param name="cols">Cols attribute. Can be null, in which case this attribute is not specified.</param>
 		/// <returns></returns>
-		public static MvcHtmlString TextAreaForKnockout<TModel, TProperty>(
+		public static IHtmlString TextAreaForKnockout<TModel, TProperty>(
 			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, 
 			string binding, string cssClass = null, string id = null, int? maxLength = null, int? rows = null, int? cols = null) {
 
@@ -127,7 +128,7 @@ namespace VocaDb.Web.Helpers {
 		/// <param name="size">Size attribute. Can be null, in which case this attribute is not specified.</param>
 		/// <param name="placeholder">Placeholder attribute. Can be null.</param>
 		/// <returns></returns>
-		public static MvcHtmlString TextBoxForKnockout<TModel, TProperty>(
+		public static IHtmlString TextBoxForKnockout<TModel, TProperty>(
 			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, 
 			string binding, string cssClass = null, string id = null, int? maxLength = null, int? size = null,
 			string placeholder = null) {
@@ -157,7 +158,7 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static MvcHtmlString NumericTextBoxForKnockout<TModel, TProperty>(
+		public static IHtmlString NumericTextBoxForKnockout<TModel, TProperty>(
 			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, 
 			string binding, string cssClass = null, string id = null, int? size = null,
 			string placeholder = null, decimal? step = null, int? min = null, int? max = null) {
