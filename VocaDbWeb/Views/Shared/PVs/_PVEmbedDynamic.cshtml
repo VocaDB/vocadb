@@ -1,3 +1,4 @@
-﻿@model VocaDb.Model.DataContracts.PVs.PVContract
+﻿@using VocaDb.Web.Models.Shared.Partials.PV;
+@model VocaDb.Model.DataContracts.PVs.PVContract
 
-@PVHelpers.EmbedPV(Model)
+@{ Html.RenderPartial("Partials/PV/_EmbedPV", new EmbedPVViewModel(Model)); }

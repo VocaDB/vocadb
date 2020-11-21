@@ -54,15 +54,22 @@ namespace VocaDb.Model.Service.Queries {
 
 			var id = artist.Id;
 
-			return session.Query<ReleaseEvent>()
-				.WhereNotDeleted()
-				.Where(e => e.AllArtists.Any(a => a.Artist.Id == id))
-				.WhereDateIsBetween(begin: null, end: DateTime.Today.AddMonths(6))
-				.OrderByDate(SortDirection.Descending)
-				.Take(3).ToArray()
-				.Select(s => new ReleaseEventForApiContract(s, languagePreference, 
-					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue, entryThumbPersister))
-				.ToArray();
+			var cacheKey = $"{nameof(ArtistRelationsQuery)}.{nameof(GetLatestEvents)}.{id}.{languagePreference}";
+
+			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromHours(4)), () => {
+
+				return session.Query<ReleaseEvent>()
+					.WhereNotDeleted()
+					.Where(e => e.AllArtists.Any(a => a.Artist.Id == id))
+					.WhereDateIsBetween(begin: null, end: DateTime.Today.AddMonths(6))
+					.OrderByDate(SortDirection.Descending)
+					.Take(3).ToArray()
+					.Select(s => new ReleaseEventForApiContract(s, languagePreference, 
+						ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue, 
+						entryThumbPersister))
+					.ToArray();
+
+			});
 
 		}
 

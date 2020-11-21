@@ -1,19 +1,24 @@
-﻿@using VocaDb.Web.Helpers;
+﻿@using VocaDb.Web.Code;
+@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Album;
+@using VocaDb.Web.Models.Shared.Partials.Album;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Albums.ArchivedAlbumVersionDetailsContract>
 
 @{
 	
     PageProperties.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 	
 	if (Model.Album != null) {
-		ViewBag.Parents = new[] { 
-			Html.ActionLink("Albums", "Index"), 
+		ViewBag.Parents = new[] {
+			Html.ActionLink("Albums", "Index"),
 			Html.ActionLink(Model.Album.Name, "Details", new { id = Model.Album.Id }),
-			Html.ActionLink("Revisions", "Versions", new { id = Model.Album.Id }) 
+			Html.ActionLink("Revisions", "Versions", new { id = Model.Album.Id })
 		};
 	} else {
-		ViewBag.Parents = new[] { 
+		ViewBag.Parents = new[] {
 			Html.ActionLink("Albums", "Index")
 		};
 	}
@@ -37,7 +42,7 @@
 }
 
 @if (Model.ArchivedVersion.Hidden) {
-	@EntryDetailsHelpers.HiddenBanner()
+	Html.RenderPartial("Partials/EntryDetails/_HiddenBanner");
 }
 
 @if (Model.ComparableVersions.Any()) {
@@ -47,11 +52,11 @@
 	}
 }
 
-@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Versions.CreateForAlbum(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForAlbum(Model.ComparedVersion) : null)
+@{ Html.RenderPartial("Partials/ArchivedEntry/_ArchivedObjectVersionProperties", new ArchivedObjectVersionPropertiesViewModel(Versions.CreateForAlbum(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForAlbum(Model.ComparedVersion) : null)); }
 
-@AlbumHelpers.PrintArchivedAlbumData(Model.Versions)
+@{ Html.RenderPartial("Partials/Album/_PrintArchivedAlbumData", new PrintArchivedAlbumDataViewModel(Model.Versions)); }
 
-@EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
+@{ Html.RenderPartial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel()); }
 
 @section BodyScripts {
     <script type="text/javascript">

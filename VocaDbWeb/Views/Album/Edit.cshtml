@@ -1,6 +1,9 @@
 ﻿@using VocaDb.Model.Helpers
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using R = ViewRes.Album;
 @using Res = ViewRes.Album.EditStrings;
 @using EditRes = ViewRes.EntryEditStrings;
@@ -117,14 +120,14 @@
 }
 
 
-@Helpers.ValidationSymmaryDiv(R.EditStrings.UnableToSaveProperties)
+@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(R.EditStrings.UnableToSaveProperties)); }
 
-@KnockoutHelpers.EntryValidationMessage(Model.Draft, validationErrors, "glalbums")
+@{ Html.RenderPartial("Partials/Knockout/_EntryValidationMessage", new EntryValidationMessageViewModel(Model.Draft, validationErrors, "glalbums")); }
 
 <br />
 <form action="@Url.Action("Edit", "Album")" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
 
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id }))
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Id }))); }
 	
 	<div id="tabs">
 
@@ -143,12 +146,12 @@
 				<label>@EditRes.DefaultLanguageSelection</label>
 			</div>
 			<div class="editor-field">
-				@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
+				@{ Html.RenderPartial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage")); }
 			</div>
 
 			<div class="editor-label">
-				@Helpers.HelpLabel(R.EditStrings.BaNames, ViewRes.EntryEditStrings.NameHelp)
-				@Helpers.RequiredField()
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(R.EditStrings.BaNames, ViewRes.EntryEditStrings.NameHelp)); }
+				@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
 				<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
 			</div>
 			<div class="editor-field" data-bind="with: names">
@@ -171,18 +174,18 @@
 
 			<div class="editor-label">
 				<label>@Res.BaDescription</label>
-				@Helpers.MarkdownNotice()
+				@{ Html.RenderPartial("Partials/Shared/_MarkdownNotice"); }
 			</div>
 			<div class="editor-field entry-edit-description" data-bind="with: description">
 				@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
 			</div>
 
 			<div class="editor-label">
-				@Helpers.HelpLabel(R.EditStrings.BaDiscType, Model.DiscTypeDescriptions)
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(R.EditStrings.BaDiscType, Model.DiscTypeDescriptions)); }
 			</div>
 			<div class="editor-field">
 				<div class="row-fluid">
-					@KnockoutHelpers.DropdownList(Model.AllDiscTypes, "discTypeStr")
+					@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AllDiscTypes, "discTypeStr")); }
 					<span data-bind="visible: validationError_needType, qTip" class="icon errorIcon" title="@ValidationErrors.NeedType"></span>
 				</div>
 			</div>
@@ -191,7 +194,7 @@
 				<label>@Res.BaReleaseEvent</label>
 			</div>
 			<div class="editor-field">
-				@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("releaseEventAutoComplete", "releaseEvent", "createNewItem: 'Create new event \\\'{0}\\\''")
+				@{ Html.RenderPartial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent", "createNewItem: 'Create new event \\\'{0}\\\''")); }
 			</div>
 
 			<table><tr>
@@ -230,14 +233,14 @@
 			</button>
 
 			<div class="editor-label">
-				@Helpers.HelpLabel(R.EditStrings.BaCatNum, "Usually catalog numbers are in the format ABC-1234, please do not add extra whitespace.")
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(R.EditStrings.BaCatNum, "Usually catalog numbers are in the format ABC-1234, please do not add extra whitespace.")); }
 			</div>
 			<div class="editor-field">
 				<input type="text" data-bind="textInput: catalogNumber" />
 			</div>
 			
 			<div class="editor-label">
-				@Helpers.HelpLabel(Res.BaBarcode, "Barcodes are usually plain numbers, for example 01234567. They can be scanned from the product package.<br /><br /><img src='" + Url.Content("~/Content/barcode.png" + "' />"))
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.BaBarcode, "Barcodes are usually plain numbers, for example 01234567. They can be scanned from the product package.<br /><br /><img src='" + Url.Content("~/Content/barcode.png" + "' />"))); }
 			</div>
 			<div class="editor-field">
 				<div data-bind="foreach: identifiers">
@@ -250,17 +253,17 @@
 			</div>
 			
 			<div class="editor-label">
-				@Helpers.HelpLabel(EditRes.WebLinks, ViewRes.EntryEditStrings.ExternalLinksQuickHelp)
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.WebLinks, ViewRes.EntryEditStrings.ExternalLinksQuickHelp)); }
 			</div>
 			<div class="editor-field" data-bind="with: webLinks">
 				@KnockoutHelpers.WebLinksEditViewKnockout(true)
 			</div>
 
 			<div class="editor-label">
-				@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
+				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)); }
 			</div>
 			<div class="editor-field">
-				@KnockoutHelpers.DropdownList(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")
+				@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")); }
 			</div>
 
 		</div>
@@ -421,7 +424,7 @@
 	<textarea data-bind="value: updateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 	
 	<br />
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id }))
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Id }))); }
 	
 	<!-- JSON model to be posted to the server -->
 	@Html.HiddenForKnockout(m => m.EditedAlbum, "value: submittedJson")
@@ -442,4 +445,4 @@
 
 </div>
 
-@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete)); }

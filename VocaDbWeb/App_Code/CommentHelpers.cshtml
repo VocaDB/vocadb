@@ -1,15 +1,11 @@
-@using VocaDb.Model.DataContracts
-@using VocaDb.Model.DataContracts.Api
-@using VocaDb.Model.DataContracts.Comments
-@using VocaDb.Model.Domain.Security
-@using VocaDb.Model.Helpers
-@using VocaDb.Model.Service.Helpers
-@using VocaDb.Web.Helpers
-@using VocaDb.Web.Code
+﻿@using System.Web.Mvc;
+@using System.Web.Mvc.Html;
+@using VocaDb.Web.Models.Shared.Partials.Comment;
 @inherits VocaDb.Web.Code.HelperPage
 
+
 @helper CommentKnockout(string messageBinding, bool allowMarkdown, string deleteHandler = "$parent.deleteComment", string editHandler = null,
-	bool standalone = true, HelperResult body = null) {
+	bool standalone = true, MvcHtmlString body = null) {
 	<div class="comment media @(standalone ? "comment-large" : "")">
 		<a data-bind="attr: { href: app.EntryUrlMapper.details_user_byName(author.name) }" class="pull-left">
 			@UserHelpers.ProfileIconKnockout(VocaDb.Model.Domain.Images.ImageSize.Thumb, binding: "author", size: 70)
@@ -34,154 +30,11 @@
 			<h3 class="media-heading comment-large-header">
 				<a data-bind="attr: { href: app.EntryUrlMapper.details_user_byName(author.name) }, text: author.name"></a>
 			</h3>
-			@(body ?? CommentBodyKnockout(messageBinding))
-		</div>
-	</div>
-}
-
-@helper CommentBodyKnockout(string messageBinding) {
-	<p data-bind="markdown: @messageBinding"></p>
-}
-
-@helper CommentBodyEditableKnockout(string messageBinding) {
-	<div data-bind="visible: $parent.editCommentModel() !== $data">
-		@CommentBodyKnockout(messageBinding)
-	</div>
-	<form data-bind="visible: $parent.editCommentModel() === $data, submit: $parent.saveEditedComment">
-		<textarea data-bind="textInput: editedMessage" rows="6" cols="60" maxlength="3000" class="comment-text-edit" required></textarea>
-		<button type="submit" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
-		<button data-bind="click: $parent.cancelEditComment" class="btn">@ViewRes.SharedStrings.Cancel</button>
-	</form>
-}
-
-@helper CommentBodyLarge(CommentContract contract, bool allowDelete, bool alwaysAllowDelete = false) {
-	<div class="comment media comment-large">
-		<a class="pull-left" href="@Url.Action("Profile", "User", new { id = contract.Author.Name })">
-			@UserHelpers.ProfileIcon(contract.Author, 70)
-		</a>
-			
-		<div class="media-body">
-			<div class="pull-right">
-				<span title="@contract.Created.ToUniversalTime().ToString("g") UTC" class="comment-date">
-					@TimeAgoStringBuilder.FormatTimeAgo(contract.Created)
-				</span>					
-				@if (alwaysAllowDelete || (allowDelete && Login.CanDeleteComment(contract))) {
-					@:&nbsp;&nbsp;
-					<a href="#" id="deleteComment_@(contract.Id)" class="deleteComment textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
-				}
-			</div>			
-			<h3 class="media-heading comment-large-header">
-				@UserHelpers.UserLink(contract.Author)
-			</h3>
-			@HtmlHelpers.FormatMarkdown(contract.Message)
-		</div>
-	</div>		
-}
-
-@helper CommentEntryItem(EntryForApiContract entry) {
-		
-	var thumbUrl = (entry.MainPicture != null ? UrlHelper.UpgradeToHttps(entry.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb)) : null);
-	
-	<div class="media">
-		@if (!string.IsNullOrEmpty(thumbUrl)) {
-		<a class="pull-left" href="@Url.EntryDetails(entry)" title="@entry.AdditionalNames">
-			<img src="@thumbUrl" alt="thumb" class="coverPicThumb" referrerpolicy="same-origin" />
-		</a>
-		}
-		
-		<div class="media-body">
-			<h4 class="media-heading">
-				<a href="@Url.EntryDetails(entry)" title="@entry.AdditionalNames">
-					@entry.Name
-				</a>
-			</h4>
-			@if (!string.IsNullOrEmpty(entry.ArtistString)) {
-				<span>@entry.ArtistString</span>
+			@if (body != null) {
+				@body
+			} else {
+				Html.RenderPartial("Partials/Comment/_CommentBodyKnockout", new CommentBodyKnockoutViewModel(messageBinding));
 			}
 		</div>
 	</div>
-		
-}
-
-@helper CommentWithEntryVertical(EntryWithCommentsContract entry, int maxLength = int.MaxValue) {
-
-	<div class="well well-transparent">
-		@CommentEntryItem(entry.Entry)
-		@foreach (var comment in entry.Comments) {
-			@PrintComment(comment, false, maxLength: maxLength)
-			if (comment != entry.Comments.Last()) {
-				<hr />
-			}
-		}
-	</div>
-
-}
-
-@helper CreateComment(string cssClass, int newCommentRows) {
-	<div class="create-comment @cssClass">
-		<form data-bind="submit: createComment">
-			<textarea data-bind="textInput: newComment" rows="@newCommentRows" cols="60" maxlength="2000" class="comment-text-edit" placeholder="@ViewRes.DiscussionContentStrings.NewComment" required></textarea>
-			<button type="submit" class="btn btn-primary">@ViewRes.DiscussionContentStrings.AddComment</button>
-		</form>
-	</div>
-}
-
-@helper EditableComments(bool allowCreateComment, bool well = true, string commentsBinding = "pageOfComments", int newCommentRows = 6, bool commentBoxEnd = false, bool pagination = true) {
-
-	var cssClass = (well ? "well well-transparent" : "standalone");
-
-	<!-- binding context: EditableCommentsViewModel -->
-
-	if (allowCreateComment && !commentBoxEnd) {
-		@CreateComment(cssClass, newCommentRows)
-	}
-
-	if (pagination) {
-	<div data-bind="with: paging, visible: paging.hasMultiplePages">
-		@KnockoutHelpers.ServerSidePaging()
-	</div>
-	}
-
-	<div data-bind="foreach: @commentsBinding">
-		<div class="editable-comment @cssClass">
-			@CommentKnockout("message", false, editHandler: "$parent.beginEditComment", standalone: !well, body: CommentBodyEditableKnockout("message"))
-		</div>
-	</div>
-
-	if (pagination) {
-	<div data-bind="with: paging, visible: paging.hasMultiplePages">
-		@KnockoutHelpers.ServerSidePaging()
-	</div>
-	}
-
-	if (allowCreateComment && commentBoxEnd) {
-		@CreateComment(cssClass, newCommentRows)
-	}
-
-}
-
-@helper LatestCommentsKnockout() {	
-	<h3 class="withMargin">@ViewRes.EntryDetailsStrings.LatestComments</h3>
-	<div data-bind="with: comments">
-		@EditableComments(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3, pagination: false)
-		<!-- ko ifnot: comments().length -->
-		<p>@ViewRes.EntryDetailsStrings.NoComments</p>
-		<!-- /ko -->
-	</div>
-}
-
-@helper PrintComment(CommentContract contract, bool allowDelete, bool alwaysAllowDelete = false, int maxLength = int.MaxValue) {	
-	<div class="comment">
-		<h3>
-			@UserHelpers.UserIconLink(contract.Author, 25)
-
-			@if (alwaysAllowDelete || (allowDelete && Login.CanDeleteComment(contract))) {
-				<text>-</text> <a href="#" id="deleteComment_@(contract.Id)" class="deleteComment">@ViewRes.SharedStrings.Delete</a>
-			}
-			<small class="pull-right extraInfo" title="@contract.Created.ToUniversalTime() UTC">
-				@TimeAgoStringBuilder.FormatTimeAgo(contract.Created)
-			</small>		
-		</h3>
-		@HtmlHelpers.FormatMarkdown(contract.Message.TruncateWithEllipsis(maxLength))
-	</div>	
 }

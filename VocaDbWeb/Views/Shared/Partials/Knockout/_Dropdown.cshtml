@@ -1,0 +1,15 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@model DropdownViewModel
+
+<div class="btn-group">
+	<button class="btn dropdown-toggle" data-toggle="dropdown">
+		<span data-bind="text: @Model.CurrentTextBinding"></span>
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu">
+		@foreach (var item in Model.Items)
+		{
+			<li><a data-bind="click: function() { @(Model.ValueBinding)('@item.Key'); }" href="#">@item.Value</a></li>
+		}
+	</ul>
+</div>

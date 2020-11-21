@@ -1,4 +1,5 @@
-﻿@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Comment;
 @inherits VocaDb.Web.Code.VocaDbPage<IEnumerable<VocaDb.Model.DataContracts.Comments.EntryWithCommentsContract>>
 
 @{
@@ -25,14 +26,14 @@
 		
 		<div class="span5">
 			@foreach (var comment in entry.Comments) {
-				@CommentHelpers.CommentBodyLarge(comment, false);
+				Html.RenderPartial("Partials/Comment/_CommentBodyLarge", new CommentBodyLargeViewModel(comment, false));
 			}			
 		</div>
 
 		<div class="span5 item">
-		
-			@CommentHelpers.CommentEntryItem(entry.Entry)
-				
+
+			@{ Html.RenderPartial("Partials/Comment/_CommentEntryItem", new CommentEntryItemViewModel(entry.Entry)); }
+
 		</div>
 		    		
 	</div>

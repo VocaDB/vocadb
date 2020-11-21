@@ -1,8 +1,6 @@
-@inherits VocaDb.Web.Code.HelperPage
+﻿@inherits VocaDb.Web.Code.HelperPage
 @using System.Web.Mvc.Html;
-@using Autofac.Integration.Mvc
 @using Microsoft.Web.Helpers
-@using Resources
 @using VocaDb.Model.DataContracts.Users
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.Users
@@ -32,21 +30,9 @@
 	</a>
 }
 
-@helper IconAndNameKnockout(string iconBinding, string nameBinding, int size = 20) {
-	@ProfileIconKnockout(iconBinding, size)
-	<span data-bind="text: @nameBinding"></span>
-}
-
 @helper IconAndNameLinkKnockout(int iconSize = 20, string cssClass = "") {
 	@* Has to be one line because of Razor *@
 	<a href="#" class="@cssClass" data-bind="attr: { href: app.EntryUrlMapper.details_user_byName(name) }">@ProfileIconKnockout("$data.mainPicture != null ? $data.mainPicture.urlThumb : null", iconSize)<span data-bind="text: name"></span></a>
-}
-
-@helper IconNameAndTypeLinkKnockout(string groupResources, int iconSize = 20) {
-	<a href="#" data-bind="attr: { href: '/Profile/' + name, title: @(groupResources + "[groupId] + '\\nJoined: ' + memberSince") }">
-		@ProfileIconKnockout("$data.mainPicture ? mainPicture.urlThumb : null", iconSize)
-		<span data-bind="text: name"></span>
-	</a>
 }
 
 <!-- User name inside anchor -->
@@ -58,18 +44,6 @@
 	<div data-bind="visible: @binding" style="width: @(size)px; height: @(size)px; display: inline-block">
 		<img data-bind="attr: { src: @binding }" alt="User avatar" src="@Url.Content("~/Content/unknown.png")" />
 	</div>
-}
-
-@helper SongVoteRatingsRadioKnockout(string binding) {
-	<button class="btn" data-bind="click: function() { @(binding)('Nothing'); }, css: { active: @(binding)() == 'Nothing' }">@ViewRes.User.RatedSongsStrings.RatingAnything</button>
-	<button class="btn" data-bind="click: function() { @(binding)('Like'); }, css: { active: @(binding)() == 'Like' }">
-		<i class="icon-star"></i>
-		@SongVoteRatingNames.Like
-	</button>
-	<button class="btn" data-bind="click: function() { @(binding)('Favorite'); }, css: { active: @(binding)() == 'Favorite' }">
-		<i class="icon-heart"></i>
-		@SongVoteRatingNames.Favorite
-	</button>
 }
 
 
