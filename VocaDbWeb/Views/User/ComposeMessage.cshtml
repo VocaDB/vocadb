@@ -1,4 +1,5 @@
-﻿@using Res = ViewRes.User.MessagesStrings;
+﻿@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using Res = ViewRes.User.MessagesStrings;
 
 <!-- NewMessageViewModel -->
 <form data-bind="with: newMessageViewModel, submit: sendMessage">
@@ -7,7 +8,7 @@
 		@Res.To
 	</div>
 	<div class="editor-field">
-		@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("userAutocomplete", "receiver")
+		@{ Html.RenderPartial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("userAutocomplete", "receiver")); }
 		<div class="alert alert-danger" data-bind="visible: isReceiverInvalid">
 			Receiver must be selected.
 		</div>
@@ -27,7 +28,7 @@
 
 	<div class="editor-label">
 		@Res.Body
-		@Helpers.MarkdownNotice()
+		@{ Html.RenderPartial("Partials/Shared/_MarkdownNotice"); }
 	</div>
 	<div class="editor-field">
 		<textarea data-bind="textInput: body" class="span5" rows="10" cols="60" maxlength="10000" required></textarea>

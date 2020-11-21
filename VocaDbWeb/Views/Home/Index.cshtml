@@ -1,6 +1,10 @@
 ﻿@using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Utils.Search
+@using VocaDb.Web.Models.Shared.Partials.Activityfeed;
+@using VocaDb.Web.Models.Shared.Partials.Album;
+@using VocaDb.Web.Models.Shared.Partials.Comment;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using Res = ViewRes.Home.IndexStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.UseCases.FrontPageContract>
 
@@ -52,20 +56,20 @@
 @if (Model.NewAlbums.Any()) {
 	<h3 class="withMargin">@Res.NewAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
 	<div id="newAlbums">
-		@AlbumHelpers.AlbumThumbs(Model.NewAlbums)
+		@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.NewAlbums)); }
 	</div>	
 }
 
 @if (Model.TopAlbums.Any()) {
 	<h3 class="withMargin">@Res.TopAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
 	<div id="topAlbums">
-		@AlbumHelpers.AlbumThumbs(Model.TopAlbums)
+		@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.TopAlbums)); }
 	</div>	
 }
 	
 @if (Model.NewEvents.Any()) {
 	<h3 class="withMargin">@Res.RecentEvents</h3>
-	@Helpers.EventThumbs(Model.NewEvents)
+	Html.RenderPartial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model.NewEvents));
 }
 
 @{ Html.RenderPartial("Partials/_NewsItems"); }
@@ -75,8 +79,8 @@
         <h3 class="withMargin">@Res.RecentActivity (@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry"))</h3>
 
         @foreach (var entry in Model.ActivityEntries) {
-	        @ActivityfeedHelpers.ActivityEntry(entry, false)
-        }
+			Html.RenderPartial("Partials/Activityfeed/_ActivityEntry", new ActivityEntryViewModel(entry));
+		}
 		
 		@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry")
     </div>
@@ -84,8 +88,8 @@
         <h3 class="withMargin">@ViewRes.Comment.IndexStrings.RecentComments (@Html.ActionLink(Res.ViewMore, "Index", "Comment"))</h3>
             
         @foreach (var comment in Model.RecentComments) {
-			@CommentHelpers.CommentWithEntryVertical(comment, 400)
-        }
+			Html.RenderPartial("Partials/Comment/_CommentWithEntryVertical", new CommentWithEntryVerticalViewModel(comment, 400));
+		}
 		
 		@Html.ActionLink(Res.ViewMore, "Index", "Comment")
     </div>

@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.PV
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Songs.SongWithPVAndVoteContract>
 
 <input type="hidden" class="js-songId" value="@Model.Id" />
@@ -24,7 +25,7 @@
 	</a>	
 </div> 
 <div class="pv-embed-wrapper">
-	@PVHelpers.EmbedPV(PVHelper.PrimaryPV(Model.PVs), 560, 340)
+	@{ Html.RenderPartial("Partials/PV/_EmbedPV", new EmbedPVViewModel(PVHelper.PrimaryPV(Model.PVs), 560, 340)); }
 </div>
 <a class="btn btn-info songInfoButton pull-right" href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(Model))">
 	<i class="icon icon-info-sign"></i>

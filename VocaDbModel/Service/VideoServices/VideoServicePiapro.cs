@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using NLog;
-using PiaproClient;
+using VocaDb.PiaproClient;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;
 

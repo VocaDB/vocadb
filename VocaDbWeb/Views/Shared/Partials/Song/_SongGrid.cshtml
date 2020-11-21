@@ -1,0 +1,42 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Song;
+@model SongGridViewModel
+
+<table>
+	@{ int i = 0; }
+
+	@foreach (var song in Model.Songs)
+	{
+		if (i % Model.Columns == 0)
+		{
+			@Html.Raw("<tr>")
+		}
+		<td>
+			@if (!string.IsNullOrEmpty(song.ThumbUrl))
+			{
+				@SongHelpers.SongIconLink(song)
+			}
+		</td>
+		<td>
+			@SongHelpers.SongLink(song)
+			@if (Model.DisplayType)
+			{
+				Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.SongType));
+			}
+			@if (Model.DisplayPublishDate && song.PublishDate.HasValue)
+			{
+				<i class="icon-calendar" title="Published: @song.PublishDate.Value.ToShortDateString()" data-bind="tooltip: { placement: 'right' }"></i>
+			}
+			<br />
+			<span class="extraInfo">@song.ArtistString</span>
+		</td>
+		{ i++; }
+		if (i % Model.Columns == 0)
+		{
+			@Html.Raw("</tr>")
+		}
+	}
+	@if (i % Model.Columns != 0)
+	{
+		@Html.Raw("</tr>")
+	}
+</table>

@@ -1,6 +1,8 @@
 ﻿@using VocaDb.Web.Helpers
-@using Resources
 @using VocaDb.Model.Service.Search
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Search;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @using VocaDb.Web.Resources.Domain
 @using SharedRes = ViewRes.SharedStrings
 @using SearchRes = ViewRes.Search.IndexStrings
@@ -14,7 +16,7 @@
 		
 		<div class="inline-block">
 			@ViewRes.EntryIndexStrings.SortBy
-			@KnockoutHelpers.Dropdown(Translate.RatedSongForUserSortRuleNames.ValuesAndNamesStrings, "sort", "sortName")
+			@{ Html.RenderPartial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.RatedSongForUserSortRuleNames.ValuesAndNamesStrings, "sort", "sortName")); }
 		</div>
 
 		<button class="btn" data-bind="click: function() { groupByRating(!groupByRating()); }, css: { active: groupByRating }">
@@ -53,7 +55,7 @@
 	<div class="control-group">
 		<div class="control-label">@SearchRes.Rating</div>
 		<div class="controls">
-			@UserHelpers.SongVoteRatingsRadioKnockout("rating")
+			@{ Html.RenderPartial("Partials/User/_SongVoteRatingsRadioKnockout", new SongVoteRatingsRadioKnockoutViewModel("rating")); }
 		</div>
 	</div>
 	
@@ -70,7 +72,7 @@
 	<div class="control-group">
 		<div class="control-label">@EntryTypeNames.Artist</div>
 		<div class="controls" data-bind="with: artistFilters">
-			@KnockoutHelpers.ArtistFilters(artistParticipationStatus: false)
+			@{ Html.RenderPartial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: false)); }
 		</div>
 	</div>
 
@@ -86,7 +88,7 @@
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			@SearchHelpers.AdvancedFilters(AdvancedSearchFilters.SongFilters)
+			@{ Html.RenderPartial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters)); }
 		</div>
 	</div>
 </div>

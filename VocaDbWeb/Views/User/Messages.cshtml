@@ -1,7 +1,10 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.Messages>
-@using VocaDb.Web.Helpers
-@using VocaDb.Model.Domain.Users
+﻿@using System.Web.Optimization;
+@using VocaDb.Model.Domain.Users;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Shared; 
 @using Res = ViewRes.User.MessagesStrings;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.Messages>
 
 @{
 	PageProperties.Title = Res.Messages;
@@ -19,7 +22,7 @@
 				<label class="control-label" data-bind="visible: inbox === @((int)UserInboxType.Received)">@Res.From</label>
 				<label class="control-label" data-bind="visible: inbox === @((int)UserInboxType.Sent)">@Res.To</label>
 				<div class="controls">
-					@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("userAutocomplete", "anotherUser")									
+					@{ Html.RenderPartial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("userAutocomplete", "anotherUser")); }
 				</div>
 			</div>
 		</div>
@@ -51,14 +54,14 @@
 					</td>
 					<td data-bind="click: $root.selectMessage"><span title="UTC" data-bind="text: created"></span></td>
 					@if (colFrom) {
-						<td data-bind="click: $root.selectMessage">@UserHelpers.IconAndNameKnockout("sender.iconUrl", "sender.name")</td>
+						<td data-bind="click: $root.selectMessage">@{ Html.RenderPartial("Partials/User/_IconAndNameKnockout", new IconAndNameKnockoutViewModel("sender.iconUrl", "sender.name")); }</td>
 					}
 					@if (colTo) {
-						<td data-bind="click: $root.selectMessage">@UserHelpers.IconAndNameKnockout("receiver.iconUrl", "receiver.name")</td>
+						<td data-bind="click: $root.selectMessage">@{ Html.RenderPartial("Partials/User/_IconAndNameKnockout", new IconAndNameKnockoutViewModel("receiver.iconUrl", "receiver.name")); }</td>
 					}
 					<td data-bind="click: $root.selectMessage">
 						<span data-bind="visible: highPriority" style="display: none;">
-							@Helpers.NotificationIcon();
+							@{ Html.RenderPartial("Partials/Shared/_NotificationIcon"); }
 							&nbsp;
 						</span>
 						@if (showUnread) {
@@ -77,7 +80,7 @@
 	</div>
 }
 
-@Helpers.ValidationSymmaryPanel(Res.MessageSendError)
+@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(Res.MessageSendError)); }
 
 <div data-bind="with: selectedMessage, visible: selectedMessage" id="viewMessage" style="display: none;">
 	@{ Html.RenderPartial("Partials/_UserMessageKnockout"); }

@@ -1,0 +1,11 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@model LargeShareLinksViewModel
+
+@{
+	var urlEncodedTitle = Url.Encode(Model.Title);
+}
+
+<a href="https://www.facebook.com/sharer/sharer.php?u=@Model.Url" target="_blank"><img alt="Share on Facebook" src="@Url.Content("~/Content/ExtIcons/facebook32.png")" style="border:0; height:32px; width:32px; margin:0 1px;" title="Share on Facebook"></a>
+<a href="http://reddit.com/submit?url=@Model.Url&title=@urlEncodedTitle" target="_blank" title="Reddit!"><img alt="Reddit!" src="@Url.Content("~/Content/ExtIcons/reddit32.png")" style="border:0; height:32px; width:32px; margin:0 1px;" title="Reddit!"></a>
+<a href="http://twitter.com/home/?status=@urlEncodedTitle: @Model.Url" target="_blank" title="Share on Twitter"><img alt="Twitter" src="@Url.Content("~/Content/ExtIcons/twitter32.png")" style="border:0; height:32px; width:32px; margin:0 1px;" title="Share on Twitter"></a>
+<a href="https://plus.google.com/share?url=@Model.Url" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" title="Share on Google+"><img alt="Google+" src="https://www.gstatic.com/images/icons/gplus-32.png" style="border:0; height:32px; width:32px; margin:0 1px;" title="Share on Google+"></a>

@@ -1,13 +1,16 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.Versions>
+﻿@using VocaDb.Web.Code;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
+@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.Versions>
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Entry.Name;
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Tags, "Index"), 
 		Html.ActionLink(Model.Entry.Name, "DetailsById", new { id = Model.Entry.Id, slug = Model.Entry.UrlSlug }) 
 	};
 }
 
-@ArchivedEntryHelpers.CurrentVersionMessage(Model.Entry.Version, Model.Entry.Status)
+@{ Html.RenderPartial("Partials/ArchivedEntry/_CurrentVersionMessage", new CurrentVersionMessageViewModel(Model.Entry.Version, Model.Entry.Status)); }
 
-@ArchivedEntryHelpers.ArchivedObjectVersions(Model.ArchivedVersions, id => Url.Action("ViewVersion", new { id }))
+@{ Html.RenderPartial("Partials/ArchivedEntry/_ArchivedObjectVersions", new ArchivedObjectVersionsViewModel(Model.ArchivedVersions, id => Url.Action("ViewVersion", new { id }))); }
