@@ -1,5 +1,6 @@
 ﻿@using VocaDb.Web.Helpers;
-@using Res = ViewRes.Event.EventsBySeriesStrings
+@using VocaDb.Web.Models.Shared.Partials.Html;
+@using Res = ViewRes.Event.EventsBySeriesStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Venues.VenueForApiContract[]>
 
 @{
@@ -45,7 +46,7 @@
 			</h3>
 						
 			@if (!string.IsNullOrEmpty(venue.Description)) {
-				<p>@HtmlHelpers.FormatMarkdown(venue.Description)</p>
+				<p>@{ Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(venue.Description)); }</p>
 			}
 		</div>
 	</div>

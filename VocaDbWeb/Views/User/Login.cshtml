@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Code;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using Res = ViewRes.User.LoginStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.LoginModel>
 
@@ -7,7 +8,7 @@
 	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 }
 
-@Helpers.ValidationSymmaryDiv(Res.UnableToLogin)
+@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(Res.UnableToLogin)); }
 
 @using (Html.BeginForm("Login", "User", FormMethod.Post))
 {

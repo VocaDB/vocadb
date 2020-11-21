@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Model.Domain
+@using VocaDb.Web.Models.Shared.Partials.Tag
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.UseCases.EntryWithTagUsagesContract>
 
 @{
@@ -10,4 +11,4 @@
 }
 
 
-@TagHelpers.TagUsagesManageTable(EntryType.ReleaseEvent, Model.TagUsages, Model.CanRemoveTagUsages, "Event")
+@{ Html.RenderPartial("Partials/Tag/_TagUsagesManageTable", new TagUsagesManageTableViewModel(EntryType.ReleaseEvent, Model.TagUsages, Model.CanRemoveTagUsages, "Event")); }

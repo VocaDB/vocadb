@@ -1,0 +1,10 @@
+﻿@using VocaDb.Model.Domain;
+@using VocaDb.Model.Domain.Songs;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@model SongLockingAutoCompleteViewModel
+
+@* Locking autocomplete for song selection. Allows selection of one (existing) song. When song is selected, clear button is displayed. *@
+@{
+	var songTypesStr = Model.SongTypes != SongTypes.Unspecified ? string.Join(",", Model.SongTypes.ToIndividualSelections().Select(t => t.ToString())) : "";
+}
+@KnockoutHelpers.LockingAutoComplete("songAutoComplete", "{ acceptSelection: " + Model.Binding + ".id, extraQueryParams: { songTypes: '" + songTypesStr + "' }, ignoreId: " + Model.IgnoreId + " }", textBinding: Model.Binding + ".name", valBinding: Model.Binding + ".id", entryType: EntryType.Song)

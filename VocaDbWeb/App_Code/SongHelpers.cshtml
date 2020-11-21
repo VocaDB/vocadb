@@ -1,58 +1,18 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
-@using System.Globalization
 @using System.Web.Mvc.Html;
 @using VocaDb.Model.DataContracts.Songs;
-@using VocaDb.Model.Service.Search.AlbumSearch
-@using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.Song;
-
-@helper ArtistParticipationStatusOptionsKnockout(string binding) {
-	{
-		var options = new Dictionary<string, string> {
-			{ ArtistAlbumParticipationStatus.Everything.ToString(), "Everything" },
-			{ ArtistAlbumParticipationStatus.OnlyMainAlbums.ToString(), "Only main songs" },
-			{ ArtistAlbumParticipationStatus.OnlyCollaborations.ToString(), "Only collaborations" },
-		};
-		@KnockoutHelpers.CheckBoxButtons(options, binding)
-	}
-}
-
-@helper LyricsInfo(LyricsForSongContract lyrics) {
-	@:@lyrics.TranslationType
-	if (!string.IsNullOrEmpty(lyrics.CultureCode)) {
-		@:(@CultureInfo.GetCultureInfo(lyrics.CultureCode).EnglishName)
-	}
-	if (!string.IsNullOrEmpty(lyrics.Source)) {
-		@:(@lyrics.Source)
-	}
-}
-
-@helper PVPreviewKnockout(string getPvServiceIcons) {
-	<div data-bind="slideVisible: preview, complete: destroyPV" class="pvPreview" style="display: none;">
-		<div data-bind="with: ratingButtons" class="pull-right">
-			@{ Html.RenderPartial("Partials/_PVRatingButtonsForIndex"); }
-			
-			<!-- Binding context: SongWithPreviewViewModel -->
-			@* PV service switcher *@
-			<div class="btn-toolbar">
-				<div class="btn-group">
-					<div data-bind="visible: $parent.pvServices && $parent.pvServices.indexOf(',') > 0, foreach: @(getPvServiceIcons)($parent.pvServices)" class="pv-preview-services">
-						<a class="btn" data-bind="click: function () { $parents[1].switchPV(service); }, attr: { title: service }, css: { active: service == $parents[1].pvService() }">
-							<img data-bind="attr: { src: url }" />
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div data-bind="html: previewHtml"></div>
-	</div>
-}
 
 @helper SongIconLink(SongContract song, int? albumId = null) {
 	<a href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(song, albumId))">
 		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin"/>
 	</a>		
+}
+
+@helper SongIconLink(SongForApiContract song) {
+	<a href="@Url.SongDetails(song)">
+		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin"/>
+	</a>
 }
 
 @helper SongLink(SongContract song, int? albumId = null, bool tooltip = false) {
@@ -68,45 +28,6 @@
 @helper SongLinkKnockout(string binding, string extUrlBinding = null, bool tooltip = false, string toolTipDomainBinding = null) {
 	<a href="#" data-bind="attr: { href: @extUrlBinding || vdb.utils.EntryUrlMapper.details_song(@binding), title: @(binding).additionalNames }, text: @(binding).name, css: { extLink: @extUrlBinding } @(tooltip ? ", songToolTip: " + binding + ".id" : "") @(toolTipDomainBinding != null ? ", toolTipDomain: " + toolTipDomainBinding : "")"></a>
 }
-
-@helper SongGrid(IEnumerable<SongForApiContract> songs, int columns,
-	bool displayType = false, bool displayPublishDate = false) {
-
-	<table>
-		@{ int i = 0; }
-
-		@foreach (var song in songs) {
-			if (i % columns == 0) {
-				@Html.Raw("<tr>")
-			}
-			<td>
-				@if (!string.IsNullOrEmpty(song.ThumbUrl)) {
-					Html.RenderPartial("Partials/Song/_SongIconLink", new SongIconLinkViewModel(song));
-				}
-			</td>
-			<td>
-				@SongLink(song)				
-				@if (displayType) {
-					Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.SongType));
-				}
-				@if (displayPublishDate && song.PublishDate.HasValue) {
-					<i class="icon-calendar" title="Published: @song.PublishDate.Value.ToShortDateString()" data-bind="tooltip: { placement: 'right' }"></i>
-				}
-				<br />
-				<span class="extraInfo">@song.ArtistString</span>
-			</td>
-			{ i++; }
-			if (i % columns == 0) {
-				@Html.Raw("</tr>")
-			}
-		}
-		@if (i % columns != 0) {
-			@Html.Raw("</tr>")
-		}
-	</table>
-
-}
-
 
 @helper SongListsKnockout(string binding, bool groupByYear = false) {
 	
@@ -143,21 +64,4 @@
 		</tbody>
 	</table>
 
-}
-
-@helper SongsList(IList<SongContract> songs, bool showType = false) {
-
-	foreach (var song in songs) {
-		if (showType) {
-			Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.SongType));
-		}
-		@SongLink(song)
-		if (song != songs.Last()) {
-			@(", ")
-		}
-	}
-}
-
-@helper SongTypesDropdownKnockout(string binding) {
-	@KnockoutHelpers.CheckBoxButtons(Translate.SongTypeNames.GetValuesAndNamesStrings(AppConfig.SongTypes), binding);
 }

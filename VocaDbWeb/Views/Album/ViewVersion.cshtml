@@ -2,6 +2,8 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Album;
 @using VocaDb.Web.Models.Shared.Partials.Album;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Albums.ArchivedAlbumVersionDetailsContract>
 
 @{
@@ -40,7 +42,7 @@
 }
 
 @if (Model.ArchivedVersion.Hidden) {
-	@EntryDetailsHelpers.HiddenBanner()
+	Html.RenderPartial("Partials/EntryDetails/_HiddenBanner");
 }
 
 @if (Model.ComparableVersions.Any()) {
@@ -50,11 +52,11 @@
 	}
 }
 
-@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Versions.CreateForAlbum(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForAlbum(Model.ComparedVersion) : null)
+@{ Html.RenderPartial("Partials/ArchivedEntry/_ArchivedObjectVersionProperties", new ArchivedObjectVersionPropertiesViewModel(Versions.CreateForAlbum(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForAlbum(Model.ComparedVersion) : null)); }
 
 @{ Html.RenderPartial("Partials/Album/_PrintArchivedAlbumData", new PrintArchivedAlbumDataViewModel(Model.Versions)); }
 
-@EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
+@{ Html.RenderPartial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel()); }
 
 @section BodyScripts {
 	<script src="@Url.Content("~/Scripts/Repositories/AlbumRepository.js")"></script>

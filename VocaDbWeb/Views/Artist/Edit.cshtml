@@ -2,6 +2,9 @@
 @using VocaDb.Model.Domain
 @using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using ValidationErrors = VocaDb.Model.Resources.ArtistValidationErrors;
 @using Res = ViewRes.Artist.EditStrings;
 @using EditRes = ViewRes.EntryEditStrings;
@@ -37,14 +40,14 @@
 }
 }
 
-@Helpers.ValidationSymmaryPanel("Unable to save")
+@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save")); }
 
-@KnockoutHelpers.EntryValidationMessage(Model.Artist.Status == EntryStatus.Draft, validationErrors, "glartists")
+@{ Html.RenderPartial("Partials/Knockout/_EntryValidationMessage", new EntryValidationMessageViewModel(Model.Artist.Status == EntryStatus.Draft, validationErrors, "glartists")); }
 
 <br />
 <form action="@Url.Action("Edit", "Artist")" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
 
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Artist.Id }))
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Artist.Id }))); }
 	
 	<div id="tabs">
 
@@ -63,12 +66,12 @@
 					<label>@EditRes.DefaultLanguageSelection</label>
 				</div>
 				<div class="editor-field">
-					@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
+					@{ Html.RenderPartial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage")); }
 				</div>
 
 				<div class="editor-label">
-					@Helpers.HelpLabel(Res.BaNames, ViewRes.EntryEditStrings.NameHelp)
-					@Helpers.RequiredField()
+					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.BaNames, ViewRes.EntryEditStrings.NameHelp)); }
+					@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
 					<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
 				</div>
 				<div class="editor-field" data-bind="with: names">
@@ -93,7 +96,7 @@
 
 				<div class="editor-label">
 					<label class="inline-block">@Res.BaDescription</label>
-					@Helpers.MarkdownNotice()
+					@{ Html.RenderPartial("Partials/Shared/_MarkdownNotice"); }
 					<span data-bind="visible: validationError_needReferences, qTip" class="icon errorIcon" title="@ValidationErrors.NeedReferences"></span>
 				</div>
 				<div class="editor-field entry-edit-description" data-bind="with: description">
@@ -104,14 +107,14 @@
 					<label>@Res.BaArtistType</label>
 				</div>
 				<div class="editor-field">
-					@KnockoutHelpers.DropdownList(Model.AllArtistTypes, "artistTypeStr")
+					@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AllArtistTypes, "artistTypeStr")); }
 					<span data-bind="visible: validationError_needType, qTip" class="icon errorIcon" title="@ValidationErrors.NeedType"></span>
 				</div>
 				
 				<!-- ko if: canHaveRelatedArtists -->
 					<div class="editor-label">
-						@Helpers.HelpLabel("Associated artists", "Artists related to this voicebank. These are inherited to derived voicebanks. " +
-							"Character designer only needs to be specified if it's different from the illustrator and manager only needs to be specified if it's different from the voice provider.")
+						@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Associated artists", "Artists related to this voicebank. These are inherited to derived voicebanks. " +
+							"Character designer only needs to be specified if it's different from the illustrator and manager only needs to be specified if it's different from the voice provider.")); }
 					</div>
 					<div class="editor-field">
 						<table>
@@ -122,25 +125,25 @@
 							</tr>
 							<tr>
 								<td>
-									@Helpers.HelpLabel("Illustrator", "Person who illustrated the character design. This is inherited to derived voicebanks.")
+									@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Illustrator", "Person who illustrated the character design. This is inherited to derived voicebanks.")); }
 								</td>
 								<td>
-									@KnockoutHelpers.ArtistLockingAutoComplete("illustrator", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual")									
+									@{ Html.RenderPartial("Partials/Knockout/_ArtistLockingAutoComplete", new ArtistLockingAutoCompleteViewModel("illustrator", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual")); }
 								</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>
-									@Helpers.HelpLabel("Voice provider", "Person who provided their voice for this voicebank. This is inherited to derived voicebanks.")
+									@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Voice provider", "Person who provided their voice for this voicebank. This is inherited to derived voicebanks.")); }
 								</td>
 								<td>
-									@KnockoutHelpers.ArtistLockingAutoComplete("voiceProvider", "Unknown,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherIndividual")									
+									@{ Html.RenderPartial("Partials/Knockout/_ArtistLockingAutoComplete", new ArtistLockingAutoCompleteViewModel("voiceProvider", "Unknown,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherIndividual")); }
 								</td>
 							</tr>
 							<!-- ko foreach: associatedArtists -->
 								<tr>
 									<td>
-										@KnockoutHelpers.DropdownList(Model.AssociatedArtistTypes, "linkType")
+										@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AssociatedArtistTypes, "linkType")); }
 									</td>
 									<td>
 										<div class="input-append">
@@ -152,10 +155,10 @@
 							<!-- /ko -->
 							<tr>
 								<td>
-									@KnockoutHelpers.DropdownList(Model.AssociatedArtistTypes, "newAssociatedArtistType")
+									@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AssociatedArtistTypes, "newAssociatedArtistType")); }
 								</td>
 								<td>
-									@KnockoutHelpers.ArtistLockingAutoComplete("newAssociatedArtist", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual")									
+									@{ Html.RenderPartial("Partials/Knockout/_ArtistLockingAutoComplete", new ArtistLockingAutoCompleteViewModel("newAssociatedArtist", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual")); }
 								</td>
 							</tr>
 						</table>
@@ -210,17 +213,17 @@
 				<!-- /ko -->		
 
 				<div class="editor-label">
-					@Helpers.HelpLabel(EditRes.WebLinks, EditRes.ExternalLinksQuickHelp)
+					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.WebLinks, EditRes.ExternalLinksQuickHelp)); }
 				</div>
 				<div class="editor-field" data-bind="with: webLinks">
 					@KnockoutHelpers.WebLinksEditViewKnockout(true)
 				</div>
 
 				<div class="editor-label">
-					@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
+					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)); }
 				</div>
 				<div class="editor-field">
-					@KnockoutHelpers.DropdownList(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")
+					@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")); }
 				</div>
 
 			</div>
@@ -248,14 +251,14 @@
 	<textarea data-bind="value: updateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 	
 	<br />	
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Artist.Id }))
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Artist.Id }))); }
 	
 	<!-- JSON model to be posted to the server -->
 	@Html.HiddenForKnockout(m => m.EditedArtist, "value: submittedJson")
 
 </form>
 
-@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete)); }
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/Artist/Edit")

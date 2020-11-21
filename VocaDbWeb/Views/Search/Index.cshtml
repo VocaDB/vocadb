@@ -1,4 +1,4 @@
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
 @using Resources
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Code
@@ -257,5 +257,5 @@
 }
 
 @helper SearchDropDown(string visibleBinding, string viewModel, Dictionary<string, string> sortRules) {
-	@:@KnockoutHelpers.SearchDropDown(visibleBinding, viewModel, sortRules)
+	Html.RenderPartial("Partials/Knockout/_SearchDropDown", new VocaDb.Web.Models.Shared.Partials.Knockout.SearchDropDownViewModel(visibleBinding, viewModel, sortRules));
 }

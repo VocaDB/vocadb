@@ -4,6 +4,9 @@
 @using VocaDb.Model.Service.VideoServices
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using ValidationErrors = VocaDb.Model.Resources.SongValidationErrors;
 @using Res = ViewRes.Song.EditStrings;
 @using EditRes = ViewRes.EntryEditStrings;
@@ -45,14 +48,14 @@
 }
 }
 
-@Helpers.ValidationSymmaryPanel("Unable to save properties.")
+@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save properties.")); }
 
-@KnockoutHelpers.EntryValidationMessage(Model.Draft, validationErrors, "glsongs")
+@{ Html.RenderPartial("Partials/Knockout/_EntryValidationMessage", new EntryValidationMessageViewModel(Model.Draft, validationErrors, "glsongs")); }
 
 <br />
 <form action="@Url.Action("Edit", "Song")" method="POST" data-bind="submit: submit, visible: true" style="display: none;">
 	@Html.HiddenFor(m => m.AlbumId)
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId }))
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId }))); }
 	
 	<div id="tabs">
 
@@ -71,14 +74,14 @@
 				</label>
 			</div>
 			<div class="editor-field">
-				@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
+				@{ Html.RenderPartial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage")); }
 			</div>
 
 			<div class="editor-label">
 				<label class="helpTip" data-bind="qTip: null" title="@EditRes.NameHelp">
 					@Res.BaNames
 				</label>
-				@Helpers.RequiredField()
+				@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
 				<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
 			</div>
 			<div class="editor-field" data-bind="with: names">
@@ -87,7 +90,7 @@
 
 			<div class="editor-label">
 				<label>@Res.BaNotes</label>
-				@Helpers.MarkdownNotice()
+				@{ Html.RenderPartial("Partials/Shared/_MarkdownNotice"); }
 			</div>
 			<div class="editor-field entry-edit-description" data-bind="with: notes">
 				@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
@@ -99,7 +102,7 @@
 			<div class="editor-field">
 				<div class="row-fluid">
 					<div class="span4">
-						@KnockoutHelpers.DropdownList(Model.AllSongTypes, "songTypeStr")
+						@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AllSongTypes, "songTypeStr")); }
 						<span data-bind="visible: validationError_needType, qTip" class="icon errorIcon" title="@ValidationErrors.NeedType"></span>
 					</div>
 				</div>
@@ -150,7 +153,7 @@
 				</label>
 			</div>
 			<div class="editor-field">
-				@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("releaseEventAutoComplete", "releaseEvent", "createNewItem: 'Create new event \\\'{0}\\\''")
+				@{ Html.RenderPartial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent", "createNewItem: 'Create new event \\\'{0}\\\''")); }
 			</div>
 
 			<div class="editor-label">
@@ -194,7 +197,7 @@
                 </label>
 			</div>
 			<div class="editor-field">
-				@KnockoutHelpers.DropdownList(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")
+				@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status")); }
 			</div>
 
 		</div>
@@ -235,7 +238,7 @@
 			</p>
 			<p>
 				@Res.PvNewType
-				@KnockoutHelpers.DropdownList(Translate.PVTypeDescriptions.ValuesAndNamesStrings, "newPvType", "input-xlarge")
+				@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.PVTypeDescriptions.ValuesAndNamesStrings, "newPvType", "input-xlarge")); }
 			</p>
 
 			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>
@@ -323,7 +326,7 @@
 	<textarea data-bind="value: updateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 	
 	<br />
-	@Helpers.SaveAndBackBtn(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId }))
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId }))); }
 	
 	<!-- JSON model to be posted to the server -->
 	@Html.HiddenForKnockout(m => m.EditedSong, "value: submittedJson")
@@ -338,7 +341,7 @@
 	@{ Html.RenderPartial("Partials/_CustomNameEdit"); }
 </div>
 
-@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete)); }
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/Song/Edit")

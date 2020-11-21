@@ -26,7 +26,7 @@
 		
 		<div class="span5">
 			@foreach (var comment in entry.Comments) {
-				@CommentHelpers.CommentBodyLarge(comment, false);
+				Html.RenderPartial("Partials/Comment/_CommentBodyLarge", new CommentBodyLargeViewModel(comment, false));
 			}			
 		</div>
 

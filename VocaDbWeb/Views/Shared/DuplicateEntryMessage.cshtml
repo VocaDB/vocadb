@@ -2,7 +2,7 @@
 
 <div class="alert">
 	<p>
-		@Helpers.NotificationIcon()
+		@{ Html.RenderPartial("Partials/Shared/_NotificationIcon"); }
 		@ViewRes.EntryCreateStrings.FoundPossibleDuplicates
 		<ul>
 		@foreach (var e in Model) {

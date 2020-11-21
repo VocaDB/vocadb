@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Helpers;;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
 @using VocaDb.Web.Models.Shared.Partials.Tag;
 @model PrintArchivedTagDataViewModel
 
@@ -8,14 +9,14 @@
 	<table class="table table-bordered">
 		@ArchivedEntryHelpers.DataRow("Id", Model.ComparedTags.FirstData.Id)
 		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedTags, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedTags, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedTags, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
 		@ArchivedEntryHelpers.DataRow("Description", Model.ComparedTags, d => d.Description)
 		@ArchivedEntryHelpers.DataRow("Description English", Model.ComparedTags, d => d.DescriptionEng)
 		@ArchivedEntryHelpers.ObjectRefList("Related tags", Model.ComparedTags, d => d.RelatedTags)
 		@ArchivedEntryHelpers.DataRow("Valid for", Model.ComparedTags, d => d.Targets)
-		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedTags, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedTags, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
 		@ArchivedEntryHelpers.DataRow("Category name", Model.ComparedTags, d => d.CategoryName)
-		@ArchivedEntryHelpers.DataRow("Parent", Model.ComparedTags, d => ArchivedEntryHelpers.ObjectRefInfo(d.Parent))
+		@ArchivedEntryHelpers.DataRow("Parent", Model.ComparedTags, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.Parent)))
 	</table>
 
 </div>

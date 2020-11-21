@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
 @using VocaDb.Web.Models.Shared.Partials.Event;
 @model PrintArchivedEventSeriesDataViewModel
 
@@ -8,9 +9,9 @@
 	<table class="table table-bordered">
 		@ArchivedEntryHelpers.DataRow("Id", Model.ComparedSeries.FirstData.Id)
 		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedSeries, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedSeries, d => DataFormatUtils.GenerateHtmlFromHelper(d.Names, ArchivedEntryHelpers.NameInfo))
+		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedSeries, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
 		@ArchivedEntryHelpers.DataRow("Description", Model.ComparedSeries, d => d.Description)
-		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedSeries, d => DataFormatUtils.GenerateHtmlFromHelper(d.WebLinks, ArchivedEntryHelpers.WebLinkInfo))
+		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedSeries, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
 		@ArchivedEntryHelpers.DataRow("Category", Model.ComparedSeries, d => d.Category)
 		@ArchivedEntryHelpers.DataRow("Main picture MIME", Model.ComparedSeries, d => d.MainPictureMime)
 	</table>

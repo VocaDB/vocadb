@@ -1,7 +1,9 @@
-﻿@using System.Web.Optimization
+﻿@using System.Web.Optimization;
 @using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
-@using VocaDb.Web.Resources.Views.Event
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
+@using VocaDb.Web.Resources.Views.Event;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesDetailsContract>
 
 @{
@@ -30,11 +32,11 @@
 	@if (Login.CanManageDb) {
 		<a href="@Url.Action("Edit", new { seriesId = Model.Id != 0 ? (int?)Model.Id : null })" id="createEventLink">@ViewRes.Event.EventsBySeriesStrings.CreateEvent</a>
 	}	
-	@Helpers.EntryStatusMessage(Model.Status)
+	@{ Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status)); }
 }
 
 @if (Model.Deleted) {
-	@EntryDetailsHelpers.DeletedBanner(null)
+	Html.RenderPartial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null));
 }
 
 <div class="media">

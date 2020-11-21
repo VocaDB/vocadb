@@ -1,4 +1,5 @@
-@using System.Web.Optimization
+﻿@using System.Web.Optimization;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @inherits VocaDb.Web.Code.VocaDbPage
 
 @{
@@ -26,7 +27,7 @@
 	<div class="control-group">
 		<label class="control-label">Target tag</label>
 		<div class="controls">
-			@KnockoutHelpers.BasicEntryLinkLockingAutoComplete("tagAutoComplete", "newTargetTag")
+			@{ Html.RenderPartial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("tagAutoComplete", "newTargetTag")); }
 		</div>
 	</div>
 	<div class="control-group">
@@ -51,10 +52,10 @@
 	<br />
 	<br />
 
-	@Helpers.SaveBtn()
+	@{ Html.RenderPartial("Partials/Shared/_SaveBtn"); }
 
 	<div data-bind="with: paging">
-		@KnockoutHelpers.ServerSidePaging()
+		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
 	</div>
 
 	<table>
@@ -82,10 +83,10 @@
 	<br />
 	
 	<div data-bind="with: paging">
-		@KnockoutHelpers.ServerSidePaging()
+		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
 	</div>
 
-	@Helpers.SaveBtn()
+	@{ Html.RenderPartial("Partials/Shared/_SaveBtn"); }
 
 </form>
 

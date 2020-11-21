@@ -1,5 +1,7 @@
 ﻿@using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @using VocaDb.Web.Models.Shared.Partials.Tag;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.Tags.ArchivedTagVersionDetailsContract>>
 
@@ -35,7 +37,7 @@
 }
 
 @if (Model.Entry.ArchivedVersion.Hidden) {
-	@EntryDetailsHelpers.HiddenBanner()
+	Html.RenderPartial("Partials/EntryDetails/_HiddenBanner");
 }
 
 @if (Model.Entry.ComparableVersions.Any()) {
@@ -45,12 +47,12 @@
 	}
 }
 
-@ArchivedEntryHelpers.ArchivedObjectVersionProperties(Model.Version(Model.Entry.ArchivedVersion),
-	Model.Version(Model.Entry.ComparedVersion))
+@{ Html.RenderPartial("Partials/ArchivedEntry/_ArchivedObjectVersionProperties", new ArchivedObjectVersionPropertiesViewModel(Model.Version(Model.Entry.ArchivedVersion),
+	Model.Version(Model.Entry.ComparedVersion))); }
 
 @{ Html.RenderPartial("Partials/Tag/_PrintArchivedTagData", new PrintArchivedTagDataViewModel(Model.Entry.Versions)); }
 
-@EntryDetailsHelpers.ReportEntryVersionPopupKnockout()
+@{ Html.RenderPartial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel()); }
 
 @section BodyScripts {
 	<script src="@Url.Content("~/Scripts/Repositories/TagRepository.js")"></script>

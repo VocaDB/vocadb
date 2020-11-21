@@ -2,7 +2,10 @@
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Helpers;
 @using VocaDb.Model.Utils.Search
+@using VocaDb.Web.Models.Shared.Partials.Activityfeed;
 @using VocaDb.Web.Models.Shared.Partials.Album;
+@using VocaDb.Web.Models.Shared.Partials.Comment;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using Res = ViewRes.Home.IndexStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.UseCases.FrontPageContract>
 
@@ -67,7 +70,7 @@
 	
 @if (Model.NewEvents.Any()) {
 	<h3 class="withMargin">@Res.RecentEvents</h3>
-	@Helpers.EventThumbs(Model.NewEvents)
+	Html.RenderPartial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model.NewEvents));
 }
 
 @{ Html.RenderPartial("Partials/_NewsItems"); }
@@ -77,8 +80,8 @@
         <h3 class="withMargin">@Res.RecentActivity (@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry"))</h3>
 
         @foreach (var entry in Model.ActivityEntries) {
-	        @ActivityfeedHelpers.ActivityEntry(entry, false)
-        }
+			Html.RenderPartial("Partials/Activityfeed/_ActivityEntry", new ActivityEntryViewModel(entry));
+		}
 		
 		@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry")
     </div>
@@ -86,8 +89,8 @@
         <h3 class="withMargin">@ViewRes.Comment.IndexStrings.RecentComments (@Html.ActionLink(Res.ViewMore, "Index", "Comment"))</h3>
             
         @foreach (var comment in Model.RecentComments) {
-			@CommentHelpers.CommentWithEntryVertical(comment, 400)
-        }
+			Html.RenderPartial("Partials/Comment/_CommentWithEntryVertical", new CommentWithEntryVerticalViewModel(comment, 400));
+		}
 		
 		@Html.ActionLink(Res.ViewMore, "Index", "Comment")
     </div>

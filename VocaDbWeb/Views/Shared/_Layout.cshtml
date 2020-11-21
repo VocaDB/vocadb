@@ -5,6 +5,7 @@
 @using VocaDb.Web.Helpers
 @using VocaDb.Model.Utils
 @using VocaDb.Web.Code
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @inherits VocaDbPage
 	
 @{
@@ -132,7 +133,7 @@
                             </div>
                                                             		
 							@if (!string.IsNullOrEmpty(TempData.StatusMessage())) {
-								@Helpers.NotificationPanel(TempData.StatusMessage())
+								Html.RenderPartial("Partials/Shared/_NotificationPanel", new NotificationPanelViewModel(TempData.StatusMessage()));
 							}
 		
 							@RenderBody()

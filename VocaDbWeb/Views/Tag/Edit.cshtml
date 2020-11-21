@@ -1,7 +1,10 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.Images
+﻿@using System.Web.Optimization;
+@using VocaDb.Model.Domain.Images;
 @using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using Res = VocaDb.Web.Resources.Views.Tag.EditStrings;
 @using EditRes = ViewRes.EntryEditStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Tag.TagEditViewModel>
@@ -59,7 +62,7 @@
 }
 }
 
-@KnockoutHelpers.EntryValidationMessage(Model.Draft, validationErrors, null)
+@{ Html.RenderPartial("Partials/Knockout/_EntryValidationMessage", new EntryValidationMessageViewModel(Model.Draft, validationErrors, null)); }
 
 <br />
 <form action="@Url.Action("Edit", "Tag")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
@@ -68,7 +71,7 @@
 	@Html.HiddenFor(m => m.Name)
 	@Html.HiddenFor(m => m.UrlSlug)
 
-	@Helpers.SaveAndBackBtn(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug }))
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug }))); }
 	
 	<div class="editor-label">
 		<label class="helpTip" data-bind="qTip">
@@ -76,7 +79,7 @@
 		</label>
 	</div>
 	<div class="editor-field">
-		@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
+		@{ Html.RenderPartial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage")); }
 		@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
 	</div>
 
@@ -84,7 +87,7 @@
 		<label class="helpTip" data-bind="qTip: null">
 			Names
 		</label>
-		@Helpers.RequiredField()
+		@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
 	</div>
 	<div class="editor-field" data-bind="with: names">
 		@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new NamesEditorViewModel()); }
@@ -110,7 +113,7 @@
 
 	<div class="editor-label">
 		@Html.LabelFor(m => m.Description)
-		@Helpers.MarkdownNotice()
+		@{ Html.RenderPartial("Partials/Shared/_MarkdownNotice"); }
 	</div>
 	<div class="editor-field entry-edit-description" data-bind="with: description">
 		@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
@@ -126,7 +129,7 @@
 				<img class="pull-left media-object" src="@thumbUrl" alt="Thumb" />
 			}
 			<div class="media-body">
-				@Helpers.ImageUploadMessage()
+				@{ Html.RenderPartial("Partials/Shared/_ImageUploadMessage"); }
 				<input type="file" id="thumbPicUpload" name="thumbPicUpload" />
 			</div>
 		</div>
@@ -181,7 +184,7 @@
 	</div>
 
 	<div class="editor-label">
-		@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
+		@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)); }
 	</div>
 	<div class="editor-field">
 		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
@@ -192,9 +195,9 @@
 	<textarea name="UpdateNotes" id="UpdateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 
 	<br />
-	@Helpers.SaveAndBackBtn(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug }))
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug }))); }
 
 </form>
 
-@EntryDetailsHelpers.EntryDeletePopup(EditRes.ConfirmDelete)
-@EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(EditRes.ConfirmDelete)); }
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash)); }

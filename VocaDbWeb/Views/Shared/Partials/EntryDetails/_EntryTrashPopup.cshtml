@@ -1,0 +1,4 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@model EntryTrashPopupViewModel
+
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel(Model.ConfirmText, Model.ViewModelBindingName, Model.DeleteButtonId, ViewRes.EntryEditStrings.MoveToTrash, ViewRes.EntryEditStrings.MoveToTrash)); }

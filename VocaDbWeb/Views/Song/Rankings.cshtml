@@ -1,10 +1,9 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.Songs
-@using VocaDb.Web.Helpers
+﻿@using System.Web.Optimization;
+@using VocaDb.Model.Domain.Songs;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 @inherits VocaDb.Web.Code.VocaDbPage
 @using Res = ViewRes.Song.RankingsStrings;
-@using SharedRes = ViewRes.SharedStrings;
-@using EntryRes = ViewRes.EntryDetailsStrings;
 
 @{
 	PageProperties.Title = BrandableStrings.Song.RankingsTitle;
@@ -91,7 +90,7 @@
 				<small class="extraInfo" data-bind="text: artistString"></small>
 
 				<div data-bind="visible: pvServices, with: previewViewModel">
-					@SongHelpers.PVPreviewKnockout("$parents[2].getPVServiceIcons")
+					@{ Html.RenderPartial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].getPVServiceIcons")); }
 				</div>
 			</td>
 			<td>

@@ -1,0 +1,59 @@
+﻿@using VocaDb.Model.DataContracts.Songs;
+@using VocaDb.Model.Domain.Artists;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Artist;
+@model ArtistListViewModel
+
+@functions {
+	public static bool ShowRoles(IArtistLinkContract artist, ShowRolesMode showRoles)
+	{
+		switch (showRoles)
+		{
+			case ShowRolesMode.IfNotDefault:
+				return artist.EffectiveRoles != ArtistRoles.Default;
+			case ShowRolesMode.IfNotVocalist:
+				return artist.EffectiveRoles != ArtistRoles.Default
+					&& artist.EffectiveRoles != ArtistRoles.Vocalist
+					&& !artist.Categories.HasFlag(ArtistCategories.Subject)
+					&& !artist.Categories.HasFlag(ArtistCategories.Producer);
+			default:
+				return false;
+		}
+	}
+}
+
+@{
+	var ordered = Model.Artists.OrderBy(a => a.IsSupport).ToArray();
+}
+
+@foreach (var artist in ordered)
+{
+	if (artist.IsSupport)
+	{
+		@("(")
+	}
+	if (artist.Artist != null)
+	{
+		if (Model.ShowType)
+		{
+			Html.RenderPartial("Partials/Artist/_ArtistTypeLabel", new ArtistTypeLabelViewModel(artist.Artist.ArtistType));
+		}
+		Html.RenderPartial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist.Artist, name: artist.Name));
+	}
+	else
+	{
+		@artist.Name
+	}
+	if (ShowRoles(artist, Model.ShowRoles))
+	{
+		@Html.Raw("&nbsp;<small class='muted'>(" + Translate.ArtistRoleNames.GetAllNameNames(artist.EffectiveRoles, ArtistRoles.Default) + ")</small>")
+	}
+	if (artist.IsSupport)
+	{
+		@(")")
+	}
+	if (artist != ordered.Last())
+	{
+		@(", ")
+	}
+}

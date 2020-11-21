@@ -1,5 +1,6 @@
-﻿@using VocaDb.Model.Domain.Security
+﻿@using VocaDb.Model.Domain.Security;
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.UserEdit>
 
 @{
@@ -17,7 +18,7 @@
 }
 
 @using(Html.BeginForm()) {	
-	@Helpers.ValidationSymmaryDiv("Unable to edit user."/* TODO: localize */)
+	Html.RenderPartial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel("Unable to edit user."/* TODO: localize */));
 	
 	@Html.HiddenFor(m => m.Id)
 
@@ -66,10 +67,10 @@
 				}				
 			</tbody>			
 		</table>
-		@Helpers.EntrySearchNameBox("ownedArtistAddName")
+		@{ Html.RenderPartial("Partials/Shared/_EntrySearchNameBox", new EntrySearchNameBoxViewModel("ownedArtistAddName")); }
 	</fieldset>
 		
-	@Helpers.SaveBtn()
+	Html.RenderPartial("Partials/Shared/_SaveBtn");
 	
 }
 

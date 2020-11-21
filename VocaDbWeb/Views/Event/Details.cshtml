@@ -1,11 +1,17 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Model.DataContracts.ReleaseEvents
-@using VocaDb.Model.Domain.Artists
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.ReleaseEvents
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Album;
+@using VocaDb.Web.Models.Shared.Partials.Artist;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Html;
+@using VocaDb.Web.Models.Shared.Partials.PV;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 @using Res = ViewRes.Event.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract>
@@ -38,7 +44,7 @@
 }
 
 @section Head {
-	@HtmlHelpers.OpenGraphMetaTags(PageProperties)
+	@{ Html.RenderPartial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties)); }
 	<link rel="canonical" href="@PageProperties.CanonicalUrl" />
 }
 
@@ -46,13 +52,13 @@
 	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editEventLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
-	@Helpers.EntryStatusMessage(Model.Status)
+	@{ Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status)); }
 }
 
 @helper ArtistList(IList<ArtistForEventContract> artists, bool showRoles = false, bool showType = false) {
 	foreach (var artist in artists) {
 		if (artist.Artist != null) {
-			@ArtistHelpers.ArtistLink(artist.Artist, typeLabel: showType)
+			Html.RenderPartial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist.Artist, typeLabel: showType));
 		} else {
 			@artist.Name
 		}
@@ -67,7 +73,7 @@
 
 
 @if (Model.Deleted) {
-	@EntryDetailsHelpers.DeletedBanner(null)
+	Html.RenderPartial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null));
 }
 
 <div class="well well-transparent">
@@ -140,7 +146,7 @@
 @if (Model.Series != null) {
 	<h3>@Res.Series: <a href="@Url.Action("SeriesDetails", new { id = Model.Series.Id, slug = Model.Series.UrlSlug })" title="@Model.Series.AdditionalNames">@Model.Series.Name</a></h3>
 	if (!string.IsNullOrEmpty(Model.Series.Description)) {
-		@HtmlHelpers.FormatMarkdown(Model.Series.Description);
+		Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Series.Description));
 	}
 	@EntryDetailsHelpers.ExternalLinksList(Model.Series.WebLinks, false)
 }
@@ -168,11 +174,11 @@
 	<h3 class="withMargin">@Res.Venue: <a href="@Url.Action("Details", "Venue", new { id = Model.Venue.Id }, null)" title="@Model.Venue.AdditionalNames">@Model.Venue.Name</a></h3>
 
 	if (Model.Venue.Coordinates.HasValue) {
-		@Helpers.EmbedGoogleMaps(Model.Venue.Coordinates)
+		Html.RenderPartial("Partials/Shared/_EmbedGoogleMaps", new EmbedGoogleMapsViewModel(Model.Venue.Coordinates));
 	}
 
 	if (!string.IsNullOrEmpty(Model.Venue.Description)) {
-		@HtmlHelpers.FormatMarkdown(Model.Venue.Description);
+		Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Venue.Description));
 	}
 	@EntryDetailsHelpers.ExternalLinksList(Model.Venue.WebLinks, false)
 }
@@ -182,7 +188,7 @@
 		@Res.Albums
 		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Albums.Length)</small>
 	</h3>
-	@AlbumHelpers.AlbumGrid(Model.Albums, 2, false, false, true)
+	Html.RenderPartial("Partials/Album/_AlbumGrid", new AlbumGridViewModel(Model.Albums, 2, false, false, true));
 }
 
 @if (Model.Songs.Any()) {
@@ -190,17 +196,17 @@
 		@Html.ActionLink(Res.Songs, "Index", "Search", UrlMapper.Search.Songs(eventId: Model.Id), null)
 		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Songs.Length)</small>
 	</h3>
-	@SongHelpers.SongGrid(Model.Songs, 2, true, false)
+	Html.RenderPartial("Partials/Song/_SongGrid", new SongGridViewModel(Model.Songs, 2, true, false));
 }
 
 @if (Model.PVs.Any()) {
 	<h3 class="withMargin">@Res.PVs</h3>
-	@Html.LinkListHtml(Model.PVs, pv => Helpers.FormatPVLink(pv, false))
+	@Html.LinkListHtml(Model.PVs, pv => Html.Partial("Partials/Shared/_FormatPVLink", new FormatPVLinkViewModel(pv, false)))
 }	
 
 @if (primaryPV != null) {
 	<div class="song-pv-player">
-		@PVHelpers.EmbedPV(primaryPV)
+		@{ Html.RenderPartial("Partials/PV/_EmbedPV", new EmbedPVViewModel(primaryPV)); }
 	</div>
 }
 
@@ -233,13 +239,13 @@
 	</ul>
 </div>
 
-@CommentHelpers.LatestCommentsKnockout()
+@{ Html.RenderPartial("Partials/Comment/_LatestCommentsKnockout"); }
 
 <div data-bind="with: tagsEditViewModel">
 	@{ Html.RenderPartial("Partials/_TagsEdit"); }
 </div>
 
-@EntryDetailsHelpers.ReportEntryPopupKnockout()
+@{ Html.RenderPartial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel()); }
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/ReleaseEvent/Details")

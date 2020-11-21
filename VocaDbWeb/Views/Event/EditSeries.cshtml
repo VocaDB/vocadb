@@ -1,6 +1,9 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Helpers
-@using VocaDb.Web.Helpers
+﻿@using System.Web.Optimization;
+@using VocaDb.Model.Helpers;
+@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @using EditRes = ViewRes.EntryEditStrings
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Event.SeriesEdit>
 
@@ -39,13 +42,13 @@
 	}
 }
 
-@Helpers.ValidationSymmaryPanel("Unable to save properties.")
+@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save properties.")); }
 
 <form action="@Url.Action("EditSeries")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
 	@Html.HiddenFor(m => m.Id)
 	@Html.HiddenFor(m => m.Name)
 
-	@Helpers.SaveAndBackBtn(backAction)
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction)); }
 
 	<div class="editor-label">
 		<label class="helpTip" data-bind="qTip" title="@EditRes.DefaultLanguageHelp">
@@ -53,7 +56,7 @@
 		</label>
 	</div>
 	<div class="editor-field">
-		@KnockoutHelpers.LanguageSelectionDropDown("defaultNameLanguage")
+		@{ Html.RenderPartial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage")); }
 		@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
 	</div>
 
@@ -126,19 +129,19 @@
 	</div>
 	
 	<div class="editor-label">
-		@Helpers.HelpLabel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)
+		@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)); }
 	</div>
 	<div class="editor-field">
 		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
 	</div>
 
 	<br />
-	@Helpers.SaveAndBackBtn(backAction)
+	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction)); }
 
 </form>
 
-@EntryDetailsHelpers.EntryDeletePopup(ViewRes.EntryEditStrings.ConfirmDelete)
-@EntryDetailsHelpers.EntryTrashPopup(EditRes.ConfirmMoveToTrash)
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete)); }
+@{ Html.RenderPartial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash)); }
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/shared/edit", "~/bundles/EventSeries/Edit")

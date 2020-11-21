@@ -1,5 +1,6 @@
 ﻿@using VocaDb.Web.Helpers;
-@using Res = ViewRes.Event.EventsBySeriesStrings
+@using VocaDb.Web.Models.Shared.Partials.Html;
+@using Res = ViewRes.Event.EventsBySeriesStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesWithEventsContract[]>
 
 @{
@@ -50,7 +51,7 @@
 			</h3>
 						
 			@if (!string.IsNullOrEmpty(series.Description)) {
-				<p>@HtmlHelpers.FormatMarkdown(series.Description)</p>
+				<p>@{ Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(series.Description)); }</p>
 			}
 		</div>
 	</div>

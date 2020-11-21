@@ -1,3 +1,4 @@
-﻿@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Comment;
 
-@CommentHelpers.EditableComments(Login.CanManageDb)
+@{ Html.RenderPartial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(Login.CanManageDb)); }
