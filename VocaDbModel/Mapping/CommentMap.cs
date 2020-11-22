@@ -1,20 +1,15 @@
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Comments;
-using VocaDb.Model.Domain.Discussions;
-using VocaDb.Model.Domain.ReleaseEvents;
-using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Domain.Tags;
-using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Mapping
 {
-	public abstract class CommentMap<TComment, TEntry> : ClassMap<TComment> where TComment : GenericComment<TEntry> where TEntry : class, IEntryWithNames
+	public class CommentMap : ClassMap<Comment>
 	{
 		protected CommentMap()
 		{
+			DiscriminateSubClassesOnColumn("[EntryType]");
+			Table("Comments");
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
@@ -25,70 +20,83 @@ namespace VocaDb.Model.Mapping
 		}
 	}
 
-	public class AlbumCommentMap : CommentMap<AlbumComment, Album>
+	public class AlbumCommentMap : SubclassMap<AlbumComment>
 	{
 		public AlbumCommentMap()
 		{
-			References(m => m.EntryForComment).Column("[Album]").Not.Nullable();
+			DiscriminatorValue(EntryType.Album.ToString());
+
+			References(m => m.EntryForComment).Column("[Album]").Nullable();
 		}
 	}
 
-	public class ArtistCommentMap : CommentMap<ArtistComment, Artist>
+	public class ArtistCommentMap : SubclassMap<ArtistComment>
 	{
 		public ArtistCommentMap()
 		{
-			References(m => m.EntryForComment).Column("[Artist]").Not.Nullable();
+			DiscriminatorValue(EntryType.Artist.ToString());
+
+			References(m => m.EntryForComment).Column("[Artist]").Nullable();
 		}
 	}
 
-	public class DiscussionCommentMap : CommentMap<DiscussionComment, DiscussionTopic>
+	public class DiscussionCommentMap : SubclassMap<DiscussionComment>
 	{
 		public DiscussionCommentMap()
 		{
-			Schema("discussions");
-			Table("DiscussionComments");
+			DiscriminatorValue(EntryType.DiscussionTopic.ToString());
 
-			References(m => m.EntryForComment).Column("[Topic]").Not.Nullable();
+			References(m => m.EntryForComment).Column("[Topic]").Nullable();
 		}
 	}
 
-	public class ReleaseEventCommentMap : CommentMap<ReleaseEventComment, ReleaseEvent>
+	public class ReleaseEventCommentMap : SubclassMap<ReleaseEventComment>
 	{
 		public ReleaseEventCommentMap()
 		{
-			References(m => m.EntryForComment).Column("[ReleaseEvent]").Not.Nullable();
+			DiscriminatorValue(EntryType.ReleaseEvent.ToString());
+
+			References(m => m.EntryForComment).Column("[ReleaseEvent]").Nullable();
 		}
 	}
 
-	public class SongCommentMap : CommentMap<SongComment, Song>
+	public class SongCommentMap : SubclassMap<SongComment>
 	{
 		public SongCommentMap()
 		{
-			References(m => m.EntryForComment).Column("[Song]").Not.Nullable();
+			DiscriminatorValue(EntryType.Song.ToString());
+
+			References(m => m.EntryForComment).Column("[Song]").Nullable();
 		}
 	}
 
-	public class SongListCommentMap : CommentMap<SongListComment, SongList>
+	public class SongListCommentMap : SubclassMap<SongListComment>
 	{
 		public SongListCommentMap()
 		{
-			References(m => m.EntryForComment).Column("SongList").Not.Nullable();
+			DiscriminatorValue(EntryType.SongList.ToString());
+
+			References(m => m.EntryForComment).Column("SongList").Nullable();
 		}
 	}
 
-	public class TagCommentMap : CommentMap<TagComment, Tag>
+	public class TagCommentMap : SubclassMap<TagComment>
 	{
 		public TagCommentMap()
 		{
-			References(m => m.EntryForComment).Column("[Tag]").Not.Nullable();
+			DiscriminatorValue(EntryType.Tag.ToString());
+
+			References(m => m.EntryForComment).Column("[Tag]").Nullable();
 		}
 	}
 
-	public class UserCommentMap : CommentMap<UserComment, User>
+	public class UserCommentMap : SubclassMap<UserComment>
 	{
 		public UserCommentMap()
 		{
-			References(m => m.EntryForComment).Column("[User]").Not.Nullable();
+			DiscriminatorValue(EntryType.User.ToString());
+
+			References(m => m.EntryForComment).Column("[User]").Nullable();
 		}
 	}
 }
