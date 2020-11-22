@@ -5,6 +5,17 @@ namespace VocaDb.Migrations
 {
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2020_11_20_2000)]
+	public class Comments : AutoReversingMigration
+	{
+		public override void Up()
+		{
+			// TODO: remove these columns
+			Alter.Column("AuthorName").OnTable(TableNames.AlbumComments).AsString(100).Nullable();
+			Alter.Column("AuthorName").OnTable(TableNames.DiscussionComments).InSchema("discussions").AsString(100).Nullable();
+		}
+	}
+
 	[Migration(2020_07_19_2000)]
 	public class ArchivedEntryVersionHidden : AutoReversingMigration
 	{

@@ -3,6 +3,7 @@ namespace VocaDb.Migrations
 	public static class TableNames
 	{
 		public const string ActivityEntries = nameof(ActivityEntries);
+		public const string AlbumComments = nameof(AlbumComments);
 		public const string AlbumDiscProperties = nameof(AlbumDiscProperties);
 		public const string AlbumNames = nameof(AlbumNames);
 		public const string Albums = nameof(Albums);
@@ -23,6 +24,7 @@ namespace VocaDb.Migrations
 		public const string Artists = nameof(Artists);
 		public const string ArtistTagUsages = nameof(ArtistTagUsages);
 		public const string AuditLogEntries = nameof(AuditLogEntries);
+		public const string DiscussionComments = nameof(DiscussionComments);
 		public const string EntryReports = nameof(EntryReports);
 		public const string EventNames = nameof(EventNames);
 		public const string EventSeriesNames = nameof(EventSeriesNames);

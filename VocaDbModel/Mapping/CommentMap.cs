@@ -29,8 +29,6 @@ namespace VocaDb.Model.Mapping
 	{
 		public AlbumCommentMap()
 		{
-			Map(m => m.AuthorName).Length(100).Not.Nullable();
-
 			References(m => m.EntryForComment).Column("[Album]").Not.Nullable();
 		}
 	}
@@ -49,8 +47,6 @@ namespace VocaDb.Model.Mapping
 		{
 			Schema("discussions");
 			Table("DiscussionComments");
-
-			Map(m => m.AuthorName).Not.Nullable();
 
 			References(m => m.EntryForComment).Column("[Topic]").Not.Nullable();
 		}
