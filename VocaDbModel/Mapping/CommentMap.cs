@@ -14,6 +14,7 @@ namespace VocaDb.Model.Mapping
 			Id(m => m.Id);
 
 			Map(m => m.Created).Not.Nullable();
+			Map(m => m.Deleted).Not.Nullable();
 			Map(m => m.Message).Length(4000).Not.Nullable();
 
 			References(m => m.Author).Not.Nullable();

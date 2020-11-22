@@ -19,6 +19,7 @@ namespace VocaDb.Migrations
 				.WithColumn("OldId").AsInt32().Nullable()
 				.WithColumn("Author").AsInt32().NotNullable().ForeignKey("FK_Comments_Users", TableNames.Users, "Id").OnDelete(Rule.Cascade)
 				.WithColumn("Created").AsDateTime().NotNullable()
+				.WithColumn("Deleted").AsBoolean().NotNullable().WithDefaultValue(false)
 				.WithColumn("Message").AsString(4000).NotNullable()
 				.WithColumn("EntryType").AsString(20).NotNullable()
 				.WithColumn("Album").AsInt32().Nullable().ForeignKey("FK_Comments_Albums", TableNames.Albums, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_Album")

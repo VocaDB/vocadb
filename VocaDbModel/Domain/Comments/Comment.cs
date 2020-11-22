@@ -42,6 +42,8 @@ namespace VocaDb.Model.Domain.Comments
 
 		public virtual DateTime Created { get; set; }
 
+		public virtual bool Deleted { get; set; }
+
 		/// <summary>
 		/// Entry owning this comment. Cannot be null.
 		/// </summary>
