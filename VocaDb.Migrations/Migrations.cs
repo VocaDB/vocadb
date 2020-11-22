@@ -13,6 +13,22 @@ namespace VocaDb.Migrations
 			// TODO: remove these columns
 			Alter.Column("AuthorName").OnTable(TableNames.AlbumComments).AsString(100).Nullable();
 			Alter.Column("AuthorName").OnTable(TableNames.DiscussionComments).InSchema("discussions").AsString(100).Nullable();
+
+			Create.Table(TableNames.Comments)
+				.WithColumn("Id").AsInt64().NotNullable().Identity().PrimaryKey()
+				.WithColumn("OldId").AsInt32().Nullable()
+				.WithColumn("Author").AsInt32().NotNullable().ForeignKey("FK_Comments_Users", TableNames.Users, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Created").AsDateTime().NotNullable()
+				.WithColumn("Message").AsString(4000).NotNullable()
+				.WithColumn("EntryType").AsString(20).NotNullable()
+				.WithColumn("Album").AsInt32().Nullable().ForeignKey("FK_Comments_Albums", TableNames.Albums, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_Album")
+				.WithColumn("Artist").AsInt32().Nullable().ForeignKey("FK_Comments_Artists", TableNames.Artists, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_Artist")
+				.WithColumn("Topic").AsInt32().Nullable().ForeignKey("FK_Comments_DiscussionTopics", "discussions", TableNames.DiscussionTopics, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_DiscussionTopic")
+				.WithColumn("ReleaseEvent").AsInt32().Nullable().ForeignKey("FK_Comments_ReleaseEvents", TableNames.AlbumReleaseEvents, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_ReleaseEvent")
+				.WithColumn("Song").AsInt32().Nullable().ForeignKey("FK_Comments_Songs", TableNames.Songs, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_Song")
+				.WithColumn("SongList").AsInt32().Nullable().ForeignKey("FK_Comments_SongLists", TableNames.SongLists, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_SongList")
+				.WithColumn("Tag").AsInt32().Nullable().ForeignKey("FK_Comments_Tags", TableNames.Tags, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_Tag")
+				.WithColumn("User").AsInt32().Nullable().ForeignKey("FK_Comments_Users1", TableNames.Users, "Id").Indexed("IX_Comments_User");
 		}
 	}
 

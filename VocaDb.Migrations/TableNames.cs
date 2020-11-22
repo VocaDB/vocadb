@@ -24,7 +24,9 @@ namespace VocaDb.Migrations
 		public const string Artists = nameof(Artists);
 		public const string ArtistTagUsages = nameof(ArtistTagUsages);
 		public const string AuditLogEntries = nameof(AuditLogEntries);
+		public const string Comments = nameof(Comments);
 		public const string DiscussionComments = nameof(DiscussionComments);
+		public const string DiscussionTopics = nameof(DiscussionTopics);
 		public const string EntryReports = nameof(EntryReports);
 		public const string EventNames = nameof(EventNames);
 		public const string EventSeriesNames = nameof(EventSeriesNames);
