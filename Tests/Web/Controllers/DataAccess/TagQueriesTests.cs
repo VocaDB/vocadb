@@ -23,13 +23,15 @@ using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Tests.Web.Controllers.DataAccess {
+namespace VocaDb.Tests.Web.Controllers.DataAccess
+{
 
 	/// <summary>
 	/// Tests for <see cref="TagQueries"/>.
 	/// </summary>
 	[TestClass]
-	public class TagQueriesTests {
+	public class TagQueriesTests
+	{
 
 		private InMemoryImagePersister imagePersister;
 		private FakePermissionContext permissionContext;
@@ -39,11 +41,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private Tag tag2;
 		private User user;
 
-		private ArchivedTagVersion GetArchivedVersion(Tag tag) {
+		private ArchivedTagVersion GetArchivedVersion(Tag tag)
+		{
 			return repository.List<ArchivedTagVersion>().FirstOrDefault(a => a.Tag.Id == tag.Id);
 		}
 
-		private Tag CreateAndSaveTag(string englishName) {
+		private Tag CreateAndSaveTag(string englishName)
+		{
 
 			var t = CreateEntry.Tag(englishName);
 
@@ -56,8 +60,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
-		private TagUsage CreateTagUsage(Tag tag, ReleaseEvent releaseEvent) {
-			
+		private TagUsage CreateTagUsage(Tag tag, ReleaseEvent releaseEvent)
+		{
+
 			var usage = repository.Save(new EventTagUsage(releaseEvent, tag));
 			tag.AllEventTagUsages.Add(usage);
 			releaseEvent.Tags.Usages.Add(usage);
@@ -65,12 +70,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
-		private Stream TestImage() {
+		private Stream TestImage()
+		{
 			return ResourceHelper.TestImage();
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			repository = new FakeTagRepository();
 
@@ -88,7 +95,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Create() {
+		public async Task Create()
+		{
 
 			var result = await queries.Create("Apimiku");
 
@@ -100,16 +108,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateTagNameException))]
-		public async Task Create_Duplicate() {
+		public async Task Create_Duplicate()
+		{
 
 			await queries.Create("Appearance Miku");
 
 		}
 
 		[TestMethod]
-		public async Task GetDetails_RecentEvents() {
-			
-			void AssertContainsEvent(TagDetailsContract details, ReleaseEvent releaseEvent) {
+		public async Task GetDetails_RecentEvents()
+		{
+
+			void AssertContainsEvent(TagDetailsContract details, ReleaseEvent releaseEvent)
+			{
 				Assert.IsTrue(details.Stats.Events.Any(e => e.Id == releaseEvent.Id), "Contains " + releaseEvent);
 			}
 
@@ -140,7 +151,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void MoveToTrash() {
+		public void MoveToTrash()
+		{
 
 			var oldCount = repository.Count<Tag>();
 
@@ -159,7 +171,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void MoveToTrash_NoDeletePermission() {
+		public void MoveToTrash_NoDeletePermission()
+		{
 
 			user.GroupId = UserGroupId.Regular;
 			permissionContext.RefreshLoggedUser(repository);
@@ -170,7 +183,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void MoveToTrash_NoEditPermission() {
+		public void MoveToTrash_NoEditPermission()
+		{
 
 			user.GroupId = UserGroupId.Trusted;
 			permissionContext.RefreshLoggedUser(repository);
@@ -181,10 +195,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void MoveToTrash_DeleteRelatedEntries() {
+		public void MoveToTrash_DeleteRelatedEntries()
+		{
 
 			repository.Save(new TagReport(tag, TagReportType.InvalidInfo, user, "test", "test", null));
-			repository.Save(new TagReport(tag2, TagReportType.InvalidInfo, user, "test", "test", null));			
+			repository.Save(new TagReport(tag2, TagReportType.InvalidInfo, user, "test", "test", null));
 			var song = repository.Save(CreateEntry.Song());
 			var tagUsage = repository.Save(song.AddTag(tag).Result);
 			tag.AllSongTagUsages.Add(tagUsage);
@@ -198,8 +213,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetTagsByCategories() {
-			
+		public void GetTagsByCategories()
+		{
+
 			tag.CategoryName = "Animation";
 
 			var result = queries.GetTagsByCategories();
@@ -213,7 +229,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Merge_ToEmpty() {
+		public void Merge_ToEmpty()
+		{
 
 			var target = repository.Save(new Tag());
 
@@ -228,10 +245,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Merge_MoveUsages() {
+		public void Merge_MoveUsages()
+		{
 
 			// Arrange
-			Action<Song, Tag> AddTag = (s, tag) => {
+			Action<Song, Tag> AddTag = (s, tag) =>
+			{
 				var u = s.AddTag(tag);
 				tag.AllSongTagUsages.Add(u.Result);
 				u.Result.CreateVote(user);
@@ -266,7 +285,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void Merge_NoPermissions() {
+		public void Merge_NoPermissions()
+		{
 
 			user.GroupId = UserGroupId.Regular;
 			permissionContext.RefreshLoggedUser(repository);
@@ -279,7 +299,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Merge_TransitiveMergeRecord() {
+		public void Merge_TransitiveMergeRecord()
+		{
 
 			var target = CreateAndSaveTag("target");
 			var newTarget = CreateAndSaveTag("newTarget");
@@ -296,7 +317,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		// Merge target is in related tags. Tag cannot be related to itself, so this it's skipped.
 		[TestMethod]
-		public void Merge_TargetInRelatedTags() {
+		public void Merge_TargetInRelatedTags()
+		{
 
 			var target = repository.Save(new Tag());
 			tag.AddRelatedTag(target);
@@ -309,7 +331,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Merge_Parent() {
+		public void Merge_Parent()
+		{
 
 			var parent = repository.Save(new Tag("parent"));
 			var target = repository.Save(new Tag("target"));
@@ -322,7 +345,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Merge_Parent_IgnoreSelf() {
+		public void Merge_Parent_IgnoreSelf()
+		{
 
 			var target = repository.Save(new Tag("target"));
 			tag.SetParent(target);
@@ -334,7 +358,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Merge_FollowedTags() {
+		public void Merge_FollowedTags()
+		{
 
 			var user2 = repository.Save(CreateEntry.User());
 			var target = repository.Save(new Tag("target"));
@@ -349,7 +374,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Merge_TagMappings() {
+		public void Merge_TagMappings()
+		{
 
 			repository.Save(tag.CreateMapping("ApiMiku"));
 			var target = repository.Save(new Tag("target"));
@@ -361,7 +387,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Description() {
+		public void Update_Description()
+		{
 
 			var updated = new TagForEditContract(tag, false, permissionContext);
 			updated.Description = new EnglishTranslatedStringContract { Original = "mikumikudance.wikia.com/wiki/Miku_Hatsune_Appearance_(Mamama)", English = string.Empty };
@@ -377,11 +404,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Image() {
-			
+		public void Update_Image()
+		{
+
 			var updated = new TagForEditContract(tag, false, permissionContext);
-			using (var stream = TestImage()) {
-				queries.Update(updated, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });			
+			using (var stream = TestImage())
+			{
+				queries.Update(updated, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });
 			}
 
 			var thumb = new EntryThumb(tag, MediaTypeNames.Image.Jpeg, ImagePurpose.Main);
@@ -395,7 +424,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Name() {
+		public void Update_Name()
+		{
 
 			var updated = new TagForEditContract(tag, false, permissionContext);
 			updated.Names[0].Value = "Api Miku";
@@ -412,7 +442,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateTagNameException))]
-		public void Update_Name_DuplicateWithAnotherTag() {
+		public void Update_Name_DuplicateWithAnotherTag()
+		{
 
 			var updated = new TagForEditContract(tag, false, permissionContext);
 			updated.Names[0].Value = "MMD";
@@ -423,7 +454,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateTagNameException))]
-		public void Update_Name_DuplicateTranslation() {
+		public void Update_Name_DuplicateTranslation()
+		{
 
 			var updated = new TagForEditContract(tag, false, permissionContext);
 			updated.Names = updated.Names.Concat(new[] { new LocalizedStringWithIdContract { Value = "Appearance Miku", Language = ContentLanguageSelection.Romaji } }).ToArray();
@@ -435,9 +467,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateTagNameException))]
-		public void Update_Name_DuplicateKana() {
+		public void Update_Name_DuplicateKana()
+		{
 
-			var updated = new TagForEditContract(tag, false, permissionContext) {
+			var updated = new TagForEditContract(tag, false, permissionContext)
+			{
 				Names = new[] {
 					new LocalizedStringWithIdContract {Value = "コノザマ", Language = ContentLanguageSelection.Japanese},
 					new LocalizedStringWithIdContract {Value = "このざま", Language = ContentLanguageSelection.Japanese},
@@ -449,8 +483,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Parent() {
-			
+		public void Update_Parent()
+		{
+
 			var updated = new TagForEditContract(tag, false, permissionContext);
 			updated.Parent = new TagBaseContract(tag2, ContentLanguagePreference.English);
 
@@ -466,8 +501,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Parent_IgnoreSelf() {
-			
+		public void Update_Parent_IgnoreSelf()
+		{
+
 			var updated = new TagForEditContract(tag, false, permissionContext);
 			updated.Parent = new TagBaseContract(tag, ContentLanguagePreference.English);
 
@@ -482,7 +518,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Parent_Renamed() {
+		public void Update_Parent_Renamed()
+		{
 
 			var updated = new TagForEditContract(tag, false, permissionContext);
 			tag2.TranslatedName.Default = "Api Miku";
@@ -496,9 +533,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void UpdateMappings_Add() {
+		public void UpdateMappings_Add()
+		{
 
-			queries.UpdateMappings(new[] { 
+			queries.UpdateMappings(new[] {
 				new TagMappingContract {
 					SourceTag = "apimiku",
 					Tag = new TagBaseContract(tag, ContentLanguagePreference.Default)
@@ -513,7 +551,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void UpdateMappings_Remove() {
+		public void UpdateMappings_Remove()
+		{
 
 			repository.Save(tag.CreateMapping("apimiku"));
 

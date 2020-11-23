@@ -1,13 +1,15 @@
 ﻿using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.Tags {
+namespace VocaDb.Model.Domain.Tags
+{
 
-	public class TagDiff : EntryDiff<TagEditableFields> {
+	public class TagDiff : EntryDiff<TagEditableFields>
+	{
 
-		public TagDiff() : this(true) {}
+		public TagDiff() : this(true) { }
 
-		public TagDiff(bool isSnapShot) 
-			: base(isSnapShot) {}
+		public TagDiff(bool isSnapShot)
+			: base(isSnapShot) { }
 
 		public EnumFieldAccessor<TagEditableFields> CategoryName => Field(TagEditableFields.CategoryName);
 		public EnumFieldAccessor<TagEditableFields> Description => Field(TagEditableFields.Description);

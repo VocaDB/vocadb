@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Knockout {
+namespace VocaDb.Web.Models.Shared.Partials.Knockout
+{
 
-	public class LanguageSelectionDropDownViewModel {
+	public class LanguageSelectionDropDownViewModel
+	{
 
-		public LanguageSelectionDropDownViewModel(string valueBinding) {
+		public LanguageSelectionDropDownViewModel(string valueBinding)
+		{
 			ValueBinding = valueBinding;
 		}
 

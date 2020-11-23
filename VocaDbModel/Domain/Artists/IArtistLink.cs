@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Domain.Artists {
+﻿namespace VocaDb.Model.Domain.Artists
+{
 
-	public interface IArtistLink {
+	public interface IArtistLink
+	{
 
 		Artist Artist { get; }
 

@@ -2,22 +2,28 @@
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.DataContracts.Albums {
+namespace VocaDb.Model.DataContracts.Albums
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArchivedArtistForAlbumContract : ObjectRefContract {
+	public class ArchivedArtistForAlbumContract : ObjectRefContract
+	{
 
-		public ArchivedArtistForAlbumContract() {}
+		public ArchivedArtistForAlbumContract() { }
 
-		public ArchivedArtistForAlbumContract(ArtistForAlbum entry) {
+		public ArchivedArtistForAlbumContract(ArtistForAlbum entry)
+		{
 
 			Roles = entry.Roles;
 			IsSupport = entry.IsSupport;
 
-			if (entry.Artist != null) {
+			if (entry.Artist != null)
+			{
 				Id = entry.Artist.Id;
 				NameHint = entry.Artist.DefaultName;
-			} else {
+			}
+			else
+			{
 				NameHint = entry.Name;
 			}
 

@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Helpers {
+﻿namespace VocaDb.Model.Helpers
+{
 
-	public static class StringExtensions {
+	public static class StringExtensions
+	{
 
 		/*public static string FirstLine(this string str) {
 			
@@ -12,7 +14,8 @@
 
 		}*/
 
-		public static string EmptyToNull(this string str) {
+		public static string EmptyToNull(this string str)
+		{
 			return str == string.Empty ? null : str;
 		}
 
@@ -31,8 +34,9 @@
 		/// and more than <paramref name="minLength"/>, 
 		/// assuming <paramref name="str"/> is longer than <paramref name="minLength"/>.
 		/// </returns>
-		public static string Summarize(this string str, int minLength, int maxLength) {
-			
+		public static string Summarize(this string str, int minLength, int maxLength)
+		{
+
 			if (string.IsNullOrEmpty(str))
 				return str;
 
@@ -48,7 +52,8 @@
 
 		}
 
-		public static string Truncate(this string str, int length) {
+		public static string Truncate(this string str, int length)
+		{
 
 			ParamIs.NotNull(() => str);
 
@@ -62,7 +67,8 @@
 		/// <param name="str">String to be processed. Cannot be null.</param>
 		/// <param name="length">Maximum length after which the string will be truncated.</param>
 		/// <returns>Truncated string with three dots at the end, if the string length exceeded the specified length, otherwise the original string.</returns>
-		public static string TruncateWithEllipsis(this string str, int length) {
+		public static string TruncateWithEllipsis(this string str, int length)
+		{
 
 			ParamIs.NotNull(() => str);
 

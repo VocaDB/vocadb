@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.Database.Repositories {
+namespace VocaDb.Model.Database.Repositories
+{
 
-	public interface IDatabaseContext : IDisposable {
-	
+	public interface IDatabaseContext : IDisposable
+	{
+
 		/// <summary>
 		/// Audit logger for the repository.
 		/// </summary>
@@ -51,7 +53,8 @@ namespace VocaDb.Model.Database.Repositories {
 	/// 
 	/// This might change later with Session Per Request model.
 	/// </remarks>
-	public interface IDatabaseContext<T> : IDatabaseContext, IEntityLoader<T> {
+	public interface IDatabaseContext<T> : IDatabaseContext, IEntityLoader<T>
+	{
 
 		/// <summary>
 		/// Deletes an entity from the repository.

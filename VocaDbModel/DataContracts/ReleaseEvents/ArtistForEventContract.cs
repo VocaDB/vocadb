@@ -5,14 +5,17 @@ using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 
-namespace VocaDb.Model.DataContracts.ReleaseEvents {
+namespace VocaDb.Model.DataContracts.ReleaseEvents
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistForEventContract {
+	public class ArtistForEventContract
+	{
 
 		public ArtistForEventContract() { }
 
-		public ArtistForEventContract(ArtistForEvent artistForEvent, ContentLanguagePreference languagePreference) {
+		public ArtistForEventContract(ArtistForEvent artistForEvent, ContentLanguagePreference languagePreference)
+		{
 
 			ParamIs.NotNull(() => artistForEvent);
 

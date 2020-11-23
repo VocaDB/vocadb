@@ -9,19 +9,22 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Tests.Domain.Users {
+namespace VocaDb.Tests.Domain.Users
+{
 
 	/// <summary>
 	/// Tests for <see cref="User"/>.
 	/// </summary>
 	[TestClass]
-	public class UserTests {
+	public class UserTests
+	{
 
 		private Song song;
 		private User user;
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			user = new User();
 			song = new Song(new LocalizedString("I just wanna say...", ContentLanguageSelection.English));
@@ -29,7 +32,8 @@ namespace VocaDb.Tests.Domain.Users {
 		}
 
 		[TestMethod]
-		public void AddOwnedArtist_New() {
+		public void AddOwnedArtist_New()
+		{
 
 			var artist = new Artist { Id = 1 };
 
@@ -42,7 +46,8 @@ namespace VocaDb.Tests.Domain.Users {
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void AddOwnedArtist_AlreadyAdded() {
+		public void AddOwnedArtist_AlreadyAdded()
+		{
 
 			var artist = new Artist { Id = 1 };
 
@@ -52,7 +57,8 @@ namespace VocaDb.Tests.Domain.Users {
 		}
 
 		[TestMethod]
-		public void AddSongToFavorites_Like() {
+		public void AddSongToFavorites_Like()
+		{
 
 			var rating = user.AddSongToFavorites(song, SongVoteRating.Like);
 
@@ -65,7 +71,8 @@ namespace VocaDb.Tests.Domain.Users {
 		}
 
 		[TestMethod]
-		public void AddSongToFavorites_Favorite() {
+		public void AddSongToFavorites_Favorite()
+		{
 
 			var rating = user.AddSongToFavorites(song, SongVoteRating.Favorite);
 
@@ -78,7 +85,8 @@ namespace VocaDb.Tests.Domain.Users {
 		}
 
 		[TestMethod]
-		public void CreateWebLink() {
+		public void CreateWebLink()
+		{
 
 			user.CreateWebLink(new WebLinkContract("http://www.test.com", "test link", WebLinkCategory.Other));
 

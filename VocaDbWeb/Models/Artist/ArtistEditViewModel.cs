@@ -11,12 +11,15 @@ using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Helpers;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Web.Models.Artist {
+namespace VocaDb.Web.Models.Artist
+{
 
 	[PropertyModelBinder]
-	public class ArtistEditViewModel {
+	public class ArtistEditViewModel
+	{
 
-		public ArtistEditViewModel() {
+		public ArtistEditViewModel()
+		{
 
 			AllArtistTypes = Translate.ArtistTypeNames.GetValuesAndNamesStrings(AppConfig.ArtistTypes);
 
@@ -25,7 +28,8 @@ namespace VocaDb.Web.Models.Artist {
 		public ArtistEditViewModel(ArtistContract artist, IUserPermissionContext permissionContext,
 			bool canDelete,
 			ArtistForEditContract editedArtist = null)
-			: this() {
+			: this()
+		{
 
 			ParamIs.NotNull(() => artist);
 
@@ -51,8 +55,9 @@ namespace VocaDb.Web.Models.Artist {
 		[FromJson]
 		public ArtistForEditContract EditedArtist { get; set; }
 
-		public void CheckModel() {
-			
+		public void CheckModel()
+		{
+
 			if (EditedArtist == null)
 				throw new InvalidFormException("Model was null");
 

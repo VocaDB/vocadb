@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using VocaDb.Model.DataContracts;
 
-namespace VocaDb.Web.Models.Shared.Partials.EntryDetails {
+namespace VocaDb.Web.Models.Shared.Partials.EntryDetails
+{
 
-	public class ExternalLinksRowsViewModel {
+	public class ExternalLinksRowsViewModel
+	{
 
-		public ExternalLinksRowsViewModel(ICollection<WebLinkContract> webLinks) {
+		public ExternalLinksRowsViewModel(ICollection<WebLinkContract> webLinks)
+		{
 			WebLinks = webLinks;
 		}
 

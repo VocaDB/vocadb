@@ -1,36 +1,43 @@
 ﻿using VocaDb.Model.DataContracts;
 
-namespace VocaDb.Model.Domain.ExtLinks {
+namespace VocaDb.Model.Domain.ExtLinks
+{
 
-	public abstract class GenericWebLink<TEntry> : WebLink where TEntry : class {
+	public abstract class GenericWebLink<TEntry> : WebLink where TEntry : class
+	{
 
 		private TEntry entry;
 
 		protected GenericWebLink() { }
 
 		protected GenericWebLink(TEntry entry, WebLinkContract contract)
-			: base(contract) {
+			: base(contract)
+		{
 
 			Entry = entry;
 
 		}
 
 		protected GenericWebLink(TEntry entry, string description, string url, WebLinkCategory category)
-			: base(description, url, category) {
+			: base(description, url, category)
+		{
 
 			Entry = entry;
 
 		}
 
-		public virtual TEntry Entry {
+		public virtual TEntry Entry
+		{
 			get { return entry; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				entry = value;
 			}
 		}
 
-		public virtual bool Equals(GenericWebLink<TEntry> another) {
+		public virtual bool Equals(GenericWebLink<TEntry> another)
+		{
 
 			if (another == null)
 				return false;
@@ -45,15 +52,18 @@ namespace VocaDb.Model.Domain.ExtLinks {
 
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as GenericWebLink<TEntry>);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return Id.GetHashCode();
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("{0} for {1}", base.ToString(), Entry);
 		}
 

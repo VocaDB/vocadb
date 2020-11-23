@@ -1,12 +1,15 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Discussions;
 
-namespace VocaDb.Model.Mapping.Discussions {
+namespace VocaDb.Model.Mapping.Discussions
+{
 
-	public class DiscussionFolderMap : ClassMap<DiscussionFolder> {
+	public class DiscussionFolderMap : ClassMap<DiscussionFolder>
+	{
 
-		public DiscussionFolderMap() {
-			
+		public DiscussionFolderMap()
+		{
+
 			Schema("discussions");
 			Table("DiscussionFolders");
 			Cache.ReadWrite();

@@ -2,7 +2,8 @@ using System;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.Activityfeed {
+namespace VocaDb.Model.Domain.Activityfeed
+{
 
 	/// <summary>
 	/// Activity entries are primarily shown in the activity feed on the front page, 
@@ -11,16 +12,19 @@ namespace VocaDb.Model.Domain.Activityfeed {
 	/// Entry-specific subclasses contain more detailed information about the activity.
 	/// Consecutive activity entries by the same user for the same entry are merged.
 	/// </summary>
-	public abstract class ActivityEntry : IEntryWithIntId {
+	public abstract class ActivityEntry : IEntryWithIntId
+	{
 
 		private User author;
 
-		protected ActivityEntry() {
+		protected ActivityEntry()
+		{
 			CreateDate = DateTime.Now;
 		}
 
-		protected ActivityEntry(User author, EntryEditEvent editEvent)	
-			: this() {
+		protected ActivityEntry(User author, EntryEditEvent editEvent)
+			: this()
+		{
 
 			Author = author;
 			EditEvent = editEvent;
@@ -32,9 +36,11 @@ namespace VocaDb.Model.Domain.Activityfeed {
 		/// </summary>
 		public abstract ArchivedObjectVersion ArchivedVersionBase { get; }
 
-		public virtual User Author {
+		public virtual User Author
+		{
 			get { return author; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				author = value;
 			}
@@ -53,11 +59,13 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 		public virtual int Id { get; set; }
 
-		public virtual bool IsDuplicate(ActivityEntry entry) {
+		public virtual bool IsDuplicate(ActivityEntry entry)
+		{
 			return (Author.Equals(entry.Author) && EntryBase.Equals(entry.EntryBase));
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("activity entry ({0}) for {1}", EditEvent, EntryBase);
 		}
 	}
@@ -65,7 +73,8 @@ namespace VocaDb.Model.Domain.Activityfeed {
 	/// <summary>
 	/// Common entry edit events
 	/// </summary>
-	public enum EntryEditEvent {
+	public enum EntryEditEvent
+	{
 
 		Created = 1,
 

@@ -1,13 +1,16 @@
 using System;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Albums {
+namespace VocaDb.Model.Domain.Albums
+{
 
-	public class AlbumReview : IAlbumLink, IEntryWithIntId {
+	public class AlbumReview : IAlbumLink, IEntryWithIntId
+	{
 
 		public AlbumReview() { }
 
-		public AlbumReview(Album album, User user, string title, string text, string languageCode) {
+		public AlbumReview(Album album, User user, string title, string text, string languageCode)
+		{
 			Album = album ?? throw new ArgumentNullException(nameof(album));
 			User = user ?? throw new ArgumentNullException(nameof(user));
 			Title = title ?? string.Empty;

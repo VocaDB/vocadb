@@ -4,8 +4,8 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Web.Controllers
 {
-    public class ActivityEntryController : ControllerBase
-    {
+	public class ActivityEntryController : ControllerBase
+	{
 
 		private new const int entriesPerPage = 50;
 
@@ -13,32 +13,35 @@ namespace VocaDb.Web.Controllers
 
 		private ActivityFeedService Service => service;
 
-	    public ActivityEntryController(ActivityFeedService service) {
+		public ActivityEntryController(ActivityFeedService service)
+		{
 			this.service = service;
 		}
 
-		public ActionResult FollowedArtistActivity() {
+		public ActionResult FollowedArtistActivity()
+		{
 
 			var result = Service.GetFollowedArtistActivity(entriesPerPage);
 			return View(result.Items);
 
 		}
 
-        //
-        // GET: /ActivityEntry/
+		//
+		// GET: /ActivityEntry/
 
-        public ActionResult Index(DateTime? before)
-        {
+		public ActionResult Index(DateTime? before)
+		{
 
 			ViewBag.Before = before;
 
 			return View("Index");
 
-        }
+		}
 
-    }
+	}
 
-	public class DetailedPageResult {
+	public class DetailedPageResult
+	{
 
 		public DateTime? LastEntryDate { get; set; }
 

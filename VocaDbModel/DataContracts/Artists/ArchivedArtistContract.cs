@@ -4,24 +4,29 @@ using VocaDb.Model.Domain.Artists;
 using System;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Model.DataContracts.Artists {
+namespace VocaDb.Model.DataContracts.Artists
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArchivedArtistContract {
+	public class ArchivedArtistContract
+	{
 
-		private static void DoIfExists(ArchivedArtistVersion version, ArtistEditableFields field, 
-			XmlCache<ArchivedArtistContract> xmlCache, Action<ArchivedArtistContract> func) {
+		private static void DoIfExists(ArchivedArtistVersion version, ArtistEditableFields field,
+			XmlCache<ArchivedArtistContract> xmlCache, Action<ArchivedArtistContract> func)
+		{
 
 			var versionWithField = version.GetLatestVersionWithField(field);
 
-			if (versionWithField != null && versionWithField.Data != null) {
+			if (versionWithField != null && versionWithField.Data != null)
+			{
 				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
 				func(data);
 			}
 
 		}
 
-		public static ArchivedArtistContract GetAllProperties(ArchivedArtistVersion version) {
+		public static ArchivedArtistContract GetAllProperties(ArchivedArtistVersion version)
+		{
 
 			var data = new ArchivedArtistContract();
 			var xmlCache = new XmlCache<ArchivedArtistContract>();
@@ -36,7 +41,8 @@ namespace VocaDb.Model.DataContracts.Artists {
 			data.ReleaseDate = thisVersion.ReleaseDate;
 			data.TranslatedName = thisVersion.TranslatedName;
 
-			DoIfExists(version, ArtistEditableFields.Description, xmlCache, v => {
+			DoIfExists(version, ArtistEditableFields.Description, xmlCache, v =>
+			{
 				data.Description = v.Description;
 				data.DescriptionEng = v.DescriptionEng;
 			});
@@ -48,10 +54,11 @@ namespace VocaDb.Model.DataContracts.Artists {
 
 		}
 
-		public ArchivedArtistContract() {}
+		public ArchivedArtistContract() { }
 
-		public ArchivedArtistContract(Artist artist, ArtistDiff diff) {
-			
+		public ArchivedArtistContract(Artist artist, ArtistDiff diff)
+		{
+
 			ParamIs.NotNull(() => artist);
 
 			ArtistType = artist.ArtistType;

@@ -5,24 +5,28 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.EntryValidators;
 using VocaDb.Tests.TestData;
 
-namespace VocaDb.Tests.Service.EntryValidators {
+namespace VocaDb.Tests.Service.EntryValidators
+{
 
 	/// <summary>
 	/// Tests for <see cref="SongValidator"/>.
 	/// </summary>
 	[TestClass]
-	public class SongValidatorTests {
+	public class SongValidatorTests
+	{
 
 		private Artist producer;
 		private Song song;
 		private Artist vocalist;
 
-		private void TestValidate(bool expectedResult, Song song) {
+		private void TestValidate(bool expectedResult, Song song)
+		{
 			Assert.AreEqual(expectedResult, new SongValidator().IsValid(song, 0));
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			vocalist = CreateEntry.Artist(ArtistType.Vocaloid, id: 1, name: "GUMI");
 			vocalist.ArtistType = ArtistType.Vocaloid;
@@ -36,7 +40,8 @@ namespace VocaDb.Tests.Service.EntryValidators {
 		}
 
 		[TestMethod]
-		public void MissingProducer() {
+		public void MissingProducer()
+		{
 
 			TestValidate(false, song);
 
@@ -46,7 +51,8 @@ namespace VocaDb.Tests.Service.EntryValidators {
 		/// Has a producer, but not in the DB
 		/// </summary>
 		[TestMethod]
-		public void MissingRealProducer() {
+		public void MissingRealProducer()
+		{
 
 			song.AddArtist("devilishP", false, ArtistRoles.Composer);
 
@@ -55,7 +61,8 @@ namespace VocaDb.Tests.Service.EntryValidators {
 		}
 
 		[TestMethod]
-		public void HasProducer() {
+		public void HasProducer()
+		{
 
 			song.AddArtist(producer);
 
@@ -64,7 +71,8 @@ namespace VocaDb.Tests.Service.EntryValidators {
 		}
 
 		[TestMethod]
-		public void MissingVocalist() {
+		public void MissingVocalist()
+		{
 
 			song.RemoveArtist(vocalist);
 
@@ -73,7 +81,8 @@ namespace VocaDb.Tests.Service.EntryValidators {
 		}
 
 		[TestMethod]
-		public void InstrumentalDoesNotNeedVocalist() {
+		public void InstrumentalDoesNotNeedVocalist()
+		{
 
 			song.AddArtist(producer);
 			song.RemoveArtist(vocalist);
@@ -85,8 +94,9 @@ namespace VocaDb.Tests.Service.EntryValidators {
 		}
 
 		[TestMethod]
-		public void DuplicateArtist() {
-	
+		public void DuplicateArtist()
+		{
+
 			song.AddArtist(producer);
 			song.AddArtist(producer);
 

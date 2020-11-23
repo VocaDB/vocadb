@@ -1,14 +1,16 @@
-﻿namespace VocaDb.Model.Domain {
+﻿namespace VocaDb.Model.Domain
+{
 
-	public enum EntryStatus {
+	public enum EntryStatus
+	{
 
-		Draft		= 0,
+		Draft = 0,
 
-		Finished	= 1,
+		Finished = 1,
 
-		Approved	= 2,
+		Approved = 2,
 
-		Locked		= 4
+		Locked = 4
 
 	}
 

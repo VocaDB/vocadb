@@ -1,6 +1,7 @@
 ﻿using System;
 
-namespace VocaDb.Model.Domain.Artists {
+namespace VocaDb.Model.Domain.Artists
+{
 
 	/// <summary>
 	/// Artist type (category).
@@ -9,7 +10,8 @@ namespace VocaDb.Model.Domain.Artists {
 	/// Do not persist the numeric values anywhere - they may change.
 	/// Names must match with <see cref="ArtistTypes"/>.
 	/// </remarks>
-	public enum ArtistType {
+	public enum ArtistType
+	{
 
 		Unknown,
 
@@ -63,8 +65,9 @@ namespace VocaDb.Model.Domain.Artists {
 	/// Prefer saving the individual values from <see cref="ArtistType"/>.
 	/// </summary>
 	[Flags]
-	public enum ArtistTypes {
-	
+	public enum ArtistTypes
+	{
+
 		Unknown = 0,
 
 		Circle = 1,

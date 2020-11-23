@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 
-namespace VocaDb.Web.Models.Shared.Partials.Shared {
+namespace VocaDb.Web.Models.Shared.Partials.Shared
+{
 
-	public class EventSeriesThumbsViewModel {
+	public class EventSeriesThumbsViewModel
+	{
 
-		public EventSeriesThumbsViewModel(IEnumerable<ReleaseEventSeriesContract> events) {
+		public EventSeriesThumbsViewModel(IEnumerable<ReleaseEventSeriesContract> events)
+		{
 			Events = events;
 		}
 

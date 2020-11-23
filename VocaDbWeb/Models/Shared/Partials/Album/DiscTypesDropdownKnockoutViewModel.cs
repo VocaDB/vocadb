@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Album {
+namespace VocaDb.Web.Models.Shared.Partials.Album
+{
 
-	public class DiscTypesDropdownKnockoutViewModel {
+	public class DiscTypesDropdownKnockoutViewModel
+	{
 
-		public DiscTypesDropdownKnockoutViewModel(string binding) {
+		public DiscTypesDropdownKnockoutViewModel(string binding)
+		{
 			Binding = binding;
 		}
 

@@ -2,11 +2,14 @@
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Paging;
 
-namespace VocaDb.Model.Service.Search.User {
+namespace VocaDb.Model.Service.Search.User
+{
 
-	public class AlbumCollectionQueryParams {
+	public class AlbumCollectionQueryParams
+	{
 
-		public AlbumCollectionQueryParams(int userId, PagingProperties paging) {
+		public AlbumCollectionQueryParams(int userId, PagingProperties paging)
+		{
 
 			ParamIs.NotNull(() => paging);
 

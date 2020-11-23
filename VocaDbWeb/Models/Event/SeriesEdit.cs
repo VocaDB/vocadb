@@ -10,16 +10,20 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Web.Code;
 
-namespace VocaDb.Web.Models.Event {
+namespace VocaDb.Web.Models.Event
+{
 
 	[PropertyModelBinder]
-	public class SeriesEdit {
+	public class SeriesEdit
+	{
 
-		public SeriesEdit() { 
+		public SeriesEdit()
+		{
 
 		}
 
-		public SeriesEdit(ReleaseEventSeriesForEditContract contract, IUserPermissionContext userContext) {
+		public SeriesEdit(ReleaseEventSeriesForEditContract contract, IUserPermissionContext userContext)
+		{
 
 			ParamIs.NotNull(() => contract);
 
@@ -61,22 +65,26 @@ namespace VocaDb.Web.Models.Event {
 		[FromJson]
 		public WebLinkContract[] WebLinks { get; set; }
 
-		public void CopyNonEditableProperties(ReleaseEventSeriesForEditContract contract, IUserPermissionContext userContext) {
+		public void CopyNonEditableProperties(ReleaseEventSeriesForEditContract contract, IUserPermissionContext userContext)
+		{
 
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(userContext).ToArray();
 
-			if (contract != null) {
+			if (contract != null)
+			{
 				Deleted = contract.Deleted;
 			}
 
 		}
 
-		public ReleaseEventSeriesForEditContract ToContract() {
+		public ReleaseEventSeriesForEditContract ToContract()
+		{
 
-			return new ReleaseEventSeriesForEditContract { 
+			return new ReleaseEventSeriesForEditContract
+			{
 				Category = Category,
 				DefaultNameLanguage = DefaultNameLanguage,
-				Description = this.Description ?? string.Empty, 
+				Description = this.Description ?? string.Empty,
 				Id = this.Id,
 				Name = this.Name,
 				Names = this.Names.ToArray(),

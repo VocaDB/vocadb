@@ -1,9 +1,11 @@
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Service.Search.Venues {
+namespace VocaDb.Model.Service.Search.Venues
+{
 
-	public class VenueQueryParams {
+	public class VenueQueryParams
+	{
 
 		public GeoPointQueryParams Coordinates { get; set; } = GeoPointQueryParams.Empty;
 

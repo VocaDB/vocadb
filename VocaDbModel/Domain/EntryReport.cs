@@ -4,23 +4,27 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Service.Translations;
 
-namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain
+{
 
-	public abstract class EntryReport : IEntryWithIntId {
-		
+	public abstract class EntryReport : IEntryWithIntId
+	{
+
 		public const int MaxNotesLength = 400;
 
 		private string hostname;
 		private string notes;
 
-		protected EntryReport() {
+		protected EntryReport()
+		{
 			Created = DateTime.UtcNow;
 			Notes = string.Empty;
 			Status = ReportStatus.Open;
 		}
 
 		protected EntryReport(User user, string hostname, string notes, int? versionNumber)
-			: this() {
+			: this()
+		{
 
 			User = user;
 			Hostname = hostname;
@@ -42,7 +46,8 @@ namespace VocaDb.Model.Domain {
 		/// <summary>
 		/// Hostname/IP address of the user who created the report. This can be null or empty.
 		/// </summary>
-		public virtual string Hostname {
+		public virtual string Hostname
+		{
 			get => hostname;
 			set => hostname = value;
 		}
@@ -52,9 +57,11 @@ namespace VocaDb.Model.Domain {
 		/// <summary>
 		/// Report notes. Cannot be null, but can be empty.
 		/// </summary>
-		public virtual string Notes {
+		public virtual string Notes
+		{
 			get => notes;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				notes = value;
 			}
@@ -77,7 +84,8 @@ namespace VocaDb.Model.Domain {
 
 	}
 
-	public enum ReportStatus {
+	public enum ReportStatus
+	{
 		Open,
 		Closed
 	}

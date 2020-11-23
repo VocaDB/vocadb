@@ -2,39 +2,44 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace VocaDb.Model.Domain.Users {
+namespace VocaDb.Model.Domain.Users
+{
 
-	public enum PurchaseStatus {
+	public enum PurchaseStatus
+	{
 
-		Nothing			= 0,
+		Nothing = 0,
 
-		Wishlisted		= 1,
+		Wishlisted = 1,
 
-		Ordered			= 2,
+		Ordered = 2,
 
-		Owned			= 4
+		Owned = 4
 
 	}
 
 	[Flags]
-	public enum PurchaseStatuses {
-		
-		Nothing		= PurchaseStatus.Nothing,
+	public enum PurchaseStatuses
+	{
 
-		Wishlisted	= PurchaseStatus.Wishlisted,
+		Nothing = PurchaseStatus.Nothing,
 
-		Ordered		= PurchaseStatus.Ordered,
+		Wishlisted = PurchaseStatus.Wishlisted,
 
-		Owned		= PurchaseStatus.Owned,
+		Ordered = PurchaseStatus.Ordered,
 
-		All			= Wishlisted | Ordered | Owned
+		Owned = PurchaseStatus.Owned,
+
+		All = Wishlisted | Ordered | Owned
 
 	}
 
-	public static class PurchaseStatusesExtender {
+	public static class PurchaseStatusesExtender
+	{
 
-		public static IEnumerable<PurchaseStatus> ToIndividualSelections(this PurchaseStatuses selections) {
-			
+		public static IEnumerable<PurchaseStatus> ToIndividualSelections(this PurchaseStatuses selections)
+		{
+
 			if (selections == PurchaseStatuses.Nothing)
 				return new[] { PurchaseStatus.Nothing };
 

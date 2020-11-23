@@ -2,9 +2,11 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search.Artists;
 
-namespace VocaDb.Model.Service.Search.User {
+namespace VocaDb.Model.Service.Search.User
+{
 
-	public class FollowedArtistQueryParams {
+	public class FollowedArtistQueryParams
+	{
 
 		public ArtistType ArtistType { get; set; }
 

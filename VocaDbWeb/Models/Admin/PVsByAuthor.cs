@@ -3,13 +3,16 @@ using System.Linq;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Songs;
 
-namespace VocaDb.Web.Models.Admin {
+namespace VocaDb.Web.Models.Admin
+{
 
-	public class PVsByAuthor {
+	public class PVsByAuthor
+	{
 
 		public PVsByAuthor() { }
 
-		public PVsByAuthor(string author, IEnumerable<PVForSongContract> pvs) {
+		public PVsByAuthor(string author, IEnumerable<PVForSongContract> pvs)
+		{
 
 			ParamIs.NotNull(() => author);
 			ParamIs.NotNull(() => pvs);

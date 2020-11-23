@@ -1,9 +1,11 @@
-﻿namespace VocaDb.Model.Domain.Globalization {
+﻿namespace VocaDb.Model.Domain.Globalization
+{
 
 	/// <summary>
 	/// Detects language from a string.
 	/// </summary>
-	public interface ILanguageDetector {
+	public interface ILanguageDetector
+	{
 
 		/// <summary>
 		/// Detects language from a string.

@@ -2,15 +2,18 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users {
+namespace VocaDb.Model.DataContracts.Users
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class UpdateUserSettingsContract : UserContract {
+	public class UpdateUserSettingsContract : UserContract
+	{
 
-		public UpdateUserSettingsContract() {}
+		public UpdateUserSettingsContract() { }
 
 		public UpdateUserSettingsContract(User user)
-			: base(user, true) {
+			: base(user, true)
+		{
 
 			AboutMe = user.Options.AboutMe;
 			Location = user.Options.Location;

@@ -1,6 +1,7 @@
 ﻿using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Database.Repositories {
+namespace VocaDb.Model.Database.Repositories
+{
 
 	/// <summary>
 	/// Repository for <see cref="UserMessage"/>.

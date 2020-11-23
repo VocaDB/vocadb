@@ -1,8 +1,10 @@
 ﻿using VocaDb.Model.Service.BrandableStrings.Collections;
 
-namespace VocaDb.Model.Service.BrandableStrings {
+namespace VocaDb.Model.Service.BrandableStrings
+{
 
-	public interface IBrandedStringsAssemblyHeader {
+	public interface IBrandedStringsAssemblyHeader
+	{
 
 		AlbumStrings Album { get; }
 		ArtistStrings Artist { get; }

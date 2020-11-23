@@ -2,17 +2,21 @@
 using VocaDb.Model.Domain.MikuDb;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.DataContracts.MikuDb {
+namespace VocaDb.Model.DataContracts.MikuDb
+{
 
-	public class MikuDbAlbumContract {
+	public class MikuDbAlbumContract
+	{
 
-		public MikuDbAlbumContract() {
+		public MikuDbAlbumContract()
+		{
 			SourceUrl = Title = string.Empty;
 		}
 
 		public MikuDbAlbumContract(MikuDbAlbum album)
-			: this() {
-			
+			: this()
+		{
+
 			ParamIs.NotNull(() => album);
 
 			Created = album.Created;
@@ -27,7 +31,8 @@ namespace VocaDb.Model.DataContracts.MikuDb {
 		}
 
 		public MikuDbAlbumContract(ImportedAlbumDataContract data)
-			: this() {
+			: this()
+		{
 
 			ParamIs.NotNull(() => data);
 

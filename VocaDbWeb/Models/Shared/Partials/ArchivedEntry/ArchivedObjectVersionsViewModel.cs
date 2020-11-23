@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using Antlr.Runtime.Misc;
 
-namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry {
+namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+{
 
-	public class ArchivedObjectVersionsViewModel {
+	public class ArchivedObjectVersionsViewModel
+	{
 
-		public ArchivedObjectVersionsViewModel(IEnumerable<ArchivedObjectVersion> archivedVersions, Func<int, string> linkFunc = null) {
+		public ArchivedObjectVersionsViewModel(IEnumerable<ArchivedObjectVersion> archivedVersions, Func<int, string> linkFunc = null)
+		{
 			ArchivedVersions = archivedVersions;
 			LinkFunc = linkFunc;
 		}

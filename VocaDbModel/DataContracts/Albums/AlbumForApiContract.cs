@@ -12,10 +12,12 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 
-namespace VocaDb.Model.DataContracts.Albums {
+namespace VocaDb.Model.DataContracts.Albums
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class AlbumForApiContract : IEntryBase {
+	public class AlbumForApiContract : IEntryBase
+	{
 
 		EntryType IEntryBase.EntryType => EntryType.Album;
 
@@ -23,18 +25,20 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		public AlbumForApiContract(
 			Album album,
-			ContentLanguagePreference languagePreference, 
+			ContentLanguagePreference languagePreference,
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			AlbumOptionalFields fields,
-			SongOptionalFields songFields = SongOptionalFields.None) : 
-			this(album, null, languagePreference, thumbPersister, fields, songFields) {}
+			SongOptionalFields songFields = SongOptionalFields.None) :
+			this(album, null, languagePreference, thumbPersister, fields, songFields)
+		{ }
 
 		public AlbumForApiContract(
-			Album album, AlbumMergeRecord mergeRecord, 
-			ContentLanguagePreference languagePreference, 
+			Album album, AlbumMergeRecord mergeRecord,
+			ContentLanguagePreference languagePreference,
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			AlbumOptionalFields fields,
-			SongOptionalFields songFields) {
+			SongOptionalFields songFields)
+		{
 
 			ArtistString = album.ArtistString[languagePreference];
 			CatalogNumber = album.OriginalRelease != null ? album.OriginalRelease.CatNum : null;
@@ -50,51 +54,63 @@ namespace VocaDb.Model.DataContracts.Albums {
 			Status = album.Status;
 			Version = album.Version;
 
-			if (fields.HasFlag(AlbumOptionalFields.AdditionalNames)) {
+			if (fields.HasFlag(AlbumOptionalFields.AdditionalNames))
+			{
 				AdditionalNames = album.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 
-			if (fields.HasFlag(AlbumOptionalFields.Artists)) {
+			if (fields.HasFlag(AlbumOptionalFields.Artists))
+			{
 				Artists = album.Artists.Select(a => new ArtistForAlbumForApiContract(a, languagePreference)).ToArray();
 			}
 
-			if (fields.HasFlag(AlbumOptionalFields.Description)) {
+			if (fields.HasFlag(AlbumOptionalFields.Description))
+			{
 				Description = album.Description[languagePreference];
 			}
 
-			if (fields.HasFlag(AlbumOptionalFields.Discs)) {
+			if (fields.HasFlag(AlbumOptionalFields.Discs))
+			{
 				Discs = album.Discs.Select(d => new AlbumDiscPropertiesContract(d)).ToArray();
 			}
 
-			if (fields.HasFlag(AlbumOptionalFields.Identifiers)) {
+			if (fields.HasFlag(AlbumOptionalFields.Identifiers))
+			{
 				Identifiers = album.Identifiers.Select(i => new AlbumIdentifierContract(i)).ToArray();
 			}
 
-			if (thumbPersister != null && fields.HasFlag(AlbumOptionalFields.MainPicture) && album.Thumb != null) {				
+			if (thumbPersister != null && fields.HasFlag(AlbumOptionalFields.MainPicture) && album.Thumb != null)
+			{
 				MainPicture = new EntryThumbForApiContract(album.Thumb, thumbPersister);
 			}
 
-			if (fields.HasFlag(AlbumOptionalFields.Names)) {
+			if (fields.HasFlag(AlbumOptionalFields.Names))
+			{
 				Names = album.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 			}
 
-			if (fields.HasFlag(AlbumOptionalFields.PVs)) {
+			if (fields.HasFlag(AlbumOptionalFields.PVs))
+			{
 				PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 			}
 
-			if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent)) {
+			if (fields.HasFlag(AlbumOptionalFields.ReleaseEvent))
+			{
 				ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, thumbPersister) : null;
 			}
 
-			if (fields.HasFlag(AlbumOptionalFields.Tags)) {
+			if (fields.HasFlag(AlbumOptionalFields.Tags))
+			{
 				Tags = album.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 			}
 
-			if (fields.HasFlag(AlbumOptionalFields.Tracks)) {
+			if (fields.HasFlag(AlbumOptionalFields.Tracks))
+			{
 				Tracks = album.Songs.Select(s => new SongInAlbumForApiContract(s, languagePreference, songFields)).ToArray();
 			}
 
-			if (fields.HasFlag(AlbumOptionalFields.WebLinks)) {
+			if (fields.HasFlag(AlbumOptionalFields.WebLinks))
+			{
 				WebLinks = album.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
 			}
 
@@ -107,7 +123,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		/// Comma-separated list of all other names that aren't the display name.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public string AdditionalNames { get; set;}
+		public string AdditionalNames { get; set; }
 
 		/// <summary>
 		/// List of artists for this song. Optional field.
@@ -212,7 +228,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		/// </summary>
 		[DataMember]
 		public OptionalDateTimeContract ReleaseDate { get; set; }
-		
+
 		/// <summary>
 		/// Event where this album was first distributed.
 		/// </summary>
@@ -246,7 +262,8 @@ namespace VocaDb.Model.DataContracts.Albums {
 	}
 
 	[Flags]
-	public enum AlbumOptionalFields {
+	public enum AlbumOptionalFields
+	{
 
 		None = 0,
 		AdditionalNames = 1,

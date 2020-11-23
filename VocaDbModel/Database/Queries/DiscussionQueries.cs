@@ -14,30 +14,36 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Database.Queries {
+namespace VocaDb.Model.Database.Queries
+{
 
-	public class DiscussionQueries : QueriesBase<IDiscussionFolderRepository, DiscussionFolder> {
+	public class DiscussionQueries : QueriesBase<IDiscussionFolderRepository, DiscussionFolder>
+	{
 
 		private const int defaultMax = 10;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IUserIconFactory userIconFactory;
 
-		private ICommentQueries Comments<T>(IDatabaseContext<T> ctx) {
+		private ICommentQueries Comments<T>(IDatabaseContext<T> ctx)
+		{
 			return new CommentQueries<DiscussionComment, DiscussionTopic>(ctx.OfType<DiscussionComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
 		public DiscussionQueries(IDiscussionFolderRepository repository, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory,
-			IEntryLinkFactory entryLinkFactory) 
-			: base(repository, permissionContext) {
-			
+			IEntryLinkFactory entryLinkFactory)
+			: base(repository, permissionContext)
+		{
+
 			this.userIconFactory = userIconFactory;
 			this.entryLinkFactory = entryLinkFactory;
 
 		}
 
-		public CommentForApiContract CreateComment(int topicId, CommentForApiContract contract) {
-			
-			return repository.HandleTransaction(ctx => {
+		public CommentForApiContract CreateComment(int topicId, CommentForApiContract contract)
+		{
+
+			return repository.HandleTransaction(ctx =>
+			{
 
 				var topic = ctx.Load<DiscussionTopic>(topicId);
 
@@ -50,14 +56,17 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public DiscussionFolderContract CreateFolder(DiscussionFolderContract contract) {
-			
+		public DiscussionFolderContract CreateFolder(DiscussionFolderContract contract)
+		{
+
 			// TODO
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
-			return repository.HandleTransaction(ctx => {
-				
-				var folder = new DiscussionFolder {
+			return repository.HandleTransaction(ctx =>
+			{
+
+				var folder = new DiscussionFolder
+				{
 					Name = contract.Name
 				};
 
@@ -71,16 +80,19 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public DiscussionTopicContract CreateTopic(int folderId, DiscussionTopicContract contract) {
-			
+		public DiscussionTopicContract CreateTopic(int folderId, DiscussionTopicContract contract)
+		{
+
 			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
 
-			if (contract.Author == null || contract.Author.Id != PermissionContext.LoggedUserId) {
+			if (contract.Author == null || contract.Author.Id != PermissionContext.LoggedUserId)
+			{
 				throw new NotAllowedException("Can only post as self");
 			}
 
-			return repository.HandleTransaction(ctx => {
-				
+			return repository.HandleTransaction(ctx =>
+			{
+
 				var folder = ctx.Load(folderId);
 				var agent = ctx.OfType<User>().CreateAgentLoginData(PermissionContext, ctx.OfType<User>().Load(contract.Author.Id));
 
@@ -97,8 +109,9 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void DeleteComment(int commentId) {
-			
+		public void DeleteComment(int commentId)
+		{
+
 			repository.HandleTransaction(ctx => Comments(ctx).Delete(commentId));
 
 		}
@@ -109,9 +122,11 @@ namespace VocaDb.Model.Database.Queries {
 		/// User can delete their own topics, moderators can delete all topics.
 		/// </summary>
 		/// <param name="topicId">Id of the topic to be deleted.</param>
-		public void DeleteTopic(int topicId) {
-			
-			repository.HandleTransaction(ctx => {
+		public void DeleteTopic(int topicId)
+		{
+
+			repository.HandleTransaction(ctx =>
+			{
 
 				var topic = ctx.OfType<DiscussionTopic>().Load(topicId);
 				var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
@@ -128,7 +143,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private void MoveTopic(IDatabaseContext ctx, DiscussionTopic topic, int targetFolderId) {
+		private void MoveTopic(IDatabaseContext ctx, DiscussionTopic topic, int targetFolderId)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 
@@ -140,23 +156,27 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void UpdateComment(int commentId, IComment contract) {
-			
+		public void UpdateComment(int commentId, IComment contract)
+		{
+
 			repository.HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
 
 		}
 
-		public void UpdateTopic(int topicId, DiscussionTopicContract contract) {
-			
+		public void UpdateTopic(int topicId, DiscussionTopicContract contract)
+		{
+
 			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
 
-			repository.HandleTransaction(ctx => {
-				
+			repository.HandleTransaction(ctx =>
+			{
+
 				var topic = ctx.OfType<DiscussionTopic>().Load(topicId);
 
 				PermissionContext.VerifyAccess(topic, EntryPermissionManager.CanEdit);
 
-				if (topic.Folder.Id != contract.FolderId && PermissionContext.HasPermission(PermissionToken.DeleteComments)) {
+				if (topic.Folder.Id != contract.FolderId && PermissionContext.HasPermission(PermissionToken.DeleteComments))
+				{
 					MoveTopic(ctx, topic, contract.FolderId);
 				}
 
@@ -172,9 +192,11 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public IEnumerable<DiscussionFolderContract> GetFolders(
-			DiscussionFolderOptionalFields fields = DiscussionFolderOptionalFields.None) {
+			DiscussionFolderOptionalFields fields = DiscussionFolderOptionalFields.None)
+		{
 
-			return HandleQuery(ctx => {
+			return HandleQuery(ctx =>
+			{
 
 				return ctx.Query()
 					.Where(f => !f.Deleted)
@@ -192,9 +214,11 @@ namespace VocaDb.Model.Database.Queries {
 			int? folderId = null,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
  			DiscussionTopicSortRule sort = DiscussionTopicSortRule.DateCreated,
-			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) {
+			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None)
+		{
 
-			return HandleQuery(ctx => {
+			return HandleQuery(ctx =>
+			{
 
 				var query = ctx.OfType<DiscussionTopic>()
 					.Query()
@@ -218,9 +242,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		[Obsolete]
 		public IEnumerable<DiscussionTopicContract> GetTopicsForFolder(int folderId,
-			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) {
+			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None)
+		{
 
-			return HandleQuery(ctx => {
+			return HandleQuery(ctx =>
+			{
 
 				var folder = ctx.Load(folderId);
 
@@ -234,9 +260,11 @@ namespace VocaDb.Model.Database.Queries {
 		}
 
 		public DiscussionTopicContract GetTopic(int topicId,
-			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) {
+			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None)
+		{
 
-			return HandleQuery(ctx => {
+			return HandleQuery(ctx =>
+			{
 
 				return new DiscussionTopicContract(ctx.OfType<DiscussionTopic>().Load(topicId), userIconFactory, fields);
 

@@ -2,11 +2,14 @@ using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.Mapping.Tags {
+namespace VocaDb.Model.Mapping.Tags
+{
 
-	public class TagMap : ClassMap<Tag> {
+	public class TagMap : ClassMap<Tag>
+	{
 
-		public TagMap() {
+		public TagMap()
+		{
 
 			Cache.NonStrictReadWrite();
 			Id(m => m.Id);
@@ -37,15 +40,18 @@ namespace VocaDb.Model.Mapping.Tags {
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Tag]").Inverse().Cascade.All().OrderBy("Created DESC"));
 
-			Component(m => m.Description, c => {
+			Component(m => m.Description, c =>
+			{
 				c.Map(m => m.Original).Column("Description").Not.Nullable().Length(int.MaxValue);
 				c.Map(m => m.English).Column("DescriptionEng").Not.Nullable().Length(int.MaxValue);
 			});
 
-			Component(m => m.Names, c => {
+			Component(m => m.Names, c =>
+			{
 				c.Map(m => m.AdditionalNamesString).Not.Nullable().Length(1024);
 				c.HasMany(m => m.Names).Table("TagNames").KeyColumn("[Tag]").Inverse().Cascade.All().Cache.ReadWrite();
-				c.Component(m => m.SortNames, c2 => {
+				c.Component(m => m.SortNames, c2 =>
+				{
 					c2.Map(m => m.DefaultLanguage, "DefaultNameLanguage");
 					c2.Map(m => m.Japanese, "JapaneseName");
 					c2.Map(m => m.English, "EnglishName");
@@ -53,12 +59,14 @@ namespace VocaDb.Model.Mapping.Tags {
 				});
 			});
 
-			Component(m => m.Thumb, c => {
+			Component(m => m.Thumb, c =>
+			{
 				c.Map(m => m.Mime).Column("ThumbMime").Length(30);
 				c.ParentReference(m => m.Entry);
 			});
 
-			Component(m => m.WebLinks, c => {
+			Component(m => m.WebLinks, c =>
+			{
 				c.HasMany(m => m.Links).Table("TagWebLinks").KeyColumn("[Tag]").Inverse().Cascade.All().Cache.ReadWrite();
 			});
 
@@ -66,9 +74,11 @@ namespace VocaDb.Model.Mapping.Tags {
 
 	}
 
-	public class ArchivedTagVersionMap : ClassMap<ArchivedTagVersion> {
+	public class ArchivedTagVersionMap : ClassMap<ArchivedTagVersion>
+	{
 
-		public ArchivedTagVersionMap() {
+		public ArchivedTagVersionMap()
+		{
 
 			Id(m => m.Id);
 
@@ -83,7 +93,8 @@ namespace VocaDb.Model.Mapping.Tags {
 			References(m => m.Author).Not.Nullable();
 			References(m => m.Tag).Not.Nullable();
 
-			Component(m => m.Diff, c => {
+			Component(m => m.Diff, c =>
+			{
 				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
 			});
 
@@ -91,9 +102,11 @@ namespace VocaDb.Model.Mapping.Tags {
 
 	}
 
-	public class TagNameMap : ClassMap<TagName> {
+	public class TagNameMap : ClassMap<TagName>
+	{
 
-		public TagNameMap() {
+		public TagNameMap()
+		{
 
 			Id(m => m.Id);
 
@@ -106,7 +119,8 @@ namespace VocaDb.Model.Mapping.Tags {
 
 	}
 
-	public class TagWebLinkMap : WebLinkMap<TagWebLink, Tag> {
+	public class TagWebLinkMap : WebLinkMap<TagWebLink, Tag>
+	{
 
 		public TagWebLinkMap() : base(false) { }
 

@@ -4,24 +4,29 @@ using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Model.DataContracts.Tags {
+namespace VocaDb.Model.DataContracts.Tags
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArchivedTagContract {
+	public class ArchivedTagContract
+	{
 
 		private static void DoIfExists(ArchivedTagVersion version, TagEditableFields field,
-			XmlCache<ArchivedTagContract> xmlCache, Action<ArchivedTagContract> func) {
+			XmlCache<ArchivedTagContract> xmlCache, Action<ArchivedTagContract> func)
+		{
 
 			var versionWithField = version.GetLatestVersionWithField(field);
 
-			if (versionWithField?.Data != null) {
+			if (versionWithField?.Data != null)
+			{
 				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
 				func(data);
 			}
 
 		}
 
-		public static ArchivedTagContract GetAllProperties(ArchivedTagVersion version) {
+		public static ArchivedTagContract GetAllProperties(ArchivedTagVersion version)
+		{
 
 			var data = new ArchivedTagContract();
 			var xmlCache = new XmlCache<ArchivedTagContract>();
@@ -33,7 +38,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 			data.Targets = thisVersion.Targets;
 			data.TranslatedName = thisVersion.TranslatedName;
 
-			DoIfExists(version, TagEditableFields.Description, xmlCache, v => {
+			DoIfExists(version, TagEditableFields.Description, xmlCache, v =>
+			{
 				data.Description = v.Description;
 				data.DescriptionEng = v.DescriptionEng;
 			});
@@ -46,11 +52,13 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		}
 
-		public ArchivedTagContract() {
+		public ArchivedTagContract()
+		{
 			Targets = TagTargetTypes.All;
 		}
 
-		public ArchivedTagContract(Tag tag, TagDiff diff) : this() {
+		public ArchivedTagContract(Tag tag, TagDiff diff) : this()
+		{
 
 			ParamIs.NotNull(() => tag);
 

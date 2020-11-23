@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Shared {
+namespace VocaDb.Web.Models.Shared.Partials.Shared
+{
 
-	public class ShowMoreViewModel {
+	public class ShowMoreViewModel
+	{
 
-		public ShowMoreViewModel(string js = null, string href = null) {
+		public ShowMoreViewModel(string js = null, string href = null)
+		{
 			JS = js;
 			Href = href;
 		}

@@ -5,12 +5,15 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Images;
 
-namespace VocaDb.Model.DataContracts.UseCases {
+namespace VocaDb.Model.DataContracts.UseCases
+{
 
-	public class EntryForPictureDisplayContract {
+	public class EntryForPictureDisplayContract
+	{
 
-		public static EntryForPictureDisplayContract Create(IEntryWithNames entry, string mime, byte[] bytes, ContentLanguagePreference languagePreference) {
-			
+		public static EntryForPictureDisplayContract Create(IEntryWithNames entry, string mime, byte[] bytes, ContentLanguagePreference languagePreference)
+		{
+
 			var name = entry.Names.SortNames[languagePreference];
 			var pic = (bytes != null ? new PictureContract(bytes, mime) : null);
 
@@ -18,7 +21,8 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		}
 
-		public static EntryForPictureDisplayContract Create(Album album, ContentLanguagePreference languagePreference) {
+		public static EntryForPictureDisplayContract Create(Album album, ContentLanguagePreference languagePreference)
+		{
 
 			ParamIs.NotNull(() => album);
 
@@ -29,8 +33,9 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		}
 
-		public static EntryForPictureDisplayContract Create(ArchivedAlbumVersion archivedVersion, 
-			ContentLanguagePreference languagePreference) {
+		public static EntryForPictureDisplayContract Create(ArchivedAlbumVersion archivedVersion,
+			ContentLanguagePreference languagePreference)
+		{
 
 			ParamIs.NotNull(() => archivedVersion);
 
@@ -46,7 +51,8 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		}
 
-		public static EntryForPictureDisplayContract Create(Artist artist, ContentLanguagePreference languagePreference) {
+		public static EntryForPictureDisplayContract Create(Artist artist, ContentLanguagePreference languagePreference)
+		{
 
 			ParamIs.NotNull(() => artist);
 
@@ -57,8 +63,9 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		}
 
-		public static EntryForPictureDisplayContract Create(ArchivedArtistVersion archivedVersion, 
-			ContentLanguagePreference languagePreference) {
+		public static EntryForPictureDisplayContract Create(ArchivedArtistVersion archivedVersion,
+			ContentLanguagePreference languagePreference)
+		{
 
 			ParamIs.NotNull(() => archivedVersion);
 
@@ -73,7 +80,8 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		}
 
-		public EntryForPictureDisplayContract(EntryType entryType, int entryId, string name, int version, PictureContract pictureContract) {
+		public EntryForPictureDisplayContract(EntryType entryType, int entryId, string name, int version, PictureContract pictureContract)
+		{
 
 			EntryType = entryType;
 			EntryId = entryId;

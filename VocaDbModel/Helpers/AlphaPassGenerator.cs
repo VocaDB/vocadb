@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Linq;
 
-namespace VocaDb.Model.Helpers {
+namespace VocaDb.Model.Helpers
+{
 
-	public class AlphaPassGenerator {
+	public class AlphaPassGenerator
+	{
 
 		private readonly char[] allowedChars;
 		private readonly Random random;
 
-		private char GenerateRandomChar() {
+		private char GenerateRandomChar()
+		{
 
 			return allowedChars[random.Next(allowedChars.Length)];
 
 		}
 
-		public AlphaPassGenerator(bool ucChar, bool lcChar, bool digits) {
+		public AlphaPassGenerator(bool ucChar, bool lcChar, bool digits)
+		{
 
 			this.random = new Random();
 
@@ -26,7 +30,8 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public string Generate(int length) {
+		public string Generate(int length)
+		{
 
 			if (length <= 0)
 				return string.Empty;

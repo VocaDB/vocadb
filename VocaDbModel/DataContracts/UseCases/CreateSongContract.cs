@@ -1,9 +1,11 @@
 ﻿using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.UseCases {
+namespace VocaDb.Model.DataContracts.UseCases
+{
 
-	public class CreateSongContract {
+	public class CreateSongContract
+	{
 
 		public ArtistForSongContract[] Artists { get; set; }
 

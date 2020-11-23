@@ -1,11 +1,14 @@
 ﻿using VocaDb.Model.Domain.Users;
 using FluentNHibernate.Mapping;
 
-namespace VocaDb.Model.Mapping.Users {
+namespace VocaDb.Model.Mapping.Users
+{
 
-	public class UserMessageMap : ClassMap<UserMessage> {
+	public class UserMessageMap : ClassMap<UserMessage>
+	{
 
-		public UserMessageMap() {
+		public UserMessageMap()
+		{
 
 			Id(m => m.Id);
 

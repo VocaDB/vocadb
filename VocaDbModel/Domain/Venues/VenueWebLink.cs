@@ -1,8 +1,10 @@
 using VocaDb.Model.Domain.ExtLinks;
 
-namespace VocaDb.Model.Domain.Venues {
+namespace VocaDb.Model.Domain.Venues
+{
 
-	public class VenueWebLink : GenericWebLink<Venue> {
+	public class VenueWebLink : GenericWebLink<Venue>
+	{
 
 		public VenueWebLink() { }
 

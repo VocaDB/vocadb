@@ -1,22 +1,27 @@
 
 using System.Linq;
 
-namespace VocaDb.Model.Service.Search {
+namespace VocaDb.Model.Service.Search
+{
 
 	/// <summary>
 	/// Collection of integer entry IDs, with various helper methods.
 	/// </summary>
-	public readonly struct EntryIdsCollection {
+	public readonly struct EntryIdsCollection
+	{
 
-		public static implicit operator EntryIdsCollection(int[] ids) {
+		public static implicit operator EntryIdsCollection(int[] ids)
+		{
 			return new EntryIdsCollection(ids);
 		}
 
-		public static EntryIdsCollection CreateWithFallback(int[] ids, int fallbackId) {
-			return new EntryIdsCollection(ids != null && ids.Any() ? ids : new [] { fallbackId });
+		public static EntryIdsCollection CreateWithFallback(int[] ids, int fallbackId)
+		{
+			return new EntryIdsCollection(ids != null && ids.Any() ? ids : new[] { fallbackId });
 		}
 
-		public EntryIdsCollection(int[] ids) : this() {
+		public EntryIdsCollection(int[] ids) : this()
+		{
 			Ids = ids;
 		}
 

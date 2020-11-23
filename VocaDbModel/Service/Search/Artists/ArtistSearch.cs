@@ -8,20 +8,23 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Service.Search.Artists {
+namespace VocaDb.Model.Service.Search.Artists
+{
 
-	public class ArtistSearch {
+	public class ArtistSearch
+	{
 
 		private readonly IEntryUrlParser entryUrlParser;
-		private readonly IDatabaseContext<Artist> context; 
+		private readonly IDatabaseContext<Artist> context;
 
 		private ContentLanguagePreference LanguagePreference { get; }
 
 		private IQueryable<Artist> CreateQuery(
-			ArtistQueryParams queryParams, 
+			ArtistQueryParams queryParams,
 			ParsedArtistQuery parsedQuery,
-			NameMatchMode? nameMatchMode = null) {
-			
+			NameMatchMode? nameMatchMode = null)
+		{
+
 			var textQuery = (parsedQuery.HasNameQuery ? queryParams.Common.TextQuery.OverrideMatchMode(nameMatchMode) : ArtistSearchTextQuery.Empty);
 
 			var query = context.Query()
@@ -43,21 +46,23 @@ namespace VocaDb.Model.Service.Search.Artists {
 
 		private ParsedArtistQuery FindInternalUrl(string trimmed, string trimmedLc)
 		{
-			if (trimmedLc.StartsWith("/ar/") || trimmedLc.StartsWith("http")) {
+			if (trimmedLc.StartsWith("/ar/") || trimmedLc.StartsWith("http"))
+			{
 
 				var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
 
 				if (entryId.EntryType == EntryType.Artist)
 					return new ParsedArtistQuery { Id = entryId.Id };
-					
+
 			}
 			return null;
 		}
 
 		private ParsedArtistQuery FindExternalUrl(string trimmed, string trimmedLc)
 		{
-			if (trimmedLc.StartsWith("http") || trimmedLc.StartsWith("mylist/") || trimmedLc.StartsWith("user/")) {
-					
+			if (trimmedLc.StartsWith("http") || trimmedLc.StartsWith("mylist/") || trimmedLc.StartsWith("user/"))
+			{
+
 				var extUrl = new ArtistExternalUrlParser().GetExternalUrl(trimmed);
 
 				if (extUrl != null)
@@ -67,16 +72,18 @@ namespace VocaDb.Model.Service.Search.Artists {
 			return null;
 		}
 
-		private ParsedArtistQuery ParseTextQuery(SearchTextQuery textQuery) {
-			
+		private ParsedArtistQuery ParseTextQuery(SearchTextQuery textQuery)
+		{
+
 			if (textQuery.IsEmpty)
 				return new ParsedArtistQuery();
 
 			var trimmed = textQuery.OriginalQuery.Trim();
 
 			var term = SearchWord.GetTerm(trimmed, "id");
-			
-			if (term == null) {
+
+			if (term == null)
+			{
 
 				var trimmedLc = trimmed.ToLowerInvariant();
 
@@ -91,42 +98,49 @@ namespace VocaDb.Model.Service.Search.Artists {
 				if (result != null)
 					return result;
 
-			} else {
+			}
+			else
+			{
 
-				switch (term.PropertyName) {
+				switch (term.PropertyName)
+				{
 					case "id":
 						return new ParsedArtistQuery { Id = PrimitiveParseHelper.ParseIntOrDefault(term.Value, 0) };
 				}
-				
+
 			}
 
 			return new ParsedArtistQuery { Name = textQuery.Query };
 
 		}
 
-		private static Artist[] SortByIds(IEnumerable<Artist> songs, int[] idList) {
-			
+		private static Artist[] SortByIds(IEnumerable<Artist> songs, int[] idList)
+		{
+
 			return Model.Helpers.CollectionHelper.SortByIds(songs, idList);
 
-		} 
+		}
 
-		public ArtistSearch(ContentLanguagePreference languagePreference, IDatabaseContext<Artist> context, IEntryUrlParser entryUrlParser) {
+		public ArtistSearch(ContentLanguagePreference languagePreference, IDatabaseContext<Artist> context, IEntryUrlParser entryUrlParser)
+		{
 			this.LanguagePreference = languagePreference;
 			this.context = context;
 			this.entryUrlParser = entryUrlParser;
 		}
 
-		public PartialFindResult<Artist> Find(ArtistQueryParams queryParams) {
+		public PartialFindResult<Artist> Find(ArtistQueryParams queryParams)
+		{
 
-			var isMoveToTopQuery = (queryParams.Common.MoveExactToTop 
-				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith 
+			var isMoveToTopQuery = (queryParams.Common.MoveExactToTop
+				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith
 				&& !queryParams.Common.TextQuery.IsExact
 				&& queryParams.Paging.Start == 0
 				&& !queryParams.Common.TextQuery.IsEmpty);
 
 			var parsedQuery = ParseTextQuery(queryParams.Common.TextQuery);
 
-			if (isMoveToTopQuery) {
+			if (isMoveToTopQuery)
+			{
 				return GetArtistsMoveExactToTop(queryParams, parsedQuery);
 			}
 
@@ -153,8 +167,9 @@ namespace VocaDb.Model.Service.Search.Artists {
 		/// Get songs, searching by exact matches FIRST.
 		/// This mode does not support paging.
 		/// </summary>
-		private PartialFindResult<Artist> GetArtistsMoveExactToTop(ArtistQueryParams queryParams, ParsedArtistQuery parsedQuery) {
-			
+		private PartialFindResult<Artist> GetArtistsMoveExactToTop(ArtistQueryParams queryParams, ParsedArtistQuery parsedQuery)
+		{
+
 			var sortRule = queryParams.SortRule;
 			var maxResults = queryParams.Paging.MaxEntries;
 			var getCount = queryParams.Paging.GetTotalCount;
@@ -172,12 +187,15 @@ namespace VocaDb.Model.Service.Search.Artists {
 				.Take(maxResults)
 				.ToArray();
 
-			if (exactResults.Length >= maxResults) {
+			if (exactResults.Length >= maxResults)
+			{
 
 				ids = exactResults;
 				count = getCount ? CreateQuery(queryParams, parsedQuery).Count() : 0;
 
-			} else { 
+			}
+			else
+			{
 
 				var directQ = CreateQuery(queryParams, parsedQuery);
 

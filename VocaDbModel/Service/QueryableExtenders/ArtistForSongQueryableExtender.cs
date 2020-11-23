@@ -2,12 +2,14 @@
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.Service.QueryableExtenders {
+namespace VocaDb.Model.Service.QueryableExtenders
+{
 
 	/// <summary>
 	/// Extensions methods for queryable of <see cref="ArtistForSong"/>.
 	/// </summary>
-	public static class ArtistForSongQueryableExtender {
+	public static class ArtistForSongQueryableExtender
+	{
 
 		/// <summary>
 		/// Filters out songs that aren't "main" songs for a particular artist type.
@@ -18,9 +20,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// <param name="query">Query. Cannot be null.</param>
 		/// <param name="artistType">Artist type.</param>
 		/// <returns>Filtered query.</returns>
-		public static IQueryable<ArtistForSong> WhereIsMainSong(this IQueryable<ArtistForSong> query, ArtistType artistType) {
-			
-			if (artistType == ArtistType.Producer) {
+		public static IQueryable<ArtistForSong> WhereIsMainSong(this IQueryable<ArtistForSong> query, ArtistType artistType)
+		{
+
+			if (artistType == ArtistType.Producer)
+			{
 
 				return query
 					.Where(artistForSong => (artistForSong.Song.SongType != SongType.MusicPV || (artistForSong.Roles & ArtistRoles.Animator) != ArtistRoles.Default)

@@ -2,82 +2,94 @@
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
 
-namespace VocaDb.Tests.Service.Helpers {
+namespace VocaDb.Tests.Service.Helpers
+{
 
 	/// <summary>
 	/// Tests for <see cref="FindHelpers"/>.
 	/// </summary>
 	[TestClass]
-	public class FindHelpersTests {
+	public class FindHelpersTests
+	{
 
-		private void TestGetMatchModeAndQueryForSearch(string query, string expectedQuery, NameMatchMode? expectedMode = null, NameMatchMode originalMode = NameMatchMode.Auto) {
+		private void TestGetMatchModeAndQueryForSearch(string query, string expectedQuery, NameMatchMode? expectedMode = null, NameMatchMode originalMode = NameMatchMode.Auto)
+		{
 
 			var result = FindHelpers.GetMatchModeAndQueryForSearch(query, ref originalMode);
 
 			Assert.AreEqual(expectedQuery, result, "query");
 			if (expectedMode != null)
 				Assert.AreEqual(expectedMode, originalMode, "matchMode");
-	
+
 		}
 
 		[TestMethod]
-		public void GetMatchModeAndQueryForSearch_Default() {
+		public void GetMatchModeAndQueryForSearch_Default()
+		{
 
 			TestGetMatchModeAndQueryForSearch("Hatsune Miku", "Hatsune Miku", NameMatchMode.Words);
 
 		}
 
 		[TestMethod]
-		public void GetMatchModeAndQueryForSearch_EmptyQuery() {
+		public void GetMatchModeAndQueryForSearch_EmptyQuery()
+		{
 
 			TestGetMatchModeAndQueryForSearch("", "");
-	
+
 		}
 
 		[TestMethod]
-		public void GetMatchModeAndQueryForSearch_Trim() {
+		public void GetMatchModeAndQueryForSearch_Trim()
+		{
 
 			TestGetMatchModeAndQueryForSearch("Hatsune Miku         ", "Hatsune Miku", NameMatchMode.Words);
 
 		}
 
 		[TestMethod]
-		public void GetMatchModeAndQueryForSearch_WildCard() {
+		public void GetMatchModeAndQueryForSearch_WildCard()
+		{
 
 			TestGetMatchModeAndQueryForSearch("Hatsune Miku*", "Hatsune Miku", NameMatchMode.StartsWith);
 
 		}
 
 		[TestMethod]
-		public void GetMatchModeAndQueryForSearch_StartsWithWildCard() {
+		public void GetMatchModeAndQueryForSearch_StartsWithWildCard()
+		{
 
 			TestGetMatchModeAndQueryForSearch("*Hatsune Miku", "Hatsune Miku", NameMatchMode.Words);
 
 		}
 
 		[TestMethod]
-		public void GetMatchModeAndQueryForSearch_ShortQuery() {
+		public void GetMatchModeAndQueryForSearch_ShortQuery()
+		{
 
 			TestGetMatchModeAndQueryForSearch("H", "H", NameMatchMode.StartsWith);
 
 		}
 
 		[TestMethod]
-		public void GetMatchModeAndQueryForSearch_ShortQueryWithWildcard() {
-			
+		public void GetMatchModeAndQueryForSearch_ShortQueryWithWildcard()
+		{
+
 			TestGetMatchModeAndQueryForSearch("1*", "1", NameMatchMode.StartsWith);
 
 		}
 
 		[TestMethod]
-		public void GetMatchModeAndQueryForSearch_ExactQuery() {
-			
+		public void GetMatchModeAndQueryForSearch_ExactQuery()
+		{
+
 			TestGetMatchModeAndQueryForSearch("\"アキ\"", "アキ", NameMatchMode.Exact);
 
 		}
 
 		[TestMethod]
-		public void GetMatchModeAndQueryForSearch_CleanTerm() {
+		public void GetMatchModeAndQueryForSearch_CleanTerm()
+		{
 
 			// For words search special SQL characters should be encoded.
 			TestGetMatchModeAndQueryForSearch("alone [SNDI RMX]", "alone [[]SNDI RMX]");
@@ -85,7 +97,8 @@ namespace VocaDb.Tests.Service.Helpers {
 		}
 
 		[TestMethod]
-		public void GetMatchModeAndQueryForSearch_QuotedQueryWithWildcards() {
+		public void GetMatchModeAndQueryForSearch_QuotedQueryWithWildcards()
+		{
 
 			// Query is quoted so exact match is used. Special SQL characters are *not* encoded.
 			TestGetMatchModeAndQueryForSearch("\"alone [SNDI RMX]\"", "alone [SNDI RMX]", NameMatchMode.Exact);
@@ -93,7 +106,8 @@ namespace VocaDb.Tests.Service.Helpers {
 		}
 
 		[TestMethod]
-		public void GetMatchModeAndQueryForSearch_ExplicitExactQueryWithWildcards() {
+		public void GetMatchModeAndQueryForSearch_ExplicitExactQueryWithWildcards()
+		{
 
 			// Exact match mode is explicitly specified. Special SQL characters are *not* encoded.
 			TestGetMatchModeAndQueryForSearch("alone [SNDI RMX]", "alone [SNDI RMX]", originalMode: NameMatchMode.Exact);

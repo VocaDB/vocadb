@@ -4,19 +4,22 @@ using VocaDb.Model;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Web.Models.Ext {
+namespace VocaDb.Web.Models.Ext
+{
 
 	[XmlRoot(ElementName = "oembed")]
-	public class SongOEmbedResponse {
+	public class SongOEmbedResponse
+	{
 
-		public SongOEmbedResponse() {}
+		public SongOEmbedResponse() { }
 
-		public SongOEmbedResponse(SongForApiContract song, int width, int height, string html) {
+		public SongOEmbedResponse(SongForApiContract song, int width, int height, string html)
+		{
 
 			ParamIs.NotNull(() => song);
 			ParamIs.NotNullOrEmpty(() => html);
 
-			AuthorName = song.ArtistString;	
+			AuthorName = song.ArtistString;
 			ThumbnailUrl = song.ThumbUrl;
 			Title = song.Name;
 

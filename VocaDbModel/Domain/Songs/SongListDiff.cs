@@ -1,10 +1,12 @@
 ﻿using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.Songs {
+namespace VocaDb.Model.Domain.Songs
+{
 
-	public class SongListDiff : EntryDiff<SongListEditableFields> {
+	public class SongListDiff : EntryDiff<SongListEditableFields>
+	{
 
-		public SongListDiff() : base(true) {}
+		public SongListDiff() : base(true) { }
 
 		public SongListDiff(bool snapshot) : base(snapshot) { }
 

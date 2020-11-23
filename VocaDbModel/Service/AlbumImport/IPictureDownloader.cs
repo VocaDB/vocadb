@@ -1,8 +1,10 @@
 ﻿using VocaDb.Model.DataContracts;
 
-namespace VocaDb.Model.Service.AlbumImport {
+namespace VocaDb.Model.Service.AlbumImport
+{
 
-	public interface IPictureDownloader {
+	public interface IPictureDownloader
+	{
 
 		PictureDataContract Create(string url);
 

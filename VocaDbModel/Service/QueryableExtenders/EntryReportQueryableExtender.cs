@@ -1,13 +1,17 @@
 using System.Linq;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.Service.QueryableExtenders {
+namespace VocaDb.Model.Service.QueryableExtenders
+{
 
-	public static class EntryReportQueryableExtender {
+	public static class EntryReportQueryableExtender
+	{
 
-		public static IQueryable<EntryReport> OrderBy(this IQueryable<EntryReport> query, EntryReportSortRule sortRule) {
+		public static IQueryable<EntryReport> OrderBy(this IQueryable<EntryReport> query, EntryReportSortRule sortRule)
+		{
 
-			switch (sortRule) {
+			switch (sortRule)
+			{
 				case EntryReportSortRule.CloseDate:
 					return query.OrderByDescending(e => e.ClosedAt ?? e.Created);
 				case EntryReportSortRule.Created:
@@ -20,7 +24,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	}
 
-	public enum EntryReportSortRule {
+	public enum EntryReportSortRule
+	{
 		None,
 		Created,
 		CloseDate

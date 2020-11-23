@@ -28,30 +28,35 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Artists;
 
-namespace VocaDb.Model.Service {
+namespace VocaDb.Model.Service
+{
 
-	public class MikuDbAlbumService : ServiceBase {
+	public class MikuDbAlbumService : ServiceBase
+	{
 
 		private readonly AlbumService albumService;
 		private readonly SongService songService;
 
-		public MikuDbAlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
-			AlbumService albumService, SongService songService) 
-			: base(sessionFactory, permissionContext, entryLinkFactory) {
-			
+		public MikuDbAlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
+			AlbumService albumService, SongService songService)
+			: base(sessionFactory, permissionContext, entryLinkFactory)
+		{
+
 			this.albumService = albumService;
 			this.songService = songService;
 
 		}
 
-		private AlbumContract AcceptImportedAlbum(ISession session, IAlbumImporter importer, ContentLanguageSelection languageSelection, 
-			InspectedAlbum acceptedAlbum, int[] selectedSongIds) {
-			
+		private AlbumContract AcceptImportedAlbum(ISession session, IAlbumImporter importer, ContentLanguageSelection languageSelection,
+			InspectedAlbum acceptedAlbum, int[] selectedSongIds)
+		{
+
 			Album album;
 			var diff = new AlbumDiff(false);
 			var isNew = acceptedAlbum.MergedAlbum == null;
 
-			if (isNew) {
+			if (isNew)
+			{
 
 				album = new Album(new LocalizedString(acceptedAlbum.ImportedAlbum.Title, languageSelection));
 
@@ -62,38 +67,48 @@ namespace VocaDb.Model.Service {
 				diff.Names.Set();
 				session.Save(album);
 
-			} else {
+			}
+			else
+			{
 
 				album = session.Load<Album>(acceptedAlbum.MergedAlbum.Id);
 
-				if (!album.Names.HasName(acceptedAlbum.ImportedAlbum.Title)) {
+				if (!album.Names.HasName(acceptedAlbum.ImportedAlbum.Title))
+				{
 					album.CreateName(acceptedAlbum.ImportedAlbum.Title, languageSelection);
 					diff.Names.Set();
 				}
 
 			}
 
-			foreach (var inspectedArtist in acceptedAlbum.Artists) {
+			foreach (var inspectedArtist in acceptedAlbum.Artists)
+			{
 
-				if (inspectedArtist.ExistingArtist != null) {
+				if (inspectedArtist.ExistingArtist != null)
+				{
 
 					var artist = session.Load<Artist>(inspectedArtist.ExistingArtist.Id);
 
-					if (!artist.HasAlbum(album)) {
+					if (!artist.HasAlbum(album))
+					{
 						session.Save(artist.AddAlbum(album));
 						diff.Artists.Set();
 					}
 
-				} else {
+				}
+				else
+				{
 					album.AddArtist(inspectedArtist.Name, false, ArtistRoles.Default);
 					diff.Artists.Set();
 				}
 
 			}
 
-			if (acceptedAlbum.MergedAlbum == null || acceptedAlbum.MergeTracks) {
+			if (acceptedAlbum.MergedAlbum == null || acceptedAlbum.MergeTracks)
+			{
 
-				foreach (var inspectedTrack in acceptedAlbum.Tracks) {
+				foreach (var inspectedTrack in acceptedAlbum.Tracks)
+				{
 					if (AcceptImportedSong(session, importer, album, inspectedTrack, languageSelection, selectedSongIds))
 						diff.Tracks.Set();
 				}
@@ -103,7 +118,8 @@ namespace VocaDb.Model.Service {
 			var importedAlbum = session.Load<MikuDbAlbum>(acceptedAlbum.ImportedAlbum.Id);
 			importedAlbum.Status = AlbumStatus.Approved;
 
-			if (importedAlbum.CoverPicture != null && album.CoverPictureData == null) {
+			if (importedAlbum.CoverPicture != null && album.CoverPictureData == null)
+			{
 
 				album.CoverPictureData = importedAlbum.CoverPicture;
 				album.CoverPictureMime = importedAlbum.CoverPictureMime;
@@ -113,20 +129,23 @@ namespace VocaDb.Model.Service {
 				diff.Cover.Set();
 			}
 
-			if (acceptedAlbum.ImportedAlbum.Data.ReleaseYear != null && album.OriginalReleaseDate.Year == null) {
+			if (acceptedAlbum.ImportedAlbum.Data.ReleaseYear != null && album.OriginalReleaseDate.Year == null)
+			{
 				album.OriginalReleaseDate.Year = acceptedAlbum.ImportedAlbum.Data.ReleaseYear;
 				diff.OriginalRelease.Set();
 			}
 
 			// Add link if not already added a link to that service
 			var sourceUrl = acceptedAlbum.ImportedAlbum.SourceUrl;
-			if (importer != null && !string.IsNullOrEmpty(sourceUrl)) {
+			if (importer != null && !string.IsNullOrEmpty(sourceUrl))
+			{
 
-				if (album.WebLinks.All(w => !string.Equals(w.Url, sourceUrl, StringComparison.InvariantCultureIgnoreCase) && !importer.IsValidFor(w.Url))) {
+				if (album.WebLinks.All(w => !string.Equals(w.Url, sourceUrl, StringComparison.InvariantCultureIgnoreCase) && !importer.IsValidFor(w.Url)))
+				{
 					album.CreateWebLink(importer.ServiceName, sourceUrl, WebLinkCategory.Reference);
 					diff.WebLinks.Set();
 				}
-				
+
 			}
 
 			album.UpdateArtistString();
@@ -145,20 +164,24 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private bool AcceptImportedSong(ISession session, IAlbumImporter importer, Album album, InspectedTrack inspectedTrack, 
-			ContentLanguageSelection languageSelection, int[] selectedSongIds) {
+		private bool AcceptImportedSong(ISession session, IAlbumImporter importer, Album album, InspectedTrack inspectedTrack,
+			ContentLanguageSelection languageSelection, int[] selectedSongIds)
+		{
 
 			Song song = null;
 			var diff = new SongDiff(false);
 
-			if (NewTrack(inspectedTrack, selectedSongIds, album)) {
+			if (NewTrack(inspectedTrack, selectedSongIds, album))
+			{
 
 				song = new Song(new LocalizedString(inspectedTrack.ImportedTrack.Title, languageSelection));
 				session.Save(song);
 				album.AddSong(song, inspectedTrack.ImportedTrack.TrackNum, inspectedTrack.ImportedTrack.DiscNum);
 				diff.Names.Set();
 
-			} else if (selectedSongIds.Contains(inspectedTrack.ExistingSong.Id)) {
+			}
+			else if (selectedSongIds.Contains(inspectedTrack.ExistingSong.Id))
+			{
 
 				song = session.Load<Song>(inspectedTrack.ExistingSong.Id);
 
@@ -167,22 +190,27 @@ namespace VocaDb.Model.Service {
 
 				var newName = inspectedTrack.ImportedTrack.Title;
 
-				if (!song.Names.HasName(newName) && !song.Names.HasNameForLanguage(languageSelection)) {
+				if (!song.Names.HasName(newName) && !song.Names.HasNameForLanguage(languageSelection))
+				{
 					song.CreateName(new LocalizedString(newName, languageSelection));
 					diff.Names.Set();
 				}
 
 			}
 
-			if (song != null) {
+			if (song != null)
+			{
 
-				if (inspectedTrack.ImportedTrack != null) {
-					foreach (var artistName in inspectedTrack.ImportedTrack.ArtistNames) {
+				if (inspectedTrack.ImportedTrack != null)
+				{
+					foreach (var artistName in inspectedTrack.ImportedTrack.ArtistNames)
+					{
 						if (CreateArtist(session, song, artistName, ArtistRoles.Composer))
 							diff.Artists.Set();
 					}
 
-					foreach (var artistName in inspectedTrack.ImportedTrack.VocalistNames) {
+					foreach (var artistName in inspectedTrack.ImportedTrack.VocalistNames)
+					{
 						if (CreateArtist(session, song, artistName, ArtistRoles.Vocalist))
 							diff.Artists.Set();
 					}
@@ -191,8 +219,9 @@ namespace VocaDb.Model.Service {
 
 				}
 
-				if (diff.ChangedFields.Value != SongEditableFields.Nothing) {
-					
+				if (diff.ChangedFields.Value != SongEditableFields.Nothing)
+				{
+
 					var importerName = importer != null ? importer.ServiceName : "(unknown)";
 
 					songService.Archive(session, song, diff, SongArchiveReason.AutoImportedFromMikuDb,
@@ -209,12 +238,14 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private bool CreateArtist(ISession session, Song song, string name, ArtistRoles roles) {
+		private bool CreateArtist(ISession session, Song song, string name, ArtistRoles roles)
+		{
 
 			var artist = FindArtist(session, name);
 			var link = (artist != null ? new ArtistForSong(song, artist, false, roles) : new ArtistForSong(song, name, false, roles));
 
-			if (!song.HasArtistLink(link)) {
+			if (!song.HasArtistLink(link))
+			{
 				song.AllArtists.Add(link);
 				return true;
 			}
@@ -223,7 +254,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private List<Album> FindAlbums(ISession session, MikuDbAlbum imported) {
+		private List<Album> FindAlbums(ISession session, MikuDbAlbum imported)
+		{
 
 			var webLinkMatches = session.Query<AlbumWebLink>()
 				.Where(w => w.Url == imported.SourceUrl)
@@ -246,25 +278,29 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private Artist FindArtist(ISession session, string artistName) {
+		private Artist FindArtist(ISession session, string artistName)
+		{
 
 			if (string.IsNullOrEmpty(artistName))
 				return null;
 
 			var artistMatch = QueryArtist(session, artistName);
 
-			if (artistMatch == null) {
+			if (artistMatch == null)
+			{
 
 				var normalized = artistName.Normalize(NormalizationForm.FormKC);
-				var compositeRegex = new Regex(@"\S+\s?\((.+)\)");	// catch name(name)
+				var compositeRegex = new Regex(@"\S+\s?\((.+)\)");  // catch name(name)
 				var match = compositeRegex.Match(normalized);
 
-				if (!match.Success) {
-					compositeRegex = new Regex(@"\S+\s?[/@](.+)");	// catch name/name and name@name
+				if (!match.Success)
+				{
+					compositeRegex = new Regex(@"\S+\s?[/@](.+)");  // catch name/name and name@name
 					match = compositeRegex.Match(normalized);
 				}
 
-				if (match.Success) {
+				if (match.Success)
+				{
 
 					var resolvedName = match.Groups[1].Value;
 					artistMatch = QueryArtist(session, resolvedName);
@@ -283,7 +319,8 @@ namespace VocaDb.Model.Service {
 		/// <param name="songs"></param>
 		/// <param name="artists"></param>
 		/// <returns></returns>
-		private Song FindMatch(Song[] songs, IEnumerable<Artist> artists) {
+		private Song FindMatch(Song[] songs, IEnumerable<Artist> artists)
+		{
 
 			if (songs.Length == 0)
 				return null;
@@ -296,7 +333,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private Song FindSong(ISession session, string songName, IEnumerable<Artist> artists) {
+		private Song FindSong(ISession session, string songName, IEnumerable<Artist> artists)
+		{
 
 			var nameMatch = session.Query<SongName>()
 				.Where(m => !m.Song.Deleted && m.Value == songName)
@@ -321,13 +359,15 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private InspectedAlbum[] Inspect(ISession session, ImportedAlbumOptions[] importedAlbumIds) {
+		private InspectedAlbum[] Inspect(ISession session, ImportedAlbumOptions[] importedAlbumIds)
+		{
 
 			return importedAlbumIds.Select(a => Inspect(session, a)).ToArray();
 
 		}
 
-		private InspectedAlbum Inspect(ISession session, ImportedAlbumOptions options) {
+		private InspectedAlbum Inspect(ISession session, ImportedAlbumOptions options)
+		{
 
 			var imported = session.Load<MikuDbAlbum>(options.ImportedDbAlbumId);
 
@@ -335,11 +375,13 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private InspectedAlbum Inspect(ISession session, MikuDbAlbum imported, ImportedAlbumOptions options) {
+		private InspectedAlbum Inspect(ISession session, MikuDbAlbum imported, ImportedAlbumOptions options)
+		{
 
 			Album albumMatch;
 			var foundAlbums = FindAlbums(session, imported);
-			switch (options.MergedAlbumId) {
+			switch (options.MergedAlbumId)
+			{
 				case null:
 					albumMatch = foundAlbums.FirstOrDefault();
 					break;
@@ -356,7 +398,7 @@ namespace VocaDb.Model.Service {
 			var importedContract = new MikuDbAlbumContract(imported);
 			var data = importedContract.Data;
 
-			var artists = data.ArtistNames.Concat(data.VocalistNames).Concat(!string.IsNullOrEmpty(data.CircleName) ? new[] { data.CircleName } : new string[] {})
+			var artists = data.ArtistNames.Concat(data.VocalistNames).Concat(!string.IsNullOrEmpty(data.CircleName) ? new[] { data.CircleName } : new string[] { })
 				.Select(a => InspectArtist(session, a))
 				.ToArray();
 
@@ -367,7 +409,8 @@ namespace VocaDb.Model.Service {
 			var result = new InspectedAlbum(importedContract);
 			result.MergeTracks = options.MergeTracks ?? true;
 
-			if (albumMatch != null) {
+			if (albumMatch != null)
+			{
 				result.MergedAlbum = new AlbumContract(albumMatch, PermissionContext.LanguagePreference);
 				result.MergedAlbumId = albumMatch.Id;
 			}
@@ -382,7 +425,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private ArtistInspectResult InspectArtist(ISession session, string name) {
+		private ArtistInspectResult InspectArtist(ISession session, string name)
+		{
 
 			//var inspected = new InspectedArtist(name);
 
@@ -395,7 +439,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private InspectedTrack InspectTrack(ISession session, ImportedAlbumTrack importedTrack, IEnumerable<Artist> artists, Album album) {
+		private InspectedTrack InspectTrack(ISession session, ImportedAlbumTrack importedTrack, IEnumerable<Artist> artists, Album album)
+		{
 
 			var inspected = new InspectedTrack(importedTrack);
 			var existingTrack = album != null ? album.GetSongByTrackNum(importedTrack.DiscNum, importedTrack.TrackNum) : null;
@@ -412,7 +457,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private bool NewTrack(InspectedTrack inspectedTrack, int[] selectedSongIds, Album album) {
+		private bool NewTrack(InspectedTrack inspectedTrack, int[] selectedSongIds, Album album)
+		{
 
 			if (inspectedTrack.ExistingSong == null)
 				return true;
@@ -425,7 +471,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		private Artist QueryArtist(ISession session, string artistName) {
+		private Artist QueryArtist(ISession session, string artistName)
+		{
 
 			artistName = ArtistHelper.GetCanonizedName(artistName);
 
@@ -446,11 +493,13 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public AlbumContract AcceptImportedAlbum(ImportedAlbumOptions importedAlbum, int[] selectedSongIds) {
+		public AlbumContract AcceptImportedAlbum(ImportedAlbumOptions importedAlbum, int[] selectedSongIds)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
 
-			return HandleTransaction(session => {
+			return HandleTransaction(session =>
+			{
 
 				var inspected = Inspect(session, importedAlbum);
 				var importer = new AlbumImporters().FindImporter(inspected.ImportedAlbum.SourceUrl);
@@ -462,15 +511,18 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public AlbumContract[] AcceptImportedAlbums(ImportedAlbumOptions[] importedAlbumIds, int[] selectedSongIds) {
+		public AlbumContract[] AcceptImportedAlbums(ImportedAlbumOptions[] importedAlbumIds, int[] selectedSongIds)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
 
-			return HandleTransaction(session => {
+			return HandleTransaction(session =>
+			{
 
 				var importedAlbums = new List<AlbumContract>(importedAlbumIds.Length);
 
-				foreach (var importedAlbum in importedAlbumIds) {
+				foreach (var importedAlbum in importedAlbumIds)
+				{
 
 					var inspected = Inspect(session, importedAlbum);
 					var importer = new AlbumImporters().FindImporter(inspected.ImportedAlbum.SourceUrl);
@@ -486,13 +538,15 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void Delete(int importedAlbumId) {
+		public void Delete(int importedAlbumId)
+		{
 
 			DeleteEntity<MikuDbAlbum>(importedAlbumId, PermissionToken.MikuDbImport);
 
 		}
 
-		public MikuDbAlbumContract[] GetAlbums(string title, AlbumStatus status, PagingProperties paging) {
+		public MikuDbAlbumContract[] GetAlbums(string title, AlbumStatus status, PagingProperties paging)
+		{
 
 			return HandleQuery(session => session
 				.Query<MikuDbAlbum>()
@@ -506,9 +560,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public PictureContract GetCoverPicture(int id) {
+		public PictureContract GetCoverPicture(int id)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var album = session.Load<MikuDbAlbum>(id);
 
@@ -521,7 +577,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public int ImportNew() {
+		public int ImportNew()
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
 
@@ -530,7 +587,8 @@ namespace VocaDb.Model.Service {
 			var importer = new MikuDbAlbumImporter(existing);
 			var imported = importer.ImportNew();
 
-			return HandleTransaction(session => {
+			return HandleTransaction(session =>
+			{
 
 				AuditLog("importing new albums from " + importer.ServiceName, session);
 
@@ -541,7 +599,8 @@ namespace VocaDb.Model.Service {
 
 				var newAlbums = new List<MikuDbAlbum>();
 
-				foreach (var contract in imported) {
+				foreach (var contract in imported)
+				{
 
 					var newAlbum = new MikuDbAlbum(contract.AlbumContract);
 
@@ -557,14 +616,16 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public int ImportFromFile(Stream stream) {
+		public int ImportFromFile(Stream stream)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
 
 			var parser = new AlbumFileParser();
 			var imported = parser.Parse(stream);
 
-			return HandleTransaction(session => {
+			return HandleTransaction(session =>
+			{
 
 				SysLog(string.Format("importing album from file with name '{0}'", imported.Title));
 
@@ -577,21 +638,23 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public AlbumImportResult ImportOne(string url) {
+		public AlbumImportResult ImportOne(string url)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.MikuDbImport);
 
 			var existing = HandleQuery(session => session.Query<MikuDbAlbum>().FirstOrDefault(a => a.SourceUrl == url));
 
 			if (existing != null)
-				return new AlbumImportResult {Message = "Album with that URL has already been imported"};
+				return new AlbumImportResult { Message = "Album with that URL has already been imported" };
 
 			var imported = new AlbumImporters(new WebPictureDownloader()).ImportOne(url);
 
 			if (imported.AlbumContract == null)
 				return imported;
 
-			HandleTransaction(session => {
+			HandleTransaction(session =>
+			{
 
 				SysLog(string.Format("importing album with URL '{0}'", url));
 
@@ -605,7 +668,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public InspectedAlbum[] Inspect(ImportedAlbumOptions[] importedAlbumIds) {
+		public InspectedAlbum[] Inspect(ImportedAlbumOptions[] importedAlbumIds)
+		{
 
 			ParamIs.NotNull(() => importedAlbumIds);
 
@@ -613,7 +677,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public InspectedAlbum Inspect(ImportedAlbumOptions importedAlbum) {
+		public InspectedAlbum Inspect(ImportedAlbumOptions importedAlbum)
+		{
 
 			ParamIs.NotNull(() => importedAlbum);
 
@@ -621,7 +686,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void SkipAlbum(int importedAlbumId) {
+		public void SkipAlbum(int importedAlbumId)
+		{
 
 			UpdateEntity<MikuDbAlbum>(importedAlbumId, a => a.Status = AlbumStatus.Skipped, PermissionToken.MikuDbImport);
 
@@ -629,9 +695,11 @@ namespace VocaDb.Model.Service {
 
 	}
 
-	public class ArtistInspectResult {
+	public class ArtistInspectResult
+	{
 
-		public ArtistInspectResult(string name, Artist existing, ContentLanguagePreference languagePreference) {
+		public ArtistInspectResult(string name, Artist existing, ContentLanguagePreference languagePreference)
+		{
 
 			InspectedArtist = new InspectedArtist(name);
 

@@ -5,18 +5,22 @@ using VocaDb.Web.Helpers;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Web.Models.Shared;
 
-namespace VocaDb.Web.Models.Artist {
+namespace VocaDb.Web.Models.Artist
+{
 
-	public class Versions {
+	public class Versions
+	{
 
-		public static ArchivedObjectVersion CreateForArtist(ArchivedArtistVersionContract artist) {
+		public static ArchivedObjectVersion CreateForArtist(ArchivedArtistVersionContract artist)
+		{
 
 			return new ArchivedObjectVersion(artist, GetReasonName(artist.Reason, artist.Notes),
 				GetChangeString(artist.ChangedFields), artist.Reason != ArtistArchiveReason.PropertiesUpdated || artist.ChangedFields != ArtistEditableFields.Nothing);
 
 		}
 
-		public static string GetChangeString(ArtistEditableFields fields) {
+		public static string GetChangeString(ArtistEditableFields fields)
+		{
 
 			if (fields == ArtistEditableFields.Nothing)
 				return string.Empty;
@@ -28,7 +32,8 @@ namespace VocaDb.Web.Models.Artist {
 
 		}
 
-		private static string GetReasonName(ArtistArchiveReason reason, string notes) {
+		private static string GetReasonName(ArtistArchiveReason reason, string notes)
+		{
 
 			if (reason == ArtistArchiveReason.Unknown)
 				return notes;
@@ -39,7 +44,8 @@ namespace VocaDb.Web.Models.Artist {
 
 		public Versions() { }
 
-		public Versions(ArtistWithArchivedVersionsContract contract) {
+		public Versions(ArtistWithArchivedVersionsContract contract)
+		{
 
 			ParamIs.NotNull(() => contract);
 

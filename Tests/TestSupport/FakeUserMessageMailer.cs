@@ -1,9 +1,11 @@
 using System.Threading.Tasks;
 using VocaDb.Model.Service.Helpers;
 
-namespace VocaDb.Tests.TestSupport {
+namespace VocaDb.Tests.TestSupport
+{
 
-	public class FakeUserMessageMailer : IUserMessageMailer{
+	public class FakeUserMessageMailer : IUserMessageMailer
+	{
 
 		public string Body { get; private set; }
 
@@ -13,8 +15,9 @@ namespace VocaDb.Tests.TestSupport {
 
 		public string Subject { get; private set; }
 
-		public bool SendEmail(string toEmail, string receiverName, string subject, string body) {
-		
+		public bool SendEmail(string toEmail, string receiverName, string subject, string body)
+		{
+
 			ToEmail = toEmail;
 			ReceiverName = receiverName;
 			Subject = subject;
@@ -24,7 +27,8 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public Task<bool> SendEmailAsync(string toEmail, string receiverName, string subject, string body) {
+		public Task<bool> SendEmailAsync(string toEmail, string receiverName, string subject, string body)
+		{
 			return Task.FromResult(SendEmail(toEmail, receiverName, subject, body));
 		}
 

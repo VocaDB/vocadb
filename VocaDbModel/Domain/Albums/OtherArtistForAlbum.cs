@@ -1,15 +1,18 @@
 ﻿using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.Domain.Albums {
+namespace VocaDb.Model.Domain.Albums
+{
 
-	public class OtherArtistForAlbum {
+	public class OtherArtistForAlbum
+	{
 
 		private Album album;
 		private string name;
 
 		public OtherArtistForAlbum() { }
 
-		public OtherArtistForAlbum(Album album, string name, bool isSupport, ArtistRoles roles) {
+		public OtherArtistForAlbum(Album album, string name, bool isSupport, ArtistRoles roles)
+		{
 
 			Album = album;
 			Name = name;
@@ -18,21 +21,25 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public virtual Album Album {
+		public virtual Album Album
+		{
 			get { return album; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
-				album = value; 
+				album = value;
 			}
 		}
 
 		public virtual int Id { get; set; }
 
-		public virtual string Name {
+		public virtual string Name
+		{
 			get { return name; }
-			set {
+			set
+			{
 				ParamIs.NotNullOrEmpty(() => value);
-				name = value; 
+				name = value;
 			}
 		}
 
@@ -40,7 +47,8 @@ namespace VocaDb.Model.Domain.Albums {
 
 		public virtual ArtistRoles Roles { get; set; }
 
-		public virtual bool Equals(OtherArtistForAlbum another) {
+		public virtual bool Equals(OtherArtistForAlbum another)
+		{
 
 			if (another == null)
 				return false;
@@ -55,11 +63,13 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as OtherArtistForAlbum);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return base.GetHashCode();
 		}
 	}

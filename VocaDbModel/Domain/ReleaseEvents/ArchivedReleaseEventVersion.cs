@@ -5,11 +5,14 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.ReleaseEvents {
+namespace VocaDb.Model.Domain.ReleaseEvents
+{
 
-	public class ArchivedReleaseEventVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<ReleaseEventEditableFields> {
+	public class ArchivedReleaseEventVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<ReleaseEventEditableFields>
+	{
 
-		public static ArchivedReleaseEventVersion Create(ReleaseEvent releaseEvent, ReleaseEventDiff diff, AgentLoginData author, EntryEditEvent commonEditEvent, string notes) {
+		public static ArchivedReleaseEventVersion Create(ReleaseEvent releaseEvent, ReleaseEventDiff diff, AgentLoginData author, EntryEditEvent commonEditEvent, string notes)
+		{
 
 			var contract = new ArchivedEventContract(releaseEvent, diff);
 			var data = XmlHelper.SerializeToXml(contract);
@@ -21,13 +24,15 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		private ReleaseEventDiff diff;
 		private ReleaseEvent releaseEvent;
 
-		public ArchivedReleaseEventVersion() {
+		public ArchivedReleaseEventVersion()
+		{
 			Status = EntryStatus.Finished;
 		}
 
 		public ArchivedReleaseEventVersion(ReleaseEvent releaseEvent, XDocument data, ReleaseEventDiff diff, AgentLoginData author,
 			EntryEditEvent commonEditEvent, string notes)
-			: base(data, author, releaseEvent.Version, releaseEvent.Status, notes) {
+			: base(data, author, releaseEvent.Version, releaseEvent.Status, notes)
+		{
 
 			ParamIs.NotNull(() => diff);
 
@@ -41,11 +46,13 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public override IEntryDiff DiffBase => Diff;
 
-		public virtual ReleaseEventDiff Diff {
+		public virtual ReleaseEventDiff Diff
+		{
 			get => diff;
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				diff = value; 
+				diff = value;
 			}
 		}
 
@@ -53,15 +60,18 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public override IEntryWithNames EntryBase => ReleaseEvent;
 
-		public virtual ReleaseEvent ReleaseEvent {
+		public virtual ReleaseEvent ReleaseEvent
+		{
 			get => releaseEvent;
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				releaseEvent = value; 
+				releaseEvent = value;
 			}
 		}
 
-		public virtual ArchivedReleaseEventVersion GetLatestVersionWithField(ReleaseEventEditableFields field) {
+		public virtual ArchivedReleaseEventVersion GetLatestVersionWithField(ReleaseEventEditableFields field)
+		{
 
 			if (IsIncluded(field))
 				return this;
@@ -70,10 +80,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
-		public virtual bool IsIncluded(ReleaseEventEditableFields field) {
+		public virtual bool IsIncluded(ReleaseEventEditableFields field)
+		{
 			return true;
 		}
 
 	}
-	
+
 }

@@ -6,23 +6,28 @@ using NHibernate.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.Database.Repositories.NHibernate {
+namespace VocaDb.Model.Database.Repositories.NHibernate
+{
 
-	public class NHibernateDatabaseContext : IDatabaseContext {
+	public class NHibernateDatabaseContext : IDatabaseContext
+	{
 
 		public IUserPermissionContext PermissionContext { get; private set; }
 		public ISession Session { get; private set; }
 
-		public NHibernateDatabaseContext(ISession session, IUserPermissionContext permissionContext) {
+		public NHibernateDatabaseContext(ISession session, IUserPermissionContext permissionContext)
+		{
 			Session = session;
 			PermissionContext = permissionContext;
 		}
 
-		public IAuditLogger AuditLogger {
+		public IAuditLogger AuditLogger
+		{
 			get { return new NHibernateAuditLogger(OfType<AuditLogEntry>(), PermissionContext); }
 		}
 
-		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) {
+		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel)
+		{
 			return new NHibernateTransaction(Session.BeginTransaction(isolationLevel));
 		}
 
@@ -30,7 +35,8 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 
 		public void Flush() => Session.Flush();
 
-		public IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject {
+		public IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject
+		{
 			return new NHibernateDatabaseContext<T2>(Session, PermissionContext);
 		}
 
@@ -38,10 +44,12 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 
 	}
 
-	public class NHibernateDatabaseContext<T> : NHibernateDatabaseContext, IDatabaseContext<T> {
+	public class NHibernateDatabaseContext<T> : NHibernateDatabaseContext, IDatabaseContext<T>
+	{
 
 		public NHibernateDatabaseContext(ISession session, IUserPermissionContext permissionContext)
-			: base(session, permissionContext) {
+			: base(session, permissionContext)
+		{
 
 		}
 
@@ -57,12 +65,14 @@ namespace VocaDb.Model.Database.Repositories.NHibernate {
 
 		public IQueryable<T> Query() => Session.Query<T>();
 
-		public T Save(T obj) {
+		public T Save(T obj)
+		{
 			Session.Save(obj);
 			return obj;
 		}
 
-		public async Task<T> SaveAsync(T obj) {
+		public async Task<T> SaveAsync(T obj)
+		{
 			await Session.SaveAsync(obj);
 			return obj;
 		}

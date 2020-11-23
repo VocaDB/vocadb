@@ -3,11 +3,14 @@ using System.Linq;
 using NLog;
 using NLog.Targets;
 
-namespace VocaDb.Web.Code.Security {
+namespace VocaDb.Web.Code.Security
+{
 
-	public class LogFileReader {
+	public class LogFileReader
+	{
 
-		public string GetLatestLogFileContents() {
+		public string GetLatestLogFileContents()
+		{
 
 			var fileTarget = (FileTarget)LogManager.Configuration.ConfiguredNamedTargets.FirstOrDefault(t => t is FileTarget);
 

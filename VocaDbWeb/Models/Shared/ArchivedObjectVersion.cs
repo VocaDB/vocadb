@@ -3,11 +3,14 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Web.Models.Shared {
+namespace VocaDb.Web.Models.Shared
+{
 
-	public class ArchivedObjectVersion {
+	public class ArchivedObjectVersion
+	{
 
-		public static ArchivedObjectVersion Create(ArchivedObjectVersionContract contract, IEnumTranslations translator) {
+		public static ArchivedObjectVersion Create(ArchivedObjectVersionContract contract, IEnumTranslations translator)
+		{
 
 			return new ArchivedObjectVersion(contract, contract.TranslateReason(translator),
 				contract.TranslateChangedFields(translator), contract.IsAnythingChanged());
@@ -16,7 +19,8 @@ namespace VocaDb.Web.Models.Shared {
 
 		public ArchivedObjectVersion() { }
 
-		public ArchivedObjectVersion(ArchivedObjectVersionContract contract, string reasonName, string changeMessage, bool anythingChanged = true) {
+		public ArchivedObjectVersion(ArchivedObjectVersionContract contract, string reasonName, string changeMessage, bool anythingChanged = true)
+		{
 
 			Contract = contract;
 			Hidden = contract.Hidden;
@@ -29,7 +33,8 @@ namespace VocaDb.Web.Models.Shared {
 
 		}
 
-		public ArchivedObjectVersion(ArchivedObjectVersionContract contract, string changeMessage, bool anythingChanged = true) {
+		public ArchivedObjectVersion(ArchivedObjectVersionContract contract, string changeMessage, bool anythingChanged = true)
+		{
 
 			Contract = contract;
 			Hidden = contract.Hidden;

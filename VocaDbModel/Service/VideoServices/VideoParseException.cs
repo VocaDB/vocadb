@@ -1,8 +1,10 @@
 ﻿using System;
 
-namespace VocaDb.Model.Service.VideoServices {
+namespace VocaDb.Model.Service.VideoServices
+{
 
-	public class VideoParseException : Exception {
+	public class VideoParseException : Exception
+	{
 
 		public VideoParseException() { }
 

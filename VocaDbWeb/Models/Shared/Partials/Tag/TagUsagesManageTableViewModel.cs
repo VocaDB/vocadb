@@ -1,11 +1,14 @@
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Web.Models.Shared.Partials.Tag {
+namespace VocaDb.Web.Models.Shared.Partials.Tag
+{
 
-	public class TagUsagesManageTableViewModel {
+	public class TagUsagesManageTableViewModel
+	{
 
-		public TagUsagesManageTableViewModel(EntryType entryType, TagUsageWithVotesContract[] tagUsages, bool canRemove, string controllerName = null) {
+		public TagUsagesManageTableViewModel(EntryType entryType, TagUsageWithVotesContract[] tagUsages, bool canRemove, string controllerName = null)
+		{
 			EntryType = entryType;
 			TagUsages = tagUsages;
 			CanRemove = canRemove;

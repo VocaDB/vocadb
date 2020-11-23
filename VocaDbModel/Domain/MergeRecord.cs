@@ -1,4 +1,5 @@
-namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain
+{
 
 	/// <summary>
 	/// Record of one entry being merged to another.
@@ -8,14 +9,16 @@ namespace VocaDb.Model.Domain {
 	/// Merge record is saved separately from the entry itself so it can be made into a weak link
 	/// and the original entry deleted.
 	/// </remarks>
-	public abstract class MergeRecord<T> : IEntryWithIntId 
-		where T : class, IEntryBase {
+	public abstract class MergeRecord<T> : IEntryWithIntId
+		where T : class, IEntryBase
+	{
 
 		private T target;
 
-		protected MergeRecord() {}
+		protected MergeRecord() { }
 
-		protected MergeRecord(T source, T target) {
+		protected MergeRecord(T source, T target)
+		{
 
 			ParamIs.NotNull(() => source);
 			ParamIs.NotNull(() => target);
@@ -38,9 +41,11 @@ namespace VocaDb.Model.Domain {
 		/// At the moment, targets of merges cannot be deleted.
 		/// In the future, this reference might be made weak as well.
 		/// </summary>
-		public virtual T Target {
+		public virtual T Target
+		{
 			get { return target; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				target = value;
 			}

@@ -8,20 +8,23 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Tests.Domain.Users {
+namespace VocaDb.Tests.Domain.Users
+{
 
 	/// <summary>
 	/// Tests for <see cref="FavoriteSongForUser"/>.
 	/// </summary>
 	[TestClass]
-	public class FavoriteSongForUserTests {
+	public class FavoriteSongForUserTests
+	{
 
 		private FavoriteSongForUser rating;
 		private Song song;
 		private User user;
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			song = new Song(new LocalizedString("I just wanna say...", ContentLanguageSelection.English));
 			user = new User { Name = "Miku" };
@@ -30,17 +33,19 @@ namespace VocaDb.Tests.Domain.Users {
 		}
 
 		[TestMethod]
-		public void Delete() {
-			
+		public void Delete()
+		{
+
 			rating.Delete();
 
 			Assert.IsFalse(song.IsFavoritedBy(user), "not favorited by user");
 			Assert.AreEqual(0, song.RatingScore, "rating score is updated");
-			
+
 		}
 
 		[TestMethod]
-		public void SetRating_Changed() {
+		public void SetRating_Changed()
+		{
 
 			rating.SetRating(SongVoteRating.Favorite);
 

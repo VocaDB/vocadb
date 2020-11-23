@@ -18,13 +18,15 @@ using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Security;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Web.Controllers.DataAccess {
+namespace VocaDb.Tests.Web.Controllers.DataAccess
+{
 
 	/// <summary>
 	/// Tests for <see cref="SongListQueries"/>.
 	/// </summary>
 	[TestClass]
-	public class SongListQueriesTests {
+	public class SongListQueriesTests
+	{
 
 		private InMemoryImagePersister imagePersister;
 		private FakePermissionContext permissionContext;
@@ -35,17 +37,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private Song song2;
 		private User userWithSongList;
 
-		private SongInListEditContract[] SongInListEditContracts(params Song[] songs) {
+		private SongInListEditContract[] SongInListEditContracts(params Song[] songs)
+		{
 			return songs.Select(s => new SongInListEditContract(new SongInList(s, new SongList(), 0, string.Empty), ContentLanguagePreference.Default)).ToArray();
 		}
 
-		private Stream TestImage() {
+		private Stream TestImage()
+		{
 			return ResourceHelper.GetFileStream("yokohma_bay_concert.jpg");
 		}
 
 		[TestInitialize]
-		public void SetUp() {
-			
+		public void SetUp()
+		{
+
 			repository = new FakeSongListRepository();
 			userWithSongList = new User("User with songlist", "123", "test@test.com", PasswordHashAlgorithms.Default);
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(userWithSongList, ContentLanguagePreference.Default));
@@ -53,13 +58,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			imagePersister = new InMemoryImagePersister();
 			queries = new SongListQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, imagePersister, new FakeUserIconFactory());
 
-			song1 = new Song(TranslatedString.Create("Project Diva desu.")) { Id = 1};
-			song2 = new Song(TranslatedString.Create("World is Mine")) { Id = 2};
+			song1 = new Song(TranslatedString.Create("Project Diva desu.")) { Id = 1 };
+			song2 = new Song(TranslatedString.Create("World is Mine")) { Id = 2 };
 
 			repository.Add(userWithSongList);
 			repository.Add(song1, song2);
 
-			songListContract = new SongListForEditContract {
+			songListContract = new SongListForEditContract
+			{
 				Name = "Mikunopolis Setlist",
 				Description = "MIKUNOPOLIS in LOS ANGELES - Hatsune Miku US debut concert held at Nokia Theatre for Anime Expo 2011 on 2nd July 2011.",
 				SongLinks = SongInListEditContracts(song1, song2)
@@ -68,7 +74,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Create() {
+		public void Create()
+		{
 
 			queries.UpdateSongList(songListContract, null);
 
@@ -84,7 +91,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Delete() {
+		public void Delete()
+		{
 
 			var list = repository.Save(new SongList("Mikulist", userWithSongList));
 			var archived = repository.Save(list.CreateArchivedVersion(new SongListDiff(), new AgentLoginData(userWithSongList), EntryEditEvent.Created, string.Empty));
@@ -99,7 +107,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetSongsInList_ByName() {
+		public void GetSongsInList_ByName()
+		{
 
 			var list = repository.Save(new SongList("Mikulist", userWithSongList));
 			repository.Save(list.AddSong(song1));
@@ -113,7 +122,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetSongsInList_ByDescription() {
+		public void GetSongsInList_ByDescription()
+		{
 
 			var list = repository.Save(new SongList("Mikulist", userWithSongList));
 			repository.Save(list.AddSong(song1, 1, "encore"));
@@ -126,7 +136,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void UpdateSongLinks() {
+		public void UpdateSongLinks()
+		{
 
 			// Create list
 			songListContract.Id = queries.UpdateSongList(songListContract, null);
@@ -146,11 +157,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Update_Image() {
-			
+		public void Update_Image()
+		{
+
 			int id;
-			using (var stream = TestImage()) {
-				id = queries.UpdateSongList(songListContract, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });			
+			using (var stream = TestImage())
+			{
+				id = queries.UpdateSongList(songListContract, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });
 			}
 
 			var songList = repository.Load(id);

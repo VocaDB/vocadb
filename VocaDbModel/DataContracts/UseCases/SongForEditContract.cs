@@ -8,16 +8,19 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.UseCases {
+namespace VocaDb.Model.DataContracts.UseCases
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongForEditContract : SongContract {
+	public class SongForEditContract : SongContract
+	{
 
-		public SongForEditContract() {}
+		public SongForEditContract() { }
 
 		public SongForEditContract(Song song, ContentLanguagePreference languagePreference)
-			: base(song, languagePreference) {
-			
+			: base(song, languagePreference)
+		{
+
 			ParamIs.NotNull(() => song);
 
 			var firstAlbum = song.Albums.Where(a => a.Album.OriginalReleaseDate.IsFullDate).OrderBy(a => a.Album.OriginalReleaseDate).FirstOrDefault();

@@ -3,11 +3,14 @@ using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.DataContracts.ReleaseEvents {
+namespace VocaDb.Model.DataContracts.ReleaseEvents
+{
 
-	public class ArchivedEventSeriesVersionDetailsContract {
+	public class ArchivedEventSeriesVersionDetailsContract
+	{
 
-		public ArchivedEventSeriesVersionDetailsContract(ArchivedReleaseEventSeriesVersion archived, ArchivedReleaseEventSeriesVersion comparedVersion, IUserPermissionContext permissionContext) {
+		public ArchivedEventSeriesVersionDetailsContract(ArchivedReleaseEventSeriesVersion archived, ArchivedReleaseEventSeriesVersion comparedVersion, IUserPermissionContext permissionContext)
+		{
 
 			ParamIs.NotNull(() => archived);
 

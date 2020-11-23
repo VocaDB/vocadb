@@ -1,17 +1,20 @@
 ﻿using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 
-namespace VocaDb.Model.DataContracts.ReleaseEvents {
+namespace VocaDb.Model.DataContracts.ReleaseEvents
+{
 
 	/// <summary>
 	/// Result of attempting to find <see cref="ReleaseEvent"/> based on name.
 	/// May include the exact event or event series with intelligent guess of series number and suffix.
 	/// </summary>
-	public class ReleaseEventFindResultContract {
+	public class ReleaseEventFindResultContract
+	{
 
 		public ReleaseEventFindResultContract() { }
 
-		public ReleaseEventFindResultContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference) {
+		public ReleaseEventFindResultContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference)
+		{
 
 			ParamIs.NotNull(() => releaseEvent);
 
@@ -20,13 +23,15 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		}
 
-		public ReleaseEventFindResultContract(string eventName) {
+		public ReleaseEventFindResultContract(string eventName)
+		{
 
 			EventName = eventName;
 
 		}
 
-		public ReleaseEventFindResultContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference, int seriesNumber, string seriesSuffix, string eventName) {
+		public ReleaseEventFindResultContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference, int seriesNumber, string seriesSuffix, string eventName)
+		{
 
 			Series = new ReleaseEventSeriesContract(series, languagePreference);
 			SeriesNumber = seriesNumber;

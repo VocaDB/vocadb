@@ -6,13 +6,16 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.DataContracts.UseCases {
+namespace VocaDb.Tests.DataContracts.UseCases
+{
 
 	[TestClass]
-	public class ArtistForEditContractTests {
+	public class ArtistForEditContractTests
+	{
 
 		[TestMethod]
-		public void Ctor_IllustratorIsAlsoManager() {
+		public void Ctor_IllustratorIsAlsoManager()
+		{
 
 			var illustrator = CreateEntry.Artist(ArtistType.Illustrator, id: 1);
 			var artist = CreateEntry.Vocalist(id: 2);

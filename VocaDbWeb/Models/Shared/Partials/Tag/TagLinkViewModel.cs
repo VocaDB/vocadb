@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts.Tags;
 
-namespace VocaDb.Web.Models.Shared.Partials.Tag {
+namespace VocaDb.Web.Models.Shared.Partials.Tag
+{
 
-	public class TagLinkViewModel {
+	public class TagLinkViewModel
+	{
 
-		public TagLinkViewModel(TagBaseContract tag, bool tooltip = false) {
+		public TagLinkViewModel(TagBaseContract tag, bool tooltip = false)
+		{
 			Tag = tag;
 			Tooltip = tooltip;
 		}

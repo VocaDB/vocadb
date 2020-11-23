@@ -5,30 +5,35 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users {
+namespace VocaDb.Model.DataContracts.Users
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class AlbumForUserForApiContract {
+	public class AlbumForUserForApiContract
+	{
 
 		public AlbumForUserForApiContract() { }
 
 		public AlbumForUserForApiContract(
-			AlbumForUser albumForUser, 
-			ContentLanguagePreference languagePreference, 
+			AlbumForUser albumForUser,
+			ContentLanguagePreference languagePreference,
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			AlbumOptionalFields fields,
 			bool shouldShowCollectionStatus,
-			bool includeUser = false) {
+			bool includeUser = false)
+		{
 
 			Album = new AlbumForApiContract(albumForUser.Album, null, languagePreference, thumbPersister, fields, SongOptionalFields.None);
 			Rating = albumForUser.Rating;
 
-			if (shouldShowCollectionStatus) {
+			if (shouldShowCollectionStatus)
+			{
 				MediaType = albumForUser.MediaType;
 				PurchaseStatus = albumForUser.PurchaseStatus;
 			}
 
-			if (includeUser) {
+			if (includeUser)
+			{
 				User = new UserForApiContract(albumForUser.User);
 			}
 

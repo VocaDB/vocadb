@@ -4,14 +4,17 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Service.Search.AlbumSearch {
+namespace VocaDb.Model.Service.Search.AlbumSearch
+{
 
 	/// <summary>
 	/// Query parameters for albums
 	/// </summary>
-	public class AlbumQueryParams {
+	public class AlbumQueryParams
+	{
 
-		public AlbumQueryParams() {
+		public AlbumQueryParams()
+		{
 
 			AlbumType = DiscType.Unknown;
 			Common = new CommonSearchParams();
@@ -20,7 +23,8 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 		}
 
 		public AlbumQueryParams(SearchTextQuery textQuery, DiscType discType, int start, int maxResults, bool getTotalCount,
-			AlbumSortRule sortRule = AlbumSortRule.Name, bool moveExactToTop = false) {
+			AlbumSortRule sortRule = AlbumSortRule.Name, bool moveExactToTop = false)
+		{
 
 			Common = new CommonSearchParams(textQuery, false, moveExactToTop);
 			Paging = new PagingProperties(start, maxResults, getTotalCount);

@@ -1,8 +1,10 @@
 ﻿using VocaDb.Model.DataContracts.MikuDb;
 
-namespace VocaDb.Model.Service.AlbumImport {
+namespace VocaDb.Model.Service.AlbumImport
+{
 
-	public class AlbumImportResult {
+	public class AlbumImportResult
+	{
 
 		public MikuDbAlbumContract AlbumContract { get; set; }
 

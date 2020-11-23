@@ -4,9 +4,11 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Model.Service.QueryableExtenders {
+namespace VocaDb.Model.Service.QueryableExtenders
+{
 
-	public static class VenueQueryableExtender {
+	public static class VenueQueryableExtender
+	{
 
 		private static double GetEarthRadius(DistanceUnit unit) => unit switch
 		{
@@ -15,9 +17,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			_ => throw new ArgumentException()
 		};
 
-		public static IQueryable<Venue> OrderBy(this IQueryable<Venue> query, VenueSortRule sortRule, ContentLanguagePreference languagePreference, GeoPointQueryParams coordinates, DistanceUnit distanceUnit) {
+		public static IQueryable<Venue> OrderBy(this IQueryable<Venue> query, VenueSortRule sortRule, ContentLanguagePreference languagePreference, GeoPointQueryParams coordinates, DistanceUnit distanceUnit)
+		{
 
-			switch (sortRule) {
+			switch (sortRule)
+			{
 				case VenueSortRule.Name:
 					return query.OrderByName(languagePreference);
 				case VenueSortRule.Distance:
@@ -28,7 +32,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<Venue> OrderByDistance(this IQueryable<Venue> query, GeoPointQueryParams coordinates, DistanceUnit distanceUnit) {
+		public static IQueryable<Venue> OrderByDistance(this IQueryable<Venue> query, GeoPointQueryParams coordinates, DistanceUnit distanceUnit)
+		{
 
 			if (!coordinates.HasValue)
 				return query;
@@ -44,20 +49,24 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<Venue> OrderByName(this IQueryable<Venue> query, ContentLanguagePreference languagePreference) {
+		public static IQueryable<Venue> OrderByName(this IQueryable<Venue> query, ContentLanguagePreference languagePreference)
+		{
 			return query.OrderByEntryName(languagePreference);
 		}
 
-		public static IQueryable<Venue> WhereHasName(this IQueryable<Venue> query, SearchTextQuery textQuery) {
+		public static IQueryable<Venue> WhereHasName(this IQueryable<Venue> query, SearchTextQuery textQuery)
+		{
 			return query.WhereHasNameGeneric<Venue, VenueName>(textQuery);
 		}
 
-		public static IQueryable<Venue> WhereInCircle(this IQueryable<Venue> query, GeoPointQueryParams queryParams, double? radius, DistanceUnit distanceUnit) {
+		public static IQueryable<Venue> WhereInCircle(this IQueryable<Venue> query, GeoPointQueryParams queryParams, double? radius, DistanceUnit distanceUnit)
+		{
 
 			if (!queryParams.HasValue)
 				return query;
 
-			if (radius.HasValue) {
+			if (radius.HasValue)
+			{
 
 				var earthRadius = GetEarthRadius(distanceUnit);
 
@@ -77,7 +86,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	}
 
-	public enum VenueSortRule {
+	public enum VenueSortRule
+	{
 
 		None,
 

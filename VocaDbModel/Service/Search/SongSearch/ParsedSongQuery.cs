@@ -2,11 +2,14 @@
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
 
-namespace VocaDb.Model.Service.Search.SongSearch {
+namespace VocaDb.Model.Service.Search.SongSearch
+{
 
-	public class ParsedSongQuery {
+	public class ParsedSongQuery
+	{
 
-		public ParsedSongQuery() {
+		public ParsedSongQuery()
+		{
 			ArtistType = ArtistType.Unknown;
 		}
 

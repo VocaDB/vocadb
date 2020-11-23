@@ -24,22 +24,26 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Model.Domain.Images;
 
-namespace VocaDb.Model.Service {
+namespace VocaDb.Model.Service
+{
 
-	public class AlbumService : ServiceBase {
+	public class AlbumService : ServiceBase
+	{
 
-// ReSharper disable UnusedMember.Local
+		// ReSharper disable UnusedMember.Local
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-// ReSharper restore UnusedMember.Local
+		// ReSharper restore UnusedMember.Local
 
-		private PartialFindResult<Album> Find(ISession session, AlbumQueryParams queryParams) {
+		private PartialFindResult<Album> Find(ISession session, AlbumQueryParams queryParams)
+		{
 
 			return new AlbumSearch(new NHibernateDatabaseContext(session, PermissionContext), queryParams.LanguagePreference).Find(queryParams);
 
 		}
 
 		private PartialFindResult<Album> FindAdvanced(
-			ISession session, string query, PagingProperties paging, AlbumSortRule sortRule) {
+			ISession session, string query, PagingProperties paging, AlbumSortRule sortRule)
+		{
 
 			var queryPlan = new AlbumQueryBuilder().BuildPlan(query);
 			return FindAdvanced(session, queryPlan, paging, sortRule);
@@ -47,7 +51,8 @@ namespace VocaDb.Model.Service {
 		}
 
 		private PartialFindResult<Album> FindAdvanced(
-			ISession session, QueryPlan<Album> queryPlan, PagingProperties paging, AlbumSortRule sortRule) {
+			ISession session, QueryPlan<Album> queryPlan, PagingProperties paging, AlbumSortRule sortRule)
+		{
 
 			var querySource = new NHibernateDatabaseContext(session, PermissionContext);
 			var processor = new QueryProcessor<Album>(querySource);
@@ -56,10 +61,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory) 
-			: base(sessionFactory, permissionContext,entryLinkFactory) {}
+		public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory)
+			: base(sessionFactory, permissionContext, entryLinkFactory) { }
 
-		public ArchivedAlbumVersion Archive(ISession session, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "") {
+		public ArchivedAlbumVersion Archive(ISession session, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "")
+		{
 
 			var agentLoginData = SessionHelper.CreateAgentLoginData(session, PermissionContext);
 			var archived = ArchivedAlbumVersion.Create(album, diff, agentLoginData, reason, notes);
@@ -68,15 +74,18 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void Archive(ISession session, Album album, AlbumArchiveReason reason, string notes = "") {
+		public void Archive(ISession session, Album album, AlbumArchiveReason reason, string notes = "")
+		{
 
 			Archive(session, album, new AlbumDiff(), reason, notes);
 
 		}
 
-		public void Delete(int id, string notes) {
+		public void Delete(int id, string notes)
+		{
 
-			UpdateEntity<Album>(id, (session, a) => {
+			UpdateEntity<Album>(id, (session, a) =>
+			{
 
 				EntryPermissionManager.VerifyDelete(PermissionContext, a);
 
@@ -92,11 +101,13 @@ namespace VocaDb.Model.Service {
 		}
 
 		public PartialFindResult<T> Find<T>(Func<Album, T> fac, AlbumQueryParams queryParams)
-			where T : class {
+			where T : class
+		{
 
 			ParamIs.NotNull(() => queryParams);
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var result = Find(session, queryParams);
 
@@ -107,15 +118,17 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public PartialFindResult<AlbumContract> Find(AlbumQueryParams queryParams) {
+		public PartialFindResult<AlbumContract> Find(AlbumQueryParams queryParams)
+		{
 
 			return Find(s => new AlbumContract(s, LanguagePreference), queryParams);
 
 		}
 
 		public PartialFindResult<AlbumContract> Find(
-			SearchTextQuery textQuery, DiscType discType, int start, int maxResults, bool getTotalCount, 
-			AlbumSortRule sortRule = AlbumSortRule.Name, bool moveExactToTop = false) {
+			SearchTextQuery textQuery, DiscType discType, int start, int maxResults, bool getTotalCount,
+			AlbumSortRule sortRule = AlbumSortRule.Name, bool moveExactToTop = false)
+		{
 
 			var queryParams = new AlbumQueryParams(textQuery, discType, start, maxResults, getTotalCount, sortRule, moveExactToTop);
 			return Find(queryParams);
@@ -123,9 +136,11 @@ namespace VocaDb.Model.Service {
 		}
 
 		public PartialFindResult<AlbumContract> FindAdvanced(
-			string query, PagingProperties paging, AlbumSortRule sortRule) {
+			string query, PagingProperties paging, AlbumSortRule sortRule)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var results = FindAdvanced(session, query, paging, sortRule);
 
@@ -137,9 +152,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public int? FindByMikuDbId(int mikuDbId) {
+		public int? FindByMikuDbId(int mikuDbId)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var link = session.Query<AlbumWebLink>()
 					.FirstOrDefault(w => !w.Entry.Deleted && w.Url.Contains("mikudb.com/" + mikuDbId + "/"));
@@ -150,7 +167,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public EntryRefWithCommonPropertiesContract[] FindDuplicates(string[] anyName) {
+		public EntryRefWithCommonPropertiesContract[] FindDuplicates(string[] anyName)
+		{
 
 			var names = anyName.Where(n => !string.IsNullOrEmpty(n)).Select(n => n.Trim()).ToArray();
 
@@ -158,7 +176,8 @@ namespace VocaDb.Model.Service {
 				return new EntryRefWithCommonPropertiesContract[] { };
 
 			// TODO: moved Distinct after ToArray to work around NH bug
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				return session.Query<AlbumName>()
 					.Where(n => names.Contains(n.Value))
@@ -174,12 +193,14 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public string[] FindNames(SearchTextQuery textQuery, int maxResults) {
+		public string[] FindNames(SearchTextQuery textQuery, int maxResults)
+		{
 
 			if (textQuery.IsEmpty)
 				return new string[] { };
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var names = session.Query<AlbumName>()
 					.Where(a => !a.Album.Deleted)
@@ -196,21 +217,25 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public T GetAlbum<T>(int id, Func<Album, T> fac) {
+		public T GetAlbum<T>(int id, Func<Album, T> fac)
+		{
 
 			return HandleQuery(session => fac(session.Load<Album>(id)));
 
 		}
 
-		public AlbumContract GetAlbum(int id) {
+		public AlbumContract GetAlbum(int id)
+		{
 
 			return GetAlbum(id, a => new AlbumContract(a, PermissionContext.LanguagePreference));
 
 		}
 
-		public AlbumContract GetAlbumByLink(string link) {
+		public AlbumContract GetAlbumByLink(string link)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var webLink = session.Query<AlbumWebLink>().FirstOrDefault(p => p.Url.Contains(link));
 
@@ -220,28 +245,32 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public string GetAlbumTagString(int id, string format, int? discNumber, bool includeHeader) {
+		public string GetAlbumTagString(int id, string format, int? discNumber, bool includeHeader)
+		{
 
 			return GetAlbum(id, a => new AlbumSongFormatter(EntryLinkFactory)
 				.ApplyFormat(a, format, discNumber, PermissionContext.LanguagePreference, includeHeader));
 
 		}
 
-		public AlbumContract GetAlbumWithAdditionalNames(int id) {
+		public AlbumContract GetAlbumWithAdditionalNames(int id)
+		{
 
 			return HandleQuery(session => new AlbumContract(
 				session.Load<Album>(id), PermissionContext.LanguagePreference));
 
 		}
 
-		public AlbumWithArchivedVersionsContract GetAlbumWithArchivedVersions(int albumId) {
+		public AlbumWithArchivedVersionsContract GetAlbumWithArchivedVersions(int albumId)
+		{
 
-			return HandleQuery(session => 
+			return HandleQuery(session =>
 				new AlbumWithArchivedVersionsContract(session.Load<Album>(albumId), PermissionContext.LanguagePreference));
 
 		}
 
-		public EntryForPictureDisplayContract GetArchivedAlbumPicture(int archivedVersionId) {
+		public EntryForPictureDisplayContract GetArchivedAlbumPicture(int archivedVersionId)
+		{
 
 			return HandleQuery(session =>
 				EntryForPictureDisplayContract.Create(
@@ -255,17 +284,20 @@ namespace VocaDb.Model.Service {
 		/// <param name="id">Album Id.</param>
 		/// <param name="requestedSize">Requested size. If Empty, original size will be returned.</param>
 		/// <returns>Data contract for the picture. Can be null if there is no picture.</returns>
-		public EntryForPictureDisplayContract GetCoverPicture(int id) {
+		public EntryForPictureDisplayContract GetCoverPicture(int id)
+		{
 
 			return HandleQuery(session =>
 				EntryForPictureDisplayContract.Create(session.Load<Album>(id), PermissionContext.LanguagePreference));
 
 		}
 
-		public EntryWithTagUsagesContract GetEntryWithTagUsages(int albumId) {
+		public EntryWithTagUsagesContract GetEntryWithTagUsages(int albumId)
+		{
 
-			return HandleQuery(session => { 
-				
+			return HandleQuery(session =>
+			{
+
 				var album = session.Load<Album>(albumId);
 				return new EntryWithTagUsagesContract(album, album.Tags.ActiveUsages, LanguagePreference, PermissionContext);
 
@@ -273,26 +305,30 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public AlbumForUserContract[] GetUsersWithAlbumInCollection(int albumId) {
+		public AlbumForUserContract[] GetUsersWithAlbumInCollection(int albumId)
+		{
 
-			return HandleQuery(session => 
-				
+			return HandleQuery(session =>
+
 				session.Load<Album>(albumId)
 					.UserCollections
-			        .Where(a => a.PurchaseStatus != PurchaseStatus.Nothing)
+					.Where(a => a.PurchaseStatus != PurchaseStatus.Nothing)
 					.OrderBy(u => u.User.Name)
 					.Select(u => new AlbumForUserContract(u, LanguagePreference, includeUser: u.User.Options.PublicAlbumCollection)).ToArray());
 
 		}
 
-		public ArchivedAlbumVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
+		public ArchivedAlbumVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var contract = new ArchivedAlbumVersionDetailsContract(session.Load<ArchivedAlbumVersion>(id),
 					(comparedVersionId != 0 ? session.Load<ArchivedAlbumVersion>(comparedVersionId) : null), PermissionContext);
 
-				if (contract.Hidden) {
+				if (contract.Hidden)
+				{
 					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
 				}
 
@@ -302,11 +338,13 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void Restore(int albumId) {
+		public void Restore(int albumId)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
 
-			HandleTransaction(session => {
+			HandleTransaction(session =>
+			{
 
 				var album = session.Load<Album>(albumId);
 
@@ -320,12 +358,14 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void UpdateArtistForAlbumIsSupport(int artistForAlbumId, bool isSupport) {
+		public void UpdateArtistForAlbumIsSupport(int artistForAlbumId, bool isSupport)
+		{
 
 			VerifyManageDatabase();
 
-			HandleTransaction(session => {
-				
+			HandleTransaction(session =>
+			{
+
 				var artistForAlbum = session.Load<ArtistForAlbum>(artistForAlbumId);
 				var album = artistForAlbum.Album;
 
@@ -340,11 +380,13 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void UpdateArtistForAlbumRoles(int artistForAlbumId, ArtistRoles roles) {
+		public void UpdateArtistForAlbumRoles(int artistForAlbumId, ArtistRoles roles)
+		{
 
 			VerifyManageDatabase();
 
-			HandleTransaction(session => {
+			HandleTransaction(session =>
+			{
 
 				var artistForAlbum = session.Load<ArtistForAlbum>(artistForAlbumId);
 				var album = artistForAlbum.Album;
@@ -362,7 +404,8 @@ namespace VocaDb.Model.Service {
 
 	}
 
-	public enum AlbumSortRule {
+	public enum AlbumSortRule
+	{
 
 		None,
 

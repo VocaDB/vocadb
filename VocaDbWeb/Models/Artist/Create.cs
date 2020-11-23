@@ -9,11 +9,14 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.ExtLinks;
 
-namespace VocaDb.Web.Models.Artist {
+namespace VocaDb.Web.Models.Artist
+{
 
-	public class Create {
+	public class Create
+	{
 
-		public Create() {
+		public Create()
+		{
 			ArtistType = ArtistType.Producer;
 			Description = string.Empty;
 			WebLinkCategory = WebLinkCategory.Other;
@@ -42,7 +45,7 @@ namespace VocaDb.Web.Models.Artist {
 		[StringLength(255)]
 		public string NameRomaji { get; set; }
 
-		public WebLinkCategory WebLinkCategory { get; set;}
+		public WebLinkCategory WebLinkCategory { get; set; }
 
 		[Display(ResourceType = typeof(CreateStrings), Name = "WebLinkDescription")]
 		[StringLength(512)]
@@ -52,16 +55,19 @@ namespace VocaDb.Web.Models.Artist {
 		[StringLength(512)]
 		public string WebLinkUrl { get; set; }
 
-		public CreateArtistContract ToContract() {
+		public CreateArtistContract ToContract()
+		{
 
-			return new CreateArtistContract {
+			return new CreateArtistContract
+			{
 				ArtistType = this.ArtistType,
 				Description = this.Description ?? string.Empty,
 				Draft = this.Draft,
 				Names = LocalizedStringHelper.SkipNullAndEmpty(NameOriginal, NameRomaji, NameEnglish).ToArray(),
-				WebLink = (!string.IsNullOrWhiteSpace(WebLinkUrl) ? new WebLinkContract { 
-					Description = WebLinkDescription ?? string.Empty, 
-					Url = WebLinkUrl, 
+				WebLink = (!string.IsNullOrWhiteSpace(WebLinkUrl) ? new WebLinkContract
+				{
+					Description = WebLinkDescription ?? string.Empty,
+					Url = WebLinkUrl,
 					Category = WebLinkCategory
 				} : null)
 			};

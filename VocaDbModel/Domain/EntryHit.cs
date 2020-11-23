@@ -1,19 +1,23 @@
 
 using System;
 
-namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain
+{
 
-	public abstract class EntryHit : IEntryWithLongId {
+	public abstract class EntryHit : IEntryWithLongId
+	{
 
 		private int agent;
 
 		protected EntryHit() { }
 
-		protected EntryHit(int agent) {
+		protected EntryHit(int agent)
+		{
 			Agent = agent;
 		}
 
-		public virtual int Agent {
+		public virtual int Agent
+		{
 			get { return agent; }
 			set { agent = value; }
 		}
@@ -27,23 +31,28 @@ namespace VocaDb.Model.Domain {
 
 	}
 
-	public class GenericEntryHit<TEntry> : EntryHit where TEntry: class {
+	public class GenericEntryHit<TEntry> : EntryHit where TEntry : class
+	{
 		private TEntry entry;
 
-		public GenericEntryHit() {}
-		public GenericEntryHit(TEntry entry, int agent) : base(agent) {
+		public GenericEntryHit() { }
+		public GenericEntryHit(TEntry entry, int agent) : base(agent)
+		{
 			Entry = entry;
 		}
 
-		public virtual TEntry Entry {
+		public virtual TEntry Entry
+		{
 			get { return entry; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				entry = value;
 			}
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return "Hit for " + Entry + " by " + Agent;
 		}
 

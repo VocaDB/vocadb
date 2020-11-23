@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.Domain.Versioning {
+namespace VocaDb.Model.Domain.Versioning
+{
 
-	public interface IArchivedVersionsManager {
+	public interface IArchivedVersionsManager
+	{
 
 		IEnumerable<ArchivedObjectVersion> VersionsBase { get; }
 
@@ -15,16 +17,19 @@ namespace VocaDb.Model.Domain.Versioning {
 
 	}
 
-	public class ArchivedVersionManager<TVersion, TField> : 
+	public class ArchivedVersionManager<TVersion, TField> :
 		IArchivedVersionsManager
-		where TVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<TField> 
-		where TField : struct, IConvertible {
+		where TVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<TField>
+		where TField : struct, IConvertible
+	{
 
 		private IList<TVersion> archivedVersions = new List<TVersion>();
 
-		public virtual IList<TVersion> Versions {
+		public virtual IList<TVersion> Versions
+		{
 			get { return archivedVersions; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
 			}
@@ -32,7 +37,8 @@ namespace VocaDb.Model.Domain.Versioning {
 
 		public IEnumerable<ArchivedObjectVersion> VersionsBase => Versions;
 
-		public virtual TVersion Add(TVersion newVersion) {
+		public virtual TVersion Add(TVersion newVersion)
+		{
 
 			ParamIs.NotNull(() => newVersion);
 
@@ -41,15 +47,18 @@ namespace VocaDb.Model.Domain.Versioning {
 
 		}
 
-		public virtual void Clear() {
+		public virtual void Clear()
+		{
 			Versions.Clear();
 		}
 
-		ArchivedObjectVersion IArchivedVersionsManager.GetLatestVersion() {
+		ArchivedObjectVersion IArchivedVersionsManager.GetLatestVersion()
+		{
 			return GetLatestVersion();
 		}
 
-		public virtual TVersion GetLatestVersion() {
+		public virtual TVersion GetLatestVersion()
+		{
 
 			// Sort first by version number because it's more accurate.
 			// Also need to sort by creation date because version number is not available for all entry types.
@@ -71,7 +80,8 @@ namespace VocaDb.Model.Domain.Versioning {
 		/// Not every version contains every field, so when constructing the current state of an entry, 
 		/// the latest version containing each field must be processed.
 		/// </remarks>
-		public virtual TVersion GetLatestVersionWithField(TField field, int lastVersion) {
+		public virtual TVersion GetLatestVersionWithField(TField field, int lastVersion)
+		{
 
 			return Versions
 				.Where(a => a.Version <= lastVersion && a.IsIncluded(field))
@@ -85,7 +95,8 @@ namespace VocaDb.Model.Domain.Versioning {
 		/// </summary>
 		/// <param name="beforeVer">Version to be compared. Can be null in which case all versions are returned.</param>
 		/// <returns>Versions whose number is lower than the compared version. Cannot be null.</returns>
-		public virtual IEnumerable<TVersion> GetPreviousVersions(TVersion beforeVer, IUserPermissionContext permissionContext) {
+		public virtual IEnumerable<TVersion> GetPreviousVersions(TVersion beforeVer, IUserPermissionContext permissionContext)
+		{
 
 			if (beforeVer == null)
 				return Versions;
@@ -96,13 +107,15 @@ namespace VocaDb.Model.Domain.Versioning {
 
 		}
 
-		public virtual TVersion GetVersion(int ver) {
+		public virtual TVersion GetVersion(int ver)
+		{
 
 			return Versions.FirstOrDefault(v => v.Version == ver);
 
 		}
 
-		public virtual bool HasAny() {
+		public virtual bool HasAny()
+		{
 			return Versions.Any();
 		}
 

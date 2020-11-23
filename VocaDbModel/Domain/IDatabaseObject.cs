@@ -1,4 +1,5 @@
-namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain
+{
 
 	/// <summary>
 	/// Base interface for all objects saved in database.
@@ -12,7 +13,8 @@ namespace VocaDb.Model.Domain {
 	/// Child entities depend on one or more root entities, for example
 	/// AlbumName, TagUsage.
 	/// </remarks>
-	public interface IDatabaseObject {
+	public interface IDatabaseObject
+	{
 
 	}
 

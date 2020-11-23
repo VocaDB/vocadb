@@ -5,13 +5,16 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Service.Search.AlbumSearch {
+namespace VocaDb.Model.Service.Search.AlbumSearch
+{
 
-	public class AlbumNameFilter : ISearchFilter<Album> {
+	public class AlbumNameFilter : ISearchFilter<Album>
+	{
 
 		private readonly string[] names;
 
-		public AlbumNameFilter(IEnumerable<string> names) {
+		public AlbumNameFilter(IEnumerable<string> names)
+		{
 			this.names = names.ToArray();
 		}
 
@@ -35,13 +38,15 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		}*/
 
-		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session) {
+		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session)
+		{
 
 			return query.WhereHasNameGeneric<Album, AlbumName>(SearchTextQuery.Create(names, NameMatchMode.Words));
 
 		}
 
-		public IQueryable<Album> Query(IDatabaseContext session) {
+		public IQueryable<Album> Query(IDatabaseContext session)
+		{
 
 			return session.Query<Album>().WhereHasName(new SearchTextQuery(string.Empty, NameMatchMode.Words, string.Empty, names));
 

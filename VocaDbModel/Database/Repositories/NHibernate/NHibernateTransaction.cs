@@ -1,13 +1,16 @@
 using NHibernate;
 using System.Threading.Tasks;
 
-namespace VocaDb.Model.Database.Repositories.NHibernate {
+namespace VocaDb.Model.Database.Repositories.NHibernate
+{
 
-	public class NHibernateTransaction : IMinimalTransaction {
+	public class NHibernateTransaction : IMinimalTransaction
+	{
 
 		private readonly ITransaction tx;
 
-		public NHibernateTransaction(ITransaction tx) {
+		public NHibernateTransaction(ITransaction tx)
+		{
 			ParamIs.NotNull(() => tx);
 			this.tx = tx;
 		}

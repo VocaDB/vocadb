@@ -12,20 +12,23 @@ using VocaDb.Model.Utils;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.SongLists;
 
-namespace VocaDb.Web.Controllers {
+namespace VocaDb.Web.Controllers
+{
 	public class SongListController : ControllerBase
-    {
+	{
 
 		public const int SongsPerPage = 50;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly SongListQueries queries;
 
-		public SongListController(SongListQueries queries, IEntryLinkFactory entryLinkFactory) {
+		public SongListController(SongListQueries queries, IEntryLinkFactory entryLinkFactory)
+		{
 			this.queries = queries;
 			this.entryLinkFactory = entryLinkFactory;
 		}
 
-		public ActionResult Details(int id = invalidId) {
+		public ActionResult Details(int id = invalidId)
+		{
 
 			if (id == invalidId)
 				return NoId();
@@ -35,11 +38,14 @@ namespace VocaDb.Web.Controllers {
 			PageProperties.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
 			PageProperties.Description = contract.Description;
 
-			if (contract.FeaturedCategory == SongListFeaturedCategory.Nothing) {
+			if (contract.FeaturedCategory == SongListFeaturedCategory.Nothing)
+			{
 				PageProperties.PageTitle = string.Format("{0} - {1}", ViewRes.SongList.DetailsStrings.SongList, contract.Name);
 				PageProperties.Title = contract.Name;
 				PageProperties.Subtitle = ViewRes.SongList.DetailsStrings.SongList;
-			} else {
+			}
+			else
+			{
 
 				var categoryName = Translate.SongListFeaturedCategoryNames[contract.FeaturedCategory];
 
@@ -53,7 +59,8 @@ namespace VocaDb.Web.Controllers {
 
 			viewModel.SmallThumbUrl = Url.ImageThumb(contract.MainPicture, ImageSize.SmallThumb);
 			var thumbUrl = viewModel.ThumbUrl = Url.ImageThumb(contract.MainPicture, ImageSize.Original) ?? Url.ImageThumb(contract.MainPicture, ImageSize.Thumb);
-			if (!string.IsNullOrEmpty(thumbUrl)) {
+			if (!string.IsNullOrEmpty(thumbUrl))
+			{
 				PageProperties.OpenGraph.Image = thumbUrl;
 			}
 
@@ -63,38 +70,41 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-        //
-        // GET: /SongList/Edit/
-        [Authorize]
-        public ActionResult Edit(int? id)
-        {
+		//
+		// GET: /SongList/Edit/
+		[Authorize]
+		public ActionResult Edit(int? id)
+		{
 
 			var contract = id != null ? queries.GetSongList(id.Value) : new SongListContract();
 			var model = new SongListEditViewModel(contract, PermissionContext);
 
-            return View(model);
+			return View(model);
 
-        }
+		}
 
 		[HttpPost]
-        [Authorize]
+		[Authorize]
 		public ActionResult Edit(SongListEditViewModel model)
-        {
+		{
 
-			if (model == null) {
-				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "View model was null - probably JavaScript is disabled");				
+			if (model == null)
+			{
+				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "View model was null - probably JavaScript is disabled");
 			}
 
 			var coverPicUpload = Request.Files["thumbPicUpload"];
 			UploadedFileContract uploadedPicture = null;
-			if (coverPicUpload != null && coverPicUpload.ContentLength > 0) {
+			if (coverPicUpload != null && coverPicUpload.ContentLength > 0)
+			{
 
 				CheckUploadedPicture(coverPicUpload, "thumbPicUpload");
-				uploadedPicture = new UploadedFileContract {Mime = coverPicUpload.ContentType, Stream = coverPicUpload.InputStream};
+				uploadedPicture = new UploadedFileContract { Mime = coverPicUpload.ContentType, Stream = coverPicUpload.InputStream };
 
 			}
 
-			if (!ModelState.IsValid) {
+			if (!ModelState.IsValid)
+			{
 				return View(new SongListEditViewModel(model.ToContract(), PermissionContext));
 			}
 
@@ -104,7 +114,8 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		public ActionResult Export(int id) {
+		public ActionResult Export(int id)
+		{
 
 			var songList = queries.GetSongList(id);
 			var formatString = "%notes%;%publishdate%;%title%;%url%;%pv.original.niconicodouga%;%pv.original.!niconicodouga%;%pv.reprint%";
@@ -117,20 +128,23 @@ namespace VocaDb.Web.Controllers {
 
 		}
 
-		public ActionResult Featured(FeaturedViewModel viewModel) {
+		public ActionResult Featured(FeaturedViewModel viewModel)
+		{
 
 			return View(viewModel);
 
 		}
 
 		[Authorize]
-		public ActionResult Import() {
+		public ActionResult Import()
+		{
 
 			return View();
 
 		}
 
-		public ActionResult Versions(int id = invalidId) {
+		public ActionResult Versions(int id = invalidId)
+		{
 
 			if (id == invalidId)
 				return NoId();
@@ -143,5 +157,5 @@ namespace VocaDb.Web.Controllers {
 			return View(contract);
 
 		}
-    }
+	}
 }

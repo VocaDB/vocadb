@@ -2,11 +2,14 @@
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.Service.Search {
+namespace VocaDb.Model.Service.Search
+{
 
-	public static class AdvancedSearchFilters {
+	public static class AdvancedSearchFilters
+	{
 
-		public static Tuple<string, AdvancedFilterType, string, bool> Filter(string description, AdvancedFilterType filterType, string param = "", bool negate = false) {
+		public static Tuple<string, AdvancedFilterType, string, bool> Filter(string description, AdvancedFilterType filterType, string param = "", bool negate = false)
+		{
 			return Tuple.Create(description, filterType, param, negate);
 		}
 

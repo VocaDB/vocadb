@@ -1,11 +1,14 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.Mapping.Artists {
+namespace VocaDb.Model.Mapping.Artists
+{
 
-	public class ArtistNameMap : ClassMap<ArtistName> {
+	public class ArtistNameMap : ClassMap<ArtistName>
+	{
 
-		public ArtistNameMap() {
+		public ArtistNameMap()
+		{
 
 			Cache.ReadWrite();
 			Id(m => m.Id);

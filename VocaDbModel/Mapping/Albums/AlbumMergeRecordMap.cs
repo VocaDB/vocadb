@@ -1,11 +1,14 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Albums;
 
-namespace VocaDb.Model.Mapping.Albums {
+namespace VocaDb.Model.Mapping.Albums
+{
 
-	public class AlbumMergeRecordMap : ClassMap<AlbumMergeRecord> {
+	public class AlbumMergeRecordMap : ClassMap<AlbumMergeRecord>
+	{
 
-		public AlbumMergeRecordMap() {
+		public AlbumMergeRecordMap()
+		{
 
 			Id(m => m.Id);
 

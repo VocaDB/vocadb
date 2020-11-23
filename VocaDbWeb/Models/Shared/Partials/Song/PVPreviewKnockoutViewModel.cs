@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Song {
+namespace VocaDb.Web.Models.Shared.Partials.Song
+{
 
-	public class PVPreviewKnockoutViewModel {
+	public class PVPreviewKnockoutViewModel
+	{
 
-		public PVPreviewKnockoutViewModel(string getPvServiceIcons) {
+		public PVPreviewKnockoutViewModel(string getPvServiceIcons)
+		{
 			GetPvServiceIcons = getPvServiceIcons;
 		}
 

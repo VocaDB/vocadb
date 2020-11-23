@@ -2,14 +2,17 @@
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts.Artists {
+namespace VocaDb.Model.DataContracts.Artists
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistForArtistContract {
+	public class ArtistForArtistContract
+	{
 
-		public ArtistForArtistContract() {}
+		public ArtistForArtistContract() { }
 
-		public ArtistForArtistContract(ArtistForArtist groupForArtist, ContentLanguagePreference languagePreference) {
+		public ArtistForArtistContract(ArtistForArtist groupForArtist, ContentLanguagePreference languagePreference)
+		{
 
 			ParamIs.NotNull(() => groupForArtist);
 

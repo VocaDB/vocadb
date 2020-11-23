@@ -1,6 +1,8 @@
-namespace VocaDb.Model.Service.Search.AlbumSearch {
+namespace VocaDb.Model.Service.Search.AlbumSearch
+{
 
-	public enum ArtistAlbumParticipationStatus {
+	public enum ArtistAlbumParticipationStatus
+	{
 
 		/// <summary>
 		/// Get content regardless of participation status.

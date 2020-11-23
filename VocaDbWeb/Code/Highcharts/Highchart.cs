@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace VocaDb.Web.Code.Highcharts {
+namespace VocaDb.Web.Code.Highcharts
+{
 
-	public class Highchart {
+	public class Highchart
+	{
 
 		public Chart Chart { get; set; }
 
@@ -20,7 +22,7 @@ namespace VocaDb.Web.Code.Highcharts {
 
 		public Axis XAxis { get; set; }
 
-		public Axis YAxis { get; set;  }
+		public Axis YAxis { get; set; }
 
 	}
 

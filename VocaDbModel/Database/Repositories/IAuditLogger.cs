@@ -3,9 +3,11 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Database.Repositories {
+namespace VocaDb.Model.Database.Repositories
+{
 
-	public interface IAuditLogger {
+	public interface IAuditLogger
+	{
 
 		/// <summary>
 		/// Logs an action in syslog. 

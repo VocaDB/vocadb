@@ -7,27 +7,32 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
+namespace VocaDb.Model.DataContracts.Songs
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongContract : IEntryWithStatus {
+	public class SongContract : IEntryWithStatus
+	{
 
 		string IEntryBase.DefaultName => Name;
 
 		EntryType IEntryBase.EntryType => EntryType.Song;
 
-		public SongContract() {}
+		public SongContract() { }
 
 		public SongContract(Song song, ContentLanguagePreference languagePreference, bool getThumbUrl = true)
-			: this(song, languagePreference, string.Empty) {
+			: this(song, languagePreference, string.Empty)
+		{
 
-			if (getThumbUrl) {
+			if (getThumbUrl)
+			{
 				ThumbUrl = song.GetThumbUrl();
 			}
 
 		}
 
-		public SongContract(Song song, ContentLanguagePreference languagePreference, string thumbUrl) {
+		public SongContract(Song song, ContentLanguagePreference languagePreference, string thumbUrl)
+		{
 
 			ParamIs.NotNull(() => song);
 
@@ -100,7 +105,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 		[DataMember]
 		public int Version { get; set; }
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("song '{0}' [{1}]", Name, Id);
 		}
 

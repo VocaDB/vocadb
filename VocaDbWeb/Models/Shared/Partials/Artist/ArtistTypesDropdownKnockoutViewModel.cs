@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Artist {
+namespace VocaDb.Web.Models.Shared.Partials.Artist
+{
 
-	public class ArtistTypesDropdownKnockoutViewModel {
+	public class ArtistTypesDropdownKnockoutViewModel
+	{
 
-		public ArtistTypesDropdownKnockoutViewModel(string binding) {
+		public ArtistTypesDropdownKnockoutViewModel(string binding)
+		{
 			Binding = binding;
 		}
 

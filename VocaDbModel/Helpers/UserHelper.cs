@@ -2,11 +2,14 @@
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Helpers {
+namespace VocaDb.Model.Helpers
+{
 
-	public static class UserHelper {
+	public static class UserHelper
+	{
 
-		public static int GetLevel(int power) {
+		public static int GetLevel(int power)
+		{
 
 			if (power <= 0)
 				return 0;
@@ -15,7 +18,8 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static int GetPower(UserDetailsContract detailsContract, int ownedAlbumCount, int albumRatingCount, int songListCount) {
+		public static int GetPower(UserDetailsContract detailsContract, int ownedAlbumCount, int albumRatingCount, int songListCount)
+		{
 
 			ParamIs.NotNull(() => detailsContract);
 
@@ -35,8 +39,9 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static bool IsVeteran(UserDetailsContract details) {
-			
+		public static bool IsVeteran(UserDetailsContract details)
+		{
+
 			var timeOnSite = DateTime.Now - details.CreateDate;
 			return
 				details.Active &&

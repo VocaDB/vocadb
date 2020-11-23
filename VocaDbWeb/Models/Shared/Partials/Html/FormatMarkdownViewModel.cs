@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Html {
+namespace VocaDb.Web.Models.Shared.Partials.Html
+{
 
-	public class FormatMarkdownViewModel {
+	public class FormatMarkdownViewModel
+	{
 
-		public FormatMarkdownViewModel(string text) {
+		public FormatMarkdownViewModel(string text)
+		{
 			Text = text;
 		}
 

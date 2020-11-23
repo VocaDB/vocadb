@@ -27,9 +27,11 @@ using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils.Config;
 
-namespace VocaDb.Model.Service {
+namespace VocaDb.Model.Service
+{
 
-	public class SongService : ServiceBase {
+	public class SongService : ServiceBase
+	{
 
 #pragma warning disable 169
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
@@ -38,24 +40,28 @@ namespace VocaDb.Model.Service {
 		private readonly VdbConfigManager config;
 		private readonly IEntryUrlParser entryUrlParser;
 
-		private PartialFindResult<Song> Find(ISession session, SongQueryParams queryParams) {
+		private PartialFindResult<Song> Find(ISession session, SongQueryParams queryParams)
+		{
 			return new SongSearch(new NHibernateDatabaseContext(session, PermissionContext), queryParams.LanguagePreference, entryUrlParser).Find(queryParams);
 		}
 
 		public SongService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser,
 			VdbConfigManager config)
-			: base(sessionFactory, permissionContext, entryLinkFactory) {
+			: base(sessionFactory, permissionContext, entryLinkFactory)
+		{
 
 			this.entryUrlParser = entryUrlParser;
 			this.config = config;
 
 		}
 
-		public void AddSongToList(int listId, int songId, string notes) {
+		public void AddSongToList(int listId, int songId, string notes)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			HandleTransaction(session => {
+			HandleTransaction(session =>
+			{
 
 				var list = session.Load<SongList>(listId);
 				var items = session.Query<SongInList>().Where(s => s.List.Id == listId);
@@ -77,7 +83,8 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void Archive(ISession session, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
+		public void Archive(ISession session, Song song, SongDiff diff, SongArchiveReason reason, string notes = "")
+		{
 
 			var agentLoginData = SessionHelper.CreateAgentLoginData(session, PermissionContext);
 			var archived = ArchivedSongVersion.Create(song, diff, agentLoginData, reason, notes);
@@ -85,15 +92,18 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void Archive(ISession session, Song song, SongArchiveReason reason, string notes = "") {
+		public void Archive(ISession session, Song song, SongArchiveReason reason, string notes = "")
+		{
 
 			Archive(session, song, new SongDiff(), reason, notes);
 
 		}
 
-		public void Delete(int id, string notes) {
+		public void Delete(int id, string notes)
+		{
 
-			UpdateEntity<Song>(id, (session, song) => {
+			UpdateEntity<Song>(id, (session, song) =>
+			{
 
 				EntryPermissionManager.VerifyDelete(PermissionContext, song);
 
@@ -108,17 +118,23 @@ namespace VocaDb.Model.Service {
 		}
 
 		public T FindFirst<T>(Func<Song, ISession, T> fac, string[] query, NameMatchMode nameMatchMode)
-			where T : class {
+			where T : class
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
-				foreach (var q in query.Where(q => !string.IsNullOrWhiteSpace(q))) {
+				foreach (var q in query.Where(q => !string.IsNullOrWhiteSpace(q)))
+				{
 
 					var result = Find(session,
-						new SongQueryParams {
-							Common = new CommonSearchParams {
+						new SongQueryParams
+						{
+							Common = new CommonSearchParams
+							{
 								TextQuery = SearchTextQuery.Create(q, nameMatchMode),
-								OnlyByName = true, MoveExactToTop = true
+								OnlyByName = true,
+								MoveExactToTop = true
 							},
 							LanguagePreference = LanguagePreference,
 							Paging = new PagingProperties(0, 30, false)
@@ -137,18 +153,21 @@ namespace VocaDb.Model.Service {
 
 		private IEntryTypeTagRepository GetEntryTypeTags(ISession session) => new EntryTypeTags(new NHibernateDatabaseContext(session, PermissionContext));
 
-		public SongDetailsContract FindFirstDetails(SearchTextQuery textQuery) {
+		public SongDetailsContract FindFirstDetails(SearchTextQuery textQuery)
+		{
 
-			return FindFirst((s, session) => new SongDetailsContract(s, PermissionContext.LanguagePreference, new SongListBaseContract[0], 
-				config.SpecialTags, GetEntryTypeTags(session), PermissionContext, null, null), 
-				new[]{ textQuery.Query }, textQuery.MatchMode);
+			return FindFirst((s, session) => new SongDetailsContract(s, PermissionContext.LanguagePreference, new SongListBaseContract[0],
+				config.SpecialTags, GetEntryTypeTags(session), PermissionContext, null, null),
+				new[] { textQuery.Query }, textQuery.MatchMode);
 
 		}
 
 		public PartialFindResult<T> Find<T>(Func<Song, T> fac, SongQueryParams queryParams)
-			where T : class {
+			where T : class
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var result = Find(session, queryParams);
 
@@ -159,28 +178,33 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public PartialFindResult<SongContract> Find(SongQueryParams queryParams) {
+		public PartialFindResult<SongContract> Find(SongQueryParams queryParams)
+		{
 
 			return Find(s => new SongContract(s, PermissionContext.LanguagePreference), queryParams);
 
 		}
 
-		public PartialFindResult<SongWithAlbumAndPVsContract> FindWithAlbum(SongQueryParams queryParams, bool getPVs) {
+		public PartialFindResult<SongWithAlbumAndPVsContract> FindWithAlbum(SongQueryParams queryParams, bool getPVs)
+		{
 
 			return Find(s => new SongWithAlbumAndPVsContract(s, PermissionContext.LanguagePreference, getPVs), queryParams);
 
 		}
 
-		public PartialFindResult<SongContract> FindWithThumbPreferNotNico(SongQueryParams queryParams) {
+		public PartialFindResult<SongContract> FindWithThumbPreferNotNico(SongQueryParams queryParams)
+		{
 
 			return Find(s => new SongContract(s, PermissionContext.LanguagePreference, VideoServiceHelper.GetThumbUrlPreferNotNico(s.PVs.PVs)), queryParams);
 
 		}
 
 		[Obsolete]
-		public SongContract[] FindByName(string term, int maxResults) {
+		public SongContract[] FindByName(string term, int maxResults)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var direct = session.Query<Song>()
 					.Where(s =>
@@ -210,12 +234,14 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public string[] FindNames(SearchTextQuery textQuery, int maxResults) {
+		public string[] FindNames(SearchTextQuery textQuery, int maxResults)
+		{
 
 			if (textQuery.IsEmpty)
 				return new string[] { };
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var names = session.Query<SongName>()
 					.Where(a => !a.Song.Deleted)
@@ -232,9 +258,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public EntryWithTagUsagesContract GetEntryWithTagUsages(int songId) {
+		public EntryWithTagUsagesContract GetEntryWithTagUsages(int songId)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var song = session.Load<Song>(songId);
 				return new EntryWithTagUsagesContract(song, song.Tags.ActiveUsages, LanguagePreference, PermissionContext);
@@ -243,19 +271,22 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public LyricsForSongContract GetRandomLyricsForSong(string query) {
+		public LyricsForSongContract GetRandomLyricsForSong(string query)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
-				var songContract = Find(session, new SongQueryParams(SearchTextQuery.Create(query), 
-					new SongType[] {}, 0, 10, false, 
-					SongSortRule.Name, false, true, null) {
+				var songContract = Find(session, new SongQueryParams(SearchTextQuery.Create(query),
+					new SongType[] { }, 0, 10, false,
+					SongSortRule.Name, false, true, null)
+				{
 					AdvancedFilters = new[] { new AdvancedSearchFilter { FilterType = AdvancedFilterType.Lyrics, Param = AdvancedSearchFilter.Any } }
 				}).Items;
 
 				if (!songContract.Any())
 					return null;
-				
+
 				var songIds = songContract.Select(s => s.Id).ToArray();
 
 				var songs = session.Query<Song>().Where(s => songIds.Contains(s.Id)).ToArray();
@@ -272,9 +303,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public LyricsForSongContract GetRandomSongWithLyricsDetails() {
+		public LyricsForSongContract GetRandomSongWithLyricsDetails()
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var ids = session.Query<LyricsForSong>().Select(s => s.Id).ToArray();
 				var id = ids[new Random().Next(ids.Length)];
@@ -285,19 +318,22 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public T GetSong<T>(int id, Func<Song, T> fac) {
+		public T GetSong<T>(int id, Func<Song, T> fac)
+		{
 
 			return HandleQuery(session => fac(session.Load<Song>(id)));
 
 		}
 
-		public SongListBaseContract[] GetSongListsForCurrentUser(int ignoreSongId) {
+		public SongListBaseContract[] GetSongListsForCurrentUser(int ignoreSongId)
+		{
 
 			PermissionContext.VerifyLogin();
 
 			var canEditPools = PermissionContext.HasPermission(PermissionToken.EditFeaturedLists);
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var ignoredLists = session
 					.Query<SongInList>()
@@ -308,8 +344,8 @@ namespace VocaDb.Model.Service {
 
 				return session.Query<SongList>()
 					.WhereNotDeleted()
-					.Where(l => !ignoredLists.Contains(l.Id) && 
-						((l.Author.Id == PermissionContext.LoggedUser.Id && l.FeaturedCategory == SongListFeaturedCategory.Nothing) 
+					.Where(l => !ignoredLists.Contains(l.Id) &&
+						((l.Author.Id == PermissionContext.LoggedUser.Id && l.FeaturedCategory == SongListFeaturedCategory.Nothing)
 							|| (canEditPools && l.FeaturedCategory == SongListFeaturedCategory.Pools)))
 					.OrderBy(l => l.Name)
 					.ToArray()
@@ -320,9 +356,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongListContract[] GetPublicSongListsForSong(int songId) {
+		public SongListContract[] GetPublicSongListsForSong(int songId)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var song = session.Load<Song>(songId);
 				var userId = PermissionContext.LoggedUserId;
@@ -338,23 +376,27 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongContract GetSongWithAdditionalNames(int id) {
+		public SongContract GetSongWithAdditionalNames(int id)
+		{
 
 			return HandleQuery(
 				session => new SongContract(session.Load<Song>(id), PermissionContext.LanguagePreference));
 
 		}
 
-		public SongWithArchivedVersionsContract GetSongWithArchivedVersions(int songId) {
+		public SongWithArchivedVersionsContract GetSongWithArchivedVersions(int songId)
+		{
 
 			return HandleQuery(session => new SongWithArchivedVersionsContract(session.Load<Song>(songId), PermissionContext.LanguagePreference));
 
 		}
 
-		public T GetSongWithPV<T>(Func<Song, T> fac, PVService service, string pvId) 
-			where T : class {
+		public T GetSongWithPV<T>(Func<Song, T> fac, PVService service, string pvId)
+			where T : class
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var pv = session.Query<PVForSong>()
 					.FirstOrDefault(p => p.Service == service && p.PVId == pvId && !p.Song.Deleted);
@@ -365,23 +407,26 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongContract GetSongWithPV(PVService service, string pvId) {
+		public SongContract GetSongWithPV(PVService service, string pvId)
+		{
 
 			return GetSongWithPV(s => new SongContract(s, PermissionContext.LanguagePreference), service, pvId);
 
 		}
 
-		public SongWithAlbumContract GetSongWithPVAndAlbum(PVService service, string pvId) {
+		public SongWithAlbumContract GetSongWithPVAndAlbum(PVService service, string pvId)
+		{
 
 			return GetSongWithPV(s => new SongWithAlbumContract(s, PermissionContext.LanguagePreference), service, pvId);
 
 		}
 
-		public SongContract[] GetSongs(string filter, int start, int count) {
+		public SongContract[] GetSongs(string filter, int start, int count)
+		{
 
 			return HandleQuery(session => session.Query<Song>()
 				.Where(s => string.IsNullOrEmpty(filter)
-					|| s.Names.SortNames.Japanese.Contains(filter) 
+					|| s.Names.SortNames.Japanese.Contains(filter)
 					|| s.NicoId == filter)
 				.OrderBy(s => s.Names.SortNames.Japanese)
 				.Skip(start)
@@ -392,15 +437,18 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public ArchivedSongVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
+		public ArchivedSongVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var contract = new ArchivedSongVersionDetailsContract(session.Load<ArchivedSongVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedSongVersion>(comparedVersionId) : null,
 					PermissionContext);
 
-				if (contract.Hidden) {
+				if (contract.Hidden)
+				{
 					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
 				}
 
@@ -410,11 +458,13 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void Restore(int songId) {
+		public void Restore(int songId)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
 
-			HandleTransaction(session => {
+			HandleTransaction(session =>
+			{
 
 				var song = session.Load<Song>(songId);
 
@@ -428,9 +478,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public SongDetailsContract XGetSongByNameArtistAndAlbum(string name, string artist, string album) {
+		public SongDetailsContract XGetSongByNameArtistAndAlbum(string name, string artist, string album)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var matches = session.Query<SongName>().Where(n => n.Value == name)
 					.Select(n => n.Song)
@@ -438,7 +490,8 @@ namespace VocaDb.Model.Service {
 
 				Artist[] artists = null;
 
-				if (!string.IsNullOrEmpty(artist)) {
+				if (!string.IsNullOrEmpty(artist))
+				{
 
 					artists = session.Query<ArtistName>()
 						.WhereArtistNameIs(ArtistSearchTextQuery.Create(artist))
@@ -453,7 +506,8 @@ namespace VocaDb.Model.Service {
 
 				Album[] albums = null;
 
-				if (!string.IsNullOrEmpty(album)) {
+				if (!string.IsNullOrEmpty(album))
+				{
 
 					albums = session.Query<Album>()
 						.WhereHasName(SearchTextQuery.Create(album))
@@ -493,7 +547,8 @@ namespace VocaDb.Model.Service {
 
 	}
 
-	public enum SongSortRule {
+	public enum SongSortRule
+	{
 
 		None,
 

@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.DataContracts.Songs {
+﻿namespace VocaDb.Model.DataContracts.Songs
+{
 
-	public enum SongMatchProperty {
+	public enum SongMatchProperty
+	{
 
 		PV,
 

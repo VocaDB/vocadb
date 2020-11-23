@@ -15,10 +15,12 @@ using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Tests.DatabaseTests.Queries {
+namespace VocaDb.Tests.DatabaseTests.Queries
+{
 
 	[TestClass]
-	public class EventQueriesDatabaseTests {
+	public class EventQueriesDatabaseTests
+	{
 
 		private readonly DatabaseTestContext<IEventRepository> context = new DatabaseTestContext<IEventRepository>();
 		private readonly FakeEntryLinkFactory entryLinkFactory = new FakeEntryLinkFactory();
@@ -29,11 +31,13 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		private readonly FakeUserIconFactory userIconFactory = new FakeUserIconFactory();
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 
-		private Task<ReleaseEventForEditContract> Update(ReleaseEventForEditContract contract) {
+		private Task<ReleaseEventForEditContract> Update(ReleaseEventForEditContract contract)
+		{
 
-			return context.RunTestAsync(async repository => {
+			return context.RunTestAsync(async repository =>
+			{
 
-				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations, mailer, 
+				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations, mailer,
 					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()), imageStore);
 
 				var updated = await queries.Update(contract, null);
@@ -44,26 +48,31 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		}
 
-		public EventQueriesDatabaseTests() {
+		public EventQueriesDatabaseTests()
+		{
 			userContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 		}
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void MoveToTrash() {
+		public void MoveToTrash()
+		{
 
 			userContext.GrantPermission(PermissionToken.MoveToTrash);
 
-			context.RunTest(repository => {
+			context.RunTest(repository =>
+			{
 
 				var id = Db.ReleaseEvent.Id;
-				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations, mailer, 
-					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()),imageStore);
+				var queries = new EventQueries(repository, entryLinkFactory, userContext, imageStore, userIconFactory, enumTranslations, mailer,
+					new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()), imageStore);
 
 				queries.MoveToTrash(id, "Deleted");
 
-				var query = repository.HandleQuery(ctx => {
-					return new {
+				var query = repository.HandleQuery(ctx =>
+				{
+					return new
+					{
 						EventFromDb = ctx.Get(id),
 						TrashedEntry = ctx.Query<TrashedEntry>().FirstOrDefault(e => e.EntryType == EntryType.ReleaseEvent && e.EntryId == id)
 					};
@@ -79,9 +88,11 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public async Task Create() {
-			
-			var contract = new ReleaseEventForEditContract {
+		public async Task Create()
+		{
+
+			var contract = new ReleaseEventForEditContract
+			{
 				Names = new[] {
 					new LocalizedStringWithIdContract { Value = "M3 2016" }
 				}
@@ -96,7 +107,8 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
 		[ExpectedException(typeof(DuplicateEventNameException))]
-		public async Task Update_DuplicateName() {
+		public async Task Update_DuplicateName()
+		{
 
 			// Name "Comiket 39" is already taken by ReleaseEvent2
 			var contract = new ReleaseEventForEditContract(Db.ReleaseEvent, ContentLanguagePreference.Default, userContext, null);
@@ -109,10 +121,12 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
 		[ExpectedException(typeof(DuplicateEventNameException))]
-		public async Task Update_DuplicateNameFromSeries() {
+		public async Task Update_DuplicateNameFromSeries()
+		{
 
 			// Generated name is "Comiket 39", which is already taken
-			var contract = new ReleaseEventForEditContract(Db.ReleaseEvent, ContentLanguagePreference.Default, userContext, null) {
+			var contract = new ReleaseEventForEditContract(Db.ReleaseEvent, ContentLanguagePreference.Default, userContext, null)
+			{
 				Series = new ReleaseEventSeriesContract(Db.ReleaseEventSeries, ContentLanguagePreference.English),
 				SeriesNumber = 39
 			};
@@ -123,7 +137,8 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public async Task Update_SwapNameTranslations() {
+		public async Task Update_SwapNameTranslations()
+		{
 
 			var contract = new ReleaseEventForEditContract(Db.ReleaseEvent, ContentLanguagePreference.Default, userContext, null);
 			contract.Names[0].Value = "ミク誕生祭"; // Swap values

@@ -1,18 +1,24 @@
 ﻿using System;
 
-namespace VocaDb.Model.Helpers {
+namespace VocaDb.Model.Helpers
+{
 
-	public static class UrlValidator {
+	public static class UrlValidator
+	{
 
-		public static bool IsValid(string urlString) {
+		public static bool IsValid(string urlString)
+		{
 
 			if (string.IsNullOrWhiteSpace(urlString))
 				return false;
 
-			try {
+			try
+			{
 				new Uri(urlString, UriKind.RelativeOrAbsolute);
 				return true;
-			} catch (UriFormatException) {
+			}
+			catch (UriFormatException)
+			{
 				return false;
 			}
 

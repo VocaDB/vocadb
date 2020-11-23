@@ -1,48 +1,58 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Tests.Helpers {
+namespace VocaDb.Tests.Helpers
+{
 
 	[TestClass]
-	public class StringHelperTests {
+	public class StringHelperTests
+	{
 
-		private void TestRemoveControlChars(string expected, string input) {
+		private void TestRemoveControlChars(string expected, string input)
+		{
 			var actual = StringHelper.RemoveControlChars(input);
 			Assert.AreEqual(expected, actual);
 		}
 
-		private void TestTrimIfNotWhitespace(string expected, string input) {
+		private void TestTrimIfNotWhitespace(string expected, string input)
+		{
 			var actual = StringHelper.TrimIfNotWhitespace(input);
 			Assert.AreEqual(expected, actual);
 		}
 
 		[TestMethod]
-		public void RemoveControlCharacter() {
+		public void RemoveControlCharacter()
+		{
 			TestRemoveControlChars("Invisible", "\x10Invisible");
 		}
 
 		[TestMethod]
-		public void RemoveControlCharsKeepSpaces() {
+		public void RemoveControlCharsKeepSpaces()
+		{
 			TestRemoveControlChars("Hatsune Miku", "Hatsune Miku");
 		}
 
 		[TestMethod]
-		public void RemoveControlCharsKeepNewlines() {
+		public void RemoveControlCharsKeepNewlines()
+		{
 			TestRemoveControlChars("Hatsune Miku\nVocaloid CV01", "Hatsune Miku\nVocaloid CV01");
 		}
 
 		[TestMethod]
-		public void RemoveControlCharsKeepNonAscii() {
+		public void RemoveControlCharsKeepNonAscii()
+		{
 			TestRemoveControlChars("初音ミク", "初音ミク");
 		}
 
 		[TestMethod]
-		public void TrimIfNotWhitespace_Trim() {
+		public void TrimIfNotWhitespace_Trim()
+		{
 			TestTrimIfNotWhitespace("Miku", "    Miku");
 		}
 
 		[TestMethod]
-		public void TrimIfNotWhitespace_Whitespace() {
+		public void TrimIfNotWhitespace_Whitespace()
+		{
 			TestTrimIfNotWhitespace(" ", " ");
 		}
 

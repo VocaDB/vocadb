@@ -1,10 +1,12 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace VocaDb.Model.Service.Security.StopForumSpam {
+namespace VocaDb.Model.Service.Security.StopForumSpam
+{
 
 	[DataContract]
-	public class SFSResponseContract {
+	public class SFSResponseContract
+	{
 
 		/// <summary>
 		/// Confidence threshold when user is considered spammer.
@@ -17,8 +19,10 @@ namespace VocaDb.Model.Service.Security.StopForumSpam {
 		[DataMember]
 		public bool Appears { get; set; }
 
-		public SFSCheckResultType Conclusion {
-			get {
+		public SFSCheckResultType Conclusion
+		{
+			get
+			{
 				if (Appears && Confidence > confidenceTreshold)
 					return SFSCheckResultType.Malicious;
 				if (Appears)

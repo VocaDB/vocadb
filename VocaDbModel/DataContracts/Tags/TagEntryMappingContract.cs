@@ -2,13 +2,16 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.DataContracts.Tags {
+namespace VocaDb.Model.DataContracts.Tags
+{
 
-	public class TagEntryMappingContract {
+	public class TagEntryMappingContract
+	{
 
 		public TagEntryMappingContract() { }
 
-		public TagEntryMappingContract(EntryTypeToTagMapping mapping, ContentLanguagePreference languagePreference) {
+		public TagEntryMappingContract(EntryTypeToTagMapping mapping, ContentLanguagePreference languagePreference)
+		{
 			EntryType = mapping.EntryTypeAndSubType;
 			Tag = new TagBaseContract(mapping.Tag, languagePreference);
 		}

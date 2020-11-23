@@ -1,11 +1,14 @@
 using System.Resources;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Service.BrandableStrings.Collections {
+namespace VocaDb.Model.Service.BrandableStrings.Collections
+{
 
-	public abstract class ResStringCollection {
+	public abstract class ResStringCollection
+	{
 
-		protected ResStringCollection(ResourceManager resourceManager) {
+		protected ResStringCollection(ResourceManager resourceManager)
+		{
 			ResourceManager = resourceManager;
 		}
 

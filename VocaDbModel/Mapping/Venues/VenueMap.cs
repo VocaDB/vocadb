@@ -1,11 +1,14 @@
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Venues;
 
-namespace VocaDb.Model.Mapping.Venues {
+namespace VocaDb.Model.Mapping.Venues
+{
 
-	public class VenueMap : ClassMap<Venue> {
+	public class VenueMap : ClassMap<Venue>
+	{
 
-		public VenueMap() {
+		public VenueMap()
+		{
 
 			Table("Venues");
 			Cache.ReadWrite();
@@ -22,23 +25,27 @@ namespace VocaDb.Model.Mapping.Venues {
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Venue]").Inverse().Cascade.All().OrderBy("Created DESC"));
 
-			Component(m => m.Coordinates, c => {
+			Component(m => m.Coordinates, c =>
+			{
 				c.Map(m => m.Latitude).Nullable();
 				c.Map(m => m.Longitude).Nullable();
 			});
 
-			Component(m => m.Names, c => {
+			Component(m => m.Names, c =>
+			{
 				c.Map(m => m.AdditionalNamesString).Not.Nullable().Length(1024);
 				c.HasMany(m => m.Names).Table("VenueNames").KeyColumn("[Venue]").Inverse().Cascade.All().Cache.ReadWrite();
-				c.Component(m => m.SortNames, c2 => {
+				c.Component(m => m.SortNames, c2 =>
+				{
 					c2.Map(m => m.DefaultLanguage, "DefaultNameLanguage");
 					c2.Map(m => m.Japanese, "JapaneseName");
 					c2.Map(m => m.English, "EnglishName");
 					c2.Map(m => m.Romaji, "RomajiName");
 				});
 			});
-			
-			Component(m => m.WebLinks, c => {
+
+			Component(m => m.WebLinks, c =>
+			{
 				c.HasMany(m => m.Links).Table("VenueWebLinks").KeyColumn("[Venue]").Inverse().Cascade.All().Cache.ReadWrite();
 			});
 
@@ -48,9 +55,11 @@ namespace VocaDb.Model.Mapping.Venues {
 
 	}
 
-	public class VenueNameMap : ClassMap<VenueName> {
+	public class VenueNameMap : ClassMap<VenueName>
+	{
 
-		public VenueNameMap() {
+		public VenueNameMap()
+		{
 
 			Table("VenueNames");
 			Cache.ReadWrite();
@@ -66,9 +75,11 @@ namespace VocaDb.Model.Mapping.Venues {
 
 	public class VenueWebLinkMap : WebLinkMap<VenueWebLink, Venue> { }
 
-	public class ArchivedVenueVersionMap : ClassMap<ArchivedVenueVersion> {
+	public class ArchivedVenueVersionMap : ClassMap<ArchivedVenueVersion>
+	{
 
-		public ArchivedVenueVersionMap() {
+		public ArchivedVenueVersionMap()
+		{
 
 			Table("ArchivedVenueVersions");
 			Id(m => m.Id);
@@ -84,7 +95,8 @@ namespace VocaDb.Model.Mapping.Venues {
 			References(m => m.Author).Not.Nullable();
 			References(m => m.Entry).Column("[Venue]").Not.Nullable();
 
-			Component(m => m.Diff, c => {
+			Component(m => m.Diff, c =>
+			{
 				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
 				c.Map(m => m.IsSnapshot).Not.Nullable();
 			});

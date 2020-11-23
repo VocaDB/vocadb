@@ -3,11 +3,14 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Service.QueryableExtenders {
+namespace VocaDb.Model.Service.QueryableExtenders
+{
 
-	public static class FavoriteSongForUserQueryableExtender {
+	public static class FavoriteSongForUserQueryableExtender
+	{
 
-		public static IQueryable<FavoriteSongForUser> OrderBy(this IQueryable<FavoriteSongForUser> query, RatedSongForUserSortRule sortRule, ContentLanguagePreference languagePreference) {
+		public static IQueryable<FavoriteSongForUser> OrderBy(this IQueryable<FavoriteSongForUser> query, RatedSongForUserSortRule sortRule, ContentLanguagePreference languagePreference)
+		{
 
 			if (sortRule == RatedSongForUserSortRule.RatingDate)
 				return query.OrderByDescending(s => s.Date);
@@ -16,7 +19,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<FavoriteSongForUser> WhereHasRating(this IQueryable<FavoriteSongForUser> query, SongVoteRating rating) {
+		public static IQueryable<FavoriteSongForUser> WhereHasRating(this IQueryable<FavoriteSongForUser> query, SongVoteRating rating)
+		{
 
 			if (rating == SongVoteRating.Nothing)
 				return query;
@@ -27,7 +31,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	}
 
-	public enum RatedSongForUserSortRule {
+	public enum RatedSongForUserSortRule
+	{
 
 		None,
 

@@ -1,11 +1,15 @@
 ﻿using System.Linq;
 
-namespace VocaDb.Model.DataContracts.Albums {
+namespace VocaDb.Model.DataContracts.Albums
+{
 
-	public class RelatedAlbumsContract {
+	public class RelatedAlbumsContract
+	{
 
-		public bool Any {
-			get {
+		public bool Any
+		{
+			get
+			{
 				return ArtistMatches.Any() || LikeMatches.Any() || TagMatches.Any();
 			}
 		}

@@ -3,11 +3,14 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service.Helpers;
 
-namespace VocaDb.Model.Service.Search.AlbumSearch {
+namespace VocaDb.Model.Service.Search.AlbumSearch
+{
 
-	public class AlbumSearchSort {
+	public class AlbumSearchSort
+	{
 
-		private static IQueryable<Album> AddReleaseRestriction(IQueryable<Album> criteria) {
+		private static IQueryable<Album> AddReleaseRestriction(IQueryable<Album> criteria)
+		{
 
 			return criteria.Where(a => a.OriginalRelease.ReleaseDate.Year != null
 				&& a.OriginalRelease.ReleaseDate.Month != null
@@ -15,9 +18,11 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		}
 
-		public static IQueryable<Album> AddOrder(IQueryable<Album> criteria, AlbumSortRule sortRule, ContentLanguagePreference languagePreference) {
+		public static IQueryable<Album> AddOrder(IQueryable<Album> criteria, AlbumSortRule sortRule, ContentLanguagePreference languagePreference)
+		{
 
-			switch (sortRule) {
+			switch (sortRule)
+			{
 				case AlbumSortRule.Name:
 					return FindHelpers.AddNameOrder(criteria, languagePreference);
 				case AlbumSortRule.ReleaseDate:

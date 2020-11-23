@@ -3,16 +3,20 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Web.Code {
+namespace VocaDb.Web.Code
+{
 
 	/// <summary>
 	/// Left hand side menu
 	/// </summary>
-	public abstract class MenuPage : VocaDbPage {
+	public abstract class MenuPage : VocaDbPage
+	{
 
-		public class Link {
+		public class Link
+		{
 
-			public Link(string title, string url, string bannerImg) {
+			public Link(string title, string url, string bannerImg)
+			{
 				BannerImg = bannerImg;
 				Title = title;
 				Url = url;
@@ -26,10 +30,11 @@ namespace VocaDb.Web.Code {
 
 		}
 
-		static MenuPage() {
+		static MenuPage()
+		{
 
 			BannerUrl = AppConfig.SiteSettings.BannerUrl.EmptyToNull();
-			
+
 			var config = AppConfig.GetGlobalLinksSection();
 
 			AppLinks = config?.AppLinks?.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).ToArray() ?? new Link[0];

@@ -1,10 +1,12 @@
 using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.ReleaseEvents {
+namespace VocaDb.Model.Domain.ReleaseEvents
+{
 
-	public class ReleaseEventDiff : EntryDiff<ReleaseEventEditableFields> {
+	public class ReleaseEventDiff : EntryDiff<ReleaseEventEditableFields>
+	{
 
-		public ReleaseEventDiff() : base(true) {}
+		public ReleaseEventDiff() : base(true) { }
 		public ReleaseEventDiff(bool isSnapshot) : base(isSnapshot) { }
 		public ReleaseEventDiff(ReleaseEventEditableFields changedFields) : base(changedFields) { }
 

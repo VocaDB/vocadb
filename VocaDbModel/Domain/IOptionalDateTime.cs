@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Domain {
+﻿namespace VocaDb.Model.Domain
+{
 
-	public interface IOptionalDateTime {
+	public interface IOptionalDateTime
+	{
 
 		int? Day { get; }
 

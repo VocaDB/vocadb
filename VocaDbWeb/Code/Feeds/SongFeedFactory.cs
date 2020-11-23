@@ -7,13 +7,16 @@ using System.Xml.Linq;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Web.Code.Feeds {
+namespace VocaDb.Web.Code.Feeds
+{
 
-	public class SongFeedFactory {
+	public class SongFeedFactory
+	{
 
 		private static readonly XNamespace mediaNs = XNamespace.Get(@"http://search.yahoo.com/mrss/");
 
-		private SyndicationItem CreateFeedItem(SongContract song, Func<SongContract, string> contentFac, Func<SongContract, string> urlFac) {
+		private SyndicationItem CreateFeedItem(SongContract song, Func<SongContract, string> contentFac, Func<SongContract, string> urlFac)
+		{
 
 			var item = new SyndicationItem(song.Name, new TextSyndicationContent(contentFac(song), TextSyndicationContentKind.Html),
 					VocaUriBuilder.CreateAbsolute(urlFac(song)), song.Id.ToString(), song.CreateDate);
@@ -26,7 +29,8 @@ namespace VocaDb.Web.Code.Feeds {
 
 		}
 
-		public SyndicationFeed Create(IEnumerable<SongContract> songs, Uri uri, Func<SongContract, string> contentFac, Func<SongContract, string> urlFac) {
+		public SyndicationFeed Create(IEnumerable<SongContract> songs, Uri uri, Func<SongContract, string> contentFac, Func<SongContract, string> urlFac)
+		{
 
 			var items = songs.Select(s => CreateFeedItem(s, contentFac, urlFac));
 

@@ -10,9 +10,11 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.VideoServices.Youtube;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Model.Service.SongImport {
+namespace VocaDb.Model.Service.SongImport
+{
 
-	public class YoutubePlaylistImporter : ISongListImporter {
+	public class YoutubePlaylistImporter : ISongListImporter
+	{
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private static readonly Regex regex = new Regex(@"www\.youtube\.com/playlist\?list=([\w\-_]+)");
@@ -23,17 +25,21 @@ namespace VocaDb.Model.Service.SongImport {
 		private const string playlistItemsFormat =
 			"https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key={0}&playlistId={1}&maxResults={2}&pageToken={3}";
 
-		private string YoutubeApiKey {
-			get {
+		private string YoutubeApiKey
+		{
+			get
+			{
 				return AppConfig.YoutubeApiKey;
 			}
 		}
 
-		private string GetId(string url) {
-			
+		private string GetId(string url)
+		{
+
 			var match = regex.Match(url);
 
-			if (!match.Success) {
+			if (!match.Success)
+			{
 				log.Warn("Youtube URL not regonized: {0}", url);
 				throw new UnableToImportException(string.Format("Youtube URL not regonized: {0}", url));
 			}
@@ -43,23 +49,29 @@ namespace VocaDb.Model.Service.SongImport {
 
 		}
 
-		private async Task<PartialImportedSongs> GetSongsById(string playlistId, string pageToken, int maxResults, bool parseAll) {
-			
+		private async Task<PartialImportedSongs> GetSongsById(string playlistId, string pageToken, int maxResults, bool parseAll)
+		{
+
 			var songs = new List<ImportedSongInListContract>();
 
 			var requestUrl = string.Format(playlistItemsFormat, YoutubeApiKey, playlistId, maxResults, pageToken);
 
 			YoutubePlaylistItemResponse result;
 
-			try {
+			try
+			{
 				result = await JsonRequest.ReadObjectAsync<YoutubePlaylistItemResponse>(requestUrl);
-			} catch (Exception x) {
+			}
+			catch (Exception x)
+			{
 				log.Warn(x, "Unable to read Youtube playlist");
 				throw new UnableToImportException("Unable to read Youtube playlist", x);
 			}
 
-			foreach (var item in result.Items) {
-				var song = new ImportedSongInListContract(PVService.Youtube, item.Snippet.ResourceId.VideoId) {
+			foreach (var item in result.Items)
+			{
+				var song = new ImportedSongInListContract(PVService.Youtube, item.Snippet.ResourceId.VideoId)
+				{
 					Name = item.Snippet.Title,
 					SortIndex = ((int?)item.Snippet.Position ?? 0) + 1,
 					Url = string.Format("https://www.youtube.com/watch?v={0}", item.Snippet.ResourceId.VideoId)
@@ -71,25 +83,31 @@ namespace VocaDb.Model.Service.SongImport {
 
 		}
 
-		public Task<PartialImportedSongs> GetSongsAsync(string url, string nextPageToken, int maxResults, bool parseAll) {
+		public Task<PartialImportedSongs> GetSongsAsync(string url, string nextPageToken, int maxResults, bool parseAll)
+		{
 			return GetSongsById(GetId(url), nextPageToken, maxResults, parseAll);
 		}
 
-		public async Task<ImportedSongListContract> ParseAsync(string url, bool parseAll) {
-			
+		public async Task<ImportedSongListContract> ParseAsync(string url, bool parseAll)
+		{
+
 			var id = GetId(url);
 
 			var requestUrl = string.Format(playlistsFormat, YoutubeApiKey, id);
 			YoutubePlaylistResponse result;
-			
-			try {
+
+			try
+			{
 				result = await JsonRequest.ReadObjectAsync<YoutubePlaylistResponse>(requestUrl);
-			} catch (Exception x) {
+			}
+			catch (Exception x)
+			{
 				log.Warn(x, "Unable to read Youtube playlist");
 				throw new UnableToImportException("Unable to read Youtube playlist");
 			}
 
-			if (!result.Items.Any()) {
+			if (!result.Items.Any())
+			{
 				log.Info("Youtube playlist not found");
 				throw new UnableToImportException(string.Format("Youtube playlist not found: {0}", url));
 			}
@@ -104,28 +122,31 @@ namespace VocaDb.Model.Service.SongImport {
 
 		}
 
-		public bool MatchUrl(string url) {
-			return regex.IsMatch(url);			
+		public bool MatchUrl(string url)
+		{
+			return regex.IsMatch(url);
 		}
 
-		public class YoutubePlaylistResponse : YoutubeResponse<YoutubePlaylistItem> {}
+		public class YoutubePlaylistResponse : YoutubeResponse<YoutubePlaylistItem> { }
 
-		public class YoutubePlaylistItem : YoutubeItem<Snippet> {}
+		public class YoutubePlaylistItem : YoutubeItem<Snippet> { }
 
-		public class YoutubePlaylistItemResponse : YoutubeResponse<YoutubePlaylistItemItem> {}
+		public class YoutubePlaylistItemResponse : YoutubeResponse<YoutubePlaylistItemItem> { }
 
-		public class YoutubePlaylistItemItem : YoutubeItem<YoutubePlaylistItemSnippet> {}
+		public class YoutubePlaylistItemItem : YoutubeItem<YoutubePlaylistItemSnippet> { }
 
-		public class YoutubePlaylistItemSnippet : Snippet {
-			
+		public class YoutubePlaylistItemSnippet : Snippet
+		{
+
 			public uint? Position { get; set; }
 
 			public YoutubeResourceId ResourceId { get; set; }
 
 		}
 
-		public class YoutubeResourceId {
-			
+		public class YoutubeResourceId
+		{
+
 			public string VideoId { get; set; }
 
 		}

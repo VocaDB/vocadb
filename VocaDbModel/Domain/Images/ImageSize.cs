@@ -1,8 +1,10 @@
 using System;
 
-namespace VocaDb.Model.Domain.Images {
+namespace VocaDb.Model.Domain.Images
+{
 
-	public enum ImageSize {
+	public enum ImageSize
+	{
 
 		/// <summary>
 		/// Original image. 
@@ -28,7 +30,8 @@ namespace VocaDb.Model.Domain.Images {
 	}
 
 	[Flags]
-	public enum ImageSizes {
+	public enum ImageSizes
+	{
 
 		Nothing = 0,
 

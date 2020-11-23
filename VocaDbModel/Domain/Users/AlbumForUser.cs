@@ -1,22 +1,26 @@
 using VocaDb.Model.Domain.Albums;
 
-namespace VocaDb.Model.Domain.Users {
+namespace VocaDb.Model.Domain.Users
+{
 
-	public class AlbumForUser : IAlbumLink, IEntryWithIntId {
+	public class AlbumForUser : IAlbumLink, IEntryWithIntId
+	{
 
 		public const int NotRated = 0;
 
 		private Album album;
 		private User user;
 
-		public AlbumForUser() {
+		public AlbumForUser()
+		{
 			MediaType = MediaType.PhysicalDisc;
 			Rating = NotRated;
 			PurchaseStatus = PurchaseStatus.Owned;
 		}
 
 		public AlbumForUser(User user, Album album, PurchaseStatus status, MediaType mediaType, int rating)
-			: this() {
+			: this()
+		{
 
 			User = user;
 			Album = album;
@@ -26,9 +30,11 @@ namespace VocaDb.Model.Domain.Users {
 
 		}
 
-		public virtual Album Album {
+		public virtual Album Album
+		{
 			get => album;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				album = value;
 			}
@@ -45,9 +51,11 @@ namespace VocaDb.Model.Domain.Users {
 		/// </summary>
 		public virtual int Rating { get; set; }
 
-		public virtual User User {
+		public virtual User User
+		{
 			get => user;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				user = value;
 			}
@@ -57,7 +65,8 @@ namespace VocaDb.Model.Domain.Users {
 		/// Deletes this link and performs any necessary bookkeeping.
 		/// Link will be removed from collections on both sides and ratings will be updated.
 		/// </summary>
-		public virtual void Delete() {
+		public virtual void Delete()
+		{
 
 			Album.UserCollections.Remove(this);
 			User.AllAlbums.Remove(this);
@@ -65,7 +74,8 @@ namespace VocaDb.Model.Domain.Users {
 
 		}
 
-		public virtual bool Equals(AlbumForUser another) {
+		public virtual bool Equals(AlbumForUser another)
+		{
 
 			if (another == null)
 				return false;
@@ -81,7 +91,8 @@ namespace VocaDb.Model.Domain.Users {
 
 		public override int GetHashCode() => base.GetHashCode();
 
-		public virtual void Move(Album target) {
+		public virtual void Move(Album target)
+		{
 
 			ParamIs.NotNull(() => target);
 

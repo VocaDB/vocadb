@@ -2,9 +2,11 @@ using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Venues;
 
-namespace VocaDb.Model.DataContracts.Venues {
+namespace VocaDb.Model.DataContracts.Venues
+{
 
-	public class ArchivedVenueVersionContract : ArchivedObjectVersionWithFieldsContract<VenueEditableFields, EntryEditEvent> {
+	public class ArchivedVenueVersionContract : ArchivedObjectVersionWithFieldsContract<VenueEditableFields, EntryEditEvent>
+	{
 
 		public ArchivedVenueVersionContract() { }
 

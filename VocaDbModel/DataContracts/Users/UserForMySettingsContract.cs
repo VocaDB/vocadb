@@ -2,17 +2,21 @@
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Security;
 
-namespace VocaDb.Model.DataContracts.Users {
+namespace VocaDb.Model.DataContracts.Users
+{
 
-	public class UserForMySettingsContract : UserContract {
+	public class UserForMySettingsContract : UserContract
+	{
 
-		public UserForMySettingsContract() {
+		public UserForMySettingsContract()
+		{
 			AboutMe = Location = string.Empty;
-			WebLinks = new WebLinkContract[] {};
+			WebLinks = new WebLinkContract[] { };
 		}
 
 		public UserForMySettingsContract(User user)
-			: base(user, true) {
+			: base(user, true)
+		{
 
 			AboutMe = user.Options.AboutMe;
 			CanChangeName = user.CanChangeName;

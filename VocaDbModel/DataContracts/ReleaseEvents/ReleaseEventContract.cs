@@ -7,9 +7,11 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.DataContracts.ReleaseEvents {
+namespace VocaDb.Model.DataContracts.ReleaseEvents
+{
 
-	public class ReleaseEventContract : IReleaseEvent, IEntryImageInformation, IEntryBase, IEntryWithStatus {
+	public class ReleaseEventContract : IReleaseEvent, IEntryImageInformation, IEntryBase, IEntryWithStatus
+	{
 
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEvent;
 		EntryType IEntryBase.EntryType => EntryType.ReleaseEvent;
@@ -17,12 +19,14 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 		string IEntryBase.DefaultName => Name;
 
-		public ReleaseEventContract() {
+		public ReleaseEventContract()
+		{
 			Description = string.Empty;
 		}
 
 		public ReleaseEventContract(ReleaseEvent ev, ContentLanguagePreference languagePreference, bool includeSeries = false, bool includeSeriesLinks = false)
-			: this() {
+			: this()
+		{
 
 			ParamIs.NotNull(() => ev);
 
@@ -43,7 +47,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			VenueName = ev.VenueName;
 			Version = ev.Version;
 
-			if (includeSeries && ev.HasSeries) {
+			if (includeSeries && ev.HasSeries)
+			{
 				Series = new ReleaseEventSeriesContract(ev.Series, languagePreference, includeSeriesLinks);
 			}
 

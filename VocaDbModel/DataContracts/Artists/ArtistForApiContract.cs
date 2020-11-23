@@ -12,17 +12,20 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 
-namespace VocaDb.Model.DataContracts.Artists {
+namespace VocaDb.Model.DataContracts.Artists
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistForApiContract {
+	public class ArtistForApiContract
+	{
 
 		public ArtistForApiContract() { }
 
-		public ArtistForApiContract(Artist artist, 
-			ContentLanguagePreference languagePreference, 
+		public ArtistForApiContract(Artist artist,
+			ContentLanguagePreference languagePreference,
 			IAggregatedEntryImageUrlFactory thumbPersister,
-			ArtistOptionalFields includedFields) {
+			ArtistOptionalFields includedFields)
+		{
 
 			ArtistType = artist.ArtistType;
 			CreateDate = artist.CreateDate;
@@ -30,13 +33,14 @@ namespace VocaDb.Model.DataContracts.Artists {
 			DefaultNameLanguage = artist.Names.SortNames.DefaultLanguage;
 			Deleted = artist.Deleted;
 			Id = artist.Id;
-			Name = artist.Names.SortNames[languagePreference];				
+			Name = artist.Names.SortNames[languagePreference];
 			PictureMime = artist.PictureMime;
 			ReleaseDate = artist.ReleaseDate.DateTime;
 			Status = artist.Status;
 			Version = artist.Version;
 
-			if (includedFields.HasFlag(ArtistOptionalFields.AdditionalNames)) {
+			if (includedFields.HasFlag(ArtistOptionalFields.AdditionalNames))
+			{
 				AdditionalNames = artist.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 
@@ -58,8 +62,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 			if (includedFields.HasFlag(ArtistOptionalFields.Tags))
 				Tags = artist.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 
-			if (thumbPersister != null && includedFields.HasFlag(ArtistOptionalFields.MainPicture) && artist.Thumb != null) {
-				
+			if (thumbPersister != null && includedFields.HasFlag(ArtistOptionalFields.MainPicture) && artist.Thumb != null)
+			{
+
 				MainPicture = new EntryThumbForApiContract(artist.Thumb, thumbPersister);
 
 			}
@@ -73,7 +78,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		/// Comma-separated list of all other names that aren't the display name.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public string AdditionalNames { get; set;}
+		public string AdditionalNames { get; set; }
 
 		/// <summary>
 		/// List of artists linked to this artist, from child to parent. Optional field.
@@ -157,7 +162,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		/// MIME type for the main picture.
 		/// </summary>
 		[DataMember]
-		public string PictureMime { get; set;}
+		public string PictureMime { get; set; }
 
 		/// <summary>
 		/// Artist relations. Optional field.
@@ -190,7 +195,8 @@ namespace VocaDb.Model.DataContracts.Artists {
 	}
 
 	[Flags]
-	public enum ArtistOptionalFields {
+	public enum ArtistOptionalFields
+	{
 
 		None = 0,
 		AdditionalNames = 1,
@@ -206,7 +212,8 @@ namespace VocaDb.Model.DataContracts.Artists {
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistRelationsForApi {
+	public class ArtistRelationsForApi
+	{
 
 		[DataMember(EmitDefaultValue = false)]
 		public AlbumForApiContract[] LatestAlbums { get; set; }
@@ -226,8 +233,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 	}
 
 	[Flags]
-	public enum ArtistRelationsFields {
-		
+	public enum ArtistRelationsFields
+	{
+
 		None = 0,
 		LatestAlbums = 1,
 		LatestEvents = 2,

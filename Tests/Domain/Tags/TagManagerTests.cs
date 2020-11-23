@@ -5,44 +5,52 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Tests.Domain.Tags {
+namespace VocaDb.Tests.Domain.Tags
+{
 
 	/// <summary>
 	/// Tests for <see cref="TagManager{T}"/>.
 	/// </summary>
 	[TestClass]
-	public class TagManagerTests {
+	public class TagManagerTests
+	{
 
-		class TagFactory : ITagFactory, ITagUsageFactory<SongTagUsage> {
+		class TagFactory : ITagFactory, ITagUsageFactory<SongTagUsage>
+		{
 
 			private readonly Song song = new Song();
 
-			public Task<Tag> CreateTagAsync(string name) {
+			public Task<Tag> CreateTagAsync(string name)
+			{
 				return Task.FromResult(new Tag(name));
 			}
 
-			public SongTagUsage CreateTagUsage(Tag tag) {
+			public SongTagUsage CreateTagUsage(Tag tag)
+			{
 				return new SongTagUsage(song, tag);
 			}
 
-			public SongTagUsage CreateTagUsage(Tag tag, SongTagUsage usage) {
+			public SongTagUsage CreateTagUsage(Tag tag, SongTagUsage usage)
+			{
 				return new SongTagUsage(usage.Entry, tag);
 			}
 
 		}
 
-		private TagManager<SongTagUsage> manager; 
+		private TagManager<SongTagUsage> manager;
 		private Tag tag;
 		private TagFactory tagFactory;
 		private User user;
 
-		private void SyncVotes(params Tag[] tags) {
+		private void SyncVotes(params Tag[] tags)
+		{
 			manager.SyncVotes(user, tags, tagFactory);
 		}
 
 		[TestInitialize]
-		public void SetUp() {
-			
+		public void SetUp()
+		{
+
 			tagFactory = new TagFactory();
 			tag = new Tag("drumnbass");
 			manager = new TagManager<SongTagUsage>();

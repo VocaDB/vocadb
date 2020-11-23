@@ -4,18 +4,21 @@ using VocaDb.Model.Domain;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Comments;
 
-namespace VocaDb.Model.DataContracts {
+namespace VocaDb.Model.DataContracts
+{
 
 	/// <summary>
 	/// Data contract for <see cref="Comment"/>.
 	/// SECURITY NOTE: User contract contains email, which is sensitive information.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class CommentContract : IComment {
+	public class CommentContract : IComment
+	{
 
 		public CommentContract() { }
 
-		public CommentContract(Comment comment) {
+		public CommentContract(Comment comment)
+		{
 
 			ParamIs.NotNull(() => comment);
 

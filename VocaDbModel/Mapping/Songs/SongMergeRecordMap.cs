@@ -1,11 +1,14 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.Mapping.Songs {
+namespace VocaDb.Model.Mapping.Songs
+{
 
-	public class SongMergeRecordMap : ClassMap<SongMergeRecord> {
+	public class SongMergeRecordMap : ClassMap<SongMergeRecord>
+	{
 
-		public SongMergeRecordMap() {
+		public SongMergeRecordMap()
+		{
 
 			Id(m => m.Id);
 

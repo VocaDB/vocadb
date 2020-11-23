@@ -1,9 +1,11 @@
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.DataContracts.Songs {
+namespace VocaDb.Model.DataContracts.Songs
+{
 
-	public interface IArtistLinkContract {
+	public interface IArtistLinkContract
+	{
 
 		ArtistContract Artist { get; }
 

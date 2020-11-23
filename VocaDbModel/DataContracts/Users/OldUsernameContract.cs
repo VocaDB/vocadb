@@ -1,13 +1,16 @@
 ﻿using System;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users {
+namespace VocaDb.Model.DataContracts.Users
+{
 
-	public class OldUsernameContract {
+	public class OldUsernameContract
+	{
 
 		public OldUsernameContract() { }
 
-		public OldUsernameContract(OldUsername oldUsername) {
+		public OldUsernameContract(OldUsername oldUsername)
+		{
 
 			ParamIs.NotNull(() => oldUsername);
 

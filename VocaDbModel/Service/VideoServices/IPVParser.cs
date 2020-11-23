@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.Service.VideoServices {
+namespace VocaDb.Model.Service.VideoServices
+{
 
-	public interface IPVParser {
+	public interface IPVParser
+	{
 
 		/// <summary>
 		/// Parses PV by URL.
@@ -29,10 +31,12 @@ namespace VocaDb.Model.Service.VideoServices {
 
 	}
 
-	public class PVParser : IPVParser {
+	public class PVParser : IPVParser
+	{
 		public Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext permissionContext) => VideoServiceHelper.ParseByUrlAsync(url, getTitle, permissionContext);
 
-		public Task<VideoUrlParseResult[]> ParseByUrlsAsync(IEnumerable<string> urls, bool getTitle, IUserPermissionContext permissionContext) {
+		public Task<VideoUrlParseResult[]> ParseByUrlsAsync(IEnumerable<string> urls, bool getTitle, IUserPermissionContext permissionContext)
+		{
 			return Task.WhenAll(urls.Select(url => ParseByUrlAsync(url, getTitle, permissionContext)));
 		}
 	}

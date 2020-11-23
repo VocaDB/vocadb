@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Activityfeed {
+namespace VocaDb.Web.Models.Shared.Partials.Activityfeed
+{
 
-	public class ActivityEntryKnockoutViewModel {
+	public class ActivityEntryKnockoutViewModel
+	{
 
-		public ActivityEntryKnockoutViewModel(string entryTypeNamesBinding, string activityFeedEventNamesBinding, string changedFieldNamesBinding, bool showDetails = false) {
+		public ActivityEntryKnockoutViewModel(string entryTypeNamesBinding, string activityFeedEventNamesBinding, string changedFieldNamesBinding, bool showDetails = false)
+		{
 
 			EntryTypeNamesBinding = entryTypeNamesBinding;
 			ActivityFeedEventNamesBinding = activityFeedEventNamesBinding;

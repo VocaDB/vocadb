@@ -2,9 +2,11 @@
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Web.Models.Ext {
+namespace VocaDb.Web.Models.Ext
+{
 
-	public class EmbedSongViewModel {
+	public class EmbedSongViewModel
+	{
 
 		private const int DefaultHeight = 315;
 		private const int DefaultWidth = 560;
@@ -13,8 +15,10 @@ namespace VocaDb.Web.Models.Ext {
 
 		public PVContract CurrentPV { get; set; }
 
-		public string CurrentServiceName {
-			get {
+		public string CurrentServiceName
+		{
+			get
+			{
 				return CurrentPV?.Service.ToString().ToLowerInvariant() ?? string.Empty;
 			}
 		}

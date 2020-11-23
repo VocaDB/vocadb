@@ -1,9 +1,11 @@
-﻿namespace VocaDb.Model.DataContracts.Artists {
+﻿namespace VocaDb.Model.DataContracts.Artists
+{
 
 	/// <summary>
 	/// Advanced artist statistics. These are updated less frequently.
 	/// </summary>
-	public class AdvancedArtistStatsContract {
+	public class AdvancedArtistStatsContract
+	{
 
 		/// <summary>
 		/// "Mostly uses"
@@ -12,8 +14,9 @@
 
 	}
 
-	public class TopStatContract<T> {
-		
+	public class TopStatContract<T>
+	{
+
 		public int Count { get; set; }
 
 		public T Data { get; set; }

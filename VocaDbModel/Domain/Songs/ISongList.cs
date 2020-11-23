@@ -1,8 +1,10 @@
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Songs {
+namespace VocaDb.Model.Domain.Songs
+{
 
-	public interface ISongList {
+	public interface ISongList
+	{
 
 		IUser Author { get; }
 

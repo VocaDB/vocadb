@@ -1,15 +1,18 @@
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Artists {
+namespace VocaDb.Model.Domain.Artists
+{
 
-	public class ArtistTagUsage : GenericTagUsage<Artist, ArtistTagVote> {
+	public class ArtistTagUsage : GenericTagUsage<Artist, ArtistTagVote>
+	{
 
 		public ArtistTagUsage() { }
 
 		public ArtistTagUsage(Artist artist, Tag tag) : base(artist, tag) { }
-		
-		public override TagVote CreateVote(User user) {
+
+		public override TagVote CreateVote(User user)
+		{
 
 			if (FindVote(user) != null)
 				return null;
@@ -22,7 +25,8 @@ namespace VocaDb.Model.Domain.Artists {
 
 		}
 
-		public override void Delete() {
+		public override void Delete()
+		{
 
 			base.Delete();
 
@@ -31,7 +35,8 @@ namespace VocaDb.Model.Domain.Artists {
 
 		}
 
-		public override TagUsage Move(Tag target) {
+		public override TagUsage Move(Tag target)
+		{
 
 			ParamIs.NotNull(() => target);
 

@@ -5,12 +5,15 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Resources;
 
-namespace VocaDb.Model.Service.EntryValidators {
+namespace VocaDb.Model.Service.EntryValidators
+{
 
-	public class SongValidator {
+	public class SongValidator
+	{
 
-		public bool IsValid(Song song, int instrumentalTagId) {
-			
+		public bool IsValid(Song song, int instrumentalTagId)
+		{
+
 			ParamIs.NotNull(() => song);
 
 			var errors = new List<string>();
@@ -20,8 +23,9 @@ namespace VocaDb.Model.Service.EntryValidators {
 
 			var derivedTypes = new[] { SongType.Remaster, SongType.Cover, SongType.Instrumental, SongType.MusicPV, SongType.Other, SongType.Remix };
 
-			if (song.Notes.IsEmpty && !song.HasOriginalVersion && derivedTypes.Contains(song.SongType)) {
-				errors.Add(SongValidationErrors.NeedOriginal);			
+			if (song.Notes.IsEmpty && !song.HasOriginalVersion && derivedTypes.Contains(song.SongType))
+			{
+				errors.Add(SongValidationErrors.NeedOriginal);
 			}
 
 			if (song.Artists.All(a => a.Artist == null))
@@ -30,9 +34,9 @@ namespace VocaDb.Model.Service.EntryValidators {
 			if (song.Names.Names.All(n => n.Language == ContentLanguageSelection.Unspecified))
 				errors.Add(SongValidationErrors.UnspecifiedNames);
 
-			if (song.SongType != SongType.Instrumental 
-				&& song.SongType != SongType.DramaPV 
-				&& !song.Tags.HasTag(instrumentalTagId) 
+			if (song.SongType != SongType.Instrumental
+				&& song.SongType != SongType.DramaPV
+				&& !song.Tags.HasTag(instrumentalTagId)
 				&& !ArtistHelper.GetVocalists(song.Artists.ToArray()).Any())
 				errors.Add(SongValidationErrors.NonInstrumentalSongNeedsVocalists);
 

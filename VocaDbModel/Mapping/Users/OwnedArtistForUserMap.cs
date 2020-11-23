@@ -1,11 +1,14 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Mapping.Users {
+namespace VocaDb.Model.Mapping.Users
+{
 
-	public class OwnedArtistForUserMap : ClassMap<OwnedArtistForUser> {
+	public class OwnedArtistForUserMap : ClassMap<OwnedArtistForUser>
+	{
 
-		public OwnedArtistForUserMap() {
+		public OwnedArtistForUserMap()
+		{
 
 			Table("OwnedArtistsForUsers");
 			Cache.ReadWrite();

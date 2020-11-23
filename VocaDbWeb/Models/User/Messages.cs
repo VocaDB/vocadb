@@ -1,15 +1,19 @@
 ﻿using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Web.Models.User {
+namespace VocaDb.Web.Models.User
+{
 
-	public class Messages {
+	public class Messages
+	{
 
-		public Messages() {
+		public Messages()
+		{
 			ReceiverName = string.Empty;
 		}
 
-		public Messages(UserBaseContract user, int? selectedMessageId, string receiverName, UserInboxType inbox) {
+		public Messages(UserBaseContract user, int? selectedMessageId, string receiverName, UserInboxType inbox)
+		{
 
 			User = user;
 			ReceiverName = receiverName ?? string.Empty;

@@ -5,12 +5,15 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Translations;
 
-namespace VocaDb.Model.Service.ExtSites {
+namespace VocaDb.Model.Service.ExtSites
+{
 
-	public class SongDescriptionGenerator {
+	public class SongDescriptionGenerator
+	{
 
-		private void AddBasicDescription(StringBuilder sb, SongContract song, TranslateableEnum<SongType> songTypeNames) {
-			
+		private void AddBasicDescription(StringBuilder sb, SongContract song, TranslateableEnum<SongType> songTypeNames)
+		{
+
 			var typeName = songTypeNames.GetName(song.SongType, CultureInfo.InvariantCulture);
 
 			sb.Append(typeName);
@@ -23,10 +26,11 @@ namespace VocaDb.Model.Service.ExtSites {
 
 		}
 
-		public string GenerateDescription(SongContract song, TranslateableEnum<SongType> songTypeNames) {
+		public string GenerateDescription(SongContract song, TranslateableEnum<SongType> songTypeNames)
+		{
 
 			var sb = new StringBuilder();
-		
+
 			AddBasicDescription(sb, song, songTypeNames);
 
 			return sb.ToString();

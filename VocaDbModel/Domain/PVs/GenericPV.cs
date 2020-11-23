@@ -1,18 +1,22 @@
 using System;
 using VocaDb.Model.DataContracts.PVs;
 
-namespace VocaDb.Model.Domain.PVs {
+namespace VocaDb.Model.Domain.PVs
+{
 
 	public abstract class GenericPV<TEntry> : PV, IEntryWithIntId
-		where TEntry : class {
+		where TEntry : class
+	{
 
 		private TEntry entry;
 
-		protected GenericPV() {
+		protected GenericPV()
+		{
 		}
 
 		protected GenericPV(TEntry entry, PVContract contract)
-			: base(contract) {
+			: base(contract)
+		{
 
 			Entry = entry;
 			Length = contract.Length;
@@ -20,9 +24,11 @@ namespace VocaDb.Model.Domain.PVs {
 
 		}
 
-		public virtual TEntry Entry {
+		public virtual TEntry Entry
+		{
 			get => entry;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				entry = value;
 			}
@@ -33,7 +39,8 @@ namespace VocaDb.Model.Domain.PVs {
 		/// </summary>
 		public virtual int Length { get; set; }
 
-		public virtual bool Equals(GenericPV<TEntry> another) {
+		public virtual bool Equals(GenericPV<TEntry> another)
+		{
 
 			if (another == null)
 				return false;
@@ -48,15 +55,18 @@ namespace VocaDb.Model.Domain.PVs {
 
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as GenericPV<TEntry>);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return base.GetHashCode();
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("PV '{0}' on {1} [{2}] for {3}", PVId, Service, Id, Entry);
 		}
 

@@ -4,10 +4,12 @@ using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Model.DataContracts.Venues {
+namespace VocaDb.Model.DataContracts.Venues
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArchivedVenueContract {
+	public class ArchivedVenueContract
+	{
 
 		[DataMember]
 		public string Address { get; set; }
@@ -35,7 +37,8 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 		public ArchivedVenueContract() { }
 
-		public ArchivedVenueContract(Venue venue, VenueDiff diff) {
+		public ArchivedVenueContract(Venue venue, VenueDiff diff)
+		{
 
 			ParamIs.NotNull(() => venue);
 
@@ -50,18 +53,21 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 		}
 
-		private static void DoIfExists(ArchivedVenueVersion version, VenueEditableFields field, XmlCache<ArchivedVenueContract> xmlCache, Action<ArchivedVenueContract> func) {
+		private static void DoIfExists(ArchivedVenueVersion version, VenueEditableFields field, XmlCache<ArchivedVenueContract> xmlCache, Action<ArchivedVenueContract> func)
+		{
 
 			var versionWithField = version.GetLatestVersionWithField(field);
 
-			if (versionWithField?.Data != null) {
+			if (versionWithField?.Data != null)
+			{
 				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
 				func(data);
 			}
 
 		}
 
-		public static ArchivedVenueContract GetAllProperties(ArchivedVenueVersion version) {
+		public static ArchivedVenueContract GetAllProperties(ArchivedVenueVersion version)
+		{
 
 			var data = new ArchivedVenueContract();
 			var xmlCache = new XmlCache<ArchivedVenueContract>();

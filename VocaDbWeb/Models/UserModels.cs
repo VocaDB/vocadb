@@ -19,11 +19,14 @@ using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Models.Shared;
 
-namespace VocaDb.Web.Models {
+namespace VocaDb.Web.Models
+{
 
-	public class RegisterModel {
+	public class RegisterModel
+	{
 
-		public RegisterModel() {
+		public RegisterModel()
+		{
 			EntryTime = DateTime.Now.Ticks;
 		}
 
@@ -58,11 +61,13 @@ namespace VocaDb.Web.Models {
 
 	}
 
-	public class LoginModel {
+	public class LoginModel
+	{
 
-		public LoginModel() {}
+		public LoginModel() { }
 
-		public LoginModel(string returnUrl, bool returnToMainSite) {
+		public LoginModel(string returnUrl, bool returnToMainSite)
+		{
 
 			this.ReturnUrl = returnUrl;
 			this.ReturnToMainSite = returnToMainSite;
@@ -100,14 +105,16 @@ namespace VocaDb.Web.Models {
 	}
 
 	[PropertyModelBinder]
-	public class MySettingsModel {
+	public class MySettingsModel
+	{
 
-		public MySettingsModel() {
+		public MySettingsModel()
+		{
 
 			AboutMe = string.Empty;
 			AllInterfaceLanguages = InterfaceLanguage.Cultures;
 			AllLanguages = EnumVal<ContentLanguagePreference>.Values.ToDictionary(l => l, Translate.ContentLanguagePreferenceName);
-			AllStylesheets = AppConfig.SiteSettings.Stylesheets?.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries).ToDictionaryWithEmpty(string.Empty, "Default", v => v, v => Path.GetFileNameWithoutExtension(v));
+			AllStylesheets = AppConfig.SiteSettings.Stylesheets?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToDictionaryWithEmpty(string.Empty, "Default", v => v, v => Path.GetFileNameWithoutExtension(v));
 			AllUserKnownLanguages = InterfaceLanguage.UserLanguageCultures;
 			AllVideoServices = EnumVal<PVService>.Values;
 			Location = string.Empty;
@@ -116,8 +123,9 @@ namespace VocaDb.Web.Models {
 		}
 
 		public MySettingsModel(UserForMySettingsContract user)
-			: this() {
-			
+			: this()
+		{
+
 			ParamIs.NotNull(() => user);
 
 			AboutMe = user.AboutMe;
@@ -162,7 +170,7 @@ namespace VocaDb.Web.Models {
 
 		public PVService[] AllVideoServices { get; set; }
 
-		[Display(Name= "Do not show my name in the recent activity list")]
+		[Display(Name = "Do not show my name in the recent activity list")]
 		public bool ShowActivity { get; set; }
 
 		public bool CanChangeName { get; set; }
@@ -238,12 +246,14 @@ namespace VocaDb.Web.Models {
 		[Range(1, 390)]
 		public int UnreadNotificationsToKeep { get; set; }
 
-		public UpdateUserSettingsContract ToContract() {
+		public UpdateUserSettingsContract ToContract()
+		{
 
 			if (WebLinks == null)
 				throw new InvalidFormException("Web links list was null");
 
-			return new UpdateUserSettingsContract {
+			return new UpdateUserSettingsContract
+			{
 				AboutMe = this.AboutMe ?? string.Empty,
 				AnonymousActivity = !this.ShowActivity,
 				Culture = this.CultureSelection ?? string.Empty,
@@ -270,9 +280,11 @@ namespace VocaDb.Web.Models {
 
 	}
 
-	public class UserEdit {
+	public class UserEdit
+	{
 
-		public UserEdit() {
+		public UserEdit()
+		{
 
 			var groups = EnumVal<UserGroupId>.Values.Where(g => EntryPermissionManager.CanEditGroupTo(Login.Manager, g)).ToArray();
 			EditableGroups = new TranslateableEnum<UserGroupId>(() => global::Resources.UserGroupNames.ResourceManager, groups);
@@ -282,7 +294,8 @@ namespace VocaDb.Web.Models {
 		}
 
 		public UserEdit(UserWithPermissionsContract contract)
-			: this() {
+			: this()
+		{
 
 			Active = contract.Active;
 			Email = contract.Email;
@@ -322,9 +335,11 @@ namespace VocaDb.Web.Models {
 
 		public bool Supporter { get; set; }
 
-		public UserWithPermissionsContract ToContract() {
+		public UserWithPermissionsContract ToContract()
+		{
 
-			return new UserWithPermissionsContract {
+			return new UserWithPermissionsContract
+			{
 				Active = this.Active,
 				Email = Email ?? string.Empty,
 				GroupId = this.GroupId,
@@ -340,11 +355,13 @@ namespace VocaDb.Web.Models {
 
 	}
 
-	public class PermissionFlagEntry {
+	public class PermissionFlagEntry
+	{
 
-		public PermissionFlagEntry() {}
+		public PermissionFlagEntry() { }
 
-		public PermissionFlagEntry(PermissionToken permissionType, bool hasFlag, bool hasPermission) {
+		public PermissionFlagEntry(PermissionToken permissionType, bool hasFlag, bool hasPermission)
+		{
 			PermissionType = new PermissionTokenContract(permissionType);
 			HasFlag = hasFlag;
 			HasPermission = hasPermission;

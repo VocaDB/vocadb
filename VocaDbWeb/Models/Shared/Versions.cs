@@ -5,13 +5,16 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Service.Translations;
 
-namespace VocaDb.Web.Models.Shared {
+namespace VocaDb.Web.Models.Shared
+{
 
-	public class Versions<TEntry> where TEntry : class {
+	public class Versions<TEntry> where TEntry : class
+	{
 
 		public Versions() { }
 
-		public Versions(TEntry contract, IEnumerable<ArchivedObjectVersionContract> archivedVersions, IEnumTranslations translator) {
+		public Versions(TEntry contract, IEnumerable<ArchivedObjectVersionContract> archivedVersions, IEnumTranslations translator)
+		{
 
 			ParamIs.NotNull(() => contract);
 
@@ -20,7 +23,8 @@ namespace VocaDb.Web.Models.Shared {
 
 		}
 
-		public Versions(IEntryWithArchivedVersionsContract<TEntry, ArchivedObjectVersionContract> contract, IEnumTranslations translator) {
+		public Versions(IEntryWithArchivedVersionsContract<TEntry, ArchivedObjectVersionContract> contract, IEnumTranslations translator)
+		{
 
 			ParamIs.NotNull(() => contract);
 

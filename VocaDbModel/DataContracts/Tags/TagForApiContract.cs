@@ -9,10 +9,12 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.DataContracts.Tags {
+namespace VocaDb.Model.DataContracts.Tags
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class TagForApiContract {
+	public class TagForApiContract
+	{
 
 		public TagForApiContract() { }
 
@@ -20,10 +22,11 @@ namespace VocaDb.Model.DataContracts.Tags {
 			ContentLanguagePreference languagePreference,
 			TagOptionalFields optionalFields) : this(tag, null, languagePreference, optionalFields) { }
 
-		public TagForApiContract(Tag tag, 
+		public TagForApiContract(Tag tag,
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			ContentLanguagePreference languagePreference,
-			TagOptionalFields optionalFields) {
+			TagOptionalFields optionalFields)
+		{
 
 			ParamIs.NotNull(() => tag);
 
@@ -40,35 +43,43 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 			var includeAdditionalNames = optionalFields.HasFlag(TagOptionalFields.AdditionalNames);
 
-			if (includeAdditionalNames) {
+			if (includeAdditionalNames)
+			{
 				AdditionalNames = tag.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 
-			if (optionalFields.HasFlag(TagOptionalFields.Description)) {
+			if (optionalFields.HasFlag(TagOptionalFields.Description))
+			{
 				Description = tag.Description[languagePreference];
 			}
 
-			if (optionalFields.HasFlag(TagOptionalFields.MainPicture) && tag.Thumb != null && thumbPersister != null) {
+			if (optionalFields.HasFlag(TagOptionalFields.MainPicture) && tag.Thumb != null && thumbPersister != null)
+			{
 				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister);
 			}
 
-			if (optionalFields.HasFlag(TagOptionalFields.Names)) {
+			if (optionalFields.HasFlag(TagOptionalFields.Names))
+			{
 				Names = tag.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 			}
 
-			if (optionalFields.HasFlag(TagOptionalFields.Parent) && tag.Parent != null) {
+			if (optionalFields.HasFlag(TagOptionalFields.Parent) && tag.Parent != null)
+			{
 				Parent = new TagBaseContract(tag.Parent, languagePreference, includeAdditionalNames);
 			}
 
-			if (optionalFields.HasFlag(TagOptionalFields.RelatedTags)) {
+			if (optionalFields.HasFlag(TagOptionalFields.RelatedTags))
+			{
 				RelatedTags = tag.RelatedTags.Select(t => new TagBaseContract(t.LinkedTag, languagePreference, includeAdditionalNames)).ToArray();
 			}
 
-			if (optionalFields.HasFlag(TagOptionalFields.TranslatedDescription)) {
+			if (optionalFields.HasFlag(TagOptionalFields.TranslatedDescription))
+			{
 				TranslatedDescription = new EnglishTranslatedStringContract(tag.Description);
 			}
 
-			if (optionalFields.HasFlag(TagOptionalFields.WebLinks)) {
+			if (optionalFields.HasFlag(TagOptionalFields.WebLinks))
+			{
 				WebLinks = tag.WebLinks.Links.Select(w => new WebLinkForApiContract(w)).ToArray();
 			}
 
@@ -152,19 +163,20 @@ namespace VocaDb.Model.DataContracts.Tags {
 	}
 
 	[Flags]
-	public enum TagOptionalFields {
+	public enum TagOptionalFields
+	{
 
-		None					= 0,
-		AdditionalNames			= 1,
+		None = 0,
+		AdditionalNames = 1,
 		[Obsolete("Tag aliases are now just names")]
 		AliasedTo = 2,
-		Description				= 4,
-		MainPicture				= 8,
-		Names					= 16,
-		Parent					= 32,
-		RelatedTags				= 64,
-		TranslatedDescription	= 128,
-		WebLinks				= 256
+		Description = 4,
+		MainPicture = 8,
+		Names = 16,
+		Parent = 32,
+		RelatedTags = 64,
+		TranslatedDescription = 128,
+		WebLinks = 256
 
 	}
 

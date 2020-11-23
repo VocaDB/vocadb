@@ -3,9 +3,11 @@ using System.Linq;
 using NHibernate;
 using VocaDb.Model.Database.Repositories;
 
-namespace VocaDb.Model.Service.Search {
+namespace VocaDb.Model.Service.Search
+{
 
-	public interface ISearchFilter<TEntry> {
+	public interface ISearchFilter<TEntry>
+	{
 
 		QueryCost Cost { get; }
 

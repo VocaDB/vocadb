@@ -1,9 +1,11 @@
-﻿namespace VocaDb.Model.Service.Search {
+﻿namespace VocaDb.Model.Service.Search
+{
 
 	/// <summary>
 	/// Advanced search filter.
 	/// </summary>
-	public class AdvancedSearchFilter {
+	public class AdvancedSearchFilter
+	{
 
 		public const string Any = "*";
 

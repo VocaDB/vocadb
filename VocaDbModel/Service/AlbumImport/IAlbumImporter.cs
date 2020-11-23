@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Service.AlbumImport {
+﻿namespace VocaDb.Model.Service.AlbumImport
+{
 
-	public interface IAlbumImporter {
+	public interface IAlbumImporter
+	{
 
 		string ServiceName { get; }
 

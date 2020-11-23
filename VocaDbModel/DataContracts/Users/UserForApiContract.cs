@@ -4,21 +4,24 @@ using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users {
+namespace VocaDb.Model.DataContracts.Users
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class UserForApiContract : UserBaseContract {
+	public class UserForApiContract : UserBaseContract
+	{
 
 		public UserForApiContract() { }
 
 		public UserForApiContract(User user)
 			: this(user, null, null, UserOptionalFields.None) { }
 
-		public UserForApiContract(User user, IUserIconFactory iconFactory, UserOptionalFields optionalFields) 
-			: this(user, null, iconFactory, optionalFields) {}
+		public UserForApiContract(User user, IUserIconFactory iconFactory, UserOptionalFields optionalFields)
+			: this(user, null, iconFactory, optionalFields) { }
 
 		public UserForApiContract(User user, string fallbackName, IUserIconFactory iconFactory, UserOptionalFields optionalFields)
-			: base(user, fallbackName) {
+			: base(user, fallbackName)
+		{
 
 			if (user == null)
 				return;
@@ -28,15 +31,18 @@ namespace VocaDb.Model.DataContracts.Users {
 			MemberSince = user.CreateDate;
 			VerifiedArtist = user.VerifiedArtist;
 
-			if (optionalFields.HasFlag(UserOptionalFields.KnownLanguages)) {
+			if (optionalFields.HasFlag(UserOptionalFields.KnownLanguages))
+			{
 				KnownLanguages = user.KnownLanguages.Select(l => new UserKnownLanguageContract(l)).ToArray();
 			}
 
-			if (optionalFields.HasFlag(UserOptionalFields.MainPicture) && !string.IsNullOrEmpty(user.Email) && iconFactory != null) {
+			if (optionalFields.HasFlag(UserOptionalFields.MainPicture) && !string.IsNullOrEmpty(user.Email) && iconFactory != null)
+			{
 				MainPicture = iconFactory.GetIcons(user, ImageSizes.All);
 			}
 
-			if (optionalFields.HasFlag(UserOptionalFields.OldUsernames)) {
+			if (optionalFields.HasFlag(UserOptionalFields.OldUsernames))
+			{
 				OldUsernames = user.OldUsernames.Select(n => new OldUsernameContract(n)).ToArray();
 			}
 
@@ -69,7 +75,8 @@ namespace VocaDb.Model.DataContracts.Users {
 	}
 
 	[Flags]
-	public enum UserOptionalFields {
+	public enum UserOptionalFields
+	{
 
 		None = 0,
 		KnownLanguages = 1,

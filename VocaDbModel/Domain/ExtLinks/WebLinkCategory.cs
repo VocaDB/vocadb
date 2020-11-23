@@ -1,6 +1,8 @@
-namespace VocaDb.Model.Domain.ExtLinks {
+namespace VocaDb.Model.Domain.ExtLinks
+{
 
-	public enum WebLinkCategory {
+	public enum WebLinkCategory
+	{
 
 		Official,
 

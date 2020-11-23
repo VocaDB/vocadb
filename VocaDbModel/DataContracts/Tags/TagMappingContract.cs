@@ -1,13 +1,16 @@
 ﻿using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.DataContracts.Tags {
+namespace VocaDb.Model.DataContracts.Tags
+{
 
-	public class TagMappingContract {
+	public class TagMappingContract
+	{
 
 		public TagMappingContract() { }
 
-		public TagMappingContract(TagMapping tagMapping, ContentLanguagePreference lang) {
+		public TagMappingContract(TagMapping tagMapping, ContentLanguagePreference lang)
+		{
 
 			ParamIs.NotNull(() => tagMapping);
 

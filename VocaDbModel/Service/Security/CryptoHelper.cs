@@ -2,9 +2,11 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace VocaDb.Model.Service.Security {
+namespace VocaDb.Model.Service.Security
+{
 
-	public static class CryptoHelper {
+	public static class CryptoHelper
+	{
 
 		public const string MD5 = "MD5";
 		public const string SHA1 = "SHA1";
@@ -14,12 +16,14 @@ namespace VocaDb.Model.Service.Security {
 		/// </summary>
 		/// <param name="ba"></param>
 		/// <returns></returns>
-		private static string ByteArrayToString(byte[] ba) {
+		private static string ByteArrayToString(byte[] ba)
+		{
 			string hex = BitConverter.ToString(ba);
-			return hex.Replace("-","");
+			return hex.Replace("-", "");
 		}
 
-		public static string HashSHA1(string str) {
+		public static string HashSHA1(string str)
+		{
 			return HashString(str, SHA1);
 		}
 
@@ -29,12 +33,14 @@ namespace VocaDb.Model.Service.Security {
 		/// <param name="inputString">Input string. Cannot be null.</param>
 		/// <param name="hashName">Hash algorithm.</param>
 		/// <returns>Hashed string. Cannot be null.</returns>
-		public static string HashString(string inputString, string hashName) {
+		public static string HashString(string inputString, string hashName)
+		{
 
 			ParamIs.NotNull(() => inputString);
 
 			var algorithm = HashAlgorithm.Create(hashName);
-			if (algorithm == null) {
+			if (algorithm == null)
+			{
 				throw new ArgumentException("Unrecognized hash name", "hashName");
 			}
 

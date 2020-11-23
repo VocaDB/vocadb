@@ -3,15 +3,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.BBCode;
 using VocaDb.Web.Code;
 
-namespace VocaDb.Tests.Service.BBCode {
+namespace VocaDb.Tests.Service.BBCode
+{
 
 	/// <summary>
 	/// Tests for <see cref="EntryLinkTransformer"/>.
 	/// </summary>
 	[TestClass]
-	public class EntryLinkTransformerTests {
+	public class EntryLinkTransformerTests
+	{
 
-		private string ApplyTransform(string raw) {
+		private string ApplyTransform(string raw)
+		{
 
 			var code = new StringBuilder(raw);
 			var linkFactory = new EntryAnchorFactory("http://test.vocadb.net");
@@ -21,7 +24,8 @@ namespace VocaDb.Tests.Service.BBCode {
 		}
 
 		[TestMethod]
-		public void ApplyTransform_Long() {
+		public void ApplyTransform_Long()
+		{
 
 			var result = ApplyTransform("/Artist/Details/39");
 
@@ -30,7 +34,8 @@ namespace VocaDb.Tests.Service.BBCode {
 		}
 
 		[TestMethod]
-		public void ApplyTransform_Short() {
+		public void ApplyTransform_Short()
+		{
 
 			var result = ApplyTransform("/S/39");
 

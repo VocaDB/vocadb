@@ -7,28 +7,33 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.Service {
+namespace VocaDb.Model.Service
+{
 
-	public class ActivityFeedService : ServiceBase {
+	public class ActivityFeedService : ServiceBase
+	{
 
 		private readonly IUserIconFactory userIconFactory;
 		private readonly EntryForApiContractFactory entryForApiContractFactory;
 
 		public ActivityFeedService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory) 
-			: base(sessionFactory, permissionContext, entryLinkFactory) {
+			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory)
+			: base(sessionFactory, permissionContext, entryLinkFactory)
+		{
 
 			this.userIconFactory = userIconFactory;
 			this.entryForApiContractFactory = entryForApiContractFactory;
 
 		}
 
-		public PartialFindResult<ActivityEntryForApiContract> GetFollowedArtistActivity(int maxEntries) {
+		public PartialFindResult<ActivityEntryForApiContract> GetFollowedArtistActivity(int maxEntries)
+		{
 
 			if (!PermissionContext.IsLoggedIn)
 				return new PartialFindResult<ActivityEntryForApiContract>();
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var userId = PermissionContext.LoggedUserId;
 
@@ -48,7 +53,7 @@ namespace VocaDb.Model.Service {
 					.Concat(songEntries)
 					.OrderByDescending(a => a.CreateDate)
 					.Take(maxEntries)
-					.Select(e => new ActivityEntryForApiContract(e, entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, 
+					.Select(e => new ActivityEntryForApiContract(e, entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture,
 						LanguagePreference), userIconFactory,
 					PermissionContext, ActivityEntryOptionalFields.None))
 					.ToArray();

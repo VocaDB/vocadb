@@ -24,11 +24,14 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
 
-namespace VocaDb.Web.Models {
+namespace VocaDb.Web.Models
+{
 
-	public class SongDetails {
+	public class SongDetails
+	{
 
-		public SongDetails(SongDetailsContract contract, IUserPermissionContext userContext) {
+		public SongDetails(SongDetailsContract contract, IUserPermissionContext userContext)
+		{
 
 			ParamIs.NotNull(() => contract);
 
@@ -82,10 +85,10 @@ namespace VocaDb.Web.Models {
 			Producers = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Producer)).ToArray();
 			var subjectsForThis = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Subject)).ToArray();
 			Subject = subjectsForThis.Any() ? subjectsForThis : contract.SubjectsFromParents;
-			OtherArtists = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Circle)  
-				|| a.Categories.HasFlag(ArtistCategories.Label) 
+			OtherArtists = contract.Artists.Where(a => a.Categories.HasFlag(ArtistCategories.Circle)
+				|| a.Categories.HasFlag(ArtistCategories.Label)
 				|| a.Categories.HasFlag(ArtistCategories.Other)
-			    || (ContentFocus != ContentFocus.Illustration && a.Categories.HasFlag(ArtistCategories.Illustrator))).ToArray();
+				|| (ContentFocus != ContentFocus.Illustration && a.Categories.HasFlag(ArtistCategories.Illustrator))).ToArray();
 
 			var pvs = contract.PVs;
 
@@ -98,14 +101,15 @@ namespace VocaDb.Web.Models {
 			if (PrimaryPV == null && !string.IsNullOrEmpty(NicoId))
 				PrimaryPV = new PVContract { PVId = NicoId, Service = PVService.NicoNicoDouga };
 
-			if (pvs.All(p => p.Service != PVService.Youtube)) {
+			if (pvs.All(p => p.Service != PVService.Youtube))
+			{
 
 				var nicoPV = VideoServiceHelper.PrimaryPV(pvs, PVService.NicoNicoDouga);
 				var query = HttpUtility.UrlEncode((nicoPV != null && !string.IsNullOrEmpty(nicoPV.Name))
 					? nicoPV.Name
 					: string.Format("{0} {1}", ArtistString, Name));
 
-				WebLinks.Add(new WebLinkContract(string.Format("http://www.youtube.com/results?search_query={0}", query), 
+				WebLinks.Add(new WebLinkContract(string.Format("http://www.youtube.com/results?search_query={0}", query),
 					ViewRes.Song.DetailsStrings.SearchYoutube, WebLinkCategory.Other));
 
 			}
@@ -228,9 +232,11 @@ namespace VocaDb.Web.Models {
 
 	}
 
-	public class SongDetailsAjax {
+	public class SongDetailsAjax
+	{
 
-		public SongDetailsAjax(SongDetails model, LyricsForSongContract preferredLyrics, int version) {
+		public SongDetailsAjax(SongDetails model, LyricsForSongContract preferredLyrics, int version)
+		{
 
 			Id = model.Id;
 			UserRating = model.UserRating;

@@ -7,14 +7,17 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Helpers {
+namespace VocaDb.Model.Helpers
+{
 
-	public class TagMapper {
+	public class TagMapper
+	{
 
 		/// <summary>
 		/// Tests if a particular tag is redundant for a song and should be skipped from automatic mapping.
 		/// </summary>
-		public bool TagIsRedundantForSong(SongType songType, int tagId, IEntryTypeTagRepository specialTags) {
+		public bool TagIsRedundantForSong(SongType songType, int tagId, IEntryTypeTagRepository specialTags)
+		{
 
 			if (tagId == specialTags.SongTypeTagId(songType))
 				return true;
@@ -23,7 +26,8 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public Tag[] MapTags(IDatabaseContext ctx, string[] nicoTags) {
+		public Tag[] MapTags(IDatabaseContext ctx, string[] nicoTags)
+		{
 
 			// Construct tag mappings (many to many)
 			var tagMappings = ctx
@@ -41,7 +45,8 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public async Task<Tag[]> MapTagsAsync(IDatabaseContext ctx, string[] nicoTags) {
+		public async Task<Tag[]> MapTagsAsync(IDatabaseContext ctx, string[] nicoTags)
+		{
 
 			// Construct tag mappings (many to many)
 			var tagMappingsList = await ctx

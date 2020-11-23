@@ -7,16 +7,19 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.Security {
+namespace VocaDb.Model.Domain.Security
+{
 
 	using StatusSet = ImmutableSortedSet<EntryStatus>;
 
 	/// <summary>
 	/// Manages entry-specific permissions that differ from global permissions.
 	/// </summary>
-	public static class EntryPermissionManager {
+	public static class EntryPermissionManager
+	{
 
-		private static StatusSet Set(params EntryStatus[] vals) {
+		private static StatusSet Set(params EntryStatus[] vals)
+		{
 			return ImmutableSortedSet.CreateRange(vals);
 		}
 
@@ -42,13 +45,14 @@ namespace VocaDb.Model.Domain.Security {
 		/// <param name="userContext">User context. Cannot be null.</param>
 		/// <param name="entry">Entry to be checked. Can be null.</param>
 		/// <returns>True if <paramref name="entry"/> is an artist entry and <paramref name="userContext"/> is a verified owner of that entry.</returns>
-		private static bool IsDirectlyVerifiedFor(IUserPermissionContext userContext, IEntryBase entry) {
-			
+		private static bool IsDirectlyVerifiedFor(IUserPermissionContext userContext, IEntryBase entry)
+		{
+
 			return
-				entry != null 
+				entry != null
 				&& entry.EntryType == EntryType.Artist
-				&& userContext.IsLoggedIn 
-				&& userContext.LoggedUser.VerifiedArtist 
+				&& userContext.IsLoggedIn
+				&& userContext.LoggedUser.VerifiedArtist
 				&& userContext.LoggedUser.OwnedArtistEntries.Any(a => a.Artist.Id == entry.Id);
 
 		}
@@ -63,7 +67,8 @@ namespace VocaDb.Model.Domain.Security {
 		/// The user is considered to be the owner of the entry if the entry is an artist entry and the user is directly connected to that artist entry
 		/// or if the entry is a song or album and the user is the owner of one of the artists for that song/album.
 		/// </remarks>
-		private static bool IsVerifiedFor(IUserPermissionContext userContext, IEntryBase entry) {
+		private static bool IsVerifiedFor(IUserPermissionContext userContext, IEntryBase entry)
+		{
 
 			if (entry == null || !userContext.IsLoggedIn || !userContext.LoggedUser.VerifiedArtist || !userContext.LoggedUser.Active)
 				return false;
@@ -88,10 +93,12 @@ namespace VocaDb.Model.Domain.Security {
 		/// <param name="permissionContext">User permission context identifying the user's global permissions.</param>
 		/// <param name="entry">Entry to be checked. Can be null. If null, only global permissions will be checked.</param>
 		/// <returns>A list of permissions that can be set by the user.</returns>
-		public static StatusSet AllowedEntryStatuses(IUserPermissionContext permissionContext, IEntryBase entry = null) {
+		public static StatusSet AllowedEntryStatuses(IUserPermissionContext permissionContext, IEntryBase entry = null)
+		{
 
 			// Check for basic edit permissions, without these the user is limited or disabled
-			if (!permissionContext.HasPermission(PermissionToken.ManageDatabase)) {
+			if (!permissionContext.HasPermission(PermissionToken.ManageDatabase))
+			{
 				return StatusSet.Empty;
 			}
 
@@ -104,7 +111,8 @@ namespace VocaDb.Model.Domain.Security {
 				return trustedStatusPermissions;
 
 			// Verified artists get trusted permissions for their own entry
-			if (IsDirectlyVerifiedFor(permissionContext, entry)) {				
+			if (IsDirectlyVerifiedFor(permissionContext, entry))
+			{
 				return trustedStatusPermissions;
 			}
 
@@ -117,8 +125,9 @@ namespace VocaDb.Model.Domain.Security {
 		}
 
 		public static bool CanDelete<TEntry>(IUserPermissionContext permissionContext, TEntry entry)
-			where TEntry: IEntryWithVersions, IEntryWithStatus {
-			
+			where TEntry : IEntryWithVersions, IEntryWithStatus
+		{
+
 			if (!permissionContext.IsLoggedIn)
 				return false;
 
@@ -138,7 +147,8 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public static bool CanEditSongList(IUserPermissionContext permissionContext, ISongList songList) {
+		public static bool CanEditSongList(IUserPermissionContext permissionContext, ISongList songList)
+		{
 
 			if (songList.FeaturedList && CanManageFeaturedLists(permissionContext))
 				return true;
@@ -150,7 +160,8 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public static bool CanEdit(IUserPermissionContext permissionContext, Comment comment) {
+		public static bool CanEdit(IUserPermissionContext permissionContext, Comment comment)
+		{
 
 			if (!permissionContext.HasPermission(PermissionToken.CreateComments))
 				return false;
@@ -162,7 +173,8 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public static bool CanEdit(IUserPermissionContext permissionContext, DiscussionTopic topic) {
+		public static bool CanEdit(IUserPermissionContext permissionContext, DiscussionTopic topic)
+		{
 
 			if (!permissionContext.HasPermission(PermissionToken.CreateComments))
 				return false;
@@ -173,13 +185,13 @@ namespace VocaDb.Model.Domain.Security {
 			return (topic.Author != null && topic.Author.IsTheSameUser(permissionContext.LoggedUser));
 
 		}
-		
-	///	public static bool CanEditTags(IUserPermissionContext userContext, IEntryBase entry) {
 
-	///		return permissionContext.HasPermission(PermissionToken.EditTags);	???
+		///	public static bool CanEditTags(IUserPermissionContext userContext, IEntryBase entry) {
 
-	///	}
-		
+		///		return permissionContext.HasPermission(PermissionToken.EditTags);	???
+
+		///	}
+
 
 		/// <summary>
 		/// Tests whether the user can edit a specific entry.
@@ -188,7 +200,8 @@ namespace VocaDb.Model.Domain.Security {
 		/// <param name="permissionContext">User permission context. Cannot be null.</param>
 		/// <param name="entry">Entry to be checked. Cannot be null.</param>
 		/// <returns>True if the user can edit the entry, otherwise false.</returns>
-		public static bool CanEdit(IUserPermissionContext permissionContext, IEntryWithStatus entry) {
+		public static bool CanEdit(IUserPermissionContext permissionContext, IEntryWithStatus entry)
+		{
 
 			ParamIs.NotNull(() => entry);
 
@@ -196,14 +209,16 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public static bool CanEditAdditionalPermissions(IUserPermissionContext permissionContext) {
+		public static bool CanEditAdditionalPermissions(IUserPermissionContext permissionContext)
+		{
 
 			ParamIs.NotNull(() => permissionContext);
 
 			return permissionContext.UserGroupId == UserGroupId.Admin;
 		}
 
-		public static bool CanEditGroupTo(IUserPermissionContext permissionContext, UserGroupId groupId) {
+		public static bool CanEditGroupTo(IUserPermissionContext permissionContext, UserGroupId groupId)
+		{
 
 			ParamIs.NotNull(() => permissionContext);
 
@@ -211,7 +226,8 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public static bool CanEditPersonalDescription(IUserPermissionContext userContext, IEntryBase entry) {
+		public static bool CanEditPersonalDescription(IUserPermissionContext userContext, IEntryBase entry)
+		{
 
 			ParamIs.NotNull(() => userContext);
 
@@ -219,7 +235,8 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public static bool CanEditUser(IUserPermissionContext permissionContext, UserGroupId groupId) {
+		public static bool CanEditUser(IUserPermissionContext permissionContext, UserGroupId groupId)
+		{
 
 			ParamIs.NotNull(() => permissionContext);
 
@@ -227,13 +244,15 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public static bool CanManageFeaturedLists(IUserPermissionContext permissionContext) {
+		public static bool CanManageFeaturedLists(IUserPermissionContext permissionContext)
+		{
 
 			return permissionContext.HasPermission(PermissionToken.EditFeaturedLists);
 
 		}
 
-		public static bool CanRemoveTagUsages(IUserPermissionContext permissionContext, IEntryBase entry) {
+		public static bool CanRemoveTagUsages(IUserPermissionContext permissionContext, IEntryBase entry)
+		{
 
 			if (!permissionContext.IsLoggedIn)
 				return false;
@@ -253,7 +272,8 @@ namespace VocaDb.Model.Domain.Security {
 		/// <param name="entry">Entry to be checked.</param>
 		/// <param name="accessCheck">Access check to perform. Returns true if user has access, otherwise false.</param>
 		/// <exception cref="NotAllowedException">If user does not have access (<paramref name="accessCheck"/> returns false).</exception>
-		public static void VerifyAccess<T>(IUserPermissionContext permissionContext, T entry, Func<IUserPermissionContext, T, bool> accessCheck) where T : class {
+		public static void VerifyAccess<T>(IUserPermissionContext permissionContext, T entry, Func<IUserPermissionContext, T, bool> accessCheck) where T : class
+		{
 
 			ParamIs.NotNull(() => entry);
 
@@ -266,7 +286,8 @@ namespace VocaDb.Model.Domain.Security {
 		/// Verifies that user is allowed to delete an entry.
 		/// </summary>
 		public static void VerifyDelete<TEntry>(IUserPermissionContext permissionContext, TEntry entry)
-			where TEntry: class, IEntryWithVersions, IEntryWithStatus {
+			where TEntry : class, IEntryWithVersions, IEntryWithStatus
+		{
 
 			VerifyAccess(permissionContext, entry, CanDelete);
 
@@ -275,7 +296,8 @@ namespace VocaDb.Model.Domain.Security {
 		/// <summary>
 		/// Verifies that user is allowed to edit a <see cref="SongList"/>.
 		/// </summary>
-		public static void VerifyEdit(IUserPermissionContext permissionContext, SongList entry) {
+		public static void VerifyEdit(IUserPermissionContext permissionContext, SongList entry)
+		{
 
 			VerifyAccess(permissionContext, entry, CanEditSongList);
 
@@ -284,7 +306,8 @@ namespace VocaDb.Model.Domain.Security {
 		/// <summary>
 		/// Verifies that user is allowed to edit an entry.
 		/// </summary>
-		public static void VerifyEdit(IUserPermissionContext permissionContext, IEntryWithStatus entry) {
+		public static void VerifyEdit(IUserPermissionContext permissionContext, IEntryWithStatus entry)
+		{
 
 			VerifyAccess(permissionContext, entry, CanEdit);
 

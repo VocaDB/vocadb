@@ -1,10 +1,13 @@
 ﻿using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Web.Models.Shared {
+namespace VocaDb.Web.Models.Shared
+{
 
-	public class EnglishTranslatedStringViewModel {
+	public class EnglishTranslatedStringViewModel
+	{
 
-		public EnglishTranslatedStringViewModel(EnglishTranslatedString str, int maxLength = 500, int summaryLength = 400) {
+		public EnglishTranslatedStringViewModel(EnglishTranslatedString str, int maxLength = 500, int summaryLength = 400)
+		{
 			String = str;
 			MaxLength = maxLength;
 			SummaryLength = summaryLength;

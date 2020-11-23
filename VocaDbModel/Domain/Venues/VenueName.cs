@@ -1,8 +1,10 @@
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.Domain.Venues {
+namespace VocaDb.Model.Domain.Venues
+{
 
-	public class VenueName : EntryName<Venue> {
+	public class VenueName : EntryName<Venue>
+	{
 
 		public VenueName() { }
 

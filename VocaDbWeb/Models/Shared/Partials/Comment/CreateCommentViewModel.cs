@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Comment {
+namespace VocaDb.Web.Models.Shared.Partials.Comment
+{
 
-	public class CreateCommentViewModel {
+	public class CreateCommentViewModel
+	{
 
-		public CreateCommentViewModel(string cssClass, int newCommentRows) {
+		public CreateCommentViewModel(string cssClass, int newCommentRows)
+		{
 			CssClass = cssClass;
 			NewCommentRows = newCommentRows;
 		}

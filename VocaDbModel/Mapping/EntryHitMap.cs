@@ -1,11 +1,14 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.Mapping {
+namespace VocaDb.Model.Mapping
+{
 
-	public class EntryHitMap<THit, TEntry> : ClassMap<THit> where THit : GenericEntryHit<TEntry> where TEntry : class {
+	public class EntryHitMap<THit, TEntry> : ClassMap<THit> where THit : GenericEntryHit<TEntry> where TEntry : class
+	{
 
-		protected EntryHitMap() {
+		protected EntryHitMap()
+		{
 
 			Id(m => m.Id);
 			ReadOnly();

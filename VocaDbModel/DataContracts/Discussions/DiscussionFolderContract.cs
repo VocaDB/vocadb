@@ -5,15 +5,18 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.DataContracts.Discussions {
+namespace VocaDb.Model.DataContracts.Discussions
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class DiscussionFolderContract {
+	public class DiscussionFolderContract
+	{
 
 		public DiscussionFolderContract() { }
 
 		public DiscussionFolderContract(DiscussionFolder folder, DiscussionFolderOptionalFields fields,
-			IUserIconFactory userIconFactory) {
+			IUserIconFactory userIconFactory)
+		{
 
 			ParamIs.NotNull(() => folder);
 
@@ -21,7 +24,8 @@ namespace VocaDb.Model.DataContracts.Discussions {
 			this.Id = folder.Id;
 			this.Name = folder.Name;
 
-			if (fields.HasFlag(DiscussionFolderOptionalFields.LastTopic) && folder.Topics.Any()) {
+			if (fields.HasFlag(DiscussionFolderOptionalFields.LastTopic) && folder.Topics.Any())
+			{
 
 				var lastTopic = folder.Topics.ToArray().MaxItem(t => t.Created);
 
@@ -30,8 +34,9 @@ namespace VocaDb.Model.DataContracts.Discussions {
 
 			}
 
-			if (fields.HasFlag(DiscussionFolderOptionalFields.TopicCount)) {
-				this.TopicCount = folder.Topics.Count();			
+			if (fields.HasFlag(DiscussionFolderOptionalFields.TopicCount))
+			{
+				this.TopicCount = folder.Topics.Count();
 			}
 
 		}
@@ -60,11 +65,12 @@ namespace VocaDb.Model.DataContracts.Discussions {
 	}
 
 	[Flags]
-	public enum DiscussionFolderOptionalFields {
-		
-		None			= 0,
-		LastTopic		= 1,
-		TopicCount		= 2
+	public enum DiscussionFolderOptionalFields
+	{
+
+		None = 0,
+		LastTopic = 1,
+		TopicCount = 2
 
 	}
 

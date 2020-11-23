@@ -1,13 +1,16 @@
 using System;
 
-namespace VocaDb.Model.Domain.Security {
+namespace VocaDb.Model.Domain.Security
+{
 
-	public class IPRule : IEntryWithIntId {
+	public class IPRule : IEntryWithIntId
+	{
 
 		private string address;
 		private string notes;
 
-		public IPRule() {
+		public IPRule()
+		{
 
 			address = string.Empty;
 			Created = DateTime.Now;
@@ -15,17 +18,20 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public IPRule(string address, string notes = "") {
+		public IPRule(string address, string notes = "")
+		{
 			Address = address;
 			Notes = notes;
 			Created = DateTime.Now;
 		}
 
-		public virtual string Address {
+		public virtual string Address
+		{
 			get { return address; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				address = value; 
+				address = value;
 			}
 		}
 
@@ -33,15 +39,18 @@ namespace VocaDb.Model.Domain.Security {
 
 		public virtual int Id { get; set; }
 
-		public virtual string Notes {
+		public virtual string Notes
+		{
 			get { return notes; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				notes = value; 
+				notes = value;
 			}
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return $"IPRule for {Address}, created at {Created}, notes {Notes}";
 		}
 	}

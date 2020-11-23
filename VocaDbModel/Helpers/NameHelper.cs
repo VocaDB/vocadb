@@ -7,15 +7,19 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.DataContracts;
 
-namespace VocaDb.Model.Helpers {
+namespace VocaDb.Model.Helpers
+{
 
-	public static class NameHelper {
+	public static class NameHelper
+	{
 
-		public static string GetAdditionalNames(IEnumerable<string> names, string display) {
+		public static string GetAdditionalNames(IEnumerable<string> names, string display)
+		{
 			return string.Join(", ", names.Where(n => n != display));
 		}
 
-		public static EntryNameContract GetName(INameManager nameManager, ContentLanguagePreference languagePreference) {
+		public static EntryNameContract GetName(INameManager nameManager, ContentLanguagePreference languagePreference)
+		{
 
 			var primary = nameManager.SortNames[languagePreference];
 
@@ -23,7 +27,8 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static string[] MoveExactNamesToTop(string[] names, string term) {
+		public static string[] MoveExactNamesToTop(string[] names, string term)
+		{
 
 			if (names == null || !names.Any())
 				return names;

@@ -10,13 +10,15 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Web.Controllers.Api {
+namespace VocaDb.Web.Controllers.Api
+{
 
 	/// <summary>
 	/// Controller for managing base class for common entries.
 	/// </summary>
 	[RoutePrefix("api/entries")]
-	public class EntryApiController : ApiController {
+	public class EntryApiController : ApiController
+	{
 
 		private const int absoluteMax = 50;
 		private const int defaultMax = 10;
@@ -28,9 +30,10 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly OtherService otherService;
 		private readonly SongQueries songQueries;
 
-		private int GetMaxResults(int max) => Math.Min(max, absoluteMax);	
+		private int GetMaxResults(int max) => Math.Min(max, absoluteMax);
 
-		public EntryApiController(EntryQueries queries, OtherService otherService, AlbumService albumService, ArtistService artistService, SongQueries songQueries, IEntryUrlParser entryUrlParser) {
+		public EntryApiController(EntryQueries queries, OtherService otherService, AlbumService albumService, ArtistService artistService, SongQueries songQueries, IEntryUrlParser entryUrlParser)
+		{
 			this.queries = queries;
 			this.otherService = otherService;
 			this.albumService = albumService;
@@ -47,7 +50,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <param name="tagId">Filter by tag Id (optional).</param>
 		/// <param name="childTags">Include child tags, if the tags being filtered by have any.</param>
 		/// <param name="status">Filter by entry status (optional).</param>
-        /// <param name="entryTypes">Included entry types (optional).</param>
+		/// <param name="entryTypes">Included entry types (optional).</param>
 		/// <param name="start">First item to be retrieved (optional, defaults to 0).</param>
 		/// <param name="maxResults">Maximum number of results to be loaded (optional, defaults to 10, maximum of 30).</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
@@ -70,11 +73,12 @@ namespace VocaDb.Web.Controllers.Api {
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			EntryOptionalFields fields = EntryOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default
-			) {
-			
+			)
+		{
+
 			maxResults = GetMaxResults(maxResults);
 
-			return queries.GetList(query, tagId, tagName, childTags, status, entryTypes, 
+			return queries.GetList(query, tagId, tagName, childTags, status, entryTypes,
 				start, maxResults, getTotalCount, sort, nameMatchMode, fields, lang, searchEvents: true);
 
 		}
@@ -91,22 +95,26 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Route("tooltip")]
-		public string GetToolTip(string url) {
+		public string GetToolTip(string url)
+		{
 
-			if (string.IsNullOrWhiteSpace(url)) {
+			if (string.IsNullOrWhiteSpace(url))
+			{
 				throw new HttpBadRequestException("URL must be specified");
 			}
 
 			var entryId = entryUrlParser.Parse(url, allowRelative: true);
 
-			if (entryId.IsEmpty) {
+			if (entryId.IsEmpty)
+			{
 				throw new HttpBadRequestException("Invalid URL");
 			}
 
 			var data = string.Empty;
 			var id = entryId.Id;
 
-			switch (entryId.EntryType) {
+			switch (entryId.EntryType)
+			{
 				case EntryType.Album:
 					data = RazorHelper.RenderPartialViewToString("AlbumWithCoverPopupContent", albumService.GetAlbum(id), "EntryApiController", Request);
 					break;

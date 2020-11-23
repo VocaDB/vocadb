@@ -2,14 +2,17 @@ using System;
 using System.Threading.Tasks;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.Database.Repositories {
+namespace VocaDb.Model.Database.Repositories
+{
 
-	public interface IRepositoryBase {
+	public interface IRepositoryBase
+	{
 
 	}
 
-	public interface IRepositoryBase<TRepositoryContext> : IRepositoryBase {
-		
+	public interface IRepositoryBase<TRepositoryContext> : IRepositoryBase
+	{
+
 		/// <summary>
 		/// Runs an unit of work that queries the database without saving anything. No explicit transaction will be opened.
 		/// </summary>
@@ -58,15 +61,17 @@ namespace VocaDb.Model.Database.Repositories {
 
 	}
 
-	public interface IRepository : IRepositoryBase<IDatabaseContext> {
-		
+	public interface IRepository : IRepositoryBase<IDatabaseContext>
+	{
+
 	}
 
 	/// <summary>
 	/// Interface for running "units of work" against the database.
 	/// </summary>
 	/// <typeparam name="T">Type of entity.</typeparam>
-	public interface IRepository<T> : IRepositoryBase<IDatabaseContext<T>> where T : class, IDatabaseObject {
+	public interface IRepository<T> : IRepositoryBase<IDatabaseContext<T>> where T : class, IDatabaseObject
+	{
 
 	}
 

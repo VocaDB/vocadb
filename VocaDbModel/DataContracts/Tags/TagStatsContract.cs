@@ -11,9 +11,11 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Tags {
+namespace VocaDb.Model.DataContracts.Tags
+{
 
-	public class TagStatsContract {
+	public class TagStatsContract
+	{
 
 		public TagStatsContract() { }
 
@@ -25,7 +27,8 @@ namespace VocaDb.Model.DataContracts.Tags {
 			IEnumerable<Song> songs, int songCount,
 			IEnumerable<ReleaseEventSeries> eventSeries, int eventSeriesCount,
 			IEnumerable<ReleaseEvent> events, int eventCount,
-			int followerCount) {
+			int followerCount)
+		{
 
 			Albums = albums.Select(a => new AlbumContract(a, languagePreference)).ToArray();
 			AlbumCount = albumCount;

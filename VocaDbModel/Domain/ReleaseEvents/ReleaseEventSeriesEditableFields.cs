@@ -1,9 +1,11 @@
 ﻿using System;
 
-namespace VocaDb.Model.Domain.ReleaseEvents {
+namespace VocaDb.Model.Domain.ReleaseEvents
+{
 
 	[Flags]
-	public enum ReleaseEventSeriesEditableFields {
+	public enum ReleaseEventSeriesEditableFields
+	{
 
 		Nothing = 0,
 

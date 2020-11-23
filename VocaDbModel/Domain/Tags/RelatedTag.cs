@@ -1,13 +1,16 @@
-namespace VocaDb.Model.Domain.Tags {
+namespace VocaDb.Model.Domain.Tags
+{
 
-	public class RelatedTag : IEntryWithIntId {
+	public class RelatedTag : IEntryWithIntId
+	{
 
 		private Tag ownerTag;
 		private Tag linkedTag;
 
 		public RelatedTag() { }
 
-		public RelatedTag(Tag ownerTag, Tag linkedTag) {
+		public RelatedTag(Tag ownerTag, Tag linkedTag)
+		{
 
 			ParamIs.NotNull(() => ownerTag);
 			ParamIs.NotNull(() => linkedTag);
@@ -19,45 +22,55 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual int Id { get; set; }
 
-		public virtual Tag OwnerTag {
+		public virtual Tag OwnerTag
+		{
 			get { return ownerTag; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				ownerTag = value;
 			}
 		}
 
-		public virtual Tag LinkedTag {
+		public virtual Tag LinkedTag
+		{
 			get { return linkedTag; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				linkedTag = value;
 			}
 		}
 
-		public virtual RelatedTag CreateReversed() {
+		public virtual RelatedTag CreateReversed()
+		{
 			return new RelatedTag(LinkedTag, OwnerTag);
 		}
 
-		public virtual void Delete() {
+		public virtual void Delete()
+		{
 			OwnerTag.RelatedTags.Remove(this);
 			LinkedTag.RelatedTags.Remove(CreateReversed());
 		}
 
-		protected bool Equals(RelatedTag other) {
+		protected bool Equals(RelatedTag other)
+		{
 			return OwnerTag.Equals(other.OwnerTag) && LinkedTag.Equals(other.LinkedTag);
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
 			if (obj.GetType() != this.GetType()) return false;
-			return Equals((RelatedTag) obj);
+			return Equals((RelatedTag)obj);
 		}
 
-		public override int GetHashCode() {
-			unchecked {
-				return ((OwnerTag != null ? OwnerTag.GetHashCode() : 0)*397) ^ (LinkedTag != null ? LinkedTag.GetHashCode() : 0);
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return ((OwnerTag != null ? OwnerTag.GetHashCode() : 0) * 397) ^ (LinkedTag != null ? LinkedTag.GetHashCode() : 0);
 			}
 		}
 

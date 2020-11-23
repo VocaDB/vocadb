@@ -1,9 +1,11 @@
-﻿namespace VocaDb.Model.Service.Security {
+﻿namespace VocaDb.Model.Service.Security
+{
 
 	/// <summary>
 	/// Algorithm for password hashing.
 	/// </summary>
-	public interface IPasswordHashAlgorithm {
+	public interface IPasswordHashAlgorithm
+	{
 
 		/// <summary>
 		/// Algorithm type used for identification.
@@ -23,7 +25,7 @@
 		/// <param name="username">Username, for example "Miku".</param>
 		/// <returns>Hashed password, ready to be stored in the database.</returns>
 		string HashPassword(string password, string salt, string username);
-		
+
 	}
 
 }

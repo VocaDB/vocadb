@@ -4,18 +4,21 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
+namespace VocaDb.Model.DataContracts.Songs
+{
 
 	[DataContract]
-	public class SongWithAlbumAndPVsContract : SongWithAlbumContract {
+	public class SongWithAlbumAndPVsContract : SongWithAlbumContract
+	{
 
-		public SongWithAlbumAndPVsContract(Song song, ContentLanguagePreference languagePreference, bool getPVs) 
-			: base(song, languagePreference) {
+		public SongWithAlbumAndPVsContract(Song song, ContentLanguagePreference languagePreference, bool getPVs)
+			: base(song, languagePreference)
+		{
 
 			if (getPVs)
 				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 			else
-				PVs = new PVContract[] {};
+				PVs = new PVContract[] { };
 
 		}
 

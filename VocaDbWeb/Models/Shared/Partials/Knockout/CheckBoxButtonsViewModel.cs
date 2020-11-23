@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 
-namespace VocaDb.Web.Models.Shared.Partials.Knockout {
+namespace VocaDb.Web.Models.Shared.Partials.Knockout
+{
 
-	public class CheckBoxButtonsViewModel {
+	public class CheckBoxButtonsViewModel
+	{
 
-		public CheckBoxButtonsViewModel(Dictionary<string, string> options, string binding) {
+		public CheckBoxButtonsViewModel(Dictionary<string, string> options, string binding)
+		{
 			Options = options;
 			Binding = binding;
 		}

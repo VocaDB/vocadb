@@ -1,12 +1,15 @@
 ﻿using System;
 
-namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain
+{
 
-	public class EntryRef : IEquatable<EntryRef> {
+	public class EntryRef : IEquatable<EntryRef>
+	{
 
 		public EntryRef() { }
 
-		public EntryRef(IEntryBase entryBase) {
+		public EntryRef(IEntryBase entryBase)
+		{
 
 			ParamIs.NotNull(() => entryBase);
 
@@ -15,16 +18,18 @@ namespace VocaDb.Model.Domain {
 
 		}
 
-		public EntryRef(EntryType entryType, int id) {
+		public EntryRef(EntryType entryType, int id)
+		{
 			EntryType = entryType;
 			Id = id;
 		}
 
-		public EntryType EntryType { get; set;  }
+		public EntryType EntryType { get; set; }
 
 		public int Id { get; set; }
 
-		public bool Equals(EntryRef another) {
+		public bool Equals(EntryRef another)
+		{
 
 			if (another == null)
 				return false;
@@ -33,15 +38,18 @@ namespace VocaDb.Model.Domain {
 
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as EntryRef);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return (EntryType.ToString() + "_" + Id).GetHashCode();
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("entry of type {0}, ID {1}", EntryType, Id);
 		}
 

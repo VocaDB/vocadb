@@ -5,9 +5,11 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Model.Domain.Artists {
+namespace VocaDb.Model.Domain.Artists
+{
 
-	public class ArtistStringFactory {
+	public class ArtistStringFactory
+	{
 
 		private readonly bool allowRepeatingProducerAsPerformer;
 
@@ -18,7 +20,8 @@ namespace VocaDb.Model.Domain.Artists {
 		/// <param name="artistLink">Artist link. Cannot be null.</param>
 		/// <param name="focus">Album focus.</param>
 		/// <returns>Sort order, 0-based.</returns>
-		private int GetSortOrderForArtistString(IArtistLinkWithRoles artistLink, ContentFocus focus) {
+		private int GetSortOrderForArtistString(IArtistLinkWithRoles artistLink, ContentFocus focus)
+		{
 
 			var categories = ArtistHelper.GetCategories(artistLink);
 
@@ -45,14 +48,16 @@ namespace VocaDb.Model.Domain.Artists {
 		}
 
 		// TODO: it'd be better to inject configuration as interface
-		public ArtistStringFactory() 
-			: this(AppConfig.AllowRepeatingProducerAsPerformer) {}
+		public ArtistStringFactory()
+			: this(AppConfig.AllowRepeatingProducerAsPerformer) { }
 
-		public ArtistStringFactory(bool allowRepeatingProducerAsPerformer) {
+		public ArtistStringFactory(bool allowRepeatingProducerAsPerformer)
+		{
 			this.allowRepeatingProducerAsPerformer = allowRepeatingProducerAsPerformer;
 		}
 
-		public TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus) {
+		public TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus)
+		{
 
 			ParamIs.NotNull(() => artists);
 
@@ -64,7 +69,7 @@ namespace VocaDb.Model.Domain.Artists {
 				.ToArray();
 
 			var performers = matched
-				.Where(a => ArtistHelper.GetCategories(a).HasFlag(ArtistCategories.Vocalist) 
+				.Where(a => ArtistHelper.GetCategories(a).HasFlag(ArtistCategories.Vocalist)
 					&& (!producers.Contains(a) || allowRepeatingProducerAsPerformer)
 					&& (a.Roles.HasFlag(ArtistRoles.Vocalist) || !a.Roles.HasFlag(ArtistRoles.Chorus)))
 				.ToArray();
@@ -75,20 +80,25 @@ namespace VocaDb.Model.Domain.Artists {
 				return new TranslatedStringWithDefault(various, various, various, various);
 
 			var performerNames = performers.Select(ArtistHelper.GetTranslatedName);
-			var producerNames =	producers.Select(ArtistHelper.GetTranslatedName);
+			var producerNames = producers.Select(ArtistHelper.GetTranslatedName);
 
-			if (producers.Any() && performers.Length > 2 && producers.Length + performers.Length >= 5) {
+			if (producers.Any() && performers.Length > 2 && producers.Length + performers.Length >= 5)
+			{
 
 				return TranslatedStringWithDefault.Create(lang => string.Format("{0} feat. various",
 					string.Join(", ", producerNames.Select(p => p[lang]))));
 
-			} else if (producers.Any() && performers.Any()) {
+			}
+			else if (producers.Any() && performers.Any())
+			{
 
 				return TranslatedStringWithDefault.Create(lang => string.Format("{0} feat. {1}",
 					string.Join(", ", producerNames.Select(p => p[lang])),
 					string.Join(", ", performerNames.Select(p => p[lang]))));
 
-			} else {
+			}
+			else
+			{
 
 				return TranslatedStringWithDefault.Create(lang => string.Join(", ", (producers.Any() ? producers : performers).Select(a => ArtistHelper.GetTranslatedName(a)[lang])));
 

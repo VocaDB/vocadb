@@ -6,24 +6,28 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Domain.Security {
+namespace VocaDb.Tests.Domain.Security
+{
 
 	/// <summary>
 	/// Unit tests for <see cref="EntryPermissionManager"/>.
 	/// </summary>
 	[TestClass]
-	public class EntryPermissionManagerTests {
+	public class EntryPermissionManagerTests
+	{
 
 		private Artist artist;
 		private User user;
 		private Artist verifiedArtist;
 		private User verifiedUser;
 
-		private bool CanDelete<T>(User user, T entry) where T : IEntryWithVersions, IEntryWithStatus {
+		private bool CanDelete<T>(User user, T entry) where T : IEntryWithVersions, IEntryWithStatus
+		{
 			return EntryPermissionManager.CanDelete(new FakePermissionContext(user), entry);
 		}
 
-		private void TestCanDelete(bool expected, EntryStatus entryStatus = EntryStatus.Finished, UserGroupId userGroup = UserGroupId.Regular) {
+		private void TestCanDelete(bool expected, EntryStatus entryStatus = EntryStatus.Finished, UserGroupId userGroup = UserGroupId.Regular)
+		{
 
 			artist.Status = entryStatus;
 			user.GroupId = userGroup;
@@ -33,7 +37,8 @@ namespace VocaDb.Tests.Domain.Security {
 
 		}
 
-		private void TestCanEdit(bool expected, EntryStatus entryStatus = EntryStatus.Finished, UserGroupId userGroup = UserGroupId.Regular) {
+		private void TestCanEdit(bool expected, EntryStatus entryStatus = EntryStatus.Finished, UserGroupId userGroup = UserGroupId.Regular)
+		{
 
 			artist.Status = entryStatus;
 			user.GroupId = userGroup;
@@ -44,7 +49,8 @@ namespace VocaDb.Tests.Domain.Security {
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			var anotherUser = CreateEntry.User(id: 2);
 			artist = CreateEntry.Artist(ArtistType.Producer);
@@ -61,35 +67,40 @@ namespace VocaDb.Tests.Domain.Security {
 		}
 
 		[TestMethod]
-		public void CanDelete_NormalUser() {
+		public void CanDelete_NormalUser()
+		{
 
 			TestCanDelete(false, EntryStatus.Finished);
 
 		}
 
 		[TestMethod]
-		public void CanDelete_TrustedUser() {
+		public void CanDelete_TrustedUser()
+		{
 
 			TestCanDelete(true, EntryStatus.Finished, UserGroupId.Trusted);
 
 		}
 
 		[TestMethod]
-		public void CanDelete_TrustedUser_LockedEntry() {
+		public void CanDelete_TrustedUser_LockedEntry()
+		{
 
 			TestCanDelete(false, EntryStatus.Locked, UserGroupId.Trusted);
 
 		}
 
 		[TestMethod]
-		public void CanDelete_Owner_Direct() {
+		public void CanDelete_Owner_Direct()
+		{
 
 			Assert.IsTrue(CanDelete(verifiedUser, verifiedArtist));
 
 		}
 
 		[TestMethod]
-		public void CanDelete_Owner_Transitive() {
+		public void CanDelete_Owner_Transitive()
+		{
 
 			var song = CreateEntry.Song();
 			song.AddArtist(verifiedArtist);
@@ -99,7 +110,8 @@ namespace VocaDb.Tests.Domain.Security {
 		}
 
 		[TestMethod]
-		public void CanDelete_Owner_Transitive_Voicebank() {
+		public void CanDelete_Owner_Transitive_Voicebank()
+		{
 
 			verifiedArtist.ArtistType = ArtistType.UTAU;
 			var song = CreateEntry.Song();
@@ -110,36 +122,41 @@ namespace VocaDb.Tests.Domain.Security {
 		}
 
 		[TestMethod]
-		public void CanEdit_NormalUser() {				
-			
+		public void CanEdit_NormalUser()
+		{
+
 			TestCanEdit(true, EntryStatus.Finished);
 
 		}
 
 		[TestMethod]
-		public void CanEdit_ApprovedEntry() {
-			
+		public void CanEdit_ApprovedEntry()
+		{
+
 			TestCanEdit(false, EntryStatus.Approved);
 
 		}
 
 		[TestMethod]
-		public void CanEdit_LimitedUser() {
-			
+		public void CanEdit_LimitedUser()
+		{
+
 			TestCanEdit(false, userGroup: UserGroupId.Limited);
 
 		}
 
 		[TestMethod]
-		public void CanEdit_ApprovedEntry_TrustedUser() {
-			
+		public void CanEdit_ApprovedEntry_TrustedUser()
+		{
+
 			TestCanEdit(true, EntryStatus.Approved, UserGroupId.Trusted);
 
 		}
 
 		[TestMethod]
-		public void CanEdit_ApprovedEntry_OwnerUser() {
-			
+		public void CanEdit_ApprovedEntry_OwnerUser()
+		{
+
 			var result = EntryPermissionManager.CanEdit(new FakePermissionContext(verifiedUser), verifiedArtist);
 
 			Assert.IsTrue(result, "result");

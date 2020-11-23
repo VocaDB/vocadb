@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts;
 
-namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry {
+namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+{
 
-	public class NameInfoViewModel {
+	public class NameInfoViewModel
+	{
 
-		public NameInfoViewModel(LocalizedStringContract name) {
+		public NameInfoViewModel(LocalizedStringContract name)
+		{
 			Name = name;
 		}
 

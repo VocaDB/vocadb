@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.EntryDetails {
+namespace VocaDb.Web.Models.Shared.Partials.EntryDetails
+{
 
-	public class EntryTrashPopupViewModel {
+	public class EntryTrashPopupViewModel
+	{
 
-		public EntryTrashPopupViewModel(string confirmText, string viewModelBindingName = "trashViewModel", string deleteButtonId = "trashLink") {
+		public EntryTrashPopupViewModel(string confirmText, string viewModelBindingName = "trashViewModel", string deleteButtonId = "trashLink")
+		{
 			ConfirmText = confirmText;
 			ViewModelBindingName = viewModelBindingName;
 			DeleteButtonId = deleteButtonId;

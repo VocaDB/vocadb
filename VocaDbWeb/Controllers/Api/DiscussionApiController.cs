@@ -8,19 +8,22 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Web.Controllers.Api {
+namespace VocaDb.Web.Controllers.Api
+{
 
 	/// <summary>
 	/// API queries for discussions.
 	/// </summary>
-	[RoutePrefix("api/discussions")]	
-	public class DiscussionApiController : ApiController {
+	[RoutePrefix("api/discussions")]
+	public class DiscussionApiController : ApiController
+	{
 
 		private const int defaultMax = 10;
 		private readonly DiscussionQueries queries;
 		private readonly IUserIconFactory userIconFactory;
 
-		public DiscussionApiController(DiscussionQueries queries, IUserIconFactory userIconFactory) {
+		public DiscussionApiController(DiscussionQueries queries, IUserIconFactory userIconFactory)
+		{
 			this.queries = queries;
 			this.userIconFactory = userIconFactory;
 		}
@@ -52,7 +55,7 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("topics/{topicId:int}")]
 		public DiscussionTopicContract GetTopic(int topicId,
 			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None) => queries.GetTopic(topicId, fields);
-	
+
 		[Route("comments/{commentId:int}")]
 		[Authorize]
 		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.UpdateComment(commentId, contract);

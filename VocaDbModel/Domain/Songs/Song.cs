@@ -24,12 +24,14 @@ using VocaDb.Model.Utils.Config;
 using VocaDb.Model.Service;
 using System.Threading.Tasks;
 
-namespace VocaDb.Model.Domain.Songs {
+namespace VocaDb.Model.Domain.Songs
+{
 
-	public class Song : IEntryBase, IEntryWithNames<SongName>, IEntryWithArtistLinks<ArtistForSong>, 
+	public class Song : IEntryBase, IEntryWithNames<SongName>, IEntryWithArtistLinks<ArtistForSong>,
 		IEntryWithTags<SongTagUsage>,
-		IEntryWithVersions, IEntryWithStatus, IDeletableEntry, INameFactory<SongName>, IWebLinkFactory<SongWebLink>, IEquatable<Song>, IEntryWithComments<SongComment>, 
-		IEntryWithLinks<SongWebLink>, IEntryWithArtists {
+		IEntryWithVersions, IEntryWithStatus, IDeletableEntry, INameFactory<SongName>, IWebLinkFactory<SongWebLink>, IEquatable<Song>, IEntryWithComments<SongComment>,
+		IEntryWithLinks<SongWebLink>, IEntryWithArtists
+	{
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
@@ -52,14 +54,16 @@ namespace VocaDb.Model.Domain.Songs {
 		private IList<FavoriteSongForUser> userFavorites = new List<FavoriteSongForUser>();
 		private IList<SongWebLink> webLinks = new List<SongWebLink>();
 
-		public virtual int GetLengthFromPV() {
+		public virtual int GetLengthFromPV()
+		{
 
 			var pv = PVs.FirstOrDefault(p => p.Length > 0);
 			return (pv != null ? pv.Length : 0);
 
 		}
 
-		public Song() {
+		public Song()
+		{
 			ArtistString = new TranslatedStringWithDefault(string.Empty, string.Empty, string.Empty, string.Empty);
 			CreateDate = DateTime.Now;
 			Deleted = false;
@@ -70,7 +74,8 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public Song(LocalizedString name)
-			: this() {
+			: this()
+		{
 
 			ParamIs.NotNull(() => name);
 
@@ -79,7 +84,8 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public Song(TranslatedString translatedName)
-			: this() {
+			: this()
+		{
 
 			ParamIs.NotNull(() => translatedName);
 
@@ -96,17 +102,21 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		public virtual IEnumerable<SongInAlbum> Albums => AllAlbums.Where(a => !a.Album.Deleted);
 
-		public virtual IList<SongInAlbum> AllAlbums {
+		public virtual IList<SongInAlbum> AllAlbums
+		{
 			get { return albums; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				albums = value;
 			}
 		}
 
-		public virtual IList<Song> AllAlternateVersions {
+		public virtual IList<Song> AllAlternateVersions
+		{
 			get { return alternateVersions; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				alternateVersions = value;
 			}
@@ -114,9 +124,11 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual IEnumerable<string> AllNames => Names.AllValues;
 
-		public virtual IList<ArtistForSong> AllArtists {
+		public virtual IList<ArtistForSong> AllArtists
+		{
 			get => artists;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				artists = value;
 			}
@@ -129,9 +141,11 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		public virtual IEnumerable<Song> AlternateVersions => AllAlternateVersions.Where(a => !a.Deleted);
 
-		public virtual ArchivedVersionManager<ArchivedSongVersion, SongEditableFields> ArchivedVersionsManager {
+		public virtual ArchivedVersionManager<ArchivedSongVersion, SongEditableFields> ArchivedVersionsManager
+		{
 			get { return archivedVersions; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
 			}
@@ -140,8 +154,10 @@ namespace VocaDb.Model.Domain.Songs {
 		/// <summary>
 		/// List of artists for this song. Does not include deleted artists.
 		/// </summary>
-		public virtual IEnumerable<Artist> ArtistList {
-			get {
+		public virtual IEnumerable<Artist> ArtistList
+		{
+			get
+			{
 				return Artists
 					.Where(a => a.Artist != null)
 					.Select(a => a.Artist);
@@ -153,17 +169,21 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		public virtual IEnumerable<ArtistForSong> Artists => AllArtists.Where(a => a.Artist == null || !a.Artist.Deleted);
 
-		public virtual TranslatedStringWithDefault ArtistString {
+		public virtual TranslatedStringWithDefault ArtistString
+		{
 			get => artistString;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				artistString = value;
 			}
 		}
 
-		public virtual IList<SongComment> Comments {
+		public virtual IList<SongComment> Comments
+		{
 			get => comments;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				comments = value;
 			}
@@ -185,8 +205,10 @@ namespace VocaDb.Model.Domain.Songs {
 		/// <summary>
 		/// Release date of the earliest album.
 		/// </summary>
-		public virtual DateTime? FirstAlbumDate {
-			get {
+		public virtual DateTime? FirstAlbumDate
+		{
+			get
+			{
 
 				// Sanity check
 				var minDateLimit = new DateTime(AppConfig.SiteSettings.MinAlbumYear, 1, 1);
@@ -206,7 +228,8 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		public virtual bool HasOriginalVersion => SongType != SongType.Original && OriginalVersion != null;
 
-		public virtual IList<SongHit> Hits {
+		public virtual IList<SongHit> Hits
+		{
 			get { return hits; }
 			set { hits = value; }
 		}
@@ -218,23 +241,28 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		public virtual int LengthSeconds { get; set; }
 
-		public virtual IList<SongInList> ListLinks {
+		public virtual IList<SongInList> ListLinks
+		{
 			get { return lists; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				lists = value;
 			}
 		}
 
-		public virtual IList<LyricsForSong> Lyrics {
+		public virtual IList<LyricsForSong> Lyrics
+		{
 			get { return lyrics; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				lyrics = value;
 			}
 		}
 
-		public virtual IEnumerable<ArtistForSong> GetCharactersFromParents() {
+		public virtual IEnumerable<ArtistForSong> GetCharactersFromParents()
+		{
 
 			if (!AppConfig.EnableArtistInheritance || OriginalVersion == null)
 				return Enumerable.Empty<ArtistForSong>();
@@ -243,7 +271,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		private IEnumerable<ArtistForSong> GetCharactersFromParents(int levels) {
+		private IEnumerable<ArtistForSong> GetCharactersFromParents(int levels)
+		{
 
 			int maxLevels = 10;
 
@@ -271,19 +300,21 @@ namespace VocaDb.Model.Domain.Songs {
 		/// This is mostly the case when the instrumental version is in the middle, for example original -> instrumental -> cover (with lyrics)
 		/// </param>
 		/// <param name="levels">Current level of traversing the parent chain.</param>
-		private IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags, IEntryTypeTagRepository entryTypeTags, bool allowInstrumental, int levels) {
+		private IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags, IEntryTypeTagRepository entryTypeTags, bool allowInstrumental, int levels)
+		{
 
 			int maxLevels = 10;
 
-			if (specialTags != null 
+			if (specialTags != null
 				&& entryTypeTags != null
 				&& (allowInstrumental || SongType != SongType.Instrumental)
-				&& HasOriginalVersion 
+				&& HasOriginalVersion
 				&& !OriginalVersion.Deleted
 				&& !Lyrics.Any()
 				&& !Tags.HasTag(specialTags.ChangedLyrics)
 				&& (allowInstrumental || !Tags.HasTag(entryTypeTags.Instrumental))
-				&& levels < maxLevels) {
+				&& levels < maxLevels)
+			{
 
 				return OriginalVersion.GetLyricsFromParents(specialTags, entryTypeTags, true, levels + 1);
 
@@ -297,15 +328,18 @@ namespace VocaDb.Model.Domain.Songs {
 		/// Lyrics for this song, either from the song entry itself, or its original version.
 		/// </summary>
 		/// <param name="specialTags">Special tags. Can be null, which will cause no lyrics to be inherited.</param>
-		public virtual IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags, IEntryTypeTagRepository entryTypeTags) {
+		public virtual IList<LyricsForSong> GetLyricsFromParents(ISpecialTags specialTags, IEntryTypeTagRepository entryTypeTags)
+		{
 
 			return GetLyricsFromParents(specialTags, entryTypeTags, false, 0);
 
 		}
 
-		public virtual NameManager<SongName> Names {
+		public virtual NameManager<SongName> Names
+		{
 			get { return names; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				names = value;
 			}
@@ -315,11 +349,13 @@ namespace VocaDb.Model.Domain.Songs {
 
 		INameManager IEntryWithNames.Names => Names;
 
-		public virtual EnglishTranslatedString Notes {
+		public virtual EnglishTranslatedString Notes
+		{
 			get { return notes; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
-				notes = value; 
+				notes = value;
 			}
 		}
 
@@ -344,9 +380,11 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		public virtual Date PublishDate { get; set; }
 
-		public virtual PVManager<PVForSong> PVs {
+		public virtual PVManager<PVForSong> PVs
+		{
 			get => pvs;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				pvs = value;
 			}
@@ -372,9 +410,11 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual EntryStatus Status { get; set; }
 
-		public virtual TagManager<SongTagUsage> Tags {
+		public virtual TagManager<SongTagUsage> Tags
+		{
 			get => tags;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				tags = value;
 			}
@@ -397,9 +437,11 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		public virtual string NicoId { get; set; }
 
-		public virtual IList<FavoriteSongForUser> UserFavorites {
+		public virtual IList<FavoriteSongForUser> UserFavorites
+		{
 			get { return userFavorites; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				userFavorites = value;
 			}
@@ -407,24 +449,29 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual int Version { get; set; }
 
-		public virtual IList<SongWebLink> WebLinks {
+		public virtual IList<SongWebLink> WebLinks
+		{
 			get { return webLinks; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				webLinks = value;
 			}
 		}
 
-		public virtual ArtistForSong AddArtist(Artist artist) {
+		public virtual ArtistForSong AddArtist(Artist artist)
+		{
 			return AddArtist(artist, false, ArtistRoles.Default);
 		}
 
-		public virtual ArtistForSong AddArtist(Artist artist, bool support, ArtistRoles roles) {
+		public virtual ArtistForSong AddArtist(Artist artist, bool support, ArtistRoles roles)
+		{
 			ParamIs.NotNull(() => artist);
 			return artist.AddSong(this, support, roles);
 		}
 
-		public virtual ArtistForSong AddArtist(string name, bool isSupport, ArtistRoles roles) {
+		public virtual ArtistForSong AddArtist(string name, bool isSupport, ArtistRoles roles)
+		{
 
 			ParamIs.NotNullOrEmpty(() => name);
 
@@ -435,7 +482,8 @@ namespace VocaDb.Model.Domain.Songs {
 			return link;
 
 		}
-		public virtual void AddAlternateVersion(Song song) {
+		public virtual void AddAlternateVersion(Song song)
+		{
 
 			ParamIs.NotNull(() => song);
 
@@ -457,8 +505,9 @@ namespace VocaDb.Model.Domain.Songs {
 		/// Result of usage addition. Cannot be null.
 		/// If the usage was added, it doesn't any have votes.
 		/// </returns>
-		public virtual CollectionAddResult<SongTagUsage> AddTag(Tag tag) {
-			
+		public virtual CollectionAddResult<SongTagUsage> AddTag(Tag tag)
+		{
+
 			ParamIs.NotNull(() => tag);
 
 			if (Tags.HasTag(tag))
@@ -472,7 +521,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual ArchivedSongVersion CreateArchivedVersion(XDocument data, SongDiff diff, AgentLoginData author, SongArchiveReason reason, string notes) {
+		public virtual ArchivedSongVersion CreateArchivedVersion(XDocument data, SongDiff diff, AgentLoginData author, SongArchiveReason reason, string notes)
+		{
 
 			var archived = new ArchivedSongVersion(this, data, diff, author, Version, Status, reason, notes);
 			ArchivedVersionsManager.Add(archived);
@@ -482,7 +532,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual Comment CreateComment(string message, AgentLoginData loginData) {
+		public virtual Comment CreateComment(string message, AgentLoginData loginData)
+		{
 
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);
@@ -494,13 +545,15 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual LyricsForSong CreateLyrics(LyricsForSongContract lyrics) {
+		public virtual LyricsForSong CreateLyrics(LyricsForSongContract lyrics)
+		{
 			ParamIs.NotNull(() => lyrics);
 			return CreateLyrics(lyrics.Value, lyrics.Source, lyrics.URL, lyrics.TranslationType, lyrics.CultureCode);
 		}
 
-		public virtual LyricsForSong CreateLyrics(string val, string source, string url, TranslationType translationType, string cultureCode) {
-			
+		public virtual LyricsForSong CreateLyrics(string val, string source, string url, TranslationType translationType, string cultureCode)
+		{
+
 			ParamIs.NotNullOrEmpty(() => val);
 			ParamIs.NotNull(() => source);
 			ParamIs.NotNull(() => url);
@@ -512,7 +565,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual SongName CreateName(string val, ContentLanguageSelection language) {
+		public virtual SongName CreateName(string val, ContentLanguageSelection language)
+		{
 
 			ParamIs.NotNullOrEmpty(() => val);
 
@@ -520,7 +574,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual SongName CreateName(LocalizedString localizedString) {
+		public virtual SongName CreateName(LocalizedString localizedString)
+		{
 
 			ParamIs.NotNull(() => localizedString);
 
@@ -531,7 +586,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual PVForSong CreatePV(PVContract contract) {
+		public virtual PVForSong CreatePV(PVContract contract)
+		{
 
 			ParamIs.NotNull(() => contract);
 
@@ -548,7 +604,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual SongWebLink CreateWebLink(string description, string url, WebLinkCategory category) {
+		public virtual SongWebLink CreateWebLink(string description, string url, WebLinkCategory category)
+		{
 
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
@@ -560,13 +617,15 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual void Delete() {
+		public virtual void Delete()
+		{
 
 			Deleted = true;
 
 		}
 
-		public virtual void DeleteArtistForSong(ArtistForSong artistForSong) {
+		public virtual void DeleteArtistForSong(ArtistForSong artistForSong)
+		{
 
 			if (!artistForSong.Song.Equals(this))
 				throw new ArgumentException("Artist is not attached to song", "artistForSong");
@@ -575,7 +634,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual bool Equals(Song another) {
+		public virtual bool Equals(Song another)
+		{
 
 			if (another == null)
 				return false;
@@ -590,19 +650,23 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as Song);
 		}
 
-		public virtual ArtistForSong GetArtistLink(Artist artist) {
+		public virtual ArtistForSong GetArtistLink(Artist artist)
+		{
 			return Artists.FirstOrDefault(a => a.Artist != null && a.Artist.Equals(artist));
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return base.GetHashCode();
 		}
 
-		public virtual ArchivedSongVersion GetLatestVersion() {
+		public virtual ArchivedSongVersion GetLatestVersion()
+		{
 			return ArchivedVersionsManager.GetLatestVersion();
 		}
 
@@ -616,11 +680,13 @@ namespace VocaDb.Model.Domain.Songs {
 		/// Absolute URL to song thumbnail. For example, http://tn-skr1.smilevideo.jp/smile?i=12849032. 
 		/// Can be null or empty if no thumbnail is available.
 		/// </returns>
-		public virtual string GetThumbUrl() {
+		public virtual string GetThumbUrl()
+		{
 			return !string.IsNullOrEmpty(ThumbUrl) ? ThumbUrl : VideoServiceHelper.GetThumbUrl(PVs.PVs);
 		}
 
-		public virtual bool HasArtist(Artist artist) {
+		public virtual bool HasArtist(Artist artist)
+		{
 
 			return ArtistList.Contains(artist);
 
@@ -631,7 +697,8 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		/// <param name="artistLink">Artist to be checked. Cannot be null.</param>
 		/// <returns>True if the artist has this album. Otherwise false.</returns>
-		public virtual bool HasArtistLink(ArtistForSong artistLink) {
+		public virtual bool HasArtistLink(ArtistForSong artistLink)
+		{
 
 			ParamIs.NotNull(() => artistLink);
 
@@ -639,7 +706,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual bool HasName(LocalizedString name) {
+		public virtual bool HasName(LocalizedString name)
+		{
 
 			ParamIs.NotNull(() => name);
 
@@ -647,7 +715,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual bool HasPV(PVService service, string pvId) {
+		public virtual bool HasPV(PVService service, string pvId)
+		{
 
 			ParamIs.NotNullOrEmpty(() => pvId);
 
@@ -655,7 +724,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual bool HasWebLink(string url) {
+		public virtual bool HasWebLink(string url)
+		{
 
 			ParamIs.NotNull(() => url);
 
@@ -663,7 +733,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual bool IsOnAlbum(Album album) {
+		public virtual bool IsOnAlbum(Album album)
+		{
 
 			ParamIs.NotNull(() => album);
 
@@ -671,7 +742,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual bool IsFavoritedBy(User user) {
+		public virtual bool IsFavoritedBy(User user)
+		{
 
 			ParamIs.NotNull(() => user);
 
@@ -679,7 +751,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual ArtistForSong RemoveArtist(Artist artist) {
+		public virtual ArtistForSong RemoveArtist(Artist artist)
+		{
 
 			var link = Artists.First(a => a.Artist.Equals(artist));
 
@@ -692,7 +765,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual void SetOriginalVersion(Song original) {
+		public virtual void SetOriginalVersion(Song original)
+		{
 
 			OriginalVersion?.AllAlternateVersions.Remove(this);
 			OriginalVersion = original;
@@ -700,9 +774,11 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual void SetReleaseEvent(ReleaseEvent releaseEvent) {
-			
-			if (Equals(ReleaseEvent, releaseEvent)) {
+		public virtual void SetReleaseEvent(ReleaseEvent releaseEvent)
+		{
+
+			if (Equals(ReleaseEvent, releaseEvent))
+			{
 				return;
 			}
 
@@ -712,25 +788,30 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual async Task<CollectionDiff<ArtistForSong, ArtistForSong>> SyncArtistsAsync(IEnumerable<ArtistContract> newArtists, Func<ArtistContract[], Task<List<Artist>>> artistGetter) {
+		public virtual async Task<CollectionDiff<ArtistForSong, ArtistForSong>> SyncArtistsAsync(IEnumerable<ArtistContract> newArtists, Func<ArtistContract[], Task<List<Artist>>> artistGetter)
+		{
 
 			var realArtists = Artists.Where(a => a.Artist != null).ToArray();
 			var artistDiff = CollectionHelper.Diff(realArtists, newArtists, (a, a2) => a.Artist.Id == a2.Id);
 			var created = new List<ArtistForSong>();
 
-			if (artistDiff.Added.Any()) {
+			if (artistDiff.Added.Any())
+			{
 
 				var addedArtists = await artistGetter(artistDiff.Added);
 
-				foreach (var artist in addedArtists) {
-					if (!HasArtist(artist)) {
+				foreach (var artist in addedArtists)
+				{
+					if (!HasArtist(artist))
+					{
 						created.Add(AddArtist(artist));
 					}
 				}
-				
+
 			}
 
-			foreach (var removed in artistDiff.Removed) {
+			foreach (var removed in artistDiff.Removed)
+			{
 				removed.Delete();
 			}
 
@@ -741,7 +822,8 @@ namespace VocaDb.Model.Domain.Songs {
 		}
 
 		public virtual CollectionDiffWithValue<ArtistForSong, ArtistForSong> SyncArtists(
-			IEnumerable<ArtistForSongContract> newArtists, Func<ArtistForSongContract, Artist> artistGetter) {
+			IEnumerable<ArtistForSongContract> newArtists, Func<ArtistForSongContract, Artist> artistGetter)
+		{
 
 			ParamIs.NotNull(() => newArtists);
 
@@ -749,37 +831,45 @@ namespace VocaDb.Model.Domain.Songs {
 			var created = new List<ArtistForSong>();
 			var edited = new List<ArtistForSong>();
 
-			foreach (var n in diff.Removed) {
+			foreach (var n in diff.Removed)
+			{
 				n.Delete();
 			}
 
-			foreach (var newEntry in diff.Added) {
+			foreach (var newEntry in diff.Added)
+			{
 
 				ArtistForSong l;
 
-				if (newEntry.Artist != null) {
+				if (newEntry.Artist != null)
+				{
 
 					var artist = artistGetter(newEntry);
 
-					if (!HasArtist(artist)) {
+					if (!HasArtist(artist))
+					{
 						l = artist.AddSong(this, newEntry.IsSupport, newEntry.Roles);
 						l.Name = newEntry.IsCustomName ? newEntry.Name : null;
 						created.Add(l);
 					}
 
-				} else {
+				}
+				else
+				{
 					l = AddArtist(newEntry.Name, newEntry.IsSupport, newEntry.Roles);
 					created.Add(l);
 				}
 
 			}
 
-			foreach (var linkEntry in diff.Unchanged) {
+			foreach (var linkEntry in diff.Unchanged)
+			{
 
 				var entry = linkEntry;
 				var newEntry = newArtists.First(e => e.Id == entry.Id);
 
-				if (!linkEntry.ContentEquals(newEntry)) {
+				if (!linkEntry.ContentEquals(newEntry))
+				{
 					linkEntry.IsSupport = newEntry.IsSupport;
 					linkEntry.Roles = newEntry.Roles;
 					linkEntry.Name = newEntry.IsCustomName ? newEntry.Name : null;
@@ -794,7 +884,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual CollectionDiffWithValue<LyricsForSong, LyricsForSong> SyncLyrics(IEnumerable<LyricsForSongContract> newLyrics) {
+		public virtual CollectionDiffWithValue<LyricsForSong, LyricsForSong> SyncLyrics(IEnumerable<LyricsForSongContract> newLyrics)
+		{
 
 			ParamIs.NotNull(() => newLyrics);
 
@@ -802,23 +893,27 @@ namespace VocaDb.Model.Domain.Songs {
 			var created = new List<LyricsForSong>();
 			var edited = new List<LyricsForSong>();
 
-			foreach (var n in diff.Removed) {
+			foreach (var n in diff.Removed)
+			{
 				Lyrics.Remove(n);
 			}
 
-			foreach (var newEntry in diff.Added) {
+			foreach (var newEntry in diff.Added)
+			{
 
 				var l = CreateLyrics(newEntry.Value, newEntry.Source, newEntry.URL, newEntry.TranslationType, newEntry.CultureCode);
 				created.Add(l);
 
 			}
 
-			foreach (var linkEntry in diff.Unchanged) {
+			foreach (var linkEntry in diff.Unchanged)
+			{
 
 				var entry = linkEntry;
 				var newEntry = newLyrics.First(e => e.Id == entry.Id);
 
-				if (!entry.ContentEquals(newEntry)) {
+				if (!entry.ContentEquals(newEntry))
+				{
 					linkEntry.CultureCode = new OptionalCultureCode(newEntry.CultureCode);
 					linkEntry.Source = newEntry.Source;
 					linkEntry.TranslationType = newEntry.TranslationType;
@@ -838,15 +933,18 @@ namespace VocaDb.Model.Domain.Songs {
 		/// </summary>
 		/// <param name="newPVs">Updated list of PVs. Cannot be null.</param>
 		/// <returns>PVs list diff. Cannot be null.</returns>
-		public virtual CollectionDiffWithValue<PVForSong, PVForSong> SyncPVs(IList<PVContract> newPVs) {
+		public virtual CollectionDiffWithValue<PVForSong, PVForSong> SyncPVs(IList<PVContract> newPVs)
+		{
 
 			var result = PVs.Sync(newPVs, CreatePV);
 
-			if (result.Changed || string.IsNullOrEmpty(ThumbUrl)) {
-				UpdateThumbUrl();				
+			if (result.Changed || string.IsNullOrEmpty(ThumbUrl))
+			{
+				UpdateThumbUrl();
 			}
 
-			if (result.Changed && !PublishDate.DateTime.HasValue) {
+			if (result.Changed && !PublishDate.DateTime.HasValue)
+			{
 				UpdatePublishDateFromPVs();
 			}
 
@@ -856,23 +954,27 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("song '{0}' [{1}]", DefaultName, Id);
 		}
 
-		public virtual void UpdateArtistString() {
+		public virtual void UpdateArtistString()
+		{
 
 			ArtistString = ArtistHelper.GetArtistString(Artists, SongHelper.GetContentFocus(SongType));
 
 		}
 
-		public virtual void UpdateFavoritedTimes() {
+		public virtual void UpdateFavoritedTimes()
+		{
 
 			FavoritedTimes = UserFavorites.Count;
 
 		}
 
-		public virtual void UpdateNicoId() {
+		public virtual void UpdateNicoId()
+		{
 
 			var originalPv = PVs.FirstOrDefault(p => p.Service == PVService.NicoNicoDouga && p.PVType == PVType.Original);
 
@@ -880,13 +982,14 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual void UpdatePublishDateFromPVs() {
+		public virtual void UpdatePublishDateFromPVs()
+		{
 
 			if (!PVs.Any())
 				return;
 
 			// Sanity check
-			var minDateLimit = new DateTime(AppConfig.SiteSettings.MinAlbumYear, 1, 1); 
+			var minDateLimit = new DateTime(AppConfig.SiteSettings.MinAlbumYear, 1, 1);
 
 			// Original PVs that have a publish date
 			var pvsWithDate = PVs.Where(p => p.PVType == PVType.Original && p.PublishDate.HasValue && p.PublishDate > minDateLimit).ToArray();
@@ -902,11 +1005,13 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual void UpdatePVServices() {
+		public virtual void UpdatePVServices()
+		{
 
 			var services = PVServices.Nothing;
 
-			foreach (var service in EnumVal<PVService>.Values) {
+			foreach (var service in EnumVal<PVService>.Values)
+			{
 				if (PVs.Any(p => !p.Disabled && p.Service == service))
 					services |= (PVServices)service;
 			}
@@ -915,8 +1020,9 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual void UpdateThumbUrl() {
-			ThumbUrl = VideoServiceHelper.GetThumbUrl(PVs.PVs);			
+		public virtual void UpdateThumbUrl()
+		{
+			ThumbUrl = VideoServiceHelper.GetThumbUrl(PVs.PVs);
 		}
 
 	}

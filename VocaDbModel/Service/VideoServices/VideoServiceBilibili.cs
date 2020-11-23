@@ -13,9 +13,11 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Service.VideoServices {
+namespace VocaDb.Model.Service.VideoServices
+{
 
-	public class VideoServiceBilibili : VideoService {
+	public class VideoServiceBilibili : VideoService
+	{
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
@@ -28,10 +30,11 @@ namespace VocaDb.Model.Service.VideoServices {
 				new RegexLinkMatcher("acg.tv/av{0}", @"bilibili.kankanews.com/video/av(\d+)")
 			};
 
-		public VideoServiceBilibili() 
-			: base(PVService.Bilibili, null, Matchers) {}
+		public VideoServiceBilibili()
+			: base(PVService.Bilibili, null, Matchers) { }
 
-		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
+		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
+		{
 
 			var id = GetIdByUrl(url);
 
@@ -42,9 +45,12 @@ namespace VocaDb.Model.Service.VideoServices {
 
 			BilibiliResponse response;
 
-			try {
+			try
+			{
 				response = await JsonRequest.ReadObjectAsync<BilibiliResponse>(requestUrl, timeout: TimeSpan.FromSeconds(10), userAgent: "VocaDB/1.0 (admin@vocadb.net)");
-			} catch (Exception x) when (x is HttpRequestException || x is WebException || x is JsonSerializationException || x is IOException) {
+			}
+			catch (Exception x) when (x is HttpRequestException || x is WebException || x is JsonSerializationException || x is IOException)
+			{
 				log.Warn(x, "Unable to load Bilibili URL {0}", url);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));
 			}
@@ -54,7 +60,8 @@ namespace VocaDb.Model.Service.VideoServices {
 			var bvid = response.Data.Bvid;
 			var cid = response.Data.Cid;
 
-			if (!getTitle) {
+			if (!getTitle)
+			{
 				return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, aid.ToString(), VideoTitleParseResult.Empty);
 			}
 
@@ -67,18 +74,20 @@ namespace VocaDb.Model.Service.VideoServices {
 			var created = response.Data.PubDate;
 			var length = response.Data.Duration;
 
-			var metadata = new PVExtendedMetadata(new BiliMetadata {
+			var metadata = new PVExtendedMetadata(new BiliMetadata
+			{
 				Aid = aid,
 				Bvid = bvid,
 				Cid = cid
 			});
 
-			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, aid.ToString(), 
+			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, aid.ToString(),
 				VideoTitleParseResult.CreateSuccess(title, author, authorId, thumb, length: length, uploadDate: created, extendedMetadata: metadata));
 
 		}
 
-		public override IEnumerable<string> GetUserProfileUrls(string authorId) {
+		public override IEnumerable<string> GetUserProfileUrls(string authorId)
+		{
 			return new[] {
 				string.Format("https://space.bilibili.com/{0}", authorId),
 				string.Format("http://space.bilibili.com/{0}", authorId),
@@ -91,7 +100,8 @@ namespace VocaDb.Model.Service.VideoServices {
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class BiliMetadata {
+	public class BiliMetadata
+	{
 		[DataMember]
 		public int Aid { get; set; }
 		[DataMember]
@@ -100,11 +110,13 @@ namespace VocaDb.Model.Service.VideoServices {
 		public int Cid { get; set; }
 	}
 
-	class BilibiliResponse {
+	class BilibiliResponse
+	{
 		public BilibiliResponseData Data { get; set; }
 	}
 
-	class BilibiliResponseData {
+	class BilibiliResponseData
+	{
 		public int Aid { get; set; }
 		public string Bvid { get; set; }
 		public int Cid { get; set; }
@@ -116,7 +128,8 @@ namespace VocaDb.Model.Service.VideoServices {
 		public string Title { get; set; }
 	}
 
-	class BilibiliResponseDataOwner {
+	class BilibiliResponseDataOwner
+	{
 		public int Mid { get; set; }
 		public string Name { get; set; }
 	}

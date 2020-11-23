@@ -3,14 +3,17 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.DataContracts {
+namespace VocaDb.Model.DataContracts
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class EntryRefContract {
+	public class EntryRefContract
+	{
 
 		public EntryRefContract() { }
 
-		public EntryRefContract(IEntryBase entryBase) {
+		public EntryRefContract(IEntryBase entryBase)
+		{
 
 			ParamIs.NotNull(() => entryBase);
 
@@ -19,7 +22,8 @@ namespace VocaDb.Model.DataContracts {
 
 		}
 
-		public EntryRefContract(EntryRef entryRef) {
+		public EntryRefContract(EntryRef entryRef)
+		{
 
 			ParamIs.NotNull(() => entryRef);
 

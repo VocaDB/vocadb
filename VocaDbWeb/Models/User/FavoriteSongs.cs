@@ -2,18 +2,22 @@
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Web.Models.User {
+namespace VocaDb.Web.Models.User
+{
 
-	public class FavoriteSongs {
+	public class FavoriteSongs
+	{
 
-		public FavoriteSongs() {
+		public FavoriteSongs()
+		{
 			GroupByRating = true;
 			Rating = SongVoteRating.Nothing;
 			Sort = RatedSongForUserSortRule.Name;
 		}
 
 		public FavoriteSongs(UserContract user, SongVoteRating rating, RatedSongForUserSortRule? sort, bool? groupByRating)
-			: this() {
+			: this()
+		{
 
 			GroupByRating = groupByRating;
 			Rating = rating;

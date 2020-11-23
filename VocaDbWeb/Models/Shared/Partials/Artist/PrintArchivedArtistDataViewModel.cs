@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts.Artists;
 
-namespace VocaDb.Web.Models.Shared.Partials.Artist {
+namespace VocaDb.Web.Models.Shared.Partials.Artist
+{
 
-	public class PrintArchivedArtistDataViewModel {
+	public class PrintArchivedArtistDataViewModel
+	{
 
-		public PrintArchivedArtistDataViewModel(ComparedArtistsContract comparedArtists) {
+		public PrintArchivedArtistDataViewModel(ComparedArtistsContract comparedArtists)
+		{
 			ComparedArtists = comparedArtists;
 		}
 

@@ -6,25 +6,30 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users {
+namespace VocaDb.Model.DataContracts.Users
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class RatedSongForUserForApiContract : SongRatingContract {
+	public class RatedSongForUserForApiContract : SongRatingContract
+	{
 
 		public RatedSongForUserForApiContract() { }
 
 		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, IUserIconFactory userIconFactory, UserOptionalFields userFields,
-			IUserPermissionContext userPermissionContext) {
+			IUserPermissionContext userPermissionContext)
+		{
 
 			this.Date = ratedSong.Date;
 			this.Rating = ratedSong.Rating;
-			if (ratedSong.User.Options.PublicRatings || userPermissionContext.HasPermission(PermissionToken.ViewHiddenRatings)) {
+			if (ratedSong.User.Options.PublicRatings || userPermissionContext.HasPermission(PermissionToken.ViewHiddenRatings))
+			{
 				User = new UserForApiContract(ratedSong.User, userIconFactory, userFields);
 			}
 
 		}
 
-		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, ContentLanguagePreference languagePreference, SongOptionalFields fields) {
+		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, ContentLanguagePreference languagePreference, SongOptionalFields fields)
+		{
 
 			this.Date = ratedSong.Date;
 			this.Rating = ratedSong.Rating;
@@ -44,7 +49,8 @@ namespace VocaDb.Model.DataContracts.Users {
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongRatingContract {
+	public class SongRatingContract
+	{
 
 		[DataMember]
 		public SongVoteRating Rating { get; set; }

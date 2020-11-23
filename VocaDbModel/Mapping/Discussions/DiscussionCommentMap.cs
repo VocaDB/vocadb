@@ -1,11 +1,14 @@
 ﻿using VocaDb.Model.Domain.Discussions;
 
-namespace VocaDb.Model.Mapping.Discussions {
+namespace VocaDb.Model.Mapping.Discussions
+{
 
-	public class DiscussionCommentMap : CommentMap<DiscussionComment, DiscussionTopic> {
+	public class DiscussionCommentMap : CommentMap<DiscussionComment, DiscussionTopic>
+	{
 
-		public DiscussionCommentMap() {
-			
+		public DiscussionCommentMap()
+		{
+
 			Schema("discussions");
 			Table("DiscussionComments");
 

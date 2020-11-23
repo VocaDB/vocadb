@@ -1,14 +1,18 @@
 ﻿using System;
 
-namespace VocaDb.Model.Domain.Users {
+namespace VocaDb.Model.Domain.Users
+{
 
-	public class OldUsername : IEntryWithIntId {
+	public class OldUsername : IEntryWithIntId
+	{
 
-		public OldUsername() {
+		public OldUsername()
+		{
 			Date = DateTime.Now;
 		}
 
-		public OldUsername(User user, string oldName) : this() {
+		public OldUsername(User user, string oldName) : this()
+		{
 
 			ParamIs.NotNull(() => user);
 			ParamIs.NotNullOrEmpty(() => oldName);

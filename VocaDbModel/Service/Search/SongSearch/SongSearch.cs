@@ -12,9 +12,11 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.VideoServices;
 
-namespace VocaDb.Model.Service.Search.SongSearch {
+namespace VocaDb.Model.Service.Search.SongSearch
+{
 
-	public class SongSearch {
+	public class SongSearch
+	{
 
 		private readonly IEntryUrlParser entryUrlParser;
 		private readonly ContentLanguagePreference languagePreference;
@@ -23,11 +25,12 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		private ContentLanguagePreference LanguagePreference => languagePreference;
 
 		private IQueryable<Song> CreateQuery(
-			SongQueryParams queryParams, 
-			ParsedSongQuery parsedQuery, 
-			NameMatchMode? nameMatchMode = null) {
-			
-			var textQuery = !SearchTextQuery.IsNullOrEmpty(parsedQuery.Name) ? 
+			SongQueryParams queryParams,
+			ParsedSongQuery parsedQuery,
+			NameMatchMode? nameMatchMode = null)
+		{
+
+			var textQuery = !SearchTextQuery.IsNullOrEmpty(parsedQuery.Name) ?
 				new SearchTextQuery(parsedQuery.Name.Query, nameMatchMode ?? parsedQuery.Name.MatchMode, parsedQuery.Name.OriginalQuery)
 				: SearchTextQuery.Empty;
 
@@ -62,23 +65,26 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				.WhereHasScore(queryParams.MinScore)
 				.WhereCreateDateIsWithin(queryParams.TimeFilter)
 				.WhereHasPV(queryParams.OnlyWithPVs)
-				.WhereMatchFilters(queryParams.AdvancedFilters);				
+				.WhereMatchFilters(queryParams.AdvancedFilters);
 
 			return query;
 
 		}
 
-		private SearchWord GetTerm(string query, params string[] testTerms) {
+		private SearchWord GetTerm(string query, params string[] testTerms)
+		{
 
 			return SearchWord.GetTerm(query, testTerms);
 
 		}
 
-		private EntryTypeAndTagCollection<SongType> ProcessUnifiedTypesAndTags(SongQueryParams queryParams) {
+		private EntryTypeAndTagCollection<SongType> ProcessUnifiedTypesAndTags(SongQueryParams queryParams)
+		{
 
 			EntryTypeAndTagCollection<SongType> typesAndTags = null;
 
-			if (queryParams.UnifyEntryTypesAndTags) {
+			if (queryParams.UnifyEntryTypesAndTags)
+			{
 				typesAndTags = EntryTypeAndTagCollection<SongType>.Create(EntryType.Song, queryParams.SongTypes, queryParams.TagIds, querySource);
 				queryParams.TagIds = queryParams.TagIds.Except(typesAndTags.TagIds).ToArray();
 				queryParams.SongTypes = queryParams.SongTypes.Except(typesAndTags.SubTypes).ToArray();
@@ -88,7 +94,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		}
 
-		private SearchTextQuery ProcessAdvancedSearch(SearchTextQuery textQuery, SongQueryParams queryParams) {
+		private SearchTextQuery ProcessAdvancedSearch(SearchTextQuery textQuery, SongQueryParams queryParams)
+		{
 
 			if (textQuery.IsEmpty || textQuery.MatchMode == NameMatchMode.Exact || textQuery.MatchMode == NameMatchMode.StartsWith || !textQuery.OriginalQuery.StartsWith("!"))
 				return textQuery;
@@ -97,32 +104,39 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 			var artistNames = parsed.GetValues("artist").ToArray();
 
-			if (artistNames.Any()) {
+			if (artistNames.Any())
+			{
 				queryParams.ArtistNames = artistNames;
 			}
 
 			var words = parsed.GetValues("").ToArray();
 
-			if (words.Any()) {
+			if (words.Any())
+			{
 				queryParams.Common.TextQuery = new SearchTextQuery(textQuery.Query, NameMatchMode.Words, textQuery.OriginalQuery, words);
 				return queryParams.Common.TextQuery;
-			} else {
+			}
+			else
+			{
 				return textQuery;
 			}
 
 		}
 
-		public static Song[] SortByIds(IEnumerable<Song> songs, int[] idList) {
-			
+		public static Song[] SortByIds(IEnumerable<Song> songs, int[] idList)
+		{
+
 			return CollectionHelper.SortByIds(songs, idList);
 
-		} 
+		}
 
-		private IQueryable<T> Query<T>() where T : class, IDatabaseObject {
+		private IQueryable<T> Query<T>() where T : class, IDatabaseObject
+		{
 			return querySource.Query<T>();
 		}
 
-		private DateTime? ParseDateOrNull(string str) {
+		private DateTime? ParseDateOrNull(string str)
+		{
 
 			DateTime parsed;
 			if (DateTime.TryParse(str, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
@@ -132,7 +146,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		}
 
-		private ParsedSongQuery ParseDateRange(string str) {
+		private ParsedSongQuery ParseDateRange(string str)
+		{
 
 			if (string.IsNullOrEmpty(str))
 				return new ParsedSongQuery();
@@ -142,35 +157,43 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			if (parts.Length == 0)
 				return new ParsedSongQuery();
 
-			return new ParsedSongQuery {
+			return new ParsedSongQuery
+			{
 				PublishedAfter = ParseDateOrNull(parts[0]),
 				PublishedBefore = parts.Length > 1 ? ParseDateOrNull(parts[1]) : null
 			};
 
 		}
 
-		private ParsedSongQuery ParseReferenceQuery(string trimmed, string query) {
+		private ParsedSongQuery ParseReferenceQuery(string trimmed, string query)
+		{
 
 			// Optimization: check prefix, in most cases the user won't be searching by URL
-			if (trimmed.StartsWith("/s/", StringComparison.InvariantCultureIgnoreCase)) {
+			if (trimmed.StartsWith("/s/", StringComparison.InvariantCultureIgnoreCase))
+			{
 
 				var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
 
 				if (entryId.EntryType == EntryType.Song)
 					return new ParsedSongQuery { Id = entryId.Id };
 
-			} else if (trimmed.StartsWith("http", StringComparison.InvariantCultureIgnoreCase)) {
+			}
+			else if (trimmed.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
+			{
 
 				// Test PV URL with services that don't require a web call
 				var videoParseResult = VideoServiceHelper.ParseByUrlAsync(query, false, null,
 					VideoService.NicoNicoDouga, VideoService.Youtube, VideoService.Bilibili, VideoService.File, VideoService.LocalFile, VideoService.Vimeo).Result;
 
-				if (videoParseResult.IsOk) {
+				if (videoParseResult.IsOk)
+				{
 
-					if (videoParseResult.Service == Domain.PVs.PVService.NicoNicoDouga) {
+					if (videoParseResult.Service == Domain.PVs.PVService.NicoNicoDouga)
+					{
 						return new ParsedSongQuery { NicoId = videoParseResult.Id };
 					}
-					else {
+					else
+					{
 						return new ParsedSongQuery { PV = new PVContract { PVId = videoParseResult.Id, Service = videoParseResult.Service } };
 					}
 
@@ -187,7 +210,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		}
 
-		public ParsedSongQuery ParseTextQuery(SearchTextQuery textQuery) {
+		public ParsedSongQuery ParseTextQuery(SearchTextQuery textQuery)
+		{
 
 			var query = textQuery.OriginalQuery;
 
@@ -197,8 +221,9 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			var trimmed = query.Trim();
 
 			var term = GetTerm(trimmed, "id", "tag", "artist-tag", "artist-type", "publish-date");
-			
-			switch (term?.PropertyName) {
+
+			switch (term?.PropertyName)
+			{
 				case "tag":
 					return new ParsedSongQuery { TagName = term.Value };
 				case "artist-tag":
@@ -212,10 +237,11 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				default:
 					return ParseReferenceQuery(trimmed, query) ?? new ParsedSongQuery { Name = textQuery };
 			}
-				
+
 		}
 
-		public SongSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference, IEntryUrlParser entryUrlParser) {
+		public SongSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference, IEntryUrlParser entryUrlParser)
+		{
 			this.querySource = querySource;
 			this.languagePreference = languagePreference;
 			this.entryUrlParser = entryUrlParser;
@@ -226,20 +252,22 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		/// </summary>
 		/// <param name="queryParams">Query parameters. Cannot be null.</param>
 		/// <returns>List of song search results. Cannot be null.</returns>
-		public PartialFindResult<Song> Find(SongQueryParams queryParams) {
+		public PartialFindResult<Song> Find(SongQueryParams queryParams)
+		{
 
 			ParamIs.NotNull(() => queryParams);
 
 			var parsedQuery = ParseTextQuery(queryParams.Common.TextQuery);
 
-			var isMoveToTopQuery = 	(queryParams.Common.MoveExactToTop 
-				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith 
-				&& queryParams.Common.NameMatchMode != NameMatchMode.Exact 
+			var isMoveToTopQuery = (queryParams.Common.MoveExactToTop
+				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith
+				&& queryParams.Common.NameMatchMode != NameMatchMode.Exact
 				&& !queryParams.ArtistParticipation.ArtistIds.HasAny
 				&& queryParams.Paging.Start == 0
 				&& parsedQuery.HasNameQuery);
 
-			if (isMoveToTopQuery) {
+			if (isMoveToTopQuery)
+			{
 				return GetSongsMoveExactToTop(queryParams, parsedQuery);
 			}
 
@@ -251,8 +279,9 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		/// Get songs, searching by exact matches FIRST.
 		/// This mode does not support paging.
 		/// </summary>
-		private PartialFindResult<Song> GetSongsMoveExactToTop(SongQueryParams queryParams, ParsedSongQuery parsedQuery) {
-			
+		private PartialFindResult<Song> GetSongsMoveExactToTop(SongQueryParams queryParams, ParsedSongQuery parsedQuery)
+		{
+
 			var sortRule = queryParams.SortRule;
 			var maxResults = queryParams.Paging.MaxEntries;
 			var getCount = queryParams.Paging.GetTotalCount;
@@ -270,12 +299,15 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 				.Take(maxResults)
 				.ToArray();
 
-			if (exactResults.Length >= maxResults) {
+			if (exactResults.Length >= maxResults)
+			{
 
 				ids = exactResults;
 				count = getCount ? CreateQuery(queryParams, parsedQuery).Count() : 0;
 
-			} else { 
+			}
+			else
+			{
 
 				var directQ = CreateQuery(queryParams, parsedQuery);
 
@@ -304,7 +336,8 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 
 		}
 
-		private PartialFindResult<Song> GetSongs(SongQueryParams queryParams, ParsedSongQuery parsedQuery) {
+		private PartialFindResult<Song> GetSongs(SongQueryParams queryParams, ParsedSongQuery parsedQuery)
+		{
 
 			var query = CreateQuery(queryParams, parsedQuery);
 

@@ -5,16 +5,19 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Tests.Helpers {
+namespace VocaDb.Tests.Helpers
+{
 
 	[TestClass]
-	public class ArtistHelperTests {
+	public class ArtistHelperTests
+	{
 
 		private IArtistLinkWithRoles circle;
 		private IArtistLinkWithRoles producer;
 		private IArtistLinkWithRoles producer2;
 
-		private IArtistLinkWithRoles CreateArtist(ArtistType artistType, string name) {
+		private IArtistLinkWithRoles CreateArtist(ArtistType artistType, string name)
+		{
 
 			var p = new Artist { ArtistType = artistType };
 			p.Names.Add(new ArtistName(p, new LocalizedString(name, ContentLanguageSelection.English)));
@@ -23,7 +26,8 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			circle = CreateArtist(ArtistType.Circle, "S.C.X.");
 
@@ -33,42 +37,50 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void CanHaveRelatedArtists_ProductCannotHaveVoiceProvider() {
+		public void CanHaveRelatedArtists_ProductCannotHaveVoiceProvider()
+		{
 			Assert.IsFalse(ArtistHelper.CanHaveRelatedArtists(ArtistType.Producer, ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne));
 		}
 
 		[TestMethod]
-		public void CanHaveRelatedArtists_ProductCanHaveGroup() {
+		public void CanHaveRelatedArtists_ProductCanHaveGroup()
+		{
 			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.Producer, ArtistLinkType.Group, LinkDirection.ManyToOne));
 		}
 
 		[TestMethod]
-		public void CanHaveRelatedArtists_VocaloidCanHaveVoiceProvider() {
+		public void CanHaveRelatedArtists_VocaloidCanHaveVoiceProvider()
+		{
 			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.Vocaloid, ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne));
 		}
 
 		[TestMethod]
-		public void CanHaveRelatedArtists_OtherVocalistCanHaveVoiceProvider() {
+		public void CanHaveRelatedArtists_OtherVocalistCanHaveVoiceProvider()
+		{
 			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.OtherVocalist, ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne));
 		}
 
 		[TestMethod]
-		public void CanHaveRelatedArtists_ProducerCanHaveVoicesProvided() {
+		public void CanHaveRelatedArtists_ProducerCanHaveVoicesProvided()
+		{
 			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.Producer, ArtistLinkType.VoiceProvider, LinkDirection.OneToMany));
 		}
 
 		[TestMethod]
-		public void CanHaveRelatedArtists_VocaloidCannotHaveVoicesProvided() {
+		public void CanHaveRelatedArtists_VocaloidCannotHaveVoicesProvided()
+		{
 			Assert.IsFalse(ArtistHelper.CanHaveRelatedArtists(ArtistType.Vocaloid, ArtistLinkType.VoiceProvider, LinkDirection.OneToMany));
 		}
 
 		[TestMethod]
-		public void CanHaveRelatedArtists_OtherVocalistCanHaveVoicesProvided() {
+		public void CanHaveRelatedArtists_OtherVocalistCanHaveVoicesProvided()
+		{
 			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.OtherVocalist, ArtistLinkType.VoiceProvider, LinkDirection.OneToMany));
 		}
 
 		[TestMethod]
-		public void GetCanonizedName_NotPName() {
+		public void GetCanonizedName_NotPName()
+		{
 
 			var result = ArtistHelper.GetCanonizedName("devilish5150");
 
@@ -77,7 +89,8 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void GetCanonizedName_PName() {
+		public void GetCanonizedName_PName()
+		{
 
 			var result = ArtistHelper.GetCanonizedName("devilishP");
 
@@ -86,7 +99,8 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void GetCanonizedName_PDashName() {
+		public void GetCanonizedName_PDashName()
+		{
 
 			var result = ArtistHelper.GetCanonizedName("devilish-P");
 
@@ -95,7 +109,8 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void GetMainCircle_HasCircle() {
+		public void GetMainCircle_HasCircle()
+		{
 
 			producer.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
 			producer2.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
@@ -107,7 +122,8 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void GetMainCircle_OnlyCircle() {
+		public void GetMainCircle_OnlyCircle()
+		{
 
 			var result = ArtistHelper.GetMainCircle(new[] { circle }, ContentFocus.Music);
 
@@ -116,7 +132,8 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void GetMainCircle_ProducerNotInCircle() {
+		public void GetMainCircle_ProducerNotInCircle()
+		{
 
 			producer.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
 
@@ -127,7 +144,8 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void GetMainCircle_NoCircle() {
+		public void GetMainCircle_NoCircle()
+		{
 
 			producer.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
 			producer2.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);

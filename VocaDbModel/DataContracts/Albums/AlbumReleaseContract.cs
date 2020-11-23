@@ -4,15 +4,18 @@ using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts.Albums {
+namespace VocaDb.Model.DataContracts.Albums
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class AlbumReleaseContract : IAlbumRelease {
+	public class AlbumReleaseContract : IAlbumRelease
+	{
 
-		public AlbumReleaseContract() {}
+		public AlbumReleaseContract() { }
 
-		public AlbumReleaseContract(AlbumRelease release, ContentLanguagePreference languagePreference) {
-			
+		public AlbumReleaseContract(AlbumRelease release, ContentLanguagePreference languagePreference)
+		{
+
 			ParamIs.NotNull(() => release);
 
 			CatNum = release.CatNum;

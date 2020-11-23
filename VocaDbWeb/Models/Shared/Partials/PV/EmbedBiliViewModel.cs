@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts.PVs;
 
-namespace VocaDb.Web.Models.Shared.Partials.PV {
+namespace VocaDb.Web.Models.Shared.Partials.PV
+{
 
-	public class EmbedBiliViewModel {
+	public class EmbedBiliViewModel
+	{
 
-		public EmbedBiliViewModel(PVContract pv, int width, int height) {
+		public EmbedBiliViewModel(PVContract pv, int width, int height)
+		{
 			PV = pv;
 			Width = width;
 			Height = height;

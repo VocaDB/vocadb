@@ -10,13 +10,15 @@ using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Service.Search.AlbumSearch {
+namespace VocaDb.Tests.Service.Search.AlbumSearch
+{
 
 	/// <summary>
 	/// Tests for <see cref="Model.Service.Search.AlbumSearch.AlbumSearch"/>.
 	/// </summary>
 	[TestClass]
-	public class AlbumSearchTests {
+	public class AlbumSearchTests
+	{
 
 		private Artist artist;
 		private AlbumQueryParams queryParams;
@@ -25,7 +27,8 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		private Album album;
 		private Album albumWithArtist;
 
-		private void AddAlbum(Album album) {
+		private void AddAlbum(Album album)
+		{
 
 			querySource.Add(album);
 
@@ -37,19 +40,22 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 
 		}
 
-		private void CreateName(Album album, string val, ContentLanguageSelection language) {
+		private void CreateName(Album album, string val, ContentLanguageSelection language)
+		{
 
 			var name = album.CreateName(val, language);
 			querySource.Add(name);
 
 		}
 
-		private PartialFindResult<Album> Find() {
+		private PartialFindResult<Album> Find()
+		{
 			return search.Find(queryParams);
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			querySource = new QuerySourceList();
 
@@ -73,7 +79,8 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		/// List all (no filters).
 		/// </summary>
 		[TestMethod]
-		public void ListAll() {
+		public void ListAll()
+		{
 
 			var result = Find();
 
@@ -88,7 +95,8 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		/// Listing, skip first result.
 		/// </summary>
 		[TestMethod]
-		public void ListSkip() {
+		public void ListSkip()
+		{
 
 			queryParams.Paging.Start = 1;
 
@@ -104,7 +112,8 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		/// List with sort by name.
 		/// </summary>
 		[TestMethod]
-		public void ListSortName() {
+		public void ListSortName()
+		{
 
 			queryParams.SortRule = AlbumSortRule.Name;
 
@@ -121,7 +130,8 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		/// List with sort by rating.
 		/// </summary>
 		[TestMethod]
-		public void ListSortRating() {
+		public void ListSortRating()
+		{
 
 			queryParams.SortRule = AlbumSortRule.RatingAverage;
 
@@ -138,7 +148,8 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		/// List with sort by favorites.
 		/// </summary>
 		[TestMethod]
-		public void ListSortAdditionDate() {
+		public void ListSortAdditionDate()
+		{
 
 			queryParams.SortRule = AlbumSortRule.AdditionDate;
 
@@ -155,7 +166,8 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		/// Query by name.
 		/// </summary>
 		[TestMethod]
-		public void QueryName() {
+		public void QueryName()
+		{
 
 			queryParams.Common.TextQuery = SearchTextQuery.Create("DIVINE");
 
@@ -186,13 +198,14 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		/// Primary name search doesn't support "Words" match mode and aliases aren't matched past the first page.
 		/// </summary>
 		[TestMethod]
-		public void QueryNameWords_SkipFirstPage() {
+		public void QueryNameWords_SkipFirstPage()
+		{
 
 			CreateName(album, "Synthesis Miku", ContentLanguageSelection.Unspecified);
 			CreateName(albumWithArtist, "DIVINE Miku", ContentLanguageSelection.Unspecified);
 
 			queryParams.Common.TextQuery = SearchTextQuery.Create("Miku Miku");
-			queryParams.Paging.Start = 1;		// Skip the first result
+			queryParams.Paging.Start = 1;       // Skip the first result
 			queryParams.Paging.MaxEntries = 1;
 
 			var result = Find();
@@ -204,7 +217,8 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		}
 
 		[TestMethod]
-		public void QueryCatNum() {
+		public void QueryCatNum()
+		{
 
 			CreateName(album, "Synthesis", ContentLanguageSelection.Unspecified);
 			CreateName(albumWithArtist, "DIVINE", ContentLanguageSelection.Unspecified);
@@ -226,7 +240,8 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		/// Query by type.
 		/// </summary>
 		[TestMethod]
-		public void QueryType() {
+		public void QueryType()
+		{
 
 			queryParams.AlbumType = DiscType.Album;
 
@@ -242,9 +257,10 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		/// Query by artist.
 		/// </summary>
 		[TestMethod]
-		public void QueryArtist() {
+		public void QueryArtist()
+		{
 
-			queryParams.ArtistParticipation.ArtistIds = new [] { artist.Id };
+			queryParams.ArtistParticipation.ArtistIds = new[] { artist.Id };
 
 			var result = Find();
 
@@ -255,10 +271,11 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		}
 
 		[TestMethod]
-		public void QueryArtistParticipationStatus_FoundMain() {
-			
+		public void QueryArtistParticipationStatus_FoundMain()
+		{
+
 			album.AddArtist(artist, true, ArtistRoles.Default);
-			queryParams.ArtistParticipation.ArtistIds = new [] { artist.Id };
+			queryParams.ArtistParticipation.ArtistIds = new[] { artist.Id };
 			queryParams.ArtistParticipation.Participation = ArtistAlbumParticipationStatus.OnlyMainAlbums;
 
 			var result = Find();
@@ -270,10 +287,11 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch {
 		}
 
 		[TestMethod]
-		public void QueryArtistParticipationStatus_FoundCollab() {
-			
+		public void QueryArtistParticipationStatus_FoundCollab()
+		{
+
 			album.AddArtist(artist, true, ArtistRoles.Default);
-			queryParams.ArtistParticipation.ArtistIds = new [] { artist.Id };
+			queryParams.ArtistParticipation.ArtistIds = new[] { artist.Id };
 			queryParams.ArtistParticipation.Participation = ArtistAlbumParticipationStatus.OnlyCollaborations;
 
 			var result = Find();

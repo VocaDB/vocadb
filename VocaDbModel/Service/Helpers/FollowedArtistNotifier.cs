@@ -12,9 +12,11 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Translations;
 
-namespace VocaDb.Model.Service.Helpers {
+namespace VocaDb.Model.Service.Helpers
+{
 
-	public interface IFollowedArtistNotifier {
+	public interface IFollowedArtistNotifier
+	{
 
 		/// <summary>
 		/// Sends notifications
@@ -33,7 +35,8 @@ namespace VocaDb.Model.Service.Helpers {
 	/// Notifications will not be sent to users with too many unread messages in their inbox.
 	/// This is to prevent flooding users with too many notifications.
 	/// </summary>
-	public class FollowedArtistNotifier : IFollowedArtistNotifier {
+	public class FollowedArtistNotifier : IFollowedArtistNotifier
+	{
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEntryLinkFactory entryLinkFactory;
@@ -41,8 +44,9 @@ namespace VocaDb.Model.Service.Helpers {
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntrySubTypeNameFactory entrySubTypeNameFactory;
 
-		public FollowedArtistNotifier(IEntryLinkFactory entryLinkFactory, IUserMessageMailer mailer, 
-			IEnumTranslations enumTranslations, IEntrySubTypeNameFactory entrySubTypeNameFactory) {
+		public FollowedArtistNotifier(IEntryLinkFactory entryLinkFactory, IUserMessageMailer mailer,
+			IEnumTranslations enumTranslations, IEntrySubTypeNameFactory entrySubTypeNameFactory)
+		{
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.mailer = mailer;
@@ -51,28 +55,35 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
-		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, bool markdown, 
-			string entryTypeName) {
-			
+		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, bool markdown,
+			string entryTypeName)
+		{
+
 			var entryName = entry.Names.SortNames[user.DefaultLanguageSelection];
 			var url = entryLinkFactory.GetFullEntryUrl(entry);
 
 			string entryLink;
-			if (markdown) {
+			if (markdown)
+			{
 				entryLink = MarkdownHelper.CreateMarkdownLink(url, entryName);
-			} else {
+			}
+			else
+			{
 				entryLink = string.Format("{0} ( {1} )", entryName, url);
 			}
 
 			string msg;
 
-			if (followedArtists.Length == 1) {
+			if (followedArtists.Length == 1)
+			{
 
 				var artistName = followedArtists.First().TranslatedName[user.DefaultLanguageSelection];
 				msg = string.Format("A new {0}, '{1}', by {2} was just added.",
 					entryTypeName, entryLink, artistName);
 
-			} else {
+			}
+			else
+			{
 
 				msg = string.Format("A new {0}, '{1}', by multiple artists you're following was just added.",
 					entryTypeName, entryLink);
@@ -84,18 +95,23 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
-		public async Task<IReadOnlyCollection<User>> SendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator) {
+		public async Task<IReadOnlyCollection<User>> SendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator)
+		{
 
-			try {
+			try
+			{
 				return await DoSendNotificationsAsync(ctx, entry, artists, creator);
-			} catch (GenericADOException x) {
+			}
+			catch (GenericADOException x)
+			{
 				log.Error(x, "Unable to send notifications");
 				return new User[0];
 			}
 
 		}
 
-		private async Task<IReadOnlyCollection<User>> DoSendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator) {
+		private async Task<IReadOnlyCollection<User>> DoSendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator)
+		{
 
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => entry);
@@ -115,7 +131,8 @@ namespace VocaDb.Model.Service.Helpers {
 					artistIds.Contains(afu.Artist.Id)
 					&& afu.User.Id != creator.Id
 					&& afu.SiteNotifications)
-				.Select(afu => new {
+				.Select(afu => new
+				{
 					UserId = afu.User.Id,
 					ArtistId = afu.Artist.Id
 				})
@@ -129,7 +146,8 @@ namespace VocaDb.Model.Service.Helpers {
 
 			log.Debug("Found {0} users subscribed to artists", userIds.Count);
 
-			if (!userIds.Any()) {
+			if (!userIds.Any())
+			{
 				log.Info("No users found - skipping.");
 				return new User[0];
 			}
@@ -141,7 +159,8 @@ namespace VocaDb.Model.Service.Helpers {
 				.Where(u => u.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < u.Options.UnreadNotificationsToKeep)
 				.VdbToListAsync();
 
-			foreach (var user in users) {
+			foreach (var user in users)
+			{
 
 				var artistIdsForUser = new HashSet<int>(usersWithArtists[user.Id]);
 				var followedArtists = coll.Where(a => artistIdsForUser.Contains(a.Id)).ToArray();
@@ -155,18 +174,22 @@ namespace VocaDb.Model.Service.Helpers {
 				var entryTypeName = entryTypeNames.GetName(entry.EntryType, culture).ToLowerInvariant();
 				var entrySubType = entrySubTypeNameFactory.GetEntrySubTypeName(entry, enumTranslations, culture)?.ToLowerInvariant();
 
-				if (!string.IsNullOrEmpty(entrySubType)) {
+				if (!string.IsNullOrEmpty(entrySubType))
+				{
 					entryTypeName += $" ({entrySubType})";
 				}
 
 				var msg = CreateMessageBody(followedArtists, user, entry, true, entryTypeName);
 
-				if (followedArtists.Length == 1) {
+				if (followedArtists.Length == 1)
+				{
 
 					var artistName = followedArtists.First().TranslatedName[user.DefaultLanguageSelection];
 					title = string.Format("New {0} by {1}", entryTypeName, artistName);
 
-				} else {
+				}
+				else
+				{
 
 					title = string.Format("New {0}", entryTypeName);
 
@@ -177,7 +200,8 @@ namespace VocaDb.Model.Service.Helpers {
 				await ctx.SaveAsync(notification);
 
 				if (user.EmailOptions != UserEmailOptions.NoEmail && !string.IsNullOrEmpty(user.Email)
-					&& followedArtists.Any(a => a.Users.Any(u => u.User.Equals(user) && u.EmailNotifications))) {
+					&& followedArtists.Any(a => a.Users.Any(u => u.User.Equals(user) && u.EmailNotifications)))
+				{
 
 					await mailer.SendEmailAsync(user.Email, user.Name, title, CreateMessageBody(followedArtists, user, entry, false, entryTypeName));
 

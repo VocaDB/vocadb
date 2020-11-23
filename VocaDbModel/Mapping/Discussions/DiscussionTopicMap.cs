@@ -1,12 +1,15 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Discussions;
 
-namespace VocaDb.Model.Mapping.Discussions {
+namespace VocaDb.Model.Mapping.Discussions
+{
 
-	public class DiscussionTopicMap : ClassMap<DiscussionTopic> {
+	public class DiscussionTopicMap : ClassMap<DiscussionTopic>
+	{
 
-		public DiscussionTopicMap() {
-			
+		public DiscussionTopicMap()
+		{
+
 			Schema("discussions");
 			Table("DiscussionTopics");
 			Cache.ReadWrite();

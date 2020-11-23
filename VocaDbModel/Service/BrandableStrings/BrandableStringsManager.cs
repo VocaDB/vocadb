@@ -8,32 +8,39 @@ using VocaDb.Model.Service.BrandableStrings.Collections;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
 
-namespace VocaDb.Model.Service.BrandableStrings {
+namespace VocaDb.Model.Service.BrandableStrings
+{
 
-	public class BrandableStringsManager {
+	public class BrandableStringsManager
+	{
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		private bool LoadBrandedStrings() {
-			
+		private bool LoadBrandedStrings()
+		{
+
 			var brandedStringsAssembly = AppConfig.BrandedStringsAssembly;
 
 			if (string.IsNullOrEmpty(brandedStringsAssembly))
 				return false;
-			
+
 			Assembly assembly;
 
-			try {
+			try
+			{
 				assembly = Assembly.LoadFrom(brandedStringsAssembly);
-			} catch (FileNotFoundException) {
+			}
+			catch (FileNotFoundException)
+			{
 				log.Warn("Branded strings assembly '{0}' not found.", brandedStringsAssembly);
 				return false;
 			}
-			
+
 			var headerType = assembly.GetTypes().FirstOrDefault(t => t.GetInterface("IBrandedStringsAssemblyHeader") != null);
 
-			if (headerType == null) {
-				log.Warn("No header type found in branded strings assembly.");				
+			if (headerType == null)
+			{
+				log.Warn("No header type found in branded strings assembly.");
 				return false;
 			}
 
@@ -50,15 +57,17 @@ namespace VocaDb.Model.Service.BrandableStrings {
 
 		}
 
-		public BrandableStringsManager(VdbConfigManager config) {
+		public BrandableStringsManager(VdbConfigManager config)
+		{
 
 			this.config = config;
 
-			if (!LoadBrandedStrings()) {
-				Album = new AlbumStrings(Resources.Views.AlbumRes.ResourceManager);				
-				Artist = new ArtistStrings(Resources.Views.ArtistRes.ResourceManager);				
-				Home = new HomeStrings(Resources.Views.HomeRes.ResourceManager);				
-				Layout = new LayoutStrings(Resources.Views.LayoutRes.ResourceManager);				
+			if (!LoadBrandedStrings())
+			{
+				Album = new AlbumStrings(Resources.Views.AlbumRes.ResourceManager);
+				Artist = new ArtistStrings(Resources.Views.ArtistRes.ResourceManager);
+				Home = new HomeStrings(Resources.Views.HomeRes.ResourceManager);
+				Layout = new LayoutStrings(Resources.Views.LayoutRes.ResourceManager);
 				Song = new SongStrings(Resources.Views.SongRes.ResourceManager);
 				User = new UserStrings(Resources.Views.UserRes.ResourceManager);
 			}
@@ -72,7 +81,7 @@ namespace VocaDb.Model.Service.BrandableStrings {
 		public ArtistStrings Artist { get; private set; }
 
 		public HomeStrings Home { get; private set; }
-	
+
 		public LayoutStrings Layout { get; private set; }
 
 		public SongStrings Song { get; private set; }

@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace VocaDb.Web.Code.Highcharts {
+namespace VocaDb.Web.Code.Highcharts
+{
 
-	public class Chart {
+	public class Chart
+	{
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public string BackgroundColor { get; set; }

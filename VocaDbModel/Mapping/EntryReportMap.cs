@@ -8,11 +8,14 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Venues;
 
-namespace VocaDb.Model.Mapping {
+namespace VocaDb.Model.Mapping
+{
 
-	public class EntryReportMap : ClassMap<EntryReport> {
+	public class EntryReportMap : ClassMap<EntryReport>
+	{
 
-		public EntryReportMap() {
+		public EntryReportMap()
+		{
 
 			Id(m => m.Id);
 			DiscriminateSubClassesOnColumn("[EntryType]");
@@ -31,9 +34,11 @@ namespace VocaDb.Model.Mapping {
 
 	}
 
-	public class AlbumReportMap : SubclassMap<AlbumReport> {
+	public class AlbumReportMap : SubclassMap<AlbumReport>
+	{
 
-		public AlbumReportMap() {
+		public AlbumReportMap()
+		{
 
 			DiscriminatorValue("Album");
 
@@ -45,9 +50,11 @@ namespace VocaDb.Model.Mapping {
 
 	}
 
-	public class ArtistReportMap : SubclassMap<ArtistReport> {
+	public class ArtistReportMap : SubclassMap<ArtistReport>
+	{
 
-		public ArtistReportMap() {
+		public ArtistReportMap()
+		{
 
 			DiscriminatorValue("Artist");
 
@@ -59,9 +66,11 @@ namespace VocaDb.Model.Mapping {
 
 	}
 
-	public class EventReportMap : SubclassMap<EventReport> {
+	public class EventReportMap : SubclassMap<EventReport>
+	{
 
-		public EventReportMap() {
+		public EventReportMap()
+		{
 
 			DiscriminatorValue("Event");
 
@@ -73,9 +82,11 @@ namespace VocaDb.Model.Mapping {
 
 	}
 
-	public class SongReportMap : SubclassMap<SongReport> {
+	public class SongReportMap : SubclassMap<SongReport>
+	{
 
-		public SongReportMap() {
+		public SongReportMap()
+		{
 
 			DiscriminatorValue("Song");
 
@@ -87,9 +98,11 @@ namespace VocaDb.Model.Mapping {
 
 	}
 
-	public class TagReportMap : SubclassMap<TagReport> {
+	public class TagReportMap : SubclassMap<TagReport>
+	{
 
-		public TagReportMap() {
+		public TagReportMap()
+		{
 
 			DiscriminatorValue("Tag");
 
@@ -101,9 +114,11 @@ namespace VocaDb.Model.Mapping {
 
 	}
 
-	public class UserReportMap : SubclassMap<UserReport> {
+	public class UserReportMap : SubclassMap<UserReport>
+	{
 
-		public UserReportMap() {
+		public UserReportMap()
+		{
 
 			DiscriminatorValue("User");
 
@@ -115,9 +130,11 @@ namespace VocaDb.Model.Mapping {
 
 	}
 
-	public class VenueReportMap : SubclassMap<VenueReport> {
+	public class VenueReportMap : SubclassMap<VenueReport>
+	{
 
-		public VenueReportMap() {
+		public VenueReportMap()
+		{
 
 			DiscriminatorValue("Venue");
 

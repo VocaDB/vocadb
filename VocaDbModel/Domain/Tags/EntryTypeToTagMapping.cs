@@ -1,10 +1,13 @@
-namespace VocaDb.Model.Domain.Tags {
+namespace VocaDb.Model.Domain.Tags
+{
 
-	public class EntryTypeToTagMapping : IEntryWithIntId {
+	public class EntryTypeToTagMapping : IEntryWithIntId
+	{
 
 		public EntryTypeToTagMapping() { }
 
-		public EntryTypeToTagMapping(EntryTypeAndSubType entryType, Tag tag) {
+		public EntryTypeToTagMapping(EntryTypeAndSubType entryType, Tag tag)
+		{
 			EntryType = entryType.EntryType;
 			SubType = entryType.SubType;
 			Tag = tag;

@@ -12,27 +12,35 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.DatabaseTests.Search.Tags {
+namespace VocaDb.Tests.DatabaseTests.Search.Tags
+{
 
 	[TestClass]
-	public class TagSearchDatabaseTests {
+	public class TagSearchDatabaseTests
+	{
 
 		private readonly DatabaseTestContext context = new DatabaseTestContext();
-		private readonly TagQueryParams queryParams = new TagQueryParams {
-			SortRule = TagSortRule.Name, Common = new CommonSearchParams(), Paging = new PagingProperties(0, 100, true)
+		private readonly TagQueryParams queryParams = new TagQueryParams
+		{
+			SortRule = TagSortRule.Name,
+			Common = new CommonSearchParams(),
+			Paging = new PagingProperties(0, 100, true)
 		};
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 
-		private void AssertHasTag(PartialFindResult<Tag> result, Tag expected) {
+		private void AssertHasTag(PartialFindResult<Tag> result, Tag expected)
+		{
 
 			Assert.IsTrue(result.Items.Any(s => s.Equals(expected)), string.Format("Found {0}", expected));
 
 		}
 
 		private PartialFindResult<Tag> CallFind(ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
-			bool onlyMinimalFields = false) {
+			bool onlyMinimalFields = false)
+		{
 
-			return context.RunTest(querySource => {
+			return context.RunTest(querySource =>
+			{
 
 				var search = new TagSearch(querySource.OfType<Tag>(), languagePreference);
 
@@ -54,7 +62,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.Tags {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void ListAll() {
+		public void ListAll()
+		{
 
 			var result = CallFind();
 
@@ -68,7 +77,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.Tags {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void ListAll_MinimalFields() {
+		public void ListAll_MinimalFields()
+		{
 
 			var result = CallFind(onlyMinimalFields: true);
 

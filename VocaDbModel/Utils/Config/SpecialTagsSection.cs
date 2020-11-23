@@ -1,16 +1,20 @@
 using System;
 using System.Configuration;
 
-namespace VocaDb.Model.Utils.Config {
+namespace VocaDb.Model.Utils.Config
+{
 
-	public class SpecialTagsSection : ConfigurationSection, ISpecialTags {
+	public class SpecialTagsSection : ConfigurationSection, ISpecialTags
+	{
 
-		private int TagId(string name) {
+		private int TagId(string name)
+		{
 			return this.Properties.Contains(name) ? (int)this[name] : 0;
 		}
 
 		[ConfigurationProperty("changedLyrics")]
-		public int ChangedLyrics {
+		public int ChangedLyrics
+		{
 			get { return TagId("changedLyrics"); }
 			set { this["changedLyrics"] = value; }
 		}
@@ -23,14 +27,16 @@ namespace VocaDb.Model.Utils.Config {
 		}
 
 		[ConfigurationProperty("shortVersion")]
-		public int ShortVersion {
+		public int ShortVersion
+		{
 			get { return TagId("shortVersion"); }
 			set { this["shortVersion"] = value; }
 		}
 
 	}
 
-	public interface ISpecialTags {
+	public interface ISpecialTags
+	{
 		int ChangedLyrics { get; }
 	}
 

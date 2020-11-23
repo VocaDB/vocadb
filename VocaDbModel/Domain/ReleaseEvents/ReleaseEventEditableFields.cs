@@ -1,46 +1,48 @@
 using System;
 
-namespace VocaDb.Model.Domain.ReleaseEvents {
+namespace VocaDb.Model.Domain.ReleaseEvents
+{
 
 	[Flags]
-	public enum ReleaseEventEditableFields {
+	public enum ReleaseEventEditableFields
+	{
 
-		Nothing			= 0,
+		Nothing = 0,
 
-		Artists			= 1,
+		Artists = 1,
 
-		Category		= 2,
+		Category = 2,
 
-		Date			= 4,
+		Date = 4,
 
-		Description		= 8,
+		Description = 8,
 
-		MainPicture		= 16,
+		MainPicture = 16,
 
 		[Obsolete]
-		Name			= 32,
+		Name = 32,
 
-		Names           = 64,
+		Names = 64,
 
-		OriginalName    = 128,
+		OriginalName = 128,
 
-		PVs				= 256,
+		PVs = 256,
 
-		Series          = 512,
+		Series = 512,
 
-		SeriesNumber	= 1024,
+		SeriesNumber = 1024,
 
-		SeriesSuffix	= 2048,
+		SeriesSuffix = 2048,
 
-		SongList		= 4096,
+		SongList = 4096,
 
-		Status			= 8192,
+		Status = 8192,
 
-		Venue			= 16384,
+		Venue = 16384,
 
-		VenueName		= 32768,
-		
-		WebLinks		= 65536
+		VenueName = 32768,
+
+		WebLinks = 65536
 
 	}
 

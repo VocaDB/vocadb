@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Service.Helpers;
 
-namespace VocaDb.Model.Domain.ExtLinks {
+namespace VocaDb.Model.Domain.ExtLinks
+{
 
 	/// <summary>
 	/// Gets variations of a web link URL based on <see cref="WebLinkVariationTypes"/>,
@@ -12,9 +13,11 @@ namespace VocaDb.Model.Domain.ExtLinks {
 	/// The result is intended to be used in "IN" SQL query for exact matches.
 	/// SQL "LIKE" query could also be used, but it may provide unexpected results unless escaped properly.
 	/// </remarks>
-	public static class WebLinkVariationsFactory {
+	public static class WebLinkVariationsFactory
+	{
 
-		private static IEnumerable<string> GetSchemeAgnostic(string url) {
+		private static IEnumerable<string> GetSchemeAgnostic(string url)
+		{
 			var urlTrimmed = UrlHelper.RemoveScheme(url);
 			return new[] {
 				urlTrimmed,
@@ -23,15 +26,17 @@ namespace VocaDb.Model.Domain.ExtLinks {
 			};
 		}
 
-		private static IEnumerable<string> GetSlashAgnostic(string url) {
+		private static IEnumerable<string> GetSlashAgnostic(string url)
+		{
 			var withoutSlash = url.EndsWith("/") ? url.Substring(0, url.Length - 1) : url;
-			return new[] { 
+			return new[] {
 				withoutSlash,
 				withoutSlash + "/"
-			};			
+			};
 		}
 
-		public static string[] GetWebLinkVariations(string originalUrl, WebLinkVariationTypes variationTypes) {
+		public static string[] GetWebLinkVariations(string originalUrl, WebLinkVariationTypes variationTypes)
+		{
 
 			var trimmed = originalUrl?.Trim();
 

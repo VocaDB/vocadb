@@ -9,15 +9,18 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 
-namespace VocaDb.Model.DataContracts.UseCases {
+namespace VocaDb.Model.DataContracts.UseCases
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class AlbumForEditContract : AlbumContract {
+	public class AlbumForEditContract : AlbumContract
+	{
 
-		public AlbumForEditContract() {}
+		public AlbumForEditContract() { }
 
 		public AlbumForEditContract(Album album, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory imageStore)
-			: base(album, languagePreference) {
+			: base(album, languagePreference)
+		{
 
 			ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			DefaultNameLanguage = album.TranslatedName.DefaultLanguage;

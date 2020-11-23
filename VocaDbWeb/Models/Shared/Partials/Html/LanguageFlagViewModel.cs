@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Html {
+namespace VocaDb.Web.Models.Shared.Partials.Html
+{
 
-	public class LanguageFlagViewModel {
+	public class LanguageFlagViewModel
+	{
 
-		public LanguageFlagViewModel(string languageCode) {
+		public LanguageFlagViewModel(string languageCode)
+		{
 			LanguageCode = languageCode;
 		}
 

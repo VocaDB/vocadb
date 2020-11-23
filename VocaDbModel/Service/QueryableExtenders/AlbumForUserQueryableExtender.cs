@@ -4,13 +4,17 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Model.Service.QueryableExtenders {
+namespace VocaDb.Model.Service.QueryableExtenders
+{
 
-	public static class AlbumForUserQueryableExtender {
+	public static class AlbumForUserQueryableExtender
+	{
 
-		public static IOrderedQueryable<AlbumForUser> OrderByAlbumName(this IQueryable<AlbumForUser> criteria, ContentLanguagePreference languagePreference) {
+		public static IOrderedQueryable<AlbumForUser> OrderByAlbumName(this IQueryable<AlbumForUser> criteria, ContentLanguagePreference languagePreference)
+		{
 
-			switch (languagePreference) {
+			switch (languagePreference)
+			{
 				case ContentLanguagePreference.Japanese:
 					return criteria.OrderBy(e => e.Album.Names.SortNames.Japanese);
 				case ContentLanguagePreference.English:
@@ -21,9 +25,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<AlbumForUser> OrderBy(this IQueryable<AlbumForUser> query, AlbumSortRule sortRule, ContentLanguagePreference languagePreference) {
+		public static IQueryable<AlbumForUser> OrderBy(this IQueryable<AlbumForUser> query, AlbumSortRule sortRule, ContentLanguagePreference languagePreference)
+		{
 
-			switch (sortRule) {
+			switch (sortRule)
+			{
 				case AlbumSortRule.Name:
 					return OrderByAlbumName(query, languagePreference);
 				case AlbumSortRule.CollectionCount:
@@ -53,16 +59,18 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<AlbumForUser> OrderByReleaseDate(this IQueryable<AlbumForUser> query) {
-			
+		public static IQueryable<AlbumForUser> OrderByReleaseDate(this IQueryable<AlbumForUser> query)
+		{
+
 			return query
 				.OrderByDescending(a => a.Album.OriginalRelease.ReleaseDate.Year)
 				.ThenByDescending(a => a.Album.OriginalRelease.ReleaseDate.Month)
 				.ThenByDescending(a => a.Album.OriginalRelease.ReleaseDate.Day);
 
-		} 
+		}
 
-		public static IQueryable<AlbumForUser> WhereHasArtist(this IQueryable<AlbumForUser> query, int artistId) {
+		public static IQueryable<AlbumForUser> WhereHasArtist(this IQueryable<AlbumForUser> query, int artistId)
+		{
 
 			if (artistId == 0)
 				return query;
@@ -71,18 +79,22 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<AlbumForUser> WhereHasCollectionStatus(this IQueryable<AlbumForUser> query, PurchaseStatus[] statuses) {
-			
+		public static IQueryable<AlbumForUser> WhereHasCollectionStatus(this IQueryable<AlbumForUser> query, PurchaseStatus[] statuses)
+		{
+
 			if (statuses == null || !statuses.Any())
 				return query;
 
-			if (statuses.Length == 1) {
-				
+			if (statuses.Length == 1)
+			{
+
 				var s = statuses[0];
 				return query.Where(a => a.PurchaseStatus == s);
 
-			} else {
-				
+			}
+			else
+			{
+
 				return query.Where(a => statuses.Contains(a.PurchaseStatus));
 
 			}
@@ -104,14 +116,16 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// Note: this code should be optimized after switching to EF.
 		/// Cannot be optimized as is for NH.
 		/// </remarks>
-		public static IQueryable<AlbumForUser> WhereHasName(this IQueryable<AlbumForUser> query, SearchTextQuery textQuery) {
+		public static IQueryable<AlbumForUser> WhereHasName(this IQueryable<AlbumForUser> query, SearchTextQuery textQuery)
+		{
 
 			if (textQuery.IsEmpty)
 				return query;
 
 			var nameFilter = textQuery.Query;
 
-			switch (textQuery.MatchMode) {
+			switch (textQuery.MatchMode)
+			{
 				case NameMatchMode.Exact:
 					return query.Where(m => m.Album.Names.Names.Any(n => n.Value == nameFilter));
 
@@ -124,25 +138,26 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case NameMatchMode.Words:
 					var words = textQuery.Words;
 
-					switch (words.Length) {
+					switch (words.Length)
+					{
 						case 1:
 							query = query.Where(q => q.Album.Names.Names.Any(n => n.Value.Contains(words[0])));
 							break;
 						case 2:
-							query = query.Where(q => 
+							query = query.Where(q =>
 								q.Album.Names.Names.Any(n => n.Value.Contains(words[0]))
 								&& q.Album.Names.Names.Any(n => n.Value.Contains(words[1]))
 							);
 							break;
 						case 3:
-							query = query.Where(q => 
+							query = query.Where(q =>
 								q.Album.Names.Names.Any(n => n.Value.Contains(words[0]))
 								&& q.Album.Names.Names.Any(n => n.Value.Contains(words[1]))
 								&& q.Album.Names.Names.Any(n => n.Value.Contains(words[2]))
 							);
 							break;
 						case 4:
-							query = query.Where(q => 
+							query = query.Where(q =>
 								q.Album.Names.Names.Any(n => n.Value.Contains(words[0]))
 								&& q.Album.Names.Names.Any(n => n.Value.Contains(words[1]))
 								&& q.Album.Names.Names.Any(n => n.Value.Contains(words[2]))
@@ -150,7 +165,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 							);
 							break;
 						case 5:
-							query = query.Where(q => 
+							query = query.Where(q =>
 								q.Album.Names.Names.Any(n => n.Value.Contains(words[0]))
 								&& q.Album.Names.Names.Any(n => n.Value.Contains(words[1]))
 								&& q.Album.Names.Names.Any(n => n.Value.Contains(words[2]))
@@ -159,7 +174,7 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 							);
 							break;
 						case 6:
-							query = query.Where(q => 
+							query = query.Where(q =>
 								q.Album.Names.Names.Any(n => n.Value.Contains(words[0]))
 								&& q.Album.Names.Names.Any(n => n.Value.Contains(words[1]))
 								&& q.Album.Names.Names.Any(n => n.Value.Contains(words[2]))
@@ -177,7 +192,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<AlbumForUser> WhereHasReleaseDate(this IQueryable<AlbumForUser> criteria) {
+		public static IQueryable<AlbumForUser> WhereHasReleaseDate(this IQueryable<AlbumForUser> criteria)
+		{
 
 			return criteria.Where(a => a.Album.OriginalRelease.ReleaseDate.Year != null
 				&& a.Album.OriginalRelease.ReleaseDate.Month != null
@@ -185,7 +201,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<AlbumForUser> WhereHasReleaseEvent(this IQueryable<AlbumForUser> query, int releaseEventId) {
+		public static IQueryable<AlbumForUser> WhereHasReleaseEvent(this IQueryable<AlbumForUser> query, int releaseEventId)
+		{
 
 			if (releaseEventId == 0)
 				return query;

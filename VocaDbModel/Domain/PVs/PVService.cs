@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace VocaDb.Model.Domain.PVs {
+namespace VocaDb.Model.Domain.PVs
+{
 
 	/// <summary>
 	/// PV service identifier.
@@ -10,27 +11,28 @@ namespace VocaDb.Model.Domain.PVs {
 	/// <remarks>
 	/// These values are supposed to be serialized as strings.
 	/// </remarks>
-	public enum PVService {
+	public enum PVService
+	{
 
-		NicoNicoDouga	= 1,
+		NicoNicoDouga = 1,
 
-		Youtube			= 2,
+		Youtube = 2,
 
-		SoundCloud		= 4,
+		SoundCloud = 4,
 
-		Vimeo			= 8,
+		Vimeo = 8,
 
-		Piapro			= 16,
+		Piapro = 16,
 
-		Bilibili		= 32,
+		Bilibili = 32,
 
-		File			= 64,
+		File = 64,
 
-		LocalFile		= 128,
+		LocalFile = 128,
 
-		Creofuga		= 256,
+		Creofuga = 256,
 
-		Bandcamp		= 512
+		Bandcamp = 512
 
 	}
 
@@ -41,36 +43,39 @@ namespace VocaDb.Model.Domain.PVs {
 	/// These values must not change because they're saved as a bit array in DB.
 	/// </remarks>
 	[Flags]
-	public enum PVServices {
+	public enum PVServices
+	{
 
-		Nothing			= 0,
+		Nothing = 0,
 
-		NicoNicoDouga	= PVService.NicoNicoDouga,
+		NicoNicoDouga = PVService.NicoNicoDouga,
 
-		Youtube			= PVService.Youtube,
+		Youtube = PVService.Youtube,
 
-		SoundCloud		= PVService.SoundCloud,
+		SoundCloud = PVService.SoundCloud,
 
-		Vimeo			= PVService.Vimeo,
+		Vimeo = PVService.Vimeo,
 
-		Piapro			= PVService.Piapro,
+		Piapro = PVService.Piapro,
 
-		Bilibili		= PVService.Bilibili,
+		Bilibili = PVService.Bilibili,
 
-		File			= PVService.File,
+		File = PVService.File,
 
-		LocalFile		= PVService.LocalFile,
+		LocalFile = PVService.LocalFile,
 
-		Creofuga        = PVService.Creofuga,
+		Creofuga = PVService.Creofuga,
 
-		Bandcamp		= PVService.Bandcamp
+		Bandcamp = PVService.Bandcamp
 
 	}
 
-	public static class PVServicesExtender {
+	public static class PVServicesExtender
+	{
 
-		public static IEnumerable<PVService> ToIndividualSelections(this PVServices selections) {
-			
+		public static IEnumerable<PVService> ToIndividualSelections(this PVServices selections)
+		{
+
 			return EnumVal<PVServices>
 				.GetIndividualValues(selections)
 				.Select(s => (PVService)s);

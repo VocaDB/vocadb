@@ -1,11 +1,14 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Mapping.Users {
+namespace VocaDb.Model.Mapping.Users
+{
 
-	public class PasswordResetRequestMap : ClassMap<PasswordResetRequest> {
+	public class PasswordResetRequestMap : ClassMap<PasswordResetRequest>
+	{
 
-		public PasswordResetRequestMap() {
+		public PasswordResetRequestMap()
+		{
 
 			Id(m => m.Id).GeneratedBy.GuidComb();
 
@@ -13,7 +16,7 @@ namespace VocaDb.Model.Mapping.Users {
 			Map(m => m.Email).Not.Nullable().Length(50);
 
 			References(m => m.User).Not.Nullable();
-		
+
 		}
 
 	}

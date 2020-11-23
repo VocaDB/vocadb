@@ -6,13 +6,15 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Service.TagFormatting {
-	
+namespace VocaDb.Tests.Service.TagFormatting
+{
+
 	/// <summary>
 	/// Tests for <see cref="AlbumSongFormatter"/>.
 	/// </summary>
 	[TestClass]
-	public class AlbumSongFormatterTests {
+	public class AlbumSongFormatterTests
+	{
 
 		private const string defaultFormat = "%title%%featvocalists%;%producers%;%album%;%discnumber%;%track%";
 		private Album album;
@@ -21,12 +23,14 @@ namespace VocaDb.Tests.Service.TagFormatting {
 		private AlbumSongFormatter target;
 		private Artist vocalist;
 
-		private string ApplyFormat(string format, ContentLanguagePreference languageSelection) {
+		private string ApplyFormat(string format, ContentLanguagePreference languageSelection)
+		{
 			return target.ApplyFormat(album, format, null, languageSelection, false);
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			producer = new Artist(TranslatedString.Create("Tripshots")) { ArtistType = ArtistType.Producer };
 			vocalist = new Artist(new TranslatedString("初音ミク", "Hatsune Miku", "Hatsune Miku")) { ArtistType = ArtistType.Vocaloid };
@@ -44,7 +48,8 @@ namespace VocaDb.Tests.Service.TagFormatting {
 		}
 
 		[TestMethod]
-		public void DefaultFormat() {
+		public void DefaultFormat()
+		{
 
 			var result = ApplyFormat(defaultFormat, ContentLanguagePreference.Romaji).Trim();
 
@@ -53,7 +58,8 @@ namespace VocaDb.Tests.Service.TagFormatting {
 		}
 
 		[TestMethod]
-		public void NoArtists() {
+		public void NoArtists()
+		{
 
 			song.RemoveArtist(producer);
 			song.RemoveArtist(vocalist);
@@ -65,7 +71,8 @@ namespace VocaDb.Tests.Service.TagFormatting {
 		}
 
 		[TestMethod]
-		public void Semicolon() {
+		public void Semicolon()
+		{
 
 			producer.TranslatedName.Romaji = "re;mo";
 
@@ -76,7 +83,8 @@ namespace VocaDb.Tests.Service.TagFormatting {
 		}
 
 		[TestMethod]
-		public void VocaloidsWithProducers() {
+		public void VocaloidsWithProducers()
+		{
 
 			var result = ApplyFormat("%title%;%artist%", ContentLanguagePreference.Romaji).Trim();
 

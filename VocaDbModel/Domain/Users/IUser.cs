@@ -1,10 +1,12 @@
-namespace VocaDb.Model.Domain.Users {
+namespace VocaDb.Model.Domain.Users
+{
 
 	/// <summary>
 	/// Interface for <see cref="User"/> with minimal information.
 	/// Contains no sensitive information.
 	/// </summary>
-	public interface IUser {
+	public interface IUser
+	{
 
 		int Id { get; set; }
 
@@ -12,9 +14,11 @@ namespace VocaDb.Model.Domain.Users {
 
 	}
 
-	public static class IUserExtender {
+	public static class IUserExtender
+	{
 
-		public static bool IsTheSameUser(this IUser left, IUser right) {
+		public static bool IsTheSameUser(this IUser left, IUser right)
+		{
 
 			ParamIs.NotNull(() => left);
 

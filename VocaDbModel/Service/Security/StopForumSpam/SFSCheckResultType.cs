@@ -1,7 +1,9 @@
-namespace VocaDb.Model.Service.Security.StopForumSpam {
+namespace VocaDb.Model.Service.Security.StopForumSpam
+{
 
-	public enum SFSCheckResultType {
-		
+	public enum SFSCheckResultType
+	{
+
 		Harmless,
 
 		Malicious,

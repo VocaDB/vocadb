@@ -1,11 +1,14 @@
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.Mapping.Songs {
+namespace VocaDb.Model.Mapping.Songs
+{
 
-	public class LyricsForSongMap : ClassMap<LyricsForSong> {
+	public class LyricsForSongMap : ClassMap<LyricsForSong>
+	{
 
-		public LyricsForSongMap() {
+		public LyricsForSongMap()
+		{
 
 			Table("LyricsForSongs");
 
@@ -18,7 +21,8 @@ namespace VocaDb.Model.Mapping.Songs {
 			Map(m => m.Value).Column("Text").Length(int.MaxValue).Not.Nullable();
 			References(m => m.Song).Not.Nullable();
 
-			Component(m => m.CultureCode, c => {
+			Component(m => m.CultureCode, c =>
+			{
 				c.Map(m => m.CultureCode).Column("[CultureCode]").Length(20).Not.Nullable();
 			});
 

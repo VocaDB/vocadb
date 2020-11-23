@@ -11,44 +11,51 @@ using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Tests.Service.Queries {
+namespace VocaDb.Tests.Service.Queries
+{
 
 	/// <summary>
 	/// Tests for <see cref="TagUsageQueries"/>.
 	/// </summary>
 	[TestClass]
-	public class TagUsageQueriesTests {
+	public class TagUsageQueriesTests
+	{
 
 		private Song entry;
 		private Tag existingTag;
 		private readonly FakeUserRepository repository = new FakeUserRepository();
-        private TagUsageQueries queries;
+		private TagUsageQueries queries;
 		private User user;
 
-		private void AddSongTags(int entryId, params TagBaseContract[] tags) {
+		private void AddSongTags(int entryId, params TagBaseContract[] tags)
+		{
 
 			queries.AddTags<Song, SongTagUsage>(entryId, tags, false, repository, new FakeEntryLinkFactory(), new EnumTranslations(),
 				song => song.Tags, (song, ctx) => new SongTagUsageFactory(ctx, song));
 
 		}
 
-		private void AddSongListTags(int entryId, params TagBaseContract[] tags) {
+		private void AddSongListTags(int entryId, params TagBaseContract[] tags)
+		{
 
 			queries.AddTags<SongList, SongListTagUsage>(entryId, tags, false, repository, new FakeEntryLinkFactory(), new EnumTranslations(),
 				songList => songList.Tags, (songList, ctx) => new SongListTagUsageFactory(ctx, songList));
 
 		}
 
-		private TagBaseContract Contract(int id) {
+		private TagBaseContract Contract(int id)
+		{
 			return new TagBaseContract { Id = id };
 		}
 
-		private TagBaseContract Contract(string name) {
+		private TagBaseContract Contract(string name)
+		{
 			return new TagBaseContract { Name = name };
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 			user = repository.Save(CreateEntry.User(group: UserGroupId.Trusted));
 			queries = new TagUsageQueries(new FakePermissionContext(user));
 			entry = repository.Save(CreateEntry.Song(name: "Puppet"));
@@ -56,7 +63,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void AddNewTagByName() {
+		public void AddNewTagByName()
+		{
 
 			var tags = new[] { Contract("vocarock") };
 
@@ -74,7 +82,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void AddExistingTagByName() {
+		public void AddExistingTagByName()
+		{
 
 			repository.Save(CreateEntry.Tag("vocarock", 39));
 
@@ -87,7 +96,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void AddTagById() {
+		public void AddTagById()
+		{
 
 			var tag = repository.Save(CreateEntry.Tag("vocarock"));
 
@@ -105,7 +115,8 @@ namespace VocaDb.Tests.Service.Queries {
 		/// Add tag based on translated name
 		/// </summary>
 		[TestMethod]
-		public void AddTagByTranslation() {
+		public void AddTagByTranslation()
+		{
 
 			var tag = repository.Save(CreateEntry.Tag("rock"));
 			tag.CreateName("ロック", ContentLanguageSelection.Japanese);
@@ -123,7 +134,8 @@ namespace VocaDb.Tests.Service.Queries {
 		/// Add renamed tag by name
 		/// </summary>
 		[TestMethod]
-		public void AddNewTag_TagIsRenamed() {
+		public void AddNewTag_TagIsRenamed()
+		{
 
 			var tag = repository.Save(CreateEntry.Tag("vocarock", 39));
 			tag.Names.First().Value = "rock";
@@ -140,7 +152,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void SkipDuplicates() {
+		public void SkipDuplicates()
+		{
 
 			var tag = repository.Save(CreateEntry.Tag("rock"));
 			tag.CreateName("ロック", ContentLanguageSelection.Japanese);
@@ -161,7 +174,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void AddMultiple() {
+		public void AddMultiple()
+		{
 
 			var tag1 = repository.Save(CreateEntry.Tag("vocarock"));
 
@@ -173,7 +187,7 @@ namespace VocaDb.Tests.Service.Queries {
 			AddSongTags(entry.Id, tags);
 
 			var entryTags = entry.Tags.Tags.ToArray();
-            Assert.AreEqual(2, entryTags.Length, "Number of applied tags");
+			Assert.AreEqual(2, entryTags.Length, "Number of applied tags");
 			Assert.IsTrue(entryTags.Any(t => t.DefaultName == "vocarock"), "vocarock tag is added");
 			Assert.IsTrue(entryTags.Any(t => t.DefaultName == "power metal"), "power metal tag is added");
 			Assert.AreEqual(1, entryTags[0].UsageCount, "Number of usages for tag");
@@ -181,7 +195,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void AddAndRemoveMultiple() {
+		public void AddAndRemoveMultiple()
+		{
 
 			var tag1 = repository.Save(CreateEntry.Tag("vocarock"));
 
@@ -202,7 +217,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void RemoveTagUsage() {
+		public void RemoveTagUsage()
+		{
 
 			var tag = repository.Save(CreateEntry.Tag("rock"));
 			var tag2 = repository.Save(CreateEntry.Tag("metal"));
@@ -218,7 +234,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void AddTag_SendNotifications() {
+		public void AddTag_SendNotifications()
+		{
 
 			var followingUser = repository.Save(CreateEntry.User(name: "Rin"));
 			var tag = repository.Save(CreateEntry.Tag("rock"));
@@ -233,7 +250,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void AddTag_SendNotifications_IgnoreSelf() {
+		public void AddTag_SendNotifications_IgnoreSelf()
+		{
 
 			var tag = repository.Save(CreateEntry.Tag("rock"));
 			repository.Save(user.AddTag(tag));
@@ -245,7 +263,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void AddTag_SendNotifications_IgnorePersonalSongList() {
+		public void AddTag_SendNotifications_IgnorePersonalSongList()
+		{
 
 			var followingUser = repository.Save(CreateEntry.User(name: "Rin"));
 			var tag = repository.Save(CreateEntry.Tag("rock"));
@@ -259,7 +278,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void SkipInvalidTarget() {
+		public void SkipInvalidTarget()
+		{
 
 			existingTag.Targets = TagTargetTypes.Album;
 			var tag = repository.Save(CreateEntry.Tag("vocarock", 39));

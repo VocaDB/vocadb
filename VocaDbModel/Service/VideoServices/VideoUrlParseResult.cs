@@ -1,13 +1,17 @@
 ﻿using System;
 using VocaDb.Model.Domain.PVs;
 
-namespace VocaDb.Model.Service.VideoServices {
+namespace VocaDb.Model.Service.VideoServices
+{
 
-	public class VideoUrlParseResult {
+	public class VideoUrlParseResult
+	{
 
-		public static VideoParseException GetException(VideoUrlParseResultType resultType, string url) {
+		public static VideoParseException GetException(VideoUrlParseResultType resultType, string url)
+		{
 
-			switch (resultType) {
+			switch (resultType)
+			{
 				case VideoUrlParseResultType.NoMatcher:
 					return new VideoParseException(string.Format("No matcher defined (url {0})", url));
 
@@ -26,7 +30,8 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		private VideoUrlParseResult(VideoUrlParseResultType resultType, string url, VideoParseException exception) {
+		private VideoUrlParseResult(VideoUrlParseResultType resultType, string url, VideoParseException exception)
+		{
 
 			ResultType = resultType;
 			Url = url;
@@ -34,7 +39,8 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		private VideoUrlParseResult(string url, PVService service, string id, VideoTitleParseResult meta) {
+		private VideoUrlParseResult(string url, PVService service, string id, VideoTitleParseResult meta)
+		{
 
 			Url = url;
 			Service = service;
@@ -52,19 +58,22 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public static VideoUrlParseResult CreateError(string url, VideoUrlParseResultType resultType, VideoParseException exception = null) {
+		public static VideoUrlParseResult CreateError(string url, VideoUrlParseResultType resultType, VideoParseException exception = null)
+		{
 
 			return new VideoUrlParseResult(resultType, url, exception);
 
 		}
 
-		public static VideoUrlParseResult CreateError(string url, VideoUrlParseResultType resultType, string message) {
+		public static VideoUrlParseResult CreateError(string url, VideoUrlParseResultType resultType, string message)
+		{
 
 			return CreateError(url, resultType, new VideoParseException(message));
 
 		}
 
-		public static VideoUrlParseResult CreateOk(string url, PVService service, string id, VideoTitleParseResult meta) {
+		public static VideoUrlParseResult CreateOk(string url, PVService service, string id, VideoTitleParseResult meta)
+		{
 
 			return new VideoUrlParseResult(url, service, id, meta);
 
@@ -103,7 +112,8 @@ namespace VocaDb.Model.Service.VideoServices {
 
 	}
 
-	public enum VideoUrlParseResultType {
+	public enum VideoUrlParseResultType
+	{
 
 		Ok,
 

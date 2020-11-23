@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Domain.Albums {
+﻿namespace VocaDb.Model.Domain.Albums
+{
 
-	public enum AlbumArchiveReason {
+	public enum AlbumArchiveReason
+	{
 
 		Unknown,
 

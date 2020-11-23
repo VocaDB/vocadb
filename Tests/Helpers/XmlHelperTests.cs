@@ -4,15 +4,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Tests.Helpers {
+namespace VocaDb.Tests.Helpers
+{
 
 	/// <summary>
 	/// Tests for <see cref="XmlHelper"/>.
 	/// </summary>
 	[TestClass]
-	public class XmlHelperTests {
+	public class XmlHelperTests
+	{
 
-		private static T SerializeToObjectAndBack<T>(T obj) {
+		private static T SerializeToObjectAndBack<T>(T obj)
+		{
 
 			var xml = XmlHelper.SerializeToXml(obj);
 
@@ -23,7 +26,8 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void SerializeToUTF8XmlString_ValidObject() {
+		public void SerializeToUTF8XmlString_ValidObject()
+		{
 
 			var album = new ArchivedAlbumContract { Description = "Miku Miku!" };
 			var doc = XmlHelper.SerializeToXml(album);
@@ -38,7 +42,8 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void SerializeToUTF8XmlString_ValidDocument() {
+		public void SerializeToUTF8XmlString_ValidDocument()
+		{
 
 			var doc = new XDocument(new XElement("root", new XElement("MikuMiku")));
 			var declaration = new XDeclaration("1.0", "utf-8", "yes");
@@ -52,7 +57,8 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void SerializeToXml_ValidObject() {
+		public void SerializeToXml_ValidObject()
+		{
 
 			var album = new ArchivedAlbumContract { Description = "Miku Miku!" };
 
@@ -63,7 +69,8 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void SerializeToXml_Unicode() {
+		public void SerializeToXml_Unicode()
+		{
 
 			var album = new ArchivedAlbumContract { Description = "初音ミク" };
 
@@ -74,10 +81,11 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void SerializeToXml_ForbiddenChars() {
+		public void SerializeToXml_ForbiddenChars()
+		{
 
 			var name = "Miku Miku!";
-			var album = new ArchivedAlbumContract { Description = name + '\x02'};
+			var album = new ArchivedAlbumContract { Description = name + '\x02' };
 
 			Assert.IsTrue(album.Description.IsNormalized());
 
@@ -88,7 +96,8 @@ namespace VocaDb.Tests.Helpers {
 		}
 
 		[TestMethod]
-		public void SerializeToXml_MultipleForbiddenChars() {
+		public void SerializeToXml_MultipleForbiddenChars()
+		{
 
 			var name = "Miku Miku!";
 			var album = new ArchivedAlbumContract { Description = string.Format("\x01{0}\x02", name) };

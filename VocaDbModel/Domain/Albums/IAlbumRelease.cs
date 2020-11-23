@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Domain.Albums {
+﻿namespace VocaDb.Model.Domain.Albums
+{
 
-	public interface IAlbumRelease {
+	public interface IAlbumRelease
+	{
 
 		string CatNum { get; }
 

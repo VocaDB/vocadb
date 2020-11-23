@@ -4,13 +4,17 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Model.Service.QueryableExtenders {
+namespace VocaDb.Model.Service.QueryableExtenders
+{
 
-	public static class SongListQueryableExtender {
+	public static class SongListQueryableExtender
+	{
 
-		public static IQueryable<SongList> OrderBy(this IQueryable<SongList> query, SongListSortRule sortRule) {
+		public static IQueryable<SongList> OrderBy(this IQueryable<SongList> query, SongListSortRule sortRule)
+		{
 
-			switch (sortRule) {
+			switch (sortRule)
+			{
 				case SongListSortRule.Date:
 					return query
 						.OrderByDate(SortDirection.Descending)
@@ -25,11 +29,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IOrderedQueryable<SongList> OrderByDate(this IQueryable<SongList> query, SortDirection direction) {
+		public static IOrderedQueryable<SongList> OrderByDate(this IQueryable<SongList> query, SortDirection direction)
+		{
 			return query.OrderBy(s => s.EventDate, direction);
 		}
 
-		public static IQueryable<SongList> WhereEventDateIsBetween(this IQueryable<SongList> query, DateTime? begin, DateTime? end) {
+		public static IQueryable<SongList> WhereEventDateIsBetween(this IQueryable<SongList> query, DateTime? begin, DateTime? end)
+		{
 
 			if (begin.HasValue && end.HasValue)
 				return query.Where(e => e.EventDate.DateTime != null && e.EventDate.DateTime >= begin && e.EventDate.DateTime < end);
@@ -44,7 +50,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<SongList> WhereHasFeaturedCategory(this IQueryable<SongList> query, SongListFeaturedCategory? featuredCategory, bool allowNothing) {
+		public static IQueryable<SongList> WhereHasFeaturedCategory(this IQueryable<SongList> query, SongListFeaturedCategory? featuredCategory, bool allowNothing)
+		{
 
 			if (!featuredCategory.HasValue)
 				return allowNothing ? query : query.Where(s => s.FeaturedCategory != SongListFeaturedCategory.Nothing);
@@ -53,12 +60,14 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IQueryable<SongList> WhereHasName(this IQueryable<SongList> query, SearchTextQuery textQuery) {
+		public static IQueryable<SongList> WhereHasName(this IQueryable<SongList> query, SearchTextQuery textQuery)
+		{
 
 			if (textQuery == null || textQuery.IsEmpty)
 				return query;
 
-			switch (textQuery.MatchMode) {
+			switch (textQuery.MatchMode)
+			{
 				case NameMatchMode.StartsWith:
 					return query.Where(u => u.Name.StartsWith(textQuery.Query));
 				case NameMatchMode.Partial:
@@ -77,8 +86,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	}
 
-	public enum SongListSortRule {
-		
+	public enum SongListSortRule
+	{
+
 		None,
 
 		Name,

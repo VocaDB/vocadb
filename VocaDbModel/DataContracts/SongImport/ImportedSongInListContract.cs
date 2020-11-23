@@ -2,14 +2,17 @@
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.PVs;
 
-namespace VocaDb.Model.DataContracts.SongImport {
+namespace VocaDb.Model.DataContracts.SongImport
+{
 
 	[DataContract]
-	public class ImportedSongInListContract {
+	public class ImportedSongInListContract
+	{
 
-		public ImportedSongInListContract() {}
+		public ImportedSongInListContract() { }
 
-		public ImportedSongInListContract(PVService service, string pvId) {
+		public ImportedSongInListContract(PVService service, string pvId)
+		{
 			PVService = service;
 			PVId = pvId;
 		}

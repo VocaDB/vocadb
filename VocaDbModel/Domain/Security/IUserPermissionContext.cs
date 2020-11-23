@@ -2,12 +2,14 @@
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Security {
+namespace VocaDb.Model.Domain.Security
+{
 
 	/// <summary>
 	/// Information about the currently logged in user.
 	/// </summary>
-	public interface IUserPermissionContext {
+	public interface IUserPermissionContext
+	{
 
 		ContentLanguagePreference LanguagePreference { get; }
 

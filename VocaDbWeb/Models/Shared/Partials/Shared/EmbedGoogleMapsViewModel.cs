@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts;
 
-namespace VocaDb.Web.Models.Shared.Partials.Shared {
+namespace VocaDb.Web.Models.Shared.Partials.Shared
+{
 
-	public class EmbedGoogleMapsViewModel {
+	public class EmbedGoogleMapsViewModel
+	{
 
-		public EmbedGoogleMapsViewModel(OptionalGeoPointContract coordinates) {
+		public EmbedGoogleMapsViewModel(OptionalGeoPointContract coordinates)
+		{
 			Coordinates = coordinates;
 		}
 

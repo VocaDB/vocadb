@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts.Api;
 
-namespace VocaDb.Web.Models.Shared.Partials.Comment {
+namespace VocaDb.Web.Models.Shared.Partials.Comment
+{
 
-	public class CommentEntryItemViewModel {
+	public class CommentEntryItemViewModel
+	{
 
-		public CommentEntryItemViewModel(EntryForApiContract entry) {
+		public CommentEntryItemViewModel(EntryForApiContract entry)
+		{
 			Entry = entry;
 		}
 

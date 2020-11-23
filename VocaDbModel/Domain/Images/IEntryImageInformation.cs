@@ -1,12 +1,14 @@
 
-namespace VocaDb.Model.Domain.Images {
+namespace VocaDb.Model.Domain.Images
+{
 
 	/// <summary>
 	/// Provides information about an entry image (both original full size images and thumbnails)
 	/// that is saved on the website. 
 	/// External images such as song thumbnails are not supported by this.
 	/// </summary>
-	public interface IEntryImageInformation {
+	public interface IEntryImageInformation
+	{
 
 		/// <summary>
 		/// Type of entry.
@@ -44,7 +46,8 @@ namespace VocaDb.Model.Domain.Images {
 
 	}
 
-	public static class EntryImageInformationExtensions {
+	public static class EntryImageInformationExtensions
+	{
 
 		public static bool PurposeMainOrUnspecified(this IEntryImageInformation image) => image.Purpose == ImagePurpose.Main || image.Purpose == ImagePurpose.Unspesified;
 
@@ -56,7 +59,8 @@ namespace VocaDb.Model.Domain.Images {
 		/// </summary>
 		/// <param name="image">Image information.</param>
 		/// <returns>True if image is assumed to exist. Otherwise false.</returns>
-		public static bool ShouldExist(this IEntryImageInformation image) {
+		public static bool ShouldExist(this IEntryImageInformation image)
+		{
 			return image != null && !string.IsNullOrEmpty(image.Mime);
 		}
 

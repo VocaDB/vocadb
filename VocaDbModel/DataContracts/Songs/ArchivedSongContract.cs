@@ -7,52 +7,63 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Model.DataContracts.Songs {
+namespace VocaDb.Model.DataContracts.Songs
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArchivedSongContract {
+	public class ArchivedSongContract
+	{
 
 		private static void DoIfExists(ArchivedSongVersion version, SongEditableFields field,
-			XmlCache<ArchivedSongContract> xmlCache, Action<ArchivedSongContract> func) {
+			XmlCache<ArchivedSongContract> xmlCache, Action<ArchivedSongContract> func)
+		{
 
 			var versionWithField = version.GetLatestVersionWithField(field);
 
-			if (versionWithField != null && versionWithField.Data != null) {
+			if (versionWithField != null && versionWithField.Data != null)
+			{
 				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
 				func(data);
 			}
 
 		}
 
-		private static void DoIfExists(ArchivedSongVersion version, SongEditableFields field, XmlCache<ArchivedSongContract> xmlCache, Action<ArchivedSongContract, XDocument> func) {
+		private static void DoIfExists(ArchivedSongVersion version, SongEditableFields field, XmlCache<ArchivedSongContract> xmlCache, Action<ArchivedSongContract, XDocument> func)
+		{
 
 			var versionWithField = version.GetLatestVersionWithField(field);
 
-			if (versionWithField != null && versionWithField.Data != null) {
+			if (versionWithField != null && versionWithField.Data != null)
+			{
 				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
 				func(data, versionWithField.Data);
 			}
 
 		}
 
-		private static void SetArtists(ArchivedSongContract data, ArchivedSongContract serialized, XDocument doc) {
+		private static void SetArtists(ArchivedSongContract data, ArchivedSongContract serialized, XDocument doc)
+		{
 
 			if (serialized.Artists != null && serialized.Artists.Any())
 				data.Artists = serialized.Artists;
-			else {
+			else
+			{
 
 				// For backwards compatibility
 				var artistElems = doc.XPathSelectElements("//ArchivedSongContract/Artists/ObjectRefContract");
 
-				data.Artists = artistElems.Select(e => new ArchivedArtistForSongContract {
-					Id = int.Parse(e.Element("Id").Value), NameHint = e.Element("NameHint").Value
+				data.Artists = artistElems.Select(e => new ArchivedArtistForSongContract
+				{
+					Id = int.Parse(e.Element("Id").Value),
+					NameHint = e.Element("NameHint").Value
 				}).ToArray();
 
 			}
 
 		}
 
-		public static ArchivedSongContract GetAllProperties(ArchivedSongVersion version) {
+		public static ArchivedSongContract GetAllProperties(ArchivedSongVersion version)
+		{
 
 			var data = new ArchivedSongContract();
 			var xmlCache = new XmlCache<ArchivedSongContract>();
@@ -82,7 +93,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		public ArchivedSongContract() { }
 
-		public ArchivedSongContract(Song song, SongDiff diff) {
+		public ArchivedSongContract(Song song, SongDiff diff)
+		{
 
 			ParamIs.NotNull(() => song);
 			ParamIs.NotNull(() => diff);
@@ -103,7 +115,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			SongType = song.SongType;
 			TranslatedName = new ArchivedTranslatedStringContract(song.TranslatedName);
 			WebLinks = (diff.IncludeWebLinks ? song.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null);
-			
+
 		}
 
 		[DataMember]

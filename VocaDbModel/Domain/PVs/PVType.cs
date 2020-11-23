@@ -1,12 +1,14 @@
-﻿namespace VocaDb.Model.Domain.PVs {
+﻿namespace VocaDb.Model.Domain.PVs
+{
 
-	public enum PVType {
+	public enum PVType
+	{
 
-		Original	= 1,
+		Original = 1,
 
-		Reprint		= 2,
+		Reprint = 2,
 
-		Other		= 4
+		Other = 4
 
 	}
 

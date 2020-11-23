@@ -1,11 +1,14 @@
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.Mapping.Songs {
+namespace VocaDb.Model.Mapping.Songs
+{
 
-	public class SongTagUsageMap : ClassMap<SongTagUsage> {
+	public class SongTagUsageMap : ClassMap<SongTagUsage>
+	{
 
-		public SongTagUsageMap() {
+		public SongTagUsageMap()
+		{
 
 			Cache.ReadWrite();
 			Id(m => m.Id);

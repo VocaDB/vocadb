@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts.Artists;
 
-namespace VocaDb.Web.Models.Shared.Partials.Artist {
+namespace VocaDb.Web.Models.Shared.Partials.Artist
+{
 
-	public class ArtistIconLinkViewModel {
+	public class ArtistIconLinkViewModel
+	{
 
-		public ArtistIconLinkViewModel(ArtistContract artist) {
+		public ArtistIconLinkViewModel(ArtistContract artist)
+		{
 			Artist = artist;
 		}
 

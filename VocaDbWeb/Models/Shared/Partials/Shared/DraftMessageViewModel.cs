@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Shared {
+namespace VocaDb.Web.Models.Shared.Partials.Shared
+{
 
-	public class DraftMessageViewModel {
+	public class DraftMessageViewModel
+	{
 
-		public DraftMessageViewModel(string section) {
+		public DraftMessageViewModel(string section)
+		{
 			Section = section;
 		}
 

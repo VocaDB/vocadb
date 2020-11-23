@@ -2,14 +2,17 @@
 using System.Linq;
 using System;
 
-namespace VocaDb.Model.Domain.Globalization {
+namespace VocaDb.Model.Domain.Globalization
+{
 
 	/// <summary>
 	/// String that is translated to all common languages supported by the system.
 	/// </summary>
-	public class TranslatedString : ITranslatedString {
+	public class TranslatedString : ITranslatedString
+	{
 
-		public static TranslatedString Create(Func<ContentLanguageSelection, string> factory) {
+		public static TranslatedString Create(Func<ContentLanguageSelection, string> factory)
+		{
 
 			return new TranslatedString(
 				factory(ContentLanguageSelection.Japanese),
@@ -19,7 +22,8 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		}
 
-		public static TranslatedString Create(string uniform) {
+		public static TranslatedString Create(string uniform)
+		{
 			return new TranslatedString(uniform, uniform, uniform);
 		}
 
@@ -27,12 +31,14 @@ namespace VocaDb.Model.Domain.Globalization {
 		private string original;
 		private string romaji;
 
-		public TranslatedString() {
+		public TranslatedString()
+		{
 			DefaultLanguage = ContentLanguageSelection.Japanese;
 		}
 
 		public TranslatedString(string original, string romaji, string english)
-			: this() {
+			: this()
+		{
 
 			Japanese = original;
 			Romaji = romaji;
@@ -40,8 +46,9 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		}
 
-		public TranslatedString(string original, string romaji, string english, 
-			ContentLanguageSelection defaultLanguage) {
+		public TranslatedString(string original, string romaji, string english,
+			ContentLanguageSelection defaultLanguage)
+		{
 
 			Japanese = original;
 			Romaji = romaji;
@@ -51,7 +58,8 @@ namespace VocaDb.Model.Domain.Globalization {
 		}
 
 		public TranslatedString(ITranslatedString contract)
-			: this() {
+			: this()
+		{
 
 			ParamIs.NotNull(() => contract);
 
@@ -59,10 +67,13 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		}
 
-		public virtual string this[ContentLanguageSelection language] {
-			get {
-				
-				switch (language) {
+		public virtual string this[ContentLanguageSelection language]
+		{
+			get
+			{
+
+				switch (language)
+				{
 					case ContentLanguageSelection.English:
 						return English;
 					case ContentLanguageSelection.Japanese:
@@ -74,9 +85,11 @@ namespace VocaDb.Model.Domain.Globalization {
 				}
 
 			}
-			set {
+			set
+			{
 
-				switch (language) {
+				switch (language)
+				{
 					case ContentLanguageSelection.English:
 						English = value;
 						break;
@@ -94,8 +107,10 @@ namespace VocaDb.Model.Domain.Globalization {
 			}
 		}
 
-		public string this[ContentLanguagePreference preference] {
-			get {
+		public string this[ContentLanguagePreference preference]
+		{
+			get
+			{
 				return GetBestMatch(preference);
 			}
 		}
@@ -104,8 +119,10 @@ namespace VocaDb.Model.Domain.Globalization {
 		/// All names in prioritized order.
 		/// Cannot be null.
 		/// </summary>
-		public virtual IEnumerable<string> All {
-			get {
+		public virtual IEnumerable<string> All
+		{
+			get
+			{
 				return new[] {
 					Japanese,
 					Romaji,
@@ -114,12 +131,14 @@ namespace VocaDb.Model.Domain.Globalization {
 			}
 		}
 
-		public virtual IEnumerable<LocalizedString> AllLocalized {
-			get {
+		public virtual IEnumerable<LocalizedString> AllLocalized
+		{
+			get
+			{
 				return new[] {
 					new LocalizedString(Japanese, ContentLanguageSelection.Japanese),
-					new LocalizedString(Romaji, ContentLanguageSelection.Romaji), 	
-					new LocalizedString(English, ContentLanguageSelection.English), 	
+					new LocalizedString(Romaji, ContentLanguageSelection.Romaji),
+					new LocalizedString(English, ContentLanguageSelection.English),
 				};
 			}
 		}
@@ -136,13 +155,17 @@ namespace VocaDb.Model.Domain.Globalization {
 		/// Name in the default language, or first available translation.
 		/// Can be null or empty, but only if there are no translations.
 		/// </summary>
-		public virtual string Default {
-			get {
+		public virtual string Default
+		{
+			get
+			{
 				return GetDefaultOrFirst();
 			}
-			set {
+			set
+			{
 
-				switch (DefaultLanguage) {
+				switch (DefaultLanguage)
+				{
 					case ContentLanguageSelection.English:
 						English = value;
 						break;
@@ -166,9 +189,11 @@ namespace VocaDb.Model.Domain.Globalization {
 		/// Name in English.
 		/// TODO: currently this can be null/empty, but that should be changed for all new fields.
 		/// </summary>
-		public virtual string English {
+		public virtual string English
+		{
 			get { return english; }
-			set {
+			set
+			{
 				english = value;
 				//UpdateDefault();
 			}
@@ -178,9 +203,11 @@ namespace VocaDb.Model.Domain.Globalization {
 		/// Name in the original language (usually Japanese).
 		/// TODO: currently this can be null/empty, but that should be changed for all new fields.
 		/// </summary>
-		public virtual string Japanese {
+		public virtual string Japanese
+		{
 			get { return original; }
-			set {
+			set
+			{
 				original = value;
 			}
 		}
@@ -189,18 +216,22 @@ namespace VocaDb.Model.Domain.Globalization {
 		/// Romanized name.
 		/// TODO: currently this can be null/empty, but that should be changed for all new fields.
 		/// </summary>
-		public virtual string Romaji {
+		public virtual string Romaji
+		{
 			get { return romaji; }
-			set {
+			set
+			{
 				romaji = value;
 			}
 		}
 
-		public virtual void Clear() {
+		public virtual void Clear()
+		{
 			Japanese = Romaji = English = string.Empty;
 		}
 
-		public virtual void CopyFrom(ITranslatedString contract) {
+		public virtual void CopyFrom(ITranslatedString contract)
+		{
 
 			ParamIs.NotNull(() => contract);
 
@@ -211,13 +242,15 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		}
 
-		public virtual string GetBestMatch(ContentLanguagePreference preference) {
+		public virtual string GetBestMatch(ContentLanguagePreference preference)
+		{
 
 			return GetBestMatch(preference, DefaultLanguage);
 
 		}
 
-		public virtual string GetBestMatch(ContentLanguagePreference preference, ContentLanguageSelection defaultLanguage) {
+		public virtual string GetBestMatch(ContentLanguagePreference preference, ContentLanguageSelection defaultLanguage)
+		{
 
 			var val = this[preference == ContentLanguagePreference.Default ? defaultLanguage : (ContentLanguageSelection)preference];
 
@@ -225,7 +258,8 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		}
 
-		public virtual string GetDefaultOrFirst() {
+		public virtual string GetDefaultOrFirst()
+		{
 
 			return GetDefaultOrFirst(DefaultLanguage);
 
@@ -236,7 +270,8 @@ namespace VocaDb.Model.Domain.Globalization {
 		/// </summary>
 		/// <param name="defaultLanguage">Selected language. If this is Unspecified, DefaultLanguage will be used.</param>
 		/// <returns>Translated name for the selected language, or first translation. Cannot be null. Can be empty, but only if there are no translations.</returns>
-		public virtual string GetDefaultOrFirst(ContentLanguageSelection defaultLanguage) {
+		public virtual string GetDefaultOrFirst(ContentLanguageSelection defaultLanguage)
+		{
 
 			var val = (defaultLanguage != ContentLanguageSelection.Unspecified || DefaultLanguage != ContentLanguageSelection.Unspecified ? this[defaultLanguage] : null);
 

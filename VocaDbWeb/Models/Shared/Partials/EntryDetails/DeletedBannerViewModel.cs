@@ -1,10 +1,13 @@
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Web.Models.Shared.Partials.EntryDetails {
+namespace VocaDb.Web.Models.Shared.Partials.EntryDetails
+{
 
-	public class DeletedBannerViewModel {
+	public class DeletedBannerViewModel
+	{
 
-		public DeletedBannerViewModel(IEntryBase mergedTo) {
+		public DeletedBannerViewModel(IEntryBase mergedTo)
+		{
 			MergedTo = mergedTo;
 		}
 

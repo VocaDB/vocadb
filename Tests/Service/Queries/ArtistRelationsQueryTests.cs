@@ -7,13 +7,15 @@ using VocaDb.Model.Service.Queries;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Service.Queries {
+namespace VocaDb.Tests.Service.Queries
+{
 
 	/// <summary>
 	/// Tests for <see cref="ArtistRelationsQuery"/>.
 	/// </summary>
 	[TestClass]
-	public class ArtistRelationsQueryTests {
+	public class ArtistRelationsQueryTests
+	{
 
 		private readonly Artist artist;
 		private readonly FakeUserRepository repository = new FakeUserRepository();
@@ -22,7 +24,8 @@ namespace VocaDb.Tests.Service.Queries {
 		private readonly Song song2;
 		private readonly Artist voicebank;
 
-		public ArtistRelationsQueryTests() {
+		public ArtistRelationsQueryTests()
+		{
 			artist = repository.Save(CreateEntry.Artist(ArtistType.Producer));
 			voicebank = repository.Save(CreateEntry.Artist(ArtistType.Vocaloid));
 			song = repository.Save(CreateEntry.Song());
@@ -34,7 +37,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void LatestSongs() {
+		public void LatestSongs()
+		{
 
 			var result = query.GetRelations(artist, ArtistRelationsFields.LatestSongs);
 
@@ -45,7 +49,8 @@ namespace VocaDb.Tests.Service.Queries {
 
 		// Songs for the vocal data provider are ignored
 		[TestMethod]
-		public void LatestSongs_VocalDataProvider() {
+		public void LatestSongs_VocalDataProvider()
+		{
 
 			song.GetArtistLink(artist).Roles = ArtistRoles.VocalDataProvider;
 			var result = query.GetRelations(artist, ArtistRelationsFields.LatestSongs);
@@ -56,7 +61,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void TopVoicebanks() {
+		public void TopVoicebanks()
+		{
 
 			var result = query.GetTopVoicebanks(artist);
 
@@ -68,7 +74,8 @@ namespace VocaDb.Tests.Service.Queries {
 
 		// Only producer roles count
 		[TestMethod]
-		public void TopVoicebanks_IgnoredRoles() {
+		public void TopVoicebanks_IgnoredRoles()
+		{
 
 			// Vocal data provider role is ignored
 			song.GetArtistLink(artist).Roles = ArtistRoles.VocalDataProvider;
@@ -79,7 +86,8 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void TopVoicebanks_IgnoredAndAllowedRoles() {
+		public void TopVoicebanks_IgnoredAndAllowedRoles()
+		{
 
 			// Vocal data provider role is ignored, but VoiceManipulator allows the song to be included.
 			song.GetArtistLink(artist).Roles = ArtistRoles.VoiceManipulator | ArtistRoles.VocalDataProvider;

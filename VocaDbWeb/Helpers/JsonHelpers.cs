@@ -2,11 +2,14 @@
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
-namespace VocaDb.Web.Helpers {
+namespace VocaDb.Web.Helpers
+{
 
-	public static class JsonHelpers {
+	public static class JsonHelpers
+	{
 
-		public static string Serialize(object value, bool lowerCase = true, bool dateTimeConverter = false) {
+		public static string Serialize(object value, bool lowerCase = true, bool dateTimeConverter = false)
+		{
 
 			var settings = new JsonSerializerSettings();
 

@@ -1,16 +1,20 @@
 ﻿using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts.Globalization {
+namespace VocaDb.Model.DataContracts.Globalization
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class EnglishTranslatedStringContract {
+	public class EnglishTranslatedStringContract
+	{
 
-		public EnglishTranslatedStringContract() {
+		public EnglishTranslatedStringContract()
+		{
 			English = Original = string.Empty;
 		}
 
-		public EnglishTranslatedStringContract(EnglishTranslatedString str) {
+		public EnglishTranslatedStringContract(EnglishTranslatedString str)
+		{
 
 			ParamIs.NotNull(() => str);
 

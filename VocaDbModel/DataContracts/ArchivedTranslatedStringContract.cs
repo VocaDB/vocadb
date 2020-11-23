@@ -1,15 +1,18 @@
 ﻿using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts {
+namespace VocaDb.Model.DataContracts
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArchivedTranslatedStringContract : ITranslatedString {
+	public class ArchivedTranslatedStringContract : ITranslatedString
+	{
 
-		public ArchivedTranslatedStringContract() {}
+		public ArchivedTranslatedStringContract() { }
 
-		public ArchivedTranslatedStringContract(TranslatedString translatedString) {
-			
+		public ArchivedTranslatedStringContract(TranslatedString translatedString)
+		{
+
 			ParamIs.NotNull(() => translatedString);
 
 			DefaultLanguage = translatedString.DefaultLanguage;

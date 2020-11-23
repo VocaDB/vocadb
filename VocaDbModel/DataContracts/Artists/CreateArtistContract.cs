@@ -1,8 +1,10 @@
 ﻿using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.DataContracts.Artists {
+namespace VocaDb.Model.DataContracts.Artists
+{
 
-	public class CreateArtistContract {
+	public class CreateArtistContract
+	{
 
 		public ArtistType ArtistType { get; set; }
 

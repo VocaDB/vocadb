@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Shared {
+namespace VocaDb.Web.Models.Shared.Partials.Shared
+{
 
-	public class SaveAndBackBtnViewModel {
+	public class SaveAndBackBtnViewModel
+	{
 
-		public SaveAndBackBtnViewModel(string backAction) {
+		public SaveAndBackBtnViewModel(string backAction)
+		{
 			BackAction = backAction;
 		}
 

@@ -26,13 +26,15 @@ using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Tests.Web.Controllers.DataAccess {
+namespace VocaDb.Tests.Web.Controllers.DataAccess
+{
 
 	/// <summary>
 	/// Tests for <see cref="AlbumQueries"/>.
 	/// </summary>
 	[TestClass]
-	public class AlbumQueriesTests {
+	public class AlbumQueriesTests
+	{
 
 		private Album album;
 		private InMemoryImagePersister imagePersister;
@@ -50,24 +52,29 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private Artist vocalist;
 		private Artist vocalist2;
 
-		private void AssertHasArtist(Album album, string artistName, ArtistRoles? roles) {
+		private void AssertHasArtist(Album album, string artistName, ArtistRoles? roles)
+		{
 			VocaDbAssert.HasArtist(album, artistName, roles);
 		}
 
-		private void AssertHasArtist(Album album, Artist artist, ArtistRoles? roles) {
+		private void AssertHasArtist(Album album, Artist artist, ArtistRoles? roles)
+		{
 			VocaDbAssert.HasArtist(album, artist, roles);
 		}
 
-		private CommentForApiContract CreateComment(int albumId, string message) {
+		private CommentForApiContract CreateComment(int albumId, string message)
+		{
 			var contract = new CommentForApiContract { Message = message, Author = new UserForApiContract(user, null, UserOptionalFields.None) };
 			return queries.CreateComment(albumId, contract);
 		}
 
-		private SongInAlbumEditContract CreateSongInAlbumEditContract(int trackNumber, int songId = 0, string songName = null) {
+		private SongInAlbumEditContract CreateSongInAlbumEditContract(int trackNumber, int songId = 0, string songName = null)
+		{
 			return new SongInAlbumEditContract { DiscNumber = 1, TrackNumber = trackNumber, SongId = songId, SongName = songName, Artists = new ArtistContract[0] };
 		}
 
-		private ArtistForAlbumContract CreateArtistForAlbumContract(int artistId = 0, string customArtistName = null, ArtistRoles roles = ArtistRoles.Default) {
+		private ArtistForAlbumContract CreateArtistForAlbumContract(int artistId = 0, string customArtistName = null, ArtistRoles roles = ArtistRoles.Default)
+		{
 
 			if (artistId != 0)
 				return new ArtistForAlbumContract { Artist = new ArtistContract { Id = artistId }, Roles = roles };
@@ -76,28 +83,34 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
-		private Task<AlbumForEditContract> CallUpdate(AlbumForEditContract contract) {
+		private Task<AlbumForEditContract> CallUpdate(AlbumForEditContract contract)
+		{
 			return queries.UpdateBasicProperties(contract, null);
 		}
 
-		private async Task<AlbumForEditContract> CallUpdate(Stream image) {
+		private async Task<AlbumForEditContract> CallUpdate(Stream image)
+		{
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
-			using (var stream = image) {
+			using (var stream = image)
+			{
 				return await queries.UpdateBasicProperties(contract, new EntryPictureFileContract(stream, MediaTypeNames.Image.Jpeg, purpose: ImagePurpose.Main));
-			}		
+			}
 		}
 
-		private void Save<T>(params T[] entity) where T : class, IDatabaseObject {
+		private void Save<T>(params T[] entity) where T : class, IDatabaseObject
+		{
 			repository.Save(entity);
 		}
 
-		private T Save<T>(T entity) where T : class, IDatabaseObject {
+		private T Save<T>(T entity) where T : class, IDatabaseObject
+		{
 			return repository.Save(entity);
 		}
 
 		[TestInitialize]
-		public void SetUp() {
-			
+		public void SetUp()
+		{
+
 			producer = CreateEntry.Producer();
 			vocalist = CreateEntry.Vocalist(name: "Hatsune Miku");
 			vocalist2 = CreateEntry.Vocalist(name: "Rin");
@@ -119,20 +132,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			permissionContext = new FakePermissionContext(user);
 			var entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
 
-			newAlbumContract = new CreateAlbumContract {
+			newAlbumContract = new CreateAlbumContract
+			{
 				DiscType = DiscType.Album,
 				Names = new[] {
 					new LocalizedStringContract("Another Dimensions", ContentLanguageSelection.English)
 				},
 				Artists = new[] {
 					new ArtistContract(producer, ContentLanguagePreference.Default),
-					new ArtistContract(vocalist, ContentLanguagePreference.Default), 
+					new ArtistContract(vocalist, ContentLanguagePreference.Default),
 				}
 			};
 
 			imagePersister = new InMemoryImagePersister();
 			mailer = new FakeUserMessageMailer();
-			queries = new AlbumQueries(repository, permissionContext, entryLinkFactory, imagePersister, imagePersister, mailer, 
+			queries = new AlbumQueries(repository, permissionContext, entryLinkFactory, imagePersister, imagePersister, mailer,
 				new FakeUserIconFactory(), new EnumTranslations(), new FakePVParser(),
 				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()), new InMemoryImagePersister(),
 				new FakeObjectCache());
@@ -140,7 +154,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Create() {
+		public async Task Create()
+		{
 
 			var result = await queries.Create(newAlbumContract);
 
@@ -172,7 +187,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public async Task Create_NoPermission() {
+		public async Task Create_NoPermission()
+		{
 
 			user.GroupId = UserGroupId.Limited;
 			permissionContext.RefreshLoggedUser(repository);
@@ -182,7 +198,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CreateComment() {
+		public void CreateComment()
+		{
 
 			var result = CreateComment(39, "Hello world");
 			Assert.IsNotNull(result, "Result");
@@ -197,18 +214,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void CreateComment_NoPermission() {
+		public void CreateComment_NoPermission()
+		{
 
 			user.GroupId = UserGroupId.Limited;
 			permissionContext.RefreshLoggedUser(repository);
-			
+
 			CreateComment(39, "Hello world");
 
 		}
 
 		[TestMethod]
-		public async Task GetCoverPictureThumb() {
-			
+		public async Task GetCoverPictureThumb()
+		{
+
 			var contract = await CallUpdate(ResourceHelper.TestImage());
 
 			var result = queries.GetCoverPictureThumb(contract.Id);
@@ -222,8 +241,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetAlbumDetails() {
-			
+		public void GetAlbumDetails()
+		{
+
 			repository.Save(album.AddSong(song, 1, 1));
 			repository.Save(album.AddSong(song2, 2, 1));
 			repository.Save(user.AddSongToFavorites(song, SongVoteRating.Favorite));
@@ -238,7 +258,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetAlbumDetails_CustomTrack() {
+		public void GetAlbumDetails_CustomTrack()
+		{
 
 			repository.Save(album.AddSong("Miku Miku", 1, 1));
 			repository.Save(user.AddSongToFavorites(song, SongVoteRating.Favorite));
@@ -250,7 +271,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetAlbumDetails_NotLoggedIn() {
+		public void GetAlbumDetails_NotLoggedIn()
+		{
 
 			repository.Save(album.AddSong("Miku Miku", 1, 1));
 			permissionContext.LogOff();
@@ -261,16 +283,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task GetTagSuggestions() {
+		public async Task GetTagSuggestions()
+		{
 
-			void AddTagUsages(Song[] songs, string[] tagNames) {
+			void AddTagUsages(Song[] songs, string[] tagNames)
+			{
 				var (tags, tagUsages, tagVotes) = CreateEntry.TagUsages(songs, tagNames, user, new SongTagUsageFactory(repository.CreateContext(), song));
 				repository.Save(tags);
 				repository.Save(tagUsages);
 				repository.Save(tagVotes);
 			}
 
-			AddTagUsages(new [] { song, song2 }, new[] { "vocarock", "techno" });
+			AddTagUsages(new[] { song, song2 }, new[] { "vocarock", "techno" });
 
 			repository.Save(album.AddSong(song, 1, 1), album.AddSong(song2, 2, 1));
 
@@ -282,8 +306,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Merge_ToEmpty() {
-			
+		public void Merge_ToEmpty()
+		{
+
 			Save(album.AddArtist(producer));
 			Save(album.AddArtist(vocalist));
 			Save(album.AddSong(song, 1, 1));
@@ -309,7 +334,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Merge_WithArtists() {
+		public void Merge_WithArtists()
+		{
 
 			Save(album.AddArtist(producer, false, ArtistRoles.Instrumentalist));
 			Save(album.AddArtist(vocalist, false, ArtistRoles.Default));
@@ -329,7 +355,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Merge_WithTracks() {
+		public void Merge_WithTracks()
+		{
 
 			Save(album.AddSong(song, 1, 1));
 			Save(album.AddSong(song2, 2, 1));
@@ -352,8 +379,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// Merge with custom tracks. Custom tracks are added as is.
 		/// </summary>
 		[TestMethod]
-		public void Merge_CustomTracks() {
-			
+		public void Merge_CustomTracks()
+		{
+
 			Save(album.AddSong(song, 1, 1));
 			Save(album.AddSong("Bonus song 1", 2, 1));
 
@@ -371,7 +399,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Revert() {
+		public void Revert()
+		{
 
 			// Arrange
 			album.Description.English = "Original";
@@ -403,7 +432,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// Old version has no image, image will be removed.
 		/// </summary>
 		[TestMethod]
-		public async Task Revert_RemoveImage() {
+		public async Task Revert_RemoveImage()
+		{
 
 			var oldVer = repository.HandleTransaction(ctx => queries.Archive(ctx, album, AlbumArchiveReason.PropertiesUpdated));
 			await CallUpdate(ResourceHelper.TestImage());
@@ -423,8 +453,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_Names() {
-			
+		public async Task Update_Names()
+		{
+
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 
 			contract.Names.First().Value = "Replaced name";
@@ -455,7 +486,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void MoveToTrash() {
+		public void MoveToTrash()
+		{
 
 			user.AdditionalPermissions.Add(PermissionToken.MoveToTrash);
 			permissionContext.RefreshLoggedUser(repository);
@@ -476,8 +508,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_Tracks() {
-			
+		public async Task Update_Tracks()
+		{
+
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			var existingSong = CreateEntry.Song(name: "Nebula");
 			repository.Save(existingSong);
@@ -507,7 +540,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_Discs() {
+		public async Task Update_Discs()
+		{
 
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			repository.Save(CreateEntry.AlbumDisc(album));
@@ -538,8 +572,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_CoverPicture() {
-			
+		public async Task Update_CoverPicture()
+		{
+
 			var contract = await CallUpdate(ResourceHelper.TestImage());
 
 			var albumFromRepo = repository.Load(contract.Id);
@@ -560,11 +595,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_Artists() {
-			
+		public async Task Update_Artists()
+		{
+
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
-			contract.ArtistLinks = new [] {
-				CreateArtistForAlbumContract(artistId: producer.Id), 
+			contract.ArtistLinks = new[] {
+				CreateArtistForAlbumContract(artistId: producer.Id),
 				CreateArtistForAlbumContract(artistId: vocalist.Id)
 			};
 
@@ -586,10 +622,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_Artists_CustomArtist() {
-			
+		public async Task Update_Artists_CustomArtist()
+		{
+
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
-			contract.ArtistLinks = new [] {
+			contract.ArtistLinks = new[] {
 				CreateArtistForAlbumContract(customArtistName: "Custom artist", roles: ArtistRoles.Composer)
 			};
 
@@ -609,12 +646,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_Artists_Notify() {
-			
+		public async Task Update_Artists_Notify()
+		{
+
 			Save(user2.AddArtist(vocalist));
 
 			var contract = new AlbumForEditContract(album, ContentLanguagePreference.Default, new InMemoryImagePersister());
-			contract.ArtistLinks = contract.ArtistLinks.Concat(new [] { CreateArtistForAlbumContract(vocalist.Id)}).ToArray();
+			contract.ArtistLinks = contract.ArtistLinks.Concat(new[] { CreateArtistForAlbumContract(vocalist.Id) }).ToArray();
 
 			await queries.UpdateBasicProperties(contract, null);
 

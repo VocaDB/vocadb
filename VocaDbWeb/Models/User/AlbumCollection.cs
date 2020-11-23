@@ -1,13 +1,16 @@
 ﻿using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Web.Models.User {
+namespace VocaDb.Web.Models.User
+{
 
-	public class AlbumCollection {
+	public class AlbumCollection
+	{
 
 		public AlbumCollection() { }
 
-		public AlbumCollection(UserContract user, AlbumCollectionRouteParams routeParams) {
+		public AlbumCollection(UserContract user, AlbumCollectionRouteParams routeParams)
+		{
 
 			User = user;
 			RouteParams = routeParams;
@@ -24,7 +27,8 @@ namespace VocaDb.Web.Models.User {
 
 	}
 
-	public class AlbumCollectionRouteParams {
+	public class AlbumCollectionRouteParams
+	{
 
 		public int id { get; set; }
 

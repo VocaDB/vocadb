@@ -7,10 +7,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Tests.Domain.Artists {
+namespace VocaDb.Tests.Domain.Artists
+{
 
 	[TestClass]
-	public class ArtistTests {
+	public class ArtistTests
+	{
 
 
 	}

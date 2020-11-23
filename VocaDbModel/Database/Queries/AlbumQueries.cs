@@ -42,12 +42,14 @@ using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Service.VideoServices;
 
-namespace VocaDb.Model.Database.Queries {
+namespace VocaDb.Model.Database.Queries
+{
 
 	/// <summary>
 	/// Database queries related to <see cref="Album"/>.
 	/// </summary>
-	public class AlbumQueries : QueriesBase<IAlbumRepository, Album> {
+	public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
+	{
 
 		private readonly ObjectCache cache;
 		private readonly IEntryLinkFactory entryLinkFactory;
@@ -62,7 +64,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		private IEntryLinkFactory EntryLinkFactory => entryLinkFactory;
 
-		private async Task<ArchivedSongVersion> ArchiveSongAsync(IDatabaseContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "") {
+		private async Task<ArchivedSongVersion> ArchiveSongAsync(IDatabaseContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "")
+		{
 
 			var agentLoginData = await ctx.CreateAgentLoginDataAsync(PermissionContext);
 			var archived = ArchivedSongVersion.Create(song, diff, agentLoginData, reason, notes);
@@ -71,27 +74,32 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private async Task<List<Artist>> GetArtistsAsync(IDatabaseContext<Album> ctx, ArtistContract[] artistContracts) {
+		private async Task<List<Artist>> GetArtistsAsync(IDatabaseContext<Album> ctx, ArtistContract[] artistContracts)
+		{
 			var ids = artistContracts.Select(a => a.Id).ToArray();
-			return await ctx.Query<Artist>().WhereIdIn(ids).VdbToListAsync();			
+			return await ctx.Query<Artist>().WhereIdIn(ids).VdbToListAsync();
 		}
 
-		private AlbumMergeRecord GetMergeRecord(IDatabaseContext session, int sourceId) {
+		private AlbumMergeRecord GetMergeRecord(IDatabaseContext session, int sourceId)
+		{
 			return session.Query<AlbumMergeRecord>().FirstOrDefault(s => s.Source == sourceId);
 		}
 
 		/// <summary>
 		/// Stats shared for all users. These are cached for 1 hour.
 		/// </summary>
-		private SharedAlbumStatsContract GetSharedAlbumStats(IDatabaseContext ctx, Album album) {
+		private SharedAlbumStatsContract GetSharedAlbumStats(IDatabaseContext ctx, Album album)
+		{
 
 			var key = string.Format("AlbumQueries.SharedAlbumStatsContract.{0}", album.Id);
-			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () => {
+			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () =>
+			{
 
 				var latestReview = album.LastReview;
 				var latestRatingScore = latestReview != null ? album.UserCollections.FirstOrDefault(uc => uc.User.Equals(latestReview.User)) : null;
 
-				return new SharedAlbumStatsContract {
+				return new SharedAlbumStatsContract
+				{
 					ReviewCount = album.Reviews.Count,
 					LatestReview = latestReview != null ? new AlbumReviewContract(latestReview, userIconFactory) : null,
 					LatestReviewRatingScore = latestRatingScore?.Rating ?? 0,
@@ -102,13 +110,17 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private ArtistForAlbum RestoreArtistRef(Album album, Artist artist, ArchivedArtistForAlbumContract albumRef) {
+		private ArtistForAlbum RestoreArtistRef(Album album, Artist artist, ArchivedArtistForAlbumContract albumRef)
+		{
 
-			if (artist != null) {
+			if (artist != null)
+			{
 
 				return (!artist.HasAlbum(album) ? artist.AddAlbum(album, albumRef.IsSupport, albumRef.Roles) : null);
 
-			} else {
+			}
+			else
+			{
 
 				return album.AddArtist(albumRef.NameHint, albumRef.IsSupport, albumRef.Roles);
 
@@ -116,13 +128,17 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private SongInAlbum RestoreTrackRef(Album album, Song song, SongInAlbumRefContract songRef) {
+		private SongInAlbum RestoreTrackRef(Album album, Song song, SongInAlbumRefContract songRef)
+		{
 
-			if (song != null) {
+			if (song != null)
+			{
 
 				return (!album.HasSong(song) ? album.AddSong(song, songRef.TrackNumber, songRef.DiscNumber) : null);
 
-			} else {
+			}
+			else
+			{
 
 				return album.AddSong(songRef.NameHint, songRef.TrackNumber, songRef.DiscNumber);
 
@@ -130,14 +146,16 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private async Task UpdateSongArtistsAsync(IDatabaseContext<Album> ctx, Song song, ArtistContract[] artistContracts) {
+		private async Task UpdateSongArtistsAsync(IDatabaseContext<Album> ctx, Song song, ArtistContract[] artistContracts)
+		{
 
-			var artistDiff = await song.SyncArtistsAsync(artistContracts, 
+			var artistDiff = await song.SyncArtistsAsync(artistContracts,
 				addedArtistContracts => GetArtistsAsync(ctx, addedArtistContracts));
 
 			await ctx.SyncAsync(artistDiff);
 
-			if (artistDiff.Changed) {
+			if (artistDiff.Changed)
+			{
 
 				var diff = new SongDiff(DoSnapshot(song.GetLatestVersion(), ctx.OfType<User>().GetLoggedUser(PermissionContext)));
 				diff.Artists.Set();
@@ -150,14 +168,15 @@ namespace VocaDb.Model.Database.Queries {
 				await AddEntryEditedEntryAsync(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Updated, archived);
 
 			}
-			
+
 		}
 
-		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, 
-			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer, 
+		public AlbumQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
+			IEntryThumbPersister imagePersister, IEntryPictureFilePersister pictureFilePersister, IUserMessageMailer mailer,
 			IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IPVParser pvParser,
 			IFollowedArtistNotifier followedArtistNotifier, IAggregatedEntryImageUrlFactory entryThumbPersister, ObjectCache cache)
-			: base(repository, permissionContext) {
+			: base(repository, permissionContext)
+		{
 
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
@@ -172,30 +191,39 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public AlbumReviewContract AddReview(int albumId, AlbumReviewContract contract) {
+		public AlbumReviewContract AddReview(int albumId, AlbumReviewContract contract)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
 
-			return HandleTransaction(ctx => {
+			return HandleTransaction(ctx =>
+			{
 
 				AlbumReview review = null;
 
-				if (contract.Id != 0) {
+				if (contract.Id != 0)
+				{
 					review = ctx.Load<AlbumReview>(contract.Id);
-					if (!review.User.Equals(PermissionContext.LoggedUser)) {
+					if (!review.User.Equals(PermissionContext.LoggedUser))
+					{
 						PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 					}
-				} else {
+				}
+				else
+				{
 					review = ctx.Query<AlbumReview>().FirstOrDefault(r => r.Album.Id == albumId && r.User.Id == PermissionContext.LoggedUserId && r.LanguageCode == contract.LanguageCode);
 				}
 
 				// Create
-				if (review == null) {
+				if (review == null)
+				{
 					var album = ctx.Load<Album>(albumId);
-					review = new AlbumReview(album, ctx.OfType<User>().GetLoggedUser(PermissionContext), contract.Title, contract.Text, contract.LanguageCode);					
+					review = new AlbumReview(album, ctx.OfType<User>().GetLoggedUser(PermissionContext), contract.Title, contract.Text, contract.LanguageCode);
 					album.Reviews.Add(review);
 					ctx.Save(review);
-				} else { // Update
+				}
+				else
+				{ // Update
 					review.LanguageCode = contract.LanguageCode;
 					review.Text = contract.Text;
 					review.Title = contract.Title;
@@ -210,15 +238,18 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void DeleteReview(int reviewId) {
+		public void DeleteReview(int reviewId)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			repository.HandleTransaction(ctx => {
+			repository.HandleTransaction(ctx =>
+			{
 
 				var review = ctx.Load<AlbumReview>(reviewId);
 
-				if (!review.User.Equals(PermissionContext.LoggedUser)) {
+				if (!review.User.Equals(PermissionContext.LoggedUser))
+				{
 					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 				}
 
@@ -229,9 +260,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public async Task<IEnumerable<AlbumReviewContract>> GetReviews(int albumId, string languageCode) {
+		public async Task<IEnumerable<AlbumReviewContract>> GetReviews(int albumId, string languageCode)
+		{
 
-			return await repository.HandleQueryAsync(async ctx => {
+			return await repository.HandleQueryAsync(async ctx =>
+			{
 
 				var album = await ctx.LoadAsync(albumId);
 
@@ -245,15 +278,17 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public async Task<IEnumerable<AlbumForUserForApiContract>> GetUserCollections(int albumId, ContentLanguagePreference languagePreference) {
+		public async Task<IEnumerable<AlbumForUserForApiContract>> GetUserCollections(int albumId, ContentLanguagePreference languagePreference)
+		{
 
-			return await repository.HandleQueryAsync(async ctx => {
+			return await repository.HandleQueryAsync(async ctx =>
+			{
 
 				var album = await ctx.LoadAsync(albumId);
 
 				return album.UserCollections
 					.Select(uc => new AlbumForUserForApiContract(uc, languagePreference, imageUrlFactory, AlbumOptionalFields.None,
-						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection, 
+						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection,
 						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection))
 					.ToArray();
 
@@ -261,7 +296,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public ArchivedAlbumVersion Archive(IDatabaseContext<Album> ctx, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "") {
+		public ArchivedAlbumVersion Archive(IDatabaseContext<Album> ctx, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "")
+		{
 
 			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
 			var archived = ArchivedAlbumVersion.Create(album, diff, agentLoginData, reason, notes);
@@ -270,7 +306,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public async Task<ArchivedAlbumVersion> ArchiveAsync(IDatabaseContext<Album> ctx, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "") {
+		public async Task<ArchivedAlbumVersion> ArchiveAsync(IDatabaseContext<Album> ctx, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "")
+		{
 
 			var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
 			var archived = ArchivedAlbumVersion.Create(album, diff, agentLoginData, reason, notes);
@@ -279,19 +316,23 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public ArchivedAlbumVersion Archive(IDatabaseContext<Album> ctx, Album album, AlbumArchiveReason reason, string notes = "") {
+		public ArchivedAlbumVersion Archive(IDatabaseContext<Album> ctx, Album album, AlbumArchiveReason reason, string notes = "")
+		{
 			return Archive(ctx, album, new AlbumDiff(), reason, notes);
 		}
 
-		public async Task<ArchivedAlbumVersion> ArchiveAsync(IDatabaseContext<Album> ctx, Album album, AlbumArchiveReason reason, string notes = "") {
+		public async Task<ArchivedAlbumVersion> ArchiveAsync(IDatabaseContext<Album> ctx, Album album, AlbumArchiveReason reason, string notes = "")
+		{
 			return await ArchiveAsync(ctx, album, new AlbumDiff(), reason, notes);
 		}
 
-		public ICommentQueries Comments(IDatabaseContext<Album> ctx) {
+		public ICommentQueries Comments(IDatabaseContext<Album> ctx)
+		{
 			return new CommentQueries<AlbumComment, Album>(ctx.OfType<AlbumComment>(), PermissionContext, userIconFactory, entryLinkFactory);
 		}
 
-		public async Task<AlbumContract> Create(CreateAlbumContract contract) {
+		public async Task<AlbumContract> Create(CreateAlbumContract contract)
+		{
 
 			ParamIs.NotNull(() => contract);
 
@@ -300,7 +341,8 @@ namespace VocaDb.Model.Database.Queries {
 
 			VerifyManageDatabase();
 
-			return await repository.HandleTransactionAsync(async ctx => {
+			return await repository.HandleTransactionAsync(async ctx =>
+			{
 
 				ctx.AuditLogger.SysLog(string.Format("creating a new album with name '{0}'", contract.Names.First().Value));
 
@@ -310,9 +352,11 @@ namespace VocaDb.Model.Database.Queries {
 
 				await ctx.SaveAsync(album);
 
-				foreach (var artistContract in contract.Artists) {
+				foreach (var artistContract in contract.Artists)
+				{
 					var artist = await ctx.LoadAsync<Artist>(artistContract.Id);
-					if (!album.HasArtist(artist)) {
+					if (!album.HasArtist(artist))
+					{
 						await ctx.SaveAsync(artist.AddAlbum(album));
 					}
 				}
@@ -332,18 +376,21 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public CommentForApiContract CreateComment(int albumId, CommentForApiContract contract) {
+		public CommentForApiContract CreateComment(int albumId, CommentForApiContract contract)
+		{
 
 			return HandleTransaction(ctx => Comments(ctx).Create(albumId, contract));
 
 		}
 
-		public (bool created, int reportId) CreateReport(int albumId, AlbumReportType reportType, string hostname, string notes, int? versionNumber) {
+		public (bool created, int reportId) CreateReport(int albumId, AlbumReportType reportType, string hostname, string notes, int? versionNumber)
+		{
 
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
-			return HandleTransaction(ctx => {
+			return HandleTransaction(ctx =>
+			{
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
 					entryLinkFactory,
 					(album, reporter, notesTruncated) => new AlbumReport(album, reportType, reporter, hostname, notesTruncated, versionNumber),
@@ -361,15 +408,18 @@ namespace VocaDb.Model.Database.Queries {
 		/// Hostname of the user requestin the album. Used to hit counting when no user is logged in. If null or empty, and no user is logged in, hit count won't be updated.
 		/// </param>
 		/// <returns>Album details contract. Cannot be null.</returns>
-		public AlbumDetailsContract GetAlbumDetails(int id, string hostname) {
+		public AlbumDetailsContract GetAlbumDetails(int id, string hostname)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var album = session.Load<Album>(id);
 
 				var stats = session.Query<Album>()
 					.Where(a => a.Id == id)
-					.Select(a => new {
+					.Select(a => new
+					{
 						CommentCount = a.Comments.Count,
 						Hits = a.Hits.Count,
 					})
@@ -380,18 +430,21 @@ namespace VocaDb.Model.Database.Queries {
 
 				var user = PermissionContext.LoggedUser;
 
-				SongVoteRating? GetRatingFunc(Song song) {
-					return user != null && song != null ? (SongVoteRating?) session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).Select(r => r.Rating).FirstOrDefault() : null;
+				SongVoteRating? GetRatingFunc(Song song)
+				{
+					return user != null && song != null ? (SongVoteRating?)session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).Select(r => r.Rating).FirstOrDefault() : null;
 				}
 
 				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imageUrlFactory, GetRatingFunc,
-					discTypeTag: new EntryTypeTags(session).GetTag(EntryType.Album, album.DiscType)) {
+					discTypeTag: new EntryTypeTags(session).GetTag(EntryType.Album, album.DiscType))
+				{
 					CommentCount = stats.CommentCount,
 					Hits = stats.Hits,
 					Stats = GetSharedAlbumStats(session, album)
 				};
 
-				if (user != null) {
+				if (user != null)
+				{
 
 					var albumForUser = session.Query<AlbumForUser>()
 						.FirstOrDefault(a => a.Album.Id == id && a.User.Id == user.Id);
@@ -408,27 +461,34 @@ namespace VocaDb.Model.Database.Queries {
 					.Select(c => new CommentForApiContract(c, userIconFactory))
 					.ToArray();
 
-				if (album.Deleted) {
+				if (album.Deleted)
+				{
 					var mergeEntry = GetMergeRecord(session, id);
 					contract.MergedTo = (mergeEntry != null ? new AlbumContract(mergeEntry.Target, LanguagePreference) : null);
 				}
 
-				if (user != null || !string.IsNullOrEmpty(hostname)) {
+				if (user != null || !string.IsNullOrEmpty(hostname))
+				{
 
 					var agentNum = (user != null ? user.Id : hostname.GetHashCode());
 
-					using (var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted)) {
+					using (var tx = session.BeginTransaction(IsolationLevel.ReadUncommitted))
+					{
 
 						var isHit = session.Query<AlbumHit>().Any(h => h.Entry.Id == id && h.Agent == agentNum);
 
-						if (!isHit) {
+						if (!isHit)
+						{
 
 							var hit = new AlbumHit(album, agentNum);
 							session.Save(hit);
 
-							try {
+							try
+							{
 								tx.Commit();
-							} catch (SqlException x) {
+							}
+							catch (SqlException x)
+							{
 								session.AuditLogger.SysLog("Error while committing hit: " + x.Message);
 							}
 
@@ -444,28 +504,33 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public T GetAlbumWithMergeRecord<T>(int id, Func<Album, AlbumMergeRecord, T> fac) {
+		public T GetAlbumWithMergeRecord<T>(int id, Func<Album, AlbumMergeRecord, T> fac)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 				var album = session.Load<Album>(id);
 				return fac(album, (album.Deleted ? GetMergeRecord(session, id) : null));
 			});
 
 		}
 
-		public CommentForApiContract[] GetComments(int albumId) {
-			
+		public CommentForApiContract[] GetComments(int albumId)
+		{
+
 			return HandleQuery(ctx => Comments(ctx).GetAll(albumId));
 
 		}
 
-		public EntryForPictureDisplayContract GetCoverPictureThumb(int albumId) {
-			
+		public EntryForPictureDisplayContract GetCoverPictureThumb(int albumId)
+		{
+
 			var size = ImageSize.Thumb;
 
 			// TODO: this all should be moved to DynamicImageUrlFactory
-			return repository.HandleQuery(ctx => {
-				
+			return repository.HandleQuery(ctx =>
+			{
+
 				var album = ctx.Load(albumId);
 
 				// If there is no picture, return empty.
@@ -474,7 +539,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				// Try to read thumbnail from file system.
 				var data = album.Thumb;
-				if (imagePersister.HasImage(data, size)) {
+				if (imagePersister.HasImage(data, size))
+				{
 					var bytes = imagePersister.ReadBytes(data, size);
 					return EntryForPictureDisplayContract.Create(album, data.Mime, bytes, PermissionContext.LanguagePreference);
 				}
@@ -486,7 +552,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public AlbumForEditContract GetForEdit(int id) {
+		public AlbumForEditContract GetForEdit(int id)
+		{
 
 			return
 				HandleQuery(session =>
@@ -494,41 +561,46 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public RelatedAlbumsContract GetRelatedAlbums(int albumId) {
+		public RelatedAlbumsContract GetRelatedAlbums(int albumId)
+		{
 
-			return repository.HandleQuery(ctx => {
+			return repository.HandleQuery(ctx =>
+			{
 
 				var album = ctx.Load(albumId);
 				var q = new RelatedAlbumsQuery(ctx);
 				var albums = q.GetRelatedAlbums(album);
 
-				return new RelatedAlbumsContract { 
-					ArtistMatches = 
+				return new RelatedAlbumsContract
+				{
+					ArtistMatches =
 						albums.ArtistMatches
 						.Select(a => new AlbumContract(a, permissionContext.LanguagePreference))
 						.OrderBy(a => a.Name)
 						.ToArray(),
-					LikeMatches = 
+					LikeMatches =
 						albums.LikeMatches
 						.Select(a => new AlbumContract(a, permissionContext.LanguagePreference))
 						.OrderBy(a => a.Name)
 						.ToArray(),
-					TagMatches = 
+					TagMatches =
 						albums.TagMatches
 						.Select(a => new AlbumContract(a, permissionContext.LanguagePreference))
 						.OrderBy(a => a.Name)
 						.ToArray()
-					};
+				};
 
 			});
 
 		}
 
-		public Task<TagUsageForApiContract[]> GetTagSuggestions(int albumId) {
+		public Task<TagUsageForApiContract[]> GetTagSuggestions(int albumId)
+		{
 
 			var maxResults = 3;
 
-			return repository.HandleQueryAsync(async ctx => {
+			return repository.HandleQueryAsync(async ctx =>
+			{
 
 				var album = ctx.Load<Album>(albumId);
 				var albumTags = album.Tags.Tags.Select(t => t.Id);
@@ -550,7 +622,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				var results = songUsages.Select(t => new TagUsageForApiContract(tags[t.TagId], t.Count, LanguagePreference));
 
-				if (songUsages.Length < 3) {
+				if (songUsages.Length < 3)
+				{
 
 					var pvResults = await pvParser.ParseByUrlsAsync(album.PVs
 						.Where(pv => pv.Service == PVService.NicoNicoDouga)
@@ -572,7 +645,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public IEnumerable<Dictionary<string, string>> GetTracksFormatted(int id, int? discNumber, string[] fields, ContentLanguagePreference lang) {
+		public IEnumerable<Dictionary<string, string>> GetTracksFormatted(int id, int? discNumber, string[] fields, ContentLanguagePreference lang)
+		{
 
 			if (fields == null || fields.Length == 0)
 				fields = new[] { "id", "title" };
@@ -581,14 +655,16 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void Merge(int sourceId, int targetId) {
+		public void Merge(int sourceId, int targetId)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.MergeEntries);
 
 			if (sourceId == targetId)
 				throw new ArgumentException("Source and target albums can't be the same", "targetId");
 
-			repository.HandleTransaction(session => {
+			repository.HandleTransaction(session =>
+			{
 
 				var source = session.Load(sourceId);
 				var target = session.Load(targetId);
@@ -598,36 +674,42 @@ namespace VocaDb.Model.Database.Queries {
 				NHibernateUtil.Initialize(source.CoverPictureData);
 				NHibernateUtil.Initialize(target.CoverPictureData);
 
-				foreach (var n in source.Names.Names.Where(n => !target.HasName(n))) {
+				foreach (var n in source.Names.Names.Where(n => !target.HasName(n)))
+				{
 					var name = target.CreateName(n.Value, n.Language);
 					session.Save(name);
 				}
 
-				foreach (var w in source.WebLinks.Where(w => !target.HasWebLink(w.Url))) {
+				foreach (var w in source.WebLinks.Where(w => !target.HasWebLink(w.Url)))
+				{
 					var link = target.CreateWebLink(w.Description, w.Url, w.Category);
 					session.Save(link);
 				}
 
 				var artists = source.Artists.Where(a => !target.HasArtistForAlbum(a)).ToArray();
-				foreach (var a in artists) {
+				foreach (var a in artists)
+				{
 					a.Move(target);
 					session.Update(a);
 				}
 
 				var songs = source.Songs.Where(s => s.Song == null || !target.HasSong(s.Song)).ToArray();
-				foreach (var s in songs) {
+				foreach (var s in songs)
+				{
 					s.Move(target);
 					session.Update(s);
 				}
 
 				var pictures = source.Pictures.ToArray();
-				foreach (var p in pictures) {
+				foreach (var p in pictures)
+				{
 					p.Move(target);
 					session.Update(p);
 				}
 
 				var userCollections = source.UserCollections.Where(a => !target.IsInUserCollection(a.User)).ToArray();
-				foreach (var u in userCollections) {
+				foreach (var u in userCollections)
+				{
 					u.Move(target);
 					session.Update(u);
 				}
@@ -674,11 +756,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public int MoveToTrash(int albumId) {
+		public int MoveToTrash(int albumId)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);
 
-			return HandleTransaction(ctx => {
+			return HandleTransaction(ctx =>
+			{
 
 				var album = ctx.Load<Album>(albumId);
 
@@ -708,21 +792,25 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public int RemoveTagUsage(long tagUsageId) {
+		public int RemoveTagUsage(long tagUsageId)
+		{
 
 			return new TagUsageQueries(PermissionContext).RemoveTagUsage<AlbumTagUsage, Album>(tagUsageId, repository);
 
 		}
 
-		public EntryRevertedContract RevertToVersion(int archivedAlbumVersionId) {
+		public EntryRevertedContract RevertToVersion(int archivedAlbumVersionId)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.RestoreRevisions);
 
-			return HandleTransaction(session => {
+			return HandleTransaction(session =>
+			{
 
 				var archivedVersion = session.Load<ArchivedAlbumVersion>(archivedAlbumVersionId);
 
-				if (archivedVersion.Hidden) {
+				if (archivedVersion.Hidden)
+				{
 					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
 				}
 
@@ -742,15 +830,18 @@ namespace VocaDb.Model.Database.Queries {
 				// Picture
 				var versionWithPic = archivedVersion.GetLatestVersionWithField(AlbumEditableFields.Cover);
 
-				if (versionWithPic != null) {
+				if (versionWithPic != null)
+				{
 
 					album.CoverPictureData = versionWithPic.CoverPicture;
 					album.CoverPictureMime = versionWithPic.CoverPictureMime;
 
-					if (versionWithPic.CoverPicture != null) {
+					if (versionWithPic.CoverPicture != null)
+					{
 
 						var thumbGenerator = new ImageThumbGenerator(imagePersister);
-						using (var stream = new MemoryStream(versionWithPic.CoverPicture.Bytes)) {
+						using (var stream = new MemoryStream(versionWithPic.CoverPicture.Bytes))
+						{
 							var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime, ImagePurpose.Main);
 							thumbGenerator.GenerateThumbsAndMoveImage(stream, thumb, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 						}
@@ -758,7 +849,9 @@ namespace VocaDb.Model.Database.Queries {
 					}
 
 
-				} else {
+				}
+				else
+				{
 
 					album.CoverPictureData = null;
 					album.CoverPictureMime = null;
@@ -786,27 +879,32 @@ namespace VocaDb.Model.Database.Queries {
 					songInAlbum => songInAlbum.Delete());
 
 				// Names
-				if (fullProperties.Names != null) {
+				if (fullProperties.Names != null)
+				{
 					var nameDiff = album.Names.SyncByContent(fullProperties.Names, album);
 					session.Sync(nameDiff);
 				}
 
 				// Weblinks
-				if (fullProperties.WebLinks != null) {
+				if (fullProperties.WebLinks != null)
+				{
 					var webLinkDiff = WebLink.SyncByValue(album.WebLinks, fullProperties.WebLinks, album);
 					session.Sync(webLinkDiff);
 				}
 
 				// PVs
-				if (fullProperties.PVs != null) {
+				if (fullProperties.PVs != null)
+				{
 
 					var pvDiff = CollectionHelper.Diff(album.PVs, fullProperties.PVs, (p1, p2) => (p1.PVId == p2.PVId && p1.Service == p2.Service));
 
-					foreach (var pv in pvDiff.Added) {
+					foreach (var pv in pvDiff.Added)
+					{
 						session.Save(album.CreatePV(new PVContract(pv)));
 					}
 
-					foreach (var pv in pvDiff.Removed) {
+					foreach (var pv in pvDiff.Removed)
+					{
 						pv.OnDelete();
 						session.Delete(pv);
 					}
@@ -825,11 +923,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public async Task<AlbumForEditContract> UpdateBasicProperties(AlbumForEditContract properties, EntryPictureFileContract pictureData) {
+		public async Task<AlbumForEditContract> UpdateBasicProperties(AlbumForEditContract properties, EntryPictureFileContract pictureData)
+		{
 
 			ParamIs.NotNull(() => properties);
 
-			return await repository.HandleTransactionAsync(async session => {
+			return await repository.HandleTransactionAsync(async session =>
+			{
 
 				var album = await session.LoadAsync(properties.Id);
 
@@ -839,7 +939,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				session.AuditLogger.SysLog(string.Format("updating properties for {0}", album));
 
-				if (album.DiscType != properties.DiscType) {
+				if (album.DiscType != properties.DiscType)
+				{
 					album.DiscType = properties.DiscType;
 					album.UpdateArtistString();
 					diff.DiscType.Set();
@@ -850,11 +951,13 @@ namespace VocaDb.Model.Database.Queries {
 				var parsedBarcodes = properties.Identifiers.Select(Album.ParseBarcode).ToArray();
 				var barcodeDiff = album.SyncIdentifiers(parsedBarcodes);
 				session.Sync(barcodeDiff);
-				if (barcodeDiff.Changed) {
+				if (barcodeDiff.Changed)
+				{
 					diff.Identifiers.Set();
 				}
 
-				if (album.TranslatedName.DefaultLanguage != properties.DefaultNameLanguage) {
+				if (album.TranslatedName.DefaultLanguage != properties.DefaultNameLanguage)
+				{
 					album.TranslatedName.DefaultLanguage = properties.DefaultNameLanguage;
 					diff.OriginalName.Set();
 				}
@@ -880,7 +983,8 @@ namespace VocaDb.Model.Database.Queries {
 				if (album.OriginalRelease == null)
 					album.OriginalRelease = new AlbumRelease();
 
-				if (!album.OriginalRelease.Equals(newOriginalRelease)) {
+				if (!album.OriginalRelease.Equals(newOriginalRelease))
+				{
 					album.OriginalRelease = newOriginalRelease;
 					diff.OriginalRelease.Set();
 				}
@@ -888,7 +992,8 @@ namespace VocaDb.Model.Database.Queries {
 				// Required because of a bug in NHibernate
 				NHibernateUtil.Initialize(album.CoverPictureData);
 
-				if (pictureData != null) {
+				if (pictureData != null)
+				{
 
 					var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
 					album.CoverPictureData = new PictureData(parsed);
@@ -903,12 +1008,13 @@ namespace VocaDb.Model.Database.Queries {
 
 				}
 
-				if (album.Status != properties.Status) {
+				if (album.Status != properties.Status)
+				{
 					album.Status = properties.Status;
 					diff.Status.Set();
 				}
 
-				var artistGetter = new Func<ArtistContract, Task<Artist>>(artist => 
+				var artistGetter = new Func<ArtistContract, Task<Artist>>(artist =>
 					session.LoadAsync<Artist>(artist.Id));
 
 				var artistsDiff = await album.SyncArtists(properties.ArtistLinks, artistGetter);
@@ -923,11 +1029,13 @@ namespace VocaDb.Model.Database.Queries {
 				if (discsDiff.Changed)
 					diff.Discs.Set();
 
-				var songGetter = new Func<SongInAlbumEditContract, Task<Song>>(async contract => {
+				var songGetter = new Func<SongInAlbumEditContract, Task<Song>>(async contract =>
+				{
 
 					if (contract.SongId != 0)
 						return await session.LoadAsync<Song>(contract.SongId);
-					else {
+					else
+					{
 
 						var songName = StringHelper.TrimIfNotWhitespace(contract.SongName);
 
@@ -938,10 +1046,11 @@ namespace VocaDb.Model.Database.Queries {
 
 						var songDiff = new SongDiff();
 						songDiff.Names.Set();
-						var songArtistDiff = await song.SyncArtistsAsync(contract.Artists, 
+						var songArtistDiff = await song.SyncArtistsAsync(contract.Artists,
 							addedArtistContracts => GetArtistsAsync(session, addedArtistContracts));
 
-						if (songArtistDiff.Changed) {
+						if (songArtistDiff.Changed)
+						{
 							songDiff.Artists.Set();
 							await session.UpdateAsync(song);
 						}
@@ -961,12 +1070,13 @@ namespace VocaDb.Model.Database.Queries {
 
 				});
 
-				var tracksDiff = await album.SyncSongs(properties.Songs, songGetter, 
+				var tracksDiff = await album.SyncSongs(properties.Songs, songGetter,
 					(song, artistContracts) => UpdateSongArtistsAsync(session, song, artistContracts));
 
 				await session.OfType<SongInAlbum>().SyncAsync(tracksDiff);
 
-				if (tracksDiff.Changed) {
+				if (tracksDiff.Changed)
+				{
 
 					var add = string.Join(", ", tracksDiff.Added.Select(i => HttpUtility.HtmlEncode(i.SongToStringOrName)));
 					var rem = string.Join(", ", tracksDiff.Removed.Select(i => HttpUtility.HtmlEncode(i.SongToStringOrName)));
@@ -995,7 +1105,7 @@ namespace VocaDb.Model.Database.Queries {
 				if (pvDiff.Changed)
 					diff.PVs.Set();
 
-				var logStr = string.Format("updated properties for album {0} ({1})", 
+				var logStr = string.Format("updated properties for album {0} ({1})",
 					entryLinkFactory.CreateEntryLink(album), diff.ChangedFieldsString)
 					+ (properties.UpdateNotes != string.Empty ? " " + properties.UpdateNotes : string.Empty)
 					.Truncate(400);
@@ -1008,11 +1118,13 @@ namespace VocaDb.Model.Database.Queries {
 				await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), album, EntryEditEvent.Updated, archivedAlbum);
 
 				var newSongCutoff = TimeSpan.FromHours(1);
-				if (artistsDiff.Added.Any() && album.CreateDate >= DateTime.Now - newSongCutoff) {
+				if (artistsDiff.Added.Any() && album.CreateDate >= DateTime.Now - newSongCutoff)
+				{
 
 					var addedArtists = artistsDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 
-					if (addedArtists.Any()) {
+					if (addedArtists.Any())
+					{
 						await followedArtistNotifier.SendNotificationsAsync(session, album, addedArtists, PermissionContext.LoggedUser);
 					}
 
@@ -1024,11 +1136,13 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public void UpdatePersonalDescription(int albumId, AlbumDetailsContract data) {
+		public void UpdatePersonalDescription(int albumId, AlbumDetailsContract data)
+		{
 
 			PermissionContext.VerifyLogin();
 
-			HandleTransaction(ctx => {
+			HandleTransaction(ctx =>
+			{
 
 				var album = ctx.Load(albumId);
 
@@ -1046,9 +1160,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		public void DeleteComment(int commentId) => HandleTransaction(ctx => Comments(ctx).Delete(commentId));
 
-		public IEnumerable<int> GetIds() {
+		public IEnumerable<int> GetIds()
+		{
 
-			return HandleQuery(ctx => {
+			return HandleQuery(ctx =>
+			{
 
 				return ctx.Query()
 					.Where(a => !a.Deleted)
@@ -1059,9 +1175,11 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public EntryIdAndVersionContract[] GetVersions() {
+		public EntryIdAndVersionContract[] GetVersions()
+		{
 
-			return HandleQuery(ctx => {
+			return HandleQuery(ctx =>
+			{
 
 				return ctx.Query()
 					.Where(a => !a.Deleted)

@@ -1,10 +1,13 @@
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Web.Models.Shared.Partials.Song {
+namespace VocaDb.Web.Models.Shared.Partials.Song
+{
 
-	public class SongTypeLabelViewModel {
+	public class SongTypeLabelViewModel
+	{
 
-		public SongTypeLabelViewModel(SongType songType) {
+		public SongTypeLabelViewModel(SongType songType)
+		{
 			SongType = songType;
 		}
 

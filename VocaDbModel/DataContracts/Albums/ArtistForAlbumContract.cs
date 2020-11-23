@@ -7,15 +7,18 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
 
-namespace VocaDb.Model.DataContracts.Albums {
+namespace VocaDb.Model.DataContracts.Albums
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistForAlbumContract : IArtistLinkContract {
+	public class ArtistForAlbumContract : IArtistLinkContract
+	{
 
-		public ArtistForAlbumContract() {}
+		public ArtistForAlbumContract() { }
 
-		public ArtistForAlbumContract(ArtistForAlbum artistForAlbum, ContentLanguagePreference languagePreference) {
-			
+		public ArtistForAlbumContract(ArtistForAlbum artistForAlbum, ContentLanguagePreference languagePreference)
+		{
+
 			ParamIs.NotNull(() => artistForAlbum);
 
 			Artist = (artistForAlbum.Artist != null ? new ArtistContract(artistForAlbum.Artist, languagePreference) : null);

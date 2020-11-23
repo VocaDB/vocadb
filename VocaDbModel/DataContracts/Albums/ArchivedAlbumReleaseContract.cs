@@ -2,14 +2,17 @@
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 
-namespace VocaDb.Model.DataContracts.Albums {
+namespace VocaDb.Model.DataContracts.Albums
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArchivedAlbumReleaseContract : IAlbumRelease {
+	public class ArchivedAlbumReleaseContract : IAlbumRelease
+	{
 
 		public ArchivedAlbumReleaseContract() { }
 
-		public ArchivedAlbumReleaseContract(AlbumRelease release) {
+		public ArchivedAlbumReleaseContract(AlbumRelease release)
+		{
 
 			ParamIs.NotNull(() => release);
 

@@ -9,20 +9,23 @@ using VocaDb.Web.Models.MikuDbAlbums;
 
 namespace VocaDb.Web.Controllers
 {
-    public class MikuDbAlbumController : ControllerBase
-    {
+	public class MikuDbAlbumController : ControllerBase
+	{
 
 		private readonly MikuDbAlbumService service;
 
-    	private MikuDbAlbumService Service {
-    		get { return service; }
-    	}
+		private MikuDbAlbumService Service
+		{
+			get { return service; }
+		}
 
-		public MikuDbAlbumController(MikuDbAlbumService service) {
+		public MikuDbAlbumController(MikuDbAlbumService service)
+		{
 			this.service = service;
 		}
 
-    	public FileResult CoverPicture(int id) {
+		public FileResult CoverPicture(int id)
+		{
 
 			var pictureData = Service.GetCoverPicture(id);
 
@@ -31,24 +34,26 @@ namespace VocaDb.Web.Controllers
 
 			return File(pictureData.Bytes, pictureData.Mime);
 
-    	}
+		}
 
-        //
-        // GET: /MikuDb/
+		//
+		// GET: /MikuDb/
 
-        public ActionResult Index(string titleFilter, AlbumStatus? status) {
+		public ActionResult Index(string titleFilter, AlbumStatus? status)
+		{
 
 			var s = status ?? AlbumStatus.New;
-        	var albums = Service.GetAlbums(titleFilter, s, new PagingProperties(0, entriesPerPage, false));
+			var albums = Service.GetAlbums(titleFilter, s, new PagingProperties(0, entriesPerPage, false));
 			var model = new Index(albums, titleFilter, s);
 
-            return View(model);
+			return View(model);
 
-        }
+		}
 
 		[HttpGet]
 		[Authorize]
-		public ActionResult PrepareForImport(int id) {
+		public ActionResult PrepareForImport(int id)
+		{
 
 			var result = Service.Inspect(new[] { new ImportedAlbumOptions(id) }).First();
 
@@ -70,7 +75,8 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public ActionResult ImportFromFile() {
+		public ActionResult ImportFromFile()
+		{
 
 			if (Request.Files.Count == 0 || Request.Files[0].ContentLength == 0)
 				return RedirectToAction("Index");
@@ -84,14 +90,18 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public ActionResult ImportOne(string AlbumUrl) {
-			
+		public ActionResult ImportOne(string AlbumUrl)
+		{
+
 			var result = Service.ImportOne(AlbumUrl);
 
-			if (result.AlbumContract != null) {
+			if (result.AlbumContract != null)
+			{
 				TempData.SetSuccessMessage("Album was imported successfully and is ready to be processed.");
 				return RedirectToAction("PrepareForImport", new { id = result.AlbumContract.Id });
-			} else if (!string.IsNullOrEmpty(result.Message)) {
+			}
+			else if (!string.IsNullOrEmpty(result.Message))
+			{
 				TempData.SetWarnMessage(result.Message);
 			}
 
@@ -100,13 +110,17 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ImportNew() {
+		public ActionResult ImportNew()
+		{
 
 			var count = Service.ImportNew();
 
-			if (count > 0) {
+			if (count > 0)
+			{
 				TempData.SetSuccessMessage(count + " album(s) were downloaded successfully and are ready to be processed.");
-			} else {
+			}
+			else
+			{
 				TempData.SetWarnMessage("No new albums to download.");
 			}
 
@@ -116,9 +130,11 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public ActionResult AcceptImported(InspectedAlbum album, string commit) {
+		public ActionResult AcceptImported(InspectedAlbum album, string commit)
+		{
 
-			if (commit != "Accept") {
+			if (commit != "Accept")
+			{
 
 				//var options = albums.Select(a => new ImportedAlbumOptions(a)).ToArray();
 				var options = new ImportedAlbumOptions(album);
@@ -140,7 +156,8 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult Delete(int id) {
+		public ActionResult Delete(int id)
+		{
 
 			Service.Delete(id);
 
@@ -151,7 +168,8 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult SkipAlbum(int id) {
+		public ActionResult SkipAlbum(int id)
+		{
 
 			Service.SkipAlbum(id);
 
@@ -161,5 +179,5 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-    }
+	}
 }

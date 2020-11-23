@@ -6,31 +6,36 @@ using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.DataContracts.Activityfeed {
+namespace VocaDb.Model.DataContracts.Activityfeed
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ActivityEntryForApiContract {
+	public class ActivityEntryForApiContract
+	{
 
 		public ActivityEntryForApiContract() { }
 
 		public ActivityEntryForApiContract(ActivityEntry activityEntry, EntryForApiContract entryForApiContract,
 			IUserIconFactory userIconFactory,
 			IUserPermissionContext permissionContext,
-			ActivityEntryOptionalFields fields) {
+			ActivityEntryOptionalFields fields)
+		{
 
 			CreateDate = activityEntry.CreateDate.ToUniversalTime();
 			EditEvent = activityEntry.EditEvent;
 
-			if (activityEntry.Author != null 
+			if (activityEntry.Author != null
 				&& ((permissionContext.IsLoggedIn && (permissionContext.LoggedUserId == activityEntry.Author.Id || permissionContext.HasPermission(PermissionToken.DisableUsers)))
-				|| !activityEntry.Author.AnonymousActivity)) {
+				|| !activityEntry.Author.AnonymousActivity))
+			{
 
 				Author = new UserForApiContract(activityEntry.Author, userIconFactory, UserOptionalFields.MainPicture);
-			
+
 			}
 
-			if (fields.HasFlag(ActivityEntryOptionalFields.ArchivedVersion) && activityEntry.ArchivedVersionBase != null) {
-				ArchivedVersion = new ArchivedObjectVersionForApiContract(activityEntry.ArchivedVersionBase);					
+			if (fields.HasFlag(ActivityEntryOptionalFields.ArchivedVersion) && activityEntry.ArchivedVersionBase != null)
+			{
+				ArchivedVersion = new ArchivedObjectVersionForApiContract(activityEntry.ArchivedVersionBase);
 			}
 
 			Entry = entryForApiContract;
@@ -55,7 +60,8 @@ namespace VocaDb.Model.DataContracts.Activityfeed {
 	}
 
 	[Flags]
-	public enum ActivityEntryOptionalFields {
+	public enum ActivityEntryOptionalFields
+	{
 		None = 0,
 		ArchivedVersion = 1,
 		Entry = 2

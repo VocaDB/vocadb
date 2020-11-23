@@ -1,18 +1,21 @@
 using VocaDb.Model.Domain;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Web.Code {
+namespace VocaDb.Web.Code
+{
 
 	/// <summary>
 	/// Common properties for a page, to be used by the layout page.
 	/// </summary>
-	public class PagePropertiesData {
+	public class PagePropertiesData
+	{
 
 		public const string Robots_Noindex_Follow = "noindex,follow";
 
 		public const string Robots_Noindex_Nofollow = "noindex,nofollow";
 
-		public static PagePropertiesData Get(dynamic viewBag) {
+		public static PagePropertiesData Get(dynamic viewBag)
+		{
 
 			return viewBag.PageProperties ?? (viewBag.PageProperties = new PagePropertiesData(viewBag));
 
@@ -20,7 +23,8 @@ namespace VocaDb.Web.Code {
 
 		private readonly dynamic viewBag;
 
-		public PagePropertiesData(dynamic viewBag) {
+		public PagePropertiesData(dynamic viewBag)
+		{
 			AddMainScripts = true;
 			GlobalSearchType = EntryType.Undefined;
 			this.viewBag = viewBag;
@@ -48,9 +52,11 @@ namespace VocaDb.Web.Code {
 		/// Page title is what appears in the browser title bar.
 		/// By default this is the same as Title.
 		/// </summary>
-		public string PageTitle {
-			get {
-				
+		public string PageTitle
+		{
+			get
+			{
+
 				if (!string.IsNullOrEmpty(ViewBag.PageTitle))
 					return ViewBag.PageTitle;
 
@@ -65,9 +71,11 @@ namespace VocaDb.Web.Code {
 		/// <summary>
 		/// Short page description 
 		/// </summary>
-		public string SummarizedDescription {
-			get {
-				
+		public string SummarizedDescription
+		{
+			get
+			{
+
 				if (string.IsNullOrEmpty(Description))
 					return string.Empty;
 
@@ -82,7 +90,8 @@ namespace VocaDb.Web.Code {
 		/// <summary>
 		/// Subtitle appears next to the main Title.
 		/// </summary>
-		public string Subtitle {
+		public string Subtitle
+		{
 			get => ViewBag.Subtitle;
 			set => ViewBag.Subtitle = value;
 		}
@@ -90,7 +99,8 @@ namespace VocaDb.Web.Code {
 		/// <summary>
 		/// Title is what appears at the top of the page.
 		/// </summary>
-		public string Title {
+		public string Title
+		{
 			get => ViewBag.Title;
 			set => ViewBag.Title = value;
 		}
@@ -98,21 +108,24 @@ namespace VocaDb.Web.Code {
 		public dynamic ViewBag => viewBag;
 	}
 
-	public class OpenGraphModel {
+	public class OpenGraphModel
+	{
 
 		private string description;
 		private string image;
 		private readonly PagePropertiesData pageProperties;
 		private string title;
 
-		public OpenGraphModel(PagePropertiesData pageProperties) {
+		public OpenGraphModel(PagePropertiesData pageProperties)
+		{
 			this.pageProperties = pageProperties;
 		}
 
 		/// <summary>
 		/// og:description meta field value. Defaults to summarized description meta field.
 		/// </summary>
-		public string Description {
+		public string Description
+		{
 			get => !string.IsNullOrEmpty(description) ? description : pageProperties.SummarizedDescription;
 			set => description = value;
 		}
@@ -120,7 +133,8 @@ namespace VocaDb.Web.Code {
 		/// <summary>
 		/// og:image meta field value. Defaults to main image set for the page.
 		/// </summary>
-		public string Image {
+		public string Image
+		{
 			get => !string.IsNullOrEmpty(image) ? image : pageProperties.ViewBag.Banner;
 			set => image = value;
 		}
@@ -130,7 +144,8 @@ namespace VocaDb.Web.Code {
 		/// <summary>
 		/// og:title meta field value. Defaults to page title.
 		/// </summary>
-		public string Title {
+		public string Title
+		{
 			get => !string.IsNullOrEmpty(title) ? title : pageProperties.Title;
 			set => title = value;
 		}
@@ -142,8 +157,9 @@ namespace VocaDb.Web.Code {
 
 	}
 
-	public static class OpenGraphTypes {
-		
+	public static class OpenGraphTypes
+	{
+
 		public const string Album = "music.album";
 		public const string Song = "music.song";
 

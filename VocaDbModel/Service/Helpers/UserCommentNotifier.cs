@@ -5,14 +5,17 @@ using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Service.Helpers {
+namespace VocaDb.Model.Service.Helpers
+{
 
 	/// <summary>
 	/// Sends notification messages to users when they're mentioned in a comment.
 	/// </summary>
-	public class UserCommentNotifier {
+	public class UserCommentNotifier
+	{
 
-		public void CheckComment(ICommentWithEntry comment, IEntryLinkFactory entryLinkFactory, IDatabaseContext<User> ctx) {
+		public void CheckComment(ICommentWithEntry comment, IEntryLinkFactory entryLinkFactory, IDatabaseContext<User> ctx)
+		{
 
 			var userMatches = Regex.Matches(comment.Message, @"@(\w+)");
 
@@ -29,7 +32,8 @@ namespace VocaDb.Model.Service.Helpers {
 			var commentMsg = comment.Message.Truncate(200);
 			var msg = string.Format("{0} mentioned you in a comment for {1}\n\n{2}", comment.AuthorName, MarkdownHelper.CreateMarkdownLink(entryLinkFactory.GetFullEntryUrl(comment.Entry), comment.Entry.DefaultName), commentMsg);
 
-			foreach (var user in users) {
+			foreach (var user in users)
+			{
 
 				var notification = new UserMessage(user, "Mentioned in a comment", msg, false);
 				ctx.OfType<UserMessage>().Save(notification);

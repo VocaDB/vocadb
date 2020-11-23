@@ -1,11 +1,14 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Albums;
 
-namespace VocaDb.Model.Mapping.Albums {
+namespace VocaDb.Model.Mapping.Albums
+{
 
-	public class AlbumDiscPropertiesMap : ClassMap<AlbumDiscProperties> {
+	public class AlbumDiscPropertiesMap : ClassMap<AlbumDiscProperties>
+	{
 
-		public AlbumDiscPropertiesMap() {
+		public AlbumDiscPropertiesMap()
+		{
 
 			Table("AlbumDiscProperties");
 			Cache.ReadWrite();

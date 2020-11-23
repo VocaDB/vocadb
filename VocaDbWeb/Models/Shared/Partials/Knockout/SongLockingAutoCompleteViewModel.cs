@@ -1,10 +1,13 @@
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Web.Models.Shared.Partials.Knockout {
+namespace VocaDb.Web.Models.Shared.Partials.Knockout
+{
 
-	public class SongLockingAutoCompleteViewModel {
+	public class SongLockingAutoCompleteViewModel
+	{
 
-		public SongLockingAutoCompleteViewModel(string binding, SongTypes songTypes = SongTypes.Unspecified, int ignoreId = 0) {
+		public SongLockingAutoCompleteViewModel(string binding, SongTypes songTypes = SongTypes.Unspecified, int ignoreId = 0)
+		{
 			Binding = binding;
 			SongTypes = songTypes;
 			IgnoreId = ignoreId;

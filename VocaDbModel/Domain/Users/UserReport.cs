@@ -1,32 +1,35 @@
-namespace VocaDb.Model.Domain.Users {
+namespace VocaDb.Model.Domain.Users
+{
 
-	public class UserReport : GenericEntryReport<User, UserReportType> {
+	public class UserReport : GenericEntryReport<User, UserReportType>
+	{
 
 		public UserReport() { }
 
 		public UserReport(User reportedUser, UserReportType reportType, User user, string hostname, string notes)
-			: base(reportedUser, reportType, user, hostname, notes, null) {}
+			: base(reportedUser, reportType, user, hostname, notes, null) { }
 
 	}
 
-	public enum UserReportType {
+	public enum UserReportType
+	{
 
 		/// <summary>
 		/// Found a match on StopForumSpam, identifying the user as malicious.
 		/// </summary>
-		MaliciousIP			= 1,
+		MaliciousIP = 1,
 
 		/// <summary>
 		/// Other users reported for spamming.
 		/// </summary>
-		Spamming			= 2,
+		Spamming = 2,
 
 		/// <summary>
 		/// User's editing permissions were removed by a staff member.
 		/// </summary>
-		RemovePermissions	= 4,
+		RemovePermissions = 4,
 
-		Other				= 8
+		Other = 8
 
 	}
 }

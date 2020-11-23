@@ -4,19 +4,23 @@ using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
+namespace VocaDb.Model.DataContracts.Songs
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongListBaseContract : IEntryWithIntId {
+	public class SongListBaseContract : IEntryWithIntId
+	{
 
-		public SongListBaseContract() {
+		public SongListBaseContract()
+		{
 
 			Name = string.Empty;
 
 		}
 
 		public SongListBaseContract(SongList songList)
-			: this() {
+			: this()
+		{
 
 			ParamIs.NotNull(() => songList);
 

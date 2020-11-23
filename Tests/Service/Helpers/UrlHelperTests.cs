@@ -1,16 +1,19 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.Helpers;
 
-namespace VocaDb.Tests.Service.Helpers {
+namespace VocaDb.Tests.Service.Helpers
+{
 
 	/// <summary>
 	/// Tests for <see cref="UrlHelper"/>.
 	/// </summary>
 	[TestClass]
-	public class UrlHelperTests {
+	public class UrlHelperTests
+	{
 
 		[TestMethod]
-		public void MakeLink_Empty() {
+		public void MakeLink_Empty()
+		{
 
 			var result = UrlHelper.MakeLink(string.Empty);
 
@@ -19,7 +22,8 @@ namespace VocaDb.Tests.Service.Helpers {
 		}
 
 		[TestMethod]
-		public void MakeLink_WithHttp() {
+		public void MakeLink_WithHttp()
+		{
 
 			var result = UrlHelper.MakeLink("http://vocadb.net");
 
@@ -28,7 +32,8 @@ namespace VocaDb.Tests.Service.Helpers {
 		}
 
 		[TestMethod]
-		public void MakeLink_WithoutHttp() {
+		public void MakeLink_WithoutHttp()
+		{
 
 			var result = UrlHelper.MakeLink("vocadb.net");
 
@@ -37,7 +42,8 @@ namespace VocaDb.Tests.Service.Helpers {
 		}
 
 		[TestMethod]
-		public void MakeLink_Mailto() {
+		public void MakeLink_Mailto()
+		{
 
 			var result = UrlHelper.MakeLink("mailto:miku@vocadb.net");
 
@@ -46,7 +52,8 @@ namespace VocaDb.Tests.Service.Helpers {
 		}
 
 		[TestMethod]
-		public void UpgradeToHttps() {
+		public void UpgradeToHttps()
+		{
 
 			Assert.AreEqual("https://tn.smilevideo.jp/smile?i=6888548", UrlHelper.UpgradeToHttps("http://tn.smilevideo.jp/smile?i=6888548"), "http://tn.smilevideo.jp was upgraded");
 			Assert.AreEqual("https://tn.smilevideo.jp/smile?i=6888548", UrlHelper.UpgradeToHttps("http://tn-skr1.smilevideo.jp/smile?i=6888548"), "http://tn-skr1.smilevideo.jp was upgraded");

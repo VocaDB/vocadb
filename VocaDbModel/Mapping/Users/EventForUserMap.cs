@@ -1,10 +1,13 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Mapping.Users {
+namespace VocaDb.Model.Mapping.Users
+{
 
-	public class EventForUserMap : ClassMap<EventForUser> {
-		public EventForUserMap() {
+	public class EventForUserMap : ClassMap<EventForUser>
+	{
+		public EventForUserMap()
+		{
 
 			Table("EventsForUsers");
 			Cache.ReadWrite();

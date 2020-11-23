@@ -5,13 +5,16 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Helpers {
+namespace VocaDb.Model.Helpers
+{
 
-	public static class LyricsHelper {
+	public static class LyricsHelper
+	{
 
-		public static LyricsForSongContract GetDefaultLyrics(LyricsForSongContract[] lyrics, OptionalCultureCode uiCultureCode, 
-			IEnumerable<OptionalCultureCode> userLanguages, 
-			Lazy<IEnumerable<UserKnownLanguage>> knownLanguages) {
+		public static LyricsForSongContract GetDefaultLyrics(LyricsForSongContract[] lyrics, OptionalCultureCode uiCultureCode,
+			IEnumerable<OptionalCultureCode> userLanguages,
+			Lazy<IEnumerable<UserKnownLanguage>> knownLanguages)
+		{
 
 			if (!lyrics.Any())
 				return null;
@@ -19,7 +22,8 @@ namespace VocaDb.Model.Helpers {
 			var dict = lyrics.Where(l => !string.IsNullOrEmpty(l.CultureCode)).Distinct(l => l.CultureCode).ToDictionary(l => l.CultureCode);
 
 			var uiCulture = uiCultureCode.CultureInfo;
-			if (uiCulture != null && dict.ContainsKey(uiCulture.TwoLetterISOLanguageName)) {
+			if (uiCulture != null && dict.ContainsKey(uiCulture.TwoLetterISOLanguageName))
+			{
 				return dict[uiCulture.TwoLetterISOLanguageName];
 			}
 
@@ -28,7 +32,8 @@ namespace VocaDb.Model.Helpers {
 				.Select(l => l.TwoLetterISOLanguageName)
 				.FirstOrDefault(l => dict.ContainsKey(l));
 
-			if (!string.IsNullOrEmpty(userLang)) {
+			if (!string.IsNullOrEmpty(userLang))
+			{
 				return dict[userLang];
 			}
 
@@ -37,7 +42,8 @@ namespace VocaDb.Model.Helpers {
 				.Select(l => l.CultureCode.CultureCode)
 				.FirstOrDefault(l => dict.ContainsKey(l));
 
-			if (lang != null) {
+			if (lang != null)
+			{
 				return dict[lang];
 			}
 

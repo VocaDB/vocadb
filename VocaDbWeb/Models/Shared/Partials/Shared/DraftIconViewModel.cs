@@ -1,10 +1,13 @@
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Web.Models.Shared.Partials.Shared {
+namespace VocaDb.Web.Models.Shared.Partials.Shared
+{
 
-	public class DraftIconViewModel {
+	public class DraftIconViewModel
+	{
 
-		public DraftIconViewModel(EntryStatus status) {
+		public DraftIconViewModel(EntryStatus status)
+		{
 			Status = status;
 		}
 

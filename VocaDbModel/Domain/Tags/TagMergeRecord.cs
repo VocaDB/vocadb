@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Domain.Tags {
+﻿namespace VocaDb.Model.Domain.Tags
+{
 
-	public class TagMergeRecord : MergeRecord<Tag> {
+	public class TagMergeRecord : MergeRecord<Tag>
+	{
 
 		public TagMergeRecord() { }
 

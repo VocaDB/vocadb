@@ -9,33 +9,39 @@ using VocaDb.Model.Service.Search.Tags;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Service.Search.Tags {
+namespace VocaDb.Tests.Service.Search.Tags
+{
 
 	/// <summary>
 	/// Tests for <see cref="TagSearch"/>.
 	/// </summary>
 	[TestClass]
-	public class TagSearchTests {
+	public class TagSearchTests
+	{
 
 		private readonly FakeTagRepository repository = new FakeTagRepository();
 
-		private PartialFindResult<Tag> CallFind(TagQueryParams queryParams, bool onlyMinimalFields) {
+		private PartialFindResult<Tag> CallFind(TagQueryParams queryParams, bool onlyMinimalFields)
+		{
 
 			return repository.HandleQuery(ctx => new TagSearch(ctx, ContentLanguagePreference.English).Find(queryParams, onlyMinimalFields));
 
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			repository.Save(
 				CreateEntry.Tag("electronic"), CreateEntry.Tag("rock"), CreateEntry.Tag("alternative rock"), CreateEntry.Tag("techno"));
 
 		}
 
-		public void Find_ByName() {
+		public void Find_ByName()
+		{
 
-			var result = CallFind(new TagQueryParams(new CommonSearchParams(SearchTextQuery.Create("rock"), false, false), new PagingProperties(0, 100, true)) {
+			var result = CallFind(new TagQueryParams(new CommonSearchParams(SearchTextQuery.Create("rock"), false, false), new PagingProperties(0, 100, true))
+			{
 				SortRule = TagSortRule.Name
 			}, false);
 
@@ -48,9 +54,11 @@ namespace VocaDb.Tests.Service.Search.Tags {
 		}
 
 		[TestMethod]
-		public void Find_MinimalFields() {
+		public void Find_MinimalFields()
+		{
 
-			var result = CallFind(new TagQueryParams(new CommonSearchParams(SearchTextQuery.Empty, false, false), new PagingProperties(0, 100, true)) {
+			var result = CallFind(new TagQueryParams(new CommonSearchParams(SearchTextQuery.Empty, false, false), new PagingProperties(0, 100, true))
+			{
 				SortRule = TagSortRule.Name
 			}, true);
 

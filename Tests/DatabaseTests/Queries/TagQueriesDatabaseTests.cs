@@ -8,27 +8,32 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Tests.DatabaseTests.Queries {
+namespace VocaDb.Tests.DatabaseTests.Queries
+{
 
 	/// <summary>
 	/// Database tests for <see cref="TagQueries"/>.
 	/// </summary>
 	[TestClass]
-	public class TagQueriesDatabaseTests {
+	public class TagQueriesDatabaseTests
+	{
 
 		private readonly DatabaseTestContext<ITagRepository> context = new DatabaseTestContext<ITagRepository>();
 		private readonly FakePermissionContext userContext;
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 
-		public TagQueriesDatabaseTests() {
+		public TagQueriesDatabaseTests()
+		{
 			userContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 		}
 
-		private TagForApiContract Merge(int sourceId, int targetId) {
+		private TagForApiContract Merge(int sourceId, int targetId)
+		{
 
 			var permissionContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 
-			return context.RunTest(repository => {
+			return context.RunTest(repository =>
+			{
 
 				var queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), new InMemoryImagePersister(), new InMemoryImagePersister(),
 					new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());
@@ -43,11 +48,13 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		}
 
-		private TagForEditContract Update(TagForEditContract contract) {
+		private TagForEditContract Update(TagForEditContract contract)
+		{
 
 			var permissionContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 
-			return context.RunTest(repository => {
+			return context.RunTest(repository =>
+			{
 
 				var queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), new InMemoryImagePersister(), new InMemoryImagePersister(),
 					new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());
@@ -62,7 +69,8 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void Merge_MoveUsages() {
+		public void Merge_MoveUsages()
+		{
 
 			var target = Merge(Db.Tag.Id, Db.Tag2.Id);
 
@@ -72,11 +80,14 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void Update_ReplaceName() {
+		public void Update_ReplaceName()
+		{
 
 			var contract = new TagForEditContract(Db.Tag, false, userContext);
-			contract.Names[0] = new LocalizedStringWithIdContract {
-				Value = "electronic", Language = ContentLanguageSelection.Japanese
+			contract.Names[0] = new LocalizedStringWithIdContract
+			{
+				Value = "electronic",
+				Language = ContentLanguageSelection.Japanese
 			};
 
 			var result = Update(contract);
@@ -88,10 +99,11 @@ namespace VocaDb.Tests.DatabaseTests.Queries {
 			Assert.AreNotEqual(0, name.Id, "Id was assigned");
 
 		}
-		
+
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void Update_SwapNameTranslations() {
+		public void Update_SwapNameTranslations()
+		{
 
 			var contract = new TagForEditContract(Db.Tag2, false, userContext);
 			contract.Names[0].Value = "ロック"; // Swap values

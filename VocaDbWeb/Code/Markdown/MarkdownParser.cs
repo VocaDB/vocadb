@@ -5,17 +5,20 @@ using MarkdownSharp;
 using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Web.Code.Markdown {
+namespace VocaDb.Web.Code.Markdown
+{
 
 	/// <summary>
 	/// Caching Markdown parser
 	/// </summary>
-	public class MarkdownParser {
+	public class MarkdownParser
+	{
 
 		// Match "&gt;" at the beginning of each line, to fix markdown blockquotes
 		private static readonly Regex quoteRegex = new Regex("^&gt;", RegexOptions.Multiline);
 
-		private static string TranformMarkdown(string text) {
+		private static string TranformMarkdown(string text)
+		{
 
 			if (string.IsNullOrEmpty(text))
 				return text;
@@ -25,14 +28,15 @@ namespace VocaDb.Web.Code.Markdown {
 
 			// StrictBoldItalic is needed because otherwise links with underscores won't work (links are more common on VDB).
 			// These settings roughtly correspond to GitHub-flavored Markdown (https://help.github.com/articles/github-flavored-markdown)
-			return new MarkdownSharp.Markdown(new MarkdownOptions { AutoHyperlink = true, AutoNewlines = true, StrictBoldItalic = true, EmptyElementSuffix = " />"})
+			return new MarkdownSharp.Markdown(new MarkdownOptions { AutoHyperlink = true, AutoNewlines = true, StrictBoldItalic = true, EmptyElementSuffix = " />" })
 				.Transform(encoded);
 
 		}
 
 		private readonly ObjectCache cache;
 
-		public MarkdownParser(ObjectCache cache) {
+		public MarkdownParser(ObjectCache cache)
+		{
 			this.cache = cache;
 		}
 
@@ -44,8 +48,9 @@ namespace VocaDb.Web.Code.Markdown {
 		/// Markdown-transformed text. This will include HTML. 
 		/// The block is usually surrounded by "p" tags.
 		/// </returns>
-		public string GetHtml(string markdownText) {
-			
+		public string GetHtml(string markdownText)
+		{
+
 			if (string.IsNullOrEmpty(markdownText))
 				return markdownText;
 
@@ -59,8 +64,9 @@ namespace VocaDb.Web.Code.Markdown {
 		/// </summary>
 		/// <param name="markdownText">Markdown-formatted text, for example "**Miku**".</param>
 		/// <returns>Text without markdown formatting, for example "Miku".</returns>
-		public string GetPlainText(string markdownText) {
-			
+		public string GetPlainText(string markdownText)
+		{
+
 			if (string.IsNullOrEmpty(markdownText))
 				return markdownText;
 
@@ -68,7 +74,8 @@ namespace VocaDb.Web.Code.Markdown {
 
 		}
 
-		private string ReplaceHtmlEntities(string text) {
+		private string ReplaceHtmlEntities(string text)
+		{
 			return text.Replace("&#39;", "'");
 		}
 

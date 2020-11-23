@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using VocaDb.Model.DataContracts.SongImport;
 
-namespace VocaDb.Web.Models.SongLists {
+namespace VocaDb.Web.Models.SongLists
+{
 
-	public class CreateFromWVR {
+	public class CreateFromWVR
+	{
 
 		public ImportedSongListContract ListResult { get; set; }
 

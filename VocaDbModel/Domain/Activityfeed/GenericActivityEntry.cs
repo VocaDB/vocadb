@@ -7,18 +7,21 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.Activityfeed {
+namespace VocaDb.Model.Domain.Activityfeed
+{
 
-	public abstract class GenericActivityEntry<TEntry, TArchivedVersion> : ActivityEntry 
+	public abstract class GenericActivityEntry<TEntry, TArchivedVersion> : ActivityEntry
 		where TEntry : class, IEntryBase, IEntryWithNames
-		where TArchivedVersion : ArchivedObjectVersion {
+		where TArchivedVersion : ArchivedObjectVersion
+	{
 
 		private TEntry entry;
 
 		protected GenericActivityEntry() { }
 
 		protected GenericActivityEntry(TEntry entry, EntryEditEvent editEvent, User author, TArchivedVersion archivedVersion)
-			: base(author, editEvent) {
+			: base(author, editEvent)
+		{
 
 			ParamIs.NotNull(() => entry);
 
@@ -30,29 +33,35 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 		public virtual TArchivedVersion ArchivedVersion { get; set; }
 
-		public override ArchivedObjectVersion ArchivedVersionBase {
+		public override ArchivedObjectVersion ArchivedVersionBase
+		{
 			get { return ArchivedVersion; }
 		}
 
-		public virtual TEntry Entry {
+		public virtual TEntry Entry
+		{
 			get { return entry; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				entry = value;
 			}
 		}
 
-		public override IEntryWithNames EntryBase {
+		public override IEntryWithNames EntryBase
+		{
 			get { return Entry; }
 		}
 
-		public override EntryType EntryType {
+		public override EntryType EntryType
+		{
 			get { return Entry.EntryType; }
 		}
 
 	}
 
-	public class AlbumActivityEntry : GenericActivityEntry<Album, ArchivedAlbumVersion> {
+	public class AlbumActivityEntry : GenericActivityEntry<Album, ArchivedAlbumVersion>
+	{
 
 		public AlbumActivityEntry() { }
 
@@ -61,7 +70,8 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 	}
 
-	public class ArtistActivityEntry : GenericActivityEntry<Artist, ArchivedArtistVersion> {
+	public class ArtistActivityEntry : GenericActivityEntry<Artist, ArchivedArtistVersion>
+	{
 
 		public ArtistActivityEntry() { }
 
@@ -70,7 +80,8 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 	}
 
-	public class ReleaseEventActivityEntry : GenericActivityEntry<ReleaseEvent, ArchivedReleaseEventVersion> {
+	public class ReleaseEventActivityEntry : GenericActivityEntry<ReleaseEvent, ArchivedReleaseEventVersion>
+	{
 
 		public ReleaseEventActivityEntry() { }
 
@@ -79,7 +90,8 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 	}
 
-	public class SongActivityEntry : GenericActivityEntry<Song, ArchivedSongVersion> {
+	public class SongActivityEntry : GenericActivityEntry<Song, ArchivedSongVersion>
+	{
 
 		public SongActivityEntry() { }
 
@@ -88,7 +100,8 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 	}
 
-	public class SongListActivityEntry : GenericActivityEntry<SongList, ArchivedSongListVersion> {
+	public class SongListActivityEntry : GenericActivityEntry<SongList, ArchivedSongListVersion>
+	{
 
 		public SongListActivityEntry() { }
 
@@ -97,7 +110,8 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 	}
 
-	public class TagActivityEntry : GenericActivityEntry<Tag, ArchivedTagVersion> {
+	public class TagActivityEntry : GenericActivityEntry<Tag, ArchivedTagVersion>
+	{
 
 		public TagActivityEntry() { }
 
@@ -106,7 +120,8 @@ namespace VocaDb.Model.Domain.Activityfeed {
 
 	}
 
-	public class VenueActivityEntry : GenericActivityEntry<Venue, ArchivedVenueVersion> {
+	public class VenueActivityEntry : GenericActivityEntry<Venue, ArchivedVenueVersion>
+	{
 
 		public VenueActivityEntry() { }
 

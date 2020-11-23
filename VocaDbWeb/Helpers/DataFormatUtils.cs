@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace VocaDb.Web.Helpers {
+namespace VocaDb.Web.Helpers
+{
 
-	public static class DataFormatUtils {
+	public static class DataFormatUtils
+	{
 
-		public static IEnumerable<IHtmlString> GenerateHtml<T>(IEnumerable<T> source, Func<T, IHtmlString> transform) {
+		public static IEnumerable<IHtmlString> GenerateHtml<T>(IEnumerable<T> source, Func<T, IHtmlString> transform)
+		{
 
 			if (source == null)
 				return null;

@@ -2,9 +2,11 @@
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.ReleaseEvents {
+namespace VocaDb.Model.Domain.ReleaseEvents
+{
 
-	public class EventReport : GenericEntryReport<ReleaseEvent, EventReportType> {
+	public class EventReport : GenericEntryReport<ReleaseEvent, EventReportType>
+	{
 
 		public static readonly HashSet<EventReportType> ReportTypesWithRequiredNotes =
 			new HashSet<EventReportType> { EventReportType.InvalidInfo, EventReportType.Other };
@@ -20,7 +22,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 	}
 
-	public enum EventReportType {
+	public enum EventReportType
+	{
 
 		InvalidInfo = 1,
 

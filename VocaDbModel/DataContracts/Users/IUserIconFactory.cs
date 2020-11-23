@@ -1,7 +1,8 @@
 ﻿using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users {
+namespace VocaDb.Model.DataContracts.Users
+{
 
 	/// <summary>
 	/// Provides URL to user's profile icon.
@@ -12,7 +13,8 @@ namespace VocaDb.Model.DataContracts.Users {
 	/// This factory can be used to create URL to the profile icon based on user's email address
 	/// (or possibly other properties) without revealing the email address.
 	/// </summary>
-	public interface IUserIconFactory {
+	public interface IUserIconFactory
+	{
 
 		/// <summary>
 		/// Get multiple icon sizes.

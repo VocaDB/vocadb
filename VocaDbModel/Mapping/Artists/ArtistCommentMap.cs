@@ -1,10 +1,13 @@
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.Mapping.Artists {
+namespace VocaDb.Model.Mapping.Artists
+{
 
-	public class ArtistCommentMap : CommentMap<ArtistComment, Artist> {
+	public class ArtistCommentMap : CommentMap<ArtistComment, Artist>
+	{
 
-		public ArtistCommentMap() {
+		public ArtistCommentMap()
+		{
 
 			References(m => m.EntryForComment).Column("[Artist]").Not.Nullable();
 

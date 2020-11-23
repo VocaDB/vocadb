@@ -9,15 +9,18 @@ using VocaDb.Model.Service.VideoServices;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Service.VideoServices {
+namespace VocaDb.Tests.Service.VideoServices
+{
 
 	/// <summary>
 	/// Unit tests for <see cref="NicoHelper"/>.
 	/// </summary>
 	[TestClass]
-	public class NicoHelperTests {
+	public class NicoHelperTests
+	{
 
-		private Artist ArtistFunc(string name) {
+		private Artist ArtistFunc(string name)
+		{
 
 			// Note: カバー is a valid artist name.
 			var artistNames = new HashSet<string> { "初音ミク", "鏡音リン", "巡音ルカ", "MEIKO", "Lily", "重音テト", "波音リツキレ", "カバー" };
@@ -29,17 +32,20 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 		}
 
-		private void AssertArtists(NicoTitleParseResult result, params string[] artists) {
-			
+		private void AssertArtists(NicoTitleParseResult result, params string[] artists)
+		{
+
 			Assert.AreEqual(artists.Length, result.Artists.Count, "Number of artists");
-			foreach (var artist in artists) {
+			foreach (var artist in artists)
+			{
 				Assert.IsTrue(result.Artists.Any(a => a.DefaultName == artist), string.Format("Has artist {0}", artist));
 			}
 
 		}
 
-		private void RunParseTitle(string nicoTitle, string expectedTitle = null, SongType? expectedSongType = null, params string[] artists) {
-			
+		private void RunParseTitle(string nicoTitle, string expectedTitle = null, SongType? expectedSongType = null, params string[] artists)
+		{
+
 			var result = CallParseTitle(nicoTitle);
 
 			if (expectedTitle != null)
@@ -53,7 +59,8 @@ namespace VocaDb.Tests.Service.VideoServices {
 
 		}
 
-		private NicoTitleParseResult CallParseTitle(string title) {
+		private NicoTitleParseResult CallParseTitle(string title)
+		{
 			return NicoHelper.ParseTitle(title, ArtistFunc);
 		}
 
@@ -61,7 +68,8 @@ namespace VocaDb.Tests.Service.VideoServices {
 		/// Valid title, basic test case
 		/// </summary>
 		[TestMethod]
-		public void ParseTitle_Valid() {
+		public void ParseTitle_Valid()
+		{
 
 			RunParseTitle("【重音テト】 ハイゲインワンダーランド 【オリジナル】", "ハイゲインワンダーランド", SongType.Original, "重音テト");
 
@@ -71,14 +79,16 @@ namespace VocaDb.Tests.Service.VideoServices {
 		/// Valid title, cover
 		/// </summary>
 		[TestMethod]
-		public void ParseTitle_Cover() {
-			
+		public void ParseTitle_Cover()
+		{
+
 			RunParseTitle("【鏡音リン・レン】愛言葉Ⅱ【カバー】", "愛言葉Ⅱ", SongType.Cover, "鏡音リン");
 
 		}
 
 		[TestMethod]
-		public void ParseTitle_UtauCover() {
+		public void ParseTitle_UtauCover()
+		{
 
 			RunParseTitle("【波音リツキレ音源】Lost Destination【UTAUカバー】", "Lost Destination", SongType.Cover, "波音リツキレ");
 
@@ -88,7 +98,8 @@ namespace VocaDb.Tests.Service.VideoServices {
 		/// Skip whitespace in artist fields.
 		/// </summary>
 		[TestMethod]
-		public void ParseTitle_WhiteSpace() {
+		public void ParseTitle_WhiteSpace()
+		{
 
 			var result = NicoHelper.ParseTitle("【 鏡音リン 】　sister's noise　(FULL) 【とある科学の超電磁砲S】", ArtistFunc);
 
@@ -102,7 +113,8 @@ namespace VocaDb.Tests.Service.VideoServices {
 		/// Handle special characters in artist fields.
 		/// </summary>
 		[TestMethod]
-		public void ParseTitle_SpecialChars() {
+		public void ParseTitle_SpecialChars()
+		{
 
 			RunParseTitle("【巡音ルカ･Lily】Blame of Angel", "Blame of Angel", null, "巡音ルカ", "Lily");
 
@@ -112,7 +124,8 @@ namespace VocaDb.Tests.Service.VideoServices {
 		/// Handle special characters in artist fields.
 		/// </summary>
 		[TestMethod]
-		public void ParseTitle_MultipleArtistFields() {
+		public void ParseTitle_MultipleArtistFields()
+		{
 
 			var result = NicoHelper.ParseTitle("【初音ミク】恋風～liebe wind～【鏡音リン】", ArtistFunc);
 
@@ -127,7 +140,8 @@ namespace VocaDb.Tests.Service.VideoServices {
 		/// Handle artist with original.
 		/// </summary>
 		[TestMethod]
-		public void ParseTitle_ArtistOriginal() {
+		public void ParseTitle_ArtistOriginal()
+		{
 
 			var result = NicoHelper.ParseTitle("libido / L.A.M.B 【MEIKOオリジナル】", ArtistFunc);
 
@@ -139,12 +153,15 @@ namespace VocaDb.Tests.Service.VideoServices {
 		}
 
 		[TestMethod]
-		public void ParseTitle_EmptyParts() {
+		public void ParseTitle_EmptyParts()
+		{
 
 			// "オリジナル・PV" lead to an empty artist name being searched. 
 			// The database collation matches this with an invalid artist, so empty artist searches are ignored.
-			var result = NicoHelper.ParseTitle("【初音ミク】心闇【オリジナル・PV】", val => {
-				if (string.IsNullOrEmpty(val)) {
+			var result = NicoHelper.ParseTitle("【初音ミク】心闇【オリジナル・PV】", val =>
+			{
+				if (string.IsNullOrEmpty(val))
+				{
 					Assert.Fail("Empty name not allowed");
 				}
 				return CreateEntry.Artist(ArtistType.Producer, name: val);

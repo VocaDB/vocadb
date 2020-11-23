@@ -4,17 +4,20 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Service;
 
-namespace VocaDb.Web.Models.Home {
+namespace VocaDb.Web.Models.Home
+{
 
-	public class SearchEntries {
+	public class SearchEntries
+	{
 
 		public SearchEntries() { }
 
 		public SearchEntries(string filter,
-			PartialFindResult<AlbumContract> albums, 
+			PartialFindResult<AlbumContract> albums,
 			PartialFindResult<ArtistContract> artists,
 			PartialFindResult<SongWithAlbumContract> songs,
-			PartialFindResult<TagContract> tags) {
+			PartialFindResult<TagContract> tags)
+		{
 
 			Filter = filter;
 			Albums = albums;

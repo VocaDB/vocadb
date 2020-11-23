@@ -3,21 +3,25 @@ using System.Linq;
 using System.Collections.Generic;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Tags {
+namespace VocaDb.Model.Domain.Tags
+{
 
 	/// <summary>
 	/// Tag attached to an entry (song, album, artist).
 	/// Tag usage may have multiple votes (<see cref="TagVote"/>), at most one vote per user.
 	/// </summary>
-	public abstract class TagUsage : IEntryWithLongId, ITagLink {
+	public abstract class TagUsage : IEntryWithLongId, ITagLink
+	{
 
 		private Tag tag;
 
-		protected TagUsage() {
+		protected TagUsage()
+		{
 			Date = DateTime.Now;
 		}
 
-		protected TagUsage(Tag tag) : this() {
+		protected TagUsage(Tag tag) : this()
+		{
 			Tag = tag;
 		}
 
@@ -40,9 +44,11 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public virtual long Id { get; set; }
 
-		public virtual Tag Tag {
+		public virtual Tag Tag
+		{
 			get { return tag; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				tag = value;
 			}
@@ -69,14 +75,16 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <remarks>
 		/// Derived methods must call this base implementation.
 		/// </remarks>
-		public virtual void Delete() {
+		public virtual void Delete()
+		{
 
 			Count = 0;
 			Tag.UsageCount--;
 
 		}
 
-		public virtual bool Equals(TagUsage another) {
+		public virtual bool Equals(TagUsage another)
+		{
 
 			if (another == null)
 				return false;
@@ -91,16 +99,19 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as TagUsage);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			var format = string.Format("{0}_{1}{2}", Tag.Id, EntryBase.EntryType, EntryBase.Id);
 			return format.GetHashCode();
 		}
 
-		public virtual bool HasVoteByUser(User user) {
+		public virtual bool HasVoteByUser(User user)
+		{
 
 			ParamIs.NotNull(() => user);
 
@@ -116,7 +127,8 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public abstract TagVote RemoveVote(User user);
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("{0} for {1} [{2}]", Tag, EntryBase, Id);
 		}
 

@@ -4,11 +4,14 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Resources;
 
-namespace VocaDb.Model.Service.EntryValidators {
+namespace VocaDb.Model.Service.EntryValidators
+{
 
-	public class ArtistValidator {
+	public class ArtistValidator
+	{
 
-		public bool IsValid(Artist artist) {
+		public bool IsValid(Artist artist)
+		{
 
 			ParamIs.NotNull(() => artist);
 

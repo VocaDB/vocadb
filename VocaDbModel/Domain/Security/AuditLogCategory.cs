@@ -1,7 +1,9 @@
-﻿namespace VocaDb.Model.Domain.Security {
+﻿namespace VocaDb.Model.Domain.Security
+{
 
-	public enum AuditLogCategory {
-	
+	public enum AuditLogCategory
+	{
+
 		Unspecified,
 
 		/// <summary>

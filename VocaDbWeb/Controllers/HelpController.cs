@@ -7,30 +7,32 @@ using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Web.Controllers
 {
-    public class HelpController : ControllerBase
-    {
+	public class HelpController : ControllerBase
+	{
 
 		private readonly VdbConfigManager config;
 		private readonly TagQueries tagQueries;
 
-		public HelpController(VdbConfigManager config, TagQueries tagQueries) {
+		public HelpController(VdbConfigManager config, TagQueries tagQueries)
+		{
 			this.config = config;
 			this.tagQueries = tagQueries;
 		}
 
-        //
-        // GET: /Help/
+		//
+		// GET: /Help/
 
-        public ActionResult Index()
-        {
-			
+		public ActionResult Index()
+		{
+
 			if (!string.IsNullOrEmpty(AppConfig.ExternalHelpPath))
 				return View("External");
 
 			ViewBag.FreeTagId = config.SpecialTags.Free;
 			ViewBag.InstrumentalTagId = tagQueries.InstrumentalTagId;
 
-			switch (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName) {
+			switch (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)
+			{
 				case "ja":
 					return View("Index.ja");
 				case "zh":
@@ -39,7 +41,7 @@ namespace VocaDb.Web.Controllers
 					return View();
 			}
 
-        }
+		}
 
-    }
+	}
 }

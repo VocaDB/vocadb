@@ -1,18 +1,22 @@
 using System;
 
-namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain
+{
 
 	/// <summary>
 	/// Combination of <see cref="EntryType"/> and optional sub-type (for example SongType).
 	/// </summary>
-	public readonly struct EntryTypeAndSubType {
+	public readonly struct EntryTypeAndSubType
+	{
 
 		public static EntryTypeAndSubType Create<TSubType>(EntryType entryType, TSubType subType)
-			where TSubType : struct, Enum {
+			where TSubType : struct, Enum
+		{
 			return new EntryTypeAndSubType(entryType, subType.ToString());
 		}
 
-		public EntryTypeAndSubType(EntryType entryType, string subType = "") {
+		public EntryTypeAndSubType(EntryType entryType, string subType = "")
+		{
 			EntryType = entryType;
 			SubType = subType ?? string.Empty;
 		}

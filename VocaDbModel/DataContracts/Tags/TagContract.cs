@@ -4,16 +4,20 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.DataContracts.Tags {
+namespace VocaDb.Model.DataContracts.Tags
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class TagContract : TagBaseContract {
+	public class TagContract : TagBaseContract
+	{
 
-		public TagContract() {
+		public TagContract()
+		{
 		}
 
 		public TagContract(Tag tag, ContentLanguagePreference languagePreference, bool includeAdditionalNames = false)
-			: base(tag, languagePreference, includeAdditionalNames, true) {
+			: base(tag, languagePreference, includeAdditionalNames, true)
+		{
 
 			ParamIs.NotNull(() => tag);
 

@@ -4,11 +4,14 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.VideoServices;
 
-namespace VocaDb.Model.Domain.PVs {
+namespace VocaDb.Model.Domain.PVs
+{
 
-	public class PV : IEquatable<PV>, IEditablePV {
+	public class PV : IEquatable<PV>, IEditablePV
+	{
 
-		public static string GetUrl(PVService service, string pvId, PVExtendedMetadata extendedMetadata = null) {
+		public static string GetUrl(PVService service, string pvId, PVExtendedMetadata extendedMetadata = null)
+		{
 			return VideoServiceHelper.Services[service].GetUrlById(pvId, extendedMetadata);
 		}
 
@@ -17,7 +20,8 @@ namespace VocaDb.Model.Domain.PVs {
 		private string name;
 		private string pvId;
 
-		public PV() {
+		public PV()
+		{
 			Author = string.Empty;
 			pvId = string.Empty;
 			Name = string.Empty;
@@ -26,7 +30,8 @@ namespace VocaDb.Model.Domain.PVs {
 		}
 
 		public PV(PVContract contract)
-			: this() {
+			: this()
+		{
 
 			ParamIs.NotNull(() => contract);
 
@@ -40,29 +45,35 @@ namespace VocaDb.Model.Domain.PVs {
 
 		}
 
-		public virtual string Author {
+		public virtual string Author
+		{
 			get => author;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				author = value;
 			}
 		}
 
-		public virtual bool Disabled {
+		public virtual bool Disabled
+		{
 			get => false;
 			set => throw new NotSupportedException();
 		}
 
 		public virtual int Id { get; set; }
 
-		public virtual PVExtendedMetadata ExtendedMetadata {
+		public virtual PVExtendedMetadata ExtendedMetadata
+		{
 			get => extendedMetadata;
 			set => extendedMetadata = value;
 		}
 
-		public virtual string Name {
+		public virtual string Name
+		{
 			get => name;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				name = value;
 			}
@@ -70,9 +81,11 @@ namespace VocaDb.Model.Domain.PVs {
 
 		public virtual DateTime? PublishDate { get; set; }
 
-		public virtual string PVId {
+		public virtual string PVId
+		{
 			get => pvId;
-			set {
+			set
+			{
 				ParamIs.NotNullOrEmpty(() => value);
 				pvId = value;
 			}
@@ -84,7 +97,8 @@ namespace VocaDb.Model.Domain.PVs {
 
 		public virtual string Url => GetUrl(Service, PVId, ExtendedMetadata);
 
-		public virtual bool ContentEquals(PVContract pv) {
+		public virtual bool ContentEquals(PVContract pv)
+		{
 
 			if (pv == null)
 				return false;
@@ -93,7 +107,8 @@ namespace VocaDb.Model.Domain.PVs {
 
 		}
 
-		public virtual void CopyMetaFrom(PVContract contract) {
+		public virtual void CopyMetaFrom(PVContract contract)
+		{
 
 			ParamIs.NotNull(() => contract);
 
@@ -103,7 +118,8 @@ namespace VocaDb.Model.Domain.PVs {
 
 		}
 
-		public virtual bool Equals(PV another) {
+		public virtual bool Equals(PV another)
+		{
 
 			if (another == null)
 				return false;
@@ -118,17 +134,20 @@ namespace VocaDb.Model.Domain.PVs {
 
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as PV);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return Id.GetHashCode();
 		}
 
-		public virtual void OnDelete() {}
+		public virtual void OnDelete() { }
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("PV '{0}' on {1} [{2}]", PVId, Service, Id);
 		}
 

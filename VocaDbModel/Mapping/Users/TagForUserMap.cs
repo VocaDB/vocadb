@@ -1,11 +1,14 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Mapping.Users {
+namespace VocaDb.Model.Mapping.Users
+{
 
-	public class TagForUserMap : ClassMap<TagForUser> {
+	public class TagForUserMap : ClassMap<TagForUser>
+	{
 
-		public TagForUserMap() {
+		public TagForUserMap()
+		{
 
 			Table("TagsForUsers");
 			Cache.ReadWrite();

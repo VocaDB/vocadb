@@ -1,23 +1,27 @@
 using System;
 using VocaDb.Model.Domain.Albums;
 
-namespace VocaDb.Model.Domain.Songs {
+namespace VocaDb.Model.Domain.Songs
+{
 
-	public class SongInAlbum : ISongLink, IEntryWithIntId {
+	public class SongInAlbum : ISongLink, IEntryWithIntId
+	{
 
 		private Album album;
 		private Song song;
 
-		public SongInAlbum() {}
+		public SongInAlbum() { }
 
-		public SongInAlbum(Song song, Album album, int trackNumber, int discNumber) {
+		public SongInAlbum(Song song, Album album, int trackNumber, int discNumber)
+		{
 			Song = song;
 			Album = album;
 			TrackNumber = trackNumber;
 			DiscNumber = discNumber;
 		}
 
-		public SongInAlbum(string name, Album album, int trackNumber, int discNumber) {
+		public SongInAlbum(string name, Album album, int trackNumber, int discNumber)
+		{
 			Name = name;
 			Album = album;
 			TrackNumber = trackNumber;
@@ -39,28 +43,34 @@ namespace VocaDb.Model.Domain.Songs {
 		/// Song entry. 
 		/// CAN BE NULL for custom songs.
 		/// </summary>
-		public virtual Song Song {
+		public virtual Song Song
+		{
 			get { return song; }
 			set { song = value; }
 		}
 
-		public virtual Album Album {
+		public virtual Album Album
+		{
 			get { return album; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				album = value;
 			}
 		}
 
-		public virtual string SongToStringOrName {
-			get {
+		public virtual string SongToStringOrName
+		{
+			get
+			{
 				return Song != null ? Song.ToString() : Name;
 			}
 		}
 
 		public virtual int TrackNumber { get; set; }
 
-		public virtual bool Equals(SongInAlbum another) {
+		public virtual bool Equals(SongInAlbum another)
+		{
 
 			if (another == null)
 				return false;
@@ -75,7 +85,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual void Delete() {
+		public virtual void Delete()
+		{
 
 			Album.AllSongs.Remove(this);
 
@@ -84,15 +95,18 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as SongInAlbum);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return base.GetHashCode();
 		}
 
-		public virtual void Move(Album target) {
+		public virtual void Move(Album target)
+		{
 
 			ParamIs.NotNull(() => target);
 
@@ -110,7 +124,8 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual void Move(Song target) {
+		public virtual void Move(Song target)
+		{
 
 			ParamIs.NotNull(() => target);
 
@@ -126,13 +141,15 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public virtual void OnDeleting() {
-			
+		public virtual void OnDeleting()
+		{
+
 			Album.OnSongDeleting(this);
 
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("({0}.{1}) {2} in {3}", DiscNumber, TrackNumber, SongToStringOrName, Album);
 		}
 

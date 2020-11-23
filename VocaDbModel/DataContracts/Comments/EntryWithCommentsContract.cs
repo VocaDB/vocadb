@@ -1,12 +1,15 @@
 ﻿using VocaDb.Model.DataContracts.Api;
 
-namespace VocaDb.Model.DataContracts.Comments {
+namespace VocaDb.Model.DataContracts.Comments
+{
 
-	public class EntryWithCommentsContract {
+	public class EntryWithCommentsContract
+	{
 
 		public EntryWithCommentsContract() { }
 
-		public EntryWithCommentsContract(EntryForApiContract entry, CommentContract[] comments) {
+		public EntryWithCommentsContract(EntryForApiContract entry, CommentContract[] comments)
+		{
 			Comments = comments;
 			Entry = entry;
 		}

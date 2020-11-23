@@ -11,20 +11,23 @@ using VocaDb.Model.Service;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Web.Controllers.DataAccess {
+namespace VocaDb.Tests.Web.Controllers.DataAccess
+{
 
 	/// <summary>
 	/// Unit tests for <see cref="EntryQueries"/>.
 	/// </summary>
 	[TestClass]
-	public class EntryQueriesTests {
+	public class EntryQueriesTests
+	{
 
 		private FakeAlbumRepository repository;
 		private EntryQueries queries;
 		private Tag tag;
 
-		private EntryForApiContract AssertHasEntry(PartialFindResult<EntryForApiContract> result, string name, EntryType entryType) {
-			
+		private EntryForApiContract AssertHasEntry(PartialFindResult<EntryForApiContract> result, string name, EntryType entryType)
+		{
+
 			var entry = result.Items.FirstOrDefault(a => string.Equals(a.DefaultName, name, StringComparison.InvariantCultureIgnoreCase)
 				&& a.EntryType == entryType);
 
@@ -34,21 +37,23 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		private PartialFindResult<EntryForApiContract> CallGetList(
-			string query = null, 
+			string query = null,
 			int[] tag = null,
 			EntryStatus? status = null,
 			int start = 0, int maxResults = 10, bool getTotalCount = true,
 			NameMatchMode nameMatchMode = NameMatchMode.Words,
 			EntryOptionalFields fields = EntryOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-			
+			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+		{
+
 			return queries.GetList(query, tag, null, false, status, null, start, maxResults, getTotalCount, EntrySortRule.Name, nameMatchMode, fields, lang);
 
 		}
 
 		[TestInitialize]
-		public void SetUp() {
-			
+		public void SetUp()
+		{
+
 			repository = new FakeAlbumRepository();
 			var permissionContext = new FakePermissionContext();
 			var thumbPersister = new InMemoryImagePersister();
@@ -74,8 +79,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// List while filtering by title (words).
 		/// </summary>
 		[TestMethod]
-		public void List_FilterByTitle() {
-			
+		public void List_FilterByTitle()
+		{
+
 			var result = CallGetList(query: "40mP");
 
 			Assert.AreEqual(4, result.TotalCount, "TotalCount");
@@ -92,8 +98,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// List while filtering by canonized artist name.
 		/// </summary>
 		[TestMethod]
-		public void List_FilterByCanonizedArtistName() {
-			
+		public void List_FilterByCanonizedArtistName()
+		{
+
 			var artist = CreateEntry.Producer(name: "nightmare-P");
 			repository.Save(artist);
 
@@ -111,9 +118,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// List while filtering by tag.
 		/// </summary>
 		[TestMethod]
-		public void List_FilterByTag() {
-			
-			var result = CallGetList(tag: new [] { tag.Id });
+		public void List_FilterByTag()
+		{
+
+			var result = CallGetList(tag: new[] { tag.Id });
 
 			Assert.AreEqual(1, result.TotalCount, "TotalCount");
 			AssertHasEntry(result, "40mP", EntryType.Artist);
@@ -124,8 +132,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// List, test paging.
 		/// </summary>
 		[TestMethod]
-		public void List_Paging() {
-			
+		public void List_Paging()
+		{
+
 			var result = CallGetList("40mP", start: 1, maxResults: 1);
 
 			Assert.AreEqual(1, result.Items.Length, "Items.Length");

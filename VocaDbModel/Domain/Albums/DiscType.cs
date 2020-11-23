@@ -1,42 +1,44 @@
-﻿namespace VocaDb.Model.Domain.Albums {
+﻿namespace VocaDb.Model.Domain.Albums
+{
 
 	/// <summary>
 	/// Album disc type.
 	/// </summary>
-	public enum DiscType {
+	public enum DiscType
+	{
 
-		Unknown		= 0,
+		Unknown = 0,
 
 		/// <summary>
 		/// Original album (default)
 		/// </summary>
-		Album		= 1,
+		Album = 1,
 
-		Single		= 2,
+		Single = 2,
 
-		EP			= 4,
+		EP = 4,
 
-		SplitAlbum	= 8,
+		SplitAlbum = 8,
 
-		Compilation	= 16,
+		Compilation = 16,
 
-		Video		= 32,
+		Video = 32,
 
-		Artbook		= 64,
-
-		/// <summary>
-		/// For TouhouDB
-		/// </summary>
-		Game		= 128,
+		Artbook = 64,
 
 		/// <summary>
 		/// For TouhouDB
 		/// </summary>
-		Fanmade		= 256,
+		Game = 128,
+
+		/// <summary>
+		/// For TouhouDB
+		/// </summary>
+		Fanmade = 256,
 
 		Instrumental = 512,
 
-		Other		= 1024
+		Other = 1024
 
 	}
 

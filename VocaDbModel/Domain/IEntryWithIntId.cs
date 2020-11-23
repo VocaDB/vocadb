@@ -1,22 +1,26 @@
-namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain
+{
 
 	/// <summary>
 	/// Base interface for database objects with Int32 ID.
 	/// Applies to both root entities and child entities.
 	/// </summary>
-	public interface IEntryWithIntId : IDatabaseObject {
-		int Id { get; set; }	
+	public interface IEntryWithIntId : IDatabaseObject
+	{
+		int Id { get; set; }
 	}
 
 	/// <summary>
 	/// Base interface for database objects with Int64 ID.
 	/// Applies to both root entities and child entities.
 	/// </summary>
-	public interface IEntryWithLongId : IDatabaseObject {
+	public interface IEntryWithLongId : IDatabaseObject
+	{
 		long Id { get; set; }
 	}
 
-	public static class IEntryWithIntIdExtender {
+	public static class IEntryWithIntIdExtender
+	{
 
 		/// <summary>
 		/// Compares the Id of this entry with another.
@@ -35,21 +39,25 @@ namespace VocaDb.Model.Domain {
 		/// null + 39 == false
 		/// 0 + 39 == false
 		/// </remarks>
-		public static bool NullSafeIdEquals(this IEntryWithIntId left, IEntryWithIntId right) {
+		public static bool NullSafeIdEquals(this IEntryWithIntId left, IEntryWithIntId right)
+		{
 
 			return left.IdOrDefault() == right.IdOrDefault();
-			
+
 		}
 
-		public static bool IdEquals(this IEntryWithIntId left, IEntryWithIntId right) {
+		public static bool IdEquals(this IEntryWithIntId left, IEntryWithIntId right)
+		{
 			return left.Id == right.Id;
 		}
 
-		public static int IdOrDefault(this IEntryWithIntId entry) {
+		public static int IdOrDefault(this IEntryWithIntId entry)
+		{
 			return entry != null ? entry.Id : 0;
 		}
 
-		public static bool IsNullOrDefault(this IEntryWithIntId entry) {
+		public static bool IsNullOrDefault(this IEntryWithIntId entry)
+		{
 			return entry == null || entry.Id == 0;
 		}
 

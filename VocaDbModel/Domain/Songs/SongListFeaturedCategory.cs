@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Domain.Songs {
+﻿namespace VocaDb.Model.Domain.Songs
+{
 
-	public enum SongListFeaturedCategory {
+	public enum SongListFeaturedCategory
+	{
 
 		Nothing,
 

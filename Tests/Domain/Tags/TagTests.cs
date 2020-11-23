@@ -5,24 +5,28 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Domain.Tags {
+namespace VocaDb.Tests.Domain.Tags
+{
 
 	/// <summary>
 	/// Tests for <see cref="Tag"/>.
 	/// </summary>
 	[TestClass]
-	public class TagTests {
+	public class TagTests
+	{
 
 		private readonly Tag tag;
 		private readonly Tag tag2;
 
-		public TagTests() {
+		public TagTests()
+		{
 			tag = CreateEntry.Tag("rock");
 			tag2 = CreateEntry.Tag("metal");
 		}
 
 		[TestMethod]
-		public void AddRelatedTag() {
+		public void AddRelatedTag()
+		{
 
 			tag.AddRelatedTag(tag2);
 
@@ -32,7 +36,8 @@ namespace VocaDb.Tests.Domain.Tags {
 		}
 
 		[TestMethod]
-		public void Delete() {
+		public void Delete()
+		{
 
 			var relatedTag = tag2;
 			tag.AddRelatedTag(relatedTag);
@@ -44,7 +49,8 @@ namespace VocaDb.Tests.Domain.Tags {
 		}
 
 		[TestMethod]
-		public void SetParent() {
+		public void SetParent()
+		{
 
 			tag.SetParent(tag2);
 
@@ -55,19 +61,22 @@ namespace VocaDb.Tests.Domain.Tags {
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void SetParent_Self() {
+		public void SetParent_Self()
+		{
 			tag.SetParent(tag);
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void SetParent_Ancestor() {
+		public void SetParent_Ancestor()
+		{
 			tag.SetParent(tag2);
 			tag2.SetParent(tag); // Circular parenthood not allowed
 		}
 
 		[TestMethod]
-		public void SyncRelatedTags() {
+		public void SyncRelatedTags()
+		{
 
 			var tag3 = CreateEntry.Tag("power metal");
 			var repository = new FakeTagRepository(tag, tag2, tag3);

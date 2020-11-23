@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts.Activityfeed;
 
-namespace VocaDb.Web.Models.Shared.Partials.Activityfeed {
+namespace VocaDb.Web.Models.Shared.Partials.Activityfeed
+{
 
-	public class EntryTypeViewModel {
+	public class EntryTypeViewModel
+	{
 
-		public EntryTypeViewModel(ActivityEntryForApiContract entry) {
+		public EntryTypeViewModel(ActivityEntryForApiContract entry)
+		{
 			Entry = entry;
 		}
 

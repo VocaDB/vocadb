@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts.Venues;
 
-namespace VocaDb.Web.Models.Shared.Partials.Venue {
+namespace VocaDb.Web.Models.Shared.Partials.Venue
+{
 
-	public class PrintArchivedVenueDataViewModel {
+	public class PrintArchivedVenueDataViewModel
+	{
 
-		public PrintArchivedVenueDataViewModel(ComparedVenueContract comparedVenues) {
+		public PrintArchivedVenueDataViewModel(ComparedVenueContract comparedVenues)
+		{
 			ComparedVenues = comparedVenues;
 		}
 

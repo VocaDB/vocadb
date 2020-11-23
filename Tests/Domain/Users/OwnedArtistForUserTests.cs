@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Tests.Domain.Users {
+namespace VocaDb.Tests.Domain.Users
+{
 
 	/// <summary>
 	/// Tests for <see cref="OwnedArtistForUser"/>.
 	/// </summary>
 	[TestClass]
-	public class OwnedArtistForUserTests {
+	public class OwnedArtistForUserTests
+	{
 
 
 

@@ -1,11 +1,14 @@
 ﻿using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
+namespace VocaDb.Model.DataContracts.Songs
+{
 
-	public class SongInListContract {
+	public class SongInListContract
+	{
 
-		public SongInListContract(SongInList songInList, ContentLanguagePreference languagePreference) {
+		public SongInListContract(SongInList songInList, ContentLanguagePreference languagePreference)
+		{
 
 			ParamIs.NotNull(() => songInList);
 

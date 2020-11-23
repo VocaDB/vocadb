@@ -4,18 +4,21 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users {
+namespace VocaDb.Model.DataContracts.Users
+{
 
 	/// <summary>
 	/// Data contract for <see cref="UserMessage"/>.
 	/// Email address is not included, just the URL to profile icon.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class UserMessageContract {
+	public class UserMessageContract
+	{
 
 		public UserMessageContract() { }
 
-		public UserMessageContract(UserMessage message, IUserIconFactory iconFactory, bool includeBody = false) {
+		public UserMessageContract(UserMessage message, IUserIconFactory iconFactory, bool includeBody = false)
+		{
 
 			ParamIs.NotNull(() => message);
 
@@ -63,7 +66,8 @@ namespace VocaDb.Model.DataContracts.Users {
 		[DataMember]
 		public string Subject { get; set; }
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("Message '{0}' to {1} [{2}]", Subject, Receiver, Id);
 		}
 

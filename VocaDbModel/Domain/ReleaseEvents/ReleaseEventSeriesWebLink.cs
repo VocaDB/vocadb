@@ -1,8 +1,10 @@
 ﻿using VocaDb.Model.Domain.ExtLinks;
 
-namespace VocaDb.Model.Domain.ReleaseEvents {
+namespace VocaDb.Model.Domain.ReleaseEvents
+{
 
-	public class ReleaseEventSeriesWebLink : GenericWebLink<ReleaseEventSeries> {
+	public class ReleaseEventSeriesWebLink : GenericWebLink<ReleaseEventSeries>
+	{
 
 		public ReleaseEventSeriesWebLink() { }
 

@@ -2,9 +2,11 @@
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Models.Shared;
 
-namespace VocaDb.Web.Models.Event {
+namespace VocaDb.Web.Models.Event
+{
 
-	public class Versions : Versions<ReleaseEventContract> {
+	public class Versions : Versions<ReleaseEventContract>
+	{
 
 		public Versions() { }
 

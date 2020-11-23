@@ -15,19 +15,22 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 
-namespace VocaDb.Model.Database.Queries {
+namespace VocaDb.Model.Database.Queries
+{
 
-	public class EntryQueries : QueriesBase<IAlbumRepository, Album> {
+	public class EntryQueries : QueriesBase<IAlbumRepository, Album>
+	{
 
 		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
 
-		public EntryQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IAggregatedEntryImageUrlFactory entryThumbPersister) 
-			: base(repository, permissionContext) {
+		public EntryQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IAggregatedEntryImageUrlFactory entryThumbPersister)
+			: base(repository, permissionContext)
+		{
 			this.entryThumbPersister = entryThumbPersister;
 		}
 
 		public PartialFindResult<EntryForApiContract> GetList(
-			string query, 
+			string query,
 			int[] tagIds,
 			string[] tags,
 			bool childTags,
@@ -40,12 +43,14 @@ namespace VocaDb.Model.Database.Queries {
 			ContentLanguagePreference lang,
 			bool searchTags = false,
 			bool searchEvents = false
-			) {
+			)
+		{
 
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var artistTextQuery = ArtistSearchTextQuery.Create(query, nameMatchMode); // Can't use the existing words collection here as they are noncanonized
 
-			return repository.HandleQuery(ctx => {
+			return repository.HandleQuery(ctx =>
+			{
 
 				// Get all applicable names per entry type
 				var artistQuery = ctx.OfType<Artist>().Query()
@@ -125,7 +130,7 @@ namespace VocaDb.Model.Database.Queries {
 					.Skip(start)
 					.Take(maxResults)
 					.ToArray();
-				
+
 				var artistIds = entryNames.Where(e => e.EntryType == EntryType.Artist).Select(a => a.Id).ToArray();
 				var albumIds = entryNames.Where(e => e.EntryType == EntryType.Album).Select(a => a.Id).ToArray();
 				var songIds = entryNames.Where(e => e.EntryType == EntryType.Song).Select(a => a.Id).ToArray();
@@ -172,11 +177,12 @@ namespace VocaDb.Model.Database.Queries {
 
 				var count = 0;
 
-				if (getTotalCount) {
-					
-					var artistCount = 
+				if (getTotalCount)
+				{
+
+					var artistCount =
 						(artistNames.Length >= maxResults ? artistQuery.Count() : artistNames.Length);
- 
+
 					var albumCount =
 						(albumNames.Length >= maxResults ? albumQuery.Count() : albumNames.Length);
 

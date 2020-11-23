@@ -1,8 +1,10 @@
 using VocaDb.Model.Utils.Search;
 
-namespace VocaDb.Model.Utils {
+namespace VocaDb.Model.Utils
+{
 
-	public class VocaUrlMapper {
+	public class VocaUrlMapper
+	{
 
 		/// <summary>
 		/// Host address including scheme, for example http://vocadb.net.

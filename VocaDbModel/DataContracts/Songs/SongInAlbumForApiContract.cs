@@ -2,15 +2,18 @@
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
+namespace VocaDb.Model.DataContracts.Songs
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongInAlbumForApiContract {
+	public class SongInAlbumForApiContract
+	{
 
-		public SongInAlbumForApiContract() {}
+		public SongInAlbumForApiContract() { }
 
-		public SongInAlbumForApiContract(SongInAlbum songInAlbum, ContentLanguagePreference languagePreference, SongOptionalFields fields) {
-			
+		public SongInAlbumForApiContract(SongInAlbum songInAlbum, ContentLanguagePreference languagePreference, SongOptionalFields fields)
+		{
+
 			ParamIs.NotNull(() => songInAlbum);
 
 			DiscNumber = songInAlbum.DiscNumber;

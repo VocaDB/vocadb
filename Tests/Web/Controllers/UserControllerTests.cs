@@ -9,7 +9,8 @@ using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Controllers;
 using VocaDb.Web.Models;
 
-namespace VocaDb.Tests.Web.Controllers {
+namespace VocaDb.Tests.Web.Controllers
+{
 
 	/*
 	/// <summary>

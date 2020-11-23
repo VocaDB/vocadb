@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Service.VideoServices.Youtube {
+﻿namespace VocaDb.Model.Service.VideoServices.Youtube
+{
 
-	public class YoutubeResponse<T> where T : IYoutubeItem {
+	public class YoutubeResponse<T> where T : IYoutubeItem
+	{
 
 		public T[] Items { get; set; }
 

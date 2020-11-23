@@ -3,15 +3,19 @@ using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts.MikuDb {
+namespace VocaDb.Model.DataContracts.MikuDb
+{
 
-	public class InspectedAlbum {
+	public class InspectedAlbum
+	{
 
-		public InspectedAlbum() { 
+		public InspectedAlbum()
+		{
 		}
 
 		public InspectedAlbum(MikuDbAlbumContract importedAlbum)
-			: this() {
+			: this()
+		{
 
 			ImportedAlbum = importedAlbum;
 
@@ -35,11 +39,13 @@ namespace VocaDb.Model.DataContracts.MikuDb {
 
 	}
 
-	public class InspectedArtist {
+	public class InspectedArtist
+	{
 
 		public InspectedArtist() { }
 
-		public InspectedArtist(string artistName) {
+		public InspectedArtist(string artistName)
+		{
 			Name = artistName;
 		}
 
@@ -49,11 +55,13 @@ namespace VocaDb.Model.DataContracts.MikuDb {
 
 	}
 
-	public class InspectedTrack {
+	public class InspectedTrack
+	{
 
 		public InspectedTrack() { }
 
-		public InspectedTrack(ImportedAlbumTrack importedTrack) {
+		public InspectedTrack(ImportedAlbumTrack importedTrack)
+		{
 			ImportedTrack = importedTrack;
 		}
 

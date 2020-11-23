@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts;
 
-namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry {
+namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+{
 
-	public class PictureFileInfoViewModel {
+	public class PictureFileInfoViewModel
+	{
 
-		public PictureFileInfoViewModel(ArchivedEntryPictureFileContract pic) {
+		public PictureFileInfoViewModel(ArchivedEntryPictureFileContract pic)
+		{
 			Pic = pic;
 		}
 

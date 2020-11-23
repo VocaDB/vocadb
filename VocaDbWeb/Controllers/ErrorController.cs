@@ -4,13 +4,14 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Controllers
 {
-    public class ErrorController : ControllerBase
-    {
+	public class ErrorController : ControllerBase
+	{
 
-        //
-        // GET: /Error/
+		//
+		// GET: /Error/
 
-		public ActionResult BadRequest(bool? redirect) {
+		public ActionResult BadRequest(bool? redirect)
+		{
 
 			if (redirect.HasValue && redirect.Value == false)
 				ErrorLogger.LogHttpError(Request, ErrorLogger.Code_BadRequest);
@@ -20,7 +21,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult Forbidden(bool? redirect) {
+		public ActionResult Forbidden(bool? redirect)
+		{
 
 			if (redirect.HasValue && redirect.Value == false)
 				ErrorLogger.LogHttpError(Request, ErrorLogger.Code_Forbidden);
@@ -30,8 +32,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-        public ActionResult Index(int? code, bool? redirect)
-        {
+		public ActionResult Index(int? code, bool? redirect)
+		{
 
 			var realCode = code ?? ErrorLogger.Code_InternalServerError;
 
@@ -48,11 +50,12 @@ namespace VocaDb.Web.Controllers
 				ErrorLogger.LogHttpError(Request, realCode);
 
 			Response.StatusCode = realCode;
-            return View("Index");
+			return View("Index");
 
-        }
+		}
 
-		public ActionResult IPForbidden(bool? redirect) {
+		public ActionResult IPForbidden(bool? redirect)
+		{
 
 			if (redirect.HasValue && redirect.Value == false)
 				ErrorLogger.LogHttpError(Request, ErrorLogger.Code_Forbidden);
@@ -64,7 +67,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult NotFound(bool? redirect) {
+		public ActionResult NotFound(bool? redirect)
+		{
 
 			if (redirect.HasValue && redirect.Value == false)
 				ErrorLogger.LogHttpError(Request, ErrorLogger.Code_NotFound);
@@ -74,5 +78,5 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-    }
+	}
 }

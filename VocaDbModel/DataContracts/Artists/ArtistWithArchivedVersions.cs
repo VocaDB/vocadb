@@ -2,12 +2,15 @@
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts.Artists {
+namespace VocaDb.Model.DataContracts.Artists
+{
 
-	public class ArtistWithArchivedVersionsContract : ArtistContract {
+	public class ArtistWithArchivedVersionsContract : ArtistContract
+	{
 
 		public ArtistWithArchivedVersionsContract(Artist artist, ContentLanguagePreference languagePreference)
-			: base(artist, languagePreference) {
+			: base(artist, languagePreference)
+		{
 
 			ParamIs.NotNull(() => artist);
 

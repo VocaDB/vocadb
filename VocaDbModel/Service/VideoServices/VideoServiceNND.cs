@@ -3,17 +3,20 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using VocaDb.Model.Domain.PVs;
 
-namespace VocaDb.Model.Service.VideoServices {
+namespace VocaDb.Model.Service.VideoServices
+{
 
-	public class VideoServiceNND : VideoService {
+	public class VideoServiceNND : VideoService
+	{
 
 		private static readonly Regex numIdRegex = new Regex(@"(\d{6,12})");
 
-		public VideoServiceNND(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers) 
-			: base(service, parser, linkMatchers) {}
+		public VideoServiceNND(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
+			: base(service, parser, linkMatchers) { }
 
 
-		public override string GetThumbUrlById(string id) {
+		public override string GetThumbUrlById(string id)
+		{
 
 			var numId = numIdRegex.Match(id);
 

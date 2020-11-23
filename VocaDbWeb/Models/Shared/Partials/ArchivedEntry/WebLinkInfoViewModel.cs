@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts;
 
-namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry {
+namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+{
 
-	public class WebLinkInfoViewModel {
+	public class WebLinkInfoViewModel
+	{
 
-		public WebLinkInfoViewModel(ArchivedWebLinkContract link) {
+		public WebLinkInfoViewModel(ArchivedWebLinkContract link)
+		{
 			Link = link;
 		}
 

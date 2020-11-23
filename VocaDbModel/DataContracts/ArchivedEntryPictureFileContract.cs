@@ -2,14 +2,17 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.DataContracts {
+namespace VocaDb.Model.DataContracts
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArchivedEntryPictureFileContract {
+	public class ArchivedEntryPictureFileContract
+	{
 
 		public ArchivedEntryPictureFileContract() { }
 
-		public ArchivedEntryPictureFileContract(EntryPictureFile entryPictureFile) {
+		public ArchivedEntryPictureFileContract(EntryPictureFile entryPictureFile)
+		{
 
 			ParamIs.NotNull(() => entryPictureFile);
 

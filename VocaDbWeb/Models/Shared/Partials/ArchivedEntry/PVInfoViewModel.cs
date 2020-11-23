@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts.PVs;
 
-namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry {
+namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+{
 
-	public class PVInfoViewModel {
+	public class PVInfoViewModel
+	{
 
-		public PVInfoViewModel(ArchivedPVContract pv) {
+		public PVInfoViewModel(ArchivedPVContract pv)
+		{
 			PV = pv;
 		}
 

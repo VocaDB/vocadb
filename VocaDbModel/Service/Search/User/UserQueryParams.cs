@@ -2,12 +2,14 @@
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Paging;
 
-namespace VocaDb.Model.Service.Search.User {
+namespace VocaDb.Model.Service.Search.User
+{
 
 	/// <summary>
 	/// Query parameters for users.
 	/// </summary>
-	public class UserQueryParams {
+	public class UserQueryParams
+	{
 
 		public CommonSearchParams Common { get; set; }
 

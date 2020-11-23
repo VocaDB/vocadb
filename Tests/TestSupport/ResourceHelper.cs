@@ -2,11 +2,14 @@
 using System.Text;
 using HtmlAgilityPack;
 
-namespace VocaDb.Tests.TestSupport {
+namespace VocaDb.Tests.TestSupport
+{
 
-	public static class ResourceHelper {
+	public static class ResourceHelper
+	{
 
-		public static Stream GetFileStream(string fileName) {
+		public static Stream GetFileStream(string fileName)
+		{
 
 			var asm = typeof(ResourceHelper).Assembly;
 			var s = asm.GetManifestResourceNames();
@@ -14,10 +17,12 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public static string ReadTextFile(string fileName) {
+		public static string ReadTextFile(string fileName)
+		{
 
 			using (var stream = GetFileStream(fileName))
-			using (var reader = new StreamReader(stream)) {
+			using (var reader = new StreamReader(stream))
+			{
 
 				return reader.ReadToEnd();
 
@@ -25,9 +30,11 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public static HtmlDocument ReadHtmlDocument(string fileName, Encoding encoding = null) {
+		public static HtmlDocument ReadHtmlDocument(string fileName, Encoding encoding = null)
+		{
 
-			using (var stream = GetFileStream(fileName)) {
+			using (var stream = GetFileStream(fileName))
+			{
 
 				var doc = new HtmlDocument();
 				doc.Load(stream, encoding ?? Encoding.Default);
@@ -37,7 +44,8 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public static Stream TestImage() {
+		public static Stream TestImage()
+		{
 			return GetFileStream("yokohma_bay_concert.jpg");
 		}
 

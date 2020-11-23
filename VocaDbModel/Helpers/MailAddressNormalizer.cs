@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 
-namespace VocaDb.Model.Helpers {
+namespace VocaDb.Model.Helpers
+{
 
-	public static class MailAddressNormalizer {
+	public static class MailAddressNormalizer
+	{
 
 		public static readonly Dictionary<string, char> hostsWithTags = new Dictionary<string, char> {
 			// Google only has two Gmail domains: https://en.wikipedia.org/wiki/List_of_Google_domains
@@ -77,7 +79,8 @@ namespace VocaDb.Model.Helpers {
 		/// <exception cref="ArgumentNullException">address is null.</exception>
 		/// <exception cref="ArgumentException">address is System.String.Empty ("").</exception>
 		/// <exception cref="FormatException">address is not in a recognized format.</exception>
-		public static string Normalize(MailAddress address) {
+		public static string Normalize(MailAddress address)
+		{
 			var user = address.User;
 			var host = address.Host.ToLower();
 

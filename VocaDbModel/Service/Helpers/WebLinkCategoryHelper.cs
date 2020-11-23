@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.Service.Helpers {
+namespace VocaDb.Model.Service.Helpers
+{
 
 	/*
 	public class WebLinkCategoryHelper {

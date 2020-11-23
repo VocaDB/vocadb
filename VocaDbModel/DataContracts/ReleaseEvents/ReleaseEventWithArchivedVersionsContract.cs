@@ -2,12 +2,15 @@
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 
-namespace VocaDb.Model.DataContracts.ReleaseEvents {
+namespace VocaDb.Model.DataContracts.ReleaseEvents
+{
 
-	public class ReleaseEventWithArchivedVersionsContract : ReleaseEventContract {
+	public class ReleaseEventWithArchivedVersionsContract : ReleaseEventContract
+	{
 
 		public ReleaseEventWithArchivedVersionsContract(ReleaseEvent ev, ContentLanguagePreference languagePreference)
-			: base(ev, languagePreference) {
+			: base(ev, languagePreference)
+		{
 
 			ArchivedVersions = ev.ArchivedVersionsManager.Versions.Select(
 				a => new ArchivedEventVersionContract(a)).ToArray();

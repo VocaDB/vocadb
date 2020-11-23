@@ -1,12 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VocaDb.Web.Models.User {
+namespace VocaDb.Web.Models.User
+{
 
-	public class RegisterOpenAuthModel {
+	public class RegisterOpenAuthModel
+	{
 
 		public RegisterOpenAuthModel() { }
 
-		public RegisterOpenAuthModel(string accessToken, string name, int twitterId, string twitterName) {
+		public RegisterOpenAuthModel(string accessToken, string name, int twitterId, string twitterName)
+		{
 			AccessToken = accessToken;
 			UserName = name;
 			TwitterId = twitterId;

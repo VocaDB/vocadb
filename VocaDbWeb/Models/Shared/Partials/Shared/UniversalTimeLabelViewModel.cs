@@ -1,10 +1,13 @@
 using System;
 
-namespace VocaDb.Web.Models.Shared.Partials.Shared {
+namespace VocaDb.Web.Models.Shared.Partials.Shared
+{
 
-	public class UniversalTimeLabelViewModel {
+	public class UniversalTimeLabelViewModel
+	{
 
-		public UniversalTimeLabelViewModel(DateTime dateTime) {
+		public UniversalTimeLabelViewModel(DateTime dateTime)
+		{
 			DateTime = dateTime;
 		}
 

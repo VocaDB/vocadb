@@ -2,13 +2,16 @@
 using System.Web.Routing;
 using VocaDb.Web.Code;
 
-namespace VocaDb.Web.App_Start {
+namespace VocaDb.Web.App_Start
+{
 
-	public static class RouteConfig {
+	public static class RouteConfig
+	{
 
 		private const string numeric = "[0-9]+";
 
-		public static void RegisterRoutes(RouteCollection routes) {
+		public static void RegisterRoutes(RouteCollection routes)
+		{
 
 			// Ignored files
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");

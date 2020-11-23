@@ -2,25 +2,32 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Tests.Service.Search {
+namespace VocaDb.Tests.Service.Search
+{
 
 	/// <summary>
 	/// Tests for <see cref="SearchParser"/>.
 	/// </summary>
 	[TestClass]
-	public class SearchParserTests {
+	public class SearchParserTests
+	{
 
-		private void AssertSearchWord(SearchWordCollection result, string propName, params string[] values) {
+		private void AssertSearchWord(SearchWordCollection result, string propName, params string[] values)
+		{
 
 			var words = result.TakeAll(propName);
 
 			Assert.AreEqual(values.Length, words.Length, "Number of words matches");
 
-			if (values.Length == 1 && words.Length == 1) {
+			if (values.Length == 1 && words.Length == 1)
+			{
 				Assert.AreEqual(values.First(), words.First().Value);
-			} else {
+			}
+			else
+			{
 
-				foreach (var value in values) {
+				foreach (var value in values)
+				{
 					Assert.IsTrue(words.Any(w => w.Value == value));
 				}
 
@@ -32,7 +39,8 @@ namespace VocaDb.Tests.Service.Search {
 		/// Query with keywords (in this case artist name)
 		/// </summary>
 		[TestMethod]
-		public void ParseQuery_QueryWithKeywords() {
+		public void ParseQuery_QueryWithKeywords()
+		{
 
 			var result = SearchParser.ParseQuery("artist:doriko Nostalgia");
 
@@ -45,7 +53,8 @@ namespace VocaDb.Tests.Service.Search {
 		/// Keywords + phrase (series of words)
 		/// </summary>
 		[TestMethod]
-		public void ParseQuery_KeywordWithPhrase() {
+		public void ParseQuery_KeywordWithPhrase()
+		{
 
 			var result = SearchParser.ParseQuery("artist:\"Hatsune Miku\" Nostalgia");
 
@@ -58,7 +67,8 @@ namespace VocaDb.Tests.Service.Search {
 		/// Multiple words, no keywords
 		/// </summary>
 		[TestMethod]
-		public void ParseQuery_MultipleWords() {
+		public void ParseQuery_MultipleWords()
+		{
 
 			var result = SearchParser.ParseQuery("Romeo and Cinderella");
 
@@ -70,7 +80,8 @@ namespace VocaDb.Tests.Service.Search {
 		/// Single phrase
 		/// </summary>
 		[TestMethod]
-		public void ParseQuery_QueryWithPhrase() {
+		public void ParseQuery_QueryWithPhrase()
+		{
 
 			var result = SearchParser.ParseQuery("\"Romeo and Cinderella\"");
 
@@ -82,7 +93,8 @@ namespace VocaDb.Tests.Service.Search {
 		/// Words + phrase
 		/// </summary>
 		[TestMethod]
-		public void ParseQuery_WordsAndPhrase() {
+		public void ParseQuery_WordsAndPhrase()
+		{
 
 			var result = SearchParser.ParseQuery("\"Romeo and Cinderella\" Hatsune Miku");
 
@@ -94,7 +106,8 @@ namespace VocaDb.Tests.Service.Search {
 		/// Phrase with non-word characters
 		/// </summary>
 		[TestMethod]
-		public void ParseQuery_SpecialCharacters() {
+		public void ParseQuery_SpecialCharacters()
+		{
 
 			var result = SearchParser.ParseQuery("\"Dancing☆Samurai\" artist:Gackpoid-V2");
 

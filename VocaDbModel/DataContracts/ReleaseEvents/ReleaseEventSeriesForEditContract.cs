@@ -2,16 +2,20 @@
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 
-namespace VocaDb.Model.DataContracts.ReleaseEvents {
+namespace VocaDb.Model.DataContracts.ReleaseEvents
+{
 
-	public class ReleaseEventSeriesForEditContract : ReleaseEventSeriesContract {
+	public class ReleaseEventSeriesForEditContract : ReleaseEventSeriesContract
+	{
 
-		public ReleaseEventSeriesForEditContract() {
-			Names = new LocalizedStringWithIdContract[] {};
+		public ReleaseEventSeriesForEditContract()
+		{
+			Names = new LocalizedStringWithIdContract[] { };
 			WebLinks = new WebLinkContract[0];
 		}
 
-		public ReleaseEventSeriesForEditContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference) : base(series, languagePreference) {
+		public ReleaseEventSeriesForEditContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference) : base(series, languagePreference)
+		{
 
 			DefaultNameLanguage = series.TranslatedName.DefaultLanguage;
 			Names = series.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();

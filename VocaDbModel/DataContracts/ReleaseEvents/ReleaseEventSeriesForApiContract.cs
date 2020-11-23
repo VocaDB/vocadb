@@ -6,13 +6,16 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 
-namespace VocaDb.Model.DataContracts.ReleaseEvents {
+namespace VocaDb.Model.DataContracts.ReleaseEvents
+{
 
-	public class ReleaseEventSeriesForApiContract {
+	public class ReleaseEventSeriesForApiContract
+	{
 
 		public ReleaseEventSeriesForApiContract() { }
 
-		public ReleaseEventSeriesForApiContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference, ReleaseEventSeriesOptionalFields fields, IAggregatedEntryImageUrlFactory thumbPersister) {
+		public ReleaseEventSeriesForApiContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference, ReleaseEventSeriesOptionalFields fields, IAggregatedEntryImageUrlFactory thumbPersister)
+		{
 
 			Category = series.Category;
 			Id = series.Id;
@@ -21,27 +24,33 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			UrlSlug = series.UrlSlug;
 			Version = series.Version;
 
-			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.AdditionalNames)) {
+			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.AdditionalNames))
+			{
 				AdditionalNames = series.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 
-			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.Description)) {
+			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.Description))
+			{
 				Description = series.Description;
 			}
 
-			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.Events)) {
+			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.Events))
+			{
 				Events = series.Events.Select(e => new ReleaseEventForApiContract(e, languagePreference, ReleaseEventOptionalFields.None, thumbPersister)).ToArray();
 			}
 
-			if (thumbPersister != null && fields.HasFlag(ReleaseEventSeriesOptionalFields.MainPicture)) {
+			if (thumbPersister != null && fields.HasFlag(ReleaseEventSeriesOptionalFields.MainPicture))
+			{
 				MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(series), thumbPersister);
 			}
 
-			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.Names)) {
+			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.Names))
+			{
 				Names = series.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 			}
 
-			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.WebLinks)) {
+			if (fields.HasFlag(ReleaseEventSeriesOptionalFields.WebLinks))
+			{
 				WebLinks = series.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
 			}
 
@@ -92,7 +101,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 	}
 
 	[Flags]
-	public enum ReleaseEventSeriesOptionalFields {
+	public enum ReleaseEventSeriesOptionalFields
+	{
 
 		None = 0,
 		AdditionalNames = 1,

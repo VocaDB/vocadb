@@ -1,8 +1,10 @@
 using System;
 
-namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain
+{
 
-	public interface IOptionalGeoPoint {
+	public interface IOptionalGeoPoint
+	{
 
 		double? Latitude { get; }
 
@@ -13,7 +15,8 @@ namespace VocaDb.Model.Domain {
 	/// <remarks>
 	/// If Latitude or Longitude is specified, the other one needs to be specified too, but it's okay for both to be empty.
 	/// </remarks>
-	public class OptionalGeoPoint : IOptionalGeoPoint {
+	public class OptionalGeoPoint : IOptionalGeoPoint
+	{
 
 		public virtual double? Latitude { get; set; }
 
@@ -21,7 +24,8 @@ namespace VocaDb.Model.Domain {
 
 		public OptionalGeoPoint() { }
 
-		public OptionalGeoPoint(IOptionalGeoPoint geoPoint) {
+		public OptionalGeoPoint(IOptionalGeoPoint geoPoint)
+		{
 
 			ParamIs.NotNull(() => geoPoint);
 
@@ -31,7 +35,8 @@ namespace VocaDb.Model.Domain {
 
 		}
 
-		public static bool IsValid(double? latitude, double? longitude) {
+		public static bool IsValid(double? latitude, double? longitude)
+		{
 
 			if (!latitude.HasValue && !longitude.HasValue)
 				return true;
@@ -49,7 +54,8 @@ namespace VocaDb.Model.Domain {
 
 		}
 
-		public static void Validate(double? latitude, double? longitude) {
+		public static void Validate(double? latitude, double? longitude)
+		{
 
 			if (!IsValid(latitude, longitude))
 				throw new FormatException("Invalid coordinates");
@@ -60,7 +66,8 @@ namespace VocaDb.Model.Domain {
 
 		public virtual bool IsEmpty => !Latitude.HasValue && !Longitude.HasValue;
 
-		public virtual bool Equals(IOptionalGeoPoint other) {
+		public virtual bool Equals(IOptionalGeoPoint other)
+		{
 
 			if (other == null)
 				return IsEmpty;

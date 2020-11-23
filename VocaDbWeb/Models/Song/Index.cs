@@ -5,17 +5,20 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 
-namespace VocaDb.Web.Models.Song {
+namespace VocaDb.Web.Models.Song
+{
 
 	/// <summary>
 	/// Parameter collection given to index action.
 	/// </summary>
-	public class IndexRouteParams {
+	public class IndexRouteParams
+	{
 
-		public IndexRouteParams() {}
+		public IndexRouteParams() { }
 
 		public IndexRouteParams(IndexRouteParams index, int? page)
-			: this() {
+			: this()
+		{
 
 			ParamIs.NotNull(() => index);
 
@@ -70,7 +73,8 @@ namespace VocaDb.Web.Models.Song {
 
 	}
 
-	public enum SongViewMode {
+	public enum SongViewMode
+	{
 
 		Details,
 

@@ -6,14 +6,17 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.VideoServices;
 
-namespace VocaDb.Model.DataContracts.PVs {
+namespace VocaDb.Model.DataContracts.PVs
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class PVContract : IPVWithThumbnail {
+	public class PVContract : IPVWithThumbnail
+	{
 
 		public PVContract() { }
 
-		public PVContract(PV pv) {
+		public PVContract(PV pv)
+		{
 
 			ParamIs.NotNull(() => pv);
 
@@ -29,7 +32,8 @@ namespace VocaDb.Model.DataContracts.PVs {
 
 		}
 
-		public PVContract(ArchivedPVContract contract) {
+		public PVContract(ArchivedPVContract contract)
+		{
 
 			ParamIs.NotNull(() => contract);
 
@@ -43,7 +47,8 @@ namespace VocaDb.Model.DataContracts.PVs {
 		}
 
 		public PVContract(PVForSong pv)
-			: this((PV)pv) {
+			: this((PV)pv)
+		{
 
 			Disabled = pv.Disabled;
 			Length = pv.Length;
@@ -51,7 +56,8 @@ namespace VocaDb.Model.DataContracts.PVs {
 
 		}
 
-		public PVContract(VideoUrlParseResult parseResult, PVType type) {
+		public PVContract(VideoUrlParseResult parseResult, PVType type)
+		{
 
 			ParamIs.NotNull(() => parseResult);
 
@@ -66,7 +72,7 @@ namespace VocaDb.Model.DataContracts.PVs {
 			PVType = type;
 
 			Url = PV.GetUrl(Service, PVId, ExtendedMetadata);
-			
+
 		}
 
 		[DataMember]
@@ -118,7 +124,8 @@ namespace VocaDb.Model.DataContracts.PVs {
 		/// </summary>
 		/// <param name="pv">Contract to be compared to. Can be null.</param>
 		/// <returns>True if the editable properties of this contract are the same as the one being compared to.</returns>
-		public bool ContentEquals(PVContract pv) {
+		public bool ContentEquals(PVContract pv)
+		{
 
 			if (pv == null)
 				return false;
@@ -127,7 +134,8 @@ namespace VocaDb.Model.DataContracts.PVs {
 
 		}
 
-		public PVContract NullToEmpty() {
+		public PVContract NullToEmpty()
+		{
 			Author = Author ?? string.Empty;
 			Name = Name ?? string.Empty;
 			ThumbUrl = ThumbUrl ?? string.Empty;

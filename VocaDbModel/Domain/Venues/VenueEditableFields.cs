@@ -1,9 +1,11 @@
 using System;
 
-namespace VocaDb.Model.Domain.Venues {
+namespace VocaDb.Model.Domain.Venues
+{
 
 	[Flags]
-	public enum VenueEditableFields {
+	public enum VenueEditableFields
+	{
 
 		Nothing = 0,
 

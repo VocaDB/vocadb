@@ -1,15 +1,18 @@
 ﻿using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts {
+namespace VocaDb.Model.DataContracts
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class TranslatedStringContract : ITranslatedString {
+	public class TranslatedStringContract : ITranslatedString
+	{
 
-		public TranslatedStringContract() {}
+		public TranslatedStringContract() { }
 
-		public TranslatedStringContract(string english, string japanese, 
-			string romaji, ContentLanguageSelection defaultLanguage) {
+		public TranslatedStringContract(string english, string japanese,
+			string romaji, ContentLanguageSelection defaultLanguage)
+		{
 
 			English = english;
 			Japanese = japanese;
@@ -18,8 +21,9 @@ namespace VocaDb.Model.DataContracts {
 
 		}
 
-		public TranslatedStringContract(TranslatedString str) {
-			
+		public TranslatedStringContract(TranslatedString str)
+		{
+
 			ParamIs.NotNull(() => str);
 
 			Default = str.Default;

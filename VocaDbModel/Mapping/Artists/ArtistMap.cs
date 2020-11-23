@@ -1,11 +1,14 @@
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.Mapping.Artists {
+namespace VocaDb.Model.Mapping.Artists
+{
 
-	public class ArtistMap : ClassMap<Artist> {
+	public class ArtistMap : ClassMap<Artist>
+	{
 
-		public ArtistMap() {
+		public ArtistMap()
+		{
 
 			Cache.ReadWrite();
 
@@ -43,18 +46,21 @@ namespace VocaDb.Model.Mapping.Artists {
 			HasMany(m => m.Hits).Inverse().Cascade.AllDeleteOrphan();
 			HasMany(m => m.WebLinks).Table("ArtistWebLinks").Inverse().Cascade.All().Cache.ReadWrite();
 
-			Component(m => m.ArchivedVersionsManager, 
+			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Artist]").Inverse().Cascade.All().OrderBy("Created DESC"));
 
-			Component(m => m.Description, c => {
+			Component(m => m.Description, c =>
+			{
 				c.Map(m => m.Original).Column("Description").Not.Nullable().Length(int.MaxValue);
 				c.Map(m => m.English).Column("DescriptionEng").Not.Nullable().Length(int.MaxValue);
 			});
 
-			Component(m => m.Names, c => {
+			Component(m => m.Names, c =>
+			{
 				c.Map(m => m.AdditionalNamesString).Not.Nullable().Length(1024);
 				c.HasMany(m => m.Names).Table("ArtistNames").KeyColumn("[Artist]").Inverse().Cascade.All().Cache.ReadWrite();
-				c.Component(m => m.SortNames, c2 => {
+				c.Component(m => m.SortNames, c2 =>
+				{
 					c2.Map(m => m.DefaultLanguage, "DefaultNameLanguage");
 					c2.Map(m => m.Japanese, "JapaneseName");
 					c2.Map(m => m.English, "EnglishName");
@@ -62,17 +68,20 @@ namespace VocaDb.Model.Mapping.Artists {
 				});
 			});
 
-			Component(m => m.Picture, c => {
+			Component(m => m.Picture, c =>
+			{
 				c.Map(m => m.Bytes, "PictureBytes").Length(int.MaxValue);
 			}).LazyLoad();
 
-			Component(m => m.Pictures, c => {
+			Component(m => m.Pictures, c =>
+			{
 				c.HasMany(m => m.Pictures).KeyColumn("[Artist]").Inverse().Cascade.All().Cache.ReadWrite();
 			});
 
 			Component(m => m.ReleaseDate, c => c.Map(m => m.DateTime).Column("ReleaseDate").Nullable());
 
-			Component(m => m.Tags, c => {
+			Component(m => m.Tags, c =>
+			{
 				c.HasMany(m => m.Usages).Table("ArtistTagUsages").KeyColumn("[Artist]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			});
 
@@ -84,9 +93,11 @@ namespace VocaDb.Model.Mapping.Artists {
 
 	}
 
-	public class ArchivedArtistVersionMap : ClassMap<ArchivedArtistVersion> {
-		
-		public ArchivedArtistVersionMap() {
+	public class ArchivedArtistVersionMap : ClassMap<ArchivedArtistVersion>
+	{
+
+		public ArchivedArtistVersionMap()
+		{
 
 			Id(m => m.Id);
 
@@ -103,12 +114,14 @@ namespace VocaDb.Model.Mapping.Artists {
 			References(m => m.Artist);
 			References(m => m.Author);
 
-			Component(m => m.Diff, c => {
+			Component(m => m.Diff, c =>
+			{
 				c.Map(m => m.ChangedFieldsString, ClassConventions.EscapeColumn("ChangedFields")).Length(1000).Not.Nullable();
 				c.Map(m => m.IsSnapshot).Not.Nullable();
 			});
 
-			Component(m => m.Picture, c => {
+			Component(m => m.Picture, c =>
+			{
 				c.Map(m => m.Bytes, "PictureBytes").Length(int.MaxValue);
 			}).LazyLoad();
 
@@ -116,10 +129,12 @@ namespace VocaDb.Model.Mapping.Artists {
 
 	}
 
-	public class ArtistForArtistMap : ClassMap<ArtistForArtist> {
-		
-		public ArtistForArtistMap() {
-			
+	public class ArtistForArtistMap : ClassMap<ArtistForArtist>
+	{
+
+		public ArtistForArtistMap()
+		{
+
 			Table("GroupsForArtists");
 			Id(m => m.Id);
 

@@ -1,18 +1,22 @@
 ﻿using System;
 using VocaDb.Model.DataContracts;
-namespace VocaDb.Model.Domain.Globalization {
+namespace VocaDb.Model.Domain.Globalization
+{
 
-	public class LocalizedString : ILocalizedString, IEquatable<LocalizedString> {
+	public class LocalizedString : ILocalizedString, IEquatable<LocalizedString>
+	{
 
 		private string val;
 
-		public LocalizedString() {
+		public LocalizedString()
+		{
 			Language = ContentLanguageSelection.Japanese;
 			Value = string.Empty;
 		}
 
-		public LocalizedString(string val, ContentLanguageSelection language) 
-			: this() {
+		public LocalizedString(string val, ContentLanguageSelection language)
+			: this()
+		{
 
 			Value = val;
 			Language = language;
@@ -21,47 +25,56 @@ namespace VocaDb.Model.Domain.Globalization {
 
 		public virtual ContentLanguageSelection Language { get; set; }
 
-		public virtual string Value {
+		public virtual string Value
+		{
 			get { return val; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				val = value;
 			}
 		}
 
-		public virtual bool ContentEquals(ILocalizedString another) {
+		public virtual bool ContentEquals(ILocalizedString another)
+		{
 
 			return (another != null && another.Language == Language && another.Value == Value);
 
 		}
 
-		public virtual bool ContentEquals(LocalizedString another) {
+		public virtual bool ContentEquals(LocalizedString another)
+		{
 
 			return (another != null && another.Language == Language && another.Value == Value);
 
 		}
 
-		public virtual bool ContentEquals(LocalizedStringContract another) {
+		public virtual bool ContentEquals(LocalizedStringContract another)
+		{
 
 			return (another != null && another.Language == Language && another.Value == Value);
 
 		}
 
-		public virtual bool Equals(LocalizedString another) {
+		public virtual bool Equals(LocalizedString another)
+		{
 
 			return ContentEquals(another);
 
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as LocalizedString);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return (Language + ":" + Value).GetHashCode();
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return Language + ": " + Value;
 		}
 

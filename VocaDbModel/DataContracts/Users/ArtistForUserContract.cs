@@ -3,13 +3,16 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users {
+namespace VocaDb.Model.DataContracts.Users
+{
 
-	public class ArtistForUserContract {
+	public class ArtistForUserContract
+	{
 
-		public ArtistForUserContract() {}
+		public ArtistForUserContract() { }
 
-		public ArtistForUserContract(OwnedArtistForUser ownedArtistForUser, ContentLanguagePreference languagePreference) {
+		public ArtistForUserContract(OwnedArtistForUser ownedArtistForUser, ContentLanguagePreference languagePreference)
+		{
 
 			ParamIs.NotNull(() => ownedArtistForUser);
 
@@ -19,7 +22,8 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		}
 
-		public ArtistForUserContract(ArtistContract artist) {
+		public ArtistForUserContract(ArtistContract artist)
+		{
 
 			Artist = artist;
 

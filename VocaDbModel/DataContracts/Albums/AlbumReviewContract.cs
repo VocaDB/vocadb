@@ -3,15 +3,19 @@ using System.ComponentModel.DataAnnotations;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Albums;
 
-namespace VocaDb.Model.DataContracts.Albums {
+namespace VocaDb.Model.DataContracts.Albums
+{
 
-	public class AlbumReviewContract {
+	public class AlbumReviewContract
+	{
 
-		public AlbumReviewContract() {
+		public AlbumReviewContract()
+		{
 			Title = string.Empty;
 		}
 
-		public AlbumReviewContract(AlbumReview review, IUserIconFactory userIconFactory) : this() {
+		public AlbumReviewContract(AlbumReview review, IUserIconFactory userIconFactory) : this()
+		{
 
 			if (review == null)
 				throw new ArgumentNullException(nameof(review));

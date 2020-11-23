@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VocaDb.Model.Domain.Images {
+namespace VocaDb.Model.Domain.Images
+{
 
-	public interface IEntryPictureFilePersister : IEntryImagePersister {
+	public interface IEntryPictureFilePersister : IEntryImagePersister
+	{
 
 	}
 

@@ -1,14 +1,17 @@
 ﻿using System.Security.Principal;
 using VocaDb.Model.DataContracts.Users;
 
-namespace VocaDb.Model.Service.Security {
+namespace VocaDb.Model.Service.Security
+{
 
-	public class VocaDbPrincipal : GenericPrincipal {
+	public class VocaDbPrincipal : GenericPrincipal
+	{
 
 		private readonly UserWithPermissionsContract user;
 
 		public VocaDbPrincipal(IIdentity identity, UserWithPermissionsContract user)
-			: base(identity, new string[] {}) {
+			: base(identity, new string[] { })
+		{
 
 			this.user = user;
 

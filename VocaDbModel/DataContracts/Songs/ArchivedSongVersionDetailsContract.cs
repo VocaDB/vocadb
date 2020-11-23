@@ -3,13 +3,16 @@ using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
+namespace VocaDb.Model.DataContracts.Songs
+{
 
-	public class ArchivedSongVersionDetailsContract {
+	public class ArchivedSongVersionDetailsContract
+	{
 
 		public ArchivedSongVersionDetailsContract() { }
 
-		public ArchivedSongVersionDetailsContract(ArchivedSongVersion archived, ArchivedSongVersion comparedVersion, IUserPermissionContext permissionContext) {
+		public ArchivedSongVersionDetailsContract(ArchivedSongVersion archived, ArchivedSongVersion comparedVersion, IUserPermissionContext permissionContext)
+		{
 
 			ParamIs.NotNull(() => archived);
 

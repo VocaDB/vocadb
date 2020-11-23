@@ -6,43 +6,50 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Domain.Images {
+namespace VocaDb.Tests.Domain.Images
+{
 
 	/// <summary>
 	/// Tests for <see cref="ImageThumbGenerator"/>.
 	/// </summary>
 	[TestClass]
-	public class ImageThumbGeneratorTests {
+	public class ImageThumbGeneratorTests
+	{
 
 		private InMemoryImagePersister persister;
 		private ImageThumbGenerator target;
 
 		private Stream TestImage() => ResourceHelper.TestImage();
 
-		private void AssertDimensions(IEntryImageInformation imageInfo, ImageSize size, int width, int height) {
+		private void AssertDimensions(IEntryImageInformation imageInfo, ImageSize size, int width, int height)
+		{
 
 			using (var stream = persister.GetReadStream(imageInfo, size))
-			using (var img = Image.FromStream(stream)) {
+			using (var img = Image.FromStream(stream))
+			{
 				Assert.AreEqual(width, img.Width, "Image width");
 				Assert.AreEqual(height, img.Height, "Image height");
 			}
 
 		}
 
-		private EntryThumbContract CallGenerateThumbsAndMoveImage(ImageSizes sizes) {
+		private EntryThumbContract CallGenerateThumbsAndMoveImage(ImageSizes sizes)
+		{
 
-			var thumb = new EntryThumbContract {EntryType = EntryType.SongList };
+			var thumb = new EntryThumbContract { EntryType = EntryType.SongList };
 
-			using (var input = TestImage()) {
-				target.GenerateThumbsAndMoveImage(input, thumb, sizes);				
+			using (var input = TestImage())
+			{
+				target.GenerateThumbsAndMoveImage(input, thumb, sizes);
 			}
-			
+
 			return thumb;
 
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			persister = new InMemoryImagePersister();
 			target = new ImageThumbGenerator(persister);
@@ -50,7 +57,8 @@ namespace VocaDb.Tests.Domain.Images {
 		}
 
 		[TestMethod]
-		public void GenerateThumbsAndMoveImage_Original() {
+		public void GenerateThumbsAndMoveImage_Original()
+		{
 
 			var thumb = CallGenerateThumbsAndMoveImage(ImageSizes.Original);
 
@@ -60,7 +68,8 @@ namespace VocaDb.Tests.Domain.Images {
 		}
 
 		[TestMethod]
-		public void GenerateThumbsAndMoveImage_Thumbnail() {
+		public void GenerateThumbsAndMoveImage_Thumbnail()
+		{
 
 			var thumb = CallGenerateThumbsAndMoveImage(ImageSizes.Thumb);
 
@@ -70,7 +79,8 @@ namespace VocaDb.Tests.Domain.Images {
 		}
 
 		[TestMethod]
-		public void GenerateThumbsAndMoveImage_OriginalAndSmallThumb() {
+		public void GenerateThumbsAndMoveImage_OriginalAndSmallThumb()
+		{
 
 			var thumb = CallGenerateThumbsAndMoveImage(ImageSizes.Original | ImageSizes.SmallThumb);
 

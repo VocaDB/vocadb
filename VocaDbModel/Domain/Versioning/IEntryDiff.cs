@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Domain.Versioning {
+﻿namespace VocaDb.Model.Domain.Versioning
+{
 
-	public interface IEntryDiff {
+	public interface IEntryDiff
+	{
 
 		string[] ChangedFieldNames { get; }
 

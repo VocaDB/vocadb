@@ -22,14 +22,16 @@ using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Tests.Web.Controllers.DataAccess {
+namespace VocaDb.Tests.Web.Controllers.DataAccess
+{
 
 	/// <summary>
 	/// Tests for <see cref="ArtistQueries"/>.
 	/// </summary>
 	[TestClass]
-	public class ArtistQueriesTests {
-		
+	public class ArtistQueriesTests
+	{
+
 		private Artist artist;
 		private CreateArtistContract newArtistContract;
 		private InMemoryImagePersister imagePersister;
@@ -39,25 +41,29 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// <summary>
 		/// Logged in user
 		/// </summary>
-		private User user; 
+		private User user;
 		private User user2;
 		private Artist vocalist;
 
-		private async Task<ArtistForEditContract> CallUpdate(ArtistForEditContract contract) {
+		private async Task<ArtistForEditContract> CallUpdate(ArtistForEditContract contract)
+		{
 			contract.Id = await queries.Update(contract, null, permissionContext);
 			return contract;
 		}
 
-		private async Task<ArtistForEditContract> CallUpdate(Stream image, string mime = MediaTypeNames.Image.Jpeg) {
+		private async Task<ArtistForEditContract> CallUpdate(Stream image, string mime = MediaTypeNames.Image.Jpeg)
+		{
 			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English, new InMemoryImagePersister());
-			using (var stream = image) {
+			using (var stream = image)
+			{
 				contract.Id = await queries.Update(contract, new EntryPictureFileContract(stream, mime, (int)stream.Length, ImagePurpose.Main), permissionContext);
-			}		
+			}
 			return contract;
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			artist = CreateEntry.Producer(name: "Tripshots");
 			vocalist = CreateEntry.Vocalist(name: "Hatsune Miku");
@@ -73,10 +79,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			permissionContext = new FakePermissionContext(user);
 			imagePersister = new InMemoryImagePersister();
 
-			queries = new ArtistQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, imagePersister, MemoryCache.Default, 
+			queries = new ArtistQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, imagePersister, MemoryCache.Default,
 				new FakeUserIconFactory(), new EnumTranslations(), imagePersister);
 
-			newArtistContract = new CreateArtistContract {
+			newArtistContract = new CreateArtistContract
+			{
 				ArtistType = ArtistType.Producer,
 				Description = string.Empty,
 				Names = new[] {
@@ -87,7 +94,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		}
 
-		private (bool created, ArtistReport report) CallCreateReport(ArtistReportType reportType, int? versionNumber = null, Artist artist = null) {
+		private (bool created, ArtistReport report) CallCreateReport(ArtistReportType reportType, int? versionNumber = null, Artist artist = null)
+		{
 			artist ??= this.artist;
 			var result = queries.CreateReport(artist.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
 			var report = repository.Load<ArtistReport>(result.reportId);
@@ -95,7 +103,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Create() {
+		public async Task Create()
+		{
 
 			var result = await queries.Create(newArtistContract);
 
@@ -125,7 +134,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public async Task Create_NoPermission() {
+		public async Task Create_NoPermission()
+		{
 
 			user.GroupId = UserGroupId.Limited;
 			permissionContext.RefreshLoggedUser(repository);
@@ -135,8 +145,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CreateReport() {
-			
+		public void CreateReport()
+		{
+
 			var editor = user2;
 			repository.Save(ArchivedArtistVersion.Create(artist, new ArtistDiff(), new AgentLoginData(editor), ArtistArchiveReason.PropertiesUpdated, string.Empty));
 			var (created, report) = CallCreateReport(ArtistReportType.InvalidInfo);
@@ -154,8 +165,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CreateReport_OwnershipClaim() {
-			
+		public void CreateReport_OwnershipClaim()
+		{
+
 			var editor = user2;
 			repository.Save(ArchivedArtistVersion.Create(artist, new ArtistDiff(), new AgentLoginData(editor), ArtistArchiveReason.PropertiesUpdated, string.Empty));
 			var (created, _) = CallCreateReport(ArtistReportType.OwnershipClaim);
@@ -167,7 +179,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void FindDuplicates_Name() {
+		public void FindDuplicates_Name()
+		{
 
 			var result = queries.FindDuplicates(new[] { artist.DefaultName }, string.Empty);
 
@@ -178,7 +191,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void FindDuplicates_Link() {
+		public void FindDuplicates_Link()
+		{
 
 			var result = queries.FindDuplicates(new string[0], "http://tripshots.net");
 
@@ -189,7 +203,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void FindDuplicates_DifferentScheme() {
+		public void FindDuplicates_DifferentScheme()
+		{
 
 			var result = queries.FindDuplicates(new string[0], "https://tripshots.net");
 
@@ -200,7 +215,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void FindDuplicates_IgnoreNullsAndEmpty() {
+		public void FindDuplicates_IgnoreNullsAndEmpty()
+		{
 
 			var result = queries.FindDuplicates(new[] { null, string.Empty }, string.Empty);
 
@@ -210,7 +226,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void FindDuplicates_Link_IgnoreDeleted() {
+		public void FindDuplicates_Link_IgnoreDeleted()
+		{
 
 			artist.Deleted = true;
 			var result = queries.FindDuplicates(new string[0], "http://tripshots.net");
@@ -221,7 +238,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void FindDuplicates_Link_IgnoreInvalidLink() {
+		public void FindDuplicates_Link_IgnoreInvalidLink()
+		{
 
 			var result = queries.FindDuplicates(new string[0], "Miku!");
 			Assert.AreEqual(0, result?.Length, "Number of results");
@@ -229,8 +247,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task GetCoverPictureThumb() {
-			
+		public async Task GetCoverPictureThumb()
+		{
+
 			var contract = await CallUpdate(ResourceHelper.TestImage());
 			contract.PictureMime = "image/jpeg";
 
@@ -245,7 +264,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetDetails() {
+		public void GetDetails()
+		{
 
 			var result = queries.GetDetails(artist.Id, "39.39.39.39");
 
@@ -258,14 +278,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetTagSuggestions() {
+		public void GetTagSuggestions()
+		{
 
 			var song = repository.Save(CreateEntry.Song());
 
 		}
 
 		[TestMethod]
-		public async Task Revert() {
+		public async Task Revert()
+		{
 
 			// Arrange
 			artist.Description.English = "Original";
@@ -278,7 +300,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			Assert.AreEqual("Updated", entryFromRepo.Description.English, "Description was updated");
 
 			// Act
-			var result = await queries.RevertToVersion(oldVer.Id);			
+			var result = await queries.RevertToVersion(oldVer.Id);
 
 			// Assert
 			Assert.AreEqual(0, result.Warnings.Length, "Number of warnings");
@@ -297,7 +319,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// Old version has no image, image will be removed.
 		/// </summary>
 		[TestMethod]
-		public async Task Revert_RemoveImage() {
+		public async Task Revert_RemoveImage()
+		{
 
 			var oldVer = await repository.HandleTransactionAsync(ctx => queries.ArchiveAsync(ctx, artist, ArtistArchiveReason.PropertiesUpdated));
 			await CallUpdate(ResourceHelper.TestImage());
@@ -320,7 +343,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// Revert to an older version with a different image.
 		/// </summary>
 		[TestMethod]
-		public async Task Revert_ImageChanged() {
+		public async Task Revert_ImageChanged()
+		{
 
 			// Arrange
 			var original = await CallUpdate(ResourceHelper.TestImage()); // First version, this is the one being restored to	
@@ -351,7 +375,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public async Task Revert_NotAllowed() {
+		public async Task Revert_NotAllowed()
+		{
 
 			// Regular users can't revert
 			user.GroupId = UserGroupId.Regular;
@@ -362,8 +387,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_Names() {
-			
+		public async Task Update_Names()
+		{
+
 			// Arrange
 			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English, new InMemoryImagePersister());
 
@@ -396,7 +422,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_OriginalName_UpdateArtistStrings() {
+		public async Task Update_OriginalName_UpdateArtistStrings()
+		{
 
 			artist.Names.Names.Clear();
 			artist.Names.Add(new ArtistName(artist, new LocalizedString("初音ミク", ContentLanguageSelection.Japanese)));
@@ -421,7 +448,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_Picture() {
+		public async Task Update_Picture()
+		{
 
 			var contract = await CallUpdate(ResourceHelper.TestImage());
 
@@ -442,13 +470,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_ArtistLinks() {
+		public async Task Update_ArtistLinks()
+		{
 
 			// Arrange
 			var circle = repository.Save(CreateEntry.Circle());
 			var illustrator = repository.Save(CreateEntry.Artist(ArtistType.Illustrator));
 
-			var contract = new ArtistForEditContract(vocalist, ContentLanguagePreference.English, new InMemoryImagePersister()) {
+			var contract = new ArtistForEditContract(vocalist, ContentLanguagePreference.English, new InMemoryImagePersister())
+			{
 				Groups = new[] {
 					new ArtistForArtistContract { Parent = new ArtistContract(circle, ContentLanguagePreference.English)},
 				},
@@ -470,14 +500,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_ArtistLinks_ChangeRole() {
+		public async Task Update_ArtistLinks_ChangeRole()
+		{
 
 			// Arrange
 			var illustrator = repository.Save(CreateEntry.Artist(ArtistType.Illustrator));
 			vocalist.AddGroup(illustrator, ArtistLinkType.Illustrator);
 
 			// Change linked artist from illustrator to voice provider
-			var contract = new ArtistForEditContract(vocalist, ContentLanguagePreference.English, new InMemoryImagePersister()) {
+			var contract = new ArtistForEditContract(vocalist, ContentLanguagePreference.English, new InMemoryImagePersister())
+			{
 				Illustrator = null,
 				VoiceProvider = new ArtistContract(illustrator, ContentLanguagePreference.English)
 			};
@@ -497,14 +529,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_ArtistLinks_IgnoreInvalid() {
+		public async Task Update_ArtistLinks_IgnoreInvalid()
+		{
 
 			// Arrange
 			var circle = repository.Save(CreateEntry.Circle());
 			var circle2 = repository.Save(CreateEntry.Circle());
 
 			// Cannot add character designer for producer
-			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English, new InMemoryImagePersister()) {
+			var contract = new ArtistForEditContract(artist, ContentLanguagePreference.English, new InMemoryImagePersister())
+			{
 				AssociatedArtists = new[] {
 					new ArtistForArtistContract(new ArtistForArtist(circle, artist, ArtistLinkType.CharacterDesigner), ContentLanguagePreference.English),
 				},

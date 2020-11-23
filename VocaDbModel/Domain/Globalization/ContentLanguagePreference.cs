@@ -1,8 +1,10 @@
-﻿namespace VocaDb.Model.Domain.Globalization {
+﻿namespace VocaDb.Model.Domain.Globalization
+{
 
-	public enum ContentLanguagePreference {
+	public enum ContentLanguagePreference
+	{
 
-		Default	= 0,
+		Default = 0,
 
 		Japanese = 1,
 

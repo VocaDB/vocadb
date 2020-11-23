@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Comment {
+namespace VocaDb.Web.Models.Shared.Partials.Comment
+{
 
-	public class CommentBodyKnockoutViewModel {
+	public class CommentBodyKnockoutViewModel
+	{
 
-		public CommentBodyKnockoutViewModel(string messageBinding) {
+		public CommentBodyKnockoutViewModel(string messageBinding)
+		{
 			MessageBinding = messageBinding;
 		}
 

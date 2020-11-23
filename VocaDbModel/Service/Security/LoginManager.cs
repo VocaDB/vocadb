@@ -11,12 +11,14 @@ using System.Globalization;
 using System.Threading;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Model.Service.Security {
+namespace VocaDb.Model.Service.Security
+{
 
 	/// <summary>
 	/// Manages login and culture related properties per-request.
 	/// </summary>
-	public class LoginManager : IUserPermissionContext {
+	public class LoginManager : IUserPermissionContext
+	{
 
 		public const int InvalidId = 0;
 		public const string LangParamName = "lang";
@@ -25,12 +27,14 @@ namespace VocaDb.Model.Service.Security {
 
 		private UserWithPermissionsContract user;
 
-		private void SetCultureSafe(string name, bool culture, bool uiCulture) {
+		private void SetCultureSafe(string name, bool culture, bool uiCulture)
+		{
 
 			if (string.IsNullOrEmpty(name))
 				return;
 
-			try {
+			try
+			{
 
 				var c = CultureInfo.GetCultureInfo(name);
 
@@ -40,13 +44,16 @@ namespace VocaDb.Model.Service.Security {
 				if (uiCulture)
 					Thread.CurrentThread.CurrentUICulture = c;
 
-			} catch (ArgumentException x) { 
+			}
+			catch (ArgumentException x)
+			{
 				log.Warn(x, "Unable to set culture");
 			}
 
 		}
 
-		public static string GetHashedAccessKey(string key) {
+		public static string GetHashedAccessKey(string key)
+		{
 
 			var salt = ConfigurationManager.AppSettings["AccessKeySalt"] ?? string.Empty;
 
@@ -54,7 +61,8 @@ namespace VocaDb.Model.Service.Security {
 
 		}
 
-		public static void SetLoggedUser(UserWithPermissionsContract user) {
+		public static void SetLoggedUser(UserWithPermissionsContract user)
+		{
 
 			ParamIs.NotNull(() => user);
 
@@ -67,7 +75,8 @@ namespace VocaDb.Model.Service.Security {
 
 		protected IPrincipal User => HttpContext.Current != null ? HttpContext.Current.User : null;
 
-		public bool HasPermission(PermissionToken token) {
+		public bool HasPermission(PermissionToken token)
+		{
 
 			if (token == PermissionToken.Nothing)
 				return true;
@@ -82,8 +91,10 @@ namespace VocaDb.Model.Service.Security {
 
 		}
 
-		public bool IsLoggedIn {
-			get {
+		public bool IsLoggedIn
+		{
+			get
+			{
 				return (HttpContext.Current != null && User != null && User.Identity.IsAuthenticated && User is VocaDbPrincipal);
 			}
 		}
@@ -97,8 +108,10 @@ namespace VocaDb.Model.Service.Security {
 		/// <summary>
 		/// Currently logged in user. Can be null.
 		/// </summary>
-		public UserWithPermissionsContract LoggedUser {
-			get {
+		public UserWithPermissionsContract LoggedUser
+		{
+			get
+			{
 
 				if (user != null)
 					return user;
@@ -116,8 +129,10 @@ namespace VocaDb.Model.Service.Security {
 
 		public string Name => User.Identity.Name;
 
-		public UserGroupId UserGroupId {
-			get {
+		public UserGroupId UserGroupId
+		{
+			get
+			{
 
 				if (LoggedUser == null)
 					return UserGroupId.Nothing;
@@ -127,32 +142,39 @@ namespace VocaDb.Model.Service.Security {
 			}
 		}
 
-		public void InitLanguage() {
+		public void InitLanguage()
+		{
 
-			if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.Request.Params["culture"])) {
+			if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.Request.Params["culture"]))
+			{
 
 				var cName = HttpContext.Current.Request.Params["culture"];
 				SetCultureSafe(cName, true, true);
 
-			} else if (IsLoggedIn) {
+			}
+			else if (IsLoggedIn)
+			{
 				SetCultureSafe(LoggedUser.Culture, true, false);
 				SetCultureSafe(LoggedUser.Language, false, true);
 			}
 
 		}
 
-		public void VerifyLogin() {
+		public void VerifyLogin()
+		{
 
 			if (!IsLoggedIn)
 				throw new NotAllowedException("Must be logged in.");
 
 		}
 
-		public void VerifyPermission(PermissionToken flag) {
+		public void VerifyPermission(PermissionToken flag)
+		{
 
-			if (!HasPermission(flag)) {
+			if (!HasPermission(flag))
+			{
 				log.Warn("User '{0}' does not have the requested permission '{1}'", Name, flag);
-				throw new NotAllowedException();				
+				throw new NotAllowedException();
 			}
 
 		}

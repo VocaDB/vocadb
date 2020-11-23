@@ -1,10 +1,13 @@
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Web.Models.Shared.Partials.Search {
+namespace VocaDb.Web.Models.Shared.Partials.Search
+{
 
-	public class AdvancedFilterViewModel {
+	public class AdvancedFilterViewModel
+	{
 
-		public AdvancedFilterViewModel(string description, AdvancedFilterType filterType, string param, bool negate) {
+		public AdvancedFilterViewModel(string description, AdvancedFilterType filterType, string param, bool negate)
+		{
 			Description = description;
 			FilterType = filterType;
 			Param = param;

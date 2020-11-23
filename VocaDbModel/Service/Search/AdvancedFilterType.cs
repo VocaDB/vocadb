@@ -1,10 +1,12 @@
-﻿namespace VocaDb.Model.Service.Search {
+﻿namespace VocaDb.Model.Service.Search
+{
 
 	/// <summary>
 	/// Type of <see cref="AdvancedSearchFilter"/>.
 	/// Filter types are common for all entry types, but not all filter types are supported for all entry types.
 	/// </summary>
-	public enum AdvancedFilterType {
+	public enum AdvancedFilterType
+	{
 
 		Nothing,
 

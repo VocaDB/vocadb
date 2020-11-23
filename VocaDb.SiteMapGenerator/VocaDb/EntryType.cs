@@ -1,6 +1,8 @@
-﻿namespace VocaDb.SiteMapGenerator.VocaDb {
+﻿namespace VocaDb.SiteMapGenerator.VocaDb
+{
 
-	public enum EntryType {
+	public enum EntryType
+	{
 
 		Artist,
 		Album,

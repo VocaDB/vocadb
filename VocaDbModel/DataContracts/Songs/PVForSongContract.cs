@@ -3,13 +3,16 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
+namespace VocaDb.Model.DataContracts.Songs
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class PVForSongContract : PVContract {
+	public class PVForSongContract : PVContract
+	{
 
 		public PVForSongContract(PVForSong pv, ContentLanguagePreference languagePreference)
-			: base(pv) {
+			: base(pv)
+		{
 
 			Song = new SongContract(pv.Song, languagePreference);
 

@@ -7,17 +7,20 @@ using VocaDb.Model.Service.Security;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Service {
+namespace VocaDb.Tests.Service
+{
 
 	[TestClass]
-	public class UserServiceTests {
+	public class UserServiceTests
+	{
 
 		private FakeUserRepository repository;
 		private UserService service;
 		private User user;
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			user = CreateEntry.User();
 			repository = new FakeUserRepository(user);
@@ -26,7 +29,8 @@ namespace VocaDb.Tests.Service {
 		}
 
 		[TestMethod]
-		public void CheckAccessWithKey_Valid() {
+		public void CheckAccessWithKey_Valid()
+		{
 
 			var result = service.CheckAccessWithKey(user.Name, LoginManager.GetHashedAccessKey(user.AccessKey), "localhatsune", false);
 
@@ -36,16 +40,18 @@ namespace VocaDb.Tests.Service {
 		}
 
 		[TestMethod]
-		public void CheckAccessWithKey_Invalid() {
+		public void CheckAccessWithKey_Invalid()
+		{
 
 			var result = service.CheckAccessWithKey(user.Name, LoginManager.GetHashedAccessKey("rinrin"), "localhatsune", false);
 
 			Assert.IsNull(result, "result");
-			
+
 		}
 
 		[TestMethod]
-		public void UpdateSongRating_Create() {
+		public void UpdateSongRating_Create()
+		{
 
 			var song = repository.Save(CreateEntry.Song());
 			service.UpdateSongRating(user.Id, song.Id, SongVoteRating.Favorite);
@@ -57,7 +63,8 @@ namespace VocaDb.Tests.Service {
 		}
 
 		[TestMethod]
-		public void UpdateSongRating_Update() {
+		public void UpdateSongRating_Update()
+		{
 
 			var song = repository.Save(CreateEntry.Song());
 			service.UpdateSongRating(user.Id, song.Id, SongVoteRating.Favorite);
@@ -71,7 +78,8 @@ namespace VocaDb.Tests.Service {
 		}
 
 		[TestMethod]
-		public void UpdateSongRating_Delete() {
+		public void UpdateSongRating_Delete()
+		{
 
 			var song = repository.Save(CreateEntry.Song());
 			service.UpdateSongRating(user.Id, song.Id, SongVoteRating.Favorite);

@@ -4,9 +4,11 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Service.Search.Events {
+namespace VocaDb.Model.Service.Search.Events
+{
 
-	public class EventQueryParams {
+	public class EventQueryParams
+	{
 
 		public DateTime? AfterDate { get; set; }
 		public DateTime? BeforeDate { get; set; }

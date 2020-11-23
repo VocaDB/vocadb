@@ -2,12 +2,14 @@ using System.Drawing;
 using System.IO;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.Images {
+namespace VocaDb.Model.Domain.Images
+{
 
 	/// <summary>
 	/// Writes entry images to a store (such as disk) and loads them back as needed.
 	/// </summary>
-	public interface IEntryImagePersister : IEntryImageUrlFactory {
+	public interface IEntryImagePersister : IEntryImageUrlFactory
+	{
 
 		/// <summary>
 		/// Gets stream for reading an image from the store.
@@ -36,9 +38,12 @@ namespace VocaDb.Model.Domain.Images {
 
 	}
 
-	public static class EntryImagePersisterExtensions {
-		public static byte[] ReadBytes(this IEntryImagePersister persister, IEntryImageInformation imageInfo, ImageSize size) {
-			using (var stream = persister.GetReadStream(imageInfo, size)) {
+	public static class EntryImagePersisterExtensions
+	{
+		public static byte[] ReadBytes(this IEntryImagePersister persister, IEntryImageInformation imageInfo, ImageSize size)
+		{
+			using (var stream = persister.GetReadStream(imageInfo, size))
+			{
 				return StreamHelper.ReadStream(stream);
 			}
 		}

@@ -1,11 +1,14 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.Mapping.Tags {
+namespace VocaDb.Model.Mapping.Tags
+{
 
-	public class RelatedTagMap : ClassMap<RelatedTag> {
+	public class RelatedTagMap : ClassMap<RelatedTag>
+	{
 
-		public RelatedTagMap() {
+		public RelatedTagMap()
+		{
 
 			Cache.ReadWrite();
 			Id(m => m.Id);

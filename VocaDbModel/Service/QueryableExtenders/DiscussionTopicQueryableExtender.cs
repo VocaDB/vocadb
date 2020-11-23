@@ -1,13 +1,17 @@
 ﻿using System.Linq;
 using VocaDb.Model.Domain.Discussions;
 
-namespace VocaDb.Model.Service.QueryableExtenders {
+namespace VocaDb.Model.Service.QueryableExtenders
+{
 
-	public static class DiscussionTopicQueryableExtender {
+	public static class DiscussionTopicQueryableExtender
+	{
 
-		public static IQueryable<DiscussionTopic> OrderBy(this IQueryable<DiscussionTopic> query, DiscussionTopicSortRule sort) {
+		public static IQueryable<DiscussionTopic> OrderBy(this IQueryable<DiscussionTopic> query, DiscussionTopicSortRule sort)
+		{
 
-			switch (sort) {
+			switch (sort)
+			{
 				case DiscussionTopicSortRule.Name:
 					return query.OrderBy(d => d.Name);
 				case DiscussionTopicSortRule.DateCreated:
@@ -18,10 +22,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 			return query;
 
-		} 
+		}
 
-		public static IQueryable<DiscussionTopic> WhereIsInFolder(this IQueryable<DiscussionTopic> query, int? folderId) {
-			
+		public static IQueryable<DiscussionTopic> WhereIsInFolder(this IQueryable<DiscussionTopic> query, int? folderId)
+		{
+
 			if (folderId == null)
 				return query;
 
@@ -31,8 +36,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 	}
 
-	public enum DiscussionTopicSortRule {
-		
+	public enum DiscussionTopicSortRule
+	{
+
 		None,
 
 		Name,

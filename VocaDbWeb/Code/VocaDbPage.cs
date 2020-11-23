@@ -7,9 +7,11 @@ using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Web.Code {
+namespace VocaDb.Web.Code
+{
 
-	public abstract class VocaDbPage<TModel> : WebViewPage<TModel> {
+	public abstract class VocaDbPage<TModel> : WebViewPage<TModel>
+	{
 
 		public BrandableStringsManager BrandableStrings => DependencyResolver.Current.GetService<BrandableStringsManager>();
 
@@ -33,27 +35,33 @@ namespace VocaDb.Web.Code {
 		/// </summary>
 		public string RootPath => Url.Content("~/");
 
-		public string DecimalDot(double val) {
+		public string DecimalDot(double val)
+		{
 			return NumberFormatHelper.DecimalDot(val);
 		}
 
-		public string ToJS(bool val) {
+		public string ToJS(bool val)
+		{
 			return val ? "true" : "false";
 		}
 
-		public string ToJS(bool? val) {
+		public string ToJS(bool? val)
+		{
 			return val.HasValue ? (val.Value ? "true" : "false") : "null";
 		}
 
-		public string ToJS(int? val) {
+		public string ToJS(int? val)
+		{
 			return val.HasValue ? val.ToString() : "null";
 		}
 
-		public IHtmlString ToJS(string str) {
+		public IHtmlString ToJS(string str)
+		{
 			return new MvcHtmlString(JsonHelpers.Serialize(str));
 		}
 
-		public IHtmlString ToJS(object obj) {
+		public IHtmlString ToJS(object obj)
+		{
 			return new MvcHtmlString(JsonHelpers.Serialize(obj));
 		}
 
@@ -63,8 +71,9 @@ namespace VocaDb.Web.Code {
 
 	}
 
-	public abstract class VocaDbPage : WebViewPage {
-		
+	public abstract class VocaDbPage : WebViewPage
+	{
+
 		public BrandableStringsManager BrandableStrings => DependencyResolver.Current.GetService<BrandableStringsManager>();
 
 		public VdbConfigManager Config => DependencyResolver.Current.GetService<VdbConfigManager>();
@@ -75,23 +84,28 @@ namespace VocaDb.Web.Code {
 
 		public string RootPath => Url.Content("~/");
 
-		public string ToJS(bool val) {
+		public string ToJS(bool val)
+		{
 			return val ? "true" : "false";
 		}
 
-		public string ToJS(bool? val) {
+		public string ToJS(bool? val)
+		{
 			return val.HasValue ? ToJS(val.Value) : "null";
 		}
 
-		public string ToJS(int? val) {
+		public string ToJS(int? val)
+		{
 			return val.HasValue ? val.ToString() : "null";
 		}
 
-		public IHtmlString ToJS(string str) {
+		public IHtmlString ToJS(string str)
+		{
 			return new MvcHtmlString(JsonHelpers.Serialize(str));
 		}
 
-		public IHtmlString ToJS(object obj) {
+		public IHtmlString ToJS(object obj)
+		{
 			return new MvcHtmlString(JsonHelpers.Serialize(obj));
 		}
 

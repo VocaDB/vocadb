@@ -8,11 +8,14 @@ using NHibernate.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Paging;
 
-namespace VocaDb.Model.Service.QueryableExtenders {
+namespace VocaDb.Model.Service.QueryableExtenders
+{
 
-	public static class GenericQueryableExtender {
+	public static class GenericQueryableExtender
+	{
 
-		public static IOrderedQueryable<TSource> OrderBy<TSource, TKey>(this IQueryable<TSource> query, Expression<Func<TSource, TKey>> keySelector, SortDirection direction) {
+		public static IOrderedQueryable<TSource> OrderBy<TSource, TKey>(this IQueryable<TSource> query, Expression<Func<TSource, TKey>> keySelector, SortDirection direction)
+		{
 
 			return direction == SortDirection.Ascending ?
 				query.OrderBy(keySelector) :
@@ -20,7 +23,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static IOrderedQueryable<TSource> ThenBy<TSource, TKey>(this IOrderedQueryable<TSource> query, Expression<Func<TSource, TKey>> keySelector, SortDirection direction) {
+		public static IOrderedQueryable<TSource> ThenBy<TSource, TKey>(this IOrderedQueryable<TSource> query, Expression<Func<TSource, TKey>> keySelector, SortDirection direction)
+		{
 
 			return direction == SortDirection.Ascending ?
 				query.ThenBy(keySelector) :
@@ -36,8 +40,9 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// <param name="paging">Paging properties. Can be null.</param>
 		/// <param name="allowEmpty">Allow empty result if MaxResults is less than 1</param>
 		/// <returns>Query which is filtered for paging.</returns>
-		public static IQueryable<T> Paged<T>(this IQueryable<T> query, PagingProperties paging, bool allowEmpty = false) {
-			
+		public static IQueryable<T> Paged<T>(this IQueryable<T> query, PagingProperties paging, bool allowEmpty = false)
+		{
+
 			if (paging == null)
 				return query;
 
@@ -52,13 +57,14 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		}
 
 		// http://blog.jukkahyv.com/2016/04/09/transform-object-to-another-type-in-a-linq-query/
-		public static IQueryable<TResult> SelectObject<TSource, TResult>(this IQueryable<TSource> query) {
+		public static IQueryable<TResult> SelectObject<TSource, TResult>(this IQueryable<TSource> query)
+		{
 
 			var t1 = typeof(TSource);
 			var t2 = typeof(TResult);
 			var properties = t2.GetProperties().Where(p => p.CanWrite && t1.GetProperty(p.Name)?.PropertyType == p.PropertyType).ToArray();
 			var param = Expression.Parameter(typeof(TSource), "p");
-			var memberBindings = properties.Select(targetProperty => 
+			var memberBindings = properties.Select(targetProperty =>
 				Expression.Bind(targetProperty, Expression.Property(param, t1.GetProperty(targetProperty.Name)))); // Prop = p.Prop
 			var memberInit = Expression.MemberInit(Expression.New(typeof(TResult)), memberBindings); // new T2 { Prop = p.Prop, ... }
 
@@ -66,9 +72,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static Task<bool> VdbAnyAsync<TSource>(this IQueryable<TSource> source) {
+		public static Task<bool> VdbAnyAsync<TSource>(this IQueryable<TSource> source)
+		{
 
-			if (source.Provider is INhQueryProvider) {
+			if (source.Provider is INhQueryProvider)
+			{
 				return source.AnyAsync();
 			}
 
@@ -76,9 +84,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static Task<int> VdbCountAsync<TSource>(this IQueryable<TSource> source) {
+		public static Task<int> VdbCountAsync<TSource>(this IQueryable<TSource> source)
+		{
 
-			if (source.Provider is INhQueryProvider) {
+			if (source.Provider is INhQueryProvider)
+			{
 				return source.CountAsync();
 			}
 
@@ -86,9 +96,11 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		}
 
-		public static Task<TSource> VdbFirstOrDefaultAsync<TSource>(this IQueryable<TSource> source) {
+		public static Task<TSource> VdbFirstOrDefaultAsync<TSource>(this IQueryable<TSource> source)
+		{
 
-			if (source.Provider is INhQueryProvider) {
+			if (source.Provider is INhQueryProvider)
+			{
 				return source.FirstOrDefaultAsync();
 			}
 
@@ -101,10 +113,12 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// To be used instead of the NHibernate extension method to make the query testable.
 		/// Calls NHibernate's method when supported, otherwise non-async version.
 		/// </summary>
-		public static Task<List<TSource>> VdbToListAsync<TSource>(this IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken)) {
+		public static Task<List<TSource>> VdbToListAsync<TSource>(this IQueryable<TSource> source, CancellationToken cancellationToken = default(CancellationToken))
+		{
 
 			// Note: ToListAsync only supports INhQueryProvider
-			if (source.Provider is INhQueryProvider) {
+			if (source.Provider is INhQueryProvider)
+			{
 				return source.ToListAsync();
 			}
 
@@ -119,12 +133,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			return new List<T>().AsQueryable();
 		}
 
-		public static IQueryable<T> WhereIdIn<T>(this IQueryable<T> query, IEnumerable<int> ids) where T : IEntryWithIntId 
+		public static IQueryable<T> WhereIdIn<T>(this IQueryable<T> query, IEnumerable<int> ids) where T : IEntryWithIntId
 			=> query.Where(e => ids.Contains(e.Id));
 
 	}
 
-	public enum SortDirection {
+	public enum SortDirection
+	{
 		Ascending,
 		Descending
 	}

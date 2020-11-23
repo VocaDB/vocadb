@@ -1,11 +1,13 @@
 ﻿using VocaDb.Model.DataContracts.PVs;
 
-namespace VocaDb.Model.Domain.PVs {
+namespace VocaDb.Model.Domain.PVs
+{
 
 	/// <summary>
 	/// Interface for PVs
 	/// </summary>
-	public interface IPV {
+	public interface IPV
+	{
 
 		bool Disabled { get; }
 

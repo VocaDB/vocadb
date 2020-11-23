@@ -6,20 +6,25 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Tests.TestSupport {
+namespace VocaDb.Tests.TestSupport
+{
 
-	public static class VocaDbAssert {
+	public static class VocaDbAssert
+	{
 
-		public static void ContainsArtists(IEnumerable<IArtistLinkWithRoles> artistLinks, params string[] artistNames) {
+		public static void ContainsArtists(IEnumerable<IArtistLinkWithRoles> artistLinks, params string[] artistNames)
+		{
 
-			foreach (var artistName in artistNames) {
-				Assert.IsTrue(artistLinks.Any(a => a.Artist != null && artistName.Equals(a.Artist.DefaultName)), 
+			foreach (var artistName in artistNames)
+			{
+				Assert.IsTrue(artistLinks.Any(a => a.Artist != null && artistName.Equals(a.Artist.DefaultName)),
 					string.Format("Found artist '{0}'", artistName));
 			}
 
 		}
 
-		public static void HasArtist(Album album, string artistName, ArtistRoles? roles) {
+		public static void HasArtist(Album album, string artistName, ArtistRoles? roles)
+		{
 
 			var link = album.AllArtists.FirstOrDefault(a => (a.Artist != null && a.Artist.DefaultName.Equals(artistName)) || (a.Artist == null && string.Equals(a.Name, artistName)));
 
@@ -30,7 +35,8 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public static void HasArtist(Album album, Artist artist, ArtistRoles? roles) {
+		public static void HasArtist(Album album, Artist artist, ArtistRoles? roles)
+		{
 
 			var link = album.GetArtistLink(artist);
 
@@ -41,8 +47,9 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public static void HasSong(Album album, Song song, int trackNumber) {
-			
+		public static void HasSong(Album album, Song song, int trackNumber)
+		{
+
 			var link = album.AllSongs.FirstOrDefault(s => s.Song != null && s.Song.Equals(song));
 
 			Assert.IsNotNull(link, string.Format("{0} exists for {1}", song, album));
@@ -51,8 +58,9 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public static void HasSong(Album album, string songName, int trackNumber) {
-			
+		public static void HasSong(Album album, string songName, int trackNumber)
+		{
+
 			var link = album.AllSongs.FirstOrDefault(s => string.Equals(s.Name, songName));
 
 			Assert.IsNotNull(link, string.Format("Song '{0}' exists for {1}", songName, album));

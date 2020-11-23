@@ -1,20 +1,25 @@
 using System.Configuration;
 
-namespace VocaDb.Model.Utils.Config {
+namespace VocaDb.Model.Utils.Config
+{
 
-	public class SiteSettingsSection : ConfigurationSection {
+	public class SiteSettingsSection : ConfigurationSection
+	{
 
-		public SiteSettingsSection() {
+		public SiteSettingsSection()
+		{
 		}
 
 		[ConfigurationProperty("bannerUrl", DefaultValue = "")]
-		public string BannerUrl {
+		public string BannerUrl
+		{
 			get => (string)this["bannerUrl"];
 			set => this["bannerUrl"] = value;
 		}
 
 		[ConfigurationProperty("blogUrl", DefaultValue = "")]
-		public string BlogUrl {
+		public string BlogUrl
+		{
 			get => (string)this["blogUrl"];
 			set => this["blogUrl"] = value;
 		}
@@ -26,37 +31,43 @@ namespace VocaDb.Model.Utils.Config {
 		public string DefaultStylesheet => (string)this["defaultStylesheet"];
 
 		[ConfigurationProperty("ircUrl", DefaultValue = "irc.rizon.net/vocadb")]
-		public string IRCUrl {
+		public string IRCUrl
+		{
 			get => (string)this["ircUrl"];
 			set => this["ircUrl"] = value;
 		}
 
 		[ConfigurationProperty("minAlbumYear", DefaultValue = 2000)]
-		public int MinAlbumYear {
+		public int MinAlbumYear
+		{
 			get => (int)this["minAlbumYear"];
 			set => this["minAlbumYear"] = value;
 		}
 
 		[ConfigurationProperty("openSearchPath", DefaultValue = "/opensearch.xml")]
-		public string OpenSearchPath {
+		public string OpenSearchPath
+		{
 			get => (string)this["openSearchPath"];
 			set => this["openSearchPath"] = value;
 		}
 
 		[ConfigurationProperty("paypalDonateCert", DefaultValue = "")]
-		public string PaypalDonateCert {
+		public string PaypalDonateCert
+		{
 			get => (string)this["paypalDonateCert"];
 			set => this["paypalDonateCert"] = value;
 		}
 
 		[ConfigurationProperty("patreonLink", DefaultValue = "")]
-		public string PatreonLink {
+		public string PatreonLink
+		{
 			get => (string)this["patreonLink"];
 			set => this["patreonLink"] = value;
 		}
 
 		[ConfigurationProperty("signupsDisabled", DefaultValue = "false")]
-		public bool SignupsDisabled {
+		public bool SignupsDisabled
+		{
 			get => (bool)this["signupsDisabled"];
 			set => this["signupsDisabled"] = value;
 		}
@@ -68,7 +79,8 @@ namespace VocaDb.Model.Utils.Config {
 		public string SiteTitle => (string)this["siteTitle"];
 
 		[ConfigurationProperty("sitewideAnnouncement", DefaultValue = "")]
-		public string SitewideAnnouncement {
+		public string SitewideAnnouncement
+		{
 			get => (string)this["sitewideAnnouncement"];
 			set => this["sitewideAnnouncement"] = value;
 		}
@@ -80,7 +92,8 @@ namespace VocaDb.Model.Utils.Config {
 		public string Stylesheets => (string)this["stylesheets"];
 
 		[ConfigurationProperty("twitterAccountName", DefaultValue = "")]
-		public string TwitterAccountName {
+		public string TwitterAccountName
+		{
 			get => (string)this["twitterAccountName"];
 			set => this["twitterAccountName"] = value;
 		}

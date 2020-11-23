@@ -6,20 +6,23 @@ using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.ExtLinks;
 
-namespace VocaDb.Tests.Domain {
+namespace VocaDb.Tests.Domain
+{
 
 	/// <summary>
 	/// Tests for <see cref="WebLink"/>.
 	/// </summary>
 	[TestClass]
-	public class WebLinkTests {
+	public class WebLinkTests
+	{
 
 		private readonly WebLinkContract webLinkContract = new WebLinkContract("test", "http://www.test.com", WebLinkCategory.Commercial) { Id = 1 };
 		private readonly WebLinkContract webLinkContract2 = new WebLinkContract("test2", "http://www.test2.com", WebLinkCategory.Official) { Id = 2 };
 		private IWebLinkFactory<WebLink> webLinkFactory;
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			var webLinkFactoryMock = new Mock<IWebLinkFactory<WebLink>>();
 			webLinkFactoryMock
@@ -30,7 +33,8 @@ namespace VocaDb.Tests.Domain {
 		}
 
 		[TestMethod]
-		public void Ctor_Contract() {
+		public void Ctor_Contract()
+		{
 
 			var result = new WebLink(webLinkContract);
 
@@ -39,7 +43,8 @@ namespace VocaDb.Tests.Domain {
 		}
 
 		[TestMethod]
-		public void ContentEquals_AnotherLink_AreSame() {
+		public void ContentEquals_AnotherLink_AreSame()
+		{
 
 			var copy = new WebLink(webLinkContract);
 
@@ -50,7 +55,8 @@ namespace VocaDb.Tests.Domain {
 		}
 
 		[TestMethod]
-		public void ContentEquals_AnotherLink_AreDifferent() {
+		public void ContentEquals_AnotherLink_AreDifferent()
+		{
 
 			var copy = new WebLink(webLinkContract);
 
@@ -59,13 +65,14 @@ namespace VocaDb.Tests.Domain {
 			Assert.IsFalse(result, "are not equal");
 
 		}
-		
+
 		[TestMethod]
-		public void Sync_Contracts_NoExistingLinks() {
+		public void Sync_Contracts_NoExistingLinks()
+		{
 
 			var newLinks = new[] { webLinkContract };
 
-			var result = WebLink.Sync(new WebLink[] {}, newLinks, webLinkFactory);
+			var result = WebLink.Sync(new WebLink[] { }, newLinks, webLinkFactory);
 
 			Assert.IsNotNull(result, "result is not null");
 			Assert.IsTrue(result.Changed, "is changed");
@@ -78,7 +85,8 @@ namespace VocaDb.Tests.Domain {
 		}
 
 		[TestMethod]
-		public void Sync_Contracts_NotChanged() {
+		public void Sync_Contracts_NotChanged()
+		{
 
 			var oldLinks = new[] { new WebLink(webLinkContract) { Id = 1 } };
 			var newLinks = new[] { webLinkContract };
@@ -96,7 +104,8 @@ namespace VocaDb.Tests.Domain {
 		}
 
 		[TestMethod]
-		public void Sync_Contracts_Edited() {
+		public void Sync_Contracts_Edited()
+		{
 
 			var oldLinks = new[] { new WebLink(webLinkContract) { Id = 2 } };
 			var newLinks = new[] { webLinkContract2 };
@@ -114,7 +123,8 @@ namespace VocaDb.Tests.Domain {
 		}
 
 		[TestMethod]
-		public void Sync_Contracts_Removed() {
+		public void Sync_Contracts_Removed()
+		{
 
 			var oldLinks = new List<WebLink> { new WebLink(webLinkContract) { Id = 1 } };
 			var newLinks = new WebLinkContract[] { };
@@ -132,7 +142,8 @@ namespace VocaDb.Tests.Domain {
 		}
 
 		[TestMethod]
-		public void Sync_Contracts_SkipWhitespace() {
+		public void Sync_Contracts_SkipWhitespace()
+		{
 
 			var newLinks = new[] { new WebLinkContract(" ", "VocaDB", WebLinkCategory.Reference) };
 

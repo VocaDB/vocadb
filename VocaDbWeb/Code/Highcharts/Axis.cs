@@ -1,12 +1,15 @@
 ﻿using Newtonsoft.Json;
 
-namespace VocaDb.Web.Code.Highcharts {
+namespace VocaDb.Web.Code.Highcharts
+{
 
-	public class Axis {
+	public class Axis
+	{
 
 		public Axis() { }
 
-		public Axis(AxisType type, Title title) {
+		public Axis(AxisType type, Title title)
+		{
 			Type = type;
 			Title = title;
 		}
@@ -22,8 +25,9 @@ namespace VocaDb.Web.Code.Highcharts {
 
 	}
 
-	public enum AxisType {
-		
+	public enum AxisType
+	{
+
 		Datetime
 
 	}

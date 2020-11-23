@@ -11,18 +11,21 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.SongLists {
+namespace VocaDb.Model.DataContracts.SongLists
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongListForApiContract : SongListBaseContract, ISongList {
+	public class SongListForApiContract : SongListBaseContract, ISongList
+	{
 
 		IUser ISongList.Author => Author;
 
 		public SongListForApiContract() { }
 
 		public SongListForApiContract(SongList list, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory, IAggregatedEntryImageUrlFactory imagePersister,
-			SongListOptionalFields fields) : base(list) {
-			
+			SongListOptionalFields fields) : base(list)
+		{
+
 			ParamIs.NotNull(() => list);
 
 			Author = new UserForApiContract(list.Author, userIconFactory, UserOptionalFields.None);
@@ -30,19 +33,23 @@ namespace VocaDb.Model.DataContracts.SongLists {
 			EventDate = list.EventDate;
 			Status = list.Status;
 
-			if (fields.HasFlag(SongListOptionalFields.Description)) {
+			if (fields.HasFlag(SongListOptionalFields.Description))
+			{
 				Description = list.Description;
 			}
 
-			if (fields.HasFlag(SongListOptionalFields.Events)) {
+			if (fields.HasFlag(SongListOptionalFields.Events))
+			{
 				Events = list.Events.Select(e => new ReleaseEventForApiContract(e, languagePreference, ReleaseEventOptionalFields.Venue, imagePersister)).OrderBy(e => e.Date).ThenBy(e => e.Name).ToArray();
 			}
 
-			if (fields.HasFlag(SongListOptionalFields.MainPicture)) {
+			if (fields.HasFlag(SongListOptionalFields.MainPicture))
+			{
 				MainPicture = list.Thumb != null ? new EntryThumbForApiContract(list.Thumb, imagePersister) : null;
 			}
 
-			if (fields.HasFlag(SongListOptionalFields.Tags)) {
+			if (fields.HasFlag(SongListOptionalFields.Tags))
+			{
 				Tags = list.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(u => u.Count).ToArray();
 			}
 
@@ -80,13 +87,14 @@ namespace VocaDb.Model.DataContracts.SongLists {
 	}
 
 	[Flags]
-	public enum SongListOptionalFields {
+	public enum SongListOptionalFields
+	{
 
-		None		= 0,
-		Description	= 1,
-		Events		= 2,
-		MainPicture	= 4,
-		Tags		= 8
+		None = 0,
+		Description = 1,
+		Events = 2,
+		MainPicture = 4,
+		Tags = 8
 
 	}
 

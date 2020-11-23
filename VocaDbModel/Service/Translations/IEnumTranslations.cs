@@ -4,9 +4,11 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.Service.Translations {
+namespace VocaDb.Model.Service.Translations
+{
 
-	public interface IEnumTranslations {
+	public interface IEnumTranslations
+	{
 
 		TranslateableEnum<AlbumReportType> AlbumReportTypeNames { get; }
 

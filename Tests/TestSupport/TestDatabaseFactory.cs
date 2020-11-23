@@ -6,15 +6,19 @@ using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using VocaDb.Model.Service;
 
-namespace VocaDb.Tests.TestSupport {
+namespace VocaDb.Tests.TestSupport
+{
 
-	public class TestDatabaseFactory {
+	public class TestDatabaseFactory
+	{
 
-		private void RunSql(string connectionStringName, Action<SqlConnection> func) {
+		private void RunSql(string connectionStringName, Action<SqlConnection> func)
+		{
 
 			var connectionString = ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
 
-			using (var connection = new SqlConnection(connectionString)) {
+			using (var connection = new SqlConnection(connectionString))
+			{
 
 				connection.Open();
 
@@ -28,10 +32,12 @@ namespace VocaDb.Tests.TestSupport {
 		/// Creates additional required database schemas.
 		/// NHibernate schema export doesn't create any schemas, so only the dbo schema is created by default.
 		/// </summary>
-		private void CreateSchemas(string connectionString) {
+		private void CreateSchemas(string connectionString)
+		{
 
 			// SQL from http://stackoverflow.com/a/521271 (might be T-SQL specific)
-			RunSql(connectionString, connection => {
+			RunSql(connectionString, connection =>
+			{
 
 				new SqlCommand(@"
 					IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'mikudb')
@@ -49,15 +55,17 @@ namespace VocaDb.Tests.TestSupport {
 		}
 
 		// Drop old database if any, create new schema
-		private void RecreateSchema(NHibernate.Cfg.Configuration cfg, string connectionStringName) {
+		private void RecreateSchema(NHibernate.Cfg.Configuration cfg, string connectionStringName)
+		{
 
-			#if !DEBUG
+#if !DEBUG
 			return;
-			#endif
+#endif
 
 			bool writeOutput = false;
 
-			RunSql(connectionStringName, connection => {
+			RunSql(connectionStringName, connection =>
+			{
 
 				// NH schema export does not correctly drop all constraints
 				// SQL from http://stackoverflow.com/a/26348027
@@ -66,11 +74,15 @@ namespace VocaDb.Tests.TestSupport {
 				", connection).ExecuteNonQuery();
 
 				var export = new SchemaExport(cfg);
-				if (writeOutput) {
-					using (var writer = new StreamWriter(@"C:\Temp\vdb.sql")) {
+				if (writeOutput)
+				{
+					using (var writer = new StreamWriter(@"C:\Temp\vdb.sql"))
+					{
 						export.Execute(false, true, false, connection, writer);
 					}
-				} else {
+				}
+				else
+				{
 					export.Execute(false, true, false, connection, null);
 				}
 
@@ -78,7 +90,8 @@ namespace VocaDb.Tests.TestSupport {
 
 		}
 
-		public ISessionFactory BuildTestSessionFactory() {
+		public ISessionFactory BuildTestSessionFactory()
+		{
 
 
 			var testDatabaseConnectionString = "LocalDB";

@@ -5,67 +5,83 @@ using System.Threading.Tasks;
 using NLog;
 using VocaDb.SiteMapGenerator.VocaDb.DataContracts;
 
-namespace VocaDb.SiteMapGenerator.VocaDb {
+namespace VocaDb.SiteMapGenerator.VocaDb
+{
 
-	public class VocaDbClient {
+	public class VocaDbClient
+	{
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly string apiRoot;
 
-		private async Task<T> GetEntries<T>(string apiUrl) {
-			
+		private async Task<T> GetEntries<T>(string apiUrl)
+		{
+
 			var uri = new Uri(apiUrl);
-			using (var client = new HttpClient()) {
-				
+			using (var client = new HttpClient())
+			{
+
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 				HttpResponseMessage response;
 
-				try {
+				try
+				{
 					response = await client.GetAsync(uri);
 					response.EnsureSuccessStatusCode();
-				} catch (HttpRequestException x) {
+				}
+				catch (HttpRequestException x)
+				{
 					log.Fatal(x, "Unable to get entries from VocaDB API");
 					throw;
 				}
 
-				try {
+				try
+				{
 					var entries = await response.Content.ReadAsAsync<T>();
 					return entries;
-				} catch (UnsupportedMediaTypeException x) {
+				}
+				catch (UnsupportedMediaTypeException x)
+				{
 					log.Fatal(x, "Unable to get entries from VocaDB API");
-					throw;			
+					throw;
 				}
 
 			}
 
 		}
 
-		public VocaDbClient(string apiRoot) {
+		public VocaDbClient(string apiRoot)
+		{
 			this.apiRoot = apiRoot;
 		}
 
-		public async Task<int[]> GetAlbums() {
+		public async Task<int[]> GetAlbums()
+		{
 			log.Info("Getting albums");
 			return await GetEntries<int[]>(string.Format("{0}api/albums/ids", apiRoot));
 		}
 
-		public async Task<int[]> GetArtists() {
+		public async Task<int[]> GetArtists()
+		{
 			log.Info("Getting artists");
 			return await GetEntries<int[]>(string.Format("{0}api/artists/ids", apiRoot));
 		}
 
-		public async Task<PartialFindResult<EntryBaseContract>> GetEvents() {
+		public async Task<PartialFindResult<EntryBaseContract>> GetEvents()
+		{
 			log.Info("Getting artists");
 			return await GetEntries<PartialFindResult<EntryBaseContract>>(string.Format("{0}api/releaseEvents?maxResults=100000", apiRoot));
 		}
 
-		public async Task<int[]> GetSongs() {
+		public async Task<int[]> GetSongs()
+		{
 			log.Info("Getting songs");
 			return await GetEntries<int[]>(string.Format("{0}api/songs/ids", apiRoot));
 		}
 
-		public async Task<PartialFindResult<EntryBaseContract>> GetTags() {
+		public async Task<PartialFindResult<EntryBaseContract>> GetTags()
+		{
 			log.Info("Getting tags");
 			return await GetEntries<PartialFindResult<EntryBaseContract>>(string.Format("{0}api/tags?maxResults=100000", apiRoot));
 		}

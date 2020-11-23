@@ -2,9 +2,11 @@
 using VocaDb.Model.Service.BrandableStrings.Collections;
 using VocaDb.UtaiteDb.Resources.ViewRes;
 
-namespace VocaDb.UtaiteDb.Resources {
+namespace VocaDb.UtaiteDb.Resources
+{
 
-	public class Header : IBrandedStringsAssemblyHeader {
+	public class Header : IBrandedStringsAssemblyHeader
+	{
 
 		public AlbumStrings Album => new AlbumStrings(AlbumRes.ResourceManager);
 

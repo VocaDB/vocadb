@@ -7,11 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
-namespace VocaDb.Model.Helpers {
+namespace VocaDb.Model.Helpers
+{
 
-	public static class HtmlRequestHelper {
+	public static class HtmlRequestHelper
+	{
 
-		public static HtmlDocument Download(string url, string acceptLanguage = null) {
+		public static HtmlDocument Download(string url, string acceptLanguage = null)
+		{
 
 			var request = WebRequest.Create(url);
 
@@ -20,17 +23,21 @@ namespace VocaDb.Model.Helpers {
 
 			WebResponse response = request.GetResponse();
 
-			try {
+			try
+			{
 				var enc = response.Headers[HttpResponseHeader.ContentEncoding];
 
-				using (var stream = response.GetResponseStream()) {
+				using (var stream = response.GetResponseStream())
+				{
 					var encoding = (!string.IsNullOrEmpty(enc) ? Encoding.GetEncoding(enc) : Encoding.UTF8);
 
 					var doc = new HtmlDocument();
 					doc.Load(stream, encoding);
 					return doc;
 				}
-			} finally {
+			}
+			finally
+			{
 				response.Close();
 			}
 
@@ -40,22 +47,28 @@ namespace VocaDb.Model.Helpers {
 
 		/// <exception cref="HttpRequestException">If the request failed</exception>
 		public static async Task<T> GetStreamAsync<T>(string url, Func<Stream, T> func, TimeSpan timeout, string userAgent = "",
-			Action<HttpRequestHeaders> headers = null) {
+			Action<HttpRequestHeaders> headers = null)
+		{
 
 			var uri = new Uri(url);
 
-			using (var client = new HttpClient()) {
+			using (var client = new HttpClient())
+			{
 
-				if (string.IsNullOrEmpty(userAgent)) {
+				if (string.IsNullOrEmpty(userAgent))
+				{
 					client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("VocaDB", "1.0"));
-				} else {
+				}
+				else
+				{
 					client.DefaultRequestHeaders.Add("User-Agent", userAgent);
 				}
 				client.Timeout = timeout;
 
 				headers?.Invoke(client.DefaultRequestHeaders);
 
-				using (var response = await client.GetAsync(uri)) {
+				using (var response = await client.GetAsync(uri))
+				{
 					response.EnsureSuccessStatusCode();
 					var stream = await response.Content.ReadAsStreamAsync();
 					return func(stream);

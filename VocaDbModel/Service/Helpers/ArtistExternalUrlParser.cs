@@ -1,14 +1,16 @@
 using System.Linq;
 using VocaDb.Model.Service.VideoServices;
 
-namespace VocaDb.Model.Service.Helpers {
+namespace VocaDb.Model.Service.Helpers
+{
 
 	/// <summary>
 	/// Parses external URL for an artist from a possible URL fragment.
 	/// Used for finding artists based on URLs to their profiles.
 	/// Only certain URL patterns such as NicoNico mylist are matched.
 	/// </summary>
-	public class ArtistExternalUrlParser {
+	public class ArtistExternalUrlParser
+	{
 
 		private static readonly RegexLinkMatcher[] linkMatchers = {
 			new RegexLinkMatcher("https://www.nicovideo.jp/{0}/{1}", @"^(?:http(?:s)?://www.nicovideo.jp)?/?(user|mylist)/(\d+)"),
@@ -36,20 +38,23 @@ namespace VocaDb.Model.Service.Helpers {
 		/// (such as artist name).
 		/// For internal URLs <see cref="EntryUrlParser"/> can be used.
 		/// </remarks>
-		public string GetExternalUrl(string possibleUrl) {
-			
+		public string GetExternalUrl(string possibleUrl)
+		{
+
 			if (string.IsNullOrEmpty(possibleUrl))
 				return null;
 
 			var lowercase = possibleUrl.ToLowerInvariant();
-			if (whitelistedUrls.Any(u => lowercase.StartsWith(u))) {
+			if (whitelistedUrls.Any(u => lowercase.StartsWith(u)))
+			{
 				return possibleUrl;
 			}
 
 			// For now keep original case, although database collation is case-insensitive, so lowercase should work too
 			// Regex matching ignores case.
 			var match = linkMatchers
-				.Select(matcher => new {
+				.Select(matcher => new
+				{
 					Success = matcher.TryGetLinkFromUrl(possibleUrl, out var formattedUrl),
 					FormattedUrl = formattedUrl
 				})

@@ -6,10 +6,12 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Tests.Domain.Artists {
+namespace VocaDb.Tests.Domain.Artists
+{
 
 	[TestClass]
-	public class ArtistStringFactoryTests {
+	public class ArtistStringFactoryTests
+	{
 
 		private ArtistStringFactory artistStringFactory;
 		private IArtistLinkWithRoles animator;
@@ -25,7 +27,8 @@ namespace VocaDb.Tests.Domain.Artists {
 		private IArtistLinkWithRoles vocalist3;
 		private IArtistLinkWithRoles vocalist4;
 
-		private ArtistForAlbum CreateArtist(ArtistType artistType, string name) {
+		private ArtistForAlbum CreateArtist(ArtistType artistType, string name)
+		{
 
 			var p = new Artist { ArtistType = artistType };
 			p.Names.Add(new ArtistName(p, new LocalizedString(name, ContentLanguageSelection.English)));
@@ -33,15 +36,18 @@ namespace VocaDb.Tests.Domain.Artists {
 
 		}
 
-		private string GetNames(params IArtistLinkWithRoles[] artists) {
+		private string GetNames(params IArtistLinkWithRoles[] artists)
+		{
 			return string.Join(", ", artists.Select(a => a.Artist.DefaultName));
 		}
 
-		private string GetArtistString(params IArtistLinkWithRoles[] artists) {
+		private string GetArtistString(params IArtistLinkWithRoles[] artists)
+		{
 			return artistStringFactory.GetArtistString(artists, ContentFocus.Music).Default;
-        }
+		}
 
-		private void TestGetArtistString(int producerCount, int vocalistCount, string expected, string message = "artist string as expected") {
+		private void TestGetArtistString(int producerCount, int vocalistCount, string expected, string message = "artist string as expected")
+		{
 
 			var result = artistStringFactory.GetArtistString(producers.Take(producerCount).Concat(vocalists.Take(vocalistCount)), ContentFocus.Music);
 
@@ -50,7 +56,8 @@ namespace VocaDb.Tests.Domain.Artists {
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			artistStringFactory = new ArtistStringFactory();
 
@@ -71,35 +78,40 @@ namespace VocaDb.Tests.Domain.Artists {
 		}
 
 		[TestMethod]
-		public void GetArtistString_Empty() {
+		public void GetArtistString_Empty()
+		{
 
 			TestGetArtistString(0, 0, string.Empty, "result is empty");
 
 		}
 
 		[TestMethod]
-		public void GetArtistString_OneProducer() {
+		public void GetArtistString_OneProducer()
+		{
 
 			TestGetArtistString(1, 0, producer.Artist.DefaultName, "producer's name");
 
 		}
 
 		[TestMethod]
-		public void GetArtistString_TwoProducers() {
+		public void GetArtistString_TwoProducers()
+		{
 
 			TestGetArtistString(2, 0, GetNames(producer, producer2), "artist string has both producers");
 
 		}
 
 		[TestMethod]
-		public void GetArtistString_OneProducerAndVocalist() {
+		public void GetArtistString_OneProducerAndVocalist()
+		{
 
 			TestGetArtistString(1, 1, string.Format("{0} feat. {1}", producer.Artist.DefaultName, vocalist.Artist.DefaultName), "artist string has producer and vocalist name");
 
 		}
 
 		[TestMethod]
-		public void GetArtistString_MultipleProducersAndTwoVocalists() {
+		public void GetArtistString_MultipleProducersAndTwoVocalists()
+		{
 
 			// 3 producers and 2 vocalists
 			TestGetArtistString(3, 2, string.Format("{0} feat. {1}", GetNames(producer, producer2, producer3), GetNames(vocalist, vocalist2)), "artist string has multiple producers and vocalists");
@@ -107,14 +119,16 @@ namespace VocaDb.Tests.Domain.Artists {
 		}
 
 		[TestMethod]
-		public void GetArtistString_OneProducerAndVariousVocalists() {
+		public void GetArtistString_OneProducerAndVariousVocalists()
+		{
 
 			TestGetArtistString(1, 4, string.Format("{0} feat. various", producer.Artist.DefaultName), "artist string has producer and various");
 
 		}
 
 		[TestMethod]
-		public void GetArtistString_VariousArtists() {
+		public void GetArtistString_VariousArtists()
+		{
 
 			// 4 producers and 2 vocalists, various artists because of >= 4 producers
 			TestGetArtistString(4, 2, ArtistHelper.VariousArtists);
@@ -125,7 +139,8 @@ namespace VocaDb.Tests.Domain.Artists {
 		/// One producer and circle, producer is shown first.
 		/// </summary>
 		[TestMethod]
-		public void GetArtistString_OneProducerAndCircle_ProducerFirst() {
+		public void GetArtistString_OneProducerAndCircle_ProducerFirst()
+		{
 
 			var result = ArtistHelper.GetArtistString(new[] { circle, producer }, ContentFocus.Music);
 
@@ -134,14 +149,16 @@ namespace VocaDb.Tests.Domain.Artists {
 		}
 
 		[TestMethod]
-		public void GetArtistString_OnlyVocalist() {
+		public void GetArtistString_OnlyVocalist()
+		{
 
 			TestGetArtistString(0, 1, vocalist.Artist.DefaultName, "artist string has vocalist name");
 
 		}
 
 		[TestMethod]
-		public void GetArtistString_OneProducerAndAnimator_NotVideo() {
+		public void GetArtistString_OneProducerAndAnimator_NotVideo()
+		{
 
 			var result = ArtistHelper.GetArtistString(new[] { producer, animator }, ContentFocus.Music);
 
@@ -153,7 +170,8 @@ namespace VocaDb.Tests.Domain.Artists {
 		/// One producer and animator, the disc is video. Animator is shown first.
 		/// </summary>
 		[TestMethod]
-		public void GetArtistString_OneProducerAndAnimator_IsVideo() {
+		public void GetArtistString_OneProducerAndAnimator_IsVideo()
+		{
 
 			var result = ArtistHelper.GetArtistString(new[] { producer, animator }, ContentFocus.Video);
 
@@ -165,7 +183,8 @@ namespace VocaDb.Tests.Domain.Artists {
 		/// The same artist appears as both producer and vocalist - do not duplicate (default VocaDB behavior).
 		/// </summary>
 		[TestMethod]
-		public void ArtistAsBothProducerAndVocalist_DoNotDuplicate() {
+		public void ArtistAsBothProducerAndVocalist_DoNotDuplicate()
+		{
 
 			producer.Roles = ArtistRoles.Composer | ArtistRoles.Vocalist;
 
@@ -176,7 +195,8 @@ namespace VocaDb.Tests.Domain.Artists {
 		}
 
 		[TestMethod]
-		public void ArtistAsBothProducerAndVocalist_MultipleArtists_DoNotDuplicate() {
+		public void ArtistAsBothProducerAndVocalist_MultipleArtists_DoNotDuplicate()
+		{
 
 			producer.Roles = ArtistRoles.Composer | ArtistRoles.Vocalist;
 
@@ -190,7 +210,8 @@ namespace VocaDb.Tests.Domain.Artists {
 		/// The same artist appears as both producer and vocalist - allow duplication (UtaiteDB behavior).
 		/// </summary>
 		[TestMethod]
-		public void ArtistAsBothProducerAndVocalist_AllowDuplicate() {
+		public void ArtistAsBothProducerAndVocalist_AllowDuplicate()
+		{
 
 			artistStringFactory = new ArtistStringFactory(true);
 			producer.Roles = ArtistRoles.Composer | ArtistRoles.Vocalist;
@@ -202,7 +223,8 @@ namespace VocaDb.Tests.Domain.Artists {
 		}
 
 		[TestMethod]
-		public void ArtistAsBothProducerAndVocalist_MultipleArtists_AllowDuplicate() {
+		public void ArtistAsBothProducerAndVocalist_MultipleArtists_AllowDuplicate()
+		{
 
 			artistStringFactory = new ArtistStringFactory(true);
 			producer.Roles = ArtistRoles.Composer | ArtistRoles.Vocalist;

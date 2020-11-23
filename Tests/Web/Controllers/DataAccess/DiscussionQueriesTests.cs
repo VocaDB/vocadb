@@ -9,13 +9,15 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Web.Controllers.DataAccess {
+namespace VocaDb.Tests.Web.Controllers.DataAccess
+{
 
 	/// <summary>
 	/// Unit tests for <see cref="DiscussionQueries"/>.
 	/// </summary>
 	[TestClass]
-	public class DiscussionQueriesTests {
+	public class DiscussionQueriesTests
+	{
 
 		private DiscussionFolder folder;
 		private FakeDiscussionFolderRepository repo;
@@ -23,8 +25,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private User user;
 
 		[TestInitialize]
-		public void SetUp() {
-			
+		public void SetUp()
+		{
+
 			user = CreateEntry.User();
 			folder = new DiscussionFolder("Test folder");
 			repo = new FakeDiscussionFolderRepository(folder);
@@ -34,8 +37,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CreateTopic() {
-			
+		public void CreateTopic()
+		{
+
 			var contract = new DiscussionTopicContract { Author = new UserForApiContract(user), Name = "New topic", Content = "Content" };
 			var result = queries.CreateTopic(folder.Id, contract);
 
@@ -55,8 +59,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void CreateTopic_NoPermission() {
-			
+		public void CreateTopic_NoPermission()
+		{
+
 			var contract = new DiscussionTopicContract { Author = new UserForApiContract { Id = 2 }, Name = "New topic", Content = "Content" };
 			queries.CreateTopic(folder.Id, contract);
 

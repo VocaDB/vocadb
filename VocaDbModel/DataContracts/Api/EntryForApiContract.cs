@@ -13,18 +13,22 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.DataContracts.Api {
+namespace VocaDb.Model.DataContracts.Api
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class EntryForApiContract : IEntryWithIntId {
+	public class EntryForApiContract : IEntryWithIntId
+	{
 
-		public static EntryForApiContract Create(IEntryWithNames entry, ContentLanguagePreference languagePreference, 
+		public static EntryForApiContract Create(IEntryWithNames entry, ContentLanguagePreference languagePreference,
 			IAggregatedEntryImageUrlFactory thumbPersister,
-			EntryOptionalFields includedFields) {
-			
+			EntryOptionalFields includedFields)
+		{
+
 			ParamIs.NotNull(() => entry);
 
-			switch (entry.EntryType) {
+			switch (entry.EntryType)
+			{
 				case EntryType.Album:
 					return new EntryForApiContract((Album)entry, languagePreference, thumbPersister, includedFields);
 				case EntryType.Artist:
@@ -45,52 +49,60 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		}
 
-		private EntryForApiContract(IEntryWithNames entry, ContentLanguagePreference languagePreference, EntryOptionalFields fields) {
+		private EntryForApiContract(IEntryWithNames entry, ContentLanguagePreference languagePreference, EntryOptionalFields fields)
+		{
 
 			EntryType = entry.EntryType;
 			Id = entry.Id;
 
 			DefaultName = entry.DefaultName;
 			DefaultNameLanguage = entry.Names.SortNames.DefaultLanguage;
-			Name = entry.Names.SortNames[languagePreference];				
+			Name = entry.Names.SortNames[languagePreference];
 			Version = entry.Version;
 
-			if (fields.HasFlag(EntryOptionalFields.AdditionalNames)) {
+			if (fields.HasFlag(EntryOptionalFields.AdditionalNames))
+			{
 				AdditionalNames = entry.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 
 		}
 
-		public EntryForApiContract(Artist artist, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister, 
+		public EntryForApiContract(Artist artist, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister,
 			EntryOptionalFields includedFields)
-			: this(artist, languagePreference, includedFields) {
+			: this(artist, languagePreference, includedFields)
+		{
 
 			ActivityDate = artist.ReleaseDate;
-			ArtistType = artist.ArtistType;			
+			ArtistType = artist.ArtistType;
 			CreateDate = artist.CreateDate;
 			Status = artist.Status;
 
-			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && artist.Picture != null) {
-				MainPicture = EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main), thumbPersister);					
+			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && artist.Picture != null)
+			{
+				MainPicture = EntryThumbForApiContract.Create(new EntryThumb(artist, artist.PictureMime, ImagePurpose.Main), thumbPersister);
 			}
 
-			if (includedFields.HasFlag(EntryOptionalFields.Names)) {
-				Names = artist.Names.Select(n => new LocalizedStringContract(n)).ToArray();				
+			if (includedFields.HasFlag(EntryOptionalFields.Names))
+			{
+				Names = artist.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 			}
 
-			if (includedFields.HasFlag(EntryOptionalFields.Tags)) {
-				Tags = artist.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();				
+			if (includedFields.HasFlag(EntryOptionalFields.Tags))
+			{
+				Tags = artist.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 			}
 
-			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {
-				WebLinks = artist.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();				
+			if (includedFields.HasFlag(EntryOptionalFields.WebLinks))
+			{
+				WebLinks = artist.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
 			}
 
 		}
 
-		public EntryForApiContract(Album album, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister, 
+		public EntryForApiContract(Album album, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister,
 			EntryOptionalFields includedFields)
-			: this(album, languagePreference, includedFields) {
+			: this(album, languagePreference, includedFields)
+		{
 
 			ActivityDate = album.OriginalReleaseDate.IsFullDate ? (DateTime?)album.OriginalReleaseDate.ToDateTime() : null;
 			ArtistString = album.ArtistString[languagePreference];
@@ -98,31 +110,37 @@ namespace VocaDb.Model.DataContracts.Api {
 			DiscType = album.DiscType;
 			Status = album.Status;
 
-			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && album.CoverPictureData != null) {
-				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister);					
+			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && album.CoverPictureData != null)
+			{
+				MainPicture = new EntryThumbForApiContract(new EntryThumb(album, album.CoverPictureMime, ImagePurpose.Main), thumbPersister);
 			}
 
-			if (includedFields.HasFlag(EntryOptionalFields.Names)) {
-				Names = album.Names.Select(n => new LocalizedStringContract(n)).ToArray();				
+			if (includedFields.HasFlag(EntryOptionalFields.Names))
+			{
+				Names = album.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 			}
 
-			if (includedFields.HasFlag(EntryOptionalFields.PVs)) {
+			if (includedFields.HasFlag(EntryOptionalFields.PVs))
+			{
 				PVs = album.PVs.Select(p => new PVContract(p)).ToArray();
 			}
 
-			if (includedFields.HasFlag(EntryOptionalFields.Tags)) {
-				Tags = album.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();				
+			if (includedFields.HasFlag(EntryOptionalFields.Tags))
+			{
+				Tags = album.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 			}
 
-			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {
-				WebLinks = album.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();				
+			if (includedFields.HasFlag(EntryOptionalFields.WebLinks))
+			{
+				WebLinks = album.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
 			}
 
 		}
 
-		public EntryForApiContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister, 
+		public EntryForApiContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister,
 			EntryOptionalFields includedFields)
-			: this(releaseEvent, languagePreference, includedFields) {
+			: this(releaseEvent, languagePreference, includedFields)
+		{
 
 			ActivityDate = releaseEvent.Date.DateTime;
 			EventCategory = releaseEvent.InheritedCategory;
@@ -130,11 +148,13 @@ namespace VocaDb.Model.DataContracts.Api {
 			Status = releaseEvent.Status;
 			UrlSlug = releaseEvent.UrlSlug;
 
-			if (includedFields.HasFlag(EntryOptionalFields.MainPicture)) {
+			if (includedFields.HasFlag(EntryOptionalFields.MainPicture))
+			{
 				MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(releaseEvent) ?? EntryThumb.Create(releaseEvent.Series), thumbPersister);
 			}
 
-			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {
+			if (includedFields.HasFlag(EntryOptionalFields.WebLinks))
+			{
 				WebLinks = releaseEvent.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
 			}
 
@@ -142,14 +162,16 @@ namespace VocaDb.Model.DataContracts.Api {
 
 		// Only used for recent comments atm.
 		public EntryForApiContract(DiscussionTopic topic, ContentLanguagePreference languagePreference)
-			: this((IEntryWithNames)topic, languagePreference, EntryOptionalFields.None) {
+			: this((IEntryWithNames)topic, languagePreference, EntryOptionalFields.None)
+		{
 
 			CreateDate = topic.Created;
 
 		}
 
 		public EntryForApiContract(Song song, ContentLanguagePreference languagePreference, EntryOptionalFields includedFields)
-			: this((IEntryWithNames)song, languagePreference, includedFields) {
+			: this((IEntryWithNames)song, languagePreference, includedFields)
+		{
 
 			ActivityDate = song.PublishDate.DateTime;
 			ArtistString = song.ArtistString[languagePreference];
@@ -157,61 +179,72 @@ namespace VocaDb.Model.DataContracts.Api {
 			SongType = song.SongType;
 			Status = song.Status;
 
-			if (includedFields.HasFlag(EntryOptionalFields.MainPicture)) {
+			if (includedFields.HasFlag(EntryOptionalFields.MainPicture))
+			{
 
 				var thumb = song.GetThumbUrl();
 
-				if (!string.IsNullOrEmpty(thumb)) {
+				if (!string.IsNullOrEmpty(thumb))
+				{
 					MainPicture = new EntryThumbForApiContract { UrlSmallThumb = thumb, UrlThumb = thumb, UrlTinyThumb = thumb };
 				}
 
 			}
 
-			if (includedFields.HasFlag(EntryOptionalFields.Names)) {
-				Names = song.Names.Select(n => new LocalizedStringContract(n)).ToArray();				
+			if (includedFields.HasFlag(EntryOptionalFields.Names))
+			{
+				Names = song.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 			}
 
-			if (includedFields.HasFlag(EntryOptionalFields.PVs)) {
+			if (includedFields.HasFlag(EntryOptionalFields.PVs))
+			{
 				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 			}
 
-			if (includedFields.HasFlag(EntryOptionalFields.Tags)) {
-				Tags = song.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();				
+			if (includedFields.HasFlag(EntryOptionalFields.Tags))
+			{
+				Tags = song.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).ToArray();
 			}
 
-			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {
-				WebLinks = song.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();				
+			if (includedFields.HasFlag(EntryOptionalFields.WebLinks))
+			{
+				WebLinks = song.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
 			}
 
 		}
 
-		public EntryForApiContract(SongList songList, IAggregatedEntryImageUrlFactory thumbPersister, 
+		public EntryForApiContract(SongList songList, IAggregatedEntryImageUrlFactory thumbPersister,
 			EntryOptionalFields includedFields)
-			: this(songList, ContentLanguagePreference.Default, includedFields) {
+			: this(songList, ContentLanguagePreference.Default, includedFields)
+		{
 
 			ActivityDate = songList.EventDate;
 			CreateDate = songList.CreateDate;
 			SongListFeaturedCategory = songList.FeaturedCategory;
 
-			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && songList.Thumb != null) {
-				MainPicture = new EntryThumbForApiContract(songList.Thumb, thumbPersister, SongList.ImageSizes);					
+			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && songList.Thumb != null)
+			{
+				MainPicture = new EntryThumbForApiContract(songList.Thumb, thumbPersister, SongList.ImageSizes);
 			}
 
 		}
 
-		public EntryForApiContract(Tag tag, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister, 
+		public EntryForApiContract(Tag tag, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister,
 			EntryOptionalFields includedFields)
-			: this(tag, languagePreference, includedFields) {
+			: this(tag, languagePreference, includedFields)
+		{
 
 			CreateDate = tag.CreateDate;
 			Status = tag.Status;
 			TagCategoryName = tag.CategoryName;
 
-			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && tag.Thumb != null) {
-				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, Tag.ImageSizes);					
+			if (includedFields.HasFlag(EntryOptionalFields.MainPicture) && tag.Thumb != null)
+			{
+				MainPicture = new EntryThumbForApiContract(tag.Thumb, thumbPersister, Tag.ImageSizes);
 			}
 
-			if (includedFields.HasFlag(EntryOptionalFields.WebLinks)) {
+			if (includedFields.HasFlag(EntryOptionalFields.WebLinks))
+			{
 				WebLinks = tag.WebLinks.Links.Select(w => new ArchivedWebLinkContract(w)).ToArray();
 			}
 
@@ -231,7 +264,7 @@ namespace VocaDb.Model.DataContracts.Api {
 		public DateTime? ActivityDate { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string AdditionalNames { get; set;}
+		public string AdditionalNames { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public string ArtistString { get; set; }
@@ -316,7 +349,8 @@ namespace VocaDb.Model.DataContracts.Api {
 	}
 
 	[Flags]
-	public enum EntryOptionalFields {
+	public enum EntryOptionalFields
+	{
 
 		None = 0,
 		AdditionalNames = 1,

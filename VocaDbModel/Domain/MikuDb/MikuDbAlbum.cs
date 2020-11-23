@@ -4,23 +4,27 @@ using VocaDb.Model.DataContracts.MikuDb;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.MikuDb {
+namespace VocaDb.Model.Domain.MikuDb
+{
 
-	public class MikuDbAlbum {
+	public class MikuDbAlbum
+	{
 
 		private XDocument data;
 		private string sourceUrl;
 		private string title;
 
-		public MikuDbAlbum() {
+		public MikuDbAlbum()
+		{
 
 			Created = DateTime.Now;
 
 		}
 
 		public MikuDbAlbum(MikuDbAlbumContract contract)
-			: this() {
-			
+			: this()
+		{
+
 			ParamIs.NotNull(() => contract);
 
 			CoverPicture = (contract.CoverPicture != null ? new PictureData(contract.CoverPicture) : null);
@@ -38,7 +42,8 @@ namespace VocaDb.Model.Domain.MikuDb {
 
 		public virtual DateTime Created { get; set; }
 
-		public virtual XDocument Data {
+		public virtual XDocument Data
+		{
 			get { return data; }
 			set { data = value; }
 		}
@@ -47,19 +52,22 @@ namespace VocaDb.Model.Domain.MikuDb {
 
 		//public virtual ContentLanguageSelection Language { get; set; }
 
-		public virtual string SourceUrl {
+		public virtual string SourceUrl
+		{
 			get { return sourceUrl; }
 			set { sourceUrl = value; }
 		}
 
 		public virtual AlbumStatus Status { get; set; }
 
-		public virtual string Title {
+		public virtual string Title
+		{
 			get { return title; }
 			set { title = value; }
 		}
 
-		public virtual bool Equals(MikuDbAlbum another) {
+		public virtual bool Equals(MikuDbAlbum another)
+		{
 
 			if (another == null)
 				return false;
@@ -74,15 +82,18 @@ namespace VocaDb.Model.Domain.MikuDb {
 
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as MikuDbAlbum);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return Id.GetHashCode();
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("Imported album '{0}' [{1}]", Title, Id);
 		}
 

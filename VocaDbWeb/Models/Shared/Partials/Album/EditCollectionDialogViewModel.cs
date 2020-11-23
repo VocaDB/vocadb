@@ -1,10 +1,13 @@
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Web.Models.Shared.Partials.Album {
+namespace VocaDb.Web.Models.Shared.Partials.Album
+{
 
-	public class EditCollectionDialogViewModel {
+	public class EditCollectionDialogViewModel
+	{
 
-		public EditCollectionDialogViewModel(PurchaseStatus purchaseStatus, MediaType mediaType) {
+		public EditCollectionDialogViewModel(PurchaseStatus purchaseStatus, MediaType mediaType)
+		{
 			PurchaseStatus = purchaseStatus;
 			MediaType = mediaType;
 		}

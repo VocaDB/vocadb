@@ -5,17 +5,21 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
+namespace VocaDb.Model.DataContracts.Songs
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongListContract : SongListBaseContract {
+	public class SongListContract : SongListBaseContract
+	{
 
-		public SongListContract() {
+		public SongListContract()
+		{
 			Description = string.Empty;
 		}
 
 		public SongListContract(SongList list, IUserPermissionContext permissionContext)
-			: base(list) {
+			: base(list)
+		{
 
 			ParamIs.NotNull(() => list);
 

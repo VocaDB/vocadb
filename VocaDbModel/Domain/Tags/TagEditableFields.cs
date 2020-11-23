@@ -1,40 +1,42 @@
 ﻿using System;
 
-namespace VocaDb.Model.Domain.Tags {
+namespace VocaDb.Model.Domain.Tags
+{
 
 	/// <summary>
 	/// Editable tag fields.
 	/// Persisted in the DB as strings, so integer values can be changed, but strings cannot.
 	/// </summary>
 	[Flags]
-	public enum TagEditableFields {
+	public enum TagEditableFields
+	{
 
-		Nothing			= 0,
+		Nothing = 0,
 
 		[Obsolete]
-		AliasedTo		= 1,
+		AliasedTo = 1,
 
-		CategoryName	= 2,
+		CategoryName = 2,
 
-		Description		= 4,
+		Description = 4,
 
 		HideFromSuggestions = 8,
 
-		Names			= 16,
+		Names = 16,
 
-		OriginalName	= 32,
+		OriginalName = 32,
 
-		Parent			= 64,
+		Parent = 64,
 
-		Picture			= 128,
+		Picture = 128,
 
-		RelatedTags		= 256,
+		RelatedTags = 256,
 
-		Status			= 512,
+		Status = 512,
 
-		Targets			= 1024,
+		Targets = 1024,
 
-		WebLinks		= 2048
+		WebLinks = 2048
 
 	}
 

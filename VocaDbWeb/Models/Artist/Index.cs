@@ -2,16 +2,19 @@
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service;
 
-namespace VocaDb.Web.Models.Artist {
+namespace VocaDb.Web.Models.Artist
+{
 
 	/// <summary>
 	/// Parameter collection given to index action.
 	/// </summary>
-	public class IndexRouteParams {
+	public class IndexRouteParams
+	{
 
 		public IndexRouteParams() { }
 
-		public IndexRouteParams(IndexRouteParams source, int? page) {
+		public IndexRouteParams(IndexRouteParams source, int? page)
+		{
 
 			ParamIs.NotNull(() => source);
 

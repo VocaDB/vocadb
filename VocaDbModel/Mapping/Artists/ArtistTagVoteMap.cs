@@ -1,11 +1,14 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.Mapping.Artists {
+namespace VocaDb.Model.Mapping.Artists
+{
 
-	public class ArtistTagVoteMap : ClassMap<ArtistTagVote> {
+	public class ArtistTagVoteMap : ClassMap<ArtistTagVote>
+	{
 
-		public ArtistTagVoteMap() {
+		public ArtistTagVoteMap()
+		{
 
 			Id(m => m.Id);
 

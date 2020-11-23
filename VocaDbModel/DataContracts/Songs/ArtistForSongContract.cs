@@ -6,15 +6,18 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.DataContracts.Songs {
+namespace VocaDb.Model.DataContracts.Songs
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistForSongContract : IArtistLinkContract {
+	public class ArtistForSongContract : IArtistLinkContract
+	{
 
 		public ArtistForSongContract() { }
 
-		public ArtistForSongContract(ArtistForSong artistForSong, ContentLanguagePreference languagePreference) {
-			
+		public ArtistForSongContract(ArtistForSong artistForSong, ContentLanguagePreference languagePreference)
+		{
+
 			ParamIs.NotNull(() => artistForSong);
 
 			Artist = (artistForSong.Artist != null ? new ArtistContract(artistForSong.Artist, languagePreference) : null);
@@ -28,7 +31,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		}
 
-		public ArtistForSongContract(ArtistContract artistContract) {
+		public ArtistForSongContract(ArtistContract artistContract)
+		{
 
 			ParamIs.NotNull(() => artistContract);
 
@@ -36,7 +40,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		}
 
-		public ArtistForSongContract(string name) {
+		public ArtistForSongContract(string name)
+		{
 
 			ParamIs.NotNullOrEmpty(() => name);
 
@@ -59,7 +64,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public int Id { get; set; }
 
 		[DataMember]
-		public bool IsCustomName { get; set;}
+		public bool IsCustomName { get; set; }
 
 		[DataMember]
 		public bool IsSupport { get; set; }

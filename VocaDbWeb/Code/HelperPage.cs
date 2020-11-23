@@ -7,9 +7,11 @@ using VocaDb.Model.Utils;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Web.Code {
+namespace VocaDb.Web.Code
+{
 
-	public class HelperPage : System.Web.WebPages.HelperPage {
+	public class HelperPage : System.Web.WebPages.HelperPage
+	{
 
 		public static IEntryLinkFactory EntryLinkFactory => (IEntryLinkFactory)DependencyResolver.Current.GetService(typeof(IEntryLinkFactory));
 
@@ -20,11 +22,13 @@ namespace VocaDb.Web.Code {
 
 		public static string RequestUrlScheme => "https";
 
-		public static IHtmlString ToJS(bool val) {
+		public static IHtmlString ToJS(bool val)
+		{
 			return new MvcHtmlString(val ? "true" : "false");
 		}
 
-		public static IHtmlString ToJS(string str) {
+		public static IHtmlString ToJS(string str)
+		{
 			return new MvcHtmlString(JsonHelpers.Serialize(str));
 		}
 

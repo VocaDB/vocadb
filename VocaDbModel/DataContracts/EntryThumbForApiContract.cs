@@ -1,7 +1,8 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Images;
 
-namespace VocaDb.Model.DataContracts {
+namespace VocaDb.Model.DataContracts
+{
 
 	/// <summary>
 	/// Entry thumbnail for API.
@@ -12,10 +13,12 @@ namespace VocaDb.Model.DataContracts {
 	/// For example, song thumbnails have different sizes.
 	/// </remarks>
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class EntryThumbForApiContract {
+	public class EntryThumbForApiContract
+	{
 
 		public static EntryThumbForApiContract Create(IEntryImageInformation image, IAggregatedEntryImageUrlFactory thumbPersister,
-			ImageSizes sizes = ImageSizes.All) {
+			ImageSizes sizes = ImageSizes.All)
+		{
 
 			if (thumbPersister == null || string.IsNullOrEmpty(image?.Mime))
 				return null;
@@ -33,7 +36,8 @@ namespace VocaDb.Model.DataContracts {
 		/// <param name="thumbPersister">Thumb persister. Cannot be null.</param>
 		/// <param name="sizes">Sizes to generate. If Nothing, no image URLs will be generated.</param>
 		public EntryThumbForApiContract(IEntryImageInformation image, IAggregatedEntryImageUrlFactory thumbPersister,
-			ImageSizes sizes = ImageSizes.All) {
+			ImageSizes sizes = ImageSizes.All)
+		{
 
 			ParamIs.NotNull(() => image);
 			ParamIs.NotNull(() => thumbPersister);
@@ -53,7 +57,7 @@ namespace VocaDb.Model.DataContracts {
 				UrlThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.Thumb);
 
 			if (sizes.HasFlag(ImageSizes.TinyThumb))
-				UrlTinyThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.TinyThumb);				
+				UrlTinyThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.TinyThumb);
 
 		}
 
@@ -97,9 +101,11 @@ namespace VocaDb.Model.DataContracts {
 		/// Prefer image sizes equal or larger than this. If nothing else is available, smaller size is allowed as well.
 		/// </param>
 		/// <returns>Thumbnail URL. Can be null or empty.</returns>
-		public string GetSmallestThumb(ImageSize preferLargerThan) {
-			
-			switch (preferLargerThan) {
+		public string GetSmallestThumb(ImageSize preferLargerThan)
+		{
+
+			switch (preferLargerThan)
+			{
 				case ImageSize.TinyThumb:
 					return UrlTinyThumb ?? UrlSmallThumb ?? UrlThumb ?? UrlOriginal;
 				case ImageSize.SmallThumb:
@@ -108,7 +114,7 @@ namespace VocaDb.Model.DataContracts {
 					return UrlThumb ?? UrlSmallThumb ?? UrlTinyThumb ?? UrlOriginal;
 				default:
 					return UrlOriginal ?? UrlThumb ?? UrlSmallThumb ?? UrlTinyThumb;
-			}				
+			}
 
 		}
 

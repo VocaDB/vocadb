@@ -10,13 +10,15 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Web.Controllers.DataAccess {
+namespace VocaDb.Tests.Web.Controllers.DataAccess
+{
 
 	/// <summary>
 	/// Tests for <see cref="UserMessageQueries"/>.
 	/// </summary>
 	[TestClass]
-	public class UserMessageQueriesTests {
+	public class UserMessageQueriesTests
+	{
 
 		private UserMessageQueries queries;
 		private FakePermissionContext permissionContext;
@@ -26,18 +28,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private User receiver;
 		private UserMessage sentMessage;
 
-		private UserMessageContract CallGet(int id) {
+		private UserMessageContract CallGet(int id)
+		{
 			return queries.Get(id, null);
 		}
 
-		private PartialFindResult<UserMessageContract> CallGetList(UserInboxType inboxType, bool unread = false) {
+		private PartialFindResult<UserMessageContract> CallGetList(UserInboxType inboxType, bool unread = false)
+		{
 			return queries.GetList(receiver.Id, new PagingProperties(0, 10, true), inboxType, unread, null, new FakeUserIconFactory());
 		}
 
 		[TestInitialize]
-		public void SetUp() {
-			
-			sender = new User { Name = "Sender user", Id = 1};
+		public void SetUp()
+		{
+
+			sender = new User { Name = "Sender user", Id = 1 };
 			receiver = new User { Name = "Receiver user", Id = 2 };
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(receiver, ContentLanguagePreference.Default));
 
@@ -57,7 +62,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Get() {
+		public void Get()
+		{
 
 			var result = CallGet(1);
 
@@ -69,7 +75,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void Get_NoPermission() {
+		public void Get_NoPermission()
+		{
 
 
 			CallGet(39);
@@ -77,7 +84,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetList_All() {
+		public void GetList_All()
+		{
 
 			var result = CallGetList(UserInboxType.Nothing);
 
@@ -89,7 +97,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetList_Received() {
+		public void GetList_Received()
+		{
 
 			var result = CallGetList(UserInboxType.Received).Items;
 
@@ -99,7 +108,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetList_Sent() {
+		public void GetList_Sent()
+		{
 
 			var result = CallGetList(UserInboxType.Sent).Items;
 
@@ -109,7 +119,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetList_Unread() {
+		public void GetList_Unread()
+		{
 
 			var another = sender.SendMessage(receiver, "Unread message", "Unread message body", false);
 			var anotherMsg = another.Item1;

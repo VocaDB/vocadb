@@ -8,15 +8,18 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 
-namespace VocaDb.Model.DataContracts.UseCases {
+namespace VocaDb.Model.DataContracts.UseCases
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistForEditContract : ArtistContract {
+	public class ArtistForEditContract : ArtistContract
+	{
 
 		public ArtistForEditContract() { }
 
 		public ArtistForEditContract(Artist artist, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory imageStore)
-			: base(artist, languagePreference) {
+			: base(artist, languagePreference)
+		{
 
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
 			DefaultNameLanguage = artist.TranslatedName.DefaultLanguage;
@@ -30,8 +33,8 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			WebLinks = artist.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 			AssociatedArtists = artist.Groups
-				.Where(a => a.LinkType != ArtistLinkType.Group 
-					&& (a.Parent.Id != Illustrator?.Id || a.LinkType != ArtistLinkType.Illustrator) 
+				.Where(a => a.LinkType != ArtistLinkType.Group
+					&& (a.Parent.Id != Illustrator?.Id || a.LinkType != ArtistLinkType.Illustrator)
 					&& (a.Parent.Id != VoiceProvider?.Id || a.LinkType != ArtistLinkType.VoiceProvider))
 				.Select(g => new ArtistForArtistContract(g, languagePreference))
 				.ToArray();
@@ -39,7 +42,7 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		}
 
 		[DataMember]
-		public ArtistForArtistContract[] AssociatedArtists { get; set;}
+		public ArtistForArtistContract[] AssociatedArtists { get; set; }
 
 		[DataMember]
 		public ArtistContract BaseVoicebank { get; set; }

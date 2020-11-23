@@ -3,17 +3,21 @@ using System.Runtime.Serialization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.PVs {
+namespace VocaDb.Model.DataContracts.PVs
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArchivedPVContract {
+	public class ArchivedPVContract
+	{
 
-		public ArchivedPVContract() {
+		public ArchivedPVContract()
+		{
 			Author = ThumbUrl = string.Empty;
 		}
 
 		public ArchivedPVContract(PV pv)
-			: this() {
+			: this()
+		{
 
 			ParamIs.NotNull(() => pv);
 
@@ -27,7 +31,8 @@ namespace VocaDb.Model.DataContracts.PVs {
 		}
 
 		public ArchivedPVContract(PVForSong pv)
-			: this((PV)pv) {
+			: this((PV)pv)
+		{
 
 			Disabled = pv.Disabled;
 			Length = pv.Length;

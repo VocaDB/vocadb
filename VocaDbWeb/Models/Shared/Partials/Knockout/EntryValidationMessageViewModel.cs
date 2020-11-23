@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 
-namespace VocaDb.Web.Models.Shared.Partials.Knockout {
+namespace VocaDb.Web.Models.Shared.Partials.Knockout
+{
 
-	public class EntryValidationMessageViewModel {
+	public class EntryValidationMessageViewModel
+	{
 
-		public EntryValidationMessageViewModel(bool draft, Dictionary<string, string> validationMessages, string helpSection) {
+		public EntryValidationMessageViewModel(bool draft, Dictionary<string, string> validationMessages, string helpSection)
+		{
 			Draft = draft;
 			ValidationMessages = validationMessages;
 			HelpSection = helpSection;

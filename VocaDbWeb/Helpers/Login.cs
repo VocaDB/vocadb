@@ -6,83 +6,108 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Web.Helpers {
+namespace VocaDb.Web.Helpers
+{
 
-	public static class Login {
+	public static class Login
+	{
 
-		public static bool CanAccessManageMenu {
-			get {
+		public static bool CanAccessManageMenu
+		{
+			get
+			{
 
 				return Manager.HasPermission(PermissionToken.AccessManageMenu);
 
 			}
 		}
 
-		public static bool CanDeleteEntries {
-			get {
+		public static bool CanDeleteEntries
+		{
+			get
+			{
 				return Manager.HasPermission(PermissionToken.DeleteEntries);
 			}
 		}
 
-		public static bool CanManageDb {
-			get {
+		public static bool CanManageDb
+		{
+			get
+			{
 				return Manager.HasPermission(PermissionToken.ManageDatabase);
 			}
 		}
-		
+
 		public static bool CanEditTags => Manager.HasPermission(PermissionToken.EditTags);
 
-		public static bool CanManageEntryReports {
-			get {
+		public static bool CanManageEntryReports
+		{
+			get
+			{
 				return Manager.HasPermission(PermissionToken.ManageEntryReports);
 			}
 		}
 
 		[Obsolete]
-		public static bool CanManageEventSeries {
+		public static bool CanManageEventSeries
+		{
 			get { return Manager.HasPermission(PermissionToken.ManageEventSeries); }
 		}
 
-		public static bool CanManageUsers {
-			get {
+		public static bool CanManageUsers
+		{
+			get
+			{
 				return Manager.HasPermission(PermissionToken.ManageUserPermissions);
 			}
 		}
 
-		public static bool CanMergeEntries {
-			get {
+		public static bool CanMergeEntries
+		{
+			get
+			{
 				return Manager.HasPermission(PermissionToken.MergeEntries);
 			}
 		}
 
-		public static bool CanModerateUsers {
-			get {
+		public static bool CanModerateUsers
+		{
+			get
+			{
 				return Manager.HasPermission(PermissionToken.DisableUsers);
 			}
 		}
 
-		public static bool CanMoveToTrash {
-			get {
+		public static bool CanMoveToTrash
+		{
+			get
+			{
 				return Manager.HasPermission(PermissionToken.MoveToTrash);
 			}
 		}
 
-		public static bool CanRevertEntryVersions {
-			get {
+		public static bool CanRevertEntryVersions
+		{
+			get
+			{
 				return Manager.HasPermission(PermissionToken.RestoreRevisions);
 			}
 		}
 
 		public static bool CanViewHiddenRevisions => Manager.HasPermission(PermissionToken.ViewHiddenRevisions);
 
-		public static bool IsLoggedIn {
-			get {
+		public static bool IsLoggedIn
+		{
+			get
+			{
 				return Manager.IsLoggedIn;
 			}
 		}
 
-		public static LoginManager Manager {
-			get {
+		public static LoginManager Manager
+		{
+			get
+			{
 				return MvcApplication.LoginManager;
 			}
 		}
@@ -90,13 +115,16 @@ namespace VocaDb.Web.Helpers {
 		/// <summary>
 		/// Currently logged in user. Can be null.
 		/// </summary>
-		public static UserWithPermissionsContract User {
-			get {
+		public static UserWithPermissionsContract User
+		{
+			get
+			{
 				return Manager.LoggedUser;
 			}
 		}
 
-		public static bool CanDeleteComment(CommentContract comment) {
+		public static bool CanDeleteComment(CommentContract comment)
+		{
 
 			ParamIs.NotNull(() => comment);
 
@@ -105,7 +133,8 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static bool CanEdit(IEntryWithStatus entry) {
+		public static bool CanEdit(IEntryWithStatus entry)
+		{
 
 			ParamIs.NotNull(() => entry);
 

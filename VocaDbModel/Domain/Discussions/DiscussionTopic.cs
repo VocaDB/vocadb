@@ -5,9 +5,11 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Discussions {
+namespace VocaDb.Model.Domain.Discussions
+{
 
-	public class DiscussionTopic : IEntryWithNames, IEntryWithComments {
+	public class DiscussionTopic : IEntryWithNames, IEntryWithComments
+	{
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
@@ -23,10 +25,12 @@ namespace VocaDb.Model.Domain.Discussions {
 		private DiscussionFolder folder;
 		private string title;
 
-		public DiscussionTopic() {
+		public DiscussionTopic()
+		{
 		}
 
-		public DiscussionTopic(DiscussionFolder folder, string name, string content, AgentLoginData agent) {
+		public DiscussionTopic(DiscussionFolder folder, string name, string content, AgentLoginData agent)
+		{
 
 			Folder = folder;
 			Name = name;
@@ -40,25 +44,31 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		public virtual User Author { get; set; }
 
-		public virtual string AuthorName {
+		public virtual string AuthorName
+		{
 			get => authorName;
-			set {
+			set
+			{
 				ParamIs.NotNullOrEmpty(() => value);
 				authorName = value;
 			}
 		}
 
-		public virtual IList<DiscussionComment> Comments {
+		public virtual IList<DiscussionComment> Comments
+		{
 			get => comments;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				comments = value;
 			}
 		}
 
-		public virtual string Content {
+		public virtual string Content
+		{
 			get => content;
-			set {
+			set
+			{
 				ParamIs.NotNullOrEmpty(() => value);
 				content = value;
 			}
@@ -73,9 +83,11 @@ namespace VocaDb.Model.Domain.Discussions {
 		/// <summary>
 		/// Folder containing this topic. Cannot be null.
 		/// </summary>
-		public virtual DiscussionFolder Folder {
+		public virtual DiscussionFolder Folder
+		{
 			get => folder;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				folder = value;
 			}
@@ -85,9 +97,11 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		public virtual bool Locked { get; set; }
 
-		public virtual string Name {
+		public virtual string Name
+		{
 			get => title;
-			set {
+			set
+			{
 				ParamIs.NotNullOrEmpty(() => value);
 				title = value;
 			}
@@ -95,7 +109,8 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		public virtual bool Pinned { get; set; }
 
-		public virtual Comment CreateComment(string message, AgentLoginData loginData) {
+		public virtual Comment CreateComment(string message, AgentLoginData loginData)
+		{
 
 			var comment = new DiscussionComment(this, message, loginData);
 			Comments.Add(comment);
@@ -103,8 +118,9 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		}
 
-		public virtual void MoveToFolder(DiscussionFolder targetFolder) {
-			
+		public virtual void MoveToFolder(DiscussionFolder targetFolder)
+		{
+
 			ParamIs.NotNull(() => targetFolder);
 
 			if (targetFolder.Equals(Folder))
@@ -116,7 +132,8 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("Discussion topic '{0}' [{1}]", Name, Id);
 		}
 

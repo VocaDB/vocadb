@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Html {
+namespace VocaDb.Web.Models.Shared.Partials.Html
+{
 
-	public class MetaTagViewModel {
+	public class MetaTagViewModel
+	{
 
-		public MetaTagViewModel(string name, string content) {
+		public MetaTagViewModel(string name, string content)
+		{
 			Name = name;
 			Content = content;
 		}

@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VocaDb.Web.Models.User {
+namespace VocaDb.Web.Models.User
+{
 
-	public class ForgotPassword {
+	public class ForgotPassword
+	{
 
 		[Required(ErrorMessageResourceType = typeof(ViewRes.User.ForgotPasswordStrings), ErrorMessageResourceName = "EmailIsRequired")]
 		[StringLength(50)]

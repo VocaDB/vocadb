@@ -2,16 +2,20 @@ using System.Linq;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Model.Service.QueryableExtenders {
+namespace VocaDb.Model.Service.QueryableExtenders
+{
 
-	public static class UserQueryableExtender {
+	public static class UserQueryableExtender
+	{
 
-		public static IQueryable<User> WhereHasName(this IQueryable<User> query, SearchTextQuery textQuery) {
+		public static IQueryable<User> WhereHasName(this IQueryable<User> query, SearchTextQuery textQuery)
+		{
 
 			if (textQuery.IsEmpty)
 				return query;
 
-			switch (textQuery.MatchMode) {
+			switch (textQuery.MatchMode)
+			{
 				case NameMatchMode.StartsWith:
 					return query.Where(u => u.Name.StartsWith(textQuery.Query));
 				case NameMatchMode.Partial:
@@ -28,7 +32,8 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 
 		public static IQueryable<User> WhereIsActive(this IQueryable<User> query) => query.Where(u => u.Active);
 
-		public static IQueryable<User> WhereKnowsLanguage(this IQueryable<User> query, string langCode) {
+		public static IQueryable<User> WhereKnowsLanguage(this IQueryable<User> query, string langCode)
+		{
 
 			if (string.IsNullOrEmpty(langCode))
 				return query;

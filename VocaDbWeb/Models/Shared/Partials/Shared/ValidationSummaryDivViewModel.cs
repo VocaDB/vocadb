@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Shared {
+namespace VocaDb.Web.Models.Shared.Partials.Shared
+{
 
-	public class ValidationSummaryDivViewModel {
+	public class ValidationSummaryDivViewModel
+	{
 
-		public ValidationSummaryDivViewModel(string message) {
+		public ValidationSummaryDivViewModel(string message)
+		{
 			Message = message;
 		}
 

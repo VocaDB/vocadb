@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Domain.Tags {
+﻿namespace VocaDb.Model.Domain.Tags
+{
 
-	public interface ITagLink {
+	public interface ITagLink
+	{
 		Tag Tag { get; set; }
 	}
 

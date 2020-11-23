@@ -10,12 +10,14 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.ReleaseEvents {
+namespace VocaDb.Model.Domain.ReleaseEvents
+{
 
-	public class ReleaseEventSeries : 
-		IEntryWithNames<EventSeriesName>, IEntryWithVersions<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>, 
+	public class ReleaseEventSeries :
+		IEntryWithNames<EventSeriesName>, IEntryWithVersions<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>,
 		IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink>, IEntryImageInformation, IEntryWithStatus,
-		IEntryWithTags<EventSeriesTagUsage>, INameFactory<EventSeriesName> {
+		IEntryWithTags<EventSeriesTagUsage>, INameFactory<EventSeriesName>
+	{
 
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb;
 
@@ -33,7 +35,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		private TagManager<EventSeriesTagUsage> tags = new TagManager<EventSeriesTagUsage>();
 		private IList<ReleaseEventSeriesWebLink> webLinks = new List<ReleaseEventSeriesWebLink>();
 
-		public ReleaseEventSeries() {
+		public ReleaseEventSeries()
+		{
 			Category = EventCategory.Unspecified;
 			Deleted = false;
 			Description = string.Empty;
@@ -41,11 +44,13 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		}
 
 		public ReleaseEventSeries(ContentLanguageSelection defaultLanguage, ICollection<ILocalizedString> names, string description)
-			: this() {
+			: this()
+		{
 
 			ParamIs.NotNull(() => names);
 
-			if (!names.Any()) {
+			if (!names.Any())
+			{
 				throw new ArgumentException("Need at least one name", nameof(names));
 			}
 
@@ -57,9 +62,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
-		public virtual IList<ReleaseEvent> AllEvents {
+		public virtual IList<ReleaseEvent> AllEvents
+		{
 			get => events;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				events = value;
 			}
@@ -69,9 +76,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
-		public virtual ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields> ArchivedVersionsManager {
+		public virtual ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields> ArchivedVersionsManager
+		{
 			get => archivedVersions;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
 			}
@@ -81,11 +90,13 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual bool Deleted { get; set; }
 
-		public virtual string Description {
+		public virtual string Description
+		{
 			get => description;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
-				description = value; 
+				description = value;
 			}
 		}
 
@@ -95,9 +106,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual int Id { get; set; }
 
-		public virtual NameManager<EventSeriesName> Names {
+		public virtual NameManager<EventSeriesName> Names
+		{
 			get => names;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				names = value;
 			}
@@ -107,9 +120,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual EntryStatus Status { get; set; }
 
-		public virtual TagManager<EventSeriesTagUsage> Tags {
+		public virtual TagManager<EventSeriesTagUsage> Tags
+		{
 			get => tags;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				tags = value;
 			}
@@ -126,19 +141,23 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual int Version { get; set; }
 
-		public virtual IList<ReleaseEventSeriesWebLink> WebLinks {
+		public virtual IList<ReleaseEventSeriesWebLink> WebLinks
+		{
 			get => webLinks;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				webLinks = value;
 			}
 		}
 
-		public virtual EventSeriesName CreateName(string val, ContentLanguageSelection language) {
+		public virtual EventSeriesName CreateName(string val, ContentLanguageSelection language)
+		{
 			return CreateName(new LocalizedString(val, language));
 		}
 
-		public virtual EventSeriesName CreateName(ILocalizedString localizedString) {
+		public virtual EventSeriesName CreateName(ILocalizedString localizedString)
+		{
 
 			ParamIs.NotNull(() => localizedString);
 
@@ -149,7 +168,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
-		public virtual ArchivedReleaseEventSeriesVersion CreateArchivedVersion(XDocument data, ReleaseEventSeriesDiff diff, AgentLoginData author, EntryEditEvent reason, string notes) {
+		public virtual ArchivedReleaseEventSeriesVersion CreateArchivedVersion(XDocument data, ReleaseEventSeriesDiff diff, AgentLoginData author, EntryEditEvent reason, string notes)
+		{
 
 			var archived = new ArchivedReleaseEventSeriesVersion(this, data, diff, author, reason, notes);
 			ArchivedVersionsManager.Add(archived);
@@ -159,7 +179,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
-		public virtual ReleaseEventSeriesWebLink CreateWebLink(string description, string url, WebLinkCategory category) {
+		public virtual ReleaseEventSeriesWebLink CreateWebLink(string description, string url, WebLinkCategory category)
+		{
 
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
@@ -171,7 +192,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
-		public virtual bool Equals(ReleaseEventSeries another) {
+		public virtual bool Equals(ReleaseEventSeries another)
+		{
 
 			if (another == null)
 				return false;
@@ -186,28 +208,35 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as ReleaseEventSeries);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return base.GetHashCode();
 		}
 
-		public virtual string GetEventName(int number, string suffix, string name) {
+		public virtual string GetEventName(int number, string suffix, string name)
+		{
 
 			if (string.IsNullOrEmpty(name))
 				return string.Empty;
 
-			if (string.IsNullOrEmpty(suffix)) {
+			if (string.IsNullOrEmpty(suffix))
+			{
 				return string.Format("{0} {1}", name, number);
-			} else {
+			}
+			else
+			{
 				return string.Format("{0} {1} {2}", name, number, suffix);
 			}
 
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("release event series '{0}' [{1}]", TranslatedName.Default, Id);
 		}
 

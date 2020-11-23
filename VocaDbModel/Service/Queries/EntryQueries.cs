@@ -8,13 +8,17 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Venues;
 
-namespace VocaDb.Model.Service.Queries {
+namespace VocaDb.Model.Service.Queries
+{
 
-	public class EntryQueries {
+	public class EntryQueries
+	{
 
-		public IEntryWithNames Load(EntryRef entryRef, IDatabaseContext ctx) {
-		
-			switch (entryRef.EntryType) {
+		public IEntryWithNames Load(EntryRef entryRef, IDatabaseContext ctx)
+		{
+
+			switch (entryRef.EntryType)
+			{
 				case EntryType.Album:
 					return ctx.Load<Album>(entryRef.Id);
 				case EntryType.Artist:

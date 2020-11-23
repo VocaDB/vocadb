@@ -13,14 +13,17 @@ using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Translations;
 
-namespace VocaDb.Model.Service.Queries {
+namespace VocaDb.Model.Service.Queries
+{
 
-	public class TagUsageQueries {
+	public class TagUsageQueries
+	{
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IUserPermissionContext permissionContext;
 
-		private bool IsValid(TagBaseContract contract) {
+		private bool IsValid(TagBaseContract contract)
+		{
 
 			if (contract == null)
 				return false;
@@ -32,25 +35,28 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		private bool HasId(TagBaseContract contract) {
+		private bool HasId(TagBaseContract contract)
+		{
 			return contract.Id > 0;
 		}
 
-		public TagUsageQueries(IUserPermissionContext permissionContext) {
+		public TagUsageQueries(IUserPermissionContext permissionContext)
+		{
 			this.permissionContext = permissionContext;
 		}
 
-		public async Task<TagUsageForApiContract[]> AddTags<TEntry, TTag>(int entryId, 
-			TagBaseContract[] tags, 
+		public async Task<TagUsageForApiContract[]> AddTags<TEntry, TTag>(int entryId,
+			TagBaseContract[] tags,
 			bool onlyAdd,
 			IRepository<User> repository,
 			IEntryLinkFactory entryLinkFactory,
 			IEnumTranslations enumTranslations,
 			Func<TEntry, TagManager<TTag>> tagFunc,
-			Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory) 
-			where TEntry : class, IEntryWithNames, IEntryWithTags 
-			where TTag : TagUsage {
-			
+			Func<TEntry, IDatabaseContext<TTag>, ITagUsageFactory<TTag>> tagUsageFactoryFactory)
+			where TEntry : class, IEntryWithNames, IEntryWithTags
+			where TTag : TagUsage
+		{
+
 			ParamIs.NotNull(() => tags);
 
 			permissionContext.VerifyPermission(PermissionToken.EditTags);
@@ -60,8 +66,9 @@ namespace VocaDb.Model.Service.Queries {
 			if (onlyAdd && !tags.Any())
 				return new TagUsageForApiContract[0];
 
-			return await repository.HandleTransactionAsync(async ctx => {
-				
+			return await repository.HandleTransactionAsync(async ctx =>
+			{
+
 				// Tags are primarily added by Id, secondarily by translated name.
 				// First separate given tags for tag IDs and tag names
 				var tagIds = tags.Where(HasId).Select(t => t.Id).ToArray();
@@ -97,7 +104,8 @@ namespace VocaDb.Model.Service.Queries {
 
 				var addedTags = appliedTags.Except(entry.Tags.Tags).ToArray();
 
-				if (entry.AllowNotifications) {
+				if (entry.AllowNotifications)
+				{
 					await new FollowedTagNotifier().SendNotificationsAsync(ctx, entry, addedTags, new[] { user.Id }, entryLinkFactory, enumTranslations);
 				}
 
@@ -117,11 +125,13 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		public int RemoveTagUsage<TUsage, TEntry>(long tagUsageId, IRepository<TEntry> repository) 
-			where TUsage : TagUsage 
-			where TEntry : class, IDatabaseObject {
+		public int RemoveTagUsage<TUsage, TEntry>(long tagUsageId, IRepository<TEntry> repository)
+			where TUsage : TagUsage
+			where TEntry : class, IDatabaseObject
+		{
 
-			return repository.HandleTransaction(ctx => {
+			return repository.HandleTransaction(ctx =>
+			{
 
 				ctx.AuditLogger.SysLog(string.Format("deleting tag usage with Id {0}", tagUsageId));
 
@@ -142,27 +152,32 @@ namespace VocaDb.Model.Service.Queries {
 
 		}
 
-		private Dictionary<int, int> GetActualTagUsageCounts(IDatabaseContext<Tag> ctx, int[] tagIds) {
+		private Dictionary<int, int> GetActualTagUsageCounts(IDatabaseContext<Tag> ctx, int[] tagIds)
+		{
 
 			// Note: these counts are not up to date in tests, only when querying the real DB
-			var result = ctx.Query().Where(t => tagIds.Contains(t.Id)).Select(t => new {
+			var result = ctx.Query().Where(t => tagIds.Contains(t.Id)).Select(t => new
+			{
 				Id = t.Id,
-				Count = t.AllAlbumTagUsages.Count + t.AllArtistTagUsages.Count 
-					+ t.AllSongTagUsages.Count + t.AllEventTagUsages.Count 
+				Count = t.AllAlbumTagUsages.Count + t.AllArtistTagUsages.Count
+					+ t.AllSongTagUsages.Count + t.AllEventTagUsages.Count
 					+ t.AllEventSeriesTagUsages.Count + t.AllSongListTagUsages.Count
 			}).ToDictionary(t => t.Id, t => t.Count);
 
 			return result;
 
-		} 
+		}
 
-		private void RecomputeTagUsagesCounts(IDatabaseContext<Tag> ctx, Tag[] tags) {
+		private void RecomputeTagUsagesCounts(IDatabaseContext<Tag> ctx, Tag[] tags)
+		{
 
 			var ids = tags.Select(t => t.Id).ToArray();
 			var usages = GetActualTagUsageCounts(ctx, ids);
 
-			foreach (var tag in tags) {
-				if (usages.ContainsKey(tag.Id) && tag.UsageCount != usages[tag.Id]) {
+			foreach (var tag in tags)
+			{
+				if (usages.ContainsKey(tag.Id) && tag.UsageCount != usages[tag.Id])
+				{
 					// This is expected for tests
 					// TODO: come up with a proper fix that works for tests and the real DB
 					log.Warn("Tag usage count doesn't match for {0}: expected {1}, actual {2}", tag, usages[tag.Id], tag.UsageCount);

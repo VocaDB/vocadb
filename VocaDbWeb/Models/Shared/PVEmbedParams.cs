@@ -1,11 +1,13 @@
 ﻿using VocaDb.Model.DataContracts.PVs;
 
-namespace VocaDb.Web.Models.Shared {
+namespace VocaDb.Web.Models.Shared
+{
 
 	/// <summary>
 	/// Custom PV embedding parameters
 	/// </summary>
-	public class PVEmbedParams {
+	public class PVEmbedParams
+	{
 
 		/// <summary>
 		/// Id of the created element (usually an iframe), if supported.

@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts.ReleaseEvents;
 
-namespace VocaDb.Web.Models.Shared.Partials.Event {
+namespace VocaDb.Web.Models.Shared.Partials.Event
+{
 
-	public class PrintArchivedEventSeriesDataViewModel {
+	public class PrintArchivedEventSeriesDataViewModel
+	{
 
-		public PrintArchivedEventSeriesDataViewModel(ComparedEventSeriesContract comparedSeries) {
+		public PrintArchivedEventSeriesDataViewModel(ComparedEventSeriesContract comparedSeries)
+		{
 			ComparedSeries = comparedSeries;
 		}
 

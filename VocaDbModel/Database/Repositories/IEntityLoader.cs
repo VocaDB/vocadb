@@ -1,10 +1,12 @@
-namespace VocaDb.Model.Database.Repositories {
+namespace VocaDb.Model.Database.Repositories
+{
 
 	/// <summary>
 	/// Loads entities of specific type by ID.
 	/// </summary>
 	/// <typeparam name="TEntity"></typeparam>
-	public interface IEntityLoader<out TEntity> {
+	public interface IEntityLoader<out TEntity>
+	{
 
 		/// <summary>
 		/// Loads an entity from the repository, checking whether the entity exists.

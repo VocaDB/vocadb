@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VocaDb.Model.Service.VideoServices.Youtube {
+namespace VocaDb.Model.Service.VideoServices.Youtube
+{
 
-	public interface IYoutubeItem {}
+	public interface IYoutubeItem { }
 
-	public class YoutubeItem<TSnippet> : IYoutubeItem where TSnippet: Snippet {
+	public class YoutubeItem<TSnippet> : IYoutubeItem where TSnippet : Snippet
+	{
 
 		public TSnippet Snippet { get; set; }
 

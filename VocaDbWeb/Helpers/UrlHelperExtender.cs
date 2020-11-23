@@ -11,13 +11,17 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Search;
 
-namespace VocaDb.Web.Helpers {
+namespace VocaDb.Web.Helpers
+{
 
-	public static class UrlHelperExtender {
+	public static class UrlHelperExtender
+	{
 
-		private static string EntryDetails(UrlHelper urlHelper, EntryType entryType, int id, string urlSlug) {
+		private static string EntryDetails(UrlHelper urlHelper, EntryType entryType, int id, string urlSlug)
+		{
 
-			switch (entryType) {
+			switch (entryType)
+			{
 				case EntryType.DiscussionTopic:
 					return urlHelper.Action("Index", "Discussion", new { clientPath = string.Format("topics/{0}", id) });
 
@@ -36,15 +40,17 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static string EntryDetails(this UrlHelper urlHelper, IEntryBase entryBase, string urlSlug = null) {
-			
+		public static string EntryDetails(this UrlHelper urlHelper, IEntryBase entryBase, string urlSlug = null)
+		{
+
 			ParamIs.NotNull(() => entryBase);
 
 			return EntryDetails(urlHelper, entryBase.EntryType, entryBase.Id, urlSlug);
 
 		}
 
-		public static string EntryDetails(this UrlHelper urlHelper, EntryForApiContract entry) {
+		public static string EntryDetails(this UrlHelper urlHelper, EntryForApiContract entry)
+		{
 
 			ParamIs.NotNull(() => entry);
 
@@ -52,10 +58,12 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static string EntryIndex(this UrlHelper urlHelper, EntryTypeAndSubType fullEntryType) {
+		public static string EntryIndex(this UrlHelper urlHelper, EntryTypeAndSubType fullEntryType)
+		{
 
 			SearchRouteParams searchRouteParams = null;
-			switch (fullEntryType.EntryType) {
+			switch (fullEntryType.EntryType)
+			{
 				case EntryType.Artist:
 					searchRouteParams = new SearchRouteParams(EntryType.Artist) { artistType = EnumVal<ArtistType>.ParseSafe(fullEntryType.SubType) };
 					break;
@@ -73,7 +81,8 @@ namespace VocaDb.Web.Helpers {
 					break;
 			}
 
-			if (searchRouteParams != null) {
+			if (searchRouteParams != null)
+			{
 				return urlHelper.Action("Index", "Search", searchRouteParams);
 			}
 
@@ -81,7 +90,8 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static string SongDetails(this UrlHelper urlHelper, IEntryBase song, int? albumId = null) {
+		public static string SongDetails(this UrlHelper urlHelper, IEntryBase song, int? albumId = null)
+		{
 
 			ParamIs.NotNull(() => song);
 
@@ -89,11 +99,13 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static string StaticResource(this UrlHelper urlHelper, string url) {
+		public static string StaticResource(this UrlHelper urlHelper, string url)
+		{
 			return VocaUriBuilder.StaticResource(url);
 		}
 
-		public static string TagDetails(this UrlHelper urlHelper, TagBaseContract tagContract) {
+		public static string TagDetails(this UrlHelper urlHelper, TagBaseContract tagContract)
+		{
 
 			ParamIs.NotNull(() => tagContract);
 
@@ -102,15 +114,18 @@ namespace VocaDb.Web.Helpers {
 		}
 
 		public static string TagUrlForEntryType<TSubType>(this UrlHelper urlHelper, EntryType entryType, TSubType subType)
-			where TSubType : struct, Enum {
+			where TSubType : struct, Enum
+		{
 			return TagUrlForEntryType(urlHelper, EntryTypeAndSubType.Create(entryType, subType));
 		}
 
-		public static string TagUrlForEntryType(this UrlHelper urlHelper, EntryTypeAndSubType entryType) {
+		public static string TagUrlForEntryType(this UrlHelper urlHelper, EntryTypeAndSubType entryType)
+		{
 			return urlHelper.Action("DetailsByEntryType", "Tag", new { entryType = entryType.EntryType, subType = entryType.SubType });
 		}
 
-		public static string UserDetails(this UrlHelper urlHelper, IUser user) {
+		public static string UserDetails(this UrlHelper urlHelper, IUser user)
+		{
 
 			ParamIs.NotNull(() => user);
 

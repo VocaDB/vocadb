@@ -9,14 +9,17 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts.Albums {
+namespace VocaDb.Model.DataContracts.Albums
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistForAlbumForApiContract {
+	public class ArtistForAlbumForApiContract
+	{
 
 		public ArtistForAlbumForApiContract() { }
 
-		public ArtistForAlbumForApiContract(ArtistForAlbum artistForAlbum, ContentLanguagePreference languagePreference) {
+		public ArtistForAlbumForApiContract(ArtistForAlbum artistForAlbum, ContentLanguagePreference languagePreference)
+		{
 
 			ParamIs.NotNull(() => artistForAlbum);
 

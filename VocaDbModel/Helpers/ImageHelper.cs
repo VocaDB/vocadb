@@ -10,12 +10,14 @@ using NLog;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain.Images;
 
-namespace VocaDb.Model.Helpers {
+namespace VocaDb.Model.Helpers
+{
 
 	/// <summary>
 	/// Various image helper methods.
 	/// </summary>
-	public static class ImageHelper {
+	public static class ImageHelper
+	{
 
 		private static readonly string[] allowedExt = { ".bmp", ".gif", ".jpg", ".jpeg", ".png" };
 		public const int DefaultSmallThumbSize = 150;
@@ -34,10 +36,14 @@ namespace VocaDb.Model.Helpers {
 		/// <param name="stream">File stream. Cannot be null.</param>
 		/// <returns>Opened image which must be disposed after using. Cannot be null.</returns>
 		/// <exception cref="InvalidPictureException">If the image could not be opened. Most likely the file is broken.</exception>
-		public static Image OpenImage(Stream stream) {
-			try {
+		public static Image OpenImage(Stream stream)
+		{
+			try
+			{
 				return Image.FromStream(stream);
-			} catch (ArgumentException x) {
+			}
+			catch (ArgumentException x)
+			{
 				log.Error(x, "Unable to open image");
 				throw new InvalidPictureException("Unable to open image", x);
 			}
@@ -53,9 +59,11 @@ namespace VocaDb.Model.Helpers {
 		/// </summary>
 		/// <param name="mime">MIME type. Can be null or empty.</param>
 		/// <returns>File extension, for example ".jpg". Can be null if MIME type is not recognized.</returns>
-		public static string GetExtensionFromMime(string mime) {
+		public static string GetExtensionFromMime(string mime)
+		{
 
-			switch (mime) {
+			switch (mime)
+			{
 				case MediaTypeNames.Image.Jpeg:
 					return ".jpg";
 				case "image/pjpeg":
@@ -70,16 +78,18 @@ namespace VocaDb.Model.Helpers {
 					return ".bmp";
 				case "audio/mp3":
 				case "audio/mpeg":
-                    return ".mp3";
-                default:
+					return ".mp3";
+				default:
 					return string.Empty;
 			}
 
 		}
 
-		public static int GetDefaultImageSizePx(ImageSize size) {
+		public static int GetDefaultImageSizePx(ImageSize size)
+		{
 
-			switch (size) {
+			switch (size)
+			{
 				case ImageSize.Thumb:
 					return DefaultThumbSize;
 				case ImageSize.SmallThumb:
@@ -94,9 +104,11 @@ namespace VocaDb.Model.Helpers {
 		/// <summary>
 		/// Gets the size in pixels for user's profile picture.
 		/// </summary>
-		public static int GetUserImageSizePx(ImageSize size) {
+		public static int GetUserImageSizePx(ImageSize size)
+		{
 
-			switch (size) {
+			switch (size)
+			{
 				case ImageSize.Original:
 					return UserThumbMax;
 
@@ -112,7 +124,8 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static PictureDataContract GetOriginal(Stream input, int length, string contentType) {
+		public static PictureDataContract GetOriginal(Stream input, int length, string contentType)
+		{
 
 			var buf = new Byte[length];
 			input.Read(buf, 0, length);
@@ -121,7 +134,8 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static bool IsValidImageExtension(string fileName) {
+		public static bool IsValidImageExtension(string fileName)
+		{
 
 			var ext = Path.GetExtension(fileName);
 
@@ -129,7 +143,8 @@ namespace VocaDb.Model.Helpers {
 
 		}
 
-		public static Image ResizeToFixedSize(Image imgPhoto, int width, int height) {
+		public static Image ResizeToFixedSize(Image imgPhoto, int width, int height)
+		{
 
 			int sourceWidth = imgPhoto.Width;
 			int sourceHeight = imgPhoto.Height;
@@ -138,9 +153,12 @@ namespace VocaDb.Model.Helpers {
 			var nPercentW = ((double)width / (double)sourceWidth);
 			var nPercentH = ((double)height / (double)sourceHeight);
 
-			if (nPercentH < nPercentW) {
+			if (nPercentH < nPercentW)
+			{
 				nPercent = nPercentH;
-			} else {
+			}
+			else
+			{
 				nPercent = nPercentW;
 			}
 
@@ -152,7 +170,8 @@ namespace VocaDb.Model.Helpers {
 			bmPhoto.SetResolution(imgPhoto.HorizontalResolution,
 							 imgPhoto.VerticalResolution);
 
-			using (var grPhoto = Graphics.FromImage(bmPhoto)) {
+			using (var grPhoto = Graphics.FromImage(bmPhoto))
+			{
 
 				grPhoto.Clear(Color.Transparent);
 				grPhoto.InterpolationMode =
@@ -173,11 +192,12 @@ namespace VocaDb.Model.Helpers {
 	/// <summary>
 	/// Exception thrown if there was an error while opening a picture file.
 	/// </summary>
-	public class InvalidPictureException : Exception {
-		public InvalidPictureException() {}
-		public InvalidPictureException(string message) : base(message) {}
-		public InvalidPictureException(string message, Exception innerException) : base(message, innerException) {}
-		protected InvalidPictureException(SerializationInfo info, StreamingContext context) : base(info, context) {}
+	public class InvalidPictureException : Exception
+	{
+		public InvalidPictureException() { }
+		public InvalidPictureException(string message) : base(message) { }
+		public InvalidPictureException(string message, Exception innerException) : base(message, innerException) { }
+		protected InvalidPictureException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 	}
 
 }

@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts;
 
-namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry {
+namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+{
 
-	public class ObjectRefInfoViewModel {
+	public class ObjectRefInfoViewModel
+	{
 
-		public ObjectRefInfoViewModel(ObjectRefContract objRef) {
+		public ObjectRefInfoViewModel(ObjectRefContract objRef)
+		{
 			ObjRef = objRef;
 		}
 

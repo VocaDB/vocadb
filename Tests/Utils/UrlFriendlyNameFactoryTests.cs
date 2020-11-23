@@ -2,14 +2,18 @@
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Tests.Utils {
+namespace VocaDb.Tests.Utils
+{
 
-	public class UrlFriendlyNameFactoryTests {
+	public class UrlFriendlyNameFactoryTests
+	{
 
 		[TestClass]
-		public class FromPlainString {
+		public class FromPlainString
+		{
 
-			private void CallGetUrlFriendlyName(string expected, string input) {
+			private void CallGetUrlFriendlyName(string expected, string input)
+			{
 
 				var result = UrlFriendlyNameFactory.GetUrlFriendlyName(input);
 				Assert.AreEqual(expected, result, input);
@@ -17,7 +21,8 @@ namespace VocaDb.Tests.Utils {
 			}
 
 			[TestMethod]
-			public void English() {
+			public void English()
+			{
 
 				// Latin characters get included as is.
 				CallGetUrlFriendlyName("hatsune-miku", "Hatsune Miku");
@@ -27,7 +32,8 @@ namespace VocaDb.Tests.Utils {
 			/// <summary>
 			/// </summary>
 			[TestMethod]
-			public void Japanese() {
+			public void Japanese()
+			{
 
 				// Non-ASCII characters get removed.
 				CallGetUrlFriendlyName(string.Empty, "初音ミク");
@@ -35,7 +41,8 @@ namespace VocaDb.Tests.Utils {
 			}
 
 			[TestMethod]
-			public void Numbers() {
+			public void Numbers()
+			{
 
 				// Digits are supported.
 				CallGetUrlFriendlyName("apple41", "apple41");
@@ -43,7 +50,8 @@ namespace VocaDb.Tests.Utils {
 			}
 
 			[TestMethod]
-			public void Trim_Japanese() {
+			public void Trim_Japanese()
+			{
 
 				// Trim Japanese
 				CallGetUrlFriendlyName("", "- 神想フ、時ノ境界 -");
@@ -53,11 +61,13 @@ namespace VocaDb.Tests.Utils {
 		}
 
 		[TestClass]
-		public class FromNameManager {
+		public class FromNameManager
+		{
 
 
 			[TestMethod]
-			public void PreferRomajiForJapanese() {
+			public void PreferRomajiForJapanese()
+			{
 
 				var nameManager = new NameManager<LocalizedStringWithId>();
 				nameManager.SortNames.DefaultLanguage = ContentLanguageSelection.Japanese;
@@ -73,7 +83,8 @@ namespace VocaDb.Tests.Utils {
 			}
 
 			[TestMethod]
-			public void UseEnglishIfDefaultLanguage() {
+			public void UseEnglishIfDefaultLanguage()
+			{
 
 				var nameManager = new NameManager<LocalizedStringWithId>();
 				nameManager.SortNames.DefaultLanguage = ContentLanguageSelection.English;
@@ -91,9 +102,11 @@ namespace VocaDb.Tests.Utils {
 		}
 
 		[TestClass]
-		public class FromTranslatedString {
+		public class FromTranslatedString
+		{
 
-			private void CallGetUrlFriendlyName(string expected, TranslatedString input) {
+			private void CallGetUrlFriendlyName(string expected, TranslatedString input)
+			{
 
 				var result = UrlFriendlyNameFactory.GetUrlFriendlyName(input);
 				Assert.AreEqual(expected, result, input.ToString());
@@ -101,7 +114,8 @@ namespace VocaDb.Tests.Utils {
 			}
 
 			[TestMethod]
-			public void PreferRomajiForJapanese() {
+			public void PreferRomajiForJapanese()
+			{
 
 				var translatedString = new TranslatedString("進撃の巨人", "Shingeki no Kyojin", "Attack on Titan", ContentLanguageSelection.Japanese);
 				CallGetUrlFriendlyName("shingeki-no-kyojin", translatedString);
@@ -109,7 +123,8 @@ namespace VocaDb.Tests.Utils {
 			}
 
 			[TestMethod]
-			public void UseEnglishIfDefaultLanguage() {
+			public void UseEnglishIfDefaultLanguage()
+			{
 
 				var translatedString = new TranslatedString("ロック", string.Empty, "rock", ContentLanguageSelection.English);
 				CallGetUrlFriendlyName("rock", translatedString);
@@ -117,7 +132,8 @@ namespace VocaDb.Tests.Utils {
 			}
 
 			[TestMethod]
-			public void AllJapanese() {
+			public void AllJapanese()
+			{
 
 				var translatedString = TranslatedString.Create("進撃の巨人");
 				CallGetUrlFriendlyName(string.Empty, translatedString);

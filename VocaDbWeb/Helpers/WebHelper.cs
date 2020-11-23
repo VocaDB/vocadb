@@ -7,9 +7,11 @@ using NLog;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Web.Code;
 
-namespace VocaDb.Web.Helpers {
+namespace VocaDb.Web.Helpers
+{
 
-	public static class WebHelper {
+	public static class WebHelper
+	{
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
@@ -20,7 +22,8 @@ namespace VocaDb.Web.Helpers {
 			"Googlebot", "bingbot"
 		};
 
-		public static IEnumerable<OptionalCultureCode> GetUserLanguageCodes(HttpRequestBase request) {
+		public static IEnumerable<OptionalCultureCode> GetUserLanguageCodes(HttpRequestBase request)
+		{
 			return request.UserLanguages?.Select(l => new OptionalCultureCode(l.Split(';')[0])); // en-US;q=0.8 -> en-US
 		}
 
@@ -30,7 +33,8 @@ namespace VocaDb.Web.Helpers {
 		/// </summary>
 		/// <param name="request">HTTP request.</param>
 		/// <returns>Culture name. Empty if not matched.</returns>
-		public static string GetInterfaceCultureName(HttpRequestBase request) {
+		public static string GetInterfaceCultureName(HttpRequestBase request)
+		{
 
 			if (request.UserLanguages == null || !request.UserLanguages.Any())
 				return string.Empty;
@@ -43,20 +47,23 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static string GetRealHost(HttpRequestBase request) {
+		public static string GetRealHost(HttpRequestBase request)
+		{
 
 			return request.UserHostAddress;
 
 		}
 
-		public static string GetRealHost(HttpRequestMessage request) {
+		public static string GetRealHost(HttpRequestMessage request)
+		{
 
 			// From https://blogs.msdn.microsoft.com/hongmeig1/2012/07/09/how-to-access-the-clients-ip-address-in-web-api/
 			if (HttpContext.Current != null)
 				return HttpContext.Current.Request.UserHostAddress;
 
 			object property;
-			if (request.Properties.TryGetValue(typeof(RemoteEndpointMessageProperty).FullName, out property)) {
+			if (request.Properties.TryGetValue(typeof(RemoteEndpointMessageProperty).FullName, out property))
+			{
 				var remoteProperty = (RemoteEndpointMessageProperty)property;
 				return remoteProperty.Address;
 			}
@@ -65,7 +72,8 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static bool IsLocalhost(string hostname) {
+		public static bool IsLocalhost(string hostname)
+		{
 
 			if (string.IsNullOrEmpty(hostname))
 				return false;
@@ -83,11 +91,13 @@ namespace VocaDb.Web.Helpers {
 		/// </summary>
 		/// <param name="request">HTTP request. Cannot be null.</param>
 		/// <returns>True if the request should be counted.</returns>
-		public static bool IsValidHit(HttpRequestBase request) {
+		public static bool IsValidHit(HttpRequestBase request)
+		{
 
 			var ua = request.UserAgent;
 
-			if (string.IsNullOrEmpty(ua)) {
+			if (string.IsNullOrEmpty(ua))
+			{
 				log.Warn(ErrorLogger.RequestInfo("Blank user agent from", request));
 				return false;
 			}
@@ -96,10 +106,12 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static void VerifyUserAgent(HttpRequestBase request) {
+		public static void VerifyUserAgent(HttpRequestBase request)
+		{
 
 			var ua = request.UserAgent;
-			if (string.IsNullOrEmpty(ua)) {
+			if (string.IsNullOrEmpty(ua))
+			{
 				log.Warn(ErrorLogger.RequestInfo("Blank user agent from", request));
 				//throw new NotAllowedException();
 			}

@@ -2,21 +2,25 @@
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.Songs {
+namespace VocaDb.Model.Domain.Songs
+{
 
-	public class ArchivedSongListVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<SongListEditableFields> {
+	public class ArchivedSongListVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<SongListEditableFields>
+	{
 
 		private SongListDiff diff;
 		private SongList songList;
 
-		public ArchivedSongListVersion() { 
+		public ArchivedSongListVersion()
+		{
 			Status = EntryStatus.Finished;
 		}
 
 		public ArchivedSongListVersion(SongList songList, SongListDiff diff, AgentLoginData author,
 			EntryStatus status,
 			EntryEditEvent commonEditEvent, string notes)
-			: base(null, author, songList.Version, status, notes) {
+			: base(null, author, songList.Version, status, notes)
+		{
 
 			ParamIs.NotNull(() => diff);
 
@@ -28,35 +32,43 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual EntryEditEvent CommonEditEvent { get; set; }
 
-		public override IEntryDiff DiffBase {
+		public override IEntryDiff DiffBase
+		{
 			get { return Diff; }
 		}
 
-		public virtual SongListDiff Diff {
+		public virtual SongListDiff Diff
+		{
 			get { return diff; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				diff = value; 
+				diff = value;
 			}
 		}
 
-		public override EntryEditEvent EditEvent {
+		public override EntryEditEvent EditEvent
+		{
 			get { return CommonEditEvent; }
 		}
 
-		public override IEntryWithNames EntryBase {
+		public override IEntryWithNames EntryBase
+		{
 			get { return SongList; }
 		}
 
-		public virtual SongList SongList {
+		public virtual SongList SongList
+		{
 			get { return songList; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				songList = value; 
+				songList = value;
 			}
 		}
 
-		public virtual bool IsIncluded(SongListEditableFields field) {
+		public virtual bool IsIncluded(SongListEditableFields field)
+		{
 			return true;
 		}
 

@@ -1,10 +1,13 @@
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Web.Models.Shared.Partials.Song {
+namespace VocaDb.Web.Models.Shared.Partials.Song
+{
 
-	public class RatingIconViewModel {
+	public class RatingIconViewModel
+	{
 
-		public RatingIconViewModel(SongVoteRating rating) {
+		public RatingIconViewModel(SongVoteRating rating)
+		{
 			Rating = rating;
 		}
 

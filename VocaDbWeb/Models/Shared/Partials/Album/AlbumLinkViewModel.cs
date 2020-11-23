@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts.Albums;
 
-namespace VocaDb.Web.Models.Shared.Partials.Album {
+namespace VocaDb.Web.Models.Shared.Partials.Album
+{
 
-	public class AlbumLinkViewModel {
+	public class AlbumLinkViewModel
+	{
 
-		public AlbumLinkViewModel(AlbumContract album) {
+		public AlbumLinkViewModel(AlbumContract album)
+		{
 			Album = album;
 		}
 

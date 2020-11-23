@@ -4,13 +4,15 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Security {
+namespace VocaDb.Model.Domain.Security
+{
 
 	/// <summary>
 	/// Common interface for user settings that can be changed individually.
 	/// These settings can be persisted for the user account if the user is logged in, or in a cookie if the user has no account.
 	/// </summary>
-	public interface IUserSetting {
+	public interface IUserSetting
+	{
 
 		/// <summary>
 		/// Parses setting value from a string.
@@ -26,10 +28,12 @@ namespace VocaDb.Model.Domain.Security {
 
 	}
 
-	public abstract class UserSetting<T> : IUserSetting {
+	public abstract class UserSetting<T> : IUserSetting
+	{
 
-		private static string GetCookieValue(HttpRequest request, string cookieName) {
-			
+		private static string GetCookieValue(HttpRequest request, string cookieName)
+		{
+
 			if (HttpContext.Current == null)
 				return null;
 
@@ -42,17 +46,20 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		private static void SetCookie(HttpContext context, string cookieName, string value, TimeSpan expires) {
-			
-			if (context != null) {
+		private static void SetCookie(HttpContext context, string cookieName, string value, TimeSpan expires)
+		{
+
+			if (context != null)
+			{
 				var cookie = new HttpCookie(cookieName, value) { Expires = DateTime.Now + expires };
 				context.Response.Cookies.Add(cookie);
 			}
 
 		}
 
-		private static bool TryGetCookieValue(HttpRequest request, string cookieName, ref T value, Func<string, T> valueGetter) {
-			
+		private static bool TryGetCookieValue(HttpRequest request, string cookieName, ref T value, Func<string, T> valueGetter)
+		{
+
 			var cookieValue = GetCookieValue(request, cookieName);
 
 			if (cookieValue == null)
@@ -66,7 +73,8 @@ namespace VocaDb.Model.Domain.Security {
 
 		delegate bool ValueGetterDelegate(string str, out T val);
 
-		private static bool TryGetFromQueryString(HttpRequest request, string paramName, ref T value, ValueGetterDelegate valueGetter) {
+		private static bool TryGetFromQueryString(HttpRequest request, string paramName, ref T value, ValueGetterDelegate valueGetter)
+		{
 
 			if (request == null || string.IsNullOrEmpty(paramName) || string.IsNullOrEmpty(request.QueryString[paramName]))
 				return false;
@@ -86,8 +94,9 @@ namespace VocaDb.Model.Domain.Security {
 
 		private bool IsRequestValueOverridden => context != null && context.Items.Contains(RequestItemName);
 
-		private T ParseValue(string str) {
-			
+		private T ParseValue(string str)
+		{
+
 			T val;
 			return TryParseValue(str, out val) ? val : Default;
 
@@ -99,8 +108,10 @@ namespace VocaDb.Model.Domain.Security {
 
 		private string RequestItemName => string.Format("UserSettings.{0}", SettingName);
 
-		private T RequestValue {
-			get {
+		private T RequestValue
+		{
+			get
+			{
 
 				if (HttpContext.Current == null)
 					throw new InvalidOperationException("HttpContext is not initialized");
@@ -108,25 +119,28 @@ namespace VocaDb.Model.Domain.Security {
 				return (T)HttpContext.Current.Items[RequestItemName];
 
 			}
-			set {
+			set
+			{
 
 				if (HttpContext.Current == null)
 					throw new InvalidOperationException("HttpContext is not initialized");
 
 				HttpContext.Current.Items[RequestItemName] = value;
 
-			}			
+			}
 		}
 
 		protected abstract string SettingName { get; }
 
 		protected abstract T GetPersistedValue(UserWithPermissionsContract permissionContext);
 
-		public void OverrideRequestValue(T val) {
+		public void OverrideRequestValue(T val)
+		{
 			RequestValue = val;
 		}
 
-		public void ParseFromValue(string val) {
+		public void ParseFromValue(string val)
+		{
 			Value = ParseValue(val);
 		}
 
@@ -134,18 +148,21 @@ namespace VocaDb.Model.Domain.Security {
 
 		protected abstract void SetPersistedValue(UserWithPermissionsContract user, T val);
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("User setting {0}: {1}", SettingName, Value);
 		}
 
 		protected abstract bool TryParseValue(string str, out T val);
 
-		protected UserSetting(HttpContext context, IUserPermissionContext permissionContext) {
+		protected UserSetting(HttpContext context, IUserPermissionContext permissionContext)
+		{
 			this.context = context;
 			this.permissionContext = permissionContext;
 		}
 
-		public void UpdateUser(User user) {
+		public void UpdateUser(User user)
+		{
 			SetPersistedValue(user, Value);
 		}
 
@@ -153,8 +170,10 @@ namespace VocaDb.Model.Domain.Security {
 		/// Gets or sets the current value. 
 		/// This will be persisted for the request, but not yet into the database (use <see cref="UpdateUser"/> to persist DB).
 		/// </summary>
-		public T Value {
-			get {
+		public T Value
+		{
+			get
+			{
 
 				if (IsRequestValueOverridden)
 					return RequestValue;
@@ -168,11 +187,12 @@ namespace VocaDb.Model.Domain.Security {
 
 				if (TryGetCookieValue(Request, CookieName, ref val, ParseValue))
 					return val;
-				
+
 				return val;
-					
+
 			}
-			set {
+			set
+			{
 
 				if (IsRequestValueOverridden)
 					OverrideRequestValue(value);
@@ -180,17 +200,18 @@ namespace VocaDb.Model.Domain.Security {
 				if (permissionContext.IsLoggedIn)
 					SetPersistedValue(permissionContext.LoggedUser, value);
 
-				SetCookie(context, CookieName, value.ToString(), CookieExpires);					
+				SetCookie(context, CookieName, value.ToString(), CookieExpires);
 
 			}
 		}
 
 	}
 
-	public class UserSettingLanguagePreference : UserSetting<ContentLanguagePreference> {
-		
-		public UserSettingLanguagePreference(HttpContext context, IUserPermissionContext permissionContext) 
-			: base(context, permissionContext) {}
+	public class UserSettingLanguagePreference : UserSetting<ContentLanguagePreference>
+	{
+
+		public UserSettingLanguagePreference(HttpContext context, IUserPermissionContext permissionContext)
+			: base(context, permissionContext) { }
 
 		protected override ContentLanguagePreference Default => ContentLanguagePreference.Default;
 
@@ -198,19 +219,23 @@ namespace VocaDb.Model.Domain.Security {
 
 		protected override string SettingName => "LanguagePreference";
 
-		protected override ContentLanguagePreference GetPersistedValue(UserWithPermissionsContract user) {
+		protected override ContentLanguagePreference GetPersistedValue(UserWithPermissionsContract user)
+		{
 			return user.DefaultLanguageSelection;
 		}
 
-		protected override void SetPersistedValue(User user, ContentLanguagePreference val) {
+		protected override void SetPersistedValue(User user, ContentLanguagePreference val)
+		{
 			user.DefaultLanguageSelection = val;
 		}
 
-		protected override void SetPersistedValue(UserWithPermissionsContract user, ContentLanguagePreference val) {
+		protected override void SetPersistedValue(UserWithPermissionsContract user, ContentLanguagePreference val)
+		{
 			user.DefaultLanguageSelection = val;
 		}
 
-		protected override bool TryParseValue(string str, out ContentLanguagePreference val) {
+		protected override bool TryParseValue(string str, out ContentLanguagePreference val)
+		{
 			return Enum.TryParse(str, out val);
 		}
 

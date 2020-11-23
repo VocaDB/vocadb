@@ -4,11 +4,14 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.Mapping.Songs {
+namespace VocaDb.Model.Mapping.Songs
+{
 
-	public class SongMap : ClassMap<Song> {
+	public class SongMap : ClassMap<Song>
+	{
 
-		public SongMap() {
+		public SongMap()
+		{
 
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -33,10 +36,12 @@ namespace VocaDb.Model.Mapping.Songs {
 			Component(m => m.ArchivedVersionsManager,
 				c => c.HasMany(m => m.Versions).KeyColumn("[Song]").Inverse().Cascade.All().OrderBy("Created DESC"));
 
-			Component(m => m.Names, c => {
+			Component(m => m.Names, c =>
+			{
 				c.Map(m => m.AdditionalNamesString).Not.Nullable().Length(1024);
 				c.HasMany(m => m.Names).Table("SongNames").KeyColumn("[Song]").Inverse().Cascade.All().Cache.ReadWrite();
-				c.Component(m => m.SortNames, c2 => {
+				c.Component(m => m.SortNames, c2 =>
+				{
 					c2.Map(m => m.DefaultLanguage, "DefaultNameLanguage");
 					c2.Map(m => m.Japanese, "JapaneseName");
 					c2.Map(m => m.English, "EnglishName");
@@ -44,22 +49,26 @@ namespace VocaDb.Model.Mapping.Songs {
 				});
 			});
 
-			Component(m => m.Notes, c => {
+			Component(m => m.Notes, c =>
+			{
 				c.Map(m => m.Original).Column("Notes").Not.Nullable().Length(int.MaxValue);
 				c.Map(m => m.English).Column("NotesEng").Not.Nullable().Length(int.MaxValue);
 			});
 
 			Component(m => m.PublishDate, c => c.Map(m => m.DateTime).Column("PublishDate").Nullable());
 
-			Component(m => m.PVs, c => {
+			Component(m => m.PVs, c =>
+			{
 				c.HasMany(m => m.PVs).KeyColumn("[Song]").Inverse().Cascade.All().Cache.ReadWrite();
 			});
 
-			Component(m => m.Tags, c => {
+			Component(m => m.Tags, c =>
+			{
 				c.HasMany(m => m.Usages).KeyColumn("[Song]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			});
 
-			Component(m => m.ArtistString, c => {
+			Component(m => m.ArtistString, c =>
+			{
 				c.Map(m => m.Japanese, "ArtistString").Length(500).Not.Nullable();
 				c.Map(m => m.Romaji, "ArtistStringRomaji").Length(500).Not.Nullable();
 				c.Map(m => m.English, "ArtistStringEnglish").Length(500).Not.Nullable();
@@ -80,9 +89,11 @@ namespace VocaDb.Model.Mapping.Songs {
 
 	}
 
-	public class ArchivedSongVersionMap : ClassMap<ArchivedSongVersion> {
+	public class ArchivedSongVersionMap : ClassMap<ArchivedSongVersion>
+	{
 
-		public ArchivedSongVersionMap() {
+		public ArchivedSongVersionMap()
+		{
 
 			Id(m => m.Id);
 
@@ -98,7 +109,8 @@ namespace VocaDb.Model.Mapping.Songs {
 			References(m => m.Author);
 			References(m => m.Song);
 
-			Component(m => m.Diff, c => {
+			Component(m => m.Diff, c =>
+			{
 				c.Map(m => m.ChangedFieldsString, ClassConventions.EscapeColumn("ChangedFields")).Length(1000).Not.Nullable();
 				c.Map(m => m.IsSnapshot).Not.Nullable();
 			});
@@ -107,9 +119,11 @@ namespace VocaDb.Model.Mapping.Songs {
 
 	}
 
-	public class SongNameMap : ClassMap<SongName> {
+	public class SongNameMap : ClassMap<SongName>
+	{
 
-		public SongNameMap() {
+		public SongNameMap()
+		{
 
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -123,9 +137,11 @@ namespace VocaDb.Model.Mapping.Songs {
 
 	}
 
-	public class ArtistForSongMap : ClassMap<ArtistForSong> {
+	public class ArtistForSongMap : ClassMap<ArtistForSong>
+	{
 
-		public ArtistForSongMap() {
+		public ArtistForSongMap()
+		{
 
 			Schema("dbo");
 			Table("ArtistsForSongs");
@@ -142,9 +158,11 @@ namespace VocaDb.Model.Mapping.Songs {
 
 	}
 
-	public class SongInAlbumMap : ClassMap<SongInAlbum> {
+	public class SongInAlbumMap : ClassMap<SongInAlbum>
+	{
 
-		public SongInAlbumMap() {
+		public SongInAlbumMap()
+		{
 
 			Schema("dbo");
 			Table("SongsInAlbums");
@@ -162,12 +180,14 @@ namespace VocaDb.Model.Mapping.Songs {
 
 	}
 
-	public class SongWebLinkMap : WebLinkMap<SongWebLink, Song> {}
+	public class SongWebLinkMap : WebLinkMap<SongWebLink, Song> { }
 
-	public class PVForSongMap : ClassMap<PVForSong> {
-		
-		public PVForSongMap() {
-			
+	public class PVForSongMap : ClassMap<PVForSong>
+	{
+
+		public PVForSongMap()
+		{
+
 			Table("PVsForSongs");
 			Id(m => m.Id);
 
@@ -184,7 +204,8 @@ namespace VocaDb.Model.Mapping.Songs {
 
 			References(m => m.Song).Not.Nullable();
 
-			Component(m => m.ExtendedMetadata, c => {
+			Component(m => m.ExtendedMetadata, c =>
+			{
 				c.Map(m => m.Json, "ExtendedMetadataJson").Nullable();
 			});
 

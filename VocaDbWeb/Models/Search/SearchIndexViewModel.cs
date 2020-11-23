@@ -4,14 +4,17 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Web.Models.Search {
+namespace VocaDb.Web.Models.Search
+{
 
-	public class SearchIndexViewModel {
+	public class SearchIndexViewModel
+	{
 
 		public SearchIndexViewModel()
-			: this(EntryType.Undefined) {}
+			: this(EntryType.Undefined) { }
 
-		public SearchIndexViewModel(EntryType searchType, string filter = null) {
+		public SearchIndexViewModel(EntryType searchType, string filter = null)
+		{
 			AllowRedirect = true;
 			SearchType = searchType;
 			Filter = filter;
@@ -47,8 +50,10 @@ namespace VocaDb.Web.Models.Search {
 
 		public EntryType SearchType { get; set; }
 
-		public string SearchTypeName {
-			get {
+		public string SearchTypeName
+		{
+			get
+			{
 				return SearchType != EntryType.Undefined ? SearchType.ToString() : "Anything";
 			}
 		}

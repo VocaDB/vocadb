@@ -2,11 +2,14 @@
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Comments;
 
-namespace VocaDb.Model.Mapping {
+namespace VocaDb.Model.Mapping
+{
 
-	public abstract class CommentMap<TComment, TEntry> : ClassMap<TComment> where TComment : GenericComment<TEntry> where TEntry : class, IEntryWithNames {
+	public abstract class CommentMap<TComment, TEntry> : ClassMap<TComment> where TComment : GenericComment<TEntry> where TEntry : class, IEntryWithNames
+	{
 
-		protected CommentMap() {
+		protected CommentMap()
+		{
 
 			Cache.ReadWrite();
 			Id(m => m.Id);

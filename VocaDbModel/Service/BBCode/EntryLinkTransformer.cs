@@ -3,16 +3,19 @@ using System.Text;
 using System.Text.RegularExpressions;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.Service.BBCode {
+namespace VocaDb.Model.Service.BBCode
+{
 
 	/// <summary>
 	/// Transforms entry page references (such as /Artist/3939) into links.
 	/// </summary>
-	public class EntryLinkTransformer : IBBCodeElementTransformer {
+	public class EntryLinkTransformer : IBBCodeElementTransformer
+	{
 
 		private readonly IEntryLinkFactory linkFactory;
 
-		public EntryLinkTransformer(IEntryLinkFactory linkFactory) {
+		public EntryLinkTransformer(IEntryLinkFactory linkFactory)
+		{
 
 			ParamIs.NotNull(() => linkFactory);
 
@@ -25,7 +28,8 @@ namespace VocaDb.Model.Service.BBCode {
 			new Regex(@"/(S)/(\w+)"),
 		};
 
-		private string GetLink(Match match) {
+		private string GetLink(Match match)
+		{
 
 			var entryTypeName = match.Groups[1].Value;
 			var entryIdStr = match.Groups[2].Value;
@@ -42,7 +46,8 @@ namespace VocaDb.Model.Service.BBCode {
 
 		}
 
-		public void ApplyTransform(StringBuilder bbCode) {
+		public void ApplyTransform(StringBuilder bbCode)
+		{
 
 			ParamIs.NotNull(() => bbCode);
 

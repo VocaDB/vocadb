@@ -1,8 +1,10 @@
 using System.Xml.Linq;
 
-namespace VocaDb.Model.Domain.Versioning {
+namespace VocaDb.Model.Domain.Versioning
+{
 
-	public interface IArchivedObjectVersion : IDatabaseObject {
+	public interface IArchivedObjectVersion : IDatabaseObject
+	{
 
 		XDocument Data { get; }
 

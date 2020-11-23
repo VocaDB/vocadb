@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.Venues {
+namespace VocaDb.Model.Domain.Venues
+{
 
-	public class VenueReport : GenericEntryReport<Venue, VenueReportType> {
+	public class VenueReport : GenericEntryReport<Venue, VenueReportType>
+	{
 
 		public static readonly HashSet<VenueReportType> ReportTypesWithRequiredNotes = new HashSet<VenueReportType> { VenueReportType.InvalidInfo, VenueReportType.Other };
 
@@ -18,7 +20,8 @@ namespace VocaDb.Model.Domain.Venues {
 
 	}
 
-	public enum VenueReportType {
+	public enum VenueReportType
+	{
 
 		InvalidInfo = 1,
 

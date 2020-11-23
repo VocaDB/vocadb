@@ -1,10 +1,13 @@
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Web.Models.Shared.Partials.Shared {
+namespace VocaDb.Web.Models.Shared.Partials.Shared
+{
 
-	public class ThumbItemViewModel {
+	public class ThumbItemViewModel
+	{
 
-		public ThumbItemViewModel(string url, string thumbUrl, string caption, IEntryBase entry = null) {
+		public ThumbItemViewModel(string url, string thumbUrl, string caption, IEntryBase entry = null)
+		{
 			Url = url;
 			ThumbUrl = thumbUrl;
 			Caption = caption;

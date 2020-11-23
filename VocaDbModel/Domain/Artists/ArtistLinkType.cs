@@ -1,9 +1,11 @@
-﻿namespace VocaDb.Model.Domain.Artists {
+﻿namespace VocaDb.Model.Domain.Artists
+{
 
 	/// <summary>
 	/// Type of (bidirectional) link between artists.
 	/// </summary>
-	public enum ArtistLinkType {
+	public enum ArtistLinkType
+	{
 
 		/// <summary>
 		/// Character designer / designer of.

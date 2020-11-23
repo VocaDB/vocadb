@@ -1,13 +1,16 @@
 ﻿using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.DataContracts.Artists {
+namespace VocaDb.Model.DataContracts.Artists
+{
 
-	public class ArchivedArtistVersionContract : ArchivedObjectVersionContract {
+	public class ArchivedArtistVersionContract : ArchivedObjectVersionContract
+	{
 
 		public ArchivedArtistVersionContract() { }
 
 		public ArchivedArtistVersionContract(ArchivedArtistVersion archivedVersion)
-			: base(archivedVersion) {
+			: base(archivedVersion)
+		{
 
 			ChangedFields = (archivedVersion.Diff != null ? archivedVersion.Diff.ChangedFields.Value : ArtistEditableFields.Nothing);
 			Reason = archivedVersion.Reason;

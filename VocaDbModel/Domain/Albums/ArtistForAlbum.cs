@@ -3,21 +3,25 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.Albums {
+namespace VocaDb.Model.Domain.Albums
+{
 
-	public class ArtistForAlbum : IArtistLinkWithRoles, IEquatable<ArtistForAlbum>, IEntryWithIntId {
+	public class ArtistForAlbum : IArtistLinkWithRoles, IEquatable<ArtistForAlbum>, IEntryWithIntId
+	{
 
 		private Album album;
 		private string notes;
 
-		public ArtistForAlbum() {
+		public ArtistForAlbum()
+		{
 			IsSupport = false;
 			Notes = string.Empty;
 			Roles = ArtistRoles.Default;
 		}
 
 		public ArtistForAlbum(Album album, Artist artist, bool support, ArtistRoles roles)
-			: this() {
+			: this()
+		{
 
 			Album = album;
 			Artist = artist;
@@ -27,7 +31,8 @@ namespace VocaDb.Model.Domain.Albums {
 		}
 
 		public ArtistForAlbum(Album album, string name, bool support, ArtistRoles roles)
-			: this() {
+			: this()
+		{
 
 			Album = album;
 			IsSupport = support;
@@ -36,9 +41,11 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public virtual Album Album {
+		public virtual Album Album
+		{
 			get { return album; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				album = value;
 			}
@@ -58,17 +65,20 @@ namespace VocaDb.Model.Domain.Albums {
 
 		public virtual string Name { get; set; }
 
-		public virtual string Notes {
+		public virtual string Notes
+		{
 			get => notes;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
-				notes = value; 
+				notes = value;
 			}
 		}
 
 		public virtual ArtistRoles Roles { get; set; }
 
-		public virtual bool ArtistLinkEquals(ArtistForAlbum another) {
+		public virtual bool ArtistLinkEquals(ArtistForAlbum another)
+		{
 
 			if (another == null)
 				return false;
@@ -77,7 +87,8 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public virtual bool ContentEquals(ArtistForAlbumContract contract) {
+		public virtual bool ContentEquals(ArtistForAlbumContract contract)
+		{
 
 			if (contract == null)
 				return false;
@@ -88,11 +99,13 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public virtual void Delete() {
+		public virtual void Delete()
+		{
 			Album.DeleteArtistForAlbum(this);
 		}
 
-		public virtual bool Equals(ArtistForAlbum another) {
+		public virtual bool Equals(ArtistForAlbum another)
+		{
 
 			if (another == null)
 				return false;
@@ -107,15 +120,18 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as ArtistForAlbum);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return Id.GetHashCode();
 		}
 
-		public virtual void Move(Album target) {
+		public virtual void Move(Album target)
+		{
 
 			ParamIs.NotNull(() => target);
 
@@ -128,7 +144,8 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public virtual void Move(Artist target) {
+		public virtual void Move(Artist target)
+		{
 
 			ParamIs.NotNull(() => target);
 
@@ -141,7 +158,8 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("{0} for {1} [{2}]", ArtistToStringOrName, Album, Id);
 		}
 

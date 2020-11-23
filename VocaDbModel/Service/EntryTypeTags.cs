@@ -5,12 +5,14 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.Service {
+namespace VocaDb.Model.Service
+{
 
 	/// <summary>
 	/// Loads tags for entry types (and sub-types).
 	/// </summary>
-	public interface IEntryTypeTagRepository {
+	public interface IEntryTypeTagRepository
+	{
 		int Cover { get; }
 		int Instrumental { get; }
 		int Remix { get; }
@@ -19,13 +21,16 @@ namespace VocaDb.Model.Service {
 		int SongTypeTagId(SongType songType);
 	}
 
-	public class EntryTypeTags : IEntryTypeTagRepository {
+	public class EntryTypeTags : IEntryTypeTagRepository
+	{
 
-		public EntryTypeTags(IDatabaseContext ctx) {
+		public EntryTypeTags(IDatabaseContext ctx)
+		{
 			this.ctx = ctx;
 		}
 
-		private int GetTagId(EntryType entryType, string subType) {
+		private int GetTagId(EntryType entryType, string subType)
+		{
 			return ctx.Query<EntryTypeToTagMapping>()
 				.Where(etm => etm.EntryType == entryType && etm.SubType == subType)
 				.Select(etm => etm.Tag.Id)

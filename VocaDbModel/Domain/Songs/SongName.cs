@@ -1,29 +1,35 @@
 ﻿using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.Domain.Songs {
+namespace VocaDb.Model.Domain.Songs
+{
 
-	public class SongName : LocalizedStringWithId {
+	public class SongName : LocalizedStringWithId
+	{
 
 		private Song song;
 
-		public SongName() {}
+		public SongName() { }
 
 		public SongName(Song song, LocalizedString localizedString)
-			: base(localizedString.Value, localizedString.Language) {
+			: base(localizedString.Value, localizedString.Language)
+		{
 
 			Song = song;
 
 		}
 
-		public virtual Song Song {
+		public virtual Song Song
+		{
 			get { return song; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				song = value;
 			}
 		}
 
-		public virtual bool Equals(SongName another) {
+		public virtual bool Equals(SongName another)
+		{
 
 			if (another == null)
 				return false;
@@ -38,15 +44,18 @@ namespace VocaDb.Model.Domain.Songs {
 
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as SongName);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return base.GetHashCode();
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("name '{0}' for {1}", Value, Song);
 		}
 

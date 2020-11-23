@@ -9,10 +9,12 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 
-namespace VocaDb.Model.DataContracts.ReleaseEvents {
+namespace VocaDb.Model.DataContracts.ReleaseEvents
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ReleaseEventForApiContract : IReleaseEvent, IEntryBase {
+	public class ReleaseEventForApiContract : IReleaseEvent, IEntryBase
+	{
 
 		bool IDeletableEntry.Deleted => false;
 		string IEntryBase.DefaultName => Name;
@@ -20,7 +22,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 
 		public ReleaseEventForApiContract() { }
 
-		public ReleaseEventForApiContract(ReleaseEvent rel, ContentLanguagePreference languagePreference, ReleaseEventOptionalFields fields, IAggregatedEntryImageUrlFactory thumbPersister) {
+		public ReleaseEventForApiContract(ReleaseEvent rel, ContentLanguagePreference languagePreference, ReleaseEventOptionalFields fields, IAggregatedEntryImageUrlFactory thumbPersister)
+		{
 
 			Category = rel.Category;
 			Date = rel.Date;
@@ -34,47 +37,58 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			VenueName = rel.VenueName;
 			Version = rel.Version;
 
-			if (rel.HasSeries) {
+			if (rel.HasSeries)
+			{
 				SeriesId = rel.Series.Id;
 			}
 
-			if (fields.HasFlag(ReleaseEventOptionalFields.AdditionalNames)) {
+			if (fields.HasFlag(ReleaseEventOptionalFields.AdditionalNames))
+			{
 				AdditionalNames = rel.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 
-			if (fields.HasFlag(ReleaseEventOptionalFields.Artists)) {
+			if (fields.HasFlag(ReleaseEventOptionalFields.Artists))
+			{
 				Artists = rel.Artists.Select(a => new ArtistForEventContract(a, languagePreference)).ToArray();
 			}
 
-			if (fields.HasFlag(ReleaseEventOptionalFields.Description)) {
+			if (fields.HasFlag(ReleaseEventOptionalFields.Description))
+			{
 				Description = rel.Description;
 			}
 
-			if (thumbPersister != null && fields.HasFlag(ReleaseEventOptionalFields.MainPicture)) {
+			if (thumbPersister != null && fields.HasFlag(ReleaseEventOptionalFields.MainPicture))
+			{
 				MainPicture = EntryThumbForApiContract.Create(EntryThumb.Create(rel) ?? EntryThumb.Create(rel.Series), thumbPersister);
 			}
 
-			if (fields.HasFlag(ReleaseEventOptionalFields.Names)) {
+			if (fields.HasFlag(ReleaseEventOptionalFields.Names))
+			{
 				Names = rel.Names.Select(n => new LocalizedStringContract(n)).ToArray();
 			}
 
-			if (fields.HasFlag(ReleaseEventOptionalFields.Series) && rel.HasSeries) {
+			if (fields.HasFlag(ReleaseEventOptionalFields.Series) && rel.HasSeries)
+			{
 				Series = new ReleaseEventSeriesContract(rel.Series, languagePreference);
 			}
 
-			if (fields.HasFlag(ReleaseEventOptionalFields.SongList) && rel.SongList != null) {
+			if (fields.HasFlag(ReleaseEventOptionalFields.SongList) && rel.SongList != null)
+			{
 				SongList = new SongListBaseContract(rel.SongList);
 			}
 
-			if (fields.HasFlag(ReleaseEventOptionalFields.Tags)) {
+			if (fields.HasFlag(ReleaseEventOptionalFields.Tags))
+			{
 				Tags = rel.Tags.ActiveUsages.Select(t => new TagUsageForApiContract(t, languagePreference)).ToArray();
 			}
 
-			if (fields.HasFlag(ReleaseEventOptionalFields.Venue) && rel.Venue != null) {
+			if (fields.HasFlag(ReleaseEventOptionalFields.Venue) && rel.Venue != null)
+			{
 				Venue = new VenueForApiContract(rel.Venue, languagePreference, VenueOptionalFields.None);
 			}
 
-			if (fields.HasFlag(ReleaseEventOptionalFields.WebLinks)) {
+			if (fields.HasFlag(ReleaseEventOptionalFields.WebLinks))
+			{
 				WebLinks = rel.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
 			}
 
@@ -168,7 +182,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 	}
 
 	[Flags]
-	public enum ReleaseEventOptionalFields {
+	public enum ReleaseEventOptionalFields
+	{
 
 		None = 0,
 		AdditionalNames = 1,

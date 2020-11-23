@@ -1,14 +1,17 @@
-namespace VocaDb.Model.Helpers {
+namespace VocaDb.Model.Helpers
+{
 
-	public readonly struct CollectionAddResult<T> {
+	public readonly struct CollectionAddResult<T>
+	{
 
 		public CollectionAddResult(T result, bool isNew)
-			: this() {
-			
+			: this()
+		{
+
 			Result = result;
 			IsNew = isNew;
 
-		} 
+		}
 
 		public bool IsNew { get; }
 
@@ -16,7 +19,8 @@ namespace VocaDb.Model.Helpers {
 
 	}
 
-	public static class CollectionAddResult {	
+	public static class CollectionAddResult
+	{
 		public static CollectionAddResult<T> Create<T>(T result, bool isNew) => new CollectionAddResult<T>(result, isNew);
 	}
 

@@ -7,17 +7,20 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search;
 using VocaDb.Tests.TestData;
 
-namespace VocaDb.Tests.Service.QueryableExtenders {
+namespace VocaDb.Tests.Service.QueryableExtenders
+{
 
 	/// <summary>
 	/// Tests for <see cref="EntryWithNamesQueryableExtender"/>.
 	/// </summary>
 	[TestClass]
-	public class EntryWithNamesQueryableExtenderTests {
+	public class EntryWithNamesQueryableExtenderTests
+	{
 
 		private Song[] songs;
 
-		public EntryWithNamesQueryableExtenderTests() {
+		public EntryWithNamesQueryableExtenderTests()
+		{
 
 			songs = new[] {
 				CreateEntry.Song(name: "Nebula"),
@@ -28,25 +31,29 @@ namespace VocaDb.Tests.Service.QueryableExtenders {
 
 		}
 
-		private Song[] WhereHasNameGeneric(IEnumerable<Song> songs, params SearchTextQuery[] queries) {
+		private Song[] WhereHasNameGeneric(IEnumerable<Song> songs, params SearchTextQuery[] queries)
+		{
 			return songs
 				.AsQueryable()
 				.WhereHasNameGeneric<Song, SongName>(queries)
 				.ToArray();
 		}
 
-		private void AssertSong(Song[] list, params string[] expectedNames) {
+		private void AssertSong(Song[] list, params string[] expectedNames)
+		{
 
 			Assert.AreEqual(expectedNames.Length, list.Length);
 
-			foreach (var name in expectedNames) {
+			foreach (var name in expectedNames)
+			{
 				Assert.IsTrue(list.Any(s => s.DefaultName == name), name);
 			}
 
 		}
 
 		[TestMethod]
-		public void WhereHasNameGeneric_SingleName_StartsWith() {
+		public void WhereHasNameGeneric_SingleName_StartsWith()
+		{
 
 			var result = WhereHasNameGeneric(songs, SearchTextQuery.Create("Ne", NameMatchMode.StartsWith));
 
@@ -55,7 +62,8 @@ namespace VocaDb.Tests.Service.QueryableExtenders {
 		}
 
 		[TestMethod]
-		public void WhereHasNameGeneric_MultipleNames_StartsWith() {
+		public void WhereHasNameGeneric_MultipleNames_StartsWith()
+		{
 
 			var result = WhereHasNameGeneric(songs, SearchTextQuery.Create("Ne", NameMatchMode.StartsWith), SearchTextQuery.Create("Sym", NameMatchMode.StartsWith));
 
@@ -64,7 +72,8 @@ namespace VocaDb.Tests.Service.QueryableExtenders {
 		}
 
 		[TestMethod]
-		public void WhereHasNameGeneric_MultipleNames_Words() {
+		public void WhereHasNameGeneric_MultipleNames_Words()
+		{
 
 			var result = WhereHasNameGeneric(songs, SearchTextQuery.Create("Stage", NameMatchMode.Words), SearchTextQuery.Create("Emotion remix", NameMatchMode.Words));
 

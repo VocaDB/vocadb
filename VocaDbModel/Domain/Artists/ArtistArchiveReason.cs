@@ -1,7 +1,9 @@
 ﻿
-namespace VocaDb.Model.Domain.Artists {
+namespace VocaDb.Model.Domain.Artists
+{
 
-	public enum ArtistArchiveReason {
+	public enum ArtistArchiveReason
+	{
 
 		Unknown,
 

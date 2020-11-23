@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using VocaDb.Model.DataContracts.Artists;
 
-namespace VocaDb.Web.Models.Shared.Partials.Artist {
+namespace VocaDb.Web.Models.Shared.Partials.Artist
+{
 
-	public class ArtistLinkListViewModel {
+	public class ArtistLinkListViewModel
+	{
 
-		public ArtistLinkListViewModel(IEnumerable<ArtistContract> artists, bool typeLabel = false, bool releaseYear = false) {
+		public ArtistLinkListViewModel(IEnumerable<ArtistContract> artists, bool typeLabel = false, bool releaseYear = false)
+		{
 			Artists = artists;
 			TypeLabel = typeLabel;
 			ReleaseYear = releaseYear;

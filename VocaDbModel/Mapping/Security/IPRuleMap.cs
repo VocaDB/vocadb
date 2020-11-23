@@ -1,11 +1,14 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.Mapping.Security {
+namespace VocaDb.Model.Mapping.Security
+{
 
-	public class IPRuleMap : ClassMap<IPRule> {
+	public class IPRuleMap : ClassMap<IPRule>
+	{
 
-		public IPRuleMap() {
+		public IPRuleMap()
+		{
 
 			Id(m => m.Id);
 

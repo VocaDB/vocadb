@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Knockout {
+namespace VocaDb.Web.Models.Shared.Partials.Knockout
+{
 
-	public class IconAndNameKnockoutViewModel {
+	public class IconAndNameKnockoutViewModel
+	{
 
-		public IconAndNameKnockoutViewModel(string iconBinding, string nameBinding, int size = 20) {
+		public IconAndNameKnockoutViewModel(string iconBinding, string nameBinding, int size = 20)
+		{
 			IconBinding = iconBinding;
 			NameBinding = nameBinding;
 			Size = size;

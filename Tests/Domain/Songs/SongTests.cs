@@ -16,19 +16,23 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Tests.TestData;
 
-namespace VocaDb.Tests.Domain.Songs {
+namespace VocaDb.Tests.Domain.Songs
+{
 
 	/// <summary>
 	/// Tests for <see cref="Song"/>.
 	/// </summary>
 	[TestClass]
-	public class SongTests {
+	public class SongTests
+	{
 
-		private class SpecialTags : ISpecialTags {
+		private class SpecialTags : ISpecialTags
+		{
 			public int ChangedLyrics { get; set; }
 		}
 
-		private class EntryTypeTags : IEntryTypeTagRepository {
+		private class EntryTypeTags : IEntryTypeTagRepository
+		{
 			public int Cover { get; set; }
 			public int Instrumental { get; set; }
 			public int Remix { get; set; }
@@ -44,20 +48,23 @@ namespace VocaDb.Tests.Domain.Songs {
 		private Tag instrumentalTag;
 		private LyricsForSong lyrics;
 		private Song song;
-		private SpecialTags specialTags;	
+		private SpecialTags specialTags;
 		private Artist vocalist;
 
 		private Func<ArtistForSongContract, Artist> artistFunc;
 
-		private IList<LyricsForSong> CallGetLyricsFromParents(Song song) {
+		private IList<LyricsForSong> CallGetLyricsFromParents(Song song)
+		{
 			return song.GetLyricsFromParents(specialTags, entryTypeTags);
 		}
 
-		private PVForSong CreatePV(PVService service = PVService.Youtube, PVType pvType = PVType.Original, DateTime? publishDate = null) {
+		private PVForSong CreatePV(PVService service = PVService.Youtube, PVType pvType = PVType.Original, DateTime? publishDate = null)
+		{
 			return song.CreatePV(new PVContract { Service = service, PVId = "test", Name = "test", PublishDate = publishDate, PVType = pvType });
 		}
 
-		private void TestUpdatePublishDateFromPVs(DateTime? expected, params PVForSong[] pvs) {
+		private void TestUpdatePublishDateFromPVs(DateTime? expected, params PVForSong[] pvs)
+		{
 
 			song.UpdatePublishDateFromPVs();
 
@@ -66,7 +73,8 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestInitialize]
-		public void Setup() {
+		public void Setup()
+		{
 
 			artist = new Artist(TranslatedString.Create("Minato")) { Id = 1, ArtistType = ArtistType.Producer };
 			vocalist = CreateEntry.Vocalist(39);
@@ -76,10 +84,12 @@ namespace VocaDb.Tests.Domain.Songs {
 			lyrics = song.CreateLyrics("Miku!", "miku", string.Empty, TranslationType.Original, "ja");
 			instrumentalTag = CreateEntry.Tag("instrumental", 1);
 			changedLyricsTag = CreateEntry.Tag("changed lyrics", 2);
-			specialTags = new SpecialTags {
+			specialTags = new SpecialTags
+			{
 				ChangedLyrics = changedLyricsTag.Id
 			};
-			entryTypeTags = new EntryTypeTags {
+			entryTypeTags = new EntryTypeTags
+			{
 				Instrumental = instrumentalTag.Id,
 			};
 			artistFunc = (contract => artists.FirstOrDefault(a => a.Id == contract.Artist?.Id));
@@ -87,7 +97,8 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void Ctor_LocalizedString() {
+		public void Ctor_LocalizedString()
+		{
 
 			song = new Song(new LocalizedString("song", ContentLanguageSelection.Romaji));
 
@@ -99,7 +110,8 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void AddTag_NewTag() {
+		public void AddTag_NewTag()
+		{
 
 			var tag = CreateEntry.Tag("rock");
 			var result = song.AddTag(tag);
@@ -113,7 +125,8 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void AddTag_ExistingTag() {
+		public void AddTag_ExistingTag()
+		{
 
 			var tag = CreateEntry.Tag("rock");
 			song.AddTag(tag);
@@ -128,7 +141,8 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void LyricsFromParents_NoLyrics() {
+		public void LyricsFromParents_NoLyrics()
+		{
 
 			var result = CallGetLyricsFromParents(new Song());
 
@@ -137,7 +151,8 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void LyricsFromParents_NoParent() {
+		public void LyricsFromParents_NoParent()
+		{
 
 			var result = CallGetLyricsFromParents(song);
 
@@ -147,9 +162,11 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void LyricsFromParents_Instrumental() {
+		public void LyricsFromParents_Instrumental()
+		{
 
-			var derived = new Song {
+			var derived = new Song
+			{
 				SongType = SongType.Instrumental,
 				OriginalVersion = song
 			};
@@ -160,9 +177,11 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void LyricsFromParents_FromParent() {
+		public void LyricsFromParents_FromParent()
+		{
 
-			var derived = new Song {
+			var derived = new Song
+			{
 				OriginalVersion = song
 			};
 			var result = CallGetLyricsFromParents(derived);
@@ -173,15 +192,18 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void LyricsFromParents_TwoLevelsWithInstrumental() {
+		public void LyricsFromParents_TwoLevelsWithInstrumental()
+		{
 
 			// original -> instrumental -> derived
-			var instrumental = new Song {
+			var instrumental = new Song
+			{
 				SongType = SongType.Instrumental,
 				OriginalVersion = song
 			};
 
-			var derived = new Song {
+			var derived = new Song
+			{
 				OriginalVersion = instrumental
 			};
 
@@ -191,8 +213,9 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void SyncArtists_Duplicate() {
-			
+		public void SyncArtists_Duplicate()
+		{
+
 			var newArtists = new[] {
 				new ArtistForSongContract(new ArtistForSong(song, artist, false, ArtistRoles.Default), ContentLanguagePreference.Default),
 				new ArtistForSongContract(new ArtistForSong(song, artist, false, ArtistRoles.Composer), ContentLanguagePreference.Default),
@@ -209,7 +232,8 @@ namespace VocaDb.Tests.Domain.Songs {
 		/// Extra artists (just name, no entry) will not be removed when syncing with real artists.
 		/// </summary>
 		[TestMethod]
-		public async Task SyncArtists_WillNotRemoveExtraArtists() {
+		public async Task SyncArtists_WillNotRemoveExtraArtists()
+		{
 
 			var link = song.AddArtist("Extra artist", false, ArtistRoles.Composer);
 			var newArtists = new[] { new ArtistContract(artist, ContentLanguagePreference.Default) };
@@ -222,15 +246,17 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void SyncArtists_CustomName() {
+		public void SyncArtists_CustomName()
+		{
 
-			var contract = new ArtistForSongContract {
-				Artist = new ArtistContract(artist, ContentLanguagePreference.Default), 
-				Name = "RyuuseiP", 
+			var contract = new ArtistForSongContract
+			{
+				Artist = new ArtistContract(artist, ContentLanguagePreference.Default),
+				Name = "RyuuseiP",
 				IsCustomName = true
 			};
 
-			song.SyncArtists(new [] { contract, new ArtistForSongContract(new ArtistContract(vocalist, ContentLanguagePreference.Default)) }, artistFunc);
+			song.SyncArtists(new[] { contract, new ArtistForSongContract(new ArtistContract(vocalist, ContentLanguagePreference.Default)) }, artistFunc);
 
 			Assert.AreEqual(2, song.Artists.Count(), "Number of artists");
 			var producerLink = song.Artists.FirstOrDefault(a => a.Artist?.Id == artist.Id);
@@ -241,7 +267,8 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void UpdatePVServices_None() {
+		public void UpdatePVServices_None()
+		{
 
 			song.UpdatePVServices();
 
@@ -250,7 +277,8 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void UpdatePVServices_One() {
+		public void UpdatePVServices_One()
+		{
 
 			CreatePV(PVService.Youtube);
 
@@ -261,7 +289,8 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void UpdatePVServices_Multiple() {
+		public void UpdatePVServices_Multiple()
+		{
 
 			CreatePV(PVService.NicoNicoDouga);
 			CreatePV(PVService.SoundCloud);
@@ -274,30 +303,34 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void UpdatePublishDateFromPVs_NoPVs_NotUpdated() {
-			
+		public void UpdatePublishDateFromPVs_NoPVs_NotUpdated()
+		{
+
 			TestUpdatePublishDateFromPVs(null);
 
 		}
 
 		[TestMethod]
-		public void UpdatePublishDateFromPVs_HasPV_Updated() {
+		public void UpdatePublishDateFromPVs_HasPV_Updated()
+		{
 
 			TestUpdatePublishDateFromPVs(new DateTime(2010, 1, 1), CreatePV(publishDate: new DateTime(2010, 1, 1)));
 
 		}
 
 		[TestMethod]
-		public void UpdatePublishDateFromPVs_HasPV_NotOriginal_NotUpdated() {
+		public void UpdatePublishDateFromPVs_HasPV_NotOriginal_NotUpdated()
+		{
 
 			TestUpdatePublishDateFromPVs(null, CreatePV(publishDate: new DateTime(2010, 1, 1), pvType: PVType.Reprint));
 
 		}
 
 		[TestMethod]
-		public void UpdatePublishDateFromPVs_MultiplePVs() {
+		public void UpdatePublishDateFromPVs_MultiplePVs()
+		{
 
-			TestUpdatePublishDateFromPVs(new DateTime(2008, 6, 12), 
+			TestUpdatePublishDateFromPVs(new DateTime(2008, 6, 12),
 				CreatePV(publishDate: new DateTime(2010, 1, 1)),
 				CreatePV(publishDate: new DateTime(2008, 6, 12))
 			);
@@ -305,7 +338,8 @@ namespace VocaDb.Tests.Domain.Songs {
 		}
 
 		[TestMethod]
-		public void UpdatePublishDateFromPVs_AlbumReleaseDate() {
+		public void UpdatePublishDateFromPVs_AlbumReleaseDate()
+		{
 
 			var album = CreateEntry.Album();
 			album.OriginalReleaseDate.Year = 2007;

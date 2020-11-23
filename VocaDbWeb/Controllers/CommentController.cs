@@ -3,26 +3,29 @@ using System.Web.Mvc;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 
-namespace VocaDb.Web.Controllers {
+namespace VocaDb.Web.Controllers
+{
 
-    public class CommentController : ControllerBase {
+	public class CommentController : ControllerBase
+	{
 
 		private readonly OtherService otherService;
 
-		public CommentController(OtherService otherService) {
+		public CommentController(OtherService otherService)
+		{
 			this.otherService = otherService;
 		}
 
-        //
-        // GET: /Comment/
+		//
+		// GET: /Comment/
 
-        public async Task<ActionResult> Index()
-        {
+		public async Task<ActionResult> Index()
+		{
 
 			var comments = await otherService.GetRecentComments();
 			return View(comments);
 
-        }
+		}
 
-    }
+	}
 }

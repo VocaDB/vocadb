@@ -5,11 +5,14 @@ using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Domain.Activityfeed;
 
-namespace VocaDb.Model.Domain.Artists {
+namespace VocaDb.Model.Domain.Artists
+{
 
-	public class ArchivedArtistVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<ArtistEditableFields> {
+	public class ArchivedArtistVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<ArtistEditableFields>
+	{
 
-		public static ArchivedArtistVersion Create(Artist artist, ArtistDiff diff, AgentLoginData author, ArtistArchiveReason reason, string notes) {
+		public static ArchivedArtistVersion Create(Artist artist, ArtistDiff diff, AgentLoginData author, ArtistArchiveReason reason, string notes)
+		{
 
 			var contract = new ArchivedArtistContract(artist, diff);
 			var data = XmlHelper.SerializeToXml(contract);
@@ -21,11 +24,12 @@ namespace VocaDb.Model.Domain.Artists {
 		private Artist artist;
 		private ArtistDiff diff;
 
-		public ArchivedArtistVersion() {}
+		public ArchivedArtistVersion() { }
 
-		public ArchivedArtistVersion(Artist artist, XDocument data, ArtistDiff diff, AgentLoginData author, int version, EntryStatus status, 
+		public ArchivedArtistVersion(Artist artist, XDocument data, ArtistDiff diff, AgentLoginData author, int version, EntryStatus status,
 			ArtistArchiveReason reason, string notes)
-			: base(data, author, version, status, notes) {
+			: base(data, author, version, status, notes)
+		{
 
 			ParamIs.NotNull(() => data);
 
@@ -33,37 +37,45 @@ namespace VocaDb.Model.Domain.Artists {
 			Diff = diff;
 			Reason = reason;
 
-			if (diff.IncludePicture) {
+			if (diff.IncludePicture)
+			{
 				Picture = artist.Picture;
 				PictureMime = artist.PictureMime;
 			}
 
 		}
 
-		public virtual Artist Artist {
+		public virtual Artist Artist
+		{
 			get { return artist; }
-			protected set {
+			protected set
+			{
 				ParamIs.NotNull(() => value);
 				artist = value;
 			}
 		}
 
-		public virtual ArtistDiff Diff {
+		public virtual ArtistDiff Diff
+		{
 			get { return diff; }
 			protected set { diff = value; }
 		}
 
-		public override IEntryDiff DiffBase {
+		public override IEntryDiff DiffBase
+		{
 			get { return Diff; }
 		}
 
-		public override EntryEditEvent EditEvent {
-			get {
+		public override EntryEditEvent EditEvent
+		{
+			get
+			{
 				return (Reason == ArtistArchiveReason.Created ? EntryEditEvent.Created : EntryEditEvent.Updated);
 			}
 		}
 
-		public override IEntryWithNames EntryBase {
+		public override IEntryWithNames EntryBase
+		{
 			get { return Artist; }
 		}
 
@@ -73,7 +85,8 @@ namespace VocaDb.Model.Domain.Artists {
 
 		public virtual ArtistArchiveReason Reason { get; set; }
 
-		public virtual ArchivedArtistVersion GetLatestVersionWithField(ArtistEditableFields field) {
+		public virtual ArchivedArtistVersion GetLatestVersionWithField(ArtistEditableFields field)
+		{
 
 			if (IsIncluded(field))
 				return this;
@@ -82,7 +95,8 @@ namespace VocaDb.Model.Domain.Artists {
 
 		}
 
-		public virtual bool IsIncluded(ArtistEditableFields field) {
+		public virtual bool IsIncluded(ArtistEditableFields field)
+		{
 			return (Diff != null && Data != null && Diff.IsIncluded(field));
 		}
 

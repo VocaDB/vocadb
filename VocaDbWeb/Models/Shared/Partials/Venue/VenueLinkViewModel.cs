@@ -1,10 +1,13 @@
 using VocaDb.Model.DataContracts.Venues;
 
-namespace VocaDb.Web.Models.Shared.Partials.Venue {
+namespace VocaDb.Web.Models.Shared.Partials.Venue
+{
 
-	public class VenueLinkViewModel {
+	public class VenueLinkViewModel
+	{
 
-		public VenueLinkViewModel(VenueForApiContract venue) {
+		public VenueLinkViewModel(VenueForApiContract venue)
+		{
 			Venue = venue;
 		}
 

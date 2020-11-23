@@ -1,11 +1,14 @@
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.ReleaseEvents;
 
-namespace VocaDb.Model.Mapping.ReleaseEvents {
+namespace VocaDb.Model.Mapping.ReleaseEvents
+{
 
-	public class ArchivedReleaseEventSeriesVersionMap : ClassMap<ArchivedReleaseEventSeriesVersion> {
+	public class ArchivedReleaseEventSeriesVersionMap : ClassMap<ArchivedReleaseEventSeriesVersion>
+	{
 
-		public ArchivedReleaseEventSeriesVersionMap() {
+		public ArchivedReleaseEventSeriesVersionMap()
+		{
 
 			Id(m => m.Id);
 			Table("ArchivedEventSeriesVersions");
@@ -20,7 +23,8 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			References(m => m.Author).Not.Nullable();
 			References(m => m.Entry).Column("[Series]").Not.Nullable();
 
-			Component(m => m.Diff, c => {
+			Component(m => m.Diff, c =>
+			{
 				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
 			});
 

@@ -1,37 +1,45 @@
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Albums {
+namespace VocaDb.Model.Domain.Albums
+{
 
-	public class AlbumPictureFile : EntryPictureFile, IEntryWithIntId {
+	public class AlbumPictureFile : EntryPictureFile, IEntryWithIntId
+	{
 
 		private Album album;
 
 		public AlbumPictureFile() { }
 
-		public AlbumPictureFile(string name, string mime, User author, Album album) 
-			: base(name, mime, author) {
+		public AlbumPictureFile(string name, string mime, User author, Album album)
+			: base(name, mime, author)
+		{
 
 			this.album = album;
 
 		}
 
-		public virtual Album Album {
+		public virtual Album Album
+		{
 			get { return album; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				album = value; 
+				album = value;
 			}
 		}
 
-		public override EntryType EntryType {
+		public override EntryType EntryType
+		{
 			get { return EntryType.Album; }
 		}
 
-		public override int OwnerEntryId {
+		public override int OwnerEntryId
+		{
 			get { return Album.Id; }
 		}
 
-		public virtual void Move(Album target) {
+		public virtual void Move(Album target)
+		{
 
 			ParamIs.NotNull(() => target);
 

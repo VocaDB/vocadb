@@ -3,20 +3,23 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.DataContracts.Tags {
+namespace VocaDb.Model.DataContracts.Tags
+{
 
 	/// <summary>
 	/// Minimal tag details: Id, Name (translated), UrlSlug.
 	/// Optionally includes AdditionalNames and Category.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class TagBaseContract : ITag, IEntryWithIntId {
+	public class TagBaseContract : ITag, IEntryWithIntId
+	{
 
 		public TagBaseContract() { }
 
 		public TagBaseContract(Tag tag, ContentLanguagePreference languagePreference,
-			bool includeAdditionalNames = false, bool includeCategory = false) {
-			
+			bool includeAdditionalNames = false, bool includeCategory = false)
+		{
+
 			ParamIs.NotNull(() => tag);
 
 			Id = tag.Id;

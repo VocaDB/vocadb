@@ -8,18 +8,22 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 
-namespace VocaDb.Model.Database.Queries {
+namespace VocaDb.Model.Database.Queries
+{
 
-	public class SongAggregateQueries : QueriesBase<ISongRepository, Song> {
+	public class SongAggregateQueries : QueriesBase<ISongRepository, Song>
+	{
 
-		public SongAggregateQueries(ISongRepository repository, IUserPermissionContext permissionContext) 
-			: base(repository, permissionContext) {}
+		public SongAggregateQueries(ISongRepository repository, IUserPermissionContext permissionContext)
+			: base(repository, permissionContext) { }
 
-		public CountPerDayContract[] AddZeros(CountPerDayContract[] query, bool addZeros, TimeUnit timeUnit) {
+		public CountPerDayContract[] AddZeros(CountPerDayContract[] query, bool addZeros, TimeUnit timeUnit)
+		{
 			return query.AddZeros(addZeros, timeUnit);
 		}
 
-		private CountPerDayContract[] SongsPerDay(IDatabaseContext ctx, Expression<Func<Song, bool>> where, DateTime? after = null) {
+		private CountPerDayContract[] SongsPerDay(IDatabaseContext ctx, Expression<Func<Song, bool>> where, DateTime? after = null)
+		{
 
 			var query = ctx.Query<Song>()
 				.Where(a => !a.Deleted && a.PublishDate.DateTime != null);
@@ -34,12 +38,14 @@ namespace VocaDb.Model.Database.Queries {
 				.OrderBy(a => a.PublishDate.DateTime.Value.Year) // Need to order by part of publish date because we're grouping
 				.ThenBy(a => a.PublishDate.DateTime.Value.Month)
 				.ThenBy(a => a.PublishDate.DateTime.Value.Day)
-				.GroupBy(a => new {
+				.GroupBy(a => new
+				{
 					Year = a.PublishDate.DateTime.Value.Year,
 					Month = a.PublishDate.DateTime.Value.Month,
 					Day = a.PublishDate.DateTime.Value.Day,
 				})
-				.Select(a => new CountPerDayContract {
+				.Select(a => new CountPerDayContract
+				{
 					Year = a.Key.Year,
 					Month = a.Key.Month,
 					Day = a.Key.Day,
@@ -49,7 +55,8 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		private CountPerDayContract[] SongsPerMonth(IDatabaseContext ctx, Expression<Func<Song, bool>> where, DateTime? after = null) {
+		private CountPerDayContract[] SongsPerMonth(IDatabaseContext ctx, Expression<Func<Song, bool>> where, DateTime? after = null)
+		{
 
 			var query = ctx.Query<Song>()
 				.Where(a => !a.Deleted && a.PublishDate.DateTime != null);
@@ -63,11 +70,13 @@ namespace VocaDb.Model.Database.Queries {
 			return query
 				.OrderBy(a => a.PublishDate.DateTime.Value.Year)
 				.ThenBy(a => a.PublishDate.DateTime.Value.Month)
-				.GroupBy(a => new {
+				.GroupBy(a => new
+				{
 					Year = a.PublishDate.DateTime.Value.Year,
 					Month = a.PublishDate.DateTime.Value.Month,
 				})
-				.Select(a => new CountPerDayContract {
+				.Select(a => new CountPerDayContract
+				{
 					Year = a.Key.Year,
 					Month = a.Key.Month,
 					Count = a.Count()
@@ -85,9 +94,11 @@ namespace VocaDb.Model.Database.Queries {
 		/// </param>
 		/// <param name="filters">Additional filters for songs. One result will be produced per filter. Cannot be null.</param>
 		/// <returns>Results. One result per filter.</returns>
-		public CountPerDayContract[][] SongsOverTime(TimeUnit timeUnit, bool addZeros, DateTime? after, params Expression<Func<Song, bool>>[] filters) {
+		public CountPerDayContract[][] SongsOverTime(TimeUnit timeUnit, bool addZeros, DateTime? after, params Expression<Func<Song, bool>>[] filters)
+		{
 
-			return repository.HandleQuery(ctx => {
+			return repository.HandleQuery(ctx =>
+			{
 
 				var results = filters
 					.Select(f => AddZeros(timeUnit == TimeUnit.Month ? SongsPerMonth(ctx, f, after) : SongsPerDay(ctx, f, after), addZeros, timeUnit))
@@ -99,15 +110,18 @@ namespace VocaDb.Model.Database.Queries {
 
 		}
 
-		public CountPerDayContract[] SongsOverTime(TimeUnit timeUnit, bool addZeros, DateTime? after, int artistId, int tagId) {
+		public CountPerDayContract[] SongsOverTime(TimeUnit timeUnit, bool addZeros, DateTime? after, int artistId, int tagId)
+		{
 
 			Expression<Func<Song, bool>> query = (s => s.PublishDate.DateTime <= DateTime.Now);
 
-			if (artistId != 0) {
+			if (artistId != 0)
+			{
 				query = query.And(s => s.AllArtists.Any(a => a.Artist.Id == artistId));
 			}
 
-			if (tagId != 0) {
+			if (tagId != 0)
+			{
 				query = query.And(s => s.Tags.Usages.Any(a => a.Tag.Id == tagId));
 			}
 
@@ -117,7 +131,8 @@ namespace VocaDb.Model.Database.Queries {
 
 	}
 
-	public enum TimeUnit {
+	public enum TimeUnit
+	{
 		Month,
 		Day
 	}

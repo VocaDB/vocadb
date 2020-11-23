@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using VocaDb.Model.DataContracts;
 
-namespace VocaDb.Model.Domain.Globalization {
+namespace VocaDb.Model.Domain.Globalization
+{
 
-	public interface INameManager {
+	public interface INameManager
+	{
 
 		/// <summary>
 		/// List of all name values.
@@ -74,7 +76,8 @@ namespace VocaDb.Model.Domain.Globalization {
 
 	}
 
-	public interface INameManager<TName> : INameManager where TName : LocalizedStringWithId {
+	public interface INameManager<TName> : INameManager where TName : LocalizedStringWithId
+	{
 
 		IList<TName> Names { get; }
 

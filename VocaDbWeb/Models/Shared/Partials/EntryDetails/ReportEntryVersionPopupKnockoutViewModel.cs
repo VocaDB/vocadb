@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.EntryDetails {
+namespace VocaDb.Web.Models.Shared.Partials.EntryDetails
+{
 
-	public class ReportEntryVersionPopupKnockoutViewModel {
+	public class ReportEntryVersionPopupKnockoutViewModel
+	{
 
-		public ReportEntryVersionPopupKnockoutViewModel(string viewModelBindingName = "reportViewModel", string reportButtonId = "reportEntryLink") {
+		public ReportEntryVersionPopupKnockoutViewModel(string viewModelBindingName = "reportViewModel", string reportButtonId = "reportEntryLink")
+		{
 			ViewModelBindingName = viewModelBindingName;
 			ReportButtonId = reportButtonId;
 		}

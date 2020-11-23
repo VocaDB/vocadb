@@ -4,17 +4,21 @@ using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.ExtLinks;
 
-namespace VocaDb.Model.DataContracts {
+namespace VocaDb.Model.DataContracts
+{
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArchivedWebLinkContract : IWebLink {
+	public class ArchivedWebLinkContract : IWebLink
+	{
 
-		public ArchivedWebLinkContract() {
+		public ArchivedWebLinkContract()
+		{
 			Category = WebLinkCategory.Other;
 		}
 
-		public ArchivedWebLinkContract(WebLink webLink) {
-			
+		public ArchivedWebLinkContract(WebLink webLink)
+		{
+
 			ParamIs.NotNull(() => webLink);
 
 			Category = webLink.Category;

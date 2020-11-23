@@ -6,19 +6,23 @@ using VocaDb.Model.Service.Security;
 using VocaDb.Web.Helpers;
 using ActionFilterAttribute = System.Web.Http.Filters.ActionFilterAttribute;
 
-namespace VocaDb.Web.Code.WebApi {
+namespace VocaDb.Web.Code.WebApi
+{
 
-	public class RestrictBannedIPAttribute : ActionFilterAttribute {
+	public class RestrictBannedIPAttribute : ActionFilterAttribute
+	{
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		public override void OnActionExecuting(HttpActionContext actionContext) {
+		public override void OnActionExecuting(HttpActionContext actionContext)
+		{
 
 			var ipRules = (IPRuleManager)actionContext.ControllerContext.Configuration.DependencyResolver.GetService(typeof(IPRuleManager));
 
 			var host = WebHelper.GetRealHost(actionContext.Request);
 
-			if (!ipRules.IsAllowed(host)) {
+			if (!ipRules.IsAllowed(host))
+			{
 
 				log.Warn("Restricting banned host '{0}' for '{1}'.", host, actionContext.Request.RequestUri);
 

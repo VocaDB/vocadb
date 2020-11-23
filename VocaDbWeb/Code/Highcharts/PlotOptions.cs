@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 
-namespace VocaDb.Web.Code.Highcharts {
+namespace VocaDb.Web.Code.Highcharts
+{
 
-	public class PlotOptions {
+	public class PlotOptions
+	{
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public PlotOptionsArea Area { get; set; }
@@ -15,8 +17,9 @@ namespace VocaDb.Web.Code.Highcharts {
 
 	}
 
-	public class PlotOptionsArea {
-		
+	public class PlotOptionsArea
+	{
+
 		public string LineColor { get; set; }
 
 		public double LineWidth { get; set; }
@@ -28,8 +31,9 @@ namespace VocaDb.Web.Code.Highcharts {
 
 	}
 
-	public enum PlotOptionsAreaStacking {
-		
+	public enum PlotOptionsAreaStacking
+	{
+
 		Percent
 
 	}

@@ -1,17 +1,21 @@
 using VocaDb.Model.DataContracts.Albums;
 
-namespace VocaDb.Model.Domain.Albums {
+namespace VocaDb.Model.Domain.Albums
+{
 
-	public class AlbumDiscProperties : IEntryWithIntId {
+	public class AlbumDiscProperties : IEntryWithIntId
+	{
 
 		private Album album;
 		private string name;
 
-		public AlbumDiscProperties() {
+		public AlbumDiscProperties()
+		{
 			MediaType = DiscMediaType.Audio;
 		}
 
-		public AlbumDiscProperties(Album album, AlbumDiscPropertiesContract contract) {
+		public AlbumDiscProperties(Album album, AlbumDiscPropertiesContract contract)
+		{
 
 			ParamIs.NotNull(() => album);
 
@@ -20,9 +24,11 @@ namespace VocaDb.Model.Domain.Albums {
 
 		}
 
-		public virtual Album Album {
+		public virtual Album Album
+		{
 			get { return album; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				album = value;
 			}
@@ -34,15 +40,18 @@ namespace VocaDb.Model.Domain.Albums {
 
 		public virtual DiscMediaType MediaType { get; set; }
 
-		public virtual string Name {
+		public virtual string Name
+		{
 			get { return name; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				name = value;
 			}
 		}
 
-		public virtual void CopyContentFrom(AlbumDiscPropertiesContract contract) {
+		public virtual void CopyContentFrom(AlbumDiscPropertiesContract contract)
+		{
 
 			ParamIs.NotNull(() => contract);
 
@@ -54,7 +63,8 @@ namespace VocaDb.Model.Domain.Albums {
 
 	}
 
-	public enum DiscMediaType {
+	public enum DiscMediaType
+	{
 		Audio,
 		Video
 	}

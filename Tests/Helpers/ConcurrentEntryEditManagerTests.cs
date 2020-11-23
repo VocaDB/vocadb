@@ -5,44 +5,49 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Security;
 
-namespace VocaDb.Tests.Helpers {
+namespace VocaDb.Tests.Helpers
+{
 
-    /// <summary>
-    /// Unit tests for <see cref="ConcurrentEntryEditManager"/>.
-    /// </summary>
-    [TestClass]
-    public class ConcurrentEntryEditManagerTests {
+	/// <summary>
+	/// Unit tests for <see cref="ConcurrentEntryEditManager"/>.
+	/// </summary>
+	[TestClass]
+	public class ConcurrentEntryEditManagerTests
+	{
 
-        private EntryRef entryRef;
+		private EntryRef entryRef;
 		private ConcurrentEntryEditManager manager;
 		private User miku;
 
-        [TestInitialize]
-        public void SetUp() {
-            
-            entryRef = new EntryRef(EntryType.Artist, 39);
-			manager = new ConcurrentEntryEditManager();
-            miku = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { Id = 1 };
+		[TestInitialize]
+		public void SetUp()
+		{
 
-        }
+			entryRef = new EntryRef(EntryType.Artist, 39);
+			manager = new ConcurrentEntryEditManager();
+			miku = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { Id = 1 };
+
+		}
 
 		/// <summary>
 		/// No one is editing.
 		/// </summary>
-        [TestMethod]
-        public void CheckConcurrentEdits_NoOneEditing() {
+		[TestMethod]
+		public void CheckConcurrentEdits_NoOneEditing()
+		{
 
 			var result = manager.CheckConcurrentEditsInst(entryRef, miku);
 
-            Assert.AreEqual(ConcurrentEntryEditManager.Nothing.UserId, result.UserId, "no one editing");
+			Assert.AreEqual(ConcurrentEntryEditManager.Nothing.UserId, result.UserId, "no one editing");
 
-        }
+		}
 
 		/// <summary>
 		/// Another editor has just started editing.
 		/// </summary>
 		[TestMethod]
-		public void CheckConcurrentEdits_PreviousEditor() {
+		public void CheckConcurrentEdits_PreviousEditor()
+		{
 
 			var rin = new User("Rin", "222", "rin@vocadb.net", PasswordHashAlgorithms.Default) { Id = 2 };
 			manager.CheckConcurrentEditsInst(entryRef, rin);
@@ -56,7 +61,8 @@ namespace VocaDb.Tests.Helpers {
 		/// Another editor has edited the entry, but the expiration time has passed.
 		/// </summary>
 		[TestMethod]
-		public void CheckConcurrentEdits_PreviousEditorExpired() {
+		public void CheckConcurrentEdits_PreviousEditorExpired()
+		{
 
 			var rin = new User("Rin", "222", "rin@vocadb.net", PasswordHashAlgorithms.Default) { Id = 2 };
 			manager.CheckConcurrentEditsInst(entryRef, rin);
@@ -68,6 +74,6 @@ namespace VocaDb.Tests.Helpers {
 
 		}
 
-    }
+	}
 
 }

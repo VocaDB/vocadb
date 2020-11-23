@@ -20,15 +20,17 @@ using VocaDb.Web.Models.Admin;
 
 namespace VocaDb.Web.Controllers
 {
-    public class AdminController : ControllerBase {
+	public class AdminController : ControllerBase
+	{
 
 		private readonly IPRuleManager ipRuleManager;
-	    private readonly ISessionFactory sessionFactory;
+		private readonly ISessionFactory sessionFactory;
 		private AdminService Service { get; set; }
 		private readonly OtherService otherService;
 
-		public AdminController(AdminService service, OtherService otherService, 
-			IPRuleManager ipRuleManager, ISessionFactory sessionFactory) {
+		public AdminController(AdminService service, OtherService otherService,
+			IPRuleManager ipRuleManager, ISessionFactory sessionFactory)
+		{
 
 			Service = service;
 			this.otherService = otherService;
@@ -38,7 +40,8 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ActiveEdits() {
+		public ActionResult ActiveEdits()
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
@@ -48,12 +51,13 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult AuditLogEntries(ViewAuditLogModel model, int start = 0) {
+		public ActionResult AuditLogEntries(ViewAuditLogModel model, int start = 0)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
 
-			var excludeUsers = (!string.IsNullOrEmpty(model.ExcludeUsers) 
-				? model.ExcludeUsers.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(u => u.Trim()).ToArray() 
+			var excludeUsers = (!string.IsNullOrEmpty(model.ExcludeUsers)
+				? model.ExcludeUsers.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(u => u.Trim()).ToArray()
 				: new string[0]);
 
 			var cutoffDays = (string.IsNullOrEmpty(model.UserName) ? 365 : 0);
@@ -65,7 +69,8 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public async Task<ActionResult> CheckSFS(string ip) {
+		public async Task<ActionResult> CheckSFS(string ip)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
@@ -79,13 +84,15 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ClearCaches() {
+		public ActionResult ClearCaches()
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
 			var cache = MemoryCache.Default;
 
-			foreach (var item in cache) {
+			foreach (var item in cache)
+			{
 				cache.Remove(item.Key);
 			}
 
@@ -93,7 +100,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult CleanupOldLogEntries() {
+		public ActionResult CleanupOldLogEntries()
+		{
 
 			var count = Service.CleanupOldLogEntries();
 
@@ -103,7 +111,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult CreateMissingThumbs() {
+		public ActionResult CreateMissingThumbs()
+		{
 
 			Service.CreateMissingThumbs();
 
@@ -113,7 +122,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult CreateXmlDump() {
+		public ActionResult CreateXmlDump()
+		{
 
 			Service.CreateXmlDump();
 
@@ -124,19 +134,21 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult DeleteEntryReport(int id) {
+		public ActionResult DeleteEntryReport(int id)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
 
 			Service.DeleteEntryReports(new[] { id });
 			TempData.SetStatusMessage("Reports deleted");
 
-			return RedirectToAction("ViewEntryReports", new { status = ReportStatus.Closed } );
+			return RedirectToAction("ViewEntryReports", new { status = ReportStatus.Closed });
 
 		}
 
 		[Authorize]
-		public ActionResult DeletePVsByAuthor(string author) {
+		public ActionResult DeletePVsByAuthor(string author)
+		{
 
 			var count = Service.DeletePVsByAuthor(author, PVService.Youtube);
 
@@ -146,20 +158,21 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-        //
-        // GET: /Admin/
+		//
+		// GET: /Admin/
 		[Authorize]
 		public ActionResult Index()
-        {
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
 
-            return View();
+			return View();
 
-        }
+		}
 
-		public ActionResult GeneratePictureThumbs() {
-			
+		public ActionResult GeneratePictureThumbs()
+		{
+
 			var count = Service.GeneratePictureThumbs();
 
 			TempData.SetStatusMessage(count + " picture thumbnails recreated.");
@@ -169,7 +182,8 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ManageIPRules() {
+		public ActionResult ManageIPRules()
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
@@ -180,7 +194,8 @@ namespace VocaDb.Web.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public ActionResult ManageIPRules([FromJson] IPRule[] rules) {
+		public ActionResult ManageIPRules([FromJson] IPRule[] rules)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
@@ -188,7 +203,7 @@ namespace VocaDb.Web.Controllers
 			ipRuleManager.Reset(rules.Select(i => i.Address));
 
 			TempData.SetSuccessMessage("IP rules updated.");
-			
+
 			return View(rules);
 
 		}
@@ -199,7 +214,8 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult ManageTagMappings() => View();
 
-		public ActionResult PVAuthorNames(string term) {
+		public ActionResult PVAuthorNames(string term)
+		{
 
 			var authors = Service.FindPVAuthorNames(term);
 
@@ -208,7 +224,8 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult PVsByAuthor(string author, int maxResults = 50) {
+		public ActionResult PVsByAuthor(string author, int maxResults = 50)
+		{
 
 			var songs = Service.GetSongPVsByAuthor(author ?? string.Empty, maxResults);
 
@@ -218,7 +235,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult RefreshDbCache() {
+		public ActionResult RefreshDbCache()
+		{
 
 			DatabaseHelper.ClearSecondLevelCache(sessionFactory);
 
@@ -226,7 +244,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult UpdateAdditionalNames() {
+		public ActionResult UpdateAdditionalNames()
+		{
 
 			Service.UpdateAdditionalNames();
 			TempData.SetStatusMessage("Updated additional names strings");
@@ -234,7 +253,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult UpdateAlbumRatingTotals() {
+		public ActionResult UpdateAlbumRatingTotals()
+		{
 
 			Service.UpdateAlbumRatingTotals();
 			TempData.SetStatusMessage("Updated album rating totals");
@@ -242,15 +262,17 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult UpdateArtistStrings() {
-			
+		public ActionResult UpdateArtistStrings()
+		{
+
 			Service.UpdateArtistStrings();
 
 			return RedirectToAction("Index");
 
 		}
 
-		public ActionResult UpdateLinkCategories() {
+		public ActionResult UpdateLinkCategories()
+		{
 
 			Service.UpdateWebLinkCategories();
 			TempData.SetStatusMessage("Updated link categories");
@@ -259,15 +281,17 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult UpdateNicoIds() {
-			
+		public ActionResult UpdateNicoIds()
+		{
+
 			Service.UpdateNicoIds();
 
 			return RedirectToAction("Index");
 
 		}
 
-		public ActionResult UpdateNormalizedEmailAddresses() {
+		public ActionResult UpdateNormalizedEmailAddresses()
+		{
 
 			Service.UpdateNormalizedEmailAddresses();
 
@@ -275,7 +299,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult UpdatePVIcons() {
+		public ActionResult UpdatePVIcons()
+		{
 
 			Service.UpdatePVIcons();
 
@@ -283,7 +308,8 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-		public ActionResult UpdateSongFavoritedTimes() {
+		public ActionResult UpdateSongFavoritedTimes()
+		{
 
 			Service.UpdateSongFavoritedTimes();
 			TempData.SetStatusMessage("Updated favorited song counts");
@@ -292,7 +318,8 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult UpdateTagVoteCounts() {
+		public ActionResult UpdateTagVoteCounts()
+		{
 
 			var count = Service.UpdateTagVoteCounts();
 			TempData.SetStatusMessage(string.Format("Updated tag vote counts, {0} corrections made", count));
@@ -301,7 +328,8 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult DeployWebsite() {
+		public ActionResult DeployWebsite()
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
@@ -314,7 +342,8 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ViewAuditLog(ViewAuditLogModel model) {
+		public ActionResult ViewAuditLog(ViewAuditLogModel model)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
 
@@ -323,7 +352,8 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ViewEntryReports(ReportStatus status = ReportStatus.Open) {
+		public ActionResult ViewEntryReports(ReportStatus status = ReportStatus.Open)
+		{
 
 			ViewBag.ReportStatus = status;
 			PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
@@ -335,7 +365,8 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[Authorize]
-		public ActionResult ViewSysLog() {
+		public ActionResult ViewSysLog()
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.ViewAuditLog);
 
@@ -347,5 +378,5 @@ namespace VocaDb.Web.Controllers
 
 		}
 
-    }
+	}
 }

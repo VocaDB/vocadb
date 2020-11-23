@@ -5,13 +5,16 @@ using System.Web.Http.Filters;
 using NHibernate;
 using NLog;
 
-namespace VocaDb.Web.Code.WebApi {
+namespace VocaDb.Web.Code.WebApi
+{
 
-	public class ObjectNotFoundExceptionFilterAttribute : ExceptionFilterAttribute {
+	public class ObjectNotFoundExceptionFilterAttribute : ExceptionFilterAttribute
+	{
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		public override void OnException(HttpActionExecutedContext context) {
+		public override void OnException(HttpActionExecutedContext context)
+		{
 
 			var ex = context.Exception as ObjectNotFoundException;
 
@@ -22,7 +25,8 @@ namespace VocaDb.Web.Code.WebApi {
 
 			log.Warn(msg);
 
-			var resp = new HttpResponseMessage(HttpStatusCode.NotFound) {
+			var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
+			{
 				Content = new StringContent(msg),
 				ReasonPhrase = msg
 			};

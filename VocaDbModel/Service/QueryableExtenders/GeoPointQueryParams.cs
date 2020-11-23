@@ -1,8 +1,10 @@
-namespace VocaDb.Model.Service.QueryableExtenders {
+namespace VocaDb.Model.Service.QueryableExtenders
+{
 
 	public enum DistanceUnit { Kilometers, Miles }
 
-	public class GeoPointQueryParams {
+	public class GeoPointQueryParams
+	{
 
 		public static readonly GeoPointQueryParams Empty = new GeoPointQueryParams();
 

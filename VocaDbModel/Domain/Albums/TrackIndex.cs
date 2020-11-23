@@ -1,15 +1,18 @@
-namespace VocaDb.Model.Domain.Albums {
+namespace VocaDb.Model.Domain.Albums
+{
 
 	/// <summary>
 	/// Represents a combination of disc number and track number,
 	/// uniquely identifying a track position in an album.
 	/// </summary>
-	public readonly struct TrackIndex {
+	public readonly struct TrackIndex
+	{
 
 		public static TrackIndex Empty => new TrackIndex(0, 0);
 
 		public TrackIndex(int discNum, int trackNum)
-			: this() {
+			: this()
+		{
 
 			this.DiscNumber = discNum;
 			this.TrackNumber = trackNum;
@@ -20,18 +23,22 @@ namespace VocaDb.Model.Domain.Albums {
 
 		public int TrackNumber { get; }
 
-		public bool Equals(TrackIndex obj) {
+		public bool Equals(TrackIndex obj)
+		{
 			return DiscNumber == obj.DiscNumber && TrackNumber == obj.TrackNumber;
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			if (ReferenceEquals(null, obj)) return false;
-			return obj is TrackIndex && Equals((TrackIndex) obj);
+			return obj is TrackIndex && Equals((TrackIndex)obj);
 		}
 
-		public override int GetHashCode() {
-			unchecked {
-				return (TrackNumber*397) ^ DiscNumber;
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return (TrackNumber * 397) ^ DiscNumber;
 			}
 		}
 

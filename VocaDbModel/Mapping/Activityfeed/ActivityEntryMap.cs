@@ -2,11 +2,14 @@ using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 
-namespace VocaDb.Model.Mapping.Activityfeed {
+namespace VocaDb.Model.Mapping.Activityfeed
+{
 
-	public class ActivityEntryMap : ClassMap<ActivityEntry> {
+	public class ActivityEntryMap : ClassMap<ActivityEntry>
+	{
 
-		public ActivityEntryMap() {
+		public ActivityEntryMap()
+		{
 
 			DiscriminateSubClassesOnColumn("[EntryType]");
 			Table("ActivityEntries");
@@ -22,9 +25,11 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 
 	}
 
-	public class AlbumActivityEntryMap : SubclassMap<AlbumActivityEntry> {
+	public class AlbumActivityEntryMap : SubclassMap<AlbumActivityEntry>
+	{
 
-		public AlbumActivityEntryMap() {
+		public AlbumActivityEntryMap()
+		{
 
 			DiscriminatorValue("Album");
 
@@ -35,9 +40,11 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 
 	}
 
-	public class ArtistActivityEntryMap : SubclassMap<ArtistActivityEntry> {
+	public class ArtistActivityEntryMap : SubclassMap<ArtistActivityEntry>
+	{
 
-		public ArtistActivityEntryMap() {
+		public ArtistActivityEntryMap()
+		{
 
 			DiscriminatorValue("Artist");
 
@@ -48,9 +55,11 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 
 	}
 
-	public class ReleaseEventActivityEntryMap : SubclassMap<ReleaseEventActivityEntry> {
+	public class ReleaseEventActivityEntryMap : SubclassMap<ReleaseEventActivityEntry>
+	{
 
-		public ReleaseEventActivityEntryMap() {
+		public ReleaseEventActivityEntryMap()
+		{
 
 			DiscriminatorValue(EntryType.ReleaseEvent.ToString());
 
@@ -61,9 +70,11 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 
 	}
 
-	public class SongActivityEntryMap : SubclassMap<SongActivityEntry> {
+	public class SongActivityEntryMap : SubclassMap<SongActivityEntry>
+	{
 
-		public SongActivityEntryMap() {
+		public SongActivityEntryMap()
+		{
 
 			DiscriminatorValue("Song");
 
@@ -74,9 +85,11 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 
 	}
 
-	public class SongListActivityEntryMap : SubclassMap<SongListActivityEntry> {
+	public class SongListActivityEntryMap : SubclassMap<SongListActivityEntry>
+	{
 
-		public SongListActivityEntryMap() {
+		public SongListActivityEntryMap()
+		{
 
 			DiscriminatorValue("SongList");
 
@@ -87,9 +100,11 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 
 	}
 
-	public class TagActivityEntryMap : SubclassMap<TagActivityEntry> {
+	public class TagActivityEntryMap : SubclassMap<TagActivityEntry>
+	{
 
-		public TagActivityEntryMap() {
+		public TagActivityEntryMap()
+		{
 
 			DiscriminatorValue("Tag");
 
@@ -100,9 +115,11 @@ namespace VocaDb.Model.Mapping.Activityfeed {
 
 	}
 
-	public class VenueActivityEntryMap : SubclassMap<VenueActivityEntry> {
+	public class VenueActivityEntryMap : SubclassMap<VenueActivityEntry>
+	{
 
-		public VenueActivityEntryMap() {
+		public VenueActivityEntryMap()
+		{
 
 			DiscriminatorValue("Venue");
 

@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Shared {
+namespace VocaDb.Web.Models.Shared.Partials.Shared
+{
 
-	public class NotificationPanelViewModel {
+	public class NotificationPanelViewModel
+	{
 
-		public NotificationPanelViewModel(string message, string messageId = "") {
+		public NotificationPanelViewModel(string message, string messageId = "")
+		{
 			Message = message;
 			MessageId = messageId;
 		}

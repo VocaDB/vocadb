@@ -1,20 +1,24 @@
 using System;
 
-namespace VocaDb.Model.Domain.Users {
+namespace VocaDb.Model.Domain.Users
+{
 
 	/// <summary>
 	/// Message sent to a user. 
 	/// Can be either a personal message from one user to another, or a notification.
 	/// </summary>
-	public class UserMessage : IEntryWithIntId {
+	public class UserMessage : IEntryWithIntId
+	{
 
-		public static UserMessage CreateReceived(User from, User to, string subject, string body, bool highPriority) {
-			
+		public static UserMessage CreateReceived(User from, User to, string subject, string body, bool highPriority)
+		{
+
 			return new UserMessage(to, UserInboxType.Received, from, to, subject, body, highPriority);
 
 		}
 
-		public static UserMessage CreateSent(User from, User to, string subject, string body, bool highPriority) {
+		public static UserMessage CreateSent(User from, User to, string subject, string body, bool highPriority)
+		{
 
 			return new UserMessage(from, UserInboxType.Sent, from, to, subject, body, highPriority);
 
@@ -24,7 +28,8 @@ namespace VocaDb.Model.Domain.Users {
 		private User receiver;
 		private string subject;
 
-		public UserMessage() {
+		public UserMessage()
+		{
 			Created = DateTime.Now;
 		}
 
@@ -32,7 +37,8 @@ namespace VocaDb.Model.Domain.Users {
 		/// Creates a new notification message (no sender).
 		/// </summary>
 		public UserMessage(User to, string subject, string body, bool highPriority)
-			: this() {
+			: this()
+		{
 
 			ParamIs.NotNull(() => to);
 
@@ -47,7 +53,8 @@ namespace VocaDb.Model.Domain.Users {
 		}
 
 		public UserMessage(User user, UserInboxType inbox, User from, User to, string subject, string body, bool highPriority)
-			: this() {
+			: this()
+		{
 
 			ParamIs.NotNull(() => user);
 
@@ -83,9 +90,11 @@ namespace VocaDb.Model.Domain.Users {
 		/// Message body. May contain Markdown markup.
 		/// Cannot be null or empty.
 		/// </summary>
-		public virtual string Message {
+		public virtual string Message
+		{
 			get => message;
-			set {
+			set
+			{
 				ParamIs.NotNullOrEmpty(() => value);
 				message = value;
 			}
@@ -96,9 +105,11 @@ namespace VocaDb.Model.Domain.Users {
 		/// <summary>
 		/// Receiver of this message. Cannot be null.
 		/// </summary>
-		public virtual User Receiver {
+		public virtual User Receiver
+		{
 			get => receiver;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				receiver = value;
 			}
@@ -109,9 +120,11 @@ namespace VocaDb.Model.Domain.Users {
 		/// </summary>
 		public virtual User Sender { get; set; }
 
-		public virtual string Subject {
+		public virtual string Subject
+		{
 			get => subject;
-			set {
+			set
+			{
 				ParamIs.NotNullOrEmpty(() => value);
 				subject = value;
 			}
@@ -123,14 +136,16 @@ namespace VocaDb.Model.Domain.Users {
 		/// </summary>
 		public virtual User User { get; set; }
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			// Note: no message contents in ToString because personal information might be logged
 			return string.Format("User message [{0}]", Id);
 		}
 
 	}
 
-	public enum UserInboxType {
+	public enum UserInboxType
+	{
 		Nothing,
 		Received,
 		Sent,

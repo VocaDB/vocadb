@@ -5,13 +5,17 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using VocaDb.Web.Controllers;
 
-namespace VocaDb.Web.Helpers {
+namespace VocaDb.Web.Helpers
+{
 
-	public static class RazorHelper {
+	public static class RazorHelper
+	{
 
-		public static string RenderPartialViewToString<T>(string viewName, T model, string controllerName, HttpRequestMessage request) {
+		public static string RenderPartialViewToString<T>(string viewName, T model, string controllerName, HttpRequestMessage request)
+		{
 
-			using (var writer = new StringWriter()) {
+			using (var writer = new StringWriter())
+			{
 
 				var routeData = new RouteData();
 				routeData.Values.Add("controller", controllerName);

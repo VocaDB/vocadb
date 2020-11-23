@@ -3,13 +3,16 @@ using VocaDb.Model;
 using VocaDb.Model.DataContracts.MikuDb;
 using VocaDb.Model.Domain.MikuDb;
 
-namespace VocaDb.Web.Models.MikuDbAlbums {
+namespace VocaDb.Web.Models.MikuDbAlbums
+{
 
-	public class Index {
+	public class Index
+	{
 
-		public Index() {}
+		public Index() { }
 
-		public Index(MikuDbAlbumContract[] albums, string titleFilter, AlbumStatus status) {
+		public Index(MikuDbAlbumContract[] albums, string titleFilter, AlbumStatus status)
+		{
 
 			ParamIs.NotNull(() => albums);
 

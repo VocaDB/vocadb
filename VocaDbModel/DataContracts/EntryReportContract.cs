@@ -4,12 +4,15 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Translations;
 
-namespace VocaDb.Model.DataContracts {
+namespace VocaDb.Model.DataContracts
+{
 
-	public class EntryReportContract {
+	public class EntryReportContract
+	{
 
 		public EntryReportContract(EntryReport report, EntryForApiContract entry,
-			IEnumTranslations enumTranslations, IUserIconFactory userIconFactory) {
+			IEnumTranslations enumTranslations, IUserIconFactory userIconFactory)
+		{
 
 			ParamIs.NotNull(() => report);
 
@@ -26,7 +29,7 @@ namespace VocaDb.Model.DataContracts {
 
 		}
 
-		public UserForApiContract ClosedBy { get; set;}
+		public UserForApiContract ClosedBy { get; set; }
 
 		public DateTime? ClosedAt { get; set; }
 

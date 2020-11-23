@@ -2,16 +2,19 @@
 using Newtonsoft.Json;
 using VocaDb.Model.DataContracts;
 
-namespace VocaDb.Model.Domain.PVs {
+namespace VocaDb.Model.Domain.PVs
+{
 
 	/// <summary>
 	/// Extended PV metadata serialized as JSON.
 	/// This must be fully serializable and generally immutable.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class PVExtendedMetadata {
+	public class PVExtendedMetadata
+	{
 
-		public virtual T GetExtendedMetadata<T>() where T : class {
+		public virtual T GetExtendedMetadata<T>() where T : class
+		{
 
 			if (string.IsNullOrEmpty(Json))
 				return null;
@@ -23,7 +26,8 @@ namespace VocaDb.Model.Domain.PVs {
 
 		public PVExtendedMetadata() { }
 
-		public PVExtendedMetadata(object data) {
+		public PVExtendedMetadata(object data)
+		{
 			Json = data != null ? JsonConvert.SerializeObject(data) : null;
 		}
 

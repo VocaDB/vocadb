@@ -20,13 +20,15 @@ using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Tests.Web.Controllers.DataAccess {
+namespace VocaDb.Tests.Web.Controllers.DataAccess
+{
 
 	/// <summary>
 	/// Tests for <see cref="EventQueries"/>.
 	/// </summary>
 	[TestClass]
-	public class EventQueriesTests {
+	public class EventQueriesTests
+	{
 
 		private Album album;
 		private ReleaseEvent existingEvent;
@@ -37,23 +39,27 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		private ReleaseEventSeries series;
 		private User user;
 
-		private async Task<ReleaseEvent> CallUpdate(ReleaseEventForEditContract contract) {
-			
+		private async Task<ReleaseEvent> CallUpdate(ReleaseEventForEditContract contract)
+		{
+
 			var result = await queries.Update(contract, null);
 			return repository.Load(result.Id);
 
 		}
 
-		private ReleaseEventForEditContract Contract(ReleaseEvent releaseEvent) {
+		private ReleaseEventForEditContract Contract(ReleaseEvent releaseEvent)
+		{
 			return new ReleaseEventForEditContract(releaseEvent, ContentLanguagePreference.Default, permissionContext, null);
 		}
 
-		private LocalizedStringWithIdContract[] Names(string name) {
+		private LocalizedStringWithIdContract[] Names(string name)
+		{
 			return new[] { new LocalizedStringWithIdContract(new LocalizedStringWithId(name, ContentLanguageSelection.English)) };
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			series = CreateEntry.EventSeries("M3");
 			existingEvent = CreateEntry.SeriesEvent(series, 2013, "Spring");
@@ -73,15 +79,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			repository.Save(user);
 			permissionContext = new FakePermissionContext(user);
 			var imageStore = new InMemoryImagePersister();
-			queries = new EventQueries(repository, new FakeEntryLinkFactory(), permissionContext, imageStore, new FakeUserIconFactory(), new EnumTranslations(), mailer, 
+			queries = new EventQueries(repository, new FakeEntryLinkFactory(), permissionContext, imageStore, new FakeUserIconFactory(), new EnumTranslations(), mailer,
 				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()), imageStore);
 
 		}
 
 		[TestMethod]
-		public async Task Create_NoSeries() {
-			
-			var contract = new ReleaseEventForEditContract {
+		public async Task Create_NoSeries()
+		{
+
+			var contract = new ReleaseEventForEditContract
+			{
 				Description = string.Empty,
 				Names = Names("Vocaloid Paradise")
 			};
@@ -95,9 +103,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Create_WithSeriesAndSuffix() {
-			
-			var contract = new ReleaseEventForEditContract {
+		public async Task Create_WithSeriesAndSuffix()
+		{
+
+			var contract = new ReleaseEventForEditContract
+			{
 				Description = string.Empty,
 				Series = new ReleaseEventSeriesContract(series, ContentLanguagePreference.English),
 				SeriesNumber = 2014,
@@ -117,9 +127,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Create_WithSeriesNoSuffix() {
-			
-			var contract = new ReleaseEventForEditContract {
+		public async Task Create_WithSeriesNoSuffix()
+		{
+
+			var contract = new ReleaseEventForEditContract
+			{
 				Description = string.Empty,
 				Series = new ReleaseEventSeriesContract(series, ContentLanguagePreference.English),
 				SeriesNumber = 2014,
@@ -137,7 +149,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Create_SeriesHasMultipleNames() {
+		public async Task Create_SeriesHasMultipleNames()
+		{
 
 			series.Names.Names = new[] {
 				series.CreateName("Comiket", ContentLanguageSelection.English),
@@ -145,7 +158,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 				series.CreateName("Comic Market", ContentLanguageSelection.Unspecified),
 			}.ToList();
 
-			var contract = new ReleaseEventForEditContract {
+			var contract = new ReleaseEventForEditContract
+			{
 				Description = string.Empty,
 				Series = new ReleaseEventSeriesContract(series, ContentLanguagePreference.English),
 				SeriesNumber = 39,
@@ -163,13 +177,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Create_WithCustomArtists() {
-			
+		public async Task Create_WithCustomArtists()
+		{
+
 			var artist = repository.Save(CreateEntry.Artist(ArtistType.Producer));
-			var contract = new ReleaseEventForEditContract {
+			var contract = new ReleaseEventForEditContract
+			{
 				Description = string.Empty,
 				SeriesSuffix = string.Empty,
-				Artists = new [] {
+				Artists = new[] {
 					new ArtistForEventContract { Artist = new ArtistContract(artist, ContentLanguagePreference.Default) },
 					new ArtistForEventContract { Name = "Miku!" }
 				}
@@ -180,8 +196,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void Delete() {
-			
+		public void Delete()
+		{
+
 			queries.Delete(existingEvent.Id, "Deleted");
 
 			Assert.IsTrue(existingEvent.Deleted, "Deleted");
@@ -192,8 +209,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_ChangeSeriesSuffix() {
-			
+		public async Task Update_ChangeSeriesSuffix()
+		{
+
 			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, permissionContext, null);
 			contract.SeriesSuffix = "Fall";
 
@@ -212,7 +230,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_ChangeName_CustomName() {
+		public async Task Update_ChangeName_CustomName()
+		{
 
 			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, permissionContext, null);
 			contract.CustomName = true;
@@ -229,7 +248,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_ChangeName_UseSeriesName() {
+		public async Task Update_ChangeName_UseSeriesName()
+		{
 
 			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, permissionContext, null);
 			contract.Names[0].Value = "New name";
@@ -248,7 +268,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateEventNameException))]
-		public async Task Update_ChangeName_DuplicateOfAnotherEvent() {
+		public async Task Update_ChangeName_DuplicateOfAnotherEvent()
+		{
 
 			var contract = new ReleaseEventForEditContract(existingEvent, ContentLanguagePreference.Default, permissionContext, null);
 			contract.Id = 0; // Simulate new event
@@ -259,10 +280,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateEventNameException))]
-		public async Task Update_ChangeName_DuplicateForSameEvent() {
+		public async Task Update_ChangeName_DuplicateForSameEvent()
+		{
 
 			var releaseEvent = repository.Save(CreateEntry.ReleaseEvent("Comiket 39"));
-			var contract = new ReleaseEventForEditContract(releaseEvent, ContentLanguagePreference.Default, permissionContext, null) {
+			var contract = new ReleaseEventForEditContract(releaseEvent, ContentLanguagePreference.Default, permissionContext, null)
+			{
 				Names = new[] {
 					new LocalizedStringWithIdContract {Value = "Comiket 39"},
 					new LocalizedStringWithIdContract {Value = "Comiket 39"}
@@ -274,7 +297,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Update_ChangeToSeriesEvent() {
+		public async Task Update_ChangeToSeriesEvent()
+		{
 
 			var releaseEvent = repository.Save(CreateEntry.ReleaseEvent("M3 39"));
 			var contract = Contract(releaseEvent);
@@ -288,9 +312,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void UpdateSeries_Create() {
+		public void UpdateSeries_Create()
+		{
 
-			var contract = new ReleaseEventSeriesForEditContract {
+			var contract = new ReleaseEventSeriesForEditContract
+			{
 				Names = Names("Comiket")
 			};
 
@@ -308,7 +334,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// Update series name, event names are updated as well
 		/// </summary>
 		[TestMethod]
-		public void UpdateSeries_UpdateName_EventsUpdated() {
+		public void UpdateSeries_UpdateName_EventsUpdated()
+		{
 
 			var contract = new ReleaseEventSeriesForEditContract(series, ContentLanguagePreference.English);
 			contract.Names[0].Value = "M3.9";
@@ -330,9 +357,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		/// Updates series default language selection, inherited language to events is updated as well.
 		/// </summary>
 		[TestMethod]
-		public void UpdateSeries_UpdateDefaultLanguage_EventsUpdated() {
+		public void UpdateSeries_UpdateDefaultLanguage_EventsUpdated()
+		{
 
-			var contract = new ReleaseEventSeriesForEditContract(series, ContentLanguagePreference.English) {
+			var contract = new ReleaseEventSeriesForEditContract(series, ContentLanguagePreference.English)
+			{
 				DefaultNameLanguage = ContentLanguageSelection.Japanese
 			};
 
@@ -343,7 +372,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateEventNameException))]
-		public void UpdateSeries_DuplicateName() {
+		public void UpdateSeries_DuplicateName()
+		{
 
 			var series2 = repository.SaveWithNames<ReleaseEventSeries, EventSeriesName>(CreateEntry.EventSeries("M3.9"));
 			repository.SaveWithNames<ReleaseEvent, EventName>(CreateEntry.SeriesEvent(series2, 2013, "Spring"));
@@ -357,7 +387,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void UpdateSeries_NoPermission() {
+		public void UpdateSeries_NoPermission()
+		{
 
 			user.GroupId = UserGroupId.Limited;
 			permissionContext.RefreshLoggedUser(repository);

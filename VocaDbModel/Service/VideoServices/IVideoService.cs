@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace VocaDb.Model.Service.VideoServices {
+namespace VocaDb.Model.Service.VideoServices
+{
 
-	public interface IVideoService {
+	public interface IVideoService
+	{
 
 		IEnumerable<string> GetUserProfileUrls(string authorId);
 

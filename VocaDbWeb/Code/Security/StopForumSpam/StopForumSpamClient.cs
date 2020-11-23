@@ -7,18 +7,21 @@ using VocaDb.Web.Helpers;
 using System.Threading.Tasks;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Web.Code.Security {
+namespace VocaDb.Web.Code.Security
+{
 
 	/// <summary>
 	/// Contacts http://www.stopforumspam.com API and queries whether there's a high probability that an IP is malicious.
 	/// </summary>
-	public class StopForumSpamClient : IStopForumSpamClient {
+	public class StopForumSpamClient : IStopForumSpamClient
+	{
 
 		private const string apiUrl = "https://www.stopforumspam.com/api?ip={0}&confidence&f=json";
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		public async Task<SFSResponseContract> CallApiAsync(string ip) {
-			
+		public async Task<SFSResponseContract> CallApiAsync(string ip)
+		{
+
 			if (string.IsNullOrEmpty(ip))
 				return null;
 
@@ -27,17 +30,23 @@ namespace VocaDb.Web.Code.Security {
 
 			var url = string.Format(apiUrl, ip);
 			SFSResultContract result;
-			try {
+			try
+			{
 				result = await JsonRequest.ReadObjectAsync<SFSResultContract>(url);
-			} catch (WebException x) {
+			}
+			catch (WebException x)
+			{
 				log.Warn(x, "Unable to get response");
 				return null;
-			} catch (JsonSerializationException x) {
+			}
+			catch (JsonSerializationException x)
+			{
 				log.Warn(x, "Unable to get response");
 				return null;
 			}
 
-			if (!result.Success) {
+			if (!result.Success)
+			{
 				log.Warn("Request was not successful");
 				return null;
 			}

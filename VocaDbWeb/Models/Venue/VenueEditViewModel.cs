@@ -7,10 +7,12 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Web.Code;
 
-namespace VocaDb.Web.Models.Venue {
+namespace VocaDb.Web.Models.Venue
+{
 
 	[PropertyModelBinder]
-	public class VenueEditViewModel {
+	public class VenueEditViewModel
+	{
 
 		public string Address { get; set; }
 
@@ -41,7 +43,8 @@ namespace VocaDb.Web.Models.Venue {
 
 		public VenueEditViewModel() { }
 
-		public VenueEditViewModel(VenueForEditContract contract, IUserPermissionContext permissionContext) {
+		public VenueEditViewModel(VenueForEditContract contract, IUserPermissionContext permissionContext)
+		{
 
 			ParamIs.NotNull(() => contract);
 
@@ -61,7 +64,8 @@ namespace VocaDb.Web.Models.Venue {
 
 		}
 
-		public VenueForEditContract ToContract() => new VenueForEditContract {
+		public VenueForEditContract ToContract() => new VenueForEditContract
+		{
 			Address = Address ?? string.Empty,
 			AddressCountryCode = AddressCountryCode ?? string.Empty,
 			Coordinates = Coordinates,

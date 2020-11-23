@@ -7,26 +7,33 @@ using System.Xml;
 using VocaDb.Model.Service.VideoServices.Youtube;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Model.Service.VideoServices {
+namespace VocaDb.Model.Service.VideoServices
+{
 
-	public class YoutubeParser : IVideoServiceParser {
+	public class YoutubeParser : IVideoServiceParser
+	{
 
 		private YoutubeService service;
 
-		public YoutubeParser() {
+		public YoutubeParser()
+		{
 			service = new YoutubeService(AppConfig.YoutubeApiKey);
 		}
 
-		private int? GetLength(YoutubeVideoItem video) {
+		private int? GetLength(YoutubeVideoItem video)
+		{
 
 			if (video.ContentDetails == null || string.IsNullOrEmpty(video.ContentDetails.Duration))
 				return null;
 
 			TimeSpan timespan;
 
-			try {
-				timespan = XmlConvert.ToTimeSpan(video.ContentDetails.Duration);			
-			} catch (FormatException) {
+			try
+			{
+				timespan = XmlConvert.ToTimeSpan(video.ContentDetails.Duration);
+			}
+			catch (FormatException)
+			{
 				return null;
 			}
 
@@ -34,13 +41,16 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		private DateTime? GetPublishDate(YoutubeVideoItem video) {
+		private DateTime? GetPublishDate(YoutubeVideoItem video)
+		{
 			return (video.Snippet.PublishedAt.HasValue ? (DateTime?)video.Snippet.PublishedAt.Value.Date : null);
 		}
 
-		private VideoTitleParseResult GetTitle(YoutubeVideoResponse result) {
+		private VideoTitleParseResult GetTitle(YoutubeVideoResponse result)
+		{
 
-			if (!result.Items.Any()) {
+			if (!result.Items.Any())
+			{
 				return VideoTitleParseResult.Empty;
 			}
 
@@ -55,12 +65,16 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		}
 
-		public async Task<VideoTitleParseResult> GetTitleAsync(string id) {
+		public async Task<VideoTitleParseResult> GetTitleAsync(string id)
+		{
 
 			YoutubeVideoResponse result;
-			try {
+			try
+			{
 				result = await service.VideoAsync(id);
-			} catch (HttpRequestException x) {
+			}
+			catch (HttpRequestException x)
+			{
 				return VideoTitleParseResult.CreateError(x.Message);
 			}
 

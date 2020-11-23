@@ -10,38 +10,45 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
+namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
+{
 
 	[TestClass]
-	public class SongSearchDatabaseTests {
+	public class SongSearchDatabaseTests
+	{
 
 		private DatabaseTestContext<IDatabaseContext> context;
 		private EntryUrlParser entryUrlParser;
 		private SongQueryParams queryParams;
 
-		private TestDatabase Db {
+		private TestDatabase Db
+		{
 			get { return TestContainerManager.TestDatabase; }
 		}
 
-		private void AssertHasSong(PartialFindResult<Song> result, Song expected) {
-			
+		private void AssertHasSong(PartialFindResult<Song> result, Song expected)
+		{
+
 			Assert.IsTrue(result.Items.Any(s => s.Equals(expected)), string.Format("Found {0}", expected));
 
 		}
 
 		[TestInitialize]
-		public void SetUp() {
-			
+		public void SetUp()
+		{
+
 			queryParams = new SongQueryParams { SortRule = SongSortRule.Name };
 			entryUrlParser = new EntryUrlParser();
 			context = new DatabaseTestContext<IDatabaseContext>();
 
 		}
 
-		private PartialFindResult<Song> CallFind(ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) {
-			
-			return context.RunTest(querySource => {
-				
+		private PartialFindResult<Song> CallFind(ContentLanguagePreference languagePreference = ContentLanguagePreference.Default)
+		{
+
+			return context.RunTest(querySource =>
+			{
+
 				var search = new Model.Service.Search.SongSearch.SongSearch(querySource, languagePreference, entryUrlParser);
 
 				var watch = new Stopwatch();
@@ -62,7 +69,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void ListAll() {
+		public void ListAll()
+		{
 
 			var result = CallFind();
 
@@ -79,7 +87,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void ListSkip() {
+		public void ListSkip()
+		{
 
 			queryParams.Paging.Start = 1;
 
@@ -96,7 +105,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void ListSortName() {
+		public void ListSortName()
+		{
 
 			queryParams.SortRule = SongSortRule.Name;
 
@@ -114,7 +124,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void ListSortFavorites() {
+		public void ListSortFavorites()
+		{
 
 			queryParams.SortRule = SongSortRule.FavoritedTimes;
 
@@ -132,7 +143,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void ListSortAdditionDate() {
+		public void ListSortAdditionDate()
+		{
 
 			queryParams.SortRule = SongSortRule.AdditionDate;
 
@@ -151,7 +163,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void QueryNamePartial() {
+		public void QueryNamePartial()
+		{
 
 			queryParams.Common.TextQuery = SearchTextQuery.Create("Tears", NameMatchMode.Partial);
 
@@ -170,7 +183,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void QueryNameWords() {
+		public void QueryNameWords()
+		{
 
 			queryParams.Common.TextQuery = SearchTextQuery.Create("Tears Crystal", NameMatchMode.Words);
 
@@ -191,7 +205,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void QueryNameMoveExactToTop() {
+		public void QueryNameMoveExactToTop()
+		{
 
 			queryParams.Common.TextQuery = SearchTextQuery.Create("Tears");
 			queryParams.Common.MoveExactToTop = true;
@@ -210,7 +225,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void QueryNameWithSqlWildcards() {
+		public void QueryNameWithSqlWildcards()
+		{
 
 			queryParams.Common.TextQuery = SearchTextQuery.Create("Nebula [Extend RMX]");
 			queryParams.Paging.MaxEntries = 1;
@@ -228,7 +244,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void QueryTag() {
+		public void QueryTag()
+		{
 
 			queryParams.Common.TextQuery = SearchTextQuery.Create("tag:Electronic");
 
@@ -245,7 +262,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void QueryType() {
+		public void QueryType()
+		{
 
 			queryParams.SongTypes = new[] { SongType.Original };
 
@@ -262,9 +280,10 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void QueryArtist() {
+		public void QueryArtist()
+		{
 
-			queryParams.ArtistParticipation.ArtistIds = new [] { Db.Producer.Id };
+			queryParams.ArtistParticipation.ArtistIds = new[] { Db.Producer.Id };
 
 			var result = CallFind();
 
@@ -277,9 +296,10 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void QueryArtistAndName() {
-			
-			queryParams.ArtistParticipation.ArtistIds = new [] { Db.Producer.Id };
+		public void QueryArtistAndName()
+		{
+
+			queryParams.ArtistParticipation.ArtistIds = new[] { Db.Producer.Id };
 			queryParams.Common.TextQuery = SearchTextQuery.Create("Azalea");
 
 			var result = CallFind();
@@ -295,7 +315,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 		/// </summary>
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void QueryOnlyWithPVs() {
+		public void QueryOnlyWithPVs()
+		{
 
 			queryParams.OnlyWithPVs = true;
 
@@ -309,13 +330,14 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void QueryLyrics_SingleLanguage() {
-			
+		public void QueryLyrics_SingleLanguage()
+		{
+
 			queryParams.AdvancedFilters = new[] { new AdvancedSearchFilter {
 				FilterType = AdvancedFilterType.Lyrics,
 				Param = OptionalCultureCode.LanguageCode_English
 			} };
-		
+
 			var result = CallFind();
 
 			Assert.AreEqual(1, result.TotalCount, "Total result count");
@@ -325,7 +347,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void QueryLyrics_AnyLanguage() {
+		public void QueryLyrics_AnyLanguage()
+		{
 
 			queryParams.AdvancedFilters = new[] { new AdvancedSearchFilter {
 				FilterType = AdvancedFilterType.Lyrics,

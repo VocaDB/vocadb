@@ -2,13 +2,16 @@
 using System.Text.RegularExpressions;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Web.Helpers {
+namespace VocaDb.Web.Helpers
+{
 
-	public static class DateTimeUtils {
+	public static class DateTimeUtils
+	{
 
 		private static readonly Regex simpleTimeRegex = new Regex(@"(\d+)([dhm]?)");
 
-		public static string FormatFromSeconds(int seconds) {
+		public static string FormatFromSeconds(int seconds)
+		{
 
 			if (seconds <= 0)
 				return string.Empty;
@@ -17,7 +20,8 @@ namespace VocaDb.Web.Helpers {
 
 		}
 
-		public static TimeSpan ParseFromSimpleString(string timeSpanStr) {
+		public static TimeSpan ParseFromSimpleString(string timeSpanStr)
+		{
 
 			if (string.IsNullOrEmpty(timeSpanStr))
 				return TimeSpan.Zero;
@@ -30,7 +34,8 @@ namespace VocaDb.Web.Helpers {
 			var quantity = int.Parse(match.Groups[1].Value);
 			var unit = (match.Groups.Count >= 3 ? match.Groups[2].Value : string.Empty).ToLowerInvariant();
 
-			switch (unit) {
+			switch (unit)
+			{
 				case "d":
 					return TimeSpan.FromDays(quantity);
 				case "m":

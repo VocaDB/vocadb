@@ -3,13 +3,16 @@ using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.DataContracts.Tags {
+namespace VocaDb.Model.DataContracts.Tags
+{
 
-	public class ArchivedTagVersionDetailsContract {
+	public class ArchivedTagVersionDetailsContract
+	{
 
 		public ArchivedTagVersionDetailsContract() { }
 
-		public ArchivedTagVersionDetailsContract(ArchivedTagVersion archived, ArchivedTagVersion comparedVersion, IUserPermissionContext permissionContext) {
+		public ArchivedTagVersionDetailsContract(ArchivedTagVersion archived, ArchivedTagVersion comparedVersion, IUserPermissionContext permissionContext)
+		{
 
 			ParamIs.NotNull(() => archived);
 

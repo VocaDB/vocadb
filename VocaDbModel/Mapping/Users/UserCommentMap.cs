@@ -1,10 +1,13 @@
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Mapping.Users {
+namespace VocaDb.Model.Mapping.Users
+{
 
-	public class UserCommentMap : CommentMap<UserComment, User> {
+	public class UserCommentMap : CommentMap<UserComment, User>
+	{
 
-		public UserCommentMap() {
+		public UserCommentMap()
+		{
 
 			References(m => m.EntryForComment).Column("[User]").Not.Nullable();
 

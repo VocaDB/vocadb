@@ -4,26 +4,30 @@ using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Tests.Domain.PVs {
+namespace VocaDb.Tests.Domain.PVs
+{
 
 	/// <summary>
 	/// Tests for <see cref="PVManager{T}"/>.
 	/// </summary>
 	[TestClass]
-	public class PVManagerTests {
+	public class PVManagerTests
+	{
 
 		private PVManager<PVForSong> manager;
 		private PVContract pvContract;
 		private PVContract pvContract2;
 
-		private PVForSong CreatePV(PVContract contract) {
+		private PVForSong CreatePV(PVContract contract)
+		{
 
 			return new PVForSong(new Song(), contract) { Id = contract.Id };
 
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			manager = new PVManager<PVForSong>();
 			pvContract = new PVContract { Id = 1, Author = "Miku!", Name = "A cool Miku PV", PVId = "3939", ThumbUrl = "http://youtube.com/thumb", Url = "http://youtube.com/39" };
@@ -32,14 +36,16 @@ namespace VocaDb.Tests.Domain.PVs {
 		}
 
 		[TestMethod]
-		public void Preconditions() {
+		public void Preconditions()
+		{
 
 			Assert.IsFalse(pvContract.ContentEquals(pvContract2), "PVContracts are not equal");
 
 		}
 
 		[TestMethod]
-		public void Sync_Contracts_NoExistingLinks() {
+		public void Sync_Contracts_NoExistingLinks()
+		{
 
 			var newPVs = new[] { pvContract };
 
@@ -56,7 +62,8 @@ namespace VocaDb.Tests.Domain.PVs {
 		}
 
 		[TestMethod]
-		public void Sync_Contracts_NotChanged() {
+		public void Sync_Contracts_NotChanged()
+		{
 
 			manager.PVs.Add(CreatePV(pvContract));
 			var newLinks = new[] { pvContract };
@@ -74,7 +81,8 @@ namespace VocaDb.Tests.Domain.PVs {
 		}
 
 		[TestMethod]
-		public void Sync_Contracts_Edited() {
+		public void Sync_Contracts_Edited()
+		{
 
 			var oldPV = CreatePV(pvContract);
 			oldPV.Id = 2;
@@ -94,7 +102,8 @@ namespace VocaDb.Tests.Domain.PVs {
 		}
 
 		[TestMethod]
-		public void Sync_Contracts_Removed() {
+		public void Sync_Contracts_Removed()
+		{
 
 			manager.PVs.Add(CreatePV(pvContract));
 			var newLinks = new PVContract[] { };

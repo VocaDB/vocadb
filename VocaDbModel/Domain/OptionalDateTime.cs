@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Globalization;
-namespace VocaDb.Model.Domain {
+namespace VocaDb.Model.Domain
+{
 
-	public class OptionalDateTime : IOptionalDateTime, IComparable<OptionalDateTime> {
+	public class OptionalDateTime : IOptionalDateTime, IComparable<OptionalDateTime>
+	{
 
-		public static bool operator ==(OptionalDateTime p1, OptionalDateTime p2) {
+		public static bool operator ==(OptionalDateTime p1, OptionalDateTime p2)
+		{
 
 			if (ReferenceEquals(p1, null) && ReferenceEquals(p2, null))
 				return true;
@@ -16,11 +19,13 @@ namespace VocaDb.Model.Domain {
 
 		}
 
-		public static bool operator !=(OptionalDateTime p1, OptionalDateTime p2) {
+		public static bool operator !=(OptionalDateTime p1, OptionalDateTime p2)
+		{
 			return !(p1 == p2);
 		}
 
-		public static OptionalDateTime Create(IOptionalDateTime contract) {
+		public static OptionalDateTime Create(IOptionalDateTime contract)
+		{
 
 			ParamIs.NotNull(() => contract);
 
@@ -28,20 +33,24 @@ namespace VocaDb.Model.Domain {
 
 		}
 
-		public static bool IsValid(int? year, int? day, int? month) {
+		public static bool IsValid(int? year, int? day, int? month)
+		{
 
-			if (year != null) {
+			if (year != null)
+			{
 
 				if (year < 0)
 					return false;
 
-				if (month != null) {
+				if (month != null)
+				{
 
 					if (month.Value < 1 || month.Value > 12)
 						return false;
 
 
-					if (day != null) {
+					if (day != null)
+					{
 						if (day.Value < 1 || day.Value > DateTime.DaysInMonth(year.Value, month.Value))
 							return false;
 					}
@@ -52,29 +61,33 @@ namespace VocaDb.Model.Domain {
 
 		}
 
-		public static DateTime ToDateTime(int? year, int? month, int? day) {
+		public static DateTime ToDateTime(int? year, int? month, int? day)
+		{
 
 			return new DateTime(year ?? DateTime.MinValue.Year, month ?? 1, day ?? 1);
 
 		}
 
-		public static void Validate(int? year, int? day, int? month) {
+		public static void Validate(int? year, int? day, int? month)
+		{
 
 			if (!IsValid(year, day, month))
 				throw new FormatException("Invalid date");
 
 		}
 
-		public OptionalDateTime() {}
+		public OptionalDateTime() { }
 
-		public OptionalDateTime(int year) {
+		public OptionalDateTime(int year)
+		{
 
 			ParamIs.NonNegative(() => year);
 			Year = year;
 
 		}
 
-		public OptionalDateTime(int? year, int? month, int? day) {
+		public OptionalDateTime(int? year, int? month, int? day)
+		{
 
 			Validate(year, day, month);
 
@@ -103,18 +116,21 @@ namespace VocaDb.Model.Domain {
 		/// <remarks>
 		/// If the date is empty this will be minimal date.
 		/// </remarks>
-		public virtual DateTime SortableDateTime {
-			get {
+		public virtual DateTime SortableDateTime
+		{
+			get
+			{
 				return new DateTime(Year ?? 1970, Month ?? 1, Day ?? 1);
 			}
-// ReSharper disable ValueParameterNotUsed
+			// ReSharper disable ValueParameterNotUsed
 			protected set { }
-// ReSharper restore ValueParameterNotUsed
+			// ReSharper restore ValueParameterNotUsed
 		}
 
 		public virtual int? Year { get; set; }
 
-		public int CompareTo(OptionalDateTime other) {
+		public int CompareTo(OptionalDateTime other)
+		{
 			return SortableDateTime.CompareTo(other.SortableDateTime);
 		}
 
@@ -130,18 +146,20 @@ namespace VocaDb.Model.Domain {
 		/// </summary>
 		/// <param name="another">Another date object. Can be null.</param>
 		/// <returns>True if the dates are considered equal, otherwise false.</returns>
-		public virtual bool Equals(OptionalDateTime another) {
+		public virtual bool Equals(OptionalDateTime another)
+		{
 
 			if (another == null)
 				return IsEmpty;
 
-			return ((IsEmpty && another.IsEmpty) 
+			return ((IsEmpty && another.IsEmpty)
 				|| (Year == another.Year && Month == another.Month && Day == another.Day));
 
 		}
 
-		public override bool Equals(object obj) {
-			
+		public override bool Equals(object obj)
+		{
+
 			if (!(obj is OptionalDateTime))
 				return false;
 
@@ -149,13 +167,15 @@ namespace VocaDb.Model.Domain {
 
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 
 			return ToString().GetHashCode();
 
 		}
 
-		public DateTime ToDateTime() {
+		public DateTime ToDateTime()
+		{
 
 			return ToDateTime(Year, Month, Day);
 
@@ -169,17 +189,23 @@ namespace VocaDb.Model.Domain {
 		/// If only year is specified, that year is returned.
 		/// If full date is specified, a localized short date string (formatted according to current culture) will be returned.
 		/// </remarks>
-		public override string ToString() {
+		public override string ToString()
+		{
 			return ToString(CultureInfo.CurrentCulture);
 		}
 
-		public string ToString(IFormatProvider formatProvider) {
-			if (Year.HasValue) {
+		public string ToString(IFormatProvider formatProvider)
+		{
+			if (Year.HasValue)
+			{
 				if (Month.HasValue && Day.HasValue)
 					return new DateTime(Year.Value, Month.Value, Day.Value).ToString("d", formatProvider);
-				else if (Month.HasValue) {
+				else if (Month.HasValue)
+				{
 					return new DateTime(Year.Value, Month.Value, 1).ToString("yyyy/M", formatProvider);
-				} else {
+				}
+				else
+				{
 					return Year.Value.ToString(formatProvider);
 				}
 			}

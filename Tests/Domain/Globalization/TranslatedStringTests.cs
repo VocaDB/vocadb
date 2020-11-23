@@ -1,13 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Tests.Domain.Globalization {
+namespace VocaDb.Tests.Domain.Globalization
+{
 
 	/// <summary>
 	/// Tests for <see cref="TranslatedString"/>.
 	/// </summary>
 	[TestClass]
-	public class TranslatedStringTests {
+	public class TranslatedStringTests
+	{
 
 		private const string eng = "Miku Miku! (English)";
 		private const string orig = "Miku Miku! (original)";
@@ -15,7 +17,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		private TranslatedString str;
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			str = new TranslatedString(orig, rom, eng);
 
@@ -25,7 +28,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// Default property. Default language is Unspecified.
 		/// </summary>
 		[TestMethod]
-		public void Default_DefaultLanguageIsUnspecified() {
+		public void Default_DefaultLanguageIsUnspecified()
+		{
 
 			str.DefaultLanguage = ContentLanguageSelection.Unspecified;
 
@@ -37,7 +41,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// Default property. Default language is Original.
 		/// </summary>
 		[TestMethod]
-		public void Default_DefaultLanguageIsOriginal() {
+		public void Default_DefaultLanguageIsOriginal()
+		{
 
 			str.DefaultLanguage = ContentLanguageSelection.Japanese;
 
@@ -49,7 +54,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// Default property. Default language is Romaji.
 		/// </summary>
 		[TestMethod]
-		public void Default_DefaultLanguageIsRomaji() {
+		public void Default_DefaultLanguageIsRomaji()
+		{
 
 			str.DefaultLanguage = ContentLanguageSelection.Romaji;
 
@@ -61,7 +67,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// Default property. Default language is English.
 		/// </summary>
 		[TestMethod]
-		public void Default_DefaultLanguageIsEnglish() {
+		public void Default_DefaultLanguageIsEnglish()
+		{
 
 			str.DefaultLanguage = ContentLanguageSelection.English;
 
@@ -73,7 +80,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// Default property. Default language is Original. No Original translation is specified.
 		/// </summary>
 		[TestMethod]
-		public void Default_DefaultLanguageIsOriginal_NoOriginalName() {
+		public void Default_DefaultLanguageIsOriginal_NoOriginalName()
+		{
 
 			str.Japanese = string.Empty;
 			str.DefaultLanguage = ContentLanguageSelection.Japanese;
@@ -86,7 +94,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// Default property. All names are empty.
 		/// </summary>
 		[TestMethod]
-		public void Default_AllNamesEmpty() {
+		public void Default_AllNamesEmpty()
+		{
 
 			var str = new TranslatedString();
 
@@ -98,7 +107,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// GetDefaultOrFirst method. Get Unspecified translation when default language is Japanese.
 		/// </summary>
 		[TestMethod]
-		public void GetDefaultOrFirst_Unspecified_DefaultLanguageIsJapanese() {
+		public void GetDefaultOrFirst_Unspecified_DefaultLanguageIsJapanese()
+		{
 
 			str.DefaultLanguage = ContentLanguageSelection.Japanese;
 
@@ -111,7 +121,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// GetDefaultOrFirst method. Get Unspecified translation when default language is English.
 		/// </summary>
 		[TestMethod]
-		public void GetDefaultOrFirst_Unspecified_DefaultLanguageIsEnglish() {
+		public void GetDefaultOrFirst_Unspecified_DefaultLanguageIsEnglish()
+		{
 
 			str.DefaultLanguage = ContentLanguageSelection.English;
 
@@ -124,7 +135,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// GetDefaultOrFirst method. Get Unspecified translation when default language is Unspecified.
 		/// </summary>
 		[TestMethod]
-		public void GetDefaultOrFirst_Unspecified_DefaultLanguageIsUnspecified() {
+		public void GetDefaultOrFirst_Unspecified_DefaultLanguageIsUnspecified()
+		{
 
 			str.DefaultLanguage = ContentLanguageSelection.Unspecified;
 
@@ -137,7 +149,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// GetDefaultOrFirst method. Get English translation when default language is Japanese.
 		/// </summary>
 		[TestMethod]
-		public void GetDefaultOrFirst_English_DefaultLanguageIsJapanese() {
+		public void GetDefaultOrFirst_English_DefaultLanguageIsJapanese()
+		{
 
 			str.DefaultLanguage = ContentLanguageSelection.Japanese;
 
@@ -150,7 +163,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// GetDefaultOrFirst method. Get English translation when default language is English.
 		/// </summary>
 		[TestMethod]
-		public void GetDefaultOrFirst_English_DefaultLanguageIsEnglish() {
+		public void GetDefaultOrFirst_English_DefaultLanguageIsEnglish()
+		{
 
 			str.DefaultLanguage = ContentLanguageSelection.English;
 
@@ -163,7 +177,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// GetDefaultOrFirst method. Get English translation when default language is Unspecified.
 		/// </summary>
 		[TestMethod]
-		public void GetDefaultOrFirst_English_DefaultLanguageIsUnspecified() {
+		public void GetDefaultOrFirst_English_DefaultLanguageIsUnspecified()
+		{
 
 			str.DefaultLanguage = ContentLanguageSelection.Unspecified;
 
@@ -176,7 +191,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// GetDefaultOrFirst method. Get Unspecified translation when default language is Unspecified and no Original translation is specified.
 		/// </summary>
 		[TestMethod]
-		public void GetDefaultOrFirst_Unspecified_DefaultLanguageIsUnspecified_NoOriginalName() {
+		public void GetDefaultOrFirst_Unspecified_DefaultLanguageIsUnspecified_NoOriginalName()
+		{
 
 			str.DefaultLanguage = ContentLanguageSelection.Unspecified;
 			str.Japanese = string.Empty;
@@ -190,7 +206,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// GetDefaultOrFirst method. Get Original translation when default language is Unspecified and no Original translation is specified.
 		/// </summary>
 		[TestMethod]
-		public void GetDefaultOrFirst_Original_DefaultLanguageIsUnspecified_NoOriginalName() {
+		public void GetDefaultOrFirst_Original_DefaultLanguageIsUnspecified_NoOriginalName()
+		{
 
 			str.DefaultLanguage = ContentLanguageSelection.Unspecified;
 			str.Japanese = string.Empty;
@@ -204,7 +221,8 @@ namespace VocaDb.Tests.Domain.Globalization {
 		/// GetDefaultOrFirst method. Get English translation when default language is Unspecified and no Original translation is specified.
 		/// </summary>
 		[TestMethod]
-		public void GetDefaultOrFirst_English_DefaultLanguageIsUnspecified_NoOriginalName() {
+		public void GetDefaultOrFirst_English_DefaultLanguageIsUnspecified_NoOriginalName()
+		{
 
 			str.DefaultLanguage = ContentLanguageSelection.Unspecified;
 			str.Japanese = string.Empty;

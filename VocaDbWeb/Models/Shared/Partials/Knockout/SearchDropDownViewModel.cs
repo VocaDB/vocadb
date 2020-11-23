@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 
-namespace VocaDb.Web.Models.Shared.Partials.Knockout {
+namespace VocaDb.Web.Models.Shared.Partials.Knockout
+{
 
-	public class SearchDropDownViewModel {
+	public class SearchDropDownViewModel
+	{
 
-		public SearchDropDownViewModel(string visibleBinding, string viewModel, Dictionary<string, string> sortRules) {
+		public SearchDropDownViewModel(string visibleBinding, string viewModel, Dictionary<string, string> sortRules)
+		{
 			VisibleBinding = visibleBinding;
 			ViewModel = viewModel;
 			SortRules = sortRules;

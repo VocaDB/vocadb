@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.EntryDetails {
+namespace VocaDb.Web.Models.Shared.Partials.EntryDetails
+{
 
-	public class EntryDeletePopupBaseViewModel {
+	public class EntryDeletePopupBaseViewModel
+	{
 
-		public EntryDeletePopupBaseViewModel(string confirmText, string viewModelBindingName, string deleteButtonId, string title, string deleteButtonText) {
+		public EntryDeletePopupBaseViewModel(string confirmText, string viewModelBindingName, string deleteButtonId, string title, string deleteButtonText)
+		{
 			ConfirmText = confirmText;
 			ViewModelBindingName = viewModelBindingName;
 			DeleteButtonId = deleteButtonId;

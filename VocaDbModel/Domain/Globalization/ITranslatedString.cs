@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Domain.Globalization {
+﻿namespace VocaDb.Model.Domain.Globalization
+{
 
-	public interface ITranslatedString {
+	public interface ITranslatedString
+	{
 
 		ContentLanguageSelection DefaultLanguage { get; set; }
 

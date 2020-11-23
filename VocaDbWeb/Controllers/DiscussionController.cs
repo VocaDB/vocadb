@@ -1,11 +1,14 @@
 ﻿using System.Web.Mvc;
 
-namespace VocaDb.Web.Controllers {
+namespace VocaDb.Web.Controllers
+{
 
-	public class DiscussionController : Controller {
+	public class DiscussionController : Controller
+	{
 
-		public ActionResult Index() {
-			
+		public ActionResult Index()
+		{
+
 			return View();
 
 		}

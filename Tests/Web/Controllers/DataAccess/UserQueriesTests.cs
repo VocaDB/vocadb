@@ -26,13 +26,15 @@ using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Tests.Web.Controllers.DataAccess {
+namespace VocaDb.Tests.Web.Controllers.DataAccess
+{
 
 	/// <summary>
 	/// Tests for <see cref="UserQueries"/>.
 	/// </summary>
 	[TestClass]
-	public class UserQueriesTests {
+	public class UserQueriesTests
+	{
 
 		private const string defaultCulture = "ja-JP";
 		private const string defaultHostname = "crypton.jp";
@@ -48,29 +50,34 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		private User LoggedUser => userWithEmail;
 
-		private void AssertEqual(User expected, UserContract actual) {
-			
+		private void AssertEqual(User expected, UserContract actual)
+		{
+
 			Assert.IsNotNull(actual, "Cannot be null");
 			Assert.AreEqual(expected.Name, actual.Name, "Name");
 			Assert.AreEqual(expected.Id, actual.Id, "Id");
 
 		}
 
-		private void AssertHasAlbum(User user, Album album) {
+		private void AssertHasAlbum(User user, Album album)
+		{
 			Assert.IsTrue(userWithEmail.Albums.Any(a => a.Album == album), "User has album");
 		}
 
-		private Task<UserContract> CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = defaultHostname, 
-			string culture = defaultCulture, TimeSpan? timeSpan = null) {
+		private Task<UserContract> CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = defaultHostname,
+			string culture = defaultCulture, TimeSpan? timeSpan = null)
+		{
 
-			return data.Create(name, pass, email, hostname, null, 
+			return data.Create(name, pass, email, hostname, null,
 				culture,
 				timeSpan ?? TimeSpan.FromMinutes(39), ipRuleManager, string.Empty);
 
 		}
 
-		private PartialFindResult<UserContract> CallGetUsers(UserGroupId groupId = UserGroupId.Nothing, string name = null, bool disabled = false, bool verifiedArtists = false, UserSortRule sortRule = UserSortRule.Name, PagingProperties paging = null) {
-			var queryParams = new UserQueryParams {
+		private PartialFindResult<UserContract> CallGetUsers(UserGroupId groupId = UserGroupId.Nothing, string name = null, bool disabled = false, bool verifiedArtists = false, UserSortRule sortRule = UserSortRule.Name, PagingProperties paging = null)
+		{
+			var queryParams = new UserQueryParams
+			{
 				Common = new CommonSearchParams(SearchTextQuery.Create(name), false, false),
 				Group = groupId,
 				IncludeDisabled = disabled,
@@ -81,16 +88,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			return data.GetUsers(queryParams, u => new UserContract(u));
 		}
 
-		private User GetUserFromRepo(string username) {
+		private User GetUserFromRepo(string username)
+		{
 			return repository.List<User>().FirstOrDefault(u => u.Name == username);
 		}
 
-		private void RefreshLoggedUser() {
+		private void RefreshLoggedUser()
+		{
 			permissionContext.RefreshLoggedUser(repository);
 		}
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			userWithEmail = new User("already_exists", "123", "already_in_use@vocadb.net", PasswordHashAlgorithms.Default) { Id = 123 };
 			userWithoutEmail = new User("no_email", "222", string.Empty, PasswordHashAlgorithms.Default) { Id = 321 };
@@ -99,7 +109,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(userWithEmail, ContentLanguagePreference.Default));
 			stopForumSpamClient = new FakeStopForumSpamClient();
 			mailer = new FakeUserMessageMailer();
-			data = new UserQueries(repository, permissionContext, new FakeEntryLinkFactory(), stopForumSpamClient, mailer, 
+			data = new UserQueries(repository, permissionContext, new FakeEntryLinkFactory(), stopForumSpamClient, mailer,
 				new FakeUserIconFactory(), new InMemoryImagePersister(), new FakeObjectCache(), new Model.Service.BrandableStrings.BrandableStringsManager(new VdbConfigManager()), new EnumTranslations());
 
 			request = new PasswordResetRequest(userWithEmail) { Id = Guid.NewGuid() };
@@ -108,7 +118,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CheckAuthentication() {
+		public void CheckAuthentication()
+		{
 
 			var result = data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", defaultCulture, false);
 
@@ -118,7 +129,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CheckAuthentication_DifferentCase() {
+		public void CheckAuthentication_DifferentCase()
+		{
 
 			userWithEmail.Name = "Already_Exists";
 			var result = data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", defaultCulture, false);
@@ -129,7 +141,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CheckAuthentication_WrongPassword() {
+		public void CheckAuthentication_WrongPassword()
+		{
 
 			var result = data.CheckAuthentication("already_exists", "3939", "miku@crypton.jp", defaultCulture, false);
 
@@ -139,7 +152,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CheckAuthentication_NotFound() {
+		public void CheckAuthentication_NotFound()
+		{
 
 			var result = data.CheckAuthentication("does_not_exist", "3939", "miku@crypton.jp", defaultCulture, false);
 
@@ -149,7 +163,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CheckAuthentication_Poisoned() {
+		public void CheckAuthentication_Poisoned()
+		{
 
 			userWithEmail.Options.Poisoned = true;
 			var result = data.CheckAuthentication(userWithEmail.Name, userWithEmail.Password, "miku@crypton.jp", defaultCulture, false);
@@ -160,7 +175,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CheckAuthentication_LoginWithEmail() {
+		public void CheckAuthentication_LoginWithEmail()
+		{
 
 			userWithEmail.Options.EmailVerified = true; // For now, logging in with email is allowed only if the email is verified
 			var result = data.CheckAuthentication(userWithEmail.Email, "123", "miku@crypton.jp", defaultCulture, false);
@@ -171,8 +187,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void ClearRatings() {
-		
+		public void ClearRatings()
+		{
+
 			userWithEmail.AdditionalPermissions.Add(PermissionToken.DisableUsers);
 			RefreshLoggedUser();
 			var album = CreateEntry.Album();
@@ -195,14 +212,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void ClearRatings_NoPermission() {
-			
+		public void ClearRatings_NoPermission()
+		{
+
 			data.ClearRatings(userWithoutEmail.Id);
 
 		}
 
 		[TestMethod]
-		public async Task Create() {
+		public async Task Create()
+		{
 
 			var name = "hatsune_miku";
 			var result = await CallCreate(name: name, email: "mikumiku@crypton.jp");
@@ -225,7 +244,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNameAlreadyExistsException))]
-		public async Task  Create_NameAlreadyExists() {
+		public async Task Create_NameAlreadyExists()
+		{
 
 			await CallCreate(name: "already_exists");
 
@@ -233,7 +253,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNameAlreadyExistsException))]
-		public async Task  Create_NameAlreadyExistsDifferentCase() {
+		public async Task Create_NameAlreadyExistsDifferentCase()
+		{
 
 			await CallCreate(name: "Already_Exists");
 
@@ -241,14 +262,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserEmailAlreadyExistsException))]
-		public async Task Create_EmailAlreadyExists() {
+		public async Task Create_EmailAlreadyExists()
+		{
 
 			await CallCreate(email: "already_in_use@vocadb.net");
 
 		}
 
 		[TestMethod]
-		public async Task Create_EmailAlreadyExistsButDisabled() {
+		public async Task Create_EmailAlreadyExistsButDisabled()
+		{
 
 			userWithEmail.Active = false;
 			var result = await CallCreate(email: "already_in_use@vocadb.net");
@@ -260,14 +283,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(InvalidEmailFormatException))]
-		public async Task Create_InvalidEmailFormat() {
+		public async Task Create_InvalidEmailFormat()
+		{
 
 			await CallCreate(email: "mikumiku");
 
 		}
 
 		[TestMethod]
-		public async Task Create_FlaggedUser_Reported() {
+		public async Task Create_FlaggedUser_Reported()
+		{
 
 			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 30d, Frequency = 50 };
 			var result = await CallCreate();
@@ -285,7 +310,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Create_FlaggedUser_NotReported() {
+		public async Task Create_FlaggedUser_NotReported()
+		{
 
 			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 0.5d, Frequency = 1 };
 			var result = await CallCreate();
@@ -296,7 +322,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task Create_LikelyMaliciousIP_Limited() {
+		public async Task Create_LikelyMaliciousIP_Limited()
+		{
 
 			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 60d, Frequency = 100 };
 			var result = await CallCreate();
@@ -310,11 +337,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 			var user = GetUserFromRepo(result.Name);
 			user.GroupId.Should().Be(UserGroupId.Limited, because: "User was limited");
 			repository.IsCommitted(user).Should().BeTrue();
-		
+
 		}
 
 		[TestMethod]
-		public void Create_MalicousIP_Banned() {
+		public void Create_MalicousIP_Banned()
+		{
 
 			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 99d, Frequency = 100 };
 			this.Invoking(self => self.CallCreate()).Should().Throw<RestrictedIPException>("User is malicious");
@@ -324,12 +352,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 			var ipRule = repository.List<IPRule>().Should().Contain(rule => rule.Address == defaultHostname).Subject;
 			repository.IsCommitted(ipRule).Should().BeTrue("IPRule was committed despite exception");
-		
+
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(TooFastRegistrationException))]
-		public async Task Create_RegistrationTimeTrigger() {
+		public async Task Create_RegistrationTimeTrigger()
+		{
 
 			await CallCreate(timeSpan: TimeSpan.FromSeconds(4));
 			Assert.IsTrue(ipRuleManager.IsAllowed(defaultHostname), "Was not banned");
@@ -338,7 +367,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(TooFastRegistrationException))]
-		public async Task Create_RegistrationTimeAndBanTrigger() {
+		public async Task Create_RegistrationTimeAndBanTrigger()
+		{
 
 			await CallCreate(timeSpan: TimeSpan.FromSeconds(1));
 			Assert.IsFalse(ipRuleManager.IsAllowed(defaultHostname), "Was banned");
@@ -346,7 +376,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CreateComment() {
+		public void CreateComment()
+		{
 
 			var sender = userWithEmail;
 			var receiver = userWithoutEmail;
@@ -370,7 +401,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CreateTwitter() {
+		public void CreateTwitter()
+		{
 
 			var name = "hatsune_miku";
 			var result = data.CreateTwitter("auth_token", name, "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
@@ -393,7 +425,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNameAlreadyExistsException))]
-		public void CreateTwitter_NameAlreadyExists() {
+		public void CreateTwitter_NameAlreadyExists()
+		{
 
 			data.CreateTwitter("auth_token", "already_exists", "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
 
@@ -401,7 +434,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserEmailAlreadyExistsException))]
-		public void CreateTwitter_EmailAlreadyExists() {
+		public void CreateTwitter_EmailAlreadyExists()
+		{
 
 			data.CreateTwitter("auth_token", "hatsune_miku", "already_in_use@vocadb.net", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
 
@@ -409,14 +443,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(InvalidEmailFormatException))]
-		public void CreateTwitter_InvalidEmailFormat() {
+		public void CreateTwitter_InvalidEmailFormat()
+		{
 
 			data.CreateTwitter("auth_token", "hatsune_miku", "mikumiku", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
 
 		}
 
 		[TestMethod]
-		public void CreateReport() {
+		public void CreateReport()
+		{
 
 			var user = repository.Save(CreateEntry.User());
 
@@ -429,11 +465,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CreateReport_Limited() {
+		public void CreateReport_Limited()
+		{
 
 			var user = repository.Save(CreateEntry.User());
 
-			for (int i = 0; i < 2; ++i) {
+			for (int i = 0; i < 2; ++i)
+			{
 				var reporter = repository.Save(CreateEntry.User());
 				permissionContext.SetLoggedUser(reporter);
 				data.CreateReport(user.Id, UserReportType.Spamming, "mikumiku", "Too much negis!", reportCountLimit: 2, reportCountDisable: 3);
@@ -445,11 +483,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CreateReport_Disabled() {
+		public void CreateReport_Disabled()
+		{
 
 			var user = repository.Save(CreateEntry.User());
 
-			for (int i = 0; i < 3; ++i) {
+			for (int i = 0; i < 3; ++i)
+			{
 				var reporter = repository.Save(CreateEntry.User());
 				permissionContext.SetLoggedUser(reporter);
 				data.CreateReport(user.Id, UserReportType.Spamming, "mikumiku", "Too much negis!", reportCountLimit: 2, reportCountDisable: 3);
@@ -461,11 +501,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void CreateReport_IgnoreDuplicates() {
+		public void CreateReport_IgnoreDuplicates()
+		{
 
 			var user = repository.Save(CreateEntry.User());
 
-			for (int i = 0; i < 3; ++i) {
+			for (int i = 0; i < 3; ++i)
+			{
 				data.CreateReport(user.Id, UserReportType.Spamming, "mikumiku", "Too much negis!", reportCountLimit: 2, reportCountDisable: 3);
 			}
 
@@ -476,8 +518,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void DisableUser() {
-			
+		public void DisableUser()
+		{
+
 			userWithEmail.AdditionalPermissions.Add(PermissionToken.DisableUsers);
 			RefreshLoggedUser();
 
@@ -489,7 +532,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void DisableUser_NoPermission() {
+		public void DisableUser_NoPermission()
+		{
 
 			data.DisableUser(userWithoutEmail.Id);
 
@@ -497,7 +541,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void DisableUser_CannotBeDisabled() {
+		public void DisableUser_CannotBeDisabled()
+		{
 
 			userWithEmail.AdditionalPermissions.Add(PermissionToken.DisableUsers);
 			userWithoutEmail.AdditionalPermissions.Add(PermissionToken.DisableUsers);
@@ -508,10 +553,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetRatingsByGenre() {
+		public void GetRatingsByGenre()
+		{
 
 			var fakeTagMock = new Mock<Tag>();
-			var fakeTag = fakeTagMock.Object; 
+			var fakeTag = fakeTagMock.Object;
 			var vocarock = new Tag("Vocarock", TagCommonCategoryNames.Genres) { Parent = fakeTag };
 			var electronic = new Tag("Electronic", TagCommonCategoryNames.Genres) { Parent = fakeTag };
 			var trance = new Tag("Trance", TagCommonCategoryNames.Genres) { Parent = electronic };
@@ -548,7 +594,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetUsers_NoFilters() {
+		public void GetUsers_NoFilters()
+		{
 
 			var result = CallGetUsers();
 
@@ -559,7 +606,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetUsers_FilterByName() {
+		public void GetUsers_FilterByName()
+		{
 
 			var result = CallGetUsers(name: "already");
 
@@ -571,7 +619,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void GetUsers_Paging() {
+		public void GetUsers_Paging()
+		{
 
 			var result = CallGetUsers(paging: new PagingProperties(1, 10, true));
 			Assert.IsNotNull(result, "result");
@@ -582,8 +631,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task RequestEmailVerification() {
-			
+		public async Task RequestEmailVerification()
+		{
+
 			var num = repository.List<PasswordResetRequest>().Count;
 
 			await data.RequestEmailVerification(userWithEmail.Id, string.Empty);
@@ -595,8 +645,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task RequestPasswordReset() {
-			
+		public async Task RequestPasswordReset()
+		{
+
 			var num = repository.List<PasswordResetRequest>().Count;
 
 			await data.RequestPasswordReset(userWithEmail.Name, userWithEmail.Email, string.Empty);
@@ -609,7 +660,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNotFoundException))]
-		public async Task RequestPasswordReset_NotFound() {
+		public async Task RequestPasswordReset_NotFound()
+		{
 
 			await data.RequestPasswordReset(userWithEmail.Name, "notfound@vocadb.net", string.Empty);
 
@@ -617,7 +669,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNotFoundException))]
-		public async Task RequestPasswordReset_Disabled() {
+		public async Task RequestPasswordReset_Disabled()
+		{
 
 			userWithEmail.Active = false;
 			await data.RequestPasswordReset(userWithEmail.Name, userWithEmail.Email, string.Empty);
@@ -625,8 +678,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void ResetPassword() {
-			
+		public void ResetPassword()
+		{
+
 			data.ResetPassword(request.Id, "123");
 
 			var hashed = PasswordHashAlgorithms.Default.HashPassword("123", request.User.Salt, request.User.NameLC);
@@ -637,7 +691,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public async Task SendMessage() {
+		public async Task SendMessage()
+		{
 
 			var sender = CreateEntry.User(name: "sender");
 			var receiver = CreateEntry.User(name: "receiver", email: "test@vocadb.net");
@@ -676,7 +731,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public async Task SendMessage_NoPermission() {
+		public async Task SendMessage_NoPermission()
+		{
 
 			var sender = CreateEntry.User(name: "sender");
 			var receiver = CreateEntry.User(name: "receiver");
@@ -688,7 +744,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void UpdateAlbumForUser_Add() {
+		public void UpdateAlbumForUser_Add()
+		{
 
 			var album = repository.Save(CreateEntry.Album());
 			data.UpdateAlbumForUser(userWithEmail.Id, album.Id, PurchaseStatus.Owned, MediaType.PhysicalDisc, 5);
@@ -698,7 +755,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void UpdateAlbumForUser_Update() {
+		public void UpdateAlbumForUser_Update()
+		{
 
 			var album = repository.Save(CreateEntry.Album());
 			data.UpdateAlbumForUser(userWithEmail.Id, album.Id, PurchaseStatus.Owned, MediaType.PhysicalDisc, 5);
@@ -713,7 +771,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void UpdateAlbumForUser_Delete() {
+		public void UpdateAlbumForUser_Delete()
+		{
 
 			var album = repository.Save(CreateEntry.Album());
 			data.UpdateAlbumForUser(userWithEmail.Id, album.Id, PurchaseStatus.Owned, MediaType.PhysicalDisc, 5);
@@ -727,7 +786,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void UpdateEventForUser() {
+		public void UpdateEventForUser()
+		{
 
 			var releaseEvent = repository.Save(CreateEntry.ReleaseEvent("Miku land"));
 			data.UpdateEventForUser(userWithEmail.Id, releaseEvent.Id, UserEventRelationshipType.Attending);
@@ -739,8 +799,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void UpdateUser_SetPermissions() {
-			
+		public void UpdateUser_SetPermissions()
+		{
+
 			LoggedUser.GroupId = UserGroupId.Admin;
 			permissionContext.RefreshLoggedUser(repository);
 
@@ -754,7 +815,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void UpdateUser_Name() {
+		public void UpdateUser_Name()
+		{
 
 			LoggedUser.GroupId = UserGroupId.Admin;
 			permissionContext.RefreshLoggedUser(repository);
@@ -777,7 +839,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNameAlreadyExistsException))]
-		public void UpdateUser_Name_AlreadyInUse() {
+		public void UpdateUser_Name_AlreadyInUse()
+		{
 
 			LoggedUser.GroupId = UserGroupId.Admin;
 			permissionContext.RefreshLoggedUser(repository);
@@ -791,7 +854,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(InvalidUserNameException))]
-		public void UpdateUser_Name_InvalidCharacters() {
+		public void UpdateUser_Name_InvalidCharacters()
+		{
 
 			LoggedUser.GroupId = UserGroupId.Admin;
 			permissionContext.RefreshLoggedUser(repository);
@@ -805,15 +869,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void UpdateUser_NotAllowed() {
-			
+		public void UpdateUser_NotAllowed()
+		{
+
 			var contract = new UserWithPermissionsContract(userWithoutEmail, ContentLanguagePreference.Default);
 			data.UpdateUser(contract);
 
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_SetEmail() {
+		public void UpdateUserSettings_SetEmail()
+		{
 
 			var contract = new UpdateUserSettingsContract(userWithEmail) { Email = "new_email@vocadb.net" };
 			userWithEmail.Options.EmailVerified = true;
@@ -828,11 +894,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_Password() {
+		public void UpdateUserSettings_Password()
+		{
 
 			var algo = new HMICSHA1PasswordHashAlgorithm();
 
-			var contract = new UpdateUserSettingsContract(userWithEmail) {
+			var contract = new UpdateUserSettingsContract(userWithEmail)
+			{
 				OldPass = "123",
 				NewPass = "3939"
 			};
@@ -845,9 +913,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(InvalidPasswordException))]
-		public void UpdateUserSettings_Password_InvalidOldPassword() {
+		public void UpdateUserSettings_Password_InvalidOldPassword()
+		{
 
-			var contract = new UpdateUserSettingsContract(userWithEmail) {
+			var contract = new UpdateUserSettingsContract(userWithEmail)
+			{
 				OldPass = "393",
 				NewPass = "3939"
 			};
@@ -858,7 +928,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
-		public void UpdateUserSettings_NoPermission() {
+		public void UpdateUserSettings_NoPermission()
+		{
 
 			data.UpdateUserSettings(new UpdateUserSettingsContract(userWithoutEmail));
 
@@ -866,7 +937,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserEmailAlreadyExistsException))]
-		public void UpdateUserSettings_EmailTaken() {
+		public void UpdateUserSettings_EmailTaken()
+		{
 
 			permissionContext.LoggedUser = new UserWithPermissionsContract(userWithoutEmail, ContentLanguagePreference.Default);
 			var contract = new UpdateUserSettingsContract(userWithoutEmail) { Email = userWithEmail.Email };
@@ -876,7 +948,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_EmailTakenButDisabled() {
+		public void UpdateUserSettings_EmailTakenButDisabled()
+		{
 
 			userWithEmail.Active = false;
 			permissionContext.LoggedUser = new UserWithPermissionsContract(userWithoutEmail, ContentLanguagePreference.Default);
@@ -892,7 +965,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(InvalidEmailFormatException))]
-		public void UpdateUserSettings_InvalidEmailFormat() {
+		public void UpdateUserSettings_InvalidEmailFormat()
+		{
 
 			var contract = new UpdateUserSettingsContract(userWithEmail) { Email = "mikumiku" };
 
@@ -901,7 +975,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void UpdateUserSettings_ChangeName() {
+		public void UpdateUserSettings_ChangeName()
+		{
 
 			userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
 			var contract = new UpdateUserSettingsContract(userWithEmail) { Name = "mikumiku" };
@@ -916,7 +991,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(InvalidUserNameException))]
-		public void UpdateUserSettings_ChangeName_Invalid() {
+		public void UpdateUserSettings_ChangeName_Invalid()
+		{
 
 			userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
 			var contract = new UpdateUserSettingsContract(userWithEmail) { Name = "miku miku" };
@@ -926,7 +1002,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNameAlreadyExistsException))]
-		public void UpdateUserSettings_ChangeName_AlreadyInUse() {
+		public void UpdateUserSettings_ChangeName_AlreadyInUse()
+		{
 
 			userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
 			var contract = new UpdateUserSettingsContract(userWithEmail) { Name = userWithoutEmail.Name };
@@ -936,7 +1013,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(UserNameTooSoonException))]
-		public void UpdateUserSettings_ChangeName_TooSoon() {
+		public void UpdateUserSettings_ChangeName_TooSoon()
+		{
 
 			userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(39);
 			var contract = new UpdateUserSettingsContract(userWithEmail) { Name = "mikumiku" };
@@ -945,8 +1023,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 		}
 
 		[TestMethod]
-		public void VerifyEmail() {
-			
+		public void VerifyEmail()
+		{
+
 			Assert.IsFalse(userWithEmail.Options.EmailVerified, "EmailVerified");
 
 			data.VerifyEmail(request.Id);
@@ -958,8 +1037,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(RequestNotValidException))]
-		public void VerifyEmail_DifferentUser() {
-			
+		public void VerifyEmail_DifferentUser()
+		{
+
 			request.User = userWithoutEmail;
 			data.VerifyEmail(request.Id);
 
@@ -967,8 +1047,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess {
 
 		[TestMethod]
 		[ExpectedException(typeof(RequestNotValidException))]
-		public void VerifyEmail_DifferentEmail() {
-			
+		public void VerifyEmail_DifferentEmail()
+		{
+
 			request.Email = "new@vocadb.net";
 			data.VerifyEmail(request.Id);
 

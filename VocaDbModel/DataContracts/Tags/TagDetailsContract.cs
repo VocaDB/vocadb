@@ -3,9 +3,11 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts.Tags {
+namespace VocaDb.Model.DataContracts.Tags
+{
 
-	public class TagDetailsContract : TagContract, IEntryWithStatus {
+	public class TagDetailsContract : TagContract, IEntryWithStatus
+	{
 
 		string IEntryBase.DefaultName => Name;
 
@@ -13,10 +15,11 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public TagDetailsContract() { }
 
-		public TagDetailsContract(Tag tag, 
+		public TagDetailsContract(Tag tag,
 			TagStatsContract stats,
 			ContentLanguagePreference languagePreference)
-			: base(tag, languagePreference) {
+			: base(tag, languagePreference)
+		{
 
 			AdditionalNames = tag.Names.AdditionalNamesString;
 			Translations = tag.Names.GetTranslationsString(languagePreference);
@@ -76,9 +79,10 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public WebLinkContract[] WebLinks { get; set; }
 
-		public object JsonModel => new {
-			Name, 
-			Parent, 
+		public object JsonModel => new
+		{
+			Name,
+			Parent,
 			Children = Children.Take(20),
 			Siblings = Siblings.Take(20),
 			HasMoreChildren = Children.Length > 20,

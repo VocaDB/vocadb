@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Service.Security {
+﻿namespace VocaDb.Model.Service.Security
+{
 
-	public static class PasswordHashAlgorithms {
+	public static class PasswordHashAlgorithms
+	{
 
 		/// <summary>
 		/// Default (recommended) password hashing algorithm.
@@ -8,8 +10,10 @@
 		/// </summary>
 		public static IPasswordHashAlgorithm Default => Get(PasswordHashAlgorithmType.HMACSHA1);
 
-		public static IPasswordHashAlgorithm Get(PasswordHashAlgorithmType algorithm) {
-			switch (algorithm) {
+		public static IPasswordHashAlgorithm Get(PasswordHashAlgorithmType algorithm)
+		{
+			switch (algorithm)
+			{
 				case PasswordHashAlgorithmType.SHA1:
 					return new SHA1PasswordHashAlgorithm();
 				case PasswordHashAlgorithmType.HMACSHA1:
@@ -20,7 +24,8 @@
 
 	}
 
-	public enum PasswordHashAlgorithmType {
+	public enum PasswordHashAlgorithmType
+	{
 		Nothing,
 		SHA1,
 		HMACSHA1

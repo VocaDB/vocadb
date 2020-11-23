@@ -5,12 +5,15 @@ using VocaDb.Model;
 using VocaDb.Model.Service;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Web.Models.Admin {
+namespace VocaDb.Web.Models.Admin
+{
 
 	[JsonObject(MemberSerialization.OptIn)]
-	public class ViewAuditLogModel {
+	public class ViewAuditLogModel
+	{
 
-		public ViewAuditLogModel() {
+		public ViewAuditLogModel()
+		{
 
 			GroupId = AuditLogUserGroupFilter.NoFilter;
 

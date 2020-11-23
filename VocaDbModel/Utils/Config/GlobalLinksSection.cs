@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Xml;
 
-namespace VocaDb.Model.Utils.Config {
+namespace VocaDb.Model.Utils.Config
+{
 
-	public class GlobalLinksSection : ConfigurationSectionGroup {
+	public class GlobalLinksSection : ConfigurationSectionGroup
+	{
 
 		public LinksSection AppLinks { get; set; }
 
@@ -16,16 +18,19 @@ namespace VocaDb.Model.Utils.Config {
 
 	}
 
-	public class LinksSection : ConfigurationSection {
+	public class LinksSection : ConfigurationSection
+	{
 
 		public LinkElement[] Links { get; set; }
 
 	}
 
-	public class LinksSectionHandler : IConfigurationSectionHandler {
+	public class LinksSectionHandler : IConfigurationSectionHandler
+	{
 
-		public object Create(object parent, object configContext, XmlNode section) {
-			
+		public object Create(object parent, object configContext, XmlNode section)
+		{
+
 			var links = section.ChildNodes.Cast<XmlNode>().Select(n => new LinkElement(
 				n.Attributes["bannerImg"].Value, n.Attributes["title"].Value, n.Attributes["url"].Value));
 
@@ -34,9 +39,11 @@ namespace VocaDb.Model.Utils.Config {
 		}
 
 	}
-	public class LinkElement  {
+	public class LinkElement
+	{
 
-		public LinkElement(string bannerImg, string title, string url) {
+		public LinkElement(string bannerImg, string title, string url)
+		{
 			BannerImg = bannerImg;
 			Title = title;
 			Url = url;

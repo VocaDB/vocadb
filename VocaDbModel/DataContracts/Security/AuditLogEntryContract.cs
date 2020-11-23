@@ -2,13 +2,16 @@
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.DataContracts.Security {
+namespace VocaDb.Model.DataContracts.Security
+{
 
-	public class AuditLogEntryContract {
+	public class AuditLogEntryContract
+	{
 
 		public AuditLogEntryContract() { }
 
-		public AuditLogEntryContract(AuditLogEntry entry) {
+		public AuditLogEntryContract(AuditLogEntry entry)
+		{
 
 			ParamIs.NotNull(() => entry);
 

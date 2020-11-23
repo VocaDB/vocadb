@@ -4,13 +4,15 @@ using System.Text.RegularExpressions;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Model.Service {
+namespace VocaDb.Model.Service
+{
 
 	/// <summary>
 	/// Parses entry type and ID from URLs to common entries, for example https://vocadb.net/S/3939.
 	/// This default implementation is based on regular expressions and handles most common cases.
 	/// </summary>
-	public class EntryUrlParser : IEntryUrlParser {
+	public class EntryUrlParser : IEntryUrlParser
+	{
 
 		private readonly Dictionary<string, EntryType> entryTypeNames = new Dictionary<string, EntryType>(StringComparer.InvariantCultureIgnoreCase) {
 			{ "Al", EntryType.Album },
@@ -29,10 +31,11 @@ namespace VocaDb.Model.Service {
 		private readonly Regex entryUrlRegexOptionalPrefix;
 
 		public EntryUrlParser()
-			: this(AppConfig.HostAddress) {}
+			: this(AppConfig.HostAddress) { }
 
-		public EntryUrlParser(string hostAddress) {
-			
+		public EntryUrlParser(string hostAddress)
+		{
+
 			hostAddress = hostAddress.Replace("https://", "https?://");
 			var hostAddresses = VocaUriBuilder.RemoveTrailingSlash(hostAddress);
 
@@ -44,8 +47,9 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public GlobalEntryId Parse(string url, bool allowRelative = false) {
-			
+		public GlobalEntryId Parse(string url, bool allowRelative = false)
+		{
+
 			if (string.IsNullOrEmpty(url))
 				return GlobalEntryId.Empty;
 
@@ -58,9 +62,12 @@ namespace VocaDb.Model.Service {
 			var entryId = match.Groups[2].Value; // Entry ID, integer
 			EntryType entryType;
 
-			if (entryTypeNames.TryGetValue(entryTypeStr, out entryType)) {
+			if (entryTypeNames.TryGetValue(entryTypeStr, out entryType))
+			{
 				return new GlobalEntryId(entryType, int.Parse(entryId));
-			} else {
+			}
+			else
+			{
 				return GlobalEntryId.Empty;
 			}
 
@@ -68,7 +75,8 @@ namespace VocaDb.Model.Service {
 
 	}
 
-	public interface IEntryUrlParser {
+	public interface IEntryUrlParser
+	{
 
 		/// <summary>
 		/// Parse URL.

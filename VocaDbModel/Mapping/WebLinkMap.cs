@@ -1,11 +1,14 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.ExtLinks;
 
-namespace VocaDb.Model.Mapping {
+namespace VocaDb.Model.Mapping
+{
 
-	public class WebLinkMap<TLink, TEntry> : ClassMap<TLink> where TLink : GenericWebLink<TEntry> where TEntry : class {
+	public class WebLinkMap<TLink, TEntry> : ClassMap<TLink> where TLink : GenericWebLink<TEntry> where TEntry : class
+	{
 
-		public WebLinkMap(bool category = true) {
+		public WebLinkMap(bool category = true)
+		{
 
 			Cache.ReadWrite();
 			Id(m => m.Id);

@@ -2,11 +2,14 @@
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.Mapping.Albums {
+namespace VocaDb.Model.Mapping.Albums
+{
 
-	public class OtherArtistForAlbumMap : ClassMap<OtherArtistForAlbum> {
+	public class OtherArtistForAlbumMap : ClassMap<OtherArtistForAlbum>
+	{
 
-		public OtherArtistForAlbumMap() {
+		public OtherArtistForAlbumMap()
+		{
 
 			Schema("dbo");
 			Table("OtherArtistsForAlbums");

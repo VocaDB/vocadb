@@ -7,19 +7,24 @@ using VocaDb.Model.Mapping;
 using VocaDb.Model.Mapping.Songs;
 using System.Configuration;
 
-namespace VocaDb.Model.Service {
+namespace VocaDb.Model.Service
+{
 
-	public static class DatabaseConfiguration {
+	public static class DatabaseConfiguration
+	{
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		private static string ConnectionStringName {
-			get {
+		private static string ConnectionStringName
+		{
+			get
+			{
 				return ConfigurationManager.AppSettings["ConnectionStringName"];
 			}
 		}
 
-		public static FluentConfiguration Configure(string connectionStringName = null) {
+		public static FluentConfiguration Configure(string connectionStringName = null)
+		{
 
 			var config = Fluently.Configure()
 				.Database(
@@ -49,20 +54,27 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public static ISessionFactory BuildSessionFactory(string connectionStringName = null) {
+		public static ISessionFactory BuildSessionFactory(string connectionStringName = null)
+		{
 
 			return BuildSessionFactory(Configure(connectionStringName));
 
 		}
 
-		public static ISessionFactory BuildSessionFactory(FluentConfiguration config) {
+		public static ISessionFactory BuildSessionFactory(FluentConfiguration config)
+		{
 
-			try {
+			try
+			{
 				return config.BuildSessionFactory();
-			} catch (ArgumentException x) {
+			}
+			catch (ArgumentException x)
+			{
 				log.Fatal(x, "Error while building session factory");
 				throw;
-			} catch (FluentConfigurationException x) {
+			}
+			catch (FluentConfigurationException x)
+			{
 				log.Fatal(x, "Error while building session factory");
 				throw;
 			}

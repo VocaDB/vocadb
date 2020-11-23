@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.Knockout {
+namespace VocaDb.Web.Models.Shared.Partials.Knockout
+{
 
-	public class DraftIconViewModel {
+	public class DraftIconViewModel
+	{
 
-		public DraftIconViewModel(string statusBinding) {
+		public DraftIconViewModel(string statusBinding)
+		{
 			StatusBinding = statusBinding;
 		}
 

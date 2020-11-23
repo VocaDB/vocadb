@@ -1,18 +1,22 @@
 ﻿using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Security {
+namespace VocaDb.Model.Domain.Security
+{
 
-	public class AgentLoginData {
+	public class AgentLoginData
+	{
 
-		public AgentLoginData(string name) {
-			
+		public AgentLoginData(string name)
+		{
+
 			ParamIs.NotNullOrEmpty(() => name);
 
 			Name = name;
 
 		}
 
-		public AgentLoginData(User user) {
+		public AgentLoginData(User user)
+		{
 
 			ParamIs.NotNull(() => user);
 
@@ -21,7 +25,8 @@ namespace VocaDb.Model.Domain.Security {
 
 		}
 
-		public AgentLoginData(User user, string name) {
+		public AgentLoginData(User user, string name)
+		{
 
 			User = user;
 			Name = name;
@@ -40,7 +45,8 @@ namespace VocaDb.Model.Domain.Security {
 			}
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return (User != null ? User.ToString() : Name);
 		}
 

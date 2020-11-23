@@ -8,23 +8,28 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.VideoServices;
 
-namespace VocaDb.Model.DataContracts.UseCases {
+namespace VocaDb.Model.DataContracts.UseCases
+{
 
 	/// <summary>
 	/// Result of checking a new PV to be posted.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class NewSongCheckResultContract {
+	public class NewSongCheckResultContract
+	{
 
-		public NewSongCheckResultContract() {
+		public NewSongCheckResultContract()
+		{
 			Matches = new DuplicateEntryResultContract<SongMatchProperty>[] { };
 		}
 
-		public NewSongCheckResultContract(DuplicateEntryResultContract<SongMatchProperty>[] matches, NicoTitleParseResult titleParseResult, ContentLanguagePreference languagePreference) {
+		public NewSongCheckResultContract(DuplicateEntryResultContract<SongMatchProperty>[] matches, NicoTitleParseResult titleParseResult, ContentLanguagePreference languagePreference)
+		{
 
 			this.Matches = matches;
 
-			if (titleParseResult != null) {
+			if (titleParseResult != null)
+			{
 				this.Artists = titleParseResult.Artists.Where(a => a != null).Select(a => new ArtistContract(a, languagePreference)).ToArray();
 				this.SongType = titleParseResult.SongType;
 				this.Title = titleParseResult.Title;

@@ -4,11 +4,14 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.DataContracts.Tags {
+namespace VocaDb.Model.DataContracts.Tags
+{
 
-	public class TagUsageWithVotesContract {
+	public class TagUsageWithVotesContract
+	{
 
-		public TagUsageWithVotesContract(TagUsage usage, ContentLanguagePreference languagePreference) {
+		public TagUsageWithVotesContract(TagUsage usage, ContentLanguagePreference languagePreference)
+		{
 
 			Count = usage.Count;
 			Date = usage.Date;
@@ -19,7 +22,7 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		}
 
-		public TagUsageWithVotesContract() {}
+		public TagUsageWithVotesContract() { }
 
 		public DateTime Date { get; set; }
 

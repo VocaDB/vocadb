@@ -1,8 +1,11 @@
-namespace VocaDb.Web.Models.Shared.Partials.User {
+namespace VocaDb.Web.Models.Shared.Partials.User
+{
 
-	public class SongVoteRatingsRadioKnockoutViewModel {
+	public class SongVoteRatingsRadioKnockoutViewModel
+	{
 
-		public SongVoteRatingsRadioKnockoutViewModel(string binding) {
+		public SongVoteRatingsRadioKnockoutViewModel(string binding)
+		{
 			Binding = binding;
 		}
 

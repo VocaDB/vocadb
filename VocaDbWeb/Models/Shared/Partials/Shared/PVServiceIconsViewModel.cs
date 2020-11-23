@@ -1,10 +1,13 @@
 using VocaDb.Model.Domain.PVs;
 
-namespace VocaDb.Web.Models.Shared.Partials.Shared {
+namespace VocaDb.Web.Models.Shared.Partials.Shared
+{
 
-	public class PVServiceIconsViewModel {
+	public class PVServiceIconsViewModel
+	{
 
-		public PVServiceIconsViewModel(PVServices services) {
+		public PVServiceIconsViewModel(PVServices services)
+		{
 			Services = services;
 		}
 

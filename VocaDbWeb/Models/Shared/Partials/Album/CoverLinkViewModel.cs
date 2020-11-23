@@ -1,10 +1,13 @@
 using VocaDb.Model.Domain.Images;
 
-namespace VocaDb.Web.Models.Shared.Partials.Album {
+namespace VocaDb.Web.Models.Shared.Partials.Album
+{
 
-	public class CoverLinkViewModel {
+	public class CoverLinkViewModel
+	{
 
-		public CoverLinkViewModel(IEntryImageInformation imageInfo) {
+		public CoverLinkViewModel(IEntryImageInformation imageInfo)
+		{
 			ImageInfo = imageInfo;
 		}
 

@@ -5,19 +5,22 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Web.Controllers;
 using VocaDb.Web.Models.Artist;
 
-namespace VocaDb.Tests.Web.Controllers {
+namespace VocaDb.Tests.Web.Controllers
+{
 
 	/// <summary>
 	/// Tests for <see cref="ArtistController"/>.
 	/// </summary>
 	[TestClass]
-	public class ArtistControllerTests {
+	public class ArtistControllerTests
+	{
 
 		private ArtistController controller;
 		private HttpResponseBase response;
 
 		[TestInitialize]
-		public void SetUp() {
+		public void SetUp()
+		{
 
 			controller = new ArtistController(null, null, null);
 
@@ -35,7 +38,8 @@ namespace VocaDb.Tests.Web.Controllers {
 		}
 
 		[TestMethod]
-		public void Edit_ModelIsNull() {
+		public void Edit_ModelIsNull()
+		{
 
 			var result = controller.Edit(new ArtistEditViewModel());
 
@@ -45,12 +49,13 @@ namespace VocaDb.Tests.Web.Controllers {
 		}
 
 		[TestMethod]
-		public void ViewVersion_NoId() {
+		public void ViewVersion_NoId()
+		{
 
 			var result = controller.ViewVersion();
 
 			Assert.IsInstanceOfType(result, typeof(HttpNotFoundResult));
-			
+
 		}
 
 	}

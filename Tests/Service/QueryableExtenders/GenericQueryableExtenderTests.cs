@@ -7,29 +7,35 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Tests.Service.QueryableExtenders {
+namespace VocaDb.Tests.Service.QueryableExtenders
+{
 
 	/// <summary>
 	/// Tests for <see cref="GenericQueryableExtender"/>
 	/// </summary>
-	public class GenericQueryableExtenderTests {
+	public class GenericQueryableExtenderTests
+	{
 
 		[TestClass]
-		public class SelectObject {
+		public class SelectObject
+		{
 
-			class Song {
+			class Song
+			{
 				public string Name { get; set; }
 				public int Length { get; set; }
 				public string Description { get; set; }
 				public string Artists { get; set; }
 			}
 
-			class SongDto {
+			class SongDto
+			{
 				public string Name { get; set; }
 				public int Length { get; set; }
 			}
 
-			class SongDto2 {
+			class SongDto2
+			{
 				public string Name { get; set; }
 				public double Length { get; set; }
 			}
@@ -40,7 +46,8 @@ namespace VocaDb.Tests.Service.QueryableExtenders {
 			}.AsQueryable();
 
 			[TestMethod]
-			public void MapToSubset() {
+			public void MapToSubset()
+			{
 
 				var result = songs.SelectObject<Song, SongDto>().ToArray();
 
@@ -51,7 +58,8 @@ namespace VocaDb.Tests.Service.QueryableExtenders {
 			}
 
 			[TestMethod]
-			public void IgnoreIncompatibleProperties() {
+			public void IgnoreIncompatibleProperties()
+			{
 
 				var result = songs.SelectObject<Song, SongDto2>().ToArray();
 

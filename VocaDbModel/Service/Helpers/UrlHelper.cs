@@ -4,11 +4,14 @@ using System.Text.RegularExpressions;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils.Config;
 
-namespace VocaDb.Model.Service.Helpers {
+namespace VocaDb.Model.Service.Helpers
+{
 
-	public static class UrlHelper {
+	public static class UrlHelper
+	{
 
-		private static bool IsFullLink(string str) {
+		private static bool IsFullLink(string str)
+		{
 
 			return (str.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase)
 				|| str.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase)
@@ -22,7 +25,8 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="partialLink">Partial URL. Can be null.</param>
 		/// <param name="assumeWww">Whether to assume the URL should start with www.</param>
 		/// <returns>Full URL including http://. Can be null if source was null.</returns>
-		public static string MakeLink(string partialLink, bool assumeWww = false) {
+		public static string MakeLink(string partialLink, bool assumeWww = false)
+		{
 
 			if (string.IsNullOrEmpty(partialLink))
 				return partialLink;
@@ -37,25 +41,30 @@ namespace VocaDb.Model.Service.Helpers {
 
 		}
 
-		public static string MakePossileAffiliateLink(string partialLink) {
+		public static string MakePossileAffiliateLink(string partialLink)
+		{
 
 			var link = MakeLink(partialLink);
 
 			return (new ExtSites.AffiliateLinkGenerator(new VdbConfigManager())).GenerateAffiliateLink(link);
 
 		}
-		
+
 		/// <summary>
 		/// Removes http:// and https:// from the beginning of an URL.
 		/// </summary>
-		public static string RemoveScheme(string url) {
+		public static string RemoveScheme(string url)
+		{
 
 			if (string.IsNullOrEmpty(url))
 				return url;
 
-			if (url.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase)) {
+			if (url.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase))
+			{
 				return url.Substring(7);
-			} else if (url.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase)) {
+			}
+			else if (url.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase))
+			{
 				return url.Substring(8);
 			}
 
@@ -66,7 +75,7 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <summary>
 		/// List of domains/URL prefixes that can be upgraded from HTTP to HTTPS as is, for example "http://i1.sndcdn.com" -> "https://i1.sndcdn.com"
 		/// </summary>
-		private static readonly string[] httpUpgradeDomains = new [] {
+		private static readonly string[] httpUpgradeDomains = new[] {
 			"http://i1.sndcdn.com", "http://nicovideo.cdn.nimg.jp/thumbnails/"
 		};
 
@@ -77,17 +86,20 @@ namespace VocaDb.Model.Service.Helpers {
 			new RegexLinkMatcher("https://tn.smilevideo.jp/smile?i={0}", @"^http://tn(?:-skr\d)?\.smilevideo\.jp/smile\?i=([\d\.]+)$")
 		};
 
-		public static string UpgradeToHttps(string url) {
+		public static string UpgradeToHttps(string url)
+		{
 
 			if (string.IsNullOrEmpty(url) || url.StartsWith("https://"))
 				return url;
 
-			if (httpUpgradeDomains.Any(m => url.StartsWith(m))) {
+			if (httpUpgradeDomains.Any(m => url.StartsWith(m)))
+			{
 				return url.Replace("http://", "https://");
 			}
 
 			var httpUpgradeMatch = httpUpgradeMatchers
-				.Select(m => new {
+				.Select(m => new
+				{
 					Success = m.TryGetLinkFromUrl(url, out var formattedUrl),
 					FormattedUrl = formattedUrl
 				})

@@ -7,20 +7,24 @@ using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.DatabaseTests {
+namespace VocaDb.Tests.DatabaseTests
+{
 
-	public class DatabaseTestContext<TTarget> {
+	public class DatabaseTestContext<TTarget>
+	{
 
 		private IContainer Container => TestContainerManager.Container;
 
-		public void RunTest(Action<TTarget> func) {
+		public void RunTest(Action<TTarget> func)
+		{
 
 			// Make sure session factory is built outside of transaction
 			Container.Resolve<ISessionFactory>();
 
 			// Wrap inside transaction scope to make the test atomic
 			using (new TransactionScope())
-			using (var lifetimeScope = Container.BeginLifetimeScope()) {
+			using (var lifetimeScope = Container.BeginLifetimeScope())
+			{
 
 				var target = lifetimeScope.Resolve<TTarget>();
 
@@ -32,14 +36,16 @@ namespace VocaDb.Tests.DatabaseTests {
 
 		}
 
-		public async Task RunTestAsync(Func<TTarget, Task> func) {
+		public async Task RunTestAsync(Func<TTarget, Task> func)
+		{
 
 			// Make sure session factory is built outside of transaction
 			Container.Resolve<ISessionFactory>();
 
 			// Wrap inside transaction scope to make the test atomic
 			using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-			using (var lifetimeScope = Container.BeginLifetimeScope()) {
+			using (var lifetimeScope = Container.BeginLifetimeScope())
+			{
 
 				var target = lifetimeScope.Resolve<TTarget>();
 
@@ -51,15 +57,17 @@ namespace VocaDb.Tests.DatabaseTests {
 
 		}
 
-		public TResult RunTest<TResult>(Func<TTarget, TResult> func) {
+		public TResult RunTest<TResult>(Func<TTarget, TResult> func)
+		{
 
 			// Make sure session factory is built outside of transaction
 			Container.Resolve<ISessionFactory>();
 
 			// Wrap inside transaction scope to make the test atomic
 			using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-			using (var lifetimeScope = Container.BeginLifetimeScope()) {
-				
+			using (var lifetimeScope = Container.BeginLifetimeScope())
+			{
+
 				var target = lifetimeScope.Resolve<TTarget>();
 
 				var result = func(target);
@@ -72,14 +80,16 @@ namespace VocaDb.Tests.DatabaseTests {
 
 		}
 
-		public async Task<TResult> RunTestAsync<TResult>(Func<TTarget, Task<TResult>> func) {
+		public async Task<TResult> RunTestAsync<TResult>(Func<TTarget, Task<TResult>> func)
+		{
 
 			// Make sure session factory is built outside of transaction
 			Container.Resolve<ISessionFactory>();
 
 			// Wrap inside transaction scope to make the test atomic
 			using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-			using (var lifetimeScope = Container.BeginLifetimeScope()) {
+			using (var lifetimeScope = Container.BeginLifetimeScope())
+			{
 
 				var target = lifetimeScope.Resolve<TTarget>();
 
@@ -97,13 +107,17 @@ namespace VocaDb.Tests.DatabaseTests {
 
 	public class DatabaseTestContext : DatabaseTestContext<IDatabaseContext> { }
 
-	public static class TestContainerManager {
+	public static class TestContainerManager
+	{
 
-		private static void EnsureContainerInitialized() {
+		private static void EnsureContainerInitialized()
+		{
 
-			lock (containerLock) {
-				if (container == null) {
-					container = TestContainerFactory.BuildContainer();					
+			lock (containerLock)
+			{
+				if (container == null)
+				{
+					container = TestContainerFactory.BuildContainer();
 					testDatabase = container.Resolve<TestDatabase>();
 				}
 			}
@@ -114,15 +128,19 @@ namespace VocaDb.Tests.DatabaseTests {
 		private const string containerLock = "container";
 		private static TestDatabase testDatabase;
 
-		public static IContainer Container {
-			get {
+		public static IContainer Container
+		{
+			get
+			{
 				EnsureContainerInitialized();
 				return container;
 			}
 		}
 
-		public static TestDatabase TestDatabase {
-			get {
+		public static TestDatabase TestDatabase
+		{
+			get
+			{
 				EnsureContainerInitialized();
 				return testDatabase;
 			}

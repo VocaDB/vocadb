@@ -3,13 +3,16 @@ using System.Linq;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.DataContracts.Tags {
+namespace VocaDb.Model.DataContracts.Tags
+{
 
-	public class TagCategoryContract {
+	public class TagCategoryContract
+	{
 
 		public TagCategoryContract() { }
 
-		public TagCategoryContract(string name, ContentLanguagePreference languagePreference, IEnumerable<Tag> tags) {
+		public TagCategoryContract(string name, ContentLanguagePreference languagePreference, IEnumerable<Tag> tags)
+		{
 
 			ParamIs.NotNull(() => name);
 			ParamIs.NotNull(() => tags);

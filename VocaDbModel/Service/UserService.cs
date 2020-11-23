@@ -19,17 +19,20 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Security;
 using IUserRepository = VocaDb.Model.Database.Repositories.IUserRepository;
 
-namespace VocaDb.Model.Service {
+namespace VocaDb.Model.Service
+{
 
-	public class UserService : QueriesBase<IUserRepository, User> {
+	public class UserService : QueriesBase<IUserRepository, User>
+	{
 
-// ReSharper disable UnusedMember.Local
+		// ReSharper disable UnusedMember.Local
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-// ReSharper restore UnusedMember.Local
+		// ReSharper restore UnusedMember.Local
 
 		private IEntryLinkFactory EntryLinkFactory { get; }
 
-		private string MakeGeoIpToolLink(string hostname) {
+		private string MakeGeoIpToolLink(string hostname)
+		{
 
 			return string.Format("<a href='http://www.geoiptool.com/?IP={0}'>{0}</a>", hostname);
 
@@ -37,17 +40,20 @@ namespace VocaDb.Model.Service {
 
 		public UserService(IUserRepository sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
 			IUserMessageMailer userMessageMailer)
-			: base(sessionFactory, permissionContext) {
+			: base(sessionFactory, permissionContext)
+		{
 
 			EntryLinkFactory = entryLinkFactory;
 
 		}
 
-		public void AddArtist(int userId, int artistId) {
+		public void AddArtist(int userId, int artistId)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			HandleTransaction(session => {
+			HandleTransaction(session =>
+			{
 
 				var exists = session.Query<ArtistForUser>().Any(u => u.User.Id == userId && u.Artist.Id == artistId);
 
@@ -67,14 +73,17 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public UserContract CheckAccessWithKey(string name, string accessKey, string hostname, bool delayFailedLogin) {
+		public UserContract CheckAccessWithKey(string name, string accessKey, string hostname, bool delayFailedLogin)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var lc = name.ToLowerInvariant();
 				var user = session.Query<User>().FirstOrDefault(u => u.Active && u.NameLC == lc);
 
-				if (user == null) {
+				if (user == null)
+				{
 
 					AuditLog(string.Format("failed login from {0} - no user.", MakeGeoIpToolLink(hostname)), session, name);
 
@@ -87,15 +96,16 @@ namespace VocaDb.Model.Service {
 
 				var hashed = LoginManager.GetHashedAccessKey(user.AccessKey);
 
-				if (accessKey != hashed) {
+				if (accessKey != hashed)
+				{
 
 					AuditLog(string.Format("failed login from {0} - wrong password.", MakeGeoIpToolLink(hostname)), session, name);
 
 					if (delayFailedLogin)
 						Thread.Sleep(2000);
 
-					return null;		
-								
+					return null;
+
 				}
 
 				AuditLog(string.Format("logged in from {0} with access key.", MakeGeoIpToolLink(hostname)), session, user);
@@ -106,9 +116,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public UserContract CheckTwitterAuthentication(string accessToken, string hostname, string culture) {
+		public UserContract CheckTwitterAuthentication(string accessToken, string hostname, string culture)
+		{
 
-			return HandleTransaction(session => {
+			return HandleTransaction(session =>
+			{
 
 				var user = session.Query<User>().FirstOrDefault(u => u.Active && u.Options.TwitterOAuthToken == accessToken);
 
@@ -126,12 +138,14 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public bool ConnectTwitter(string authToken, int twitterId, string twitterName, string hostname) {
+		public bool ConnectTwitter(string authToken, int twitterId, string twitterName, string hostname)
+		{
 
 			ParamIs.NotNullOrEmpty(() => authToken);
 			ParamIs.NotNullOrEmpty(() => hostname);
 
-			return HandleTransaction(session => {
+			return HandleTransaction(session =>
+			{
 
 				var user = session.Query<UserOptions>().Where(u => u.TwitterOAuthToken == authToken)
 					.Select(a => a.User).FirstOrDefault();
@@ -154,9 +168,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void DeleteComment(int commentId) {
+		public void DeleteComment(int commentId)
+		{
 
-			HandleTransaction(session => {
+			HandleTransaction(session =>
+			{
 
 				var comment = session.Load<UserComment>(commentId);
 				var user = GetLoggedUser(session);
@@ -173,9 +189,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public CommentContract[] GetComments(int userId) {
+		public CommentContract[] GetComments(int userId)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var user = session.Load<User>(userId);
 
@@ -190,27 +208,32 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public UserContract GetUser(int id, bool getPublicCollection = false) {
+		public UserContract GetUser(int id, bool getPublicCollection = false)
+		{
 
 			return HandleQuery(session => new UserContract(session.Load<User>(id), getPublicCollection));
 
 		}
 
-		public UserForMySettingsContract GetUserForMySettings(int id) {
+		public UserForMySettingsContract GetUserForMySettings(int id)
+		{
 
 			return HandleQuery(session => new UserForMySettingsContract(session.Load<User>(id)));
 
 		}
 
-		public UserWithPermissionsContract GetUserWithPermissions(int id) {
+		public UserWithPermissionsContract GetUserWithPermissions(int id)
+		{
 
 			return HandleQuery(session => new UserWithPermissionsContract(session.Load<User>(id), LanguagePreference));
 
 		}
 
-		public UserWithPermissionsContract GetUserByName(string name, bool skipMessages) {
+		public UserWithPermissionsContract GetUserByName(string name, bool skipMessages)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var user = session.Query<User>().FirstOrDefault(u => u.Name.Equals(name));
 
@@ -232,9 +255,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public PartialFindResult<UserMessageContract> GetReceivedMessages(int userId, PagingProperties paging) {
+		public PartialFindResult<UserMessageContract> GetReceivedMessages(int userId, PagingProperties paging)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var query = session.Query<UserMessage>()
 					.Where(m => m.Receiver.Id == userId);
@@ -252,9 +277,11 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public PartialFindResult<UserMessageContract> GetSentMessages(int userId, PagingProperties paging) {
+		public PartialFindResult<UserMessageContract> GetSentMessages(int userId, PagingProperties paging)
+		{
 
-			return HandleQuery(session => {
+			return HandleQuery(session =>
+			{
 
 				var query = session.Query<UserMessage>()
 					.Where(m => m.Sender.Id == userId);
@@ -272,18 +299,21 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void RemoveArtistFromUser(int userId, int artistId) {
+		public void RemoveArtistFromUser(int userId, int artistId)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			HandleTransaction(session => {
+			HandleTransaction(session =>
+			{
 
 				var link = session.Query<ArtistForUser>()
 					.FirstOrDefault(a => a.Artist.Id == artistId && a.User.Id == userId);
 
 				AuditLog(string.Format("removing {0}", link), session);
 
-				if (link != null) {
+				if (link != null)
+				{
 					link.Delete();
 					session.Delete(link);
 				}
@@ -292,11 +322,13 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void ResetAccessKey() {
+		public void ResetAccessKey()
+		{
 
 			PermissionContext.VerifyLogin();
 
-			HandleTransaction(session => {
+			HandleTransaction(session =>
+			{
 
 				var user = GetLoggedUser(session);
 				user.GenerateAccessKey();
@@ -309,28 +341,36 @@ namespace VocaDb.Model.Service {
 
 		}
 
-		public void UpdateSongRating(int userId, int songId, SongVoteRating rating) {
+		public void UpdateSongRating(int userId, int songId, SongVoteRating rating)
+		{
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			HandleTransaction(session => {
+			HandleTransaction(session =>
+			{
 
 				var existing = session.Query<FavoriteSongForUser>().FirstOrDefault(f => f.User.Id == userId && f.Song.Id == songId);
 				var user = session.Load<User>(userId);
 				var song = session.Load<Song>(songId);
 				var agent = new AgentLoginData(user);
 
-				if (existing != null) {
+				if (existing != null)
+				{
 
-					if (rating != SongVoteRating.Nothing) {
+					if (rating != SongVoteRating.Nothing)
+					{
 						existing.SetRating(rating);
 						session.Update(existing);
-					} else {
+					}
+					else
+					{
 						existing.Delete();
 						session.Delete(existing);
 					}
 
-				} else if (rating != SongVoteRating.Nothing) {
+				}
+				else if (rating != SongVoteRating.Nothing)
+				{
 
 					var link = user.AddSongToFavorites(song, rating);
 					session.Save(link);
@@ -348,36 +388,40 @@ namespace VocaDb.Model.Service {
 
 	}
 
-	public class InvalidPasswordException : Exception {
-		
-		public InvalidPasswordException()
-			: base("Invalid password") {}
+	public class InvalidPasswordException : Exception
+	{
 
-		protected InvalidPasswordException(SerializationInfo info, StreamingContext context) 
-			: base(info, context) {}
+		public InvalidPasswordException()
+			: base("Invalid password") { }
+
+		protected InvalidPasswordException(SerializationInfo info, StreamingContext context)
+			: base(info, context) { }
 
 	}
 
-	public class UserNotFoundException : EntityNotFoundException {
+	public class UserNotFoundException : EntityNotFoundException
+	{
 
 		public UserNotFoundException()
-			: base("User not found") {}
+			: base("User not found") { }
 
-		protected UserNotFoundException(SerializationInfo info, StreamingContext context) 
-			: base(info, context) {}
+		protected UserNotFoundException(SerializationInfo info, StreamingContext context)
+			: base(info, context) { }
 
 	}
 
-	public class UserNameAlreadyExistsException : Exception {
+	public class UserNameAlreadyExistsException : Exception
+	{
 
 		public UserNameAlreadyExistsException()
-			: base("Username is already taken") {}
+			: base("Username is already taken") { }
 
 	}
 
-	public class InvalidUserNameException : Exception {
+	public class InvalidUserNameException : Exception
+	{
 
-		public InvalidUserNameException() 
+		public InvalidUserNameException()
 			: base("Specified username is invalid") { }
 
 		public InvalidUserNameException(string name)
@@ -385,21 +429,24 @@ namespace VocaDb.Model.Service {
 
 	}
 
-	public class UserNameTooSoonException : Exception {
+	public class UserNameTooSoonException : Exception
+	{
 
-		public UserNameTooSoonException() 
+		public UserNameTooSoonException()
 			: base("Username cannot be changed yet") { }
 
 	}
 
-	public class UserEmailAlreadyExistsException : Exception {
+	public class UserEmailAlreadyExistsException : Exception
+	{
 
 		public UserEmailAlreadyExistsException()
-			: base("Email address is already taken") {}
+			: base("Email address is already taken") { }
 
 	}
 
-	public enum UserSortRule {
+	public enum UserSortRule
+	{
 
 		RegisterDate,
 
@@ -409,8 +456,9 @@ namespace VocaDb.Model.Service {
 
 	}
 
-	public enum LoginError {
-		
+	public enum LoginError
+	{
+
 		Nothing,
 
 		NotFound,
@@ -421,19 +469,23 @@ namespace VocaDb.Model.Service {
 
 	}
 
-	public class LoginResult {
+	public class LoginResult
+	{
 
-		public static LoginResult CreateError(LoginError error) {
-			return new LoginResult {Error = error };
+		public static LoginResult CreateError(LoginError error)
+		{
+			return new LoginResult { Error = error };
 		}
 
-		public static LoginResult CreateSuccess(UserContract user) {
-			return new LoginResult {User = user, Error = LoginError.Nothing};
+		public static LoginResult CreateSuccess(UserContract user)
+		{
+			return new LoginResult { User = user, Error = LoginError.Nothing };
 		}
 
 		public LoginError Error { get; set; }
 
-		public bool IsOk {
+		public bool IsOk
+		{
 			get { return Error == LoginError.Nothing; }
 		}
 

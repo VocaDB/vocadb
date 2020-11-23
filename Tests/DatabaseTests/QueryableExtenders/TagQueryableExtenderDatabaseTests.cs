@@ -5,19 +5,23 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.DatabaseTests.QueryableExtenders {
+namespace VocaDb.Tests.DatabaseTests.QueryableExtenders
+{
 
 	/// <summary>
 	/// Database tests for <see cref="TagQueryableExtender"/>.
 	/// </summary>
 	[TestClass]
-	public class TagQueryableExtenderDatabaseTests {
+	public class TagQueryableExtenderDatabaseTests
+	{
 
 		private readonly DatabaseTestContext<IDatabaseContext> context = new DatabaseTestContext<IDatabaseContext>();
 
-		private Tag[] WhereHasName(params string[] names) {
+		private Tag[] WhereHasName(params string[] names)
+		{
 
-			return context.RunTest(ctx => {
+			return context.RunTest(ctx =>
+			{
 				return ctx.Query<Tag>().WhereHasName(names).ToArray();
 			});
 
@@ -25,7 +29,8 @@ namespace VocaDb.Tests.DatabaseTests.QueryableExtenders {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void WhereHasName() {
+		public void WhereHasName()
+		{
 
 			var tags = WhereHasName("rock", "electronic");
 
@@ -38,7 +43,8 @@ namespace VocaDb.Tests.DatabaseTests.QueryableExtenders {
 
 		[TestMethod]
 		[TestCategory(TestCategories.Database)]
-		public void WhereHasName_Empty() {
+		public void WhereHasName_Empty()
+		{
 
 			var tags = WhereHasName(new string[0]);
 

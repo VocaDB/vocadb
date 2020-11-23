@@ -5,17 +5,21 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.DataContracts.Tags {
+namespace VocaDb.Model.DataContracts.Tags
+{
 
 	[DataContract]
-	public class TagForEditContract : TagContract {
+	public class TagForEditContract : TagContract
+	{
 
-		public TagForEditContract() {
+		public TagForEditContract()
+		{
 			UpdateNotes = string.Empty;
 		}
 
 		public TagForEditContract(Tag tag, bool isEmpty, IUserPermissionContext userContext)
-			: base(tag, userContext.LanguagePreference) {
+			: base(tag, userContext.LanguagePreference)
+		{
 
 			CanDelete = EntryPermissionManager.CanDelete(userContext, tag);
 			DefaultNameLanguage = tag.TranslatedName.DefaultLanguage;

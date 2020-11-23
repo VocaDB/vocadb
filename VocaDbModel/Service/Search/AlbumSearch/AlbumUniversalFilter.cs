@@ -5,21 +5,26 @@ using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.Service.Search.AlbumSearch {
+namespace VocaDb.Model.Service.Search.AlbumSearch
+{
 
-	public class AlbumUniversalFilter : ISearchFilter<Album> {
+	public class AlbumUniversalFilter : ISearchFilter<Album>
+	{
 
 		private readonly string term;
 
-		public AlbumUniversalFilter(string term) {
+		public AlbumUniversalFilter(string term)
+		{
 			this.term = term;
 		}
 
-		public QueryCost Cost {
+		public QueryCost Cost
+		{
 			get { return QueryCost.VeryHigh; }
 		}
 
-		public void FilterResults(List<Album> albums, IDatabaseContext session) {
+		public void FilterResults(List<Album> albums, IDatabaseContext session)
+		{
 
 			albums.RemoveAll(a => !(
 				a.Names.Any(n => n.Value.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) != -1)
@@ -30,13 +35,14 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		}
 
-		public List<Album> GetResults(IDatabaseContext session) {
+		public List<Album> GetResults(IDatabaseContext session)
+		{
 
 			var nameRes = session.Query<AlbumName>().Where(n => n.Value.Contains(term))
 				.Select(n => n.Album)
 				.Distinct()
 				.ToList();
-				
+
 			var artistRes = session.Query<ArtistName>()
 				.Where(an => an.Value.Contains(term))
 				.SelectMany(an => an.Artist.AllAlbums)
@@ -63,11 +69,13 @@ namespace VocaDb.Model.Service.Search.AlbumSearch {
 
 		}
 
-		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session) {
+		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session)
+		{
 			throw new NotImplementedException();
 		}
 
-		public IQueryable<Album> Query(IDatabaseContext session) {
+		public IQueryable<Album> Query(IDatabaseContext session)
+		{
 			throw new NotImplementedException();
 		}
 	}

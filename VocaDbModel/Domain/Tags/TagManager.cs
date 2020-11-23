@@ -3,14 +3,16 @@ using System.Linq;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.Tags {
-	
+namespace VocaDb.Model.Domain.Tags
+{
+
 	/// <summary>
 	/// Manages tags and tag usages for an entry.
 	/// There's always one tag manager per entry.
 	/// </summary>
 	/// <typeparam name="T">Type of tag usage.</typeparam>
-	public class TagManager<T> : ITagManager where T : TagUsage {
+	public class TagManager<T> : ITagManager where T : TagUsage
+	{
 
 		private ISet<T> tags = new HashSet<T>();
 
@@ -24,8 +26,10 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <summary>
 		/// Tags sorted descending by the number of votes. Cannot be null.
 		/// </summary>
-		public virtual IEnumerable<Tag> TagsByVotes {
-			get {
+		public virtual IEnumerable<Tag> TagsByVotes
+		{
+			get
+			{
 				return Usages.OrderByDescending(u => u.Count).Select(u => u.Tag);
 			}
 		}
@@ -34,9 +38,11 @@ namespace VocaDb.Model.Domain.Tags {
 		/// List of all tag usages. Cannot be null.
 		/// This property is mapped to database.
 		/// </summary>
-		public virtual ISet<T> Usages {
+		public virtual ISet<T> Usages
+		{
 			get { return tags; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				tags = value;
 			}
@@ -45,7 +51,8 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <summary>
 		/// Deletes all tag usages, updating caches.
 		/// </summary>
-		public virtual void DeleteUsages() {
+		public virtual void DeleteUsages()
+		{
 
 			var list = Usages.ToArray();
 
@@ -54,12 +61,14 @@ namespace VocaDb.Model.Domain.Tags {
 
 		}
 
-		public virtual T GetTagUsage(Tag tag) {
+		public virtual T GetTagUsage(Tag tag)
+		{
 			ParamIs.NotNull(() => tag);
 			return Usages.FirstOrDefault(t => t.Tag.Equals(tag));
 		}
 
-		public virtual bool HasTag(Tag tag) {
+		public virtual bool HasTag(Tag tag)
+		{
 
 			ParamIs.NotNull(() => tag);
 
@@ -70,13 +79,15 @@ namespace VocaDb.Model.Domain.Tags {
 		public virtual bool HasTag(int tagId) => Usages.Any(u => u.Tag.Id == tagId);
 
 		public virtual Tag[] SyncVotes(User user, Tag[] tags, ITagUsageFactory<T> tagUsageFactory,
-			bool onlyAdd = false) {
+			bool onlyAdd = false)
+		{
 
 			var actualTags = tags.Distinct().ToArray();
 			var tagUsagesDiff = CollectionHelper.Diff(Usages, actualTags, (t1, t2) => t1.Tag.Equals(t2));
 			var modifiedTags = new List<Tag>(tagUsagesDiff.Added.Length + tagUsagesDiff.Removed.Length + tagUsagesDiff.Unchanged.Length);
 
-			foreach (var newUsageTag in tagUsagesDiff.Added) {
+			foreach (var newUsageTag in tagUsagesDiff.Added)
+			{
 				var newUsage = tagUsageFactory.CreateTagUsage(newUsageTag);
 				Usages.Add(newUsage);
 				newUsage.CreateVote(user);
@@ -84,22 +95,26 @@ namespace VocaDb.Model.Domain.Tags {
 				modifiedTags.Add(newUsageTag);
 			}
 
-			if (!onlyAdd) {
-				foreach (var removedTag in tagUsagesDiff.Removed) {
+			if (!onlyAdd)
+			{
+				foreach (var removedTag in tagUsagesDiff.Removed)
+				{
 
 					removedTag.RemoveVote(user);
 
-					if (!removedTag.HasVotes) {
+					if (!removedTag.HasVotes)
+					{
 						removedTag.Tag.UsageCount--;
 						Usages.Remove(removedTag);
 					}
 
 					modifiedTags.Add(removedTag.Tag);
 
-				}				
+				}
 			}
 
-			foreach (var updated in tagUsagesDiff.Unchanged) {
+			foreach (var updated in tagUsagesDiff.Unchanged)
+			{
 
 				updated.CreateVote(user);
 				modifiedTags.Add(updated.Tag);
@@ -112,7 +127,8 @@ namespace VocaDb.Model.Domain.Tags {
 
 	}
 
-	public interface ITagManager {
+	public interface ITagManager
+	{
 
 		IEnumerable<Tag> Tags { get; }
 

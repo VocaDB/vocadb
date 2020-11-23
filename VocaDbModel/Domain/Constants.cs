@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Model.Domain {
+﻿namespace VocaDb.Model.Domain
+{
 
-	public static class Constants {
+	public static class Constants
+	{
 
 		/// <summary>
 		/// For some entry types we want to prevent users from uploading too large images.

@@ -5,19 +5,23 @@ using System.Threading.Tasks;
 using System.Web;
 using NLog;
 
-namespace VocaDb.Model.Helpers {
+namespace VocaDb.Model.Helpers
+{
 
-	public class ReCaptcha2 {
+	public class ReCaptcha2
+	{
 
 		public const string ResponseFieldName = "g-recaptcha-response";
 		private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 		private const string VerifyApi = "https://www.google.com/recaptcha/api/siteverify";
 
-		public static async Task<ValidateCaptchaResponse> ValidateAsync(HttpRequestBase request, string privateKey) {
-			
+		public static async Task<ValidateCaptchaResponse> ValidateAsync(HttpRequestBase request, string privateKey)
+		{
+
 			var userResponse = request.Form[ResponseFieldName];
 
-			if (string.IsNullOrEmpty(userResponse)) {
+			if (string.IsNullOrEmpty(userResponse))
+			{
 				log.Warn("CAPTCHA response was empty");
 				return new ValidateCaptchaResponse(false);
 			}
@@ -27,21 +31,25 @@ namespace VocaDb.Model.Helpers {
 			var requestUrl = string.Format("{0}?secret={1}&response={2}&remoteip={3}", VerifyApi, privateKey, userResponse, userIp);
 			VerifyResponse verifyResponse;
 
-			try {
+			try
+			{
 				verifyResponse = await JsonRequest.ReadObjectAsync<VerifyResponse>(requestUrl);
-			} catch (WebException x) {
+			}
+			catch (WebException x)
+			{
 				log.Error(x, "Unable to get response from ReCAPTCHA");
 				return new ValidateCaptchaResponse(false);
 			}
 
-			return new ValidateCaptchaResponse(verifyResponse.Success, 
+			return new ValidateCaptchaResponse(verifyResponse.Success,
 				userResponse,
 				verifyResponse.ErrorCodes != null ? string.Join(", ", verifyResponse.ErrorCodes) : string.Empty);
 
 		}
 
 		[DataContract]
-		public class VerifyResponse {
+		public class VerifyResponse
+		{
 
 			[DataMember(Name = "error-codes")]
 			public string[] ErrorCodes { get; set; }
@@ -53,9 +61,11 @@ namespace VocaDb.Model.Helpers {
 
 	}
 
-	public class ValidateCaptchaResponse {
+	public class ValidateCaptchaResponse
+	{
 
-		public ValidateCaptchaResponse(bool success, string userResponse = "", string errorCodes = "") {
+		public ValidateCaptchaResponse(bool success, string userResponse = "", string errorCodes = "")
+		{
 			Error = errorCodes;
 			UserResponse = userResponse;
 			Success = success;

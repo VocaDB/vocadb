@@ -1,6 +1,8 @@
-﻿namespace VocaDb.Web.Code.Highcharts {
+﻿namespace VocaDb.Web.Code.Highcharts
+{
 
-	public enum SeriesType {
+	public enum SeriesType
+	{
 
 		Area,
 

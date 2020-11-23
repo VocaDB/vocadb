@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace VocaDb.Web.Models.User {
+namespace VocaDb.Web.Models.User
+{
 
-	public class ResetPassword {
+	public class ResetPassword
+	{
 
 		[Required]
 		[Display(Name = "New password")]
