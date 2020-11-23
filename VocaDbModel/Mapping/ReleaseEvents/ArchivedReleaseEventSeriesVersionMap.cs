@@ -3,13 +3,10 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Mapping.ReleaseEvents
 {
-
 	public class ArchivedReleaseEventSeriesVersionMap : ClassMap<ArchivedReleaseEventSeriesVersion>
 	{
-
 		public ArchivedReleaseEventSeriesVersionMap()
 		{
-
 			Id(m => m.Id);
 			Table("ArchivedEventSeriesVersions");
 
@@ -27,9 +24,6 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 			{
 				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
 			});
-
 		}
-
 	}
-
 }

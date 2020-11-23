@@ -2,13 +2,11 @@ using System;
 
 namespace VocaDb.Model.Domain.Tags
 {
-
 	/// <summary>
 	/// Defines tag mapping from an external source system such as NicoNicoDouga to VocaDB.
 	/// </summary>
 	public class TagMapping : IEntryWithIntId, ITagLink
 	{
-
 		public TagMapping()
 		{
 			CreateDate = DateTime.Now;
@@ -17,13 +15,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public TagMapping(Tag tag, string sourceTag) : this()
 		{
-
 			ParamIs.NotNull(() => tag);
 			ParamIs.NotNullOrEmpty(() => sourceTag);
 
 			Tag = tag;
 			SourceTag = sourceTag;
-
 		}
 
 		private Tag tag;
@@ -68,7 +64,6 @@ namespace VocaDb.Model.Domain.Tags
 		}
 
 		public override string ToString() => $"Mapping from '{SourceTag}' to {Tag}";
-
 	}
 
 	public enum TagMappingType
@@ -87,5 +82,4 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		Suggestion = 4
 	}
-
 }

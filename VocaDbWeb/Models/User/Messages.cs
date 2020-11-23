@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Web.Models.User
 {
-
 	public class Messages
 	{
-
 		public Messages()
 		{
 			ReceiverName = string.Empty;
@@ -14,12 +12,10 @@ namespace VocaDb.Web.Models.User
 
 		public Messages(UserBaseContract user, int? selectedMessageId, string receiverName, UserInboxType inbox)
 		{
-
 			User = user;
 			ReceiverName = receiverName ?? string.Empty;
 			SelectedMessageId = selectedMessageId;
 			Inbox = inbox;
-
 		}
 
 		public UserInboxType Inbox { get; set; }
@@ -29,7 +25,5 @@ namespace VocaDb.Web.Models.User
 		public int? SelectedMessageId { get; set; }
 
 		public UserBaseContract User { get; set; }
-
 	}
-
 }

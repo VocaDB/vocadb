@@ -2,10 +2,8 @@ using System.Configuration;
 
 namespace VocaDb.Model.Utils.Config
 {
-
 	public class SiteSettingsSection : ConfigurationSection
 	{
-
 		public SiteSettingsSection()
 		{
 		}

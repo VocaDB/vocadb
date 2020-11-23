@@ -6,15 +6,12 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.DataContracts.Artists
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedArtistContract
 	{
-
 		private static void DoIfExists(ArchivedArtistVersion version, ArtistEditableFields field,
 			XmlCache<ArchivedArtistContract> xmlCache, Action<ArchivedArtistContract> func)
 		{
-
 			var versionWithField = version.GetLatestVersionWithField(field);
 
 			if (versionWithField != null && versionWithField.Data != null)
@@ -22,12 +19,10 @@ namespace VocaDb.Model.DataContracts.Artists
 				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
 				func(data);
 			}
-
 		}
 
 		public static ArchivedArtistContract GetAllProperties(ArchivedArtistVersion version)
 		{
-
 			var data = new ArchivedArtistContract();
 			var xmlCache = new XmlCache<ArchivedArtistContract>();
 			var thisVersion = xmlCache.Deserialize(version.Version, version.Data);
@@ -51,14 +46,12 @@ namespace VocaDb.Model.DataContracts.Artists
 			DoIfExists(version, ArtistEditableFields.WebLinks, xmlCache, v => data.WebLinks = v.WebLinks);
 
 			return data;
-
 		}
 
 		public ArchivedArtistContract() { }
 
 		public ArchivedArtistContract(Artist artist, ArtistDiff diff)
 		{
-
 			ParamIs.NotNull(() => artist);
 
 			ArtistType = artist.ArtistType;
@@ -74,7 +67,6 @@ namespace VocaDb.Model.DataContracts.Artists
 			ReleaseDate = artist.ReleaseDate;
 			TranslatedName = new TranslatedStringContract(artist.TranslatedName);
 			WebLinks = (diff.IncludeWebLinks ? artist.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null);
-
 		}
 
 		[DataMember]
@@ -115,7 +107,5 @@ namespace VocaDb.Model.DataContracts.Artists
 
 		[DataMember]
 		public ArchivedWebLinkContract[] WebLinks { get; set; }
-
 	}
-
 }

@@ -2,10 +2,8 @@ using VocaDb.Model.DataContracts;
 
 namespace VocaDb.Web.Models.Shared.Partials.Comment
 {
-
 	public class PrintCommentViewModel
 	{
-
 		public PrintCommentViewModel(CommentContract contract, bool allowDelete, bool alwaysAllowDelete = false, int maxLength = int.MaxValue)
 		{
 			Contract = contract;
@@ -21,7 +19,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Comment
 		public bool AlwaysAllowDelete { get; set; }
 
 		public int MaxLength { get; set; }
-
 	}
-
 }

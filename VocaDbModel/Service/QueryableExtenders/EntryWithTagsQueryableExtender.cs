@@ -4,51 +4,42 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.Service.QueryableExtenders
 {
-
 	public static class EntryWithTagsQueryableExtender
 	{
-
 		public static IMaybeOrderedQueryable<TEntry> OrderByTagUsage<TEntry, TTagLink>(this IQueryable<TEntry> query, int tagId)
 			where TEntry : IEntryWithTags<TTagLink>
 			where TTagLink : TagUsage
 		{
-
 			if (tagId != 0)
 			{
 				return MaybeOrderedQueryable.Create(query.OrderByDescending(e => e.Tags.Usages.Where(u => u.Tag.Id == tagId).Sum(u => u.Count)));
 			}
 
 			return MaybeOrderedQueryable.Create(query);
-
 		}
 
 		public static IQueryable<TEntry> WhereHasTag<TEntry, TTagLink>(this IQueryable<TEntry> query, string tagName)
 			where TEntry : IEntryWithTags<TTagLink> where TTagLink : TagUsage
 		{
-
 			if (string.IsNullOrEmpty(tagName))
 				return query;
 
 			return query.Where(s => s.Tags.Usages.Any(t => t.Tag.Names.Names.Any(n => n.Value == tagName)));
-
 		}
 
 		public static IQueryable<TEntry> WhereHasTags<TEntry, TTagLink>(this IQueryable<TEntry> query, string[] tagNames)
 			where TEntry : IEntryWithTags<TTagLink> where TTagLink : TagUsage
 		{
-
 			if (tagNames == null || !tagNames.Any())
 				return query;
 
 			return tagNames.Aggregate(query, WhereHasTag<TEntry, TTagLink>);
-
 		}
 
 		public static IQueryable<TEntry> WhereHasTag<TEntry, TTagLink>(this IQueryable<TEntry> query, int tagId, bool childTags = false)
 			where TEntry : IEntryWithTags<TTagLink>
 			where TTagLink : TagUsage
 		{
-
 			if (tagId == 0)
 				return query;
 
@@ -56,7 +47,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 				return query.Where(s => s.Tags.Usages.Any(a => a.Tag.Id == tagId || a.Tag.Parent.Id == tagId || a.Tag.Parent.Parent.Id == tagId || a.Tag.Parent.Parent.Parent.Id == tagId));
 			else
 				return query.Where(s => s.Tags.Usages.Any(a => a.Tag.Id == tagId));
-
 		}
 
 		/// <summary>
@@ -72,14 +62,10 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			where TEntry : IEntryWithTags<TTagLink>
 			where TTagLink : TagUsage
 		{
-
 			if (tagIds == null || !tagIds.Any())
 				return query;
 
 			return tagIds.Aggregate(query, (q, t) => WhereHasTag<TEntry, TTagLink>(q, t, childTags));
-
 		}
-
 	}
-
 }

@@ -6,10 +6,8 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Web.Models.Search
 {
-
 	public class SearchIndexViewModel
 	{
-
 		public SearchIndexViewModel()
 			: this(EntryType.Undefined) { }
 
@@ -71,8 +69,5 @@ namespace VocaDb.Web.Models.Search
 		public string Sort { get; set; }
 
 		public string ViewMode { get; set; }
-
-
 	}
-
 }

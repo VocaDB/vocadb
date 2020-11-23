@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.Domain.ReleaseEvents
 {
-
 	public class ArtistForEvent : IEntryWithIntId, IArtistLink
 	{
-
 		private ReleaseEvent releaseEvent;
 		private string name;
 
@@ -42,6 +40,5 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		{
 			ReleaseEvent.AllArtists.Remove(this);
 		}
-
 	}
 }

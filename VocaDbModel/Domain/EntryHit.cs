@@ -3,10 +3,8 @@ using System;
 
 namespace VocaDb.Model.Domain
 {
-
 	public abstract class EntryHit : IEntryWithLongId
 	{
-
 		private int agent;
 
 		protected EntryHit() { }
@@ -28,7 +26,6 @@ namespace VocaDb.Model.Domain
 		public virtual DateTime Date { get; set; }
 
 		public virtual long Id { get; set; }
-
 	}
 
 	public class GenericEntryHit<TEntry> : EntryHit where TEntry : class
@@ -55,7 +52,5 @@ namespace VocaDb.Model.Domain
 		{
 			return "Hit for " + Entry + " by " + Agent;
 		}
-
 	}
-
 }

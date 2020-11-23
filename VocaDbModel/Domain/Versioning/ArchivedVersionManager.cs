@@ -5,16 +5,13 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Domain.Versioning
 {
-
 	public interface IArchivedVersionsManager
 	{
-
 		IEnumerable<ArchivedObjectVersion> VersionsBase { get; }
 
 		ArchivedObjectVersion GetLatestVersion();
 
 		bool HasAny();
-
 	}
 
 	public class ArchivedVersionManager<TVersion, TField> :
@@ -22,7 +19,6 @@ namespace VocaDb.Model.Domain.Versioning
 		where TVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<TField>
 		where TField : struct, IConvertible
 	{
-
 		private IList<TVersion> archivedVersions = new List<TVersion>();
 
 		public virtual IList<TVersion> Versions
@@ -39,12 +35,10 @@ namespace VocaDb.Model.Domain.Versioning
 
 		public virtual TVersion Add(TVersion newVersion)
 		{
-
 			ParamIs.NotNull(() => newVersion);
 
 			Versions.Add(newVersion);
 			return newVersion;
-
 		}
 
 		public virtual void Clear()
@@ -59,14 +53,12 @@ namespace VocaDb.Model.Domain.Versioning
 
 		public virtual TVersion GetLatestVersion()
 		{
-
 			// Sort first by version number because it's more accurate.
 			// Also need to sort by creation date because version number is not available for all entry types.
 			return Versions
 				.OrderByDescending(m => m.Version)
 				.ThenByDescending(m => m.Created)
 				.FirstOrDefault();
-
 		}
 
 		/// <summary>
@@ -82,12 +74,10 @@ namespace VocaDb.Model.Domain.Versioning
 		/// </remarks>
 		public virtual TVersion GetLatestVersionWithField(TField field, int lastVersion)
 		{
-
 			return Versions
 				.Where(a => a.Version <= lastVersion && a.IsIncluded(field))
 				.OrderByDescending(m => m.Version)
 				.FirstOrDefault();
-
 		}
 
 		/// <summary>
@@ -97,28 +87,22 @@ namespace VocaDb.Model.Domain.Versioning
 		/// <returns>Versions whose number is lower than the compared version. Cannot be null.</returns>
 		public virtual IEnumerable<TVersion> GetPreviousVersions(TVersion beforeVer, IUserPermissionContext permissionContext)
 		{
-
 			if (beforeVer == null)
 				return Versions;
 
 			return Versions
 				.Where(a => a.Version < beforeVer.Version)
 				.Where(v => permissionContext.HasPermission(PermissionToken.ViewHiddenRevisions) || !v.Hidden);
-
 		}
 
 		public virtual TVersion GetVersion(int ver)
 		{
-
 			return Versions.FirstOrDefault(v => v.Version == ver);
-
 		}
 
 		public virtual bool HasAny()
 		{
 			return Versions.Any();
 		}
-
 	}
-
 }

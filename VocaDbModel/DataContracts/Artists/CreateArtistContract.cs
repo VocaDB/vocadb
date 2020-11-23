@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.DataContracts.Artists
 {
-
 	public class CreateArtistContract
 	{
-
 		public ArtistType ArtistType { get; set; }
 
 		public string Description { get; set; }
@@ -17,7 +15,5 @@ namespace VocaDb.Model.DataContracts.Artists
 		public EntryPictureFileContract PictureData { get; set; }
 
 		public WebLinkContract WebLink { get; set; }
-
 	}
-
 }

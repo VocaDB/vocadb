@@ -6,10 +6,8 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
-
 	public class ReleaseEventForEditContract : ReleaseEventDetailsContract
 	{
-
 		public ReleaseEventForEditContract()
 		{
 			Names = new LocalizedStringWithIdContract[0];
@@ -18,13 +16,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		public ReleaseEventForEditContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IUserIconFactory userIconFactory) :
 			base(releaseEvent, languagePreference, userContext, userIconFactory)
 		{
-
 			Names = releaseEvent.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
-
 		}
 
 		public LocalizedStringWithIdContract[] Names { get; set; }
-
 	}
-
 }

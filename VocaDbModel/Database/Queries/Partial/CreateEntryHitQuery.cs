@@ -10,16 +10,13 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Database.Queries.Partial
 {
-
 	public class CreateEntryHitQuery
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		public void CreateHit<TEntry, THit>(IDatabaseContext ctx, TEntry entry, string hostname, IUserPermissionContext userContext, Func<TEntry, int, THit> factory)
 			where TEntry : class, IEntryBase where THit : GenericEntryHit<TEntry>
 		{
-
 			if (!userContext.IsLoggedIn && string.IsNullOrEmpty(hostname))
 				return;
 
@@ -30,7 +27,6 @@ namespace VocaDb.Model.Database.Queries.Partial
 
 			using (var tx = ctx.BeginTransaction(IsolationLevel.ReadUncommitted))
 			{
-
 				var entryId = entry.Id;
 				var isHit = ctx.Query<THit>().Any(h => h.Entry.Id == entryId && h.Agent == agentNum);
 
@@ -56,12 +52,8 @@ namespace VocaDb.Model.Database.Queries.Partial
 					{
 						log.Warn(x, "Unable to save hit for {0}", entry);
 					}
-
 				}
-
 			}
-
 		}
 	}
-
 }

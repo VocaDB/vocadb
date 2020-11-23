@@ -36,13 +36,10 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service
 {
-
 	public class OtherService : ServiceBase
 	{
-
 		class EntryComparer : IEqualityComparer<IEntryWithNames>
 		{
-
 			public bool Equals(IEntryWithNames x, IEntryWithNames y)
 			{
 				return x.EntryType == y.EntryType && x.Id == y.Id;
@@ -52,7 +49,6 @@ namespace VocaDb.Model.Service
 			{
 				return obj.Id;
 			}
-
 		}
 
 		private readonly ObjectCache cache;
@@ -67,7 +63,6 @@ namespace VocaDb.Model.Service
 
 		private AlbumForApiContract[] GetTopAlbums(ISession session, int[] recentIds, ContentLanguagePreference languagePreference, AlbumOptionalFields fields)
 		{
-
 			var minRatings = 2; // Minimum number of ratings
 			var sampleSize = 300; // Get this many popular albums to be rotated when cache expires
 			var albumCount = 7; // This many albums are shown, the albums are rotated when cache expires
@@ -105,15 +100,12 @@ namespace VocaDb.Model.Service
 				.ToArray();
 
 			return popularAlbumContracts;
-
 		}
 
 		private AlbumForApiContract[] GetTopAlbumsCached(ISession session, int[] recentIds, ContentLanguagePreference languagePreference, AlbumOptionalFields fields)
 		{
-
 			var cacheKey = $"OtherService.PopularAlbums.{languagePreference}";
 			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromHours(24)), () => GetTopAlbums(session, recentIds, languagePreference, fields));
-
 		}
 
 		public AlbumForApiContract[] GetRecentAlbums(ContentLanguagePreference languagePreference, AlbumOptionalFields fields)
@@ -123,7 +115,6 @@ namespace VocaDb.Model.Service
 
 		private AlbumForApiContract[] GetRecentAlbums(ISession session, ContentLanguagePreference languagePreference, AlbumOptionalFields fields)
 		{
-
 			var cacheKey = $"OtherService.RecentAlbums.{languagePreference}";
 			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromHours(1)), () =>
 			{
@@ -153,17 +144,14 @@ namespace VocaDb.Model.Service
 
 				return newAlbumContracts;
 			});
-
 		}
 
 		private ReleaseEventForApiContract[] GetRecentEvents(ISession session)
 		{
-
 			var count = 3;
 			var cacheKey = string.Format("OtherService.RecentEvents.{0}", LanguagePreference);
 			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(24), () =>
 			{
-
 				var minDate = DateTime.Now - TimeSpan.FromDays(2);
 				var maxDate = DateTime.Now + TimeSpan.FromDays(14);
 
@@ -179,40 +167,31 @@ namespace VocaDb.Model.Service
 					thumbPersister));
 
 				return entryContracts.ToArray();
-
 			});
-
 		}
 
 		private Task<EntryWithCommentsContract[]> GetRecentCommentsAsync(ISession session)
 		{
-
 			var cacheKey = $"OtherService.RecentComments.{LanguagePreference}";
 			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromMinutes(5)), async () =>
 			{
-
 				var item = await GetRecentCommentsAsync(session, 9);
 				return item;
-
 			});
-
 		}
 
 		public async Task<SongForApiContract[]> GetHighlightedSongs(ContentLanguagePreference languagePreference, SongOptionalFields fields)
 		{
-
 			return await HandleQueryAsync(async session =>
 			{
 				return (await GetHighlightedSongs(session))
 					.Select(s => new SongForApiContract(s, languagePreference, fields))
 					.ToArray();
 			});
-
 		}
 
 		private async Task<Song[]> GetHighlightedSongs(ISession session)
 		{
-
 			var cacheKey = "OtherService.HighlightedSongs";
 			var cachedSongIds = (int[])cache.Get(cacheKey);
 
@@ -263,13 +242,10 @@ namespace VocaDb.Model.Service
 			// If there's enough songs for cutoff date, return them, otherwise load more songs.
 			if (recentSongs.Length >= songCount)
 			{
-
 				songs = recentSongs;
-
 			}
 			else
 			{
-
 				var moreSongs =
 					session.Query<Song>()
 					.WhereHasArtist(AppConfig.FilteredArtistId)
@@ -285,39 +261,32 @@ namespace VocaDb.Model.Service
 					.Concat(moreSongs)
 					.OrderByDescending(s => s.RatingScore)
 					.ToArray();
-
 			}
 
 			var allSongIds = songs.Select(s => s.Id).ToArray();
 			cache.Add(cacheKey, allSongIds, DateTime.Now + TimeSpan.FromMinutes(15));
 
 			return songs;
-
 		}
 
 		private IEnumerable<EntryWithCommentsContract> CreateEntryWithCommentsContract<T>(IEnumerable<T> comments, Func<T, EntryForApiContract> entryContractFac)
 			where T : Comment
 		{
-
 			return comments.GroupBy(e => e.Entry, new EntryComparer()).Select(e => new EntryWithCommentsContract(entryContractFac(e.First()), e.Select(c => new CommentContract(c)).ToArray()));
-
 		}
 
 		private async Task<List<Comment>> GetComments<TEntry, TComment>(ISession session, int maxComments, bool checkDeleted) where TComment : GenericComment<TEntry> where TEntry : class, IEntryWithNames
 		{
-
 			var q = session.Query<TComment>();
 
 			if (checkDeleted)
 				q = q.Where(c => !c.EntryForComment.Deleted);
 
 			return await q.OrderByDescending(c => c.Created).Take(maxComments).Cast<Comment>().VdbToListAsync();
-
 		}
 
 		private async Task<EntryWithCommentsContract[]> GetRecentCommentsAsync(ISession session, int maxComments)
 		{
-
 			var albumComments = await GetComments<Album, AlbumComment>(session, maxComments, true);
 			var artistComments = await GetComments<Artist, ArtistComment>(session, maxComments, true);
 			var songComments = await GetComments<Song, SongComment>(session, maxComments, true);
@@ -355,31 +324,25 @@ namespace VocaDb.Model.Service
 				.ToArray();
 
 			return contracts;
-
 		}
 
 		public OtherService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
 			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory, ObjectCache cache, IAggregatedEntryImageUrlFactory thumbPersister)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
-
 			this.userIconFactory = userIconFactory;
 			this.entryForApiContractFactory = entryForApiContractFactory;
 			this.cache = cache;
 			this.thumbPersister = thumbPersister;
-
 		}
 
 		public void AuditLog(string doingWhat, string who, AuditLogCategory category = AuditLogCategory.Unspecified)
 		{
-
 			HandleTransaction(session => AuditLog(doingWhat, session, who, category));
-
 		}
 
 		public string[] FindNames(SearchTextQuery textQuery, int maxResults)
 		{
-
 			if (textQuery.IsEmpty)
 				return new string[] { };
 
@@ -388,7 +351,6 @@ namespace VocaDb.Model.Service
 
 			return HandleQuery(session =>
 			{
-
 				var artistNames = session.Query<ArtistName>()
 					.WhereArtistNameIs(artistTextQuery)
 					.Where(a => !a.Artist.Deleted)
@@ -443,19 +405,15 @@ namespace VocaDb.Model.Service
 					.ToArray();
 
 				return NameHelper.MoveExactNamesToTop(allNames, textQuery.Query);
-
 			});
-
 		}
 
 		public async Task<FrontPageContract> GetFrontPageContent()
 		{
-
 			const int maxActivityEntries = 15;
 
 			return await HandleQueryAsync(async session =>
 			{
-
 				var activityEntries = (await session.Query<ActivityEntry>()
 					.OrderByDescending(a => a.CreateDate)
 					.Take(maxActivityEntries)
@@ -478,14 +436,11 @@ namespace VocaDb.Model.Service
 				return new FrontPageContract(activityEntries, newAlbums, recentEvents, recentComments, topAlbums, newSongs,
 					firstSongVote != null ? firstSongVote.Rating : SongVoteRating.Nothing, PermissionContext.LanguagePreference,
 					userIconFactory, PermissionContext, entryForApiContractFactory);
-
 			});
-
 		}
 
 		public IPRule[] GetIPRules() => HandleQuery(session => session.Query<IPRule>().ToArray());
 
 		public Task<EntryWithCommentsContract[]> GetRecentComments() => HandleQueryAsync(session => GetRecentCommentsAsync(session, 50));
-
 	}
 }

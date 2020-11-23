@@ -8,18 +8,15 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.Queries
 {
-
 	/// <summary>
 	/// Finds the previous and next main albums for release date for a particular album.
 	/// </summary>
 	public class PreviousAndNextAlbumsQuery
 	{
-
 		private readonly IDatabaseContext<Album> ctx;
 
 		private IQueryable<Album> AddReleaseRestrictionAfter(IQueryable<Album> criteria, DateTime date)
 		{
-
 			return criteria.Where(a => a.OriginalRelease.ReleaseDate.Year != null
 				&& a.OriginalRelease.ReleaseDate.Month != null
 				&& a.OriginalRelease.ReleaseDate.Day != null
@@ -28,12 +25,10 @@ namespace VocaDb.Model.Service.Queries
 				|| (a.OriginalRelease.ReleaseDate.Year == date.Year
 					&& a.OriginalRelease.ReleaseDate.Month == date.Month
 					&& a.OriginalRelease.ReleaseDate.Day > date.Day)));
-
 		}
 
 		private IQueryable<Album> AddReleaseRestrictionBefore(IQueryable<Album> criteria, DateTime date)
 		{
-
 			return criteria.Where(a => a.OriginalRelease.ReleaseDate.Year != null
 				&& a.OriginalRelease.ReleaseDate.Month != null
 				&& a.OriginalRelease.ReleaseDate.Day != null
@@ -42,12 +37,10 @@ namespace VocaDb.Model.Service.Queries
 				|| (a.OriginalRelease.ReleaseDate.Year == date.Year
 					&& a.OriginalRelease.ReleaseDate.Month == date.Month
 					&& a.OriginalRelease.ReleaseDate.Day <= date.Day)));
-
 		}
 
 		private IQueryable<Album> GetMainAlbumQuery(Artist artist, Album album)
 		{
-
 			var albumId = album.Id;
 			var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;
 
@@ -56,17 +49,14 @@ namespace VocaDb.Model.Service.Queries
 				&& ((a.Roles == ArtistRoles.Default) || ((a.Roles & producerRoles) != ArtistRoles.Default))
 				&& a.Album.ArtistString.Default != ArtistHelper.VariousArtists)
 				.Select(a => a.Album);
-
 		}
 
 		private Artist[] GetMainArtists(Album album, IEnumerable<IArtistLinkWithRoles> creditableArtists)
 		{
-
 			if (album.IsVariousArtists)
 				return null;
 
 			return ArtistHelper.GetProducers(creditableArtists, AlbumHelper.GetContentFocus(album.DiscType)).Select(a => a.Artist).ToArray();
-
 		}
 
 		public PreviousAndNextAlbumsQuery(IDatabaseContext<Album> ctx)
@@ -76,7 +66,6 @@ namespace VocaDb.Model.Service.Queries
 
 		public Album[] GetRelatedAlbums(Album album)
 		{
-
 			var creditableArtists = album.Artists.Where(a => a.Artist != null && !a.IsSupport).ToArray();
 			Artist mainArtist = null;
 			var mainArtists = GetMainArtists(album, creditableArtists);
@@ -86,12 +75,10 @@ namespace VocaDb.Model.Service.Queries
 
 			if (mainArtist == null)
 			{
-
 				mainArtists = creditableArtists.Where(a => ArtistHelper.GetCategories(a).HasFlag(ArtistCategories.Circle)).Select(c => c.Artist).ToArray();
 
 				if (mainArtists.Length == 1)
 					mainArtist = mainArtists.First();
-
 			}
 
 			if (mainArtist == null)
@@ -99,7 +86,6 @@ namespace VocaDb.Model.Service.Queries
 
 			if (album.OriginalReleaseDate.IsEmpty)
 			{
-
 				var mainAlbumsQuery = GetMainAlbumQuery(mainArtist, album)
 					.OrderByDescending(a => a.OriginalRelease.ReleaseDate.Year)
 					.ThenByDescending(a => a.OriginalRelease.ReleaseDate.Month)
@@ -107,11 +93,9 @@ namespace VocaDb.Model.Service.Queries
 					.Take(2);
 
 				return mainAlbumsQuery.ToArray();
-
 			}
 			else
 			{
-
 				var releaseDate = album.OriginalReleaseDate.ToDateTime();
 
 				var previousAlbum = AddReleaseRestrictionBefore(GetMainAlbumQuery(mainArtist, album), releaseDate)
@@ -127,11 +111,7 @@ namespace VocaDb.Model.Service.Queries
 					.FirstOrDefault();
 
 				return new[] { previousAlbum, nextAlbum }.Where(a => a != null).ToArray();
-
 			}
-
 		}
-
 	}
-
 }

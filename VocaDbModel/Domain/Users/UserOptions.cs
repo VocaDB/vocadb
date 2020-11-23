@@ -2,14 +2,12 @@ using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.Domain.Users
 {
-
 	/// <summary>
 	/// Various additional properties for user that are not needed in most cases.
 	/// For example, for authentication and user profile.
 	/// </summary>
 	public class UserOptions : IDatabaseObject
 	{
-
 		private string aboutMe;
 		private string albumFormatString;
 		private string lastLoginAddress;
@@ -23,7 +21,6 @@ namespace VocaDb.Model.Domain.Users
 
 		public UserOptions()
 		{
-
 			LastLoginAddress
 				= AboutMe
 				= AlbumFormatString
@@ -39,15 +36,12 @@ namespace VocaDb.Model.Domain.Users
 			ShowChatbox = true;
 			EmailVerified = false;
 			UnreadNotificationsToKeep = 10;
-
 		}
 
 		public UserOptions(User user)
 			: this()
 		{
-
 			User = user;
-
 		}
 
 		public virtual string AboutMe
@@ -185,6 +179,5 @@ namespace VocaDb.Model.Domain.Users
 				user = value;
 			}
 		}
-
 	}
 }

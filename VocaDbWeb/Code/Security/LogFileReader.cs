@@ -5,13 +5,10 @@ using NLog.Targets;
 
 namespace VocaDb.Web.Code.Security
 {
-
 	public class LogFileReader
 	{
-
 		public string GetLatestLogFileContents()
 		{
-
 			var fileTarget = (FileTarget)LogManager.Configuration.ConfiguredNamedTargets.FirstOrDefault(t => t is FileTarget);
 
 			if (fileTarget == null)
@@ -25,9 +22,6 @@ namespace VocaDb.Web.Code.Security
 				return string.Empty;
 
 			return File.ReadAllText(latestFile);
-
 		}
-
 	}
-
 }

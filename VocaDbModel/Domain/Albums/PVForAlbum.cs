@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Domain.Albums
 {
-
 	public class PVForAlbum : PV, IEntryWithIntId
 	{
-
 		private Album album;
 
 		public PVForAlbum() { }
@@ -14,9 +12,7 @@ namespace VocaDb.Model.Domain.Albums
 		public PVForAlbum(Album album, PVContract contract)
 			: base(contract)
 		{
-
 			Album = album;
-
 		}
 
 		public virtual Album Album
@@ -31,7 +27,6 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual bool Equals(PVForAlbum another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -42,7 +37,6 @@ namespace VocaDb.Model.Domain.Albums
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -57,17 +51,12 @@ namespace VocaDb.Model.Domain.Albums
 
 		public override void OnDelete()
 		{
-
 			Album.PVs.Remove(this);
-
 		}
 
 		public override string ToString()
 		{
 			return string.Format("PV '{0}' [{1}] for {2}", PVId, Id, Album);
 		}
-
-
 	}
-
 }

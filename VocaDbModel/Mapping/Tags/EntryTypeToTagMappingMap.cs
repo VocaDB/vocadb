@@ -3,7 +3,6 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.Mapping.Tags
 {
-
 	public class EntryTypeToTagMappingMap : ClassMap<EntryTypeToTagMapping>
 	{
 		public EntryTypeToTagMappingMap()

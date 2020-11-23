@@ -5,10 +5,8 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Search.Tags
 {
-
 	public class TagQueryParams
 	{
-
 		public TagQueryParams() { }
 
 		public TagQueryParams(CommonSearchParams common, PagingProperties paging)
@@ -30,7 +28,5 @@ namespace VocaDb.Model.Service.Search.Tags
 		public TagSortRule SortRule { get; set; } = TagSortRule.Name;
 
 		public TagTargetTypes Target { get; set; } = TagTargetTypes.All;
-
 	}
-
 }

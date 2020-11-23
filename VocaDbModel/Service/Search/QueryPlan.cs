@@ -6,10 +6,8 @@ using System.Text;
 
 namespace VocaDb.Model.Service.Search
 {
-
 	public class QueryPlan<TEntry> : IEnumerable<ISearchFilter<TEntry>>
 	{
-
 		private readonly List<ISearchFilter<TEntry>> filters;
 
 		public QueryPlan(IEnumerable<ISearchFilter<TEntry>> filters)
@@ -27,5 +25,4 @@ namespace VocaDb.Model.Service.Search
 			return GetEnumerator();
 		}
 	}
-
 }

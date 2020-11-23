@@ -1,22 +1,18 @@
 namespace VocaDb.Model.Domain.Albums
 {
-
 	/// <summary>
 	/// Represents a combination of disc number and track number,
 	/// uniquely identifying a track position in an album.
 	/// </summary>
 	public readonly struct TrackIndex
 	{
-
 		public static TrackIndex Empty => new TrackIndex(0, 0);
 
 		public TrackIndex(int discNum, int trackNum)
 			: this()
 		{
-
 			this.DiscNumber = discNum;
 			this.TrackNumber = trackNum;
-
 		}
 
 		public int DiscNumber { get; }
@@ -48,5 +44,4 @@ namespace VocaDb.Model.Domain.Albums
 
 		public static bool operator !=(TrackIndex left, TrackIndex right) => !left.Equals(right);
 	}
-
 }

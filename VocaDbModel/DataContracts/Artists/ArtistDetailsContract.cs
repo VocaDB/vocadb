@@ -15,18 +15,15 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Artists
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArtistDetailsContract : ArtistContract
 	{
-
 		public ArtistDetailsContract() { }
 
 		public ArtistDetailsContract(Artist artist, ContentLanguagePreference languagePreference, IUserPermissionContext userContext,
 			IAggregatedEntryImageUrlFactory imageStore, Tag artistTypeTag = null)
 			: base(artist, languagePreference)
 		{
-
 			AllNames = string.Join(", ", artist.AllNames.Where(n => n != Name));
 			ArtistTypeTag = artistTypeTag != null ? new TagBaseContract(artistTypeTag, languagePreference) : null;
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
@@ -51,7 +48,6 @@ namespace VocaDb.Model.DataContracts.Artists
 
 			if (artist.CanHaveChildVoicebanks)
 			{
-
 				var children = artist.ChildVoicebanks
 					.Where(c => !c.Deleted)
 					.Select(c => new ArtistContract(c, languagePreference))
@@ -63,7 +59,6 @@ namespace VocaDb.Model.DataContracts.Artists
 					.OrderBy(c => c.ReleaseDate)
 					.Concat(children.Where(c => !c.ReleaseDate.HasValue))
 					.ToArray();
-
 			}
 			else
 			{
@@ -94,7 +89,6 @@ namespace VocaDb.Model.DataContracts.Artists
 
 			Voicebanks = artist.ArtistLinksOfType(ArtistLinkType.VoiceProvider, LinkDirection.OneToMany)
 				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
-
 		}
 
 		[DataMember]
@@ -213,25 +207,21 @@ namespace VocaDb.Model.DataContracts.Artists
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }
-
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class PersonalArtistStatsContract
 	{
-
 		/// <summary>
 		/// Number of times logged user has rated songs by this artist.
 		/// </summary>
 		[DataMember]
 		public int SongRatingCount { get; set; }
-
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SharedArtistStatsContract
 	{
-
 		[DataMember]
 		public int AlbumCount { get; set; }
 
@@ -255,7 +245,5 @@ namespace VocaDb.Model.DataContracts.Artists
 		/// </summary>
 		[DataMember]
 		public int RatedSongCount { get; set; }
-
 	}
-
 }

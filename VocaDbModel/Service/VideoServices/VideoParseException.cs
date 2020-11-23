@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public class VideoParseException : Exception
 	{
-
 		public VideoParseException() { }
 
 		public VideoParseException(string message)
@@ -13,7 +11,5 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public VideoParseException(string message, Exception inner)
 			: base(message, inner) { }
-
 	}
-
 }

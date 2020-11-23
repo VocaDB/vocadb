@@ -9,7 +9,6 @@ namespace VocaDb.Web.Controllers
 {
 	public class HelpController : ControllerBase
 	{
-
 		private readonly VdbConfigManager config;
 		private readonly TagQueries tagQueries;
 
@@ -24,7 +23,6 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Index()
 		{
-
 			if (!string.IsNullOrEmpty(AppConfig.ExternalHelpPath))
 				return View("External");
 
@@ -40,8 +38,6 @@ namespace VocaDb.Web.Controllers
 				default:
 					return View();
 			}
-
 		}
-
 	}
 }

@@ -8,15 +8,11 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	public class FakeAuditLogger : IAuditLogger
 	{
-
 		private string GetAuditLogMessage(string doingWhat, string who)
 		{
-
 			return string.Format("'{0}' {1}", who, doingWhat);
-
 		}
 
 		public void AuditLog(string doingWhat, AgentLoginData who, AuditLogCategory category = AuditLogCategory.Unspecified)
@@ -50,6 +46,5 @@ namespace VocaDb.Tests.TestSupport
 			AuditLog(doingWhat, user, category, entryId);
 			return Task.CompletedTask;
 		}
-
 	}
 }

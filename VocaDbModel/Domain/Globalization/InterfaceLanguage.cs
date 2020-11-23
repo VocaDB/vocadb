@@ -5,10 +5,8 @@ using System.Globalization;
 
 namespace VocaDb.Model.Domain.Globalization
 {
-
 	public static class InterfaceLanguage
 	{
-
 		private static readonly ImmutableHashSet<string> twoLetterLanguageCodes;
 
 		static InterfaceLanguage()
@@ -45,6 +43,5 @@ namespace VocaDb.Model.Domain.Globalization
 		};
 
 		public static CultureCollection UserLanguageCultures => new CultureCollection(UserLanguageCodes);
-
 	}
 }

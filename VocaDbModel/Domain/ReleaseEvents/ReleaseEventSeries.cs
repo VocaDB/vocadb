@@ -12,13 +12,11 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.ReleaseEvents
 {
-
 	public class ReleaseEventSeries :
 		IEntryWithNames<EventSeriesName>, IEntryWithVersions<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>,
 		IEntryBase, IEquatable<ReleaseEventSeries>, IWebLinkFactory<ReleaseEventSeriesWebLink>, IEntryImageInformation, IEntryWithStatus,
 		IEntryWithTags<EventSeriesTagUsage>, INameFactory<EventSeriesName>
 	{
-
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb | ImageSizes.TinyThumb;
 
 		string IEntryBase.DefaultName => TranslatedName.Default;
@@ -46,7 +44,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		public ReleaseEventSeries(ContentLanguageSelection defaultLanguage, ICollection<ILocalizedString> names, string description)
 			: this()
 		{
-
 			ParamIs.NotNull(() => names);
 
 			if (!names.Any())
@@ -59,7 +56,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 			foreach (var a in names)
 				CreateName(a);
-
 		}
 
 		public virtual IList<ReleaseEvent> AllEvents
@@ -158,30 +154,25 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual EventSeriesName CreateName(ILocalizedString localizedString)
 		{
-
 			ParamIs.NotNull(() => localizedString);
 
 			var name = new EventSeriesName(this, localizedString);
 			Names.Add(name);
 
 			return name;
-
 		}
 
 		public virtual ArchivedReleaseEventSeriesVersion CreateArchivedVersion(XDocument data, ReleaseEventSeriesDiff diff, AgentLoginData author, EntryEditEvent reason, string notes)
 		{
-
 			var archived = new ArchivedReleaseEventSeriesVersion(this, data, diff, author, reason, notes);
 			ArchivedVersionsManager.Add(archived);
 			Version++;
 
 			return archived;
-
 		}
 
 		public virtual ReleaseEventSeriesWebLink CreateWebLink(string description, string url, WebLinkCategory category)
 		{
-
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
 
@@ -189,12 +180,10 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			WebLinks.Add(link);
 
 			return link;
-
 		}
 
 		public virtual bool Equals(ReleaseEventSeries another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -205,7 +194,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -220,7 +208,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual string GetEventName(int number, string suffix, string name)
 		{
-
 			if (string.IsNullOrEmpty(name))
 				return string.Empty;
 
@@ -232,14 +219,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			{
 				return string.Format("{0} {1} {2}", name, number, suffix);
 			}
-
 		}
 
 		public override string ToString()
 		{
 			return string.Format("release event series '{0}' [{1}]", TranslatedName.Default, Id);
 		}
-
 	}
-
 }

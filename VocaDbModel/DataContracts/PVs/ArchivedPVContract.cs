@@ -5,11 +5,9 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.PVs
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedPVContract
 	{
-
 		public ArchivedPVContract()
 		{
 			Author = ThumbUrl = string.Empty;
@@ -18,7 +16,6 @@ namespace VocaDb.Model.DataContracts.PVs
 		public ArchivedPVContract(PV pv)
 			: this()
 		{
-
 			ParamIs.NotNull(() => pv);
 
 			Author = pv.Author;
@@ -27,18 +24,15 @@ namespace VocaDb.Model.DataContracts.PVs
 			PVId = pv.PVId;
 			Service = pv.Service;
 			PVType = pv.PVType;
-
 		}
 
 		public ArchivedPVContract(PVForSong pv)
 			: this((PV)pv)
 		{
-
 			Disabled = pv.Disabled;
 			Length = pv.Length;
 			PublishDate = pv.PublishDate;
 			ThumbUrl = pv.ThumbUrl;
-
 		}
 
 		[DataMember]
@@ -70,7 +64,5 @@ namespace VocaDb.Model.DataContracts.PVs
 
 		[DataMember]
 		public string ThumbUrl { get; set; }
-
 	}
-
 }

@@ -9,10 +9,8 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public class YoutubeParser : IVideoServiceParser
 	{
-
 		private YoutubeService service;
 
 		public YoutubeParser()
@@ -22,7 +20,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 		private int? GetLength(YoutubeVideoItem video)
 		{
-
 			if (video.ContentDetails == null || string.IsNullOrEmpty(video.ContentDetails.Duration))
 				return null;
 
@@ -38,7 +35,6 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 
 			return (int?)timespan.TotalSeconds;
-
 		}
 
 		private DateTime? GetPublishDate(YoutubeVideoItem video)
@@ -48,7 +44,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 		private VideoTitleParseResult GetTitle(YoutubeVideoResponse result)
 		{
-
 			if (!result.Items.Any())
 			{
 				return VideoTitleParseResult.Empty;
@@ -62,12 +57,10 @@ namespace VocaDb.Model.Service.VideoServices
 			var publishDate = GetPublishDate(video);
 
 			return VideoTitleParseResult.CreateSuccess(video.Snippet.Title, author, authorId, thumbUrl, length, uploadDate: publishDate);
-
 		}
 
 		public async Task<VideoTitleParseResult> GetTitleAsync(string id)
 		{
-
 			YoutubeVideoResponse result;
 			try
 			{
@@ -79,9 +72,6 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 
 			return GetTitle(result);
-
 		}
-
 	}
-
 }

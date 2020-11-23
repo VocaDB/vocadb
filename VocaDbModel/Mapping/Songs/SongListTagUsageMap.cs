@@ -3,13 +3,10 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.Mapping.Songs
 {
-
 	public class SongListTagUsageMap : ClassMap<SongListTagUsage>
 	{
-
 		public SongListTagUsageMap()
 		{
-
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
@@ -19,9 +16,6 @@ namespace VocaDb.Model.Mapping.Songs
 			References(m => m.Entry).Column("[SongList]").Not.Nullable();
 			References(m => m.Tag).Not.Nullable();
 			HasMany(m => m.Votes).KeyColumn("[Usage]").Inverse().Cascade.AllDeleteOrphan();
-
 		}
-
 	}
-
 }

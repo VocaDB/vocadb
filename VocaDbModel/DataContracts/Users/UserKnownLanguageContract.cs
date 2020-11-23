@@ -5,21 +5,17 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class UserKnownLanguageContract
 	{
-
 		public UserKnownLanguageContract() { }
 
 		public UserKnownLanguageContract(UserKnownLanguage userKnownLanguage)
 		{
-
 			ParamIs.NotNull(() => userKnownLanguage);
 
 			CultureCode = userKnownLanguage.CultureCode.CultureCode;
 			Proficiency = userKnownLanguage.Proficiency;
-
 		}
 
 		[DataMember]
@@ -28,7 +24,5 @@ namespace VocaDb.Model.DataContracts.Users
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public UserLanguageProficiency Proficiency { get; set; }
-
 	}
-
 }

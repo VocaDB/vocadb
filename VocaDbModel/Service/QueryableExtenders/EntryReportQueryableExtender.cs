@@ -3,13 +3,10 @@ using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Service.QueryableExtenders
 {
-
 	public static class EntryReportQueryableExtender
 	{
-
 		public static IQueryable<EntryReport> OrderBy(this IQueryable<EntryReport> query, EntryReportSortRule sortRule)
 		{
-
 			switch (sortRule)
 			{
 				case EntryReportSortRule.CloseDate:
@@ -19,9 +16,7 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return query;
-
 		}
-
 	}
 
 	public enum EntryReportSortRule
@@ -30,5 +25,4 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		Created,
 		CloseDate
 	}
-
 }

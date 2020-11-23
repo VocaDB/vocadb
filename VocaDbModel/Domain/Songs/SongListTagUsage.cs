@@ -3,17 +3,14 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Songs
 {
-
 	public class SongListTagUsage : GenericTagUsage<SongList, SongListTagVote>
 	{
-
 		public SongListTagUsage() { }
 
 		public SongListTagUsage(SongList songList, Tag tag) : base(songList, tag) { }
 
 		public override TagVote CreateVote(User user)
 		{
-
 			if (FindVote(user) != null)
 				return null;
 
@@ -22,22 +19,18 @@ namespace VocaDb.Model.Domain.Songs
 			Count++;
 
 			return vote;
-
 		}
 
 		public override void Delete()
 		{
-
 			base.Delete();
 
 			Entry.Tags.Usages.Remove(this);
 			Tag.AllSongListTagUsages.Remove(this);
-
 		}
 
 		public override TagUsage Move(Tag target)
 		{
-
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Tag))
@@ -52,9 +45,6 @@ namespace VocaDb.Model.Domain.Songs
 			Entry.Tags.Usages.Add(newUsage);
 
 			return newUsage;
-
 		}
-
 	}
-
 }

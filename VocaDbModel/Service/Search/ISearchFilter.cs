@@ -5,10 +5,8 @@ using VocaDb.Model.Database.Repositories;
 
 namespace VocaDb.Model.Service.Search
 {
-
 	public interface ISearchFilter<TEntry>
 	{
-
 		QueryCost Cost { get; }
 
 		//void FilterResults(List<TEntry> albums, ISession session);
@@ -18,7 +16,5 @@ namespace VocaDb.Model.Service.Search
 		IQueryable<TEntry> Filter(IQueryable<TEntry> query, IDatabaseContext session);
 
 		IQueryable<TEntry> Query(IDatabaseContext session);
-
 	}
-
 }

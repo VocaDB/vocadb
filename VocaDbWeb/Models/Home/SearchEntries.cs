@@ -6,10 +6,8 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Web.Models.Home
 {
-
 	public class SearchEntries
 	{
-
 		public SearchEntries() { }
 
 		public SearchEntries(string filter,
@@ -18,13 +16,11 @@ namespace VocaDb.Web.Models.Home
 			PartialFindResult<SongWithAlbumContract> songs,
 			PartialFindResult<TagContract> tags)
 		{
-
 			Filter = filter;
 			Albums = albums;
 			Artists = artists;
 			Songs = songs;
 			Tags = tags;
-
 		}
 
 		public PartialFindResult<AlbumContract> Albums { get; set; }
@@ -36,7 +32,5 @@ namespace VocaDb.Web.Models.Home
 		public PartialFindResult<SongWithAlbumContract> Songs { get; set; }
 
 		public PartialFindResult<TagContract> Tags { get; set; }
-
 	}
-
 }

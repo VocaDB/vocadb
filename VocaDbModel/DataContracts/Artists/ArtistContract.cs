@@ -9,11 +9,9 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.Artists
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArtistContract : IEntryWithStatus, IEntryImageInformation
 	{
-
 		string IEntryBase.DefaultName => Name;
 
 		EntryType IEntryBase.EntryType => EntryType.Artist;
@@ -26,7 +24,6 @@ namespace VocaDb.Model.DataContracts.Artists
 
 		public ArtistContract(Artist artist, ContentLanguagePreference preference)
 		{
-
 			ParamIs.NotNull(() => artist);
 
 			AdditionalNames = artist.Names.GetAdditionalNamesStringForLanguage(preference);
@@ -38,12 +35,10 @@ namespace VocaDb.Model.DataContracts.Artists
 			ReleaseDate = artist.ReleaseDate.DateTime;
 			Status = artist.Status;
 			Version = artist.Version;
-
 		}
 
 		public ArtistContract(TranslatedArtistContract artist, ContentLanguagePreference preference)
 		{
-
 			ParamIs.NotNull(() => artist);
 
 			AdditionalNames = artist.Names.GetAdditionalNamesStringForLanguage(preference);
@@ -55,7 +50,6 @@ namespace VocaDb.Model.DataContracts.Artists
 			ReleaseDate = artist.ReleaseDate;
 			Status = artist.Status;
 			Version = artist.Version;
-
 		}
 
 		[DataMember]
@@ -91,7 +85,5 @@ namespace VocaDb.Model.DataContracts.Artists
 		{
 			return string.Format("Artist {0} [{1}]", Name, Id);
 		}
-
 	}
-
 }

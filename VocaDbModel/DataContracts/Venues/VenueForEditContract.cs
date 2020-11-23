@@ -4,10 +4,8 @@ using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.DataContracts.Venues
 {
-
 	public class VenueForEditContract : VenueContract
 	{
-
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		public LocalizedStringWithIdContract[] Names { get; set; }
@@ -16,12 +14,8 @@ namespace VocaDb.Model.DataContracts.Venues
 
 		public VenueForEditContract(Venue venue, ContentLanguagePreference languagePreference) : base(venue, languagePreference, true)
 		{
-
 			DefaultNameLanguage = venue.TranslatedName.DefaultLanguage;
 			Names = venue.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
-
 		}
-
 	}
-
 }

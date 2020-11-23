@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.Domain.Songs
 {
-
 	public class SongName : LocalizedStringWithId
 	{
-
 		private Song song;
 
 		public SongName() { }
@@ -13,9 +11,7 @@ namespace VocaDb.Model.Domain.Songs
 		public SongName(Song song, LocalizedString localizedString)
 			: base(localizedString.Value, localizedString.Language)
 		{
-
 			Song = song;
-
 		}
 
 		public virtual Song Song
@@ -30,7 +26,6 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual bool Equals(SongName another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -41,7 +36,6 @@ namespace VocaDb.Model.Domain.Songs
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -58,6 +52,5 @@ namespace VocaDb.Model.Domain.Songs
 		{
 			return string.Format("name '{0}' for {1}", Value, Song);
 		}
-
 	}
 }

@@ -12,13 +12,11 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.AlbumImport
 {
-
 	/// <summary>
 	/// Imports albums from MikuDB.com (now dead).
 	/// </summary>
 	public class MikuDbAlbumImporter : IAlbumImporter
 	{
-
 		private const string albumIndexUrl = "http://mikudb.com/album-index/";
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private const int maxResults = 5;
@@ -27,145 +25,113 @@ namespace VocaDb.Model.Service.AlbumImport
 
 		private bool ContainsTracklist(HtmlNode node)
 		{
-
 			var text = StripHtml(node.InnerText);
 
 			return (LineMatch(text, "Track list") || LineMatch(text, "Tracks list"));
-
 		}
 
 		private HtmlNode FindTracklistRow(HtmlDocument doc, HtmlNode row)
 		{
-
 			// Find the first table row on the page
 			if (row == null)
 				row = doc.DocumentNode.SelectSingleNode(".//div[@class='postcontent']/table/tr[1]");
 
 			if (row != null)
 			{
-
 				while (row != null)
 				{
-
 					var cell = row.Element("td");
 
 					if (cell != null && ContainsTracklist(cell))
 						return row;
 
 					row = row.NextSibling;
-
 				}
-
 			}
 			else
 			{
-
 				// Legacy pages don't have a <table>, but <p> elements instead
 				row = doc.DocumentNode.SelectSingleNode(".//div[@class='postcontent']/p[2]");
 
 				while (row != null)
 				{
-
 					if (ContainsTracklist(row))
 						return row;
 
 					row = row.NextSibling;
-
 				}
-
 			}
 
 			return null;
-
 		}
 
 		private bool LineMatch(string line, string field)
 		{
-
 			return line.StartsWith(field + ":") || line.StartsWith(field + " :");
-
 		}
 
 		private string ParseArtist(string artistName)
 		{
-
 			artistName = artistName.Trim();
 
 			if (string.IsNullOrEmpty(artistName) || artistName == "-")
 				return string.Empty;
 
 			return artistName;
-
 		}
 
 		private string[] ParseArtists(string artistString)
 		{
-
 			return artistString
 				.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
 				.Select(s => s.Trim())
 				.Where(s => s != "-")
 				.ToArray();
-
 		}
 
 		private void ParseInfoBox(ImportedAlbumDataContract data, HtmlNode infoBox)
 		{
-
 			var text = infoBox.InnerHtml;
 			var rows = text.Split(new[] { "<br>", "<br />", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
 			foreach (var row in rows)
 			{
-
 				var stripped = HtmlEntity.DeEntitize(StripHtml(row));
 				if (stripped.StartsWith("\"") && stripped.EndsWith("\""))
 					stripped = stripped.Substring(1, stripped.Length - 2).Trim();
 
 				if (LineMatch(stripped, "Artist") || LineMatch(stripped, "Artists"))
 				{
-
 					var artists = ParseArtists(stripped.Substring(8));
 					data.ArtistNames = artists;
-
 				}
 				else if (LineMatch(stripped, "Vocals"))
 				{
-
 					var vocals = ParseArtists(stripped.Substring(8));
 					data.VocalistNames = vocals;
-
 				}
 				else if (LineMatch(stripped, "Circle"))
 				{
-
 					var artists = ParseArtist(stripped.Substring(8));
 					data.CircleName = artists;
-
 				}
 				else if (LineMatch(stripped, "Year"))
 				{
-
 					int year;
 					if (int.TryParse(stripped.Substring(6), out year))
 						data.ReleaseYear = year;
-
 				}
-
 			}
-
 		}
 
 		private void ParseTrackList(ImportedAlbumDataContract data, HtmlNode cell)
 		{
-
 			var lines = cell.InnerText.Split(new[] { "<br>", "<br />", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
 			int discNum = 1;
 			var tracks = new List<ImportedAlbumTrack>();
 			foreach (var line in lines)
 			{
-
 				var dotPos = line.IndexOf('.');
 
 				if (dotPos <= 0)
@@ -177,7 +143,6 @@ namespace VocaDb.Model.Service.AlbumImport
 
 				if (int.TryParse(trackText, out trackNum))
 				{
-
 					if (trackNum == 1 && tracks.Any())
 						discNum++;
 
@@ -190,26 +155,19 @@ namespace VocaDb.Model.Service.AlbumImport
 						Title = HtmlEntity.DeEntitize(trackTitle),
 						TrackNum = trackNum
 					});
-
 				}
-
 			}
 
 			data.Tracks = tracks.ToArray();
-
-
 		}
 
 		private string StripHtml(string html)
 		{
-
 			return HtmlHelperFunctions.StripHtml(html).Trim();
-
 		}
 
 		private MikuDbAlbumContract GetAlbumData(HtmlDocument doc, string url)
 		{
-
 			var data = new ImportedAlbumDataContract();
 
 			string title = string.Empty;
@@ -223,11 +181,9 @@ namespace VocaDb.Model.Service.AlbumImport
 
 			if (coverPicLink != null)
 			{
-
 				var address = coverPicLink.Attributes["src"].Value;
 
 				coverPicture = DownloadCoverPicture(address);
-
 			}
 
 			var infoBox = doc.DocumentNode.SelectSingleNode(".//div[@class='postcontent']/table/tr[1]/td[2]");
@@ -241,18 +197,14 @@ namespace VocaDb.Model.Service.AlbumImport
 
 			if (trackListRow != null)
 			{
-
 				ParseTrackList(data, trackListRow);
-
 			}
 
 			return new MikuDbAlbumContract { Title = title, Data = data, CoverPicture = coverPicture, SourceUrl = url };
-
 		}
 
 		private MikuDbAlbumContract GetAlbumData(string url)
 		{
-
 			HtmlDocument doc;
 
 			try
@@ -266,19 +218,16 @@ namespace VocaDb.Model.Service.AlbumImport
 			}
 
 			return GetAlbumData(doc, url);
-
 		}
 
 		private AlbumImportResult[] Import(HtmlDocument doc)
 		{
-
 			var listDiv = doc.DocumentNode.SelectSingleNode("//div[@class = 'postcontent2']");
 			var albumDivs = listDiv.Descendants("div");
 			var list = new List<AlbumImportResult>();
 
 			foreach (var albumDiv in albumDivs)
 			{
-
 				var link = albumDiv.Element("a");
 
 				if (link == null)
@@ -304,70 +253,53 @@ namespace VocaDb.Model.Service.AlbumImport
 					break;
 
 				Thread.Sleep(300);
-
 			}
 
 			return list.ToArray();
-
 		}
 
 		private PictureDataContract DownloadCoverPicture(string url)
 		{
-
 			WebRequest request;
 
 			if (url.Contains("-250x250"))
 			{
-
 				var fullUrl = url.Replace("-250x250", string.Empty);
 
 				request = WebRequest.Create(fullUrl);
 				using (var response = (HttpWebResponse)request.GetResponse())
 				{
-
 					if (response.StatusCode != HttpStatusCode.NotFound)
 					{
-
 						using (var stream = response.GetResponseStream())
 						{
-
 							var buf = StreamHelper.ReadStream(stream, response.ContentLength);
 
 							return new PictureDataContract(buf, response.ContentType);
-
 						}
-
 					}
-
 				}
-
 			}
 
 			request = WebRequest.Create(url);
 			using (var response = request.GetResponse())
 			using (var stream = response.GetResponseStream())
 			{
-
 				var buf = StreamHelper.ReadStream(stream, response.ContentLength);
 
 				return new PictureDataContract(buf, response.ContentType);
-
 			}
-
 		}
 
 		public MikuDbAlbumImporter(IEnumerable<MikuDbAlbumContract> existingUrls)
 		{
-
 			ParamIs.NotNull(() => existingUrls);
 
 			this.existingUrls = new HashSet<string>(existingUrls.Select(a => a.SourceUrl));
-
 		}
 
 		public AlbumImportResult[] ImportNew()
 		{
-
 			HtmlDocument albumIndex;
 
 			try
@@ -381,19 +313,16 @@ namespace VocaDb.Model.Service.AlbumImport
 			}
 
 			return Import(albumIndex);
-
 		}
 
 		public AlbumImportResult ImportOne(string url)
 		{
-
 			if (existingUrls.Contains(url))
 				return new AlbumImportResult { Message = "Album already imported" };
 
 			var data = GetAlbumData(url);
 
 			return new AlbumImportResult { AlbumContract = data };
-
 		}
 
 		public bool IsValidFor(string url)
@@ -405,6 +334,5 @@ namespace VocaDb.Model.Service.AlbumImport
 		{
 			get { return "MikuDB"; }
 		}
-
 	}
 }

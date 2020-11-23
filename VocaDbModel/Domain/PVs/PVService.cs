@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace VocaDb.Model.Domain.PVs
 {
-
 	/// <summary>
 	/// PV service identifier.
 	/// </summary>
@@ -13,7 +12,6 @@ namespace VocaDb.Model.Domain.PVs
 	/// </remarks>
 	public enum PVService
 	{
-
 		NicoNicoDouga = 1,
 
 		Youtube = 2,
@@ -33,7 +31,6 @@ namespace VocaDb.Model.Domain.PVs
 		Creofuga = 256,
 
 		Bandcamp = 512
-
 	}
 
 	/// <summary>
@@ -45,7 +42,6 @@ namespace VocaDb.Model.Domain.PVs
 	[Flags]
 	public enum PVServices
 	{
-
 		Nothing = 0,
 
 		NicoNicoDouga = PVService.NicoNicoDouga,
@@ -67,21 +63,15 @@ namespace VocaDb.Model.Domain.PVs
 		Creofuga = PVService.Creofuga,
 
 		Bandcamp = PVService.Bandcamp
-
 	}
 
 	public static class PVServicesExtender
 	{
-
 		public static IEnumerable<PVService> ToIndividualSelections(this PVServices selections)
 		{
-
 			return EnumVal<PVServices>
 				.GetIndividualValues(selections)
 				.Select(s => (PVService)s);
-
 		}
-
 	}
-
 }

@@ -13,10 +13,8 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
-
 	public class TagStatsContract
 	{
-
 		public TagStatsContract() { }
 
 		public TagStatsContract(
@@ -29,7 +27,6 @@ namespace VocaDb.Model.DataContracts.Tags
 			IEnumerable<ReleaseEvent> events, int eventCount,
 			int followerCount)
 		{
-
 			Albums = albums.Select(a => new AlbumContract(a, languagePreference)).ToArray();
 			AlbumCount = albumCount;
 
@@ -49,7 +46,6 @@ namespace VocaDb.Model.DataContracts.Tags
 			SongCount = songCount;
 
 			FollowerCount = followerCount;
-
 		}
 
 		public int AlbumCount { get; set; }
@@ -77,7 +73,5 @@ namespace VocaDb.Model.DataContracts.Tags
 		public SongForApiContract[] Songs { get; set; }
 
 		public int SongCount { get; set; }
-
 	}
-
 }

@@ -5,12 +5,7 @@ using System.Text;
 
 namespace VocaDb.Model.Domain.Albums
 {
-
 	public enum MediaTypes
 	{
-
-
-
 	}
-
 }

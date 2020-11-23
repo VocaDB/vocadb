@@ -14,22 +14,17 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Models.Album
 {
-
 	[PropertyModelBinder]
 	public class AlbumEditViewModel
 	{
-
 		public AlbumEditViewModel()
 		{
-
 			AllDiscTypes = Translate.DiscTypeNames.GetValuesAndNamesStrings(AppConfig.AlbumTypes);
 
 			DiscTypeDescriptions = ViewRes.Album.EditStrings.BaDiscTypeExplanation
 								   + "<br /><br /><ul>" + string.Join("",
 									   EnumVal<DiscType>.Values.Where(v => v != DiscType.Unknown).Select(v => string.Format("<li><strong>{0}</strong>: {1}</li>",
 										   Translate.DiscTypeName(v), global::Resources.DiscTypeDescriptions.ResourceManager.GetString(v.ToString()))));
-
-
 		}
 
 		public AlbumEditViewModel(AlbumContract album, IUserPermissionContext permissionContext,
@@ -37,7 +32,6 @@ namespace VocaDb.Web.Models.Album
 			AlbumForEditContract editedAlbum = null)
 			: this()
 		{
-
 			ParamIs.NotNull(() => album);
 
 			Album = album;
@@ -45,7 +39,6 @@ namespace VocaDb.Web.Models.Album
 			EditedAlbum = editedAlbum;
 
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
-
 		}
 
 		public AlbumContract Album { get; set; }
@@ -90,7 +83,6 @@ namespace VocaDb.Web.Models.Album
 
 		public void CheckModel()
 		{
-
 			if (EditedAlbum == null)
 				throw new InvalidFormException("Model was null");
 
@@ -111,8 +103,6 @@ namespace VocaDb.Web.Models.Album
 
 			if (EditedAlbum.WebLinks == null)
 				throw new InvalidFormException("WebLinks list was null");
-
 		}
-
 	}
 }

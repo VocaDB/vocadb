@@ -11,7 +11,6 @@ using VocaDb.Model.Service.Exceptions;
 
 namespace VocaDb.Model.Database.Queries.Partial
 {
-
 	/// <summary>
 	/// Handles updating event names.
 	/// </summary>
@@ -22,7 +21,6 @@ namespace VocaDb.Model.Database.Queries.Partial
 	/// </remarks>
 	public class UpdateEventNamesQuery
 	{
-
 		private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
@@ -37,7 +35,6 @@ namespace VocaDb.Model.Database.Queries.Partial
 		/// </remarks>
 		public void CheckDuplicateName(IDatabaseContext ctx, string[] names, int eventId)
 		{
-
 			var duplicateName = names
 				.GroupBy(n => n, new KanaAndCaseInsensitiveStringComparer())
 				.Where(n => n.Count() > 1)
@@ -58,12 +55,10 @@ namespace VocaDb.Model.Database.Queries.Partial
 				log.Info($"Duplicate name '{duplicateName}' for event {eventId}. Also used for {duplicate.Entry}.");
 				throw new DuplicateEventNameException(duplicate.Value, duplicate.Entry.Id);
 			}
-
 		}
 
 		private bool SaveNames(IDatabaseContext ctx, ReleaseEvent ev, IEnumerable<ILocalizedString> names)
 		{
-
 			// Make sure deletions are flushed to database BEFORE new names are added, to make sure there's no duplicates
 			var diff = ev.Names.SyncByContent(names, ev,
 				deleted =>
@@ -78,13 +73,11 @@ namespace VocaDb.Model.Database.Queries.Partial
 				ctx.Save(n);
 
 			return diff.Changed;
-
 		}
 
 		private IEnumerable<ILocalizedString> GetNames(IDatabaseContext ctx,
 			IEntryWithIntId seriesLink, bool customName, int seriesNumber, string seriesSuffix, IEnumerable<ILocalizedString> nameContracts)
 		{
-
 			var series = ctx.NullSafeLoad<ReleaseEventSeries>(seriesLink);
 
 			var names = series != null && !customName
@@ -93,7 +86,6 @@ namespace VocaDb.Model.Database.Queries.Partial
 				: nameContracts;
 
 			return names;
-
 		}
 
 		/// <summary>
@@ -116,16 +108,12 @@ namespace VocaDb.Model.Database.Queries.Partial
 		public bool UpdateNames(IDatabaseContext ctx, ReleaseEvent ev, IEntryWithIntId seriesLink,
 			bool customName, int seriesNumber, string seriesSuffix, IEnumerable<ILocalizedString> nameContracts)
 		{
-
 			var names = GetNames(ctx, seriesLink, customName, seriesNumber, seriesSuffix, nameContracts).ToArray();
 			var namesValues = names.Select(n => n.Value).ToArray();
 
 			CheckDuplicateName(ctx, namesValues, ev.Id);
 			var changed = SaveNames(ctx, ev, names);
 			return changed;
-
 		}
-
 	}
-
 }

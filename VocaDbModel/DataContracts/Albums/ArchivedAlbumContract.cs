@@ -9,14 +9,11 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.DataContracts.Albums
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedAlbumContract
 	{
-
 		private static void DoIfExists(ArchivedAlbumVersion version, AlbumEditableFields field, XmlCache<ArchivedAlbumContract> xmlCache, Action<ArchivedAlbumContract> func)
 		{
-
 			var versionWithField = version.GetLatestVersionWithField(field);
 
 			if (versionWithField != null && versionWithField.Data != null)
@@ -24,12 +21,10 @@ namespace VocaDb.Model.DataContracts.Albums
 				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
 				func(data);
 			}
-
 		}
 
 		private static void DoIfExists(ArchivedAlbumVersion version, AlbumEditableFields field, XmlCache<ArchivedAlbumContract> xmlCache, Action<ArchivedAlbumContract, XDocument> func)
 		{
-
 			var versionWithField = version.GetLatestVersionWithField(field);
 
 			if (versionWithField != null && versionWithField.Data != null)
@@ -37,17 +32,14 @@ namespace VocaDb.Model.DataContracts.Albums
 				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
 				func(data, versionWithField.Data);
 			}
-
 		}
 
 		private static void SetArtists(ArchivedAlbumContract data, ArchivedAlbumContract serialized, XDocument doc)
 		{
-
 			if (serialized.Artists != null && serialized.Artists.Any())
 				data.Artists = serialized.Artists;
 			else
 			{
-
 				// For backwards compatibility
 				var artistElems = doc.XPathSelectElements("//ArchivedAlbumContract/Artists/ObjectRefContract"); //.Elements("Artists").Elements("ObjectRefContract"));
 
@@ -56,14 +48,11 @@ namespace VocaDb.Model.DataContracts.Albums
 					Id = int.Parse(e.Element("Id").Value),
 					NameHint = e.Element("NameHint").Value
 				}).ToArray();
-
 			}
-
 		}
 
 		public static ArchivedAlbumContract GetAllProperties(ArchivedAlbumVersion version)
 		{
-
 			var data = new ArchivedAlbumContract();
 			var xmlCache = new XmlCache<ArchivedAlbumContract>();
 			var thisVersion = xmlCache.Deserialize(version.Version, version.Data);
@@ -89,14 +78,12 @@ namespace VocaDb.Model.DataContracts.Albums
 			DoIfExists(version, AlbumEditableFields.WebLinks, xmlCache, v => data.WebLinks = v.WebLinks);
 
 			return data;
-
 		}
 
 		public ArchivedAlbumContract() { }
 
 		public ArchivedAlbumContract(Album album, AlbumDiff diff)
 		{
-
 			ParamIs.NotNull(() => album);
 			ParamIs.NotNull(() => diff);
 
@@ -115,7 +102,6 @@ namespace VocaDb.Model.DataContracts.Albums
 			Songs = (diff.IncludeTracks ? album.Songs.Select(s => new SongInAlbumRefContract(s)).ToArray() : null);
 			TranslatedName = new TranslatedStringContract(album.TranslatedName);
 			WebLinks = (diff.IncludeWebLinks ? album.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null);
-
 		}
 
 		[DataMember]
@@ -162,7 +148,5 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		[DataMember]
 		public ArchivedWebLinkContract[] WebLinks { get; set; }
-
 	}
-
 }

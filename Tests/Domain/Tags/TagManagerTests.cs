@@ -7,17 +7,14 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Tests.Domain.Tags
 {
-
 	/// <summary>
 	/// Tests for <see cref="TagManager{T}"/>.
 	/// </summary>
 	[TestClass]
 	public class TagManagerTests
 	{
-
 		class TagFactory : ITagFactory, ITagUsageFactory<SongTagUsage>
 		{
-
 			private readonly Song song = new Song();
 
 			public Task<Tag> CreateTagAsync(string name)
@@ -34,7 +31,6 @@ namespace VocaDb.Tests.Domain.Tags
 			{
 				return new SongTagUsage(usage.Entry, tag);
 			}
-
 		}
 
 		private TagManager<SongTagUsage> manager;
@@ -50,14 +46,10 @@ namespace VocaDb.Tests.Domain.Tags
 		[TestInitialize]
 		public void SetUp()
 		{
-
 			tagFactory = new TagFactory();
 			tag = new Tag("drumnbass");
 			manager = new TagManager<SongTagUsage>();
 			user = new User();
-
 		}
-
 	}
-
 }

@@ -4,14 +4,12 @@ using System.Linq;
 
 namespace VocaDb.Model
 {
-
 	/// <summary>
 	/// Type-safe enum
 	/// </summary>
 	/// <typeparam name="T">Enum type</typeparam>
 	public class EnumVal<T> : IEquatable<EnumVal<T>>, IEquatable<T> where T : struct, Enum
 	{
-
 		private T val;
 
 		private int ValInt
@@ -78,7 +76,6 @@ namespace VocaDb.Model
 
 		public static T[] ParseAll(string[] values)
 		{
-
 			ParamIs.NotNull(() => values);
 
 			var list = new List<T>(values.Length);
@@ -90,17 +87,14 @@ namespace VocaDb.Model
 			}
 
 			return list.ToArray();
-
 		}
 
 		public static T[] ParseMultiple(string value)
 		{
-
 			if (string.IsNullOrEmpty(value))
 				return new T[0];
 
 			return ParseAll(value.Split(','));
-
 		}
 
 		public static T ParseSafe(string value, T def = default)
@@ -157,16 +151,12 @@ namespace VocaDb.Model
 
 		public void SetFlag(T flag, bool val)
 		{
-
 			var isSet = FlagIsSet(flag);
 
 			if (val && !isSet)
 				AddFlag(flag);
 			else if (!val && isSet)
 				RemoveFlag(flag);
-
 		}
-
 	}
-
 }

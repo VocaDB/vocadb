@@ -8,10 +8,8 @@ using VocaDb.Model.Service.Queries;
 
 namespace VocaDb.Model.Service.Helpers
 {
-
 	public class TagFactoryRepository : ITagFactory
 	{
-
 		private readonly AgentLoginData loginData;
 		private readonly IDatabaseContext<Tag> ctx;
 
@@ -23,7 +21,6 @@ namespace VocaDb.Model.Service.Helpers
 
 		public async Task<Tag> CreateTagAsync(string englishName)
 		{
-
 			var tag = new Tag(new LocalizedString(englishName, ContentLanguageSelection.English));
 			await ctx.SaveAsync(tag);
 
@@ -34,8 +31,6 @@ namespace VocaDb.Model.Service.Helpers
 			await new ActivityEntryQueries(ctx.OfType<ActivityEntry>(), null).AddActivityfeedEntryAsync(activityEntry);
 
 			return tag;
-
 		}
 	}
-
 }

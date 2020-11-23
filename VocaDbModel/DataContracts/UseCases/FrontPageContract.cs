@@ -14,10 +14,8 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.UseCases
 {
-
 	public class FrontPageContract
 	{
-
 		public FrontPageContract() { }
 
 		public FrontPageContract(IEnumerable<ActivityEntry> activityEntries,
@@ -29,7 +27,6 @@ namespace VocaDb.Model.DataContracts.UseCases
 			ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory, IUserPermissionContext permissionContext,
 			EntryForApiContractFactory entryForApiContractFactory)
 		{
-
 			ActivityEntries = activityEntries.Select(e => new ActivityEntryForApiContract(e,
 				entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, languagePreference),
 				 userIconFactory, permissionContext, ActivityEntryOptionalFields.None)).ToArray();
@@ -40,7 +37,6 @@ namespace VocaDb.Model.DataContracts.UseCases
 			NewEvents = newEvents;
 
 			FirstSong = (newSongs.Any() ? new SongWithPVAndVoteContract(newSongs.First(), firstSongRating, languagePreference) : null);
-
 		}
 
 		public ActivityEntryForApiContract[] ActivityEntries { get; set; }
@@ -56,6 +52,5 @@ namespace VocaDb.Model.DataContracts.UseCases
 		public EntryWithCommentsContract[] RecentComments { get; set; }
 
 		public AlbumForApiContract[] TopAlbums { get; set; }
-
 	}
 }

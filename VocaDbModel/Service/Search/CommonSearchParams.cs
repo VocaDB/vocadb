@@ -2,13 +2,11 @@
 
 namespace VocaDb.Model.Service.Search
 {
-
 	/// <summary>
 	/// Common search parameters for all entry types.
 	/// </summary>
 	public class CommonSearchParams : CommonSearchParams<SearchTextQuery>
 	{
-
 		public static CommonSearchParams<TTextQuery> Create<TTextQuery>(TTextQuery textQuery, bool onlyByName, bool moveExactToTop) where TTextQuery : SearchTextQuery, new()
 		{
 			return new CommonSearchParams<TTextQuery>(textQuery, onlyByName, moveExactToTop);
@@ -18,7 +16,6 @@ namespace VocaDb.Model.Service.Search
 
 		public CommonSearchParams(SearchTextQuery textQuery, bool onlyByName, bool moveExactToTop)
 			: base(textQuery, onlyByName, moveExactToTop) { }
-
 	}
 
 	/// <summary>
@@ -26,7 +23,6 @@ namespace VocaDb.Model.Service.Search
 	/// </summary>
 	public class CommonSearchParams<TTextQuery> where TTextQuery : SearchTextQuery, new()
 	{
-
 		public CommonSearchParams()
 		{
 			TextQuery = new TTextQuery();
@@ -35,11 +31,9 @@ namespace VocaDb.Model.Service.Search
 		public CommonSearchParams(TTextQuery textQuery, bool onlyByName, bool moveExactToTop)
 			: this()
 		{
-
 			TextQuery = textQuery;
 			OnlyByName = onlyByName;
 			MoveExactToTop = moveExactToTop;
-
 		}
 
 		public EntryStatus? EntryStatus { get; set; }
@@ -57,7 +51,5 @@ namespace VocaDb.Model.Service.Search
 		public string Query => TextQuery.Query;
 
 		public TTextQuery TextQuery { get; set; }
-
 	}
-
 }

@@ -24,29 +24,22 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Web.Helpers
 {
-
 	public static class Translate
 	{
-
 		private static readonly Dictionary<Type, ITranslateableEnum> allResourceManagers;
 
 		private static Type GetEnumType(FieldInfo property)
 		{
-
 			return property.FieldType.GetGenericArguments().First();
-
 		}
 
 		private static ITranslateableEnum GetResourceManager(FieldInfo property)
 		{
-
 			return (ITranslateableEnum)property.GetValue(null);
-
 		}
 
 		static Translate()
 		{
-
 			var enums = typeof(Translate).GetFields().Where(p => typeof(ITranslateableEnum).IsAssignableFrom(p.FieldType));
 			allResourceManagers = enums
 				.Select(p => new
@@ -56,7 +49,6 @@ namespace VocaDb.Web.Helpers
 				})
 				.Distinct(p => p.EnumType)
 				.ToDictionary(p => p.EnumType, p => p.TranslateableEnum);
-
 		}
 
 		public static readonly TranslateableEnum<PurchaseStatus> AlbumCollectionStatusNames =
@@ -201,72 +193,52 @@ namespace VocaDb.Web.Helpers
 
 		public static string AlbumEditableField(AlbumEditableFields field)
 		{
-
 			return AlbumEditableFieldNames.GetName(field);
-
 		}
 
 		public static string AlbumArchiveReason(AlbumArchiveReason reason)
 		{
-
 			return AlbumArchiveReasonNames.ResourceManager.GetString(reason.ToString());
-
 		}
 
 		public static string AllPermissionTokenNames(IEnumerable<PermissionToken> tokens)
 		{
-
 			return string.Join(", ", tokens.Select(t => PermissionTokenName(t)));
-
 		}
 
 		public static string ArtistEditableField(ArtistEditableFields field)
 		{
-
 			return ArtistEditableFieldNames.GetName(field);
-
 		}
 
 		public static string ArtistArchiveReason(ArtistArchiveReason reason)
 		{
-
 			return ArtistArchiveReasonNames.ResourceManager.GetString(reason.ToString());
-
 		}
 
 		public static string ArtistTypeName(ArtistType artistType)
 		{
-
 			return Model.Resources.ArtistTypeNames.ResourceManager.GetString(artistType.ToString());
-
 		}
 
 		public static string ContentLanguagePreferenceName(ContentLanguagePreference languagePreference)
 		{
-
 			return global::Resources.ContentLanguageSelectionNames.ResourceManager.GetString(languagePreference.ToString());
-
 		}
 
 		public static string ContentLanguageSelectionName(ContentLanguageSelection languageSelection)
 		{
-
 			return global::Resources.ContentLanguageSelectionNames.ResourceManager.GetString(languageSelection.ToString());
-
 		}
 
 		public static string DiscTypeName(DiscType discType)
 		{
-
 			return Model.Resources.Albums.DiscTypeNames.ResourceManager.GetString(discType.ToString());
-
 		}
 
 		public static string EmailOptions(UserEmailOptions emailOptions)
 		{
-
 			return UserEmailOptionsNames.ResourceManager.GetString(emailOptions.ToString());
-
 		}
 
 		public static string EntrySubTypeName(EntryTypeAndSubType fullEntryType)
@@ -283,23 +255,18 @@ namespace VocaDb.Web.Helpers
 
 		public static string SongArchiveReason(SongArchiveReason reason)
 		{
-
 			return SongArchiveReasonNames.ResourceManager.GetString(reason.ToString());
-
 		}
 
 		public static string SongEditableField(SongEditableFields field)
 		{
-
 			return SongEditableFieldNames[field];
-
 		}
 
 		public static string VenueEditableField(VenueEditableFields field) => VenueEditableFieldNames[field];
 
 		public static string PermissionTokenName(IPermissionToken token)
 		{
-
 			PermissionToken t;
 			if (PermissionToken.TryGetById(token.Id, out t))
 			{
@@ -309,14 +276,11 @@ namespace VocaDb.Web.Helpers
 			{
 				return (token.Name != null ? PermissionTokenNames.ResourceManager.GetString(token.Name) : null) ?? token.Name ?? token.Id.ToString();
 			}
-
 		}
 
 		public static TranslateableEnum<TEnum> Translations<TEnum>() where TEnum : struct, Enum
 		{
 			return (TranslateableEnum<TEnum>)allResourceManagers[typeof(TEnum)];
 		}
-
 	}
-
 }

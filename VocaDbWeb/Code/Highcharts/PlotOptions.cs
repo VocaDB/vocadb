@@ -2,10 +2,8 @@
 
 namespace VocaDb.Web.Code.Highcharts
 {
-
 	public class PlotOptions
 	{
-
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public PlotOptionsArea Area { get; set; }
 
@@ -14,12 +12,10 @@ namespace VocaDb.Web.Code.Highcharts
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public dynamic Pie { get; set; }
-
 	}
 
 	public class PlotOptionsArea
 	{
-
 		public string LineColor { get; set; }
 
 		public double LineWidth { get; set; }
@@ -28,14 +24,10 @@ namespace VocaDb.Web.Code.Highcharts
 
 		[JsonConverter(typeof(CamelCaseStringEnumConverter))]
 		public PlotOptionsAreaStacking? Stacking { get; set; }
-
 	}
 
 	public enum PlotOptionsAreaStacking
 	{
-
 		Percent
-
 	}
-
 }

@@ -2,10 +2,8 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.Domain
 {
-
 	public class EntryThumb : IEntryImageInformation
 	{
-
 		public static EntryThumb Create<T>(T entry) where T : class, IEntryBase, IEntryImageInformation
 		{
 			return !string.IsNullOrEmpty(entry?.Mime) ? new EntryThumb(entry, entry.Mime, entry.Purpose) : null;
@@ -46,12 +44,10 @@ namespace VocaDb.Model.Domain
 		}
 
 		public int Version => Entry.Version;
-
 	}
 
 	public class EntryThumbMain : EntryThumb
 	{
-
 		public EntryThumbMain()
 		{
 			Purpose = ImagePurpose.Main;
@@ -59,7 +55,5 @@ namespace VocaDb.Model.Domain
 
 		public EntryThumbMain(IEntryBase entry, string mime)
 			: base(entry, mime, ImagePurpose.Main) { }
-
 	}
-
 }

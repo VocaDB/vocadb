@@ -1,7 +1,6 @@
 
 namespace VocaDb.Model.Domain.Images
 {
-
 	/// <summary>
 	/// Provides information about an entry image (both original full size images and thumbnails)
 	/// that is saved on the website. 
@@ -9,7 +8,6 @@ namespace VocaDb.Model.Domain.Images
 	/// </summary>
 	public interface IEntryImageInformation
 	{
-
 		/// <summary>
 		/// Type of entry.
 		/// Determines the folder in which the image file is saved (and thus the URL).
@@ -43,12 +41,10 @@ namespace VocaDb.Model.Domain.Images
 		/// If the image does not support versioning this will always be 0.
 		/// </summary>
 		int Version { get; }
-
 	}
 
 	public static class EntryImageInformationExtensions
 	{
-
 		public static bool PurposeMainOrUnspecified(this IEntryImageInformation image) => image.Purpose == ImagePurpose.Main || image.Purpose == ImagePurpose.Unspesified;
 
 		/// <summary>
@@ -63,7 +59,5 @@ namespace VocaDb.Model.Domain.Images
 		{
 			return image != null && !string.IsNullOrEmpty(image.Mime);
 		}
-
 	}
-
 }

@@ -6,11 +6,9 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class TagContract : TagBaseContract
 	{
-
 		public TagContract()
 		{
 		}
@@ -18,7 +16,6 @@ namespace VocaDb.Model.DataContracts.Tags
 		public TagContract(Tag tag, ContentLanguagePreference languagePreference, bool includeAdditionalNames = false)
 			: base(tag, languagePreference, includeAdditionalNames, true)
 		{
-
 			ParamIs.NotNull(() => tag);
 
 			CreateDate = tag.CreateDate;
@@ -29,7 +26,6 @@ namespace VocaDb.Model.DataContracts.Tags
 			Status = tag.Status;
 			Targets = tag.Targets;
 			Version = tag.Version;
-
 		}
 
 		/// <summary>
@@ -57,6 +53,5 @@ namespace VocaDb.Model.DataContracts.Tags
 
 		[DataMember]
 		public int Version { get; set; }
-
 	}
 }

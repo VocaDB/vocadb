@@ -2,13 +2,11 @@ using System;
 
 namespace VocaDb.Model.Domain
 {
-
 	/// <summary>
 	/// Do not change the numeric values here.
 	/// </summary>
 	public enum EntryType
 	{
-
 		Undefined = 0,
 
 		Album = 1,
@@ -32,7 +30,6 @@ namespace VocaDb.Model.Domain
 		User = 512,
 
 		Venue = 1024
-
 	}
 
 	[Flags]
@@ -51,5 +48,4 @@ namespace VocaDb.Model.Domain
 		User = EntryType.User,
 		Venue = EntryType.Venue
 	}
-
 }

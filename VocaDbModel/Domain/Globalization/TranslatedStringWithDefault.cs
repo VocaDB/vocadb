@@ -2,20 +2,16 @@
 
 namespace VocaDb.Model.Domain.Globalization
 {
-
 	public class TranslatedStringWithDefault : TranslatedString, IEquatable<TranslatedStringWithDefault>
 	{
-
 		public new static TranslatedStringWithDefault Create(Func<ContentLanguageSelection, string> factory)
 		{
-
 			return new TranslatedStringWithDefault(
 				factory(ContentLanguageSelection.Japanese),
 				factory(ContentLanguageSelection.Romaji),
 				factory(ContentLanguageSelection.English),
 				factory(ContentLanguageSelection.Unspecified)
 			);
-
 		}
 
 		private string def;
@@ -25,16 +21,13 @@ namespace VocaDb.Model.Domain.Globalization
 		public TranslatedStringWithDefault(string original, string romaji, string english, string def)
 			: base(original, romaji, english)
 		{
-
 			Default = def;
-
 		}
 
 		public override string this[ContentLanguageSelection language]
 		{
 			get
 			{
-
 				switch (language)
 				{
 					case ContentLanguageSelection.English:
@@ -46,11 +39,9 @@ namespace VocaDb.Model.Domain.Globalization
 					default:
 						return Default;
 				}
-
 			}
 			set
 			{
-
 				switch (language)
 				{
 					case ContentLanguageSelection.English:
@@ -66,7 +57,6 @@ namespace VocaDb.Model.Domain.Globalization
 						Default = value;
 						break;
 				}
-
 			}
 		}
 
@@ -82,12 +72,10 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public bool Equals(TranslatedStringWithDefault other)
 		{
-
 			if (other == null)
 				return false;
 
 			return Default.Equals(other.Default) && English.Equals(other.English) && Japanese.Equals(other.Japanese) && Romaji.Equals(other.Romaji);
-
 		}
 
 		public override bool Equals(object obj)
@@ -102,23 +90,17 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public override string GetBestMatch(ContentLanguagePreference preference)
 		{
-
 			return GetBestMatch(preference, ContentLanguageSelection.Unspecified);
-
 		}
 
 		public override string GetDefaultOrFirst()
 		{
-
 			return GetDefaultOrFirst(ContentLanguageSelection.Unspecified);
-
 		}
 
 		public override string ToString()
 		{
 			return string.Format("Default: {0}, Japanese: {1}, Romaji: {2}, English: {3}", Default, Japanese, Romaji, English);
 		}
-
 	}
-
 }

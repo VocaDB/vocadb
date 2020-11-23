@@ -2,20 +2,16 @@ using System;
 
 namespace VocaDb.Model.Domain.Security
 {
-
 	public class IPRule : IEntryWithIntId
 	{
-
 		private string address;
 		private string notes;
 
 		public IPRule()
 		{
-
 			address = string.Empty;
 			Created = DateTime.Now;
 			Notes = string.Empty;
-
 		}
 
 		public IPRule(string address, string notes = "")

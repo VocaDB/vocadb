@@ -4,10 +4,8 @@ using VocaDb.Model.DataContracts.Songs;
 
 namespace VocaDb.Model.Domain.Songs
 {
-
 	public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject
 	{
-
 		private OptionalCultureCode cultureCode;
 		private string notes;
 		private Song song;
@@ -19,14 +17,12 @@ namespace VocaDb.Model.Domain.Songs
 
 		public LyricsForSong(Song song, string val, string source, string url, TranslationType translationType, string cultureCode)
 		{
-
 			Song = song;
 			Source = source;
 			URL = url;
 			TranslationType = translationType;
 			CultureCode = new OptionalCultureCode(cultureCode);
 			Value = val;
-
 		}
 
 		public virtual OptionalCultureCode CultureCode
@@ -94,7 +90,6 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual bool ContentEquals(LyricsForSongContract contract)
 		{
-
 			if (contract == null)
 				return false;
 
@@ -103,12 +98,10 @@ namespace VocaDb.Model.Domain.Songs
 				&& Source == contract.Source
 				&& URL == contract.URL
 				&& Value == contract.Value);
-
 		}
 
 		public virtual bool Equals(LyricsForSong another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -119,7 +112,6 @@ namespace VocaDb.Model.Domain.Songs
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -131,7 +123,5 @@ namespace VocaDb.Model.Domain.Songs
 		{
 			return Id.GetHashCode();
 		}
-
 	}
-
 }

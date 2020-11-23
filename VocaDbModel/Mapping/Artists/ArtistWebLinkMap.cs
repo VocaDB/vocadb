@@ -2,7 +2,5 @@
 
 namespace VocaDb.Model.Mapping.Artists
 {
-
 	public class ArtistWebLinkMap : WebLinkMap<ArtistWebLink, Artist> { }
-
 }

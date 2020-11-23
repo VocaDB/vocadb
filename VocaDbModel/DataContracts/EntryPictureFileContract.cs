@@ -5,11 +5,9 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryPictureFileContract : IEntryPictureFile
 	{
-
 		int IEntryImageInformation.Version => 0;
 
 		public EntryPictureFileContract() { }
@@ -24,7 +22,6 @@ namespace VocaDb.Model.DataContracts
 
 		public EntryPictureFileContract(EntryPictureFile picture, IAggregatedEntryImageUrlFactory imageStore)
 		{
-
 			ParamIs.NotNull(() => picture);
 
 			EntryType = picture.EntryType;
@@ -34,7 +31,6 @@ namespace VocaDb.Model.DataContracts
 			OwnerEntryId = picture.OwnerEntryId;
 			ThumbUrl = imageStore.GetUrlAbsolute(picture, ImageSize.Thumb, true);
 			Purpose = picture.Purpose;
-
 		}
 
 		public int ContentLength { get; set; }
@@ -72,6 +68,5 @@ namespace VocaDb.Model.DataContracts
 			Name = Name ?? string.Empty;
 			return this;
 		}
-
 	}
 }

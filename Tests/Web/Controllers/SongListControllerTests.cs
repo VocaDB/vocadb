@@ -5,14 +5,12 @@ using VocaDb.Web.Controllers;
 
 namespace VocaDb.Tests.Web.Controllers
 {
-
 	/// <summary>
 	/// Tests for <see cref="SongListController"/>
 	/// </summary>
 	[TestClass]
 	public class SongListControllerTests
 	{
-
 		private SongListController controller;
 
 		[TestInitialize]
@@ -24,12 +22,9 @@ namespace VocaDb.Tests.Web.Controllers
 		[TestMethod]
 		public void Details_NoId()
 		{
-
 			var result = controller.Details();
 
 			Assert.IsInstanceOfType(result, typeof(HttpNotFoundResult));
-
 		}
-
 	}
 }

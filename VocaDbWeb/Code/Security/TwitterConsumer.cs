@@ -10,10 +10,8 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Web.Code.Security
 {
-
 	public class TwitterConsumer
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
@@ -45,7 +43,6 @@ namespace VocaDb.Web.Code.Security
 		{
 			get
 			{
-
 				var store = HttpContext.Current.Session;
 				var tokenManager = (InMemoryTokenManager)store["TwitterShortTermUserSessionTokenManager"];
 				if (tokenManager == null)
@@ -65,7 +62,6 @@ namespace VocaDb.Web.Code.Security
 				}
 
 				return tokenManager;
-
 			}
 		}
 
@@ -79,7 +75,6 @@ namespace VocaDb.Web.Code.Security
 
 		public AuthorizedTokenResponse ProcessUserAuthorization(string hostname)
 		{
-
 			try
 			{
 				log.Info("Processing Twitter authorization from {0}.", hostname);
@@ -90,8 +85,6 @@ namespace VocaDb.Web.Code.Security
 				log.Error(x, "Unable to process Twitter authentication");
 				return null;
 			}
-
 		}
-
 	}
 }

@@ -7,13 +7,11 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Helpers
 {
-
 	/// <summary>
 	/// Manages concurrent entry edits.
 	/// </summary>
 	public class ConcurrentEntryEditManager
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private static readonly ConcurrentEntryEditManager staticInstance = new ConcurrentEntryEditManager();
 
@@ -21,17 +19,14 @@ namespace VocaDb.Model.Helpers
 
 		public class EntryEditData
 		{
-
 			public EntryEditData() { }
 
 			public EntryEditData(IUser user)
 				: this()
 			{
-
 				UserId = user.Id;
 				UserName = user.Name;
 				Time = DateTime.Now;
-
 			}
 
 			public DateTime Time { get; set; }
@@ -42,12 +37,9 @@ namespace VocaDb.Model.Helpers
 
 			public void Refresh(IUser user)
 			{
-
 				if (user.Id == UserId)
 					Time = DateTime.Now;
-
 			}
-
 		}
 
 		public static IEnumerable<KeyValuePair<EntryRef, EntryEditData>> Editors => staticInstance.editors;
@@ -61,30 +53,24 @@ namespace VocaDb.Model.Helpers
 
 		private void ClearExpiredUsages()
 		{
-
 			var cutoffDate = DateTime.Now - TimeSpan.FromMinutes(3);
 
 			lock (editors)
 			{
-
 				var expired = editors.Where(e => e.Value.Time < cutoffDate).Select(e => e.Key).ToArray();
 
 				foreach (var e in expired)
 					editors.Remove(e);
-
 			}
-
 		}
 
 		private void AddOrUpdate(EntryRef entry, IUser user)
 		{
-
 			ParamIs.NotNull(() => entry);
 			ParamIs.NotNull(() => user);
 
 			lock (editors)
 			{
-
 				if (editors.ContainsKey(entry))
 					editors[entry].Refresh(user);
 				else
@@ -92,26 +78,20 @@ namespace VocaDb.Model.Helpers
 					log.Debug("{0} starting to edit {1}", user, entry);
 					editors.Add(entry, CreateEntryEditData(user));
 				}
-
 			}
-
 		}
 
 		private EntryEditData GetEditor(EntryRef entry)
 		{
-
 			ParamIs.NotNull(() => entry);
 
 			lock (editors)
 			{
-
 				if (editors.ContainsKey(entry))
 					return editors[entry];
-
 			}
 
 			return Nothing;
-
 		}
 
 		/// <summary>
@@ -122,7 +102,6 @@ namespace VocaDb.Model.Helpers
 		/// <returns>Edit data for the active editor. Cannot be null.</returns>
 		public EntryEditData CheckConcurrentEditsInst(EntryRef entry, IUser user)
 		{
-
 			ParamIs.NotNull(() => entry);
 			ParamIs.NotNull(() => user);
 
@@ -136,13 +115,11 @@ namespace VocaDb.Model.Helpers
 			AddOrUpdate(entry, user);
 
 			return Nothing;
-
 		}
 
 		public virtual EntryEditData CreateEntryEditData(IUser user)
 		{
 			return new EntryEditData(user);
 		}
-
 	}
 }

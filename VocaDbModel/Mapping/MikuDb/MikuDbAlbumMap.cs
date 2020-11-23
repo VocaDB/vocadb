@@ -3,13 +3,10 @@ using VocaDb.Model.Domain.MikuDb;
 
 namespace VocaDb.Model.Mapping.MikuDb
 {
-
 	public class MikuDbAlbumMap : ClassMap<MikuDbAlbum>
 	{
-
 		public MikuDbAlbumMap()
 		{
-
 			Schema("mikudb");
 			Table("ImportedAlbums");
 
@@ -26,9 +23,6 @@ namespace VocaDb.Model.Mapping.MikuDb
 			{
 				c.Map(m => m.Bytes, "CoverPictureBytes").Length(int.MaxValue).LazyLoad();
 			});
-
 		}
-
 	}
-
 }

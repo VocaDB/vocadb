@@ -4,10 +4,8 @@ using System.Linq;
 
 namespace VocaDb.Model.Domain.Globalization
 {
-
 	public class RegionCollection
 	{
-
 		public static readonly string[] RegionCodes = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
 			.Select(culture => new RegionInfo(culture.Name).TwoLetterISORegionName)
 			.OrderBy(c => c)
@@ -29,7 +27,5 @@ namespace VocaDb.Model.Domain.Globalization
 					.OrderBy(k => k.Value))
 				.ToDictionary(k => k.Key, k => k.Value);
 		}
-
 	}
-
 }

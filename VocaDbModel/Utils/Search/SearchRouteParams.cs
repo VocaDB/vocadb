@@ -7,10 +7,8 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Utils.Search
 {
-
 	public class SearchRouteParams
 	{
-
 		public SearchRouteParams(EntryType? searchType = null)
 		{
 			this.searchType = searchType;
@@ -41,42 +39,34 @@ namespace VocaDb.Model.Utils.Search
 		public string tag { get; set; }
 
 		public int? tagId { get; set; }
-
 	}
 
 	public class SearchRouteParamsFactory
 	{
-
 		public static SearchRouteParamsFactory Instance => new SearchRouteParamsFactory();
 
 		public SearchRouteParams Albums(int? tagId = null)
 		{
-
 			return new SearchRouteParams(EntryType.Album)
 			{
 				tagId = tagId,
 			};
-
 		}
 
 		public SearchRouteParams Artists(int? tagId = null)
 		{
-
 			return new SearchRouteParams(EntryType.Artist)
 			{
 				tagId = tagId,
 			};
-
 		}
 
 		public SearchRouteParams Entries(int? tagId = null)
 		{
-
 			return new SearchRouteParams(EntryType.Undefined)
 			{
 				tagId = tagId,
 			};
-
 		}
 
 		public SearchRouteParams Events(
@@ -85,7 +75,6 @@ namespace VocaDb.Model.Utils.Search
 			EventSortRule? sort = null,
 			EventCategory? category = null)
 		{
-
 			return new SearchRouteParams(EntryType.ReleaseEvent)
 			{
 				tagId = tagId,
@@ -93,7 +82,6 @@ namespace VocaDb.Model.Utils.Search
 				sort = sort,
 				eventCategory = category
 			};
-
 		}
 
 		public SearchRouteParams Songs(
@@ -103,7 +91,6 @@ namespace VocaDb.Model.Utils.Search
 			object sort = null,
 			int? tagId = null)
 		{
-
 			return new SearchRouteParams(EntryType.Song)
 			{
 				artistId = artistId,
@@ -112,9 +99,6 @@ namespace VocaDb.Model.Utils.Search
 				sort = sort,
 				tagId = tagId
 			};
-
 		}
-
 	}
-
 }

@@ -1,9 +1,7 @@
 namespace VocaDb.Migrations
 {
-
 	public static class TableNames
 	{
-
 		public const string ActivityEntries = nameof(ActivityEntries);
 		public const string AlbumDiscProperties = nameof(AlbumDiscProperties);
 		public const string AlbumNames = nameof(AlbumNames);
@@ -54,12 +52,10 @@ namespace VocaDb.Migrations
 		public const string UserMessages = nameof(UserMessages);
 		public const string Users = nameof(Users);
 		public const string Venues = nameof(Venues);
-
 	}
 
 	public static class ColumnNames
 	{
 		public const string Id = nameof(Id);
 	}
-
 }

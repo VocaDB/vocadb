@@ -15,10 +15,8 @@ using File = System.IO.File;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public class LocalFileManager
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		public const int MaxMediaSizeMB = 20;
 		public const int MaxMediaSizeBytes = MaxMediaSizeMB * 1024 * 1024;
@@ -39,7 +37,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public PVContract CreatePVContract(HttpPostedFileBase file, IIdentity user, IUser loggedInUser)
 		{
-
 			var tempFile = Path.ChangeExtension(Path.GetTempFileName(), ImageHelper.GetExtensionFromMime(file.ContentType));
 			file.SaveAs(tempFile);
 
@@ -59,7 +56,6 @@ namespace VocaDb.Model.Service.VideoServices
 				pv.Name = Path.GetFileNameWithoutExtension(file.FileName);
 
 			return pv;
-
 		}
 
 		private string GetFilesystemPath(string pvId)
@@ -69,7 +65,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 		private void CreateThumbnail(string oldFull, string pvId, PVForSong pv)
 		{
-
 			if (!IsImage(oldFull))
 				return;
 
@@ -83,16 +78,13 @@ namespace VocaDb.Model.Service.VideoServices
 				pv.ThumbUrl = VocaUriBuilder.StaticResource("/media-thumb/" + pvId);
 				pv.Song.UpdateThumbUrl();
 			}
-
 		}
 
 		public void SyncLocalFilePVs(CollectionDiff<PVForSong, PVForSong> diff, int songId)
 		{
-
 			var addedLocalMedia = diff.Added.Where(m => m.Service == PVService.LocalFile);
 			foreach (var pv in addedLocalMedia)
 			{
-
 				var oldFull = Path.Combine(Path.GetTempPath(), pv.PVId);
 
 				if (Path.GetDirectoryName(oldFull) != Path.GetDirectoryName(Path.GetTempPath()))
@@ -107,7 +99,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 				try
 				{
-
 					File.Move(oldFull, newFull);
 
 					// Remove copied permissions, reset to inherited http://stackoverflow.com/a/2930969
@@ -116,14 +107,12 @@ namespace VocaDb.Model.Service.VideoServices
 					File.SetAccessControl(newFull, fs);
 
 					CreateThumbnail(newFull, newId, pv);
-
 				}
 				catch (IOException x)
 				{
 					log.Error(x, "Unable to move local media file: " + oldFull);
 					throw;
 				}
-
 			}
 
 			foreach (var pv in diff.Removed.Where(m => m.Service == PVService.LocalFile))
@@ -141,9 +130,6 @@ namespace VocaDb.Model.Service.VideoServices
 					}
 				}
 			}
-
 		}
-
 	}
-
 }

@@ -7,15 +7,12 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Helpers
 {
-
 	public static class LyricsHelper
 	{
-
 		public static LyricsForSongContract GetDefaultLyrics(LyricsForSongContract[] lyrics, OptionalCultureCode uiCultureCode,
 			IEnumerable<OptionalCultureCode> userLanguages,
 			Lazy<IEnumerable<UserKnownLanguage>> knownLanguages)
 		{
-
 			if (!lyrics.Any())
 				return null;
 
@@ -50,8 +47,6 @@ namespace VocaDb.Model.Helpers
 			var original = lyrics.FirstOrDefault(l => l.TranslationType == TranslationType.Original);
 
 			return original ?? lyrics.First();
-
 		}
-
 	}
 }

@@ -6,10 +6,8 @@ using NLog;
 
 namespace VocaDb.Web.Code.WebApi
 {
-
 	public class UnhandledExceptionLogger : ExceptionLogger
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		public override bool ShouldLog(ExceptionLoggerContext context)
@@ -21,14 +19,10 @@ namespace VocaDb.Web.Code.WebApi
 
 		public override void Log(ExceptionLoggerContext context)
 		{
-
 			if (!ShouldLog(context))
 				return;
 
 			log.Error(context.Exception, "Exception raised by web API");
-
 		}
-
 	}
-
 }

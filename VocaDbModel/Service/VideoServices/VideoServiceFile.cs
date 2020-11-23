@@ -13,10 +13,8 @@ using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public class VideoServiceFile : VideoService
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private static readonly HashSet<string> mimeTypes = new HashSet<string>(new[] { "audio/mpeg" }, StringComparer.InvariantCultureIgnoreCase);
 
@@ -48,7 +46,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 		private VideoTitleParseResult GetVideoTitle(string id)
 		{
-
 			Uri uri;
 			string name = string.Empty;
 			if (Uri.TryCreate(id, UriKind.Absolute, out uri))
@@ -57,7 +54,6 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 
 			return VideoTitleParseResult.CreateSuccess(name, string.Empty, string.Empty, string.Empty);
-
 		}
 
 		public override Task<VideoTitleParseResult> GetVideoTitleAsync(string id)
@@ -72,7 +68,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
 		{
-
 			url = UrlHelper.MakeLink(url);
 
 			Uri parsedUri;
@@ -92,10 +87,8 @@ namespace VocaDb.Model.Service.VideoServices
 
 			try
 			{
-
 				using (var client = new HttpClient())
 				{
-
 					client.Timeout = TimeSpan.FromSeconds(10);
 
 					using (var response = await client.SendAsync(request))
@@ -108,11 +101,8 @@ namespace VocaDb.Model.Service.VideoServices
 						{
 							return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, string.Format("Unsupported content type: {0}", mime));
 						}
-
 					}
-
 				}
-
 			}
 			catch (WebException x)
 			{
@@ -122,14 +112,11 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 
 			return VideoUrlParseResult.CreateOk(url, PVService.File, url, await GetVideoTitleAsync(url));
-
 		}
 
 		protected override Task<VideoUrlParseResult> ParseByIdAsync(string id, string url, bool getMeta)
 		{
 			return ParseByUrlAsync(url, getMeta);
 		}
-
 	}
-
 }

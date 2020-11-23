@@ -6,17 +6,13 @@ using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Service.Helpers
 {
-
 	public static class UrlHelper
 	{
-
 		private static bool IsFullLink(string str)
 		{
-
 			return (str.StartsWith("http://", StringComparison.InvariantCultureIgnoreCase)
 				|| str.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase)
 				|| str.StartsWith("mailto:", StringComparison.InvariantCultureIgnoreCase));
-
 		}
 
 		/// <summary>
@@ -27,7 +23,6 @@ namespace VocaDb.Model.Service.Helpers
 		/// <returns>Full URL including http://. Can be null if source was null.</returns>
 		public static string MakeLink(string partialLink, bool assumeWww = false)
 		{
-
 			if (string.IsNullOrEmpty(partialLink))
 				return partialLink;
 
@@ -38,16 +33,13 @@ namespace VocaDb.Model.Service.Helpers
 				return string.Format("http://www.{0}", partialLink);
 
 			return string.Format("http://{0}", partialLink);
-
 		}
 
 		public static string MakePossileAffiliateLink(string partialLink)
 		{
-
 			var link = MakeLink(partialLink);
 
 			return (new ExtSites.AffiliateLinkGenerator(new VdbConfigManager())).GenerateAffiliateLink(link);
-
 		}
 
 		/// <summary>
@@ -55,7 +47,6 @@ namespace VocaDb.Model.Service.Helpers
 		/// </summary>
 		public static string RemoveScheme(string url)
 		{
-
 			if (string.IsNullOrEmpty(url))
 				return url;
 
@@ -69,7 +60,6 @@ namespace VocaDb.Model.Service.Helpers
 			}
 
 			return url;
-
 		}
 
 		/// <summary>
@@ -88,7 +78,6 @@ namespace VocaDb.Model.Service.Helpers
 
 		public static string UpgradeToHttps(string url)
 		{
-
 			if (string.IsNullOrEmpty(url) || url.StartsWith("https://"))
 				return url;
 
@@ -109,9 +98,6 @@ namespace VocaDb.Model.Service.Helpers
 				url = httpUpgradeMatch.FormattedUrl;
 
 			return url;
-
 		}
-
 	}
-
 }

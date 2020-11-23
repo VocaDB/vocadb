@@ -5,19 +5,16 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Domain.Images
 {
-
 	/// <summary>
 	/// Stores entry thumbnails (for album/artist) in the static files folder on the server disk using the newer directory layout
 	/// where different sizes of images are saved in separate folders (for example /img/Album/mainSmall/39.jpg).
 	/// </summary>
 	public class ServerEntryThumbPersister : ServerEntryImagePersisterBase, IEntryThumbPersister
 	{
-
 		private readonly string staticRoot;
 
 		private static string GetDir(ImageSize size)
 		{
-
 			switch (size)
 			{
 				case ImageSize.Original:
@@ -31,7 +28,6 @@ namespace VocaDb.Model.Domain.Images
 				default:
 					throw new NotSupportedException();
 			}
-
 		}
 
 		private string GetRelativeUrl(IEntryImageInformation picture, ImageSize size)
@@ -55,9 +51,7 @@ namespace VocaDb.Model.Domain.Images
 
 		public ServerEntryThumbPersister()
 		{
-
 			staticRoot = AppConfig.StaticContentPath;
-
 		}
 
 		public override VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size)
@@ -73,5 +67,4 @@ namespace VocaDb.Model.Domain.Images
 					&& size != ImageSize.Original);
 		}
 	}
-
 }

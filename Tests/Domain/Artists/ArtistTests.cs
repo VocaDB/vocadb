@@ -9,12 +9,8 @@ using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Tests.Domain.Artists
 {
-
 	[TestClass]
 	public class ArtistTests
 	{
-
-
 	}
-
 }

@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.Domain.Tags
 {
-
 	public class TagDiff : EntryDiff<TagEditableFields>
 	{
-
 		public TagDiff() : this(true) { }
 
 		public TagDiff(bool isSnapShot)
@@ -27,6 +25,5 @@ namespace VocaDb.Model.Domain.Tags
 		public virtual bool IncludeNames => IsSnapshot || Names.IsChanged;
 		public virtual bool IncludeRelatedTags => IsSnapshot || RelatedTags.IsChanged;
 		public virtual bool IncludeWebLinks => IsSnapshot || WebLinks.IsChanged;
-
 	}
 }

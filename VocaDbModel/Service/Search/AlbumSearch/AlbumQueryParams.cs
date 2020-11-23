@@ -6,32 +6,26 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch
 {
-
 	/// <summary>
 	/// Query parameters for albums
 	/// </summary>
 	public class AlbumQueryParams
 	{
-
 		public AlbumQueryParams()
 		{
-
 			AlbumType = DiscType.Unknown;
 			Common = new CommonSearchParams();
 			Paging = new PagingProperties(0, 30, true);
-
 		}
 
 		public AlbumQueryParams(SearchTextQuery textQuery, DiscType discType, int start, int maxResults, bool getTotalCount,
 			AlbumSortRule sortRule = AlbumSortRule.Name, bool moveExactToTop = false)
 		{
-
 			Common = new CommonSearchParams(textQuery, false, moveExactToTop);
 			Paging = new PagingProperties(start, maxResults, getTotalCount);
 
 			AlbumType = discType;
 			SortRule = sortRule;
-
 		}
 
 		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
@@ -65,7 +59,5 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 		public string[] Tags { get; set; }
 
 		public int[] TagIds { get; set; }
-
 	}
-
 }

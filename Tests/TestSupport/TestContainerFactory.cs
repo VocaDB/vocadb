@@ -8,13 +8,11 @@ using VocaDb.Tests.DatabaseTests;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	/// <summary>
 	/// Creates AutoFac dependency injection container for database tests.
 	/// </summary>
 	public static class TestContainerFactory
 	{
-
 		private static ISessionFactory BuildTestSessionFactory()
 		{
 			return new TestDatabaseFactory().BuildTestSessionFactory();
@@ -22,7 +20,6 @@ namespace VocaDb.Tests.TestSupport
 
 		public static IContainer BuildContainer()
 		{
-
 			var builder = new ContainerBuilder();
 
 			builder.Register(x => BuildTestSessionFactory()).SingleInstance();
@@ -44,9 +41,6 @@ namespace VocaDb.Tests.TestSupport
 
 			var container = builder.Build();
 			return container;
-
 		}
-
 	}
-
 }

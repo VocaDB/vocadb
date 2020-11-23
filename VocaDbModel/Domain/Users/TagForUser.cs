@@ -2,13 +2,11 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.Domain.Users
 {
-
 	/// <summary>
 	/// User following a tag.
 	/// </summary>
 	public class TagForUser : IEntryWithIntId
 	{
-
 		private Tag tag;
 		private User user;
 
@@ -17,10 +15,8 @@ namespace VocaDb.Model.Domain.Users
 		public TagForUser(User user, Tag tag)
 			: this()
 		{
-
 			User = user;
 			Tag = tag;
-
 		}
 
 		public virtual int Id { get; set; }
@@ -50,5 +46,4 @@ namespace VocaDb.Model.Domain.Users
 			return string.Format("{0} following {1}", User, Tag);
 		}
 	}
-
 }

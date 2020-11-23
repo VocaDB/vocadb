@@ -18,31 +18,25 @@ using VocaDb.Web.Code.Filters;
 
 namespace VocaDb.Web
 {
-
 	public class MvcApplication : HttpApplication
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private static UserService UserService => DependencyResolver.Current.GetService<UserService>();
 
 		public static bool IsAjaxRequest(HttpRequest request)
 		{
-
 			ParamIs.NotNull(() => request);
 
 			return (request["X-Requested-With"] == "XMLHttpRequest" || request.Headers["X-Requested-With"] == "XMLHttpRequest");
-
 		}
 
 		public static LoginManager LoginManager => new LoginManager();
 
 		protected void Application_AuthenticateRequest(object sender, EventArgs e)
 		{
-
 			try
 			{
-
 				// Get user roles from cookie and assign correct principal
 				if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
 				{
@@ -56,7 +50,6 @@ namespace VocaDb.Web
 				}
 
 				LoginManager.InitLanguage();
-
 			}
 			catch (HttpRequestValidationException x)
 			{
@@ -67,12 +60,10 @@ namespace VocaDb.Web
 				// TODO: this should be processed using normal exception handling.
 				ErrorLogger.LogException(Request, x, LogLevel.Fatal);
 			}
-
 		}
 
 		private void HandleHttpError(int code, string description = null, string msg = null)
 		{
-
 			// Log error here to get request info.
 			ErrorLogger.LogHttpError(Request, code, msg);
 
@@ -84,12 +75,10 @@ namespace VocaDb.Web
 
 			Response.RedirectToRoute("Default",
 				new { controller = "Error", action = "Index", code, redirect = true });
-
 		}
 
 		protected void Application_Error(object sender, EventArgs e)
 		{
-
 			var ex = HttpContext.Current.Server.GetLastError();
 
 			if (ex == null)
@@ -152,7 +141,6 @@ namespace VocaDb.Web
 
 		protected void Application_Start()
 		{
-
 			log.Info("Web application starting.");
 
 			MvcHandler.DisableMvcResponseHeader = true;
@@ -165,7 +153,6 @@ namespace VocaDb.Web
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 
 			log.Debug("Web application started successfully.");
-
 		}
 	}
 }

@@ -4,13 +4,11 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Images
 {
-
 	/// <summary>
 	/// Writes entry images to a store (such as disk) and loads them back as needed.
 	/// </summary>
 	public interface IEntryImagePersister : IEntryImageUrlFactory
 	{
-
 		/// <summary>
 		/// Gets stream for reading an image from the store.
 		/// </summary>
@@ -35,7 +33,6 @@ namespace VocaDb.Model.Domain.Images
 		/// <param name="size">Image size.</param>
 		/// <param name="image">Image object. Cannot be null.</param>
 		void Write(IEntryImageInformation picture, ImageSize size, Image image);
-
 	}
 
 	public static class EntryImagePersisterExtensions
@@ -48,5 +45,4 @@ namespace VocaDb.Model.Domain.Images
 			}
 		}
 	}
-
 }

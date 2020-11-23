@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.Domain.Tags
 {
-
 	public class TagWebLink : GenericWebLink<Tag>
 	{
-
 		public TagWebLink() { }
 
 		public TagWebLink(Tag tag, WebLinkContract contract)
@@ -14,7 +12,5 @@ namespace VocaDb.Model.Domain.Tags
 
 		public TagWebLink(Tag tag, string description, string url)
 			: base(tag, description, url, WebLinkCategory.Other) { }
-
 	}
-
 }

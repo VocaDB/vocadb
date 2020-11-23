@@ -7,10 +7,8 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Models.SongLists
 {
-
 	public class SongListDetailsViewModel
 	{
-
 		public SongListDetailsViewModel() { }
 
 		public SongListDetailsViewModel(SongListForApiContract songList, IUserPermissionContext permissionContext)
@@ -37,7 +35,5 @@ namespace VocaDb.Web.Models.SongLists
 		}
 
 		public string ThumbUrl { get; set; }
-
 	}
-
 }

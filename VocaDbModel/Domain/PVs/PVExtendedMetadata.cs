@@ -4,7 +4,6 @@ using VocaDb.Model.DataContracts;
 
 namespace VocaDb.Model.Domain.PVs
 {
-
 	/// <summary>
 	/// Extended PV metadata serialized as JSON.
 	/// This must be fully serializable and generally immutable.
@@ -12,16 +11,13 @@ namespace VocaDb.Model.Domain.PVs
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class PVExtendedMetadata
 	{
-
 		public virtual T GetExtendedMetadata<T>() where T : class
 		{
-
 			if (string.IsNullOrEmpty(Json))
 				return null;
 
 			var obj = JsonConvert.DeserializeObject<T>(Json);
 			return obj;
-
 		}
 
 		public PVExtendedMetadata() { }
@@ -33,7 +29,5 @@ namespace VocaDb.Model.Domain.PVs
 
 		[DataMember]
 		public string Json { get; set; }
-
 	}
-
 }

@@ -3,13 +3,10 @@ using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.Mapping.Artists
 {
-
 	public class ArtistMap : ClassMap<Artist>
 	{
-
 		public ArtistMap()
 		{
-
 			Cache.ReadWrite();
 
 			Id(m => m.Id);
@@ -88,17 +85,13 @@ namespace VocaDb.Model.Mapping.Artists
 			//HasMany(m => m.Hits).Inverse().Cascade.AllDeleteOrphan();
 			HasMany(m => m.OwnerUsers).Inverse().Cache.ReadWrite();
 			HasMany(m => m.Users).Inverse();
-
 		}
-
 	}
 
 	public class ArchivedArtistVersionMap : ClassMap<ArchivedArtistVersion>
 	{
-
 		public ArchivedArtistVersionMap()
 		{
-
 			Id(m => m.Id);
 
 			Map(m => m.AgentName).Not.Nullable();
@@ -124,28 +117,21 @@ namespace VocaDb.Model.Mapping.Artists
 			{
 				c.Map(m => m.Bytes, "PictureBytes").Length(int.MaxValue);
 			}).LazyLoad();
-
 		}
-
 	}
 
 	public class ArtistForArtistMap : ClassMap<ArtistForArtist>
 	{
-
 		public ArtistForArtistMap()
 		{
-
 			Table("GroupsForArtists");
 			Id(m => m.Id);
 
 			Map(m => m.LinkType).Not.Nullable();
 			References(m => m.Parent).Column("[Group]").Not.Nullable();
 			References(m => m.Member).Not.Nullable();
-
 		}
-
 	}
 
 	public class ArtistHitMap : EntryHitMap<ArtistHit, Artist> { }
-
 }

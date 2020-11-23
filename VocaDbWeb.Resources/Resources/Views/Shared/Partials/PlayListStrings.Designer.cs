@@ -25,7 +25,6 @@ namespace VocaDb.Web.Resources.Views.Shared.Partials
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public class PlayListStrings
 	{
-
 		private static global::System.Resources.ResourceManager resourceMan;
 
 		private static global::System.Globalization.CultureInfo resourceCulture;

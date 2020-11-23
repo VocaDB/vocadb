@@ -8,10 +8,8 @@ using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	public class FakePVParser : IPVParser
 	{
-
 		public Func<string, bool, VideoUrlParseResult> ResultFunc { get; set; }
 
 		public Dictionary<string, VideoUrlParseResult> MatchedPVs { get; set; }
@@ -23,14 +21,12 @@ namespace VocaDb.Tests.TestSupport
 
 		private VideoUrlParseResult ParseByUrl(string url, bool getTitle, IUserPermissionContext permissionContext)
 		{
-
 			if (!MatchedPVs.ContainsKey(url))
 			{
 				return ResultFunc != null ? ResultFunc(url, getTitle) : VideoUrlParseResult.CreateOk(url, PVService.NicoNicoDouga, "sm393939", VideoTitleParseResult.Empty);
 			}
 
 			return MatchedPVs[url];
-
 		}
 
 		public Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext permissionContext)
@@ -43,5 +39,4 @@ namespace VocaDb.Tests.TestSupport
 			return Task.FromResult(urls.Select(url => ParseByUrl(url, getTitle, permissionContext)).ToArray());
 		}
 	}
-
 }

@@ -7,20 +7,17 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Web.Code
 {
-
 	/// <summary>
 	/// Generates Gravatar URLs for user profile icons.
 	/// </summary>
 	public class GravatarUserIconFactory : IUserIconFactory
 	{
-
 		private string GetUrl(IUserWithEmail user, int sizePx) => Gravatar.GetUrl(user.Email, sizePx, scheme: "https");
 
 		public GravatarUserIconFactory() { }
 
 		public EntryThumbForApiContract GetIcons(IUserWithEmail user, ImageSizes sizes = ImageSizes.All)
 		{
-
 			var contract = new EntryThumbForApiContract();
 
 			if (string.IsNullOrEmpty(user.Email))
@@ -42,8 +39,6 @@ namespace VocaDb.Web.Code
 			}
 
 			return contract;
-
 		}
 	}
-
 }

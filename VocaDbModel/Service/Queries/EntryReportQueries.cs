@@ -12,7 +12,6 @@ using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.Queries
 {
-
 	/// <summary>
 	/// Creates <see cref="EntryReport"/>s.
 	/// </summary>
@@ -21,7 +20,6 @@ namespace VocaDb.Model.Service.Queries
 	/// </remarks>
 	public class EntryReportQueries
 	{
-
 		private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
@@ -55,7 +53,6 @@ namespace VocaDb.Model.Service.Queries
 			where TReport : GenericEntryReport<TEntry, TReportType>
 			where TReportType : struct, Enum
 		{
-
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
@@ -86,7 +83,6 @@ namespace VocaDb.Model.Service.Queries
 
 			if (versionForReport == null)
 			{
-
 				// Get first version, check if all following edits were made by the same user OR the reporter
 				var firstVersion = entry.ArchivedVersionsManager.VersionsBase.FirstOrDefault(
 					ver => ver.Author != null && !ver.Author.Equals(reporter));
@@ -98,7 +94,6 @@ namespace VocaDb.Model.Service.Queries
 
 				if (oneEditor)
 					versionForReport = firstVersion; // TODO: need to include report type in notification
-
 			}
 
 			// Get translated report type name
@@ -121,9 +116,6 @@ namespace VocaDb.Model.Service.Queries
 
 			ctx.Save(report);
 			return (true, report.Id);
-
 		}
-
 	}
-
 }

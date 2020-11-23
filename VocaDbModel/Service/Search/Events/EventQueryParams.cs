@@ -6,10 +6,8 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Search.Events
 {
-
 	public class EventQueryParams
 	{
-
 		public DateTime? AfterDate { get; set; }
 		public DateTime? BeforeDate { get; set; }
 		public EventCategory Category { get; set; }
@@ -26,7 +24,5 @@ namespace VocaDb.Model.Service.Search.Events
 		public EntryIdsCollection ArtistIds { get; set; }
 		public bool ChildVoicebanks { get; set; }
 		public bool IncludeMembers { get; set; }
-
 	}
-
 }

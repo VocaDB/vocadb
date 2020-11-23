@@ -7,15 +7,12 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.DataContracts
 {
-
 	public class ArchivedObjectVersionContract
 	{
-
 		public ArchivedObjectVersionContract() { }
 
 		public ArchivedObjectVersionContract(ArchivedObjectVersion archivedObjectVersion)
 		{
-
 			ParamIs.NotNull(() => archivedObjectVersion);
 
 			AgentName = !string.IsNullOrEmpty(archivedObjectVersion.AgentName) || archivedObjectVersion.Author == null ? archivedObjectVersion.AgentName : archivedObjectVersion.Author.Name;
@@ -28,7 +25,6 @@ namespace VocaDb.Model.DataContracts
 			Notes = archivedObjectVersion.Notes;
 			Status = archivedObjectVersion.Status;
 			Version = archivedObjectVersion.Version;
-
 		}
 
 		public string AgentName { get; set; }
@@ -65,7 +61,5 @@ namespace VocaDb.Model.DataContracts
 		{
 			return string.Empty;
 		}
-
 	}
-
 }

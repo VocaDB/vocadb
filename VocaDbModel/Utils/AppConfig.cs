@@ -7,10 +7,8 @@ using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Utils
 {
-
 	public static class AppConfig
 	{
-
 		private static DiscType[] albumTypes;
 		private static ArtistType[] artistTypes;
 		private static ArtistRoles[] artistRoles;
@@ -70,18 +68,14 @@ namespace VocaDb.Model.Utils
 
 		private static bool Val(string key, bool def)
 		{
-
 			var val = Val(key);
 			return (bool.TryParse(val, out var boolVal)) ? boolVal : def;
-
 		}
 
 		private static int Val(string key, int def)
 		{
-
 			var val = Val(key);
 			return (int.TryParse(val, out var boolVal)) ? boolVal : def;
-
 		}
 
 		public static bool AllowCustomArtistName => Val("AllowCustomArtistName", false);
@@ -90,7 +84,6 @@ namespace VocaDb.Model.Utils
 		{
 			get
 			{
-
 				if (albumTypes == null)
 				{
 					var val = Val("AlbumTypes");
@@ -98,7 +91,6 @@ namespace VocaDb.Model.Utils
 				}
 
 				return albumTypes;
-
 			}
 		}
 
@@ -118,7 +110,6 @@ namespace VocaDb.Model.Utils
 		{
 			get
 			{
-
 				if (artistTypes == null)
 				{
 					var val = Val("ArtistTypes");
@@ -126,7 +117,6 @@ namespace VocaDb.Model.Utils
 				}
 
 				return artistTypes;
-
 			}
 		}
 
@@ -134,7 +124,6 @@ namespace VocaDb.Model.Utils
 		{
 			get
 			{
-
 				if (artistRoles == null)
 				{
 					var val = Val("ArtistRoles");
@@ -142,7 +131,6 @@ namespace VocaDb.Model.Utils
 				}
 
 				return artistRoles;
-
 			}
 		}
 
@@ -170,14 +158,12 @@ namespace VocaDb.Model.Utils
 
 		public static GlobalLinksSection GetGlobalLinksSection()
 		{
-
 			var appLinks = (LinksSection)ConfigurationManager.GetSection("vocaDb/globalLinks/appLinks");
 			var bigBanners = (LinksSection)ConfigurationManager.GetSection("vocaDb/globalLinks/bigBanners");
 			var smallBanners = (LinksSection)ConfigurationManager.GetSection("vocaDb/globalLinks/smallBanners");
 			var socialSites = (LinksSection)ConfigurationManager.GetSection("vocaDb/globalLinks/socialSites");
 
 			return new GlobalLinksSection { AppLinks = appLinks, BigBanners = bigBanners, SmallBanners = smallBanners, SocialSites = socialSites };
-
 		}
 
 		public static SlogansSection GetSlogansSection()
@@ -216,7 +202,6 @@ namespace VocaDb.Model.Utils
 		{
 			get
 			{
-
 				if (songTypes == null)
 				{
 					var val = Val("SongTypes");
@@ -224,7 +209,6 @@ namespace VocaDb.Model.Utils
 				}
 
 				return songTypes;
-
 			}
 		}
 
@@ -241,6 +225,5 @@ namespace VocaDb.Model.Utils
 		public static string YoutubeApiKey => Val("YoutubeApiKey");
 
 		public static string VimeoApiKey => Val("VimeoApiKey");
-
 	}
 }

@@ -3,10 +3,8 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	public class FakeEntryLinkFactory : IEntryLinkFactory
 	{
-
 		public string CreateEntryLink(IEntryBase entry, string slug)
 		{
 			return entry?.ToString();
@@ -21,7 +19,5 @@ namespace VocaDb.Tests.TestSupport
 		{
 			return string.Empty;
 		}
-
 	}
-
 }

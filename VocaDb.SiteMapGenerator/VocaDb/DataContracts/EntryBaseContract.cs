@@ -2,11 +2,9 @@
 
 namespace VocaDb.SiteMapGenerator.VocaDb.DataContracts
 {
-
 	[DataContract]
 	public class EntryBaseContract
 	{
-
 		[DataMember]
 		public int Id { get; set; }
 
@@ -15,7 +13,5 @@ namespace VocaDb.SiteMapGenerator.VocaDb.DataContracts
 
 		[DataMember]
 		public string UrlSlug { get; set; }
-
 	}
-
 }

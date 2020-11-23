@@ -4,10 +4,8 @@ using System.Linq;
 
 namespace VocaDb.Model.Domain.Songs
 {
-
 	public enum SongType
 	{
-
 		Unspecified = 0,
 
 		Original = 1,
@@ -33,13 +31,11 @@ namespace VocaDb.Model.Domain.Songs
 		Illustration = 1024,
 
 		Other = 2048
-
 	}
 
 	[Flags]
 	public enum SongTypes
 	{
-
 		Unspecified = 0,
 
 		Original = 1,
@@ -63,22 +59,16 @@ namespace VocaDb.Model.Domain.Songs
 		Illustration = 512,
 
 		Other = 1024,
-
 	}
 
 	public static class SongTypesExtender
 	{
-
 		public static IEnumerable<SongType> ToIndividualSelections(this SongTypes selections, bool skipUnspecified = false)
 		{
-
 			return EnumVal<SongTypes>
 				.GetIndividualValues(selections)
 				.Where(t => !skipUnspecified || t != SongTypes.Unspecified)
 				.Select(s => (SongType)s);
-
 		}
-
 	}
-
 }

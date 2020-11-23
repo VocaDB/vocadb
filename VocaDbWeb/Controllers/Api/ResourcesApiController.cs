@@ -14,7 +14,6 @@ using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	/// <summary>
 	/// Loads localized string resources.
 	/// </summary>
@@ -22,19 +21,14 @@ namespace VocaDb.Web.Controllers.Api
 	[DefaultCasingConfig]
 	public class ResourcesApiController : ApiController
 	{
-
 		class DefaultCasingConfig : Attribute, IControllerConfiguration
 		{
-
 			public void Initialize(HttpControllerSettings controllerSettings, HttpControllerDescriptor controllerDescriptor)
 			{
-
 				controllerSettings.Formatters.Clear();
 				controllerSettings.Formatters.Add(new JsonMediaTypeFormatter());
 				controllerSettings.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new DefaultContractResolver();
-
 			}
-
 		}
 
 		private const int cacheDuration = Constants.SecondsInADay;
@@ -67,14 +61,12 @@ namespace VocaDb.Web.Controllers.Api
 
 		private Dictionary<string, string> GetResources(string setName, CultureInfo culture)
 		{
-
 			ResourceManager resourceManager;
 			if (!allSets.TryGetValue(setName, out resourceManager))
 				return new Dictionary<string, string>();
 
 			var set = resourceManager.GetResourceSet(culture, true, true);
 			return set.Cast<DictionaryEntry>().ToDictionary(s => (string)s.Key, s => (string)s.Value);
-
 		}
 
 		/// <summary>
@@ -87,7 +79,6 @@ namespace VocaDb.Web.Controllers.Api
 		[CacheOutput(ClientTimeSpan = cacheDuration, ServerTimeSpan = cacheDuration)]
 		public Dictionary<string, Dictionary<string, string>> GetList(string cultureCode, [FromUri] string[] setNames)
 		{
-
 			if (setNames == null || !setNames.Any())
 			{
 				return new Dictionary<string, Dictionary<string, string>>();
@@ -108,9 +99,6 @@ namespace VocaDb.Web.Controllers.Api
 
 			var sets = setNames.Distinct().ToDictionary(s => s, s => GetResources(s, culture));
 			return sets;
-
 		}
-
 	}
-
 }

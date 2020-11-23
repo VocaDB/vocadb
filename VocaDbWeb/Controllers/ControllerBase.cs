@@ -21,10 +21,8 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Web.Controllers
 {
-
 	public class ControllerBase : Controller
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		protected static readonly TimeSpan imageExpirationTime = TimeSpan.FromMinutes(5);
 		protected const int entriesPerPage = 30;
@@ -44,11 +42,9 @@ namespace VocaDb.Web.Controllers
 		{
 			get
 			{
-
 				PermissionContext.VerifyLogin();
 
 				return PermissionContext.LoggedUser.Id;
-
 			}
 		}
 
@@ -68,15 +64,12 @@ namespace VocaDb.Web.Controllers
 
 		protected void AddFormSubmissionError(string details)
 		{
-
 			log.Warn("Form submission error: {0}", details);
 			ModelState.AddModelError(string.Empty, string.Format("Error while sending form contents - please try again. Diagnostic error message: {0}.", details));
-
 		}
 
 		protected ActionResult Picture(EntryForPictureDisplayContract contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			// Allow images to be cached by public proxies, images shouldn't contain anything sensitive so this should be ok.
@@ -90,41 +83,31 @@ namespace VocaDb.Web.Controllers
 				Response.Cache.SetMaxAge(pictureCacheDuration);
 
 			return Picture(contract.Picture, contract.Name);
-
 		}
 
 		protected void CheckConcurrentEdit(EntryType entryType, int id)
 		{
-
 			Login.Manager.VerifyLogin();
 
 			var conflictingEditor = ConcurrentEntryEditManager.CheckConcurrentEdits(new EntryRef(entryType, id), Login.User);
 
 			if (conflictingEditor.UserId != ConcurrentEntryEditManager.Nothing.UserId)
 			{
-
 				var ago = DateTime.Now - conflictingEditor.Time;
 
 				if (ago.TotalMinutes < 1)
 				{
-
 					TempData.SetStatusMessage(string.Format(ViewRes.EntryEditStrings.ConcurrentEditWarningNow, conflictingEditor.UserName));
-
 				}
 				else
 				{
-
 					TempData.SetStatusMessage(string.Format(ViewRes.EntryEditStrings.ConcurrentEditWarning, conflictingEditor.UserName, (int)ago.TotalMinutes));
-
 				}
-
 			}
-
 		}
 
 		protected bool CheckUploadedPicture(HttpPostedFileBase pictureUpload, string fieldName)
 		{
-
 			bool errors = false;
 
 			if (pictureUpload.ContentLength > ImageHelper.MaxImageSizeBytes)
@@ -140,22 +123,18 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return !errors;
-
 		}
 
 		protected ActionResult HttpStatusCodeResult(HttpStatusCode code, string message)
 		{
-
 			Response.StatusCode = (int)code;
 			Response.StatusDescription = message;
 
 			return Content((int)code + ": " + message);
-
 		}
 
 		protected void ParseAdditionalPictures(HttpPostedFileBase mainPic, IList<EntryPictureFileContract> pictures)
 		{
-
 			ParamIs.NotNull(() => mainPic);
 			ParamIs.NotNull(() => pictures);
 
@@ -168,7 +147,6 @@ namespace VocaDb.Web.Controllers
 
 			for (int i = 0; i < additionalPics.Length; ++i)
 			{
-
 				if (i >= newPics.Length)
 					break;
 
@@ -182,21 +160,17 @@ namespace VocaDb.Web.Controllers
 					newPics[i].ContentLength = contract.ContentLength;
 					newPics[i].Purpose = contract.Purpose;
 				}
-
 			}
 
 			CollectionHelper.RemoveAll(pictures, p => p.Id == 0 && p.UploadedFile == null);
-
 		}
 
 		protected EntryPictureFileContract ParsePicture(HttpPostedFileBase pictureUpload, string fieldName, ImagePurpose purpose)
 		{
-
 			EntryPictureFileContract pictureData = null;
 
 			if (Request.Files.Count > 0 && pictureUpload != null && pictureUpload.ContentLength > 0)
 			{
-
 				if (pictureUpload.ContentLength > ImageHelper.MaxImageSizeBytes)
 				{
 					ModelState.AddModelError(fieldName, "Picture file is too large.");
@@ -211,16 +185,13 @@ namespace VocaDb.Web.Controllers
 
 				pictureData = new EntryPictureFileContract(pictureUpload.InputStream, pictureUpload.ContentType, pictureUpload.ContentLength, purpose);
 				pictureData.OriginalFileName = pictureUpload.FileName;
-
 			}
 
 			return pictureData;
-
 		}
 
 		protected ActionResult Picture(PictureContract pictureData, string title)
 		{
-
 			if (pictureData?.Bytes == null || string.IsNullOrEmpty(pictureData.Mime))
 				return File(Server.MapPath("~/Content/unknown.png"), "image/png");
 
@@ -234,36 +205,28 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return File(pictureData.Bytes, pictureData.Mime);
-
 		}
 
 		protected ActionResult LowercaseJson(object obj)
 		{
-
 			return new JsonNetResult { Data = obj };
-
 		}
 
 		protected new ActionResult Json(object obj)
 		{
-
 			return Content(JsonConvert.SerializeObject(obj), "application/json");
-
 		}
 
 		protected new ActionResult Json(object obj, string jsonPCallback)
 		{
-
 			if (string.IsNullOrEmpty(jsonPCallback))
 				return Json(obj);
 
 			return Content(string.Format("{0}({1})", jsonPCallback, JsonConvert.SerializeObject(obj)), "application/json");
-
 		}
 
 		protected string RenderPartialViewToString(string viewName, object model)
 		{
-
 			if (string.IsNullOrEmpty(viewName))
 				viewName = ControllerContext.RouteData.GetRequiredString("action");
 
@@ -277,12 +240,10 @@ namespace VocaDb.Web.Controllers
 
 				return sw.GetStringBuilder().ToString();
 			}
-
 		}
 
 		protected void RestoreErrorsFromTempData()
 		{
-
 			var list = TempData["ModelErrors"] as ModelStateList;
 
 			if (list == null)
@@ -301,12 +262,10 @@ namespace VocaDb.Web.Controllers
 					}
 				}
 			}
-
 		}
 
 		protected void SaveErrorsToTempData()
 		{
-
 			var list = new ModelStateList
 			{
 				ModelStates
@@ -314,21 +273,17 @@ namespace VocaDb.Web.Controllers
 			};
 
 			TempData["ModelErrors"] = list;
-
 		}
 
 		protected void SetSearchEntryType(EntryType entryType)
 		{
-
 			PageProperties.GlobalSearchType = entryType;
-
 		}
 
 		protected VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
 		protected ActionResult Xml(string content)
 		{
-
 			if (string.IsNullOrEmpty(content))
 				return new EmptyResult();
 
@@ -338,46 +293,35 @@ namespace VocaDb.Web.Controllers
 				Content = content,
 				ContentEncoding = Encoding.UTF8
 			};
-
 		}
-
 	}
 
 	class ModelStateList
 	{
-
 		public ModelStateErrors[] ModelStates;
-
 	}
 
 	class ModelStateErrors
 	{
-
 		public ModelStateErrors() { }
 
 		public ModelStateErrors(string key, ModelState state)
 		{
-
 			Key = key;
 			Errors = state.Errors;
-
 		}
 
 		public string Key { get; set; }
 
 		public ModelErrorCollection Errors { get; set; }
-
 	}
 
 	public enum DataFormat
 	{
-
 		Auto,
 
 		Json,
 
 		Xml
-
 	}
-
 }

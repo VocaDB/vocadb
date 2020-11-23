@@ -2,13 +2,11 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Tags
 {
-
 	/// <summary>
 	/// User's vote for a particular tag for a particular entry.
 	/// </summary>
 	public abstract class TagVote : IEntryWithLongId
 	{
-
 		private User user;
 
 		protected TagVote() { }
@@ -34,7 +32,6 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual bool Equals(TagVote another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -45,7 +42,6 @@ namespace VocaDb.Model.Domain.Tags
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj) => Equals(obj as TagVote);
@@ -56,6 +52,5 @@ namespace VocaDb.Model.Domain.Tags
 		{
 			return string.Format("Vote for {0} by {1}", UsageBase, User);
 		}
-
 	}
 }

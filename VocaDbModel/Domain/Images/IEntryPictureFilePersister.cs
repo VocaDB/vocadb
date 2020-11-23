@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace VocaDb.Model.Domain.Images
 {
-
 	public interface IEntryPictureFilePersister : IEntryImagePersister
 	{
-
 	}
-
 }

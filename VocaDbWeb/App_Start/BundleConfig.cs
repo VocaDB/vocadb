@@ -2,13 +2,10 @@ using System.Web.Optimization;
 
 namespace VocaDb.Web.App_Start
 {
-
 	public static class BundleConfig
 	{
-
 		public static void RegisterBundles(BundleCollection bundles)
 		{
-
 			bundles.Add(new ScriptBundle("~/bundles/shared/libs").Include(
 				"~/Scripts/jquery-{version}.js",
 				"~/Scripts/bootstrap.js",
@@ -582,9 +579,6 @@ namespace VocaDb.Web.App_Start
 			// CSS for jqxRating
 			bundles.Add(new StyleBundle("~/Scripts/jqwidgets27/styles/css").Include(
 				"~/Scripts/jqwidgets27/styles/jqx.base.css"));
-
 		}
-
 	}
-
 }

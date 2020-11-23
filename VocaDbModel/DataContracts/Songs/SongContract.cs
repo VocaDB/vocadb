@@ -9,11 +9,9 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongContract : IEntryWithStatus
 	{
-
 		string IEntryBase.DefaultName => Name;
 
 		EntryType IEntryBase.EntryType => EntryType.Song;
@@ -23,17 +21,14 @@ namespace VocaDb.Model.DataContracts.Songs
 		public SongContract(Song song, ContentLanguagePreference languagePreference, bool getThumbUrl = true)
 			: this(song, languagePreference, string.Empty)
 		{
-
 			if (getThumbUrl)
 			{
 				ThumbUrl = song.GetThumbUrl();
 			}
-
 		}
 
 		public SongContract(Song song, ContentLanguagePreference languagePreference, string thumbUrl)
 		{
-
 			ParamIs.NotNull(() => song);
 
 			AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
@@ -52,7 +47,6 @@ namespace VocaDb.Model.DataContracts.Songs
 			Status = song.Status;
 			Version = song.Version;
 			ThumbUrl = thumbUrl ?? string.Empty;
-
 		}
 
 		[DataMember]
@@ -109,7 +103,5 @@ namespace VocaDb.Model.DataContracts.Songs
 		{
 			return string.Format("song '{0}' [{1}]", Name, Id);
 		}
-
 	}
-
 }

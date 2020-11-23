@@ -7,7 +7,6 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.Service
 {
-
 	/// <summary>
 	/// Loads tags for entry types (and sub-types).
 	/// </summary>
@@ -23,7 +22,6 @@ namespace VocaDb.Model.Service
 
 	public class EntryTypeTags : IEntryTypeTagRepository
 	{
-
 		public EntryTypeTags(IDatabaseContext ctx)
 		{
 			this.ctx = ctx;
@@ -45,6 +43,5 @@ namespace VocaDb.Model.Service
 		public Tag GetTag<TSubType>(EntryType entryType, TSubType subType) where TSubType : Enum => ctx.NullSafeLoad<Tag>(GetTagId(entryType, subType.ToString()));
 		public Tag GetTag(EntryTypeAndSubType fullEntryType) => ctx.NullSafeLoad<Tag>(GetTagId(fullEntryType.EntryType, fullEntryType.SubType));
 		public int SongTypeTagId(SongType songType) => GetTagId(EntryType.Song, songType.ToString());
-
 	}
 }

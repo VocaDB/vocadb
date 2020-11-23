@@ -3,12 +3,10 @@ using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Mapping.Albums
 {
-
 	public class AlbumReviewMap : ClassMap<AlbumReview>
 	{
 		public AlbumReviewMap()
 		{
-
 			Table("AlbumReviews");
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -20,8 +18,6 @@ namespace VocaDb.Model.Mapping.Albums
 
 			References(m => m.Album).Not.Nullable().UniqueKey("UX_AlbumReviews");
 			References(m => m.User).Not.Nullable().UniqueKey("UX_AlbumReviews");
-
 		}
-
 	}
 }

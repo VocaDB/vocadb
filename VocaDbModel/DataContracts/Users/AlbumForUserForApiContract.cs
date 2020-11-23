@@ -7,11 +7,9 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class AlbumForUserForApiContract
 	{
-
 		public AlbumForUserForApiContract() { }
 
 		public AlbumForUserForApiContract(
@@ -22,7 +20,6 @@ namespace VocaDb.Model.DataContracts.Users
 			bool shouldShowCollectionStatus,
 			bool includeUser = false)
 		{
-
 			Album = new AlbumForApiContract(albumForUser.Album, null, languagePreference, thumbPersister, fields, SongOptionalFields.None);
 			Rating = albumForUser.Rating;
 
@@ -36,7 +33,6 @@ namespace VocaDb.Model.DataContracts.Users
 			{
 				User = new UserForApiContract(albumForUser.User);
 			}
-
 		}
 
 
@@ -63,7 +59,5 @@ namespace VocaDb.Model.DataContracts.Users
 
 		[DataMember]
 		public UserForApiContract User { get; set; }
-
 	}
-
 }

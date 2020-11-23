@@ -4,10 +4,8 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Songs
 {
-
 	public class SongReport : GenericEntryReport<Song, SongReportType>
 	{
-
 		public static readonly HashSet<SongReportType> ReportTypesWithRequiredNotes =
 			new HashSet<SongReportType> { SongReportType.InvalidInfo, SongReportType.Other };
 
@@ -25,12 +23,10 @@ namespace VocaDb.Model.Domain.Songs
 		}
 
 		public override ArchivedObjectVersion VersionBase => Version;
-
 	}
 
 	public enum SongReportType
 	{
-
 		BrokenPV = 1,
 
 		InvalidInfo = 2,
@@ -40,7 +36,5 @@ namespace VocaDb.Model.Domain.Songs
 		Inappropriate = 4,
 
 		Other = 5
-
 	}
-
 }

@@ -2,11 +2,9 @@
 
 namespace VocaDb.Model.DataContracts.UseCases
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryIdAndVersionContract
 	{
-
 		public EntryIdAndVersionContract() { }
 
 		public EntryIdAndVersionContract(int id, int version)
@@ -20,7 +18,5 @@ namespace VocaDb.Model.DataContracts.UseCases
 
 		[DataMember]
 		public int Version { get; set; }
-
 	}
-
 }

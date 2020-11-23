@@ -9,20 +9,17 @@ using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Service.Search.Artists
 {
-
 	/// <summary>
 	/// Tests for <see cref="ArtistSearch"/>.
 	/// </summary>
 	[TestClass]
 	public class ArtistSearchTests
 	{
-
 		private readonly ArtistSearch artistSearch;
 		private readonly FakeArtistRepository db = new FakeArtistRepository();
 
 		public ArtistSearchTests()
 		{
-
 			artistSearch = new ArtistSearch(ContentLanguagePreference.Default, db.CreateContext(), new EntryUrlParser());
 
 			var artist1 = db.Save(CreateEntry.Artist(ArtistType.Producer, name: "XenonP"));
@@ -30,13 +27,11 @@ namespace VocaDb.Tests.Service.Search.Artists
 			db.Save(artist1.CreateWebLink("Twitter", "https://twitter.com/XenonP_XM", WebLinkCategory.Official));
 			db.SaveNames(db.Save(CreateEntry.Artist(ArtistType.Producer, name: "Clean Tears")));
 			db.SaveNames(db.Save(CreateEntry.Artist(ArtistType.Vocaloid, name: "Hatsune Miku")));
-
 		}
 
 		[TestMethod]
 		public void Find()
 		{
-
 			var result = artistSearch.Find(new ArtistQueryParams
 			{
 				Common = {
@@ -46,13 +41,11 @@ namespace VocaDb.Tests.Service.Search.Artists
 
 			Assert.AreEqual(1, result.Items.Length, "Got 1 result");
 			Assert.AreEqual("XenonP", result.Items[0].DefaultName, "Result as expected");
-
 		}
 
 		[TestMethod]
 		public void Find_ByTwitter()
 		{
-
 			var result = artistSearch.Find(new ArtistQueryParams
 			{
 				Common = {
@@ -62,13 +55,11 @@ namespace VocaDb.Tests.Service.Search.Artists
 
 			Assert.AreEqual(1, result.Items.Length, "Got 1 result");
 			Assert.AreEqual("XenonP", result.Items[0].DefaultName, "Result as expected");
-
 		}
 
 		[TestMethod]
 		public void Find_ByTwitter_EndsWithP()
 		{
-
 			var artist = db.Save(CreateEntry.Artist(ArtistType.Producer, name: "Uji"));
 			db.SaveNames(artist);
 			db.Save(artist.CreateWebLink("Twitter", "https://twitter.com/Uji_RaychoruiP", WebLinkCategory.Official));
@@ -82,10 +73,6 @@ namespace VocaDb.Tests.Service.Search.Artists
 
 			Assert.AreEqual(1, result.Items.Length, "Got 1 result");
 			Assert.AreEqual("Uji", result.Items[0].DefaultName, "Result as expected");
-
-
 		}
-
 	}
-
 }

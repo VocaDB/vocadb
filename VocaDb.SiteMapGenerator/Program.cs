@@ -8,15 +8,12 @@ using VocaDb.SiteMapGenerator.VocaDb;
 
 namespace VocaDb.SiteMapGenerator
 {
-
 	class Program
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private static async Task GenerateSitemap()
 		{
-
 			var config = new Config();
 			var client = new VocaDbClient(config.SiteRootUrl);
 
@@ -38,14 +35,11 @@ namespace VocaDb.SiteMapGenerator
 				{ EntryType.Song, songs.Select(e => new EntryReference(e)) },
 				{ EntryType.Tag, tags.Items.Select(e => new EntryReference(e.Id, e.UrlSlug)) },
 			});
-
 		}
 
 		static void Main(string[] args)
 		{
-
 			Task.WaitAll(GenerateSitemap());
-
 		}
 	}
 }

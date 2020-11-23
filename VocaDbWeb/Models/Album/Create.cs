@@ -11,11 +11,9 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Album
 {
-
 	[PropertyModelBinder]
 	public class Create
 	{
-
 		public Create()
 		{
 			Artists = new List<ArtistContract>();
@@ -43,16 +41,12 @@ namespace VocaDb.Web.Models.Album
 
 		public CreateAlbumContract ToContract()
 		{
-
 			return new CreateAlbumContract
 			{
 				Artists = this.Artists.ToArray(),
 				DiscType = this.DiscType,
 				Names = LocalizedStringHelper.SkipNullAndEmpty(NameOriginal, NameRomaji, NameEnglish).ToArray()
 			};
-
 		}
-
 	}
-
 }

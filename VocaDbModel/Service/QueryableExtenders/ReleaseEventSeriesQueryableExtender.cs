@@ -5,10 +5,8 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtenders
 {
-
 	public static class ReleaseEventSeriesQueryableExtender
 	{
-
 		public static IQueryable<ReleaseEventSeries> OrderByName(this IQueryable<ReleaseEventSeries> query, ContentLanguagePreference languagePreference)
 		{
 			return query.OrderByEntryName(languagePreference);
@@ -18,7 +16,5 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		{
 			return query.WhereHasNameGeneric<ReleaseEventSeries, EventSeriesName>(textQuery);
 		}
-
 	}
-
 }

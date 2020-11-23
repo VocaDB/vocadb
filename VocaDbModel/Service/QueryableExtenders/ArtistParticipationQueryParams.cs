@@ -9,24 +9,20 @@ using VocaDb.Model.Service.Search.AlbumSearch;
 
 namespace VocaDb.Model.Service.QueryableExtenders
 {
-
 	/// <summary>
 	/// Parameters for filtering content (usually songs or albums) based on artists' <see cref=""ArtistAlbumParticipationStatus/>.
 	/// </summary>
 	public class ArtistParticipationQueryParams
 	{
-
 		public ArtistParticipationQueryParams() { }
 
 		public ArtistParticipationQueryParams(EntryIdsCollection artistIds, ArtistAlbumParticipationStatus participation,
 			bool childVoicebanks, bool includeMembers)
 		{
-
 			ArtistIds = artistIds;
 			Participation = participation;
 			ChildVoicebanks = childVoicebanks;
 			IncludeMembers = includeMembers;
-
 		}
 
 		/// <summary>
@@ -42,21 +38,18 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		/// For groups, include members.
 		/// </summary>
 		public bool IncludeMembers { get; set; }
-
 	}
 
 	public readonly struct ArtistParticipationQueryParams<TEntry, TArtistLink>
 		where TEntry : IEntryWithArtistLinks<TArtistLink>
 		where TArtistLink : IArtistLinkWithRoles
 	{
-
 		public ArtistParticipationQueryParams(IQueryable<TEntry> query, ArtistParticipationQueryParams queryParams,
 			IEntityLoader<Artist> artistGetter,
 			Expression<Func<TEntry, bool>> mainEntriesExpression,
 			Expression<Func<TEntry, bool>> collaborationsExpression)
 			: this()
 		{
-
 			Query = query;
 			ArtistIds = queryParams.ArtistIds;
 			Participation = queryParams.Participation;
@@ -65,7 +58,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			ArtistGetter = artistGetter;
 			MainEntriesExpression = mainEntriesExpression;
 			CollaborationsExpression = collaborationsExpression;
-
 		}
 
 		public ArtistParticipationQueryParams(IQueryable<TEntry> query,
@@ -76,7 +68,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			Expression<Func<TEntry, bool>> collaborationsExpression)
 			: this()
 		{
-
 			Query = query;
 			ArtistIds = artistIds;
 			Participation = queryParams.Participation;
@@ -85,7 +76,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			ArtistGetter = artistGetter;
 			MainEntriesExpression = mainEntriesExpression;
 			CollaborationsExpression = collaborationsExpression;
-
 		}
 
 		public IQueryable<TEntry> Query { get; }
@@ -96,7 +86,5 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		public IEntityLoader<Artist> ArtistGetter { get; }
 		public Expression<Func<TEntry, bool>> MainEntriesExpression { get; }
 		public Expression<Func<TEntry, bool>> CollaborationsExpression { get; }
-
 	}
-
 }

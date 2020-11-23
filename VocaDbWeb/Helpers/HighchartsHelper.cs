@@ -5,10 +5,8 @@ using VocaDb.Web.Code.Highcharts;
 
 namespace VocaDb.Web.Helpers
 {
-
 	public static class HighchartsHelper
 	{
-
 		public static double ToEpochTime(DateTime date)
 		{
 			return (date - new DateTime(1970, 1, 1)).TotalMilliseconds;
@@ -17,7 +15,6 @@ namespace VocaDb.Web.Helpers
 		public static Highchart DateLineChartWithAverage(string title, string pointsTitle, string yAxisTitle, ICollection<Tuple<DateTime, int>> points,
 			bool average = true)
 		{
-
 			var averages = (average ? points.Select(p => Tuple.Create(p.Item1, Math.Floor(points.Where(p2 => p2.Item1 >= p.Item1 - TimeSpan.FromDays(182) && p2.Item1 <= p.Item1 + TimeSpan.FromDays(182)).Average(p3 => p3.Item2)))).ToArray() : new Tuple<DateTime, double>[0]);
 
 			var dataSeries = new Series
@@ -42,12 +39,10 @@ namespace VocaDb.Web.Helpers
 				: new[] { dataSeries });
 
 			return DateLineChart(title, pointsTitle, yAxisTitle, series);
-
 		}
 
 		public static Highchart DateLineChart(string title, string pointsTitle, string yAxisTitle, ICollection<Series> series)
 		{
-
 			return new Highchart
 			{
 				Chart = new Chart
@@ -88,12 +83,10 @@ namespace VocaDb.Web.Helpers
 				},
 				Series = series
 			};
-
 		}
 
 		public static Highchart SimplePieChart(string title, string seriesName, ICollection<Tuple<string, int>> points, bool transparentBackground)
 		{
-
 			return new Highchart
 			{
 				Chart = new Chart
@@ -132,11 +125,7 @@ namespace VocaDb.Web.Helpers
 						Data = points.Select(p => new object[] { p.Item1, p.Item2 }).ToArray()
 					}
 				}
-
 			};
-
 		}
-
 	}
-
 }

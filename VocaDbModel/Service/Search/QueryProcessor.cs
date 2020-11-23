@@ -5,10 +5,8 @@ using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.Search
 {
-
 	public class QueryProcessor<T>
 	{
-
 		private readonly IDatabaseContext querySource;
 
 		public QueryProcessor(IDatabaseContext querySource)
@@ -20,7 +18,6 @@ namespace VocaDb.Model.Service.Search
 			QueryPlan<T> queryPlan, PagingProperties paging,
 			Func<IQueryable<T>, IQueryable<T>> orderBy)
 		{
-
 			if (!queryPlan.Any())
 				return new PartialFindResult<T>(new T[] { }, 0);
 
@@ -28,12 +25,10 @@ namespace VocaDb.Model.Service.Search
 
 			foreach (var filter in queryPlan)
 			{
-
 				if (entries == null)
 					entries = filter.Query(querySource);
 				else
 					entries = filter.Filter(entries, querySource);
-
 			}
 
 			if (entries == null)
@@ -52,8 +47,6 @@ namespace VocaDb.Model.Service.Search
 				.ToArray();
 
 			return new PartialFindResult<T>(result, queryResult.Count());
-
 		}
-
 	}
 }

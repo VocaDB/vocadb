@@ -6,28 +6,22 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongListBaseContract : IEntryWithIntId
 	{
-
 		public SongListBaseContract()
 		{
-
 			Name = string.Empty;
-
 		}
 
 		public SongListBaseContract(SongList songList)
 			: this()
 		{
-
 			ParamIs.NotNull(() => songList);
 
 			FeaturedCategory = songList.FeaturedCategory;
 			Id = songList.Id;
 			Name = songList.Name;
-
 		}
 
 		[DataMember]
@@ -39,7 +33,5 @@ namespace VocaDb.Model.DataContracts.Songs
 
 		[DataMember]
 		public string Name { get; set; }
-
 	}
-
 }

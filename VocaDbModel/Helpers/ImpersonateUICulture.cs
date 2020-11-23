@@ -4,7 +4,6 @@ using System.Threading;
 
 namespace VocaDb.Model.Helpers
 {
-
 	/// <summary>
 	/// Temporarily sets UI Culture to something else.
 	/// Use this in a using block, so that the Dispose method is called
@@ -12,7 +11,6 @@ namespace VocaDb.Model.Helpers
 	/// </summary>
 	public class ImpersonateUICulture : IDisposable
 	{
-
 		private readonly CultureInfo old;
 
 		public ImpersonateUICulture(CultureInfo impersonated)
@@ -25,6 +23,5 @@ namespace VocaDb.Model.Helpers
 		{
 			Thread.CurrentThread.CurrentUICulture = old;
 		}
-
 	}
 }

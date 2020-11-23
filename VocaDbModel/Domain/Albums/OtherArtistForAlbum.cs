@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.Domain.Albums
 {
-
 	public class OtherArtistForAlbum
 	{
-
 		private Album album;
 		private string name;
 
@@ -13,12 +11,10 @@ namespace VocaDb.Model.Domain.Albums
 
 		public OtherArtistForAlbum(Album album, string name, bool isSupport, ArtistRoles roles)
 		{
-
 			Album = album;
 			Name = name;
 			IsSupport = isSupport;
 			Roles = roles;
-
 		}
 
 		public virtual Album Album
@@ -49,7 +45,6 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual bool Equals(OtherArtistForAlbum another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -60,7 +55,6 @@ namespace VocaDb.Model.Domain.Albums
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)

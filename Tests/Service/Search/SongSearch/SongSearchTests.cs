@@ -10,21 +10,18 @@ using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Service.Search.SongSearch
 {
-
 	/// <summary>
 	/// Tests for <see cref="Model.Service.Search.SongSearch.SongSearch"/>.
 	/// </summary>
 	[TestClass]
 	public class SongSearchTests
 	{
-
 		private Model.Service.Search.SongSearch.SongSearch songSearch;
 		private readonly SongQueryParams queryParams = new SongQueryParams { SortRule = SongSortRule.Name };
 
 		[TestInitialize]
 		public void SetUp()
 		{
-
 			var repo = new FakeSongRepository();
 			songSearch = new Model.Service.Search.SongSearch.SongSearch(repo.CreateContext(),
 				Model.Domain.Globalization.ContentLanguagePreference.Default,
@@ -35,12 +32,10 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 				CreateEntry.Song(name: "Anger"),
 				CreateEntry.Song(name: "Anger [EXTEND RMX]")
 			);
-
 		}
 
 		private void AssertResults(PartialFindResult<Song> result, params string[] songNames)
 		{
-
 			Assert.AreEqual(songNames.Length, result.TotalCount, "Total number of results");
 			Assert.AreEqual(songNames.Length, result.Items.Length, "Number of returned items");
 
@@ -48,7 +43,6 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 			{
 				Assert.IsTrue(result.Items.Any(s => s.DefaultName == songName), string.Format("Song named '{0}' was returned", songName));
 			}
-
 		}
 
 		private PartialFindResult<Song> CallFind()
@@ -59,25 +53,21 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 		[TestMethod]
 		public void Find_NameWords()
 		{
-
 			queryParams.Common.TextQuery = SearchTextQuery.Create("Anger");
 
 			var result = CallFind();
 
 			AssertResults(result, "Anger", "Anger [EXTEND RMX]");
-
 		}
 
 		[TestMethod]
 		public void Find_NameMatchModeExact()
 		{
-
 			queryParams.Common.TextQuery = SearchTextQuery.Create("Anger", NameMatchMode.Exact);
 
 			var result = CallFind();
 
 			AssertResults(result, "Anger");
-
 		}
 
 		/// <summary>
@@ -86,88 +76,70 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 		[TestMethod]
 		public void Find_NameQuotedExact()
 		{
-
 			queryParams.Common.TextQuery = SearchTextQuery.Create("\"Anger\"");
 
 			var result = CallFind();
 
 			AssertResults(result, "Anger");
-
 		}
 
 		[TestMethod]
 		public void ParseTextQuery_Empty()
 		{
-
 			var result = songSearch.ParseTextQuery(SearchTextQuery.Empty);
 
 			Assert.IsFalse(result.HasNameQuery, "HasNameQuery");
-
 		}
 
 		[TestMethod]
 		public void ParseTextQuery_Name()
 		{
-
 			var result = songSearch.ParseTextQuery(SearchTextQuery.Create("Hatsune Miku"));
 
 			Assert.IsTrue(result.HasNameQuery, "HasNameQuery");
 			Assert.AreEqual("Hatsune Miku", result.Name.Query, "Name query");
-
 		}
 
 		[TestMethod]
 		public void ParseTextQuery_Id()
 		{
-
 			var result = songSearch.ParseTextQuery(SearchTextQuery.Create("id:3939"));
 
 			Assert.IsFalse(result.HasNameQuery, "HasNameQuery");
 			Assert.AreEqual(3939, result.Id, "Id query");
-
 		}
 
 		[TestMethod]
 		public void ParseTextQuery_IdInvalid()
 		{
-
 			var result = songSearch.ParseTextQuery(SearchTextQuery.Create("id:miku!"));
 
 			Assert.AreEqual(0, result.Id, "Id query");
-
 		}
 
 		[TestMethod]
 		public void ParseTextQuery_DateAfter()
 		{
-
 			var result = songSearch.ParseTextQuery(SearchTextQuery.Create("publish-date:2015/9/3"));
 
 			Assert.AreEqual(new DateTime(2015, 9, 3), result.PublishedAfter, "Publish date after");
-
 		}
 
 		[TestMethod]
 		public void ParseTextQuery_DateRange()
 		{
-
 			var result = songSearch.ParseTextQuery(SearchTextQuery.Create("publish-date:2015/9/3-2015/10/1"));
 
 			Assert.AreEqual(new DateTime(2015, 9, 3), result.PublishedAfter, "Publish date after");
 			Assert.AreEqual(new DateTime(2015, 10, 1), result.PublishedBefore, "Publish date before");
-
 		}
 
 		[TestMethod]
 		public void ParseTextQuery_DateInvalid()
 		{
-
 			var result = songSearch.ParseTextQuery(SearchTextQuery.Create("publish-date:Miku!"));
 
 			Assert.IsNull(result.PublishedAfter, "Publish date after");
-
 		}
-
 	}
-
 }

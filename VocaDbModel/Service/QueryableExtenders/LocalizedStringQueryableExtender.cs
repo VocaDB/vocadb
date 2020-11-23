@@ -6,16 +6,13 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtenders
 {
-
 	public static class LocalizedStringQueryableExtender
 	{
-
 		public const int MaxSearchWords = 10;
 
 		public static IQueryable<T> WhereEntryNameIs<T>(this IQueryable<T> query, SearchTextQuery textQuery)
 			where T : LocalizedString
 		{
-
 			if (textQuery.IsEmpty)
 				return query;
 
@@ -42,13 +39,9 @@ namespace VocaDb.Model.Service.QueryableExtenders
 					}
 
 					return query;
-
 			}
 
 			return query;
-
 		}
-
 	}
-
 }

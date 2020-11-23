@@ -13,10 +13,8 @@ using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.SongImport
 {
-
 	public class NicoNicoMyListParser : ISongListImporter
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private static readonly Regex wvrIdRegex = new Regex(@"#(\d{3})");
 
@@ -33,7 +31,6 @@ namespace VocaDb.Model.Service.SongImport
 
 		public Task<ImportedSongListContract> ParseAsync(string url, bool parseAll)
 		{
-
 			if (string.IsNullOrEmpty(url))
 				throw new UnableToImportException("Feed URL cannot be empty");
 
@@ -76,10 +73,8 @@ namespace VocaDb.Model.Service.SongImport
 
 			foreach (var item in channel.Items.Cast<RssItem>())
 			{
-
 				if (parseAll || IsRankingsItem(item))
 				{
-
 					var nicoId = VideoService.NicoNicoDouga.GetIdByUrl(item.Link.ToString());
 					songs.Add(new ImportedSongInListContract(PVService.NicoNicoDouga, nicoId)
 					{
@@ -88,14 +83,11 @@ namespace VocaDb.Model.Service.SongImport
 						Url = item.Link.ToString()
 					});
 					++order;
-
 				}
-
 			}
 
 			result.Songs = new PartialImportedSongs(songs.ToArray(), songs.Count, null);
 			return Task.FromResult(result);
-
 		}
 
 		public bool MatchUrl(string url)
@@ -103,7 +95,5 @@ namespace VocaDb.Model.Service.SongImport
 			var regex = new Regex(@"www.nicovideo.jp/mylist/\d+");
 			return regex.IsMatch(url);
 		}
-
 	}
-
 }

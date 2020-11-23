@@ -10,7 +10,6 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	/// <summary>
 	/// Fake in-memory repository for testing.
 	/// </summary>
@@ -18,7 +17,6 @@ namespace VocaDb.Tests.TestSupport
 	public class FakeRepository<T> : IRepository<T>
 		where T : class, IDatabaseObject
 	{
-
 		protected readonly QuerySourceList querySource;
 
 		public FakeRepository()
@@ -144,7 +142,6 @@ namespace VocaDb.Tests.TestSupport
 
 		public Song Save(Song song)
 		{
-
 			var ctx = CreateContext();
 
 			ctx.Save(song);
@@ -152,34 +149,28 @@ namespace VocaDb.Tests.TestSupport
 			SaveNames(song);
 
 			return song;
-
 		}
 
 		public void SaveNames<TName>(params IEntryWithNames<TName>[] entries)
 			where TName : LocalizedStringWithId
 		{
-
 			foreach (var name in entries.SelectMany(e => e.Names.Names))
 				Save(name);
-
 		}
 
 		public TEntry SaveWithNames<TEntry, TName>(TEntry entry)
 			where TEntry : class, IEntryWithNames<TName>
 			where TName : LocalizedStringWithId
 		{
-
 			CreateContext().Save(entry);
 			SaveNames(entry);
 			return entry;
-
 		}
 	}
 
 	public class ListDatabaseContext<T> : IDatabaseContext<T>
 		where T : class, IDatabaseObject
 	{
-
 		private static readonly bool isEntityWithId = typeof(IEntryWithIntId).IsAssignableFrom(typeof(T)) || typeof(IEntryWithLongId).IsAssignableFrom(typeof(T));
 
 		protected bool IsEntityWithId => isEntityWithId;
@@ -187,7 +178,6 @@ namespace VocaDb.Tests.TestSupport
 		// Get next Id
 		private void AssignNewId(T obj)
 		{
-
 			switch (obj)
 			{
 				case IEntryWithIntId entityInt when entityInt.Id == 0:
@@ -198,7 +188,6 @@ namespace VocaDb.Tests.TestSupport
 					entityLong.Id = (Query().Any() ? Query().Max(o => ((IEntryWithLongId)o).Id) + 1 : 1);
 					break;
 			}
-
 		}
 
 		/// <summary>
@@ -210,12 +199,10 @@ namespace VocaDb.Tests.TestSupport
 		/// <returns>True if the Id matches the entity, otherwise false.</returns>
 		protected virtual bool IdEquals(T entity, object id)
 		{
-
 			if (IsEntityWithId && id is int)
 				return ((IEntryWithIntId)entity).Id == (int)id;
 			else
 				return GetId(entity).Equals(id);
-
 		}
 
 		/// <summary>
@@ -231,7 +218,6 @@ namespace VocaDb.Tests.TestSupport
 		/// <returns>Entity Id. Cannot be null (Id can never be null)</returns>
 		protected virtual object GetId(T entity)
 		{
-
 			switch (entity)
 			{
 				case IEntryWithIntId id:
@@ -245,7 +231,6 @@ namespace VocaDb.Tests.TestSupport
 
 			dynamic dyn = entity;
 			return dyn.Id;
-
 		}
 
 		protected readonly QuerySourceList querySource;
@@ -269,32 +254,26 @@ namespace VocaDb.Tests.TestSupport
 
 		public void Dispose()
 		{
-
 		}
 
 		public void Flush()
 		{
-
 		}
 
 		public T Get(object id)
 		{
-
 			var list = querySource.List<T>();
 			return list.FirstOrDefault(i => IdEquals(i, id));
-
 		}
 
 		public virtual T Load(object id)
 		{
-
 			var list = querySource.List<T>();
 
 			if (list.All(i => !IdEquals(i, id)))
 				throw new InvalidOperationException(string.Format("Entity of type {0} with Id {1} not found", typeof(T), id));
 
 			return list.First(i => IdEquals(i, id));
-
 		}
 
 		public Task<T> LoadAsync(object id) => Task.FromResult(Load(id));
@@ -308,7 +287,6 @@ namespace VocaDb.Tests.TestSupport
 
 		public T Save(T obj)
 		{
-
 			if (IsEntityWithId)
 			{
 				AssignNewId(obj);
@@ -316,18 +294,15 @@ namespace VocaDb.Tests.TestSupport
 
 			querySource.Add(obj);
 			return obj;
-
 		}
 
 		public Task<T> SaveAsync(T obj) => Task.FromResult(Save(obj));
 
 		public virtual void Update(T obj)
 		{
-
 			var existing = Load(GetId(obj));
 			Delete(existing);   // Replace existing
 			Save(obj);
-
 		}
 
 		public Task UpdateAsync(T obj)
@@ -336,5 +311,4 @@ namespace VocaDb.Tests.TestSupport
 			return Task.CompletedTask;
 		}
 	}
-
 }

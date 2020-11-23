@@ -25,7 +25,6 @@ namespace VocaDb.Web.Resources.Domain
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public class EntryReportTypeNames
 	{
-
 		private static global::System.Resources.ResourceManager resourceMan;
 
 		private static global::System.Globalization.CultureInfo resourceCulture;

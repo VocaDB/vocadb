@@ -9,11 +9,9 @@ using Newtonsoft.Json.Converters;
 
 namespace VocaDb.Model.Service.Translations
 {
-
 	public class TranslateableEnum<TEnum> : ITranslateableEnum, IEnumerable<TranslateableEnumField<TEnum>>
 		where TEnum : struct, Enum
 	{
-
 		private readonly Func<ResourceManager> resourceManager;
 
 		internal ResourceManager ResourceManager => resourceManager();
@@ -60,11 +58,9 @@ namespace VocaDb.Model.Service.Translations
 
 		public string GetAllNameNames(TEnum flags, params TEnum[] except)
 		{
-
 			return string.Join(", ", Values
 				.Where(f => !except.Contains(f) && EnumVal<TEnum>.FlagIsSet(flags, f))
 				.Select(GetName));
-
 		}
 
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -92,17 +88,14 @@ namespace VocaDb.Model.Service.Translations
 			var res = ResourceManager;
 			return values.ToDictionary(t => t.ToString(), t => GetName(t, res));
 		}
-
 	}
 
 	public interface ITranslateableEnum
 	{
-
 	}
 
 	public readonly struct TranslateableEnumField<T> where T : struct, IConvertible
 	{
-
 		public TranslateableEnumField(T id, string translation)
 		{
 			Id = id;
@@ -116,5 +109,4 @@ namespace VocaDb.Model.Service.Translations
 
 		public KeyValuePair<T, string> ToKeyValuePair() => new KeyValuePair<T, string>(Id, Name);
 	}
-
 }

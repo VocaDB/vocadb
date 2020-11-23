@@ -1,9 +1,7 @@
 namespace VocaDb.Web.Models.Shared.Partials.Knockout
 {
-
 	public class ArtistLockingAutoCompleteViewModel
 	{
-
 		public ArtistLockingAutoCompleteViewModel(string binding, string artistTypes, int ignoreId = 0)
 		{
 			Binding = binding;
@@ -16,7 +14,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Knockout
 		public string ArtistTypes { get; set; }
 
 		public int IgnoreId { get; set; }
-
 	}
-
 }

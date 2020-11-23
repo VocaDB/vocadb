@@ -8,21 +8,18 @@ using System.Reflection.Emit;
 
 namespace VocaDb.Model
 {
-
 	/// <summary>
 	/// Utility methods for parameter validation.
 	/// </summary>
 	[DebuggerStepThrough]
 	public static class ParamIs
 	{
-
 		/// <summary>
 		/// Validates that the given parameter is a positive (greater than 0) integer.
 		/// </summary>
 		/// <param name="expression">Parameter expression. Expression body must be a member expression, for example "() => param". Cannot be null.</param>
 		public static void Between(Expression<Func<int>> expression, int min, int max)
 		{
-
 			if (!(expression.Body is MemberExpression))
 				throw new ArgumentException("Only member expressions are supported", "expression");
 
@@ -33,7 +30,6 @@ namespace VocaDb.Model
 				var body = (MemberExpression)expression.Body;
 				throw new ArgumentException(body.Member.Name + " must be between " + min + " and " + max, body.Member.Name);
 			}
-
 		}
 
 		/// <summary>
@@ -43,10 +39,8 @@ namespace VocaDb.Model
 		/// <param name="paramName">Parameter name. Cannot be null or empty.</param>
 		public static void NonNegative(int val, string paramName = null)
 		{
-
 			if (val < 0)
 				throw new ArgumentException(paramName + " must be a non-negative integer", paramName);
-
 		}
 
 		/// <summary>
@@ -55,7 +49,6 @@ namespace VocaDb.Model
 		/// <param name="expression">Parameter expression. Expression body must be a member expression, for example "() => param". Cannot be null.</param>
 		public static void NonNegative(Expression<Func<int>> expression)
 		{
-
 			if (!(expression.Body is MemberExpression))
 				throw new ArgumentException("Only member expressions are supported", "expression");
 
@@ -66,7 +59,6 @@ namespace VocaDb.Model
 				var body = (MemberExpression)expression.Body;
 				throw new ArgumentException(body.Member.Name + " must be a non-negative integer", body.Member.Name);
 			}
-
 		}
 
 		/// <summary>
@@ -79,10 +71,8 @@ namespace VocaDb.Model
 		/// </remarks>
 		public static void NotNull(object val, string paramName = null)
 		{
-
 			if (val == null)
 				throw new ArgumentNullException(paramName);
-
 		}
 
 		/*
@@ -101,7 +91,6 @@ namespace VocaDb.Model
 				var body = (MemberExpression)expression.Body;
 				throw new ArgumentNullException(body.Member.Name);				
 			}
-
 		}*/
 
 		/// <summary>
@@ -110,7 +99,6 @@ namespace VocaDb.Model
 		/// <param name="arg">Parameter expression. Expression body must be a member expression, for example "() => param". Cannot be null.</param>
 		public static void NotNull<T>(Func<T> arg) where T : class
 		{
-
 			if (arg() != null)
 				return;
 
@@ -124,7 +112,6 @@ namespace VocaDb.Model
 			}
 
 			throw new ArgumentNullException(fieldInfo.Name);
-
 		}
 
 		/// <summary>
@@ -137,10 +124,8 @@ namespace VocaDb.Model
 		/// </remarks>
 		public static void NotNullOrEmpty(string val, string paramName = null)
 		{
-
 			if (string.IsNullOrEmpty(val))
 				throw new ArgumentException(paramName + " cannot be null or empty", paramName);
-
 		}
 
 		/*
@@ -159,7 +144,6 @@ namespace VocaDb.Model
 				var body = (MemberExpression)expression.Body;
 				throw new ArgumentException(body.Member.Name + " cannot be null or empty", body.Member.Name);
 			}
-
 		}*/
 
 		/// <summary>
@@ -168,7 +152,6 @@ namespace VocaDb.Model
 		/// <param name="arg">Parameter expression. Expression body must be a member expression. Cannot be null.</param>
 		public static void NotNullOrEmpty(Func<string> arg)
 		{
-
 			if (!string.IsNullOrEmpty(arg()))
 				return;
 
@@ -182,7 +165,6 @@ namespace VocaDb.Model
 			}
 
 			throw new ArgumentException(fieldInfo.Name + " cannot be null or empty");
-
 		}
 
 		/// <summary>
@@ -191,7 +173,6 @@ namespace VocaDb.Model
 		/// <param name="expression">Parameter expression. Expression body must be a member expression. Cannot be null.</param>
 		public static void NotNullOrWhiteSpace(Expression<Func<string>> expression)
 		{
-
 			if (!(expression.Body is MemberExpression))
 				throw new ArgumentException("Only member expressions are supported", "expression");
 
@@ -202,7 +183,6 @@ namespace VocaDb.Model
 				var body = (MemberExpression)expression.Body;
 				throw new ArgumentException(body.Member.Name + " cannot be null or whitespace", body.Member.Name);
 			}
-
 		}
 
 		/// <summary>
@@ -212,12 +192,9 @@ namespace VocaDb.Model
 		/// <param name="paramName">Parameter name. Cannot be null or empty.</param>
 		public static void Positive(int val, string paramName = null)
 		{
-
 			if (val <= 0)
 				throw new ArgumentException(paramName + " must be a positive integer", paramName);
-
 		}
-
 	}
 
 	/// <summary>

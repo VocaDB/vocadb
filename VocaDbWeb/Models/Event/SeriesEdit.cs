@@ -12,19 +12,15 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Event
 {
-
 	[PropertyModelBinder]
 	public class SeriesEdit
 	{
-
 		public SeriesEdit()
 		{
-
 		}
 
 		public SeriesEdit(ReleaseEventSeriesForEditContract contract, IUserPermissionContext userContext)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			Category = contract.Category;
@@ -38,7 +34,6 @@ namespace VocaDb.Web.Models.Event
 			WebLinks = contract.WebLinks;
 
 			CopyNonEditableProperties(contract, userContext);
-
 		}
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
@@ -67,19 +62,16 @@ namespace VocaDb.Web.Models.Event
 
 		public void CopyNonEditableProperties(ReleaseEventSeriesForEditContract contract, IUserPermissionContext userContext)
 		{
-
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(userContext).ToArray();
 
 			if (contract != null)
 			{
 				Deleted = contract.Deleted;
 			}
-
 		}
 
 		public ReleaseEventSeriesForEditContract ToContract()
 		{
-
 			return new ReleaseEventSeriesForEditContract
 			{
 				Category = Category,
@@ -91,8 +83,6 @@ namespace VocaDb.Web.Models.Event
 				Status = Status,
 				WebLinks = this.WebLinks
 			};
-
 		}
-
 	}
 }

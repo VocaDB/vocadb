@@ -7,10 +7,8 @@ using Newtonsoft.Json;
 
 namespace VocaDb.Model.Helpers
 {
-
 	public static class JsonRequest
 	{
-
 		public static Task<T> ReadObjectAsync<T>(string url) => ReadObjectAsync<T>(url, TimeSpan.FromSeconds(100));
 
 		/// <summary>
@@ -27,7 +25,6 @@ namespace VocaDb.Model.Helpers
 		public static async Task<T> ReadObjectAsync<T>(string url, TimeSpan timeout, string userAgent = "",
 			Action<HttpRequestHeaders> headers = null)
 		{
-
 			return await HtmlRequestHelper.GetStreamAsync(url, stream =>
 			{
 				using (var streamReader = new StreamReader(stream))
@@ -37,9 +34,6 @@ namespace VocaDb.Model.Helpers
 					return serializer.Deserialize<T>(jsonReader);
 				}
 			}, timeout: timeout, userAgent: userAgent, headers: headers);
-
 		}
-
 	}
-
 }

@@ -14,17 +14,13 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Models.Song
 {
-
 	[PropertyModelBinder]
 	public class SongEditViewModel
 	{
-
 		public SongEditViewModel()
 		{
-
 			AllPVTypes = EnumVal<PVType>.Values;
 			AllVideoServices = EnumVal<PVService>.Values;
-
 		}
 
 		public SongEditViewModel(SongContract song, IUserPermissionContext permissionContext,
@@ -33,7 +29,6 @@ namespace VocaDb.Web.Models.Song
 			SongForEditContract editedSong = null, int? albumId = null)
 			: this()
 		{
-
 			ParamIs.NotNull(() => song);
 
 			Song = song;
@@ -42,7 +37,6 @@ namespace VocaDb.Web.Models.Song
 			InstrumentalTagId = instrumentalTagId;
 			EditedSong = editedSong;
 			AlbumId = albumId;
-
 		}
 
 		public int? AlbumId { get; set; }
@@ -88,7 +82,6 @@ namespace VocaDb.Web.Models.Song
 
 		public void CheckModel()
 		{
-
 			if (EditedSong == null)
 				throw new InvalidFormException("Model was null");
 
@@ -106,8 +99,6 @@ namespace VocaDb.Web.Models.Song
 
 			if (EditedSong.WebLinks == null)
 				throw new InvalidFormException("WebLinks list was null"); // Shouldn't be null
-
 		}
-
 	}
 }

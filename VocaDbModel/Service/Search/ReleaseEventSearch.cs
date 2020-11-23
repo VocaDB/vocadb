@@ -10,10 +10,8 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Service.Search
 {
-
 	public class ReleaseEventSearch
 	{
-
 		private static readonly Regex eventNameRegex = new Regex(@"([^\d]+)(\d+)(?:\s(\w+))?");
 		private static readonly Regex eventNumberRegex = new Regex(@"^(\d+)(?:\s(\w+))?");
 
@@ -31,7 +29,6 @@ namespace VocaDb.Model.Service.Search
 
 		private ReleaseEventFindResultContract AttemptSeriesMatch(string seriesName, ReleaseEventSeries series, string query, ContentLanguagePreference languagePreference)
 		{
-
 			var queryWithoutSeries = query.Remove(0, seriesName.Length).TrimStart();
 			var match = eventNumberRegex.Match(queryWithoutSeries);
 
@@ -51,12 +48,10 @@ namespace VocaDb.Model.Service.Search
 			{
 				return new ReleaseEventFindResultContract(series, languagePreference, seriesNumber, seriesSuffix, query);
 			}
-
 		}
 
 		public ReleaseEventFindResultContract Find(string query, ContentLanguagePreference languagePreference)
 		{
-
 			if (string.IsNullOrEmpty(query))
 				return new ReleaseEventFindResultContract();
 
@@ -74,24 +69,19 @@ namespace VocaDb.Model.Service.Search
 
 			foreach (var startsWithMatch in startsWithMatches)
 			{
-
 				foreach (var alias in startsWithMatch.Names.Where(a => query.StartsWith(a.Value, StringComparison.InvariantCultureIgnoreCase)))
 				{
-
 					var result = AttemptSeriesMatch(alias.Value, startsWithMatch, query, languagePreference);
 
 					if (result != null)
 						return result;
-
 				}
-
 			}
 
 			var match = eventNameRegex.Match(query);
 
 			if (match.Success)
 			{
-
 				var seriesName = match.Groups[1].Value.Trim();
 				var seriesNumber = Convert.ToInt32(match.Groups[2].Value);
 				var seriesSuffix = (match.Groups.Count >= 4 ? match.Groups[3].Value : string.Empty);
@@ -113,7 +103,6 @@ namespace VocaDb.Model.Service.Search
 
 				if (series != null)
 					return new ReleaseEventFindResultContract(series, languagePreference, seriesNumber, seriesSuffix, query);
-
 			}
 
 			var events = Query<ReleaseEvent>().Where(e => e.Names.Names.Any(n => query.Contains(n.Value) || n.Value.Contains(query))).Take(2).ToArray();
@@ -124,9 +113,6 @@ namespace VocaDb.Model.Service.Search
 			}
 
 			return new ReleaseEventFindResultContract(events[0], languagePreference);
-
 		}
-
 	}
-
 }

@@ -4,10 +4,8 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Venues
 {
-
 	public class VenueReport : GenericEntryReport<Venue, VenueReportType>
 	{
-
 		public static readonly HashSet<VenueReportType> ReportTypesWithRequiredNotes = new HashSet<VenueReportType> { VenueReportType.InvalidInfo, VenueReportType.Other };
 
 		public VenueReport() { }
@@ -17,12 +15,10 @@ namespace VocaDb.Model.Domain.Venues
 		public virtual ArchivedVenueVersion Version => VersionNumber.HasValue ? Entry.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
 
 		public override ArchivedObjectVersion VersionBase => Version;
-
 	}
 
 	public enum VenueReportType
 	{
-
 		InvalidInfo = 1,
 
 		Duplicate = 2,
@@ -30,7 +26,5 @@ namespace VocaDb.Model.Domain.Venues
 		Inappropriate = 3,
 
 		Other = 4
-
 	}
-
 }

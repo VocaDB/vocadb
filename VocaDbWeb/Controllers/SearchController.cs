@@ -21,7 +21,6 @@ namespace VocaDb.Web.Controllers
 {
 	public class SearchController : ControllerBase
 	{
-
 		private readonly AlbumService albumService;
 		private readonly ArtistService artistService;
 		private readonly EntryQueries entryQueries;
@@ -64,13 +63,11 @@ namespace VocaDb.Web.Controllers
 
 		private ActionResult TryRedirect(string filter, EntryType searchType)
 		{
-
 			var textQuery = SearchTextQuery.Create(filter);
 			var artistTextQuery = ArtistSearchTextQuery.Create(filter);
 
 			switch (searchType)
 			{
-
 				case EntryType.Undefined:
 					{
 						var result = entryQueries.GetList(filter, null, null, false, null, null, 0, 1, true, EntrySortRule.Name,
@@ -79,7 +76,6 @@ namespace VocaDb.Web.Controllers
 
 						if (result.TotalCount == 1)
 						{
-
 							var item = result.Items.First();
 							var entryId = item.Id;
 
@@ -96,9 +92,7 @@ namespace VocaDb.Web.Controllers
 								case EntryType.Tag:
 									return RedirectToTag(entryId, item.UrlSlug);
 							}
-
 						}
-
 					}
 					break;
 
@@ -174,17 +168,14 @@ namespace VocaDb.Web.Controllers
 						var controller = searchType.ToString();
 						return RedirectToAction(action, controller, new { filter });
 					}
-
 			}
 
 			return null;
-
 		}
 
 		public SearchController(OtherService services, ArtistService artistService, AlbumService albumService, SongService songService, SongListQueries songListQueries,
 			TagQueries tagQueries, EventQueries eventQueries, EntryQueries entryQueries, IUserPermissionContext permissionContext)
 		{
-
 			this.services = services;
 			this.artistService = artistService;
 			this.albumService = albumService;
@@ -194,12 +185,10 @@ namespace VocaDb.Web.Controllers
 			this.eventQueries = eventQueries;
 			this.entryQueries = entryQueries;
 			this.permissionContext = permissionContext;
-
 		}
 
 		public ActionResult Index(SearchIndexViewModel viewModel)
 		{
-
 			if (viewModel == null)
 				viewModel = new SearchIndexViewModel();
 
@@ -208,12 +197,10 @@ namespace VocaDb.Web.Controllers
 
 			if (viewModel.AllowRedirect && !string.IsNullOrEmpty(filter))
 			{
-
 				var redirectResult = TryRedirect(filter, viewModel.SearchType);
 
 				if (redirectResult != null)
 					return redirectResult;
-
 			}
 
 			if (!string.IsNullOrEmpty(viewModel.Tag))
@@ -226,15 +213,11 @@ namespace VocaDb.Web.Controllers
 			SetSearchEntryType(viewModel.SearchType);
 
 			return View("Index", viewModel);
-
 		}
 
 		public ActionResult Radio()
 		{
-
 			return Index(new SearchIndexViewModel(EntryType.Song) { MinScore = 1, Sort = "AdditionDate", ViewMode = "PlayList", Autoplay = true, Shuffle = true });
-
 		}
-
 	}
 }

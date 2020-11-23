@@ -5,11 +5,9 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongListForEditContract : SongListContract
 	{
-
 		public SongListForEditContract()
 		{
 			SongLinks = new SongInListEditContract[] { };
@@ -19,12 +17,10 @@ namespace VocaDb.Model.DataContracts.Songs
 		public SongListForEditContract(SongList songList, IUserPermissionContext permissionContext)
 			: base(songList, permissionContext)
 		{
-
 			SongLinks = songList.SongLinks
 				.OrderBy(s => s.Order)
 				.Select(s => new SongInListEditContract(s, permissionContext.LanguagePreference))
 				.ToArray();
-
 		}
 
 		[DataMember]
@@ -32,7 +28,5 @@ namespace VocaDb.Model.DataContracts.Songs
 
 		[DataMember]
 		public string UpdateNotes { get; set; }
-
 	}
-
 }

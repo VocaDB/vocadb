@@ -4,10 +4,8 @@ using VocaDb.Model.Database.Repositories;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	public sealed class FakeTransaction : IMinimalTransaction
 	{
-
 		public FakeTransaction() { }
 
 		public FakeTransaction(Action commitAction = null, Action rollbackAction = null)
@@ -49,7 +47,5 @@ namespace VocaDb.Tests.TestSupport
 		{
 			rollbackAction?.Invoke();
 		}
-
 	}
-
 }

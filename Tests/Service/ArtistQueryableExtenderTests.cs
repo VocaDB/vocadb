@@ -7,14 +7,12 @@ using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Tests.Service
 {
-
 	/// <summary>
 	/// Tests for <see cref="ArtistQueryableExtender"/>.
 	/// </summary>
 	[TestClass]
 	public class ArtistQueryableExtenderTests
 	{
-
 		private List<ArtistName> CreateArtistNames(params string[] names)
 		{
 			return names.Select(name => new ArtistName { Value = name }).ToList();
@@ -35,9 +33,7 @@ namespace VocaDb.Tests.Service
 		[TestInitialize]
 		public void SetUp()
 		{
-
 			artists = CreateArtistNames("HSP", "Hiroyuki ODA", "8#Prince");
-
 		}
 
 		/// <summary>
@@ -47,11 +43,9 @@ namespace VocaDb.Tests.Service
 		[TestMethod]
 		public void FilterByArtistName_NotMatch_NotFound()
 		{
-
 			var result = FilterByArtistName("HSS");
 
 			SequenceEqual(result, "result");
-
 		}
 
 		/// <summary>
@@ -61,11 +55,9 @@ namespace VocaDb.Tests.Service
 		[TestMethod]
 		public void FilterByArtistName_PName_QueryJustBelowMinLengthForContains_Found()
 		{
-
 			var result = FilterByArtistName("HSP");
 
 			SequenceEqual(result, "result", "HSP");
-
 		}
 
 		/// <summary>
@@ -75,11 +67,9 @@ namespace VocaDb.Tests.Service
 		[TestMethod]
 		public void FilterByArtistName_NotPName_QueryJustBelowMinLengthForContains_Found()
 		{
-
 			var result = FilterByArtistName("HS");
 
 			SequenceEqual(result, "result", "HSP");
-
 		}
 
 		/// <summary>
@@ -90,11 +80,9 @@ namespace VocaDb.Tests.Service
 		[TestMethod]
 		public void FilterByArtistName_NotPNameButEndsInP_QueryJustAboveMinLengthForContains_Found()
 		{
-
 			var result = FilterByArtistName("8#P");
 
 			SequenceEqual(result, "result", "8#Prince");
-
 		}
 
 		/// <summary>
@@ -104,11 +92,9 @@ namespace VocaDb.Tests.Service
 		[TestMethod]
 		public void FilterByArtistName_NotPNameDoesNotEndInP_QueryJustAboveMinLengthForContains_Found()
 		{
-
 			var result = FilterByArtistName("Hir");
 
 			SequenceEqual(result, "result", "Hiroyuki ODA");
-
 		}
 
 		/// <summary>
@@ -118,13 +104,9 @@ namespace VocaDb.Tests.Service
 		[TestMethod]
 		public void FilterByArtistName_NotPName_QueryLongEnoughForContains_Found()
 		{
-
 			var result = FilterByArtistName("Hiroyuki");
 
 			SequenceEqual(result, "result", "Hiroyuki ODA");
-
 		}
-
 	}
-
 }

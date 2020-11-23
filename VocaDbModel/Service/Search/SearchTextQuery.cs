@@ -5,7 +5,6 @@ using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.Search
 {
-
 	/// <summary>
 	/// Represents a textual filter for entry name.
 	/// </summary>
@@ -16,7 +15,6 @@ namespace VocaDb.Model.Service.Search
 	/// </remarks>
 	public class SearchTextQuery
 	{
-
 		protected string[] words;
 		private readonly NameMatchMode matchMode;
 		private readonly string originalQuery;
@@ -43,10 +41,8 @@ namespace VocaDb.Model.Service.Search
 			NameMatchMode selectedMode = NameMatchMode.Auto,
 			NameMatchMode defaultMode = NameMatchMode.Words)
 		{
-
 			var parsedQuery = FindHelpers.GetMatchModeAndQueryForSearch(query, ref selectedMode, defaultMode);
 			return new SearchTextQuery(parsedQuery, selectedMode, query);
-
 		}
 
 		public static IEnumerable<SearchTextQuery> Create(IEnumerable<string> names, NameMatchMode selectedMode = NameMatchMode.Auto, NameMatchMode defaultMode = NameMatchMode.Words)
@@ -73,7 +69,6 @@ namespace VocaDb.Model.Service.Search
 			string originalQuery,
 			string[] words = null)
 		{
-
 			if (!string.IsNullOrEmpty(query) && matchMode == NameMatchMode.Auto)
 				throw new ArgumentException("'Auto' is not allowed here; specific name match mode is required", nameof(MatchMode));
 
@@ -81,7 +76,6 @@ namespace VocaDb.Model.Service.Search
 			this.matchMode = matchMode;
 			this.originalQuery = originalQuery;
 			this.words = words;
-
 		}
 
 		/// <summary>
@@ -127,7 +121,5 @@ namespace VocaDb.Model.Service.Search
 		{
 			return string.Format("Text filter by '{0}' ({1})", Query, MatchMode);
 		}
-
 	}
-
 }

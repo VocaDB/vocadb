@@ -15,10 +15,8 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public class VideoServiceBilibili : VideoService
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		public static readonly RegexLinkMatcher[] Matchers =
@@ -35,7 +33,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
 		{
-
 			var id = GetIdByUrl(url);
 
 			if (string.IsNullOrEmpty(id))
@@ -83,7 +80,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 			return VideoUrlParseResult.CreateOk(url, PVService.Bilibili, aid.ToString(),
 				VideoTitleParseResult.CreateSuccess(title, author, authorId, thumb, length: length, uploadDate: created, extendedMetadata: metadata));
-
 		}
 
 		public override IEnumerable<string> GetUserProfileUrls(string authorId)
@@ -96,7 +92,6 @@ namespace VocaDb.Model.Service.VideoServices
 		}
 
 		public override string GetUrlById(string id, PVExtendedMetadata _) => $"https://www.bilibili.com/video/av{id}";
-
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
@@ -133,5 +128,4 @@ namespace VocaDb.Model.Service.VideoServices
 		public int Mid { get; set; }
 		public string Name { get; set; }
 	}
-
 }

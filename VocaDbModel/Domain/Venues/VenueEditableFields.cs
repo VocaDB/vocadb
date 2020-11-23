@@ -2,11 +2,9 @@ using System;
 
 namespace VocaDb.Model.Domain.Venues
 {
-
 	[Flags]
 	public enum VenueEditableFields
 	{
-
 		Nothing = 0,
 
 		Address = 1,
@@ -24,7 +22,5 @@ namespace VocaDb.Model.Domain.Venues
 		Status = 64,
 
 		WebLinks = 128
-
 	}
-
 }

@@ -2,26 +2,20 @@ using System;
 
 namespace VocaDb.Model.Domain.Users
 {
-
 	/// <summary>
 	/// Message sent to a user. 
 	/// Can be either a personal message from one user to another, or a notification.
 	/// </summary>
 	public class UserMessage : IEntryWithIntId
 	{
-
 		public static UserMessage CreateReceived(User from, User to, string subject, string body, bool highPriority)
 		{
-
 			return new UserMessage(to, UserInboxType.Received, from, to, subject, body, highPriority);
-
 		}
 
 		public static UserMessage CreateSent(User from, User to, string subject, string body, bool highPriority)
 		{
-
 			return new UserMessage(from, UserInboxType.Sent, from, to, subject, body, highPriority);
-
 		}
 
 		private string message;
@@ -39,7 +33,6 @@ namespace VocaDb.Model.Domain.Users
 		public UserMessage(User to, string subject, string body, bool highPriority)
 			: this()
 		{
-
 			ParamIs.NotNull(() => to);
 
 			User = to;
@@ -49,13 +42,11 @@ namespace VocaDb.Model.Domain.Users
 			HighPriority = highPriority;
 
 			Inbox = UserInboxType.Notifications;
-
 		}
 
 		public UserMessage(User user, UserInboxType inbox, User from, User to, string subject, string body, bool highPriority)
 			: this()
 		{
-
 			ParamIs.NotNull(() => user);
 
 			User = user;
@@ -65,7 +56,6 @@ namespace VocaDb.Model.Domain.Users
 			Subject = subject;
 			Message = body;
 			HighPriority = highPriority;
-
 		}
 
 		/// <summary>
@@ -141,7 +131,6 @@ namespace VocaDb.Model.Domain.Users
 			// Note: no message contents in ToString because personal information might be logged
 			return string.Format("User message [{0}]", Id);
 		}
-
 	}
 
 	public enum UserInboxType
@@ -151,5 +140,4 @@ namespace VocaDb.Model.Domain.Users
 		Sent,
 		Notifications
 	}
-
 }

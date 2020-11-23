@@ -1,6 +1,5 @@
 namespace VocaDb.Model.Domain
 {
-
 	/// <summary>
 	/// Base interface for database objects with Int32 ID.
 	/// Applies to both root entities and child entities.
@@ -21,7 +20,6 @@ namespace VocaDb.Model.Domain
 
 	public static class IEntryWithIntIdExtender
 	{
-
 		/// <summary>
 		/// Compares the Id of this entry with another.
 		/// Null values and entries where the Id is undefined (0) will be handled.
@@ -41,9 +39,7 @@ namespace VocaDb.Model.Domain
 		/// </remarks>
 		public static bool NullSafeIdEquals(this IEntryWithIntId left, IEntryWithIntId right)
 		{
-
 			return left.IdOrDefault() == right.IdOrDefault();
-
 		}
 
 		public static bool IdEquals(this IEntryWithIntId left, IEntryWithIntId right)
@@ -60,7 +56,5 @@ namespace VocaDb.Model.Domain
 		{
 			return entry == null || entry.Id == 0;
 		}
-
 	}
-
 }

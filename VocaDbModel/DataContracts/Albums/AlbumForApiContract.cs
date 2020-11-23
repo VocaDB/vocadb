@@ -14,11 +14,9 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.Albums
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class AlbumForApiContract : IEntryBase
 	{
-
 		EntryType IEntryBase.EntryType => EntryType.Album;
 
 		public AlbumForApiContract() { }
@@ -39,7 +37,6 @@ namespace VocaDb.Model.DataContracts.Albums
 			AlbumOptionalFields fields,
 			SongOptionalFields songFields)
 		{
-
 			ArtistString = album.ArtistString[languagePreference];
 			CatalogNumber = album.OriginalRelease != null ? album.OriginalRelease.CatNum : null;
 			CreateDate = album.CreateDate;
@@ -116,7 +113,6 @@ namespace VocaDb.Model.DataContracts.Albums
 
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
-
 		}
 
 		/// <summary>
@@ -258,13 +254,11 @@ namespace VocaDb.Model.DataContracts.Albums
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public WebLinkForApiContract[] WebLinks { get; set; }
-
 	}
 
 	[Flags]
 	public enum AlbumOptionalFields
 	{
-
 		None = 0,
 		AdditionalNames = 1,
 		Artists = 2,
@@ -278,7 +272,5 @@ namespace VocaDb.Model.DataContracts.Albums
 		Tags = 512,
 		Tracks = 1024,
 		WebLinks = 2048
-
 	}
-
 }

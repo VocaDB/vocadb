@@ -5,10 +5,8 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.ExtLinks
 {
-
 	public class WebLinkManager<T> where T : WebLink
 	{
-
 		private IList<T> links = new List<T>();
 
 		public virtual bool HasLink(string url)
@@ -35,7 +33,5 @@ namespace VocaDb.Model.Domain.ExtLinks
 		{
 			return WebLink.SyncByValue(Links, newLinks, webLinkFactory);
 		}
-
 	}
-
 }

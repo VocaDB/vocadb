@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs
 {
-
 	public class ComparedSongsContract : ComparedVersionsContract<ArchivedSongContract>
 	{
-
 		public ComparedSongsContract(ComparedVersionsContract<ArchivedSongContract> comparedVersions)
 			: base(comparedVersions) { }
 
@@ -14,6 +12,5 @@ namespace VocaDb.Model.DataContracts.Songs
 		{
 			return new ComparedSongsContract(Create(firstData, secondData, ArchivedSongContract.GetAllProperties, d => d.Id));
 		}
-
 	}
 }

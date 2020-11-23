@@ -8,16 +8,13 @@ using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.DataContracts.PVs
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class PVContract : IPVWithThumbnail
 	{
-
 		public PVContract() { }
 
 		public PVContract(PV pv)
 		{
-
 			ParamIs.NotNull(() => pv);
 
 			Author = pv.Author;
@@ -29,12 +26,10 @@ namespace VocaDb.Model.DataContracts.PVs
 			PublishDate = pv.PublishDate;
 			PVType = pv.PVType;
 			Url = pv.Url;
-
 		}
 
 		public PVContract(ArchivedPVContract contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			Author = contract.Author;
@@ -43,22 +38,18 @@ namespace VocaDb.Model.DataContracts.PVs
 			PVId = contract.PVId;
 			Service = contract.Service;
 			PVType = contract.PVType;
-
 		}
 
 		public PVContract(PVForSong pv)
 			: this((PV)pv)
 		{
-
 			Disabled = pv.Disabled;
 			Length = pv.Length;
 			ThumbUrl = pv.ThumbUrl;
-
 		}
 
 		public PVContract(VideoUrlParseResult parseResult, PVType type)
 		{
-
 			ParamIs.NotNull(() => parseResult);
 
 			Author = parseResult.Author;
@@ -72,7 +63,6 @@ namespace VocaDb.Model.DataContracts.PVs
 			PVType = type;
 
 			Url = PV.GetUrl(Service, PVId, ExtendedMetadata);
-
 		}
 
 		[DataMember]
@@ -126,12 +116,10 @@ namespace VocaDb.Model.DataContracts.PVs
 		/// <returns>True if the editable properties of this contract are the same as the one being compared to.</returns>
 		public bool ContentEquals(PVContract pv)
 		{
-
 			if (pv == null)
 				return false;
 
 			return (Name == pv.Name && Disabled == pv.Disabled);
-
 		}
 
 		public PVContract NullToEmpty()
@@ -141,7 +129,5 @@ namespace VocaDb.Model.DataContracts.PVs
 			ThumbUrl = ThumbUrl ?? string.Empty;
 			return this;
 		}
-
 	}
-
 }

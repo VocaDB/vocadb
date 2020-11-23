@@ -7,21 +7,17 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Models.Admin
 {
-
 	[JsonObject(MemberSerialization.OptIn)]
 	public class ViewAuditLogModel
 	{
-
 		public ViewAuditLogModel()
 		{
-
 			GroupId = AuditLogUserGroupFilter.NoFilter;
 
 			UserGroups = new[] {
 				new KeyValuePair<AuditLogUserGroupFilter, string>(AuditLogUserGroupFilter.NoFilter, "No group filter")
 				}.Concat(Translate.UserGroups.Values.Select(u => new KeyValuePair<AuditLogUserGroupFilter, string>(EnumVal<AuditLogUserGroupFilter>.Parse(u.ToString()), Translate.UserGroups[u])))
 				.ToArray();
-
 		}
 
 		[JsonProperty]
@@ -40,7 +36,5 @@ namespace VocaDb.Web.Models.Admin
 
 		[JsonProperty]
 		public string UserName { get; set; }
-
 	}
-
 }

@@ -7,11 +7,9 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.DataContracts.MikuDb
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ImportedAlbumTrack
 	{
-
 		public ImportedAlbumTrack()
 		{
 			DiscNum = 1;
@@ -47,7 +45,5 @@ namespace VocaDb.Model.DataContracts.MikuDb
 		{
 			return string.Format("Imported track {0} ({1})", Title, ArtistString);
 		}
-
 	}
-
 }

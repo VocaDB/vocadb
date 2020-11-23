@@ -4,14 +4,12 @@ using System.Text.RegularExpressions;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	/// <summary>
 	/// Captures values from (partial) URL using regex and then formats a full
 	/// URL using those captured values.
 	/// </summary>
 	public class RegexLinkMatcher
 	{
-
 		private readonly string template;
 		private readonly Regex regex;
 
@@ -23,15 +21,12 @@ namespace VocaDb.Model.Service.VideoServices
 		/// <remarks>The number of captured groups in <paramref name="regexStr"/> should match placeholders in <paramref name="template"/>.</remarks>
 		public RegexLinkMatcher(string template, string regexStr)
 		{
-
 			regex = new Regex(regexStr, RegexOptions.IgnoreCase);
 			this.template = template;
-
 		}
 
 		public string GetId(string url)
 		{
-
 			var match = regex.Match(url);
 
 			if (match.Groups.Count < 2)
@@ -39,7 +34,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 			var group = match.Groups[1];
 			return group.Value;
-
 		}
 
 		public bool IsMatch(string url) => regex.IsMatch(url);
@@ -56,7 +50,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public bool TryGetLinkFromUrl(string url, out string formattedUrl)
 		{
-
 			var match = regex.Match(url);
 
 			if (match.Success)
@@ -70,9 +63,6 @@ namespace VocaDb.Model.Service.VideoServices
 				formattedUrl = null;
 				return false;
 			}
-
 		}
-
 	}
-
 }

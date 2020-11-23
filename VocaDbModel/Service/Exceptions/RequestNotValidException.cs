@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 
 namespace VocaDb.Model.Service.Exceptions
 {
-
 	public class RequestNotValidException : Exception
 	{
 		public RequestNotValidException() { }

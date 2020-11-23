@@ -9,17 +9,14 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Tests.Service.QueryableExtenders
 {
-
 	/// <summary>
 	/// Tests for <see cref="GenericQueryableExtender"/>
 	/// </summary>
 	public class GenericQueryableExtenderTests
 	{
-
 		[TestClass]
 		public class SelectObject
 		{
-
 			class Song
 			{
 				public string Name { get; set; }
@@ -48,29 +45,22 @@ namespace VocaDb.Tests.Service.QueryableExtenders
 			[TestMethod]
 			public void MapToSubset()
 			{
-
 				var result = songs.SelectObject<Song, SongDto>().ToArray();
 
 				Assert.AreEqual(2, result.Length, "Number of results");
 				Assert.AreEqual("Nebula", result[0].Name, "First song name");
 				Assert.AreEqual(3939, result[0].Length, "First song length");
-
 			}
 
 			[TestMethod]
 			public void IgnoreIncompatibleProperties()
 			{
-
 				var result = songs.SelectObject<Song, SongDto2>().ToArray();
 
 				Assert.AreEqual(2, result.Length, "Number of results");
 				Assert.AreEqual("Nebula", result[0].Name, "First song name");
 				Assert.AreEqual(0, result[0].Length, "First song length");
-
 			}
-
 		}
-
 	}
-
 }

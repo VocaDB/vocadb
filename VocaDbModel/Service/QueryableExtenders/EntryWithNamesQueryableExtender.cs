@@ -10,30 +10,23 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtenders
 {
-
 	public static class EntryWithNamesQueryableExtender
 	{
-
 		public static IOrderedQueryable<T> OrderByEntryName<T>(this IQueryable<T> criteria, ContentLanguagePreference languagePreference)
 			where T : IEntryWithNames
 		{
-
 			return FindHelpers.AddNameOrder(criteria, languagePreference);
-
 		}
 
 		public static IOrderedQueryable<T> ThenByEntryName<T>(this IOrderedQueryable<T> criteria, ContentLanguagePreference languagePreference)
 			where T : IEntryWithNames
 		{
-
 			return FindHelpers.AddNameOrder(criteria, languagePreference);
-
 		}
 
 		public static IQueryable<EntryIdAndName> SelectIdAndName<T>(this IQueryable<T> query, ContentLanguagePreference languagePreference)
 			where T : class, IEntryWithNames
 		{
-
 			switch (languagePreference)
 			{
 				case ContentLanguagePreference.English:
@@ -45,13 +38,11 @@ namespace VocaDb.Model.Service.QueryableExtenders
 				default:
 					return query.Select(a => new EntryIdAndName { Name = a.Names.SortNames.Japanese, Id = a.Id });
 			}
-
 		}
 
 		public static IQueryable<EntryBaseContract> SelectEntryBase<T>(this IQueryable<T> query, ContentLanguagePreference languagePreference, EntryType entryType)
 			where T : class, IEntryWithNames
 		{
-
 			switch (languagePreference)
 			{
 				case ContentLanguagePreference.English:
@@ -63,7 +54,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 				default:
 					return query.Select(a => new EntryBaseContract { DefaultName = a.Names.SortNames.Japanese, Id = a.Id, EntryType = entryType });
 			}
-
 		}
 
 		/// <summary>
@@ -78,18 +68,15 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		public static IQueryable<TEntry> WhereHasNameGeneric<TEntry, TName>(this IQueryable<TEntry> query, IEnumerable<SearchTextQuery> names)
 			where TEntry : IEntryWithNames<TName> where TName : LocalizedStringWithId
 		{
-
 			names = names ?? new SearchTextQuery[0];
 
 			var predicate = names.Aggregate(PredicateBuilder.False<TEntry>(), (nameExp, name) => nameExp.Or(WhereHasNameExpression<TEntry, TName>(name)));
 			return query.Where(predicate);
-
 		}
 
 		public static Expression<Func<TEntry, bool>> WhereHasNameExpression<TEntry, TName>(SearchTextQuery textQuery) where TEntry
 			: IEntryWithNames<TName> where TName : LocalizedStringWithId
 		{
-
 			var nameFilter = textQuery.Query;
 
 			switch (textQuery.MatchMode)
@@ -109,7 +96,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return m => true;
-
 		}
 
 		/// <summary>
@@ -128,7 +114,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		public static IQueryable<TEntry> WhereHasNameGeneric<TEntry, TName>(this IQueryable<TEntry> query, SearchTextQuery textQuery) where TEntry
 			: IEntryWithNames<TName> where TName : LocalizedStringWithId
 		{
-
 			if (textQuery.IsEmpty)
 				return query;
 
@@ -136,8 +121,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			var expression = WhereHasNameExpression<TEntry, TName>(textQuery);
 
 			return query.Where(expression);
-
 		}
-
 	}
 }

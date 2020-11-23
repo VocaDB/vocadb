@@ -3,18 +3,14 @@ using System.IO;
 
 namespace VocaDb.Model.Domain.Images
 {
-
 	public abstract class ServerEntryImagePersisterBase : IEntryImagePersister
 	{
-
 		private void EnsureDirExistsForFile(string path)
 		{
-
 			var dir = Path.GetDirectoryName(path);
 
 			if (dir != null && !Directory.Exists(dir))
 				Directory.CreateDirectory(dir);
-
 		}
 
 		public Stream GetReadStream(IEntryImageInformation picture, ImageSize size)
@@ -33,7 +29,6 @@ namespace VocaDb.Model.Domain.Images
 
 		public void Write(IEntryImageInformation picture, ImageSize size, Stream file)
 		{
-
 			var path = GetPath(picture, size);
 
 			if (string.IsNullOrEmpty(path))
@@ -49,12 +44,10 @@ namespace VocaDb.Model.Domain.Images
 			}
 
 			file.Seek(0, SeekOrigin.Begin);
-
 		}
 
 		public void Write(IEntryImageInformation picture, ImageSize size, Image image)
 		{
-
 			var path = GetPath(picture, size);
 
 			if (string.IsNullOrEmpty(path))
@@ -63,11 +56,8 @@ namespace VocaDb.Model.Domain.Images
 			EnsureDirExistsForFile(path);
 
 			image.Save(path);
-
 		}
 
 		public abstract bool IsSupported(IEntryImageInformation picture, ImageSize size);
-
 	}
-
 }

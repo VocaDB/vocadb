@@ -9,10 +9,8 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Helpers
 {
-
 	public static class WebHelper
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
@@ -35,7 +33,6 @@ namespace VocaDb.Web.Helpers
 		/// <returns>Culture name. Empty if not matched.</returns>
 		public static string GetInterfaceCultureName(HttpRequestBase request)
 		{
-
 			if (request.UserLanguages == null || !request.UserLanguages.Any())
 				return string.Empty;
 
@@ -44,19 +41,15 @@ namespace VocaDb.Web.Helpers
 				.Where(l => l != null && InterfaceLanguage.IsValidUserInterfaceCulture(l))
 				.Select(l => l.Name)
 				.FirstOrDefault() ?? string.Empty;
-
 		}
 
 		public static string GetRealHost(HttpRequestBase request)
 		{
-
 			return request.UserHostAddress;
-
 		}
 
 		public static string GetRealHost(HttpRequestMessage request)
 		{
-
 			// From https://blogs.msdn.microsoft.com/hongmeig1/2012/07/09/how-to-access-the-clients-ip-address-in-web-api/
 			if (HttpContext.Current != null)
 				return HttpContext.Current.Request.UserHostAddress;
@@ -69,18 +62,15 @@ namespace VocaDb.Web.Helpers
 			}
 
 			return null;
-
 		}
 
 		public static bool IsLocalhost(string hostname)
 		{
-
 			if (string.IsNullOrEmpty(hostname))
 				return false;
 
 			var localhosts = new[] { "localhost", "127.0.0.1", "::1" };
 			return localhosts.Contains(hostname);
-
 		}
 
 		/// <summary>
@@ -93,7 +83,6 @@ namespace VocaDb.Web.Helpers
 		/// <returns>True if the request should be counted.</returns>
 		public static bool IsValidHit(HttpRequestBase request)
 		{
-
 			var ua = request.UserAgent;
 
 			if (string.IsNullOrEmpty(ua))
@@ -103,21 +92,16 @@ namespace VocaDb.Web.Helpers
 			}
 
 			return !forbiddenUserAgents.Any(ua.Contains);
-
 		}
 
 		public static void VerifyUserAgent(HttpRequestBase request)
 		{
-
 			var ua = request.UserAgent;
 			if (string.IsNullOrEmpty(ua))
 			{
 				log.Warn(ErrorLogger.RequestInfo("Blank user agent from", request));
 				//throw new NotAllowedException();
 			}
-
 		}
-
 	}
-
 }

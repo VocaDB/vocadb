@@ -3,10 +3,8 @@ using System.Configuration;
 
 namespace VocaDb.Model.Utils.Config
 {
-
 	public class SpecialTagsSection : ConfigurationSection, ISpecialTags
 	{
-
 		private int TagId(string name)
 		{
 			return this.Properties.Contains(name) ? (int)this[name] : 0;
@@ -32,12 +30,10 @@ namespace VocaDb.Model.Utils.Config
 			get { return TagId("shortVersion"); }
 			set { this["shortVersion"] = value; }
 		}
-
 	}
 
 	public interface ISpecialTags
 	{
 		int ChangedLyrics { get; }
 	}
-
 }

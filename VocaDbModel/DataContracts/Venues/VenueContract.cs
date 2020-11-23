@@ -5,10 +5,8 @@ using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.DataContracts.Venues
 {
-
 	public class VenueContract : IEntryWithStatus
 	{
-
 		EntryType IEntryBase.EntryType => EntryType.Venue;
 		string IEntryBase.DefaultName => Name;
 
@@ -38,7 +36,6 @@ namespace VocaDb.Model.DataContracts.Venues
 
 		public VenueContract(Venue venue, ContentLanguagePreference languagePreference, bool includeLinks = false)
 		{
-
 			ParamIs.NotNull(() => venue);
 
 			AdditionalNames = venue.Names.GetAdditionalNamesStringForLanguage(languagePreference);
@@ -56,11 +53,8 @@ namespace VocaDb.Model.DataContracts.Venues
 			{
 				WebLinks = venue.WebLinks.Links.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 			}
-
 		}
 
 		public override string ToString() => $"venue '{Name}' [{Id}]";
-
 	}
-
 }

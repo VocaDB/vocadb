@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.Domain.ReleaseEvents
 {
-
 	public class ReleaseEventSeriesDiff : EntryDiff<ReleaseEventSeriesEditableFields>
 	{
-
 		public ReleaseEventSeriesDiff() : base(true) { }
 		public ReleaseEventSeriesDiff(bool isSnapshot) : base(isSnapshot) { }
 		public ReleaseEventSeriesDiff(ReleaseEventSeriesEditableFields changedFields) : base(changedFields) { }
@@ -20,7 +18,5 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual bool IncludeNames => IsSnapshot || Names.IsChanged;
 		public virtual bool IncludeWebLinks => IsSnapshot || WebLinks.IsChanged;
-
 	}
-
 }

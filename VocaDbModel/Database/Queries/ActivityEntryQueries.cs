@@ -12,10 +12,8 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Model.Database.Queries
 {
-
 	public class ActivityEntryQueries
 	{
-
 		public class EditsPerDay
 		{
 			public int Count { get; set; }
@@ -35,20 +33,16 @@ namespace VocaDb.Model.Database.Queries
 		public ActivityEntryQueries(IRepository repository, IUserIconFactory userIconFactory,
 			IUserPermissionContext permissionContext, EntryForApiContractFactory entryForApiContractFactory)
 		{
-
 			this.repository = repository;
 			this.userIconFactory = userIconFactory;
 			this.permissionContext = permissionContext;
 			this.entryForApiContractFactory = entryForApiContractFactory;
-
 		}
 
 		public ICollection<Tuple<DateTime, int>> GetEditsPerDay(int? userId, DateTime? cutoff)
 		{
-
 			var values = repository.HandleQuery(ctx =>
 			{
-
 				var query = ctx.Query<ActivityEntry>();
 
 				if (userId.HasValue)
@@ -77,13 +71,11 @@ namespace VocaDb.Model.Database.Queries
 						Count = a.Count()
 					})
 					.ToArray();
-
 			});
 
 			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
 
 			return points;
-
 		}
 
 		public PartialFindResult<ActivityEntryForApiContract> GetList(
@@ -97,12 +89,10 @@ namespace VocaDb.Model.Database.Queries
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-
 			maxResults = Math.Min(maxResults, absoluteMax);
 
 			return repository.HandleQuery(ctx =>
 			{
-
 				var query = ctx.Query<ActivityEntry>();
 
 				if (before.HasValue && !since.HasValue)
@@ -143,11 +133,7 @@ namespace VocaDb.Model.Database.Queries
 				var count = getTotalCount ? query.Count() : 0;
 
 				return PartialFindResult.Create(activityEntries, count);
-
 			});
-
 		}
-
 	}
-
 }

@@ -2,7 +2,6 @@ using System;
 
 namespace VocaDb.Model.Domain.Artists
 {
-
 	/// <summary>
 	/// Artist categories are shown as rows on song/album details page,
 	/// with their own title.
@@ -10,7 +9,6 @@ namespace VocaDb.Model.Domain.Artists
 	[Flags]
 	public enum ArtistCategories
 	{
-
 		Nothing = 0,
 
 		Vocalist = 1,
@@ -33,7 +31,5 @@ namespace VocaDb.Model.Domain.Artists
 		Illustrator = 128,
 
 		Subject = 256
-
 	}
-
 }

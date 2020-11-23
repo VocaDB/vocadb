@@ -6,13 +6,10 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtenders
 {
-
 	public static class SongListQueryableExtender
 	{
-
 		public static IQueryable<SongList> OrderBy(this IQueryable<SongList> query, SongListSortRule sortRule)
 		{
-
 			switch (sortRule)
 			{
 				case SongListSortRule.Date:
@@ -26,7 +23,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return query;
-
 		}
 
 		public static IOrderedQueryable<SongList> OrderByDate(this IQueryable<SongList> query, SortDirection direction)
@@ -36,7 +32,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 		public static IQueryable<SongList> WhereEventDateIsBetween(this IQueryable<SongList> query, DateTime? begin, DateTime? end)
 		{
-
 			if (begin.HasValue && end.HasValue)
 				return query.Where(e => e.EventDate.DateTime != null && e.EventDate.DateTime >= begin && e.EventDate.DateTime < end);
 
@@ -47,22 +42,18 @@ namespace VocaDb.Model.Service.QueryableExtenders
 				return query.Where(e => e.EventDate.DateTime != null && e.EventDate.DateTime < end);
 
 			return query;
-
 		}
 
 		public static IQueryable<SongList> WhereHasFeaturedCategory(this IQueryable<SongList> query, SongListFeaturedCategory? featuredCategory, bool allowNothing)
 		{
-
 			if (!featuredCategory.HasValue)
 				return allowNothing ? query : query.Where(s => s.FeaturedCategory != SongListFeaturedCategory.Nothing);
 
 			return query.Where(s => s.FeaturedCategory == featuredCategory.Value);
-
 		}
 
 		public static IQueryable<SongList> WhereHasName(this IQueryable<SongList> query, SearchTextQuery textQuery)
 		{
-
 			if (textQuery == null || textQuery.IsEmpty)
 				return query;
 
@@ -81,14 +72,11 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return query;
-
 		}
-
 	}
 
 	public enum SongListSortRule
 	{
-
 		None,
 
 		Name,
@@ -96,7 +84,5 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		Date,
 
 		CreateDate
-
 	}
-
 }

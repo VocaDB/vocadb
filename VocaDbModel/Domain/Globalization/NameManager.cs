@@ -8,10 +8,8 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Domain.Globalization
 {
-
 	public class NameManager<T> : INameManager<T>, IEnumerable<T> where T : LocalizedStringWithId
 	{
-
 		private string additionalNamesString;
 		private IList<T> names = new List<T>();
 		private TranslatedString sortNames = new TranslatedString();
@@ -23,19 +21,16 @@ namespace VocaDb.Model.Domain.Globalization
 
 		private T GetDefaultName()
 		{
-
 			if (!Names.Any())
 				return null;
 
 			var name = FirstName(sortNames.DefaultLanguage);
 
 			return name ?? Names.First();
-
 		}
 
 		private T GetFirstName(ContentLanguageSelection languageSelection)
 		{
-
 			if (!Names.Any())
 				return null;
 
@@ -50,12 +45,10 @@ namespace VocaDb.Model.Domain.Globalization
 				name = FirstName(ContentLanguageSelection.English);
 
 			return name ?? GetDefaultName();
-
 		}
 
 		private void SetValueFor(ContentLanguageSelection language)
 		{
-
 			if (!Names.Any())
 				return;
 
@@ -66,7 +59,6 @@ namespace VocaDb.Model.Domain.Globalization
 
 			if (string.IsNullOrEmpty(SortNames[language]))
 				SortNames[language] = Names.First().Value;
-
 		}
 
 		/// <summary>
@@ -87,11 +79,9 @@ namespace VocaDb.Model.Domain.Globalization
 		{
 			get
 			{
-
 				return SortNames.All
 					.Concat(Names.Select(n => n.Value))
 					.Distinct();
-
 			}
 		}
 
@@ -135,12 +125,10 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual void Add(T name, bool update = true)
 		{
-
 			Names.Add(name);
 
 			if (update)
 				UpdateSortNames();
-
 		}
 
 		/// <summary>
@@ -167,7 +155,6 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public string GetAdditionalNamesStringForLanguage(ContentLanguagePreference languagePreference)
 		{
-
 			var display = SortNames[languagePreference];
 			var different = SortNames.All.Where(s => s != display).Distinct();
 
@@ -175,7 +162,6 @@ namespace VocaDb.Model.Domain.Globalization
 				return string.Join(", ", different.Concat(Enumerable.Repeat(AdditionalNamesString, 1)));
 			else
 				return string.Join(", ", different);
-
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
@@ -190,22 +176,18 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public EntryNameContract GetEntryName(ContentLanguagePreference languagePreference)
 		{
-
 			var display = SortNames[languagePreference];
 			var additional = GetAdditionalNamesStringForLanguage(languagePreference);
 
 			return new EntryNameContract(display, additional);
-
 		}
 
 		public string GetTranslationsString(ContentLanguagePreference languagePreference)
 		{
-
 			var display = SortNames[languagePreference];
 			var different = SortNames.All.Where(s => s != display).Distinct();
 
 			return string.Join(", ", different);
-
 		}
 
 		public virtual string GetUrlFriendlyName()
@@ -215,9 +197,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual bool HasName(LocalizedString name)
 		{
-
 			return Names.Any(n => n.ContentEquals(name));
-
 		}
 
 		public virtual bool HasNameForLanguage(ContentLanguageSelection language)
@@ -227,14 +207,11 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual bool HasName(string val)
 		{
-
 			return Names.Any(n => n.Value.Equals(val, StringComparison.InvariantCultureIgnoreCase));
-
 		}
 
 		public virtual void Init(IEnumerable<LocalizedStringContract> names, INameFactory<T> nameFactory)
 		{
-
 			ParamIs.NotNull(() => names);
 			ParamIs.NotNull(() => nameFactory);
 
@@ -247,17 +224,14 @@ namespace VocaDb.Model.Domain.Globalization
 				SortNames.DefaultLanguage = ContentLanguageSelection.Romaji;
 			else if (names.Any(n => n.Language == ContentLanguageSelection.English))
 				SortNames.DefaultLanguage = ContentLanguageSelection.English;
-
 		}
 
 		public virtual void Remove(T name, bool update = true)
 		{
-
 			Names.Remove(name);
 
 			if (update)
 				UpdateSortNames();
-
 		}
 
 		/// <summary>
@@ -277,7 +251,6 @@ namespace VocaDb.Model.Domain.Globalization
 		public virtual CollectionDiffWithValue<T, T> Sync(IEnumerable<LocalizedStringWithIdContract> newNames, INameFactory<T> nameFactory,
 			Action<T[]> deletedCallback = null, Action<T[]> editedCallback = null, bool immutable = false)
 		{
-
 			ParamIs.NotNull(() => newNames);
 			ParamIs.NotNull(() => nameFactory);
 
@@ -294,7 +267,6 @@ namespace VocaDb.Model.Domain.Globalization
 
 			foreach (var old in diff.Unchanged)
 			{
-
 				var nameEntry = newNames.First(n => n.Id == old.Id);
 
 				if (!old.ContentEquals(nameEntry))
@@ -303,28 +275,23 @@ namespace VocaDb.Model.Domain.Globalization
 					old.Value = nameEntry.Value;
 					edited.Add(old);
 				}
-
 			}
 
 			editedCallback?.Invoke(edited.ToArray());
 
 			foreach (var nameEntry in diff.Added)
 			{
-
 				var n = nameFactory.CreateName(nameEntry.Value, nameEntry.Language);
 				created.Add(n);
-
 			}
 
 			UpdateSortNames();
 
 			return new CollectionDiffWithValue<T, T>(created, diff.Removed, diff.Unchanged, edited);
-
 		}
 
 		public virtual CollectionDiff<T, T> SyncByContent(IEnumerable<ILocalizedString> newNames, INameFactory<T> nameFactory, Action<T[]> deletedCallback = null)
 		{
-
 			ParamIs.NotNull(() => newNames);
 			ParamIs.NotNull(() => nameFactory);
 
@@ -340,21 +307,17 @@ namespace VocaDb.Model.Domain.Globalization
 
 			foreach (var nameEntry in diff.Added)
 			{
-
 				var n = nameFactory.CreateName(nameEntry.Value, nameEntry.Language);
 				created.Add(n);
-
 			}
 
 			UpdateSortNames();
 
 			return new CollectionDiff<T, T>(created, diff.Removed, diff.Unchanged);
-
 		}
 
 		public virtual void UpdateSortNames()
 		{
-
 			if (!Names.Any())
 				return;
 
@@ -365,26 +328,19 @@ namespace VocaDb.Model.Domain.Globalization
 
 			var additionalNames = Names.Select(n => n.Value).Where(n => !SortNames.All.Contains(n)).Distinct();
 			AdditionalNamesString = string.Join(", ", additionalNames);
-
 		}
-
 	}
 
 	public class BasicNameManager : NameManager<LocalizedStringWithId>
 	{
-
 		public BasicNameManager() { }
 
 		public BasicNameManager(INameManager nameManager)
 		{
-
 			ParamIs.NotNull(() => nameManager);
 
 			Names = nameManager.NamesBase.Select(n => new LocalizedStringWithId(n.Value, n.Language)).ToArray();
 			SortNames = new TranslatedString(nameManager.SortNames);
-
 		}
-
 	}
-
 }

@@ -4,14 +4,12 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Comments
 {
-
 	/// <summary>
 	/// Base class for comments.
 	/// Comments can be added for entries such as albums and users.
 	/// </summary>
 	public abstract class Comment : ICommentWithEntry
 	{
-
 		private string authorName;
 		private string message;
 
@@ -23,13 +21,11 @@ namespace VocaDb.Model.Domain.Comments
 		protected Comment(string message, AgentLoginData loginData)
 			: this()
 		{
-
 			ParamIs.NotNull(() => loginData);
 
 			Message = message;
 			Author = loginData.User;
 			AuthorName = loginData.Name;
-
 		}
 
 		public virtual User Author { get; set; }
@@ -73,25 +69,19 @@ namespace VocaDb.Model.Domain.Comments
 		{
 			return string.Format("comment [{0}] for {1}", Id, Entry);
 		}
-
 	}
 
 	public interface IComment : IEntryWithIntId
 	{
-
 		string AuthorName { get; }
 
 		DateTime Created { get; }
 
 		string Message { get; }
-
 	}
 
 	public interface ICommentWithEntry : IComment
 	{
-
 		IEntryWithNames Entry { get; }
-
 	}
-
 }

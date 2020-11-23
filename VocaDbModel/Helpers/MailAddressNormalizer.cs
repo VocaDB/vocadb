@@ -7,10 +7,8 @@ using System.Text.RegularExpressions;
 
 namespace VocaDb.Model.Helpers
 {
-
 	public static class MailAddressNormalizer
 	{
-
 		public static readonly Dictionary<string, char> hostsWithTags = new Dictionary<string, char> {
 			// Google only has two Gmail domains: https://en.wikipedia.org/wiki/List_of_Google_domains
 			{ "gmail.com", '+' },
@@ -103,7 +101,5 @@ namespace VocaDb.Model.Helpers
 		/// <exception cref="ArgumentException">address is System.String.Empty ("").</exception>
 		/// <exception cref="FormatException">address is not in a recognized format.</exception>
 		public static string Normalize(string address) => Normalize(new MailAddress(address));
-
 	}
-
 }

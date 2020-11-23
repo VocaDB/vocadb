@@ -5,14 +5,11 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.ExtLinks
 {
-
 	public class WebLink : IWebLink, IEntryWithIntId
 	{
-
 		public static CollectionDiffWithValue<T, T> Sync<T>(IList<T> oldLinks, IEnumerable<WebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
 			where T : WebLink
 		{
-
 			ParamIs.NotNull(() => oldLinks);
 			ParamIs.NotNull(() => newLinks);
 
@@ -28,13 +25,11 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 			foreach (var linkEntry in validLinks)
 			{
-
 				var entry = linkEntry;
 				var old = (entry.Id != 0 ? oldLinks.FirstOrDefault(n => n.Id == entry.Id) : null);
 
 				if (old != null)
 				{
-
 					if (!old.ContentEquals(linkEntry))
 					{
 						old.Category = linkEntry.Category;
@@ -42,26 +37,20 @@ namespace VocaDb.Model.Domain.ExtLinks
 						old.Url = linkEntry.Url;
 						edited.Add(old);
 					}
-
 				}
 				else
 				{
-
 					var n = webLinkFactory.CreateWebLink(linkEntry.Description, linkEntry.Url, linkEntry.Category);
 					created.Add(n);
-
 				}
-
 			}
 
 			return new CollectionDiffWithValue<T, T>(created, diff.Removed, diff.Unchanged, edited);
-
 		}
 
 		public static CollectionDiff<T, T> SyncByValue<T>(IList<T> oldLinks, IEnumerable<ArchivedWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
 			where T : WebLink
 		{
-
 			var diff = CollectionHelper.Diff(oldLinks, newLinks, (n1, n2) => n1.ContentEquals(n2));
 			var created = new List<T>();
 
@@ -72,14 +61,11 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 			foreach (var linkEntry in diff.Added)
 			{
-
 				var n = webLinkFactory.CreateWebLink(linkEntry.Description, linkEntry.Url, linkEntry.Category);
 				created.Add(n);
-
 			}
 
 			return new CollectionDiff<T, T>(created, diff.Removed, diff.Unchanged);
-
 		}
 
 		private string description;
@@ -89,25 +75,21 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public WebLink(string description, string url, WebLinkCategory category)
 		{
-
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrWhiteSpace(() => url);
 
 			Description = description;
 			Url = url;
 			Category = category;
-
 		}
 
 		public WebLink(WebLinkContract contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			Category = contract.Category;
 			Description = contract.Description;
 			Url = contract.Url;
-
 		}
 
 		public virtual WebLinkCategory Category { get; set; }
@@ -153,30 +135,24 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public virtual bool ContentEquals(IWebLink another)
 		{
-
 			if (another == null)
 				return false;
 
 			return (Url == another.Url && Description == another.Description && Category == another.Category);
-
 		}
 
 		public override string ToString()
 		{
 			return string.Format("web link '{0}'", Url);
 		}
-
 	}
 
 	public interface IWebLink
 	{
-
 		WebLinkCategory Category { get; set; }
 
 		string Description { get; set; }
 
 		string Url { get; set; }
-
 	}
-
 }

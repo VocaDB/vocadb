@@ -6,7 +6,6 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users
 {
-
 	/// <summary>
 	/// Data contract for <see cref="UserMessage"/>.
 	/// Email address is not included, just the URL to profile icon.
@@ -14,12 +13,10 @@ namespace VocaDb.Model.DataContracts.Users
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class UserMessageContract
 	{
-
 		public UserMessageContract() { }
 
 		public UserMessageContract(UserMessage message, IUserIconFactory iconFactory, bool includeBody = false)
 		{
-
 			ParamIs.NotNull(() => message);
 
 			Body = (includeBody ? message.Message : string.Empty);
@@ -32,7 +29,6 @@ namespace VocaDb.Model.DataContracts.Users
 			Receiver = new UserForApiContract(message.Receiver, iconFactory, UserOptionalFields.MainPicture);
 			Sender = (message.Sender != null ? new UserForApiContract(message.Sender, iconFactory, UserOptionalFields.MainPicture) : null);
 			Subject = message.Subject;
-
 		}
 
 		[DataMember]
@@ -70,7 +66,5 @@ namespace VocaDb.Model.DataContracts.Users
 		{
 			return string.Format("Message '{0}' to {1} [{2}]", Subject, Receiver, Id);
 		}
-
 	}
-
 }

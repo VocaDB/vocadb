@@ -2,10 +2,8 @@ using VocaDb.Model.DataContracts.Albums;
 
 namespace VocaDb.Model.Domain.Albums
 {
-
 	public class AlbumDiscProperties : IEntryWithIntId
 	{
-
 		private Album album;
 		private string name;
 
@@ -16,12 +14,10 @@ namespace VocaDb.Model.Domain.Albums
 
 		public AlbumDiscProperties(Album album, AlbumDiscPropertiesContract contract)
 		{
-
 			ParamIs.NotNull(() => album);
 
 			Album = album;
 			CopyContentFrom(contract);
-
 		}
 
 		public virtual Album Album
@@ -52,15 +48,12 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual void CopyContentFrom(AlbumDiscPropertiesContract contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			DiscNumber = contract.DiscNumber;
 			MediaType = contract.MediaType;
 			Name = contract.Name;
-
 		}
-
 	}
 
 	public enum DiscMediaType
@@ -68,5 +61,4 @@ namespace VocaDb.Model.Domain.Albums
 		Audio,
 		Video
 	}
-
 }

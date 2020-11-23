@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Domain.Songs
 {
-
 	public class SongComment : GenericComment<Song>
 	{
-
 		public SongComment() { }
 
 		public SongComment(Song song, string message, AgentLoginData loginData)
@@ -16,7 +14,5 @@ namespace VocaDb.Model.Domain.Songs
 		{
 			EntryForComment.Comments.Remove(this);
 		}
-
 	}
-
 }

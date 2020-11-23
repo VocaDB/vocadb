@@ -14,11 +14,9 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongForApiContract : IEntryBase
 	{
-
 		EntryType IEntryBase.EntryType => EntryType.Song;
 
 		public SongForApiContract() { }
@@ -28,7 +26,6 @@ namespace VocaDb.Model.DataContracts.Songs
 
 		public SongForApiContract(Song song, SongMergeRecord mergeRecord, ContentLanguagePreference languagePreference, SongOptionalFields fields)
 		{
-
 			ArtistString = song.ArtistString[languagePreference];
 			CreateDate = song.CreateDate;
 			DefaultName = song.DefaultName;
@@ -61,14 +58,12 @@ namespace VocaDb.Model.DataContracts.Songs
 
 			if (fields.HasFlag(SongOptionalFields.MainPicture))
 			{
-
 				var thumb = song.GetThumbUrl();
 
 				if (!string.IsNullOrEmpty(thumb))
 				{
 					MainPicture = new EntryThumbForApiContract { UrlThumb = thumb };
 				}
-
 			}
 
 			if (fields.HasFlag(SongOptionalFields.Names))
@@ -96,8 +91,6 @@ namespace VocaDb.Model.DataContracts.Songs
 
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
-
-
 		}
 
 		/// <summary>
@@ -250,13 +243,11 @@ namespace VocaDb.Model.DataContracts.Songs
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public WebLinkForApiContract[] WebLinks { get; set; }
-
 	}
 
 	[Flags]
 	public enum SongOptionalFields
 	{
-
 		None = 0,
 		AdditionalNames = 1,
 		Albums = 2,
@@ -269,7 +260,5 @@ namespace VocaDb.Model.DataContracts.Songs
 		Tags = 256,
 		ThumbUrl = 512,
 		WebLinks = 1024
-
 	}
-
 }

@@ -7,10 +7,8 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Code.Highcharts
 {
-
 	public class Series
 	{
-
 		public static object[][] DateData<T>(IEnumerable<T> source, Func<T, DateTime> dateSelector, Func<T, int> valSelector)
 		{
 			return source.Select(p => new object[] { HighchartsHelper.ToEpochTime(dateSelector(p)), valSelector(p) }).ToArray();
@@ -43,7 +41,5 @@ namespace VocaDb.Web.Code.Highcharts
 		[JsonConverter(typeof(CamelCaseStringEnumConverter))]
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public SeriesType? Type { get; set; }
-
 	}
-
 }

@@ -6,11 +6,9 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryThumbContract : IEntryImageInformation
 	{
-
 		private readonly ImagePurpose purpose;
 		ImagePurpose IEntryImageInformation.Purpose => purpose;
 
@@ -37,6 +35,5 @@ namespace VocaDb.Model.DataContracts
 
 		[DataMember]
 		public int Version { get; set; }
-
 	}
 }

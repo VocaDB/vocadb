@@ -5,10 +5,8 @@ using System.Linq;
 
 namespace VocaDb.Model.Service.Search
 {
-
 	public class SearchWordCollection : IEnumerable<SearchWord>
 	{
-
 		public SearchWordCollection(IEnumerable<SearchWord> words)
 		{
 			Words = words.ToList();
@@ -45,7 +43,6 @@ namespace VocaDb.Model.Service.Search
 
 		public SearchWord TakeNext()
 		{
-
 			if (!Words.Any())
 				return null;
 
@@ -53,9 +50,6 @@ namespace VocaDb.Model.Service.Search
 			Words.Remove(w);
 
 			return w;
-
 		}
-
 	}
-
 }

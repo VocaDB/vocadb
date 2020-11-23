@@ -1,9 +1,7 @@
 namespace VocaDb.Model.Domain.Tags
 {
-
 	public class EntryTypeToTagMapping : IEntryWithIntId
 	{
-
 		public EntryTypeToTagMapping() { }
 
 		public EntryTypeToTagMapping(EntryTypeAndSubType entryType, Tag tag)
@@ -26,7 +24,5 @@ namespace VocaDb.Model.Domain.Tags
 		public virtual string SubType { get; set; }
 
 		public virtual Tag Tag { get; set; }
-
 	}
-
 }

@@ -12,14 +12,12 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	/// <summary>
 	/// Controller for managing base class for common entries.
 	/// </summary>
 	[RoutePrefix("api/entries")]
 	public class EntryApiController : ApiController
 	{
-
 		private const int absoluteMax = 50;
 		private const int defaultMax = 10;
 
@@ -75,12 +73,10 @@ namespace VocaDb.Web.Controllers.Api
 			ContentLanguagePreference lang = ContentLanguagePreference.Default
 			)
 		{
-
 			maxResults = GetMaxResults(maxResults);
 
 			return queries.GetList(query, tagId, tagName, childTags, status, entryTypes,
 				start, maxResults, getTotalCount, sort, nameMatchMode, fields, lang, searchEvents: true);
-
 		}
 
 		/// <summary>
@@ -97,7 +93,6 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("tooltip")]
 		public string GetToolTip(string url)
 		{
-
 			if (string.IsNullOrWhiteSpace(url))
 			{
 				throw new HttpBadRequestException("URL must be specified");
@@ -127,9 +122,6 @@ namespace VocaDb.Web.Controllers.Api
 			}
 
 			return data;
-
 		}
-
 	}
-
 }

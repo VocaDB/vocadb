@@ -6,10 +6,8 @@ using VocaDb.Model.Domain.Activityfeed;
 
 namespace VocaDb.Model.Domain.Versioning
 {
-
 	public abstract class ArchivedObjectVersion : IDatabaseObject
 	{
-
 		private string notes;
 
 		protected ArchivedObjectVersion()
@@ -20,7 +18,6 @@ namespace VocaDb.Model.Domain.Versioning
 		protected ArchivedObjectVersion(XDocument data, AgentLoginData author, int version, EntryStatus status, string notes)
 			: this()
 		{
-
 			ParamIs.NotNull(() => author);
 
 			Data = data;
@@ -29,7 +26,6 @@ namespace VocaDb.Model.Domain.Versioning
 			Notes = notes;
 			Status = status;
 			Version = version;
-
 		}
 
 		public virtual string AgentName { get; protected set; }
@@ -81,7 +77,5 @@ namespace VocaDb.Model.Domain.Versioning
 		{
 			return string.Format("archived version {0} for {1}", Version, EntryBase);
 		}
-
 	}
-
 }

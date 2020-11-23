@@ -7,16 +7,12 @@ using VocaDb.Web.Controllers;
 
 namespace VocaDb.Web.Helpers
 {
-
 	public static class RazorHelper
 	{
-
 		public static string RenderPartialViewToString<T>(string viewName, T model, string controllerName, HttpRequestMessage request)
 		{
-
 			using (var writer = new StringWriter())
 			{
-
 				var routeData = new RouteData();
 				routeData.Values.Add("controller", controllerName);
 				var fakeControllerContext = new ControllerContext(new HttpContextWrapper(new HttpContext(new HttpRequest(null, request.RequestUri.ToString(), null), new HttpResponse(null))), routeData, new HelpController(null, null));
@@ -28,7 +24,6 @@ namespace VocaDb.Web.Helpers
 				razorViewResult.View.Render(viewContext, writer);
 				return writer.ToString();
 			}
-
 		}
 	}
 }

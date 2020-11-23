@@ -11,11 +11,9 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ReleaseEventForApiContract : IReleaseEvent, IEntryBase
 	{
-
 		bool IDeletableEntry.Deleted => false;
 		string IEntryBase.DefaultName => Name;
 		EntryType IEntryBase.EntryType => EntryType.ReleaseEvent;
@@ -24,7 +22,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 		public ReleaseEventForApiContract(ReleaseEvent rel, ContentLanguagePreference languagePreference, ReleaseEventOptionalFields fields, IAggregatedEntryImageUrlFactory thumbPersister)
 		{
-
 			Category = rel.Category;
 			Date = rel.Date;
 			EndDate = rel.EndDate;
@@ -91,7 +88,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			{
 				WebLinks = rel.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
 			}
-
 		}
 
 		/// <summary>
@@ -178,13 +174,11 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 		[DataMember(EmitDefaultValue = false)]
 		public WebLinkForApiContract[] WebLinks { get; set; }
-
 	}
 
 	[Flags]
 	public enum ReleaseEventOptionalFields
 	{
-
 		None = 0,
 		AdditionalNames = 1,
 		Artists = 2,
@@ -196,7 +190,5 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		Tags = 128,
 		Venue = 256,
 		WebLinks = 512
-
 	}
-
 }

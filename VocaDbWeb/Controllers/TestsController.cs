@@ -12,7 +12,6 @@ namespace VocaDb.Web.Controllers
 		{
 			return View();
 		}
-
 	}
 #endif
 }

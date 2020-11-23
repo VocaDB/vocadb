@@ -9,11 +9,9 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Venue
 {
-
 	[PropertyModelBinder]
 	public class VenueEditViewModel
 	{
-
 		public string Address { get; set; }
 
 		public string AddressCountryCode { get; set; }
@@ -45,7 +43,6 @@ namespace VocaDb.Web.Models.Venue
 
 		public VenueEditViewModel(VenueForEditContract contract, IUserPermissionContext permissionContext)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			Address = contract.Address;
@@ -61,7 +58,6 @@ namespace VocaDb.Web.Models.Venue
 			WebLinks = contract.WebLinks;
 
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
-
 		}
 
 		public VenueForEditContract ToContract() => new VenueForEditContract
@@ -77,7 +73,5 @@ namespace VocaDb.Web.Models.Venue
 			Status = Status,
 			WebLinks = WebLinks
 		};
-
 	}
-
 }

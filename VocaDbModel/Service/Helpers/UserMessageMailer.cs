@@ -6,10 +6,8 @@ using VocaDb.Model.Service.BrandableStrings;
 
 namespace VocaDb.Model.Service.Helpers
 {
-
 	public class UserMessageMailer : IUserMessageMailer
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly BrandableStringsManager brandableStringsManager;
 
@@ -20,7 +18,6 @@ namespace VocaDb.Model.Service.Helpers
 
 		public bool SendEmail(string toEmail, string receiverName, string subject, string body)
 		{
-
 			if (string.IsNullOrEmpty(toEmail))
 				return false;
 
@@ -65,12 +62,10 @@ namespace VocaDb.Model.Service.Helpers
 			}
 
 			return true;
-
 		}
 
 		public async Task<bool> SendEmailAsync(string toEmail, string receiverName, string subject, string body)
 		{
-
 			if (string.IsNullOrEmpty(toEmail))
 				return false;
 
@@ -115,9 +110,6 @@ namespace VocaDb.Model.Service.Helpers
 			}
 
 			return true;
-
 		}
-
 	}
-
 }

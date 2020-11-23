@@ -9,10 +9,8 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Code
 {
-
 	public abstract class VocaDbPage<TModel> : WebViewPage<TModel>
 	{
-
 		public BrandableStringsManager BrandableStrings => DependencyResolver.Current.GetService<BrandableStringsManager>();
 
 		public VdbConfigManager Config => DependencyResolver.Current.GetService<VdbConfigManager>();
@@ -68,12 +66,10 @@ namespace VocaDb.Web.Code
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
 		public IUserPermissionContext UserContext => DependencyResolver.Current.GetService<IUserPermissionContext>();
-
 	}
 
 	public abstract class VocaDbPage : WebViewPage
 	{
-
 		public BrandableStringsManager BrandableStrings => DependencyResolver.Current.GetService<BrandableStringsManager>();
 
 		public VdbConfigManager Config => DependencyResolver.Current.GetService<VdbConfigManager>();
@@ -112,7 +108,5 @@ namespace VocaDb.Web.Code
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
 		public IUserPermissionContext UserContext => DependencyResolver.Current.GetService<IUserPermissionContext>();
-
 	}
-
 }

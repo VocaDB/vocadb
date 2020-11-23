@@ -3,13 +3,10 @@ using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.Mapping.Venues
 {
-
 	public class VenueMap : ClassMap<Venue>
 	{
-
 		public VenueMap()
 		{
-
 			Table("Venues");
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -50,17 +47,13 @@ namespace VocaDb.Model.Mapping.Venues
 			});
 
 			HasMany(m => m.AllEvents).OrderBy("SeriesNumber").KeyColumn("[Venue]").Inverse().Cache.ReadWrite();
-
 		}
-
 	}
 
 	public class VenueNameMap : ClassMap<VenueName>
 	{
-
 		public VenueNameMap()
 		{
-
 			Table("VenueNames");
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -68,19 +61,15 @@ namespace VocaDb.Model.Mapping.Venues
 			Map(m => m.Language).Not.Nullable();
 			Map(m => m.Value).Length(255).Not.Nullable();
 			References(m => m.Entry).Column("[Venue]").Not.Nullable();
-
 		}
-
 	}
 
 	public class VenueWebLinkMap : WebLinkMap<VenueWebLink, Venue> { }
 
 	public class ArchivedVenueVersionMap : ClassMap<ArchivedVenueVersion>
 	{
-
 		public ArchivedVenueVersionMap()
 		{
-
 			Table("ArchivedVenueVersions");
 			Id(m => m.Id);
 
@@ -100,9 +89,6 @@ namespace VocaDb.Model.Mapping.Venues
 				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
 				c.Map(m => m.IsSnapshot).Not.Nullable();
 			});
-
 		}
-
 	}
-
 }

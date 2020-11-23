@@ -6,14 +6,12 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service
 {
-
 	/// <summary>
 	/// Parses entry type and ID from URLs to common entries, for example https://vocadb.net/S/3939.
 	/// This default implementation is based on regular expressions and handles most common cases.
 	/// </summary>
 	public class EntryUrlParser : IEntryUrlParser
 	{
-
 		private readonly Dictionary<string, EntryType> entryTypeNames = new Dictionary<string, EntryType>(StringComparer.InvariantCultureIgnoreCase) {
 			{ "Al", EntryType.Album },
 			{ "Album/Details", EntryType.Album },
@@ -35,7 +33,6 @@ namespace VocaDb.Model.Service
 
 		public EntryUrlParser(string hostAddress)
 		{
-
 			hostAddress = hostAddress.Replace("https://", "https?://");
 			var hostAddresses = VocaUriBuilder.RemoveTrailingSlash(hostAddress);
 
@@ -44,12 +41,10 @@ namespace VocaDb.Model.Service
 			entryUrlRegex = new Regex(string.Format(entryUrlRegexTemplate, hostAddresses, string.Empty), RegexOptions.IgnoreCase);
 
 			entryUrlRegexOptionalPrefix = new Regex(string.Format(entryUrlRegexTemplate, hostAddresses, "?"), RegexOptions.IgnoreCase);
-
 		}
 
 		public GlobalEntryId Parse(string url, bool allowRelative = false)
 		{
-
 			if (string.IsNullOrEmpty(url))
 				return GlobalEntryId.Empty;
 
@@ -70,14 +65,11 @@ namespace VocaDb.Model.Service
 			{
 				return GlobalEntryId.Empty;
 			}
-
 		}
-
 	}
 
 	public interface IEntryUrlParser
 	{
-
 		/// <summary>
 		/// Parse URL.
 		/// </summary>
@@ -92,7 +84,5 @@ namespace VocaDb.Model.Service
 		/// If the URL could not be parsed, this will be <see cref="GlobalEntryId.Empty" />.
 		/// </returns>
 		GlobalEntryId Parse(string url, bool allowRelative = false);
-
 	}
-
 }

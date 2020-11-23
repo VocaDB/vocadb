@@ -25,7 +25,6 @@ namespace VocaDb.Model.Resources.Views
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	internal class AlbumRes
 	{
-
 		private static global::System.Resources.ResourceManager resourceMan;
 
 		private static global::System.Globalization.CultureInfo resourceCulture;

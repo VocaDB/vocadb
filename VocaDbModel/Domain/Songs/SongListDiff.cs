@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.Domain.Songs
 {
-
 	public class SongListDiff : EntryDiff<SongListEditableFields>
 	{
-
 		public SongListDiff() : base(true) { }
 
 		public SongListDiff(bool snapshot) : base(snapshot) { }
@@ -22,5 +20,4 @@ namespace VocaDb.Model.Domain.Songs
 
 		public EnumFieldAccessor<SongListEditableFields> Thumbnail => Field(SongListEditableFields.Thumbnail);
 	}
-
 }

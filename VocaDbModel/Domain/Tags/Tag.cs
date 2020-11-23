@@ -18,12 +18,10 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Tags
 {
-
 	public class Tag :
 		IEquatable<Tag>, IEntryWithNames<TagName>, IEntryWithStatus, IEntryWithComments, ITag, INameFactory<TagName>, IWebLinkFactory<TagWebLink>,
 		IEntryWithVersions, IDeletableEntry
 	{
-
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 		/// <summary>
@@ -71,13 +69,11 @@ namespace VocaDb.Model.Domain.Tags
 		public Tag(LocalizedString name, string categoryName = "")
 			: this()
 		{
-
 			ParamIs.NotNull(() => name);
 
 			Names.SortNames.DefaultLanguage = name.Language;
 			Names.Add(new TagName(this, name));
 			CategoryName = categoryName;
-
 		}
 
 		/// <summary>
@@ -196,7 +192,6 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
-
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);
 
@@ -204,7 +199,6 @@ namespace VocaDb.Model.Domain.Tags
 			Comments.Add(comment);
 
 			return comment;
-
 		}
 
 		public virtual string DefaultName => TranslatedName.Default;
@@ -281,50 +275,41 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual ArchivedTagVersion CreateArchivedVersion(XDocument data, TagDiff diff, AgentLoginData author, EntryEditEvent reason, string notes)
 		{
-
 			var archived = new ArchivedTagVersion(this, data, diff, author, reason, notes);
 			ArchivedVersionsManager.Add(archived);
 			Version++;
 
 			return archived;
-
 		}
 
 		public virtual TagMapping CreateMapping(string sourceTag)
 		{
-
 			ParamIs.NotNullOrEmpty(() => sourceTag);
 
 			var mapping = new TagMapping(this, sourceTag);
 			Mappings.Add(mapping);
 			return mapping;
-
 		}
 
 		public virtual TagName CreateName(string val, ContentLanguageSelection language)
 		{
-
 			ParamIs.NotNullOrEmpty(() => val);
 
 			return CreateName(new LocalizedString(val, language));
-
 		}
 
 		public virtual TagName CreateName(LocalizedString localizedString)
 		{
-
 			ParamIs.NotNull(() => localizedString);
 
 			var name = new TagName(this, localizedString);
 			Names.Add(name);
 
 			return name;
-
 		}
 
 		public virtual TagWebLink CreateWebLink(string description, string url, WebLinkCategory category)
 		{
-
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
 
@@ -332,12 +317,10 @@ namespace VocaDb.Model.Domain.Tags
 			WebLinks.Links.Add(link);
 
 			return link;
-
 		}
 
 		public virtual void Delete()
 		{
-
 			while (AllAlbumTagUsages.Any())
 				AllAlbumTagUsages.First().Delete();
 
@@ -360,12 +343,10 @@ namespace VocaDb.Model.Domain.Tags
 
 			TagsForUsers.Clear();
 			Mappings.Clear();
-
 		}
 
 		public virtual bool Equals(Tag tag)
 		{
-
 			if (tag == null)
 				return false;
 
@@ -373,7 +354,6 @@ namespace VocaDb.Model.Domain.Tags
 				return true;
 
 			return Id != 0 && Id == tag.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -397,12 +377,10 @@ namespace VocaDb.Model.Domain.Tags
 		public virtual bool IsValidParent(Tag tag)
 		{
 			return tag == null || (!tag.Equals(this) && !tag.HasAncestorTag(this));
-
 		}
 
 		public virtual void SetParent(Tag newParent)
 		{
-
 			// New parent is current parent, no change
 			if (Equals(Parent, newParent))
 			{
@@ -419,7 +397,6 @@ namespace VocaDb.Model.Domain.Tags
 			Parent = newParent;
 
 			newParent?.AllChildren.Add(this);
-
 		}
 
 		public virtual ISet<EventTagUsage> AllEventTagUsages
@@ -472,7 +449,6 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual bool IsValidFor(EntryType entryType)
 		{
-
 			if (Targets == TagTargetTypes.All)
 				return true;
 
@@ -483,7 +459,6 @@ namespace VocaDb.Model.Domain.Tags
 				entryType = EntryType.ReleaseEvent;
 
 			return Targets.HasFlag((TagTargetTypes)entryType);
-
 		}
 
 		public virtual ISet<RelatedTag> RelatedTags
@@ -542,7 +517,6 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual RelatedTag AddRelatedTag(Tag tag)
 		{
-
 			ParamIs.NotNull(() => tag);
 
 			if (Equals(tag))
@@ -555,12 +529,10 @@ namespace VocaDb.Model.Domain.Tags
 			tag.RelatedTags.Add(reverseLink);
 
 			return link;
-
 		}
 
 		public virtual CollectionDiff<RelatedTag> SyncRelatedTags(IEnumerable<ITag> newRelatedTags, Func<int, Tag> loadTagFunc)
 		{
-
 			Func<ITag, RelatedTag> create = tagRef =>
 			{
 				var tag = loadTagFunc(tagRef.Id);
@@ -569,19 +541,16 @@ namespace VocaDb.Model.Domain.Tags
 
 			var diff = CollectionHelper.Sync(RelatedTags, newRelatedTags, (t1, t2) => Equals(t1.LinkedTag, t2), create, link => link.Delete());
 			return diff;
-
 		}
 
 		public override string ToString()
 		{
 			return string.Format("tag '{0}' [{1}]", DefaultName, Id);
 		}
-
 	}
 
 	public interface ITag
 	{
 		int Id { get; }
 	}
-
 }

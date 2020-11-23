@@ -4,18 +4,15 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Web.Models.Album
 {
-
 	/// <summary>
 	/// Parameter collection given to index action.
 	/// </summary>
 	public class IndexRouteParams
 	{
-
 		public IndexRouteParams() { }
 
 		public IndexRouteParams(IndexRouteParams source, int? page)
 		{
-
 			ParamIs.NotNull(() => source);
 
 			discType = (source.discType != DiscType.Unknown ? source.discType : null);
@@ -25,7 +22,6 @@ namespace VocaDb.Web.Models.Album
 			sort = source.sort;
 			view = source.view;
 			this.page = page;
-
 		}
 
 		public DiscType? discType { get; set; }
@@ -35,7 +31,5 @@ namespace VocaDb.Web.Models.Album
 		public int? page { get; set; }
 		public AlbumSortRule? sort { get; set; }
 		public EntryViewMode? view { get; set; }
-
 	}
-
 }

@@ -7,10 +7,8 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Web.Helpers
 {
-
 	public class EnumTranslations : IEnumTranslations
 	{
-
 		public TranslateableEnum<AlbumReportType> AlbumReportTypeNames => Translate.AlbumReportTypeNames;
 
 		public TranslateableEnum<ArtistReportType> ArtistReportTypeNames => Translate.ArtistReportTypeNames;
@@ -31,7 +29,5 @@ namespace VocaDb.Web.Helpers
 		{
 			return Translations<TEnum>().GetName(val, culture);
 		}
-
 	}
-
 }

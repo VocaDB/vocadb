@@ -4,13 +4,10 @@ using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.Mapping.Albums
 {
-
 	public class AlbumMap : ClassMap<Album>
 	{
-
 		public AlbumMap()
 		{
-
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
@@ -95,17 +92,13 @@ namespace VocaDb.Model.Mapping.Albums
 			HasMany(m => m.Reviews).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.UserCollections).Inverse().Cache.ReadWrite();
 			HasMany(m => m.WebLinks).Table("AlbumWebLinks").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
-
 		}
-
 	}
 
 	public class ArtistForAlbumMap : ClassMap<ArtistForAlbum>
 	{
-
 		public ArtistForAlbumMap()
 		{
-
 			Schema("dbo");
 			Table("ArtistsForAlbums");
 			Cache.ReadWrite();
@@ -117,17 +110,13 @@ namespace VocaDb.Model.Mapping.Albums
 			Map(m => m.Roles).CustomType(typeof(ArtistRoles)).Not.Nullable();
 			References(m => m.Album).Not.Nullable();
 			References(m => m.Artist).Nullable();
-
 		}
-
 	}
 
 	public class ArchivedAlbumVersionMap : ClassMap<ArchivedAlbumVersion>
 	{
-
 		public ArchivedAlbumVersionMap()
 		{
-
 			Id(m => m.Id);
 
 			Map(m => m.AgentName).Not.Nullable();
@@ -153,25 +142,18 @@ namespace VocaDb.Model.Mapping.Albums
 				c.Map(m => m.ChangedFieldsString, ClassConventions.EscapeColumn("ChangedFields")).Length(1000).Not.Nullable();
 				c.Map(m => m.IsSnapshot).Not.Nullable();
 			});
-
 		}
-
 	}
 
 	public class AlbumIdentifierMap : ClassMap<AlbumIdentifier>
 	{
-
 		public AlbumIdentifierMap()
 		{
-
 			Id(m => m.Id);
 
 			Map(m => m.Value).Length(50).Not.Nullable();
 
 			References(m => m.Album).Not.Nullable();
-
 		}
-
 	}
-
 }

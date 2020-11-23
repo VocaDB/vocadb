@@ -3,10 +3,8 @@ using VocaDb.Model.DataContracts.Albums;
 
 namespace VocaDb.Web.Models.Shared.Partials.Album
 {
-
 	public class AlbumGridViewModel
 	{
-
 		public AlbumGridViewModel(IEnumerable<AlbumContract> albums, int columns, bool displayRating, bool displayReleaseDate, bool displayType = false)
 		{
 			Albums = albums;
@@ -25,7 +23,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Album
 		public bool DisplayReleaseDate { get; set; }
 
 		public bool DisplayType { get; set; }
-
 	}
-
 }

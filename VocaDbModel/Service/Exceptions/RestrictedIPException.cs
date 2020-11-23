@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 
 namespace VocaDb.Model.Service.Exceptions
 {
-
 	public class RestrictedIPException : Exception
 	{
 		public RestrictedIPException() { }

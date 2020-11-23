@@ -5,13 +5,10 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
-
 	public class ArchivedEventSeriesVersionDetailsContract
 	{
-
 		public ArchivedEventSeriesVersionDetailsContract(ArchivedReleaseEventSeriesVersion archived, ArchivedReleaseEventSeriesVersion comparedVersion, IUserPermissionContext permissionContext)
 		{
-
 			ParamIs.NotNull(() => archived);
 
 			ArchivedVersion = new ArchivedEventSeriesVersionContract(archived);
@@ -27,7 +24,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			Versions = ComparedEventSeriesContract.Create(archived, comparedVersion);
 
 			ComparedVersionId = Versions.SecondId;
-
 		}
 
 		public ArchivedEventSeriesVersionContract ArchivedVersion { get; set; }
@@ -45,7 +41,5 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		public string Name { get; set; }
 
 		public ComparedEventSeriesContract Versions { get; set; }
-
 	}
-
 }

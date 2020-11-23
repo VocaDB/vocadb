@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.UseCases
 {
-
 	public class CreateSongContract
 	{
-
 		public ArtistForSongContract[] Artists { get; set; }
 
 		public bool Draft { get; set; }
@@ -26,7 +24,5 @@ namespace VocaDb.Model.DataContracts.UseCases
 		public string UpdateNotes { get; set; }
 
 		public WebLinkContract[] WebLinks { get; set; }
-
 	}
-
 }

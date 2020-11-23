@@ -4,10 +4,8 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.DataContracts.MikuDb
 {
-
 	public class MikuDbAlbumContract
 	{
-
 		public MikuDbAlbumContract()
 		{
 			SourceUrl = Title = string.Empty;
@@ -16,7 +14,6 @@ namespace VocaDb.Model.DataContracts.MikuDb
 		public MikuDbAlbumContract(MikuDbAlbum album)
 			: this()
 		{
-
 			ParamIs.NotNull(() => album);
 
 			Created = album.Created;
@@ -27,19 +24,16 @@ namespace VocaDb.Model.DataContracts.MikuDb
 			Title = album.Title;
 
 			Selected = (Status == AlbumStatus.New);
-
 		}
 
 		public MikuDbAlbumContract(ImportedAlbumDataContract data)
 			: this()
 		{
-
 			ParamIs.NotNull(() => data);
 
 			Data = data;
 			Created = DateTime.Now;
 			Title = data.Title;
-
 		}
 
 		public PictureDataContract CoverPicture { get; set; }
@@ -57,7 +51,5 @@ namespace VocaDb.Model.DataContracts.MikuDb
 		public AlbumStatus Status { get; set; }
 
 		public string Title { get; set; }
-
 	}
-
 }

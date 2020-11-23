@@ -4,13 +4,10 @@ using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.Search.User
 {
-
 	public class AlbumCollectionQueryParams
 	{
-
 		public AlbumCollectionQueryParams(int userId, PagingProperties paging)
 		{
-
 			ParamIs.NotNull(() => paging);
 
 			Paging = paging;
@@ -19,7 +16,6 @@ namespace VocaDb.Model.Service.Search.User
 			FilterByStatus = null;
 			Sort = AlbumSortRule.Name;
 			TextQuery = new SearchTextQuery();
-
 		}
 
 		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
@@ -49,8 +45,5 @@ namespace VocaDb.Model.Service.Search.User
 		/// Id of the user whose albums to get.
 		/// </summary>
 		public int UserId { get; set; }
-
-
 	}
-
 }

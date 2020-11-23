@@ -1,12 +1,10 @@
 ﻿namespace VocaDb.Model.Service.Search
 {
-
 	/// <summary>
 	/// Advanced search filter.
 	/// </summary>
 	public class AdvancedSearchFilter
 	{
-
 		public const string Any = "*";
 
 		public AdvancedFilterType FilterType { get; set; }
@@ -21,7 +19,5 @@
 		/// Filter parameter, for example artist type to filter by.
 		/// </summary>
 		public string Param { get; set; }
-
 	}
-
 }

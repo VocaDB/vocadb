@@ -7,14 +7,12 @@ using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Tests.Helpers
 {
-
 	/// <summary>
 	/// Unit tests for <see cref="ConcurrentEntryEditManager"/>.
 	/// </summary>
 	[TestClass]
 	public class ConcurrentEntryEditManagerTests
 	{
-
 		private EntryRef entryRef;
 		private ConcurrentEntryEditManager manager;
 		private User miku;
@@ -22,11 +20,9 @@ namespace VocaDb.Tests.Helpers
 		[TestInitialize]
 		public void SetUp()
 		{
-
 			entryRef = new EntryRef(EntryType.Artist, 39);
 			manager = new ConcurrentEntryEditManager();
 			miku = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { Id = 1 };
-
 		}
 
 		/// <summary>
@@ -35,11 +31,9 @@ namespace VocaDb.Tests.Helpers
 		[TestMethod]
 		public void CheckConcurrentEdits_NoOneEditing()
 		{
-
 			var result = manager.CheckConcurrentEditsInst(entryRef, miku);
 
 			Assert.AreEqual(ConcurrentEntryEditManager.Nothing.UserId, result.UserId, "no one editing");
-
 		}
 
 		/// <summary>
@@ -48,13 +42,11 @@ namespace VocaDb.Tests.Helpers
 		[TestMethod]
 		public void CheckConcurrentEdits_PreviousEditor()
 		{
-
 			var rin = new User("Rin", "222", "rin@vocadb.net", PasswordHashAlgorithms.Default) { Id = 2 };
 			manager.CheckConcurrentEditsInst(entryRef, rin);
 			var result = manager.CheckConcurrentEditsInst(entryRef, miku);
 
 			Assert.AreEqual(rin.Id, result.UserId, "Rin still editing");
-
 		}
 
 		/// <summary>
@@ -63,7 +55,6 @@ namespace VocaDb.Tests.Helpers
 		[TestMethod]
 		public void CheckConcurrentEdits_PreviousEditorExpired()
 		{
-
 			var rin = new User("Rin", "222", "rin@vocadb.net", PasswordHashAlgorithms.Default) { Id = 2 };
 			manager.CheckConcurrentEditsInst(entryRef, rin);
 			var result = manager.CheckConcurrentEditsInst(entryRef, miku);
@@ -71,9 +62,6 @@ namespace VocaDb.Tests.Helpers
 			result = manager.CheckConcurrentEditsInst(entryRef, miku);
 
 			Assert.AreEqual(ConcurrentEntryEditManager.Nothing.UserId, result.UserId, "no one editing");
-
 		}
-
 	}
-
 }

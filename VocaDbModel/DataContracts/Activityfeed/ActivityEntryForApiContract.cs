@@ -8,11 +8,9 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Activityfeed
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ActivityEntryForApiContract
 	{
-
 		public ActivityEntryForApiContract() { }
 
 		public ActivityEntryForApiContract(ActivityEntry activityEntry, EntryForApiContract entryForApiContract,
@@ -20,7 +18,6 @@ namespace VocaDb.Model.DataContracts.Activityfeed
 			IUserPermissionContext permissionContext,
 			ActivityEntryOptionalFields fields)
 		{
-
 			CreateDate = activityEntry.CreateDate.ToUniversalTime();
 			EditEvent = activityEntry.EditEvent;
 
@@ -28,9 +25,7 @@ namespace VocaDb.Model.DataContracts.Activityfeed
 				&& ((permissionContext.IsLoggedIn && (permissionContext.LoggedUserId == activityEntry.Author.Id || permissionContext.HasPermission(PermissionToken.DisableUsers)))
 				|| !activityEntry.Author.AnonymousActivity))
 			{
-
 				Author = new UserForApiContract(activityEntry.Author, userIconFactory, UserOptionalFields.MainPicture);
-
 			}
 
 			if (fields.HasFlag(ActivityEntryOptionalFields.ArchivedVersion) && activityEntry.ArchivedVersionBase != null)
@@ -39,7 +34,6 @@ namespace VocaDb.Model.DataContracts.Activityfeed
 			}
 
 			Entry = entryForApiContract;
-
 		}
 
 		[DataMember(EmitDefaultValue = false)]
@@ -56,7 +50,6 @@ namespace VocaDb.Model.DataContracts.Activityfeed
 
 		[DataMember(EmitDefaultValue = false)]
 		public EntryForApiContract Entry { get; set; }
-
 	}
 
 	[Flags]
@@ -66,5 +59,4 @@ namespace VocaDb.Model.DataContracts.Activityfeed
 		ArchivedVersion = 1,
 		Entry = 2
 	}
-
 }

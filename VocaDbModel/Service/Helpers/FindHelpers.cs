@@ -8,10 +8,8 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.Helpers
 {
-
 	public static class FindHelpers
 	{
-
 		public const int MaxSearchWords = 10;
 
 		private static Expression<Func<T, string>> OrderByExpression<T>(ContentLanguagePreference languagePreference) where T : IEntryWithNames
@@ -51,12 +49,10 @@ namespace VocaDb.Model.Service.Helpers
 		/// </remarks>
 		public static string CleanTerm(string term)
 		{
-
 			if (string.IsNullOrEmpty(term))
 				return term;
 
 			return term.Replace("[", "[[]").Replace("%", "[%]");
-
 		}
 
 		private static bool ShouldEncodeSQLCharacters(NameMatchMode matchMode)
@@ -76,7 +72,6 @@ namespace VocaDb.Model.Service.Helpers
 		/// <returns>Text query. Wildcard characters are removed. Can be null or empty, if original query is.</returns>
 		public static string GetMatchModeAndQueryForSearch(string query, ref NameMatchMode matchMode, NameMatchMode defaultMode = NameMatchMode.Words)
 		{
-
 			if (string.IsNullOrEmpty(query))
 				return query;
 
@@ -125,19 +120,14 @@ namespace VocaDb.Model.Service.Helpers
 			}
 
 			return query;
-
 		}
 
 		public static string[] GetQueryWords(string query)
 		{
-
 			return query
 				.Split(new[] { ' ' }, MaxSearchWords, StringSplitOptions.RemoveEmptyEntries)
 				.Distinct()
 				.ToArray();
-
 		}
-
 	}
-
 }

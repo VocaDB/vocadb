@@ -1,9 +1,7 @@
 ﻿namespace VocaDb.Model.Service.Search.AlbumSearch
 {
-
 	public class ParsedAlbumQuery
 	{
-
 		public ParsedAlbumQuery()
 		{
 		}
@@ -21,7 +19,5 @@
 				return !string.IsNullOrEmpty(Name);
 			}
 		}
-
 	}
-
 }

@@ -13,11 +13,9 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Song
 {
-
 	[PropertyModelBinder]
 	public class Create
 	{
-
 		public Create()
 		{
 			NameEnglish = NameOriginal = NameRomaji = PVUrl = ReprintPVUrl = string.Empty;
@@ -58,7 +56,6 @@ namespace VocaDb.Web.Models.Song
 
 		public CreateSongContract ToContract()
 		{
-
 			return new CreateSongContract
 			{
 				Artists = this.Artists.ToArray(),
@@ -69,9 +66,6 @@ namespace VocaDb.Web.Models.Song
 				ReprintPVUrl = this.ReprintPVUrl,
 				SongType = this.SongType
 			};
-
 		}
-
 	}
-
 }

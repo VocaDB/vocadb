@@ -10,10 +10,8 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Model.Database.Queries
 {
-
 	public class SongAggregateQueries : QueriesBase<ISongRepository, Song>
 	{
-
 		public SongAggregateQueries(ISongRepository repository, IUserPermissionContext permissionContext)
 			: base(repository, permissionContext) { }
 
@@ -24,7 +22,6 @@ namespace VocaDb.Model.Database.Queries
 
 		private CountPerDayContract[] SongsPerDay(IDatabaseContext ctx, Expression<Func<Song, bool>> where, DateTime? after = null)
 		{
-
 			var query = ctx.Query<Song>()
 				.Where(a => !a.Deleted && a.PublishDate.DateTime != null);
 
@@ -52,12 +49,10 @@ namespace VocaDb.Model.Database.Queries
 					Count = a.Count()
 				})
 				.ToArray();
-
 		}
 
 		private CountPerDayContract[] SongsPerMonth(IDatabaseContext ctx, Expression<Func<Song, bool>> where, DateTime? after = null)
 		{
-
 			var query = ctx.Query<Song>()
 				.Where(a => !a.Deleted && a.PublishDate.DateTime != null);
 
@@ -82,7 +77,6 @@ namespace VocaDb.Model.Database.Queries
 					Count = a.Count()
 				})
 				.ToArray();
-
 		}
 
 		/// <summary>
@@ -96,23 +90,18 @@ namespace VocaDb.Model.Database.Queries
 		/// <returns>Results. One result per filter.</returns>
 		public CountPerDayContract[][] SongsOverTime(TimeUnit timeUnit, bool addZeros, DateTime? after, params Expression<Func<Song, bool>>[] filters)
 		{
-
 			return repository.HandleQuery(ctx =>
 			{
-
 				var results = filters
 					.Select(f => AddZeros(timeUnit == TimeUnit.Month ? SongsPerMonth(ctx, f, after) : SongsPerDay(ctx, f, after), addZeros, timeUnit))
 					.ToArray();
 
 				return results;
-
 			});
-
 		}
 
 		public CountPerDayContract[] SongsOverTime(TimeUnit timeUnit, bool addZeros, DateTime? after, int artistId, int tagId)
 		{
-
 			Expression<Func<Song, bool>> query = (s => s.PublishDate.DateTime <= DateTime.Now);
 
 			if (artistId != 0)
@@ -126,9 +115,7 @@ namespace VocaDb.Model.Database.Queries
 			}
 
 			return SongsOverTime(timeUnit, addZeros, after, query)[0];
-
 		}
-
 	}
 
 	public enum TimeUnit
@@ -136,5 +123,4 @@ namespace VocaDb.Model.Database.Queries
 		Month,
 		Day
 	}
-
 }

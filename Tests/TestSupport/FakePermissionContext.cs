@@ -7,10 +7,8 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	public class FakePermissionContext : IUserPermissionContext
 	{
-
 		public FakePermissionContext() { }
 
 		public FakePermissionContext(UserWithPermissionsContract loggedUser)
@@ -23,7 +21,6 @@ namespace VocaDb.Tests.TestSupport
 
 		public bool HasPermission(PermissionToken token)
 		{
-
 			if (token == PermissionToken.Nothing)
 				return true;
 
@@ -31,7 +28,6 @@ namespace VocaDb.Tests.TestSupport
 				return false;
 
 			return (LoggedUser.EffectivePermissions.Contains(token));
-
 		}
 
 		public bool IsLoggedIn => LoggedUser != null;
@@ -75,21 +71,16 @@ namespace VocaDb.Tests.TestSupport
 
 		public void VerifyLogin()
 		{
-
 			if (!IsLoggedIn)
 				throw new NotAllowedException("Must be logged in.");
-
 		}
 
 		public void VerifyPermission(PermissionToken flag)
 		{
-
 			if (!HasPermission(flag))
 			{
 				throw new NotAllowedException();
 			}
-
 		}
-
 	}
 }

@@ -2,14 +2,12 @@ using System;
 
 namespace VocaDb.Model.Domain.Songs
 {
-
 	/// <summary>
 	/// Saved in the database as strings - numbers can be changed, but not the names.
 	/// </summary>
 	[Flags]
 	public enum SongEditableFields
 	{
-
 		Nothing = 0,
 
 		Albums = 1,
@@ -39,7 +37,5 @@ namespace VocaDb.Model.Domain.Songs
 		Status = 4096,
 
 		WebLinks = 8192
-
 	}
-
 }

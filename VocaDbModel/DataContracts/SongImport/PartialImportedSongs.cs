@@ -2,11 +2,9 @@
 
 namespace VocaDb.Model.DataContracts.SongImport
 {
-
 	[DataContract]
 	public class PartialImportedSongs
 	{
-
 		public PartialImportedSongs() { }
 
 		public PartialImportedSongs(ImportedSongInListContract[] items, int totalCount, string nextPageToken)
@@ -24,7 +22,5 @@ namespace VocaDb.Model.DataContracts.SongImport
 
 		[DataMember]
 		public int TotalCount { get; set; }
-
 	}
-
 }

@@ -3,10 +3,8 @@ using VocaDb.Model.DataContracts.Songs;
 
 namespace VocaDb.Web.Models.Shared.Partials.Song
 {
-
 	public class SongGridViewModel
 	{
-
 		public SongGridViewModel(IEnumerable<SongForApiContract> songs, int columns, bool displayType = false, bool displayPublishDate = false)
 		{
 			Songs = songs;
@@ -22,7 +20,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Song
 		public bool DisplayType { get; set; }
 
 		public bool DisplayPublishDate { get; set; }
-
 	}
-
 }

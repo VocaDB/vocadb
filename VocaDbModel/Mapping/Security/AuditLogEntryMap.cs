@@ -3,13 +3,10 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Mapping.Security
 {
-
 	public class AuditLogEntryMap : ClassMap<AuditLogEntry>
 	{
-
 		public AuditLogEntryMap()
 		{
-
 			Table("AuditLogEntries");
 			Id(m => m.Id);
 
@@ -23,9 +20,6 @@ namespace VocaDb.Model.Mapping.Security
 				c.Map(m => m.EntryType, "EntryType");
 				c.Map(m => m.Id, "EntryId");
 			});
-
 		}
-
 	}
-
 }

@@ -4,10 +4,8 @@ using System.Linq;
 
 namespace VocaDb.Model.Domain.Globalization
 {
-
 	public class CultureCollection
 	{
-
 		public CultureCollection(CultureInfo[] cultures)
 		{
 			Cultures = cultures;
@@ -28,7 +26,5 @@ namespace VocaDb.Model.Domain.Globalization
 					.OrderBy(k => k.Value))
 				.ToDictionary(k => k.Key, k => k.Value);
 		}
-
 	}
-
 }

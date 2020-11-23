@@ -6,14 +6,11 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.DataContracts
 {
-
 	public class EntryReportContract
 	{
-
 		public EntryReportContract(EntryReport report, EntryForApiContract entry,
 			IEnumTranslations enumTranslations, IUserIconFactory userIconFactory)
 		{
-
 			ParamIs.NotNull(() => report);
 
 			ClosedAt = report.ClosedAt;
@@ -26,7 +23,6 @@ namespace VocaDb.Model.DataContracts
 			ReportTypeName = enumTranslations != null ? report.TranslatedReportTypeName(enumTranslations) : null;
 			User = (report.User != null ? new UserForApiContract(report.User, userIconFactory, UserOptionalFields.MainPicture) : null);
 			Version = (report.VersionBase != null ? new ArchivedObjectVersionContract(report.VersionBase) : null);
-
 		}
 
 		public UserForApiContract ClosedBy { get; set; }
@@ -48,7 +44,5 @@ namespace VocaDb.Model.DataContracts
 		public UserForApiContract User { get; set; }
 
 		public ArchivedObjectVersionContract Version { get; set; }
-
 	}
-
 }

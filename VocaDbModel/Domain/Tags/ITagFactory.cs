@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 
 namespace VocaDb.Model.Domain.Tags
 {
-
 	public interface ITagFactory
 	{
 		Task<Tag> CreateTagAsync(string englishName);
@@ -11,7 +10,6 @@ namespace VocaDb.Model.Domain.Tags
 
 	public static class ITagFactoryExtensions
 	{
-
 		// TODO: .NET Core async enumerable
 		public static async Task<List<Tag>> CreateTagsAsync(this ITagFactory tagFactory, IEnumerable<string> englishNames)
 		{
@@ -23,5 +21,4 @@ namespace VocaDb.Model.Domain.Tags
 			return tags;
 		}
 	}
-
 }

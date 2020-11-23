@@ -4,22 +4,18 @@ using System;
 
 namespace VocaDb.Model.Domain.Globalization
 {
-
 	/// <summary>
 	/// String that is translated to all common languages supported by the system.
 	/// </summary>
 	public class TranslatedString : ITranslatedString
 	{
-
 		public static TranslatedString Create(Func<ContentLanguageSelection, string> factory)
 		{
-
 			return new TranslatedString(
 				factory(ContentLanguageSelection.Japanese),
 				factory(ContentLanguageSelection.Romaji),
 				factory(ContentLanguageSelection.English)
 			);
-
 		}
 
 		public static TranslatedString Create(string uniform)
@@ -39,39 +35,32 @@ namespace VocaDb.Model.Domain.Globalization
 		public TranslatedString(string original, string romaji, string english)
 			: this()
 		{
-
 			Japanese = original;
 			Romaji = romaji;
 			English = english;
-
 		}
 
 		public TranslatedString(string original, string romaji, string english,
 			ContentLanguageSelection defaultLanguage)
 		{
-
 			Japanese = original;
 			Romaji = romaji;
 			English = english;
 			DefaultLanguage = defaultLanguage;
-
 		}
 
 		public TranslatedString(ITranslatedString contract)
 			: this()
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			CopyFrom(contract);
-
 		}
 
 		public virtual string this[ContentLanguageSelection language]
 		{
 			get
 			{
-
 				switch (language)
 				{
 					case ContentLanguageSelection.English:
@@ -83,11 +72,9 @@ namespace VocaDb.Model.Domain.Globalization
 					default:
 						return Default;
 				}
-
 			}
 			set
 			{
-
 				switch (language)
 				{
 					case ContentLanguageSelection.English:
@@ -103,7 +90,6 @@ namespace VocaDb.Model.Domain.Globalization
 						Default = value;
 						break;
 				}
-
 			}
 		}
 
@@ -163,7 +149,6 @@ namespace VocaDb.Model.Domain.Globalization
 			}
 			set
 			{
-
 				switch (DefaultLanguage)
 				{
 					case ContentLanguageSelection.English:
@@ -179,7 +164,6 @@ namespace VocaDb.Model.Domain.Globalization
 						Japanese = value;
 						break;
 				}
-
 			}
 		}
 
@@ -232,37 +216,29 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual void CopyFrom(ITranslatedString contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			DefaultLanguage = contract.DefaultLanguage;
 			English = contract.English;
 			Japanese = contract.Japanese;
 			Romaji = contract.Romaji;
-
 		}
 
 		public virtual string GetBestMatch(ContentLanguagePreference preference)
 		{
-
 			return GetBestMatch(preference, DefaultLanguage);
-
 		}
 
 		public virtual string GetBestMatch(ContentLanguagePreference preference, ContentLanguageSelection defaultLanguage)
 		{
-
 			var val = this[preference == ContentLanguagePreference.Default ? defaultLanguage : (ContentLanguageSelection)preference];
 
 			return (!string.IsNullOrEmpty(val) ? val : GetDefaultOrFirst(defaultLanguage));
-
 		}
 
 		public virtual string GetDefaultOrFirst()
 		{
-
 			return GetDefaultOrFirst(DefaultLanguage);
-
 		}
 
 		/// <summary>
@@ -272,13 +248,9 @@ namespace VocaDb.Model.Domain.Globalization
 		/// <returns>Translated name for the selected language, or first translation. Cannot be null. Can be empty, but only if there are no translations.</returns>
 		public virtual string GetDefaultOrFirst(ContentLanguageSelection defaultLanguage)
 		{
-
 			var val = (defaultLanguage != ContentLanguageSelection.Unspecified || DefaultLanguage != ContentLanguageSelection.Unspecified ? this[defaultLanguage] : null);
 
 			return !string.IsNullOrEmpty(val) ? val : All.FirstOrDefault(n => !string.IsNullOrEmpty(n)) ?? string.Empty;
-
 		}
-
 	}
-
 }

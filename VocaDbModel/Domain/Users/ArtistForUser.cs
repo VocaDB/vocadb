@@ -2,14 +2,12 @@ using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.Domain.Users
 {
-
 	/// <summary>
 	/// User following an artist.
 	/// </summary>
 	/// <remarks>For owned artists see <see cref="OwnedArtistForUser"/>.</remarks>
 	public class ArtistForUser : IArtistLink, IEntryWithIntId
 	{
-
 		private Artist artist;
 		private User user;
 
@@ -21,10 +19,8 @@ namespace VocaDb.Model.Domain.Users
 		public ArtistForUser(User user, Artist artist)
 			: this()
 		{
-
 			User = user;
 			Artist = artist;
-
 		}
 
 		public virtual int Id { get; set; }
@@ -65,15 +61,12 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public virtual void Delete()
 		{
-
 			User.AllArtists.Remove(this);
 			Artist.Users.Remove(this);
-
 		}
 
 		public virtual bool Equals(ArtistForUser another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -84,7 +77,6 @@ namespace VocaDb.Model.Domain.Users
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -99,7 +91,6 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual void Move(Artist target)
 		{
-
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Artist))
@@ -108,14 +99,11 @@ namespace VocaDb.Model.Domain.Users
 			Artist.Users.Remove(this);
 			Artist = target;
 			target.Users.Add(this);
-
 		}
 
 		public override string ToString()
 		{
 			return string.Format("{0} following {1}", User, Artist);
 		}
-
 	}
-
 }

@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Domain.Discussions
 {
-
 	public class DiscussionComment : GenericComment<DiscussionTopic>
 	{
-
 		public DiscussionComment() { }
 
 		public DiscussionComment(DiscussionTopic topic, string message, AgentLoginData loginData)
@@ -16,7 +14,5 @@ namespace VocaDb.Model.Domain.Discussions
 		{
 			EntryForComment.Comments.Remove(this);
 		}
-
 	}
-
 }

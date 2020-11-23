@@ -4,17 +4,13 @@ using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public interface IVideoServiceParser
 	{
-
 		Task<VideoTitleParseResult> GetTitleAsync(string id);
-
 	}
 
 	public class VideoTitleParseResult
 	{
-
 		public static VideoTitleParseResult Empty => new VideoTitleParseResult(true, null, null, null, null, null);
 
 		public static VideoTitleParseResult CreateError(string error)
@@ -90,7 +86,5 @@ namespace VocaDb.Model.Service.VideoServices
 		public string ThumbUrl { get; set; }
 
 		public DateTime? UploadDate { get; set; }
-
 	}
-
 }

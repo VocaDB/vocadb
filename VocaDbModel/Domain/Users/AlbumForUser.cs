@@ -2,10 +2,8 @@ using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Domain.Users
 {
-
 	public class AlbumForUser : IAlbumLink, IEntryWithIntId
 	{
-
 		public const int NotRated = 0;
 
 		private Album album;
@@ -21,13 +19,11 @@ namespace VocaDb.Model.Domain.Users
 		public AlbumForUser(User user, Album album, PurchaseStatus status, MediaType mediaType, int rating)
 			: this()
 		{
-
 			User = user;
 			Album = album;
 			PurchaseStatus = status;
 			MediaType = mediaType;
 			Rating = rating;
-
 		}
 
 		public virtual Album Album
@@ -67,16 +63,13 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public virtual void Delete()
 		{
-
 			Album.UserCollections.Remove(this);
 			User.AllAlbums.Remove(this);
 			Album.UpdateRatingTotals();
-
 		}
 
 		public virtual bool Equals(AlbumForUser another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -84,7 +77,6 @@ namespace VocaDb.Model.Domain.Users
 				return true;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj) => Equals(obj as AlbumForUser);
@@ -93,7 +85,6 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual void Move(Album target)
 		{
-
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Album))
@@ -104,11 +95,8 @@ namespace VocaDb.Model.Domain.Users
 			Album = target;
 			target.UserCollections.Add(this);
 			target.UpdateRatingTotals();
-
 		}
 
 		public override string ToString() => string.Format("{0} for {1}", Album, User);
-
 	}
-
 }

@@ -25,7 +25,6 @@ namespace ViewRes.Comment
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public class IndexStrings
 	{
-
 		private static global::System.Resources.ResourceManager resourceMan;
 
 		private static global::System.Globalization.CultureInfo resourceCulture;

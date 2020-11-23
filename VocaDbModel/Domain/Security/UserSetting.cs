@@ -6,14 +6,12 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Security
 {
-
 	/// <summary>
 	/// Common interface for user settings that can be changed individually.
 	/// These settings can be persisted for the user account if the user is logged in, or in a cookie if the user has no account.
 	/// </summary>
 	public interface IUserSetting
 	{
-
 		/// <summary>
 		/// Parses setting value from a string.
 		/// </summary>
@@ -25,15 +23,12 @@ namespace VocaDb.Model.Domain.Security
 		/// </summary>
 		/// <param name="user">User to be updated. Cannot be null.</param>
 		void UpdateUser(User user);
-
 	}
 
 	public abstract class UserSetting<T> : IUserSetting
 	{
-
 		private static string GetCookieValue(HttpRequest request, string cookieName)
 		{
-
 			if (HttpContext.Current == null)
 				return null;
 
@@ -43,23 +38,19 @@ namespace VocaDb.Model.Domain.Security
 				return null;
 			else
 				return cookie.Value;
-
 		}
 
 		private static void SetCookie(HttpContext context, string cookieName, string value, TimeSpan expires)
 		{
-
 			if (context != null)
 			{
 				var cookie = new HttpCookie(cookieName, value) { Expires = DateTime.Now + expires };
 				context.Response.Cookies.Add(cookie);
 			}
-
 		}
 
 		private static bool TryGetCookieValue(HttpRequest request, string cookieName, ref T value, Func<string, T> valueGetter)
 		{
-
 			var cookieValue = GetCookieValue(request, cookieName);
 
 			if (cookieValue == null)
@@ -68,19 +59,16 @@ namespace VocaDb.Model.Domain.Security
 			value = valueGetter(cookieValue);
 
 			return true;
-
 		}
 
 		delegate bool ValueGetterDelegate(string str, out T val);
 
 		private static bool TryGetFromQueryString(HttpRequest request, string paramName, ref T value, ValueGetterDelegate valueGetter)
 		{
-
 			if (request == null || string.IsNullOrEmpty(paramName) || string.IsNullOrEmpty(request.QueryString[paramName]))
 				return false;
 
 			return valueGetter(request.QueryString[paramName], out value);
-
 		}
 
 		private readonly HttpContext context;
@@ -96,10 +84,8 @@ namespace VocaDb.Model.Domain.Security
 
 		private T ParseValue(string str)
 		{
-
 			T val;
 			return TryParseValue(str, out val) ? val : Default;
-
 		}
 
 		private HttpRequest Request => context != null ? context.Request : null;
@@ -112,21 +98,17 @@ namespace VocaDb.Model.Domain.Security
 		{
 			get
 			{
-
 				if (HttpContext.Current == null)
 					throw new InvalidOperationException("HttpContext is not initialized");
 
 				return (T)HttpContext.Current.Items[RequestItemName];
-
 			}
 			set
 			{
-
 				if (HttpContext.Current == null)
 					throw new InvalidOperationException("HttpContext is not initialized");
 
 				HttpContext.Current.Items[RequestItemName] = value;
-
 			}
 		}
 
@@ -174,7 +156,6 @@ namespace VocaDb.Model.Domain.Security
 		{
 			get
 			{
-
 				if (IsRequestValueOverridden)
 					return RequestValue;
 
@@ -189,11 +170,9 @@ namespace VocaDb.Model.Domain.Security
 					return val;
 
 				return val;
-
 			}
 			set
 			{
-
 				if (IsRequestValueOverridden)
 					OverrideRequestValue(value);
 
@@ -201,15 +180,12 @@ namespace VocaDb.Model.Domain.Security
 					SetPersistedValue(permissionContext.LoggedUser, value);
 
 				SetCookie(context, CookieName, value.ToString(), CookieExpires);
-
 			}
 		}
-
 	}
 
 	public class UserSettingLanguagePreference : UserSetting<ContentLanguagePreference>
 	{
-
 		public UserSettingLanguagePreference(HttpContext context, IUserPermissionContext permissionContext)
 			: base(context, permissionContext) { }
 
@@ -238,7 +214,5 @@ namespace VocaDb.Model.Domain.Security
 		{
 			return Enum.TryParse(str, out val);
 		}
-
 	}
-
 }

@@ -12,10 +12,8 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.SongImport
 {
-
 	public class YoutubePlaylistImporter : ISongListImporter
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private static readonly Regex regex = new Regex(@"www\.youtube\.com/playlist\?list=([\w\-_]+)");
 
@@ -35,7 +33,6 @@ namespace VocaDb.Model.Service.SongImport
 
 		private string GetId(string url)
 		{
-
 			var match = regex.Match(url);
 
 			if (!match.Success)
@@ -46,12 +43,10 @@ namespace VocaDb.Model.Service.SongImport
 
 			var id = match.Groups[1].Value;
 			return id;
-
 		}
 
 		private async Task<PartialImportedSongs> GetSongsById(string playlistId, string pageToken, int maxResults, bool parseAll)
 		{
-
 			var songs = new List<ImportedSongInListContract>();
 
 			var requestUrl = string.Format(playlistItemsFormat, YoutubeApiKey, playlistId, maxResults, pageToken);
@@ -80,7 +75,6 @@ namespace VocaDb.Model.Service.SongImport
 			}
 
 			return new PartialImportedSongs(songs.ToArray(), result.PageInfo.TotalResults ?? 0, result.NextPageToken);
-
 		}
 
 		public Task<PartialImportedSongs> GetSongsAsync(string url, string nextPageToken, int maxResults, bool parseAll)
@@ -90,7 +84,6 @@ namespace VocaDb.Model.Service.SongImport
 
 		public async Task<ImportedSongListContract> ParseAsync(string url, bool parseAll)
 		{
-
 			var id = GetId(url);
 
 			var requestUrl = string.Format(playlistsFormat, YoutubeApiKey, id);
@@ -119,7 +112,6 @@ namespace VocaDb.Model.Service.SongImport
 			var songs = await GetSongsById(id, null, 10, parseAll);
 
 			return new ImportedSongListContract { Name = name, Description = description, CreateDate = created, Songs = songs };
-
 		}
 
 		public bool MatchUrl(string url)
@@ -137,20 +129,14 @@ namespace VocaDb.Model.Service.SongImport
 
 		public class YoutubePlaylistItemSnippet : Snippet
 		{
-
 			public uint? Position { get; set; }
 
 			public YoutubeResourceId ResourceId { get; set; }
-
 		}
 
 		public class YoutubeResourceId
 		{
-
 			public string VideoId { get; set; }
-
 		}
-
 	}
-
 }

@@ -5,28 +5,22 @@ using System.Xml.XPath;
 
 namespace VocaDb.Model.Helpers
 {
-
 	/// <summary>
 	/// Various helper methods for XML processing.
 	/// </summary>
 	public static class XmlHelper
 	{
-
 		public static string GetNodeTextOrEmpty(XElement node)
 		{
-
 			if (node == null)
 				return string.Empty;
 
 			return node.Value;
-
 		}
 
 		public static string GetNodeTextOrEmpty(XDocument doc, string xpath)
 		{
-
 			return GetNodeTextOrEmpty(doc.XPathSelectElement(xpath));
-
 		}
 
 		/// <summary>
@@ -37,14 +31,12 @@ namespace VocaDb.Model.Helpers
 		/// <returns>Document serialized into XML string, in UTF-8 encoding.</returns>
 		public static string SerializeToUTF8XmlString(XDocument doc)
 		{
-
 			ParamIs.NotNull(() => doc);
 
 			doc.Declaration = new XDeclaration("1.0", "utf-8", "yes");
 
 			using (var stream = new MemoryStream())
 			{
-
 				doc.Save(stream);
 				stream.Seek(0, SeekOrigin.Begin);
 
@@ -52,9 +44,7 @@ namespace VocaDb.Model.Helpers
 				{
 					return reader.ReadToEnd();
 				}
-
 			}
-
 		}
 
 		/// <summary>
@@ -66,10 +56,8 @@ namespace VocaDb.Model.Helpers
 		/// <returns>Object serialized into XML string, in UTF-8 encoding.</returns>
 		public static string SerializeToUTF8XmlString<T>(T obj)
 		{
-
 			var doc = SerializeToXml(obj);
 			return SerializeToUTF8XmlString(doc);
-
 		}
 
 		/// <summary>
@@ -82,7 +70,6 @@ namespace VocaDb.Model.Helpers
 		/// <remarks>Some illegal characters are sanitized from the object, for example 0x02 (STX).</remarks>
 		public static XDocument SerializeToXml<T>(T obj)
 		{
-
 			var serializer = new XmlSerializer(typeof(T));
 			XDocument doc;
 
@@ -104,7 +91,6 @@ namespace VocaDb.Model.Helpers
 			serializer.Serialize(doc.CreateWriter(), obj);*/
 
 			return doc;
-
 		}
 
 		/// <summary>
@@ -115,7 +101,6 @@ namespace VocaDb.Model.Helpers
 		/// <returns>The deserialized object.</returns>
 		public static T DeserializeFromXml<T>(XDocument doc)
 		{
-
 			ParamIs.NotNull(() => doc);
 
 			var serializer = new XmlSerializer(typeof(T));
@@ -127,9 +112,6 @@ namespace VocaDb.Model.Helpers
 			}
 
 			return obj;
-
 		}
-
 	}
-
 }

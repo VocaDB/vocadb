@@ -8,14 +8,12 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Search
 {
-
 	/// <summary>
 	/// Collection of entry sub-types and associated tags.
 	/// </summary>
 	/// <typeparam name="TSubType">Entry sub-type type. For example SongType.</typeparam>
 	public class EntryTypeAndTagCollection<TSubType> where TSubType : struct, Enum
 	{
-
 		public static EntryTypeAndTagCollection<TSubType> Create(
 			EntryType entryType, int tagId, IDatabaseContext ctx, bool allowAllTags = false)
 		{
@@ -26,14 +24,12 @@ namespace VocaDb.Model.Service.Search
 			EntryType entryType, IReadOnlyCollection<TSubType> subTypes,
 			IReadOnlyCollection<int> tagIds, IDatabaseContext ctx, bool allowAllTags = false)
 		{
-
 			TSubType[] allTypes;
 			int[] songTypeTagIds;
 			int[] allTagIds;
 
 			if (tagIds.Any())
 			{
-
 				var songTypesAndTagsFromTags = ctx.Query<EntryTypeToTagMapping>()
 					.WhereEntryTypeIs(entryType)
 					.WhereHasSubType()
@@ -45,7 +41,6 @@ namespace VocaDb.Model.Service.Search
 				var songTypesFromTags = songTypesAndTagsFromTags.Select(etm => EnumVal<TSubType>.Parse(etm.SubType));
 
 				allTypes = subTypes.Union(songTypesFromTags).ToArray();
-
 			}
 			else
 			{
@@ -70,7 +65,6 @@ namespace VocaDb.Model.Service.Search
 				allTagIds = allTagIds.Union(tagIds).ToArray();
 
 			return new EntryTypeAndTagCollection<TSubType>(allTypes, allTagIds);
-
 		}
 
 		public EntryTypeAndTagCollection(TSubType[] subTypes, int[] tagIds)
@@ -84,7 +78,5 @@ namespace VocaDb.Model.Service.Search
 		public TSubType[] SubTypes { get; }
 
 		public int[] TagIds { get; }
-
 	}
-
 }

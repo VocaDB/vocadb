@@ -6,13 +6,10 @@ using HtmlAgilityPack;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public static class HtmlParsingHelper
 	{
-
 		public static Encoding GetEncoding(string encodingStr, Encoding defaultEncoding)
 		{
-
 			if (string.IsNullOrEmpty(encodingStr))
 				return defaultEncoding;
 
@@ -24,12 +21,10 @@ namespace VocaDb.Model.Service.VideoServices
 			{
 				return defaultEncoding;
 			}
-
 		}
 
 		public static T ParseHtmlPage<T>(string url, Encoding defaultEncoding, Func<HtmlDocument, string, T> func) where T : class
 		{
-
 			var request = WebRequest.Create(url);
 			WebResponse response;
 
@@ -57,9 +52,6 @@ namespace VocaDb.Model.Service.VideoServices
 			{
 				response.Close();
 			}
-
 		}
-
 	}
-
 }

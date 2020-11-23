@@ -3,10 +3,8 @@ using System.Globalization;
 
 namespace VocaDb.Model.Domain.Globalization
 {
-
 	public class OptionalCultureCode : IEquatable<OptionalCultureCode>
 	{
-
 		public static OptionalCultureCode Empty => new OptionalCultureCode(string.Empty);
 		public const string LanguageCode_English = "en";
 		public const string LanguageCode_Japanese = "ja";
@@ -70,7 +68,6 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual CultureInfo GetCultureInfoSafe()
 		{
-
 			if (IsEmpty)
 				return null;
 
@@ -82,14 +79,11 @@ namespace VocaDb.Model.Domain.Globalization
 			{
 				return null;
 			}
-
 		}
 
 		public override int GetHashCode()
 		{
 			return !IsEmpty ? CultureCode.GetHashCode() : 0;
 		}
-
 	}
-
 }

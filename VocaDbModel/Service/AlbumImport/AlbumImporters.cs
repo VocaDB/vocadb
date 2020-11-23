@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.Service.AlbumImport
 {
-
 	public class AlbumImporters
 	{
-
 		private readonly IAlbumImporter[] importers;
 
 		public AlbumImporters()
@@ -23,15 +21,12 @@ namespace VocaDb.Model.Service.AlbumImport
 
 		public AlbumImportResult ImportOne(string url)
 		{
-
 			var importer = FindImporter(url);
 
 			if (importer == null)
 				return new AlbumImportResult { Message = "URL not recognized" };
 
 			return importer.ImportOne(url);
-
 		}
-
 	}
 }

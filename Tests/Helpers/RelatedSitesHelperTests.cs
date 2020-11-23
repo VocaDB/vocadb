@@ -3,11 +3,9 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Tests.Helpers
 {
-
 	[TestClass]
 	public class RelatedSitesHelperTests
 	{
-
 		private void TestRelatedSite(bool expected, string url)
 		{
 			var result = RelatedSitesHelper.IsRelatedSite(url);
@@ -37,7 +35,5 @@ namespace VocaDb.Tests.Helpers
 		{
 			TestRelatedSite(true, "https://vocadb.net/S/3939");
 		}
-
 	}
-
 }

@@ -3,10 +3,8 @@ using VocaDb.Model.Service.Security.StopForumSpam;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	public class FakeStopForumSpamClient : IStopForumSpamClient
 	{
-
 		public FakeStopForumSpamClient()
 		{
 			Response = new SFSResponseContract();
@@ -22,7 +20,5 @@ namespace VocaDb.Tests.TestSupport
 		}
 
 		public Task<SFSResponseContract> CallApiAsync(string ip) => Task.FromResult(CallApi(ip));
-
 	}
-
 }

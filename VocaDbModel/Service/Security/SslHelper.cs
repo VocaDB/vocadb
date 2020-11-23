@@ -2,10 +2,8 @@ using System.Net;
 
 namespace VocaDb.Model.Service.Security
 {
-
 	public static class SslHelper
 	{
-
 		/// <summary>
 		/// Force to use TLS 1.2 / TLS 1.3.
 		/// </summary>
@@ -15,6 +13,5 @@ namespace VocaDb.Model.Service.Security
 			// TODO: TLS 1.2 should already be default in .NET 4.8. Figure out why not.
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13;
 		}
-
 	}
 }

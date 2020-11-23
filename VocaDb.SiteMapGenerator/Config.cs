@@ -4,7 +4,6 @@ namespace VocaDb.SiteMapGenerator
 {
 	public class Config
 	{
-
 		private string AppSetting(string key, string def)
 		{
 			return ConfigurationManager.AppSettings[key] ?? def;
@@ -24,6 +23,5 @@ namespace VocaDb.SiteMapGenerator
 		{
 			get { return AppSetting("sitemapRootUrl", "http://static.vocadb.net/sitemaps/"); }
 		}
-
 	}
 }

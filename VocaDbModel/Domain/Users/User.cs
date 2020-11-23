@@ -22,10 +22,8 @@ using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Model.Domain.Users
 {
-
 	public class User : IEntryWithNames, IUserWithEmail, IEquatable<IUser>, IWebLinkFactory<UserWebLink>, IEntryWithComments
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		public const string NameRegex = "^[a-zA-Z0-9_]+$";
 		public static readonly TimeSpan UsernameCooldown = TimeSpan.FromDays(365);
@@ -67,18 +65,15 @@ namespace VocaDb.Model.Domain.Users
 		{
 			get
 			{
-
 				if (VerifiedArtist)
 					return new PermissionCollection(new[] { PermissionToken.UploadMedia });
 
 				return PermissionCollection.Empty;
-
 			}
 		}
 
 		public User()
 		{
-
 			Active = true;
 			AnonymousActivity = false;
 			CreateDate = DateTime.Now;
@@ -92,7 +87,6 @@ namespace VocaDb.Model.Domain.Users
 			LastLogin = DateTime.Now;
 			Options = new UserOptions(this);
 			PreferredVideoService = PVService.Youtube;
-
 		}
 
 		/// <summary>
@@ -105,7 +99,6 @@ namespace VocaDb.Model.Domain.Users
 		public User(string name, string pass, string email, IPasswordHashAlgorithm passwordHashAlgorithm)
 			: this()
 		{
-
 			ParamIs.NotNull(() => passwordHashAlgorithm);
 
 			Name = name;
@@ -116,7 +109,6 @@ namespace VocaDb.Model.Domain.Users
 			UpdatePassword(pass, passwordHashAlgorithm);
 
 			GenerateAccessKey();
-
 		}
 
 		public virtual string AccessKey
@@ -261,14 +253,12 @@ namespace VocaDb.Model.Domain.Users
 		{
 			get
 			{
-
 				if (!Active)
 					return new PermissionCollection();
 
 				return UserGroup.GetPermissions(GroupId)
 					.Merge(AdditionalPermissions)
 					.Merge(StatusPermissions);
-
 			}
 		}
 
@@ -522,7 +512,6 @@ namespace VocaDb.Model.Domain.Users
 		/// <returns>Album link. Cannot be null.</returns>
 		public virtual AlbumForUser AddAlbum(Album album, PurchaseStatus status, MediaType mediaType, int rating)
 		{
-
 			ParamIs.NotNull(() => album);
 
 			var link = new AlbumForUser(this, album, status, mediaType, rating);
@@ -531,7 +520,6 @@ namespace VocaDb.Model.Domain.Users
 			album.UpdateRatingTotals();
 
 			return link;
-
 		}
 
 		/// <summary>
@@ -541,7 +529,6 @@ namespace VocaDb.Model.Domain.Users
 		/// <returns>The link object. Cannot be null.</returns>
 		public virtual ArtistForUser AddArtist(Artist artist)
 		{
-
 			ParamIs.NotNull(() => artist);
 
 			var link = new ArtistForUser(this, artist);
@@ -549,12 +536,10 @@ namespace VocaDb.Model.Domain.Users
 			artist.Users.Add(link);
 
 			return link;
-
 		}
 
 		public virtual EventForUser AddEvent(ReleaseEvent releaseEvent, UserEventRelationshipType relationshipType)
 		{
-
 			ParamIs.NotNull(() => releaseEvent);
 
 			var link = new EventForUser(this, releaseEvent, relationshipType);
@@ -562,21 +547,17 @@ namespace VocaDb.Model.Domain.Users
 			releaseEvent.Users.Add(link);
 
 			return link;
-
 		}
 
 		public virtual UserKnownLanguage AddKnownLanguage(string cultureCode, UserLanguageProficiency proficiency)
 		{
-
 			var lang = new UserKnownLanguage(this, cultureCode, proficiency);
 			KnownLanguages.Add(lang);
 			return lang;
-
 		}
 
 		public virtual UserMessage CreateNotification(string subject, string body)
 		{
-
 			log.Debug("Creating notification for {0} with subject '{1}'", this, subject);
 
 			var msg = new UserMessage(this, subject, body, false);
@@ -586,7 +567,6 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual OwnedArtistForUser AddOwnedArtist(Artist artist)
 		{
-
 			ParamIs.NotNull(() => artist);
 
 			var old = ownedArtists.FirstOrDefault(a => a.Artist.Equals(artist));
@@ -600,12 +580,10 @@ namespace VocaDb.Model.Domain.Users
 			VerifiedArtist = true;
 
 			return link;
-
 		}
 
 		public virtual FavoriteSongForUser AddSongToFavorites(Song song, SongVoteRating rating)
 		{
-
 			ParamIs.NotNull(() => song);
 
 			var link = new FavoriteSongForUser(this, song, rating);
@@ -618,23 +596,19 @@ namespace VocaDb.Model.Domain.Users
 			song.RatingScore += FavoriteSongForUser.GetRatingScore(rating);
 
 			return link;
-
 		}
 
 		public virtual TagForUser AddTag(Tag tag)
 		{
-
 			ParamIs.NotNull(() => tag);
 
 			var link = new TagForUser(this, tag);
 			tag.TagsForUsers.Add(link);
 			return link;
-
 		}
 
 		public virtual void ClearTwitter()
 		{
-
 			if (!HasPassword)
 			{
 				throw new NoPasswordException("Cannot disconnect Twitter if there is no password set.");
@@ -642,12 +616,10 @@ namespace VocaDb.Model.Domain.Users
 
 			Options.TwitterName = Options.TwitterOAuthToken = Options.TwitterOAuthTokenSecret = string.Empty;
 			Options.TwitterId = 0;
-
 		}
 
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
-
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);
 
@@ -655,19 +627,16 @@ namespace VocaDb.Model.Domain.Users
 			Comments.Add(comment);
 
 			return comment;
-
 		}
 
 		public virtual UserWebLink CreateWebLink(WebLinkContract contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			var link = new UserWebLink(this, contract);
 			WebLinks.Add(link);
 
 			return link;
-
 		}
 
 		public virtual UserWebLink CreateWebLink(string description, string url, WebLinkCategory category)
@@ -677,7 +646,6 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual bool Equals(IUser another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -685,7 +653,6 @@ namespace VocaDb.Model.Domain.Users
 				return true;
 
 			return string.Equals(this.Name, another.Name, StringComparison.InvariantCultureIgnoreCase);
-
 		}
 
 		public override bool Equals(object obj)
@@ -695,9 +662,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual void GenerateAccessKey()
 		{
-
 			AccessKey = new AlphaPassGenerator(true, true, true).Generate(20);
-
 		}
 
 		public override int GetHashCode()
@@ -707,7 +672,6 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual (UserMessage Received, UserMessage Sent) SendMessage(User to, string subject, string body, bool highPriority)
 		{
-
 			ParamIs.NotNull(() => to);
 
 			var received = UserMessage.CreateReceived(this, to, subject, body, highPriority);
@@ -719,12 +683,10 @@ namespace VocaDb.Model.Domain.Users
 			Messages.Add(sent);
 
 			return (received, sent);
-
 		}
 
 		public virtual void SetEmail(string newEmail)
 		{
-
 			ParamIs.NotNull(() => newEmail);
 
 			if (newEmail != string.Empty)
@@ -736,7 +698,6 @@ namespace VocaDb.Model.Domain.Users
 				NormalizedEmail = !string.IsNullOrEmpty(newEmail) ? MailAddressNormalizer.Normalize(newEmail) : string.Empty;
 				Options.EmailVerified = false;
 			}
-
 		}
 
 		public override string ToString()
@@ -753,24 +714,18 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual void UpdatePassword(string password, IPasswordHashAlgorithm algorithm)
 		{
-
 			ParamIs.NotNull(() => algorithm);
 
 			if (PasswordHashAlgorithm != algorithm.AlgorithmType)
 			{
-
 				log.Info("Updating password hash algorithm to {0}", algorithm.AlgorithmType);
 
 				PasswordHashAlgorithm = algorithm.AlgorithmType;
 				Salt = algorithm.GenerateSalt(); // Salt needs to be regenerated too because its length may change
-
 			}
 
 			var newHashed = !string.IsNullOrEmpty(password) ? algorithm.HashPassword(password, Salt, NameLC) : string.Empty;
 			Password = newHashed;
-
 		}
-
 	}
-
 }

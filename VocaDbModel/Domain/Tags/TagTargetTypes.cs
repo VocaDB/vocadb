@@ -2,7 +2,6 @@
 
 namespace VocaDb.Model.Domain.Tags
 {
-
 	/// <summary>
 	/// Possible tag targets. This is a subset of combinations of <see cref="EntryType"/>.
 	/// </summary>
@@ -38,5 +37,4 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		All = 1073741823
 	}
-
 }

@@ -4,13 +4,11 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Security
 {
-
 	/// <summary>
 	/// Information about the currently logged in user.
 	/// </summary>
 	public interface IUserPermissionContext
 	{
-
 		ContentLanguagePreference LanguagePreference { get; }
 
 		UserSettingLanguagePreference LanguagePreferenceSetting { get; }
@@ -57,7 +55,5 @@ namespace VocaDb.Model.Domain.Security
 		/// <param name="flag">Permission to be tested.</param>
 		/// <exception cref="NotAllowedException">If the user does not have the permission.</exception>
 		void VerifyPermission(PermissionToken flag);
-
 	}
-
 }

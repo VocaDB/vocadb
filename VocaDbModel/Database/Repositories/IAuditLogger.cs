@@ -5,10 +5,8 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Database.Repositories
 {
-
 	public interface IAuditLogger
 	{
-
 		/// <summary>
 		/// Logs an action in syslog. 
 		/// Syslog is saved through NLog to a file.
@@ -32,6 +30,5 @@ namespace VocaDb.Model.Database.Repositories
 		void AuditLog(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null);
 
 		Task AuditLogAsync(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null);
-
 	}
 }

@@ -3,14 +3,12 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Tests.Helpers
 {
-
 	/// <summary>
 	/// Code from https://github.com/iDoRecall/email-normalize/blob/0938e0a4710c6fc076c50dd42ea2886b2984e219/tests.js
 	/// </summary>
 	[TestClass]
 	public class MailAddressNormalizerTests
 	{
-
 		private string NormalizedAddress(string address)
 		{
 			return MailAddressNormalizer.Normalize(address);
@@ -79,7 +77,5 @@ namespace VocaDb.Tests.Helpers
 			// http://outcoldman.com/en/archive/2014/05/08/fastmail/
 			TestNormalizedEmail("denis+tag@outcoldman.com", "denis+tag@outcoldman.com");
 		}
-
 	}
-
 }

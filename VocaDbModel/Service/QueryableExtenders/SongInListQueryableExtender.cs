@@ -7,13 +7,10 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtenders
 {
-
 	public static class SongInListQueryableExtender
 	{
-
 		private static Expression<Func<SongInList, bool>> GetNotesExpression(SearchTextQuery textQuery)
 		{
-
 			var query = textQuery.Query;
 
 			switch (textQuery.MatchMode)
@@ -30,17 +27,14 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return m => true;
-
 		}
 
 		public static IQueryable<SongInList> OrderBy(this IQueryable<SongInList> query, SongSortRule? sortRule, ContentLanguagePreference languagePreference)
 		{
-
 			if (sortRule == null)
 				return query.OrderBy(s => s.Order);
 
 			return SongLinkQueryableExtender.OrderBy(query, sortRule.Value, languagePreference);
-
 		}
 
 		public static IQueryable<SongList> WhereHasTags(this IQueryable<SongList> query, int[] tagId, bool childTags = false)
@@ -50,7 +44,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 		public static IQueryable<SongInList> WhereSongHasName(this IQueryable<SongInList> query, SearchTextQuery textQuery, bool includeDescription)
 		{
-
 			if (textQuery.IsEmpty)
 				return query;
 
@@ -62,9 +55,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return query.Where(expression);
-
 		}
-
 	}
-
 }

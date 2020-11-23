@@ -5,10 +5,8 @@ using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
-
 	public class TagDetailsContract : TagContract, IEntryWithStatus
 	{
-
 		string IEntryBase.DefaultName => Name;
 
 		EntryType IEntryBase.EntryType => EntryType.Tag;
@@ -20,7 +18,6 @@ namespace VocaDb.Model.DataContracts.Tags
 			ContentLanguagePreference languagePreference)
 			: base(tag, languagePreference)
 		{
-
 			AdditionalNames = tag.Names.AdditionalNamesString;
 			Translations = tag.Names.GetTranslationsString(languagePreference);
 
@@ -46,7 +43,6 @@ namespace VocaDb.Model.DataContracts.Tags
 			MappedNicoTags = tag.Mappings.Select(t => t.SourceTag).ToArray();
 
 			Stats = stats;
-
 		}
 
 		public int AllUsageCount => Stats.ArtistCount + Stats.AlbumCount + Stats.SongCount + Stats.EventCount + Stats.SongListCount;
@@ -88,7 +84,5 @@ namespace VocaDb.Model.DataContracts.Tags
 			HasMoreChildren = Children.Length > 20,
 			HasMoreSiblings = Siblings.Length > 20
 		};
-
 	}
-
 }

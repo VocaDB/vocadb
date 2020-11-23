@@ -7,10 +7,8 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Database.Repositories.NHibernate
 {
-
 	public class NHibernateRepository : IRepository
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		public IUserPermissionContext PermissionContext { get; private set; }
 		public ISessionFactory SessionFactory { get; private set; }
@@ -71,17 +69,14 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 
 		public TResult HandleTransaction<TResult>(Func<IDatabaseContext, TResult> func, string failMsg = "Unexpected NHibernate error")
 		{
-
 			try
 			{
 				using (var ctx = OpenSessionForContext())
 				using (var tx = ctx.Session.BeginTransaction())
 				{
-
 					var val = func(ctx);
 					tx.Commit();
 					return val;
-
 				}
 			}
 			catch (HibernateException x)
@@ -89,22 +84,18 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
 		public async Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext, Task<TResult>> func, string failMsg = "Unexpected NHibernate error")
 		{
-
 			try
 			{
 				using (var ctx = OpenSessionForContext())
 				using (var tx = ctx.Session.BeginTransaction())
 				{
-
 					var val = await func(ctx);
 					await tx.CommitAsync();
 					return val;
-
 				}
 			}
 			catch (HibernateException x)
@@ -112,12 +103,10 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
 		public async Task HandleTransactionAsync(Func<IDatabaseContext, Task> func, string failMsg = "Unexpected database error")
 		{
-
 			try
 			{
 				using (var ctx = OpenSessionForContext())
@@ -132,21 +121,17 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
 		public void HandleTransaction(Action<IDatabaseContext> func, string failMsg = "Unexpected NHibernate error")
 		{
-
 			try
 			{
 				using (var ctx = OpenSessionForContext())
 				using (var tx = ctx.Session.BeginTransaction())
 				{
-
 					func(ctx);
 					tx.Commit();
-
 				}
 			}
 			catch (HibernateException x)
@@ -154,14 +139,11 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
-
 	}
 
 	public abstract class NHibernateRepository<T> : IRepository<T> where T : class, IDatabaseObject
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		public IUserPermissionContext PermissionContext { get; private set; }
 		public ISessionFactory SessionFactory { get; private set; }
@@ -222,17 +204,14 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 
 		public TResult HandleTransaction<TResult>(Func<IDatabaseContext<T>, TResult> func, string failMsg = "Unexpected NHibernate error")
 		{
-
 			try
 			{
 				using (var ctx = OpenSessionForContext())
 				using (var tx = ctx.Session.BeginTransaction())
 				{
-
 					var val = func(ctx);
 					tx.Commit();
 					return val;
-
 				}
 			}
 			catch (HibernateException x)
@@ -240,21 +219,17 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
 		public void HandleTransaction(Action<IDatabaseContext<T>> func, string failMsg = "Unexpected NHibernate error")
 		{
-
 			try
 			{
 				using (var ctx = OpenSessionForContext())
 				using (var tx = ctx.Session.BeginTransaction())
 				{
-
 					func(ctx);
 					tx.Commit();
-
 				}
 			}
 			catch (HibernateException x)
@@ -262,22 +237,18 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
 		public async Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext<T>, Task<TResult>> func, string failMsg = "Unexpected NHibernate error")
 		{
-
 			try
 			{
 				using (var ctx = OpenSessionForContext())
 				using (var tx = ctx.Session.BeginTransaction())
 				{
-
 					var val = await func(ctx);
 					await tx.CommitAsync();
 					return val;
-
 				}
 			}
 			catch (HibernateException x)
@@ -285,12 +256,10 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
 		public async Task HandleTransactionAsync(Func<IDatabaseContext<T>, Task> func, string failMsg = "Unexpected database error")
 		{
-
 			try
 			{
 				using (var ctx = OpenSessionForContext())
@@ -305,9 +274,6 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
-
 	}
-
 }

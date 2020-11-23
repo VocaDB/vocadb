@@ -1,9 +1,7 @@
 ﻿namespace VocaDb.Model.Domain.Songs
 {
-
 	public enum SongArchiveReason
 	{
-
 		Unknown,
 
 		Created,
@@ -19,7 +17,5 @@
 		Deleted,
 
 		Restored
-
 	}
-
 }

@@ -3,7 +3,6 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain
 {
-
 	/// <summary>
 	/// Date object without time or timezone.
 	/// Dates are considered equal as long as day, month and year are the same, even if timezones were different.
@@ -15,7 +14,6 @@ namespace VocaDb.Model.Domain
 	/// </remarks>
 	public struct Date : IComparable<Date>
 	{
-
 		public static implicit operator Date(DateTime? dateTime)
 		{
 			return new Date(dateTime);
@@ -68,31 +66,24 @@ namespace VocaDb.Model.Domain
 
 		public bool Equals(DateTime? anotherDateTime)
 		{
-
 			return DateTimeHelper.DateEquals(DateTime, anotherDateTime);
-
 		}
 
 		public bool Equals(Date? another)
 		{
-
 			if (another == null)
 				return false;
 
 			return DateTimeHelper.DateEquals(DateTime, another.Value.DateTime);
-
 		}
 
 		public bool Equals(Date another)
 		{
-
 			return DateTimeHelper.DateEquals(DateTime, another.DateTime);
-
 		}
 
 		public override bool Equals(object obj)
 		{
-
 			if (obj is DateTime?)
 				return Equals((DateTime?)obj);
 
@@ -100,7 +91,6 @@ namespace VocaDb.Model.Domain
 				return Equals((Date?)obj);
 
 			return false;
-
 		}
 
 		public override int GetHashCode()
@@ -112,7 +102,5 @@ namespace VocaDb.Model.Domain
 		{
 			return DateTime.HasValue ? DateTime.Value.ToShortDateString() : base.ToString();
 		}
-
 	}
-
 }

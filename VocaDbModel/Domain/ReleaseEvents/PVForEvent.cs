@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Domain.ReleaseEvents
 {
-
 	public class PVForEvent : GenericPV<ReleaseEvent>
 	{
-
 		public PVForEvent() { }
 		public PVForEvent(ReleaseEvent entry, PVContract contract) : base(entry, contract) { }
 
@@ -14,7 +12,5 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		{
 			Entry.PVs.Remove(this);
 		}
-
 	}
-
 }

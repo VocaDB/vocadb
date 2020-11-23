@@ -3,11 +3,9 @@ using System.Runtime.Serialization;
 
 namespace VocaDb.Model.DataContracts.SongImport
 {
-
 	[DataContract]
 	public class ImportedSongListContract
 	{
-
 		public ImportedSongListContract()
 		{
 			Description = string.Empty;
@@ -36,7 +34,5 @@ namespace VocaDb.Model.DataContracts.SongImport
 
 		[DataMember]
 		public int WVRNumber { get; set; }
-
 	}
-
 }

@@ -4,10 +4,8 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Web.Code
 {
-
 	public class SloganGenerator
 	{
-
 		private static readonly string[] defaultSlogans = {
 			"Telling you who's whoo.",
 			"1st place to check.",
@@ -23,7 +21,6 @@ namespace VocaDb.Web.Code
 
 		private static string[] GetValues()
 		{
-
 			if (slogans == null)
 			{
 				var config = AppConfig.GetSlogansSection();
@@ -31,12 +28,10 @@ namespace VocaDb.Web.Code
 			}
 
 			return slogans;
-
 		}
 
 		public static string Generate()
 		{
-
 			var values = GetValues();
 
 			if (!values.Any())
@@ -45,9 +40,6 @@ namespace VocaDb.Web.Code
 			var result = values[new Random().Next(values.Length)];
 
 			return result;
-
 		}
-
 	}
-
 }

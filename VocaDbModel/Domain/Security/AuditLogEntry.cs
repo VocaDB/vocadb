@@ -4,10 +4,8 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Security
 {
-
 	public class AuditLogEntry : IEntryWithLongId
 	{
-
 		public const int MaxActionLength = 400;
 
 		private string action;
@@ -22,7 +20,6 @@ namespace VocaDb.Model.Domain.Security
 		public AuditLogEntry(AgentLoginData agentLoginData, string action, AuditLogCategory category, GlobalEntryId entryId)
 			: this()
 		{
-
 			ParamIs.NotNull(() => agentLoginData);
 			ParamIs.NotNullOrEmpty(() => action);
 
@@ -31,7 +28,6 @@ namespace VocaDb.Model.Domain.Security
 			Category = category;
 			User = agentLoginData.User;
 			EntryId = entryId;
-
 		}
 
 		public virtual string Action
@@ -63,7 +59,5 @@ namespace VocaDb.Model.Domain.Security
 		public virtual DateTime Time { get; set; }
 
 		public virtual User User { get; set; }
-
 	}
-
 }

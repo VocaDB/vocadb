@@ -13,16 +13,12 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Web.Models.Artist
 {
-
 	[PropertyModelBinder]
 	public class ArtistEditViewModel
 	{
-
 		public ArtistEditViewModel()
 		{
-
 			AllArtistTypes = Translate.ArtistTypeNames.GetValuesAndNamesStrings(AppConfig.ArtistTypes);
-
 		}
 
 		public ArtistEditViewModel(ArtistContract artist, IUserPermissionContext permissionContext,
@@ -30,14 +26,12 @@ namespace VocaDb.Web.Models.Artist
 			ArtistForEditContract editedArtist = null)
 			: this()
 		{
-
 			ParamIs.NotNull(() => artist);
 
 			Artist = artist;
 			CanDelete = canDelete;
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext, artist).ToArray();
 			EditedArtist = editedArtist;
-
 		}
 
 		public Dictionary<string, string> AllArtistTypes { get; set; }
@@ -57,7 +51,6 @@ namespace VocaDb.Web.Models.Artist
 
 		public void CheckModel()
 		{
-
 			if (EditedArtist == null)
 				throw new InvalidFormException("Model was null");
 
@@ -69,9 +62,6 @@ namespace VocaDb.Web.Models.Artist
 
 			if (EditedArtist.WebLinks == null)
 				throw new InvalidFormException("Weblinks list was null"); // Shouldn't be null
-
 		}
-
 	}
-
 }

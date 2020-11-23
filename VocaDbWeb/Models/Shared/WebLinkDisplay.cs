@@ -8,10 +8,8 @@ using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Web.Models.Shared
 {
-
 	public class WebLinkDisplay
 	{
-
 		public WebLinkDisplay()
 		{
 			Category = WebLinkCategory.Other;
@@ -21,14 +19,12 @@ namespace VocaDb.Web.Models.Shared
 
 		public WebLinkDisplay(WebLinkContract contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			Category = contract.Category;
 			Description = contract.Description;
 			Id = contract.Id;
 			Url = contract.Url;
-
 		}
 
 		[JsonConverter(typeof(StringEnumConverter))]
@@ -45,7 +41,6 @@ namespace VocaDb.Web.Models.Shared
 
 		public WebLinkContract ToContract()
 		{
-
 			return new WebLinkContract
 			{
 				Id = this.Id,
@@ -53,9 +48,6 @@ namespace VocaDb.Web.Models.Shared
 				Url = this.Url,
 				Category = this.Category
 			};
-
 		}
-
 	}
-
 }

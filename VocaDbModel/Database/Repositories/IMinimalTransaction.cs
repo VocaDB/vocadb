@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 
 namespace VocaDb.Model.Database.Repositories
 {
-
 	/// <summary>
 	/// Minimal interface for transactions. Allows committing and rolling back the transaction.
 	/// </summary>
@@ -12,13 +11,10 @@ namespace VocaDb.Model.Database.Repositories
 	/// </remarks>
 	public interface IMinimalTransaction : IDisposable
 	{
-
 		void Commit();
 
 		Task CommitAsync();
 
 		void Rollback();
-
 	}
-
 }

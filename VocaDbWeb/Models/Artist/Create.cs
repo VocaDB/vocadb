@@ -11,10 +11,8 @@ using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Web.Models.Artist
 {
-
 	public class Create
 	{
-
 		public Create()
 		{
 			ArtistType = ArtistType.Producer;
@@ -57,7 +55,6 @@ namespace VocaDb.Web.Models.Artist
 
 		public CreateArtistContract ToContract()
 		{
-
 			return new CreateArtistContract
 			{
 				ArtistType = this.ArtistType,
@@ -71,8 +68,6 @@ namespace VocaDb.Web.Models.Artist
 					Category = WebLinkCategory
 				} : null)
 			};
-
 		}
-
 	}
 }

@@ -5,14 +5,12 @@ using VocaDb.Model.Domain;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	/// <summary>
 	/// Wraps <see cref="IDatabaseContext"/> as <see cref="IRepository"/>.
 	/// TODO: maybe remove this.
 	/// </summary>
 	public class DatabaseContextAsRepositoryWrapper : IRepository
 	{
-
 		private readonly IDatabaseContext dbContext;
 
 		public DatabaseContextAsRepositoryWrapper(IDatabaseContext dbContext)
@@ -49,13 +47,11 @@ namespace VocaDb.Tests.TestSupport
 		{
 			return func(dbContext);
 		}
-
 	}
 
 	public class DatabaseContextAsRepositoryWrapper<TRepo> : IRepository<TRepo>
 		where TRepo : class, IDatabaseObject
 	{
-
 		private readonly IDatabaseContext<TRepo> dbContext;
 
 		public DatabaseContextAsRepositoryWrapper(IDatabaseContext<TRepo> dbContext)
@@ -92,6 +88,5 @@ namespace VocaDb.Tests.TestSupport
 		{
 			return func(dbContext);
 		}
-
 	}
 }

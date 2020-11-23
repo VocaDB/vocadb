@@ -21,12 +21,10 @@ using System.Threading.Tasks;
 
 namespace VocaDb.Model.Domain.Albums
 {
-
 	public class Album : IEntryBase, IEntryWithNames<AlbumName>, IEntryWithVersions, IEntryWithStatus,
 		IDeletableEntry, IEquatable<Album>, INameFactory<AlbumName>, IWebLinkFactory<AlbumWebLink>, IEntryWithArtistLinks<ArtistForAlbum>, IEntryWithTags<AlbumTagUsage>,
 		IEntryWithLinks<AlbumWebLink>, IEntryWithComments<AlbumComment>, IEntryWithArtists
 	{
-
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
 		public static string ParseBarcode(string barcode)
@@ -36,20 +34,16 @@ namespace VocaDb.Model.Domain.Albums
 
 		public static bool TrackPropertiesEqual(SongInAlbum first, SongInAlbumEditContract second)
 		{
-
 			return first.DiscNumber == second.DiscNumber && first.TrackNumber == second.TrackNumber;
-
 		}
 
 		public static bool TrackArtistsEqual(Song first, SongInAlbumEditContract second)
 		{
-
 			if (first == null || second.IsCustomTrack)
 				return true; // Cannot edit artists for custom tracks.
 
 			return first.ArtistList.All(a => second.Artists.Any(a2 => a.Id == a2.Id))
 				   && second.Artists.All(a => first.ArtistList.Any(a2 => a.Id == a2.Id));
-
 		}
 
 		private ArchivedVersionManager<ArchivedAlbumVersion, AlbumEditableFields> archivedVersions
@@ -86,22 +80,18 @@ namespace VocaDb.Model.Domain.Albums
 		public Album(LocalizedString name)
 			: this()
 		{
-
 			ParamIs.NotNull(() => name);
 
 			Names.Add(new AlbumName(this, name));
-
 		}
 
 		public Album(TranslatedString translatedName)
 			: this()
 		{
-
 			ParamIs.NotNull(() => translatedName);
 
 			foreach (var name in translatedName.AllLocalized)
 				Names.Add(new AlbumName(this, name));
-
 		}
 
 		public virtual IList<ArtistForAlbum> AllArtists
@@ -309,7 +299,6 @@ namespace VocaDb.Model.Domain.Albums
 		{
 			get
 			{
-
 				if (OriginalRelease == null)
 					OriginalRelease = new AlbumRelease();
 
@@ -317,7 +306,6 @@ namespace VocaDb.Model.Domain.Albums
 					OriginalRelease.ReleaseDate = new OptionalDateTime();
 
 				return OriginalRelease.ReleaseDate;
-
 			}
 		}
 
@@ -325,21 +313,17 @@ namespace VocaDb.Model.Domain.Albums
 		{
 			get
 			{
-
 				if (OriginalRelease == null)
 					return null;
 
 				return OriginalRelease.ReleaseEvent;
-
 			}
 			set
 			{
-
 				if (OriginalRelease == null)
 					OriginalRelease = new AlbumRelease();
 
 				OriginalRelease.ReleaseEvent = value;
-
 			}
 		}
 
@@ -463,25 +447,20 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual ArtistForAlbum AddArtist(Artist artist)
 		{
-
 			ParamIs.NotNull(() => artist);
 
 			return artist.AddAlbum(this);
-
 		}
 
 		public virtual ArtistForAlbum AddArtist(Artist artist, bool isSupport, ArtistRoles roles)
 		{
-
 			ParamIs.NotNull(() => artist);
 
 			return artist.AddAlbum(this, isSupport, roles);
-
 		}
 
 		public virtual ArtistForAlbum AddArtist(string name, bool isSupport, ArtistRoles roles)
 		{
-
 			ParamIs.NotNullOrEmpty(() => name);
 
 			var link = new ArtistForAlbum(this, name, isSupport, roles);
@@ -489,12 +468,10 @@ namespace VocaDb.Model.Domain.Albums
 			AllArtists.Add(link);
 
 			return link;
-
 		}
 
 		public virtual SongInAlbum AddSong(Song song, int trackNum, int discNum)
 		{
-
 			ParamIs.NotNull(() => song);
 
 			var track = new SongInAlbum(song, this, trackNum, discNum);
@@ -502,35 +479,29 @@ namespace VocaDb.Model.Domain.Albums
 			song.AllAlbums.Add(track);
 
 			return track;
-
 		}
 
 		public virtual SongInAlbum AddSong(string songName, int trackNum, int discNum)
 		{
-
 			ParamIs.NotNullOrEmpty(() => songName);
 
 			var track = new SongInAlbum(songName, this, trackNum, discNum);
 			AllSongs.Add(track);
 
 			return track;
-
 		}
 
 		public virtual ArchivedAlbumVersion CreateArchivedVersion(XDocument data, AlbumDiff diff, AgentLoginData author, AlbumArchiveReason reason, string notes)
 		{
-
 			var archived = new ArchivedAlbumVersion(this, data, diff, author, Version, Status, reason, notes);
 			ArchivedVersionsManager.Add(archived);
 			Version++;
 
 			return archived;
-
 		}
 
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
-
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);
 
@@ -538,46 +509,38 @@ namespace VocaDb.Model.Domain.Albums
 			Comments.Add(comment);
 
 			return comment;
-
 		}
 
 		public virtual AlbumName CreateName(string val, ContentLanguageSelection language)
 		{
-
 			ParamIs.NotNullOrEmpty(() => val);
 
 			var name = new AlbumName(this, new LocalizedString(val, language));
 			Names.Add(name);
 
 			return name;
-
 		}
 
 		public virtual AlbumPictureFile CreatePicture(string name, string mime, User author)
 		{
-
 			var f = new AlbumPictureFile(name, mime, author, this);
 			Pictures.Add(f);
 
 			return f;
-
 		}
 
 		public virtual PVForAlbum CreatePV(PVContract contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			var pv = new PVForAlbum(this, contract);
 			PVs.Add(pv);
 
 			return pv;
-
 		}
 
 		public virtual AlbumWebLink CreateWebLink(string description, string url, WebLinkCategory category)
 		{
-
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
 
@@ -585,19 +548,15 @@ namespace VocaDb.Model.Domain.Albums
 			WebLinks.Add(link);
 
 			return link;
-
 		}
 
 		public virtual void Delete()
 		{
-
 			Deleted = true;
-
 		}
 
 		public virtual void DeleteArtistForAlbum(ArtistForAlbum artistForAlbum)
 		{
-
 			if (!artistForAlbum.Album.Equals(this))
 				throw new ArgumentException("Artist is not attached to album", "artistForAlbum");
 
@@ -607,7 +566,6 @@ namespace VocaDb.Model.Domain.Albums
 				artistForAlbum.Artist.AllAlbums.Remove(artistForAlbum);
 
 			UpdateArtistString();
-
 		}
 
 		/// <summary>
@@ -615,7 +573,6 @@ namespace VocaDb.Model.Domain.Albums
 		/// </summary>
 		public virtual void DeleteLinks()
 		{
-
 			var artistLinks = AllArtists.ToArray();
 			foreach (var artist in artistLinks)
 				artist.Delete();
@@ -631,12 +588,10 @@ namespace VocaDb.Model.Domain.Albums
 			Tags.DeleteUsages();
 
 			// Archived versions and comments are cascaded
-
 		}
 
 		public virtual bool Equals(Album another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -647,7 +602,6 @@ namespace VocaDb.Model.Domain.Albums
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -677,10 +631,8 @@ namespace VocaDb.Model.Domain.Albums
 		/// <returns>Next free track number on the specified disc, starting from 1.</returns>
 		public virtual int GetNextTrackNumber(int discNum)
 		{
-
 			return (Songs.Any(s => s.DiscNumber == discNum)
 				? Songs.Where(s => s.DiscNumber == discNum).Max(s => s.TrackNumber) + 1 : 1);
-
 		}
 
 		public virtual SongInAlbum GetSongByTrackNum(int discNum, int trackNum)
@@ -695,12 +647,10 @@ namespace VocaDb.Model.Domain.Albums
 		/// <returns>True if the artist has this album or artist was null. Otherwise false.</returns>
 		public virtual bool HasArtist(Artist artist)
 		{
-
 			if (artist == null)
 				return false;
 
 			return Artists.Any(a => artist.Equals(a.Artist));
-
 		}
 
 		/// <summary>
@@ -710,47 +660,37 @@ namespace VocaDb.Model.Domain.Albums
 		/// <returns>True if the artist has this album. Otherwise false.</returns>
 		public virtual bool HasArtistForAlbum(ArtistForAlbum artistForAlbum)
 		{
-
 			ParamIs.NotNull(() => artistForAlbum);
 
 			return Artists.Any(a => a.ArtistLinkEquals(artistForAlbum));
-
 		}
 
 		public virtual bool HasName(LocalizedString name)
 		{
-
 			ParamIs.NotNull(() => name);
 
 			return Names.HasName(name);
-
 		}
 
 		public virtual bool HasSong(Song song)
 		{
-
 			ParamIs.NotNull(() => song);
 
 			return Songs.Any(a => song.Equals(a.Song));
-
 		}
 
 		public virtual bool HasWebLink(string url)
 		{
-
 			ParamIs.NotNull(() => url);
 
 			return WebLinks.Any(w => w.Url == url);
-
 		}
 
 		public virtual bool IsInUserCollection(User user)
 		{
-
 			ParamIs.NotNull(() => user);
 
 			return UserCollections.Any(w => w.User.Equals(user));
-
 		}
 
 		/// <summary>
@@ -762,22 +702,17 @@ namespace VocaDb.Model.Domain.Albums
 		/// <returns>Index of the next track. Empty if the index parameter specifies the first track on the first disc.</returns>
 		public virtual TrackIndex NextTrackIndex(TrackIndex index)
 		{
-
 			// Last track on disc, move to the next disc.
 			if (index.TrackNumber >= GetNextTrackNumber(index.DiscNumber) - 1)
 			{
-
 				return new TrackIndex(index.DiscNumber + 1, 1);
-
 			}
 
 			return new TrackIndex(index.DiscNumber, index.TrackNumber + 1);
-
 		}
 
 		public virtual void OnSongDeleting(SongInAlbum songInAlbum)
 		{
-
 			ParamIs.NotNull(() => songInAlbum);
 
 			if (!songInAlbum.Album.Equals(this))
@@ -789,7 +724,6 @@ namespace VocaDb.Model.Domain.Albums
 			}
 
 			AllSongs.Remove(songInAlbum);
-
 		}
 
 		/// <summary>
@@ -801,40 +735,31 @@ namespace VocaDb.Model.Domain.Albums
 		/// <returns>Index of the previous track. Empty if the index parameter specifies the first track on the first disc.</returns>
 		public virtual TrackIndex PreviousTrackIndex(TrackIndex index)
 		{
-
 			if (index.TrackNumber == 1)
 			{
-
 				if (index.DiscNumber == 1)
 				{
-
 					return TrackIndex.Empty;
-
 				}
 
 				var discNum = index.DiscNumber - 1;
 				var trackNum = GetNextTrackNumber(discNum) - 1;
 
 				return new TrackIndex(discNum, trackNum);
-
 			}
 
 			return new TrackIndex(index.DiscNumber, index.TrackNumber - 1);
-
 		}
 
 		public virtual async Task<CollectionDiffWithValue<ArtistForAlbum, ArtistForAlbum>> SyncArtists(
 			IEnumerable<ArtistForAlbumContract> newArtists, Func<ArtistContract, Task<Artist>> artistGetter)
 		{
-
 			var create = new Func<ArtistForAlbumContract, Task<ArtistForAlbum>>(async contract =>
 			{
-
 				ArtistForAlbum link = null;
 
 				if (contract.Artist != null)
 				{
-
 					var artist = await artistGetter(contract.Artist);
 
 					if (!HasArtist(artist))
@@ -842,7 +767,6 @@ namespace VocaDb.Model.Domain.Albums
 						link = AddArtist(artist, contract.IsSupport, contract.Roles);
 						link.Name = contract.IsCustomName ? contract.Name : null;
 					}
-
 				}
 				else
 				{
@@ -850,7 +774,6 @@ namespace VocaDb.Model.Domain.Albums
 				}
 
 				return link;
-
 			});
 
 			var delete = new Func<ArtistForAlbum, Task>(link =>
@@ -861,7 +784,6 @@ namespace VocaDb.Model.Domain.Albums
 
 			var update = new Func<ArtistForAlbum, ArtistForAlbumContract, Task<bool>>((old, newEntry) =>
 			{
-
 				if (!old.ContentEquals(newEntry))
 				{
 					old.IsSupport = newEntry.IsSupport;
@@ -873,7 +795,6 @@ namespace VocaDb.Model.Domain.Albums
 				{
 					return Task.FromResult(false);
 				}
-
 			});
 
 			var diff = await CollectionHelper.SyncWithContentAsync(AllArtists, newArtists.ToArray(), (a1, a2) => a1.Id == a2.Id, create, update, delete);
@@ -884,12 +805,10 @@ namespace VocaDb.Model.Domain.Albums
 			}
 
 			return diff;
-
 		}
 
 		public virtual async Task<CollectionDiffWithValue<AlbumDiscProperties, AlbumDiscProperties>> SyncDiscs(AlbumDiscPropertiesContract[] newDiscs)
 		{
-
 			for (var i = 0; i < newDiscs.Length; ++i)
 			{
 				newDiscs[i].DiscNumber = i + 1;
@@ -923,12 +842,10 @@ namespace VocaDb.Model.Domain.Albums
 
 			var diff = await CollectionHelper.SyncWithContentAsync(Discs, newDiscs, idEquality, create, update, remove);
 			return diff;
-
 		}
 
 		public virtual CollectionDiff<AlbumIdentifier, AlbumIdentifier> SyncIdentifiers(string[] newIdentifiers)
 		{
-
 			Func<AlbumIdentifier, string, bool> equality = ((i1, i2) => i1.Value == i2);
 			Func<string, AlbumIdentifier> create = (data =>
 			{
@@ -939,12 +856,10 @@ namespace VocaDb.Model.Domain.Albums
 
 			var diff = CollectionHelper.Sync(Identifiers, newIdentifiers, equality, create);
 			return diff;
-
 		}
 
 		public virtual CollectionDiffWithValue<PVForAlbum, PVForAlbum> SyncPVs(IEnumerable<PVContract> newPVs)
 		{
-
 			ParamIs.NotNull(() => newPVs);
 
 			var diff = CollectionHelper.Diff(PVs, newPVs, (n1, n2) => n1.Id == n2.Id);
@@ -958,15 +873,12 @@ namespace VocaDb.Model.Domain.Albums
 
 			foreach (var newEntry in diff.Added)
 			{
-
 				var l = CreatePV(newEntry);
 				created.Add(l);
-
 			}
 
 			foreach (var linkEntry in diff.Unchanged)
 			{
-
 				var entry = linkEntry;
 				var newEntry = newPVs.First(e => e.Id == entry.Id);
 
@@ -975,18 +887,15 @@ namespace VocaDb.Model.Domain.Albums
 					linkEntry.CopyMetaFrom(newEntry);
 					edited.Add(linkEntry);
 				}
-
 			}
 
 			return new CollectionDiffWithValue<PVForAlbum, PVForAlbum>(created, diff.Removed, diff.Unchanged, edited);
-
 		}
 
 		public virtual async Task<CollectionDiffWithValue<SongInAlbum, SongInAlbum>> SyncSongs(
 			IEnumerable<SongInAlbumEditContract> newTracks, Func<SongInAlbumEditContract, Task<Song>> songGetter,
 			Func<Song, ArtistContract[], Task> updateArtistsFunc)
 		{
-
 			var diff = CollectionHelper.Diff(Songs, newTracks, (n1, n2) => n1.Id == n2.SongInAlbumId);
 			var created = new List<SongInAlbum>();
 			var edited = new List<SongInAlbum>();
@@ -998,34 +907,27 @@ namespace VocaDb.Model.Domain.Albums
 
 			foreach (var newEntry in diff.Added)
 			{
-
 				SongInAlbum link;
 
 				if (!newEntry.IsCustomTrack)
 				{
-
 					var song = await songGetter(newEntry);
 
 					if (!TrackArtistsEqual(song, newEntry))
 						await updateArtistsFunc(song, newEntry.Artists);
 
 					link = AddSong(song, newEntry.TrackNumber, newEntry.DiscNumber);
-
 				}
 				else
 				{
-
 					link = AddSong(newEntry.SongName, newEntry.TrackNumber, newEntry.DiscNumber);
-
 				}
 
 				created.Add(link);
-
 			}
 
 			foreach (var linkEntry in diff.Unchanged)
 			{
-
 				var entry = linkEntry;
 				var newEntry = newTracks.First(e => e.SongInAlbumId == entry.Id);
 
@@ -1038,11 +940,9 @@ namespace VocaDb.Model.Domain.Albums
 
 				if (!TrackArtistsEqual(linkEntry.Song, newEntry))
 					await updateArtistsFunc(linkEntry.Song, newEntry.Artists);
-
 			}
 
 			return new CollectionDiffWithValue<SongInAlbum, SongInAlbum>(created, diff.Removed, diff.Unchanged, edited);
-
 		}
 
 		public override string ToString()
@@ -1052,20 +952,14 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual void UpdateArtistString()
 		{
-
 			ArtistString = ArtistHelper.GetArtistString(Artists, AlbumHelper.GetContentFocus(DiscType));
-
 		}
 
 		public virtual void UpdateRatingTotals()
 		{
-
 			RatingCount = UserCollections.Where(a => a.Rating != AlbumForUser.NotRated).Count();
 			RatingTotal = UserCollections.Sum(a => a.Rating);
 			RatingAverageInt = RatingCount > 0 ? (RatingTotal * 100 / RatingCount) : 0;
-
 		}
-
 	}
-
 }

@@ -6,16 +6,13 @@ using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.Service.ExtSites
 {
-
 	/// <summary>
 	/// Generates links to related useful sites.
 	/// </summary>
 	public class ExtLinkGenerator
 	{
-
 		public List<WebLinkContract> GenerateLinksForAlbum(AlbumContract album)
 		{
-
 			var links = new List<WebLinkContract>();
 
 			links.Add(new WebLinkContract(
@@ -24,9 +21,6 @@ namespace VocaDb.Model.Service.ExtSites
 				WebLinkCategory.Commercial));
 
 			return links;
-
 		}
-
 	}
-
 }

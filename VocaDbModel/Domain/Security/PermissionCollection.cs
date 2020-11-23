@@ -4,7 +4,6 @@ using System.Collections;
 
 namespace VocaDb.Model.Domain.Security
 {
-
 	public interface IPermissionCollection : IEnumerable<PermissionToken>
 	{
 		bool Has(PermissionToken flag);
@@ -12,7 +11,6 @@ namespace VocaDb.Model.Domain.Security
 
 	public class PermissionCollection : IPermissionCollection
 	{
-
 		public static PermissionCollection operator +(PermissionCollection left, PermissionCollection right)
 		{
 			return left.Merge(right);
@@ -24,10 +22,8 @@ namespace VocaDb.Model.Domain.Security
 
 		private void AddAll(IEnumerable<PermissionToken> flags)
 		{
-
 			foreach (var flag in flags)
 				permissions.Add(flag);
-
 		}
 
 		public PermissionCollection()
@@ -78,21 +74,17 @@ namespace VocaDb.Model.Domain.Security
 
 		public bool Has(PermissionToken flag)
 		{
-
 			return (flag == PermissionToken.Nothing || permissions.Contains(flag));
-
 		}
 
 		public PermissionCollection Merge(PermissionCollection collection)
 		{
-
 			ParamIs.NotNull(() => collection);
 
 			if (!collection.Permissions.Any())
 				return this;
 
 			return new PermissionCollection(Permissions.Concat(collection.Permissions));
-
 		}
 
 		public PermissionCollection Merge(IPermissionCollection collection)
@@ -100,6 +92,5 @@ namespace VocaDb.Model.Domain.Security
 			ParamIs.NotNull(() => collection);
 			return new PermissionCollection(this.Concat(collection));
 		}
-
 	}
 }

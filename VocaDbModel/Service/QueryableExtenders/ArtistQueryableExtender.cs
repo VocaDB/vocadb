@@ -12,46 +12,35 @@ using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Model.Service.QueryableExtenders
 {
-
 	public static class ArtistQueryableExtender
 	{
-
 		public static IQueryable<ArtistName> WhereArtistNameIs(this IQueryable<ArtistName> query, ArtistSearchTextQuery textQuery)
 		{
-
 			var canonizedName = textQuery.Query;
 
 			if (textQuery.IsExact)
 			{
-
 				return query.Where(m => m.Value == canonizedName
 					|| m.Value == string.Format("{0}P", canonizedName)
 					|| m.Value == string.Format("{0}-P", canonizedName));
-
 			}
 			else
 			{
-
 				return query.WhereEntryNameIs(textQuery);
-
 			}
-
 		}
 
 		public static IQueryable<ArtistName> WhereArtistTypeIn(this IQueryable<ArtistName> queryable, ArtistType[] types)
 		{
-
 			if (types == null || !types.Any())
 				return queryable;
 
 			return queryable.Where(n => types.Contains(n.Artist.ArtistType));
-
 		}
 
 		public static IQueryable<Artist> OrderBy(
 			this IQueryable<Artist> criteria, ArtistSortRule sortRule, ContentLanguagePreference languagePreference)
 		{
-
 			switch (sortRule)
 			{
 				case ArtistSortRule.Name:
@@ -73,13 +62,11 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return criteria;
-
 		}
 
 		public static IQueryable<Artist> OrderBy(
 			this IQueryable<Artist> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference)
 		{
-
 			switch (sortRule)
 			{
 				case EntrySortRule.Name:
@@ -89,25 +76,20 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return query;
-
 		}
 
 		public static IQueryable<Artist> OrderByReleaseDate(this IQueryable<Artist> criteria, SortDirection direction)
 		{
-
 			return criteria.OrderBy(a => a.ReleaseDate, direction)
 				.ThenBy(a => a.CreateDate, direction);
-
 		}
 
 		public static IQueryable<Artist> WhereDraftsOnly(this IQueryable<Artist> query, bool draftsOnly)
 		{
-
 			if (!draftsOnly)
 				return query;
 
 			return query.Where(a => a.Status == EntryStatus.Draft);
-
 		}
 
 		/// <summary>
@@ -120,12 +102,10 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<Artist> WhereHasExternalLinkUrl(this IQueryable<Artist> query, string extLinkUrl)
 		{
-
 			if (string.IsNullOrEmpty(extLinkUrl) || extLinkUrl.Length <= 1)
 				return query;
 
 			return query.WhereHasLink<Artist, ArtistWebLink>(extLinkUrl, WebLinkVariationTypes.All);
-
 		}
 
 		/// <summary>
@@ -136,9 +116,7 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<Artist> WhereHasName(this IQueryable<Artist> query, ArtistSearchTextQuery textQuery)
 		{
-
 			return query.WhereHasNameGeneric<Artist, ArtistName>(textQuery);
-
 		}
 
 		/// <summary>
@@ -150,7 +128,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<Artist> WhereHasName_Canonized(this IQueryable<Artist> query, ArtistSearchTextQuery textQuery)
 		{
-
 			if (textQuery.IsEmpty)
 				return query;
 
@@ -158,88 +135,68 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 			if (textQuery.IsExact)
 			{
-
 				return query.Where(m => m.Names.Names.Any(n =>
 					n.Value == canonizedName
 					|| n.Value == string.Format("{0}P", canonizedName)
 					|| n.Value == string.Format("{0}-P", canonizedName)));
-
 			}
 			else
 			{
-
 				return query.WhereHasName(textQuery);
-
 			}
-
 		}
 
 		public static IQueryable<Artist> WhereHasTag(this IQueryable<Artist> query, string tagName)
 		{
-
 			return query.WhereHasTag<Artist, ArtistTagUsage>(tagName);
-
 		}
 
 		public static IQueryable<Artist> WhereHasTags(this IQueryable<Artist> query, string[] tagName)
 		{
-
 			return query.WhereHasTags<Artist, ArtistTagUsage>(tagName);
-
 		}
 
 		public static IQueryable<Artist> WhereHasTags(this IQueryable<Artist> query, int[] tagId, bool childTags = false)
 		{
-
 			return query.WhereHasTags<Artist, ArtistTagUsage>(tagId, childTags);
-
 		}
 
 		public static IQueryable<Artist> WhereHasType(this IQueryable<Artist> query, ArtistType[] artistTypes)
 		{
-
 			if (!artistTypes.Any())
 				return query;
 
 			return query.Where(m => artistTypes.Contains(m.ArtistType));
-
 		}
 
 		public static IQueryable<Artist> WhereIdIs(this IQueryable<Artist> query, int id)
 		{
-
 			if (id == 0)
 				return query;
 
 			return query.Where(m => m.Id == id);
-
 		}
 
 		public static IQueryable<Artist> WhereIsFollowedByUser(this IQueryable<Artist> query, int userId)
 		{
-
 			if (userId == 0)
 				return query;
 
 			query = query.Where(s => s.Users.Any(a => a.User.Id == userId));
 
 			return query;
-
 		}
 
 		public static IQueryable<Artist> WhereAllowBaseVoicebanks(this IQueryable<Artist> query, bool allowed)
 		{
-
 			if (allowed)
 				return query;
 
 			return query.Where(a => a.BaseVoicebank == null);
-
 		}
 
 		public static IQueryable<Artist> WhereMatchFilter(this IQueryable<Artist> query, AdvancedSearchFilter filter)
 		{
-
 			switch (filter.FilterType)
 			{
 				case AdvancedFilterType.HasUserAccount:
@@ -264,14 +221,11 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return query;
-
 		}
 
 		public static IQueryable<Artist> WhereMatchFilters(this IQueryable<Artist> query, IEnumerable<AdvancedSearchFilter> filters)
 		{
-
 			return filters?.Aggregate(query, WhereMatchFilter) ?? query;
-
 		}
 	}
 }

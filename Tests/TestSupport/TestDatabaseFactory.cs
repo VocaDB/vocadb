@@ -8,24 +8,18 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	public class TestDatabaseFactory
 	{
-
 		private void RunSql(string connectionStringName, Action<SqlConnection> func)
 		{
-
 			var connectionString = ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString;
 
 			using (var connection = new SqlConnection(connectionString))
 			{
-
 				connection.Open();
 
 				func(connection);
-
 			}
-
 		}
 
 		/// <summary>
@@ -34,11 +28,9 @@ namespace VocaDb.Tests.TestSupport
 		/// </summary>
 		private void CreateSchemas(string connectionString)
 		{
-
 			// SQL from http://stackoverflow.com/a/521271 (might be T-SQL specific)
 			RunSql(connectionString, connection =>
 			{
-
 				new SqlCommand(@"
 					IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'mikudb')
 					BEGIN
@@ -49,15 +41,12 @@ namespace VocaDb.Tests.TestSupport
 					EXEC('CREATE SCHEMA [discussions]');
 					END
 				", connection).ExecuteNonQuery();
-
 			});
-
 		}
 
 		// Drop old database if any, create new schema
 		private void RecreateSchema(NHibernate.Cfg.Configuration cfg, string connectionStringName)
 		{
-
 #if !DEBUG
 			return;
 #endif
@@ -66,7 +55,6 @@ namespace VocaDb.Tests.TestSupport
 
 			RunSql(connectionStringName, connection =>
 			{
-
 				// NH schema export does not correctly drop all constraints
 				// SQL from http://stackoverflow.com/a/26348027
 				new SqlCommand(@"
@@ -85,15 +73,11 @@ namespace VocaDb.Tests.TestSupport
 				{
 					export.Execute(false, true, false, connection, null);
 				}
-
 			});
-
 		}
 
 		public ISessionFactory BuildTestSessionFactory()
 		{
-
-
 			var testDatabaseConnectionString = "LocalDB";
 			var config = DatabaseConfiguration.Configure(testDatabaseConnectionString);
 
@@ -104,9 +88,6 @@ namespace VocaDb.Tests.TestSupport
 
 			var fac = DatabaseConfiguration.BuildSessionFactory(config);
 			return fac;
-
 		}
-
 	}
-
 }

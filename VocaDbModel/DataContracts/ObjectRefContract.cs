@@ -3,7 +3,6 @@ using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.DataContracts
 {
-
 	/// <summary>
 	/// Serializable data contract with (Int32) Id of the referred object
 	/// and the referred object's current name.
@@ -12,7 +11,6 @@ namespace VocaDb.Model.DataContracts
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ObjectRefContract : IEntryWithIntId
 	{
-
 		public static ObjectRefContract Create(IEntryBase entry)
 		{
 			return entry != null ? new ObjectRefContract(entry) : null;
@@ -22,20 +20,16 @@ namespace VocaDb.Model.DataContracts
 
 		public ObjectRefContract(int id, string nameHint)
 		{
-
 			Id = id;
 			NameHint = nameHint;
-
 		}
 
 		public ObjectRefContract(IEntryBase entry)
 		{
-
 			ParamIs.NotNull(() => entry);
 
 			Id = entry.Id;
 			NameHint = entry.DefaultName;
-
 		}
 
 		/// <summary>
@@ -51,6 +45,5 @@ namespace VocaDb.Model.DataContracts
 		{
 			return string.Format("{0} [{1}]", NameHint, Id);
 		}
-
 	}
 }

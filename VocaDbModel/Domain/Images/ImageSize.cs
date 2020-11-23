@@ -2,10 +2,8 @@ using System;
 
 namespace VocaDb.Model.Domain.Images
 {
-
 	public enum ImageSize
 	{
-
 		/// <summary>
 		/// Original image. 
 		/// Typically full size, although a maximum size can be placed as well.
@@ -26,13 +24,11 @@ namespace VocaDb.Model.Domain.Images
 		/// Tiny thumbnail, default size is 70x70px.
 		/// </summary>
 		TinyThumb = 8,
-
 	}
 
 	[Flags]
 	public enum ImageSizes
 	{
-
 		Nothing = 0,
 
 		/// <summary>
@@ -58,7 +54,5 @@ namespace VocaDb.Model.Domain.Images
 		AllThumbs = Thumb | SmallThumb | TinyThumb,
 
 		All = Original | Thumb | SmallThumb | TinyThumb
-
 	}
-
 }

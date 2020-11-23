@@ -6,20 +6,16 @@ using VocaDb.Model.Service.Search.AlbumSearch;
 
 namespace VocaDb.Model.Service.QueryableExtenders
 {
-
 	public static class EntryWithArtistsQueryableExtender
 	{
-
 		public static IQueryable<TEntry> WhereArtistHasType<TEntry, TArtistLink>(this IQueryable<TEntry> query, ArtistType artistType)
 			where TEntry : IEntryWithArtistLinks<TArtistLink>
 			where TArtistLink : IArtistLinkWithRoles
 		{
-
 			if (artistType == ArtistType.Unknown)
 				return query;
 
 			return query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == artistType));
-
 		}
 
 		/// <summary>
@@ -35,7 +31,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			where TEntry : IEntryWithArtistLinks<TArtistLink>
 			where TArtistLink : IArtistLink
 		{
-
 			if (artistId == 0)
 				return query;
 
@@ -52,7 +47,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			{
 				return query.Where(s => s.AllArtists.Any(a => a.Artist.Id == artistId));
 			}
-
 		}
 
 		/// <summary>
@@ -66,19 +60,16 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		public static IQueryable<TEntry> WhereHasArtists<TEntry, TArtistLink>(this IQueryable<TEntry> query, EntryIdsCollection artistIds, bool childVoicebanks, bool includeMembers)
 			where TEntry : IEntryWithArtistLinks<TArtistLink> where TArtistLink : IArtistLink
 		{
-
 			if (!artistIds.HasAny)
 				return query;
 
 			return artistIds.Ids.Aggregate(query, (current, artistId) => current.WhereHasArtist<TEntry, TArtistLink>(artistId, childVoicebanks, includeMembers));
-
 		}
 
 		public static IQueryable<TEntry> WhereHasArtistParticipationStatus<TEntry, TArtistLink>(
 			ArtistParticipationQueryParams<TEntry, TArtistLink> queryParams)
 			where TEntry : IEntryWithArtistLinks<TArtistLink> where TArtistLink : IArtistLinkWithRoles
 		{
-
 			var query = queryParams.Query;
 			var childVoicebanks = queryParams.ChildVoicebanks;
 
@@ -102,7 +93,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 			if (musicProducerTypes.Contains(artist.ArtistType))
 			{
-
 				switch (participation)
 				{
 					case ArtistAlbumParticipationStatus.OnlyMainAlbums:
@@ -112,11 +102,9 @@ namespace VocaDb.Model.Service.QueryableExtenders
 					default:
 						return query;
 				}
-
 			}
 			else
 			{
-
 				switch (participation)
 				{
 					case ArtistAlbumParticipationStatus.OnlyMainAlbums:
@@ -126,21 +114,16 @@ namespace VocaDb.Model.Service.QueryableExtenders
 					default:
 						return query;
 				}
-
 			}
-
 		}
 
 		public static IQueryable<TEntry> WhereHasArtists<TEntry, TArtistLink>(this IQueryable<TEntry> query, string[] artistNames)
 			where TEntry : IEntryWithArtistLinks<TArtistLink> where TArtistLink : IArtistLink
 		{
-
 			if (artistNames == null || artistNames.Length == 0)
 				return query;
 
 			return artistNames.Aggregate(query, (current, artistName) => current.Where(e => e.AllArtists.Any(a => a.Artist.Names.Names.Any(n => n.Value == artistName))));
-
 		}
-
 	}
 }

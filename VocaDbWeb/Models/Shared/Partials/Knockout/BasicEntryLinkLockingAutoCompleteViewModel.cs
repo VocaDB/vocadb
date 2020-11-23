@@ -1,9 +1,7 @@
 namespace VocaDb.Web.Models.Shared.Partials.Knockout
 {
-
 	public class BasicEntryLinkLockingAutoCompleteViewModel
 	{
-
 		public BasicEntryLinkLockingAutoCompleteViewModel(string bindingHandler, string binding, string extraBindings = null)
 		{
 			BindingHandler = bindingHandler;
@@ -16,7 +14,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Knockout
 		public string Binding { get; set; }
 
 		public string ExtraBindings { get; set; }
-
 	}
-
 }

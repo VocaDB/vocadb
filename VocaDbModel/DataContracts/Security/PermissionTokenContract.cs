@@ -4,19 +4,15 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Security
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class PermissionTokenContract : IPermissionToken
 	{
-
 		public PermissionTokenContract() { }
 
 		public PermissionTokenContract(PermissionToken token)
 		{
-
 			Id = token.Id;
 			Name = token.Name;
-
 		}
 
 		[DataMember]
@@ -24,7 +20,5 @@ namespace VocaDb.Model.DataContracts.Security
 
 		[DataMember]
 		public string Name { get; set; }
-
 	}
-
 }

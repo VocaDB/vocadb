@@ -1,6 +1,5 @@
 ﻿namespace VocaDb.Model.Domain.ReleaseEvents
 {
-
 	public enum EventCategory
 	{
 		Unspecified = 0,
@@ -24,5 +23,4 @@
 		Convention = 32,
 		Other = 64
 	}
-
 }

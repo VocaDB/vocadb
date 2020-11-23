@@ -3,13 +3,11 @@ using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.DataContracts
 {
-
 	/// <summary>
 	/// Used for comments
 	/// </summary>
 	public class EntryWithNameAndVersionContract : EntryRefWithNameContract, IEntryBase
 	{
-
 		string IEntryBase.DefaultName
 		{
 			get { return Name.DisplayName; }
@@ -23,13 +21,9 @@ namespace VocaDb.Model.DataContracts
 		public EntryWithNameAndVersionContract(IEntryWithNames entry, ContentLanguagePreference languagePreference)
 			: base(entry, languagePreference)
 		{
-
 			Version = entry.Version;
-
 		}
 
 		public int Version { get; set; }
-
 	}
-
 }

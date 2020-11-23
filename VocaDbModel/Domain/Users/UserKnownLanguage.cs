@@ -2,7 +2,6 @@
 
 namespace VocaDb.Model.Domain.Users
 {
-
 	public class UserKnownLanguage : IEntryWithIntId
 	{
 		private OptionalCultureCode cultureCode;
@@ -27,7 +26,6 @@ namespace VocaDb.Model.Domain.Users
 		public virtual UserLanguageProficiency Proficiency { get; set; }
 
 		public virtual User User { get; set; }
-
 	}
 
 	public enum UserLanguageProficiency
@@ -38,5 +36,4 @@ namespace VocaDb.Model.Domain.Users
 		Advanced = 3,
 		Native = 4
 	}
-
 }

@@ -3,13 +3,10 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Mapping.ReleaseEvents
 {
-
 	public class PVForEventMap : ClassMap<PVForEvent>
 	{
-
 		public PVForEventMap()
 		{
-
 			Table("PVsForEvents");
 			Id(m => m.Id);
 
@@ -26,9 +23,6 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 			{
 				c.Map(m => m.Json, "ExtendedMetadataJson").Nullable();
 			});
-
 		}
-
 	}
-
 }

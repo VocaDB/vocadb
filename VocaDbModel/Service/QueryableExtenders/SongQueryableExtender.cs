@@ -12,22 +12,17 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtenders
 {
-
 	public static class SongQueryableExtender
 	{
-
 		public static IOrderedQueryable<Song> OrderByPublishDate(this IQueryable<Song> criteria, SortDirection direction)
 		{
-
 			return criteria.OrderBy(a => a.PublishDate, direction)
 				.ThenBy(a => a.CreateDate, direction);
-
 		}
 
 		public static IQueryable<Song> OrderBy(this IQueryable<Song> query, SongSortRule sortRule,
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default, int tagId = 0)
 		{
-
 			switch (sortRule)
 			{
 				case SongSortRule.Name:
@@ -45,13 +40,11 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return query;
-
 		}
 
 		public static IQueryable<Song> OrderBy(
 			this IQueryable<Song> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference)
 		{
-
 			switch (sortRule)
 			{
 				case EntrySortRule.Name:
@@ -63,7 +56,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return query;
-
 		}
 
 		public static IMaybeOrderedQueryable<Song> OrderByTagUsage(this IQueryable<Song> query, int tagId)
@@ -73,12 +65,10 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 		public static IQueryable<Song> WhereArtistHasTag(this IQueryable<Song> query, string tagName)
 		{
-
 			if (string.IsNullOrEmpty(tagName))
 				return query;
 
 			return query.Where(s => s.AllArtists.Any(a => a.Artist.Tags.Usages.Any(t => t.Tag.Names.SortNames.English == tagName || t.Tag.Names.SortNames.Romaji == tagName || t.Tag.Names.SortNames.Japanese == tagName)));
-
 		}
 
 		public static IQueryable<Song> WhereArtistHasType(this IQueryable<Song> query, ArtistType artistType)
@@ -88,24 +78,20 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 		public static IQueryable<Song> WhereArtistIsFollowedByUser(this IQueryable<Song> query, int userId)
 		{
-
 			if (userId == 0)
 				return query;
 
 			query = query.Where(s => s.AllArtists.Any(a => a.Artist.Users.Any(u => u.User.Id == userId)));
 
 			return query;
-
 		}
 
 		public static IQueryable<Song> WhereDraftsOnly(this IQueryable<Song> query, bool draftsOnly)
 		{
-
 			if (!draftsOnly)
 				return query;
 
 			return query.Where(a => a.Status == EntryStatus.Draft);
-
 		}
 
 		/// <summary>
@@ -113,19 +99,16 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		/// </summary>
 		public static IQueryable<Song> WhereHasArtist(this IQueryable<Song> query, int artistId)
 		{
-
 			if (artistId == 0)
 				return query;
 
 			return query.WhereHasArtist<Song, ArtistForSong>(artistId, false, false);
-
 		}
 
 		public static IQueryable<Song> WhereHasArtistParticipationStatus(this IQueryable<Song> query,
 			ArtistParticipationQueryParams queryParams,
 			IEntityLoader<Artist> artistGetter)
 		{
-
 			var various = Model.Helpers.ArtistHelper.VariousArtists;
 			var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;
 			var artistId = queryParams.ArtistIds.Primary;
@@ -134,12 +117,10 @@ namespace VocaDb.Model.Service.QueryableExtenders
 				al => al.AllArtists.Any(a => a.Artist.Id == artistId && !a.IsSupport && ((a.Roles == ArtistRoles.Default) || ((a.Roles & producerRoles) != ArtistRoles.Default)) && a.Song.ArtistString.Default != various),
 				al => al.AllArtists.Any(a => a.Artist.Id == artistId && (a.IsSupport || ((a.Roles != ArtistRoles.Default) && ((a.Roles & producerRoles) == ArtistRoles.Default)) || a.Song.ArtistString.Default == various))
 			));
-
 		}
 
 		public static IQueryable<Song> WhereHasLyrics(this IQueryable<Song> query, string[] languageCodes, bool any)
 		{
-
 			if (any)
 			{
 				return query.Where(s => s.Lyrics.Any());
@@ -152,17 +133,14 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			{
 				return query;
 			}
-
 		}
 
 		public static IQueryable<Song> WhereHasLyricsContent(this IQueryable<Song> query, string text)
 		{
-
 			if (string.IsNullOrEmpty(text))
 				return query;
 
 			return query.Where(s => s.Lyrics.Any(l => l.Value.Contains(text)));
-
 		}
 
 		/// <summary>
@@ -178,9 +156,7 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<Song> WhereHasName(this IQueryable<Song> query, SearchTextQuery textQuery)
 		{
-
 			return query.WhereHasNameGeneric<Song, SongName>(textQuery);
-
 		}
 
 		public static IQueryable<Song> WhereHasName(this IQueryable<Song> query, IEnumerable<SearchTextQuery> names)
@@ -190,29 +166,24 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 		public static IQueryable<Song> WhereCreateDateIsWithin(this IQueryable<Song> criteria, TimeSpan timeFilter)
 		{
-
 			if (timeFilter == TimeSpan.Zero)
 				return criteria;
 
 			var since = DateTime.Now - timeFilter;
 
 			return criteria.Where(t => t.CreateDate >= since);
-
 		}
 
 		public static IQueryable<Song> WhereHasNicoId(this IQueryable<Song> query, string nicoId)
 		{
-
 			if (string.IsNullOrEmpty(nicoId))
 				return query;
 
 			return query.Where(s => s.NicoId == nicoId);
-
 		}
 
 		public static IQueryable<Song> WhereHasParentSong(this IQueryable<Song> query, int parentSongId)
 		{
-
 			if (parentSongId == 0)
 				return query;
 
@@ -221,14 +192,11 @@ namespace VocaDb.Model.Service.QueryableExtenders
 				|| s.OriginalVersion.OriginalVersion.OriginalVersion.Id == parentSongId);
 
 			return query;
-
 		}
 
 		public static IQueryable<Song> WhereHasPublishDate(this IQueryable<Song> query, bool hasPublishDate)
 		{
-
 			return hasPublishDate ? query.Where(s => s.PublishDate.DateTime != null) : query.Where(s => s.PublishDate.DateTime == null);
-
 		}
 
 		/// <summary>
@@ -240,12 +208,10 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		/// <returns>Filtered query.</returns>
 		public static IQueryable<Song> WhereHasPVService(this IQueryable<Song> query, PVServices? pvServices)
 		{
-
 			if (pvServices == null || pvServices.Value == PVServices.Nothing)
 				return query;
 
 			return query.Where(s => (s.PVServices & pvServices) != PVServices.Nothing);
-
 		}
 
 		/// <summary>
@@ -263,68 +229,53 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 		public static IQueryable<Song> WhereHasPV(this IQueryable<Song> query, PVService? service, string pvId)
 		{
-
 			if (service == null || pvId == null)
 				return query;
 
 			return query.Where(s => s.PVs.PVs.Any(pv => pv.Service == service && pv.PVId == pvId));
-
 		}
 
 		public static IQueryable<Song> WhereHasPV(this IQueryable<Song> query, IPV pv)
 		{
-
 			if (pv == null)
 				return query;
 
 			return WhereHasPV(query, pv.Service, pv.PVId);
-
 		}
 
 		public static IQueryable<Song> WhereHasScore(this IQueryable<Song> query, int minScore)
 		{
-
 			if (minScore <= 0)
 				return query;
 
 			return query.Where(q => q.RatingScore >= minScore);
-
 		}
 
 		public static IQueryable<Song> WhereHasTag(this IQueryable<Song> query, string tagName)
 		{
-
 			return query.WhereHasTag<Song, SongTagUsage>(tagName);
-
 		}
 
 		public static IQueryable<Song> WhereHasTags(this IQueryable<Song> query, string[] tagName)
 		{
-
 			return query.WhereHasTags<Song, SongTagUsage>(tagName);
-
 		}
 
 		public static IQueryable<Song> WhereHasTags(this IQueryable<Song> query, int[] tagId, bool childTags = false)
 		{
-
 			return query.WhereHasTags<Song, SongTagUsage>(tagId, childTags);
-
 		}
 
 		public static IQueryable<Song> WhereHasType(this IQueryable<Song> query, SongType[] songTypes)
 		{
-
 			if (!songTypes.Any())
 				return query;
 
 			return query.Where(m => songTypes.Contains(m.SongType));
-
 		}
 
 		public static IQueryable<Song> WhereHasTypeOrTag(this IQueryable<Song> query, EntryTypeAndTagCollection<SongType> entryTypeAndTagCollection)
 		{
-
 			if (entryTypeAndTagCollection == null || entryTypeAndTagCollection.IsEmpty)
 				return query;
 
@@ -333,22 +284,18 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 			return query.Where(song => entryTypeAndTagCollection.SubTypes.Contains(song.SongType)
 				|| song.Tags.Usages.Any(u => entryTypeAndTagCollection.TagIds.Contains(u.Tag.Id)));
-
 		}
 
 		public static IQueryable<Song> WhereHasType(this IQueryable<Song> query, SongType? songType)
 		{
-
 			if (songType == null)
 				return query;
 
 			return query.Where(s => s.SongType == songType);
-
 		}
 
 		public static IQueryable<Song> WhereHasVocalist(this IQueryable<Song> query, SongVocalistSelection vocalist)
 		{
-
 			switch (vocalist)
 			{
 				case SongVocalistSelection.Vocaloid:
@@ -360,44 +307,36 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return query;
-
 		}
 
 		public static IQueryable<Song> WhereIdIs(this IQueryable<Song> query, int id)
 		{
-
 			if (id == 0)
 				return query;
 
 			return query.Where(m => m.Id == id);
-
 		}
 
 		public static IQueryable<Song> WhereIdNotIn(this IQueryable<Song> query, int[] ignoreIds)
 		{
-
 			if (ignoreIds == null || !ignoreIds.Any())
 				return query;
 
 			return query.Where(s => !ignoreIds.Contains(s.Id));
-
 		}
 
 		public static IQueryable<Song> WhereInUserCollection(this IQueryable<Song> query, int userId)
 		{
-
 			if (userId == 0)
 				return query;
 
 			query = query.Where(s => s.UserFavorites.Any(a => a.User.Id == userId));
 
 			return query;
-
 		}
 
 		public static IQueryable<Song> WhereMatchFilter(this IQueryable<Song> query, AdvancedSearchFilter filter)
 		{
-
 			if (filter == null)
 				return query;
 
@@ -443,19 +382,15 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return query;
-
 		}
 
 		public static IQueryable<Song> WhereMatchFilters(this IQueryable<Song> query, IEnumerable<AdvancedSearchFilter> filters)
 		{
-
 			return filters?.Aggregate(query, WhereMatchFilter) ?? query;
-
 		}
 
 		public static IQueryable<Song> WherePublishDateIsBetween(this IQueryable<Song> query, DateTime? begin, DateTime? end)
 		{
-
 			if (begin.HasValue && end.HasValue)
 				return query.Where(e => e.PublishDate.DateTime != null && e.PublishDate.DateTime >= begin && e.PublishDate.DateTime < end);
 
@@ -466,19 +401,15 @@ namespace VocaDb.Model.Service.QueryableExtenders
 				return query.Where(e => e.PublishDate.DateTime != null && e.PublishDate.DateTime < end);
 
 			return query;
-
 		}
 
 		public static IQueryable<Song> WhereReleaseEventIs(this IQueryable<Song> query, int eventId)
 		{
-
 			if (eventId == 0)
 				return query;
 
 			return query.Where(s => s.ReleaseEvent.Id == eventId);
-
 		}
-
 	}
 
 	public enum SongVocalistSelection
@@ -488,5 +419,4 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		UTAU,
 		CeVIO
 	}
-
 }

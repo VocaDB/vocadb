@@ -3,24 +3,19 @@ using FluentNHibernate.Conventions.Instances;
 
 namespace VocaDb.Model.Mapping
 {
-
 	public class ClassConventions : IClassConvention, IIdConvention, IReferenceConvention, IPropertyConvention, IHasManyConvention
 	{
-
 		public static string EscapeColumn(string col) => string.Format("[{0}]", col);
 
 		public void Apply(IClassInstance instance)
 		{
-
 			instance.Cache.ReadWrite();
 			instance.Schema("dbo");
 			instance.Table(instance.EntityType.Name + "s");
-
 		}
 
 		public void Apply(IIdentityInstance instance)
 		{
-
 			instance.Column("Id");
 			if (instance.Type == typeof(int) || instance.Type == typeof(long))
 			{
@@ -30,7 +25,6 @@ namespace VocaDb.Model.Mapping
 			{
 				instance.GeneratedBy.Assigned();
 			}
-
 		}
 
 		public void Apply(IManyToOneInstance instance)
@@ -49,5 +43,4 @@ namespace VocaDb.Model.Mapping
 			//instance.LazyLoad(); // TODO: profile this
 		}
 	}
-
 }

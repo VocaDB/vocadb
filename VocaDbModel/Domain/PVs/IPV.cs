@@ -2,13 +2,11 @@
 
 namespace VocaDb.Model.Domain.PVs
 {
-
 	/// <summary>
 	/// Interface for PVs
 	/// </summary>
 	public interface IPV
 	{
-
 		bool Disabled { get; }
 
 		/// <summary>
@@ -29,7 +27,5 @@ namespace VocaDb.Model.Domain.PVs
 		PVService Service { get; }
 
 		bool ContentEquals(PVContract pv);
-
 	}
-
 }

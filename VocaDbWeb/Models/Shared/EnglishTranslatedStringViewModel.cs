@@ -2,10 +2,8 @@
 
 namespace VocaDb.Web.Models.Shared
 {
-
 	public class EnglishTranslatedStringViewModel
 	{
-
 		public EnglishTranslatedStringViewModel(EnglishTranslatedString str, int maxLength = 500, int summaryLength = 400)
 		{
 			String = str;
@@ -26,7 +24,5 @@ namespace VocaDb.Web.Models.Shared
 		/// Generally this should be the same or smaller than MaxLength.
 		/// </summary>
 		public int SummaryLength { get; set; }
-
 	}
-
 }

@@ -3,13 +3,11 @@ using FluentMigrator;
 
 namespace VocaDb.Migrations
 {
-
 	// Migration version format: YYYY_MM_DD_HHmm
 
 	[Migration(2020_07_19_2000)]
 	public class ArchivedEntryVersionHidden : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
 			Create.Column("Hidden").OnTable(TableNames.ArchivedAlbumVersions).AsBoolean().NotNullable().WithDefaultValue(false);
@@ -21,7 +19,6 @@ namespace VocaDb.Migrations
 			Create.Column("Hidden").OnTable(TableNames.ArchivedTagVersions).AsBoolean().NotNullable().WithDefaultValue(false);
 			Create.Column("Hidden").OnTable(TableNames.ArchivedVenueVersions).AsBoolean().NotNullable().WithDefaultValue(false);
 		}
-
 	}
 
 	[Migration(2020_05_28_2100)]
@@ -43,29 +40,24 @@ namespace VocaDb.Migrations
 	[Migration(2020_03_30_2300)]
 	public class UserNormalizedEmail : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
 			Create.Column("NormalizedEmail").OnTable(TableNames.Users).AsString(50).NotNullable().WithDefaultValue(string.Empty);
 		}
-
 	}
 
 	[Migration(2020_03_22_0000)]
 	public class VenueAddressCountryCode : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
 			Create.Column("AddressCountryCode").OnTable(TableNames.Venues).AsString(10).NotNullable().WithDefaultValue(string.Empty);
 		}
-
 	}
 
 	[Migration(2020_03_01_1300)]
 	public class ArchivedReleaseEventRenameVenue : Migration
 	{
-
 		public override void Up()
 		{
 			Execute.Sql("UPDATE [ArchivedEventVersions] SET ChangedFields = REPLACE(ChangedFields, 'Venue', 'VenueName') WHERE ChangedFields LIKE '%Venue%' AND NOT ChangedFields LIKE '%VenueName%'");
@@ -75,39 +67,32 @@ namespace VocaDb.Migrations
 		{
 			Execute.Sql("UPDATE [ArchivedEventVersions] SET ChangedFields = REPLACE(ChangedFields, 'VenueName', 'Venue') WHERE ChangedFields LIKE '%VenueName%'");
 		}
-
 	}
 
 	[Migration(2020_03_01_1000)]
 	public class VenueCreateDate : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
 			Create.Column("CreateDate").OnTable(TableNames.Venues).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
 		}
-
 	}
 
 	[Migration(2020_02_28_1700)]
 	public class ReleaseEventRenameVenue : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
 			Rename.Column("[Venue]").OnTable(TableNames.AlbumReleaseEvents).To("VenueName");
 			Rename.Column("[VenueEntry]").OnTable(TableNames.AlbumReleaseEvents).To("Venue");
 		}
-
 	}
 
 	[Migration(2020_02_27_2100)]
 	public class EventVenues : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Table("Venues")
 				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
 				.WithColumn("Description").AsString(int.MaxValue).NotNullable().WithDefaultValue(string.Empty)
@@ -158,9 +143,7 @@ namespace VocaDb.Migrations
 				.ForeignKey(TableNames.ArchivedVenueVersions, "Id").OnDelete(Rule.None);
 
 			Create.Column("VenueEntry").OnTable(TableNames.AlbumReleaseEvents).AsInt32().Nullable().ForeignKey(TableNames.Venues, "Id").OnDelete(Rule.SetNull);
-
 		}
-
 	}
 
 	[Migration(2020_02_08_1800)]
@@ -184,7 +167,6 @@ namespace VocaDb.Migrations
 	[Migration(2020_02_05_1900)]
 	public class EventDescriptionLength : Migration
 	{
-
 		public override void Up()
 		{
 			Delete.DefaultConstraint().OnTable(TableNames.AlbumReleaseEvents).OnColumn("Description");
@@ -194,7 +176,6 @@ namespace VocaDb.Migrations
 		}
 
 		public override void Down() { }
-
 	}
 
 	[Migration(2020_01_05_1600)]
@@ -223,7 +204,6 @@ namespace VocaDb.Migrations
 	[Migration(2019_11_17_0100)]
 	public class SongListTags : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
 			Create.Table("SongListTagUsages")
@@ -240,7 +220,6 @@ namespace VocaDb.Migrations
 				.OnColumn("Tag").Ascending().WithOptions().Unique();
 			Create.Index("IX_SongListTagUsages_Tag").OnTable("SongListTagUsages").OnColumn("Tag").Ascending();
 		}
-
 	}
 
 	[Migration(2019_04_14_1300)]
@@ -516,10 +495,8 @@ namespace VocaDb.Migrations
 	[Migration(2017_04_20_2000)]
 	public class TranslatedEventName : Migration
 	{
-
 		public override void Up()
 		{
-
 			// Event series
 			Rename.Table("AlbumReleaseEventSeriesAliases").To(TableNames.EventSeriesNames);
 			Rename.Column("[Name]").OnTable(TableNames.EventSeriesNames).To("Value"); // Note: must NOT use brackets in column name here
@@ -554,13 +531,11 @@ namespace VocaDb.Migrations
 
 			Execute.Sql(string.Format("UPDATE {0} SET JapaneseName = EnglishName, RomajiName = EnglishName", TableNames.AlbumReleaseEvents));
 			Execute.Sql(string.Format("INSERT INTO {0} ([Event], Language, Value) SELECT Id, 'English', EnglishName FROM {1}", TableNames.EventNames, TableNames.AlbumReleaseEvents));
-
 		}
 
 		public override void Down()
 		{
 		}
-
 	}
 
 	[Migration(2017_04_15_2100)]
@@ -616,7 +591,6 @@ namespace VocaDb.Migrations
 	{
 		public override void Up()
 		{
-
 			Create.Table("EventsForUsers")
 				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
 				.WithColumn("RelationshipType").AsString(50).NotNullable()
@@ -626,7 +600,6 @@ namespace VocaDb.Migrations
 			Create.UniqueConstraint("UX_EventsForUsers_ReleaseEvents_Users")
 				.OnTable("EventsForUsers")
 				.Columns("ReleaseEvent", "[User]");
-
 		}
 	}
 
@@ -666,38 +639,28 @@ namespace VocaDb.Migrations
 	[Migration(2017_02_23_2100)]
 	public class AlbumPersonalDescription : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("PersonalDescriptionText").OnTable(TableNames.Albums).AsString(2000).Nullable();
 			Create.Column("PersonalDescriptionAuthor").OnTable(TableNames.Albums).AsInt32().Nullable().ForeignKey(TableNames.Artists, "Id");
-
 		}
-
 	}
 
 	[Migration(201702192100)]
 	public class SongPersonalDescription : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("PersonalDescriptionText").OnTable(TableNames.Songs).AsString(2000).Nullable();
 			Create.Column("PersonalDescriptionAuthor").OnTable(TableNames.Songs).AsInt32().Nullable().ForeignKey(TableNames.Artists, "Id");
-
 		}
-
 	}
 
 	[Migration(201701122000)]
 	public class ArtistHit : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Table("ArtistHits")
 				.WithColumn("Id").AsInt64().NotNullable().PrimaryKey().Identity()
 				.WithColumn("Artist").AsInt32().NotNullable().ForeignKey(TableNames.Artists, "Id").OnDelete(Rule.Cascade)
@@ -705,9 +668,7 @@ namespace VocaDb.Migrations
 				.WithColumn("[Date]").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
 
 			Create.UniqueConstraint("UX_Artist_Agent").OnTable("ArtistHits").Columns("Artist", "Agent");
-
 		}
-
 	}
 
 	[Migration(201701041900)]
@@ -715,7 +676,6 @@ namespace VocaDb.Migrations
 	{
 		public override void Up()
 		{
-
 			Create.Table(TableNames.TagsForUsers)
 				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
 				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id")
@@ -723,30 +683,23 @@ namespace VocaDb.Migrations
 
 			Create.UniqueConstraint("UX_TagsForUsers_Tag_User").OnTable(TableNames.TagsForUsers)
 				.Columns("Tag", "[User]");
-
 		}
 	}
 
 	[Migration(201611131900)]
 	public class VoicebankReleaseDate : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("ReleaseDate").OnTable(TableNames.Artists).AsDate().Nullable();
-
 		}
-
 	}
 
 	[Migration(201611052100)]
 	public class TagMapping : Migration
 	{
-
 		public override void Up()
 		{
-
 			Create.Table(TableNames.TagMappings)
 				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
 				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id")
@@ -756,20 +709,17 @@ namespace VocaDb.Migrations
 				.OnColumn("Tag").Ascending()
 				.OnColumn("SourceTag").Ascending()
 				.WithOptions().Unique();
-
 		}
 
 		public override void Down()
 		{
 			Delete.Table(TableNames.TagMappings);
 		}
-
 	}
 
 	[Migration(201610032100)]
 	public class TagRemoveAliasedTo : Migration
 	{
-
 		public override void Up()
 		{
 			Delete.ForeignKey("FK_Tags_Tags").OnTable(TableNames.Tags);
@@ -780,55 +730,43 @@ namespace VocaDb.Migrations
 		{
 			Create.Column("AliasedTo").OnTable(TableNames.Tags).AsInt32().Nullable().ForeignKey(TableNames.Tags, "Id");
 		}
-
 	}
 
 	[Migration(201609272100)]
 	public class UserNewCryptoAlgo : Migration
 	{
-
 		public override void Up()
 		{
-
 			Alter.Table(TableNames.Users).AlterColumn("Salt").AsString(100).NotNullable();
 			Create.Column("PasswordHashAlgorithm").OnTable(TableNames.Users).AsString(20).NotNullable().WithDefaultValue("SHA1");
-
 		}
 
 		public override void Down()
 		{
-
 			Alter.Table(TableNames.Users).AlterColumn("Salt").AsInt32().NotNullable();
-
 		}
-
 	}
 
 	[Migration(201609122300)]
 	public class LyricsURL : Migration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("URL").OnTable(TableNames.LyricsForSongs).AsString(255).NotNullable().WithDefaultValue(string.Empty);
 
 			Execute.SqlFormat("UPDATE {0} SET URL = [Source] WHERE [Source] LIKE 'http%' OR [Source] LIKE 'www%'", TableNames.LyricsForSongs);
 			Execute.SqlFormat("UPDATE {0} SET [Source] = '' WHERE [Source] LIKE 'http%' OR [Source] LIKE 'www%'", TableNames.LyricsForSongs);
-
 		}
 
 		public override void Down()
 		{
 			Delete.Column("URL").FromTable(TableNames.LyricsForSongs);
 		}
-
 	}
 
 	[Migration(201609092300)]
 	public class RemoveLanguageFromLyrics : Migration
 	{
-
 		public override void Up()
 		{
 			Delete.Column("Language").FromTable(TableNames.LyricsForSongs);
@@ -838,16 +776,13 @@ namespace VocaDb.Migrations
 		{
 			Create.Column("Language").OnTable(TableNames.LyricsForSongs).AsString(20).NotNullable().WithDefaultValue(string.Empty);
 		}
-
 	}
 
 	[Migration(201609071900)]
 	public class LyricsLanguage : Migration
 	{
-
 		public override void Up()
 		{
-
 			Alter.Table(TableNames.LyricsForSongs).AddColumn("CultureCode").AsString(10).NotNullable().WithDefaultValue(string.Empty);
 			Alter.Table(TableNames.LyricsForSongs).AddColumn("TranslationType").AsString(20).NotNullable().WithDefaultValue(string.Empty);
 
@@ -856,20 +791,16 @@ namespace VocaDb.Migrations
 
 			Execute.SqlFormat("UPDATE {0} SET TranslationType = CASE WHEN Language = 'Japanese' THEN 'Original' WHEN Language = 'Romaji' THEN 'Romanized' ELSE 'Translation' END",
 				TableNames.LyricsForSongs);
-
 		}
 
 		public override void Down()
 		{
-
 		}
-
 	}
 
 	[Migration(201608292120)]
 	public class TagDescriptionLength : Migration
 	{
-
 		public override void Up()
 		{
 			Delete.DefaultConstraint().OnTable(TableNames.Tags).OnColumn("Description");
@@ -879,30 +810,24 @@ namespace VocaDb.Migrations
 		}
 
 		public override void Down() { }
-
 	}
 
 	[Migration(201608231900)]
 	public class UserKnownLanguages : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Table("UserKnownLanguages")
 				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
 				.WithColumn("CultureCode").AsString(10).NotNullable()
 				.WithColumn("Proficiency").AsString(15).NotNullable()
 				.WithColumn("[User]").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id");
-
 		}
-
 	}
 
 	[Migration(201608082300)]
 	public class ArchivedReleaseEventRemoveRedundantFields : Migration
 	{
-
 		public override void Up()
 		{
 			Delete.Column("Date").FromTable(TableNames.ArchivedEventVersions);
@@ -915,18 +840,14 @@ namespace VocaDb.Migrations
 
 		public override void Down()
 		{
-
 		}
-
 	}
 
 	[Migration(201608082200)]
 	public class ReleaseEventSeriesVersionHistory : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("Version").OnTable(TableNames.AlbumReleaseEventSeries).AsInt32().NotNullable().WithDefaultValue(0);
 
 			Create.Table("ArchivedEventSeriesVersions")
@@ -939,69 +860,53 @@ namespace VocaDb.Migrations
 				.WithColumn("Series").AsInt32().NotNullable().ForeignKey(TableNames.AlbumReleaseEventSeries, "Id").OnDelete(Rule.Cascade)
 				.WithColumn("Notes").AsString(200).NotNullable()
 				.WithColumn("Version").AsInt32().NotNullable();
-
 		}
 	}
 
 	[Migration(201608052200)]
 	public class AlbumReleaseEventId : Migration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("ReleaseEvent").OnTable(TableNames.Albums).AsInt32().Nullable().ForeignKey(TableNames.AlbumReleaseEvents, "Id").OnDelete(Rule.SetNull);
 
 			Execute.Sql(string.Format("UPDATE {0} SET {0}.ReleaseEvent = re.Id FROM {0} INNER JOIN {1} re ON ({0}.ReleaseEventName = re.Name)",
 				TableNames.Albums, TableNames.AlbumReleaseEvents));
 
 			Delete.Column("ReleaseEventName").FromTable(TableNames.Albums);
-
 		}
 
 		public override void Down()
 		{
-
 			Create.Column("ReleaseEventName").OnTable(TableNames.Albums).AsString(50).Nullable().ForeignKey(TableNames.AlbumReleaseEvents, "Name");
 			Delete.Column("ReleaseEvent").FromTable(TableNames.Albums);
-
 		}
 	}
 
 	[Migration(201608022200)]
 	public class ArchivedReleaseEventNotesAndData : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("[Data]").OnTable(TableNames.ArchivedEventVersions).AsXml().Nullable();
 			Create.Column("Notes").OnTable(TableNames.ArchivedEventVersions).AsString(200).NotNullable().WithDefaultValue(string.Empty);
-
 		}
-
 	}
 
 	[Migration(201607231900)]
 	public class ReleaseEventsForSongs : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("ReleaseEvent").OnTable(TableNames.Songs).AsInt32().Nullable().ForeignKey(TableNames.AlbumReleaseEvents, "Id");
-
 		}
-
 	}
 
 	[Migration(201607072100)]
 	public class ReleaseEventWebLinks : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Table("ReleaseEventWebLinks")
 				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
 				.WithColumn("Category").AsAnsiString(20).NotNullable()
@@ -1015,148 +920,111 @@ namespace VocaDb.Migrations
 				.WithColumn("Description").AsString(512).NotNullable()
 				.WithColumn("ReleaseEventSeries").AsInt32().NotNullable().ForeignKey(TableNames.AlbumReleaseEventSeries, "Id").OnDelete(Rule.Cascade)
 				.WithColumn("Url").AsString(512).NotNullable();
-
 		}
-
 	}
 
 	[Migration(201607061900)]
 	public class SongListDescriptionExtend : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Alter.Column("Description").OnTable(TableNames.SongLists).AsString(4000).NotNullable();
-
 		}
-
 	}
 
 	[Migration(201607041700)]
 	public class ArtistForArtistLinkType : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("LinkType").OnTable(TableNames.GroupsForArtists).AsString(20).NotNullable().WithDefaultValue("Group");
-
 		}
-
 	}
 
 	[Migration(201606232200)]
 	public class ReleaseEventNameUniqueIndex : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Index("IX_AlbumReleaseEvents_Name").OnTable(TableNames.AlbumReleaseEvents).OnColumn("[Name]").Unique();
-
 		}
-
 	}
 
 	[Migration(201606132100)]
 	public class TagsHiddenFromSuggestions : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("HideFromSuggestions").OnTable(TableNames.Tags).AsBoolean().NotNullable().WithDefaultValue(false);
-
 		}
-
 	}
 
 	[Migration(201606041900)]
 	public class TrashedEntryNotes : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("Notes").OnTable(TableNames.TrashedEntries).AsString(200).NotNullable().WithDefaultValue(string.Empty);
-
 		}
-
 	}
 
 	[Migration(201605291900)]
 	public class OldUserNames : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Table(TableNames.OldUsernames)
 				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
 				.WithColumn("[Date]").AsDateTime().NotNullable()
 				.WithColumn("[User]").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id")
 				.WithColumn("OldName").AsString(400).NotNullable();
-
 		}
-
 	}
 
 	[Migration(201605252100)]
 	public class TagMergeRecords : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Table(TableNames.TagMergeRecords)
 				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
 				.WithColumn("Source").AsInt32().NotNullable()
 				.WithColumn("Target").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id");
-
 		}
-
 	}
 
 	[Migration(201605242300)]
 	public class TagUsageDate : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
 			Create.Column("[Date]").OnTable(TableNames.AlbumTagUsages).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
 			Create.Column("[Date]").OnTable(TableNames.ArtistTagUsages).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
 			Create.Column("[Date]").OnTable(TableNames.SongTagUsages).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
 		}
-
 	}
 
 	[Migration(201605231800)]
 	public class TagSoftDeleted : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
 			Create.Column("Deleted").OnTable(TableNames.Tags).AsBoolean().NotNullable().WithDefaultValue(false);
 		}
-
 	}
 
 	[Migration(201605172100)]
 	public class EventCustomName : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
 			Create.Column("CustomName").OnTable(TableNames.AlbumReleaseEvents).AsBoolean().NotNullable().WithDefaultValue(false);
 		}
-
 	}
 
 	[Migration(201604062130)]
 	public class SongNotesExtend : Migration
 	{
-
 		public override void Up()
 		{
 			Delete.DefaultConstraint().OnTable(TableNames.Songs).OnColumn("Notes");
@@ -1168,132 +1036,95 @@ namespace VocaDb.Migrations
 			Delete.DefaultConstraint().OnTable(TableNames.Songs).OnColumn("Notes");
 			Alter.Table(TableNames.Songs).AlterColumn("Notes").AsString(800).NotNullable().WithDefaultValue("");
 		}
-
 	}
 
 	[Migration(201603092000)]
 	public class UserLanguageCodeExtend : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Alter.Table(TableNames.Users).AlterColumn("Language").AsString(10).NotNullable().WithDefaultValue("");
 			Alter.Table(TableNames.Users).AlterColumn("[Culture]").AsAnsiString(10).NotNullable();
-
 		}
-
 	}
 
 	[Migration(201603062100)]
 	public class TrashedEntryId : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Alter.Table(TableNames.TrashedEntries).AddColumn("EntryId").AsInt32().NotNullable().WithDefaultValue(0);
-
 		}
-
 	}
 
 	[Migration(201603061800)]
 	public class TagReports : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Alter.Table(TableNames.EntryReports).AddColumn("Tag").AsInt32().Nullable().ForeignKey(TableNames.Tags, "Id");
-
 		}
-
 	}
 
 	[Migration(201603031900)]
 	public class TagCreateDate : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Alter.Table(TableNames.Tags).AddColumn("CreateDate").AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
-
 		}
-
 	}
 
 	[Migration(201603031800)]
 	public class TagAdditionalNamesString : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Alter.Table(TableNames.Tags).AddColumn("AdditionalNamesString").AsString(1024).NotNullable().WithDefaultValue(string.Empty);
-
 		}
-
 	}
 
 	[Migration(201602292300)]
 	public class PVForAlbumPvIdColumnLength : Migration
 	{
-
 		public override void Up()
 		{
-
 			Alter.Table(TableNames.PVsForAlbums).AlterColumn("PVId").AsString(255).NotNullable();
-
 		}
 
 		public override void Down()
 		{
-
 			Alter.Table(TableNames.PVsForAlbums).AlterColumn("PVId").AsString(100).NotNullable();
-
 		}
-
 	}
 
 	[Migration(201602151700)]
 	public class TagWebLinks : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Table(TableNames.TagWebLinks)
 				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
 				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id").OnDelete(Rule.Cascade).Indexed("IX_TagWebLinks")
 				.WithColumn("Description").AsString(512).NotNullable()
 				.WithColumn("Url").AsString(512).NotNullable();
-
 		}
-
 	}
 
 	[Migration(201602140100)]
 	public class SupporterUser : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("Supporter").OnTable(TableNames.UserOptions).AsBoolean().NotNullable().WithDefaultValue(false);
-
 		}
-
 	}
 
 	[Migration(201602082130)]
 	public class RelatedTags : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Table(TableNames.RelatedTags)
 				.WithColumn("Id").AsInt32().Identity().PrimaryKey()
 				.WithColumn("OwnerTag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id").OnDelete(Rule.Cascade)
@@ -1302,44 +1133,32 @@ namespace VocaDb.Migrations
 			Create.Index("IX_RelatedTags_Tag1_Tag2").OnTable(TableNames.RelatedTags)
 				.OnColumn("OwnerTag").Ascending()
 				.OnColumn("LinkedTag").Unique();
-
 		}
-
 	}
 
 	[Migration(201601231630)]
 	public class RemoveInlineFieldsFromArchivedTags : Migration
 	{
-
 		public override void Up()
 		{
-
 			Delete.Column("CategoryName").FromTable(TableNames.ArchivedTagVersions);
 			Delete.Column("Description").FromTable(TableNames.ArchivedTagVersions);
-
 		}
 
 		public override void Down()
 		{
-
 			Create.Column("CategoryName").OnTable(TableNames.ArchivedTagVersions).AsString(30).NotNullable().WithDefaultValue(string.Empty);
 			Create.Column("Description").OnTable(TableNames.ArchivedTagVersions).AsString(1000).NotNullable().WithDefaultValue(string.Empty);
-
 		}
-
 	}
 
 	[Migration(201601231230)]
 	public class TranslatedTagDescription : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("DescriptionEng").OnTable(TableNames.Tags).AsString(1000).NotNullable().WithDefaultValue(string.Empty);
-
 		}
-
 	}
 
 	/// <summary>
@@ -1349,10 +1168,8 @@ namespace VocaDb.Migrations
 	[Migration(201601212000)]
 	public class AddIndicesMigration : Migration
 	{
-
 		public override void Up()
 		{
-
 			Create.Index("IX_ActivityEntries_Author_EditEvent").OnTable(TableNames.ActivityEntries)
 				.OnColumn("Author").Ascending()
 				.OnColumn("EditEvent").Ascending(); // Include EditEvent column because it's used for filtering
@@ -1366,20 +1183,16 @@ namespace VocaDb.Migrations
 				.OnColumn("[User]").Ascending()
 				.OnColumn("Song").Ascending()
 				.WithOptions().Unique();
-
 		}
 
 		public override void Down()
 		{
-
 			Delete.Index("IX_ActivityEntries_Author_EditEvent").OnTable(TableNames.ActivityEntries);
 			Delete.Index("IX_FavoriteSongsForUsers_3").OnTable(TableNames.FavoriteSongsForUsers);
 			Create.Index("IX_FavoriteSongsForUsers_3").OnTable(TableNames.FavoriteSongsForUsers)
 				.OnColumn("[User]").Ascending()
 				.OnColumn("Song").Ascending();
-
 		}
-
 	}
 
 	/// <summary>
@@ -1388,10 +1201,8 @@ namespace VocaDb.Migrations
 	[Migration(201601202130)]
 	public class AlbumForUserUniqueIndex : Migration
 	{
-
 		public override void Up()
 		{
-
 			if (Schema.Table(TableNames.AlbumsForUsers).Index("IX_AlbumsForUsers").Exists())
 				Delete.Index("IX_AlbumsForUsers").OnTable(TableNames.AlbumsForUsers);
 
@@ -1399,62 +1210,48 @@ namespace VocaDb.Migrations
 				.OnColumn("[User]").Ascending()
 				.OnColumn("Album").Ascending()
 				.WithOptions().Unique();
-
 		}
 
 		public override void Down()
 		{
-
 			Delete.Index("IX_AlbumsForUsers").OnTable(TableNames.AlbumsForUsers);
 
 			Create.Index("IX_AlbumsForUsers").OnTable(TableNames.AlbumsForUsers).OnColumn("[User]").Ascending();
-
 		}
-
 	}
 
 	[Migration(201601161800)]
 	public class TagUsageCount : Migration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("UsageCount").OnTable(TableNames.Tags).AsInt32().NotNullable().WithDefaultValue(0);
 
 			Execute.SqlFormat(@"UPDATE {0} SET UsageCount = 
 				(SELECT COUNT(*) FROM {1} WHERE Tag = {0}.Id) + (SELECT COUNT(*) FROM {2} WHERE Tag = {0}.Id) + (SELECT COUNT(*) FROM {3} WHERE Tag = {0}.Id)",
 				TableNames.Tags, TableNames.AlbumTagUsages, TableNames.ArtistTagUsages, TableNames.SongTagUsages);
-
 		}
 
 		public override void Down()
 		{
 			Delete.Column("UsageCount").FromTable(TableNames.Tags);
 		}
-
 	}
 
 	[Migration(201601101900)]
 	public class CreateDataForArchivedTagVersion : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("Data").OnTable(TableNames.ArchivedTagVersions).AsXml().Nullable();
-
 		}
-
 	}
 
 	[Migration(201512182300)]
 	public class CreateTranslatedTagName : Migration
 	{
-
 		public override void Up()
 		{
-
 			Create.Table(TableNames.TagNames)
 				.WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
 				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey(TableNames.Tags, "Id").OnDelete(Rule.Cascade)
@@ -1468,7 +1265,6 @@ namespace VocaDb.Migrations
 
 			Execute.Sql(string.Format("UPDATE {0} SET JapaneseName = EnglishName, RomajiName = EnglishName", TableNames.Tags));
 			Execute.Sql(string.Format("INSERT INTO {0} (Tag, Language, Value) SELECT Id, 'English', EnglishName FROM {1}", TableNames.TagNames, TableNames.Tags));
-
 		}
 
 		public override void Down()
@@ -1478,39 +1274,30 @@ namespace VocaDb.Migrations
 			Delete.Column("JapaneseName").FromTable(TableNames.Tags);
 			Delete.Column("RomajiName").FromTable(TableNames.Tags);
 		}
-
 	}
 
 	[Migration(201512072000)]
 	public class RemoveTagName : Migration
 	{
-
 		public override void Up()
 		{
-
 			Delete.Column("[Name]").FromTable(TableNames.Tags);
-
 		}
 
 		public override void Down()
 		{
-
 			Create.Column("[Name]").OnTable(TableNames.Tags).AsString(30).NotNullable().WithDefaultValue(string.Empty);
-
 		}
-
 	}
 
 	[Migration(201512011830)]
 	public class TagPrimaryKey : Migration
 	{
-
 		private const string pkName = "PK_Tags";
 		private const string ixName = "IX_Tags";
 
 		public override void Up()
 		{
-
 			Delete.PrimaryKey(pkName).FromTable(TableNames.Tags);
 			Create.PrimaryKey(pkName).OnTable(TableNames.Tags).Column("Id");
 
@@ -1533,23 +1320,18 @@ namespace VocaDb.Migrations
 			Create.ForeignKey("FK_AlbumTagUsages_Tags").FromTable(TableNames.AlbumTagUsages).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
 			Create.ForeignKey("FK_SongTagUsages_Tags").FromTable(TableNames.SongTagUsages).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
 			Create.ForeignKey("FK_TagComments_Tags").FromTable(TableNames.TagComments).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
-
 		}
 
 		public override void Down()
 		{
-
 		}
-
 	}
 
 	[Migration(201511302100)]
 	public class TagIdReferences : Migration
 	{
-
 		private void CopyTagNameToId(string tableName, string foreignKeyColumnName, bool nullable = false)
 		{
-
 			var tagNameColumn = string.Format("{0}Name", foreignKeyColumnName);
 
 			Rename.Column(foreignKeyColumnName).OnTable(tableName).To(tagNameColumn);
@@ -1563,12 +1345,10 @@ namespace VocaDb.Migrations
 				Alter.Column(foreignKeyColumnName).OnTable(tableName).AsInt32().NotNullable();
 
 			Delete.Column(tagNameColumn).FromTable(tableName);
-
 		}
 
 		private void MigrateUsagesTable(string usagesTableName, string entryColumnName)
 		{
-
 			var primaryIndexName = string.Format("IX_{0}", usagesTableName);
 			var secondaryIndexname = string.Format("IX_{0}_1", usagesTableName);
 			var foreignKeyName = string.Format("FK_{0}_Tags", usagesTableName);
@@ -1598,12 +1378,10 @@ namespace VocaDb.Migrations
 				.FromTable(usagesTableName).ForeignColumn("Tag")
 				.ToTable(TableNames.Tags).PrimaryColumn("Id")
 				.OnDelete(Rule.Cascade);
-
 		}
 
 		public override void Up()
 		{
-
 			// Tag usages
 			MigrateUsagesTable(TableNames.SongTagUsages, "Song");
 			MigrateUsagesTable(TableNames.AlbumTagUsages, "Album");
@@ -1629,34 +1407,28 @@ namespace VocaDb.Migrations
 			Delete.ForeignKey("FK_ActivityEntries_Tags").OnTable(TableNames.ActivityEntries);
 			CopyTagNameToId(TableNames.ActivityEntries, "Tag", true);
 			Create.ForeignKey("FK_ActivityEntries_Tags").FromTable(TableNames.ActivityEntries).ForeignColumn("Tag").ToTable(TableNames.Tags).PrimaryColumn("Id");
-
 		}
 
 		public override void Down()
 		{
 			// Sorry
 		}
-
 	}
 
 	[Migration(201511261900)]
 	public class TagEnglishName : Migration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("EnglishName").OnTable(TableNames.Tags).AsString(100).NotNullable().WithDefaultValue(string.Empty);
 			Execute.Sql(string.Format("UPDATE {0} SET EnglishName = Name", TableNames.Tags));
 			Create.Index("IX_Tags_EnglishName").OnTable(TableNames.Tags).OnColumn("EnglishName").Unique();
-
 		}
 
 		public override void Down()
 		{
 			Delete.Column("EnglishName").FromTable(TableNames.Tags);
 		}
-
 	}
 
 	/// <summary>
@@ -1665,7 +1437,6 @@ namespace VocaDb.Migrations
 	[Migration(201511232100)]
 	public class TagUsagesUniqueIndexes : Migration
 	{
-
 		private void CreateIndex(string table, string indexName, string entityColumn)
 		{
 			if (Schema.Table(table).Index(indexName).Exists())
@@ -1682,74 +1453,55 @@ namespace VocaDb.Migrations
 
 		public override void Up()
 		{
-
 			CreateIndex(TableNames.SongTagUsages, "IX_SongTagUsages", "Song");
 			CreateIndex(TableNames.AlbumTagUsages, "IX_AlbumTagUsages", "Album");
 			CreateIndex(TableNames.ArtistTagUsages, "IX_ArtistTagUsages", "Artist");
-
 		}
 
 		public override void Down()
 		{
-
 			RevertIndex(TableNames.SongTagUsages, "IX_SongTagUsages", "Song");
 			RevertIndex(TableNames.AlbumTagUsages, "IX_AlbumTagUsages", "Album");
 			RevertIndex(TableNames.ArtistTagUsages, "IX_ArtistTagUsages", "Artist");
-
 		}
-
 	}
 
 	[Migration(201511151730)]
 	public class ReleaseEventSeriesPicture : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("PictureMime").OnTable(TableNames.AlbumReleaseEventSeries).AsString(32).Nullable();
-
 		}
-
 	}
 
 	[Migration(201511022300)]
 	public class UserMessagesIndexReceiver : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			// Used for checking unread messages
 			Create.Index("IX_UserMessages_User").OnTable(TableNames.UserMessages)
 				.OnColumn("[User]").Ascending()
 				.OnColumn("[Inbox]").Ascending()
 				.OnColumn("[Read]").Ascending();
-
 		}
-
 	}
 
 	[Migration(201510232200)]
 	public class ArchivedTagNotes : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("[Notes]").OnTable(TableNames.ArchivedTagVersions).AsString(200).NotNullable().WithDefaultValue(string.Empty);
-
 		}
-
 	}
 
 	[Migration(201510102223)]
 	public class AlbumDiscProperties : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Table(TableNames.AlbumDiscProperties)
 				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
 				.WithColumn("Album").AsInt32().NotNullable()
@@ -1761,146 +1513,109 @@ namespace VocaDb.Migrations
 			Create.Index("IX_AlbumDiscProperties_Album_DiscNumber").OnTable(TableNames.AlbumDiscProperties)
 				.OnColumn("Album").Ascending().OnColumn("DiscNumber").Ascending().WithOptions().Unique();
 		}
-
 	}
 
 	[Migration(201509172250)]
 	public class UnreadNotificationsToKeepForUser : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("UnreadNotificationsToKeep").OnTable(TableNames.UserOptions).AsInt32().NotNullable().WithDefaultValue(10);
-
 		}
-
 	}
 
 	[Migration(201509131540)]
 	public class TagComments : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Table("TagComments")
 				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
 				.WithColumn("Author").AsInt32().NotNullable().ForeignKey("FK_TagComments_Users", TableNames.Users, "Id").OnDelete(Rule.Cascade)
 				.WithColumn("Created").AsDateTime().NotNullable()
 				.WithColumn("Message").AsString(4000).NotNullable()
 				.WithColumn("Tag").AsInt32().NotNullable().ForeignKey("FK_TagComments_Tags", TableNames.Tags, "Id").OnDelete(Rule.Cascade).Indexed("IX_TagComments_Tag");
-
 		}
-
 	}
 
 	[Migration(201509062115)]
 	public class SongListComments : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Table("SongListComments")
 				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
 				.WithColumn("Author").AsInt32().NotNullable().ForeignKey("FK_SongListComments_Users", TableNames.Users, "Id").OnDelete(Rule.Cascade)
 				.WithColumn("Created").AsDateTime().NotNullable()
 				.WithColumn("Message").AsString(4000).NotNullable()
 				.WithColumn("SongList").AsInt32().NotNullable().ForeignKey("FK_SongListComments_SongLists", TableNames.SongLists, "Id").OnDelete(Rule.Cascade);
-
 		}
-
 	}
 
 	[Migration(201509032103)]
 	public class VerifiedArtistForUsers : Migration
 	{
-
 		private const string col = "VerifiedArtist";
 
 		public override void Up()
 		{
-
 			Create.Column(col).OnTable(TableNames.Users).AsBoolean().NotNullable().WithDefaultValue(false);
 
 			Execute.Sql("UPDATE usr SET usr.VerifiedArtist = 1 FROM [Users] usr WHERE usr.Id IN (SELECT DISTINCT [User] FROM OwnedArtistsForUsers)");
-
 		}
 
 		public override void Down()
 		{
 			Delete.Column(col).FromTable(TableNames.Users);
 		}
-
 	}
 
 	[Migration(201508222100)]
 	public class CreateInboxesForUserMessages : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("[User]").OnTable(TableNames.UserMessages).AsInt32().Nullable()
 				.ForeignKey("FK_UserMessages_Users2", TableNames.Users, "Id").OnDelete(Rule.Cascade);
 
 			Create.Column("Inbox").OnTable(TableNames.UserMessages).AsString(16).Nullable();
-
 		}
-
 	}
 
 	[Migration(201507261300)]
 	public class CreateDateToSongLists : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("[CreateDate]").OnTable(TableNames.SongLists).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
-
 		}
-
 	}
 
 	[Migration(201507221700)]
 	public class AllowCustomTracks : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Alter.Column("[Song]").OnTable(TableNames.SongsInAlbums).AsInt32().Nullable();
-
 		}
-
 	}
 
 	[Migration(201507121800)]
 	public class EventDateToSongLists : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("[EventDate]").OnTable(TableNames.SongLists).AsDate().Nullable();
-
 		}
-
 	}
 
 	[Migration(201507091400)]
 	public class DateToRatedSongs : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("[Date]").OnTable(TableNames.FavoriteSongsForUsers).AsDateTime().NotNullable().WithDefault(SystemMethods.CurrentDateTime);
-
 		}
-
 	}
 
 	/// <summary>
@@ -1911,73 +1626,55 @@ namespace VocaDb.Migrations
 	[Migration(201507040000)]
 	public class IndexDeletedToAlbums : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Index("IX_Albums_Deleted").OnTable(TableNames.Albums)
 				.OnColumn("[Deleted]").Ascending().OnColumn("[Id]").Ascending();
-
 		}
-
 	}
 
 	[Migration(201506272320)]
 	public class ArchivedSongListVersionNotes : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("[Status]").OnTable(TableNames.SongLists).AsString(10).NotNullable().WithDefaultValue("Finished");
 			Create.Column("[Notes]").OnTable(TableNames.ArchivedSongListVersions).AsString(200).NotNullable().WithDefaultValue(string.Empty);
-
 		}
-
 	}
 
 	[Migration(201505301700)]
 	public class VersionNumbers : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("[Version]").OnTable(TableNames.AlbumReleaseEvents).AsInt32().NotNullable().WithDefaultValue(0);
 			Create.Column("[Version]").OnTable(TableNames.SongLists).AsInt32().NotNullable().WithDefaultValue(0);
 			Create.Column("[Version]").OnTable(TableNames.Tags).AsInt32().NotNullable().WithDefaultValue(0);
 			Create.Column("[Version]").OnTable(TableNames.ArchivedEventVersions).AsInt32().NotNullable().WithDefaultValue(0);
 			Create.Column("[Version]").OnTable(TableNames.ArchivedSongListVersions).AsInt32().NotNullable().WithDefaultValue(0);
 			Create.Column("[Version]").OnTable(TableNames.ArchivedTagVersions).AsInt32().NotNullable().WithDefaultValue(0);
-
 		}
-
 	}
 
 	[Migration(201505301600)]
 	public class ActivityEntryReleaseEvent : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("ReleaseEvent").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
 				.ForeignKey("FK_ActivityEntries_AlbumReleaseEvents", TableNames.AlbumReleaseEvents, "Id").OnDelete(Rule.Cascade);
 
 			Create.Column("ArchivedReleaseEventVersion").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
 				.ForeignKey("FK_ActivityEntries_ArchivedEventVersions", TableNames.ArchivedEventVersions, "Id").OnDelete(Rule.None);
-
 		}
-
 	}
 
 	[Migration(201505252132)]
 	public class ActivityEntryTagsAndSongLists : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("SongList").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
 				.ForeignKey("FK_ActivityEntries_SongLists", TableNames.SongLists, "Id").OnDelete(Rule.Cascade);
 
@@ -1989,19 +1686,15 @@ namespace VocaDb.Migrations
 
 			Create.Column("ArchivedTagVersion").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
 				.ForeignKey("FK_ActivityEntries_ArchivedTagVersions", TableNames.ArchivedTagVersions, "Id").OnDelete(Rule.None);
-
 		}
-
 	}
 
 
 	[Migration(201505182200)]
 	public class ActivityEntryArchivedEntryIds : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("ArchivedAlbumVersion").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
 				.ForeignKey("FK_ActivityEntries_ArchivedAlbumVersions", TableNames.ArchivedAlbumVersions, "Id").OnDelete(Rule.None);
 
@@ -2010,138 +1703,100 @@ namespace VocaDb.Migrations
 
 			Create.Column("ArchivedSongVersion").OnTable(TableNames.ActivityEntries).AsInt32().Nullable()
 				.ForeignKey("FK_ActivityEntries_ArchivedSongVersions", TableNames.ArchivedSongVersions, "Id").OnDelete(Rule.None);
-
 		}
-
 	}
 
 	[Migration(201505142300)]
 	public class SongThumbUrl : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("ThumbUrl").OnTable(TableNames.Songs).AsString(255).Nullable();
-
 		}
-
 	}
 
 	[Migration(201505101800)]
 	public class SongPublishDate : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("PublishDate").OnTable(TableNames.Songs).AsDate().Nullable();
-
 		}
-
 	}
 
 	[Migration(201505092300)]
 	public class SongPVPublishDate : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("PublishDate").OnTable(TableNames.PVsForSongs).AsDate().Nullable();
-
 		}
-
 	}
 
 	[Migration(201504302045)]
 	public class UserLastLoginCulture : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			Create.Column("LastLoginCulture").OnTable(TableNames.UserOptions).AsString(20).NotNullable().WithDefaultValue(string.Empty);
-
 		}
-
 	}
 
 	[Migration(201504111700)]
 	public class EntryReportVersionNumber : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			if (Schema.Table(TableNames.EntryReports).Column("VersionNumber").Exists())
 				return;
 
 			Create.Column("VersionNumber").OnTable(TableNames.EntryReports).AsInt32().Nullable();
-
 		}
-
 	}
 
 	[Migration(201504012300)]
 	public class ArtistBaseVoicebankIndex : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			if (Schema.Table(TableNames.Artists).Index("IX_Artists_BaseVoicebank").Exists())
 				return;
 
 			Create.Index("IX_Artists_BaseVoicebank").OnTable(TableNames.Artists).OnColumn("BaseVoicebank").Ascending();
-
 		}
-
 	}
 
 	[Migration(201502131812)]
 	public class ExtendCommentTextLength : Migration
 	{
-
 		private readonly string[] tables = { "AlbumComments", "ArtistComments", "SongComments", "UserComments" };
 
 		public override void Up()
 		{
-
 			foreach (var table in tables)
 			{
-
 				Alter.Column("Message").OnTable(table).AsString(4000);
-
 			}
 
 			Alter.Column("Message").OnTable("DiscussionComments").InSchema("discussions").AsString(4000);
-
 		}
 
 		public override void Down()
 		{
-
 			foreach (var table in tables)
 			{
-
 				Alter.Column("Message").OnTable(table).AsString(800);
-
 			}
 
 			Alter.Column("Message").OnTable("DiscussionComments").InSchema("discussions").AsString(800);
-
 		}
-
 	}
 
 	[Migration(201501271800)]
 	public class AddDiscussionFolders : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			var schema = "discussions";
 
 			if (Schema.Schema(schema).Table("DiscussionFolders").Exists())
@@ -2174,9 +1829,7 @@ namespace VocaDb.Migrations
 				.WithColumn("Message").AsString(int.MaxValue).NotNullable()
 				.WithColumn("[Author]").AsInt32().Nullable().ForeignKey("FK_DiscussionComments_Users", "dbo", "[Users]", "[Id]").OnDelete(Rule.SetNull)
 				.WithColumn("[Topic]").AsInt32().NotNullable().ForeignKey("FK_DiscussionComments_DiscussionTopics", schema, "[DiscussionTopics]", "[Id]").OnDelete(Rule.Cascade);
-
 		}
-
 	}
 
 
@@ -2186,17 +1839,14 @@ namespace VocaDb.Migrations
 	[Migration(201501192000)]
 	public class AddEnglishTranslatedDescriptions : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			if (Schema.Table("Artists").Column("DescriptionEng").Exists())
 				return;
 
 			Create.Column("DescriptionEng").OnTable("Artists").AsString(int.MaxValue).WithDefaultValue(string.Empty);
 			Create.Column("DescriptionEng").OnTable("Albums").AsString(int.MaxValue).WithDefaultValue(string.Empty);
 			Create.Column("NotesEng").OnTable("Songs").AsString(int.MaxValue).WithDefaultValue(string.Empty);
-
 		}
 	}
 
@@ -2206,17 +1856,12 @@ namespace VocaDb.Migrations
 	[Migration(201501232300)]
 	public class AddShowChatboxForUser : AutoReversingMigration
 	{
-
 		public override void Up()
 		{
-
 			if (Schema.Table("UserOptions").Column("ShowChatbox").Exists())
 				return;
 
 			Create.Column("ShowChatbox").OnTable("UserOptions").AsBoolean().WithDefaultValue(true);
-
 		}
-
 	}
-
 }

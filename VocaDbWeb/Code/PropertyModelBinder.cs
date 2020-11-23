@@ -5,14 +5,12 @@ using System.Web.Mvc;
 
 namespace VocaDb.Web.Code
 {
-
 	/// <summary>
 	/// Allows custom property bindings.
 	/// If a property is decorated with a subclass of <see cref="CustomModelBinderAttribute"/>, that binder will be used for that property.
 	/// </summary>
 	public class PropertyModelBinder : DefaultModelBinder
 	{
-
 		protected override void BindProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor)
 		{
 			// Check if the property has the PropertyBinderAttribute, meaning
@@ -36,7 +34,6 @@ namespace VocaDb.Web.Code
 			  .OfType<ICustomPropertyBinder>()
 			  .FirstOrDefault();
 		}
-
 	}
 
 	/// <summary>
@@ -45,12 +42,9 @@ namespace VocaDb.Web.Code
 	/// </summary>
 	public class PropertyModelBinderAttribute : CustomModelBinderAttribute
 	{
-
 		public override IModelBinder GetBinder()
 		{
 			return new PropertyModelBinder();
 		}
-
 	}
-
 }

@@ -7,20 +7,16 @@ using VocaDb.SiteMapGenerator.VocaDb.DataContracts;
 
 namespace VocaDb.SiteMapGenerator.VocaDb
 {
-
 	public class VocaDbClient
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly string apiRoot;
 
 		private async Task<T> GetEntries<T>(string apiUrl)
 		{
-
 			var uri = new Uri(apiUrl);
 			using (var client = new HttpClient())
 			{
-
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 				HttpResponseMessage response;
@@ -46,9 +42,7 @@ namespace VocaDb.SiteMapGenerator.VocaDb
 					log.Fatal(x, "Unable to get entries from VocaDB API");
 					throw;
 				}
-
 			}
-
 		}
 
 		public VocaDbClient(string apiRoot)
@@ -85,7 +79,5 @@ namespace VocaDb.SiteMapGenerator.VocaDb
 			log.Info("Getting tags");
 			return await GetEntries<PartialFindResult<EntryBaseContract>>(string.Format("{0}api/tags?maxResults=100000", apiRoot));
 		}
-
 	}
-
 }

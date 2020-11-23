@@ -15,13 +15,11 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Songs
 {
-
 	public class SongList : IEntryWithNames, ISongList,
 		IEntryWithVersions<ArchivedSongListVersion, SongListEditableFields>,
 		IEntryWithComments<SongListComment>, IEntryWithStatus,
 		IEntryWithTags<SongListTagUsage>
 	{
-
 		IUser ISongList.Author => Author;
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
@@ -52,10 +50,8 @@ namespace VocaDb.Model.Domain.Songs
 		public SongList(string name, User author)
 			: this()
 		{
-
 			Name = name;
 			Author = author;
-
 		}
 
 		public virtual IList<SongInList> AllSongs
@@ -104,7 +100,6 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
-
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);
 
@@ -112,7 +107,6 @@ namespace VocaDb.Model.Domain.Songs
 			Comments.Add(comment);
 
 			return comment;
-
 		}
 
 		/// <summary>
@@ -195,37 +189,30 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual SongInList AddSong(Song song)
 		{
-
 			var order = (SongLinks.Any() ? SongLinks.Max(s => s.Order) + 1 : 1);
 			return AddSong(song, order, string.Empty);
-
 		}
 
 		public virtual SongInList AddSong(Song song, int order, string notes)
 		{
-
 			ParamIs.NotNull(() => song);
 
 			var link = new SongInList(song, this, order, notes);
 			AllSongs.Add(link);
 			return link;
-
 		}
 
 		public virtual ArchivedSongListVersion CreateArchivedVersion(SongListDiff diff, AgentLoginData author, EntryEditEvent reason, string notes)
 		{
-
 			var archived = new ArchivedSongListVersion(this, diff, author, Status, reason, notes);
 			ArchivedVersionsManager.Add(archived);
 			Version++;
 
 			return archived;
-
 		}
 
 		public virtual bool Equals(SongList another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -236,7 +223,6 @@ namespace VocaDb.Model.Domain.Songs
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -252,7 +238,6 @@ namespace VocaDb.Model.Domain.Songs
 		public virtual CollectionDiffWithValue<SongInList, SongInList> SyncSongs(
 			IEnumerable<SongInListEditContract> newTracks, Func<SongInListEditContract, Song> songGetter)
 		{
-
 			var diff = CollectionHelper.Diff(SongLinks, newTracks, (n1, n2) => n1.Id == n2.SongInListId);
 			var created = new List<SongInList>();
 			var edited = new List<SongInList>();
@@ -264,17 +249,14 @@ namespace VocaDb.Model.Domain.Songs
 
 			foreach (var newEntry in diff.Added)
 			{
-
 				var song = songGetter(newEntry);
 
 				var link = AddSong(song, newEntry.Order, newEntry.Notes ?? string.Empty);
 				created.Add(link);
-
 			}
 
 			foreach (var linkEntry in diff.Unchanged)
 			{
-
 				var entry = linkEntry;
 				var newEntry = newTracks.First(e => e.SongInListId == entry.Id);
 
@@ -284,17 +266,14 @@ namespace VocaDb.Model.Domain.Songs
 					linkEntry.Notes = newEntry.Notes;
 					edited.Add(linkEntry);
 				}
-
 			}
 
 			return new CollectionDiffWithValue<SongInList, SongInList>(created, diff.Removed, diff.Unchanged, edited);
-
 		}
 
 		public override string ToString()
 		{
 			return string.Format("song list '{0}' [{1}]", Name, Id);
 		}
-
 	}
 }

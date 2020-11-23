@@ -8,24 +8,20 @@ using VocaDb.Model.Service.Search.AlbumSearch;
 
 namespace VocaDb.Model.Service.Search.SongSearch
 {
-
 	/// <summary>
 	/// Query parameters for songs
 	/// </summary>
 	public class SongQueryParams
 	{
-
 		private int[] ignoredIds;
 		private SongType[] songTypes;
 
 		public SongQueryParams()
 		{
-
 			Common = new CommonSearchParams();
 			IgnoredIds = new int[] { };
 			Paging = new PagingProperties(0, 30, true);
 			SongTypes = new SongType[] { };
-
 		}
 
 		/// <param name="query">Query search string. Can be null or empty, in which case no filtering by name is done.</param>
@@ -42,7 +38,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			bool getTotalCount, SongSortRule sortRule,
 			bool onlyByName, bool moveExactToTop, int[] ignoredIds)
 		{
-
 			Common = new CommonSearchParams(textQuery, onlyByName, moveExactToTop);
 			Paging = new PagingProperties(start, maxResults, getTotalCount);
 
@@ -51,7 +46,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			IgnoredIds = ignoredIds;
 			TimeFilter = TimeSpan.Zero;
 			OnlyWithPVs = false;
-
 		}
 
 		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
@@ -140,7 +134,5 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		/// 0 = no filtering (default).
 		/// </summary>
 		public int UserCollectionId { get; set; }
-
 	}
-
 }

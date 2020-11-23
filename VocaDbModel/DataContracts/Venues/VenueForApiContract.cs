@@ -8,11 +8,9 @@ using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.DataContracts.Venues
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class VenueForApiContract : IEntryWithStatus
 	{
-
 		EntryType IEntryBase.EntryType => EntryType.Venue;
 		string IEntryBase.DefaultName => Name;
 
@@ -70,7 +68,6 @@ namespace VocaDb.Model.DataContracts.Venues
 
 		public VenueForApiContract(Venue venue, ContentLanguagePreference languagePreference, VenueOptionalFields fields)
 		{
-
 			ParamIs.NotNull(() => venue);
 
 			Id = venue.Id;
@@ -106,22 +103,17 @@ namespace VocaDb.Model.DataContracts.Venues
 			{
 				WebLinks = venue.WebLinks.Links.Select(w => new WebLinkForApiContract(w, WebLinkOptionalFields.DescriptionOrUrl)).ToArray();
 			}
-
 		}
-
 	}
 
 	[Flags]
 	public enum VenueOptionalFields
 	{
-
 		None = 0,
 		AdditionalNames = 1,
 		Description = 2,
 		Events = 4,
 		Names = 8,
 		WebLinks = 16
-
 	}
-
 }

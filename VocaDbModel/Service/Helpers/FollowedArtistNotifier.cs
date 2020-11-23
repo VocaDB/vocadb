@@ -14,10 +14,8 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Service.Helpers
 {
-
 	public interface IFollowedArtistNotifier
 	{
-
 		/// <summary>
 		/// Sends notifications
 		/// </summary>
@@ -26,7 +24,6 @@ namespace VocaDb.Model.Service.Helpers
 		/// <param name="artists">List of artists for the entry. Cannot be null.</param>
 		/// <param name="creator">User who created the entry. The creator will be excluded from all notifications. Cannot be null.</param>
 		Task<IReadOnlyCollection<User>> SendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator);
-
 	}
 
 	/// <summary>
@@ -37,7 +34,6 @@ namespace VocaDb.Model.Service.Helpers
 	/// </summary>
 	public class FollowedArtistNotifier : IFollowedArtistNotifier
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IUserMessageMailer mailer;
@@ -47,18 +43,15 @@ namespace VocaDb.Model.Service.Helpers
 		public FollowedArtistNotifier(IEntryLinkFactory entryLinkFactory, IUserMessageMailer mailer,
 			IEnumTranslations enumTranslations, IEntrySubTypeNameFactory entrySubTypeNameFactory)
 		{
-
 			this.entryLinkFactory = entryLinkFactory;
 			this.mailer = mailer;
 			this.enumTranslations = enumTranslations;
 			this.entrySubTypeNameFactory = entrySubTypeNameFactory;
-
 		}
 
 		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, bool markdown,
 			string entryTypeName)
 		{
-
 			var entryName = entry.Names.SortNames[user.DefaultLanguageSelection];
 			var url = entryLinkFactory.GetFullEntryUrl(entry);
 
@@ -76,28 +69,22 @@ namespace VocaDb.Model.Service.Helpers
 
 			if (followedArtists.Length == 1)
 			{
-
 				var artistName = followedArtists.First().TranslatedName[user.DefaultLanguageSelection];
 				msg = string.Format("A new {0}, '{1}', by {2} was just added.",
 					entryTypeName, entryLink, artistName);
-
 			}
 			else
 			{
-
 				msg = string.Format("A new {0}, '{1}', by multiple artists you're following was just added.",
 					entryTypeName, entryLink);
-
 			}
 
 			msg += "\nYou're receiving this notification because you're following the artist(s).";
 			return msg;
-
 		}
 
 		public async Task<IReadOnlyCollection<User>> SendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator)
 		{
-
 			try
 			{
 				return await DoSendNotificationsAsync(ctx, entry, artists, creator);
@@ -107,12 +94,10 @@ namespace VocaDb.Model.Service.Helpers
 				log.Error(x, "Unable to send notifications");
 				return new User[0];
 			}
-
 		}
 
 		private async Task<IReadOnlyCollection<User>> DoSendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator)
 		{
-
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => entry);
 			ParamIs.NotNull(() => artists);
@@ -161,7 +146,6 @@ namespace VocaDb.Model.Service.Helpers
 
 			foreach (var user in users)
 			{
-
 				var artistIdsForUser = new HashSet<int>(usersWithArtists[user.Id]);
 				var followedArtists = coll.Where(a => artistIdsForUser.Contains(a.Id)).ToArray();
 
@@ -183,16 +167,12 @@ namespace VocaDb.Model.Service.Helpers
 
 				if (followedArtists.Length == 1)
 				{
-
 					var artistName = followedArtists.First().TranslatedName[user.DefaultLanguageSelection];
 					title = string.Format("New {0} by {1}", entryTypeName, artistName);
-
 				}
 				else
 				{
-
 					title = string.Format("New {0}", entryTypeName);
-
 				}
 
 				var notification = new UserMessage(user, title, msg, false);
@@ -202,18 +182,13 @@ namespace VocaDb.Model.Service.Helpers
 				if (user.EmailOptions != UserEmailOptions.NoEmail && !string.IsNullOrEmpty(user.Email)
 					&& followedArtists.Any(a => a.Users.Any(u => u.User.Equals(user) && u.EmailNotifications)))
 				{
-
 					await mailer.SendEmailAsync(user.Email, user.Name, title, CreateMessageBody(followedArtists, user, entry, false, entryTypeName));
-
 				}
-
 			}
 
 			log.Info($"Sent notifications to {users.Count} users");
 
 			return users;
-
 		}
-
 	}
 }

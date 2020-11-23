@@ -1,6 +1,5 @@
 namespace VocaDb.Model.Domain
 {
-
 	/// <summary>
 	/// Record of one entry being merged to another.
 	/// </summary>
@@ -12,20 +11,17 @@ namespace VocaDb.Model.Domain
 	public abstract class MergeRecord<T> : IEntryWithIntId
 		where T : class, IEntryBase
 	{
-
 		private T target;
 
 		protected MergeRecord() { }
 
 		protected MergeRecord(T source, T target)
 		{
-
 			ParamIs.NotNull(() => source);
 			ParamIs.NotNull(() => target);
 
 			this.Source = source.Id;
 			this.Target = target;
-
 		}
 
 		public virtual int Id { get; set; }
@@ -50,6 +46,5 @@ namespace VocaDb.Model.Domain
 				target = value;
 			}
 		}
-
 	}
 }

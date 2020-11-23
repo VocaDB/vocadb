@@ -4,13 +4,11 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.DataContracts.Versioning
 {
-
 	public class ArchivedObjectVersionWithFieldsContract<TFields, TReason>
 		: ArchivedObjectVersionContract
 		where TFields : struct, Enum
 		where TReason : struct, Enum
 	{
-
 		private TFields DefaultField => default;
 
 		public ArchivedObjectVersionWithFieldsContract() { }
@@ -19,10 +17,8 @@ namespace VocaDb.Model.DataContracts.Versioning
 			TFields fields, TReason reason)
 			: base(archivedVersion)
 		{
-
 			ChangedFields = fields;
 			Reason = reason;
-
 		}
 
 		public TFields ChangedFields { get; set; }
@@ -43,19 +39,15 @@ namespace VocaDb.Model.DataContracts.Versioning
 		{
 			return !Equals(Reason, default(TReason)) ? translator.Translations<TReason>().GetName(Reason) : Notes;
 		}
-
 	}
 
 	public static class ArchivedObjectVersionWithFieldsContract
 	{
-
 		public static ArchivedObjectVersionWithFieldsContract<TFields, TReason> Create<TFields, TReason>(
 			ArchivedObjectVersion archivedVersion,
 			TFields fields, TReason reason) where TFields : struct, Enum where TReason : struct, Enum
 		{
 			return new ArchivedObjectVersionWithFieldsContract<TFields, TReason>(archivedVersion, fields, reason);
 		}
-
 	}
-
 }

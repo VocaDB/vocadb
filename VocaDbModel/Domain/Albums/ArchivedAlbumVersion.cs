@@ -8,10 +8,8 @@ using VocaDb.Model.Domain.Activityfeed;
 
 namespace VocaDb.Model.Domain.Albums
 {
-
 	public class ArchivedAlbumVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<AlbumEditableFields>
 	{
-
 		/// <summary>
 		/// Creates an archived version of an album.
 		/// </summary>
@@ -24,7 +22,6 @@ namespace VocaDb.Model.Domain.Albums
 		/// <exception cref="XmlException">If the entry could not be serialized. This could happen if the object contains illegal characters.</exception>
 		public static ArchivedAlbumVersion Create(Album album, AlbumDiff diff, AgentLoginData author, AlbumArchiveReason reason, string notes)
 		{
-
 			ParamIs.NotNull(() => album);
 			ParamIs.NotNull(() => diff);
 			ParamIs.NotNull(() => author);
@@ -34,7 +31,6 @@ namespace VocaDb.Model.Domain.Albums
 			var data = XmlHelper.SerializeToXml(contract);
 
 			return album.CreateArchivedVersion(data, diff, author, reason, notes);
-
 		}
 
 		private Album album;
@@ -50,7 +46,6 @@ namespace VocaDb.Model.Domain.Albums
 			AlbumArchiveReason reason, string notes)
 			: base(data, author, version, status, notes)
 		{
-
 			ParamIs.NotNull(() => data);
 			ParamIs.NotNull(() => diff);
 
@@ -63,7 +58,6 @@ namespace VocaDb.Model.Domain.Albums
 				CoverPicture = album.CoverPictureData;
 				CoverPictureMime = album.CoverPictureMime;
 			}
-
 		}
 
 		/// <summary>
@@ -112,19 +106,15 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual ArchivedAlbumVersion GetLatestVersionWithField(AlbumEditableFields field)
 		{
-
 			if (IsIncluded(field))
 				return this;
 
 			return Album.ArchivedVersionsManager.GetLatestVersionWithField(field, Version);
-
 		}
 
 		public virtual bool IsIncluded(AlbumEditableFields field)
 		{
 			return (Diff != null && Data != null && Diff.IsIncluded(field));
 		}
-
 	}
-
 }

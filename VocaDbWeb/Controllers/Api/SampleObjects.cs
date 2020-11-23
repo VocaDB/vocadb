@@ -17,10 +17,8 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Web.Areas.HelpPage.App_Start
 {
-
 	public static class SampleObjects
 	{
-
 		private static readonly ArtistContract producer = new ArtistContract
 		{
 			Id = 10,
@@ -174,6 +172,5 @@ namespace VocaDb.Web.Areas.HelpPage.App_Start
 				};
 			}
 		}
-
 	}
 }

@@ -2,10 +2,8 @@
 
 namespace VocaDb.Web.Code.Highcharts
 {
-
 	public class Axis
 	{
-
 		public Axis() { }
 
 		public Axis(AxisType type, Title title)
@@ -22,14 +20,10 @@ namespace VocaDb.Web.Code.Highcharts
 		[JsonConverter(typeof(CamelCaseStringEnumConverter))]
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public AxisType? Type { get; set; }
-
 	}
 
 	public enum AxisType
 	{
-
 		Datetime
-
 	}
-
 }

@@ -4,13 +4,11 @@ using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.Search.User
 {
-
 	/// <summary>
 	/// Query parameters for users.
 	/// </summary>
 	public class UserQueryParams
 	{
-
 		public CommonSearchParams Common { get; set; }
 
 		public UserGroupId Group { get; set; }
@@ -28,7 +26,5 @@ namespace VocaDb.Model.Service.Search.User
 		public PagingProperties Paging { get; set; }
 
 		public UserSortRule Sort { get; set; }
-
 	}
-
 }

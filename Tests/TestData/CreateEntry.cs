@@ -16,10 +16,8 @@ using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Tests.TestData
 {
-
 	public static class CreateEntry
 	{
-
 		public static Album Album(int id = 0, string name = "Synthesis", string coverPictureMime = null)
 		{
 			return new Album(new LocalizedString(name, ContentLanguageSelection.Unspecified)) { Id = id, CoverPictureMime = coverPictureMime };
@@ -84,12 +82,10 @@ namespace VocaDb.Tests.TestData
 
 		public static SongTagUsage SongTagUsage(Song song, Tag tag, User vote = null)
 		{
-
 			var usage = new SongTagUsage(song, tag);
 			song.Tags.Usages.Add(usage);
 			usage.CreateVote(vote);
 			return usage;
-
 		}
 
 		public static Tag Tag(string name, int id = 0, string pictureMime = "")
@@ -127,18 +123,14 @@ namespace VocaDb.Tests.TestData
 			string subject = "Hello world", string body = "Message body", bool highPriority = false,
 			bool read = false)
 		{
-
 			return new UserMessage(receiver, UserInboxType.Received, sender, receiver, subject, body, highPriority) { Id = id, Read = read };
-
 		}
 
 		public static UserMessage UserMessageSent(int id = 0, User sender = null, User receiver = null,
 			string subject = "Hello world", string body = "Message body", bool highPriority = false,
 			bool read = false)
 		{
-
 			return new UserMessage(sender, UserInboxType.Sent, sender, receiver, subject, body, highPriority) { Id = id, Read = read };
-
 		}
 
 		public static VideoUrlParseResult VideoUrlParseResultWithTitle(
@@ -151,16 +143,12 @@ namespace VocaDb.Tests.TestData
 			int? length = null,
 			string[] tags = null)
 		{
-
 			return VideoUrlParseResult.CreateOk(url, service, id, VideoTitleParseResult.CreateSuccess(title, author, null, thumbUrl, length, tags));
-
 		}
 
 		public static Artist Vocalist(int id = 0, string name = null, ArtistType artistType = ArtistType.Vocaloid)
 		{
 			return new Artist(TranslatedString.Create(name ?? "Hatsune Miku")) { Id = id, ArtistType = artistType };
 		}
-
 	}
-
 }

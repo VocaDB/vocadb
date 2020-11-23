@@ -8,10 +8,8 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Web.Code.Security.Membership
 {
-
 	public class VocaDbMembershipProvider : MembershipProvider
 	{
-
 		public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
 		{
 			throw new NotImplementedException();

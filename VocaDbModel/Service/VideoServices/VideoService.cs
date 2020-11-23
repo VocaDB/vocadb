@@ -7,10 +7,8 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public class VideoService : IVideoService
 	{
-
 		public static readonly VideoService Bandcamp = new VideoServiceBandcamp();
 
 		public static readonly VideoService Bilibili = new VideoServiceBilibili();
@@ -70,31 +68,25 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public virtual string GetIdByUrl(string url)
 		{
-
 			var matcher = linkMatchers.FirstOrDefault(m => m.IsMatch(url));
 
 			if (matcher == null)
 				return null;
 
 			return matcher.GetId(url);
-
 		}
 
 		public virtual string GetThumbUrlById(string id)
 		{
-
 			return null;
-
 		}
 
 		public virtual string GetMaxSizeThumbUrlById(string id) => GetThumbUrlById(id);
 
 		public virtual string GetUrlById(string id, PVExtendedMetadata extendedMetadata)
 		{
-
 			var matcher = linkMatchers.First();
 			return string.Format("http://{0}", matcher.MakeLinkFromId(id));
-
 		}
 
 		public virtual IEnumerable<string> GetUserProfileUrls(string authorId) => Enumerable.Empty<string>();
@@ -113,14 +105,11 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public virtual bool IsValidFor(string url)
 		{
-
 			return linkMatchers.Any(m => m.IsMatch(url));
-
 		}
 
 		public virtual Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
 		{
-
 			var id = GetIdByUrl(url);
 
 			if (id == null)
@@ -129,21 +118,16 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 
 			return ParseByIdAsync(id, url, getTitle);
-
 		}
 
 		protected virtual async Task<VideoUrlParseResult> ParseByIdAsync(string id, string url, bool getMeta)
 		{
-
 			var meta = (getMeta ? await GetVideoTitleAsync(id) : VideoTitleParseResult.Empty) ?? VideoTitleParseResult.Empty;
 
 			// Note that even if meta lookup failed, we're returning Ok here, because for example NND API doesn't support all PVs.
 			// Metadata is optional. We should only return an error if the metadata is mandatory or there was a fatal unhandled error.
 
 			return VideoUrlParseResult.CreateOk(url, Service, id, meta);
-
 		}
-
 	}
-
 }

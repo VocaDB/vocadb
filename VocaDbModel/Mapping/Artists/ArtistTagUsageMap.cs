@@ -3,13 +3,10 @@ using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.Mapping.Artists
 {
-
 	public class ArtistTagUsageMap : ClassMap<ArtistTagUsage>
 	{
-
 		public ArtistTagUsageMap()
 		{
-
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
@@ -19,9 +16,6 @@ namespace VocaDb.Model.Mapping.Artists
 			References(m => m.Entry).Column("[Artist]").Not.Nullable();
 			References(m => m.Tag).Not.Nullable();
 			HasMany(m => m.Votes).KeyColumn("[Usage]").Inverse().Cascade.AllDeleteOrphan();
-
 		}
-
 	}
-
 }

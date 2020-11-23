@@ -5,10 +5,8 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Albums
 {
-
 	public class ArtistForAlbum : IArtistLinkWithRoles, IEquatable<ArtistForAlbum>, IEntryWithIntId
 	{
-
 		private Album album;
 		private string notes;
 
@@ -22,23 +20,19 @@ namespace VocaDb.Model.Domain.Albums
 		public ArtistForAlbum(Album album, Artist artist, bool support, ArtistRoles roles)
 			: this()
 		{
-
 			Album = album;
 			Artist = artist;
 			IsSupport = support;
 			Roles = roles;
-
 		}
 
 		public ArtistForAlbum(Album album, string name, bool support, ArtistRoles roles)
 			: this()
 		{
-
 			Album = album;
 			IsSupport = support;
 			Name = name;
 			Roles = roles;
-
 		}
 
 		public virtual Album Album
@@ -79,24 +73,20 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual bool ArtistLinkEquals(ArtistForAlbum another)
 		{
-
 			if (another == null)
 				return false;
 
 			return ((Artist != null && Artist.Equals(another.Artist)) || (Artist == null && another.Artist == null && Name == another.Name));
-
 		}
 
 		public virtual bool ContentEquals(ArtistForAlbumContract contract)
 		{
-
 			if (contract == null)
 				return false;
 
 			var realNewName = contract.IsCustomName ? contract.Name : null;
 
 			return (IsSupport == contract.IsSupport && Roles == contract.Roles && Name == realNewName);
-
 		}
 
 		public virtual void Delete()
@@ -106,7 +96,6 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual bool Equals(ArtistForAlbum another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -117,7 +106,6 @@ namespace VocaDb.Model.Domain.Albums
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -132,7 +120,6 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual void Move(Album target)
 		{
-
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Album))
@@ -141,12 +128,10 @@ namespace VocaDb.Model.Domain.Albums
 			Album.AllArtists.Remove(this);
 			Album = target;
 			target.AllArtists.Add(this);
-
 		}
 
 		public virtual void Move(Artist target)
 		{
-
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Artist))
@@ -155,13 +140,11 @@ namespace VocaDb.Model.Domain.Albums
 			Artist.AllAlbums.Remove(this);
 			Artist = target;
 			target.AllAlbums.Add(this);
-
 		}
 
 		public override string ToString()
 		{
 			return string.Format("{0} for {1} [{2}]", ArtistToStringOrName, Album, Id);
 		}
-
 	}
 }

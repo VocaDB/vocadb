@@ -16,35 +16,28 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Database.Queries
 {
-
 	public class VenueQueries : QueriesBase<IVenueRepository, Venue>
 	{
-
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
 
 		public VenueQueries(IVenueRepository venueRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext, IEnumTranslations enumTranslations)
 			: base(venueRepository, permissionContext)
 		{
-
 			this.entryLinkFactory = entryLinkFactory;
 			this.enumTranslations = enumTranslations;
-
 		}
 
 		private ArchivedVenueVersion Archive(IDatabaseContext<Venue> ctx, Venue venue, VenueDiff diff, EntryEditEvent reason, string notes)
 		{
-
 			var agentLoginData = ctx.OfType<User>().CreateAgentLoginData(permissionContext);
 			var archived = ArchivedVenueVersion.Create(venue, diff, agentLoginData, reason, notes);
 			ctx.Save(archived);
 			return archived;
-
 		}
 
 		public (bool created, int reportId) CreateReport(int venueId, VenueReportType reportType, string hostname, string notes, int? versionNumber)
 		{
-
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
@@ -56,28 +49,23 @@ namespace VocaDb.Model.Database.Queries
 					() => reportType != VenueReportType.Other ? enumTranslations.Translation(reportType) : null,
 					venueId, reportType, hostname, notes);
 			});
-
 		}
 
 		private void CreateTrashedEntry(IDatabaseContext ctx, Venue venue, string notes)
 		{
-
 			var archived = new ArchivedVenueContract(venue, new VenueDiff(true));
 			var data = XmlHelper.SerializeToXml(archived);
 			var trashed = new TrashedEntry(venue, data, GetLoggedUser(ctx), notes);
 
 			ctx.Save(trashed);
-
 		}
 
 		public void Delete(int id, string notes)
 		{
-
 			permissionContext.VerifyManageDatabase();
 
 			repository.HandleTransaction(ctx =>
 			{
-
 				var entry = ctx.Load(id);
 
 				PermissionContext.VerifyEntryDelete(entry);
@@ -88,17 +76,13 @@ namespace VocaDb.Model.Database.Queries
 				Archive(ctx, entry, new VenueDiff(false), EntryEditEvent.Deleted, notes);
 
 				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
-
 			});
-
 		}
 
 		public PartialFindResult<TResult> Find<TResult>(Func<Venue, TResult> fac, VenueQueryParams queryParams)
 		{
-
 			return HandleQuery(ctx =>
 			{
-
 				var q = ctx.Query<Venue>()
 					.WhereNotDeleted()
 					.WhereHasName(queryParams.TextQuery)
@@ -114,34 +98,26 @@ namespace VocaDb.Model.Database.Queries
 				var count = queryParams.Paging.GetTotalCount ? q.Count() : 0;
 
 				return PartialFindResult.Create(entries, count);
-
 			});
-
 		}
 
 		public VenueForApiContract GetDetails(int id)
 		{
-
 			return HandleQuery(ctx => new VenueForApiContract(
 				ctx.Load(id),
 				LanguagePreference,
 				VenueOptionalFields.AdditionalNames | VenueOptionalFields.Description | VenueOptionalFields.Events | VenueOptionalFields.Names | VenueOptionalFields.WebLinks));
-
 		}
 
 		public VenueForEditContract GetForEdit(int id)
 		{
-
 			return HandleQuery(ctx => new VenueForEditContract(ctx.Load(id), LanguagePreference));
-
 		}
 
 		public ArchivedVenueVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
-
 			return HandleQuery(session =>
 			{
-
 				var contract = new ArchivedVenueVersionDetailsContract(session.Load<ArchivedVenueVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedVenueVersion>(comparedVersionId) : null,
 					PermissionContext);
@@ -152,26 +128,20 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				return contract;
-
 			});
-
 		}
 
 		public VenueWithArchivedVersionsContract GetWithArchivedVersions(int id)
 		{
-
 			return HandleQuery(ctx => new VenueWithArchivedVersionsContract(ctx.Load(id), LanguagePreference));
-
 		}
 
 		public void MoveToTrash(int id, string notes)
 		{
-
 			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);
 
 			repository.HandleTransaction(ctx =>
 			{
-
 				var entry = ctx.Load(id);
 
 				PermissionContext.VerifyEntryDelete(entry);
@@ -195,19 +165,15 @@ namespace VocaDb.Model.Database.Queries
 				ctx.Delete(entry);
 
 				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", entry));
-
 			});
-
 		}
 
 		public void Restore(int id)
 		{
-
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
 
 			HandleTransaction(ctx =>
 			{
-
 				var venue = ctx.Load<Venue>(id);
 
 				venue.Deleted = false;
@@ -217,26 +183,21 @@ namespace VocaDb.Model.Database.Queries
 				Archive(ctx, venue, new VenueDiff(false), EntryEditEvent.Restored, string.Empty);
 
 				ctx.AuditLogger.AuditLog(string.Format("restored {0}", venue));
-
 			});
-
 		}
 
 		public int Update(VenueForEditContract contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyManageDatabase();
 
 			return HandleTransaction(ctx =>
 			{
-
 				Venue venue;
 
 				if (contract.Id == 0)
 				{
-
 					venue = new Venue(contract.DefaultNameLanguage, contract.Names, contract.Description)
 					{
 						Address = contract.Address,
@@ -269,11 +230,9 @@ namespace VocaDb.Model.Database.Queries
 					AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), venue, EntryEditEvent.Created, archived);
 
 					AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(venue)), ctx);
-
 				}
 				else
 				{
-
 					venue = ctx.Load<Venue>(contract.Id);
 					permissionContext.VerifyEntryEdit(venue);
 					var diff = new VenueDiff(DoSnapshot(venue, ctx));
@@ -334,15 +293,10 @@ namespace VocaDb.Model.Database.Queries
 					AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), venue, EntryEditEvent.Updated, archived);
 
 					AuditLog(string.Format("updated {0}", entryLinkFactory.CreateEntryLink(venue)), ctx);
-
 				}
 
 				return venue.Id;
-
 			});
-
 		}
-
 	}
-
 }

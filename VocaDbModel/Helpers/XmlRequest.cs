@@ -7,7 +7,6 @@ namespace VocaDb.Model.Helpers
 {
 	public static class XmlRequest
 	{
-
 		private static T GetXmlResponse<T>(Stream stream)
 		{
 			var serializer = new XmlSerializer(typeof(T));
@@ -25,6 +24,5 @@ namespace VocaDb.Model.Helpers
 		{
 			return HtmlRequestHelper.GetStreamAsync(url, stream => GetXmlResponse<T>(stream));
 		}
-
 	}
 }

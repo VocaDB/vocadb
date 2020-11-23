@@ -13,10 +13,8 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Queries
 {
-
 	public interface ICommentQueries
 	{
-
 		CommentForApiContract Create(int entryId, CommentForApiContract contract);
 
 		void Delete(int commentId);
@@ -32,12 +30,10 @@ namespace VocaDb.Model.Service.Queries
 		Task<CommentForApiContract[]> GetListAsync(int entryId, int count);
 
 		void Update(int commentId, IComment contract);
-
 	}
 
 	public class CommentQueries<T, TEntry> : ICommentQueries where T : GenericComment<TEntry> where TEntry : class, IEntryWithComments
 	{
-
 		private readonly IDatabaseContext ctx;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly Func<int, TEntry> entryLoaderFunc;
@@ -52,18 +48,15 @@ namespace VocaDb.Model.Service.Queries
 		public CommentQueries(IDatabaseContext ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory,
 			Func<int, TEntry> entryLoaderFunc = null)
 		{
-
 			this.ctx = ctx;
 			this.entryLinkFactory = entryLinkFactory;
 			this.permissionContext = permissionContext;
 			this.userIconFactory = userIconFactory;
 			this.entryLoaderFunc = entryLoaderFunc;
-
 		}
 
 		public CommentForApiContract Create(int entryId, CommentForApiContract contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			permissionContext.VerifyPermission(PermissionToken.CreateComments);
@@ -88,12 +81,10 @@ namespace VocaDb.Model.Service.Queries
 			new UserCommentNotifier().CheckComment(comment, entryLinkFactory, ctx.OfType<User>());
 
 			return new CommentForApiContract(comment, userIconFactory);
-
 		}
 
 		public void Delete(int commentId)
 		{
-
 			var comment = ctx.OfType<T>().Load(commentId);
 			var user = ctx.OfType<User>().GetLoggedUser(permissionContext);
 
@@ -105,18 +96,15 @@ namespace VocaDb.Model.Service.Queries
 			comment.OnDelete();
 
 			ctx.Delete(comment);
-
 		}
 
 		public CommentForApiContract[] GetAll(int entryId)
 		{
-
 			return Load(entryId)
 				.Comments
 				.OrderByDescending(c => c.Created)
 				.Select(c => new CommentForApiContract(c, userIconFactory))
 				.ToArray();
-
 		}
 
 		public int GetCount(int entryId)
@@ -131,17 +119,14 @@ namespace VocaDb.Model.Service.Queries
 
 		public CommentForApiContract[] GetList(int entryId, int count)
 		{
-
 			return ctx.Query<T>().Where(c => c.EntryForComment.Id == entryId)
 				.OrderByDescending(c => c.Created).Take(count).ToArray()
 				.Select(c => new CommentForApiContract(c, userIconFactory))
 				.ToArray();
-
 		}
 
 		public async Task<CommentForApiContract[]> GetListAsync(int entryId, int count)
 		{
-
 			var comments = await ctx.Query<T>()
 				.Where(c => c.EntryForComment.Id == entryId)
 				.OrderByDescending(c => c.Created).Take(count)
@@ -150,12 +135,10 @@ namespace VocaDb.Model.Service.Queries
 			return comments
 				.Select(c => new CommentForApiContract(c, userIconFactory))
 				.ToArray();
-
 		}
 
 		public void Update(int commentId, IComment contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			permissionContext.VerifyPermission(PermissionToken.CreateComments);
@@ -171,9 +154,6 @@ namespace VocaDb.Model.Service.Queries
 			ctx.AuditLogger.AuditLog(string.Format("updated comment for {0}: '{1}'",
 				entryLinkFactory.CreateEntryLink(comment.Entry),
 				HttpUtility.HtmlEncode(contract.Message)));
-
 		}
-
 	}
-
 }

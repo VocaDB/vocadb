@@ -2,14 +2,12 @@
 
 namespace VocaDb.Model.DataContracts
 {
-
 	/// <summary>
 	/// Entry name (title) with primary display name and additional names.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryNameContract
 	{
-
 		public static EntryNameContract Empty
 		{
 			get
@@ -38,7 +36,5 @@ namespace VocaDb.Model.DataContracts
 		/// </summary>
 		[DataMember]
 		public string DisplayName { get; set; }
-
 	}
-
 }

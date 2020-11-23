@@ -5,16 +5,13 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Web.Code
 {
-
 	/// <summary>
 	/// Left hand side menu
 	/// </summary>
 	public abstract class MenuPage : VocaDbPage
 	{
-
 		public class Link
 		{
-
 			public Link(string title, string url, string bannerImg)
 			{
 				BannerImg = bannerImg;
@@ -27,12 +24,10 @@ namespace VocaDb.Web.Code
 			public string Title { get; set; }
 
 			public string Url { get; set; }
-
 		}
 
 		static MenuPage()
 		{
-
 			BannerUrl = AppConfig.SiteSettings.BannerUrl.EmptyToNull();
 
 			var config = AppConfig.GetGlobalLinksSection();
@@ -41,7 +36,6 @@ namespace VocaDb.Web.Code
 			BigBanners = config?.BigBanners?.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).RandomSort().ToArray() ?? new Link[0];
 			SmallBanners = config?.SmallBanners?.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).RandomSort().ToArray() ?? new Link[0];
 			SocialLinks = config?.SocialSites?.Links.Select(l => new Link(l.Title, l.Url, l.BannerImg)).ToArray() ?? new Link[0];
-
 		}
 
 		public static Link[] AppLinks { get; }
@@ -58,7 +52,5 @@ namespace VocaDb.Web.Code
 		public static Link[] SmallBanners { get; }
 
 		public static Link[] SocialLinks { get; }
-
 	}
-
 }

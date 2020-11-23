@@ -21,14 +21,12 @@ using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	/// <summary>
 	/// API queries for artists.
 	/// </summary>
 	[RoutePrefix("api/artists")]
 	public class ArtistApiController : ApiController
 	{
-
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly ObjectCache cache;
@@ -50,7 +48,6 @@ namespace VocaDb.Web.Controllers.Api
 			ContentLanguagePreference lang,
 			IDatabaseContext<Artist> ctx)
 		{
-
 			var contract = new ArtistForApiContract(a, lang, thumbPersister, fields);
 
 			if (relations != ArtistRelationsFields.None)
@@ -59,7 +56,6 @@ namespace VocaDb.Web.Controllers.Api
 			}
 
 			return contract;
-
 		}
 
 		/// <summary>
@@ -158,7 +154,6 @@ namespace VocaDb.Web.Controllers.Api
 			ArtistOptionalFields fields = ArtistOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-
 			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
 			var types = EnumVal<ArtistType>.ParseMultiple(artistTypes);
 
@@ -176,7 +171,6 @@ namespace VocaDb.Web.Controllers.Api
 			var artists = service.FindArtists(s => new ArtistForApiContract(s, lang, thumbPersister, fields), param);
 
 			return artists;
-
 		}
 
 		[Route("ids")]
@@ -223,7 +217,5 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("{id:int}/comments")]
 		[Authorize]
 		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) => queries.CreateComment(id, contract);
-
 	}
-
 }

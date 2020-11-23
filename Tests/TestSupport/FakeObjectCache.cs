@@ -4,10 +4,8 @@ using System.Runtime.Caching;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	public class FakeObjectCache : ObjectCache
 	{
-
 		public override bool Add(string key, object value, DateTimeOffset absoluteExpiration, string regionName = null)
 		{
 			return true;
@@ -109,5 +107,4 @@ namespace VocaDb.Tests.TestSupport
 			set { throw new NotImplementedException(); }
 		}
 	}
-
 }

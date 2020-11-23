@@ -3,13 +3,11 @@ using System.Linq;
 
 namespace VocaDb.Model.Service.Search
 {
-
 	/// <summary>
 	/// Collection of integer entry IDs, with various helper methods.
 	/// </summary>
 	public readonly struct EntryIdsCollection
 	{
-
 		public static implicit operator EntryIdsCollection(int[] ids)
 		{
 			return new EntryIdsCollection(ids);
@@ -34,7 +32,5 @@ namespace VocaDb.Model.Service.Search
 		public int[] Ids { get; }
 
 		public int Primary => HasSingleId ? Ids[0] : 0;
-
 	}
-
 }

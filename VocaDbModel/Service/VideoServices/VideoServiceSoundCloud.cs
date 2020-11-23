@@ -13,13 +13,10 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public class VideoServiceSoundCloud : VideoService
 	{
-
 		class SoundCloudResult
 		{
-
 			public string Artwork_url { get; set; }
 
 			public DateTime Created_at { get; set; }
@@ -31,18 +28,15 @@ namespace VocaDb.Model.Service.VideoServices
 			public string Title { get; set; }
 
 			public SoundCloudUser User { get; set; }
-
 		}
 
 		class SoundCloudUser
 		{
-
 			public string Avatar_url { get; set; }
 
 			public string Permalink { get; set; }
 
 			public string Username { get; set; }
-
 		}
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
@@ -52,16 +46,13 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null)
 		{
-
 			var compositeId = new SoundCloudId(id);
 			var matcher = linkMatchers.First();
 			return $"http://{matcher.MakeLinkFromId(compositeId.SoundCloudUrl)}";
-
 		}
 
 		public async Task<VideoUrlParseResult> ParseBySoundCloudUrl(string url)
 		{
-
 			SslHelper.ForceStrongTLS();
 
 			var apikey = AppConfig.SoundCloudClientId;
@@ -127,16 +118,13 @@ namespace VocaDb.Model.Service.VideoServices
 			var authorId = result.User.Permalink; // Using permalink because that's the public URL
 
 			return VideoUrlParseResult.CreateOk(url, PVService.SoundCloud, id.ToString(), VideoTitleParseResult.CreateSuccess(title, author, authorId, thumbUrl, length, uploadDate: uploadDate));
-
 		}
 
 		public override Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
 		{
-
 			var soundCloudUrl = linkMatchers[0].GetId(url);
 
 			return ParseBySoundCloudUrl(soundCloudUrl);
-
 		}
 
 		public override IEnumerable<string> GetUserProfileUrls(string authorId)
@@ -146,7 +134,6 @@ namespace VocaDb.Model.Service.VideoServices
 				string.Format("https://soundcloud.com/{0}", authorId),
 			};
 		}
-
 	}
 
 	/// <summary>
@@ -154,7 +141,6 @@ namespace VocaDb.Model.Service.VideoServices
 	/// </summary>
 	public class SoundCloudId
 	{
-
 		/// <summary>
 		/// Remove query string.
 		/// See https://github.com/VocaDB/vocadb/issues/459
@@ -163,18 +149,15 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public SoundCloudId(string trackId, string soundCloudUrl)
 		{
-
 			ParamIs.NotNullOrEmpty(() => trackId);
 			ParamIs.NotNullOrEmpty(() => soundCloudUrl);
 
 			TrackId = trackId;
 			SoundCloudUrl = CleanUrl(soundCloudUrl);
-
 		}
 
 		public SoundCloudId(string compositeId)
 		{
-
 			ParamIs.NotNull(() => compositeId);
 
 			var parts = compositeId.Split(' ');
@@ -186,7 +169,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 			TrackId = parts[0];
 			SoundCloudUrl = parts[1];
-
 		}
 
 		/// <summary>
@@ -207,7 +189,5 @@ namespace VocaDb.Model.Service.VideoServices
 		{
 			return string.Format("{0} {1}", TrackId, SoundCloudUrl);
 		}
-
 	}
-
 }

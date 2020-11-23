@@ -4,10 +4,8 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
-
 	public class TagEntryMappingContract
 	{
-
 		public TagEntryMappingContract() { }
 
 		public TagEntryMappingContract(EntryTypeToTagMapping mapping, ContentLanguagePreference languagePreference)
@@ -19,7 +17,5 @@ namespace VocaDb.Model.DataContracts.Tags
 		public EntryTypeAndSubType EntryType { get; set; }
 
 		public TagBaseContract Tag { get; set; }
-
 	}
-
 }

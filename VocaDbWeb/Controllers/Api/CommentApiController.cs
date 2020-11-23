@@ -11,14 +11,12 @@ using VocaDb.Model.Service.Queries;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	/// <summary>
 	/// API queries for entry comments.
 	/// </summary>
 	[RoutePrefix("api/comments")]
 	public class CommentApiController : ApiController
 	{
-
 		private readonly IRepository db;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IUserPermissionContext userContext;
@@ -26,7 +24,6 @@ namespace VocaDb.Web.Controllers.Api
 
 		private ICommentQueries GetComments(IDatabaseContext ctx, EntryType entryType)
 		{
-
 			switch (entryType)
 			{
 				case EntryType.ReleaseEvent:
@@ -34,7 +31,6 @@ namespace VocaDb.Web.Controllers.Api
 			}
 
 			throw new ArgumentException("Unsupported entry type: " + entryType, nameof(entryType));
-
 		}
 
 		public CommentApiController(IRepository db, IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory)
@@ -90,7 +86,5 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("{entryType}-comments")]
 		[Authorize]
 		public CommentForApiContract PostNewComment(EntryType entryType, CommentForApiContract contract) => db.HandleTransaction(ctx => GetComments(ctx, entryType).Create(contract.Entry.Id, contract));
-
 	}
-
 }

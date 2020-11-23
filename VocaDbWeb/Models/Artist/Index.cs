@@ -4,18 +4,15 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Web.Models.Artist
 {
-
 	/// <summary>
 	/// Parameter collection given to index action.
 	/// </summary>
 	public class IndexRouteParams
 	{
-
 		public IndexRouteParams() { }
 
 		public IndexRouteParams(IndexRouteParams source, int? page)
 		{
-
 			ParamIs.NotNull(() => source);
 
 			artistType = (source.artistType != ArtistType.Unknown ? source.artistType : null);
@@ -24,7 +21,6 @@ namespace VocaDb.Web.Models.Artist
 			matchMode = source.matchMode;
 			sort = source.sort;
 			this.page = page;
-
 		}
 
 		public ArtistType? artistType { get; set; }
@@ -33,7 +29,5 @@ namespace VocaDb.Web.Models.Artist
 		public NameMatchMode? matchMode { get; set; }
 		public int? page { get; set; }
 		public ArtistSortRule? sort { get; set; }
-
 	}
-
 }

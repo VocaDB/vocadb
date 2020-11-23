@@ -3,11 +3,9 @@ using VocaDb.Model.DataContracts.PVs;
 
 namespace VocaDb.Model.Domain.PVs
 {
-
 	public abstract class GenericPV<TEntry> : PV, IEntryWithIntId
 		where TEntry : class
 	{
-
 		private TEntry entry;
 
 		protected GenericPV()
@@ -17,11 +15,9 @@ namespace VocaDb.Model.Domain.PVs
 		protected GenericPV(TEntry entry, PVContract contract)
 			: base(contract)
 		{
-
 			Entry = entry;
 			Length = contract.Length;
 			PublishDate = contract.PublishDate;
-
 		}
 
 		public virtual TEntry Entry
@@ -41,7 +37,6 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual bool Equals(GenericPV<TEntry> another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -52,7 +47,6 @@ namespace VocaDb.Model.Domain.PVs
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -69,7 +63,5 @@ namespace VocaDb.Model.Domain.PVs
 		{
 			return string.Format("PV '{0}' on {1} [{2}] for {3}", PVId, Service, Id, Entry);
 		}
-
 	}
-
 }

@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
-
 	public class ComparedEventSeriesContract : ComparedVersionsContract<ArchivedEventSeriesContract>
 	{
-
 		public ComparedEventSeriesContract(ComparedVersionsContract<ArchivedEventSeriesContract> comparedVersions)
 			: base(comparedVersions) { }
 
@@ -14,7 +12,5 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		{
 			return new ComparedEventSeriesContract(Create(firstData, secondData, ArchivedEventSeriesContract.GetAllProperties, d => d.Id));
 		}
-
 	}
-
 }

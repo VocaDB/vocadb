@@ -18,14 +18,12 @@ using VocaDb.Web.Code.WebApi;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	/// <summary>
 	/// API queries for album release events.
 	/// </summary>
 	[RoutePrefix("api/releaseEvents")]
 	public class ReleaseEventApiController : ApiController
 	{
-
 		private const int defaultMax = 10;
 		private readonly EventQueries queries;
 		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
@@ -49,7 +47,6 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		public void Delete(int id, string notes = "", bool hardDelete = false)
 		{
-
 			notes = notes ?? string.Empty;
 
 			if (hardDelete)
@@ -60,7 +57,6 @@ namespace VocaDb.Web.Controllers.Api
 			{
 				queries.Delete(id, notes);
 			}
-
 		}
 
 		/// <summary>
@@ -139,7 +135,6 @@ namespace VocaDb.Web.Controllers.Api
 			ContentLanguagePreference lang = ContentLanguagePreference.Default
 			)
 		{
-
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var queryParams = new EventQueryParams
 			{
@@ -160,7 +155,6 @@ namespace VocaDb.Web.Controllers.Api
 			};
 
 			return queries.Find(e => new ReleaseEventForApiContract(e, lang, fields, thumbPersister), queryParams);
-
 		}
 
 		/// <summary>
@@ -193,7 +187,5 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("{eventId:int}/reports")]
 		[RestrictBannedIP]
 		public void PostReport(int eventId, EventReportType reportType, string notes, int? versionNumber) => queries.CreateReport(eventId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
-
 	}
-
 }

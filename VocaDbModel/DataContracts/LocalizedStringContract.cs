@@ -5,21 +5,17 @@ using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.DataContracts
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class LocalizedStringContract : ILocalizedString
 	{
-
 		public LocalizedStringContract() { }
 
 		public LocalizedStringContract(LocalizedString str)
 		{
-
 			ParamIs.NotNull(() => str);
 
 			Language = str.Language;
 			Value = str.Value;
-
 		}
 
 		public LocalizedStringContract(string value, ContentLanguageSelection language)
@@ -34,7 +30,5 @@ namespace VocaDb.Model.DataContracts
 
 		[DataMember]
 		public string Value { get; set; }
-
 	}
-
 }

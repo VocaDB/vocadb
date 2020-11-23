@@ -10,14 +10,12 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	/// <summary>
 	/// API queries for discussions.
 	/// </summary>
 	[RoutePrefix("api/discussions")]
 	public class DiscussionApiController : ApiController
 	{
-
 		private const int defaultMax = 10;
 		private readonly DiscussionQueries queries;
 		private readonly IUserIconFactory userIconFactory;
@@ -75,7 +73,5 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("folders/{folderId:int}/topics")]
 		[Authorize]
 		public DiscussionTopicContract PostNewTopic(int folderId, DiscussionTopicContract contract) => queries.CreateTopic(folderId, contract);
-
 	}
-
 }

@@ -3,13 +3,11 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Domain.Users
 {
-
 	/// <summary>
 	/// Comment created on user's profile.
 	/// </summary>
 	public class UserComment : GenericComment<User>
 	{
-
 		public UserComment() { }
 
 		public UserComment(User user, string message, AgentLoginData loginData)
@@ -19,7 +17,5 @@ namespace VocaDb.Model.Domain.Users
 		{
 			EntryForComment.Comments.Remove(this);
 		}
-
 	}
-
 }

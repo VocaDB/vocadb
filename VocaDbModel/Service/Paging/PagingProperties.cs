@@ -3,14 +3,12 @@ using VocaDb.Model.DataContracts;
 
 namespace VocaDb.Model.Service.Paging
 {
-
 	/// <summary>
 	/// Common query properties for paging.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class PagingProperties
 	{
-
 		/// <summary>
 		/// Creates paging properties based on a page number (instead of absolute entry index).
 		/// </summary>
@@ -20,9 +18,7 @@ namespace VocaDb.Model.Service.Paging
 		/// <returns>Paging properties. Cannot be null.</returns>
 		public static PagingProperties CreateFromPage(int page, int entriesPerPage, bool getTotalCount)
 		{
-
 			return new PagingProperties(page * entriesPerPage, entriesPerPage, getTotalCount);
-
 		}
 
 		public static PagingProperties FirstPage(int entriesPerPage, bool getTotalCount = false)
@@ -60,6 +56,5 @@ namespace VocaDb.Model.Service.Paging
 		/// </summary>
 		[DataMember]
 		public int Start { get; set; }
-
 	}
 }

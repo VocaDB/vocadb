@@ -2,14 +2,11 @@ using System;
 
 namespace VocaDb.Model.Domain
 {
-
 	public interface IOptionalGeoPoint
 	{
-
 		double? Latitude { get; }
 
 		double? Longitude { get; }
-
 	}
 
 	/// <remarks>
@@ -17,7 +14,6 @@ namespace VocaDb.Model.Domain
 	/// </remarks>
 	public class OptionalGeoPoint : IOptionalGeoPoint
 	{
-
 		public virtual double? Latitude { get; set; }
 
 		public virtual double? Longitude { get; set; }
@@ -26,18 +22,15 @@ namespace VocaDb.Model.Domain
 
 		public OptionalGeoPoint(IOptionalGeoPoint geoPoint)
 		{
-
 			ParamIs.NotNull(() => geoPoint);
 
 			Validate(geoPoint.Latitude, geoPoint.Longitude);
 			Latitude = geoPoint.Latitude;
 			Longitude = geoPoint.Longitude;
-
 		}
 
 		public static bool IsValid(double? latitude, double? longitude)
 		{
-
 			if (!latitude.HasValue && !longitude.HasValue)
 				return true;
 
@@ -51,15 +44,12 @@ namespace VocaDb.Model.Domain
 				return false;
 
 			return true;
-
 		}
 
 		public static void Validate(double? latitude, double? longitude)
 		{
-
 			if (!IsValid(latitude, longitude))
 				throw new FormatException("Invalid coordinates");
-
 		}
 
 		public virtual bool HasValue => Latitude.HasValue && Longitude.HasValue;
@@ -68,12 +58,10 @@ namespace VocaDb.Model.Domain
 
 		public virtual bool Equals(IOptionalGeoPoint other)
 		{
-
 			if (other == null)
 				return IsEmpty;
 
 			return (Latitude == other.Latitude) && (Longitude == other.Longitude);
-
 		}
 
 		public override int GetHashCode() => ToString().GetHashCode();
@@ -81,7 +69,5 @@ namespace VocaDb.Model.Domain
 		public override bool Equals(object obj) => (obj is OptionalGeoPoint) && Equals((OptionalGeoPoint)obj);
 
 		public override string ToString() => HasValue ? $"{Latitude}, {Longitude}" : string.Empty;
-
 	}
-
 }

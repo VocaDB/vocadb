@@ -2,10 +2,8 @@ using System.Collections.Generic;
 
 namespace VocaDb.Web.Models.Shared.Partials.Knockout
 {
-
 	public class DropdownListViewModel
 	{
-
 		public DropdownListViewModel(Dictionary<string, string> items, string valueBinding, string cssClass = null, bool required = false)
 		{
 			Items = items;
@@ -21,7 +19,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Knockout
 		public string CssClass { get; set; }
 
 		public bool Required { get; set; }
-
 	}
-
 }

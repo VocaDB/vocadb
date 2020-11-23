@@ -4,10 +4,8 @@ using VocaDb.UtaiteDb.Resources.ViewRes;
 
 namespace VocaDb.UtaiteDb.Resources
 {
-
 	public class Header : IBrandedStringsAssemblyHeader
 	{
-
 		public AlbumStrings Album => new AlbumStrings(AlbumRes.ResourceManager);
 
 		public ArtistStrings Artist => new ArtistStrings(ArtistRes.ResourceManager);
@@ -19,6 +17,5 @@ namespace VocaDb.UtaiteDb.Resources
 		public SongStrings Song => new SongStrings(SongRes.ResourceManager);
 
 		public UserStrings User => new UserStrings(UserRes.ResourceManager);
-
 	}
 }

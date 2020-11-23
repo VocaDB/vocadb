@@ -3,17 +3,14 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.ReleaseEvents
 {
-
 	public class EventTagUsage : GenericTagUsage<ReleaseEvent, EventTagVote>
 	{
-
 		public EventTagUsage() { }
 
 		public EventTagUsage(ReleaseEvent releaseEvent, Tag tag) : base(releaseEvent, tag) { }
 
 		public override TagVote CreateVote(User user)
 		{
-
 			if (FindVote(user) != null)
 				return null;
 
@@ -22,22 +19,18 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			Count++;
 
 			return vote;
-
 		}
 
 		public override void Delete()
 		{
-
 			base.Delete();
 
 			Entry.Tags.Usages.Remove(this);
 			Tag.AllEventTagUsages.Remove(this);
-
 		}
 
 		public override TagUsage Move(Tag target)
 		{
-
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Tag))
@@ -52,8 +45,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			Entry.Tags.Usages.Add(newUsage);
 
 			return newUsage;
-
 		}
-
 	}
 }

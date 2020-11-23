@@ -5,10 +5,8 @@ using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Helpers
 {
-
 	public static class EnumerableExtender
 	{
-
 		public static IEnumerable<T> Distinct<T, T2>(this IEnumerable<T> source, Func<T, T2> func, IEqualityComparer<T2> propertyEquality)
 		{
 			var comparer = new DistinctPropertyEqualityComparer<T, T2>(func, propertyEquality);
@@ -43,11 +41,9 @@ namespace VocaDb.Model.Helpers
 		/// <returns>Item with the highest value.</returns>
 		public static TSource MaxItem<TSource, TResult>(this IList<TSource> source, Func<TSource, TResult> selector)
 		{
-
 			var max = source.Max(selector);
 
 			return source.First(t => Equals(selector(t), max));
-
 		}
 
 		/// <summary>
@@ -62,7 +58,6 @@ namespace VocaDb.Model.Helpers
 
 		public static Dictionary<T, T2> ToDictionaryWithEmpty<TSource, T, T2>(this IEnumerable<TSource> source, T emptyKey, T2 emptyVal, Func<TSource, T> keySelector, Func<TSource, T2> valueSelector)
 		{
-
 			var vals = new Dictionary<T, T2>();
 			vals.Add(emptyKey, emptyVal);
 
@@ -70,7 +65,6 @@ namespace VocaDb.Model.Helpers
 				vals.Add(keySelector(item), valueSelector(item));
 
 			return vals;
-
 		}
 
 		public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T> enumerable) => enumerable.Where(i => i != null);
@@ -79,12 +73,10 @@ namespace VocaDb.Model.Helpers
 		{
 			return enumerable.Where(s => !string.IsNullOrEmpty(s));
 		}
-
 	}
 
 	public class DistinctPropertyEqualityComparer<T, T2> : IEqualityComparer<T>
 	{
-
 		private readonly IEqualityComparer<T2> propertyEquality;
 		private readonly Func<T, T2> func;
 
@@ -99,19 +91,15 @@ namespace VocaDb.Model.Helpers
 
 		public bool Equals(T x, T y)
 		{
-
 			if (ReferenceEquals(x, y))
 				return true;
 
 			return propertyEquality.Equals(func(x), func(y));
-
 		}
 
 		public int GetHashCode(T obj)
 		{
 			return propertyEquality.GetHashCode(func(obj));
 		}
-
 	}
-
 }

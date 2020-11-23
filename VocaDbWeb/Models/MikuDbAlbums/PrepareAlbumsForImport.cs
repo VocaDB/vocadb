@@ -2,10 +2,8 @@
 
 namespace VocaDb.Web.Models.MikuDbAlbums
 {
-
 	public class PrepareAlbumsForImport
 	{
-
 		public PrepareAlbumsForImport() { }
 
 		public PrepareAlbumsForImport(InspectedAlbum album)
@@ -14,6 +12,5 @@ namespace VocaDb.Web.Models.MikuDbAlbums
 		}
 
 		public InspectedAlbum Album { get; set; }
-
 	}
 }

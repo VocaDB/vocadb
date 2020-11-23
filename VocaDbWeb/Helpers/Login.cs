@@ -8,17 +8,13 @@ using VocaDb.Model.Domain;
 
 namespace VocaDb.Web.Helpers
 {
-
 	public static class Login
 	{
-
 		public static bool CanAccessManageMenu
 		{
 			get
 			{
-
 				return Manager.HasPermission(PermissionToken.AccessManageMenu);
-
 			}
 		}
 
@@ -125,23 +121,17 @@ namespace VocaDb.Web.Helpers
 
 		public static bool CanDeleteComment(CommentContract comment)
 		{
-
 			ParamIs.NotNull(() => comment);
 
 			return Manager.HasPermission(PermissionToken.DeleteComments)
 				|| (comment.Author != null && User != null && comment.Author.Id == User.Id);
-
 		}
 
 		public static bool CanEdit(IEntryWithStatus entry)
 		{
-
 			ParamIs.NotNull(() => entry);
 
 			return EntryPermissionManager.CanEdit(Manager, entry);
-
 		}
-
 	}
-
 }

@@ -7,10 +7,8 @@ using System.Xml;
 
 namespace VocaDb.Web.Code.Feeds
 {
-
 	public class FeedResult : ActionResult
 	{
-
 		private readonly SyndicationFeedFormatter feed;
 
 		public Encoding ContentEncoding { get; set; }
@@ -28,7 +26,6 @@ namespace VocaDb.Web.Code.Feeds
 
 		public override void ExecuteResult(ControllerContext context)
 		{
-
 			if (context == null)
 				throw new ArgumentNullException("context");
 
@@ -46,10 +43,6 @@ namespace VocaDb.Web.Code.Feeds
 					feed.WriteTo(xmlWriter);
 				}
 			}
-
 		}
-
-
 	}
-
 }

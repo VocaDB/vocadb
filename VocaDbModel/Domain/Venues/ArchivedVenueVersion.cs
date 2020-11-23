@@ -7,18 +7,14 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Venues
 {
-
 	public class ArchivedVenueVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<VenueEditableFields>
 	{
-
 		public static ArchivedVenueVersion Create(Venue venue, VenueDiff diff, AgentLoginData author, EntryEditEvent commonEditEvent, string notes)
 		{
-
 			var contract = new ArchivedVenueContract(venue, diff);
 			var data = XmlHelper.SerializeToXml(contract);
 
 			return venue.CreateArchivedVersion(data, diff, author, commonEditEvent, notes);
-
 		}
 
 		private VenueDiff diff;
@@ -33,13 +29,11 @@ namespace VocaDb.Model.Domain.Venues
 			EntryEditEvent commonEditEvent, string notes)
 			: base(data, author, venue.Version, venue.Status, notes)
 		{
-
 			ParamIs.NotNull(() => diff);
 
 			Entry = venue;
 			Diff = diff;
 			CommonEditEvent = commonEditEvent;
-
 		}
 
 		public virtual EntryEditEvent CommonEditEvent { get; set; }
@@ -72,19 +66,15 @@ namespace VocaDb.Model.Domain.Venues
 
 		public virtual ArchivedVenueVersion GetLatestVersionWithField(VenueEditableFields field)
 		{
-
 			if (IsIncluded(field))
 				return this;
 
 			return Entry.ArchivedVersionsManager.GetLatestVersionWithField(field, Version);
-
 		}
 
 		public virtual bool IsIncluded(VenueEditableFields field)
 		{
 			return Diff != null && Data != null && Diff.IsIncluded(field);
 		}
-
 	}
-
 }

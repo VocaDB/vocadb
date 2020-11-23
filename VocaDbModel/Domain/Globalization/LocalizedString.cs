@@ -2,10 +2,8 @@
 using VocaDb.Model.DataContracts;
 namespace VocaDb.Model.Domain.Globalization
 {
-
 	public class LocalizedString : ILocalizedString, IEquatable<LocalizedString>
 	{
-
 		private string val;
 
 		public LocalizedString()
@@ -17,10 +15,8 @@ namespace VocaDb.Model.Domain.Globalization
 		public LocalizedString(string val, ContentLanguageSelection language)
 			: this()
 		{
-
 			Value = val;
 			Language = language;
-
 		}
 
 		public virtual ContentLanguageSelection Language { get; set; }
@@ -37,30 +33,22 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual bool ContentEquals(ILocalizedString another)
 		{
-
 			return (another != null && another.Language == Language && another.Value == Value);
-
 		}
 
 		public virtual bool ContentEquals(LocalizedString another)
 		{
-
 			return (another != null && another.Language == Language && another.Value == Value);
-
 		}
 
 		public virtual bool ContentEquals(LocalizedStringContract another)
 		{
-
 			return (another != null && another.Language == Language && another.Value == Value);
-
 		}
 
 		public virtual bool Equals(LocalizedString another)
 		{
-
 			return ContentEquals(another);
-
 		}
 
 		public override bool Equals(object obj)
@@ -77,6 +65,5 @@ namespace VocaDb.Model.Domain.Globalization
 		{
 			return Language + ": " + Value;
 		}
-
 	}
 }

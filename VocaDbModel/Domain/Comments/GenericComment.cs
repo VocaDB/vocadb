@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.Domain.Comments
 {
-
 	public class GenericComment<T> : Comment where T : class, IEntryWithNames
 	{
-
 		private T entry;
 
 		public GenericComment() { }
@@ -13,9 +11,7 @@ namespace VocaDb.Model.Domain.Comments
 		public GenericComment(T entry, string message, AgentLoginData loginData)
 			: base(message, loginData)
 		{
-
 			EntryForComment = entry;
-
 		}
 
 		public override IEntryWithNames Entry => EntryForComment;
@@ -32,7 +28,6 @@ namespace VocaDb.Model.Domain.Comments
 
 		public virtual bool Equals(GenericComment<T> another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -43,7 +38,6 @@ namespace VocaDb.Model.Domain.Comments
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -60,7 +54,5 @@ namespace VocaDb.Model.Domain.Comments
 		{
 			return string.Format("comment [{0}] for " + Entry, Id);
 		}
-
 	}
-
 }

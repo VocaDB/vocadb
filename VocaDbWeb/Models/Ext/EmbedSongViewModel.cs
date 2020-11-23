@@ -4,10 +4,8 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Models.Ext
 {
-
 	public class EmbedSongViewModel
 	{
-
 		private const int DefaultHeight = 315;
 		private const int DefaultWidth = 560;
 
@@ -34,7 +32,5 @@ namespace VocaDb.Web.Models.Ext
 		public int PlayerHeight => Height ?? DefaultHeight;
 
 		public int PlayerWidth => Width ?? DefaultWidth;
-
 	}
-
 }

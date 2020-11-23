@@ -25,7 +25,6 @@ namespace VocaDb.Web.Controllers
 {
 	public class TagController : ControllerBase
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IEntryLinkFactory entryLinkFactory;
@@ -36,37 +35,30 @@ namespace VocaDb.Web.Controllers
 		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory, IEnumTranslations enumTranslations, MarkdownParser markdownParser,
 			IAggregatedEntryImageUrlFactory entryThumbPersister)
 		{
-
 			this.queries = queries;
 			this.entryLinkFactory = entryLinkFactory;
 			this.enumTranslations = enumTranslations;
 			this.markdownParser = markdownParser;
 			this.entryThumbPersister = entryThumbPersister;
-
 		}
 
 		public ActionResult ArchivedVersionXml(int id)
 		{
-
 			var doc = queries.GetVersionXml<ArchivedTagVersion>(id);
 			var content = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
 
 			return Xml(content);
-
 		}
 
 		public ActionResult Restore(int id)
 		{
-
 			queries.Restore(id);
 
 			return RedirectToAction("DetailsById", new { id });
-
 		}
 
 		private ActionResult RenderDetails(TagDetailsContract contract)
 		{
-
 			if (contract == null)
 				return HttpNotFound();
 
@@ -78,14 +70,12 @@ namespace VocaDb.Web.Controllers
 			PageProperties.OpenGraph.ShowTwitterCard = true;
 
 			return View("Details", contract);
-
 		}
 
 		// Kept for now since there's external references.
 		[Obsolete]
 		public ActionResult Details(string id)
 		{
-
 			if (string.IsNullOrEmpty(id))
 				return NoId();
 
@@ -98,7 +88,6 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return RedirectToActionPermanent("DetailsById", new { id = tagId, slug = id });
-
 		}
 
 		/// <summary>
@@ -107,7 +96,6 @@ namespace VocaDb.Web.Controllers
 		/// </summary>
 		public ActionResult DetailsByEntryType(EntryType entryType, string subType = "")
 		{
-
 			var tag = queries.FindTagForEntryType(new EntryTypeAndSubType(entryType, subType), (tag, lang) => new TagBaseContract(tag, lang));
 
 			if (tag != null)
@@ -118,12 +106,10 @@ namespace VocaDb.Web.Controllers
 			{
 				return RedirectToAction("Index");
 			}
-
 		}
 
 		public async Task<ActionResult> DetailsById(int id = invalidId, string slug = null)
 		{
-
 			if (id == invalidId)
 				return NoId();
 
@@ -150,18 +136,15 @@ namespace VocaDb.Web.Controllers
 			prop.Description = markdownParser.GetPlainText(contract.Description.EnglishOrOriginal);
 
 			return RenderDetails(contract);
-
 		}
 
 		[Authorize]
 		public ActionResult Edit(int id)
 		{
-
 			CheckConcurrentEdit(EntryType.Tag, id);
 
 			var model = new TagEditViewModel(queries.GetTagForEdit(id), PermissionContext);
 			return View(model);
-
 		}
 
 		private ActionResult RenderEdit(TagEditViewModel model)
@@ -175,15 +158,12 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Edit(TagEditViewModel model)
 		{
-
 			var coverPicUpload = Request.Files["thumbPicUpload"];
 			UploadedFileContract uploadedPicture = null;
 			if (coverPicUpload != null && coverPicUpload.ContentLength > 0)
 			{
-
 				CheckUploadedPicture(coverPicUpload, "thumbPicUpload");
 				uploadedPicture = new UploadedFileContract { Mime = coverPicUpload.ContentType, Stream = coverPicUpload.InputStream };
-
 			}
 
 			try
@@ -213,15 +193,12 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return RedirectToAction("DetailsById", new { id = result.Id, slug = result.UrlSlug });
-
 		}
 
 		public ActionResult Index(string filter = null)
 		{
-
 			if (!string.IsNullOrEmpty(filter))
 			{
-
 				var tag = queries.GetTagByName(filter, t => new { t.Id, t.UrlSlug });
 
 				if (tag != null)
@@ -230,26 +207,21 @@ namespace VocaDb.Web.Controllers
 				}
 
 				return RedirectToAction("Index", "Search", new SearchIndexViewModel(EntryType.Tag, filter));
-
 			}
 
 			var tags = queries.GetTagsByCategories();
 			return View(tags);
-
 		}
 
 		public ActionResult Merge(int id)
 		{
-
 			var tag = queries.LoadTag(id, t => new TagBaseContract(t, PermissionContext.LanguagePreference));
 			return View(tag);
-
 		}
 
 		[HttpPost]
 		public ActionResult Merge(int id, int? targetTagId)
 		{
-
 			if (targetTagId == null)
 			{
 				ModelState.AddModelError("targetTagId", "Tag must be selected");
@@ -259,7 +231,6 @@ namespace VocaDb.Web.Controllers
 			queries.Merge(id, targetTagId.Value);
 
 			return RedirectToAction("Edit", new { id = targetTagId.Value });
-
 		}
 
 		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
@@ -268,44 +239,35 @@ namespace VocaDb.Web.Controllers
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			string culture = InterfaceLanguage.DefaultCultureCode)
 		{
-
 			if (id == invalidId)
 				return HttpNotFound();
 
 			var tag = queries.LoadTag(id, t => new TagForApiContract(t, entryThumbPersister,
 				lang, TagOptionalFields.AdditionalNames | TagOptionalFields.Description | TagOptionalFields.MainPicture));
 			return PartialView("_TagPopupContent", tag);
-
 		}
 
 		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
 		{
-
 			queries.UpdateVersionVisibility<ArchivedTagVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
-
 		}
 
 		public ActionResult Versions(int id = invalidId)
 		{
-
 			if (id == invalidId)
 				return NoId();
 
 			var contract = queries.GetTagWithArchivedVersions(id);
 			return View(new Versions(contract, enumTranslations));
-
 		}
 
 		public ActionResult ViewVersion(int id, int? ComparedVersionId)
 		{
-
 			var contract = queries.GetVersionDetails(id, ComparedVersionId ?? 0);
 
 			return View(new ViewVersion<ArchivedTagVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
-
 		}
-
 	}
 }

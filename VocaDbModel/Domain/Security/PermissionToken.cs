@@ -5,14 +5,12 @@ using VocaDb.Model.DataContracts;
 
 namespace VocaDb.Model.Domain.Security
 {
-
 	/// <summary>
 	/// Permission tokens are immutable objects that represent global permissions.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public struct PermissionToken : IEquatable<PermissionToken>, IPermissionToken
 	{
-
 		private Guid id;
 		private string name;
 
@@ -94,13 +92,11 @@ namespace VocaDb.Model.Domain.Security
 
 		public static PermissionToken GetById(Guid id)
 		{
-
 			PermissionToken token;
 			if (all.TryGetValue(id, out token))
 				return token;
 
 			throw new ArgumentException(string.Format("Invalid permission token: {0}.", id), "id");
-
 		}
 
 		public static bool IsValid(PermissionToken token)
@@ -110,12 +106,10 @@ namespace VocaDb.Model.Domain.Security
 
 		public static bool TryGetById(Guid id, out PermissionToken token)
 		{
-
 			if (all.TryGetValue(id, out token))
 				return true;
 
 			return false;
-
 		}
 
 		public static bool operator ==(PermissionToken left, PermissionToken right)
@@ -155,12 +149,10 @@ namespace VocaDb.Model.Domain.Security
 
 		public override bool Equals(object obj)
 		{
-
 			if (!(obj is PermissionToken))
 				return false;
 
 			return Equals((PermissionToken)obj);
-
 		}
 
 		public override int GetHashCode()
@@ -172,16 +164,12 @@ namespace VocaDb.Model.Domain.Security
 		{
 			return Name;
 		}
-
 	}
 
 	public interface IPermissionToken
 	{
-
 		Guid Id { get; }
 
 		string Name { get; }
-
 	}
-
 }

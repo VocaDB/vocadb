@@ -4,11 +4,9 @@ using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.DataContracts.SongImport
 {
-
 	[DataContract]
 	public class ImportedSongInListContract
 	{
-
 		public ImportedSongInListContract() { }
 
 		public ImportedSongInListContract(PVService service, string pvId)
@@ -34,6 +32,5 @@ namespace VocaDb.Model.DataContracts.SongImport
 
 		[DataMember]
 		public string Url { get; set; }
-
 	}
 }

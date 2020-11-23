@@ -30,14 +30,12 @@ using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	/// <summary>
 	/// API queries for songs.
 	/// </summary>
 	[System.Web.Http.RoutePrefix("api/songs")]
 	public class SongApiController : ApiController
 	{
-
 		private const int hourInSeconds = 3600;
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
@@ -56,7 +54,6 @@ namespace VocaDb.Web.Controllers.Api
 			IEntryLinkFactory entryLinkFactory, IUserPermissionContext userPermissionContext,
 			UserService userService, OtherService otherService)
 		{
-
 			this.service = service;
 			this.queries = queries;
 			this.userService = userService;
@@ -64,7 +61,6 @@ namespace VocaDb.Web.Controllers.Api
 			this.entryLinkFactory = entryLinkFactory;
 			this.userPermissionContext = userPermissionContext;
 			this.otherService = otherService;
-
 		}
 
 		/// <summary>
@@ -280,7 +276,6 @@ namespace VocaDb.Web.Controllers.Api
 			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
@@ -313,7 +308,6 @@ namespace VocaDb.Web.Controllers.Api
 			var artists = service.Find(s => new SongForApiContract(s, null, lang, fields), param);
 
 			return artists;
-
 		}
 
 		/// <summary>
@@ -428,7 +422,6 @@ namespace VocaDb.Web.Controllers.Api
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
 		public Task<SongContract> PostNewSong(CreateSongContract contract)
 		{
-
 			if (contract == null)
 				throw new HttpBadRequestException("Message was empty");
 
@@ -444,7 +437,6 @@ namespace VocaDb.Web.Controllers.Api
 			{
 				throw new HttpBadRequestException(x.Message);
 			}
-
 		}
 
 		[System.Web.Http.Route("{id:int}/pvs")]
@@ -456,7 +448,5 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Authorize]
 		public void PostPersonalDescription(int id, SongDetailsContract data) => queries.UpdatePersonalDescription(id, data);
-
 	}
-
 }

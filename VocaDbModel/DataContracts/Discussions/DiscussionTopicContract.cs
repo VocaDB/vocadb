@@ -7,16 +7,13 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.DataContracts.Discussions
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class DiscussionTopicContract
 	{
-
 		public DiscussionTopicContract() { }
 
 		public DiscussionTopicContract(DiscussionTopic topic, IUserIconFactory userIconFactory, DiscussionTopicOptionalFields fields)
 		{
-
 			ParamIs.NotNull(() => topic);
 
 			Author = new UserForApiContract(topic.Author, userIconFactory, UserOptionalFields.MainPicture);
@@ -46,7 +43,6 @@ namespace VocaDb.Model.DataContracts.Discussions
 				LastComment = new CommentForApiContract(topic.Comments.MaxItem(c => c.Created),
 					userIconFactory, includeMessage: false);
 			}
-
 		}
 
 		[DataMember]
@@ -91,7 +87,6 @@ namespace VocaDb.Model.DataContracts.Discussions
 	[Flags]
 	public enum DiscussionTopicOptionalFields
 	{
-
 		None = 0,
 
 		Comments = 1,
@@ -100,7 +95,5 @@ namespace VocaDb.Model.DataContracts.Discussions
 		LastComment = 8,
 
 		All = (Comments | CommentCount | Content | LastComment)
-
 	}
-
 }

@@ -2,7 +2,6 @@ using System;
 
 namespace VocaDb.Model.Domain.ExtLinks
 {
-
 	[Flags]
 	public enum WebLinkVariationTypes
 	{
@@ -23,5 +22,4 @@ namespace VocaDb.Model.Domain.ExtLinks
 		/// </summary>
 		All = IgnoreScheme | IgnoreTrailingSlash
 	}
-
 }

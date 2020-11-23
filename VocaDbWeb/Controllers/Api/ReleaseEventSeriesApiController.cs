@@ -8,14 +8,12 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	/// <summary>
 	/// API queries for album release event series.
 	/// </summary>
 	[RoutePrefix("api/releaseEventSeries")]
 	public class ReleaseEventSeriesApiController : ApiController
 	{
-
 		private const int defaultMax = 10;
 		private readonly EventQueries queries;
 
@@ -37,7 +35,6 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		public void Delete(int id, string notes = "", bool hardDelete = false)
 		{
-
 			notes = notes ?? string.Empty;
 
 			if (hardDelete)
@@ -48,7 +45,6 @@ namespace VocaDb.Web.Controllers.Api
 			{
 				queries.DeleteSeries(id, notes);
 			}
-
 		}
 
 		/// <summary>
@@ -78,7 +74,5 @@ namespace VocaDb.Web.Controllers.Api
 			int id,
 			ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetOneSeries(id, lang, fields);
-
 	}
-
 }

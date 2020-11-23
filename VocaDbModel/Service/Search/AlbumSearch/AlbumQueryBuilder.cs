@@ -4,13 +4,10 @@ using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch
 {
-
 	public class AlbumQueryBuilder
 	{
-
 		public QueryPlan<Album> BuildPlan(string query)
 		{
-
 			var words = SearchParser.ParseQuery(query);
 			var filters = new List<ISearchFilter<Album>>();
 
@@ -29,7 +26,6 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 
 			while (words.Any())
 			{
-
 				var word = words.TakeNext();
 				ISearchFilter<Album> filter = null;
 
@@ -44,18 +40,13 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 					default:
 						filter = new AlbumNameFilter(new[] { word.Value });
 						break;
-
 				}
 
 				if (filter != null)
 					filters.Add(filter);
-
 			}
 
 			return new QueryPlan<Album>(filters);
-
 		}
-
 	}
-
 }

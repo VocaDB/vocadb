@@ -3,14 +3,12 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Tests.Helpers
 {
-
 	/// <summary>
 	/// Tests for <see cref="EnumerableExtender"/>.
 	/// </summary>
 	[TestClass]
 	public class EnumerableExtenderTests
 	{
-
 		[TestMethod]
 		public void MinOrNull_NotEmpty()
 		{
@@ -22,7 +20,5 @@ namespace VocaDb.Tests.Helpers
 		{
 			Assert.IsNull(new int[0].MinOrNull());
 		}
-
 	}
-
 }

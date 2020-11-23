@@ -6,13 +6,10 @@ using VocaDb.Model.Service.Search.AlbumSearch;
 
 namespace VocaDb.Model.Service.QueryableExtenders
 {
-
 	public static class ArtistForAlbumQueryableExtender
 	{
-
 		public static IQueryable<ArtistForAlbum> WhereHasArtistParticipationStatus(this IQueryable<ArtistForAlbum> query, Artist artist, ArtistAlbumParticipationStatus participation)
 		{
-
 			if (participation == ArtistAlbumParticipationStatus.Everything || artist == null)
 				return query;
 
@@ -20,7 +17,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 			if (musicProducerTypes.Contains(artist.ArtistType))
 			{
-
 				var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;
 
 				switch (participation)
@@ -32,11 +28,9 @@ namespace VocaDb.Model.Service.QueryableExtenders
 					default:
 						return query;
 				}
-
 			}
 			else
 			{
-
 				switch (participation)
 				{
 					case ArtistAlbumParticipationStatus.OnlyMainAlbums:
@@ -46,11 +40,7 @@ namespace VocaDb.Model.Service.QueryableExtenders
 					default:
 						return query;
 				}
-
 			}
-
 		}
-
 	}
-
 }

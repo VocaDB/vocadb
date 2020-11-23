@@ -8,10 +8,8 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Model.Database.Queries
 {
-
 	public class PVQueries
 	{
-
 		private readonly IRepository repository;
 
 		public PVQueries(IRepository repository)
@@ -24,10 +22,8 @@ namespace VocaDb.Model.Database.Queries
 			int maxResults = 10, bool getTotalCount = false,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-
 			return repository.HandleQuery(db =>
 			{
-
 				var query = db.Query<PVForSong>();
 
 				if (!string.IsNullOrEmpty(name))
@@ -51,11 +47,7 @@ namespace VocaDb.Model.Database.Queries
 
 				var results = query.Select(p => new PVForSongContract(p, lang)).ToArray();
 				return PartialFindResult.Create(results, count);
-
 			});
-
 		}
-
 	}
-
 }

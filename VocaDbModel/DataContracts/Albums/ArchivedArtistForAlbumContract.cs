@@ -4,16 +4,13 @@ using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.DataContracts.Albums
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedArtistForAlbumContract : ObjectRefContract
 	{
-
 		public ArchivedArtistForAlbumContract() { }
 
 		public ArchivedArtistForAlbumContract(ArtistForAlbum entry)
 		{
-
 			Roles = entry.Roles;
 			IsSupport = entry.IsSupport;
 
@@ -26,7 +23,6 @@ namespace VocaDb.Model.DataContracts.Albums
 			{
 				NameHint = entry.Name;
 			}
-
 		}
 
 		[DataMember]
@@ -34,7 +30,5 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		[DataMember]
 		public ArtistRoles Roles { get; set; }
-
 	}
-
 }

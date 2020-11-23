@@ -38,14 +38,12 @@ using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	/// <summary>
 	/// API queries for users.
 	/// </summary>
 	[RoutePrefix("api/users")]
 	public class UserApiController : ApiController
 	{
-
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly UserMessageQueries messageQueries;
@@ -134,7 +132,6 @@ namespace VocaDb.Web.Controllers.Api
 			AlbumOptionalFields fields = AlbumOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-
 			maxResults = Math.Min(maxResults, absoluteMax);
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
@@ -155,7 +152,6 @@ namespace VocaDb.Web.Controllers.Api
 				new AlbumForUserForApiContract(afu, lang, thumbPersister, fields, shouldShowCollectionStatus));
 
 			return albums;
-
 		}
 
 		/// <summary>
@@ -212,7 +208,6 @@ namespace VocaDb.Web.Controllers.Api
 			ArtistOptionalFields fields = ArtistOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-
 			maxResults = Math.Min(maxResults, absoluteMax);
 			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
 
@@ -230,7 +225,6 @@ namespace VocaDb.Web.Controllers.Api
 				new ArtistForUserForApiContract(afu, lang, thumbPersister, fields));
 
 			return artists;
-
 		}
 
 		/// <summary>
@@ -267,7 +261,6 @@ namespace VocaDb.Web.Controllers.Api
 			string knowsLanguage = null,
 			UserOptionalFields fields = UserOptionalFields.None)
 		{
-
 			var queryParams = new UserQueryParams
 			{
 				Common = new CommonSearchParams(SearchTextQuery.Create(query, nameMatchMode), false, false),
@@ -282,7 +275,6 @@ namespace VocaDb.Web.Controllers.Api
 			};
 
 			return queries.GetUsers(queryParams, user => new UserForApiContract(user, userIconFactory, fields));
-
 		}
 
 		/// <summary>
@@ -330,7 +322,6 @@ namespace VocaDb.Web.Controllers.Api
 			int maxResults = 10,
 			bool getTotalCount = false)
 		{
-
 			if (id != permissionContext.LoggedUserId)
 			{
 				throw new HttpForbiddenException();
@@ -338,7 +329,6 @@ namespace VocaDb.Web.Controllers.Api
 
 			return messageQueries.GetList(permissionContext.LoggedUserId, new PagingProperties(start, maxResults, getTotalCount),
 				inbox ?? UserInboxType.Nothing, unread, anotherUserId, userIconFactory);
-
 		}
 
 		/// <summary>
@@ -350,14 +340,12 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		public void DeleteMessages(int id, [FromUri] int[] messageId)
 		{
-
 			if (id != permissionContext.LoggedUserId)
 			{
 				throw new HttpForbiddenException();
 			}
 
 			messageQueries.Delete(messageId);
-
 		}
 
 		/// <summary>
@@ -386,12 +374,10 @@ namespace VocaDb.Web.Controllers.Api
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false
 			)
 		{
-
 			var paging = new PagingProperties(start, maxResults, getTotalCount);
 			var result = queries.GetProfileComments(id, paging);
 
 			return result;
-
 		}
 
 		/// <summary>
@@ -439,7 +425,6 @@ namespace VocaDb.Web.Controllers.Api
 			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-
 			maxResults = Math.Min(maxResults, absoluteMax);
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
@@ -461,7 +446,6 @@ namespace VocaDb.Web.Controllers.Api
 
 			var songs = queries.GetRatedSongs(queryParams, ratedSong => new RatedSongForUserForApiContract(ratedSong, lang, fields));
 			return songs;
-
 		}
 
 		/// <summary>
@@ -489,7 +473,6 @@ namespace VocaDb.Web.Controllers.Api
 			SongListSortRule sort = SongListSortRule.Name,
 			SongListOptionalFields? fields = null)
 		{
-
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var queryParams = new SongListQueryParams
 			{
@@ -501,7 +484,6 @@ namespace VocaDb.Web.Controllers.Api
 			};
 
 			return queries.GetCustomSongLists(id, queryParams, fields ?? SongListOptionalFields.None);
-
 		}
 
 		/// <summary>
@@ -592,10 +574,8 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		public string PostAlbumStatus(int albumId, PurchaseStatus collectionStatus, MediaType mediaType, int rating)
 		{
-
 			queries.UpdateAlbumForUser(permissionContext.LoggedUserId, albumId, collectionStatus, mediaType, rating);
 			return "OK";
-
 		}
 
 		/// <summary>
@@ -631,12 +611,10 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		public async Task<UserMessageContract> PostNewMessage(int id, UserMessageContract contract)
 		{
-
 			var mySettingsUrl = VocaUriBuilder.CreateAbsolute("User/MySettings").ToString();
 			var messagesUrl = VocaUriBuilder.CreateAbsolute("User/Messages").ToString();
 
 			return await queries.SendMessage(contract, mySettingsUrl, messagesUrl);
-
 		}
 
 		/// <summary>
@@ -685,10 +663,8 @@ namespace VocaDb.Web.Controllers.Api
 		[Obsolete]
 		public string PostSongRating(int songId, SongVoteRating rating)
 		{
-
 			service.UpdateSongRating(permissionContext.LoggedUserId, songId, rating);
 			return "OK";
-
 		}
 
 		/// <summary>
@@ -702,12 +678,10 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public Task<TagUsageForApiContract[]> PutAlbumTags(int albumId, TagBaseContract[] tags)
 		{
-
 			if (tags == null)
 				throw new HttpBadRequestException();
 
 			return queries.SaveAlbumTags(albumId, tags, false);
-
 		}
 
 		[Route("current/artistTags/{artistId:int}")]
@@ -715,12 +689,10 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public Task<TagUsageForApiContract[]> PutArtistTags(int artistId, TagBaseContract[] tags)
 		{
-
 			if (tags == null)
 				throw new HttpBadRequestException();
 
 			return queries.SaveArtistTags(artistId, tags, false);
-
 		}
 
 		[Route("current/eventTags/{eventId:int}")]
@@ -728,12 +700,10 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public Task<TagUsageForApiContract[]> PutEventTags(int eventId, TagBaseContract[] tags)
 		{
-
 			if (tags == null)
 				throw new HttpBadRequestException();
 
 			return queries.SaveEventTags(eventId, tags, false);
-
 		}
 
 		[Route("current/eventSeriesTags/{seriesId:int}")]
@@ -741,12 +711,10 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public Task<TagUsageForApiContract[]> PutEventSeriesTags(int seriesId, TagBaseContract[] tags)
 		{
-
 			if (tags == null)
 				throw new HttpBadRequestException();
 
 			return queries.SaveEventSeriesTags(seriesId, tags, false);
-
 		}
 
 		[Route("current/songListTags/{songListId:int}")]
@@ -754,12 +722,10 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public Task<TagUsageForApiContract[]> PutSongListTags(int songListId, TagBaseContract[] tags)
 		{
-
 			if (tags == null)
 				throw new HttpBadRequestException();
 
 			return queries.SaveSongListTags(songListId, tags, false);
-
 		}
 
 		/// <summary>
@@ -777,12 +743,10 @@ namespace VocaDb.Web.Controllers.Api
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
 		public Task PostSongTags(int songId, TagBaseContract[] tags)
 		{
-
 			if (tags == null)
 				throw new HttpBadRequestException();
 
 			return queries.SaveSongTags(songId, tags, true);
-
 		}
 
 		[Route("current/songTags/{songId:int}")]
@@ -790,12 +754,10 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public Task<TagUsageForApiContract[]> PutSongTags(int songId, TagBaseContract[] tags)
 		{
-
 			if (tags == null)
 				throw new HttpBadRequestException();
 
 			return queries.SaveSongTags(songId, tags, false);
-
 		}
 
 		/// <summary>
@@ -817,7 +779,6 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("{id:int}/settings/{settingName}")]
 		public void PostSetting(int id, string settingName, [FromBody] string settingValue)
 		{
-
 			if (id != 0 && id != permissionContext.LoggedUserId)
 				throw new HttpForbiddenException();
 
@@ -839,7 +800,6 @@ namespace VocaDb.Web.Controllers.Api
 
 			if (permissionContext.IsLoggedIn)
 				queries.UpdateUserSetting(setting);
-
 		}
 
 		public class PostStatusLimitedModel
@@ -852,6 +812,5 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("{id:int}/status-limited")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public void PostStatusLimited(int id, [FromBody] PostStatusLimitedModel model) => queries.SetUserToLimited(id, model.Reason, WebHelper.GetRealHost(Request), model.CreateReport);
-
 	}
 }

@@ -9,10 +9,8 @@ using NHibernate.UserTypes;
 
 namespace VocaDb.Model.Mapping.CustomTypes
 {
-
 	public class XDocumentType : IUserType
 	{
-
 		public int GetHashCode(object x)
 		{
 			return x.GetHashCode();
@@ -41,24 +39,20 @@ namespace VocaDb.Model.Mapping.CustomTypes
 
 		public new bool Equals(object x, object y)
 		{
-
 			if (ReferenceEquals(x, y)) return true;
 			if (x == null || y == null) return false;
 
 			return x.Equals(y);
-
 		}
 
 		public object DeepCopy(object value)
 		{
-
 			var source = value as XDocument;
 
 			if (source == null)
 				return null;
 
 			return new XDocument(source);
-
 		}
 
 		public bool IsMutable
@@ -68,19 +62,16 @@ namespace VocaDb.Model.Mapping.CustomTypes
 
 		public object NullSafeGet(DbDataReader dr, string[] names, ISessionImplementor session, object owner)
 		{
-
 			var content = dr[names[0]] as string;
 
 			if (content != null)
 				return XDocument.Parse(content);
 			else
 				return null;
-
 		}
 
 		public void NullSafeSet(DbCommand cmd, object obj, int index, ISessionImplementor session)
 		{
-
 			var parameter = (DbParameter)cmd.Parameters[index];
 
 			if (obj == null)
@@ -94,7 +85,6 @@ namespace VocaDb.Model.Mapping.CustomTypes
 				parameter.Value = content;
 			}
 		}
-
 	}
 
 	public class SqlXmlType : SqlType
@@ -104,5 +94,4 @@ namespace VocaDb.Model.Mapping.CustomTypes
 		{
 		}
 	}
-
 }

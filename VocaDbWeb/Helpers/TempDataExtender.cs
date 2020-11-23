@@ -2,10 +2,8 @@
 
 namespace VocaDb.Web.Helpers
 {
-
 	public static class TempDataExtender
 	{
-
 		private const string errorKey = "ErrorMessage";
 		private const string statusKey = "StatusMessage";
 		private const string successKey = "SuccessMessage";
@@ -61,7 +59,5 @@ namespace VocaDb.Web.Helpers
 		{
 			return Get(temp, warnKey);
 		}
-
 	}
-
 }

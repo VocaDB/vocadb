@@ -5,22 +5,17 @@ using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch
 {
-
 	public class AlbumSearchSort
 	{
-
 		private static IQueryable<Album> AddReleaseRestriction(IQueryable<Album> criteria)
 		{
-
 			return criteria.Where(a => a.OriginalRelease.ReleaseDate.Year != null
 				&& a.OriginalRelease.ReleaseDate.Month != null
 				&& a.OriginalRelease.ReleaseDate.Day != null);
-
 		}
 
 		public static IQueryable<Album> AddOrder(IQueryable<Album> criteria, AlbumSortRule sortRule, ContentLanguagePreference languagePreference)
 		{
-
 			switch (sortRule)
 			{
 				case AlbumSortRule.Name:
@@ -43,9 +38,6 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 			}
 
 			return criteria;
-
 		}
-
 	}
-
 }

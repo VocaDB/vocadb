@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
-
 	public class TagSelectionContract
 	{
-
 		public TagSelectionContract() { }
 
 		public TagSelectionContract(Tag tag, ContentLanguagePreference languagePreference, bool selected)
@@ -18,7 +16,5 @@ namespace VocaDb.Model.DataContracts.Tags
 		public bool Selected { get; set; }
 
 		public TagBaseContract Tag { get; set; }
-
 	}
-
 }

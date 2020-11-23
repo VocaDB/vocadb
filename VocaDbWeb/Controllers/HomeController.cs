@@ -12,11 +12,9 @@ using VocaDb.Web.Models;
 
 namespace VocaDb.Web.Controllers
 {
-
 	[SessionState(SessionStateBehavior.ReadOnly)]
 	public class HomeController : ControllerBase
 	{
-
 		private readonly BrandableStringsManager brandableStringsManager;
 		private readonly OtherService otherService;
 		private readonly SongQueries songService;
@@ -30,20 +28,16 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Chat()
 		{
-
 			return View();
-
 		}
 
 		// Might still be used by some clients with opensearch
 		[Obsolete("Moved to web api")]
 		public ActionResult FindNames(string term)
 		{
-
 			var result = otherService.FindNames(SearchTextQuery.Create(term), 10);
 
 			return Json(result);
-
 		}
 
 		//
@@ -51,20 +45,17 @@ namespace VocaDb.Web.Controllers
 
 		public async Task<ActionResult> Index()
 		{
-
 			PageProperties.Description = brandableStringsManager.Home.SiteDescription;
 			PageProperties.AddMainScripts = false;
 
 			var contract = await otherService.GetFrontPageContent();
 
 			return View(contract);
-
 		}
 
 		[HttpPost]
 		public ActionResult GlobalSearch(GlobalSearchBoxModel model)
 		{
-
 			switch (model.ObjectType)
 			{
 				case EntryType.Undefined:
@@ -88,22 +79,17 @@ namespace VocaDb.Web.Controllers
 				default:
 					var controller = model.ObjectType.ToString();
 					return RedirectToAction("Index", controller, new { filter = model.GlobalSearchTerm });
-
 			}
-
-
 		}
 
 		public ActionResult PVContent(int songId = invalidId)
 		{
-
 			if (songId == invalidId)
 				return NoId();
 
 			var song = songService.GetSongWithPVAndVote(songId, false);
 
 			return PartialView("PVs/_PVContent", song);
-
 		}
 
 		public ActionResult Search(string filter)
@@ -115,6 +101,5 @@ namespace VocaDb.Web.Controllers
 		{
 			return View();
 		}
-
 	}
 }

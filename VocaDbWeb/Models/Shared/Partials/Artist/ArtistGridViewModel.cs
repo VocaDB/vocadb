@@ -3,10 +3,8 @@ using VocaDb.Model.DataContracts.Artists;
 
 namespace VocaDb.Web.Models.Shared.Partials.Artist
 {
-
 	public class ArtistGridViewModel
 	{
-
 		public ArtistGridViewModel(IEnumerable<ArtistContract> artists, int columns, bool displayType = false)
 		{
 			Artists = artists;
@@ -19,7 +17,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Artist
 		public int Columns { get; set; }
 
 		public bool DisplayType { get; set; }
-
 	}
-
 }

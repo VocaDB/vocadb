@@ -14,7 +14,6 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Database.Queries
 {
-
 	public class EntryWithIdAndData<T> : IEntryWithIntId
 	{
 		public T Entry { get; set; }
@@ -24,7 +23,6 @@ namespace VocaDb.Model.Database.Queries
 
 	public class SongsPerArtistPerDate
 	{
-
 		public SongsPerArtistPerDate() { }
 
 		public SongsPerArtistPerDate(DateTime date, int artistId, int count)
@@ -39,12 +37,10 @@ namespace VocaDb.Model.Database.Queries
 		public int ArtistId { get; set; }
 
 		public int Count { get; set; }
-
 	}
 
 	public class StatsQueries
 	{
-
 		private readonly IRepository repository;
 
 		public StatsQueries(IRepository repository)
@@ -54,7 +50,6 @@ namespace VocaDb.Model.Database.Queries
 
 		private int GetRootVb(int vb, Dictionary<int, int> voicebankMap)
 		{
-
 			int loops = 0;
 			while (loops++ <= 10)
 			{
@@ -64,12 +59,10 @@ namespace VocaDb.Model.Database.Queries
 			}
 
 			return vb;
-
 		}
 
 		private Dictionary<int, int> GetRootVoicebanksMap(IDatabaseContext ctx)
 		{
-
 			// Map from child voicebank to base voicebank
 			var baseVoicebankMap = ctx.Query<Artist>()
 				.Where(a => a.BaseVoicebank != null)
@@ -80,12 +73,10 @@ namespace VocaDb.Model.Database.Queries
 				.ToDictionary(a => a.Key, a => GetRootVb(a.Value, baseVoicebankMap));
 
 			return rootVoicebankMap;
-
 		}
 
 		private SongsPerArtistPerDate[] SumToBaseVoicebanks(IDatabaseContext ctx, SongsPerArtistPerDate[] data)
 		{
-
 			var baseVoicebankMap = GetRootVoicebanksMap(ctx);
 
 			// Group by date, then by root artist
@@ -99,29 +90,24 @@ namespace VocaDb.Model.Database.Queries
 
 			// Select new dictionary with songs grouped by root artists and dates
 			return dataDict.SelectMany(d => d.Value.Select(d2 => new SongsPerArtistPerDate(d.Key, d2.Key, d2.Value))).ToArray();
-
 		}
 
 		public class LocalizedValue
 		{
-
 			public int EntryId { get; set; }
 
 			public TranslatedString Name { get; set; }
 
 			public int Value { get; set; }
-
 		}
 
 		public IEnumerable<CountPerDayContract> ArtistsPerMonth(DateTime? cutoff = null)
 		{
-
 			var end = DateTime.Now.AddMonths(-1);
 
 			// TODO: report not verified
 			return repository.HandleQuery(ctx =>
 			{
-
 				return ctx.Query<ArtistForSong>()
 					.WhereSongHasPublishDate(true)
 					.WhereSongPublishDateIsBetween(cutoff, end)
@@ -152,17 +138,13 @@ namespace VocaDb.Model.Database.Queries
 						Month = a.Key.Month,
 						Count = a.Count()
 					});
-
 			});
-
 		}
 
 		public IEnumerable<CountPerDayContract> SongsAddedPerDay(DateTime? cutoff)
 		{
-
 			return repository.HandleQuery(ctx =>
 			{
-
 				var query = ctx.Query<Song>();
 
 				if (cutoff.HasValue)
@@ -182,17 +164,13 @@ namespace VocaDb.Model.Database.Queries
 					.Select(a => new CountPerDayContract(a.Key.Year, a.Key.Month, a.Key.Day, a.Count()))
 					.Where(a => a.Count < 1000)
 					.ToArray();
-
 			});
-
 		}
 
 		public IEnumerable<Tuple<Artist, SongsPerArtistPerDate[]>> SongsPerVocaloidOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
 		{
-
 			return repository.HandleQuery(ctx =>
 			{
-
 				// Note: the same song may be included multiple times for different artists
 				var points = ctx.Query<ArtistForSong>()
 					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null && s.Song.PublishDate.DateTime.Value.Year >= startYear && vocalistTypes.Contains(s.Artist.ArtistType))
@@ -224,17 +202,13 @@ namespace VocaDb.Model.Database.Queries
 					.Take(15)
 					.Select(a => Tuple.Create(artists[a.Key], a.ToArray()));
 				return byArtist;
-
 			});
-
 		}
 
 		public IEnumerable<IGrouping<ArtistType, Tuple<DateTime, ArtistType, int>>> GetSongsPerVoicebankTypeOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
 		{
-
 			return repository.HandleQuery(ctx =>
 			{
-
 				// Note: the same song may be included multiple times for different artists
 				var points = ctx.Query<ArtistForSong>()
 					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null && s.Song.PublishDate.DateTime.Value.Year >= startYear && vocalistTypes.Contains(s.Artist.ArtistType))
@@ -259,17 +233,13 @@ namespace VocaDb.Model.Database.Queries
 					.ToArray();
 
 				return points;
-
 			});
-
 		}
 
 		public IEnumerable<EntryWithIdAndData<LocalizedValue>> HitsPerSongOverTime(DateTime? cutoff)
 		{
-
 			return repository.HandleQuery(ctx =>
 			{
-
 				var topSongIds = ctx.Query<SongHit>()
 					.Where(s => !s.Entry.Deleted && s.Entry.PublishDate.DateTime != null)
 					.FilterIfNotNull(cutoff, s => s.Entry.PublishDate.DateTime > cutoff)
@@ -326,17 +296,13 @@ namespace VocaDb.Model.Database.Queries
 					Data = p.Select(d => d.Data).ToArray()
 				}).OrderByIds(topSongIds);
 				return bySong;
-
 			});
-
 		}
 
 		public EntryWithIdAndData<LocalizedValue>[] ScorePerSongOverTime(DateTime? cutoff)
 		{
-
 			return repository.HandleQuery(ctx =>
 			{
-
 				var topSongIds = ctx.Query<FavoriteSongForUser>()
 					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null)
 					.FilterIfNotNull(cutoff, s => s.Song.PublishDate.DateTime > cutoff)
@@ -393,9 +359,7 @@ namespace VocaDb.Model.Database.Queries
 					Data = p.Select(d => d.Data).ToArray().AddPreviousValues(true, TimeUnit.Day, DateTime.Now).ToArray()
 				}).OrderByIds(topSongIds);
 				return bySong;
-
 			});
-
 		}
 
 		public static Dictionary<int, LocalizedValue> GetSongsWithNames(IDatabaseContext ctx, int[] topSongIds)
@@ -415,22 +379,16 @@ namespace VocaDb.Model.Database.Queries
 				}).ToDictionary(s => s.EntryId);
 			return songs;
 		}
-
 	}
 
 	public static class IQueryableExtensionsForStats
 	{
-
 		public static IQueryable<T> FilterIfNotNull<T>(this IQueryable<T> query, DateTime? since, Expression<Func<T, bool>> predicate)
 		{
-
 			if (!since.HasValue)
 				return query;
 
 			return query.Where(predicate);
-
 		}
-
 	}
-
 }

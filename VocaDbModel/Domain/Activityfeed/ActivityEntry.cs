@@ -4,7 +4,6 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Activityfeed
 {
-
 	/// <summary>
 	/// Activity entries are primarily shown in the activity feed on the front page, 
 	/// but they are also used for statistics such as the number of edits per user.
@@ -14,7 +13,6 @@ namespace VocaDb.Model.Domain.Activityfeed
 	/// </summary>
 	public abstract class ActivityEntry : IEntryWithIntId
 	{
-
 		private User author;
 
 		protected ActivityEntry()
@@ -25,10 +23,8 @@ namespace VocaDb.Model.Domain.Activityfeed
 		protected ActivityEntry(User author, EntryEditEvent editEvent)
 			: this()
 		{
-
 			Author = author;
 			EditEvent = editEvent;
-
 		}
 
 		/// <summary>
@@ -75,7 +71,6 @@ namespace VocaDb.Model.Domain.Activityfeed
 	/// </summary>
 	public enum EntryEditEvent
 	{
-
 		Created = 1,
 
 		Updated = 2,
@@ -83,7 +78,5 @@ namespace VocaDb.Model.Domain.Activityfeed
 		Deleted = 3,
 
 		Restored = 4
-
 	}
-
 }

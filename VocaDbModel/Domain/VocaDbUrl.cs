@@ -5,7 +5,6 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Domain
 {
-
 	/// <summary>
 	/// URL object with domain information (either main, static or external).
 	/// Can be absolute or relative.
@@ -14,7 +13,6 @@ namespace VocaDb.Model.Domain
 	[DebuggerDisplay("{DebugString}")]
 	public class VocaDbUrl : IEquatable<VocaDbUrl>
 	{
-
 		public static VocaDbUrl Empty { get; } = new VocaDbUrl(string.Empty, UrlDomain.Main, UriKind.Absolute);
 		public static VocaDbUrl External(string url) => new VocaDbUrl(url, UrlDomain.External, UriKind.Absolute);
 
@@ -40,7 +38,6 @@ namespace VocaDb.Model.Domain
 		/// <exception cref="NotSupportedException">URL cannot be converted to absolute.</exception>
 		public VocaDbUrl ToAbsolute()
 		{
-
 			switch (Kind)
 			{
 				case UriKind.Absolute:
@@ -58,7 +55,6 @@ namespace VocaDb.Model.Domain
 				default:
 					throw new InvalidOperationException(DebugString);
 			}
-
 		}
 
 		public VocaDbUrl ToAbsoluteIfNotMain() => Domain == UrlDomain.Main ? this : ToAbsolute();
@@ -79,7 +75,6 @@ namespace VocaDb.Model.Domain
 			hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Url);
 			return hashCode;
 		}
-
 	}
 
 	public enum UrlDomain

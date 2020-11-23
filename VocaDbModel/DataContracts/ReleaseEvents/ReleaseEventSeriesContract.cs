@@ -7,11 +7,9 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ReleaseEventSeriesContract : IEntryImageInformation, IEntryWithIntId, IEntryWithStatus
 	{
-
 		string IEntryBase.DefaultName => Name;
 		EntryType IEntryBase.EntryType => EntryType.ReleaseEventSeries;
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEventSeries;
@@ -26,7 +24,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		public ReleaseEventSeriesContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference, bool includeLinks = false)
 			: this()
 		{
-
 			ParamIs.NotNull(() => series);
 
 			AdditionalNames = series.Names.GetAdditionalNamesStringForLanguage(languagePreference);
@@ -44,7 +41,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			{
 				WebLinks = series.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 			}
-
 		}
 
 		[DataMember]
@@ -84,7 +80,5 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		{
 			return string.Format("release event series {0} [{1}]", Name, Id);
 		}
-
 	}
-
 }

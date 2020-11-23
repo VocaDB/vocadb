@@ -6,10 +6,8 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Domain
 {
-
 	public abstract class EntryReport : IEntryWithIntId
 	{
-
 		public const int MaxNotesLength = 400;
 
 		private string hostname;
@@ -25,12 +23,10 @@ namespace VocaDb.Model.Domain
 		protected EntryReport(User user, string hostname, string notes, int? versionNumber)
 			: this()
 		{
-
 			User = user;
 			Hostname = hostname;
 			Notes = notes;
 			VersionNumber = versionNumber;
-
 		}
 
 		public virtual DateTime? ClosedAt { get; set; }
@@ -81,7 +77,6 @@ namespace VocaDb.Model.Domain
 		public virtual ArchivedObjectVersion VersionBase => null;
 
 		public virtual int? VersionNumber { get; set; }
-
 	}
 
 	public enum ReportStatus
@@ -89,5 +84,4 @@ namespace VocaDb.Model.Domain
 		Open,
 		Closed
 	}
-
 }

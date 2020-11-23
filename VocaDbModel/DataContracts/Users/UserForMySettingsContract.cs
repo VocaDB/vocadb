@@ -4,10 +4,8 @@ using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Model.DataContracts.Users
 {
-
 	public class UserForMySettingsContract : UserContract
 	{
-
 		public UserForMySettingsContract()
 		{
 			AboutMe = Location = string.Empty;
@@ -17,7 +15,6 @@ namespace VocaDb.Model.DataContracts.Users
 		public UserForMySettingsContract(User user)
 			: base(user, true)
 		{
-
 			AboutMe = user.Options.AboutMe;
 			CanChangeName = user.CanChangeName;
 			EmailVerified = user.Options.EmailVerified;
@@ -33,7 +30,6 @@ namespace VocaDb.Model.DataContracts.Users
 			TwitterName = user.Options.TwitterName;
 			UnreadNotificationsToKeep = user.Options.UnreadNotificationsToKeep;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
-
 		}
 
 		public string AboutMe { get; set; }
@@ -65,6 +61,5 @@ namespace VocaDb.Model.DataContracts.Users
 		public int UnreadNotificationsToKeep { get; set; }
 
 		public WebLinkContract[] WebLinks { get; set; }
-
 	}
 }

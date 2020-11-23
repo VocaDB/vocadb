@@ -26,14 +26,12 @@ using VocaDb.Web.Code.Exceptions;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	/// <summary>
 	/// API queries for song lists.
 	/// </summary>
 	[RoutePrefix("api/songLists")]
 	public class SongListApiController : ApiController
 	{
-
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly SongListQueries queries;
@@ -60,7 +58,6 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		public void Delete(int id, string notes = "", bool hardDelete = false)
 		{
-
 			notes = notes ?? string.Empty;
 
 			if (hardDelete)
@@ -71,7 +68,6 @@ namespace VocaDb.Web.Controllers.Api
 			{
 				queries.Delete(id, notes);
 			}
-
 		}
 
 		/// <summary>
@@ -125,7 +121,6 @@ namespace VocaDb.Web.Controllers.Api
 			SongListOptionalFields fields = SongListOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var queryParams = new SongListQueryParams
 			{
@@ -138,7 +133,6 @@ namespace VocaDb.Web.Controllers.Api
 			};
 
 			return queries.Find(s => new SongListForApiContract(s, lang, userIconFactory, entryImagePersister, fields), queryParams);
-
 		}
 
 		/// <summary>
@@ -193,7 +187,6 @@ namespace VocaDb.Web.Controllers.Api
 			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-
 			maxResults = Math.Min(maxResults, absoluteMax);
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
@@ -212,14 +205,12 @@ namespace VocaDb.Web.Controllers.Api
 					SongTypes = types
 				},
 				songInList => new SongInListForApiContract(songInList, lang, fields));
-
 		}
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Route("import")]
 		public async Task<ImportedSongListContract> GetImport(string url, bool parseAll = true)
 		{
-
 			try
 			{
 				return await queries.Import(url, parseAll);
@@ -228,14 +219,12 @@ namespace VocaDb.Web.Controllers.Api
 			{
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = x.Message });
 			}
-
 		}
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Route("import-songs")]
 		public async Task<PartialImportedSongs> GetImportSongs(string url, string pageToken, int maxResults = 20, bool parseAll = true)
 		{
-
 			try
 			{
 				return await queries.ImportSongs(url, pageToken, maxResults, parseAll);
@@ -244,7 +233,6 @@ namespace VocaDb.Web.Controllers.Api
 			{
 				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = x.Message });
 			}
-
 		}
 
 		/// <summary>
@@ -256,12 +244,10 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		public int Post(SongListForEditContract list)
 		{
-
 			if (list == null)
 				throw new HttpBadRequestException();
 
 			return queries.UpdateSongList(list, null);
-
 		}
 
 		/// <summary>
@@ -286,7 +272,5 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("{listId:int}/comments")]
 		[Authorize]
 		public CommentForApiContract PostNewComment(int listId, CommentForApiContract contract) => queries.CreateComment(listId, contract);
-
 	}
-
 }

@@ -2,10 +2,8 @@ using VocaDb.Model.DataContracts.Tags;
 
 namespace VocaDb.Web.Models.Shared.Partials.Tag
 {
-
 	public class TagListViewModel
 	{
-
 		public TagListViewModel(TagBaseContract[] tagNames, bool tooltip = false)
 		{
 			TagNames = tagNames;
@@ -15,7 +13,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Tag
 		public TagBaseContract[] TagNames { get; set; }
 
 		public bool Tooltip { get; set; }
-
 	}
-
 }

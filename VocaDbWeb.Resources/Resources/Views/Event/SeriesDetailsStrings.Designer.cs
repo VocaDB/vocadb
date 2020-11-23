@@ -25,7 +25,6 @@ namespace VocaDb.Web.Resources.Views.Event
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public class SeriesDetailsStrings
 	{
-
 		private static global::System.Resources.ResourceManager resourceMan;
 
 		private static global::System.Globalization.CultureInfo resourceCulture;

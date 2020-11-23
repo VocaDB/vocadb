@@ -5,10 +5,8 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Web.Controllers
 {
-
 	public class CommentController : ControllerBase
 	{
-
 		private readonly OtherService otherService;
 
 		public CommentController(OtherService otherService)
@@ -21,11 +19,8 @@ namespace VocaDb.Web.Controllers
 
 		public async Task<ActionResult> Index()
 		{
-
 			var comments = await otherService.GetRecentComments();
 			return View(comments);
-
 		}
-
 	}
 }

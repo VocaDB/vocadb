@@ -4,7 +4,6 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Domain.Images
 {
-
 	/// <summary>
 	/// Stores entry images on disk, using the old directory structure (such as /EntryImg/Album/39-t.jpg).
 	/// Used for persisting songlist/tag thumbnails on the server disk.
@@ -15,7 +14,6 @@ namespace VocaDb.Model.Domain.Images
 	/// </remarks>
 	public class ServerEntryImagePersisterOld : ServerEntryImagePersisterBase, IEntryImagePersisterOld, IEntryPictureFilePersister
 	{
-
 		private static string GetFileName(int id, string mime, string suffix)
 		{
 			return string.Format("{0}{1}{2}", id, suffix, ImageHelper.GetExtensionFromMime(mime));
@@ -43,7 +41,6 @@ namespace VocaDb.Model.Domain.Images
 
 		public override VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size)
 		{
-
 			ParamIs.NotNull(() => picture);
 
 			string url;
@@ -58,7 +55,6 @@ namespace VocaDb.Model.Domain.Images
 			}
 
 			return new VocaDbUrl(url, UrlDomain.Main, System.UriKind.Relative);
-
 		}
 
 		public override string GetPath(IEntryImageInformation picture, ImageSize size)
@@ -71,6 +67,5 @@ namespace VocaDb.Model.Domain.Images
 			return picture.EntryType == EntryType.SongList || picture.EntryType == EntryType.Tag
 				|| ((picture.EntryType == EntryType.Album || picture.EntryType == EntryType.Artist) && picture.Purpose == ImagePurpose.Additional);
 		}
-
 	}
 }

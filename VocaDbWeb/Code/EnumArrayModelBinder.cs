@@ -6,7 +6,6 @@ using VocaDb.Model;
 
 namespace VocaDb.Web.Code
 {
-
 	/// <summary>
 	/// Parses enum arrays that are passed as comma-separated string (such as "English,Japanese"), similar to bitfields.
 	/// </summary>
@@ -17,12 +16,10 @@ namespace VocaDb.Web.Code
 	/// </remarks>
 	public class EnumArrayModelBinder : IModelBinder
 	{
-
 		private static readonly Type genericEnumValType = typeof(EnumVal<>);
 
 		public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
 		{
-
 			var key = bindingContext.ModelName;
 			var val = bindingContext.ValueProvider.GetValue(key);
 
@@ -46,17 +43,13 @@ namespace VocaDb.Web.Code
 			var result = enumValType.GetMethod("ParseMultiple", BindingFlags.Public | BindingFlags.Static).Invoke(null, new[] { val.AttemptedValue });
 			bindingContext.Model = result;
 			return true;
-
 		}
-
 	}
 
 	public class EnumArrayModelBinder<TEnum> : IModelBinder where TEnum : struct, Enum
 	{
-
 		public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
 		{
-
 			var key = bindingContext.ModelName;
 			var val = bindingContext.ValueProvider.GetValue(key);
 			if (val != null && !string.IsNullOrEmpty(val.AttemptedValue))
@@ -67,9 +60,7 @@ namespace VocaDb.Web.Code
 			}
 
 			return false;
-
 		}
-
 	}
 
 	[AttributeUsage(AttributeTargets.Parameter)]
@@ -77,5 +68,4 @@ namespace VocaDb.Web.Code
 	{
 		public EnumArrayBinderAttribute() : base(typeof(EnumArrayModelBinder)) { }
 	}
-
 }

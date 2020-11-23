@@ -19,14 +19,12 @@ using VocaDb.Web.Models.Song;
 
 namespace VocaDb.Tests.Web.Controllers
 {
-
 	/// <summary>
 	/// Tests for <see cref="SongController"/>.
 	/// </summary>
 	[TestClass]
 	public class SongControllerTests
 	{
-
 		private readonly SongController controller;
 		private readonly FakePermissionContext permissionContext = new FakePermissionContext();
 		private readonly FakeSongRepository repository = new FakeSongRepository();
@@ -43,7 +41,6 @@ namespace VocaDb.Tests.Web.Controllers
 		[TestMethod]
 		public async Task Create()
 		{
-
 			var artist = repository.Save(CreateEntry.Artist(ArtistType.Producer));
 
 			var model = new Create
@@ -63,9 +60,6 @@ namespace VocaDb.Tests.Web.Controllers
 			Assert.AreEqual("Edit", routeResult.RouteValues["Action"], "Action");
 
 			Assert.AreEqual(1, repository.List<Song>().Count, "Song was created");
-
 		}
-
 	}
-
 }

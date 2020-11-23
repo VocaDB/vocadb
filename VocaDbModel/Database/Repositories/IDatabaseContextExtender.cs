@@ -9,55 +9,41 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Database.Repositories
 {
-
 	/// <summary>
 	/// Extension methods for <see cref="IDatabaseContext"/>.
 	/// </summary>
 	public static class IDatabaseContextExtender
 	{
-
 		public static AgentLoginData CreateAgentLoginData<T>(this IDatabaseContext<T> ctx, IUserPermissionContext permissionContext, User user = null)
 		{
-
 			if (user != null)
 				return new AgentLoginData(user);
 
 			if (permissionContext.IsLoggedIn)
 			{
-
 				user = ctx.OfType<User>().GetLoggedUser(permissionContext);
 				return new AgentLoginData(user);
-
 			}
 			else
 			{
-
 				return new AgentLoginData(permissionContext.Name);
-
 			}
-
 		}
 
 		public static async Task<AgentLoginData> CreateAgentLoginDataAsync<T>(this IDatabaseContext<T> ctx, IUserPermissionContext permissionContext, User user = null)
 		{
-
 			if (user != null)
 				return new AgentLoginData(user);
 
 			if (permissionContext.IsLoggedIn)
 			{
-
 				user = await ctx.OfType<User>().GetLoggedUserAsync(permissionContext);
 				return new AgentLoginData(user);
-
 			}
 			else
 			{
-
 				return new AgentLoginData(permissionContext.Name);
-
 			}
-
 		}
 
 		public static void Delete<T>(this IDatabaseContext ctx, T obj) where T : class, IDatabaseObject
@@ -78,37 +64,29 @@ namespace VocaDb.Model.Database.Repositories
 		public static void DeleteAll<T, T2>(this IDatabaseContext<T> ctx, IEnumerable<T2> objs)
 			where T2 : class, IDatabaseObject
 		{
-
 			var ctxTyped = ctx.OfType<T2>();
 
 			foreach (var obj in objs)
 				ctxTyped.Delete(obj);
-
 		}
 
 		public static User GetLoggedUser(this IDatabaseContext<User> ctx, IUserPermissionContext permissionContext)
 		{
-
 			permissionContext.VerifyLogin();
 
 			return ctx.Load(permissionContext.LoggedUserId);
-
 		}
 
 		public static async Task<User> GetLoggedUserAsync(this IDatabaseContext<User> ctx, IUserPermissionContext permissionContext)
 		{
-
 			permissionContext.VerifyLogin();
 
 			return await ctx.LoadAsync(permissionContext.LoggedUserId);
-
 		}
 
 		public static User GetLoggedUserOrNull(this IDatabaseContext<User> ctx, IUserPermissionContext permissionContext)
 		{
-
 			return (permissionContext.LoggedUser != null ? ctx.Load(permissionContext.LoggedUser.Id) : null);
-
 		}
 
 		public static T2 Load<T2>(this IDatabaseContext ctx, object id) where T2 : class, IDatabaseObject
@@ -165,7 +143,6 @@ namespace VocaDb.Model.Database.Repositories
 
 		public static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff)
 		{
-
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => diff);
 
@@ -177,12 +154,10 @@ namespace VocaDb.Model.Database.Repositories
 
 			foreach (var n in diff.Unchanged)
 				ctx.Update(n);
-
 		}
 
 		public static async Task SyncAsync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff)
 		{
-
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => diff);
 
@@ -194,7 +169,6 @@ namespace VocaDb.Model.Database.Repositories
 
 			foreach (var n in diff.Unchanged)
 				await ctx.UpdateAsync(n);
-
 		}
 
 		/// <summary>
@@ -209,28 +183,23 @@ namespace VocaDb.Model.Database.Repositories
 		public static CollectionDiff<T2, T2> Sync<T, T2>(this IDatabaseContext<T> ctx, CollectionDiff<T2, T2> diff)
 			where T2 : class, IDatabaseObject
 		{
-
 			ParamIs.NotNull(() => ctx);
 
 			Sync<T2>(ctx.OfType<T2>(), diff);
 			return diff;
-
 		}
 
 		public static async Task<CollectionDiff<T2, T2>> SyncAsync<T, T2>(this IDatabaseContext<T> ctx, CollectionDiff<T2, T2> diff)
 			where T2 : class, IDatabaseObject
 		{
-
 			ParamIs.NotNull(() => ctx);
 
 			await SyncAsync<T2>(ctx.OfType<T2>(), diff);
 			return diff;
-
 		}
 
 		public static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiffWithValue<T, T> diff)
 		{
-
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => diff);
 
@@ -242,12 +211,10 @@ namespace VocaDb.Model.Database.Repositories
 
 			foreach (var n in diff.Edited)
 				ctx.Update(n);
-
 		}
 
 		public static async Task SyncAsync<T>(this IDatabaseContext<T> ctx, CollectionDiffWithValue<T, T> diff)
 		{
-
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => diff);
 
@@ -259,7 +226,6 @@ namespace VocaDb.Model.Database.Repositories
 
 			foreach (var n in diff.Edited)
 				await ctx.UpdateAsync(n);
-
 		}
 
 		public static T2 Save<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject =>
@@ -282,7 +248,5 @@ namespace VocaDb.Model.Database.Repositories
 
 		public static Task UpdateAsync<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject
 			=> ctx.OfType<T2>().UpdateAsync(obj);
-
 	}
-
 }

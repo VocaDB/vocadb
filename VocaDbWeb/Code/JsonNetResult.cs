@@ -5,13 +5,11 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Code
 {
-
 	/// <summary>
 	/// JSON result using the JSON.net library instead of standard .NET.
 	/// </summary>
 	public class JsonNetResult : JsonResult
 	{
-
 		public JsonNetResult()
 		{
 			LowercaseNames = true;
@@ -23,7 +21,6 @@ namespace VocaDb.Web.Code
 
 		public override void ExecuteResult(ControllerContext context)
 		{
-
 			ParamIs.NotNull(() => context);
 
 			if (context.HttpContext == null || context.HttpContext.Request == null)
@@ -39,13 +36,9 @@ namespace VocaDb.Web.Code
 
 			if (Data != null)
 			{
-
 				var json = JsonHelpers.Serialize(Data, LowercaseNames);
 				response.Write(json);
-
 			}
-
 		}
 	}
-
 }

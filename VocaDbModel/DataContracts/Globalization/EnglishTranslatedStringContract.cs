@@ -3,11 +3,9 @@ using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.DataContracts.Globalization
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EnglishTranslatedStringContract
 	{
-
 		public EnglishTranslatedStringContract()
 		{
 			English = Original = string.Empty;
@@ -15,12 +13,10 @@ namespace VocaDb.Model.DataContracts.Globalization
 
 		public EnglishTranslatedStringContract(EnglishTranslatedString str)
 		{
-
 			ParamIs.NotNull(() => str);
 
 			English = str.English;
 			Original = str.Original;
-
 		}
 
 		[DataMember]
@@ -28,6 +24,5 @@ namespace VocaDb.Model.DataContracts.Globalization
 
 		[DataMember]
 		public string Original { get; set; }
-
 	}
 }

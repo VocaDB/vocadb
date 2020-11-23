@@ -8,33 +8,27 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class RatedSongForUserForApiContract : SongRatingContract
 	{
-
 		public RatedSongForUserForApiContract() { }
 
 		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, IUserIconFactory userIconFactory, UserOptionalFields userFields,
 			IUserPermissionContext userPermissionContext)
 		{
-
 			this.Date = ratedSong.Date;
 			this.Rating = ratedSong.Rating;
 			if (ratedSong.User.Options.PublicRatings || userPermissionContext.HasPermission(PermissionToken.ViewHiddenRatings))
 			{
 				User = new UserForApiContract(ratedSong.User, userIconFactory, userFields);
 			}
-
 		}
 
 		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, ContentLanguagePreference languagePreference, SongOptionalFields fields)
 		{
-
 			this.Date = ratedSong.Date;
 			this.Rating = ratedSong.Rating;
 			this.Song = new SongForApiContract(ratedSong.Song, null, languagePreference, fields);
-
 		}
 
 		[DataMember]
@@ -45,16 +39,12 @@ namespace VocaDb.Model.DataContracts.Users
 
 		[DataMember(EmitDefaultValue = false)]
 		public UserForApiContract User { get; set; }
-
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongRatingContract
 	{
-
 		[DataMember]
 		public SongVoteRating Rating { get; set; }
-
 	}
-
 }

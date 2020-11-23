@@ -12,7 +12,6 @@ namespace VocaDb.Web
 {
 	public class SwaggerConfig
 	{
-
 		public static void Register()
 		{
 			var resourcesAssembly = typeof(ResourcesRoot).Assembly;

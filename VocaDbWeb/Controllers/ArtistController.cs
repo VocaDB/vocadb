@@ -28,7 +28,6 @@ namespace VocaDb.Web.Controllers
 {
 	public class ArtistController : ControllerBase
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private readonly ArtistQueries queries;
@@ -55,16 +54,13 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult ArchivedVersionPicture(int id)
 		{
-
 			var contract = Service.GetArchivedArtistPicture(id);
 
 			return Picture(contract);
-
 		}
 
 		public ActionResult ArchivedVersionXml(int id = invalidId)
 		{
-
 			if (id == invalidId)
 				return NoId();
 
@@ -72,22 +68,18 @@ namespace VocaDb.Web.Controllers
 			var content = XmlHelper.SerializeToUTF8XmlString(doc);
 
 			return Xml(content);
-
 		}
 
 		[HttpPost]
 		[RestrictBannedIP]
 		public void CreateReport(int artistId, ArtistReportType reportType, string notes, int? versionNumber)
 		{
-
 			queries.CreateReport(artistId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
-
 		}
 
 		[Obsolete]
 		public ActionResult Index(IndexRouteParams routeParams)
 		{
-
 			return RedirectToAction("Index", "Search", new SearchRouteParams
 			{
 				searchType = EntryType.Artist,
@@ -95,47 +87,38 @@ namespace VocaDb.Web.Controllers
 				sort = routeParams.sort,
 				artistType = routeParams.artistType
 			});
-
 		}
 
 		[Authorize]
 		public ActionResult RemoveTagUsage(long id)
 		{
-
 			var artistId = queries.RemoveTagUsage(id);
 			TempData.SetStatusMessage("Tag usage removed");
 
 			return RedirectToAction("ManageTagUsages", new { id = artistId });
-
 		}
 
 		public ActionResult Restore(int id)
 		{
-
 			Service.Restore(id);
 
 			return RedirectToAction("Edit", new { id = id });
-
 		}
 
 		public async Task<ActionResult> RevertToVersion(int archivedArtistVersionId)
 		{
-
 			var result = await queries.RevertToVersion(archivedArtistVersionId);
 
 			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
 
 			return RedirectToAction("Edit", new { id = result.Id });
-
 		}
 
 		[HttpPost]
 		public ActionResult FindDuplicate(string term1, string term2, string term3, string linkUrl)
 		{
-
 			var result = queries.FindDuplicates(new[] { term1, term2, term3 }, linkUrl).Select(e => new DuplicateEntryResultContract<ArtistEditableFields>(e, ArtistEditableFields.Names));
 			return LowercaseJson(result);
-
 		}
 
 		//
@@ -143,7 +126,6 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Details(int id = invalidId)
 		{
-
 			if (id == invalidId)
 				return HttpNotFound();
 
@@ -163,55 +145,45 @@ namespace VocaDb.Web.Controllers
 			prop.OpenGraph.ShowTwitterCard = true;
 
 			return View(model);
-
 		}
 
 		public ActionResult Picture(int id = invalidId)
 		{
-
 			if (id == invalidId)
 				return NoId();
 
 			var artist = Service.GetArtistPicture(id);
 
 			return Picture(artist);
-
 		}
 
 		public ActionResult PictureThumb(int id = invalidId)
 		{
-
 			if (id == invalidId)
 				return NoId();
 
 			var artist = queries.GetPictureThumb(id);
 			return Picture(artist);
-
 		}
 
 		public ActionResult PopupContent(int id = invalidId)
 		{
-
 			if (id == invalidId)
 				return NoId();
 
 			var artist = Service.GetArtist(id);
 			return PartialView("ArtistPopupContent", artist);
-
 		}
 
 		[Authorize]
 		public ActionResult Create()
 		{
-
 			return View(new Create());
-
 		}
 
 		[HttpPost]
 		public async Task<ActionResult> Create(Create model)
 		{
-
 			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji) && string.IsNullOrWhiteSpace(model.NameEnglish))
 				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
 
@@ -239,7 +211,6 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return RedirectToAction("Edit", new { id = artist.Id });
-
 		}
 
 		//
@@ -247,7 +218,6 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Edit(int id = invalidId)
 		{
-
 			if (id == invalidId)
 				return NoId();
 
@@ -255,7 +225,6 @@ namespace VocaDb.Web.Controllers
 
 			var model = CreateArtistEditViewModel(id, null);
 			return View(model);
-
 		}
 
 		//
@@ -264,7 +233,6 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public async Task<ActionResult> Edit(ArtistEditViewModel viewModel)
 		{
-
 			// Unable to continue if viewmodel is null because we need the ID at least
 			if (viewModel == null || viewModel.EditedArtist == null)
 			{
@@ -310,73 +278,57 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return RedirectToAction("Details", new { id = model.Id });
-
 		}
 
 		[Authorize]
 		public ActionResult ManageTagUsages(int id)
 		{
-
 			var artist = Service.GetEntryWithTagUsages(id);
 			return View(artist);
-
 		}
 
 		public ActionResult Merge(int id)
 		{
-
 			var artist = Service.GetArtist(id);
 			return View(artist);
-
 		}
 
 		[HttpPost]
 		public ActionResult Merge(int id, int targetArtistId)
 		{
-
 			Service.Merge(id, targetArtistId);
 
 			return RedirectToAction("Edit", new { id = targetArtistId });
-
 		}
 
 		public ActionResult Name(int id)
 		{
-
 			var contract = Service.GetArtist(id);
 			return Content(contract.Name);
-
 		}
 
 		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
 		{
-
 			queries.UpdateVersionVisibility<ArchivedArtistVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
-
 		}
 
 		public ActionResult Versions(int id)
 		{
-
 			var contract = Service.GetArtistWithArchivedVersions(id);
 
 			return View(new Versions(contract));
-
 		}
 
 		public ActionResult ViewVersion(int id = invalidId, int? ComparedVersionId = null)
 		{
-
 			if (id == invalidId)
 				return NoId();
 
 			var contract = Service.GetVersionDetails(id, ComparedVersionId ?? 0);
 
 			return View(contract);
-
 		}
-
 	}
 }

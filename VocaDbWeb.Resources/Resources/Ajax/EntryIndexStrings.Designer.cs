@@ -25,7 +25,6 @@ namespace AjaxRes
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public class EntryIndexStrings
 	{
-
 		private static global::System.Resources.ResourceManager resourceMan;
 
 		private static global::System.Globalization.CultureInfo resourceCulture;

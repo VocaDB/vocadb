@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.DataContracts.Aggregate
 {
-
 	public class CountPerDayContract
 	{
-
 		public CountPerDayContract()
 		{
 			Day = 1;
@@ -36,7 +34,5 @@ namespace VocaDb.Model.DataContracts.Aggregate
 		{
 			return new DateTime(Year, Month, Day);
 		}
-
 	}
-
 }

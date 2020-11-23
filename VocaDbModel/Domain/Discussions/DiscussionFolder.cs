@@ -4,10 +4,8 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Discussions
 {
-
 	public class DiscussionFolder : IEntryWithIntId
 	{
-
 		private string description;
 		private string title;
 		private IList<DiscussionTopic> topics = new List<DiscussionTopic>();
@@ -20,9 +18,7 @@ namespace VocaDb.Model.Domain.Discussions
 		public DiscussionFolder(string title)
 			: this()
 		{
-
 			Name = title;
-
 		}
 
 		/// <summary>
@@ -83,7 +79,5 @@ namespace VocaDb.Model.Domain.Discussions
 		{
 			return string.Format("Discussion folder '{0}' [{1}]", Name, Id);
 		}
-
 	}
-
 }

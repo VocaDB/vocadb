@@ -4,10 +4,8 @@ using System.Threading.Tasks;
 
 namespace VocaDb.Model.Domain.Caching
 {
-
 	public static class ObjectCacheExtender
 	{
-
 		/// <summary>
 		/// Get cache item, or insert if it doesn't exist.
 		/// </summary>
@@ -29,7 +27,6 @@ namespace VocaDb.Model.Domain.Caching
 		/// </remarks>
 		public static T GetOrInsert<T>(this ObjectCache cache, string key, CacheItemPolicy cacheItemPolicy, Func<T> func, Func<T, bool> allowCaching = null)
 		{
-
 			// Note: not thread safe
 			if (cache.Contains(key))
 				return (T)cache.Get(key);
@@ -44,12 +41,10 @@ namespace VocaDb.Model.Domain.Caching
 			}
 
 			return item;
-
 		}
 
 		public static async Task<T> GetOrInsertAsync<T>(this ObjectCache cache, string key, CacheItemPolicy policy, Func<Task<T>> func, Func<T, bool> allowCaching = null)
 		{
-
 			if (cache.Contains(key))
 				return (T)cache.Get(key);
 
@@ -63,14 +58,11 @@ namespace VocaDb.Model.Domain.Caching
 			}
 
 			return item;
-
 		}
-
 	}
 
 	public static class CachePolicy
 	{
-
 		public static CacheItemPolicy AbsoluteExpiration(TimeSpan fromNow)
 		{
 			return new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now + fromNow };
@@ -88,7 +80,5 @@ namespace VocaDb.Model.Domain.Caching
 		{
 			return new CacheItemPolicy();
 		}
-
 	}
-
 }

@@ -5,10 +5,8 @@ using VocaDb.Model.Database.Queries;
 
 namespace VocaDb.Model.DataContracts.Aggregate
 {
-
 	public static class CountPerDayContractExtender
 	{
-
 		public static IEnumerable<TResult> CumulativeSelect<TSource, TResult>(this IEnumerable<TSource> sequence, Func<TSource, TResult, TResult> func)
 		{
 			var previous = default(TResult);
@@ -46,20 +44,16 @@ namespace VocaDb.Model.DataContracts.Aggregate
 		/// </summary>
 		private static IEnumerable<DateTime> DateGenerator(DateTime start, DateTime end, TimeUnit timeUnit)
 		{
-
 			var current = start;
 			while (current <= end)
 			{
-
 				yield return current;
 
 				if (timeUnit == TimeUnit.Month)
 					current = current.AddMonths(1);
 				else
 					current = current.AddDays(1);
-
 			}
-
 		}
 
 		// https://stackoverflow.com/a/3683217
@@ -94,7 +88,6 @@ namespace VocaDb.Model.DataContracts.Aggregate
 
 		private static CountPerDayContract[] FillValues(this CountPerDayContract[] query, DateTime? endDate, bool addZeros, TimeUnit timeUnit, Func<Dictionary<DateTime, CountPerDayContract>, DateTime, CountPerDayContract, CountPerDayContract> func)
 		{
-
 			if (!addZeros || !query.Any())
 				return query;
 
@@ -104,7 +97,6 @@ namespace VocaDb.Model.DataContracts.Aggregate
 			return DateGenerator(dict.First().Key, end, timeUnit)
 				.SelectWithPrevious<DateTime, CountPerDayContract>((d, prev) => func(dict, d, prev))
 				.ToArray();
-
 		}
 
 		/// <summary>
@@ -123,5 +115,4 @@ namespace VocaDb.Model.DataContracts.Aggregate
 			return FillValues(query, endDate, addZeros, timeUnit, GetCountOrPrevious);
 		}
 	}
-
 }

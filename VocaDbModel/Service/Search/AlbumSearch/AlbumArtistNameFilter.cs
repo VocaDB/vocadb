@@ -5,10 +5,8 @@ using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch
 {
-
 	public class AlbumArtistNameFilter : ISearchFilter<Album>
 	{
-
 		private readonly string[] artistNames;
 
 		public AlbumArtistNameFilter(IEnumerable<string> artistNames)
@@ -23,14 +21,11 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 
 		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session)
 		{
-
 			return query.Where(a => a.AllArtists.Any(u => u.Artist.Names.Names.Any(a2 => artistNames.Any(na => a2.Value.Contains(na)))));
-
 		}
 
 		public IQueryable<Album> Query(IDatabaseContext session)
 		{
-
 			/*var n = artistNames.First();
 			return session.Query<ArtistName>()
 				.Where(an => an.Value.Contains(n))
@@ -54,7 +49,6 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 
 			return session.Query<Album>();
 			//return session.Query<Album>().Where(a => artistNames.All(na => a.AllArtists.Any(u => u.Artist.Names.Names.Any(a2 => a2.Value.Contains(na)))));
-
 		}
 	}
 }

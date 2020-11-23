@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.Domain.Albums
 {
-
 	public class AlbumDiff : EntryDiff<AlbumEditableFields>
 	{
-
 		public AlbumDiff() : this(true) { }
 		public AlbumDiff(bool isSnapshot) : base(isSnapshot) { }
 
@@ -38,8 +36,5 @@ namespace VocaDb.Model.Domain.Albums
 		{
 			return (field != AlbumEditableFields.Cover ? base.IsIncluded(field) : IncludeCover);
 		}
-
 	}
-
-
 }

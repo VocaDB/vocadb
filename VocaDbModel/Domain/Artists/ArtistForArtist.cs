@@ -2,10 +2,8 @@ using System;
 
 namespace VocaDb.Model.Domain.Artists
 {
-
 	public class ArtistForArtist : IEntryWithIntId
 	{
-
 		private Artist parent;
 		private Artist member;
 
@@ -13,11 +11,9 @@ namespace VocaDb.Model.Domain.Artists
 
 		public ArtistForArtist(Artist group, Artist member, ArtistLinkType linkType)
 		{
-
 			Parent = group;
 			Member = member;
 			LinkType = linkType;
-
 		}
 
 		public virtual Artist Parent
@@ -46,15 +42,12 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual void Delete()
 		{
-
 			Parent.AllMembers.Remove(this);
 			Member.AllGroups.Remove(this);
-
 		}
 
 		public virtual bool Equals(ArtistForArtist another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -62,7 +55,6 @@ namespace VocaDb.Model.Domain.Artists
 				return true;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -82,7 +74,6 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual void MoveToGroup(Artist target)
 		{
-
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Parent))
@@ -91,12 +82,10 @@ namespace VocaDb.Model.Domain.Artists
 			Parent.AllMembers.Remove(this);
 			Parent = target;
 			target.AllMembers.Add(this);
-
 		}
 
 		public virtual void MoveToMember(Artist target)
 		{
-
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Member))
@@ -105,14 +94,11 @@ namespace VocaDb.Model.Domain.Artists
 			Member.AllGroups.Remove(this);
 			Member = target;
 			target.AllGroups.Add(this);
-
 		}
 
 		public override string ToString()
 		{
 			return Parent + " for " + Member + " (" + LinkType + ")";
 		}
-
 	}
-
 }

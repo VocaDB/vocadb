@@ -3,13 +3,10 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.Mapping.Songs
 {
-
 	public class LyricsForSongMap : ClassMap<LyricsForSong>
 	{
-
 		public LyricsForSongMap()
 		{
-
 			Table("LyricsForSongs");
 
 			Cache.ReadWrite();
@@ -25,10 +22,6 @@ namespace VocaDb.Model.Mapping.Songs
 			{
 				c.Map(m => m.CultureCode).Column("[CultureCode]").Length(20).Not.Nullable();
 			});
-
 		}
-
-
 	}
-
 }

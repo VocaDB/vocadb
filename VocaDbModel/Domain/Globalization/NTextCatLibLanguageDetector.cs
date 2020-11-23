@@ -5,10 +5,8 @@ using IvanAkcheurov.NTextCat.Lib;
 
 namespace VocaDb.Model.Domain.Globalization
 {
-
 	public class NTextCatLibLanguageDetector : ILanguageDetector
 	{
-
 		private string LanguageFilePath
 		{
 			get
@@ -19,7 +17,6 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public ContentLanguageSelection Detect(string str, ContentLanguageSelection def = ContentLanguageSelection.Unspecified)
 		{
-
 			var factory = new RankedLanguageIdentifierFactory();
 			var identifier = factory.Load(LanguageFilePath);
 			var res = identifier.Identify(str).FirstOrDefault();
@@ -36,9 +33,6 @@ namespace VocaDb.Model.Domain.Globalization
 				return ContentLanguageSelection.English;
 
 			return def;
-
 		}
-
 	}
-
 }

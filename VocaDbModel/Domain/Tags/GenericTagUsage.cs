@@ -4,10 +4,8 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Tags
 {
-
 	public abstract class GenericTagUsage<TEntry, TVote> : TagUsage where TEntry : class, IEntryBase where TVote : TagVote
 	{
-
 		private TEntry entry;
 		private IList<TVote> votes = new List<TVote>();
 
@@ -16,9 +14,7 @@ namespace VocaDb.Model.Domain.Tags
 		public GenericTagUsage(TEntry entry, Tag tag)
 			: base(tag)
 		{
-
 			Entry = entry;
-
 		}
 
 		public virtual TEntry Entry
@@ -47,22 +43,17 @@ namespace VocaDb.Model.Domain.Tags
 
 		public override void Delete()
 		{
-
 			base.Delete();
 			Votes.Clear();
-
 		}
 
 		public virtual TVote FindVote(User user)
 		{
-
 			return Votes.FirstOrDefault(v => v.User.Equals(user));
-
 		}
 
 		public override TagVote RemoveVote(User user)
 		{
-
 			var vote = FindVote(user);
 
 			if (vote == null)
@@ -72,10 +63,6 @@ namespace VocaDb.Model.Domain.Tags
 			Count--;
 
 			return vote;
-
 		}
-
-
 	}
-
 }

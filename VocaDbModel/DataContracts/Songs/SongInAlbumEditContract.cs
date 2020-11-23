@@ -6,15 +6,12 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs
 {
-
 	public class SongInAlbumEditContract
 	{
-
 		public SongInAlbumEditContract() { }
 
 		public SongInAlbumEditContract(SongInAlbum songInAlbum, ContentLanguagePreference languagePreference)
 		{
-
 			ParamIs.NotNull(() => songInAlbum);
 
 			DiscNumber = songInAlbum.DiscNumber;
@@ -28,24 +25,19 @@ namespace VocaDb.Model.DataContracts.Songs
 			var song = songInAlbum.Song;
 			if (song != null)
 			{
-
 				Artists = song.ArtistList.Select(a => new ArtistContract(a, languagePreference)).ToArray();
 				ArtistString = song.ArtistString[languagePreference];
 				SongName = song.TranslatedName[languagePreference];
 				SongAdditionalNames = string.Join(", ", song.AllNames.Where(n => n != SongName));
 				SongId = song.Id;
-
 			}
 			else
 			{
-
 				Artists = new ArtistContract[0];
 				SongName = songInAlbum.Name;
-
 			}
 
 			IsCustomTrack = song == null;
-
 		}
 
 		public ArtistContract[] Artists { get; set; }
@@ -65,7 +57,5 @@ namespace VocaDb.Model.DataContracts.Songs
 		public string SongName { get; set; }
 
 		public int TrackNumber { get; set; }
-
 	}
-
 }

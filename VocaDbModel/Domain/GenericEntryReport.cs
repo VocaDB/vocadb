@@ -5,12 +5,10 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Domain
 {
-
 	public abstract class GenericEntryReport<TEntry, TReport> : EntryReport, IEntryLink<TEntry>
 		where TEntry : class, IEntryWithNames
 		where TReport : struct, Enum
 	{
-
 		private TEntry song;
 
 		protected GenericEntryReport() { }
@@ -18,10 +16,8 @@ namespace VocaDb.Model.Domain
 		protected GenericEntryReport(TEntry entry, TReport reportType, User user, string hostname, string notes, int? versionNumber)
 			: base(user, hostname, notes, versionNumber)
 		{
-
 			Entry = entry;
 			ReportType = reportType;
-
 		}
 
 		public override IEntryWithNames EntryBase => Entry;
@@ -56,7 +52,5 @@ namespace VocaDb.Model.Domain
 		{
 			return enumTranslations.Translation(ReportType, culture);
 		}
-
 	}
-
 }

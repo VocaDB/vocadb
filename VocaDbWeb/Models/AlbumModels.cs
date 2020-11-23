@@ -22,10 +22,8 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Web.Models
 {
-
 	public class AlbumDetails : IEntryImageInformation
 	{
-
 		private readonly string mime;
 
 		public EntryType EntryType => EntryType.Album;
@@ -38,7 +36,6 @@ namespace VocaDb.Web.Models
 
 		public AlbumDetails(AlbumDetailsContract contract, IUserPermissionContext permissionContext)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			AdditionalNames = contract.AdditionalNames;
@@ -114,7 +111,6 @@ namespace VocaDb.Web.Models
 				|| (ContentFocus != ContentFocus.Illustration && a.Categories.HasFlag(ArtistCategories.Illustrator))).ToArray();
 
 			PrimaryPV = PVHelper.PrimaryPV(PVs);
-
 		}
 
 		public string AdditionalNames { get; set; }
@@ -261,22 +257,18 @@ namespace VocaDb.Web.Models
 		public WebLinkContract[] WebLinks { get; set; }
 
 		public int WishlistedBy { get; set; }
-
 	}
 
 	public class AlbumDisc
 	{
-
 		public AlbumDisc(int discNumber, IEnumerable<SongInAlbumContract> songs, AlbumDiscPropertiesContract discProperties)
 		{
-
 			DiscNumber = discNumber;
 			Songs = songs.ToArray();
 
 			IsVideo = discProperties != null && discProperties.MediaType == DiscMediaType.Video;
 			Name = discProperties != null ? discProperties.Name : null;
 			TotalLength = Songs.All(s => s.Song != null && s.Song.LengthSeconds > 0) ? TimeSpan.FromSeconds(Songs.Sum(s => s.Song.LengthSeconds)) : TimeSpan.Zero;
-
 		}
 
 		public int DiscNumber { get; set; }
@@ -288,21 +280,17 @@ namespace VocaDb.Web.Models
 		public string Name { get; set; }
 
 		public IEnumerable<SongInAlbumContract> Songs { get; set; }
-
 	}
 
 	public class AlbumDetailsAjax
 	{
-
 		public AlbumDetailsAjax(AlbumDetails model)
 		{
-
 			Id = model.Id;
 			LatestComments = model.LatestComments;
 			PersonalDescriptionAuthor = model.PersonalDescriptionAuthor;
 			PersonalDescriptionText = model.PersonalDescriptionText;
 			TagUsages = model.Tags;
-
 		}
 
 		public int Id { get; set; }
@@ -314,7 +302,5 @@ namespace VocaDb.Web.Models
 		public string PersonalDescriptionText { get; set; }
 
 		public TagUsageForApiContract[] TagUsages { get; set; }
-
 	}
-
 }

@@ -4,10 +4,8 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Artists
 {
-
 	public class ArtistReport : GenericEntryReport<Artist, ArtistReportType>
 	{
-
 		public static readonly HashSet<ArtistReportType> ReportTypesWithRequiredNotes =
 			new HashSet<ArtistReportType> { ArtistReportType.InvalidInfo, ArtistReportType.Other };
 
@@ -25,12 +23,10 @@ namespace VocaDb.Model.Domain.Artists
 		}
 
 		public override ArchivedObjectVersion VersionBase => Version;
-
 	}
 
 	public enum ArtistReportType
 	{
-
 		InvalidInfo = 1,
 
 		Duplicate = 2,
@@ -40,7 +36,5 @@ namespace VocaDb.Model.Domain.Artists
 		OwnershipClaim = 4,
 
 		Other = 5
-
 	}
-
 }

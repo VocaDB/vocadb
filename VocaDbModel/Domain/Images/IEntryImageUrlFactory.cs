@@ -1,9 +1,7 @@
 namespace VocaDb.Model.Domain.Images
 {
-
 	public interface IEntryImageUrlFactory
 	{
-
 		/// <summary>
 		/// Gets an absolute URL for internal and external access to an image.
 		/// </summary>
@@ -24,7 +22,6 @@ namespace VocaDb.Model.Domain.Images
 		bool HasImage(IEntryImageInformation picture, ImageSize size);
 
 		bool IsSupported(IEntryImageInformation picture, ImageSize size);
-
 	}
 
 	/// <summary>
@@ -32,15 +29,12 @@ namespace VocaDb.Model.Domain.Images
 	/// </summary>
 	public static class IEntryImageUrlFactoryExtender
 	{
-
 		public static VocaDbUrl GetUrlWithFallback(this IEntryImageUrlFactory urlFactory, IEntryImageInformation imageInfo, ImageSize size, VocaDbUrl fallbackUrl)
 		{
-
 			if (imageInfo == null || !imageInfo.ShouldExist() || !urlFactory.HasImage(imageInfo, size))
 				return fallbackUrl;
 
 			return urlFactory.GetUrl(imageInfo, size);
-
 		}
 
 		/// <summary>
@@ -56,19 +50,15 @@ namespace VocaDb.Model.Domain.Images
 		/// </returns>
 		public static VocaDbUrl GetUrl(this IEntryImageUrlFactory persister, IEntryImageInformation picture, ImageSize size, bool checkExists)
 		{
-
 			if (checkExists && !persister.HasImage(picture, size))
 				return VocaDbUrl.Empty;
 
 			return persister.GetUrl(picture, size);
-
 		}
 
 		public static string GetUrlAbsolute(this IEntryImageUrlFactory persister, IEntryImageInformation picture, ImageSize size, bool checkExists = false)
 		{
 			return persister.GetUrl(picture, size, checkExists).ToAbsolute().Url;
 		}
-
 	}
-
 }

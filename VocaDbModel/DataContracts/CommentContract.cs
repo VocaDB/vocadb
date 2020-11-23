@@ -6,7 +6,6 @@ using VocaDb.Model.Domain.Comments;
 
 namespace VocaDb.Model.DataContracts
 {
-
 	/// <summary>
 	/// Data contract for <see cref="Comment"/>.
 	/// SECURITY NOTE: User contract contains email, which is sensitive information.
@@ -14,12 +13,10 @@ namespace VocaDb.Model.DataContracts
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class CommentContract : IComment
 	{
-
 		public CommentContract() { }
 
 		public CommentContract(Comment comment)
 		{
-
 			ParamIs.NotNull(() => comment);
 
 			Author = (comment.Author != null ? new UserWithEmailContract(comment.Author) : null);
@@ -27,7 +24,6 @@ namespace VocaDb.Model.DataContracts
 			Created = comment.Created;
 			Id = comment.Id;
 			Message = comment.Message;
-
 		}
 
 		[DataMember]
@@ -44,7 +40,5 @@ namespace VocaDb.Model.DataContracts
 
 		[DataMember]
 		public string Message { get; set; }
-
 	}
-
 }

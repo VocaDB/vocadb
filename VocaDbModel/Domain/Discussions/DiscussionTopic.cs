@@ -7,10 +7,8 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Discussions
 {
-
 	public class DiscussionTopic : IEntryWithNames, IEntryWithComments
 	{
-
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
 		string IEntryBase.DefaultName => Name;
@@ -31,7 +29,6 @@ namespace VocaDb.Model.Domain.Discussions
 
 		public DiscussionTopic(DiscussionFolder folder, string name, string content, AgentLoginData agent)
 		{
-
 			Folder = folder;
 			Name = name;
 			Content = content;
@@ -39,7 +36,6 @@ namespace VocaDb.Model.Domain.Discussions
 			AuthorName = agent.Name;
 
 			Created = DateTime.Now;
-
 		}
 
 		public virtual User Author { get; set; }
@@ -111,16 +107,13 @@ namespace VocaDb.Model.Domain.Discussions
 
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
-
 			var comment = new DiscussionComment(this, message, loginData);
 			Comments.Add(comment);
 			return comment;
-
 		}
 
 		public virtual void MoveToFolder(DiscussionFolder targetFolder)
 		{
-
 			ParamIs.NotNull(() => targetFolder);
 
 			if (targetFolder.Equals(Folder))
@@ -129,14 +122,11 @@ namespace VocaDb.Model.Domain.Discussions
 			Folder.AllTopics.Remove(this);
 			Folder = targetFolder;
 			Folder.AllTopics.Add(this);
-
 		}
 
 		public override string ToString()
 		{
 			return string.Format("Discussion topic '{0}' [{1}]", Name, Id);
 		}
-
 	}
-
 }

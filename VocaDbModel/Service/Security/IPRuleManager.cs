@@ -6,14 +6,12 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Service.Security
 {
-
 	/// <summary>
 	/// Manages IP rules. 
 	/// Currently this means IPs banned through the admin or automatically.
 	/// </summary>
 	public class IPRuleManager
 	{
-
 		private static readonly string lockStr = "lock";
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
@@ -39,7 +37,6 @@ namespace VocaDb.Model.Service.Security
 
 		public bool AddPermBannedIP(IDatabaseContext db, IPRule ipRule)
 		{
-
 			if (ipRule == null)
 				throw new ArgumentNullException(nameof(ipRule));
 
@@ -53,7 +50,6 @@ namespace VocaDb.Model.Service.Security
 				permBannedIPs.Add(ipRule.Address);
 				return true;
 			}
-
 		}
 
 		public bool AddPermBannedIP(IDatabaseContext db, string host, string notes)
@@ -85,7 +81,5 @@ namespace VocaDb.Model.Service.Security
 		{
 			permBannedIPs.Reset(ips);
 		}
-
 	}
-
 }

@@ -1,9 +1,7 @@
 ﻿namespace VocaDb.Model.Service.Security
 {
-
 	public static class PasswordHashAlgorithms
 	{
-
 		/// <summary>
 		/// Default (recommended) password hashing algorithm.
 		/// To be used for all new passwords.
@@ -21,7 +19,6 @@
 			}
 			return null;
 		}
-
 	}
 
 	public enum PasswordHashAlgorithmType
@@ -30,5 +27,4 @@
 		SHA1,
 		HMACSHA1
 	}
-
 }

@@ -7,13 +7,11 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.PVs
 {
-
 	/// <summary>
 	/// Manages a collection of PVs.
 	/// </summary>
 	public class PVManager<T> : IEnumerable<T> where T : class, IEditablePV
 	{
-
 		private IList<T> pvs = new List<T>();
 
 		public virtual IList<T> PVs
@@ -28,10 +26,8 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual T Add(T pv)
 		{
-
 			PVs.Add(pv);
 			return pv;
-
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
@@ -56,7 +52,6 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual CollectionDiffWithValue<T, T> Sync(IList<PVContract> newPVs, Func<PVContract, T> fac)
 		{
-
 			ParamIs.NotNull(() => newPVs);
 
 			var diff = CollectionHelper.Diff(PVs, newPVs, (n1, n2) => n1.Id == n2.Id);
@@ -70,15 +65,12 @@ namespace VocaDb.Model.Domain.PVs
 
 			foreach (var newEntry in diff.Added)
 			{
-
 				var l = fac(newEntry);
 				created.Add(l);
-
 			}
 
 			foreach (var linkEntry in diff.Unchanged)
 			{
-
 				var entry = linkEntry;
 				var newEntry = newPVs.First(e => e.Id == entry.Id);
 
@@ -87,7 +79,6 @@ namespace VocaDb.Model.Domain.PVs
 					linkEntry.CopyMetaFrom(newEntry);
 					edited.Add(linkEntry);
 				}
-
 			}
 
 			// Already done at add/delete
@@ -95,9 +86,6 @@ namespace VocaDb.Model.Domain.PVs
 			//UpdatePVServices();
 
 			return new CollectionDiffWithValue<T, T>(created, diff.Removed, diff.Unchanged, edited);
-
 		}
-
 	}
-
 }

@@ -7,10 +7,8 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public interface IPVParser
 	{
-
 		/// <summary>
 		/// Parses PV by URL.
 		/// </summary>
@@ -28,7 +26,6 @@ namespace VocaDb.Model.Service.VideoServices
 		/// <param name="permissionContext">Permission context. Can be null (if the user is not logged in).</param>
 		/// <returns>Result of PV parsing. Cannot be null.</returns>
 		Task<VideoUrlParseResult[]> ParseByUrlsAsync(IEnumerable<string> urls, bool getTitle, IUserPermissionContext permissionContext);
-
 	}
 
 	public class PVParser : IPVParser
@@ -40,5 +37,4 @@ namespace VocaDb.Model.Service.VideoServices
 			return Task.WhenAll(urls.Select(url => ParseByUrlAsync(url, getTitle, permissionContext)));
 		}
 	}
-
 }

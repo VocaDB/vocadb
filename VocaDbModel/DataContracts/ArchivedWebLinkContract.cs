@@ -6,11 +6,9 @@ using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.DataContracts
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedWebLinkContract : IWebLink
 	{
-
 		public ArchivedWebLinkContract()
 		{
 			Category = WebLinkCategory.Other;
@@ -18,13 +16,11 @@ namespace VocaDb.Model.DataContracts
 
 		public ArchivedWebLinkContract(WebLink webLink)
 		{
-
 			ParamIs.NotNull(() => webLink);
 
 			Category = webLink.Category;
 			Description = webLink.Description;
 			Url = webLink.Url;
-
 		}
 
 		[DataMember]
@@ -36,6 +32,5 @@ namespace VocaDb.Model.DataContracts
 
 		[DataMember]
 		public string Url { get; set; }
-
 	}
 }

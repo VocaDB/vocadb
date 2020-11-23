@@ -4,10 +4,8 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Songs
 {
-
 	public class ArchivedSongListVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<SongListEditableFields>
 	{
-
 		private SongListDiff diff;
 		private SongList songList;
 
@@ -21,13 +19,11 @@ namespace VocaDb.Model.Domain.Songs
 			EntryEditEvent commonEditEvent, string notes)
 			: base(null, author, songList.Version, status, notes)
 		{
-
 			ParamIs.NotNull(() => diff);
 
 			SongList = songList;
 			Diff = diff;
 			CommonEditEvent = commonEditEvent;
-
 		}
 
 		public virtual EntryEditEvent CommonEditEvent { get; set; }
@@ -71,7 +67,5 @@ namespace VocaDb.Model.Domain.Songs
 		{
 			return true;
 		}
-
 	}
-
 }

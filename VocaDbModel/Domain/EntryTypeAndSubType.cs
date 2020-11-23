@@ -2,13 +2,11 @@ using System;
 
 namespace VocaDb.Model.Domain
 {
-
 	/// <summary>
 	/// Combination of <see cref="EntryType"/> and optional sub-type (for example SongType).
 	/// </summary>
 	public readonly struct EntryTypeAndSubType
 	{
-
 		public static EntryTypeAndSubType Create<TSubType>(EntryType entryType, TSubType subType)
 			where TSubType : struct, Enum
 		{
@@ -31,6 +29,5 @@ namespace VocaDb.Model.Domain
 		/// Can be empty, if not specified.
 		/// </summary>
 		public string SubType { get; }
-
 	}
 }

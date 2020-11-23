@@ -3,10 +3,8 @@ using System.Linq;
 
 namespace VocaDb.Model.Domain.Versioning
 {
-
 	public abstract class EntryDiff<T> : IEntryDiff where T : struct, Enum
 	{
-
 		protected EnumFieldAccessor<T> Field(T field)
 		{
 			return new EnumFieldAccessor<T>(ChangedFields, field);
@@ -35,12 +33,10 @@ namespace VocaDb.Model.Domain.Versioning
 		{
 			get
 			{
-
 				var fieldNames = EnumVal<T>.Values
 					.Where(f => !IsDefault(f) && IsChanged(f)).Select(f => f.ToString());
 
 				return fieldNames.ToArray();
-
 			}
 		}
 
@@ -48,14 +44,11 @@ namespace VocaDb.Model.Domain.Versioning
 		{
 			get
 			{
-
 				var fieldNames = EnumVal<T>.Values.Where(f => !IsDefault(f) && IsChanged(f));
 				return string.Join(",", fieldNames);
-
 			}
 			set
 			{
-
 				ChangedFields.Clear();
 
 				if (string.IsNullOrEmpty(value))
@@ -70,7 +63,6 @@ namespace VocaDb.Model.Domain.Versioning
 					if (Enum.TryParse(name, out field))
 						SetChanged(field);
 				}
-
 			}
 		}
 
@@ -106,12 +98,10 @@ namespace VocaDb.Model.Domain.Versioning
 		{
 			ChangedFields.SetFlag(field, true);
 		}
-
 	}
 
 	public struct EnumFieldAccessor<T> where T : struct, Enum
 	{
-
 		private readonly EnumVal<T> val;
 		private readonly T field;
 
@@ -138,5 +128,4 @@ namespace VocaDb.Model.Domain.Versioning
 			return $"{field} changed: {IsChanged}";
 		}
 	}
-
 }

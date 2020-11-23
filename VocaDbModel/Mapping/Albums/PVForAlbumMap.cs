@@ -3,13 +3,10 @@ using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Mapping.Albums
 {
-
 	public class PVForAlbumMap : ClassMap<PVForAlbum>
 	{
-
 		public PVForAlbumMap()
 		{
-
 			Table("PVsForAlbums");
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -27,9 +24,6 @@ namespace VocaDb.Model.Mapping.Albums
 			{
 				c.Map(m => m.Json, "ExtendedMetadataJson").Nullable();
 			});
-
 		}
-
 	}
-
 }

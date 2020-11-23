@@ -7,19 +7,15 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Users
 {
-
 	/// <summary>
 	/// User is a verified owner of an artist entry.
 	/// </summary>
 	public class OwnedArtistForUser : IEntryWithIntId
 	{
-
 		public static CollectionDiff<OwnedArtistForUser, OwnedArtistForUser> Sync(
 			IList<OwnedArtistForUser> oldLinks, IEnumerable<ArtistForUserContract> newLinks, Func<ArtistForUserContract, OwnedArtistForUser> fac)
 		{
-
 			return CollectionHelper.Sync(oldLinks, newLinks, (n1, n2) => n1.Id == n2.Id, fac);
-
 		}
 
 		private Artist artist;
@@ -57,15 +53,12 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual void Delete()
 		{
-
 			User.AllOwnedArtists.Remove(this);
 			Artist.OwnerUsers.Remove(this);
-
 		}
 
 		public virtual bool Equals(OwnedArtistForUser another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -76,7 +69,6 @@ namespace VocaDb.Model.Domain.Users
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -91,7 +83,6 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual void Move(Artist target)
 		{
-
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Artist))
@@ -100,13 +91,11 @@ namespace VocaDb.Model.Domain.Users
 			Artist.OwnerUsers.Remove(this);
 			Artist = target;
 			target.OwnerUsers.Add(this);
-
 		}
 
 		public override string ToString()
 		{
 			return string.Format("Owned {0} for {1}", Artist, User);
 		}
-
 	}
 }

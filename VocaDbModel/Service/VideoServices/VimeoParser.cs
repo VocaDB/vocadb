@@ -12,15 +12,12 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public class VimeoParser : IVideoServiceParser
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		public async Task<VideoTitleParseResult> GetTitleAsync(string id)
 		{
-
 			static void SetHeaders(HttpRequestHeaders headers)
 			{
 				var apiKey = AppConfig.VimeoApiKey;
@@ -66,14 +63,11 @@ namespace VocaDb.Model.Service.VideoServices
 			var date = result.CreatedTime; // Convert.ToDateTime(result.Video.Upload_Date); // xmlserializer can't parse the date
 
 			return VideoTitleParseResult.CreateSuccess(title, author, null, thumbUrl, length, uploadDate: date);
-
 		}
-
 	}
 
 	public class VimeoResult
 	{
-
 		public int Duration { get; set; }
 
 		public string Name { get; set; }
@@ -84,30 +78,22 @@ namespace VocaDb.Model.Service.VideoServices
 		public VimeoPictures Pictures { get; set; }
 
 		public VimeoUser User { get; set; }
-
 	}
 
 	public class VimeoPictures
 	{
-
 		public VimeoPicture[] Sizes { get; set; }
-
 	}
 
 	public class VimeoPicture
 	{
-
 		public string Link { get; set; }
 
 		public int Width { get; set; }
-
 	}
 
 	public class VimeoUser
 	{
-
 		public string Name { get; set; }
-
 	}
-
 }

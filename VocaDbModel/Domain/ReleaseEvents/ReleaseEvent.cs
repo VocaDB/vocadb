@@ -24,11 +24,9 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.ReleaseEvents
 {
-
 	public class ReleaseEvent : IEntryWithNames<EventName>, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink>, IReleaseEvent,
 		IEntryImageInformation, IEntryWithComments<ReleaseEventComment>, IEntryWithStatus, INameFactory<EventName>, IEntryWithTags<EventTagUsage>, IEntryWithArtistLinks<ArtistForEvent>
 	{
-
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 		string IReleaseEvent.Name => DefaultName;
 		INameManager IEntryWithNames.Names => Names;
@@ -63,21 +61,18 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		public ReleaseEvent(string description, DateTime? date, ContentLanguageSelection defaultNameLanguage)
 			: this()
 		{
-
 			ParamIs.NotNull(() => names);
 
 			Description = description;
 			Date = date;
 			TranslatedName.DefaultLanguage = defaultNameLanguage;
 			TranslatedName.Clear();
-
 		}
 
 		public ReleaseEvent(string description, DateTime? date, ReleaseEventSeries series, int seriesNumber, string seriesSuffix,
 			ContentLanguageSelection defaultNameLanguage, bool customName)
 			: this()
 		{
-
 			ParamIs.NotNull(() => series);
 
 			Description = description;
@@ -96,7 +91,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			{
 				TranslatedName.DefaultLanguage = Series.TranslatedName.DefaultLanguage;
 			}
-
 		}
 
 		public virtual IEnumerable<Album> Albums => AllAlbums.Where(a => !a.Deleted);
@@ -285,18 +279,15 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual ArchivedReleaseEventVersion CreateArchivedVersion(XDocument data, ReleaseEventDiff diff, AgentLoginData author, EntryEditEvent reason, string notes)
 		{
-
 			var archived = new ArchivedReleaseEventVersion(this, data, diff, author, reason, notes);
 			ArchivedVersionsManager.Add(archived);
 			Version++;
 
 			return archived;
-
 		}
 
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
-
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);
 
@@ -304,7 +295,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			Comments.Add(comment);
 
 			return comment;
-
 		}
 
 		public virtual EventName CreateName(string val, ContentLanguageSelection language)
@@ -314,31 +304,26 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual EventName CreateName(ILocalizedString localizedString)
 		{
-
 			ParamIs.NotNull(() => localizedString);
 
 			var name = new EventName(this, localizedString);
 			Names.Add(name);
 
 			return name;
-
 		}
 
 		public virtual PVForEvent CreatePV(PVContract contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			var pv = new PVForEvent(this, contract);
 			PVs.Add(pv);
 
 			return pv;
-
 		}
 
 		public virtual ReleaseEventWebLink CreateWebLink(string description, string url, WebLinkCategory category)
 		{
-
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
 
@@ -346,12 +331,10 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			WebLinks.Add(link);
 
 			return link;
-
 		}
 
 		public virtual bool Equals(ReleaseEvent another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -362,7 +345,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -377,7 +359,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		private async Task<ArtistForEvent> AddArtist(ArtistForEventContract contract, Func<int, Task<Artist>> artistGetter)
 		{
-
 			ArtistForEvent link;
 
 			if (contract.Artist == null)
@@ -399,7 +380,6 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 			AllArtists.Add(link);
 			return link;
-
 		}
 
 		public virtual IEnumerable<LocalizedString> GetNamesFromSeries()
@@ -409,32 +389,27 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual void SetSeries(ReleaseEventSeries newSeries)
 		{
-
 			if (Equals(Series, newSeries))
 				return;
 
 			Series?.AllEvents.Remove(this);
 			newSeries?.AllEvents.Add(this);
 			Series = newSeries;
-
 		}
 
 		public virtual void SetVenue(Venue newVenue)
 		{
-
 			if (Equals(Venue, newVenue))
 				return;
 
 			Venue?.AllEvents.Remove(this);
 			newVenue?.AllEvents.Add(this);
 			Venue = newVenue;
-
 		}
 
 		public virtual async Task<CollectionDiffWithValue<ArtistForEvent, ArtistForEvent>> SyncArtists(
 			IList<ArtistForEventContract> newArtists, Func<int, Task<Artist>> artistGetter)
 		{
-
 			ParamIs.NotNull(() => newArtists);
 
 			Task<bool> Update(ArtistForEvent old, ArtistForEventContract newArtist)
@@ -449,19 +424,16 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 			var diff = await CollectionHelper.SyncWithContentAsync(AllArtists, newArtists, (a1, a2) => a1.Id == a2.Id, async a => await AddArtist(a, artistGetter), Update, null);
 			return diff;
-
 		}
 
 		public override string ToString()
 		{
 			return string.Format("Release event '{0}' [{1}]", DefaultName, Id);
 		}
-
 	}
 
 	public interface IReleaseEvent : IEntryWithIntId
 	{
 		string Name { get; }
 	}
-
 }

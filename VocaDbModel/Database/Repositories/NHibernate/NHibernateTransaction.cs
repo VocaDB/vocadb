@@ -3,10 +3,8 @@ using System.Threading.Tasks;
 
 namespace VocaDb.Model.Database.Repositories.NHibernate
 {
-
 	public class NHibernateTransaction : IMinimalTransaction
 	{
-
 		private readonly ITransaction tx;
 
 		public NHibernateTransaction(ITransaction tx)
@@ -22,6 +20,5 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		public Task CommitAsync() => tx.CommitAsync();
 
 		public void Rollback() => tx.Rollback();
-
 	}
 }

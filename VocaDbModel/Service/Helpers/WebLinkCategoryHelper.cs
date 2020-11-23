@@ -7,7 +7,6 @@ using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Service.Helpers
 {
-
 	/*
 	public class WebLinkCategoryHelper {
 
@@ -16,7 +15,6 @@ namespace VocaDb.Model.Service.Helpers
 			Contains,
 
 			StartsWith
-
 		}
 
 		class StringMatcher {
@@ -35,9 +33,7 @@ namespace VocaDb.Model.Service.Helpers
 					return val.IndexOf(matcher, StringComparison.InvariantCultureIgnoreCase) != -1;
 				else
 					return val.StartsWith(matcher, StringComparison.InvariantCultureIgnoreCase);
-
 			}
-
 		}
 
 		class CategoryMatcher {
@@ -54,7 +50,6 @@ namespace VocaDb.Model.Service.Helpers
 			public bool IsMatch(string val) {
 				return matchers.Any(m => m.IsMatch(val));
 			}
-
 		}
 
 		private readonly IList<CategoryMatcher> categoryMatchers = new List<CategoryMatcher>{
@@ -115,9 +110,6 @@ namespace VocaDb.Model.Service.Helpers
 
 			var matcher = categoryMatchers.FirstOrDefault(m => m.IsMatch(url));
 			return (matcher != null ? matcher.Category : WebLinkCategory.Other);
-
 		}
-
 	}*/
-
 }

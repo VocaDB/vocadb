@@ -5,14 +5,12 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Tags
 {
-
 	/// <summary>
 	/// Tag attached to an entry (song, album, artist).
 	/// Tag usage may have multiple votes (<see cref="TagVote"/>), at most one vote per user.
 	/// </summary>
 	public abstract class TagUsage : IEntryWithLongId, ITagLink
 	{
-
 		private Tag tag;
 
 		protected TagUsage()
@@ -77,15 +75,12 @@ namespace VocaDb.Model.Domain.Tags
 		/// </remarks>
 		public virtual void Delete()
 		{
-
 			Count = 0;
 			Tag.UsageCount--;
-
 		}
 
 		public virtual bool Equals(TagUsage another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -96,7 +91,6 @@ namespace VocaDb.Model.Domain.Tags
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -112,11 +106,9 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual bool HasVoteByUser(User user)
 		{
-
 			ParamIs.NotNull(() => user);
 
 			return VotesBase.Any(v => v.User.Equals(user));
-
 		}
 
 		/// <summary>
@@ -131,7 +123,5 @@ namespace VocaDb.Model.Domain.Tags
 		{
 			return string.Format("{0} for {1} [{2}]", Tag, EntryBase, Id);
 		}
-
 	}
-
 }

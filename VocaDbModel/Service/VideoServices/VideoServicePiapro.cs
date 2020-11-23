@@ -9,10 +9,8 @@ using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public class VideoServicePiapro : VideoService
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		public VideoServicePiapro(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
@@ -20,7 +18,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 		private VideoUrlParseResult Parse(PostQueryResult result, string url)
 		{
-
 			if (result.PostType != PostType.Audio)
 			{
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException("Content type indicates this isn't an audio post"));
@@ -33,12 +30,10 @@ namespace VocaDb.Model.Service.VideoServices
 
 			return VideoUrlParseResult.CreateOk(url, PVService.Piapro, result.Id,
 				VideoTitleParseResult.CreateSuccess(result.Title, result.Author, result.AuthorId, result.ArtworkUrl, result.LengthSeconds, uploadDate: result.Date, extendedMetadata: piaproMetadata));
-
 		}
 
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
 		{
-
 			PostQueryResult result;
 			var client = new PiaproClient.PiaproClient { RequestTimeout = TimeSpan.FromMilliseconds(3900) /* Value chosen after careful consideration */ };
 			try
@@ -52,7 +47,6 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 
 			return Parse(result, url);
-
 		}
 
 		public override IEnumerable<string> GetUserProfileUrls(string authorId)
@@ -67,9 +61,7 @@ namespace VocaDb.Model.Service.VideoServices
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class PiaproMetadata
 	{
-
 		[DataMember]
 		public string Timestamp { get; set; }
 	}
-
 }

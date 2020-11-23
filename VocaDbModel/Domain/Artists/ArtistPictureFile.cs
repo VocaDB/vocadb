@@ -2,10 +2,8 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Artists
 {
-
 	public class ArtistPictureFile : EntryPictureFile, IEntryWithIntId
 	{
-
 		private Artist artist;
 
 		public ArtistPictureFile() { }
@@ -13,9 +11,7 @@ namespace VocaDb.Model.Domain.Artists
 		public ArtistPictureFile(string name, string mime, User author, Artist artist)
 			: base(name, mime, author)
 		{
-
 			this.artist = artist;
-
 		}
 
 		public virtual Artist Artist
@@ -40,7 +36,6 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual void Move(Artist target)
 		{
-
 			ParamIs.NotNull(() => target);
 
 			if (target == Artist)
@@ -49,9 +44,6 @@ namespace VocaDb.Model.Domain.Artists
 			Artist.Pictures.Remove(this);
 			Artist = target;
 			target.Pictures.Add(this);
-
 		}
-
 	}
-
 }

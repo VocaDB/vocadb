@@ -13,11 +13,9 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.SongLists
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongListForApiContract : SongListBaseContract, ISongList
 	{
-
 		IUser ISongList.Author => Author;
 
 		public SongListForApiContract() { }
@@ -25,7 +23,6 @@ namespace VocaDb.Model.DataContracts.SongLists
 		public SongListForApiContract(SongList list, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory, IAggregatedEntryImageUrlFactory imagePersister,
 			SongListOptionalFields fields) : base(list)
 		{
-
 			ParamIs.NotNull(() => list);
 
 			Author = new UserForApiContract(list.Author, userIconFactory, UserOptionalFields.None);
@@ -52,7 +49,6 @@ namespace VocaDb.Model.DataContracts.SongLists
 			{
 				Tags = list.Tags.ActiveUsages.Select(u => new TagUsageForApiContract(u, languagePreference)).OrderByDescending(u => u.Count).ToArray();
 			}
-
 		}
 
 		[DataMember]
@@ -83,19 +79,15 @@ namespace VocaDb.Model.DataContracts.SongLists
 
 		[DataMember(EmitDefaultValue = false)]
 		public TagUsageForApiContract[] Tags { get; set; }
-
 	}
 
 	[Flags]
 	public enum SongListOptionalFields
 	{
-
 		None = 0,
 		Description = 1,
 		Events = 2,
 		MainPicture = 4,
 		Tags = 8
-
 	}
-
 }

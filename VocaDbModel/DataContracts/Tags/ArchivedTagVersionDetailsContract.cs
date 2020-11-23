@@ -5,15 +5,12 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
-
 	public class ArchivedTagVersionDetailsContract
 	{
-
 		public ArchivedTagVersionDetailsContract() { }
 
 		public ArchivedTagVersionDetailsContract(ArchivedTagVersion archived, ArchivedTagVersion comparedVersion, IUserPermissionContext permissionContext)
 		{
-
 			ParamIs.NotNull(() => archived);
 
 			ArchivedVersion = new ArchivedTagVersionContract(archived);
@@ -30,7 +27,6 @@ namespace VocaDb.Model.DataContracts.Tags
 			Versions = ComparedTagsContract.Create(archived, comparedVersion);
 
 			ComparedVersionId = Versions.SecondId;
-
 		}
 
 		public ArchivedObjectVersionContract ArchivedVersion { get; set; }
@@ -48,7 +44,5 @@ namespace VocaDb.Model.DataContracts.Tags
 		public TagContract Tag { get; set; }
 
 		public ComparedTagsContract Versions { get; set; }
-
 	}
-
 }

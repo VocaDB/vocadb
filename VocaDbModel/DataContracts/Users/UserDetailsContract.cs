@@ -10,20 +10,17 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users
 {
-
 	/// <summary>
 	/// Data contract for <see cref="User"/>, for details view.
 	/// SECURITY NOTE: take care when sending to client due to the contained sensitive information.
 	/// </summary>
 	public class UserDetailsContract : UserWithPermissionsContract
 	{
-
 		public UserDetailsContract() { }
 
 		public UserDetailsContract(User user, IUserPermissionContext permissionContext)
 			: base(user, permissionContext.LanguagePreference, getPublicCollection: true)
 		{
-
 			AboutMe = user.Options.AboutMe;
 			CustomTitle = user.Options.CustomTitle;
 			EmailVerified = user.Options.EmailVerified;
@@ -35,7 +32,6 @@ namespace VocaDb.Model.DataContracts.Users
 			Standalone = user.Options.Standalone;
 			TwitterName = user.Options.TwitterName;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
-
 		}
 
 		public string AboutMe { get; set; }
@@ -99,6 +95,5 @@ namespace VocaDb.Model.DataContracts.Users
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }
-
 	}
 }

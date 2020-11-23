@@ -5,10 +5,8 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Songs
 {
-
 	public class ArtistForSong : IEquatable<ArtistForSong>, IArtistLinkWithRoles, ISongLink, IEntryWithIntId
 	{
-
 		private string notes;
 		private Song song;
 
@@ -21,23 +19,19 @@ namespace VocaDb.Model.Domain.Songs
 		public ArtistForSong(Song song, Artist artist, bool support, ArtistRoles roles)
 			: this()
 		{
-
 			Song = song;
 			Artist = artist;
 			IsSupport = support;
 			Roles = roles;
-
 		}
 
 		public ArtistForSong(Song song, string name, bool support, ArtistRoles roles)
 			: this()
 		{
-
 			Song = song;
 			IsSupport = support;
 			Name = name;
 			Roles = roles;
-
 		}
 
 		public virtual Artist Artist { get; set; }
@@ -84,40 +78,33 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual bool ArtistLinkEquals(ArtistForSong another)
 		{
-
 			if (another == null)
 				return false;
 
 			return ((Artist != null && Artist.Equals(another.Artist)) || (Artist == null && another.Artist == null && Name == another.Name));
-
 		}
 
 		public virtual bool ContentEquals(ArtistForSongContract contract)
 		{
-
 			if (contract == null)
 				return false;
 
 			var realNewName = contract.IsCustomName ? contract.Name : null;
 
 			return (IsSupport == contract.IsSupport && Roles == contract.Roles && Name == realNewName);
-
 		}
 
 		public virtual void Delete()
 		{
-
 			if (Artist != null)
 				Artist.AllSongs.Remove(this);
 
 			Song.AllArtists.Remove(this);
 			Song.UpdateArtistString();
-
 		}
 
 		public virtual bool Equals(ArtistForSong another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -128,7 +115,6 @@ namespace VocaDb.Model.Domain.Songs
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -143,7 +129,6 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual void Move(Artist target)
 		{
-
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Artist))
@@ -154,12 +139,10 @@ namespace VocaDb.Model.Domain.Songs
 
 			Artist = target;
 			target.AllSongs.Add(this);
-
 		}
 
 		public virtual void Move(Song target)
 		{
-
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Song))
@@ -168,13 +151,11 @@ namespace VocaDb.Model.Domain.Songs
 			Song.AllArtists.Remove(this);
 			Song = target;
 			target.AllArtists.Add(this);
-
 		}
 
 		public override string ToString()
 		{
 			return string.Format("{0} for {1}", ArtistToStringOrName, Song);
 		}
-
 	}
 }

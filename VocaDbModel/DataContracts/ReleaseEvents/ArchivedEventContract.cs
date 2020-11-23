@@ -7,15 +7,12 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedEventContract
 	{
-
 		private static void DoIfExists(ArchivedReleaseEventVersion version, ReleaseEventEditableFields field,
 			XmlCache<ArchivedEventContract> xmlCache, Action<ArchivedEventContract> func)
 		{
-
 			var versionWithField = version.GetLatestVersionWithField(field);
 
 			if (versionWithField?.Data != null)
@@ -23,12 +20,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
 				func(data);
 			}
-
 		}
 
 		public static ArchivedEventContract GetAllProperties(ArchivedReleaseEventVersion version)
 		{
-
 			var data = new ArchivedEventContract();
 			var xmlCache = new XmlCache<ArchivedEventContract>();
 			var thisVersion = version.Data != null ? xmlCache.Deserialize(version.Version, version.Data) : new ArchivedEventContract();
@@ -51,14 +46,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			DoIfExists(version, ReleaseEventEditableFields.WebLinks, xmlCache, v => data.WebLinks = v.WebLinks);
 
 			return data;
-
 		}
 
 		public ArchivedEventContract() { }
 
 		public ArchivedEventContract(ReleaseEvent ev, ReleaseEventDiff diff)
 		{
-
 			ParamIs.NotNull(() => ev);
 			ParamIs.NotNull(() => diff);
 
@@ -77,7 +70,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			Venue = ObjectRefContract.Create(ev.Venue);
 			VenueName = ev.VenueName;
 			WebLinks = diff.IncludeWebLinks ? ev.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
-
 		}
 
 		[DataMember]
@@ -127,7 +119,5 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 		[DataMember]
 		public ArchivedWebLinkContract[] WebLinks { get; set; }
-
 	}
-
 }

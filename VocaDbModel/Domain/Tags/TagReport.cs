@@ -4,10 +4,8 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Tags
 {
-
 	public class TagReport : GenericEntryReport<Tag, TagReportType>
 	{
-
 		public static readonly HashSet<TagReportType> ReportTypesWithRequiredNotes =
 			new HashSet<TagReportType> { TagReportType.InvalidInfo, TagReportType.Other };
 
@@ -19,12 +17,10 @@ namespace VocaDb.Model.Domain.Tags
 		public virtual ArchivedTagVersion Version => VersionNumber.HasValue ? Entry.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
 
 		public override ArchivedObjectVersion VersionBase => Version;
-
 	}
 
 	public enum TagReportType
 	{
-
 		InvalidInfo = 1,
 
 		Duplicate = 2,
@@ -32,7 +28,5 @@ namespace VocaDb.Model.Domain.Tags
 		Inappropriate = 3,
 
 		Other = 4
-
 	}
-
 }

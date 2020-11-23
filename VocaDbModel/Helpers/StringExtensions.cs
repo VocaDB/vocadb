@@ -1,9 +1,7 @@
 ﻿namespace VocaDb.Model.Helpers
 {
-
 	public static class StringExtensions
 	{
-
 		/*public static string FirstLine(this string str) {
 			
 			if (string.IsNullOrEmpty(str))
@@ -11,7 +9,6 @@
 
 			var newline = str.IndexOf('\n');
 			return newline != -1 ? str.Substring(0, newline) : str;
-
 		}*/
 
 		public static string EmptyToNull(this string str)
@@ -36,7 +33,6 @@
 		/// </returns>
 		public static string Summarize(this string str, int minLength, int maxLength)
 		{
-
 			if (string.IsNullOrEmpty(str))
 				return str;
 
@@ -49,16 +45,13 @@
 				return str.Substring(0, newline);
 
 			return TruncateWithEllipsis(str, maxLength);
-
 		}
 
 		public static string Truncate(this string str, int length)
 		{
-
 			ParamIs.NotNull(() => str);
 
 			return (str.Length > length ? str.Substring(0, length) : str);
-
 		}
 
 		/// <summary>
@@ -69,12 +62,9 @@
 		/// <returns>Truncated string with three dots at the end, if the string length exceeded the specified length, otherwise the original string.</returns>
 		public static string TruncateWithEllipsis(this string str, int length)
 		{
-
 			ParamIs.NotNull(() => str);
 
 			return (str.Length > length ? string.Format("{0}...", str.Substring(0, length)) : str);
-
 		}
-
 	}
 }

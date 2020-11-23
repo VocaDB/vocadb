@@ -2,10 +2,8 @@ using System.Collections.Generic;
 
 namespace VocaDb.Web.Models.Shared.Partials.Knockout
 {
-
 	public class SearchDropDownViewModel
 	{
-
 		public SearchDropDownViewModel(string visibleBinding, string viewModel, Dictionary<string, string> sortRules)
 		{
 			VisibleBinding = visibleBinding;
@@ -18,7 +16,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Knockout
 		public string ViewModel { get; set; }
 
 		public Dictionary<string, string> SortRules { get; set; }
-
 	}
-
 }

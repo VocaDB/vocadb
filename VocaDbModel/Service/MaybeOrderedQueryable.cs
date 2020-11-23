@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 
 namespace VocaDb.Model.Service
 {
-
 	/// <summary>
 	/// <see cref="IQueryable{T}"/> which may or may not be ordered.
 	/// </summary>
@@ -14,7 +13,6 @@ namespace VocaDb.Model.Service
 
 	public class MaybeOrderedQueryable<T> : IMaybeOrderedQueryable<T>
 	{
-
 		public MaybeOrderedQueryable(IQueryable<T> query, bool isOrdered)
 		{
 			this.query = query;
@@ -35,7 +33,6 @@ namespace VocaDb.Model.Service
 		public IQueryProvider Provider => query.Provider;
 		public IEnumerator<T> GetEnumerator() => query.GetEnumerator();
 		IEnumerator IEnumerable.GetEnumerator() => query.GetEnumerator();
-
 	}
 
 	public static class MaybeOrderedQueryable
@@ -43,5 +40,4 @@ namespace VocaDb.Model.Service
 		public static IMaybeOrderedQueryable<T> Create<T>(IQueryable<T> query, bool isOrdered = false) => new MaybeOrderedQueryable<T>(query, isOrdered);
 		public static IMaybeOrderedQueryable<T> Create<T>(IOrderedQueryable<T> query) => new MaybeOrderedQueryable<T>(query);
 	}
-
 }

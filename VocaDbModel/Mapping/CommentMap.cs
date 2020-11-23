@@ -4,13 +4,10 @@ using VocaDb.Model.Domain.Comments;
 
 namespace VocaDb.Model.Mapping
 {
-
 	public abstract class CommentMap<TComment, TEntry> : ClassMap<TComment> where TComment : GenericComment<TEntry> where TEntry : class, IEntryWithNames
 	{
-
 		protected CommentMap()
 		{
-
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
@@ -18,9 +15,6 @@ namespace VocaDb.Model.Mapping
 			Map(m => m.Message).Length(4000).Not.Nullable();
 
 			References(m => m.Author).Not.Nullable();
-
 		}
-
 	}
-
 }

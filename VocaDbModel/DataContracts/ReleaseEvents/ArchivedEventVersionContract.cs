@@ -4,15 +4,11 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
-
 	public class ArchivedEventVersionContract : ArchivedObjectVersionWithFieldsContract<ReleaseEventEditableFields, EntryEditEvent>
 	{
-
 		public ArchivedEventVersionContract() { }
 
 		public ArchivedEventVersionContract(ArchivedReleaseEventVersion archivedVersion)
 			: base(archivedVersion, archivedVersion.Diff.ChangedFields.Value, archivedVersion.CommonEditEvent) { }
-
 	}
-
 }

@@ -14,11 +14,9 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.Artists
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArtistForApiContract
 	{
-
 		public ArtistForApiContract() { }
 
 		public ArtistForApiContract(Artist artist,
@@ -26,7 +24,6 @@ namespace VocaDb.Model.DataContracts.Artists
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			ArtistOptionalFields includedFields)
 		{
-
 			ArtistType = artist.ArtistType;
 			CreateDate = artist.CreateDate;
 			DefaultName = artist.DefaultName;
@@ -64,14 +61,11 @@ namespace VocaDb.Model.DataContracts.Artists
 
 			if (thumbPersister != null && includedFields.HasFlag(ArtistOptionalFields.MainPicture) && artist.Thumb != null)
 			{
-
 				MainPicture = new EntryThumbForApiContract(artist.Thumb, thumbPersister);
-
 			}
 
 			if (includedFields.HasFlag(ArtistOptionalFields.WebLinks))
 				WebLinks = artist.WebLinks.Select(w => new WebLinkForApiContract(w)).ToArray();
-
 		}
 
 		/// <summary>
@@ -191,13 +185,11 @@ namespace VocaDb.Model.DataContracts.Artists
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public WebLinkForApiContract[] WebLinks { get; set; }
-
 	}
 
 	[Flags]
 	public enum ArtistOptionalFields
 	{
-
 		None = 0,
 		AdditionalNames = 1,
 		ArtistLinks = 2,
@@ -208,13 +200,11 @@ namespace VocaDb.Model.DataContracts.Artists
 		Names = 64,
 		Tags = 128,
 		WebLinks = 256
-
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArtistRelationsForApi
 	{
-
 		[DataMember(EmitDefaultValue = false)]
 		public AlbumForApiContract[] LatestAlbums { get; set; }
 
@@ -229,13 +219,11 @@ namespace VocaDb.Model.DataContracts.Artists
 
 		[DataMember(EmitDefaultValue = false)]
 		public SongForApiContract[] PopularSongs { get; set; }
-
 	}
 
 	[Flags]
 	public enum ArtistRelationsFields
 	{
-
 		None = 0,
 		LatestAlbums = 1,
 		LatestEvents = 2,
@@ -243,7 +231,5 @@ namespace VocaDb.Model.DataContracts.Artists
 		PopularAlbums = 8,
 		PopularSongs = 16,
 		All = LatestAlbums | LatestEvents | LatestSongs | PopularAlbums | PopularSongs
-
 	}
-
 }

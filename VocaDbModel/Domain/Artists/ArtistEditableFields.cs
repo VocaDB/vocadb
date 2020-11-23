@@ -2,14 +2,12 @@
 
 namespace VocaDb.Model.Domain.Artists
 {
-
 	/// <summary>
 	/// Saved in the database as strings - numbers can be changed, but not the names.
 	/// </summary>
 	[Flags]
 	public enum ArtistEditableFields
 	{
-
 		Nothing = 0,
 
 		Albums = 1,
@@ -35,7 +33,5 @@ namespace VocaDb.Model.Domain.Artists
 		Status = 1024,
 
 		WebLinks = 2048
-
 	}
-
 }

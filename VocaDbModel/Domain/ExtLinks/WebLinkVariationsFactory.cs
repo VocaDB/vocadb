@@ -4,7 +4,6 @@ using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Domain.ExtLinks
 {
-
 	/// <summary>
 	/// Gets variations of a web link URL based on <see cref="WebLinkVariationTypes"/>,
 	/// for example scheme variations (http/https).
@@ -15,7 +14,6 @@ namespace VocaDb.Model.Domain.ExtLinks
 	/// </remarks>
 	public static class WebLinkVariationsFactory
 	{
-
 		private static IEnumerable<string> GetSchemeAgnostic(string url)
 		{
 			var urlTrimmed = UrlHelper.RemoveScheme(url);
@@ -37,7 +35,6 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public static string[] GetWebLinkVariations(string originalUrl, WebLinkVariationTypes variationTypes)
 		{
-
 			var trimmed = originalUrl?.Trim();
 
 			if (string.IsNullOrEmpty(trimmed))
@@ -56,8 +53,6 @@ namespace VocaDb.Model.Domain.ExtLinks
 			}
 
 			return variations.ToArray();
-
 		}
-
 	}
 }

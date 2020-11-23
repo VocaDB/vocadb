@@ -3,7 +3,6 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users
 {
-
 	/// <summary>
 	/// Provides URL to user's profile icon.
 	/// 
@@ -15,7 +14,6 @@ namespace VocaDb.Model.DataContracts.Users
 	/// </summary>
 	public interface IUserIconFactory
 	{
-
 		/// <summary>
 		/// Get multiple icon sizes.
 		/// </summary>
@@ -23,7 +21,5 @@ namespace VocaDb.Model.DataContracts.Users
 		/// <param name="sizes">Sizes of icons to get. Note that user icon image sizes are different from other entries.</param>
 		/// <returns>User icons. Cannot be null.</returns>
 		EntryThumbForApiContract GetIcons(IUserWithEmail user, ImageSizes sizes = ImageSizes.All);
-
 	}
-
 }

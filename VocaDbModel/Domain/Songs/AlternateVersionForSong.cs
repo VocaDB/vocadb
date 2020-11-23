@@ -5,10 +5,8 @@ using System.Text;
 
 namespace VocaDb.Model.Domain.Songs
 {
-
 	public class AlternateVersionForSong
 	{
-
 		private Song derived;
 		private Song original;
 
@@ -16,10 +14,8 @@ namespace VocaDb.Model.Domain.Songs
 
 		public AlternateVersionForSong(Song original, Song derived)
 		{
-
 			Original = original;
 			Derived = derived;
-
 		}
 
 		public virtual Song Derived
@@ -43,7 +39,5 @@ namespace VocaDb.Model.Domain.Songs
 				original = value;
 			}
 		}
-
 	}
-
 }

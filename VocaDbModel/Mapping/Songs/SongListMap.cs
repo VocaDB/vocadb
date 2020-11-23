@@ -3,13 +3,10 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.Mapping.Songs
 {
-
 	public class SongListMap : ClassMap<SongList>
 	{
-
 		public SongListMap()
 		{
-
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
@@ -48,17 +45,13 @@ namespace VocaDb.Model.Mapping.Songs
 			HasMany(m => m.Comments).Inverse().KeyColumn("SongList").Cascade.AllDeleteOrphan().OrderBy("Created");
 
 			HasMany(m => m.Events).Inverse().Cache.ReadWrite();
-
 		}
-
 	}
 
 	public class SongInListMap : ClassMap<SongInList>
 	{
-
 		public SongInListMap()
 		{
-
 			Table("SongsInLists");
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -68,17 +61,13 @@ namespace VocaDb.Model.Mapping.Songs
 
 			References(m => m.List).Not.Nullable();
 			References(m => m.Song).Not.Nullable();
-
 		}
-
 	}
 
 	public class ArchivedSongListVersionMap : ClassMap<ArchivedSongListVersion>
 	{
-
 		public ArchivedSongListVersionMap()
 		{
-
 			Id(m => m.Id);
 
 			Map(m => m.CommonEditEvent).Length(30).Not.Nullable();
@@ -95,9 +84,6 @@ namespace VocaDb.Model.Mapping.Songs
 			{
 				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
 			});
-
 		}
-
 	}
-
 }

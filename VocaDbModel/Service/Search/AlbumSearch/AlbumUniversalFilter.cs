@@ -7,10 +7,8 @@ using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch
 {
-
 	public class AlbumUniversalFilter : ISearchFilter<Album>
 	{
-
 		private readonly string term;
 
 		public AlbumUniversalFilter(string term)
@@ -25,19 +23,16 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 
 		public void FilterResults(List<Album> albums, IDatabaseContext session)
 		{
-
 			albums.RemoveAll(a => !(
 				a.Names.Any(n => n.Value.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) != -1)
 				|| (a.ArtistString.Default.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) != -1
 				&& a.ArtistString.Japanese.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) != -1
 				&& a.ArtistString.Romaji.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) != -1
 				&& a.ArtistString.English.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) != -1)));
-
 		}
 
 		public List<Album> GetResults(IDatabaseContext session)
 		{
-
 			var nameRes = session.Query<AlbumName>().Where(n => n.Value.Contains(term))
 				.Select(n => n.Album)
 				.Distinct()
@@ -66,7 +61,6 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 					&& a.ArtistString.Romaji.Contains(term)
 					&& a.ArtistString.English.Contains(term))
 				.ToList();*/
-
 		}
 
 		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session)
@@ -79,5 +73,4 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 			throw new NotImplementedException();
 		}
 	}
-
 }

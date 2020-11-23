@@ -19,10 +19,8 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.Service
 {
-
 	public class ArtistService : ServiceBase
 	{
-
 		private readonly IEntryUrlParser entryUrlParser;
 
 		// ReSharper disable UnusedMember.Local
@@ -31,44 +29,34 @@ namespace VocaDb.Model.Service
 
 		public PartialFindResult<Artist> Find(ISession session, ArtistQueryParams queryParams)
 		{
-
 			var context = new NHibernateDatabaseContext<Artist>(session, PermissionContext);
 			return new ArtistSearch(queryParams.LanguagePreference, context, entryUrlParser).Find(queryParams);
-
 		}
 
 		public ArtistService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
-
 			this.entryUrlParser = entryUrlParser;
-
 		}
 
 		public void Archive(ISession session, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "")
 		{
-
 			SysLog("Archiving " + artist);
 
 			var agentLoginData = SessionHelper.CreateAgentLoginData(session, PermissionContext);
 			var archived = ArchivedArtistVersion.Create(artist, diff, agentLoginData, reason, notes);
 			session.Save(archived);
-
 		}
 
 		public void Archive(ISession session, Artist artist, ArtistArchiveReason reason, string notes = "")
 		{
-
 			Archive(session, artist, new ArtistDiff(), reason, notes);
-
 		}
 
 		public void Delete(int id, string notes)
 		{
-
 			UpdateEntity<Artist>(id, (session, a) =>
 			{
-
 				EntryPermissionManager.VerifyDelete(PermissionContext, a);
 
 				AuditLog(string.Format("deleting artist {0}{1}", EntryLinkFactory.CreateEntryLink(a), !string.IsNullOrEmpty(notes) ? " " + notes : string.Empty), session);
@@ -77,42 +65,32 @@ namespace VocaDb.Model.Service
 				a.Delete();
 
 				Archive(session, a, new ArtistDiff(false), ArtistArchiveReason.Deleted, notes);
-
 			}, PermissionToken.Nothing, skipLog: true);
-
 		}
 
 		public PartialFindResult<ArtistContract> FindArtists(ArtistQueryParams queryParams)
 		{
-
 			return FindArtists(a => new ArtistContract(a, PermissionContext.LanguagePreference), queryParams);
-
 		}
 
 		public PartialFindResult<T> FindArtists<T>(Func<Artist, T> fac, ArtistQueryParams queryParams)
 		{
-
 			return HandleQuery(session =>
 			{
-
 				var result = Find(session, queryParams);
 
 				return new PartialFindResult<T>(result.Items.Select(fac).ToArray(),
 					result.TotalCount, result.Term);
-
 			});
-
 		}
 
 		public string[] FindNames(ArtistSearchTextQuery textQuery, int maxResults)
 		{
-
 			if (textQuery.IsEmpty)
 				return new string[] { };
 
 			return HandleQuery(session =>
 			{
-
 				var names = session.Query<ArtistName>()
 					.Where(a => !a.Artist.Deleted)
 					.WhereArtistNameIs(textQuery)
@@ -123,32 +101,24 @@ namespace VocaDb.Model.Service
 					.ToArray();
 
 				return NameHelper.MoveExactNamesToTop(names, textQuery.Query);
-
 			});
-
 		}
 
 		public EntryForPictureDisplayContract GetArchivedArtistPicture(int archivedVersionId)
 		{
-
 			return HandleQuery(session =>
 				EntryForPictureDisplayContract.Create(
 				session.Load<ArchivedArtistVersion>(archivedVersionId), LanguagePreference));
-
 		}
 
 		public ArtistContract GetArtist(int id)
 		{
-
 			return HandleQuery(session => new ArtistContract(session.Load<Artist>(id), LanguagePreference));
-
 		}
 
 		public ArtistContract GetArtistWithAdditionalNames(int id)
 		{
-
 			return HandleQuery(session => new ArtistContract(session.Load<Artist>(id), PermissionContext.LanguagePreference));
-
 		}
 
 		/// <summary>
@@ -158,26 +128,20 @@ namespace VocaDb.Model.Service
 		/// <returns>Data contract for the picture. Can be null if there is no picture.</returns>
 		public EntryForPictureDisplayContract GetArtistPicture(int id)
 		{
-
 			return HandleQuery(session =>
 				EntryForPictureDisplayContract.Create(session.Load<Artist>(id), PermissionContext.LanguagePreference));
-
 		}
 
 		public ArtistWithArchivedVersionsContract GetArtistWithArchivedVersions(int artistId)
 		{
-
 			return HandleQuery(session => new ArtistWithArchivedVersionsContract(
 				session.Load<Artist>(artistId), PermissionContext.LanguagePreference));
-
 		}
 
 		public ArtistForApiContract[] GetArtistsWithYoutubeChannels(ContentLanguagePreference languagePreference)
 		{
-
 			return HandleQuery(session =>
 			{
-
 				var contracts = session.Query<ArtistWebLink>()
 					.Where(l => !l.Entry.Deleted
 						&& (l.Entry.ArtistType == ArtistType.Producer || l.Entry.ArtistType == ArtistType.Circle || l.Entry.ArtistType == ArtistType.Animator)
@@ -189,30 +153,22 @@ namespace VocaDb.Model.Service
 					.ToArray();
 
 				return contracts;
-
 			});
-
 		}
 
 		public EntryWithTagUsagesContract GetEntryWithTagUsages(int artistId)
 		{
-
 			return HandleQuery(session =>
 			{
-
 				var artist = session.Load<Artist>(artistId);
 				return new EntryWithTagUsagesContract(artist, artist.Tags.ActiveUsages, LanguagePreference, PermissionContext);
-
 			});
-
 		}
 
 		public ArchivedArtistVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
-
 			return HandleQuery(session =>
 			{
-
 				var contract = new ArchivedArtistVersionDetailsContract(session.Load<ArchivedArtistVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedArtistVersion>(comparedVersionId) : null, PermissionContext);
 
@@ -222,14 +178,11 @@ namespace VocaDb.Model.Service
 				}
 
 				return contract;
-
 			});
-
 		}
 
 		public void Merge(int sourceId, int targetId)
 		{
-
 			PermissionContext.VerifyPermission(PermissionToken.MergeEntries);
 
 			if (sourceId == targetId)
@@ -237,7 +190,6 @@ namespace VocaDb.Model.Service
 
 			HandleTransaction(session =>
 			{
-
 				var source = session.Load<Artist>(sourceId);
 				var target = session.Load<Artist>(targetId);
 
@@ -324,19 +276,15 @@ namespace VocaDb.Model.Service
 
 				session.Update(source);
 				session.Update(target);
-
 			});
-
 		}
 
 		public void Restore(int artistId)
 		{
-
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
 
 			HandleTransaction(session =>
 			{
-
 				var artist = session.Load<Artist>(artistId);
 
 				NHibernateUtil.Initialize(artist.Picture);
@@ -347,16 +295,12 @@ namespace VocaDb.Model.Service
 				Archive(session, artist, new ArtistDiff(false), ArtistArchiveReason.Restored);
 
 				AuditLog("restored " + EntryLinkFactory.CreateEntryLink(artist), session);
-
 			});
-
 		}
-
 	}
 
 	public enum ArtistSortRule
 	{
-
 		/// <summary>
 		/// Not sorted (random order)
 		/// </summary>
@@ -387,7 +331,5 @@ namespace VocaDb.Model.Service
 		SongRating,
 
 		FollowerCount
-
 	}
-
 }

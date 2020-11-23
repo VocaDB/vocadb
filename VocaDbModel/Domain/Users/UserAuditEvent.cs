@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace VocaDb.Model.Domain.Users
 {
-
 	public class UserAuditEvent
 	{
-
-
-
 	}
 
 	public enum UserAuditEventType
@@ -20,5 +16,4 @@ namespace VocaDb.Model.Domain.Users
 		EditName,
 		AddNote
 	}
-
 }

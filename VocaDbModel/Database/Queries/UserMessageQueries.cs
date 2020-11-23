@@ -9,25 +9,21 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Database.Queries
 {
-
 	/// <summary>
 	/// Queries for <see cref="UserMessage"/>.
 	/// </summary>
 	public class UserMessageQueries : QueriesBase<IUserMessageRepository, UserMessage>
 	{
-
 		public UserMessageQueries(IUserMessageRepository repository, IUserPermissionContext permissionContext)
 			: base(repository, permissionContext) { }
 
 		private void DoDelete(IDatabaseContext ctx, UserMessage msg)
 		{
-
 			VerifyResourceAccess(msg.User);
 
 			msg.Sender?.SentMessages.Remove(msg);
 			msg.Receiver.ReceivedMessages.Remove(msg);
 			ctx.Delete(msg);
-
 		}
 
 		/// <summary>
@@ -36,20 +32,16 @@ namespace VocaDb.Model.Database.Queries
 		/// <param name="messageId">Id of the message to be deleted.</param>
 		public void Delete(int messageId)
 		{
-
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
 			repository.HandleTransaction(ctx =>
 			{
-
 				var msg = ctx.Load(messageId);
 
 				DoDelete(ctx, msg);
 
 				ctx.AuditLogger.SysLog(string.Format("deleted {0}", msg));
-
 			});
-
 		}
 
 		/// <summary>
@@ -58,7 +50,6 @@ namespace VocaDb.Model.Database.Queries
 		/// <param name="messageIds">List of IDs of the messages to be deleted.</param>
 		public void Delete(int[] messageIds)
 		{
-
 			if (messageIds.Length == 1)
 			{
 				Delete(messageIds.First());
@@ -69,7 +60,6 @@ namespace VocaDb.Model.Database.Queries
 
 			repository.HandleTransaction(ctx =>
 			{
-
 				var messages = ctx.LoadMultiple<UserMessage>(messageIds);
 
 				foreach (var msg in messages)
@@ -78,19 +68,15 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				ctx.AuditLogger.SysLog(string.Format("deleted {0} messages", messageIds.Length));
-
 			});
-
 		}
 
 		public UserMessageContract Get(int messageId, IUserIconFactory iconFactory)
 		{
-
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
 			return repository.HandleTransaction(ctx =>
 			{
-
 				var msg = ctx.Load(messageId);
 
 				VerifyResourceAccess(msg.User);
@@ -102,20 +88,16 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				return new UserMessageContract(msg, iconFactory, includeBody: true);
-
 			});
-
 		}
 
 		public PartialFindResult<UserMessageContract> GetList(int id, PagingProperties paging, UserInboxType inboxType,
 			bool unread, int? anotherUserId, IUserIconFactory iconFactory)
 		{
-
 			PermissionContext.VerifyResourceAccess(new[] { id });
 
 			return HandleQuery(ctx =>
 			{
-
 				var query = ctx.Query()
 					.Where(u => u.User.Id == id)
 					.WhereInboxIs(inboxType, unread)
@@ -144,10 +126,7 @@ namespace VocaDb.Model.Database.Queries
 				var count = paging.GetTotalCount ? query.Count() : 0;
 
 				return new PartialFindResult<UserMessageContract>(messages, count);
-
 			});
-
 		}
 	}
-
 }

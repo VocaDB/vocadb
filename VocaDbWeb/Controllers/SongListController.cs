@@ -16,7 +16,6 @@ namespace VocaDb.Web.Controllers
 {
 	public class SongListController : ControllerBase
 	{
-
 		public const int SongsPerPage = 50;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly SongListQueries queries;
@@ -29,7 +28,6 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Details(int id = invalidId)
 		{
-
 			if (id == invalidId)
 				return NoId();
 
@@ -46,13 +44,11 @@ namespace VocaDb.Web.Controllers
 			}
 			else
 			{
-
 				var categoryName = Translate.SongListFeaturedCategoryNames[contract.FeaturedCategory];
 
 				PageProperties.PageTitle = string.Format("{0} - {1}", categoryName, contract.Name);
 				PageProperties.Title = contract.Name;
 				PageProperties.Subtitle = categoryName;
-
 			}
 
 			var viewModel = new SongListDetailsViewModel(contract, PermissionContext);
@@ -67,7 +63,6 @@ namespace VocaDb.Web.Controllers
 			PageProperties.OpenGraph.ShowTwitterCard = true;
 
 			return View(viewModel);
-
 		}
 
 		//
@@ -75,19 +70,16 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Edit(int? id)
 		{
-
 			var contract = id != null ? queries.GetSongList(id.Value) : new SongListContract();
 			var model = new SongListEditViewModel(contract, PermissionContext);
 
 			return View(model);
-
 		}
 
 		[HttpPost]
 		[Authorize]
 		public ActionResult Edit(SongListEditViewModel model)
 		{
-
 			if (model == null)
 			{
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "View model was null - probably JavaScript is disabled");
@@ -97,10 +89,8 @@ namespace VocaDb.Web.Controllers
 			UploadedFileContract uploadedPicture = null;
 			if (coverPicUpload != null && coverPicUpload.ContentLength > 0)
 			{
-
 				CheckUploadedPicture(coverPicUpload, "thumbPicUpload");
 				uploadedPicture = new UploadedFileContract { Mime = coverPicUpload.ContentType, Stream = coverPicUpload.InputStream };
-
 			}
 
 			if (!ModelState.IsValid)
@@ -111,12 +101,10 @@ namespace VocaDb.Web.Controllers
 			var listId = queries.UpdateSongList(model.ToContract(), uploadedPicture);
 
 			return RedirectToAction("Details", new { id = listId });
-
 		}
 
 		public ActionResult Export(int id)
 		{
-
 			var songList = queries.GetSongList(id);
 			var formatString = "%notes%;%publishdate%;%title%;%url%;%pv.original.niconicodouga%;%pv.original.!niconicodouga%;%pv.reprint%";
 			var tagString = queries.GetTagString(id, formatString);
@@ -125,27 +113,21 @@ namespace VocaDb.Web.Controllers
 			var data = enc.GetPreamble().Concat(enc.GetBytes(tagString)).ToArray();
 
 			return File(data, "text/csv", songList.Name + ".csv");
-
 		}
 
 		public ActionResult Featured(FeaturedViewModel viewModel)
 		{
-
 			return View(viewModel);
-
 		}
 
 		[Authorize]
 		public ActionResult Import()
 		{
-
 			return View();
-
 		}
 
 		public ActionResult Versions(int id = invalidId)
 		{
-
 			if (id == invalidId)
 				return NoId();
 
@@ -155,7 +137,6 @@ namespace VocaDb.Web.Controllers
 				return HttpNotFound();
 
 			return View(contract);
-
 		}
 	}
 }

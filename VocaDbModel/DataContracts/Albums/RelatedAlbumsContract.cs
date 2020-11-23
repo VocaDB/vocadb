@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.DataContracts.Albums
 {
-
 	public class RelatedAlbumsContract
 	{
-
 		public bool Any
 		{
 			get
@@ -19,7 +17,5 @@ namespace VocaDb.Model.DataContracts.Albums
 		public AlbumContract[] LikeMatches { get; set; }
 
 		public AlbumContract[] TagMatches { get; set; }
-
 	}
-
 }

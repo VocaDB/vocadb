@@ -2,10 +2,8 @@ using System;
 
 namespace VocaDb.Model.Domain.Versioning
 {
-
 	public interface IArchivedObjectVersionWithFields<TField> : IArchivedObjectVersion where TField : struct, IConvertible
 	{
-
 		/// <summary>
 		/// Checks whether a specific field is included in this diff.
 		/// </summary>
@@ -16,7 +14,5 @@ namespace VocaDb.Model.Domain.Versioning
 		/// Other fields are commonly included only they are changed.
 		/// </remarks>
 		bool IsIncluded(TField field);
-
 	}
-
 }

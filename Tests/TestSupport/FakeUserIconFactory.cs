@@ -5,10 +5,8 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	public class FakeUserIconFactory : IUserIconFactory
 	{
-
 		public string GetIconUrl(IUserWithEmail user)
 		{
 			return string.Empty;
@@ -18,6 +16,5 @@ namespace VocaDb.Tests.TestSupport
 		{
 			return new EntryThumbForApiContract();
 		}
-
 	}
 }

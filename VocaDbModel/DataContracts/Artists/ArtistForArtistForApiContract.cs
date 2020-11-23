@@ -5,11 +5,9 @@ using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.DataContracts.Artists
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArtistForArtistForApiContract
 	{
-
 		public ArtistForArtistForApiContract() { }
 
 		public ArtistForArtistForApiContract(ArtistForArtist link, LinkDirection direction, ContentLanguagePreference languagePreference)
@@ -23,7 +21,5 @@ namespace VocaDb.Model.DataContracts.Artists
 
 		[DataMember]
 		public ArtistLinkType LinkType { get; set; }
-
 	}
-
 }

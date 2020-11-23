@@ -4,13 +4,10 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.Mapping.Tags
 {
-
 	public class TagMap : ClassMap<Tag>
 	{
-
 		public TagMap()
 		{
-
 			Cache.NonStrictReadWrite();
 			Id(m => m.Id);
 
@@ -69,17 +66,13 @@ namespace VocaDb.Model.Mapping.Tags
 			{
 				c.HasMany(m => m.Links).Table("TagWebLinks").KeyColumn("[Tag]").Inverse().Cascade.All().Cache.ReadWrite();
 			});
-
 		}
-
 	}
 
 	public class ArchivedTagVersionMap : ClassMap<ArchivedTagVersion>
 	{
-
 		public ArchivedTagVersionMap()
 		{
-
 			Id(m => m.Id);
 
 			Map(m => m.CommonEditEvent).Length(30).Not.Nullable();
@@ -97,33 +90,24 @@ namespace VocaDb.Model.Mapping.Tags
 			{
 				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
 			});
-
 		}
-
 	}
 
 	public class TagNameMap : ClassMap<TagName>
 	{
-
 		public TagNameMap()
 		{
-
 			Id(m => m.Id);
 
 			Map(m => m.Language).Not.Nullable();
 			Map(m => m.Value).Length(255).Not.Nullable().Unique();
 
 			References(m => m.Entry).Column("[Tag]").Not.Nullable();
-
 		}
-
 	}
 
 	public class TagWebLinkMap : WebLinkMap<TagWebLink, Tag>
 	{
-
 		public TagWebLinkMap() : base(false) { }
-
 	}
-
 }

@@ -8,10 +8,8 @@ using System.Web.Mvc;
 
 namespace VocaDb.Web.Helpers
 {
-
 	public static class ResourceHelpers
 	{
-
 		public static IDictionary<object, object> ToDict(ResourceManager resourceManager)
 		{
 			return resourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true).Cast<DictionaryEntry>().ToDictionary(k => k.Key, v => v.Value);
@@ -19,13 +17,9 @@ namespace VocaDb.Web.Helpers
 
 		public static IHtmlString ToJSON(ResourceManager resourceManager, bool lowerCase = false)
 		{
-
 			var dic = ToDict(resourceManager);
 
 			return new MvcHtmlString(JsonHelpers.Serialize(dic, lowerCase));
-
 		}
-
 	}
-
 }

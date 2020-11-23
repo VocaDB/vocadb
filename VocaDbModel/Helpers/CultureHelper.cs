@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.Helpers
 {
-
 	public static class CultureHelper
 	{
-
 		public static CultureInfo Default => CultureInfo.InvariantCulture;
 		public static CultureInfo EnUS => CultureConstants.EnUS;
 
@@ -17,10 +15,7 @@ namespace VocaDb.Model.Helpers
 		/// <returns>The specified culture, or application default culture. Cannot be null.</returns>
 		public static CultureInfo GetCultureOrDefault(OptionalCultureCode culture)
 		{
-
 			return culture.GetCultureInfoSafe() ?? Default;
-
 		}
-
 	}
 }

@@ -10,10 +10,8 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Search.Artists
 {
-
 	public class ArtistSearch
 	{
-
 		private readonly IEntryUrlParser entryUrlParser;
 		private readonly IDatabaseContext<Artist> context;
 
@@ -24,7 +22,6 @@ namespace VocaDb.Model.Service.Search.Artists
 			ParsedArtistQuery parsedQuery,
 			NameMatchMode? nameMatchMode = null)
 		{
-
 			var textQuery = (parsedQuery.HasNameQuery ? queryParams.Common.TextQuery.OverrideMatchMode(nameMatchMode) : ArtistSearchTextQuery.Empty);
 
 			var query = context.Query()
@@ -41,19 +38,16 @@ namespace VocaDb.Model.Service.Search.Artists
 				.WhereMatchFilters(queryParams.AdvancedFilters);
 
 			return query;
-
 		}
 
 		private ParsedArtistQuery FindInternalUrl(string trimmed, string trimmedLc)
 		{
 			if (trimmedLc.StartsWith("/ar/") || trimmedLc.StartsWith("http"))
 			{
-
 				var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
 
 				if (entryId.EntryType == EntryType.Artist)
 					return new ParsedArtistQuery { Id = entryId.Id };
-
 			}
 			return null;
 		}
@@ -62,19 +56,16 @@ namespace VocaDb.Model.Service.Search.Artists
 		{
 			if (trimmedLc.StartsWith("http") || trimmedLc.StartsWith("mylist/") || trimmedLc.StartsWith("user/"))
 			{
-
 				var extUrl = new ArtistExternalUrlParser().GetExternalUrl(trimmed);
 
 				if (extUrl != null)
 					return new ParsedArtistQuery { ExternalLinkUrl = extUrl };
-
 			}
 			return null;
 		}
 
 		private ParsedArtistQuery ParseTextQuery(SearchTextQuery textQuery)
 		{
-
 			if (textQuery.IsEmpty)
 				return new ParsedArtistQuery();
 
@@ -84,7 +75,6 @@ namespace VocaDb.Model.Service.Search.Artists
 
 			if (term == null)
 			{
-
 				var trimmedLc = trimmed.ToLowerInvariant();
 
 				// Optimization: check prefix, in most cases the user won't be searching by URL
@@ -97,28 +87,22 @@ namespace VocaDb.Model.Service.Search.Artists
 
 				if (result != null)
 					return result;
-
 			}
 			else
 			{
-
 				switch (term.PropertyName)
 				{
 					case "id":
 						return new ParsedArtistQuery { Id = PrimitiveParseHelper.ParseIntOrDefault(term.Value, 0) };
 				}
-
 			}
 
 			return new ParsedArtistQuery { Name = textQuery.Query };
-
 		}
 
 		private static Artist[] SortByIds(IEnumerable<Artist> songs, int[] idList)
 		{
-
 			return Model.Helpers.CollectionHelper.SortByIds(songs, idList);
-
 		}
 
 		public ArtistSearch(ContentLanguagePreference languagePreference, IDatabaseContext<Artist> context, IEntryUrlParser entryUrlParser)
@@ -130,7 +114,6 @@ namespace VocaDb.Model.Service.Search.Artists
 
 		public PartialFindResult<Artist> Find(ArtistQueryParams queryParams)
 		{
-
 			var isMoveToTopQuery = (queryParams.Common.MoveExactToTop
 				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith
 				&& !queryParams.Common.TextQuery.IsExact
@@ -160,7 +143,6 @@ namespace VocaDb.Model.Service.Search.Artists
 			var count = (queryParams.Paging.GetTotalCount ? query.Count() : 0);
 
 			return new PartialFindResult<Artist>(artists, count, queryParams.Common.Query);
-
 		}
 
 		/// <summary>
@@ -169,7 +151,6 @@ namespace VocaDb.Model.Service.Search.Artists
 		/// </summary>
 		private PartialFindResult<Artist> GetArtistsMoveExactToTop(ArtistQueryParams queryParams, ParsedArtistQuery parsedQuery)
 		{
-
 			var sortRule = queryParams.SortRule;
 			var maxResults = queryParams.Paging.MaxEntries;
 			var getCount = queryParams.Paging.GetTotalCount;
@@ -189,14 +170,11 @@ namespace VocaDb.Model.Service.Search.Artists
 
 			if (exactResults.Length >= maxResults)
 			{
-
 				ids = exactResults;
 				count = getCount ? CreateQuery(queryParams, parsedQuery).Count() : 0;
-
 			}
 			else
 			{
-
 				var directQ = CreateQuery(queryParams, parsedQuery);
 
 				var direct = directQ
@@ -212,7 +190,6 @@ namespace VocaDb.Model.Service.Search.Artists
 					.ToArray();
 
 				count = getCount ? directQ.Count() : 0;
-
 			}
 
 			var artist = SortByIds(context
@@ -221,8 +198,6 @@ namespace VocaDb.Model.Service.Search.Artists
 				.ToArray(), ids);
 
 			return new PartialFindResult<Artist>(artist, count, queryParams.Common.Query);
-
 		}
-
 	}
 }

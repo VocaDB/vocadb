@@ -10,7 +10,6 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class VideoServiceBandcamp : VideoService
 	{
-
 		public static readonly RegexLinkMatcher[] Matchers =
 		{
 			new RegexLinkMatcher(".bandcamp.com/track/{0}", @".bandcamp.com/track/([\w\-]+)")
@@ -18,7 +17,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public override async Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
 		{
-
 			var extractor = new BandcampMetadataClient();
 			var info = await extractor.ExtractAsync(url);
 
@@ -35,7 +33,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 			var meta = VideoTitleParseResult.CreateSuccess(info.Title, info.Uploader, info.UploaderId, info.Thumbnail, (int?)info.Duration, uploadDate: date, extendedMetadata: bandcampMetadata);
 			return VideoUrlParseResult.CreateOk(url, PVService.Bandcamp, info.Id, meta);
-
 		}
 
 		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null)
@@ -45,7 +42,6 @@ namespace VocaDb.Model.Service.VideoServices
 		}
 
 		public VideoServiceBandcamp() : base(PVService.Bandcamp, null, Matchers) { }
-
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]

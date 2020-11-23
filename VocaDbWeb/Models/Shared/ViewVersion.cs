@@ -3,10 +3,8 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Web.Models.Shared
 {
-
 	public class ViewVersion<TEntry>
 	{
-
 		public ViewVersion(TEntry entry, IEnumTranslations enumTranslations, int comparedVersionId)
 		{
 			Entry = entry;
@@ -24,7 +22,5 @@ namespace VocaDb.Web.Models.Shared
 		{
 			return contract != null ? ArchivedObjectVersion.Create(contract, EnumTranslations) : null;
 		}
-
 	}
-
 }

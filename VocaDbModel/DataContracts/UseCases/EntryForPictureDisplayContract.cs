@@ -7,36 +7,29 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.UseCases
 {
-
 	public class EntryForPictureDisplayContract
 	{
-
 		public static EntryForPictureDisplayContract Create(IEntryWithNames entry, string mime, byte[] bytes, ContentLanguagePreference languagePreference)
 		{
-
 			var name = entry.Names.SortNames[languagePreference];
 			var pic = (bytes != null ? new PictureContract(bytes, mime) : null);
 
 			return new EntryForPictureDisplayContract(entry.EntryType, entry.Id, name, entry.Version, pic);
-
 		}
 
 		public static EntryForPictureDisplayContract Create(Album album, ContentLanguagePreference languagePreference)
 		{
-
 			ParamIs.NotNull(() => album);
 
 			var name = album.TranslatedName[languagePreference];
 			var pic = (album.CoverPictureData != null ? new PictureContract(album.CoverPictureData, album.CoverPictureMime) : null);
 
 			return new EntryForPictureDisplayContract(EntryType.Album, album.Id, name, album.Version, pic);
-
 		}
 
 		public static EntryForPictureDisplayContract Create(ArchivedAlbumVersion archivedVersion,
 			ContentLanguagePreference languagePreference)
 		{
-
 			ParamIs.NotNull(() => archivedVersion);
 
 			var name = archivedVersion.Album.TranslatedName[languagePreference];
@@ -48,25 +41,21 @@ namespace VocaDb.Model.DataContracts.UseCases
 
 			return new EntryForPictureDisplayContract(
 				EntryType.Album, archivedVersion.Album.Id, name, archivedVersion.Version, pic);
-
 		}
 
 		public static EntryForPictureDisplayContract Create(Artist artist, ContentLanguagePreference languagePreference)
 		{
-
 			ParamIs.NotNull(() => artist);
 
 			var name = artist.TranslatedName[languagePreference];
 			var pic = (artist.Picture != null ? new PictureContract(artist.Picture, artist.PictureMime) : null);
 
 			return new EntryForPictureDisplayContract(EntryType.Artist, artist.Id, name, artist.Version, pic);
-
 		}
 
 		public static EntryForPictureDisplayContract Create(ArchivedArtistVersion archivedVersion,
 			ContentLanguagePreference languagePreference)
 		{
-
 			ParamIs.NotNull(() => archivedVersion);
 
 			var name = archivedVersion.Artist.TranslatedName[languagePreference];
@@ -77,18 +66,15 @@ namespace VocaDb.Model.DataContracts.UseCases
 				pic = new PictureContract(versionWithPic.Picture, versionWithPic.PictureMime);
 
 			return new EntryForPictureDisplayContract(EntryType.Artist, archivedVersion.Artist.Id, name, archivedVersion.Version, pic);
-
 		}
 
 		public EntryForPictureDisplayContract(EntryType entryType, int entryId, string name, int version, PictureContract pictureContract)
 		{
-
 			EntryType = entryType;
 			EntryId = entryId;
 			Name = name;
 			Version = version;
 			Picture = pictureContract;
-
 		}
 
 		public int EntryId { get; set; }
@@ -100,6 +86,5 @@ namespace VocaDb.Model.DataContracts.UseCases
 		public PictureContract Picture { get; set; }
 
 		public int Version { get; set; }
-
 	}
 }

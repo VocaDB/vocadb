@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 
 namespace VocaDb.Model.Service.SongImport
 {
-
 	public class UnableToImportException : Exception
 	{
 		public UnableToImportException(string message) : base(message) { }
@@ -13,5 +12,4 @@ namespace VocaDb.Model.Service.SongImport
 		{ }
 		protected UnableToImportException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 	}
-
 }

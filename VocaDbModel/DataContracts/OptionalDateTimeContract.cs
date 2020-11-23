@@ -3,16 +3,13 @@ using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.DataContracts
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class OptionalDateTimeContract : IOptionalDateTime
 	{
-
 		public OptionalDateTimeContract() { }
 
 		public OptionalDateTimeContract(OptionalDateTime dateTime)
 		{
-
 			ParamIs.NotNull(() => dateTime);
 
 			Day = dateTime.Day;
@@ -20,7 +17,6 @@ namespace VocaDb.Model.DataContracts
 			Month = dateTime.Month;
 			Year = dateTime.Year;
 			Formatted = dateTime.ToString();
-
 		}
 
 		[DataMember]
@@ -37,8 +33,5 @@ namespace VocaDb.Model.DataContracts
 
 		[DataMember]
 		public int? Year { get; set; }
-
-
 	}
-
 }

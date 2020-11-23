@@ -6,16 +6,13 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Web.Models.Ext
 {
-
 	[XmlRoot(ElementName = "oembed")]
 	public class SongOEmbedResponse
 	{
-
 		public SongOEmbedResponse() { }
 
 		public SongOEmbedResponse(SongForApiContract song, int width, int height, string html)
 		{
-
 			ParamIs.NotNull(() => song);
 			ParamIs.NotNullOrEmpty(() => html);
 
@@ -26,7 +23,6 @@ namespace VocaDb.Web.Models.Ext
 			Height = height;
 			Html = html;
 			Width = width;
-
 		}
 
 		[JsonProperty("author_name"), XmlElement("author_name")]
@@ -58,7 +54,5 @@ namespace VocaDb.Web.Models.Ext
 
 		[JsonProperty("width"), XmlElement("width")]
 		public int Width { get; set; }
-
 	}
-
 }

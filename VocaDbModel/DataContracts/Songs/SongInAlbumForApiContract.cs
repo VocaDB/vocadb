@@ -4,16 +4,13 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongInAlbumForApiContract
 	{
-
 		public SongInAlbumForApiContract() { }
 
 		public SongInAlbumForApiContract(SongInAlbum songInAlbum, ContentLanguagePreference languagePreference, SongOptionalFields fields)
 		{
-
 			ParamIs.NotNull(() => songInAlbum);
 
 			DiscNumber = songInAlbum.DiscNumber;
@@ -23,7 +20,6 @@ namespace VocaDb.Model.DataContracts.Songs
 			var song = songInAlbum.Song;
 			Song = song != null ? new SongForApiContract(song, null, languagePreference, fields) : null;
 			Name = Song != null ? Song.Name : songInAlbum.Name;
-
 		}
 
 		[DataMember]
@@ -40,8 +36,5 @@ namespace VocaDb.Model.DataContracts.Songs
 
 		[DataMember]
 		public int TrackNumber { get; set; }
-
-
 	}
-
 }

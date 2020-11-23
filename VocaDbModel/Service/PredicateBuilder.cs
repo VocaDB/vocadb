@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 
 namespace VocaDb.Model.Service
 {
-
 	/// <summary>
 	/// Code from http://www.albahari.com/nutshell/predicatebuilder.aspx
 	/// </summary>
@@ -29,5 +28,4 @@ namespace VocaDb.Model.Service
 				(Expression.AndAlso(expr1.Body, invokedExpr), expr1.Parameters);
 		}
 	}
-
 }

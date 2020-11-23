@@ -9,15 +9,12 @@ using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.DatabaseTests
 {
-
 	public class DatabaseTestContext<TTarget>
 	{
-
 		private IContainer Container => TestContainerManager.Container;
 
 		public void RunTest(Action<TTarget> func)
 		{
-
 			// Make sure session factory is built outside of transaction
 			Container.Resolve<ISessionFactory>();
 
@@ -25,20 +22,16 @@ namespace VocaDb.Tests.DatabaseTests
 			using (new TransactionScope())
 			using (var lifetimeScope = Container.BeginLifetimeScope())
 			{
-
 				var target = lifetimeScope.Resolve<TTarget>();
 
 				func(target);
 
 				DatabaseHelper.ClearSecondLevelCache(lifetimeScope.Resolve<ISessionFactory>());
-
 			}
-
 		}
 
 		public async Task RunTestAsync(Func<TTarget, Task> func)
 		{
-
 			// Make sure session factory is built outside of transaction
 			Container.Resolve<ISessionFactory>();
 
@@ -46,20 +39,16 @@ namespace VocaDb.Tests.DatabaseTests
 			using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 			using (var lifetimeScope = Container.BeginLifetimeScope())
 			{
-
 				var target = lifetimeScope.Resolve<TTarget>();
 
 				await func(target);
 
 				DatabaseHelper.ClearSecondLevelCache(lifetimeScope.Resolve<ISessionFactory>());
-
 			}
-
 		}
 
 		public TResult RunTest<TResult>(Func<TTarget, TResult> func)
 		{
-
 			// Make sure session factory is built outside of transaction
 			Container.Resolve<ISessionFactory>();
 
@@ -67,7 +56,6 @@ namespace VocaDb.Tests.DatabaseTests
 			using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 			using (var lifetimeScope = Container.BeginLifetimeScope())
 			{
-
 				var target = lifetimeScope.Resolve<TTarget>();
 
 				var result = func(target);
@@ -75,14 +63,11 @@ namespace VocaDb.Tests.DatabaseTests
 				DatabaseHelper.ClearSecondLevelCache(lifetimeScope.Resolve<ISessionFactory>());
 
 				return result;
-
 			}
-
 		}
 
 		public async Task<TResult> RunTestAsync<TResult>(Func<TTarget, Task<TResult>> func)
 		{
-
 			// Make sure session factory is built outside of transaction
 			Container.Resolve<ISessionFactory>();
 
@@ -90,7 +75,6 @@ namespace VocaDb.Tests.DatabaseTests
 			using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 			using (var lifetimeScope = Container.BeginLifetimeScope())
 			{
-
 				var target = lifetimeScope.Resolve<TTarget>();
 
 				var result = await func(target);
@@ -98,21 +82,16 @@ namespace VocaDb.Tests.DatabaseTests
 				DatabaseHelper.ClearSecondLevelCache(lifetimeScope.Resolve<ISessionFactory>());
 
 				return result;
-
 			}
-
 		}
-
 	}
 
 	public class DatabaseTestContext : DatabaseTestContext<IDatabaseContext> { }
 
 	public static class TestContainerManager
 	{
-
 		private static void EnsureContainerInitialized()
 		{
-
 			lock (containerLock)
 			{
 				if (container == null)
@@ -121,7 +100,6 @@ namespace VocaDb.Tests.DatabaseTests
 					testDatabase = container.Resolve<TestDatabase>();
 				}
 			}
-
 		}
 
 		private static IContainer container;
@@ -145,7 +123,5 @@ namespace VocaDb.Tests.DatabaseTests
 				return testDatabase;
 			}
 		}
-
 	}
-
 }

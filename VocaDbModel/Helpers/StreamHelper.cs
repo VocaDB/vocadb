@@ -5,8 +5,6 @@ namespace VocaDb.Model.Helpers
 {
 	public static class StreamHelper
 	{
-
-
 		public static void CopyStream(Stream source, Stream target)
 		{
 			const int bufSize = 1024;
@@ -28,7 +26,6 @@ namespace VocaDb.Model.Helpers
 		/// <exception cref="NotSupportedException">If the stream length is not known.</exception>
 		public static byte[] ReadStream(Stream input)
 		{
-
 			if (input.CanSeek && input.Position > 0)
 				input.Position = 0;
 
@@ -39,12 +36,10 @@ namespace VocaDb.Model.Helpers
 			var bytes = new byte[input.Length];
 			input.Read(bytes, 0, (int)input.Length);
 			return bytes;
-
 		}
 
 		public static byte[] ReadStream(Stream input, long length)
 		{
-
 			if (input.CanSeek && input.Position > 0)
 				input.Position = 0;
 
@@ -63,9 +58,6 @@ namespace VocaDb.Model.Helpers
 			while (count != 0);
 
 			return wholeBuf;
-
 		}
-
 	}
-
 }

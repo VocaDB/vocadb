@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.Helpers
 {
-
 	public static class HtmlHelperFunctions
 	{
-
 		/// <summary>
 		/// Strips HTML tags from a string.
 		/// Text inside tags is kept.
@@ -14,13 +12,10 @@ namespace VocaDb.Model.Helpers
 		/// <returns>String with all HTML tags stripped. Can be null or empty.</returns>
 		public static string StripHtml(string html)
 		{
-
 			if (string.IsNullOrEmpty(html))
 				return html;
 
 			return Regex.Replace(html, "<.*?>", string.Empty);
-
 		}
 	}
-
 }

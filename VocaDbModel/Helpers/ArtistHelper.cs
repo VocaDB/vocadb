@@ -8,35 +8,27 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Helpers
 {
-
 	public static class ArtistHelper
 	{
-
 		public const string VariousArtists = "Various artists";
 
 		public static TranslatedString GetTranslatedName(IArtistLinkWithRoles link)
 		{
-
 			return (link.Artist != null && string.IsNullOrEmpty(link.Name) ? link.Artist.TranslatedName : TranslatedString.Create(link.Name));
-
 		}
 
 		public static bool IsProducerRole(IArtistLinkWithRoles link, ContentFocus focus)
 		{
-
 			return IsProducerRole(GetCategories(link), focus);
-
 		}
 
 		private static bool IsProducerRole(ArtistCategories categories, ContentFocus focus)
 		{
-
 			return (categories.HasFlag(ArtistCategories.Producer)
 				|| categories.HasFlag(ArtistCategories.Circle)
 				|| categories.HasFlag(ArtistCategories.Band)
 				|| (focus == ContentFocus.Video && categories.HasFlag(ArtistCategories.Animator))
 				|| (focus == ContentFocus.Illustration && categories.HasFlag(ArtistCategories.Illustrator)));
-
 		}
 
 		/// <summary>
@@ -44,14 +36,12 @@ namespace VocaDb.Model.Helpers
 		/// </summary>
 		public static bool IsValidCreditableArtist(IArtistLinkWithRoles artist)
 		{
-
 			if (artist.IsSupport)
 				return false;
 
 			var cat = GetCategories(artist);
 
 			return (cat != ArtistCategories.Nothing && cat != ArtistCategories.Label);
-
 		}
 
 		public static readonly Dictionary<ArtistType, ArtistCategories> CategoriesForTypes = new Dictionary<ArtistType, ArtistCategories> {
@@ -129,7 +119,6 @@ namespace VocaDb.Model.Helpers
 		/// <returns>True if the artist type can have artist links, otherwise false.</returns>
 		public static bool CanHaveRelatedArtists(ArtistType artistType, ArtistLinkType linkType, LinkDirection direction)
 		{
-
 			if (artistType == ArtistType.Unknown)
 				return true;
 
@@ -139,14 +128,11 @@ namespace VocaDb.Model.Helpers
 			}
 
 			return direction == LinkDirection.ManyToOne ? VocalistTypes.Contains(artistType) : !VocalistTypes.Contains(artistType) || artistType == ArtistType.OtherVocalist;
-
 		}
 
 		public static TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus)
 		{
-
 			return new ArtistStringFactory().GetArtistString(artists, focus);
-
 		}
 
 		/// <summary>
@@ -156,7 +142,6 @@ namespace VocaDb.Model.Helpers
 		/// <returns>Canonized artist name.</returns>
 		public static string GetCanonizedName(string name)
 		{
-
 			if (string.IsNullOrEmpty(name))
 				return name;
 
@@ -164,30 +149,23 @@ namespace VocaDb.Model.Helpers
 			queryWithoutP = (queryWithoutP.EndsWith("P", StringComparison.InvariantCultureIgnoreCase) ? queryWithoutP.Substring(0, queryWithoutP.Length - 1) : queryWithoutP);
 
 			return queryWithoutP;
-
 		}
 
 		public static ArtistCategories GetCategories(IArtistLinkWithRoles artist)
 		{
-
 			ParamIs.NotNull(() => artist);
 
 			return GetCategories(artist.Artist != null ? artist.Artist.ArtistType : ArtistType.Unknown, artist.Roles);
-
 		}
 
 		public static ArtistCategories GetCategories(ArtistType type, ArtistRoles roles)
 		{
-
 			if (roles == ArtistRoles.Default || !IsCustomizable(type))
 			{
-
 				return CategoriesForTypes[type];
-
 			}
 			else
 			{
-
 				var cat = ArtistCategories.Nothing;
 
 				if (roles.HasFlag(ArtistRoles.Vocalist) || roles.HasFlag(ArtistRoles.Chorus))
@@ -212,10 +190,7 @@ namespace VocaDb.Model.Helpers
 					cat = ArtistCategories.Other;
 
 				return cat;
-
 			}
-
-
 		}
 
 		/// <summary>
@@ -226,13 +201,11 @@ namespace VocaDb.Model.Helpers
 		/// <returns>Individual artist types.</returns>
 		public static ArtistType[] GetArtistTypesFromFlags(ArtistTypes flags)
 		{
-
 			return EnumVal<ArtistTypes>
 				.GetIndividualValues(flags)
 				.Where(v => v != ArtistTypes.Unknown)
 				.Select(a => EnumVal<ArtistType>.Parse(a.ToString()))
 				.ToArray();
-
 		}
 
 		/// <summary>
@@ -244,7 +217,6 @@ namespace VocaDb.Model.Helpers
 		/// <returns>The main circle, or null if there is none.</returns>
 		public static Artist GetMainCircle(IList<IArtistLinkWithRoles> artists, ContentFocus focus)
 		{
-
 			var producers = GetProducers(artists.Where(a => !a.IsSupport), focus).ToArray();
 
 			// Find the circle in which all the producers belong to
@@ -253,12 +225,10 @@ namespace VocaDb.Model.Helpers
 				&& producers.All(p => p.Artist != null && (p.Artist.Equals(a.Artist) || p.Artist.HasGroup(a.Artist))));
 
 			return circle != null ? circle.Artist : null;
-
 		}
 
 		public static ArtistRoles GetOtherArtistRoles(ArtistType artistType)
 		{
-
 			switch (artistType)
 			{
 				case ArtistType.Illustrator:
@@ -270,7 +240,6 @@ namespace VocaDb.Model.Helpers
 				default:
 					return ArtistRoles.Default;
 			}
-
 		}
 
 		public static IEnumerable<IArtistLinkWithRoles> GetProducers(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus)
@@ -280,24 +249,20 @@ namespace VocaDb.Model.Helpers
 
 		public static string[] GetProducerNames(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus, ContentLanguagePreference languagePreference)
 		{
-
 			var matched = artists.Where(IsValidCreditableArtist).ToArray();
 			var producers = matched.Where(a => IsProducerRole(a, focus)).ToArray();
 			var names = producers.Select(p => GetTranslatedName(p).GetBestMatch(languagePreference)).ToArray();
 
 			return names;
-
 		}
 
 		public static string[] GetVocalistNames(IEnumerable<IArtistLinkWithRoles> artists, ContentLanguagePreference languagePreference)
 		{
-
 			var matched = artists.Where(IsValidCreditableArtist).ToArray();
 			var vocalists = GetVocalists(matched);
 			var names = vocalists.Select(p => GetTranslatedName(p).GetBestMatch(languagePreference)).ToArray();
 
 			return names;
-
 		}
 
 		public static IEnumerable<IArtistLinkWithRoles> GetVocalists(IList<IArtistLinkWithRoles> artists)
@@ -307,16 +272,12 @@ namespace VocaDb.Model.Helpers
 
 		public static bool IsCustomizable(ArtistType at)
 		{
-
 			return CustomizableTypes.Contains(at);
-
 		}
 
 		public static bool IsVoiceSynthesizer(ArtistType artistType)
 		{
 			return VoiceSynthesizerTypes.Contains(artistType);
 		}
-
 	}
-
 }

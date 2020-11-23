@@ -11,11 +11,9 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.Venues
 {
-
 	public class Venue : IEntryWithNames<VenueName>, IEntryWithVersions<ArchivedVenueVersion, VenueEditableFields>,
 		IEntryBase, IWebLinkFactory<VenueWebLink>, IEntryWithStatus, INameFactory<VenueName>
 	{
-
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<VenueName> IEntryWithNames<VenueName>.Names => Names;
@@ -30,7 +28,6 @@ namespace VocaDb.Model.Domain.Venues
 
 		public Venue(ContentLanguageSelection defaultLanguage, ICollection<ILocalizedString> names, string description) : this()
 		{
-
 			ParamIs.NotNull(() => names);
 
 			if (!names.Any())
@@ -43,7 +40,6 @@ namespace VocaDb.Model.Domain.Venues
 
 			foreach (var a in names)
 				CreateName(a);
-
 		}
 
 		public virtual string Address { get; set; } = string.Empty;
@@ -118,13 +114,11 @@ namespace VocaDb.Model.Domain.Venues
 
 		public virtual ArchivedVenueVersion CreateArchivedVersion(XDocument data, VenueDiff diff, AgentLoginData author, EntryEditEvent reason, string notes)
 		{
-
 			var archived = new ArchivedVenueVersion(this, data, diff, author, reason, notes);
 			ArchivedVersionsManager.Add(archived);
 			Version++;
 
 			return archived;
-
 		}
 
 		public virtual VenueName CreateName(string val, ContentLanguageSelection language)
@@ -134,19 +128,16 @@ namespace VocaDb.Model.Domain.Venues
 
 		public virtual VenueName CreateName(ILocalizedString localizedString)
 		{
-
 			ParamIs.NotNull(() => localizedString);
 
 			var name = new VenueName(this, localizedString);
 			Names.Add(name);
 
 			return name;
-
 		}
 
 		public virtual VenueWebLink CreateWebLink(string description, string url, WebLinkCategory category)
 		{
-
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
 
@@ -154,11 +145,8 @@ namespace VocaDb.Model.Domain.Venues
 			WebLinks.Links.Add(link);
 
 			return link;
-
 		}
 
 		public override string ToString() => $"venue '{DefaultName}' [{Id}]";
-
 	}
-
 }

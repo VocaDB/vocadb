@@ -6,10 +6,8 @@ using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Domain.PVs
 {
-
 	public class PV : IEquatable<PV>, IEditablePV
 	{
-
 		public static string GetUrl(PVService service, string pvId, PVExtendedMetadata extendedMetadata = null)
 		{
 			return VideoServiceHelper.Services[service].GetUrlById(pvId, extendedMetadata);
@@ -32,7 +30,6 @@ namespace VocaDb.Model.Domain.PVs
 		public PV(PVContract contract)
 			: this()
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			Service = contract.Service;
@@ -42,7 +39,6 @@ namespace VocaDb.Model.Domain.PVs
 			PublishDate = contract.PublishDate;
 			Author = contract.Author ?? string.Empty;
 			ExtendedMetadata = contract.ExtendedMetadata;
-
 		}
 
 		public virtual string Author
@@ -99,28 +95,23 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual bool ContentEquals(PVContract pv)
 		{
-
 			if (pv == null)
 				return false;
 
 			return (Name == pv.Name);
-
 		}
 
 		public virtual void CopyMetaFrom(PVContract contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			Author = contract.Author;
 			Name = contract.Name;
 			PVType = contract.PVType;
-
 		}
 
 		public virtual bool Equals(PV another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -131,7 +122,6 @@ namespace VocaDb.Model.Domain.PVs
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -150,7 +140,5 @@ namespace VocaDb.Model.Domain.PVs
 		{
 			return string.Format("PV '{0}' on {1} [{2}]", PVId, Service, Id);
 		}
-
 	}
-
 }

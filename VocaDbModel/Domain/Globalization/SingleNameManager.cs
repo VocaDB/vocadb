@@ -4,10 +4,8 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Domain.Globalization
 {
-
 	public class SingleNameManager : INameManager
 	{
-
 		private readonly string name;
 
 		public SingleNameManager(string name)

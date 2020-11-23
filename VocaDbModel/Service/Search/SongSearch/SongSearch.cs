@@ -14,10 +14,8 @@ using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.Search.SongSearch
 {
-
 	public class SongSearch
 	{
-
 		private readonly IEntryUrlParser entryUrlParser;
 		private readonly ContentLanguagePreference languagePreference;
 		private readonly IDatabaseContext querySource;
@@ -29,7 +27,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			ParsedSongQuery parsedQuery,
 			NameMatchMode? nameMatchMode = null)
 		{
-
 			var textQuery = !SearchTextQuery.IsNullOrEmpty(parsedQuery.Name) ?
 				new SearchTextQuery(parsedQuery.Name.Query, nameMatchMode ?? parsedQuery.Name.MatchMode, parsedQuery.Name.OriginalQuery)
 				: SearchTextQuery.Empty;
@@ -68,19 +65,15 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				.WhereMatchFilters(queryParams.AdvancedFilters);
 
 			return query;
-
 		}
 
 		private SearchWord GetTerm(string query, params string[] testTerms)
 		{
-
 			return SearchWord.GetTerm(query, testTerms);
-
 		}
 
 		private EntryTypeAndTagCollection<SongType> ProcessUnifiedTypesAndTags(SongQueryParams queryParams)
 		{
-
 			EntryTypeAndTagCollection<SongType> typesAndTags = null;
 
 			if (queryParams.UnifyEntryTypesAndTags)
@@ -91,12 +84,10 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			}
 
 			return typesAndTags;
-
 		}
 
 		private SearchTextQuery ProcessAdvancedSearch(SearchTextQuery textQuery, SongQueryParams queryParams)
 		{
-
 			if (textQuery.IsEmpty || textQuery.MatchMode == NameMatchMode.Exact || textQuery.MatchMode == NameMatchMode.StartsWith || !textQuery.OriginalQuery.StartsWith("!"))
 				return textQuery;
 
@@ -120,14 +111,11 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			{
 				return textQuery;
 			}
-
 		}
 
 		public static Song[] SortByIds(IEnumerable<Song> songs, int[] idList)
 		{
-
 			return CollectionHelper.SortByIds(songs, idList);
-
 		}
 
 		private IQueryable<T> Query<T>() where T : class, IDatabaseObject
@@ -137,18 +125,15 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 		private DateTime? ParseDateOrNull(string str)
 		{
-
 			DateTime parsed;
 			if (DateTime.TryParse(str, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
 				return parsed;
 			else
 				return null;
-
 		}
 
 		private ParsedSongQuery ParseDateRange(string str)
 		{
-
 			if (string.IsNullOrEmpty(str))
 				return new ParsedSongQuery();
 
@@ -162,32 +147,26 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				PublishedAfter = ParseDateOrNull(parts[0]),
 				PublishedBefore = parts.Length > 1 ? ParseDateOrNull(parts[1]) : null
 			};
-
 		}
 
 		private ParsedSongQuery ParseReferenceQuery(string trimmed, string query)
 		{
-
 			// Optimization: check prefix, in most cases the user won't be searching by URL
 			if (trimmed.StartsWith("/s/", StringComparison.InvariantCultureIgnoreCase))
 			{
-
 				var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
 
 				if (entryId.EntryType == EntryType.Song)
 					return new ParsedSongQuery { Id = entryId.Id };
-
 			}
 			else if (trimmed.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
 			{
-
 				// Test PV URL with services that don't require a web call
 				var videoParseResult = VideoServiceHelper.ParseByUrlAsync(query, false, null,
 					VideoService.NicoNicoDouga, VideoService.Youtube, VideoService.Bilibili, VideoService.File, VideoService.LocalFile, VideoService.Vimeo).Result;
 
 				if (videoParseResult.IsOk)
 				{
-
 					if (videoParseResult.Service == Domain.PVs.PVService.NicoNicoDouga)
 					{
 						return new ParsedSongQuery { NicoId = videoParseResult.Id };
@@ -196,23 +175,19 @@ namespace VocaDb.Model.Service.Search.SongSearch
 					{
 						return new ParsedSongQuery { PV = new PVContract { PVId = videoParseResult.Id, Service = videoParseResult.Service } };
 					}
-
 				}
 
 				var entryId = entryUrlParser.Parse(trimmed, allowRelative: false);
 
 				if (entryId.EntryType == EntryType.Song)
 					return new ParsedSongQuery { Id = entryId.Id };
-
 			}
 
 			return null;
-
 		}
 
 		public ParsedSongQuery ParseTextQuery(SearchTextQuery textQuery)
 		{
-
 			var query = textQuery.OriginalQuery;
 
 			if (string.IsNullOrWhiteSpace(query))
@@ -237,7 +212,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				default:
 					return ParseReferenceQuery(trimmed, query) ?? new ParsedSongQuery { Name = textQuery };
 			}
-
 		}
 
 		public SongSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference, IEntryUrlParser entryUrlParser)
@@ -254,7 +228,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		/// <returns>List of song search results. Cannot be null.</returns>
 		public PartialFindResult<Song> Find(SongQueryParams queryParams)
 		{
-
 			ParamIs.NotNull(() => queryParams);
 
 			var parsedQuery = ParseTextQuery(queryParams.Common.TextQuery);
@@ -272,7 +245,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			}
 
 			return GetSongs(queryParams, parsedQuery);
-
 		}
 
 		/// <summary>
@@ -281,7 +253,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		/// </summary>
 		private PartialFindResult<Song> GetSongsMoveExactToTop(SongQueryParams queryParams, ParsedSongQuery parsedQuery)
 		{
-
 			var sortRule = queryParams.SortRule;
 			var maxResults = queryParams.Paging.MaxEntries;
 			var getCount = queryParams.Paging.GetTotalCount;
@@ -301,14 +272,11 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			if (exactResults.Length >= maxResults)
 			{
-
 				ids = exactResults;
 				count = getCount ? CreateQuery(queryParams, parsedQuery).Count() : 0;
-
 			}
 			else
 			{
-
 				var directQ = CreateQuery(queryParams, parsedQuery);
 
 				var direct = directQ
@@ -324,7 +292,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 					.ToArray();
 
 				count = getCount ? directQ.Count() : 0;
-
 			}
 
 			var songs = querySource
@@ -333,12 +300,10 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				.OrderByIds(ids);
 
 			return new PartialFindResult<Song>(songs, count, queryParams.Common.Query);
-
 		}
 
 		private PartialFindResult<Song> GetSongs(SongQueryParams queryParams, ParsedSongQuery parsedQuery)
 		{
-
 			var query = CreateQuery(queryParams, parsedQuery);
 
 			var ids = query
@@ -355,9 +320,6 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			var count = (queryParams.Paging.GetTotalCount ? query.Count() : 0);
 
 			return new PartialFindResult<Song>(songs, count, queryParams.Common.Query);
-
 		}
-
 	}
-
 }

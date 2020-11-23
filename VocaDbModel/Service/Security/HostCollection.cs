@@ -4,7 +4,6 @@ using System.Threading;
 
 namespace VocaDb.Model.Service.Security
 {
-
 	public interface IHostCollection
 	{
 		IReadOnlyCollection<string> Hosts { get; }
@@ -16,7 +15,6 @@ namespace VocaDb.Model.Service.Security
 	/// </summary>
 	public class HostCollection : IHostCollection
 	{
-
 		private HashSet<string> ips;
 		private readonly ReaderWriterLockSlim readerWriterLock = new ReaderWriterLockSlim();
 
@@ -32,7 +30,6 @@ namespace VocaDb.Model.Service.Security
 
 		public void Add(string host)
 		{
-
 			readerWriterLock.EnterWriteLock();
 			try
 			{
@@ -42,12 +39,10 @@ namespace VocaDb.Model.Service.Security
 			{
 				readerWriterLock.ExitWriteLock();
 			}
-
 		}
 
 		public void Reset(IEnumerable<string> ips)
 		{
-
 			readerWriterLock.EnterWriteLock();
 			try
 			{
@@ -57,7 +52,6 @@ namespace VocaDb.Model.Service.Security
 			{
 				readerWriterLock.ExitWriteLock();
 			}
-
 		}
 
 		public bool Contains(string host)
@@ -103,6 +97,5 @@ namespace VocaDb.Model.Service.Security
 		}
 
 		IReadOnlyCollection<string> IHostCollection.Hosts => Hosts;
-
 	}
 }

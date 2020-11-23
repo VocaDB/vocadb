@@ -3,11 +3,9 @@ using System.Runtime.Serialization;
 
 namespace VocaDb.Model.Service.Security.StopForumSpam
 {
-
 	[DataContract]
 	public class SFSResponseContract
 	{
-
 		/// <summary>
 		/// Confidence threshold when user is considered spammer.
 		/// </summary>
@@ -49,7 +47,5 @@ namespace VocaDb.Model.Service.Security.StopForumSpam
 
 		[DataMember]
 		public DateTime LastSeen { get; set; }
-
 	}
-
 }

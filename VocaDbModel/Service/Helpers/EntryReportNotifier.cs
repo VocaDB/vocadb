@@ -6,17 +6,14 @@ using VocaDb.Model.Resources.Messages;
 
 namespace VocaDb.Model.Service.Helpers
 {
-
 	public class EntryReportNotifier
 	{
-
 		public void SendReportNotification(IDatabaseContext<UserMessage> ctx,
 			ArchivedObjectVersion reportedVersion,
 			string notes,
 			IEntryLinkFactory entryLinkFactory,
 			string reportName)
 		{
-
 			if (reportedVersion == null)
 				return;
 
@@ -53,9 +50,6 @@ namespace VocaDb.Model.Service.Helpers
 
 			var notification = new UserMessage(receiver, string.Format(title, entry.DefaultName), message, false);
 			ctx.Save(notification);
-
 		}
-
 	}
-
 }

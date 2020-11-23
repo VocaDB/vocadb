@@ -7,15 +7,12 @@ using NLog;
 
 namespace VocaDb.Web.Code.WebApi
 {
-
 	public class ObjectNotFoundExceptionFilterAttribute : ExceptionFilterAttribute
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		public override void OnException(HttpActionExecutedContext context)
 		{
-
 			var ex = context.Exception as ObjectNotFoundException;
 
 			if (ex == null)
@@ -32,9 +29,6 @@ namespace VocaDb.Web.Code.WebApi
 			};
 
 			throw new HttpResponseException(resp);
-
 		}
-
 	}
-
 }

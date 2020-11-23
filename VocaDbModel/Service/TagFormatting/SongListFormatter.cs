@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.Service.TagFormatting
 {
-
 	public class SongListFormatter : SongCsvFileFormatter<SongInList>
 	{
-
 		public SongListFormatter(IEntryLinkFactory entryLinkFactory)
 			: base(entryLinkFactory)
 		{
@@ -14,7 +12,6 @@ namespace VocaDb.Model.Service.TagFormatting
 
 		protected override string GetFieldValue(string fieldName, SongInList songInList, ContentLanguagePreference languagePreference)
 		{
-
 			switch (fieldName)
 			{
 				case "notes":
@@ -22,15 +19,11 @@ namespace VocaDb.Model.Service.TagFormatting
 				default:
 					return GetFieldValue(fieldName, (ISongLink)songInList, languagePreference);
 			}
-
 		}
 
 		public string ApplyFormat(SongList songList, string format, ContentLanguagePreference languagePreference, bool includeHeader)
 		{
-
 			return ApplyFormat(songList.SongLinks, format, languagePreference, includeHeader);
-
 		}
-
 	}
 }

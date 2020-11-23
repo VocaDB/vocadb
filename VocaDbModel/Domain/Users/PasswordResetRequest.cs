@@ -2,10 +2,8 @@ using System;
 
 namespace VocaDb.Model.Domain.Users
 {
-
 	public class PasswordResetRequest : IDatabaseObject
 	{
-
 		public static readonly TimeSpan ExpirationTime = TimeSpan.FromDays(1);
 
 		private User user;
@@ -19,10 +17,8 @@ namespace VocaDb.Model.Domain.Users
 		public PasswordResetRequest(User user)
 			: this()
 		{
-
 			User = user;
 			Email = user.Email;
-
 		}
 
 		public virtual DateTime Created { get; set; }

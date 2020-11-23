@@ -5,13 +5,10 @@ using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.DataContracts.Venues
 {
-
 	public class ArchivedVenueVersionDetailsContract
 	{
-
 		public ArchivedVenueVersionDetailsContract(ArchivedVenueVersion archived, ArchivedVenueVersion comparedVersion, IUserPermissionContext permissionContext)
 		{
-
 			ParamIs.NotNull(() => archived);
 
 			ArchivedVersion = new ArchivedVenueVersionContract(archived);
@@ -27,7 +24,6 @@ namespace VocaDb.Model.DataContracts.Venues
 			Versions = ComparedVenueContract.Create(archived, comparedVersion);
 
 			ComparedVersionId = Versions.SecondId;
-
 		}
 
 		public ArchivedVenueVersionContract ArchivedVersion { get; set; }
@@ -45,7 +41,5 @@ namespace VocaDb.Model.DataContracts.Venues
 		public VenueContract Venue { get; set; }
 
 		public ComparedVenueContract Versions { get; set; }
-
 	}
-
 }

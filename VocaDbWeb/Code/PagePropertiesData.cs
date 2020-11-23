@@ -3,22 +3,18 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Web.Code
 {
-
 	/// <summary>
 	/// Common properties for a page, to be used by the layout page.
 	/// </summary>
 	public class PagePropertiesData
 	{
-
 		public const string Robots_Noindex_Follow = "noindex,follow";
 
 		public const string Robots_Noindex_Nofollow = "noindex,nofollow";
 
 		public static PagePropertiesData Get(dynamic viewBag)
 		{
-
 			return viewBag.PageProperties ?? (viewBag.PageProperties = new PagePropertiesData(viewBag));
-
 		}
 
 		private readonly dynamic viewBag;
@@ -56,12 +52,10 @@ namespace VocaDb.Web.Code
 		{
 			get
 			{
-
 				if (!string.IsNullOrEmpty(ViewBag.PageTitle))
 					return ViewBag.PageTitle;
 
 				return (string)ViewBag.Title ?? string.Empty;
-
 			}
 			set => ViewBag.PageTitle = value;
 		}
@@ -75,7 +69,6 @@ namespace VocaDb.Web.Code
 		{
 			get
 			{
-
 				if (string.IsNullOrEmpty(Description))
 					return string.Empty;
 
@@ -83,7 +76,6 @@ namespace VocaDb.Web.Code
 				return Description
 					.Trim()
 					.Summarize(30, 300);
-
 			}
 		}
 
@@ -110,7 +102,6 @@ namespace VocaDb.Web.Code
 
 	public class OpenGraphModel
 	{
-
 		private string description;
 		private string image;
 		private readonly PagePropertiesData pageProperties;
@@ -154,15 +145,11 @@ namespace VocaDb.Web.Code
 		/// og:type meta field value.
 		/// </summary>
 		public string Type { get; set; }
-
 	}
 
 	public static class OpenGraphTypes
 	{
-
 		public const string Album = "music.album";
 		public const string Song = "music.song";
-
 	}
-
 }

@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Helpers
 {
-
 	public static class AlbumHelper
 	{
-
 		public static ContentFocus GetContentFocus(DiscType t)
 		{
 			switch (t)
@@ -19,7 +17,5 @@ namespace VocaDb.Model.Helpers
 					return ContentFocus.Music;
 			}
 		}
-
 	}
-
 }

@@ -25,7 +25,6 @@ namespace ViewRes.Event
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public class EventsBySeriesStrings
 	{
-
 		private static global::System.Resources.ResourceManager resourceMan;
 
 		private static global::System.Globalization.CultureInfo resourceCulture;

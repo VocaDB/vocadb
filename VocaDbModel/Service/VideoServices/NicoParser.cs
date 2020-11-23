@@ -15,7 +15,6 @@ using VocaDb.NicoApi;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public class NicoParser : IVideoServiceParser
 	{
 		public Task<VideoTitleParseResult> GetTitleAsync(string id) => NicoHelper.GetTitleAPIAsync(id);
@@ -23,12 +22,10 @@ namespace VocaDb.Model.Service.VideoServices
 
 	public static class NicoHelper
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private static string GetUserName(Stream htmlStream, Encoding encoding)
 		{
-
 			var doc = new HtmlDocument();
 			try
 			{
@@ -44,7 +41,6 @@ namespace VocaDb.Model.Service.VideoServices
 			var titleText = (titleElem != null ? titleElem.InnerText : null);
 
 			return (titleText != null ? HtmlEntity.DeEntitize(titleText) : null);
-
 		}
 
 		/// <summary>
@@ -53,7 +49,6 @@ namespace VocaDb.Model.Service.VideoServices
 		/// </summary>
 		private static string GetUserName(string userId)
 		{
-
 			var url = string.Format("http://ext.nicovideo.jp/thumb_user/{0}", userId);
 
 			var request = WebRequest.Create(url);
@@ -83,7 +78,6 @@ namespace VocaDb.Model.Service.VideoServices
 			{
 				response.Close();
 			}
-
 		}
 
 		public static IEnumerable<string> GetUserProfileUrlById(string userId)
@@ -102,7 +96,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public static VideoTitleParseResult ParseResponse(VideoDataResult nicoResponse)
 		{
-
 			string author = nicoResponse.Author;
 			string userId = nicoResponse.AuthorId;
 			if (string.IsNullOrEmpty(author))
@@ -112,12 +105,10 @@ namespace VocaDb.Model.Service.VideoServices
 			result.Tags = nicoResponse.Tags.Select(tag => tag.Name).ToArray();
 
 			return result;
-
 		}
 
 		public static async Task<VideoTitleParseResult> GetTitleAPIAsync(string id)
 		{
-
 			VideoDataResult result;
 			try
 			{
@@ -128,12 +119,10 @@ namespace VocaDb.Model.Service.VideoServices
 				return VideoTitleParseResult.CreateError("NicoVideo (error): " + x.Message);
 			}
 			return ParseResponse(result);
-
 		}
 
 		private static Encoding GetEncoding(string encodingStr)
 		{
-
 			if (string.IsNullOrEmpty(encodingStr))
 				return Encoding.UTF8;
 
@@ -145,7 +134,6 @@ namespace VocaDb.Model.Service.VideoServices
 			{
 				return Encoding.UTF8;
 			}
-
 		}
 
 		/// <summary>
@@ -157,7 +145,6 @@ namespace VocaDb.Model.Service.VideoServices
 		/// <remarks>This works with titles that follow the common Nico format, such as 【重音テト】 ハイゲインワンダーランド 【オリジナル】.</remarks>
 		public static NicoTitleParseResult ParseTitle(string title, Func<string, Artist> artistFunc)
 		{
-
 			if (string.IsNullOrEmpty(title))
 				return new NicoTitleParseResult(title);
 
@@ -172,7 +159,6 @@ namespace VocaDb.Model.Service.VideoServices
 
 			foreach (Match match in matches)
 			{
-
 				var original = "オリジナル";
 				var cover = "カバー";
 
@@ -183,7 +169,6 @@ namespace VocaDb.Model.Service.VideoServices
 					songType = SongType.Cover;
 				else
 				{
-
 					if (content.Contains(original))
 					{
 						songType = SongType.Original;
@@ -199,12 +184,10 @@ namespace VocaDb.Model.Service.VideoServices
 						artists.Add(a);
 					else
 					{
-
 						var parts = content.Split('･', '・', '×');
 
 						foreach (var part in parts.Where(p => p != string.Empty))
 						{
-
 							a = artistFunc(part);
 
 							// Some UTAUs are credited with the "音源" suffix, so also try without it.
@@ -215,22 +198,15 @@ namespace VocaDb.Model.Service.VideoServices
 
 							if (a != null)
 								artists.Add(a);
-
 						}
-
 					}
-
 				}
 
 				title = title.Remove(match.Index - offset, match.Value.Length);
 				offset += match.Length;
-
 			}
 
 			return new NicoTitleParseResult(title.Trim(), artists, songType);
-
 		}
-
 	}
-
 }

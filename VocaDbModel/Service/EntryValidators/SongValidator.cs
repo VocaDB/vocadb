@@ -7,13 +7,10 @@ using VocaDb.Model.Resources;
 
 namespace VocaDb.Model.Service.EntryValidators
 {
-
 	public class SongValidator
 	{
-
 		public bool IsValid(Song song, int instrumentalTagId)
 		{
-
 			ParamIs.NotNull(() => song);
 
 			var errors = new List<string>();
@@ -47,9 +44,6 @@ namespace VocaDb.Model.Service.EntryValidators
 				errors.Add(SongValidationErrors.DuplicateArtist);
 
 			return !errors.Any();
-
 		}
-
 	}
-
 }

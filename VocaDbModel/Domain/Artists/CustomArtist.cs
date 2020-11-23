@@ -1,9 +1,7 @@
 ﻿namespace VocaDb.Model.Domain.Artists
 {
-
 	public class CustomArtist : IArtistLinkWithRoles
 	{
-
 		public CustomArtist(string name, ArtistRoles roles)
 		{
 			Name = name;
@@ -26,7 +24,5 @@
 				return null;
 			}
 		}
-
-
 	}
 }

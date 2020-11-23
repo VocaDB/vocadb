@@ -3,13 +3,10 @@ using FluentNHibernate.Mapping;
 
 namespace VocaDb.Model.Mapping.Users
 {
-
 	public class UserMessageMap : ClassMap<UserMessage>
 	{
-
 		public UserMessageMap()
 		{
-
 			Id(m => m.Id);
 
 			Map(m => m.Created).Not.Nullable();
@@ -21,9 +18,6 @@ namespace VocaDb.Model.Mapping.Users
 			References(m => m.Sender).Nullable();
 			References(m => m.Receiver).Not.Nullable();
 			References(m => m.User).Not.Nullable();
-
 		}
-
 	}
-
 }

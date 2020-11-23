@@ -11,11 +11,9 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class TagForApiContract
 	{
-
 		public TagForApiContract() { }
 
 		public TagForApiContract(Tag tag,
@@ -27,7 +25,6 @@ namespace VocaDb.Model.DataContracts.Tags
 			ContentLanguagePreference languagePreference,
 			TagOptionalFields optionalFields)
 		{
-
 			ParamIs.NotNull(() => tag);
 
 			CategoryName = tag.CategoryName;
@@ -82,7 +79,6 @@ namespace VocaDb.Model.DataContracts.Tags
 			{
 				WebLinks = tag.WebLinks.Links.Select(w => new WebLinkForApiContract(w)).ToArray();
 			}
-
 		}
 
 		/// <summary>
@@ -159,13 +155,11 @@ namespace VocaDb.Model.DataContracts.Tags
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public WebLinkForApiContract[] WebLinks { get; set; }
-
 	}
 
 	[Flags]
 	public enum TagOptionalFields
 	{
-
 		None = 0,
 		AdditionalNames = 1,
 		[Obsolete("Tag aliases are now just names")]
@@ -177,7 +171,5 @@ namespace VocaDb.Model.DataContracts.Tags
 		RelatedTags = 64,
 		TranslatedDescription = 128,
 		WebLinks = 256
-
 	}
-
 }

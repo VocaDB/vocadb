@@ -4,11 +4,9 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class TagUsageForApiContract
 	{
-
 		public TagUsageForApiContract() { }
 
 		public TagUsageForApiContract(TagUsage tagUsage, ContentLanguagePreference languagePreference)
@@ -28,7 +26,5 @@ namespace VocaDb.Model.DataContracts.Tags
 
 		[DataMember]
 		public TagBaseContract Tag { get; set; }
-
 	}
-
 }

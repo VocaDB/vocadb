@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 
 namespace VocaDb.Web.Code.Exceptions
 {
-
 	/// <summary>
 	/// Exception indicating that invalid web form was posted.
 	/// </summary>
@@ -14,5 +13,4 @@ namespace VocaDb.Web.Code.Exceptions
 		public InvalidFormException(string message, Exception innerException) : base(message, innerException) { }
 		protected InvalidFormException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 	}
-
 }

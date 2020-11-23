@@ -2,13 +2,11 @@
 
 namespace VocaDb.Model.Domain.Globalization
 {
-
 	/// <summary>
 	/// String that can be translated into one language.
 	/// </summary>
 	public class EnglishTranslatedString
 	{
-
 		private string english;
 		private string original;
 
@@ -54,7 +52,6 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual bool CopyFrom(EnglishTranslatedStringContract contract)
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			var changed = false;
@@ -75,12 +72,10 @@ namespace VocaDb.Model.Domain.Globalization
 			}
 
 			return changed;
-
 		}
 
 		public virtual bool CopyIfEmpty(EnglishTranslatedString source)
 		{
-
 			bool changed = false;
 
 			if (Original == string.Empty && Original != source.Original)
@@ -96,7 +91,6 @@ namespace VocaDb.Model.Domain.Globalization
 			}
 
 			return changed;
-
 		}
 
 		public virtual bool ShowEnglish(ContentLanguagePreference languagePreference)
@@ -110,7 +104,5 @@ namespace VocaDb.Model.Domain.Globalization
 		}
 
 		public string this[ContentLanguagePreference preference] => GetBestMatch(preference);
-
 	}
-
 }

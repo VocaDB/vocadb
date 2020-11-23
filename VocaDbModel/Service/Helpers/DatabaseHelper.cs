@@ -2,13 +2,10 @@
 
 namespace VocaDb.Model.Service.Helpers
 {
-
 	public static class DatabaseHelper
 	{
-
 		public static void ClearSecondLevelCache(ISessionFactory sessionFactory)
 		{
-
 			var classMetadata = sessionFactory.GetAllClassMetadata();
 			foreach (var ep in classMetadata.Values)
 			{
@@ -20,8 +17,6 @@ namespace VocaDb.Model.Service.Helpers
 			{
 				sessionFactory.EvictCollection(acp.Role);
 			}
-
 		}
-
 	}
 }

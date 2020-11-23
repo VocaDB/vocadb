@@ -12,10 +12,8 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Database.Queries.Partial
 {
-
 	public class CreateEventQuery
 	{
-
 		/// <summary>
 		/// Returns a release event if it can be uniquely identified (by either name or ID).
 		/// Otherwise attempts to create a new event based on given name.
@@ -29,7 +27,6 @@ namespace VocaDb.Model.Database.Queries.Partial
 		/// <returns>The release event. Can be null if no name or ID is specified. Returned event can be either a new event or existing event.</returns>
 		public ReleaseEvent FindOrCreate(IDatabaseContext ctx, IUserPermissionContext userContext, IReleaseEvent contract, IEntryBase forEntry)
 		{
-
 			if (contract == null || (contract.Id == 0 && string.IsNullOrWhiteSpace(contract.Name)))
 				return null;
 
@@ -70,9 +67,6 @@ namespace VocaDb.Model.Database.Queries.Partial
 			ctx.Save(archivedVersion);
 
 			return newEvent;
-
 		}
-
 	}
-
 }

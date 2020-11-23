@@ -5,7 +5,6 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Tags
 {
-
 	/// <summary>
 	/// Manages tags and tag usages for an entry.
 	/// There's always one tag manager per entry.
@@ -13,7 +12,6 @@ namespace VocaDb.Model.Domain.Tags
 	/// <typeparam name="T">Type of tag usage.</typeparam>
 	public class TagManager<T> : ITagManager where T : TagUsage
 	{
-
 		private ISet<T> tags = new HashSet<T>();
 
 		/// <summary>
@@ -53,12 +51,10 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		public virtual void DeleteUsages()
 		{
-
 			var list = Usages.ToArray();
 
 			foreach (var usage in list)
 				usage.Delete();
-
 		}
 
 		public virtual T GetTagUsage(Tag tag)
@@ -69,11 +65,9 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual bool HasTag(Tag tag)
 		{
-
 			ParamIs.NotNull(() => tag);
 
 			return Usages.Any(u => u.Tag.Equals(tag));
-
 		}
 
 		public virtual bool HasTag(int tagId) => Usages.Any(u => u.Tag.Id == tagId);
@@ -81,7 +75,6 @@ namespace VocaDb.Model.Domain.Tags
 		public virtual Tag[] SyncVotes(User user, Tag[] tags, ITagUsageFactory<T> tagUsageFactory,
 			bool onlyAdd = false)
 		{
-
 			var actualTags = tags.Distinct().ToArray();
 			var tagUsagesDiff = CollectionHelper.Diff(Usages, actualTags, (t1, t2) => t1.Tag.Equals(t2));
 			var modifiedTags = new List<Tag>(tagUsagesDiff.Added.Length + tagUsagesDiff.Removed.Length + tagUsagesDiff.Unchanged.Length);
@@ -99,7 +92,6 @@ namespace VocaDb.Model.Domain.Tags
 			{
 				foreach (var removedTag in tagUsagesDiff.Removed)
 				{
-
 					removedTag.RemoveVote(user);
 
 					if (!removedTag.HasVotes)
@@ -109,31 +101,23 @@ namespace VocaDb.Model.Domain.Tags
 					}
 
 					modifiedTags.Add(removedTag.Tag);
-
 				}
 			}
 
 			foreach (var updated in tagUsagesDiff.Unchanged)
 			{
-
 				updated.CreateVote(user);
 				modifiedTags.Add(updated.Tag);
-
 			}
 
 			return modifiedTags.ToArray();
-
 		}
-
 	}
 
 	public interface ITagManager
 	{
-
 		IEnumerable<Tag> Tags { get; }
 
 		bool HasTag(Tag tag);
-
 	}
-
 }

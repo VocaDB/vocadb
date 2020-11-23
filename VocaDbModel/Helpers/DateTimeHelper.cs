@@ -2,13 +2,10 @@
 
 namespace VocaDb.Model.Helpers
 {
-
 	public static class DateTimeHelper
 	{
-
 		public static bool DateEquals(DateTime? first, DateTime? second)
 		{
-
 			if (!first.HasValue && !second.HasValue) // Both are null
 				return true;
 
@@ -16,7 +13,6 @@ namespace VocaDb.Model.Helpers
 				return false;
 
 			return first.Value.Date == second.Value.Date;
-
 		}
 
 		public static string FormatMinSec(int seconds)
@@ -31,7 +27,6 @@ namespace VocaDb.Model.Helpers
 
 		public static DateTime? ParseDateTimeOffsetAsDate(string str)
 		{
-
 			DateTimeOffset date;
 			if (DateTimeOffset.TryParse(str, out date))
 			{
@@ -39,9 +34,6 @@ namespace VocaDb.Model.Helpers
 			}
 
 			return null;
-
 		}
-
 	}
-
 }

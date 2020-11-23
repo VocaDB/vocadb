@@ -12,13 +12,11 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.Helpers
 {
-
 	/// <summary>
 	/// Various image helper methods.
 	/// </summary>
 	public static class ImageHelper
 	{
-
 		private static readonly string[] allowedExt = { ".bmp", ".gif", ".jpg", ".jpeg", ".png" };
 		public const int DefaultSmallThumbSize = 150;
 		public const int DefaultThumbSize = 250;
@@ -61,7 +59,6 @@ namespace VocaDb.Model.Helpers
 		/// <returns>File extension, for example ".jpg". Can be null if MIME type is not recognized.</returns>
 		public static string GetExtensionFromMime(string mime)
 		{
-
 			switch (mime)
 			{
 				case MediaTypeNames.Image.Jpeg:
@@ -82,12 +79,10 @@ namespace VocaDb.Model.Helpers
 				default:
 					return string.Empty;
 			}
-
 		}
 
 		public static int GetDefaultImageSizePx(ImageSize size)
 		{
-
 			switch (size)
 			{
 				case ImageSize.Thumb:
@@ -106,7 +101,6 @@ namespace VocaDb.Model.Helpers
 		/// </summary>
 		public static int GetUserImageSizePx(ImageSize size)
 		{
-
 			switch (size)
 			{
 				case ImageSize.Original:
@@ -121,31 +115,25 @@ namespace VocaDb.Model.Helpers
 			}
 
 			return UserThumbMax;
-
 		}
 
 		public static PictureDataContract GetOriginal(Stream input, int length, string contentType)
 		{
-
 			var buf = new Byte[length];
 			input.Read(buf, 0, length);
 
 			return new PictureDataContract(buf, contentType);
-
 		}
 
 		public static bool IsValidImageExtension(string fileName)
 		{
-
 			var ext = Path.GetExtension(fileName);
 
 			return (allowedExt.Any(e => string.Equals(e, ext, StringComparison.InvariantCultureIgnoreCase)));
-
 		}
 
 		public static Image ResizeToFixedSize(Image imgPhoto, int width, int height)
 		{
-
 			int sourceWidth = imgPhoto.Width;
 			int sourceHeight = imgPhoto.Height;
 
@@ -172,7 +160,6 @@ namespace VocaDb.Model.Helpers
 
 			using (var grPhoto = Graphics.FromImage(bmPhoto))
 			{
-
 				grPhoto.Clear(Color.Transparent);
 				grPhoto.InterpolationMode =
 						InterpolationMode.HighQualityBicubic;
@@ -181,11 +168,9 @@ namespace VocaDb.Model.Helpers
 					new Rectangle(0, 0, destWidth, destHeight),
 					new Rectangle(0, 0, sourceWidth, sourceHeight),
 					GraphicsUnit.Pixel);
-
 			}
 
 			return bmPhoto;
-
 		}
 	}
 
@@ -199,5 +184,4 @@ namespace VocaDb.Model.Helpers
 		public InvalidPictureException(string message, Exception innerException) : base(message, innerException) { }
 		protected InvalidPictureException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 	}
-
 }

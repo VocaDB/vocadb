@@ -3,13 +3,10 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Mapping.ReleaseEvents
 {
-
 	public class ReleaseEventSeriesMap : ClassMap<ReleaseEventSeries>
 	{
-
 		public ReleaseEventSeriesMap()
 		{
-
 			Table("AlbumReleaseEventSeries");
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -44,17 +41,13 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 
 			HasMany(m => m.AllEvents).OrderBy("[SeriesNumber]").KeyColumn("[Series]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.WebLinks).KeyColumn("[ReleaseEventSeries]").Inverse().Cascade.All().Cache.ReadWrite();
-
 		}
-
 	}
 
 	public class EventSeriesNameMap : ClassMap<EventSeriesName>
 	{
-
 		public EventSeriesNameMap()
 		{
-
 			Table("EventSeriesNames");
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -62,11 +55,8 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 			Map(m => m.Language).Not.Nullable();
 			Map(m => m.Value).Length(255).Not.Nullable();
 			References(m => m.Entry).Column("[Series]").Not.Nullable();
-
 		}
-
 	}
 
 	public class ReleaseEventSeriesWebLinkMap : WebLinkMap<ReleaseEventSeriesWebLink, ReleaseEventSeries> { }
-
 }

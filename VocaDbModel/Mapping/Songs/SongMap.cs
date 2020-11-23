@@ -6,13 +6,10 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.Mapping.Songs
 {
-
 	public class SongMap : ClassMap<Song>
 	{
-
 		public SongMap()
 		{
-
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
@@ -84,17 +81,13 @@ namespace VocaDb.Model.Mapping.Songs
 			HasMany(m => m.Lyrics).Inverse().Cascade.All().Cache.ReadWrite();
 			HasMany(m => m.UserFavorites).Inverse();
 			HasMany(m => m.WebLinks).Table("SongWebLinks").Inverse().Cascade.All().Cache.ReadWrite();
-
 		}
-
 	}
 
 	public class ArchivedSongVersionMap : ClassMap<ArchivedSongVersion>
 	{
-
 		public ArchivedSongVersionMap()
 		{
-
 			Id(m => m.Id);
 
 			Map(m => m.AgentName).Length(100).Not.Nullable();
@@ -114,17 +107,13 @@ namespace VocaDb.Model.Mapping.Songs
 				c.Map(m => m.ChangedFieldsString, ClassConventions.EscapeColumn("ChangedFields")).Length(1000).Not.Nullable();
 				c.Map(m => m.IsSnapshot).Not.Nullable();
 			});
-
 		}
-
 	}
 
 	public class SongNameMap : ClassMap<SongName>
 	{
-
 		public SongNameMap()
 		{
-
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
@@ -132,17 +121,13 @@ namespace VocaDb.Model.Mapping.Songs
 			Map(m => m.Value).Length(255).Not.Nullable();
 
 			References(m => m.Song).Not.Nullable();
-
 		}
-
 	}
 
 	public class ArtistForSongMap : ClassMap<ArtistForSong>
 	{
-
 		public ArtistForSongMap()
 		{
-
 			Schema("dbo");
 			Table("ArtistsForSongs");
 			Cache.ReadWrite();
@@ -153,17 +138,13 @@ namespace VocaDb.Model.Mapping.Songs
 			Map(m => m.Roles).CustomType(typeof(ArtistRoles)).Not.Nullable();
 			References(m => m.Artist).Nullable();
 			References(m => m.Song).Not.Nullable();
-
 		}
-
 	}
 
 	public class SongInAlbumMap : ClassMap<SongInAlbum>
 	{
-
 		public SongInAlbumMap()
 		{
-
 			Schema("dbo");
 			Table("SongsInAlbums");
 			Cache.ReadWrite();
@@ -175,19 +156,15 @@ namespace VocaDb.Model.Mapping.Songs
 			Map(m => m.TrackNumber).Not.Nullable();
 			References(m => m.Album).Not.Nullable();
 			References(m => m.Song).Nullable();
-
 		}
-
 	}
 
 	public class SongWebLinkMap : WebLinkMap<SongWebLink, Song> { }
 
 	public class PVForSongMap : ClassMap<PVForSong>
 	{
-
 		public PVForSongMap()
 		{
-
 			Table("PVsForSongs");
 			Id(m => m.Id);
 
@@ -208,9 +185,6 @@ namespace VocaDb.Model.Mapping.Songs
 			{
 				c.Map(m => m.Json, "ExtendedMetadataJson").Nullable();
 			});
-
 		}
-
 	}
-
 }

@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.DataContracts.Albums
 {
-
 	public class ComparedAlbumsContract : ComparedVersionsContract<ArchivedAlbumContract>
 	{
-
 		public ComparedAlbumsContract(ComparedVersionsContract<ArchivedAlbumContract> comparedVersions)
 			: base(comparedVersions) { }
 
@@ -14,6 +12,5 @@ namespace VocaDb.Model.DataContracts.Albums
 		{
 			return new ComparedAlbumsContract(Create(firstData, secondData, ArchivedAlbumContract.GetAllProperties, d => d.Id));
 		}
-
 	}
 }

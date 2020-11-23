@@ -22,14 +22,12 @@ using WebApi.OutputCache.V2;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	/// <summary>
 	/// API queries for albums.
 	/// </summary>
 	[RoutePrefix("api/albums")]
 	public class AlbumApiController : ApiController
 	{
-
 		private const int hourInSeconds = 3600;
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
@@ -41,12 +39,10 @@ namespace VocaDb.Web.Controllers.Api
 		public AlbumApiController(AlbumQueries queries, AlbumService service,
 			OtherService otherService, IAggregatedEntryImageUrlFactory thumbPersister)
 		{
-
 			this.queries = queries;
 			this.service = service;
 			this.otherService = otherService;
 			this.thumbPersister = thumbPersister;
-
 		}
 
 		/// <summary>
@@ -180,7 +176,6 @@ namespace VocaDb.Web.Controllers.Api
 			AlbumOptionalFields fields = AlbumOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
 			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort ?? AlbumSortRule.Name, preferAccurateMatches)
@@ -206,7 +201,6 @@ namespace VocaDb.Web.Controllers.Api
 			var entries = service.Find(a => new AlbumForApiContract(a, null, lang, thumbPersister, fields, SongOptionalFields.None), queryParams);
 
 			return entries;
-
 		}
 
 		/// <summary>
@@ -336,7 +330,5 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Authorize]
 		public void PostPersonalDescription(int id, AlbumDetailsContract data) => queries.UpdatePersonalDescription(id, data);
-
 	}
-
 }

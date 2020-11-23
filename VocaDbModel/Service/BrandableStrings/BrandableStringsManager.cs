@@ -10,15 +10,12 @@ using VocaDb.Model.Utils.Config;
 
 namespace VocaDb.Model.Service.BrandableStrings
 {
-
 	public class BrandableStringsManager
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private bool LoadBrandedStrings()
 		{
-
 			var brandedStringsAssembly = AppConfig.BrandedStringsAssembly;
 
 			if (string.IsNullOrEmpty(brandedStringsAssembly))
@@ -54,12 +51,10 @@ namespace VocaDb.Model.Service.BrandableStrings
 			User = header.User;
 
 			return true;
-
 		}
 
 		public BrandableStringsManager(VdbConfigManager config)
 		{
-
 			this.config = config;
 
 			if (!LoadBrandedStrings())
@@ -71,7 +66,6 @@ namespace VocaDb.Model.Service.BrandableStrings
 				Song = new SongStrings(Resources.Views.SongRes.ResourceManager);
 				User = new UserStrings(Resources.Views.UserRes.ResourceManager);
 			}
-
 		}
 
 		private readonly VdbConfigManager config;
@@ -90,6 +84,5 @@ namespace VocaDb.Model.Service.BrandableStrings
 
 		public string SiteName => config.SiteSettings.SiteName.EmptyToNull() ?? Layout.SiteName;
 		public string SiteTitle => config.SiteSettings.SiteTitle.EmptyToNull() ?? Layout.SiteTitle;
-
 	}
 }

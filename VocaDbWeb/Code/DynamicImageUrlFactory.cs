@@ -5,10 +5,8 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Web.Code
 {
-
 	public class DynamicImageUrlFactory : IDynamicImageUrlFactory
 	{
-
 		public DynamicImageUrlFactory(Lazy<UrlHelper> urlHelper)
 		{
 			this.urlHelperAccessor = urlHelper;
@@ -18,7 +16,6 @@ namespace VocaDb.Web.Code
 
 		public VocaDbUrl GetUrl(IEntryImageInformation imageInfo, ImageSize size)
 		{
-
 			var urlHelper = urlHelperAccessor.Value;
 			string dynamicUrl = null;
 			if (imageInfo.EntryType == EntryType.Album)
@@ -37,7 +34,6 @@ namespace VocaDb.Web.Code
 			}
 
 			return !string.IsNullOrEmpty(dynamicUrl) ? new VocaDbUrl(dynamicUrl, UrlDomain.Main, System.UriKind.Relative) : VocaDbUrl.Empty;
-
 		}
 
 		public bool HasImage(IEntryImageInformation picture, ImageSize size) => IsSupported(picture, size) && picture.ShouldExist();
@@ -47,5 +43,4 @@ namespace VocaDb.Web.Code
 			return picture.PurposeMainOrUnspecified() && (picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album);
 		}
 	}
-
 }

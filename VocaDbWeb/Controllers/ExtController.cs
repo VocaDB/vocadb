@@ -20,11 +20,9 @@ using VocaDb.Web.Models.Ext;
 
 namespace VocaDb.Web.Controllers
 {
-
 	[SessionState(SessionStateBehavior.Disabled)]
 	public class ExtController : ControllerBase
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private readonly AlbumService albumService;
@@ -37,23 +35,19 @@ namespace VocaDb.Web.Controllers
 
 		protected ActionResult Object<T>(T obj, DataFormat format) where T : class
 		{
-
 			if (format == DataFormat.Xml)
 				return Xml(obj);
 			else
 				return Json(obj);
-
 		}
 
 		protected ActionResult Xml<T>(T obj) where T : class
 		{
-
 			if (obj == null)
 				return new EmptyResult();
 
 			var content = XmlHelper.SerializeToUTF8XmlString(obj);
 			return base.Xml(content);
-
 		}
 
 		public ExtController(IEntryUrlParser entryUrlParser, IAggregatedEntryImageUrlFactory entryThumbPersister,
@@ -74,7 +68,6 @@ namespace VocaDb.Web.Controllers
 		public ActionResult EmbedSong(int songId = invalidId, int pvId = invalidId, int? w = null, int? h = null,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-
 			if (songId == invalidId)
 				return NoId();
 
@@ -101,12 +94,10 @@ namespace VocaDb.Web.Controllers
 			};
 
 			return PartialView(viewModel);
-
 		}
 
 		public ActionResult EntryToolTip(string url, string callback)
 		{
-
 			if (string.IsNullOrWhiteSpace(url))
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "URL must be specified");
 
@@ -141,12 +132,10 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return Json(data, callback);
-
 		}
 
 		public ActionResult OEmbed(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json, bool responsiveWrapper = false)
 		{
-
 			if (string.IsNullOrEmpty(url))
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "URL must be specified");
 
@@ -178,14 +167,12 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return Object(new SongOEmbedResponse(song, maxwidth, maxheight, html), format);
-
 		}
 
 		public ActionResult OEmbedResponsive(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json)
 		{
 			return OEmbed(url, maxwidth, maxheight, format, true);
 		}
-
 	}
 
 	public class OEmbedParams
@@ -194,5 +181,4 @@ namespace VocaDb.Web.Controllers
 		public int Width { get; set; }
 		public string Src { get; set; }
 	}
-
 }

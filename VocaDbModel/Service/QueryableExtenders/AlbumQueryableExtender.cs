@@ -12,23 +12,18 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Model.Service.QueryableExtenders
 {
-
 	public static class AlbumQueryableExtender
 	{
-
 		public static IQueryable<Album> OrderByReleaseDate(this IQueryable<Album> query, SortDirection direction)
 		{
-
 			return query
 				.OrderBy(a => a.OriginalRelease.ReleaseDate.Year, direction)
 				.ThenBy(a => a.OriginalRelease.ReleaseDate.Month, direction)
 				.ThenBy(a => a.OriginalRelease.ReleaseDate.Day, direction);
-
 		}
 
 		public static IQueryable<Album> OrderBy(this IQueryable<Album> criteria, AlbumSortRule sortRule, ContentLanguagePreference languagePreference)
 		{
-
 			switch (sortRule)
 			{
 				case AlbumSortRule.Name:
@@ -55,13 +50,11 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return criteria;
-
 		}
 
 		public static IQueryable<Album> OrderBy(
 			this IQueryable<Album> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction)
 		{
-
 			switch (sortRule)
 			{
 				case EntrySortRule.Name:
@@ -73,7 +66,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return query;
-
 		}
 
 		public static IQueryable<Album> WhereArtistHasType(this IQueryable<Album> query, ArtistType artistType)
@@ -83,22 +75,18 @@ namespace VocaDb.Model.Service.QueryableExtenders
 
 		public static IQueryable<Album> WhereDraftsOnly(this IQueryable<Album> query, bool draftsOnly)
 		{
-
 			if (!draftsOnly)
 				return query;
 
 			return query.Where(a => a.Status == EntryStatus.Draft);
-
 		}
 
 		public static IQueryable<Album> WhereHasArtist(this IQueryable<Album> query, int artistId)
 		{
-
 			if (artistId == 0)
 				return query;
 
 			return query.WhereHasArtist<Album, ArtistForAlbum>(artistId, false, false);
-
 		}
 
 		public static IQueryable<Album> WhereHasArtistParticipationStatus(
@@ -107,7 +95,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			EntryIdsCollection artistIds,
 			IEntityLoader<Artist> artistGetter)
 		{
-
 			var various = Model.Helpers.ArtistHelper.VariousArtists;
 			var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;
 			var artistId = artistIds.Primary;
@@ -116,24 +103,19 @@ namespace VocaDb.Model.Service.QueryableExtenders
 				al => al.AllArtists.Any(a => a.Artist.Id == artistId && !a.IsSupport && ((a.Roles == ArtistRoles.Default) || ((a.Roles & producerRoles) != ArtistRoles.Default)) && a.Album.ArtistString.Default != various),
 				al => al.AllArtists.Any(a => a.Artist.Id == artistId && (a.IsSupport || ((a.Roles != ArtistRoles.Default) && ((a.Roles & producerRoles) == ArtistRoles.Default)) || a.Album.ArtistString.Default == various))
 			));
-
 		}
 
 		public static IQueryable<Album> WhereHasBarcode(this IQueryable<Album> query, string barcode)
 		{
-
 			if (string.IsNullOrEmpty(barcode))
 				return query;
 
 			return query.Where(a => a.Identifiers.Any(i => i.Value == barcode));
-
 		}
 
 		public static IQueryable<Album> WhereHasLinkWithCategory(this IQueryable<Album> query, WebLinkCategory category)
 		{
-
 			return query.Where(m => m.WebLinks.Any(l => l.Category == category));
-
 		}
 
 		/// <summary>
@@ -149,7 +131,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<Album> WhereHasName(this IQueryable<Album> query, SearchTextQuery textQuery, bool allowCatNum = false)
 		{
-
 			if (textQuery.IsEmpty)
 				return query;
 
@@ -162,52 +143,40 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return query.Where(expression);
-
 		}
 
 		public static IQueryable<Album> WhereHasReleaseDate(this IQueryable<Album> criteria)
 		{
-
 			return criteria.Where(a => a.OriginalRelease.ReleaseDate.Year != null
 				&& a.OriginalRelease.ReleaseDate.Month != null
 				&& a.OriginalRelease.ReleaseDate.Day != null);
-
 		}
 
 		public static IQueryable<Album> WhereHasTag(this IQueryable<Album> query, string tagName)
 		{
-
 			return query.WhereHasTag<Album, AlbumTagUsage>(tagName);
-
 		}
 
 		public static IQueryable<Album> WhereHasTags(this IQueryable<Album> query, string[] tagName)
 		{
-
 			return query.WhereHasTags<Album, AlbumTagUsage>(tagName);
-
 		}
 
 		public static IQueryable<Album> WhereHasTags(this IQueryable<Album> query, int[] tagId, bool childTags = false)
 		{
-
 			return query.WhereHasTags<Album, AlbumTagUsage>(tagId, childTags);
-
 		}
 
 		public static IQueryable<Album> WhereHasType(this IQueryable<Album> query, DiscType albumType)
 		{
-
 			if (albumType == DiscType.Unknown)
 				return query;
 
 			return query.Where(m => m.DiscType == albumType);
-
 		}
 
 		public static IQueryable<Album> WhereMatchFilter(this IQueryable<Album> query, AdvancedSearchFilter filter)
 		{
-
 			switch (filter.FilterType)
 			{
 				case AdvancedFilterType.ArtistType:
@@ -234,19 +203,15 @@ namespace VocaDb.Model.Service.QueryableExtenders
 			}
 
 			return query;
-
 		}
 
 		public static IQueryable<Album> WhereMatchFilters(this IQueryable<Album> query, IEnumerable<AdvancedSearchFilter> filters)
 		{
-
 			return filters?.Aggregate(query, WhereMatchFilter) ?? query;
-
 		}
 
 		public static IQueryable<Album> WhereReleaseDateIsAfter(this IQueryable<Album> query, DateTime? beginDateNullable)
 		{
-
 			if (!beginDateNullable.HasValue)
 				return query;
 
@@ -257,12 +222,10 @@ namespace VocaDb.Model.Service.QueryableExtenders
 				|| (a.OriginalRelease.ReleaseDate.Year == beginDate.Year
 					&& a.OriginalRelease.ReleaseDate.Month == beginDate.Month
 					&& a.OriginalRelease.ReleaseDate.Day >= beginDate.Day));
-
 		}
 
 		public static IQueryable<Album> WhereReleaseDateIsBefore(this IQueryable<Album> query, DateTime? endDateNullable)
 		{
-
 			if (!endDateNullable.HasValue)
 				return query;
 
@@ -273,7 +236,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 				|| (a.OriginalRelease.ReleaseDate.Year == endDate.Year
 					&& a.OriginalRelease.ReleaseDate.Month == endDate.Month
 					&& a.OriginalRelease.ReleaseDate.Day < endDate.Day));
-
 		}
 
 		/// <summary>
@@ -282,7 +244,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 		/// </summary>
 		public static IQueryable<Album> WhereSortBy(this IQueryable<Album> query, AlbumSortRule sort)
 		{
-
 			switch (sort)
 			{
 				case AlbumSortRule.ReleaseDate:
@@ -291,8 +252,6 @@ namespace VocaDb.Model.Service.QueryableExtenders
 				default:
 					return query;
 			}
-
 		}
-
 	}
 }

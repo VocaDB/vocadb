@@ -10,11 +10,9 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.Albums
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class AlbumContract : IEntryWithStatus, IEquatable<AlbumContract>, IEntryImageInformation
 	{
-
 		string IEntryBase.DefaultName => Name;
 
 		bool IDeletableEntry.Deleted => false;
@@ -29,7 +27,6 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		public AlbumContract(Album album, ContentLanguagePreference languagePreference)
 		{
-
 			ParamIs.NotNull(() => album);
 
 			AdditionalNames = album.Names.GetAdditionalNamesStringForLanguage(languagePreference);
@@ -46,7 +43,6 @@ namespace VocaDb.Model.DataContracts.Albums
 			ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, null) : null;
 			Status = album.Status;
 			Version = album.Version;
-
 		}
 
 		[DataMember]
@@ -97,7 +93,6 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		public bool Equals(AlbumContract another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -108,7 +103,6 @@ namespace VocaDb.Model.DataContracts.Albums
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -125,7 +119,5 @@ namespace VocaDb.Model.DataContracts.Albums
 		{
 			return string.Format("album '{0}' [{1}]", Name, Id);
 		}
-
 	}
-
 }

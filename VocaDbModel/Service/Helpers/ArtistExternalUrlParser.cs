@@ -3,7 +3,6 @@ using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.Service.Helpers
 {
-
 	/// <summary>
 	/// Parses external URL for an artist from a possible URL fragment.
 	/// Used for finding artists based on URLs to their profiles.
@@ -11,7 +10,6 @@ namespace VocaDb.Model.Service.Helpers
 	/// </summary>
 	public class ArtistExternalUrlParser
 	{
-
 		private static readonly RegexLinkMatcher[] linkMatchers = {
 			new RegexLinkMatcher("https://www.nicovideo.jp/{0}/{1}", @"^(?:http(?:s)?://www.nicovideo.jp)?/?(user|mylist)/(\d+)"),
 			new RegexLinkMatcher("https://twitter.com/{0}", @"^http(?:s)?://twitter\.com/(\w+)")
@@ -40,7 +38,6 @@ namespace VocaDb.Model.Service.Helpers
 		/// </remarks>
 		public string GetExternalUrl(string possibleUrl)
 		{
-
 			if (string.IsNullOrEmpty(possibleUrl))
 				return null;
 
@@ -61,9 +58,6 @@ namespace VocaDb.Model.Service.Helpers
 				.FirstOrDefault(m => m.Success);
 
 			return match?.FormattedUrl;
-
 		}
-
 	}
-
 }

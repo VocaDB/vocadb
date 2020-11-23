@@ -1,9 +1,7 @@
 namespace VocaDb.Model.Domain.Tags
 {
-
 	public class RelatedTag : IEntryWithIntId
 	{
-
 		private Tag ownerTag;
 		private Tag linkedTag;
 
@@ -11,13 +9,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public RelatedTag(Tag ownerTag, Tag linkedTag)
 		{
-
 			ParamIs.NotNull(() => ownerTag);
 			ParamIs.NotNull(() => linkedTag);
 
 			OwnerTag = ownerTag;
 			LinkedTag = linkedTag;
-
 		}
 
 		public virtual int Id { get; set; }
@@ -73,7 +69,5 @@ namespace VocaDb.Model.Domain.Tags
 				return ((OwnerTag != null ? OwnerTag.GetHashCode() : 0) * 397) ^ (LinkedTag != null ? LinkedTag.GetHashCode() : 0);
 			}
 		}
-
 	}
-
 }

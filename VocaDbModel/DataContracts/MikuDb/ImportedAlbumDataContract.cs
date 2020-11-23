@@ -2,11 +2,9 @@
 
 namespace VocaDb.Model.DataContracts.MikuDb
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ImportedAlbumDataContract
 	{
-
 		public ImportedAlbumDataContract()
 		{
 			ArtistNames = new string[] { };
@@ -34,7 +32,5 @@ namespace VocaDb.Model.DataContracts.MikuDb
 
 		[DataMember]
 		public string[] VocalistNames { get; set; }
-
 	}
-
 }

@@ -10,10 +10,8 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Service.TagFormatting
 {
-
 	public abstract class SongCsvFileFormatter<T> where T : ISongLink
 	{
-
 		struct FieldMatch
 		{
 			public string FieldName { get; set; }
@@ -35,21 +33,16 @@ namespace VocaDb.Model.Service.TagFormatting
 
 		private string GetProducerStr(Song song, ContentLanguagePreference languagePreference)
 		{
-
 			return string.Join(", ", ArtistHelper.GetProducerNames(song.Artists, SongHelper.GetContentFocus(song.SongType), languagePreference));
-
 		}
 
 		private string GetVocalistStr(Song song, ContentLanguagePreference languagePreference)
 		{
-
 			return string.Join(", ", ArtistHelper.GetVocalistNames(song.Artists, languagePreference));
-
 		}
 
 		protected string GetFieldValue(string fieldName, ISongLink songLink, ContentLanguagePreference languagePreference)
 		{
-
 			var song = songLink.Song;
 
 			if (song == null)
@@ -103,7 +96,6 @@ namespace VocaDb.Model.Service.TagFormatting
 				default:
 					return string.Empty;
 			}
-
 		}
 
 		protected virtual string GetFieldValue(string fieldName, T track, ContentLanguagePreference languagePreference)
@@ -114,15 +106,12 @@ namespace VocaDb.Model.Service.TagFormatting
 		private void ReplaceField(
 			string tokenName, string tokenStr, StringBuilder sb, T track, ContentLanguagePreference languagePreference)
 		{
-
 			var val = GetField(GetFieldValue(tokenName.ToLowerInvariant(), track, languagePreference));
 			sb.Replace(tokenStr, val);
-
 		}
 
 		private string ApplyFormat(T track, string format, ContentLanguagePreference languagePreference, IEnumerable<FieldMatch> fieldMatches)
 		{
-
 			var sb = new StringBuilder(format);
 
 			foreach (var match in fieldMatches)
@@ -131,12 +120,10 @@ namespace VocaDb.Model.Service.TagFormatting
 			}
 
 			return sb.ToString();
-
 		}
 
 		private static string GetField(string val)
 		{
-
 			if (string.IsNullOrEmpty(val))
 				return string.Empty;
 
@@ -144,21 +131,17 @@ namespace VocaDb.Model.Service.TagFormatting
 				return val;
 			else
 				return string.Format("\"{0}\"", val);
-
 		}
 
 		private IEnumerable<FieldMatch> GetMatches(string format)
 		{
-
 			var fieldRegex = new Regex(@"%([\w\.!]+)%");
 
 			return fieldRegex.Matches(format).Cast<Match>().Select(m => new FieldMatch { FieldName = m.Groups[1].Value.ToLowerInvariant(), TokenStr = m.Value });
-
 		}
 
 		protected string ApplyFormat(IEnumerable<T> songs, string format, ContentLanguagePreference languagePreference, bool includeHeader)
 		{
-
 			var sb = new StringBuilder();
 
 			var formatFields = GetMatches(format).ToArray();
@@ -172,17 +155,13 @@ namespace VocaDb.Model.Service.TagFormatting
 				sb.AppendLine(ApplyFormat(song, format, languagePreference, formatFields));
 
 			return sb.ToString();
-
 		}
 
 		protected Dictionary<string, string>[] ApplyFormatDict(IEnumerable<T> songs, string[] fields, ContentLanguagePreference languagePreference)
 		{
-
 			var formatFields = fields.Distinct().Select(f => f.ToLowerInvariant()).ToArray();
 
 			return songs.Select(s => formatFields.ToDictionary(m => m, m => GetFieldValue(m, s, languagePreference))).ToArray();
-
 		}
-
 	}
 }

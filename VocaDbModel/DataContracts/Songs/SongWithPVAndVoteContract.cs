@@ -8,21 +8,17 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs
 {
-
 	[DataContract]
 	public class SongWithPVAndVoteContract : SongContract
 	{
-
 		public SongWithPVAndVoteContract(Song song, SongVoteRating vote, ContentLanguagePreference languagePreference, bool includePVs = true)
 			: base(song, languagePreference)
 		{
-
 			if (includePVs)
 			{
 				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 			}
 			Vote = vote;
-
 		}
 
 		[DataMember]
@@ -31,6 +27,5 @@ namespace VocaDb.Model.DataContracts.Songs
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public SongVoteRating Vote { get; set; }
-
 	}
 }

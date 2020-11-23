@@ -6,7 +6,6 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain
 {
-
 	/// <summary>
 	/// Picture file with multiple sizes for an entry, such as album or artist.
 	/// Multiple pictures may be attached to an entry.
@@ -21,7 +20,6 @@ namespace VocaDb.Model.Domain
 	/// </summary>
 	public abstract class EntryPictureFile : IEntryPictureFile
 	{
-
 		// Not versioned.
 		int IEntryImageInformation.Version => 0;
 
@@ -49,11 +47,9 @@ namespace VocaDb.Model.Domain
 		protected EntryPictureFile(string name, string mime, User author)
 			: this()
 		{
-
 			Name = name;
 			Mime = mime;
 			Author = author;
-
 		}
 
 		/// <summary>
@@ -123,17 +119,13 @@ namespace VocaDb.Model.Domain
 		{
 			return string.Format("Picture file {0} [{1}]", Name, Id);
 		}
-
 	}
 
 	public interface IEntryPictureFile : IEntryImageInformation
 	{
-
 		/// <summary>
 		/// ID of the entry owning the picture.
 		/// </summary>
 		int OwnerEntryId { get; }
-
 	}
-
 }

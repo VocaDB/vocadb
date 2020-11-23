@@ -4,10 +4,8 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Search.SongSearch
 {
-
 	public class SongListQueryParams
 	{
-
 		public bool ChildTags { get; set; }
 
 		public SongListFeaturedCategory? FeaturedCategory { get; set; }
@@ -19,7 +17,5 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		public int[] TagIds { get; set; }
 
 		public SearchTextQuery TextQuery { get; set; }
-
 	}
-
 }

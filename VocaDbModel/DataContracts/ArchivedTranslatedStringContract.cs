@@ -3,23 +3,19 @@ using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.DataContracts
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedTranslatedStringContract : ITranslatedString
 	{
-
 		public ArchivedTranslatedStringContract() { }
 
 		public ArchivedTranslatedStringContract(TranslatedString translatedString)
 		{
-
 			ParamIs.NotNull(() => translatedString);
 
 			DefaultLanguage = translatedString.DefaultLanguage;
 			English = translatedString.English;
 			Japanese = translatedString.Japanese;
 			Romaji = translatedString.Romaji;
-
 		}
 
 		[DataMember]
@@ -33,8 +29,5 @@ namespace VocaDb.Model.DataContracts
 
 		[DataMember]
 		public string Romaji { get; set; }
-
-
 	}
-
 }

@@ -3,10 +3,8 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Albums
 {
-
 	public class AlbumReview : IAlbumLink, IEntryWithIntId
 	{
-
 		public AlbumReview() { }
 
 		public AlbumReview(Album album, User user, string title, string text, string languageCode)
@@ -32,7 +30,5 @@ namespace VocaDb.Model.Domain.Albums
 		public virtual string Title { get; set; }
 
 		public virtual User User { get; set; }
-
 	}
-
 }

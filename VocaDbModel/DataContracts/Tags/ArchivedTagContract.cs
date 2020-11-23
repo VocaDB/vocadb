@@ -6,15 +6,12 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.DataContracts.Tags
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedTagContract
 	{
-
 		private static void DoIfExists(ArchivedTagVersion version, TagEditableFields field,
 			XmlCache<ArchivedTagContract> xmlCache, Action<ArchivedTagContract> func)
 		{
-
 			var versionWithField = version.GetLatestVersionWithField(field);
 
 			if (versionWithField?.Data != null)
@@ -22,12 +19,10 @@ namespace VocaDb.Model.DataContracts.Tags
 				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
 				func(data);
 			}
-
 		}
 
 		public static ArchivedTagContract GetAllProperties(ArchivedTagVersion version)
 		{
-
 			var data = new ArchivedTagContract();
 			var xmlCache = new XmlCache<ArchivedTagContract>();
 			var thisVersion = version.Data != null ? xmlCache.Deserialize(version.Version, version.Data) : new ArchivedTagContract();
@@ -49,7 +44,6 @@ namespace VocaDb.Model.DataContracts.Tags
 			DoIfExists(version, TagEditableFields.WebLinks, xmlCache, v => data.WebLinks = v.WebLinks);
 
 			return data;
-
 		}
 
 		public ArchivedTagContract()
@@ -59,7 +53,6 @@ namespace VocaDb.Model.DataContracts.Tags
 
 		public ArchivedTagContract(Tag tag, TagDiff diff) : this()
 		{
-
 			ParamIs.NotNull(() => tag);
 
 			CategoryName = tag.CategoryName;
@@ -74,7 +67,6 @@ namespace VocaDb.Model.DataContracts.Tags
 			ThumbMime = tag.Thumb?.Mime;
 			TranslatedName = new ArchivedTranslatedStringContract(tag.TranslatedName);
 			WebLinks = diff.IncludeWebLinks ? tag.WebLinks.Links.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
-
 		}
 
 		[DataMember]
@@ -112,7 +104,5 @@ namespace VocaDb.Model.DataContracts.Tags
 
 		[DataMember]
 		public ArchivedWebLinkContract[] WebLinks { get; set; }
-
 	}
-
 }

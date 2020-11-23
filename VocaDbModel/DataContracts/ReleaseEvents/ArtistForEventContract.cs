@@ -7,16 +7,13 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArtistForEventContract
 	{
-
 		public ArtistForEventContract() { }
 
 		public ArtistForEventContract(ArtistForEvent artistForEvent, ContentLanguagePreference languagePreference)
 		{
-
 			ParamIs.NotNull(() => artistForEvent);
 
 			Artist = artistForEvent.Artist != null ? new ArtistContract(artistForEvent.Artist, languagePreference) : null;
@@ -24,7 +21,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			Name = artistForEvent.Name;
 			Roles = artistForEvent.Roles;
 			EffectiveRoles = artistForEvent.Roles;
-
 		}
 
 		[DataMember]
@@ -43,7 +39,5 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ArtistEventRoles Roles { get; set; }
-
 	}
-
 }

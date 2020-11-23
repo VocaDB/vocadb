@@ -25,7 +25,6 @@ namespace VocaDb.Model.Resources
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public class SongValidationErrors
 	{
-
 		private static global::System.Resources.ResourceManager resourceMan;
 
 		private static global::System.Globalization.CultureInfo resourceCulture;

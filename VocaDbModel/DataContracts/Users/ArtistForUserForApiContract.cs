@@ -6,14 +6,11 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users
 {
-
 	[DataContract]
 	public class ArtistForUserForApiContract
 	{
-
 		public ArtistForUserForApiContract()
 		{
-
 		}
 
 		public ArtistForUserForApiContract(ArtistForUser artistForUser,
@@ -21,14 +18,10 @@ namespace VocaDb.Model.DataContracts.Users
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			ArtistOptionalFields includedFields)
 		{
-
 			Artist = new ArtistForApiContract(artistForUser.Artist, languagePreference, thumbPersister, includedFields);
-
 		}
 
 		[DataMember]
 		public ArtistForApiContract Artist { get; set; }
-
 	}
-
 }

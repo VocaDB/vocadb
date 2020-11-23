@@ -5,10 +5,8 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	public class FakeDynamicImageUrlFactory : IDynamicImageUrlFactory
 	{
-
 		private Lazy<System.Web.Mvc.UrlHelper> UrlHelper => new Lazy<System.Web.Mvc.UrlHelper>(() => new System.Web.Mvc.UrlHelper());
 
 		public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size)
@@ -26,5 +24,4 @@ namespace VocaDb.Tests.TestSupport
 			return new DynamicImageUrlFactory(UrlHelper).IsSupported(picture, size);
 		}
 	}
-
 }

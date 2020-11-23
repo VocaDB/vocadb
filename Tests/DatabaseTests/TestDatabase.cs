@@ -12,10 +12,8 @@ using VocaDb.Tests.TestData;
 
 namespace VocaDb.Tests.DatabaseTests
 {
-
 	public class TestDatabase
 	{
-
 		public const int ProducerId = 257;
 		public const int SongId = 121;
 		public const int Song2Id = 122;
@@ -54,11 +52,9 @@ namespace VocaDb.Tests.DatabaseTests
 
 		private void Seed(ISessionFactory sessionFactory)
 		{
-
 			using (var session = sessionFactory.OpenSession())
 			using (var tx = session.BeginTransaction())
 			{
-
 				Producer = new Artist(TranslatedString.Create("Junk")) { Id = ProducerId };
 				session.Save(Producer);
 
@@ -158,10 +154,7 @@ namespace VocaDb.Tests.DatabaseTests
 				session.Save(UserWithEditPermissions);
 
 				tx.Commit();
-
 			}
-
 		}
-
 	}
 }

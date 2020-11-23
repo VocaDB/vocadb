@@ -14,14 +14,12 @@ using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	/// <summary>
 	/// API queries for PVs
 	/// </summary>
 	[RoutePrefix("api/pvs")]
 	public class PVApiController : ApiController
 	{
-
 		private readonly IPVParser pvParser;
 		private readonly IUserPermissionContext permissionContext;
 		private readonly PVQueries queries;
@@ -53,7 +51,6 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public async Task<PVContract> GetPVByUrl(string pvUrl, PVType type = PVType.Original, bool getTitle = true)
 		{
-
 			if (string.IsNullOrEmpty(pvUrl))
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 
@@ -71,9 +68,6 @@ namespace VocaDb.Web.Controllers.Api
 
 			var contract = new PVContract(result, type);
 			return contract;
-
 		}
-
 	}
-
 }

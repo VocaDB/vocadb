@@ -6,25 +6,20 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.MikuDb
 {
-
 	public class MikuDbAlbum
 	{
-
 		private XDocument data;
 		private string sourceUrl;
 		private string title;
 
 		public MikuDbAlbum()
 		{
-
 			Created = DateTime.Now;
-
 		}
 
 		public MikuDbAlbum(MikuDbAlbumContract contract)
 			: this()
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			CoverPicture = (contract.CoverPicture != null ? new PictureData(contract.CoverPicture) : null);
@@ -33,7 +28,6 @@ namespace VocaDb.Model.Domain.MikuDb
 			SourceUrl = contract.SourceUrl;
 			Status = contract.Status;
 			Title = contract.Title;
-
 		}
 
 		public virtual PictureData CoverPicture { get; set; }
@@ -68,7 +62,6 @@ namespace VocaDb.Model.Domain.MikuDb
 
 		public virtual bool Equals(MikuDbAlbum another)
 		{
-
 			if (another == null)
 				return false;
 
@@ -79,7 +72,6 @@ namespace VocaDb.Model.Domain.MikuDb
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj)
@@ -96,7 +88,5 @@ namespace VocaDb.Model.Domain.MikuDb
 		{
 			return string.Format("Imported album '{0}' [{1}]", Title, Id);
 		}
-
 	}
-
 }

@@ -20,13 +20,10 @@ using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Service.DataSharing
 {
-
 	public class XmlDumper
 	{
-
 		public class Loader
 		{
-
 			private const int maxEntries = 100;
 			private readonly PackageCreator packageCreator;
 			private readonly ISession session;
@@ -57,15 +54,12 @@ namespace VocaDb.Model.Service.DataSharing
 			{
 				packageCreator.Dump(start => Load<TEntry>(session, start, maxEntries), folder, fac);
 			}
-
 		}
 
 		public void Create(string path, ISession session)
 		{
-
 			using (var package = Package.Open(path, FileMode.Create))
 			{
-
 				var loader = new Loader(session, package);
 				loader.DumpSkipDeleted<Artist, ArchivedArtistContract>("/Artists/", a => new ArchivedArtistContract(a, new ArtistDiff()));
 				loader.DumpSkipDeleted<Album, ArchivedAlbumContract>("/Albums/", a => new ArchivedAlbumContract(a, new AlbumDiff()));
@@ -73,16 +67,12 @@ namespace VocaDb.Model.Service.DataSharing
 				loader.Dump<ReleaseEventSeries, ArchivedEventSeriesContract>("/EventSeries/", a => new ArchivedEventSeriesContract(a, new ReleaseEventSeriesDiff()));
 				loader.Dump<ReleaseEvent, ArchivedEventContract>("/Events/", a => new ArchivedEventContract(a, new ReleaseEventDiff()));
 				loader.DumpSkipDeleted<Tag, ArchivedTagContract>("/Tags/", a => new ArchivedTagContract(a, new TagDiff()));
-
 			}
-
 		}
-
 	}
 
 	public class PackageCreator
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly Package package;
 		private readonly Action cleanup;
@@ -95,13 +85,11 @@ namespace VocaDb.Model.Service.DataSharing
 
 		public void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac)
 		{
-
 			bool run = true;
 			int start = 0;
 
 			while (run)
 			{
-
 				var entries = loadFunc(start);
 				var contracts = entries.Select(fac).ToArray();
 				DumpXml(contracts, start, folder);
@@ -112,14 +100,11 @@ namespace VocaDb.Model.Service.DataSharing
 				// Cleanup
 				cleanup();
 				GC.Collect();
-
 			}
-
 		}
 
 		private void DumpXml<T>(T[] contract, int id, string folder)
 		{
-
 			var partUri = PackUriHelper.CreatePartUri(new Uri(string.Format("{0}{1}.xml", folder, id), UriKind.Relative));
 
 			if (package.PartExists(partUri))
@@ -136,9 +121,6 @@ namespace VocaDb.Model.Service.DataSharing
 			{
 				data.Save(stream);
 			}
-
 		}
-
 	}
-
 }

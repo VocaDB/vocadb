@@ -17,10 +17,8 @@ using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Model.Database.Queries
 {
-
 	public class EntryQueries : QueriesBase<IAlbumRepository, Album>
 	{
-
 		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
 
 		public EntryQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IAggregatedEntryImageUrlFactory entryThumbPersister)
@@ -45,13 +43,11 @@ namespace VocaDb.Model.Database.Queries
 			bool searchEvents = false
 			)
 		{
-
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var artistTextQuery = ArtistSearchTextQuery.Create(query, nameMatchMode); // Can't use the existing words collection here as they are noncanonized
 
 			return repository.HandleQuery(ctx =>
 			{
-
 				// Get all applicable names per entry type
 				var artistQuery = ctx.OfType<Artist>().Query()
 					.WhereEntryTypeIsIncluded(entryTypes, EntryType.Artist)
@@ -179,7 +175,6 @@ namespace VocaDb.Model.Database.Queries
 
 				if (getTotalCount)
 				{
-
 					var artistCount =
 						(artistNames.Length >= maxResults ? artistQuery.Count() : artistNames.Length);
 
@@ -196,15 +191,10 @@ namespace VocaDb.Model.Database.Queries
 						searchEvents ? (eventNames.Length >= maxResults ? eventQuery.Count() : eventNames.Length) : 0;
 
 					count = artistCount + albumCount + songCount + tagCount + eventCount;
-
 				}
 
 				return new PartialFindResult<EntryForApiContract>(entries.ToArray(), count);
-
 			});
-
 		}
-
 	}
-
 }

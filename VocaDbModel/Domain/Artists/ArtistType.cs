@@ -2,7 +2,6 @@
 
 namespace VocaDb.Model.Domain.Artists
 {
-
 	/// <summary>
 	/// Artist type (category).
 	/// </summary>
@@ -12,7 +11,6 @@ namespace VocaDb.Model.Domain.Artists
 	/// </remarks>
 	public enum ArtistType
 	{
-
 		Unknown,
 
 		/// <summary>
@@ -57,7 +55,6 @@ namespace VocaDb.Model.Domain.Artists
 		Vocalist,
 
 		Character
-
 	}
 
 	/// <summary>
@@ -67,7 +64,6 @@ namespace VocaDb.Model.Domain.Artists
 	[Flags]
 	public enum ArtistTypes
 	{
-
 		Unknown = 0,
 
 		Circle = 1,
@@ -103,7 +99,5 @@ namespace VocaDb.Model.Domain.Artists
 		Vocalist = 32768,
 
 		Character = 65536
-
 	}
-
 }

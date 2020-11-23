@@ -2,35 +2,27 @@
 
 namespace VocaDb.Model.Domain.Security
 {
-
 	public class AgentLoginData
 	{
-
 		public AgentLoginData(string name)
 		{
-
 			ParamIs.NotNullOrEmpty(() => name);
 
 			Name = name;
-
 		}
 
 		public AgentLoginData(User user)
 		{
-
 			ParamIs.NotNull(() => user);
 
 			Name = user.Name;
 			User = user;
-
 		}
 
 		public AgentLoginData(User user, string name)
 		{
-
 			User = user;
 			Name = name;
-
 		}
 
 		public string Name { get; private set; }
@@ -49,7 +41,5 @@ namespace VocaDb.Model.Domain.Security
 		{
 			return (User != null ? User.ToString() : Name);
 		}
-
 	}
-
 }

@@ -14,11 +14,9 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.SongLists
 {
-
 	[FromJson]
 	public class SongListEditViewModel
 	{
-
 		public SongListEditViewModel()
 		{
 			SongLinks = new List<SongInListEditContract>();
@@ -28,7 +26,6 @@ namespace VocaDb.Web.Models.SongLists
 		public SongListEditViewModel(SongListContract contract, IUserPermissionContext permissionContext)
 			: this()
 		{
-
 			ParamIs.NotNull(() => contract);
 
 			CurrentName = contract.Name;
@@ -43,7 +40,6 @@ namespace VocaDb.Web.Models.SongLists
 
 			AllowedEntryStatuses = new[] { EntryStatus.Draft, EntryStatus.Finished };
 			CanCreateFeaturedLists = EntryPermissionManager.CanManageFeaturedLists(permissionContext);
-
 		}
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
@@ -78,7 +74,6 @@ namespace VocaDb.Web.Models.SongLists
 
 		public SongListForEditContract ToContract()
 		{
-
 			return new SongListForEditContract
 			{
 				Description = this.Description ?? string.Empty,
@@ -90,9 +85,6 @@ namespace VocaDb.Web.Models.SongLists
 				Status = this.Status,
 				UpdateNotes = this.UpdateNotes ?? string.Empty
 			};
-
 		}
-
 	}
-
 }

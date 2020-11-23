@@ -6,10 +6,8 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public class VideoServiceLocalFile : VideoService
 	{
-
 		public VideoServiceLocalFile()
 			: base(PVService.LocalFile, null, new RegexLinkMatcher[0]) { }
 
@@ -49,6 +47,5 @@ namespace VocaDb.Model.Service.VideoServices
 		{
 			return ParseByUrlAsync(url, getMeta);
 		}
-
 	}
 }

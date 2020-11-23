@@ -9,7 +9,6 @@ using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	/// <summary>
 	/// Manages <see cref="IPRule"/>s
 	/// </summary>
@@ -18,7 +17,6 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/ip-rules")]
 	public class IPRuleApiController : ApiController
 	{
-
 		public IPRuleApiController(IUserPermissionContext userContext, IRepository repo, IPRuleManager ipRuleManager)
 		{
 			this.userContext = userContext;
@@ -33,7 +31,6 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("{id:int}")]
 		public async Task DeleteIPRule(int ruleID)
 		{
-
 			userContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			await repo.HandleTransactionAsync(async ctx =>
@@ -43,26 +40,22 @@ namespace VocaDb.Web.Controllers.Api
 				ipRuleManager.RemovePermBannedIP(rule.Address);
 				ctx.AuditLogger.SysLog($"removed {rule.Address} from banned IPs");
 			});
-
 		}
 
 		[Route("")]
 		public async Task<IEnumerable<IPRule>> GetIPRules()
 		{
-
 			userContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			return await repo.HandleQueryAsync(async ctx =>
 			{
 				return await ctx.Query<IPRule>().ToListAsync();
 			});
-
 		}
 
 		[Route("")]
 		public bool PostNewIPRule(IPRule rule)
 		{
-
 			userContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			if (string.IsNullOrEmpty(rule?.Address))
@@ -79,8 +72,6 @@ namespace VocaDb.Web.Controllers.Api
 			});
 
 			return result;
-
 		}
-
 	}
 }

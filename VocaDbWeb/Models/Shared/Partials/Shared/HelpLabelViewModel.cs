@@ -1,9 +1,7 @@
 namespace VocaDb.Web.Models.Shared.Partials.Shared
 {
-
 	public class HelpLabelViewModel
 	{
-
 		public HelpLabelViewModel(string label, string title, string forElem = null)
 		{
 			Label = label;
@@ -16,7 +14,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Shared
 		public string Title { get; set; }
 
 		public string ForElem { get; set; }
-
 	}
-
 }

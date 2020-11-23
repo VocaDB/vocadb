@@ -6,15 +6,12 @@ using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArchivedEventSeriesContract
 	{
-
 		private static void DoIfExists(ArchivedReleaseEventSeriesVersion version, ReleaseEventSeriesEditableFields field,
 			XmlCache<ArchivedEventSeriesContract> xmlCache, Action<ArchivedEventSeriesContract> func)
 		{
-
 			var versionWithField = version.GetLatestVersionWithField(field);
 
 			if (versionWithField?.Data != null)
@@ -22,12 +19,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
 				func(data);
 			}
-
 		}
 
 		public static ArchivedEventSeriesContract GetAllProperties(ArchivedReleaseEventSeriesVersion version)
 		{
-
 			var data = new ArchivedEventSeriesContract();
 			var xmlCache = new XmlCache<ArchivedEventSeriesContract>();
 			var thisVersion = version.Data != null ? xmlCache.Deserialize(version.Version, version.Data) : new ArchivedEventSeriesContract();
@@ -42,14 +37,12 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			DoIfExists(version, ReleaseEventSeriesEditableFields.WebLinks, xmlCache, v => data.WebLinks = v.WebLinks);
 
 			return data;
-
 		}
 
 		public ArchivedEventSeriesContract() { }
 
 		public ArchivedEventSeriesContract(ReleaseEventSeries series, ReleaseEventSeriesDiff diff)
 		{
-
 			ParamIs.NotNull(() => series);
 
 			Category = series.Category;
@@ -59,7 +52,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			Names = diff.IncludeNames ? series.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
 			TranslatedName = new ArchivedTranslatedStringContract(series.TranslatedName);
 			WebLinks = diff.IncludeWebLinks ? series.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
-
 		}
 
 		[DataMember]
@@ -85,7 +77,5 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 		[DataMember]
 		public ArchivedWebLinkContract[] WebLinks { get; set; }
-
 	}
-
 }

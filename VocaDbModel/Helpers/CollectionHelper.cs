@@ -6,10 +6,8 @@ using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Helpers
 {
-
 	public static class CollectionHelper
 	{
-
 		public static T AddAndReturn<T>(IList<T> collection, T item)
 		{
 			collection.Add(item);
@@ -27,7 +25,6 @@ namespace VocaDb.Model.Helpers
 		/// <returns>Diff for the two collections. Cannot be null.</returns>
 		public static CollectionDiff<T, T2> Diff<T, T2>(IEnumerable<T> old, IEnumerable<T2> newItems, Func<T, T2, bool> equality)
 		{
-
 			ParamIs.NotNull(() => old);
 			ParamIs.NotNull(() => newItems);
 			ParamIs.NotNull(() => equality);
@@ -37,7 +34,6 @@ namespace VocaDb.Model.Helpers
 			var unchanged = old.Except(removed);    // FIXME: possible error, can't use default equality?
 
 			return new CollectionDiff<T, T2>(added, removed, unchanged);
-
 		}
 
 		/// <summary>
@@ -50,7 +46,6 @@ namespace VocaDb.Model.Helpers
 		/// <returns>A number of random items from the list. Cannot be null.</returns>
 		public static IEnumerable<T> GetRandomItems<T>(IList<T> source, int count)
 		{
-
 			ParamIs.NotNull(() => source);
 
 			if (source.Count <= count)
@@ -63,7 +58,6 @@ namespace VocaDb.Model.Helpers
 				.Take(count);                       // Take the first [count] numbers that should now be random and unique.
 
 			return randomIndices.Select(i => source[i]);    // Take items matching the random indices from the list
-
 		}
 
 		public static IEnumerable<T> MoveToTop<T>(IEnumerable<T> source, T top) => Enumerable.Repeat(top, 1).Concat(source.Except(Enumerable.Repeat(top, 1)));
@@ -82,7 +76,6 @@ namespace VocaDb.Model.Helpers
 		/// </remarks>
 		public static IEnumerable<T> RandomSort<T>(this IEnumerable<T> source)
 		{
-
 			var list = source.ToList();
 
 			var rng = new Random();
@@ -97,17 +90,14 @@ namespace VocaDb.Model.Helpers
 			}
 
 			return list;
-
 		}
 
 		public static void RemoveAll<T>(IList<T> list, Func<T, bool> pred)
 		{
-
 			bool changed = true;
 
 			while (changed)
 			{
-
 				changed = false;
 
 				foreach (var item in list)
@@ -119,9 +109,7 @@ namespace VocaDb.Model.Helpers
 						break;
 					}
 				}
-
 			}
-
 		}
 
 		public static IEnumerable<T> RemovedItems<T>(IEnumerable<T> old, IEnumerable<T> newItems) => old.Where(i => !newItems.Contains(i));
@@ -132,7 +120,6 @@ namespace VocaDb.Model.Helpers
 
 		public static T[] SortByIds<T>(IEnumerable<T> entries, int[] idList) where T : IEntryWithIntId
 		{
-
 			var bucket = new T[idList.Length];
 			var idToIndex = Enumerable
 				.Range(0, idList.Length)
@@ -140,7 +127,6 @@ namespace VocaDb.Model.Helpers
 
 			foreach (var entry in entries)
 			{
-
 				if (!idToIndex.ContainsKey(entry.Id))
 				{
 					throw new InvalidOperationException(string.Format("No ID mapping found for {0}", entry));
@@ -148,11 +134,9 @@ namespace VocaDb.Model.Helpers
 
 				var idx = idToIndex[entry.Id];
 				bucket[idx] = entry;
-
 			}
 
 			return bucket;
-
 		}
 
 		/// <summary>
@@ -193,18 +177,15 @@ namespace VocaDb.Model.Helpers
 		/// <returns>Diff for the two collections. Cannot be null.</returns>
 		public static CollectionDiff<T> Sync<T, T2>(ICollection<T> old, IEnumerable<T2> newItems, Func<T, T2, bool> equality, Func<T2, T> create, Action<T> remove = null)
 		{
-
 			var diff = Diff(old, newItems, equality);
 			var created = new List<T>();
 
 			foreach (var removed in diff.Removed)
 			{
-
 				remove?.Invoke(removed);
 
 				// Note: this removes the item from the source collection directly, but not from any other collections.
 				old.Remove(removed);
-
 			}
 
 			foreach (var linkEntry in diff.Added)
@@ -216,24 +197,20 @@ namespace VocaDb.Model.Helpers
 			}
 
 			return new CollectionDiff<T>(created, diff.Removed, diff.Unchanged);
-
 		}
 
 		public static async Task<CollectionDiff<T>> SyncAsync<T, T2>(ICollection<T> old, IEnumerable<T2> newItems, Func<T, T2, bool> equality, Func<T2, Task<T>> create, Func<T, Task> remove = null)
 		{
-
 			var diff = Diff(old, newItems, equality);
 			var created = new List<T>();
 
 			foreach (var removed in diff.Removed)
 			{
-
 				if (remove != null)
 					await remove(removed);
 
 				// Note: this removes the item from the source collection directly, but not from any other collections.
 				old.Remove(removed);
-
 			}
 
 			foreach (var linkEntry in diff.Added)
@@ -245,7 +222,6 @@ namespace VocaDb.Model.Helpers
 			}
 
 			return new CollectionDiff<T>(created, diff.Removed, diff.Unchanged);
-
 		}
 
 		/// <summary>
@@ -284,7 +260,6 @@ namespace VocaDb.Model.Helpers
 		public static async Task<CollectionDiffWithValue<T, T>> SyncWithContentAsync<T, T2>(IList<T> oldItems, IList<T2> newItems,
 			Func<T, T2, bool> identityEquality, Func<T2, Task<T>> create, Func<T, T2, Task<bool>> update, Func<T, Task> remove) where T : class
 		{
-
 			ParamIs.NotNull(() => oldItems);
 			ParamIs.NotNull(() => newItems);
 			ParamIs.NotNull(() => identityEquality);
@@ -294,18 +269,15 @@ namespace VocaDb.Model.Helpers
 
 			foreach (var oldItem in diff.Unchanged)
 			{
-
 				var newItem = newItems.First(i => identityEquality(oldItem, i));
 
 				if (await update(oldItem, newItem))
 				{
 					edited.Add(oldItem);
 				}
-
 			}
 
 			return new CollectionDiffWithValue<T, T>(diff.Added, diff.Removed, diff.Unchanged, edited);
-
 		}
 	}
 
@@ -316,10 +288,8 @@ namespace VocaDb.Model.Helpers
 	/// <typeparam name="T2">Type of the new collection (may be the same as old).</typeparam>
 	public class CollectionDiff<T, T2>
 	{
-
 		public CollectionDiff(IEnumerable<T2> added, IEnumerable<T> removed, IEnumerable<T> unchanged)
 		{
-
 			ParamIs.NotNull(() => added);
 			ParamIs.NotNull(() => removed);
 			ParamIs.NotNull(() => unchanged);
@@ -327,7 +297,6 @@ namespace VocaDb.Model.Helpers
 			Added = added.ToArray();
 			Removed = removed.ToArray();
 			Unchanged = unchanged.ToArray();
-
 		}
 
 		/// <summary>
@@ -350,7 +319,6 @@ namespace VocaDb.Model.Helpers
 		/// Note: the contents of those entriers might still be changed, depending on equality.
 		/// </summary>
 		public T[] Unchanged { get; private set; }
-
 	}
 
 	/// <summary>
@@ -359,10 +327,8 @@ namespace VocaDb.Model.Helpers
 	/// <typeparam name="T">Type of the collection.</typeparam>
 	public class CollectionDiff<T> : CollectionDiff<T, T>
 	{
-
 		public CollectionDiff(IEnumerable<T> added, IEnumerable<T> removed, IEnumerable<T> unchanged)
 			: base(added, removed, unchanged) { }
-
 	}
 
 	/// <summary>
@@ -372,16 +338,13 @@ namespace VocaDb.Model.Helpers
 	/// <typeparam name="T2">Type of the new collection (may be the same as old).</typeparam>
 	public class CollectionDiffWithValue<T, T2> : CollectionDiff<T, T2>
 	{
-
 		public CollectionDiffWithValue(IEnumerable<T2> added, IEnumerable<T> removed,
 			IEnumerable<T> unchanged, IEnumerable<T> edited)
 			: base(added, removed, unchanged)
 		{
-
 			ParamIs.NotNull(() => edited);
 
 			Edited = edited.ToArray();
-
 		}
 
 		public override bool Changed => base.Changed || Edited.Any();
@@ -390,7 +353,5 @@ namespace VocaDb.Model.Helpers
 		/// Entries that existed in both old and new sets AND whose contents were changed.
 		/// </summary>
 		public T[] Edited { get; private set; }
-
 	}
-
 }

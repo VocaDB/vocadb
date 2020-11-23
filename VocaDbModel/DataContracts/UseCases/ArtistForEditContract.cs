@@ -10,17 +10,14 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts.UseCases
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class ArtistForEditContract : ArtistContract
 	{
-
 		public ArtistForEditContract() { }
 
 		public ArtistForEditContract(Artist artist, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory imageStore)
 			: base(artist, languagePreference)
 		{
-
 			BaseVoicebank = artist.BaseVoicebank != null ? new ArtistContract(artist.BaseVoicebank, languagePreference) : null;
 			DefaultNameLanguage = artist.TranslatedName.DefaultLanguage;
 			Description = new EnglishTranslatedStringContract(artist.Description);
@@ -38,7 +35,6 @@ namespace VocaDb.Model.DataContracts.UseCases
 					&& (a.Parent.Id != VoiceProvider?.Id || a.LinkType != ArtistLinkType.VoiceProvider))
 				.Select(g => new ArtistForArtistContract(g, languagePreference))
 				.ToArray();
-
 		}
 
 		[DataMember]
@@ -73,7 +69,5 @@ namespace VocaDb.Model.DataContracts.UseCases
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }
-
 	}
-
 }

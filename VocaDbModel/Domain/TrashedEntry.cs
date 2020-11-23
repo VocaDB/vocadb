@@ -4,10 +4,8 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain
 {
-
 	public class TrashedEntry : IEntryWithIntId
 	{
-
 		private XDocument data;
 		private string name;
 		private string notes;
@@ -22,7 +20,6 @@ namespace VocaDb.Model.Domain
 		public TrashedEntry(IEntryBase entry, XDocument data, User user, string notes = "")
 			: this()
 		{
-
 			ParamIs.NotNull(() => entry);
 
 			Data = data;
@@ -31,7 +28,6 @@ namespace VocaDb.Model.Domain
 			Name = entry.DefaultName;
 			User = user;
 			Notes = notes;
-
 		}
 
 		public virtual DateTime Created { get; set; }
@@ -91,5 +87,4 @@ namespace VocaDb.Model.Domain
 			}
 		}
 	}
-
 }

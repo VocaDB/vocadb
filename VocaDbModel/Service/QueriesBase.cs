@@ -19,12 +19,10 @@ using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Service
 {
-
 	public abstract class QueriesBase<TRepo, TEntity>
 		where TRepo : class, IRepository<TEntity>
 		where TEntity : class, IDatabaseObject
 	{
-
 		protected readonly IUserPermissionContext permissionContext;
 		protected readonly TRepo repository;
 
@@ -40,92 +38,70 @@ namespace VocaDb.Model.Service
 
 		protected void AddActivityfeedEntry(IDatabaseContext<ActivityEntry> ctx, ActivityEntry entry)
 		{
-
 			new Queries.ActivityEntryQueries(ctx, PermissionContext).AddActivityfeedEntry(entry);
-
 		}
 
 		protected async Task AddActivityfeedEntryAsync(IDatabaseContext<ActivityEntry> ctx, ActivityEntry entry)
 		{
-
 			await new Queries.ActivityEntryQueries(ctx, PermissionContext).AddActivityfeedEntryAsync(entry);
-
 		}
 
 		protected async Task AddActivityfeedEntryAsync(IDatabaseContext<ActivityEntry> ctx, Func<User, ActivityEntry> entryFunc)
 		{
-
 			var user = await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext);
 			await AddActivityfeedEntryAsync(ctx, entryFunc(user));
-
 		}
 
 		protected async Task AddEntryEditedEntryAsync(IDatabaseContext<ActivityEntry> ctx, Album entry, EntryEditEvent editEvent, ArchivedAlbumVersion archivedVersion)
 		{
-
 			var user = await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext);
 			var activityEntry = new AlbumActivityEntry(entry, editEvent, user, archivedVersion);
 			await AddActivityfeedEntryAsync(ctx, activityEntry);
-
 		}
 
 		protected async Task AddEntryEditedEntryAsync(IDatabaseContext<ActivityEntry> ctx, Artist entry, EntryEditEvent editEvent, ArchivedArtistVersion archivedVersion)
 		{
-
 			var user = await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext);
 			var activityEntry = new ArtistActivityEntry(entry, editEvent, user, archivedVersion);
 			await AddActivityfeedEntryAsync(ctx, activityEntry);
-
 		}
 
 		protected async Task AddEntryEditedEntryAsync(IDatabaseContext<ActivityEntry> ctx, ArchivedReleaseEventVersion archivedVersion)
 		{
-
 			await AddActivityfeedEntryAsync(ctx, user => new ReleaseEventActivityEntry(archivedVersion.ReleaseEvent, archivedVersion.EditEvent, user, archivedVersion));
-
 		}
 
 		protected void AddEntryEditedEntry(IDatabaseContext<ActivityEntry> ctx, Song entry, EntryEditEvent editEvent, ArchivedSongVersion archivedVersion)
 		{
-
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
 			var activityEntry = new SongActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(ctx, activityEntry);
-
 		}
 
 		protected async Task AddEntryEditedEntryAsync(IDatabaseContext<ActivityEntry> ctx, Song entry, EntryEditEvent editEvent, ArchivedSongVersion archivedVersion)
 		{
-
 			var user = await ctx.OfType<User>().GetLoggedUserAsync(PermissionContext);
 			var activityEntry = new SongActivityEntry(entry, editEvent, user, archivedVersion);
 			await AddActivityfeedEntryAsync(ctx, activityEntry);
-
 		}
 
 		protected void AddEntryEditedEntry(IDatabaseContext<ActivityEntry> ctx, SongList entry, EntryEditEvent editEvent, ArchivedSongListVersion archivedVersion)
 		{
-
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
 			var activityEntry = new SongListActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(ctx, activityEntry);
-
 		}
 
 		protected void AddEntryEditedEntry(IDatabaseContext<ActivityEntry> ctx, Tag entry, EntryEditEvent editEvent, ArchivedTagVersion archivedVersion)
 		{
-
 			new Queries.ActivityEntryQueries(ctx, PermissionContext).AddEntryEditedEntry(entry, editEvent, archivedVersion);
-
 		}
 
 		protected void AddEntryEditedEntry(IDatabaseContext<ActivityEntry> ctx, Venue entry, EntryEditEvent editEvent, ArchivedVenueVersion archivedVersion)
 		{
-
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
 			var activityEntry = new VenueActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(ctx, activityEntry);
-
 		}
 
 		protected void AuditLog(string doingWhat, IDatabaseContext<TEntity> session, AgentLoginData who, AuditLogCategory category = AuditLogCategory.Unspecified)
@@ -150,22 +126,18 @@ namespace VocaDb.Model.Service
 
 		protected bool DoSnapshot(IEntryWithVersions entry, IDatabaseContext ctx)
 		{
-
 			var latestVersion = entry.ArchivedVersionsManager.GetLatestVersion();
 			var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
 
 			return DoSnapshot(latestVersion, user);
-
 		}
 
 		protected bool DoSnapshot(ArchivedObjectVersion latestVersion, User user)
 		{
-
 			if (latestVersion == null)
 				return true;
 
 			return ((((latestVersion.Version + 1) % 5) == 0) || !user.Equals(latestVersion.Author));
-
 		}
 
 		protected User GetLoggedUser(IDatabaseContext session)
@@ -175,44 +147,34 @@ namespace VocaDb.Model.Service
 
 		protected void VerifyEntryEdit(IEntryWithStatus entry)
 		{
-
 			EntryPermissionManager.VerifyEdit(PermissionContext, entry);
-
 		}
 
 		protected void VerifyManageDatabase()
 		{
-
 			PermissionContext.VerifyPermission(PermissionToken.ManageDatabase);
-
 		}
 
 		protected void VerifyResourceAccess(params IUser[] owners)
 		{
-
 			VerifyResourceAccess(owners.Select(o => o.Id));
-
 		}
 
 		private void VerifyResourceAccess(IEnumerable<int> ownerIds)
 		{
-
 			PermissionContext.VerifyLogin();
 
 			if (!ownerIds.Contains(PermissionContext.LoggedUser.Id))
 				throw new NotAllowedException("You do not have access to this resource.");
-
 		}
 
 		protected QueriesBase(TRepo repository, IUserPermissionContext permissionContext)
 		{
-
 			ParamIs.NotNull(() => repository);
 			ParamIs.NotNull(() => permissionContext);
 
 			this.repository = repository;
 			this.permissionContext = permissionContext;
-
 		}
 
 		/// <summary>
@@ -257,10 +219,8 @@ namespace VocaDb.Model.Service
 
 		public XDocument GetVersionXml<TArchivedVersion>(int id) where TArchivedVersion : class, IArchivedObjectVersion
 		{
-
 			return HandleQuery(ctx =>
 			{
-
 				var archivedVersion = ctx.Load<TArchivedVersion>(id);
 
 				if (archivedVersion.Hidden)
@@ -269,29 +229,21 @@ namespace VocaDb.Model.Service
 				}
 
 				return archivedVersion.Data;
-
 			});
-
 		}
 
 		public void UpdateVersionVisibility<TArchivedVersion>(int archivedVersionId, bool hidden) where TArchivedVersion : class, IArchivedObjectVersion
 		{
-
 			permissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
 
 			repository.HandleTransaction(session =>
 			{
-
 				var archivedVersion = session.Load<TArchivedVersion>(archivedVersionId);
 
 				archivedVersion.Hidden = hidden;
 
 				AuditLog($"updated version visibility for {archivedVersion} to Hidden = {hidden}", session);
-
 			});
-
 		}
-
 	}
-
 }

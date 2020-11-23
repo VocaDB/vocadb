@@ -15,16 +15,13 @@ using VocaDb.Model.Service.Translations;
 
 namespace VocaDb.Model.Service.Queries
 {
-
 	public class TagUsageQueries
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IUserPermissionContext permissionContext;
 
 		private bool IsValid(TagBaseContract contract)
 		{
-
 			if (contract == null)
 				return false;
 
@@ -32,7 +29,6 @@ namespace VocaDb.Model.Service.Queries
 				return true;
 
 			return !string.IsNullOrEmpty(contract.Name);
-
 		}
 
 		private bool HasId(TagBaseContract contract)
@@ -56,7 +52,6 @@ namespace VocaDb.Model.Service.Queries
 			where TEntry : class, IEntryWithNames, IEntryWithTags
 			where TTag : TagUsage
 		{
-
 			ParamIs.NotNull(() => tags);
 
 			permissionContext.VerifyPermission(PermissionToken.EditTags);
@@ -68,7 +63,6 @@ namespace VocaDb.Model.Service.Queries
 
 			return await repository.HandleTransactionAsync(async ctx =>
 			{
-
 				// Tags are primarily added by Id, secondarily by translated name.
 				// First separate given tags for tag IDs and tag names
 				var tagIds = tags.Where(HasId).Select(t => t.Id).ToArray();
@@ -120,19 +114,15 @@ namespace VocaDb.Model.Service.Queries
 				ctx.AuditLogger.SysLog("finished tagging");
 
 				return tagFunc(entry).ActiveUsages.Select(t => new TagUsageForApiContract(t, permissionContext.LanguagePreference)).ToArray();
-
 			});
-
 		}
 
 		public int RemoveTagUsage<TUsage, TEntry>(long tagUsageId, IRepository<TEntry> repository)
 			where TUsage : TagUsage
 			where TEntry : class, IDatabaseObject
 		{
-
 			return repository.HandleTransaction(ctx =>
 			{
-
 				ctx.AuditLogger.SysLog(string.Format("deleting tag usage with Id {0}", tagUsageId));
 
 				var tagUsage = ctx.Load<TUsage>(tagUsageId);
@@ -147,14 +137,11 @@ namespace VocaDb.Model.Service.Queries
 				ctx.AuditLogger.SysLog("Usage count for " + tagUsage.Tag + " is now " + tagUsage.Tag.UsageCount);
 
 				return tagUsage.EntryBase.Id;
-
 			});
-
 		}
 
 		private Dictionary<int, int> GetActualTagUsageCounts(IDatabaseContext<Tag> ctx, int[] tagIds)
 		{
-
 			// Note: these counts are not up to date in tests, only when querying the real DB
 			var result = ctx.Query().Where(t => tagIds.Contains(t.Id)).Select(t => new
 			{
@@ -165,12 +152,10 @@ namespace VocaDb.Model.Service.Queries
 			}).ToDictionary(t => t.Id, t => t.Count);
 
 			return result;
-
 		}
 
 		private void RecomputeTagUsagesCounts(IDatabaseContext<Tag> ctx, Tag[] tags)
 		{
-
 			var ids = tags.Select(t => t.Id).ToArray();
 			var usages = GetActualTagUsageCounts(ctx, ids);
 
@@ -183,9 +168,6 @@ namespace VocaDb.Model.Service.Queries
 					log.Warn("Tag usage count doesn't match for {0}: expected {1}, actual {2}", tag, usages[tag.Id], tag.UsageCount);
 				}
 			}
-
 		}
-
 	}
-
 }

@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace VocaDb.Model.Domain.Images
 {
-
 	/// <summary>
 	/// Supports generating image URL for any type of entry supported by <see cref="IEntryImageInformation"/>.
 	/// Automatically chooses the appropriate implementation.
@@ -15,7 +14,6 @@ namespace VocaDb.Model.Domain.Images
 
 	public class ServerEntryImageFactoryAggregator : IAggregatedEntryImageUrlFactory
 	{
-
 		// TODO: optimize with lookups
 		private readonly IEntryImageUrlFactory[] factories;
 
@@ -49,6 +47,5 @@ namespace VocaDb.Model.Domain.Images
 		}
 
 		public bool IsSupported(IEntryImageInformation picture, ImageSize size) => Factories(picture, size).Any();
-
 	}
 }

@@ -4,15 +4,12 @@ using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Database.Repositories
 {
-
 	public interface IRepositoryBase
 	{
-
 	}
 
 	public interface IRepositoryBase<TRepositoryContext> : IRepositoryBase
 	{
-
 		/// <summary>
 		/// Runs an unit of work that queries the database without saving anything. No explicit transaction will be opened.
 		/// </summary>
@@ -58,12 +55,10 @@ namespace VocaDb.Model.Database.Repositories
 		/// <param name="failMsg">Failure message. Cannot be null.</param>
 		/// <returns>Result. Can be null.</returns>
 		Task<TResult> HandleTransactionAsync<TResult>(Func<TRepositoryContext, Task<TResult>> func, string failMsg = "Unexpected database error");
-
 	}
 
 	public interface IRepository : IRepositoryBase<IDatabaseContext>
 	{
-
 	}
 
 	/// <summary>
@@ -72,7 +67,5 @@ namespace VocaDb.Model.Database.Repositories
 	/// <typeparam name="T">Type of entity.</typeparam>
 	public interface IRepository<T> : IRepositoryBase<IDatabaseContext<T>> where T : class, IDatabaseObject
 	{
-
 	}
-
 }

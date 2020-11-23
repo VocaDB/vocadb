@@ -25,7 +25,6 @@ namespace VocaDb.Model.Resources.Messages
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public class UserAccountStrings
 	{
-
 		private static global::System.Resources.ResourceManager resourceMan;
 
 		private static global::System.Globalization.CultureInfo resourceCulture;

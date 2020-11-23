@@ -10,13 +10,10 @@ using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.Service.Queries
 {
-
 	public class EntryQueries
 	{
-
 		public IEntryWithNames Load(EntryRef entryRef, IDatabaseContext ctx)
 		{
-
 			switch (entryRef.EntryType)
 			{
 				case EntryType.Album:
@@ -36,10 +33,6 @@ namespace VocaDb.Model.Service.Queries
 			}
 
 			throw new ArgumentException("Unsupported entry type: " + entryRef.EntryType);
-
 		}
-
-
 	}
-
 }

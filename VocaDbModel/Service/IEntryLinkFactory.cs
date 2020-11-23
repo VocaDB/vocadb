@@ -2,13 +2,11 @@
 
 namespace VocaDb.Model.Service
 {
-
 	/// <summary>
 	/// Creates HTML anchors to common entry types.
 	/// </summary>
 	public interface IEntryLinkFactory
 	{
-
 		/// <summary>
 		/// Creates HTML anchor tag for an entry.
 		/// HTML will be encoded.
@@ -20,12 +18,10 @@ namespace VocaDb.Model.Service
 		string CreateEntryLink(EntryType entryType, int id, string name, string slug = null);
 
 		string GetFullEntryUrl(EntryType entryType, int id, string slug = null);
-
 	}
 
 	public static class IEntryLinkFactoryExtender
 	{
-
 		public static string GetFullEntryUrl(this IEntryLinkFactory entryLinkFactory, IEntryBase entryBase, string slug = null)
 		{
 			return entryLinkFactory.GetFullEntryUrl(entryBase.EntryType, entryBase.Id, slug);
@@ -35,7 +31,5 @@ namespace VocaDb.Model.Service
 		{
 			return entryLinkFactory.GetFullEntryUrl(globalId.EntryType, globalId.Id, slug);
 		}
-
 	}
-
 }

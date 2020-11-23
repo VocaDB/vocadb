@@ -14,10 +14,8 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
-
 	public class ReleaseEventDetailsContract : ReleaseEventContract
 	{
-
 		public ReleaseEventDetailsContract()
 		{
 			Artists = new ArtistForEventContract[0];
@@ -29,7 +27,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryTypeTagRepository entryTypeTags = null)
 			: base(releaseEvent, languagePreference, true, true)
 		{
-
 			ParamIs.NotNull(() => releaseEvent);
 
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, releaseEvent);
@@ -68,7 +65,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			{
 				SongListSongs = releaseEvent.SongList.SongLinks.OrderBy(s => s.Order).Select(s => new SongInListContract(s, languagePreference)).ToArray();
 			}
-
 		}
 
 		public AlbumContract[] Albums { get; set; }
@@ -104,6 +100,5 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		public UserForApiContract[] UsersAttending { get; set; }
 
 		public WebLinkContract[] WebLinks { get; set; }
-
 	}
 }

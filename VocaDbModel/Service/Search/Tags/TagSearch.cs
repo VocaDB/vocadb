@@ -7,10 +7,8 @@ using VocaDb.Model.Service.QueryableExtenders;
 
 namespace VocaDb.Model.Service.Search.Tags
 {
-
 	public class TagSearch
 	{
-
 		private readonly IDatabaseContext<Tag> dbContext;
 		private readonly ContentLanguagePreference languagePreference;
 
@@ -22,7 +20,6 @@ namespace VocaDb.Model.Service.Search.Tags
 
 		private IQueryable<Tag> CreateQuery(TagQueryParams queryParams, string queryText, NameMatchMode nameMatchMode)
 		{
-
 			var textQuery = TagSearchTextQuery.Create(queryText, nameMatchMode);
 
 			var query = dbContext.Query()
@@ -33,12 +30,10 @@ namespace VocaDb.Model.Service.Search.Tags
 				.WhereHasTarget(queryParams.Target);
 
 			return query;
-
 		}
 
 		public PartialFindResult<Tag> Find(TagQueryParams queryParams, bool onlyMinimalFields)
 		{
-
 			var isMoveToTopQuery = queryParams.Common.MoveExactToTop
 				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith
 				&& queryParams.Common.NameMatchMode != NameMatchMode.Exact
@@ -87,13 +82,10 @@ namespace VocaDb.Model.Service.Search.Tags
 
 			if (queryParams.Paging.GetTotalCount)
 			{
-
 				count = query.Count();
-
 			}
 
 			return PartialFindResult.Create(tags, count);
-
 		}
 
 		/// <summary>
@@ -102,7 +94,6 @@ namespace VocaDb.Model.Service.Search.Tags
 		/// </summary>
 		private PartialFindResult<Tag> GetTagsMoveExactToTop(TagQueryParams queryParams)
 		{
-
 			var sortRule = queryParams.SortRule;
 			var maxResults = queryParams.Paging.MaxEntries;
 			var getCount = queryParams.Paging.GetTotalCount;
@@ -122,14 +113,11 @@ namespace VocaDb.Model.Service.Search.Tags
 
 			if (exactResults.Length >= maxResults)
 			{
-
 				ids = exactResults;
 				count = getCount ? CreateQuery(queryParams, queryParams.Common.Query, queryParams.Common.NameMatchMode).Count() : 0;
-
 			}
 			else
 			{
-
 				var directQ = CreateQuery(queryParams, queryParams.Common.Query, queryParams.Common.NameMatchMode);
 
 				var direct = directQ
@@ -145,7 +133,6 @@ namespace VocaDb.Model.Service.Search.Tags
 					.ToArray();
 
 				count = getCount ? directQ.Count() : 0;
-
 			}
 
 			var tags = dbContext
@@ -154,8 +141,6 @@ namespace VocaDb.Model.Service.Search.Tags
 				.OrderByIds(ids);
 
 			return new PartialFindResult<Tag>(tags, count, queryParams.Common.Query);
-
 		}
-
 	}
 }

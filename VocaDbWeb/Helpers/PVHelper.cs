@@ -7,10 +7,8 @@ using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Web.Helpers
 {
-
 	public static class PVHelper
 	{
-
 		private static PVService? PreferredVideoService
 		{
 			get
@@ -21,17 +19,12 @@ namespace VocaDb.Web.Helpers
 
 		public static PVContract[] GetMainPVs(PVContract[] allPvs)
 		{
-
 			return EnumVal<PVService>.Values.Select(service => VideoServiceHelper.GetPV(allPvs, service)).Where(p => p != null).ToArray();
-
 		}
 
 		public static PVContract PrimaryPV(IEnumerable<PVContract> pvs)
 		{
-
 			return VideoServiceHelper.PrimaryPV(pvs, PreferredVideoService);
-
 		}
-
 	}
 }

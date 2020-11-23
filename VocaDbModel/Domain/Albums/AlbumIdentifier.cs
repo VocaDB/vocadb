@@ -1,9 +1,7 @@
 ﻿namespace VocaDb.Model.Domain.Albums
 {
-
 	public class AlbumIdentifier : IEntryWithIntId
 	{
-
 		private Album album;
 		private string value;
 
@@ -41,7 +39,5 @@
 		{
 			return string.Equals(Value, another.Value);
 		}
-
 	}
-
 }

@@ -10,14 +10,12 @@ using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Model.DataContracts.UseCases
 {
-
 	/// <summary>
 	/// Result of checking a new PV to be posted.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class NewSongCheckResultContract
 	{
-
 		public NewSongCheckResultContract()
 		{
 			Matches = new DuplicateEntryResultContract<SongMatchProperty>[] { };
@@ -25,7 +23,6 @@ namespace VocaDb.Model.DataContracts.UseCases
 
 		public NewSongCheckResultContract(DuplicateEntryResultContract<SongMatchProperty>[] matches, NicoTitleParseResult titleParseResult, ContentLanguagePreference languagePreference)
 		{
-
 			this.Matches = matches;
 
 			if (titleParseResult != null)
@@ -35,7 +32,6 @@ namespace VocaDb.Model.DataContracts.UseCases
 				this.Title = titleParseResult.Title;
 				this.TitleLanguage = titleParseResult.TitleLanguage;
 			}
-
 		}
 
 		/// <summary>
@@ -71,6 +67,5 @@ namespace VocaDb.Model.DataContracts.UseCases
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
 		public ContentLanguageSelection TitleLanguage { get; set; }
-
 	}
 }

@@ -4,10 +4,8 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Domain.Users
 {
-
 	public class UserGroup
 	{
-
 		/// <summary>
 		/// User group with no permissions.
 		/// </summary>
@@ -72,22 +70,18 @@ namespace VocaDb.Model.Domain.Users
 		/// <returns>User group matching the Id, or <see cref="Nothing"/>, if no matching group is found.</returns>
 		public static UserGroup GetGroup(UserGroupId groupId)
 		{
-
 			if (!groups.ContainsKey(groupId))
 				return Nothing;
 
 			return groups[groupId];
-
 		}
 
 		public static PermissionCollection GetPermissions(UserGroupId groupId)
 		{
-
 			if (!groups.ContainsKey(groupId))
 				return new PermissionCollection();
 
 			return groups[groupId].Permissions;
-
 		}
 
 		public static UserGroupId[] GroupIds
@@ -119,12 +113,10 @@ namespace VocaDb.Model.Domain.Users
 		public UserGroupId Id { get; private set; }
 
 		public PermissionCollection Permissions { get; private set; }
-
 	}
 
 	public enum UserGroupId
 	{
-
 		Nothing,
 
 		Limited,
@@ -136,7 +128,5 @@ namespace VocaDb.Model.Domain.Users
 		Moderator,
 
 		Admin,
-
 	}
-
 }

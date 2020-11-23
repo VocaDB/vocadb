@@ -5,10 +5,8 @@ using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.DataContracts.Albums
 {
-
 	public class AlbumReviewContract
 	{
-
 		public AlbumReviewContract()
 		{
 			Title = string.Empty;
@@ -16,7 +14,6 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		public AlbumReviewContract(AlbumReview review, IUserIconFactory userIconFactory) : this()
 		{
-
 			if (review == null)
 				throw new ArgumentNullException(nameof(review));
 
@@ -27,7 +24,6 @@ namespace VocaDb.Model.DataContracts.Albums
 			Text = review.Text;
 			Title = review.Title;
 			User = new UserForApiContract(review.User, userIconFactory, UserOptionalFields.MainPicture);
-
 		}
 
 		public virtual int Id { get; set; }
@@ -47,7 +43,5 @@ namespace VocaDb.Model.DataContracts.Albums
 		public virtual string Title { get; set; }
 
 		public virtual UserForApiContract User { get; set; }
-
 	}
-
 }

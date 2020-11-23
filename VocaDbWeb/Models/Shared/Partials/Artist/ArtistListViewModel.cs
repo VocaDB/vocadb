@@ -3,7 +3,6 @@ using VocaDb.Model.DataContracts.Songs;
 
 namespace VocaDb.Web.Models.Shared.Partials.Artist
 {
-
 	public enum ShowRolesMode
 	{
 		Never,
@@ -19,7 +18,6 @@ namespace VocaDb.Web.Models.Shared.Partials.Artist
 
 	public class ArtistListViewModel
 	{
-
 		public ArtistListViewModel(IEnumerable<IArtistLinkContract> artists, ShowRolesMode showRoles = ShowRolesMode.Never, bool showType = false)
 		{
 			Artists = artists;
@@ -32,7 +30,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Artist
 		public ShowRolesMode ShowRoles { get; set; }
 
 		public bool ShowType { get; set; }
-
 	}
-
 }

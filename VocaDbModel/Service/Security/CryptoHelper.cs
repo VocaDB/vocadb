@@ -4,10 +4,8 @@ using System.Text;
 
 namespace VocaDb.Model.Service.Security
 {
-
 	public static class CryptoHelper
 	{
-
 		public const string MD5 = "MD5";
 		public const string SHA1 = "SHA1";
 
@@ -35,7 +33,6 @@ namespace VocaDb.Model.Service.Security
 		/// <returns>Hashed string. Cannot be null.</returns>
 		public static string HashString(string inputString, string hashName)
 		{
-
 			ParamIs.NotNull(() => inputString);
 
 			var algorithm = HashAlgorithm.Create(hashName);
@@ -46,9 +43,6 @@ namespace VocaDb.Model.Service.Security
 
 			byte[] hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
 			return ByteArrayToString(hash);
-
 		}
-
 	}
-
 }

@@ -1,7 +1,6 @@
 ﻿
 namespace VocaDb.Model.Domain
 {
-
 	/// <summary>
 	/// Primary focus of an album/song.
 	/// </summary>
@@ -11,5 +10,4 @@ namespace VocaDb.Model.Domain
 		Video,
 		Illustration
 	}
-
 }

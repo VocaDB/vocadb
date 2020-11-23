@@ -25,7 +25,6 @@ namespace VocaDb.Web.Resources.Domain.Artists
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public class ArtistLinkTypeNames
 	{
-
 		private static global::System.Resources.ResourceManager resourceMan;
 
 		private static global::System.Globalization.CultureInfo resourceCulture;

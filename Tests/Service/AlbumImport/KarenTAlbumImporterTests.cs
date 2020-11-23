@@ -8,14 +8,12 @@ using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Service.AlbumImport
 {
-
 	/// <summary>
 	/// Tests for <see cref="KarenTAlbumImporter"/>.
 	/// </summary>
 	[TestClass]
 	public class KarenTAlbumImporterTests
 	{
-
 		private KarenTAlbumImporter importer;
 		private MikuDbAlbumContract importedAlbum;
 		private ImportedAlbumDataContract importedData;
@@ -52,7 +50,6 @@ namespace VocaDb.Tests.Service.AlbumImport
 		public void Description()
 		{
 			Assert.AreEqual("Heavenz 1st Album", importedData.Description, "Description");
-
 		}
 
 		[TestMethod]
@@ -85,52 +82,40 @@ namespace VocaDb.Tests.Service.AlbumImport
 		[TestMethod]
 		public void ParseTrackRow()
 		{
-
 			var result = ParseTrack("01.&nbsp;Cloud Science (feat. Hatsune Miku)");
 
 			AssertTrack("Cloud Science", "Hatsune Miku", result);
-
 		}
 
 		[TestMethod]
 		public void ParseTrackRow_NonWordChars()
 		{
-
 			var result = ParseTrack("05.&nbsp;yurameku - Album ver. - (feat. Hatsune Miku)");
 
 			AssertTrack("yurameku - Album ver. -", "Hatsune Miku", result);
-
 		}
 
 		[TestMethod]
 		public void ParseTrackRow_OffVocal()
 		{
-
 			var result = ParseTrack("11.&nbsp;Quarrel with the doppelganger -off vocal");
 
 			AssertTrack("Quarrel with the doppelganger", "", result);
 			// TODO: could also handle type as instrumental
-
 		}
 
 		[TestMethod]
 		public void ParseTrackRow_MultipleVocalists()
 		{
-
 			var result = ParseTrack("07.&nbsp;MIRAI KOURO / LR ver (feat. Kagamine Rin&Kagamine Len)");
 
 			AssertTrack("MIRAI KOURO / LR ver", "Kagamine Rin, Kagamine Len", result);
-
 		}
 
 		[TestMethod]
 		public void Tracks()
 		{
-
 			Assert.AreEqual(11, importedData.Tracks.Length, "11 tracks");
-
 		}
-
 	}
-
 }

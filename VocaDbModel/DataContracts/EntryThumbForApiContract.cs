@@ -3,7 +3,6 @@ using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.DataContracts
 {
-
 	/// <summary>
 	/// Entry thumbnail for API.
 	/// Contains URLs to thumbnails of different sizes.
@@ -15,16 +14,13 @@ namespace VocaDb.Model.DataContracts
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryThumbForApiContract
 	{
-
 		public static EntryThumbForApiContract Create(IEntryImageInformation image, IAggregatedEntryImageUrlFactory thumbPersister,
 			ImageSizes sizes = ImageSizes.All)
 		{
-
 			if (thumbPersister == null || string.IsNullOrEmpty(image?.Mime))
 				return null;
 
 			return new EntryThumbForApiContract(image, thumbPersister, sizes);
-
 		}
 
 		public EntryThumbForApiContract() { }
@@ -38,7 +34,6 @@ namespace VocaDb.Model.DataContracts
 		public EntryThumbForApiContract(IEntryImageInformation image, IAggregatedEntryImageUrlFactory thumbPersister,
 			ImageSizes sizes = ImageSizes.All)
 		{
-
 			ParamIs.NotNull(() => image);
 			ParamIs.NotNull(() => thumbPersister);
 
@@ -58,7 +53,6 @@ namespace VocaDb.Model.DataContracts
 
 			if (sizes.HasFlag(ImageSizes.TinyThumb))
 				UrlTinyThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.TinyThumb);
-
 		}
 
 		/// <summary>
@@ -103,7 +97,6 @@ namespace VocaDb.Model.DataContracts
 		/// <returns>Thumbnail URL. Can be null or empty.</returns>
 		public string GetSmallestThumb(ImageSize preferLargerThan)
 		{
-
 			switch (preferLargerThan)
 			{
 				case ImageSize.TinyThumb:
@@ -115,9 +108,6 @@ namespace VocaDb.Model.DataContracts
 				default:
 					return UrlOriginal ?? UrlThumb ?? UrlSmallThumb ?? UrlTinyThumb;
 			}
-
 		}
-
 	}
-
 }

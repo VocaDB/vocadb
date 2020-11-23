@@ -6,13 +6,11 @@ using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Web.Controllers.Api
 {
-
 	[Authorize]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	[RoutePrefix("api/admin")]
 	public class AdminApiController : ApiController
 	{
-
 		private readonly IPRuleManager ipRuleManager;
 		private readonly IUserPermissionContext userContext;
 
@@ -25,14 +23,10 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("tempBannedIPs")]
 		public string[] GetTempBannedIPs()
 		{
-
 			userContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			var hosts = ipRuleManager.TempBannedIPs.Hosts;
 			return hosts.ToArray();
-
 		}
-
 	}
-
 }

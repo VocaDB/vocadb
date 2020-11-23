@@ -25,7 +25,6 @@ namespace VocaDb.Web.Resources.Views.SongList
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public class ImportStrings
 	{
-
 		private static global::System.Resources.ResourceManager resourceMan;
 
 		private static global::System.Globalization.CultureInfo resourceCulture;

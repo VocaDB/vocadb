@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.Domain.Artists
 {
-
 	public class ArtistDiff : EntryDiff<ArtistEditableFields>
 	{
-
 		public ArtistDiff() : this(true) { }
 
 		public ArtistDiff(bool isSnapshot) : base(isSnapshot) { }
@@ -31,11 +29,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public override bool IsIncluded(ArtistEditableFields field)
 		{
-
 			return (field != ArtistEditableFields.Picture ? base.IsIncluded(field) : IncludePicture);
-
 		}
-
 	}
-
 }

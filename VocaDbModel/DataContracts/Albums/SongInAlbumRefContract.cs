@@ -3,11 +3,9 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Albums
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongInAlbumRefContract : ObjectRefContract
 	{
-
 		public SongInAlbumRefContract()
 		{
 			DiscNumber = 1;
@@ -15,7 +13,6 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		public SongInAlbumRefContract(SongInAlbum songInAlbum)
 		{
-
 			DiscNumber = songInAlbum.DiscNumber;
 			TrackNumber = songInAlbum.TrackNumber;
 
@@ -29,7 +26,6 @@ namespace VocaDb.Model.DataContracts.Albums
 			{
 				NameHint = songInAlbum.Name;
 			}
-
 		}
 
 		[DataMember]
@@ -37,7 +33,5 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		[DataMember]
 		public int TrackNumber { get; set; }
-
 	}
-
 }

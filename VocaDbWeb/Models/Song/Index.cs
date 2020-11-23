@@ -7,19 +7,16 @@ using VocaDb.Model.Service;
 
 namespace VocaDb.Web.Models.Song
 {
-
 	/// <summary>
 	/// Parameter collection given to index action.
 	/// </summary>
 	public class IndexRouteParams
 	{
-
 		public IndexRouteParams() { }
 
 		public IndexRouteParams(IndexRouteParams index, int? page)
 			: this()
 		{
-
 			ParamIs.NotNull(() => index);
 
 			artistId = index.artistId;
@@ -37,7 +34,6 @@ namespace VocaDb.Web.Models.Song
 			userCollectionId = index.userCollectionId;
 			view = index.view;
 			this.page = page;
-
 		}
 
 		public int? artistId { get; set; }
@@ -70,16 +66,12 @@ namespace VocaDb.Web.Models.Song
 		public int? userCollectionId { get; set; }
 
 		public SongViewMode? view { get; set; }
-
 	}
 
 	public enum SongViewMode
 	{
-
 		Details,
 
 		Preview
-
 	}
-
 }

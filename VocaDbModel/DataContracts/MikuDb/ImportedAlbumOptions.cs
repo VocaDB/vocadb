@@ -2,10 +2,8 @@
 
 namespace VocaDb.Model.DataContracts.MikuDb
 {
-
 	public class ImportedAlbumOptions
 	{
-
 		public ImportedAlbumOptions(int importedAlbumId)
 		{
 			ImportedDbAlbumId = importedAlbumId;
@@ -26,7 +24,5 @@ namespace VocaDb.Model.DataContracts.MikuDb
 		public bool? MergeTracks { get; set; }
 
 		public ContentLanguageSelection SelectedLanguage { get; set; }
-
 	}
-
 }

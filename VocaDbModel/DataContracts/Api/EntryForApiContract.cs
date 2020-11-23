@@ -15,16 +15,13 @@ using VocaDb.Model.Domain.Tags;
 
 namespace VocaDb.Model.DataContracts.Api
 {
-
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryForApiContract : IEntryWithIntId
 	{
-
 		public static EntryForApiContract Create(IEntryWithNames entry, ContentLanguagePreference languagePreference,
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			EntryOptionalFields includedFields)
 		{
-
 			ParamIs.NotNull(() => entry);
 
 			switch (entry.EntryType)
@@ -46,12 +43,10 @@ namespace VocaDb.Model.DataContracts.Api
 			}
 
 			return new EntryForApiContract(entry, languagePreference, includedFields);
-
 		}
 
 		private EntryForApiContract(IEntryWithNames entry, ContentLanguagePreference languagePreference, EntryOptionalFields fields)
 		{
-
 			EntryType = entry.EntryType;
 			Id = entry.Id;
 
@@ -64,14 +59,12 @@ namespace VocaDb.Model.DataContracts.Api
 			{
 				AdditionalNames = entry.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
-
 		}
 
 		public EntryForApiContract(Artist artist, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister,
 			EntryOptionalFields includedFields)
 			: this(artist, languagePreference, includedFields)
 		{
-
 			ActivityDate = artist.ReleaseDate;
 			ArtistType = artist.ArtistType;
 			CreateDate = artist.CreateDate;
@@ -96,14 +89,12 @@ namespace VocaDb.Model.DataContracts.Api
 			{
 				WebLinks = artist.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
 			}
-
 		}
 
 		public EntryForApiContract(Album album, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister,
 			EntryOptionalFields includedFields)
 			: this(album, languagePreference, includedFields)
 		{
-
 			ActivityDate = album.OriginalReleaseDate.IsFullDate ? (DateTime?)album.OriginalReleaseDate.ToDateTime() : null;
 			ArtistString = album.ArtistString[languagePreference];
 			CreateDate = album.CreateDate;
@@ -134,14 +125,12 @@ namespace VocaDb.Model.DataContracts.Api
 			{
 				WebLinks = album.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
 			}
-
 		}
 
 		public EntryForApiContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister,
 			EntryOptionalFields includedFields)
 			: this(releaseEvent, languagePreference, includedFields)
 		{
-
 			ActivityDate = releaseEvent.Date.DateTime;
 			EventCategory = releaseEvent.InheritedCategory;
 			ReleaseEventSeriesName = releaseEvent.Series?.TranslatedName[languagePreference];
@@ -157,22 +146,18 @@ namespace VocaDb.Model.DataContracts.Api
 			{
 				WebLinks = releaseEvent.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
 			}
-
 		}
 
 		// Only used for recent comments atm.
 		public EntryForApiContract(DiscussionTopic topic, ContentLanguagePreference languagePreference)
 			: this((IEntryWithNames)topic, languagePreference, EntryOptionalFields.None)
 		{
-
 			CreateDate = topic.Created;
-
 		}
 
 		public EntryForApiContract(Song song, ContentLanguagePreference languagePreference, EntryOptionalFields includedFields)
 			: this((IEntryWithNames)song, languagePreference, includedFields)
 		{
-
 			ActivityDate = song.PublishDate.DateTime;
 			ArtistString = song.ArtistString[languagePreference];
 			CreateDate = song.CreateDate;
@@ -181,14 +166,12 @@ namespace VocaDb.Model.DataContracts.Api
 
 			if (includedFields.HasFlag(EntryOptionalFields.MainPicture))
 			{
-
 				var thumb = song.GetThumbUrl();
 
 				if (!string.IsNullOrEmpty(thumb))
 				{
 					MainPicture = new EntryThumbForApiContract { UrlSmallThumb = thumb, UrlThumb = thumb, UrlTinyThumb = thumb };
 				}
-
 			}
 
 			if (includedFields.HasFlag(EntryOptionalFields.Names))
@@ -210,14 +193,12 @@ namespace VocaDb.Model.DataContracts.Api
 			{
 				WebLinks = song.WebLinks.Select(w => new ArchivedWebLinkContract(w)).ToArray();
 			}
-
 		}
 
 		public EntryForApiContract(SongList songList, IAggregatedEntryImageUrlFactory thumbPersister,
 			EntryOptionalFields includedFields)
 			: this(songList, ContentLanguagePreference.Default, includedFields)
 		{
-
 			ActivityDate = songList.EventDate;
 			CreateDate = songList.CreateDate;
 			SongListFeaturedCategory = songList.FeaturedCategory;
@@ -226,14 +207,12 @@ namespace VocaDb.Model.DataContracts.Api
 			{
 				MainPicture = new EntryThumbForApiContract(songList.Thumb, thumbPersister, SongList.ImageSizes);
 			}
-
 		}
 
 		public EntryForApiContract(Tag tag, ContentLanguagePreference languagePreference, IAggregatedEntryImageUrlFactory thumbPersister,
 			EntryOptionalFields includedFields)
 			: this(tag, languagePreference, includedFields)
 		{
-
 			CreateDate = tag.CreateDate;
 			Status = tag.Status;
 			TagCategoryName = tag.CategoryName;
@@ -249,7 +228,6 @@ namespace VocaDb.Model.DataContracts.Api
 			}
 
 			UrlSlug = tag.UrlSlug;
-
 		}
 
 		/// <summary>
@@ -345,13 +323,11 @@ namespace VocaDb.Model.DataContracts.Api
 
 		[DataMember(EmitDefaultValue = false)]
 		public ArchivedWebLinkContract[] WebLinks { get; set; }
-
 	}
 
 	[Flags]
 	public enum EntryOptionalFields
 	{
-
 		None = 0,
 		AdditionalNames = 1,
 		Description = 2,
@@ -365,7 +341,5 @@ namespace VocaDb.Model.DataContracts.Api
 
 		Tags = 32,
 		WebLinks = 64
-
 	}
-
 }

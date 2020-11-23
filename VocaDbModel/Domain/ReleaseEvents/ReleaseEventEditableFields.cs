@@ -2,11 +2,9 @@ using System;
 
 namespace VocaDb.Model.Domain.ReleaseEvents
 {
-
 	[Flags]
 	public enum ReleaseEventEditableFields
 	{
-
 		Nothing = 0,
 
 		Artists = 1,
@@ -43,7 +41,5 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		VenueName = 32768,
 
 		WebLinks = 65536
-
 	}
-
 }

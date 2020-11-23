@@ -5,16 +5,13 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.DataContracts.Artists
 {
-
 	public class ArchivedArtistVersionDetailsContract
 	{
-
 		public ArchivedArtistVersionDetailsContract() { }
 
 		public ArchivedArtistVersionDetailsContract(ArchivedArtistVersion archived, ArchivedArtistVersion comparedVersion,
 			IUserPermissionContext permissionContext)
 		{
-
 			ParamIs.NotNull(() => archived);
 
 			ArchivedVersion = new ArchivedArtistVersionContract(archived);
@@ -31,7 +28,6 @@ namespace VocaDb.Model.DataContracts.Artists
 			Versions = ComparedArtistsContract.Create(archived, comparedVersion);
 
 			ComparedVersionId = Versions.SecondId;
-
 		}
 
 		public ArchivedArtistVersionContract ArchivedVersion { get; set; }
@@ -51,7 +47,5 @@ namespace VocaDb.Model.DataContracts.Artists
 		public string Name { get; set; }
 
 		public ComparedArtistsContract Versions { get; set; }
-
 	}
-
 }

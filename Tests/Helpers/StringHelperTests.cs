@@ -3,11 +3,9 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Tests.Helpers
 {
-
 	[TestClass]
 	public class StringHelperTests
 	{
-
 		private void TestRemoveControlChars(string expected, string input)
 		{
 			var actual = StringHelper.RemoveControlChars(input);
@@ -55,7 +53,5 @@ namespace VocaDb.Tests.Helpers
 		{
 			TestTrimIfNotWhitespace(" ", " ");
 		}
-
 	}
-
 }

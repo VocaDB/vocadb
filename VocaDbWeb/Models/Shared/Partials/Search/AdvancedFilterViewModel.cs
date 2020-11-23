@@ -2,10 +2,8 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Web.Models.Shared.Partials.Search
 {
-
 	public class AdvancedFilterViewModel
 	{
-
 		public AdvancedFilterViewModel(string description, AdvancedFilterType filterType, string param, bool negate)
 		{
 			Description = description;
@@ -21,7 +19,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Search
 		public string Param { get; set; }
 
 		public bool Negate { get; set; }
-
 	}
-
 }

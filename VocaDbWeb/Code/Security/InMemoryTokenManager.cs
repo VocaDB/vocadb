@@ -25,7 +25,6 @@ namespace VocaDb.Web.Code.Security
 	/// </remarks>
 	internal class InMemoryTokenManager : IConsumerTokenManager, IOpenIdOAuthTokenManager
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly Dictionary<string, string> tokensAndSecrets = new Dictionary<string, string>();
 
@@ -156,5 +155,4 @@ namespace VocaDb.Web.Code.Security
 
 		#endregion
 	}
-
 }

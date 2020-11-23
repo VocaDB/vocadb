@@ -2,7 +2,5 @@
 
 namespace VocaDb.Model.Mapping.Songs
 {
-
 	public class SongHitMap : EntryHitMap<SongHit, Song> { }
-
 }

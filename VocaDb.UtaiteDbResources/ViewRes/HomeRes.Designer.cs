@@ -25,7 +25,6 @@ namespace VocaDb.UtaiteDb.Resources.ViewRes
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public class HomeRes
 	{
-
 		private static global::System.Resources.ResourceManager resourceMan;
 
 		private static global::System.Globalization.CultureInfo resourceCulture;

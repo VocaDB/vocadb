@@ -8,10 +8,8 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Database.Repositories.NHibernate
 {
-
 	public class NHibernateDatabaseContext : IDatabaseContext
 	{
-
 		public IUserPermissionContext PermissionContext { get; private set; }
 		public ISession Session { get; private set; }
 
@@ -41,16 +39,13 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		}
 
 		public IQueryable<T2> Query<T2>() where T2 : class, IDatabaseObject => OfType<T2>().Query();
-
 	}
 
 	public class NHibernateDatabaseContext<T> : NHibernateDatabaseContext, IDatabaseContext<T>
 	{
-
 		public NHibernateDatabaseContext(ISession session, IUserPermissionContext permissionContext)
 			: base(session, permissionContext)
 		{
-
 		}
 
 		public void Delete(T entity) => Session.Delete(entity);
@@ -80,7 +75,5 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		public void Update(T obj) => Session.Update(obj);
 
 		public Task UpdateAsync(T obj) => Session.UpdateAsync(obj);
-
 	}
-
 }

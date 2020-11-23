@@ -5,10 +5,8 @@ using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.Service.VideoServices
 {
-
 	public class NicoTitleParseResult
 	{
-
 		public NicoTitleParseResult(string title)
 			: this(title, new List<Artist>(), SongType.Unspecified) { }
 
@@ -26,6 +24,5 @@ namespace VocaDb.Model.Service.VideoServices
 		public string Title { get; set; }
 
 		public ContentLanguageSelection TitleLanguage { get; set; }
-
 	}
 }
