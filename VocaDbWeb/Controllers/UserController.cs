@@ -40,7 +40,6 @@ namespace VocaDb.Web.Controllers
 {
 	public class UserController : ControllerBase
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private const int clientCacheDurationSec = 86400;
 
@@ -59,14 +58,11 @@ namespace VocaDb.Web.Controllers
 
 		private UserForMySettingsContract GetUserForMySettings()
 		{
-
 			return Service.GetUserForMySettings(PermissionContext.LoggedUser.Id);
-
 		}
 
 		private bool HandleCreate(UserContract user)
 		{
-
 			if (user == null)
 			{
 				ModelState.AddModelError("UserName", ViewRes.User.CreateStrings.UsernameTaken);
@@ -77,14 +73,12 @@ namespace VocaDb.Web.Controllers
 				FormsAuthentication.SetAuthCookie(user.Name, true);
 				return true;
 			}
-
 		}
 
 		public UserController(UserService service, UserQueries data, ArtistService artistService, ArtistQueries artistQueries, OtherService otherService,
 			IRepository repository,
 			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config, MarkdownParser markdownParser, ActivityEntryQueries activityEntryQueries, LoginManager loginManager)
 		{
-
 			Service = service;
 			Data = data;
 			this.activityEntryQueries = activityEntryQueries;
@@ -97,32 +91,26 @@ namespace VocaDb.Web.Controllers
 			this.config = config;
 			this.markdownParser = markdownParser;
 			this.loginManager = loginManager;
-
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
 		public void AddArtistForUser(int artistId)
 		{
-
 			Service.AddArtist(LoggedUserId, artistId);
-
 		}
 
 		public ActionResult AlbumCollection(AlbumCollectionRouteParams routeParams)
 		{
-
 			var id = routeParams.id;
 
 			if (id == invalidId)
 				return NoId();
 
 			return View(new AlbumCollection(Service.GetUser(id, true), routeParams));
-
 		}
 
 		public ActionResult ConnectTwitter()
 		{
-
 			// Make sure session ID is initialized
 			// ReSharper disable UnusedVariable
 			var sessionId = Session.SessionID;
@@ -149,12 +137,10 @@ namespace VocaDb.Web.Controllers
 			response.Send();
 			Response.End();
 			return new EmptyResult();
-
 		}
 
 		public ActionResult ConnectTwitterComplete()
 		{
-
 			// Denied authorization
 			var param = Request.QueryString["denied"];
 
@@ -186,12 +172,10 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return RedirectToAction("MySettings");
-
 		}
 
 		public ActionResult EntryEdits(int id = invalidId, bool onlySubmissions = true)
 		{
-
 			if (id == invalidId)
 				return NoId();
 
@@ -199,30 +183,24 @@ namespace VocaDb.Web.Controllers
 			ViewBag.EditEvent = (onlySubmissions ? (int?)EntryEditEvent.Created : null);
 
 			return View(user);
-
 		}
 
 		public ActionResult FavoriteSongs(int id = invalidId, int? page = null, SongVoteRating? rating = null, RatedSongForUserSortRule? sort = null, bool? groupByRating = null)
 		{
-
 			if (id == invalidId)
 				return NoId();
 
 			return View(new FavoriteSongs(Service.GetUser(id), rating ?? SongVoteRating.Nothing, sort, groupByRating));
-
 		}
 
 		public ActionResult ForgotPassword()
 		{
-
 			return View();
-
 		}
 
 		[HttpPost]
 		public async Task<ActionResult> ForgotPassword(ForgotPassword model)
 		{
-
 			var captchaResult = await ReCaptcha2.ValidateAsync(new AspNetHttpRequest(Request), AppConfig.ReCAPTCHAKey);
 			if (!captchaResult.Success)
 				ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
@@ -241,7 +219,6 @@ namespace VocaDb.Web.Controllers
 			TempData.SetStatusMessage(ViewRes.User.ForgotPasswordStrings.MessageSent);
 
 			return RedirectToAction("Login");
-
 		}
 
 		//
@@ -249,12 +226,10 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Index(string filter = null, UserGroupId? groupId = null)
 		{
-
 			var vm = new Index { Filter = filter, GroupId = groupId };
 
 			if (!string.IsNullOrEmpty(filter))
 			{
-
 				var queryParams = new UserQueryParams
 				{
 					Common = new CommonSearchParams(SearchTextQuery.Create(filter), false, false),
@@ -268,11 +243,9 @@ namespace VocaDb.Web.Controllers
 				{
 					return RedirectToAction("Profile", new { id = result.Items[0] });
 				}
-
 			}
 
 			return View(vm);
-
 		}
 
 		//
@@ -280,37 +253,31 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Details(int id = invalidId)
 		{
-
 			if (id == invalidId)
 				return NoId();
 
 			var model = Data.GetUserDetails(id);
 			return View(model);
-
 		}
 
 		[Authorize]
 		public PartialViewResult OwnedArtistForUserEditRow(int artistId)
 		{
-
 			var artist = artistService.GetArtist(artistId);
 			var ownedArtist = new ArtistForUserContract(artist);
 
 			return PartialView(ownedArtist);
-
 		}
 
 		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
 		public PartialViewResult PopupContent(int id, string culture = InterfaceLanguage.DefaultCultureCode)
 		{
-
 			var user = Service.GetUser(id);
 			return PartialView("_UserPopupContent", user);
 		}
 
 		public new ActionResult Profile(string id, int? artistId = null, bool? childVoicebanks = null)
 		{
-
 			var model = Data.GetUserByNameNonSensitive(id);
 
 			if (model == null)
@@ -320,13 +287,11 @@ namespace VocaDb.Web.Controllers
 			ViewBag.ChildVoicebanks = childVoicebanks;
 
 			return View("Details", model);
-
 		}
 
 		[RestrictBannedIP]
 		public ActionResult Login(string returnUrl = null)
 		{
-
 			RestoreErrorsFromTempData();
 
 			return View(new LoginModel(returnUrl, false));
@@ -335,35 +300,28 @@ namespace VocaDb.Web.Controllers
 		[RestrictBannedIP]
 		public PartialViewResult LoginForm(string returnUrl)
 		{
-
 			return PartialView("Login", new LoginModel(returnUrl, false));
-
 		}
 
 		[HttpPost]
 		[RestrictBannedIP]
 		public ActionResult Login(LoginModel model)
 		{
-
 			if (ModelState.IsValid)
 			{
-
 				var host = WebHelper.GetRealHost(Request);
 				var culture = WebHelper.GetInterfaceCultureName(Request);
 				var result = Data.CheckAuthentication(model.UserName, model.Password, host, culture, true);
 
 				if (!result.IsOk)
 				{
-
 					ModelState.AddModelError("", ViewRes.User.LoginStrings.WrongPassword);
 
 					if (result.Error == LoginError.AccountPoisoned)
 						ipRuleManager.AddTempBannedIP(host, "Account poisoned");
-
 				}
 				else
 				{
-
 					var user = result.User;
 
 					TempData.SetSuccessMessage(string.Format(ViewRes.User.LoginStrings.Welcome, user.Name));
@@ -395,9 +353,7 @@ namespace VocaDb.Web.Controllers
 						targetUrl = VocaUriBuilder.AbsoluteFromUnknown(targetUrl, preserveAbsolute: true);
 
 					return Redirect(targetUrl);
-
 				}
-
 			}
 
 			if (model.ReturnToMainSite)
@@ -407,13 +363,11 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return View(model);
-
 		}
 
 		[RestrictBannedIP]
 		public ActionResult LoginTwitter(string returnUrl)
 		{
-
 			log.Info($"{WebHelper.GetRealHost(Request)} login via Twitter");
 
 			// Make sure session ID is initialized
@@ -436,12 +390,10 @@ namespace VocaDb.Web.Controllers
 			}
 			catch (ProtocolException x)
 			{
-
 				log.Error(x, "Exception while attempting to send Twitter request");
 				TempData.SetErrorMessage("There was an error while connecting to Twitter - please try again later.");
 
 				return RedirectToAction("Login");
-
 			}
 
 			var response = twitterSignIn.Channel.PrepareResponse(request);
@@ -450,13 +402,11 @@ namespace VocaDb.Web.Controllers
 			Response.End();
 
 			return new EmptyResult();
-
 		}
 
 		[RestrictBannedIP]
 		public ActionResult LoginTwitterComplete(string returnUrl)
 		{
-
 			// Denied authorization
 			var param = Request.QueryString["denied"];
 
@@ -495,7 +445,6 @@ namespace VocaDb.Web.Controllers
 				targetUrl = Url.Action("Index", "Home");
 
 			return Redirect(targetUrl);
-
 		}
 
 		[HttpPost]
@@ -503,42 +452,32 @@ namespace VocaDb.Web.Controllers
 		[RestrictBannedIP]
 		public ActionResult LoginTwitterComplete(RegisterOpenAuthModel model)
 		{
-
 			if (!ModelState.IsValid)
 				return View(model);
 
 			try
 			{
-
 				var user = Data.CreateTwitter(model.AccessToken, model.UserName, model.Email ?? string.Empty,
 					model.TwitterId, model.TwitterName, Hostname, WebHelper.GetInterfaceCultureName(Request));
 				FormsAuthentication.SetAuthCookie(user.Name, false);
 
 				return RedirectToAction("Index", "Home");
-
 			}
 			catch (UserNameAlreadyExistsException)
 			{
-
 				ModelState.AddModelError("UserName", ViewRes.User.CreateStrings.UsernameTaken);
 				return View(model);
-
 			}
 			catch (UserEmailAlreadyExistsException)
 			{
-
 				ModelState.AddModelError("Email", ViewRes.User.CreateStrings.EmailTaken);
 				return View(model);
-
 			}
 			catch (InvalidEmailFormatException)
 			{
-
 				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
 				return View(model);
-
 			}
-
 		}
 
 		public ActionResult Logout()
@@ -550,13 +489,11 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Clear(int id)
 		{
-
 			PermissionContext.VerifyPermission(PermissionToken.DisableUsers);
 
 			Data.ClearRatings(id);
 			TempData.SetSuccessMessage("User ratings cleared");
 			return RedirectToAction("Details", new { id });
-
 		}
 
 		//
@@ -574,7 +511,6 @@ namespace VocaDb.Web.Controllers
 		[HttpPost]
 		public async Task<ActionResult> Create(RegisterModel model)
 		{
-
 			string restrictedErr = "Sorry, access from your host is restricted. It is possible this restriction is no longer valid. If you think this is the case, please contact support.";
 
 			if (!ModelState.IsValidField("Extra"))
@@ -592,11 +528,9 @@ namespace VocaDb.Web.Controllers
 			var recaptchaResult = await ReCaptcha2.ValidateAsync(new AspNetHttpRequest(Request), AppConfig.ReCAPTCHAKey);
 			if (!recaptchaResult.Success)
 			{
-
 				ErrorLogger.LogMessage(Request, string.Format("Invalid CAPTCHA (error {0})", recaptchaResult.Error), LogLevel.Warn);
 				otherService.AuditLog("failed CAPTCHA", Hostname, AuditLogCategory.UserCreateFailCaptcha);
 				ModelState.AddModelError("CAPTCHA", ViewRes.User.CreateStrings.CaptchaInvalid);
-
 			}
 
 			if (!ModelState.IsValid)
@@ -614,7 +548,6 @@ namespace VocaDb.Web.Controllers
 			// Attempt to register the user
 			try
 			{
-
 				var url = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User")).ToString();
 				var user = await Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname,
 					Request.UserAgent,
@@ -622,7 +555,6 @@ namespace VocaDb.Web.Controllers
 					time, ipRuleManager, url);
 				FormsAuthentication.SetAuthCookie(user.Name, false);
 				return RedirectToAction("Index", "Home");
-
 			}
 			catch (UserNameAlreadyExistsException)
 			{
@@ -649,7 +581,6 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError("Restricted", restrictedErr);
 				return View(model);
 			}
-
 		}
 
 		[HttpPost]
@@ -664,12 +595,10 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Edit(int id)
 		{
-
 			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
 			var user = Service.GetUserWithPermissions(id);
 			return View(new UserEdit(user));
-
 		}
 
 		//
@@ -678,7 +607,6 @@ namespace VocaDb.Web.Controllers
 		[HttpPost]
 		public ActionResult Edit(UserEdit model, IEnumerable<PermissionFlagEntry> permissions)
 		{
-
 			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
 			model.OldName = Service.GetUser(model.Id).Name;
@@ -705,66 +633,54 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return RedirectToAction("Details", new { id = model.Id });
-
 		}
 
 		[OutputCache(Duration = clientCacheDurationSec)]
 		public ActionResult Stats_EditsPerDay(int id)
 		{
-
 			var points = activityEntryQueries.GetEditsPerDay(id, null);
 
 			return LowercaseJson(HighchartsHelper.DateLineChartWithAverage("Edits per day", "Edits", "Number of edits", points));
-
 		}
 
 		public ActionResult Stats(int id, string type)
 		{
-
 			ViewBag.StatType = type;
 			return View(Service.GetUser(id));
-
 		}
 
 		[Authorize]
 		public ActionResult Messages(int? messageId, string receiverName)
 		{
-
 			var user = PermissionContext.LoggedUser;
 			var inbox = UserInboxType.Received;
 
 			if (messageId.HasValue)
 			{
-
 				var isNotification = Data.IsNotification(messageId.Value, user);
 
 				if (isNotification)
 					inbox = UserInboxType.Notifications;
-
 			}
 
 			var model = new Messages(user, messageId, receiverName, inbox);
 
 			return View(model);
-
 		}
 
 		[Authorize]
 		public ActionResult MySettings()
 		{
-
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
 			var user = GetUserForMySettings();
 
 			return View(new MySettingsModel(user));
-
 		}
 
 		[HttpPost]
 		public ActionResult MySettings(MySettingsModel model)
 		{
-
 			var user = PermissionContext.LoggedUser;
 
 			if (user == null || user.Id != model.Id)
@@ -833,31 +749,25 @@ namespace VocaDb.Web.Controllers
 			TempData.SetSuccessMessage(ViewRes.User.MySettingsStrings.SettingsUpdated);
 
 			return RedirectToAction("Profile", new { id = newUser.Name });
-
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
 		public void RemoveArtistFromUser(int artistId)
 		{
-
 			Service.RemoveArtistFromUser(LoggedUserId, artistId);
-
 		}
 
 		[HttpPost]
 		[Authorize]
 		public async Task RequestEmailVerification()
 		{
-
 			var url = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User"));
 			await Data.RequestEmailVerification(LoggedUserId, url.ToString());
-
 		}
 
 		[Authorize]
 		public ActionResult VerifyEmail(Guid token)
 		{
-
 			try
 			{
 				var result = Data.VerifyEmail(token);
@@ -872,28 +782,23 @@ namespace VocaDb.Web.Controllers
 					TempData.SetSuccessMessage("Email verified successfully. Thank you.");
 					return RedirectToAction("MySettings");
 				}
-
 			}
 			catch (RequestNotValidException)
 			{
 				TempData.SetErrorMessage("Verification request is not valid for the logged in user");
 				return RedirectToAction("Index", "Home");
 			}
-
 		}
 
 		public ActionResult RequestVerification()
 		{
-
 			return View();
-
 		}
 
 		[HttpPost]
 		[Authorize]
 		public ActionResult RequestVerification([FromJson] ArtistContract selectedArtist, string message, string linkToProof, bool privateMessage)
 		{
-
 			if (selectedArtist == null)
 			{
 				TempData.SetErrorMessage("Artist must be selected");
@@ -917,21 +822,17 @@ namespace VocaDb.Web.Controllers
 
 			TempData.SetSuccessMessage("Request sent");
 			return View();
-
 		}
 
 		public ActionResult ResetAccesskey()
 		{
-
 			Service.ResetAccessKey();
 			TempData.SetStatusMessage("Access key reset");
 			return RedirectToAction("MySettings");
-
 		}
 
 		public ActionResult ResetPassword(Guid? id)
 		{
-
 			var idVal = id ?? Guid.Empty;
 			var model = new ResetPassword();
 
@@ -945,13 +846,11 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return View(model);
-
 		}
 
 		[HttpPost]
 		public ActionResult ResetPassword(ResetPassword model)
 		{
-
 			if (!Data.CheckPasswordResetRequest(model.RequestId))
 			{
 				ModelState.AddModelError("", "Request ID is invalid. It might have been used already.");
@@ -968,46 +867,36 @@ namespace VocaDb.Web.Controllers
 			TempData.SetStatusMessage("Password reset successfully!");
 
 			return RedirectToAction("Index", "Home");
-
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
 		public void UpdateAlbumForUser(int albumid, PurchaseStatus collectionStatus, MediaType mediaType, int rating)
 		{
-
 			Data.UpdateAlbumForUser(LoggedUserId, albumid, collectionStatus, mediaType, rating);
-
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
 		public void UpdateArtistSubscription(int artistId, bool? emailNotifications, bool? siteNotifications)
 		{
-
 			Data.UpdateArtistSubscriptionForCurrentUser(artistId, emailNotifications, siteNotifications);
-
 		}
 
 		[Authorize]
 		public ActionResult Disable(int id)
 		{
-
 			Data.DisableUser(id);
 
 			return RedirectToAction("Details", new { id });
-
 		}
 
 		[Authorize]
 		public ActionResult DisconnectTwitter()
 		{
-
 			Data.DisconnectTwitter();
 
 			TempData.SetSuccessMessage("Twitter login disconnected");
 
 			return RedirectToAction("MySettings");
-
 		}
-
 	}
 }

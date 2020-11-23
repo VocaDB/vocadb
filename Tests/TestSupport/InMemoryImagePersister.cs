@@ -9,13 +9,11 @@ using VocaDb.Model.Helpers;
 
 namespace VocaDb.Tests.TestSupport
 {
-
 	/// <summary>
 	/// In-memory image persisting system (virtual filesystem), for testing.
 	/// </summary>
 	public class InMemoryImagePersisterStore
 	{
-
 		private readonly Dictionary<string, byte[]> images = new Dictionary<string, byte[]>();
 
 		private ImageFormat GetImageFormat(IEntryImageInformation imageInfo)
@@ -53,30 +51,24 @@ namespace VocaDb.Tests.TestSupport
 
 		public void Write(IEntryImageInformation picture, ImageSize size, Stream stream)
 		{
-
 			var bytes = StreamHelper.ReadStream(stream);
 
 			var url = GetUrl(picture, size).Url;
 			images[url] = bytes;
-
 		}
 
 		public void Write(IEntryImageInformation picture, ImageSize size, Image image)
 		{
-
 			using (var stream = new MemoryStream())
 			{
 				image.Save(stream, GetImageFormat(picture));
 				Write(picture, size, stream);
 			}
-
 		}
-
 	}
 
 	public abstract class InMemoryImagePersisterBase : IEntryImagePersister
 	{
-
 		public InMemoryImagePersisterBase() : this(new InMemoryImagePersisterStore()) { }
 
 		public InMemoryImagePersisterBase(InMemoryImagePersisterStore store)
@@ -97,7 +89,6 @@ namespace VocaDb.Tests.TestSupport
 		public bool HasImage(IEntryImageInformation picture, ImageSize size) => store.HasImage(picture, size);
 
 		public abstract bool IsSupported(IEntryImageInformation picture, ImageSize size);
-
 	}
 
 	public class InMemoryImagePersister : InMemoryImagePersisterBase, IAggregatedEntryImageUrlFactory, IEntryImagePersisterOld, IEntryThumbPersister, IEntryPictureFilePersister
@@ -107,26 +98,21 @@ namespace VocaDb.Tests.TestSupport
 
 	public class InMemoryEntryThumbPersister : InMemoryImagePersisterBase, IEntryThumbPersister
 	{
-
 		public InMemoryEntryThumbPersister(InMemoryImagePersisterStore store) : base(store) { }
 
 		public override bool IsSupported(IEntryImageInformation picture, ImageSize size)
 		{
 			return new ServerEntryThumbPersister().IsSupported(picture, size);
 		}
-
 	}
 
 	public class InMemoryEntryImagePersisterOld : InMemoryImagePersisterBase, IEntryImagePersisterOld
 	{
-
 		public InMemoryEntryImagePersisterOld(InMemoryImagePersisterStore store) : base(store) { }
 
 		public override bool IsSupported(IEntryImageInformation picture, ImageSize size)
 		{
 			return new ServerEntryImagePersisterOld(null).IsSupported(picture, size);
 		}
-
 	}
-
 }

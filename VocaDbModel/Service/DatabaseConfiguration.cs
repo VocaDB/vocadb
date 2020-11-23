@@ -9,10 +9,8 @@ using System.Configuration;
 
 namespace VocaDb.Model.Service
 {
-
 	public static class DatabaseConfiguration
 	{
-
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private static string ConnectionStringName
@@ -31,7 +29,6 @@ namespace VocaDb.Model.Service
 
 		public static FluentConfiguration Configure(string connectionStringName = null)
 		{
-
 			var config = Fluently.Configure()
 				.Database(
 					MsSqlConfiguration.MsSql2012
@@ -57,19 +54,15 @@ namespace VocaDb.Model.Service
 				;
 
 			return config;
-
 		}
 
 		public static ISessionFactory BuildSessionFactory(string connectionStringName = null)
 		{
-
 			return BuildSessionFactory(Configure(connectionStringName));
-
 		}
 
 		public static ISessionFactory BuildSessionFactory(FluentConfiguration config)
 		{
-
 			try
 			{
 				return config.BuildSessionFactory();
@@ -84,9 +77,6 @@ namespace VocaDb.Model.Service
 				log.Fatal(x, "Error while building session factory");
 				throw;
 			}
-
 		}
-
 	}
-
 }

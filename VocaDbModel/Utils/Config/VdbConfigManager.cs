@@ -2,13 +2,11 @@ using System.Configuration;
 
 namespace VocaDb.Model.Utils.Config
 {
-
 	/// <summary>
 	/// Manages VocaDb global configuration.
 	/// </summary>
 	public class VdbConfigManager
 	{
-
 		public AffiliatesSection Affiliates
 		{
 			get
@@ -31,5 +29,4 @@ namespace VocaDb.Model.Utils.Config
 			}
 		}
 	}
-
 }

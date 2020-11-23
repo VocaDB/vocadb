@@ -6,10 +6,8 @@ using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Model.Domain.Globalization
 {
-
 	public class NTextCatLibLanguageDetector : ILanguageDetector
 	{
-
 		public NTextCatLibLanguageDetector(IHttpContext context)
 		{
 			this.context = context;
@@ -21,7 +19,6 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public ContentLanguageSelection Detect(string str, ContentLanguageSelection def = ContentLanguageSelection.Unspecified)
 		{
-
 			var factory = new RankedLanguageIdentifierFactory();
 			var identifier = factory.Load(LanguageFilePath);
 			var res = identifier.Identify(str).FirstOrDefault();
@@ -38,9 +35,6 @@ namespace VocaDb.Model.Domain.Globalization
 				return ContentLanguageSelection.English;
 
 			return def;
-
 		}
-
 	}
-
 }

@@ -2,13 +2,11 @@ using System;
 
 namespace VocaDb.Model.Utils
 {
-
 	/// <summary>
 	/// Various URL manipulation functions.
 	/// </summary>
 	public static class VocaUriBuilder
 	{
-
 		private static readonly string hostAddress = RemoveTrailingSlash(AppConfig.HostAddress);
 
 		// Path to static files root, for example https://static.vocadb.net. Possible trailing slash is removed.
@@ -21,9 +19,7 @@ namespace VocaDb.Model.Utils
 		/// <returns></returns>
 		public static string Absolute(string relative)
 		{
-
 			return MergeUrls_BaseNoTrailingSlash(HostAddress, relative);
-
 		}
 
 		/// <summary>
@@ -34,7 +30,6 @@ namespace VocaDb.Model.Utils
 		/// <returns></returns>
 		public static string AbsoluteFromUnknown(string relativeOrAbsolute, bool preserveAbsolute)
 		{
-
 			Uri uri;
 			if (Uri.TryCreate(relativeOrAbsolute, UriKind.RelativeOrAbsolute, out uri))
 			{
@@ -45,7 +40,6 @@ namespace VocaDb.Model.Utils
 			}
 			else
 				return relativeOrAbsolute;
-
 		}
 
 		/// <summary>
@@ -55,9 +49,7 @@ namespace VocaDb.Model.Utils
 		/// <returns>Absolute address, for example https://vocadb.net/User/Profile/Test </returns>
 		public static Uri CreateAbsolute(string relative)
 		{
-
 			return new Uri(new Uri(HostAddress), relative);
-
 		}
 
 		/// <summary>
@@ -71,41 +63,33 @@ namespace VocaDb.Model.Utils
 
 		private static string MergeUrls_BaseNoTrailingSlash(string baseUrl, string relative)
 		{
-
 			if (relative.StartsWith("/"))
 				return string.Format("{0}{1}", baseUrl, relative);
 			else
 				return string.Format("{0}/{1}", baseUrl, relative);
-
 		}
 
 		public static string MergeUrls(string baseUrl, string relative)
 		{
-
 			if (baseUrl.EndsWith("/"))
 			{
-
 				if (relative.StartsWith("/"))
 					return string.Format("{0}{1}", baseUrl.Substring(0, baseUrl.Length - 1), relative);
 				else
 					return string.Format("{0}{1}", baseUrl, relative);
-
 			}
 			else
 			{
 				return MergeUrls_BaseNoTrailingSlash(baseUrl, relative);
 			}
-
 		}
 
 		public static string RemoveTrailingSlash(string url)
 		{
-
 			if (string.IsNullOrEmpty(url))
 				return url;
 
 			return url.EndsWith("/") ? url.Substring(0, AppConfig.StaticContentHost.Length - 1) : url;
-
 		}
 
 		/// <summary>
@@ -116,13 +100,11 @@ namespace VocaDb.Model.Utils
 		/// <returns>Relative portion of the URL, for example /</returns>
 		private static string Relative(string relativeOrAbsolute)
 		{
-
 			Uri uri;
 			if (Uri.TryCreate(relativeOrAbsolute, UriKind.RelativeOrAbsolute, out uri))
 				return uri.IsAbsoluteUri ? uri.PathAndQuery : relativeOrAbsolute;
 			else
 				return relativeOrAbsolute;
-
 		}
 
 		/// <summary>
@@ -136,6 +118,5 @@ namespace VocaDb.Model.Utils
 		{
 			return MergeUrls_BaseNoTrailingSlash(staticResourceBase, relative);
 		}
-
 	}
 }

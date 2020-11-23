@@ -5,10 +5,8 @@ using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Model.Domain.Security
 {
-
 	public class UserSettingCulture : UserSetting<string>
 	{
-
 		public UserSettingCulture(IHttpContext context, IUserPermissionContext permissionContext) : base(context, permissionContext)
 		{
 		}
@@ -36,7 +34,6 @@ namespace VocaDb.Model.Domain.Security
 
 	public class UserSettingLanguage : UserSetting<string>
 	{
-
 		public UserSettingLanguage(IHttpContext context, IUserPermissionContext permissionContext) : base(context, permissionContext)
 		{
 		}
@@ -61,5 +58,4 @@ namespace VocaDb.Model.Domain.Security
 			return true;
 		}
 	}
-
 }
