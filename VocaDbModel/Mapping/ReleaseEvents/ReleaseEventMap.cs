@@ -65,14 +65,6 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 		}
 	}
 
-	public class ReleaseEventCommentMap : CommentMap<ReleaseEventComment, ReleaseEvent>
-	{
-		public ReleaseEventCommentMap()
-		{
-			References(m => m.EntryForComment).Column("[ReleaseEvent]").Not.Nullable();
-		}
-	}
-
 	public class EventNameMap : ClassMap<EventName>
 	{
 		public EventNameMap()
