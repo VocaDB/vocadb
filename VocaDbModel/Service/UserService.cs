@@ -15,7 +15,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Security;
 using IUserRepository = VocaDb.Model.Database.Repositories.IUserRepository;
 

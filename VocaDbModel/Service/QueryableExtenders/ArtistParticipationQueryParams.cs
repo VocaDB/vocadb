@@ -7,7 +7,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 
-namespace VocaDb.Model.Service.QueryableExtenders
+namespace VocaDb.Model.Service.QueryableExtensions
 {
 	/// <summary>
 	/// Parameters for filtering content (usually songs or albums) based on artists' <see cref=""ArtistAlbumParticipationStatus/>.
