@@ -23,7 +23,5 @@ namespace VocaDb.Web {
 		public NameValueCollection Params => request.Params;
 		public NameValueCollection QueryString => request.QueryString;
 		public string UserHostAddress => request.UserHostAddress;
-
 	}
-
 }

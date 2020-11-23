@@ -5,5 +5,4 @@ namespace VocaDb.Model.Domain.Web {
         string FileName { get; }
         void SaveAs(string path);
 	}
-
 }

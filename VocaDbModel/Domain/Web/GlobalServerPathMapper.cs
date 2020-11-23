@@ -12,7 +12,5 @@ namespace VocaDb.Model.Domain.Web {
 
 		public static IServerPathMapper ServerPathMapper => factory != null ? factory() : 
 			throw new InvalidOperationException("Server path mapper factory is not configured");
-
 	}
-
 }

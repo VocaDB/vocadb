@@ -27,7 +27,5 @@ namespace VocaDb.Web {
 		public IServerPathMapper ServerPathMapper => this;
 
 		public string MapPath(string relative) => context.Server.MapPath(relative);
-
 	}
-
 }

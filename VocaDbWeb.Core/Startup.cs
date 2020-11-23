@@ -7,15 +7,11 @@ using Microsoft.Extensions.Hosting;
 
 namespace VocaDb.Web
 {
-
 	public class Startup
 	{
-
 		public Startup(IConfiguration configuration)
 		{
-
 			Configuration = configuration;
-
 		}
 
 		public IConfiguration Configuration { get; }
@@ -23,20 +19,16 @@ namespace VocaDb.Web
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-
 			services.AddControllersWithViews();
-
 		}
 
 		public void ConfigureContainer(ContainerBuilder builder)
 		{
-
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
@@ -60,9 +52,6 @@ namespace VocaDb.Web
 					name: "default",
 					pattern: "{controller=Home}/{action=Index}/{id?}");
 			});
-
 		}
-
 	}
-
 }

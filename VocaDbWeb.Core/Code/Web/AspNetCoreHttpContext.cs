@@ -9,10 +9,8 @@ using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Web
 {
-
 	public class AspNetCoreHttpContext : IHttpContext, IServerPathMapper
 	{
-
 		private readonly IHttpContextAccessor _contextAccessor;
 		private readonly IWebHostEnvironment _webHostEnvironment;
 
@@ -37,7 +35,5 @@ namespace VocaDb.Web
 		public IServerPathMapper ServerPathMapper => this;
 
 		public string MapPath(string relative) => Path.Combine(_webHostEnvironment.WebRootPath, relative.TrimStart('~', '/'));
-
 	}
-
 }

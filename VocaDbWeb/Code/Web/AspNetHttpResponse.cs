@@ -19,7 +19,5 @@ namespace VocaDb.Web {
 		public void AddCookie(string name, string value, DateTime expires) {
 			response.AppendCookie(new HttpCookie(name, value) { Expires = expires });
 		}
-
 	}
-
 }

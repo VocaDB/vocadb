@@ -7,10 +7,8 @@ using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Web
 {
-
 	public class AspNetCoreHttpRequest : IHttpRequest
 	{
-
 		private readonly HttpRequest request;
 
 		public AspNetCoreHttpRequest(HttpRequest request)
@@ -27,24 +25,18 @@ namespace VocaDb.Web
 
 		private static NameValueCollection ToNameValueCollection(IEnumerable<KeyValuePair<string, string>> source)
 		{
-
 			var ret = new NameValueCollection();
 			foreach (var kv in source)
 				ret.Add(kv.Key, kv.Value);
 			return ret;
-
 		}
 
 		private static NameValueCollection ToNameValueCollection(IEnumerable<KeyValuePair<string, StringValues>> source)
 		{
-
 			var ret = new NameValueCollection();
 			foreach (var kv in source)
 				ret.Add(kv.Key, kv.Value);
 			return ret;
-
 		}
-
 	}
-
 }

@@ -16,7 +16,5 @@ namespace VocaDb.Web {
 		public string FileName => file.FileName;
 
 		public void SaveAs(string path) => file.SaveAs(path);
-
 	}
-
 }

@@ -11,7 +11,5 @@ namespace VocaDb.Model.Helpers {
 		public static TValue GetValueOrDefault<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, TKey key) {
 			return dictionary.TryGetValue(key, out var val) ? val : default;
 		}
-
 	}
-
 }

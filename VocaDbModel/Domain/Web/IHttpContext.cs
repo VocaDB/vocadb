@@ -40,6 +40,5 @@ namespace VocaDb.Model.Domain.Web {
 		}
 
 		public string Value { get; }
-
 	}
 }

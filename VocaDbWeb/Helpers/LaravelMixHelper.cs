@@ -41,7 +41,5 @@ namespace VocaDb.Web.Helpers {
 		/// <param name="paths">Set of virtual paths for which to generate link tags.</param>
 		/// <returns>A HTML string containing the link tag or tags.</returns>
 		public static IHtmlString RenderStyles(params string[] paths) => Styles.Render(paths.Select(p => GetPathToVersionedMixFile(GetPath(p))).ToArray());
-
 	}
-
 }
