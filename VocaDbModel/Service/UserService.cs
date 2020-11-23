@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading;
@@ -154,7 +154,7 @@ namespace VocaDb.Model.Service
 				if (!user.Equals(comment.Author) && !user.Equals(comment.EntryForComment))
 					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 
-				comment.EntryForComment.Comments.Remove(comment);
+				comment.OnDelete();
 				session.Delete(comment);
 			});
 		}
