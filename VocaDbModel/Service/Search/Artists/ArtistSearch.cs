@@ -6,7 +6,7 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Model.Service.Search.Artists
 {

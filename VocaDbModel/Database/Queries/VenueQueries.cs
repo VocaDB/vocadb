@@ -10,7 +10,7 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search.Venues;
 using VocaDb.Model.Service.Translations;
 

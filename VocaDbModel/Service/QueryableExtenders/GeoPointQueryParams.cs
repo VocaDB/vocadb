@@ -1,4 +1,4 @@
-namespace VocaDb.Model.Service.QueryableExtenders
+namespace VocaDb.Model.Service.QueryableExtensions
 {
 	public enum DistanceUnit { Kilometers, Miles }
 

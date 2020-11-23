@@ -20,7 +20,7 @@ using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Model.Domain.Images;
 
