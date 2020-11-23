@@ -7,14 +7,17 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using VocaDb.Model.Domain.Web;
 
-namespace VocaDb.Web {
+namespace VocaDb.Web
+{
 
-	public class AspNetCoreHttpContext : IHttpContext, IServerPathMapper {
+	public class AspNetCoreHttpContext : IHttpContext, IServerPathMapper
+	{
 
 		private readonly IHttpContextAccessor _contextAccessor;
 		private readonly IWebHostEnvironment _webHostEnvironment;
 
-		public AspNetCoreHttpContext(IHttpContextAccessor contextAccessor, IWebHostEnvironment webHostEnvironment) {
+		public AspNetCoreHttpContext(IHttpContextAccessor contextAccessor, IWebHostEnvironment webHostEnvironment)
+		{
 			_contextAccessor = contextAccessor;
 			_webHostEnvironment = webHostEnvironment;
 		}
@@ -25,7 +28,8 @@ namespace VocaDb.Web {
 		public IHttpRequest Request => new AspNetCoreHttpRequest(Context.Request);
 		public IHttpResponse Response => new AspNetCoreHttpResponse(Context.Response);
 
-		public IPrincipal User {
+		public IPrincipal User
+		{
 			get => Context.User;
 			set => Context.User = value as ClaimsPrincipal;
 		}

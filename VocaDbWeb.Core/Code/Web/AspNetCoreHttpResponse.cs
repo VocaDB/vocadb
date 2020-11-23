@@ -2,13 +2,16 @@ using System;
 using Microsoft.AspNetCore.Http;
 using VocaDb.Model.Domain.Web;
 
-namespace VocaDb.Web {
+namespace VocaDb.Web
+{
 
-	public class AspNetCoreHttpResponse : IHttpResponse {
+	public class AspNetCoreHttpResponse : IHttpResponse
+	{
 
 		private readonly HttpResponse response;
 
-		public AspNetCoreHttpResponse(HttpResponse response) {
+		public AspNetCoreHttpResponse(HttpResponse response)
+		{
 			this.response = response;
 		}
 

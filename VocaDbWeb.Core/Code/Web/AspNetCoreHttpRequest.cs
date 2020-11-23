@@ -5,13 +5,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using VocaDb.Model.Domain.Web;
 
-namespace VocaDb.Web {
+namespace VocaDb.Web
+{
 
-	public class AspNetCoreHttpRequest : IHttpRequest {
+	public class AspNetCoreHttpRequest : IHttpRequest
+	{
 
 		private readonly HttpRequest request;
 
-		public AspNetCoreHttpRequest(HttpRequest request) {
+		public AspNetCoreHttpRequest(HttpRequest request)
+		{
 			this.request = request;
 		}
 
@@ -22,7 +25,8 @@ namespace VocaDb.Web {
 		public NameValueCollection QueryString => ToNameValueCollection(request.Query);
 		public string UserHostAddress => request.HttpContext.Connection.RemoteIpAddress.ToString();
 
-		private static NameValueCollection ToNameValueCollection(IEnumerable<KeyValuePair<string, string>> source) {
+		private static NameValueCollection ToNameValueCollection(IEnumerable<KeyValuePair<string, string>> source)
+		{
 
 			var ret = new NameValueCollection();
 			foreach (var kv in source)
@@ -31,7 +35,8 @@ namespace VocaDb.Web {
 
 		}
 
-		private static NameValueCollection ToNameValueCollection(IEnumerable<KeyValuePair<string, StringValues>> source) {
+		private static NameValueCollection ToNameValueCollection(IEnumerable<KeyValuePair<string, StringValues>> source)
+		{
 
 			var ret = new NameValueCollection();
 			foreach (var kv in source)
