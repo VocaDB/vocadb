@@ -6,15 +6,16 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Tests.Helpers {
-
+namespace VocaDb.Tests.Helpers
+{
 	/// <summary>
 	/// Tests for <see cref="LyricsHelper"/>
 	/// </summary>
 	[TestClass]
-	public class LyricsHelperTests {
-
-		private static LyricsForSongContract Lyrics(string cultureCode, TranslationType translationType = TranslationType.Translation) {
+	public class LyricsHelperTests
+	{
+		private static LyricsForSongContract Lyrics(string cultureCode, TranslationType translationType = TranslationType.Translation)
+		{
 			return new LyricsForSongContract { CultureCode = cultureCode, TranslationType = translationType, Source = string.Empty, Value = "Miku Miku!" };
 		}
 
@@ -26,34 +27,29 @@ namespace VocaDb.Tests.Helpers {
 		};
 
 		[TestMethod]
-		public void GetDefaultLyrics_UiLanguage() {
-
+		public void GetDefaultLyrics_UiLanguage()
+		{
 			var result = LyricsHelper.GetDefaultLyrics(lyrics, new OptionalCultureCode(OptionalCultureCode.LanguageCode_English), null, null);
 
 			Assert.AreEqual(OptionalCultureCode.LanguageCode_English, result?.CultureCode, "CultureCode");
-
 		}
 
 		[TestMethod]
-		public void GetDefaultLyrics_UserLanguage() {
-
-			var result = LyricsHelper.GetDefaultLyrics(lyrics, new OptionalCultureCode("es"), 
-				new[] { new OptionalCultureCode("mi-ku"), new OptionalCultureCode(OptionalCultureCode.LanguageCode_English)}, null);
+		public void GetDefaultLyrics_UserLanguage()
+		{
+			var result = LyricsHelper.GetDefaultLyrics(lyrics, new OptionalCultureCode("es"),
+				new[] { new OptionalCultureCode("mi-ku"), new OptionalCultureCode(OptionalCultureCode.LanguageCode_English) }, null);
 
 			Assert.AreEqual(OptionalCultureCode.LanguageCode_English, result?.CultureCode, "CultureCode");
-
 		}
 
 		[TestMethod]
-		public void GetDefaultLyrics_Original() {
-
+		public void GetDefaultLyrics_Original()
+		{
 			var result = LyricsHelper.GetDefaultLyrics(lyrics, new OptionalCultureCode("es"),
 				new[] { new OptionalCultureCode("mi-ku") }, new Lazy<IEnumerable<UserKnownLanguage>>(() => null));
 
 			Assert.AreEqual(OptionalCultureCode.LanguageCode_Japanese, result?.CultureCode, "CultureCode");
-
 		}
-
 	}
-
 }

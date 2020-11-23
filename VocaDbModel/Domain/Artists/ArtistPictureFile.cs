@@ -1,38 +1,41 @@
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Artists {
-
-	public class ArtistPictureFile : EntryPictureFile, IEntryWithIntId {
-
+namespace VocaDb.Model.Domain.Artists
+{
+	public class ArtistPictureFile : EntryPictureFile, IEntryWithIntId
+	{
 		private Artist artist;
 
 		public ArtistPictureFile() { }
 
-		public ArtistPictureFile(string name, string mime, User author, Artist artist) 
-			: base(name, mime, author) {
-
+		public ArtistPictureFile(string name, string mime, User author, Artist artist)
+			: base(name, mime, author)
+		{
 			this.artist = artist;
-
 		}
 
-		public virtual Artist Artist {
+		public virtual Artist Artist
+		{
 			get { return artist; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				artist = value; 
+				artist = value;
 			}
 		}
 
-		public override EntryType EntryType {
+		public override EntryType EntryType
+		{
 			get { return EntryType.Artist; }
 		}
 
-		public override int OwnerEntryId {
+		public override int OwnerEntryId
+		{
 			get { return Artist.Id; }
 		}
 
-		public virtual void Move(Artist target) {
-
+		public virtual void Move(Artist target)
+		{
 			ParamIs.NotNull(() => target);
 
 			if (target == Artist)
@@ -41,9 +44,6 @@ namespace VocaDb.Model.Domain.Artists {
 			Artist.Pictures.Remove(this);
 			Artist = target;
 			target.Pictures.Add(this);
-
 		}
-
 	}
-
 }

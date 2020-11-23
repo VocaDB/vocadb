@@ -1,7 +1,7 @@
 ﻿using System;
 
-namespace VocaDb.Model.Domain.Tags {
-
+namespace VocaDb.Model.Domain.Tags
+{
 	/// <summary>
 	/// Possible tag targets. This is a subset of combinations of <see cref="EntryType"/>.
 	/// </summary>
@@ -10,7 +10,8 @@ namespace VocaDb.Model.Domain.Tags {
 	/// because that makes them being ignored by XmlSerializer (see https://stackoverflow.com/questions/331013/obsolete-attribute-causes-property-to-be-ignored-by-xmlserialization).
 	/// </remarks>
 	[Flags]
-	public enum TagTargetTypes {
+	public enum TagTargetTypes
+	{
 		/// <summary>
 		/// Cannot be used for any entries (only for grouping other tags)
 		/// </summary>
@@ -36,5 +37,4 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		All = 1073741823
 	}
-
 }

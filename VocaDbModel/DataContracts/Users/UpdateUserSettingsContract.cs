@@ -2,16 +2,16 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users {
-
+namespace VocaDb.Model.DataContracts.Users
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class UpdateUserSettingsContract : UserContract {
-
-		public UpdateUserSettingsContract() {}
+	public class UpdateUserSettingsContract : UserContract
+	{
+		public UpdateUserSettingsContract() { }
 
 		public UpdateUserSettingsContract(User user)
-			: base(user, true) {
-
+			: base(user, true)
+		{
 			AboutMe = user.Options.AboutMe;
 			Location = user.Options.Location;
 			KnownLanguages = user.KnownLanguages.Select(l => new UserKnownLanguageContract(l)).ToArray();
@@ -20,7 +20,6 @@ namespace VocaDb.Model.DataContracts.Users {
 			Stylesheet = user.Options.Stylesheet;
 			UnreadNotificationsToKeep = user.Options.UnreadNotificationsToKeep;
 			WebLinks = user.WebLinks.Select(w => new WebLinkContract(w)).ToArray();
-
 		}
 
 		public string AboutMe { get; set; }
@@ -42,7 +41,5 @@ namespace VocaDb.Model.DataContracts.Users {
 		public int UnreadNotificationsToKeep { get; set; }
 
 		public WebLinkContract[] WebLinks { get; set; }
-
 	}
-
 }

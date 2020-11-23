@@ -4,11 +4,12 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Model.Service.QueryableExtenders {
-
-	public static class ReleaseEventQueryableExtender {
-
-		public static IOrderedQueryable<ReleaseEvent> OrderByDate(this IQueryable<ReleaseEvent> query, SortDirection? direction) {
+namespace VocaDb.Model.Service.QueryableExtenders
+{
+	public static class ReleaseEventQueryableExtender
+	{
+		public static IOrderedQueryable<ReleaseEvent> OrderByDate(this IQueryable<ReleaseEvent> query, SortDirection? direction)
+		{
 			return query.OrderBy(e => e.Date.DateTime, direction ?? SortDirection.Descending);
 		}
 
@@ -19,9 +20,10 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		/// <param name="sortRule">Sort rule.</param>
 		/// <param name="direction">Sort direction. If null, default direction is used.</param>
 		/// <returns>Sorted query. Cannot be null.</returns>
-		public static IQueryable<ReleaseEvent> OrderBy(this IQueryable<ReleaseEvent> query, EventSortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction) {
-
-			switch (sortRule) {
+		public static IQueryable<ReleaseEvent> OrderBy(this IQueryable<ReleaseEvent> query, EventSortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction)
+		{
+			switch (sortRule)
+			{
 				case EventSortRule.Date:
 					return query.OrderByDate(direction);
 				case EventSortRule.AdditionDate:
@@ -35,13 +37,13 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			}
 
 			return query;
-
 		}
 
 		public static IQueryable<ReleaseEvent> OrderBy(
-			this IQueryable<ReleaseEvent> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction) {
-
-			switch (sortRule) {
+			this IQueryable<ReleaseEvent> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction)
+		{
+			switch (sortRule)
+			{
 				case EntrySortRule.Name:
 					return query.OrderByName(languagePreference);
 				case EntrySortRule.AdditionDate:
@@ -51,18 +53,19 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			}
 
 			return query;
-
 		}
 
-		public static IOrderedQueryable<ReleaseEvent> OrderByName(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference) {
+		public static IOrderedQueryable<ReleaseEvent> OrderByName(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference)
+		{
 			return query.OrderByEntryName(languagePreference);
 		}
 
-		public static IOrderedQueryable<ReleaseEvent> OrderBySeriesName(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference) {
-
+		public static IOrderedQueryable<ReleaseEvent> OrderBySeriesName(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference)
+		{
 			IOrderedQueryable<ReleaseEvent> ordered;
 
-			switch (languagePreference) {
+			switch (languagePreference)
+			{
 				case ContentLanguagePreference.English:
 					ordered = query.OrderBy(e => e.Series.Names.SortNames.English);
 					break;
@@ -75,11 +78,10 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			}
 
 			return ordered.ThenBy(e => e.SeriesNumber);
-
 		}
 
-		public static IOrderedQueryable<ReleaseEvent> OrderByVenueName(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference) {
-
+		public static IOrderedQueryable<ReleaseEvent> OrderByVenueName(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference)
+		{
 			var ordered = languagePreference switch
 			{
 				ContentLanguagePreference.English => query.OrderBy(e => e.Venue.Names.SortNames.English),
@@ -88,11 +90,10 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			};
 
 			return ordered.ThenBy(e => e.VenueName);
-
 		}
 
-		public static IQueryable<ReleaseEvent> WhereDateIsBetween(this IQueryable<ReleaseEvent> query, DateTime? begin, DateTime? end) {
-			
+		public static IQueryable<ReleaseEvent> WhereDateIsBetween(this IQueryable<ReleaseEvent> query, DateTime? begin, DateTime? end)
+		{
 			if (begin.HasValue && end.HasValue)
 				return query.Where(e => e.Date.DateTime != null && e.Date.DateTime >= begin && e.Date.DateTime < end);
 
@@ -103,57 +104,53 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				return query.Where(e => e.Date.DateTime != null && e.Date.DateTime < end);
 
 			return query;
-
 		}
 
-		public static IQueryable<ReleaseEvent> WhereHasArtists(this IQueryable<ReleaseEvent> query, EntryIdsCollection artistIds, bool childVoicebanks, bool includeMembers) {
-
+		public static IQueryable<ReleaseEvent> WhereHasArtists(this IQueryable<ReleaseEvent> query, EntryIdsCollection artistIds, bool childVoicebanks, bool includeMembers)
+		{
 			if (!artistIds.HasAny)
 				return query;
 
 			return query.WhereHasArtists<ReleaseEvent, ArtistForEvent>(artistIds, childVoicebanks, includeMembers);
-
 		}
 
-		public static IQueryable<ReleaseEvent> WhereHasCategory(this IQueryable<ReleaseEvent> query, EventCategory category) {
-
+		public static IQueryable<ReleaseEvent> WhereHasCategory(this IQueryable<ReleaseEvent> query, EventCategory category)
+		{
 			if (category == EventCategory.Unspecified)
 				return query;
 
 			return query.Where(e => (e.Series != null && e.Series.Category == category) || (e.Series == null && e.Category == category));
-
 		}
 
-		public static IQueryable<ReleaseEvent> WhereHasName(this IQueryable<ReleaseEvent> query, SearchTextQuery textQuery) {
+		public static IQueryable<ReleaseEvent> WhereHasName(this IQueryable<ReleaseEvent> query, SearchTextQuery textQuery)
+		{
 			return query.WhereHasNameGeneric<ReleaseEvent, EventName>(textQuery);
 		}
 
-		public static IQueryable<ReleaseEvent> WhereHasSeries(this IQueryable<ReleaseEvent> query, int seriesId) {
-			
+		public static IQueryable<ReleaseEvent> WhereHasSeries(this IQueryable<ReleaseEvent> query, int seriesId)
+		{
 			if (seriesId == 0)
 				return query;
 
 			return query.Where(e => e.Series.Id == seriesId);
-
 		}
 
-		public static IQueryable<ReleaseEvent> WhereHasTags(this IQueryable<ReleaseEvent> query, int[] tagId, bool childTags = false) {
+		public static IQueryable<ReleaseEvent> WhereHasTags(this IQueryable<ReleaseEvent> query, int[] tagId, bool childTags = false)
+		{
 			return query.WhereHasTags<ReleaseEvent, EventTagUsage>(tagId, childTags);
 		}
 
-		public static IQueryable<ReleaseEvent> WhereInUserCollection(this IQueryable<ReleaseEvent> query, int userId) {
-
+		public static IQueryable<ReleaseEvent> WhereInUserCollection(this IQueryable<ReleaseEvent> query, int userId)
+		{
 			if (userId == 0)
 				return query;
 
 			return query.Where(s => s.Users.Any(a => a.User.Id == userId));
-
 		}
-
 	}
 
-	public enum EventSortRule {
-		
+	public enum EventSortRule
+	{
 		None,
 
 		Name,
@@ -168,7 +165,5 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 		SeriesName,
 
 		VenueName
-
 	}
-
 }

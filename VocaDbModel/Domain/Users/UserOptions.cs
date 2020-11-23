@@ -1,13 +1,13 @@
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.Domain.Users {
-
+namespace VocaDb.Model.Domain.Users
+{
 	/// <summary>
 	/// Various additional properties for user that are not needed in most cases.
 	/// For example, for authentication and user profile.
 	/// </summary>
-	public class UserOptions : IDatabaseObject {
-
+	public class UserOptions : IDatabaseObject
+	{
 		private string aboutMe;
 		private string albumFormatString;
 		private string lastLoginAddress;
@@ -19,9 +19,9 @@ namespace VocaDb.Model.Domain.Users {
 		private User user;
 		private OptionalCultureCode lastLoginCulture;
 
-		public UserOptions() {		
-	 
-			LastLoginAddress 
+		public UserOptions()
+		{
+			LastLoginAddress
 				= AboutMe
 				= AlbumFormatString
 				= Location
@@ -36,27 +36,29 @@ namespace VocaDb.Model.Domain.Users {
 			ShowChatbox = true;
 			EmailVerified = false;
 			UnreadNotificationsToKeep = 10;
-
 		}
 
 		public UserOptions(User user)
-			: this() {
-
+			: this()
+		{
 			User = user;
-
 		}
 
-		public virtual string AboutMe {
+		public virtual string AboutMe
+		{
 			get { return aboutMe; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				aboutMe = value; 
+				aboutMe = value;
 			}
 		}
 
-		public virtual string AlbumFormatString {
+		public virtual string AlbumFormatString
+		{
 			get { return albumFormatString; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				albumFormatString = value;
 			}
@@ -68,26 +70,32 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual int Id { get; set; }
 
-		public virtual OptionalCultureCode LastLoginCulture {
+		public virtual OptionalCultureCode LastLoginCulture
+		{
 			get { return lastLoginCulture ?? (lastLoginCulture = new OptionalCultureCode()); }
-			set {
+			set
+			{
 				lastLoginCulture = value ?? OptionalCultureCode.Empty;
 			}
 		}
 
-		public virtual string LastLoginAddress {
+		public virtual string LastLoginAddress
+		{
 			get { return lastLoginAddress; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				lastLoginAddress = value; 
+				lastLoginAddress = value;
 			}
 		}
 
-		public virtual string Location {
+		public virtual string Location
+		{
 			get { return location; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				location = value; 
+				location = value;
 			}
 		}
 
@@ -99,7 +107,7 @@ namespace VocaDb.Model.Domain.Users {
 		/// <summary>
 		/// Allow others to see this user's album collection (ownership status and media type).
 		/// </summary>
-		public virtual bool PublicAlbumCollection { get; set;}
+		public virtual bool PublicAlbumCollection { get; set; }
 
 		/// <summary>
 		/// Allow anyone to see user's album and song ratings. 
@@ -107,11 +115,13 @@ namespace VocaDb.Model.Domain.Users {
 		/// </summary>
 		public virtual bool PublicRatings { get; set; }
 
-		public virtual string Realname {
+		public virtual string Realname
+		{
 			get { return realname; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				realname = value; 
+				realname = value;
 			}
 		}
 
@@ -128,39 +138,46 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual int TwitterId { get; set; }
 
-		public virtual string TwitterName {
+		public virtual string TwitterName
+		{
 			get { return twitterName; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				twitterName = value; 
+				twitterName = value;
 			}
 		}
 
-		public virtual string TwitterOAuthToken {
+		public virtual string TwitterOAuthToken
+		{
 			get { return oauthToken; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				oauthToken = value; 
+				oauthToken = value;
 			}
 		}
 
-		public virtual string TwitterOAuthTokenSecret {
+		public virtual string TwitterOAuthTokenSecret
+		{
 			get { return oauthTokenSecret; }
-			set { 
-				oauthTokenSecret = value; 
+			set
+			{
+				oauthTokenSecret = value;
 				ParamIs.NotNull(() => value);
 			}
 		}
 
 		public virtual int UnreadNotificationsToKeep { get; set; }
 
-		public virtual User User {
+		public virtual User User
+		{
 			get { return user; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				user = value; 
+				user = value;
 			}
 		}
-
 	}
 }

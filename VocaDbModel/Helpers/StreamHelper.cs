@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 
-namespace VocaDb.Model.Helpers 
+namespace VocaDb.Model.Helpers
 {
-	public static class StreamHelper {
-
-
-		public static void CopyStream(Stream source, Stream target) {
+	public static class StreamHelper
+	{
+		public static void CopyStream(Stream source, Stream target)
+		{
 			const int bufSize = 1024;
 			byte[] buf = new byte[bufSize];
 			int bytesRead = 0;
@@ -24,8 +24,8 @@ namespace VocaDb.Model.Helpers
 		/// <param name="input">Input stream. Cannot be null.</param>
 		/// <returns>Stream bytes. Cannot be null.</returns>
 		/// <exception cref="NotSupportedException">If the stream length is not known.</exception>
-		public static byte[] ReadStream(Stream input) {
-			
+		public static byte[] ReadStream(Stream input)
+		{
 			if (input.CanSeek && input.Position > 0)
 				input.Position = 0;
 
@@ -36,11 +36,10 @@ namespace VocaDb.Model.Helpers
 			var bytes = new byte[input.Length];
 			input.Read(bytes, 0, (int)input.Length);
 			return bytes;
-
 		}
 
-		public static byte[] ReadStream(Stream input, long length) {
-
+		public static byte[] ReadStream(Stream input, long length)
+		{
 			if (input.CanSeek && input.Position > 0)
 				input.Position = 0;
 
@@ -50,7 +49,8 @@ namespace VocaDb.Model.Helpers
 
 			int count = 0;
 			int offset = 0;
-			do {
+			do
+			{
 				count = input.Read(buf, 0, buffer);
 				Array.Copy(buf, 0, wholeBuf, offset, count);
 				offset += count;
@@ -58,9 +58,6 @@ namespace VocaDb.Model.Helpers
 			while (count != 0);
 
 			return wholeBuf;
-
 		}
-
 	}
-
 }

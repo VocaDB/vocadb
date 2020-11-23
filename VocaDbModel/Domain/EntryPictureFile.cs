@@ -4,8 +4,8 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain {
-
+namespace VocaDb.Model.Domain
+{
 	/// <summary>
 	/// Picture file with multiple sizes for an entry, such as album or artist.
 	/// Multiple pictures may be attached to an entry.
@@ -18,8 +18,8 @@ namespace VocaDb.Model.Domain {
 	/// At the moment these files are saved under the application folder, but this should be changed so that they're
 	/// saved to the static files folder.
 	/// </summary>
-	public abstract class EntryPictureFile : IEntryPictureFile {
-
+	public abstract class EntryPictureFile : IEntryPictureFile
+	{
 		// Not versioned.
 		int IEntryImageInformation.Version => 0;
 
@@ -31,33 +31,37 @@ namespace VocaDb.Model.Domain {
 		/// Extension for this picture file, determined based on the MIME type.
 		/// Cannot be null. Can be empty if the MIME is not recognized.
 		/// </summary>
-		protected string Extension {
-			get {
+		protected string Extension
+		{
+			get
+			{
 				return ImageHelper.GetExtensionFromMime(Mime) ?? string.Empty;
 			}
 		}
 
-		protected EntryPictureFile() {
+		protected EntryPictureFile()
+		{
 			Created = DateTime.Now;
 		}
 
 		protected EntryPictureFile(string name, string mime, User author)
-			: this() {
-
+			: this()
+		{
 			Name = name;
 			Mime = mime;
 			Author = author;
-
 		}
 
 		/// <summary>
 		/// User who uploaded this picture. Cannot be null.
 		/// </summary>
-		public virtual User Author {
+		public virtual User Author
+		{
 			get { return author; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				author = value; 
+				author = value;
 			}
 		}
 
@@ -78,22 +82,26 @@ namespace VocaDb.Model.Domain {
 		/// Image MIME type. Cannot be null.
 		/// MIME types for jpg, png, gif and bmp are recognized.
 		/// </summary>
-		public virtual string Mime {
+		public virtual string Mime
+		{
 			get { return mime; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				mime = value; 
+				mime = value;
 			}
 		}
 
 		/// <summary>
 		/// Image user-friendly name. Cannot be null.
 		/// </summary>
-		public virtual string Name {
+		public virtual string Name
+		{
 			get { return name; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				name = value; 
+				name = value;
 			}
 		}
 
@@ -107,19 +115,17 @@ namespace VocaDb.Model.Domain {
 		/// </summary>
 		public virtual Stream UploadedFile { get; set; }
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("Picture file {0} [{1}]", Name, Id);
 		}
-
 	}
 
-	public interface IEntryPictureFile : IEntryImageInformation {
-
+	public interface IEntryPictureFile : IEntryImageInformation
+	{
 		/// <summary>
 		/// ID of the entry owning the picture.
 		/// </summary>
 		int OwnerEntryId { get; }
-
 	}
-
 }

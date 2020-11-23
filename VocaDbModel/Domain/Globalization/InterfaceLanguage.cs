@@ -3,13 +3,14 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Globalization;
 
-namespace VocaDb.Model.Domain.Globalization {
-
-	public static class InterfaceLanguage {
-
+namespace VocaDb.Model.Domain.Globalization
+{
+	public static class InterfaceLanguage
+	{
 		private static readonly ImmutableHashSet<string> twoLetterLanguageCodes;
 
-		static InterfaceLanguage() {
+		static InterfaceLanguage()
+		{
 			twoLetterLanguageCodes = ImmutableHashSet.CreateRange(Cultures.Cultures.Select(c => c.TwoLetterISOLanguageName));
 		}
 
@@ -23,11 +24,13 @@ namespace VocaDb.Model.Domain.Globalization {
 		/// </summary>
 		/// <param name="culture">Culture to be tested. Cannot be null.</param>
 		/// <returns>Language code matching the culture. If there was no match, this returns an empty string.</returns>
-		public static string GetAvailableLanguageCode(CultureInfo culture) {
+		public static string GetAvailableLanguageCode(CultureInfo culture)
+		{
 			return IsValidUserInterfaceCulture(culture) ? culture.TwoLetterISOLanguageName : string.Empty;
 		}
 
-		public static bool IsValidUserInterfaceCulture(CultureInfo culture) {
+		public static bool IsValidUserInterfaceCulture(CultureInfo culture)
+		{
 			return twoLetterLanguageCodes.Contains(culture.TwoLetterISOLanguageName);
 		}
 
@@ -40,6 +43,5 @@ namespace VocaDb.Model.Domain.Globalization {
 		};
 
 		public static CultureCollection UserLanguageCultures => new CultureCollection(UserLanguageCodes);
-
 	}
 }

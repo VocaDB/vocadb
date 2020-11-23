@@ -1,6 +1,7 @@
-﻿namespace VocaDb.Model.Domain.ReleaseEvents {
-
-	public enum EventCategory {
+﻿namespace VocaDb.Model.Domain.ReleaseEvents
+{
+	public enum EventCategory
+	{
 		Unspecified = 0,
 		/// <summary>
 		/// Comiket, VoMas
@@ -22,5 +23,4 @@
 		Convention = 32,
 		Other = 64
 	}
-
 }

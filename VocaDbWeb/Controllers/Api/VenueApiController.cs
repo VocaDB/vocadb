@@ -11,21 +11,20 @@ using VocaDb.Model.Service.Search.Venues;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Web.Controllers.Api {
-
+namespace VocaDb.Web.Controllers.Api
+{
 	/// <summary>
 	/// API queries for venues.
 	/// </summary>
 	[RoutePrefix("api/venues")]
-	public class VenueApiController : ApiController {
-
+	public class VenueApiController : ApiController
+	{
 		private const int defaultMax = 10;
 		private readonly VenueQueries queries;
 
-		public VenueApiController(VenueQueries queries) {
-
+		public VenueApiController(VenueQueries queries)
+		{
 			this.queries = queries;
-
 		}
 
 		/// <summary>
@@ -39,16 +38,18 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </param>
 		[Route("{id:int}")]
 		[Authorize]
-		public void Delete(int id, string notes = "", bool hardDelete = false) {
-
+		public void Delete(int id, string notes = "", bool hardDelete = false)
+		{
 			notes = notes ?? string.Empty;
 
-			if (hardDelete) {
+			if (hardDelete)
+			{
 				queries.MoveToTrash(id, notes);
-			} else {
+			}
+			else
+			{
 				queries.Delete(id, notes);
 			}
-
 		}
 
 		/// <summary>
@@ -69,16 +70,17 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Page of venue.</returns>
 		[Route("")]
 		public PartialFindResult<VenueForApiContract> GetList(
-			string query = "", 
+			string query = "",
 			VenueOptionalFields fields = VenueOptionalFields.None,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			VenueSortRule sortRule = VenueSortRule.Name,
-			double? latitude = null, double? longitude = null, double? radius = null, DistanceUnit distanceUnit = DistanceUnit.Kilometers) {
-
+			double? latitude = null, double? longitude = null, double? radius = null, DistanceUnit distanceUnit = DistanceUnit.Kilometers)
+		{
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
-			var queryParams = new VenueQueryParams {
+			var queryParams = new VenueQueryParams
+			{
 				Coordinates = new GeoPointQueryParams(latitude, longitude),
 				DistanceUnit = distanceUnit,
 				Paging = new PagingProperties(start, maxResults, getTotalCount),
@@ -88,7 +90,6 @@ namespace VocaDb.Web.Controllers.Api {
 			};
 
 			return queries.Find(v => new VenueForApiContract(v, lang, fields), queryParams);
-
 		}
 
 		/// <summary>
@@ -101,7 +102,5 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{id:int}/reports")]
 		[RestrictBannedIP]
 		public void PostReport(int id, VenueReportType reportType, string notes, int? versionNumber) => queries.CreateReport(id, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
-
 	}
-
 }

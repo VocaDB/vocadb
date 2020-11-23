@@ -4,26 +4,24 @@ using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
-
+namespace VocaDb.Model.DataContracts.Songs
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongListBaseContract : IEntryWithIntId {
-
-		public SongListBaseContract() {
-
+	public class SongListBaseContract : IEntryWithIntId
+	{
+		public SongListBaseContract()
+		{
 			Name = string.Empty;
-
 		}
 
 		public SongListBaseContract(SongList songList)
-			: this() {
-
+			: this()
+		{
 			ParamIs.NotNull(() => songList);
 
 			FeaturedCategory = songList.FeaturedCategory;
 			Id = songList.Id;
 			Name = songList.Name;
-
 		}
 
 		[DataMember]
@@ -35,7 +33,5 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public string Name { get; set; }
-
 	}
-
 }

@@ -1,7 +1,7 @@
-﻿namespace VocaDb.Model.Domain {
-
-	public static class Constants {
-
+﻿namespace VocaDb.Model.Domain
+{
+	public static class Constants
+	{
 		/// <summary>
 		/// For some entry types we want to prevent users from uploading too large images.
 		/// 600px is the minimum recommended size for Facebook.
@@ -12,7 +12,5 @@
 		/// 24h
 		/// </summary>
 		public const int SecondsInADay = 86400;
-
 	}
-
 }

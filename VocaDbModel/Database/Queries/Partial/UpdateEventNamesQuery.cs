@@ -9,8 +9,8 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Exceptions;
 
-namespace VocaDb.Model.Database.Queries.Partial {
-
+namespace VocaDb.Model.Database.Queries.Partial
+{
 	/// <summary>
 	/// Handles updating event names.
 	/// </summary>
@@ -19,8 +19,8 @@ namespace VocaDb.Model.Database.Queries.Partial {
 	/// Because of the order in which NHibernate saves cascaded collections, we need to make sure
 	/// that there's no duplicate event names at any point.
 	/// </remarks>
-	public class UpdateEventNamesQuery {
-
+	public class UpdateEventNamesQuery
+	{
 		private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
@@ -33,15 +33,16 @@ namespace VocaDb.Model.Database.Queries.Partial {
 		/// <remarks>
 		/// Duplicate names are not allowed in the list of given names for a single event, and no two events may have the same name.
 		/// </remarks>
-		public void CheckDuplicateName(IDatabaseContext ctx, string[] names, int eventId) {
-
+		public void CheckDuplicateName(IDatabaseContext ctx, string[] names, int eventId)
+		{
 			var duplicateName = names
 				.GroupBy(n => n, new KanaAndCaseInsensitiveStringComparer())
 				.Where(n => n.Count() > 1)
 				.Select(n => n.First())
 				.FirstOrDefault();
 
-			if (duplicateName != null) {
+			if (duplicateName != null)
+			{
 				log.Info($"Duplicate name '{duplicateName}' for event {eventId}.");
 				throw new DuplicateEventNameException(duplicateName, eventId);
 			}
@@ -49,18 +50,19 @@ namespace VocaDb.Model.Database.Queries.Partial {
 			var duplicate = ctx.Query<EventName>()
 				.FirstOrDefault(e => e.Entry.Id != eventId && names.Contains(e.Value));
 
-			if (duplicate != null) {
+			if (duplicate != null)
+			{
 				log.Info($"Duplicate name '{duplicateName}' for event {eventId}. Also used for {duplicate.Entry}.");
 				throw new DuplicateEventNameException(duplicate.Value, duplicate.Entry.Id);
 			}
-
 		}
 
-		private bool SaveNames(IDatabaseContext ctx, ReleaseEvent ev, IEnumerable<ILocalizedString> names) {
-
+		private bool SaveNames(IDatabaseContext ctx, ReleaseEvent ev, IEnumerable<ILocalizedString> names)
+		{
 			// Make sure deletions are flushed to database BEFORE new names are added, to make sure there's no duplicates
 			var diff = ev.Names.SyncByContent(names, ev,
-				deleted => {
+				deleted =>
+				{
 					foreach (var name in deleted)
 						ctx.Delete(name);
 					ctx.Flush();
@@ -71,12 +73,11 @@ namespace VocaDb.Model.Database.Queries.Partial {
 				ctx.Save(n);
 
 			return diff.Changed;
-
 		}
 
 		private IEnumerable<ILocalizedString> GetNames(IDatabaseContext ctx,
-			IEntryWithIntId seriesLink, bool customName, int seriesNumber, string seriesSuffix, IEnumerable<ILocalizedString> nameContracts) {
-
+			IEntryWithIntId seriesLink, bool customName, int seriesNumber, string seriesSuffix, IEnumerable<ILocalizedString> nameContracts)
+		{
 			var series = ctx.NullSafeLoad<ReleaseEventSeries>(seriesLink);
 
 			var names = series != null && !customName
@@ -85,7 +86,6 @@ namespace VocaDb.Model.Database.Queries.Partial {
 				: nameContracts;
 
 			return names;
-
 		}
 
 		/// <summary>
@@ -105,18 +105,15 @@ namespace VocaDb.Model.Database.Queries.Partial {
 		/// If custom name is enabled or no series is specified, given names are used.
 		/// Default name language is inherited from series as well, but that setting is not touched by this method.
 		/// </remarks>
-		public bool UpdateNames(IDatabaseContext ctx, ReleaseEvent ev, IEntryWithIntId seriesLink, 
-			bool customName, int seriesNumber, string seriesSuffix, IEnumerable<ILocalizedString> nameContracts) {
-
+		public bool UpdateNames(IDatabaseContext ctx, ReleaseEvent ev, IEntryWithIntId seriesLink,
+			bool customName, int seriesNumber, string seriesSuffix, IEnumerable<ILocalizedString> nameContracts)
+		{
 			var names = GetNames(ctx, seriesLink, customName, seriesNumber, seriesSuffix, nameContracts).ToArray();
 			var namesValues = names.Select(n => n.Value).ToArray();
 
 			CheckDuplicateName(ctx, namesValues, ev.Id);
 			var changed = SaveNames(ctx, ev, names);
 			return changed;
-
 		}
-
 	}
-
 }

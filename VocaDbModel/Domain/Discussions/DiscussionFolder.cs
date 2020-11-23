@@ -2,32 +2,34 @@ using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Discussions {
-
-	public class DiscussionFolder : IEntryWithIntId {
-
+namespace VocaDb.Model.Domain.Discussions
+{
+	public class DiscussionFolder : IEntryWithIntId
+	{
 		private string description;
 		private string title;
 		private IList<DiscussionTopic> topics = new List<DiscussionTopic>();
 
-		public DiscussionFolder() {
+		public DiscussionFolder()
+		{
 			Description = string.Empty;
 		}
 
-		public DiscussionFolder(string title) 
-			: this() {
-
+		public DiscussionFolder(string title)
+			: this()
+		{
 			Name = title;
-
 		}
 
 		/// <summary>
 		/// List of topics for this folder.
 		/// This list includes deleted topics.
 		/// </summary>
-		public virtual IList<DiscussionTopic> AllTopics {
+		public virtual IList<DiscussionTopic> AllTopics
+		{
 			get { return topics; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				topics = value;
 			}
@@ -35,9 +37,11 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		public virtual bool Deleted { get; set; }
 
-		public virtual string Description {
+		public virtual string Description
+		{
 			get { return description; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				description = value;
 			}
@@ -45,9 +49,11 @@ namespace VocaDb.Model.Domain.Discussions {
 
 		public virtual int Id { get; set; }
 
-		public virtual string Name {
+		public virtual string Name
+		{
 			get { return title; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				title = value;
 			}
@@ -61,16 +67,17 @@ namespace VocaDb.Model.Domain.Discussions {
 		/// List of discussion topics for this folder.
 		/// This list does not include deleted topics.
 		/// </summary>
-		public virtual IEnumerable<DiscussionTopic> Topics {
-			get {
+		public virtual IEnumerable<DiscussionTopic> Topics
+		{
+			get
+			{
 				return AllTopics.Where(t => !t.Deleted);
 			}
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("Discussion folder '{0}' [{1}]", Name, Id);
 		}
-
 	}
-
 }

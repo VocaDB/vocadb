@@ -1,12 +1,12 @@
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.Mapping.Security {
-
-	public class AuditLogEntryMap : ClassMap<AuditLogEntry> {
-
-		public AuditLogEntryMap() {
-
+namespace VocaDb.Model.Mapping.Security
+{
+	public class AuditLogEntryMap : ClassMap<AuditLogEntry>
+	{
+		public AuditLogEntryMap()
+		{
 			Table("AuditLogEntries");
 			Id(m => m.Id);
 
@@ -15,13 +15,11 @@ namespace VocaDb.Model.Mapping.Security {
 			Map(m => m.Time).Not.Nullable();
 			References(m => m.User).Nullable();
 
-			Component(m => m.EntryId, c => {
+			Component(m => m.EntryId, c =>
+			{
 				c.Map(m => m.EntryType, "EntryType");
 				c.Map(m => m.Id, "EntryId");
 			});
-
 		}
-
 	}
-
 }

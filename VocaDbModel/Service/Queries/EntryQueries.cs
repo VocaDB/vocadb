@@ -8,13 +8,14 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Venues;
 
-namespace VocaDb.Model.Service.Queries {
-
-	public class EntryQueries {
-
-		public IEntryWithNames Load(EntryRef entryRef, IDatabaseContext ctx) {
-		
-			switch (entryRef.EntryType) {
+namespace VocaDb.Model.Service.Queries
+{
+	public class EntryQueries
+	{
+		public IEntryWithNames Load(EntryRef entryRef, IDatabaseContext ctx)
+		{
+			switch (entryRef.EntryType)
+			{
 				case EntryType.Album:
 					return ctx.Load<Album>(entryRef.Id);
 				case EntryType.Artist:
@@ -32,10 +33,6 @@ namespace VocaDb.Model.Service.Queries {
 			}
 
 			throw new ArgumentException("Unsupported entry type: " + entryRef.EntryType);
-
 		}
-
-
 	}
-
 }

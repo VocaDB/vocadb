@@ -4,12 +4,12 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Resources;
 
-namespace VocaDb.Model.Service.EntryValidators {
-
-	public class ArtistValidator {
-
-		public bool IsValid(Artist artist) {
-
+namespace VocaDb.Model.Service.EntryValidators
+{
+	public class ArtistValidator
+	{
+		public bool IsValid(Artist artist)
+		{
 			ParamIs.NotNull(() => artist);
 
 			var errors = new List<string>();
@@ -24,9 +24,6 @@ namespace VocaDb.Model.Service.EntryValidators {
 				errors.Add(ArtistValidationErrors.NeedReferences);
 
 			return !errors.Any();
-
 		}
-
 	}
-
 }

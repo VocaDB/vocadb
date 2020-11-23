@@ -1,25 +1,25 @@
 using System;
 
-namespace VocaDb.Model.Domain.Tags {
-
+namespace VocaDb.Model.Domain.Tags
+{
 	/// <summary>
 	/// Defines tag mapping from an external source system such as NicoNicoDouga to VocaDB.
 	/// </summary>
-	public class TagMapping : IEntryWithIntId, ITagLink {
-
-		public TagMapping() {
+	public class TagMapping : IEntryWithIntId, ITagLink
+	{
+		public TagMapping()
+		{
 			CreateDate = DateTime.Now;
 			MappingType = TagMappingType.Automatic;
 		}
 
-		public TagMapping(Tag tag, string sourceTag) : this() {
-
+		public TagMapping(Tag tag, string sourceTag) : this()
+		{
 			ParamIs.NotNull(() => tag);
 			ParamIs.NotNullOrEmpty(() => sourceTag);
 
 			Tag = tag;
 			SourceTag = sourceTag;
-
 		}
 
 		private Tag tag;
@@ -35,9 +35,11 @@ namespace VocaDb.Model.Domain.Tags {
 		/// Tag name in the source system.
 		/// For example "VOCAROCK".
 		/// </summary>
-		public virtual string SourceTag {
+		public virtual string SourceTag
+		{
 			get => sourceTag;
-			set {
+			set
+			{
 				ParamIs.NotNullOrEmpty(() => value);
 				sourceTag = value;
 			}
@@ -46,23 +48,26 @@ namespace VocaDb.Model.Domain.Tags {
 		/// <summary>
 		/// VocaDB tag. Cannot be null.
 		/// </summary>
-		public virtual Tag Tag {
+		public virtual Tag Tag
+		{
 			get => tag;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				tag = value;
 			}
 		}
 
-		public virtual void Delete() {
+		public virtual void Delete()
+		{
 			Tag.Mappings.Remove(this);
 		}
 
 		public override string ToString() => $"Mapping from '{SourceTag}' to {Tag}";
-
 	}
 
-	public enum TagMappingType {
+	public enum TagMappingType
+	{
 		Nothing = 0,
 		/// <summary>
 		/// Tag appears in related tags, but is not automatically mapped
@@ -77,5 +82,4 @@ namespace VocaDb.Model.Domain.Tags {
 		/// </summary>
 		Suggestion = 4
 	}
-
 }

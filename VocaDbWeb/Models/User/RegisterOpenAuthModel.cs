@@ -1,12 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VocaDb.Web.Models.User {
-
-	public class RegisterOpenAuthModel {
-
+namespace VocaDb.Web.Models.User
+{
+	public class RegisterOpenAuthModel
+	{
 		public RegisterOpenAuthModel() { }
 
-		public RegisterOpenAuthModel(string accessToken, string name, int twitterId, string twitterName) {
+		public RegisterOpenAuthModel(string accessToken, string name, int twitterId, string twitterName)
+		{
 			AccessToken = accessToken;
 			UserName = name;
 			TwitterId = twitterId;
@@ -29,7 +30,5 @@ namespace VocaDb.Web.Models.User {
 		[StringLength(100, MinimumLength = 3)]
 		[RegularExpression("[a-zA-Z0-9_]+")]
 		public string UserName { get; set; }
-
 	}
-
 }

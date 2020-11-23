@@ -2,23 +2,24 @@ using System;
 using System.Xml.Linq;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain {
-
-	public class TrashedEntry : IEntryWithIntId {
-
+namespace VocaDb.Model.Domain
+{
+	public class TrashedEntry : IEntryWithIntId
+	{
 		private XDocument data;
 		private string name;
 		private string notes;
 		private User user;
 
-		public TrashedEntry() {
+		public TrashedEntry()
+		{
 			Created = DateTime.Now;
 			Notes = string.Empty;
 		}
 
 		public TrashedEntry(IEntryBase entry, XDocument data, User user, string notes = "")
-			: this() {
-
+			: this()
+		{
 			ParamIs.NotNull(() => entry);
 
 			Data = data;
@@ -27,16 +28,17 @@ namespace VocaDb.Model.Domain {
 			Name = entry.DefaultName;
 			User = user;
 			Notes = notes;
-
 		}
 
 		public virtual DateTime Created { get; set; }
 
-		public virtual XDocument Data {
+		public virtual XDocument Data
+		{
 			get { return data; }
-			set { 
+			set
+			{
 				ParamIs.NotNull(() => value);
-				data = value; 
+				data = value;
 			}
 		}
 
@@ -52,17 +54,21 @@ namespace VocaDb.Model.Domain {
 		/// <summary>
 		/// Default name of the entry that was deleted. Cannot be null or empty.
 		/// </summary>
-		public virtual string Name {
+		public virtual string Name
+		{
 			get { return name; }
-			set {
-                ParamIs.NotNullOrEmpty(() => value);
-			    name = value;
+			set
+			{
+				ParamIs.NotNullOrEmpty(() => value);
+				name = value;
 			}
 		}
 
-		public virtual string Notes {
+		public virtual string Notes
+		{
 			get { return notes; }
-			protected set {
+			protected set
+			{
 				ParamIs.NotNull(() => value);
 				notes = value;
 			}
@@ -71,13 +77,14 @@ namespace VocaDb.Model.Domain {
 		/// <summary>
 		/// User who deleted the entry. Cannot be null.
 		/// </summary>
-		public virtual User User {
+		public virtual User User
+		{
 			get { return user; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
-				user = value; 
+				user = value;
 			}
 		}
 	}
-
 }

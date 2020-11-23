@@ -12,23 +12,23 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.DataContracts.UseCases {
-
-	public class FrontPageContract {
-
+namespace VocaDb.Model.DataContracts.UseCases
+{
+	public class FrontPageContract
+	{
 		public FrontPageContract() { }
 
 		public FrontPageContract(IEnumerable<ActivityEntry> activityEntries,
 			AlbumForApiContract[] newAlbums,
-			ReleaseEventForApiContract[] newEvents, 
+			ReleaseEventForApiContract[] newEvents,
 			IEnumerable<EntryWithCommentsContract> recentComments,
 			AlbumForApiContract[] topAlbums, Song[] newSongs,
 			SongVoteRating firstSongRating,
-			ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory, IUserPermissionContext permissionContext, 
-			EntryForApiContractFactory entryForApiContractFactory) {
-
+			ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory, IUserPermissionContext permissionContext,
+			EntryForApiContractFactory entryForApiContractFactory)
+		{
 			ActivityEntries = activityEntries.Select(e => new ActivityEntryForApiContract(e,
-				entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, languagePreference), 
+				entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture, languagePreference),
 				 userIconFactory, permissionContext, ActivityEntryOptionalFields.None)).ToArray();
 			NewAlbums = newAlbums;
 			NewSongs = newSongs.Select(s => new SongWithPVAndVoteContract(s, SongVoteRating.Nothing, languagePreference)).ToArray();
@@ -37,14 +37,13 @@ namespace VocaDb.Model.DataContracts.UseCases {
 			NewEvents = newEvents;
 
 			FirstSong = (newSongs.Any() ? new SongWithPVAndVoteContract(newSongs.First(), firstSongRating, languagePreference) : null);
-
 		}
 
 		public ActivityEntryForApiContract[] ActivityEntries { get; set; }
 
 		public SongWithPVAndVoteContract FirstSong { get; set; }
 
-		public AlbumForApiContract[] NewAlbums { get; set; }	
+		public AlbumForApiContract[] NewAlbums { get; set; }
 
 		public ReleaseEventForApiContract[] NewEvents { get; set; }
 
@@ -53,6 +52,5 @@ namespace VocaDb.Model.DataContracts.UseCases {
 		public EntryWithCommentsContract[] RecentComments { get; set; }
 
 		public AlbumForApiContract[] TopAlbums { get; set; }
-
 	}
 }

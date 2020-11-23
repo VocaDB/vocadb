@@ -1,16 +1,15 @@
-﻿namespace VocaDb.Model.Service.Search {
+﻿namespace VocaDb.Model.Service.Search
+{
+	public enum QueryCost
+	{
+		Nothing = 0,
 
-	public enum QueryCost {
+		Low = 1,
 
-		Nothing		= 0,
+		Medium = 5,
 
-		Low			= 1,
+		High = 10,
 
-		Medium		= 5,
-
-		High		= 10,
-
-		VeryHigh	= 15
-
+		VeryHigh = 15
 	}
 }

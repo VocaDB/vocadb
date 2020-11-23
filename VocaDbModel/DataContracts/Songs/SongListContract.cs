@@ -5,18 +5,19 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
-
+namespace VocaDb.Model.DataContracts.Songs
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongListContract : SongListBaseContract {
-
-		public SongListContract() {
+	public class SongListContract : SongListBaseContract
+	{
+		public SongListContract()
+		{
 			Description = string.Empty;
 		}
 
 		public SongListContract(SongList list, IUserPermissionContext permissionContext)
-			: base(list) {
-
+			: base(list)
+		{
 			ParamIs.NotNull(() => list);
 
 			Author = new UserWithEmailContract(list.Author);
@@ -27,7 +28,6 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Status = list.Status;
 			Thumb = (list.Thumb != null ? new EntryThumbContract(list.Thumb) : null);
 			Version = list.Version;
-
 		}
 
 		[DataMember]
@@ -53,6 +53,5 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public int Version { get; set; }
-
 	}
 }

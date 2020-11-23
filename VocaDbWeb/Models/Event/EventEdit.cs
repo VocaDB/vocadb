@@ -14,32 +14,32 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Web.Code;
 
-namespace VocaDb.Web.Models.Event {
-
+namespace VocaDb.Web.Models.Event
+{
 	[PropertyModelBinder]
-	public class EventEdit : IEntryImageInformation {
-
+	public class EventEdit : IEntryImageInformation
+	{
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEvent;
 		string IEntryImageInformation.Mime => PictureMime;
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 
-		public EventEdit() {
+		public EventEdit()
+		{
 			Description = SeriesSuffix = string.Empty;
 		}
 
 		public EventEdit(ReleaseEventSeriesContract seriesContract, VenueContract venueContract, IUserPermissionContext userContext)
-			: this() {
-
+			: this()
+		{
 			Series = seriesContract;
 			Venue = venueContract;
 
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(userContext).ToArray();
-
 		}
 
 		public EventEdit(ReleaseEventForEditContract contract, IUserPermissionContext userContext)
-			: this() {
-
+			: this()
+		{
 			ParamIs.NotNull(() => contract);
 
 			Artists = contract.Artists;
@@ -63,7 +63,6 @@ namespace VocaDb.Web.Models.Event {
 			WebLinks = contract.WebLinks;
 
 			CopyNonEditableProperties(contract, userContext);
-
 		}
 
 		public ReleaseEventSeriesContract[] AllSeries { get; set; }
@@ -131,23 +130,24 @@ namespace VocaDb.Web.Models.Event {
 		[FromJson]
 		public WebLinkContract[] WebLinks { get; set; }
 
-		public void CopyNonEditableProperties(ReleaseEventDetailsContract contract, IUserPermissionContext userContext) {
-
+		public void CopyNonEditableProperties(ReleaseEventDetailsContract contract, IUserPermissionContext userContext)
+		{
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(userContext).ToArray();
 
-			if (contract != null) {
+			if (contract != null)
+			{
 				Deleted = contract.Deleted;
 				OldName = contract.Name;
 				PictureMime = contract.PictureMime;
 				UrlSlug = contract.UrlSlug;
 				Version = contract.Version;
 			}
-
 		}
 
-		public ReleaseEventForEditContract ToContract() {
-
-			return new ReleaseEventForEditContract {
+		public ReleaseEventForEditContract ToContract()
+		{
+			return new ReleaseEventForEditContract
+			{
 				Artists = Artists,
 				Category = Category,
 				CustomName = this.CustomName,
@@ -159,7 +159,7 @@ namespace VocaDb.Web.Models.Event {
 				Name = this.Name,
 				Names = Names,
 				PVs = PVs,
-				Series = this.Series, 
+				Series = this.Series,
 				SeriesNumber = this.SeriesNumber,
 				SeriesSuffix = this.SeriesSuffix ?? string.Empty,
 				SongList = SongList,
@@ -168,9 +168,6 @@ namespace VocaDb.Web.Models.Event {
 				VenueName = VenueName,
 				WebLinks = this.WebLinks
 			};
-
 		}
-
 	}
-
 }

@@ -6,18 +6,19 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Web.Controllers.Api {
-
+namespace VocaDb.Web.Controllers.Api
+{
 	/// <summary>
 	/// API queries for album release event series.
 	/// </summary>
 	[RoutePrefix("api/releaseEventSeries")]
-	public class ReleaseEventSeriesApiController : ApiController {
-
+	public class ReleaseEventSeriesApiController : ApiController
+	{
 		private const int defaultMax = 10;
 		private readonly EventQueries queries;
 
-		public ReleaseEventSeriesApiController(EventQueries queries) {
+		public ReleaseEventSeriesApiController(EventQueries queries)
+		{
 			this.queries = queries;
 		}
 
@@ -32,16 +33,18 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </param>
 		[Route("{id:int}")]
 		[Authorize]
-		public void Delete(int id, string notes = "", bool hardDelete = false) {
-
+		public void Delete(int id, string notes = "", bool hardDelete = false)
+		{
 			notes = notes ?? string.Empty;
 
-			if (hardDelete) {
+			if (hardDelete)
+			{
 				queries.MoveSeriesToTrash(id, notes);
-			} else {
+			}
+			else
+			{
 				queries.DeleteSeries(id, notes);
 			}
-
 		}
 
 		/// <summary>
@@ -57,7 +60,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <returns>Page of event series.</returns>
 		[Route("")]
 		public PartialFindResult<ReleaseEventSeriesForApiContract> GetList(
-			string query = "", 
+			string query = "",
 			ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None,
 			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
@@ -71,7 +74,5 @@ namespace VocaDb.Web.Controllers.Api {
 			int id,
 			ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetOneSeries(id, lang, fields);
-
 	}
-
 }

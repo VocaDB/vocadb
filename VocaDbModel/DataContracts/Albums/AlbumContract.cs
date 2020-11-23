@@ -8,11 +8,11 @@ using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 
-namespace VocaDb.Model.DataContracts.Albums {
-
+namespace VocaDb.Model.DataContracts.Albums
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class AlbumContract : IEntryWithStatus, IEquatable<AlbumContract>, IEntryImageInformation {
-
+	public class AlbumContract : IEntryWithStatus, IEquatable<AlbumContract>, IEntryImageInformation
+	{
 		string IEntryBase.DefaultName => Name;
 
 		bool IDeletableEntry.Deleted => false;
@@ -25,8 +25,8 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		public AlbumContract() { }
 
-		public AlbumContract(Album album, ContentLanguagePreference languagePreference) {
-
+		public AlbumContract(Album album, ContentLanguagePreference languagePreference)
+		{
 			ParamIs.NotNull(() => album);
 
 			AdditionalNames = album.Names.GetAdditionalNamesStringForLanguage(languagePreference);
@@ -43,7 +43,6 @@ namespace VocaDb.Model.DataContracts.Albums {
 			ReleaseEvent = album.OriginalReleaseEvent != null ? new ReleaseEventForApiContract(album.OriginalReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, null) : null;
 			Status = album.Status;
 			Version = album.Version;
-
 		}
 
 		[DataMember]
@@ -53,7 +52,7 @@ namespace VocaDb.Model.DataContracts.Albums {
 		public string ArtistString { get; set; }
 
 		[DataMember]
-		public string CoverPictureMime { get; set;}
+		public string CoverPictureMime { get; set; }
 
 		[DataMember]
 		public DateTime CreateDate { get; set; }
@@ -92,8 +91,8 @@ namespace VocaDb.Model.DataContracts.Albums {
 		[DataMember]
 		public int Version { get; set; }
 
-		public bool Equals(AlbumContract another) {
-
+		public bool Equals(AlbumContract another)
+		{
 			if (another == null)
 				return false;
 
@@ -104,21 +103,21 @@ namespace VocaDb.Model.DataContracts.Albums {
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
-	    public override bool Equals(object obj) {
-	        return Equals(obj as AlbumContract);
-	    }
+		public override bool Equals(object obj)
+		{
+			return Equals(obj as AlbumContract);
+		}
 
-	    public override int GetHashCode() {
-	        return Id.GetHashCode();
-	    }
+		public override int GetHashCode()
+		{
+			return Id.GetHashCode();
+		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("album '{0}' [{1}]", Name, Id);
 		}
-
 	}
-
 }

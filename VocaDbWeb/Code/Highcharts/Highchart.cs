@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace VocaDb.Web.Code.Highcharts {
-
-	public class Highchart {
-
+namespace VocaDb.Web.Code.Highcharts
+{
+	public class Highchart
+	{
 		public Chart Chart { get; set; }
 
 		public dynamic Legend { get; set; }
@@ -20,8 +20,6 @@ namespace VocaDb.Web.Code.Highcharts {
 
 		public Axis XAxis { get; set; }
 
-		public Axis YAxis { get; set;  }
-
+		public Axis YAxis { get; set; }
 	}
-
 }

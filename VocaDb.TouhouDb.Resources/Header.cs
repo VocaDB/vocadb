@@ -2,8 +2,10 @@
 using VocaDb.Model.Service.BrandableStrings.Collections;
 using VocaDb.TouhouDb.Resources.ViewRes;
 
-namespace VocaDb.TouhouDb.Resources {
-	public class Header : IBrandedStringsAssemblyHeader {
+namespace VocaDb.TouhouDb.Resources
+{
+	public class Header : IBrandedStringsAssemblyHeader
+	{
 		public AlbumStrings Album => new AlbumStrings(AlbumRes.ResourceManager);
 
 		public ArtistStrings Artist => new ArtistStrings(ArtistRes.ResourceManager);

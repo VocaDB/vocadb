@@ -22,20 +22,21 @@ using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using WebApi.OutputCache.V2;
 
-namespace VocaDb.Web.Controllers.Api {
-
+namespace VocaDb.Web.Controllers.Api
+{
 	/// <summary>
 	/// API queries for tags.
 	/// </summary>
 	[RoutePrefix("api/tags")]
-	public class TagApiController : ApiController {
-
+	public class TagApiController : ApiController
+	{
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly TagQueries queries;
 		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 
-		public TagApiController(TagQueries queries, IAggregatedEntryImageUrlFactory thumbPersister) {
+		public TagApiController(TagQueries queries, IAggregatedEntryImageUrlFactory thumbPersister)
+		{
 			this.queries = queries;
 			this.thumbPersister = thumbPersister;
 		}
@@ -51,16 +52,18 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </param>
 		[Route("{id:int}")]
 		[Authorize]
-		public void Delete(int id, string notes = "", bool hardDelete = false) {
-
+		public void Delete(int id, string notes = "", bool hardDelete = false)
+		{
 			notes = notes ?? string.Empty;
 
-			if (hardDelete) {
+			if (hardDelete)
+			{
 				queries.MoveToTrash(id, notes);
-			} else {
+			}
+			else
+			{
 				queries.Delete(id, notes);
 			}
-
 		}
 
 		/// <summary>
@@ -164,22 +167,22 @@ namespace VocaDb.Web.Controllers.Api {
 			bool preferAccurateMatches = false,
 			TagOptionalFields fields = TagOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
-			TagTargetTypes target = TagTargetTypes.All) {
-			
+			TagTargetTypes target = TagTargetTypes.All)
+		{
 			maxResults = Math.Min(maxResults, fields != TagOptionalFields.None ? absoluteMax : int.MaxValue);
 			var queryParams = new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(query, nameMatchMode), false, preferAccurateMatches),
-				new PagingProperties(start, maxResults, getTotalCount)) {
-					AllowChildren = allowChildren,
-					CategoryName = categoryName,
-					SortRule = sort ?? TagSortRule.Name,
-					LanguagePreference = lang,
-					Target = target
+				new PagingProperties(start, maxResults, getTotalCount))
+			{
+				AllowChildren = allowChildren,
+				CategoryName = categoryName,
+				SortRule = sort ?? TagSortRule.Name,
+				LanguagePreference = lang,
+				Target = target
 			};
 
 			var tags = queries.Find(queryParams, fields, lang);
 
 			return tags;
-
 		}
 
 		[Route("entry-type-mappings")]
@@ -244,14 +247,16 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <response code="400">If tag name is already in use</response>
 		[Route("")]
 		[Authorize]
-		public async Task<TagBaseContract> PostNewTag(string name) {
-
-			try {
-				return await queries.Create(name);				
-			} catch (DuplicateTagNameException) {
+		public async Task<TagBaseContract> PostNewTag(string name)
+		{
+			try
+			{
+				return await queries.Create(name);
+			}
+			catch (DuplicateTagNameException)
+			{
 				throw new HttpBadRequestException("Tag name is already in use");
 			}
-
 		}
 
 		/// <summary>
@@ -278,29 +283,27 @@ namespace VocaDb.Web.Controllers.Api {
 		[Authorize]
 		[Route("entry-type-mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public void PutEntryMappings(IEnumerable<TagEntryMappingContract> mappings) {
-
-			if (mappings == null) {
+		public void PutEntryMappings(IEnumerable<TagEntryMappingContract> mappings)
+		{
+			if (mappings == null)
+			{
 				throw new HttpBadRequestException("Mappings cannot be null");
 			}
 
 			queries.UpdateEntryMappings(mappings.ToArray());
-
 		}
 
 		[Authorize]
 		[Route("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public void PutMappings(IEnumerable<TagMappingContract> mappings) {
-
-			if (mappings == null) {
+		public void PutMappings(IEnumerable<TagMappingContract> mappings)
+		{
+			if (mappings == null)
+			{
 				throw new HttpBadRequestException("Mappings cannot be null");
 			}
 
 			queries.UpdateMappings(mappings.ToArray());
-
 		}
-
 	}
-
 }

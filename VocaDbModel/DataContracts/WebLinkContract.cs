@@ -4,27 +4,27 @@ using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.ExtLinks;
 
-namespace VocaDb.Model.DataContracts {
-
+namespace VocaDb.Model.DataContracts
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class WebLinkContract : IWebLink {
-
-		public WebLinkContract() {
+	public class WebLinkContract : IWebLink
+	{
+		public WebLinkContract()
+		{
 			Category = WebLinkCategory.Other;
 		}
 
-		public WebLinkContract(string url, string description, WebLinkCategory category) {
-
+		public WebLinkContract(string url, string description, WebLinkCategory category)
+		{
 			Url = url;
 			Description = description;
 			Category = category;
 
 			DescriptionOrUrl = !string.IsNullOrEmpty(description) ? description : url;
-
 		}
 
-		public WebLinkContract(WebLink link) {
-			
+		public WebLinkContract(WebLink link)
+		{
 			ParamIs.NotNull(() => link);
 
 			Category = link.Category;
@@ -32,7 +32,6 @@ namespace VocaDb.Model.DataContracts {
 			DescriptionOrUrl = link.DescriptionOrUrl;
 			Id = link.Id;
 			Url = link.Url;
-
 		}
 
 		[DataMember]
@@ -50,7 +49,5 @@ namespace VocaDb.Model.DataContracts {
 
 		[DataMember]
 		public string Url { get; set; }
-
 	}
-
 }

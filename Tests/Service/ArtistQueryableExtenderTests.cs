@@ -5,33 +5,35 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Artists;
 
-namespace VocaDb.Tests.Service {
-
+namespace VocaDb.Tests.Service
+{
 	/// <summary>
 	/// Tests for <see cref="ArtistQueryableExtender"/>.
 	/// </summary>
 	[TestClass]
-	public class ArtistQueryableExtenderTests {
-
-		private List<ArtistName> CreateArtistNames(params string[] names) {
+	public class ArtistQueryableExtenderTests
+	{
+		private List<ArtistName> CreateArtistNames(params string[] names)
+		{
 			return names.Select(name => new ArtistName { Value = name }).ToList();
 		}
 
 		private List<ArtistName> artists;
 
-		private IQueryable<ArtistName> FilterByArtistName(string artistName) {
+		private IQueryable<ArtistName> FilterByArtistName(string artistName)
+		{
 			return artists.AsQueryable().WhereArtistNameIs(ArtistSearchTextQuery.Create(artistName));
-		} 
+		}
 
-		private void SequenceEqual(IEnumerable<ArtistName> actual, string message, params string[] expected) {
+		private void SequenceEqual(IEnumerable<ArtistName> actual, string message, params string[] expected)
+		{
 			Assert.IsTrue(actual.Select(n => n.Value).SequenceEqual(expected), message);
 		}
 
 		[TestInitialize]
-		public void SetUp() {
-
+		public void SetUp()
+		{
 			artists = CreateArtistNames("HSP", "Hiroyuki ODA", "8#Prince");
-
 		}
 
 		/// <summary>
@@ -39,12 +41,11 @@ namespace VocaDb.Tests.Service {
 		/// HSS -> nothing
 		/// </summary>
 		[TestMethod]
-		public void FilterByArtistName_NotMatch_NotFound() {
-
+		public void FilterByArtistName_NotMatch_NotFound()
+		{
 			var result = FilterByArtistName("HSS");
 
 			SequenceEqual(result, "result");
-
 		}
 
 		/// <summary>
@@ -52,12 +53,11 @@ namespace VocaDb.Tests.Service {
 		/// HSP -> HSP
 		/// </summary>
 		[TestMethod]
-		public void FilterByArtistName_PName_QueryJustBelowMinLengthForContains_Found() {
-
+		public void FilterByArtistName_PName_QueryJustBelowMinLengthForContains_Found()
+		{
 			var result = FilterByArtistName("HSP");
 
 			SequenceEqual(result, "result", "HSP");
-
 		}
 
 		/// <summary>
@@ -65,12 +65,11 @@ namespace VocaDb.Tests.Service {
 		/// HS -> HSP
 		/// </summary>
 		[TestMethod]
-		public void FilterByArtistName_NotPName_QueryJustBelowMinLengthForContains_Found() {
-
+		public void FilterByArtistName_NotPName_QueryJustBelowMinLengthForContains_Found()
+		{
 			var result = FilterByArtistName("HS");
 
 			SequenceEqual(result, "result", "HSP");
-
 		}
 
 		/// <summary>
@@ -79,12 +78,11 @@ namespace VocaDb.Tests.Service {
 		/// 8#P -> 8#Prince.
 		/// </summary>
 		[TestMethod]
-		public void FilterByArtistName_NotPNameButEndsInP_QueryJustAboveMinLengthForContains_Found() {
-
+		public void FilterByArtistName_NotPNameButEndsInP_QueryJustAboveMinLengthForContains_Found()
+		{
 			var result = FilterByArtistName("8#P");
 
 			SequenceEqual(result, "result", "8#Prince");
-
 		}
 
 		/// <summary>
@@ -92,12 +90,11 @@ namespace VocaDb.Tests.Service {
 		/// Hir -> Hiroyuki ODA
 		/// </summary>
 		[TestMethod]
-		public void FilterByArtistName_NotPNameDoesNotEndInP_QueryJustAboveMinLengthForContains_Found() {
-
+		public void FilterByArtistName_NotPNameDoesNotEndInP_QueryJustAboveMinLengthForContains_Found()
+		{
 			var result = FilterByArtistName("Hir");
 
 			SequenceEqual(result, "result", "Hiroyuki ODA");
-
 		}
 
 		/// <summary>
@@ -105,14 +102,11 @@ namespace VocaDb.Tests.Service {
 		/// Hiroyuki -> Hiroyuki ODA
 		/// </summary>
 		[TestMethod]
-		public void FilterByArtistName_NotPName_QueryLongEnoughForContains_Found() {
-
+		public void FilterByArtistName_NotPName_QueryLongEnoughForContains_Found()
+		{
 			var result = FilterByArtistName("Hiroyuki");
 
 			SequenceEqual(result, "result", "Hiroyuki ODA");
-
 		}
-
 	}
-
 }

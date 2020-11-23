@@ -1,7 +1,7 @@
-namespace VocaDb.Model.Domain.ExtLinks {
-
-	public enum WebLinkCategory {
-
+namespace VocaDb.Model.Domain.ExtLinks
+{
+	public enum WebLinkCategory
+	{
 		Official,
 
 		Commercial,
@@ -9,7 +9,5 @@ namespace VocaDb.Model.Domain.ExtLinks {
 		Reference,
 
 		Other
-
 	}
-
 }

@@ -10,11 +10,12 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 
-namespace VocaDb.Model.Database.Queries {
-
-	public class ActivityEntryQueries {
-
-		public class EditsPerDay {
+namespace VocaDb.Model.Database.Queries
+{
+	public class ActivityEntryQueries
+	{
+		public class EditsPerDay
+		{
 			public int Count { get; set; }
 			public int Day { get; set; }
 			public int Month { get; set; }
@@ -30,22 +31,22 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly EntryForApiContractFactory entryForApiContractFactory;
 
 		public ActivityEntryQueries(IRepository repository, IUserIconFactory userIconFactory,
-			IUserPermissionContext permissionContext, EntryForApiContractFactory entryForApiContractFactory) {
-
+			IUserPermissionContext permissionContext, EntryForApiContractFactory entryForApiContractFactory)
+		{
 			this.repository = repository;
 			this.userIconFactory = userIconFactory;
 			this.permissionContext = permissionContext;
 			this.entryForApiContractFactory = entryForApiContractFactory;
-
 		}
 
-		public ICollection<Tuple<DateTime, int>> GetEditsPerDay(int? userId, DateTime? cutoff) {
-			
-			var values = repository.HandleQuery(ctx => {
-
+		public ICollection<Tuple<DateTime, int>> GetEditsPerDay(int? userId, DateTime? cutoff)
+		{
+			var values = repository.HandleQuery(ctx =>
+			{
 				var query = ctx.Query<ActivityEntry>();
 
-				if (userId.HasValue) {
+				if (userId.HasValue)
+				{
 					query = query.Where(a => a.Author.Id == userId.Value);
 				}
 
@@ -56,25 +57,25 @@ namespace VocaDb.Model.Database.Queries {
 					.OrderBy(a => a.CreateDate.Year)
 					.ThenBy(a => a.CreateDate.Month)
 					.ThenBy(a => a.CreateDate.Day)
-					.GroupBy(a => new {
-						Year = a.CreateDate.Year, 
+					.GroupBy(a => new
+					{
+						Year = a.CreateDate.Year,
 						Month = a.CreateDate.Month,
 						Day = a.CreateDate.Day
 					})
-					.Select(a => new {
+					.Select(a => new
+					{
 						a.Key.Year,
 						a.Key.Month,
 						a.Key.Day,
 						Count = a.Count()
 					})
 					.ToArray();
-
 			});
 
 			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
 
 			return points;
-
 		}
 
 		public PartialFindResult<ActivityEntryForApiContract> GetList(
@@ -86,31 +87,36 @@ namespace VocaDb.Model.Database.Queries {
 			bool getTotalCount = false,
 			ActivityEntryOptionalFields fields = ActivityEntryOptionalFields.None,
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
+			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+		{
 			maxResults = Math.Min(maxResults, absoluteMax);
 
-			return repository.HandleQuery(ctx => {
-
+			return repository.HandleQuery(ctx =>
+			{
 				var query = ctx.Query<ActivityEntry>();
 
-				if (before.HasValue && !since.HasValue) {
+				if (before.HasValue && !since.HasValue)
+				{
 					query = query.Where(a => a.CreateDate < before.Value);
 				}
 
-				if (!before.HasValue && since.HasValue) {
+				if (!before.HasValue && since.HasValue)
+				{
 					query = query.Where(a => a.CreateDate > since.Value);
 				}
 
-				if (before.HasValue && since.HasValue) {
+				if (before.HasValue && since.HasValue)
+				{
 					query = query.Where(a => a.CreateDate > since.Value && a.CreateDate < before.Value);
 				}
 
-				if (userId.HasValue) {
+				if (userId.HasValue)
+				{
 					query = query.Where(a => a.Author.Id == userId.Value);
 				}
 
-				if (editEvent.HasValue) {
+				if (editEvent.HasValue)
+				{
 					query = query.Where(a => a.EditEvent == editEvent.Value);
 				}
 
@@ -127,11 +133,7 @@ namespace VocaDb.Model.Database.Queries {
 				var count = getTotalCount ? query.Count() : 0;
 
 				return PartialFindResult.Create(activityEntries, count);
-
 			});
-
 		}
-
 	}
-
 }

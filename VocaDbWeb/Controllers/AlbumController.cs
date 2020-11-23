@@ -30,107 +30,102 @@ using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers
 {
-    public class AlbumController : ControllerBase
-    {
-
+	public class AlbumController : ControllerBase
+	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly AlbumDescriptionGenerator albumDescriptionGenerator;
 		private readonly MarkdownParser markdownParser;
-	    private readonly AlbumQueries queries;
-	    private readonly UserQueries userQueries;
+		private readonly AlbumQueries queries;
+		private readonly UserQueries userQueries;
 
 		private AlbumService Service { get; set; }
 
-		private AlbumEditViewModel CreateAlbumEditViewModel(int id, AlbumForEditContract editedAlbum) {
+		private AlbumEditViewModel CreateAlbumEditViewModel(int id, AlbumForEditContract editedAlbum)
+		{
 			return Service.GetAlbum(id, album => new AlbumEditViewModel(new AlbumContract(album, PermissionContext.LanguagePreference), PermissionContext,
 				EntryPermissionManager.CanDelete(PermissionContext, album), editedAlbum));
 		}
 
 		public AlbumController(AlbumService service, AlbumQueries queries, UserQueries userQueries, AlbumDescriptionGenerator albumDescriptionGenerator,
-			MarkdownParser markdownParser) {
-
+			MarkdownParser markdownParser)
+		{
 			Service = service;
 			this.queries = queries;
 			this.userQueries = userQueries;
 			this.albumDescriptionGenerator = albumDescriptionGenerator;
 			this.markdownParser = markdownParser;
-
 		}
 
-		public ActionResult ArchivedVersionCoverPicture(int id = invalidId) {
-
+		public ActionResult ArchivedVersionCoverPicture(int id = invalidId)
+		{
 			if (id == invalidId)
 				return NoId();
 
 			var contract = Service.GetArchivedAlbumPicture(id);
 
 			return Picture(contract);
-
 		}
 
-		public ActionResult ArchivedVersionXml(int id) {
-
+		public ActionResult ArchivedVersionXml(int id)
+		{
 			var doc = queries.GetVersionXml<ArchivedAlbumVersion>(id);
 			var content = XmlHelper.SerializeToUTF8XmlString(doc);
 
 			return Xml(content);
-
 		}
 
 		[HttpPost]
 		[RestrictBannedIP]
-		public void CreateReport(int albumId, AlbumReportType reportType, string notes, int? versionNumber) {
-
+		public void CreateReport(int albumId, AlbumReportType reportType, string notes, int? versionNumber)
+		{
 			queries.CreateReport(albumId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
-
 		}
 
-        //
-        // GET: /Album/
+		//
+		// GET: /Album/
 
-		public ActionResult Index(IndexRouteParams routeParams) {
-
-			return RedirectToAction("Index", "Search", new SearchRouteParams {
-				searchType = EntryType.Album, filter = routeParams.filter, sort = routeParams.sort,
+		public ActionResult Index(IndexRouteParams routeParams)
+		{
+			return RedirectToAction("Index", "Search", new SearchRouteParams
+			{
+				searchType = EntryType.Album,
+				filter = routeParams.filter,
+				sort = routeParams.sort,
 				discType = routeParams.discType
 			});
+		}
 
-        }
-
-		public ActionResult FindDuplicate(string term1, string term2, string term3) {
-
+		public ActionResult FindDuplicate(string term1, string term2, string term3)
+		{
 			var result = Service.FindDuplicates(new[] { term1, term2, term3 });
 			var contracts = result.Select(f => new DuplicateEntryResultContract<AlbumMatchProperty>(f, AlbumMatchProperty.Title)).ToArray();
 
 			return LowercaseJson(contracts);
-
 		}
 
-		public ActionResult PopupContent(int id = invalidId) {
-
+		public ActionResult PopupContent(int id = invalidId)
+		{
 			if (id == invalidId)
 				return HttpNotFound();
 
 			var album = Service.GetAlbum(id);
 			return PartialView("AlbumPopupContent", album);
-
 		}
 
-		public ActionResult PopupWithCoverContent(int id = invalidId) {
-
+		public ActionResult PopupWithCoverContent(int id = invalidId)
+		{
 			if (id == invalidId)
 				return HttpNotFound();
 
 			var album = Service.GetAlbum(id);
 			return PartialView("AlbumWithCoverPopupContent", album);
-
 		}
 
-        //
-        // GET: /Album/Details/5
+		//
+		// GET: /Album/Details/5
 
-        public ActionResult Details(int id = invalidId) {
-
+		public ActionResult Details(int id = invalidId)
+		{
 			if (id == invalidId)
 				return NoId();
 
@@ -147,33 +142,38 @@ namespace VocaDb.Web.Controllers
 			prop.OpenGraph.ShowTwitterCard = true;
 
 			string titleAndArtist;
-			if (!string.IsNullOrEmpty(model.ArtistString)) {
+			if (!string.IsNullOrEmpty(model.ArtistString))
+			{
 				titleAndArtist = string.Format("{0} - {1}", model.Name, model.ArtistString);
-			} else {
+			}
+			else
+			{
 				titleAndArtist = model.Name;
 			}
 
-			PageProperties.OpenGraph.Title =  string.Format("{0} ({1})", titleAndArtist, Translate.DiscTypeName(model.DiscType));
+			PageProperties.OpenGraph.Title = string.Format("{0} ({1})", titleAndArtist, Translate.DiscTypeName(model.DiscType));
 
 			PageProperties.PageTitle = titleAndArtist;
 			PageProperties.Subtitle = string.Format("{0} ({1})", model.ArtistString, Translate.DiscTypeName(model.DiscType));
 
-			prop.Description = !model.Description.IsEmpty ? 
+			prop.Description = !model.Description.IsEmpty ?
 				markdownParser.GetPlainText(model.Description.EnglishOrOriginal) :
 				albumDescriptionGenerator.GenerateDescription(model, d => Translate.DiscTypeNames.GetName(d, CultureInfo.InvariantCulture));
 
-            return View(new AlbumDetails(model, PermissionContext));
+			return View(new AlbumDetails(model, PermissionContext));
+		}
 
-        }
-
-		public ActionResult DownloadTags(int id = invalidId, string formatString = "", int? discNumber = null, bool setFormatString = false, bool includeHeader = false) {
-
+		public ActionResult DownloadTags(int id = invalidId, string formatString = "", int? discNumber = null, bool setFormatString = false, bool includeHeader = false)
+		{
 			if (id == invalidId)
 				return NoId();
 
-			if (setFormatString) {
+			if (setFormatString)
+			{
 				userQueries.SetAlbumFormatString(formatString);
-			} else if (string.IsNullOrEmpty(formatString) && PermissionContext.IsLoggedIn) {
+			}
+			else if (string.IsNullOrEmpty(formatString) && PermissionContext.IsLoggedIn)
+			{
 				formatString = PermissionContext.LoggedUser.AlbumFormatString;
 			}
 
@@ -187,42 +187,38 @@ namespace VocaDb.Web.Controllers
 			var data = enc.GetPreamble().Concat(enc.GetBytes(tagString)).ToArray();
 
 			return File(data, "text/csv", album.Name + ".csv");
-
 		}
 
 		//[OutputCache(Duration = pictureCacheDurationSec, Location = OutputCacheLocation.Any, VaryByParam = "id,v")]
-		public ActionResult CoverPicture(int id = invalidId) {
-
+		public ActionResult CoverPicture(int id = invalidId)
+		{
 			if (id == invalidId)
 				return HttpNotFound();
 
 			var album = Service.GetCoverPicture(id);
 
 			return Picture(album);
-
 		}
 
-		public ActionResult CoverPictureThumb(int id = invalidId) {
-
-			if (id == invalidId) 
+		public ActionResult CoverPictureThumb(int id = invalidId)
+		{
+			if (id == invalidId)
 				return HttpNotFound();
 
 			var data = queries.GetCoverPictureThumb(id);
 			return Picture(data);
-
 		}
 
 		[Authorize]
-		public ActionResult Create() {
-
+		public ActionResult Create()
+		{
 			return View(new Create());
-
 		}
 
 		[HttpPost]
-		public async Task<ActionResult> Create(Create model) {
-
-			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji) 
+		public async Task<ActionResult> Create(Create model)
+		{
+			if (string.IsNullOrWhiteSpace(model.NameOriginal) && string.IsNullOrWhiteSpace(model.NameRomaji)
 				&& string.IsNullOrWhiteSpace(model.NameEnglish))
 				ModelState.AddModelError("Names", ViewRes.EntryCreateStrings.NeedName);
 
@@ -236,43 +232,46 @@ namespace VocaDb.Web.Controllers
 
 			var album = await queries.Create(contract);
 			return RedirectToAction("Edit", new { id = album.Id });
-
 		}
 
-        //
-        // GET: /Album/Edit/5
-        [Authorize]
-        public ActionResult Edit(int id) {
-
+		//
+		// GET: /Album/Edit/5
+		[Authorize]
+		public ActionResult Edit(int id)
+		{
 			CheckConcurrentEdit(EntryType.Album, id);
 
 			return View(CreateAlbumEditViewModel(id, null));
-
-        }
+		}
 
 		//
 		// POST: /Album/Edit/5
 
 		[HttpPost]
 		[Authorize]
-		public async Task<ActionResult> Edit(AlbumEditViewModel viewModel) {
-
+		public async Task<ActionResult> Edit(AlbumEditViewModel viewModel)
+		{
 			// Unable to continue if viewmodel is null because we need the ID at least
-			if (viewModel == null || viewModel.EditedAlbum == null) {
+			if (viewModel == null || viewModel.EditedAlbum == null)
+			{
 				log.Warn("Viewmodel was null");
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");
 			}
 
-			try {
+			try
+			{
 				viewModel.CheckModel();
-			} catch (InvalidFormException x) {
+			}
+			catch (InvalidFormException x)
+			{
 				AddFormSubmissionError(x.Message);
 			}
 
 			var model = viewModel.EditedAlbum;
 
 			// Note: name is allowed to be whitespace, but not empty.
-			if (model.Names != null && model.Names.All(n => n == null || string.IsNullOrEmpty(n.Value))) {
+			if (model.Names != null && model.Names.All(n => n == null || string.IsNullOrEmpty(n.Value)))
+			{
 				ModelState.AddModelError("Names", AlbumValidationErrors.UnspecifiedNames);
 			}
 
@@ -282,159 +281,149 @@ namespace VocaDb.Web.Controllers
 			var coverPicUpload = Request.Files["coverPicUpload"];
 			var pictureData = ParsePicture(coverPicUpload, "CoverPicture", ImagePurpose.Main);
 
-			if (coverPicUpload == null) {
+			if (coverPicUpload == null)
+			{
 				AddFormSubmissionError("Cover picture was null");
 			}
 
-			if (model.Pictures == null) {
+			if (model.Pictures == null)
+			{
 				AddFormSubmissionError("List of pictures was null");
 			}
 
-			if (coverPicUpload != null && model.Pictures != null) {
+			if (coverPicUpload != null && model.Pictures != null)
+			{
 				ParseAdditionalPictures(coverPicUpload, model.Pictures);
 			}
 
-			if (!ModelState.IsValid) {
+			if (!ModelState.IsValid)
+			{
 				return View(CreateAlbumEditViewModel(model.Id, model));
 			}
 
-			try {
+			try
+			{
 				await queries.UpdateBasicProperties(model, pictureData);
-			} catch (InvalidPictureException) {
+			}
+			catch (InvalidPictureException)
+			{
 				ModelState.AddModelError("ImageError", "The uploaded image could not processed, it might be broken. Please check the file and try again.");
 				return View(CreateAlbumEditViewModel(model.Id, model));
 			}
 
 			return RedirectToAction("Details", new { id = model.Id });
-
 		}
 
-		public ActionResult Related(int id = invalidId) {
-
+		public ActionResult Related(int id = invalidId)
+		{
 			if (id == invalidId)
 				return NoId();
 
 			var related = queries.GetRelatedAlbums(id);
 			return PartialView("RelatedAlbums", related);
-
 		}
 
 		[Authorize]
-		public ActionResult RemoveTagUsage(long id) {
-
+		public ActionResult RemoveTagUsage(long id)
+		{
 			var albumId = queries.RemoveTagUsage(id);
 			TempData.SetStatusMessage("Tag usage removed");
 
 			return RedirectToAction("ManageTagUsages", new { id = albumId });
-
 		}
 
-		public ActionResult Restore(int id) {
-
+		public ActionResult Restore(int id)
+		{
 			Service.Restore(id);
 
 			return RedirectToAction("Edit", new { id = id });
-
 		}
 
-		public ActionResult RevertToVersion(int archivedAlbumVersionId) {
-
+		public ActionResult RevertToVersion(int archivedAlbumVersionId)
+		{
 			var result = queries.RevertToVersion(archivedAlbumVersionId);
 
 			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
 
 			return RedirectToAction("Edit", new { id = result.Id });
-
 		}
 
 		[Authorize]
-		public ActionResult Deleted() {
-
+		public ActionResult Deleted()
+		{
 			return View();
-
 		}
 
 		[Authorize]
-		public ActionResult ManageTagUsages(int id) {
-
+		public ActionResult ManageTagUsages(int id)
+		{
 			var album = Service.GetEntryWithTagUsages(id);
 			return View(album);
-
 		}
 
-		public ActionResult Merge(int id) {
-
+		public ActionResult Merge(int id)
+		{
 			var album = Service.GetAlbum(id);
 			return View(album);
-
 		}
 
 		[HttpPost]
-		public ActionResult Merge(int id, int targetAlbumId) {
-
+		public ActionResult Merge(int id, int targetAlbumId)
+		{
 			queries.Merge(id, targetAlbumId);
 
 			return RedirectToAction("Edit", new { id = targetAlbumId });
-
 		}
 
 		[Authorize]
-		public ActionResult MoveToTrash(int id) {
-
+		public ActionResult MoveToTrash(int id)
+		{
 			queries.MoveToTrash(id);
 
 			TempData.SetStatusMessage("Entry moved to trash");
 
 			return RedirectToAction("Deleted");
-
 		}
 
-		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden) {
-
+		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
+		{
 			queries.UpdateVersionVisibility<ArchivedAlbumVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
-
 		}
 
-		public ActionResult UsersWithAlbumInCollection(int albumId = invalidId) {
-
+		public ActionResult UsersWithAlbumInCollection(int albumId = invalidId)
+		{
 			if (albumId == invalidId)
 				return NoId();
 
 			var users = Service.GetUsersWithAlbumInCollection(albumId);
 			return PartialView(users);
-
 		}
 
-		public ActionResult Versions(int id = invalidId) {
-
+		public ActionResult Versions(int id = invalidId)
+		{
 			if (id == invalidId)
 				return NoId();
 
 			var contract = Service.GetAlbumWithArchivedVersions(id);
 
 			return View(new Versions(contract));
-
 		}
 
-		public ActionResult ViewVersion(int id = invalidId, int? ComparedVersionId = 0) {
-
+		public ActionResult ViewVersion(int id = invalidId, int? ComparedVersionId = 0)
+		{
 			if (id == invalidId)
 				return NoId();
 
 			var contract = Service.GetVersionDetails(id, ComparedVersionId ?? 0);
 
 			return View(contract);
-
 		}
-
-    }
-
-	public enum AlbumMatchProperty {
-
-		Title,
-
 	}
 
+	public enum AlbumMatchProperty
+	{
+		Title,
+	}
 }

@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.Service.VideoServices {
-
-	public class VideoService : IVideoService {
-
+namespace VocaDb.Model.Service.VideoServices
+{
+	public class VideoService : IVideoService
+	{
 		public static readonly VideoService Bandcamp = new VideoServiceBandcamp();
 
 		public static readonly VideoService Bilibili = new VideoServiceBilibili();
@@ -57,7 +57,8 @@ namespace VocaDb.Model.Service.VideoServices {
 		protected readonly RegexLinkMatcher[] linkMatchers;
 		private readonly IVideoServiceParser parser;
 
-		protected VideoService(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers) {
+		protected VideoService(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
+		{
 			Service = service;
 			this.parser = parser;
 			this.linkMatchers = linkMatchers;
@@ -65,30 +66,27 @@ namespace VocaDb.Model.Service.VideoServices {
 
 		public PVService Service { get; private set; }
 
-		public virtual string GetIdByUrl(string url) {
-
+		public virtual string GetIdByUrl(string url)
+		{
 			var matcher = linkMatchers.FirstOrDefault(m => m.IsMatch(url));
 
 			if (matcher == null)
 				return null;
 
 			return matcher.GetId(url);
-
 		}
 
-		public virtual string GetThumbUrlById(string id) {
-
+		public virtual string GetThumbUrlById(string id)
+		{
 			return null;
-
 		}
 
 		public virtual string GetMaxSizeThumbUrlById(string id) => GetThumbUrlById(id);
 
-		public virtual string GetUrlById(string id, PVExtendedMetadata extendedMetadata) {
-
+		public virtual string GetUrlById(string id, PVExtendedMetadata extendedMetadata)
+		{
 			var matcher = linkMatchers.First();
 			return string.Format("http://{0}", matcher.MakeLinkFromId(id));
-
 		}
 
 		public virtual IEnumerable<string> GetUserProfileUrls(string authorId) => Enumerable.Empty<string>();
@@ -100,39 +98,36 @@ namespace VocaDb.Model.Service.VideoServices {
 		/// </summary>
 		/// <param name="permissionContext">Permission context. Can be null (when no user is logged in).</param>
 		/// <returns>True if the user authorized to add PVs for this service, otherwise false.</returns>
-		public virtual bool IsAuthorized(IUserPermissionContext permissionContext) {
+		public virtual bool IsAuthorized(IUserPermissionContext permissionContext)
+		{
 			return true;
 		}
 
-		public virtual bool IsValidFor(string url) {
-
+		public virtual bool IsValidFor(string url)
+		{
 			return linkMatchers.Any(m => m.IsMatch(url));
-
 		}
 
-		public virtual Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
-
+		public virtual Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
+		{
 			var id = GetIdByUrl(url);
 
-			if (id == null) {
+			if (id == null)
+			{
 				return Task.FromResult(VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.NoMatcher));
 			}
 
 			return ParseByIdAsync(id, url, getTitle);
-
 		}
 
-		protected virtual async Task<VideoUrlParseResult> ParseByIdAsync(string id, string url, bool getMeta) {
-
+		protected virtual async Task<VideoUrlParseResult> ParseByIdAsync(string id, string url, bool getMeta)
+		{
 			var meta = (getMeta ? await GetVideoTitleAsync(id) : VideoTitleParseResult.Empty) ?? VideoTitleParseResult.Empty;
 
 			// Note that even if meta lookup failed, we're returning Ok here, because for example NND API doesn't support all PVs.
 			// Metadata is optional. We should only return an error if the metadata is mandatory or there was a fatal unhandled error.
 
 			return VideoUrlParseResult.CreateOk(url, Service, id, meta);
-
 		}
-
 	}
-
 }

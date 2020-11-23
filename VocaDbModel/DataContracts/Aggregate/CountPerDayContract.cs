@@ -1,21 +1,24 @@
 ﻿using System;
 
-namespace VocaDb.Model.DataContracts.Aggregate {
-
-	public class CountPerDayContract {
-
-		public CountPerDayContract() {
+namespace VocaDb.Model.DataContracts.Aggregate
+{
+	public class CountPerDayContract
+	{
+		public CountPerDayContract()
+		{
 			Day = 1;
 		}
 
-		public CountPerDayContract(int year, int month, int day, int count) {
+		public CountPerDayContract(int year, int month, int day, int count)
+		{
 			Year = year;
 			Month = month;
 			Day = day;
 			Count = count;
 		}
 
-		public CountPerDayContract(DateTime dt, int count) {
+		public CountPerDayContract(DateTime dt, int count)
+		{
 			Year = dt.Year;
 			Month = dt.Month;
 			Day = dt.Day;
@@ -27,10 +30,9 @@ namespace VocaDb.Model.DataContracts.Aggregate {
 		public int Day { get; set; }
 		public int Count { get; set; }
 
-		public DateTime ToDateTime() {
+		public DateTime ToDateTime()
+		{
 			return new DateTime(Year, Month, Day);
 		}
-
 	}
-
 }

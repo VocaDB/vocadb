@@ -1,12 +1,12 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.ReleaseEvents;
 
-namespace VocaDb.Model.Mapping.ReleaseEvents {
-
-	public class EventTagUsageMap : ClassMap<EventTagUsage> {
-
-		public EventTagUsageMap() {
-
+namespace VocaDb.Model.Mapping.ReleaseEvents
+{
+	public class EventTagUsageMap : ClassMap<EventTagUsage>
+	{
+		public EventTagUsageMap()
+		{
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
@@ -16,22 +16,17 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 			References(m => m.Entry).Column("[Event]").Not.Nullable();
 			References(m => m.Tag).Not.Nullable();
 			HasMany(m => m.Votes).KeyColumn("[Usage]").Inverse().Cascade.AllDeleteOrphan();
-
 		}
-
 	}
 
-	public class EventTagVoteMap : ClassMap<EventTagVote> {
-
-		public EventTagVoteMap() {
-
+	public class EventTagVoteMap : ClassMap<EventTagVote>
+	{
+		public EventTagVoteMap()
+		{
 			Id(m => m.Id);
 
 			References(m => m.User).Not.Nullable();
 			References(m => m.Usage).Not.Nullable();
-
 		}
-
 	}
-
 }

@@ -2,16 +2,16 @@
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
-
+namespace VocaDb.Model.DataContracts.Songs
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongInAlbumContract {
-
-		public SongInAlbumContract() {}
+	public class SongInAlbumContract
+	{
+		public SongInAlbumContract() { }
 
 		public SongInAlbumContract(SongInAlbum songInAlbum, ContentLanguagePreference languagePreference, bool getThumbUrl = true,
-			SongVoteRating? rating = null) {
-			
+			SongVoteRating? rating = null)
+		{
 			ParamIs.NotNull(() => songInAlbum);
 
 			DiscNumber = songInAlbum.DiscNumber;
@@ -22,7 +22,6 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Song = song != null ? new SongContract(song, languagePreference, getThumbUrl) : null;
 			Name = Song != null ? Song.Name : songInAlbum.Name;
 			Rating = rating;
-
 		}
 
 		[DataMember]
@@ -43,10 +42,9 @@ namespace VocaDb.Model.DataContracts.Songs {
 		[DataMember]
 		public int TrackNumber { get; set; }
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("({0}.{1}) {2} in album", DiscNumber, TrackNumber, Song);
 		}
-
 	}
-
 }

@@ -5,10 +5,10 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Utils.Config;
 
-namespace VocaDb.Model.Utils {
-
-	public static class AppConfig {
-
+namespace VocaDb.Model.Utils
+{
+	public static class AppConfig
+	{
 		private static DiscType[] albumTypes;
 		private static ArtistType[] artistTypes;
 		private static ArtistRoles[] artistRoles;
@@ -61,36 +61,36 @@ namespace VocaDb.Model.Utils {
 			SongType.Other
 		};
 
-		private static string Val(string key) {
+		private static string Val(string key)
+		{
 			return ConfigurationManager.AppSettings[key];
 		}
 
-		private static bool Val(string key, bool def) {
-
+		private static bool Val(string key, bool def)
+		{
 			var val = Val(key);
 			return (bool.TryParse(val, out var boolVal)) ? boolVal : def;
-			
 		}
 
-		private static int Val(string key, int def) {
-
+		private static int Val(string key, int def)
+		{
 			var val = Val(key);
 			return (int.TryParse(val, out var boolVal)) ? boolVal : def;
-
 		}
 
 		public static bool AllowCustomArtistName => Val("AllowCustomArtistName", false);
 
-		public static DiscType[] AlbumTypes {
-			get {
-
-				if (albumTypes == null) {
+		public static DiscType[] AlbumTypes
+		{
+			get
+			{
+				if (albumTypes == null)
+				{
 					var val = Val("AlbumTypes");
 					albumTypes = !string.IsNullOrEmpty(val) ? EnumVal<DiscType>.ParseMultiple(val) : DefaultDiscTypes;
 				}
 
 				return albumTypes;
-
 			}
 		}
 
@@ -106,29 +106,31 @@ namespace VocaDb.Model.Utils {
 		/// </summary>
 		public static bool AllowRepeatingProducerAsPerformer => Val("AllowRepeatingProducerAsPerformer", false);
 
-		public static ArtistType[] ArtistTypes {
-			get {
-				
-				if (artistTypes == null) {
+		public static ArtistType[] ArtistTypes
+		{
+			get
+			{
+				if (artistTypes == null)
+				{
 					var val = Val("ArtistTypes");
 					artistTypes = !string.IsNullOrEmpty(val) ? EnumVal<ArtistType>.ParseMultiple(val) : EnumVal<ArtistType>.Values;
 				}
 
 				return artistTypes;
-
 			}
 		}
 
-		public static ArtistRoles[] ArtistRoles {
-			get {
-				
-				if (artistRoles == null) {
+		public static ArtistRoles[] ArtistRoles
+		{
+			get
+			{
+				if (artistRoles == null)
+				{
 					var val = Val("ArtistRoles");
 					artistRoles = !string.IsNullOrEmpty(val) ? EnumVal<ArtistRoles>.ParseMultiple(val) : DefaultValidRoles;
 				}
 
 				return artistRoles;
-
 			}
 		}
 
@@ -154,18 +156,18 @@ namespace VocaDb.Model.Utils {
 
 		public static string GADomain => Val(nameof(GADomain));
 
-		public static GlobalLinksSection GetGlobalLinksSection() {
-		
+		public static GlobalLinksSection GetGlobalLinksSection()
+		{
 			var appLinks = (LinksSection)ConfigurationManager.GetSection("vocaDb/globalLinks/appLinks");
 			var bigBanners = (LinksSection)ConfigurationManager.GetSection("vocaDb/globalLinks/bigBanners");
 			var smallBanners = (LinksSection)ConfigurationManager.GetSection("vocaDb/globalLinks/smallBanners");
 			var socialSites = (LinksSection)ConfigurationManager.GetSection("vocaDb/globalLinks/socialSites");
 
-			return new  GlobalLinksSection { AppLinks = appLinks, BigBanners = bigBanners, SmallBanners  = smallBanners, SocialSites = socialSites };
-
+			return new GlobalLinksSection { AppLinks = appLinks, BigBanners = bigBanners, SmallBanners = smallBanners, SocialSites = socialSites };
 		}
 
-		public static SlogansSection GetSlogansSection() {
+		public static SlogansSection GetSlogansSection()
+		{
 			return (SlogansSection)ConfigurationManager.GetSection("vocaDb/slogans");
 		}
 
@@ -181,8 +183,10 @@ namespace VocaDb.Model.Utils {
 		/// Preferred artist types when parsing Nico PVs.
 		/// For VocaDB Vocaloids are expected instead of human vocalists.
 		/// </summary>
-		public static ArtistType[] PreferredNicoArtistTypes {
-			get {
+		public static ArtistType[] PreferredNicoArtistTypes
+		{
+			get
+			{
 				var val = Val("PreferredNicoArtistTypes");
 				return !string.IsNullOrEmpty(val) ? EnumVal<ArtistType>.ParseMultiple(val) : new ArtistType[0];
 			}
@@ -194,16 +198,17 @@ namespace VocaDb.Model.Utils {
 
 		public static SiteSettingsSection SiteSettings => new VdbConfigManager().SiteSettings;
 
-		public static SongType[] SongTypes {
-			get {
-				
-				if (songTypes == null) {
+		public static SongType[] SongTypes
+		{
+			get
+			{
+				if (songTypes == null)
+				{
 					var val = Val("SongTypes");
 					songTypes = !string.IsNullOrEmpty(val) ? EnumVal<SongType>.ParseMultiple(val) : DefaultSongTypes;
 				}
 
 				return songTypes;
-
 			}
 		}
 
@@ -220,6 +225,5 @@ namespace VocaDb.Model.Utils {
 		public static string YoutubeApiKey => Val("YoutubeApiKey");
 
 		public static string VimeoApiKey => Val("VimeoApiKey");
-
 	}
 }

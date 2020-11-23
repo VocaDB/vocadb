@@ -1,7 +1,7 @@
-﻿namespace VocaDb.Model.Service.Search {
-
-	public enum AlbumSearchProperty {
-
+﻿namespace VocaDb.Model.Service.Search
+{
+	public enum AlbumSearchProperty
+	{
 		Artist,
 
 		DiscType,
@@ -11,7 +11,5 @@
 		Name,
 
 		Tag
-
 	}
-
 }

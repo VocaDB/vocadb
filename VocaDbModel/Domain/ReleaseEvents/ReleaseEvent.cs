@@ -22,11 +22,11 @@ using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.ReleaseEvents {
-
-	public class ReleaseEvent : IEntryWithNames<EventName>, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink>, IReleaseEvent, 
-		IEntryImageInformation, IEntryWithComments<ReleaseEventComment>, IEntryWithStatus, INameFactory<EventName>, IEntryWithTags<EventTagUsage>, IEntryWithArtistLinks<ArtistForEvent> {
-
+namespace VocaDb.Model.Domain.ReleaseEvents
+{
+	public class ReleaseEvent : IEntryWithNames<EventName>, IEntryWithVersions, IWebLinkFactory<ReleaseEventWebLink>, IReleaseEvent,
+		IEntryImageInformation, IEntryWithComments<ReleaseEventComment>, IEntryWithStatus, INameFactory<EventName>, IEntryWithTags<EventTagUsage>, IEntryWithArtistLinks<ArtistForEvent>
+	{
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 		string IReleaseEvent.Name => DefaultName;
 		INameManager IEntryWithNames.Names => Names;
@@ -49,7 +49,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		private IList<EventForUser> users = new List<EventForUser>();
 		private IList<ReleaseEventWebLink> webLinks = new List<ReleaseEventWebLink>();
 
-		public ReleaseEvent() {
+		public ReleaseEvent()
+		{
 			Category = EventCategory.Unspecified;
 			CreateDate = DateTime.Now;
 			Deleted = false;
@@ -58,21 +59,20 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		}
 
 		public ReleaseEvent(string description, DateTime? date, ContentLanguageSelection defaultNameLanguage)
-			: this() {
-
+			: this()
+		{
 			ParamIs.NotNull(() => names);
 
 			Description = description;
 			Date = date;
 			TranslatedName.DefaultLanguage = defaultNameLanguage;
 			TranslatedName.Clear();
-
 		}
 
 		public ReleaseEvent(string description, DateTime? date, ReleaseEventSeries series, int seriesNumber, string seriesSuffix,
 			ContentLanguageSelection defaultNameLanguage, bool customName)
-			: this() {
-
+			: this()
+		{
 			ParamIs.NotNull(() => series);
 
 			Description = description;
@@ -83,35 +83,43 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			CustomName = customName;
 			TranslatedName.Clear();
 
-			if (customName) {
+			if (customName)
+			{
 				TranslatedName.DefaultLanguage = defaultNameLanguage;
-			} else {
+			}
+			else
+			{
 				TranslatedName.DefaultLanguage = Series.TranslatedName.DefaultLanguage;
 			}
-
 		}
 
 		public virtual IEnumerable<Album> Albums => AllAlbums.Where(a => !a.Deleted);
 
-		public virtual IList<Album> AllAlbums {
+		public virtual IList<Album> AllAlbums
+		{
 			get => albums;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
-				albums = value; 
+				albums = value;
 			}
 		}
 
-		public virtual IList<ArtistForEvent> AllArtists {
+		public virtual IList<ArtistForEvent> AllArtists
+		{
 			get => artists;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				artists = value;
 			}
 		}
 
-		public virtual IList<Song> AllSongs {
+		public virtual IList<Song> AllSongs
+		{
 			get => songs;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				songs = value;
 			}
@@ -119,9 +127,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual bool AllowNotifications => true;
 
-		public virtual ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> ArchivedVersionsManager {
+		public virtual ArchivedVersionManager<ArchivedReleaseEventVersion, ReleaseEventEditableFields> ArchivedVersionsManager
+		{
 			get => archivedVersions;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
 			}
@@ -133,9 +143,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
-		public virtual IList<ReleaseEventComment> Comments {
+		public virtual IList<ReleaseEventComment> Comments
+		{
 			get => comments;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				comments = value;
 			}
@@ -151,11 +163,13 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual bool Deleted { get; set; }
 
-		public virtual string Description {
+		public virtual string Description
+		{
 			get => description;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
-				description = value; 
+				description = value;
 			}
 		}
 
@@ -172,9 +186,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		/// </summary>
 		public virtual EventCategory InheritedCategory => HasSeries ? Series.Category : Category;
 
-		public virtual NameManager<EventName> Names {
+		public virtual NameManager<EventName> Names
+		{
 			get => names;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				names = value;
 			}
@@ -182,24 +198,29 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual string PictureMime { get; set; }
 
-		public virtual PVManager<PVForEvent> PVs {
+		public virtual PVManager<PVForEvent> PVs
+		{
 			get => pvs;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				pvs = value;
 			}
 		}
 
-		public virtual ReleaseEventSeries Series {
+		public virtual ReleaseEventSeries Series
+		{
 			get => series;
 			set => series = value;
 		}
 
 		public virtual int SeriesNumber { get; set; }
 
-		public virtual string SeriesSuffix {
+		public virtual string SeriesSuffix
+		{
 			get => seriesSuffix;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				seriesSuffix = value;
 			}
@@ -211,9 +232,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual EntryStatus Status { get; set; }
 
-		public virtual TagManager<EventTagUsage> Tags {
+		public virtual TagManager<EventTagUsage> Tags
+		{
 			get => tags;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				tags = value;
 			}
@@ -228,9 +251,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		/// </summary>
 		public virtual string UrlSlug => Utils.UrlFriendlyNameFactory.GetUrlFriendlyName(TranslatedName);
 
-		public virtual IList<EventForUser> Users {
+		public virtual IList<EventForUser> Users
+		{
 			get => users;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				users = value;
 			}
@@ -242,26 +267,27 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 		public virtual int Version { get; set; }
 
-		public virtual IList<ReleaseEventWebLink> WebLinks {
+		public virtual IList<ReleaseEventWebLink> WebLinks
+		{
 			get => webLinks;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				webLinks = value;
 			}
 		}
 
-		public virtual ArchivedReleaseEventVersion CreateArchivedVersion(XDocument data, ReleaseEventDiff diff, AgentLoginData author, EntryEditEvent reason, string notes) {
-
+		public virtual ArchivedReleaseEventVersion CreateArchivedVersion(XDocument data, ReleaseEventDiff diff, AgentLoginData author, EntryEditEvent reason, string notes)
+		{
 			var archived = new ArchivedReleaseEventVersion(this, data, diff, author, reason, notes);
 			ArchivedVersionsManager.Add(archived);
 			Version++;
 
 			return archived;
-
 		}
 
-		public virtual Comment CreateComment(string message, AgentLoginData loginData) {
-
+		public virtual Comment CreateComment(string message, AgentLoginData loginData)
+		{
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);
 
@@ -269,37 +295,35 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			Comments.Add(comment);
 
 			return comment;
-
 		}
 
-		public virtual EventName CreateName(string val, ContentLanguageSelection language) {
+		public virtual EventName CreateName(string val, ContentLanguageSelection language)
+		{
 			return CreateName(new LocalizedString(val, language));
 		}
 
-		public virtual EventName CreateName(ILocalizedString localizedString) {
-
+		public virtual EventName CreateName(ILocalizedString localizedString)
+		{
 			ParamIs.NotNull(() => localizedString);
 
 			var name = new EventName(this, localizedString);
 			Names.Add(name);
 
 			return name;
-
 		}
 
-		public virtual PVForEvent CreatePV(PVContract contract) {
-
+		public virtual PVForEvent CreatePV(PVContract contract)
+		{
 			ParamIs.NotNull(() => contract);
 
 			var pv = new PVForEvent(this, contract);
 			PVs.Add(pv);
 
 			return pv;
-
 		}
 
-		public virtual ReleaseEventWebLink CreateWebLink(string description, string url, WebLinkCategory category) {
-
+		public virtual ReleaseEventWebLink CreateWebLink(string description, string url, WebLinkCategory category)
+		{
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
 
@@ -307,11 +331,10 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 			WebLinks.Add(link);
 
 			return link;
-
 		}
 
-		public virtual bool Equals(ReleaseEvent another) {
-
+		public virtual bool Equals(ReleaseEvent another)
+		{
 			if (another == null)
 				return false;
 
@@ -322,71 +345,77 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as ReleaseEvent);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return Id.GetHashCode();
 		}
 
-		private async Task<ArtistForEvent> AddArtist(ArtistForEventContract contract, Func<int, Task<Artist>> artistGetter) {
-
+		private async Task<ArtistForEvent> AddArtist(ArtistForEventContract contract, Func<int, Task<Artist>> artistGetter)
+		{
 			ArtistForEvent link;
 
-			if (contract.Artist == null) {
-				link = new ArtistForEvent(this, null) {
+			if (contract.Artist == null)
+			{
+				link = new ArtistForEvent(this, null)
+				{
 					Name = contract.Name,
 					Roles = contract.Roles
 				};
-			} else {
+			}
+			else
+			{
 				var artist = await artistGetter(contract.Artist.Id);
-				link = new ArtistForEvent(this, artist) {
+				link = new ArtistForEvent(this, artist)
+				{
 					Roles = contract.Roles
 				};
 			}
 
 			AllArtists.Add(link);
 			return link;
-
 		}
 
-		public virtual IEnumerable<LocalizedString> GetNamesFromSeries() {
+		public virtual IEnumerable<LocalizedString> GetNamesFromSeries()
+		{
 			return Series.Names.Select(seriesName => new LocalizedString(Series.GetEventName(SeriesNumber, SeriesSuffix, seriesName.Value), seriesName.Language));
 		}
 
-		public virtual void SetSeries(ReleaseEventSeries newSeries) {
-			
+		public virtual void SetSeries(ReleaseEventSeries newSeries)
+		{
 			if (Equals(Series, newSeries))
 				return;
 
 			Series?.AllEvents.Remove(this);
 			newSeries?.AllEvents.Add(this);
 			Series = newSeries;
-
 		}
 
-		public virtual void SetVenue(Venue newVenue) {
-
+		public virtual void SetVenue(Venue newVenue)
+		{
 			if (Equals(Venue, newVenue))
 				return;
 
 			Venue?.AllEvents.Remove(this);
 			newVenue?.AllEvents.Add(this);
 			Venue = newVenue;
-
 		}
 
 		public virtual async Task<CollectionDiffWithValue<ArtistForEvent, ArtistForEvent>> SyncArtists(
-			IList<ArtistForEventContract> newArtists, Func<int, Task<Artist>> artistGetter) {
-
+			IList<ArtistForEventContract> newArtists, Func<int, Task<Artist>> artistGetter)
+		{
 			ParamIs.NotNull(() => newArtists);
 
-			Task<bool> Update(ArtistForEvent old, ArtistForEventContract newArtist) {
-				if (old.Roles == newArtist.Roles) {
+			Task<bool> Update(ArtistForEvent old, ArtistForEventContract newArtist)
+			{
+				if (old.Roles == newArtist.Roles)
+				{
 					return Task.FromResult(false);
 				}
 				old.Roles = newArtist.Roles;
@@ -395,17 +424,16 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 
 			var diff = await CollectionHelper.SyncWithContentAsync(AllArtists, newArtists, (a1, a2) => a1.Id == a2.Id, async a => await AddArtist(a, artistGetter), Update, null);
 			return diff;
-
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("Release event '{0}' [{1}]", DefaultName, Id);
 		}
-
 	}
 
-	public interface IReleaseEvent : IEntryWithIntId {
+	public interface IReleaseEvent : IEntryWithIntId
+	{
 		string Name { get; }
 	}
-
 }

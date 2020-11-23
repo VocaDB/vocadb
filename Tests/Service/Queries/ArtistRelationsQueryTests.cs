@@ -7,14 +7,14 @@ using VocaDb.Model.Service.Queries;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Service.Queries {
-
+namespace VocaDb.Tests.Service.Queries
+{
 	/// <summary>
 	/// Tests for <see cref="ArtistRelationsQuery"/>.
 	/// </summary>
 	[TestClass]
-	public class ArtistRelationsQueryTests {
-
+	public class ArtistRelationsQueryTests
+	{
 		private readonly Artist artist;
 		private readonly FakeUserRepository repository = new FakeUserRepository();
 		private readonly ArtistRelationsQuery query;
@@ -22,7 +22,8 @@ namespace VocaDb.Tests.Service.Queries {
 		private readonly Song song2;
 		private readonly Artist voicebank;
 
-		public ArtistRelationsQueryTests() {
+		public ArtistRelationsQueryTests()
+		{
 			artist = repository.Save(CreateEntry.Artist(ArtistType.Producer));
 			voicebank = repository.Save(CreateEntry.Artist(ArtistType.Vocaloid));
 			song = repository.Save(CreateEntry.Song());
@@ -34,61 +35,54 @@ namespace VocaDb.Tests.Service.Queries {
 		}
 
 		[TestMethod]
-		public void LatestSongs() {
-
+		public void LatestSongs()
+		{
 			var result = query.GetRelations(artist, ArtistRelationsFields.LatestSongs);
 
 			Assert.AreEqual(2, result.LatestSongs.Length, "Number of songs");
 			Assert.IsTrue(result.LatestSongs.Any(s => s.Id == song.Id), "Song as expected");
-
 		}
 
 		// Songs for the vocal data provider are ignored
 		[TestMethod]
-		public void LatestSongs_VocalDataProvider() {
-
+		public void LatestSongs_VocalDataProvider()
+		{
 			song.GetArtistLink(artist).Roles = ArtistRoles.VocalDataProvider;
 			var result = query.GetRelations(artist, ArtistRelationsFields.LatestSongs);
 
 			Assert.AreEqual(1, result.LatestSongs.Length, "Number of songs");
 			Assert.AreEqual(song2.Id, result.LatestSongs.First().Id, "Song as expected");
-
 		}
 
 		[TestMethod]
-		public void TopVoicebanks() {
-
+		public void TopVoicebanks()
+		{
 			var result = query.GetTopVoicebanks(artist);
 
 			// artist has song with voicebank
 			Assert.AreEqual(1, result.Length, "Number of voicebanks");
 			Assert.AreEqual(voicebank.Id, result[0].Data.Id, "Artist as expected");
-
 		}
 
 		// Only producer roles count
 		[TestMethod]
-		public void TopVoicebanks_IgnoredRoles() {
-
+		public void TopVoicebanks_IgnoredRoles()
+		{
 			// Vocal data provider role is ignored
 			song.GetArtistLink(artist).Roles = ArtistRoles.VocalDataProvider;
 			var result = query.GetTopVoicebanks(artist);
 
 			Assert.AreEqual(0, result.Length, "Number of voicebanks");
-
 		}
 
 		[TestMethod]
-		public void TopVoicebanks_IgnoredAndAllowedRoles() {
-
+		public void TopVoicebanks_IgnoredAndAllowedRoles()
+		{
 			// Vocal data provider role is ignored, but VoiceManipulator allows the song to be included.
 			song.GetArtistLink(artist).Roles = ArtistRoles.VoiceManipulator | ArtistRoles.VocalDataProvider;
 			var result = query.GetTopVoicebanks(artist);
 
 			Assert.AreEqual(1, result.Length, "Number of voicebanks");
-
 		}
-
 	}
-
 }

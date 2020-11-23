@@ -1,7 +1,7 @@
-﻿namespace VocaDb.Model.Domain.Globalization {
-
-	public interface ITranslatedString {
-
+﻿namespace VocaDb.Model.Domain.Globalization
+{
+	public interface ITranslatedString
+	{
 		ContentLanguageSelection DefaultLanguage { get; set; }
 
 		/// <summary>
@@ -21,7 +21,5 @@
 		/// TODO: currently this can be null/empty, but that should be changed for all new fields.
 		/// </summary>
 		string Romaji { get; set; }
-
 	}
-
 }

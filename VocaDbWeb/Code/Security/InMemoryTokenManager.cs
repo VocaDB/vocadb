@@ -12,7 +12,8 @@ using DotNetOpenAuth.OAuth.Messages;
 using DotNetOpenAuth.OpenId.Extensions.OAuth;
 using NLog;
 
-namespace VocaDb.Web.Code.Security {
+namespace VocaDb.Web.Code.Security
+{
 	/// <summary>
 	/// A token manager that only retains tokens in memory. 
 	/// Meant for SHORT TERM USE TOKENS ONLY.
@@ -22,8 +23,8 @@ namespace VocaDb.Web.Code.Security {
 	/// where the user only signs in without providing any authorization to access
 	/// Twitter APIs except to authenticate, since that access token is only useful once.
 	/// </remarks>
-	internal class InMemoryTokenManager : IConsumerTokenManager, IOpenIdOAuthTokenManager {
-
+	internal class InMemoryTokenManager : IConsumerTokenManager, IOpenIdOAuthTokenManager
+	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly Dictionary<string, string> tokensAndSecrets = new Dictionary<string, string>();
 
@@ -32,8 +33,10 @@ namespace VocaDb.Web.Code.Security {
 		/// </summary>
 		/// <param name="consumerKey">The consumer key.</param>
 		/// <param name="consumerSecret">The consumer secret.</param>
-		public InMemoryTokenManager(string consumerKey, string consumerSecret) {
-			if (string.IsNullOrEmpty(consumerKey)) {
+		public InMemoryTokenManager(string consumerKey, string consumerSecret)
+		{
+			if (string.IsNullOrEmpty(consumerKey))
+			{
 				throw new ArgumentNullException("consumerKey");
 			}
 
@@ -53,7 +56,7 @@ namespace VocaDb.Web.Code.Security {
 		/// <value>The consumer secret.</value>
 		public string ConsumerSecret { get; private set; }
 
-	#region ITokenManager Members
+		#region ITokenManager Members
 
 		/// <summary>
 		/// Gets the Token Secret given a request or access token.
@@ -63,7 +66,8 @@ namespace VocaDb.Web.Code.Security {
 		/// The secret associated with the given token.
 		/// </returns>
 		/// <exception cref="ArgumentException">Thrown if the secret cannot be found for the given token.</exception>
-		public string GetTokenSecret(string token) {
+		public string GetTokenSecret(string token)
+		{
 			log.Info("Requesting secret for token " + token);
 			return this.tokensAndSecrets[token];
 		}
@@ -81,7 +85,8 @@ namespace VocaDb.Web.Code.Security {
 		/// account with access tokens (not request tokens) in the <see cref="ExpireRequestTokenAndStoreNewAccessToken"/>
 		/// method.
 		/// </remarks>
-		public void StoreNewRequestToken(UnauthorizedTokenRequest request, ITokenSecretContainingMessage response) {
+		public void StoreNewRequestToken(UnauthorizedTokenRequest request, ITokenSecretContainingMessage response)
+		{
 			log.Info($"Storing token {response.Token}");
 			this.tokensAndSecrets[response.Token] = response.TokenSecret;
 		}
@@ -109,7 +114,8 @@ namespace VocaDb.Web.Code.Security {
 		/// token to associate the access token with a user account at that point.
 		/// </para>
 		/// </remarks>
-		public void ExpireRequestTokenAndStoreNewAccessToken(string consumerKey, string requestToken, string accessToken, string accessTokenSecret) {
+		public void ExpireRequestTokenAndStoreNewAccessToken(string consumerKey, string requestToken, string accessToken, string accessTokenSecret)
+		{
 			log.Info("Expiring tokens");
 			this.tokensAndSecrets.Remove(requestToken);
 			this.tokensAndSecrets[accessToken] = accessTokenSecret;
@@ -120,13 +126,14 @@ namespace VocaDb.Web.Code.Security {
 		/// </summary>
 		/// <param name="token">The token to classify.</param>
 		/// <returns>Request or Access token, or invalid if the token is not recognized.</returns>
-		public TokenType GetTokenType(string token) {
+		public TokenType GetTokenType(string token)
+		{
 			throw new NotImplementedException();
 		}
 
 		#endregion
 
-	#region IOpenIdOAuthTokenManager Members
+		#region IOpenIdOAuthTokenManager Members
 
 		/// <summary>
 		/// Stores a new request token obtained over an OpenID request.
@@ -140,12 +147,12 @@ namespace VocaDb.Web.Code.Security {
 		/// relying party to receive the positive authentication assertion and immediately
 		/// send a follow-up request for the access token.</para>
 		/// </remarks>
-		public void StoreOpenIdAuthorizedRequestToken(string consumerKey, AuthorizationApprovedResponse authorization) {
+		public void StoreOpenIdAuthorizedRequestToken(string consumerKey, AuthorizationApprovedResponse authorization)
+		{
 			log.Info("Storing openId auth request token " + authorization.RequestToken);
 			this.tokensAndSecrets[authorization.RequestToken] = string.Empty;
 		}
 
 		#endregion
 	}
-
 }

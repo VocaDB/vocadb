@@ -9,51 +9,48 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Tests.Domain.Users {
-
+namespace VocaDb.Tests.Domain.Users
+{
 	/// <summary>
 	/// Tests for <see cref="User"/>.
 	/// </summary>
 	[TestClass]
-	public class UserTests {
-
+	public class UserTests
+	{
 		private Song song;
 		private User user;
 
 		[TestInitialize]
-		public void SetUp() {
-
+		public void SetUp()
+		{
 			user = new User();
 			song = new Song(new LocalizedString("I just wanna say...", ContentLanguageSelection.English));
-
 		}
 
 		[TestMethod]
-		public void AddOwnedArtist_New() {
-
+		public void AddOwnedArtist_New()
+		{
 			var artist = new Artist { Id = 1 };
 
 			var result = user.AddOwnedArtist(artist);
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual(artist, result.Artist, "Artist");
-
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentException))]
-		public void AddOwnedArtist_AlreadyAdded() {
-
+		public void AddOwnedArtist_AlreadyAdded()
+		{
 			var artist = new Artist { Id = 1 };
 
 			user.AddOwnedArtist(artist);
 			user.AddOwnedArtist(artist);
-
 		}
 
 		[TestMethod]
-		public void AddSongToFavorites_Like() {
-
+		public void AddSongToFavorites_Like()
+		{
 			var rating = user.AddSongToFavorites(song, SongVoteRating.Like);
 
 			Assert.IsNotNull(rating, "result is not null");
@@ -61,12 +58,11 @@ namespace VocaDb.Tests.Domain.Users {
 			Assert.AreEqual(0, song.FavoritedTimes, "not favorited");
 			Assert.AreEqual(FavoriteSongForUser.GetRatingScore(SongVoteRating.Like), song.RatingScore, "rating score");
 			Assert.IsTrue(song.IsFavoritedBy(user), "song is favorited by user");
-
 		}
 
 		[TestMethod]
-		public void AddSongToFavorites_Favorite() {
-
+		public void AddSongToFavorites_Favorite()
+		{
 			var rating = user.AddSongToFavorites(song, SongVoteRating.Favorite);
 
 			Assert.IsNotNull(rating, "result is not null");
@@ -74,12 +70,11 @@ namespace VocaDb.Tests.Domain.Users {
 			Assert.AreEqual(1, song.FavoritedTimes, "favorited once");
 			Assert.AreEqual(FavoriteSongForUser.GetRatingScore(SongVoteRating.Favorite), song.RatingScore, "rating score");
 			Assert.IsTrue(song.IsFavoritedBy(user), "song is favorited by user");
-
 		}
 
 		[TestMethod]
-		public void CreateWebLink() {
-
+		public void CreateWebLink()
+		{
 			user.CreateWebLink(new WebLinkContract("http://www.test.com", "test link", WebLinkCategory.Other));
 
 			Assert.AreEqual(1, user.WebLinks.Count, "Should have one link");
@@ -87,9 +82,6 @@ namespace VocaDb.Tests.Domain.Users {
 			Assert.AreEqual("test link", link.Description, "description");
 			Assert.AreEqual("http://www.test.com", link.Url, "url");
 			Assert.AreEqual(WebLinkCategory.Other, link.Category, "category");
-
 		}
-
 	}
-
 }

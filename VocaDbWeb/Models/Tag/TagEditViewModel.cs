@@ -14,15 +14,15 @@ using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Resources.Domain;
 
-namespace VocaDb.Web.Models.Tag {
-
+namespace VocaDb.Web.Models.Tag
+{
 	[PropertyModelBinder]
-	public class TagEditViewModel {
+	public class TagEditViewModel
+	{
+		public TagEditViewModel() { }
 
-		public TagEditViewModel() {}
-
-		public TagEditViewModel(TagForEditContract contract, IUserPermissionContext permissionContext) {
-
+		public TagEditViewModel(TagForEditContract contract, IUserPermissionContext permissionContext)
+		{
 			ParamIs.NotNull(() => contract);
 
 			CategoryName = contract.CategoryName;
@@ -37,7 +37,6 @@ namespace VocaDb.Web.Models.Tag {
 			WebLinks = contract.WebLinks;
 
 			CopyNonEditableProperties(contract, permissionContext);
-
 		}
 
 		public Dictionary<TagTargetTypes, string> AllTagTargetTypes { get; set; }
@@ -92,8 +91,8 @@ namespace VocaDb.Web.Models.Tag {
 		[FromJson]
 		public WebLinkContract[] WebLinks { get; set; }
 
-		public void CheckModel() {
-
+		public void CheckModel()
+		{
 			if (Description == null)
 				throw new InvalidFormException("Description was null");
 
@@ -102,11 +101,10 @@ namespace VocaDb.Web.Models.Tag {
 
 			if (WebLinks == null)
 				throw new InvalidFormException("WebLinks list was null");
-
 		}
 
-		public void CopyNonEditableProperties(TagForEditContract contract, IUserPermissionContext permissionContext) {
-
+		public void CopyNonEditableProperties(TagForEditContract contract, IUserPermissionContext permissionContext)
+		{
 			AllowedEntryStatuses = EntryPermissionManager.AllowedEntryStatuses(permissionContext).ToArray();
 			CanDelete = contract.CanDelete;
 			CurrentName = contract.Name;
@@ -116,8 +114,10 @@ namespace VocaDb.Web.Models.Tag {
 			Thumb = contract.Thumb;
 			UrlSlug = contract.UrlSlug;
 
-			string GetTagTargetTypeName(TagTargetTypes t) {
-				switch (t) {
+			string GetTagTargetTypeName(TagTargetTypes t)
+			{
+				switch (t)
+				{
 					case TagTargetTypes.Nothing:
 						return "Nothing";
 					case TagTargetTypes.All:
@@ -128,12 +128,12 @@ namespace VocaDb.Web.Models.Tag {
 
 			AllTagTargetTypes = new[] { TagTargetTypes.Album, TagTargetTypes.Artist, TagTargetTypes.Song, TagTargetTypes.Event }
 				.ToDictionary(t => t, GetTagTargetTypeName);
-
 		}
 
-		public TagForEditContract ToContract() {
-
-			return new TagForEditContract {
+		public TagForEditContract ToContract()
+		{
+			return new TagForEditContract
+			{
 				Id = this.Id,
 				Name = this.Name,
 				Names = Names,
@@ -148,8 +148,6 @@ namespace VocaDb.Web.Models.Tag {
 				UpdateNotes = this.UpdateNotes ?? string.Empty,
 				WebLinks = WebLinks
 			};
-
 		}
-
 	}
 }

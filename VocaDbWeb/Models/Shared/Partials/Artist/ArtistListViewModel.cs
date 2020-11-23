@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using VocaDb.Model.DataContracts.Songs;
 
-namespace VocaDb.Web.Models.Shared.Partials.Artist {
-
-	public enum ShowRolesMode {
+namespace VocaDb.Web.Models.Shared.Partials.Artist
+{
+	public enum ShowRolesMode
+	{
 		Never,
 		/// <summary>
 		/// Show roles if role is not "Default"
@@ -15,9 +16,10 @@ namespace VocaDb.Web.Models.Shared.Partials.Artist {
 		IfNotVocalist
 	}
 
-	public class ArtistListViewModel {
-
-		public ArtistListViewModel(IEnumerable<IArtistLinkContract> artists, ShowRolesMode showRoles = ShowRolesMode.Never, bool showType = false) {
+	public class ArtistListViewModel
+	{
+		public ArtistListViewModel(IEnumerable<IArtistLinkContract> artists, ShowRolesMode showRoles = ShowRolesMode.Never, bool showType = false)
+		{
 			Artists = artists;
 			ShowRoles = showRoles;
 			ShowType = showType;
@@ -28,7 +30,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Artist {
 		public ShowRolesMode ShowRoles { get; set; }
 
 		public bool ShowType { get; set; }
-
 	}
-
 }

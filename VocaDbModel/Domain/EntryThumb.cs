@@ -1,26 +1,30 @@
 using VocaDb.Model.Domain.Images;
 
-namespace VocaDb.Model.Domain {
-
-	public class EntryThumb : IEntryImageInformation {
-
-		public static EntryThumb Create<T>(T entry) where T : class, IEntryBase, IEntryImageInformation {
+namespace VocaDb.Model.Domain
+{
+	public class EntryThumb : IEntryImageInformation
+	{
+		public static EntryThumb Create<T>(T entry) where T : class, IEntryBase, IEntryImageInformation
+		{
 			return !string.IsNullOrEmpty(entry?.Mime) ? new EntryThumb(entry, entry.Mime, entry.Purpose) : null;
 		}
 
 		private IEntryBase entry;
 
-		public EntryThumb() {}
+		public EntryThumb() { }
 
-		public EntryThumb(IEntryBase entry, string mime, ImagePurpose purpose) {
+		public EntryThumb(IEntryBase entry, string mime, ImagePurpose purpose)
+		{
 			Entry = entry;
 			Mime = mime;
 			Purpose = purpose;
 		}
 
-		public IEntryBase Entry {
+		public IEntryBase Entry
+		{
 			get => entry;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				entry = value;
 			}
@@ -34,23 +38,22 @@ namespace VocaDb.Model.Domain {
 
 		public ImagePurpose Purpose { get; set; }
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("Thumbnail for {0}.", Entry);
 		}
 
 		public int Version => Entry.Version;
-
 	}
 
-	public class EntryThumbMain : EntryThumb {
-
-		public EntryThumbMain() {
+	public class EntryThumbMain : EntryThumb
+	{
+		public EntryThumbMain()
+		{
 			Purpose = ImagePurpose.Main;
 		}
 
-		public EntryThumbMain(IEntryBase entry, string mime) 
-			: base(entry, mime, ImagePurpose.Main) {}
-
+		public EntryThumbMain(IEntryBase entry, string mime)
+			: base(entry, mime, ImagePurpose.Main) { }
 	}
-
 }

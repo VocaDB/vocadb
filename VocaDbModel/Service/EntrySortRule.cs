@@ -1,6 +1,7 @@
-﻿namespace VocaDb.Model.Service {
-
-	public enum EntrySortRule {
+﻿namespace VocaDb.Model.Service
+{
+	public enum EntrySortRule
+	{
 		None,
 		Name,
 		AdditionDate,
@@ -10,5 +11,4 @@
 		/// </summary>
 		ActivityDate
 	}
-
 }

@@ -5,20 +5,21 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Service.Search.Tags {
-
-	public class TagSearch {
-
+namespace VocaDb.Model.Service.Search.Tags
+{
+	public class TagSearch
+	{
 		private readonly IDatabaseContext<Tag> dbContext;
 		private readonly ContentLanguagePreference languagePreference;
 
-		public TagSearch(IDatabaseContext<Tag> dbContext, ContentLanguagePreference languagePreference) {
+		public TagSearch(IDatabaseContext<Tag> dbContext, ContentLanguagePreference languagePreference)
+		{
 			this.dbContext = dbContext;
 			this.languagePreference = languagePreference;
 		}
 
-		private IQueryable<Tag> CreateQuery(TagQueryParams queryParams, string queryText, NameMatchMode nameMatchMode) {
-
+		private IQueryable<Tag> CreateQuery(TagQueryParams queryParams, string queryText, NameMatchMode nameMatchMode)
+		{
 			var textQuery = TagSearchTextQuery.Create(queryText, nameMatchMode);
 
 			var query = dbContext.Query()
@@ -29,18 +30,18 @@ namespace VocaDb.Model.Service.Search.Tags {
 				.WhereHasTarget(queryParams.Target);
 
 			return query;
-
 		}
 
-		public PartialFindResult<Tag> Find(TagQueryParams queryParams, bool onlyMinimalFields) {
-
+		public PartialFindResult<Tag> Find(TagQueryParams queryParams, bool onlyMinimalFields)
+		{
 			var isMoveToTopQuery = queryParams.Common.MoveExactToTop
 				&& queryParams.Common.NameMatchMode != NameMatchMode.StartsWith
 				&& queryParams.Common.NameMatchMode != NameMatchMode.Exact
 				&& queryParams.Paging.Start == 0
 				&& !queryParams.Common.TextQuery.IsEmpty;
 
-			if (isMoveToTopQuery) {
+			if (isMoveToTopQuery)
+			{
 				return GetTagsMoveExactToTop(queryParams);
 			}
 
@@ -52,42 +53,47 @@ namespace VocaDb.Model.Service.Search.Tags {
 
 			Tag[] tags;
 
-			if (onlyMinimalFields) {
-				tags = orderedAndPaged.Select(t => new Tag {
+			if (onlyMinimalFields)
+			{
+				tags = orderedAndPaged.Select(t => new Tag
+				{
 					Id = t.Id,
 					CategoryName = t.CategoryName,
 					CreateDate = t.CreateDate,
 					Status = t.Status,
 					Version = t.Version,
-					Names = new NameManager<TagName> { SortNames = {
+					Names = new NameManager<TagName>
+					{
+						SortNames = {
 						English = t.Names.SortNames.English,
 						Romaji = t.Names.SortNames.Romaji,
 						Japanese = t.Names.SortNames.Japanese,
 						DefaultLanguage = t.Names.SortNames.DefaultLanguage
-					} }
+					}
+					}
 				}).ToArray();
-			} else {
+			}
+			else
+			{
 				tags = orderedAndPaged.ToArray();
 			}
 
 			var count = 0;
 
-			if (queryParams.Paging.GetTotalCount) {
-
+			if (queryParams.Paging.GetTotalCount)
+			{
 				count = query.Count();
-
 			}
 
 			return PartialFindResult.Create(tags, count);
-
 		}
 
 		/// <summary>
 		/// Get tags, searching by exact matches FIRST.
 		/// This mode does not support paging.
 		/// </summary>
-		private PartialFindResult<Tag> GetTagsMoveExactToTop(TagQueryParams queryParams) {
-
+		private PartialFindResult<Tag> GetTagsMoveExactToTop(TagQueryParams queryParams)
+		{
 			var sortRule = queryParams.SortRule;
 			var maxResults = queryParams.Paging.MaxEntries;
 			var getCount = queryParams.Paging.GetTotalCount;
@@ -105,13 +111,13 @@ namespace VocaDb.Model.Service.Search.Tags {
 				.Take(maxResults)
 				.ToArray();
 
-			if (exactResults.Length >= maxResults) {
-
+			if (exactResults.Length >= maxResults)
+			{
 				ids = exactResults;
 				count = getCount ? CreateQuery(queryParams, queryParams.Common.Query, queryParams.Common.NameMatchMode).Count() : 0;
-
-			} else {
-
+			}
+			else
+			{
 				var directQ = CreateQuery(queryParams, queryParams.Common.Query, queryParams.Common.NameMatchMode);
 
 				var direct = directQ
@@ -127,7 +133,6 @@ namespace VocaDb.Model.Service.Search.Tags {
 					.ToArray();
 
 				count = getCount ? directQ.Count() : 0;
-
 			}
 
 			var tags = dbContext
@@ -136,8 +141,6 @@ namespace VocaDb.Model.Service.Search.Tags {
 				.OrderByIds(ids);
 
 			return new PartialFindResult<Tag>(tags, count, queryParams.Common.Query);
-
 		}
-
 	}
 }

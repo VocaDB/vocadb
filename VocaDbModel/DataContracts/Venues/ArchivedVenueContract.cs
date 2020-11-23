@@ -4,11 +4,11 @@ using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Model.DataContracts.Venues {
-
+namespace VocaDb.Model.DataContracts.Venues
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArchivedVenueContract {
-
+	public class ArchivedVenueContract
+	{
 		[DataMember]
 		public string Address { get; set; }
 
@@ -35,8 +35,8 @@ namespace VocaDb.Model.DataContracts.Venues {
 
 		public ArchivedVenueContract() { }
 
-		public ArchivedVenueContract(Venue venue, VenueDiff diff) {
-
+		public ArchivedVenueContract(Venue venue, VenueDiff diff)
+		{
 			ParamIs.NotNull(() => venue);
 
 			Address = venue.Address;
@@ -47,22 +47,21 @@ namespace VocaDb.Model.DataContracts.Venues {
 			Names = diff.IncludeNames ? venue.Names.Names.Select(n => new LocalizedStringContract(n)).ToArray() : null;
 			TranslatedName = new ArchivedTranslatedStringContract(venue.TranslatedName);
 			WebLinks = diff.IncludeWebLinks ? venue.WebLinks.Links.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
-
 		}
 
-		private static void DoIfExists(ArchivedVenueVersion version, VenueEditableFields field, XmlCache<ArchivedVenueContract> xmlCache, Action<ArchivedVenueContract> func) {
-
+		private static void DoIfExists(ArchivedVenueVersion version, VenueEditableFields field, XmlCache<ArchivedVenueContract> xmlCache, Action<ArchivedVenueContract> func)
+		{
 			var versionWithField = version.GetLatestVersionWithField(field);
 
-			if (versionWithField?.Data != null) {
+			if (versionWithField?.Data != null)
+			{
 				var data = xmlCache.Deserialize(versionWithField.Version, versionWithField.Data);
 				func(data);
 			}
-
 		}
 
-		public static ArchivedVenueContract GetAllProperties(ArchivedVenueVersion version) {
-
+		public static ArchivedVenueContract GetAllProperties(ArchivedVenueVersion version)
+		{
 			var data = new ArchivedVenueContract();
 			var xmlCache = new XmlCache<ArchivedVenueContract>();
 			var thisVersion = version.Data != null ? xmlCache.Deserialize(version.Version, version.Data) : new ArchivedVenueContract();
@@ -78,9 +77,6 @@ namespace VocaDb.Model.DataContracts.Venues {
 			DoIfExists(version, VenueEditableFields.WebLinks, xmlCache, v => data.WebLinks = v.WebLinks);
 
 			return data;
-
 		}
-
 	}
-
 }

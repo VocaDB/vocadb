@@ -3,15 +3,15 @@ using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Comments;
 
-namespace VocaDb.Model.DataContracts {
-
+namespace VocaDb.Model.DataContracts
+{
 	[DataContract]
-	public class CommentForApiContract : IComment {
-
+	public class CommentForApiContract : IComment
+	{
 		public CommentForApiContract() { }
 
-		public CommentForApiContract(Comment comment, IUserIconFactory iconFactory, bool includeMessage = true) {
-			
+		public CommentForApiContract(Comment comment, IUserIconFactory iconFactory, bool includeMessage = true)
+		{
 			ParamIs.NotNull(() => comment);
 
 			Author = comment.Author != null ? new UserForApiContract(comment.Author, iconFactory, UserOptionalFields.MainPicture) : null;
@@ -19,7 +19,6 @@ namespace VocaDb.Model.DataContracts {
 			Created = comment.Created.ToUniversalTime();
 			Id = comment.Id;
 			Message = (includeMessage ? comment.Message : null);
-
 		}
 
 		[DataMember]
@@ -42,7 +41,5 @@ namespace VocaDb.Model.DataContracts {
 
 		[DataMember]
 		public string Message { get; set; }
-
 	}
-
 }

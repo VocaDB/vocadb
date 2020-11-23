@@ -1,8 +1,9 @@
-namespace VocaDb.Web.Models.Shared.Partials.PV {
-
-	public class EmbedNicoViewModel {
-
-		public EmbedNicoViewModel(string pvId, string widthStr, string heightStr, string id = null, bool enableApi = false) {
+namespace VocaDb.Web.Models.Shared.Partials.PV
+{
+	public class EmbedNicoViewModel
+	{
+		public EmbedNicoViewModel(string pvId, string widthStr, string heightStr, string id = null, bool enableApi = false)
+		{
 			PVId = pvId;
 			WidthStr = widthStr;
 			HeightStr = heightStr;
@@ -19,7 +20,5 @@ namespace VocaDb.Web.Models.Shared.Partials.PV {
 		public string Id { get; set; }
 
 		public bool EnableApi { get; set; }
-
 	}
-
 }

@@ -2,14 +2,14 @@
 using System.Linq;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Web.Code {
-
-	public class SloganGenerator {
-
+namespace VocaDb.Web.Code
+{
+	public class SloganGenerator
+	{
 		private static readonly string[] defaultSlogans = {
-			"Telling you who's whoo.", 
-			"1st place to check.", 
-			"We got APIs and ApiMikus.", 
+			"Telling you who's whoo.",
+			"1st place to check.",
+			"We got APIs and ApiMikus.",
 			"Use the search, Luka!",
 			"shu-t up and enjoy",
 			"Now with 39% more Miku",
@@ -19,19 +19,19 @@ namespace VocaDb.Web.Code {
 
 		private static string[] slogans;
 
-		private static string[] GetValues() {
-
-			if (slogans == null) {
+		private static string[] GetValues()
+		{
+			if (slogans == null)
+			{
 				var config = AppConfig.GetSlogansSection();
 				slogans = config?.Slogans?.Select(s => s.Value).ToArray() ?? defaultSlogans;
 			}
 
 			return slogans;
-
 		}
 
-		public static string Generate() {
-
+		public static string Generate()
+		{
 			var values = GetValues();
 
 			if (!values.Any())
@@ -40,9 +40,6 @@ namespace VocaDb.Web.Code {
 			var result = values[new Random().Next(values.Length)];
 
 			return result;
-
 		}
-
 	}
-
 }

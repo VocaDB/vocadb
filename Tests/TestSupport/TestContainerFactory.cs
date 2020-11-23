@@ -6,19 +6,20 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Tests.DatabaseTests;
 
-namespace VocaDb.Tests.TestSupport {
-
+namespace VocaDb.Tests.TestSupport
+{
 	/// <summary>
 	/// Creates AutoFac dependency injection container for database tests.
 	/// </summary>
-	public static class TestContainerFactory {
-
-		private static ISessionFactory BuildTestSessionFactory() {
+	public static class TestContainerFactory
+	{
+		private static ISessionFactory BuildTestSessionFactory()
+		{
 			return new TestDatabaseFactory().BuildTestSessionFactory();
 		}
 
-		public static IContainer BuildContainer() {
-
+		public static IContainer BuildContainer()
+		{
 			var builder = new ContainerBuilder();
 
 			builder.Register(x => BuildTestSessionFactory()).SingleInstance();
@@ -40,9 +41,6 @@ namespace VocaDb.Tests.TestSupport {
 
 			var container = builder.Build();
 			return container;
-
 		}
-
 	}
-
 }

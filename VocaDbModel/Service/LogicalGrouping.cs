@@ -1,5 +1,7 @@
-namespace VocaDb.Model.Service {
-	public enum LogicalGrouping {
+namespace VocaDb.Model.Service
+{
+	public enum LogicalGrouping
+	{
 		/// <summary>
 		/// All must match
 		/// </summary>

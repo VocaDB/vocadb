@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using VocaDb.Model.DataContracts.Artists;
 
-namespace VocaDb.Web.Models.Shared.Partials.Artist {
-
-	public class ArtistGridViewModel {
-
-		public ArtistGridViewModel(IEnumerable<ArtistContract> artists, int columns, bool displayType = false) {
+namespace VocaDb.Web.Models.Shared.Partials.Artist
+{
+	public class ArtistGridViewModel
+	{
+		public ArtistGridViewModel(IEnumerable<ArtistContract> artists, int columns, bool displayType = false)
+		{
 			Artists = artists;
 			Columns = columns;
 			DisplayType = displayType;
@@ -16,7 +17,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Artist {
 		public int Columns { get; set; }
 
 		public bool DisplayType { get; set; }
-
 	}
-
 }

@@ -1,12 +1,12 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Discussions;
 
-namespace VocaDb.Model.Mapping.Discussions {
-
-	public class DiscussionTopicMap : ClassMap<DiscussionTopic> {
-
-		public DiscussionTopicMap() {
-			
+namespace VocaDb.Model.Mapping.Discussions
+{
+	public class DiscussionTopicMap : ClassMap<DiscussionTopic>
+	{
+		public DiscussionTopicMap()
+		{
 			Schema("discussions");
 			Table("DiscussionTopics");
 			Cache.ReadWrite();
@@ -24,9 +24,6 @@ namespace VocaDb.Model.Mapping.Discussions {
 			References(m => m.Folder).Not.Nullable();
 
 			HasMany(m => m.Comments).KeyColumn("[Topic]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
-
 		}
-
 	}
-
 }

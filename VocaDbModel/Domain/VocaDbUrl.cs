@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Model.Domain {
-
+namespace VocaDb.Model.Domain
+{
 	/// <summary>
 	/// URL object with domain information (either main, static or external).
 	/// Can be absolute or relative.
 	/// URLs are immutable.
 	/// </summary>
 	[DebuggerDisplay("{DebugString}")]
-	public class VocaDbUrl : IEquatable<VocaDbUrl> {
-
+	public class VocaDbUrl : IEquatable<VocaDbUrl>
+	{
 		public static VocaDbUrl Empty { get; } = new VocaDbUrl(string.Empty, UrlDomain.Main, UriKind.Absolute);
 		public static VocaDbUrl External(string url) => new VocaDbUrl(url, UrlDomain.External, UriKind.Absolute);
 
-		public VocaDbUrl(string url, UrlDomain domain, UriKind kind) {
+		public VocaDbUrl(string url, UrlDomain domain, UriKind kind)
+		{
 			Url = url;
 			Domain = domain;
 			Kind = kind;
@@ -35,9 +36,10 @@ namespace VocaDb.Model.Domain {
 		/// </summary>
 		/// <returns>Absolute URL. Cannot be null.</returns>
 		/// <exception cref="NotSupportedException">URL cannot be converted to absolute.</exception>
-		public VocaDbUrl ToAbsolute() {
-
-			switch (Kind) {
+		public VocaDbUrl ToAbsolute()
+		{
+			switch (Kind)
+			{
 				case UriKind.Absolute:
 					return this;
 				case UriKind.Relative when Domain == UrlDomain.Main:
@@ -53,29 +55,30 @@ namespace VocaDb.Model.Domain {
 				default:
 					throw new InvalidOperationException(DebugString);
 			}
-
 		}
 
 		public VocaDbUrl ToAbsoluteIfNotMain() => Domain == UrlDomain.Main ? this : ToAbsolute();
 
 		public override string ToString() => Url;
 
-		public bool Equals(VocaDbUrl other) {
+		public bool Equals(VocaDbUrl other)
+		{
 			return other != null && other.Domain == Domain && other.Url == Url;
 		}
 
 		public override bool Equals(object obj) => Equals(obj as VocaDbUrl);
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			int hashCode = -120357769;
 			hashCode = hashCode * -1521134295 + Domain.GetHashCode();
 			hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Url);
 			return hashCode;
 		}
-
 	}
 
-	public enum UrlDomain {
+	public enum UrlDomain
+	{
 		/// <summary>
 		/// https://vocadb.net
 		/// </summary>

@@ -2,9 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace VocaDb.Model.Service.Security {
-
-	public interface IHostCollection {
+namespace VocaDb.Model.Service.Security
+{
+	public interface IHostCollection
+	{
 		IReadOnlyCollection<string> Hosts { get; }
 		bool Contains(string host);
 	}
@@ -12,71 +13,89 @@ namespace VocaDb.Model.Service.Security {
 	/// <summary>
 	/// Thread-safe collection of hostnames.
 	/// </summary>
-	public class HostCollection : IHostCollection {
-
+	public class HostCollection : IHostCollection
+	{
 		private HashSet<string> ips;
 		private readonly ReaderWriterLockSlim readerWriterLock = new ReaderWriterLockSlim();
 
-		public HostCollection() {
+		public HostCollection()
+		{
 			ips = new HashSet<string>();
 		}
 
-		public HostCollection(IEnumerable<string> ips) {
+		public HostCollection(IEnumerable<string> ips)
+		{
 			this.ips = new HashSet<string>(ips);
 		}
 
-		public void Add(string host) {
-
+		public void Add(string host)
+		{
 			readerWriterLock.EnterWriteLock();
-			try {
+			try
+			{
 				ips.Add(host);
-			} finally {
+			}
+			finally
+			{
 				readerWriterLock.ExitWriteLock();
 			}
-
 		}
 
-		public void Reset(IEnumerable<string> ips) {
-
+		public void Reset(IEnumerable<string> ips)
+		{
 			readerWriterLock.EnterWriteLock();
-			try {
+			try
+			{
 				this.ips = new HashSet<string>(ips);
-			} finally {
+			}
+			finally
+			{
 				readerWriterLock.ExitWriteLock();
 			}
-
 		}
 
-		public bool Contains(string host) {
+		public bool Contains(string host)
+		{
 			readerWriterLock.EnterReadLock();
-			try {
+			try
+			{
 				return ips.Contains(host);
-			} finally {
+			}
+			finally
+			{
 				readerWriterLock.ExitReadLock();
 			}
 		}
 
-		public void Remove(string host) {
+		public void Remove(string host)
+		{
 			readerWriterLock.EnterWriteLock();
-			try {
+			try
+			{
 				ips.Remove(host);
-			} finally {
+			}
+			finally
+			{
 				readerWriterLock.ExitWriteLock();
 			}
 		}
 
-		public string[] Hosts {
-			get {
+		public string[] Hosts
+		{
+			get
+			{
 				readerWriterLock.EnterReadLock();
-				try {
+				try
+				{
 					return ips.ToArray();
-				} finally {
+				}
+				finally
+				{
 					readerWriterLock.ExitReadLock();
 				}
 			}
 		}
 
 		IReadOnlyCollection<string> IHostCollection.Hosts => Hosts;
-
 	}
 }

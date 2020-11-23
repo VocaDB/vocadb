@@ -1,11 +1,11 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.DataContracts {
-
+namespace VocaDb.Model.DataContracts
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class OptionalGeoPointContract : IOptionalGeoPoint {
-
+	public class OptionalGeoPointContract : IOptionalGeoPoint
+	{
 		[DataMember]
 		public string Formatted { get; set; }
 
@@ -20,17 +20,14 @@ namespace VocaDb.Model.DataContracts {
 
 		public OptionalGeoPointContract() { }
 
-		public OptionalGeoPointContract(OptionalGeoPoint geoPoint) {
-
+		public OptionalGeoPointContract(OptionalGeoPoint geoPoint)
+		{
 			ParamIs.NotNull(() => geoPoint);
 
 			Formatted = geoPoint.ToString();
 			HasValue = geoPoint.HasValue;
 			Latitude = geoPoint.Latitude;
 			Longitude = geoPoint.Longitude;
-
 		}
-
 	}
-
 }

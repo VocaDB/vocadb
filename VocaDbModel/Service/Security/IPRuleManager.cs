@@ -4,22 +4,24 @@ using NLog;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Security;
 
-namespace VocaDb.Model.Service.Security {
-
+namespace VocaDb.Model.Service.Security
+{
 	/// <summary>
 	/// Manages IP rules. 
 	/// Currently this means IPs banned through the admin or automatically.
 	/// </summary>
-	public class IPRuleManager {
-
+	public class IPRuleManager
+	{
 		private static readonly string lockStr = "lock";
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		public IPRuleManager() {
+		public IPRuleManager()
+		{
 			permBannedIPs = new HostCollection();
 		}
 
-		public IPRuleManager(IEnumerable<string> ips) {
+		public IPRuleManager(IEnumerable<string> ips)
+		{
 			permBannedIPs = new HostCollection(ips);
 		}
 
@@ -33,12 +35,13 @@ namespace VocaDb.Model.Service.Security {
 		/// </summary>
 		public IHostCollection TempBannedIPs => tempBannedIPs;
 
-		public bool AddPermBannedIP(IDatabaseContext db, IPRule ipRule) {
-
+		public bool AddPermBannedIP(IDatabaseContext db, IPRule ipRule)
+		{
 			if (ipRule == null)
 				throw new ArgumentNullException(nameof(ipRule));
 
-			lock (lockStr) {
+			lock (lockStr)
+			{
 				if (permBannedIPs.Contains(ipRule.Address))
 					return false;
 
@@ -47,13 +50,13 @@ namespace VocaDb.Model.Service.Security {
 				permBannedIPs.Add(ipRule.Address);
 				return true;
 			}
-
 		}
 
-		public bool AddPermBannedIP(IDatabaseContext db, string host, string notes) 
+		public bool AddPermBannedIP(IDatabaseContext db, string host, string notes)
 			=> AddPermBannedIP(db, new IPRule(host, notes));
 
-		public void AddTempBannedIP(string host, string reason = "") {
+		public void AddTempBannedIP(string host, string reason = "")
+		{
 			log.Info("Adding temp banned IP {0}. Reason: {1}", host, reason);
 			tempBannedIPs.Add(host);
 		}
@@ -64,18 +67,19 @@ namespace VocaDb.Model.Service.Security {
 		/// </summary>
 		/// <param name="hostAddress">Host address (IP).</param>
 		/// <returns>True if the host is allowed access (not banned).</returns>
-		public bool IsAllowed(string hostAddress) {
+		public bool IsAllowed(string hostAddress)
+		{
 			return !permBannedIPs.Contains(hostAddress) && !tempBannedIPs.Contains(hostAddress);
 		}
 
-		public void RemovePermBannedIP(string address) {
+		public void RemovePermBannedIP(string address)
+		{
 			permBannedIPs.Remove(address);
 		}
 
-		public void Reset(IEnumerable<string> ips) {
+		public void Reset(IEnumerable<string> ips)
+		{
 			permBannedIPs.Reset(ips);
 		}
-
 	}
-
 }

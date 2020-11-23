@@ -4,21 +4,22 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Model.Service.QueryableExtenders {
-
-	public static class LocalizedStringQueryableExtender {
-
+namespace VocaDb.Model.Service.QueryableExtenders
+{
+	public static class LocalizedStringQueryableExtender
+	{
 		public const int MaxSearchWords = 10;
 
 		public static IQueryable<T> WhereEntryNameIs<T>(this IQueryable<T> query, SearchTextQuery textQuery)
-			where T : LocalizedString {
-
+			where T : LocalizedString
+		{
 			if (textQuery.IsEmpty)
 				return query;
 
 			var nameFilter = textQuery.Query;
 
-			switch (textQuery.MatchMode) {
+			switch (textQuery.MatchMode)
+			{
 				case NameMatchMode.Exact:
 					return query.Where(m => m.Value == nameFilter);
 
@@ -31,19 +32,16 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 				case NameMatchMode.Words:
 					var words = textQuery.Words;
 
-					foreach (var word in words.Take(MaxSearchWords)) {
+					foreach (var word in words.Take(MaxSearchWords))
+					{
 						var temp = word;
 						query = query.Where(q => q.Value.Contains(temp));
 					}
 
 					return query;
-
 			}
 
 			return query;
-
 		}
-
 	}
-
 }

@@ -20,10 +20,10 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Web.Models {
-
-	public class AlbumDetails : IEntryImageInformation {
-
+namespace VocaDb.Web.Models
+{
+	public class AlbumDetails : IEntryImageInformation
+	{
 		private readonly string mime;
 
 		public EntryType EntryType => EntryType.Album;
@@ -34,8 +34,8 @@ namespace VocaDb.Web.Models {
 
 		public AlbumDetails() { }
 
-		public AlbumDetails(AlbumDetailsContract contract, IUserPermissionContext permissionContext) {
-
+		public AlbumDetails(AlbumDetailsContract contract, IUserPermissionContext permissionContext)
+		{
 			ParamIs.NotNull(() => contract);
 
 			AdditionalNames = contract.AdditionalNames;
@@ -75,19 +75,21 @@ namespace VocaDb.Web.Models {
 			mime = contract.CoverPictureMime;
 
 			var songsByDiscs = contract.Songs.GroupBy(s => s.DiscNumber);
-			Discs = 
+			Discs =
 				(from songsByDisc in songsByDiscs
-				let dn = songsByDisc.Key
-				select new AlbumDisc(dn, songsByDisc, contract.Discs.ContainsKey(dn) ? contract.Discs[dn] : null))
+				 let dn = songsByDisc.Key
+				 select new AlbumDisc(dn, songsByDisc, contract.Discs.ContainsKey(dn) ? contract.Discs[dn] : null))
 				.ToArray();
 
-			if (contract.AlbumForUser != null) {
+			if (contract.AlbumForUser != null)
+			{
 				AlbumMediaType = contract.AlbumForUser.MediaType;
 				AlbumPurchaseStatus = contract.AlbumForUser.PurchaseStatus;
 				CollectionRating = contract.AlbumForUser.Rating;
 			}
 
-			if (contract.OriginalRelease != null) {
+			if (contract.OriginalRelease != null)
+			{
 				CatNum = contract.OriginalRelease.CatNum;
 				ReleaseEvent = contract.OriginalRelease.ReleaseEvent;
 				ReleaseDate = contract.OriginalRelease.ReleaseDate;
@@ -104,12 +106,11 @@ namespace VocaDb.Web.Models {
 			Producers = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Producer)).ToArray();
 			Vocalists = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Vocalist)).ToArray();
 			Subject = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Subject)).ToArray();
-			OtherArtists = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Other) 
-				|| a.Categories.HasFlag(ArtistCategories.Animator) 
+			OtherArtists = artists.Where(a => a.Categories.HasFlag(ArtistCategories.Other)
+				|| a.Categories.HasFlag(ArtistCategories.Animator)
 				|| (ContentFocus != ContentFocus.Illustration && a.Categories.HasFlag(ArtistCategories.Illustrator))).ToArray();
 
 			PrimaryPV = PVHelper.PrimaryPV(PVs);
-
 		}
 
 		public string AdditionalNames { get; set; }
@@ -160,8 +161,10 @@ namespace VocaDb.Web.Models {
 
 		public ArtistForAlbumContract[] Illustrators { get; set; }
 
-		public string Json {
-			get {
+		public string Json
+		{
+			get
+			{
 				return JsonHelpers.Serialize(new AlbumDetailsAjax(this));
 			}
 		}
@@ -202,28 +205,36 @@ namespace VocaDb.Web.Models {
 
 		public OptionalDateTimeContract ReleaseDate { get; set; }
 
-		public bool ReleaseDateIsInTheFarFuture {
-			get {
+		public bool ReleaseDateIsInTheFarFuture
+		{
+			get
+			{
 				return FullReleaseDate.HasValue && FullReleaseDate.Value > DateTime.Now.AddDays(7);
 			}
 		}
 
-		public bool ReleaseDateIsInTheNearFuture {
-			get {
+		public bool ReleaseDateIsInTheNearFuture
+		{
+			get
+			{
 				return FullReleaseDate.HasValue && FullReleaseDate.Value > DateTime.Now && FullReleaseDate.Value <= DateTime.Now.AddDays(7);
 			}
 		}
 
-		public bool ReleaseDateIsInThePast {
-			get {
+		public bool ReleaseDateIsInThePast
+		{
+			get
+			{
 				return FullReleaseDate.HasValue && FullReleaseDate.Value <= DateTime.Now;
 			}
 		}
 
 		public int ReviewCount { get; set; }
 
-		public bool ShowProducerRoles {
-			get {
+		public bool ShowProducerRoles
+		{
+			get
+			{
 				// Show producer roles if more than one producer and other roles besides just composer.
 				return Producers.Length > 1 && Producers.Any(p => p.Roles != ArtistRoles.Default && p.Roles != ArtistRoles.Composer);
 			}
@@ -246,20 +257,18 @@ namespace VocaDb.Web.Models {
 		public WebLinkContract[] WebLinks { get; set; }
 
 		public int WishlistedBy { get; set; }
-
 	}
 
-	public class AlbumDisc {
-
-		public AlbumDisc(int discNumber, IEnumerable<SongInAlbumContract> songs, AlbumDiscPropertiesContract discProperties) {
-
+	public class AlbumDisc
+	{
+		public AlbumDisc(int discNumber, IEnumerable<SongInAlbumContract> songs, AlbumDiscPropertiesContract discProperties)
+		{
 			DiscNumber = discNumber;
 			Songs = songs.ToArray();
 
 			IsVideo = discProperties != null && discProperties.MediaType == DiscMediaType.Video;
 			Name = discProperties != null ? discProperties.Name : null;
 			TotalLength = Songs.All(s => s.Song != null && s.Song.LengthSeconds > 0) ? TimeSpan.FromSeconds(Songs.Sum(s => s.Song.LengthSeconds)) : TimeSpan.Zero;
-
 		}
 
 		public int DiscNumber { get; set; }
@@ -271,19 +280,17 @@ namespace VocaDb.Web.Models {
 		public string Name { get; set; }
 
 		public IEnumerable<SongInAlbumContract> Songs { get; set; }
-
 	}
 
-	public class AlbumDetailsAjax {
-
-		public AlbumDetailsAjax(AlbumDetails model) {
-
+	public class AlbumDetailsAjax
+	{
+		public AlbumDetailsAjax(AlbumDetails model)
+		{
 			Id = model.Id;
 			LatestComments = model.LatestComments;
 			PersonalDescriptionAuthor = model.PersonalDescriptionAuthor;
 			PersonalDescriptionText = model.PersonalDescriptionText;
 			TagUsages = model.Tags;
-
 		}
 
 		public int Id { get; set; }
@@ -295,7 +302,5 @@ namespace VocaDb.Web.Models {
 		public string PersonalDescriptionText { get; set; }
 
 		public TagUsageForApiContract[] TagUsages { get; set; }
-
 	}
-
 }

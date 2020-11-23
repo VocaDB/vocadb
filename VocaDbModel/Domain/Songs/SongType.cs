@@ -2,78 +2,73 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace VocaDb.Model.Domain.Songs {
+namespace VocaDb.Model.Domain.Songs
+{
+	public enum SongType
+	{
+		Unspecified = 0,
 
-	public enum SongType {
+		Original = 1,
 
-		Unspecified		= 0,
+		Remaster = 2,
 
-		Original		= 1,
+		Remix = 4,
 
-		Remaster		= 2,
+		Cover = 8,
 
-		Remix			= 4,
+		Arrangement = 16,
 
-		Cover			= 8,
+		Instrumental = 32,
 
-		Arrangement		= 16,
+		Mashup = 64,
 
-		Instrumental	= 32,
+		MusicPV = 128,
 
-		Mashup			= 64,
+		DramaPV = 256,
 
-		MusicPV			= 128,
+		Live = 512,
 
-		DramaPV			= 256,
+		Illustration = 1024,
 
-		Live			= 512,
-
-		Illustration	= 1024,
-
-		Other			= 2048
-
+		Other = 2048
 	}
 
 	[Flags]
-	public enum SongTypes {
+	public enum SongTypes
+	{
+		Unspecified = 0,
 
-		Unspecified		= 0,
+		Original = 1,
 
-		Original		= 1,
+		Remaster = 2,
 
-		Remaster		= 2,
+		Remix = 4,
 
-		Remix			= 4,
+		Cover = 8,
 
-		Cover			= 8,
+		Instrumental = 16,
 
-		Instrumental	= 16,
+		Mashup = 32,
 
-		Mashup			= 32,
+		MusicPV = 64,
 
-		MusicPV			= 64,
+		DramaPV = 128,
 
-		DramaPV			= 128,
+		Live = 256,
 
-		Live			= 256,
+		Illustration = 512,
 
-		Illustration	= 512,
-
-		Other           = 1024,
-
+		Other = 1024,
 	}
 
-	public static class SongTypesExtender {
-
-		public static IEnumerable<SongType> ToIndividualSelections(this SongTypes selections, bool skipUnspecified = false) {
-			
+	public static class SongTypesExtender
+	{
+		public static IEnumerable<SongType> ToIndividualSelections(this SongTypes selections, bool skipUnspecified = false)
+		{
 			return EnumVal<SongTypes>
 				.GetIndividualValues(selections)
 				.Where(t => !skipUnspecified || t != SongTypes.Unspecified)
 				.Select(s => (SongType)s);
-
 		}
-
 	}
-
 }

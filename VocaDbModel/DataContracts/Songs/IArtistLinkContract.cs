@@ -1,10 +1,10 @@
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.DataContracts.Songs {
-
-	public interface IArtistLinkContract {
-
+namespace VocaDb.Model.DataContracts.Songs
+{
+	public interface IArtistLinkContract
+	{
 		ArtistContract Artist { get; }
 
 		ArtistCategories Categories { get; }
@@ -14,7 +14,5 @@ namespace VocaDb.Model.DataContracts.Songs {
 		bool IsSupport { get; }
 
 		string Name { get; }
-
 	}
-
 }

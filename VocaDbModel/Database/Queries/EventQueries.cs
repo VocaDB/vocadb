@@ -33,10 +33,10 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Events;
 using VocaDb.Model.Service.Translations;
 
-namespace VocaDb.Model.Database.Queries {
-
-	public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent> {
-
+namespace VocaDb.Model.Database.Queries
+{
+	public class EventQueries : QueriesBase<IEventRepository, ReleaseEvent>
+	{
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IFollowedArtistNotifier followedArtistNotifier;
@@ -45,29 +45,27 @@ namespace VocaDb.Model.Database.Queries {
 		private readonly IUserMessageMailer mailer;
 		private readonly IUserIconFactory userIconFactory;
 
-		private ArchivedReleaseEventVersion Archive(IDatabaseContext<ReleaseEvent> ctx, ReleaseEvent releaseEvent, ReleaseEventDiff diff, EntryEditEvent reason, string notes) {
-
+		private ArchivedReleaseEventVersion Archive(IDatabaseContext<ReleaseEvent> ctx, ReleaseEvent releaseEvent, ReleaseEventDiff diff, EntryEditEvent reason, string notes)
+		{
 			var agentLoginData = ctx.OfType<User>().CreateAgentLoginData(permissionContext);
 			var archived = ArchivedReleaseEventVersion.Create(releaseEvent, diff, agentLoginData, reason, notes);
 			ctx.Save(archived);
 			return archived;
-
 		}
 
-		private ArchivedReleaseEventSeriesVersion Archive(IDatabaseContext<ReleaseEvent> ctx, ReleaseEventSeries releaseEvent, ReleaseEventSeriesDiff diff, EntryEditEvent reason, string notes) {
-
+		private ArchivedReleaseEventSeriesVersion Archive(IDatabaseContext<ReleaseEvent> ctx, ReleaseEventSeries releaseEvent, ReleaseEventSeriesDiff diff, EntryEditEvent reason, string notes)
+		{
 			var agentLoginData = ctx.OfType<User>().CreateAgentLoginData(permissionContext);
 			var archived = ArchivedReleaseEventSeriesVersion.Create(releaseEvent, diff, agentLoginData, reason, notes);
 			ctx.Save(archived);
 			return archived;
-
 		}
 
 		public EventQueries(IEventRepository eventRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext,
-			IEntryThumbPersister imagePersister, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, 
+			IEntryThumbPersister imagePersister, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations,
 			IUserMessageMailer mailer, IFollowedArtistNotifier followedArtistNotifier, IAggregatedEntryImageUrlFactory imageUrlFactory)
-			: base(eventRepository, permissionContext) {
-
+			: base(eventRepository, permissionContext)
+		{
 			this.entryLinkFactory = entryLinkFactory;
 			this.imagePersister = imagePersister;
 			this.userIconFactory = userIconFactory;
@@ -75,30 +73,29 @@ namespace VocaDb.Model.Database.Queries {
 			this.mailer = mailer;
 			this.followedArtistNotifier = followedArtistNotifier;
 			this.imageUrlFactory = imageUrlFactory;
-
 		}
 
-		public (bool created, int reportId) CreateReport(int eventId, EventReportType reportType, string hostname, string notes, int? versionNumber) {
-
+		public (bool created, int reportId) CreateReport(int eventId, EventReportType reportType, string hostname, string notes, int? versionNumber)
+		{
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
-			return HandleTransaction(ctx => {
+			return HandleTransaction(ctx =>
+			{
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
 					entryLinkFactory,
 					(song, reporter, notesTruncated) => new EventReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != EventReportType.Other ? enumTranslations.Translation(reportType) : null,
 					eventId, reportType, hostname, notes);
 			});
-
 		}
 
-		public void Delete(int eventId, string notes) {
-
+		public void Delete(int eventId, string notes)
+		{
 			permissionContext.VerifyManageDatabase();
 
-			repository.HandleTransaction(ctx => {
-
+			repository.HandleTransaction(ctx =>
+			{
 				var entry = ctx.Load(eventId);
 
 				PermissionContext.VerifyEntryDelete(entry);
@@ -109,17 +106,15 @@ namespace VocaDb.Model.Database.Queries {
 				Archive(ctx, entry, new ReleaseEventDiff(false), EntryEditEvent.Deleted, notes);
 
 				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
-
 			});
-
 		}
 
-		public void DeleteSeries(int id, string notes) {
-
+		public void DeleteSeries(int id, string notes)
+		{
 			permissionContext.VerifyManageDatabase();
 
-			repository.HandleTransaction(ctx => {
-
+			repository.HandleTransaction(ctx =>
+			{
 				var entry = ctx.Load<ReleaseEventSeries>(id);
 
 				PermissionContext.VerifyEntryDelete(entry);
@@ -130,15 +125,13 @@ namespace VocaDb.Model.Database.Queries {
 				Archive(ctx, entry, new ReleaseEventSeriesDiff(false), EntryEditEvent.Deleted, notes);
 
 				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
-
 			});
-
 		}
 
-		public PartialFindResult<TResult> Find<TResult>(Func<ReleaseEvent, TResult> fac, EventQueryParams queryParams) {
-
-			return HandleQuery(ctx => {
-
+		public PartialFindResult<TResult> Find<TResult>(Func<ReleaseEvent, TResult> fac, EventQueryParams queryParams)
+		{
+			return HandleQuery(ctx =>
+			{
 				var q = ctx.Query()
 					.WhereNotDeleted()
 					.WhereHasArtists(queryParams.ArtistIds, queryParams.ChildVoicebanks, queryParams.IncludeMembers)
@@ -159,28 +152,26 @@ namespace VocaDb.Model.Database.Queries {
 
 				var count = 0;
 
-				if (queryParams.Paging != null && queryParams.Paging.GetTotalCount) {
-
+				if (queryParams.Paging != null && queryParams.Paging.GetTotalCount)
+				{
 					count = q.Count();
-
 				}
 
 				return new PartialFindResult<TResult>(entries, count);
-
 			});
-
 		}
 
 		public PartialFindResult<ReleaseEventSeriesForApiContract> FindSeries(SearchTextQuery textQuery, PagingProperties paging,
-			ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None) {
+			ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None)
+		{
 			return FindSeries(s => new ReleaseEventSeriesForApiContract(s, lang, fields, imageUrlFactory), textQuery, paging);
 		}
 
-		public PartialFindResult<TResult> FindSeries<TResult>(Func<ReleaseEventSeries, TResult> fac, 
-			SearchTextQuery textQuery, PagingProperties paging) {
-
-			return HandleQuery(ctx => {
-
+		public PartialFindResult<TResult> FindSeries<TResult>(Func<ReleaseEventSeries, TResult> fac,
+			SearchTextQuery textQuery, PagingProperties paging)
+		{
+			return HandleQuery(ctx =>
+			{
 				var q = ctx.Query<ReleaseEventSeries>()
 					.WhereNotDeleted()
 					.WhereHasName(textQuery)
@@ -195,18 +186,17 @@ namespace VocaDb.Model.Database.Queries {
 				var count = paging.GetTotalCount ? q.Count() : 0;
 
 				return PartialFindResult.Create(entries, count);
-
 			});
-
 		}
 
-		public ReleaseEventDetailsContract GetDetails(int id) {
-
-			return HandleQuery(ctx => {
-
+		public ReleaseEventDetailsContract GetDetails(int id)
+		{
+			return HandleQuery(ctx =>
+			{
 				UserEventRelationshipType? eventAssociation = null;
 
-				if (permissionContext.IsLoggedIn) {
+				if (permissionContext.IsLoggedIn)
+				{
 					eventAssociation = ctx.Query<EventForUser>()
 						.Where(e => e.ReleaseEvent.Id == id && e.User.Id == permissionContext.LoggedUserId)
 						.Select(e => e.RelationshipType)
@@ -214,41 +204,42 @@ namespace VocaDb.Model.Database.Queries {
 				}
 
 				return new ReleaseEventDetailsContract(ctx.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, PermissionContext, userIconFactory,
-					new EntryTypeTags(ctx)) {	
+					new EntryTypeTags(ctx))
+				{
 					EventAssociationType = eventAssociation,
 					LatestComments = new CommentQueries<ReleaseEventComment, ReleaseEvent>(
 						ctx, PermissionContext, userIconFactory, entryLinkFactory).GetList(id, 3)
 				};
 			});
-
 		}
 
-		public EntryWithTagUsagesContract GetEntryWithTagUsages(int eventId) {
-
-			return HandleQuery(session => {
+		public EntryWithTagUsagesContract GetEntryWithTagUsages(int eventId)
+		{
+			return HandleQuery(session =>
+			{
 				var releaseEvent = session.Load<ReleaseEvent>(eventId);
 				return new EntryWithTagUsagesContract(releaseEvent, releaseEvent.Tags.ActiveUsages, LanguagePreference, PermissionContext);
 			});
-
 		}
 
-		public ReleaseEventForEditContract GetEventForEdit(int id) {
-
+		public ReleaseEventForEditContract GetEventForEdit(int id)
+		{
 			return HandleQuery(session => new ReleaseEventForEditContract(
-				session.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, PermissionContext, null) {
+				session.Load<ReleaseEvent>(id), PermissionContext.LanguagePreference, PermissionContext, null)
+			{
 				AllSeries = session.Query<ReleaseEventSeries>().Select(s => new ReleaseEventSeriesContract(s, LanguagePreference, false)).ToArray()
 			});
-
 		}
 
-		public ReleaseEventForApiContract GetOne(int id, ContentLanguagePreference lang, ReleaseEventOptionalFields fields) {
+		public ReleaseEventForApiContract GetOne(int id, ContentLanguagePreference lang, ReleaseEventOptionalFields fields)
+		{
 			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), lang, fields, imageUrlFactory));
 		}
-		
-		public VenueForApiContract[] GetReleaseEventsByVenue() {
 
-			return HandleQuery(session => {
-
+		public VenueForApiContract[] GetReleaseEventsByVenue()
+		{
+			return HandleQuery(session =>
+			{
 				var allEvents = session.Query<ReleaseEvent>().Where(e => !e.Deleted).ToArray();
 				var venues = session.Query<Venue>().Where(e => !e.Deleted).OrderByName(LanguagePreference).ToArray();
 
@@ -258,56 +249,55 @@ namespace VocaDb.Model.Database.Queries {
 					VenueOptionalFields.AdditionalNames | VenueOptionalFields.Description | VenueOptionalFields.Events | VenueOptionalFields.Names | VenueOptionalFields.WebLinks));
 				var ungrouped = allEvents.Where(e => e.Venue == null).OrderBy(e => e.TranslatedName[LanguagePreference]);
 
-				return venueContracts.Append(new VenueForApiContract {
+				return venueContracts.Append(new VenueForApiContract
+				{
 					Name = string.Empty,
 					Events = ungrouped.Select(e => new ReleaseEventContract(e, LanguagePreference)).ToArray()
 				}).ToArray();
-
 			});
-
 		}
 
-		public ReleaseEventSeriesForApiContract GetOneSeries(int id, ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields) {
+		public ReleaseEventSeriesForApiContract GetOneSeries(int id, ContentLanguagePreference lang, ReleaseEventSeriesOptionalFields fields)
+		{
 			return repository.HandleQuery(ctx => new ReleaseEventSeriesForApiContract(ctx.Load<ReleaseEventSeries>(id), lang, fields, imageUrlFactory));
 		}
 
-		public ArchivedEventSeriesVersionDetailsContract GetSeriesVersionDetails(int id, int comparedVersionId) {
-
-			return HandleQuery(session => {
-
+		public ArchivedEventSeriesVersionDetailsContract GetSeriesVersionDetails(int id, int comparedVersionId)
+		{
+			return HandleQuery(session =>
+			{
 				var contract = new ArchivedEventSeriesVersionDetailsContract(session.Load<ArchivedReleaseEventSeriesVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventSeriesVersion>(comparedVersionId) : null,
 					PermissionContext);
 
-				if (contract.Hidden) {
+				if (contract.Hidden)
+				{
 					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
 				}
 
 				return contract;
-
 			});
 		}
 
-		public ArchivedEventVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
-
-			return HandleQuery(session => {
-
+		public ArchivedEventVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
+		{
+			return HandleQuery(session =>
+			{
 				var contract = new ArchivedEventVersionDetailsContract(session.Load<ArchivedReleaseEventVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventVersion>(comparedVersionId) : null,
 					PermissionContext);
 
-				if (contract.Hidden) {
+				if (contract.Hidden)
+				{
 					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
 				}
 
 				return contract;
-
 			});
-
 		}
 
-		public ReleaseEventContract[] List(EventSortRule sortRule, SortDirection sortDirection, bool includeSeries = false) {
-			
+		public ReleaseEventContract[] List(EventSortRule sortRule, SortDirection sortDirection, bool includeSeries = false)
+		{
 			return repository.HandleQuery(ctx => ctx
 				.Query()
 				.Where(e => e.Date.DateTime != null)
@@ -315,41 +305,37 @@ namespace VocaDb.Model.Database.Queries {
 				.ToArray()
 				.Select(e => new ReleaseEventContract(e, LanguagePreference, includeSeries))
 				.ToArray());
-
 		}
 
-		public ReleaseEventForApiContract Load(int id, ReleaseEventOptionalFields fields) {
-
+		public ReleaseEventForApiContract Load(int id, ReleaseEventOptionalFields fields)
+		{
 			return repository.HandleQuery(ctx => new ReleaseEventForApiContract(ctx.Load(id), LanguagePreference, fields, imageUrlFactory));
-
 		}
 
-		private void CreateTrashedEntry(IDatabaseContext ctx, ReleaseEvent releaseEvent, string notes) {
-
+		private void CreateTrashedEntry(IDatabaseContext ctx, ReleaseEvent releaseEvent, string notes)
+		{
 			var archived = new ArchivedEventContract(releaseEvent, new ReleaseEventDiff(true));
 			var data = XmlHelper.SerializeToXml(archived);
 			var trashed = new TrashedEntry(releaseEvent, data, GetLoggedUser(ctx), notes);
 
 			ctx.Save(trashed);
-
 		}
 
-		private void CreateTrashedEntry(IDatabaseContext ctx, ReleaseEventSeries eventSeries, string notes) {
-
+		private void CreateTrashedEntry(IDatabaseContext ctx, ReleaseEventSeries eventSeries, string notes)
+		{
 			var archived = new ArchivedEventSeriesContract(eventSeries, new ReleaseEventSeriesDiff(true));
 			var data = XmlHelper.SerializeToXml(archived);
 			var trashed = new TrashedEntry(eventSeries, data, GetLoggedUser(ctx), notes);
 
 			ctx.Save(trashed);
-
 		}
 
-		public void MoveSeriesToTrash(int seriesId, string notes) {
-
+		public void MoveSeriesToTrash(int seriesId, string notes)
+		{
 			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);
 
-			repository.HandleTransaction(ctx => {
-
+			repository.HandleTransaction(ctx =>
+			{
 				var entry = ctx.Load<ReleaseEventSeries>(seriesId);
 
 				PermissionContext.VerifyEntryDelete(entry);
@@ -359,24 +345,23 @@ namespace VocaDb.Model.Database.Queries {
 				CreateTrashedEntry(ctx, entry, notes);
 
 				var allEvents = entry.AllEvents.ToArray();
-				foreach (var ev in allEvents) {
+				foreach (var ev in allEvents)
+				{
 					ev.SetSeries(null);
 				}
 
 				ctx.Delete(entry);
 
 				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", entry));
-
 			});
-
 		}
 
-		public void MoveToTrash(int eventId, string notes) {
-
+		public void MoveToTrash(int eventId, string notes)
+		{
 			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);
 
-			repository.HandleTransaction(ctx => {
-
+			repository.HandleTransaction(ctx =>
+			{
 				var entry = ctx.Load(eventId);
 
 				PermissionContext.VerifyEntryDelete(entry);
@@ -387,7 +372,8 @@ namespace VocaDb.Model.Database.Queries {
 
 				entry.Series?.AllEvents.Remove(entry);
 
-				foreach (var song in entry.AllSongs) {
+				foreach (var song in entry.AllSongs)
+				{
 					song.ReleaseEvent = null;
 				}
 
@@ -400,23 +386,20 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.Delete(entry);
 
 				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", entry));
-
 			});
-
 		}
 
-		public int RemoveTagUsage(long tagUsageId) {
-
+		public int RemoveTagUsage(long tagUsageId)
+		{
 			return new TagUsageQueries(PermissionContext).RemoveTagUsage<EventTagUsage, ReleaseEvent>(tagUsageId, repository);
-
 		}
 
-		public void Restore(int eventId) {
-
+		public void Restore(int eventId)
+		{
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
 
-			HandleTransaction(ctx => {
-
+			HandleTransaction(ctx =>
+			{
 				var ev = ctx.Load<ReleaseEvent>(eventId);
 
 				ev.Deleted = false;
@@ -426,17 +409,15 @@ namespace VocaDb.Model.Database.Queries {
 				Archive(ctx, ev, new ReleaseEventDiff(false), EntryEditEvent.Restored, string.Empty);
 
 				ctx.AuditLogger.AuditLog(string.Format("restored {0}", ev));
-
 			});
-
 		}
 
-		public void RestoreSeries(int eventId) {
-
+		public void RestoreSeries(int eventId)
+		{
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
 
-			HandleTransaction(ctx => {
-
+			HandleTransaction(ctx =>
+			{
 				var ev = ctx.Load<ReleaseEventSeries>(eventId);
 
 				ev.Deleted = false;
@@ -446,9 +427,7 @@ namespace VocaDb.Model.Database.Queries {
 				Archive(ctx, ev, new ReleaseEventSeriesDiff(false), EntryEditEvent.Restored, string.Empty);
 
 				ctx.AuditLogger.AuditLog(string.Format("restored {0}", ev));
-
 			});
-
 		}
 
 		/// <summary>
@@ -459,26 +438,29 @@ namespace VocaDb.Model.Database.Queries {
 		/// <param name="contract">Updated contract. Cannot be null.</param>
 		/// <returns>Updated release event data. Cannot be null.</returns>
 		/// <exception cref="DuplicateEventNameException">If the event name is already in use.</exception>
-		public async Task<ReleaseEventContract> Update(ReleaseEventForEditContract contract, EntryPictureFileContract pictureData) {
-
+		public async Task<ReleaseEventContract> Update(ReleaseEventForEditContract contract, EntryPictureFileContract pictureData)
+		{
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyManageDatabase();
 
-			return await repository.HandleTransactionAsync(async session => {
-
+			return await repository.HandleTransactionAsync(async session =>
+			{
 				ReleaseEvent ev;
 
-				if (contract.Id == 0) {
-
+				if (contract.Id == 0)
+				{
 					var diff = new ReleaseEventDiff();
 
-					if (!contract.Series.IsNullOrDefault()) {
+					if (!contract.Series.IsNullOrDefault())
+					{
 						var series = await session.LoadAsync<ReleaseEventSeries>(contract.Series.Id);
-						ev = new ReleaseEvent(contract.Description, contract.Date, series, contract.SeriesNumber, contract.SeriesSuffix, 
+						ev = new ReleaseEvent(contract.Description, contract.Date, series, contract.SeriesNumber, contract.SeriesSuffix,
 							contract.DefaultNameLanguage, contract.CustomName);
 						series.AllEvents.Add(ev);
-					} else {
+					}
+					else
+					{
 						ev = new ReleaseEvent(contract.Description, contract.Date, contract.DefaultNameLanguage);
 					}
 
@@ -489,21 +471,25 @@ namespace VocaDb.Model.Database.Queries {
 					ev.SetVenue(await session.NullSafeLoadAsync<Venue>(contract.Venue));
 					ev.VenueName = contract.VenueName;
 
-					if (contract.SongList != null) {
+					if (contract.SongList != null)
+					{
 						diff.SongList.Set();
 					}
 
-					if (contract.Venue != null) {
+					if (contract.Venue != null)
+					{
 						diff.Venue.Set();
 					}
 
-					if (!string.IsNullOrEmpty(contract.VenueName)) {
+					if (!string.IsNullOrEmpty(contract.VenueName))
+					{
 						diff.VenueName.Set();
 					}
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
 
-					if (weblinksDiff.Changed) {
+					if (weblinksDiff.Changed)
+					{
 						diff.WebLinks.Set();
 					}
 
@@ -521,11 +507,13 @@ namespace VocaDb.Model.Database.Queries {
 					await session.SaveAsync(ev);
 
 					var namesChanged = new UpdateEventNamesQuery().UpdateNames(session, ev, contract.Series, contract.CustomName, contract.SeriesNumber, contract.SeriesSuffix, contract.Names);
-					if (namesChanged) {
+					if (namesChanged)
+					{
 						await session.UpdateAsync(ev);
 					}
 
-					if (pictureData != null) {
+					if (pictureData != null)
+					{
 						diff.MainPicture.Set();
 						SaveImage(ev, pictureData);
 						await session.UpdateAsync(ev);
@@ -537,9 +525,9 @@ namespace VocaDb.Model.Database.Queries {
 					await session.AuditLogger.AuditLogAsync(string.Format("created {0}", entryLinkFactory.CreateEntryLink(ev)));
 
 					await followedArtistNotifier.SendNotificationsAsync(session, ev, ev.Artists.Where(a => a?.Artist != null).Select(a => a.Artist), PermissionContext.LoggedUser);
-
-				} else {
-
+				}
+				else
+				{
 					ev = await session.LoadAsync(contract.Id);
 					permissionContext.VerifyEntryEdit(ev);
 
@@ -555,17 +543,20 @@ namespace VocaDb.Model.Database.Queries {
 						diff.Description.Set();
 
 					var inheritedLanguage = ev.Series == null || contract.CustomName ? contract.DefaultNameLanguage : ev.Series.TranslatedName.DefaultLanguage;
-					if (ev.TranslatedName.DefaultLanguage != inheritedLanguage) {
+					if (ev.TranslatedName.DefaultLanguage != inheritedLanguage)
+					{
 						diff.OriginalName.Set();
 					}
 
 					var namesChanged = new UpdateEventNamesQuery().UpdateNames(session, ev, contract.Series, contract.CustomName, contract.SeriesNumber, contract.SeriesSuffix, contract.Names);
 
-					if (namesChanged) {
+					if (namesChanged)
+					{
 						diff.Names.Set();
 					}
 
-					if (!ev.Series.NullSafeIdEquals(contract.Series)) {
+					if (!ev.Series.NullSafeIdEquals(contract.Series))
+					{
 						diff.Series.Set();
 					}
 
@@ -575,18 +566,21 @@ namespace VocaDb.Model.Database.Queries {
 					if (ev.SeriesSuffix != contract.SeriesSuffix)
 						diff.SeriesSuffix.Set();
 
-					if (!ev.SongList.NullSafeIdEquals(contract.SongList)) {
+					if (!ev.SongList.NullSafeIdEquals(contract.SongList))
+					{
 						diff.SongList.Set();
 					}
 
 					if (ev.Status != contract.Status)
 						diff.Status.Set();
-					
-					if (!ev.Venue.NullSafeIdEquals(contract.Venue)) {
+
+					if (!ev.Venue.NullSafeIdEquals(contract.Venue))
+					{
 						diff.Venue.Set();
 					}
 
-					if (!string.Equals(ev.VenueName, contract.VenueName)) {
+					if (!string.Equals(ev.VenueName, contract.VenueName))
+					{
 						diff.VenueName.Set();
 					}
 
@@ -606,7 +600,8 @@ namespace VocaDb.Model.Database.Queries {
 
 					var weblinksDiff = WebLink.Sync(ev.WebLinks, contract.WebLinks, ev);
 
-					if (weblinksDiff.Changed) {
+					if (weblinksDiff.Changed)
+					{
 						diff.WebLinks.Set();
 						await session.OfType<ReleaseEventWebLink>().SyncAsync(weblinksDiff);
 					}
@@ -622,7 +617,8 @@ namespace VocaDb.Model.Database.Queries {
 					if (artistDiff.Changed)
 						diff.Artists.Set();
 
-					if (pictureData != null) {
+					if (pictureData != null)
+					{
 						diff.MainPicture.Set();
 						SaveImage(ev, pictureData);
 					}
@@ -636,26 +632,23 @@ namespace VocaDb.Model.Database.Queries {
 					await session.AuditLogger.AuditLogAsync(logStr);
 
 					var newSongCutoff = TimeSpan.FromHours(1);
-					if (artistDiff.Added.Any() && ev.CreateDate >= DateTime.Now - newSongCutoff) {
-
+					if (artistDiff.Added.Any() && ev.CreateDate >= DateTime.Now - newSongCutoff)
+					{
 						var addedArtists = artistDiff.Added.Where(a => a.Artist != null).Select(a => a.Artist).Distinct().ToArray();
 
-						if (addedArtists.Any()) {
+						if (addedArtists.Any())
+						{
 							await followedArtistNotifier.SendNotificationsAsync(session, ev, addedArtists, PermissionContext.LoggedUser);
 						}
-
 					}
-
 				}
 
 				return new ReleaseEventContract(ev, LanguagePreference);
-
 			});
-
 		}
 
-		private PictureDataContract SaveImage(IEntryImageInformation entry, EntryPictureFileContract pictureData) {
-
+		private PictureDataContract SaveImage(IEntryImageInformation entry, EntryPictureFileContract pictureData)
+		{
 			if (pictureData == null) return null;
 
 			var parsed = ImageHelper.GetOriginal(pictureData.UploadedFile, pictureData.ContentLength, pictureData.Mime);
@@ -665,36 +658,34 @@ namespace VocaDb.Model.Database.Queries {
 			var thumbGenerator = new ImageThumbGenerator(imagePersister);
 			thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ReleaseEventSeries.ImageSizes, originalSize: Constants.RestrictedImageOriginalSize);
 			return parsed;
-
 		}
 
-		private void SaveImage(ReleaseEventSeries series, EntryPictureFileContract pictureData) {
-
+		private void SaveImage(ReleaseEventSeries series, EntryPictureFileContract pictureData)
+		{
 			var parsed = SaveImage((IEntryImageInformation)series, pictureData);
 			series.PictureMime = parsed.Mime;
-
 		}
 
-		private void SaveImage(ReleaseEvent ev, EntryPictureFileContract pictureData) {
-
+		private void SaveImage(ReleaseEvent ev, EntryPictureFileContract pictureData)
+		{
 			var parsed = SaveImage((IEntryImageInformation)ev, pictureData);
 			ev.PictureMime = parsed.Mime;
-
 		}
 
-		public int UpdateSeries(ReleaseEventSeriesForEditContract contract, EntryPictureFileContract pictureData) {
-
+		public int UpdateSeries(ReleaseEventSeriesForEditContract contract, EntryPictureFileContract pictureData)
+		{
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyManageDatabase();
 
-			return HandleTransaction(session => {
-
+			return HandleTransaction(session =>
+			{
 				ReleaseEventSeries series;
 
-				if (contract.Id == 0) {
-
-					series = new ReleaseEventSeries(contract.DefaultNameLanguage, contract.Names, contract.Description) {
+				if (contract.Id == 0)
+				{
+					series = new ReleaseEventSeries(contract.DefaultNameLanguage, contract.Names, contract.Description)
+					{
 						Category = contract.Category,
 						Status = contract.Status
 					};
@@ -706,12 +697,14 @@ namespace VocaDb.Model.Database.Queries {
 
 					var weblinksDiff = WebLink.Sync(series.WebLinks, contract.WebLinks, series);
 
-					if (weblinksDiff.Changed) {
+					if (weblinksDiff.Changed)
+					{
 						diff.WebLinks.Set();
 						session.OfType<ReleaseEventWebLink>().Sync(weblinksDiff);
 					}
 
-					if (pictureData != null) {
+					if (pictureData != null)
+					{
 						diff.Picture.Set();
 						SaveImage(series, pictureData);
 						session.Update(series);
@@ -722,14 +715,15 @@ namespace VocaDb.Model.Database.Queries {
 					Archive(session, series, diff, EntryEditEvent.Created, string.Empty);
 
 					AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(series)), session);
-
-				} else {
-
+				}
+				else
+				{
 					series = session.Load<ReleaseEventSeries>(contract.Id);
 					permissionContext.VerifyEntryEdit(series);
 					var diff = new ReleaseEventSeriesDiff(DoSnapshot(series, session));
 
-					if (series.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage) {
+					if (series.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage)
+					{
 						series.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
 						diff.OriginalName.Set();
 					}
@@ -737,43 +731,51 @@ namespace VocaDb.Model.Database.Queries {
 					var nameDiff = series.Names.Sync(contract.Names, series);
 					session.Sync(nameDiff);
 
-					if (nameDiff.Changed) {
+					if (nameDiff.Changed)
+					{
 						diff.Names.Set();
 					}
 
 
-					if (series.Category != contract.Category) {
+					if (series.Category != contract.Category)
+					{
 						diff.Category.Set();
 						series.Category = contract.Category;
 					}
 
-					if (series.Description != contract.Description) {
+					if (series.Description != contract.Description)
+					{
 						diff.Description.Set();
 						series.Description = contract.Description;
 					}
 
-					if (series.Status != contract.Status) {
+					if (series.Status != contract.Status)
+					{
 						diff.Status.Set();
 						series.Status = contract.Status;
 					}
 
-					if (pictureData != null) {
+					if (pictureData != null)
+					{
 						diff.Picture.Set();
 						SaveImage(series, pictureData);
 					}
 
 					var weblinksDiff = WebLink.Sync(series.WebLinks, contract.WebLinks, series);
 
-					if (weblinksDiff.Changed) {
+					if (weblinksDiff.Changed)
+					{
 						diff.WebLinks.Set();
 						session.Sync(weblinksDiff);
 					}
 
 					session.Update(series);
 
-					if (diff.Names.IsChanged || diff.OriginalName.IsChanged) {
+					if (diff.Names.IsChanged || diff.OriginalName.IsChanged)
+					{
 						var eventNamesQuery = new UpdateEventNamesQuery();
-						foreach (var ev in series.Events.Where(e => !e.CustomName)) {
+						foreach (var ev in series.Events.Where(e => !e.CustomName))
+						{
 							eventNamesQuery.UpdateNames(session, ev, series, ev.CustomName, ev.SeriesNumber, ev.SeriesSuffix, ev.Names);
 							ev.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
 							session.Update(ev);
@@ -783,56 +785,47 @@ namespace VocaDb.Model.Database.Queries {
 					Archive(session, series, diff, EntryEditEvent.Updated, string.Empty);
 
 					AuditLog(string.Format("updated {0}", entryLinkFactory.CreateEntryLink(series)), session);
-
 				}
 
 				return series.Id;
-
 			});
-
 		}
 
 		public AlbumForApiContract[] GetAlbums(int eventId,
 			AlbumOptionalFields fields = AlbumOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			return repository.HandleQuery(ctx => {
-
+			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+		{
+			return repository.HandleQuery(ctx =>
+			{
 				var ev = ctx.Load(eventId);
 				return ev.Albums.Select(a => new AlbumForApiContract(a, null, lang, imageUrlFactory, fields, SongOptionalFields.None)).ToArray();
-
 			});
-
 		}
 
 		public SongForApiContract[] GetPublishedSongs(int eventId,
 			SongOptionalFields fields = SongOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			return repository.HandleQuery(ctx => {
+			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+		{
+			return repository.HandleQuery(ctx =>
+			{
 				var ev = ctx.Load(eventId);
 				return ev.Songs.Select(a => new SongForApiContract(a, lang, fields)).ToArray();
 			});
-
 		}
 
 		public string[] GetNames(
 			string query = "",
-			int maxResults = 10) {
-
-			return repository.HandleQuery(ctx => {
-
+			int maxResults = 10)
+		{
+			return repository.HandleQuery(ctx =>
+			{
 				return ctx.Query<EventName>()
 					.Where(n => !n.Entry.Deleted && n.Value.Contains(query))
 					.OrderBy(n => n.Value)
 					.Take(maxResults)
 					.Select(r => r.Value)
 					.ToArray();
-
 			});
-
 		}
-
 	}
-
 }

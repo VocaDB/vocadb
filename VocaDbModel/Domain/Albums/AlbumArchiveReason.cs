@@ -1,7 +1,7 @@
-﻿namespace VocaDb.Model.Domain.Albums {
-
-	public enum AlbumArchiveReason {
-
+﻿namespace VocaDb.Model.Domain.Albums
+{
+	public enum AlbumArchiveReason
+	{
 		Unknown,
 
 		Created,
@@ -17,7 +17,5 @@
 		Deleted,
 
 		Restored
-
 	}
-
 }

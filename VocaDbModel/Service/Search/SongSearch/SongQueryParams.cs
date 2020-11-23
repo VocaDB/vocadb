@@ -6,23 +6,22 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.AlbumSearch;
 
-namespace VocaDb.Model.Service.Search.SongSearch {
-
+namespace VocaDb.Model.Service.Search.SongSearch
+{
 	/// <summary>
 	/// Query parameters for songs
 	/// </summary>
-	public class SongQueryParams {
-
+	public class SongQueryParams
+	{
 		private int[] ignoredIds;
 		private SongType[] songTypes;
 
-		public SongQueryParams() {
-
+		public SongQueryParams()
+		{
 			Common = new CommonSearchParams();
-			IgnoredIds = new int[] {};
+			IgnoredIds = new int[] { };
 			Paging = new PagingProperties(0, 30, true);
-			SongTypes = new SongType[] {};
-
+			SongTypes = new SongType[] { };
 		}
 
 		/// <param name="query">Query search string. Can be null or empty, in which case no filtering by name is done.</param>
@@ -36,9 +35,9 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		/// <param name="moveExactToTop">Whether to move exact match to the top of search results.</param>
 		/// <param name="ignoredIds">List of entries to be ignored. Can be null in which case no filtering is done.</param>
 		public SongQueryParams(SearchTextQuery textQuery, SongType[] songTypes, int start, int maxResults,
-			bool getTotalCount, SongSortRule sortRule, 
-			bool onlyByName, bool moveExactToTop, int[] ignoredIds) {
-
+			bool getTotalCount, SongSortRule sortRule,
+			bool onlyByName, bool moveExactToTop, int[] ignoredIds)
+		{
 			Common = new CommonSearchParams(textQuery, onlyByName, moveExactToTop);
 			Paging = new PagingProperties(start, maxResults, getTotalCount);
 
@@ -47,7 +46,6 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 			IgnoredIds = ignoredIds;
 			TimeFilter = TimeSpan.Zero;
 			OnlyWithPVs = false;
-
 		}
 
 		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
@@ -74,10 +72,12 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		/// If empty, no filtering is done by song IDs.
 		/// TODO: this isn't really in use anymore. Filtering by ID should be done after search.
 		/// </summary>
-		public int[] IgnoredIds {
+		public int[] IgnoredIds
+		{
 			get { return ignoredIds; }
-			set {
-				ignoredIds = value ?? new int[] { }; 
+			set
+			{
+				ignoredIds = value ?? new int[] { };
 			}
 		}
 
@@ -107,10 +107,12 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		/// List of song types that should be searched for. Cannot be null.
 		/// If empty, all song types are included.
 		/// </summary>
-		public SongType[] SongTypes {
+		public SongType[] SongTypes
+		{
 			get { return songTypes; }
-			set {
-				songTypes = value ?? new SongType[] { }; 
+			set
+			{
+				songTypes = value ?? new SongType[] { };
 			}
 		}
 
@@ -132,7 +134,5 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		/// 0 = no filtering (default).
 		/// </summary>
 		public int UserCollectionId { get; set; }
-
 	}
-
 }

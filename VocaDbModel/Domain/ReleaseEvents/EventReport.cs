@@ -2,10 +2,10 @@
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.ReleaseEvents {
-
-	public class EventReport : GenericEntryReport<ReleaseEvent, EventReportType> {
-
+namespace VocaDb.Model.Domain.ReleaseEvents
+{
+	public class EventReport : GenericEntryReport<ReleaseEvent, EventReportType>
+	{
 		public static readonly HashSet<EventReportType> ReportTypesWithRequiredNotes =
 			new HashSet<EventReportType> { EventReportType.InvalidInfo, EventReportType.Other };
 
@@ -17,11 +17,10 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		public virtual ArchivedReleaseEventVersion Version => VersionNumber.HasValue ? Entry.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
 
 		public override ArchivedObjectVersion VersionBase => Version;
-
 	}
 
-	public enum EventReportType {
-
+	public enum EventReportType
+	{
 		InvalidInfo = 1,
 
 		Duplicate = 2,
@@ -29,7 +28,5 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		Inappropriate = 3,
 
 		Other = 4
-
 	}
-
 }

@@ -4,19 +4,20 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Activityfeed;
 
-namespace VocaDb.Model.Domain.Versioning {
-
-	public abstract class ArchivedObjectVersion : IDatabaseObject {
-
+namespace VocaDb.Model.Domain.Versioning
+{
+	public abstract class ArchivedObjectVersion : IDatabaseObject
+	{
 		private string notes;
 
-		protected ArchivedObjectVersion() {
+		protected ArchivedObjectVersion()
+		{
 			Created = DateTime.Now;
 		}
 
 		protected ArchivedObjectVersion(XDocument data, AgentLoginData author, int version, EntryStatus status, string notes)
-			: this() {
-
+			: this()
+		{
 			ParamIs.NotNull(() => author);
 
 			Data = data;
@@ -25,7 +26,6 @@ namespace VocaDb.Model.Domain.Versioning {
 			Notes = notes;
 			Status = status;
 			Version = version;
-
 		}
 
 		public virtual string AgentName { get; protected set; }
@@ -53,11 +53,13 @@ namespace VocaDb.Model.Domain.Versioning {
 
 		public virtual int Id { get; protected set; }
 
-		public virtual string Notes {
+		public virtual string Notes
+		{
 			get { return notes; }
-			protected set {
+			protected set
+			{
 				ParamIs.NotNull(() => value);
-				notes = value; 
+				notes = value;
 			}
 		}
 
@@ -71,10 +73,9 @@ namespace VocaDb.Model.Domain.Versioning {
 		/// </remarks>
 		public virtual int Version { get; protected set; }
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("archived version {0} for {1}", Version, EntryBase);
 		}
-
 	}
-
 }

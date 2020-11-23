@@ -14,17 +14,17 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.DataContracts.Albums {
-
+namespace VocaDb.Model.DataContracts.Albums
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class AlbumDetailsContract : AlbumContract {
-
+	public class AlbumDetailsContract : AlbumContract
+	{
 		public AlbumDetailsContract() { }
 
 		public AlbumDetailsContract(Album album, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IAggregatedEntryImageUrlFactory thumbPersister,
 			Func<Song, SongVoteRating?> getSongRating = null, Tag discTypeTag = null)
-			: base(album, languagePreference) {
-
+			: base(album, languagePreference)
+		{
 			ArtistLinks = album.Artists.Select(a => new ArtistForAlbumContract(a, languagePreference)).OrderBy(a => a.Name).ToArray();
 			CanEditPersonalDescription = EntryPermissionManager.CanEditPersonalDescription(userContext, album);
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, album);
@@ -46,7 +46,6 @@ namespace VocaDb.Model.DataContracts.Albums {
 			PersonalDescriptionAuthor = author != null ? new ArtistForApiContract(author, languagePreference, thumbPersister, ArtistOptionalFields.MainPicture) : null;
 
 			TotalLength = Songs.All(s => s.Song != null && s.Song.LengthSeconds > 0) ? TimeSpan.FromSeconds(Songs.Sum(s => s.Song.LengthSeconds)) : TimeSpan.Zero;
-
 		}
 
 		[DataMember]
@@ -109,12 +108,11 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }
-
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SharedAlbumStatsContract {
-
+	public class SharedAlbumStatsContract
+	{
 		[DataMember]
 		public AlbumReviewContract LatestReview { get; set; }
 
@@ -129,7 +127,5 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		[DataMember]
 		public int WishlistCount { get; set; }
-
 	}
-
 }

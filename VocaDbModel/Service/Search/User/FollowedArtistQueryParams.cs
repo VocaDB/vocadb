@@ -2,10 +2,10 @@ using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search.Artists;
 
-namespace VocaDb.Model.Service.Search.User {
-
-	public class FollowedArtistQueryParams {
-
+namespace VocaDb.Model.Service.Search.User
+{
+	public class FollowedArtistQueryParams
+	{
 		public ArtistType ArtistType { get; set; }
 
 		/// <summary>
@@ -23,7 +23,5 @@ namespace VocaDb.Model.Service.Search.User {
 		/// Id of the user whose artists to get.
 		/// </summary>
 		public int UserId { get; set; }
-
 	}
-
 }

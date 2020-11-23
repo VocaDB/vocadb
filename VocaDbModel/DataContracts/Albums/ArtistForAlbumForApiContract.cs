@@ -9,15 +9,15 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts.Albums {
-
+namespace VocaDb.Model.DataContracts.Albums
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistForAlbumForApiContract {
-
+	public class ArtistForAlbumForApiContract
+	{
 		public ArtistForAlbumForApiContract() { }
 
-		public ArtistForAlbumForApiContract(ArtistForAlbum artistForAlbum, ContentLanguagePreference languagePreference) {
-
+		public ArtistForAlbumForApiContract(ArtistForAlbum artistForAlbum, ContentLanguagePreference languagePreference)
+		{
 			ParamIs.NotNull(() => artistForAlbum);
 
 			Artist = (artistForAlbum.Artist != null ? new ArtistContract(artistForAlbum.Artist, languagePreference) : null);
@@ -26,7 +26,6 @@ namespace VocaDb.Model.DataContracts.Albums {
 			IsSupport = artistForAlbum.IsSupport;
 			Name = (Artist != null ? Artist.Name : artistForAlbum.Name);
 			Roles = artistForAlbum.Roles;
-
 		}
 
 		[DataMember]
@@ -46,7 +45,5 @@ namespace VocaDb.Model.DataContracts.Albums {
 
 		[DataMember]
 		public ArtistRoles Roles { get; set; }
-
 	}
-
 }

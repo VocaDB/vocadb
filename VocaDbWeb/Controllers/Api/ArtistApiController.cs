@@ -19,14 +19,14 @@ using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 
-namespace VocaDb.Web.Controllers.Api {
-
+namespace VocaDb.Web.Controllers.Api
+{
 	/// <summary>
 	/// API queries for artists.
 	/// </summary>
 	[RoutePrefix("api/artists")]
-	public class ArtistApiController : ApiController {
-
+	public class ArtistApiController : ApiController
+	{
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
 		private readonly ObjectCache cache;
@@ -34,27 +34,28 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly ArtistService service;
 		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 
-		public ArtistApiController(ArtistQueries queries, ArtistService service, IAggregatedEntryImageUrlFactory thumbPersister, ObjectCache cache) {
+		public ArtistApiController(ArtistQueries queries, ArtistService service, IAggregatedEntryImageUrlFactory thumbPersister, ObjectCache cache)
+		{
 			this.queries = queries;
 			this.service = service;
 			this.thumbPersister = thumbPersister;
 			this.cache = cache;
 		}
 
-		private ArtistForApiContract GetArtist(Artist a, ArtistMergeRecord m, 
-			ArtistOptionalFields fields, 
+		private ArtistForApiContract GetArtist(Artist a, ArtistMergeRecord m,
+			ArtistOptionalFields fields,
 			ArtistRelationsFields relations,
 			ContentLanguagePreference lang,
-			IDatabaseContext<Artist> ctx) {
-			
+			IDatabaseContext<Artist> ctx)
+		{
 			var contract = new ArtistForApiContract(a, lang, thumbPersister, fields);
 
-			if (relations != ArtistRelationsFields.None) {
+			if (relations != ArtistRelationsFields.None)
+			{
 				contract.Relations = new ArtistRelationsQuery(ctx, lang, cache, thumbPersister).GetRelations(a, relations);
 			}
 
 			return contract;
-
 		}
 
 		/// <summary>
@@ -90,7 +91,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public IEnumerable<CommentForApiContract> GetComments(int id) => queries.GetComments(id);
 
 		[Route("{id:int}/for-edit")]
-		[ApiExplorerSettings(IgnoreApi=true)]
+		[ApiExplorerSettings(IgnoreApi = true)]
 		public ArtistForEditContract GetForEdit(int id) => queries.GetArtistForEdit(id);
 
 		/// <summary>
@@ -137,7 +138,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <example>http://vocadb.net/api/artists?query=Tripshots&amp;artistTypes=Producer</example>
 		[Route("")]
 		public PartialFindResult<ArtistForApiContract> GetList(
-			string query = "", 
+			string query = "",
 			string artistTypes = null,
 			bool allowBaseVoicebanks = true,
 			[FromUri] string[] tagName = null,
@@ -151,12 +152,13 @@ namespace VocaDb.Web.Controllers.Api {
 			bool preferAccurateMatches = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			ArtistOptionalFields fields = ArtistOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
+			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+		{
 			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
 			var types = EnumVal<ArtistType>.ParseMultiple(artistTypes);
 
-			var param = new ArtistQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort, preferAccurateMatches) {
+			var param = new ArtistQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort, preferAccurateMatches)
+			{
 				Tags = tagName,
 				TagIds = tagId,
 				ChildTags = childTags,
@@ -169,7 +171,6 @@ namespace VocaDb.Web.Controllers.Api {
 			var artists = service.FindArtists(s => new ArtistForApiContract(s, lang, thumbPersister, fields), param);
 
 			return artists;
-
 		}
 
 		[Route("ids")]
@@ -216,7 +217,5 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{id:int}/comments")]
 		[Authorize]
 		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) => queries.CreateComment(id, contract);
-
 	}
-
 }

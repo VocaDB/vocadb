@@ -3,23 +3,23 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts {
-
+namespace VocaDb.Model.DataContracts
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class LocalizedStringContract : ILocalizedString {
+	public class LocalizedStringContract : ILocalizedString
+	{
+		public LocalizedStringContract() { }
 
-		public LocalizedStringContract() {}
-
-		public LocalizedStringContract(LocalizedString str) {
-			
+		public LocalizedStringContract(LocalizedString str)
+		{
 			ParamIs.NotNull(() => str);
 
 			Language = str.Language;
 			Value = str.Value;
-
 		}
 
-		public LocalizedStringContract(string value, ContentLanguageSelection language) {
+		public LocalizedStringContract(string value, ContentLanguageSelection language)
+		{
 			Value = value;
 			Language = language;
 		}
@@ -30,7 +30,5 @@ namespace VocaDb.Model.DataContracts {
 
 		[DataMember]
 		public string Value { get; set; }
-
 	}
-
 }

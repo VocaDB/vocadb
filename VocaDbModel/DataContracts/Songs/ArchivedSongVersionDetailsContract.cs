@@ -3,14 +3,14 @@ using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
-
-	public class ArchivedSongVersionDetailsContract {
-
+namespace VocaDb.Model.DataContracts.Songs
+{
+	public class ArchivedSongVersionDetailsContract
+	{
 		public ArchivedSongVersionDetailsContract() { }
 
-		public ArchivedSongVersionDetailsContract(ArchivedSongVersion archived, ArchivedSongVersion comparedVersion, IUserPermissionContext permissionContext) {
-
+		public ArchivedSongVersionDetailsContract(ArchivedSongVersion archived, ArchivedSongVersion comparedVersion, IUserPermissionContext permissionContext)
+		{
 			ParamIs.NotNull(() => archived);
 
 			ArchivedVersion = new ArchivedSongVersionContract(archived);
@@ -27,7 +27,6 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Versions = ComparedSongsContract.Create(archived, comparedVersion);
 
 			ComparedVersionId = Versions.SecondId;
-
 		}
 
 		public ArchivedSongVersionContract ArchivedVersion { get; set; }
@@ -47,8 +46,5 @@ namespace VocaDb.Model.DataContracts.Songs {
 		public SongContract Song { get; set; }
 
 		public ComparedSongsContract Versions { get; set; }
-
-
 	}
-
 }

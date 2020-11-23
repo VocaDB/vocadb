@@ -4,16 +4,17 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Web.Helpers {
-
+namespace VocaDb.Web.Helpers
+{
 	/// <summary>
 	/// Extension methods for generating URLs to entry images.
 	/// </summary>
-	public static class UrlHelperExtenderForImages {
-
+	public static class UrlHelperExtenderForImages
+	{
 		private static IAggregatedEntryImageUrlFactory ImageUrlFactory => DependencyResolver.Current.GetService<IAggregatedEntryImageUrlFactory>();
 
-		private static VocaDbUrl GetUnknownImageUrl(UrlHelper urlHelper) {
+		private static VocaDbUrl GetUnknownImageUrl(UrlHelper urlHelper)
+		{
 			return new VocaDbUrl(urlHelper.Content("~/Content/unknown.png"), UrlDomain.Main, System.UriKind.Relative);
 		}
 
@@ -24,10 +25,9 @@ namespace VocaDb.Web.Helpers {
 		/// <param name="imageInfo">Image information. Cannot be null.</param>
 		/// <param name="size">Requested image size.</param>
 		/// <returns>URL to the image thumbnail (may be placeholder).</returns>
-		public static string ImageThumb(this UrlHelper urlHelper, EntryThumbForApiContract imageInfo, ImageSize size) {
-
+		public static string ImageThumb(this UrlHelper urlHelper, EntryThumbForApiContract imageInfo, ImageSize size)
+		{
 			return imageInfo?.GetSmallestThumb(size).EmptyToNull() ?? GetUnknownImageUrl(urlHelper).Url;
-
 		}
 
 		/// <summary>
@@ -48,13 +48,11 @@ namespace VocaDb.Web.Helpers {
 		/// </param>
 		/// <param name="useUnknownImage">Use unknown image as fallback if image does not exist.</param>
 		/// <returns>URL to the image thumbnail.</returns>
-		public static string ImageThumb(this UrlHelper urlHelper, IEntryImageInformation imageInfo, ImageSize size, bool fullUrl = false, bool useUnknownImage = true) {
-			
+		public static string ImageThumb(this UrlHelper urlHelper, IEntryImageInformation imageInfo, ImageSize size, bool fullUrl = false, bool useUnknownImage = true)
+		{
 			var unknown = useUnknownImage ? GetUnknownImageUrl(urlHelper) : VocaDbUrl.Empty;
 			var url = ImageUrlFactory.GetUrlWithFallback(imageInfo, size, unknown).ToAbsoluteIfNotMain();
 			return fullUrl ? url.ToAbsolute().Url : url.Url;
-
 		}
-
 	}
 }

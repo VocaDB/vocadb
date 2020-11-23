@@ -1,11 +1,11 @@
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace VocaDb.Model.DataContracts.Songs {
-
+namespace VocaDb.Model.DataContracts.Songs
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class RelatedSongsContract {
-
+	public class RelatedSongsContract
+	{
 		public bool Any => ArtistMatches.Any() || LikeMatches.Any() || TagMatches.Any();
 
 		[DataMember]
@@ -16,7 +16,5 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public SongForApiContract[] TagMatches { get; set; }
-
 	}
-
 }

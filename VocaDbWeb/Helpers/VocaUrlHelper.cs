@@ -1,10 +1,10 @@
 using System.Web;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Web.Helpers {
-
-	public static class VocaUrlHelper {
-
+namespace VocaDb.Web.Helpers
+{
+	public static class VocaUrlHelper
+	{
 		public static string MergeUrls(string baseUrl, string relative) => VocaUriBuilder.MergeUrls(baseUrl, relative);
 
 		/// <summary>
@@ -16,7 +16,5 @@ namespace VocaDb.Web.Helpers {
 		/// Full path to that static resource, for example http://static.vocadb.net/banners/rvocaloid.png
 		/// </returns>
 		public static string StaticResource(string relative) => VocaUriBuilder.StaticResource(relative);
-
 	}
-
 }

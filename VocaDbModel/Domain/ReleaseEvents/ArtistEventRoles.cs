@@ -1,10 +1,10 @@
 using System;
 
-namespace VocaDb.Model.Domain.ReleaseEvents {
-
+namespace VocaDb.Model.Domain.ReleaseEvents
+{
 	[Flags]
-	public enum ArtistEventRoles {
-
+	public enum ArtistEventRoles
+	{
 		Default = 0,
 
 		Dancer = 1,
@@ -44,7 +44,5 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		OtherPerformer = 256,
 
 		Other = 512
-
 	}
-
 }

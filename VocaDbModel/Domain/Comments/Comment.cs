@@ -2,37 +2,39 @@ using System;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Comments {
-
+namespace VocaDb.Model.Domain.Comments
+{
 	/// <summary>
 	/// Base class for comments.
 	/// Comments can be added for entries such as albums and users.
 	/// </summary>
-	public abstract class Comment : ICommentWithEntry {
-
+	public abstract class Comment : ICommentWithEntry
+	{
 		private string authorName;
 		private string message;
 
-		protected Comment() {
+		protected Comment()
+		{
 			Created = DateTime.Now;
 		}
 
 		protected Comment(string message, AgentLoginData loginData)
-			: this() {
-
+			: this()
+		{
 			ParamIs.NotNull(() => loginData);
 
 			Message = message;
 			Author = loginData.User;
 			AuthorName = loginData.Name;
-
 		}
 
 		public virtual User Author { get; set; }
 
-		public virtual string AuthorName {
+		public virtual string AuthorName
+		{
 			get => authorName;
-			set {
+			set
+			{
 				ParamIs.NotNullOrEmpty(() => value);
 				authorName = value;
 			}
@@ -51,9 +53,11 @@ namespace VocaDb.Model.Domain.Comments {
 
 		public virtual int Id { get; set; }
 
-		public virtual string Message {
+		public virtual string Message
+		{
 			get => message;
-			set {
+			set
+			{
 				ParamIs.NotNullOrEmpty(() => value);
 				message = value;
 			}
@@ -61,26 +65,23 @@ namespace VocaDb.Model.Domain.Comments {
 
 		public virtual void OnDelete() { }
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("comment [{0}] for {1}", Id, Entry);
 		}
-
 	}
 
-	public interface IComment : IEntryWithIntId {
-
+	public interface IComment : IEntryWithIntId
+	{
 		string AuthorName { get; }
 
 		DateTime Created { get; }
 
 		string Message { get; }
-
 	}
 
-	public interface ICommentWithEntry : IComment {
-
+	public interface ICommentWithEntry : IComment
+	{
 		IEntryWithNames Entry { get; }
-
 	}
-
 }

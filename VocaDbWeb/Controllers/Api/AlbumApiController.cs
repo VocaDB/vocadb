@@ -20,14 +20,14 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using WebApi.OutputCache.V2;
 
-namespace VocaDb.Web.Controllers.Api {
-
+namespace VocaDb.Web.Controllers.Api
+{
 	/// <summary>
 	/// API queries for albums.
 	/// </summary>
 	[RoutePrefix("api/albums")]
-	public class AlbumApiController : ApiController {
-
+	public class AlbumApiController : ApiController
+	{
 		private const int hourInSeconds = 3600;
 		private const int absoluteMax = 100;
 		private const int defaultMax = 10;
@@ -36,14 +36,13 @@ namespace VocaDb.Web.Controllers.Api {
 		private readonly AlbumQueries queries;
 		private readonly AlbumService service;
 
-		public AlbumApiController(AlbumQueries queries, AlbumService service, 
-			OtherService otherService, IAggregatedEntryImageUrlFactory thumbPersister) {		
-			
+		public AlbumApiController(AlbumQueries queries, AlbumService service,
+			OtherService otherService, IAggregatedEntryImageUrlFactory thumbPersister)
+		{
 			this.queries = queries;
 			this.service = service;
 			this.otherService = otherService;
 			this.thumbPersister = thumbPersister;
-
 		}
 
 		/// <summary>
@@ -79,7 +78,7 @@ namespace VocaDb.Web.Controllers.Api {
 		public IEnumerable<CommentForApiContract> GetComments(int id) => queries.GetComments(id);
 
 		[Route("{id:int}/for-edit")]
-		[ApiExplorerSettings(IgnoreApi=true)]
+		[ApiExplorerSettings(IgnoreApi = true)]
 		public AlbumForEditContract GetForEdit(int id) => queries.GetForEdit(id);
 
 		/// <summary>
@@ -153,7 +152,7 @@ namespace VocaDb.Web.Controllers.Api {
 		/// <example>https://vocadb.net/api/albums?query=Synthesis&amp;discTypes=Album</example>
 		[Route("")]
 		public PartialFindResult<AlbumForApiContract> GetList(
-			string query = "", 
+			string query = "",
 			DiscType discTypes = DiscType.Unknown,
 			[FromUri] string[] tagName = null,
 			[FromUri] int[] tagId = null,
@@ -167,19 +166,20 @@ namespace VocaDb.Web.Controllers.Api {
 			DateTime? releaseDateAfter = null,
 			DateTime? releaseDateBefore = null,
 			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
-			int start = 0, 
+			int start = 0,
 			int maxResults = defaultMax,
-			bool getTotalCount = false, 
+			bool getTotalCount = false,
 			AlbumSortRule? sort = null,
 			bool preferAccurateMatches = false,
 			bool deleted = false,
-			NameMatchMode nameMatchMode = NameMatchMode.Exact, 
-			AlbumOptionalFields fields = AlbumOptionalFields.None, 
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
+			NameMatchMode nameMatchMode = NameMatchMode.Exact,
+			AlbumOptionalFields fields = AlbumOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+		{
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
-			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort ?? AlbumSortRule.Name, preferAccurateMatches) {
+			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort ?? AlbumSortRule.Name, preferAccurateMatches)
+			{
 				ArtistParticipation = {
 					ArtistIds = artistId,
 					Participation = artistParticipationStatus,
@@ -199,9 +199,8 @@ namespace VocaDb.Web.Controllers.Api {
 			queryParams.Common.EntryStatus = status;
 
 			var entries = service.Find(a => new AlbumForApiContract(a, null, lang, thumbPersister, fields, SongOptionalFields.None), queryParams);
-			
-			return entries;
 
+			return entries;
 		}
 
 		/// <summary>
@@ -251,7 +250,8 @@ namespace VocaDb.Web.Controllers.Api {
 		public IEnumerable<AlbumForApiContract> GetTopAlbums(
 			[FromUri] int[] ignoreIds = null,
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
-			AlbumOptionalFields fields = AlbumOptionalFields.None) {
+			AlbumOptionalFields fields = AlbumOptionalFields.None)
+		{
 			ignoreIds ??= Array.Empty<int>();
 			return otherService.GetTopAlbums(languagePreference, fields, ignoreIds);
 		}
@@ -330,7 +330,5 @@ namespace VocaDb.Web.Controllers.Api {
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Authorize]
 		public void PostPersonalDescription(int id, AlbumDetailsContract data) => queries.UpdatePersonalDescription(id, data);
-
 	}
-
 }

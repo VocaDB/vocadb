@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace VocaDb.Model.Domain.ReleaseEvents {
-
+namespace VocaDb.Model.Domain.ReleaseEvents
+{
 	[Flags]
-	public enum ReleaseEventSeriesEditableFields {
-
+	public enum ReleaseEventSeriesEditableFields
+	{
 		Nothing = 0,
 
 		Category = 1,
@@ -23,7 +23,5 @@ namespace VocaDb.Model.Domain.ReleaseEvents {
 		Status = 64,
 
 		WebLinks = 128
-
 	}
-
 }

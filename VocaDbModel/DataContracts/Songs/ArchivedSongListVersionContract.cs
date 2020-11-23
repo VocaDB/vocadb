@@ -1,23 +1,21 @@
 ﻿using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
-
-	public class ArchivedSongListVersionContract : ArchivedObjectVersionContract {
-
+namespace VocaDb.Model.DataContracts.Songs
+{
+	public class ArchivedSongListVersionContract : ArchivedObjectVersionContract
+	{
 		public ArchivedSongListVersionContract() { }
 
 		public ArchivedSongListVersionContract(ArchivedSongListVersion archivedVersion)
-			: base(archivedVersion) {
-
+			: base(archivedVersion)
+		{
 			ChangedFields = archivedVersion.Diff.ChangedFields.Value;
 			Reason = archivedVersion.CommonEditEvent;
-
 		}
 
 		public SongListEditableFields ChangedFields { get; set; }
 
 		public EntryEditEvent Reason { get; set; }
-
 	}
 }

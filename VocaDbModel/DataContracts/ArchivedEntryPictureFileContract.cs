@@ -2,15 +2,15 @@
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.DataContracts {
-
+namespace VocaDb.Model.DataContracts
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArchivedEntryPictureFileContract {
-
+	public class ArchivedEntryPictureFileContract
+	{
 		public ArchivedEntryPictureFileContract() { }
 
-		public ArchivedEntryPictureFileContract(EntryPictureFile entryPictureFile) {
-
+		public ArchivedEntryPictureFileContract(EntryPictureFile entryPictureFile)
+		{
 			ParamIs.NotNull(() => entryPictureFile);
 
 			Author = new ObjectRefContract(entryPictureFile.Author);
@@ -18,7 +18,6 @@ namespace VocaDb.Model.DataContracts {
 			Id = entryPictureFile.Id;
 			Mime = entryPictureFile.Mime;
 			Name = entryPictureFile.Name;
-
 		}
 
 		[DataMember]
@@ -35,7 +34,5 @@ namespace VocaDb.Model.DataContracts {
 
 		[DataMember]
 		public string Name { get; set; }
-
 	}
-
 }
