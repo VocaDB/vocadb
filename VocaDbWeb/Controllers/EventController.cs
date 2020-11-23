@@ -14,7 +14,7 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Events;
 using VocaDb.Model.Service.Translations;

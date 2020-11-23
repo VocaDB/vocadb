@@ -25,7 +25,7 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search.Artists;
 
 namespace VocaDb.Model.Service

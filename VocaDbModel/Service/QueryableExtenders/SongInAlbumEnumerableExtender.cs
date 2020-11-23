@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.Service.QueryableExtenders
+namespace VocaDb.Model.Service.QueryableExtensions
 {
 	public static class SongInAlbumEnumerableExtender
 	{
