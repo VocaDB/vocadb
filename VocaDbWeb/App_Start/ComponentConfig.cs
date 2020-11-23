@@ -34,20 +34,24 @@ using VocaDb.Web.Code.Security;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Services;
 
-namespace VocaDb.Web.App_Start {
+namespace VocaDb.Web.App_Start
+{
 
 	/// <summary>
 	/// Configures AutoFac dependency injection.
 	/// </summary>
-	public static class ComponentConfig {
+	public static class ComponentConfig
+	{
 
-		private static string[] LoadBlockedIPs(IComponentContext componentContext) {
+		private static string[] LoadBlockedIPs(IComponentContext componentContext)
+		{
 
 			return componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());
 
 		}
 
-		public static void RegisterComponent() {
+		public static void RegisterComponent()
+		{
 
 			var builder = new ContainerBuilder();
 
@@ -127,7 +131,7 @@ namespace VocaDb.Web.App_Start {
 
 			// Enable DI for action filters
 			builder.Register(c => new RestrictBlockedIPAttribute(c.Resolve<IPRuleManager>()))
-                .AsActionFilterFor<Controller>().InstancePerRequest();
+				.AsActionFilterFor<Controller>().InstancePerRequest();
 
 			builder.RegisterFilterProvider();
 
