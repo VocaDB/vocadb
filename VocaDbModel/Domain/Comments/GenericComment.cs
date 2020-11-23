@@ -69,11 +69,6 @@ namespace VocaDb.Model.Domain.Comments
 
 		public AlbumComment(Album album, string message, AgentLoginData loginData)
 			: base(album, message, loginData) { }
-
-		public override void OnDelete()
-		{
-			EntryForComment.AllComments.Remove(this);
-		}
 	}
 
 	public class ArtistComment : GenericComment<Artist>
@@ -82,11 +77,6 @@ namespace VocaDb.Model.Domain.Comments
 
 		public ArtistComment(Artist artist, string message, AgentLoginData loginData)
 			: base(artist, message, loginData) { }
-
-		public override void OnDelete()
-		{
-			EntryForComment.AllComments.Remove(this);
-		}
 	}
 
 	public class DiscussionComment : GenericComment<DiscussionTopic>
@@ -95,11 +85,6 @@ namespace VocaDb.Model.Domain.Comments
 
 		public DiscussionComment(DiscussionTopic topic, string message, AgentLoginData loginData)
 			: base(topic, message, loginData) { }
-
-		public override void OnDelete()
-		{
-			EntryForComment.AllComments.Remove(this);
-		}
 	}
 
 	public class ReleaseEventComment : GenericComment<ReleaseEvent>
@@ -107,13 +92,7 @@ namespace VocaDb.Model.Domain.Comments
 		public ReleaseEventComment() { }
 
 		public ReleaseEventComment(ReleaseEvent entry, string message, AgentLoginData loginData)
-			: base(entry, message, loginData)
-		{ }
-
-		public override void OnDelete()
-		{
-			EntryForComment.AllComments.Remove(this);
-		}
+			: base(entry, message, loginData) { }
 	}
 
 	public class SongComment : GenericComment<Song>
@@ -122,11 +101,6 @@ namespace VocaDb.Model.Domain.Comments
 
 		public SongComment(Song song, string message, AgentLoginData loginData)
 			: base(song, message, loginData) { }
-
-		public override void OnDelete()
-		{
-			EntryForComment.AllComments.Remove(this);
-		}
 	}
 
 	public class SongListComment : GenericComment<SongList>
@@ -135,11 +109,6 @@ namespace VocaDb.Model.Domain.Comments
 
 		public SongListComment(SongList list, string message, AgentLoginData loginData)
 			: base(list, message, loginData) { }
-
-		public override void OnDelete()
-		{
-			EntryForComment.AllComments.Remove(this);
-		}
 	}
 
 	public class TagComment : GenericComment<Tag>
@@ -159,10 +128,5 @@ namespace VocaDb.Model.Domain.Comments
 
 		public UserComment(User user, string message, AgentLoginData loginData)
 			: base(user, message, loginData) { }
-
-		public override void OnDelete()
-		{
-			EntryForComment.AllComments.Remove(this);
-		}
 	}
 }

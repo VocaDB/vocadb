@@ -95,7 +95,7 @@ namespace VocaDb.Model.Service.Queries
 				permissionContext.VerifyPermission(PermissionToken.DeleteComments);
 
 			comment.OnDelete();
-			ctx.Delete(comment);
+			ctx.Update(comment);
 		}
 
 		public CommentForApiContract[] GetAll(int entryId)

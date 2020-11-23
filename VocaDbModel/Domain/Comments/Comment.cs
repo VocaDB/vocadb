@@ -65,7 +65,7 @@ namespace VocaDb.Model.Domain.Comments
 			}
 		}
 
-		public virtual void OnDelete() { }
+		public virtual void OnDelete() => Deleted = true;
 
 		public override string ToString()
 		{

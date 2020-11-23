@@ -155,7 +155,7 @@ namespace VocaDb.Model.Service
 					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 
 				comment.OnDelete();
-				session.Delete(comment);
+				session.Update(comment);
 			});
 		}
 
