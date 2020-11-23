@@ -1,12 +1,12 @@
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.Mapping.Songs {
-
-	public class SongListMap : ClassMap<SongList> {
-
-		public SongListMap() {
-
+namespace VocaDb.Model.Mapping.Songs
+{
+	public class SongListMap : ClassMap<SongList>
+	{
+		public SongListMap()
+		{
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
@@ -23,11 +23,13 @@ namespace VocaDb.Model.Mapping.Songs {
 
 			Component(m => m.EventDate, c => c.Map(m => m.DateTime).Column("EventDate").Nullable());
 
-			Component(m => m.Tags, c => {
+			Component(m => m.Tags, c =>
+			{
 				c.HasMany(m => m.Usages).KeyColumn("[SongList]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			});
 
-			Component(m => m.Thumb, c => {
+			Component(m => m.Thumb, c =>
+			{
 				c.Map(m => m.Mime).Column("ThumbMime").Length(30);
 				c.ParentReference(m => m.Entry);
 			});
@@ -43,15 +45,13 @@ namespace VocaDb.Model.Mapping.Songs {
 			HasMany(m => m.Comments).Inverse().KeyColumn("SongList").Cascade.AllDeleteOrphan().OrderBy("Created");
 
 			HasMany(m => m.Events).Inverse().Cache.ReadWrite();
-
 		}
-
 	}
 
-	public class SongInListMap : ClassMap<SongInList> {
-
-		public SongInListMap() {
-
+	public class SongInListMap : ClassMap<SongInList>
+	{
+		public SongInListMap()
+		{
 			Table("SongsInLists");
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -61,15 +61,13 @@ namespace VocaDb.Model.Mapping.Songs {
 
 			References(m => m.List).Not.Nullable();
 			References(m => m.Song).Not.Nullable();
-
 		}
-
 	}
 
-	public class ArchivedSongListVersionMap : ClassMap<ArchivedSongListVersion> {
-
-		public ArchivedSongListVersionMap() {
-
+	public class ArchivedSongListVersionMap : ClassMap<ArchivedSongListVersion>
+	{
+		public ArchivedSongListVersionMap()
+		{
 			Id(m => m.Id);
 
 			Map(m => m.CommonEditEvent).Length(30).Not.Nullable();
@@ -82,12 +80,10 @@ namespace VocaDb.Model.Mapping.Songs {
 			References(m => m.Author).Not.Nullable();
 			References(m => m.SongList).Not.Nullable();
 
-			Component(m => m.Diff, c => {
+			Component(m => m.Diff, c =>
+			{
 				c.Map(m => m.ChangedFieldsString, "ChangedFields").Length(100).Not.Nullable();
 			});
-
 		}
-
 	}
-
 }

@@ -14,17 +14,17 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
 using VocaDb.Model.Utils.Config;
 
-namespace VocaDb.Model.DataContracts.Songs {
-
+namespace VocaDb.Model.DataContracts.Songs
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongDetailsContract {
-
-		public SongDetailsContract() {}
+	public class SongDetailsContract
+	{
+		public SongDetailsContract() { }
 
 		public SongDetailsContract(Song song, ContentLanguagePreference languagePreference,
-			SongListBaseContract[] pools, ISpecialTags specialTags, IEntryTypeTagRepository entryTypeTags, IUserPermissionContext userContext, 
-			IAggregatedEntryImageUrlFactory thumbPersister, Tag songTypeTag = null) {
-
+			SongListBaseContract[] pools, ISpecialTags specialTags, IEntryTypeTagRepository entryTypeTags, IUserPermissionContext userContext,
+			IAggregatedEntryImageUrlFactory thumbPersister, Tag songTypeTag = null)
+		{
 			Song = new SongContract(song, languagePreference);
 
 			AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
@@ -39,7 +39,7 @@ namespace VocaDb.Model.DataContracts.Songs {
 			LikeCount = song.UserFavorites.Count(f => f.Rating == SongVoteRating.Like);
 			LyricsFromParents = song.GetLyricsFromParents(specialTags, entryTypeTags).Select(l => new LyricsForSongContract(l, false)).ToArray();
 			Notes = song.Notes;
-			OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ? 
+			OriginalVersion = (song.OriginalVersion != null && !song.OriginalVersion.Deleted ?
 				new SongForApiContract(song.OriginalVersion, null, languagePreference, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl) : null);
 
 			PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
@@ -54,7 +54,6 @@ namespace VocaDb.Model.DataContracts.Songs {
 			WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 			Pools = pools;
-
 		}
 
 		/// <summary>
@@ -172,7 +171,5 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }
-
 	}
-
 }

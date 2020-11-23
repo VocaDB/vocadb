@@ -14,35 +14,38 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 using File = System.IO.File;
 
-namespace VocaDb.Model.Service.VideoServices {
-
-	public class LocalFileManager {
-
+namespace VocaDb.Model.Service.VideoServices
+{
+	public class LocalFileManager
+	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		public const int MaxMediaSizeMB = 20;
 		public const int MaxMediaSizeBytes = MaxMediaSizeMB * 1024 * 1024;
 		public static readonly string[] Extensions = { ".mp3", ".jpg", ".png" };
 		public static readonly string[] MimeTypes = { "audio/mp3", "audio/mpeg", "image/jpeg", "image/png" };
 
-		public static bool IsAudio(string filename) {
+		public static bool IsAudio(string filename)
+		{
 			return !IsImage(filename);
 		}
 
-		public static bool IsImage(string filename) {
+		public static bool IsImage(string filename)
+		{
 			string[] imageExtensions = { ".jpg", ".png" };
 			var ext = Path.GetExtension(filename);
 			return imageExtensions.Contains(ext);
 		}
 
-		public PVContract CreatePVContract(IHttpPostedFile file, IIdentity user, IUser loggedInUser) {
-
+		public PVContract CreatePVContract(IHttpPostedFile file, IIdentity user, IUser loggedInUser)
+		{
 			var tempFile = Path.ChangeExtension(Path.GetTempFileName(), ImageHelper.GetExtensionFromMime(file.ContentType));
 			file.SaveAs(tempFile);
 
 			var filename = Path.GetFileName(tempFile);
 			var pv = new PVContract { Service = PVService.LocalFile, PVId = filename };
 
-			using (var mp3 = TagLib.File.Create(tempFile, file.ContentType, ReadStyle.Average)) {
+			using (var mp3 = TagLib.File.Create(tempFile, file.ContentType, ReadStyle.Average))
+			{
 				pv.Name = mp3.Tag.Title;
 				pv.Author = user.Name;
 				pv.Length = (int)mp3.Properties.Duration.TotalSeconds;
@@ -54,35 +57,35 @@ namespace VocaDb.Model.Service.VideoServices {
 				pv.Name = Path.GetFileNameWithoutExtension(file.FileName);
 
 			return pv;
-
 		}
 
-		private string GetFilesystemPath(string pvId) {
+		private string GetFilesystemPath(string pvId)
+		{
 			return Path.Combine(AppConfig.StaticContentPath + "\\media\\", pvId);
-        }
+		}
 
-		private void CreateThumbnail(string oldFull, string pvId, PVForSong pv) {
-
+		private void CreateThumbnail(string oldFull, string pvId, PVForSong pv)
+		{
 			if (!IsImage(oldFull))
 				return;
 
 			var path = Path.Combine(AppConfig.StaticContentPath + "\\media-thumb\\", pvId);
 
 			using (var stream = new FileStream(oldFull, FileMode.Open))
-			using (var original = ImageHelper.OpenImage(stream)) {
+			using (var original = ImageHelper.OpenImage(stream))
+			{
 				var thumb = ImageHelper.ResizeToFixedSize(original, 560, 315);
 				thumb.Save(path);
 				pv.ThumbUrl = VocaUriBuilder.StaticResource("/media-thumb/" + pvId);
 				pv.Song.UpdateThumbUrl();
 			}
-
 		}
 
-		public void SyncLocalFilePVs(CollectionDiff<PVForSong, PVForSong> diff, int songId) {
-
+		public void SyncLocalFilePVs(CollectionDiff<PVForSong, PVForSong> diff, int songId)
+		{
 			var addedLocalMedia = diff.Added.Where(m => m.Service == PVService.LocalFile);
-			foreach (var pv in addedLocalMedia) {
-
+			foreach (var pv in addedLocalMedia)
+			{
 				var oldFull = Path.Combine(Path.GetTempPath(), pv.PVId);
 
 				if (Path.GetDirectoryName(oldFull) != Path.GetDirectoryName(Path.GetTempPath()))
@@ -95,8 +98,8 @@ namespace VocaDb.Model.Service.VideoServices {
 				var newFull = GetFilesystemPath(newId);
 				pv.PVId = newId;
 
-				try {
-
+				try
+				{
 					File.Move(oldFull, newFull);
 
 					// Remove copied permissions, reset to inherited http://stackoverflow.com/a/2930969
@@ -106,27 +109,29 @@ namespace VocaDb.Model.Service.VideoServices {
 					newFullFileInfo.SetAccessControl(fs);
 
 					CreateThumbnail(newFull, newId, pv);
-
-				} catch (IOException x) {
+				}
+				catch (IOException x)
+				{
 					log.Error(x, "Unable to move local media file: " + oldFull);
 					throw;
 				}
-
 			}
 
-			foreach (var pv in diff.Removed.Where(m => m.Service == PVService.LocalFile)) {
+			foreach (var pv in diff.Removed.Where(m => m.Service == PVService.LocalFile))
+			{
 				var fullPath = GetFilesystemPath(pv.PVId);
-				if (File.Exists(fullPath)) {
-					try {
+				if (File.Exists(fullPath))
+				{
+					try
+					{
 						File.Delete(fullPath);
-					} catch (IOException x) {
+					}
+					catch (IOException x)
+					{
 						log.Error(x, "Unable to delete local media file: " + fullPath);
 					}
-                }
+				}
 			}
-
 		}
-
 	}
-
 }

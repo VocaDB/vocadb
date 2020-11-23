@@ -12,20 +12,21 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 
-namespace VocaDb.Model.DataContracts.ReleaseEvents {
-
-	public class ReleaseEventDetailsContract : ReleaseEventContract {
-
-		public ReleaseEventDetailsContract() {
+namespace VocaDb.Model.DataContracts.ReleaseEvents
+{
+	public class ReleaseEventDetailsContract : ReleaseEventContract
+	{
+		public ReleaseEventDetailsContract()
+		{
 			Artists = new ArtistForEventContract[0];
 			PVs = new PVContract[0];
 			WebLinks = new WebLinkContract[0];
 		}
 
-		public ReleaseEventDetailsContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference, 
-			IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryTypeTagRepository entryTypeTags = null) 
-			: base(releaseEvent, languagePreference, true, true) {
-
+		public ReleaseEventDetailsContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference,
+			IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryTypeTagRepository entryTypeTags = null)
+			: base(releaseEvent, languagePreference, true, true)
+		{
 			ParamIs.NotNull(() => releaseEvent);
 
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, releaseEvent);
@@ -60,10 +61,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 				.Select(u => new UserForApiContract(u.User, userIconFactory, UserOptionalFields.MainPicture))
 				.ToArray();
 
-			if (releaseEvent.SongList != null) {
+			if (releaseEvent.SongList != null)
+			{
 				SongListSongs = releaseEvent.SongList.SongLinks.OrderBy(s => s.Order).Select(s => new SongInListContract(s, languagePreference)).ToArray();
 			}
-
 		}
 
 		public AlbumContract[] Albums { get; set; }
@@ -99,6 +100,5 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		public UserForApiContract[] UsersAttending { get; set; }
 
 		public WebLinkContract[] WebLinks { get; set; }
-
 	}
 }

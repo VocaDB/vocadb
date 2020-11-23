@@ -5,25 +5,24 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using VocaDb.Model.DataContracts.MikuDb;
 
-namespace VocaDb.Model.Service.Helpers {
-
-	public class AlbumFileParser {
-
+namespace VocaDb.Model.Service.Helpers
+{
+	public class AlbumFileParser
+	{
 		private readonly Regex numRegex = new Regex(@"(\d+)");
 
-		private string[] GetArtistNames(string artistString) {
-
+		private string[] GetArtistNames(string artistString)
+		{
 			//var names = artistString.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
 			//if (names.Length == 1)
 			var names = artistString.Split(new[] { ", ", " & " }, StringSplitOptions.RemoveEmptyEntries);
 
 			return names;
-
 		}
 
-		private ImportedAlbumTrack ParseTrack(DataRow dataRow, int nextTrackNum) {
-
+		private ImportedAlbumTrack ParseTrack(DataRow dataRow, int nextTrackNum)
+		{
 			var track = new ImportedAlbumTrack();
 
 			track.Title = dataRow.GetString(AlbumFileField.Title);
@@ -42,47 +41,46 @@ namespace VocaDb.Model.Service.Helpers {
 
 			var artist = dataRow.GetString(AlbumFileField.Artist, string.Empty);
 
-			if (artist != string.Empty) {
-
+			if (artist != string.Empty)
+			{
 				var featPos = artist.IndexOf("feat.", StringComparison.InvariantCultureIgnoreCase);
 
-				if (featPos != -1) {
-
+				if (featPos != -1)
+				{
 					var vocaloidName = artist.Substring(featPos + 5, artist.Length - featPos - 5).Trim();
 					track.VocalistNames = GetArtistNames(vocaloidName);
 					artist = artist.Substring(0, featPos).Trim();
-
-				} else {
-
-					track.VocalistNames = new string[] {};
-
+				}
+				else
+				{
+					track.VocalistNames = new string[] { };
 				}
 
 				artists.AddRange(GetArtistNames(artist));
-
 			}
 
 			track.ArtistNames = artists.Distinct().ToArray();
 			return track;
-
 		}
 
-		public MikuDbAlbumContract Parse(Stream input) {
-
+		public MikuDbAlbumContract Parse(Stream input)
+		{
 			var tracks = new List<ImportedAlbumTrack>();
 			var parser = new DataRowParser();
 			var data = new ImportedAlbumDataContract();
 			data.Title = "Unknown";
 
-			using (var reader = new StreamReader(input)) {
-
+			using (var reader = new StreamReader(input))
+			{
 				string row;
-				while ((row = reader.ReadLine()) != null) {
-
-					if (!parser.IsConfigured) {
+				while ((row = reader.ReadLine()) != null)
+				{
+					if (!parser.IsConfigured)
+					{
 						parser.Configure(row);
-					} else {
-
+					}
+					else
+					{
 						var dataRow = new DataRow(parser, row);
 
 						var albumName = dataRow.GetString(AlbumFileField.Album, string.Empty);
@@ -95,11 +93,8 @@ namespace VocaDb.Model.Service.Helpers {
 
 						var track = ParseTrack(dataRow, tracks.Count + 1);
 						tracks.Add(track);
-
 					}
-
 				}
-
 			}
 
 			data.ArtistNames = tracks.SelectMany(t => t.ArtistNames).Distinct().ToArray();
@@ -107,54 +102,50 @@ namespace VocaDb.Model.Service.Helpers {
 			data.Tracks = tracks.OrderBy(t => t.TrackNum).ToArray();
 
 			return new MikuDbAlbumContract(data);
-
 		}
-
 	}
 
-	public enum AlbumFileField {
+	public enum AlbumFileField
+	{
+		Album = 0,
 
-		Album		= 0,
+		Artist = 1,
 
-		Artist		= 1,
+		Composer = 2,
 
-		Composer	= 2,
+		Title = 3,
 
-		Title		= 3,
+		Track = 4,
 
-		Track		= 4,
-
-		Year		= 5
-
+		Year = 5
 	}
 
-	public class DataRowParser {
-
+	public class DataRowParser
+	{
 		private readonly Dictionary<AlbumFileField, int> fieldCols = new Dictionary<AlbumFileField, int>();
 
-		public bool Configure(string headerRow) {
-
+		public bool Configure(string headerRow)
+		{
 			fieldCols.Clear();
 			var cols = headerRow.Split(';');
 
 			if (!cols.Any(c => Enum.IsDefined(typeof(AlbumFileField), c)))
 				return false;
 
-			for (int i = 0; i < cols.Length; ++i) {
-
+			for (int i = 0; i < cols.Length; ++i)
+			{
 				AlbumFileField field;
-				if (Enum.TryParse(cols[i], true, out field)) {
+				if (Enum.TryParse(cols[i], true, out field))
+				{
 					fieldCols.Add(field, i);
 				}
-
 			}
 
 			return true;
-
 		}
 
-		public string GetFieldOrEmpty(string[] cols, AlbumFileField field) {
-
+		public string GetFieldOrEmpty(string[] cols, AlbumFileField field)
+		{
 			if (!IsConfigured)
 				throw new InvalidOperationException("Field column indices not configured");
 
@@ -167,29 +158,30 @@ namespace VocaDb.Model.Service.Helpers {
 				return string.Empty;
 
 			return cols[index];
-
 		}
 
-		public bool IsConfigured {
-			get {
+		public bool IsConfigured
+		{
+			get
+			{
 				return fieldCols.Any();
 			}
 		}
-
 	}
 
-	public class DataRow {
-
+	public class DataRow
+	{
 		private readonly string[] cols;
 		private readonly DataRowParser rowParser;
 
-		public DataRow(DataRowParser rowParser, string row) {
+		public DataRow(DataRowParser rowParser, string row)
+		{
 			this.rowParser = rowParser;
 			this.cols = row.Split(';');
 		}
 
-		public int GetIntOrDefault(AlbumFileField field, int def) {
-
+		public int GetIntOrDefault(AlbumFileField field, int def)
+		{
 			var val = rowParser.GetFieldOrEmpty(cols, field);
 
 			if (val == string.Empty)
@@ -201,31 +193,26 @@ namespace VocaDb.Model.Service.Helpers {
 				return i;
 
 			return def;
-
 		}
 
-		public string GetString(AlbumFileField field) {
-
+		public string GetString(AlbumFileField field)
+		{
 			var val = rowParser.GetFieldOrEmpty(cols, field);
 
 			if (val == string.Empty)
 				throw new InvalidOperationException("Required field " + field + " is empty");
 
 			return val;
-
 		}
 
-		public string GetString(AlbumFileField field, string def) {
-
+		public string GetString(AlbumFileField field, string def)
+		{
 			var val = rowParser.GetFieldOrEmpty(cols, field);
 
 			if (val == string.Empty)
 				return def;
 
 			return val;
-
 		}
-
 	}
-
 }

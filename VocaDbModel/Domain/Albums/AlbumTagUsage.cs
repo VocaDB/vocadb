@@ -1,16 +1,16 @@
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Albums {
-
-	public class AlbumTagUsage : GenericTagUsage<Album, AlbumTagVote> {
-
+namespace VocaDb.Model.Domain.Albums
+{
+	public class AlbumTagUsage : GenericTagUsage<Album, AlbumTagVote>
+	{
 		public AlbumTagUsage() { }
 
 		public AlbumTagUsage(Album album, Tag tag) : base(album, tag) { }
-		
-		public override TagVote CreateVote(User user) {
 
+		public override TagVote CreateVote(User user)
+		{
 			if (FindVote(user) != null)
 				return null;
 
@@ -19,20 +19,18 @@ namespace VocaDb.Model.Domain.Albums {
 			Count++;
 
 			return vote;
-
 		}
 
-		public override void Delete() {
-
+		public override void Delete()
+		{
 			base.Delete();
 
 			Entry.Tags.Usages.Remove(this);
 			Tag.AllAlbumTagUsages.Remove(this);
-
 		}
 
-		public override TagUsage Move(Tag target) {
-
+		public override TagUsage Move(Tag target)
+		{
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Tag))
@@ -47,9 +45,6 @@ namespace VocaDb.Model.Domain.Albums {
 			Entry.Tags.Usages.Add(newUsage);
 
 			return newUsage;
-
 		}
-
 	}
-
 }

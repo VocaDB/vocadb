@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace VocaDb.Model.DataContracts.SongImport {
-
+namespace VocaDb.Model.DataContracts.SongImport
+{
 	[DataContract]
-	public class ImportedSongListContract {
-
-		public ImportedSongListContract() {
+	public class ImportedSongListContract
+	{
+		public ImportedSongListContract()
+		{
 			Description = string.Empty;
 		}
 
-		public ImportedSongListContract(string name, DateTime createDate, string description, PartialImportedSongs songs, int wvrId) {
+		public ImportedSongListContract(string name, DateTime createDate, string description, PartialImportedSongs songs, int wvrId)
+		{
 			CreateDate = createDate;
 			Description = description;
 			Name = name;
@@ -32,7 +34,5 @@ namespace VocaDb.Model.DataContracts.SongImport {
 
 		[DataMember]
 		public int WVRNumber { get; set; }
-
 	}
-
 }

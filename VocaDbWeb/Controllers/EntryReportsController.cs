@@ -4,25 +4,22 @@ using VocaDb.Model.Domain;
 
 namespace VocaDb.Web.Controllers
 {
-
 	/// <summary>
 	/// Controller for <see cref="EntryReport"/>.
 	/// </summary>
-    public class EntryReportsController : Controller
-    {
-
+	public class EntryReportsController : Controller
+	{
 		private readonly EntryReportQueries queries;
 
-		public EntryReportsController(EntryReportQueries queries) {
+		public EntryReportsController(EntryReportQueries queries)
+		{
 			this.queries = queries;
 		}
-        
+
 		[Authorize]
-		public int NewReportsCount() {
-
+		public int NewReportsCount()
+		{
 			return queries.GetNewReportsCount();
-
 		}
-
-    }
+	}
 }

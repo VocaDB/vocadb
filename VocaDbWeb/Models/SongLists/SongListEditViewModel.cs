@@ -12,19 +12,20 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Web.Code;
 
-namespace VocaDb.Web.Models.SongLists {
-
+namespace VocaDb.Web.Models.SongLists
+{
 	[FromJson]
-	public class SongListEditViewModel {
-
-		public SongListEditViewModel() {
+	public class SongListEditViewModel
+	{
+		public SongListEditViewModel()
+		{
 			SongLinks = new List<SongInListEditContract>();
 			UpdateNotes = string.Empty;
 		}
 
 		public SongListEditViewModel(SongListContract contract, IUserPermissionContext permissionContext)
-			: this() {
-
+			: this()
+		{
 			ParamIs.NotNull(() => contract);
 
 			CurrentName = contract.Name;
@@ -37,9 +38,8 @@ namespace VocaDb.Web.Models.SongLists {
 			Status = contract.Status;
 			Thumb = contract.Thumb;
 
-			AllowedEntryStatuses = new [] { EntryStatus.Draft, EntryStatus.Finished };
+			AllowedEntryStatuses = new[] { EntryStatus.Draft, EntryStatus.Finished };
 			CanCreateFeaturedLists = EntryPermissionManager.CanManageFeaturedLists(permissionContext);
-
 		}
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
@@ -48,7 +48,7 @@ namespace VocaDb.Web.Models.SongLists {
 
 		public string CurrentName { get; set; }
 
-		public bool Deleted { get; set;}
+		public bool Deleted { get; set; }
 
 		[StringLength(2000)]
 		public string Description { get; set; }
@@ -72,9 +72,10 @@ namespace VocaDb.Web.Models.SongLists {
 
 		public string UpdateNotes { get; set; }
 
-		public SongListForEditContract ToContract() {
-
-			return new SongListForEditContract {
+		public SongListForEditContract ToContract()
+		{
+			return new SongListForEditContract
+			{
 				Description = this.Description ?? string.Empty,
 				EventDate = this.EventDate,
 				FeaturedCategory = this.FeaturedCategory,
@@ -84,9 +85,6 @@ namespace VocaDb.Web.Models.SongLists {
 				Status = this.Status,
 				UpdateNotes = this.UpdateNotes ?? string.Empty
 			};
-
 		}
-
 	}
-
 }

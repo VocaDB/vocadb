@@ -1,25 +1,26 @@
 using System;
 
-namespace VocaDb.Model.Domain.Artists {
-
-	public class ArtistForArtist : IEntryWithIntId {
-
+namespace VocaDb.Model.Domain.Artists
+{
+	public class ArtistForArtist : IEntryWithIntId
+	{
 		private Artist parent;
 		private Artist member;
 
 		public ArtistForArtist() { }
 
-		public ArtistForArtist(Artist group, Artist member, ArtistLinkType linkType) {
-
+		public ArtistForArtist(Artist group, Artist member, ArtistLinkType linkType)
+		{
 			Parent = group;
 			Member = member;
 			LinkType = linkType;
-
 		}
 
-		public virtual Artist Parent {
+		public virtual Artist Parent
+		{
 			get { return parent; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				parent = value;
 			}
@@ -29,23 +30,24 @@ namespace VocaDb.Model.Domain.Artists {
 
 		public virtual ArtistLinkType LinkType { get; set; }
 
-		public virtual Artist Member {
+		public virtual Artist Member
+		{
 			get { return member; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				member = value;
 			}
 		}
 
-		public virtual void Delete() {
-
+		public virtual void Delete()
+		{
 			Parent.AllMembers.Remove(this);
 			Member.AllGroups.Remove(this);
-
 		}
 
-		public virtual bool Equals(ArtistForArtist another) {
-
+		public virtual bool Equals(ArtistForArtist another)
+		{
 			if (another == null)
 				return false;
 
@@ -53,23 +55,25 @@ namespace VocaDb.Model.Domain.Artists {
 				return true;
 
 			return this.Id == another.Id;
-
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as ArtistForArtist);
 		}
 
-		public virtual Artist GetArtist(LinkDirection direction) {
+		public virtual Artist GetArtist(LinkDirection direction)
+		{
 			return direction == LinkDirection.ManyToOne ? Parent : Member;
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return base.GetHashCode();
 		}
 
-		public virtual void MoveToGroup(Artist target) {
-
+		public virtual void MoveToGroup(Artist target)
+		{
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Parent))
@@ -78,11 +82,10 @@ namespace VocaDb.Model.Domain.Artists {
 			Parent.AllMembers.Remove(this);
 			Parent = target;
 			target.AllMembers.Add(this);
-
 		}
 
-		public virtual void MoveToMember(Artist target) {
-
+		public virtual void MoveToMember(Artist target)
+		{
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Member))
@@ -91,13 +94,11 @@ namespace VocaDb.Model.Domain.Artists {
 			Member.AllGroups.Remove(this);
 			Member = target;
 			target.AllGroups.Add(this);
-
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return Parent + " for " + Member + " (" + LinkType + ")";
 		}
-
 	}
-
 }

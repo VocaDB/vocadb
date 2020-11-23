@@ -1,26 +1,24 @@
 ﻿using System;
 
-namespace VocaDb.Model.Domain.Songs {
-
+namespace VocaDb.Model.Domain.Songs
+{
 	[Flags]
-	public enum SongListEditableFields {
+	public enum SongListEditableFields
+	{
+		Nothing = 0,
 
-		Nothing				= 0,
+		Description = 1,
 
-		Description			= 1,
+		EventDate = 2,
 
-		EventDate			= 2,
+		FeaturedCategory = 4,
 
-		FeaturedCategory	= 4,
+		Name = 8,
 
-		Name				= 8,
+		Songs = 16,
 
-		Songs				= 16,
+		Status = 32,
 
-		Status				= 32,
-
-		Thumbnail			= 64
-
+		Thumbnail = 64
 	}
-
 }

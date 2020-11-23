@@ -1,19 +1,18 @@
 ﻿using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Web.Models.User {
-
-	public class AlbumCollection {
-
+namespace VocaDb.Web.Models.User
+{
+	public class AlbumCollection
+	{
 		public AlbumCollection() { }
 
-		public AlbumCollection(UserContract user, AlbumCollectionRouteParams routeParams) {
-
+		public AlbumCollection(UserContract user, AlbumCollectionRouteParams routeParams)
+		{
 			User = user;
 			RouteParams = routeParams;
 
 			FilterByPurchaseStatus = routeParams.purchaseStatus ?? PurchaseStatus.Nothing;
-
 		}
 
 		public PurchaseStatus FilterByPurchaseStatus { get; set; }
@@ -21,11 +20,10 @@ namespace VocaDb.Web.Models.User {
 		public AlbumCollectionRouteParams RouteParams { get; set; }
 
 		public UserContract User { get; set; }
-
 	}
 
-	public class AlbumCollectionRouteParams {
-
+	public class AlbumCollectionRouteParams
+	{
 		public int id { get; set; }
 
 		public int? page { get; set; }
@@ -35,7 +33,5 @@ namespace VocaDb.Web.Models.User {
 		public PurchaseStatus? purchaseStatus { get; set; }
 
 		public int totalCount { get; set; }
-
 	}
-
 }

@@ -5,15 +5,15 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.DataContracts.Discussions {
-
+namespace VocaDb.Model.DataContracts.Discussions
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class DiscussionTopicContract {
-
+	public class DiscussionTopicContract
+	{
 		public DiscussionTopicContract() { }
 
-		public DiscussionTopicContract(DiscussionTopic topic, IUserIconFactory userIconFactory, DiscussionTopicOptionalFields fields) {
-			
+		public DiscussionTopicContract(DiscussionTopic topic, IUserIconFactory userIconFactory, DiscussionTopicOptionalFields fields)
+		{
 			ParamIs.NotNull(() => topic);
 
 			Author = new UserForApiContract(topic.Author, userIconFactory, UserOptionalFields.MainPicture);
@@ -23,23 +23,26 @@ namespace VocaDb.Model.DataContracts.Discussions {
 			Locked = topic.Locked;
 			Name = topic.Name;
 
-			if (fields.HasFlag(DiscussionTopicOptionalFields.Comments)) {
-				Comments = topic.Comments.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();				
+			if (fields.HasFlag(DiscussionTopicOptionalFields.Comments))
+			{
+				Comments = topic.Comments.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
 			}
 
-			if (fields.HasFlag(DiscussionTopicOptionalFields.CommentCount)) {
-				CommentCount = topic.Comments.Count;				
+			if (fields.HasFlag(DiscussionTopicOptionalFields.CommentCount))
+			{
+				CommentCount = topic.Comments.Count;
 			}
 
-			if (fields.HasFlag(DiscussionTopicOptionalFields.Content)) {
-				Content = topic.Content;				
+			if (fields.HasFlag(DiscussionTopicOptionalFields.Content))
+			{
+				Content = topic.Content;
 			}
 
-			if (fields.HasFlag(DiscussionTopicOptionalFields.LastComment) && topic.Comments.Any()) {
-				LastComment = new CommentForApiContract(topic.Comments.MaxItem(c => c.Created), 
+			if (fields.HasFlag(DiscussionTopicOptionalFields.LastComment) && topic.Comments.Any())
+			{
+				LastComment = new CommentForApiContract(topic.Comments.MaxItem(c => c.Created),
 					userIconFactory, includeMessage: false);
 			}
-
 		}
 
 		[DataMember]
@@ -75,23 +78,22 @@ namespace VocaDb.Model.DataContracts.Discussions {
 		[DataMember]
 		public string Name { get; set; }
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("{0} [{1}] at {2}", Name, Id, Created);
 		}
 	}
 
 	[Flags]
-	public enum DiscussionTopicOptionalFields {
-		
-		None			= 0,
+	public enum DiscussionTopicOptionalFields
+	{
+		None = 0,
 
-		Comments		= 1,
-		CommentCount	= 2,
-		Content			= 4,
-		LastComment 	= 8,
+		Comments = 1,
+		CommentCount = 2,
+		Content = 4,
+		LastComment = 8,
 
 		All = (Comments | CommentCount | Content | LastComment)
-
 	}
-
 }

@@ -3,15 +3,15 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Service.Search.User {
-
+namespace VocaDb.Model.Service.Search.User
+{
 	/// <summary>
 	/// Query parameters for rated (favorited/liked) songs by user.
 	/// </summary>
-	public class RatedSongQueryParams {
-
-		public RatedSongQueryParams(int userId, PagingProperties paging) {
-
+	public class RatedSongQueryParams
+	{
+		public RatedSongQueryParams(int userId, PagingProperties paging)
+		{
 			ParamIs.NotNull(() => paging);
 
 			Paging = paging;
@@ -21,7 +21,6 @@ namespace VocaDb.Model.Service.Search.User {
 			GroupByRating = true;
 			SortRule = RatedSongForUserSortRule.Name;
 			TextQuery = new SearchTextQuery();
-
 		}
 
 		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
@@ -63,6 +62,5 @@ namespace VocaDb.Model.Service.Search.User {
 		/// Id of the user whose songs to get.
 		/// </summary>
 		public int UserId { get; set; }
-
 	}
 }

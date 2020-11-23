@@ -2,10 +2,10 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Service.Search.SongSearch {
-
-	public class SongListQueryParams {
-
+namespace VocaDb.Model.Service.Search.SongSearch
+{
+	public class SongListQueryParams
+	{
 		public bool ChildTags { get; set; }
 
 		public SongListFeaturedCategory? FeaturedCategory { get; set; }
@@ -17,7 +17,5 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		public int[] TagIds { get; set; }
 
 		public SearchTextQuery TextQuery { get; set; }
-
 	}
-
 }

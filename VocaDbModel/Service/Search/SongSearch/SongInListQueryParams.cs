@@ -2,10 +2,10 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Paging;
 
-namespace VocaDb.Model.Service.Search.SongSearch {
-
-	public class SongInListQueryParams {
-
+namespace VocaDb.Model.Service.Search.SongSearch
+{
+	public class SongInListQueryParams
+	{
 		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
 
 		public int[] ArtistIds { get; set; }
@@ -28,7 +28,5 @@ namespace VocaDb.Model.Service.Search.SongSearch {
 		public SongType[] SongTypes { get; set; }
 
 		public int[] TagIds { get; set; }
-
 	}
-
 }

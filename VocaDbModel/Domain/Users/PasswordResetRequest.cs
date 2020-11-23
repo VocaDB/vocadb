@@ -1,24 +1,24 @@
 using System;
 
-namespace VocaDb.Model.Domain.Users {
-
-	public class PasswordResetRequest : IDatabaseObject {
-
+namespace VocaDb.Model.Domain.Users
+{
+	public class PasswordResetRequest : IDatabaseObject
+	{
 		public static readonly TimeSpan ExpirationTime = TimeSpan.FromDays(1);
 
 		private User user;
 
-		public PasswordResetRequest() {
+		public PasswordResetRequest()
+		{
 			Created = DateTime.Now;
 			Email = string.Empty;
 		}
 
 		public PasswordResetRequest(User user)
-			: this() {
-
+			: this()
+		{
 			User = user;
 			Email = user.Email;
-
 		}
 
 		public virtual DateTime Created { get; set; }
@@ -32,11 +32,13 @@ namespace VocaDb.Model.Domain.Users {
 
 		public virtual bool IsValid => Created >= DateTime.Now - ExpirationTime;
 
-		public virtual User User {
+		public virtual User User
+		{
 			get => user;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
-				user = value; 
+				user = value;
 			}
 		}
 	}

@@ -6,34 +6,38 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
 
-namespace VocaDb.Model.Database.Queries {
-
-	public class PVQueries {
-
+namespace VocaDb.Model.Database.Queries
+{
+	public class PVQueries
+	{
 		private readonly IRepository repository;
 
-		public PVQueries(IRepository repository) {
+		public PVQueries(IRepository repository)
+		{
 			this.repository = repository;
 		}
 
 		public PartialFindResult<PVForSongContract> GetList(string name = null, string author = null,
 			PVService? service = null,
 			int maxResults = 10, bool getTotalCount = false,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) {
-
-			return repository.HandleQuery(db => {
-
+			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+		{
+			return repository.HandleQuery(db =>
+			{
 				var query = db.Query<PVForSong>();
 
-				if (!string.IsNullOrEmpty(name)) {
+				if (!string.IsNullOrEmpty(name))
+				{
 					query = query.Where(pv => pv.Name == name);
 				}
 
-				if (!string.IsNullOrEmpty(author)) {
+				if (!string.IsNullOrEmpty(author))
+				{
 					query = query.Where(pv => pv.Author == author);
 				}
 
-				if (service.HasValue) {
+				if (service.HasValue)
+				{
 					query = query.Where(pv => pv.Service == service);
 				}
 
@@ -43,11 +47,7 @@ namespace VocaDb.Model.Database.Queries {
 
 				var results = query.Select(p => new PVForSongContract(p, lang)).ToArray();
 				return PartialFindResult.Create(results, count);
-
 			});
-
 		}
-
 	}
-
 }

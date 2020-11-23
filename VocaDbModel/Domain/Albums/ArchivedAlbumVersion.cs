@@ -6,10 +6,10 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Domain.Activityfeed;
 
-namespace VocaDb.Model.Domain.Albums {
-
-	public class ArchivedAlbumVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<AlbumEditableFields> {
-
+namespace VocaDb.Model.Domain.Albums
+{
+	public class ArchivedAlbumVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<AlbumEditableFields>
+	{
 		/// <summary>
 		/// Creates an archived version of an album.
 		/// </summary>
@@ -20,8 +20,8 @@ namespace VocaDb.Model.Domain.Albums {
 		/// <param name="notes">Free-form edit notes. Cannot be null.</param>
 		/// <returns>Archived album version. Cannot be null.</returns>
 		/// <exception cref="XmlException">If the entry could not be serialized. This could happen if the object contains illegal characters.</exception>
-		public static ArchivedAlbumVersion Create(Album album, AlbumDiff diff, AgentLoginData author, AlbumArchiveReason reason, string notes) {
-
+		public static ArchivedAlbumVersion Create(Album album, AlbumDiff diff, AgentLoginData author, AlbumArchiveReason reason, string notes)
+		{
 			ParamIs.NotNull(() => album);
 			ParamIs.NotNull(() => diff);
 			ParamIs.NotNull(() => author);
@@ -31,21 +31,21 @@ namespace VocaDb.Model.Domain.Albums {
 			var data = XmlHelper.SerializeToXml(contract);
 
 			return album.CreateArchivedVersion(data, diff, author, reason, notes);
-
 		}
 
 		private Album album;
 		private AlbumDiff diff;
 
-		public ArchivedAlbumVersion() {
+		public ArchivedAlbumVersion()
+		{
 			Diff = new AlbumDiff();
 			Reason = AlbumArchiveReason.Unknown;
 		}
 
 		public ArchivedAlbumVersion(Album album, XDocument data, AlbumDiff diff, AgentLoginData author, int version, EntryStatus status,
 			AlbumArchiveReason reason, string notes)
-			: base(data, author, version, status, notes) {
-
+			: base(data, author, version, status, notes)
+		{
 			ParamIs.NotNull(() => data);
 			ParamIs.NotNull(() => diff);
 
@@ -53,19 +53,21 @@ namespace VocaDb.Model.Domain.Albums {
 			Diff = diff;
 			Reason = reason;
 
-			if (diff.IncludeCover) {
+			if (diff.IncludeCover)
+			{
 				CoverPicture = album.CoverPictureData;
-				CoverPictureMime = album.CoverPictureMime;				
+				CoverPictureMime = album.CoverPictureMime;
 			}
-
 		}
 
 		/// <summary>
 		/// Album associated with this revision. Cannot be null.
 		/// </summary>
-		public virtual Album Album {
+		public virtual Album Album
+		{
 			get { return album; }
-			protected set {
+			protected set
+			{
 				ParamIs.NotNull(() => value);
 				album = value;
 			}
@@ -75,41 +77,44 @@ namespace VocaDb.Model.Domain.Albums {
 
 		public virtual string CoverPictureMime { get; set; }
 
-		public virtual AlbumDiff Diff {
+		public virtual AlbumDiff Diff
+		{
 			get { return diff; }
 			protected set { diff = value; }
 		}
 
-		public override IEntryDiff DiffBase {
+		public override IEntryDiff DiffBase
+		{
 			get { return Diff; }
 		}
 
-		public override EntryEditEvent EditEvent {
-			get { 
-				return (Reason == AlbumArchiveReason.Created || Reason == AlbumArchiveReason.AutoImportedFromMikuDb 
+		public override EntryEditEvent EditEvent
+		{
+			get
+			{
+				return (Reason == AlbumArchiveReason.Created || Reason == AlbumArchiveReason.AutoImportedFromMikuDb
 					? EntryEditEvent.Created : EntryEditEvent.Updated);
 			}
 		}
 
-		public override IEntryWithNames EntryBase {
+		public override IEntryWithNames EntryBase
+		{
 			get { return Album; }
 		}
 
 		public virtual AlbumArchiveReason Reason { get; set; }
 
-		public virtual ArchivedAlbumVersion GetLatestVersionWithField(AlbumEditableFields field) {
-
+		public virtual ArchivedAlbumVersion GetLatestVersionWithField(AlbumEditableFields field)
+		{
 			if (IsIncluded(field))
 				return this;
 
 			return Album.ArchivedVersionsManager.GetLatestVersionWithField(field, Version);
-
 		}
 
-		public virtual bool IsIncluded(AlbumEditableFields field) {
+		public virtual bool IsIncluded(AlbumEditableFields field)
+		{
 			return (Diff != null && Data != null && Diff.IsIncluded(field));
 		}
-
 	}
-
 }

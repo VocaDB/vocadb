@@ -3,13 +3,14 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Service.Search.Tags {
-
-	public class TagQueryParams {
-
+namespace VocaDb.Model.Service.Search.Tags
+{
+	public class TagQueryParams
+	{
 		public TagQueryParams() { }
 
-		public TagQueryParams(CommonSearchParams common, PagingProperties paging) {
+		public TagQueryParams(CommonSearchParams common, PagingProperties paging)
+		{
 			Common = common;
 			Paging = paging;
 		}
@@ -27,7 +28,5 @@ namespace VocaDb.Model.Service.Search.Tags {
 		public TagSortRule SortRule { get; set; } = TagSortRule.Name;
 
 		public TagTargetTypes Target { get; set; } = TagTargetTypes.All;
-
 	}
-
 }

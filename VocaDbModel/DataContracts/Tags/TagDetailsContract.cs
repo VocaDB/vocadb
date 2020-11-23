@@ -3,21 +3,21 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Globalization;
 
-namespace VocaDb.Model.DataContracts.Tags {
-
-	public class TagDetailsContract : TagContract, IEntryWithStatus {
-
+namespace VocaDb.Model.DataContracts.Tags
+{
+	public class TagDetailsContract : TagContract, IEntryWithStatus
+	{
 		string IEntryBase.DefaultName => Name;
 
 		EntryType IEntryBase.EntryType => EntryType.Tag;
 
 		public TagDetailsContract() { }
 
-		public TagDetailsContract(Tag tag, 
+		public TagDetailsContract(Tag tag,
 			TagStatsContract stats,
 			ContentLanguagePreference languagePreference)
-			: base(tag, languagePreference) {
-
+			: base(tag, languagePreference)
+		{
 			AdditionalNames = tag.Names.AdditionalNamesString;
 			Translations = tag.Names.GetTranslationsString(languagePreference);
 
@@ -43,7 +43,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 			MappedNicoTags = tag.Mappings.Select(t => t.SourceTag).ToArray();
 
 			Stats = stats;
-
 		}
 
 		public int AllUsageCount => Stats.ArtistCount + Stats.AlbumCount + Stats.SongCount + Stats.EventCount + Stats.SongListCount;
@@ -76,15 +75,14 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		public WebLinkContract[] WebLinks { get; set; }
 
-		public object JsonModel => new {
-			Name, 
-			Parent, 
+		public object JsonModel => new
+		{
+			Name,
+			Parent,
 			Children = Children.Take(20),
 			Siblings = Siblings.Take(20),
 			HasMoreChildren = Children.Length > 20,
 			HasMoreSiblings = Siblings.Length > 20
 		};
-
 	}
-
 }

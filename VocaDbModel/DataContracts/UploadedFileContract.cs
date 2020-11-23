@@ -1,12 +1,12 @@
 ﻿using System.IO;
 
-namespace VocaDb.Model.DataContracts {
-
+namespace VocaDb.Model.DataContracts
+{
 	/// <summary>
 	/// Data contract for an uploaded file.
 	/// </summary>
-	public class UploadedFileContract {
-
+	public class UploadedFileContract
+	{
 		/// <summary>
 		/// MIME type. Can be null or empty, although shouldn't be for any of the known file types.
 		/// </summary>
@@ -16,6 +16,5 @@ namespace VocaDb.Model.DataContracts {
 		/// Data stream. Cannot be null.
 		/// </summary>
 		public Stream Stream { get; set; }
-
 	}
 }

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.Database.Repositories {
-
-	public interface IDatabaseContext : IDisposable {
-	
+namespace VocaDb.Model.Database.Repositories
+{
+	public interface IDatabaseContext : IDisposable
+	{
 		/// <summary>
 		/// Audit logger for the repository.
 		/// </summary>
@@ -36,7 +36,6 @@ namespace VocaDb.Model.Database.Repositories {
 		/// </summary>
 		/// <returns>Queryable interface. Cannot be null.</returns>
 		IQueryable<T2> Query<T2>() where T2 : class, IDatabaseObject;
-
 	}
 
 	/// <summary>
@@ -51,8 +50,8 @@ namespace VocaDb.Model.Database.Repositories {
 	/// 
 	/// This might change later with Session Per Request model.
 	/// </remarks>
-	public interface IDatabaseContext<T> : IDatabaseContext, IEntityLoader<T> {
-
+	public interface IDatabaseContext<T> : IDatabaseContext, IEntityLoader<T>
+	{
 		/// <summary>
 		/// Deletes an entity from the repository.
 		/// </summary>
@@ -93,7 +92,5 @@ namespace VocaDb.Model.Database.Repositories {
 		void Update(T obj);
 
 		Task UpdateAsync(T obj);
-
 	}
-
 }

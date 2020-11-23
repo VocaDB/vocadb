@@ -12,43 +12,44 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Translations;
 
-namespace VocaDb.Model.Service.Helpers {
-
-	public class FollowedTagNotifier {
-
+namespace VocaDb.Model.Service.Helpers
+{
+	public class FollowedTagNotifier
+	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		private string CreateMessageBody(Tag[] followedArtists, User user, IEntryWithNames entry, IEntryLinkFactory entryLinkFactory, bool markdown, 
-			string entryTypeName) {
-
+		private string CreateMessageBody(Tag[] followedArtists, User user, IEntryWithNames entry, IEntryLinkFactory entryLinkFactory, bool markdown,
+			string entryTypeName)
+		{
 			var entryName = entry.Names.SortNames[user.DefaultLanguageSelection];
 			var url = entryLinkFactory.GetFullEntryUrl(entry);
 
 			string entryLink;
-			if (markdown) {
+			if (markdown)
+			{
 				entryLink = MarkdownHelper.CreateMarkdownLink(url, entryName);
-			} else {
+			}
+			else
+			{
 				entryLink = string.Format("{0} ( {1} )", entryName, url);
 			}
 
 			string msg;
 
-			if (followedArtists.Length == 1) {
-
+			if (followedArtists.Length == 1)
+			{
 				var artistName = followedArtists.First().TranslatedName[user.DefaultLanguageSelection];
 				msg = string.Format("A new {0}, '{1}', tagged with {2} was just added.",
 					entryTypeName, entryLink, artistName);
-
-			} else {
-
+			}
+			else
+			{
 				msg = string.Format("A new {0}, '{1}', tagged with multiple tags you're following was just added.",
 					entryTypeName, entryLink);
-
 			}
 
 			msg += "\nYou're receiving this notification because you're following the tag(s).";
 			return msg;
-
 		}
 
 		/// <summary>
@@ -61,8 +62,8 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="entryLinkFactory">Factory for creating links to entries. Cannot be null.</param>
 		public async Task SendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry,
 			IReadOnlyCollection<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
-			IEnumTranslations enumTranslations) {
-
+			IEnumTranslations enumTranslations)
+		{
 			ParamIs.NotNull(() => ctx);
 			ParamIs.NotNull(() => entry);
 			ParamIs.NotNull(() => tags);
@@ -72,18 +73,20 @@ namespace VocaDb.Model.Service.Helpers {
 			if (!tags.Any())
 				return;
 
-			try {
+			try
+			{
 				await DoSendNotificationsAsync(ctx, entry, tags, ignoreUsers, entryLinkFactory, enumTranslations);
-			} catch (GenericADOException x) {
+			}
+			catch (GenericADOException x)
+			{
 				log.Error(x, "Unable to send notifications");
 			}
-
 		}
 
 		private async Task DoSendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry,
 			IReadOnlyCollection<Tag> tags, int[] ignoreUsers, IEntryLinkFactory entryLinkFactory,
-			IEnumTranslations enumTranslations) {
-
+			IEnumTranslations enumTranslations)
+		{
 			var coll = tags.Distinct().ToArray();
 			var tagIds = coll.Select(a => a.Id).ToArray();
 
@@ -93,7 +96,8 @@ namespace VocaDb.Model.Service.Helpers {
 			var usersWithTagsArr = await ctx.Query<TagForUser>()
 				.Where(afu =>
 					tagIds.Contains(afu.Tag.Id))
-				.Select(afu => new {
+				.Select(afu => new
+				{
 					UserId = afu.User.Id,
 					TagId = afu.Tag.Id
 				})
@@ -107,7 +111,8 @@ namespace VocaDb.Model.Service.Helpers {
 
 			log.Debug("Found {0} users subscribed to tags", userIds.Length);
 
-			if (!userIds.Any()) {
+			if (!userIds.Any())
+			{
 				log.Info("No users subscribed to tags - skipping.");
 				return;
 			}
@@ -119,8 +124,8 @@ namespace VocaDb.Model.Service.Helpers {
 				.Where(u => u.ReceivedMessages.Count(m => m.Inbox == UserInboxType.Notifications && !m.Read) < u.Options.UnreadNotificationsToKeep)
 				.VdbToListAsync();
 
-			foreach (var user in users) {
-
+			foreach (var user in users)
+			{
 				var tagIdsForUser = new HashSet<int>(usersWithTags[user.Id]);
 				var followedTags = coll.Where(a => tagIdsForUser.Contains(a.Id)).ToArray();
 
@@ -132,26 +137,21 @@ namespace VocaDb.Model.Service.Helpers {
 				var entryTypeName = entryTypeNames.GetName(entry.EntryType, CultureHelper.GetCultureOrDefault(user.LanguageOrLastLoginCulture)).ToLowerInvariant();
 				var msg = CreateMessageBody(followedTags, user, entry, entryLinkFactory, true, entryTypeName);
 
-				if (followedTags.Length == 1) {
-
+				if (followedTags.Length == 1)
+				{
 					var artistName = followedTags.First().TranslatedName[user.DefaultLanguageSelection];
 					title = string.Format("New {0} tagged with {1}", entryTypeName, artistName);
-
-				} else {
-
+				}
+				else
+				{
 					title = string.Format("New {0}", entryTypeName);
-
 				}
 
 				var notification = user.CreateNotification(title, msg);
 				await ctx.SaveAsync(notification);
-
 			}
 
 			log.Info($"Sent notifications to {users.Count} users");
-
 		}
-
 	}
-
 }

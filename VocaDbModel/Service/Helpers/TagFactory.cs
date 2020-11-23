@@ -6,20 +6,21 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service.Queries;
 
-namespace VocaDb.Model.Service.Helpers {
-
-	public class TagFactoryRepository : ITagFactory {
-
+namespace VocaDb.Model.Service.Helpers
+{
+	public class TagFactoryRepository : ITagFactory
+	{
 		private readonly AgentLoginData loginData;
 		private readonly IDatabaseContext<Tag> ctx;
 
-		public TagFactoryRepository(IDatabaseContext<Tag> ctx, AgentLoginData loginData) {
+		public TagFactoryRepository(IDatabaseContext<Tag> ctx, AgentLoginData loginData)
+		{
 			this.ctx = ctx;
 			this.loginData = loginData;
 		}
 
-		public async Task<Tag> CreateTagAsync(string englishName) {
-
+		public async Task<Tag> CreateTagAsync(string englishName)
+		{
 			var tag = new Tag(new LocalizedString(englishName, ContentLanguageSelection.English));
 			await ctx.SaveAsync(tag);
 
@@ -30,8 +31,6 @@ namespace VocaDb.Model.Service.Helpers {
 			await new ActivityEntryQueries(ctx.OfType<ActivityEntry>(), null).AddActivityfeedEntryAsync(activityEntry);
 
 			return tag;
-
 		}
 	}
-
 }

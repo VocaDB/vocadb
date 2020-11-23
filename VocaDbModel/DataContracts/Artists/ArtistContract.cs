@@ -7,11 +7,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.Images;
 
-namespace VocaDb.Model.DataContracts.Artists {
-
+namespace VocaDb.Model.DataContracts.Artists
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ArtistContract : IEntryWithStatus, IEntryImageInformation {
-
+	public class ArtistContract : IEntryWithStatus, IEntryImageInformation
+	{
 		string IEntryBase.DefaultName => Name;
 
 		EntryType IEntryBase.EntryType => EntryType.Artist;
@@ -20,10 +20,10 @@ namespace VocaDb.Model.DataContracts.Artists {
 		string IEntryImageInformation.Mime => PictureMime;
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 
-		public ArtistContract() {}
+		public ArtistContract() { }
 
-		public ArtistContract(Artist artist, ContentLanguagePreference preference) {
-
+		public ArtistContract(Artist artist, ContentLanguagePreference preference)
+		{
 			ParamIs.NotNull(() => artist);
 
 			AdditionalNames = artist.Names.GetAdditionalNamesStringForLanguage(preference);
@@ -35,11 +35,10 @@ namespace VocaDb.Model.DataContracts.Artists {
 			ReleaseDate = artist.ReleaseDate.DateTime;
 			Status = artist.Status;
 			Version = artist.Version;
-
 		}
 
-		public ArtistContract(TranslatedArtistContract artist, ContentLanguagePreference preference) {
-
+		public ArtistContract(TranslatedArtistContract artist, ContentLanguagePreference preference)
+		{
 			ParamIs.NotNull(() => artist);
 
 			AdditionalNames = artist.Names.GetAdditionalNamesStringForLanguage(preference);
@@ -51,7 +50,6 @@ namespace VocaDb.Model.DataContracts.Artists {
 			ReleaseDate = artist.ReleaseDate;
 			Status = artist.Status;
 			Version = artist.Version;
-
 		}
 
 		[DataMember]
@@ -71,7 +69,7 @@ namespace VocaDb.Model.DataContracts.Artists {
 		public string Name { get; set; }
 
 		[DataMember]
-		public string PictureMime { get; set;}
+		public string PictureMime { get; set; }
 
 		[DataMember]
 		public DateTime? ReleaseDate { get; set; }
@@ -83,10 +81,9 @@ namespace VocaDb.Model.DataContracts.Artists {
 		[DataMember]
 		public int Version { get; set; }
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("Artist {0} [{1}]", Name, Id);
 		}
-
 	}
-
 }

@@ -1,8 +1,9 @@
-﻿namespace VocaDb.Model.Service.Search.AlbumSearch {
-
-	public class ParsedAlbumQuery {
-
-		public ParsedAlbumQuery() {
+﻿namespace VocaDb.Model.Service.Search.AlbumSearch
+{
+	public class ParsedAlbumQuery
+	{
+		public ParsedAlbumQuery()
+		{
 		}
 
 		public int ArtistId { get; set; }
@@ -11,12 +12,12 @@
 
 		public string TagName { get; set; }
 
-		public bool HasNameQuery {
-			get {
+		public bool HasNameQuery
+		{
+			get
+			{
 				return !string.IsNullOrEmpty(Name);
 			}
 		}
-
 	}
-
 }

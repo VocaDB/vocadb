@@ -1,6 +1,7 @@
-namespace VocaDb.Model.Domain.Images {
-
-	public enum ImagePurpose {
+namespace VocaDb.Model.Domain.Images
+{
+	public enum ImagePurpose
+	{
 		/// <summary>
 		/// Unspecified/doesn't matter
 		/// </summary>
@@ -14,5 +15,4 @@ namespace VocaDb.Model.Domain.Images {
 		/// </summary>
 		Additional
 	}
-
 }

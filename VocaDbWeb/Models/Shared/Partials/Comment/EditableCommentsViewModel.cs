@@ -1,8 +1,9 @@
-namespace VocaDb.Web.Models.Shared.Partials.Comment {
-
-	public class EditableCommentsViewModel {
-
-		public EditableCommentsViewModel(bool allowCreateComment, bool well = true, string commentsBinding = "pageOfComments", int newCommentRows = 6, bool commentBoxEnd = false, bool pagination = true) {
+namespace VocaDb.Web.Models.Shared.Partials.Comment
+{
+	public class EditableCommentsViewModel
+	{
+		public EditableCommentsViewModel(bool allowCreateComment, bool well = true, string commentsBinding = "pageOfComments", int newCommentRows = 6, bool commentBoxEnd = false, bool pagination = true)
+		{
 			AllowCreateComment = allowCreateComment;
 			Well = well;
 			CommentsBinding = commentsBinding;
@@ -22,7 +23,5 @@ namespace VocaDb.Web.Models.Shared.Partials.Comment {
 		public bool CommentBoxEnd { get; set; }
 
 		public bool Pagination { get; set; }
-
 	}
-
 }

@@ -2,10 +2,10 @@
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Utils {
-
-	public static class UrlFriendlyNameFactory {
-
+namespace VocaDb.Model.Utils
+{
+	public static class UrlFriendlyNameFactory
+	{
 		/// <summary>
 		/// Gets an URL-friendly name from any entry name.
 		/// The processed name can be used as user-friendly part of an URL.
@@ -13,8 +13,8 @@ namespace VocaDb.Model.Utils {
 		/// English or Romanized name is preferred.
 		/// This method will use the original names list, which is slower and should be cached.
 		/// </summary>
-		public static string GetUrlFriendlyName(INameManager nameManager) {
-
+		public static string GetUrlFriendlyName(INameManager nameManager)
+		{
 			string raw = null;
 
 			// Try English if English is the default language selection
@@ -34,7 +34,6 @@ namespace VocaDb.Model.Utils {
 				return string.Empty;
 
 			return GetUrlFriendlyName(raw);
-
 		}
 
 		/// <summary>
@@ -43,8 +42,8 @@ namespace VocaDb.Model.Utils {
 		/// 
 		/// English or Romanized name is preferred.
 		/// </summary>
-		public static string GetUrlFriendlyName(TranslatedString translatedString) {
-
+		public static string GetUrlFriendlyName(TranslatedString translatedString)
+		{
 			string raw = null;
 
 			// Try English if English is the default language selection
@@ -64,7 +63,6 @@ namespace VocaDb.Model.Utils {
 				return string.Empty;
 
 			return GetUrlFriendlyName(raw);
-
 		}
 
 		/// <summary>
@@ -79,17 +77,14 @@ namespace VocaDb.Model.Utils {
 		/// </summary>
 		/// <param name="name">Entry name, for example "Hatsune Miku". Can be null or empty.</param>
 		/// <returns>Processed name, for example "hatsune-miku". Can be empty. Cannot be null.</returns>
-		public static string GetUrlFriendlyName(string name) {
-
+		public static string GetUrlFriendlyName(string name)
+		{
 			if (string.IsNullOrEmpty(name))
 				return string.Empty;
 
 			// Note: perf test about 100000 iterations per second, although could be optimized/cached
 			var cleanedName = Regex.Replace(name.Replace(' ', '-'), @"[^a-zA-Z0-9_-]", string.Empty);
 			return cleanedName.Trim(' ', '-', '_').Truncate(30).ToLowerInvariant();
-
 		}
-
 	}
-
 }

@@ -12,55 +12,52 @@ using VocaDb.Web.Models;
 
 namespace VocaDb.Web.Controllers
 {
-
 	[SessionState(SessionStateBehavior.ReadOnly)]
-    public class HomeController : ControllerBase
-    {
-
+	public class HomeController : ControllerBase
+	{
 		private readonly BrandableStringsManager brandableStringsManager;
 		private readonly OtherService otherService;
 		private readonly SongQueries songService;
 
-		public HomeController(SongQueries songService, OtherService otherService, BrandableStringsManager brandableStringsManager) {
+		public HomeController(SongQueries songService, OtherService otherService, BrandableStringsManager brandableStringsManager)
+		{
 			this.songService = songService;
 			this.otherService = otherService;
 			this.brandableStringsManager = brandableStringsManager;
 		}
 
-		public ActionResult Chat() {
-
+		public ActionResult Chat()
+		{
 			return View();
-
 		}
 
 		// Might still be used by some clients with opensearch
 		[Obsolete("Moved to web api")]
-		public ActionResult FindNames(string term) {
-
+		public ActionResult FindNames(string term)
+		{
 			var result = otherService.FindNames(SearchTextQuery.Create(term), 10);
 
 			return Json(result);
-
 		}
 
-        //
-        // GET: /Home/
+		//
+		// GET: /Home/
 
-        public async Task<ActionResult> Index() {
-
+		public async Task<ActionResult> Index()
+		{
 			PageProperties.Description = brandableStringsManager.Home.SiteDescription;
 			PageProperties.AddMainScripts = false;
 
 			var contract = await otherService.GetFrontPageContent();
 
-            return View(contract);
-
-        }
+			return View(contract);
+		}
 
 		[HttpPost]
-		public ActionResult GlobalSearch(GlobalSearchBoxModel model) {
-
-			switch (model.ObjectType) {
+		public ActionResult GlobalSearch(GlobalSearchBoxModel model)
+		{
+			switch (model.ObjectType)
+			{
 				case EntryType.Undefined:
 					return RedirectToAction("Index", "Search", new { filter = model.GlobalSearchTerm });
 
@@ -81,31 +78,28 @@ namespace VocaDb.Web.Controllers
 
 				default:
 					var controller = model.ObjectType.ToString();
-					return RedirectToAction("Index", controller, new {filter = model.GlobalSearchTerm});
-
+					return RedirectToAction("Index", controller, new { filter = model.GlobalSearchTerm });
 			}
-
-
 		}
 
-		public ActionResult PVContent(int songId = invalidId) {
-
+		public ActionResult PVContent(int songId = invalidId)
+		{
 			if (songId == invalidId)
 				return NoId();
 
 			var song = songService.GetSongWithPVAndVote(songId, false);
 
 			return PartialView("PVs/_PVContent", song);
-
 		}
 
-		public ActionResult Search(string filter) {
+		public ActionResult Search(string filter)
+		{
 			return RedirectToAction("Index", "Search", new { filter });
 		}
 
-		public ActionResult Wiki() {
+		public ActionResult Wiki()
+		{
 			return View();
 		}
-
-    }
+	}
 }

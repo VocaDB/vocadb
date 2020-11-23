@@ -7,24 +7,23 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Helpers {
-
-	public class TagMapper {
-
+namespace VocaDb.Model.Helpers
+{
+	public class TagMapper
+	{
 		/// <summary>
 		/// Tests if a particular tag is redundant for a song and should be skipped from automatic mapping.
 		/// </summary>
-		public bool TagIsRedundantForSong(SongType songType, int tagId, IEntryTypeTagRepository specialTags) {
-
+		public bool TagIsRedundantForSong(SongType songType, int tagId, IEntryTypeTagRepository specialTags)
+		{
 			if (tagId == specialTags.SongTypeTagId(songType))
 				return true;
 
 			return false;
-
 		}
 
-		public Tag[] MapTags(IDatabaseContext ctx, string[] nicoTags) {
-
+		public Tag[] MapTags(IDatabaseContext ctx, string[] nicoTags)
+		{
 			// Construct tag mappings (many to many)
 			var tagMappings = ctx
 				.Query<TagMapping>()
@@ -38,11 +37,10 @@ namespace VocaDb.Model.Helpers {
 				.SelectMany(t => tagMappings[t])
 				.Distinct()
 				.ToArray();
-
 		}
 
-		public async Task<Tag[]> MapTagsAsync(IDatabaseContext ctx, string[] nicoTags) {
-
+		public async Task<Tag[]> MapTagsAsync(IDatabaseContext ctx, string[] nicoTags)
+		{
 			// Construct tag mappings (many to many)
 			var tagMappingsList = await ctx
 				.Query<TagMapping>()
@@ -58,8 +56,6 @@ namespace VocaDb.Model.Helpers {
 				.SelectMany(t => tagMappings[t])
 				.Distinct()
 				.ToArray();
-
 		}
 	}
-
 }

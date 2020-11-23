@@ -8,14 +8,14 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 
-namespace VocaDb.Tests.Service.Search {
-
+namespace VocaDb.Tests.Service.Search
+{
 	/// <summary>
 	/// Tests for <see cref="ReleaseEventSearch"/>.
 	/// </summary>
 	[TestClass]
-	public class ReleaseEventSearchTests {
-
+	public class ReleaseEventSearchTests
+	{
 		private ReleaseEvent eventInSeries;
 		private ReleaseEvent unsortedEvent;
 		private QuerySourceList querySource;
@@ -23,45 +23,41 @@ namespace VocaDb.Tests.Service.Search {
 		private int eventId;
 		private ReleaseEventSearch target;
 
-		private void AreEqual(ReleaseEvent expected, ReleaseEventFindResultContract actual) {
-			
+		private void AreEqual(ReleaseEvent expected, ReleaseEventFindResultContract actual)
+		{
 			Assert.IsNotNull(actual, "Result");
 			Assert.AreEqual(expected.DefaultName, actual.EventName, "EventName");
 			Assert.AreEqual(expected.Id, actual.EventId, "EventId");
-
 		}
 
-		private ReleaseEvent CreateEvent(ReleaseEventSeries series, int number, string suffix = "") {
-
+		private ReleaseEvent CreateEvent(ReleaseEventSeries series, int number, string suffix = "")
+		{
 			var e = CreateEntry.SeriesEvent(series, number, suffix, id: eventId++);
 			querySource.Add(e);
 			series.AllEvents.Add(e);
 
 			return e;
-
 		}
 
-		private ReleaseEvent CreateEvent(string name) {
-
+		private ReleaseEvent CreateEvent(string name)
+		{
 			var e = CreateEntry.ReleaseEvent(name, id: eventId++);
 			querySource.Add(e);
 
 			return e;
-
 		}
 
-		private ReleaseEventSeries CreateSeries(params string[] aliases) {
-
+		private ReleaseEventSeries CreateSeries(params string[] aliases)
+		{
 			var s = new ReleaseEventSeries(ContentLanguageSelection.English, aliases.Select(a => new LocalizedString(a, ContentLanguageSelection.English)).ToArray(), string.Empty);
 			querySource.Add(s);
 
 			return s;
-
 		}
 
 		[TestInitialize]
-		public void SetUp() {
-
+		public void SetUp()
+		{
 			querySource = new QuerySourceList();
 
 			target = new ReleaseEventSearch(querySource);
@@ -70,10 +66,10 @@ namespace VocaDb.Tests.Service.Search {
 
 			eventInSeries = CreateEvent(series, 84);
 			unsortedEvent = CreateEvent("Vocaloid Festa");
-
 		}
 
-		private ReleaseEventFindResultContract Find(string query) {
+		private ReleaseEventFindResultContract Find(string query)
+		{
 			return target.Find(query, ContentLanguagePreference.English);
 		}
 
@@ -81,80 +77,74 @@ namespace VocaDb.Tests.Service.Search {
 		/// Test preconditions
 		/// </summary>
 		[TestMethod]
-		public void Ctor() {
-
+		public void Ctor()
+		{
 			Assert.AreEqual("Comiket 84", eventInSeries.DefaultName, "Name");
 			Assert.AreEqual("Vocaloid Festa", unsortedEvent.DefaultName, "Name");
-
 		}
 
 		/// <summary>
 		/// Find by combined series and event.
 		/// </summary>
 		[TestMethod]
-		public void FindSeriesAndEvent() {
-
+		public void FindSeriesAndEvent()
+		{
 			var result = Find("Comiket 84");
 
 			AreEqual(eventInSeries, result);
-
 		}
 
 		/// <summary>
 		/// Find by alias.
 		/// </summary>
 		[TestMethod]
-		public void FindAlias() {
-
+		public void FindAlias()
+		{
 			var result = Find("C84");
 
 			AreEqual(eventInSeries, result);
-
 		}
 
 		/// <summary>
 		/// Find by series, unknown event.
 		/// </summary>
 		[TestMethod]
-		public void FindNewEventEventInSeriesExact() {
-
+		public void FindNewEventEventInSeriesExact()
+		{
 			var result = Find("Comiket 85");
 
 			Assert.IsNotNull(result, "Result");
 			Assert.IsNotNull(result.Series, "Series");
 			Assert.AreEqual("Comiket", result.Series.Name, "Series");
 			Assert.AreEqual(85, result.SeriesNumber, "SeriesNumber");
-
 		}
 
 		/// <summary>
 		/// Find by combined series and event, partial match.
 		/// </summary>
 		[TestMethod]
-		public void FindSeriesAndEventPartial() {
-
+		public void FindSeriesAndEventPartial()
+		{
 			var voMas = CreateSeries("The Voc@loid M@ster");
 			var voMas23 = CreateEvent(voMas, 23);
 			var result = Find("Voc@loid M@ster 23");
 
 			AreEqual(voMas23, result);
-
 		}
 
 		/// <summary>
 		/// Find event, part of a series, but the series isn't added yet.
 		/// </summary>
 		[TestMethod]
-		public void FindUnknownSeries() {
-
+		public void FindUnknownSeries()
+		{
 			// Note: earlier the "c" in this name matched with Comiket's "c", causing Comiket to be returned as the series.
 			var result = Find("Gackpoid's birthday 2011");
 
 			// Note: could also return assumed series and allow creating the series as well. Right now, only an ungrouped event can be created.
 			Assert.IsNotNull(result, "Result");
-			Assert.AreEqual(null, result.Series, "Series");	// Series not found
+			Assert.AreEqual(null, result.Series, "Series"); // Series not found
 			Assert.AreEqual("Gackpoid's birthday 2011", result.EventName, "EventName");
-
 		}
 
 		/// <summary>
@@ -163,8 +153,8 @@ namespace VocaDb.Tests.Service.Search {
 		/// See https://code.google.com/p/vocadb/issues/detail?id=164
 		/// </summary>
 		[TestMethod]
-		public void FindSeriesWithNumber() {
-
+		public void FindSeriesWithNumber()
+		{
 			CreateSeries("M3");
 
 			var result = Find("M3 2013");
@@ -173,7 +163,6 @@ namespace VocaDb.Tests.Service.Search {
 			Assert.IsNotNull(result.Series, "Series");
 			Assert.AreEqual("M3", result.Series.Name, "Series");
 			Assert.AreEqual(2013, result.SeriesNumber, "SeriesNumber");
-
 		}
 
 		/// <summary>
@@ -182,8 +171,8 @@ namespace VocaDb.Tests.Service.Search {
 		/// See https://code.google.com/p/vocadb/issues/detail?id=164
 		/// </summary>
 		[TestMethod]
-		public void FindSeriesWithNumberAndSuffix() {
-
+		public void FindSeriesWithNumberAndSuffix()
+		{
 			CreateSeries("M3");
 
 			var result = Find("M3 2013 Spring");
@@ -193,15 +182,14 @@ namespace VocaDb.Tests.Service.Search {
 			Assert.AreEqual("M3", result.Series.Name, "Series");
 			Assert.AreEqual(2013, result.SeriesNumber, "SeriesNumber");
 			Assert.AreEqual("Spring", result.SeriesSuffix, "SeriesSuffix");
-
 		}
 
 		/// <summary>
 		/// Find known event by exact name when the event name contains a suffix.
 		/// </summary>
 		[TestMethod]
-		public void FindSeriesWithNumberAndSuffix_Exact() {
-
+		public void FindSeriesWithNumberAndSuffix_Exact()
+		{
 			series = CreateSeries("M3");
 			CreateEvent(series, 2013, "Fall");
 
@@ -210,34 +198,29 @@ namespace VocaDb.Tests.Service.Search {
 			Assert.IsNotNull(result, "Result");
 			Assert.IsTrue(result.IsKnownEvent, "IsKnownEvent");
 			Assert.AreEqual("M3 2013 Fall", result.EventName, "EventName");
-
 		}
 
 		/// <summary>
 		/// Find by series, unknown event.
 		/// </summary>
 		[TestMethod]
-		public void FindUnsortedEvent() {
-
+		public void FindUnsortedEvent()
+		{
 			var result = Find("The Vocaloid Festa");
 
 			AreEqual(unsortedEvent, result);
-
 		}
 
 		/// <summary>
 		/// Doesn't match any series.
 		/// </summary>
 		[TestMethod]
-		public void FindNothing() {
-
+		public void FindNothing()
+		{
 			var result = Find("Does not exist");
 
 			Assert.IsNotNull(result, "Result");
 			Assert.AreEqual("Does not exist", result.EventName, "EventName");
-
 		}
-
 	}
-
 }

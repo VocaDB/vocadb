@@ -13,13 +13,13 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.Songs {
-
+namespace VocaDb.Model.Domain.Songs
+{
 	public class SongList : IEntryWithNames, ISongList,
-		IEntryWithVersions<ArchivedSongListVersion, SongListEditableFields>, 
+		IEntryWithVersions<ArchivedSongListVersion, SongListEditableFields>,
 		IEntryWithComments<SongListComment>, IEntryWithStatus,
-		IEntryWithTags<SongListTagUsage> {
-
+		IEntryWithTags<SongListTagUsage>
+	{
 		IUser ISongList.Author => Author;
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
@@ -32,7 +32,7 @@ namespace VocaDb.Model.Domain.Songs {
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb;
 
 		private ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> archivedVersions
-			= new ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields>();		
+			= new ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields>();
 		private User author;
 		private IList<SongListComment> comments = new List<SongListComment>();
 		private string description;
@@ -41,22 +41,24 @@ namespace VocaDb.Model.Domain.Songs {
 		private IList<SongInList> songs = new List<SongInList>();
 		private TagManager<SongListTagUsage> tags = new TagManager<SongListTagUsage>();
 
-		public SongList() {
+		public SongList()
+		{
 			CreateDate = DateTime.Now;
 			Description = string.Empty;
 		}
 
 		public SongList(string name, User author)
-			: this() {
-
+			: this()
+		{
 			Name = name;
 			Author = author;
-
 		}
 
-		public virtual IList<SongInList> AllSongs {
+		public virtual IList<SongInList> AllSongs
+		{
 			get => songs;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				songs = value;
 			}
@@ -66,32 +68,38 @@ namespace VocaDb.Model.Domain.Songs {
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
-		public virtual ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> ArchivedVersionsManager {
+		public virtual ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> ArchivedVersionsManager
+		{
 			get => archivedVersions;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				archivedVersions = value;
 			}
 		}
 
-		public virtual User Author {
+		public virtual User Author
+		{
 			get => author;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				author = value;
 			}
 		}
 
-		public virtual IList<SongListComment> Comments {
+		public virtual IList<SongListComment> Comments
+		{
 			get => comments;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				comments = value;
 			}
 		}
 
-		public virtual Comment CreateComment(string message, AgentLoginData loginData) {
-
+		public virtual Comment CreateComment(string message, AgentLoginData loginData)
+		{
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);
 
@@ -99,7 +107,6 @@ namespace VocaDb.Model.Domain.Songs {
 			Comments.Add(comment);
 
 			return comment;
-
 		}
 
 		/// <summary>
@@ -111,9 +118,11 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual bool Deleted { get; set; }
 
-		public virtual string Description {
+		public virtual string Description
+		{
 			get => description;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				description = value;
 			}
@@ -123,9 +132,11 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual Date EventDate { get; set; }
 
-		public virtual IList<ReleaseEvent> Events {
+		public virtual IList<ReleaseEvent> Events
+		{
 			get => events;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				events = value;
 			}
@@ -137,25 +148,31 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual int Id { get; set; }
 
-		public virtual string Name {
+		public virtual string Name
+		{
 			get => name;
-			set {
+			set
+			{
 				ParamIs.NotNullOrWhiteSpace(() => value);
 				name = value;
 			}
 		}
 
-		public virtual IEnumerable<SongInList> SongLinks {
-			get {
+		public virtual IEnumerable<SongInList> SongLinks
+		{
+			get
+			{
 				return AllSongs.Where(s => !s.Song.Deleted);
 			}
 		}
 
 		public virtual EntryStatus Status { get; set; }
 
-		public virtual TagManager<SongListTagUsage> Tags {
+		public virtual TagManager<SongListTagUsage> Tags
+		{
 			get => tags;
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				tags = value;
 			}
@@ -170,35 +187,32 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual int Version { get; set; }
 
-		public virtual SongInList AddSong(Song song) {
-
+		public virtual SongInList AddSong(Song song)
+		{
 			var order = (SongLinks.Any() ? SongLinks.Max(s => s.Order) + 1 : 1);
 			return AddSong(song, order, string.Empty);
-
 		}
 
-		public virtual SongInList AddSong(Song song, int order, string notes) {
-
+		public virtual SongInList AddSong(Song song, int order, string notes)
+		{
 			ParamIs.NotNull(() => song);
 
 			var link = new SongInList(song, this, order, notes);
 			AllSongs.Add(link);
 			return link;
-
 		}
 
-		public virtual ArchivedSongListVersion CreateArchivedVersion(SongListDiff diff, AgentLoginData author, EntryEditEvent reason, string notes) {
-
+		public virtual ArchivedSongListVersion CreateArchivedVersion(SongListDiff diff, AgentLoginData author, EntryEditEvent reason, string notes)
+		{
 			var archived = new ArchivedSongListVersion(this, diff, author, Status, reason, notes);
 			ArchivedVersionsManager.Add(archived);
 			Version++;
 
 			return archived;
-
 		}
 
-		public virtual bool Equals(SongList another) {
-
+		public virtual bool Equals(SongList another)
+		{
 			if (another == null)
 				return false;
 
@@ -209,57 +223,57 @@ namespace VocaDb.Model.Domain.Songs {
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as SongList);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return base.GetHashCode();
 		}
 
 		public virtual CollectionDiffWithValue<SongInList, SongInList> SyncSongs(
-			IEnumerable<SongInListEditContract> newTracks, Func<SongInListEditContract, Song> songGetter) {
-
+			IEnumerable<SongInListEditContract> newTracks, Func<SongInListEditContract, Song> songGetter)
+		{
 			var diff = CollectionHelper.Diff(SongLinks, newTracks, (n1, n2) => n1.Id == n2.SongInListId);
 			var created = new List<SongInList>();
 			var edited = new List<SongInList>();
 
-			foreach (var n in diff.Removed) {
+			foreach (var n in diff.Removed)
+			{
 				n.Delete();
 			}
 
-			foreach (var newEntry in diff.Added) {
-
+			foreach (var newEntry in diff.Added)
+			{
 				var song = songGetter(newEntry);
 
 				var link = AddSong(song, newEntry.Order, newEntry.Notes ?? string.Empty);
 				created.Add(link);
-
 			}
 
-			foreach (var linkEntry in diff.Unchanged) {
-
+			foreach (var linkEntry in diff.Unchanged)
+			{
 				var entry = linkEntry;
 				var newEntry = newTracks.First(e => e.SongInListId == entry.Id);
 
-				if (newEntry.Order != linkEntry.Order || newEntry.Notes != linkEntry.Notes) {
+				if (newEntry.Order != linkEntry.Order || newEntry.Notes != linkEntry.Notes)
+				{
 					linkEntry.Order = newEntry.Order;
 					linkEntry.Notes = newEntry.Notes;
 					edited.Add(linkEntry);
 				}
-
 			}
 
 			return new CollectionDiffWithValue<SongInList, SongInList>(created, diff.Removed, diff.Unchanged, edited);
-
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("song list '{0}' [{1}]", Name, Id);
 		}
-
 	}
 }

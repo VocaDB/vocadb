@@ -1,12 +1,12 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.Mapping.Artists {
-
-	public class ArtistPictureFileMap : ClassMap<ArtistPictureFile> {
-
-		public ArtistPictureFileMap() {
-
+namespace VocaDb.Model.Mapping.Artists
+{
+	public class ArtistPictureFileMap : ClassMap<ArtistPictureFile>
+	{
+		public ArtistPictureFileMap()
+		{
 			Id(m => m.Id);
 
 			Map(m => m.Created).Not.Nullable();
@@ -15,9 +15,6 @@ namespace VocaDb.Model.Mapping.Artists {
 
 			References(m => m.Artist).Not.Nullable();
 			References(m => m.Author).Not.Nullable();
-
 		}
-
 	}
-
 }

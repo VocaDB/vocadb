@@ -16,19 +16,20 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Events;
 using VocaDb.Web.Code.WebApi;
 
-namespace VocaDb.Web.Controllers.Api {
-
+namespace VocaDb.Web.Controllers.Api
+{
 	/// <summary>
 	/// API queries for album release events.
 	/// </summary>
 	[RoutePrefix("api/releaseEvents")]
-	public class ReleaseEventApiController : ApiController {
-
+	public class ReleaseEventApiController : ApiController
+	{
 		private const int defaultMax = 10;
 		private readonly EventQueries queries;
 		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 
-		public ReleaseEventApiController(EventQueries queries, IAggregatedEntryImageUrlFactory thumbPersister) {
+		public ReleaseEventApiController(EventQueries queries, IAggregatedEntryImageUrlFactory thumbPersister)
+		{
 			this.queries = queries;
 			this.thumbPersister = thumbPersister;
 		}
@@ -44,16 +45,18 @@ namespace VocaDb.Web.Controllers.Api {
 		/// </param>
 		[Route("{id:int}")]
 		[Authorize]
-		public void Delete(int id, string notes = "", bool hardDelete = false) {
-
+		public void Delete(int id, string notes = "", bool hardDelete = false)
+		{
 			notes = notes ?? string.Empty;
 
-			if (hardDelete) {
+			if (hardDelete)
+			{
 				queries.MoveToTrash(id, notes);
-			} else {
+			}
+			else
+			{
 				queries.Delete(id, notes);
 			}
-
 		}
 
 		/// <summary>
@@ -124,16 +127,17 @@ namespace VocaDb.Web.Controllers.Api {
 			bool childVoicebanks = false,
 			bool includeMembers = false,
 			EntryStatus? status = null,
-			int start = 0, 
+			int start = 0,
 			int maxResults = defaultMax,
-			bool getTotalCount = false, 
+			bool getTotalCount = false,
 			EventSortRule sort = EventSortRule.Name,
 			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default
-			) {
-			
+			)
+		{
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
-			var queryParams = new EventQueryParams {
+			var queryParams = new EventQueryParams
+			{
 				TextQuery = textQuery,
 				SeriesId = seriesId,
 				AfterDate = afterDate,
@@ -151,7 +155,6 @@ namespace VocaDb.Web.Controllers.Api {
 			};
 
 			return queries.Find(e => new ReleaseEventForApiContract(e, lang, fields, thumbPersister), queryParams);
-
 		}
 
 		/// <summary>
@@ -170,8 +173,8 @@ namespace VocaDb.Web.Controllers.Api {
 			int maxResults = 10) => queries.GetNames(query, maxResults);
 
 		[Route("{id:int}")]
-		public ReleaseEventForApiContract GetOne(int id, 
-			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None, 
+		public ReleaseEventForApiContract GetOne(int id,
+			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetOne(id, lang, fields);
 
 		/// <summary>
@@ -184,7 +187,5 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{eventId:int}/reports")]
 		[RestrictBannedIP]
 		public void PostReport(int eventId, EventReportType reportType, string notes, int? versionNumber) => queries.CreateReport(eventId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
-
 	}
-
 }

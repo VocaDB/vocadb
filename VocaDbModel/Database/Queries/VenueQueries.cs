@@ -14,61 +14,58 @@ using VocaDb.Model.Service.QueryableExtenders;
 using VocaDb.Model.Service.Search.Venues;
 using VocaDb.Model.Service.Translations;
 
-namespace VocaDb.Model.Database.Queries {
-
-	public class VenueQueries : QueriesBase<IVenueRepository, Venue> {
-
+namespace VocaDb.Model.Database.Queries
+{
+	public class VenueQueries : QueriesBase<IVenueRepository, Venue>
+	{
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
 
 		public VenueQueries(IVenueRepository venueRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext, IEnumTranslations enumTranslations)
-			: base(venueRepository, permissionContext) {
-
+			: base(venueRepository, permissionContext)
+		{
 			this.entryLinkFactory = entryLinkFactory;
 			this.enumTranslations = enumTranslations;
-
 		}
-		
-		private ArchivedVenueVersion Archive(IDatabaseContext<Venue> ctx, Venue venue, VenueDiff diff, EntryEditEvent reason, string notes) {
 
+		private ArchivedVenueVersion Archive(IDatabaseContext<Venue> ctx, Venue venue, VenueDiff diff, EntryEditEvent reason, string notes)
+		{
 			var agentLoginData = ctx.OfType<User>().CreateAgentLoginData(permissionContext);
 			var archived = ArchivedVenueVersion.Create(venue, diff, agentLoginData, reason, notes);
 			ctx.Save(archived);
 			return archived;
-
 		}
 
-		public (bool created, int reportId) CreateReport(int venueId, VenueReportType reportType, string hostname, string notes, int? versionNumber) {
-
+		public (bool created, int reportId) CreateReport(int venueId, VenueReportType reportType, string hostname, string notes, int? versionNumber)
+		{
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
-			return HandleTransaction(ctx => {
+			return HandleTransaction(ctx =>
+			{
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
 					entryLinkFactory,
 					(song, reporter, notesTruncated) => new VenueReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
 					() => reportType != VenueReportType.Other ? enumTranslations.Translation(reportType) : null,
 					venueId, reportType, hostname, notes);
 			});
-
 		}
-		
-		private void CreateTrashedEntry(IDatabaseContext ctx, Venue venue, string notes) {
 
+		private void CreateTrashedEntry(IDatabaseContext ctx, Venue venue, string notes)
+		{
 			var archived = new ArchivedVenueContract(venue, new VenueDiff(true));
 			var data = XmlHelper.SerializeToXml(archived);
 			var trashed = new TrashedEntry(venue, data, GetLoggedUser(ctx), notes);
 
 			ctx.Save(trashed);
-
 		}
 
-		public void Delete(int id, string notes) {
-
+		public void Delete(int id, string notes)
+		{
 			permissionContext.VerifyManageDatabase();
 
-			repository.HandleTransaction(ctx => {
-
+			repository.HandleTransaction(ctx =>
+			{
 				var entry = ctx.Load(id);
 
 				PermissionContext.VerifyEntryDelete(entry);
@@ -79,15 +76,13 @@ namespace VocaDb.Model.Database.Queries {
 				Archive(ctx, entry, new VenueDiff(false), EntryEditEvent.Deleted, notes);
 
 				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
-
 			});
-
 		}
-		
-		public PartialFindResult<TResult> Find<TResult>(Func<Venue, TResult> fac, VenueQueryParams queryParams) {
 
-			return HandleQuery(ctx => {
-
+		public PartialFindResult<TResult> Find<TResult>(Func<Venue, TResult> fac, VenueQueryParams queryParams)
+		{
+			return HandleQuery(ctx =>
+			{
 				var q = ctx.Query<Venue>()
 					.WhereNotDeleted()
 					.WhereHasName(queryParams.TextQuery)
@@ -103,56 +98,50 @@ namespace VocaDb.Model.Database.Queries {
 				var count = queryParams.Paging.GetTotalCount ? q.Count() : 0;
 
 				return PartialFindResult.Create(entries, count);
-
 			});
-
 		}
 
-		public VenueForApiContract GetDetails(int id) {
-
+		public VenueForApiContract GetDetails(int id)
+		{
 			return HandleQuery(ctx => new VenueForApiContract(
 				ctx.Load(id),
 				LanguagePreference,
 				VenueOptionalFields.AdditionalNames | VenueOptionalFields.Description | VenueOptionalFields.Events | VenueOptionalFields.Names | VenueOptionalFields.WebLinks));
-
 		}
 
-		public VenueForEditContract GetForEdit(int id) {
-
+		public VenueForEditContract GetForEdit(int id)
+		{
 			return HandleQuery(ctx => new VenueForEditContract(ctx.Load(id), LanguagePreference));
-
 		}
 
-		public ArchivedVenueVersionDetailsContract GetVersionDetails(int id, int comparedVersionId) {
-
-			return HandleQuery(session => {
-
+		public ArchivedVenueVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
+		{
+			return HandleQuery(session =>
+			{
 				var contract = new ArchivedVenueVersionDetailsContract(session.Load<ArchivedVenueVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedVenueVersion>(comparedVersionId) : null,
 					PermissionContext);
 
-				if (contract.Hidden) {
+				if (contract.Hidden)
+				{
 					PermissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
 				}
 
 				return contract;
-
 			});
-
 		}
 
-		public VenueWithArchivedVersionsContract GetWithArchivedVersions(int id) {
-
+		public VenueWithArchivedVersionsContract GetWithArchivedVersions(int id)
+		{
 			return HandleQuery(ctx => new VenueWithArchivedVersionsContract(ctx.Load(id), LanguagePreference));
-
 		}
-		
-		public void MoveToTrash(int id, string notes) {
 
+		public void MoveToTrash(int id, string notes)
+		{
 			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);
 
-			repository.HandleTransaction(ctx => {
-
+			repository.HandleTransaction(ctx =>
+			{
 				var entry = ctx.Load(id);
 
 				PermissionContext.VerifyEntryDelete(entry);
@@ -160,9 +149,10 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.AuditLogger.SysLog(string.Format("moving {0} to trash", entry));
 
 				CreateTrashedEntry(ctx, entry, notes);
-				
+
 				var allEvents = entry.AllEvents.ToArray();
-				foreach (var ev in allEvents) {
+				foreach (var ev in allEvents)
+				{
 					ev.SetVenue(null);
 				}
 
@@ -175,17 +165,15 @@ namespace VocaDb.Model.Database.Queries {
 				ctx.Delete(entry);
 
 				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", entry));
-
 			});
-
 		}
-		
-		public void Restore(int id) {
 
+		public void Restore(int id)
+		{
 			PermissionContext.VerifyPermission(PermissionToken.DeleteEntries);
 
-			HandleTransaction(ctx => {
-
+			HandleTransaction(ctx =>
+			{
 				var venue = ctx.Load<Venue>(id);
 
 				venue.Deleted = false;
@@ -195,24 +183,23 @@ namespace VocaDb.Model.Database.Queries {
 				Archive(ctx, venue, new VenueDiff(false), EntryEditEvent.Restored, string.Empty);
 
 				ctx.AuditLogger.AuditLog(string.Format("restored {0}", venue));
-
 			});
-
 		}
 
-		public int Update(VenueForEditContract contract) {
-
+		public int Update(VenueForEditContract contract)
+		{
 			ParamIs.NotNull(() => contract);
 
 			PermissionContext.VerifyManageDatabase();
 
-			return HandleTransaction(ctx => {
-
+			return HandleTransaction(ctx =>
+			{
 				Venue venue;
 
-				if (contract.Id == 0) {
-
-					venue = new Venue(contract.DefaultNameLanguage, contract.Names, contract.Description) {
+				if (contract.Id == 0)
+				{
+					venue = new Venue(contract.DefaultNameLanguage, contract.Names, contract.Description)
+					{
 						Address = contract.Address,
 						AddressCountryCode = contract.AddressCountryCode,
 						Coordinates = (contract.Coordinates != null) ? new OptionalGeoPoint(contract.Coordinates) : new OptionalGeoPoint(),
@@ -226,7 +213,8 @@ namespace VocaDb.Model.Database.Queries {
 					diff.AddressCountryCode.Set(!string.IsNullOrEmpty(contract.AddressCountryCode));
 					diff.Description.Set(!string.IsNullOrEmpty(contract.Description));
 
-					if (contract.Coordinates != null) {
+					if (contract.Coordinates != null)
+					{
 						diff.Coordinates.Set();
 					}
 
@@ -242,14 +230,15 @@ namespace VocaDb.Model.Database.Queries {
 					AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), venue, EntryEditEvent.Created, archived);
 
 					AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(venue)), ctx);
-
-				} else {
-					
+				}
+				else
+				{
 					venue = ctx.Load<Venue>(contract.Id);
 					permissionContext.VerifyEntryEdit(venue);
 					var diff = new VenueDiff(DoSnapshot(venue, ctx));
 
-					if (venue.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage) {
+					if (venue.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage)
+					{
 						venue.TranslatedName.DefaultLanguage = contract.DefaultNameLanguage;
 						diff.OriginalName.Set();
 					}
@@ -257,31 +246,37 @@ namespace VocaDb.Model.Database.Queries {
 					var nameDiff = venue.Names.Sync(contract.Names, venue);
 					ctx.Sync(nameDiff);
 
-					if (nameDiff.Changed) {
+					if (nameDiff.Changed)
+					{
 						diff.Names.Set();
 					}
 
-					if (venue.Address != contract.Address) {
+					if (venue.Address != contract.Address)
+					{
 						diff.Address.Set();
 						venue.Address = contract.Address;
 					}
 
-					if (venue.AddressCountryCode != contract.AddressCountryCode) {
+					if (venue.AddressCountryCode != contract.AddressCountryCode)
+					{
 						diff.AddressCountryCode.Set();
 						venue.AddressCountryCode = contract.AddressCountryCode;
 					}
 
-					if (venue.Description != contract.Description) {
+					if (venue.Description != contract.Description)
+					{
 						diff.Description.Set();
 						venue.Description = contract.Description;
 					}
 
-					if (!venue.Coordinates.Equals(contract.Coordinates)) {
+					if (!venue.Coordinates.Equals(contract.Coordinates))
+					{
 						diff.Coordinates.Set();
 						venue.Coordinates = (contract.Coordinates != null) ? new OptionalGeoPoint(contract.Coordinates) : new OptionalGeoPoint();
 					}
 
-					if (venue.Status != contract.Status) {
+					if (venue.Status != contract.Status)
+					{
 						diff.Status.Set();
 						venue.Status = contract.Status;
 					}
@@ -298,15 +293,10 @@ namespace VocaDb.Model.Database.Queries {
 					AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), venue, EntryEditEvent.Updated, archived);
 
 					AuditLog(string.Format("updated {0}", entryLinkFactory.CreateEntryLink(venue)), ctx);
-
 				}
 
 				return venue.Id;
-
 			});
-
 		}
-
 	}
-
 }

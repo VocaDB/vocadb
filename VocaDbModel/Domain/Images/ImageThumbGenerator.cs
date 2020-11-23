@@ -2,20 +2,19 @@ using System.Drawing;
 using System.IO;
 using VocaDb.Model.Helpers;
 
-namespace VocaDb.Model.Domain.Images {
-
-	public class ImageThumbGenerator {
-
+namespace VocaDb.Model.Domain.Images
+{
+	public class ImageThumbGenerator
+	{
 		private readonly IEntryImagePersister persister;
 
 		public const int Unlimited = ImageHelper.ImageSizeUnlimited;
 
-		public ImageThumbGenerator(IEntryImagePersister persister) {
-			
+		public ImageThumbGenerator(IEntryImagePersister persister)
+		{
 			ParamIs.NotNull(() => persister);
 
 			this.persister = persister;
-
 		}
 
 		/// <summary>
@@ -29,26 +28,29 @@ namespace VocaDb.Model.Domain.Images {
 		/// <param name="imageInfo">Image information. Cannot be null.</param>
 		/// <param name="size">Image size of the saved thumbnail.</param>
 		/// <param name="dimensions">Dimensions of the thumbnail.</param>
-		private void GenerateThumbAndMoveImage(Image original, Stream input, IEntryImageInformation imageInfo, ImageSize size, int dimensions) {
-
-			if (dimensions != Unlimited && (original.Width > dimensions || original.Height > dimensions)) {
-				using (var thumb = ImageHelper.ResizeToFixedSize(original, dimensions, dimensions)) {
+		private void GenerateThumbAndMoveImage(Image original, Stream input, IEntryImageInformation imageInfo, ImageSize size, int dimensions)
+		{
+			if (dimensions != Unlimited && (original.Width > dimensions || original.Height > dimensions))
+			{
+				using (var thumb = ImageHelper.ResizeToFixedSize(original, dimensions, dimensions))
+				{
 					persister.Write(imageInfo, size, thumb);
 				}
-			} else {
+			}
+			else
+			{
 				persister.Write(imageInfo, size, input);
 			}
-
 		}
 
 		/// <summary>
 		/// Generates thumbnails and writes the original file into external image files.
 		/// </summary>
 		/// <exception cref="InvalidPictureException">If the image could not be opened. Most likely the file is broken.</exception>
-		public void GenerateThumbsAndMoveImage(Stream input, IEntryImageInformation imageInfo, ImageSizes imageSizes, int originalSize = Unlimited) {
-
-			using (var original = ImageHelper.OpenImage(input)) {
-
+		public void GenerateThumbsAndMoveImage(Stream input, IEntryImageInformation imageInfo, ImageSizes imageSizes, int originalSize = Unlimited)
+		{
+			using (var original = ImageHelper.OpenImage(input))
+			{
 				if (imageSizes.HasFlag(ImageSizes.Original))
 					GenerateThumbAndMoveImage(original, input, imageInfo, ImageSize.Original, originalSize);
 
@@ -60,11 +62,7 @@ namespace VocaDb.Model.Domain.Images {
 
 				if (imageSizes.HasFlag(ImageSizes.TinyThumb))
 					GenerateThumbAndMoveImage(original, input, imageInfo, ImageSize.TinyThumb, ImageHelper.DefaultTinyThumbSize);
-
 			}
-
 		}
-
 	}
-
 }

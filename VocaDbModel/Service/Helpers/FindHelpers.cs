@@ -6,14 +6,16 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Model.Service.Helpers {
-
-	public static class FindHelpers {
-
+namespace VocaDb.Model.Service.Helpers
+{
+	public static class FindHelpers
+	{
 		public const int MaxSearchWords = 10;
 
-		private static Expression<Func<T, string>> OrderByExpression<T>(ContentLanguagePreference languagePreference) where T : IEntryWithNames {
-			switch (languagePreference) {
+		private static Expression<Func<T, string>> OrderByExpression<T>(ContentLanguagePreference languagePreference) where T : IEntryWithNames
+		{
+			switch (languagePreference)
+			{
 				case ContentLanguagePreference.Japanese:
 					return e => e.Names.SortNames.Japanese;
 				case ContentLanguagePreference.English:
@@ -26,11 +28,13 @@ namespace VocaDb.Model.Service.Helpers {
 			}
 		}
 
-		public static IOrderedQueryable<T> AddNameOrder<T>(IQueryable<T> criteria, ContentLanguagePreference languagePreference) where T : IEntryWithNames {
+		public static IOrderedQueryable<T> AddNameOrder<T>(IQueryable<T> criteria, ContentLanguagePreference languagePreference) where T : IEntryWithNames
+		{
 			return criteria.OrderBy(OrderByExpression<T>(languagePreference));
 		}
 
-		public static IOrderedQueryable<T> AddNameOrder<T>(IOrderedQueryable<T> criteria, ContentLanguagePreference languagePreference) where T : IEntryWithNames {
+		public static IOrderedQueryable<T> AddNameOrder<T>(IOrderedQueryable<T> criteria, ContentLanguagePreference languagePreference) where T : IEntryWithNames
+		{
 			return criteria.ThenBy(OrderByExpression<T>(languagePreference));
 		}
 
@@ -43,16 +47,16 @@ namespace VocaDb.Model.Service.Helpers {
 		/// Because brackets are used for character group wildcards in T-SQL "like" queries, 
 		/// searches such as "alone [SNDI RMX]" did not work.
 		/// </remarks>
-		public static string CleanTerm(string term) {
-
+		public static string CleanTerm(string term)
+		{
 			if (string.IsNullOrEmpty(term))
 				return term;
 
 			return term.Replace("[", "[[]").Replace("%", "[%]");
-
 		}
 
-		private static bool ShouldEncodeSQLCharacters(NameMatchMode matchMode) {
+		private static bool ShouldEncodeSQLCharacters(NameMatchMode matchMode)
+		{
 			return matchMode == NameMatchMode.Partial || matchMode == NameMatchMode.StartsWith || matchMode == NameMatchMode.Words;
 		}
 
@@ -66,8 +70,8 @@ namespace VocaDb.Model.Service.Helpers {
 		/// <param name="matchMode">Current match mode. If Auto, will be set if something else besides Auto.</param>
 		/// <param name="defaultMode">Default match mode to be used for normal queries.</param>
 		/// <returns>Text query. Wildcard characters are removed. Can be null or empty, if original query is.</returns>
-		public static string GetMatchModeAndQueryForSearch(string query, ref NameMatchMode matchMode, NameMatchMode defaultMode = NameMatchMode.Words) {
-
+		public static string GetMatchModeAndQueryForSearch(string query, ref NameMatchMode matchMode, NameMatchMode defaultMode = NameMatchMode.Words)
+		{
 			if (string.IsNullOrEmpty(query))
 				return query;
 
@@ -75,52 +79,55 @@ namespace VocaDb.Model.Service.Helpers {
 			query = query.Trim();
 
 			// If name match mode is already decided, there's nothing more to do
-			if (matchMode != NameMatchMode.Auto) {
-				if (ShouldEncodeSQLCharacters(matchMode)) {
+			if (matchMode != NameMatchMode.Auto)
+			{
+				if (ShouldEncodeSQLCharacters(matchMode))
+				{
 					query = CleanTerm(query);
 				}
 				return query;
 			}
 
-			if (query.Length > 1 && query.StartsWith("*")) {
+			if (query.Length > 1 && query.StartsWith("*"))
+			{
 				matchMode = NameMatchMode.Words;
 				return CleanTerm(query).Substring(1);
 			}
 
-			if (query.Length > 1 && query.EndsWith("*")) {
+			if (query.Length > 1 && query.EndsWith("*"))
+			{
 				matchMode = NameMatchMode.StartsWith;
 				return CleanTerm(query).Substring(0, query.Length - 1);
 			}
 
-			if (query.Length > 2 && query.StartsWith("\"") && query.EndsWith("\"")) {
+			if (query.Length > 2 && query.StartsWith("\"") && query.EndsWith("\""))
+			{
 				matchMode = NameMatchMode.Exact;
 				return query.Substring(1, query.Length - 2);
 			}
 
-			if (query.Length <= 2) {
+			if (query.Length <= 2)
+			{
 				matchMode = NameMatchMode.StartsWith;
 				return CleanTerm(query);
 			}
 
 			matchMode = defaultMode;
 
-			if (ShouldEncodeSQLCharacters(matchMode)) {
+			if (ShouldEncodeSQLCharacters(matchMode))
+			{
 				query = CleanTerm(query);
 			}
 
 			return query;
-
 		}
 
-		public static string[] GetQueryWords(string query) {
-
+		public static string[] GetQueryWords(string query)
+		{
 			return query
 				.Split(new[] { ' ' }, MaxSearchWords, StringSplitOptions.RemoveEmptyEntries)
 				.Distinct()
 				.ToArray();
-
 		}
-
 	}
-
 }

@@ -4,22 +4,23 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users {
-
+namespace VocaDb.Model.DataContracts.Users
+{
 	/// <summary>
 	/// Data contract for <see cref="User"/> with most properties.
 	/// SECURITY NOTE: take care when sending to client due to the contained sensitive information.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class UserContract : UserWithEmailContract {
-
-		public UserContract() {
+	public class UserContract : UserWithEmailContract
+	{
+		public UserContract()
+		{
 			Language = string.Empty;
 		}
 
 		public UserContract(User user, bool getPublicCollection = false)
-			: base(user) {
-
+			: base(user)
+		{
 			ParamIs.NotNull(() => user);
 
 			Active = user.Active;
@@ -35,7 +36,6 @@ namespace VocaDb.Model.DataContracts.Users {
 
 			if (getPublicCollection)
 				PublicAlbumCollection = user.Options.PublicAlbumCollection;
-
 		}
 
 		[DataMember]
@@ -70,7 +70,5 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		[DataMember]
 		public bool VerifiedArtist { get; set; }
-
 	}
-
 }

@@ -5,11 +5,12 @@ using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Utils.Search {
-
-	public class SearchRouteParams {
-
-		public SearchRouteParams(EntryType? searchType = null) {
+namespace VocaDb.Model.Utils.Search
+{
+	public class SearchRouteParams
+	{
+		public SearchRouteParams(EntryType? searchType = null)
+		{
 			this.searchType = searchType;
 		}
 
@@ -38,69 +39,66 @@ namespace VocaDb.Model.Utils.Search {
 		public string tag { get; set; }
 
 		public int? tagId { get; set; }
-
 	}
 
-	public class SearchRouteParamsFactory {
-
+	public class SearchRouteParamsFactory
+	{
 		public static SearchRouteParamsFactory Instance => new SearchRouteParamsFactory();
 
-		public SearchRouteParams Albums(int? tagId = null) {
-			
-			return new SearchRouteParams(EntryType.Album) {
+		public SearchRouteParams Albums(int? tagId = null)
+		{
+			return new SearchRouteParams(EntryType.Album)
+			{
 				tagId = tagId,
 			};
-
 		}
 
-		public SearchRouteParams Artists(int? tagId = null) {
-			
-			return new SearchRouteParams(EntryType.Artist) {
+		public SearchRouteParams Artists(int? tagId = null)
+		{
+			return new SearchRouteParams(EntryType.Artist)
+			{
 				tagId = tagId,
 			};
-
 		}
 
-		public SearchRouteParams Entries(int? tagId = null) {
-
-			return new SearchRouteParams(EntryType.Undefined) {
+		public SearchRouteParams Entries(int? tagId = null)
+		{
+			return new SearchRouteParams(EntryType.Undefined)
+			{
 				tagId = tagId,
 			};
-
 		}
 
 		public SearchRouteParams Events(
-			int? tagId = null, 
-			int? artistId = null, 
+			int? tagId = null,
+			int? artistId = null,
 			EventSortRule? sort = null,
-			EventCategory? category = null) {
-
-			return new SearchRouteParams(EntryType.ReleaseEvent) {
+			EventCategory? category = null)
+		{
+			return new SearchRouteParams(EntryType.ReleaseEvent)
+			{
 				tagId = tagId,
 				artistId = artistId,
 				sort = sort,
 				eventCategory = category
 			};
-
 		}
 
 		public SearchRouteParams Songs(
 			int? artistId = null,
 			int? eventId = null,
-			SongType? songType = null, 
-			object sort = null, 
-			int? tagId = null) {
-			
-			return new SearchRouteParams(EntryType.Song) {
-				artistId = artistId, 
+			SongType? songType = null,
+			object sort = null,
+			int? tagId = null)
+		{
+			return new SearchRouteParams(EntryType.Song)
+			{
+				artistId = artistId,
 				eventId = eventId,
-				songType =  songType, 
+				songType = songType,
 				sort = sort,
 				tagId = tagId
 			};
-
 		}
-
 	}
-
 }

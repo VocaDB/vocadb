@@ -8,19 +8,19 @@ using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users {
-
+namespace VocaDb.Model.DataContracts.Users
+{
 	/// <summary>
 	/// Data contract for <see cref="User"/>, for details view.
 	/// SECURITY NOTE: take care when sending to client due to the contained sensitive information.
 	/// </summary>
-	public class UserDetailsContract : UserWithPermissionsContract {
+	public class UserDetailsContract : UserWithPermissionsContract
+	{
+		public UserDetailsContract() { }
 
-		public UserDetailsContract() {}
-
-		public UserDetailsContract(User user, IUserPermissionContext permissionContext) 
-			: base(user, permissionContext.LanguagePreference, getPublicCollection: true) {
-
+		public UserDetailsContract(User user, IUserPermissionContext permissionContext)
+			: base(user, permissionContext.LanguagePreference, getPublicCollection: true)
+		{
 			AboutMe = user.Options.AboutMe;
 			CustomTitle = user.Options.CustomTitle;
 			EmailVerified = user.Options.EmailVerified;
@@ -32,7 +32,6 @@ namespace VocaDb.Model.DataContracts.Users {
 			Standalone = user.Options.Standalone;
 			TwitterName = user.Options.TwitterName;
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
-
 		}
 
 		public string AboutMe { get; set; }
@@ -49,13 +48,13 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		public int EditCount { get; set; }
 
-		public AlbumForApiContract[] FavoriteAlbums { get; set;}
+		public AlbumForApiContract[] FavoriteAlbums { get; set; }
 
 		public int FavoriteSongCount { get; set; }
 
-		public TagBaseContract[] FavoriteTags { get; set;}
+		public TagBaseContract[] FavoriteTags { get; set; }
 
-		public ArtistContract[] FollowedArtists { get; set;}
+		public ArtistContract[] FollowedArtists { get; set; }
 
 		public bool IsVeteran { get; set; }
 
@@ -96,6 +95,5 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }
-
 	}
 }

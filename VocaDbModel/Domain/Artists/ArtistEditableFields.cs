@@ -1,39 +1,37 @@
 ﻿using System;
 
-namespace VocaDb.Model.Domain.Artists {
-
+namespace VocaDb.Model.Domain.Artists
+{
 	/// <summary>
 	/// Saved in the database as strings - numbers can be changed, but not the names.
 	/// </summary>
 	[Flags]
-	public enum ArtistEditableFields {
+	public enum ArtistEditableFields
+	{
+		Nothing = 0,
 
-		Nothing			= 0,
+		Albums = 1,
 
-		Albums			= 1,
+		ArtistType = 2,
 
-		ArtistType		= 2,
+		BaseVoicebank = 4,
 
-		BaseVoicebank	= 4,
+		Description = 8,
 
-		Description		= 8,
+		Groups = 16,
 
-		Groups			= 16,
+		Names = 32,
 
-		Names			= 32,
+		OriginalName = 64,
 
-		OriginalName	= 64,
+		Picture = 128,
 
-		Picture			= 128,
+		Pictures = 256,
 
-		Pictures		= 256,
+		ReleaseDate = 512,
 
-		ReleaseDate		= 512,
+		Status = 1024,
 
-		Status			= 1024,
-
-		WebLinks		= 2048
-
+		WebLinks = 2048
 	}
-
 }

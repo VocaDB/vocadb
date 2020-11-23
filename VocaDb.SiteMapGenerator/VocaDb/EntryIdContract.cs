@@ -1,13 +1,11 @@
 ﻿using System.Runtime.Serialization;
 
-namespace VocaDb.SiteMapGenerator.VocaDb {
-
+namespace VocaDb.SiteMapGenerator.VocaDb
+{
 	[DataContract]
-	public class EntryIdContract {
-
+	public class EntryIdContract
+	{
 		[DataMember]
 		public int Id { get; set; }
-
 	}
-
 }

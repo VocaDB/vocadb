@@ -9,31 +9,32 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
 
-namespace VocaDb.Web.Controllers.Api {
-
+namespace VocaDb.Web.Controllers.Api
+{
 	/// <summary>
 	/// API queries for entry comments.
 	/// </summary>
 	[RoutePrefix("api/comments")]
-	public class CommentApiController : ApiController {
-
+	public class CommentApiController : ApiController
+	{
 		private readonly IRepository db;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IUserPermissionContext userContext;
 		private readonly IUserIconFactory userIconFactory;
 
-		private ICommentQueries GetComments(IDatabaseContext ctx, EntryType entryType) {
-			
-			switch (entryType) {
+		private ICommentQueries GetComments(IDatabaseContext ctx, EntryType entryType)
+		{
+			switch (entryType)
+			{
 				case EntryType.ReleaseEvent:
 					return new CommentQueries<ReleaseEventComment, ReleaseEvent>(ctx, userContext, userIconFactory, entryLinkFactory);
 			}
 
 			throw new ArgumentException("Unsupported entry type: " + entryType, nameof(entryType));
-
 		}
 
-		public CommentApiController(IRepository db, IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory) {
+		public CommentApiController(IRepository db, IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory)
+		{
 			this.db = db;
 			this.userContext = userContext;
 			this.userIconFactory = userIconFactory;
@@ -85,7 +86,5 @@ namespace VocaDb.Web.Controllers.Api {
 		[Route("{entryType}-comments")]
 		[Authorize]
 		public CommentForApiContract PostNewComment(EntryType entryType, CommentForApiContract contract) => db.HandleTransaction(ctx => GetComments(ctx, entryType).Create(contract.Entry.Id, contract));
-
 	}
-
 }

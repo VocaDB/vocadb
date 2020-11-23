@@ -13,39 +13,40 @@ using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Tests.Service.Helpers {
-
+namespace VocaDb.Tests.Service.Helpers
+{
 	/// <summary>
 	/// Tests for <see cref="FollowedArtistNotifier"/>
 	/// </summary>
 	[TestClass]
-	public class FollowedArtistNotifierTests {
-
+	public class FollowedArtistNotifierTests
+	{
 		private Album album;
 		private User creator;
 		private FakeEntryLinkFactory entryLinkFactory;
 		private FakeUserMessageMailer mailer;
 		private Artist producer;
-		private FakeRepository<UserMessage> repository;  
+		private FakeRepository<UserMessage> repository;
 		private User user;
 		private Artist vocalist;
 
-		private Task CallSendNotifications(IUser creator) {
-
-			return repository.HandleTransactionAsync(ctx => {
+		private Task CallSendNotifications(IUser creator)
+		{
+			return repository.HandleTransactionAsync(ctx =>
+			{
 				return new FollowedArtistNotifier(entryLinkFactory, mailer, new EnumTranslations(), new EntrySubTypeNameFactory())
 					.SendNotificationsAsync(ctx, album, new[] { producer, vocalist }, creator);
 			});
-
 		}
 
-		private T Save<T>(T entry) where T : class, IDatabaseObject {
+		private T Save<T>(T entry) where T : class, IDatabaseObject
+		{
 			return repository.Save(entry);
 		}
 
 		[TestInitialize]
-		public void SetUp() {
-
+		public void SetUp()
+		{
 			entryLinkFactory = new FakeEntryLinkFactory();
 			repository = new FakeRepository<UserMessage>();
 			mailer = new FakeUserMessageMailer();
@@ -53,17 +54,15 @@ namespace VocaDb.Tests.Service.Helpers {
 			album = Save(new Album(new LocalizedString("New Album", ContentLanguageSelection.English)));
 			producer = Save(new Artist(TranslatedString.Create("Tripshots")) { Id = 1, ArtistType = ArtistType.Producer });
 			vocalist = Save(new Artist(TranslatedString.Create("Hatsune Miku")) { Id = 2, ArtistType = ArtistType.Vocaloid });
-			user = Save(new User("Miku", "123", string.Empty, PasswordHashAlgorithms.Default) { Id = 1});
+			user = Save(new User("Miku", "123", string.Empty, PasswordHashAlgorithms.Default) { Id = 1 });
 			creator = Save(new User("Rin", "123", string.Empty, PasswordHashAlgorithms.Default) { Id = 2 });
 
 			Save(user.AddArtist(producer));
-
 		}
 
 		[TestMethod]
-		public async Task SendNotifications() {
-			
-
+		public async Task SendNotifications()
+		{
 			await CallSendNotifications(creator);
 
 			var notification = repository.List<UserMessage>().FirstOrDefault();
@@ -71,12 +70,11 @@ namespace VocaDb.Tests.Service.Helpers {
 			Assert.IsNotNull(notification, "Notification was created");
 			Assert.AreEqual(user, notification.Receiver, "Receiver");
 			Assert.AreEqual("New album (original album) by Tripshots", notification.Subject, "Subject");
-
 		}
 
 		[TestMethod]
-		public async Task SendNotifications_Email() {
-			
+		public async Task SendNotifications_Email()
+		{
 			user.Email = "miku@vocadb.net";
 			user.AllArtists.First().EmailNotifications = true;
 
@@ -85,31 +83,28 @@ namespace VocaDb.Tests.Service.Helpers {
 			Assert.IsNotNull(mailer.Body, "Body");
 			Assert.AreEqual(user.Name, mailer.ReceiverName, "ReceiverName");
 			Assert.AreEqual("New album (original album) by Tripshots", mailer.Subject, "Subject");
-
 		}
 
 		[TestMethod]
-		public async Task SendNotifications_SameUser() {
-
+		public async Task SendNotifications_SameUser()
+		{
 			await CallSendNotifications(user);
 
 			Assert.IsFalse(repository.List<UserMessage>().Any(), "No notification created");
-
 		}
 
 		[TestMethod]
-		public async Task SendNotifications_DisabledUser() {
-
+		public async Task SendNotifications_DisabledUser()
+		{
 			user.Active = false;
 			await CallSendNotifications(creator);
 
 			Assert.IsFalse(repository.List<UserMessage>().Any(), "No notification created");
-
 		}
 
 		[TestMethod]
-		public async Task SendNotifications_MultipleFollowedArtists() {
-
+		public async Task SendNotifications_MultipleFollowedArtists()
+		{
 			Save(user.AddArtist(vocalist));
 
 			await CallSendNotifications(creator);
@@ -118,14 +113,14 @@ namespace VocaDb.Tests.Service.Helpers {
 
 			Assert.IsNotNull(notification, "Notification was created");
 			Assert.AreEqual("New album (original album)", notification.Subject, "Subject");
-
 		}
 
 		// User has too many unread notifications
-		[TestMethod]	
-		public async Task TooManyUnreadMessages() {
-
-			for (int i = 0; i < 10; ++i) {
+		[TestMethod]
+		public async Task TooManyUnreadMessages()
+		{
+			for (int i = 0; i < 10; ++i)
+			{
 				user.ReceivedMessages.Add(repository.Save(new UserMessage(user, "New message!", i.ToString(), false)));
 			}
 
@@ -133,15 +128,15 @@ namespace VocaDb.Tests.Service.Helpers {
 
 			Assert.AreEqual(10, repository.List<UserMessage>().Count, "No notification created");
 			Assert.IsTrue(repository.List<UserMessage>().All(m => m.Subject == "New message!"), "No notification created");
-
 		}
 
 		// Too many messages limit only counts notifications
 		[TestMethod]
-		public async Task OnlyCountNotifications() {
-
+		public async Task OnlyCountNotifications()
+		{
 			// Not counted since the messages are not notifications
-			for (int i = 0; i < 5; ++i) {
+			for (int i = 0; i < 5; ++i)
+			{
 				user.ReceivedMessages.Add(repository.Save(UserMessage.CreateReceived(creator, user, "New message!", i.ToString(), false)));
 				user.ReceivedMessages.Add(repository.Save(UserMessage.CreateSent(creator, user, "New message!", i.ToString(), false)));
 			}
@@ -156,9 +151,6 @@ namespace VocaDb.Tests.Service.Helpers {
 
 			Assert.IsNotNull(notification, "Notification was created");
 			Assert.AreEqual(user, notification.Receiver, "Receiver");
-
 		}
-
 	}
-
 }

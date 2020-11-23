@@ -1,12 +1,12 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain;
 
-namespace VocaDb.Model.Mapping {
-
-	public class TrashedEntryMap : ClassMap<TrashedEntry> {
-
-		public TrashedEntryMap() {
-
+namespace VocaDb.Model.Mapping
+{
+	public class TrashedEntryMap : ClassMap<TrashedEntry>
+	{
+		public TrashedEntryMap()
+		{
 			Cache.ReadWrite();
 			Table("TrashedEntries");
 			Id(m => m.Id);
@@ -19,9 +19,6 @@ namespace VocaDb.Model.Mapping {
 			Map(m => m.Notes).Not.Nullable().Length(200);
 
 			References(m => m.User).Not.Nullable();
-
 		}
-
 	}
-
 }

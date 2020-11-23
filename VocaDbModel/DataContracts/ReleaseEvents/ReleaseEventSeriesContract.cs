@@ -5,24 +5,25 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 
-namespace VocaDb.Model.DataContracts.ReleaseEvents {
-
+namespace VocaDb.Model.DataContracts.ReleaseEvents
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class ReleaseEventSeriesContract : IEntryImageInformation, IEntryWithIntId, IEntryWithStatus {
-
-		string IEntryBase.DefaultName => Name;		
+	public class ReleaseEventSeriesContract : IEntryImageInformation, IEntryWithIntId, IEntryWithStatus
+	{
+		string IEntryBase.DefaultName => Name;
 		EntryType IEntryBase.EntryType => EntryType.ReleaseEventSeries;
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEventSeries;
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 		string IEntryImageInformation.Mime => PictureMime;
 
-		public ReleaseEventSeriesContract() {
+		public ReleaseEventSeriesContract()
+		{
 			Description = string.Empty;
 		}
 
 		public ReleaseEventSeriesContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference, bool includeLinks = false)
-			: this() {
-
+			: this()
+		{
 			ParamIs.NotNull(() => series);
 
 			AdditionalNames = series.Names.GetAdditionalNamesStringForLanguage(languagePreference);
@@ -36,10 +37,10 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 			UrlSlug = series.UrlSlug;
 			Version = series.Version;
 
-			if (includeLinks) {
+			if (includeLinks)
+			{
 				WebLinks = series.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 			}
-
 		}
 
 		[DataMember]
@@ -75,10 +76,9 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents {
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("release event series {0} [{1}]", Name, Id);
 		}
-
 	}
-
 }

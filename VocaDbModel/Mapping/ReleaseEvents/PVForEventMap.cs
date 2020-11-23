@@ -1,12 +1,12 @@
 ﻿using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.ReleaseEvents;
 
-namespace VocaDb.Model.Mapping.ReleaseEvents {
-
-	public class PVForEventMap : ClassMap<PVForEvent> {
-
-		public PVForEventMap() {
-
+namespace VocaDb.Model.Mapping.ReleaseEvents
+{
+	public class PVForEventMap : ClassMap<PVForEvent>
+	{
+		public PVForEventMap()
+		{
 			Table("PVsForEvents");
 			Id(m => m.Id);
 
@@ -19,12 +19,10 @@ namespace VocaDb.Model.Mapping.ReleaseEvents {
 
 			References(m => m.Entry).Column("[Event]").Not.Nullable();
 
-			Component(m => m.ExtendedMetadata, c => {
+			Component(m => m.ExtendedMetadata, c =>
+			{
 				c.Map(m => m.Json, "ExtendedMetadataJson").Nullable();
 			});
-
 		}
-
 	}
-
 }

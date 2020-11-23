@@ -5,15 +5,16 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Model.Service.QueryableExtenders {
-
-	public static class SongInListQueryableExtender {
-
-		private static Expression<Func<SongInList, bool>> GetNotesExpression(SearchTextQuery textQuery) {
-
+namespace VocaDb.Model.Service.QueryableExtenders
+{
+	public static class SongInListQueryableExtender
+	{
+		private static Expression<Func<SongInList, bool>> GetNotesExpression(SearchTextQuery textQuery)
+		{
 			var query = textQuery.Query;
 
-			switch (textQuery.MatchMode) {
+			switch (textQuery.MatchMode)
+			{
 				case NameMatchMode.Exact:
 					return s => s.Notes != null && s.Notes == query;
 				case NameMatchMode.Partial:
@@ -26,37 +27,34 @@ namespace VocaDb.Model.Service.QueryableExtenders {
 			}
 
 			return m => true;
-
 		}
 
-		public static IQueryable<SongInList> OrderBy(this IQueryable<SongInList> query, SongSortRule? sortRule, ContentLanguagePreference languagePreference) {
-
+		public static IQueryable<SongInList> OrderBy(this IQueryable<SongInList> query, SongSortRule? sortRule, ContentLanguagePreference languagePreference)
+		{
 			if (sortRule == null)
 				return query.OrderBy(s => s.Order);
 
 			return SongLinkQueryableExtender.OrderBy(query, sortRule.Value, languagePreference);
-
 		}
 
-		public static IQueryable<SongList> WhereHasTags(this IQueryable<SongList> query, int[] tagId, bool childTags = false) {
+		public static IQueryable<SongList> WhereHasTags(this IQueryable<SongList> query, int[] tagId, bool childTags = false)
+		{
 			return query.WhereHasTags<SongList, SongListTagUsage>(tagId, childTags);
 		}
 
-		public static IQueryable<SongInList> WhereSongHasName(this IQueryable<SongInList> query, SearchTextQuery textQuery, bool includeDescription) {
-
+		public static IQueryable<SongInList> WhereSongHasName(this IQueryable<SongInList> query, SearchTextQuery textQuery, bool includeDescription)
+		{
 			if (textQuery.IsEmpty)
 				return query;
 
 			var expression = SongLinkQueryableExtender.GetChildHasNameExpression<SongInList>(textQuery);
 
-			if (includeDescription) {
+			if (includeDescription)
+			{
 				expression = expression.Or(GetNotesExpression(textQuery));
 			}
 
 			return query.Where(expression);
-
 		}
-
 	}
-
 }

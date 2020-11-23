@@ -1,7 +1,7 @@
-namespace VocaDb.Model.Domain.Images {
-
-	public interface IEntryImageUrlFactory {
-
+namespace VocaDb.Model.Domain.Images
+{
+	public interface IEntryImageUrlFactory
+	{
 		/// <summary>
 		/// Gets an absolute URL for internal and external access to an image.
 		/// </summary>
@@ -22,21 +22,19 @@ namespace VocaDb.Model.Domain.Images {
 		bool HasImage(IEntryImageInformation picture, ImageSize size);
 
 		bool IsSupported(IEntryImageInformation picture, ImageSize size);
-
 	}
 
 	/// <summary>
 	/// Extensions to <see cref="IEntryImageUrlFactory"/>.
 	/// </summary>
-	public static class IEntryImageUrlFactoryExtender {
-
-		public static VocaDbUrl GetUrlWithFallback(this IEntryImageUrlFactory urlFactory, IEntryImageInformation imageInfo, ImageSize size, VocaDbUrl fallbackUrl) {
-
+	public static class IEntryImageUrlFactoryExtender
+	{
+		public static VocaDbUrl GetUrlWithFallback(this IEntryImageUrlFactory urlFactory, IEntryImageInformation imageInfo, ImageSize size, VocaDbUrl fallbackUrl)
+		{
 			if (imageInfo == null || !imageInfo.ShouldExist() || !urlFactory.HasImage(imageInfo, size))
 				return fallbackUrl;
 
 			return urlFactory.GetUrl(imageInfo, size);
-
 		}
 
 		/// <summary>
@@ -50,19 +48,17 @@ namespace VocaDb.Model.Domain.Images {
 		/// URL to image, if image exists or <paramref name="checkExists"/> is false. 
 		/// If <paramref name="checkExists"/> is true and image does not exist, this will be <see cref="VocaDbUrl.Empty"/>.
 		/// </returns>
-		public static VocaDbUrl GetUrl(this IEntryImageUrlFactory persister, IEntryImageInformation picture, ImageSize size, bool checkExists) {
-
+		public static VocaDbUrl GetUrl(this IEntryImageUrlFactory persister, IEntryImageInformation picture, ImageSize size, bool checkExists)
+		{
 			if (checkExists && !persister.HasImage(picture, size))
 				return VocaDbUrl.Empty;
 
 			return persister.GetUrl(picture, size);
-
 		}
 
-		public static string GetUrlAbsolute(this IEntryImageUrlFactory persister, IEntryImageInformation picture, ImageSize size, bool checkExists = false) {
+		public static string GetUrlAbsolute(this IEntryImageUrlFactory persister, IEntryImageInformation picture, ImageSize size, bool checkExists = false)
+		{
 			return persister.GetUrl(picture, size, checkExists).ToAbsolute().Url;
 		}
-
 	}
-
 }

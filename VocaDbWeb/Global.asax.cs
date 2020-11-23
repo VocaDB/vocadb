@@ -17,31 +17,32 @@ using VocaDb.Web.Code;
 using VocaDb.Web.Code.Filters;
 using VocaDb.Model.Domain.Web;
 
-namespace VocaDb.Web {
-
-	public class MvcApplication : HttpApplication {
-
+namespace VocaDb.Web
+{
+	public class MvcApplication : HttpApplication
+	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private static UserService UserService => DependencyResolver.Current.GetService<UserService>();
 
-		public static bool IsAjaxRequest(HttpRequest request) {
-
+		public static bool IsAjaxRequest(HttpRequest request)
+		{
 			ParamIs.NotNull(() => request);
 
 			return (request["X-Requested-With"] == "XMLHttpRequest" || request.Headers["X-Requested-With"] == "XMLHttpRequest");
-
 		}
 
 		public static LoginManager LoginManager => new LoginManager(new AspNetHttpContext(HttpContext.Current));
 
-		protected void Application_AuthenticateRequest(object sender, EventArgs e) {
-
-			try {
-
+		protected void Application_AuthenticateRequest(object sender, EventArgs e)
+		{
+			try
+			{
 				// Get user roles from cookie and assign correct principal
-				if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated) {
-					if (HttpContext.Current.User.Identity is FormsIdentity && !(HttpContext.Current.User is VocaDbPrincipal)) {
+				if (HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+				{
+					if (HttpContext.Current.User.Identity is FormsIdentity && !(HttpContext.Current.User is VocaDbPrincipal))
+					{
 						var id = (FormsIdentity)HttpContext.Current.User.Identity;
 						var user = UserService.GetUserByName(id.Name, IsAjaxRequest(Request));
 						if (user != null)
@@ -50,18 +51,20 @@ namespace VocaDb.Web {
 				}
 
 				LoginManager.InitLanguage();
-
-			} catch (HttpRequestValidationException x) {
+			}
+			catch (HttpRequestValidationException x)
+			{
 				ErrorLogger.LogMessage(Request, x.Message, LogLevel.Warn);
-			} catch (Exception x) {
+			}
+			catch (Exception x)
+			{
 				// TODO: this should be processed using normal exception handling.
 				ErrorLogger.LogException(Request, x, LogLevel.Fatal);
 			}
-
 		}
 
-		private void HandleHttpError(int code, string description = null, string msg = null) {
-
+		private void HandleHttpError(int code, string description = null, string msg = null)
+		{
 			// Log error here to get request info.
 			ErrorLogger.LogHttpError(Request, code, msg);
 
@@ -73,30 +76,32 @@ namespace VocaDb.Web {
 
 			Response.RedirectToRoute("Default",
 				new { controller = "Error", action = "Index", code, redirect = true });
-
 		}
 
-		protected void Application_Error(object sender, EventArgs e) {
-
+		protected void Application_Error(object sender, EventArgs e)
+		{
 			var ex = HttpContext.Current.Server.GetLastError();
 
 			if (ex == null)
 				return;
 
-			if (ex is OperationCanceledException) {
+			if (ex is OperationCanceledException)
+			{
 				// This is a bug in Web API 5.1 (http://aspnetwebstack.codeplex.com/workitem/1797) and can be ignored.
 				Server.ClearError();
 				return;
 			}
 
 			// NHibernate missing entity exceptions. Usually caused by an invalid or deleted Id. This error has been logged already.
-			if (ex is ObjectNotFoundException || ex is EntityNotFoundException) {
+			if (ex is ObjectNotFoundException || ex is EntityNotFoundException)
+			{
 				HandleHttpError(ErrorLogger.Code_NotFound, "Entity not found");
 				return;
 			}
 
 			// Insufficient privileges. This error has been logged already.
-			if (ex is NotAllowedException) {
+			if (ex is NotAllowedException)
+			{
 				HandleHttpError(ErrorLogger.Code_Forbidden, ex.Message);
 				return;
 			}
@@ -104,15 +109,19 @@ namespace VocaDb.Web {
 			// Not found (usually by the controller). We get these a lot.
 			var httpException = ex as HttpException;
 			var code = (httpException != null ? httpException.GetHttpCode() : 0);
-			if (code == ErrorLogger.Code_NotFound || code == ErrorLogger.Code_BadRequest) {
+			if (code == ErrorLogger.Code_NotFound || code == ErrorLogger.Code_BadRequest)
+			{
 				// Getting a lot of these >_>
-				if (ex.Message != "A potentially dangerous Request.Path value was detected from the client (?).") {
+				if (ex.Message != "A potentially dangerous Request.Path value was detected from the client (?).")
+				{
 					HandleHttpError(code, null, ex.Message);
-				} else {
-					Server.ClearError();
-					Response.StatusCode = code;		
 				}
-				return;					
+				else
+				{
+					Server.ClearError();
+					Response.StatusCode = code;
+				}
+				return;
 			}
 
 			// Generic NHibernate exception. This error has been logged already.
@@ -126,12 +135,13 @@ namespace VocaDb.Web {
 #endif
 		}
 
-		public static void RegisterGlobalFilters(GlobalFilterCollection filters) {
+		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+		{
 			filters.Add(new DisableWapFilter());
 		}
 
-		protected void Application_Start() {
-
+		protected void Application_Start()
+		{
 			log.Info("Web application starting.");
 
 			MvcHandler.DisableMvcResponseHeader = true;
@@ -146,7 +156,6 @@ namespace VocaDb.Web {
 			GlobalServerPathMapper.Configure(() => new AspNetHttpContext(HttpContext.Current));
 
 			log.Debug("Web application started successfully.");
-
 		}
 	}
 }

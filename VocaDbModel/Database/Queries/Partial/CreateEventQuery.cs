@@ -10,10 +10,10 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Search;
 
-namespace VocaDb.Model.Database.Queries.Partial {
-
-	public class CreateEventQuery {
-
+namespace VocaDb.Model.Database.Queries.Partial
+{
+	public class CreateEventQuery
+	{
 		/// <summary>
 		/// Returns a release event if it can be uniquely identified (by either name or ID).
 		/// Otherwise attempts to create a new event based on given name.
@@ -25,8 +25,8 @@ namespace VocaDb.Model.Database.Queries.Partial {
 		/// <param name="contract">Release event data.</param>
 		/// <param name="forEntry">Which entry the release event will be created for. Optional, can be null.</param>
 		/// <returns>The release event. Can be null if no name or ID is specified. Returned event can be either a new event or existing event.</returns>
-		public ReleaseEvent FindOrCreate(IDatabaseContext ctx, IUserPermissionContext userContext, IReleaseEvent contract, IEntryBase forEntry) {
-
+		public ReleaseEvent FindOrCreate(IDatabaseContext ctx, IUserPermissionContext userContext, IReleaseEvent contract, IEntryBase forEntry)
+		{
 			if (contract == null || (contract.Id == 0 && string.IsNullOrWhiteSpace(contract.Name)))
 				return null;
 
@@ -45,12 +45,15 @@ namespace VocaDb.Model.Database.Queries.Partial {
 			ReleaseEvent newEvent;
 			LocalizedStringContract[] names;
 
-			if (series == null) {
+			if (series == null)
+			{
 				var nameValue = searchResult.EventName.EmptyToNull() ?? contract.Name;
 				var name = new LocalizedStringContract(nameValue, ContentLanguageSelection.English);
 				names = new[] { name };
 				newEvent = new ReleaseEvent(string.Empty, null, ContentLanguageSelection.English);
-			} else {
+			}
+			else
+			{
 				names = new LocalizedStringContract[0];
 				newEvent = new ReleaseEvent(string.Empty, null, series, searchResult.SeriesNumber, searchResult.SeriesSuffix, ContentLanguageSelection.Unspecified, false);
 			}
@@ -64,9 +67,6 @@ namespace VocaDb.Model.Database.Queries.Partial {
 			ctx.Save(archivedVersion);
 
 			return newEvent;
-
 		}
-
 	}
-
 }

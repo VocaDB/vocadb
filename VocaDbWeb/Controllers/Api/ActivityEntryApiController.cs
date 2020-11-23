@@ -7,18 +7,19 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
 
-namespace VocaDb.Web.Controllers.Api {
-
+namespace VocaDb.Web.Controllers.Api
+{
 	/// <summary>
 	/// API queries for activity feed.
 	/// </summary>
 	[RoutePrefix("api/activityEntries")]
-	public class ActivityEntryApiController : ApiController {
-
+	public class ActivityEntryApiController : ApiController
+	{
 		private const int defaultMax = 50;
 		private readonly ActivityEntryQueries queries;
 
-		public ActivityEntryApiController(ActivityEntryQueries queries) {
+		public ActivityEntryApiController(ActivityEntryQueries queries)
+		{
 			this.queries = queries;
 		}
 
@@ -50,7 +51,5 @@ namespace VocaDb.Web.Controllers.Api {
 			ActivityEntryOptionalFields fields = ActivityEntryOptionalFields.None,
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetList(before, since, userId, editEvent, maxResults, getTotalCount, fields, entryFields, lang);
-
 	}
-
 }

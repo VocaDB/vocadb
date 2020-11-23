@@ -1,8 +1,8 @@
 ﻿
-namespace VocaDb.Model.Domain.Artists {
-
-	public enum ArtistArchiveReason {
-
+namespace VocaDb.Model.Domain.Artists
+{
+	public enum ArtistArchiveReason
+	{
 		Unknown,
 
 		Created,
@@ -16,7 +16,5 @@ namespace VocaDb.Model.Domain.Artists {
 		Deleted,
 
 		Restored
-
 	}
-
 }

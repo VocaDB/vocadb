@@ -12,20 +12,20 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
-
+namespace VocaDb.Model.DataContracts.Songs
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class SongForApiContract : IEntryBase {
-
+	public class SongForApiContract : IEntryBase
+	{
 		EntryType IEntryBase.EntryType => EntryType.Song;
 
 		public SongForApiContract() { }
 
 		public SongForApiContract(Song song, ContentLanguagePreference languagePreference, SongOptionalFields fields)
-			: this(song, null, languagePreference, fields) {}
+			: this(song, null, languagePreference, fields) { }
 
-		public SongForApiContract(Song song, SongMergeRecord mergeRecord, ContentLanguagePreference languagePreference, SongOptionalFields fields) {
-			
+		public SongForApiContract(Song song, SongMergeRecord mergeRecord, ContentLanguagePreference languagePreference, SongOptionalFields fields)
+		{
 			ArtistString = song.ArtistString[languagePreference];
 			CreateDate = song.CreateDate;
 			DefaultName = song.DefaultName;
@@ -42,7 +42,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 			Status = song.Status;
 			Version = song.Version;
 
-			if (fields.HasFlag(SongOptionalFields.AdditionalNames)) {
+			if (fields.HasFlag(SongOptionalFields.AdditionalNames))
+			{
 				AdditionalNames = song.Names.GetAdditionalNamesStringForLanguage(languagePreference);
 			}
 
@@ -55,14 +56,14 @@ namespace VocaDb.Model.DataContracts.Songs {
 			if (fields.HasFlag(SongOptionalFields.Lyrics))
 				Lyrics = song.Lyrics.Select(l => new LyricsForSongContract(l)).ToArray();
 
-			if (fields.HasFlag(SongOptionalFields.MainPicture)) {
-
+			if (fields.HasFlag(SongOptionalFields.MainPicture))
+			{
 				var thumb = song.GetThumbUrl();
 
-				if (!string.IsNullOrEmpty(thumb)) {
+				if (!string.IsNullOrEmpty(thumb))
+				{
 					MainPicture = new EntryThumbForApiContract { UrlThumb = thumb };
 				}
-
 			}
 
 			if (fields.HasFlag(SongOptionalFields.Names))
@@ -74,7 +75,8 @@ namespace VocaDb.Model.DataContracts.Songs {
 			if (fields.HasFlag(SongOptionalFields.PVs))
 				PVs = song.PVs.Select(p => new PVContract(p)).ToArray();
 
-			if (fields.HasFlag(SongOptionalFields.ReleaseEvent) && song.ReleaseEvent != null) {
+			if (fields.HasFlag(SongOptionalFields.ReleaseEvent) && song.ReleaseEvent != null)
+			{
 				ReleaseEvent = new ReleaseEventForApiContract(song.ReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, null);
 			}
 
@@ -89,15 +91,13 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
-
-
 		}
 
 		/// <summary>
 		/// Comma-separated list of all other names that aren't the display name.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public string AdditionalNames { get; set;}
+		public string AdditionalNames { get; set; }
 
 		/// <summary>
 		/// List of albums this song appears on. Optional field.
@@ -243,12 +243,11 @@ namespace VocaDb.Model.DataContracts.Songs {
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public WebLinkForApiContract[] WebLinks { get; set; }
-
 	}
 
 	[Flags]
-	public enum SongOptionalFields {
-
+	public enum SongOptionalFields
+	{
 		None = 0,
 		AdditionalNames = 1,
 		Albums = 2,
@@ -261,7 +260,5 @@ namespace VocaDb.Model.DataContracts.Songs {
 		Tags = 256,
 		ThumbUrl = 512,
 		WebLinks = 1024
-
 	}
-
 }

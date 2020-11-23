@@ -2,10 +2,10 @@ using System;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.DataContracts.Songs;
 
-namespace VocaDb.Model.Domain.Songs {
-
-	public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject {
-
+namespace VocaDb.Model.Domain.Songs
+{
+	public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject
+	{
 		private OptionalCultureCode cultureCode;
 		private string notes;
 		private Song song;
@@ -13,47 +13,54 @@ namespace VocaDb.Model.Domain.Songs {
 		private string value;
 		private string url;
 
-		public LyricsForSong() {}
+		public LyricsForSong() { }
 
-		public LyricsForSong(Song song, string val, string source, string url, TranslationType translationType, string cultureCode) {
-
+		public LyricsForSong(Song song, string val, string source, string url, TranslationType translationType, string cultureCode)
+		{
 			Song = song;
 			Source = source;
 			URL = url;
 			TranslationType = translationType;
 			CultureCode = new OptionalCultureCode(cultureCode);
 			Value = val;
-
 		}
 
-		public virtual OptionalCultureCode CultureCode {
+		public virtual OptionalCultureCode CultureCode
+		{
 			get { return cultureCode ?? (cultureCode = OptionalCultureCode.Empty); }
-			set {
+			set
+			{
 				cultureCode = value ?? OptionalCultureCode.Empty;
 			}
 		}
 
 		public virtual int Id { get; protected set; }
 
-		public virtual string Notes {
+		public virtual string Notes
+		{
 			get { return notes; }
-			set {
-				ParamIs.NotNull(() => value);				
+			set
+			{
+				ParamIs.NotNull(() => value);
 				notes = value;
 			}
 		}
 
-		public virtual Song Song {
+		public virtual Song Song
+		{
 			get { return song; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				song = value;
 			}
 		}
 
-		public virtual string Source {
+		public virtual string Source
+		{
 			get { return source; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				source = value;
 			}
@@ -61,37 +68,40 @@ namespace VocaDb.Model.Domain.Songs {
 
 		public virtual TranslationType TranslationType { get; set; }
 
-		public virtual string URL {
+		public virtual string URL
+		{
 			get { return url; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				url = value;
 			}
 		}
 
-		public virtual string Value {
+		public virtual string Value
+		{
 			get { return value; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				this.value = value;
 			}
 		}
 
-		public virtual bool ContentEquals(LyricsForSongContract contract) {
-
+		public virtual bool ContentEquals(LyricsForSongContract contract)
+		{
 			if (contract == null)
 				return false;
 
-			return (TranslationType == contract.TranslationType 
-				&& CultureCode.CultureCode == contract.CultureCode 
+			return (TranslationType == contract.TranslationType
+				&& CultureCode.CultureCode == contract.CultureCode
 				&& Source == contract.Source
-				&& URL == contract.URL 
+				&& URL == contract.URL
 				&& Value == contract.Value);
-
 		}
 
-		public virtual bool Equals(LyricsForSong another) {
-
+		public virtual bool Equals(LyricsForSong another)
+		{
 			if (another == null)
 				return false;
 
@@ -102,17 +112,16 @@ namespace VocaDb.Model.Domain.Songs {
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as LyricsForSong);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return Id.GetHashCode();
 		}
-
 	}
-
 }

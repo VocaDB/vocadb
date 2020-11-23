@@ -3,14 +3,15 @@ using System.Web.Mvc;
 using VocaDb.Model;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Web.Code {
-
+namespace VocaDb.Web.Code
+{
 	/// <summary>
 	/// JSON result using the JSON.net library instead of standard .NET.
 	/// </summary>
-	public class JsonNetResult : JsonResult {
-
-		public JsonNetResult() {
+	public class JsonNetResult : JsonResult
+	{
+		public JsonNetResult()
+		{
 			LowercaseNames = true;
 		}
 
@@ -18,8 +19,8 @@ namespace VocaDb.Web.Code {
 		/// (as opposed to the standard behavior of keeping a capital letter).
 		public bool LowercaseNames { get; set; }
 
-		public override void ExecuteResult(ControllerContext context) {
-
+		public override void ExecuteResult(ControllerContext context)
+		{
 			ParamIs.NotNull(() => context);
 
 			if (context.HttpContext == null || context.HttpContext.Request == null)
@@ -28,18 +29,16 @@ namespace VocaDb.Web.Code {
 			var response = context.HttpContext.Response;
 
 			response.ContentType = !String.IsNullOrEmpty(ContentType) ? ContentType : "application/json";
-			if (ContentEncoding != null) {
+			if (ContentEncoding != null)
+			{
 				response.ContentEncoding = ContentEncoding;
 			}
 
-			if (Data != null) {
-
+			if (Data != null)
+			{
 				var json = JsonHelpers.Serialize(Data, LowercaseNames);
 				response.Write(json);
-
 			}
-
 		}
 	}
-
 }

@@ -2,30 +2,31 @@
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.Artists {
-
-	public class ArtistReport : GenericEntryReport<Artist, ArtistReportType> {
-
-        public static readonly HashSet<ArtistReportType> ReportTypesWithRequiredNotes = 
-            new HashSet<ArtistReportType>{ ArtistReportType.InvalidInfo, ArtistReportType.Other };
+namespace VocaDb.Model.Domain.Artists
+{
+	public class ArtistReport : GenericEntryReport<Artist, ArtistReportType>
+	{
+		public static readonly HashSet<ArtistReportType> ReportTypesWithRequiredNotes =
+			new HashSet<ArtistReportType> { ArtistReportType.InvalidInfo, ArtistReportType.Other };
 
 		public ArtistReport() { }
 
 		public ArtistReport(Artist artist, ArtistReportType reportType, User user, string hostname, string notes, int? versionNumber)
-			: base(artist, reportType, user, hostname, notes, versionNumber) {}
+			: base(artist, reportType, user, hostname, notes, versionNumber) { }
 
-		public virtual ArchivedArtistVersion Version {
-			get {
+		public virtual ArchivedArtistVersion Version
+		{
+			get
+			{
 				return VersionNumber.HasValue ? Entry.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
 			}
 		}
 
 		public override ArchivedObjectVersion VersionBase => Version;
-
 	}
 
-	public enum ArtistReportType {
-
+	public enum ArtistReportType
+	{
 		InvalidInfo = 1,
 
 		Duplicate = 2,
@@ -35,7 +36,5 @@ namespace VocaDb.Model.Domain.Artists {
 		OwnershipClaim = 4,
 
 		Other = 5
-
 	}
-
 }

@@ -5,18 +5,19 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
 
-namespace VocaDb.Model.DataContracts.Tags {
-
+namespace VocaDb.Model.DataContracts.Tags
+{
 	[DataContract]
-	public class TagForEditContract : TagContract {
-
-		public TagForEditContract() {
+	public class TagForEditContract : TagContract
+	{
+		public TagForEditContract()
+		{
 			UpdateNotes = string.Empty;
 		}
 
 		public TagForEditContract(Tag tag, bool isEmpty, IUserPermissionContext userContext)
-			: base(tag, userContext.LanguagePreference) {
-
+			: base(tag, userContext.LanguagePreference)
+		{
 			CanDelete = EntryPermissionManager.CanDelete(userContext, tag);
 			DefaultNameLanguage = tag.TranslatedName.DefaultLanguage;
 			Description = new EnglishTranslatedStringContract(tag.Description);
@@ -26,7 +27,6 @@ namespace VocaDb.Model.DataContracts.Tags {
 			Thumb = (tag.Thumb != null ? new EntryThumbContract(tag.Thumb) : null);
 			UpdateNotes = string.Empty;
 			WebLinks = tag.WebLinks.Links.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
-
 		}
 
 		[DataMember]
@@ -55,6 +55,5 @@ namespace VocaDb.Model.DataContracts.Tags {
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }
-
 	}
 }

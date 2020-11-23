@@ -1,12 +1,12 @@
 ﻿using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.Artists {
-
-	public class ArtistDiff : EntryDiff<ArtistEditableFields> {
-
+namespace VocaDb.Model.Domain.Artists
+{
+	public class ArtistDiff : EntryDiff<ArtistEditableFields>
+	{
 		public ArtistDiff() : this(true) { }
 
-		public ArtistDiff(bool isSnapshot) : base(isSnapshot) {}
+		public ArtistDiff(bool isSnapshot) : base(isSnapshot) { }
 
 		public EnumFieldAccessor<ArtistEditableFields> Albums => Field(ArtistEditableFields.Albums);
 		public EnumFieldAccessor<ArtistEditableFields> ArtistType => Field(ArtistEditableFields.ArtistType);
@@ -27,12 +27,9 @@ namespace VocaDb.Model.Domain.Artists {
 		public virtual bool IncludeWebLinks => IsSnapshot || WebLinks.IsChanged;
 		public bool IncludePicture => Picture.IsChanged;
 
-		public override bool IsIncluded(ArtistEditableFields field) {
-
+		public override bool IsIncluded(ArtistEditableFields field)
+		{
 			return (field != ArtistEditableFields.Picture ? base.IsIncluded(field) : IncludePicture);
-
 		}
-
 	}
-
 }

@@ -8,29 +8,28 @@ using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.QueryableExtenders;
 
-namespace VocaDb.Model.Service.Queries {
-
-	public class RelatedSongsQuery {
-
+namespace VocaDb.Model.Service.Queries
+{
+	public class RelatedSongsQuery
+	{
 		private readonly IDatabaseContext<Song> ctx;
 
-		private Artist[] GetMainArtists(Song song, IList<IArtistLinkWithRoles> creditableArtists) {
-
+		private Artist[] GetMainArtists(Song song, IList<IArtistLinkWithRoles> creditableArtists)
+		{
 			return ArtistHelper.GetProducers(creditableArtists, SongHelper.GetContentFocus(song.SongType)).Select(a => a.Artist).ToArray();
-
 		}
 
-		public RelatedSongsQuery(IDatabaseContext<Song> ctx) {
-
+		public RelatedSongsQuery(IDatabaseContext<Song> ctx)
+		{
 			ParamIs.NotNull(() => ctx);
 
 			this.ctx = ctx;
-
 		}
 
-		public int[] GetLikeMatches(Song song, IList<int> ignoreIds, int count) {
-
-			if (song.RatingScore <= 0) {
+		public int[] GetLikeMatches(Song song, IList<int> ignoreIds, int count)
+		{
+			if (song.RatingScore <= 0)
+			{
 				return new int[0];
 			}
 
@@ -48,7 +47,8 @@ namespace VocaDb.Model.Service.Queries {
 					&& !ignoreIds.Contains(f.Song.Id)
 					&& !f.Song.Deleted)
 				.GroupBy(f => f.Song.Id)
-				.Select(f => new {
+				.Select(f => new
+				{
 					SongId = f.Key,
 					Ratings = f.Sum(r => (int)r.Rating),
 					SongScore = f.Sum(r => r.Song.RatingScore)
@@ -58,25 +58,24 @@ namespace VocaDb.Model.Service.Queries {
 				.Select(s => s.SongId)
 				.Take(count)
 				.ToArray();
-
 		}
 
-		public RelatedSongs GetRelatedSongs(Song song, SongRelationsFields fields = SongRelationsFields.All, int count = 12) {
-
+		public RelatedSongs GetRelatedSongs(Song song, SongRelationsFields fields = SongRelationsFields.All, int count = 12)
+		{
 			ParamIs.NotNull(() => song);
 
 			var songs = new RelatedSongs();
 			var songId = song.Id;
 			var loadedSongs = new List<int>(count * 2) { songId };
 
-			if (fields.HasFlag(SongRelationsFields.ArtistMatches)) {
-
+			if (fields.HasFlag(SongRelationsFields.ArtistMatches))
+			{
 				var creditableArtists = song.Artists.Where(a => a.Artist != null && !a.IsSupport).ToArray();
 
 				var mainArtists = GetMainArtists(song, creditableArtists);
 
-				if (mainArtists != null && mainArtists.Any()) {
-
+				if (mainArtists != null && mainArtists.Any())
+				{
 					var mainArtistIds = mainArtists.Select(a => a.Id).ToArray();
 					var songsByMainArtists = ctx.Query()
 						.Where(s =>
@@ -91,22 +90,19 @@ namespace VocaDb.Model.Service.Queries {
 
 					songs.ArtistMatches = songsByMainArtists;
 					loadedSongs.AddRange(songsByMainArtists.Select(s => s.Id));
-
 				}
-
 			}
 
-			if (fields.HasFlag(SongRelationsFields.LikeMatches) && song.RatingScore > 0) {
-
+			if (fields.HasFlag(SongRelationsFields.LikeMatches) && song.RatingScore > 0)
+			{
 				var likeMatches = GetLikeMatches(song, loadedSongs, count);
 
 				songs.LikeMatches = ctx.Query().Where(s => likeMatches.Contains(s.Id)).ToArray();
 				loadedSongs.AddRange(likeMatches);
-
 			}
 
-			if (fields.HasFlag(SongRelationsFields.TagMatches) && song.Tags.Tags.Any()) {
-
+			if (fields.HasFlag(SongRelationsFields.TagMatches) && song.Tags.Tags.Any())
+			{
 				// Take top 5 tags
 				var tagIds = song.Tags.Usages
 					.OrderByDescending(u => u.Count)
@@ -115,28 +111,26 @@ namespace VocaDb.Model.Service.Queries {
 					.ToArray();
 
 				var songsWithTags =
-					ctx.Query().Where(s => 
+					ctx.Query().Where(s =>
 						s.Id != songId
-						&& !loadedSongs.Contains(s.Id) 
-						&& !s.Deleted 
+						&& !loadedSongs.Contains(s.Id)
+						&& !s.Deleted
 						&& s.Tags.Usages.Any(t => tagIds.Contains(t.Tag.Id)))
 					.OrderBy(SongSortRule.RatingScore)
 					.Take(count)
 					.ToArray();
 
 				songs.TagMatches = songsWithTags;
-
 			}
 
 			return songs;
-
 		}
-
 	}
 
-	public class RelatedSongs {
-
-		public RelatedSongs() {
+	public class RelatedSongs
+	{
+		public RelatedSongs()
+		{
 			ArtistMatches = new Song[0];
 			LikeMatches = new Song[0];
 			TagMatches = new Song[0];
@@ -147,16 +141,15 @@ namespace VocaDb.Model.Service.Queries {
 		public Song[] LikeMatches { get; set; }
 
 		public Song[] TagMatches { get; set; }
-
 	}
 
 	[Flags]
-	public enum SongRelationsFields {
+	public enum SongRelationsFields
+	{
 		None = 0,
 		ArtistMatches = 1,
 		LikeMatches = 2,
 		TagMatches = 4,
 		All = ArtistMatches | LikeMatches | TagMatches
 	}
-
 }

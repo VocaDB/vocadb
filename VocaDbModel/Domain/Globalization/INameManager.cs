@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using VocaDb.Model.DataContracts;
 
-namespace VocaDb.Model.Domain.Globalization {
-
-	public interface INameManager {
-
+namespace VocaDb.Model.Domain.Globalization
+{
+	public interface INameManager
+	{
 		/// <summary>
 		/// List of all name values.
 		/// This list includes translated sort name as well as aliases, 
@@ -71,13 +71,10 @@ namespace VocaDb.Model.Domain.Globalization {
 		/// <param name="language">Language selection.</param>
 		/// <returns>True if a name exists for the language selection.</returns>
 		bool HasNameForLanguage(ContentLanguageSelection language);
-
 	}
 
-	public interface INameManager<TName> : INameManager where TName : LocalizedStringWithId {
-
+	public interface INameManager<TName> : INameManager where TName : LocalizedStringWithId
+	{
 		IList<TName> Names { get; }
-
 	}
-
 }

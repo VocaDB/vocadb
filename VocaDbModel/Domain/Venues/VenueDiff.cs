@@ -1,9 +1,9 @@
 using VocaDb.Model.Domain.Versioning;
 
-namespace VocaDb.Model.Domain.Venues {
-
-	public class VenueDiff : EntryDiff<VenueEditableFields> {
-
+namespace VocaDb.Model.Domain.Venues
+{
+	public class VenueDiff : EntryDiff<VenueEditableFields>
+	{
 		public VenueDiff() : base(true) { }
 		public VenueDiff(bool isSnapshot) : base(isSnapshot) { }
 		public VenueDiff(VenueEditableFields changedFields) : base(changedFields) { }
@@ -19,7 +19,5 @@ namespace VocaDb.Model.Domain.Venues {
 
 		public virtual bool IncludeNames => IsSnapshot || Names.IsChanged;
 		public virtual bool IncludeWebLinks => IsSnapshot || WebLinks.IsChanged;
-
 	}
-
 }

@@ -1,13 +1,14 @@
 ﻿using System.Runtime.Serialization;
 
-namespace VocaDb.Model.DataContracts.UseCases {
-
+namespace VocaDb.Model.DataContracts.UseCases
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class EntryIdAndVersionContract {
+	public class EntryIdAndVersionContract
+	{
+		public EntryIdAndVersionContract() { }
 
-		public EntryIdAndVersionContract() {}
-
-		public EntryIdAndVersionContract(int id, int version) {
+		public EntryIdAndVersionContract(int id, int version)
+		{
 			Id = id;
 			Version = version;
 		}
@@ -17,7 +18,5 @@ namespace VocaDb.Model.DataContracts.UseCases {
 
 		[DataMember]
 		public int Version { get; set; }
-
 	}
-
 }

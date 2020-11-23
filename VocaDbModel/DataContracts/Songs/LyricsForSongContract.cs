@@ -5,15 +5,15 @@ using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.DataContracts.Songs {
-
+namespace VocaDb.Model.DataContracts.Songs
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class LyricsForSongContract {
-
+	public class LyricsForSongContract
+	{
 		public LyricsForSongContract() { }
 
-		public LyricsForSongContract(LyricsForSong lyrics, bool includeValue = true) {
-			
+		public LyricsForSongContract(LyricsForSong lyrics, bool includeValue = true)
+		{
 			ParamIs.NotNull(() => lyrics);
 
 			CultureCode = lyrics.CultureCode.CultureCode;
@@ -22,10 +22,10 @@ namespace VocaDb.Model.DataContracts.Songs {
 			TranslationType = lyrics.TranslationType;
 			URL = lyrics.URL;
 
-			if (includeValue) {
+			if (includeValue)
+			{
 				Value = lyrics.Value;
 			}
-
 		}
 
 		[DataMember]
@@ -52,6 +52,5 @@ namespace VocaDb.Model.DataContracts.Songs {
 
 		[DataMember(EmitDefaultValue = false)]
 		public string Value { get; set; }
-
 	}
 }

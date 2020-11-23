@@ -12,24 +12,23 @@ using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Helpers;
 
-namespace VocaDb.Web.Models.Song {
-
+namespace VocaDb.Web.Models.Song
+{
 	[PropertyModelBinder]
-	public class SongEditViewModel {
-
-		public SongEditViewModel() {
-
+	public class SongEditViewModel
+	{
+		public SongEditViewModel()
+		{
 			AllPVTypes = EnumVal<PVType>.Values;
 			AllVideoServices = EnumVal<PVService>.Values;
-
 		}
 
 		public SongEditViewModel(SongContract song, IUserPermissionContext permissionContext,
 			bool canDelete,
 			int instrumentalTagId,
 			SongForEditContract editedSong = null, int? albumId = null)
-			: this() {
-
+			: this()
+		{
 			ParamIs.NotNull(() => song);
 
 			Song = song;
@@ -38,7 +37,6 @@ namespace VocaDb.Web.Models.Song {
 			InstrumentalTagId = instrumentalTagId;
 			EditedSong = editedSong;
 			AlbumId = albumId;
-
 		}
 
 		public int? AlbumId { get; set; }
@@ -47,17 +45,20 @@ namespace VocaDb.Web.Models.Song {
 
 		public PVType[] AllPVTypes { get; set; }
 
-		public Dictionary<string, string> AllSongTypes {
-			get {
+		public Dictionary<string, string> AllSongTypes
+		{
+			get
+			{
 				return Translate.SongTypeNames.GetValuesAndNamesStrings(AppConfig.SongTypes);
 			}
-		} 
+		}
 
 		public PVService[] AllVideoServices { get; set; }
 
 		public bool CanDelete { get; set; }
 
-		public bool Draft {
+		public bool Draft
+		{
 			get { return Song != null && Song.Status == EntryStatus.Draft; }
 		}
 
@@ -65,20 +66,22 @@ namespace VocaDb.Web.Models.Song {
 		[AllowHtml]
 		public SongForEditContract EditedSong { get; set; }
 
-		public int Id {
+		public int Id
+		{
 			get { return Song != null ? Song.Id : 0; }
 		}
 
 		public int InstrumentalTagId { get; set; }
 
-		public string Name {
+		public string Name
+		{
 			get { return Song != null ? Song.Name : null; }
 		}
 
 		public SongContract Song { get; set; }
 
-		public void CheckModel() {
-
+		public void CheckModel()
+		{
 			if (EditedSong == null)
 				throw new InvalidFormException("Model was null");
 
@@ -96,8 +99,6 @@ namespace VocaDb.Web.Models.Song {
 
 			if (EditedSong.WebLinks == null)
 				throw new InvalidFormException("WebLinks list was null"); // Shouldn't be null
-
 		}
-
 	}
 }

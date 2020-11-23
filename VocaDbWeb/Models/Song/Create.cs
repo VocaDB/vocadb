@@ -11,12 +11,13 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
 using VocaDb.Web.Code;
 
-namespace VocaDb.Web.Models.Song {
-
+namespace VocaDb.Web.Models.Song
+{
 	[PropertyModelBinder]
-	public class Create {
-
-		public Create() {
+	public class Create
+	{
+		public Create()
+		{
 			NameEnglish = NameOriginal = NameRomaji = PVUrl = ReprintPVUrl = string.Empty;
 		}
 
@@ -53,20 +54,18 @@ namespace VocaDb.Web.Models.Song {
 		[Display(ResourceType = typeof(CreateStrings), Name = "SongType")]
 		public SongType SongType { get; set; } = SongType.Original;
 
-		public CreateSongContract ToContract() {
-
-			return new CreateSongContract {
+		public CreateSongContract ToContract()
+		{
+			return new CreateSongContract
+			{
 				Artists = this.Artists.ToArray(),
 				Draft = this.Draft,
 				Names = LocalizedStringHelper.SkipNullAndEmpty(NameOriginal, NameRomaji, NameEnglish).ToArray(),
 				OriginalVersion = OriginalVersion,
-				PVUrls = new [] { this.PVUrl },
+				PVUrls = new[] { this.PVUrl },
 				ReprintPVUrl = this.ReprintPVUrl,
 				SongType = this.SongType
 			};
-
 		}
-
 	}
-
 }

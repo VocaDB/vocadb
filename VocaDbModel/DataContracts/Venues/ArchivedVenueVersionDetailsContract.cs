@@ -3,19 +3,19 @@ using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Venues;
 
-namespace VocaDb.Model.DataContracts.Venues {
-
-	public class ArchivedVenueVersionDetailsContract {
-
-		public ArchivedVenueVersionDetailsContract(ArchivedVenueVersion archived, ArchivedVenueVersion comparedVersion, IUserPermissionContext permissionContext) {
-
+namespace VocaDb.Model.DataContracts.Venues
+{
+	public class ArchivedVenueVersionDetailsContract
+	{
+		public ArchivedVenueVersionDetailsContract(ArchivedVenueVersion archived, ArchivedVenueVersion comparedVersion, IUserPermissionContext permissionContext)
+		{
 			ParamIs.NotNull(() => archived);
 
 			ArchivedVersion = new ArchivedVenueVersionContract(archived);
 			ComparedVersion = comparedVersion != null ? new ArchivedVenueVersionContract(comparedVersion) : null;
 			Venue = new VenueContract(archived.Entry, permissionContext.LanguagePreference);
 			Name = Venue.Name;
-			
+
 			ComparableVersions = archived.Entry.ArchivedVersionsManager
 				.GetPreviousVersions(archived, permissionContext)
 				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields.Value, a.CommonEditEvent))
@@ -24,7 +24,6 @@ namespace VocaDb.Model.DataContracts.Venues {
 			Versions = ComparedVenueContract.Create(archived, comparedVersion);
 
 			ComparedVersionId = Versions.SecondId;
-
 		}
 
 		public ArchivedVenueVersionContract ArchivedVersion { get; set; }
@@ -42,7 +41,5 @@ namespace VocaDb.Model.DataContracts.Venues {
 		public VenueContract Venue { get; set; }
 
 		public ComparedVenueContract Versions { get; set; }
-
 	}
-
 }

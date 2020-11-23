@@ -1,17 +1,16 @@
 
-namespace VocaDb.Model.Domain.Globalization {
-
-	public class EntryName<TEntry> : LocalizedStringWithId where TEntry : class {
-
+namespace VocaDb.Model.Domain.Globalization
+{
+	public class EntryName<TEntry> : LocalizedStringWithId where TEntry : class
+	{
 		private TEntry entry;
 
 		public EntryName() { }
 
 		public EntryName(TEntry entry, ILocalizedString localizedString)
-			: base(localizedString.Value, localizedString.Language) {
-
+			: base(localizedString.Value, localizedString.Language)
+		{
 			Entry = entry;
-
 		}
 
 		public virtual TEntry Entry
@@ -24,8 +23,8 @@ namespace VocaDb.Model.Domain.Globalization {
 			}
 		}
 
-		public virtual bool Equals(EntryName<TEntry> another) {
-
+		public virtual bool Equals(EntryName<TEntry> another)
+		{
 			if (another == null)
 				return false;
 
@@ -36,21 +35,21 @@ namespace VocaDb.Model.Domain.Globalization {
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as EntryName<TEntry>);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return base.GetHashCode();
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("name '{0}' for {1}", Value, Entry);
 		}
-
 	}
-
 }

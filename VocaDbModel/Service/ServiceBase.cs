@@ -20,10 +20,10 @@ using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;
 
-namespace VocaDb.Model.Service {
-
-	public abstract class ServiceBase {
-
+namespace VocaDb.Model.Service
+{
+	public abstract class ServiceBase
+	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private readonly IEntryLinkFactory entryLinkFactory;
@@ -31,82 +31,80 @@ namespace VocaDb.Model.Service {
 		private readonly ISessionFactory sessionFactory;
 		private readonly IUserPermissionContext permissionContext;
 
-		protected string CreateEntryLink(IEntryBase entry) {
+		protected string CreateEntryLink(IEntryBase entry)
+		{
 			return EntryLinkFactory.CreateEntryLink(entry);
 		}
 
-		private string GetAuditLogMessage(string doingWhat, string who) {
-
+		private string GetAuditLogMessage(string doingWhat, string who)
+		{
 			return string.Format("'{0}' {1}", who, doingWhat);
-
 		}
 
-		protected User GetLoggedUser(ISession session) {
-
+		protected User GetLoggedUser(ISession session)
+		{
 			PermissionContext.VerifyLogin();
 
 			return session.Load<User>(PermissionContext.LoggedUser.Id);
-
 		}
 
-		protected User GetLoggedUserOrDefault(ISession session) {
-
+		protected User GetLoggedUserOrDefault(ISession session)
+		{
 			return (PermissionContext.LoggedUser != null ? session.Load<User>(PermissionContext.LoggedUser.Id) : null);
-
 		}
 
-		protected IEntryLinkFactory EntryLinkFactory {
+		protected IEntryLinkFactory EntryLinkFactory
+		{
 			get { return entryLinkFactory; }
 		}
 
-		protected ContentLanguagePreference LanguagePreference {
+		protected ContentLanguagePreference LanguagePreference
+		{
 			get { return PermissionContext.LanguagePreference; }
 		}
 
-		protected IUserPermissionContext PermissionContext {
+		protected IUserPermissionContext PermissionContext
+		{
 			get { return permissionContext; }
 		}
 
-		protected ISessionFactory SessionFactory {
+		protected ISessionFactory SessionFactory
+		{
 			get { return sessionFactory; }
 		}
 
-		protected void AddActivityfeedEntry(ISession session, ActivityEntry entry) {
-
+		protected void AddActivityfeedEntry(ISession session, ActivityEntry entry)
+		{
 			var latestEntries = session.Query<ActivityEntry>()
 				.OrderByDescending(a => a.CreateDate)
-				.Take(10)	// time cutoff would be better instead of an arbitrary number of activity entries
+				.Take(10)   // time cutoff would be better instead of an arbitrary number of activity entries
 				.ToArray();
 
 			if (latestEntries.Any(e => e.IsDuplicate(entry)))
 				return;
 
 			session.Save(entry);
-
 		}
 
-		protected void AddEntryEditedEntry(ISession session, Album entry, EntryEditEvent editEvent, ArchivedAlbumVersion archivedVersion) {
-
+		protected void AddEntryEditedEntry(ISession session, Album entry, EntryEditEvent editEvent, ArchivedAlbumVersion archivedVersion)
+		{
 			var user = GetLoggedUser(session);
 			var activityEntry = new AlbumActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(session, activityEntry);
-
 		}
 
-		protected void AddEntryEditedEntry(ISession session, Artist entry, EntryEditEvent editEvent, ArchivedArtistVersion archivedVersion) {
-
+		protected void AddEntryEditedEntry(ISession session, Artist entry, EntryEditEvent editEvent, ArchivedArtistVersion archivedVersion)
+		{
 			var user = GetLoggedUser(session);
 			var activityEntry = new ArtistActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(session, activityEntry);
-
 		}
 
-		protected void AddEntryEditedEntry(ISession session, Song entry, EntryEditEvent editEvent, ArchivedSongVersion archivedVersion) {
-
+		protected void AddEntryEditedEntry(ISession session, Song entry, EntryEditEvent editEvent, ArchivedSongVersion archivedVersion)
+		{
 			var user = GetLoggedUser(session);
 			var activityEntry = new SongActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(session, activityEntry);
-
 		}
 
 		/// <summary>
@@ -115,10 +113,9 @@ namespace VocaDb.Model.Service {
 		/// This override uses the currently logged in user, if any.
 		/// </summary>
 		/// <param name="doingWhat">What the user was doing.</param>
-		protected void SysLog(string doingWhat) {
-
+		protected void SysLog(string doingWhat)
+		{
 			SysLog(doingWhat, PermissionContext.Name);
-
 		}
 
 		/// <summary>
@@ -127,14 +124,13 @@ namespace VocaDb.Model.Service {
 		/// </summary>
 		/// <param name="doingWhat">What the user was doing.</param>
 		/// <param name="who">Who made the action.</param>
-		protected void SysLog(string doingWhat, string who) {
-
+		protected void SysLog(string doingWhat, string who)
+		{
 			log.Info(GetAuditLogMessage(doingWhat, who));
-
 		}
 
-		protected void AuditLog(string doingWhat, ISession session, AgentLoginData who, AuditLogCategory category = AuditLogCategory.Unspecified) {
-
+		protected void AuditLog(string doingWhat, ISession session, AgentLoginData who, AuditLogCategory category = AuditLogCategory.Unspecified)
+		{
 			ParamIs.NotNull(() => session);
 			ParamIs.NotNull(() => who);
 
@@ -143,11 +139,10 @@ namespace VocaDb.Model.Service {
 			var entry = new AuditLogEntry(who, doingWhat, category, GlobalEntryId.Empty);
 
 			session.Save(entry);
-
 		}
 
-		protected void AuditLog(string doingWhat, ISession session, string who, AuditLogCategory category = AuditLogCategory.Unspecified) {
-
+		protected void AuditLog(string doingWhat, ISession session, string who, AuditLogCategory category = AuditLogCategory.Unspecified)
+		{
 			ParamIs.NotNull(() => session);
 
 			SysLog(doingWhat, who);
@@ -156,11 +151,10 @@ namespace VocaDb.Model.Service {
 			var entry = new AuditLogEntry(agentLoginData, doingWhat, category, GlobalEntryId.Empty);
 
 			session.Save(entry);
-
 		}
 
-		protected void AuditLog(string doingWhat, ISession session, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified) {
-
+		protected void AuditLog(string doingWhat, ISession session, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified)
+		{
 			ParamIs.NotNull(() => session);
 
 			var agentLoginData = SessionHelper.CreateAgentLoginData(session, PermissionContext, user);
@@ -168,177 +162,195 @@ namespace VocaDb.Model.Service {
 			var entry = new AuditLogEntry(agentLoginData, doingWhat, category, GlobalEntryId.Empty);
 
 			session.Save(entry);
-
 		}
 
-		protected bool DoSnapshot(ArchivedObjectVersion latestVersion, User user) {
-
+		protected bool DoSnapshot(ArchivedObjectVersion latestVersion, User user)
+		{
 			if (latestVersion == null)
 				return true;
 
 			return ((((latestVersion.Version + 1) % 5) == 0) || !user.Equals(latestVersion.Author));
-
 		}
 
-		protected void HandleQuery(Action<ISession> func, string failMsg = "Unexpected NHibernate error") {
-
-			try {
-				using (var session = OpenSession()) {
+		protected void HandleQuery(Action<ISession> func, string failMsg = "Unexpected NHibernate error")
+		{
+			try
+			{
+				using (var session = OpenSession())
+				{
 					func(session);
 				}
-			} catch (ObjectNotFoundException x) {
+			}
+			catch (ObjectNotFoundException x)
+			{
 				log.Error(x.Message);
 				throw;
-			} catch (HibernateException x) {
+			}
+			catch (HibernateException x)
+			{
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
-		protected T HandleQuery<T>(Func<ISession, T> func, string failMsg = "Unexpected NHibernate error") {
-
-			try {
-				using (var session = OpenSession()) {
+		protected T HandleQuery<T>(Func<ISession, T> func, string failMsg = "Unexpected NHibernate error")
+		{
+			try
+			{
+				using (var session = OpenSession())
+				{
 					return func(session);
 				}
-			} catch (ObjectNotFoundException x) {
+			}
+			catch (ObjectNotFoundException x)
+			{
 				log.Error(x.Message);
 				throw;
-			} catch (HibernateException x) {
+			}
+			catch (HibernateException x)
+			{
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
-		protected async Task<T> HandleQueryAsync<T>(Func<ISession, Task<T>> func, string failMsg = "Unexpected NHibernate error") {
-
-			try {
-				using (var session = OpenSession()) {
+		protected async Task<T> HandleQueryAsync<T>(Func<ISession, Task<T>> func, string failMsg = "Unexpected NHibernate error")
+		{
+			try
+			{
+				using (var session = OpenSession())
+				{
 					return await func(session);
 				}
-			} catch (ObjectNotFoundException x) {
+			}
+			catch (ObjectNotFoundException x)
+			{
 				log.Error(x.Message);
 				throw;
-			} catch (HibernateException x) {
+			}
+			catch (HibernateException x)
+			{
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
-		protected T HandleTransaction<T>(Func<ISession, T> func, string failMsg = "Unexpected NHibernate error") {
-
-			try {
+		protected T HandleTransaction<T>(Func<ISession, T> func, string failMsg = "Unexpected NHibernate error")
+		{
+			try
+			{
 				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction()) {
-
+				using (var tx = session.BeginTransaction())
+				{
 					var val = func(session);
 					tx.Commit();
 					return val;
-
 				}
-			} catch (HibernateException x) {
+			}
+			catch (HibernateException x)
+			{
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
-		protected T HandleTransaction<T>(Func<ISession, ITransaction, T> func, string failMsg = "Unexpected NHibernate error") {
-
-			try {
+		protected T HandleTransaction<T>(Func<ISession, ITransaction, T> func, string failMsg = "Unexpected NHibernate error")
+		{
+			try
+			{
 				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction()) {
-
+				using (var tx = session.BeginTransaction())
+				{
 					var val = func(session, tx);
 					tx.Commit();
 					return val;
-
 				}
-			} catch (HibernateException x) {
+			}
+			catch (HibernateException x)
+			{
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
-		protected T HandleTransaction<T>(Func<ISession, T> func, IsolationLevel isolationLevel, string failMsg = "Unexpected NHibernate error") {
-
-			try {
+		protected T HandleTransaction<T>(Func<ISession, T> func, IsolationLevel isolationLevel, string failMsg = "Unexpected NHibernate error")
+		{
+			try
+			{
 				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction(isolationLevel)) {
-
+				using (var tx = session.BeginTransaction(isolationLevel))
+				{
 					var val = func(session);
 					tx.Commit();
 					return val;
-
 				}
-			} catch (HibernateException x) {
+			}
+			catch (HibernateException x)
+			{
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
-		protected void HandleTransaction(Action<ISession> func, string failMsg = "Unexpected NHibernate error") {
-
-			try {
+		protected void HandleTransaction(Action<ISession> func, string failMsg = "Unexpected NHibernate error")
+		{
+			try
+			{
 				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction()) {
-
+				using (var tx = session.BeginTransaction())
+				{
 					func(session);
 					tx.Commit();
-
 				}
-			} catch (HibernateException x) {
+			}
+			catch (HibernateException x)
+			{
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
-		protected void HandleTransaction(Action<ISession> func, IsolationLevel isolationLevel, string failMsg = "Unexpected NHibernate error") {
-
-			try {
+		protected void HandleTransaction(Action<ISession> func, IsolationLevel isolationLevel, string failMsg = "Unexpected NHibernate error")
+		{
+			try
+			{
 				using (var session = OpenSession())
-				using (var tx = session.BeginTransaction(isolationLevel)) {
-
+				using (var tx = session.BeginTransaction(isolationLevel))
+				{
 					func(session);
 					tx.Commit();
-
 				}
-			} catch (HibernateException x) {
+			}
+			catch (HibernateException x)
+			{
 				log.Error(x, failMsg);
 				throw;
 			}
-
 		}
 
-		protected ISession OpenSession() {
+		protected ISession OpenSession()
+		{
 			return sessionFactory.OpenSession();
 		}
 
 		protected ServiceBase(
-			ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory) {
-
+			ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory)
+		{
 			ParamIs.NotNull(() => sessionFactory);
 
 			this.sessionFactory = sessionFactory;
 			this.permissionContext = permissionContext;
 			this.entryLinkFactory = entryLinkFactory;
-
 		}
 
-		protected void DeleteEntity<TEntity>(int id, PermissionToken permissionFlags, bool skipLog = false) {
-
+		protected void DeleteEntity<TEntity>(int id, PermissionToken permissionFlags, bool skipLog = false)
+		{
 			var typeName = typeof(TEntity).Name;
 			SysLog(string.Format("is about to delete {0} with Id {1}", typeName, id));
 			PermissionContext.VerifyPermission(permissionFlags);
 
-			HandleTransaction(session => {
-
+			HandleTransaction(session =>
+			{
 				var entity = session.Load<TEntity>(id);
 
 				if (!skipLog)
@@ -347,20 +359,18 @@ namespace VocaDb.Model.Service {
 					SysLog("deleting " + entity);
 
 				session.Delete(entity);
-
 			}, "Unable to delete " + typeName);
-
 		}
 
-		protected void UpdateEntity<TEntity>(int id, Action<TEntity> func, PermissionToken permissionFlags, bool skipLog = false) {
-
+		protected void UpdateEntity<TEntity>(int id, Action<TEntity> func, PermissionToken permissionFlags, bool skipLog = false)
+		{
 			var typeName = typeof(TEntity).Name;
 
 			SysLog(string.Format("is about to update {0} with Id {1}", typeName, id));
 			PermissionContext.VerifyPermission(permissionFlags);
 
-			HandleTransaction(session => {
-
+			HandleTransaction(session =>
+			{
 				var entity = session.Load<TEntity>(id);
 
 				if (!skipLog)
@@ -371,20 +381,18 @@ namespace VocaDb.Model.Service {
 				func(entity);
 
 				session.Update(entity);
-
 			}, "Unable to update " + typeName);
-
 		}
 
-		protected void UpdateEntity<TEntity>(int id, Action<ISession, TEntity> func, PermissionToken permissionFlags, bool skipLog = false) {
-
+		protected void UpdateEntity<TEntity>(int id, Action<ISession, TEntity> func, PermissionToken permissionFlags, bool skipLog = false)
+		{
 			var typeName = typeof(TEntity).Name;
 
 			SysLog(string.Format("is about to update {0} with Id {1}", typeName, id));
 			PermissionContext.VerifyPermission(permissionFlags);
 
-			HandleTransaction(session => {
-
+			HandleTransaction(session =>
+			{
 				var entity = session.Load<TEntity>(id);
 
 				if (!skipLog)
@@ -395,73 +403,64 @@ namespace VocaDb.Model.Service {
 				func(session, entity);
 
 				session.Update(entity);
-
 			}, "Unable to update " + typeName);
-
 		}
 
-		protected void VerifyEntryEdit(IEntryWithStatus entry) {
-
+		protected void VerifyEntryEdit(IEntryWithStatus entry)
+		{
 			EntryPermissionManager.VerifyEdit(PermissionContext, entry);
-
 		}
 
-		protected void VerifyManageDatabase() {
-
+		protected void VerifyManageDatabase()
+		{
 			PermissionContext.VerifyPermission(PermissionToken.ManageDatabase);
-
 		}
 
-		protected void VerifyResourceAccess(params User[] owners) {
-
+		protected void VerifyResourceAccess(params User[] owners)
+		{
 			VerifyResourceAccess(owners.Select(o => o.Id));
-				
 		}
 
-		protected void VerifyResourceAccess(params UserContract[] owners) {
-
+		protected void VerifyResourceAccess(params UserContract[] owners)
+		{
 			VerifyResourceAccess(owners.Select(o => o.Id));
-
 		}
 
-		private void VerifyResourceAccess(IEnumerable<int> ownerIds) {
-
+		private void VerifyResourceAccess(IEnumerable<int> ownerIds)
+		{
 			PermissionContext.VerifyLogin();
 
 			if (!ownerIds.Contains(PermissionContext.LoggedUser.Id))
 				throw new NotAllowedException("You do not have access to this resource.");
-
 		}
-
 	}
 
-	public static class PartialFindResult {
-
-		public static PartialFindResult<T> Create<T>(T[] items, int totalCount) {
+	public static class PartialFindResult
+	{
+		public static PartialFindResult<T> Create<T>(T[] items, int totalCount)
+		{
 			return new PartialFindResult<T>(items, totalCount);
 		}
-
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class PartialFindResult<T> {
+	public class PartialFindResult<T>
+	{
+		public PartialFindResult()
+		{
+			Items = new T[] { };
+		}
 
-		public PartialFindResult() { 
-			Items = new T[] {};
-		} 
-
-		public PartialFindResult(T[] items, int totalCount) {
-
+		public PartialFindResult(T[] items, int totalCount)
+		{
 			Items = items;
 			TotalCount = totalCount;
-
 		}
 
 		public PartialFindResult(T[] items, int totalCount, string term)
-			: this(items, totalCount) {
-
+			: this(items, totalCount)
+		{
 			Term = term;
-
 		}
 
 		[DataMember]
@@ -472,8 +471,5 @@ namespace VocaDb.Model.Service {
 
 		[DataMember]
 		public int TotalCount { get; set; }
-
 	}
-
-
 }

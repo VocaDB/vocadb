@@ -11,12 +11,12 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
 
-namespace VocaDb.Model.Service.VideoServices {
-
-	public class VideoServiceSoundCloud : VideoService {
-
-		class SoundCloudResult {
-
+namespace VocaDb.Model.Service.VideoServices
+{
+	public class VideoServiceSoundCloud : VideoService
+	{
+		class SoundCloudResult
+		{
 			public string Artwork_url { get; set; }
 
 			public DateTime Created_at { get; set; }
@@ -28,34 +28,31 @@ namespace VocaDb.Model.Service.VideoServices {
 			public string Title { get; set; }
 
 			public SoundCloudUser User { get; set; }
-
 		}
 
-		class SoundCloudUser {
-
+		class SoundCloudUser
+		{
 			public string Avatar_url { get; set; }
 
 			public string Permalink { get; set; }
 
 			public string Username { get; set; }
-
 		}
 
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		public VideoServiceSoundCloud(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers) 
-			: base(service, parser, linkMatchers) {}
+		public VideoServiceSoundCloud(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
+			: base(service, parser, linkMatchers) { }
 
-		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null) {
-
+		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null)
+		{
 			var compositeId = new SoundCloudId(id);
 			var matcher = linkMatchers.First();
 			return $"http://{matcher.MakeLinkFromId(compositeId.SoundCloudUrl)}";
-
 		}
 
-		public async Task<VideoUrlParseResult> ParseBySoundCloudUrl(string url) {
-
+		public async Task<VideoUrlParseResult> ParseBySoundCloudUrl(string url)
+		{
 			SslHelper.ForceStrongTLS();
 
 			var apikey = AppConfig.SoundCloudClientId;
@@ -64,25 +61,37 @@ namespace VocaDb.Model.Service.VideoServices {
 			SoundCloudResult result;
 
 			bool HasStatusCode(WebException x, HttpStatusCode statusCode) => x.Response != null && ((HttpWebResponse)x.Response).StatusCode == statusCode;
-			
-			VideoUrlParseResult ReturnError(Exception x, string additionalInfo = null) {
-				var msg = string.Format("Unable to load SoundCloud URL '{0}'.{1}", url, additionalInfo != null ? " " + additionalInfo + ".": string.Empty);
+
+			VideoUrlParseResult ReturnError(Exception x, string additionalInfo = null)
+			{
+				var msg = string.Format("Unable to load SoundCloud URL '{0}'.{1}", url, additionalInfo != null ? " " + additionalInfo + "." : string.Empty);
 				log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			}
 
-			try {
+			try
+			{
 				result = await JsonRequest.ReadObjectAsync<SoundCloudResult>(apiUrl, timeout: TimeSpan.FromSeconds(10));
-			} catch (WebException x) when (HasStatusCode(x, HttpStatusCode.Forbidden)) {
+			}
+			catch (WebException x) when (HasStatusCode(x, HttpStatusCode.Forbidden))
+			{
 				// Forbidden most likely means the artist has prevented API access to their tracks, http://stackoverflow.com/a/36529330
 				return ReturnError(x, "This track cannot be embedded");
-			} catch (WebException x) when (HasStatusCode(x, HttpStatusCode.NotFound)) {
+			}
+			catch (WebException x) when (HasStatusCode(x, HttpStatusCode.NotFound))
+			{
 				return ReturnError(x, "Not found");
-			} catch (WebException x) {
+			}
+			catch (WebException x)
+			{
 				return ReturnError(x);
-			} catch (JsonSerializationException x) {
+			}
+			catch (JsonSerializationException x)
+			{
 				return ReturnError(x);
-			} catch (HttpRequestException x) {
+			}
+			catch (HttpRequestException x)
+			{
 				return ReturnError(x);
 			}
 
@@ -98,7 +107,8 @@ namespace VocaDb.Model.Service.VideoServices {
 			var thumbUrl = result.Artwork_url;
 
 			// Substitute song thumbnail with user avatar, if no actual thumbnail is provided. This is what the SoundCloud site does as well.
-			if (string.IsNullOrEmpty(thumbUrl)) {
+			if (string.IsNullOrEmpty(thumbUrl))
+			{
 				thumbUrl = result.User.Avatar_url;
 			}
 
@@ -108,60 +118,57 @@ namespace VocaDb.Model.Service.VideoServices {
 			var authorId = result.User.Permalink; // Using permalink because that's the public URL
 
 			return VideoUrlParseResult.CreateOk(url, PVService.SoundCloud, id.ToString(), VideoTitleParseResult.CreateSuccess(title, author, authorId, thumbUrl, length, uploadDate: uploadDate));
-
 		}
 
-		public override Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle) {
-
+		public override Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
+		{
 			var soundCloudUrl = linkMatchers[0].GetId(url);
 
 			return ParseBySoundCloudUrl(soundCloudUrl);
-
 		}
 
-		public override IEnumerable<string> GetUserProfileUrls(string authorId) {
-			return new[] { 
+		public override IEnumerable<string> GetUserProfileUrls(string authorId)
+		{
+			return new[] {
 				string.Format("http://soundcloud.com/{0}", authorId),
 				string.Format("https://soundcloud.com/{0}", authorId),
 			};
 		}
-
 	}
 
 	/// <summary>
 	/// Composite SoundCloud ID. Contains both the track Id and the relative URL (for direct links).
 	/// </summary>
-	public class SoundCloudId {
-
+	public class SoundCloudId
+	{
 		/// <summary>
 		/// Remove query string.
 		/// See https://github.com/VocaDB/vocadb/issues/459
 		/// </summary>
 		private string CleanUrl(string url) => url.Split('?')[0];
 
-		public SoundCloudId(string trackId, string soundCloudUrl) {
-
+		public SoundCloudId(string trackId, string soundCloudUrl)
+		{
 			ParamIs.NotNullOrEmpty(() => trackId);
 			ParamIs.NotNullOrEmpty(() => soundCloudUrl);
 
 			TrackId = trackId;
 			SoundCloudUrl = CleanUrl(soundCloudUrl);
-
 		}
 
-		public SoundCloudId(string compositeId) {
-
+		public SoundCloudId(string compositeId)
+		{
 			ParamIs.NotNull(() => compositeId);
 
 			var parts = compositeId.Split(' ');
 
-			if (parts.Length < 2) {
+			if (parts.Length < 2)
+			{
 				throw new ArgumentException("Composite ID must contain both track Id and URL");
 			}
 
 			TrackId = parts[0];
 			SoundCloudUrl = parts[1];
-
 		}
 
 		/// <summary>
@@ -178,10 +185,9 @@ namespace VocaDb.Model.Service.VideoServices {
 		/// Gets the composite ID string with both the relative URL and track Id.
 		/// </summary>
 		/// <returns>Composite ID, for example "8431571 tamagotaso/nightcruise"</returns>
-		public override string  ToString() {
+		public override string ToString()
+		{
 			return string.Format("{0} {1}", TrackId, SoundCloudUrl);
 		}
-
 	}
-
 }

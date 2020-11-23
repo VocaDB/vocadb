@@ -1,14 +1,12 @@
 ﻿
-namespace VocaDb.Model.Domain.Users {
+namespace VocaDb.Model.Domain.Users
+{
+	public enum MediaType
+	{
+		PhysicalDisc = 1,
 
-	public enum MediaType {
+		DigitalDownload = 2,
 
-		PhysicalDisc	= 1,
-
-		DigitalDownload	= 2,
-
-		Other			= 4
-
+		Other = 4
 	}
-
 }

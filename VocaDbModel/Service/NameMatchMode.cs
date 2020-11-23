@@ -1,10 +1,10 @@
-﻿namespace VocaDb.Model.Service {
-
+﻿namespace VocaDb.Model.Service
+{
 	/// <summary>
 	/// Match mode for name queries.
 	/// </summary>
-	public enum NameMatchMode {
-
+	public enum NameMatchMode
+	{
 		/// <summary>
 		/// Automatically choose match mode based on query term length.
 		/// For longer queries this is generally Words, for shorter StartsWith.
@@ -33,7 +33,5 @@
 		/// The order of words does not matter.
 		/// </summary>
 		Words
-
 	}
-
 }

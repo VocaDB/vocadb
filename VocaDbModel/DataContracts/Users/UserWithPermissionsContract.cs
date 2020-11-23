@@ -5,20 +5,20 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users {
-
+namespace VocaDb.Model.DataContracts.Users
+{
 	/// <summary>
 	/// User with additional permission flags and artist ownership permissions.
 	/// Used for user details page as well as checking for permissions of the logged in user.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class UserWithPermissionsContract : UserContract {
-
+	public class UserWithPermissionsContract : UserContract
+	{
 		public UserWithPermissionsContract() { }
 
 		public UserWithPermissionsContract(User user, ContentLanguagePreference languagePreference, bool getPublicCollection = false)
-			: base(user, getPublicCollection) {
-
+			: base(user, getPublicCollection)
+		{
 			AdditionalPermissions = new HashSet<PermissionToken>(user.AdditionalPermissions.PermissionTokens);
 			AlbumFormatString = user.Options.AlbumFormatString;
 			EffectivePermissions = new HashSet<PermissionToken>(user.EffectivePermissions.PermissionTokens);
@@ -26,7 +26,6 @@ namespace VocaDb.Model.DataContracts.Users {
 			Poisoned = user.Options.Poisoned;
 			Stylesheet = user.Options.Stylesheet;
 			Supporter = user.Options.Supporter;
-
 		}
 
 		[DataMember]
@@ -55,7 +54,5 @@ namespace VocaDb.Model.DataContracts.Users {
 
 		[DataMember]
 		public int UnreadMessagesCount { get; set; }
-
 	}
-
 }

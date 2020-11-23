@@ -1,33 +1,35 @@
 using VocaDb.Model.Domain.Artists;
 
-namespace VocaDb.Model.Domain.Users {
-
+namespace VocaDb.Model.Domain.Users
+{
 	/// <summary>
 	/// User following an artist.
 	/// </summary>
 	/// <remarks>For owned artists see <see cref="OwnedArtistForUser"/>.</remarks>
-	public class ArtistForUser : IArtistLink, IEntryWithIntId {
-
+	public class ArtistForUser : IArtistLink, IEntryWithIntId
+	{
 		private Artist artist;
 		private User user;
 
-		public ArtistForUser() {
+		public ArtistForUser()
+		{
 			SiteNotifications = true;
 		}
 
 		public ArtistForUser(User user, Artist artist)
-			: this() {
-
+			: this()
+		{
 			User = user;
 			Artist = artist;
-
 		}
 
 		public virtual int Id { get; set; }
 
-		public virtual Artist Artist {
+		public virtual Artist Artist
+		{
 			get { return artist; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				artist = value;
 			}
@@ -43,9 +45,11 @@ namespace VocaDb.Model.Domain.Users {
 		/// </summary>
 		public virtual bool SiteNotifications { get; set; }
 
-		public virtual User User {
+		public virtual User User
+		{
 			get { return user; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				user = value;
 			}
@@ -55,15 +59,14 @@ namespace VocaDb.Model.Domain.Users {
 		/// Deletes this link and performs any necessary bookkeeping.
 		/// Link will be removed from collections on both sides and ratings will be updated.
 		/// </summary>
-		public virtual void Delete() {
-
+		public virtual void Delete()
+		{
 			User.AllArtists.Remove(this);
 			Artist.Users.Remove(this);
-
 		}
 
-		public virtual bool Equals(ArtistForUser another) {
-
+		public virtual bool Equals(ArtistForUser another)
+		{
 			if (another == null)
 				return false;
 
@@ -74,19 +77,20 @@ namespace VocaDb.Model.Domain.Users {
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
-		public override bool Equals(object obj) {
+		public override bool Equals(object obj)
+		{
 			return Equals(obj as ArtistForUser);
 		}
 
-		public override int GetHashCode() {
+		public override int GetHashCode()
+		{
 			return Id.GetHashCode();
 		}
 
-		public virtual void Move(Artist target) {
-
+		public virtual void Move(Artist target)
+		{
 			ParamIs.NotNull(() => target);
 
 			if (target.Equals(Artist))
@@ -95,13 +99,11 @@ namespace VocaDb.Model.Domain.Users {
 			Artist.Users.Remove(this);
 			Artist = target;
 			target.Users.Add(this);
-
 		}
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("{0} following {1}", User, Artist);
 		}
-
 	}
-
 }

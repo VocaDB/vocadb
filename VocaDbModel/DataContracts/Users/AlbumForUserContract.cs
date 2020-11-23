@@ -3,16 +3,16 @@ using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.DataContracts.Users {
-
+namespace VocaDb.Model.DataContracts.Users
+{
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class AlbumForUserContract {
+	public class AlbumForUserContract
+	{
+		public AlbumForUserContract() { }
 
-		public AlbumForUserContract() {}
-
-		public AlbumForUserContract(AlbumForUser albumForUser, 
-			ContentLanguagePreference languagePreference, bool includeUser = true) {
-
+		public AlbumForUserContract(AlbumForUser albumForUser,
+			ContentLanguagePreference languagePreference, bool includeUser = true)
+		{
 			ParamIs.NotNull(() => albumForUser);
 
 			Album = new AlbumContract(albumForUser.Album, languagePreference);
@@ -21,10 +21,10 @@ namespace VocaDb.Model.DataContracts.Users {
 			PurchaseStatus = albumForUser.PurchaseStatus;
 			Rating = albumForUser.Rating;
 
-			if (includeUser) {
+			if (includeUser)
+			{
 				User = new UserContract(albumForUser.User);
 			}
-
 		}
 
 		[DataMember]
@@ -50,7 +50,5 @@ namespace VocaDb.Model.DataContracts.Users {
 		/// </summary>
 		[DataMember]
 		public UserContract User { get; set; }
-
 	}
-
 }

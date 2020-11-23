@@ -2,12 +2,12 @@ using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Mapping.Users {
-
-	public class UserMap : ClassMap<User> {
-
-		public UserMap() {
-
+namespace VocaDb.Model.Mapping.Users
+{
+	public class UserMap : ClassMap<User>
+	{
+		public UserMap()
+		{
 			Cache.ReadWrite();
 			Id(m => m.Id);
 
@@ -30,7 +30,8 @@ namespace VocaDb.Model.Mapping.Users {
 			Map(m => m.Salt).Length(100).Not.Nullable();
 			Map(m => m.VerifiedArtist).Not.Nullable();
 
-			Component(m => m.AdditionalPermissions, c => {
+			Component(m => m.AdditionalPermissions, c =>
+			{
 				c.HasMany(m => m.Permissions)
 					.Table("UserAdditionalPermissions")
 					.AsSet()
@@ -40,7 +41,8 @@ namespace VocaDb.Model.Mapping.Users {
 					.Cache.ReadWrite();
 			});
 
-			Component(m => m.Language, c => {
+			Component(m => m.Language, c =>
+			{
 				c.Map(m => m.CultureCode).Column("[Language]").Length(20).Not.Nullable();
 			});
 
@@ -68,15 +70,13 @@ namespace VocaDb.Model.Mapping.Users {
 			HasMany(m => m.SentMessages).KeyColumn("[Sender]").Inverse();
 			HasMany(m => m.SongLists).KeyColumn("[Author]").OrderBy("Name").Inverse().Cascade.All();
 			HasMany(m => m.WebLinks).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
-
 		}
-
 	}
 
-	public class UserOptionsMap : ClassMap<UserOptions> {
-
-		UserOptionsMap() {
-
+	public class UserOptionsMap : ClassMap<UserOptions>
+	{
+		UserOptionsMap()
+		{
 			Table("UserOptions");
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -100,18 +100,17 @@ namespace VocaDb.Model.Mapping.Users {
 			Map(m => m.TwitterOAuthTokenSecret).Not.Nullable();
 			Map(m => m.UnreadNotificationsToKeep).Not.Nullable();
 
-			Component(m => m.LastLoginCulture, c => {
+			Component(m => m.LastLoginCulture, c =>
+			{
 				c.Map(m => m.CultureCode).Column("[LastLoginCulture]").Length(20).Not.Nullable();
 			});
-
 		}
-
 	}
 
-	public class AlbumForUserMap : ClassMap<AlbumForUser> {
-
-		public AlbumForUserMap() {
-
+	public class AlbumForUserMap : ClassMap<AlbumForUser>
+	{
+		public AlbumForUserMap()
+		{
 			Table("AlbumsForUsers");
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -122,15 +121,13 @@ namespace VocaDb.Model.Mapping.Users {
 
 			References(m => m.Album).Not.Nullable().UniqueKey("IX_AlbumsForUsers");
 			References(m => m.User).Not.Nullable().UniqueKey("IX_AlbumsForUsers");
-
 		}
-
 	}
 
-	public class ArtistForUserMap : ClassMap<ArtistForUser> {
-
-		public ArtistForUserMap() {
-
+	public class ArtistForUserMap : ClassMap<ArtistForUser>
+	{
+		public ArtistForUserMap()
+		{
 			Table("ArtistsForUsers");
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -140,15 +137,13 @@ namespace VocaDb.Model.Mapping.Users {
 
 			References(m => m.Artist).Not.Nullable();
 			References(m => m.User).Not.Nullable();
-
 		}
-
 	}
 
-	public class FavoriteSongForUserMap : ClassMap<FavoriteSongForUser> {
-		
-		public FavoriteSongForUserMap() {
-			
+	public class FavoriteSongForUserMap : ClassMap<FavoriteSongForUser>
+	{
+		public FavoriteSongForUserMap()
+		{
 			Table("FavoriteSongsForUsers");
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -158,9 +153,6 @@ namespace VocaDb.Model.Mapping.Users {
 
 			References(m => m.Song).Not.Nullable().UniqueKey("IX_FavoriteSongsForUsers_3");
 			References(m => m.User).Not.Nullable().UniqueKey("IX_FavoriteSongsForUsers_3");
-
 		}
-
 	}
-
 }

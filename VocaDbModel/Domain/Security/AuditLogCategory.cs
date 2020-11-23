@@ -1,7 +1,7 @@
-﻿namespace VocaDb.Model.Domain.Security {
-
-	public enum AuditLogCategory {
-	
+﻿namespace VocaDb.Model.Domain.Security
+{
+	public enum AuditLogCategory
+	{
 		Unspecified,
 
 		/// <summary>
@@ -63,7 +63,5 @@
 		/// User was updated
 		/// </summary>
 		UserUpdate
-
 	}
-
 }

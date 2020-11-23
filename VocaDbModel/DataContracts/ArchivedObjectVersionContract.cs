@@ -5,14 +5,14 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Service.Translations;
 
-namespace VocaDb.Model.DataContracts {
+namespace VocaDb.Model.DataContracts
+{
+	public class ArchivedObjectVersionContract
+	{
+		public ArchivedObjectVersionContract() { }
 
-	public class ArchivedObjectVersionContract {
-
-		public ArchivedObjectVersionContract() {}
-
-		public ArchivedObjectVersionContract(ArchivedObjectVersion archivedObjectVersion) {
-			
+		public ArchivedObjectVersionContract(ArchivedObjectVersion archivedObjectVersion)
+		{
 			ParamIs.NotNull(() => archivedObjectVersion);
 
 			AgentName = !string.IsNullOrEmpty(archivedObjectVersion.AgentName) || archivedObjectVersion.Author == null ? archivedObjectVersion.AgentName : archivedObjectVersion.Author.Name;
@@ -25,7 +25,6 @@ namespace VocaDb.Model.DataContracts {
 			Notes = archivedObjectVersion.Notes;
 			Status = archivedObjectVersion.Status;
 			Version = archivedObjectVersion.Version;
-
 		}
 
 		public string AgentName { get; set; }
@@ -48,18 +47,19 @@ namespace VocaDb.Model.DataContracts {
 
 		public int Version { get; set; }
 
-		public virtual bool IsAnythingChanged() {
+		public virtual bool IsAnythingChanged()
+		{
 			return false;
 		}
 
-		public virtual string TranslateChangedFields(IEnumTranslations translator) {
+		public virtual string TranslateChangedFields(IEnumTranslations translator)
+		{
 			return string.Empty;
 		}
 
-		public virtual string TranslateReason(IEnumTranslations translator) {
+		public virtual string TranslateReason(IEnumTranslations translator)
+		{
 			return string.Empty;
 		}
-
 	}
-
 }

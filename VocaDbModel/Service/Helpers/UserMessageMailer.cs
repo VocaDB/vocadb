@@ -4,27 +4,31 @@ using System.Threading.Tasks;
 using NLog;
 using VocaDb.Model.Service.BrandableStrings;
 
-namespace VocaDb.Model.Service.Helpers {
-
-	public class UserMessageMailer : IUserMessageMailer {
-
+namespace VocaDb.Model.Service.Helpers
+{
+	public class UserMessageMailer : IUserMessageMailer
+	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly BrandableStringsManager brandableStringsManager;
 
-		public UserMessageMailer(BrandableStringsManager brandableStringsManager) {
+		public UserMessageMailer(BrandableStringsManager brandableStringsManager)
+		{
 			this.brandableStringsManager = brandableStringsManager;
 		}
 
-		public bool SendEmail(string toEmail, string receiverName, string subject, string body) {
-
+		public bool SendEmail(string toEmail, string receiverName, string subject, string body)
+		{
 			if (string.IsNullOrEmpty(toEmail))
 				return false;
 
 			MailAddress to;
 
-			try {
+			try
+			{
 				to = new MailAddress(toEmail);
-			} catch (FormatException x) {
+			}
+			catch (FormatException x)
+			{
 				log.Warn(x, "Unable to validate receiver email");
 				return false;
 			}
@@ -42,30 +46,37 @@ namespace VocaDb.Model.Service.Helpers {
 
 			var client = new SmtpClient();
 
-			try {
+			try
+			{
 				client.Send(mailMessage);
-			} catch (SmtpException x) {
+			}
+			catch (SmtpException x)
+			{
 				log.Error(x, "Unable to send mail");
 				return false;
-			} catch (InvalidOperationException x) {
+			}
+			catch (InvalidOperationException x)
+			{
 				log.Error(x, "Unable to send mail");
-				return false;				
+				return false;
 			}
 
 			return true;
-
 		}
 
-		public async Task<bool> SendEmailAsync(string toEmail, string receiverName, string subject, string body) {
-
+		public async Task<bool> SendEmailAsync(string toEmail, string receiverName, string subject, string body)
+		{
 			if (string.IsNullOrEmpty(toEmail))
 				return false;
 
 			MailAddress to;
 
-			try {
+			try
+			{
 				to = new MailAddress(toEmail);
-			} catch (FormatException x) {
+			}
+			catch (FormatException x)
+			{
 				log.Warn(x, "Unable to validate receiver email");
 				return false;
 			}
@@ -83,20 +94,22 @@ namespace VocaDb.Model.Service.Helpers {
 
 			var client = new SmtpClient();
 
-			try {
+			try
+			{
 				await client.SendMailAsync(mailMessage);
-			} catch (SmtpException x) {
+			}
+			catch (SmtpException x)
+			{
 				log.Error(x, "Unable to send mail");
 				return false;
-			} catch (InvalidOperationException x) {
+			}
+			catch (InvalidOperationException x)
+			{
 				log.Error(x, "Unable to send mail");
-				return false;				
+				return false;
 			}
 
 			return true;
-
 		}
-
 	}
-
 }

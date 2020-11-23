@@ -5,21 +5,22 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Tests.TestSupport {
+namespace VocaDb.Tests.TestSupport
+{
+	public class FakePermissionContext : IUserPermissionContext
+	{
+		public FakePermissionContext() { }
 
-	public class FakePermissionContext : IUserPermissionContext {
-
-		public FakePermissionContext() {}
-
-		public FakePermissionContext(UserWithPermissionsContract loggedUser) {
+		public FakePermissionContext(UserWithPermissionsContract loggedUser)
+		{
 			LoggedUser = loggedUser;
 		}
 
 		public FakePermissionContext(User user)
-			: this(new UserWithPermissionsContract(user, ContentLanguagePreference.Default)) {}
+			: this(new UserWithPermissionsContract(user, ContentLanguagePreference.Default)) { }
 
-		public bool HasPermission(PermissionToken token) {
-
+		public bool HasPermission(PermissionToken token)
+		{
 			if (token == PermissionToken.Nothing)
 				return true;
 
@@ -27,7 +28,6 @@ namespace VocaDb.Tests.TestSupport {
 				return false;
 
 			return (LoggedUser.EffectivePermissions.Contains(token));
-
 		}
 
 		public bool IsLoggedIn => LoggedUser != null;
@@ -44,11 +44,13 @@ namespace VocaDb.Tests.TestSupport {
 
 		public UserGroupId UserGroupId => LoggedUser != null ? LoggedUser.GroupId : UserGroupId.Nothing;
 
-		public void GrantPermission(PermissionToken permissionToken) {
+		public void GrantPermission(PermissionToken permissionToken)
+		{
 			LoggedUser?.EffectivePermissions.Add(permissionToken);
 		}
 
-		public void LogOff() {
+		public void LogOff()
+		{
 			LoggedUser = null;
 		}
 
@@ -57,28 +59,28 @@ namespace VocaDb.Tests.TestSupport {
 		/// </summary>
 		/// <typeparam name="T">Repository type.</typeparam>
 		/// <param name="repository">Repository. Cannot be null.</param>
-		public void RefreshLoggedUser<T>(IRepository<T> repository) where T : class, IDatabaseObject {
+		public void RefreshLoggedUser<T>(IRepository<T> repository) where T : class, IDatabaseObject
+		{
 			LoggedUser = repository.HandleQuery(ctx => new UserWithPermissionsContract(ctx.OfType<User>().Load(LoggedUserId), ContentLanguagePreference.Default));
 		}
 
-		public void SetLoggedUser(User user) {
+		public void SetLoggedUser(User user)
+		{
 			LoggedUser = new UserWithPermissionsContract(user, ContentLanguagePreference.Default);
 		}
 
-		public void VerifyLogin() {
-
+		public void VerifyLogin()
+		{
 			if (!IsLoggedIn)
 				throw new NotAllowedException("Must be logged in.");
-
 		}
 
-		public void VerifyPermission(PermissionToken flag) {
-
-			if (!HasPermission(flag)) {
+		public void VerifyPermission(PermissionToken flag)
+		{
+			if (!HasPermission(flag))
+			{
 				throw new NotAllowedException();
 			}
-
 		}
-
 	}
 }

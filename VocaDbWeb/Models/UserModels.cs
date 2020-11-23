@@ -19,11 +19,12 @@ using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Models.Shared;
 
-namespace VocaDb.Web.Models {
-
-	public class RegisterModel {
-
-		public RegisterModel() {
+namespace VocaDb.Web.Models
+{
+	public class RegisterModel
+	{
+		public RegisterModel()
+		{
 			EntryTime = DateTime.Now.Ticks;
 		}
 
@@ -55,18 +56,16 @@ namespace VocaDb.Web.Models {
 		[Display(ResourceType = typeof(ViewRes.User.CreateStrings), Name = "Password")]
 		[StringLength(100, MinimumLength = 8)]
 		public string Password { get; set; }
-
 	}
 
-	public class LoginModel {
+	public class LoginModel
+	{
+		public LoginModel() { }
 
-		public LoginModel() {}
-
-		public LoginModel(string returnUrl, bool returnToMainSite) {
-
+		public LoginModel(string returnUrl, bool returnToMainSite)
+		{
 			this.ReturnUrl = returnUrl;
 			this.ReturnToMainSite = returnToMainSite;
-
 		}
 
 		[Display(ResourceType = typeof(ViewRes.User.LoginStrings), Name = "KeepMeLoggedIn")]
@@ -96,28 +95,26 @@ namespace VocaDb.Web.Models {
 		public bool ReturnToMainSite { get; set; }
 
 		public string ReturnUrl { get; set; }
-
 	}
 
 	[PropertyModelBinder]
-	public class MySettingsModel {
-
-		public MySettingsModel() {
-
+	public class MySettingsModel
+	{
+		public MySettingsModel()
+		{
 			AboutMe = string.Empty;
 			AllInterfaceLanguages = InterfaceLanguage.Cultures;
 			AllLanguages = EnumVal<ContentLanguagePreference>.Values.ToDictionary(l => l, Translate.ContentLanguagePreferenceName);
-			AllStylesheets = AppConfig.SiteSettings.Stylesheets?.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries).ToDictionaryWithEmpty(string.Empty, "Default", v => v, v => Path.GetFileNameWithoutExtension(v));
+			AllStylesheets = AppConfig.SiteSettings.Stylesheets?.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToDictionaryWithEmpty(string.Empty, "Default", v => v, v => Path.GetFileNameWithoutExtension(v));
 			AllUserKnownLanguages = InterfaceLanguage.UserLanguageCultures;
 			AllVideoServices = EnumVal<PVService>.Values;
 			Location = string.Empty;
 			WebLinks = new List<WebLinkDisplay>();
-
 		}
 
 		public MySettingsModel(UserForMySettingsContract user)
-			: this() {
-			
+			: this()
+		{
 			ParamIs.NotNull(() => user);
 
 			AboutMe = user.AboutMe;
@@ -145,7 +142,6 @@ namespace VocaDb.Web.Models {
 			WebLinks = user.WebLinks.Select(w => new WebLinkDisplay(w)).ToArray();
 
 			AccessKey = user.HashedAccessKey;
-
 		}
 
 		public string AboutMe { get; set; }
@@ -162,7 +158,7 @@ namespace VocaDb.Web.Models {
 
 		public PVService[] AllVideoServices { get; set; }
 
-		[Display(Name= "Do not show my name in the recent activity list")]
+		[Display(Name = "Do not show my name in the recent activity list")]
 		public bool ShowActivity { get; set; }
 
 		public bool CanChangeName { get; set; }
@@ -238,12 +234,13 @@ namespace VocaDb.Web.Models {
 		[Range(1, 390)]
 		public int UnreadNotificationsToKeep { get; set; }
 
-		public UpdateUserSettingsContract ToContract() {
-
+		public UpdateUserSettingsContract ToContract()
+		{
 			if (WebLinks == null)
 				throw new InvalidFormException("Web links list was null");
 
-			return new UpdateUserSettingsContract {
+			return new UpdateUserSettingsContract
+			{
 				AboutMe = this.AboutMe ?? string.Empty,
 				AnonymousActivity = !this.ShowActivity,
 				Culture = this.CultureSelection ?? string.Empty,
@@ -265,25 +262,22 @@ namespace VocaDb.Web.Models {
 				UnreadNotificationsToKeep = this.UnreadNotificationsToKeep,
 				WebLinks = this.WebLinks.Select(w => w.ToContract()).ToArray(),
 			};
-
 		}
-
 	}
 
-	public class UserEdit {
-
-		public UserEdit() {
-
+	public class UserEdit
+	{
+		public UserEdit()
+		{
 			var groups = EnumVal<UserGroupId>.Values.Where(g => EntryPermissionManager.CanEditGroupTo(Login.Manager, g)).ToArray();
 			EditableGroups = new TranslateableEnum<UserGroupId>(() => global::Resources.UserGroupNames.ResourceManager, groups);
 			OwnedArtists = new List<ArtistForUserContract>();
 			Permissions = new List<PermissionFlagEntry>();
-
 		}
 
 		public UserEdit(UserWithPermissionsContract contract)
-			: this() {
-
+			: this()
+		{
 			Active = contract.Active;
 			Email = contract.Email;
 			GroupId = contract.GroupId;
@@ -294,7 +288,6 @@ namespace VocaDb.Web.Models {
 				.Select(p => new PermissionFlagEntry(p, contract.AdditionalPermissions.Contains(p), contract.EffectivePermissions.Contains(p))).ToArray();
 			Poisoned = contract.Poisoned;
 			Supporter = contract.Supporter;
-
 		}
 
 		public bool Active { get; set; }
@@ -322,9 +315,10 @@ namespace VocaDb.Web.Models {
 
 		public bool Supporter { get; set; }
 
-		public UserWithPermissionsContract ToContract() {
-
-			return new UserWithPermissionsContract {
+		public UserWithPermissionsContract ToContract()
+		{
+			return new UserWithPermissionsContract
+			{
 				Active = this.Active,
 				Email = Email ?? string.Empty,
 				GroupId = this.GroupId,
@@ -335,16 +329,15 @@ namespace VocaDb.Web.Models {
 				Supporter = this.Supporter,
 				AdditionalPermissions = new HashSet<PermissionToken>(Permissions.Where(p => p.HasFlag).Select(p => PermissionToken.GetById(p.PermissionType.Id)))
 			};
-
 		}
-
 	}
 
-	public class PermissionFlagEntry {
+	public class PermissionFlagEntry
+	{
+		public PermissionFlagEntry() { }
 
-		public PermissionFlagEntry() {}
-
-		public PermissionFlagEntry(PermissionToken permissionType, bool hasFlag, bool hasPermission) {
+		public PermissionFlagEntry(PermissionToken permissionType, bool hasFlag, bool hasPermission)
+		{
 			PermissionType = new PermissionTokenContract(permissionType);
 			HasFlag = hasFlag;
 			HasPermission = hasPermission;
@@ -355,7 +348,5 @@ namespace VocaDb.Web.Models {
 		public bool HasPermission { get; set; }
 
 		public PermissionTokenContract PermissionType { get; set; }
-
 	}
-
 }

@@ -12,19 +12,20 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.VideoServices;
 
-namespace VocaDb.Web.Controllers.Api {
-
+namespace VocaDb.Web.Controllers.Api
+{
 	/// <summary>
 	/// API queries for PVs
 	/// </summary>
 	[RoutePrefix("api/pvs")]
-	public class PVApiController : ApiController {
-
+	public class PVApiController : ApiController
+	{
 		private readonly IPVParser pvParser;
 		private readonly IUserPermissionContext permissionContext;
 		private readonly PVQueries queries;
 
-		public PVApiController(IPVParser pvParser, IUserPermissionContext permissionContext, PVQueries queries) {
+		public PVApiController(IPVParser pvParser, IUserPermissionContext permissionContext, PVQueries queries)
+		{
 			this.pvParser = pvParser;
 			this.permissionContext = permissionContext;
 			this.queries = queries;
@@ -48,26 +49,25 @@ namespace VocaDb.Web.Controllers.Api {
 
 		[Route("")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<PVContract> GetPVByUrl(string pvUrl, PVType type = PVType.Original, bool getTitle = true) {
-
+		public async Task<PVContract> GetPVByUrl(string pvUrl, PVType type = PVType.Original, bool getTitle = true)
+		{
 			if (string.IsNullOrEmpty(pvUrl))
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 
 			var result = await pvParser.ParseByUrlAsync(pvUrl, getTitle, permissionContext);
 
-			if (!result.IsOk) {
+			if (!result.IsOk)
+			{
 				var msg = result.Exception.Message;
-				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) {
-					ReasonPhrase = msg, 
+				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest)
+				{
+					ReasonPhrase = msg,
 					Content = new StringContent(msg)
 				});
 			}
 
 			var contract = new PVContract(result, type);
 			return contract;
-
 		}
-
 	}
-
 }

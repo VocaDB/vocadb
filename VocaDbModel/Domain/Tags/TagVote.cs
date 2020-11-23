@@ -1,17 +1,18 @@
 using VocaDb.Model.Domain.Users;
 
-namespace VocaDb.Model.Domain.Tags {
-
+namespace VocaDb.Model.Domain.Tags
+{
 	/// <summary>
 	/// User's vote for a particular tag for a particular entry.
 	/// </summary>
-	public abstract class TagVote : IEntryWithLongId {
-
+	public abstract class TagVote : IEntryWithLongId
+	{
 		private User user;
 
 		protected TagVote() { }
 
-		protected TagVote(User user) {
+		protected TagVote(User user)
+		{
 			User = user;
 		}
 
@@ -19,16 +20,18 @@ namespace VocaDb.Model.Domain.Tags {
 
 		public abstract TagUsage UsageBase { get; }
 
-		public virtual User User {
+		public virtual User User
+		{
 			get { return user; }
-			set {
+			set
+			{
 				ParamIs.NotNull(() => value);
 				user = value;
 			}
 		}
 
-		public virtual bool Equals(TagVote another) {
-
+		public virtual bool Equals(TagVote another)
+		{
 			if (another == null)
 				return false;
 
@@ -39,16 +42,15 @@ namespace VocaDb.Model.Domain.Tags {
 				return false;
 
 			return this.Id == another.Id;
-
 		}
 
 		public override bool Equals(object obj) => Equals(obj as TagVote);
 
 		public override int GetHashCode() => Id.GetHashCode();
 
-		public override string ToString() {
+		public override string ToString()
+		{
 			return string.Format("Vote for {0} by {1}", UsageBase, User);
 		}
-
 	}
 }

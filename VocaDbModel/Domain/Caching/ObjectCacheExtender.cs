@@ -2,10 +2,10 @@ using System;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 
-namespace VocaDb.Model.Domain.Caching {
-
-	public static class ObjectCacheExtender {
-
+namespace VocaDb.Model.Domain.Caching
+{
+	public static class ObjectCacheExtender
+	{
 		/// <summary>
 		/// Get cache item, or insert if it doesn't exist.
 		/// </summary>
@@ -25,8 +25,8 @@ namespace VocaDb.Model.Domain.Caching {
 		/// <remarks>
 		/// This method is not thread safe in the sense that the data factory method may be called multiple times from different threads.
 		/// </remarks>
-		public static T GetOrInsert<T>(this ObjectCache cache, string key, CacheItemPolicy cacheItemPolicy, Func<T> func, Func<T, bool> allowCaching = null) {
-			
+		public static T GetOrInsert<T>(this ObjectCache cache, string key, CacheItemPolicy cacheItemPolicy, Func<T> func, Func<T, bool> allowCaching = null)
+		{
 			// Note: not thread safe
 			if (cache.Contains(key))
 				return (T)cache.Get(key);
@@ -35,16 +35,16 @@ namespace VocaDb.Model.Domain.Caching {
 
 			var addCache = allowCaching == null || allowCaching(item);
 
-			if (addCache) {
+			if (addCache)
+			{
 				cache.Add(key, item, cacheItemPolicy);
 			}
 
 			return item;
-
 		}
 
-		public static async Task<T> GetOrInsertAsync<T>(this ObjectCache cache, string key, CacheItemPolicy policy, Func<Task<T>> func, Func<T, bool> allowCaching = null) {
-
+		public static async Task<T> GetOrInsertAsync<T>(this ObjectCache cache, string key, CacheItemPolicy policy, Func<Task<T>> func, Func<T, bool> allowCaching = null)
+		{
 			if (cache.Contains(key))
 				return (T)cache.Get(key);
 
@@ -52,33 +52,33 @@ namespace VocaDb.Model.Domain.Caching {
 
 			var addCache = allowCaching == null || allowCaching(item);
 
-			if (addCache) {
+			if (addCache)
+			{
 				cache.Add(key, item, policy);
 			}
 
 			return item;
-
 		}
-
 	}
 
-	public static class CachePolicy {
-
-		public static CacheItemPolicy AbsoluteExpiration(TimeSpan fromNow) {
+	public static class CachePolicy
+	{
+		public static CacheItemPolicy AbsoluteExpiration(TimeSpan fromNow)
+		{
 			return new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now + fromNow };
 		}
 
-		public static CacheItemPolicy AbsoluteExpiration(int hours) {
+		public static CacheItemPolicy AbsoluteExpiration(int hours)
+		{
 			return AbsoluteExpiration(TimeSpan.FromHours(hours));
 		}
 
 		/// <summary>
 		/// Cache never expires.
 		/// </summary>
-		public static CacheItemPolicy Never() {
+		public static CacheItemPolicy Never()
+		{
 			return new CacheItemPolicy();
 		}
-
 	}
-
 }

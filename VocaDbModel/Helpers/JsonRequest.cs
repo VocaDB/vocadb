@@ -5,10 +5,10 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace VocaDb.Model.Helpers {
-
-	public static class JsonRequest {
-
+namespace VocaDb.Model.Helpers
+{
+	public static class JsonRequest
+	{
 		public static Task<T> ReadObjectAsync<T>(string url) => ReadObjectAsync<T>(url, TimeSpan.FromSeconds(100));
 
 		/// <summary>
@@ -23,18 +23,17 @@ namespace VocaDb.Model.Helpers {
 		/// <exception cref="JsonSerializationException">If the response wasn't valid JSON.</exception>
 		/// <exception cref="HttpRequestException">If the request failed.</exception>
 		public static async Task<T> ReadObjectAsync<T>(string url, TimeSpan timeout, string userAgent = "",
-			Action<HttpRequestHeaders> headers = null) {
-
-			return await HtmlRequestHelper.GetStreamAsync(url, stream => {
+			Action<HttpRequestHeaders> headers = null)
+		{
+			return await HtmlRequestHelper.GetStreamAsync(url, stream =>
+			{
 				using (var streamReader = new StreamReader(stream))
-				using (var jsonReader = new JsonTextReader(streamReader)) {
+				using (var jsonReader = new JsonTextReader(streamReader))
+				{
 					var serializer = new JsonSerializer();
 					return serializer.Deserialize<T>(jsonReader);
 				}
 			}, timeout: timeout, userAgent: userAgent, headers: headers);
-
 		}
-
 	}
-
 }
