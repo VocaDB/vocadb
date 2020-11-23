@@ -498,6 +498,7 @@ namespace VocaDb.Model.Database.Queries
 
 				contract.CommentCount = Comments(session).GetCount(songId);
 				contract.LatestComments = session.Query<SongComment>()
+					.WhereNotDeleted()
 					.Where(c => c.EntryForComment.Id == songId)
 					.OrderByDescending(c => c.Created).Take(3).ToArray()
 					.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();

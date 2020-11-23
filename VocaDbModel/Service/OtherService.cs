@@ -277,7 +277,7 @@ namespace VocaDb.Model.Service
 
 		private async Task<List<Comment>> GetComments<TEntry, TComment>(ISession session, int maxComments, bool checkDeleted) where TComment : GenericComment<TEntry> where TEntry : class, IEntryWithNames
 		{
-			var q = session.Query<TComment>();
+			var q = session.Query<TComment>().WhereNotDeleted();
 
 			if (checkDeleted)
 				q = q.Where(c => !c.EntryForComment.Deleted);

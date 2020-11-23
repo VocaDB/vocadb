@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -107,19 +108,17 @@ namespace VocaDb.Model.Service.Queries
 				.ToArray();
 		}
 
-		public int GetCount(int entryId)
-		{
-			return ctx.Query<T>().Count(c => c.EntryForComment.Id == entryId);
-		}
+		private IQueryable<Comment> GetComments(int entryId) => ctx.Query<T>()
+			.WhereNotDeleted()
+			.Where(c => c.EntryForComment.Id == entryId);
 
-		public async Task<int> GetCountAsync(int entryId)
-		{
-			return await ctx.Query<T>().Where(c => c.EntryForComment.Id == entryId).VdbCountAsync();
-		}
+		public int GetCount(int entryId) => GetComments(entryId).Count();
+
+		public async Task<int> GetCountAsync(int entryId) => await GetComments(entryId).VdbCountAsync();
 
 		public CommentForApiContract[] GetList(int entryId, int count)
 		{
-			return ctx.Query<T>().Where(c => c.EntryForComment.Id == entryId)
+			return GetComments(entryId)
 				.OrderByDescending(c => c.Created).Take(count).ToArray()
 				.Select(c => new CommentForApiContract(c, userIconFactory))
 				.ToArray();
@@ -127,8 +126,7 @@ namespace VocaDb.Model.Service.Queries
 
 		public async Task<CommentForApiContract[]> GetListAsync(int entryId, int count)
 		{
-			var comments = await ctx.Query<T>()
-				.Where(c => c.EntryForComment.Id == entryId)
+			var comments = await GetComments(entryId)
 				.OrderByDescending(c => c.Created).Take(count)
 				.VdbToListAsync();
 

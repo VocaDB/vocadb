@@ -399,6 +399,7 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				contract.LatestComments = session.Query<AlbumComment>()
+					.WhereNotDeleted()
 					.Where(c => c.EntryForComment.Id == id)
 					.OrderByDescending(c => c.Created)
 					.Take(3)

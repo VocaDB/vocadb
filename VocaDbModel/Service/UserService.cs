@@ -166,8 +166,10 @@ namespace VocaDb.Model.Service
 				var user = session.Load<User>(userId);
 
 				var comments = session.Query<AlbumComment>()
+					.WhereNotDeleted()
 					.Where(c => c.Author == user && !c.EntryForComment.Deleted).OrderByDescending(c => c.Created).ToArray().Cast<Comment>()
 					.Concat(session.Query<ArtistComment>()
+						.WhereNotDeleted()
 						.Where(c => c.Author == user && !c.EntryForComment.Deleted)).OrderByDescending(c => c.Created).ToArray();
 
 				return comments.Select(c => new CommentContract(c)).ToArray();

@@ -193,9 +193,9 @@ namespace VocaDb.Model.Database.Queries
 					stats.FavoriteSongCount = GetSongCount(ctx, user);
 
 					stats.CommentCount
-						= ctx.Query<AlbumComment>().Count(c => c.Author.Id == user.Id)
-						+ ctx.Query<ArtistComment>().Count(c => c.Author.Id == user.Id)
-						+ ctx.Query<SongComment>().Count(c => c.Author.Id == user.Id);
+						= ctx.Query<AlbumComment>().WhereNotDeleted().Count(c => c.Author.Id == user.Id)
+						+ ctx.Query<ArtistComment>().WhereNotDeleted().Count(c => c.Author.Id == user.Id)
+						+ ctx.Query<SongComment>().WhereNotDeleted().Count(c => c.Author.Id == user.Id);
 
 					stats.EditCount = ctx.Query<ActivityEntry>().Count(c => c.Author.Id == user.Id);
 
@@ -269,6 +269,7 @@ namespace VocaDb.Model.Database.Queries
 				.ToArray();
 
 			details.LatestComments = session.Query<UserComment>()
+				.WhereNotDeleted()
 				.Where(c => c.EntryForComment == user).OrderByDescending(c => c.Created).Take(3)
 				.ToArray()
 				.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
@@ -963,6 +964,7 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(ctx =>
 			{
 				var query = ctx.OfType<UserComment>().Query()
+					.WhereNotDeleted()
 					.Where(c => c.EntryForComment.Id == userId);
 
 				var comments = query
