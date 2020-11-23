@@ -328,9 +328,10 @@ namespace VocaDb.Model.Database.Queries
 
 				var stats = session.Query()
 					.Where(a => a.Id == id)
+					.ToArray()
 					.Select(a => new
 					{
-						CommentCount = a.Comments.Count,
+						CommentCount = a.Comments.Count(),
 					})
 					.FirstOrDefault();
 

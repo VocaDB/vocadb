@@ -42,7 +42,7 @@ namespace VocaDb.Model.Mapping.Songs
 				.Inverse().Cascade.AllDeleteOrphan()
 				.Cache.ReadWrite();
 
-			HasMany(m => m.Comments).Inverse().KeyColumn("SongList").Cascade.AllDeleteOrphan().OrderBy("Created");
+			HasMany(m => m.AllComments).Inverse().KeyColumn("SongList").Cascade.AllDeleteOrphan().OrderBy("Created");
 
 			HasMany(m => m.Events).Inverse().Cache.ReadWrite();
 		}

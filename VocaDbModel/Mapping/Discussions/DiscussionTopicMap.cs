@@ -1,4 +1,4 @@
-﻿using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Discussions;
 
 namespace VocaDb.Model.Mapping.Discussions
@@ -23,7 +23,7 @@ namespace VocaDb.Model.Mapping.Discussions
 			References(m => m.Author).Nullable();
 			References(m => m.Folder).Not.Nullable();
 
-			HasMany(m => m.Comments).KeyColumn("[Topic]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
+			HasMany(m => m.AllComments).KeyColumn("[Topic]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 		}
 	}
 }

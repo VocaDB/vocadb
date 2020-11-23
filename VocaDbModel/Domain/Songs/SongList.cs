@@ -88,7 +88,7 @@ namespace VocaDb.Model.Domain.Songs
 			}
 		}
 
-		public virtual IList<SongListComment> Comments
+		public virtual IList<SongListComment> AllComments
 		{
 			get => comments;
 			set
@@ -98,13 +98,15 @@ namespace VocaDb.Model.Domain.Songs
 			}
 		}
 
+		public virtual IEnumerable<SongListComment> Comments => AllComments.Where(c => !c.Deleted);
+
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
 			ParamIs.NotNullOrEmpty(() => message);
 			ParamIs.NotNull(() => loginData);
 
 			var comment = new SongListComment(this, message, loginData);
-			Comments.Add(comment);
+			AllComments.Add(comment);
 
 			return comment;
 		}

@@ -72,7 +72,7 @@ namespace VocaDb.Model.Domain.Comments
 
 		public override void OnDelete()
 		{
-			EntryForComment.Comments.Remove(this);
+			EntryForComment.AllComments.Remove(this);
 		}
 	}
 
@@ -85,7 +85,7 @@ namespace VocaDb.Model.Domain.Comments
 
 		public override void OnDelete()
 		{
-			EntryForComment.Comments.Remove(this);
+			EntryForComment.AllComments.Remove(this);
 		}
 	}
 
@@ -98,7 +98,7 @@ namespace VocaDb.Model.Domain.Comments
 
 		public override void OnDelete()
 		{
-			EntryForComment.Comments.Remove(this);
+			EntryForComment.AllComments.Remove(this);
 		}
 	}
 
@@ -112,7 +112,7 @@ namespace VocaDb.Model.Domain.Comments
 
 		public override void OnDelete()
 		{
-			EntryForComment.Comments.Remove(this);
+			EntryForComment.AllComments.Remove(this);
 		}
 	}
 
@@ -125,7 +125,7 @@ namespace VocaDb.Model.Domain.Comments
 
 		public override void OnDelete()
 		{
-			EntryForComment.Comments.Remove(this);
+			EntryForComment.AllComments.Remove(this);
 		}
 	}
 
@@ -138,7 +138,7 @@ namespace VocaDb.Model.Domain.Comments
 
 		public override void OnDelete()
 		{
-			EntryForComment.Comments.Remove(this);
+			EntryForComment.AllComments.Remove(this);
 		}
 	}
 
@@ -162,7 +162,7 @@ namespace VocaDb.Model.Domain.Comments
 
 		public override void OnDelete()
 		{
-			EntryForComment.Comments.Remove(this);
+			EntryForComment.AllComments.Remove(this);
 		}
 	}
 }

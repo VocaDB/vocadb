@@ -83,7 +83,7 @@ namespace VocaDb.Model.Mapping.Albums
 
 			HasMany(m => m.AllArtists).Table("ArtistsForAlbums").Inverse().Cascade.All().Cache.ReadWrite();
 			HasMany(m => m.AllSongs).Inverse().Cascade.All().OrderBy("DiscNumber, TrackNumber").Cache.ReadWrite();
-			HasMany(m => m.Comments).Inverse().Cascade.AllDeleteOrphan().OrderBy("Created");
+			HasMany(m => m.AllComments).Inverse().Cascade.AllDeleteOrphan().OrderBy("Created");
 			HasMany(m => m.Discs).Inverse().Cascade.AllDeleteOrphan().OrderBy("DiscNumber").Cache.ReadWrite();
 			HasMany(m => m.Hits).Inverse().Cascade.AllDeleteOrphan();
 			HasMany(m => m.Identifiers).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();

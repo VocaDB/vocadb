@@ -159,7 +159,7 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
-		public virtual IList<AlbumComment> Comments
+		public virtual IList<AlbumComment> AllComments
 		{
 			get { return comments; }
 			set
@@ -168,6 +168,8 @@ namespace VocaDb.Model.Domain.Albums
 				comments = value;
 			}
 		}
+
+		public virtual IEnumerable<AlbumComment> Comments => AllComments.Where(c => !c.Deleted);
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
@@ -506,7 +508,7 @@ namespace VocaDb.Model.Domain.Albums
 			ParamIs.NotNull(() => loginData);
 
 			var comment = new AlbumComment(this, message, loginData);
-			Comments.Add(comment);
+			AllComments.Add(comment);
 
 			return comment;
 		}

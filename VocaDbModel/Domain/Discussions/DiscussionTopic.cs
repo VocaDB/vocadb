@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
@@ -50,7 +51,7 @@ namespace VocaDb.Model.Domain.Discussions
 			}
 		}
 
-		public virtual IList<DiscussionComment> Comments
+		public virtual IList<DiscussionComment> AllComments
 		{
 			get => comments;
 			set
@@ -59,6 +60,8 @@ namespace VocaDb.Model.Domain.Discussions
 				comments = value;
 			}
 		}
+
+		public virtual IEnumerable<DiscussionComment> Comments => AllComments.Where(c => !c.Deleted);
 
 		public virtual string Content
 		{
@@ -108,7 +111,7 @@ namespace VocaDb.Model.Domain.Discussions
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
 			var comment = new DiscussionComment(this, message, loginData);
-			Comments.Add(comment);
+			AllComments.Add(comment);
 			return comment;
 		}
 

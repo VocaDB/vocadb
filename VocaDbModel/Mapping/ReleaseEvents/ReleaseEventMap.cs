@@ -26,7 +26,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 			HasMany(m => m.AllAlbums).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.AllArtists).KeyColumn("[Event]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.AllSongs).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
-			HasMany(m => m.Comments).KeyColumn("[ReleaseEvent]").Inverse().Cascade.AllDeleteOrphan();
+			HasMany(m => m.AllComments).KeyColumn("[ReleaseEvent]").Inverse().Cascade.AllDeleteOrphan();
 			HasMany(m => m.Users).Inverse().Cascade.All().Cache.ReadWrite();
 			HasMany(m => m.WebLinks).KeyColumn("[ReleaseEvent]").Inverse().Cascade.All().Cache.ReadWrite();
 

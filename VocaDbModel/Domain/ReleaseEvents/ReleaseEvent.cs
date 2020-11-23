@@ -143,7 +143,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
-		public virtual IList<ReleaseEventComment> Comments
+		public virtual IList<ReleaseEventComment> AllComments
 		{
 			get => comments;
 			set
@@ -152,6 +152,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 				comments = value;
 			}
 		}
+
+		public virtual IEnumerable<ReleaseEventComment> Comments => AllComments.Where(c => !c.Deleted);
 
 		public virtual DateTime CreateDate { get; set; }
 
@@ -292,7 +294,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			ParamIs.NotNull(() => loginData);
 
 			var comment = new ReleaseEventComment(this, message, loginData);
-			Comments.Add(comment);
+			AllComments.Add(comment);
 
 			return comment;
 		}
