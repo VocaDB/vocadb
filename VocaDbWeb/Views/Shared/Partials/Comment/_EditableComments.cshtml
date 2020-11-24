@@ -8,13 +8,13 @@
 <!-- binding context: EditableCommentsViewModel -->
 @if (Model.AllowCreateComment && !Model.CommentBoxEnd)
 {
-	Html.RenderPartial("Partials/Comment/_CreateComment", new CreateCommentViewModel(cssClass, Model.NewCommentRows));
+	@Html.Partial("Partials/Comment/_CreateComment", new CreateCommentViewModel(cssClass, Model.NewCommentRows))
 }
 
 @if (Model.Pagination)
 {
 	<div data-bind="with: paging, visible: paging.hasMultiplePages">
-		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
 	</div>
 }
 
@@ -27,11 +27,11 @@
 @if (Model.Pagination)
 {
 	<div data-bind="with: paging, visible: paging.hasMultiplePages">
-		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
 	</div>
 }
 
 @if (Model.AllowCreateComment && Model.CommentBoxEnd)
 {
-	Html.RenderPartial("Partials/Comment/_CreateComment", new CreateCommentViewModel(cssClass, Model.NewCommentRows));
+	@Html.Partial("Partials/Comment/_CreateComment", new CreateCommentViewModel(cssClass, Model.NewCommentRows))
 }

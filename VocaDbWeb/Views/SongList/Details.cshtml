@@ -41,7 +41,7 @@
 }
 
 @section Head {
-	@{ Html.RenderPartial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties)); }
+	@Html.Partial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties))
 	<link rel="canonical" href="@url" />
 }
 
@@ -54,16 +54,16 @@
 }
 	@Html.ActionLink(Res.Export, "Export", new { id = Model.SongList.Id }, new { id = "export" })
 	@if (Model.IsFeatured) {
-		Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.SongList.Status));
+		@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.SongList.Status))
 	}
 }
 
 @if (Model.IsFeatured && Model.SongList.Status == EntryStatus.Draft && !Model.SongList.Deleted) {
-	Html.RenderPartial("Partials/Shared/_DraftMessage", new DraftMessageViewModel(string.Empty));
+	@Html.Partial("Partials/Shared/_DraftMessage", new DraftMessageViewModel(string.Empty))
 }
 
 @if (Model.SongList.Deleted) {
-	Html.RenderPartial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null));
+	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null))
 }
 
 <div class="media">
@@ -99,13 +99,13 @@
 						</a>
 						@if (ev.Date.HasValue) {
 							if (ev.HasVenueOrVenueName) {
-								<small>(@ev.Date.Value.ToString("d"), @{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev)); })</small>
+								<small>(@ev.Date.Value.ToString("d"), @Html.Partial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev)))</small>
 							} else {
 								<small>(@ev.Date.Value.ToString("d"))</small>
 							}
 						} else {
 							if (ev.HasVenueOrVenueName) {
-								<small>(@{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev)); })</small>
+								<small>(@Html.Partial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev)))</small>
 							}
 						}
 					</li>
@@ -133,7 +133,7 @@
 
 	<div class="inline-block songlist-sort pull-left">
 		@ViewRes.EntryIndexStrings.SortBy
-		@{ Html.RenderPartial("Partials/Knockout/_Dropdown", new DropdownViewModel(Model.SortRules, "sort", "sortName")); }
+		@Html.Partial("Partials/Knockout/_Dropdown", new DropdownViewModel(Model.SortRules, "sort", "sortName"))
 	</div>
 
 	<div class="pull-left songlist-text-query">
@@ -150,14 +150,14 @@
 		<div class="control-group">
 			<div class="control-label">@SearchRes.SongType</div>
 			<div class="controls">
-				@{ Html.RenderPartial("Partials/Song/_SongTypesDropdownKnockout", new SongTypesDropdownKnockoutViewModel("songType")); }
+				@Html.Partial("Partials/Song/_SongTypesDropdownKnockout", new SongTypesDropdownKnockoutViewModel("songType"))
 			</div>
 		</div>
 
 		<div class="control-group">
 			<div class="control-label">@EntryTypeNames.Artist</div>
 			<div class="controls" data-bind="with: artistFilters">
-				@{ Html.RenderPartial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: false)); }
+				@Html.Partial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: false))
 			</div>
 		</div>
 		
@@ -171,7 +171,7 @@
 		<div class="control-group">
 			<div class="control-label"></div>
 			<div class="controls">
-				@{ Html.RenderPartial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters)); }
+				@Html.Partial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters))
 			</div>
 		</div>
 	</div>
@@ -180,11 +180,11 @@
 <div data-bind="css: { loading: loading }, visible: playlistMode() == false" style="display: none;">
 
 	<div data-bind="with: paging" class="dropdown pull-right">
-		@{ Html.RenderPartial("Partials/Knockout/_EntryCount"); }
+		@Html.Partial("Partials/Knockout/_EntryCount")
 	</div>
 
 	<div data-bind="with: paging">
-		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
 	</div>
 
 	<table class="table table-striped">
@@ -216,13 +216,13 @@
 					<img data-bind="attr: { src: url, title: service }" />
 					<!-- /ko -->
 					
-					@{ Html.RenderPartial("Partials/Knockout/_DraftIcon", new KnockoutDraftIconViewModel("status")); }
+					@Html.Partial("Partials/Knockout/_DraftIcon", new KnockoutDraftIconViewModel("status"))
 
 					<br />
 					<small class="extraInfo" data-bind="text: song.artistString"></small>
 
 					<div data-bind="visible: song.pvServices, with: song.previewViewModel">
-						@{ Html.RenderPartial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].pvServiceIcons.getIconUrls")); }
+						@Html.Partial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].pvServiceIcons.getIconUrls"))
 					</div>
 				</td>
 				<!-- ko if: $parent.showTags -->
@@ -240,7 +240,7 @@
 	</table>
 
 	<div data-bind="with: paging">
-		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
 	</div>
 
 </div>
@@ -251,7 +251,7 @@
 	</div>
 </div>
 
-@{ Html.RenderPartial("Partials/Comment/_LatestCommentsKnockout"); }
+@Html.Partial("Partials/Comment/_LatestCommentsKnockout")
 
 <div data-bind="with: tagsEditViewModel">
 	@{ Html.RenderPartial("Partials/_TagsEdit"); }

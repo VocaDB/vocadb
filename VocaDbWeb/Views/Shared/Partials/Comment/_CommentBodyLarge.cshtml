@@ -23,6 +23,6 @@
 		<h3 class="media-heading comment-large-header">
 			@UserHelpers.UserLink(Model.Contract.Author)
 		</h3>
-		@{ Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Contract.Message)); }
+		@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Contract.Message))
 	</div>
 </div>

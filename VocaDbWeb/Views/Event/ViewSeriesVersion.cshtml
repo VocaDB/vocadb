@@ -36,7 +36,7 @@
 }
 
 @if (Model.Entry.ArchivedVersion.Hidden) {
-	Html.RenderPartial("Partials/EntryDetails/_HiddenBanner");
+	@Html.Partial("Partials/EntryDetails/_HiddenBanner")
 }
 
 @if (Model.Entry.ComparableVersions.Any()) {
@@ -46,12 +46,11 @@
 	}
 }
 
-@{ Html.RenderPartial("Partials/ArchivedEntry/_ArchivedObjectVersionProperties", new ArchivedObjectVersionPropertiesViewModel(Model.Version(Model.Entry.ArchivedVersion),
-	Model.Version(Model.Entry.ComparedVersion))); }
+@Html.Partial("Partials/ArchivedEntry/_ArchivedObjectVersionProperties", new ArchivedObjectVersionPropertiesViewModel(Model.Version(Model.Entry.ArchivedVersion), Model.Version(Model.Entry.ComparedVersion)))
 
-@{ Html.RenderPartial("Partials/Event/_PrintArchivedEventSeriesData", new PrintArchivedEventSeriesDataViewModel(Model.Entry.Versions)); }
+@Html.Partial("Partials/Event/_PrintArchivedEventSeriesData", new PrintArchivedEventSeriesDataViewModel(Model.Entry.Versions))
 
-@{ Html.RenderPartial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel()); }
+@Html.Partial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel())
 
 @section BodyScripts {
 	<script src="@Url.Content("~/Scripts/Repositories/ReleaseEventRepository.js")"></script>

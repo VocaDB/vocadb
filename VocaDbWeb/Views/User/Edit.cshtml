@@ -18,7 +18,7 @@
 }
 
 @using(Html.BeginForm()) {	
-	Html.RenderPartial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel("Unable to edit user."/* TODO: localize */));
+	@Html.Partial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel("Unable to edit user."/* TODO: localize */))
 	
 	@Html.HiddenFor(m => m.Id)
 
@@ -67,10 +67,10 @@
 				}				
 			</tbody>			
 		</table>
-		@{ Html.RenderPartial("Partials/Shared/_EntrySearchNameBox", new EntrySearchNameBoxViewModel("ownedArtistAddName")); }
+		@Html.Partial("Partials/Shared/_EntrySearchNameBox", new EntrySearchNameBoxViewModel("ownedArtistAddName"))
 	</fieldset>
 		
-	Html.RenderPartial("Partials/Shared/_SaveBtn");
+	@Html.Partial("Partials/Shared/_SaveBtn")
 	
 }
 

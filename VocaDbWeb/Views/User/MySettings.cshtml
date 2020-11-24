@@ -17,7 +17,7 @@
 	};		
 }
 
-@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(R.MySettingsStrings.UnableToSave)); }
+@Html.Partial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(R.MySettingsStrings.UnableToSave))
 
 @using (Html.BeginForm("MySettings", "User", FormMethod.Post)) {
     
@@ -28,7 +28,7 @@
     @Html.HiddenFor(m => m.TwitterName)
 	@Html.HiddenFor(m => m.CanChangeName)
 
-	Html.RenderPartial("Partials/Shared/_SaveBtn");
+	@Html.Partial("Partials/Shared/_SaveBtn")
 	
 	<div id="tabs">
 
@@ -43,7 +43,7 @@
 		<div id="accountSettings">
 			<div>
 				<div class="editor-label">
-					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.Username, "Username can be changed once per year. Username may contain alphanumeric characters and underscores. After changing your username you need to log in again. Contact staff member if necessary.")); }
+					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.Username, "Username can be changed once per year. Username may contain alphanumeric characters and underscores. After changing your username you need to log in again. Contact staff member if necessary."))
 				</div>
 				<div class="editor-field">
 					@if (Model.CanChangeName) {
@@ -55,7 +55,7 @@
 				</div>
 
 				<div class="editor-label">
-					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.Email, Res.EmailNote)); }
+					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.Email, Res.EmailNote))
 				</div>
 				<div class="editor-field">
 					@Html.TextBoxForKnockout(m => m.Email, "value: email", maxLength: 50)
@@ -187,7 +187,7 @@
 			
  			<div class="editor-label">
 				@R.MySettingsStrings.AboutMe
-				@{ Html.RenderPartial("Partials/Shared/_MarkdownNotice"); }
+				@Html.Partial("Partials/Shared/_MarkdownNotice")
 			</div>
 			<div class="editor-field">
 				@Html.TextAreaForKnockout(m => m.AboutMe, binding: "textInput: aboutMe", cssClass: "input-xxlarge", rows: 7)
@@ -207,10 +207,10 @@
 						<!-- ko foreach: knownLanguages -->
 							<tr>
 								<td>
-									@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AllUserKnownLanguages.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode", cssClass: "input-xlarge")); }
+									@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AllUserKnownLanguages.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode", cssClass: "input-xlarge"))
 								</td>
 								<td>
-									@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.UserLanguageProficiencyNames.ValuesAndNamesStrings, "proficiency")); }
+									@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.UserLanguageProficiencyNames.ValuesAndNamesStrings, "proficiency"))
 								</td>
 								<td>								
 									<a href="#" class="textLink deleteLink" data-bind="click: function() { $parent.knownLanguages.remove($data); }">@ViewRes.SharedStrings.Delete</a>
@@ -275,7 +275,7 @@
 	</div>
 	
 	<br />
-	Html.RenderPartial("Partials/Shared/_SaveBtn");
+	@Html.Partial("Partials/Shared/_SaveBtn")
 	
 }
 

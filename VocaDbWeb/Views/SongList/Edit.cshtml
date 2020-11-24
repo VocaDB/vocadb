@@ -49,12 +49,12 @@
 </script>
 }
 
-@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(Res.UnableToSave)); }
+@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(Res.UnableToSave))
 
 <form action="@Url.Action("Edit", "SongList")" id="songListForm" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
 	@Html.HiddenFor(m => m.CanCreateFeaturedLists)
 
-	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(parentUrl)); }
+	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(parentUrl))
 
 	<div id="tabs">
 
@@ -74,7 +74,7 @@
 
 			<div class="editor-label">
 				@Res.Description
-				@{ Html.RenderPartial("Partials/Shared/_MarkdownNotice"); }
+				@Html.Partial("Partials/Shared/_MarkdownNotice")
 			</div>
 			<div class="editor-field">
 				<textarea data-bind="textInput: description" rows="6" cols="60" maxlength="3000" class="input-xxlarge"></textarea>
@@ -95,7 +95,7 @@
 			}
 			
 			<div class="editor-label">
-				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.EventDate, Res.EventDateHelp)); }
+				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.EventDate, Res.EventDateHelp))
 			</div>
 			<div class="editor-field">
 				<input type="text" data-bind="datepicker: { value: eventDateDate, dateFormat: 'yy-mm-dd' }" class="span2" maxlength="10" />
@@ -110,14 +110,14 @@
 						<img class="pull-left media-object" src="@thumbUrl" alt="Thumb" />
 					}
 					<div class="media-body">
-						@{ Html.RenderPartial("Partials/Shared/_ImageUploadMessage"); }
+						@Html.Partial("Partials/Shared/_ImageUploadMessage")
 						<input type="file" id="thumbPicUpload" name="thumbPicUpload" />
 					</div>
 				</div>
 			</div>
 			
 			<div class="editor-label">
-				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.Status, Resources.CommonMessages.EntryStatusExplanation)); }
+				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.Status, Resources.CommonMessages.EntryStatusExplanation))
 			</div>
 			<div class="editor-field">
 				@Html.DropdownForKnockout(m => m.Status, ViewHelper.CreateEnumList(Model.AllowedEntryStatuses, Translate.EntryStatusNames.GetTranslatedFields(Model.AllowedEntryStatuses)), "value: status")
@@ -166,9 +166,9 @@
 
 	<input type="hidden" name="model" data-bind="value: ko.toJSON($root)" />
 	<br />
-	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(parentUrl)); }
+	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(parentUrl))
 
 </form>
 
-@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete)); }
-@{ Html.RenderPartial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash)); }
+@Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
+@Html.Partial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))

@@ -1,4 +1,4 @@
 ﻿@using VocaDb.Web.Models.Shared.Partials.Shared;
 @model ValidationSummaryDivViewModel
 
-@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(Model.Message)); }
+@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(Model.Message))

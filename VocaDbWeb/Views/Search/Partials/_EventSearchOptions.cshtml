@@ -11,7 +11,7 @@
 		<div class="control-label">@Res.EventCategory</div>
 		<div class="controls">
 			<div class="input-append">
-				@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.ReleaseEventCategoryNames.ValuesAndNamesStrings, "category")); }
+				@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.ReleaseEventCategoryNames.ValuesAndNamesStrings, "category"))
 			</div>
 		</div>
 	</div>
@@ -19,7 +19,7 @@
 	<div class="control-group">
 		<div class="control-label">@EntryTypeNames.Artist</div>
 		<div class="controls" data-bind="with: artistFilters">
-			@{ Html.RenderPartial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: false)); }
+			@Html.Partial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: false))
 		</div>
 	</div>
 	
