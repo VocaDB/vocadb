@@ -7,7 +7,7 @@
 
 
 	<div data-bind="with: paging">
-		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
 	</div>
 
 	<table class="table table-striped" data-bind="css: { loading: loading }">
@@ -37,7 +37,7 @@
 					<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details('Artist', id) }" href="#"></a>
 					&nbsp;
 					<span data-bind="artistTypeLabel: artistType"></span>
-					@{ Html.RenderPartial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status")); }
+					@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
 					<br />
 					<small class="extraInfo" data-bind="text: $data.additionalNames"></small>
 				</td>
@@ -62,7 +62,7 @@
 	</table>
 
 	<div data-bind="with: paging">
-		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
 	</div>
 
 </div>

@@ -4,7 +4,7 @@
 
 <h3 class="withMargin">@ViewRes.EntryDetailsStrings.LatestComments</h3>
 <div data-bind="with: comments">
-	@{ Html.RenderPartial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3, pagination: false)); }
+	@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3, pagination: false))
 	<!-- ko ifnot: comments().length -->
 	<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 	<!-- /ko -->

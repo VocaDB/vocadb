@@ -60,8 +60,8 @@
     <PackageReference Include="System.Runtime.Caching" Version="4.7.0" />
     <PackageReference Include="taglib" Version="2.1.0.0" />
     <PackageReference Include="VocaDb.BandcampMetadataExtractor" Version="1.0.1" />
-    <PackageReference Include="VocaDb.NicoApiClient" Version="2.0.0" />
-    <PackageReference Include="VocaDb.PiaproClient" Version="3.0.0" />
+    <PackageReference Include="VocaDb.NicoApiClient" Version="2.0.1" />
+    <PackageReference Include="VocaDb.PiaproClient" Version="3.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="RSS.NET">

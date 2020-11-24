@@ -13,7 +13,7 @@ using VocaDb.Model.Service.Helpers;
 using System.Drawing;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Database.Repositories.NHibernate;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Domain.Images;
 

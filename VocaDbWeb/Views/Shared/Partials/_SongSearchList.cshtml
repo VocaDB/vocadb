@@ -11,7 +11,7 @@
 @{ Html.RenderPartial("Partials/_EntryCountBox"); }
 
 <div data-bind="with: paging">
-	@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+	@Html.Partial("Partials/Knockout/_ServerSidePaging")
 </div>
 
 <table class="table table-striped" data-bind="css: { loading: loading }">
@@ -59,7 +59,7 @@
 				<span data-bind="visible: $data.rating === 'Favorite'" class="icon heartIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Favorite]"></span>
 				<span data-bind="visible: $data.rating === 'Like'" class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>
 				
-				@{ Html.RenderPartial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status")); }
+				@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
 				
 				<i class="icon-calendar" data-bind="visible: $data.publishDate, attr: { title: ($data.publishDate ? 'Published: ' + $parent.formatDate($data.publishDate) : '') }, tooltip: { placement: 'right' }"></i>
 
@@ -67,7 +67,7 @@
 				<small class="extraInfo" data-bind="text: artistString"></small>
 
 				<div data-bind="visible: pvServices, with: previewViewModel">
-					@{ Html.RenderPartial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].getPVServiceIcons")); }
+					@Html.Partial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].getPVServiceIcons"))
 				</div>
 			</td>
 			<td data-bind="visible: $parent.showTags()" class="search-tags-column">
@@ -87,7 +87,7 @@
 </table>
 
 <div data-bind="with: paging">
-	@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+	@Html.Partial("Partials/Knockout/_ServerSidePaging")
 </div>
 <!-- /ko -->
 	

@@ -18,5 +18,5 @@
 </ul>
 
 @foreach (var entry in Model) {
-	Html.RenderPartial("Partials/Activityfeed/_ActivityEntry", new ActivityEntryViewModel(entry));
+	@Html.Partial("Partials/Activityfeed/_ActivityEntry", new ActivityEntryViewModel(entry))
 }

@@ -26,7 +26,7 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Service.DataSharing;
 using VocaDb.Model.Service.Helpers;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Utils;
 

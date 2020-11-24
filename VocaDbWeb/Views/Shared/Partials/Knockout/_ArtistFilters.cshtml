@@ -17,7 +17,7 @@
 	@if (Model.ArtistParticipationStatus)
 	{
 		<!-- ko if: $parent.hasSingleArtist -->
-		Html.RenderPartial("Partials/Song/_ArtistParticipationStatusOptionsKnockout", new ArtistParticipationStatusOptionsKnockoutViewModel("$parent.artistParticipationStatus"));
+		@Html.Partial("Partials/Song/_ArtistParticipationStatusOptionsKnockout", new ArtistParticipationStatusOptionsKnockoutViewModel("$parent.artistParticipationStatus"))
 		<!-- /ko -->
 	}
 </div>

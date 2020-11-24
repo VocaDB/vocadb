@@ -34,7 +34,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.EntryValidators;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Queries;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Service.VideoServices;

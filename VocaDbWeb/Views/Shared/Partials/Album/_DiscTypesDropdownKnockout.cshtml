@@ -5,4 +5,4 @@
 @using VocaDb.Model.Utils;
 @model DiscTypesDropdownKnockoutViewModel
 
-@{ Html.RenderPartial("Partials/Knockout/_CheckBoxButtons", new CheckBoxButtonsViewModel(Translate.DiscTypeNames.GetValuesAndNamesStrings(AppConfig.AlbumTypes), Model.Binding)); }
+@Html.Partial("Partials/Knockout/_CheckBoxButtons", new CheckBoxButtonsViewModel(Translate.DiscTypeNames.GetValuesAndNamesStrings(AppConfig.AlbumTypes), Model.Binding))

@@ -1,6 +1,6 @@
 ﻿@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
-@using rule = VocaDb.Model.Service.QueryableExtenders.EventSortRule;
+@using rule = VocaDb.Model.Service.QueryableExtensions.EventSortRule;
 @using Res = ViewRes.Event.EventsBySeriesStrings
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventForApiContract[]>
 
@@ -40,7 +40,7 @@
 	}
 }
 
-@{ Html.RenderPartial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model)); }
+@Html.Partial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model))
 
 @section BodyScripts {
 	<script type="text/javascript">

@@ -16,7 +16,7 @@
 		break;
 
 	case PVService.Bilibili:
-		Html.RenderPartial("Partials/PV/_EmbedBili", new EmbedBiliViewModel(Model.PV, Model.Width, Model.Height));
+		@Html.Partial("Partials/PV/_EmbedBili", new EmbedBiliViewModel(Model.PV, Model.Width, Model.Height))
 		break;
 
 	case PVService.File:
@@ -36,11 +36,11 @@
 		break;
 
 	case PVService.NicoNicoDouga:
-		Html.RenderPartial("Partials/PV/_EmbedNico", new EmbedNicoViewModel(Model.PV.PVId, widthStr, heightStr, Model.Id, Model.EnableApi));
+		@Html.Partial("Partials/PV/_EmbedNico", new EmbedNicoViewModel(Model.PV.PVId, widthStr, heightStr, Model.Id, Model.EnableApi))
 		break;
 
 	case PVService.Piapro:
-		Html.RenderPartial("Partials/PV/_EmbedPiapro", new EmbedPiaproViewModel(Model.PV, widthStr, heightStr));
+		@Html.Partial("Partials/PV/_EmbedPiapro", new EmbedPiaproViewModel(Model.PV, widthStr, heightStr))
 		break;
 
 	case PVService.SoundCloud:

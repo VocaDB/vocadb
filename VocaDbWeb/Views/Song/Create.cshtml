@@ -13,7 +13,7 @@
 
 <form action="@Url.Action("Create", "Song")" method="POST" data-bind="submit: submit">
 
-	@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(Res.UnableToCreateSong)); }
+	@Html.Partial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(Res.UnableToCreateSong))
 																								
 	<div class="row-fluid">
 		<div class="span5 well well-transparent">
@@ -44,7 +44,7 @@
 
 			<div class="editor-label">
 				@Res.Name
-				@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
+				@Html.Partial("Partials/Shared/_RequiredField")
 			</div>
 
 			<div class="editor-field">
@@ -110,7 +110,7 @@
 
 			<div class="editor-label">
 				<span>@Res.ArtistsInfo</span>
-				@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
+				@Html.Partial("Partials/Shared/_RequiredField")
 				<br />
 				<span class="extraInfo">@Res.ArtistDesc</span>
 			</div>

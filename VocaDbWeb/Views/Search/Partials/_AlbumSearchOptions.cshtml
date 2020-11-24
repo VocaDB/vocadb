@@ -10,21 +10,21 @@
 	<div class="control-group">
 		<div class="control-label">@Res.AlbumType</div>
 		<div class="controls">
-			@{ Html.RenderPartial("Partials/Album/_DiscTypesDropdownKnockout", new DiscTypesDropdownKnockoutViewModel("albumType")); }
+			@Html.Partial("Partials/Album/_DiscTypesDropdownKnockout", new DiscTypesDropdownKnockoutViewModel("albumType"))
 		</div>
 	</div>
 
 	<div class="control-group">
 		<div class="control-label">@EntryTypeNames.Artist</div>
 		<div class="controls" data-bind="with: artistFilters">
-			@{ Html.RenderPartial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: true)); }
+			@Html.Partial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: true))
 		</div>
 	</div>
 	
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			@{ Html.RenderPartial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.AlbumFilters)); }
+			@Html.Partial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.AlbumFilters))
 		</div>
 	</div>
 </div>

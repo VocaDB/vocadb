@@ -90,7 +90,7 @@
 				<small class="extraInfo" data-bind="text: artistString"></small>
 
 				<div data-bind="visible: pvServices, with: previewViewModel">
-					@{ Html.RenderPartial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].getPVServiceIcons")); }
+					@Html.Partial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].getPVServiceIcons"))
 				</div>
 			</td>
 			<td>

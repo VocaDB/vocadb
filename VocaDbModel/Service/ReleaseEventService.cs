@@ -6,7 +6,7 @@ using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.ReleaseEvents;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Model.Service
 {

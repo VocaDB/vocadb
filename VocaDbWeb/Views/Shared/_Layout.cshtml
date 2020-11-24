@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using System.Web.Optimization
 @using VocaDb.Model.Domain.Globalization
 @using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers
@@ -132,7 +133,7 @@
                             </div>
                                                             		
 							@if (!string.IsNullOrEmpty(TempData.StatusMessage())) {
-								Html.RenderPartial("Partials/Shared/_NotificationPanel", new NotificationPanelViewModel(TempData.StatusMessage()));
+								@Html.Partial("Partials/Shared/_NotificationPanel", new NotificationPanelViewModel(TempData.StatusMessage()))
 							}
 		
 							@RenderBody()
