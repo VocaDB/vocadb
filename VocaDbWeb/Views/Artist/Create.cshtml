@@ -14,14 +14,14 @@
 
 <form action="@Url.Action("Create", "Artist")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
 
-	@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(R.CreateStrings.UnableToCreateArtist)); }
+	@Html.Partial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(R.CreateStrings.UnableToCreateArtist))
 	
 	<div class="row-fluid">
 		<div class="span5 well well-transparent">
 
 			<div class="editor-label">
 				@R.CreateStrings.Name
-				@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
+				@Html.Partial("Partials/Shared/_RequiredField")
 			</div>
 
 			<div class="editor-field">
@@ -67,7 +67,7 @@
 				<table>
 					<tr><td class="formLabel">
 						@R.CreateStrings.WebLinkURL
-						@{ Html.RenderPartial("Partials/Shared/_RequiredField"); }
+						@Html.Partial("Partials/Shared/_RequiredField")
 					</td><td>
 						@Html.TextBoxForKnockout(m => m.WebLinkUrl, "value: webLink.url, focusout: checkDuplicates",  "input-xlarge", maxLength: 512)     
 					</td></tr>

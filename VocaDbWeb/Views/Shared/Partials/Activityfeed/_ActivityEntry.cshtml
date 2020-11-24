@@ -18,7 +18,7 @@
 		@HelperRes.ActivityFeedHelperStrings.Someone
 	}
 
-	@{ Html.RenderPartial("Partials/Activityfeed/_EntryType", new EntryTypeViewModel(Model.Entry)); }
+	@Html.Partial("Partials/Activityfeed/_EntryType", new EntryTypeViewModel(Model.Entry))
 
 	<small class="pull-right extraInfo" title="@Model.Entry.CreateDate.ToUniversalTime().ToString("g") UTC">
 		@TimeAgoStringBuilder.FormatTimeAgo(Model.Entry.CreateDate)

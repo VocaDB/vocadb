@@ -12,10 +12,10 @@
 			@Html.Raw("<tr>")
 		}
 		<td>
-			@{ Html.RenderPartial("Partials/Artist/_ArtistIconLink", new ArtistIconLinkViewModel(artist)); }
+			@Html.Partial("Partials/Artist/_ArtistIconLink", new ArtistIconLinkViewModel(artist))
 		</td>
 		<td>
-			@{ Html.RenderPartial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist)); }
+			@Html.Partial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist))
 			@if (Model.DisplayType)
 			{
 				@("(")@Translate.ArtistTypeName(artist.ArtistType)@(")")

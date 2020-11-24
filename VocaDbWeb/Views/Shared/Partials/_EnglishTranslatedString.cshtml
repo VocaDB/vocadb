@@ -8,13 +8,13 @@
 	var maxLength = Model.MaxLength;
 	var summaryLength = Model.SummaryLength;
 	if (str == null || str.Length <= maxLength) {
-		Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(str));
+		@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(str))
 	} else {
 		<div data-bind="visible: isFullDescriptionShown()">
-			@{ Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(str)); }
+			@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(str))
 		</div>
 		<div data-bind="visible: !isFullDescriptionShown()">
-			@{ Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(str.Substring(0, summaryLength) + "...")); }
+			@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(str.Substring(0, summaryLength) + "..."))
 			<p><a href="" data-bind="click: showFullDescription">@Res.ShowFullDescription</a></p>
 		</div>
 	}

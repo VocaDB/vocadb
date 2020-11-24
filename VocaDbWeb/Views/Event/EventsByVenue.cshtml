@@ -46,7 +46,7 @@
 			</h3>
 						
 			@if (!string.IsNullOrEmpty(venue.Description)) {
-				<p>@{ Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(venue.Description)); }</p>
+				<p>@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(venue.Description))</p>
 			}
 		</div>
 	</div>

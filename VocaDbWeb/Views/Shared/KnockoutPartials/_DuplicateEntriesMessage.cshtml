@@ -3,7 +3,7 @@
 	Binding context: KnockoutObservableArray<dc.DuplicateEntryResultContract>
 -->
 <div class="alert" style="display:none" data-bind="visible: dupeEntries() && dupeEntries().length > 0">
-	@{ Html.RenderPartial("Partials/Shared/_NotificationIcon"); }
+	@Html.Partial("Partials/Shared/_NotificationIcon")
 	@ViewRes.EntryCreateStrings.FoundPossibleDuplicates
 	<ul data-bind="foreach: dupeEntries">
 		<li>

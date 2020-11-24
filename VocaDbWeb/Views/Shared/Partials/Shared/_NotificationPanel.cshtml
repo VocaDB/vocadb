@@ -2,6 +2,6 @@
 @model NotificationPanelViewModel
 
 <div class="alert">
-	@{ Html.RenderPartial("Partials/Shared/_NotificationIcon"); }
+	@Html.Partial("Partials/Shared/_NotificationIcon")
 	<span id="@Model.MessageId">@Model.Message</span>
 </div>

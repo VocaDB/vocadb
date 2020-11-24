@@ -257,5 +257,5 @@
 }
 
 @helper SearchDropDown(string visibleBinding, string viewModel, Dictionary<string, string> sortRules) {
-	Html.RenderPartial("Partials/Knockout/_SearchDropDown", new VocaDb.Web.Models.Shared.Partials.Knockout.SearchDropDownViewModel(visibleBinding, viewModel, sortRules));
+	@Html.Partial("Partials/Knockout/_SearchDropDown", new VocaDb.Web.Models.Shared.Partials.Knockout.SearchDropDownViewModel(visibleBinding, viewModel, sortRules))
 }

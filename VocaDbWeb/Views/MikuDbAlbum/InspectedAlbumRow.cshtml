@@ -18,13 +18,13 @@
 					<button id="updateAlbumBtn" type="submit" class="btn" name="commit" value="No">Update</button>
 					<br />
 					@if (Model.MergedAlbum != null) { 
-						<span>@{ Html.RenderPartial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(Model.MergedAlbum)); }</span>
+						<span>@Html.Partial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(Model.MergedAlbum))</span>
 					} else {
 						<span>(no match)</span>
 					}
 				</p>
 				<br />
-				@{ Html.RenderPartial("Partials/Shared/_EntrySearchNameBox", new EntrySearchNameBoxViewModel("albumSearchName")); }
+				@Html.Partial("Partials/Shared/_EntrySearchNameBox", new EntrySearchNameBoxViewModel("albumSearchName"))
 			</td>
 			<td>
 				<p class="form-inline">
@@ -40,7 +40,7 @@
 					<li>
 						@artist.Name: 
 						@if (artist.ExistingArtist != null) {
-							<span>@{ Html.RenderPartial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist.ExistingArtist)); }</span>
+							<span>@Html.Partial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist.ExistingArtist))</span>
 						} else {
 							<span>(no match)</span>
 						}

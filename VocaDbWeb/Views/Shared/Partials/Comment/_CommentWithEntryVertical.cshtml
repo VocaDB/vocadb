@@ -2,10 +2,10 @@
 @model CommentWithEntryVerticalViewModel
 
 <div class="well well-transparent">
-	@{ Html.RenderPartial("Partials/Comment/_CommentEntryItem", new CommentEntryItemViewModel(Model.Entry.Entry)); }
+	@Html.Partial("Partials/Comment/_CommentEntryItem", new CommentEntryItemViewModel(Model.Entry.Entry))
 	@foreach (var comment in Model.Entry.Comments)
 	{
-		Html.RenderPartial("Partials/Comment/_PrintComment", new PrintCommentViewModel(comment, false, maxLength: Model.MaxLength));
+		@Html.Partial("Partials/Comment/_PrintComment", new PrintCommentViewModel(comment, false, maxLength: Model.MaxLength))
 		if (comment != Model.Entry.Comments.Last())
 		{
 			<hr />

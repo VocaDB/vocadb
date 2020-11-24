@@ -17,5 +17,5 @@
 			@TimeAgoStringBuilder.FormatTimeAgo(Model.Contract.Created)
 		</small>
 	</h3>
-	@{ Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Contract.Message.TruncateWithEllipsis(Model.MaxLength))); }
+	@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Contract.Message.TruncateWithEllipsis(Model.MaxLength)))
 </div>
