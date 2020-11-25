@@ -16,6 +16,7 @@ namespace VocaDb.Migrations
 
 			Create.Table(TableNames.Comments)
 				.WithColumn("Id").AsInt64().NotNullable().Identity().PrimaryKey()
+				.WithColumn("OldTable").AsString().Nullable()
 				.WithColumn("OldId").AsInt32().Nullable()
 				.WithColumn("Author").AsInt32().NotNullable().ForeignKey("FK_Comments_Users", TableNames.Users, "Id").OnDelete(Rule.Cascade)
 				.WithColumn("Created").AsDateTime().NotNullable()
