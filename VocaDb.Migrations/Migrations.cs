@@ -6,7 +6,7 @@ namespace VocaDb.Migrations
 	// Migration version format: YYYY_MM_DD_HHmm
 
 	[Migration(2020_11_20_2000)]
-	public class Comments : AutoReversingMigration
+	public class Comments : Migration
 	{
 		public override void Up()
 		{
@@ -31,6 +31,29 @@ namespace VocaDb.Migrations
 				.WithColumn("SongList").AsInt32().Nullable().ForeignKey("FK_Comments_SongLists", TableNames.SongLists, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_SongList")
 				.WithColumn("Tag").AsInt32().Nullable().ForeignKey("FK_Comments_Tags", TableNames.Tags, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_Tag")
 				.WithColumn("User").AsInt32().Nullable().ForeignKey("FK_Comments_Users1", TableNames.Users, "Id").Indexed("IX_Comments_User");
+
+			Execute.Sql(@"insert into Comments(OldTable, OldId, EntryType, Album, Artist, Topic, ReleaseEvent, Song, SongList, Tag, [User], Author, Created, Message, Deleted)
+select 'AlbumComments', Id, 'Album', Album, null, null, null, null, null, null, null as [User], Author, Created, Message, Deleted from AlbumComments
+union
+select 'ArtistComments', Id, 'Artist', null, Artist, null, null, null, null, null, null as [User], Author, Created, Message, Deleted from ArtistComments
+union
+select 'discussions.DiscussionComments', Id, 'DiscussionTopic', null, null, Topic, null, null, null, null, null as [User], Author, Created, Message, Deleted from discussions.DiscussionComments
+union
+select 'ReleaseEventComments', Id, 'ReleaseEvent', null, null, null, ReleaseEvent, null, null, null, null as [User], Author, Created, Message, Deleted from ReleaseEventComments
+union
+select 'SongComments', Id, 'Song', null, null, null, null, Song, null, null, null as [User], Author, Created, Message, Deleted from SongComments
+union
+select 'SongListComments', Id, 'SongList', null, null, null, null, null, SongList, null, null as [User], Author, Created, Message, Deleted from SongListComments
+union
+select 'TagComments', Id, 'Tag', null, null, null, null, null, null, Tag, null as [User], Author, Created, Message, Deleted from TagComments
+union
+select 'UserComments', Id, 'User', null, null, null, null, null, null, null, [User], Author, Created, Message, Deleted from UserComments
+order by Created");
+		}
+
+		public override void Down()
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 
