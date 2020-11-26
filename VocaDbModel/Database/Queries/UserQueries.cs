@@ -192,13 +192,8 @@ namespace VocaDb.Model.Database.Queries
 					stats.ArtistCount = GetArtistCount(ctx, user);
 					stats.FavoriteSongCount = GetSongCount(ctx, user);
 
-					stats.CommentCount
-						= ctx.Query<AlbumComment>().WhereNotDeleted().Count(c => c.Author.Id == user.Id)
-						+ ctx.Query<ArtistComment>().WhereNotDeleted().Count(c => c.Author.Id == user.Id)
-						+ ctx.Query<SongComment>().WhereNotDeleted().Count(c => c.Author.Id == user.Id);
-
+					stats.CommentCount = ctx.Query<Comment>().WhereNotDeleted().Count(c => c.Author.Id == user.Id);
 					stats.EditCount = ctx.Query<ActivityEntry>().Count(c => c.Author.Id == user.Id);
-
 					stats.SubmitCount = ctx.Query<ActivityEntry>().Count(c => c.Author.Id == user.Id && c.EditEvent == EntryEditEvent.Created);
 
 					stats.TagVotes

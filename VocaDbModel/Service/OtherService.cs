@@ -275,25 +275,14 @@ namespace VocaDb.Model.Service
 			return comments.GroupBy(e => e.Entry, new EntryComparer()).Select(e => new EntryWithCommentsContract(entryContractFac(e.First()), e.Select(c => new CommentContract(c)).ToArray()));
 		}
 
-		private async Task<List<Comment>> GetComments<TEntry, TComment>(ISession session, int maxComments, bool checkDeleted) where TComment : GenericComment<TEntry> where TEntry : class, IEntryWithNames
-		{
-			var q = session.Query<TComment>().WhereNotDeleted();
-
-			if (checkDeleted)
-				q = q.Where(c => !c.EntryForComment.Deleted);
-
-			return await q.OrderByDescending(c => c.Created).Take(maxComments).Cast<Comment>().VdbToListAsync();
-		}
-
 		private async Task<EntryWithCommentsContract[]> GetRecentCommentsAsync(ISession session, int maxComments)
 		{
-			var albumComments = await GetComments<Album, AlbumComment>(session, maxComments, true);
-			var artistComments = await GetComments<Artist, ArtistComment>(session, maxComments, true);
-			var songComments = await GetComments<Song, SongComment>(session, maxComments, true);
-			var discussionComments = await GetComments<DiscussionTopic, DiscussionComment>(session, maxComments, true);
-			var songListComments = await GetComments<SongList, SongListComment>(session, maxComments, false);
-			var tagComments = await GetComments<Tag, TagComment>(session, maxComments, true);
-			var eventComments = await GetComments<ReleaseEvent, ReleaseEventComment>(session, maxComments, true);
+			var comments = session.Query<Comment>()
+				.WhereNotDeleted()
+				.OrderByDescending(c => c.Created)
+				.Take(maxComments)
+				.ToArray()
+				.Where(c => !c.Entry.Deleted);
 
 			// Discussion topics aren't actually comments but we want to show them in the recent comments list anyway
 			var discussionTopics = await session.Query<DiscussionTopic>().Where(c => !c.Deleted).OrderByDescending(c => c.Created).Take(maxComments).VdbToListAsync();
@@ -308,14 +297,8 @@ namespace VocaDb.Model.Service
 				Created = r.Date
 			});
 
-			var combined = albumComments
-				.Concat(artistComments)
-				.Concat(songComments)
-				.Concat(songListComments)
-				.Concat(discussionComments)
+			var combined = comments
 				.Concat(discussionTopicsAsComments)
-				.Concat(tagComments)
-				.Concat(eventComments)
 				.Concat(albumReviewsAsComments)
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments);
