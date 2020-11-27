@@ -27,6 +27,10 @@ namespace VocaDb.Migrations
 
 		public override void Up()
 		{
+			Rename.Column("Date").OnTable(TableNames.AlbumReviews).To("Created");
+			Rename.Column("Text").OnTable(TableNames.AlbumReviews).To("Message");
+			Rename.Column("User").OnTable(TableNames.AlbumReviews).To("Author");
+
 			var commentTables = new[]
 			{
 				new CommentTable(name: TableNames.AlbumComments, schema: null, hasAuthorName: true),
@@ -37,6 +41,8 @@ namespace VocaDb.Migrations
 				new CommentTable(name: TableNames.SongListComments, schema: null, hasAuthorName: false),
 				new CommentTable(name: TableNames.TagComments, schema: null, hasAuthorName: false),
 				new CommentTable(name: TableNames.UserComments, schema: null, hasAuthorName: false),
+
+				new CommentTable(name: TableNames.AlbumReviews, schema: null, hasAuthorName: false),
 			};
 
 			Create.Table(TableNames.Comments)

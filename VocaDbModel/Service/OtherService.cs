@@ -291,15 +291,8 @@ namespace VocaDb.Model.Service
 				Created = t.Created
 			});
 
-			var albumReviews = await session.Query<AlbumReview>().OrderByDescending(r => r.Date).Take(maxComments).VdbToListAsync();
-			var albumReviewsAsComments = albumReviews.Select(r => new AlbumComment(r.Album, r.Text, new AgentLoginData(r.User))
-			{
-				Created = r.Date
-			});
-
 			var combined = comments
 				.Concat(discussionTopicsAsComments)
-				.Concat(albumReviewsAsComments)
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments);
 

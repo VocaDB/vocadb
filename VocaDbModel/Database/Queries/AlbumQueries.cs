@@ -91,7 +91,7 @@ namespace VocaDb.Model.Database.Queries
 			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () =>
 			{
 				var latestReview = album.LastReview;
-				var latestRatingScore = latestReview != null ? album.UserCollections.FirstOrDefault(uc => uc.User.Equals(latestReview.User)) : null;
+				var latestRatingScore = latestReview != null ? album.UserCollections.FirstOrDefault(uc => uc.User.Equals(latestReview.Author)) : null;
 
 				return new SharedAlbumStatsContract
 				{
@@ -178,33 +178,34 @@ namespace VocaDb.Model.Database.Queries
 				if (contract.Id != 0)
 				{
 					review = ctx.Load<AlbumReview>(contract.Id);
-					if (!review.User.Equals(PermissionContext.LoggedUser))
+					if (!review.Author.Equals(PermissionContext.LoggedUser))
 					{
 						PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 					}
 				}
 				else
 				{
-					review = ctx.Query<AlbumReview>().FirstOrDefault(r => r.Album.Id == albumId && r.User.Id == PermissionContext.LoggedUserId && r.LanguageCode == contract.LanguageCode);
+					review = ctx.Query<AlbumReview>().FirstOrDefault(r => r.EntryForComment.Id == albumId && r.Author.Id == PermissionContext.LoggedUserId && r.LanguageCode == contract.LanguageCode);
 				}
 
 				// Create
 				if (review == null)
 				{
 					var album = ctx.Load<Album>(albumId);
-					review = new AlbumReview(album, ctx.OfType<User>().GetLoggedUser(PermissionContext), contract.Title, contract.Text, contract.LanguageCode);
+					var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
+					review = new AlbumReview(album, contract.Text, agentLoginData, contract.Title, contract.LanguageCode);
 					album.Reviews.Add(review);
 					ctx.Save(review);
 				}
 				else
 				{ // Update
 					review.LanguageCode = contract.LanguageCode;
-					review.Text = contract.Text;
+					review.Message = contract.Text;
 					review.Title = contract.Title;
 					ctx.Update(review);
 				}
 
-				ctx.AuditLogger.AuditLog(string.Format("submitted review for {0}", entryLinkFactory.CreateEntryLink(review.Album)));
+				ctx.AuditLogger.AuditLog(string.Format("submitted review for {0}", entryLinkFactory.CreateEntryLink(review.EntryForComment)));
 
 				return new AlbumReviewContract(review, userIconFactory);
 			});
@@ -218,12 +219,12 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var review = ctx.Load<AlbumReview>(reviewId);
 
-				if (!review.User.Equals(PermissionContext.LoggedUser))
+				if (!review.Author.Equals(PermissionContext.LoggedUser))
 				{
 					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 				}
 
-				review.Album.Reviews.Remove(review);
+				review.EntryForComment.Reviews.Remove(review);
 				ctx.Delete(review);
 			});
 		}
@@ -236,7 +237,7 @@ namespace VocaDb.Model.Database.Queries
 
 				return album.Reviews
 					.Where(review => string.IsNullOrEmpty(languageCode) || review.LanguageCode == languageCode)
-					.OrderBy(review => review.Date)
+					.OrderBy(review => review.Created)
 					.Select(review => new AlbumReviewContract(review, userIconFactory))
 					.ToArray();
 			});

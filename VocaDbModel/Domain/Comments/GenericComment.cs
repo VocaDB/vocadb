@@ -129,4 +129,22 @@ namespace VocaDb.Model.Domain.Comments
 		public UserComment(User user, string message, AgentLoginData loginData)
 			: base(user, message, loginData) { }
 	}
+
+	public class AlbumReview : GenericComment<Album>, IAlbumLink, IEntryWithIntId
+	{
+		public AlbumReview() { }
+
+		public AlbumReview(Album entry, string message, AgentLoginData loginData, string title, string languageCode)
+			: base(entry, message, loginData)
+		{
+			Title = title ?? string.Empty;
+			LanguageCode = languageCode ?? string.Empty;
+		}
+
+		public virtual string LanguageCode { get; set; }
+
+		public virtual string Title { get; set; }
+
+		Album IAlbumLink.Album => EntryForComment;
+	}
 }

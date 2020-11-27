@@ -264,7 +264,7 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
-		public virtual AlbumReview LastReview => Reviews.OrderByDescending(r => r.Date).FirstOrDefault();
+		public virtual AlbumReview LastReview => Reviews.OrderByDescending(r => r.Created).FirstOrDefault();
 
 		public virtual TranslatedString TranslatedName
 		{

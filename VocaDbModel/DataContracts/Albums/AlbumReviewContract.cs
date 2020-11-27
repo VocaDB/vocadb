@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Comments;
 
 namespace VocaDb.Model.DataContracts.Albums
 {
@@ -18,12 +18,12 @@ namespace VocaDb.Model.DataContracts.Albums
 				throw new ArgumentNullException(nameof(review));
 
 			Id = review.Id;
-			AlbumId = review.Album.Id;
-			Date = review.Date;
+			AlbumId = review.EntryForComment.Id;
+			Date = review.Created;
 			LanguageCode = review.LanguageCode;
-			Text = review.Text;
+			Text = review.Message;
 			Title = review.Title;
-			User = new UserForApiContract(review.User, userIconFactory, UserOptionalFields.MainPicture);
+			User = new UserForApiContract(review.Author, userIconFactory, UserOptionalFields.MainPicture);
 		}
 
 		public virtual int Id { get; set; }

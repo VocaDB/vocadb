@@ -107,4 +107,18 @@ namespace VocaDb.Model.Mapping
 			References(m => m.EntryForComment).Column("[User]").Nullable();
 		}
 	}
+
+	public class AlbumReviewMap : SubclassMap<AlbumReview>
+	{
+		public AlbumReviewMap()
+		{
+			Table("AlbumReviews");
+			KeyColumn("Comment");
+
+			Map(m => m.LanguageCode).Not.Nullable().UniqueKey("UX_AlbumReviews");
+			Map(m => m.Title).Not.Nullable();
+
+			References(m => m.EntryForComment).Column("Album").Not.Nullable().UniqueKey("UX_AlbumReviews");
+		}
+	}
 }
