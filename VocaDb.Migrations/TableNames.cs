@@ -20,6 +20,7 @@ namespace VocaDb.Migrations
 		public const string ArchivedSongListVersions = nameof(ArchivedSongListVersions);
 		public const string ArchivedTagVersions = nameof(ArchivedTagVersions);
 		public const string ArchivedVenueVersions = nameof(ArchivedVenueVersions);
+		public const string ArtistComments = nameof(ArtistComments);
 		public const string ArtistNames = nameof(ArtistNames);
 		public const string Artists = nameof(Artists);
 		public const string ArtistTagUsages = nameof(ArtistTagUsages);
@@ -39,8 +40,11 @@ namespace VocaDb.Migrations
 		public const string PVsForEvents = nameof(PVsForEvents);
 		public const string PVsForSongs = nameof(PVsForSongs);
 		public const string RelatedTags = nameof(RelatedTags);
+		public const string ReleaseEventComments = nameof(ReleaseEventComments);
 		public const string SongsInAlbums = nameof(SongsInAlbums);
+		public const string SongListComments = nameof(SongListComments);
 		public const string SongLists = nameof(SongLists);
+		public const string SongComments = nameof(SongComments);
 		public const string Songs = nameof(Songs);
 		public const string SongNames = nameof(SongNames);
 		public const string SongTagUsages = nameof(SongTagUsages);
@@ -52,6 +56,7 @@ namespace VocaDb.Migrations
 		public const string TagNames = nameof(TagNames);
 		public const string TagWebLinks = nameof(TagWebLinks);
 		public const string TrashedEntries = nameof(TrashedEntries);
+		public const string UserComments = nameof(UserComments);
 		public const string UserOptions = nameof(UserOptions);
 		public const string UserMessages = nameof(UserMessages);
 		public const string Users = nameof(Users);

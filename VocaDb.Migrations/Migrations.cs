@@ -1,4 +1,5 @@
 using System.Data;
+using System.Linq;
 using FluentMigrator;
 
 namespace VocaDb.Migrations
@@ -8,47 +9,72 @@ namespace VocaDb.Migrations
 	[Migration(2020_11_20_2000)]
 	public class Comments : Migration
 	{
+		private sealed class CommentTable
+		{
+			public CommentTable(string name, string schema, bool hasAuthorName)
+			{
+				Name = name;
+				Schema = schema;
+				HasAuthorName = hasAuthorName;
+			}
+
+			public string Name { get; }
+			public string Schema { get; }
+			public bool HasAuthorName { get; }
+
+			public string NameWithSchema => Schema != null ? $"{Schema}.{Name}" : Name;
+		}
+
 		public override void Up()
 		{
-			// TODO: remove these columns
-			Alter.Column("AuthorName").OnTable(TableNames.AlbumComments).AsString(100).Nullable();
-			Alter.Column("AuthorName").OnTable(TableNames.DiscussionComments).InSchema("discussions").AsString(100).Nullable();
+			var commentTables = new[]
+			{
+				new CommentTable(name: TableNames.AlbumComments, schema: null, hasAuthorName: true),
+				new CommentTable(name: TableNames.ArtistComments, schema: null, hasAuthorName: false),
+				new CommentTable(name: TableNames.DiscussionComments, schema: "discussions", hasAuthorName: true),
+				new CommentTable(name: TableNames.ReleaseEventComments, schema: null, hasAuthorName: false),
+				new CommentTable(name: TableNames.SongComments, schema: null, hasAuthorName: false),
+				new CommentTable(name: TableNames.SongListComments, schema: null, hasAuthorName: false),
+				new CommentTable(name: TableNames.TagComments, schema: null, hasAuthorName: false),
+				new CommentTable(name: TableNames.UserComments, schema: null, hasAuthorName: false),
+			};
 
 			Create.Table(TableNames.Comments)
 				.WithColumn("Id").AsInt64().NotNullable().Identity().PrimaryKey()
-				.WithColumn("OldTable").AsString().Nullable()
-				.WithColumn("OldId").AsInt32().Nullable()
-				.WithColumn("Author").AsInt32().NotNullable().ForeignKey("FK_Comments_Users", TableNames.Users, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Author").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id").OnDelete(Rule.Cascade)
 				.WithColumn("Created").AsDateTime().NotNullable()
 				.WithColumn("Deleted").AsBoolean().NotNullable().WithDefaultValue(false)
 				.WithColumn("Message").AsString(4000).NotNullable()
-				.WithColumn("EntryType").AsString(20).NotNullable()
-				.WithColumn("Album").AsInt32().Nullable().ForeignKey("FK_Comments_Albums", TableNames.Albums, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_Album")
-				.WithColumn("Artist").AsInt32().Nullable().ForeignKey("FK_Comments_Artists", TableNames.Artists, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_Artist")
-				.WithColumn("Topic").AsInt32().Nullable().ForeignKey("FK_Comments_DiscussionTopics", "discussions", TableNames.DiscussionTopics, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_DiscussionTopic")
-				.WithColumn("ReleaseEvent").AsInt32().Nullable().ForeignKey("FK_Comments_ReleaseEvents", TableNames.AlbumReleaseEvents, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_ReleaseEvent")
-				.WithColumn("Song").AsInt32().Nullable().ForeignKey("FK_Comments_Songs", TableNames.Songs, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_Song")
-				.WithColumn("SongList").AsInt32().Nullable().ForeignKey("FK_Comments_SongLists", TableNames.SongLists, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_SongList")
-				.WithColumn("Tag").AsInt32().Nullable().ForeignKey("FK_Comments_Tags", TableNames.Tags, "Id").OnDelete(Rule.Cascade).Indexed("IX_Comments_Tag")
-				.WithColumn("User").AsInt32().Nullable().ForeignKey("FK_Comments_Users1", TableNames.Users, "Id").Indexed("IX_Comments_User");
+				// TODO: remove these columns
+				.WithColumn("OldTable").AsString().Nullable()
+				.WithColumn("OldId").AsInt32().Nullable();
 
-			Execute.Sql(@"insert into Comments(OldTable, OldId, EntryType, Album, Artist, Topic, ReleaseEvent, Song, SongList, Tag, [User], Author, Created, Message, Deleted)
-select 'AlbumComments', Id, 'Album', Album, null, null, null, null, null, null, null as [User], Author, Created, Message, Deleted from AlbumComments
-union
-select 'ArtistComments', Id, 'Artist', null, Artist, null, null, null, null, null, null as [User], Author, Created, Message, Deleted from ArtistComments
-union
-select 'discussions.DiscussionComments', Id, 'DiscussionTopic', null, null, Topic, null, null, null, null, null as [User], Author, Created, Message, Deleted from discussions.DiscussionComments
-union
-select 'ReleaseEventComments', Id, 'ReleaseEvent', null, null, null, ReleaseEvent, null, null, null, null as [User], Author, Created, Message, Deleted from ReleaseEventComments
-union
-select 'SongComments', Id, 'Song', null, null, null, null, Song, null, null, null as [User], Author, Created, Message, Deleted from SongComments
-union
-select 'SongListComments', Id, 'SongList', null, null, null, null, null, SongList, null, null as [User], Author, Created, Message, Deleted from SongListComments
-union
-select 'TagComments', Id, 'Tag', null, null, null, null, null, null, Tag, null as [User], Author, Created, Message, Deleted from TagComments
-union
-select 'UserComments', Id, 'User', null, null, null, null, null, null, null, [User], Author, Created, Message, Deleted from UserComments
-order by Created");
+			var values = string.Join(" union ", commentTables.Select(table => $"select '{table.NameWithSchema}', Id, Author, Created, Message from {table.NameWithSchema}"));
+			Execute.Sql($@"insert into Comments(OldTable, OldId, Author, Created, Message) {values} order by Created");
+
+			foreach (var table in commentTables)
+			{
+				Create.Column("Comment").OnTable(table.Name).InSchema(table.Schema).AsInt64().Nullable();
+				Execute.Sql($"update {table.NameWithSchema} set Comment = c.Id from {table.NameWithSchema} ec inner join {TableNames.Comments} c on c.OldTable = '{table.NameWithSchema}' and ec.Id = c.OldId");
+				Alter.Column("Comment").OnTable(table.Name).InSchema(table.Schema).AsInt64().NotNullable().ForeignKey(TableNames.Comments, "Id");
+
+				// TODO: remove these columns
+
+				if (table.HasAuthorName)
+				{
+					Alter.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).AsString(100).Nullable();
+					Rename.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).To("OldAuthorName");
+				}
+
+				Alter.Column("Author").OnTable(table.Name).InSchema(table.Schema).AsInt32().Nullable();
+				Rename.Column("Author").OnTable(table.Name).InSchema(table.Schema).To("OldAuthor");
+
+				Alter.Column("Created").OnTable(table.Name).InSchema(table.Schema).AsDateTime().Nullable();
+				Rename.Column("Created").OnTable(table.Name).InSchema(table.Schema).To("OldCreated");
+
+				Alter.Column("Message").OnTable(table.Name).InSchema(table.Schema).AsString(4000).Nullable();
+				Rename.Column("Message").OnTable(table.Name).InSchema(table.Schema).To("OldMessage");
+			}
 		}
 
 		public override void Down()

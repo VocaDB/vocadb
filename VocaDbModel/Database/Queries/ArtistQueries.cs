@@ -331,7 +331,7 @@ namespace VocaDb.Model.Database.Queries
 					.ToArray()
 					.Select(a => new
 					{
-						CommentCount = a.Comments.Count(),
+						CommentCount = Comments(session).GetCount(id),
 					})
 					.FirstOrDefault();
 

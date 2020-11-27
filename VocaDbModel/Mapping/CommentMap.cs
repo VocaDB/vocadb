@@ -1,5 +1,4 @@
 using FluentNHibernate.Mapping;
-using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Comments;
 
 namespace VocaDb.Model.Mapping
@@ -8,7 +7,6 @@ namespace VocaDb.Model.Mapping
 	{
 		protected CommentMap()
 		{
-			DiscriminateSubClassesOnColumn("[EntryType]");
 			Table("Comments");
 			Cache.ReadWrite();
 			Id(m => m.Id);
@@ -25,7 +23,8 @@ namespace VocaDb.Model.Mapping
 	{
 		public AlbumCommentMap()
 		{
-			DiscriminatorValue(EntryType.Album.ToString());
+			Table("AlbumComments");
+			KeyColumn("Comment");
 
 			References(m => m.EntryForComment).Column("[Album]").Nullable();
 		}
@@ -35,7 +34,8 @@ namespace VocaDb.Model.Mapping
 	{
 		public ArtistCommentMap()
 		{
-			DiscriminatorValue(EntryType.Artist.ToString());
+			Table("ArtistComments");
+			KeyColumn("Comment");
 
 			References(m => m.EntryForComment).Column("[Artist]").Nullable();
 		}
@@ -45,7 +45,9 @@ namespace VocaDb.Model.Mapping
 	{
 		public DiscussionCommentMap()
 		{
-			DiscriminatorValue(EntryType.DiscussionTopic.ToString());
+			Schema("discussions");
+			Table("DiscussionComments");
+			KeyColumn("Comment");
 
 			References(m => m.EntryForComment).Column("[Topic]").Nullable();
 		}
@@ -55,7 +57,8 @@ namespace VocaDb.Model.Mapping
 	{
 		public ReleaseEventCommentMap()
 		{
-			DiscriminatorValue(EntryType.ReleaseEvent.ToString());
+			Table("ReleaseEventComments");
+			KeyColumn("Comment");
 
 			References(m => m.EntryForComment).Column("[ReleaseEvent]").Nullable();
 		}
@@ -65,7 +68,8 @@ namespace VocaDb.Model.Mapping
 	{
 		public SongCommentMap()
 		{
-			DiscriminatorValue(EntryType.Song.ToString());
+			Table("SongComments");
+			KeyColumn("Comment");
 
 			References(m => m.EntryForComment).Column("[Song]").Nullable();
 		}
@@ -75,7 +79,8 @@ namespace VocaDb.Model.Mapping
 	{
 		public SongListCommentMap()
 		{
-			DiscriminatorValue(EntryType.SongList.ToString());
+			Table("SongListComments");
+			KeyColumn("Comment");
 
 			References(m => m.EntryForComment).Column("SongList").Nullable();
 		}
@@ -85,7 +90,8 @@ namespace VocaDb.Model.Mapping
 	{
 		public TagCommentMap()
 		{
-			DiscriminatorValue(EntryType.Tag.ToString());
+			Table("TagComments");
+			KeyColumn("Comment");
 
 			References(m => m.EntryForComment).Column("[Tag]").Nullable();
 		}
@@ -95,7 +101,8 @@ namespace VocaDb.Model.Mapping
 	{
 		public UserCommentMap()
 		{
-			DiscriminatorValue(EntryType.User.ToString());
+			Table("UserComments");
+			KeyColumn("Comment");
 
 			References(m => m.EntryForComment).Column("[User]").Nullable();
 		}
