@@ -15,7 +15,7 @@
 	<div class="pull-right">
 		<div class="inline-block">
 			@ViewRes.EntryIndexStrings.SortBy
-			@{ Html.RenderPartial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.AlbumSortRuleNames.ValuesAndNamesStrings, "sort", "sortName")); }
+			@Html.Partial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.AlbumSortRuleNames.ValuesAndNamesStrings, "sort", "sortName"))
 
 			<div class="btn-group">
 				<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#">
@@ -71,7 +71,7 @@
 	<div class="control-group">
 		<div class="control-label">@ViewRes.Search.IndexStrings.AlbumType</div>
 		<div class="controls">
-			@{ Html.RenderPartial("Partials/Album/_DiscTypesDropdownKnockout", new DiscTypesDropdownKnockoutViewModel("albumType")); }
+			@Html.Partial("Partials/Album/_DiscTypesDropdownKnockout", new DiscTypesDropdownKnockoutViewModel("albumType"))
 		</div>
 	</div>
 
@@ -91,7 +91,7 @@
 				<a href="#" class="btn btn-nomargin" data-bind="visible: !releaseEvent.isEmpty(), attr: { href: releaseEventUrl() }" title="Release event information">
 					<i class="icon icon-info-sign"></i>
 				</a>
-				@{ Html.RenderPartial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent")); }
+				@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent"))
 			</div>
 		</div>
 	</div>
@@ -99,7 +99,7 @@
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			@{ Html.RenderPartial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.AlbumFilters)); }
+			@Html.Partial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.AlbumFilters))
 		</div>
 	</div>
 
@@ -108,11 +108,11 @@
 <div data-bind="css: { loading: loading }, visible: true" style="display: none;">
 
 	<div data-bind="with: paging" class="dropdown pull-right">
-		@{ Html.RenderPartial("Partials/Knockout/_EntryCount"); }
+		@Html.Partial("Partials/Knockout/_EntryCount")
 	</div>
 
 	<div data-bind="with: paging">
-		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
 	</div>
 
 	<!-- ko if: viewMode() == 'Details' -->
@@ -151,7 +151,7 @@
 				</td>
 				<td>
 					<a data-bind="text: album.name, attr: { href: vdb.utils.EntryUrlMapper.details('Album', album.id), title: album.additionalNames }" href="#"></a><br />
-					@{ Html.RenderPartial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status")); }
+					@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
 					<small class="extraInfo" data-bind="text: album.artistString"></small><br />
 					<small class="extraInfo" data-bind="text: $parent.resources().discTypeNames[album.discType]"></small>
 				</td>
@@ -191,7 +191,7 @@
 	<!-- /ko -->
 
 	<div data-bind="with: paging">
-		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
 	</div>
 
 </div>

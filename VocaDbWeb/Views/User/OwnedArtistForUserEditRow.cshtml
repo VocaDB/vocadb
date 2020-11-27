@@ -8,7 +8,7 @@
 			@Html.HiddenFor(m => m.Id)
 			@Html.HiddenFor(m => m.Artist.Id)
 			@Html.HiddenFor(m => m.Artist.Name)
-			Html.RenderPartial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(Model.Artist));
+			@Html.Partial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(Model.Artist))
 		}
 	</td>
 	<td>

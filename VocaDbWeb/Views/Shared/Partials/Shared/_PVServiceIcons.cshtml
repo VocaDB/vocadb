@@ -5,5 +5,5 @@
 
 @foreach (var service in EnumVal<PVService>.Values.Where(service => Model.Services.HasFlag((PVServices)service)))
 {
-	Html.RenderPartial("Partials/Shared/_PVServiceIcon", new PVServiceIconViewModel(service));
+	@Html.Partial("Partials/Shared/_PVServiceIcon", new PVServiceIconViewModel(service))
 }

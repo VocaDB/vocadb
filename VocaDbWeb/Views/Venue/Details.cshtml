@@ -28,15 +28,15 @@
 		<a href="@Url.Action("Edit", "Event", new { venueId = Model.Id != 0 ? (int?)Model.Id : null }, null)" id="createEventLink">@ViewRes.Event.EventsBySeriesStrings.CreateEvent</a>
 	}
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
-	@{ Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status)); }
+	@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
 }
 
 @if (Model.Deleted) {
-	Html.RenderPartial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null));
+	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null))
 }
 
 @if (Model.Coordinates.HasValue) {
-	Html.RenderPartial("Partials/Shared/_EmbedGoogleMaps", new EmbedGoogleMapsViewModel(Model.Coordinates));
+	@Html.Partial("Partials/Shared/_EmbedGoogleMaps", new EmbedGoogleMapsViewModel(Model.Coordinates))
 }
 
 <div class="media">
@@ -82,7 +82,7 @@
 	}
 </ul>
 
-@{ Html.RenderPartial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel()); }
+@Html.Partial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel())
 
 @section BodyScripts {
 @Scripts.Render("~/bundles/Venue/Details")

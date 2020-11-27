@@ -36,7 +36,7 @@
 			</td>
 			<td>
 				<span class="@style">
-					@{ Html.RenderPartial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(ver.Contract.Created)); }
+					@Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(ver.Contract.Created))
 				</span>
 			</td>
 			<td>					

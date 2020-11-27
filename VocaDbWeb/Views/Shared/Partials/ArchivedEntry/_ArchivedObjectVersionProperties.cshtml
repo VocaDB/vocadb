@@ -38,11 +38,11 @@
 		</tr>
 		<tr>
 			<td>Created</td>
-			<td>@{ Html.RenderPartial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.Ver.Contract.Created)); }</td>
+			<td>@Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.Ver.Contract.Created))</td>
 			<td>
 				@if (Model.CompareTo != null)
 				{
-					Html.RenderPartial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CompareTo.Contract.Created));
+					@Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CompareTo.Contract.Created))
 				}
 			</td>
 		</tr>

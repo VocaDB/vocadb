@@ -43,7 +43,7 @@
 				{
 					<br />
 					<small class="extraInfo">
-						@{ Html.RenderPartial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev)); }
+						@Html.Partial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev))
 					</small>
 				}
 			</div>

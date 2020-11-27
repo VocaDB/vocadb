@@ -20,7 +20,7 @@
 			@SongHelpers.SongLink(song)
 			@if (Model.DisplayType)
 			{
-				Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.SongType));
+				@Html.Partial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.SongType))
 			}
 			@if (Model.DisplayPublishDate && song.PublishDate.HasValue)
 			{
