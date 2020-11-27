@@ -95,7 +95,7 @@ namespace VocaDb.Model.Database.Queries
 
 				return new SharedAlbumStatsContract
 				{
-					ReviewCount = album.Reviews.Count,
+					ReviewCount = album.Reviews.Count(),
 					LatestReview = latestReview != null ? new AlbumReviewContract(latestReview, userIconFactory) : null,
 					LatestReviewRatingScore = latestRatingScore?.Rating ?? 0,
 					OwnedCount = album.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Owned),
@@ -189,12 +189,12 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				// Create
-				if (review == null)
+				if (review == null || review.Deleted)
 				{
 					var album = ctx.Load<Album>(albumId);
 					var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
 					review = new AlbumReview(album, contract.Text, agentLoginData, contract.Title, contract.LanguageCode);
-					album.Reviews.Add(review);
+					album.AllReviews.Add(review);
 					ctx.Save(review);
 				}
 				else
@@ -224,8 +224,8 @@ namespace VocaDb.Model.Database.Queries
 					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 				}
 
-				review.EntryForComment.Reviews.Remove(review);
-				ctx.Delete(review);
+				review.OnDelete();
+				ctx.Update(review);
 			});
 		}
 

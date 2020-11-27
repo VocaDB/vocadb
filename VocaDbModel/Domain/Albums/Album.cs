@@ -391,7 +391,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual int RatingTotal { get; set; }
 
-		public virtual IList<AlbumReview> Reviews
+		public virtual IList<AlbumReview> AllReviews
 		{
 			get => reviews;
 			set
@@ -400,6 +400,8 @@ namespace VocaDb.Model.Domain.Albums
 				reviews = value;
 			}
 		}
+
+		public virtual IEnumerable<AlbumReview> Reviews => AllReviews.Where(r => !r.Deleted);
 
 		public virtual IEnumerable<SongInAlbum> Songs
 		{

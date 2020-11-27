@@ -30,6 +30,7 @@ namespace VocaDb.Migrations
 			Rename.Column("Date").OnTable(TableNames.AlbumReviews).To("Created");
 			Rename.Column("Text").OnTable(TableNames.AlbumReviews).To("Message");
 			Rename.Column("User").OnTable(TableNames.AlbumReviews).To("Author");
+			Delete.Index("UX_AlbumReviews").OnTable(TableNames.AlbumReviews);
 
 			var commentTables = new[]
 			{
