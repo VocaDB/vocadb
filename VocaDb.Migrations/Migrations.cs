@@ -18,15 +18,30 @@ namespace VocaDb.Migrations
 				HasAuthorName = hasAuthorName;
 			}
 
+			/// <summary>
+			/// Table name without schema. (e.g. `AlbumComments`, `ArtistComments`, `DiscussionComments`, ...)
+			/// </summary>
 			public string Name { get; }
+
+			/// <summary>
+			/// Table schema. (either null or `discussions`)
+			/// </summary>
 			public string Schema { get; }
+
+			/// <summary>
+			/// The table has the `AuthorName` column.
+			/// </summary>
 			public bool HasAuthorName { get; }
 
+			/// <summary>
+			/// Table name with schema. (e.g. `AlbumComments`, `ArtistComments`, `discussions.DiscussionComments`, ...)
+			/// </summary>
 			public string NameWithSchema => Schema != null ? $"{Schema}.{Name}" : Name;
 		}
 
 		public override void Up()
 		{
+			// Rename columns on `AlbumReviews` table.
 			Rename.Column("Date").OnTable(TableNames.AlbumReviews).To("Created");
 			Rename.Column("Text").OnTable(TableNames.AlbumReviews).To("Message");
 			Rename.Column("User").OnTable(TableNames.AlbumReviews).To("Author");
@@ -46,6 +61,7 @@ namespace VocaDb.Migrations
 				new CommentTable(name: TableNames.AlbumReviews, schema: null, hasAuthorName: false),
 			};
 
+			// Create `Comments` table.
 			Create.Table(TableNames.Comments)
 				.WithColumn("Id").AsInt64().NotNullable().Identity().PrimaryKey()
 				.WithColumn("Author").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id").OnDelete(Rule.Cascade)
@@ -56,29 +72,43 @@ namespace VocaDb.Migrations
 				.WithColumn("OldTable").AsString().Nullable()
 				.WithColumn("OldId").AsInt32().Nullable();
 
+			// insert into Comments(OldTable, OldId, Author, Created, Message)
+			//     select 'AlbumComments', Id, Author, Created, Message from AlbumComments union
+			//     select 'ArtistComments', Id, Author, Created, Message from ArtistComments union
+			//     select 'discussions.DiscussionComments', Id, Author, Created, Message from discussions.DiscussionComments union
+			//     ...
+			//     select 'UserComments', Id, Author, Created, Message from UserComments union
+			//     select 'AlbumReviews', Id, Author, Created, Message from AlbumReviews
+			// order by Created
 			var values = string.Join(" union ", commentTables.Select(table => $"select '{table.NameWithSchema}', Id, Author, Created, Message from {table.NameWithSchema}"));
 			Execute.Sql($@"insert into Comments(OldTable, OldId, Author, Created, Message) {values} order by Created");
 
 			foreach (var table in commentTables)
 			{
+				// Add `Comment` column to comment tables (`AlbumComments`, `ArtistComments`, `DiscussionComments`, ...).
 				Create.Column("Comment").OnTable(table.Name).InSchema(table.Schema).AsInt64().Nullable();
+				// e.g. update discussions.DiscussionComments set Comment = c.Id from discussions.DiscussionComments ec inner join Comments c on c.OldTable = 'discussions.DiscussionComments' and ec.Id = c.OldId
 				Execute.Sql($"update {table.NameWithSchema} set Comment = c.Id from {table.NameWithSchema} ec inner join {TableNames.Comments} c on c.OldTable = '{table.NameWithSchema}' and ec.Id = c.OldId");
 				Alter.Column("Comment").OnTable(table.Name).InSchema(table.Schema).AsInt64().NotNullable().ForeignKey(TableNames.Comments, "Id");
 
-				// TODO: remove these columns
+				// TODO: remove these columns.
 
 				if (table.HasAuthorName)
 				{
+					// Make `AuthorName` nullable and rename it to `OldAuthorName`.
 					Alter.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).AsString(100).Nullable();
 					Rename.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).To("OldAuthorName");
 				}
 
+				// Make `Author` nullable and rename it to `OldAuthor`.
 				Alter.Column("Author").OnTable(table.Name).InSchema(table.Schema).AsInt32().Nullable();
 				Rename.Column("Author").OnTable(table.Name).InSchema(table.Schema).To("OldAuthor");
 
+				// Make `Created` nullable and rename it to `OldCreated`.
 				Alter.Column("Created").OnTable(table.Name).InSchema(table.Schema).AsDateTime().Nullable();
 				Rename.Column("Created").OnTable(table.Name).InSchema(table.Schema).To("OldCreated");
 
+				// Make `Message` nullable and rename it to `OldMessage`.
 				Alter.Column("Message").OnTable(table.Name).InSchema(table.Schema).AsString(4000).Nullable();
 				Rename.Column("Message").OnTable(table.Name).InSchema(table.Schema).To("OldMessage");
 			}
