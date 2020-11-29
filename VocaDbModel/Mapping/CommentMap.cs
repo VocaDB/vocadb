@@ -13,7 +13,7 @@ namespace VocaDb.Model.Mapping
 
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
-			Map(m => m.Message).Length(4000).Not.Nullable();
+			Map(m => m.Message).Length(int.MaxValue).Not.Nullable();
 
 			References(m => m.Author).Not.Nullable();
 		}

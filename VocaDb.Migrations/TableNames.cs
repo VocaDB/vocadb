@@ -1,5 +1,10 @@
 namespace VocaDb.Migrations
 {
+	public static class SchemaNames
+	{
+		public const string Discussions = "discussions";
+	}
+
 	public static class TableNames
 	{
 		public const string ActivityEntries = nameof(ActivityEntries);

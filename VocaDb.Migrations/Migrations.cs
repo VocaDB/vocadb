@@ -9,13 +9,23 @@ namespace VocaDb.Migrations
 	[Migration(2020_11_20_2000)]
 	public class Comments : Migration
 	{
+		private enum CommentTableOptions
+		{
+			None = 0,
+
+			/// <summary>
+			/// Rename the `AuthorName` column.
+			/// </summary>
+			RenameAuthorName = 1,
+		}
+
 		private sealed class CommentTable
 		{
-			public CommentTable(string name, string schema, bool hasAuthorName)
+			public CommentTable(string name, string schema = null, CommentTableOptions options = CommentTableOptions.None)
 			{
 				Name = name;
 				Schema = schema;
-				HasAuthorName = hasAuthorName;
+				Options = options;
 			}
 
 			/// <summary>
@@ -28,10 +38,7 @@ namespace VocaDb.Migrations
 			/// </summary>
 			public string Schema { get; }
 
-			/// <summary>
-			/// The table has the `AuthorName` column.
-			/// </summary>
-			public bool HasAuthorName { get; }
+			public CommentTableOptions Options { get; }
 
 			/// <summary>
 			/// Table name with schema. (e.g. `AlbumComments`, `ArtistComments`, `discussions.DiscussionComments`, ...)
@@ -47,30 +54,30 @@ namespace VocaDb.Migrations
 			Rename.Column("User").OnTable(TableNames.AlbumReviews).To("Author");
 			Delete.Index("UX_AlbumReviews").OnTable(TableNames.AlbumReviews);
 
-			var commentTables = new[]
-			{
-				new CommentTable(name: TableNames.AlbumComments, schema: null, hasAuthorName: true),
-				new CommentTable(name: TableNames.ArtistComments, schema: null, hasAuthorName: false),
-				new CommentTable(name: TableNames.DiscussionComments, schema: "discussions", hasAuthorName: true),
-				new CommentTable(name: TableNames.ReleaseEventComments, schema: null, hasAuthorName: false),
-				new CommentTable(name: TableNames.SongComments, schema: null, hasAuthorName: false),
-				new CommentTable(name: TableNames.SongListComments, schema: null, hasAuthorName: false),
-				new CommentTable(name: TableNames.TagComments, schema: null, hasAuthorName: false),
-				new CommentTable(name: TableNames.UserComments, schema: null, hasAuthorName: false),
-
-				new CommentTable(name: TableNames.AlbumReviews, schema: null, hasAuthorName: false),
-			};
-
 			// Create `Comments` table.
 			Create.Table(TableNames.Comments)
 				.WithColumn("Id").AsInt64().NotNullable().Identity().PrimaryKey()
 				.WithColumn("Author").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id").OnDelete(Rule.Cascade)
 				.WithColumn("Created").AsDateTime().NotNullable()
 				.WithColumn("Deleted").AsBoolean().NotNullable().WithDefaultValue(false)
-				.WithColumn("Message").AsString(4000).NotNullable()
+				.WithColumn("Message").AsString(int.MaxValue).NotNullable()
 				// TODO: remove these columns
 				.WithColumn("OldTable").AsString().Nullable()
 				.WithColumn("OldId").AsInt32().Nullable();
+
+			var commentTables = new[]
+			{
+				new CommentTable(name: TableNames.AlbumComments, options: CommentTableOptions.RenameAuthorName),
+				new CommentTable(name: TableNames.ArtistComments),
+				new CommentTable(name: TableNames.DiscussionComments, schema: SchemaNames.Discussions, options: CommentTableOptions.RenameAuthorName),
+				new CommentTable(name: TableNames.ReleaseEventComments),
+				new CommentTable(name: TableNames.SongComments),
+				new CommentTable(name: TableNames.SongListComments),
+				new CommentTable(name: TableNames.TagComments),
+				new CommentTable(name: TableNames.UserComments),
+
+				new CommentTable(name: TableNames.AlbumReviews),
+			};
 
 			// insert into Comments(OldTable, OldId, Author, Created, Message)
 			//     select 'AlbumComments', Id, Author, Created, Message from AlbumComments union
@@ -81,7 +88,7 @@ namespace VocaDb.Migrations
 			//     select 'AlbumReviews', Id, Author, Created, Message from AlbumReviews
 			// order by Created
 			var values = string.Join(" union ", commentTables.Select(table => $"select '{table.NameWithSchema}', Id, Author, Created, Message from {table.NameWithSchema}"));
-			Execute.Sql($@"insert into Comments(OldTable, OldId, Author, Created, Message) {values} order by Created");
+			Execute.Sql($@"insert into {TableNames.Comments}(OldTable, OldId, Author, Created, Message) {values} order by Created");
 
 			foreach (var table in commentTables)
 			{
@@ -92,13 +99,6 @@ namespace VocaDb.Migrations
 				Alter.Column("Comment").OnTable(table.Name).InSchema(table.Schema).AsInt64().NotNullable().ForeignKey(TableNames.Comments, "Id");
 
 				// TODO: remove these columns.
-
-				if (table.HasAuthorName)
-				{
-					// Make `AuthorName` nullable and rename it to `OldAuthorName`.
-					Alter.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).AsString(100).Nullable();
-					Rename.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).To("OldAuthorName");
-				}
 
 				// Make `Author` nullable and rename it to `OldAuthor`.
 				Alter.Column("Author").OnTable(table.Name).InSchema(table.Schema).AsInt32().Nullable();
@@ -111,6 +111,13 @@ namespace VocaDb.Migrations
 				// Make `Message` nullable and rename it to `OldMessage`.
 				Alter.Column("Message").OnTable(table.Name).InSchema(table.Schema).AsString(4000).Nullable();
 				Rename.Column("Message").OnTable(table.Name).InSchema(table.Schema).To("OldMessage");
+
+				if (table.Options.HasFlag(CommentTableOptions.RenameAuthorName))
+				{
+					// Make `AuthorName` nullable and rename it to `OldAuthorName`.
+					Alter.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).AsString(100).Nullable();
+					Rename.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).To("OldAuthorName");
+				}
 			}
 		}
 
