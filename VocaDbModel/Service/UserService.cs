@@ -154,7 +154,7 @@ namespace VocaDb.Model.Service
 				if (!user.Equals(comment.Author) && !user.Equals(comment.EntryForComment))
 					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 
-				comment.OnDelete();
+				comment.Delete();
 				session.Update(comment);
 			});
 		}

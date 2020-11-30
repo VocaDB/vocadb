@@ -94,7 +94,7 @@ namespace VocaDb.Model.Service.Queries
 			if (!user.Equals(comment.Author))
 				permissionContext.VerifyPermission(PermissionToken.DeleteComments);
 
-			comment.OnDelete();
+			comment.Delete();
 			ctx.Update(comment);
 		}
 

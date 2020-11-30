@@ -224,7 +224,7 @@ namespace VocaDb.Model.Database.Queries
 					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 				}
 
-				review.OnDelete();
+				review.Delete();
 				ctx.Update(review);
 			});
 		}
