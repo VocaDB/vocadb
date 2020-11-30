@@ -17,11 +17,6 @@ namespace VocaDb.Migrations
 			/// Rename the `AuthorName` column.
 			/// </summary>
 			RenameAuthorName = 1,
-
-			/// <summary>
-			/// Copy the `Deleted` column.
-			/// </summary>
-			CopyDeleted = 2,
 		}
 
 		private sealed class CommentTable
@@ -84,7 +79,7 @@ namespace VocaDb.Migrations
 				new CommentTable(name: TableNames.TagComments),
 				new CommentTable(name: TableNames.UserComments),
 
-				new CommentTable(name: TableNames.DiscussionTopics, schema: SchemaNames.Discussions, options: CommentTableOptions.CopyDeleted),
+				new CommentTable(name: TableNames.DiscussionTopics, schema: SchemaNames.Discussions),
 				new CommentTable(name: TableNames.AlbumReviews),
 			};
 
@@ -128,16 +123,10 @@ namespace VocaDb.Migrations
 					Alter.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).AsString(100).Nullable();
 					Rename.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).To("OldAuthorName");
 				}
-
-				if (table.Options.HasFlag(CommentTableOptions.CopyDeleted))
-				{
-					// update Comments set Deleted = ec.Deleted from discussions.DiscussionTopics ec inner join Comments c on c.OldTable = 'discussions.DiscussionTopics' and ec.Id = c.OldId
-					Execute.Sql($"update {TableNames.Comments} set Deleted = ec.Deleted from {table.NameWithSchema} ec inner join {TableNames.Comments} c on c.OldTable = '{table.NameWithSchema}' and ec.Id = c.OldId");
-				}
 			}
 
-			// insert into discussions.DiscussionComments(Comment, Topic) select Comment, Id from discussions.DiscussionTopics
-			Execute.Sql($"insert into {SchemaNames.Discussions}.{TableNames.DiscussionComments}(Comment, Topic) select Comment, Id from {SchemaNames.Discussions}.{TableNames.DiscussionTopics}");
+			Execute.Sql($"update Comments set Deleted = ec.Deleted from discussions.DiscussionTopics ec inner join Comments c on c.OldTable = 'discussions.DiscussionTopics' and ec.Id = c.OldId");
+			Execute.Sql($"insert into discussions.DiscussionComments(Comment, Topic) select Comment, Id from discussions.DiscussionTopics");
 
 			// Rename columns on `DiscussionTopics` table.
 			Rename.Column("Comment").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).To("FirstComment");
