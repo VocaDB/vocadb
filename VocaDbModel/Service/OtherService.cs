@@ -169,16 +169,6 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-		private Task<EntryWithCommentsContract[]> GetRecentCommentsAsync(ISession session)
-		{
-			var cacheKey = $"OtherService.RecentComments.{LanguagePreference}";
-			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromMinutes(5)), async () =>
-			{
-				var item = await GetRecentCommentsAsync(session, 9);
-				return item;
-			});
-		}
-
 		public async Task<SongForApiContract[]> GetHighlightedSongs(ContentLanguagePreference languagePreference, SongOptionalFields fields)
 		{
 			return await HandleQueryAsync(async session =>
@@ -396,7 +386,7 @@ namespace VocaDb.Model.Service
 
 				var firstSongVote = (newSongs.Any() ? await session.Query<FavoriteSongForUser>().FirstOrDefaultAsync(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId) : null);
 
-				var recentComments = await GetRecentCommentsAsync(session);
+				var recentComments = await GetRecentCommentsAsync(session, 9);
 
 				var recentEvents = GetRecentEvents(session);
 
