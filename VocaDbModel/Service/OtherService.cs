@@ -20,7 +20,6 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Comments;
-using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -277,22 +276,14 @@ namespace VocaDb.Model.Service
 
 		private async Task<EntryWithCommentsContract[]> GetRecentCommentsAsync(ISession session, int maxComments)
 		{
-			var comments = session.Query<Comment>()
+			var comments = (await session.Query<Comment>()
 				.WhereNotDeleted()
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments)
-				.ToArray()
+				.ToListAsync())
 				.Where(c => !c.Entry.Deleted);
 
-			// Discussion topics aren't actually comments but we want to show them in the recent comments list anyway
-			var discussionTopics = await session.Query<DiscussionTopic>().Where(c => !c.Deleted).OrderByDescending(c => c.Created).Take(maxComments).VdbToListAsync();
-			var discussionTopicsAsComments = discussionTopics.Select(t => new DiscussionComment(t, t.Content, new AgentLoginData(t.Author, t.AuthorName ?? t.Author.Name))
-			{
-				Created = t.Created
-			});
-
 			var combined = comments
-				.Concat(discussionTopicsAsComments)
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments);
 
