@@ -20,7 +20,6 @@ namespace VocaDb.Model.Domain.Discussions
 
 		private string authorName;
 		private IList<DiscussionComment> comments = new List<DiscussionComment>();
-		private string content;
 		private DiscussionFolder folder;
 		private string title;
 
@@ -32,14 +31,13 @@ namespace VocaDb.Model.Domain.Discussions
 		{
 			Folder = folder;
 			Name = name;
-			Content = content;
-			Author = agent.User;
+			CreateComment(content, agent);
 			AuthorName = agent.Name;
 
 			Created = DateTime.Now;
 		}
 
-		public virtual User Author { get; set; }
+		public virtual User Author => FirstComment.Author;
 
 		public virtual string AuthorName
 		{
@@ -61,23 +59,17 @@ namespace VocaDb.Model.Domain.Discussions
 			}
 		}
 
-		public virtual IEnumerable<DiscussionComment> Comments => AllComments.Where(c => !c.Deleted);
+		public virtual IEnumerable<DiscussionComment> Comments => AllComments.Where(c => c != FirstComment).Where(c => !c.Deleted);
 
-		public virtual string Content
-		{
-			get => content;
-			set
-			{
-				ParamIs.NotNullOrEmpty(() => value);
-				content = value;
-			}
-		}
+		public virtual string Content => FirstComment.Message;
 
 		public virtual DateTime Created { get; set; }
 
 		public virtual bool Deleted { get; set; }
 
 		public virtual EntryType EntryType => EntryType.DiscussionTopic;
+
+		public virtual DiscussionComment FirstComment => AllComments.OrderBy(c => c.Created).First();
 
 		/// <summary>
 		/// Folder containing this topic. Cannot be null.
@@ -114,6 +106,8 @@ namespace VocaDb.Model.Domain.Discussions
 			AllComments.Add(comment);
 			return comment;
 		}
+
+		public virtual void Delete() => Deleted = true;
 
 		public virtual void MoveToFolder(DiscussionFolder targetFolder)
 		{
