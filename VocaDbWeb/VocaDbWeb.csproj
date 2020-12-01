@@ -693,7 +693,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\libs.js" />
-    <Content Include="webpack.css.js" />
     <Content Include="webpack.mix.js" />
     <Content Include="robots.txt" />
     <TypeScriptCompile Include="Scripts\Album\Edit.ts" />

@@ -11,15 +11,15 @@ const mix = require('laravel-mix');
  |
  */
 
-require('laravel-mix-merge-manifest');
-
 mix
-	.mergeManifest()
 	.setPublicPath('./')
 	.webpackConfig({
 		output: {
 			library: 'app'
 		}
+	})
+	.options({
+		processCssUrls: false
 	})
 
 
@@ -187,7 +187,18 @@ mix
 	], "bundles/Venue/Details.js")
 
 	.scripts([
-	], "bundles/Venue/Edit.js");
+	], "bundles/Venue/Edit.js")
+
+
+	// Base CSS
+	.less("Content/css.less", "Content")
+
+	.less("Content/embedSong.less", "Content")
+
+	// CSS for jqxRating
+	.styles([
+		"Scripts/jqwidgets27/styles/jqx.base.css"
+	], "Scripts/jqwidgets27/styles/css.css");
 
 
 if (mix.inProduction()) {
