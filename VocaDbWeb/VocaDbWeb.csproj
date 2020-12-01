@@ -1962,6 +1962,7 @@
     <Content Include="Views\Shared\Partials\ArchivedEntry\_PictureFileInfo.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_PVInfo.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_ObjectRefInfo.cshtml" />
+    <Content Include="Views\Shared\Partials\_TwitterTimeline.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

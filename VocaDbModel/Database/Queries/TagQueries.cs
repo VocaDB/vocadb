@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
+using NHibernate.Exceptions;
 using NLog;
 using VocaDb.Model.Database.Queries.Partial;
 using VocaDb.Model.Database.Repositories;
@@ -111,7 +112,7 @@ namespace VocaDb.Model.Database.Queries
 
 				usageCount = await q.VdbCountAsync();
 			}
-			catch (SqlException x)
+			catch (Exception x) when (x is SqlException or GenericADOException)
 			{
 				log.Warn(x, "Unable to get tag usages");
 				topUsages = new TEntry[0];
