@@ -32,7 +32,7 @@
 			@if (body != null) {
 				@body
 			} else {
-				Html.RenderPartial("Partials/Comment/_CommentBodyKnockout", new CommentBodyKnockoutViewModel(messageBinding));
+				@Html.Partial("Partials/Comment/_CommentBodyKnockout", new CommentBodyKnockoutViewModel(messageBinding))
 			}
 		</div>
 	</div>

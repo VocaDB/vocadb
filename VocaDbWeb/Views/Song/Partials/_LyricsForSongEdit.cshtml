@@ -17,11 +17,11 @@
 		<div class="accordion-inner">
 			<div>
 				<p data-bind="visible: showLanguageSelection()">
-					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(ViewRes.Song.EditStrings.LyLanguage, "If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'.")); }
-					@{ Html.RenderPartial("Partials/Knockout/_DropdownList", new DropdownListViewModel(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode")); }
+					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(ViewRes.Song.EditStrings.LyLanguage, "If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'."))
+					@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode"))
 				</p>
 				<div>
-					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Source", "You can fill either label, URL or both")); }
+					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Source", "You can fill either label, URL or both"))
 					<div class="inline input-prepend">
 						<span class="add-on" title="Label">
 							<i class="icon-pencil"></i>

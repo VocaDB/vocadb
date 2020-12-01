@@ -3,7 +3,7 @@ using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Service.Helpers;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Model.Service.Search.AlbumSearch
 {

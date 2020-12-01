@@ -49,7 +49,7 @@
 }
 
 @helper AlbumLink(AlbumContract album) {
-	Html.RenderPartial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(album));
+	@Html.Partial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(album))
 	if (!album.ReleaseDate.IsEmpty) {<small class="muted">&nbsp;(@album.ReleaseDate.Year)</small>}
 }
 
@@ -59,7 +59,7 @@
 		if (alternateVersion.LengthSeconds > 0) {
 			@:(@VocaDb.Model.Helpers.DateTimeHelper.FormatMinSec(alternateVersion.LengthSeconds))
 		}
-		Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(alternateVersion.SongType));
+		@Html.Partial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(alternateVersion.SongType))
 		<br />
 		@alternateVersion.ArtistString<br />
 	}	
@@ -76,7 +76,7 @@
 	<link rel="alternate" type="application/json+oembed" href="@(VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("OEmbed", "Ext", new { url = VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("Details", "Song", new { Model.Id }), format = "json" }))" title="@Model.Name" />	
 	<link rel="alternate" type="text/xml+oembed" href="@(VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("OEmbed", "Ext", new { url = VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("Details", "Song", new { Model.Id }), format = "xml" }))" title="@Model.Name" />
 	<link rel="canonical" href="@url" />
-	@{ Html.RenderPartial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties)); }
+	@Html.Partial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties))
 	<link href="@Url.Content("~/Scripts/MediaElement/mediaelementplayer.min.css")" rel="stylesheet" type="text/css" />	
 }
 
@@ -84,7 +84,7 @@
 @if (Model.OriginalPVs.Any() || Model.OtherPVs.Any()) {
 	<div id="pvPlayer" class="song-pv-player">
 		@if (Model.PrimaryPV != null) {
-			Html.RenderPartial("Partials/PV/_EmbedPV", new EmbedPVViewModel(Model.PrimaryPV));
+			@Html.Partial("Partials/PV/_EmbedPV", new EmbedPVViewModel(Model.PrimaryPV))
 		}
 	</div>
 }
@@ -118,17 +118,17 @@
 	<a data-bind="jqButton: { icon: 'ui-icon-wrench' }, click: function() { maintenanceDialogVisible(true); }" id="maintenanceActions" href="#">Maintenance actions</a>			 
 }
 	
-@{ Html.RenderPartial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status)); }
+@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
 
 @Helpers.AjaxLoader("pvLoader")		
 }
 
 @if (Model.Deleted) {
-	Html.RenderPartial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(Model.MergedTo));
+	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(Model.MergedTo))
 }
 
 @if (Model.Draft && !Model.Deleted) {
-	Html.RenderPartial("Partials/Shared/_DraftMessage", new DraftMessageViewModel("glsongs"));
+	@Html.Partial("Partials/Shared/_DraftMessage", new DraftMessageViewModel("glsongs"))
 }
 
 <div id="tabs" class="js-cloak" data-bind="show">
@@ -166,7 +166,7 @@
 					}
 				</td>
 				<td class="artistList">
-					@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Performers, showRoles: ShowRolesMode.IfNotVocalist, showType: true)); }
+					@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Performers, showRoles: ShowRolesMode.IfNotVocalist, showType: true))
 				</td>
 			</tr>
 			}
@@ -175,7 +175,7 @@
 				<tr>
 					<td>@EntryRes.Subject</td>
 					<td class="artistList">
-						@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Subject)); }
+						@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Subject))
 					</td>
 				</tr>
 			}			
@@ -183,7 +183,7 @@
 			<tr>
 				<td>@ViewRes.Song.DetailsStrings.Producers</td>
 				<td class="artistList">
-					@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Producers, showRoles: (Model.Producers.Length > 1) ? ShowRolesMode.IfNotDefault : ShowRolesMode.Never)); }
+					@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Producers, showRoles: (Model.Producers.Length > 1) ? ShowRolesMode.IfNotDefault : ShowRolesMode.Never))
 				</td>
 			</tr>
 			}
@@ -191,7 +191,7 @@
 				<tr>
 					<td>Illustrators</td>
 					<td class="artistList">
-						@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Illustrators)); }
+						@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Illustrators))
 					</td>
 				</tr>
 			}			
@@ -200,7 +200,7 @@
 				<tr>
 					<td>@Res.Band</td>
 					<td class="artistList">
-						@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Bands)); }
+						@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Bands))
 					</td>
 				</tr>
 			}
@@ -210,7 +210,7 @@
 			<tr>
 				<td>@ViewRes.Song.DetailsStrings.Animators</td>
 				<td class="artistList">
-					@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Animators)); }
+					@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Animators))
 				</td>
 			</tr>
 			}
@@ -219,7 +219,7 @@
 			<tr>
 				<td>@ViewRes.Song.DetailsStrings.OtherArtists</td>
 				<td class="artistList">
-					@{ Html.RenderPartial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.OtherArtists, showRoles: ShowRolesMode.IfNotDefault)); }
+					@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.OtherArtists, showRoles: ShowRolesMode.IfNotDefault))
 				</td>
 			</tr>
 			}
@@ -227,7 +227,7 @@
 			<tr>
 				<td>@ViewRes.SharedStrings.Type</td>
 				<td>
-					@{ Html.RenderPartial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(Model.SongType)); }
+					@Html.Partial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(Model.SongType))
 					@if (Model.SongTypeTag != null) {
 						<a href="@Url.TagDetails(Model.SongTypeTag)" data-bind="tagToolTip: @Model.SongTypeTag.Id">@Translate.SongTypeNames[Model.SongType]</a>
 					} else {
@@ -300,7 +300,7 @@
 			</tr>
    }
 			
-			@{ Html.RenderPartial("Partials/EntryDetails/_ExternalLinksRows", new ExternalLinksRowsViewModel(Model.WebLinks)); }
+			@Html.Partial("Partials/EntryDetails/_ExternalLinksRows", new ExternalLinksRowsViewModel(Model.WebLinks))
 			
 			<tr data-bind="if: originalVersion().entry">
 				<td>@Res.OriginalVersion</td>
@@ -369,7 +369,7 @@
 			<tr>
 				<td>@ViewRes.EntryDetailsStrings.AdditionDate</td>
 				<td>
-					@{ Html.RenderPartial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CreateDate)); }
+					@Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CreateDate))
 				</td>	
 			</tr>
 			
@@ -400,7 +400,7 @@
 		
 		@if (Model.Suggestions.Any()) {
 			<h3 class="withMargin">@Res.SuggestionsTitle</h3>
-			Html.RenderPartial("Partials/Song/_SongGrid", new SongGridViewModel(Model.Suggestions, 2, true, true));
+			@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.Suggestions, 2, true, true))
 			<p>
 				<a href="#" id="viewRelatedLink">@Res.SeeRelatedSongs</a>
 			</p>
@@ -439,7 +439,7 @@
 			</div>
 		}
 
-		@{ Html.RenderPartial("Partials/Comment/_LatestCommentsKnockout"); }
+		@Html.Partial("Partials/Comment/_LatestCommentsKnockout")
 		
 		<p>
 			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>
@@ -481,14 +481,14 @@
 	 }
 	 
 	<div id="discussionTab" data-bind="with: comments">
-		@{ Html.RenderPartial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false)); }
+		@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false))
 	</div>	 
 	
 	<div id="shareTab">
 		<div>
 			<label>
 				@ViewRes.EntryDetailsStrings.Social<br />
-				@{ Html.RenderPartial("Partials/EntryDetails/_LargeShareLinks", new LargeShareLinksViewModel(PageProperties.Title, url)); }
+				@Html.Partial("Partials/EntryDetails/_LargeShareLinks", new LargeShareLinksViewModel(PageProperties.Title, url))
 				<br /><br />
 			</label>
 		</div>
@@ -524,7 +524,7 @@
 
 @{ Html.RenderPartial("Partials/_SongInListsDialog"); }
 
-@{ Html.RenderPartial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel()); }
+@Html.Partial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel())
 
 <div 
 	data-bind="

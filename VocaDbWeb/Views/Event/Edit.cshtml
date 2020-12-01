@@ -43,12 +43,12 @@
 	}
 }
 
-@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save properties.")); }
+@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save properties."))
 
 <form method="POST" data-bind="submit: submit" enctype="multipart/form-data">
 	@Html.HiddenFor(m => m.Id)
 
-	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction)); }
+	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction))
 	
 	<div id="tabs">
 		
@@ -123,7 +123,7 @@
 					</label>
 				</div>
 				<div class="editor-field">
-					@{ Html.RenderPartial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage")); }
+					@Html.Partial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage"))
 					@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
 				</div>
 
@@ -161,7 +161,7 @@
 			</div>
 
 			<div class="editor-label">
-				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Date", "Enter event begin date. For events lasting multiple days, end date can be entered as well. Both are optional, and end date does not need to be specified if it's the same as begin date.")); }
+				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Date", "Enter event begin date. For events lasting multiple days, end date can be entered as well. Both are optional, and end date does not need to be specified if it's the same as begin date."))
 			</div>
 			<div class="editor-field">
 				<input type="text" data-bind="datepicker: { value: date, dateFormat: 'yy-mm-dd' }" class="input-small" maxlength="10" />
@@ -173,10 +173,10 @@
 			</div>
 
 			<div class="editor-label">
-				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Setlist", "If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here.")); }
+				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Setlist", "If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here."))
 			</div>
 			<div class="editor-field">
-				@{ Html.RenderPartial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("songListAutoComplete", "songList", "songListCategory: 'Concerts'")); }
+				@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("songListAutoComplete", "songList", "songListCategory: 'Concerts'"))
 				@Html.HiddenForKnockout(m => m.SongList, "value: ko.toJSON(songList.entry())")
 			</div>
 	
@@ -190,7 +190,7 @@
 
 			<div data-bind="visible: !venue.entry()">
 				<div class="editor-label">
-					@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Venue name", "Can be either a physical location such as concert hall, or a virtual location (website).")); }
+					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Venue name", "Can be either a physical location such as concert hall, or a virtual location (website)."))
 				</div>
 				<div class="editor-field">
 					@Html.TextBoxFor(m => m.VenueName, new { size = 40, @class = "span3", maxlength = 1000 })<br />
@@ -225,7 +225,7 @@
 			</div>
 	
 			<div class="editor-label">
-				@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)); }
+				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation))
 			</div>
 			<div class="editor-field">
 				@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
@@ -318,7 +318,7 @@
 	</div>
 
 	<br />
-	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction)); }
+	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction))
 
 </form>
 
@@ -326,8 +326,8 @@
 	@{ Html.RenderPartial("Partials/_ArtistRolesEditViewModel"); }
 </div>
 
-@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete)); }
-@{ Html.RenderPartial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash)); }
+@Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
+@Html.Partial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))
 
 @section BodyScripts {
 @LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/ReleaseEvent/Edit.js")

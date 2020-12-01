@@ -11,4 +11,4 @@
 }
 
 
-@{ Html.RenderPartial("Partials/Tag/_TagUsagesManageTable", new TagUsagesManageTableViewModel(EntryType.Artist, Model.TagUsages, Model.CanRemoveTagUsages)); }
+@Html.Partial("Partials/Tag/_TagUsagesManageTable", new TagUsagesManageTableViewModel(EntryType.Artist, Model.TagUsages, Model.CanRemoveTagUsages))

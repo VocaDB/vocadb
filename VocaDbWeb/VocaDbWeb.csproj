@@ -693,7 +693,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\libs.js" />
-    <Content Include="webpack.css.js" />
     <Content Include="webpack.mix.js" />
     <Content Include="robots.txt" />
     <TypeScriptCompile Include="Scripts\Album\Edit.ts" />
@@ -1962,6 +1961,7 @@
     <Content Include="Views\Shared\Partials\ArchivedEntry\_PictureFileInfo.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_PVInfo.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_ObjectRefInfo.cshtml" />
+    <Content Include="Views\Shared\Partials\_TwitterTimeline.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -225,7 +225,7 @@
 			@if (!string.IsNullOrEmpty(Model.AboutMe))
 			{
 				<h4>@R.AboutMe</h4>
-				Html.RenderPartial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.AboutMe));
+				@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.AboutMe))
 				<br />
 			}
 			
@@ -234,7 +234,7 @@
 				<ul class="user-known-languages">
 				@foreach (var lang in Model.KnownLanguages) {
 					<li>
-						@{ Html.RenderPartial("Partials/Html/_LanguageFlag", new LanguageFlagViewModel(lang.CultureCode)); }
+						@Html.Partial("Partials/Html/_LanguageFlag", new LanguageFlagViewModel(lang.CultureCode))
 						@GetLanguageName(lang)
 						@if (lang.Proficiency != UserLanguageProficiency.Nothing) {
 							@:(@Translate.UserLanguageProficiencyNames[lang.Proficiency])
@@ -247,7 +247,7 @@
 			@if (Model.OwnedArtistEntries.Any())
 			{
 				<h4>@R.VerifiedOwner</h4>
-				Html.RenderPartial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.OwnedArtistEntries.Select(a => a.Artist), 3, true));
+				@Html.Partial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.OwnedArtistEntries.Select(a => a.Artist), 3, true))
 				<br />
 			}
 
@@ -275,7 +275,7 @@
 			@if (Model.FavoriteTags.Any())
 			{
 				<h4>@R.FavoriteTags</h4>
-				Html.RenderPartial("Partials/Tag/_TagList", new TagListViewModel(Model.FavoriteTags));
+				@Html.Partial("Partials/Tag/_TagList", new TagListViewModel(Model.FavoriteTags))
 				<br />
 				<div style="width: 400px; height: 200px;" data-bind="highcharts: ratingsByGenreChart"></div>
 				<br />
@@ -292,7 +292,7 @@
 			else if (Login.CanManageUsers)
 			{
 				<h4>@R.LastLogin</h4>
-				Html.RenderPartial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.LastLogin));
+				@Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.LastLogin))
 				if (Login.CanManageUsers) {
 					@:(@Model.LastLoginAddress)
 					<a href='http://www.geoiptool.com/?IP=@Model.LastLoginAddress'>GeoIpTool</a>
@@ -338,7 +338,7 @@
 					<small>(@string.Format(R.Total, Model.AlbumCollectionCount))</small>
 				</a>
 			</h3>
-			@{ Html.RenderPartial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.FavoriteAlbums)); }
+			@Html.Partial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.FavoriteAlbums))
 		</div>
 	}
 
@@ -356,7 +356,7 @@
 					<small>(@string.Format(R.Total, Model.FavoriteSongCount))</small>
 				</a>
 			</h3>
-			@{ Html.RenderPartial("Partials/Song/_SongGrid", new SongGridViewModel(Model.LatestRatedSongs, 3)); }
+			@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.LatestRatedSongs, 3))
 		</div>
 	}
 
@@ -374,7 +374,7 @@
 					<small>(@string.Format(R.Total, Model.ArtistCount))</small>
 				</a>
 			</h3>
-			@{ Html.RenderPartial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.FollowedArtists, 3)); }
+			@Html.Partial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.FollowedArtists, 3))
 		</div>
 	}
 	
@@ -390,7 +390,7 @@
 			</a>
 		</h3>
 		<div data-bind="with: comments">
-			@{ Html.RenderPartial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3)); }
+			@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3))
 			<!-- ko ifnot: comments().length -->
 			<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 			<!-- /ko -->
@@ -417,7 +417,7 @@
 
 <div data-bind="visible: view() == 'Comments', show" class="well well-transparent js-cloak">
 	<div data-bind="with: comments">
-		@{ Html.RenderPartial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false)); }
+		@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false))
 	</div>
 </div>
 
@@ -429,8 +429,8 @@
 	<div id="sfsCheckDialog" title="StopForumSpam check"></div>
 }
 
-@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel("Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional).", "limitedUserViewModel", "setToLimitedLink", "Remove editing permissions", "Confirm")); }
-@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel("Please confirm that you wish to report user. Please provide additional explanation below.", "reportUserViewModel", "reportUserLink", "Report user", "Confirm")); }
+@Html.Partial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel("Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional).", "limitedUserViewModel", "setToLimitedLink", "Remove editing permissions", "Confirm"))
+@Html.Partial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel("Please confirm that you wish to report user. Please provide additional explanation below.", "reportUserViewModel", "reportUserLink", "Report user", "Confirm"))
 
 @section Head {
 	@LaravelMixHelper.RenderStyles("~/Scripts/jqwidgets27/styles/css.css")

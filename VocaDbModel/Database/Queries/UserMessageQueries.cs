@@ -5,7 +5,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Model.Database.Queries
 {

@@ -13,7 +13,7 @@
 		<div class="control-label">@Res.SongType</div>
 		<div class="controls">
 			<div class="control-group">
-				@{ Html.RenderPartial("Partials/Song/_SongTypesDropdownKnockout", new SongTypesDropdownKnockoutViewModel("songType")); }
+				@Html.Partial("Partials/Song/_SongTypesDropdownKnockout", new SongTypesDropdownKnockoutViewModel("songType"))
 			</div>
 			<div class="control-group" data-bind="visible: showUnifyEntryTypesAndTags">
 				<label class="checkbox" >
@@ -27,7 +27,7 @@
 	<div class="control-group">
 		<div class="control-label">@EntryTypeNames.Artist</div>
 		<div class="controls" data-bind="with: artistFilters">
-			@{ Html.RenderPartial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: true)); }
+			@Html.Partial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: true))
 		</div>
 	</div>
 
@@ -59,7 +59,7 @@
 	<div class="control-group">
 		<div class="control-label">@Res.ReleaseEvent</div>
 		<div class="controls">
-			@{ Html.RenderPartial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent")); }
+			@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent"))
 		</div>
 	</div>
 	
@@ -74,14 +74,14 @@
 	<div class="control-group">
 		<div class="control-label">@Res.ParentVersion</div>
 		<div class="controls">
-			@{ Html.RenderPartial("Partials/Knockout/_SongLockingAutoComplete", new SongLockingAutoCompleteViewModel("parentVersion")); }
+			@Html.Partial("Partials/Knockout/_SongLockingAutoComplete", new SongLockingAutoCompleteViewModel("parentVersion"))
 		</div>
 	</div>
 
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			@{ Html.RenderPartial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters)); }
+			@Html.Partial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters))
 		</div>
 	</div>
 </div>

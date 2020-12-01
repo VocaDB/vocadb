@@ -1,4 +1,4 @@
 ﻿@using VocaDb.Web.Models.Shared.Partials.PV;
 @model VocaDb.Web.Models.Shared.PVEmbedParams
 		   
-@{ Html.RenderPartial("Partials/PV/_EmbedPV", new EmbedPVViewModel(Model.PV, enableApi: Model.EnableScriptAccess, id: Model.ElementId)); }
+@Html.Partial("Partials/PV/_EmbedPV", new EmbedPVViewModel(Model.PV, enableApi: Model.EnableScriptAccess, id: Model.ElementId))

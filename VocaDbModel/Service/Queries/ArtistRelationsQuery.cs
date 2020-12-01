@@ -14,7 +14,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search.AlbumSearch;
 
 namespace VocaDb.Model.Service.Queries

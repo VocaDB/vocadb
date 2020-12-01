@@ -1,7 +1,7 @@
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Model.Service.Search.User
 {

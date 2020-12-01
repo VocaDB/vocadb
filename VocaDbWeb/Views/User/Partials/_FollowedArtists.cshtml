@@ -6,7 +6,7 @@
 	<div class="control-group">
 		<div class="control-label">@ViewRes.Search.IndexStrings.ArtistType</div>
 		<div class="controls">
-			@{ Html.RenderPartial("Partials/Artist/_ArtistTypesDropdownKnockout", new ArtistTypesDropdownKnockoutViewModel("artistType")); }
+			@Html.Partial("Partials/Artist/_ArtistTypesDropdownKnockout", new ArtistTypesDropdownKnockoutViewModel("artistType"))
 		</div>
 	</div>
 
@@ -25,11 +25,11 @@
 <div data-bind="css: { loading: loading }, visible: true" style="display: none;">
 
 	<div data-bind="with: paging" class="dropdown pull-right">
-		@{ Html.RenderPartial("Partials/Knockout/_EntryCount"); }
+		@Html.Partial("Partials/Knockout/_EntryCount")
 	</div>
 
 	<div data-bind="with: paging">
-		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
 	</div>
 
 	<table class="table table-striped" data-bind="css: { loading: loading }">
@@ -51,7 +51,7 @@
 					<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details('Artist', id) }" href="#"></a>
 					&nbsp;
 					<span data-bind="artistTypeLabel: artistType"></span>
-					@{ Html.RenderPartial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status")); }
+					@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
 					<br />
 					<span data-bind="visible: $data.additionalNames">
 						<small class="extraInfo" data-bind="text: $data.additionalNames"></small><br />						
@@ -63,7 +63,7 @@
 	</table>
 
 	<div data-bind="with: paging">
-		@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
 	</div>
 
 </div>

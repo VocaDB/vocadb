@@ -42,13 +42,13 @@
 	}
 }
 
-@{ Html.RenderPartial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save properties.")); }
+@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save properties."))
 
 <form action="@Url.Action("EditSeries")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
 	@Html.HiddenFor(m => m.Id)
 	@Html.HiddenFor(m => m.Name)
 
-	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction)); }
+	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction))
 
 	<div class="editor-label">
 		<label class="helpTip" data-bind="qTip" title="@EditRes.DefaultLanguageHelp">
@@ -56,7 +56,7 @@
 		</label>
 	</div>
 	<div class="editor-field">
-		@{ Html.RenderPartial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage")); }
+		@Html.Partial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage"))
 		@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
 	</div>
 
@@ -129,19 +129,19 @@
 	</div>
 	
 	<div class="editor-label">
-		@{ Html.RenderPartial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation)); }
+		@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation))
 	</div>
 	<div class="editor-field">
 		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
 	</div>
 
 	<br />
-	@{ Html.RenderPartial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction)); }
+	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction))
 
 </form>
 
-@{ Html.RenderPartial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete)); }
-@{ Html.RenderPartial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash)); }
+@Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
+@Html.Partial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))
 
 @section BodyScripts {
 @LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/EventSeries/Edit.js")

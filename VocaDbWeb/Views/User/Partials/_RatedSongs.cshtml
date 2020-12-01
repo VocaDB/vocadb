@@ -16,7 +16,7 @@
 		
 		<div class="inline-block">
 			@ViewRes.EntryIndexStrings.SortBy
-			@{ Html.RenderPartial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.RatedSongForUserSortRuleNames.ValuesAndNamesStrings, "sort", "sortName")); }
+			@Html.Partial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.RatedSongForUserSortRuleNames.ValuesAndNamesStrings, "sort", "sortName"))
 		</div>
 
 		<button class="btn" data-bind="click: function() { groupByRating(!groupByRating()); }, css: { active: groupByRating }">
@@ -55,7 +55,7 @@
 	<div class="control-group">
 		<div class="control-label">@SearchRes.Rating</div>
 		<div class="controls">
-			@{ Html.RenderPartial("Partials/User/_SongVoteRatingsRadioKnockout", new SongVoteRatingsRadioKnockoutViewModel("rating")); }
+			@Html.Partial("Partials/User/_SongVoteRatingsRadioKnockout", new SongVoteRatingsRadioKnockoutViewModel("rating"))
 		</div>
 	</div>
 	
@@ -72,7 +72,7 @@
 	<div class="control-group">
 		<div class="control-label">@EntryTypeNames.Artist</div>
 		<div class="controls" data-bind="with: artistFilters">
-			@{ Html.RenderPartial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: false)); }
+			@Html.Partial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: false))
 		</div>
 	</div>
 
@@ -88,7 +88,7 @@
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			@{ Html.RenderPartial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters)); }
+			@Html.Partial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters))
 		</div>
 	</div>
 </div>

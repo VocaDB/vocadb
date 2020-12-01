@@ -23,7 +23,7 @@
 </ul>
 
 <div data-bind="foreach: entries, show" class="js-cloak">
-	@{ Html.RenderPartial("Partials/Activityfeed/_ActivityEntryKnockout", new ActivityEntryKnockoutViewModel("$parent.getEntryTypeName", "$parent.getActivityFeedEventName", "$parents[1].getChangedFieldNames", true)); }
+	@Html.Partial("Partials/Activityfeed/_ActivityEntryKnockout", new ActivityEntryKnockoutViewModel("$parent.getEntryTypeName", "$parent.getActivityFeedEventName", "$parents[1].getChangedFieldNames", true))
 </div>
 
 <hr />

@@ -7,7 +7,7 @@
 @{ Html.RenderPartial("Partials/_EntryCountBox"); }
 
 <div data-bind="with: paging">
-	@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+	@Html.Partial("Partials/Knockout/_ServerSidePaging")
 </div>
 	
 <!-- ko if: viewMode() == 'Details' -->
@@ -46,7 +46,7 @@
 			</td>
 			<td>
 				<a data-bind="text: ko.filters.truncate(name, 150), attr: { href: app.EntryUrlMapper.details('Album', id), title: $data.additionalNames }" href="#"></a>
-				@{ Html.RenderPartial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status")); }
+				@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
 				<br />
 				<small class="extraInfo" data-bind="text: artistString"></small><br />
 				<small class="extraInfo" data-bind="text: $parent.discTypeName(discType)"></small>
@@ -93,5 +93,5 @@
 <!-- /ko -->
 		
 <div data-bind="with: paging">
-	@{ Html.RenderPartial("Partials/Knockout/_ServerSidePaging"); }
+	@Html.Partial("Partials/Knockout/_ServerSidePaging")
 </div>

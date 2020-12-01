@@ -13,7 +13,7 @@
 @using (Html.BeginForm())
 {
 
-	Html.RenderPartial("Partials/Shared/_MergeEntryInfo");
+	@Html.Partial("Partials/Shared/_MergeEntryInfo")
 
 	<input type="hidden" name="targetArtistId" id="targetArtistId" data-bind="value: target.id" />
 

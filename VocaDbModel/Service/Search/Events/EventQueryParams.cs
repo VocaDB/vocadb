@@ -2,7 +2,7 @@
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.QueryableExtenders;
+using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Model.Service.Search.Events
 {
