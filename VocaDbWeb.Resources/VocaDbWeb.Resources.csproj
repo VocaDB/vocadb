@@ -426,6 +426,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>TopBarStrings.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Views\Shared\ViewVersionStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ViewVersionStrings.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Views\Shared\_LayoutStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -974,6 +979,11 @@
     <EmbeddedResource Update="Resources\Views\Shared\TopBarStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TopBarStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\ViewVersionStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ViewVersionStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Shared\_LayoutStrings.resx">
