@@ -105,9 +105,4 @@ namespace VocaDb.Model.Mapping.Tags
 			References(m => m.Entry).Column("[Tag]").Not.Nullable();
 		}
 	}
-
-	public class TagWebLinkMap : WebLinkMap<TagWebLink, Tag>
-	{
-		public TagWebLinkMap() : base(false) { }
-	}
 }

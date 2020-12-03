@@ -16,6 +16,7 @@ using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.Service
 {

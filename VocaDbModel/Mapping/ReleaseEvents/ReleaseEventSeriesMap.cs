@@ -57,6 +57,4 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 			References(m => m.Entry).Column("[Series]").Not.Nullable();
 		}
 	}
-
-	public class ReleaseEventSeriesWebLinkMap : WebLinkMap<ReleaseEventSeriesWebLink, ReleaseEventSeries> { }
 }

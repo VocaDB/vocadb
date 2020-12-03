@@ -1,4 +1,11 @@
-﻿using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts;
+using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Tags;
+using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.Domain.ExtLinks
 {
@@ -58,5 +65,72 @@ namespace VocaDb.Model.Domain.ExtLinks
 		{
 			return string.Format("{0} for {1}", base.ToString(), Entry);
 		}
+	}
+
+	public class AlbumWebLink : GenericWebLink<Album>
+	{
+		public AlbumWebLink() { }
+
+		public AlbumWebLink(Album album, string description, string url, WebLinkCategory category)
+			: base(album, description, url, category) { }
+	}
+
+	public class ArtistWebLink : GenericWebLink<Artist>
+	{
+		public ArtistWebLink() { }
+
+		public ArtistWebLink(Artist artist, string description, string url, WebLinkCategory category)
+			: base(artist, description, url, category) { }
+	}
+
+	public class ReleaseEventWebLink : GenericWebLink<ReleaseEvent>
+	{
+		public ReleaseEventWebLink() { }
+
+		public ReleaseEventWebLink(ReleaseEvent releaseEvent, string description, string url, WebLinkCategory category)
+			: base(releaseEvent, description, url, category) { }
+	}
+
+	public class ReleaseEventSeriesWebLink : GenericWebLink<ReleaseEventSeries>
+	{
+		public ReleaseEventSeriesWebLink() { }
+
+		public ReleaseEventSeriesWebLink(ReleaseEventSeries series, string description, string url, WebLinkCategory category)
+			: base(series, description, url, category) { }
+	}
+
+	public class SongWebLink : GenericWebLink<Song>
+	{
+		public SongWebLink() { }
+
+		public SongWebLink(Song song, string description, string url, WebLinkCategory category)
+			: base(song, description, url, category) { }
+	}
+
+	public class TagWebLink : GenericWebLink<Tag>
+	{
+		public TagWebLink() { }
+
+		public TagWebLink(Tag tag, WebLinkContract contract)
+			: base(tag, contract) { }
+
+		public TagWebLink(Tag tag, string description, string url)
+			: base(tag, description, url, WebLinkCategory.Other) { }
+	}
+
+	public class UserWebLink : GenericWebLink<User>
+	{
+		public UserWebLink() { }
+
+		public UserWebLink(User user, WebLinkContract contract)
+			: base(user, contract) { }
+	}
+
+	public class VenueWebLink : GenericWebLink<Venue>
+	{
+		public VenueWebLink() { }
+
+		public VenueWebLink(Venue venue, string description, string url, WebLinkCategory category)
+			: base(venue, description, url, category) { }
 	}
 }

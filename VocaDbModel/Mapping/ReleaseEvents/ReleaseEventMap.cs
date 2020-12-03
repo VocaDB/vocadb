@@ -87,8 +87,6 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 		}
 	}
 
-	public class ReleaseEventWebLinkMap : WebLinkMap<ReleaseEventWebLink, ReleaseEvent> { }
-
 	public class ArchivedReleaseEventVersionMap : ClassMap<ArchivedReleaseEventVersion>
 	{
 		public ArchivedReleaseEventVersionMap()
