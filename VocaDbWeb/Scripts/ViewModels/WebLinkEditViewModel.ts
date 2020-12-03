@@ -6,7 +6,9 @@ import WebLinkMatcher from '../Shared/WebLinkMatcher';
         
         public category: KnockoutObservable<string>;
 
-        public description: KnockoutObservable<string>;
+		public description: KnockoutObservable<string>;
+
+		public disabled: KnockoutObservable<boolean>;
 
         public id: number;
 
@@ -17,14 +19,16 @@ import WebLinkMatcher from '../Shared/WebLinkMatcher';
             if (data) {
 
                 this.category = ko.observable(data.category);
-                this.description = ko.observable(data.description);
+				this.description = ko.observable(data.description);
+				this.disabled = ko.observable(data.disabled);
                 this.id = data.id;
                 this.url = ko.observable(data.url);
 
             } else {
 
                 this.category = ko.observable(WebLinkCategory[WebLinkCategory.Other]);
-                this.description = ko.observable("");
+				this.description = ko.observable("");
+				this.disabled = ko.observable(false);
                 this.id = 0;
                 this.url = ko.observable("");
 

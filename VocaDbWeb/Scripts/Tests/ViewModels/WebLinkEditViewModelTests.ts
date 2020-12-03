@@ -1,6 +1,6 @@
 import WebLinkEditViewModel from '../../ViewModels/WebLinkEditViewModel';
 
-    var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
+    var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots", disabled: false };
 
     QUnit.module("WebLinkEditViewModel");
 
