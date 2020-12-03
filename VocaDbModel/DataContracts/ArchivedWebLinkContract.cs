@@ -1,7 +1,6 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.DataContracts
@@ -20,6 +19,7 @@ namespace VocaDb.Model.DataContracts
 
 			Category = webLink.Category;
 			Description = webLink.Description;
+			Disabled = webLink.Disabled;
 			Url = webLink.Url;
 		}
 
@@ -29,6 +29,9 @@ namespace VocaDb.Model.DataContracts
 
 		[DataMember]
 		public string Description { get; set; }
+
+		[DataMember]
+		public bool Disabled { get; set; }
 
 		[DataMember]
 		public string Url { get; set; }

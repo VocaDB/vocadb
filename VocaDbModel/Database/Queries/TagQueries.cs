@@ -648,7 +648,7 @@ namespace VocaDb.Model.Database.Queries
 				// Weblinks
 				foreach (var w in source.WebLinks.Links.Where(w => !target.WebLinks.HasLink(w.Url)))
 				{
-					var link = target.CreateWebLink(w.Description, w.Url, w.Category);
+					var link = target.CreateWebLink(w.Description, w.Url, w.Category, w.Disabled);
 					ctx.Save(link);
 					diff.WebLinks.Set();
 				}

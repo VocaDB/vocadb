@@ -217,7 +217,7 @@ namespace VocaDb.Model.Database.Queries
 
 				if (contract.WebLink != null)
 				{
-					artist.CreateWebLink(contract.WebLink.Description, contract.WebLink.Url, contract.WebLink.Category);
+					artist.CreateWebLink(contract.WebLink.Description, contract.WebLink.Url, contract.WebLink.Category, contract.WebLink.Disabled);
 					diff.WebLinks.Set();
 				}
 

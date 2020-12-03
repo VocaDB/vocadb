@@ -639,9 +639,9 @@ namespace VocaDb.Model.Domain.Users
 			return link;
 		}
 
-		public virtual UserWebLink CreateWebLink(string description, string url, WebLinkCategory category)
+		public virtual UserWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
-			return CreateWebLink(new WebLinkContract(url, description, category));
+			return CreateWebLink(new WebLinkContract(url, description, category, disabled));
 		}
 
 		public virtual bool Equals(IUser another)

@@ -208,7 +208,7 @@ namespace VocaDb.Model.Service
 
 				foreach (var w in source.WebLinks.Where(w => !target.HasWebLink(w.Url)))
 				{
-					var link = target.CreateWebLink(w.Description, w.Url, w.Category);
+					var link = target.CreateWebLink(w.Description, w.Url, w.Category, w.Disabled);
 					session.Save(link);
 				}
 

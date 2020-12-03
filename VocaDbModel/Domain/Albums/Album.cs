@@ -539,12 +539,12 @@ namespace VocaDb.Model.Domain.Albums
 			return pv;
 		}
 
-		public virtual AlbumWebLink CreateWebLink(string description, string url, WebLinkCategory category)
+		public virtual AlbumWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
 
-			var link = new AlbumWebLink(this, description, url, category);
+			var link = new AlbumWebLink(this, description, url, category, disabled);
 			WebLinks.Add(link);
 
 			return link;

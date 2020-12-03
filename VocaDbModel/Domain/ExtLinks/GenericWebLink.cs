@@ -21,8 +21,8 @@ namespace VocaDb.Model.Domain.ExtLinks
 			Entry = entry;
 		}
 
-		protected GenericWebLink(TEntry entry, string description, string url, WebLinkCategory category)
-			: base(description, url, category)
+		protected GenericWebLink(TEntry entry, string description, string url, WebLinkCategory category, bool disabled)
+			: base(description, url, category, disabled)
 		{
 			Entry = entry;
 		}
@@ -71,40 +71,40 @@ namespace VocaDb.Model.Domain.ExtLinks
 	{
 		public AlbumWebLink() { }
 
-		public AlbumWebLink(Album album, string description, string url, WebLinkCategory category)
-			: base(album, description, url, category) { }
+		public AlbumWebLink(Album album, string description, string url, WebLinkCategory category, bool disabled)
+			: base(album, description, url, category, disabled) { }
 	}
 
 	public class ArtistWebLink : GenericWebLink<Artist>
 	{
 		public ArtistWebLink() { }
 
-		public ArtistWebLink(Artist artist, string description, string url, WebLinkCategory category)
-			: base(artist, description, url, category) { }
+		public ArtistWebLink(Artist artist, string description, string url, WebLinkCategory category, bool disabled)
+			: base(artist, description, url, category, disabled) { }
 	}
 
 	public class ReleaseEventWebLink : GenericWebLink<ReleaseEvent>
 	{
 		public ReleaseEventWebLink() { }
 
-		public ReleaseEventWebLink(ReleaseEvent releaseEvent, string description, string url, WebLinkCategory category)
-			: base(releaseEvent, description, url, category) { }
+		public ReleaseEventWebLink(ReleaseEvent releaseEvent, string description, string url, WebLinkCategory category, bool disabled)
+			: base(releaseEvent, description, url, category, disabled) { }
 	}
 
 	public class ReleaseEventSeriesWebLink : GenericWebLink<ReleaseEventSeries>
 	{
 		public ReleaseEventSeriesWebLink() { }
 
-		public ReleaseEventSeriesWebLink(ReleaseEventSeries series, string description, string url, WebLinkCategory category)
-			: base(series, description, url, category) { }
+		public ReleaseEventSeriesWebLink(ReleaseEventSeries series, string description, string url, WebLinkCategory category, bool disabled)
+			: base(series, description, url, category, disabled) { }
 	}
 
 	public class SongWebLink : GenericWebLink<Song>
 	{
 		public SongWebLink() { }
 
-		public SongWebLink(Song song, string description, string url, WebLinkCategory category)
-			: base(song, description, url, category) { }
+		public SongWebLink(Song song, string description, string url, WebLinkCategory category, bool disabled)
+			: base(song, description, url, category, disabled) { }
 	}
 
 	public class TagWebLink : GenericWebLink<Tag>
@@ -114,8 +114,8 @@ namespace VocaDb.Model.Domain.ExtLinks
 		public TagWebLink(Tag tag, WebLinkContract contract)
 			: base(tag, contract) { }
 
-		public TagWebLink(Tag tag, string description, string url)
-			: base(tag, description, url, WebLinkCategory.Other) { }
+		public TagWebLink(Tag tag, string description, string url, bool disabled)
+			: base(tag, description, url, WebLinkCategory.Other, disabled) { }
 	}
 
 	public class UserWebLink : GenericWebLink<User>
@@ -130,7 +130,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 	{
 		public VenueWebLink() { }
 
-		public VenueWebLink(Venue venue, string description, string url, WebLinkCategory category)
-			: base(venue, description, url, category) { }
+		public VenueWebLink(Venue venue, string description, string url, WebLinkCategory category, bool disabled)
+			: base(venue, description, url, category, disabled) { }
 	}
 }

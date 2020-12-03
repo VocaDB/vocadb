@@ -106,7 +106,7 @@ namespace VocaDb.Web.Models
 					: string.Format("{0} {1}", ArtistString, Name));
 
 				WebLinks.Add(new WebLinkContract(string.Format("http://www.youtube.com/results?search_query={0}", query),
-					ViewRes.Song.DetailsStrings.SearchYoutube, WebLinkCategory.Other));
+					ViewRes.Song.DetailsStrings.SearchYoutube, WebLinkCategory.Other, disabled: false));
 			}
 
 			Json = JsonHelpers.Serialize(new SongDetailsAjax(this, contract.PreferredLyrics, contract.Song.Version));

@@ -308,12 +308,12 @@ namespace VocaDb.Model.Domain.Tags
 			return name;
 		}
 
-		public virtual TagWebLink CreateWebLink(string description, string url, WebLinkCategory category)
+		public virtual TagWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
 
-			var link = new TagWebLink(this, description, url);
+			var link = new TagWebLink(this, description, url, disabled);
 			WebLinks.Links.Add(link);
 
 			return link;

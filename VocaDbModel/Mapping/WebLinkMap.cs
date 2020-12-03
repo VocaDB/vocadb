@@ -20,6 +20,7 @@ namespace VocaDb.Model.Mapping
 			if (category)
 				Map(m => m.Category).Not.Nullable();
 
+			Map(m => m.Disabled).Not.Nullable();
 			Map(m => m.Description).Length(512).Not.Nullable();
 			Map(m => m.Url).Length(512).Not.Nullable();
 
