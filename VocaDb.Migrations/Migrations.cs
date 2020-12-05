@@ -17,6 +17,11 @@ namespace VocaDb.Migrations
 			/// Rename the `AuthorName` column.
 			/// </summary>
 			RenameAuthorName = 1,
+
+			/// <summary>
+			/// Rename the `Id` column.
+			/// </summary>
+			RenameId = 2,
 		}
 
 		private sealed class CommentTable
@@ -70,17 +75,17 @@ namespace VocaDb.Migrations
 
 			var commentTables = new[]
 			{
-				new CommentTable(name: TableNames.AlbumComments, options: CommentTableOptions.RenameAuthorName),
-				new CommentTable(name: TableNames.ArtistComments),
-				new CommentTable(name: TableNames.DiscussionComments, schema: SchemaNames.Discussions, options: CommentTableOptions.RenameAuthorName),
-				new CommentTable(name: TableNames.ReleaseEventComments),
-				new CommentTable(name: TableNames.SongComments),
-				new CommentTable(name: TableNames.SongListComments),
-				new CommentTable(name: TableNames.TagComments),
-				new CommentTable(name: TableNames.UserComments),
+				new CommentTable(name: TableNames.AlbumComments, options: CommentTableOptions.RenameId | CommentTableOptions.RenameAuthorName),
+				new CommentTable(name: TableNames.ArtistComments, options: CommentTableOptions.RenameId),
+				new CommentTable(name: TableNames.DiscussionComments, schema: SchemaNames.Discussions, options: CommentTableOptions.RenameId | CommentTableOptions.RenameAuthorName),
+				new CommentTable(name: TableNames.ReleaseEventComments, options: CommentTableOptions.RenameId),
+				new CommentTable(name: TableNames.SongComments, options: CommentTableOptions.RenameId),
+				new CommentTable(name: TableNames.SongListComments, options: CommentTableOptions.RenameId),
+				new CommentTable(name: TableNames.TagComments, options: CommentTableOptions.RenameId),
+				new CommentTable(name: TableNames.UserComments, options: CommentTableOptions.RenameId),
 
 				new CommentTable(name: TableNames.DiscussionTopics, schema: SchemaNames.Discussions),
-				new CommentTable(name: TableNames.AlbumReviews),
+				new CommentTable(name: TableNames.AlbumReviews, options: CommentTableOptions.RenameId),
 			};
 
 			// insert into Comments(OldTable, OldId, Author, Created, Message)
@@ -122,6 +127,13 @@ namespace VocaDb.Migrations
 					// Make `AuthorName` nullable and rename it to `OldAuthorName`.
 					Alter.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).AsString(100).Nullable();
 					Rename.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).To("OldAuthorName");
+				}
+
+				if (table.Options.HasFlag(CommentTableOptions.RenameId))
+				{
+					// Make `Id` nullable and rename it to `OldId`.
+					Alter.Column("Id").OnTable(table.Name).InSchema(table.Schema).AsInt32().Nullable();
+					Rename.Column("Id").OnTable(table.Name).InSchema(table.Schema).To("OldId");
 				}
 			}
 
