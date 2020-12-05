@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EntryType" xml:space="preserve">
+    <value>Type</value>
+  </data>
   <data name="OnlyAdditions" xml:space="preserve">
     <value>Only additions</value>
   </data>

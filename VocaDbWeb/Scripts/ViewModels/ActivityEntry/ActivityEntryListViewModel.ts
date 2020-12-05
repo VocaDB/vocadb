@@ -20,7 +20,9 @@ import UrlMapper from '../../Shared/UrlMapper';
 			additionsOnly?: boolean) {
 
 			this.additionsOnly = ko.observable(additionsOnly ?? false);
+			this.entryType = ko.observable();
 			this.additionsOnly.subscribe(this.clear);
+			this.entryType.subscribe(this.clear);
 
 			this.resources = new ResourcesManager(resourceRepo, cultureCode);
 			this.resources.loadResources(this.loadMore, ResourceSetNames.artistTypeNames, ResourceSetNames.discTypeNames, ResourceSetNames.songTypeNames,
@@ -41,6 +43,8 @@ import UrlMapper from '../../Shared/UrlMapper';
 		}
 
 		public entries = ko.observableArray<ActivityEntryContract>([]);
+
+		public entryType: KnockoutObservable<EntryType>;
 
 		public getActivityFeedEventName = (activityEntry: ActivityEntryContract) => {
 			
@@ -139,7 +143,8 @@ import UrlMapper from '../../Shared/UrlMapper';
 				lang: this.languageSelection,
 				before: this.lastEntryDate ? this.lastEntryDate.toISOString() : null,
 				userId: this.userId,
-				editEvent: this.additionsOnly() ? EntryEditEvent.Created : null
+				editEvent: this.additionsOnly() ? EntryEditEvent.Created : null,
+				entryType: this.entryType()
 			}, (result: PartialFindResultContract<ActivityEntryContract>) => {
 
 				var entries = result.items;

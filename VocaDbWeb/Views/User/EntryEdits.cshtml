@@ -1,6 +1,7 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.Activityfeed
+@using VocaDb.Web.Models.Shared.Partials.Activityfeed;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Users.UserBaseContract>
 
 @{
@@ -15,6 +16,14 @@
 
 <div class="form-horizontal well well-transparent">
 	<div>
+		<div class="control-group">
+			<div class="control-label">@ViewRes.User.EntryEditsStrings.EntryType</div>
+			<div class="controls">
+				@* TODO: filter out invalid entry types. *@
+				@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryTypeNames.ValuesAndNamesStrings, "entryType"))
+			</div>
+		</div>
+
 		<div class="control-group">
 			<div class="controls">
 				<label class="checkbox">

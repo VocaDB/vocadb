@@ -61,6 +61,15 @@ namespace ViewRes.User {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string EntryType {
+            get {
+                return ResourceManager.GetString("EntryType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only additions.
         /// </summary>
         public static string OnlyAdditions {
