@@ -118,7 +118,7 @@ namespace VocaDb.Model.Mapping
 			Map(m => m.LanguageCode).Not.Nullable().UniqueKey("UX_AlbumReviews");
 			Map(m => m.Title).Not.Nullable();
 
-			References(m => m.EntryForComment).Column("Album").Not.Nullable();
+			References(m => m.EntryForComment).Column("[Album]").Not.Nullable();
 		}
 	}
 }
