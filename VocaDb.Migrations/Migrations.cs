@@ -9,28 +9,13 @@ namespace VocaDb.Migrations
 	[Migration(2020_11_20_2000)]
 	public class Comments : Migration
 	{
-		private enum CommentTableOptions
-		{
-			None = 0,
-
-			/// <summary>
-			/// Rename the `AuthorName` column.
-			/// </summary>
-			RenameAuthorName = 1,
-
-			/// <summary>
-			/// Rename the `Id` column.
-			/// </summary>
-			RenameId = 2,
-		}
-
 		private sealed class CommentTable
 		{
-			public CommentTable(string name, string schema = null, CommentTableOptions options = CommentTableOptions.None)
+			public CommentTable(string name, string schema = null, string entryTypeName = null)
 			{
 				Name = name;
 				Schema = schema;
-				Options = options;
+				EntryTypeName = entryTypeName;
 			}
 
 			/// <summary>
@@ -43,7 +28,10 @@ namespace VocaDb.Migrations
 			/// </summary>
 			public string Schema { get; }
 
-			public CommentTableOptions Options { get; }
+			/// <summary>
+			/// Entry type name. (e.g. `Album`, `Artist`, `Topic`, ...)
+			/// </summary>
+			public string EntryTypeName { get; }
 
 			/// <summary>
 			/// Table name with schema. (e.g. `AlbumComments`, `ArtistComments`, `discussions.DiscussionComments`, ...)
@@ -75,17 +63,17 @@ namespace VocaDb.Migrations
 
 			var commentTables = new[]
 			{
-				new CommentTable(name: TableNames.AlbumComments, options: CommentTableOptions.RenameId | CommentTableOptions.RenameAuthorName),
-				new CommentTable(name: TableNames.ArtistComments, options: CommentTableOptions.RenameId),
-				new CommentTable(name: TableNames.DiscussionComments, schema: SchemaNames.Discussions, options: CommentTableOptions.RenameId | CommentTableOptions.RenameAuthorName),
-				new CommentTable(name: TableNames.ReleaseEventComments, options: CommentTableOptions.RenameId),
-				new CommentTable(name: TableNames.SongComments, options: CommentTableOptions.RenameId),
-				new CommentTable(name: TableNames.SongListComments, options: CommentTableOptions.RenameId),
-				new CommentTable(name: TableNames.TagComments, options: CommentTableOptions.RenameId),
-				new CommentTable(name: TableNames.UserComments, options: CommentTableOptions.RenameId),
+				new CommentTable(name: TableNames.AlbumComments, entryTypeName: "Album"),
+				new CommentTable(name: TableNames.ArtistComments, entryTypeName: "Artist"),
+				new CommentTable(name: TableNames.DiscussionComments, schema: SchemaNames.Discussions, entryTypeName: "Topic"),
+				new CommentTable(name: TableNames.ReleaseEventComments, entryTypeName: "ReleaseEvent"),
+				new CommentTable(name: TableNames.SongComments, entryTypeName: "Song"),
+				new CommentTable(name: TableNames.SongListComments, entryTypeName: "SongList"),
+				new CommentTable(name: TableNames.TagComments, entryTypeName: "Tag"),
+				new CommentTable(name: TableNames.UserComments, entryTypeName: "User"),
 
 				new CommentTable(name: TableNames.DiscussionTopics, schema: SchemaNames.Discussions),
-				new CommentTable(name: TableNames.AlbumReviews, options: CommentTableOptions.RenameId),
+				new CommentTable(name: TableNames.AlbumReviews, entryTypeName: "Album"),
 			};
 
 			// insert into Comments(OldTable, OldId, Author, Created, Message)
@@ -122,19 +110,21 @@ namespace VocaDb.Migrations
 				Alter.Column("Message").OnTable(table.Name).InSchema(table.Schema).AsString(4000).Nullable();
 				Rename.Column("Message").OnTable(table.Name).InSchema(table.Schema).To("OldMessage");
 
-				if (table.Options.HasFlag(CommentTableOptions.RenameAuthorName))
+				if (Schema.Schema(table.Schema).Table(table.Name).Column("AuthorName").Exists())
 				{
 					// Make `AuthorName` nullable and rename it to `OldAuthorName`.
 					Alter.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).AsString(100).Nullable();
 					Rename.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).To("OldAuthorName");
 				}
 
-				if (table.Options.HasFlag(CommentTableOptions.RenameId))
+				if (table.EntryTypeName != null)
 				{
 					Delete.PrimaryKey($"PK_{table.Name}").FromTable(table.Name).InSchema(table.Schema);
 					// Make `Id` nullable and rename it to `OldId`.
 					Alter.Column("Id").OnTable(table.Name).InSchema(table.Schema).AsInt32().Nullable();
 					Rename.Column("Id").OnTable(table.Name).InSchema(table.Schema).To("OldId");
+
+					Create.PrimaryKey().OnTable(table.Name).WithSchema(table.Schema).Columns("Comment", table.EntryTypeName);
 				}
 			}
 
