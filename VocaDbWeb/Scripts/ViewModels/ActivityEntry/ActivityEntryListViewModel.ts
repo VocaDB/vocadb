@@ -17,15 +17,10 @@ import UrlMapper from '../../Shared/UrlMapper';
 			private languageSelection: string,
 			cultureCode: string,
 			private userId?: number,
-			editEvent?: EntryEditEvent) {
-			
-			this.editEvent = ko.observable(editEvent);
-			this.editEvent.subscribe(this.clear);
+			additionsOnly?: boolean) {
 
-			this.editEventFilter_all = ko.computed({
-				read: () => this.editEvent() == null,
-				write: (val: boolean) => this.editEvent(val ? null : EntryEditEvent.Created)
-			});
+			this.additionsOnly = ko.observable(additionsOnly ?? false);
+			this.additionsOnly.subscribe(this.clear);
 
 			this.resources = new ResourcesManager(resourceRepo, cultureCode);
 			this.resources.loadResources(this.loadMore, ResourceSetNames.artistTypeNames, ResourceSetNames.discTypeNames, ResourceSetNames.songTypeNames,
@@ -37,6 +32,8 @@ import UrlMapper from '../../Shared/UrlMapper';
 
 		}
 
+		public additionsOnly: KnockoutObservable<boolean>;
+
 		private clear = () => {
 			this.lastEntryDate = null;
 			this.entries([]);
@@ -44,10 +41,6 @@ import UrlMapper from '../../Shared/UrlMapper';
 		}
 
 		public entries = ko.observableArray<ActivityEntryContract>([]);
-
-		public editEvent: KnockoutObservable<EntryEditEvent>;
-
-		public editEventFilter_all: KnockoutComputed<boolean>;
 
 		public getActivityFeedEventName = (activityEntry: ActivityEntryContract) => {
 			
@@ -146,7 +139,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 				lang: this.languageSelection,
 				before: this.lastEntryDate ? this.lastEntryDate.toISOString() : null,
 				userId: this.userId,
-				editEvent: this.editEvent() ? EntryEditEvent[this.editEvent()] : null
+				editEvent: this.additionsOnly() ? EntryEditEvent.Created : null
 			}, (result: PartialFindResultContract<ActivityEntryContract>) => {
 
 				var entries = result.items;

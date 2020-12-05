@@ -180,7 +180,7 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			var user = Service.GetUser(id);
-			ViewBag.EditEvent = (onlySubmissions ? (int?)EntryEditEvent.Created : null);
+			ViewBag.AdditionsOnly = onlySubmissions ? (bool?)true : null;
 
 			return View(user);
 		}
