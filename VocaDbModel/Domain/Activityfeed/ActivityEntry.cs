@@ -34,7 +34,7 @@ namespace VocaDb.Model.Domain.Activityfeed
 
 		public virtual User Author
 		{
-			get { return author; }
+			get => author;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -55,15 +55,9 @@ namespace VocaDb.Model.Domain.Activityfeed
 
 		public virtual int Id { get; set; }
 
-		public virtual bool IsDuplicate(ActivityEntry entry)
-		{
-			return (Author.Equals(entry.Author) && EntryBase.Equals(entry.EntryBase));
-		}
+		public virtual bool IsDuplicate(ActivityEntry entry) => Author.Equals(entry.Author) && EntryBase.Equals(entry.EntryBase);
 
-		public override string ToString()
-		{
-			return string.Format("activity entry ({0}) for {1}", EditEvent, EntryBase);
-		}
+		public override string ToString() => $"activity entry ({EditEvent}) for {EntryBase}";
 	}
 
 	/// <summary>

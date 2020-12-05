@@ -3,6 +3,7 @@ using System.Web.Http;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Activityfeed;
 using VocaDb.Model.DataContracts.Api;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
@@ -30,6 +31,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="since">Filter to return activity entries only after this date. Optional, by default no filter.</param>
 		/// <param name="userId">Filter by user Id. Optional, by default no filter.</param>
 		/// <param name="editEvent">Filter by entry edit event (either Created or Updated). Optional, by default no filter.</param>
+		/// <param name="entryType">Entry type. Optional.</param>
 		/// <param name="maxResults">Maximum number of results to return. Default 50. Maximum value 500.</param>
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="fields">Optional fields.</param>
@@ -46,10 +48,11 @@ namespace VocaDb.Web.Controllers.Api
 			DateTime? since = null,
  			int? userId = null,
 			EntryEditEvent? editEvent = null,
+			EntryType entryType = EntryType.Undefined,
 			int maxResults = defaultMax,
 			bool getTotalCount = false,
 			ActivityEntryOptionalFields fields = ActivityEntryOptionalFields.None,
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetList(before, since, userId, editEvent, maxResults, getTotalCount, fields, entryFields, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetList(before, since, userId, editEvent, entryType, maxResults, getTotalCount, fields, entryFields, lang);
 	}
 }
