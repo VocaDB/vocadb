@@ -52,7 +52,7 @@ namespace VocaDb.Migrations
 
 			// Create `Comments` table.
 			Create.Table(TableNames.Comments)
-				.WithColumn("Id").AsInt64().NotNullable().Identity().PrimaryKey()
+				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
 				.WithColumn("Author").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id").OnDelete(Rule.Cascade)
 				.WithColumn("Created").AsDateTime().NotNullable()
 				.WithColumn("Deleted").AsBoolean().NotNullable().WithDefaultValue(false)
@@ -91,10 +91,10 @@ namespace VocaDb.Migrations
 			foreach (var table in commentTables)
 			{
 				// Add `Comment` column to comment tables (`AlbumComments`, `ArtistComments`, `DiscussionComments`, ..., 'DiscussionTopics', 'AlbumReviews').
-				Create.Column("Comment").OnTable(table.Name).InSchema(table.Schema).AsInt64().Nullable();
+				Create.Column("Comment").OnTable(table.Name).InSchema(table.Schema).AsInt32().Nullable();
 				// e.g. update discussions.DiscussionComments set Comment = c.Id from discussions.DiscussionComments ec inner join Comments c on c.OldTable = 'discussions.DiscussionComments' and ec.Id = c.OldId
 				Execute.Sql($"update {table.NameWithSchema} set Comment = c.Id from {table.NameWithSchema} ec inner join {TableNames.Comments} c on c.OldTable = '{table.NameWithSchema}' and ec.Id = c.OldId");
-				Alter.Column("Comment").OnTable(table.Name).InSchema(table.Schema).AsInt64().NotNullable().ForeignKey(TableNames.Comments, "Id");
+				Alter.Column("Comment").OnTable(table.Name).InSchema(table.Schema).AsInt32().NotNullable().ForeignKey(TableNames.Comments, "Id");
 
 				// TODO: remove these columns.
 
@@ -132,7 +132,7 @@ namespace VocaDb.Migrations
 			Execute.Sql($"insert into discussions.DiscussionComments(Comment, Topic) select Comment, Id from discussions.DiscussionTopics");
 
 			// Make `Comment` nullable and rename it to `OldComment`.
-			Alter.Column("Comment").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).AsInt64().Nullable();
+			Alter.Column("Comment").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).AsInt32().Nullable();
 			Rename.Column("Comment").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).To("OldComment");
 
 			Rename.Column("OldCreated").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).To("Created");
