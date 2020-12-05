@@ -140,12 +140,11 @@ namespace VocaDb.Migrations
 			Execute.Sql($"update Comments set Deleted = ec.Deleted from discussions.DiscussionTopics ec inner join Comments c on c.OldTable = 'discussions.DiscussionTopics' and ec.Id = c.OldId");
 			Execute.Sql($"insert into discussions.DiscussionComments(Comment, Topic) select Comment, Id from discussions.DiscussionTopics");
 
-			// Rename columns on `DiscussionTopics` table.
-			Rename.Column("Comment").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).To("FirstComment");
-			Rename.Column("OldCreated").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).To("Created");
+			// Make `Comment` nullable and rename it to `OldComment`.
+			Alter.Column("Comment").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).AsInt64().Nullable();
+			Rename.Column("Comment").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).To("OldComment");
 
-			// Make `FirstComment` nullable.
-			Alter.Column("FirstComment").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).AsInt64().Nullable();
+			Rename.Column("OldCreated").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).To("Created");
 		}
 
 		public override void Down()
