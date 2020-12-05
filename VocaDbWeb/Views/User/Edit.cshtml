@@ -75,5 +75,11 @@
 }
 
 @section BodyScripts {
-	<script type="text/javascript" src="@Url.Content("~/Scripts/User/Edit.js")"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			app.initUserEditPage();
+		});
+
+	</script>
 }

@@ -1,4 +1,4 @@
-﻿@using System.Web.Optimization
+﻿@using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.TagBaseContract>
 
 @{
@@ -11,7 +11,8 @@
 
 }
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
 
 	@Html.Partial("Partials/Shared/_MergeEntryInfo")
 
@@ -42,14 +43,14 @@
 }
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/shared/edit", "~/bundles/Tag/Merge")
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Tag/Merge.js")
 	<script type="text/javascript">
 
 		$(function () {
 
-			var repo = new vdb.repositories.TagRepository('@RootPath');
+			var repo = new app.TagRepository('@RootPath');
 			var data = @ToJS(Model);
-			var vm = new vdb.viewModels.tags.TagMergeViewModel(repo, data);
+			var vm = new app.TagMergeViewModel(repo, data);
 			ko.applyBindings(vm);
 
 			$("#mergeBtn").click(function () {

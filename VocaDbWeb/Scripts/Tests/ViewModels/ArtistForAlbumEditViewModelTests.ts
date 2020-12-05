@@ -1,15 +1,11 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../TestSupport/FakeAlbumRepository.ts" />
-/// <reference path="../../ViewModels/ArtistForAlbumEditViewModel.ts" />
+import ArtistContract from '../../DataContracts/Artist/ArtistContract';
+import ArtistForAlbumContract from '../../DataContracts/ArtistForAlbumContract';
+import ArtistForAlbumEditViewModel from '../../ViewModels/ArtistForAlbumEditViewModel';
+import FakeAlbumRepository from '../TestSupport/FakeAlbumRepository';
 
-module vdb.tests.viewModels {
-
-    import vm = vdb.viewModels;
-    import dc = vdb.dataContracts;
-
-    var rep = new vdb.tests.testSupport.FakeAlbumRepository();
-    var producer: dc.ArtistContract;
-    var data: dc.ArtistForAlbumContract;
+    var rep = new FakeAlbumRepository();
+    var producer: ArtistContract;
+    var data: ArtistForAlbumContract;
 
     QUnit.module("ArtistForAlbumEditViewModelTests", {
         setup: () => {
@@ -19,7 +15,7 @@ module vdb.tests.viewModels {
     });
 
     function createViewModel() {
-        return new vm.ArtistForAlbumEditViewModel(rep, data);
+        return new ArtistForAlbumEditViewModel(rep, data);
     }
 
     test("constructor", () => {
@@ -63,5 +59,3 @@ module vdb.tests.viewModels {
         equal(target.rolesArray()[1], "Arranger", "rolesArray[1]");
 
     });
-
-}

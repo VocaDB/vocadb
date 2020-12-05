@@ -1,7 +1,8 @@
+import LocalizedStringWithIdContract from "../Globalization/LocalizedStringWithIdContract";
+import OptionalGeoPointContract from "../OptionalGeoPointContract";
+import WebLinkContract from "../WebLinkContract";
 
-module vdb.dataContracts {
-
-	export interface VenueForEditContract {
+	export default interface VenueForEditContract {
 
 		address: string;
 
@@ -13,11 +14,8 @@ module vdb.dataContracts {
 
 		id: number;
 
-		names?: globalization.LocalizedStringWithIdContract[];
+		names?: LocalizedStringWithIdContract[];
 
 		webLinks: WebLinkContract[];
 
 	}
-
-}
-

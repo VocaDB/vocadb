@@ -20,16 +20,16 @@
 
 @section Toolbar {
 @if (Login.CanRevertEntryVersions && Model.CanBeReverted) {
-	@Html.ActionLink("Revert to this version", "RevertToVersion", new { archivedArtistVersionId = Model.ArchivedVersion.Id }, new { id = "revertLink", onclick = "return confirm(\"Are you sure you want to revert to this version?\");" })
+	@Html.ActionLink(ViewRes.ViewVersionStrings.RevertToVersion, "RevertToVersion", new { archivedArtistVersionId = Model.ArchivedVersion.Id }, new { id = "revertLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmRevertToVersion) })
 }
 &nbsp;
 <a href="@Url.Action("ArchivedVersionXml", new { id = Model.ArchivedVersion.Id })" id="downloadXmlLink">Download XML</a>
 <a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 @if (Login.CanViewHiddenRevisions) {
 	if (Model.ArchivedVersion.Hidden) {
-		@Html.ActionLink("Show this version", "UpdateVersionVisibility", new { archivedVersionId = Model.ArchivedVersion.Id, hidden = false }, new { id = "showLink", onclick = "return confirm(\"Are you sure you want to show this version?\");" })
+		@Html.ActionLink(ViewRes.ViewVersionStrings.UnhideVersion, "UpdateVersionVisibility", new { archivedVersionId = Model.ArchivedVersion.Id, hidden = false }, new { id = "showLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmUnhide) })
 	} else {
-		@Html.ActionLink("Hide this version", "UpdateVersionVisibility", new { archivedVersionId = Model.ArchivedVersion.Id, hidden = true }, new { id = "hideLink", onclick = "return confirm(\"Are you sure you want to hide this version?\");" })
+		@Html.ActionLink(ViewRes.ViewVersionStrings.HideVersion, "UpdateVersionVisibility", new { archivedVersionId = Model.ArchivedVersion.Id, hidden = true }, new { id = "hideLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmHide) })
 	}
 }
 }
@@ -52,7 +52,6 @@
 @Html.Partial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel())
 
 @section BodyScripts {
-	<script src="@Url.Content("~/Scripts/ViewModels/Artist/ArchivedArtistViewModel.js")"></script>
     <script type="text/javascript">
 
 		$(function () {
@@ -63,9 +62,9 @@
 			$("#showLink").button({ icons: { primary: 'ui-icon-unlocked' } });
 			$("#hideLink").button({ icons: { primary: 'ui-icon-locked' } });
 
-            var rep = new vdb.repositories.ArtistRepository('@RootPath', @LanguagePreferenceInt);
+            var rep = new app.ArtistRepository('@RootPath', @LanguagePreferenceInt);
 
-            var viewModel = new vdb.viewModels.artists.ArchivedArtistViewModel(@Model.Artist.Id, @Model.ArchivedVersion.Version, rep);
+            var viewModel = new app.ArchivedArtistViewModel(@Model.Artist.Id, @Model.ArchivedVersion.Version, rep);
             ko.applyBindings(viewModel);
 
         });

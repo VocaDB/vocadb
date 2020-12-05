@@ -137,7 +137,7 @@
 	</div>
 	<div class="editor-field" data-bind="with: webLinks">
 		@KnockoutHelpers.WebLinksEditViewKnockout(false)
-		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(webLinks)")
+		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(items)")
 	</div>
 	
 	<div class="editor-label">
@@ -156,13 +156,13 @@
 @Html.Partial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/shared/edit", "~/bundles/Venue/Edit")
+@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Venue/Edit.js")
 <script type="text/javascript">
 
 	$(function () {
 		
-		var urlMapper = new vdb.UrlMapper('@RootPath');
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var urlMapper = new app.UrlMapper('@RootPath');
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var venueRepo = repoFactory.venueRepository();
 		var userRepo = repoFactory.userRepository();
 		var contract = @ToJS(new {
@@ -173,10 +173,10 @@
 			Model.WebLinks
 		});
 
-		var vm = new vdb.viewModels.venues.VenueEditViewModel(venueRepo, userRepo, urlMapper, contract);
+		var vm = new app.VenueEditViewModel(venueRepo, userRepo, urlMapper, contract);
 		ko.applyBindings(vm);
 
-		initPage();
+		app.initVenueEditPage();
 
 	});
 

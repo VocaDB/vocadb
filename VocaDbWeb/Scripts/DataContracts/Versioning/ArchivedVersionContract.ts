@@ -1,8 +1,6 @@
-﻿
-module vdb.dataContracts.versioning {
-	
+
 	// C# class: ArchivedObjectVersionForApiContract
-	export interface ArchivedVersionContract {
+	export default interface ArchivedVersionContract {
 		
 		changedFields: string[];
 
@@ -13,5 +11,3 @@ module vdb.dataContracts.versioning {
 		version: number;
 
 	}
-
-} 

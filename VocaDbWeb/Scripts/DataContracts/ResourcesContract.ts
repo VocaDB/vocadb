@@ -1,8 +1,6 @@
 
-module vdb.dataContracts {
-	
 	// From ResourcesApiController
-	export interface ResourcesContract {
+	export default interface ResourcesContract {
 
 		activityEntry_activityFeedEventNames?: { [key: string]: string; }
 		album_albumEditableFieldNames?: { [key: string]: string; }
@@ -29,5 +27,3 @@ module vdb.dataContracts {
 		userGroupNames?: { [key: string]: string; }
 
 	}
-
-}

@@ -1,19 +1,21 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Web;
 using IvanAkcheurov.NTextCat.Lib;
+using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Model.Domain.Globalization
 {
 	public class NTextCatLibLanguageDetector : ILanguageDetector
 	{
-		private string LanguageFilePath
+		public NTextCatLibLanguageDetector(IHttpContext context)
 		{
-			get
-			{
-				return HttpContext.Current.Server.MapPath("~/App_Data/Core14.profile.xml");
-			}
+			this.context = context;
 		}
+
+		private readonly IHttpContext context;
+
+		private string LanguageFilePath => context.ServerPathMapper.MapPath("~/App_Data/Core14.profile.xml");
 
 		public ContentLanguageSelection Detect(string str, ContentLanguageSelection def = ContentLanguageSelection.Unspecified)
 		{

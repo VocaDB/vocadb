@@ -1,13 +1,14 @@
-﻿
-module vdb.viewModels.user {
-	
-	import dc = vdb.dataContracts;
+import ResourceRepository from '../../Repositories/ResourceRepository';
+import ResourcesManager from '../../Models/ResourcesManager';
+import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
+import UserApiContract from '../../DataContracts/User/UserApiContract';
+import UserRepository from '../../Repositories/UserRepository';
 
-	export class ListUsersViewModel {
+	export default class ListUsersViewModel {
 		
 		constructor(
-			private readonly repo: repositories.UserRepository,
-			resourceRepo: repositories.ResourceRepository,
+			private readonly repo: UserRepository,
+			resourceRepo: ResourceRepository,
 			cultureCode: string,
 			searchTerm: string,
 			group: string) {
@@ -17,7 +18,7 @@ module vdb.viewModels.user {
 
 			this.searchTerm = ko.observable(searchTerm || "").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 
-			this.resources = new vdb.models.ResourcesManager(resourceRepo, cultureCode);
+			this.resources = new ResourcesManager(resourceRepo, cultureCode);
 			this.resources.loadResources(null, "userGroupNames");
 
 			this.disabledUsers.subscribe(this.updateResultsWithTotalCount);
@@ -38,10 +39,10 @@ module vdb.viewModels.user {
 		public loading = ko.observable(false);
 		public knowsLanguage = ko.observable("");
 		public onlyVerifiedArtists = ko.observable(false);
-		public page = ko.observableArray<dc.user.UserApiContract>([]); // Current page of items
+		public page = ko.observableArray<UserApiContract>([]); // Current page of items
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public pauseNotifications = false;
-		public resources: vdb.models.ResourcesManager;
+		public resources: ResourcesManager;
 		public searchTerm: KnockoutObservable<string>;
 		public sort = ko.observable("RegisterDate");
 
@@ -79,5 +80,3 @@ module vdb.viewModels.user {
 		}
 
 	}
-
-}

@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Caching;
+using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
@@ -16,6 +17,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Service.ExtSites;
@@ -57,7 +59,8 @@ namespace VocaDb.Web.App_Start
 			builder.Register(x => DatabaseConfiguration.BuildSessionFactory()).SingleInstance();
 
 			// Other dependencies (for repositories mostly)
-			builder.RegisterType<LoginManager>().As<IUserPermissionContext>();
+			builder.Register(x => new AspNetHttpContext(HttpContext.Current)).As<IHttpContext>();
+			builder.RegisterType<LoginManager>().AsSelf().As<IUserPermissionContext>();
 			builder.Register(x => new EntryAnchorFactory(AppConfig.HostAddress)).As<IEntryLinkFactory>();
 			builder.RegisterType<UserMessageMailer>().As<IUserMessageMailer>();
 			builder.RegisterType<StopForumSpamClient>().As<IStopForumSpamClient>();

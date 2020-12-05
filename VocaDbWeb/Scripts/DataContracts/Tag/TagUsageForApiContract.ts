@@ -1,12 +1,9 @@
-﻿
-module vdb.dataContracts.tags {
-	
-	export interface TagUsageForApiContract {
+import TagBaseContract from './TagBaseContract';
+
+	export default interface TagUsageForApiContract {
 
 		count: number;
 
 		tag: TagBaseContract;
 
 	}
-
-}

@@ -1,9 +1,9 @@
-﻿
-module vdb.dataContracts {
-	
+import EntryThumbContract from './EntryThumbContract';
+import EntryWithTagUsagesContract from './Base/EntryWithTagUsagesContract';
+
 	// Base data contract for entries from the API.
 	// Corresponds to C# datacontract EntryForApiContract.
-	export interface EntryContract extends EntryWithTagUsagesContract {
+	export default interface EntryContract extends EntryWithTagUsagesContract {
 
 		additionalNames: string;
 
@@ -32,5 +32,3 @@ module vdb.dataContracts {
 		urlSlug?: string;
 
 	}
-
-}

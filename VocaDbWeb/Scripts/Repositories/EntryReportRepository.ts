@@ -1,17 +1,12 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../Shared/UrlMapper.ts" />
+import UrlMapper from '../Shared/UrlMapper';
 
-module vdb.repositories {
-
-    export class EntryReportRepository {
+    export default class EntryReportRepository {
 
         public getNewReportCount = (callback: (count) => void) => {
             var url = this.urlMapper.mapRelative("/entryReports/newReportsCount");
             $.getJSON(url, null, callback);
         };
 
-        constructor(private urlMapper: vdb.UrlMapper) {}
+        constructor(private urlMapper: UrlMapper) {}
 
     }
-
-}

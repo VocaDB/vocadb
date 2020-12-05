@@ -130,16 +130,16 @@
 </form>
 
 @section BodyScripts {
-    @Scripts.Render("~/bundles/shared/edit", "~/bundles/Artist/Create")
+    @LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Artist/Create.js")
     <script type="text/javascript">
 
 		$(document).ready(function () {
 			ko.punches.enableAll();
-			var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
+			var repoFactory = new app.RepositoryFactory(new app.UrlMapper('@RootPath'), @LanguagePreferenceInt);
 			var repo = repoFactory.artistRepository();
 			var tagRepo = repoFactory.tagRepository();
             var json = @Html.Raw(JsonHelpers.Serialize(Model));
-            ko.applyBindings(new vdb.viewModels.ArtistCreateViewModel(repo, tagRepo, json));
+            ko.applyBindings(new app.ArtistCreateViewModel(repo, tagRepo, json));
         });
 
     </script>

@@ -1,14 +1,12 @@
-﻿
-namespace vdb.dataContracts {
-	
-	export interface RatedSongForUserForApiContract {
+import SongApiContract from '../Song/SongApiContract';
+import UserApiContract from './UserApiContract';
+
+	export default interface RatedSongForUserForApiContract {
 
 		rating: string;
 
 		song?: SongApiContract;
 
-		user?: user.UserApiContract;
+		user?: UserApiContract;
 
 	}
-
-}

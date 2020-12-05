@@ -1,5 +1,3 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../typings/knockout/knockout.d.ts" />
 
 interface KnockoutBindingHandlers {
 	// Knockout binding for qTip tooltip.

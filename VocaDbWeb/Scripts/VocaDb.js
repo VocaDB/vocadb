@@ -1,22 +1,4 @@
 
-function getId(elem) {
-
-	if ($(elem) == null || $(elem).attr('id') == null)
-		return null;
-
-	var parts = $(elem).attr('id').split("_");
-	return (parts.length >= 2 ? parts[1] : null);
-}
-
-function isNullOrWhiteSpace(str) {
-
-	if (str == null || str.length == 0)
-		return true;
-
-	return !(/\S/.test(str));
-
-}
-
 vdb = {};
 vdb.functions = vdb.functions || {};
 vdb.values = vdb.values || {};
@@ -45,7 +27,7 @@ vdb.functions.showLoginPopup = function() {
                 content: {
                     text: 'Loading...',
                     ajax: {
-						url: vdb.functions.mapAbsoluteUrl('/Artist/PopupContent'),
+						url: app.functions.mapAbsoluteUrl('/Artist/PopupContent'),
                         type: 'GET',
                         data: { id: $(elem).data("entryId") }
                     }
@@ -72,7 +54,7 @@ vdb.functions.showLoginPopup = function() {
                 content: {
                     text: 'Loading...',
                     ajax: {
-						url: vdb.functions.mapAbsoluteUrl('/Album/PopupContent'),
+						url: app.functions.mapAbsoluteUrl('/Album/PopupContent'),
                         type: 'GET',
                         data: { id: $(elem).data("entryId") }
                     }
@@ -96,7 +78,7 @@ vdb.functions.showLoginPopup = function() {
 				content: {
 					text: 'Loading...',
 					ajax: {
-						url: vdb.functions.mapAbsoluteUrl('/Album/PopupWithCoverContent'),
+						url: app.functions.mapAbsoluteUrl('/Album/PopupWithCoverContent'),
 						type: 'GET',
 						data: { id: $(elem).data("entryId") }
 					}

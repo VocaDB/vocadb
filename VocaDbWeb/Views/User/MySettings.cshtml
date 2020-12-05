@@ -1,5 +1,4 @@
 ﻿@using System.Activities.Expressions
-@using System.Web.Optimization
 @using VocaDb.Web.Models
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
@@ -235,7 +234,7 @@
 			</div>
 			<div class="editor-field" data-bind="with: webLinksViewModel">
 				@KnockoutHelpers.WebLinksEditViewKnockout(false)
-				<input type="hidden" name="webLinks" data-bind="value: ko.toJSON(webLinks)" />
+				<input type="hidden" name="webLinks" data-bind="value: ko.toJSON(items)" />
 			</div>
 
 		</div>
@@ -280,21 +279,21 @@
 }
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/shared/edit", "~/bundles/User/MySettings")
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/User/MySettings.js")
 	<script type="text/javascript">
 
 		$(document).ready(function () {
 
 			$("#tabs").tabs();
 
-			var urlMapper = new vdb.UrlMapper('@Url.Content("~/")');
-			var repository = new vdb.repositories.UserRepository(urlMapper);
+			var urlMapper = new app.UrlMapper('@Url.Content("~/")');
+			var repository = new app.UserRepository(urlMapper);
 
 			@* Can't encode about me text here because textarea needs unencoded. It's user's own content anyway. *@
 			@{ var data = new { Model.AboutMe, Model.Email, Model.EmailVerified, Model.KnownLanguages, Model.WebLinks };	}
 			var model = @Html.Raw(JsonHelpers.Serialize(data));
 
-			var viewModel = new vdb.viewModels.MySettingsViewModel(repository, model.aboutMe, model.email, model.emailVerified, model.webLinks, model.knownLanguages);
+			var viewModel = new app.MySettingsViewModel(repository, model.aboutMe, model.email, model.emailVerified, model.webLinks, model.knownLanguages);
 			ko.applyBindings(viewModel);
 
 		});

@@ -1,5 +1,4 @@
-@using System.Web.Optimization
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers
 @using Res = ViewRes.User.RequestVerificationStrings
 @inherits VocaDb.Web.Code.VocaDbPage<string>
 
@@ -22,7 +21,7 @@
 				@Res.ArtistTitle
 			</label>
 			<div data-bind="if: selectedArtist, visible: selectedArtist" style="display: none;">
-				<a data-bind="text: selectedArtist().name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', selectedArtist().id) }" href="#"></a>
+				<a data-bind="text: selectedArtist().name, attr: { href: app.EntryUrlMapper.details('Artist', selectedArtist().id) }" href="#"></a>
 				<button data-bind="click: clearArtist" class="btn btn-mini btn-danger">@ViewRes.SharedStrings.Clear</button>
 			</div>
 			<div data-bind="ifnot: selectedArtist">
@@ -72,15 +71,13 @@
 
 @section BodyScripts {
 
-	@Scripts.Render("~/bundles/shared/edit")
-	<script type="text/javascript" src="@Url.Content("~/Scripts/Repositories/ArtistRepository.js")"></script>
-	<script type="text/javascript" src="@Url.Content("~/Scripts/ViewModels/User/RequestVerificationViewModel.js")"></script>
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js")
 	<script type="text/javascript">
 
 		$(document).ready(function () {
-			var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
+			var repoFactory = new app.RepositoryFactory(new app.UrlMapper('@RootPath'), @LanguagePreferenceInt);
 			var artistRepo = repoFactory.artistRepository();
-			ko.applyBindings(new vdb.viewModels.RequestVerificationViewModel(artistRepo));
+			ko.applyBindings(new app.RequestVerificationViewModel(artistRepo));
 		});
 
 	</script>

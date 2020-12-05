@@ -1,9 +1,7 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-/// <reference path="../../Shared/GlobalFunctions.ts" />
+import AdminRepository from '../../Repositories/AdminRepository';
+import ui from '../../Shared/MessagesTyped';
 
-module vdb.viewModels {
-
-    export class ManageIPRulesViewModel {
+    export default class ManageIPRulesViewModel {
 
         public add = () => {
 
@@ -46,7 +44,7 @@ module vdb.viewModels {
             ko.utils.postJson(location.href, json, null);
         };
 
-        constructor(data: IPRuleContract[], repo: rep.AdminRepository) {
+        constructor(data: IPRuleContract[], repo: AdminRepository) {
 
 			const rules = _.chain(data).sortBy('created').reverse().map(r => new IPRule(r)).value();
             this.rules = ko.observableArray(rules);
@@ -93,5 +91,3 @@ module vdb.viewModels {
         }
 
     };
-
-}

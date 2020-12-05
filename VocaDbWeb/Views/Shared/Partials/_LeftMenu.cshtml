@@ -8,7 +8,7 @@
 @inherits MenuPage
 
 @helper BannerLink(string title, string url, string img) {
-	<a href="@url" onclick="vdb.functions.trackOutboundLink(event)"><img src="@VocaUrlHelper.StaticResource("/banners/" + img)" alt="@title" title="@title" /></a>
+	<a href="@url" onclick="app.functions.trackOutboundLink(event)"><img src="@VocaUrlHelper.StaticResource("/banners/" + img)" alt="@title" title="@title" /></a>
 }
 
 @helper Banner(string title, string url, string img) {

@@ -1,13 +1,17 @@
-﻿
-interface KnockoutBindingHandlers {
-	userAutocomplete: KnockoutBindingHandler;
-}
+import { EntryAutoCompleteParams } from '../../Shared/EntryAutoComplete';
+import functions from '../../Shared/GlobalFunctions';
+import { initEntrySearch } from '../../Shared/EntryAutoComplete';
+import UserApiContract from '../../DataContracts/User/UserApiContract';
 
-module vdb.knockoutExtensions.bindingHandlers {
+declare global {
+	interface KnockoutBindingHandlers {
+		userAutocomplete: KnockoutBindingHandler;
+	}
+}
 
 	export function userAutocomplete(element: HTMLElement, valueAccessor: () => any) {
 
-		const params: vdb.EntryAutoCompleteParams<dc.user.UserApiContract> = {
+		const params: EntryAutoCompleteParams<UserApiContract> = {
 			acceptSelection: (id, term, itemType, item) => {
 				valueAccessor()(item);
 			},
@@ -18,12 +22,10 @@ module vdb.knockoutExtensions.bindingHandlers {
 			singleRow: true
 		};
 
-		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/users"), params);
+		initEntrySearch(element, functions.mapAbsoluteUrl("/api/users"), params);
 
 	}
 
-}
-
 ko.bindingHandlers.userAutocomplete = {
-	init: vdb.knockoutExtensions.bindingHandlers.userAutocomplete
+	init: userAutocomplete
 }

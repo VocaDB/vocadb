@@ -1,11 +1,9 @@
+import ArtistContract from '../DataContracts/Artist/ArtistContract';
+import SongInAlbumEditContract from '../DataContracts/Song/SongInAlbumEditContract';
 
-module vdb.viewModels {
-
-    import dc = vdb.dataContracts;
-
-    export class SongInAlbumEditViewModel {
+    export default class SongInAlbumEditViewModel {
         
-        public artists: KnockoutObservableArray<dc.ArtistContract>;
+        public artists: KnockoutObservableArray<ArtistContract>;
 
         public artistString: KnockoutObservable<string>;
 
@@ -27,7 +25,7 @@ module vdb.viewModels {
 
         public trackNumber: KnockoutObservable<number>;
 
-        constructor(data: dc.songs.SongInAlbumEditContract) {
+        constructor(data: SongInAlbumEditContract) {
             
             this.artists = ko.observableArray(data.artists);
             this.artistString = ko.observable(data.artistString);
@@ -50,5 +48,3 @@ module vdb.viewModels {
         }
 
     }
-
-}

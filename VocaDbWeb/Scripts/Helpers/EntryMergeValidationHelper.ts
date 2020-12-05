@@ -1,31 +1,31 @@
-﻿
-module vdb.helpers {
-	
-	export class EntryMergeValidationHelper {
+import CommonEntryContract from '../DataContracts/CommonEntryContract';
+import EntryStatus from '../Models/EntryStatus';
 
-		private static toEnum(statusStr: string | models.EntryStatus): models.EntryStatus {
+	export default class EntryMergeValidationHelper {
+
+		private static toEnum(statusStr: string | EntryStatus): EntryStatus {
 		
 			if (typeof statusStr === "string") {
-				return models.EntryStatus[statusStr];
+				return EntryStatus[statusStr];
 			} else {
 				return statusStr;
 			}
 				 
 		}
 
-		public static validate(baseStatus: string | models.EntryStatus, targetStatus: string | models.EntryStatus, baseCreated: string, targetCreated: string) {
+		public static validate(baseStatus: string | EntryStatus, targetStatus: string | EntryStatus, baseCreated: string, targetCreated: string) {
 
 			var baseStatusEnum = EntryMergeValidationHelper.toEnum(baseStatus);
 			var targetStatusEnum = EntryMergeValidationHelper.toEnum(targetStatus);
 
 			return {
-				validationError_targetIsLessComplete: moment(targetCreated) <= moment(baseCreated) && targetStatusEnum === models.EntryStatus.Draft && baseStatusEnum > models.EntryStatus.Draft,
-				validationError_targetIsNewer: !(targetStatusEnum > models.EntryStatus.Draft && baseStatusEnum === models.EntryStatus.Draft) && moment(targetCreated) > moment(baseCreated)
+				validationError_targetIsLessComplete: moment(targetCreated) <= moment(baseCreated) && targetStatusEnum === EntryStatus.Draft && baseStatusEnum > EntryStatus.Draft,
+				validationError_targetIsNewer: !(targetStatusEnum > EntryStatus.Draft && baseStatusEnum === EntryStatus.Draft) && moment(targetCreated) > moment(baseCreated)
 			};
 
 		}
 
-		public static validateEntry(base: dc.CommonEntryContract, target: dc.CommonEntryContract) {
+		public static validateEntry(base: CommonEntryContract, target: CommonEntryContract) {
 
 			if (base == null || target == null) {
 				return {
@@ -44,5 +44,3 @@ module vdb.helpers {
 		validationError_targetIsLessComplete: boolean;
 		validationError_targetIsNewer: boolean;
 	}
-
-}

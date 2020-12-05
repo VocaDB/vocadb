@@ -1,10 +1,8 @@
-﻿
-namespace vdb.models.globalization {
 
-	export enum TranslationType {
+	enum TranslationType {
 		Original,
 		Romanized,
 		Translation
 	}
 
-}
+	export default TranslationType;

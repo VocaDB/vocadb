@@ -1,7 +1,5 @@
 
-module vdb.models.pvs {
-	
-	export enum PVService {
+	enum PVService {
 		
 		NicoNicoDouga	= 1,
 
@@ -25,4 +23,4 @@ module vdb.models.pvs {
 
 	}
 
-}
+	export default PVService;

@@ -11,16 +11,12 @@
 
 @section BodyScripts {
 	
-	<script src="@Url.Content("~/Scripts/Repositories/AlbumRepository.js")"></script>
-	<script src="@Url.Content("~/Scripts/ViewModels/Search/SearchCategoryBaseViewModel.js")"></script>
-	<script src="@Url.Content("~/Scripts/ViewModels/Search/AlbumSearchViewModel.js")"></script>
-	<script src="@Url.Content("~/Scripts/ViewModels/Album/DeletedAlbumsViewModel.js")"></script>
 	<script language="javascript">
 		
 		$(function () {
 
-			var repo = new vdb.repositories.AlbumRepository('@RootPath', @LanguagePreferenceInt);
-			var viewModel = new vdb.viewModels.DeletedAlbumsViewModel(repo);
+			var repo = new app.AlbumRepository('@RootPath', @LanguagePreferenceInt);
+			var viewModel = new app.DeletedAlbumsViewModel(repo);
 			ko.applyBindings(viewModel);
 
 		});

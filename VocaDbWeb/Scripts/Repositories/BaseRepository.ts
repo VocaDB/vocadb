@@ -1,9 +1,7 @@
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import NameMatchMode from '../Models/NameMatchMode';
 
-module vdb.repositories {
-
-	import cls = vdb.models;
-
-	export class BaseRepository {
+	export default class BaseRepository {
 
 		protected handleJqueryPromise<T>(jqueryPromise: JQueryXHR) {
 			const promise = Promise.resolve(jqueryPromise);
@@ -22,8 +20,8 @@ module vdb.repositories {
 		// todo: protected
 		public languagePreferenceStr: string;
 
-		constructor(public baseUrl: string, languagePreference = cls.globalization.ContentLanguagePreference.Default) {
-			this.languagePreferenceStr = cls.globalization.ContentLanguagePreference[languagePreference];
+		constructor(public baseUrl: string, languagePreference = ContentLanguagePreference.Default) {
+			this.languagePreferenceStr = ContentLanguagePreference[languagePreference];
 		}
 
 	}
@@ -34,16 +32,14 @@ module vdb.repositories {
 		getTotalCount?: boolean;
 
 		// Content language preference
-		lang?: vdb.models.globalization.ContentLanguagePreference;
+		lang?: ContentLanguagePreference;
 
 		maxResults?: number;
 
-		nameMatchMode?: cls.NameMatchMode;
+		nameMatchMode?: NameMatchMode;
 
 		start?: number;
 
 		query?: string;
 
 	}
-
-}

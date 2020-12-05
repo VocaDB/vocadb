@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain
+﻿@using VocaDb.Model.Domain
 @using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
@@ -174,7 +173,7 @@
 							<tbody data-bind="foreach: groups">
 								<tr>
 									<td>
-										<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', parent.id) }, text: parent.name, artistToolTip: parent.id"></a>
+										<a data-bind="attr: { href: app.EntryUrlMapper.details('Artist', parent.id) }, text: parent.name, artistToolTip: parent.id"></a>
 									</td>
 									<td>
 										<a data-bind="click: $parent.removeGroup" href="#" class="textLink removeLink">@ViewRes.SharedStrings.Remove</a>
@@ -260,7 +259,7 @@
 @Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/shared/edit", "~/bundles/Artist/Edit")
+@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Artist/Edit.js")
 
 <script type="text/javascript">
 
@@ -270,24 +269,24 @@
 			saveWarning: @ToJS(EditRes.SaveWarning)
 		};
 
-		var urlMapper = new vdb.UrlMapper('@RootPath');
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var urlMapper = new app.UrlMapper('@RootPath');
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var artistRepo = repoFactory.artistRepository();
 		var userRepo = repoFactory.userRepository();
 		var editedModel = @Html.Raw(JsonHelpers.Serialize(Model.EditedArtist));
 		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
 
 		if (editedModel) {
-			ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, userRepo, urlMapper, webLinkCategoryJson, editedModel, new vdb.ui_dialog.DialogService()));
+			ko.applyBindings(new app.ArtistEditViewModel(artistRepo, userRepo, urlMapper, webLinkCategoryJson, editedModel, new app.DialogService()));
 		} else {
 
 			artistRepo.getForEdit(@Model.Artist.Id, function (model) {
-				ko.applyBindings(new vdb.viewModels.ArtistEditViewModel(artistRepo, userRepo, urlMapper, webLinkCategoryJson, model, new vdb.ui_dialog.DialogService()));
+				ko.applyBindings(new app.ArtistEditViewModel(artistRepo, userRepo, urlMapper, webLinkCategoryJson, model, new app.DialogService()));
 			});
 
 		}
 
-		initPage();
+		app.initArtistEditPage();
 
 	});
 

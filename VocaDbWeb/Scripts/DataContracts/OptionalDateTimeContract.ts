@@ -1,7 +1,5 @@
-﻿
-module vdb.dataContracts {
-	
-	export interface OptionalDateTimeContract {
+
+	export default interface OptionalDateTimeContract {
 
 		day?: number;
 
@@ -12,5 +10,3 @@ module vdb.dataContracts {
 		year?: number;
 
 	}
-
-} 

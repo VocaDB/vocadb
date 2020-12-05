@@ -1,7 +1,6 @@
-﻿
-module vdb.dataContracts.songList {
-	
-	export interface ImportedSongListContract {
+import PartialImportedSongs from './PartialImportedSongs';
+
+	export default interface ImportedSongListContract {
 		
 		createDate: string;
 
@@ -14,5 +13,3 @@ module vdb.dataContracts.songList {
 		wvrNumber: string;
 
 	}
-
-} 

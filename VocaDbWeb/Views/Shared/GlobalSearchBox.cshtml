@@ -75,7 +75,7 @@
 			<li><h6>@ViewRes.User.MySettingsStrings.DefaultLanguageSelection</h6></li>
 			@foreach (var lp in EnumVal<ContentLanguagePreference>.Values) {
 				<li>
-					<a href="#" onclick="return setLanguagePreferenceCookie('@lp');">
+					<a href="#" onclick="return app.setLanguagePreferenceCookie('@lp');">
 						<i class="menuIcon icon-ok" style="@(lp == Login.Manager.LanguagePreference ? "" : "display: none;")"></i>
 						<i class="menuIcon icon-" style="@(lp == Login.Manager.LanguagePreference ? "display: none;" : "")"></i>
 						@Translate.ContentLanguagePreferenceName(lp)

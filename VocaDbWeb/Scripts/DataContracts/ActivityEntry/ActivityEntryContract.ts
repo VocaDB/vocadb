@@ -1,11 +1,12 @@
-﻿
-module vdb.dataContracts.activityEntry {
-	
-	export interface ActivityEntryContract {
-		
-		archivedVersion: versioning.ArchivedVersionContract;
+import ArchivedVersionContract from '../Versioning/ArchivedVersionContract';
+import EntryContract from '../EntryContract';
+import UserApiContract from '../User/UserApiContract';
 
-		author: user.UserApiContract;
+	export default interface ActivityEntryContract {
+		
+		archivedVersion: ArchivedVersionContract;
+
+		author: UserApiContract;
 
 		createDate: string;
 
@@ -14,5 +15,3 @@ module vdb.dataContracts.activityEntry {
 		entry: EntryContract;
 
 	}
-
-} 

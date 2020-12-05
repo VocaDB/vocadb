@@ -1,7 +1,5 @@
-﻿
-module vdb.dataContracts.discussions {
-	
-	export interface DiscussionFolderContract {
+
+	export default interface DiscussionFolderContract {
 		
 		description: string;
 
@@ -14,5 +12,3 @@ module vdb.dataContracts.discussions {
 		topicCount: number;
 
 	}
-
-} 

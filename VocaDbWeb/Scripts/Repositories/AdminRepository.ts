@@ -1,13 +1,11 @@
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../Shared/UrlMapper.ts" />
+import { IPRuleContract } from '../ViewModels/Admin/ManageIPRulesViewModel';
+import UrlMapper from '../Shared/UrlMapper';
 
-module vdb.repositories {
+    export default class AdminRepository {
 
-    export class AdminRepository {
+        constructor(private urlMapper: UrlMapper) { }
 
-        constructor(private urlMapper: vdb.UrlMapper) { }
-
-		public addIpToBanList = (rule: vdb.viewModels.IPRuleContract, callback: (result: boolean) => void) => {
+		public addIpToBanList = (rule: IPRuleContract, callback: (result: boolean) => void) => {
 			return $.post(this.urlMapper.mapRelative("/api/ip-rules"), rule, callback);
 		}
 
@@ -22,5 +20,3 @@ module vdb.repositories {
 		}
 
     }
-
-}

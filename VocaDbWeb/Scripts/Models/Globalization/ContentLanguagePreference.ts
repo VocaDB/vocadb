@@ -1,7 +1,5 @@
-﻿
-module vdb.models.globalization {
 
-	export enum ContentLanguagePreference {
+	enum ContentLanguagePreference {
 
 		Default		= 0,
 
@@ -13,4 +11,4 @@ module vdb.models.globalization {
 
 	}
 
-} 
+	export default ContentLanguagePreference;

@@ -1,7 +1,5 @@
-﻿
-module vdb.models.albums {
 
-	export enum AlbumType {
+	enum AlbumType {
 		
 		Unknown		= 0,
 
@@ -29,4 +27,4 @@ module vdb.models.albums {
 
 	}
 
-}
+	export default AlbumType;

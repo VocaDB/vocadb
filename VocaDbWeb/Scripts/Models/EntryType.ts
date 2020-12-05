@@ -1,9 +1,7 @@
 
-module vdb.models {
-
     // Identifies common entry type.
     // Corresponds to the EntryType enum C#.
-    export enum EntryType {
+    enum EntryType {
         
 		Undefined			= 0,
 
@@ -31,4 +29,4 @@ module vdb.models {
 		
     }
 
-}
+	export default EntryType;

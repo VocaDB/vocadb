@@ -1,16 +1,17 @@
-﻿@using System.Web.Optimization
+﻿@using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Artists.ArtistContract>
 
 @{
-    PageProperties.Title = "Merge artist - " + Model.Name;
-	ViewBag.Parents = new[] { 
-		Html.ActionLink("Artists", "Index"), 
+	PageProperties.Title = "Merge artist - " + Model.Name;
+	ViewBag.Parents = new[] {
+		Html.ActionLink("Artists", "Index"),
 		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }),
 		Html.ActionLink("Edit", "Edit", new { id = Model.Id }),
-	};	
+	};
 }
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
 
 	@Html.Partial("Partials/Shared/_MergeEntryInfo")
 
@@ -41,14 +42,14 @@
 }
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/shared/edit", "~/bundles/Artist/Merge")
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Artist/Merge.js")
 	<script type="text/javascript">
 
 		$(function() {
 
-			var repoFactory = new vdb.repositories.RepositoryFactory(new vdb.UrlMapper('@RootPath'), @LanguagePreferenceInt);
+			var repoFactory = new app.RepositoryFactory(new app.UrlMapper('@RootPath'), @LanguagePreferenceInt);
 			var repo = repoFactory.artistRepository();
-			var vm = new vdb.viewModels.artists.ArtistMergeViewModel(repo, @Model.Id);
+			var vm = new app.ArtistMergeViewModel(repo, @Model.Id);
 			ko.applyBindings(vm);
 
 			$("#mergeBtn").click(function () {
@@ -57,5 +58,5 @@
 
 		});
 
-	</script> 
+	</script>
 }

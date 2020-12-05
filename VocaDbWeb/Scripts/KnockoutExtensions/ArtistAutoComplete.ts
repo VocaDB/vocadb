@@ -1,16 +1,16 @@
-/// <reference path="../typings/knockout/knockout.d.ts" />
-/// <reference path="../Shared/GlobalFunctions.ts" />
-/// <reference path="../Shared/EntryAutoComplete.ts" />
-/// <reference path="AutoCompleteParams.ts" />
+import { ArtistAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
+import ArtistContract from '../DataContracts/Artist/ArtistContract';
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import { EntryAutoCompleteParams } from '../Shared/EntryAutoComplete';
+import functions from '../Shared/GlobalFunctions';
+import { initEntrySearch } from '../Shared/EntryAutoComplete';
 
-interface KnockoutBindingHandlers {
-	// Artist autocomplete search box.
-    artistAutoComplete: KnockoutBindingHandler;
+declare global {
+	interface KnockoutBindingHandlers {
+		// Artist autocomplete search box.
+		artistAutoComplete: KnockoutBindingHandler;
+	}
 }
-
-module vdb.knockoutExtensions {
-
-	import cls = vdb.models;
 
 	export function artistAutoComplete(element: HTMLElement, valueAccessor) {
 
@@ -34,7 +34,7 @@ module vdb.knockoutExtensions {
 
 		var queryParams = {
 			nameMatchMode: 'Auto',
-			lang: cls.globalization.ContentLanguagePreference[vdb.values.languagePreference],
+			lang: ContentLanguagePreference[vdb.values.languagePreference],
 			fields: 'AdditionalNames',
 			preferAccurateMatches: true,
 			maxResults: 20
@@ -42,7 +42,7 @@ module vdb.knockoutExtensions {
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 
-		var params: vdb.EntryAutoCompleteParams<vdb.dataContracts.ArtistContract> = {
+		var params: EntryAutoCompleteParams<ArtistContract> = {
 			acceptSelection: properties.acceptSelection,
 			createNewItem: properties.createNewItem,
 			createOptionFirstRow: (item) => (item.name + " (" + item.artistType + ")"),
@@ -52,11 +52,10 @@ module vdb.knockoutExtensions {
 			termParamName: 'query'
 		};
 
-		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/artists"), params);
+		initEntrySearch(element, functions.mapAbsoluteUrl("/api/artists"), params);
 
 	}
-}
 
 ko.bindingHandlers.artistAutoComplete = {
-    init: vdb.knockoutExtensions.artistAutoComplete
+    init: artistAutoComplete
 }

@@ -1,14 +1,15 @@
-﻿
-module vdb.viewModels.discussions {
-	
-	import dc = vdb.dataContracts;
+import DiscussionFolderContract from '../../DataContracts/Discussion/DiscussionFolderContract';
+import DiscussionTopicContract from '../../DataContracts/Discussion/DiscussionTopicContract';
+import DiscussionRepository from '../../Repositories/DiscussionRepository';
+import EditableCommentsViewModel from '../EditableCommentsViewModel';
+import UserApiContract from '../../DataContracts/User/UserApiContract';
 
-	export class DiscussionTopicViewModel {
+	export default class DiscussionTopicViewModel {
 
-		constructor(private repo: rep.DiscussionRepository, private loggedUserId: number,
+		constructor(private repo: DiscussionRepository, private loggedUserId: number,
 			canDeleteAllComments: boolean,
-			contract: dc.discussions.DiscussionTopicContract,
-			private folders: dc.discussions.DiscussionFolderContract[]) {
+			contract: DiscussionTopicContract,
+			private folders: DiscussionFolderContract[]) {
 
 			this.contract = ko.observable(contract);
 
@@ -26,7 +27,7 @@ module vdb.viewModels.discussions {
 			this.editModel(null);
 		}
 
-		public contract: KnockoutObservable<dc.discussions.DiscussionTopicContract>;
+		public contract: KnockoutObservable<DiscussionTopicContract>;
 
 		public editModel = ko.observable<DiscussionTopicEditViewModel>(null);
 
@@ -58,8 +59,8 @@ module vdb.viewModels.discussions {
 	export class DiscussionTopicEditViewModel {
 
 		constructor(userId: number,
-			public folders: dc.discussions.DiscussionFolderContract[],
-			contract?: dc.discussions.DiscussionTopicContract) {
+			public folders: DiscussionFolderContract[],
+			contract?: DiscussionTopicContract) {
 
 			this.author = { id: userId, name: '' };
 
@@ -73,7 +74,7 @@ module vdb.viewModels.discussions {
 
 		}
 
-		public author: dc.user.UserApiContract;
+		public author: UserApiContract;
 
 		public content = ko.observable("");
 
@@ -83,10 +84,8 @@ module vdb.viewModels.discussions {
 
 		public name = ko.observable("");
 
-		public toContract = (): dc.discussions.DiscussionTopicContract => {
+		public toContract = (): DiscussionTopicContract => {
 			return ko.toJS(this);
 		}
 
 	}
-
-} 

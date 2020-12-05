@@ -40,12 +40,12 @@
 	<tbody data-bind="foreach: page">
 		<tr>
 			<td style="width: 80px">
-				<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Album', id), title: $data.additionalNames }" href="#" class="coverPicThumb">
+				<a data-bind="attr: { href: app.EntryUrlMapper.details('Album', id), title: $data.additionalNames }" href="#" class="coverPicThumb">
 					<img data-bind="attr: { src: ($data.mainPicture && mainPicture.urlTinyThumb ? mainPicture.urlTinyThumb : $parent.unknownPictureUrl) }" title="Cover picture" alt="Cover picture" class="coverPicThumb img-rounded" />
 				</a>
 			</td>
 			<td>
-				<a data-bind="text: ko.filters.truncate(name, 150), attr: { href: vdb.utils.EntryUrlMapper.details('Album', id), title: $data.additionalNames }" href="#"></a>
+				<a data-bind="text: ko.filters.truncate(name, 150), attr: { href: app.EntryUrlMapper.details('Album', id), title: $data.additionalNames }" href="#"></a>
 				@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
 				<br />
 				<small class="extraInfo" data-bind="text: artistString"></small><br />
@@ -63,7 +63,7 @@
 				<span data-bind="text: releaseDate ? releaseDate.formatted : ''"></span>
 				<span data-bind="visible: $data.releaseEvent">
 					<br />
-					<a data-bind="text: $data.releaseEvent ? $data.releaseEvent.name : '', attr: { href: vdb.utils.EntryUrlMapper.details('ReleaseEvent', $data.releaseEvent ? $data.releaseEvent.id : 0) }" href="#"></a>
+					<a data-bind="text: $data.releaseEvent ? $data.releaseEvent.name : '', attr: { href: app.EntryUrlMapper.details('ReleaseEvent', $data.releaseEvent ? $data.releaseEvent.id : 0) }" href="#"></a>
 				</span>
 			</td>
 			<td style="width: 150px">
@@ -82,7 +82,7 @@
 <!-- ko if: viewMode() == 'Tiles' -->
 <ul class="smallThumbs" data-bind="foreach: page">
 	<li>
-		<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Album', id), title: $data.additionalNames }" href="#">
+		<a data-bind="attr: { href: app.EntryUrlMapper.details('Album', id), title: $data.additionalNames }" href="#">
 			<div class="pictureFrame img-rounded">
 				<img data-bind="attr: { src: ($data.mainPicture ? mainPicture.urlSmallThumb : $parent.unknownPictureUrl) }, albumToolTip: id" alt="Preview" class="coverPic img-rounded" />
 			</div>

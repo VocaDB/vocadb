@@ -1,10 +1,7 @@
-﻿
-module vdb.dataContracts.songs {
+import SongContract from './SongContract';
 
-	export interface SongWithPVAndVoteContract extends SongContract {
+	export default interface SongWithPVAndVoteContract extends SongContract {
 
 		vote: string;
 
 	}
-
-}

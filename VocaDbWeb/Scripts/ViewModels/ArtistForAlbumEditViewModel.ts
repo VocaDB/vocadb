@@ -1,13 +1,13 @@
-
-namespace vdb.viewModels {
-
-    import dc = vdb.dataContracts;
-    import rep = vdb.repositories;
+import AlbumRepository from '../Repositories/AlbumRepository';
+import ArtistContract from '../DataContracts/Artist/ArtistContract';
+import ArtistForAlbumContract from '../DataContracts/ArtistForAlbumContract';
+import ArtistHelper from '../Helpers/ArtistHelper';
+import ArtistRoles from '../Models/Artists/ArtistRoles';
 
     // View model for editing artist for album link.
-    export class ArtistForAlbumEditViewModel implements IEditableArtistWithSupport {
+    export default class ArtistForAlbumEditViewModel implements IEditableArtistWithSupport {
         
-		public artist: dc.ArtistContract;
+		public artist: ArtistContract;
 
         // Unique link Id.
         public id: number;
@@ -29,9 +29,9 @@ namespace vdb.viewModels {
         // List of roles for this artist.
 		public rolesArray: KnockoutObservableArray<string>;
 
-	    public rolesArrayTyped: KnockoutComputed<models.artists.ArtistRoles[]>;
+	    public rolesArrayTyped: KnockoutComputed<ArtistRoles[]>;
 
-		public toContract: () => dc.ArtistForAlbumContract = () => {
+		public toContract: () => ArtistForAlbumContract = () => {
 			return {
 				artist: this.artist,
 				id: this.id,
@@ -42,7 +42,7 @@ namespace vdb.viewModels {
 			};
 		}
 
-        constructor(repository: rep.AlbumRepository, data: dc.ArtistForAlbumContract) {
+        constructor(repository: AlbumRepository, data: ArtistForAlbumContract) {
 
             this.artist = data.artist;
 			this.id = data.id;
@@ -53,7 +53,7 @@ namespace vdb.viewModels {
             this.rolesArray = ko.observableArray<string>([]);
 
             this.isCustomizable = ko.computed(() => {
-                return !this.artist || helpers.ArtistHelper.isCustomizable(this.artist.artistType);
+                return !this.artist || ArtistHelper.isCustomizable(this.artist.artistType);
             });
 
             this.roles = ko.computed({
@@ -66,7 +66,7 @@ namespace vdb.viewModels {
             });
 
             this.roles(data.roles);
-			this.rolesArrayTyped = ko.pureComputed(() => helpers.ArtistHelper.getRolesArray(this.rolesArray()));
+			this.rolesArrayTyped = ko.pureComputed(() => ArtistHelper.getRolesArray(this.rolesArray()));
         
         }
     
@@ -77,5 +77,3 @@ namespace vdb.viewModels {
 		rolesArray: KnockoutObservableArray<string>;
 
 	}
-
-}

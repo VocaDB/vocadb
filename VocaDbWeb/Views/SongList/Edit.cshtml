@@ -37,13 +37,13 @@
 }
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/shared/edit", "~/bundles/SongList/Edit")
+@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/SongList/Edit.js")
 <script type="text/javascript">
 
 	$(document).ready(function () {
-		var urlMapper = new vdb.UrlMapper('@RootPath');
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
-		initPage(repoFactory, @Model.Id);
+		var urlMapper = new app.UrlMapper('@RootPath');
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		app.initSongListEditPage(repoFactory, urlMapper, @Model.Id);
 	});
 
 </script>

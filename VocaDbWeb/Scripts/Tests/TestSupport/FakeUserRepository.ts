@@ -1,20 +1,20 @@
-/// <reference path="../../Repositories/UserRepository.ts" />
+import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
+import SongVoteRating from '../../Models/SongVoteRating';
+import UrlMapper from '../../Shared/UrlMapper';
+import { UserInboxType } from '../../Repositories/UserRepository';
+import UserMessageSummaryContract from '../../DataContracts/User/UserMessageSummaryContract';
+import UserRepository from '../../Repositories/UserRepository';
 
-module vdb.tests.testSupport {
+    export default class FakeUserRepository extends UserRepository {
 
-    import cls = vdb.models;
-    import dc = vdb.dataContracts;
-
-    export class FakeUserRepository extends vdb.repositories.UserRepository {
-
-        public message: dc.UserMessageSummaryContract;
-        public messages: dc.UserMessageSummaryContract[];
+        public message: UserMessageSummaryContract;
+        public messages: UserMessageSummaryContract[];
         public songId: number;
-        public rating: cls.SongVoteRating;
+        public rating: SongVoteRating;
 
         constructor() {
 
-            super(new vdb.UrlMapper(""));        
+            super(new UrlMapper(""));        
 
             this.getMessage = (messageId, callback?) => {
 
@@ -23,15 +23,15 @@ module vdb.tests.testSupport {
 
             };
 
-            this.getMessageSummaries = (userId: number, inbox: repositories.UserInboxType, maxCount?, unread?, anotherUserId?, iconSize?,
-				callback?: (result: dc.PartialFindResultContract<dc.UserMessageSummaryContract>) => void) => {
+            this.getMessageSummaries = (userId: number, inbox: UserInboxType, maxCount?, unread?, anotherUserId?, iconSize?,
+				callback?: (result: PartialFindResultContract<UserMessageSummaryContract>) => void) => {
 
                 if (callback)
                     callback({ items: this.messages, totalCount: (this.messages ? this.messages.length : 0) });
 
             };
 
-            this.updateSongRating = (songId: number, rating: cls.SongVoteRating, callback: Function) => {
+            this.updateSongRating = (songId: number, rating: SongVoteRating, callback: Function) => {
 
                 this.songId = songId;
                 this.rating = rating;
@@ -46,5 +46,3 @@ module vdb.tests.testSupport {
         }
     
     }
-
-}

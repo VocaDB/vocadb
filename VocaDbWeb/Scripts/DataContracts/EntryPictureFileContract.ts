@@ -1,7 +1,5 @@
-﻿
-module vdb.dataContracts {
-	
-	export interface EntryPictureFileContract {
+
+	export default interface EntryPictureFileContract {
 
 		entryType: string;
 
@@ -16,5 +14,3 @@ module vdb.dataContracts {
 		thumbUrl: string;
 
 	}
-
-}

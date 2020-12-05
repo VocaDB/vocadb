@@ -91,7 +91,7 @@ namespace VocaDb.Model.DataContracts.Venues
 
 			if (fields.HasFlag(VenueOptionalFields.Events))
 			{
-				Events = venue.Events.OrderBy(e => e.Date.DateTime).Select(e => new ReleaseEventContract(e, languagePreference)).ToArray();
+				Events = venue.Events.OrderBy(e => e.Date.DateTime).ThenBy(e => e.SeriesNumber).Select(e => new ReleaseEventContract(e, languagePreference)).ToArray();
 			}
 
 			if (fields.HasFlag(VenueOptionalFields.Names))

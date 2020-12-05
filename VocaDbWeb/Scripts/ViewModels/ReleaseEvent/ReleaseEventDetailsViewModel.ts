@@ -1,55 +1,64 @@
-﻿
-namespace vdb.viewModels.releaseEvents {
+import CommentContract from '../../DataContracts/CommentContract';
+import CommentRepository from '../../Repositories/CommentRepository';
+import EditableCommentsViewModel from '../EditableCommentsViewModel';
+import EntryType from '../../Models/EntryType';
+import { IEntryReportType } from '../ReportEntryViewModel';
+import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
+import ReportEntryViewModel from '../ReportEntryViewModel';
+import TagListViewModel from '../Tag/TagListViewModel';
+import TagsEditViewModel from '../Tag/TagsEditViewModel';
+import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
+import ui from '../../Shared/MessagesTyped';
+import UrlMapper from '../../Shared/UrlMapper';
+import UserBaseContract from '../../DataContracts/User/UserBaseContract';
+import UserEventRelationshipType from '../../Models/Users/UserEventRelationshipType';
+import UserRepository from '../../Repositories/UserRepository';
 
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
-
-	export class ReleaseEventDetailsViewModel {
+	export default class ReleaseEventDetailsViewModel {
 
 		constructor(
-			urlMapper: vdb.UrlMapper,
-			private readonly repo: rep.ReleaseEventRepository,
-			private readonly userRepo: rep.UserRepository,
-			latestComments: dc.CommentContract[],
+			urlMapper: UrlMapper,
+			private readonly repo: ReleaseEventRepository,
+			private readonly userRepo: UserRepository,
+			latestComments: CommentContract[],
 			reportTypes: IEntryReportType[],
 			public loggedUserId: number,
 			private readonly eventId: number,
-			eventAssociationType: models.users.UserEventRelationshipType,
-			usersAttending: dc.UserBaseContract[],
-			tagUsages: dc.tags.TagUsageForApiContract[],
+			eventAssociationType: UserEventRelationshipType,
+			usersAttending: UserBaseContract[],
+			tagUsages: TagUsageForApiContract[],
 			canDeleteAllComments: boolean) {
 
-			const commentRepo = new rep.CommentRepository(urlMapper, vdb.models.EntryType.ReleaseEvent);
+			const commentRepo = new CommentRepository(urlMapper, EntryType.ReleaseEvent);
 			this.comments = new EditableCommentsViewModel(commentRepo, eventId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
 			this.eventAssociationType(eventAssociationType);
 			this.usersAttending = ko.observableArray(usersAttending);
 
 			this.reportViewModel = new ReportEntryViewModel(reportTypes, (reportType, notes) => {
 				repo.createReport(eventId, reportType, notes, null);
-				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 			});
 
-			this.tagsEditViewModel = new tags.TagsEditViewModel({
+			this.tagsEditViewModel = new TagsEditViewModel({
 				getTagSelections: callback => userRepo.getEventTagSelections(this.eventId, callback),
 				saveTagSelections: tags => userRepo.updateEventTags(this.eventId, tags, this.tagUsages.updateTagUsages)
-			}, cls.EntryType.ReleaseEvent);
+			}, EntryType.ReleaseEvent);
 
-			this.tagUsages = new tags.TagListViewModel(tagUsages);
+			this.tagUsages = new TagListViewModel(tagUsages);
 
 		}
 
 		public comments: EditableCommentsViewModel;
 
-		private eventAssociationType = ko.observable<models.users.UserEventRelationshipType>(null);
+		private eventAssociationType = ko.observable<UserEventRelationshipType>(null);
 
 		public hasEvent = ko.computed(() => {
 			return !!this.eventAssociationType();
 		});
 
-		public isEventAttending = ko.computed(() => this.eventAssociationType() === models.users.UserEventRelationshipType.Attending);
+		public isEventAttending = ko.computed(() => this.eventAssociationType() === UserEventRelationshipType.Attending);
 
-		public isEventInterested = ko.computed(() => this.eventAssociationType() === models.users.UserEventRelationshipType.Interested);
+		public isEventInterested = ko.computed(() => this.eventAssociationType() === UserEventRelationshipType.Interested);
 
 		public removeEvent = () => {
 			this.userRepo.deleteEventForUser(this.eventId);
@@ -61,26 +70,24 @@ namespace vdb.viewModels.releaseEvents {
 		public reportViewModel: ReportEntryViewModel;
 
 		public setEventAttending = () => {
-			this.userRepo.updateEventForUser(this.eventId, vdb.models.users.UserEventRelationshipType.Attending);
-			this.eventAssociationType(models.users.UserEventRelationshipType.Attending);
+			this.userRepo.updateEventForUser(this.eventId, UserEventRelationshipType.Attending);
+			this.eventAssociationType(UserEventRelationshipType.Attending);
 			this.userRepo.getOne(this.loggedUserId, "MainPicture", user => {
 				this.usersAttending.push(user);
 			});
 		}
 
 		public setEventInterested = () => {
-			this.userRepo.updateEventForUser(this.eventId, vdb.models.users.UserEventRelationshipType.Interested);
-			this.eventAssociationType(models.users.UserEventRelationshipType.Interested);
+			this.userRepo.updateEventForUser(this.eventId, UserEventRelationshipType.Interested);
+			this.eventAssociationType(UserEventRelationshipType.Interested);
 			var link = _.find(this.usersAttending(), u => u.id === this.loggedUserId);
 			this.usersAttending.remove(link);
 		}
 
-		public tagsEditViewModel: tags.TagsEditViewModel;
+		public tagsEditViewModel: TagsEditViewModel;
 
-		public tagUsages: tags.TagListViewModel;
+		public tagUsages: TagListViewModel;
 
-		public usersAttending: KnockoutObservableArray<dc.UserBaseContract>;
+		public usersAttending: KnockoutObservableArray<UserBaseContract>;
 
 	}
-
-}

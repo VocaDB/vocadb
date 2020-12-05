@@ -1,11 +1,9 @@
-﻿
-module vdb.viewModels.pvs {
+import DateTimeHelper from '../../Helpers/DateTimeHelper';
+import PVContract from '../../DataContracts/PVs/PVContract';
 
-	import dc = vdb.dataContracts;
-
-	export class PVEditViewModel {
+	export default class PVEditViewModel {
 		
-		constructor(contract: dc.pvs.PVContract, pvType?: string) {
+		constructor(contract: PVContract, pvType?: string) {
 
 			this.author = contract.author;
 			this.createdBy = contract.createdBy;
@@ -21,7 +19,7 @@ module vdb.viewModels.pvs {
 			this.url = contract.url;
 
 			this.name = ko.observable(contract.name);
-			this.lengthFormatted = vdb.helpers.DateTimeHelper.formatFromSeconds(this.length);
+			this.lengthFormatted = DateTimeHelper.formatFromSeconds(this.length);
 
 		}
 
@@ -54,5 +52,3 @@ module vdb.viewModels.pvs {
 		url: string;
 
 	}
-
-}

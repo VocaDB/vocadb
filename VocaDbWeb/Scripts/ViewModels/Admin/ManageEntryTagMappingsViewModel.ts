@@ -1,14 +1,23 @@
+import AlbumType from "../../Models/Albums/AlbumType";
+import ArtistType from "../../Models/Artists/ArtistType";
+import BasicEntryLinkViewModel from "../BasicEntryLinkViewModel";
+import { EditTagMappingViewModel } from "./ManageTagMappingsViewModel";
+import EntryTagMappingContract from "../../DataContracts/Tag/EntryTagMappingContract";
+import EntryType from "../../Models/EntryType";
+import EntryTypeAndSubTypeContract from "../../DataContracts/EntryTypeAndSubTypeContract";
+import EntryUrlMapper from "../../Shared/EntryUrlMapper";
+import EventCategory from "../../Models/Events/EventCategory";
+import functions from "../../Shared/GlobalFunctions";
+import ServerSidePagingViewModel from "../ServerSidePagingViewModel";
+import SongType from "../../Models/Songs/SongType";
+import TagBaseContract from "../../DataContracts/Tag/TagBaseContract";
+import TagRepository from "../../Repositories/TagRepository";
+import ui from '../../Shared/MessagesTyped';
 
-namespace vdb.viewModels.admin {
-
-	import dc = dataContracts;
-	import cls = models;
-	import vm = viewModels;
-
-	export class ManageEntryTagMappingsViewModel {
+	export default class ManageEntryTagMappingsViewModel {
 
 		constructor(
-			private readonly tagRepo: vdb.repositories.TagRepository) {
+			private readonly tagRepo: TagRepository) {
 			this.loadMappings();
 		}
 
@@ -36,7 +45,7 @@ namespace vdb.viewModels.admin {
 		}
 
 		public getTagUrl = (tag: EditTagMappingViewModel) => {
-			return vdb.functions.mapAbsoluteUrl(utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
+			return functions.mapAbsoluteUrl(EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
 		}
 
 		private loadMappings = async () => {
@@ -48,26 +57,26 @@ namespace vdb.viewModels.admin {
 
 		public mappings = ko.observableArray<EditEntryTagMappingViewModel>();
 
-		public paging = new vm.ServerSidePagingViewModel(50);
+		public paging = new ServerSidePagingViewModel(50);
 
 		public activeMappings = ko.computed(() => _.filter(this.mappings(), m => !m.isDeleted()));
 
 		private getEnumValues = <TEnum>(Enum: any, selected?: Array<TEnum>) => Object.keys(Enum).filter(k => (!selected || _.includes(selected, Enum[k])) && typeof Enum[k as any] === "number");
 
-		public entryTypes = this.getEnumValues<cls.EntryType>(cls.EntryType, [cls.EntryType.Album, cls.EntryType.Artist, cls.EntryType.Song, cls.EntryType.ReleaseEvent]);
+		public entryTypes = this.getEnumValues<EntryType>(EntryType, [EntryType.Album, EntryType.Artist, EntryType.Song, EntryType.ReleaseEvent]);
 
 		private readonly entrySubTypesByType = [
-			{ key: cls.EntryType.Album, values: this.getEnumValues<cls.albums.AlbumType>(cls.albums.AlbumType) },
-			{ key: cls.EntryType.Artist, values: this.getEnumValues<cls.artists.ArtistType>(cls.artists.ArtistType) },
-			{ key: cls.EntryType.Song, values: this.getEnumValues<cls.songs.SongType>(cls.songs.SongType) },
-			{ key: cls.EntryType.ReleaseEvent, values: this.getEnumValues<cls.events.EventCategory>(cls.events.EventCategory) }
+			{ key: EntryType.Album, values: this.getEnumValues<AlbumType>(AlbumType) },
+			{ key: EntryType.Artist, values: this.getEnumValues<ArtistType>(ArtistType) },
+			{ key: EntryType.Song, values: this.getEnumValues<SongType>(SongType) },
+			{ key: EntryType.ReleaseEvent, values: this.getEnumValues<EventCategory>(EventCategory) }
 		];
 
 		public newEntryType = ko.observable("");
 		public newEntrySubType = ko.observable("");
-		public newTargetTag = new BasicEntryLinkViewModel<dc.TagBaseContract>();
+		public newTargetTag = new BasicEntryLinkViewModel<TagBaseContract>();
 
-		public entrySubTypes: KnockoutComputed<string[]> = ko.computed(() => _.find(this.entrySubTypesByType, et => cls.EntryType[et.key] === this.newEntryType())?.values ?? []);
+		public entrySubTypes: KnockoutComputed<string[]> = ko.computed(() => _.find(this.entrySubTypesByType, et => EntryType[et.key] === this.newEntryType())?.values ?? []);
 
 		public save = async () => {
 
@@ -82,7 +91,7 @@ namespace vdb.viewModels.admin {
 
 	export class EditEntryTagMappingViewModel {
 
-		constructor(mapping: dc.tags.EntryTagMappingContract, isNew: boolean = false) {
+		constructor(mapping: EntryTagMappingContract, isNew: boolean = false) {
 			this.entryType = mapping.entryType;
 			this.tag = mapping.tag;
 			this.isNew = isNew;
@@ -90,11 +99,9 @@ namespace vdb.viewModels.admin {
 
 		isDeleted = ko.observable(false);
 		isNew: boolean;
-		entryType: dc.EntryTypeAndSubTypeContract;
-		tag: dc.TagBaseContract;
+		entryType: EntryTypeAndSubTypeContract;
+		tag: TagBaseContract;
 
 		public deleteMapping = () => this.isDeleted(true);
 
 	}
-
-}

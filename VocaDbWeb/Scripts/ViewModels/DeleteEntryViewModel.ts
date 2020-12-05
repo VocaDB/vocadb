@@ -1,7 +1,5 @@
 
-module vdb.viewModels {
-	
-	export class DeleteEntryViewModel {
+	export default class DeleteEntryViewModel {
 		
 		constructor(private deleteCallback: (notes: string) => void,
 			public readonly notesRequired: boolean = false) { }
@@ -21,5 +19,3 @@ module vdb.viewModels {
 		public show = () => this.dialogVisible(true);
 
 	}
-
-} 
