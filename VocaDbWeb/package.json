@@ -21,7 +21,7 @@
         "bootstrap-sass": "^2.3.2",
         "jquery": "^2.2.1",
         "jquery-ui": "^1.10.4",
-        "knockout": "^3.4.1",
+        "knockout": "^3.5.0",
         "knockout-punches": "^0.5.1",
         "laravel-mix": "^5.0.9",
         "lodash": "^4.17.3",
