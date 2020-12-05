@@ -131,6 +131,7 @@ namespace VocaDb.Migrations
 
 				if (table.Options.HasFlag(CommentTableOptions.RenameId))
 				{
+					Delete.PrimaryKey($"PK_{table.Name}").FromTable(table.Name).InSchema(table.Schema);
 					// Make `Id` nullable and rename it to `OldId`.
 					Alter.Column("Id").OnTable(table.Name).InSchema(table.Schema).AsInt32().Nullable();
 					Rename.Column("Id").OnTable(table.Name).InSchema(table.Schema).To("OldId");
