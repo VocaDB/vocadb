@@ -29,9 +29,9 @@
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 	@if (Login.CanViewHiddenRevisions) {
 		if (Model.Entry.ArchivedVersion.Hidden) {
-			@Html.ActionLink("Show this version", "UpdateVersionVisibility", new { archivedVersionId = Model.Entry.ArchivedVersion.Id, hidden = false }, new { id = "showLink", onclick = "return confirm(\"Are you sure you want to show this version?\");" })
+			@Html.ActionLink(ViewRes.ViewVersionStrings.UnhideVersion, "UpdateVersionVisibility", new { archivedVersionId = Model.Entry.ArchivedVersion.Id, hidden = false }, new { id = "showLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmUnhide) })
 		} else {
-			@Html.ActionLink("Hide this version", "UpdateVersionVisibility", new { archivedVersionId = Model.Entry.ArchivedVersion.Id, hidden = true }, new { id = "hideLink", onclick = "return confirm(\"Are you sure you want to hide this version?\");" })
+			@Html.ActionLink(ViewRes.ViewVersionStrings.HideVersion, "UpdateVersionVisibility", new { archivedVersionId = Model.Entry.ArchivedVersion.Id, hidden = true }, new { id = "hideLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmHide) })
 		}
 	}
 }
@@ -54,8 +54,6 @@
 @Html.Partial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel())
 
 @section BodyScripts {
-	<script src="@Url.Content("~/Scripts/Repositories/ReleaseEventRepository.js")"></script>
-	<script src="@Url.Content("~/Scripts/ViewModels/ArchivedEntryViewModel.js")"></script>
 	<script type="text/javascript">
 
 		$(function () {
@@ -65,8 +63,8 @@
 			$("#showLink").button({ icons: { primary: 'ui-icon-unlocked' } });
 			$("#hideLink").button({ icons: { primary: 'ui-icon-locked' } });
 
-			var rep = new vdb.repositories.ReleaseEventRepository(new vdb.UrlMapper('@RootPath'));
-			var viewModel = new vdb.viewModels.ArchivedEntryViewModel(@Model.Entry.ReleaseEvent.Id, @Model.Entry.ArchivedVersion.Version, rep);
+			var rep = new app.ReleaseEventRepository(new app.UrlMapper('@RootPath'));
+			var viewModel = new app.ArchivedEntryViewModel(@Model.Entry.ReleaseEvent.Id, @Model.Entry.ArchivedVersion.Version, rep);
 			ko.applyBindings(viewModel);
 
 		});

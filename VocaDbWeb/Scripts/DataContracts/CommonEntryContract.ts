@@ -1,7 +1,5 @@
-﻿
-module vdb.dataContracts {
-	
-	export interface CommonEntryContract {
+
+	export default interface CommonEntryContract {
 
 		createDate?: string;
 		
@@ -12,5 +10,3 @@ module vdb.dataContracts {
 		status?: string;
 
 	}
-
-}

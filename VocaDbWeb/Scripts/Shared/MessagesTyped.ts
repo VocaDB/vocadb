@@ -1,7 +1,5 @@
-﻿
-module vdb {
-	
-	export class ui {
+
+	export default class ui {
 
 		public static showSuccessMessage = (message?: string) => {
 			var successMessage = $("#successMessage");
@@ -68,5 +66,3 @@ module vdb {
 		}
 
 	}
-
-} 

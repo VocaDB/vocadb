@@ -1,11 +1,9 @@
-﻿
-module vdb.viewModels {
+import EntryPictureFileContract from '../DataContracts/EntryPictureFileContract';
+import EntryPictureFileEditViewModel from './EntryPictureFileEditViewModel';
 
-	import dc = vdb.dataContracts;
-	
-	export class EntryPictureFileListEditViewModel {
+	export default class EntryPictureFileListEditViewModel {
 
-		constructor(pictures: dc.EntryPictureFileContract[]) {
+		constructor(pictures: EntryPictureFileContract[]) {
 
 			this.pictures = ko.observableArray(_.map(pictures, picture => new EntryPictureFileEditViewModel(picture)));
 
@@ -21,12 +19,10 @@ module vdb.viewModels {
 			this.pictures.remove(picture);
 		}
 
-		public toContracts: () => dc.EntryPictureFileContract[] = () => {
+		public toContracts: () => EntryPictureFileContract[] = () => {
 
 			return ko.toJS(this.pictures());
 
 		}
 
 	}
-
-}

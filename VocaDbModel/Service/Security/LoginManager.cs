@@ -1,7 +1,6 @@
-﻿using System;
+using System;
 using System.Configuration;
 using System.Security.Principal;
-using System.Web;
 using NLog;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
@@ -9,6 +8,7 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using System.Globalization;
 using System.Threading;
+using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Service.Security
@@ -18,6 +18,12 @@ namespace VocaDb.Model.Service.Security
 	/// </summary>
 	public class LoginManager : IUserPermissionContext
 	{
+		public LoginManager(IHttpContext context)
+		{
+			this.context = context;
+		}
+
+		private readonly IHttpContext context;
 		public const int InvalidId = 0;
 		public const string LangParamName = "lang";
 
@@ -53,17 +59,17 @@ namespace VocaDb.Model.Service.Security
 			return CryptoHelper.HashSHA1(key + salt);
 		}
 
-		public static void SetLoggedUser(UserWithPermissionsContract user)
+		public void SetLoggedUser(UserWithPermissionsContract user)
 		{
 			ParamIs.NotNull(() => user);
 
-			if (!HttpContext.Current.User.Identity.IsAuthenticated)
+			if (!context.User.Identity.IsAuthenticated)
 				throw new InvalidOperationException("Must be authenticated");
 
-			HttpContext.Current.User = new VocaDbPrincipal(HttpContext.Current.User.Identity, user);
+			context.User = new VocaDbPrincipal(context.User.Identity, user);
 		}
 
-		protected IPrincipal User => HttpContext.Current != null ? HttpContext.Current.User : null;
+		protected IPrincipal User => context?.User;
 
 		public bool HasPermission(PermissionToken token)
 		{
@@ -83,13 +89,13 @@ namespace VocaDb.Model.Service.Security
 		{
 			get
 			{
-				return (HttpContext.Current != null && User != null && User.Identity.IsAuthenticated && User is VocaDbPrincipal);
+				return (context != null && User != null && User.Identity.IsAuthenticated && User is VocaDbPrincipal);
 			}
 		}
 
 		public ContentLanguagePreference LanguagePreference => LanguagePreferenceSetting.Value;
 
-		public UserSettingLanguagePreference LanguagePreferenceSetting => new UserSettingLanguagePreference(HttpContext.Current, this);
+		public UserSettingLanguagePreference LanguagePreferenceSetting => new UserSettingLanguagePreference(context, this);
 
 		public bool LockdownEnabled => !string.IsNullOrEmpty(AppConfig.LockdownMessage);
 
@@ -128,9 +134,9 @@ namespace VocaDb.Model.Service.Security
 
 		public void InitLanguage()
 		{
-			if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.Request.Params["culture"]))
+			if (context != null && !string.IsNullOrEmpty(context.Request.Params["culture"]))
 			{
-				var cName = HttpContext.Current.Request.Params["culture"];
+				var cName = context.Request.Params["culture"];
 				SetCultureSafe(cName, true, true);
 			}
 			else if (IsLoggedIn)

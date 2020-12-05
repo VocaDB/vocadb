@@ -1,7 +1,11 @@
-﻿
-module vdb.dataContracts {
+import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
+import EntryThumbContract from '../EntryThumbContract';
+import EntryType from '../../Models/EntryType';
+import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
+import TagBaseContract from './TagBaseContract';
+import WebLinkContract from '../WebLinkContract';
 
-	export interface TagApiContract {
+	export default interface TagApiContract {
 
 		additionalNames?: string;
 
@@ -17,7 +21,7 @@ module vdb.dataContracts {
 
 		name: string;
 
-		names: globalization.LocalizedStringWithIdContract[];
+		names: LocalizedStringWithIdContract[];
 
 		parent: TagBaseContract;
 
@@ -25,16 +29,14 @@ module vdb.dataContracts {
 
 		status: string;
 
-		targets: models.EntryType;
+		targets: EntryType;
 
-		translatedDescription?: globalization.EnglishTranslatedStringContract;
+		translatedDescription?: EnglishTranslatedStringContract;
 
 		urlSlug?: string;
 
 		usageCount: number;
 
-		webLinks: dc.WebLinkContract[];
+		webLinks: WebLinkContract[];
 
 	}
-
-} 

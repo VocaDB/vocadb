@@ -1,9 +1,10 @@
-﻿
-module vdb.viewModels.tags {
-	
-	export class TagCreateViewModel {
+import EntryUrlMapper from '../../Shared/EntryUrlMapper';
+import NameMatchMode from '../../Models/NameMatchMode';
+import TagRepository from '../../Repositories/TagRepository';
 
-		constructor(private tagRepo: repositories.TagRepository) {
+	export default class TagCreateViewModel {
+
+		constructor(private tagRepo: TagRepository) {
 
 			this.newTagName.subscribe(val => {
 
@@ -12,7 +13,7 @@ module vdb.viewModels.tags {
 					return;
 				}
 
-				tagRepo.getList({ start: 0, maxResults: 1, getTotalCount: false, query: val, nameMatchMode: models.NameMatchMode.Exact, allowAliases: true }, result => {
+				tagRepo.getList({ start: 0, maxResults: 1, getTotalCount: false, query: val, nameMatchMode: NameMatchMode.Exact, allowAliases: true }, result => {
 					this.duplicateName(result.items.length > 0);
 				});
 			});
@@ -20,7 +21,7 @@ module vdb.viewModels.tags {
 		}
 
 		public createTag = () => {
-			this.tagRepo.create(this.newTagName(), t => window.location.href = utils.EntryUrlMapper.details_tag_contract(t));
+			this.tagRepo.create(this.newTagName(), t => window.location.href = EntryUrlMapper.details_tag_contract(t));
 		}
 
 		public dialogVisible = ko.observable(false);
@@ -32,5 +33,3 @@ module vdb.viewModels.tags {
 		public isValid = ko.computed(() => this.newTagName() && !this.duplicateName());
 
 	}
-
-}

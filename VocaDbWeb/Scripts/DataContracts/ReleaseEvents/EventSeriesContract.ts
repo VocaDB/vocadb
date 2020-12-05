@@ -1,7 +1,10 @@
+import EntryThumbContract from '../EntryThumbContract';
+import IEntryWithIdAndName from '../../Models/IEntryWithIdAndName';
+import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
+import WebLinkContract from '../WebLinkContract';
 
-namespace vdb.dataContracts {
-
-	export interface EventSeriesContract extends models.IEntryWithIdAndName {
+	// Matches ReleaseEventForApiContract
+	export default interface EventSeriesContract extends IEntryWithIdAndName {
 
 		category: string;
 
@@ -11,10 +14,8 @@ namespace vdb.dataContracts {
 
 		name: string;
 
-		names?: globalization.LocalizedStringWithIdContract[];
+		names?: LocalizedStringWithIdContract[];
 
 		webLinks: WebLinkContract[];
 
 	}
-
-}

@@ -1,7 +1,5 @@
 
-module vdb.viewModels {
-	
-	export class ReportEntryViewModel {
+	export default class ReportEntryViewModel {
 		
 		constructor(
 			public reportTypes: IEntryReportType[],
@@ -46,5 +44,3 @@ module vdb.viewModels {
 		notesRequired: boolean;
 
 	}
-
-} 

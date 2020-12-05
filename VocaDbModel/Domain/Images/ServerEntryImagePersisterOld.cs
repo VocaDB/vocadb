@@ -1,4 +1,5 @@
 using System.Web;
+using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 
@@ -14,6 +15,14 @@ namespace VocaDb.Model.Domain.Images
 	/// </remarks>
 	public class ServerEntryImagePersisterOld : ServerEntryImagePersisterBase, IEntryImagePersisterOld, IEntryPictureFilePersister
 	{
+		public ServerEntryImagePersisterOld(IHttpContext context)
+		{
+			this.context = context;
+		}
+
+		private readonly IHttpContext context;
+
+
 		private static string GetFileName(int id, string mime, string suffix)
 		{
 			return string.Format("{0}{1}{2}", id, suffix, ImageHelper.GetExtensionFromMime(mime));
@@ -59,7 +68,7 @@ namespace VocaDb.Model.Domain.Images
 
 		public override string GetPath(IEntryImageInformation picture, ImageSize size)
 		{
-			return HttpContext.Current.Server.MapPath(string.Format("~\\EntryImg\\{0}\\{1}", picture.EntryType, GetFileName(picture, size)));
+			return context.ServerPathMapper.MapPath(string.Format("~\\EntryImg\\{0}\\{1}", picture.EntryType, GetFileName(picture, size)));
 		}
 
 		public override bool IsSupported(IEntryImageInformation picture, ImageSize size)

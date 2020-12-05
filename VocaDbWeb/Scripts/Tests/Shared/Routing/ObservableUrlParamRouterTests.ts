@@ -1,5 +1,4 @@
-﻿
-module vdb.tests.shared.routing {
+import ObservableUrlParamRouter from '../../../Shared/Routing/ObservableUrlParamRouter';
 
 	interface HistoryEntry {
 		data: any;
@@ -40,7 +39,7 @@ module vdb.tests.shared.routing {
     });
 
 	var initRouter = () => {
-		new vdb.routing.ObservableUrlParamRouter(testObject, win);
+		new ObservableUrlParamRouter(testObject, win);
 	}
 
 	QUnit.test("changing observable adds history entry", () => {
@@ -102,4 +101,3 @@ module vdb.tests.shared.routing {
 		QUnit.equal(testObject.song(), "Becoming Round", "testObject.song");
 
 	});
-}

@@ -1,12 +1,17 @@
+import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
+import ContentLanguagePreference from '../../../Models/Globalization/ContentLanguagePreference';
+import { IPlayListRepository } from './PlayListViewModel';
+import { ISongForPlayList } from './PlayListViewModel';
+import { SongOptionalFields } from '../../../Models/EntryOptionalFields';
+import PagingProperties from '../../../DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '../../../DataContracts/PartialFindResultContract';
+import SongApiContract from '../../../DataContracts/Song/SongApiContract';
+import SongRepository from '../../../Repositories/SongRepository';
+import SongType from '../../../Models/Songs/SongType';
 
-module vdb.viewModels.songs {
-	
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
+	export default class PlayListRepositoryForSongsAdapter implements IPlayListRepository {
 
-	export class PlayListRepositoryForSongsAdapter implements IPlayListRepository {
-
-		constructor(private songRepo: rep.SongRepository,
+		constructor(private songRepo: SongRepository,
 			private query: KnockoutObservable<string>,
 			private sort: KnockoutObservable<string>,
 			private songType: KnockoutObservable<string>,
@@ -28,17 +33,17 @@ module vdb.viewModels.songs {
 			private parentVersionId: KnockoutComputed<number>,
 			private fields: KnockoutObservable<string>,
 			private draftsOnly: KnockoutObservable<boolean>,
-			private advancedFilters: KnockoutObservableArray<search.AdvancedSearchFilter>) { }
+			private advancedFilters: KnockoutObservableArray<AdvancedSearchFilter>) { }
 
 		public getSongs = (
 			pvServices: string,
-			paging: dc.PagingProperties,
-			fields: cls.SongOptionalFields,
-			lang: cls.globalization.ContentLanguagePreference,
-			callback: (result: dc.PartialFindResultContract<ISongForPlayList>) => void) => {
+			paging: PagingProperties,
+			fields: SongOptionalFields,
+			lang: ContentLanguagePreference,
+			callback: (result: PartialFindResultContract<ISongForPlayList>) => void) => {
 
-			this.songRepo.getList(paging, cls.globalization.ContentLanguagePreference[lang], this.query(), this.sort(),
-				this.songType() != cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
+			this.songRepo.getList(paging, ContentLanguagePreference[lang], this.query(), this.sort(),
+				this.songType() != SongType[SongType.Unspecified] ? this.songType() : null,
 				this.afterDate(),
 				this.beforeDate(),
 				this.tagIds(),
@@ -58,7 +63,7 @@ module vdb.viewModels.songs {
 				this.fields(),
 				this.draftsOnly() ? "Draft" : null,
 				this.advancedFilters ? this.advancedFilters() : null,
-				(result: dc.PartialFindResultContract<dc.SongApiContract>) => {
+				(result: PartialFindResultContract<SongApiContract>) => {
 
 				var mapped = _.map(result.items, (song, idx) => {
 					return {
@@ -75,5 +80,3 @@ module vdb.viewModels.songs {
 		}
 
 	}
-
-}

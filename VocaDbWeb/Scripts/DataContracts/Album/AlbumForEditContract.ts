@@ -1,7 +1,14 @@
-﻿
-module vdb.dataContracts.albums {
-	
-	export interface AlbumForEditContract {
+import AlbumDiscPropertiesContract from './AlbumDiscPropertiesContract';
+import AlbumReleaseContract from './AlbumReleaseContract';
+import ArtistForAlbumContract from '../ArtistForAlbumContract';
+import EnglishTranslatedStringContract from '../Globalization/EnglishTranslatedStringContract';
+import EntryPictureFileContract from '../EntryPictureFileContract';
+import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
+import PVContract from '../PVs/PVContract';
+import SongInAlbumEditContract from '../Song/SongInAlbumEditContract';
+import WebLinkContract from '../WebLinkContract';
+
+	export default interface AlbumForEditContract {
 
 		artistLinks: ArtistForAlbumContract[];
 
@@ -9,7 +16,7 @@ module vdb.dataContracts.albums {
 
 		defaultNameLanguage: string;
 
-		description: globalization.EnglishTranslatedStringContract;
+		description: EnglishTranslatedStringContract;
 
 		discs: AlbumDiscPropertiesContract[];
 
@@ -19,15 +26,15 @@ module vdb.dataContracts.albums {
 
 		identifiers: string[];
 
-		names: globalization.LocalizedStringWithIdContract[];
+		names: LocalizedStringWithIdContract[];
 
 		originalRelease: AlbumReleaseContract;
 
 		pictures: EntryPictureFileContract[];
 
-		pvs: pvs.PVContract[];
+		pvs: PVContract[];
 
-		songs: songs.SongInAlbumEditContract[];
+		songs: SongInAlbumEditContract[];
 
 		status: string;
 
@@ -36,5 +43,3 @@ module vdb.dataContracts.albums {
 		webLinks: WebLinkContract[];
 
 	}
-
-}

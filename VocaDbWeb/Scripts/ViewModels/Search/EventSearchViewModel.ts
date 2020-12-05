@@ -1,15 +1,18 @@
+import ArtistFilters from './ArtistFilters';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import ReleaseEventContract from '../../DataContracts/ReleaseEvents/ReleaseEventContract';
+import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
+import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
+import SearchViewModel from './SearchViewModel';
 
-namespace vdb.viewModels.search {
-
-	import dc = vdb.dataContracts;
-
-	export class EventSearchViewModel extends SearchCategoryBaseViewModel<dc.ReleaseEventContract> {
+	export default class EventSearchViewModel extends SearchCategoryBaseViewModel<ReleaseEventContract> {
 
 		constructor(
 			searchViewModel: SearchViewModel,
-			lang: vdb.models.globalization.ContentLanguagePreference,
-			private readonly eventRepo: rep.ReleaseEventRepository,
-			artistRepo: rep.ArtistRepository,
+			lang: ContentLanguagePreference,
+			private readonly eventRepo: ReleaseEventRepository,
+			artistRepo: ArtistRepository,
 			public loggedUserId: number,
 			sort: string,
 			artistId: number[],
@@ -68,7 +71,7 @@ namespace vdb.viewModels.search {
 		
 		public fields = ko.computed(() => this.searchViewModel.showTags() ? "AdditionalNames,MainPicture,Series,Venue,Tags" : "AdditionalNames,MainPicture,Series,Venue");
 
-		public getCategoryName = (event: dc.ReleaseEventContract) => {
+		public getCategoryName = (event: ReleaseEventContract) => {
 
 			var inherited = event.series ? event.series.category : event.category;
 
@@ -80,5 +83,3 @@ namespace vdb.viewModels.search {
 		}
 
 	}
-
-}

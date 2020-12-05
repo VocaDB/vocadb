@@ -1,24 +1,18 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../ViewModels/TopBarViewModel.ts" />
-/// <reference path="../TestSupport/FakeEntryReportRepository.ts" />
-/// <reference path="../TestSupport/FakeUserRepository.ts" />
-
-module vdb.tests.viewModels {
-
-    import dc = vdb.dataContracts;
-    import sup = vdb.tests.testSupport;
+import FakeEntryReportRepository from '../TestSupport/FakeEntryReportRepository';
+import FakeUserRepository from '../TestSupport/FakeUserRepository';
+import TopBarViewModel from '../../ViewModels/TopBarViewModel';
 
     var entryTypeTranslations;
-    var entryReportRepo: sup.FakeEntryReportRepository;
-    var userRepo: sup.FakeUserRepository;
+    var entryReportRepo: FakeEntryReportRepository;
+    var userRepo: FakeUserRepository;
 
     QUnit.module("TopBarViewModel", {
         setup: () => {
 
             entryTypeTranslations = { 'Album': 'Album!' };
-            entryReportRepo = new sup.FakeEntryReportRepository();
+            entryReportRepo = new FakeEntryReportRepository();
             entryReportRepo.entryReportCount = 39;
-            userRepo = new sup.FakeUserRepository();
+            userRepo = new FakeUserRepository();
             userRepo.messages = [
 				{ createdFormatted: "2039.3.9", highPriority: false, id: 39, inbox: 'Received', read: false, receiver: null, subject: "New message!" },
 				{ createdFormatted: "2039.3.9", highPriority: false, id: 40, inbox: 'Received', read: false, receiver: null, subject: "Another message" }
@@ -28,7 +22,7 @@ module vdb.tests.viewModels {
     });
 
     var create = (getNewReportsCount: boolean = false) => {
-        return new vdb.viewModels.TopBarViewModel(entryTypeTranslations, 'Album', '', 0, getNewReportsCount, entryReportRepo, userRepo);
+        return new TopBarViewModel(entryTypeTranslations, 'Album', '', 0, getNewReportsCount, entryReportRepo, userRepo);
     };
 
     test("constructor", () => {
@@ -60,5 +54,3 @@ module vdb.tests.viewModels {
         equal(target.unreadMessages()[0].subject, "New message!");
 
     });
-
-}

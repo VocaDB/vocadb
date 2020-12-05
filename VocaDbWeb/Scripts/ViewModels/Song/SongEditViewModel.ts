@@ -1,22 +1,40 @@
-/// <reference path="../../DataContracts/TranslatedEnumField.ts" />
-/// <reference path="../../DataContracts/WebLinkContract.ts" />
-/// <reference path="../WebLinksEditViewModel.ts" />
+import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel'
+import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
+import ArtistForAlbumContract from '../../DataContracts/ArtistForAlbumContract';
+import ArtistForAlbumEditViewModel from '../ArtistForAlbumEditViewModel';
+import ArtistHelper from '../../Helpers/ArtistHelper';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
+import CustomNameEditViewModel from '../CustomNameEditViewModel';
+import DateTimeHelper from '../../Helpers/DateTimeHelper';
+import DeleteEntryViewModel from '../DeleteEntryViewModel';
+import EnglishTranslatedStringEditViewModel from '../Globalization/EnglishTranslatedStringEditViewModel';
+import EntryType from '../../Models/EntryType';
+import { IDialogService } from '../../Shared/DialogService';
+import { LyricsForSongListEditViewModel } from './LyricsForSongEditViewModel';
+import NamesEditViewModel from '../Globalization/NamesEditViewModel';
+import PVListEditViewModel from '../PVs/PVListEditViewModel';
+import PVRepository from '../../Repositories/PVRepository';
+import PVType from '../../Models/PVs/PVType';
+import ReleaseEventContract from '../../DataContracts/ReleaseEvents/ReleaseEventContract';
+import { SongAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
+import SongContract from '../../DataContracts/Song/SongContract';
+import SongForEditContract from '../../DataContracts/Song/SongForEditContract';
+import SongHelper from '../../Helpers/SongHelper';
+import SongRepository from '../../Repositories/SongRepository';
+import SongType from '../../Models/Songs/SongType';
+import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
+import UrlMapper from '../../Shared/UrlMapper';
+import UserRepository from '../../Repositories/UserRepository';
+import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
-module vdb.viewModels {
-
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
-	import hel = vdb.helpers;
-	import rep = vdb.repositories;
-	var SongType = cls.songs.SongType;
-
-    export class SongEditViewModel {
+    export default class SongEditViewModel {
 
 		private albumEventId: number;
 		public albumReleaseDate: moment.Moment;
         // List of artist links for this song.
         public artistLinks: KnockoutObservableArray<ArtistForAlbumEditViewModel>;
-		artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams;
+		artistSearchParams: ArtistAutoCompleteParams;
 		public canHaveOriginalVersion: KnockoutComputed<boolean>;
 		public defaultNameLanguage: KnockoutObservable<string>;
 		public deleted: boolean;
@@ -26,17 +44,17 @@ module vdb.viewModels {
 		public id: number;
         public length: KnockoutObservable<number>;
 		public lengthFormatted: KnockoutComputed<string>;
-		public lyrics: songs.LyricsForSongListEditViewModel;
-		public names: globalization.NamesEditViewModel;
-		public notes: globalization.EnglishTranslatedStringEditViewModel;
-		public originalVersion: BasicEntryLinkViewModel<dc.SongContract>;
-		public originalVersionSearchParams: vdb.knockoutExtensions.SongAutoCompleteParams;
-		public originalVersionSuggestions = ko.observableArray<dc.SongContract>();
+		public lyrics: LyricsForSongListEditViewModel;
+		public names: NamesEditViewModel;
+		public notes: EnglishTranslatedStringEditViewModel;
+		public originalVersion: BasicEntryLinkViewModel<SongContract>;
+		public originalVersionSearchParams: SongAutoCompleteParams;
+		public originalVersionSuggestions = ko.observableArray<SongContract>();
 		public publishDate: KnockoutObservable<Date>;
-		public pvs: pvs.PVListEditViewModel;
-		public releaseEvent: BasicEntryLinkViewModel<dc.ReleaseEventContract>;
+		public pvs: PVListEditViewModel;
+		public releaseEvent: BasicEntryLinkViewModel<ReleaseEventContract>;
 		public showLyricsNote: KnockoutComputed<boolean>;
-		public songType: KnockoutComputed<cls.songs.SongType>;
+		public songType: KnockoutComputed<SongType>;
 		public songTypeStr: KnockoutObservable<string>;
 		public status: KnockoutObservable<string>;
 		public submittedJson = ko.observable("");
@@ -56,7 +74,7 @@ module vdb.viewModels {
 
 				this.artistRepository.getOne(artistId, artist => {
 
-					var data: dc.ArtistForAlbumContract = {
+					var data: ArtistForAlbumContract = {
 						artist: artist,
 						isSupport: false,
 						name: artist.name,
@@ -71,7 +89,7 @@ module vdb.viewModels {
 
 			} else {
 
-				var data: dc.ArtistForAlbumContract = {
+				var data: ArtistForAlbumContract = {
 					artist: null,
 					name: customArtistName,
 					isSupport: false,
@@ -86,7 +104,7 @@ module vdb.viewModels {
 
 		};
 
-		public artistRolesEditViewModel: artists.AlbumArtistRolesEditViewModel;
+		public artistRolesEditViewModel: AlbumArtistRolesEditViewModel;
 
 		// Clears fields that are not valid for the selected song type.
 		private clearInvalidData = () => {
@@ -116,7 +134,7 @@ module vdb.viewModels {
 			this.originalVersionSuggestions.removeAll();
 
 			const names = _.map(this.names.getPrimaryNames().length ? this.names.getPrimaryNames() : this.names.getAllNames(), n => n.value());
-			const [all, originals] = await Promise.all([this.songRepository.getByNames(names, [this.id]), this.songRepository.getByNames(names, [this.id], [cls.songs.SongType.Original, cls.songs.SongType.Remaster])]);
+			const [all, originals] = await Promise.all([this.songRepository.getByNames(names, [this.id]), this.songRepository.getByNames(names, [this.id], [SongType.Original, SongType.Remaster])]);
 
 			const suggestions = _.chain(originals).unionBy(all, i => i.id).take(3).value();
 
@@ -131,7 +149,7 @@ module vdb.viewModels {
 			this.artistLinks.remove(artist);
 		};
 
-		public selectOriginalVersion = (song: dc.SongContract) => {
+		public selectOriginalVersion = (song: SongContract) => {
 			this.originalVersion.entry(song);
 		}
 
@@ -148,7 +166,7 @@ module vdb.viewModels {
 
 			this.submitting(true);
 
-			var submittedModel: dc.songs.SongForEditContract = {
+			var submittedModel: SongForEditContract = {
 				artists: _.map(this.artistLinks(), artist => artist.toContract()),
 				defaultNameLanguage: this.defaultNameLanguage(),
 				deleted: this.deleted,
@@ -192,16 +210,16 @@ module vdb.viewModels {
 		public validationError_unspecifiedNames: KnockoutComputed<boolean>;
 
 		constructor(
-			private songRepository: rep.SongRepository,
-			private artistRepository: rep.ArtistRepository,
-			pvRepository: rep.PVRepository,
-			userRepository: rep.UserRepository,
-			private urlMapper: vdb.UrlMapper,
+			private songRepository: SongRepository,
+			private artistRepository: ArtistRepository,
+			pvRepository: PVRepository,
+			userRepository: UserRepository,
+			private urlMapper: UrlMapper,
 			private readonly artistRoleNames: { [key: string]: string; },
-			webLinkCategories: vdb.dataContracts.TranslatedEnumField[],
-			data: dc.songs.SongForEditContract,
+			webLinkCategories: TranslatedEnumField[],
+			data: SongForEditContract,
 			canBulkDeletePVs: boolean,
-			private dialogService: ui_dialog.IDialogService,
+			private dialogService: IDialogService,
 			private instrumentalTagId: number,
 			public languageNames) {
 
@@ -212,21 +230,21 @@ module vdb.viewModels {
 			this.deleted = data.deleted;
 			this.id = data.id;
 			this.length = ko.observable(data.lengthSeconds);
-			this.lyrics = new songs.LyricsForSongListEditViewModel(data.lyrics);
-			this.names = globalization.NamesEditViewModel.fromContracts(data.names);
-			this.notes = new globalization.EnglishTranslatedStringEditViewModel(data.notes);
-			this.originalVersion = new BasicEntryLinkViewModel<dc.SongContract>(data.originalVersion, songRepository.getOne);
+			this.lyrics = new LyricsForSongListEditViewModel(data.lyrics);
+			this.names = NamesEditViewModel.fromContracts(data.names);
+			this.notes = new EnglishTranslatedStringEditViewModel(data.notes);
+			this.originalVersion = new BasicEntryLinkViewModel<SongContract>(data.originalVersion, songRepository.getOne);
 			this.publishDate = ko.observable(data.publishDate ? moment(data.publishDate).toDate() : null); // Assume server date is UTC
-			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, data.pvs, canBulkDeletePVs, true, true);
-			this.releaseEvent = new BasicEntryLinkViewModel<dc.ReleaseEventContract>(data.releaseEvent, null);
+			this.pvs = new PVListEditViewModel(pvRepository, urlMapper, data.pvs, canBulkDeletePVs, true, true);
+			this.releaseEvent = new BasicEntryLinkViewModel<ReleaseEventContract>(data.releaseEvent, null);
 			this.songTypeStr = ko.observable(data.songType);
-			this.songType = ko.computed(() => cls.songs.SongType[this.songTypeStr()]);
+			this.songType = ko.computed(() => SongType[this.songTypeStr()]);
 			this.status = ko.observable(data.status);
 			this.tags = data.tags;
 			this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
 
 
-			this.artistRolesEditViewModel = new artists.AlbumArtistRolesEditViewModel(artistRoleNames);
+			this.artistRolesEditViewModel = new AlbumArtistRolesEditViewModel(artistRoleNames);
 
 			this.artistSearchParams = {
 				createNewItem: vdb.resources.song.addExtraArtist,
@@ -234,7 +252,7 @@ module vdb.viewModels {
 				height: 300
 			};
 
-			this.canHaveOriginalVersion = ko.computed(() => this.songType() !== cls.songs.SongType.Original);
+			this.canHaveOriginalVersion = ko.computed(() => this.songType() !== SongType.Original);
 
 			this.hasAlbums = data.hasAlbums;
 
@@ -250,7 +268,7 @@ module vdb.viewModels {
             
             this.lengthFormatted = ko.computed({
 				read: () => {
-					return vdb.helpers.DateTimeHelper.formatFromSeconds(this.length());
+					return DateTimeHelper.formatFromSeconds(this.length());
                 },
                 write: (value: string) => {
                     var parts = value.split(":");
@@ -266,11 +284,11 @@ module vdb.viewModels {
 
 			this.showInstrumentalNote = ko.computed(() => {
 				return this.pvs.isPossibleInstrumental()
-					&& this.songType() !== models.songs.SongType.Instrumental
+					&& this.songType() !== SongType.Instrumental
 					&& !_.some(this.tags, t => t === this.instrumentalTagId);
 			});
 
-			this.showLyricsNote = ko.computed(() => this.songType() !== cls.songs.SongType.Instrumental && !this.originalVersion.isEmpty());
+			this.showLyricsNote = ko.computed(() => this.songType() !== SongType.Instrumental && !this.originalVersion.isEmpty());
 
 			this.validationError_duplicateArtist = ko.computed(() => {
 				return _.some(_.groupBy(this.artistLinks(), (a: ArtistForAlbumEditViewModel) => a.artist ? a.artist.id.toString() : a.name()), a => a.length > 1);
@@ -280,7 +298,7 @@ module vdb.viewModels {
 
 			this.validationError_needOriginal = ko.computed(() => {
 				
-				var songType = models.songs.SongType;
+				var songType = SongType;
 				var derivedTypes = [songType.Remaster, songType.Cover, songType.Instrumental, songType.MusicPV, songType.Other, songType.Remix, songType.Arrangement];
 				return (this.notes.original() === null || this.notes.original() === "")
 					&& this.originalVersion.entry() == null
@@ -288,12 +306,12 @@ module vdb.viewModels {
 
 			});
 
-			this.validationError_needProducer = ko.computed(() => !this.validationError_needArtist() && !_.some(this.artistLinks(), a => a.artist != null && hel.ArtistHelper.isProducerRole(a.artist, a.rolesArrayTyped(), hel.SongHelper.getContentFocus(this.songType()))));
+			this.validationError_needProducer = ko.computed(() => !this.validationError_needArtist() && !_.some(this.artistLinks(), a => a.artist != null && ArtistHelper.isProducerRole(a.artist, a.rolesArrayTyped(), SongHelper.getContentFocus(this.songType()))));
 
 			this.validationError_needReferences = ko.computed(() =>
 				!this.hasAlbums
 				&& _.isEmpty(this.notes.original())
-				&& _.isEmpty(this.webLinks.webLinks())
+				&& _.isEmpty(this.webLinks.items())
 				&& _.isEmpty(this.pvs.pvs()));
 
 			this.validationError_needType = ko.computed(() => this.songType() === SongType.Unspecified);
@@ -301,10 +319,10 @@ module vdb.viewModels {
 			this.validationError_nonInstrumentalSongNeedsVocalists = ko.computed(() => {
 
 				return (!this.validationError_needArtist()
-					&& !hel.SongHelper.isInstrumental(this.songType())
-					&& this.songType() !== models.songs.SongType.Arrangement // Arrangements are considered possible instrumentals in this context
+					&& !SongHelper.isInstrumental(this.songType())
+					&& this.songType() !== SongType.Arrangement // Arrangements are considered possible instrumentals in this context
 					&& !_.some(this.tags, t => t === this.instrumentalTagId))
-					&& !_.some(this.artistLinks(), a => hel.ArtistHelper.isVocalistRole(a.artist, a.rolesArrayTyped()));
+					&& !_.some(this.artistLinks(), a => ArtistHelper.isVocalistRole(a.artist, a.rolesArrayTyped()));
 
 			});
 
@@ -329,7 +347,7 @@ module vdb.viewModels {
 			this.firstPvDate = ko.computed(() => {
 
 				var val = _.chain(this.pvs.pvs())
-					.filter(pv => pv.publishDate && pv.pvType === models.pvs.PVType[models.pvs.PVType.Original])
+					.filter(pv => pv.publishDate && pv.pvType === PVType[PVType.Original])
 					.map(pv => moment(pv.publishDate))
 					.sortBy(p => p)
 					.head<_.LoDashExplicitObjectWrapper<moment.Moment>>() 
@@ -349,7 +367,7 @@ module vdb.viewModels {
 				.head<_.LoDashExplicitObjectWrapper<PotentialDate>>()
 				.value());
 
-			window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.Song, data.id), 10000);
+			window.setInterval(() => userRepository.refreshEntryEdit(EntryType.Song, data.id), 10000);
 
         }
 
@@ -359,5 +377,3 @@ module vdb.viewModels {
 		date: moment.Moment;
 		source: string;
 	}
-
-}

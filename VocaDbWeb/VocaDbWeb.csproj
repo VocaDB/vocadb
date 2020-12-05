@@ -32,6 +32,7 @@
     <UseGlobalApplicationHostFile />
     <Use64BitIISExpress />
     <TypeScriptToolsVersion>3.7</TypeScriptToolsVersion>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
@@ -73,16 +74,11 @@
     <PackageReference Include="highcharts.js" Version="4.2.0.0" />
     <PackageReference Include="highcharts.TypeScript.DefinitelyTyped" Version="0.3.7" />
     <PackageReference Include="Iesi.Collections" Version="4.0.4" />
-    <PackageReference Include="jQuery" Version="2.2.1" />
     <PackageReference Include="jquery.TypeScript.DefinitelyTyped" Version="2.2.8" />
-    <PackageReference Include="jQuery.UI.Combined" Version="1.8.11" />
     <PackageReference Include="jqueryui.TypeScript.DefinitelyTyped" Version="0.4.1" />
     <PackageReference Include="knockout.TypeScript.DefinitelyTyped" Version="0.8.2" />
-    <PackageReference Include="knockoutjs" Version="3.4.1" />
-    <PackageReference Include="lodash" Version="4.17.3" />
     <PackageReference Include="lodash.TypeScript.DefinitelyTyped" Version="2.4.9" />
     <PackageReference Include="MarkdownSharp" Version="2.0.5" />
-    <PackageReference Include="marked" Version="0.3.3" />
     <PackageReference Include="marked.TypeScript.DefinitelyTyped" Version="0.1.0" />
     <PackageReference Include="Microsoft.AspNet.Cors" Version="5.2.6" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
@@ -109,6 +105,12 @@
     <PackageReference Include="Strathweb.CacheOutput.WebApi2" Version="0.10.0" />
     <PackageReference Include="Swashbuckle" Version="5.2.2" />
     <PackageReference Include="Swashbuckle.Core" Version="5.2.2" />
+    <PackageReference Include="System.ComponentModel.Annotations">
+      <Version>4.7.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.IO.FileSystem.AccessControl">
+      <Version>4.7.0</Version>
+    </PackageReference>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.2" />
     <PackageReference Include="Twitter.Bootstrap" Version="2.0.3" />
@@ -141,7 +143,6 @@
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Extensions" />
@@ -155,8 +156,13 @@
   <ItemGroup>
     <Compile Include="Code\DynamicImageUrlFactory.cs" />
     <Compile Include="Code\EntrySubTypeNameFactory.cs" />
+    <Compile Include="Code\Web\AspNetHttpContext.cs" />
+    <Compile Include="Code\Web\AspNetHttpPostedFile.cs" />
+    <Compile Include="Code\Web\AspNetHttpRequest.cs" />
+    <Compile Include="Code\Web\AspNetHttpResponse.cs" />
     <Compile Include="Controllers\Api\CommentApiController.cs" />
     <Compile Include="Controllers\Api\EntryTypesApiController.cs" />
+    <Compile Include="Helpers\LaravelMixHelper.cs" />
     <Compile Include="Controllers\Api\IPRuleApiController.cs" />
     <Compile Include="Controllers\Api\VenueApiController.cs" />
     <Compile Include="Controllers\VenueController.cs" />
@@ -564,9 +570,6 @@
     <Content Include="Content\Site-teto.css" />
     <Content Include="Content\star.png" />
     <Content Include="Content\star_disabled.png" />
-    <Content Include="Content\Styles\base.css">
-      <DependentUpon>base.less</DependentUpon>
-    </Content>
     <Content Include="Content\Styles\DarkAngel.css">
       <DependentUpon>DarkAngel.less</DependentUpon>
     </Content>
@@ -576,65 +579,25 @@
     <Content Include="Content\Styles\embedSong.css">
       <DependentUpon>embedSong.less</DependentUpon>
     </Content>
-    <Content Include="Content\Styles\ExtLinks.css">
-      <DependentUpon>ExtLinks.less</DependentUpon>
-    </Content>
     <Content Include="Content\Styles\Icons.css" />
     <Content Include="Content\nico.png" />
     <Content Include="Content\star5.png" />
-    <Content Include="Content\Styles\Overrides.css">
-      <DependentUpon>Overrides.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Styles\Overrides.min.css">
-      <DependentUpon>Overrides.css</DependentUpon>
-    </Content>
     <Content Include="Content\Styles\Pager.css" />
-    <Content Include="Content\Styles\PVViewer_Black.css">
-      <DependentUpon>PVViewer_Black.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Styles\PVViewer_Blue.css">
-      <DependentUpon>PVViewer_Blue.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Styles\Search.css">
-      <DependentUpon>Search.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Styles\Snow2013.css">
-      <DependentUpon>Snow2013.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Styles\song.css">
-      <DependentUpon>song.less</DependentUpon>
-    </Content>
     <Content Include="Content\Styles\songlist.css">
       <DependentUpon>songlist.less</DependentUpon>
     </Content>
     <Content Include="Content\Styles\TetoDB.css" />
-    <Content Include="Content\Styles\userpage.css">
-      <DependentUpon>userpage.less</DependentUpon>
-    </Content>
     <Content Include="Content\teto.jpg" />
     <Content Include="Content\tetoDB-title.png" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_55_fbec88_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_75_d0e5f5_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_85_dfeffc_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
     <Content Include="Content\themes\base\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
     <Content Include="Content\themes\base\images\ui-icons_217bc0_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_469bdd_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_6da8d5_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_d8e7f3_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_f9bd01_256x240.png" />
     <Content Include="Content\themes\base\jquery-ui.css" />
@@ -729,12 +692,13 @@
     <Content Include="albumsearch.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Scripts\libs.js" />
+    <Content Include="webpack.mix.js" />
     <Content Include="robots.txt" />
-    <Content Include="Scripts\Album\Edit.js" />
-    <Content Include="Scripts\Artist\Edit.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
+    <TypeScriptCompile Include="Scripts\Album\Edit.ts" />
+    <TypeScriptCompile Include="Scripts\Artist\Edit.ts" />
     <TypeScriptCompile Include="Scripts\Album\Details.ts" />
+    <TypeScriptCompile Include="Scripts\App.ts" />
     <TypeScriptCompile Include="Scripts\Artist\Details.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\ActivityEntry\ActivityEntryContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Aggregate\CountPerDayContract.ts" />
@@ -805,6 +769,8 @@
     <TypeScriptCompile Include="Scripts\DataContracts\Song\SongListContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserBaseContract.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\User\UserMessageSummaryContract.ts" />
+    <TypeScriptCompile Include="Scripts\Event\Edit.ts" />
+    <TypeScriptCompile Include="Scripts\Event\SeriesEdit.ts" />
     <TypeScriptCompile Include="Scripts\DataContracts\Venue\VenueForApiContract.ts" />
     <Content Include="Scripts\Event\Edit.js" />
     <Content Include="Scripts\Event\SeriesEdit.js" />
@@ -867,10 +833,6 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="Scripts\jquery-2.2.1.js" />
-    <Content Include="Scripts\jquery-2.2.1.min.js" />
-    <Content Include="Scripts\jquery-ui-1.10.4.js" />
-    <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\jquery.tools.min.js" />
     <Content Include="Scripts\jqwidgets27\globalization\globalize.js" />
     <Content Include="Scripts\jqwidgets27\globalization\jquery.glob.cs-CZ.js" />
@@ -1205,8 +1167,6 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Show.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\SlideVisible.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ArtistAutoComplete.ts" />
-    <Content Include="Scripts\knockout-3.4.1.debug.js" />
-    <Content Include="Scripts\knockout-3.4.1.js" />
     <Content Include="Scripts\knockout-sortable.js" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\FocusOut.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\EntryToolTip.ts" />
@@ -1218,17 +1178,10 @@
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Song\SongTypeLabel.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Sortable.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\StopBinding.ts" />
-    <Content Include="Scripts\knockout.punches.min.js" />
     <Content Include="Scripts\Libraries\qunit-1.19.0.js" />
-    <Content Include="Scripts\lodash.core.js" />
-    <Content Include="Scripts\lodash.core.min.js" />
-    <Content Include="Scripts\lodash.js" />
-    <Content Include="Scripts\lodash.min.js" />
-    <Content Include="Scripts\marked.js" />
-    <Content Include="Scripts\marked.min.js" />
     <Content Include="Scripts\MediaElement\mediaelement.min.js" />
     <Content Include="Scripts\MediaElement\mediaelementplayer.min.css" />
-    <Content Include="Scripts\MikuDbAlbums\PrepareForImport.js" />
+    <TypeScriptCompile Include="Scripts\MikuDbAlbums\PrepareForImport.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\TagAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\Tag\TagCategoryAutoComplete.ts" />
     <TypeScriptCompile Include="Scripts\KnockoutExtensions\ToggleClick.ts" />
@@ -1269,6 +1222,7 @@
     <TypeScriptCompile Include="Scripts\Shared\Routing\ObservableUrlParamRouter.ts" />
     <TypeScriptCompile Include="Scripts\Shared\TopBar.ts" />
     <TypeScriptCompile Include="Scripts\Tag\Details.ts" />
+    <TypeScriptCompile Include="Scripts\tests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\Helpers\AjaxHelperTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\Helpers\DateTimeHelperTests.ts" />
     <TypeScriptCompile Include="Scripts\Tests\Helpers\EntryMergeValidationHelperTests.ts" />
@@ -1407,12 +1361,11 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\page.js" />
-    <Content Include="Scripts\qTip\jquery.qtip.js" />
-    <Content Include="Scripts\SongList\Edit.js" />
-    <Content Include="Scripts\Song\Details.js" />
-    <Content Include="Scripts\Song\Edit.js" />
+    <TypeScriptCompile Include="Scripts\SongList\Edit.ts" />
+    <TypeScriptCompile Include="Scripts\Song\Details.ts" />
+    <TypeScriptCompile Include="Scripts\Song\Edit.ts" />
     <Content Include="Scripts\soundcloud-api.js" />
-    <Content Include="Scripts\Tag\Edit.js" />
+    <TypeScriptCompile Include="Scripts\Tag\Edit.ts" />
     <Content Include="Scripts\ui\i18n\jquery-ui-i18n.js" />
     <Content Include="Scripts\ui\i18n\jquery.ui.datepicker-af.js" />
     <Content Include="Scripts\ui\i18n\jquery.ui.datepicker-ar-DZ.js" />
@@ -1603,7 +1556,7 @@
     <Content Include="Scripts\ui\minified\jquery.ui.widget.min.js" />
     <Content Include="Scripts\url.js" />
     <Content Include="Scripts\url.min.js" />
-    <Content Include="Scripts\User\Edit.js" />
+    <TypeScriptCompile Include="Scripts\User\Edit.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\FeaturedSongListsViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\ImportSongListViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\SongList\SongListEditViewModel.ts" />
@@ -1641,7 +1594,7 @@
     <TypeScriptCompile Include="Scripts\ViewModels\User\UserMessagesViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\WebLinksEditViewModel.ts" />
     <TypeScriptCompile Include="Scripts\ViewModels\Venue\VenueEditViewModel.ts" />
-    <Content Include="Scripts\Venue\Edit.js" />
+    <TypeScriptCompile Include="Scripts\Venue\Edit.ts" />
     <Content Include="Scripts\VocaDb.js" />
     <Content Include="Services\QueryService.svc" />
     <Content Include="sitemap.xml">
@@ -1665,6 +1618,7 @@
     <Folder Include="logs\" />
     <Folder Include="Scripts\Admin\" />
     <Folder Include="Scripts\KnockoutExtensions\Album\" />
+    <Folder Include="Scripts\qTip\" />
     <Folder Include="Views\Integration\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
     <Folder Include="Views\Shared\KnockoutTemplates\" />
@@ -1780,15 +1734,18 @@
     <Content Include="Views\Discussion\Partials\_ViewTopic.cshtml" />
     <Content Include="Views\Discussion\Partials\_EditTopic.cshtml" />
     <Content Include="Views\Discussion\Partials\_ViewFolders.cshtml" />
-    <Content Include="Scripts\jquery-2.2.1.min.map" />
     <Content Include="Views\Error\IPForbidden.cshtml" />
     <Content Include="Views\Admin\ManageTagMappings.cshtml" />
     <Content Include="Views\Admin\ActiveEdits.cshtml" />
     <Content Include="Content\Styles\DarkAngel.less" />
+    <Content Include="Content\css.less" />
+    <Content Include="Content\embedSong.less" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Album\Partials\_AlbumReviews.cshtml" />
+    <Content Include="package.json" />
+    <Content Include="tsconfig.json" />
     <Content Include="Views\Admin\ManageEntryTagMappings.cshtml" />
     <Content Include="Views\Shared\Partials\Album\_AlbumLink.cshtml" />
     <None Include="Views\Event\EditSeries.cshtml" />

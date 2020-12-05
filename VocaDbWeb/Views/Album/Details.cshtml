@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain
+﻿@using VocaDb.Model.Domain
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Model.Domain.Albums
@@ -32,7 +31,7 @@
 @section Head {
 	@Html.Partial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties))
 	<link rel="canonical" href="@url" />
-	@Styles.Render("~/Scripts/jqwidgets27/styles/css")
+	@LaravelMixHelper.RenderStyles("~/Scripts/jqwidgets27/styles/css.css")
 }
 
 @section Toolbar {
@@ -409,7 +408,7 @@
 				@EntryRes.PersonalDescription
 			</h3>
 			<div class="media" data-bind="with: personalDescription">
-				<a data-bind="visible: !author.isEmpty() && author.entry().mainPicture, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
+				<a data-bind="visible: !author.isEmpty() && author.entry().mainPicture, attr: { href: app.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
 					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !author.isEmpty() && author.entry().mainPicture ? author.entry().mainPicture.urlSmallThumb : null }" />
 				</a>
 
@@ -421,7 +420,7 @@
 						</div>
 					}
 					<h3 class="media-heading" data-bind="visible: !author.isEmpty()">
-						<a data-bind="attr: { href: vdb.utils.EntryUrlMapper.details('Artist', author.id()) }, text: author.name"></a>
+						<a data-bind="attr: { href: app.EntryUrlMapper.details('Artist', author.id()) }, text: author.name"></a>
 					</h3>
 					<div data-bind="visible: !editing()">
 						<p data-bind="markdown: text"></p>
@@ -543,7 +542,7 @@
 @Html.Partial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel())
 
 @section BodyScripts {
-	@Scripts.Render("~/bundles/Album/Details", "~/bundles/jqxRating")
+	@LaravelMixHelper.RenderScripts("~/bundles/Album/Details.js", "~/bundles/jqxRating.js")
 	<script type="text/javascript">
 
 		$(document).ready(function() {
@@ -551,8 +550,8 @@
 			moment.locale('@Culture');
 			ko.punches.enableAll();
 
-			var urlMapper = new vdb.UrlMapper("@Url.Content("~/")");
-			var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
+			var urlMapper = new app.UrlMapper("@Url.Content("~/")");
+			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
 			var albumRepo = repoFactory.albumRepository();
 			var userRepo = repoFactory.userRepository();
 			var artistRepo = repoFactory.artistRepository();
@@ -571,7 +570,7 @@
 			var jsonModel = @Html.Raw(Model.Json);
 			var formatString = '@(Login.Manager.IsLoggedIn ? Login.User.AlbumFormatString : "")';
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-			var viewModel = new vdb.viewModels.AlbumDetailsViewModel(albumRepo, userRepo,
+			var viewModel = new app.AlbumDetailsViewModel(albumRepo, userRepo,
 				artistRepo,
 				jsonModel,
 				reportTypes,
@@ -580,7 +579,7 @@
 				canDeleteAllComments, formatString, @ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)));
 			ko.applyBindings(viewModel);
 
-			initAlbumDetailsPage(@Model.Id, @Model.CollectionRating,
+			app.initAlbumDetailsPage(@Model.Id, @Model.CollectionRating,
 				"@ViewRes.SharedStrings.Save", urlMapper, viewModel);
 
 		});

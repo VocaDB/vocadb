@@ -1,17 +1,19 @@
-﻿
-module vdb.viewModels.search {
+import AlbumContract from '../../DataContracts/Album/AlbumContract';
+import AlbumRepository from '../../Repositories/AlbumRepository';
+import ArtistFilters from './ArtistFilters';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import ResourceRepository from '../../Repositories/ResourceRepository';
+import ResourcesManager from '../../Models/ResourcesManager';
+import SearchCategoryBaseViewModel from './SearchCategoryBaseViewModel';
+import SearchViewModel from './SearchViewModel';
 
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
-
-	export class AlbumSearchViewModel extends SearchCategoryBaseViewModel<dc.AlbumContract> {
+	export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<AlbumContract> {
 
 		constructor(searchViewModel: SearchViewModel,
 			private unknownPictureUrl: string,
-			lang: string, private albumRepo: rep.AlbumRepository,
-			private artistRepo: rep.ArtistRepository,
-			resourceRep: rep.ResourceRepository,
+			lang: string, private albumRepo: AlbumRepository,
+			private artistRepo: ArtistRepository,
+			resourceRep: ResourceRepository,
 			cultureCode: string,
 			sort: string,
 			artistId: number[],
@@ -24,7 +26,7 @@ module vdb.viewModels.search {
 			if (searchViewModel) {
 				this.resourceManager = searchViewModel.resourcesManager;
 			} else {
-				this.resourceManager = new cls.ResourcesManager(resourceRep, cultureCode);
+				this.resourceManager = new ResourcesManager(resourceRep, cultureCode);
 				this.resourceManager.loadResources(null, "albumSortRuleNames", "discTypeNames");
 			}
 
@@ -61,7 +63,7 @@ module vdb.viewModels.search {
 
 		public albumType: KnockoutObservable<string>;
 		public artistFilters: ArtistFilters;
-		private resourceManager: cls.ResourcesManager;
+		private resourceManager: ResourcesManager;
 		public sort: KnockoutObservable<string>;
 		public sortName: KnockoutComputed<string>;
 		public viewMode: KnockoutObservable<string>;
@@ -70,7 +72,7 @@ module vdb.viewModels.search {
 
 		public fields = ko.computed(() => this.showTags() ? "AdditionalNames,MainPicture,ReleaseEvent,Tags" : "AdditionalNames,MainPicture,ReleaseEvent");
 
-		public ratingStars = (album: dc.AlbumContract) => {
+		public ratingStars = (album: AlbumContract) => {
 
 			if (!album)
 				return [];
@@ -85,5 +87,3 @@ module vdb.viewModels.search {
 		};
 
 	}
-
-}

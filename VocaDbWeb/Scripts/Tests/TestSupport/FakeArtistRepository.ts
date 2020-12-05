@@ -1,18 +1,15 @@
-/// <reference path="../../Repositories/ArtistRepository.ts" />
+import ArtistContract from '../../DataContracts/Artist/ArtistContract';
+import ArtistRepository from '../../Repositories/ArtistRepository';
 
-module vdb.tests.testSupport {
+    export default class FakeArtistRepository extends ArtistRepository {
 
-    import dc = vdb.dataContracts;
-
-    export class FakeArtistRepository extends vdb.repositories.ArtistRepository {
-
-        result: dc.ArtistContract = null;
+        result: ArtistContract = null;
 
         constructor() {
 
             super("");
 
-            this.getOne = (id, callback: (result: dc.ArtistContract) => void) => {
+            this.getOne = (id, callback: (result: ArtistContract) => void) => {
                 if (callback)
                     callback(this.result);
             };
@@ -20,5 +17,3 @@ module vdb.tests.testSupport {
         }
 
     }
-
-}

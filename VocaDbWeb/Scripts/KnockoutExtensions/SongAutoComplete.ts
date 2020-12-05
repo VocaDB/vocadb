@@ -1,17 +1,18 @@
-/// <reference path="../typings/knockout/knockout.d.ts" />
-/// <reference path="../Shared/GlobalFunctions.ts" />
-/// <reference path="../Shared/EntryAutoComplete.ts" />
-/// <reference path="AutoCompleteParams.ts" />
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import functions from '../Shared/GlobalFunctions';
+import { initEntrySearch } from '../Shared/EntryAutoComplete';
+import NameMatchMode from '../Models/NameMatchMode';
+import SearchTextQueryHelper from '../Helpers/SearchTextQueryHelper';
+import { SongAutoCompleteParams } from '../KnockoutExtensions/AutoCompleteParams';
+import SongContract from '../DataContracts/Song/SongContract';
+import { SongQueryParams } from '../Repositories/SongRepository';
 
-interface KnockoutBindingHandlers {
-	// Song autocomplete search box.
-    songAutoComplete: KnockoutBindingHandler;
+declare global {
+	interface KnockoutBindingHandlers {
+		// Song autocomplete search box.
+		songAutoComplete: KnockoutBindingHandler;
+	}
 }
-
-module vdb.knockoutExtensions {
-
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
 
 	export function songAutoComplete(element: HTMLElement, valueAccessor) {
 		
@@ -34,33 +35,31 @@ module vdb.knockoutExtensions {
 		}
 
 		var queryParams = {
-			nameMatchMode: cls.NameMatchMode[cls.NameMatchMode.Auto],
-			lang: cls.globalization.ContentLanguagePreference[vdb.values.languagePreference],
+			nameMatchMode: NameMatchMode[NameMatchMode.Auto],
+			lang: ContentLanguagePreference[vdb.values.languagePreference],
 			preferAccurateMatches: true
 		};
 		if (properties.extraQueryParams)
 			jQuery.extend(queryParams, properties.extraQueryParams);
 
-		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/songs"),
+		initEntrySearch(element, functions.mapAbsoluteUrl("/api/songs"),
 			{
 				acceptSelection: properties.acceptSelection,
 				createNewItem: properties.createNewItem,
 				createCustomItem: properties.createCustomItem,
-				createOptionFirstRow: (item: dc.SongContract) => (item.name + " (" + item.songType + ")"),
-				createOptionSecondRow: (item: dc.SongContract) => (item.artistString),
+				createOptionFirstRow: (item: SongContract) => (item.name + " (" + item.songType + ")"),
+				createOptionSecondRow: (item: SongContract) => (item.artistString),
 				extraQueryParams: queryParams,
 				filter: filter,
 				termParamName: 'query',
-				onQuery: (searchQueryParams: rep.SongQueryParams, term: string) => {
+				onQuery: (searchQueryParams: SongQueryParams, term: string) => {
 					// Increase the number of results for wildcard queries
-					searchQueryParams.maxResults = helpers.SearchTextQueryHelper.isWildcardQuery(term) ? 30 : 15;
+					searchQueryParams.maxResults = SearchTextQueryHelper.isWildcardQuery(term) ? 30 : 15;
 				}
 			});
 
 	}
 
-}
-
 ko.bindingHandlers.songAutoComplete = {
-	init: vdb.knockoutExtensions.songAutoComplete
+	init: songAutoComplete
 }

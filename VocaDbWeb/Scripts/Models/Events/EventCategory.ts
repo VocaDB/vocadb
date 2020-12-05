@@ -1,7 +1,5 @@
 
-namespace vdb.models.events {
-
-	export enum EventCategory {
+	enum EventCategory {
 		Unspecified = 0,		
 		AlbumRelease = 1,
 		Anniversary = 2,
@@ -12,4 +10,4 @@ namespace vdb.models.events {
 		Other = 64
 	}
 
-}
+	export default EventCategory;

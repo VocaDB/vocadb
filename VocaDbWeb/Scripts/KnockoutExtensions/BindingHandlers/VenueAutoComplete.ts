@@ -1,21 +1,28 @@
+import ContentLanguagePreference from "../../Models/Globalization/ContentLanguagePreference";
+import { EntryAutoCompleteParams } from "../../Shared/EntryAutoComplete";
+import functions from '../../Shared/GlobalFunctions';
+import { initEntrySearch } from '../../Shared/EntryAutoComplete';
+import VenueForApiContract from "../../DataContracts/Venue/VenueForApiContract";
 
-interface KnockoutBindingHandlers {
-	venueAutoComplete: KnockoutBindingHandler;
+declare global {
+	interface KnockoutBindingHandlers {
+		venueAutoComplete: KnockoutBindingHandler;
+	}
 }
 
 // Venue autocomplete search box.
 ko.bindingHandlers.venueAutoComplete = {
-	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<dc.VenueForApiContract>, allBindingsAccessor: () => any) => {
+	init: (element: HTMLElement, valueAccessor: () => KnockoutObservable<VenueForApiContract>, allBindingsAccessor: () => any) => {
 
 		var queryParams = {
 			nameMatchMode: 'Auto',
-			lang: vdb.models.globalization.ContentLanguagePreference[vdb.values.languagePreference],
+			lang: ContentLanguagePreference[vdb.values.languagePreference],
 			preferAccurateMatches: true,
 			maxResults: 20,
 			sort: 'Name'
 		};
 
-		const params: vdb.EntryAutoCompleteParams<dc.VenueForApiContract> = {
+		const params: EntryAutoCompleteParams<VenueForApiContract> = {
 			acceptSelection: (id, term, itemType, item) => {
 				valueAccessor()(item);
 			},
@@ -26,7 +33,7 @@ ko.bindingHandlers.venueAutoComplete = {
 			singleRow: true
 		};
 
-		vdb.initEntrySearch(element, vdb.functions.mapAbsoluteUrl("/api/venues"), params);
+		initEntrySearch(element, functions.mapAbsoluteUrl("/api/venues"), params);
 
 	}
 }

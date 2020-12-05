@@ -1,55 +1,70 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" /> 
-/// <reference path="../../Repositories/UserRepository.ts" />
+import AlbumRepository from '../../Repositories/AlbumRepository';
+import AlbumSearchViewModel from '../Search/AlbumSearchViewModel';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import CommentContract from '../../DataContracts/CommentContract';
+import ContentLanguagePreference from '../../Models/Globalization/ContentLanguagePreference';
+import CountPerDayContract from '../../DataContracts/Aggregate/CountPerDayContract';
+import EditableCommentsViewModel from '../EditableCommentsViewModel';
+import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
+import EntryType from '../../Models/EntryType';
+import HighchartsHelper from '../../Helpers/HighchartsHelper';
+import { IEntryReportType } from '../ReportEntryViewModel';
+import PVPlayersFactory from '../PVs/PVPlayersFactory';
+import ReportEntryViewModel from '../ReportEntryViewModel';
+import ResourceRepository from '../../Repositories/ResourceRepository';
+import SongRepository from '../../Repositories/SongRepository';
+import SongSearchViewModel from '../Search/SongSearchViewModel';
+import TagListViewModel from '../Tag/TagListViewModel';
+import TagsEditViewModel from '../Tag/TagsEditViewModel';
+import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContract';
+import TimeUnit from '../../Models/Aggregate/TimeUnit';
+import ui from '../../Shared/MessagesTyped';
+import UrlMapper from '../../Shared/UrlMapper';
+import UserRepository from '../../Repositories/UserRepository';
 
-module vdb.viewModels {
-
-	import cls = vdb.models;
-	import dc = dataContracts;
-	import rep = vdb.repositories;
-
-	export class ArtistDetailsViewModel {
+	export default class ArtistDetailsViewModel {
 
 		constructor(
-			repo: rep.ArtistRepository,
+			repo: ArtistRepository,
 			private artistId: number,
-			tagUsages: dc.tags.TagUsageForApiContract[],
+			tagUsages: TagUsageForApiContract[],
 			hasSubscription: boolean,
 			emailNotifications: boolean, siteNotifications: boolean,
 			hasEnglishDescription: boolean,
 			private unknownPictureUrl: string,
-			languagePreference: cls.globalization.ContentLanguagePreference,
-			private urlMapper: vdb.UrlMapper,
-			private albumRepo: rep.AlbumRepository,
-			private songRepo: rep.SongRepository,
-			private resourceRepo: rep.ResourceRepository,
-			private userRepository: rep.UserRepository,
+			languagePreference: ContentLanguagePreference,
+			private urlMapper: UrlMapper,
+			private albumRepo: AlbumRepository,
+			private songRepo: SongRepository,
+			private resourceRepo: ResourceRepository,
+			private userRepository: UserRepository,
 			private cultureCode: string,
 			reportTypes: IEntryReportType[],
 			private loggedUserId: number,
 			canDeleteAllComments: boolean,
-			private pvPlayersFactory: pvs.PVPlayersFactory,
-			latestComments: dc.CommentContract[]) {
+			private pvPlayersFactory: PVPlayersFactory,
+			latestComments: CommentContract[]) {
 
-			this.lang = cls.globalization.ContentLanguagePreference[languagePreference];
+			this.lang = ContentLanguagePreference[languagePreference];
 			this.hasArtistSubscription = ko.observable(hasSubscription);
 			this.customizeSubscriptionDialog = new CustomizeArtistSubscriptionViewModel(artistId, emailNotifications, siteNotifications, userRepository);
-			this.description = new globalization.EnglishTranslatedStringViewModel((hasEnglishDescription
-				&& (languagePreference === cls.globalization.ContentLanguagePreference.English || languagePreference === cls.globalization.ContentLanguagePreference.Romaji)));
+			this.description = new EnglishTranslatedStringViewModel((hasEnglishDescription
+				&& (languagePreference === ContentLanguagePreference.English || languagePreference === ContentLanguagePreference.Romaji)));
 
 			this.comments = new EditableCommentsViewModel(repo, artistId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
 
-			this.tagsEditViewModel = new tags.TagsEditViewModel({
+			this.tagsEditViewModel = new TagsEditViewModel({
 				getTagSelections: callback => userRepository.getArtistTagSelections(artistId, callback),
 				saveTagSelections: tags => userRepository.updateArtistTags(artistId, tags, this.tagUsages.updateTagUsages)
-			}, cls.EntryType.Artist, callback => repo.getTagSuggestions(this.artistId, callback));
+			}, EntryType.Artist, callback => repo.getTagSuggestions(this.artistId, callback));
 
-			this.tagUsages = new tags.TagListViewModel(tagUsages);
+			this.tagUsages = new TagListViewModel(tagUsages);
 
 			this.reportViewModel = new ReportEntryViewModel(reportTypes, (reportType, notes) => {
 
 				repo.createReport(this.artistId, reportType, notes, null);
 
-				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 
 			});
 
@@ -77,16 +92,16 @@ module vdb.viewModels {
 			// Delayed load highcharts stuff
 			var highchartsPromise = $.getScript(this.urlMapper.mapRelative("scripts/highcharts/4.2.0/highcharts.js"));
 			var highchartsHelperPromise = $.getScript(this.urlMapper.mapRelative("/scripts/helpers/HighchartsHelper.js"));
-			var songsPerMonthDataPromise = this.songRepo.getOverTime(vdb.models.aggregate.TimeUnit.month, this.artistId);
+			var songsPerMonthDataPromise = this.songRepo.getOverTime(TimeUnit.month, this.artistId);
 
 			$.when(songsPerMonthDataPromise, highchartsPromise, highchartsHelperPromise)
-				.done((songsPerMonthData: JQueryPromiseCallback<dataContracts.aggregate.CountPerDayContract[]>) => {
+				.done((songsPerMonthData: JQueryPromiseCallback<CountPerDayContract[]>) => {
 
-				var points: dataContracts.aggregate.CountPerDayContract[] = songsPerMonthData[0];
+				var points: CountPerDayContract[] = songsPerMonthData[0];
 
 				// Need at least 2 points because lone point looks weird
 				if (points && points.length >= 2) {
-					this.songsOverTimeChart(vdb.helpers.HighchartsHelper.dateLineChartWithAverage('Songs per month', null, 'Songs', points));					
+					this.songsOverTimeChart(HighchartsHelper.dateLineChartWithAverage('Songs per month', null, 'Songs', points));					
 				}
 
 			});
@@ -102,26 +117,26 @@ module vdb.viewModels {
 		}
 
 		public showAllMembers = ko.observable(false);
-		public description: globalization.EnglishTranslatedStringViewModel;
-		public songsViewModel: KnockoutObservable<vdb.viewModels.search.SongSearchViewModel> = ko.observable(null);
+		public description: EnglishTranslatedStringViewModel;
+		public songsViewModel: KnockoutObservable<SongSearchViewModel> = ko.observable(null);
 
 		public songsOverTimeChart = ko.observable<HighchartsOptions>(null);
 
-		public collaborationAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);
-		public mainAlbumsViewModel: KnockoutObservable<vdb.viewModels.search.AlbumSearchViewModel> = ko.observable(null);
+		public collaborationAlbumsViewModel: KnockoutObservable<AlbumSearchViewModel> = ko.observable(null);
+		public mainAlbumsViewModel: KnockoutObservable<AlbumSearchViewModel> = ko.observable(null);
 
 		public reportViewModel: ReportEntryViewModel;
 
-		public tagsEditViewModel: tags.TagsEditViewModel;
+		public tagsEditViewModel: TagsEditViewModel;
 
-		public tagUsages: tags.TagListViewModel;
+		public tagUsages: TagListViewModel;
 
 		public initMainAlbums = () => {
 			
 			if (this.mainAlbumsViewModel())
 				return;
 
-			this.mainAlbumsViewModel(new vdb.viewModels.search.AlbumSearchViewModel(null, this.unknownPictureUrl, this.lang,
+			this.mainAlbumsViewModel(new AlbumSearchViewModel(null, this.unknownPictureUrl, this.lang,
 				this.albumRepo, null, this.resourceRepo, this.cultureCode, null, [ this.artistId ], null, "Unknown", null));
 			this.mainAlbumsViewModel().artistFilters.artistParticipationStatus("OnlyMainAlbums");
 
@@ -132,7 +147,7 @@ module vdb.viewModels {
 			if (this.collaborationAlbumsViewModel())
 				return;
 
-			this.collaborationAlbumsViewModel(new vdb.viewModels.search.AlbumSearchViewModel(null, this.unknownPictureUrl, this.lang,
+			this.collaborationAlbumsViewModel(new AlbumSearchViewModel(null, this.unknownPictureUrl, this.lang,
 				this.albumRepo, null, this.resourceRepo, this.cultureCode, null, [ this.artistId ], null, "Unknown", null));
 			this.collaborationAlbumsViewModel().artistFilters.artistParticipationStatus("OnlyCollaborations");
 
@@ -143,7 +158,7 @@ module vdb.viewModels {
 			if (this.songsViewModel())
 				return;
 
-			this.songsViewModel(new vdb.viewModels.search.SongSearchViewModel(null, this.urlMapper, this.lang, this.songRepo, null, this.userRepository, null, this.resourceRepo,
+			this.songsViewModel(new SongSearchViewModel(null, this.urlMapper, this.lang, this.songRepo, null, this.userRepository, null, this.resourceRepo,
 				this.cultureCode, this.loggedUserId, null, [ this.artistId ], null, null, null, false, false, null, null, null, null, null, this.pvPlayersFactory));
 			this.songsViewModel().updateResults(true);
 
@@ -157,7 +172,7 @@ module vdb.viewModels {
 
 		public notificationsMethod: KnockoutObservable<string>;
 
-		constructor(artistId: number, emailNotifications: boolean, siteNotifications: boolean, userRepository: rep.UserRepository) {
+		constructor(artistId: number, emailNotifications: boolean, siteNotifications: boolean, userRepository: UserRepository) {
 
 			this.notificationsMethod = ko.observable(!siteNotifications ? "Nothing" : (!emailNotifications ? "Site" : "Email"));
 
@@ -174,5 +189,3 @@ module vdb.viewModels {
 		};
 
 	}
-
-}

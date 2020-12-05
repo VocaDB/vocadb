@@ -1,12 +1,11 @@
+import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteParams';
+import ArtistContract from '../../DataContracts/Artist/ArtistContract';
+import ArtistRepository from '../../Repositories/ArtistRepository';
 
-module vdb.viewModels {
-
-    import dc = vdb.dataContracts;
-
-    export class RequestVerificationViewModel {
+    export default class RequestVerificationViewModel {
     
 		constructor(
-			private readonly artistRepository: vdb.repositories.ArtistRepository) { }
+			private readonly artistRepository: ArtistRepository) { }
 
         public clearArtist = () => {
             this.selectedArtist(null);
@@ -14,7 +13,7 @@ module vdb.viewModels {
 
 		public privateMessage = ko.observable(false);
 
-        public selectedArtist: KnockoutObservable<dc.ArtistContract> = ko.observable(null);
+        public selectedArtist: KnockoutObservable<ArtistContract> = ko.observable(null);
 
         public setArtist = (targetArtistId) => {
 
@@ -24,10 +23,8 @@ module vdb.viewModels {
 
         }
 
-        public artistSearchParams: vdb.knockoutExtensions.ArtistAutoCompleteParams = {
+        public artistSearchParams: ArtistAutoCompleteParams = {
             acceptSelection: this.setArtist
         };
       
     }
-
-}

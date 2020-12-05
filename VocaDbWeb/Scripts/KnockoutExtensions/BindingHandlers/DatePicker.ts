@@ -1,6 +1,9 @@
+import DateTimeHelper from '../../Helpers/DateTimeHelper';
 
-interface KnockoutBindingHandlers {
-	datepicker: KnockoutBindingHandler;
+declare global {
+	interface KnockoutBindingHandlers {
+		datepicker: KnockoutBindingHandler;
+	}
 }
 
 interface DatePickerOptions {
@@ -19,13 +22,13 @@ ko.bindingHandlers.datepicker = {
 		$(element).datepicker({ dateFormat: options.dateFormat });
 
 		if (value) {
-			$(element).datepicker('setDate', vdb.helpers.DateTimeHelper.convertToLocal(value));
+			$(element).datepicker('setDate', DateTimeHelper.convertToLocal(value));
 		}
 
 		if (ko.isObservable(options.value)) {
 			var subscription = options.value.subscribe((newValue: Date) => {
 				// datepicker displays time in local time, so we convert it back to local
-				$(element).datepicker('setDate', vdb.helpers.DateTimeHelper.convertToLocal(newValue));
+				$(element).datepicker('setDate', DateTimeHelper.convertToLocal(newValue));
 			});
 
 			ko.utils.domNodeDisposal.addDisposeCallback(element, () => {
@@ -38,7 +41,7 @@ ko.bindingHandlers.datepicker = {
 				const format = $(element).datepicker('option', 'dateFormat');
 				const parsed = $.datepicker.parseDate(format, selectedText);
 				// Make sure the date is parsed as UTC as we don't want any timezones here. jQuery UI seems to always parse as local.
-				const date = vdb.helpers.DateTimeHelper.convertToUtc(parsed);
+				const date = DateTimeHelper.convertToUtc(parsed);
 				options.value(date);					
 			} else {
 				options.value(null);

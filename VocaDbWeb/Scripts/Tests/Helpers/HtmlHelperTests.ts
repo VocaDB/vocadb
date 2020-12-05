@@ -1,10 +1,9 @@
-﻿
-module vdb.tests.helpers {
-	
+import HtmlHelper from '../../Helpers/HtmlHelper';
+
 	QUnit.module("HtmlHelper");
 
 	var testBoldAndHtmlEncode = (text: string, term: string, expected: string) => {
-		var actual = vdb.helpers.HtmlHelper.boldAndHtmlEncode(text, term);
+		var actual = HtmlHelper.boldAndHtmlEncode(text, term);
 		equal(actual, expected, "with term " + term);
 	}
 
@@ -37,5 +36,3 @@ module vdb.tests.helpers {
 		testBoldAndHtmlEncode("Sentaku <love or dead>", "<love", "Sentaku <b>&lt;love</b> or dead&gt;");
 
 	});
-
-}

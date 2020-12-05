@@ -1,7 +1,5 @@
 
-module vdb.helpers {
-	
-	export class DateTimeHelper {
+	export default class DateTimeHelper {
 		
 		private static addLeadingZero(val) {
 			return (val < 10 ? "0" + val : val);
@@ -30,5 +28,3 @@ module vdb.helpers {
 		}
 
 	}
-
-}

@@ -1,22 +1,38 @@
+import { AlbumArtistRolesEditViewModel } from '../Artist/ArtistRolesEditViewModel';
+import ArtistEventRoles from '../../Models/Events/ArtistEventRoles';
+import ArtistForEventContract from '../../DataContracts/ReleaseEvents/ArtistForEventContract';
+import ArtistForEventEditViewModel from '../ReleaseEvent/ArtistForEventEditViewModel';
+import ArtistRepository from '../../Repositories/ArtistRepository';
+import ArtistRolesEditViewModel from '../Artist/ArtistRolesEditViewModel';
+import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
+import DeleteEntryViewModel from '../DeleteEntryViewModel';
+import EntryType from '../../Models/EntryType';
+import EntryUrlMapper from '../../Shared/EntryUrlMapper';
+import IEntryWithIdAndName from '../../Models/IEntryWithIdAndName';
+import NamesEditViewModel from '../Globalization/NamesEditViewModel';
+import PVListEditViewModel from '../PVs/PVListEditViewModel';
+import PVRepository from '../../Repositories/PVRepository';
+import ReleaseEventContract from '../../DataContracts/ReleaseEvents/ReleaseEventContract';
+import ReleaseEventRepository from '../../Repositories/ReleaseEventRepository';
+import SongListBaseContract from '../../DataContracts/SongListBaseContract';
+import UrlMapper from '../../Shared/UrlMapper';
+import UserRepository from '../../Repositories/UserRepository';
+import VenueForApiContract from '../../DataContracts/Venue/VenueForApiContract';
+import WebLinksEditViewModel from '../WebLinksEditViewModel';
 
-module vdb.viewModels.releaseEvents {
-
-	import dc = vdb.dataContracts;
-	import rep = repositories;
-
-	export class ReleaseEventEditViewModel {
+	export default class ReleaseEventEditViewModel {
 
 		constructor(
-			private readonly repo: rep.ReleaseEventRepository,
-			userRepository: rep.UserRepository,
-			pvRepository: rep.PVRepository,
-			private readonly artistRepository: rep.ArtistRepository,
-			private readonly urlMapper: vdb.UrlMapper,
+			private readonly repo: ReleaseEventRepository,
+			userRepository: UserRepository,
+			pvRepository: PVRepository,
+			private readonly artistRepository: ArtistRepository,
+			private readonly urlMapper: UrlMapper,
 			private readonly artistRoleNames: { [key: string]: string; },
-			contract: dc.ReleaseEventContract) {
+			contract: ReleaseEventContract) {
 
-			this.artistRolesEditViewModel = new artists.AlbumArtistRolesEditViewModel(artistRoleNames);
-			this.artistLinks = ko.observableArray(_.map(contract.artists, artist => new events.ArtistForEventEditViewModel(artist)));
+			this.artistRolesEditViewModel = new AlbumArtistRolesEditViewModel(artistRoleNames);
+			this.artistLinks = ko.observableArray(_.map(contract.artists, artist => new ArtistForEventEditViewModel(artist)));
 			this.id = contract.id;
 			this.date = ko.observable(contract.date ? moment(contract.date).toDate() : null);
 			this.dateStr = ko.computed(() => (this.date() ? this.date().toISOString() : null));
@@ -24,8 +40,8 @@ module vdb.viewModels.releaseEvents {
 			this.endDateStr = ko.computed(() => (this.endDate() ? this.endDate().toISOString() : null));
 
 			this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
-			this.names = globalization.NamesEditViewModel.fromContracts(contract.names);
-			this.pvs = new pvs.PVListEditViewModel(pvRepository, urlMapper, contract.pvs, false, true, false);
+			this.names = NamesEditViewModel.fromContracts(contract.names);
+			this.pvs = new PVListEditViewModel(pvRepository, urlMapper, contract.pvs, false, true, false);
 			this.series = new BasicEntryLinkViewModel(contract.series, null);
 			this.isSeriesEvent = ko.observable(!this.series.isEmpty());
 
@@ -46,7 +62,7 @@ module vdb.viewModels.releaseEvents {
 			this.artistLinkContracts = ko.computed(() => ko.toJS(this.artistLinks()));
 
 			if (contract.id) {
-				window.setInterval(() => userRepository.refreshEntryEdit(models.EntryType.ReleaseEvent, contract.id), 10000);				
+				window.setInterval(() => userRepository.refreshEntryEdit(EntryType.ReleaseEvent, contract.id), 10000);				
 			}
 
 		}
@@ -57,37 +73,37 @@ module vdb.viewModels.releaseEvents {
 
 				this.artistRepository.getOne(artistId, artist => {
 
-					const data: dc.events.ArtistForEventContract = {
+					const data: ArtistForEventContract = {
 						artist: artist,
 						name: artist.name,
 						id: 0,
 						roles: 'Default'
 					};
 
-					const link = new events.ArtistForEventEditViewModel(data);
+					const link = new ArtistForEventEditViewModel(data);
 					this.artistLinks.push(link);
 
 				});
 
 			} else {
 
-				const data: dc.events.ArtistForEventContract = {
+				const data: ArtistForEventContract = {
 					artist: null,
 					name: customArtistName,
 					id: 0,
 					roles: 'Default'
 				};
 
-				const link = new events.ArtistForEventEditViewModel(data);
+				const link = new ArtistForEventEditViewModel(data);
 				this.artistLinks.push(link);
 
 			}
 
 		};
 
-		public artistLinks: KnockoutObservableArray<events.ArtistForEventEditViewModel>;
+		public artistLinks: KnockoutObservableArray<ArtistForEventEditViewModel>;
 
-		public artistLinkContracts: KnockoutComputed<dc.events.ArtistForEventContract[]>;
+		public artistLinkContracts: KnockoutComputed<ArtistForEventContract[]>;
 
 		public artistRolesEditViewModel: EventArtistRolesEditViewModel;
 
@@ -112,7 +128,7 @@ module vdb.viewModels.releaseEvents {
 
 		public description = ko.observable<string>();
 
-		public editArtistRoles = (artist: events.ArtistForEventEditViewModel) => {
+		public editArtistRoles = (artist: ArtistForEventEditViewModel) => {
 			this.artistRolesEditViewModel.show(artist);
 		}
 
@@ -126,24 +142,24 @@ module vdb.viewModels.releaseEvents {
 
 		public isSeriesEventStr: KnockoutComputed<string>;
 
-		public names: globalization.NamesEditViewModel;
-		public pvs: pvs.PVListEditViewModel;
+		public names: NamesEditViewModel;
+		public pvs: PVListEditViewModel;
 
 		private redirectToDetails = () => {
-			window.location.href = this.urlMapper.mapRelative(utils.EntryUrlMapper.details(models.EntryType.ReleaseEvent, this.id));
+			window.location.href = this.urlMapper.mapRelative(EntryUrlMapper.details(EntryType.ReleaseEvent, this.id));
 		}
 
 		private redirectToRoot = () => {
 			window.location.href = this.urlMapper.mapRelative("Event");
 		}
 
-		public removeArtist = (artist: events.ArtistForEventEditViewModel) => {
+		public removeArtist = (artist: ArtistForEventEditViewModel) => {
 			this.artistLinks.remove(artist);
 		};
 
-		public series: BasicEntryLinkViewModel<models.IEntryWithIdAndName>;
+		public series: BasicEntryLinkViewModel<IEntryWithIdAndName>;
 
-		public songList: BasicEntryLinkViewModel<dc.SongListBaseContract>;
+		public songList: BasicEntryLinkViewModel<SongListBaseContract>;
 
 		public submit = () => {
 			this.submitting(true);
@@ -160,18 +176,16 @@ module vdb.viewModels.releaseEvents {
 			this.repo.delete(this.id, notes, true, this.redirectToRoot);
 		});
 
-		public venue: BasicEntryLinkViewModel<dc.VenueForApiContract>;
+		public venue: BasicEntryLinkViewModel<VenueForApiContract>;
 
         public webLinks: WebLinksEditViewModel;
 
 	}
 
-	export class EventArtistRolesEditViewModel extends artists.ArtistRolesEditViewModel {
+	export class EventArtistRolesEditViewModel extends ArtistRolesEditViewModel {
 
 		constructor(roleNames: { [key: string]: string; }) {
-			super(roleNames, models.events.ArtistEventRoles[models.events.ArtistEventRoles.Default]);
+			super(roleNames, ArtistEventRoles[ArtistEventRoles.Default]);
 		}
 
 	}
-
-}

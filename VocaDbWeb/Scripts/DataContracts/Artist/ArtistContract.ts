@@ -1,12 +1,9 @@
+import CommonEntryContract from '../CommonEntryContract';
 
-module vdb.dataContracts {
-
-    export interface ArtistContract extends CommonEntryContract {
+    export default interface ArtistContract extends CommonEntryContract {
 
         additionalNames?: string;
 
         artistType?: string;
 
     }
-
-}

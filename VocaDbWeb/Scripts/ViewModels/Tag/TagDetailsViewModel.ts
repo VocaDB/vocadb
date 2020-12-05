@@ -1,15 +1,18 @@
-﻿
-module vdb.viewModels.tags {
-	
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
+import CommentContract from '../../DataContracts/CommentContract';
+import EditableCommentsViewModel from '../EditableCommentsViewModel';
+import EnglishTranslatedStringViewModel from '../Globalization/EnglishTranslatedStringViewModel';
+import { IEntryReportType } from '../ReportEntryViewModel';
+import ReportEntryViewModel from '../ReportEntryViewModel';
+import TagRepository from '../../Repositories/TagRepository';
+import ui from '../../Shared/MessagesTyped';
+import UserRepository from '../../Repositories/UserRepository';
 
-	export class TagDetailsViewModel {
+	export default class TagDetailsViewModel {
 		
 		constructor(
-			repo: rep.TagRepository,
-			private userRepo: rep.UserRepository,
-			latestComments: dc.CommentContract[],
+			repo: TagRepository,
+			private userRepo: UserRepository,
+			latestComments: CommentContract[],
 			reportTypes: IEntryReportType[],
 			loggedUserId: number,
 			private tagId: number,
@@ -23,11 +26,11 @@ module vdb.viewModels.tags {
 
 				repo.createReport(tagId, reportType, notes, null);
 
-				vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+				ui.showSuccessMessage(vdb.resources.shared.reportSent);
 
 			});
 
-			this.description = new globalization.EnglishTranslatedStringViewModel(showTranslatedDescription);
+			this.description = new EnglishTranslatedStringViewModel(showTranslatedDescription);
 			this.isFollowed = ko.observable(isFollowed);
 			this.isLoggedIn = !!loggedUserId;
 
@@ -53,8 +56,6 @@ module vdb.viewModels.tags {
 
 		public reportViewModel: ReportEntryViewModel;
 
-		public description: globalization.EnglishTranslatedStringViewModel;
+		public description: EnglishTranslatedStringViewModel;
 
 	}
-
-}

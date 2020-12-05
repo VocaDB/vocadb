@@ -1,7 +1,5 @@
-﻿
-module vdb.viewModels.pvs {
-
-	import cls = vdb.models;
+import { IPVPlayer } from './PVPlayerViewModel';
+import PVService from '../../Models/PVs/PVService';
 
 	/*
 		Note: I'm not terrible happy about the implementation for now.
@@ -9,7 +7,7 @@ module vdb.viewModels.pvs {
 		The current PV is saved into variable "loadedPv" when the original player is loaded.
 	*/
 
-	export class PVPlayerNico implements IPVPlayer {
+	export default class PVPlayerNico implements IPVPlayer {
 
 		private static scriptLoaded: boolean = false;
 		private static playerFactory: nico.NicoPlayerFactory = null;
@@ -107,14 +105,14 @@ module vdb.viewModels.pvs {
 
 		}
 
-		public service = cls.pvs.PVService.NicoNicoDouga;
+		public service = PVService.NicoNicoDouga;
 
 	}
 
-}
-
-interface Window {
-	onNicoPlayerFactoryReady: (callback: nico.NicoPlayerFactory) => void;
+declare global {
+	interface Window {
+		onNicoPlayerFactoryReady: (callback: nico.NicoPlayerFactory) => void;
+	}
 }
 
 declare namespace nico {

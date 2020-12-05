@@ -1,20 +1,21 @@
+import DateTimeHelper from '../../Helpers/DateTimeHelper';
+import PVContract from '../../DataContracts/PVs/PVContract';
+import PVEditViewModel from './PVEditViewModel';
+import PVRepository from '../../Repositories/PVRepository';
+import PVServiceIcons from '../../Models/PVServiceIcons';
+import UrlMapper from '../../Shared/UrlMapper';
 
-module vdb.viewModels.pvs {
-
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
-	
-	export class PVListEditViewModel {
+	export default class PVListEditViewModel {
 
 		constructor(
-			private readonly  repo: rep.PVRepository,
+			private readonly  repo: PVRepository,
 			public urlMapper: UrlMapper, // Used from the view to map to PV listing
-			pvs: dc.pvs.PVContract[],
+			pvs: PVContract[],
 			public canBulkDeletePVs: boolean,
 			public showPublishDates: boolean,
 			public allowDisabled: boolean) {
 
-			this.pvServiceIcons = new vdb.models.PVServiceIcons(urlMapper);
+			this.pvServiceIcons = new PVServiceIcons(urlMapper);
 			this.pvs = ko.observableArray(_.map(pvs, pv => new PVEditViewModel(pv)));
 
 		}
@@ -46,7 +47,7 @@ module vdb.viewModels.pvs {
 		}
 
 		public formatLength = (seconds: number) => {
-			return vdb.helpers.DateTimeHelper.formatFromSeconds(seconds);
+			return DateTimeHelper.formatFromSeconds(seconds);
 		}
 
 		public getPvServiceIcon = (service: string) => {
@@ -56,7 +57,7 @@ module vdb.viewModels.pvs {
 		public isPossibleInstrumental = ko.observable(false);
 
 		// Attempts to identify whether the PV could be instrumental
-		private isPossibleInstrumentalPv = (pv: dc.pvs.PVContract) => {
+		private isPossibleInstrumentalPv = (pv: PVContract) => {
 
 			return (pv && pv.name && (
 				pv.name.toLowerCase().indexOf("inst.") >= 0
@@ -73,13 +74,13 @@ module vdb.viewModels.pvs {
 
 		public pvs: KnockoutObservableArray<PVEditViewModel>;
 
-		public pvServiceIcons: vdb.models.PVServiceIcons;
+		public pvServiceIcons: PVServiceIcons;
 
 		public remove = (pv: PVEditViewModel) => {
 			this.pvs.remove(pv);
 		}
 
-		public toContracts: () => dc.pvs.PVContract[] = () => {
+		public toContracts: () => PVContract[] = () => {
 			return ko.toJS(this.pvs());
 		}
 
@@ -107,5 +108,3 @@ module vdb.viewModels.pvs {
 		}
 
 	}
-
-}

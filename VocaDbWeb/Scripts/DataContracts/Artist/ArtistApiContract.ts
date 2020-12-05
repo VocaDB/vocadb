@@ -1,7 +1,8 @@
-﻿
-module vdb.dataContracts {
+import CommonEntryContract from '../CommonEntryContract';
+import EntryThumbContract from '../EntryThumbContract';
+import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
 
-	export interface ArtistApiContract extends CommonEntryContract, EntryWithTagUsagesContract {
+	export default interface ArtistApiContract extends CommonEntryContract, EntryWithTagUsagesContract {
 
 		additionalNames: string;
 
@@ -10,5 +11,3 @@ module vdb.dataContracts {
 		mainPicture: EntryThumbContract;
 
 	}
-
-} 

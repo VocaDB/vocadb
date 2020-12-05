@@ -1,4 +1,6 @@
-﻿module vdb {
+import EntryWithTagUsagesContract from '../DataContracts/Base/EntryWithTagUsagesContract';
+import HtmlHelper from '../Helpers/HtmlHelper';
+import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
 
 	export interface EntryAutoCompleteParams<TContract> {
 
@@ -48,7 +50,7 @@
 
 	}
 
-	export function initEntrySearch<TContract extends vdb.dataContracts.EntryWithTagUsagesContract>(nameBoxElem: HTMLElement, searchUrl: string, params: EntryAutoCompleteParams<TContract>) {
+	export function initEntrySearch<TContract extends EntryWithTagUsagesContract>(nameBoxElem: HTMLElement, searchUrl: string, params: EntryAutoCompleteParams<TContract>) {
 
 		if (!params)
 			throw Error("params cannot be null");
@@ -64,7 +66,7 @@
 		var method = 'GET';
 
 		function bold(text: string, term: string) {
-			return vdb.helpers.HtmlHelper.boldAndHtmlEncode(text, term);
+			return HtmlHelper.boldAndHtmlEncode(text, term);
 		}
 
 		function createHtml(item: AutoCompleteItem<TContract>) {
@@ -84,9 +86,9 @@
 				var secondRow = createOptionSecondRow(data);
 				if (firstRow) {
 					if (params.singleRow) {
-						html = "<a><div>" + bold(firstRow, term) + " <small class='extraInfo'>" + vdb.helpers.HtmlHelper.htmlEncode(secondRow) + "</small></div></a>";																	
+						html = "<a><div>" + bold(firstRow, term) + " <small class='extraInfo'>" + HtmlHelper.htmlEncode(secondRow) + "</small></div></a>";																	
 					} else {
-						html = "<a><div>" + bold(firstRow, term) + "</div><div><small class='extraInfo'>" + vdb.helpers.HtmlHelper.htmlEncode(secondRow) + "</small></div></a>";											
+						html = "<a><div>" + bold(firstRow, term) + "</div><div><small class='extraInfo'>" + HtmlHelper.htmlEncode(secondRow) + "</small></div></a>";											
 					}
 				}
 			} else if (createOptionFirstRow) {
@@ -110,7 +112,7 @@
 			if (extraQueryParams != null)
 				jQuery.extend(queryParams, extraQueryParams);
 
-			$.ajax({ type: method, url: searchUrl, data: queryParams, success: (result: vdb.dataContracts.PartialFindResultContract<TContract>) => {
+			$.ajax({ type: method, url: searchUrl, data: queryParams, success: (result: PartialFindResultContract<TContract>) => {
 
 				var filtered = (!filter ? result.items : _.filter(result.items, filter));
 
@@ -157,5 +159,3 @@
 		}
 
 	}
-
-}

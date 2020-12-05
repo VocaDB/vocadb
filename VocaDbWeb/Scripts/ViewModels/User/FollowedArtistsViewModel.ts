@@ -1,17 +1,18 @@
+import RatedSongForUserForApiContract from '../../DataContracts/User/RatedSongForUserForApiContract';
+import ResourceRepository from '../../Repositories/ResourceRepository';
+import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
+import TagFilters from '../Search/TagFilters'
+import TagRepository from '../../Repositories/TagRepository';
+import UserRepository from '../../Repositories/UserRepository';
 
-module vdb.viewModels.user {
+	export default class FollowedArtistsViewModel {
 
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
-
-	export class FollowedArtistsViewModel {
-
-		constructor(private userRepo: rep.UserRepository,
-			private resourceRepo: rep.ResourceRepository,
-			tagRepo: rep.TagRepository,
+		constructor(private userRepo: UserRepository,
+			private resourceRepo: ResourceRepository,
+			tagRepo: TagRepository,
 			private languageSelection: string, private loggedUserId: number, private cultureCode: string) {
 
-			this.tagFilters = new viewModels.search.TagFilters(tagRepo, languageSelection);
+			this.tagFilters = new TagFilters(tagRepo, languageSelection);
 
 			this.paging.page.subscribe(this.updateResultsWithoutTotalCount);
 			this.paging.pageSize.subscribe(this.updateResultsWithTotalCount);
@@ -36,11 +37,11 @@ module vdb.viewModels.user {
 		public artistType = ko.observable("Unknown");
 		public isInit = false;
 		public loading = ko.observable(true); // Currently loading for data
-		public page = ko.observableArray<dc.RatedSongForUserForApiContract>([]); // Current page of items
+		public page = ko.observableArray<RatedSongForUserForApiContract>([]); // Current page of items
 		public paging = new ServerSidePagingViewModel(20); // Paging view model
 		public pauseNotifications = false;
 		public resources = ko.observable<any>();
-		public tagFilters: viewModels.search.TagFilters;
+		public tagFilters: TagFilters;
 
 		public updateResultsWithTotalCount = () => this.updateResults(true);
 		public updateResultsWithoutTotalCount = () => this.updateResults(false);
@@ -77,5 +78,3 @@ module vdb.viewModels.user {
 		}
 
 	}
-
-}

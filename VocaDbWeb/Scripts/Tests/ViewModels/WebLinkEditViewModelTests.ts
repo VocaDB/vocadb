@@ -1,10 +1,4 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/WebLinkCategory.ts" />
-/// <reference path="../../ViewModels/WebLinkEditViewModel.ts" />
-
-module vdb.tests.viewModels {
-
-    import vm = vdb.viewModels;
+import WebLinkEditViewModel from '../../ViewModels/WebLinkEditViewModel';
 
     var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
 
@@ -12,7 +6,7 @@ module vdb.tests.viewModels {
 
     test("constructor", () => {
 
-        var target = new vm.WebLinkEditViewModel(webLinkData);
+        var target = new WebLinkEditViewModel(webLinkData);
 
         equal(target.category(), "Official", "category");
         equal(target.description(), "Youtube Channel", "description");
@@ -22,7 +16,7 @@ module vdb.tests.viewModels {
 
     test("editing url sets description", () => {
 
-        var target = new vm.WebLinkEditViewModel(null);
+        var target = new WebLinkEditViewModel(null);
 
         target.url("http://www.nicovideo.jp/mylist/");
 
@@ -30,5 +24,3 @@ module vdb.tests.viewModels {
         equal(target.description(), "NND MyList", "description");
 
     });
-
-}

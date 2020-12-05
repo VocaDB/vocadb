@@ -1,9 +1,7 @@
-/// <reference path="../../DataContracts/NewSongCheckResultContract.ts" />
-/// <reference path="../../Repositories/SongRepository.ts" />
-
-module vdb.tests.testSupport {
-
-	import dc = vdb.dataContracts;
+import NewSongCheckResultContract from '../../DataContracts/NewSongCheckResultContract';
+import SongApiContract from '../../DataContracts/Song/SongApiContract';
+import SongListBaseContract from '../../DataContracts/SongListBaseContract';
+import SongRepository from '../../Repositories/SongRepository';
 
 	export interface SongInList {
 		listId: number;
@@ -11,11 +9,11 @@ module vdb.tests.testSupport {
 		notes: string;
 	}
 
-    export class FakeSongRepository extends vdb.repositories.SongRepository {
+    export default class FakeSongRepository extends SongRepository {
 
-        results: dc.NewSongCheckResultContract = null;
-        song: dc.SongApiContract = null;
-		songLists: dc.SongListBaseContract[] = [];
+        results: NewSongCheckResultContract = null;
+        song: SongApiContract = null;
+		songLists: SongListBaseContract[] = [];
 		songsInLists: SongInList[] = [];
 
         constructor() {
@@ -37,7 +35,7 @@ module vdb.tests.testSupport {
 
             }
 
-            this.findDuplicate = (params, callback: (result: dc.NewSongCheckResultContract) => void) => {
+            this.findDuplicate = (params, callback: (result: NewSongCheckResultContract) => void) => {
                 if (callback)
                     callback(this.results);
             };
@@ -60,5 +58,3 @@ module vdb.tests.testSupport {
         }
 
     }
-
-}

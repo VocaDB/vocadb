@@ -15,6 +15,7 @@ using VocaDb.Model.Service.Security;
 using VocaDb.Web.App_Start;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Filters;
+using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Web
 {
@@ -31,7 +32,7 @@ namespace VocaDb.Web
 			return (request["X-Requested-With"] == "XMLHttpRequest" || request.Headers["X-Requested-With"] == "XMLHttpRequest");
 		}
 
-		public static LoginManager LoginManager => new LoginManager();
+		public static LoginManager LoginManager => new LoginManager(new AspNetHttpContext(HttpContext.Current));
 
 		protected void Application_AuthenticateRequest(object sender, EventArgs e)
 		{
@@ -151,6 +152,8 @@ namespace VocaDb.Web
 			RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+			GlobalServerPathMapper.Configure(() => new AspNetHttpContext(HttpContext.Current));
 
 			log.Debug("Web application started successfully.");
 		}

@@ -1,7 +1,5 @@
 
-module vdb.helpers {
-	
-	export class HtmlHelper {
+	export default class HtmlHelper {
 		
 		// Bolds and HTML encodes a term
 		public static boldAndHtmlEncode(text: string, term: string) {
@@ -35,5 +33,3 @@ module vdb.helpers {
 		}
 
 	}
-
-}

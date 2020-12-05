@@ -1,10 +1,9 @@
-﻿
-module vdb.viewModels {
-	
+import IEntryWithIdAndName from '../Models/IEntryWithIdAndName';
+
 	// Basic link to an entry with ID and name.
 	// Allows changing the link by setting the ID.
 	// Works well with LockingAutoComplete.
-	export class BasicEntryLinkViewModel<TEntry extends vdb.models.IEntryWithIdAndName> {
+	export default class BasicEntryLinkViewModel<TEntry extends IEntryWithIdAndName> {
 		
 		// entry: current entry reference (can be null). Zero-like ID will be considered the same as null.
 		// entryFunc: function for loading the entry asynchronously by Id.
@@ -45,5 +44,3 @@ module vdb.viewModels {
 		public subscribe = (callback: (newValue: number) => void) => this.id.subscribe(callback);
 
 	}
-
-}

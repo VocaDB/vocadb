@@ -1,14 +1,15 @@
+import ResourceRepository from '../../Repositories/ResourceRepository';
+import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
+import SongListContract from '../../DataContracts/Song/SongListContract';
+import SongListRepository from '../../Repositories/SongListRepository';
+import SongListsBaseViewModel from './SongListsBaseViewModel';
+import TagRepository from '../../Repositories/TagRepository';
 
-module vdb.viewModels.songList {
-	
-	import dc = vdb.dataContracts;
-	import rep = vdb.repositories;
+	export default class FeaturedSongListsViewModel {
 
-	export class FeaturedSongListsViewModel {
-
-		constructor(listRepo: rep.SongListRepository,
-			resourceRepo: rep.ResourceRepository,
-			tagRepo: rep.TagRepository,
+		constructor(listRepo: SongListRepository,
+			resourceRepo: ResourceRepository,
+			tagRepo: TagRepository,
 			languageSelection: string,
 			cultureCode: string,
 			tagIds: number[],
@@ -44,9 +45,9 @@ module vdb.viewModels.songList {
 
 	export class FeaturedSongListCategoryViewModel extends SongListsBaseViewModel {
 
-		constructor(private listRepo: rep.SongListRepository,
-			resourceRepo: rep.ResourceRepository,
-			tagRepo: rep.TagRepository,
+		constructor(private listRepo: SongListRepository,
+			resourceRepo: ResourceRepository,
+			tagRepo: TagRepository,
 			languageSelection: string,
 			cultureCode: string,
 			tagIds: number[],
@@ -57,7 +58,7 @@ module vdb.viewModels.songList {
 
 		}
 		
-		public loadMoreItems = (callback: (result: dc.PartialFindResultContract<dc.SongListContract>) => void) => {
+		public loadMoreItems = (callback: (result: PartialFindResultContract<SongListContract>) => void) => {
 			this.listRepo.getFeatured(
 				this.query(),
 				this.category,
@@ -69,5 +70,3 @@ module vdb.viewModels.songList {
 		};
 
 	}
-
-}

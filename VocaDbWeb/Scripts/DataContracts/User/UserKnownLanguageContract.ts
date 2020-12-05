@@ -1,11 +1,7 @@
-﻿
-namespace vdb.dataContracts {
 
-	export interface UserKnownLanguageContract {
+	export default interface UserKnownLanguageContract {
 
 		cultureCode: string;
 		proficiency: string;
 
 	}
-
-}

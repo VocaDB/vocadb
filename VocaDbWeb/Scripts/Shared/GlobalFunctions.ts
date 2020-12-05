@@ -1,8 +1,7 @@
-/// <reference path="GlobalValues.ts" />
 
-module vdb.functions {
+export default class functions {
 
-	export function getId(elem: HTMLElement) {
+	public static getId(elem: HTMLElement) {
 		if ($(elem) == null || $(elem).attr('id') == null)
 			return null;
 
@@ -10,7 +9,7 @@ module vdb.functions {
 		return (parts.length >= 2 ? parts[1] : null);		
 	}
 
-    export function isNullOrWhiteSpace(str: string) {
+	public static isNullOrWhiteSpace(str: string) {
 
         if (str == null || str.length == 0)
             return true;
@@ -19,13 +18,13 @@ module vdb.functions {
 
     }
 
-    export function mapAbsoluteUrl(relative: string) {
+	public static mapAbsoluteUrl(relative: string) {
 
-        return mergeUrls(vdb.values.baseAddress, relative);
+        return functions.mergeUrls(vdb.values.baseAddress, relative);
 
     };
 
-    export function mergeUrls(base: string, relative: string) {
+    public static mergeUrls(base: string, relative: string) {
         
         if (base.charAt(base.length - 1) == "/" && relative.charAt(0) == "/")
             return base + relative.substr(1);
@@ -40,13 +39,13 @@ module vdb.functions {
 
 	}
 
-	export function getUrlDomain(url: string) {
+	public static getUrlDomain(url: string) {
 		// http://stackoverflow.com/a/8498629
 		const matches = url ? url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i) : null;
 		return matches && matches[1];  // domain will be null if no match is found		
 	}
 
-	export function trackOutboundLink(event: MouseEvent) {
+	public static trackOutboundLink(event: MouseEvent) {
 
 		// Skip tracking if ga not present, sendBeacon is not supported, or mouse button is right-click
 		const mright = 2;
@@ -58,7 +57,7 @@ module vdb.functions {
 		if (!href)
 			return;
 
-		const domain = getUrlDomain(href);
+		const domain = functions.getUrlDomain(href);
 
 		// Beacon transport doesn't require waiting for response
 		// https://developers.google.com/analytics/devguides/collection/analyticsjs/sending-hits#specifying_different_transport_mechanisms
@@ -71,7 +70,9 @@ module vdb.functions {
 
 }
 
-interface Navigator {
-	// sendBeacon is not available in older TS versions
-	sendBeacon(url: any, data?: any): boolean;
+declare global {
+	interface Navigator {
+		// sendBeacon is not available in older TS versions
+		sendBeacon(url: any, data?: any): boolean;
+	}
 }

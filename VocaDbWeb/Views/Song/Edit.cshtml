@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.Globalization
+﻿@using VocaDb.Model.Domain.Globalization
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Service.VideoServices
 @using VocaDb.Model.Utils
@@ -123,7 +122,7 @@
 					<table data-bind="foreach: originalVersionSuggestions">
 						<tr>
 							<td>
-								<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details_song($data) }, songToolTip: id" href="#" target="_blank"></a>
+								<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details_song($data) }, songToolTip: id" href="#" target="_blank"></a>
 								(<span data-bind="text: songType"></span>)
 								<div data-bind="if: $data.artistString">
 									<span data-bind="text: artistString"></span>
@@ -344,7 +343,7 @@
 @Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/shared/edit", "~/bundles/Song/Edit")
+@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Song/Edit.js")
 
 <script type="text/javascript">
 
@@ -364,8 +363,8 @@
 		var editedModel = @Html.Raw(JsonHelpers.Serialize(Model.EditedSong));
 		var canBulkDeletePVs = @ToJS(Login.Manager.HasPermission(VocaDb.Model.Domain.Security.PermissionToken.BulkDeletePVs));
 		var rootPath = '@RootPath';
-		var urlMapper = new vdb.UrlMapper(rootPath);
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var urlMapper = new app.UrlMapper(rootPath);
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var songRepo = repoFactory.songRepository();
 		var artistRepo = repoFactory.artistRepository();
 		var pvRepo = repoFactory.pvRepository();
@@ -377,18 +376,18 @@
 		var vm;
 
 		if (editedModel) {
-			vm = new vdb.viewModels.SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, urlMapper, artistRoleJson, webLinkCategoryJson, 
-				editedModel, canBulkDeletePVs, new vdb.ui_dialog.DialogService(), instrumentalTagId, languageNames);
+			vm = new app.SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, urlMapper, artistRoleJson, webLinkCategoryJson, 
+				editedModel, canBulkDeletePVs, new app.DialogService(), instrumentalTagId, languageNames);
 			ko.applyBindings(vm);
 		} else {
 			songRepo.getForEdit(@Model.Id, function (model) {
-				vm = new vdb.viewModels.SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, urlMapper, artistRoleJson, 
-					webLinkCategoryJson, model, canBulkDeletePVs, new vdb.ui_dialog.DialogService(), instrumentalTagId, languageNames);
+				vm = new app.SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, urlMapper, artistRoleJson, 
+					webLinkCategoryJson, model, canBulkDeletePVs, new app.DialogService(), instrumentalTagId, languageNames);
 				ko.applyBindings(vm);
 			});
 		}
 
-		initPage();
+		app.initSongEditPage();
 
 	});
 

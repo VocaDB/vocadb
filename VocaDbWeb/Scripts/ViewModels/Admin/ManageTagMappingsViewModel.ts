@@ -1,13 +1,16 @@
+import BasicEntryLinkViewModel from '../BasicEntryLinkViewModel';
+import EntryUrlMapper from '../../Shared/EntryUrlMapper';
+import functions from '../../Shared/GlobalFunctions';
+import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
+import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
+import TagMappingContract from '../../DataContracts/Tag/TagMappingContract';
+import TagRepository from '../../Repositories/TagRepository';
+import ui from '../../Shared/MessagesTyped';
 
-namespace vdb.viewModels.admin {
-
-	import dc = dataContracts;
-	import vm = viewModels;
-
-	export class ManageTagMappingsViewModel {
+	export default class ManageTagMappingsViewModel {
 
 		constructor(
-			private readonly tagRepo: vdb.repositories.TagRepository) {
+			private readonly tagRepo: TagRepository) {
 			this.filter.subscribe(() => {
 				this.paging.totalItems(this.filteredMappings().length);
 				this.paging.goToFirstPage();
@@ -42,7 +45,7 @@ namespace vdb.viewModels.admin {
 		}
 
 		public getTagUrl = (tag: EditTagMappingViewModel) => {
-			return vdb.functions.mapAbsoluteUrl(utils.EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
+			return functions.mapAbsoluteUrl(EntryUrlMapper.details_tag(tag.tag.id, tag.tag.urlSlug));
 		}
 
 		private loadMappings = async () => {
@@ -63,12 +66,12 @@ namespace vdb.viewModels.admin {
 			return _.filter(this.mappings(), mapping => _.includes(mapping.sourceTag.toLowerCase(), filter) || _.includes(mapping.tag.name.toLowerCase(), filter));
 		});
 
-		public paging = new vm.ServerSidePagingViewModel(50);
+		public paging = new ServerSidePagingViewModel(50);
 
 		public activeMappings = ko.computed(() => _.filter(this.mappings(), m => !m.isDeleted()));
 
 		public newSourceName = ko.observable("");
-		public newTargetTag = new BasicEntryLinkViewModel<dc.TagBaseContract>();
+		public newTargetTag = new BasicEntryLinkViewModel<TagBaseContract>();
 
 		public save = async () => {
 
@@ -89,7 +92,7 @@ namespace vdb.viewModels.admin {
 
 	export class EditTagMappingViewModel {
 
-		constructor(mapping: dc.tags.TagMappingContract, isNew: boolean = false) {
+		constructor(mapping: TagMappingContract, isNew: boolean = false) {
 			this.sourceTag = mapping.sourceTag;
 			this.tag = mapping.tag;
 			this.isNew = isNew;
@@ -98,10 +101,8 @@ namespace vdb.viewModels.admin {
 		isDeleted = ko.observable(false);
 		isNew: boolean;
 		sourceTag: string;
-		tag: dc.TagBaseContract;
+		tag: TagBaseContract;
 
 		public deleteMapping = () => this.isDeleted(true);
 
 	}
-
-}

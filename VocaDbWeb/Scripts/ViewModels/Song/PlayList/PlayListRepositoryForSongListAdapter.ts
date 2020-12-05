@@ -1,12 +1,16 @@
-﻿
-module vdb.viewModels.songs {
-	
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
+import AdvancedSearchFilter from '../../Search/AdvancedSearchFilter';
+import ContentLanguagePreference from '../../../Models/Globalization/ContentLanguagePreference';
+import { IPlayListRepository } from './PlayListViewModel';
+import { ISongForPlayList } from './PlayListViewModel';
+import PagingProperties from '../../../DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '../../../DataContracts/PartialFindResultContract';
+import SongListRepository from '../../../Repositories/SongListRepository';
+import { SongOptionalFields } from '../../../Models/EntryOptionalFields';
+import SongType from '../../../Models/Songs/SongType';
 
-	export class PlayListRepositoryForSongListAdapter implements IPlayListRepository {
+	export default class PlayListRepositoryForSongListAdapter implements IPlayListRepository {
 
-		constructor(private songListRepo: rep.SongListRepository,
+		constructor(private songListRepo: SongListRepository,
 			private songListId: number,
 			private query: KnockoutObservable<string>,
 			private songType: KnockoutObservable<string>,
@@ -15,18 +19,18 @@ module vdb.viewModels.songs {
 			private artistIds: KnockoutComputed<number[]>,
 			private artistParticipationStatus: KnockoutObservable<string>,
 			private childVoicebanks: KnockoutObservable<boolean>,
-			private advancedFilters: KnockoutObservableArray<search.AdvancedSearchFilter>,
+			private advancedFilters: KnockoutObservableArray<AdvancedSearchFilter>,
 			private sort: KnockoutObservable<string>) { }
 
 		public getSongs = (
 			pvServices: string,
-			paging: dc.PagingProperties,
-			fields: cls.SongOptionalFields,
-			lang: cls.globalization.ContentLanguagePreference,
-			callback: (result: dc.PartialFindResultContract<ISongForPlayList>) => void) => {
+			paging: PagingProperties,
+			fields: SongOptionalFields,
+			lang: ContentLanguagePreference,
+			callback: (result: PartialFindResultContract<ISongForPlayList>) => void) => {
 
 			this.songListRepo.getSongs(this.songListId, this.query(),
-				this.songType() !== cls.songs.SongType[cls.songs.SongType.Unspecified] ? this.songType() : null,
+				this.songType() !== SongType[SongType.Unspecified] ? this.songType() : null,
 				this.tagIds(), this.childTags(), this.artistIds(), this.artistParticipationStatus(), this.childVoicebanks(),
 				this.advancedFilters(),
 				pvServices, paging, fields, this.sort(), lang, result => {
@@ -46,5 +50,3 @@ module vdb.viewModels.songs {
 		}
 
 	}
-
-}

@@ -1,13 +1,13 @@
-using System.Web;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
+using VocaDb.Model.Domain.Web;
 
 namespace VocaDb.Model.Domain.Security
 {
 	public class UserSettingCulture : UserSetting<string>
 	{
-		public UserSettingCulture(HttpContext context, IUserPermissionContext permissionContext) : base(context, permissionContext)
+		public UserSettingCulture(IHttpContext context, IUserPermissionContext permissionContext) : base(context, permissionContext)
 		{
 		}
 
@@ -34,7 +34,7 @@ namespace VocaDb.Model.Domain.Security
 
 	public class UserSettingLanguage : UserSetting<string>
 	{
-		public UserSettingLanguage(HttpContext context, IUserPermissionContext permissionContext) : base(context, permissionContext)
+		public UserSettingLanguage(IHttpContext context, IUserPermissionContext permissionContext) : base(context, permissionContext)
 		{
 		}
 

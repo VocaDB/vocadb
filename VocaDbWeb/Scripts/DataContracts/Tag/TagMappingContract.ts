@@ -1,11 +1,8 @@
-﻿
-namespace vdb.dataContracts.tags {
+import TagBaseContract from './TagBaseContract';
 
-	export interface TagMappingContract {
+	export default interface TagMappingContract {
 
 		sourceTag: string;
 		tag: TagBaseContract;
 
 	}
-
-}

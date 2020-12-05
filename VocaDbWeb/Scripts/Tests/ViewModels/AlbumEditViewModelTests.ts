@@ -1,39 +1,41 @@
-/// <reference path="../../typings/qunit/qunit.d.ts" />
-/// <reference path="../../Models/WebLinkCategory.ts" />
-/// <reference path="../TestSupport/FakeAlbumRepository.ts" />
-/// <reference path="../TestSupport/FakeSongRepository.ts" />
-/// <reference path="../../ViewModels/Album/AlbumEditViewModel.ts" />
+import AlbumForEditContract from '../../DataContracts/Album/AlbumForEditContract';
+import AlbumEditViewModel from '../../ViewModels/Album/AlbumEditViewModel';
+import ArtistContract from '../../DataContracts/Artist/ArtistContract';
+import FakeAlbumRepository from '../TestSupport/FakeAlbumRepository';
+import FakeArtistRepository from '../TestSupport/FakeArtistRepository';
+import FakeSongRepository from '../TestSupport/FakeSongRepository';
+import FakeUserRepository from '../TestSupport/FakeUserRepository';
+import SongApiContract from '../../DataContracts/Song/SongApiContract';
+import SongInAlbumEditContract from '../../DataContracts/Song/SongInAlbumEditContract';
+import SongInAlbumEditViewModel from '../../ViewModels/SongInAlbumEditViewModel';
+import { TrackPropertiesViewModel } from '../../ViewModels/Album/AlbumEditViewModel';
+import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
+import UrlMapper from '../../Shared/UrlMapper';
 
-module vdb.tests.viewModels {
-
-    import vm = vdb.viewModels;
-    import dc = vdb.dataContracts;
-	import sup = vdb.tests.testSupport;
-
-    var rep = new vdb.tests.testSupport.FakeAlbumRepository();
-	var songRep: vdb.tests.testSupport.FakeSongRepository;
-	var artistRep: vdb.tests.testSupport.FakeArtistRepository;
-	var userRepo = new sup.FakeUserRepository();
+    var rep = new FakeAlbumRepository();
+	var songRep: FakeSongRepository;
+	var artistRep: FakeArtistRepository;
+	var userRepo = new FakeUserRepository();
 	var pvRep = null;
 	var urlMapper = new UrlMapper("");
 
-    var song: dc.SongApiContract;
-    var categories: dc.TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
+    var song: SongApiContract;
+    var categories: TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
 
-    var producer: dc.ArtistContract = { id: 1, name: "Tripshots", additionalNames: "", artistType: "Producer" };
-    var vocalist: dc.ArtistContract = { id: 2, name: "Hatsune Miku", additionalNames: "初音ミク", artistType: "Vocalist" };
-    var label: dc.ArtistContract = { id: 3, name: "KarenT", additionalNames: "", artistType: "Label" };
+    var producer: ArtistContract = { id: 1, name: "Tripshots", additionalNames: "", artistType: "Producer" };
+    var vocalist: ArtistContract = { id: 2, name: "Hatsune Miku", additionalNames: "初音ミク", artistType: "Vocalist" };
+    var label: ArtistContract = { id: 3, name: "KarenT", additionalNames: "", artistType: "Label" };
 
     var producerArtistLink = { artist: producer, id: 39, isSupport: false, name: "", roles: "Default" };
     var vocalistArtistLink = { artist: vocalist, id: 40, isSupport: false, name: "", roles: "Default" };
     var labelArtistLink = { artist: label, id: 41, isSupport: false, name: "", roles: "Default" };
     var customArtistLink = { artist: null, id: 42, isSupport: false, name: "xxJulexx", roles: "Default" };
 
-	var songInAlbum: dc.songs.SongInAlbumEditContract;
-	var customTrack: dc.songs.SongInAlbumEditContract;
+	var songInAlbum: SongInAlbumEditContract;
+	var customTrack: SongInAlbumEditContract;
     var roles: { [key: string]: string; } = { Default: "Default", VoiceManipulator: "Voice manipulator" };
     var webLinkData = { category: "Official", description: "Youtube Channel", id: 123, url: "http://www.youtube.com/user/tripshots" };
-    var data: dc.albums.AlbumForEditContract;
+    var data: AlbumForEditContract;
 	vdb.resources = {
 		album: {}, albumDetails: { download: "" }, albumEdit: { addExtraArtist: "" }, entryEdit: {}, shared: null, song: null
 	};
@@ -41,7 +43,7 @@ module vdb.tests.viewModels {
     QUnit.module("AlbumEditViewModelTests", {
         setup: () => {
 
-            songRep = new vdb.tests.testSupport.FakeSongRepository();
+            songRep = new FakeSongRepository();
 			song = {
 				additionalNames: "", artistString: "Tripshots", artists: [ { id: 0, artist: producer, isSupport: false, name: null, roles: null } ], id: 2, lengthSeconds: 0, name: "Anger", pvServices: "Nothing",
 				ratingScore: 0, songType: 'Original',
@@ -49,7 +51,7 @@ module vdb.tests.viewModels {
 			};
             songRep.song = song;
 
-			artistRep = new vdb.tests.testSupport.FakeArtistRepository();
+			artistRep = new FakeArtistRepository();
 
             songInAlbum = {
                 artists: [producer], artistString: "Tripshots", discNumber: 1, songAdditionalNames: "",
@@ -90,15 +92,15 @@ module vdb.tests.viewModels {
     });
 
     function createViewModel() {
-        return new vm.AlbumEditViewModel(rep, songRep, artistRep, pvRep, userRepo, null, urlMapper, roles, categories, data, true, false, null);
+        return new AlbumEditViewModel(rep, songRep, artistRep, pvRep, userRepo, null, urlMapper, roles, categories, data, true, false, null);
     }
 
     function createTrackPropertiesViewModel() {
-        var songVm = new vm.SongInAlbumEditViewModel(songInAlbum);
-        return new vm.TrackPropertiesViewModel([producer, vocalist], songVm);
+        var songVm = new SongInAlbumEditViewModel(songInAlbum);
+        return new TrackPropertiesViewModel([producer, vocalist], songVm);
     }
 
-    function findArtistSelection(target: vm.TrackPropertiesViewModel, artist: dc.ArtistContract) {
+    function findArtistSelection(target: TrackPropertiesViewModel, artist: ArtistContract) {
         return _.find(target.artistSelections, a => a.artist == artist);
     }
 
@@ -117,8 +119,8 @@ module vdb.tests.viewModels {
         equal(target.tracks()[0].selected(), false, "tracks[0].selected");
 		equal(target.tracks()[0].trackNumber(), 1, "tracks[0].trackNumber");
 
-        equal(target.webLinks.webLinks().length, 1, "webLinks.length");
-        equal(target.webLinks.webLinks()[0].id, 123, "webLinks[0].id");
+        equal(target.webLinks.items().length, 1, "webLinks.length");
+		equal(target.webLinks.items()[0].id, 123, "webLinks[0].id");
 
     });
 
@@ -161,7 +163,7 @@ module vdb.tests.viewModels {
 
 	QUnit.test("addArtist existing", () => {
 
-		var newVocalist: dc.ArtistContract = { id: 4, name: "Kagamine Rin", additionalNames: "", artistType: "Vocaloid" };
+		var newVocalist: ArtistContract = { id: 4, name: "Kagamine Rin", additionalNames: "", artistType: "Vocaloid" };
 		artistRep.result = newVocalist;
 
 		var target = createViewModel();
@@ -429,5 +431,3 @@ module vdb.tests.viewModels {
         equal(vocalistSelection.visible(), false, "vocalistSelection.visible");
 
     });
-
-}

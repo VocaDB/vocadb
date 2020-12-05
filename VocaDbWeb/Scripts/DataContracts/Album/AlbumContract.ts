@@ -1,7 +1,9 @@
-﻿
-module vdb.dataContracts {
+import CommonEntryContract from '../CommonEntryContract';
+import EntryThumbContract from '../EntryThumbContract';
+import EntryWithTagUsagesContract from '../Base/EntryWithTagUsagesContract';
+import OptionalDateTimeContract from '../OptionalDateTimeContract';
 
-	export interface AlbumContract extends CommonEntryContract, EntryWithTagUsagesContract {
+	export default interface AlbumContract extends CommonEntryContract, EntryWithTagUsagesContract {
 
 		additionalNames: string;
 
@@ -18,5 +20,3 @@ module vdb.dataContracts {
 		releaseDate: OptionalDateTimeContract;
 
 	}
-
-} 

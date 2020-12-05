@@ -1,15 +1,10 @@
-/// <reference path="../../typings/knockout/knockout.d.ts" />
-/// <reference path="../../Repositories/SongRepository.ts" />
-/// <reference path="../../Repositories/UserRepository.ts" />
-/// <reference path="../PVRatingButtonsViewModel.ts" />
-
-module vdb.viewModels {
-
-	import cls = vdb.models;
-    import rep = vdb.repositories;
+import PVRatingButtonsViewModel from '../PVRatingButtonsViewModel';
+import PVService from '../../Models/PVs/PVService';
+import SongRepository from '../../Repositories/SongRepository';
+import UserRepository from '../../Repositories/UserRepository';
 
     // View model for song with PV preview and rating buttons (for example, on front page and song index page).
-    export class SongWithPreviewViewModel {
+    export default class SongWithPreviewViewModel {
         
         // Destroy PV player (clears HTML)
         public destroyPV: () => void;
@@ -33,7 +28,7 @@ module vdb.viewModels {
         // Toggle preview status.
         public togglePreview: () => void;
 
-        constructor(repository: rep.SongRepository, userRepository: rep.UserRepository, public songId: number, public pvServices: string) {
+        constructor(repository: SongRepository, userRepository: UserRepository, public songId: number, public pvServices: string) {
             
             this.destroyPV = () => {
                 this.previewHtml(null);
@@ -65,7 +60,7 @@ module vdb.viewModels {
 			this.switchPV = (newService: string) => {
 
 				this.pvService(newService);
-				var service: cls.pvs.PVService = cls.pvs.PVService[newService];
+				var service: PVService = PVService[newService];
 				repository.pvForSongAndService(songId, service, html => this.previewHtml(html));
 
 			}
@@ -73,5 +68,3 @@ module vdb.viewModels {
         }
     
     }
-
-}

@@ -1,13 +1,24 @@
+import AdminRepository from './AdminRepository';
+import AlbumRepository from './AlbumRepository';
+import ArtistRepository from './ArtistRepository';
+import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
+import DiscussionRepository from './DiscussionRepository';
+import EntryRepository from './EntryRepository';
+import PVRepository from './PVRepository';
+import ReleaseEventRepository from './ReleaseEventRepository';
+import ResourceRepository from './ResourceRepository';
+import SongListRepository from './SongListRepository';
+import SongRepository from './SongRepository';
+import TagRepository from './TagRepository';
+import UrlMapper from '../Shared/UrlMapper';
+import UserRepository from './UserRepository';
+import VenueRepository from './VenueRepository';
 
-module vdb.repositories {
-
-	import cls = vdb.models;
-
-	export class RepositoryFactory {
+	export default class RepositoryFactory {
 		
 		constructor(
-			private readonly urlMapper: vdb.UrlMapper,
-			private readonly lang: cls.globalization.ContentLanguagePreference,
+			private readonly urlMapper: UrlMapper,
+			private readonly lang: ContentLanguagePreference,
 			private readonly loggedUserId: number) { }
 
 		public adminRepository = () => {
@@ -63,5 +74,3 @@ module vdb.repositories {
 		}
 
 	}
-
-}

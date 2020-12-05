@@ -1,7 +1,5 @@
 
-module vdb.dataContracts {
-
-    export interface WebLinkContract {
+    export default interface WebLinkContract {
         
         category: string;
 
@@ -12,5 +10,3 @@ module vdb.dataContracts {
         url: string;
     
     }
-
-}

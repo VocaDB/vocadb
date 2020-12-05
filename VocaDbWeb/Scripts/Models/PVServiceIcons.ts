@@ -1,12 +1,11 @@
+import UrlMapper from '../Shared/UrlMapper';
 
-module vdb.models {
-	
 	// Class for getting URLs of PV service icons.
-	export class PVServiceIcons {
+	export default class PVServiceIcons {
 
 		private icons: any;
 
-		constructor(urlMapper: vdb.UrlMapper) {
+		constructor(urlMapper: UrlMapper) {
 			
 			this.icons = {
 				File: urlMapper.mapRelative("/Content/Icons/music.png"),
@@ -47,5 +46,3 @@ module vdb.models {
 		}
 
 	}
-
-}

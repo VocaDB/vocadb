@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NLog;
@@ -21,12 +21,18 @@ namespace VocaDb.Model.Service
 			}
 		}
 
+		private static string GetConnectionString(string connectionStringName)
+		{
+			return ConfigurationManager.ConnectionStrings[connectionStringName]?.ConnectionString
+				?? throw new ArgumentException("Connection string not found: " + connectionStringName);
+		}
+
 		public static FluentConfiguration Configure(string connectionStringName = null)
 		{
 			var config = Fluently.Configure()
 				.Database(
 					MsSqlConfiguration.MsSql2012
-						.ConnectionString(c => c.FromConnectionStringWithKey(connectionStringName ?? ConnectionStringName))
+						.ConnectionString(c => c.Is(GetConnectionString(connectionStringName ?? ConnectionStringName)))
 						.MaxFetchDepth(1)
 #if !DEBUG
 					.UseReflectionOptimizer()

@@ -1,13 +1,13 @@
-﻿@using System.Web.Optimization
+﻿@using VocaDb.Web.Helpers
 @{
-    Layout = null;
+	Layout = null;
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+	<meta name="viewport" content="width=device-width" />
 	<title>QUnit Tests for VocaDB</title>
 	<link rel="stylesheet" href="@Url.Content("~/Content/qunit-1.19.0.css")" type="text/css" />
 </head>
@@ -15,10 +15,8 @@
 	<div id="qunit"></div>
 	<div id="qunit-fixture"></div>
 
-	@Scripts.Render("~/bundles/shared/libs", "~/bundles/shared/jqui", "~/bundles/VocaDB", "~/bundles/shared/common", "~/bundles/shared/main")
-	<script src="@Url.Content("~/Scripts/Models/SongVoteRating.js")"></script>
-	<script src="@Url.Content("~/Scripts/ViewModels/PVRatingButtonsViewModel.js")"></script>
+	@LaravelMixHelper.RenderScripts("~/bundles/shared/libs.js"/*, "~/bundles/shared/jqui.js"*/, "~/bundles/VocaDB.js", "~/bundles/shared/common.js", "~/bundles/shared/main.js")
 	<script src="@Url.Content("~/Scripts/Libraries/qunit-1.19.0.js")"></script>
-	@Scripts.Render("~/bundles/tests")
+	@LaravelMixHelper.RenderScripts("~/bundles/tests.js")
 </body>
 </html>

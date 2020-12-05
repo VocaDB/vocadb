@@ -1,7 +1,5 @@
-﻿
-namespace vdb.models.pvs {
 
-	export enum PVType {
+	enum PVType {
 
 		Original = 1,
 
@@ -11,4 +9,4 @@ namespace vdb.models.pvs {
 
 	}
 
-}
+	export default PVType;

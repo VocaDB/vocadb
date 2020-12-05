@@ -1,17 +1,21 @@
+import AjaxHelper from '../Helpers/AjaxHelper';
+import BaseRepository from './BaseRepository';
+import { CommonQueryParams } from './BaseRepository';
+import functions from '../Shared/GlobalFunctions';
+import NameMatchMode from '../Models/NameMatchMode';
+import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
+import ReleaseEventContract from '../DataContracts/ReleaseEvents/ReleaseEventContract';
+import ReleaseEventSeriesForApiContract from '../DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
+import UrlMapper from '../Shared/UrlMapper';
 
-module vdb.repositories {
+	export default class ReleaseEventRepository extends BaseRepository {
 
-	import cls = vdb.models;
-	import dc = vdb.dataContracts;
-
-	export class ReleaseEventRepository extends BaseRepository {
-
-		constructor(private readonly urlMapper: vdb.UrlMapper) {
+		constructor(private readonly urlMapper: UrlMapper) {
 			super(urlMapper.baseUrl);
 		}
 
 		public createReport = (eventId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/releaseEvents/" + eventId + "/reports?" + helpers.AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
+			var url = functions.mergeUrls(this.baseUrl, "/api/releaseEvents/" + eventId + "/reports?" + AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
 			$.post(url, callback);
 		}
 
@@ -24,11 +28,11 @@ module vdb.repositories {
 		}
 
 		public getList = (queryParams: EventQueryParams,
-			callback?: (result: dc.PartialFindResultContract<dc.ReleaseEventContract>) => void) => {
+			callback?: (result: PartialFindResultContract<ReleaseEventContract>) => void) => {
 
-			var nameMatchMode = queryParams.nameMatchMode || models.NameMatchMode.Auto;
+			var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/releaseEvents");
+			var url = functions.mergeUrls(this.baseUrl, "/api/releaseEvents");
 			var data = {
 				start: queryParams.start, getTotalCount: queryParams.getTotalCount, maxResults: queryParams.maxResults,
 				query: queryParams.query,
@@ -43,7 +47,7 @@ module vdb.repositories {
 				status: queryParams.status || undefined,
 				afterDate: this.getDate(queryParams.afterDate),
 				beforeDate: this.getDate(queryParams.beforeDate),
-				nameMatchMode: models.NameMatchMode[nameMatchMode],
+				nameMatchMode: NameMatchMode[nameMatchMode],
 				lang: queryParams.lang,
 				sort: queryParams.sort
 			};
@@ -52,23 +56,23 @@ module vdb.repositories {
 
 		}
 
-		public getOne = (id: number, callback?: (result: dc.ReleaseEventContract) => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/releaseEvents/" + id);
+		public getOne = (id: number, callback?: (result: ReleaseEventContract) => void) => {
+			var url = functions.mergeUrls(this.baseUrl, "/api/releaseEvents/" + id);
 			$.getJSON(url, {}, callback);
 		}
 
-		public getOneByName = (name: string, callback?: (result: dc.ReleaseEventContract) => void) => {
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/releaseEvents?query=" + encodeURIComponent(name) + "&nameMatchMode=Exact&maxResults=1");
+		public getOneByName = (name: string, callback?: (result: ReleaseEventContract) => void) => {
+			var url = functions.mergeUrls(this.baseUrl, "/api/releaseEvents?query=" + encodeURIComponent(name) + "&nameMatchMode=Exact&maxResults=1");
 			$.getJSON(url, { }, result => callback(result && result.items && result.items.length ? result.items[0] : null));
 		}
 
-		public getSeriesList = (query: string, nameMatchMode: models.NameMatchMode, maxResults: number, callback?: (result: dc.PartialFindResultContract<dc.ReleaseEventSeriesForApiContract>) => void) => {
+		public getSeriesList = (query: string, nameMatchMode: NameMatchMode, maxResults: number, callback?: (result: PartialFindResultContract<ReleaseEventSeriesForApiContract>) => void) => {
 
-			var url = vdb.functions.mergeUrls(this.baseUrl, "/api/releaseEventSeries");
+			var url = functions.mergeUrls(this.baseUrl, "/api/releaseEventSeries");
 			var data = {
 				query: query,
 				maxResults: maxResults,
-				nameMatchMode: models.NameMatchMode[nameMatchMode]
+				nameMatchMode: NameMatchMode[nameMatchMode]
 			};
 
 			$.getJSON(url, data, callback);
@@ -105,5 +109,3 @@ module vdb.repositories {
 		userCollectionId?: number;
 
 	}
-
-}

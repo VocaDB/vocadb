@@ -1,6 +1,4 @@
-﻿
-module vdb.models {
-	
+
 	export class EntryOptionalFields<T> {
 
 		// TODO: better way for generic constraints?
@@ -38,5 +36,3 @@ module vdb.models {
 		WebLinks = 128
 
 	}
-
-}

@@ -1,13 +1,19 @@
-﻿
-interface JQuery {
-	scrollable: (params: any) => void;
+import PVRatingButtonsViewModel from '../ViewModels/PVRatingButtonsViewModel';
+import ui from '../Shared/MessagesTyped';
+import UrlMapper from '../Shared/UrlMapper';
+import UserRepository from '../Repositories/UserRepository';
+
+declare global {
+	interface JQuery {
+		scrollable: (params: any) => void;
+	}
 }
 
-$(() => {
+export function initPage() {
 
 	function initRatingButtons() {
-		const urlMapper = new vdb.UrlMapper(vdb.values.baseAddress);
-		const repo = new vdb.repositories.UserRepository(urlMapper);
+		const urlMapper = new UrlMapper(vdb.values.baseAddress);
+		const repo = new UserRepository(urlMapper);
 		const ratingBar = $("#rating-bar");
 
 		if (!ratingBar.length) {
@@ -16,10 +22,10 @@ $(() => {
 
 		const songId = ratingBar.data('song-id');
 		const rating = ratingBar.data('rating');
-		const viewModel = new vdb.viewModels.PVRatingButtonsViewModel(repo, { id: songId, vote: rating }, () => {
-			vdb.ui.showSuccessMessage(vdb.resources.song.thanksForRating);				
+		const viewModel = new PVRatingButtonsViewModel(repo, { id: songId, vote: rating }, () => {
+			ui.showSuccessMessage(vdb.resources.song.thanksForRating);
 		}, vdb.values.isLoggedIn);
-		ko.applyBindings(viewModel, ratingBar[0]);		
+		ko.applyBindings(viewModel, ratingBar[0]);
 	}
 
 	initRatingButtons();
@@ -44,4 +50,4 @@ $(() => {
 	$("#newAlbums img").vdbAlbumToolTip();
 	$("#topAlbums img").vdbAlbumToolTip();
 
-});
+}

@@ -1,10 +1,12 @@
+import UrlMapper from '../Shared/UrlMapper';
+import UserRepository from '../Repositories/UserRepository';
 
 $(() => {
 
 	$("#globalSearchTerm").autocomplete({
 		source: (request, response: (items: string[]) => void) => {
 
-			var urlMapper = new vdb.UrlMapper(vdb.values.baseAddress);
+			var urlMapper = new UrlMapper(vdb.values.baseAddress);
 			var term: string = request.term;
 			var entryType = $("#globalSearchObjectType").val();
 			var endpoint: string = null;
@@ -50,9 +52,9 @@ $(() => {
 
 });
 
-function setLanguagePreferenceCookie(languagePreference: string) {
+export function setLanguagePreferenceCookie(languagePreference: string) {
 
-	var userRepo = new vdb.repositories.UserRepository(new vdb.UrlMapper(vdb.values.baseAddress), 0);
+	var userRepo = new UserRepository(new UrlMapper(vdb.values.baseAddress), 0);
 	userRepo.updateUserSetting(null, 'languagePreference', languagePreference, () => {
 		window.location.reload();
 	});

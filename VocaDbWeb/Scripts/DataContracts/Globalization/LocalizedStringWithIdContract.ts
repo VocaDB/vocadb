@@ -1,8 +1,5 @@
-﻿
-namespace vdb.dataContracts.globalization {
+import LocalizedStringContract from './LocalizedStringContract';
 
-	export interface LocalizedStringWithIdContract extends LocalizedStringContract {
+	export default interface LocalizedStringWithIdContract extends LocalizedStringContract {
 		id: number;
 	}
-
-}

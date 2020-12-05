@@ -1,11 +1,12 @@
-﻿
-module vdb.viewModels.search {
-	
+import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
+import TagFilter from './TagFilter';
+import TagRepository from '../../Repositories/TagRepository';
+
 	// Manages tag filters for search
-	export class TagFilters {
+	export default class TagFilters {
 
 		constructor(
-			private tagRepo: repositories.TagRepository,
+			private tagRepo: TagRepository,
 			private languageSelection: string,
 			tags: KnockoutObservableArray<TagFilter> = null) {
 			
@@ -20,7 +21,7 @@ module vdb.viewModels.search {
 
 		}
 
-		public addTag = (tag: dc.TagBaseContract) => this.tags.push(TagFilter.fromContract(tag));
+		public addTag = (tag: TagBaseContract) => this.tags.push(TagFilter.fromContract(tag));
 
 		public addTags = (
 			selectedTagIds: number[]) => {
@@ -52,7 +53,7 @@ module vdb.viewModels.search {
 		// Fired when any of the tag filters is changed
 		public filters: KnockoutComputed<void>;
 
-		public selectTag = (tag: dc.TagBaseContract) => {
+		public selectTag = (tag: TagBaseContract) => {
 			this.tags([ TagFilter.fromContract(tag) ]);
 		}
 
@@ -60,5 +61,3 @@ module vdb.viewModels.search {
 		public tagIds: KnockoutComputed<number[]>;
 
 	}
-
-}

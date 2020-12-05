@@ -1,12 +1,8 @@
-﻿
-module vdb.dataContracts {
-	
-	export interface PartialFindResultContract<T> {
+
+	export default interface PartialFindResultContract<T> {
 
 		items: T[];
 
 		totalCount: number;
 
 	}
-
-}

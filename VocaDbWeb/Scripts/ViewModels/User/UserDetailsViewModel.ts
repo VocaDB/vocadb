@@ -1,13 +1,21 @@
-/// <reference path="../../typings/jquery/jquery.d.ts" />
-/// <reference path="../../Repositories/AdminRepository.ts" />
+import AdminRepository from '../../Repositories/AdminRepository';
+import AlbumCollectionViewModel from './AlbumCollectionViewModel';
+import CommentContract from '../../DataContracts/CommentContract';
+import DeleteEntryViewModel from '../DeleteEntryViewModel';
+import EditableCommentsViewModel from '../EditableCommentsViewModel';
+import FollowedArtistsViewModel from './FollowedArtistsViewModel';
+import HighchartsHelper from '../../Helpers/HighchartsHelper';
+import RatedSongsSearchViewModel from './RatedSongsSearchViewModel';
+import ReleaseEventContract from '../../DataContracts/ReleaseEvents/ReleaseEventContract';
+import ResourceRepository from '../../Repositories/ResourceRepository';
+import SongListsBaseViewModel from '../SongList/SongListsBaseViewModel';
+import TagRepository from '../../Repositories/TagRepository';
+import ui from '../../Shared/MessagesTyped';
+import UrlMapper from '../../Shared/UrlMapper';
+import UserEventRelationshipType from '../../Models/Users/UserEventRelationshipType';
+import UserRepository from '../../Repositories/UserRepository';
 
-module vdb.viewModels.user {
-
-	import cls = models;
-	import dc = vdb.dataContracts;
-    import rep = vdb.repositories;
-
-    export class UserDetailsViewModel {
+    export default class UserDetailsViewModel {
 
 		private static overview = "Overview";
 
@@ -15,9 +23,9 @@ module vdb.viewModels.user {
 
 			this.adminRepo.addIpToBanList({ address: this.lastLoginAddress, notes: this.name }, result => {
 				if (result) {
-					vdb.ui.showSuccessMessage("Added to ban list");
+					ui.showSuccessMessage("Added to ban list");
 				} else {
-					vdb.ui.showErrorMessage("Already in the ban list");
+					ui.showErrorMessage("Already in the ban list");
 				}
 			});
 
@@ -36,8 +44,8 @@ module vdb.viewModels.user {
 
 		public comments: EditableCommentsViewModel;
 		private eventsLoaded = false;
-		public events = ko.observableArray<dc.ReleaseEventContract>([]);
-		public eventsType = ko.observable(cls.users.UserEventRelationshipType[cls.users.UserEventRelationshipType.Attending]);
+		public events = ko.observableArray<ReleaseEventContract>([]);
+		public eventsType = ko.observable(UserEventRelationshipType[UserEventRelationshipType.Attending]);
 
 		public limitedUserViewModel = new DeleteEntryViewModel(notes => {
 			$.ajax(this.urlMapper.mapRelative("api/users/" + this.userId + "/status-limited"), {
@@ -50,7 +58,7 @@ module vdb.viewModels.user {
 		public reportUserViewModel = new DeleteEntryViewModel(notes => {
 			$.ajax(this.urlMapper.mapRelative("api/users/" + this.userId + "/reports"), {
                 type: 'POST', data: { reason: notes, reportType: 'Spamming' }, success: () => {
-                    vdb.ui.showSuccessMessage(vdb.resources.shared.reportSent);
+                    ui.showSuccessMessage(vdb.resources.shared.reportSent);
                     this.reportUserViewModel.notes("");
 				}
 			});
@@ -75,7 +83,7 @@ module vdb.viewModels.user {
 
 		private loadEvents = () => {
 
-			this.userRepo.getEvents(this.userId, cls.users.UserEventRelationshipType[this.eventsType()], events => {
+			this.userRepo.getEvents(this.userId, UserEventRelationshipType[this.eventsType()], events => {
 				this.events(events);
 			});
 
@@ -141,15 +149,15 @@ module vdb.viewModels.user {
 			private lastLoginAddress: string,
 			private canEditAllComments: boolean,
 			private urlMapper: UrlMapper,
-			private userRepo: rep.UserRepository,
-			private adminRepo: rep.AdminRepository,
-			resourceRepo: rep.ResourceRepository,
-			tagRepo: rep.TagRepository,
+			private userRepo: UserRepository,
+			private adminRepo: AdminRepository,
+			resourceRepo: ResourceRepository,
+			tagRepo: TagRepository,
 			languageSelection: string,
 			public followedArtistsViewModel: FollowedArtistsViewModel,
 			public albumCollectionViewModel: AlbumCollectionViewModel,
 			public ratedSongsViewModel: RatedSongsSearchViewModel,
-			latestComments: dc.CommentContract[]) {
+			latestComments: CommentContract[]) {
 
 			var canDeleteAllComments = (userId === loggedUserId);
 
@@ -162,7 +170,7 @@ module vdb.viewModels.user {
 			};
 
 			userRepo.getRatingsByGenre(userId, data => {
-				this.ratingsByGenreChart(vdb.helpers.HighchartsHelper.simplePieChart(null, "Songs", data));
+				this.ratingsByGenreChart(HighchartsHelper.simplePieChart(null, "Songs", data));
 			});
 
 			userRepo.getOne(userId, null, data => {
@@ -175,12 +183,12 @@ module vdb.viewModels.user {
 
     }
 
-	export class UserSongListsViewModel extends songList.SongListsBaseViewModel {
+	export class UserSongListsViewModel extends SongListsBaseViewModel {
 
 		constructor(private readonly userId,
-			private readonly userRepo: rep.UserRepository,
-			resourceRepo: rep.ResourceRepository,
-			tagRepo: rep.TagRepository,
+			private readonly userRepo: UserRepository,
+			resourceRepo: ResourceRepository,
+			tagRepo: TagRepository,
 			languageSelection: string,
 			cultureCode: string) {
 			super(resourceRepo, tagRepo, languageSelection, cultureCode, [], true);
@@ -198,5 +206,3 @@ module vdb.viewModels.user {
 		}
 
 	}
-
-}

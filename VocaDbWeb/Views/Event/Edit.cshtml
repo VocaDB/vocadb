@@ -221,7 +221,7 @@
 			</div>
 			<div class="editor-field" data-bind="with: webLinks">
 				@KnockoutHelpers.WebLinksEditViewKnockout(false)
-				@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(webLinks)")
+				@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(items)")
 			</div>
 	
 			<div class="editor-label">
@@ -248,7 +248,7 @@
 							<tr>
 								<td>
 									<div data-bind="with: artist">
-										<a data-bind="text: name, attr: { href: vdb.utils.EntryUrlMapper.details('Artist', id) }, artistToolTip: id" href="#"></a>
+										<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details('Artist', id) }, artistToolTip: id" href="#"></a>
 										<br />
 										<span data-bind="text: additionalNames" class="extraInfo"></span>
 									</div>
@@ -330,14 +330,14 @@
 @Html.Partial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))
 
 @section BodyScripts {
-@Scripts.Render("~/bundles/shared/edit", "~/bundles/ReleaseEvent/Edit")
+@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/ReleaseEvent/Edit.js")
 <script type="text/javascript">
 	$(function () {
 
 		ko.punches.enableAll();
 
-		var urlMapper = new vdb.UrlMapper('@RootPath');
-		var repoFactory = new vdb.repositories.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var urlMapper = new app.UrlMapper('@RootPath');
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var eventRepo = repoFactory.eventRepository();
 		var userRepo = repoFactory.userRepository();
 		var pvRepo = repoFactory.pvRepository();
@@ -357,10 +357,10 @@
 			Model.Venue
 		});
 
-		var vm = new vdb.viewModels.releaseEvents.ReleaseEventEditViewModel(eventRepo, userRepo, pvRepo, artistRepo, urlMapper, artistRoleJson, contract);
+		var vm = new app.ReleaseEventEditViewModel(eventRepo, userRepo, pvRepo, artistRepo, urlMapper, artistRoleJson, contract);
 		ko.applyBindings(vm);
 
-		initPage();
+		app.initReleaseEventEditPage();
 
 	});
 </script>

@@ -1,9 +1,7 @@
-/// <reference path="../../Shared/UrlMapper.ts" />
-/// <reference path="../../Repositories/EntryReportRepository.ts" />
+import EntryReportRepository from '../../Repositories/EntryReportRepository';
+import UrlMapper from '../../Shared/UrlMapper';
 
-module vdb.tests.testSupport {
-
-    export class FakeEntryReportRepository extends vdb.repositories.EntryReportRepository {
+    export default class FakeEntryReportRepository extends EntryReportRepository {
 
         public entryReportCount: number;
 
@@ -19,5 +17,3 @@ module vdb.tests.testSupport {
         }
 
     }
-
-}

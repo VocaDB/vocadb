@@ -1,9 +1,7 @@
-﻿
-module vdb.viewModels.pvs {
+import { IPVPlayer } from './PVPlayerViewModel';
+import PVService from '../../Models/PVs/PVService';
 
-	import cls = vdb.models;
-
-	export class PVPlayerYoutube implements IPVPlayer {
+	export default class PVPlayerYoutube implements IPVPlayer {
 
 		constructor(
 			private playerElementId: string,
@@ -82,8 +80,6 @@ module vdb.viewModels.pvs {
 
 		}
 
-		public service = cls.pvs.PVService.Youtube;
+		public service = PVService.Youtube;
 
 	}
-
-}

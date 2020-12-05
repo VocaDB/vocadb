@@ -1,10 +1,13 @@
+import AlbumDetailsViewModel from '../ViewModels/Album/AlbumDetailsViewModel';
+import ui from '../Shared/MessagesTyped';
+import UrlMapper from '../Shared/UrlMapper';
 
-function initAlbumDetailsPage(
+export function initAlbumDetailsPage(
 	albumId: number,
 	collectionRating: number,
 	saveStr,
-	urlMapper: vdb.UrlMapper,
-	viewModel: vdb.viewModels.AlbumDetailsViewModel) {
+	urlMapper: UrlMapper,
+	viewModel: AlbumDetailsViewModel) {
 
 	$("#addAlbumLink").button({ disabled: $("#addAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-star' } });
 	$("#updateAlbumLink").button({ disabled: $("#updateAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench' } });
@@ -75,7 +78,7 @@ function initAlbumDetailsPage(
 					$("#updateAlbumLink").show();
 				}
 
-				vdb.ui.showSuccessMessage(vdb.resources.album.addedToCollection);
+				ui.showSuccessMessage(vdb.resources.album.addedToCollection);
 
 			}
 		} as JQueryUI.ButtonOptions]
