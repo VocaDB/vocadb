@@ -610,5 +610,99 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			Assert.IsNotNull(notification, "Notification was created");
 			Assert.AreEqual(user2, notification.Receiver, "Receiver");
 		}
+
+		[TestMethod]
+		public void AddReview()
+		{
+			AlbumReviewContract AddReview(int id, string text, string title, string languageCode) => queries.AddReview(album.Id, new AlbumReviewContract
+			{
+				Id = id,
+				AlbumId = album.Id,
+				Text = text,
+				User = new UserForApiContract(user, null, UserOptionalFields.None),
+				Title = title,
+				LanguageCode = languageCode,
+			});
+
+			void AssertReview(int id, string message, string title, string languageCode, bool deleted, AlbumReview review)
+			{
+				Assert.AreEqual(id, review.Id);
+				Assert.AreEqual(message, review.Message);
+				Assert.AreEqual(user, review.Author, "Author");
+				Assert.AreEqual(album, review.Entry, "Album");
+				Assert.AreEqual(title, review.Title);
+				Assert.AreEqual(languageCode, review.LanguageCode);
+				Assert.AreEqual(deleted, review.Deleted);
+			}
+
+			// 1. User posts review (review is created)
+			var review = AddReview(
+				id: 0,
+				text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				title: "Title",
+				languageCode: "ja");
+
+			var reviewFromRepo = repository.Load<AlbumReview>(review.Id);
+			AssertReview(
+				review.Id,
+				message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				title: "Title",
+				languageCode: "ja",
+				deleted: false,
+				reviewFromRepo);
+
+			// 2. User deletes review (review is marked deleted)
+			queries.DeleteReview(reviewFromRepo.Id);
+
+			reviewFromRepo = repository.Load<AlbumReview>(review.Id);
+			AssertReview(
+				review.Id,
+				message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				title: "Title",
+				languageCode: "ja",
+				deleted: true,
+				reviewFromRepo);
+
+			// 3. User posts new review (review is created)
+			var review2 = AddReview(
+				id: 0,
+				text: "いろはにほへと ちりぬるを わかよたれそ つねならむ うゐのおくやま けふこえて あさきゆめみし ゑひもせす",
+				title: "いろはうた",
+				languageCode: "ja");
+
+			var review2FromRepo = repository.Load<AlbumReview>(review2.Id);
+			AssertReview(
+				review2.Id,
+				message: "いろはにほへと ちりぬるを わかよたれそ つねならむ うゐのおくやま けふこえて あさきゆめみし ゑひもせす",
+				title: "いろはうた",
+				languageCode: "ja",
+				deleted: false,
+				review2FromRepo);
+
+			// 4. User updates review
+			var result = AddReview(
+				id: review2FromRepo.Id,
+				text: "色は匂へど 散りぬるを 我が世誰ぞ 常ならむ 有為の奥山 今日越えて 浅き夢見じ 酔ひもせず",
+				title: "いろは歌",
+				languageCode: review2FromRepo.LanguageCode);
+
+			var resultFromRepo = repository.Load<AlbumReview>(result.Id);
+			AssertReview(
+				review2FromRepo.Id,
+				message: "色は匂へど 散りぬるを 我が世誰ぞ 常ならむ 有為の奥山 今日越えて 浅き夢見じ 酔ひもせず",
+				title: "いろは歌",
+				languageCode: "ja",
+				deleted: false,
+				resultFromRepo);
+
+			reviewFromRepo = repository.Load<AlbumReview>(review.Id);
+			AssertReview(
+				review.Id,
+				message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				title: "Title",
+				languageCode: "ja",
+				deleted: true,
+				reviewFromRepo);
+		}
 	}
 }
