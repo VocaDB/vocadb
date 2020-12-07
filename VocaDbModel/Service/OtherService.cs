@@ -266,6 +266,7 @@ namespace VocaDb.Model.Service
 
 		private async Task<EntryWithCommentsContract[]> GetRecentCommentsAsync(ISession session, int maxComments)
 		{
+			// FIXME: this returns less comments if there are deleted entries.
 			var comments = (await session.Query<Comment>()
 				.WhereNotDeleted()
 				.OrderByDescending(c => c.Created)
@@ -371,6 +372,7 @@ namespace VocaDb.Model.Service
 
 			return await HandleQueryAsync(async session =>
 			{
+				// FIXME: this returns less comments if there are deleted entries.
 				var activityEntries = (await session.Query<ActivityEntry>()
 					.OrderByDescending(a => a.CreateDate)
 					.Take(maxActivityEntries)

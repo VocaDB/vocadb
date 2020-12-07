@@ -59,6 +59,9 @@ namespace VocaDb.Model.Domain.Discussions
 			}
 		}
 
+		/// <remarks>
+		/// The <see cref="FirstComment"/> is regarded as the content of a topic, therefore, we exclude it from <see cref="Comments"/>.
+		/// </remarks>
 		public virtual IEnumerable<DiscussionComment> Comments => AllComments.Where(c => c != FirstComment).Where(c => !c.Deleted);
 
 		public virtual string Content => FirstComment.Message;
@@ -107,7 +110,11 @@ namespace VocaDb.Model.Domain.Discussions
 			return comment;
 		}
 
-		public virtual void Delete() => Deleted = true;
+		public virtual void Delete()
+		{
+			Deleted = true;
+			FirstComment.Deleted = true;
+		}
 
 		public virtual void MoveToFolder(DiscussionFolder targetFolder)
 		{

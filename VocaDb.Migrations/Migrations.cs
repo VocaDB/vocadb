@@ -49,6 +49,10 @@ namespace VocaDb.Migrations
 			Rename.Column("Text").OnTable(TableNames.AlbumReviews).To("Message");
 			Rename.Column("User").OnTable(TableNames.AlbumReviews).To("Author");
 			Delete.Index("UX_AlbumReviews").OnTable(TableNames.AlbumReviews);
+			Create.Index().OnTable(TableNames.AlbumReviews)
+				.OnColumn("Album").Ascending()
+				.OnColumn("Author").Ascending()
+				.OnColumn("LanguageCode").Ascending();
 
 			// Create `Comments` table.
 			Create.Table(TableNames.Comments)
@@ -107,7 +111,7 @@ namespace VocaDb.Migrations
 				Rename.Column("Created").OnTable(table.Name).InSchema(table.Schema).To("OldCreated");
 
 				// Make `Message` nullable and rename it to `OldMessage`.
-				Alter.Column("Message").OnTable(table.Name).InSchema(table.Schema).AsString(4000).Nullable();
+				Alter.Column("Message").OnTable(table.Name).InSchema(table.Schema).AsString(int.MaxValue).Nullable();
 				Rename.Column("Message").OnTable(table.Name).InSchema(table.Schema).To("OldMessage");
 
 				if (Schema.Schema(table.Schema).Table(table.Name).Column("AuthorName").Exists())
@@ -120,15 +124,19 @@ namespace VocaDb.Migrations
 				if (table.EntryTypeName != null)
 				{
 					Delete.PrimaryKey($"PK_{table.Name}").FromTable(table.Name).InSchema(table.Schema);
+					Delete.ForeignKey($"FK_{table.Name}_Comment_Comments_Id").OnTable(table.Name).InSchema(table.Schema);
 					// Make `Id` nullable and rename it to `OldId`.
 					Alter.Column("Id").OnTable(table.Name).InSchema(table.Schema).AsInt32().Nullable();
 					Rename.Column("Id").OnTable(table.Name).InSchema(table.Schema).To("OldId");
 
-					Create.PrimaryKey().OnTable(table.Name).WithSchema(table.Schema).Columns("Comment", table.EntryTypeName);
+					Create.PrimaryKey().OnTable(table.Name).WithSchema(table.Schema).Column("Comment");
 				}
 			}
 
+			// Copy the value of `Deleted` from `DiscussionTopics` to `Comments`.
 			Execute.Sql($"update Comments set Deleted = ec.Deleted from discussions.DiscussionTopics ec inner join Comments c on c.OldTable = 'discussions.DiscussionTopics' and ec.Id = c.OldId");
+
+			// Copy `Comment` and `Topic` (`Id`) from `DiscussionTopics` to `DiscussionComments`.
 			Execute.Sql($"insert into discussions.DiscussionComments(Comment, Topic) select Comment, Id from discussions.DiscussionTopics");
 
 			// Make `Comment` nullable and rename it to `OldComment`.
