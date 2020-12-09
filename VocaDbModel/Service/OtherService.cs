@@ -269,6 +269,7 @@ namespace VocaDb.Model.Service
 			// FIXME: this returns less comments if there are deleted entries.
 			var comments = (await session.Query<Comment>()
 				.WhereNotDeleted()
+				.Where(c => !(c is UserComment))
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments)
 				.ToListAsync())
