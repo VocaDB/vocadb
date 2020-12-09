@@ -363,19 +363,6 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var album = session.Load<Album>(id);
 
-				var stats = session.Query<Album>()
-					.Where(a => a.Id == id)
-					.ToArray()
-					.Select(a => new
-					{
-						CommentCount = Comments(session).GetCount(id),
-						Hits = a.Hits.Count,
-					})
-					.FirstOrDefault();
-
-				if (stats == null)
-					throw new ObjectNotFoundException(id, typeof(Album));
-
 				var user = PermissionContext.LoggedUser;
 
 				SongVoteRating? GetRatingFunc(Song song)
@@ -386,8 +373,8 @@ namespace VocaDb.Model.Database.Queries
 				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imageUrlFactory, GetRatingFunc,
 					discTypeTag: new EntryTypeTags(session).GetTag(EntryType.Album, album.DiscType))
 				{
-					CommentCount = stats.CommentCount,
-					Hits = stats.Hits,
+					CommentCount = Comments(session).GetCount(id),
+					Hits = session.Query<AlbumHit>().Count(h => h.Entry.Id == id),
 					Stats = GetSharedAlbumStats(session, album)
 				};
 

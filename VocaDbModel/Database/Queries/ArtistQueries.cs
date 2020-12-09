@@ -326,22 +326,10 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var artist = session.Load(id);
 
-				var stats = session.Query()
-					.Where(a => a.Id == id)
-					.ToArray()
-					.Select(a => new
-					{
-						CommentCount = Comments(session).GetCount(id),
-					})
-					.FirstOrDefault();
-
-				if (stats == null)
-					EntityNotFoundException.Throw<Artist>(id);
-
 				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, imageUrlFactory,
 					new EntryTypeTags(session).GetTag(EntryType.Artist, artist.ArtistType))
 				{
-					CommentCount = stats.CommentCount,
+					CommentCount = Comments(session).GetCount(id),
 					SharedStats = GetSharedArtistStats(session, artist),
 					PersonalStats = GetPersonalArtistStats(session, artist),
 					AdvancedStats = GetAdvancedStats(session, artist)
