@@ -179,7 +179,7 @@
 		</label>
 	</div>
 	<div class="editor-field" data-bind="with: webLinks">
-		@KnockoutHelpers.WebLinksEditViewKnockout(false)
+		@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(false))
 		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(items)")
 	</div>
 

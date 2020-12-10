@@ -220,6 +220,7 @@
     <Compile Include="Models\Shared\Partials\Knockout\SearchDropDownViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\SongLockingAutoCompleteViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\TagFiltersViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Knockout\WebLinksEditViewKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedBiliViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedNicoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedPiaproViewModel.cs" />
@@ -819,7 +820,6 @@
     <Content Include="Scripts\highcharts\4.2.0\themes\skies.js" />
     <Content Include="Content\Styles\ExtLinks.less" />
     <Content Include="Content\Styles\Overrides.less" />
-    <Content Include="App_Code\KnockoutHelpers.cshtml" />
     <Content Include="Content\Styles\PVViewer_Blue.less" />
     <Content Include="Content\Styles\PVViewer_Black.less" />
     <Content Include="Content\Styles\Snow2013.less" />
@@ -1967,6 +1967,7 @@
     <Content Include="Views\Shared\Partials\Comment\_CommentKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_LockingAutoComplete.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_TagFilters.cshtml" />
+    <Content Include="Views\Shared\Partials\Knockout\_WebLinksEditViewKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

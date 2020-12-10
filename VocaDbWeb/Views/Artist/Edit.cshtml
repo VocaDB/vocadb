@@ -214,7 +214,7 @@
 					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.WebLinks, EditRes.ExternalLinksQuickHelp))
 				</div>
 				<div class="editor-field" data-bind="with: webLinks">
-					@KnockoutHelpers.WebLinksEditViewKnockout(true)
+					@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(true))
 				</div>
 
 				<div class="editor-label">
