@@ -1,0 +1,13 @@
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
+@model DataRowViewModel
+
+<tr class="@(Model.CompareVal != null && Model.Val != Model.CompareVal ? "changed" : "")">
+	<td>@Model.Name</td>
+	<td colspan="@(Model.CompareVal != null ? 1 : 2)" @Html.ConditionalAttribute(Model.PreserveLineBreaks, "class", "pre-line")>@Model.Val</td>
+	@if (Model.CompareVal != null)
+	{
+		<td @Html.ConditionalAttribute(Model.PreserveLineBreaks, "class", "pre-line")>@Model.CompareVal</td>
+
+	}
+</tr>

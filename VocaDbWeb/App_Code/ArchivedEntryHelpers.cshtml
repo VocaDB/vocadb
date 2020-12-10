@@ -8,23 +8,23 @@
 @inherits VocaDb.Web.Code.HelperPage
 
 @functions {
-	public static HelperResult DataRow<T>(string name, T primary, T compared, Func<T, object> valGetter, bool preserveLineBreaks = false)
+	public static IHtmlString DataRow<T>(System.Web.Mvc.HtmlHelper htmlHelper, string name, T primary, T compared, Func<T, object> valGetter, bool preserveLineBreaks = false)
 		where T : class {
 
 		var val1 = valGetter(primary);
 		var val2 = (compared != null ? valGetter(compared) : null);
 
-		return DataRow(name, val1, val2, preserveLineBreaks);
+		return htmlHelper.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel(name, val1, val2, preserveLineBreaks));
 		
     }
 
-	public static HelperResult DataRow<T>(string name, ComparedVersionsContract<T> comparedVersions, Func<T, object> valGetter, bool preserveLineBreaks = false)
+	public static IHtmlString DataRow<T>(System.Web.Mvc.HtmlHelper htmlHelper, string name, ComparedVersionsContract<T> comparedVersions, Func<T, object> valGetter, bool preserveLineBreaks = false)
 		where T : class {
 
 		var val1 = valGetter(comparedVersions.FirstData);
 		var val2 = (comparedVersions.SecondData != null ? valGetter(comparedVersions.SecondData) : null);
 
-		return DataRow(name, val1, val2, preserveLineBreaks);
+		return htmlHelper.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel(name, val1, val2, preserveLineBreaks));
 
 	}
 
@@ -89,16 +89,6 @@
 
 	}
 	
-}
-
-@helper DataRow(string name, object val, object compareVal = null, bool preserveLineBreaks = false) {
-	<tr class="@(compareVal != null && val != compareVal ? "changed" : "")">
-		<td>@name</td>
-		<td colspan="@(compareVal != null ? 1 : 2)" @Html.ConditionalAttribute(preserveLineBreaks, "class", "pre-line")>@val</td>
-		@if (compareVal != null) {
-		<td @Html.ConditionalAttribute(preserveLineBreaks, "class", "pre-line")>@compareVal</td>			
-		}
-	</tr>	
 }
 
 @helper DataRowList(string name, IEnumerable<IHtmlString> rows, IEnumerable<IHtmlString> compareRows = null) {
