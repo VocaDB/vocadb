@@ -38,19 +38,6 @@
 	}
 }
 
-@helper IconAndName(IUserWithEmail user, int size = 20) {
-	@ProfileIcon(user, size)
-	<span>@user.Name</span>
-}
-
-@helper IconAndName(IUserWithEmail user, string name, int size = 20) {
-	if (user != null) {
-		@IconAndName(user, size)
-	} else {
-		@name
-	}
-}
-
 @helper ProfileIcon(IUserWithEmail user, int size = 80) {
 	if (user != null && !string.IsNullOrEmpty(user.Email)) {
 		<div style="width: @(size)px; height: @(size)px; display: inline-block">
