@@ -9,9 +9,9 @@
 	<table class="table table-bordered">
 		@Html.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel("Id", Model.ComparedEvents.FirstData.Id))
 		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedEvents, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
+		@ArchivedEntryHelpers.DataRowList(Html, "Names", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
 		@ArchivedEntryHelpers.DataRow(Html, "Description", Model.ComparedEvents, d => d.Description)
-		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
+		@ArchivedEntryHelpers.DataRowList(Html, "External links", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
 		@ArchivedEntryHelpers.DataRow(Html, "Category", Model.ComparedEvents, d => d.Category)
 		@ArchivedEntryHelpers.DataRow(Html, "Date", Model.ComparedEvents, d => d.Date)
 		@ArchivedEntryHelpers.DataRow(Html, "Venue", Model.ComparedEvents, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.Venue)))
@@ -19,8 +19,8 @@
 		@ArchivedEntryHelpers.DataRow(Html, "Main picture MIME", Model.ComparedEvents, d => d.MainPictureMime)
 		@ArchivedEntryHelpers.DataRow(Html, "Series", Model.ComparedEvents, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.Series)))
 		@ArchivedEntryHelpers.DataRow(Html, "Series number", Model.ComparedEvents, d => d.SeriesNumber)
-		@ArchivedEntryHelpers.DataRowList("Artists", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.Artists, artist => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(artist))))
-		@ArchivedEntryHelpers.DataRowList("PVs", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.PVs, pv => Html.Partial("Partials/ArchivedEntry/_PVInfo", new PVInfoViewModel(pv))))
+		@ArchivedEntryHelpers.DataRowList(Html, "Artists", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.Artists, artist => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(artist))))
+		@ArchivedEntryHelpers.DataRowList(Html, "PVs", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.PVs, pv => Html.Partial("Partials/ArchivedEntry/_PVInfo", new PVInfoViewModel(pv))))
 		@ArchivedEntryHelpers.DataRow(Html, "Song list", Model.ComparedEvents, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.SongList)))
 	</table>
 

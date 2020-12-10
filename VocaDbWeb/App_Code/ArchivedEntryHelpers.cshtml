@@ -28,23 +28,23 @@
 
 	}
 
-	public static HelperResult DataRowList<T>(string name, T primary, T compared, Func<T, IEnumerable<IHtmlString>> valGetter)
+	public static IHtmlString DataRowList<T>(System.Web.Mvc.HtmlHelper htmlHelper, string name, T primary, T compared, Func<T, IEnumerable<IHtmlString>> valGetter)
 		where T : class {
 
 		var val1 = valGetter(primary);
 		var val2 = (compared != null ? valGetter(compared) : null);
 
-		return DataRowList(name, val1, val2);
+		return htmlHelper.Partial("Partials/ArchivedEntry/_DataRowList", new DataRowListViewModel(name, val1, val2));
 			
 	}
 
-	public static HelperResult DataRowList<T>(string name, ComparedVersionsContract<T> comparedVersions, Func<T, IEnumerable<IHtmlString>> valGetter)
+	public static IHtmlString DataRowList<T>(System.Web.Mvc.HtmlHelper htmlHelper, string name, ComparedVersionsContract<T> comparedVersions, Func<T, IEnumerable<IHtmlString>> valGetter)
 		where T : class {
 
 		var val1 = valGetter(comparedVersions.FirstData);
 		var val2 = (comparedVersions.SecondData != null ? valGetter(comparedVersions.SecondData) : null);
 
-		return DataRowList(name, val1, val2);
+		return htmlHelper.Partial("Partials/ArchivedEntry/_DataRowList", new DataRowListViewModel(name, val1, val2));
 
 	}
 		
@@ -52,10 +52,10 @@
 		return OptionalDateTime.ToDateTime(contract.Year, contract.Month, contract.Day).ToShortDateString();
 	}
 
-	public static HelperResult ObjectRefList<T>(string name, ComparedVersionsContract<T> comparedVersions, 
+	public static IHtmlString ObjectRefList<T>(System.Web.Mvc.HtmlHelper htmlHelper, string name, ComparedVersionsContract<T> comparedVersions, 
 		Func<T, IEnumerable<ObjectRefContract>> valGetter) where T : class {
 		
-		return DataRowList(name, comparedVersions, d => DataFormatUtils.GenerateHtml(valGetter(d), objRef => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(objRef))));
+		return DataRowList(htmlHelper, name, comparedVersions, d => DataFormatUtils.GenerateHtml(valGetter(d), objRef => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(objRef))));
 		
 	}
 
@@ -91,34 +91,8 @@
 	
 }
 
-@helper DataRowList(string name, IEnumerable<IHtmlString> rows, IEnumerable<IHtmlString> compareRows = null) {
-	if (rows != null) {
-	<tr>
-		<td>@name</td>
-		<td colspan="@(compareRows != null ? 1 : 2)">
-			<ul>
-			@foreach (var row in rows) {
-				var isNew = (compareRows != null && !compareRows.Any(r => row.ToString().Equals(r.ToString())));
-				<li class="@(isNew ? "archived-entry-compare-modified" : "")">@row</li>
-			}			
-			</ul>
-		</td>
-		@if (compareRows != null) {
-		<td>
-				<ul>
-				@foreach (var row in compareRows) {
-					var isRemoved = !rows.Any(r => row.ToString().Equals(r.ToString()));
-					<li class="@(isRemoved ? "archived-entry-compare-modified" : "")">@row</li>
-				}			
-				</ul>	
-		</td>
-		}		
-	</tr>	
-	}
-}
-
 @helper ObjectRefList(string name, IEnumerable<ObjectRefContract> objRefs) {
-	@DataRowList(name, DataFormatUtils.GenerateHtml(objRefs, objRef => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(objRef))));
+	@Html.Partial("Partials/ArchivedEntry/_DataRowList", new DataRowListViewModel(name, DataFormatUtils.GenerateHtml(objRefs, objRef => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(objRef)))))
 }
 
 @helper PictureRow(string name, string url, string compareToUrl = null) {

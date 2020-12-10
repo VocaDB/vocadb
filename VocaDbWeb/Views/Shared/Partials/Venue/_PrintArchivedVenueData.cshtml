@@ -10,12 +10,12 @@
 	<table class="table table-bordered">
 		@Html.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel("Id", Model.ComparedVenues.FirstData.Id))
 		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedVenues, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedVenues, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
+		@ArchivedEntryHelpers.DataRowList(Html, "Names", Model.ComparedVenues, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
 		@ArchivedEntryHelpers.DataRow(Html, "Description", Model.ComparedVenues, d => d.Description)
 		@ArchivedEntryHelpers.DataRow(Html, "Coordinates", Model.ComparedVenues, d => ((d.Coordinates != null) && d.Coordinates.HasValue) ? d.Coordinates.Formatted : string.Empty)
 		@ArchivedEntryHelpers.DataRow(Html, "Country/Region", Model.ComparedVenues, d => !string.IsNullOrEmpty(d.AddressCountryCode) ? new RegionInfo(d.AddressCountryCode).DisplayName : string.Empty)
 		@ArchivedEntryHelpers.DataRow(Html, "Address", Model.ComparedVenues, d => d.Address)
-		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedVenues, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
+		@ArchivedEntryHelpers.DataRowList(Html, "External links", Model.ComparedVenues, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
 	</table>
 
 </div>

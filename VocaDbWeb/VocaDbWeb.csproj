@@ -176,6 +176,7 @@
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionPropertiesViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\CurrentVersionMessageViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\ArchivedEntry\DataRowListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\DataRowViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\NameInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ObjectRefInfoViewModel.cs" />
@@ -1981,6 +1982,7 @@
     <Content Include="Views\Shared\Partials\User\_UserLinkOrName.cshtml" />
     <Content Include="Views\Shared\Partials\EntryDetails\_ExternalLinksList.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_DataRow.cshtml" />
+    <Content Include="Views\Shared\Partials\ArchivedEntry\_DataRowList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
