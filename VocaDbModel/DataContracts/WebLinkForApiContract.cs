@@ -7,7 +7,7 @@ using VocaDb.Model.Domain.ExtLinks;
 namespace VocaDb.Model.DataContracts
 {
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class WebLinkForApiContract : IWebLink
+	public class WebLinkForApiContract : IWebLinkWithDescriptionOrUrl
 	{
 		public WebLinkForApiContract() { }
 

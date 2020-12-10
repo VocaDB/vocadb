@@ -1,20 +1,8 @@
-﻿@using VocaDb.Model.DataContracts
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Model.Domain.ExtLinks;
 @inherits VocaDb.Web.Code.HelperPage
 
-@helper ExternalLinksList(IEnumerable<WebLinkContract> webLinks, bool showCategory = false) {
-    
-    foreach (var link in webLinks) {
-        <a class="extLink" href="@VocaDb.Model.Service.Helpers.UrlHelper.MakePossileAffiliateLink(link.Url)" onclick="app.functions.trackOutboundLink(event)">@link.DescriptionOrUrl</a>
-        if (showCategory) {
-            @("(")@Translate.WebLinkCategoryNames[link.Category]@(")")
-        }
-        <br />
-	}
-
-}
-
-@helper ExternalLinksList(IEnumerable<WebLinkForApiContract> webLinks, bool showCategory = false) {
+@helper ExternalLinksList(IEnumerable<IWebLinkWithDescriptionOrUrl> webLinks, bool showCategory = false) {
     
     foreach (var link in webLinks) {
         <a class="extLink" href="@VocaDb.Model.Service.Helpers.UrlHelper.MakePossileAffiliateLink(link.Url)" onclick="app.functions.trackOutboundLink(event)">@link.DescriptionOrUrl</a>
