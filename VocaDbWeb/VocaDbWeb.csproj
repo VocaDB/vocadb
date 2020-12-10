@@ -256,6 +256,7 @@
     <Compile Include="Models\Shared\Partials\Song\LyricsInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\PVPreviewKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Song\SongLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongTypesDropdownKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagListViewModel.cs" />
@@ -1987,6 +1988,7 @@
     <Content Include="Views\Shared\Partials\ArchivedEntry\_DataRowList.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_PictureRow.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_TranslatedNameRow.cshtml" />
+    <Content Include="Views\Shared\Partials\Song\_SongLinkKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

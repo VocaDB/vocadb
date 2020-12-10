@@ -25,10 +25,6 @@
 	</a>
 }
 
-@helper SongLinkKnockout(string binding, string extUrlBinding = null, bool tooltip = false, string toolTipDomainBinding = null) {
-	<a href="#" data-bind="attr: { href: @extUrlBinding || app.EntryUrlMapper.details_song(@binding), title: @(binding).additionalNames }, text: @(binding).name, css: { extLink: @extUrlBinding } @(tooltip ? ", songToolTip: " + binding + ".id" : "") @(toolTipDomainBinding != null ? ", toolTipDomain: " + toolTipDomainBinding : "")"></a>
-}
-
 @helper SongListsKnockout(string binding, bool groupByYear = false) {
 	
 	<table class="table table-striped">
