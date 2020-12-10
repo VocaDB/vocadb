@@ -91,10 +91,6 @@
 	
 }
 
-@helper ObjectRefList(string name, IEnumerable<ObjectRefContract> objRefs) {
-	@Html.Partial("Partials/ArchivedEntry/_DataRowList", new DataRowListViewModel(name, DataFormatUtils.GenerateHtml(objRefs, objRef => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(objRef)))))
-}
-
 @helper PictureRow(string name, string url, string compareToUrl = null) {
 	<tr>
 		<td>@name</td>
