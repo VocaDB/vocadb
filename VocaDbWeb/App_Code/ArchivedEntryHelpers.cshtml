@@ -69,84 +69,14 @@
 				
 	}
 	
-	public static HelperResult TranslatedNameRow<T>(ComparedVersionsContract<T> comparedVersions, Func<T, TranslatedStringContract> valGetter)
+	public static IHtmlString TranslatedNameRow<T>(System.Web.Mvc.HtmlHelper htmlHelper, ComparedVersionsContract<T> comparedVersions, Func<T, ITranslatedString> valGetter)
 		where T : class {
 
 		var val1 = valGetter(comparedVersions.FirstData);
 		var val2 = comparedVersions.SecondData != null ? valGetter(comparedVersions.SecondData) : null;
 
-		return TranslatedNameRow(val1, val2);
-		
-	}
-
-	public static HelperResult TranslatedNameRow<T>(ComparedVersionsContract<T> comparedVersions, Func<T, ArchivedTranslatedStringContract> valGetter)
-		where T : class {
-
-		var val1 = valGetter(comparedVersions.FirstData);
-		var val2 = comparedVersions.SecondData != null ? valGetter(comparedVersions.SecondData) : null;
-
-		return TranslatedNameRow(val1, val2);
+		return htmlHelper.Partial("Partials/ArchivedEntry/_TranslatedNameRow", new TranslatedNameRowViewModel(val1, val2));
 
 	}
 	
-}
-
-@helper TranslatedNameRow(TranslatedStringContract name, TranslatedStringContract compareToName = null) {
-	<tr>
-		<td>Original language:</td>
-		<td colspan="@(compareToName != null ? 1 : 2)">
-			@Translate.ContentLanguageSelectionName(name.DefaultLanguage)
-		</td>
-		@if (compareToName != null) {
-			<td>			
-				@Translate.ContentLanguageSelectionName(compareToName.DefaultLanguage)
-			</td>
-		}
-	</tr>
-	<tr>
-		<td>Primary names</td>
-		<td colspan="@(compareToName != null ? 1 : 2)">
-			@Translate.ContentLanguageSelectionName(ContentLanguageSelection.Japanese): @name.Japanese<br />
-			@Translate.ContentLanguageSelectionName(ContentLanguageSelection.Romaji): @name.Romaji<br />
-			@Translate.ContentLanguageSelectionName(ContentLanguageSelection.English): @name.English<br />
-		</td>
-		@if (compareToName != null) {
-			<td>			
-				@(Translate.ContentLanguageSelectionName(ContentLanguageSelection.Japanese) + ": " + compareToName.Japanese)<br />
-				@(Translate.ContentLanguageSelectionName(ContentLanguageSelection.Romaji) + ": " + compareToName.Romaji)<br />
-				@(Translate.ContentLanguageSelectionName(ContentLanguageSelection.English) + ": " +  compareToName.English)<br />			
-			</td>
-		}
-	</tr>
-}
-
-@helper TranslatedNameRow(ArchivedTranslatedStringContract name, ArchivedTranslatedStringContract compareToName = null) {
-	<tr>
-		<td>Original language</td>
-		<td colspan="@(compareToName != null ? 1 : 2)">
-			@(name != null ? Translate.ContentLanguageSelectionName(name.DefaultLanguage) : string.Empty)
-		</td>
-		@if (compareToName != null) {
-			<td>			
-				@Translate.ContentLanguageSelectionName(compareToName.DefaultLanguage)
-			</td>
-		}
-	</tr>
-	<tr>
-		<td>Primary names</td>
-		<td colspan="@(compareToName != null ? 1 : 2)">
-			@if (name != null) {
-				@:@Translate.ContentLanguageSelectionName(ContentLanguageSelection.Japanese): @name.Japanese<br />
-				@:@Translate.ContentLanguageSelectionName(ContentLanguageSelection.Romaji): @name.Romaji<br />
-				@:@Translate.ContentLanguageSelectionName(ContentLanguageSelection.English): @name.English<br />
-			}
-		</td>
-		@if (compareToName != null) {
-			<td>			
-				@(Translate.ContentLanguageSelectionName(ContentLanguageSelection.Japanese) + ": " + compareToName.Japanese)<br />
-				@(Translate.ContentLanguageSelectionName(ContentLanguageSelection.Romaji) + ": " + compareToName.Romaji)<br />
-				@(Translate.ContentLanguageSelectionName(ContentLanguageSelection.English) + ": " +  compareToName.English)<br />
-			</td>
-		}
-	</tr>
 }

@@ -8,7 +8,7 @@
 
 	<table class="table table-bordered">
 		@Html.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel("Id", Model.ComparedTags.FirstData.Id))
-		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedTags, d => d.TranslatedName)
+		@ArchivedEntryHelpers.TranslatedNameRow(Html, Model.ComparedTags, d => d.TranslatedName)
 		@ArchivedEntryHelpers.DataRowList(Html, "Names", Model.ComparedTags, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
 		@ArchivedEntryHelpers.DataRow(Html, "Description", Model.ComparedTags, d => d.Description)
 		@ArchivedEntryHelpers.DataRow(Html, "Description English", Model.ComparedTags, d => d.DescriptionEng)

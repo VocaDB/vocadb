@@ -9,7 +9,7 @@
 
 	<table class="table table-bordered">
 		@Html.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel("Id", Model.ComparedVenues.FirstData.Id))
-		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedVenues, d => d.TranslatedName)
+		@ArchivedEntryHelpers.TranslatedNameRow(Html, Model.ComparedVenues, d => d.TranslatedName)
 		@ArchivedEntryHelpers.DataRowList(Html, "Names", Model.ComparedVenues, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
 		@ArchivedEntryHelpers.DataRow(Html, "Description", Model.ComparedVenues, d => d.Description)
 		@ArchivedEntryHelpers.DataRow(Html, "Coordinates", Model.ComparedVenues, d => ((d.Coordinates != null) && d.Coordinates.HasValue) ? d.Coordinates.Formatted : string.Empty)

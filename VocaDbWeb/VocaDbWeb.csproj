@@ -183,6 +183,7 @@
     <Compile Include="Models\Shared\Partials\ArchivedEntry\PictureFileInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\PictureRowViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\PVInfoViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\ArchivedEntry\TranslatedNameRowViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\WebLinkInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistLinkListViewModel.cs" />
@@ -1985,6 +1986,7 @@
     <Content Include="Views\Shared\Partials\ArchivedEntry\_DataRow.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_DataRowList.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_PictureRow.cshtml" />
+    <Content Include="Views\Shared\Partials\ArchivedEntry\_TranslatedNameRow.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

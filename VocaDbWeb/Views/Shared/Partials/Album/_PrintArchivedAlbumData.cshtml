@@ -10,7 +10,7 @@
 		@Html.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel("Album Id", Model.ComparedAlbums.FirstData.Id))
 		@ArchivedEntryHelpers.PictureRow(Html, "Main picture", Model.ComparedAlbums, id => Url.Action("ArchivedVersionCoverPicture", "Album", new { id }))
 		@ArchivedEntryHelpers.DataRow(Html, "Main picture MIME", Model.ComparedAlbums, d => d.MainPictureMime)
-		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedAlbums, d => d.TranslatedName)
+		@ArchivedEntryHelpers.TranslatedNameRow(Html, Model.ComparedAlbums, d => d.TranslatedName)
 		@ArchivedEntryHelpers.DataRowList(Html, "Names", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
 		@ArchivedEntryHelpers.DataRow(Html, "Description", Model.ComparedAlbums, d => d.Description, preserveLineBreaks: true)
 		@ArchivedEntryHelpers.DataRow(Html, "Description (en)", Model.ComparedAlbums, d => d.DescriptionEng, preserveLineBreaks: true)
