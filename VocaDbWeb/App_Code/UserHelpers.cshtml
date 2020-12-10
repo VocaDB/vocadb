@@ -23,13 +23,6 @@
 
 }
 
-<!-- User icon inside anchor (no name) -->
-@helper IconAndLinkKnockout(string userBinding, string cssClass) {
-	<a data-bind="attr: { href: app.EntryUrlMapper.details_user_byName(@(userBinding + ".name")) }" class="pull-left">
-		@ProfileIconKnockout(VocaDb.Model.Domain.Images.ImageSize.Thumb, binding: userBinding, size: 70)
-	</a>
-}
-
 @helper IconAndNameLinkKnockout(int iconSize = 20, string cssClass = "") {
 	@* Has to be one line because of Razor *@
 	<a href="#" class="@cssClass" data-bind="attr: { href: app.EntryUrlMapper.details_user_byName(name) }">@ProfileIconKnockout("$data.mainPicture != null ? $data.mainPicture.urlThumb : null", iconSize)<span data-bind="text: name"></span></a>

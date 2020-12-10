@@ -269,6 +269,7 @@
     <Compile Include="Models\Shared\Partials\Song\RatingIconViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongTypeLabelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\PrintArchivedTagDataViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\User\IconAndLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\IconNameAndTypeLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\SongVoteRatingsRadioKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Venue\PrintArchivedVenueDataViewModel.cs" />
@@ -1968,6 +1969,7 @@
     <Content Include="Views\Shared\Partials\Knockout\_LockingAutoComplete.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_TagFilters.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_WebLinksEditViewKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\User\_IconAndLinkKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
