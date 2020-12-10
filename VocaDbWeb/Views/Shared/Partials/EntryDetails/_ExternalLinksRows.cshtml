@@ -12,7 +12,7 @@
 	<tr>
 		<td>@ViewRes.EntryDetailsStrings.OfficialLinks</td>
 		<td>
-			@EntryDetailsHelpers.ExternalLinksList(official, false)
+			@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(official, false))
 		</td>
 	</tr>
 }
@@ -22,7 +22,7 @@
 	<tr>
 		<td>@ViewRes.EntryDetailsStrings.OtherLinks</td>
 		<td>
-			@EntryDetailsHelpers.ExternalLinksList(other, true)
+			@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(other, true))
 		</td>
 	</tr>
 }

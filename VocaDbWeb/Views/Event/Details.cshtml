@@ -124,7 +124,7 @@
 			}
 
 			@if (Model.WebLinks.Any()) {
-				@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
+				@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.WebLinks, false))
 				<br/>
 			}
 
@@ -149,7 +149,7 @@
 	if (!string.IsNullOrEmpty(Model.Series.Description)) {
 		@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Series.Description))
 	}
-	@EntryDetailsHelpers.ExternalLinksList(Model.Series.WebLinks, false)
+	@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.Series.WebLinks, false))
 }
 
 @if (Model.SongList != null) {
@@ -181,7 +181,7 @@
 	if (!string.IsNullOrEmpty(Model.Venue.Description)) {
 		@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Venue.Description))
 	}
-	@EntryDetailsHelpers.ExternalLinksList(Model.Venue.WebLinks, false)
+	@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.Venue.WebLinks, false))
 }
 
 @if (Model.Albums.Any()) {

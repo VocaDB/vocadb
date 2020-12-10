@@ -198,6 +198,7 @@
     <Compile Include="Models\Shared\Partials\EntryDetails\EntryDeletePopupBaseViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\EntryDeletePopupViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\EntryTrashPopupViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\EntryDetails\ExternalLinksListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ExternalLinksRowsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\LargeShareLinksViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryPopupKnockoutViewModel.cs" />
@@ -1712,7 +1713,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_Code\EntryDetailsHelpers.cshtml" />
     <Content Include="Views\Admin\ViewEntryReports.cshtml" />
     <Content Include="Views\Error\Forbidden.cshtml" />
     <Content Include="Views\Error\_Layout.cshtml" />
@@ -1978,6 +1978,7 @@
     <Content Include="Views\Shared\Partials\User\_NameLinkKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\User\_UserLink.cshtml" />
     <Content Include="Views\Shared\Partials\User\_UserLinkOrName.cshtml" />
+    <Content Include="Views\Shared\Partials\EntryDetails\_ExternalLinksList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
