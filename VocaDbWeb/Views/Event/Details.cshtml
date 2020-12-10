@@ -12,6 +12,7 @@
 @using VocaDb.Web.Models.Shared.Partials.PV;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @using Res = ViewRes.Event.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract>
@@ -234,7 +235,7 @@
 <div data-bind="visible: usersAttending().length" class="withMargin">
 	<ul data-bind="foreach: usersAttending()">
 		<li>
-			@UserHelpers.IconAndNameLinkKnockout()
+			@Html.Partial("Partials/User/_IconAndNameLinkKnockout", new IconAndNameLinkKnockoutViewModel())
 		</li>
 	</ul>
 </div>

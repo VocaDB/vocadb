@@ -1,4 +1,5 @@
-﻿
+﻿@using VocaDb.Web.Models.Shared.Partials.User;
+
 <!-- RatingsViewModel -->
 
 <div data-bind="visible: showFavorites">
@@ -8,7 +9,7 @@
 	</h4>
 	<ul class="link-list" data-bind="foreach: favorites">
 		<li class="link-item user-with-rating">
-			@UserHelpers.IconAndNameLinkKnockout()
+			@Html.Partial("Partials/User/_IconAndNameLinkKnockout", new IconAndNameLinkKnockoutViewModel())
 		</li>
 	</ul>
 </div>
@@ -20,7 +21,7 @@
 	</h4>
 	<ul class="link-list" data-bind="foreach: likes">
 		<li class="link-item user-with-rating">
-			@UserHelpers.IconAndNameLinkKnockout()			
+			@Html.Partial("Partials/User/_IconAndNameLinkKnockout", new IconAndNameLinkKnockoutViewModel())
 		</li>
 	</ul>
 </div>
