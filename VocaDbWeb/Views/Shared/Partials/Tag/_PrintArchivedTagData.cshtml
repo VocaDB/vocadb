@@ -8,15 +8,15 @@
 
 	<table class="table table-bordered">
 		@Html.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel("Id", Model.ComparedTags.FirstData.Id))
-		@ArchivedEntryHelpers.TranslatedNameRow(Html, Model.ComparedTags, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList(Html, "Names", Model.ComparedTags, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
-		@ArchivedEntryHelpers.DataRow(Html, "Description", Model.ComparedTags, d => d.Description)
-		@ArchivedEntryHelpers.DataRow(Html, "Description English", Model.ComparedTags, d => d.DescriptionEng)
-		@ArchivedEntryHelpers.ObjectRefList(Html, "Related tags", Model.ComparedTags, d => d.RelatedTags)
-		@ArchivedEntryHelpers.DataRow(Html, "Valid for", Model.ComparedTags, d => d.Targets)
-		@ArchivedEntryHelpers.DataRowList(Html, "External links", Model.ComparedTags, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
-		@ArchivedEntryHelpers.DataRow(Html, "Category name", Model.ComparedTags, d => d.CategoryName)
-		@ArchivedEntryHelpers.DataRow(Html, "Parent", Model.ComparedTags, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.Parent)))
+		@Html.TranslatedNameRow(Model.ComparedTags, d => d.TranslatedName)
+		@Html.DataRowList("Names", Model.ComparedTags, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
+		@Html.DataRow("Description", Model.ComparedTags, d => d.Description)
+		@Html.DataRow("Description English", Model.ComparedTags, d => d.DescriptionEng)
+		@Html.ObjectRefList("Related tags", Model.ComparedTags, d => d.RelatedTags)
+		@Html.DataRow("Valid for", Model.ComparedTags, d => d.Targets)
+		@Html.DataRowList("External links", Model.ComparedTags, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
+		@Html.DataRow("Category name", Model.ComparedTags, d => d.CategoryName)
+		@Html.DataRow("Parent", Model.ComparedTags, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.Parent)))
 	</table>
 
 </div>

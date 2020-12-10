@@ -162,6 +162,7 @@
     <Compile Include="Code\Web\AspNetHttpResponse.cs" />
     <Compile Include="Controllers\Api\CommentApiController.cs" />
     <Compile Include="Controllers\Api\EntryTypesApiController.cs" />
+    <Compile Include="Helpers\ArchivedEntryHtmlExtensions.cs" />
     <Compile Include="Helpers\LaravelMixHelper.cs" />
     <Compile Include="Controllers\Api\IPRuleApiController.cs" />
     <Compile Include="Controllers\Api\VenueApiController.cs" />
@@ -1695,7 +1696,6 @@
     <Content Include="Views\Tag\Details.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Album\ViewVersion.cshtml" />
-    <Content Include="App_Code\ArchivedEntryHelpers.cshtml" />
     <Content Include="Views\Artist\ViewVersion.cshtml" />
     <Content Include="App_Code\SongHelpers.cshtml" />
     <Content Include="Views\Song\ViewVersion.cshtml" />

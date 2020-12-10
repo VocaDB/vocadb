@@ -8,19 +8,19 @@
 
 	<table class="table table-bordered">
 		@Html.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel("Id", Model.ComparedArtists.FirstData.Id))
-		@ArchivedEntryHelpers.PictureRow(Html, "Main picture", Model.ComparedArtists, id => Url.Action("ArchivedVersionPicture", "Artist", new { id }))
-		@ArchivedEntryHelpers.DataRow(Html, "Main picture MIME", Model.ComparedArtists, d => d.MainPictureMime)
-		@ArchivedEntryHelpers.TranslatedNameRow(Html, Model.ComparedArtists, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList(Html, "Names", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
-		@ArchivedEntryHelpers.DataRow(Html, "Description", Model.ComparedArtists, d => d.Description, preserveLineBreaks: true)
-		@ArchivedEntryHelpers.DataRow(Html, "Description (en)", Model.ComparedArtists, d => d.DescriptionEng, preserveLineBreaks: true)
-		@ArchivedEntryHelpers.DataRow(Html, "Release date", Model.ComparedArtists, d => d.ReleaseDate)
-		@ArchivedEntryHelpers.DataRow(Html, "Artist type", Model.ComparedArtists, d => Translate.ArtistTypeName(d.ArtistType))
-		@ArchivedEntryHelpers.DataRowList(Html, "External links", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
-		@ArchivedEntryHelpers.DataRow(Html, "Base voicebank", Model.ComparedArtists, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.BaseVoicebank)))
-		@ArchivedEntryHelpers.DataRowList(Html, "Associated artists", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.Groups, g => MvcHtmlString.Create(g.NameHint + " [" + g.Id + "] (" + g.LinkType + ")")))
-		@ArchivedEntryHelpers.ObjectRefList(Html, "Members", Model.ComparedArtists, d => d.Members)
-		@ArchivedEntryHelpers.DataRowList(Html, "Pictures", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.Pictures, picture => Html.Partial("Partials/ArchivedEntry/_PictureFileInfo", new PictureFileInfoViewModel(picture))))
+		@Html.PictureRow("Main picture", Model.ComparedArtists, id => Url.Action("ArchivedVersionPicture", "Artist", new { id }))
+		@Html.DataRow("Main picture MIME", Model.ComparedArtists, d => d.MainPictureMime)
+		@Html.TranslatedNameRow(Model.ComparedArtists, d => d.TranslatedName)
+		@Html.DataRowList("Names", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
+		@Html.DataRow("Description", Model.ComparedArtists, d => d.Description, preserveLineBreaks: true)
+		@Html.DataRow("Description (en)", Model.ComparedArtists, d => d.DescriptionEng, preserveLineBreaks: true)
+		@Html.DataRow("Release date", Model.ComparedArtists, d => d.ReleaseDate)
+		@Html.DataRow("Artist type", Model.ComparedArtists, d => Translate.ArtistTypeName(d.ArtistType))
+		@Html.DataRowList("External links", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
+		@Html.DataRow("Base voicebank", Model.ComparedArtists, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.BaseVoicebank)))
+		@Html.DataRowList("Associated artists", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.Groups, g => MvcHtmlString.Create(g.NameHint + " [" + g.Id + "] (" + g.LinkType + ")")))
+		@Html.ObjectRefList("Members", Model.ComparedArtists, d => d.Members)
+		@Html.DataRowList("Pictures", Model.ComparedArtists, d => DataFormatUtils.GenerateHtml(d.Pictures, picture => Html.Partial("Partials/ArchivedEntry/_PictureFileInfo", new PictureFileInfoViewModel(picture))))
 	</table>
 
 </div>
