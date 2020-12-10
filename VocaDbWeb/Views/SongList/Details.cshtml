@@ -164,7 +164,7 @@
 		<div class="control-group">
 			<div class="control-label">@ViewRes.SharedStrings.Tag</div>
 			<div class="controls">
-				@KnockoutHelpers.TagFilters()
+				@Html.Partial("Partials/Knockout/_TagFilters", new TagFiltersViewModel())
 			</div>
 		</div>
 

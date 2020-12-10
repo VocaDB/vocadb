@@ -219,6 +219,7 @@
     <Compile Include="Models\Shared\Partials\Knockout\LockingAutoCompleteViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\SearchDropDownViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\SongLockingAutoCompleteViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Knockout\TagFiltersViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedBiliViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedNicoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedPiaproViewModel.cs" />
@@ -1965,6 +1966,7 @@
     <Content Include="Views\Shared\Partials\_TwitterTimeline.cshtml" />
     <Content Include="Views\Shared\Partials\Comment\_CommentKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\Knockout\_LockingAutoComplete.cshtml" />
+    <Content Include="Views\Shared\Partials\Knockout\_TagFilters.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

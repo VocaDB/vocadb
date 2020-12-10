@@ -96,7 +96,7 @@
 		<div class="control-group" data-bind="visible: showTagFilter">
 			<div class="control-label">@ViewRes.SharedStrings.Tag</div>
 			<div class="controls" data-bind="with: tagFilters">
-				@KnockoutHelpers.TagFilters(true)
+				@Html.Partial("Partials/Knockout/_TagFilters", new TagFiltersViewModel(true))
 			</div>
 		</div>
 
