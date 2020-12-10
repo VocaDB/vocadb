@@ -83,11 +83,3 @@ if (user != null) {
 		@name
 	}
 }
-
-@helper UserLink(IUser user, string name) {
-	if (user != null) {
-		@Html.Partial("Partials/User/_UserLink", new UserLinkViewModel(user))
-	} else {
-		@name
-	}
-}
