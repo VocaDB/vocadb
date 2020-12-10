@@ -1,0 +1,15 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
+@model PictureRowViewModel
+
+<tr>
+	<td>@Model.Name</td>
+	<td colspan="@(!string.IsNullOrEmpty(Model.CompareToUrl) ? 1 : 2)">
+		<img src="@Model.Url" alt="@Model.Name" class="coverPic" />
+	</td>
+	@if (!string.IsNullOrEmpty(Model.CompareToUrl))
+	{
+		<td>
+			<img src="@Model.CompareToUrl" alt="@Model.Name" class="coverPic" />
+		</td>
+	}
+</tr>

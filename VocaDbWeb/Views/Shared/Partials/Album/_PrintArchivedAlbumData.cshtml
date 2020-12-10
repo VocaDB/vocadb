@@ -8,7 +8,7 @@
 
 	<table class="table table-bordered">
 		@Html.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel("Album Id", Model.ComparedAlbums.FirstData.Id))
-		@ArchivedEntryHelpers.PictureRow("Main picture", Model.ComparedAlbums, id => Url.Action("ArchivedVersionCoverPicture", "Album", new { id }))
+		@ArchivedEntryHelpers.PictureRow(Html, "Main picture", Model.ComparedAlbums, id => Url.Action("ArchivedVersionCoverPicture", "Album", new { id }))
 		@ArchivedEntryHelpers.DataRow(Html, "Main picture MIME", Model.ComparedAlbums, d => d.MainPictureMime)
 		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedAlbums, d => d.TranslatedName)
 		@ArchivedEntryHelpers.DataRowList(Html, "Names", Model.ComparedAlbums, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))

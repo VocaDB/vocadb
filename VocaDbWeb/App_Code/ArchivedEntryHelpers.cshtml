@@ -59,13 +59,13 @@
 		
 	}
 
-	public static HelperResult PictureRow<T>(string name, ComparedVersionsContract<T> comparedVersions, Func<int, string> urlGetter)
+	public static IHtmlString PictureRow<T>(System.Web.Mvc.HtmlHelper htmlHelper, string name, ComparedVersionsContract<T> comparedVersions, Func<int, string> urlGetter)
 		where T : class {
 
 		var val1 = urlGetter(comparedVersions.FirstId);
 		var val2 = (comparedVersions.SecondId != 0 ? urlGetter(comparedVersions.SecondId) : null);
 
-		return PictureRow(name, val1, val2);
+		return htmlHelper.Partial("Partials/ArchivedEntry/_PictureRow", new PictureRowViewModel(name, val1, val2));
 				
 	}
 	
@@ -89,21 +89,6 @@
 
 	}
 	
-}
-
-@helper PictureRow(string name, string url, string compareToUrl = null) {
-	<tr>
-		<td>@name</td>
-		<td colspan="@(!string.IsNullOrEmpty(compareToUrl) ? 1 : 2)">
-			<img src="@url" alt="@name" class="coverPic" />
-		</td>
-		@if (!string.IsNullOrEmpty(compareToUrl)) {
-			<td>
-				<img src="@compareToUrl" alt="@name" class="coverPic" />
-			</td>
-		}
-	</tr>	
-
 }
 
 @helper TranslatedNameRow(TranslatedStringContract name, TranslatedStringContract compareToName = null) {
