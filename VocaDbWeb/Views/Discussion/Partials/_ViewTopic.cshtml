@@ -10,7 +10,7 @@
 			<h3 data-bind="text: contract().name"></h3>
 
 			<div data-bind="with: contract">
-				@CommentHelpers.CommentKnockout("content", true, "$parents[1].deleteTopic", "$parent.beginEditTopic")
+				@Html.Partial("Partials/Comment/_CommentKnockout", new CommentKnockoutViewModel("content", true, "$parents[1].deleteTopic", "$parent.beginEditTopic"))
 			</div>
 
 		</div>	

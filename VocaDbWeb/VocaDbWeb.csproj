@@ -189,6 +189,7 @@
     <Compile Include="Models\Shared\Partials\Comment\CommentBodyEditableKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentBodyKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentBodyLargeViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Comment\CommentKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentWithEntryVerticalViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CreateCommentViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\EditableCommentsViewModel.cs" />
@@ -814,7 +815,6 @@
     <Content Include="Scripts\highcharts\4.2.0\themes\grid.js" />
     <Content Include="Scripts\highcharts\4.2.0\themes\sand-signika.js" />
     <Content Include="Scripts\highcharts\4.2.0\themes\skies.js" />
-    <Content Include="App_Code\CommentHelpers.cshtml" />
     <Content Include="Content\Styles\ExtLinks.less" />
     <Content Include="Content\Styles\Overrides.less" />
     <Content Include="App_Code\KnockoutHelpers.cshtml" />
@@ -1962,6 +1962,7 @@
     <Content Include="Views\Shared\Partials\ArchivedEntry\_PVInfo.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_ObjectRefInfo.cshtml" />
     <Content Include="Views\Shared\Partials\_TwitterTimeline.cshtml" />
+    <Content Include="Views\Shared\Partials\Comment\_CommentKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
