@@ -272,6 +272,7 @@
     <Compile Include="Models\Shared\Partials\User\IconAndLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\IconAndNameLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\IconNameAndTypeLinkKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\User\NameLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\SongVoteRatingsRadioKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Venue\PrintArchivedVenueDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Event\VenueLinkOrVenueNameViewModel.cs" />
@@ -1972,6 +1973,7 @@
     <Content Include="Views\Shared\Partials\Knockout\_WebLinksEditViewKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\User\_IconAndLinkKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\User\_IconAndNameLinkKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\User\_NameLinkKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -63,7 +63,7 @@
 				<!-- /ko -->
 			</div>
 			<h3 class="media-heading">
-				@UserHelpers.NameLinkKnockout("user")
+				@Html.Partial("Partials/User/_NameLinkKnockout", new NameLinkKnockoutViewModel("user"))
 			</h3>
 			
 			<span data-bind="foreach: $parent.ratingStars($parent.getRatingForUser(user.id))">
