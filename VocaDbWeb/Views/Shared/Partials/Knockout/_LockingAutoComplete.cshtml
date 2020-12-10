@@ -1,0 +1,18 @@
+﻿@using VocaDb.Model.Domain;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@model LockingAutoCompleteViewModel
+
+@*
+	Autocomplete box that allows selection of one item. When an item is selected, "clear" button will be displayed.
+*@
+<input type="text" class="input-large" data-bind="@Model.BindingHandler: @Model.Binding, visible: !@(Model.ValBinding ?? Model.Binding)()@(!string.IsNullOrEmpty(Model.ExtraBindings) ? ", " + Model.ExtraBindings : "")" placeholder="@ViewRes.SharedStrings.Search" />
+<div class="input-append" data-bind="visible: @(Model.ValBinding ?? Model.Binding)()" style="display: none;">
+	@if (Model.EntryType != EntryType.Undefined)
+	{
+		<a href="#" class="btn btn-nomargin" data-bind="attr: { href: app.EntryUrlMapper.details('@Model.EntryType', @(Model.ValBinding ?? Model.Binding)()) }">
+			<i class="icon icon-info-sign"></i>
+		</a>
+	}
+	<input type="text" class="input-large" readonly data-bind="value: @(Model.TextBinding ?? Model.Binding)" />
+	<button type="button" class="btn btn-danger" data-bind="click: function() { @(Model.ValBinding ?? Model.Binding)(null); }">@ViewRes.SharedStrings.Clear</button>
+</div>

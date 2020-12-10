@@ -115,7 +115,7 @@
 			</div>
 			<div class="editor-field">
 				<div style="display: inline-block;" class="input-append">
-					@KnockoutHelpers.LockingAutoComplete("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id")
+					@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id"))
 				</div>
 				<div data-bind="visible: originalVersion.isEmpty">
 					<a href="" data-bind="click: findOriginalSongSuggestions" class="textLink searchLink">Find originals</a>

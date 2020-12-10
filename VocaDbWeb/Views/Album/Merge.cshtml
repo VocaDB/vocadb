@@ -1,4 +1,5 @@
-﻿@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Albums.AlbumContract>
 
 @{
@@ -20,7 +21,7 @@
 	<br />
 	<div class="clearfix">
 		<div class="pull-left">
-			@KnockoutHelpers.LockingAutoComplete("albumAutoComplete", "targetSearchParams", "target.name", "target.id")
+			@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("albumAutoComplete", "targetSearchParams", "target.name", "target.id"))
 		</div>
 		<div class="pull-left entry-field-inline-warning">
 			<div class="alert" data-bind="visible: validationError_targetIsNewer" style="display: none;">

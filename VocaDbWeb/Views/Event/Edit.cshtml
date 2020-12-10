@@ -82,7 +82,7 @@
 					Series
 				</div>
 				<div class="editor-field">
-					@KnockoutHelpers.LockingAutoComplete("releaseEventSeriesAutoComplete", "series.entry", "series.name")
+					@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("releaseEventSeriesAutoComplete", "series.entry", "series.name"))
 					@Html.HiddenForKnockout(m => m.Series, "value: ko.toJSON(series)")
 				</div>
 
@@ -184,7 +184,7 @@
 				Venue
 			</div>
 			<div class="editor-field">
-				@KnockoutHelpers.LockingAutoComplete("venueAutoComplete", "venue.entry", "venue.name")
+				@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("venueAutoComplete", "venue.entry", "venue.name"))
 				@Html.HiddenForKnockout(m => m.Venue, "value: ko.toJSON(venue.entry())")
 			</div>
 

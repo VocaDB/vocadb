@@ -216,6 +216,7 @@
     <Compile Include="Models\Shared\Partials\Knockout\EntryValidationMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\IconAndNameKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\LanguageSelectionDropDownViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Knockout\LockingAutoCompleteViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\SearchDropDownViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\SongLockingAutoCompleteViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedBiliViewModel.cs" />
@@ -1963,6 +1964,7 @@
     <Content Include="Views\Shared\Partials\ArchivedEntry\_ObjectRefInfo.cshtml" />
     <Content Include="Views\Shared\Partials\_TwitterTimeline.cshtml" />
     <Content Include="Views\Shared\Partials\Comment\_CommentKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\Knockout\_LockingAutoComplete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

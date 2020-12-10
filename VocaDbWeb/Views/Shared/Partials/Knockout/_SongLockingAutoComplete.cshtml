@@ -7,4 +7,4 @@
 @{
 	var songTypesStr = Model.SongTypes != SongTypes.Unspecified ? string.Join(",", Model.SongTypes.ToIndividualSelections().Select(t => t.ToString())) : "";
 }
-@KnockoutHelpers.LockingAutoComplete("songAutoComplete", "{ acceptSelection: " + Model.Binding + ".id, extraQueryParams: { songTypes: '" + songTypesStr + "' }, ignoreId: " + Model.IgnoreId + " }", textBinding: Model.Binding + ".name", valBinding: Model.Binding + ".id", entryType: EntryType.Song)
+@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("songAutoComplete", "{ acceptSelection: " + Model.Binding + ".id, extraQueryParams: { songTypes: '" + songTypesStr + "' }, ignoreId: " + Model.IgnoreId + " }", textBinding: Model.Binding + ".name", valBinding: Model.Binding + ".id", entryType: EntryType.Song))

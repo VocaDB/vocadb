@@ -3,6 +3,7 @@
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Code
 @using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using VocaDb.Web.Resources.Domain
 @using Res = ViewRes.Search.IndexStrings;
 @using SharedRes = ViewRes.SharedStrings;
@@ -112,7 +113,7 @@
 			<div class="control-label">@Res.TagCategory</div>
 			<div class="controls">
 				<div class="input-append">
-					@KnockoutHelpers.LockingAutoComplete("tagCategoryAutoComplete", "categoryName", extraBindings: "clearValue: true")
+					@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("tagCategoryAutoComplete", "categoryName", extraBindings: "clearValue: true"))
 				</div>
 			</div>
 		</div>

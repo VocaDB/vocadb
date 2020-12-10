@@ -194,7 +194,7 @@
 				</div>
 				<div class="editor-field">
 					<div style="display: inline-block;" class="input-append">
-						@KnockoutHelpers.LockingAutoComplete("artistAutoComplete", "baseVoicebankSearchParams", textBinding: "baseVoicebank.name", valBinding: "baseVoicebank.id")
+						@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("artistAutoComplete", "baseVoicebankSearchParams", textBinding: "baseVoicebank.name", valBinding: "baseVoicebank.id"))
 					</div>
 				</div>		
 				<!-- /ko -->		

@@ -1,22 +1,5 @@
 ﻿@using System.Web.Mvc.Html;
-@using VocaDb.Model.Domain;
 @inherits VocaDb.Web.Code.HelperPage
-
-@* 
-	Autocomplete box that allows selection of one item. When an item is selected, "clear" button will be displayed.
-*@
-@helper LockingAutoComplete(string bindingHandler, string binding, string textBinding = null, string valBinding = null, string extraBindings = null, EntryType entryType = EntryType.Undefined) {
-	<input type="text" class="input-large" data-bind="@bindingHandler: @binding, visible: !@(valBinding ?? binding)()@(!string.IsNullOrEmpty(extraBindings) ? ", " + extraBindings : "")" placeholder="@ViewRes.SharedStrings.Search" />
-	<div class="input-append" data-bind="visible: @(valBinding ?? binding)()" style="display: none;">
-		@if (entryType != EntryType.Undefined) {
-			<a href="#" class="btn btn-nomargin" data-bind="attr: { href: app.EntryUrlMapper.details('@entryType', @(valBinding ?? binding)()) }">
-				<i class="icon icon-info-sign"></i>
-			</a>
-		}
-		<input type="text" class="input-large" readonly data-bind="value: @(textBinding ?? binding)" />
-		<button type="button" class="btn btn-danger" data-bind="click: function() { @(valBinding ?? binding)(null); }">@ViewRes.SharedStrings.Clear</button>
-	</div>
-}
 
 @helper TagFilters(bool topGenres = false) {
 
