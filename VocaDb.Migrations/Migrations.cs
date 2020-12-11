@@ -1,5 +1,4 @@
 using System.Data;
-using System.Linq;
 using FluentMigrator;
 
 namespace VocaDb.Migrations
@@ -41,6 +40,12 @@ namespace VocaDb.Migrations
 
 		public override void Up()
 		{
+			// TODO: remove these columns
+			Alter.Column("AuthorName").OnTable(TableNames.AlbumComments).AsString(100).Nullable();
+			Alter.Column("AuthorName").OnTable(TableNames.DiscussionComments).InSchema(SchemaNames.Discussions).AsString(100).Nullable();
+			Alter.Column("Author").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).AsInt32().Nullable();
+			Alter.Column("Content").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).AsString(int.MaxValue).Nullable();
+
 			// Rename columns on `DiscussionTopics` table.
 			Rename.Column("Content").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).To("Message");
 
@@ -48,11 +53,6 @@ namespace VocaDb.Migrations
 			Rename.Column("Date").OnTable(TableNames.AlbumReviews).To("Created");
 			Rename.Column("Text").OnTable(TableNames.AlbumReviews).To("Message");
 			Rename.Column("User").OnTable(TableNames.AlbumReviews).To("Author");
-			Delete.Index("UX_AlbumReviews").OnTable(TableNames.AlbumReviews);
-			Create.Index().OnTable(TableNames.AlbumReviews)
-				.OnColumn("Album").Ascending()
-				.OnColumn("Author").Ascending()
-				.OnColumn("LanguageCode").Ascending();
 
 			// Create `Comments` table.
 			Create.Table(TableNames.Comments)
@@ -61,89 +61,42 @@ namespace VocaDb.Migrations
 				.WithColumn("Created").AsDateTime().NotNullable()
 				.WithColumn("Deleted").AsBoolean().NotNullable().WithDefaultValue(false)
 				.WithColumn("Message").AsString(int.MaxValue).NotNullable()
+				.WithColumn("LanguageCode").AsString(8).Nullable()
+				.WithColumn("Title").AsString(200).Nullable()
+				.WithColumn("EntryType").AsString(20).NotNullable()
+				.WithColumn("Album").AsInt32().Nullable().ForeignKey(TableNames.Albums, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("Artist").AsInt32().Nullable().ForeignKey(TableNames.Artists, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("Topic").AsInt32().Nullable().ForeignKey(foreignKeyName: null, "discussions", TableNames.DiscussionTopics, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("ReleaseEvent").AsInt32().Nullable().ForeignKey(TableNames.AlbumReleaseEvents, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("Song").AsInt32().Nullable().ForeignKey(TableNames.Songs, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("SongList").AsInt32().Nullable().ForeignKey(TableNames.SongLists, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("Tag").AsInt32().Nullable().ForeignKey(TableNames.Tags, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("User").AsInt32().Nullable().ForeignKey(TableNames.Users, "Id").Indexed()
 				// TODO: remove these columns
 				.WithColumn("OldTable").AsString().Nullable()
 				.WithColumn("OldId").AsInt32().Nullable();
 
-			var commentTables = new[]
-			{
-				new CommentTable(name: TableNames.AlbumComments, entryTypeName: "Album"),
-				new CommentTable(name: TableNames.ArtistComments, entryTypeName: "Artist"),
-				new CommentTable(name: TableNames.DiscussionComments, schema: SchemaNames.Discussions, entryTypeName: "Topic"),
-				new CommentTable(name: TableNames.ReleaseEventComments, entryTypeName: "ReleaseEvent"),
-				new CommentTable(name: TableNames.SongComments, entryTypeName: "Song"),
-				new CommentTable(name: TableNames.SongListComments, entryTypeName: "SongList"),
-				new CommentTable(name: TableNames.TagComments, entryTypeName: "Tag"),
-				new CommentTable(name: TableNames.UserComments, entryTypeName: "User"),
-
-				new CommentTable(name: TableNames.DiscussionTopics, schema: SchemaNames.Discussions),
-				new CommentTable(name: TableNames.AlbumReviews, entryTypeName: "Album"),
-			};
-
-			// insert into Comments(OldTable, OldId, Author, Created, Message)
-			//     select 'AlbumComments', Id, Author, Created, Message from AlbumComments union
-			//     select 'ArtistComments', Id, Author, Created, Message from ArtistComments union
-			//     select 'discussions.DiscussionComments', Id, Author, Created, Message from discussions.DiscussionComments union
-			//     ...
-			//     select 'UserComments', Id, Author, Created, Message from UserComments union
-			//     select 'DiscussionTopics', Id, Author, Created, Message from discussions.DiscussionTopics union
-			//     select 'AlbumReviews', Id, Author, Created, Message from AlbumReviews
-			// order by Created
-			var values = string.Join(" union ", commentTables.Select(table => $"select '{table.NameWithSchema}', Id, Author, Created, Message from {table.NameWithSchema}"));
-			Execute.Sql($@"insert into {TableNames.Comments}(OldTable, OldId, Author, Created, Message) {values} order by Created");
-
-			foreach (var table in commentTables)
-			{
-				// Add `Comment` column to comment tables (`AlbumComments`, `ArtistComments`, `DiscussionComments`, ..., 'DiscussionTopics', 'AlbumReviews').
-				Create.Column("Comment").OnTable(table.Name).InSchema(table.Schema).AsInt32().Nullable();
-				// e.g. update discussions.DiscussionComments set Comment = c.Id from discussions.DiscussionComments ec inner join Comments c on c.OldTable = 'discussions.DiscussionComments' and ec.Id = c.OldId
-				Execute.Sql($"update {table.NameWithSchema} set Comment = c.Id from {table.NameWithSchema} ec inner join {TableNames.Comments} c on c.OldTable = '{table.NameWithSchema}' and ec.Id = c.OldId");
-				Alter.Column("Comment").OnTable(table.Name).InSchema(table.Schema).AsInt32().NotNullable().ForeignKey(TableNames.Comments, "Id");
-
-				// TODO: remove these columns.
-
-				// Make `Author` nullable and rename it to `OldAuthor`.
-				Alter.Column("Author").OnTable(table.Name).InSchema(table.Schema).AsInt32().Nullable();
-				Rename.Column("Author").OnTable(table.Name).InSchema(table.Schema).To("OldAuthor");
-
-				// Make `Created` nullable and rename it to `OldCreated`.
-				Alter.Column("Created").OnTable(table.Name).InSchema(table.Schema).AsDateTime().Nullable();
-				Rename.Column("Created").OnTable(table.Name).InSchema(table.Schema).To("OldCreated");
-
-				// Make `Message` nullable and rename it to `OldMessage`.
-				Alter.Column("Message").OnTable(table.Name).InSchema(table.Schema).AsString(int.MaxValue).Nullable();
-				Rename.Column("Message").OnTable(table.Name).InSchema(table.Schema).To("OldMessage");
-
-				if (Schema.Schema(table.Schema).Table(table.Name).Column("AuthorName").Exists())
-				{
-					// Make `AuthorName` nullable and rename it to `OldAuthorName`.
-					Alter.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).AsString(100).Nullable();
-					Rename.Column("AuthorName").OnTable(table.Name).InSchema(table.Schema).To("OldAuthorName");
-				}
-
-				if (table.EntryTypeName != null)
-				{
-					Delete.PrimaryKey($"PK_{table.Name}").FromTable(table.Name).InSchema(table.Schema);
-					Delete.ForeignKey($"FK_{table.Name}_Comment_Comments_Id").OnTable(table.Name).InSchema(table.Schema);
-					// Make `Id` nullable and rename it to `OldId`.
-					Alter.Column("Id").OnTable(table.Name).InSchema(table.Schema).AsInt32().Nullable();
-					Rename.Column("Id").OnTable(table.Name).InSchema(table.Schema).To("OldId");
-
-					Create.PrimaryKey().OnTable(table.Name).WithSchema(table.Schema).Column("Comment");
-				}
-			}
-
-			// Copy the value of `Deleted` from `DiscussionTopics` to `Comments`.
-			Execute.Sql($"update Comments set Deleted = ec.Deleted from discussions.DiscussionTopics ec inner join Comments c on c.OldTable = 'discussions.DiscussionTopics' and ec.Id = c.OldId");
-
-			// Copy `Comment` and `Topic` (`Id`) from `DiscussionTopics` to `DiscussionComments`.
-			Execute.Sql($"insert into discussions.DiscussionComments(Comment, Topic) select Comment, Id from discussions.DiscussionTopics");
-
-			// Make `Comment` nullable and rename it to `OldComment`.
-			Alter.Column("Comment").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).AsInt32().Nullable();
-			Rename.Column("Comment").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).To("OldComment");
-
-			Rename.Column("OldCreated").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).To("Created");
+			Execute.Sql(@"insert into Comments(OldTable, OldId, EntryType, Album, Artist, Topic, ReleaseEvent, Song, SongList, Tag, [User], Author, Created, Message, Deleted, LanguageCode, Title)
+select 'AlbumComments', Id, 'AlbumComment', Album, null, null, null, null, null, null, null, Author, Created, Message, 0, null, null from AlbumComments
+union
+select 'ArtistComments', Id, 'ArtistComment', null, Artist, null, null, null, null, null, null, Author, Created, Message, 0, null, null from ArtistComments
+union
+select 'discussions.DiscussionComments', Id, 'DiscussionComment', null, null, Topic, null, null, null, null, null, Author, Created, Message, 0, null, null from discussions.DiscussionComments
+union
+select 'ReleaseEventComments', Id, 'ReleaseEventComment', null, null, null, ReleaseEvent, null, null, null, null, Author, Created, Message, 0, null, null from ReleaseEventComments
+union
+select 'SongComments', Id, 'SongComment', null, null, null, null, Song, null, null, null, Author, Created, Message, 0, null, null from SongComments
+union
+select 'SongListComments', Id, 'SongListComment', null, null, null, null, null, SongList, null, null, Author, Created, Message, 0, null, null from SongListComments
+union
+select 'TagComments', Id, 'TagComment', null, null, null, null, null, null, Tag, null, Author, Created, Message, 0, null, null from TagComments
+union
+select 'UserComments', Id, 'UserComment', null, null, null, null, null, null, null, [User], Author, Created, Message, 0, null, null from UserComments
+union
+select 'discussions.DiscussionTopics', Id, 'DiscussionComment', null, null, Id, null, null, null, null, null, Author, Created, Message, Deleted, null, null from discussions.DiscussionTopics
+union
+select 'AlbumReviews', Id, 'AlbumReview', Album, null, null, null, null, null, null, null, Author, Created, Message, 0, LanguageCode, Title from AlbumReviews
+order by Created");
 		}
 
 		public override void Down()
