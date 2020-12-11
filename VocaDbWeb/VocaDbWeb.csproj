@@ -1697,7 +1697,6 @@
     <Content Include="Views\User\ComposeMessage.cshtml" />
     <Content Include="Views\User\ForgotPassword.cshtml" />
     <Content Include="Views\User\ResetPassword.cshtml" />
-    <Content Include="Views\Shared\DuplicateEntryMessage.cshtml" />
     <Content Include="Views\Tag\Details.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Album\ViewVersion.cshtml" />

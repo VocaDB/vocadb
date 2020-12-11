@@ -11,10 +11,6 @@
 	<img id="@id" src="@Url.Content("~/Content/ajax-loader.gif")" alt="loading..." style="display:none;" />
 }
 
-@helper EntryLink(EntryRefWithNameContract entryRef) {
-	@Html.ActionLink(entryRef.Name.DisplayName, "Details", entryRef.EntryType.ToString(), new RouteValueDictionary { { "id", entryRef.Id } }, new Dictionary<string, object> { { "title", entryRef.Name.AdditionalNames }, { "data-entry-id", entryRef.Id } })
-}
-
 @helper EntryLink(EntryBaseContract entry) {
 	@Html.ActionLink(entry.DefaultName, "Details", entry.EntryType.ToString(), new { id = entry.Id }, null)	
 }
