@@ -45,12 +45,6 @@
 	}
 }
 
-@helper Stars(double current, int max) {
-	<span title="@Math.Round(current, 2)">
-		@Stars((int)Math.Round(current, MidpointRounding.AwayFromZero), max)
-	</span>
-}
-
 @helper StarsMeta(int current, int max) {
 	for (int i = 1; i <= max; ++i) {
 		if (current >= i) {
