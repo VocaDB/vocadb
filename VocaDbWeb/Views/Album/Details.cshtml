@@ -465,7 +465,7 @@
 
 					@if (Model.LatestReviewRatingScore > 0)
 					{
-						@Helpers.Stars(Model.LatestReviewRatingScore, 5)
+						@Html.Partial("Partials/Shared/_Stars", new StarsViewModel(Model.LatestReviewRatingScore, 5))
 					}
 
 					<div>
