@@ -248,6 +248,7 @@
     <Compile Include="Models\Shared\Partials\Shared\PVServiceIconViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\SaveAndBackBtnViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\ShowMoreViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\StarsMetaViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\StarsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\ThumbItemViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\UniversalTimeLabelViewModel.cs" />
@@ -1993,6 +1994,7 @@
     <Content Include="Views\Shared\Partials\Song\_SongLinkKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\Song\_SongListsKnockout.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_Stars.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_StarsMeta.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -3,6 +3,7 @@
 @using System.Web.Routing
 @using VocaDb.Model.DataContracts
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 
 @helper AjaxLoader() {
 	<img src="@Url.Content("~/Content/ajax-loader.gif")" alt="loading..." />
@@ -21,19 +22,9 @@
 }
 
 
-@helper StarsMeta(int current, int max) {
-	for (int i = 1; i <= max; ++i) {
-		if (current >= i) {
-			<img class="rating" src="@Url.Content("~/Content/star.png")" alt="@current" />
-		} else {
-			<img class="rating" src="@Url.Content("~/Content/star_disabled.png")" alt="@current" />
-		}
-	}
-}
-
 @helper StarsMeta(double current, int max) {
 	<span title="@NumberFormatHelper.DecimalDot(Math.Round(current, 2))">
-        @StarsMeta((int)Math.Round(current, MidpointRounding.AwayFromZero), max)
+		@Html.Partial("Partials/Shared/_StarsMeta", new StarsMetaViewModel((int)Math.Round(current, MidpointRounding.AwayFromZero), max))
 	</span>
 }
 
