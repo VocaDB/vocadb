@@ -7,9 +7,10 @@ namespace VocaDb.Model.Mapping
 	{
 		protected CommentMap()
 		{
+			DiscriminateSubClassesOnColumn("[EntryType]");
 			Table("Comments");
-			Cache.ReadWrite();
 			Id(m => m.Id);
+			Cache.ReadWrite();
 
 			Map(m => m.Created).Not.Nullable();
 			Map(m => m.Deleted).Not.Nullable();
@@ -23,8 +24,7 @@ namespace VocaDb.Model.Mapping
 	{
 		public AlbumCommentMap()
 		{
-			Table("AlbumComments");
-			KeyColumn("Comment");
+			DiscriminatorValue(nameof(AlbumComment));
 
 			References(m => m.EntryForComment).Column("[Album]").Nullable();
 		}
@@ -34,8 +34,7 @@ namespace VocaDb.Model.Mapping
 	{
 		public ArtistCommentMap()
 		{
-			Table("ArtistComments");
-			KeyColumn("Comment");
+			DiscriminatorValue(nameof(ArtistComment));
 
 			References(m => m.EntryForComment).Column("[Artist]").Nullable();
 		}
@@ -45,9 +44,7 @@ namespace VocaDb.Model.Mapping
 	{
 		public DiscussionCommentMap()
 		{
-			Schema("discussions");
-			Table("DiscussionComments");
-			KeyColumn("Comment");
+			DiscriminatorValue(nameof(DiscussionComment));
 
 			References(m => m.EntryForComment).Column("[Topic]").Nullable();
 		}
@@ -57,8 +54,7 @@ namespace VocaDb.Model.Mapping
 	{
 		public ReleaseEventCommentMap()
 		{
-			Table("ReleaseEventComments");
-			KeyColumn("Comment");
+			DiscriminatorValue(nameof(ReleaseEventComment));
 
 			References(m => m.EntryForComment).Column("[ReleaseEvent]").Nullable();
 		}
@@ -68,8 +64,7 @@ namespace VocaDb.Model.Mapping
 	{
 		public SongCommentMap()
 		{
-			Table("SongComments");
-			KeyColumn("Comment");
+			DiscriminatorValue(nameof(SongComment));
 
 			References(m => m.EntryForComment).Column("[Song]").Nullable();
 		}
@@ -79,8 +74,7 @@ namespace VocaDb.Model.Mapping
 	{
 		public SongListCommentMap()
 		{
-			Table("SongListComments");
-			KeyColumn("Comment");
+			DiscriminatorValue(nameof(SongListComment));
 
 			References(m => m.EntryForComment).Column("SongList").Nullable();
 		}
@@ -90,8 +84,7 @@ namespace VocaDb.Model.Mapping
 	{
 		public TagCommentMap()
 		{
-			Table("TagComments");
-			KeyColumn("Comment");
+			DiscriminatorValue(nameof(TagComment));
 
 			References(m => m.EntryForComment).Column("[Tag]").Nullable();
 		}
@@ -101,8 +94,7 @@ namespace VocaDb.Model.Mapping
 	{
 		public UserCommentMap()
 		{
-			Table("UserComments");
-			KeyColumn("Comment");
+			DiscriminatorValue(nameof(UserComment));
 
 			References(m => m.EntryForComment).Column("[User]").Nullable();
 		}
@@ -112,8 +104,7 @@ namespace VocaDb.Model.Mapping
 	{
 		public AlbumReviewMap()
 		{
-			Table("AlbumReviews");
-			KeyColumn("Comment");
+			DiscriminatorValue(nameof(AlbumReview));
 
 			Map(m => m.LanguageCode).Not.Nullable();
 			Map(m => m.Title).Not.Nullable();
