@@ -2,8 +2,6 @@
 @using System.Web.Mvc.Html;
 @using System.Web.Routing
 @using VocaDb.Model.DataContracts
-@using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.Shared;
 
 @helper AjaxLoader() {
 	<img src="@Url.Content("~/Content/ajax-loader.gif")" alt="loading..." />
@@ -19,12 +17,5 @@
 
 @helper EntryLink(EntryBaseContract entry) {
 	@Html.ActionLink(entry.DefaultName, "Details", entry.EntryType.ToString(), new { id = entry.Id }, null)	
-}
-
-
-@helper StarsMeta(double current, int max) {
-	<span title="@NumberFormatHelper.DecimalDot(Math.Round(current, 2))">
-		@Html.Partial("Partials/Shared/_StarsMeta", new StarsMetaViewModel((int)Math.Round(current, MidpointRounding.AwayFromZero), max))
-	</span>
 }
 

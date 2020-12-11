@@ -113,7 +113,7 @@
 				{
 					<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
 						<meta itemprop="ratingValue" content="@DecimalDot(Model.RatingAverage)" />
-						@Helpers.StarsMeta(Model.RatingAverage, 5)<br />
+						@Html.Partial("Partials/Shared/_StarsMetaSpan", new StarsMetaSpanViewModel(Model.RatingAverage, 5))<br />
 						(<span itemprop="ratingCount">@Model.RatingCount</span> @Res.Ratings)
 					</div>
 				}
