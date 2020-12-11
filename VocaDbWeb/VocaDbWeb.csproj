@@ -233,6 +233,7 @@
     <Compile Include="Models\Shared\Partials\PV\EmbedPVViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Search\AdvancedFiltersViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Search\AdvancedFilterViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\AjaxLoaderViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\DraftIconViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\DraftMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EmbedGoogleMapsViewModel.cs" />
@@ -1679,7 +1680,6 @@
     <Content Include="Views\Shared\GlobalSearchBox.cshtml" />
     <Content Include="Views\MikuDbAlbum\Index.cshtml" />
     <Content Include="Views\MikuDbAlbum\MikuDbAlbumRow.cshtml" />
-    <Content Include="App_Code\Helpers.cshtml" />
     <Content Include="Views\Artist\Merge.cshtml" />
     <Content Include="Views\Album\Merge.cshtml" />
     <Content Include="Views\MikuDbAlbum\PrepareForImport.cshtml" />
@@ -1998,6 +1998,7 @@
     <Content Include="Views\Shared\Partials\Shared\_StarsMeta.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_StarsMetaSpan.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_EntryLink.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_AjaxLoader.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

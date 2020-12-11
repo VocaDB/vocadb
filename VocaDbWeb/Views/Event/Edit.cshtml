@@ -310,7 +310,7 @@
 
 			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>
 
-			@Helpers.AjaxLoader("pvLoader")
+			@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
 			@Html.HiddenForKnockout(m => m.PVs, "value: ko.toJSON($data.toContracts())")
 
 		</div>

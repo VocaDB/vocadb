@@ -20,7 +20,7 @@
 		<div class="span5 well well-transparent">
 			
 			<div class="pull-right">
-				@Helpers.AjaxLoader("pvLoader")				
+				@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
 			</div>
 
 			<div class="alert alert-danger" data-bind="visible: isDuplicatePV" style="display:none">

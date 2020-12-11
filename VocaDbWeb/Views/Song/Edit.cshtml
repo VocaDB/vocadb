@@ -252,7 +252,7 @@
 				<a data-bind="click: uploadMedia" href="#" class="textLink addLink">Upload</a>
 			}
 
-			@Helpers.AjaxLoader("pvLoader")
+			@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
 
 		</div>
 

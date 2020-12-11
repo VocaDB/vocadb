@@ -120,7 +120,7 @@
 	
 @Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
 
-@Helpers.AjaxLoader("pvLoader")		
+@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
 }
 
 @if (Model.Deleted) {

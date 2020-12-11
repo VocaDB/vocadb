@@ -413,7 +413,7 @@
 			</p>
 
 			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>
-			@Helpers.AjaxLoader("pvLoader")
+			@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
 
 		</div>
 
