@@ -236,6 +236,7 @@
     <Compile Include="Models\Shared\Partials\Shared\DraftIconViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\DraftMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EmbedGoogleMapsViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\EntryLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EntryPictureFileLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EntrySearchNameBoxViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EntryStatusMessageViewModel.cs" />
@@ -1996,6 +1997,7 @@
     <Content Include="Views\Shared\Partials\Shared\_Stars.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_StarsMeta.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_StarsMetaSpan.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_EntryLink.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

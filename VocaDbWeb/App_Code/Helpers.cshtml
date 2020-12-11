@@ -1,7 +1,4 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
-@using System.Web.Mvc.Html;
-@using System.Web.Routing
-@using VocaDb.Model.DataContracts
 
 @helper AjaxLoader() {
 	<img src="@Url.Content("~/Content/ajax-loader.gif")" alt="loading..." />
@@ -9,9 +6,5 @@
 
 @helper AjaxLoader(string id) {
 	<img id="@id" src="@Url.Content("~/Content/ajax-loader.gif")" alt="loading..." style="display:none;" />
-}
-
-@helper EntryLink(EntryBaseContract entry) {
-	@Html.ActionLink(entry.DefaultName, "Details", entry.EntryType.ToString(), new { id = entry.Id }, null)	
 }
 
