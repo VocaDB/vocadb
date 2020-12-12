@@ -7,6 +7,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Web.Controllers.Api
 {
@@ -36,7 +37,8 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="fields">Optional fields.</param>
 		/// <param name="entryFields">Optional fields for entries.</param>
-		/// <param name="lang">Content language preference.</param>
+		/// <param name="lang">Content language preference. Optional.</param>
+		/// <param name="sortRule">Sort rule. Optional.</param>
 		/// <returns>List of activity entries.</returns>
 		/// <remarks>
 		/// Entries are always returned sorted from newest to oldest.
@@ -53,6 +55,8 @@ namespace VocaDb.Web.Controllers.Api
 			bool getTotalCount = false,
 			ActivityEntryOptionalFields fields = ActivityEntryOptionalFields.None,
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetList(before, since, userId, editEvent, entryType, maxResults, getTotalCount, fields, entryFields, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default,
+			ActivityEntrySortRule sortRule = ActivityEntrySortRule.CreateDateDescending
+		) => queries.GetList(before, since, userId, editEvent, entryType, maxResults, getTotalCount, fields, entryFields, lang, sortRule);
 	}
 }

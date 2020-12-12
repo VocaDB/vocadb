@@ -10,6 +10,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Model.Database.Queries
 {
@@ -89,7 +90,8 @@ namespace VocaDb.Model.Database.Queries
 			bool getTotalCount = false,
 			ActivityEntryOptionalFields fields = ActivityEntryOptionalFields.None,
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+			ContentLanguagePreference lang = ContentLanguagePreference.Default,
+			ActivityEntrySortRule sortRule = ActivityEntrySortRule.CreateDateDescending)
 		{
 			maxResults = Math.Min(maxResults, absoluteMax);
 
@@ -116,7 +118,7 @@ namespace VocaDb.Model.Database.Queries
 					query = query.Where(a => a.EntryType == entryType);
 
 				var activityEntries = query
-					.OrderByDescending(a => a.CreateDate)
+					.OrderBy(sortRule)
 					.Take(maxResults)
 					.ToArray()
 					.Where(a => !a.EntryBase.Deleted)
