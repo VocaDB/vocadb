@@ -2,6 +2,7 @@
 @using VocaDb.Web.Code;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Activityfeed;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @model ActivityEntryViewModel
 
 @{
@@ -11,7 +12,7 @@
 <div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
 	@if (Model.Entry.Author != null)
 	{
-		@UserHelpers.UserIconLink_UserForApiContract(Model.Entry.Author, userInfo: true)
+		@Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(Model.Entry.Author, userInfo: true))
 	}
 	else
 	{

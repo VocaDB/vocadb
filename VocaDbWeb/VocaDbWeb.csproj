@@ -290,6 +290,7 @@
     <Compile Include="Models\Shared\Partials\User\NameLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\SongVoteRatingsRadioKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\UserIconLinkOrNameViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\User\UserIconLink_UserForApiContractViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\UserLinkOrNameViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\UserLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Venue\PrintArchivedVenueDataViewModel.cs" />
@@ -2004,6 +2005,7 @@
     <Content Include="Views\Shared\Partials\Song\_SongIconLink.cshtml" />
     <Content Include="Views\Shared\Partials\Song\_SongLink.cshtml" />
     <Content Include="Views\Shared\Partials\User\_UserIconLinkOrName.cshtml" />
+    <Content Include="Views\Shared\Partials\User\_UserIconLink_UserForApiContract.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

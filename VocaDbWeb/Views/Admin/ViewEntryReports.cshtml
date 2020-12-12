@@ -2,6 +2,7 @@
 @using VocaDb.Model.DataContracts.Users;
 @using VocaDb.Model.Domain;
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @inherits VocaDb.Web.Code.VocaDbPage<EntryReportContract[]>
 
 @{
@@ -11,7 +12,7 @@
 
 @helper UserIconLinkOrName(UserForApiContract user, string name, int size = 20) {
 	if (user != null) {
-		@UserHelpers.UserIconLink_UserForApiContract(user, size)
+		@Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(user, size))
 	} else {
 		@name
 	}
@@ -74,7 +75,7 @@
 				}
 				@if (status == ReportStatus.Closed) {
 					<td>
-						@UserHelpers.UserIconLink_UserForApiContract(r.ClosedBy)
+						@Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(r.ClosedBy))
 					</td>
 					<td>
 						@r.ClosedAt
