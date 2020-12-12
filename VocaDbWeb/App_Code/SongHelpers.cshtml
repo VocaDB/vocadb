@@ -1,8 +1,0 @@
-﻿@inherits VocaDb.Web.Code.HelperPage
-@using System.Web.Mvc.Html;
-@using VocaDb.Model.DataContracts.Songs;
-@using VocaDb.Web.Helpers;
-
-@helper SongLink(SongContract song, int? albumId = null, bool tooltip = false) {
-	@Html.ActionLink(song.Name, "Details", "Song", ViewHelper.GetRouteValueDictionary(song, albumId), new Dictionary<string, object> { { "title", song.AdditionalNames }, { "data-bind", tooltip ? "songToolTip: " + song.Id : null } })
-}
