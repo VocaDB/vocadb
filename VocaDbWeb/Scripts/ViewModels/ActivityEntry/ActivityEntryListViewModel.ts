@@ -36,7 +36,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 			this.sort.subscribe(this.clear);
 
 			this.resources = new ResourcesManager(resourceRepo, cultureCode);
-			this.resources.loadResources(this.loadMore, ResourceSetNames.artistTypeNames, ResourceSetNames.discTypeNames, ResourceSetNames.songTypeNames,
+			this.resources.loadResources(null, ResourceSetNames.artistTypeNames, ResourceSetNames.discTypeNames, ResourceSetNames.songTypeNames,
 				ResourceSetNames.userGroupNames, ResourceSetNames.activityEntry.activityFeedEventNames, ResourceSetNames.album.albumEditableFieldNames, ResourceSetNames.artist.artistEditableFieldNames,
 				ResourceSetNames.releaseEvent.releaseEventEditableFieldNames,
 				ResourceSetNames.song.songEditableFieldNames, ResourceSetNames.songList.songListEditableFieldNames, ResourceSetNames.songList.songListFeaturedCategoryNames,
