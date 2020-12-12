@@ -233,7 +233,7 @@
 				@R.MySettingsStrings.ExternalLinks
 			</div>
 			<div class="editor-field" data-bind="with: webLinksViewModel">
-				@KnockoutHelpers.WebLinksEditViewKnockout(false)
+				@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(false))
 				<input type="hidden" name="webLinks" data-bind="value: ko.toJSON(items)" />
 			</div>
 

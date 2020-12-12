@@ -63,7 +63,7 @@
 				<a href="#" class="btn btn-nomargin" data-bind="visible: tag, attr: { href: tagUrl() }" title="Tag information">
 					<i class="icon icon-info-sign"></i>
 				</a>
-				@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "tag", "tagName")
+				@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("tagAutoComplete", "tag", "tagName"))
 			</div>
 		</div>
 	</div>
@@ -79,7 +79,7 @@
 		<div class="control-label">@EntryTypeNames.Artist</div>
 		<div class="controls">
 			<div style="display: inline-block;" class="input-append">
-				@KnockoutHelpers.LockingAutoComplete("artistAutoComplete", "artistSearchParams", textBinding: "artistName", valBinding: "artistId")
+				@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("artistAutoComplete", "artistSearchParams", textBinding: "artistName", valBinding: "artistId"))
 			</div>
 		</div>
 	</div>

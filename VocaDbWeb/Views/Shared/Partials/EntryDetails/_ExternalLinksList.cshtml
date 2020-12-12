@@ -1,0 +1,11 @@
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@model ExternalLinksListViewModel
+
+@foreach (var link in Model.WebLinks) {
+	<a class="extLink" href="@VocaDb.Model.Service.Helpers.UrlHelper.MakePossileAffiliateLink(link.Url)" onclick="app.functions.trackOutboundLink(event)">@link.DescriptionOrUrl</a>
+	if (Model.ShowCategory) {
+		@("(")@Translate.WebLinkCategoryNames[link.Category]@(")")
+	}
+	<br />
+}

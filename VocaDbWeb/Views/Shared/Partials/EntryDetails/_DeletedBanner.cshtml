@@ -1,5 +1,6 @@
 ﻿@using VocaDb.Model.DataContracts;
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
+@using VocaDb.Web.Models.Shared.Partials.Shared;
 @model DeletedBannerViewModel
 
 <div class="alert">
@@ -7,7 +8,7 @@
 	@if (Model.MergedTo != null)
 	{
 		@(Resources.CommonMessages.EntryMergedTo + " ")
-		@Helpers.EntryLink(new EntryBaseContract(Model.MergedTo))
+		@Html.Partial("Partials/Shared/_EntryLink", new EntryLinkViewModel(new EntryBaseContract(Model.MergedTo)))
 		@(".")
 	}
 </div>

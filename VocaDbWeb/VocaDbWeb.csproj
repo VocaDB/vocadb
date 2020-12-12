@@ -162,6 +162,7 @@
     <Compile Include="Code\Web\AspNetHttpResponse.cs" />
     <Compile Include="Controllers\Api\CommentApiController.cs" />
     <Compile Include="Controllers\Api\EntryTypesApiController.cs" />
+    <Compile Include="Helpers\ArchivedEntryHtmlExtensions.cs" />
     <Compile Include="Helpers\LaravelMixHelper.cs" />
     <Compile Include="Controllers\Api\IPRuleApiController.cs" />
     <Compile Include="Controllers\Api\VenueApiController.cs" />
@@ -176,10 +177,14 @@
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionPropertiesViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ArchivedObjectVersionsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\CurrentVersionMessageViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\ArchivedEntry\DataRowListViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\ArchivedEntry\DataRowViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\NameInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\ObjectRefInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\PictureFileInfoViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\ArchivedEntry\PictureRowViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\PVInfoViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\ArchivedEntry\TranslatedNameRowViewModel.cs" />
     <Compile Include="Models\Shared\Partials\ArchivedEntry\WebLinkInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistGridViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Artist\ArtistLinkListViewModel.cs" />
@@ -189,6 +194,7 @@
     <Compile Include="Models\Shared\Partials\Comment\CommentBodyEditableKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentBodyKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentBodyLargeViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Comment\CommentKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CommentWithEntryVerticalViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\CreateCommentViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Comment\EditableCommentsViewModel.cs" />
@@ -197,6 +203,7 @@
     <Compile Include="Models\Shared\Partials\EntryDetails\EntryDeletePopupBaseViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\EntryDeletePopupViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\EntryTrashPopupViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\EntryDetails\ExternalLinksListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ExternalLinksRowsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\LargeShareLinksViewModel.cs" />
     <Compile Include="Models\Shared\Partials\EntryDetails\ReportEntryPopupKnockoutViewModel.cs" />
@@ -215,17 +222,22 @@
     <Compile Include="Models\Shared\Partials\Knockout\EntryValidationMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\IconAndNameKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\LanguageSelectionDropDownViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Knockout\LockingAutoCompleteViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\SearchDropDownViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\SongLockingAutoCompleteViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Knockout\TagFiltersViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Knockout\WebLinksEditViewKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedBiliViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedNicoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedPiaproViewModel.cs" />
     <Compile Include="Models\Shared\Partials\PV\EmbedPVViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Search\AdvancedFiltersViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Search\AdvancedFilterViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\AjaxLoaderViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\DraftIconViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\DraftMessageViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EmbedGoogleMapsViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\EntryLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EntryPictureFileLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EntrySearchNameBoxViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\EntryStatusMessageViewModel.cs" />
@@ -238,6 +250,9 @@
     <Compile Include="Models\Shared\Partials\Shared\PVServiceIconViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\SaveAndBackBtnViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\ShowMoreViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\StarsMetaSpanViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\StarsMetaViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Shared\StarsViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\ThumbItemViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\UniversalTimeLabelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Shared\ValidationSummaryDivViewModel.cs" />
@@ -246,6 +261,8 @@
     <Compile Include="Models\Shared\Partials\Song\LyricsInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\PVPreviewKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Song\SongLinkKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Song\SongListsKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongTypesDropdownKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagListViewModel.cs" />
@@ -265,8 +282,13 @@
     <Compile Include="Models\Shared\Partials\Song\RatingIconViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongTypeLabelViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\PrintArchivedTagDataViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\User\IconAndLinkKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\User\IconAndNameLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\IconNameAndTypeLinkKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\User\NameLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\SongVoteRatingsRadioKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\User\UserLinkOrNameViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\User\UserLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Venue\PrintArchivedVenueDataViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Event\VenueLinkOrVenueNameViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Venue\VenueLinkViewModel.cs" />
@@ -814,10 +836,8 @@
     <Content Include="Scripts\highcharts\4.2.0\themes\grid.js" />
     <Content Include="Scripts\highcharts\4.2.0\themes\sand-signika.js" />
     <Content Include="Scripts\highcharts\4.2.0\themes\skies.js" />
-    <Content Include="App_Code\CommentHelpers.cshtml" />
     <Content Include="Content\Styles\ExtLinks.less" />
     <Content Include="Content\Styles\Overrides.less" />
-    <Content Include="App_Code\KnockoutHelpers.cshtml" />
     <Content Include="Content\Styles\PVViewer_Blue.less" />
     <Content Include="Content\Styles\PVViewer_Black.less" />
     <Content Include="Content\Styles\Snow2013.less" />
@@ -1660,7 +1680,6 @@
     <Content Include="Views\Shared\GlobalSearchBox.cshtml" />
     <Content Include="Views\MikuDbAlbum\Index.cshtml" />
     <Content Include="Views\MikuDbAlbum\MikuDbAlbumRow.cshtml" />
-    <Content Include="App_Code\Helpers.cshtml" />
     <Content Include="Views\Artist\Merge.cshtml" />
     <Content Include="Views\Album\Merge.cshtml" />
     <Content Include="Views\MikuDbAlbum\PrepareForImport.cshtml" />
@@ -1679,11 +1698,9 @@
     <Content Include="Views\User\ComposeMessage.cshtml" />
     <Content Include="Views\User\ForgotPassword.cshtml" />
     <Content Include="Views\User\ResetPassword.cshtml" />
-    <Content Include="Views\Shared\DuplicateEntryMessage.cshtml" />
     <Content Include="Views\Tag\Details.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Album\ViewVersion.cshtml" />
-    <Content Include="App_Code\ArchivedEntryHelpers.cshtml" />
     <Content Include="Views\Artist\ViewVersion.cshtml" />
     <Content Include="App_Code\SongHelpers.cshtml" />
     <Content Include="Views\Song\ViewVersion.cshtml" />
@@ -1705,7 +1722,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_Code\EntryDetailsHelpers.cshtml" />
     <Content Include="Views\Admin\ViewEntryReports.cshtml" />
     <Content Include="Views\Error\Forbidden.cshtml" />
     <Content Include="Views\Error\_Layout.cshtml" />
@@ -1962,6 +1978,27 @@
     <Content Include="Views\Shared\Partials\ArchivedEntry\_PVInfo.cshtml" />
     <Content Include="Views\Shared\Partials\ArchivedEntry\_ObjectRefInfo.cshtml" />
     <Content Include="Views\Shared\Partials\_TwitterTimeline.cshtml" />
+    <Content Include="Views\Shared\Partials\Comment\_CommentKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\Knockout\_LockingAutoComplete.cshtml" />
+    <Content Include="Views\Shared\Partials\Knockout\_TagFilters.cshtml" />
+    <Content Include="Views\Shared\Partials\Knockout\_WebLinksEditViewKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\User\_IconAndLinkKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\User\_IconAndNameLinkKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\User\_NameLinkKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\User\_UserLink.cshtml" />
+    <Content Include="Views\Shared\Partials\User\_UserLinkOrName.cshtml" />
+    <Content Include="Views\Shared\Partials\EntryDetails\_ExternalLinksList.cshtml" />
+    <Content Include="Views\Shared\Partials\ArchivedEntry\_DataRow.cshtml" />
+    <Content Include="Views\Shared\Partials\ArchivedEntry\_DataRowList.cshtml" />
+    <Content Include="Views\Shared\Partials\ArchivedEntry\_PictureRow.cshtml" />
+    <Content Include="Views\Shared\Partials\ArchivedEntry\_TranslatedNameRow.cshtml" />
+    <Content Include="Views\Shared\Partials\Song\_SongLinkKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\Song\_SongListsKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_Stars.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_StarsMeta.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_StarsMetaSpan.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_EntryLink.cshtml" />
+    <Content Include="Views\Shared\Partials\Shared\_AjaxLoader.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

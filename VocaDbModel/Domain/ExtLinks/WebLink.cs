@@ -155,4 +155,9 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		string Url { get; set; }
 	}
+
+	public interface IWebLinkWithDescriptionOrUrl : IWebLink
+	{
+		string DescriptionOrUrl { get; }
+	}
 }

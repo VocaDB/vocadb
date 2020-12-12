@@ -1,3 +1,4 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Shared;
 @inherits VocaDb.Web.Code.VocaDbPage
 @using Res = ViewRes.TagSelectionsStrings
 
@@ -24,7 +25,7 @@
 		<div data-bind="visible: getSuggestions">
 			<p>@Res.Suggestions</p>
 			<div data-bind="visible: !suggestionsLoaded()">
-				@Helpers.AjaxLoader()
+				@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel())
 			</div>
 			<div data-bind="visible: suggestionsLoaded() && !suggestions().length">
 				@Res.NoSuggestions

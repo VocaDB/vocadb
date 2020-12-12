@@ -12,6 +12,7 @@
 @using VocaDb.Web.Models.Shared.Partials.PV;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @using Res = ViewRes.Event.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract>
@@ -123,7 +124,7 @@
 			}
 
 			@if (Model.WebLinks.Any()) {
-				@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
+				@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.WebLinks, false))
 				<br/>
 			}
 
@@ -148,7 +149,7 @@
 	if (!string.IsNullOrEmpty(Model.Series.Description)) {
 		@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Series.Description))
 	}
-	@EntryDetailsHelpers.ExternalLinksList(Model.Series.WebLinks, false)
+	@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.Series.WebLinks, false))
 }
 
 @if (Model.SongList != null) {
@@ -180,7 +181,7 @@
 	if (!string.IsNullOrEmpty(Model.Venue.Description)) {
 		@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Venue.Description))
 	}
-	@EntryDetailsHelpers.ExternalLinksList(Model.Venue.WebLinks, false)
+	@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.Venue.WebLinks, false))
 }
 
 @if (Model.Albums.Any()) {
@@ -234,7 +235,7 @@
 <div data-bind="visible: usersAttending().length" class="withMargin">
 	<ul data-bind="foreach: usersAttending()">
 		<li>
-			@UserHelpers.IconAndNameLinkKnockout()
+			@Html.Partial("Partials/User/_IconAndNameLinkKnockout", new IconAndNameLinkKnockoutViewModel())
 		</li>
 	</ul>
 </div>

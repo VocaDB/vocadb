@@ -82,7 +82,7 @@
 					Series
 				</div>
 				<div class="editor-field">
-					@KnockoutHelpers.LockingAutoComplete("releaseEventSeriesAutoComplete", "series.entry", "series.name")
+					@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("releaseEventSeriesAutoComplete", "series.entry", "series.name"))
 					@Html.HiddenForKnockout(m => m.Series, "value: ko.toJSON(series)")
 				</div>
 
@@ -184,7 +184,7 @@
 				Venue
 			</div>
 			<div class="editor-field">
-				@KnockoutHelpers.LockingAutoComplete("venueAutoComplete", "venue.entry", "venue.name")
+				@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("venueAutoComplete", "venue.entry", "venue.name"))
 				@Html.HiddenForKnockout(m => m.Venue, "value: ko.toJSON(venue.entry())")
 			</div>
 
@@ -220,7 +220,7 @@
 				</label>
 			</div>
 			<div class="editor-field" data-bind="with: webLinks">
-				@KnockoutHelpers.WebLinksEditViewKnockout(false)
+				@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(false))
 				@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(items)")
 			</div>
 	
@@ -310,7 +310,7 @@
 
 			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>
 
-			@Helpers.AjaxLoader("pvLoader")
+			@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
 			@Html.HiddenForKnockout(m => m.PVs, "value: ko.toJSON($data.toContracts())")
 
 		</div>

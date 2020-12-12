@@ -1,0 +1,45 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@model TagFiltersViewModel
+
+<!-- Viewmodel: TagFilters -->
+<!-- ko foreach: tags -->
+<div class="control-group">
+	<div style="display: inline-block;" class="input-append input-prepend">
+		<a href="#" class="btn btn-nomargin" data-bind="attr: { href: app.EntryUrlMapper.details_tag(id, urlSlug()) }">
+			<i class="icon icon-info-sign"></i>
+		</a>
+		<div class="input-append">
+			<input type="text" class="input-large" readonly data-bind="value: name" />
+			<button type="button" class="btn btn-danger" data-bind="click: function() { $parent.tags.remove($data); }">Clear</button>
+		</div>
+	</div>
+</div>
+<!-- /ko -->
+
+<div data-bind="visible: tags().length">
+	<label class="checkbox">
+		<input type="checkbox" data-bind="checked: childTags" />
+		@ViewRes.Search.IndexStrings.ChildTags
+	</label>
+</div>
+
+<div>
+
+	<input type="text" class="input-large" data-bind="tagAutoComplete: addTag" placeholder="@ViewRes.SharedStrings.Search" />
+
+	@if (Model.TopGenres)
+	{
+		<div class="btn-group">
+			<button class="btn dropdown-toggle btn-nomargin" data-toggle="dropdown">
+				@ViewRes.Search.IndexStrings.TopGenres
+				<span class="caret"></span>
+			</button>
+			<ul data-bind="foreach: $parent.genreTags" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+				<li>
+					<a href="#" data-bind="attr: { href: app.EntryUrlMapper.details_tag_contract($data) }, text: name, click: function(selectedTag) { $parent.addTag(selectedTag); }"></a>
+				</li>
+			</ul>
+		</div>
+	}
+
+</div>

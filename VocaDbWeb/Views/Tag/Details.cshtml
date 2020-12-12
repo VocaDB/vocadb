@@ -112,7 +112,7 @@
 			}
 
 			@if (Model.WebLinks.Any()) {
-				@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks, false)
+				@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.WebLinks, false))
 				<br />
 			}
 			

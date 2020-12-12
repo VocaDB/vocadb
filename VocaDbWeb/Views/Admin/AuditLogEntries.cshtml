@@ -1,10 +1,11 @@
-﻿@model VocaDb.Model.DataContracts.Security.AuditLogEntryContract[]
+﻿@using VocaDb.Web.Models.Shared.Partials.User;
+@model VocaDb.Model.DataContracts.Security.AuditLogEntryContract[]
 
 @foreach (var entry in Model) {
 	<tr>
 		<td>@entry.Time.ToUniversalTime()</td>
 		<td>
-			@UserHelpers.UserLink(entry.User, entry.AgentName)
+			@Html.Partial("Partials/User/_UserLinkOrName", new UserLinkOrNameViewModel(entry.User, entry.AgentName))
 		</td>
 		<td>
 			@Html.Raw(entry.Action)

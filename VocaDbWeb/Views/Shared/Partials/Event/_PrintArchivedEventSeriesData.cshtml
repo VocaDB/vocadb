@@ -7,13 +7,13 @@
 	<h4>Content</h4>
 
 	<table class="table table-bordered">
-		@ArchivedEntryHelpers.DataRow("Id", Model.ComparedSeries.FirstData.Id)
-		@ArchivedEntryHelpers.TranslatedNameRow(Model.ComparedSeries, d => d.TranslatedName)
-		@ArchivedEntryHelpers.DataRowList("Names", Model.ComparedSeries, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
-		@ArchivedEntryHelpers.DataRow("Description", Model.ComparedSeries, d => d.Description)
-		@ArchivedEntryHelpers.DataRowList("External links", Model.ComparedSeries, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
-		@ArchivedEntryHelpers.DataRow("Category", Model.ComparedSeries, d => d.Category)
-		@ArchivedEntryHelpers.DataRow("Main picture MIME", Model.ComparedSeries, d => d.MainPictureMime)
+		@Html.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel("Id", Model.ComparedSeries.FirstData.Id))
+		@Html.TranslatedNameRow(Model.ComparedSeries, d => d.TranslatedName)
+		@Html.DataRowList("Names", Model.ComparedSeries, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
+		@Html.DataRow("Description", Model.ComparedSeries, d => d.Description)
+		@Html.DataRowList("External links", Model.ComparedSeries, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
+		@Html.DataRow("Category", Model.ComparedSeries, d => d.Category)
+		@Html.DataRow("Main picture MIME", Model.ComparedSeries, d => d.MainPictureMime)
 	</table>
 
 </div>

@@ -254,7 +254,7 @@
 			@if (Model.WebLinks.Any())
 			{
 				<h4 class="withMargin">@ViewRes.EntryDetailsStrings.ExternalLinks</h4>
-				@EntryDetailsHelpers.ExternalLinksList(Model.WebLinks)
+				@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.WebLinks))
 				<br />
 			}
 

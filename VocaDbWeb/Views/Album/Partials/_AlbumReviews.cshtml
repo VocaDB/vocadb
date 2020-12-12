@@ -2,6 +2,7 @@
 @using VocaDb.Model.Domain.Security;
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @using Res = ViewRes.Album.DetailsStrings
 @inherits VocaDb.Web.Code.VocaDbPage
 
@@ -43,7 +44,7 @@
 
 <div data-bind="foreach: reviews" class="album-reviews">
 	<div class="album-review media">
-		@UserHelpers.IconAndLinkKnockout("user", "pull-left")
+		@Html.Partial("Partials/User/_IconAndLinkKnockout", new IconAndLinkKnockoutViewModel("user", "pull-left"))
 
 		<div class="media-body">
 			<div class="pull-right">
@@ -62,7 +63,7 @@
 				<!-- /ko -->
 			</div>
 			<h3 class="media-heading">
-				@UserHelpers.NameLinkKnockout("user")
+				@Html.Partial("Partials/User/_NameLinkKnockout", new NameLinkKnockoutViewModel("user"))
 			</h3>
 			
 			<span data-bind="foreach: $parent.ratingStars($parent.getRatingForUser(user.id))">

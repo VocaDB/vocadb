@@ -1,6 +1,7 @@
 ﻿@using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Domain.Songs
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 @using VocaDb.Web.Models.SongLists
 @using Res = ViewRes.SongList.FeaturedStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<FeaturedViewModel>
@@ -32,7 +33,7 @@
 		
 	@{ Html.RenderPartial("Partials/_SongListsFilters"); }
 
-	@SongHelpers.SongListsKnockout("items", groupByYear: true)
+	@Html.Partial("Partials/Song/_SongListsKnockout", new SongListsKnockoutViewModel("items", groupByYear: true))
 
 	<h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
 
