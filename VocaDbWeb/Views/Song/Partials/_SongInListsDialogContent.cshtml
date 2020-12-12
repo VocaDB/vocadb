@@ -28,7 +28,7 @@
 	
 	foreach (var list in customLists) {
 		<a href="@Url.Action("Details", "SongList", new { id = list.Id })">@list.Name</a>				
-		@("(")@UserHelpers.UserIconLink(list.Author)@(")")
+		@("(")@UserHelpers.UserIconLink_IUserWithEmail(list.Author)@(")")
 		<br />
 	}
 	

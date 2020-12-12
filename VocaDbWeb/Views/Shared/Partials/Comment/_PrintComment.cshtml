@@ -7,7 +7,7 @@
 
 <div class="comment">
 	<h3>
-		@UserHelpers.UserIconLink(Model.Contract.Author, 25)
+		@UserHelpers.UserIconLink_IUserWithEmail(Model.Contract.Author, 25)
 
 		@if (Model.AlwaysAllowDelete || (Model.AllowDelete && Login.CanDeleteComment(Model.Contract)))
 		{

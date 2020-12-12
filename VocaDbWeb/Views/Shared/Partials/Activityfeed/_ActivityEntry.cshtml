@@ -11,7 +11,7 @@
 <div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
 	@if (Model.Entry.Author != null)
 	{
-		@UserHelpers.UserIconLink(Model.Entry.Author, userInfo: true)
+		@UserHelpers.UserIconLink_UserForApiContract(Model.Entry.Author, userInfo: true)
 	}
 	else
 	{

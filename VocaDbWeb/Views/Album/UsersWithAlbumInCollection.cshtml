@@ -4,7 +4,7 @@
 @model AlbumForUserContract[]
 
 @helper UserGrid(IEnumerable<AlbumForUserContract> users) {
-	@Html.Grid(users, 2, u => new MvcHtmlString(UserHelpers.UserIconLink(u.User).ToHtmlString() + " (" + Translate.AlbumMediaTypeNames[u.MediaType] + ")"))
+	@Html.Grid(users, 2, u => new MvcHtmlString(UserHelpers.UserIconLink_UserContract(u.User).ToHtmlString() + " (" + Translate.AlbumMediaTypeNames[u.MediaType] + ")"))
 }
 
 @{

@@ -7,7 +7,7 @@
 
 <div class="comment media comment-large">
 	<a class="pull-left" href="@Url.Action("Profile", "User", new { id = Model.Contract.Author.Name })">
-		@UserHelpers.ProfileIcon(Model.Contract.Author, 70)
+		@UserHelpers.ProfileIcon_IUserWithEmail(Model.Contract.Author, 70)
 	</a>
 
 	<div class="media-body">

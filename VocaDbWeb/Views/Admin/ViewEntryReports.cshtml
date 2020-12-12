@@ -11,7 +11,7 @@
 
 @helper UserIconLinkOrName(UserForApiContract user, string name, int size = 20) {
 	if (user != null) {
-		@UserHelpers.UserIconLink(user, size)
+		@UserHelpers.UserIconLink_UserForApiContract(user, size)
 	} else {
 		@name
 	}
@@ -74,7 +74,7 @@
 				}
 				@if (status == ReportStatus.Closed) {
 					<td>
-						@UserHelpers.UserIconLink(r.ClosedBy)
+						@UserHelpers.UserIconLink_UserForApiContract(r.ClosedBy)
 					</td>
 					<td>
 						@r.ClosedAt

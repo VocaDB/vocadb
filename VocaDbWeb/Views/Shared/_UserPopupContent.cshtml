@@ -7,7 +7,7 @@
 
 @if (!string.IsNullOrEmpty(Model.Email)) {
 <div class="thumbnail">
-	@UserHelpers.ProfileIcon(Model)
+	@UserHelpers.ProfileIcon_IUserWithEmail(Model)
 </div>
 }
 

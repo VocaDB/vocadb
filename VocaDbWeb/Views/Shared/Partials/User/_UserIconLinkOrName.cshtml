@@ -2,7 +2,7 @@
 @model UserIconLinkOrNameViewModel
 
 @if (Model.User != null) {
-	@UserHelpers.UserIconLink(Model.User, Model.Size)
+	@UserHelpers.UserIconLink_IUserWithEmail(Model.User, Model.Size)
 } else {
 	@Model.Name
 }

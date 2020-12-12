@@ -47,7 +47,7 @@
 
 @helper AvatarImg() {
 	if (!string.IsNullOrEmpty(Model.Email)) {
-		@UserHelpers.ProfileIcon(Model, 120)
+		@UserHelpers.ProfileIcon_IUserWithEmail(Model, 120)
 	} else {
 		<img src="@Url.Content("~/Content/unknown.png")" width="120" height="120" alt="Avatar" />
 	}

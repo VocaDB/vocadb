@@ -37,7 +37,7 @@
 	}
 }
 
-@helper ProfileIcon(IUserWithEmail user, int size = 80) {
+@helper ProfileIcon_IUserWithEmail(IUserWithEmail user, int size = 80) {
 	if (user != null && !string.IsNullOrEmpty(user.Email)) {
 		<div style="width: @(size)px; height: @(size)px; display: inline-block">
 			@Gravatar.GetHtml(user.Email, size, scheme: RequestUrlScheme)
@@ -49,16 +49,16 @@
 	@ProfileIconKnockout(binding + ".mainPicture != null ? " + binding + ".mainPicture." + GetImageSizeProperty(imageSize) + " : null", size > 0 ? size : ImageHelper.GetUserImageSizePx(imageSize))
 }
 
-@helper UserIconLink(IUserWithEmail user, int size = ImageHelper.UserTinyThumbSize) {
-	<a href="@Url.UserDetails(user)">@ProfileIcon(user, size)<span>@(user != null ? user.Name : "")</span></a>
+@helper UserIconLink_IUserWithEmail(IUserWithEmail user, int size = ImageHelper.UserTinyThumbSize) {
+	<a href="@Url.UserDetails(user)">@ProfileIcon_IUserWithEmail(user, size)<span>@(user != null ? user.Name : "")</span></a>
 }
 
-@helper UserIconLink(UserContract user, int size = ImageHelper.UserTinyThumbSize, bool userInfo = false, bool tooltip = false) {
+@helper UserIconLink_UserContract(UserContract user, int size = ImageHelper.UserTinyThumbSize, bool userInfo = false, bool tooltip = false) {
 	<a href="@Url.UserDetails(user)" @Html.ConditionalAttribute(tooltip && user != null, "data-bind", "userToolTip: " + (user != null ? user.Id : 0)) 
-	   title='@(userInfo && user != null ? (Translate.UserGroups[user.GroupId] + "\nJoined: " + user.CreateDate.ToShortDateString()) : "")'>@ProfileIcon(user, size)<span>@(user != null ? user.Name : "")</span></a>
+	   title='@(userInfo && user != null ? (Translate.UserGroups[user.GroupId] + "\nJoined: " + user.CreateDate.ToShortDateString()) : "")'>@ProfileIcon_IUserWithEmail(user, size)<span>@(user != null ? user.Name : "")</span></a>
 }
 
-@helper UserIconLink(UserForApiContract user, int size = ImageHelper.UserTinyThumbSize, bool userInfo = false, bool tooltip = false) {
+@helper UserIconLink_UserForApiContract(UserForApiContract user, int size = ImageHelper.UserTinyThumbSize, bool userInfo = false, bool tooltip = false) {
 	<a href="@Url.UserDetails(user)" @Html.ConditionalAttribute(tooltip && user != null, "data-bind", "userToolTip: " + (user != null ? user.Id : 0)) 
 	   title='@(userInfo && user != null ? (Translate.UserGroups[user.GroupId] + "\nJoined: " + user.MemberSince.ToShortDateString()) : "")'>
 		@ProfileIcon(user != null && user.MainPicture != null ? user.MainPicture.GetSmallestThumb(ImageSize.TinyThumb) : null, size)
