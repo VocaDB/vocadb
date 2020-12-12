@@ -261,6 +261,7 @@
     <Compile Include="Models\Shared\Partials\Song\LyricsInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\PVPreviewKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Song\SongIconLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongListsKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongTypesDropdownKnockoutViewModel.cs" />
@@ -1999,6 +2000,7 @@
     <Content Include="Views\Shared\Partials\Shared\_StarsMetaSpan.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_EntryLink.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_AjaxLoader.cshtml" />
+    <Content Include="Views\Shared\Partials\Song\_SongIconLink.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

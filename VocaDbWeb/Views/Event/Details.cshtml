@@ -159,7 +159,7 @@
 			@foreach (var song in Model.SongListSongs) {
 				<tr>
 					<td style="width: 50px"><h1>@song.Order</h1></td>
-					<td style="width: 75px">@SongHelpers.SongIconLink(song.Song)</td>
+					<td style="width: 75px">@Html.Partial("Partials/Song/_SongIconLink", new SongIconLinkViewModel(song.Song))</td>
 					<td>
 						@SongHelpers.SongLink(song.Song)
 						<br />
