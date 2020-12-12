@@ -91,10 +91,9 @@ import UserRepository from '../../Repositories/UserRepository';
 			
 			// Delayed load highcharts stuff
 			var highchartsPromise = $.getScript(this.urlMapper.mapRelative("scripts/highcharts/4.2.0/highcharts.js"));
-			var highchartsHelperPromise = $.getScript(this.urlMapper.mapRelative("/scripts/helpers/HighchartsHelper.js"));
 			var songsPerMonthDataPromise = this.songRepo.getOverTime(TimeUnit.month, this.artistId);
 
-			$.when(songsPerMonthDataPromise, highchartsPromise, highchartsHelperPromise)
+			$.when(songsPerMonthDataPromise, highchartsPromise)
 				.done((songsPerMonthData: JQueryPromiseCallback<CountPerDayContract[]>) => {
 
 				var points: CountPerDayContract[] = songsPerMonthData[0];
