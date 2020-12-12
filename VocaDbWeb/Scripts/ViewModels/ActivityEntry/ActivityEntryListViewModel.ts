@@ -10,6 +10,14 @@ import ResourcesManager from '../../Models/ResourcesManager';
 import { ResourceSetNames } from '../../Models/ResourcesManager';
 import UrlMapper from '../../Shared/UrlMapper';
 
+	enum ActivityEntrySortRule {
+
+		CreateDateDescending,
+
+		CreateDate,
+
+	}
+
 	export default class ActivityEntryListViewModel {
 		
 		constructor(private urlMapper: UrlMapper,
@@ -143,11 +151,13 @@ import UrlMapper from '../../Shared/UrlMapper';
 		public loadMore = () => {
 			
 			var url = this.urlMapper.mapRelative("/api/activityEntries");
+			var sortRule = ActivityEntrySortRule[this.sort()];
 			$.getJSON(url, {
 				fields: 'Entry,ArchivedVersion',
 				entryFields: 'AdditionalNames,MainPicture',
 				lang: this.languageSelection,
-				before: this.lastEntryDate ? this.lastEntryDate.toISOString() : null,
+				before: sortRule === ActivityEntrySortRule.CreateDateDescending && this.lastEntryDate ? this.lastEntryDate.toISOString() : null,
+				since: sortRule === ActivityEntrySortRule.CreateDate && this.lastEntryDate ? this.lastEntryDate.toISOString() : null,
 				userId: this.userId,
 				editEvent: this.additionsOnly() ? EntryEditEvent.Created : null,
 				entryType: this.entryType(),
