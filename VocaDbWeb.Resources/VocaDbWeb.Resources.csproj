@@ -16,6 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="App_GlobalResources\ActivityEntrySortRuleNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ActivityEntrySortRuleNames.resx</DependentUpon>
+    </Compile>
     <Compile Update="App_GlobalResources\AlbumArchiveReasonNames.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -569,6 +574,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="App_GlobalResources\ActivityEntrySortRuleNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ActivityEntrySortRuleNames.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\AlbumArchiveReasonNames.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumArchiveReasonNames.designer.cs</LastGenOutput>

@@ -21,16 +21,22 @@ import UrlMapper from '../../Shared/UrlMapper';
 
 			this.additionsOnly = ko.observable(additionsOnly ?? false);
 			this.entryType = ko.observable();
+			this.sort = ko.observable("CreateDateDescending");
+
 			this.additionsOnly.subscribe(this.clear);
 			this.entryType.subscribe(this.clear);
+			this.sort.subscribe(this.clear);
 
 			this.resources = new ResourcesManager(resourceRepo, cultureCode);
 			this.resources.loadResources(this.loadMore, ResourceSetNames.artistTypeNames, ResourceSetNames.discTypeNames, ResourceSetNames.songTypeNames,
 				ResourceSetNames.userGroupNames, ResourceSetNames.activityEntry.activityFeedEventNames, ResourceSetNames.album.albumEditableFieldNames, ResourceSetNames.artist.artistEditableFieldNames,
 				ResourceSetNames.releaseEvent.releaseEventEditableFieldNames,
 				ResourceSetNames.song.songEditableFieldNames, ResourceSetNames.songList.songListEditableFieldNames, ResourceSetNames.songList.songListFeaturedCategoryNames,
-				ResourceSetNames.tag.tagEditableFieldNames);
+				ResourceSetNames.tag.tagEditableFieldNames, "activityEntrySortRuleNames");
 
+			this.sortName = ko.computed(() => {
+				return this.resources.resources().activityEntrySortRuleNames != null ? this.resources.resources().activityEntrySortRuleNames[this.sort()] : "";
+			});
 
 		}
 
@@ -144,7 +150,8 @@ import UrlMapper from '../../Shared/UrlMapper';
 				before: this.lastEntryDate ? this.lastEntryDate.toISOString() : null,
 				userId: this.userId,
 				editEvent: this.additionsOnly() ? EntryEditEvent.Created : null,
-				entryType: this.entryType()
+				entryType: this.entryType(),
+				sortRule: this.sort()
 			}, (result: PartialFindResultContract<ActivityEntryContract>) => {
 
 				var entries = result.items;
@@ -160,5 +167,8 @@ import UrlMapper from '../../Shared/UrlMapper';
 		}
 
 		public resources: ResourcesManager;
+
+		public sort: KnockoutObservable<string>;
+		public sortName: KnockoutComputed<string>;
 
 	}

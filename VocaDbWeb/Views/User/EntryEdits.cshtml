@@ -15,24 +15,31 @@
 <!-- Binding context: ActivityEntryListViewModel -->
 
 <div class="form-horizontal well well-transparent">
-	<div>
-		<div class="control-group">
-			<div class="control-label">@ViewRes.User.EntryEditsStrings.EntryType</div>
-			<div class="controls">
-				@* TODO: filter out invalid entry types. *@
-				@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryTypeNames.ValuesAndNamesStrings, "entryType"))
-			</div>
-		</div>
 
-		<div class="control-group">
-			<div class="controls">
-				<label class="checkbox">
-					<input type="checkbox" data-bind="checked: additionsOnly" />
-					@ViewRes.User.EntryEditsStrings.OnlyAdditions
-				</label>
-			</div>
+	<div class="pull-right">
+		<div class="inline-block">
+			@ViewRes.EntryIndexStrings.SortBy
+			@Html.Partial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.ActivityEntrySortRuleNames.ValuesAndNamesStrings, "sort", "sortName"))
 		</div>
 	</div>
+
+	<div class="control-group">
+		<div class="control-label">@ViewRes.User.EntryEditsStrings.EntryType</div>
+		<div class="controls">
+			@* TODO: filter out invalid entry types. *@
+			@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryTypeNames.ValuesAndNamesStrings, "entryType"))
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="controls">
+			<label class="checkbox">
+				<input type="checkbox" data-bind="checked: additionsOnly" />
+				@ViewRes.User.EntryEditsStrings.OnlyAdditions
+			</label>
+		</div>
+	</div>
+
 </div>
 
 <div data-bind="foreach: entries, show" class="js-cloak">

@@ -51,6 +51,9 @@ namespace VocaDb.Web.Helpers
 				.ToDictionary(p => p.EnumType, p => p.TranslateableEnum);
 		}
 
+		public static readonly TranslateableEnum<ActivityEntrySortRule> ActivityEntrySortRuleNames =
+			new TranslateableEnum<ActivityEntrySortRule>(() => global::Resources.ActivityEntrySortRuleNames.ResourceManager);
+
 		public static readonly TranslateableEnum<PurchaseStatus> AlbumCollectionStatusNames =
 			new TranslateableEnum<PurchaseStatus>(() => global::Resources.AlbumCollectionStatusNames.ResourceManager);
 
