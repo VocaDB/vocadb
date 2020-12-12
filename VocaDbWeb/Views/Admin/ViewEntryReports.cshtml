@@ -45,7 +45,7 @@
 		@foreach (var r in Model) {			
 			<tr>
 				<td>@r.Created</td>
-				<td>@UserHelpers.UserIconLink(r.User, r.Hostname)</td>
+				<td>@UserHelpers.UserIconLinkOrName(r.User, r.Hostname)</td>
 				<td>
 					<a href="@Url.EntryDetails(r.Entry)" title="@r.Entry.AdditionalNames">@r.Entry.Name</a>
 					
