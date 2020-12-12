@@ -1,12 +1,10 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
-@using System.Web.Mvc.Html;
 @using Microsoft.Web.Helpers
 @using VocaDb.Model.DataContracts.Users
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.Users
 @using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers
-@using VocaDb.Web.Models.Shared.Partials.User;
 
 @functions {
 
@@ -66,14 +64,6 @@
 		@ProfileIcon(user != null && user.MainPicture != null ? user.MainPicture.GetSmallestThumb(ImageSize.TinyThumb) : null, size)
 		<span>@(user != null ? user.Name : "")</span>
 	</a>
-}
-
-@helper UserIconLinkOrName(UserForApiContract user, string name, int size = 20) {
-	if (user != null) {
-		@UserIconLink(user, size)
-	} else {
-		@name
-	}
 }
 
 @helper UserIconLinkOrName(IUserWithEmail user, string name, int size = 20) {
