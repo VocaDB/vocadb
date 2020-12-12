@@ -261,7 +261,9 @@
     <Compile Include="Models\Shared\Partials\Song\LyricsInfoViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\PVPreviewKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongGridViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Song\SongIconLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongLinkKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\Song\SongLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongListsKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Song\SongTypesDropdownKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Tag\TagLinkViewModel.cs" />
@@ -287,6 +289,7 @@
     <Compile Include="Models\Shared\Partials\User\IconNameAndTypeLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\NameLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\SongVoteRatingsRadioKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\User\UserIconLinkOrNameViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\UserLinkOrNameViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\UserLinkViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Venue\PrintArchivedVenueDataViewModel.cs" />
@@ -1702,7 +1705,6 @@
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Album\ViewVersion.cshtml" />
     <Content Include="Views\Artist\ViewVersion.cshtml" />
-    <Content Include="App_Code\SongHelpers.cshtml" />
     <Content Include="Views\Song\ViewVersion.cshtml" />
     <Content Include="Views\SongList\Edit.cshtml" />
     <Content Include="Views\SongList\Details.cshtml" />
@@ -1999,6 +2001,9 @@
     <Content Include="Views\Shared\Partials\Shared\_StarsMetaSpan.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_EntryLink.cshtml" />
     <Content Include="Views\Shared\Partials\Shared\_AjaxLoader.cshtml" />
+    <Content Include="Views\Shared\Partials\Song\_SongIconLink.cshtml" />
+    <Content Include="Views\Shared\Partials\Song\_SongLink.cshtml" />
+    <Content Include="Views\Shared\Partials\User\_UserIconLinkOrName.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

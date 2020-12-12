@@ -1,6 +1,7 @@
 ﻿@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.ArchivedEntry;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @model ArchivedObjectVersionsViewModel
 
 <table class="table table-striped table-hover">
@@ -40,7 +41,7 @@
 				</span>
 			</td>
 			<td>					
-				@UserHelpers.UserIconLink(ver.Contract.Author, ver.Contract.AgentName)
+				@Html.Partial("Partials/User/_UserIconLinkOrName", new UserIconLinkOrNameViewModel(ver.Contract.Author, ver.Contract.AgentName))
 			</td>
 			<td>
 				<span class="@style">						

@@ -1,11 +1,20 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<EntryReportContract[]>
-@using VocaDb.Model.DataContracts
-@using VocaDb.Model.Domain
+﻿@using VocaDb.Model.DataContracts;
+@using VocaDb.Model.DataContracts.Users;
+@using VocaDb.Model.Domain;
 @using VocaDb.Web.Helpers;
+@inherits VocaDb.Web.Code.VocaDbPage<EntryReportContract[]>
 
 @{
 	PageProperties.Title = "View entry reports";
 	ReportStatus status = ViewBag.ReportStatus;
+}
+
+@helper UserIconLinkOrName(UserForApiContract user, string name, int size = 20) {
+	if (user != null) {
+		@UserHelpers.UserIconLink(user, size)
+	} else {
+		@name
+	}
 }
 
 <ul class="nav nav-pills">
@@ -45,7 +54,7 @@
 		@foreach (var r in Model) {			
 			<tr>
 				<td>@r.Created</td>
-				<td>@UserHelpers.UserIconLink(r.User, r.Hostname)</td>
+				<td>@UserIconLinkOrName(r.User, r.Hostname)</td>
 				<td>
 					<a href="@Url.EntryDetails(r.Entry)" title="@r.Entry.AdditionalNames">@r.Entry.Name</a>
 					

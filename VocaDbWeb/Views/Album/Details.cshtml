@@ -363,7 +363,7 @@
 								<div class="tracklist-trackTitle">
 									@if (song.Song != null)
 									{
-										@SongHelpers.SongLink(song.Song, Model.Id, tooltip: true)
+										@Html.Partial("Partials/Song/_SongLink", new SongLinkViewModel(song.Song, Model.Id, tooltip: true))
 										if (song.Song.LengthSeconds > 0)
 										{
 											@(" (" + DateTimeUtils.FormatFromSeconds(song.Song.LengthSeconds) + ")")
