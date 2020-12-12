@@ -29,14 +29,11 @@ namespace VocaDb.Model.Domain.Activityfeed
 
 		public virtual TArchivedVersion ArchivedVersion { get; set; }
 
-		public override ArchivedObjectVersion ArchivedVersionBase
-		{
-			get { return ArchivedVersion; }
-		}
+		public override ArchivedObjectVersion ArchivedVersionBase => ArchivedVersion;
 
 		public virtual TEntry Entry
 		{
-			get { return entry; }
+			get => entry;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -44,15 +41,9 @@ namespace VocaDb.Model.Domain.Activityfeed
 			}
 		}
 
-		public override IEntryWithNames EntryBase
-		{
-			get { return Entry; }
-		}
+		public override IEntryWithNames EntryBase => Entry;
 
-		public override EntryType EntryType
-		{
-			get { return Entry.EntryType; }
-		}
+		public override EntryType EntryType { get; }
 	}
 
 	public class AlbumActivityEntry : GenericActivityEntry<Album, ArchivedAlbumVersion>

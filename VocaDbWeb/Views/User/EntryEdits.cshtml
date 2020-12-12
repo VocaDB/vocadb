@@ -1,6 +1,7 @@
 ﻿@using System.Web.Optimization
 @using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.Activityfeed
+@using VocaDb.Web.Models.Shared.Partials.Activityfeed;
+@using VocaDb.Web.Models.Shared.Partials.Knockout;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Users.UserBaseContract>
 
 @{
@@ -13,14 +14,32 @@
 
 <!-- Binding context: ActivityEntryListViewModel -->
 
-<ul class="nav nav-pills">
-	<li data-bind="css: { active: editEventFilter_all }">
-		<a href="#" click="{{ function() { editEventFilter_all(true); } }}">All edits</a>
-	</li>
-	<li data-bind="css: { active: !editEventFilter_all() }">
-		<a href="#" click="{{ function() { editEventFilter_all(false); } }}">Only additions</a>
-	</li>
-</ul>
+<div class="form-horizontal well well-transparent">
+
+	<div class="pull-right">
+		<div class="inline-block">
+			@ViewRes.EntryIndexStrings.SortBy
+			@Html.Partial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.ActivityEntrySortRuleNames.ValuesAndNamesStrings, "sort", "sortName"))
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@ViewRes.User.EntryEditsStrings.EntryType</div>
+		<div class="controls">
+			@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.ActivityEntryTargetTypeNames.ValuesAndNamesStrings, "entryType"))
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="controls">
+			<label class="checkbox">
+				<input type="checkbox" data-bind="checked: additionsOnly" />
+				@ViewRes.User.EntryEditsStrings.OnlyAdditions
+			</label>
+		</div>
+	</div>
+
+</div>
 
 <div data-bind="foreach: entries, show" class="js-cloak">
 	@Html.Partial("Partials/Activityfeed/_ActivityEntryKnockout", new ActivityEntryKnockoutViewModel("$parent.getEntryTypeName", "$parent.getActivityFeedEventName", "$parents[1].getChangedFieldNames", true))
@@ -44,9 +63,9 @@
 			var languageSelection = '@UserContext.LanguagePreference';
 			var cultureCode = '@UICulture';
 			var userId = @Model.Id;
-			var editEvent = @ToJS((int?)ViewBag.EditEvent);
+			var additionsOnly = @ToJS((bool?)ViewBag.AdditionsOnly);
 
-			var vm = new app.ActivityEntryListViewModel(urlMapper, resourceRepo, languageSelection, cultureCode, userId, editEvent);
+			var vm = new app.ActivityEntryListViewModel(urlMapper, resourceRepo, languageSelection, cultureCode, userId, additionsOnly);
 			ko.applyBindings(vm);
 
 		});

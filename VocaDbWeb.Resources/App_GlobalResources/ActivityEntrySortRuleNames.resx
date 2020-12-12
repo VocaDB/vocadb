@@ -117,40 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Album" xml:space="preserve">
-    <value>Album</value>
+  <data name="CreateDate" xml:space="preserve">
+    <value>Oldest</value>
   </data>
-  <data name="Artist" xml:space="preserve">
-    <value>Artist</value>
-  </data>
-  <data name="DiscussionTopic" xml:space="preserve">
-    <value>Topic</value>
-  </data>
-  <data name="PV" xml:space="preserve">
-    <value>PV</value>
-  </data>
-  <data name="ReleaseEvent" xml:space="preserve">
-    <value>Event</value>
-  </data>
-  <data name="ReleaseEventSeries" xml:space="preserve">
-    <value>Event series</value>
-  </data>
-  <data name="Song" xml:space="preserve">
-    <value>Song</value>
-  </data>
-  <data name="SongList" xml:space="preserve">
-    <value>Song list</value>
-  </data>
-  <data name="Tag" xml:space="preserve">
-    <value>Tag</value>
-  </data>
-  <data name="Undefined" xml:space="preserve">
-    <value>Anything</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>User</value>
-  </data>
-  <data name="Venue" xml:space="preserve">
-    <value>Venue</value>
+  <data name="CreateDateDescending" xml:space="preserve">
+    <value>Newest</value>
   </data>
 </root>
