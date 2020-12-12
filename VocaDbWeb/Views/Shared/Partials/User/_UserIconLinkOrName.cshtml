@@ -1,0 +1,8 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.User;
+@model UserIconLinkOrNameViewModel
+
+@if (Model.User != null) {
+	@UserHelpers.UserIconLink(Model.User, Model.Size)
+} else {
+	@Model.Name
+}

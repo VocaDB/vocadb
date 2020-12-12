@@ -65,11 +65,3 @@
 		<span>@(user != null ? user.Name : "")</span>
 	</a>
 }
-
-@helper UserIconLinkOrName(IUserWithEmail user, string name, int size = 20) {
-if (user != null) {
-		@UserIconLink(user, size)
-	} else {
-		@name
-	}
-}
