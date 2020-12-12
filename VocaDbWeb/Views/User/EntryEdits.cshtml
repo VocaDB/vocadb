@@ -26,8 +26,7 @@
 	<div class="control-group">
 		<div class="control-label">@ViewRes.User.EntryEditsStrings.EntryType</div>
 		<div class="controls">
-			@* TODO: filter out invalid entry types. *@
-			@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryTypeNames.ValuesAndNamesStrings, "entryType"))
+			@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.ActivityEntryTargetTypeNames.ValuesAndNamesStrings, "entryType"))
 		</div>
 	</div>
 
