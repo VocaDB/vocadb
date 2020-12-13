@@ -13,6 +13,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
 @using VocaDb.Web.Models.Shared.Partials.Tag;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @using VocaDb.Web.Resources.Domain.Globalization
 @using R = ViewRes.User.DetailsStrings;
 @using Res = ViewRes.User.DetailsStrings;
@@ -47,7 +48,7 @@
 
 @helper AvatarImg() {
 	if (!string.IsNullOrEmpty(Model.Email)) {
-		@UserHelpers.ProfileIcon_IUserWithEmail(Model, 120)
+		@Html.Partial("Partials/User/_ProfileIcon_IUserWithEmail", new ProfileIcon_IUserWithEmailViewModel(Model, 120))
 	} else {
 		<img src="@Url.Content("~/Content/unknown.png")" width="120" height="120" alt="Avatar" />
 	}

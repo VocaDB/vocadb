@@ -2,4 +2,4 @@
 @using VocaDb.Web.Models.Shared.Partials.User;
 @model UserIconLink_IUserWithEmailViewModel
 
-<a href="@Url.UserDetails(Model.User)">@UserHelpers.ProfileIcon_IUserWithEmail(Model.User, Model.Size)<span>@(Model.User != null ? Model.User.Name : "")</span></a>
+<a href="@Url.UserDetails(Model.User)">@Html.Partial("Partials/User/_ProfileIcon_IUserWithEmail", new ProfileIcon_IUserWithEmailViewModel(Model.User, Model.Size))<span>@(Model.User != null ? Model.User.Name : "")</span></a>
