@@ -220,7 +220,7 @@
     <Compile Include="Models\Shared\Partials\Knockout\DropdownListViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\DropdownViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\EntryValidationMessageViewModel.cs" />
-    <Compile Include="Models\Shared\Partials\Knockout\IconAndNameKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\User\IconAndNameKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\LanguageSelectionDropDownViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\LockingAutoCompleteViewModel.cs" />
     <Compile Include="Models\Shared\Partials\Knockout\SearchDropDownViewModel.cs" />
@@ -2017,6 +2017,7 @@
     <Content Include="Views\Shared\Partials\User\_ProfileIcon.cshtml" />
     <Content Include="Views\Shared\Partials\User\_ProfileIconKnockout_ImageSize.cshtml" />
     <Content Include="Views\Shared\Partials\User\_ProfileIconKnockout.cshtml" />
+    <Content Include="Views\Shared\Partials\User\_IconAndNameKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
