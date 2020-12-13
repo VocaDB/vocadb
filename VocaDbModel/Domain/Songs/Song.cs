@@ -171,7 +171,7 @@ namespace VocaDb.Model.Domain.Songs
 			}
 		}
 
-		public virtual IList<SongComment> Comments
+		public virtual IList<SongComment> AllComments
 		{
 			get => comments;
 			set
@@ -180,6 +180,8 @@ namespace VocaDb.Model.Domain.Songs
 				comments = value;
 			}
 		}
+
+		public virtual IEnumerable<SongComment> Comments => AllComments.Where(c => !c.Deleted);
 
 		/// <summary>
 		/// Date when this entry was created.
@@ -510,7 +512,7 @@ namespace VocaDb.Model.Domain.Songs
 			ParamIs.NotNull(() => loginData);
 
 			var comment = new SongComment(this, message, loginData);
-			Comments.Add(comment);
+			AllComments.Add(comment);
 
 			return comment;
 		}
@@ -566,12 +568,12 @@ namespace VocaDb.Model.Domain.Songs
 			return pv;
 		}
 
-		public virtual SongWebLink CreateWebLink(string description, string url, WebLinkCategory category)
+		public virtual SongWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
 
-			var link = new SongWebLink(this, description, url, category);
+			var link = new SongWebLink(this, description, url, category, disabled);
 			WebLinks.Add(link);
 
 			return link;

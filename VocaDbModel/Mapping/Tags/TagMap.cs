@@ -29,7 +29,7 @@ namespace VocaDb.Model.Mapping.Tags
 			HasMany(m => m.AllSongListTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.AllSongTagUsages).Cascade.AllDeleteOrphan().Inverse();
 			HasMany(m => m.AllChildren).KeyColumn("[Parent]").Inverse().Cache.ReadWrite();
-			HasMany(m => m.Comments).Inverse().KeyColumn("[Tag]").Cascade.AllDeleteOrphan();
+			HasMany(m => m.AllComments).Inverse().KeyColumn("[Tag]").Cascade.AllDeleteOrphan();
 			HasMany(m => m.Mappings).Inverse().Cascade.AllDeleteOrphan().Cache.NonStrictReadWrite();
 			HasMany(m => m.RelatedTags).Inverse().KeyColumn("[OwnerTag]").Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.TagsForUsers).Cascade.AllDeleteOrphan().Inverse();
@@ -104,10 +104,5 @@ namespace VocaDb.Model.Mapping.Tags
 
 			References(m => m.Entry).Column("[Tag]").Not.Nullable();
 		}
-	}
-
-	public class TagWebLinkMap : WebLinkMap<TagWebLink, Tag>
-	{
-		public TagWebLinkMap() : base(false) { }
 	}
 }

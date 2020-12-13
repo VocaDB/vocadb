@@ -159,7 +159,7 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
-		public virtual IList<AlbumComment> Comments
+		public virtual IList<AlbumComment> AllComments
 		{
 			get { return comments; }
 			set
@@ -168,6 +168,8 @@ namespace VocaDb.Model.Domain.Albums
 				comments = value;
 			}
 		}
+
+		public virtual IEnumerable<AlbumComment> Comments => AllComments.Where(c => !c.Deleted);
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
@@ -262,7 +264,7 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
-		public virtual AlbumReview LastReview => Reviews.OrderByDescending(r => r.Date).FirstOrDefault();
+		public virtual AlbumReview LastReview => Reviews.OrderByDescending(r => r.Created).FirstOrDefault();
 
 		public virtual TranslatedString TranslatedName
 		{
@@ -389,7 +391,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual int RatingTotal { get; set; }
 
-		public virtual IList<AlbumReview> Reviews
+		public virtual IList<AlbumReview> AllReviews
 		{
 			get => reviews;
 			set
@@ -398,6 +400,8 @@ namespace VocaDb.Model.Domain.Albums
 				reviews = value;
 			}
 		}
+
+		public virtual IEnumerable<AlbumReview> Reviews => AllReviews.Where(r => !r.Deleted);
 
 		public virtual IEnumerable<SongInAlbum> Songs
 		{
@@ -506,7 +510,7 @@ namespace VocaDb.Model.Domain.Albums
 			ParamIs.NotNull(() => loginData);
 
 			var comment = new AlbumComment(this, message, loginData);
-			Comments.Add(comment);
+			AllComments.Add(comment);
 
 			return comment;
 		}
@@ -539,12 +543,12 @@ namespace VocaDb.Model.Domain.Albums
 			return pv;
 		}
 
-		public virtual AlbumWebLink CreateWebLink(string description, string url, WebLinkCategory category)
+		public virtual AlbumWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
 
-			var link = new AlbumWebLink(this, description, url, category);
+			var link = new AlbumWebLink(this, description, url, category, disabled);
 			WebLinks.Add(link);
 
 			return link;

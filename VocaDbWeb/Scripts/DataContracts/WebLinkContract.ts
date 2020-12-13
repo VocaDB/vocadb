@@ -3,7 +3,9 @@
         
         category: string;
 
-        description: string;
+		description: string;
+
+		disabled: boolean;
 
         id: number;
 

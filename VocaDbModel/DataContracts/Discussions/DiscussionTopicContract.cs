@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Users;
@@ -30,7 +30,7 @@ namespace VocaDb.Model.DataContracts.Discussions
 
 			if (fields.HasFlag(DiscussionTopicOptionalFields.CommentCount))
 			{
-				CommentCount = topic.Comments.Count;
+				CommentCount = topic.Comments.Count();
 			}
 
 			if (fields.HasFlag(DiscussionTopicOptionalFields.Content))
@@ -40,7 +40,7 @@ namespace VocaDb.Model.DataContracts.Discussions
 
 			if (fields.HasFlag(DiscussionTopicOptionalFields.LastComment) && topic.Comments.Any())
 			{
-				LastComment = new CommentForApiContract(topic.Comments.MaxItem(c => c.Created),
+				LastComment = new CommentForApiContract(topic.Comments.ToArray().MaxItem(c => c.Created),
 					userIconFactory, includeMessage: false);
 			}
 		}

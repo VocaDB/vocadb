@@ -18,6 +18,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -217,7 +218,7 @@ namespace VocaDb.Model.Database.Queries
 
 				if (contract.WebLink != null)
 				{
-					artist.CreateWebLink(contract.WebLink.Description, contract.WebLink.Url, contract.WebLink.Category);
+					artist.CreateWebLink(contract.WebLink.Description, contract.WebLink.Url, contract.WebLink.Category, contract.WebLink.Disabled);
 					diff.WebLinks.Set();
 				}
 
@@ -325,21 +326,10 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var artist = session.Load(id);
 
-				var stats = session.Query()
-					.Where(a => a.Id == id)
-					.Select(a => new
-					{
-						CommentCount = a.Comments.Count,
-					})
-					.FirstOrDefault();
-
-				if (stats == null)
-					EntityNotFoundException.Throw<Artist>(id);
-
 				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, imageUrlFactory,
 					new EntryTypeTags(session).GetTag(EntryType.Artist, artist.ArtistType))
 				{
-					CommentCount = stats.CommentCount,
+					CommentCount = Comments(session).GetCount(id),
 					SharedStats = GetSharedArtistStats(session, artist),
 					PersonalStats = GetPersonalArtistStats(session, artist),
 					AdvancedStats = GetAdvancedStats(session, artist)

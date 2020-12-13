@@ -203,11 +203,7 @@ namespace VocaDb.Model.Domain.Users
 			}
 		}
 
-		/// <summary>
-		/// List of comments on this user's profile.
-		/// This is not the list of comments this user had made himself!
-		/// </summary>
-		public virtual IList<UserComment> Comments
+		public virtual IList<UserComment> AllComments
 		{
 			get => comments;
 			set
@@ -216,6 +212,12 @@ namespace VocaDb.Model.Domain.Users
 				comments = value;
 			}
 		}
+
+		/// <summary>
+		/// List of comments on this user's profile.
+		/// This is not the list of comments this user had made himself!
+		/// </summary>
+		public virtual IEnumerable<UserComment> Comments => AllComments.Where(c => !c.Deleted);
 
 		/// <summary>
 		/// Date when user account was created (signed up).
@@ -624,7 +626,7 @@ namespace VocaDb.Model.Domain.Users
 			ParamIs.NotNull(() => loginData);
 
 			var comment = new UserComment(this, message, loginData);
-			Comments.Add(comment);
+			AllComments.Add(comment);
 
 			return comment;
 		}
@@ -639,9 +641,9 @@ namespace VocaDb.Model.Domain.Users
 			return link;
 		}
 
-		public virtual UserWebLink CreateWebLink(string description, string url, WebLinkCategory category)
+		public virtual UserWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
-			return CreateWebLink(new WebLinkContract(url, description, category));
+			return CreateWebLink(new WebLinkContract(url, description, category, disabled));
 		}
 
 		public virtual bool Equals(IUser another)

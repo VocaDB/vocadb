@@ -2,10 +2,15 @@
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails;
 @model ExternalLinksListViewModel
 
-@foreach (var link in Model.WebLinks) {
-	<a class="extLink" href="@VocaDb.Model.Service.Helpers.UrlHelper.MakePossileAffiliateLink(link.Url)" onclick="app.functions.trackOutboundLink(event)">@link.DescriptionOrUrl</a>
-	if (Model.ShowCategory) {
+@foreach (var link in Model.WebLinks)
+{
+	<a class="extLink" href="@VocaDb.Model.Service.Helpers.UrlHelper.MakePossileAffiliateLink(link.Url)" onclick="app.functions.trackOutboundLink(event)" style="@(link.Disabled ? "text-decoration: line-through;" : "")">@link.DescriptionOrUrl</a>
+	if (Model.ShowCategory)
+	{
 		@("(")@Translate.WebLinkCategoryNames[link.Category]@(")")
 	}
+	<a href="https://web.archive.org/web/*/@link.Url" target="_blank">
+		<img src="@Url.Content("~/Content/ExtIcons/archive.png")" title="See this page archived on the Wayback Machine">
+	</a>
 	<br />
 }

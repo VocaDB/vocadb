@@ -20,7 +20,6 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Comments;
-using VocaDb.Model.Domain.Discussions;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -170,16 +169,6 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-		private Task<EntryWithCommentsContract[]> GetRecentCommentsAsync(ISession session)
-		{
-			var cacheKey = $"OtherService.RecentComments.{LanguagePreference}";
-			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromMinutes(5)), async () =>
-			{
-				var item = await GetRecentCommentsAsync(session, 9);
-				return item;
-			});
-		}
-
 		public async Task<SongForApiContract[]> GetHighlightedSongs(ContentLanguagePreference languagePreference, SongOptionalFields fields)
 		{
 			return await HandleQueryAsync(async session =>
@@ -275,48 +264,18 @@ namespace VocaDb.Model.Service
 			return comments.GroupBy(e => e.Entry, new EntryComparer()).Select(e => new EntryWithCommentsContract(entryContractFac(e.First()), e.Select(c => new CommentContract(c)).ToArray()));
 		}
 
-		private async Task<List<Comment>> GetComments<TEntry, TComment>(ISession session, int maxComments, bool checkDeleted) where TComment : GenericComment<TEntry> where TEntry : class, IEntryWithNames
-		{
-			var q = session.Query<TComment>();
-
-			if (checkDeleted)
-				q = q.Where(c => !c.EntryForComment.Deleted);
-
-			return await q.OrderByDescending(c => c.Created).Take(maxComments).Cast<Comment>().VdbToListAsync();
-		}
-
 		private async Task<EntryWithCommentsContract[]> GetRecentCommentsAsync(ISession session, int maxComments)
 		{
-			var albumComments = await GetComments<Album, AlbumComment>(session, maxComments, true);
-			var artistComments = await GetComments<Artist, ArtistComment>(session, maxComments, true);
-			var songComments = await GetComments<Song, SongComment>(session, maxComments, true);
-			var discussionComments = await GetComments<DiscussionTopic, DiscussionComment>(session, maxComments, true);
-			var songListComments = await GetComments<SongList, SongListComment>(session, maxComments, false);
-			var tagComments = await GetComments<Tag, TagComment>(session, maxComments, true);
-			var eventComments = await GetComments<ReleaseEvent, ReleaseEventComment>(session, maxComments, true);
+			// FIXME: this returns less comments if there are deleted entries.
+			var comments = (await session.Query<Comment>()
+				.WhereNotDeleted()
+				.Where(c => !(c is UserComment))
+				.OrderByDescending(c => c.Created)
+				.Take(maxComments)
+				.ToListAsync())
+				.Where(c => !c.Entry.Deleted);
 
-			// Discussion topics aren't actually comments but we want to show them in the recent comments list anyway
-			var discussionTopics = await session.Query<DiscussionTopic>().Where(c => !c.Deleted).OrderByDescending(c => c.Created).Take(maxComments).VdbToListAsync();
-			var discussionTopicsAsComments = discussionTopics.Select(t => new DiscussionComment(t, t.Content, new AgentLoginData(t.Author, t.AuthorName ?? t.Author.Name))
-			{
-				Created = t.Created
-			});
-
-			var albumReviews = await session.Query<AlbumReview>().OrderByDescending(r => r.Date).Take(maxComments).VdbToListAsync();
-			var albumReviewsAsComments = albumReviews.Select(r => new AlbumComment(r.Album, r.Text, new AgentLoginData(r.User))
-			{
-				Created = r.Date
-			});
-
-			var combined = albumComments
-				.Concat(artistComments)
-				.Concat(songComments)
-				.Concat(songListComments)
-				.Concat(discussionComments)
-				.Concat(discussionTopicsAsComments)
-				.Concat(tagComments)
-				.Concat(eventComments)
-				.Concat(albumReviewsAsComments)
+			var combined = comments
 				.OrderByDescending(c => c.Created)
 				.Take(maxComments);
 
@@ -414,6 +373,7 @@ namespace VocaDb.Model.Service
 
 			return await HandleQueryAsync(async session =>
 			{
+				// FIXME: this returns less comments if there are deleted entries.
 				var activityEntries = (await session.Query<ActivityEntry>()
 					.OrderByDescending(a => a.CreateDate)
 					.Take(maxActivityEntries)
@@ -429,7 +389,7 @@ namespace VocaDb.Model.Service
 
 				var firstSongVote = (newSongs.Any() ? await session.Query<FavoriteSongForUser>().FirstOrDefaultAsync(s => s.Song.Id == newSongs.First().Id && s.User.Id == PermissionContext.LoggedUserId) : null);
 
-				var recentComments = await GetRecentCommentsAsync(session);
+				var recentComments = await GetRecentCommentsAsync(session, 9);
 
 				var recentEvents = GetRecentEvents(session);
 

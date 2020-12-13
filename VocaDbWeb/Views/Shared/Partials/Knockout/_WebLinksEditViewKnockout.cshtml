@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using Res = ViewRes.Song.EditStrings;
 @model WebLinksEditViewKnockoutViewModel
 
 <!-- binding context: WebLinksEditViewModel -->
@@ -14,6 +15,7 @@
 			{
 				<th>@HelperRes.HelperStrings.WebLinkCategoryTitle</th>
 			}
+			<th>@Res.PvStatus</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -27,6 +29,12 @@
 					<select data-bind="value: category, options: $parent.categories, optionsText: 'name', optionsValue: 'id'" class="input-medium"></select>
 				</td>
 			}
+			<td>
+				<label class="checkbox">
+					<input type="checkbox" data-bind="checked: disabled" />
+					@ViewRes.EntryEditStrings.PVUnavailable
+				</label>
+			</td>
 			<td>
 				<a href="#" class="textLink deleteLink" data-bind="click: $parent.remove">@ViewRes.SharedStrings.Delete</a>
 			</td>

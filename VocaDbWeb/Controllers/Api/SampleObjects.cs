@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
@@ -70,7 +70,7 @@ namespace VocaDb.Web.Areas.HelpPage.App_Start
 				new TagUsageForApiContract { Tag = new TagBaseContract { Name = "electronic" } }
 			},
 			WebLinks = new[] {
-				new WebLinkForApiContract(new WebLink("KarenT", "http://karent.jp/album/29", WebLinkCategory.Official)),
+				new WebLinkForApiContract(new WebLink("KarenT", "http://karent.jp/album/29", WebLinkCategory.Official, disabled: false)),
 			}
 		};
 

@@ -34,13 +34,14 @@ namespace VocaDb.Model.Domain.ExtLinks
 					{
 						old.Category = linkEntry.Category;
 						old.Description = linkEntry.Description;
+						old.Disabled = linkEntry.Disabled;
 						old.Url = linkEntry.Url;
 						edited.Add(old);
 					}
 				}
 				else
 				{
-					var n = webLinkFactory.CreateWebLink(linkEntry.Description, linkEntry.Url, linkEntry.Category);
+					var n = webLinkFactory.CreateWebLink(linkEntry.Description, linkEntry.Url, linkEntry.Category, linkEntry.Disabled);
 					created.Add(n);
 				}
 			}
@@ -61,7 +62,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 			foreach (var linkEntry in diff.Added)
 			{
-				var n = webLinkFactory.CreateWebLink(linkEntry.Description, linkEntry.Url, linkEntry.Category);
+				var n = webLinkFactory.CreateWebLink(linkEntry.Description, linkEntry.Url, linkEntry.Category, linkEntry.Disabled);
 				created.Add(n);
 			}
 
@@ -73,7 +74,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public WebLink() { }
 
-		public WebLink(string description, string url, WebLinkCategory category)
+		public WebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrWhiteSpace(() => url);
@@ -81,6 +82,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 			Description = description;
 			Url = url;
 			Category = category;
+			Disabled = disabled;
 		}
 
 		public WebLink(WebLinkContract contract)
@@ -90,9 +92,12 @@ namespace VocaDb.Model.Domain.ExtLinks
 			Category = contract.Category;
 			Description = contract.Description;
 			Url = contract.Url;
+			Disabled = contract.Disabled;
 		}
 
 		public virtual WebLinkCategory Category { get; set; }
+
+		public virtual bool Disabled { get; set; }
 
 		/// <summary>
 		/// User-visible link description. Cannot be null.
@@ -133,12 +138,12 @@ namespace VocaDb.Model.Domain.ExtLinks
 			}
 		}
 
-		public virtual bool ContentEquals(IWebLink another)
+		public virtual bool ContentEquals(IWebLink other)
 		{
-			if (another == null)
+			if (other == null)
 				return false;
 
-			return (Url == another.Url && Description == another.Description && Category == another.Category);
+			return Url == other.Url && Description == other.Description && Category == other.Category && Disabled == other.Disabled;
 		}
 
 		public override string ToString()
@@ -154,6 +159,8 @@ namespace VocaDb.Model.Domain.ExtLinks
 		string Description { get; set; }
 
 		string Url { get; set; }
+
+		bool Disabled { get; set; }
 	}
 
 	public interface IWebLinkWithDescriptionOrUrl : IWebLink
