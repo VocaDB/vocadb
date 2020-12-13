@@ -28,7 +28,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 			additionsOnly?: boolean) {
 
 			this.additionsOnly = ko.observable(additionsOnly ?? false);
-			this.entryType = ko.observable();
+			this.entryType = ko.observable(EntryType[EntryType.Undefined]);
 			this.sort = ko.observable(ActivityEntrySortRule[ActivityEntrySortRule.CreateDateDescending]);
 
 			this.additionsOnly.subscribe(this.clear);
@@ -36,7 +36,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 			this.sort.subscribe(this.clear);
 
 			this.resources = new ResourcesManager(resourceRepo, cultureCode);
-			this.resources.loadResources(null, ResourceSetNames.artistTypeNames, ResourceSetNames.discTypeNames, ResourceSetNames.songTypeNames,
+			this.resources.loadResources(this.loadMore, ResourceSetNames.artistTypeNames, ResourceSetNames.discTypeNames, ResourceSetNames.songTypeNames,
 				ResourceSetNames.userGroupNames, ResourceSetNames.activityEntry.activityFeedEventNames, ResourceSetNames.album.albumEditableFieldNames, ResourceSetNames.artist.artistEditableFieldNames,
 				ResourceSetNames.releaseEvent.releaseEventEditableFieldNames,
 				ResourceSetNames.song.songEditableFieldNames, ResourceSetNames.songList.songListEditableFieldNames, ResourceSetNames.songList.songListFeaturedCategoryNames,
@@ -56,7 +56,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 
 		public entries = ko.observableArray<ActivityEntryContract>([]);
 
-		public entryType: KnockoutObservable<EntryType>;
+		public entryType: KnockoutObservable<string>;
 
 		public getActivityFeedEventName = (activityEntry: ActivityEntryContract) => {
 			
