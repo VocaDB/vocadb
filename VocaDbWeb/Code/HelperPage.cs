@@ -18,8 +18,6 @@ namespace VocaDb.Web.Code
 
 		public static MarkdownParser MarkdownParser => DependencyResolver.Current.GetService<MarkdownParser>();
 
-		public static string RequestUrlScheme => "https";
-
 		public static IHtmlString ToJS(bool val)
 		{
 			return new MvcHtmlString(val ? "true" : "false");

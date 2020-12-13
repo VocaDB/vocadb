@@ -2,6 +2,6 @@
 @model IconNameAndTypeLinkKnockoutViewModel
 
 <a href="#" data-bind="attr: { href: '/Profile/' + name, title: @(Model.GroupResources + "[groupId] + '\\nJoined: ' + memberSince") }">
-	@UserHelpers.ProfileIconKnockout("$data.mainPicture ? mainPicture.urlThumb : null", Model.IconSize)
+	@Html.Partial("Partials/User/_ProfileIconKnockout", new ProfileIconKnockoutViewModel("$data.mainPicture ? mainPicture.urlThumb : null", Model.IconSize))
 	<span data-bind="text: name"></span>
 </a>
