@@ -29,7 +29,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 
 			this.additionsOnly = ko.observable(additionsOnly ?? false);
 			this.entryType = ko.observable();
-			this.sort = ko.observable("CreateDateDescending");
+			this.sort = ko.observable(ActivityEntrySortRule[ActivityEntrySortRule.CreateDateDescending]);
 
 			this.additionsOnly.subscribe(this.clear);
 			this.entryType.subscribe(this.clear);
@@ -42,9 +42,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 				ResourceSetNames.song.songEditableFieldNames, ResourceSetNames.songList.songListEditableFieldNames, ResourceSetNames.songList.songListFeaturedCategoryNames,
 				ResourceSetNames.tag.tagEditableFieldNames, "activityEntrySortRuleNames");
 
-			this.sortName = ko.computed(() => {
-				return this.resources.resources().activityEntrySortRuleNames != null ? this.resources.resources().activityEntrySortRuleNames[this.sort()] : "";
-			});
+			this.sortName = ko.computed(() => this.resources.resources().activityEntrySortRuleNames != null ? this.resources.resources().activityEntrySortRuleNames[this.sort()] : "");
 
 		}
 
