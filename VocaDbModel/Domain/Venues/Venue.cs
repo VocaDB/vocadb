@@ -136,12 +136,12 @@ namespace VocaDb.Model.Domain.Venues
 			return name;
 		}
 
-		public virtual VenueWebLink CreateWebLink(string description, string url, WebLinkCategory category)
+		public virtual VenueWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
 
-			var link = new VenueWebLink(this, description, url, category);
+			var link = new VenueWebLink(this, description, url, category, disabled);
 			WebLinks.Links.Add(link);
 
 			return link;

@@ -11,7 +11,7 @@ import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
 import UrlMapper from '../../Shared/UrlMapper';
 
 	var categories: TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
-	var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
+	var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots", disabled: false };
 	var data: SongForEditContract;
 	var songRepo = new FakeSongRepository();
 	var artistRepo = new FakeArtistRepository();

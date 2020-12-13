@@ -96,7 +96,7 @@ namespace VocaDb.Tests.Domain.Albums
 		[TestMethod]
 		public void CreateWebLink()
 		{
-			album.CreateWebLink("test link", "http://www.test.com", WebLinkCategory.Other);
+			album.CreateWebLink("test link", "http://www.test.com", WebLinkCategory.Other, disabled: false);
 
 			Assert.AreEqual(1, album.WebLinks.Count, "Should have one link");
 			var link = album.WebLinks.First();

@@ -16,6 +16,7 @@ using VocaDb.Model.Database.Repositories.NHibernate;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.Service
 {
@@ -207,7 +208,7 @@ namespace VocaDb.Model.Service
 
 				foreach (var w in source.WebLinks.Where(w => !target.HasWebLink(w.Url)))
 				{
-					var link = target.CreateWebLink(w.Description, w.Url, w.Category);
+					var link = target.CreateWebLink(w.Description, w.Url, w.Category, w.Disabled);
 					session.Save(link);
 				}
 

@@ -159,8 +159,6 @@ namespace VocaDb.Model.Mapping.Songs
 		}
 	}
 
-	public class SongWebLinkMap : WebLinkMap<SongWebLink, Song> { }
-
 	public class PVForSongMap : ClassMap<PVForSong>
 	{
 		public PVForSongMap()

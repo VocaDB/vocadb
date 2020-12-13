@@ -23,6 +23,7 @@ using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.TagFormatting;
 using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.Service
 {

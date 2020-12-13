@@ -5,6 +5,28 @@ namespace VocaDb.Migrations
 {
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2020_12_03_2000)]
+	public class WebLinkDisabled : AutoReversingMigration
+	{
+		public override void Up()
+		{
+			var webLinkTables = new[]
+			{
+				TableNames.AlbumWebLinks,
+				TableNames.ArtistWebLinks,
+				TableNames.ReleaseEventWebLinks,
+				TableNames.ReleaseEventSeriesWebLinks,
+				TableNames.SongWebLinks,
+				TableNames.TagWebLinks,
+				TableNames.UserWebLinks,
+				TableNames.VenueWebLinks,
+			};
+
+			foreach (var table in webLinkTables)
+				Create.Column("Disabled").OnTable(table).AsBoolean().NotNullable().WithDefaultValue(false);
+		}
+	}
+
 	[Migration(2020_11_20_2000)]
 	public class Comments : Migration
 	{
@@ -80,14 +102,20 @@ order by Created");
 	{
 		public override void Up()
 		{
-			Create.Column("Hidden").OnTable(TableNames.ArchivedAlbumVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedArtistVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedEventSeriesVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedEventVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedSongListVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedSongVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedTagVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedVenueVersions).AsBoolean().NotNullable().WithDefaultValue(false);
+			var archivedVersionTables = new[]
+			{
+				TableNames.ArchivedAlbumVersions,
+				TableNames.ArchivedArtistVersions,
+				TableNames.ArchivedEventSeriesVersions,
+				TableNames.ArchivedEventVersions,
+				TableNames.ArchivedSongListVersions,
+				TableNames.ArchivedSongVersions,
+				TableNames.ArchivedTagVersions,
+				TableNames.ArchivedVenueVersions,
+			};
+
+			foreach (var table in archivedVersionTables)
+				Create.Column("Hidden").OnTable(table).AsBoolean().NotNullable().WithDefaultValue(false);
 		}
 	}
 

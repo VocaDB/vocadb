@@ -324,12 +324,12 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			return pv;
 		}
 
-		public virtual ReleaseEventWebLink CreateWebLink(string description, string url, WebLinkCategory category)
+		public virtual ReleaseEventWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
 			ParamIs.NotNull(() => description);
 			ParamIs.NotNullOrEmpty(() => url);
 
-			var link = new ReleaseEventWebLink(this, description, url, category);
+			var link = new ReleaseEventWebLink(this, description, url, category, disabled);
 			WebLinks.Add(link);
 
 			return link;

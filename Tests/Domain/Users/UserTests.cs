@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts;
@@ -75,7 +75,7 @@ namespace VocaDb.Tests.Domain.Users
 		[TestMethod]
 		public void CreateWebLink()
 		{
-			user.CreateWebLink(new WebLinkContract("http://www.test.com", "test link", WebLinkCategory.Other));
+			user.CreateWebLink(new WebLinkContract("http://www.test.com", "test link", WebLinkCategory.Other, disabled: false));
 
 			Assert.AreEqual(1, user.WebLinks.Count, "Should have one link");
 			var link = user.WebLinks.First();

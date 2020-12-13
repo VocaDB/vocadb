@@ -7,3 +7,7 @@
 }
 <a href="@VocaDb.Model.Service.Helpers.UrlHelper.MakeLink(Model.Link.Url)">@Model.Link.Url</a>
 @(" (")@Model.Link.Category@(")")
+@if (Model.Link.Disabled)
+{
+	@:(unavailable)
+}

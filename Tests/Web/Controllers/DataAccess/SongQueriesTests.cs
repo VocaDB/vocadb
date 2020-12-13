@@ -544,7 +544,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public async Task FindDuplicates_ParsePVInfo_YouTube()
 		{
 			var artist = repository.Save(CreateEntry.Artist(ArtistType.Producer, name: "Clean Tears"));
-			repository.Save(artist.CreateWebLink("YouTube", "https://www.youtube.com/channel/UCnHGCQ0pwnRFF5Oe2YTeOcA", WebLinkCategory.Official));
+			repository.Save(artist.CreateWebLink("YouTube", "https://www.youtube.com/channel/UCnHGCQ0pwnRFF5Oe2YTeOcA", WebLinkCategory.Official, disabled: false));
 
 			var titleParseResult = VideoTitleParseResult.CreateSuccess("Clean Tears - Ruby", "Clean Tears", null, "http://tn.smilevideo.jp/smile?i=32347786", 39);
 			titleParseResult.Author = "Clean Tears";
@@ -933,7 +933,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
 			contract.WebLinks = new[] {
-				new WebLinkContract("http://vocadb.net", "VocaDB", WebLinkCategory.Reference)
+				new WebLinkContract("http://vocadb.net", "VocaDB", WebLinkCategory.Reference, disabled: false)
 			};
 
 			contract = await queries.UpdateBasicProperties(contract);
@@ -947,7 +947,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var contract = new SongForEditContract(song, ContentLanguagePreference.English);
 			contract.WebLinks = new[] {
-				new WebLinkContract(" ", "VocaDB", WebLinkCategory.Reference)
+				new WebLinkContract(" ", "VocaDB", WebLinkCategory.Reference, disabled: false)
 			};
 
 			contract = await queries.UpdateBasicProperties(contract);

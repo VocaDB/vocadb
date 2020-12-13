@@ -1,7 +1,6 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.DataContracts
@@ -14,11 +13,12 @@ namespace VocaDb.Model.DataContracts
 			Category = WebLinkCategory.Other;
 		}
 
-		public WebLinkContract(string url, string description, WebLinkCategory category)
+		public WebLinkContract(string url, string description, WebLinkCategory category, bool disabled)
 		{
 			Url = url;
 			Description = description;
 			Category = category;
+			Disabled = disabled;
 
 			DescriptionOrUrl = !string.IsNullOrEmpty(description) ? description : url;
 		}
@@ -30,6 +30,7 @@ namespace VocaDb.Model.DataContracts
 			Category = link.Category;
 			Description = link.Description;
 			DescriptionOrUrl = link.DescriptionOrUrl;
+			Disabled = link.Disabled;
 			Id = link.Id;
 			Url = link.Url;
 		}
@@ -43,6 +44,9 @@ namespace VocaDb.Model.DataContracts
 
 		[DataMember]
 		public string DescriptionOrUrl { get; set; }
+
+		[DataMember]
+		public bool Disabled { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }
