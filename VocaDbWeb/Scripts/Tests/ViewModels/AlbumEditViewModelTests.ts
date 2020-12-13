@@ -34,7 +34,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 	var songInAlbum: SongInAlbumEditContract;
 	var customTrack: SongInAlbumEditContract;
     var roles: { [key: string]: string; } = { Default: "Default", VoiceManipulator: "Voice manipulator" };
-    var webLinkData = { category: "Official", description: "Youtube Channel", id: 123, url: "http://www.youtube.com/user/tripshots" };
+    var webLinkData = { category: "Official", description: "Youtube Channel", id: 123, url: "http://www.youtube.com/user/tripshots", disabled: false };
     var data: AlbumForEditContract;
 	vdb.resources = {
 		album: {}, albumDetails: { download: "" }, albumEdit: { addExtraArtist: "" }, entryEdit: {}, shared: null, song: null

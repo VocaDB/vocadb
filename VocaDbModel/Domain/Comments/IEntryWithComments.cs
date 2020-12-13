@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Domain.Comments
@@ -12,6 +12,6 @@ namespace VocaDb.Model.Domain.Comments
 
 	public interface IEntryWithComments<TComment> : IEntryWithComments where TComment : Comment
 	{
-		new IList<TComment> Comments { get; }
+		new IEnumerable<TComment> Comments { get; }
 	}
 }

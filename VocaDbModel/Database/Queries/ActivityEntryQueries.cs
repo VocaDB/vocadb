@@ -5,10 +5,12 @@ using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Activityfeed;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.QueryableExtensions;
 
 namespace VocaDb.Model.Database.Queries
 {
@@ -83,11 +85,13 @@ namespace VocaDb.Model.Database.Queries
 			DateTime? since = null,
  			int? userId = null,
 			EntryEditEvent? editEvent = null,
+			EntryType entryType = EntryType.Undefined,
 			int maxResults = defaultMax,
 			bool getTotalCount = false,
 			ActivityEntryOptionalFields fields = ActivityEntryOptionalFields.None,
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+			ContentLanguagePreference lang = ContentLanguagePreference.Default,
+			ActivityEntrySortRule sortRule = ActivityEntrySortRule.CreateDateDescending)
 		{
 			maxResults = Math.Min(maxResults, absoluteMax);
 
@@ -96,32 +100,25 @@ namespace VocaDb.Model.Database.Queries
 				var query = ctx.Query<ActivityEntry>();
 
 				if (before.HasValue && !since.HasValue)
-				{
 					query = query.Where(a => a.CreateDate < before.Value);
-				}
 
 				if (!before.HasValue && since.HasValue)
-				{
 					query = query.Where(a => a.CreateDate > since.Value);
-				}
 
 				if (before.HasValue && since.HasValue)
-				{
 					query = query.Where(a => a.CreateDate > since.Value && a.CreateDate < before.Value);
-				}
 
 				if (userId.HasValue)
-				{
 					query = query.Where(a => a.Author.Id == userId.Value);
-				}
 
 				if (editEvent.HasValue)
-				{
 					query = query.Where(a => a.EditEvent == editEvent.Value);
-				}
+
+				if (entryType != EntryType.Undefined)
+					query = query.Where(a => a.EntryType == entryType);
 
 				var activityEntries = query
-					.OrderByDescending(a => a.CreateDate)
+					.OrderBy(sortRule)
 					.Take(maxResults)
 					.ToArray()
 					.Where(a => !a.EntryBase.Deleted)

@@ -16,6 +16,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Knockout;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @using R = ViewRes.Artist;
 @using Res = ViewRes.Artist.DetailsStrings
 @inherits VocaDb.Web.Code.VocaDbPage<ArtistDetailsContract>
@@ -174,7 +175,7 @@
 						</td>
 						<td>
 							@foreach (var user in Model.OwnerUsers) {
-								@UserHelpers.UserIconLink(user, tooltip: true)
+								@Html.Partial("Partials/User/_UserIconLink_UserContract", new UserIconLink_UserContractViewModel(user, tooltip: true))
 								<br />
 							}
 						</td>

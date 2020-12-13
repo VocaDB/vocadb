@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
 
 namespace VocaDb.Web.Controllers

@@ -2,7 +2,7 @@ import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
 import WebLinksEditViewModel from '../../ViewModels/WebLinksEditViewModel';
 
     var categories: TranslatedEnumField[] = [{ id: "Official", name: "Official" }, { id: "Commercial", name: "Commercial" }];
-    var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots" };
+    var webLinkData = { category: "Official", description: "Youtube Channel", id: 0, url: "http://www.youtube.com/user/tripshots", disabled: false };
 
     QUnit.module("WebLinksEditViewModel");
 

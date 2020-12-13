@@ -8,6 +8,8 @@ namespace VocaDb.Model.Mapping.Activityfeed
 	{
 		public ActivityEntryMap()
 		{
+			// Code from: https://stackoverflow.com/questions/25938174/how-to-use-nhibernate-discriminatesubclassesoncolumn-and-references-for-the-same/25972593#25972593
+			Map(m => m.EntryType).ReadOnly().Access.None();
 			DiscriminateSubClassesOnColumn("[EntryType]");
 			Table("ActivityEntries");
 			Id(m => m.Id);

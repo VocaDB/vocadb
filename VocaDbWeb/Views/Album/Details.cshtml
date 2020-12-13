@@ -16,6 +16,7 @@
 @using VocaDb.Web.Models.Shared.Partials.PV;
 @using VocaDb.Web.Models.Shared.Partials.Shared;
 @using VocaDb.Web.Models.Shared.Partials.Song;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @using R = ViewRes.Album;
 @using Res = ViewRes.Album.DetailsStrings;
 @using EntryRes = ViewRes.EntryDetailsStrings;
@@ -112,7 +113,7 @@
 				{
 					<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
 						<meta itemprop="ratingValue" content="@DecimalDot(Model.RatingAverage)" />
-						@Helpers.StarsMeta(Model.RatingAverage, 5)<br />
+						@Html.Partial("Partials/Shared/_StarsMetaSpan", new StarsMetaSpanViewModel(Model.RatingAverage, 5))<br />
 						(<span itemprop="ratingCount">@Model.RatingCount</span> @Res.Ratings)
 					</div>
 				}
@@ -362,7 +363,7 @@
 								<div class="tracklist-trackTitle">
 									@if (song.Song != null)
 									{
-										@SongHelpers.SongLink(song.Song, Model.Id, tooltip: true)
+										@Html.Partial("Partials/Song/_SongLink", new SongLinkViewModel(song.Song, Model.Id, tooltip: true))
 										if (song.Song.LengthSeconds > 0)
 										{
 											@(" (" + DateTimeUtils.FormatFromSeconds(song.Song.LengthSeconds) + ")")
@@ -449,7 +450,7 @@
 
 			<div class="media">
 				<a class="pull-left" href="@Url.UserDetails(Model.LatestReview.User)">
-					@UserHelpers.ProfileIcon(Model.LatestReview.User.MainPicture.UrlThumb, 70)
+					@Html.Partial("Partials/User/_ProfileIcon", new ProfileIconViewModel(Model.LatestReview.User.MainPicture.UrlThumb, 70))
 				</a>
 
 				<div class="media-body">
@@ -459,12 +460,12 @@
 						@VocaDb.Web.Code.TimeAgoStringBuilder.FormatTimeAgo(Model.LatestReview.Date)
 					</div>
 					<h3 class="media-heading">
-						@UserHelpers.UserLink(Model.LatestReview.User)
+						@Html.Partial("Partials/User/_UserLink", new UserLinkViewModel(Model.LatestReview.User))
 					</h3>
 
 					@if (Model.LatestReviewRatingScore > 0)
 					{
-						@Helpers.Stars(Model.LatestReviewRatingScore, 5)
+						@Html.Partial("Partials/Shared/_Stars", new StarsViewModel(Model.LatestReviewRatingScore, 5))
 					}
 
 					<div>

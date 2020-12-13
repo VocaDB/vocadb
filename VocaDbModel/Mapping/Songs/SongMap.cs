@@ -75,7 +75,7 @@ namespace VocaDb.Model.Mapping.Songs
 			HasMany(m => m.AllAlbums).Table("SongsInAlbums").Inverse().Cascade.All().Cache.ReadWrite();
 			HasMany(m => m.AllAlternateVersions).KeyColumn("[OriginalVersion]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.AllArtists).Table("ArtistsForSongs").Inverse().Cascade.All().Cache.ReadWrite();
-			HasMany(m => m.Comments).Inverse().Cascade.AllDeleteOrphan().OrderBy("Created");
+			HasMany(m => m.AllComments).Inverse().Cascade.AllDeleteOrphan().OrderBy("Created");
 			HasMany(m => m.Hits).Inverse();
 			HasMany(m => m.ListLinks).Inverse();
 			HasMany(m => m.Lyrics).Inverse().Cascade.All().Cache.ReadWrite();
@@ -158,8 +158,6 @@ namespace VocaDb.Model.Mapping.Songs
 			References(m => m.Song).Nullable();
 		}
 	}
-
-	public class SongWebLinkMap : WebLinkMap<SongWebLink, Song> { }
 
 	public class PVForSongMap : ClassMap<PVForSong>
 	{

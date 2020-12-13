@@ -256,7 +256,7 @@
 				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.WebLinks, ViewRes.EntryEditStrings.ExternalLinksQuickHelp))
 			</div>
 			<div class="editor-field" data-bind="with: webLinks">
-				@KnockoutHelpers.WebLinksEditViewKnockout(true)
+				@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(true))
 			</div>
 
 			<div class="editor-label">
@@ -413,7 +413,7 @@
 			</p>
 
 			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>
-			@Helpers.AjaxLoader("pvLoader")
+			@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
 
 		</div>
 

@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
@@ -19,7 +20,6 @@ namespace VocaDb.Model.Domain.Discussions
 
 		private string authorName;
 		private IList<DiscussionComment> comments = new List<DiscussionComment>();
-		private string content;
 		private DiscussionFolder folder;
 		private string title;
 
@@ -31,14 +31,13 @@ namespace VocaDb.Model.Domain.Discussions
 		{
 			Folder = folder;
 			Name = name;
-			Content = content;
-			Author = agent.User;
+			CreateComment(content, agent);
 			AuthorName = agent.Name;
 
 			Created = DateTime.Now;
 		}
 
-		public virtual User Author { get; set; }
+		public virtual User Author => FirstComment.Author;
 
 		public virtual string AuthorName
 		{
@@ -50,7 +49,7 @@ namespace VocaDb.Model.Domain.Discussions
 			}
 		}
 
-		public virtual IList<DiscussionComment> Comments
+		public virtual IList<DiscussionComment> AllComments
 		{
 			get => comments;
 			set
@@ -60,21 +59,20 @@ namespace VocaDb.Model.Domain.Discussions
 			}
 		}
 
-		public virtual string Content
-		{
-			get => content;
-			set
-			{
-				ParamIs.NotNullOrEmpty(() => value);
-				content = value;
-			}
-		}
+		/// <remarks>
+		/// The <see cref="FirstComment"/> is regarded as the content of a topic, therefore, we exclude it from <see cref="Comments"/>.
+		/// </remarks>
+		public virtual IEnumerable<DiscussionComment> Comments => AllComments.Where(c => c != FirstComment).Where(c => !c.Deleted);
+
+		public virtual string Content => FirstComment.Message;
 
 		public virtual DateTime Created { get; set; }
 
 		public virtual bool Deleted { get; set; }
 
 		public virtual EntryType EntryType => EntryType.DiscussionTopic;
+
+		public virtual DiscussionComment FirstComment => AllComments.OrderBy(c => c.Created).First();
 
 		/// <summary>
 		/// Folder containing this topic. Cannot be null.
@@ -108,8 +106,14 @@ namespace VocaDb.Model.Domain.Discussions
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
 			var comment = new DiscussionComment(this, message, loginData);
-			Comments.Add(comment);
+			AllComments.Add(comment);
 			return comment;
+		}
+
+		public virtual void Delete()
+		{
+			Deleted = true;
+			FirstComment.Deleted = true;
 		}
 
 		public virtual void MoveToFolder(DiscussionFolder targetFolder)

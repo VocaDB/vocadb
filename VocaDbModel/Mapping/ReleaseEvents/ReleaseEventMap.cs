@@ -26,7 +26,7 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 			HasMany(m => m.AllAlbums).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
 			HasMany(m => m.AllArtists).KeyColumn("[Event]").Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.AllSongs).KeyColumn("[ReleaseEvent]").Inverse().Cache.ReadWrite();
-			HasMany(m => m.Comments).KeyColumn("[ReleaseEvent]").Inverse().Cascade.AllDeleteOrphan();
+			HasMany(m => m.AllComments).KeyColumn("[ReleaseEvent]").Inverse().Cascade.AllDeleteOrphan();
 			HasMany(m => m.Users).Inverse().Cascade.All().Cache.ReadWrite();
 			HasMany(m => m.WebLinks).KeyColumn("[ReleaseEvent]").Inverse().Cascade.All().Cache.ReadWrite();
 
@@ -65,14 +65,6 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 		}
 	}
 
-	public class ReleaseEventCommentMap : CommentMap<ReleaseEventComment, ReleaseEvent>
-	{
-		public ReleaseEventCommentMap()
-		{
-			References(m => m.EntryForComment).Column("[ReleaseEvent]").Not.Nullable();
-		}
-	}
-
 	public class EventNameMap : ClassMap<EventName>
 	{
 		public EventNameMap()
@@ -86,8 +78,6 @@ namespace VocaDb.Model.Mapping.ReleaseEvents
 			References(m => m.Entry).Column("[Event]").Not.Nullable();
 		}
 	}
-
-	public class ReleaseEventWebLinkMap : WebLinkMap<ReleaseEventWebLink, ReleaseEvent> { }
 
 	public class ArchivedReleaseEventVersionMap : ClassMap<ArchivedReleaseEventVersion>
 	{

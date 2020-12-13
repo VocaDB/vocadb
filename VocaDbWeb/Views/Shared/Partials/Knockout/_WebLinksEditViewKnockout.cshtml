@@ -1,0 +1,45 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Knockout;
+@using Res = ViewRes.Song.EditStrings;
+@model WebLinksEditViewKnockoutViewModel
+
+<!-- binding context: WebLinksEditViewModel -->
+<table>
+	<thead>
+		<tr data-bind="visible: items && items().length">
+			<th>
+				@HelperRes.HelperStrings.WebLinkUrlTitle
+				@Html.Partial("Partials/Shared/_RequiredField")
+			</th>
+			<th>@HelperRes.HelperStrings.WebLinkDescriptionTitle</th>
+			@if (Model.ShowCategory)
+			{
+				<th>@HelperRes.HelperStrings.WebLinkCategoryTitle</th>
+			}
+			<th>@Res.PvStatus</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach: items">
+		<tr>
+			<td><input type="text" data-bind="value: url" maxlength="512" class="input-xlarge" /></td>
+			<td><input type="text" data-bind="value: description" maxlength="512" /></td>
+			@if (Model.ShowCategory)
+			{
+				<td>
+					<select data-bind="value: category, options: $parent.categories, optionsText: 'name', optionsValue: 'id'" class="input-medium"></select>
+				</td>
+			}
+			<td>
+				<label class="checkbox">
+					<input type="checkbox" data-bind="checked: disabled" />
+					@ViewRes.EntryEditStrings.PVUnavailable
+				</label>
+			</td>
+			<td>
+				<a href="#" class="textLink deleteLink" data-bind="click: $parent.remove">@ViewRes.SharedStrings.Delete</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<a href="#" class="textLink addLink" data-bind="click: add">@HelperRes.HelperStrings.WebLinkNewRow</a>

@@ -55,7 +55,7 @@
 
 @helper AlternateVersions(IEnumerable<SongContract> songs) {
 	foreach (var alternateVersion in songs) {
-		@SongHelpers.SongLink(alternateVersion, tooltip: true)
+		@Html.Partial("Partials/Song/_SongLink", new SongLinkViewModel(alternateVersion, tooltip: true))
 		if (alternateVersion.LengthSeconds > 0) {
 			@:(@VocaDb.Model.Helpers.DateTimeHelper.FormatMinSec(alternateVersion.LengthSeconds))
 		}
@@ -120,7 +120,7 @@
 	
 @Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
 
-@Helpers.AjaxLoader("pvLoader")		
+@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
 }
 
 @if (Model.Deleted) {
@@ -305,7 +305,7 @@
 			<tr data-bind="if: originalVersion().entry">
 				<td>@Res.OriginalVersion</td>
 				<td>
-					@SongHelpers.SongLinkKnockout("originalVersion().entry", "originalVersion().url", tooltip: true, toolTipDomainBinding: "originalVersion().domain")
+					@Html.Partial("Partials/Song/_SongLinkKnockout", new SongLinkKnockoutViewModel("originalVersion().entry", "originalVersion().url", tooltip: true, toolTipDomainBinding: "originalVersion().domain"))
 					<span data-bind="songTypeLabel: originalVersion().entry.songType"></span>
 					<br />
 					<span data-bind="text: originalVersion().entry.artistString"></span>

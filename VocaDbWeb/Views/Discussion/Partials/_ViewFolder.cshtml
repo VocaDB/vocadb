@@ -1,5 +1,6 @@
-﻿@using VocaDb.Model.Domain.Security
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Model.Domain.Images;
+@using VocaDb.Model.Domain.Security;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @using Res = ViewRes.Discussion.IndexStrings
 @inherits VocaDb.Web.Code.VocaDbPage
 
@@ -52,7 +53,7 @@
 				</td>
 				<td>
 					<span data-bind="with: author">
-						@UserHelpers.ProfileIconKnockout(VocaDb.Model.Domain.Images.ImageSize.TinyThumb, size: 18)
+						@Html.Partial("Partials/User/_ProfileIconKnockout_ImageSize", new ProfileIconKnockout_ImageSizeViewModel(ImageSize.TinyThumb, size: 18))
 						<span>{{name}}</span>
 					</span>
 				</td>

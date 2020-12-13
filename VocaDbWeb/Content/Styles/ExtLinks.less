@@ -26,6 +26,10 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/animate.png"));
 	}
 
+	&[href^="http://web.archive.org/"], &[href^="https://web.archive.org/"] {
+		.extLink(url("/Content/ExtIcons//archive.png"));
+	}
+
 	&[href^="http://www5.atwiki.jp/hmiku/"], &[href^="https://www5.atwiki.jp/hmiku/"], &[href^="https://w.atwiki.jp/hmiku/"] {
 		background-image: url("/Content/ExtIcons/atwiki.png");
 	}

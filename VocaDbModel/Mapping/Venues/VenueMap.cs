@@ -64,8 +64,6 @@ namespace VocaDb.Model.Mapping.Venues
 		}
 	}
 
-	public class VenueWebLinkMap : WebLinkMap<VenueWebLink, Venue> { }
-
 	public class ArchivedVenueVersionMap : ClassMap<ArchivedVenueVersion>
 	{
 		public ArchivedVenueVersionMap()

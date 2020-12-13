@@ -1,11 +1,21 @@
-﻿@inherits VocaDb.Web.Code.VocaDbPage<EntryReportContract[]>
-@using VocaDb.Model.DataContracts
-@using VocaDb.Model.Domain
+﻿@using VocaDb.Model.DataContracts;
+@using VocaDb.Model.DataContracts.Users;
+@using VocaDb.Model.Domain;
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.User;
+@inherits VocaDb.Web.Code.VocaDbPage<EntryReportContract[]>
 
 @{
 	PageProperties.Title = "View entry reports";
 	ReportStatus status = ViewBag.ReportStatus;
+}
+
+@helper UserIconLinkOrName(UserForApiContract user, string name, int size = 20) {
+	if (user != null) {
+		@Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(user, size))
+	} else {
+		@name
+	}
 }
 
 <ul class="nav nav-pills">
@@ -45,7 +55,7 @@
 		@foreach (var r in Model) {			
 			<tr>
 				<td>@r.Created</td>
-				<td>@UserHelpers.UserIconLink(r.User, r.Hostname)</td>
+				<td>@UserIconLinkOrName(r.User, r.Hostname)</td>
 				<td>
 					<a href="@Url.EntryDetails(r.Entry)" title="@r.Entry.AdditionalNames">@r.Entry.Name</a>
 					
@@ -65,7 +75,7 @@
 				}
 				@if (status == ReportStatus.Closed) {
 					<td>
-						@UserHelpers.UserIconLink(r.ClosedBy)
+						@Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(r.ClosedBy))
 					</td>
 					<td>
 						@r.ClosedAt

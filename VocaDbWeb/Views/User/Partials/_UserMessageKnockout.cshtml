@@ -1,4 +1,6 @@
-﻿<!-- binding context: UserMessageViewModel -->
+﻿@using VocaDb.Web.Models.Shared.Partials.User;
+
+<!-- binding context: UserMessageViewModel -->
 
 <div class="message ui-tabs ui-widget ui-widget-content ui-corner-all">
 
@@ -10,13 +12,13 @@
 			<span data-bind="with: sender">
 				<span>@ViewRes.User.MessagesStrings.From</span>
 				<span>
-					@UserHelpers.IconAndNameLinkKnockout()
+					@Html.Partial("Partials/User/_IconAndNameLinkKnockout", new IconAndNameLinkKnockoutViewModel())
 					<span class="razor-whitespace-fix">.</span>
 				</span>
 			</span>
 			<span>@ViewRes.User.MessagesStrings.To</span>
 			<span data-bind="with: receiver">
-				@UserHelpers.IconAndNameLinkKnockout()
+				@Html.Partial("Partials/User/_IconAndNameLinkKnockout", new IconAndNameLinkKnockoutViewModel())
 				<span class="razor-whitespace-fix">.</span>
 			</span>
 		</div>

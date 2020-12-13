@@ -1,0 +1,8 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.User;
+@model IconAndLinkKnockoutViewModel
+
+@* User icon inside anchor (no name) *@
+
+<a data-bind="attr: { href: app.EntryUrlMapper.details_user_byName(@(Model.UserBinding + ".name")) }" class="pull-left">
+	@Html.Partial("Partials/User/_ProfileIconKnockout_ImageSize", new ProfileIconKnockout_ImageSizeViewModel(VocaDb.Model.Domain.Images.ImageSize.Thumb, binding: Model.UserBinding, size: 70))
+</a>

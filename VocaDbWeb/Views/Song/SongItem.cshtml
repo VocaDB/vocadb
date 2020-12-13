@@ -1,8 +1,9 @@
-﻿@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Song;
 @model VocaDb.Model.DataContracts.Songs.SongContract
 
 <div style="float:left;">
-	@SongHelpers.SongIconLink(Model)
+	@Html.Partial("Partials/Song/_SongIconLink", new SongIconLinkViewModel(Model))
 </div>
 <br />
 <small>@Model.ArtistString (@Translate.SongTypeNames[Model.SongType])</small>

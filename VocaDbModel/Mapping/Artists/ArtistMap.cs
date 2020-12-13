@@ -39,7 +39,7 @@ namespace VocaDb.Model.Mapping.Artists
 				.Inverse()
 				.KeyColumn("[BaseVoicebank]")
 				.Cache.ReadWrite();
-			HasMany(m => m.Comments).Inverse().Cascade.AllDeleteOrphan().OrderBy("Created");
+			HasMany(m => m.AllComments).Inverse().Cascade.AllDeleteOrphan().OrderBy("Created");
 			HasMany(m => m.Hits).Inverse().Cascade.AllDeleteOrphan();
 			HasMany(m => m.WebLinks).Table("ArtistWebLinks").Inverse().Cascade.All().Cache.ReadWrite();
 

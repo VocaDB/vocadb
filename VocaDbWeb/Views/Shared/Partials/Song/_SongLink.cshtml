@@ -1,0 +1,5 @@
+﻿@using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.Song;
+@model SongLinkViewModel
+
+@Html.ActionLink(Model.Song.Name, "Details", "Song", ViewHelper.GetRouteValueDictionary(Model.Song, Model.AlbumId), new Dictionary<string, object> { { "title", Model.Song.AdditionalNames }, { "data-bind", Model.Tooltip ? "songToolTip: " + Model.Song.Id : null } })

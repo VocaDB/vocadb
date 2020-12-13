@@ -2,11 +2,12 @@
 @using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Comment;
 @using VocaDb.Web.Models.Shared.Partials.Html;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @model CommentBodyLargeViewModel
 
 <div class="comment media comment-large">
 	<a class="pull-left" href="@Url.Action("Profile", "User", new { id = Model.Contract.Author.Name })">
-		@UserHelpers.ProfileIcon(Model.Contract.Author, 70)
+		@Html.Partial("Partials/User/_ProfileIcon_IUserWithEmail", new ProfileIcon_IUserWithEmailViewModel(Model.Contract.Author, 70))
 	</a>
 
 	<div class="media-body">
@@ -21,7 +22,7 @@
 			}
 		</div>
 		<h3 class="media-heading comment-large-header">
-			@UserHelpers.UserLink(Model.Contract.Author)
+			@Html.Partial("Partials/User/_UserLink", new UserLinkViewModel(Model.Contract.Author))
 		</h3>
 		@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Contract.Message))
 	</div>

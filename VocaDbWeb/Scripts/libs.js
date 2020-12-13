@@ -18,7 +18,6 @@ require('jquery-ui/slider');
 require('jquery-ui/sortable');
 require('jquery-ui/spinner');
 require('jquery-ui/tabs');
-require('jquery-ui/tooltip');
 
 window.ko = require('knockout');
 

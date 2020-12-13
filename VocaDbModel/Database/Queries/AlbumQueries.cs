@@ -24,6 +24,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -90,11 +91,11 @@ namespace VocaDb.Model.Database.Queries
 			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () =>
 			{
 				var latestReview = album.LastReview;
-				var latestRatingScore = latestReview != null ? album.UserCollections.FirstOrDefault(uc => uc.User.Equals(latestReview.User)) : null;
+				var latestRatingScore = latestReview != null ? album.UserCollections.FirstOrDefault(uc => uc.User.Equals(latestReview.Author)) : null;
 
 				return new SharedAlbumStatsContract
 				{
-					ReviewCount = album.Reviews.Count,
+					ReviewCount = album.Reviews.Count(),
 					LatestReview = latestReview != null ? new AlbumReviewContract(latestReview, userIconFactory) : null,
 					LatestReviewRatingScore = latestRatingScore?.Rating ?? 0,
 					OwnedCount = album.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Owned),
@@ -177,33 +178,34 @@ namespace VocaDb.Model.Database.Queries
 				if (contract.Id != 0)
 				{
 					review = ctx.Load<AlbumReview>(contract.Id);
-					if (!review.User.Equals(PermissionContext.LoggedUser))
+					if (!review.Author.Equals(PermissionContext.LoggedUser))
 					{
 						PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 					}
 				}
 				else
 				{
-					review = ctx.Query<AlbumReview>().FirstOrDefault(r => r.Album.Id == albumId && r.User.Id == PermissionContext.LoggedUserId && r.LanguageCode == contract.LanguageCode);
+					review = ctx.Query<AlbumReview>().FirstOrDefault(r => r.EntryForComment.Id == albumId && r.Author.Id == PermissionContext.LoggedUserId && r.LanguageCode == contract.LanguageCode);
 				}
 
 				// Create
-				if (review == null)
+				if (review == null || review.Deleted)
 				{
 					var album = ctx.Load<Album>(albumId);
-					review = new AlbumReview(album, ctx.OfType<User>().GetLoggedUser(PermissionContext), contract.Title, contract.Text, contract.LanguageCode);
-					album.Reviews.Add(review);
+					var agentLoginData = ctx.CreateAgentLoginData(PermissionContext);
+					review = new AlbumReview(album, contract.Text, agentLoginData, contract.Title, contract.LanguageCode);
+					album.AllReviews.Add(review);
 					ctx.Save(review);
 				}
 				else
 				{ // Update
 					review.LanguageCode = contract.LanguageCode;
-					review.Text = contract.Text;
+					review.Message = contract.Text;
 					review.Title = contract.Title;
 					ctx.Update(review);
 				}
 
-				ctx.AuditLogger.AuditLog(string.Format("submitted review for {0}", entryLinkFactory.CreateEntryLink(review.Album)));
+				ctx.AuditLogger.AuditLog(string.Format("submitted review for {0}", entryLinkFactory.CreateEntryLink(review.EntryForComment)));
 
 				return new AlbumReviewContract(review, userIconFactory);
 			});
@@ -217,13 +219,13 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var review = ctx.Load<AlbumReview>(reviewId);
 
-				if (!review.User.Equals(PermissionContext.LoggedUser))
+				if (!review.Author.Equals(PermissionContext.LoggedUser))
 				{
 					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 				}
 
-				review.Album.Reviews.Remove(review);
-				ctx.Delete(review);
+				review.Delete();
+				ctx.Update(review);
 			});
 		}
 
@@ -235,7 +237,7 @@ namespace VocaDb.Model.Database.Queries
 
 				return album.Reviews
 					.Where(review => string.IsNullOrEmpty(languageCode) || review.LanguageCode == languageCode)
-					.OrderBy(review => review.Date)
+					.OrderBy(review => review.Created)
 					.Select(review => new AlbumReviewContract(review, userIconFactory))
 					.ToArray();
 			});
@@ -361,18 +363,6 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var album = session.Load<Album>(id);
 
-				var stats = session.Query<Album>()
-					.Where(a => a.Id == id)
-					.Select(a => new
-					{
-						CommentCount = a.Comments.Count,
-						Hits = a.Hits.Count,
-					})
-					.FirstOrDefault();
-
-				if (stats == null)
-					throw new ObjectNotFoundException(id, typeof(Album));
-
 				var user = PermissionContext.LoggedUser;
 
 				SongVoteRating? GetRatingFunc(Song song)
@@ -383,8 +373,8 @@ namespace VocaDb.Model.Database.Queries
 				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imageUrlFactory, GetRatingFunc,
 					discTypeTag: new EntryTypeTags(session).GetTag(EntryType.Album, album.DiscType))
 				{
-					CommentCount = stats.CommentCount,
-					Hits = stats.Hits,
+					CommentCount = Comments(session).GetCount(id),
+					Hits = session.Query<AlbumHit>().Count(h => h.Entry.Id == id),
 					Stats = GetSharedAlbumStats(session, album)
 				};
 
@@ -397,6 +387,7 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				contract.LatestComments = session.Query<AlbumComment>()
+					.WhereNotDeleted()
 					.Where(c => c.EntryForComment.Id == id)
 					.OrderByDescending(c => c.Created)
 					.Take(3)
@@ -593,7 +584,7 @@ namespace VocaDb.Model.Database.Queries
 
 				foreach (var w in source.WebLinks.Where(w => !target.HasWebLink(w.Url)))
 				{
-					var link = target.CreateWebLink(w.Description, w.Url, w.Category);
+					var link = target.CreateWebLink(w.Description, w.Url, w.Category, w.Disabled);
 					session.Save(link);
 				}
 

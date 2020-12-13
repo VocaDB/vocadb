@@ -123,6 +123,12 @@
   <data name="Artist" xml:space="preserve">
     <value>Artist</value>
   </data>
+  <data name="DiscussionTopic" xml:space="preserve">
+    <value>Topic</value>
+  </data>
+  <data name="PV" xml:space="preserve">
+    <value>PV</value>
+  </data>
   <data name="ReleaseEvent" xml:space="preserve">
     <value>Event</value>
   </data>
@@ -143,5 +149,8 @@
   </data>
   <data name="User" xml:space="preserve">
     <value>User</value>
+  </data>
+  <data name="Venue" xml:space="preserve">
+    <value>Venue</value>
   </data>
 </root>

@@ -12,6 +12,7 @@
 		tag_tagEditableFieldNames?: { [key: string]: string; }
 		user_ratedSongForUserSortRuleNames?: { [key: string]: string; }
 
+		activityEntrySortRuleNames?: { [key: string]: string }
 		albumCollectionStatusNames?: { [key: string]: string; }
 		albumMediaTypeNames?: { [key: string]: string; }
 		albumSortRuleNames?: { [key: string]: string; }

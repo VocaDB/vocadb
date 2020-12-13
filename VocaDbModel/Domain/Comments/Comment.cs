@@ -8,7 +8,7 @@ namespace VocaDb.Model.Domain.Comments
 	/// Base class for comments.
 	/// Comments can be added for entries such as albums and users.
 	/// </summary>
-	public abstract class Comment : ICommentWithEntry
+	public abstract class Comment : ICommentWithEntry, IDeletableEntry
 	{
 		private string authorName;
 		private string message;
@@ -42,6 +42,8 @@ namespace VocaDb.Model.Domain.Comments
 
 		public virtual DateTime Created { get; set; }
 
+		public virtual bool Deleted { get; set; }
+
 		/// <summary>
 		/// Entry owning this comment. Cannot be null.
 		/// </summary>
@@ -63,12 +65,9 @@ namespace VocaDb.Model.Domain.Comments
 			}
 		}
 
-		public virtual void OnDelete() { }
+		public virtual void Delete() => Deleted = true;
 
-		public override string ToString()
-		{
-			return string.Format("comment [{0}] for {1}", Id, Entry);
-		}
+		public override string ToString() => $"comment [{Id}] for {Entry}";
 	}
 
 	public interface IComment : IEntryWithIntId

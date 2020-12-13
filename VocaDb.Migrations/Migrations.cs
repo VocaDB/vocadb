@@ -5,19 +5,117 @@ namespace VocaDb.Migrations
 {
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2020_12_03_2000)]
+	public class WebLinkDisabled : AutoReversingMigration
+	{
+		public override void Up()
+		{
+			var webLinkTables = new[]
+			{
+				TableNames.AlbumWebLinks,
+				TableNames.ArtistWebLinks,
+				TableNames.ReleaseEventWebLinks,
+				TableNames.ReleaseEventSeriesWebLinks,
+				TableNames.SongWebLinks,
+				TableNames.TagWebLinks,
+				TableNames.UserWebLinks,
+				TableNames.VenueWebLinks,
+			};
+
+			foreach (var table in webLinkTables)
+				Create.Column("Disabled").OnTable(table).AsBoolean().NotNullable().WithDefaultValue(false);
+		}
+	}
+
+	[Migration(2020_11_20_2000)]
+	public class Comments : Migration
+	{
+		public override void Up()
+		{
+			// TODO: remove these columns
+			Alter.Column("AuthorName").OnTable(TableNames.AlbumComments).AsString(100).Nullable();
+			Alter.Column("AuthorName").OnTable(TableNames.DiscussionComments).InSchema(SchemaNames.Discussions).AsString(100).Nullable();
+			Alter.Column("Author").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).AsInt32().Nullable();
+			Alter.Column("Content").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).AsString(int.MaxValue).Nullable();
+
+			// Rename columns on `DiscussionTopics` table.
+			Rename.Column("Content").OnTable(TableNames.DiscussionTopics).InSchema(SchemaNames.Discussions).To("Message");
+
+			// Rename columns on `AlbumReviews` table.
+			Rename.Column("Date").OnTable(TableNames.AlbumReviews).To("Created");
+			Rename.Column("Text").OnTable(TableNames.AlbumReviews).To("Message");
+			Rename.Column("User").OnTable(TableNames.AlbumReviews).To("Author");
+
+			// Create `Comments` table.
+			Create.Table(TableNames.Comments)
+				.WithColumn("Id").AsInt32().NotNullable().Identity().PrimaryKey()
+				.WithColumn("Author").AsInt32().NotNullable().ForeignKey(TableNames.Users, "Id").OnDelete(Rule.Cascade)
+				.WithColumn("Created").AsDateTime().NotNullable()
+				.WithColumn("Deleted").AsBoolean().NotNullable().WithDefaultValue(false)
+				.WithColumn("Message").AsString(int.MaxValue).NotNullable()
+				.WithColumn("LanguageCode").AsString(8).Nullable()
+				.WithColumn("Title").AsString(200).Nullable()
+				.WithColumn("EntryType").AsString(20).NotNullable()
+				.WithColumn("Album").AsInt32().Nullable().ForeignKey(TableNames.Albums, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("Artist").AsInt32().Nullable().ForeignKey(TableNames.Artists, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("Topic").AsInt32().Nullable().ForeignKey(foreignKeyName: null, "discussions", TableNames.DiscussionTopics, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("ReleaseEvent").AsInt32().Nullable().ForeignKey(TableNames.AlbumReleaseEvents, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("Song").AsInt32().Nullable().ForeignKey(TableNames.Songs, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("SongList").AsInt32().Nullable().ForeignKey(TableNames.SongLists, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("Tag").AsInt32().Nullable().ForeignKey(TableNames.Tags, "Id").OnDelete(Rule.Cascade).Indexed()
+				.WithColumn("User").AsInt32().Nullable().ForeignKey(TableNames.Users, "Id").Indexed()
+				// TODO: remove these columns
+				.WithColumn("OldTable").AsString().Nullable()
+				.WithColumn("OldId").AsInt32().Nullable();
+
+			Execute.Sql(@"insert into Comments(OldTable, OldId, EntryType, Album, Artist, Topic, ReleaseEvent, Song, SongList, Tag, [User], Author, Created, Message, Deleted, LanguageCode, Title)
+select 'AlbumComments', Id, 'AlbumComment', Album, null, null, null, null, null, null, null, Author, Created, Message, 0, null, null from AlbumComments
+union
+select 'ArtistComments', Id, 'ArtistComment', null, Artist, null, null, null, null, null, null, Author, Created, Message, 0, null, null from ArtistComments
+union
+select 'discussions.DiscussionComments', Id, 'DiscussionComment', null, null, Topic, null, null, null, null, null, Author, Created, Message, 0, null, null from discussions.DiscussionComments
+union
+select 'ReleaseEventComments', Id, 'ReleaseEventComment', null, null, null, ReleaseEvent, null, null, null, null, Author, Created, Message, 0, null, null from ReleaseEventComments
+union
+select 'SongComments', Id, 'SongComment', null, null, null, null, Song, null, null, null, Author, Created, Message, 0, null, null from SongComments
+union
+select 'SongListComments', Id, 'SongListComment', null, null, null, null, null, SongList, null, null, Author, Created, Message, 0, null, null from SongListComments
+union
+select 'TagComments', Id, 'TagComment', null, null, null, null, null, null, Tag, null, Author, Created, Message, 0, null, null from TagComments
+union
+select 'UserComments', Id, 'UserComment', null, null, null, null, null, null, null, [User], Author, Created, Message, 0, null, null from UserComments
+union
+select 'discussions.DiscussionTopics', Id, 'DiscussionComment', null, null, Id, null, null, null, null, null, Author, Created, Message, Deleted, null, null from discussions.DiscussionTopics
+union
+select 'AlbumReviews', Id, 'AlbumReview', Album, null, null, null, null, null, null, null, Author, Created, Message, 0, LanguageCode, Title from AlbumReviews
+order by Created");
+		}
+
+		public override void Down()
+		{
+			throw new System.NotImplementedException();
+		}
+	}
+
 	[Migration(2020_07_19_2000)]
 	public class ArchivedEntryVersionHidden : AutoReversingMigration
 	{
 		public override void Up()
 		{
-			Create.Column("Hidden").OnTable(TableNames.ArchivedAlbumVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedArtistVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedEventSeriesVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedEventVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedSongListVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedSongVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedTagVersions).AsBoolean().NotNullable().WithDefaultValue(false);
-			Create.Column("Hidden").OnTable(TableNames.ArchivedVenueVersions).AsBoolean().NotNullable().WithDefaultValue(false);
+			var archivedVersionTables = new[]
+			{
+				TableNames.ArchivedAlbumVersions,
+				TableNames.ArchivedArtistVersions,
+				TableNames.ArchivedEventSeriesVersions,
+				TableNames.ArchivedEventVersions,
+				TableNames.ArchivedSongListVersions,
+				TableNames.ArchivedSongVersions,
+				TableNames.ArchivedTagVersions,
+				TableNames.ArchivedVenueVersions,
+			};
+
+			foreach (var table in archivedVersionTables)
+				Create.Column("Hidden").OnTable(table).AsBoolean().NotNullable().WithDefaultValue(false);
 		}
 	}
 

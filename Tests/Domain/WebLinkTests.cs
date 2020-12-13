@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -14,8 +14,8 @@ namespace VocaDb.Tests.Domain
 	[TestClass]
 	public class WebLinkTests
 	{
-		private readonly WebLinkContract webLinkContract = new WebLinkContract("test", "http://www.test.com", WebLinkCategory.Commercial) { Id = 1 };
-		private readonly WebLinkContract webLinkContract2 = new WebLinkContract("test2", "http://www.test2.com", WebLinkCategory.Official) { Id = 2 };
+		private readonly WebLinkContract webLinkContract = new WebLinkContract("test", "http://www.test.com", WebLinkCategory.Commercial, disabled: false) { Id = 1 };
+		private readonly WebLinkContract webLinkContract2 = new WebLinkContract("test2", "http://www.test2.com", WebLinkCategory.Official, disabled: false) { Id = 2 };
 		private IWebLinkFactory<WebLink> webLinkFactory;
 
 		[TestInitialize]
@@ -23,8 +23,8 @@ namespace VocaDb.Tests.Domain
 		{
 			var webLinkFactoryMock = new Mock<IWebLinkFactory<WebLink>>();
 			webLinkFactoryMock
-				.Setup(m => m.CreateWebLink(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<WebLinkCategory>()))
-				.Returns<string, string, WebLinkCategory>((d, u, c) => new WebLink(d, u, c));
+				.Setup(m => m.CreateWebLink(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<WebLinkCategory>(), It.IsAny<bool>()))
+				.Returns<string, string, WebLinkCategory, bool>((description, url, category, disabled) => new WebLink(description, url, category, disabled));
 			webLinkFactory = webLinkFactoryMock.Object;
 		}
 
@@ -126,7 +126,7 @@ namespace VocaDb.Tests.Domain
 		[TestMethod]
 		public void Sync_Contracts_SkipWhitespace()
 		{
-			var newLinks = new[] { new WebLinkContract(" ", "VocaDB", WebLinkCategory.Reference) };
+			var newLinks = new[] { new WebLinkContract(" ", "VocaDB", WebLinkCategory.Reference, disabled: false) };
 
 			var result = WebLink.Sync(new WebLink[] { }, newLinks, webLinkFactory);
 

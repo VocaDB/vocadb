@@ -21,6 +21,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
@@ -497,6 +498,7 @@ namespace VocaDb.Model.Database.Queries
 
 				contract.CommentCount = Comments(session).GetCount(songId);
 				contract.LatestComments = session.Query<SongComment>()
+					.WhereNotDeleted()
 					.Where(c => c.EntryForComment.Id == songId)
 					.OrderByDescending(c => c.Created).Take(3).ToArray()
 					.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
@@ -884,7 +886,7 @@ namespace VocaDb.Model.Database.Queries
 				// Weblinks
 				foreach (var w in source.WebLinks.Where(w => !target.HasWebLink(w.Url)))
 				{
-					var link = target.CreateWebLink(w.Description, w.Url, w.Category);
+					var link = target.CreateWebLink(w.Description, w.Url, w.Category, w.Disabled);
 					ctx.Save(link);
 				}
 

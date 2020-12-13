@@ -10,6 +10,14 @@ import ResourcesManager from '../../Models/ResourcesManager';
 import { ResourceSetNames } from '../../Models/ResourcesManager';
 import UrlMapper from '../../Shared/UrlMapper';
 
+	enum ActivityEntrySortRule {
+
+		CreateDateDescending,
+
+		CreateDate,
+
+	}
+
 	export default class ActivityEntryListViewModel {
 		
 		constructor(private urlMapper: UrlMapper,
@@ -17,25 +25,28 @@ import UrlMapper from '../../Shared/UrlMapper';
 			private languageSelection: string,
 			cultureCode: string,
 			private userId?: number,
-			editEvent?: EntryEditEvent) {
-			
-			this.editEvent = ko.observable(editEvent);
-			this.editEvent.subscribe(this.clear);
+			additionsOnly?: boolean) {
 
-			this.editEventFilter_all = ko.computed({
-				read: () => this.editEvent() == null,
-				write: (val: boolean) => this.editEvent(val ? null : EntryEditEvent.Created)
-			});
+			this.additionsOnly = ko.observable(additionsOnly ?? false);
+			this.entryType = ko.observable(EntryType[EntryType.Undefined]);
+			this.sort = ko.observable(ActivityEntrySortRule[ActivityEntrySortRule.CreateDateDescending]);
+
+			this.additionsOnly.subscribe(this.clear);
+			this.entryType.subscribe(this.clear);
+			this.sort.subscribe(this.clear);
 
 			this.resources = new ResourcesManager(resourceRepo, cultureCode);
 			this.resources.loadResources(this.loadMore, ResourceSetNames.artistTypeNames, ResourceSetNames.discTypeNames, ResourceSetNames.songTypeNames,
 				ResourceSetNames.userGroupNames, ResourceSetNames.activityEntry.activityFeedEventNames, ResourceSetNames.album.albumEditableFieldNames, ResourceSetNames.artist.artistEditableFieldNames,
 				ResourceSetNames.releaseEvent.releaseEventEditableFieldNames,
 				ResourceSetNames.song.songEditableFieldNames, ResourceSetNames.songList.songListEditableFieldNames, ResourceSetNames.songList.songListFeaturedCategoryNames,
-				ResourceSetNames.tag.tagEditableFieldNames);
+				ResourceSetNames.tag.tagEditableFieldNames, "activityEntrySortRuleNames");
 
+			this.sortName = ko.computed(() => this.resources.resources().activityEntrySortRuleNames != null ? this.resources.resources().activityEntrySortRuleNames[this.sort()] : "");
 
 		}
+
+		public additionsOnly: KnockoutObservable<boolean>;
 
 		private clear = () => {
 			this.lastEntryDate = null;
@@ -45,9 +56,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 
 		public entries = ko.observableArray<ActivityEntryContract>([]);
 
-		public editEvent: KnockoutObservable<EntryEditEvent>;
-
-		public editEventFilter_all: KnockoutComputed<boolean>;
+		public entryType: KnockoutObservable<string>;
 
 		public getActivityFeedEventName = (activityEntry: ActivityEntryContract) => {
 			
@@ -140,13 +149,17 @@ import UrlMapper from '../../Shared/UrlMapper';
 		public loadMore = () => {
 			
 			var url = this.urlMapper.mapRelative("/api/activityEntries");
+			var sortRule = ActivityEntrySortRule[this.sort()];
 			$.getJSON(url, {
 				fields: 'Entry,ArchivedVersion',
 				entryFields: 'AdditionalNames,MainPicture',
 				lang: this.languageSelection,
-				before: this.lastEntryDate ? this.lastEntryDate.toISOString() : null,
+				before: sortRule === ActivityEntrySortRule.CreateDateDescending && this.lastEntryDate ? this.lastEntryDate.toISOString() : null,
+				since: sortRule === ActivityEntrySortRule.CreateDate && this.lastEntryDate ? this.lastEntryDate.toISOString() : null,
 				userId: this.userId,
-				editEvent: this.editEvent() ? EntryEditEvent[this.editEvent()] : null
+				editEvent: this.additionsOnly() ? EntryEditEvent.Created : null,
+				entryType: this.entryType(),
+				sortRule: this.sort()
 			}, (result: PartialFindResultContract<ActivityEntryContract>) => {
 
 				var entries = result.items;
@@ -162,5 +175,8 @@ import UrlMapper from '../../Shared/UrlMapper';
 		}
 
 		public resources: ResourcesManager;
+
+		public sort: KnockoutObservable<string>;
+		public sortName: KnockoutComputed<string>;
 
 	}

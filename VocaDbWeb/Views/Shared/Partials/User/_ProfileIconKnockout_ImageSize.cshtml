@@ -1,0 +1,24 @@
+﻿@using VocaDb.Model.Domain.Images;
+@using VocaDb.Model.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.User;
+@model ProfileIconKnockout_ImageSizeViewModel
+
+@functions {
+
+	static string GetImageSizeProperty(ImageSize size)
+	{
+		switch (size)
+		{
+			case ImageSize.Thumb:
+				return "urlThumb";
+			case ImageSize.SmallThumb:
+				return "urlSmallThumb";
+			case ImageSize.TinyThumb:
+				return "urlTinyThumb";
+		}
+		return "urlThumb";
+	}
+
+}
+
+@Html.Partial("Partials/User/_ProfileIconKnockout", new ProfileIconKnockoutViewModel(Model.Binding + ".mainPicture != null ? " + Model.Binding + ".mainPicture." + GetImageSizeProperty(Model.ImageSize) + " : null", Model.Size > 0 ? Model.Size : ImageHelper.GetUserImageSizePx(Model.ImageSize)))

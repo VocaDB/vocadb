@@ -107,7 +107,7 @@
 		<label for="parent" class="helpTip" title="Parent tag groups related tags under one parent. Child tags are still considered separate.">Parent</label>
 	</div>
 	<div class="editor-field">
-		@KnockoutHelpers.LockingAutoComplete("tagAutoComplete", "parent", "parentName", extraBindings: "tagFilter: denySelf, clearValue: true, allowAliases: false")
+		@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("tagAutoComplete", "parent", "parentName", extraBindings: "tagFilter: denySelf, clearValue: true, allowAliases: false"))
 		@Html.HiddenForKnockout(m => m.Parent, "value: ko.toJSON(parent)")
 	</div>
 
@@ -179,7 +179,7 @@
 		</label>
 	</div>
 	<div class="editor-field" data-bind="with: webLinks">
-		@KnockoutHelpers.WebLinksEditViewKnockout(false)
+		@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(false))
 		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(items)")
 	</div>
 

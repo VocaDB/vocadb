@@ -16,6 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="App_GlobalResources\ActivityEntrySortRuleNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ActivityEntrySortRuleNames.resx</DependentUpon>
+    </Compile>
     <Compile Update="App_GlobalResources\AlbumArchiveReasonNames.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -426,6 +431,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>TopBarStrings.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Views\Shared\ViewVersionStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ViewVersionStrings.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Views\Shared\_LayoutStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -501,6 +511,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DetailsStrings.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Views\User\EntryEditsStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntryEditsStrings.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Views\User\FavoriteSongsStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -559,6 +574,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="App_GlobalResources\ActivityEntrySortRuleNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ActivityEntrySortRuleNames.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\AlbumArchiveReasonNames.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AlbumArchiveReasonNames.designer.cs</LastGenOutput>
@@ -976,6 +996,11 @@
       <LastGenOutput>TopBarStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\ViewVersionStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ViewVersionStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Shared\_LayoutStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>_LayoutStrings.Designer.cs</LastGenOutput>
@@ -1056,6 +1081,11 @@
       <LastGenOutput>DetailsStrings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\User\EntryEditsStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EntryEditsStrings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ViewRes.User</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\User\FavoriteSongsStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
