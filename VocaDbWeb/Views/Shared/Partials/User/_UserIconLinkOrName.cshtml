@@ -2,7 +2,7 @@
 @model UserIconLinkOrNameViewModel
 
 @if (Model.User != null) {
-	@UserHelpers.UserIconLink_IUserWithEmail(Model.User, Model.Size)
+	@Html.Partial("Partials/User/_UserIconLink_IUserWithEmail", new UserIconLink_IUserWithEmailViewModel(Model.User, Model.Size))
 } else {
 	@Model.Name
 }

@@ -1,5 +1,6 @@
-﻿@model VocaDb.Model.DataContracts.Songs.SongListContract[]
-@using VocaDb.Model.Domain.Songs;
+﻿@using VocaDb.Model.Domain.Songs;
+@using VocaDb.Web.Models.Shared.Partials.User;
+@model VocaDb.Model.DataContracts.Songs.SongListContract[]
 
 @{
 
@@ -28,7 +29,7 @@
 	
 	foreach (var list in customLists) {
 		<a href="@Url.Action("Details", "SongList", new { id = list.Id })">@list.Name</a>				
-		@("(")@UserHelpers.UserIconLink_IUserWithEmail(list.Author)@(")")
+		@("(")@Html.Partial("Partials/User/_UserIconLink_IUserWithEmail", new UserIconLink_IUserWithEmailViewModel(list.Author))@(")")
 		<br />
 	}
 	
