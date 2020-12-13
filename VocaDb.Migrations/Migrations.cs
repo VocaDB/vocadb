@@ -8,36 +8,6 @@ namespace VocaDb.Migrations
 	[Migration(2020_11_20_2000)]
 	public class Comments : Migration
 	{
-		private sealed class CommentTable
-		{
-			public CommentTable(string name, string schema = null, string entryTypeName = null)
-			{
-				Name = name;
-				Schema = schema;
-				EntryTypeName = entryTypeName;
-			}
-
-			/// <summary>
-			/// Table name without schema. (e.g. `AlbumComments`, `ArtistComments`, `DiscussionComments`, ...)
-			/// </summary>
-			public string Name { get; }
-
-			/// <summary>
-			/// Table schema. (either null or `discussions`)
-			/// </summary>
-			public string Schema { get; }
-
-			/// <summary>
-			/// Entry type name. (e.g. `Album`, `Artist`, `Topic`, ...)
-			/// </summary>
-			public string EntryTypeName { get; }
-
-			/// <summary>
-			/// Table name with schema. (e.g. `AlbumComments`, `ArtistComments`, `discussions.DiscussionComments`, ...)
-			/// </summary>
-			public string NameWithSchema => Schema != null ? $"{Schema}.{Name}" : Name;
-		}
-
 		public override void Up()
 		{
 			// TODO: remove these columns
