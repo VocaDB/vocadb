@@ -188,7 +188,7 @@ namespace VocaDb.Model.Domain.Artists
 			}
 		}
 
-		public virtual IList<ArtistComment> Comments
+		public virtual IList<ArtistComment> AllComments
 		{
 			get => comments;
 			set
@@ -197,6 +197,8 @@ namespace VocaDb.Model.Domain.Artists
 				comments = value;
 			}
 		}
+
+		public virtual IEnumerable<ArtistComment> Comments => AllComments.Where(c => !c.Deleted);
 
 		public virtual User CreatedBy
 		{
@@ -434,7 +436,7 @@ namespace VocaDb.Model.Domain.Artists
 			ParamIs.NotNull(() => author);
 
 			var comment = new ArtistComment(this, message, author);
-			Comments.Add(comment);
+			AllComments.Add(comment);
 
 			return comment;
 		}

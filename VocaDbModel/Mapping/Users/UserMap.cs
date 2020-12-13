@@ -60,7 +60,7 @@ namespace VocaDb.Model.Mapping.Users
 			HasMany(m => m.AllAlbums).Inverse().Cascade.All().Cache.ReadWrite();
 			HasMany(m => m.AllArtists).Inverse().Cascade.All().Cache.ReadWrite();
 			HasMany(m => m.AllOwnedArtists).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
-			HasMany(m => m.Comments).Inverse().Cascade.AllDeleteOrphan().OrderBy("Created");
+			HasMany(m => m.AllComments).Inverse().Cascade.AllDeleteOrphan().OrderBy("Created");
 			HasMany(m => m.Events).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();
 			HasMany(m => m.FavoriteSongs).Inverse().Cascade.All().Cache.ReadWrite();
 			HasMany(m => m.KnownLanguages).Inverse().Cascade.AllDeleteOrphan().Cache.ReadWrite();

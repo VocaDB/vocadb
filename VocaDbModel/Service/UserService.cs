@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading;
@@ -154,8 +154,8 @@ namespace VocaDb.Model.Service
 				if (!user.Equals(comment.Author) && !user.Equals(comment.EntryForComment))
 					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 
-				comment.EntryForComment.Comments.Remove(comment);
-				session.Delete(comment);
+				comment.Delete();
+				session.Update(comment);
 			});
 		}
 
@@ -166,8 +166,10 @@ namespace VocaDb.Model.Service
 				var user = session.Load<User>(userId);
 
 				var comments = session.Query<AlbumComment>()
+					.WhereNotDeleted()
 					.Where(c => c.Author == user && !c.EntryForComment.Deleted).OrderByDescending(c => c.Created).ToArray().Cast<Comment>()
 					.Concat(session.Query<ArtistComment>()
+						.WhereNotDeleted()
 						.Where(c => c.Author == user && !c.EntryForComment.Deleted)).OrderByDescending(c => c.Created).ToArray();
 
 				return comments.Select(c => new CommentContract(c)).ToArray();

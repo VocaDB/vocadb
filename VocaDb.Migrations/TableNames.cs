@@ -1,8 +1,14 @@
 namespace VocaDb.Migrations
 {
+	public static class SchemaNames
+	{
+		public const string Discussions = "discussions";
+	}
+
 	public static class TableNames
 	{
 		public const string ActivityEntries = nameof(ActivityEntries);
+		public const string AlbumComments = nameof(AlbumComments);
 		public const string AlbumDiscProperties = nameof(AlbumDiscProperties);
 		public const string AlbumNames = nameof(AlbumNames);
 		public const string Albums = nameof(Albums);
@@ -20,11 +26,15 @@ namespace VocaDb.Migrations
 		public const string ArchivedSongListVersions = nameof(ArchivedSongListVersions);
 		public const string ArchivedTagVersions = nameof(ArchivedTagVersions);
 		public const string ArchivedVenueVersions = nameof(ArchivedVenueVersions);
+		public const string ArtistComments = nameof(ArtistComments);
 		public const string ArtistNames = nameof(ArtistNames);
 		public const string Artists = nameof(Artists);
 		public const string ArtistTagUsages = nameof(ArtistTagUsages);
 		public const string ArtistWebLinks = nameof(ArtistWebLinks);
 		public const string AuditLogEntries = nameof(AuditLogEntries);
+		public const string Comments = nameof(Comments);
+		public const string DiscussionComments = nameof(DiscussionComments);
+		public const string DiscussionTopics = nameof(DiscussionTopics);
 		public const string EntryReports = nameof(EntryReports);
 		public const string EventNames = nameof(EventNames);
 		public const string EventSeriesNames = nameof(EventSeriesNames);
@@ -37,10 +47,13 @@ namespace VocaDb.Migrations
 		public const string PVsForEvents = nameof(PVsForEvents);
 		public const string PVsForSongs = nameof(PVsForSongs);
 		public const string RelatedTags = nameof(RelatedTags);
+		public const string ReleaseEventComments = nameof(ReleaseEventComments);
 		public const string ReleaseEventWebLinks = nameof(ReleaseEventWebLinks);
 		public const string ReleaseEventSeriesWebLinks = nameof(ReleaseEventSeriesWebLinks);
 		public const string SongsInAlbums = nameof(SongsInAlbums);
+		public const string SongListComments = nameof(SongListComments);
 		public const string SongLists = nameof(SongLists);
+		public const string SongComments = nameof(SongComments);
 		public const string Songs = nameof(Songs);
 		public const string SongNames = nameof(SongNames);
 		public const string SongTagUsages = nameof(SongTagUsages);
@@ -53,6 +66,7 @@ namespace VocaDb.Migrations
 		public const string TagNames = nameof(TagNames);
 		public const string TagWebLinks = nameof(TagWebLinks);
 		public const string TrashedEntries = nameof(TrashedEntries);
+		public const string UserComments = nameof(UserComments);
 		public const string UserOptions = nameof(UserOptions);
 		public const string UserMessages = nameof(UserMessages);
 		public const string Users = nameof(Users);

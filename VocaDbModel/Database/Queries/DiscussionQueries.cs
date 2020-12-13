@@ -116,7 +116,7 @@ namespace VocaDb.Model.Database.Queries
 				if (!user.Equals(topic.Author))
 					PermissionContext.VerifyPermission(PermissionToken.DeleteComments);
 
-				topic.Deleted = true;
+				topic.Delete();
 				ctx.Update(topic);
 			});
 		}
@@ -154,7 +154,7 @@ namespace VocaDb.Model.Database.Queries
 
 				topic.Locked = contract.Locked;
 				topic.Name = contract.Name;
-				topic.Content = contract.Content;
+				topic.FirstComment.Message = contract.Content;
 
 				ctx.Update(topic);
 				ctx.AuditLogger.AuditLog("updated " + topic);

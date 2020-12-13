@@ -175,7 +175,7 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		public virtual IEnumerable<Tag> Children => AllChildren.Where(t => !t.Deleted);
 
-		public virtual IList<TagComment> Comments
+		public virtual IList<TagComment> AllComments
 		{
 			get => comments;
 			set
@@ -184,6 +184,8 @@ namespace VocaDb.Model.Domain.Tags
 				comments = value;
 			}
 		}
+
+		public virtual IEnumerable<TagComment> Comments => AllComments.Where(c => !c.Deleted);
 
 		/// <summary>
 		/// Date when this entry was created.
@@ -196,7 +198,7 @@ namespace VocaDb.Model.Domain.Tags
 			ParamIs.NotNull(() => loginData);
 
 			var comment = new TagComment(this, message, loginData);
-			Comments.Add(comment);
+			AllComments.Add(comment);
 
 			return comment;
 		}

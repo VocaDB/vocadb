@@ -23,6 +23,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
+using VocaDb.Model.Domain.Comments;
 using VocaDb.Model.Domain.Exceptions;
 using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
@@ -191,13 +192,8 @@ namespace VocaDb.Model.Database.Queries
 					stats.ArtistCount = GetArtistCount(ctx, user);
 					stats.FavoriteSongCount = GetSongCount(ctx, user);
 
-					stats.CommentCount
-						= ctx.Query<AlbumComment>().Count(c => c.Author.Id == user.Id)
-						+ ctx.Query<ArtistComment>().Count(c => c.Author.Id == user.Id)
-						+ ctx.Query<SongComment>().Count(c => c.Author.Id == user.Id);
-
+					stats.CommentCount = ctx.Query<Comment>().WhereNotDeleted().Count(c => c.Author.Id == user.Id);
 					stats.EditCount = ctx.Query<ActivityEntry>().Count(c => c.Author.Id == user.Id);
-
 					stats.SubmitCount = ctx.Query<ActivityEntry>().Count(c => c.Author.Id == user.Id && c.EditEvent == EntryEditEvent.Created);
 
 					stats.TagVotes
@@ -268,6 +264,7 @@ namespace VocaDb.Model.Database.Queries
 				.ToArray();
 
 			details.LatestComments = session.Query<UserComment>()
+				.WhereNotDeleted()
 				.Where(c => c.EntryForComment == user).OrderByDescending(c => c.Created).Take(3)
 				.ToArray()
 				.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
@@ -962,6 +959,7 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(ctx =>
 			{
 				var query = ctx.OfType<UserComment>().Query()
+					.WhereNotDeleted()
 					.Where(c => c.EntryForComment.Id == userId);
 
 				var comments = query
