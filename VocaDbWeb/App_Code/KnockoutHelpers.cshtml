@@ -1,5 +1,6 @@
 ﻿@using System.Web.Mvc.Html;
 @using VocaDb.Model.Domain;
+@using Res = ViewRes.Song.EditStrings;
 @inherits VocaDb.Web.Code.HelperPage
 
 @* 
@@ -78,6 +79,7 @@
 				@if (showCategory) {
 					<th>@HelperRes.HelperStrings.WebLinkCategoryTitle</th>
 				}
+				<th>@Res.PvStatus</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -90,6 +92,12 @@
 						<select data-bind="value: category, options: $parent.categories, optionsText: 'name', optionsValue: 'id'" class="input-medium"></select>
 					</td>
 				}
+				<td>
+					<label class="checkbox">
+						<input type="checkbox" data-bind="checked: disabled" />
+						@ViewRes.EntryEditStrings.PVUnavailable
+					</label>
+				</td>
 				<td>
 					<a href="#" class="textLink deleteLink" data-bind="click: $parent.remove">@ViewRes.SharedStrings.Delete</a>
 				</td>

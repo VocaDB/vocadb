@@ -19,10 +19,9 @@ namespace VocaDb.Model.DataContracts
 			Description = webLink.Description;
 
 			if (fields.HasFlag(WebLinkOptionalFields.DescriptionOrUrl))
-			{
 				DescriptionOrUrl = webLink.DescriptionOrUrl;
-			}
 
+			Disabled = webLink.Disabled;
 			Id = webLink.Id;
 			Url = webLink.Url;
 		}
@@ -36,6 +35,9 @@ namespace VocaDb.Model.DataContracts
 
 		[DataMember(EmitDefaultValue = false)]
 		public string DescriptionOrUrl { get; set; }
+
+		[DataMember]
+		public bool Disabled { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }

@@ -17,6 +17,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Caching;
+using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
@@ -647,7 +648,7 @@ namespace VocaDb.Model.Database.Queries
 				// Weblinks
 				foreach (var w in source.WebLinks.Links.Where(w => !target.WebLinks.HasLink(w.Url)))
 				{
-					var link = target.CreateWebLink(w.Description, w.Url, w.Category);
+					var link = target.CreateWebLink(w.Description, w.Url, w.Category, w.Disabled);
 					ctx.Save(link);
 					diff.WebLinks.Set();
 				}

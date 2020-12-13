@@ -125,7 +125,7 @@ namespace VocaDb.Model.Service
 			{
 				if (album.WebLinks.All(w => !string.Equals(w.Url, sourceUrl, StringComparison.InvariantCultureIgnoreCase) && !importer.IsValidFor(w.Url)))
 				{
-					album.CreateWebLink(importer.ServiceName, sourceUrl, WebLinkCategory.Reference);
+					album.CreateWebLink(importer.ServiceName, sourceUrl, WebLinkCategory.Reference, disabled: false);
 					diff.WebLinks.Set();
 				}
 			}

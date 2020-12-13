@@ -65,7 +65,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			artist = CreateEntry.Producer(name: "Tripshots");
 			vocalist = CreateEntry.Vocalist(name: "Hatsune Miku");
 			repository = new FakeArtistRepository(artist, vocalist);
-			var weblink = new ArtistWebLink(artist, "Website", "http://tripshots.net", WebLinkCategory.Official);
+			var weblink = new ArtistWebLink(artist, "Website", "http://tripshots.net", WebLinkCategory.Official, disabled: false);
 			artist.WebLinks.Add(weblink);
 			repository.Save(weblink);
 			repository.SaveNames(artist, vocalist);
@@ -86,7 +86,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				Names = new[] {
 					new LocalizedStringContract("Tripshots", ContentLanguageSelection.English)
 				},
-				WebLink = new WebLinkContract("http://tripshots.net/", "Website", WebLinkCategory.Official)
+				WebLink = new WebLinkContract("http://tripshots.net/", "Website", WebLinkCategory.Official, disabled: false)
 			};
 		}
 

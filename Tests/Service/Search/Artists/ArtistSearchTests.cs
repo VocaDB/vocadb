@@ -24,7 +24,7 @@ namespace VocaDb.Tests.Service.Search.Artists
 
 			var artist1 = db.Save(CreateEntry.Artist(ArtistType.Producer, name: "XenonP"));
 			db.SaveNames(artist1);
-			db.Save(artist1.CreateWebLink("Twitter", "https://twitter.com/XenonP_XM", WebLinkCategory.Official));
+			db.Save(artist1.CreateWebLink("Twitter", "https://twitter.com/XenonP_XM", WebLinkCategory.Official, disabled: false));
 			db.SaveNames(db.Save(CreateEntry.Artist(ArtistType.Producer, name: "Clean Tears")));
 			db.SaveNames(db.Save(CreateEntry.Artist(ArtistType.Vocaloid, name: "Hatsune Miku")));
 		}
@@ -62,7 +62,7 @@ namespace VocaDb.Tests.Service.Search.Artists
 		{
 			var artist = db.Save(CreateEntry.Artist(ArtistType.Producer, name: "Uji"));
 			db.SaveNames(artist);
-			db.Save(artist.CreateWebLink("Twitter", "https://twitter.com/Uji_RaychoruiP", WebLinkCategory.Official));
+			db.Save(artist.CreateWebLink("Twitter", "https://twitter.com/Uji_RaychoruiP", WebLinkCategory.Official, disabled: false));
 
 			var result = artistSearch.Find(new ArtistQueryParams
 			{
