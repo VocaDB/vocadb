@@ -1,9 +1,11 @@
-﻿@using VocaDb.Web.Models.Shared.Partials.Comment;
+﻿@using VocaDb.Model.Domain.Images;
+@using VocaDb.Web.Models.Shared.Partials.Comment;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @model CommentKnockoutViewModel
 
 <div class="comment media @(Model.Standalone ? "comment-large" : "")">
 	<a data-bind="attr: { href: app.EntryUrlMapper.details_user_byName(author.name) }" class="pull-left">
-		@UserHelpers.ProfileIconKnockout_ImageSize(VocaDb.Model.Domain.Images.ImageSize.Thumb, binding: "author", size: 70)
+		@Html.Partial("Partials/User/_ProfileIconKnockout_ImageSize", new ProfileIconKnockout_ImageSizeViewModel(ImageSize.Thumb, binding: "author", size: 70))
 	</a>
 
 	<div class="media-body">

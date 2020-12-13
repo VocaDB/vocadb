@@ -1,6 +1,8 @@
-﻿@using VocaDb.Model
-@using VocaDb.Model.Domain.Globalization
+﻿@using VocaDb.Model;
+@using VocaDb.Model.Domain.Globalization;
+@using VocaDb.Model.Domain.Images;
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @using Res = ViewRes.TopBarStrings;
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.GlobalSearchBoxModel>
 
@@ -105,7 +107,7 @@
 						<div class="media">
 							<div class="pull-left media-image-usermessage" style="width: 40px; height: 40px;">
 								<!-- ko if: $data.sender -->
-								@UserHelpers.ProfileIconKnockout_ImageSize(VocaDb.Model.Domain.Images.ImageSize.SmallThumb, "sender", 40)
+								@Html.Partial("Partials/User/_ProfileIconKnockout_ImageSize", new ProfileIconKnockout_ImageSizeViewModel(ImageSize.SmallThumb, "sender", 40))
 								<!-- /ko -->
 								<!-- ko ifnot: $data.sender -->
 								<img src="@Url.Content("~/Content/vocadb_40.png")" alt="Notification" />

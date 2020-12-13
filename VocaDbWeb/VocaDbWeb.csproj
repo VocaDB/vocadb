@@ -288,6 +288,7 @@
     <Compile Include="Models\Shared\Partials\User\IconAndNameLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\IconNameAndTypeLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\NameLinkKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\User\ProfileIconKnockout_ImageSizeViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\ProfileIconViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\ProfileIcon_IUserWithEmailViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\SongVoteRatingsRadioKnockoutViewModel.cs" />
@@ -2014,6 +2015,7 @@
     <Content Include="Views\Shared\Partials\User\_UserIconLink_IUserWithEmail.cshtml" />
     <Content Include="Views\Shared\Partials\User\_ProfileIcon_IUserWithEmail.cshtml" />
     <Content Include="Views\Shared\Partials\User\_ProfileIcon.cshtml" />
+    <Content Include="Views\Shared\Partials\User\_ProfileIconKnockout_ImageSize.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
