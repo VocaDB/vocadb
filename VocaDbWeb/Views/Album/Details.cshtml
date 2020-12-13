@@ -450,7 +450,7 @@
 
 			<div class="media">
 				<a class="pull-left" href="@Url.UserDetails(Model.LatestReview.User)">
-					@UserHelpers.ProfileIcon(Model.LatestReview.User.MainPicture.UrlThumb, 70)
+					@Html.Partial("Partials/User/_ProfileIcon", new ProfileIconViewModel(Model.LatestReview.User.MainPicture.UrlThumb, 70))
 				</a>
 
 				<div class="media-body">

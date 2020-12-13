@@ -5,6 +5,6 @@
 
 <a href="@Url.UserDetails(Model.User)" @Html.ConditionalAttribute(Model.Tooltip && Model.User != null, "data-bind", "userToolTip: " + (Model.User != null ? Model.User.Id : 0))
    title='@(Model.UserInfo && Model.User != null ? (Translate.UserGroups[Model.User.GroupId] + "\nJoined: " + Model.User.MemberSince.ToShortDateString()) : "")'>
-	@UserHelpers.ProfileIcon(Model.User != null && Model.User.MainPicture != null ? Model.User.MainPicture.GetSmallestThumb(ImageSize.TinyThumb) : null, Model.Size)
+	@Html.Partial("Partials/User/_ProfileIcon", new ProfileIconViewModel(Model.User != null && Model.User.MainPicture != null ? Model.User.MainPicture.GetSmallestThumb(ImageSize.TinyThumb) : null, Model.Size))
 	<span>@(Model.User != null ? Model.User.Name : "")</span>
 </a>
