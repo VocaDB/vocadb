@@ -1,6 +1,5 @@
 ﻿@inherits VocaDb.Web.Code.HelperPage
 @using Microsoft.Web.Helpers
-@using VocaDb.Model.DataContracts.Users
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.Users
 @using VocaDb.Model.Helpers
@@ -51,9 +50,4 @@
 
 @helper UserIconLink_IUserWithEmail(IUserWithEmail user, int size = ImageHelper.UserTinyThumbSize) {
 	<a href="@Url.UserDetails(user)">@ProfileIcon_IUserWithEmail(user, size)<span>@(user != null ? user.Name : "")</span></a>
-}
-
-@helper UserIconLink_UserContract(UserContract user, int size = ImageHelper.UserTinyThumbSize, bool userInfo = false, bool tooltip = false) {
-	<a href="@Url.UserDetails(user)" @Html.ConditionalAttribute(tooltip && user != null, "data-bind", "userToolTip: " + (user != null ? user.Id : 0)) 
-	   title='@(userInfo && user != null ? (Translate.UserGroups[user.GroupId] + "\nJoined: " + user.CreateDate.ToShortDateString()) : "")'>@ProfileIcon_IUserWithEmail(user, size)<span>@(user != null ? user.Name : "")</span></a>
 }

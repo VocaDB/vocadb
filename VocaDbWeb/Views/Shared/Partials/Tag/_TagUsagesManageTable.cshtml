@@ -1,6 +1,7 @@
 ﻿@using System.Web.Mvc.Html;
-@using VocaDb.Web.Helpers
+@using VocaDb.Web.Helpers;
 @using VocaDb.Web.Models.Shared.Partials.Tag;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @model TagUsagesManageTableViewModel
 
 <div class="alert">
@@ -33,7 +34,7 @@
 						<td>
 							@foreach (var user in usage.Votes)
 							{
-								@UserHelpers.UserIconLink_UserContract(user)<br />
+								@Html.Partial("Partials/User/_UserIconLink_UserContract", new UserIconLink_UserContractViewModel(user))<br />
 							}
 						</td>
 					}

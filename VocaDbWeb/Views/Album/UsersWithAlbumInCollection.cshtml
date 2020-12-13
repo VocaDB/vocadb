@@ -1,10 +1,11 @@
-﻿@using VocaDb.Model.DataContracts.Users
-@using VocaDb.Model.Domain.Users
+﻿@using VocaDb.Model.DataContracts.Users;
+@using VocaDb.Model.Domain.Users;
 @using VocaDb.Web.Helpers;
+@using VocaDb.Web.Models.Shared.Partials.User;
 @model AlbumForUserContract[]
 
 @helper UserGrid(IEnumerable<AlbumForUserContract> users) {
-	@Html.Grid(users, 2, u => new MvcHtmlString(UserHelpers.UserIconLink_UserContract(u.User).ToHtmlString() + " (" + Translate.AlbumMediaTypeNames[u.MediaType] + ")"))
+	@Html.Grid(users, 2, u => new MvcHtmlString(Html.Partial("Partials/User/_UserIconLink_UserContract", new UserIconLink_UserContractViewModel(u.User)).ToHtmlString() + " (" + Translate.AlbumMediaTypeNames[u.MediaType] + ")"))
 }
 
 @{
