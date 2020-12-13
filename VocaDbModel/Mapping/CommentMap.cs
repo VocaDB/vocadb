@@ -7,7 +7,9 @@ namespace VocaDb.Model.Mapping
 	{
 		protected CommentMap()
 		{
-			DiscriminateSubClassesOnColumn("[EntryType]");
+			// Code from: https://stackoverflow.com/questions/6870467/fluentnhibernate-subclassmap-issue-discriminator-fail/6915355#6915355
+			// See also: https://stackoverflow.com/questions/26372382/how-can-i-use-fluent-nhibernate-to-discriminate-on-a-column-of-a-parent-relation/26375330#26375330
+			DiscriminateSubClassesOnColumn("[EntryType]").AlwaysSelectWithValue();
 			Table("Comments");
 			Id(m => m.Id);
 			Cache.ReadWrite();
