@@ -3,7 +3,7 @@
 
 <div class="comment media @(Model.Standalone ? "comment-large" : "")">
 	<a data-bind="attr: { href: app.EntryUrlMapper.details_user_byName(author.name) }" class="pull-left">
-		@UserHelpers.ProfileIconKnockout(VocaDb.Model.Domain.Images.ImageSize.Thumb, binding: "author", size: 70)
+		@UserHelpers.ProfileIconKnockout_ImageSize(VocaDb.Model.Domain.Images.ImageSize.Thumb, binding: "author", size: 70)
 	</a>
 
 	<div class="media-body">

@@ -25,6 +25,6 @@
 }
 
 
-@helper ProfileIconKnockout(ImageSize imageSize = ImageSize.TinyThumb, string binding = "$data", int size = 0) {
+@helper ProfileIconKnockout_ImageSize(ImageSize imageSize = ImageSize.TinyThumb, string binding = "$data", int size = 0) {
 	@ProfileIconKnockout(binding + ".mainPicture != null ? " + binding + ".mainPicture." + GetImageSizeProperty(imageSize) + " : null", size > 0 ? size : ImageHelper.GetUserImageSizePx(imageSize))
 }
