@@ -1,7 +1,0 @@
-﻿@inherits VocaDb.Web.Code.HelperPage
-
-@helper ProfileIconKnockout(string binding, int size = 80) {
-	<div data-bind="visible: @binding" style="width: @(size)px; height: @(size)px; display: inline-block">
-		<img data-bind="attr: { src: @binding }" alt="User avatar" src="@Url.Content("~/Content/unknown.png")" />
-	</div>
-}

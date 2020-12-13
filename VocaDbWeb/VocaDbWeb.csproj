@@ -288,6 +288,7 @@
     <Compile Include="Models\Shared\Partials\User\IconAndNameLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\IconNameAndTypeLinkKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\NameLinkKnockoutViewModel.cs" />
+    <Compile Include="Models\Shared\Partials\User\ProfileIconKnockoutViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\ProfileIconKnockout_ImageSizeViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\ProfileIconViewModel.cs" />
     <Compile Include="Models\Shared\Partials\User\ProfileIcon_IUserWithEmailViewModel.cs" />
@@ -1719,7 +1720,6 @@
     <Content Include="Views\Tag\Edit.cshtml" />
     <Content Include="Views\User\EntryEdits.cshtml" />
     <Content Include="Views\SongList\Featured.cshtml" />
-    <Content Include="App_Code\UserHelpers.cshtml" />
     <Content Include="Views\Event\Details.cshtml" />
     <Content Include="Views\Event\EventsBySeries.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
@@ -2016,6 +2016,7 @@
     <Content Include="Views\Shared\Partials\User\_ProfileIcon_IUserWithEmail.cshtml" />
     <Content Include="Views\Shared\Partials\User\_ProfileIcon.cshtml" />
     <Content Include="Views\Shared\Partials\User\_ProfileIconKnockout_ImageSize.cshtml" />
+    <Content Include="Views\Shared\Partials\User\_ProfileIconKnockout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -21,4 +21,4 @@
 
 }
 
-@UserHelpers.ProfileIconKnockout(Model.Binding + ".mainPicture != null ? " + Model.Binding + ".mainPicture." + GetImageSizeProperty(Model.ImageSize) + " : null", Model.Size > 0 ? Model.Size : ImageHelper.GetUserImageSizePx(Model.ImageSize))
+@Html.Partial("Partials/User/_ProfileIconKnockout", new ProfileIconKnockoutViewModel(Model.Binding + ".mainPicture != null ? " + Model.Binding + ".mainPicture." + GetImageSizeProperty(Model.ImageSize) + " : null", Model.Size > 0 ? Model.Size : ImageHelper.GetUserImageSizePx(Model.ImageSize)))
