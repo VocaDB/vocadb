@@ -8,7 +8,7 @@ namespace VocaDb.Model.Domain.Comments
 	/// Base class for comments.
 	/// Comments can be added for entries such as albums and users.
 	/// </summary>
-	public abstract class Comment : ICommentWithEntry
+	public abstract class Comment : ICommentWithEntry, IDeletableEntry
 	{
 		private string authorName;
 		private string message;
