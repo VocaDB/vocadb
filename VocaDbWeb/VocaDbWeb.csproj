@@ -36,6 +36,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,7 +49,6 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -60,7 +60,6 @@
     <Prefer32Bit>false</Prefer32Bit>
     <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Antlr" Version="3.5.0.2" />
