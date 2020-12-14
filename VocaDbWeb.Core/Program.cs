@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.IO;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;

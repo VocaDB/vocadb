@@ -1,3 +1,5 @@
+#nullable disable
+
 using System;
 using Microsoft.AspNetCore.Http;
 using VocaDb.Model.Domain.Web;
