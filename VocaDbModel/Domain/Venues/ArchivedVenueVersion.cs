@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain.Activityfeed;

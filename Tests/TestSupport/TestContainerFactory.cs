@@ -1,4 +1,6 @@
-﻿using Autofac;
+#nullable disable
+
+using Autofac;
 using NHibernate;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Database.Repositories.NHibernate;

@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.DataContracts.Venues;
 
 namespace VocaDb.Web.Models.Shared.Partials.Venue

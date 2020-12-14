@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+#nullable disable
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 

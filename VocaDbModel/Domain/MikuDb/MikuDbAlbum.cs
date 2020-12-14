@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using System.Xml.Linq;
 using VocaDb.Model.DataContracts.MikuDb;
 using VocaDb.Model.Domain.Globalization;

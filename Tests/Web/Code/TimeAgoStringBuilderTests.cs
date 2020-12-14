@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Web.Code;
 using VocaDb.Web.Resources.Views.Shared;

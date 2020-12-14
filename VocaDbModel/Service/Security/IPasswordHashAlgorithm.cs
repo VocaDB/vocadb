@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Service.Security
+#nullable disable
+
+namespace VocaDb.Model.Service.Security
 {
 	/// <summary>
 	/// Algorithm for password hashing.

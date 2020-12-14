@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Database.Repositories;
+#nullable disable
+
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain;

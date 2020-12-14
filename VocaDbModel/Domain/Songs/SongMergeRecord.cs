@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Songs
+#nullable disable
+
+namespace VocaDb.Model.Domain.Songs
 {
 	public class SongMergeRecord : MergeRecord<Song>
 	{

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+#nullable disable
+
+using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using ViewRes;
 using ViewRes.Artist;

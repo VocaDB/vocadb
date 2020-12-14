@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.DataContracts
+#nullable disable
+
+namespace VocaDb.Model.DataContracts
 {
 	public static class Schemas
 	{

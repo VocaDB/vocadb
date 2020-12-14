@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Linq;
 using System.Threading.Tasks;
 using VocaDb.Model.Database.Repositories;

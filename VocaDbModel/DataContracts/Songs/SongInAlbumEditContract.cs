@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using System.Linq;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Globalization;

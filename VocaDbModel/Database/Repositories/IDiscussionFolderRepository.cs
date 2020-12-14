@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Domain.Discussions;
+#nullable disable
+
+using VocaDb.Model.Domain.Discussions;
 
 namespace VocaDb.Model.Database.Repositories
 {

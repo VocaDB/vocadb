@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Albums
+#nullable disable
+
+namespace VocaDb.Model.Domain.Albums
 {
 	public enum AlbumArchiveReason
 	{

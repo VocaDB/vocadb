@@ -1,3 +1,5 @@
+#nullable disable
+
 using System;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Service.Translations;

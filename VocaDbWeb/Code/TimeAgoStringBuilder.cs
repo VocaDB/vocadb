@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using VocaDb.Web.Resources.Views.Shared;
 
 namespace VocaDb.Web.Code

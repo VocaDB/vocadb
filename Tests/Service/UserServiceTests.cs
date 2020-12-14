@@ -1,4 +1,6 @@
-﻿using System.Linq;
+#nullable disable
+
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;

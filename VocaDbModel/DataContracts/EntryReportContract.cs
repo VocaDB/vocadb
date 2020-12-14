@@ -1,3 +1,5 @@
+#nullable disable
+
 using System;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;

@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;

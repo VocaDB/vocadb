@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Versioning
+#nullable disable
+
+namespace VocaDb.Model.Domain.Versioning
 {
 	public interface IEntryDiff
 	{

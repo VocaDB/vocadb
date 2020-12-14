@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Web.Models.Shared.Partials.Artist

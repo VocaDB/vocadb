@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Converters;
+#nullable disable
+
+using Newtonsoft.Json.Converters;
 
 namespace VocaDb.Web.Code.Highcharts
 {

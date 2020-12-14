@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Service.Search.AlbumSearch
+#nullable disable
+
+namespace VocaDb.Model.Service.Search.AlbumSearch
 {
 	public class ParsedAlbumQuery
 	{

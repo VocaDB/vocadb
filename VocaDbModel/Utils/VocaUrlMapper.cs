@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Utils.Search;
 
 namespace VocaDb.Model.Utils

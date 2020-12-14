@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Domain.Users;
+#nullable disable
+
+using VocaDb.Model.Domain.Users;
 using FluentNHibernate.Mapping;
 
 namespace VocaDb.Model.Mapping.Users

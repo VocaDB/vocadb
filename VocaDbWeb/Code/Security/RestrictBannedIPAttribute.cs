@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Net;
 using System.Web.Mvc;
 using NLog;

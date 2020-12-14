@@ -1,4 +1,6 @@
-﻿namespace VocaDb.SiteMapGenerator.VocaDb
+#nullable disable
+
+namespace VocaDb.SiteMapGenerator.VocaDb
 {
 	public enum EntryType
 	{

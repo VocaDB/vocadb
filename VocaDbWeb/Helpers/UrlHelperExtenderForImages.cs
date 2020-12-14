@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Web.Mvc;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;

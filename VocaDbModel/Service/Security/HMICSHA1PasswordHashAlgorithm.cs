@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using System.Security.Cryptography;
 
 namespace VocaDb.Model.Service.Security

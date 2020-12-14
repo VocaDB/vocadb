@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Web.Models.Shared
+#nullable disable
+
+namespace VocaDb.Web.Models.Shared
 {
 	public class NamesEditorViewModel
 	{

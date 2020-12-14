@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Paging;
 

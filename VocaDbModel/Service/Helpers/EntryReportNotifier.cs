@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Database.Repositories;
+#nullable disable
+
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Helpers;

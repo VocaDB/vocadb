@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Tags
+#nullable disable
+
+namespace VocaDb.Model.Domain.Tags
 {
 	public interface ITagLink
 	{

@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Artists
+#nullable disable
+
+namespace VocaDb.Model.Domain.Artists
 {
 	/// <summary>
 	/// Artist link with roles, including the support status.

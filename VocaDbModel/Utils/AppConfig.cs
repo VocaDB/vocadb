@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Configuration;
 using NHibernate.Linq.Functions;
 using VocaDb.Model.Domain.Albums;

@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+#nullable disable
+
+using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts;
 
 namespace VocaDb.Model.Service.Paging

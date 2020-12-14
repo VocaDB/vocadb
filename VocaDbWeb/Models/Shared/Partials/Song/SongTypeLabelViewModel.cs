@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Web.Models.Shared.Partials.Song

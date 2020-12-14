@@ -1,4 +1,6 @@
-﻿using System.Web;
+#nullable disable
+
+using System.Web;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using VocaDb.Web.Helpers;

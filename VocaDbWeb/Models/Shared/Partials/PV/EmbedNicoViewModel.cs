@@ -1,3 +1,5 @@
+#nullable disable
+
 namespace VocaDb.Web.Models.Shared.Partials.PV
 {
 	public class EmbedNicoViewModel

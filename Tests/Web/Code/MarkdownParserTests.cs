@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+#nullable disable
+
+using System.Text.RegularExpressions;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Tests.TestSupport;

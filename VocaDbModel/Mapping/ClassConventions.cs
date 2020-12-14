@@ -1,3 +1,5 @@
+#nullable disable
+
 using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Instances;
 

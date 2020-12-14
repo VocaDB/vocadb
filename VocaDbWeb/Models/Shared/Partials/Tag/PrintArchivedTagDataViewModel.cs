@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.DataContracts.Tags;
 
 namespace VocaDb.Web.Models.Shared.Partials.Tag

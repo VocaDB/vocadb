@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search.Artists;

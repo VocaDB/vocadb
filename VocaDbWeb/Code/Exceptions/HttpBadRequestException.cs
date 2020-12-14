@@ -1,4 +1,6 @@
-﻿
+#nullable disable
+
+
 namespace VocaDb.Web.Code.Exceptions
 {
 	public class HttpBadRequestException : HttpStatusCodeException

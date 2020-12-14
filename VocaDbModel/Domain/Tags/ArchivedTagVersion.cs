@@ -1,4 +1,6 @@
-﻿using System.Xml.Linq;
+#nullable disable
+
+using System.Xml.Linq;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Security;

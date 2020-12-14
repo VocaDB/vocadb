@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+#nullable disable
+
+using System.ComponentModel;
 using System.Web.Mvc;
 
 namespace VocaDb.Web.Code

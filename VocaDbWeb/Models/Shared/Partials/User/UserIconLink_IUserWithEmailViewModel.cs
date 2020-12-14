@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
 

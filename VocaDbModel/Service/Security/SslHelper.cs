@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Net;
 
 namespace VocaDb.Model.Service.Security

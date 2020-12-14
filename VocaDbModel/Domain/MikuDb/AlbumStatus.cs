@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.MikuDb
+#nullable disable
+
+namespace VocaDb.Model.Domain.MikuDb
 {
 	public enum AlbumStatus
 	{

@@ -1,4 +1,6 @@
-namespace VocaDb.Web.Models.Shared.Partials.Knockout
+#nullable disable
+
+namespace VocaDb.Web.Models.Shared.Partials.User
 {
 	public class IconAndNameKnockoutViewModel
 	{

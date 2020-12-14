@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.DataContracts;
 
 namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry

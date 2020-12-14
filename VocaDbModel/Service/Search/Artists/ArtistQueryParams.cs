@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Domain.Artists;
+#nullable disable
+
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service.Paging;
 

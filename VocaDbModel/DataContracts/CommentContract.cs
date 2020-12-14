@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using System.Runtime.Serialization;
