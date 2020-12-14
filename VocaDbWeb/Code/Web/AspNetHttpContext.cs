@@ -24,8 +24,14 @@ namespace VocaDb.Web
 
 		public IPrincipal User
 		{
-			get => context.User;
-			set => context.User = value;
+			get => context?.User;
+			set
+			{
+				if (context == null)
+					return;
+
+				context.User = value;
+			}
 		}
 
 		public IServerPathMapper ServerPathMapper => this;
