@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Users;

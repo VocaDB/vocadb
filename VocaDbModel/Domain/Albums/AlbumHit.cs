@@ -1,4 +1,6 @@
-﻿
+#nullable disable
+
+
 namespace VocaDb.Model.Domain.Albums
 {
 	public class AlbumHit : GenericEntryHit<Album>

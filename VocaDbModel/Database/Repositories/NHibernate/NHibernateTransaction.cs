@@ -1,3 +1,5 @@
+#nullable disable
+
 using NHibernate;
 using System.Threading.Tasks;
 

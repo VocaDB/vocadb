@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Albums

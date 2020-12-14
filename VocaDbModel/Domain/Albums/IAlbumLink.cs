@@ -1,3 +1,5 @@
+#nullable disable
+
 namespace VocaDb.Model.Domain.Albums
 {
 	/// <summary>

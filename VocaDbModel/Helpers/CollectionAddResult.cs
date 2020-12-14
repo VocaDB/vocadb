@@ -1,3 +1,5 @@
+#nullable disable
+
 namespace VocaDb.Model.Helpers
 {
 	public readonly struct CollectionAddResult<T>

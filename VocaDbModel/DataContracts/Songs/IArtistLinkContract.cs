@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Artists;
 

@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;

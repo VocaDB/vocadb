@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Runtime.Caching;
 using System.Text.RegularExpressions;
 using System.Web;

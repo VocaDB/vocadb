@@ -1,4 +1,6 @@
-﻿using System.Linq;
+#nullable disable
+
+using System.Linq;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model;
 using VocaDb.Web.Models.Shared;

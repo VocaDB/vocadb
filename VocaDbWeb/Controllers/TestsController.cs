@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+#nullable disable
+
+using System.Web.Mvc;
 
 namespace VocaDb.Web.Controllers
 {

@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Venues;
 

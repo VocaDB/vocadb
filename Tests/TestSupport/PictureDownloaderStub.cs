@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.DataContracts;
+#nullable disable
+
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.Service.AlbumImport;
 
 namespace VocaDb.Tests.TestSupport

@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Domain.Globalization;
+#nullable disable
+
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs

@@ -1,4 +1,6 @@
-﻿using System.Xml.Serialization;
+#nullable disable
+
+using System.Xml.Serialization;
 using Newtonsoft.Json;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Songs;

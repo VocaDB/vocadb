@@ -1,3 +1,5 @@
+#nullable disable
+
 namespace VocaDb.Model.Domain.Images
 {
 	public enum ImagePurpose

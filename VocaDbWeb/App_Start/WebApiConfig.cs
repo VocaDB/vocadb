@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+#nullable disable
+
+using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.ExceptionHandling;
 using Newtonsoft.Json;

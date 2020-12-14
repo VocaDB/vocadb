@@ -1,4 +1,6 @@
-﻿using System.Text;
+#nullable disable
+
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.BBCode;
 using VocaDb.Web.Code;

@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Songs
+#nullable disable
+
+namespace VocaDb.Model.Domain.Songs
 {
 	/// <summary>
 	/// Rating of a song vote.

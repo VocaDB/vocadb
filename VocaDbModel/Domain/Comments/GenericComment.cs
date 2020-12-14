@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Discussions;

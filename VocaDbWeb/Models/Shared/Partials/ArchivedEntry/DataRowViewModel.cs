@@ -1,3 +1,5 @@
+#nullable disable
+
 namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry
 {
 	public class DataRowViewModel

@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.DataContracts.Activityfeed;
 
 namespace VocaDb.Web.Models.Shared.Partials.Activityfeed

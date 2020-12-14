@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using System.Data;
 using System.Linq;
 using NHibernate;

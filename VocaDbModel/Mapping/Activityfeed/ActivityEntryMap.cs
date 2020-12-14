@@ -1,3 +1,5 @@
+#nullable disable
+
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;

@@ -1,3 +1,5 @@
+#nullable disable
+
 namespace VocaDb.Web.Models.Shared.Partials.User
 {
 	public class IconAndLinkKnockoutViewModel

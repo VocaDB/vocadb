@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Domain.Globalization;
+#nullable disable
+
+using VocaDb.Model.Domain.Globalization;
 
 namespace VocaDb.Model.Domain.Users
 {

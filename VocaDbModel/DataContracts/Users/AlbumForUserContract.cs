@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Domain.Globalization;

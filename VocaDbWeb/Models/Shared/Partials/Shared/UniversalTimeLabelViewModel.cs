@@ -1,3 +1,5 @@
+#nullable disable
+
 using System;
 
 namespace VocaDb.Web.Models.Shared.Partials.Shared

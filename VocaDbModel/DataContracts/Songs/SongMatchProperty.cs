@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.DataContracts.Songs
+#nullable disable
+
+namespace VocaDb.Model.DataContracts.Songs
 {
 	public enum SongMatchProperty
 	{

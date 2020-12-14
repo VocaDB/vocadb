@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Globalization
+#nullable disable
+
+namespace VocaDb.Model.Domain.Globalization
 {
 	/// <summary>
 	/// Detects language from a string.

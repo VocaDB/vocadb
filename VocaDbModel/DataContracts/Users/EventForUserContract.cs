@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;

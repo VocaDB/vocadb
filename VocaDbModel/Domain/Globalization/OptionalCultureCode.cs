@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using System.Globalization;
 
 namespace VocaDb.Model.Domain.Globalization

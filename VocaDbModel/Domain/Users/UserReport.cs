@@ -1,3 +1,5 @@
+#nullable disable
+
 namespace VocaDb.Model.Domain.Users
 {
 	public class UserReport : GenericEntryReport<User, UserReportType>

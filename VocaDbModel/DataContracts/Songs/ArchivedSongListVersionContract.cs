@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Domain.Activityfeed;
+#nullable disable
+
+using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs

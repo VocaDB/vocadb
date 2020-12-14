@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Domain.ReleaseEvents;
+#nullable disable
+
+using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Domain.Users
 {

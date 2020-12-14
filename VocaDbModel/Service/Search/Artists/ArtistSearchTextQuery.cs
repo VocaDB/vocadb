@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Helpers;
+#nullable disable
+
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.Search.Artists

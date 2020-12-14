@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.DataContracts.Artists;
+#nullable disable
+
+using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;

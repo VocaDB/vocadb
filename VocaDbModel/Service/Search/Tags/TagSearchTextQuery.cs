@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Service.Helpers;
+#nullable disable
+
+using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.Search.Tags
 {

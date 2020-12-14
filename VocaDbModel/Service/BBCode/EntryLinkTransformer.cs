@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using VocaDb.Model.Domain;

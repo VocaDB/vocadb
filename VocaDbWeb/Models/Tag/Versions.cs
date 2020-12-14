@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.DataContracts.Tags;
+#nullable disable
+
+using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Models.Shared;
 

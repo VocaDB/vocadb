@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Domain;
 
 namespace VocaDb.Web.Models.Shared.Partials.Knockout

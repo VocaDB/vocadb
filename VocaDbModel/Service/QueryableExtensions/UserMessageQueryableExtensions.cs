@@ -1,4 +1,6 @@
-﻿using System.Linq;
+#nullable disable
+
+using System.Linq;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Service.QueryableExtensions

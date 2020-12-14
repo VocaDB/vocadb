@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.DataContracts.Artists;
+#nullable disable
+
+using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.DataContracts.Albums

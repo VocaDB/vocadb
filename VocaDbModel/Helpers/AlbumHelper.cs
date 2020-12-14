@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Domain;
+#nullable disable
+
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
 
 namespace VocaDb.Model.Helpers

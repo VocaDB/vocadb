@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+#nullable disable
+
+using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Controllers;

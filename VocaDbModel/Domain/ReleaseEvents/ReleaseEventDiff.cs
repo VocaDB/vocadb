@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Domain.Versioning;
 
 namespace VocaDb.Model.Domain.ReleaseEvents

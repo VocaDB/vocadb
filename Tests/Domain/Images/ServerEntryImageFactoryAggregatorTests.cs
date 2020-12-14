@@ -1,3 +1,5 @@
+#nullable disable
+
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Albums;

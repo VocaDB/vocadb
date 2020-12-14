@@ -1,4 +1,6 @@
-﻿using System.Linq;
+#nullable disable
+
+using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Albums;
 

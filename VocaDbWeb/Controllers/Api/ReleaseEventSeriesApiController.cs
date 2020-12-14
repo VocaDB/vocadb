@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Web.Http;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.ReleaseEvents;

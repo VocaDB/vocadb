@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.DataContracts.ReleaseEvents;
 
 namespace VocaDb.Web.Models.Shared.Partials.Event

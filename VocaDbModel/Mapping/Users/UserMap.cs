@@ -1,3 +1,5 @@
+#nullable disable
+
 using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;

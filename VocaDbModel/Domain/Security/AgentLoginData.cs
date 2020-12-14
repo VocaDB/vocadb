@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Domain.Users;
+#nullable disable
+
+using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Security
 {

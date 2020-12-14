@@ -1,3 +1,5 @@
+#nullable disable
+
 using NLog;
 using System.Threading.Tasks;
 using VocaDb.Model.Domain;

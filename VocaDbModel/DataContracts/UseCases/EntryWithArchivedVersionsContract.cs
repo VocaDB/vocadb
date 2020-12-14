@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using System.Collections.Generic;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Versioning;

@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using System.ServiceModel.Syndication;
 using System.Text;
 using System.Web;

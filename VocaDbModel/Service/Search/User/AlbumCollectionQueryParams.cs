@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Domain.Albums;
+#nullable disable
+
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Paging;
 

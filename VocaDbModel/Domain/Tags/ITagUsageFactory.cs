@@ -1,4 +1,6 @@
-﻿
+#nullable disable
+
+
 namespace VocaDb.Model.Domain.Tags
 {
 	public interface ITagUsageFactory<T> where T : TagUsage

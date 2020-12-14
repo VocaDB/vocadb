@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.DataContracts.ReleaseEvents;
+#nullable disable
+
+using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Models.Shared;
 

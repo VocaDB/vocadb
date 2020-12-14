@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Domain.Venues;
 
 namespace VocaDb.Model.Database.Repositories

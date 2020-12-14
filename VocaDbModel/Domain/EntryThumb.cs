@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Model.Domain

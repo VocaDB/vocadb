@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Linq;
 using NHibernate;
 using NHibernate.Linq;
