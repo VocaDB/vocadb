@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain
+#nullable disable
+
+namespace VocaDb.Model.Domain
 {
 	public interface IEntryBase : IDeletableEntry
 	{

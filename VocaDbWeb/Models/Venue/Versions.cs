@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Models.Shared;

@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.DataContracts.Users;
+#nullable disable
+
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.QueryableExtensions;
 

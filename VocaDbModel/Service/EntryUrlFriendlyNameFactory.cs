@@ -1,4 +1,6 @@
-﻿using System.Collections.Concurrent;
+#nullable disable
+
+using System.Collections.Concurrent;
 using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Service

@@ -1,4 +1,6 @@
-﻿using System.Net;
+#nullable disable
+
+using System.Net;
 
 namespace VocaDb.Web.Code.Exceptions
 {

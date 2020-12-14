@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+#nullable disable
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using VocaDb.Model.Domain.Users;
 

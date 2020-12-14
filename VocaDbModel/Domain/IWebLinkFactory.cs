@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Domain.ExtLinks;
 
 namespace VocaDb.Model.Domain

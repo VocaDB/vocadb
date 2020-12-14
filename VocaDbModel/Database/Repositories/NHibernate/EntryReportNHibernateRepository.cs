@@ -1,4 +1,6 @@
-﻿using NHibernate;
+#nullable disable
+
+using NHibernate;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 

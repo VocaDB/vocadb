@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Web;
 using System.Web.WebPages;
 using System.Web.Mvc;

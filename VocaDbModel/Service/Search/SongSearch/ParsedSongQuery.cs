@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.PVs;
 

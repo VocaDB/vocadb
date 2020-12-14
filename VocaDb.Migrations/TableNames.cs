@@ -1,3 +1,5 @@
+#nullable disable
+
 namespace VocaDb.Migrations
 {
 	public static class SchemaNames

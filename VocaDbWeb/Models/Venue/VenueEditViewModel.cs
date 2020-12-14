@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Linq;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;

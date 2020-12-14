@@ -1,4 +1,6 @@
-﻿using FluentMigrator.Builders.Execute;
+#nullable disable
+
+using FluentMigrator.Builders.Execute;
 
 namespace VocaDb.Migrations
 {

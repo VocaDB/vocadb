@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;

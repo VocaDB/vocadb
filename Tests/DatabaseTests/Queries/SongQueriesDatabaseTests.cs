@@ -1,3 +1,5 @@
+#nullable disable
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using VocaDb.Model.Database.Queries;

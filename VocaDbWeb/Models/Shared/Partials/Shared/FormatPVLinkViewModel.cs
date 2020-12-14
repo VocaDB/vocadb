@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.DataContracts.PVs;
 
 namespace VocaDb.Web.Models.Shared.Partials.Shared

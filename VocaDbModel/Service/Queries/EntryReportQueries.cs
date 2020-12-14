@@ -1,3 +1,5 @@
+#nullable disable
+
 using NLog;
 using System;
 using System.Linq;

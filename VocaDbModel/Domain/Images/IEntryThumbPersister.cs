@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Images
+#nullable disable
+
+namespace VocaDb.Model.Domain.Images
 {
 	/// <summary>
 	/// Persister interface for album and artist thumbnails.

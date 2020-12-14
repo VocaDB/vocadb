@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.DataContracts.Artists
+#nullable disable
+
+namespace VocaDb.Model.DataContracts.Artists
 {
 	/// <summary>
 	/// Advanced artist statistics. These are updated less frequently.

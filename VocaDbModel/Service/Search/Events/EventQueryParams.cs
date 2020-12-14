@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.Paging;

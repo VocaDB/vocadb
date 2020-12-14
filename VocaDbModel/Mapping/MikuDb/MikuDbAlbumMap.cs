@@ -1,4 +1,6 @@
-﻿using FluentNHibernate.Mapping;
+#nullable disable
+
+using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.MikuDb;
 
 namespace VocaDb.Model.Mapping.MikuDb

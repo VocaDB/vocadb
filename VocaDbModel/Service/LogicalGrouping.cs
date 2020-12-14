@@ -1,3 +1,5 @@
+#nullable disable
+
 namespace VocaDb.Model.Service
 {
 	public enum LogicalGrouping

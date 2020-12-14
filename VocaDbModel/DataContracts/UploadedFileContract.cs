@@ -1,4 +1,6 @@
-﻿using System.IO;
+#nullable disable
+
+using System.IO;
 
 namespace VocaDb.Model.DataContracts
 {

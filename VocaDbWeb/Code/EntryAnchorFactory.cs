@@ -1,4 +1,6 @@
-﻿using System.Web;
+#nullable disable
+
+using System.Web;
 using VocaDb.Model;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service;

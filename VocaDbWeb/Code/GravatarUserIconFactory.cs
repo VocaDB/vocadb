@@ -1,3 +1,5 @@
+#nullable disable
+
 using Microsoft.Web.Helpers;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;

@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Globalization
+#nullable disable
+
+namespace VocaDb.Model.Domain.Globalization
 {
 	/// <summary>
 	/// Interface for localized strings (string with a language selection).

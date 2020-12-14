@@ -1,4 +1,6 @@
-﻿
+#nullable disable
+
+
 using VocaDb.Model.Domain.ReleaseEvents;
 
 namespace VocaDb.Model.Domain.Albums

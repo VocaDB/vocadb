@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Security
+#nullable disable
+
+namespace VocaDb.Model.Domain.Security
 {
 	public enum AuditLogCategory
 	{

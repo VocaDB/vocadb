@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Service.Search
+#nullable disable
+
+namespace VocaDb.Model.Service.Search
 {
 	public enum AlbumSearchProperty
 	{

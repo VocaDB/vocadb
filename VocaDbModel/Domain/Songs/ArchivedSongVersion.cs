@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Domain.Security;
+#nullable disable
+
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.DataContracts.Songs;
 using System.Xml.Linq;
 using VocaDb.Model.Domain.Versioning;

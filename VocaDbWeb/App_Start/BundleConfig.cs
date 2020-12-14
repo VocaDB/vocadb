@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Web.Optimization;
 
 namespace VocaDb.Web.App_Start

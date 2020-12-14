@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.Helpers;
 
 namespace VocaDb.Web.Models.Shared.Partials.User

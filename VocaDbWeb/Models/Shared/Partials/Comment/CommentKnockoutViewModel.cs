@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Web;
 
 namespace VocaDb.Web.Models.Shared.Partials.Comment

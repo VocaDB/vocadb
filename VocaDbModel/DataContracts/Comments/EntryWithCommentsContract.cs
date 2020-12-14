@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.DataContracts.Api;
+#nullable disable
+
+using VocaDb.Model.DataContracts.Api;
 
 namespace VocaDb.Model.DataContracts.Comments
 {

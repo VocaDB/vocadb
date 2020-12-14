@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Service.Security
+#nullable disable
+
+namespace VocaDb.Model.Service.Security
 {
 	public static class PasswordHashAlgorithms
 	{

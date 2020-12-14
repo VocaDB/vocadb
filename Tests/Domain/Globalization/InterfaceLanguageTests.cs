@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+#nullable disable
+
+using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Globalization;
 

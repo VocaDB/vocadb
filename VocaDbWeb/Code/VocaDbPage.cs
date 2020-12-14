@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Web;
 using System.Web.Mvc;
 using VocaDb.Model.Domain.Security;

@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.DataContracts;
+#nullable disable
+
+using VocaDb.Model.DataContracts;
 
 namespace VocaDb.Model.Service.AlbumImport
 {

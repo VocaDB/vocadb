@@ -1,3 +1,5 @@
+#nullable disable
+
 namespace VocaDb.Model.Service.QueryableExtensions
 {
 	public enum DistanceUnit { Kilometers, Miles }

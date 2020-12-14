@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Database.Repositories;
+#nullable disable
+
+using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Discussions;
 
 namespace VocaDb.Tests.TestSupport

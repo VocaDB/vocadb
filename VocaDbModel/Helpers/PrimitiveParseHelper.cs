@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Helpers
+#nullable disable
+
+namespace VocaDb.Model.Helpers
 {
 	public static class PrimitiveParseHelper
 	{

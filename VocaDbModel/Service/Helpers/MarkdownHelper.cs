@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Service.Helpers
+#nullable disable
+
+namespace VocaDb.Model.Service.Helpers
 {
 	public class MarkdownHelper
 	{

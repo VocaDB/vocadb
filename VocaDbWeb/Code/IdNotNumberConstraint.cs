@@ -1,4 +1,6 @@
-﻿using System.Web;
+#nullable disable
+
+using System.Web;
 using System.Web.Routing;
 
 namespace VocaDb.Web.Code

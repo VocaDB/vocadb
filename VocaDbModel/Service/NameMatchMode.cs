@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Service
+#nullable disable
+
+namespace VocaDb.Model.Service
 {
 	/// <summary>
 	/// Match mode for name queries.

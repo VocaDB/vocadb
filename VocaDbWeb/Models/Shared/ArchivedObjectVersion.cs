@@ -1,3 +1,5 @@
+#nullable disable
+
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Translations;

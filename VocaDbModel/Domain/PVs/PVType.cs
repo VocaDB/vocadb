@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.PVs
+#nullable disable
+
+namespace VocaDb.Model.Domain.PVs
 {
 	public enum PVType
 	{

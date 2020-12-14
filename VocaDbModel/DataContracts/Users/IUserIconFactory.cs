@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Domain.Images;
+#nullable disable
+
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users

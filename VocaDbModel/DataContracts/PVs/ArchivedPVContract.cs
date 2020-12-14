@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using System.Runtime.Serialization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;

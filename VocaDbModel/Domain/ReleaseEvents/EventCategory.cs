@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.ReleaseEvents
+#nullable disable
+
+namespace VocaDb.Model.Domain.ReleaseEvents
 {
 	public enum EventCategory
 	{

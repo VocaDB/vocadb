@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace VocaDb.Web.Models.User

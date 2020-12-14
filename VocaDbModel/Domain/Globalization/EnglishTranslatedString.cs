@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.DataContracts.Globalization;
+#nullable disable
+
+using VocaDb.Model.DataContracts.Globalization;
 
 namespace VocaDb.Model.Domain.Globalization
 {

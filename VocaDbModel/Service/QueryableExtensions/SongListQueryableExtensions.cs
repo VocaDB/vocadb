@@ -1,4 +1,6 @@
-﻿using System;
+#nullable disable
+
+using System;
 using System.Linq;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.Helpers;

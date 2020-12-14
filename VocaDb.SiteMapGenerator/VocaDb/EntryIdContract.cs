@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+#nullable disable
+
+using System.Runtime.Serialization;
 
 namespace VocaDb.SiteMapGenerator.VocaDb
 {

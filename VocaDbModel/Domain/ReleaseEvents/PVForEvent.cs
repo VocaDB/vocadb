@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.DataContracts.PVs;
+#nullable disable
+
+using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.PVs;
 
 namespace VocaDb.Model.Domain.ReleaseEvents

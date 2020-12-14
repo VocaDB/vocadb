@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Xml.Linq;
 
 namespace VocaDb.Model.Domain.Versioning

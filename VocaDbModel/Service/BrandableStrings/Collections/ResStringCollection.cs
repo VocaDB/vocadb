@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Resources;
 using VocaDb.Model.Helpers;
 

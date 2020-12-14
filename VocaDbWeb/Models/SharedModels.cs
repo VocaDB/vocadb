@@ -1,4 +1,6 @@
-﻿using Resources;
+#nullable disable
+
+using Resources;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Resources.Domain;

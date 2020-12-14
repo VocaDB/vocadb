@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+#nullable disable
+
+using System.Text.RegularExpressions;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Helpers;
 

@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Domain.Users
+#nullable disable
+
+namespace VocaDb.Model.Domain.Users
 {
 	/// <summary>
 	/// Interface for <see cref="User"/> with email.

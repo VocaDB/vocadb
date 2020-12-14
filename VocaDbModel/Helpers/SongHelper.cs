@@ -1,4 +1,6 @@
-﻿using System.Linq;
+#nullable disable
+
+using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;

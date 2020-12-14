@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.DataContracts.Songs;
+#nullable disable
+
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.UseCases

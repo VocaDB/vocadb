@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.Service.BrandableStrings.Collections;
+#nullable disable
+
+using VocaDb.Model.Service.BrandableStrings.Collections;
 
 namespace VocaDb.Model.Service.BrandableStrings
 {

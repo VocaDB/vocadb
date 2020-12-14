@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Model.Service.VideoServices.Youtube
+#nullable disable
+
+namespace VocaDb.Model.Service.VideoServices.Youtube
 {
 	public class YoutubeResponse<T> where T : IYoutubeItem
 	{

@@ -1,4 +1,6 @@
-﻿using FluentNHibernate.Mapping;
+#nullable disable
+
+using FluentNHibernate.Mapping;
 using VocaDb.Model.Domain.Discussions;
 
 namespace VocaDb.Model.Mapping.Discussions

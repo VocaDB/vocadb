@@ -1,4 +1,6 @@
-﻿using System.Net;
+#nullable disable
+
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

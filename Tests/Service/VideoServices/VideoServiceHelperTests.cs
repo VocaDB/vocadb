@@ -1,3 +1,5 @@
+#nullable disable
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;

@@ -1,4 +1,6 @@
-﻿namespace VocaDb.Tests.TestSupport
+#nullable disable
+
+namespace VocaDb.Tests.TestSupport
 {
 	public static class TestCategories
 	{

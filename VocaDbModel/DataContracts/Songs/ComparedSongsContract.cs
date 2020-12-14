@@ -1,4 +1,6 @@
-﻿using VocaDb.Model.DataContracts.Versioning;
+#nullable disable
+
+using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Songs;
 
 namespace VocaDb.Model.DataContracts.Songs

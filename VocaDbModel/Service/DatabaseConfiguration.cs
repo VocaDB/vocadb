@@ -1,3 +1,5 @@
+#nullable disable
+
 using System;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;

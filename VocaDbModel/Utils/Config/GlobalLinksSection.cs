@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+#nullable disable
+
+using System.Configuration;
 using System.Linq;
 using System.Xml;
 

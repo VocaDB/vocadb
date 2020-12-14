@@ -1,4 +1,6 @@
-﻿using System.Text;
+#nullable disable
+
+using System.Text;
 
 namespace VocaDb.Model.Service.BBCode
 {

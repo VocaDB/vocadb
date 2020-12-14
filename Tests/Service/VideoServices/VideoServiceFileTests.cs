@@ -1,3 +1,5 @@
+#nullable disable
+
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.VideoServices;

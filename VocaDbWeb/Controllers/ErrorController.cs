@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+#nullable disable
+
+using System.Web.Mvc;
 using NLog;
 using VocaDb.Web.Code;
 

@@ -1,4 +1,6 @@
-﻿using System.Net;
+#nullable disable
+
+using System.Net;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Helpers;
 
