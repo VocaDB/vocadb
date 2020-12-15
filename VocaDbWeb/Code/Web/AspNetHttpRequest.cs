@@ -6,15 +6,17 @@ using System.Linq;
 using System.Web;
 using VocaDb.Model.Domain.Web;
 
-namespace VocaDb.Web {
-
-	public class AspNetHttpRequest : IHttpRequest {
-
-		public AspNetHttpRequest(HttpRequestBase request) {
+namespace VocaDb.Web
+{
+	public class AspNetHttpRequest : IHttpRequest
+	{
+		public AspNetHttpRequest(HttpRequestBase request)
+		{
 			this.request = request;
 		}
 
-		public AspNetHttpRequest(HttpRequest request) {
+		public AspNetHttpRequest(HttpRequest request)
+		{
 			this.request = new HttpRequestWrapper(request);
 		}
 

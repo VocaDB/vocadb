@@ -5,11 +5,12 @@ using System.Security.Principal;
 using System.Web;
 using VocaDb.Model.Domain.Web;
 
-namespace VocaDb.Web {
-
-	public class AspNetHttpContext : IHttpContext, IServerPathMapper {
-
-		public AspNetHttpContext(HttpContext context) {
+namespace VocaDb.Web
+{
+	public class AspNetHttpContext : IHttpContext, IServerPathMapper
+	{
+		public AspNetHttpContext(HttpContext context)
+		{
 			this.context = context;
 		}
 
@@ -21,9 +22,16 @@ namespace VocaDb.Web {
 
 		public IHttpResponse Response => new AspNetHttpResponse(context.Response);
 
-		public IPrincipal User { 
-			get => context.User;
-			set => context.User = value; 
+		public IPrincipal User
+		{
+			get => context?.User;
+			set
+			{
+				if (context == null)
+					return;
+
+				context.User = value;
+			}
 		}
 
 		public IServerPathMapper ServerPathMapper => this;

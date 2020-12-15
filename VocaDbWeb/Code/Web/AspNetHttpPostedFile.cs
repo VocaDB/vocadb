@@ -3,11 +3,12 @@
 using System.Web;
 using VocaDb.Model.Domain.Web;
 
-namespace VocaDb.Web {
-
-	public class AspNetHttpPostedFile : IHttpPostedFile {
-
-		public AspNetHttpPostedFile(HttpPostedFileBase file) {
+namespace VocaDb.Web
+{
+	public class AspNetHttpPostedFile : IHttpPostedFile
+	{
+		public AspNetHttpPostedFile(HttpPostedFileBase file)
+		{
 			this.file = file;
 		}
 
