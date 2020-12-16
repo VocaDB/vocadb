@@ -22,7 +22,7 @@ namespace VocaDb.Tests.Domain.Images
 		{
 			dynamicImageUrlFactory = new FakeDynamicImageUrlFactory();
 			imageStore = new InMemoryImagePersisterStore();
-			urlFactory = new ServerEntryImageFactoryAggregator(dynamicImageUrlFactory, new InMemoryEntryThumbPersister(imageStore), new InMemoryEntryImagePersisterOld(imageStore));
+			urlFactory = new ServerEntryImageFactoryAggregator(dynamicImageUrlFactory, new InMemoryEntryThumbPersister(imageStore));
 
 			var album = CreateEntry.Album(1, coverPictureMime: "image/png");
 			albumContract = AlbumContract(album);

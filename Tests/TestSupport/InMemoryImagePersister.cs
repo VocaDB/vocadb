@@ -93,7 +93,7 @@ namespace VocaDb.Tests.TestSupport
 		public abstract bool IsSupported(IEntryImageInformation picture, ImageSize size);
 	}
 
-	public class InMemoryImagePersister : InMemoryImagePersisterBase, IAggregatedEntryImageUrlFactory, IEntryImagePersisterOld, IEntryThumbPersister, IEntryPictureFilePersister
+	public class InMemoryImagePersister : InMemoryImagePersisterBase, IAggregatedEntryImageUrlFactory, IEntryThumbPersister, IEntryPictureFilePersister
 	{
 		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) => true;
 	}
@@ -105,16 +105,6 @@ namespace VocaDb.Tests.TestSupport
 		public override bool IsSupported(IEntryImageInformation picture, ImageSize size)
 		{
 			return new ServerEntryThumbPersister().IsSupported(picture, size);
-		}
-	}
-
-	public class InMemoryEntryImagePersisterOld : InMemoryImagePersisterBase, IEntryImagePersisterOld
-	{
-		public InMemoryEntryImagePersisterOld(InMemoryImagePersisterStore store) : base(store) { }
-
-		public override bool IsSupported(IEntryImageInformation picture, ImageSize size)
-		{
-			return new ServerEntryImagePersisterOld(null).IsSupported(picture, size);
 		}
 	}
 }

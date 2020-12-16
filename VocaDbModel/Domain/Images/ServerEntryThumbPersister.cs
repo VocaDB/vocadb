@@ -11,7 +11,7 @@ namespace VocaDb.Model.Domain.Images
 	/// Stores entry thumbnails (for album/artist) in the static files folder on the server disk using the newer directory layout
 	/// where different sizes of images are saved in separate folders (for example /img/Album/mainSmall/39.jpg).
 	/// </summary>
-	public class ServerEntryThumbPersister : ServerEntryImagePersisterBase, IEntryThumbPersister
+	public class ServerEntryThumbPersister : ServerEntryImagePersisterBase, IEntryThumbPersister, IEntryPictureFilePersister
 	{
 		private readonly string _staticRoot;
 
@@ -25,14 +25,14 @@ namespace VocaDb.Model.Domain.Images
 		};
 
 		private string GetRelativeUrl(IEntryImageInformation picture, ImageSize size) => (picture.Version > 0)
-			? $"/img/{picture.EntryType.ToString().ToLowerInvariant()}/main{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}?v={picture.Version}"
-			: $"/img/{picture.EntryType.ToString().ToLowerInvariant()}/main{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
+			? $"/img/{picture.EntryType.ToString().ToLowerInvariant()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}?v={picture.Version}"
+			: $"/img/{picture.EntryType.ToString().ToLowerInvariant()}/{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
 
 		public override string GetPath(IEntryImageInformation picture, ImageSize size)
 		{
 			if (string.IsNullOrEmpty(_staticRoot))
 				return string.Empty;
-			var relative = $@"img\{picture.EntryType}\main{GetDir(size)}\{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
+			var relative = $@"img\{picture.EntryType}\{picture.Purpose.ToString().ToLowerInvariant()}{GetDir(size)}\{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
 			return Path.Combine(_staticRoot, relative);
 		}
 
@@ -44,8 +44,7 @@ namespace VocaDb.Model.Domain.Images
 		public override VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size) => new VocaDbUrl(GetRelativeUrl(picture, size), UrlDomain.Static, UriKind.Relative);
 
 		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) => picture.EntryType == EntryType.ReleaseEvent || picture.EntryType == EntryType.ReleaseEventSeries || picture.EntryType == EntryType.SongList || picture.EntryType == EntryType.Tag
-			|| ((picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album)
-				&& picture.PurposeMainOrUnspecified()
-				&& size != ImageSize.Original);
+			|| ((picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album) && picture.PurposeMainOrUnspecified() && size != ImageSize.Original)
+			|| ((picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album) && picture.Purpose == ImagePurpose.Additional);
 	}
 }
