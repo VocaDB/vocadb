@@ -1,9 +1,7 @@
 #nullable disable
 
-using System.Web;
 using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Helpers;
-using VocaDb.Model.Utils;
 
 namespace VocaDb.Model.Domain.Images
 {
@@ -19,64 +17,37 @@ namespace VocaDb.Model.Domain.Images
 	{
 		public ServerEntryImagePersisterOld(IHttpContext context)
 		{
-			this.context = context;
+			_context = context;
 		}
 
-		private readonly IHttpContext context;
+		private readonly IHttpContext _context;
 
+		private static string GetFileName(int id, string mime, string suffix) => $"{id}{suffix}{ImageHelper.GetExtensionFromMime(mime)}";
 
-		private static string GetFileName(int id, string mime, string suffix)
+		private static string GetFileName(IEntryImageInformation picture, ImageSize size) => GetFileName(picture.Id, picture.Mime, GetSuffix(size));
+
+		private static string GetSuffix(ImageSize size) => size switch
 		{
-			return string.Format("{0}{1}{2}", id, suffix, ImageHelper.GetExtensionFromMime(mime));
-		}
-
-		private static string GetFileName(IEntryImageInformation picture, ImageSize size)
-		{
-			return GetFileName(picture.Id, picture.Mime, GetSuffix(size));
-		}
-
-		private static string GetSuffix(ImageSize size)
-		{
-			switch (size)
-			{
-				case ImageSize.Thumb:
-					return "-t";
-				case ImageSize.SmallThumb:
-					return "-st";
-				case ImageSize.TinyThumb:
-					return "-tt";
-				default:
-					return string.Empty;
-			}
-		}
+			ImageSize.Thumb => "-t",
+			ImageSize.SmallThumb => "-st",
+			ImageSize.TinyThumb => "-tt",
+			_ => string.Empty,
+		};
 
 		public override VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size)
 		{
 			ParamIs.NotNull(() => picture);
 
-			string url;
-
-			if (picture.Version > 0)
-			{
-				url = string.Format("/EntryImg/{0}/{1}?v={2}", picture.EntryType, GetFileName(picture, size), picture.Version);
-			}
-			else
-			{
-				url = string.Format("/EntryImg/{0}/{1}", picture.EntryType, GetFileName(picture, size));
-			}
+			var url = (picture.Version > 0)
+				? $"/EntryImg/{picture.EntryType}/{GetFileName(picture, size)}?v={picture.Version}"
+				: $"/EntryImg/{picture.EntryType}/{GetFileName(picture, size)}";
 
 			return new VocaDbUrl(url, UrlDomain.Main, System.UriKind.Relative);
 		}
 
-		public override string GetPath(IEntryImageInformation picture, ImageSize size)
-		{
-			return context.ServerPathMapper.MapPath(string.Format("~\\EntryImg\\{0}\\{1}", picture.EntryType, GetFileName(picture, size)));
-		}
+		public override string GetPath(IEntryImageInformation picture, ImageSize size) => _context.ServerPathMapper.MapPath($@"~\EntryImg\{picture.EntryType}\{GetFileName(picture, size)}");
 
-		public override bool IsSupported(IEntryImageInformation picture, ImageSize size)
-		{
-			return picture.EntryType == EntryType.SongList || picture.EntryType == EntryType.Tag
-				|| ((picture.EntryType == EntryType.Album || picture.EntryType == EntryType.Artist) && picture.Purpose == ImagePurpose.Additional);
-		}
+		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) => picture.EntryType == EntryType.SongList || picture.EntryType == EntryType.Tag
+			|| ((picture.EntryType == EntryType.Album || picture.EntryType == EntryType.Artist) && picture.Purpose == ImagePurpose.Additional);
 	}
 }

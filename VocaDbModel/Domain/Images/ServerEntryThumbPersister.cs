@@ -13,60 +13,39 @@ namespace VocaDb.Model.Domain.Images
 	/// </summary>
 	public class ServerEntryThumbPersister : ServerEntryImagePersisterBase, IEntryThumbPersister
 	{
-		private readonly string staticRoot;
+		private readonly string _staticRoot;
 
-		private static string GetDir(ImageSize size)
+		private static string GetDir(ImageSize size) => size switch
 		{
-			switch (size)
-			{
-				case ImageSize.Original:
-					return "Orig";
-				case ImageSize.Thumb:
-					return "Thumb";
-				case ImageSize.SmallThumb:
-					return "Small";
-				case ImageSize.TinyThumb:
-					return "Tiny";
-				default:
-					throw new NotSupportedException();
-			}
-		}
+			ImageSize.Original => "Orig",
+			ImageSize.Thumb => "Thumb",
+			ImageSize.SmallThumb => "Small",
+			ImageSize.TinyThumb => "Tiny",
+			_ => throw new NotSupportedException(),
+		};
 
-		private string GetRelativeUrl(IEntryImageInformation picture, ImageSize size)
-		{
-			if (picture.Version > 0)
-			{
-				return string.Format("/img/{0}/main{1}/{2}{3}?v={4}", picture.EntryType.ToString().ToLowerInvariant(), GetDir(size), picture.Id,
-					ImageHelper.GetExtensionFromMime(picture.Mime), picture.Version);
-			}
-			else
-				return string.Format("/img/{0}/main{1}/{2}{3}", picture.EntryType.ToString().ToLowerInvariant(), GetDir(size), picture.Id, ImageHelper.GetExtensionFromMime(picture.Mime));
-		}
+		private string GetRelativeUrl(IEntryImageInformation picture, ImageSize size) => (picture.Version > 0)
+			? $"/img/{picture.EntryType.ToString().ToLowerInvariant()}/main{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}?v={picture.Version}"
+			: $"/img/{picture.EntryType.ToString().ToLowerInvariant()}/main{GetDir(size)}/{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
 
 		public override string GetPath(IEntryImageInformation picture, ImageSize size)
 		{
-			if (string.IsNullOrEmpty(staticRoot))
+			if (string.IsNullOrEmpty(_staticRoot))
 				return string.Empty;
-			var relative = string.Format(@"img\{0}\main{1}\{2}{3}", picture.EntryType, GetDir(size), picture.Id, ImageHelper.GetExtensionFromMime(picture.Mime));
-			return Path.Combine(staticRoot, relative);
+			var relative = $@"img\{picture.EntryType}\main{GetDir(size)}\{picture.Id}{ImageHelper.GetExtensionFromMime(picture.Mime)}";
+			return Path.Combine(_staticRoot, relative);
 		}
 
 		public ServerEntryThumbPersister()
 		{
-			staticRoot = AppConfig.StaticContentPath;
+			_staticRoot = AppConfig.StaticContentPath;
 		}
 
-		public override VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size)
-		{
-			return new VocaDbUrl(GetRelativeUrl(picture, size), UrlDomain.Static, UriKind.Relative);
-		}
+		public override VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size) => new VocaDbUrl(GetRelativeUrl(picture, size), UrlDomain.Static, UriKind.Relative);
 
-		public override bool IsSupported(IEntryImageInformation picture, ImageSize size)
-		{
-			return picture.EntryType == EntryType.ReleaseEvent || picture.EntryType == EntryType.ReleaseEventSeries
-				|| ((picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album)
-					&& picture.PurposeMainOrUnspecified()
-					&& size != ImageSize.Original);
-		}
+		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) => picture.EntryType == EntryType.ReleaseEvent || picture.EntryType == EntryType.ReleaseEventSeries
+			|| ((picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album)
+				&& picture.PurposeMainOrUnspecified()
+				&& size != ImageSize.Original);
 	}
 }
