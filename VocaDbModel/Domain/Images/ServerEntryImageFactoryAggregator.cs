@@ -19,11 +19,10 @@ namespace VocaDb.Model.Domain.Images
 		// TODO: optimize with lookups
 		private readonly IEntryImageUrlFactory[] factories;
 
-		public ServerEntryImageFactoryAggregator(IDynamicImageUrlFactory dynamicImageUrlFactory, IEntryThumbPersister thumbPersister, IEntryImagePersisterOld entryImagePersisterOld)
+		public ServerEntryImageFactoryAggregator(IDynamicImageUrlFactory dynamicImageUrlFactory, IEntryThumbPersister thumbPersister)
 		{
 			factories = new IEntryImageUrlFactory[] {
 				thumbPersister,
-				entryImagePersisterOld,
 				dynamicImageUrlFactory
 			};
 		}
