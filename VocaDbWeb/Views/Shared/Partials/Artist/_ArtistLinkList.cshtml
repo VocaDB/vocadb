@@ -1,7 +1,7 @@
-﻿@using System.Web.Mvc;
-@using System.Web.Mvc.Html;
-@using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.Artist;
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Artist
 @model ArtistLinkListViewModel
 
 @Html.LinkList(Model.Artists, a => new MvcHtmlString(Html.Partial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(a, Model.TypeLabel, releaseYear: Model.ReleaseYear)).ToString()))

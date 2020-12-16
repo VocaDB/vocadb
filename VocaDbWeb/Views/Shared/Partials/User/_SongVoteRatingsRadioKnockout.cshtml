@@ -1,5 +1,5 @@
-﻿@using Resources;
-@using VocaDb.Web.Models.Shared.Partials.User;
+﻿@using Resources
+@using VocaDb.Web.Models.Shared.Partials.User
 @model SongVoteRatingsRadioKnockoutViewModel
 
 <button class="btn" data-bind="click: function() { @(Model.Binding)('Nothing'); }, css: { active: @(Model.Binding)() == 'Nothing' }">@ViewRes.User.RatedSongsStrings.RatingAnything</button>

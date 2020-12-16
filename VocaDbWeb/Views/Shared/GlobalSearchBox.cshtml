@@ -1,9 +1,9 @@
-﻿@using VocaDb.Model;
-@using VocaDb.Model.Domain.Globalization;
-@using VocaDb.Model.Domain.Images;
-@using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.User;
-@using Res = ViewRes.TopBarStrings;
+﻿@using VocaDb.Model
+@using VocaDb.Model.Domain.Globalization
+@using VocaDb.Model.Domain.Images
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.User
+@using Res = ViewRes.TopBarStrings
 @inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.GlobalSearchBoxModel>
 
 @using (Html.BeginForm("GlobalSearch", "Home", FormMethod.Post, new { @class = "navbar-form form-inline pull-left navbar-search", id = "globalSearchBox" })) {

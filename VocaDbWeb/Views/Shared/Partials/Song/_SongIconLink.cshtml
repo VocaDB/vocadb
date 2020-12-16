@@ -1,5 +1,5 @@
-﻿@using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.Song;
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Song
 @model SongIconLinkViewModel
 
 <a href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(Model.Song, Model.AlbumId))">

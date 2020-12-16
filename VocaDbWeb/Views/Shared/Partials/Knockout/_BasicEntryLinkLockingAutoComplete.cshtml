@@ -1,4 +1,4 @@
-﻿@using VocaDb.Web.Models.Shared.Partials.Knockout;
+﻿@using VocaDb.Web.Models.Shared.Partials.Knockout
 @model BasicEntryLinkLockingAutoCompleteViewModel
 
 <input type="text" class="input-large" data-bind="@Model.BindingHandler: @(Model.Binding).entry, visible: @(Model.Binding).isEmpty()@(!string.IsNullOrEmpty(Model.ExtraBindings) ? ", " + Model.ExtraBindings : "")" placeholder="@ViewRes.SharedStrings.Search" />

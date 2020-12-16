@@ -1,4 +1,4 @@
-﻿@using VocaDb.Web.Models.Shared.Partials.Tag;
+﻿@using VocaDb.Web.Models.Shared.Partials.Tag
 @model TagLinkViewModel
 
 @Html.ActionLink(Model.Tag.Name, "DetailsById", "Tag", new RouteValueDictionary { { "id", Model.Tag.Id }, { "slug", Model.Tag.UrlSlug } }, new Dictionary<string, object> { { "title", Model.Tag.AdditionalNames }, { "data-bind", Model.Tooltip ? "tagToolTip: " + Model.Tag.Id : null } })
