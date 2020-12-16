@@ -51,7 +51,7 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IEnumTranslations enumTranslations;
 		private readonly IAggregatedEntryImageUrlFactory thumbStore;
-		private readonly IEntryImagePersisterOld imagePersister;
+		private readonly IEntryThumbPersister imagePersister;
 		private readonly IUserIconFactory userIconFactory;
 
 		private class TagTopUsagesAndCount<T>
@@ -169,7 +169,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 		public TagQueries(ITagRepository repository, IUserPermissionContext permissionContext,
-			IEntryLinkFactory entryLinkFactory, IEntryImagePersisterOld imagePersister, IAggregatedEntryImageUrlFactory thumbStore, IUserIconFactory userIconFactory,
+			IEntryLinkFactory entryLinkFactory, IEntryThumbPersister imagePersister, IAggregatedEntryImageUrlFactory thumbStore, IUserIconFactory userIconFactory,
 			IEnumTranslations enumTranslations, ObjectCache cache)
 			: base(repository, permissionContext)
 		{

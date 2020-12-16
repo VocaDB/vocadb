@@ -47,7 +47,6 @@ namespace VocaDb.Model.Domain.Images
 
 		public override string GetPath(IEntryImageInformation picture, ImageSize size) => _context.ServerPathMapper.MapPath($@"~\EntryImg\{picture.EntryType}\{GetFileName(picture, size)}");
 
-		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) => picture.EntryType == EntryType.SongList || picture.EntryType == EntryType.Tag
-			|| ((picture.EntryType == EntryType.Album || picture.EntryType == EntryType.Artist) && picture.Purpose == ImagePurpose.Additional);
+		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) => (picture.EntryType == EntryType.Album || picture.EntryType == EntryType.Artist) && picture.Purpose == ImagePurpose.Additional;
 	}
 }

@@ -32,7 +32,7 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private readonly IAggregatedEntryImageUrlFactory thumbStore;
-		private readonly IEntryImagePersisterOld imagePersister;
+		private readonly IEntryThumbPersister imagePersister;
 		private readonly IUserIconFactory userIconFactory;
 
 		public ArchivedSongListVersion Archive(IDatabaseContext<SongList> ctx, SongList songList, SongListDiff diff, EntryEditEvent reason, string notes = "")
@@ -124,7 +124,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 
 		public SongListQueries(ISongListRepository repository, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			IEntryImagePersisterOld imagePersister, IAggregatedEntryImageUrlFactory thumbStore, IUserIconFactory userIconFactory)
+			IEntryThumbPersister imagePersister, IAggregatedEntryImageUrlFactory thumbStore, IUserIconFactory userIconFactory)
 			: base(repository, permissionContext)
 		{
 			this.entryLinkFactory = entryLinkFactory;

@@ -43,7 +43,7 @@ namespace VocaDb.Model.Domain.Images
 
 		public override VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size) => new VocaDbUrl(GetRelativeUrl(picture, size), UrlDomain.Static, UriKind.Relative);
 
-		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) => picture.EntryType == EntryType.ReleaseEvent || picture.EntryType == EntryType.ReleaseEventSeries
+		public override bool IsSupported(IEntryImageInformation picture, ImageSize size) => picture.EntryType == EntryType.ReleaseEvent || picture.EntryType == EntryType.ReleaseEventSeries || picture.EntryType == EntryType.SongList || picture.EntryType == EntryType.Tag
 			|| ((picture.EntryType == EntryType.Artist || picture.EntryType == EntryType.Album)
 				&& picture.PurposeMainOrUnspecified()
 				&& size != ImageSize.Original);
