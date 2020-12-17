@@ -134,7 +134,7 @@ namespace VocaDb.Web.Controllers
 		{
 			var count = Service.DeletePVsByAuthor(author, PVService.Youtube);
 
-			TempData.SetSuccessMessage(string.Format("Deleted {0} PVs by '{1}'.", count, author));
+			TempData.SetSuccessMessage($"Deleted {count} PVs by '{author}'.");
 
 			return View("PVsByAuthor", new PVsByAuthor(author ?? string.Empty, new PVForSongContract[] { }));
 		}
@@ -272,7 +272,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult UpdateTagVoteCounts()
 		{
 			var count = Service.UpdateTagVoteCounts();
-			TempData.SetStatusMessage(string.Format("Updated tag vote counts, {0} corrections made", count));
+			TempData.SetStatusMessage($"Updated tag vote counts, {count} corrections made");
 			return RedirectToAction("Index");
 		}
 

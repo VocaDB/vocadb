@@ -62,7 +62,7 @@ namespace VocaDb.Tests.Domain.Globalization
 
 			foreach (var item in actual)
 			{
-				Assert.IsTrue(actual.Any(n => n.ContentEquals(item)), string.Format("Found name '{0}' ({1})", item, action));
+				Assert.IsTrue(actual.Any(n => n.ContentEquals(item)), $"Found name '{item}' ({action})");
 			}
 		}
 

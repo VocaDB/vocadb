@@ -146,17 +146,17 @@ namespace VocaDb.Web.Controllers
 			string titleAndArtist;
 			if (!string.IsNullOrEmpty(model.ArtistString))
 			{
-				titleAndArtist = string.Format("{0} - {1}", model.Name, model.ArtistString);
+				titleAndArtist = $"{model.Name} - {model.ArtistString}";
 			}
 			else
 			{
 				titleAndArtist = model.Name;
 			}
 
-			PageProperties.OpenGraph.Title = string.Format("{0} ({1})", titleAndArtist, Translate.DiscTypeName(model.DiscType));
+			PageProperties.OpenGraph.Title = $"{titleAndArtist} ({Translate.DiscTypeName(model.DiscType)})";
 
 			PageProperties.PageTitle = titleAndArtist;
-			PageProperties.Subtitle = string.Format("{0} ({1})", model.ArtistString, Translate.DiscTypeName(model.DiscType));
+			PageProperties.Subtitle = $"{model.ArtistString} ({Translate.DiscTypeName(model.DiscType)})";
 
 			prop.Description = !model.Description.IsEmpty ?
 				markdownParser.GetPlainText(model.Description.EnglishOrOriginal) :

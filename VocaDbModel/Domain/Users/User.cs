@@ -706,7 +706,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public override string ToString()
 		{
-			return string.Format("user '{0}' [{1}]", Name, Id);
+			return $"user '{Name}' [{Id}]";
 		}
 
 		public virtual void UpdateLastLogin(string host, string culture)

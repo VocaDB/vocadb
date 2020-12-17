@@ -64,7 +64,7 @@ namespace VocaDb.Model.Service.Helpers
 			}
 			else
 			{
-				entryLink = string.Format("{0} ( {1} )", entryName, url);
+				entryLink = $"{entryName} ( {url} )";
 			}
 
 			string msg;
@@ -72,13 +72,11 @@ namespace VocaDb.Model.Service.Helpers
 			if (followedArtists.Length == 1)
 			{
 				var artistName = followedArtists.First().TranslatedName[user.DefaultLanguageSelection];
-				msg = string.Format("A new {0}, '{1}', by {2} was just added.",
-					entryTypeName, entryLink, artistName);
+				msg = $"A new {entryTypeName}, '{entryLink}', by {artistName} was just added.";
 			}
 			else
 			{
-				msg = string.Format("A new {0}, '{1}', by multiple artists you're following was just added.",
-					entryTypeName, entryLink);
+				msg = $"A new {entryTypeName}, '{entryLink}', by multiple artists you're following was just added.";
 			}
 
 			msg += "\nYou're receiving this notification because you're following the artist(s).";
@@ -170,11 +168,11 @@ namespace VocaDb.Model.Service.Helpers
 				if (followedArtists.Length == 1)
 				{
 					var artistName = followedArtists.First().TranslatedName[user.DefaultLanguageSelection];
-					title = string.Format("New {0} by {1}", entryTypeName, artistName);
+					title = $"New {entryTypeName} by {artistName}";
 				}
 				else
 				{
-					title = string.Format("New {0}", entryTypeName);
+					title = $"New {entryTypeName}";
 				}
 
 				var notification = new UserMessage(user, title, msg, false);

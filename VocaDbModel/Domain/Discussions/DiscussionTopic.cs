@@ -132,7 +132,7 @@ namespace VocaDb.Model.Domain.Discussions
 
 		public override string ToString()
 		{
-			return string.Format("Discussion topic '{0}' [{1}]", Name, Id);
+			return $"Discussion topic '{Name}' [{Id}]";
 		}
 	}
 }

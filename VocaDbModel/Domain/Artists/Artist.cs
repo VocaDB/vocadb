@@ -380,7 +380,7 @@ namespace VocaDb.Model.Domain.Artists
 
 			// Check is too slow for now
 			//if (HasAlbum(album))
-			//	throw new InvalidOperationException(string.Format("{0} has already been added for {1}", album, this));
+			//	throw new InvalidOperationException($"{album} has already been added for {this}");
 
 			var link = new ArtistForAlbum(album, this, support, roles);
 			AllAlbums.Add(link);
@@ -589,7 +589,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public override string ToString()
 		{
-			return string.Format("artist '{0}' [{1}]", DefaultName, Id);
+			return $"artist '{DefaultName}' [{Id}]";
 		}
 	}
 }

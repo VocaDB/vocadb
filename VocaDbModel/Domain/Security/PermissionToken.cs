@@ -98,7 +98,7 @@ namespace VocaDb.Model.Domain.Security
 			if (all.TryGetValue(id, out token))
 				return token;
 
-			throw new ArgumentException(string.Format("Invalid permission token: {0}.", id), "id");
+			throw new ArgumentException($"Invalid permission token: {id}.", "id");
 		}
 
 		public static bool IsValid(PermissionToken token)

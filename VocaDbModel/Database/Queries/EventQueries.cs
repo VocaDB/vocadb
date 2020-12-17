@@ -108,7 +108,7 @@ namespace VocaDb.Model.Database.Queries
 
 				Archive(ctx, entry, new ReleaseEventDiff(false), EntryEditEvent.Deleted, notes);
 
-				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
+				ctx.AuditLogger.AuditLog($"deleted {entry}");
 			});
 		}
 
@@ -127,7 +127,7 @@ namespace VocaDb.Model.Database.Queries
 
 				Archive(ctx, entry, new ReleaseEventSeriesDiff(false), EntryEditEvent.Deleted, notes);
 
-				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
+				ctx.AuditLogger.AuditLog($"deleted {entry}");
 			});
 		}
 
@@ -343,7 +343,7 @@ namespace VocaDb.Model.Database.Queries
 
 				PermissionContext.VerifyEntryDelete(entry);
 
-				ctx.AuditLogger.SysLog(string.Format("moving {0} to trash", entry));
+				ctx.AuditLogger.SysLog($"moving {entry} to trash");
 
 				CreateTrashedEntry(ctx, entry, notes);
 
@@ -355,7 +355,7 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Delete(entry);
 
-				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", entry));
+				ctx.AuditLogger.AuditLog($"moved {entry} to trash");
 			});
 		}
 
@@ -369,7 +369,7 @@ namespace VocaDb.Model.Database.Queries
 
 				PermissionContext.VerifyEntryDelete(entry);
 
-				ctx.AuditLogger.SysLog(string.Format("moving {0} to trash", entry));
+				ctx.AuditLogger.SysLog($"moving {entry} to trash");
 
 				CreateTrashedEntry(ctx, entry, notes);
 
@@ -388,7 +388,7 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Delete(entry);
 
-				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", entry));
+				ctx.AuditLogger.AuditLog($"moved {entry} to trash");
 			});
 		}
 
@@ -411,7 +411,7 @@ namespace VocaDb.Model.Database.Queries
 
 				Archive(ctx, ev, new ReleaseEventDiff(false), EntryEditEvent.Restored, string.Empty);
 
-				ctx.AuditLogger.AuditLog(string.Format("restored {0}", ev));
+				ctx.AuditLogger.AuditLog($"restored {ev}");
 			});
 		}
 
@@ -429,7 +429,7 @@ namespace VocaDb.Model.Database.Queries
 
 				Archive(ctx, ev, new ReleaseEventSeriesDiff(false), EntryEditEvent.Restored, string.Empty);
 
-				ctx.AuditLogger.AuditLog(string.Format("restored {0}", ev));
+				ctx.AuditLogger.AuditLog($"restored {ev}");
 			});
 		}
 
@@ -525,7 +525,7 @@ namespace VocaDb.Model.Database.Queries
 					var archived = Archive(session, ev, diff, EntryEditEvent.Created, string.Empty);
 					await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), archived);
 
-					await session.AuditLogger.AuditLogAsync(string.Format("created {0}", entryLinkFactory.CreateEntryLink(ev)));
+					await session.AuditLogger.AuditLogAsync($"created {entryLinkFactory.CreateEntryLink(ev)}");
 
 					await followedArtistNotifier.SendNotificationsAsync(session, ev, ev.Artists.Where(a => a?.Artist != null).Select(a => a.Artist), PermissionContext.LoggedUser);
 				}
@@ -631,7 +631,7 @@ namespace VocaDb.Model.Database.Queries
 					var archived = Archive(session, ev, diff, EntryEditEvent.Updated, string.Empty);
 					await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), archived);
 
-					var logStr = string.Format("updated properties for {0} ({1})", entryLinkFactory.CreateEntryLink(ev), diff.ChangedFieldsString);
+					var logStr = $"updated properties for {entryLinkFactory.CreateEntryLink(ev)} ({diff.ChangedFieldsString})";
 					await session.AuditLogger.AuditLogAsync(logStr);
 
 					var newSongCutoff = TimeSpan.FromHours(1);
@@ -717,7 +717,7 @@ namespace VocaDb.Model.Database.Queries
 
 					Archive(session, series, diff, EntryEditEvent.Created, string.Empty);
 
-					AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(series)), session);
+					AuditLog($"created {entryLinkFactory.CreateEntryLink(series)}", session);
 				}
 				else
 				{
@@ -787,7 +787,7 @@ namespace VocaDb.Model.Database.Queries
 
 					Archive(session, series, diff, EntryEditEvent.Updated, string.Empty);
 
-					AuditLog(string.Format("updated {0}", entryLinkFactory.CreateEntryLink(series)), session);
+					AuditLog($"updated {entryLinkFactory.CreateEntryLink(series)}", session);
 				}
 
 				return series.Id;

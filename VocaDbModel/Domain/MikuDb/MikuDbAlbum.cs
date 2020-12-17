@@ -88,7 +88,7 @@ namespace VocaDb.Model.Domain.MikuDb
 
 		public override string ToString()
 		{
-			return string.Format("Imported album '{0}' [{1}]", Title, Id);
+			return $"Imported album '{Title}' [{Id}]";
 		}
 	}
 }

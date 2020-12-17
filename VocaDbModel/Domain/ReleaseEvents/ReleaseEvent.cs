@@ -432,7 +432,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public override string ToString()
 		{
-			return string.Format("Release event '{0}' [{1}]", DefaultName, Id);
+			return $"Release event '{DefaultName}' [{Id}]";
 		}
 	}
 

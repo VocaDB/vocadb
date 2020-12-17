@@ -35,7 +35,7 @@ namespace VocaDb.Tests.Service.VideoServices
 			Assert.AreEqual(artists.Length, result.Artists.Count, "Number of artists");
 			foreach (var artist in artists)
 			{
-				Assert.IsTrue(result.Artists.Any(a => a.DefaultName == artist), string.Format("Has artist {0}", artist));
+				Assert.IsTrue(result.Artists.Any(a => a.DefaultName == artist), $"Has artist {artist}");
 			}
 		}
 

@@ -22,7 +22,7 @@ namespace VocaDb.Model.DataContracts.Artists
 
 		public override string ToString()
 		{
-			return string.Format("translated artist '{0}' [{1}]", Name, Id);
+			return $"translated artist '{Name}' [{Id}]";
 		}
 	}
 }

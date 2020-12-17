@@ -103,7 +103,7 @@ namespace VocaDb.Model.DataContracts.Songs
 
 		public override string ToString()
 		{
-			return string.Format("song '{0}' [{1}]", Name, Id);
+			return $"song '{Name}' [{Id}]";
 		}
 	}
 }

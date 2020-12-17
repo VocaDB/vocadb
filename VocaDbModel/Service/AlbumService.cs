@@ -78,7 +78,7 @@ namespace VocaDb.Model.Service
 			{
 				EntryPermissionManager.VerifyDelete(PermissionContext, a);
 
-				AuditLog(string.Format("deleting album {0}", EntryLinkFactory.CreateEntryLink(a)), session);
+				AuditLog($"deleting album {EntryLinkFactory.CreateEntryLink(a)}", session);
 
 				NHibernateUtil.Initialize(a.CoverPictureData);
 				a.Delete();
@@ -301,7 +301,7 @@ namespace VocaDb.Model.Service
 				artistForAlbum.IsSupport = isSupport;
 				album.UpdateArtistString();
 
-				AuditLog(string.Format("updated IsSupport for {0} on {1}", artistForAlbum.ArtistToStringOrName, CreateEntryLink(album)), session);
+				AuditLog($"updated IsSupport for {artistForAlbum.ArtistToStringOrName} on {CreateEntryLink(album)}", session);
 
 				session.Update(album);
 			});
@@ -319,7 +319,7 @@ namespace VocaDb.Model.Service
 				artistForAlbum.Roles = roles;
 				album.UpdateArtistString();
 
-				AuditLog(string.Format("updated roles for {0} on {1}", artistForAlbum.ArtistToStringOrName, CreateEntryLink(album)), session);
+				AuditLog($"updated roles for {artistForAlbum.ArtistToStringOrName} on {CreateEntryLink(album)}", session);
 
 				session.Update(album);
 			});

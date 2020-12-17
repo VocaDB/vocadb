@@ -221,7 +221,7 @@ namespace VocaDb.Model.Database.Queries
 				var factory = new TagFactoryRepository(ctx, ctx.CreateAgentLoginData(PermissionContext));
 				var tag = await factory.CreateTagAsync(name);
 
-				await ctx.AuditLogger.AuditLogAsync(string.Format("created tag {0}", entryLinkFactory.CreateEntryLink(tag)));
+				await ctx.AuditLogger.AuditLogAsync($"created tag {entryLinkFactory.CreateEntryLink(tag)}");
 
 				return new TagBaseContract(tag, PermissionContext.LanguagePreference);
 			});
@@ -259,7 +259,7 @@ namespace VocaDb.Model.Database.Queries
 
 				tag.Deleted = true;
 
-				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entryLinkFactory.CreateEntryLink(tag)));
+				ctx.AuditLogger.AuditLog($"deleted {entryLinkFactory.CreateEntryLink(tag)}");
 
 				Archive(ctx, tag, new TagDiff(false), EntryEditEvent.Deleted, notes);
 
@@ -366,7 +366,7 @@ namespace VocaDb.Model.Database.Queries
 
 		private async Task<TagStatsContract> GetStatsAsync(IDatabaseContext<Tag> ctx, int tagId)
 		{
-			var key = string.Format("TagQueries.GetStats.{0}.{1}", tagId, LanguagePreference);
+			var key = $"TagQueries.GetStats.{tagId}.{LanguagePreference}";
 			return await cache.GetOrInsertAsync(key, CachePolicy.AbsoluteExpiration(1), async () =>
 			{
 				var artists = await GetTopUsagesAndCountAsync<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
@@ -620,8 +620,7 @@ namespace VocaDb.Model.Database.Queries
 				var diff = new TagDiff(false);
 				diff.Names.Set();
 
-				ctx.AuditLogger.AuditLog(string.Format("Merging {0} to {1}",
-					source, entryLinkFactory.CreateEntryLink(target)));
+				ctx.AuditLogger.AuditLog($"Merging {source} to {entryLinkFactory.CreateEntryLink(target)}");
 
 				// Other properties
 				if (string.IsNullOrEmpty(target.CategoryName) && !string.IsNullOrEmpty(source.CategoryName))
@@ -697,7 +696,7 @@ namespace VocaDb.Model.Database.Queries
 					ctx.Save(name);
 				}
 
-				Archive(ctx, target, diff, EntryEditEvent.Updated, string.Format("Merged from {0}", source));
+				Archive(ctx, target, diff, EntryEditEvent.Updated, $"Merged from {source}");
 
 				ctx.Update(target);
 			});
@@ -720,7 +719,7 @@ namespace VocaDb.Model.Database.Queries
 				DeleteActivityEntries(ctx, id);
 				DeleteReports(ctx, id);
 
-				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", tag));
+				ctx.AuditLogger.AuditLog($"moved {tag} to trash");
 
 				ctx.Delete(tag);
 			});
@@ -869,7 +868,7 @@ namespace VocaDb.Model.Database.Queries
 					thumbGenerator.GenerateThumbsAndMoveImage(uploadedImage.Stream, thumb, Tag.ImageSizes, originalSize: Constants.RestrictedImageOriginalSize);
 				}
 
-				var logStr = string.Format("updated properties for tag {0} ({1})", entryLinkFactory.CreateEntryLink(tag), diff.ChangedFieldsString);
+				var logStr = $"updated properties for tag {entryLinkFactory.CreateEntryLink(tag)} ({diff.ChangedFieldsString})";
 				ctx.AuditLogger.AuditLog(logStr);
 
 				var archived = Archive(ctx, tag, diff, EntryEditEvent.Updated, contract.UpdateNotes);
@@ -895,8 +894,8 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Sync(diff);
 
-				ctx.AuditLogger.AuditLog(string.Format("updated entry type / tag mappings ({0} additions, {1} deletions)", diff.Added.Length, diff.Removed.Length));
-				ctx.AuditLogger.SysLog(string.Format("added [{0}], deleted [{1}]", string.Join(", ", diff.Added.Select(t => t.Tag.DefaultName)), string.Join(", ", diff.Removed.Select(t => t.Tag.DefaultName))));
+				ctx.AuditLogger.AuditLog($"updated entry type / tag mappings ({diff.Added.Length} additions, {diff.Removed.Length} deletions)");
+				ctx.AuditLogger.SysLog($"added [{string.Join(", ", diff.Added.Select(t => t.Tag.DefaultName))}], deleted [{string.Join(", ", diff.Removed.Select(t => t.Tag.DefaultName))}]");
 			});
 		}
 
@@ -919,8 +918,8 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Sync(diff);
 
-				ctx.AuditLogger.AuditLog(string.Format("updated tag mappings ({0} additions, {1} deletions)", diff.Added.Length, diff.Removed.Length));
-				ctx.AuditLogger.SysLog(string.Format("added [{0}], deleted [{1}]", string.Join(", ", diff.Added.Select(t => t.Tag.DefaultName)), string.Join(", ", diff.Removed.Select(t => t.Tag.DefaultName))));
+				ctx.AuditLogger.AuditLog($"updated tag mappings ({diff.Added.Length} additions, {diff.Removed.Length} deletions)");
+				ctx.AuditLogger.SysLog($"added [{string.Join(", ", diff.Added.Select(t => t.Tag.DefaultName))}], deleted [{string.Join(", ", diff.Removed.Select(t => t.Tag.DefaultName))}]");
 			});
 		}
 

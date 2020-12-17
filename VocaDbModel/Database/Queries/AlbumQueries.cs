@@ -89,7 +89,7 @@ namespace VocaDb.Model.Database.Queries
 		/// </summary>
 		private SharedAlbumStatsContract GetSharedAlbumStats(IDatabaseContext ctx, Album album)
 		{
-			var key = string.Format("AlbumQueries.SharedAlbumStatsContract.{0}", album.Id);
+			var key = $"AlbumQueries.SharedAlbumStatsContract.{album.Id}";
 			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () =>
 			{
 				var latestReview = album.LastReview;
@@ -207,7 +207,7 @@ namespace VocaDb.Model.Database.Queries
 					ctx.Update(review);
 				}
 
-				ctx.AuditLogger.AuditLog(string.Format("submitted review for {0}", entryLinkFactory.CreateEntryLink(review.EntryForComment)));
+				ctx.AuditLogger.AuditLog($"submitted review for {entryLinkFactory.CreateEntryLink(review.EntryForComment)}");
 
 				return new AlbumReviewContract(review, userIconFactory);
 			});
@@ -301,7 +301,7 @@ namespace VocaDb.Model.Database.Queries
 
 			return await repository.HandleTransactionAsync(async ctx =>
 			{
-				ctx.AuditLogger.SysLog(string.Format("creating a new album with name '{0}'", contract.Names.First().Value));
+				ctx.AuditLogger.SysLog($"creating a new album with name '{contract.Names.First().Value}'");
 
 				var album = new Album { DiscType = contract.DiscType };
 
@@ -322,7 +322,7 @@ namespace VocaDb.Model.Database.Queries
 				var archived = await ArchiveAsync(ctx, album, AlbumArchiveReason.Created);
 				await ctx.UpdateAsync(album);
 
-				await ctx.AuditLogger.AuditLogAsync(string.Format("created album {0} ({1})", entryLinkFactory.CreateEntryLink(album), album.DiscType));
+				await ctx.AuditLogger.AuditLogAsync($"created album {entryLinkFactory.CreateEntryLink(album)} ({album.DiscType})");
 				await AddEntryEditedEntryAsync(ctx.OfType<ActivityEntry>(), album, EntryEditEvent.Created, archived);
 
 				await followedArtistNotifier.SendNotificationsAsync(ctx, album, album.ArtistList, PermissionContext.LoggedUser);
@@ -573,7 +573,7 @@ namespace VocaDb.Model.Database.Queries
 				var source = session.Load(sourceId);
 				var target = session.Load(targetId);
 
-				session.AuditLogger.AuditLog(string.Format("Merging {0} to {1}", EntryLinkFactory.CreateEntryLink(source), EntryLinkFactory.CreateEntryLink(target)));
+				session.AuditLogger.AuditLog($"Merging {EntryLinkFactory.CreateEntryLink(source)} to {EntryLinkFactory.CreateEntryLink(target)}");
 
 				NHibernateUtil.Initialize(source.CoverPictureData);
 				NHibernateUtil.Initialize(target.CoverPictureData);
@@ -650,8 +650,8 @@ namespace VocaDb.Model.Database.Queries
 				target.UpdateArtistString();
 				target.Names.UpdateSortNames();
 
-				Archive(session, source, AlbumArchiveReason.Deleted, string.Format("Merged to {0}", target));
-				Archive(session, target, AlbumArchiveReason.Merged, string.Format("Merged from {0}", source));
+				Archive(session, source, AlbumArchiveReason.Deleted, $"Merged to {target}");
+				Archive(session, target, AlbumArchiveReason.Merged, $"Merged from {source}");
 
 				session.Update(source);
 				session.Update(target);
@@ -666,7 +666,7 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var album = ctx.Load<Album>(albumId);
 
-				AuditLog(string.Format("moving {0} to trash", album), ctx);
+				AuditLog($"moving {album} to trash", ctx);
 
 				NHibernateUtil.Initialize(album.CoverPictureData);
 
@@ -799,8 +799,8 @@ namespace VocaDb.Model.Database.Queries
 				album.UpdateArtistString();
 				album.UpdateRatingTotals();
 
-				Archive(session, album, diff, AlbumArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
-				AuditLog(string.Format("reverted {0} to revision {1}", EntryLinkFactory.CreateEntryLink(album), archivedVersion.Version), session);
+				Archive(session, album, diff, AlbumArchiveReason.Reverted, $"Reverted to version {archivedVersion.Version}");
+				AuditLog($"reverted {EntryLinkFactory.CreateEntryLink(album)} to revision {archivedVersion.Version}", session);
 
 				return new EntryRevertedContract(album, warnings);
 			});
@@ -818,7 +818,7 @@ namespace VocaDb.Model.Database.Queries
 
 				var diff = new AlbumDiff(DoSnapshot(album.ArchivedVersionsManager.GetLatestVersion(), session.OfType<User>().GetLoggedUser(PermissionContext)));
 
-				session.AuditLogger.SysLog(string.Format("updating properties for {0}", album));
+				session.AuditLogger.SysLog($"updating properties for {album}");
 
 				if (album.DiscType != properties.DiscType)
 				{
@@ -916,7 +916,7 @@ namespace VocaDb.Model.Database.Queries
 					{
 						var songName = StringHelper.TrimIfNotWhitespace(contract.SongName);
 
-						session.AuditLogger.SysLog(string.Format("creating a new song '{0}' to {1}", songName, album));
+						session.AuditLogger.SysLog($"creating a new song '{songName}' to {album}");
 
 						var song = new Song(new LocalizedString(songName, ContentLanguageSelection.Unspecified));
 						await session.SaveAsync(song);
@@ -935,10 +935,9 @@ namespace VocaDb.Model.Database.Queries
 						await session.SyncAsync(songArtistDiff);
 
 						var archived = await ArchiveSongAsync(session.OfType<Song>(), song, songDiff, SongArchiveReason.Created,
-							string.Format("Created for album '{0}'", album.DefaultName.TruncateWithEllipsis(100)));
+							$"Created for album '{album.DefaultName.TruncateWithEllipsis(100)}'");
 
-						await session.AuditLogger.AuditLogAsync(string.Format("created {0} for {1}",
-							entryLinkFactory.CreateEntryLink(song), entryLinkFactory.CreateEntryLink(album)));
+						await session.AuditLogger.AuditLogAsync($"created {entryLinkFactory.CreateEntryLink(song)} for {entryLinkFactory.CreateEntryLink(album)}");
 						await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), song, EntryEditEvent.Created, archived);
 
 						return song;
@@ -956,7 +955,7 @@ namespace VocaDb.Model.Database.Queries
 					var rem = string.Join(", ", tracksDiff.Removed.Select(i => HttpUtility.HtmlEncode(i.SongToStringOrName)));
 					var edit = string.Join(", ", tracksDiff.Edited.Select(i => HttpUtility.HtmlEncode(i.SongToStringOrName)));
 
-					var str = string.Format("edited tracks (added: {0}, removed: {1}, reordered: {2})", add, rem, edit)
+					var str = $"edited tracks (added: {add}, removed: {rem}, reordered: {edit})"
 						.Truncate(300);
 
 					await session.AuditLogger.AuditLogAsync(str);
@@ -978,8 +977,7 @@ namespace VocaDb.Model.Database.Queries
 				if (pvDiff.Changed)
 					diff.PVs.Set();
 
-				var logStr = string.Format("updated properties for album {0} ({1})",
-					entryLinkFactory.CreateEntryLink(album), diff.ChangedFieldsString)
+				var logStr = $"updated properties for album {entryLinkFactory.CreateEntryLink(album)} ({diff.ChangedFieldsString})"
 					+ (properties.UpdateNotes != string.Empty ? " " + properties.UpdateNotes : string.Empty)
 					.Truncate(400);
 
@@ -1019,7 +1017,7 @@ namespace VocaDb.Model.Database.Queries
 				album.PersonalDescriptionAuthorId = data.PersonalDescriptionAuthor?.Id;
 
 				ctx.Update(album);
-				ctx.AuditLogger.AuditLog(string.Format("updated personal description for {0}", entryLinkFactory.CreateEntryLink(album)));
+				ctx.AuditLogger.AuditLog($"updated personal description for {entryLinkFactory.CreateEntryLink(album)}");
 			});
 		}
 

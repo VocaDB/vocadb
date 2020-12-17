@@ -88,7 +88,7 @@ namespace VocaDb.Model.Service.VideoServices
 		public virtual string GetUrlById(string id, PVExtendedMetadata extendedMetadata)
 		{
 			var matcher = linkMatchers.First();
-			return string.Format("http://{0}", matcher.MakeLinkFromId(id));
+			return $"http://{matcher.MakeLinkFromId(id)}";
 		}
 
 		public virtual IEnumerable<string> GetUserProfileUrls(string authorId) => Enumerable.Empty<string>();

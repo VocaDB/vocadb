@@ -15,7 +15,7 @@ namespace VocaDb.Web.Code
 
 		private string CreateAnchor(string href, string text)
 		{
-			return string.Format("<a href=\"{0}\">{1}</a>", href, HttpUtility.HtmlEncode(text));
+			return $"<a href=\"{href}\">{HttpUtility.HtmlEncode(text)}</a>";
 		}
 
 		/// <summary>
@@ -43,35 +43,35 @@ namespace VocaDb.Web.Code
 			switch (entryType)
 			{
 				case EntryType.Album:
-					relative = string.Format("Al/{0}", id);
+					relative = $"Al/{id}";
 					break;
 
 				case EntryType.Artist:
-					relative = string.Format("Ar/{0}", id);
+					relative = $"Ar/{id}";
 					break;
 
 				case EntryType.DiscussionTopic:
-					relative = string.Format("discussion/topics/{0}", id);
+					relative = $"discussion/topics/{id}";
 					break;
 
 				case EntryType.ReleaseEvent:
-					relative = string.Format("E/{0}{1}{2}", id, slashForSlug, slug);
+					relative = $"E/{id}{slashForSlug}{slug}";
 					break;
 
 				case EntryType.ReleaseEventSeries:
-					relative = string.Format("Event/SeriesDetails/{0}", id);
+					relative = $"Event/SeriesDetails/{id}";
 					break;
 
 				case EntryType.Song:
-					relative = string.Format("S/{0}", id);
+					relative = $"S/{id}";
 					break;
 
 				case EntryType.Tag:
-					relative = string.Format("T/{0}{1}{2}", id, slashForSlug, slug);
+					relative = $"T/{id}{slashForSlug}{slug}";
 					break;
 
 				default:
-					relative = string.Format("{0}/Details/{1}", entryType, id);
+					relative = $"{entryType}/Details/{id}";
 					break;
 			}
 

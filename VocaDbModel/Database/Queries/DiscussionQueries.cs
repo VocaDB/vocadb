@@ -129,7 +129,7 @@ namespace VocaDb.Model.Database.Queries
 
 			var folder = ctx.Load<DiscussionFolder>(targetFolderId);
 
-			ctx.AuditLogger.AuditLog(string.Format("Moving {0} to {1}", topic, folder));
+			ctx.AuditLogger.AuditLog($"Moving {topic} to {folder}");
 
 			topic.MoveToFolder(folder);
 		}

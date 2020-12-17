@@ -119,7 +119,7 @@ namespace VocaDb.Model.Domain
 
 		public override string ToString()
 		{
-			return string.Format("Picture file {0} [{1}]", Name, Id);
+			return $"Picture file {Name} [{Id}]";
 		}
 	}
 

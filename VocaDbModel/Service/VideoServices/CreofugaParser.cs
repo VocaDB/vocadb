@@ -57,7 +57,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public Task<VideoTitleParseResult> GetTitleAsync(string id)
 		{
-			var url = string.Format("https://creofuga.net/audios/{0}", id);
+			var url = $"https://creofuga.net/audios/{id}";
 			return HtmlRequestHelper.GetStreamAsync(url, stream => ParseByHtmlStream(stream, Encoding.UTF8, url));
 		}
 	}

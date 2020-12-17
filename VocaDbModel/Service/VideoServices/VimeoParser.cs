@@ -26,7 +26,7 @@ namespace VocaDb.Model.Service.VideoServices
 				headers.Authorization = new AuthenticationHeaderValue("bearer", apiKey);
 			}
 
-			var url = string.Format("https://api.vimeo.com/videos/{0}", id);
+			var url = $"https://api.vimeo.com/videos/{id}";
 
 			VimeoResult result;
 

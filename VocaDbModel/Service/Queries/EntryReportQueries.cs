@@ -58,7 +58,7 @@ namespace VocaDb.Model.Service.Queries
 			ParamIs.NotNull(() => hostname);
 			ParamIs.NotNull(() => notes);
 
-			var msg = string.Format("creating report for {0} [{1}] as {2}", typeof(TEntry).Name, entryId, reportType);
+			var msg = $"creating report for {typeof(TEntry).Name} [{entryId}] as {reportType}";
 			ctx.AuditLogger.SysLog(msg, hostname);
 
 			var loggedUserId = permissionContext.LoggedUserId;
@@ -113,7 +113,7 @@ namespace VocaDb.Model.Service.Queries
 				new EntryReportNotifier().SendReportNotification(ctx.OfType<UserMessage>(), versionForReport, notes, entryLinkFactory, reportName);
 			}
 
-			msg = string.Format("reported {0} as {1} ({2})", entryLinkFactory.CreateEntryLink(entry), reportType, HttpUtility.HtmlEncode(notes));
+			msg = $"reported {entryLinkFactory.CreateEntryLink(entry)} as {reportType} ({HttpUtility.HtmlEncode(notes)})";
 			ctx.AuditLogger.AuditLog(msg.Truncate(200), new AgentLoginData(reporter, hostname));
 
 			ctx.Save(report);

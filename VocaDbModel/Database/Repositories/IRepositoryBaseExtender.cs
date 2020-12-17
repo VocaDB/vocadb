@@ -20,7 +20,7 @@ namespace VocaDb.Model.Database.Repositories
 
 			repository.HandleTransaction(session =>
 			{
-				session.AuditLogger.SysLog(string.Format("is about to update {0} with Id {1}", typeName, id));
+				session.AuditLogger.SysLog($"is about to update {typeName} with Id {id}");
 
 				var entity = session.Load<TEntity>(id);
 

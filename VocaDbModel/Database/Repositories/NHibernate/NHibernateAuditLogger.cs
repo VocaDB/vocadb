@@ -39,7 +39,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 
 		private string GetAuditLogMessage(string doingWhat, string who)
 		{
-			return string.Format("'{0}' {1}", who, doingWhat);
+			return $"'{who}' {doingWhat}";
 		}
 
 		/// <summary>

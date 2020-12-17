@@ -874,7 +874,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public override string ToString()
 		{
-			return string.Format("song '{0}' [{1}]", DefaultName, Id);
+			return $"song '{DefaultName}' [{Id}]";
 		}
 
 		public virtual void UpdateArtistString()

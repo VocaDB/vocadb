@@ -179,7 +179,7 @@ namespace VocaDb.Model.Database.Queries
 
 		private CachedUserStats GetCachedUserStats(IDatabaseContext<User> ctx, User user)
 		{
-			var key = string.Format("CachedUserStats.{0}", user.Id);
+			var key = $"CachedUserStats.{user.Id}";
 			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(4), () =>
 			{
 				var stats = new CachedUserStats();
@@ -220,7 +220,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			ParamIs.NotNull(() => message);
 
-			var subject = string.Format("New private message from {0}", message.Sender.Name);
+			var subject = $"New private message from {message.Sender.Name}";
 			var body = string.Format(
 				"You have received a message from {0}. " +
 				"You can view your messages at {1}." +
@@ -295,7 +295,7 @@ namespace VocaDb.Model.Database.Queries
 			if (user.Active && user.GroupId >= UserGroupId.Regular && user.GroupId <= UserGroupId.Trusted && user.Equals(PermissionContext.LoggedUser) && !user.VerifiedArtist)
 			{
 				// Scan by Twitter account name and entry name.
-				var twitterUrl = !string.IsNullOrEmpty(user.Options.TwitterName) ? string.Format("https://twitter.com/{0}", user.Options.TwitterName) : null;
+				var twitterUrl = !string.IsNullOrEmpty(user.Options.TwitterName) ? $"https://twitter.com/{user.Options.TwitterName}" : null;
 				var producerTypes = new[] { ArtistType.Producer, ArtistType.Animator, ArtistType.Illustrator };
 
 				details.PossibleProducerAccount = session.Query<Artist>().Any(a =>
@@ -321,7 +321,7 @@ namespace VocaDb.Model.Database.Queries
 
 		private string MakeGeoIpToolLink(string hostname)
 		{
-			return string.Format("<a href='http://www.geoiptool.com/?IP={0}'>{0}</a>", hostname);
+			return $"<a href='http://www.geoiptool.com/?IP={hostname}'>{hostname}</a>";
 		}
 
 		private async Task SendEmailVerificationRequest(IDatabaseContext<User> ctx, User user, string resetUrl, string subject)
@@ -411,7 +411,7 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Save(user.AddTag(tag));
 
-				AuditLog(string.Format("followed {0}", tag), ctx, user);
+				AuditLog($"followed {tag}", ctx, user);
 			});
 		}
 
@@ -440,7 +440,7 @@ namespace VocaDb.Model.Database.Queries
 			{
 				if (IsPoisoned(ctx, lc))
 				{
-					ctx.AuditLogger.SysLog(string.Format("failed login from {0} - account is poisoned.", MakeGeoIpToolLink(hostname)), name);
+					ctx.AuditLogger.SysLog($"failed login from {MakeGeoIpToolLink(hostname)} - account is poisoned.", name);
 					return LoginResult.CreateError(LoginError.AccountPoisoned);
 				}
 
@@ -449,7 +449,7 @@ namespace VocaDb.Model.Database.Queries
 
 				if (user == null)
 				{
-					ctx.AuditLogger.AuditLog(string.Format("failed login from {0} - no user.", MakeGeoIpToolLink(hostname)), name);
+					ctx.AuditLogger.AuditLog($"failed login from {MakeGeoIpToolLink(hostname)} - no user.", name);
 					if (delayFailedLogin)
 						Thread.Sleep(2000);
 					return LoginResult.CreateError(LoginError.NotFound);
@@ -462,14 +462,14 @@ namespace VocaDb.Model.Database.Queries
 
 				if (user.Password != hashed)
 				{
-					ctx.AuditLogger.AuditLog(string.Format("failed login from {0} - wrong password.", MakeGeoIpToolLink(hostname)), name);
+					ctx.AuditLogger.AuditLog($"failed login from {MakeGeoIpToolLink(hostname)} - wrong password.", name);
 					if (delayFailedLogin)
 						Thread.Sleep(2000);
 					return LoginResult.CreateError(LoginError.InvalidPassword);
 				}
 
 				// Login attempt successful.
-				ctx.AuditLogger.AuditLog(string.Format("logged in from {0} with '{1}'.", MakeGeoIpToolLink(hostname), name), user);
+				ctx.AuditLogger.AuditLog($"logged in from {MakeGeoIpToolLink(hostname)} with '{name}'.", user);
 
 				user.UpdatePassword(pass, PasswordHashAlgorithms.Default);
 				user.UpdateLastLogin(hostname, culture);
@@ -499,15 +499,13 @@ namespace VocaDb.Model.Database.Queries
 				var user = ctx.Load(userId);
 				var agent = ctx.CreateAgentLoginData(PermissionContext);
 
-				ctx.AuditLogger.AuditLog(string.Format("creating comment for {0}: '{1}'",
-					EntryLinkFactory.CreateEntryLink(user),
-					HttpUtility.HtmlEncode(message)), agent.User);
+				ctx.AuditLogger.AuditLog($"creating comment for {EntryLinkFactory.CreateEntryLink(user)}: '{HttpUtility.HtmlEncode(message)}'", agent.User);
 
 				var comment = user.CreateComment(message, agent);
 				ctx.OfType<UserComment>().Save(comment);
 
 				var commentMsg = comment.Message.Truncate(200);
-				var notificationMsg = string.Format("{0} posted a comment on your profile.\n\n{1}", agent.Name, commentMsg);
+				var notificationMsg = $"{agent.Name} posted a comment on your profile.\n\n{commentMsg}";
 				var notification = new UserMessage(user, "Comment posted on your profile", notificationMsg, false);
 				ctx.OfType<UserMessage>().Save(notification);
 
@@ -600,9 +598,9 @@ namespace VocaDb.Model.Database.Queries
 			switch (result.Conclusion)
 			{
 				case SFSCheckResultType.Malicious:
-					return string.Format("Malicious ({0} % confidence)", result.Confidence);
+					return $"Malicious ({result.Confidence} % confidence)";
 				case SFSCheckResultType.Uncertain:
-					return string.Format("Uncertain ({0} % confidence)", result.Confidence);
+					return $"Uncertain ({result.Confidence} % confidence)";
 				default:
 					return "Ok";
 			}
@@ -628,7 +626,7 @@ namespace VocaDb.Model.Database.Queries
 				if (!user.CanBeDisabled)
 					throw new NotAllowedException("This user account cannot be cleared.");
 
-				ctx.AuditLogger.AuditLog(string.Format("clearing ratings by {0}", user));
+				ctx.AuditLogger.AuditLog($"clearing ratings by {user}");
 
 				while (entryTypeFlags.HasFlag(EntryTypes.Album) && user.AllAlbums.Any())
 				{
@@ -734,7 +732,7 @@ namespace VocaDb.Model.Database.Queries
 				using (var tx = ctx.BeginTransaction())
 				{
 					user = await CreateUser(ctx, name, pass, email, hostname, culture, sfsCheckResult, verifyEmailUrl);
-					ctx.AuditLogger.AuditLog(string.Format("registered from {0} in {1} (SFS check {2}, UA '{3}').", MakeGeoIpToolLink(hostname), timeSpan, sfsStr, userAgent), user);
+					ctx.AuditLogger.AuditLog($"registered from {MakeGeoIpToolLink(hostname)} in {timeSpan} (SFS check {sfsStr}, UA '{userAgent}').", user);
 					await tx.CommitAsync();
 				}
 
@@ -755,8 +753,7 @@ namespace VocaDb.Model.Database.Queries
 			if (sfsCheckResult.Appears && sfsCheckResult.Confidence >= confidenceReport)
 			{
 				var report = new UserReport(user, UserReportType.MaliciousIP, null, hostname,
-					string.Format("Confidence {0} %, Frequency {1}, Last seen {2}. Conclusion {3}.",
-					sfsCheckResult.Confidence, sfsCheckResult.Frequency, sfsCheckResult.LastSeen.ToShortDateString(), sfsCheckResult.Conclusion));
+					$"Confidence {sfsCheckResult.Confidence} %, Frequency {sfsCheckResult.Frequency}, Last seen {sfsCheckResult.LastSeen.ToShortDateString()}. Conclusion {sfsCheckResult.Conclusion}.");
 
 				await ctx.OfType<UserReport>().SaveAsync(report);
 
@@ -821,7 +818,7 @@ namespace VocaDb.Model.Database.Queries
 				user.UpdateLastLogin(hostname, culture);
 				ctx.Save(user);
 
-				ctx.AuditLogger.AuditLog(string.Format("registered from {0} using Twitter name '{1}'.", MakeGeoIpToolLink(hostname), twitterName), user);
+				ctx.AuditLogger.AuditLog($"registered from {MakeGeoIpToolLink(hostname)} using Twitter name '{twitterName}'.", user);
 
 				return new UserContract(user);
 			});
@@ -840,7 +837,7 @@ namespace VocaDb.Model.Database.Queries
 
 				user.Active = false;
 
-				ctx.AuditLogger.AuditLog(string.Format("disabled {0}.", EntryLinkFactory.CreateEntryLink(user)));
+				ctx.AuditLogger.AuditLog($"disabled {EntryLinkFactory.CreateEntryLink(user)}.");
 
 				ctx.Update(user);
 			});
@@ -1260,7 +1257,7 @@ namespace VocaDb.Model.Database.Queries
 				var link = session.Query<TagForUser>()
 					.FirstOrDefault(a => a.Tag.Id == tagId && a.User.Id == userId);
 
-				AuditLog(string.Format("removing {0}", link), session);
+				AuditLog($"removing {link}", session);
 
 				if (link != null)
 				{
@@ -1274,7 +1271,7 @@ namespace VocaDb.Model.Database.Queries
 			await repository.HandleTransactionAsync(async ctx =>
 			{
 				var user = await ctx.LoadAsync(userId);
-				ctx.AuditLogger.SysLog(string.Format("requesting email verification ({0})", user.Email), user.Name);
+				ctx.AuditLogger.SysLog($"requesting email verification ({user.Email})", user.Name);
 
 				var subject = string.Format(UserAccountStrings.VerifyEmailSubject, brandableStringsManager.Layout.SiteName);
 
@@ -1310,7 +1307,7 @@ namespace VocaDb.Model.Database.Queries
 				var request = new PasswordResetRequest(user);
 				await ctx.SaveAsync(request);
 
-				var resetFullUrl = string.Format("{0}/{1}", resetUrl, request.Id);
+				var resetFullUrl = $"{resetUrl}/{request.Id}";
 				var subject = UserAccountStrings.PasswordResetSubject;
 				var body = string.Format(UserAccountStrings.PasswordResetBody, resetFullUrl);
 
@@ -1470,7 +1467,7 @@ namespace VocaDb.Model.Database.Queries
 			if (!EntryPermissionManager.CanEditUser(PermissionContext, user.GroupId))
 			{
 				var loggedUser = ctx.GetLoggedUser(PermissionContext);
-				var msg = string.Format("{0} (level {1}) not allowed to edit {2} (level {3})", loggedUser, loggedUser.GroupId, user, user.GroupId);
+				var msg = $"{loggedUser} (level {loggedUser.GroupId}) not allowed to edit {user} (level {user.GroupId})";
 				log.Error(msg);
 				throw new NotAllowedException(msg);
 			}
@@ -1490,7 +1487,7 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				var reasonText = !string.IsNullOrEmpty(reason) ? ": " + reason : string.Empty;
-				var message = string.Format("updated user {0} by removing edit permissions{1}", EntryLinkFactory.CreateEntryLink(user), reasonText);
+				var message = $"updated user {EntryLinkFactory.CreateEntryLink(user)} by removing edit permissions{reasonText}";
 				session.AuditLogger.AuditLog(message, entryId: user.GlobalId);
 			}, PermissionToken.RemoveEditPermission, PermissionContext, skipLog: true);
 		}
@@ -1549,14 +1546,13 @@ namespace VocaDb.Model.Database.Queries
 				user.Options.Poisoned = contract.Poisoned;
 				user.Options.Supporter = contract.Supporter;
 
-				session.AuditLogger.AuditLog(string.Format("updated user {0}", EntryLinkFactory.CreateEntryLink(user)), entryId: user.GlobalId);
+				session.AuditLogger.AuditLog($"updated user {EntryLinkFactory.CreateEntryLink(user)}", entryId: user.GlobalId);
 			}, PermissionToken.ManageUserPermissions, PermissionContext, skipLog: true);
 		}
 
 		private void SetUsername(IDatabaseContext<User> session, User user, string newName)
 		{
-			session.AuditLogger.AuditLog(string.Format("changed username of {0} to '{1}'", EntryLinkFactory.CreateEntryLink(user),
-				newName));
+			session.AuditLogger.AuditLog($"changed username of {EntryLinkFactory.CreateEntryLink(user)} to '{newName}'");
 
 			var usernameEntry = new OldUsername(user, user.Name);
 			session.Save(usernameEntry);
@@ -1579,8 +1575,7 @@ namespace VocaDb.Model.Database.Queries
 				// Delete
 				if (albumForUser != null && status == PurchaseStatus.Nothing && rating == 0)
 				{
-					session.AuditLogger.AuditLog(string.Format("deleting {0} from collection",
-						entryLinkFactory.CreateEntryLink(albumForUser.Album)));
+					session.AuditLogger.AuditLog($"deleting {entryLinkFactory.CreateEntryLink(albumForUser.Album)} from collection");
 
 					NHibernateUtil.Initialize(albumForUser.Album.CoverPictureData);
 
@@ -1600,7 +1595,7 @@ namespace VocaDb.Model.Database.Queries
 					session.Save(albumForUser);
 					session.Update(album);
 
-					session.AuditLogger.AuditLog(string.Format("added {0} to collection", entryLinkFactory.CreateEntryLink(album)));
+					session.AuditLogger.AuditLog($"added {entryLinkFactory.CreateEntryLink(album)} to collection");
 
 					// Update
 				}
@@ -1618,8 +1613,7 @@ namespace VocaDb.Model.Database.Queries
 						session.Update(albumForUser.Album);
 					}
 
-					session.AuditLogger.AuditLog(string.Format("updated {0} in collection",
-						entryLinkFactory.CreateEntryLink(albumForUser.Album)));
+					session.AuditLogger.AuditLog($"updated {entryLinkFactory.CreateEntryLink(albumForUser.Album)} in collection");
 				}
 			});
 		}
@@ -1646,7 +1640,7 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Update(subscription);
 
-				ctx.AuditLogger.SysLog(string.Format("updated artist subscription for {0}.", subscription.Artist));
+				ctx.AuditLogger.SysLog($"updated artist subscription for {subscription.Artist}.");
 			});
 		}
 
@@ -1669,20 +1663,20 @@ namespace VocaDb.Model.Database.Queries
 					{
 						subscription.OnDeleted();
 						ctx.Delete(subscription);
-						ctx.AuditLogger.AuditLog(string.Format("removed association to {0}.", subscription.ReleaseEvent));
+						ctx.AuditLogger.AuditLog($"removed association to {subscription.ReleaseEvent}.");
 					}
 					else if (relationshipType != subscription.RelationshipType)
 					{
 						subscription.RelationshipType = relationshipType.Value;
 						ctx.Update(subscription);
-						ctx.AuditLogger.AuditLog(string.Format("updated association to {0}.", subscription.ReleaseEvent));
+						ctx.AuditLogger.AuditLog($"updated association to {subscription.ReleaseEvent}.");
 					}
 				}
 				else if (relationshipType.HasValue)
 				{
 					subscription = ctx.Load<User>(userId).AddEvent(ctx.Load<ReleaseEvent>(eventId), relationshipType.Value);
 					ctx.Save(subscription);
-					ctx.AuditLogger.AuditLog(string.Format("created association to {0}.", subscription.ReleaseEvent));
+					ctx.AuditLogger.AuditLog($"created association to {subscription.ReleaseEvent}.");
 				}
 			});
 		}
@@ -1708,7 +1702,7 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var user = ctx.Load(contract.Id);
 
-				ctx.AuditLogger.SysLog(string.Format("Updating settings for {0}", user));
+				ctx.AuditLogger.SysLog($"Updating settings for {user}");
 
 				PermissionContext.VerifyResourceAccess(user);
 
@@ -1814,7 +1808,7 @@ namespace VocaDb.Model.Database.Queries
 
 				if (!user.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase))
 				{
-					log.Info(string.Format("Email {0} not valid for {1}", request.Email, user));
+					log.Info($"Email {request.Email} not valid for {user}");
 					throw new RequestNotValidException("Email verification request not valid for this user");
 
 					/*
@@ -1828,7 +1822,7 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Delete(request);
 
-				ctx.AuditLogger.AuditLog(string.Format("verified email ({0})", user.Email));
+				ctx.AuditLogger.AuditLog($"verified email ({user.Email})");
 
 				return true;
 			});

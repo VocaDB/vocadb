@@ -123,7 +123,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public override string ToString()
 		{
-			return string.Format("PV '{0}' [{1}] for {2}", PVId, Id, Song);
+			return $"PV '{PVId}' [{Id}] for {Song}";
 		}
 	}
 }

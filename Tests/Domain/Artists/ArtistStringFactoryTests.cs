@@ -92,20 +92,20 @@ namespace VocaDb.Tests.Domain.Artists
 		[TestMethod]
 		public void GetArtistString_OneProducerAndVocalist()
 		{
-			TestGetArtistString(1, 1, string.Format("{0} feat. {1}", producer.Artist.DefaultName, vocalist.Artist.DefaultName), "artist string has producer and vocalist name");
+			TestGetArtistString(1, 1, $"{producer.Artist.DefaultName} feat. {vocalist.Artist.DefaultName}", "artist string has producer and vocalist name");
 		}
 
 		[TestMethod]
 		public void GetArtistString_MultipleProducersAndTwoVocalists()
 		{
 			// 3 producers and 2 vocalists
-			TestGetArtistString(3, 2, string.Format("{0} feat. {1}", GetNames(producer, producer2, producer3), GetNames(vocalist, vocalist2)), "artist string has multiple producers and vocalists");
+			TestGetArtistString(3, 2, $"{GetNames(producer, producer2, producer3)} feat. {GetNames(vocalist, vocalist2)}", "artist string has multiple producers and vocalists");
 		}
 
 		[TestMethod]
 		public void GetArtistString_OneProducerAndVariousVocalists()
 		{
-			TestGetArtistString(1, 4, string.Format("{0} feat. various", producer.Artist.DefaultName), "artist string has producer and various");
+			TestGetArtistString(1, 4, $"{producer.Artist.DefaultName} feat. various", "artist string has producer and various");
 		}
 
 		[TestMethod]

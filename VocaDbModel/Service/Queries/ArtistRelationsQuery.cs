@@ -98,7 +98,7 @@ namespace VocaDb.Model.Service.Queries
 
 		private int[] GetLatestSongIds(IDatabaseContext ctx, Artist artist)
 		{
-			var cacheKey = string.Format("ArtistRelationsQuery.GetLatestSongs.{0}", artist.Id);
+			var cacheKey = $"ArtistRelationsQuery.GetLatestSongs.{artist.Id}";
 
 			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromMinutes(5)), () =>
 			{
@@ -124,7 +124,7 @@ namespace VocaDb.Model.Service.Queries
 
 		private int[] GetTopSongIds(IDatabaseContext ctx, Artist artist, SongForApiContract[] latestSongs)
 		{
-			var cacheKey = string.Format("ArtistRelationsQuery.GetTopSongs.{0}", artist.Id);
+			var cacheKey = $"ArtistRelationsQuery.GetTopSongs.{artist.Id}";
 
 			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(1), () =>
 			{

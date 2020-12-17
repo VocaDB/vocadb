@@ -40,7 +40,7 @@ namespace VocaDb.Model.Service.SongImport
 			if (!match.Success)
 			{
 				log.Warn("Youtube URL not regonized: {0}", url);
-				throw new UnableToImportException(string.Format("Youtube URL not regonized: {0}", url));
+				throw new UnableToImportException($"Youtube URL not regonized: {url}");
 			}
 
 			var id = match.Groups[1].Value;
@@ -71,7 +71,7 @@ namespace VocaDb.Model.Service.SongImport
 				{
 					Name = item.Snippet.Title,
 					SortIndex = ((int?)item.Snippet.Position ?? 0) + 1,
-					Url = string.Format("https://www.youtube.com/watch?v={0}", item.Snippet.ResourceId.VideoId)
+					Url = $"https://www.youtube.com/watch?v={item.Snippet.ResourceId.VideoId}"
 				};
 				songs.Add(song);
 			}
@@ -104,7 +104,7 @@ namespace VocaDb.Model.Service.SongImport
 			if (!result.Items.Any())
 			{
 				log.Info("Youtube playlist not found");
-				throw new UnableToImportException(string.Format("Youtube playlist not found: {0}", url));
+				throw new UnableToImportException($"Youtube playlist not found: {url}");
 			}
 
 			var name = result.Items[0].Snippet.Title;

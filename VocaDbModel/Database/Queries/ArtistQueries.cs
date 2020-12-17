@@ -66,7 +66,7 @@ namespace VocaDb.Model.Database.Queries
 			if (artist.ArtistType != ArtistType.Producer)
 				return null;
 
-			var key = string.Format("ArtistQueries.AdvancedArtistStatsContract.{0}", artist.Id);
+			var key = $"ArtistQueries.AdvancedArtistStatsContract.{artist.Id}";
 
 			var cached = cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () =>
 			{
@@ -97,7 +97,7 @@ namespace VocaDb.Model.Database.Queries
 			if (!PermissionContext.IsLoggedIn)
 				return null;
 
-			var key = string.Format("ArtistQueries.PersonalArtistStatsContract.{0}.{1}", artist.Id, PermissionContext.LoggedUserId);
+			var key = $"ArtistQueries.PersonalArtistStatsContract.{artist.Id}.{PermissionContext.LoggedUserId}";
 			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () =>
 			{
 				return new PersonalArtistStatsContract
@@ -114,7 +114,7 @@ namespace VocaDb.Model.Database.Queries
 		/// </summary>
 		private SharedArtistStatsContract GetSharedArtistStats(IDatabaseContext<Artist> ctx, Artist artist)
 		{
-			var key = string.Format("ArtistQueries.SharedArtistStatsContract.{0}", artist.Id);
+			var key = $"ArtistQueries.SharedArtistStatsContract.{artist.Id}";
 			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () =>
 			{
 				try
@@ -208,7 +208,7 @@ namespace VocaDb.Model.Database.Queries
 
 			return await repository.HandleTransactionAsync(async ctx =>
 			{
-				ctx.AuditLogger.SysLog(string.Format("creating a new artist with name '{0}'", contract.Names.First().Value));
+				ctx.AuditLogger.SysLog($"creating a new artist with name '{contract.Names.First().Value}'");
 
 				var artist = new Artist
 				{
@@ -246,7 +246,7 @@ namespace VocaDb.Model.Database.Queries
 				var archived = await ArchiveAsync(ctx, artist, diff, ArtistArchiveReason.Created);
 				await ctx.UpdateAsync(artist);
 
-				await ctx.AuditLogger.AuditLogAsync(string.Format("created artist {0} ({1})", entryLinkFactory.CreateEntryLink(artist), artist.ArtistType));
+				await ctx.AuditLogger.AuditLogAsync($"created artist {entryLinkFactory.CreateEntryLink(artist)} ({artist.ArtistType})");
 				await AddEntryEditedEntryAsync(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Created, archived);
 
 				return new ArtistContract(artist, PermissionContext.LanguagePreference);
@@ -539,8 +539,8 @@ namespace VocaDb.Model.Database.Queries
 					await session.SyncAsync(webLinkDiff);
 				}
 
-				await ArchiveAsync(session, artist, diff, ArtistArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
-				await AuditLogAsync(string.Format("reverted {0} to revision {1}", entryLinkFactory.CreateEntryLink(artist), archivedVersion.Version), session);
+				await ArchiveAsync(session, artist, diff, ArtistArchiveReason.Reverted, $"Reverted to version {archivedVersion.Version}");
+				await AuditLogAsync($"reverted {entryLinkFactory.CreateEntryLink(artist)} to revision {archivedVersion.Version}", session);
 
 				return new EntryRevertedContract(artist, warnings);
 			});
@@ -559,7 +559,7 @@ namespace VocaDb.Model.Database.Queries
 
 				var diff = new ArtistDiff(DoSnapshot(artist.GetLatestVersion(), await ctx.OfType<User>().GetLoggedUserAsync(permissionContext)));
 
-				ctx.AuditLogger.SysLog(string.Format("updating properties for {0}", artist));
+				ctx.AuditLogger.SysLog($"updating properties for {artist}");
 
 				if (artist.ArtistType != properties.ArtistType)
 				{
@@ -671,7 +671,7 @@ namespace VocaDb.Model.Database.Queries
 				if (picsDiff.Changed)
 					diff.Pictures.Set();
 
-				var logStr = string.Format("updated properties for artist {0} ({1})", entryLinkFactory.CreateEntryLink(artist), diff.ChangedFieldsString)
+				var logStr = $"updated properties for artist {entryLinkFactory.CreateEntryLink(artist)} ({diff.ChangedFieldsString})"
 					+ (properties.UpdateNotes != string.Empty ? " " + properties.UpdateNotes : string.Empty)
 					.Truncate(400);
 

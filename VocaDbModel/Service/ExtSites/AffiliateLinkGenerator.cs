@@ -28,11 +28,11 @@ namespace VocaDb.Model.Service.ExtSites
 			}
 			else if (url.Contains("?"))
 			{
-				return string.Format("{0}&{1}{2}", url, paramEq, val);
+				return $"{url}&{paramEq}{val}";
 			}
 			else
 			{
-				return string.Format("{0}?{1}{2}", url, paramEq, val);
+				return $"{url}?{paramEq}{val}";
 			}
 		}
 

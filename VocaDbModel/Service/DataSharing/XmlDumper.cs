@@ -107,7 +107,7 @@ namespace VocaDb.Model.Service.DataSharing
 
 		private void DumpXml<T>(T[] contract, int id, string folder)
 		{
-			var partUri = PackUriHelper.CreatePartUri(new Uri(string.Format("{0}{1}.xml", folder, id), UriKind.Relative));
+			var partUri = PackUriHelper.CreatePartUri(new Uri($"{folder}{id}.xml", UriKind.Relative));
 
 			if (package.PartExists(partUri))
 			{

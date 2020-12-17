@@ -19,9 +19,9 @@ namespace VocaDb.Web.Code
 		public static void LogHttpError(HttpRequestBase request, int code, string msg = null, LogLevel level = null)
 		{
 			if (string.IsNullOrEmpty(msg))
-				log.Log(level ?? LogLevel.Warn, RequestInfo(string.Format("HTTP error code {0} for", code), request));
+				log.Log(level ?? LogLevel.Warn, RequestInfo($"HTTP error code {code} for", request));
 			else
-				log.Log(level ?? LogLevel.Warn, RequestInfo(string.Format("HTTP error code {0} ({1}) for", code, msg), request));
+				log.Log(level ?? LogLevel.Warn, RequestInfo($"HTTP error code {code} ({msg}) for", request));
 		}
 
 		/// <summary>
@@ -57,8 +57,7 @@ namespace VocaDb.Web.Code
 
 		public static string RequestInfo(string msg, HttpRequestBase request)
 		{
-			return string.Format("{0} '{1}' [{2}], URL {3} '{4}', UA '{5}', referrer '{6}'",
-				msg, request.UserHostAddress, request.UserHostName, request.HttpMethod, request.Unvalidated.Url.PathAndQuery, request.UserAgent, request.UrlReferrer);
+			return $"{msg} '{request.UserHostAddress}' [{request.UserHostName}], URL {request.HttpMethod} '{request.Unvalidated.Url.PathAndQuery}', UA '{request.UserAgent}', referrer '{request.UrlReferrer}'";
 		}
 	}
 }

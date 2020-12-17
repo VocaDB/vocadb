@@ -30,7 +30,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.Tags
 
 		private void AssertHasTag(PartialFindResult<Tag> result, Tag expected)
 		{
-			Assert.IsTrue(result.Items.Any(s => s.Equals(expected)), string.Format("Found {0}", expected));
+			Assert.IsTrue(result.Items.Any(s => s.Equals(expected)), $"Found {expected}");
 		}
 
 		private PartialFindResult<Tag> CallFind(ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,

@@ -40,7 +40,7 @@ namespace VocaDb.Model.Service
 
 		private string GetAuditLogMessage(string doingWhat, string who)
 		{
-			return string.Format("'{0}' {1}", who, doingWhat);
+			return $"'{who}' {doingWhat}";
 		}
 
 		protected User GetLoggedUser(ISession session)
@@ -348,7 +348,7 @@ namespace VocaDb.Model.Service
 		protected void DeleteEntity<TEntity>(int id, PermissionToken permissionFlags, bool skipLog = false)
 		{
 			var typeName = typeof(TEntity).Name;
-			SysLog(string.Format("is about to delete {0} with Id {1}", typeName, id));
+			SysLog($"is about to delete {typeName} with Id {id}");
 			PermissionContext.VerifyPermission(permissionFlags);
 
 			HandleTransaction(session =>
@@ -368,7 +368,7 @@ namespace VocaDb.Model.Service
 		{
 			var typeName = typeof(TEntity).Name;
 
-			SysLog(string.Format("is about to update {0} with Id {1}", typeName, id));
+			SysLog($"is about to update {typeName} with Id {id}");
 			PermissionContext.VerifyPermission(permissionFlags);
 
 			HandleTransaction(session =>
@@ -390,7 +390,7 @@ namespace VocaDb.Model.Service
 		{
 			var typeName = typeof(TEntity).Name;
 
-			SysLog(string.Format("is about to update {0} with Id {1}", typeName, id));
+			SysLog($"is about to update {typeName} with Id {id}");
 			PermissionContext.VerifyPermission(permissionFlags);
 
 			HandleTransaction(session =>

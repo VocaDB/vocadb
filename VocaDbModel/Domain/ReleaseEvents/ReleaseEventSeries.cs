@@ -215,17 +215,17 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 			if (string.IsNullOrEmpty(suffix))
 			{
-				return string.Format("{0} {1}", name, number);
+				return $"{name} {number}";
 			}
 			else
 			{
-				return string.Format("{0} {1} {2}", name, number, suffix);
+				return $"{name} {number} {suffix}";
 			}
 		}
 
 		public override string ToString()
 		{
-			return string.Format("release event series '{0}' [{1}]", TranslatedName.Default, Id);
+			return $"release event series '{TranslatedName.Default}' [{Id}]";
 		}
 	}
 }

@@ -51,7 +51,7 @@ namespace VocaDb.Model.Service.VideoServices
 		/// </summary>
 		private static string GetUserName(string userId)
 		{
-			var url = string.Format("http://ext.nicovideo.jp/thumb_user/{0}", userId);
+			var url = $"http://ext.nicovideo.jp/thumb_user/{userId}";
 
 			var request = WebRequest.Create(url);
 			request.Timeout = 10000;
@@ -85,8 +85,8 @@ namespace VocaDb.Model.Service.VideoServices
 		public static IEnumerable<string> GetUserProfileUrlById(string userId)
 		{
 			return new[] {
-				string.Format("http://www.nicovideo.jp/user/{0}", userId),
-				string.Format("https://www.nicovideo.jp/user/{0}", userId),
+				$"http://www.nicovideo.jp/user/{userId}",
+				$"https://www.nicovideo.jp/user/{userId}",
 			};
 		}
 

@@ -77,7 +77,7 @@ namespace VocaDb.Model.Database.Queries
 
 				Archive(ctx, entry, new VenueDiff(false), EntryEditEvent.Deleted, notes);
 
-				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
+				ctx.AuditLogger.AuditLog($"deleted {entry}");
 			});
 		}
 
@@ -148,7 +148,7 @@ namespace VocaDb.Model.Database.Queries
 
 				PermissionContext.VerifyEntryDelete(entry);
 
-				ctx.AuditLogger.SysLog(string.Format("moving {0} to trash", entry));
+				ctx.AuditLogger.SysLog($"moving {entry} to trash");
 
 				CreateTrashedEntry(ctx, entry, notes);
 
@@ -166,7 +166,7 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Delete(entry);
 
-				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", entry));
+				ctx.AuditLogger.AuditLog($"moved {entry} to trash");
 			});
 		}
 
@@ -184,7 +184,7 @@ namespace VocaDb.Model.Database.Queries
 
 				Archive(ctx, venue, new VenueDiff(false), EntryEditEvent.Restored, string.Empty);
 
-				ctx.AuditLogger.AuditLog(string.Format("restored {0}", venue));
+				ctx.AuditLogger.AuditLog($"restored {venue}");
 			});
 		}
 
@@ -231,7 +231,7 @@ namespace VocaDb.Model.Database.Queries
 					var archived = Archive(ctx, venue, diff, EntryEditEvent.Created, string.Empty);
 					AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), venue, EntryEditEvent.Created, archived);
 
-					AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(venue)), ctx);
+					AuditLog($"created {entryLinkFactory.CreateEntryLink(venue)}", ctx);
 				}
 				else
 				{
@@ -294,7 +294,7 @@ namespace VocaDb.Model.Database.Queries
 					var archived = Archive(ctx, venue, diff, EntryEditEvent.Updated, string.Empty);
 					AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), venue, EntryEditEvent.Updated, archived);
 
-					AuditLog(string.Format("updated {0}", entryLinkFactory.CreateEntryLink(venue)), ctx);
+					AuditLog($"updated {entryLinkFactory.CreateEntryLink(venue)}", ctx);
 				}
 
 				return venue.Id;

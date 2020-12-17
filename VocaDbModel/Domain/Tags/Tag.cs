@@ -549,7 +549,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public override string ToString()
 		{
-			return string.Format("tag '{0}' [{1}]", DefaultName, Id);
+			return $"tag '{DefaultName}' [{Id}]";
 		}
 	}
 

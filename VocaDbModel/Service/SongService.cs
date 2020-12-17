@@ -73,7 +73,7 @@ namespace VocaDb.Model.Service
 				var link = list.AddSong(song, order, notes);
 				session.Save(link);
 
-				SysLog(string.Format("added {0} to {1}", song, list));
+				SysLog($"added {song} to {list}");
 			});
 		}
 
@@ -95,7 +95,7 @@ namespace VocaDb.Model.Service
 			{
 				EntryPermissionManager.VerifyDelete(PermissionContext, song);
 
-				AuditLog(string.Format("deleting song {0}", EntryLinkFactory.CreateEntryLink(song)), session);
+				AuditLog($"deleting song {EntryLinkFactory.CreateEntryLink(song)}", session);
 
 				song.Delete();
 

@@ -42,7 +42,7 @@ namespace VocaDb.Model.Domain
 
 		public override string ToString()
 		{
-			return string.Format("Entry report '{0}' for {1} [{2}]", ReportType, EntryBase, Id);
+			return $"Entry report '{ReportType}' for {EntryBase} [{Id}]";
 		}
 
 		public override string TranslatedReportTypeName(IEnumTranslations enumTranslations)

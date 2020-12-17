@@ -81,14 +81,11 @@ namespace VocaDb.Model.Domain.Artists
 
 			if (producers.Any() && performers.Length > 2 && producers.Length + performers.Length >= 5)
 			{
-				return TranslatedStringWithDefault.Create(lang => string.Format("{0} feat. various",
-					string.Join(", ", producerNames.Select(p => p[lang]))));
+				return TranslatedStringWithDefault.Create(lang => $"{string.Join(", ", producerNames.Select(p => p[lang]))} feat. various");
 			}
 			else if (producers.Any() && performers.Any())
 			{
-				return TranslatedStringWithDefault.Create(lang => string.Format("{0} feat. {1}",
-					string.Join(", ", producerNames.Select(p => p[lang])),
-					string.Join(", ", performerNames.Select(p => p[lang]))));
+				return TranslatedStringWithDefault.Create(lang => $"{string.Join(", ", producerNames.Select(p => p[lang]))} feat. {string.Join(", ", performerNames.Select(p => p[lang]))}");
 			}
 			else
 			{

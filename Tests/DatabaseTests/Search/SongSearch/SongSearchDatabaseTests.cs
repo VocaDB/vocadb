@@ -28,7 +28,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 		private void AssertHasSong(PartialFindResult<Song> result, Song expected)
 		{
-			Assert.IsTrue(result.Items.Any(s => s.Equals(expected)), string.Format("Found {0}", expected));
+			Assert.IsTrue(result.Items.Any(s => s.Equals(expected)), $"Found {expected}");
 		}
 
 		[TestInitialize]

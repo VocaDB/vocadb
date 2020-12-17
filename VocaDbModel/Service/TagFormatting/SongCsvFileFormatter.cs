@@ -132,7 +132,7 @@ namespace VocaDb.Model.Service.TagFormatting
 			if (!val.Contains(";"))
 				return val;
 			else
-				return string.Format("\"{0}\"", val);
+				return $"\"{val}\"";
 		}
 
 		private IEnumerable<FieldMatch> GetMatches(string format)

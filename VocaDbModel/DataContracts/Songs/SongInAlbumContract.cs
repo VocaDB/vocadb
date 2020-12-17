@@ -46,7 +46,7 @@ namespace VocaDb.Model.DataContracts.Songs
 
 		public override string ToString()
 		{
-			return string.Format("({0}.{1}) {2} in album", DiscNumber, TrackNumber, Song);
+			return $"({DiscNumber}.{TrackNumber}) {Song} in album";
 		}
 	}
 }

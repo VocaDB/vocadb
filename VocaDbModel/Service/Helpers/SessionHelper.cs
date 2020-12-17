@@ -105,7 +105,7 @@ namespace VocaDb.Model.Service.Helpers
 			var obj = session.Get<TEntry>(objRef.Id);
 			if (obj == null)
 			{
-				warnings.Add(string.Format("Referenced {0} {1} not found", typeof(TEntry).Name, objRef));
+				warnings.Add($"Referenced {typeof(TEntry).Name} {objRef} not found");
 			}
 
 			return obj;

@@ -612,8 +612,8 @@ order by Created");
 				.AddColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
 				.AddColumn("AdditionalNamesString").AsString(1024).NotNullable().WithDefaultValue(string.Empty);
 
-			Execute.Sql(string.Format("UPDATE {0} SET JapaneseName = EnglishName, RomajiName = EnglishName", TableNames.AlbumReleaseEventSeries));
-			Execute.Sql(string.Format("INSERT INTO {0} (Series, Language, Value) SELECT Id, 'English', EnglishName FROM {1}", TableNames.EventSeriesNames, TableNames.AlbumReleaseEventSeries));
+			Execute.Sql($"UPDATE {TableNames.AlbumReleaseEventSeries} SET JapaneseName = EnglishName, RomajiName = EnglishName");
+			Execute.Sql($"INSERT INTO {TableNames.EventSeriesNames} (Series, Language, Value) SELECT Id, 'English', EnglishName FROM {TableNames.AlbumReleaseEventSeries}");
 
 			// Events
 			Create.Table(TableNames.EventNames)
@@ -629,8 +629,8 @@ order by Created");
 				.AddColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
 				.AddColumn("AdditionalNamesString").AsString(1024).NotNullable().WithDefaultValue(string.Empty);
 
-			Execute.Sql(string.Format("UPDATE {0} SET JapaneseName = EnglishName, RomajiName = EnglishName", TableNames.AlbumReleaseEvents));
-			Execute.Sql(string.Format("INSERT INTO {0} ([Event], Language, Value) SELECT Id, 'English', EnglishName FROM {1}", TableNames.EventNames, TableNames.AlbumReleaseEvents));
+			Execute.Sql($"UPDATE {TableNames.AlbumReleaseEvents} SET JapaneseName = EnglishName, RomajiName = EnglishName");
+			Execute.Sql($"INSERT INTO {TableNames.EventNames} ([Event], Language, Value) SELECT Id, 'English', EnglishName FROM {TableNames.AlbumReleaseEvents}");
 		}
 
 		public override void Down()
@@ -970,8 +970,7 @@ order by Created");
 		{
 			Create.Column("ReleaseEvent").OnTable(TableNames.Albums).AsInt32().Nullable().ForeignKey(TableNames.AlbumReleaseEvents, "Id").OnDelete(Rule.SetNull);
 
-			Execute.Sql(string.Format("UPDATE {0} SET {0}.ReleaseEvent = re.Id FROM {0} INNER JOIN {1} re ON ({0}.ReleaseEventName = re.Name)",
-				TableNames.Albums, TableNames.AlbumReleaseEvents));
+			Execute.Sql($"UPDATE {TableNames.Albums} SET {TableNames.Albums}.ReleaseEvent = re.Id FROM {TableNames.Albums} INNER JOIN {TableNames.AlbumReleaseEvents} re ON ({TableNames.Albums}.ReleaseEventName = re.Name)");
 
 			Delete.Column("ReleaseEventName").FromTable(TableNames.Albums);
 		}
@@ -1363,8 +1362,8 @@ order by Created");
 				.AddColumn("JapaneseName").AsString(255).NotNullable().WithDefaultValue(string.Empty)
 				.AddColumn("RomajiName").AsString(255).NotNullable().WithDefaultValue(string.Empty);
 
-			Execute.Sql(string.Format("UPDATE {0} SET JapaneseName = EnglishName, RomajiName = EnglishName", TableNames.Tags));
-			Execute.Sql(string.Format("INSERT INTO {0} (Tag, Language, Value) SELECT Id, 'English', EnglishName FROM {1}", TableNames.TagNames, TableNames.Tags));
+			Execute.Sql($"UPDATE {TableNames.Tags} SET JapaneseName = EnglishName, RomajiName = EnglishName");
+			Execute.Sql($"INSERT INTO {TableNames.TagNames} (Tag, Language, Value) SELECT Id, 'English', EnglishName FROM {TableNames.Tags}");
 		}
 
 		public override void Down()
@@ -1432,14 +1431,13 @@ order by Created");
 	{
 		private void CopyTagNameToId(string tableName, string foreignKeyColumnName, bool nullable = false)
 		{
-			var tagNameColumn = string.Format("{0}Name", foreignKeyColumnName);
+			var tagNameColumn = $"{foreignKeyColumnName}Name";
 
 			Rename.Column(foreignKeyColumnName).OnTable(tableName).To(tagNameColumn);
 			Create.Column(foreignKeyColumnName).OnTable(tableName).AsInt32().Nullable();
 
 			// Ex. UPDATE SongTagUsages SET SongTagUsages.Tag = Tags.Id FROM SongTagUsages INNER JOIN Tags ON (SongTagUsages.TagName = Tags.Name)
-			Execute.Sql(string.Format("UPDATE {0} SET {0}.{1} = SourceTable.Id FROM {0} INNER JOIN {2} SourceTable ON ({0}.{3} = SourceTable.Name)",
-				tableName, foreignKeyColumnName, TableNames.Tags, tagNameColumn));
+			Execute.Sql($"UPDATE {tableName} SET {tableName}.{foreignKeyColumnName} = SourceTable.Id FROM {tableName} INNER JOIN {TableNames.Tags} SourceTable ON ({tableName}.{tagNameColumn} = SourceTable.Name)");
 
 			if (!nullable)
 				Alter.Column(foreignKeyColumnName).OnTable(tableName).AsInt32().NotNullable();
@@ -1449,9 +1447,9 @@ order by Created");
 
 		private void MigrateUsagesTable(string usagesTableName, string entryColumnName)
 		{
-			var primaryIndexName = string.Format("IX_{0}", usagesTableName);
-			var secondaryIndexname = string.Format("IX_{0}_1", usagesTableName);
-			var foreignKeyName = string.Format("FK_{0}_Tags", usagesTableName);
+			var primaryIndexName = $"IX_{usagesTableName}";
+			var secondaryIndexname = $"IX_{usagesTableName}_1";
+			var foreignKeyName = $"FK_{usagesTableName}_Tags";
 
 			Delete.Index(primaryIndexName).OnTable(usagesTableName);
 
@@ -1490,7 +1488,7 @@ order by Created");
 			// Archived versions
 			Delete.ForeignKey("FK_ArchivedTagVersions_Tags").OnTable(TableNames.ArchivedTagVersions);
 			CopyTagNameToId(TableNames.ArchivedTagVersions, "Tag");
-			Create.ForeignKey(string.Format("FK_{0}_Tags", TableNames.ArchivedTagVersions))
+			Create.ForeignKey($"FK_{TableNames.ArchivedTagVersions}_Tags")
 				.FromTable(TableNames.ArchivedTagVersions).ForeignColumn("Tag")
 				.ToTable(TableNames.Tags).PrimaryColumn("Id")
 				.OnDelete(Rule.Cascade);
@@ -1521,7 +1519,7 @@ order by Created");
 		public override void Up()
 		{
 			Create.Column("EnglishName").OnTable(TableNames.Tags).AsString(100).NotNullable().WithDefaultValue(string.Empty);
-			Execute.Sql(string.Format("UPDATE {0} SET EnglishName = Name", TableNames.Tags));
+			Execute.Sql($"UPDATE {TableNames.Tags} SET EnglishName = Name");
 			Create.Index("IX_Tags_EnglishName").OnTable(TableNames.Tags).OnColumn("EnglishName").Unique();
 		}
 

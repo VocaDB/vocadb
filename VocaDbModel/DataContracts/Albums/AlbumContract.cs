@@ -119,7 +119,7 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		public override string ToString()
 		{
-			return string.Format("album '{0}' [{1}]", Name, Id);
+			return $"album '{Name}' [{Id}]";
 		}
 	}
 }

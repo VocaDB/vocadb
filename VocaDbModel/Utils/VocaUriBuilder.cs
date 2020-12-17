@@ -66,9 +66,9 @@ namespace VocaDb.Model.Utils
 		private static string MergeUrls_BaseNoTrailingSlash(string baseUrl, string relative)
 		{
 			if (relative.StartsWith("/"))
-				return string.Format("{0}{1}", baseUrl, relative);
+				return $"{baseUrl}{relative}";
 			else
-				return string.Format("{0}/{1}", baseUrl, relative);
+				return $"{baseUrl}/{relative}";
 		}
 
 		public static string MergeUrls(string baseUrl, string relative)
@@ -76,9 +76,9 @@ namespace VocaDb.Model.Utils
 			if (baseUrl.EndsWith("/"))
 			{
 				if (relative.StartsWith("/"))
-					return string.Format("{0}{1}", baseUrl.Substring(0, baseUrl.Length - 1), relative);
+					return $"{baseUrl.Substring(0, baseUrl.Length - 1)}{relative}";
 				else
-					return string.Format("{0}{1}", baseUrl, relative);
+					return $"{baseUrl}{relative}";
 			}
 			else
 			{

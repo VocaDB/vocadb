@@ -953,7 +953,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public override string ToString()
 		{
-			return string.Format("album '{0}' [{1}]", DefaultName, Id);
+			return $"album '{DefaultName}' [{Id}]";
 		}
 
 		public virtual void UpdateArtistString()

@@ -102,7 +102,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public override int GetHashCode()
 		{
-			var format = string.Format("{0}_{1}{2}", Tag.Id, EntryBase.EntryType, EntryBase.Id);
+			var format = $"{Tag.Id}_{EntryBase.EntryType}{EntryBase.Id}";
 			return format.GetHashCode();
 		}
 
@@ -123,7 +123,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public override string ToString()
 		{
-			return string.Format("{0} for {1} [{2}]", Tag, EntryBase, Id);
+			return $"{Tag} for {EntryBase} [{Id}]";
 		}
 	}
 }

@@ -12,16 +12,16 @@ namespace VocaDb.Model.Service.VideoServices
 			switch (resultType)
 			{
 				case VideoUrlParseResultType.NoMatcher:
-					return new VideoParseException(string.Format("No matcher defined (url {0})", url));
+					return new VideoParseException($"No matcher defined (url {url})");
 
 				case VideoUrlParseResultType.LoadError:
-					return new VideoParseException(string.Format("Unable to load metadata (url {0})", url));
+					return new VideoParseException($"Unable to load metadata (url {url})");
 
 				case VideoUrlParseResultType.Duplicate:
-					return new VideoParseException(string.Format("Duplicate entry (url {0})", url));
+					return new VideoParseException($"Duplicate entry (url {url})");
 
 				case VideoUrlParseResultType.OtherError:
-					return new VideoParseException(string.Format("Unable to process PV link (url {0})", url));
+					return new VideoParseException($"Unable to process PV link (url {url})");
 
 				default:
 					return null;

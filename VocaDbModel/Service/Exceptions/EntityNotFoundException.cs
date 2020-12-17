@@ -12,7 +12,7 @@ namespace VocaDb.Model.Service.Exceptions
 	{
 		public static void Throw<T>(int id)
 		{
-			throw new EntityNotFoundException(string.Format("Entity of type {0} with ID {1} not found", typeof(T).Name, id));
+			throw new EntityNotFoundException($"Entity of type {typeof(T).Name} with ID {id} not found");
 		}
 
 		public EntityNotFoundException() { }

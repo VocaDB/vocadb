@@ -28,15 +28,15 @@ namespace VocaDb.SiteMapGenerator.Sitemap
 			switch (entryType)
 			{
 				case EntryType.Album:
-					return string.Format("{0}Al/{1}", siteRoot, id.Id);
+					return $"{siteRoot}Al/{id.Id}";
 				case EntryType.Artist:
-					return string.Format("{0}Ar/{1}", siteRoot, id.Id);
+					return $"{siteRoot}Ar/{id.Id}";
 				case EntryType.ReleaseEvent:
-					return string.Format("{0}E/{1}/{2}", siteRoot, id.Id, id.UrlSlug);
+					return $"{siteRoot}E/{id.Id}/{id.UrlSlug}";
 				case EntryType.Song:
-					return string.Format("{0}S/{1}", siteRoot, id.Id);
+					return $"{siteRoot}S/{id.Id}";
 				case EntryType.Tag:
-					return string.Format("{0}T/{1}/{2}", siteRoot, id.Id, id.UrlSlug);
+					return $"{siteRoot}T/{id.Id}/{id.UrlSlug}";
 			}
 
 			return string.Empty;
@@ -81,7 +81,7 @@ namespace VocaDb.SiteMapGenerator.Sitemap
 					sitemapDoc.Root.Add(element);
 				}
 
-				var sitemapFile = string.Format("sitemap-{0}.xml", sitemapNumber);
+				var sitemapFile = $"sitemap-{sitemapNumber}.xml";
 				var sitemapPath = Path.Combine(outFolder, sitemapFile);
 				var sitemapUrl = sitemapRootUrl + sitemapFile;
 				sitemapDoc.Save(sitemapPath);

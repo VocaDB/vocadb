@@ -43,7 +43,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 
 			foreach (var songName in songNames)
 			{
-				Assert.IsTrue(result.Items.Any(s => s.DefaultName == songName), string.Format("Song named '{0}' was returned", songName));
+				Assert.IsTrue(result.Items.Any(s => s.DefaultName == songName), $"Song named '{songName}' was returned");
 			}
 		}
 

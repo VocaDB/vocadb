@@ -66,7 +66,7 @@ namespace VocaDb.Model.DataContracts.Users
 
 		public override string ToString()
 		{
-			return string.Format("Message '{0}' to {1} [{2}]", Subject, Receiver, Id);
+			return $"Message '{Subject}' to {Receiver} [{Id}]";
 		}
 	}
 }

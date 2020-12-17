@@ -530,7 +530,7 @@ namespace VocaDb.Web.Controllers
 			var recaptchaResult = await ReCaptcha2.ValidateAsync(new AspNetHttpRequest(Request), AppConfig.ReCAPTCHAKey);
 			if (!recaptchaResult.Success)
 			{
-				ErrorLogger.LogMessage(Request, string.Format("Invalid CAPTCHA (error {0})", recaptchaResult.Error), LogLevel.Warn);
+				ErrorLogger.LogMessage(Request, $"Invalid CAPTCHA (error {recaptchaResult.Error})", LogLevel.Warn);
 				otherService.AuditLog("failed CAPTCHA", Hostname, AuditLogCategory.UserCreateFailCaptcha);
 				ModelState.AddModelError("CAPTCHA", ViewRes.User.CreateStrings.CaptchaInvalid);
 			}
@@ -820,7 +820,7 @@ namespace VocaDb.Web.Controllers
 
 			var fullMessage = "Proof: " + linkToProof + ", Message: " + message;
 
-			artistQueries.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, string.Format("Account verification request: {0}", fullMessage), null);
+			artistQueries.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, $"Account verification request: {fullMessage}", null);
 
 			TempData.SetSuccessMessage("Request sent");
 			return View();

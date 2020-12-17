@@ -277,7 +277,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public override string ToString()
 		{
-			return string.Format("song list '{0}' [{1}]", Name, Id);
+			return $"song list '{Name}' [{Id}]";
 		}
 	}
 }

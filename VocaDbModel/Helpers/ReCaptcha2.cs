@@ -26,7 +26,7 @@ namespace VocaDb.Model.Helpers
 
 			var userIp = request.UserHostAddress;
 
-			var requestUrl = string.Format("{0}?secret={1}&response={2}&remoteip={3}", VerifyApi, privateKey, userResponse, userIp);
+			var requestUrl = $"{VerifyApi}?secret={privateKey}&response={userResponse}&remoteip={userIp}";
 			VerifyResponse verifyResponse;
 
 			try

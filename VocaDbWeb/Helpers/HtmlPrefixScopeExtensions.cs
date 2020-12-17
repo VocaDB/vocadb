@@ -17,9 +17,9 @@ namespace VocaDb.Web.Helpers
 			string itemIndex = idsToReuse.Count > 0 ? idsToReuse.Dequeue() : Guid.NewGuid().ToString();
 
 			// autocomplete="off" is needed to work around a very annoying Chrome behaviour whereby it reuses old values after the user clicks "Back", which causes the xyz.index and xyz[...] values to get out of sync.
-			html.ViewContext.Writer.WriteLine(string.Format("<input type=\"hidden\" name=\"{0}.index\" autocomplete=\"off\" value=\"{1}\" />", collectionName, html.Encode(itemIndex)));
+			html.ViewContext.Writer.WriteLine($"<input type=\"hidden\" name=\"{collectionName}.index\" autocomplete=\"off\" value=\"{html.Encode(itemIndex)}\" />");
 
-			return BeginHtmlFieldPrefixScope(html, string.Format("{0}[{1}]", collectionName, itemIndex));
+			return BeginHtmlFieldPrefixScope(html, $"{collectionName}[{itemIndex}]");
 		}
 
 		public static IDisposable BeginHtmlFieldPrefixScope(this HtmlHelper html, string htmlFieldPrefix)

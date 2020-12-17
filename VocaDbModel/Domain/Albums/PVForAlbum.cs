@@ -58,7 +58,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public override string ToString()
 		{
-			return string.Format("PV '{0}' [{1}] for {2}", PVId, Id, Album);
+			return $"PV '{PVId}' [{Id}] for {Album}";
 		}
 	}
 }

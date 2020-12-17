@@ -82,7 +82,7 @@ namespace VocaDb.Model.DataContracts.Discussions
 
 		public override string ToString()
 		{
-			return string.Format("{0} [{1}] at {2}", Name, Id, Created);
+			return $"{Name} [{Id}] at {Created}";
 		}
 	}
 

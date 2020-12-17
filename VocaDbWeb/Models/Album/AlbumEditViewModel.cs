@@ -25,8 +25,7 @@ namespace VocaDb.Web.Models.Album
 
 			DiscTypeDescriptions = ViewRes.Album.EditStrings.BaDiscTypeExplanation
 								   + "<br /><br /><ul>" + string.Join("",
-									   EnumVal<DiscType>.Values.Where(v => v != DiscType.Unknown).Select(v => string.Format("<li><strong>{0}</strong>: {1}</li>",
-										   Translate.DiscTypeName(v), global::Resources.DiscTypeDescriptions.ResourceManager.GetString(v.ToString()))));
+									   EnumVal<DiscType>.Values.Where(v => v != DiscType.Unknown).Select(v => $"<li><strong>{Translate.DiscTypeName(v)}</strong>: {(global::Resources.DiscTypeDescriptions.ResourceManager.GetString(v.ToString()))}</li>"));
 		}
 
 		public AlbumEditViewModel(AlbumContract album, IUserPermissionContext permissionContext,

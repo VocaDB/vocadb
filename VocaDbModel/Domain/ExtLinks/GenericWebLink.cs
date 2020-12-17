@@ -65,7 +65,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public override string ToString()
 		{
-			return string.Format("{0} for {1}", base.ToString(), Entry);
+			return $"{base.ToString()} for {Entry}";
 		}
 	}
 

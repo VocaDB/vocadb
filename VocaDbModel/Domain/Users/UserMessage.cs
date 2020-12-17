@@ -131,7 +131,7 @@ namespace VocaDb.Model.Domain.Users
 		public override string ToString()
 		{
 			// Note: no message contents in ToString because personal information might be logged
-			return string.Format("User message [{0}]", Id);
+			return $"User message [{Id}]";
 		}
 	}
 

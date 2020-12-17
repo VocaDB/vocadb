@@ -97,7 +97,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public override string ToString()
 		{
-			return string.Format("Owned {0} for {1}", Artist, User);
+			return $"Owned {Artist} for {User}";
 		}
 	}
 }

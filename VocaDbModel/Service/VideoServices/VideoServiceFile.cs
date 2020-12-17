@@ -79,7 +79,7 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 			catch (UriFormatException x)
 			{
-				var msg = string.Format("{0} could not be parsed as a valid URL.", url);
+				var msg = $"{url} could not be parsed as a valid URL.";
 				log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			}
@@ -101,14 +101,14 @@ namespace VocaDb.Model.Service.VideoServices
 
 						if (!mimeTypes.Contains(mime))
 						{
-							return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, string.Format("Unsupported content type: {0}", mime));
+							return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, $"Unsupported content type: {mime}");
 						}
 					}
 				}
 			}
 			catch (WebException x)
 			{
-				var msg = string.Format("Unable to load file URL {0}. The file might not be publicly accessible", url);
+				var msg = $"Unable to load file URL {url}. The file might not be publicly accessible";
 				log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			}

@@ -22,7 +22,7 @@ namespace VocaDb.Model.Service.VideoServices
 			if (!numId.Success)
 				return null;
 
-			return string.Format("https://tn.smilevideo.jp/smile?i={0}", numId.Value);
+			return $"https://tn.smilevideo.jp/smile?i={numId.Value}";
 		}
 
 		public override IEnumerable<string> GetUserProfileUrls(string authorId) => NicoHelper.GetUserProfileUrlById(authorId);

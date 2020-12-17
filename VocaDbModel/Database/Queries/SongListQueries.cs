@@ -101,7 +101,7 @@ namespace VocaDb.Model.Database.Queries
 
 			ctx.Update(newList);
 
-			ctx.AuditLogger.AuditLog(string.Format("created song list {0}", entryLinkFactory.CreateEntryLink(newList)), user);
+			ctx.AuditLogger.AuditLog($"created song list {entryLinkFactory.CreateEntryLink(newList)}", user);
 			var archived = Archive(ctx, newList, new SongListDiff(), EntryEditEvent.Created, contract.UpdateNotes);
 
 			if (newList.FeaturedList)
@@ -158,7 +158,7 @@ namespace VocaDb.Model.Database.Queries
 
 				Archive(ctx, entry, new SongListDiff(false), EntryEditEvent.Deleted, notes);
 
-				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
+				ctx.AuditLogger.AuditLog($"deleted {entry}");
 			});
 		}
 
@@ -171,7 +171,7 @@ namespace VocaDb.Model.Database.Queries
 				var user = GetLoggedUser(ctx);
 				var list = ctx.Load<SongList>(listId);
 
-				ctx.AuditLogger.SysLog(string.Format("deleting {0}", list.ToString()));
+				ctx.AuditLogger.SysLog($"deleting {list.ToString()}");
 
 				EntryPermissionManager.VerifyEdit(PermissionContext, list);
 
@@ -184,7 +184,7 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Delete(list);
 
-				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", list.ToString()), user);
+				ctx.AuditLogger.AuditLog($"deleted {list.ToString()}", user);
 			});
 		}
 
@@ -335,7 +335,7 @@ namespace VocaDb.Model.Database.Queries
 					ctx.Update(list);
 
 					ctx.AuditLogger.AuditLog(
-						string.Format("updated song list {0} ({1})", entryLinkFactory.CreateEntryLink(list), diff.ChangedFieldsString), user);
+						$"updated song list {entryLinkFactory.CreateEntryLink(list)} ({diff.ChangedFieldsString})", user);
 
 					var archived = Archive(ctx, list, diff, EntryEditEvent.Updated, contract.UpdateNotes);
 

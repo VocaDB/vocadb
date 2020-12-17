@@ -54,8 +54,8 @@ namespace VocaDb.Model.Service.VideoServices
 		public override IEnumerable<string> GetUserProfileUrls(string authorId)
 		{
 			return new[] {
-				string.Format("http://piapro.jp/{0}", authorId),
-				string.Format("https://piapro.jp/{0}", authorId),
+				$"http://piapro.jp/{authorId}",
+				$"https://piapro.jp/{authorId}",
 			};
 		}
 	}

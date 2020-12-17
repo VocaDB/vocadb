@@ -40,7 +40,7 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
-		public override string ToString() => string.Format("{0}.{1}", DiscNumber, TrackNumber);
+		public override string ToString() => $"{DiscNumber}.{TrackNumber}";
 
 		public static bool operator ==(TrackIndex left, TrackIndex right) => left.Equals(right);
 

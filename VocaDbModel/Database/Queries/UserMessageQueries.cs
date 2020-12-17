@@ -42,7 +42,7 @@ namespace VocaDb.Model.Database.Queries
 
 				DoDelete(ctx, msg);
 
-				ctx.AuditLogger.SysLog(string.Format("deleted {0}", msg));
+				ctx.AuditLogger.SysLog($"deleted {msg}");
 			});
 		}
 
@@ -69,7 +69,7 @@ namespace VocaDb.Model.Database.Queries
 					DoDelete(ctx, msg);
 				}
 
-				ctx.AuditLogger.SysLog(string.Format("deleted {0} messages", messageIds.Length));
+				ctx.AuditLogger.SysLog($"deleted {messageIds.Length} messages");
 			});
 		}
 

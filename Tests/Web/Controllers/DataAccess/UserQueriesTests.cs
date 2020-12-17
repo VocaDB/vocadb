@@ -345,7 +345,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			Assert.AreEqual(sender.Id, comment.Author.Id, "Sender Id");
 			Assert.AreEqual(receiver.Id, comment.Entry.Id, "Receiver Id");
 
-			var notificationMsg = string.Format("{0} posted a comment on your profile.\n\n{1}", sender.Name, comment.Message);
+			var notificationMsg = $"{sender.Name} posted a comment on your profile.\n\n{comment.Message}";
 			var notification = repository.List<UserMessage>().FirstOrDefault();
 			Assert.IsNotNull(notification, "Notification was saved");
 			Assert.AreEqual(notificationMsg, notification.Message, "Notification message");

@@ -20,7 +20,7 @@ namespace VocaDb.Web.Code.WebApi
 			if (ex == null)
 				return;
 
-			var msg = string.Format("Object not found: {0}#{1}", ex.EntityName, ex.Identifier);
+			var msg = $"Object not found: {ex.EntityName}#{ex.Identifier}";
 
 			log.Warn(msg);
 

@@ -62,7 +62,7 @@ namespace VocaDb.Model.Service
 			{
 				EntryPermissionManager.VerifyDelete(PermissionContext, a);
 
-				AuditLog(string.Format("deleting artist {0}{1}", EntryLinkFactory.CreateEntryLink(a), !string.IsNullOrEmpty(notes) ? " " + notes : string.Empty), session);
+				AuditLog($"deleting artist {EntryLinkFactory.CreateEntryLink(a)}{(!string.IsNullOrEmpty(notes) ? " " + notes : string.Empty)}", session);
 
 				NHibernateUtil.Initialize(a.Picture);
 				a.Delete();
@@ -196,8 +196,7 @@ namespace VocaDb.Model.Service
 				var source = session.Load<Artist>(sourceId);
 				var target = session.Load<Artist>(targetId);
 
-				AuditLog(string.Format("Merging {0} to {1}",
-					EntryLinkFactory.CreateEntryLink(source), EntryLinkFactory.CreateEntryLink(target)), session);
+				AuditLog($"Merging {EntryLinkFactory.CreateEntryLink(source)} to {EntryLinkFactory.CreateEntryLink(target)}", session);
 
 				NHibernateUtil.Initialize(source.Picture);
 				NHibernateUtil.Initialize(target.Picture);
@@ -271,8 +270,8 @@ namespace VocaDb.Model.Service
 
 				source.Deleted = true;
 
-				Archive(session, source, ArtistArchiveReason.Deleted, string.Format("Merged to {0}", target));
-				Archive(session, target, ArtistArchiveReason.Merged, string.Format("Merged from '{0}'", source));
+				Archive(session, source, ArtistArchiveReason.Deleted, $"Merged to {target}");
+				Archive(session, target, ArtistArchiveReason.Merged, $"Merged from '{source}'");
 
 				NHibernateUtil.Initialize(source.Picture);
 				NHibernateUtil.Initialize(target.Picture);

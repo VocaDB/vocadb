@@ -105,7 +105,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public override string ToString()
 		{
-			return string.Format("{0} following {1}", User, Artist);
+			return $"{User} following {Artist}";
 		}
 	}
 }

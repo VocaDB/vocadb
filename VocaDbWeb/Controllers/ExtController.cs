@@ -165,7 +165,7 @@ namespace VocaDb.Web.Controllers
 			}
 			else
 			{
-				html = string.Format("<iframe src=\"{0}\" width=\"{1}\" height=\"{2}\"></iframe>", src, maxwidth, maxheight);
+				html = $"<iframe src=\"{src}\" width=\"{maxwidth}\" height=\"{maxheight}\"></iframe>";
 			}
 
 			return Object(new SongOEmbedResponse(song, maxwidth, maxheight, html), format);

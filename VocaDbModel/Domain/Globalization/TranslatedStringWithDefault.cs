@@ -102,7 +102,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public override string ToString()
 		{
-			return string.Format("Default: {0}, Japanese: {1}, Romaji: {2}, English: {3}", Default, Japanese, Romaji, English);
+			return $"Default: {Default}, Japanese: {Japanese}, Romaji: {Romaji}, English: {English}";
 		}
 	}
 }

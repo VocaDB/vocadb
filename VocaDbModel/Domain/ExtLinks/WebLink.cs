@@ -150,7 +150,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public override string ToString()
 		{
-			return string.Format("web link '{0}'", Url);
+			return $"web link '{Url}'";
 		}
 	}
 

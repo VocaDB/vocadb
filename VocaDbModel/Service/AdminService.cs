@@ -207,10 +207,7 @@ namespace VocaDb.Model.Service
 
 				foreach (var report in reports)
 				{
-					AuditLog(string.Format("closed entry report {0}{1} for {2}",
-						report.TranslatedReportTypeName(enumTranslations, CultureInfo.DefaultThreadCurrentCulture),
-						!string.IsNullOrEmpty(report.Notes) ? " (" + report.Notes + ")" : string.Empty,
-						EntryLinkFactory.CreateEntryLink(report.EntryBase)), session);
+					AuditLog($"closed entry report {report.TranslatedReportTypeName(enumTranslations, CultureInfo.DefaultThreadCurrentCulture)}{(!string.IsNullOrEmpty(report.Notes) ? " (" + report.Notes + ")" : string.Empty)} for {EntryLinkFactory.CreateEntryLink(report.EntryBase)}", session);
 					report.Status = ReportStatus.Closed;
 					report.ClosedBy = GetLoggedUser(session);
 					report.ClosedAt = DateTime.UtcNow;
@@ -228,7 +225,7 @@ namespace VocaDb.Model.Service
 
 			return HandleTransaction(session =>
 			{
-				AuditLog(string.Format("deleting PVs by '{0}' for service {1}.", author, service), session);
+				AuditLog($"deleting PVs by '{author}' for service {service}.", session);
 
 				var pvs = session.Query<PVForSong>().Where(p => p.Service == service && p.Author == author).ToArray();
 

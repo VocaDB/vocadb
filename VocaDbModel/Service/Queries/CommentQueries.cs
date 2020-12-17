@@ -76,9 +76,7 @@ namespace VocaDb.Model.Service.Queries
 
 			ctx.Save(comment);
 
-			ctx.AuditLogger.AuditLog(string.Format("creating comment for {0}: '{1}'",
-				entryLinkFactory.CreateEntryLink(entry),
-				HttpUtility.HtmlEncode(contract.Message)),
+			ctx.AuditLogger.AuditLog($"creating comment for {entryLinkFactory.CreateEntryLink(entry)}: '{HttpUtility.HtmlEncode(contract.Message)}'",
 				agent);
 
 			new UserCommentNotifier().CheckComment(comment, entryLinkFactory, ctx.OfType<User>());
@@ -150,9 +148,7 @@ namespace VocaDb.Model.Service.Queries
 
 			ctx.Update(comment);
 
-			ctx.AuditLogger.AuditLog(string.Format("updated comment for {0}: '{1}'",
-				entryLinkFactory.CreateEntryLink(comment.Entry),
-				HttpUtility.HtmlEncode(contract.Message)));
+			ctx.AuditLogger.AuditLog($"updated comment for {entryLinkFactory.CreateEntryLink(comment.Entry)}: '{HttpUtility.HtmlEncode(contract.Message)}'");
 		}
 	}
 }

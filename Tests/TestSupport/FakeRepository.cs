@@ -273,7 +273,7 @@ namespace VocaDb.Tests.TestSupport
 			var list = querySource.List<T>();
 
 			if (list.All(i => !IdEquals(i, id)))
-				throw new InvalidOperationException(string.Format("Entity of type {0} with Id {1} not found", typeof(T), id));
+				throw new InvalidOperationException($"Entity of type {typeof(T)} with Id {id} not found");
 
 			return list.First(i => IdEquals(i, id));
 		}

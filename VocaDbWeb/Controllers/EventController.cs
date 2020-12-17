@@ -91,7 +91,7 @@ namespace VocaDb.Web.Controllers
 
 			var pictureData = !string.IsNullOrEmpty(ev.PictureMime) ? (IEntryImageInformation)ev : ev.Series;
 
-			PageProperties.PageTitle = string.Format("{0} ({1})", ev.Name, subtitle);
+			PageProperties.PageTitle = $"{ev.Name} ({subtitle})";
 			PageProperties.Title = ev.Name;
 			PageProperties.Subtitle = subtitle;
 			PageProperties.CanonicalUrl = entryLinkFactory.GetFullEntryUrl(EntryType.ReleaseEvent, ev.Id, ev.UrlSlug);
@@ -328,7 +328,7 @@ namespace VocaDb.Web.Controllers
 				subtitle = Translate.ReleaseEventCategoryNames[series.Category];
 			}
 
-			PageProperties.PageTitle = string.Format("{0} ({1})", series.Name, subtitle);
+			PageProperties.PageTitle = $"{series.Name} ({subtitle})";
 			PageProperties.Title = series.Name;
 			PageProperties.Subtitle = subtitle;
 			PageProperties.OpenGraph.Image = Url.ImageThumb(series, ImageSize.Original);

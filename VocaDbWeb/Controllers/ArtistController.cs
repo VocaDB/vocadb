@@ -139,11 +139,11 @@ namespace VocaDb.Web.Controllers
 			var prop = PageProperties;
 			prop.GlobalSearchType = EntryType.Artist;
 			prop.Title = model.Name;
-			prop.Subtitle = string.Format("({0})", Translate.ArtistTypeName(model.ArtistType));
+			prop.Subtitle = $"({Translate.ArtistTypeName(model.ArtistType)})";
 			prop.Description = new ArtistDescriptionGenerator().GenerateDescription(model, markdownParser.GetPlainText(model.Description.EnglishOrOriginal), Translate.ArtistTypeNames);
 			prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new { id }));
 			prop.OpenGraph.Image = Url.ImageThumb(model, Model.Domain.Images.ImageSize.Original, fullUrl: true);
-			prop.OpenGraph.Title = hasDescription ? string.Format("{0} ({1})", model.Name, Translate.ArtistTypeName(model.ArtistType)) : model.Name;
+			prop.OpenGraph.Title = hasDescription ? $"{model.Name} ({Translate.ArtistTypeName(model.ArtistType)})" : model.Name;
 			prop.OpenGraph.ShowTwitterCard = true;
 
 			return View(model);

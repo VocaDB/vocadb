@@ -49,7 +49,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public override string ToString()
 		{
-			return string.Format("name '{0}' for {1}", Value, Artist);
+			return $"name '{Value}' for {Artist}";
 		}
 	}
 }

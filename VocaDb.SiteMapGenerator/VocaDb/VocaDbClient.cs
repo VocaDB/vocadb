@@ -55,31 +55,31 @@ namespace VocaDb.SiteMapGenerator.VocaDb
 		public async Task<int[]> GetAlbums()
 		{
 			log.Info("Getting albums");
-			return await GetEntries<int[]>(string.Format("{0}api/albums/ids", apiRoot));
+			return await GetEntries<int[]>($"{apiRoot}api/albums/ids");
 		}
 
 		public async Task<int[]> GetArtists()
 		{
 			log.Info("Getting artists");
-			return await GetEntries<int[]>(string.Format("{0}api/artists/ids", apiRoot));
+			return await GetEntries<int[]>($"{apiRoot}api/artists/ids");
 		}
 
 		public async Task<PartialFindResult<EntryBaseContract>> GetEvents()
 		{
 			log.Info("Getting artists");
-			return await GetEntries<PartialFindResult<EntryBaseContract>>(string.Format("{0}api/releaseEvents?maxResults=100000", apiRoot));
+			return await GetEntries<PartialFindResult<EntryBaseContract>>($"{apiRoot}api/releaseEvents?maxResults=100000");
 		}
 
 		public async Task<int[]> GetSongs()
 		{
 			log.Info("Getting songs");
-			return await GetEntries<int[]>(string.Format("{0}api/songs/ids", apiRoot));
+			return await GetEntries<int[]>($"{apiRoot}api/songs/ids");
 		}
 
 		public async Task<PartialFindResult<EntryBaseContract>> GetTags()
 		{
 			log.Info("Getting tags");
-			return await GetEntries<PartialFindResult<EntryBaseContract>>(string.Format("{0}api/tags?maxResults=100000", apiRoot));
+			return await GetEntries<PartialFindResult<EntryBaseContract>>($"{apiRoot}api/tags?maxResults=100000");
 		}
 	}
 }

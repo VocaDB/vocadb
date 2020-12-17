@@ -25,7 +25,7 @@ namespace VocaDb.Model.Domain
 
 		public override string ToString()
 		{
-			return string.Format("{0}.{1}", EntryType, Id);
+			return $"{EntryType}.{Id}";
 		}
 
 		public bool Equals(GlobalEntryId other)

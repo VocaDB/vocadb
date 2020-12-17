@@ -14,7 +14,7 @@ namespace VocaDb.Tests.TestSupport
 	{
 		private string GetAuditLogMessage(string doingWhat, string who)
 		{
-			return string.Format("'{0}' {1}", who, doingWhat);
+			return $"'{who}' {doingWhat}";
 		}
 
 		public void AuditLog(string doingWhat, AgentLoginData who, AuditLogCategory category = AuditLogCategory.Unspecified)

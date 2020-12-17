@@ -95,8 +95,7 @@ namespace VocaDb.Model.Service.Queries
 				var tagUsageFactory = tagUsageFactoryFactory(entry, ctx.OfType<TTag>());
 
 				var tagNames = appliedTags.Select(t => t.DefaultName);
-				await ctx.AuditLogger.AuditLogAsync(string.Format("tagging {0} with {1}",
-					entryLinkFactory.CreateEntryLink(entry), string.Join(", ", tagNames)), user);
+				await ctx.AuditLogger.AuditLogAsync($"tagging {entryLinkFactory.CreateEntryLink(entry)} with {string.Join(", ", tagNames)}", user);
 
 				var addedTags = appliedTags.Except(entry.Tags.Tags).ToArray();
 
@@ -125,7 +124,7 @@ namespace VocaDb.Model.Service.Queries
 		{
 			return repository.HandleTransaction(ctx =>
 			{
-				ctx.AuditLogger.SysLog(string.Format("deleting tag usage with Id {0}", tagUsageId));
+				ctx.AuditLogger.SysLog($"deleting tag usage with Id {tagUsageId}");
 
 				var tagUsage = ctx.Load<TUsage>(tagUsageId);
 
@@ -135,7 +134,7 @@ namespace VocaDb.Model.Service.Queries
 				ctx.Delete(tagUsage);
 				ctx.Update(tagUsage.Tag);
 
-				ctx.AuditLogger.AuditLog(string.Format("removed {0}", tagUsage));
+				ctx.AuditLogger.AuditLog($"removed {tagUsage}");
 				ctx.AuditLogger.SysLog("Usage count for " + tagUsage.Tag + " is now " + tagUsage.Tag.UsageCount);
 
 				return tagUsage.EntryBase.Id;

@@ -100,7 +100,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public override string ToString()
 		{
-			return string.Format("{0} in {1}", Song, List);
+			return $"{Song} in {List}";
 		}
 	}
 }

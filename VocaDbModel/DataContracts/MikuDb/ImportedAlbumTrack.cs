@@ -45,7 +45,7 @@ namespace VocaDb.Model.DataContracts.MikuDb
 
 		public override string ToString()
 		{
-			return string.Format("Imported track {0} ({1})", Title, ArtistString);
+			return $"Imported track {Title} ({ArtistString})";
 		}
 	}
 }

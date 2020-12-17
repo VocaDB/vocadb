@@ -42,7 +42,7 @@ namespace VocaDb.Model.Domain
 
 		public override string ToString()
 		{
-			return string.Format("Thumbnail for {0}.", Entry);
+			return $"Thumbnail for {Entry}.";
 		}
 
 		public int Version => Entry.Version;

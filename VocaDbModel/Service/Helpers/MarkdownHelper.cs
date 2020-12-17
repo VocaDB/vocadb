@@ -6,7 +6,7 @@ namespace VocaDb.Model.Service.Helpers
 	{
 		public static string CreateMarkdownLink(string url, string name)
 		{
-			return string.Format("[{0}]({1})", name, url);
+			return $"[{name}]({url})";
 		}
 	}
 }

@@ -52,7 +52,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public override string ToString()
 		{
-			return string.Format("name '{0}' for {1}", Value, Song);
+			return $"name '{Value}' for {Song}";
 		}
 	}
 }

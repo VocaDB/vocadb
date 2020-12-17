@@ -40,7 +40,7 @@ namespace VocaDb.Web.Controllers
 
 			if (contract.FeaturedCategory == SongListFeaturedCategory.Nothing)
 			{
-				PageProperties.PageTitle = string.Format("{0} - {1}", ViewRes.SongList.DetailsStrings.SongList, contract.Name);
+				PageProperties.PageTitle = $"{ViewRes.SongList.DetailsStrings.SongList} - {contract.Name}";
 				PageProperties.Title = contract.Name;
 				PageProperties.Subtitle = ViewRes.SongList.DetailsStrings.SongList;
 			}
@@ -48,7 +48,7 @@ namespace VocaDb.Web.Controllers
 			{
 				var categoryName = Translate.SongListFeaturedCategoryNames[contract.FeaturedCategory];
 
-				PageProperties.PageTitle = string.Format("{0} - {1}", categoryName, contract.Name);
+				PageProperties.PageTitle = $"{categoryName} - {contract.Name}";
 				PageProperties.Title = contract.Name;
 				PageProperties.Subtitle = categoryName;
 			}

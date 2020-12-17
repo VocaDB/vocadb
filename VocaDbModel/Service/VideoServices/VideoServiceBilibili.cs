@@ -51,7 +51,7 @@ namespace VocaDb.Model.Service.VideoServices
 			catch (Exception x) when (x is HttpRequestException || x is WebException || x is JsonSerializationException || x is IOException)
 			{
 				log.Warn(x, "Unable to load Bilibili URL {0}", url);
-				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(string.Format("Unable to load Bilibili URL: {0}", x.Message), x));
+				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException($"Unable to load Bilibili URL: {x.Message}", x));
 			}
 
 			var authorId = response.Data.Owner.Mid.ToString();
@@ -87,9 +87,9 @@ namespace VocaDb.Model.Service.VideoServices
 		public override IEnumerable<string> GetUserProfileUrls(string authorId)
 		{
 			return new[] {
-				string.Format("https://space.bilibili.com/{0}", authorId),
-				string.Format("http://space.bilibili.com/{0}", authorId),
-				string.Format("http://space.bilibili.com/{0}/#!/index", authorId)
+				$"https://space.bilibili.com/{authorId}",
+				$"http://space.bilibili.com/{authorId}",
+				$"http://space.bilibili.com/{authorId}/#!/index"
 			};
 		}
 

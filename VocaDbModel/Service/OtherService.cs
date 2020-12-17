@@ -150,7 +150,7 @@ namespace VocaDb.Model.Service
 		private ReleaseEventForApiContract[] GetRecentEvents(ISession session)
 		{
 			var count = 3;
-			var cacheKey = string.Format("OtherService.RecentEvents.{0}", LanguagePreference);
+			var cacheKey = $"OtherService.RecentEvents.{LanguagePreference}";
 			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(24), () =>
 			{
 				var minDate = DateTime.Now - TimeSpan.FromDays(2);

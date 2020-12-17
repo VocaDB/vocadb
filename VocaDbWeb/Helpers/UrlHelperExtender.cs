@@ -22,7 +22,7 @@ namespace VocaDb.Web.Helpers
 			switch (entryType)
 			{
 				case EntryType.DiscussionTopic:
-					return urlHelper.Action("Index", "Discussion", new { clientPath = string.Format("topics/{0}", id) });
+					return urlHelper.Action("Index", "Discussion", new { clientPath = $"topics/{id}" });
 
 				case EntryType.ReleaseEvent:
 					return urlHelper.Action("Details", "Event", new { id, slug = urlSlug });

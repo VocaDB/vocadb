@@ -148,7 +148,7 @@ namespace VocaDb.Web.Controllers
 			string titleAndArtist;
 			if (!string.IsNullOrEmpty(model.ArtistString))
 			{
-				titleAndArtist = string.Format("{0} - {1}", model.Name, model.ArtistString);
+				titleAndArtist = $"{model.Name} - {model.ArtistString}";
 			}
 			else
 			{
@@ -156,7 +156,7 @@ namespace VocaDb.Web.Controllers
 			}
 			prop.PageTitle = titleAndArtist;
 
-			prop.Subtitle = string.Format("{0} ({1})", model.ArtistString, Translate.SongTypeNames[model.SongType]);
+			prop.Subtitle = $"{model.ArtistString} ({Translate.SongTypeNames[model.SongType]})";
 
 			if (!string.IsNullOrEmpty(model.ThumbUrlMaxSize))
 			{
@@ -164,7 +164,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
-			prop.OpenGraph.Title = hasDescription ? string.Format("{0} ({1})", titleAndArtist, Translate.SongTypeNames[model.SongType]) : model.Name;
+			prop.OpenGraph.Title = hasDescription ? $"{titleAndArtist} ({Translate.SongTypeNames[model.SongType]})" : model.Name;
 			prop.OpenGraph.Type = OpenGraphTypes.Song;
 
 			return View(model);

@@ -63,7 +63,7 @@ namespace VocaDb.Model.Domain.PVs
 
 		public override string ToString()
 		{
-			return string.Format("PV '{0}' on {1} [{2}] for {3}", PVId, Service, Id, Entry);
+			return $"PV '{PVId}' on {Service} [{Id}] for {Entry}";
 		}
 	}
 }

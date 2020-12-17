@@ -77,7 +77,7 @@ namespace VocaDb.Model.Domain.Versioning
 
 		public override string ToString()
 		{
-			return string.Format("archived version {0} for {1}", Version, EntryBase);
+			return $"archived version {Version} for {EntryBase}";
 		}
 	}
 }

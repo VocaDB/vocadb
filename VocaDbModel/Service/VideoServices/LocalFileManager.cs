@@ -96,7 +96,7 @@ namespace VocaDb.Model.Service.VideoServices
 				if (!Extensions.Contains(Path.GetExtension(oldFull)))
 					throw new InvalidOperationException("Invalid extension");
 
-				var newId = string.Format("{0}-S{1}-{2}", pv.Author, songId, pv.PVId);
+				var newId = $"{pv.Author}-S{songId}-{pv.PVId}";
 				var newFull = GetFilesystemPath(newId);
 				pv.PVId = newId;
 

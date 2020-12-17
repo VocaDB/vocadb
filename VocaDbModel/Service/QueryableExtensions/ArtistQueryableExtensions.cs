@@ -23,8 +23,8 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			if (textQuery.IsExact)
 			{
 				return query.Where(m => m.Value == canonizedName
-					|| m.Value == string.Format("{0}P", canonizedName)
-					|| m.Value == string.Format("{0}-P", canonizedName));
+					|| m.Value == $"{canonizedName}P"
+					|| m.Value == $"{canonizedName}-P");
 			}
 			else
 			{
@@ -139,8 +139,8 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			{
 				return query.Where(m => m.Names.Names.Any(n =>
 					n.Value == canonizedName
-					|| n.Value == string.Format("{0}P", canonizedName)
-					|| n.Value == string.Format("{0}-P", canonizedName)));
+					|| n.Value == $"{canonizedName}P"
+					|| n.Value == $"{canonizedName}-P"));
 			}
 			else
 			{

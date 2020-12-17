@@ -52,7 +52,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public override string ToString()
 		{
-			return string.Format("Vote for {0} by {1}", UsageBase, User);
+			return $"Vote for {UsageBase} by {User}";
 		}
 	}
 }

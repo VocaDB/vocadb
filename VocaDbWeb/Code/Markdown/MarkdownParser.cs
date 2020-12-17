@@ -51,7 +51,7 @@ namespace VocaDb.Web.Code.Markdown
 			if (string.IsNullOrEmpty(markdownText))
 				return markdownText;
 
-			var key = string.Format("MarkdownParser.Html_{0}", markdownText);
+			var key = $"MarkdownParser.Html_{markdownText}";
 			return cache.GetOrInsert(key, CachePolicy.Never(), () => TranformMarkdown(markdownText));
 		}
 

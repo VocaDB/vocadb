@@ -99,6 +99,6 @@ namespace VocaDb.Model.Domain.Users
 			target.UpdateRatingTotals();
 		}
 
-		public override string ToString() => string.Format("{0} for {1}", Album, User);
+		public override string ToString() => $"{Album} for {User}";
 	}
 }

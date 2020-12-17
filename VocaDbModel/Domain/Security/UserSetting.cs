@@ -78,7 +78,7 @@ namespace VocaDb.Model.Domain.Security
 
 		protected virtual TimeSpan CookieExpires => TimeSpan.FromHours(24);
 
-		protected virtual string CookieName => string.Format("UserSettings.{0}", SettingName);
+		protected virtual string CookieName => $"UserSettings.{SettingName}";
 
 		protected virtual T Default => default(T);
 
@@ -94,7 +94,7 @@ namespace VocaDb.Model.Domain.Security
 
 		protected virtual string RequestParamName => null;
 
-		private string RequestItemName => string.Format("UserSettings.{0}", SettingName);
+		private string RequestItemName => $"UserSettings.{SettingName}";
 
 		private T RequestValue
 		{
@@ -134,7 +134,7 @@ namespace VocaDb.Model.Domain.Security
 
 		public override string ToString()
 		{
-			return string.Format("User setting {0}: {1}", SettingName, Value);
+			return $"User setting {SettingName}: {Value}";
 		}
 
 		protected abstract bool TryParseValue(string str, out T val);

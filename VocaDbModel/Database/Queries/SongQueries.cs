@@ -129,7 +129,7 @@ namespace VocaDb.Model.Database.Queries
 
 		private Song[] GetSongSuggestions(IDatabaseContext<Song> ctx, Song song)
 		{
-			var cacheKey = string.Format("GetSongSuggestions.{0}", song.Id);
+			var cacheKey = $"GetSongSuggestions.{song.Id}";
 
 			var songIds = cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(24), () =>
 			{
@@ -147,7 +147,7 @@ namespace VocaDb.Model.Database.Queries
 
 		private SongListBaseContract[] GetSongPools(IDatabaseContext<Song> ctx, int songId)
 		{
-			var cacheKey = string.Format("GetSongPools.{0}", songId);
+			var cacheKey = $"GetSongPools.{songId}";
 			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(1), () =>
 			{
 				var lists = ctx
@@ -255,8 +255,7 @@ namespace VocaDb.Model.Database.Queries
 
 			if (existing != null)
 			{
-				throw new VideoParseException(string.Format("Song '{0}' already contains this PV",
-					existing.Song.TranslatedName[PermissionContext.LanguagePreference]));
+				throw new VideoParseException($"Song '{existing.Song.TranslatedName[PermissionContext.LanguagePreference]}' already contains this PV");
 			}
 
 			return pvResult;
@@ -331,7 +330,7 @@ namespace VocaDb.Model.Database.Queries
 				var pvResults = (await ParsePVs(ctx.OfType<PVForSong>(), contract.PVUrls)).Where(p => p != null).ToArray() ?? new VideoUrlParseResult[0];
 				var reprintPvResult = await ParsePV(ctx.OfType<PVForSong>(), contract.ReprintPVUrl);
 
-				ctx.AuditLogger.SysLog(string.Format("creating a new song with name '{0}'", contract.Names.First().Value));
+				ctx.AuditLogger.SysLog($"creating a new song with name '{contract.Names.First().Value}'");
 
 				var diff = new SongDiff();
 				diff.Names.Set();
@@ -404,7 +403,7 @@ namespace VocaDb.Model.Database.Queries
 				var archived = await ArchiveAsync(ctx, song, diff, SongArchiveReason.Created, contract.UpdateNotes ?? string.Empty);
 				await ctx.UpdateAsync(song);
 
-				var logStr = string.Format("created song {0} of type {1} ({2})", entryLinkFactory.CreateEntryLink(song), song.SongType, diff.ChangedFieldsString)
+				var logStr = $"created song {entryLinkFactory.CreateEntryLink(song)} of type {song.SongType} ({diff.ChangedFieldsString})"
 					+ (!string.IsNullOrEmpty(contract.UpdateNotes) ? " " + HttpUtility.HtmlEncode(contract.UpdateNotes) : string.Empty)
 					.Truncate(400);
 
@@ -875,8 +874,7 @@ namespace VocaDb.Model.Database.Queries
 				var source = ctx.Load(sourceId);
 				var target = ctx.Load(targetId);
 
-				ctx.AuditLogger.AuditLog(string.Format("Merging {0} to {1}",
-					entryLinkFactory.CreateEntryLink(source), entryLinkFactory.CreateEntryLink(target)));
+				ctx.AuditLogger.AuditLog($"Merging {entryLinkFactory.CreateEntryLink(source)} to {entryLinkFactory.CreateEntryLink(target)}");
 
 				// Names
 				foreach (var n in source.Names.Names.Where(n => !target.HasName(n)))
@@ -964,8 +962,8 @@ namespace VocaDb.Model.Database.Queries
 				target.UpdateArtistString();
 				target.UpdateNicoId();
 
-				Archive(ctx, source, SongArchiveReason.Deleted, string.Format("Merged to {0}", target));
-				Archive(ctx, target, SongArchiveReason.Merged, string.Format("Merged from {0}", source));
+				Archive(ctx, source, SongArchiveReason.Deleted, $"Merged to {target}");
+				Archive(ctx, target, SongArchiveReason.Merged, $"Merged from {source}");
 
 				ctx.Update(source);
 				ctx.Update(target);
@@ -1122,8 +1120,8 @@ namespace VocaDb.Model.Database.Queries
 
 				song.UpdateFavoritedTimes();
 
-				Archive(session, song, SongArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
-				AuditLog(string.Format("reverted {0} to revision {1}", entryLinkFactory.CreateEntryLink(song), archivedVersion.Version), session);
+				Archive(session, song, SongArchiveReason.Reverted, $"Reverted to version {archivedVersion.Version}");
+				AuditLog($"reverted {entryLinkFactory.CreateEntryLink(song)} to revision {archivedVersion.Version}", session);
 
 				return new EntryRevertedContract(song, warnings);
 			});
@@ -1163,7 +1161,7 @@ namespace VocaDb.Model.Database.Queries
 
 				var diff = new SongDiff(DoSnapshot(song.GetLatestVersion(), ctx.OfType<User>().GetLoggedUser(PermissionContext)));
 
-				ctx.AuditLogger.SysLog(string.Format("updating properties for {0}", song));
+				ctx.AuditLogger.SysLog($"updating properties for {song}");
 
 				var oldPvCount = song.PVs.OfType(PVType.Original).Count();
 				diff.Notes.Set(song.Notes.CopyFrom(properties.Notes));
@@ -1242,7 +1240,7 @@ namespace VocaDb.Model.Database.Queries
 				if (lyricsDiff.Changed)
 					diff.Lyrics.Set();
 
-				var logStr = string.Format("updated properties for song {0} ({1})", entryLinkFactory.CreateEntryLink(song), diff.ChangedFieldsString)
+				var logStr = $"updated properties for song {entryLinkFactory.CreateEntryLink(song)} ({diff.ChangedFieldsString})"
 					+ (properties.UpdateNotes != string.Empty ? " " + HttpUtility.HtmlEncode(properties.UpdateNotes) : string.Empty)
 					.Truncate(400);
 
@@ -1287,7 +1285,7 @@ namespace VocaDb.Model.Database.Queries
 				song.PersonalDescriptionAuthorId = data.PersonalDescriptionAuthor?.Id;
 
 				ctx.Update(song);
-				ctx.AuditLogger.AuditLog(string.Format("updated personal description for {0}", entryLinkFactory.CreateEntryLink(song)));
+				ctx.AuditLogger.AuditLog($"updated personal description for {entryLinkFactory.CreateEntryLink(song)}");
 			});
 		}
 
@@ -1323,7 +1321,7 @@ namespace VocaDb.Model.Database.Queries
 
 				if (pvDiff.Changed)
 				{
-					var logStr = string.Format("updated PVs for song {0}", entryLinkFactory.CreateEntryLink(song)).Truncate(400);
+					var logStr = $"updated PVs for song {entryLinkFactory.CreateEntryLink(song)}".Truncate(400);
 
 					await ArchiveAsync(ctx, song, diff, SongArchiveReason.PropertiesUpdated, string.Empty);
 					await ctx.UpdateAsync(song);

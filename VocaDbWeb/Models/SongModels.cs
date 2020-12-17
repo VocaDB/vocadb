@@ -105,9 +105,9 @@ namespace VocaDb.Web.Models
 				var nicoPV = VideoServiceHelper.PrimaryPV(pvs, PVService.NicoNicoDouga);
 				var query = HttpUtility.UrlEncode((nicoPV != null && !string.IsNullOrEmpty(nicoPV.Name))
 					? nicoPV.Name
-					: string.Format("{0} {1}", ArtistString, Name));
+					: $"{ArtistString} {Name}");
 
-				WebLinks.Add(new WebLinkContract(string.Format("http://www.youtube.com/results?search_query={0}", query),
+				WebLinks.Add(new WebLinkContract($"http://www.youtube.com/results?search_query={query}",
 					ViewRes.Song.DetailsStrings.SearchYoutube, WebLinkCategory.Other, disabled: false));
 			}
 
