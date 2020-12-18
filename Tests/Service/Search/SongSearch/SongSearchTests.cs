@@ -19,7 +19,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 	public class SongSearchTests
 	{
 		private Model.Service.Search.SongSearch.SongSearch songSearch;
-		private readonly SongQueryParams queryParams = new SongQueryParams { SortRule = SongSortRule.Name };
+		private readonly SongQueryParams queryParams = new() { SortRule = SongSortRule.Name };
 
 		[TestInitialize]
 		public void SetUp()

@@ -8,7 +8,7 @@ namespace VocaDb.Model.Domain.Venues
 {
 	public class VenueReport : GenericEntryReport<Venue, VenueReportType>
 	{
-		public static readonly HashSet<VenueReportType> ReportTypesWithRequiredNotes = new HashSet<VenueReportType> { VenueReportType.InvalidInfo, VenueReportType.Other };
+		public static readonly HashSet<VenueReportType> ReportTypesWithRequiredNotes = new() { VenueReportType.InvalidInfo, VenueReportType.Other };
 
 		public VenueReport() { }
 

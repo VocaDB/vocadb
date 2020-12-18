@@ -46,7 +46,8 @@ namespace VocaDb.Model.Helpers
 			return (cat != ArtistCategories.Nothing && cat != ArtistCategories.Label);
 		}
 
-		public static readonly Dictionary<ArtistType, ArtistCategories> CategoriesForTypes = new Dictionary<ArtistType, ArtistCategories> {
+		public static readonly Dictionary<ArtistType, ArtistCategories> CategoriesForTypes = new()
+		{
 			{ ArtistType.Animator, ArtistCategories.Animator },
 			{ ArtistType.Character, ArtistCategories.Subject },
 			{ ArtistType.Circle, ArtistCategories.Circle },

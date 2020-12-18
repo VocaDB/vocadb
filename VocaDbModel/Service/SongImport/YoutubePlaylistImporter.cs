@@ -17,7 +17,7 @@ namespace VocaDb.Model.Service.SongImport
 	public class YoutubePlaylistImporter : ISongListImporter
 	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private static readonly Regex regex = new Regex(@"www\.youtube\.com/playlist\?list=([\w\-_]+)");
+		private static readonly Regex regex = new(@"www\.youtube\.com/playlist\?list=([\w\-_]+)");
 
 		private const string PlaylistsFormat =
 			"https://www.googleapis.com/youtube/v3/playlists?part=snippet&key={0}&id={1}";

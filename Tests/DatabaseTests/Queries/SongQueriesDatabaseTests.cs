@@ -24,7 +24,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 	[TestClass]
 	public class SongQueriesDatabaseTests
 	{
-		private readonly DatabaseTestContext<ISongRepository> context = new DatabaseTestContext<ISongRepository>();
+		private readonly DatabaseTestContext<ISongRepository> context = new();
 		private readonly FakePermissionContext userContext;
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 

@@ -41,20 +41,18 @@ namespace VocaDb.Model.Service.VideoServices
 			});
 
 		public static readonly VideoService Vimeo =
-			new VideoService(PVService.Vimeo, new VimeoParser(), new[] {
+			new(PVService.Vimeo, new VimeoParser(), new[] {
 				new RegexLinkMatcher("vimeo.com/{0}", @"vimeo.com/(\d+)"),
 			});
 
 		public static readonly VideoService Creofuga =
-			new VideoService(PVService.Creofuga, new CreofugaParser(), new[] {
+			new(PVService.Creofuga, new CreofugaParser(), new[] {
 				new RegexLinkMatcher("creofuga.net/audios/{0}", @"creofuga.net/audios/(\d+)"),
 			});
 
-		public static readonly VideoServiceFile File =
-			new VideoServiceFile();
+		public static readonly VideoServiceFile File = new();
 
-		public static readonly VideoServiceLocalFile LocalFile =
-			new VideoServiceLocalFile();
+		public static readonly VideoServiceLocalFile LocalFile = new();
 
 		protected readonly RegexLinkMatcher[] linkMatchers;
 		private readonly IVideoServiceParser parser;

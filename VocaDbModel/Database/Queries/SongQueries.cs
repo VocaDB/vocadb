@@ -61,7 +61,7 @@ namespace VocaDb.Model.Database.Queries
 		private readonly ILanguageDetector languageDetector;
 		private readonly IUserMessageMailer mailer;
 		private readonly IPVParser pvParser;
-		private readonly TagMapper tagMapper = new TagMapper();
+		private readonly TagMapper tagMapper = new();
 		private readonly IUserIconFactory userIconFactory;
 
 		private void AddSongHit(IDatabaseContext<Song> session, Song song, string hostname)

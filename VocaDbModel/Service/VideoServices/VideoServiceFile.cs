@@ -18,7 +18,7 @@ namespace VocaDb.Model.Service.VideoServices
 	public class VideoServiceFile : VideoService
 	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private static readonly HashSet<string> mimeTypes = new HashSet<string>(new[] { "audio/mpeg" }, StringComparer.InvariantCultureIgnoreCase);
+		private static readonly HashSet<string> mimeTypes = new(new[] { "audio/mpeg" }, StringComparer.InvariantCultureIgnoreCase);
 
 		public VideoServiceFile()
 			: base(PVService.File, null, new[] {

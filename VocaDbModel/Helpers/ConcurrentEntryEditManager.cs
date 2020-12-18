@@ -15,9 +15,9 @@ namespace VocaDb.Model.Helpers
 	public class ConcurrentEntryEditManager
 	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private static readonly ConcurrentEntryEditManager staticInstance = new ConcurrentEntryEditManager();
+		private static readonly ConcurrentEntryEditManager staticInstance = new();
 
-		public static readonly EntryEditData Nothing = new EntryEditData();
+		public static readonly EntryEditData Nothing = new();
 
 		public class EntryEditData
 		{
@@ -51,7 +51,7 @@ namespace VocaDb.Model.Helpers
 			return staticInstance.CheckConcurrentEditsInst(entry, user);
 		}
 
-		private readonly Dictionary<EntryRef, EntryEditData> editors = new Dictionary<EntryRef, EntryEditData>();
+		private readonly Dictionary<EntryRef, EntryEditData> editors = new();
 
 		private void ClearExpiredUsages()
 		{

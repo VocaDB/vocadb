@@ -15,7 +15,7 @@ namespace VocaDb.Tests.DatabaseTests.QueryableExtensions
 	[TestClass]
 	public class TagQueryableExtensionsDatabaseTests
 	{
-		private readonly DatabaseTestContext<IDatabaseContext> context = new DatabaseTestContext<IDatabaseContext>();
+		private readonly DatabaseTestContext<IDatabaseContext> context = new();
 
 		private Tag[] WhereHasName(params string[] names)
 		{

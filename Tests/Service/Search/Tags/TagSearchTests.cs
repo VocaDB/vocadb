@@ -19,7 +19,7 @@ namespace VocaDb.Tests.Service.Search.Tags
 	[TestClass]
 	public class TagSearchTests
 	{
-		private readonly FakeTagRepository repository = new FakeTagRepository();
+		private readonly FakeTagRepository repository = new();
 
 		private PartialFindResult<Tag> CallFind(TagQueryParams queryParams, bool onlyMinimalFields)
 		{

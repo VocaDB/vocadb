@@ -32,7 +32,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 	{
 		private Album album;
 		private ReleaseEvent existingEvent;
-		private readonly FakeUserMessageMailer mailer = new FakeUserMessageMailer();
+		private readonly FakeUserMessageMailer mailer = new();
 		private FakePermissionContext permissionContext;
 		private FakeEventRepository repository;
 		private EventQueries queries;

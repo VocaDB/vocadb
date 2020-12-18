@@ -49,12 +49,12 @@ namespace VocaDb.Model.Domain.Tags
 		private ISet<EventTagUsage> eventTagUsages = new HashSet<EventTagUsage>();
 		private ISet<EventSeriesTagUsage> eventSeriesTagUsages = new HashSet<EventSeriesTagUsage>();
 		private IList<TagMapping> mappings = new List<TagMapping>();
-		private NameManager<TagName> names = new NameManager<TagName>();
+		private NameManager<TagName> names = new();
 		private ISet<RelatedTag> relatedTags = new HashSet<RelatedTag>();
 		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
 		private ISet<SongListTagUsage> songListTagUsages = new HashSet<SongListTagUsage>();
 		private IList<TagForUser> tagsForUsers = new List<TagForUser>();
-		private WebLinkManager<TagWebLink> webLinks = new WebLinkManager<TagWebLink>();
+		private WebLinkManager<TagWebLink> webLinks = new();
 
 		public Tag()
 		{

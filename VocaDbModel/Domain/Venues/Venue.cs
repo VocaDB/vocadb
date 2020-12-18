@@ -20,11 +20,11 @@ namespace VocaDb.Model.Domain.Venues
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<VenueName> IEntryWithNames<VenueName>.Names => Names;
 
-		private ArchivedVersionManager<ArchivedVenueVersion, VenueEditableFields> archivedVersions = new ArchivedVersionManager<ArchivedVenueVersion, VenueEditableFields>();
+		private ArchivedVersionManager<ArchivedVenueVersion, VenueEditableFields> archivedVersions = new();
 		private OptionalGeoPoint coordinates;
 		private IList<ReleaseEvent> events = new List<ReleaseEvent>();
-		private NameManager<VenueName> names = new NameManager<VenueName>();
-		private WebLinkManager<VenueWebLink> webLinks = new WebLinkManager<VenueWebLink>();
+		private NameManager<VenueName> names = new();
+		private WebLinkManager<VenueWebLink> webLinks = new();
 
 		public Venue() { }
 

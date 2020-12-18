@@ -16,8 +16,8 @@ namespace VocaDb.Tests.Domain
 	[TestClass]
 	public class WebLinkTests
 	{
-		private readonly WebLinkContract webLinkContract = new WebLinkContract("test", "http://www.test.com", WebLinkCategory.Commercial, disabled: false) { Id = 1 };
-		private readonly WebLinkContract webLinkContract2 = new WebLinkContract("test2", "http://www.test2.com", WebLinkCategory.Official, disabled: false) { Id = 2 };
+		private readonly WebLinkContract webLinkContract = new("test", "http://www.test.com", WebLinkCategory.Commercial, disabled: false) { Id = 1 };
+		private readonly WebLinkContract webLinkContract2 = new("test2", "http://www.test2.com", WebLinkCategory.Official, disabled: false) { Id = 2 };
 		private IWebLinkFactory<WebLink> webLinkFactory;
 
 		[TestInitialize]

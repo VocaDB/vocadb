@@ -18,7 +18,7 @@ namespace VocaDb.Model.Service.Security
 	public class HostCollection : IHostCollection
 	{
 		private HashSet<string> ips;
-		private readonly ReaderWriterLockSlim readerWriterLock = new ReaderWriterLockSlim();
+		private readonly ReaderWriterLockSlim readerWriterLock = new();
 
 		public HostCollection()
 		{

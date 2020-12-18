@@ -11,7 +11,7 @@ namespace VocaDb.Tests.Web.Code
 	[TestClass]
 	public class MarkdownParserTests
 	{
-		private readonly MarkdownParser parser = new MarkdownParser(new FakeObjectCache());
+		private readonly MarkdownParser parser = new(new FakeObjectCache());
 
 		private string GetHtml(string markdownText)
 		{

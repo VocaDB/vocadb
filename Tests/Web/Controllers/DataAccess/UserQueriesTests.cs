@@ -43,7 +43,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		private PasswordResetRequest request;
 		private FakePermissionContext permissionContext;
 		private FakeUserRepository repository;
-		private readonly IPRuleManager ipRuleManager = new IPRuleManager();
+		private readonly IPRuleManager ipRuleManager = new();
 		private FakeStopForumSpamClient stopForumSpamClient;
 		private User userWithEmail;
 		private User userWithoutEmail;

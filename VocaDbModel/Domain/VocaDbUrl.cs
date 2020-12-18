@@ -15,8 +15,8 @@ namespace VocaDb.Model.Domain
 	[DebuggerDisplay("{DebugString}")]
 	public class VocaDbUrl : IEquatable<VocaDbUrl>
 	{
-		public static VocaDbUrl Empty { get; } = new VocaDbUrl(string.Empty, UrlDomain.Main, UriKind.Absolute);
-		public static VocaDbUrl External(string url) => new VocaDbUrl(url, UrlDomain.External, UriKind.Absolute);
+		public static VocaDbUrl Empty { get; } = new(string.Empty, UrlDomain.Main, UriKind.Absolute);
+		public static VocaDbUrl External(string url) => new(url, UrlDomain.External, UriKind.Absolute);
 
 		public VocaDbUrl(string url, UrlDomain domain, UriKind kind)
 		{

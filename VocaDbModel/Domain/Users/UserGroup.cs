@@ -11,11 +11,11 @@ namespace VocaDb.Model.Domain.Users
 		/// <summary>
 		/// User group with no permissions.
 		/// </summary>
-		public static readonly UserGroup Nothing = new UserGroup(UserGroupId.Nothing);
+		public static readonly UserGroup Nothing = new(UserGroupId.Nothing);
 
-		private static readonly UserGroup limited = new UserGroup(UserGroupId.Limited, PermissionToken.EditProfile);
+		private static readonly UserGroup limited = new(UserGroupId.Limited, PermissionToken.EditProfile);
 
-		private static readonly UserGroup regular = new UserGroup(UserGroupId.Regular,
+		private static readonly UserGroup regular = new(UserGroupId.Regular,
 			limited,
 			PermissionToken.CreateComments,
 			PermissionToken.ManageDatabase,
@@ -24,7 +24,7 @@ namespace VocaDb.Model.Domain.Users
 			PermissionToken.ManageEventSeries
 		);
 
-		private static readonly UserGroup trusted = new UserGroup(UserGroupId.Trusted,
+		private static readonly UserGroup trusted = new(UserGroupId.Trusted,
 			regular,
 			PermissionToken.AddRawFileMedia,
 			PermissionToken.ApproveEntries,
@@ -36,7 +36,7 @@ namespace VocaDb.Model.Domain.Users
 			PermissionToken.RemoveTagUsages
 		);
 
-		private static readonly UserGroup mod = new UserGroup(UserGroupId.Moderator,
+		private static readonly UserGroup mod = new(UserGroupId.Moderator,
 			trusted,
 			PermissionToken.AccessManageMenu,
 			PermissionToken.ApplyAnyTag,
@@ -58,7 +58,7 @@ namespace VocaDb.Model.Domain.Users
 			PermissionToken.UploadMedia
 		);
 
-		private static readonly UserGroup admin = new UserGroup(UserGroupId.Admin,
+		private static readonly UserGroup admin = new(UserGroupId.Admin,
 			mod, PermissionToken.Admin);
 
 		private static readonly Dictionary<UserGroupId, UserGroup> groups = new[] {

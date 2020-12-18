@@ -14,7 +14,7 @@ namespace VocaDb.Model.Service
 	/// </summary>
 	public class EntryUrlParser : IEntryUrlParser
 	{
-		private readonly Dictionary<string, EntryType> entryTypeNames = new Dictionary<string, EntryType>(StringComparer.InvariantCultureIgnoreCase) {
+		private readonly Dictionary<string, EntryType> entryTypeNames = new(StringComparer.InvariantCultureIgnoreCase) {
 			{ "Al", EntryType.Album },
 			{ "Album/Details", EntryType.Album },
 			{ "Ar", EntryType.Artist },

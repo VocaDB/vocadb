@@ -18,7 +18,7 @@ namespace VocaDb.Model.Domain.Security
 			return left.Merge(right);
 		}
 
-		public static readonly PermissionCollection Empty = new PermissionCollection();
+		public static readonly PermissionCollection Empty = new();
 
 		private ISet<PermissionToken> permissions;
 

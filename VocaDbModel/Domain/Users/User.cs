@@ -40,7 +40,7 @@ namespace VocaDb.Model.Domain.Users
 		int IEntryBase.Version => 0;
 
 		private string accessKey;
-		private PermissionCollection additionalPermissions = new PermissionCollection();
+		private PermissionCollection additionalPermissions = new();
 		private IList<AlbumForUser> albums = new List<AlbumForUser>();
 		private IList<ArtistForUser> artists = new List<ArtistForUser>();
 		private IList<UserComment> comments = new List<UserComment>();

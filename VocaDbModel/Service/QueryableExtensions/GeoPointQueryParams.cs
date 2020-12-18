@@ -6,7 +6,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 	public class GeoPointQueryParams
 	{
-		public static readonly GeoPointQueryParams Empty = new GeoPointQueryParams();
+		public static readonly GeoPointQueryParams Empty = new();
 
 		public double? Latitude { get; set; }
 

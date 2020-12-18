@@ -28,8 +28,8 @@ namespace VocaDb.Tests.Web.Controllers
 	public class SongControllerTests
 	{
 		private readonly SongController controller;
-		private readonly FakePermissionContext permissionContext = new FakePermissionContext();
-		private readonly FakeSongRepository repository = new FakeSongRepository();
+		private readonly FakePermissionContext permissionContext = new();
+		private readonly FakeSongRepository repository = new();
 
 		public SongControllerTests()
 		{

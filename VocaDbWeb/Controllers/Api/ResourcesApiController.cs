@@ -35,7 +35,8 @@ namespace VocaDb.Web.Controllers.Api
 
 		private const int CacheDuration = Constants.SecondsInADay;
 
-		private readonly Dictionary<string, ResourceManager> allSets = new Dictionary<string, ResourceManager> {
+		private readonly Dictionary<string, ResourceManager> allSets = new()
+		{
 			{ "activityEntry_activityFeedEventNames", HelperRes.ActivityFeedHelperStrings.ResourceManager },
 			{ "album_albumEditableFieldNames", global::Resources.AlbumEditableFieldNames.ResourceManager },
 			{ "artist_artistEditableFieldNames", global::Resources.ArtistEditableFieldNames.ResourceManager },

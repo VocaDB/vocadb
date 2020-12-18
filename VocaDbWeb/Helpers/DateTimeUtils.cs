@@ -8,7 +8,7 @@ namespace VocaDb.Web.Helpers
 {
 	public static class DateTimeUtils
 	{
-		private static readonly Regex simpleTimeRegex = new Regex(@"(\d+)([dhm]?)");
+		private static readonly Regex simpleTimeRegex = new(@"(\d+)([dhm]?)");
 
 		public static string FormatFromSeconds(int seconds)
 		{

@@ -18,7 +18,7 @@ namespace VocaDb.Model.Service.AlbumImport
 	public class KarenTAlbumImporter : IAlbumImporter
 	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private static readonly RegexLinkMatcher matcher = new RegexLinkMatcher("https://karent.jp/album/{0}", @"http(?:s?)://karent.jp/album/(\d+)");
+		private static readonly RegexLinkMatcher matcher = new("https://karent.jp/album/{0}", @"http(?:s?)://karent.jp/album/(\d+)");
 		private readonly IPictureDownloader pictureDownloader;
 
 		public KarenTAlbumImporter(IPictureDownloader pictureDownloader)

@@ -23,7 +23,7 @@ namespace VocaDb.Tests.Service.Queries
 	{
 		private Song entry;
 		private Tag existingTag;
-		private readonly FakeUserRepository repository = new FakeUserRepository();
+		private readonly FakeUserRepository repository = new();
 		private TagUsageQueries queries;
 		private User user;
 

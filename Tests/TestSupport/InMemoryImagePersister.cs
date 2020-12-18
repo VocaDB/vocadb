@@ -16,7 +16,7 @@ namespace VocaDb.Tests.TestSupport
 	/// </summary>
 	public class InMemoryImagePersisterStore
 	{
-		private readonly Dictionary<string, byte[]> images = new Dictionary<string, byte[]>();
+		private readonly Dictionary<string, byte[]> images = new();
 
 		private ImageFormat GetImageFormat(IEntryImageInformation imageInfo) => imageInfo.Mime switch
 		{

@@ -42,7 +42,7 @@ namespace VocaDb.Tests.Domain.Songs
 		}
 
 		private Artist artist;
-		private readonly List<Artist> artists = new List<Artist>();
+		private readonly List<Artist> artists = new();
 		private Tag changedLyricsTag;
 		private EntryTypeTags entryTypeTags;
 		private Tag instrumentalTag;

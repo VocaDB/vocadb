@@ -42,12 +42,12 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		private IList<ArtistForEvent> artists = new List<ArtistForEvent>();
 		private IList<ReleaseEventComment> comments = new List<ReleaseEventComment>();
 		private string description;
-		private NameManager<EventName> names = new NameManager<EventName>();
-		private PVManager<PVForEvent> pvs = new PVManager<PVForEvent>();
+		private NameManager<EventName> names = new();
+		private PVManager<PVForEvent> pvs = new();
 		private ReleaseEventSeries series;
 		private string seriesSuffix;
 		private IList<Song> songs = new List<Song>();
-		private TagManager<EventTagUsage> tags = new TagManager<EventTagUsage>();
+		private TagManager<EventTagUsage> tags = new();
 		private IList<EventForUser> users = new List<EventForUser>();
 		private IList<ReleaseEventWebLink> webLinks = new List<ReleaseEventWebLink>();
 

@@ -28,7 +28,7 @@ namespace VocaDb.Model.Domain.Security
 		/// <summary>
 		/// Special token used to indicate the absence of permissions.
 		/// </summary>
-		public static readonly PermissionToken Nothing = new PermissionToken(Guid.Empty, "Nothing");
+		public static readonly PermissionToken Nothing = new(Guid.Empty, "Nothing");
 
 		public static readonly PermissionToken AccessManageMenu = New("b54de61d-9341-4435-8cb1-31e5e295d577", nameof(AccessManageMenu));
 

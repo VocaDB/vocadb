@@ -11,7 +11,8 @@ namespace VocaDb.Model.Helpers
 {
 	public static class MailAddressNormalizer
 	{
-		public static readonly Dictionary<string, char> hostsWithTags = new Dictionary<string, char> {
+		public static readonly Dictionary<string, char> hostsWithTags = new()
+		{
 			// Google only has two Gmail domains: https://en.wikipedia.org/wiki/List_of_Google_domains
 			{ "gmail.com", '+' },
 			{ "googlemail.com", '+' },

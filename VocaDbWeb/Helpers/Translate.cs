@@ -54,10 +54,10 @@ namespace VocaDb.Web.Helpers
 		}
 
 		public static readonly TranslateableEnum<ActivityEntrySortRule> ActivityEntrySortRuleNames =
-			new TranslateableEnum<ActivityEntrySortRule>(() => global::Resources.ActivityEntrySortRuleNames.ResourceManager);
+			new(() => global::Resources.ActivityEntrySortRuleNames.ResourceManager);
 
 		public static readonly TranslateableEnum<EntryType> ActivityEntryTargetTypeNames =
-			new TranslateableEnum<EntryType>(() => Resources.Domain.EntryTypeNames.ResourceManager, new[]
+			new(() => Resources.Domain.EntryTypeNames.ResourceManager, new[]
 			{
 				EntryType.Undefined,
 				EntryType.Album,
@@ -70,138 +70,138 @@ namespace VocaDb.Web.Helpers
 			});
 
 		public static readonly TranslateableEnum<PurchaseStatus> AlbumCollectionStatusNames =
-			new TranslateableEnum<PurchaseStatus>(() => global::Resources.AlbumCollectionStatusNames.ResourceManager);
+			new(() => global::Resources.AlbumCollectionStatusNames.ResourceManager);
 
 		public static readonly TranslateableEnum<AlbumEditableFields> AlbumEditableFieldNames =
-			new TranslateableEnum<AlbumEditableFields>(() => global::Resources.AlbumEditableFieldNames.ResourceManager);
+			new(() => global::Resources.AlbumEditableFieldNames.ResourceManager);
 
 		public static readonly TranslateableEnum<MediaType> AlbumMediaTypeNames =
-			new TranslateableEnum<MediaType>(() => global::Resources.AlbumMediaTypeNames.ResourceManager);
+			new(() => global::Resources.AlbumMediaTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<AlbumReportType> AlbumReportTypeNames =
-			new TranslateableEnum<AlbumReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
+			new(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<AlbumSortRule> AlbumSortRuleNames =
-			new TranslateableEnum<AlbumSortRule>(() => global::Resources.AlbumSortRuleNames.ResourceManager, new[] {
+			new(() => global::Resources.AlbumSortRuleNames.ResourceManager, new[] {
 				AlbumSortRule.Name, AlbumSortRule.AdditionDate, AlbumSortRule.ReleaseDate, AlbumSortRule.RatingAverage, AlbumSortRule.RatingTotal,
 				AlbumSortRule.CollectionCount
 			});
 
 		public static readonly TranslateableEnum<ArtistEditableFields> ArtistEditableFieldNames =
-			new TranslateableEnum<ArtistEditableFields>(() => global::Resources.ArtistEditableFieldNames.ResourceManager);
+			new(() => global::Resources.ArtistEditableFieldNames.ResourceManager);
 
 		public static readonly TranslateableEnum<ArtistEventRoles> ArtistEventRoleNames =
-			new TranslateableEnum<ArtistEventRoles>(() => Resources.Domain.ReleaseEvents.ArtistEventRoleNames.ResourceManager);
+			new(() => Resources.Domain.ReleaseEvents.ArtistEventRoleNames.ResourceManager);
 
-		public static TranslateableEnum<ArtistLinkType> ArtistLinkTypeNames => new TranslateableEnum<ArtistLinkType>(() => Resources.Domain.Artists.ArtistLinkTypeNames.ResourceManager);
+		public static TranslateableEnum<ArtistLinkType> ArtistLinkTypeNames => new(() => Resources.Domain.Artists.ArtistLinkTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<ArtistReportType> ArtistReportTypeNames =
-			new TranslateableEnum<ArtistReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
+			new(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<ArtistRoles> ArtistRoleNames =
-			new TranslateableEnum<ArtistRoles>(() => global::Resources.ArtistRoleNames.ResourceManager);
+			new(() => global::Resources.ArtistRoleNames.ResourceManager);
 
 		public static readonly TranslateableEnum<ArtistSortRule> ArtistSortRuleNames =
-			new TranslateableEnum<ArtistSortRule>(() => global::Resources.ArtistSortRuleNames.ResourceManager, new[] {
+			new(() => global::Resources.ArtistSortRuleNames.ResourceManager, new[] {
 				ArtistSortRule.Name, ArtistSortRule.AdditionDate, ArtistSortRule.AdditionDateAsc,
 				ArtistSortRule.ReleaseDate,
 				ArtistSortRule.SongCount, ArtistSortRule.SongRating, ArtistSortRule.FollowerCount
 			});
 
-		public static TranslateableEnum<ArtistType> ArtistTypeNames => new TranslateableEnum<ArtistType>(() => Model.Resources.ArtistTypeNames.ResourceManager);
+		public static TranslateableEnum<ArtistType> ArtistTypeNames => new(() => Model.Resources.ArtistTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<ContentLanguageSelection> ContentLanguageSelectionNames =
-			new TranslateableEnum<ContentLanguageSelection>(() => global::Resources.ContentLanguageSelectionNames.ResourceManager);
+			new(() => global::Resources.ContentLanguageSelectionNames.ResourceManager);
 
 		public static TranslateableEnum<DiscType> DiscTypeNames =
-			new TranslateableEnum<DiscType>(() => Model.Resources.Albums.DiscTypeNames.ResourceManager);
+			new(() => Model.Resources.Albums.DiscTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<EntryEditEvent> EntryEditEventNames =
-			new TranslateableEnum<EntryEditEvent>(() => global::Resources.EntryEditEventNames.ResourceManager);
+			new(() => global::Resources.EntryEditEventNames.ResourceManager);
 
 		public static readonly TranslateableEnum<EntryStatus> EntryStatusNames =
-			new TranslateableEnum<EntryStatus>(() => global::Resources.EntryStatusNames.ResourceManager);
+			new(() => global::Resources.EntryStatusNames.ResourceManager);
 
 		public static readonly TranslateableEnum<EntryType> EntryTypeNames =
-			new TranslateableEnum<EntryType>(() => Resources.Domain.EntryTypeNames.ResourceManager);
+			new(() => Resources.Domain.EntryTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<EventReportType> EventReportTypeNames =
-			new TranslateableEnum<EventReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
+			new(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<EventSortRule> EventSortRuleNames =
-			new TranslateableEnum<EventSortRule>(() => Resources.Domain.ReleaseEvents.EventSortRuleNames.ResourceManager, EnumVal<EventSortRule>.Values.Where(s => s != EventSortRule.None));
+			new(() => Resources.Domain.ReleaseEvents.EventSortRuleNames.ResourceManager, EnumVal<EventSortRule>.Values.Where(s => s != EventSortRule.None));
 
 		public static readonly TranslateableEnum<PVType> PVTypeDescriptions =
-			new TranslateableEnum<PVType>(() => global::Resources.PVTypeDescriptions.ResourceManager);
+			new(() => global::Resources.PVTypeDescriptions.ResourceManager);
 
 		public static readonly TranslateableEnum<PVType> PVTypeNames =
-			new TranslateableEnum<PVType>(() => global::Resources.PVTypeNames.ResourceManager);
+			new(() => global::Resources.PVTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<EventCategory> ReleaseEventCategoryNames =
-			new TranslateableEnum<EventCategory>(() => Resources.Domain.ReleaseEvents.EventCategoryNames.ResourceManager);
+			new(() => Resources.Domain.ReleaseEvents.EventCategoryNames.ResourceManager);
 
 		public static readonly TranslateableEnum<ReleaseEventEditableFields> ReleaseEventEditableFieldNames =
-			new TranslateableEnum<ReleaseEventEditableFields>(() => global::Resources.ReleaseEventEditableFieldNames.ResourceManager);
+			new(() => global::Resources.ReleaseEventEditableFieldNames.ResourceManager);
 
 		public static readonly TranslateableEnum<ReleaseEventSeriesEditableFields> ReleaseEventSeriesEditableFieldNames =
-			new TranslateableEnum<ReleaseEventSeriesEditableFields>(() => Resources.Domain.ReleaseEvents.ReleaseEventSeriesEditableFieldNames.ResourceManager);
+			new(() => Resources.Domain.ReleaseEvents.ReleaseEventSeriesEditableFieldNames.ResourceManager);
 
 		public static readonly TranslateableEnum<SongEditableFields> SongEditableFieldNames =
-			new TranslateableEnum<SongEditableFields>(() => global::Resources.SongEditableFieldNames.ResourceManager);
+			new(() => global::Resources.SongEditableFieldNames.ResourceManager);
 
 		public static readonly TranslateableEnum<SongListEditableFields> SongListEditableFieldNames =
-			new TranslateableEnum<SongListEditableFields>(() => global::Resources.SongListEditableFieldNames.ResourceManager);
+			new(() => global::Resources.SongListEditableFieldNames.ResourceManager);
 
 		public static readonly TranslateableEnum<SongListFeaturedCategory> SongListFeaturedCategoryNames =
-			new TranslateableEnum<SongListFeaturedCategory>(() => global::Resources.SongListFeaturedCategoryNames.ResourceManager);
+			new(() => global::Resources.SongListFeaturedCategoryNames.ResourceManager);
 
 		public static readonly TranslateableEnum<SongReportType> SongReportTypeNames =
-			new TranslateableEnum<SongReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
+			new(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<SongSortRule> SongSortRuleNames =
-			new TranslateableEnum<SongSortRule>(() => global::Resources.SongSortRuleNames.ResourceManager, new[] {
+			new(() => global::Resources.SongSortRuleNames.ResourceManager, new[] {
 				SongSortRule.Name, SongSortRule.AdditionDate, SongSortRule.PublishDate, SongSortRule.RatingScore, SongSortRule.FavoritedTimes,
 				SongSortRule.TagUsageCount
 			});
 
 		public static readonly DerivedTranslateableEnum<RatedSongForUserSortRule, SongSortRule> RatedSongForUserSortRuleNames =
-			new DerivedTranslateableEnum<RatedSongForUserSortRule, SongSortRule>(SongSortRuleNames, () => global::Resources.RatedSongForUserSortRuleNames.ResourceManager, new[] {
+			new(SongSortRuleNames, () => global::Resources.RatedSongForUserSortRuleNames.ResourceManager, new[] {
 				RatedSongForUserSortRule.Name, RatedSongForUserSortRule.AdditionDate, RatedSongForUserSortRule.PublishDate,
 				RatedSongForUserSortRule.RatingScore, RatedSongForUserSortRule.FavoritedTimes, RatedSongForUserSortRule.RatingDate
 			});
 
 		public static readonly TranslateableEnum<SongType> SongTypeNames =
-			new TranslateableEnum<SongType>(() => Model.Resources.Songs.SongTypeNames.ResourceManager);
+			new(() => Model.Resources.Songs.SongTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<SongVoteRating> SongVoteRatingNames =
-			new TranslateableEnum<SongVoteRating>(() => global::Resources.SongVoteRatingNames.ResourceManager);
+			new(() => global::Resources.SongVoteRatingNames.ResourceManager);
 
 		public static readonly TranslateableEnum<TagEditableFields> TagEditableFieldNames =
-			new TranslateableEnum<TagEditableFields>(() => global::Resources.TagEditableFieldNames.ResourceManager);
+			new(() => global::Resources.TagEditableFieldNames.ResourceManager);
 
 		public static readonly TranslateableEnum<TagReportType> TagReportTypeNames =
-			new TranslateableEnum<TagReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
+			new(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<TagTargetTypes> TagTargetTypeNames =
-			new TranslateableEnum<TagTargetTypes>(() => Resources.Domain.EntryTypeNames.ResourceManager);
+			new(() => Resources.Domain.EntryTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<UserGroupId> UserGroups =
-			new TranslateableEnum<UserGroupId>(() => UserGroupNames.ResourceManager);
+			new(() => UserGroupNames.ResourceManager);
 
 		public static readonly TranslateableEnum<UserLanguageProficiency> UserLanguageProficiencyNames =
-			new TranslateableEnum<UserLanguageProficiency>(() => Resources.Domain.Users.UserLanguageProficiencyNames.ResourceManager);
+			new(() => Resources.Domain.Users.UserLanguageProficiencyNames.ResourceManager);
 
 		public static readonly TranslateableEnum<UserReportType> UserReportTypeNames =
-			new TranslateableEnum<UserReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
+			new(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<VenueEditableFields> VenueEditableFieldNames =
-			new TranslateableEnum<VenueEditableFields>(() => global::Resources.VenueEditableFieldNames.ResourceManager);
+			new(() => global::Resources.VenueEditableFieldNames.ResourceManager);
 
 		public static readonly TranslateableEnum<VenueReportType> VenueReportTypeNames =
-			new TranslateableEnum<VenueReportType>(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
+			new(() => Resources.Domain.EntryReportTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<WebLinkCategory> WebLinkCategoryNames =
-			new TranslateableEnum<WebLinkCategory>(() => global::Resources.WebLinkCategoryNames.ResourceManager);
+			new(() => global::Resources.WebLinkCategoryNames.ResourceManager);
 
 		public static string AlbumEditableField(AlbumEditableFields field)
 		{

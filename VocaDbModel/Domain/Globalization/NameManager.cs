@@ -14,7 +14,7 @@ namespace VocaDb.Model.Domain.Globalization
 	{
 		private string additionalNamesString;
 		private IList<T> names = new List<T>();
-		private TranslatedString sortNames = new TranslatedString();
+		private TranslatedString sortNames = new();
 
 		public NameManager()
 		{

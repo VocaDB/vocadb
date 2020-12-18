@@ -14,8 +14,8 @@ namespace VocaDb.Model.Service.Search
 {
 	public class ReleaseEventSearch
 	{
-		private static readonly Regex eventNameRegex = new Regex(@"([^\d]+)(\d+)(?:\s(\w+))?");
-		private static readonly Regex eventNumberRegex = new Regex(@"^(\d+)(?:\s(\w+))?");
+		private static readonly Regex eventNameRegex = new(@"([^\d]+)(\d+)(?:\s(\w+))?");
+		private static readonly Regex eventNumberRegex = new(@"^(\d+)(?:\s(\w+))?");
 
 		private readonly IDatabaseContext querySource;
 

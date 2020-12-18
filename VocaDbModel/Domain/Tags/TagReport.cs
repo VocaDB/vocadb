@@ -8,8 +8,7 @@ namespace VocaDb.Model.Domain.Tags
 {
 	public class TagReport : GenericEntryReport<Tag, TagReportType>
 	{
-		public static readonly HashSet<TagReportType> ReportTypesWithRequiredNotes =
-			new HashSet<TagReportType> { TagReportType.InvalidInfo, TagReportType.Other };
+		public static readonly HashSet<TagReportType> ReportTypesWithRequiredNotes = new() { TagReportType.InvalidInfo, TagReportType.Other };
 
 		public TagReport() { }
 

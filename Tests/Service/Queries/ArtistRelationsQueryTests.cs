@@ -18,7 +18,7 @@ namespace VocaDb.Tests.Service.Queries
 	public class ArtistRelationsQueryTests
 	{
 		private readonly Artist artist;
-		private readonly FakeUserRepository repository = new FakeUserRepository();
+		private readonly FakeUserRepository repository = new();
 		private readonly ArtistRelationsQuery query;
 		private readonly Song song;
 		private readonly Song song2;

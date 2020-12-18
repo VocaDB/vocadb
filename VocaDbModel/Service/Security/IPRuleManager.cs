@@ -28,7 +28,7 @@ namespace VocaDb.Model.Service.Security
 		}
 
 		private readonly HostCollection permBannedIPs;
-		private readonly HostCollection tempBannedIPs = new HostCollection();
+		private readonly HostCollection tempBannedIPs = new();
 
 		public IHostCollection PermBannedIPs => permBannedIPs;
 

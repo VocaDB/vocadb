@@ -13,9 +13,9 @@ namespace VocaDb.Tests.TestSupport
 	public class QuerySourceList : IDatabaseContext
 	{
 		// Objects added (but not yet committed) during this transaction
-		private readonly List<IDatabaseObject> added = new List<IDatabaseObject>();
+		private readonly List<IDatabaseObject> added = new();
 		// Objects that were committed
-		private readonly List<IDatabaseObject> committed = new List<IDatabaseObject>();
+		private readonly List<IDatabaseObject> committed = new();
 		private readonly Dictionary<Type, IList> entities;
 
 		public QuerySourceList()

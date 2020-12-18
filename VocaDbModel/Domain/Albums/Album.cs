@@ -57,14 +57,14 @@ namespace VocaDb.Model.Domain.Albums
 		private IList<AlbumDiscProperties> discs = new List<AlbumDiscProperties>();
 		private IList<AlbumHit> hits = new List<AlbumHit>();
 		private IList<AlbumIdentifier> identifiers = new List<AlbumIdentifier>();
-		private NameManager<AlbumName> names = new NameManager<AlbumName>();
-		private AlbumRelease originalRelease = new AlbumRelease();
+		private NameManager<AlbumName> names = new();
+		private AlbumRelease originalRelease = new();
 		private IList<OtherArtistForAlbum> otherArtists = new List<OtherArtistForAlbum>();
-		private EntryPictureFileManager<AlbumPictureFile> pictureManager = new EntryPictureFileManager<AlbumPictureFile>();
+		private EntryPictureFileManager<AlbumPictureFile> pictureManager = new();
 		private IList<PVForAlbum> pvs = new List<PVForAlbum>();
 		private IList<AlbumReview> reviews = new List<AlbumReview>();
 		private IList<SongInAlbum> songs = new List<SongInAlbum>();
-		private TagManager<AlbumTagUsage> tags = new TagManager<AlbumTagUsage>();
+		private TagManager<AlbumTagUsage> tags = new();
 		private IList<AlbumForUser> userCollections = new List<AlbumForUser>();
 		private IList<AlbumWebLink> webLinks = new List<AlbumWebLink>();
 

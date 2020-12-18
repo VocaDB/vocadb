@@ -8,8 +8,7 @@ namespace VocaDb.Model.Domain.Songs
 {
 	public class SongReport : GenericEntryReport<Song, SongReportType>
 	{
-		public static readonly HashSet<SongReportType> ReportTypesWithRequiredNotes =
-			new HashSet<SongReportType> { SongReportType.InvalidInfo, SongReportType.Other };
+		public static readonly HashSet<SongReportType> ReportTypesWithRequiredNotes = new() { SongReportType.InvalidInfo, SongReportType.Other };
 
 		public SongReport() { }
 

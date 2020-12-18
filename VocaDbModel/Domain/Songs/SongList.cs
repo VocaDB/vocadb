@@ -41,7 +41,7 @@ namespace VocaDb.Model.Domain.Songs
 		private IList<ReleaseEvent> events = new List<ReleaseEvent>();
 		private string name;
 		private IList<SongInList> songs = new List<SongInList>();
-		private TagManager<SongListTagUsage> tags = new TagManager<SongListTagUsage>();
+		private TagManager<SongListTagUsage> tags = new();
 
 		public SongList()
 		{

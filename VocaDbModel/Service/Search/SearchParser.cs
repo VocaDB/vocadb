@@ -9,7 +9,7 @@ namespace VocaDb.Model.Service.Search
 	{
 		// prop-name:value
 		// prop-name is optional. value can be quoted. If quoted, it may contain whitespace
-		private static readonly Regex regex = new Regex(@"(?:([\w-]+):)?(?:([^\s""]+)|""([^""]+)"")");
+		private static readonly Regex regex = new(@"(?:([\w-]+):)?(?:([^\s""]+)|""([^""]+)"")");
 
 		public static SearchWordCollection ParseQuery(string query)
 		{

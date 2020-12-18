@@ -8,7 +8,7 @@ namespace VocaDb.Model.Domain
 	/// </summary>
 	public readonly struct GlobalEntryId
 	{
-		public static readonly GlobalEntryId Empty = new GlobalEntryId();
+		public static readonly GlobalEntryId Empty = new();
 
 		public GlobalEntryId(EntryType entryType, int id)
 			: this()

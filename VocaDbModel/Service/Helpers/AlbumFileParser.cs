@@ -11,7 +11,7 @@ namespace VocaDb.Model.Service.Helpers
 {
 	public class AlbumFileParser
 	{
-		private readonly Regex numRegex = new Regex(@"(\d+)");
+		private readonly Regex numRegex = new(@"(\d+)");
 
 		private string[] GetArtistNames(string artistString)
 		{
@@ -124,7 +124,7 @@ namespace VocaDb.Model.Service.Helpers
 
 	public class DataRowParser
 	{
-		private readonly Dictionary<AlbumFileField, int> fieldCols = new Dictionary<AlbumFileField, int>();
+		private readonly Dictionary<AlbumFileField, int> fieldCols = new();
 
 		public bool Configure(string headerRow)
 		{

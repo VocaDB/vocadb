@@ -17,7 +17,7 @@ namespace VocaDb.Tests.Domain.Tags
 	{
 		class TagFactory : ITagFactory, ITagUsageFactory<SongTagUsage>
 		{
-			private readonly Song song = new Song();
+			private readonly Song song = new();
 
 			public Task<Tag> CreateTagAsync(string name)
 			{

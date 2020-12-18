@@ -18,7 +18,7 @@ namespace VocaDb.Tests.Service.Search.Artists
 	public class ArtistSearchTests
 	{
 		private readonly ArtistSearch artistSearch;
-		private readonly FakeArtistRepository db = new FakeArtistRepository();
+		private readonly FakeArtistRepository db = new();
 
 		public ArtistSearchTests()
 		{

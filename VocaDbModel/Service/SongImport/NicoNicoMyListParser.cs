@@ -18,7 +18,7 @@ namespace VocaDb.Model.Service.SongImport
 	public class NicoNicoMyListParser : ISongListImporter
 	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private static readonly Regex wvrIdRegex = new Regex(@"#(\d{3})");
+		private static readonly Regex wvrIdRegex = new(@"#(\d{3})");
 
 		public Task<PartialImportedSongs> GetSongsAsync(string url, string nextPageToken, int maxResults, bool parseAll)
 		{

@@ -22,13 +22,13 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 	[TestClass]
 	public class EventQueriesDatabaseTests
 	{
-		private readonly DatabaseTestContext<IEventRepository> context = new DatabaseTestContext<IEventRepository>();
-		private readonly FakeEntryLinkFactory entryLinkFactory = new FakeEntryLinkFactory();
-		private readonly EnumTranslations enumTranslations = new EnumTranslations();
-		private readonly InMemoryImagePersister imageStore = new InMemoryImagePersister();
-		private readonly FakeUserMessageMailer mailer = new FakeUserMessageMailer();
+		private readonly DatabaseTestContext<IEventRepository> context = new();
+		private readonly FakeEntryLinkFactory entryLinkFactory = new();
+		private readonly EnumTranslations enumTranslations = new();
+		private readonly InMemoryImagePersister imageStore = new();
+		private readonly FakeUserMessageMailer mailer = new();
 		private readonly FakePermissionContext userContext;
-		private readonly FakeUserIconFactory userIconFactory = new FakeUserIconFactory();
+		private readonly FakeUserIconFactory userIconFactory = new();
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 
 		private Task<ReleaseEventForEditContract> Update(ReleaseEventForEditContract contract)

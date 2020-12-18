@@ -31,8 +31,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			= new ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>();
 		private string description;
 		private IList<ReleaseEvent> events = new List<ReleaseEvent>();
-		private NameManager<EventSeriesName> names = new NameManager<EventSeriesName>();
-		private TagManager<EventSeriesTagUsage> tags = new TagManager<EventSeriesTagUsage>();
+		private NameManager<EventSeriesName> names = new();
+		private TagManager<EventSeriesTagUsage> tags = new();
 		private IList<ReleaseEventSeriesWebLink> webLinks = new List<ReleaseEventSeriesWebLink>();
 
 		public ReleaseEventSeries()

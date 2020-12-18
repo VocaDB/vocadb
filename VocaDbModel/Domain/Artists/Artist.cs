@@ -41,11 +41,11 @@ namespace VocaDb.Model.Domain.Artists
 		private IList<ArtistForArtist> groups = new List<ArtistForArtist>();
 		private IList<ArtistHit> hits = new List<ArtistHit>();
 		private IList<ArtistForArtist> members = new List<ArtistForArtist>();
-		private NameManager<ArtistName> names = new NameManager<ArtistName>();
+		private NameManager<ArtistName> names = new();
 		private IList<OwnedArtistForUser> ownerUsers = new List<OwnedArtistForUser>();
-		private EntryPictureFileManager<ArtistPictureFile> pictureManager = new EntryPictureFileManager<ArtistPictureFile>();
+		private EntryPictureFileManager<ArtistPictureFile> pictureManager = new();
 		private IList<ArtistForSong> songs = new List<ArtistForSong>();
-		private TagManager<ArtistTagUsage> tags = new TagManager<ArtistTagUsage>();
+		private TagManager<ArtistTagUsage> tags = new();
 		private IList<ArtistForUser> users = new List<ArtistForUser>();
 		private IList<ArtistWebLink> webLinks = new List<ArtistWebLink>();
 

@@ -18,7 +18,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 	[TestClass]
 	public class TagQueriesDatabaseTests
 	{
-		private readonly DatabaseTestContext<ITagRepository> context = new DatabaseTestContext<ITagRepository>();
+		private readonly DatabaseTestContext<ITagRepository> context = new();
 		private readonly FakePermissionContext userContext;
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 

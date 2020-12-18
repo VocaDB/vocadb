@@ -19,8 +19,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.Tags
 	[TestClass]
 	public class TagSearchDatabaseTests
 	{
-		private readonly DatabaseTestContext context = new DatabaseTestContext();
-		private readonly TagQueryParams queryParams = new TagQueryParams
+		private readonly DatabaseTestContext context = new();
+		private readonly TagQueryParams queryParams = new()
 		{
 			SortRule = TagSortRule.Name,
 			Common = new CommonSearchParams(),

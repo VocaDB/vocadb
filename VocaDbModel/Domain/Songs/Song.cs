@@ -47,10 +47,10 @@ namespace VocaDb.Model.Domain.Songs
 		private IList<SongHit> hits = new List<SongHit>();
 		private IList<SongInList> lists = new List<SongInList>();
 		private IList<LyricsForSong> lyrics = new List<LyricsForSong>();
-		private NameManager<SongName> names = new NameManager<SongName>();
+		private NameManager<SongName> names = new();
 		private EnglishTranslatedString notes;
-		private PVManager<PVForSong> pvs = new PVManager<PVForSong>();
-		private TagManager<SongTagUsage> tags = new TagManager<SongTagUsage>();
+		private PVManager<PVForSong> pvs = new();
+		private TagManager<SongTagUsage> tags = new();
 		private IList<FavoriteSongForUser> userFavorites = new List<FavoriteSongForUser>();
 		private IList<SongWebLink> webLinks = new List<SongWebLink>();
 
