@@ -34,8 +34,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 				switch (word.PropertyName.ToLowerInvariant())
 				{
 					case "artistId":
-						int artistId;
-						if (int.TryParse(word.Value, out artistId))
+						if (int.TryParse(word.Value, out var artistId))
 							filter = new AlbumArtistFilter(artistId);
 						break;
 

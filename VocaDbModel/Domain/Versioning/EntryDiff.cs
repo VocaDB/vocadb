@@ -61,8 +61,7 @@ namespace VocaDb.Model.Domain.Versioning
 				var fieldNames = value.Split(',');
 				foreach (var name in fieldNames)
 				{
-					T field;
-					if (Enum.TryParse(name, out field))
+					if (Enum.TryParse(name, out T field))
 						SetChanged(field);
 				}
 			}

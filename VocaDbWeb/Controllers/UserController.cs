@@ -160,8 +160,7 @@ namespace VocaDb.Web.Controllers
 				return RedirectToAction("MySettings");
 			}
 
-			int twitterId;
-			int.TryParse(response.ExtraData["user_id"], out twitterId);
+			int.TryParse(response.ExtraData["user_id"], out int twitterId);
 			var twitterName = response.ExtraData["screen_name"];
 
 			if (Service.ConnectTwitter(response.AccessToken, twitterId, twitterName, WebHelper.GetRealHost(Request)))
@@ -431,8 +430,7 @@ namespace VocaDb.Web.Controllers
 
 			if (user == null)
 			{
-				int twitterId;
-				int.TryParse(response.ExtraData["user_id"], out twitterId);
+				int.TryParse(response.ExtraData["user_id"], out int twitterId);
 				var twitterName = response.ExtraData["screen_name"];
 				return View(new RegisterOpenAuthModel(response.AccessToken, twitterName, twitterId, twitterName));
 			}

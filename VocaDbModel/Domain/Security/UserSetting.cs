@@ -84,11 +84,7 @@ namespace VocaDb.Model.Domain.Security
 
 		private bool IsRequestValueOverridden => context != null && context.Items.Contains(RequestItemName);
 
-		private T ParseValue(string str)
-		{
-			T val;
-			return TryParseValue(str, out val) ? val : Default;
-		}
+		private T ParseValue(string str) => TryParseValue(str, out T val) ? val : Default;
 
 		private IHttpRequest Request => context != null ? context.Request : null;
 

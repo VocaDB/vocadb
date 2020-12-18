@@ -48,12 +48,9 @@ namespace VocaDb.Model.Service.VideoServices
 
 		private VideoTitleParseResult GetVideoTitle(string id)
 		{
-			Uri uri;
 			string name = string.Empty;
-			if (Uri.TryCreate(id, UriKind.Absolute, out uri))
-			{
+			if (Uri.TryCreate(id, UriKind.Absolute, out Uri uri))
 				name = HttpUtility.UrlDecode(uri.Segments.Last());
-			}
 
 			return VideoTitleParseResult.CreateSuccess(name, string.Empty, string.Empty, string.Empty);
 		}

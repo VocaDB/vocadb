@@ -32,8 +32,7 @@ namespace VocaDb.Model.Utils
 		/// <returns></returns>
 		public static string AbsoluteFromUnknown(string relativeOrAbsolute, bool preserveAbsolute)
 		{
-			Uri uri;
-			if (Uri.TryCreate(relativeOrAbsolute, UriKind.RelativeOrAbsolute, out uri))
+			if (Uri.TryCreate(relativeOrAbsolute, UriKind.RelativeOrAbsolute, out Uri uri))
 			{
 				if (uri.IsAbsoluteUri)
 					return preserveAbsolute ? relativeOrAbsolute : Absolute(Relative(relativeOrAbsolute)); // URL is absolute, replace it with main site URL or preserve original.
@@ -102,8 +101,7 @@ namespace VocaDb.Model.Utils
 		/// <returns>Relative portion of the URL, for example /</returns>
 		private static string Relative(string relativeOrAbsolute)
 		{
-			Uri uri;
-			if (Uri.TryCreate(relativeOrAbsolute, UriKind.RelativeOrAbsolute, out uri))
+			if (Uri.TryCreate(relativeOrAbsolute, UriKind.RelativeOrAbsolute, out Uri uri))
 				return uri.IsAbsoluteUri ? uri.PathAndQuery : relativeOrAbsolute;
 			else
 				return relativeOrAbsolute;

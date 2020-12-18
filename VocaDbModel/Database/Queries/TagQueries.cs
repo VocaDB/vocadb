@@ -590,9 +590,8 @@ namespace VocaDb.Model.Database.Queries
 
 			foreach (var usage in source.AllTagUsages.ToArray())
 			{
-				TagUsage targetUsage;
 
-				if (!targetTagUsages.TryGetValue(new GlobalEntryId(usage.EntryBase.EntryType, usage.EntryBase.Id), out targetUsage))
+				if (!targetTagUsages.TryGetValue(new GlobalEntryId(usage.EntryBase.EntryType, usage.EntryBase.Id), out TagUsage targetUsage))
 				{
 					targetUsage = usage.Move(target);
 					source.UsageCount--;

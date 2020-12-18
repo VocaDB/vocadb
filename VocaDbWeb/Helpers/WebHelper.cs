@@ -56,8 +56,7 @@ namespace VocaDb.Web.Helpers
 			if (HttpContext.Current != null)
 				return HttpContext.Current.Request.UserHostAddress;
 
-			object property;
-			if (request.Properties.TryGetValue(typeof(RemoteEndpointMessageProperty).FullName, out property))
+			if (request.Properties.TryGetValue(typeof(RemoteEndpointMessageProperty).FullName, out object property))
 			{
 				var remoteProperty = (RemoteEndpointMessageProperty)property;
 				return remoteProperty.Address;

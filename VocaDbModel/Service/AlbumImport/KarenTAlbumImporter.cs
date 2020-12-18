@@ -113,8 +113,7 @@ namespace VocaDb.Model.Service.AlbumImport
 
 			if (releaseDateRow != null)
 			{
-				DateTime releaseDate;
-				if (DateTime.TryParseExact(releaseDateRow.Element("#text").InnerText, "yyyy.MM.dd", null, DateTimeStyles.None, out releaseDate))
+				if (DateTime.TryParseExact(releaseDateRow.Element("#text").InnerText, "yyyy.MM.dd", null, DateTimeStyles.None, out DateTime releaseDate))
 					data.ReleaseYear = releaseDate.Year;
 			}
 

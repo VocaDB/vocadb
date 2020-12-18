@@ -64,8 +64,7 @@ namespace VocaDb.Web.Controllers.Api
 
 		private Dictionary<string, string> GetResources(string setName, CultureInfo culture)
 		{
-			ResourceManager resourceManager;
-			if (!allSets.TryGetValue(setName, out resourceManager))
+			if (!allSets.TryGetValue(setName, out ResourceManager resourceManager))
 				return new Dictionary<string, string>();
 
 			var set = resourceManager.GetResourceSet(culture, true, true);

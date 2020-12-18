@@ -34,9 +34,7 @@ namespace VocaDb.Model.Service.BBCode
 			if (entryTypeName == "S")
 				entryTypeName = "Song";
 
-			EntryType entryType;
-			int entryId;
-			if (Enum.TryParse(entryTypeName, true, out entryType) && int.TryParse(entryIdStr, out entryId))
+			if (Enum.TryParse(entryTypeName, true, out EntryType entryType) && int.TryParse(entryIdStr, out int entryId))
 				return linkFactory.CreateEntryLink(entryType, entryId, match.Value);
 			else
 				return match.Value;

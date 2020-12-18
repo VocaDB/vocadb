@@ -125,14 +125,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			return querySource.Query<T>();
 		}
 
-		private DateTime? ParseDateOrNull(string str)
-		{
-			DateTime parsed;
-			if (DateTime.TryParse(str, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
-				return parsed;
-			else
-				return null;
-		}
+		private DateTime? ParseDateOrNull(string str) => DateTime.TryParse(str, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsed) ? parsed : null;
 
 		private ParsedSongQuery ParseDateRange(string str)
 		{

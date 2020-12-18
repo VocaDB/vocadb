@@ -119,8 +119,7 @@ namespace VocaDb.Model.Service.AlbumImport
 				}
 				else if (LineMatch(stripped, "Year"))
 				{
-					int year;
-					if (int.TryParse(stripped.Substring(6), out year))
+					if (int.TryParse(stripped.Substring(6), out int year))
 						data.ReleaseYear = year;
 				}
 			}
@@ -141,9 +140,7 @@ namespace VocaDb.Model.Service.AlbumImport
 
 				var trackText = line.Substring(0, dotPos);
 
-				int trackNum;
-
-				if (int.TryParse(trackText, out trackNum))
+				if (int.TryParse(trackText, out int trackNum))
 				{
 					if (trackNum == 1 && tracks.Any())
 						discNum++;

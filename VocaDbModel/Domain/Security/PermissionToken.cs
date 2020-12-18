@@ -94,8 +94,7 @@ namespace VocaDb.Model.Domain.Security
 
 		public static PermissionToken GetById(Guid id)
 		{
-			PermissionToken token;
-			if (all.TryGetValue(id, out token))
+			if (all.TryGetValue(id, out PermissionToken token))
 				return token;
 
 			throw new ArgumentException($"Invalid permission token: {id}.", "id");

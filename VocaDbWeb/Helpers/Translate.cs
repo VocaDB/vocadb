@@ -282,15 +282,10 @@ namespace VocaDb.Web.Helpers
 
 		public static string PermissionTokenName(IPermissionToken token)
 		{
-			PermissionToken t;
-			if (PermissionToken.TryGetById(token.Id, out t))
-			{
+			if (PermissionToken.TryGetById(token.Id, out PermissionToken t))
 				return PermissionTokenNames.ResourceManager.GetString(t.Name) ?? t.Name;
-			}
 			else
-			{
 				return (token.Name != null ? PermissionTokenNames.ResourceManager.GetString(token.Name) : null) ?? token.Name ?? token.Id.ToString();
-			}
 		}
 
 		public static TranslateableEnum<TEnum> Translations<TEnum>() where TEnum : struct, Enum

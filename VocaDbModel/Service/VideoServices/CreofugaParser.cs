@@ -18,13 +18,7 @@ namespace VocaDb.Model.Service.VideoServices
 			if (string.IsNullOrEmpty(lengthStr))
 				return null;
 
-			TimeSpan timespan;
-			if (TimeSpan.TryParseExact(lengthStr, "mm\\:ss", CultureInfo.InvariantCulture, out timespan))
-			{
-				return (int)timespan.TotalSeconds;
-			}
-
-			return null;
+			return TimeSpan.TryParseExact(lengthStr, "mm\\:ss", CultureInfo.InvariantCulture, out TimeSpan timespan) ? (int)timespan.TotalSeconds : null;
 		}
 
 		private DateTime? ParseDate(string dateStr)
@@ -32,8 +26,7 @@ namespace VocaDb.Model.Service.VideoServices
 			if (string.IsNullOrEmpty(dateStr))
 				return null;
 
-			DateTime date;
-			return DateTime.TryParseExact(dateStr, "yy/MM/dd mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out date) ? (DateTime?)date : null; // 15/10/15 21:20
+			return DateTime.TryParseExact(dateStr, "yy/MM/dd mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces, out DateTime date) ? (DateTime?)date : null; // 15/10/15 21:20
 		}
 
 		private VideoTitleParseResult ParseDocument(HtmlDocument doc, string url)

@@ -136,11 +136,8 @@ namespace VocaDb.Model.Service.Helpers
 
 			for (int i = 0; i < cols.Length; ++i)
 			{
-				AlbumFileField field;
-				if (Enum.TryParse(cols[i], true, out field))
-				{
+				if (Enum.TryParse(cols[i], true, out AlbumFileField field))
 					fieldCols.Add(field, i);
-				}
 			}
 
 			return true;
@@ -189,12 +186,7 @@ namespace VocaDb.Model.Service.Helpers
 			if (val == string.Empty)
 				return def;
 
-			int i;
-
-			if (int.TryParse(val, out i))
-				return i;
-
-			return def;
+			return int.TryParse(val, out int i) ? i : def;
 		}
 
 		public string GetString(AlbumFileField field)

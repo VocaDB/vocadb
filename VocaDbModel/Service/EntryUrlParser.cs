@@ -57,16 +57,11 @@ namespace VocaDb.Model.Service
 
 			var entryTypeStr = match.Groups[1].Value; // URL portion that identifies the entry type, for example "Al" or "Album/Details".
 			var entryId = match.Groups[2].Value; // Entry ID, integer
-			EntryType entryType;
 
-			if (entryTypeNames.TryGetValue(entryTypeStr, out entryType))
-			{
+			if (entryTypeNames.TryGetValue(entryTypeStr, out EntryType entryType))
 				return new GlobalEntryId(entryType, int.Parse(entryId));
-			}
 			else
-			{
 				return GlobalEntryId.Empty;
-			}
 		}
 	}
 

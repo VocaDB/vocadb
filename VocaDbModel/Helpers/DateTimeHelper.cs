@@ -29,11 +29,8 @@ namespace VocaDb.Model.Helpers
 
 		public static DateTime? ParseDateTimeOffsetAsDate(string str)
 		{
-			DateTimeOffset date;
-			if (DateTimeOffset.TryParse(str, out date))
-			{
+			if (DateTimeOffset.TryParse(str, out DateTimeOffset date))
 				return date.Date;
-			}
 
 			return null;
 		}
