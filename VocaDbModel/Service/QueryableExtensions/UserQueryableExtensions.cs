@@ -13,18 +13,14 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			if (textQuery.IsEmpty)
 				return query;
 
-			switch (textQuery.MatchMode)
+			return textQuery.MatchMode switch
 			{
-				case NameMatchMode.StartsWith:
-					return query.Where(u => u.Name.StartsWith(textQuery.Query));
-				case NameMatchMode.Partial:
-				case NameMatchMode.Words: // Words search doesn't really make sense for usernames, so using partial matching
-					return query.Where(u => u.Name.Contains(textQuery.Query));
-				case NameMatchMode.Exact:
-					return query.Where(u => u.Name == textQuery.Query);
-			}
-
-			return query;
+				NameMatchMode.StartsWith => query.Where(u => u.Name.StartsWith(textQuery.Query)),
+				// Words search doesn't really make sense for usernames, so using partial matching
+				NameMatchMode.Partial or NameMatchMode.Words => query.Where(u => u.Name.Contains(textQuery.Query)),
+				NameMatchMode.Exact => query.Where(u => u.Name == textQuery.Query),
+				_ => query,
+			};
 		}
 
 		public static IQueryable<User> WhereIsActive(this IQueryable<User> query) => query.Where(u => u.Active);

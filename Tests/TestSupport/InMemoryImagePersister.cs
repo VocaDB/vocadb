@@ -18,22 +18,14 @@ namespace VocaDb.Tests.TestSupport
 	{
 		private readonly Dictionary<string, byte[]> images = new Dictionary<string, byte[]>();
 
-		private ImageFormat GetImageFormat(IEntryImageInformation imageInfo)
+		private ImageFormat GetImageFormat(IEntryImageInformation imageInfo) => imageInfo.Mime switch
 		{
-			switch (imageInfo.Mime)
-			{
-				case MediaTypeNames.Image.Jpeg:
-					return ImageFormat.Jpeg;
-				case "image/png":
-					return ImageFormat.Png;
-				case MediaTypeNames.Image.Gif:
-					return ImageFormat.Gif;
-				case "image/bmp":
-					return ImageFormat.Bmp;
-				default:
-					return ImageFormat.Png;
-			}
-		}
+			MediaTypeNames.Image.Jpeg => ImageFormat.Jpeg,
+			"image/png" => ImageFormat.Png,
+			MediaTypeNames.Image.Gif => ImageFormat.Gif,
+			"image/bmp" => ImageFormat.Bmp,
+			_ => ImageFormat.Png,
+		};
 
 		public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size)
 		{

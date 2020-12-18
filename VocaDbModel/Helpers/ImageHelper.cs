@@ -59,65 +59,36 @@ namespace VocaDb.Model.Helpers
 		/// </summary>
 		/// <param name="mime">MIME type. Can be null or empty.</param>
 		/// <returns>File extension, for example ".jpg". Can be null if MIME type is not recognized.</returns>
-		public static string GetExtensionFromMime(string mime)
+		public static string GetExtensionFromMime(string mime) => mime switch
 		{
-			switch (mime)
-			{
-				case MediaTypeNames.Image.Jpeg:
-					return ".jpg";
-				case "image/pjpeg":
-					return ".jpg";
-				case "image/png":
-					return ".png";
-				case MediaTypeNames.Image.Gif:
-					return ".gif";
-				case "image/bmp":
-					return ".bmp";
-				case "image/x-ms-bmp":
-					return ".bmp";
-				case "audio/mp3":
-				case "audio/mpeg":
-					return ".mp3";
-				default:
-					return string.Empty;
-			}
-		}
+			MediaTypeNames.Image.Jpeg => ".jpg",
+			"image/pjpeg" => ".jpg",
+			"image/png" => ".png",
+			MediaTypeNames.Image.Gif => ".gif",
+			"image/bmp" => ".bmp",
+			"image/x-ms-bmp" => ".bmp",
+			"audio/mp3" or "audio/mpeg" => ".mp3",
+			_ => string.Empty,
+		};
 
-		public static int GetDefaultImageSizePx(ImageSize size)
+		public static int GetDefaultImageSizePx(ImageSize size) => size switch
 		{
-			switch (size)
-			{
-				case ImageSize.Thumb:
-					return DefaultThumbSize;
-				case ImageSize.SmallThumb:
-					return DefaultSmallThumbSize;
-				case ImageSize.TinyThumb:
-					return DefaultTinyThumbSize;
-				default:
-					return ImageSizeUnlimited;
-			}
-		}
+			ImageSize.Thumb => DefaultThumbSize,
+			ImageSize.SmallThumb => DefaultSmallThumbSize,
+			ImageSize.TinyThumb => DefaultTinyThumbSize,
+			_ => ImageSizeUnlimited,
+		};
 
 		/// <summary>
 		/// Gets the size in pixels for user's profile picture.
 		/// </summary>
-		public static int GetUserImageSizePx(ImageSize size)
+		public static int GetUserImageSizePx(ImageSize size) => size switch
 		{
-			switch (size)
-			{
-				case ImageSize.Original:
-					return UserThumbMax;
-
-				case ImageSize.Thumb:
-				case ImageSize.SmallThumb:
-					return UserThumbSize;
-
-				case ImageSize.TinyThumb:
-					return UserTinyThumbSize;
-			}
-
-			return UserThumbMax;
-		}
+			ImageSize.Original => UserThumbMax,
+			ImageSize.Thumb or ImageSize.SmallThumb => UserThumbSize,
+			ImageSize.TinyThumb => UserTinyThumbSize,
+			_ => UserThumbMax,
+		};
 
 		public static PictureDataContract GetOriginal(Stream input, int length, string contentType)
 		{

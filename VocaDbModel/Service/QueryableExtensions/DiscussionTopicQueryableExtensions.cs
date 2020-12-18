@@ -7,20 +7,13 @@ namespace VocaDb.Model.Service.QueryableExtensions
 {
 	public static class DiscussionTopicQueryableExtensions
 	{
-		public static IQueryable<DiscussionTopic> OrderBy(this IQueryable<DiscussionTopic> query, DiscussionTopicSortRule sort)
+		public static IQueryable<DiscussionTopic> OrderBy(this IQueryable<DiscussionTopic> query, DiscussionTopicSortRule sort) => sort switch
 		{
-			switch (sort)
-			{
-				case DiscussionTopicSortRule.Name:
-					return query.OrderBy(d => d.Name);
-				case DiscussionTopicSortRule.DateCreated:
-					return query.OrderByDescending(d => d.Created);
-				case DiscussionTopicSortRule.LastCommentDate:
-					return query.OrderByDescending(d => d.Comments.Max(c => c.Created));
-			}
-
-			return query;
-		}
+			DiscussionTopicSortRule.Name => query.OrderBy(d => d.Name),
+			DiscussionTopicSortRule.DateCreated => query.OrderByDescending(d => d.Created),
+			DiscussionTopicSortRule.LastCommentDate => query.OrderByDescending(d => d.Comments.Max(c => c.Created)),
+			_ => query,
+		};
 
 		public static IQueryable<DiscussionTopic> WhereIsInFolder(this IQueryable<DiscussionTopic> query, int? folderId)
 		{

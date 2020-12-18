@@ -229,20 +229,12 @@ namespace VocaDb.Model.Helpers
 			return circle != null ? circle.Artist : null;
 		}
 
-		public static ArtistRoles GetOtherArtistRoles(ArtistType artistType)
+		public static ArtistRoles GetOtherArtistRoles(ArtistType artistType) => artistType switch
 		{
-			switch (artistType)
-			{
-				case ArtistType.Illustrator:
-					return ArtistRoles.Illustrator;
-
-				case ArtistType.Lyricist:
-					return ArtistRoles.Lyricist;
-
-				default:
-					return ArtistRoles.Default;
-			}
-		}
+			ArtistType.Illustrator => ArtistRoles.Illustrator,
+			ArtistType.Lyricist => ArtistRoles.Lyricist,
+			_ => ArtistRoles.Default,
+		};
 
 		public static IEnumerable<IArtistLinkWithRoles> GetProducers(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus)
 		{

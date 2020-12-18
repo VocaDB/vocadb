@@ -25,16 +25,11 @@ namespace VocaDb.Web.Controllers.Api
 		private readonly IUserPermissionContext userContext;
 		private readonly IUserIconFactory userIconFactory;
 
-		private ICommentQueries GetComments(IDatabaseContext ctx, EntryType entryType)
+		private ICommentQueries GetComments(IDatabaseContext ctx, EntryType entryType) => entryType switch
 		{
-			switch (entryType)
-			{
-				case EntryType.ReleaseEvent:
-					return new CommentQueries<ReleaseEventComment, ReleaseEvent>(ctx, userContext, userIconFactory, entryLinkFactory);
-			}
-
-			throw new ArgumentException("Unsupported entry type: " + entryType, nameof(entryType));
-		}
+			EntryType.ReleaseEvent => new CommentQueries<ReleaseEventComment, ReleaseEvent>(ctx, userContext, userIconFactory, entryLinkFactory),
+			_ => throw new ArgumentException("Unsupported entry type: " + entryType, nameof(entryType)),
+		};
 
 		public CommentApiController(IRepository db, IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory)
 		{

@@ -35,46 +35,20 @@ namespace VocaDb.Web.Code
 
 		private string GetUrl(string basePart, EntryType entryType, int id, string slug)
 		{
-			string relative;
 			slug = slug ?? string.Empty;
 
 			var slashForSlug = slug != string.Empty ? "/" : string.Empty;
-
-			switch (entryType)
+			var relative = entryType switch
 			{
-				case EntryType.Album:
-					relative = $"Al/{id}";
-					break;
-
-				case EntryType.Artist:
-					relative = $"Ar/{id}";
-					break;
-
-				case EntryType.DiscussionTopic:
-					relative = $"discussion/topics/{id}";
-					break;
-
-				case EntryType.ReleaseEvent:
-					relative = $"E/{id}{slashForSlug}{slug}";
-					break;
-
-				case EntryType.ReleaseEventSeries:
-					relative = $"Event/SeriesDetails/{id}";
-					break;
-
-				case EntryType.Song:
-					relative = $"S/{id}";
-					break;
-
-				case EntryType.Tag:
-					relative = $"T/{id}{slashForSlug}{slug}";
-					break;
-
-				default:
-					relative = $"{entryType}/Details/{id}";
-					break;
-			}
-
+				EntryType.Album => $"Al/{id}",
+				EntryType.Artist => $"Ar/{id}",
+				EntryType.DiscussionTopic => $"discussion/topics/{id}",
+				EntryType.ReleaseEvent => $"E/{id}{slashForSlug}{slug}",
+				EntryType.ReleaseEventSeries => $"Event/SeriesDetails/{id}",
+				EntryType.Song => $"S/{id}",
+				EntryType.Tag => $"T/{id}{slashForSlug}{slug}",
+				_ => $"{entryType}/Details/{id}",
+			};
 			return VocaUriBuilder.MergeUrls(basePart, relative);
 		}
 

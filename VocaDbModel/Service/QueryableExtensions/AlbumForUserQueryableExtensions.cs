@@ -10,50 +10,25 @@ namespace VocaDb.Model.Service.QueryableExtensions
 {
 	public static class AlbumForUserQueryableExtensions
 	{
-		public static IOrderedQueryable<AlbumForUser> OrderByAlbumName(this IQueryable<AlbumForUser> criteria, ContentLanguagePreference languagePreference)
+		public static IOrderedQueryable<AlbumForUser> OrderByAlbumName(this IQueryable<AlbumForUser> criteria, ContentLanguagePreference languagePreference) => languagePreference switch
 		{
-			switch (languagePreference)
-			{
-				case ContentLanguagePreference.Japanese:
-					return criteria.OrderBy(e => e.Album.Names.SortNames.Japanese);
-				case ContentLanguagePreference.English:
-					return criteria.OrderBy(e => e.Album.Names.SortNames.English);
-				default:
-					return criteria.OrderBy(e => e.Album.Names.SortNames.Romaji);
-			}
-		}
+			ContentLanguagePreference.Japanese => criteria.OrderBy(e => e.Album.Names.SortNames.Japanese),
+			ContentLanguagePreference.English => criteria.OrderBy(e => e.Album.Names.SortNames.English),
+			_ => criteria.OrderBy(e => e.Album.Names.SortNames.Romaji),
+		};
 
-		public static IQueryable<AlbumForUser> OrderBy(this IQueryable<AlbumForUser> query, AlbumSortRule sortRule, ContentLanguagePreference languagePreference)
+		public static IQueryable<AlbumForUser> OrderBy(this IQueryable<AlbumForUser> query, AlbumSortRule sortRule, ContentLanguagePreference languagePreference) => sortRule switch
 		{
-			switch (sortRule)
-			{
-				case AlbumSortRule.Name:
-					return OrderByAlbumName(query, languagePreference);
-				case AlbumSortRule.CollectionCount:
-					return query.OrderByDescending(a => a.Album.UserCollections.Count);
-				case AlbumSortRule.ReleaseDate:
-					return query
-						.WhereHasReleaseDate()
-						.OrderByReleaseDate();
-				case AlbumSortRule.ReleaseDateWithNulls:
-					return query.OrderByReleaseDate();
-				case AlbumSortRule.AdditionDate:
-					return query.OrderByDescending(a => a.Album.CreateDate);
-				case AlbumSortRule.RatingAverage:
-					return query.OrderByDescending(a => a.Album.RatingAverageInt)
-						.ThenByDescending(a => a.Album.RatingCount);
-				case AlbumSortRule.RatingTotal:
-					return query.OrderByDescending(a => a.Album.RatingTotal)
-						.ThenByDescending(a => a.Album.RatingAverageInt);
-				case AlbumSortRule.NameThenReleaseDate:
-					return OrderByAlbumName(query, languagePreference)
-						.ThenBy(a => a.Album.OriginalRelease.ReleaseDate.Year)
-						.ThenBy(a => a.Album.OriginalRelease.ReleaseDate.Month)
-						.ThenBy(a => a.Album.OriginalRelease.ReleaseDate.Day);
-			}
-
-			return query;
-		}
+			AlbumSortRule.Name => OrderByAlbumName(query, languagePreference),
+			AlbumSortRule.CollectionCount => query.OrderByDescending(a => a.Album.UserCollections.Count),
+			AlbumSortRule.ReleaseDate => query.WhereHasReleaseDate().OrderByReleaseDate(),
+			AlbumSortRule.ReleaseDateWithNulls => query.OrderByReleaseDate(),
+			AlbumSortRule.AdditionDate => query.OrderByDescending(a => a.Album.CreateDate),
+			AlbumSortRule.RatingAverage => query.OrderByDescending(a => a.Album.RatingAverageInt).ThenByDescending(a => a.Album.RatingCount),
+			AlbumSortRule.RatingTotal => query.OrderByDescending(a => a.Album.RatingTotal).ThenByDescending(a => a.Album.RatingAverageInt),
+			AlbumSortRule.NameThenReleaseDate => OrderByAlbumName(query, languagePreference).ThenBy(a => a.Album.OriginalRelease.ReleaseDate.Year).ThenBy(a => a.Album.OriginalRelease.ReleaseDate.Month).ThenBy(a => a.Album.OriginalRelease.ReleaseDate.Day),
+			_ => query,
+		};
 
 		public static IQueryable<AlbumForUser> OrderByReleaseDate(this IQueryable<AlbumForUser> query)
 		{

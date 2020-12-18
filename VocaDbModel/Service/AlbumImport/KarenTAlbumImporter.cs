@@ -81,26 +81,16 @@ namespace VocaDb.Model.Service.AlbumImport
 			return new MikuDbAlbumContract(data) { CoverPicture = coverPic, SourceUrl = url };
 		}
 
-		private string GetVocalistName(string portraitImg)
+		private string GetVocalistName(string portraitImg) => portraitImg switch
 		{
-			switch (portraitImg)
-			{
-				case "/modpub/images/ico/ico_cv_1.png":
-					return "Hatsune Miku";
-				case "/modpub/images/ico/ico_cv_2.png":
-					return "Kagamine Rin";
-				case "/modpub/images/ico/ico_cv_3.png":
-					return "Kagamine Len";
-				case "/modpub/images/ico/ico_cv_4.png":
-					return "Megurine Luka";
-				case "/modpub/images/ico/ico_cv_5.png":
-					return "MEIKO";
-				case "/modpub/images/ico/ico_cv_6.png":
-					return "KAITO";
-				default:
-					return null;
-			}
-		}
+			"/modpub/images/ico/ico_cv_1.png" => "Hatsune Miku",
+			"/modpub/images/ico/ico_cv_2.png" => "Kagamine Rin",
+			"/modpub/images/ico/ico_cv_3.png" => "Kagamine Len",
+			"/modpub/images/ico/ico_cv_4.png" => "Megurine Luka",
+			"/modpub/images/ico/ico_cv_5.png" => "MEIKO",
+			"/modpub/images/ico/ico_cv_6.png" => "KAITO",
+			_ => null,
+		};
 
 		private HtmlNode GetInfoElem(HtmlNodeCollection nodes, string title)
 		{

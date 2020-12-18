@@ -199,21 +199,15 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			var term = GetTerm(trimmed, "id", "tag", "artist-tag", "artist-type", "publish-date");
 
-			switch (term?.PropertyName)
+			return (term?.PropertyName) switch
 			{
-				case "tag":
-					return new ParsedSongQuery { TagName = term.Value };
-				case "artist-tag":
-					return new ParsedSongQuery { ArtistTag = term.Value };
-				case "artist-type":
-					return new ParsedSongQuery { ArtistType = EnumVal<ArtistType>.ParseSafe(term.Value, ArtistType.Unknown) };
-				case "id":
-					return new ParsedSongQuery { Id = PrimitiveParseHelper.ParseIntOrDefault(term.Value, 0) };
-				case "publish-date":
-					return ParseDateRange(term.Value);
-				default:
-					return ParseReferenceQuery(trimmed, query) ?? new ParsedSongQuery { Name = textQuery };
-			}
+				"tag" => new ParsedSongQuery { TagName = term.Value },
+				"artist-tag" => new ParsedSongQuery { ArtistTag = term.Value },
+				"artist-type" => new ParsedSongQuery { ArtistType = EnumVal<ArtistType>.ParseSafe(term.Value, ArtistType.Unknown) },
+				"id" => new ParsedSongQuery { Id = PrimitiveParseHelper.ParseIntOrDefault(term.Value, 0) },
+				"publish-date" => ParseDateRange(term.Value),
+				_ => ParseReferenceQuery(trimmed, query) ?? new ParsedSongQuery { Name = textQuery },
+			};
 		}
 
 		public SongSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference, IEntryUrlParser entryUrlParser)

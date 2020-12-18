@@ -10,20 +10,13 @@ namespace VocaDb.Model.Domain.Users
 	/// </summary>
 	public class FavoriteSongForUser : ISongLink, IEntryWithIntId
 	{
-		public static int GetRatingScore(SongVoteRating rating)
+		public static int GetRatingScore(SongVoteRating rating) => rating switch
 		{
-			switch (rating)
-			{
-				case SongVoteRating.Favorite:
-					return 3;
-				case SongVoteRating.Like:
-					return 2;
-				case SongVoteRating.Dislike:
-					return -1;
-				default:
-					return 0;
-			}
-		}
+			SongVoteRating.Favorite => 3,
+			SongVoteRating.Like => 2,
+			SongVoteRating.Dislike => -1,
+			_ => 0,
+		};
 
 		private Song song;
 		private User user;

@@ -28,20 +28,13 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public override string this[ContentLanguageSelection language]
 		{
-			get
+			get => language switch
 			{
-				switch (language)
-				{
-					case ContentLanguageSelection.English:
-						return English;
-					case ContentLanguageSelection.Japanese:
-						return Japanese;
-					case ContentLanguageSelection.Romaji:
-						return Romaji;
-					default:
-						return Default;
-				}
-			}
+				ContentLanguageSelection.English => English,
+				ContentLanguageSelection.Japanese => Japanese,
+				ContentLanguageSelection.Romaji => Romaji,
+				_ => Default,
+			};
 			set
 			{
 				switch (language)

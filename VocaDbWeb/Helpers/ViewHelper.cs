@@ -284,32 +284,18 @@ namespace VocaDb.Web.Helpers
 			return DependencyResolver.Current.GetService<MarkdownParser>().GetPlainText(markdown);
 		}
 
-		public static string VideoServiceLinkUrl(this HtmlHelper htmlHelper, PVService service)
+		public static string VideoServiceLinkUrl(this HtmlHelper htmlHelper, PVService service) => service switch
 		{
-			switch (service)
-			{
-				case PVService.Bandcamp:
-					return UrlHelper.GenerateContentUrl("~/Content/ExtIcons/bandcamp.png", new HttpContextWrapper(HttpContext.Current));
-				case PVService.Bilibili:
-					return UrlHelper.GenerateContentUrl("~/Content/ExtIcons/bilibili.png", new HttpContextWrapper(HttpContext.Current));
-				case PVService.File:
-				case PVService.LocalFile:
-					return UrlHelper.GenerateContentUrl("~/Content/Icons/music.png", new HttpContextWrapper(HttpContext.Current));
-				case PVService.NicoNicoDouga:
-					return UrlHelper.GenerateContentUrl("~/Content/nico.png", new HttpContextWrapper(HttpContext.Current));
-				case PVService.Piapro:
-					return UrlHelper.GenerateContentUrl("~/Content/ExtIcons/piapro.png", new HttpContextWrapper(HttpContext.Current));
-				case PVService.SoundCloud:
-					return UrlHelper.GenerateContentUrl("~/Content/Icons/soundcloud.png", new HttpContextWrapper(HttpContext.Current));
-				case PVService.Youtube:
-					return UrlHelper.GenerateContentUrl("~/Content/youtube.png", new HttpContextWrapper(HttpContext.Current));
-				case PVService.Vimeo:
-					return UrlHelper.GenerateContentUrl("~/Content/ExtIcons/vimeo.png", new HttpContextWrapper(HttpContext.Current));
-				case PVService.Creofuga:
-					return UrlHelper.GenerateContentUrl("~/Content/ExtIcons/creofuga.png", new HttpContextWrapper(HttpContext.Current));
-				default:
-					return string.Empty;
-			}
-		}
+			PVService.Bandcamp => UrlHelper.GenerateContentUrl("~/Content/ExtIcons/bandcamp.png", new HttpContextWrapper(HttpContext.Current)),
+			PVService.Bilibili => UrlHelper.GenerateContentUrl("~/Content/ExtIcons/bilibili.png", new HttpContextWrapper(HttpContext.Current)),
+			PVService.File or PVService.LocalFile => UrlHelper.GenerateContentUrl("~/Content/Icons/music.png", new HttpContextWrapper(HttpContext.Current)),
+			PVService.NicoNicoDouga => UrlHelper.GenerateContentUrl("~/Content/nico.png", new HttpContextWrapper(HttpContext.Current)),
+			PVService.Piapro => UrlHelper.GenerateContentUrl("~/Content/ExtIcons/piapro.png", new HttpContextWrapper(HttpContext.Current)),
+			PVService.SoundCloud => UrlHelper.GenerateContentUrl("~/Content/Icons/soundcloud.png", new HttpContextWrapper(HttpContext.Current)),
+			PVService.Youtube => UrlHelper.GenerateContentUrl("~/Content/youtube.png", new HttpContextWrapper(HttpContext.Current)),
+			PVService.Vimeo => UrlHelper.GenerateContentUrl("~/Content/ExtIcons/vimeo.png", new HttpContextWrapper(HttpContext.Current)),
+			PVService.Creofuga => UrlHelper.GenerateContentUrl("~/Content/ExtIcons/creofuga.png", new HttpContextWrapper(HttpContext.Current)),
+			_ => string.Empty,
+		};
 	}
 }

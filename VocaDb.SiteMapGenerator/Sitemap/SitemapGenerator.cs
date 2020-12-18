@@ -23,24 +23,15 @@ namespace VocaDb.SiteMapGenerator.Sitemap
 			);
 		}
 
-		private string GenerateEntryUrl(EntryType entryType, EntryReference id)
+		private string GenerateEntryUrl(EntryType entryType, EntryReference id) => entryType switch
 		{
-			switch (entryType)
-			{
-				case EntryType.Album:
-					return $"{siteRoot}Al/{id.Id}";
-				case EntryType.Artist:
-					return $"{siteRoot}Ar/{id.Id}";
-				case EntryType.ReleaseEvent:
-					return $"{siteRoot}E/{id.Id}/{id.UrlSlug}";
-				case EntryType.Song:
-					return $"{siteRoot}S/{id.Id}";
-				case EntryType.Tag:
-					return $"{siteRoot}T/{id.Id}/{id.UrlSlug}";
-			}
-
-			return string.Empty;
-		}
+			EntryType.Album => $"{siteRoot}Al/{id.Id}",
+			EntryType.Artist => $"{siteRoot}Ar/{id.Id}",
+			EntryType.ReleaseEvent => $"{siteRoot}E/{id.Id}/{id.UrlSlug}",
+			EntryType.Song => $"{siteRoot}S/{id.Id}",
+			EntryType.Tag => $"{siteRoot}T/{id.Id}/{id.UrlSlug}",
+			_ => string.Empty,
+		};
 
 		private IEnumerable<XElement> CreateUrlElements(Dictionary<EntryType, IEnumerable<EntryReference>> entries)
 		{

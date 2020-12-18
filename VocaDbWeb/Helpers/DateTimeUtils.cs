@@ -31,15 +31,12 @@ namespace VocaDb.Web.Helpers
 			var quantity = int.Parse(match.Groups[1].Value);
 			var unit = (match.Groups.Count >= 3 ? match.Groups[2].Value : string.Empty).ToLowerInvariant();
 
-			switch (unit)
+			return unit switch
 			{
-				case "d":
-					return TimeSpan.FromDays(quantity);
-				case "m":
-					return TimeSpan.FromMinutes(quantity);
-				default:
-					return TimeSpan.FromHours(quantity);
-			}
+				"d" => TimeSpan.FromDays(quantity),
+				"m" => TimeSpan.FromMinutes(quantity),
+				_ => TimeSpan.FromHours(quantity),
+			};
 		}
 	}
 }

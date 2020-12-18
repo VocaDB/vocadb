@@ -26,18 +26,11 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		}
 
 		public static IQueryable<T> WhereHasLink<T, TLink>(this IQueryable<T> query, string url, NameMatchMode matchMode)
-			where T : IEntryWithLinks<TLink> where TLink : WebLink
+			where T : IEntryWithLinks<TLink> where TLink : WebLink => matchMode switch
 		{
-			switch (matchMode)
-			{
-				case NameMatchMode.StartsWith:
-					return query.Where(e => e.WebLinks.Any(l => l.Url.StartsWith(url)));
-				case NameMatchMode.Partial:
-				case NameMatchMode.Words:
-					return query.Where(e => e.WebLinks.Any(l => l.Url.Contains(url)));
-				default:
-					return query.Where(e => e.WebLinks.Any(l => l.Url == url));
-			}
-		}
+			NameMatchMode.StartsWith => query.Where(e => e.WebLinks.Any(l => l.Url.StartsWith(url))),
+			NameMatchMode.Partial or NameMatchMode.Words => query.Where(e => e.WebLinks.Any(l => l.Url.Contains(url))),
+			_ => query.Where(e => e.WebLinks.Any(l => l.Url == url)),
+		};
 	}
 }

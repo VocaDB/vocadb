@@ -14,21 +14,14 @@ namespace VocaDb.Model.Service.Helpers
 	{
 		public const int MaxSearchWords = 10;
 
-		private static Expression<Func<T, string>> OrderByExpression<T>(ContentLanguagePreference languagePreference) where T : IEntryWithNames
+		private static Expression<Func<T, string>> OrderByExpression<T>(ContentLanguagePreference languagePreference) where T : IEntryWithNames => languagePreference switch
 		{
-			switch (languagePreference)
-			{
-				case ContentLanguagePreference.Japanese:
-					return e => e.Names.SortNames.Japanese;
-				case ContentLanguagePreference.English:
-					return e => e.Names.SortNames.English;
-				case ContentLanguagePreference.Romaji:
-					return e => e.Names.SortNames.Romaji;
-				default:
-					// Note: the Default name field is not mapped to database so we're selecting it here dynamically. There is some small performance penalty.
-					return e => e.Names.SortNames.DefaultLanguage == ContentLanguageSelection.English ? e.Names.SortNames.English : (e.Names.SortNames.DefaultLanguage == ContentLanguageSelection.Romaji ? e.Names.SortNames.Romaji : e.Names.SortNames.Japanese);
-			}
-		}
+			ContentLanguagePreference.Japanese => e => e.Names.SortNames.Japanese,
+			ContentLanguagePreference.English => e => e.Names.SortNames.English,
+			ContentLanguagePreference.Romaji => e => e.Names.SortNames.Romaji,
+			// Note: the Default name field is not mapped to database so we're selecting it here dynamically. There is some small performance penalty.
+			_ => e => e.Names.SortNames.DefaultLanguage == ContentLanguageSelection.English ? e.Names.SortNames.English : (e.Names.SortNames.DefaultLanguage == ContentLanguageSelection.Romaji ? e.Names.SortNames.Romaji : e.Names.SortNames.Japanese),
+		};
 
 		public static IOrderedQueryable<T> AddNameOrder<T>(IQueryable<T> criteria, ContentLanguagePreference languagePreference) where T : IEntryWithNames
 		{

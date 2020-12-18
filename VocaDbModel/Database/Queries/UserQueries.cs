@@ -103,22 +103,13 @@ namespace VocaDb.Model.Database.Queries
 			get { return entryLinkFactory; }
 		}
 
-		private IQueryable<User> AddOrder(IQueryable<User> query, UserSortRule sortRule)
+		private IQueryable<User> AddOrder(IQueryable<User> query, UserSortRule sortRule) => sortRule switch
 		{
-			switch (sortRule)
-			{
-				case UserSortRule.Name:
-					return query.OrderBy(u => u.Name);
-				case UserSortRule.RegisterDate:
-					return query.OrderBy(u => u.CreateDate);
-				case UserSortRule.Group:
-					return query
-						.OrderBy(u => u.GroupId)
-						.ThenBy(u => u.Name);
-			}
-
-			return query;
-		}
+			UserSortRule.Name => query.OrderBy(u => u.Name),
+			UserSortRule.RegisterDate => query.OrderBy(u => u.CreateDate),
+			UserSortRule.Group => query.OrderBy(u => u.GroupId).ThenBy(u => u.Name),
+			_ => query,
+		};
 
 		private UserReport CreateReport(IDatabaseContext ctx, User reportedUser, UserReportType reportType, string hostname, string notes)
 		{
@@ -595,15 +586,12 @@ namespace VocaDb.Model.Database.Queries
 			if (result == null)
 				return "error";
 
-			switch (result.Conclusion)
+			return result.Conclusion switch
 			{
-				case SFSCheckResultType.Malicious:
-					return $"Malicious ({result.Confidence} % confidence)";
-				case SFSCheckResultType.Uncertain:
-					return $"Uncertain ({result.Confidence} % confidence)";
-				default:
-					return "Ok";
-			}
+				SFSCheckResultType.Malicious => $"Malicious ({result.Confidence} % confidence)",
+				SFSCheckResultType.Uncertain => $"Uncertain ({result.Confidence} % confidence)",
+				_ => "Ok",
+			};
 		}
 
 		/// <summary>

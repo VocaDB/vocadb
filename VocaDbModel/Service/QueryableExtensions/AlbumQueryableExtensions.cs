@@ -24,51 +24,27 @@ namespace VocaDb.Model.Service.QueryableExtensions
 				.ThenBy(a => a.OriginalRelease.ReleaseDate.Day, direction);
 		}
 
-		public static IQueryable<Album> OrderBy(this IQueryable<Album> criteria, AlbumSortRule sortRule, ContentLanguagePreference languagePreference)
+		public static IQueryable<Album> OrderBy(this IQueryable<Album> criteria, AlbumSortRule sortRule, ContentLanguagePreference languagePreference) => sortRule switch
 		{
-			switch (sortRule)
-			{
-				case AlbumSortRule.Name:
-					return FindHelpers.AddNameOrder(criteria, languagePreference);
-				case AlbumSortRule.CollectionCount:
-					return criteria.OrderByDescending(a => a.UserCollections.Count);
-				case AlbumSortRule.ReleaseDate:
-					return criteria.OrderByReleaseDate(SortDirection.Descending);
-				case AlbumSortRule.ReleaseDateWithNulls:
-					return criteria.OrderByReleaseDate(SortDirection.Descending);
-				case AlbumSortRule.AdditionDate:
-					return criteria.OrderByDescending(a => a.CreateDate);
-				case AlbumSortRule.RatingAverage:
-					return criteria.OrderByDescending(a => a.RatingAverageInt)
-						.ThenByDescending(a => a.RatingCount);
-				case AlbumSortRule.RatingTotal:
-					return criteria.OrderByDescending(a => a.RatingTotal)
-						.ThenByDescending(a => a.RatingAverageInt);
-				case AlbumSortRule.NameThenReleaseDate:
-					return FindHelpers.AddNameOrder(criteria, languagePreference)
-						.ThenBy(a => a.OriginalRelease.ReleaseDate.Year)
-						.ThenBy(a => a.OriginalRelease.ReleaseDate.Month)
-						.ThenBy(a => a.OriginalRelease.ReleaseDate.Day);
-			}
-
-			return criteria;
-		}
+			AlbumSortRule.Name => FindHelpers.AddNameOrder(criteria, languagePreference),
+			AlbumSortRule.CollectionCount => criteria.OrderByDescending(a => a.UserCollections.Count),
+			AlbumSortRule.ReleaseDate => criteria.OrderByReleaseDate(SortDirection.Descending),
+			AlbumSortRule.ReleaseDateWithNulls => criteria.OrderByReleaseDate(SortDirection.Descending),
+			AlbumSortRule.AdditionDate => criteria.OrderByDescending(a => a.CreateDate),
+			AlbumSortRule.RatingAverage => criteria.OrderByDescending(a => a.RatingAverageInt).ThenByDescending(a => a.RatingCount),
+			AlbumSortRule.RatingTotal => criteria.OrderByDescending(a => a.RatingTotal).ThenByDescending(a => a.RatingAverageInt),
+			AlbumSortRule.NameThenReleaseDate => FindHelpers.AddNameOrder(criteria, languagePreference).ThenBy(a => a.OriginalRelease.ReleaseDate.Year).ThenBy(a => a.OriginalRelease.ReleaseDate.Month).ThenBy(a => a.OriginalRelease.ReleaseDate.Day),
+			_ => criteria,
+		};
 
 		public static IQueryable<Album> OrderBy(
-			this IQueryable<Album> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction)
+			this IQueryable<Album> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction) => sortRule switch
 		{
-			switch (sortRule)
-			{
-				case EntrySortRule.Name:
-					return FindHelpers.AddNameOrder(query, languagePreference);
-				case EntrySortRule.AdditionDate:
-					return query.OrderByDescending(a => a.CreateDate);
-				case EntrySortRule.ActivityDate:
-					return query.OrderByReleaseDate(direction ?? SortDirection.Descending);
-			}
-
-			return query;
-		}
+			EntrySortRule.Name => FindHelpers.AddNameOrder(query, languagePreference),
+			EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
+			EntrySortRule.ActivityDate => query.OrderByReleaseDate(direction ?? SortDirection.Descending),
+			_ => query,
+		};
 
 		public static IQueryable<Album> WhereArtistHasType(this IQueryable<Album> query, ArtistType artistType)
 		{
@@ -244,16 +220,10 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		/// Makes sure that the query is filtered by restrictions of the sort rule.
 		/// This can be used to separate the filtering from the actual sorting, when sorting is not needed (for example, only count is needed).
 		/// </summary>
-		public static IQueryable<Album> WhereSortBy(this IQueryable<Album> query, AlbumSortRule sort)
+		public static IQueryable<Album> WhereSortBy(this IQueryable<Album> query, AlbumSortRule sort) => sort switch
 		{
-			switch (sort)
-			{
-				case AlbumSortRule.ReleaseDate:
-					return query.WhereHasReleaseDate();
-
-				default:
-					return query;
-			}
-		}
+			AlbumSortRule.ReleaseDate => query.WhereHasReleaseDate(),
+			_ => query,
+		};
 	}
 }

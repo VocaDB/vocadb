@@ -259,17 +259,14 @@ namespace VocaDb.Web.Helpers
 			return UserEmailOptionsNames.ResourceManager.GetString(emailOptions.ToString());
 		}
 
-		public static string EntrySubTypeName(EntryTypeAndSubType fullEntryType)
+		public static string EntrySubTypeName(EntryTypeAndSubType fullEntryType) => fullEntryType.EntryType switch
 		{
-			return fullEntryType.EntryType switch
-			{
-				EntryType.Album => DiscTypeName(EnumVal<DiscType>.Parse(fullEntryType.SubType)),
-				EntryType.Artist => ArtistTypeName(EnumVal<ArtistType>.Parse(fullEntryType.SubType)),
-				EntryType.ReleaseEvent => ReleaseEventCategoryNames[EnumVal<EventCategory>.Parse(fullEntryType.SubType)],
-				EntryType.Song => SongTypeNames[EnumVal<SongType>.Parse(fullEntryType.SubType)],
-				_ => string.Empty,
-			};
-		}
+			EntryType.Album => DiscTypeName(EnumVal<DiscType>.Parse(fullEntryType.SubType)),
+			EntryType.Artist => ArtistTypeName(EnumVal<ArtistType>.Parse(fullEntryType.SubType)),
+			EntryType.ReleaseEvent => ReleaseEventCategoryNames[EnumVal<EventCategory>.Parse(fullEntryType.SubType)],
+			EntryType.Song => SongTypeNames[EnumVal<SongType>.Parse(fullEntryType.SubType)],
+			_ => string.Empty,
+		};
 
 		public static string SongArchiveReason(SongArchiveReason reason)
 		{

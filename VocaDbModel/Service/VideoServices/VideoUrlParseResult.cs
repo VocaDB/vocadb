@@ -7,26 +7,14 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class VideoUrlParseResult
 	{
-		public static VideoParseException GetException(VideoUrlParseResultType resultType, string url)
+		public static VideoParseException GetException(VideoUrlParseResultType resultType, string url) => resultType switch
 		{
-			switch (resultType)
-			{
-				case VideoUrlParseResultType.NoMatcher:
-					return new VideoParseException($"No matcher defined (url {url})");
-
-				case VideoUrlParseResultType.LoadError:
-					return new VideoParseException($"Unable to load metadata (url {url})");
-
-				case VideoUrlParseResultType.Duplicate:
-					return new VideoParseException($"Duplicate entry (url {url})");
-
-				case VideoUrlParseResultType.OtherError:
-					return new VideoParseException($"Unable to process PV link (url {url})");
-
-				default:
-					return null;
-			}
-		}
+			VideoUrlParseResultType.NoMatcher => new VideoParseException($"No matcher defined (url {url})"),
+			VideoUrlParseResultType.LoadError => new VideoParseException($"Unable to load metadata (url {url})"),
+			VideoUrlParseResultType.Duplicate => new VideoParseException($"Duplicate entry (url {url})"),
+			VideoUrlParseResultType.OtherError => new VideoParseException($"Unable to process PV link (url {url})"),
+			_ => null,
+		};
 
 		private VideoUrlParseResult(VideoUrlParseResultType resultType, string url, VideoParseException exception)
 		{
