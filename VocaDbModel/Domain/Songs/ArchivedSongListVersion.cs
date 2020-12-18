@@ -30,14 +30,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual EntryEditEvent CommonEditEvent { get; set; }
 
-		public override IEntryDiff DiffBase
-		{
-			get { return Diff; }
-		}
+		public override IEntryDiff DiffBase => Diff;
 
 		public virtual SongListDiff Diff
 		{
-			get { return diff; }
+			get => diff;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -45,19 +42,13 @@ namespace VocaDb.Model.Domain.Songs
 			}
 		}
 
-		public override EntryEditEvent EditEvent
-		{
-			get { return CommonEditEvent; }
-		}
+		public override EntryEditEvent EditEvent => CommonEditEvent;
 
-		public override IEntryWithNames EntryBase
-		{
-			get { return SongList; }
-		}
+		public override IEntryWithNames EntryBase => SongList;
 
 		public virtual SongList SongList
 		{
-			get { return songList; }
+			get => songList;
 			set
 			{
 				ParamIs.NotNull(() => value);

@@ -22,7 +22,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual Tag OwnerTag
 		{
-			get { return ownerTag; }
+			get => ownerTag;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -32,7 +32,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual Tag LinkedTag
 		{
-			get { return linkedTag; }
+			get => linkedTag;
 			set
 			{
 				ParamIs.NotNull(() => value);

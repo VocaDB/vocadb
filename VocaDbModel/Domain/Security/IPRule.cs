@@ -25,7 +25,7 @@ namespace VocaDb.Model.Domain.Security
 
 		public virtual string Address
 		{
-			get { return address; }
+			get => address;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -39,7 +39,7 @@ namespace VocaDb.Model.Domain.Security
 
 		public virtual string Notes
 		{
-			get { return notes; }
+			get => notes;
 			set
 			{
 				ParamIs.NotNull(() => value);

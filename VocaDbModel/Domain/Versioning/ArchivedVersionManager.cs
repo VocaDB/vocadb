@@ -25,7 +25,7 @@ namespace VocaDb.Model.Domain.Versioning
 
 		public virtual IList<TVersion> Versions
 		{
-			get { return archivedVersions; }
+			get => archivedVersions;
 			set
 			{
 				ParamIs.NotNull(() => value);

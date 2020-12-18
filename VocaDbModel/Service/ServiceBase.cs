@@ -55,25 +55,13 @@ namespace VocaDb.Model.Service
 			return (PermissionContext.LoggedUser != null ? session.Load<User>(PermissionContext.LoggedUser.Id) : null);
 		}
 
-		protected IEntryLinkFactory EntryLinkFactory
-		{
-			get { return entryLinkFactory; }
-		}
+		protected IEntryLinkFactory EntryLinkFactory => entryLinkFactory;
 
-		protected ContentLanguagePreference LanguagePreference
-		{
-			get { return PermissionContext.LanguagePreference; }
-		}
+		protected ContentLanguagePreference LanguagePreference => PermissionContext.LanguagePreference;
 
-		protected IUserPermissionContext PermissionContext
-		{
-			get { return permissionContext; }
-		}
+		protected IUserPermissionContext PermissionContext => permissionContext;
 
-		protected ISessionFactory SessionFactory
-		{
-			get { return sessionFactory; }
-		}
+		protected ISessionFactory SessionFactory => sessionFactory;
 
 		protected void AddActivityfeedEntry(ISession session, ActivityEntry entry)
 		{

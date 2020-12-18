@@ -18,8 +18,8 @@ namespace VocaDb.Model.Domain
 
 		public virtual int Agent
 		{
-			get { return agent; }
-			set { agent = value; }
+			get => agent;
+			set => agent = value;
 		}
 
 		/// <summary>
@@ -42,7 +42,7 @@ namespace VocaDb.Model.Domain
 
 		public virtual TEntry Entry
 		{
-			get { return entry; }
+			get => entry;
 			set
 			{
 				ParamIs.NotNull(() => value);

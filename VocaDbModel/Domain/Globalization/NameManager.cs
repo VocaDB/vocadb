@@ -69,7 +69,7 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual string AdditionalNamesString
 		{
-			get { return additionalNamesString; }
+			get => additionalNamesString;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -102,7 +102,7 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual IList<T> Names
 		{
-			get { return names; }
+			get => names;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -110,14 +110,11 @@ namespace VocaDb.Model.Domain.Globalization
 			}
 		}
 
-		public virtual IEnumerable<LocalizedStringWithId> NamesBase
-		{
-			get { return Names; }
-		}
+		public virtual IEnumerable<LocalizedStringWithId> NamesBase => Names;
 
 		public virtual TranslatedString SortNames
 		{
-			get { return sortNames; }
+			get => sortNames;
 			set
 			{
 				ParamIs.NotNull(() => value);

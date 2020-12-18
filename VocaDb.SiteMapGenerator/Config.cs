@@ -11,19 +11,10 @@ namespace VocaDb.SiteMapGenerator
 			return ConfigurationManager.AppSettings[key] ?? def;
 		}
 
-		public string OutFolder
-		{
-			get { return AppSetting("outFolder", string.Empty); }
-		}
+		public string OutFolder => AppSetting("outFolder", string.Empty);
 
-		public string SiteRootUrl
-		{
-			get { return AppSetting("siteRootUrl", "http://vocadb.net/"); }
-		}
+		public string SiteRootUrl => AppSetting("siteRootUrl", "http://vocadb.net/");
 
-		public string SitemapRootUrl
-		{
-			get { return AppSetting("sitemapRootUrl", "http://static.vocadb.net/sitemaps/"); }
-		}
+		public string SitemapRootUrl => AppSetting("sitemapRootUrl", "http://static.vocadb.net/sitemaps/");
 	}
 }

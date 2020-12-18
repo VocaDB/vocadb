@@ -15,10 +15,7 @@ namespace VocaDb.Web.Controllers
 	{
 		private readonly MikuDbAlbumService service;
 
-		private MikuDbAlbumService Service
-		{
-			get { return service; }
-		}
+		private MikuDbAlbumService Service => service;
 
 		public MikuDbAlbumController(MikuDbAlbumService service)
 		{

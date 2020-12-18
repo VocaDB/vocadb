@@ -192,10 +192,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			return matcher.IsMatch(url);
 		}
 
-		public string ServiceName
-		{
-			get { return "KarenT"; }
-		}
+		public string ServiceName => "KarenT";
 
 		public override string ToString()
 		{

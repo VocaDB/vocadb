@@ -11,13 +11,7 @@ namespace VocaDb.Web.Helpers
 {
 	public static class PVHelper
 	{
-		private static PVService? PreferredVideoService
-		{
-			get
-			{
-				return MvcApplication.LoginManager.IsLoggedIn ? (PVService?)MvcApplication.LoginManager.LoggedUser.PreferredVideoService : null;
-			}
-		}
+		private static PVService? PreferredVideoService => MvcApplication.LoginManager.IsLoggedIn ? (PVService?)MvcApplication.LoginManager.LoggedUser.PreferredVideoService : null;
 
 		public static PVContract[] GetMainPVs(PVContract[] allPvs)
 		{

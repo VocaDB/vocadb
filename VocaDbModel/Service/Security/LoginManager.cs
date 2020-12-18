@@ -87,13 +87,7 @@ namespace VocaDb.Model.Service.Security
 			return (LoggedUser.EffectivePermissions.Contains(token));
 		}
 
-		public bool IsLoggedIn
-		{
-			get
-			{
-				return (context != null && User != null && User.Identity.IsAuthenticated && User is VocaDbPrincipal);
-			}
-		}
+		public bool IsLoggedIn => (context != null && User != null && User.Identity.IsAuthenticated && User is VocaDbPrincipal);
 
 		public ContentLanguagePreference LanguagePreference => LanguagePreferenceSetting.Value;
 

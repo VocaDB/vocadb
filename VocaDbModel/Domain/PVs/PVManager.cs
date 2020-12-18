@@ -18,7 +18,7 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual IList<T> PVs
 		{
-			get { return pvs; }
+			get => pvs;
 			set
 			{
 				ParamIs.NotNull(() => value);

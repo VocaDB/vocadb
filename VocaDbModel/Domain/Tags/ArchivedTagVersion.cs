@@ -44,7 +44,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual TagDiff Diff
 		{
-			get { return diff; }
+			get => diff;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -58,7 +58,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual Tag Tag
 		{
-			get { return tag; }
+			get => tag;
 			set
 			{
 				ParamIs.NotNull(() => value);

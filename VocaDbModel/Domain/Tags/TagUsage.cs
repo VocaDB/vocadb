@@ -46,7 +46,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual Tag Tag
 		{
-			get { return tag; }
+			get => tag;
 			set
 			{
 				ParamIs.NotNull(() => value);

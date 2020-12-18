@@ -86,13 +86,7 @@ namespace VocaDb.Model.Domain.Users
 			return groups[groupId].Permissions;
 		}
 
-		public static UserGroupId[] GroupIds
-		{
-			get
-			{
-				return EnumVal<UserGroupId>.Values;
-			}
-		}
+		public static UserGroupId[] GroupIds => EnumVal<UserGroupId>.Values;
 
 		public UserGroup(UserGroupId id, UserGroup parent, params PermissionToken[] permissions)
 		{

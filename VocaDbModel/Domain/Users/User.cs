@@ -137,13 +137,7 @@ namespace VocaDb.Model.Domain.Users
 			set => additionalPermissions = value ?? new PermissionCollection();
 		}
 
-		public virtual IEnumerable<AlbumForUser> Albums
-		{
-			get
-			{
-				return AllAlbums.Where(a => !a.Album.Deleted);
-			}
-		}
+		public virtual IEnumerable<AlbumForUser> Albums => AllAlbums.Where(a => !a.Album.Deleted);
 
 		public virtual IList<AlbumForUser> AllAlbums
 		{
@@ -158,13 +152,7 @@ namespace VocaDb.Model.Domain.Users
 		/// <summary>
 		/// List of artists followed by this user. This list does not include deleted entries. Cannot be null.
 		/// </summary>
-		public virtual IEnumerable<ArtistForUser> Artists
-		{
-			get
-			{
-				return AllArtists.Where(a => !a.Artist.Deleted);
-			}
-		}
+		public virtual IEnumerable<ArtistForUser> Artists => AllArtists.Where(a => !a.Artist.Deleted);
 
 		/// <summary>
 		/// List of artists followed by this user. Includes deleted artists. Cannot be null.
@@ -430,13 +418,7 @@ namespace VocaDb.Model.Domain.Users
 		/// <summary>
 		/// List of artists entries for which this user is a verified owner. Does not include deleted artists. Cannot be null.
 		/// </summary>
-		public virtual IEnumerable<OwnedArtistForUser> OwnedArtists
-		{
-			get
-			{
-				return AllOwnedArtists.Where(a => !a.Artist.Deleted);
-			}
-		}
+		public virtual IEnumerable<OwnedArtistForUser> OwnedArtists => AllOwnedArtists.Where(a => !a.Artist.Deleted);
 
 		/// <summary>
 		/// Hashed and salted password.

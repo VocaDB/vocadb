@@ -19,8 +19,8 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual OptionalCultureCode CultureCode
 		{
-			get { return cultureCode ?? (cultureCode = OptionalCultureCode.Empty); }
-			set { cultureCode = value ?? OptionalCultureCode.Empty; }
+			get => cultureCode ?? (cultureCode = OptionalCultureCode.Empty);
+			set => cultureCode = value ?? OptionalCultureCode.Empty;
 		}
 
 		public virtual int Id { get; set; }

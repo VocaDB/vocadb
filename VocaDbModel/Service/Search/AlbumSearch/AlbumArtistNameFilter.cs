@@ -16,10 +16,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 			this.artistNames = artistNames.ToArray();
 		}
 
-		public QueryCost Cost
-		{
-			get { return QueryCost.High; }
-		}
+		public QueryCost Cost => QueryCost.High;
 
 		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session)
 		{

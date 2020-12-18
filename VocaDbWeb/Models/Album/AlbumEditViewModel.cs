@@ -52,35 +52,17 @@ namespace VocaDb.Web.Models.Album
 
 		public string DiscTypeDescriptions { get; set; }
 
-		public bool Draft
-		{
-			get
-			{
-				return Album != null && Album.Status == EntryStatus.Draft;
-			}
-		}
+		public bool Draft => Album != null && Album.Status == EntryStatus.Draft;
 
 		[FromJson]
 		[AllowHtml]
 		public AlbumForEditContract EditedAlbum { get; set; }
 
-		public bool HasCoverPicture
-		{
-			get
-			{
-				return Album != null && !string.IsNullOrEmpty(Album.CoverPictureMime);
-			}
-		}
+		public bool HasCoverPicture => Album != null && !string.IsNullOrEmpty(Album.CoverPictureMime);
 
-		public int Id
-		{
-			get { return Album != null ? Album.Id : 0; }
-		}
+		public int Id => Album != null ? Album.Id : 0;
 
-		public string Name
-		{
-			get { return Album != null ? Album.Name : null; }
-		}
+		public string Name => Album != null ? Album.Name : null;
 
 		public void CheckModel()
 		{

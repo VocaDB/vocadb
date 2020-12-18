@@ -42,7 +42,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual Song Song
 		{
-			get { return song; }
+			get => song;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -52,7 +52,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual User User
 		{
-			get { return user; }
+			get => user;
 			set
 			{
 				ParamIs.NotNull(() => value);

@@ -45,13 +45,13 @@ namespace VocaDb.Model.Domain.Songs
 		/// </summary>
 		public virtual Song Song
 		{
-			get { return song; }
-			set { song = value; }
+			get => song;
+			set => song = value;
 		}
 
 		public virtual Album Album
 		{
-			get { return album; }
+			get => album;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -59,13 +59,7 @@ namespace VocaDb.Model.Domain.Songs
 			}
 		}
 
-		public virtual string SongToStringOrName
-		{
-			get
-			{
-				return Song != null ? Song.ToString() : Name;
-			}
-		}
+		public virtual string SongToStringOrName => Song != null ? Song.ToString() : Name;
 
 		public virtual int TrackNumber { get; set; }
 

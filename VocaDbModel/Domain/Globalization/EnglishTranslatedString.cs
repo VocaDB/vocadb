@@ -44,7 +44,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual string Original
 		{
-			get { return original; }
+			get => original;
 			set
 			{
 				ParamIs.NotNull(() => value);

@@ -18,10 +18,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 			this.term = term;
 		}
 
-		public QueryCost Cost
-		{
-			get { return QueryCost.VeryHigh; }
-		}
+		public QueryCost Cost => QueryCost.VeryHigh;
 
 		public void FilterResults(List<Album> albums, IDatabaseContext session)
 		{

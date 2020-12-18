@@ -16,10 +16,7 @@ namespace VocaDb.Web.Code.Feeds
 		public Encoding ContentEncoding { get; set; }
 		public string ContentType { get; set; }
 
-		public SyndicationFeedFormatter Feed
-		{
-			get { return feed; }
-		}
+		public SyndicationFeedFormatter Feed => feed;
 
 		public FeedResult(SyndicationFeedFormatter feed)
 		{

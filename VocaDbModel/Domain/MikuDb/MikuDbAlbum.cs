@@ -40,8 +40,8 @@ namespace VocaDb.Model.Domain.MikuDb
 
 		public virtual XDocument Data
 		{
-			get { return data; }
-			set { data = value; }
+			get => data;
+			set => data = value;
 		}
 
 		public virtual int Id { get; set; }
@@ -50,16 +50,16 @@ namespace VocaDb.Model.Domain.MikuDb
 
 		public virtual string SourceUrl
 		{
-			get { return sourceUrl; }
-			set { sourceUrl = value; }
+			get => sourceUrl;
+			set => sourceUrl = value;
 		}
 
 		public virtual AlbumStatus Status { get; set; }
 
 		public virtual string Title
 		{
-			get { return title; }
-			set { title = value; }
+			get => title;
+			set => title = value;
 		}
 
 		public virtual bool Equals(MikuDbAlbum another)

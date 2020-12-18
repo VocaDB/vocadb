@@ -76,7 +76,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		/// </summary>
 		public int[] IgnoredIds
 		{
-			get { return ignoredIds; }
+			get => ignoredIds;
 			set
 			{
 				ignoredIds = value ?? new int[] { };
@@ -111,7 +111,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		/// </summary>
 		public SongType[] SongTypes
 		{
-			get { return songTypes; }
+			get => songTypes;
 			set
 			{
 				songTypes = value ?? new SongType[] { };

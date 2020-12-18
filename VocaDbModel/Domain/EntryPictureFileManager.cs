@@ -17,7 +17,7 @@ namespace VocaDb.Model.Domain
 
 		public virtual IList<T> Pictures
 		{
-			get { return pictures; }
+			get => pictures;
 			set
 			{
 				ParamIs.NotNull(() => value);

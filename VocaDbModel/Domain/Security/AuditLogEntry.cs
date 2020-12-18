@@ -34,7 +34,7 @@ namespace VocaDb.Model.Domain.Security
 
 		public virtual string Action
 		{
-			get { return action; }
+			get => action;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
@@ -44,7 +44,7 @@ namespace VocaDb.Model.Domain.Security
 
 		public virtual string AgentName
 		{
-			get { return agentName; }
+			get => agentName;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);

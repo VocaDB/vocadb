@@ -35,7 +35,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual Artist Artist
 		{
-			get { return artist; }
+			get => artist;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -45,7 +45,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual User User
 		{
-			get { return user; }
+			get => user;
 			set
 			{
 				ParamIs.NotNull(() => value);

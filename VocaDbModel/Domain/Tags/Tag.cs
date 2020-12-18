@@ -96,13 +96,7 @@ namespace VocaDb.Model.Domain.Tags
 		/// List of all album tag usages (not including deleted albums) for this tag.
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
 		/// </summary>
-		public virtual IEnumerable<AlbumTagUsage> AlbumTagUsages
-		{
-			get
-			{
-				return AllAlbumTagUsages.Where(a => !a.Entry.Deleted);
-			}
-		}
+		public virtual IEnumerable<AlbumTagUsage> AlbumTagUsages => AllAlbumTagUsages.Where(a => !a.Entry.Deleted);
 
 		/// <summary>
 		/// List of all artist tag usages (including deleted artists) for this tag.
@@ -154,13 +148,7 @@ namespace VocaDb.Model.Domain.Tags
 		/// List of all artist tag usages (not including deleted artists) for this tag.
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
 		/// </summary>
-		public virtual IEnumerable<ArtistTagUsage> ArtistTagUsages
-		{
-			get
-			{
-				return AllArtistTagUsages.Where(a => !a.Entry.Deleted);
-			}
-		}
+		public virtual IEnumerable<ArtistTagUsage> ArtistTagUsages => AllArtistTagUsages.Where(a => !a.Entry.Deleted);
 
 		public virtual string CategoryName
 		{

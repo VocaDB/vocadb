@@ -115,8 +115,8 @@ namespace VocaDb.Model.Domain.Versioning
 
 		public bool IsChanged
 		{
-			get { return val.FlagIsSet(field); }
-			set { val.SetFlag(field, value); }
+			get => val.FlagIsSet(field);
+			set => val.SetFlag(field, value);
 		}
 
 		public void Set(bool value = true)

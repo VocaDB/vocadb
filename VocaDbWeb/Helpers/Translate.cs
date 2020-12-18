@@ -108,13 +108,7 @@ namespace VocaDb.Web.Helpers
 				ArtistSortRule.SongCount, ArtistSortRule.SongRating, ArtistSortRule.FollowerCount
 			});
 
-		public static TranslateableEnum<ArtistType> ArtistTypeNames
-		{
-			get
-			{
-				return new TranslateableEnum<ArtistType>(() => Model.Resources.ArtistTypeNames.ResourceManager);
-			}
-		}
+		public static TranslateableEnum<ArtistType> ArtistTypeNames => new TranslateableEnum<ArtistType>(() => Model.Resources.ArtistTypeNames.ResourceManager);
 
 		public static readonly TranslateableEnum<ContentLanguageSelection> ContentLanguageSelectionNames =
 			new TranslateableEnum<ContentLanguageSelection>(() => global::Resources.ContentLanguageSelectionNames.ResourceManager);

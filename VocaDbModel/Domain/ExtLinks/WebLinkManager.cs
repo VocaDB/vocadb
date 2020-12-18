@@ -18,7 +18,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public virtual IList<T> Links
 		{
-			get { return links; }
+			get => links;
 			set
 			{
 				ParamIs.NotNull(() => value);

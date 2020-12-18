@@ -16,13 +16,7 @@ namespace VocaDb.Model.Domain.Albums
 		public AlbumReport(Album album, AlbumReportType reportType, User user, string hostname, string notes, int? versionNumber)
 			: base(album, reportType, user, hostname, notes, versionNumber) { }
 
-		public virtual ArchivedAlbumVersion Version
-		{
-			get
-			{
-				return VersionNumber.HasValue ? Entry.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
-			}
-		}
+		public virtual ArchivedAlbumVersion Version => VersionNumber.HasValue ? Entry.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
 
 		public override ArchivedObjectVersion VersionBase => Version;
 	}

@@ -132,15 +132,15 @@ namespace VocaDb.Model.Domain.Security
 		[DataMember]
 		public Guid Id
 		{
-			get { return id; }
-			set { id = value; }
+			get => id;
+			set => id = value;
 		}
 
 		[DataMember]
 		public string Name
 		{
-			get { return name; }
-			set { name = value; }
+			get => name;
+			set => name = value;
 		}
 
 		public bool Equals(PermissionToken token)

@@ -16,13 +16,7 @@ namespace VocaDb.Model.Domain.Songs
 		public SongReport(Song song, SongReportType reportType, User user, string hostname, string notes, int? versionNumber)
 			: base(song, reportType, user, hostname, notes, versionNumber) { }
 
-		public virtual ArchivedSongVersion Version
-		{
-			get
-			{
-				return VersionNumber.HasValue ? Entry.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
-			}
-		}
+		public virtual ArchivedSongVersion Version => VersionNumber.HasValue ? Entry.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
 
 		public override ArchivedObjectVersion VersionBase => Version;
 	}

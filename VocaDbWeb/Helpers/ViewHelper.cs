@@ -52,13 +52,7 @@ namespace VocaDb.Web.Helpers
 			}
 		}
 
-		public static SelectList LanguagePreferenceList
-		{
-			get
-			{
-				return new SelectList(LanguagePreferences, "Key", "Value");
-			}
-		}
+		public static SelectList LanguagePreferenceList => new SelectList(LanguagePreferences, "Key", "Value");
 
 		public static IHtmlString ConditionalAttribute(this HtmlHelper html, bool condition, string attributeName, string value)
 		{

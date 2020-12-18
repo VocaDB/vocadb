@@ -42,13 +42,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual string ArtistToStringOrName => Artist?.ToString() ?? Name;
 
-		public virtual ArtistRoles EffectiveRoles
-		{
-			get
-			{
-				return (Roles != ArtistRoles.Default || Artist == null) ? Roles : ArtistHelper.GetOtherArtistRoles(Artist.ArtistType);
-			}
-		}
+		public virtual ArtistRoles EffectiveRoles => (Roles != ArtistRoles.Default || Artist == null) ? Roles : ArtistHelper.GetOtherArtistRoles(Artist.ArtistType);
 
 		public virtual int Id { get; set; }
 

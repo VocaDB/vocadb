@@ -29,7 +29,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual OptionalCultureCode CultureCode
 		{
-			get { return cultureCode ?? (cultureCode = OptionalCultureCode.Empty); }
+			get => cultureCode ?? (cultureCode = OptionalCultureCode.Empty);
 			set
 			{
 				cultureCode = value ?? OptionalCultureCode.Empty;
@@ -40,7 +40,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual string Notes
 		{
-			get { return notes; }
+			get => notes;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -50,7 +50,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Song
 		{
-			get { return song; }
+			get => song;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -60,7 +60,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual string Source
 		{
-			get { return source; }
+			get => source;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -72,7 +72,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual string URL
 		{
-			get { return url; }
+			get => url;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -82,7 +82,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual string Value
 		{
-			get { return value; }
+			get => value;
 			set
 			{
 				ParamIs.NotNull(() => value);

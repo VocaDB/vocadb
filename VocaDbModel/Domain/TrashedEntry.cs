@@ -36,7 +36,7 @@ namespace VocaDb.Model.Domain
 
 		public virtual XDocument Data
 		{
-			get { return data; }
+			get => data;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -58,7 +58,7 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual string Name
 		{
-			get { return name; }
+			get => name;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
@@ -68,7 +68,7 @@ namespace VocaDb.Model.Domain
 
 		public virtual string Notes
 		{
-			get { return notes; }
+			get => notes;
 			protected set
 			{
 				ParamIs.NotNull(() => value);
@@ -81,7 +81,7 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual User User
 		{
-			get { return user; }
+			get => user;
 			set
 			{
 				ParamIs.NotNull(() => value);

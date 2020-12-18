@@ -46,13 +46,7 @@ namespace VocaDb.Model.Service.Translations
 
 		public string this[TEnum val] => GetName(val);
 
-		public IEnumerable<TranslateableEnumField<TEnum>> AllFields
-		{
-			get
-			{
-				return Values.Select(v => new TranslateableEnumField<TEnum>(v, GetName(v)));
-			}
-		}
+		public IEnumerable<TranslateableEnumField<TEnum>> AllFields => Values.Select(v => new TranslateableEnumField<TEnum>(v, GetName(v)));
 
 		public Dictionary<string, string> ValuesAndNamesStrings => GetValuesAndNamesStrings(Values);
 

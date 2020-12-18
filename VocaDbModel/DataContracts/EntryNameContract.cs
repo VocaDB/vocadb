@@ -10,13 +10,7 @@ namespace VocaDb.Model.DataContracts
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryNameContract
 	{
-		public static EntryNameContract Empty
-		{
-			get
-			{
-				return new EntryNameContract(string.Empty);
-			}
-		}
+		public static EntryNameContract Empty => new EntryNameContract(string.Empty);
 
 		public EntryNameContract(string displayName, string additionalNames)
 		{

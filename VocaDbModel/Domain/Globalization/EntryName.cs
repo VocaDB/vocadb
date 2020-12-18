@@ -17,7 +17,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual TEntry Entry
 		{
-			get { return entry; }
+			get => entry;
 			set
 			{
 				ParamIs.NotNull(() => value);

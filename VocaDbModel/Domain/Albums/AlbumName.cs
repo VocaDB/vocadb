@@ -18,7 +18,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual Album Album
 		{
-			get { return album; }
+			get => album;
 			set
 			{
 				ParamIs.NotNull(() => value);

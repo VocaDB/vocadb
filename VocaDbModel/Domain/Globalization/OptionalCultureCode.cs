@@ -37,8 +37,8 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual string CultureCode
 		{
-			get { return cultureCode; }
-			set { cultureCode = value ?? string.Empty; }
+			get => cultureCode;
+			set => cultureCode = value ?? string.Empty;
 		}
 
 		public virtual bool IsEmpty => string.IsNullOrEmpty(CultureCode);

@@ -24,7 +24,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual Album Album
 		{
-			get { return album; }
+			get => album;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -40,7 +40,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual string Name
 		{
-			get { return name; }
+			get => name;
 			set
 			{
 				ParamIs.NotNull(() => value);

@@ -41,7 +41,7 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual T Target
 		{
-			get { return target; }
+			get => target;
 			set
 			{
 				ParamIs.NotNull(() => value);

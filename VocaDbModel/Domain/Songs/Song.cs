@@ -98,7 +98,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<SongInAlbum> AllAlbums
 		{
-			get { return albums; }
+			get => albums;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -108,7 +108,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<Song> AllAlternateVersions
 		{
-			get { return alternateVersions; }
+			get => alternateVersions;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -137,7 +137,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual ArchivedVersionManager<ArchivedSongVersion, SongEditableFields> ArchivedVersionsManager
 		{
-			get { return archivedVersions; }
+			get => archivedVersions;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -224,8 +224,8 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<SongHit> Hits
 		{
-			get { return hits; }
-			set { hits = value; }
+			get => hits;
+			set => hits = value;
 		}
 
 		public virtual int Id { get; set; }
@@ -237,7 +237,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<SongInList> ListLinks
 		{
-			get { return lists; }
+			get => lists;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -247,7 +247,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<LyricsForSong> Lyrics
 		{
-			get { return lyrics; }
+			get => lyrics;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -321,7 +321,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual NameManager<SongName> Names
 		{
-			get { return names; }
+			get => names;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -335,7 +335,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual EnglishTranslatedString Notes
 		{
-			get { return notes; }
+			get => notes;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -423,7 +423,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<FavoriteSongForUser> UserFavorites
 		{
-			get { return userFavorites; }
+			get => userFavorites;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -435,7 +435,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<SongWebLink> WebLinks
 		{
-			get { return webLinks; }
+			get => webLinks;
 			set
 			{
 				ParamIs.NotNull(() => value);

@@ -25,13 +25,7 @@ namespace VocaDb.Model.Service.SongImport
 		private const string playlistItemsFormat =
 			"https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key={0}&playlistId={1}&maxResults={2}&pageToken={3}";
 
-		private string YoutubeApiKey
-		{
-			get
-			{
-				return AppConfig.YoutubeApiKey;
-			}
-		}
+		private string YoutubeApiKey => AppConfig.YoutubeApiKey;
 
 		private string GetId(string url)
 		{

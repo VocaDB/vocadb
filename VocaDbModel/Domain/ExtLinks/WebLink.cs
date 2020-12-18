@@ -106,7 +106,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 		/// </summary>
 		public virtual string Description
 		{
-			get { return description; }
+			get => description;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -117,13 +117,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 		/// <summary>
 		/// Link description if the description is not empty. Otherwise URL.
 		/// </summary>
-		public virtual string DescriptionOrUrl
-		{
-			get
-			{
-				return !string.IsNullOrEmpty(Description) ? Description : Url;
-			}
-		}
+		public virtual string DescriptionOrUrl => !string.IsNullOrEmpty(Description) ? Description : Url;
 
 		public virtual int Id { get; set; }
 
@@ -132,7 +126,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 		/// </summary>
 		public virtual string Url
 		{
-			get { return url; }
+			get => url;
 			set
 			{
 				ParamIs.NotNullOrWhiteSpace(() => value);

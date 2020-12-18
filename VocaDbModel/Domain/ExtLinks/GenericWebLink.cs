@@ -31,7 +31,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public virtual TEntry Entry
 		{
-			get { return entry; }
+			get => entry;
 			set
 			{
 				ParamIs.NotNull(() => value);

@@ -72,13 +72,7 @@ namespace VocaDb.Model.Domain.Artists
 		/// List of albums for this artist (not including deleted). 
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
 		/// </summary>
-		public virtual IEnumerable<ArtistForAlbum> Albums
-		{
-			get
-			{
-				return AllAlbums.Where(a => !a.Album.Deleted);
-			}
-		}
+		public virtual IEnumerable<ArtistForAlbum> Albums => AllAlbums.Where(a => !a.Album.Deleted);
 
 		/// <summary>
 		/// List of all albums for this artist (including deleted). 
@@ -230,13 +224,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual EntryType EntryType => EntryType.Artist;
 
-		public virtual IEnumerable<ArtistForArtist> Groups
-		{
-			get
-			{
-				return AllGroups.Where(g => !g.Parent.Deleted);
-			}
-		}
+		public virtual IEnumerable<ArtistForArtist> Groups => AllGroups.Where(g => !g.Parent.Deleted);
 
 		public virtual int Id { get; set; }
 
@@ -266,10 +254,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual TranslatedString TranslatedName => Names.SortNames;
 
-		public virtual IEnumerable<ArtistForArtist> Members
-		{
-			get { return AllMembers.Where(m => !m.Member.Deleted); }
-		}
+		public virtual IEnumerable<ArtistForArtist> Members => AllMembers.Where(m => !m.Member.Deleted);
 
 		public virtual NameManager<ArtistName> Names
 		{
@@ -318,13 +303,7 @@ namespace VocaDb.Model.Domain.Artists
 		/// List of songs for this artist (not including deleted). 
 		/// Warning: this list can be huge! Avoid traversing the list if possible.
 		/// </summary>
-		public virtual IEnumerable<ArtistForSong> Songs
-		{
-			get
-			{
-				return AllSongs.Where(s => !s.Song.Deleted);
-			}
-		}
+		public virtual IEnumerable<ArtistForSong> Songs => AllSongs.Where(s => !s.Song.Deleted);
 
 		public virtual EntryStatus Status { get; set; }
 

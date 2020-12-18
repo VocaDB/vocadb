@@ -49,10 +49,7 @@ namespace VocaDb.Web.Controllers
 			this.markdownParser = markdownParser;
 		}
 
-		private ArtistService Service
-		{
-			get { return service; }
-		}
+		private ArtistService Service => service;
 
 		public ActionResult ArchivedVersionPicture(int id)
 		{

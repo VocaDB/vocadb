@@ -19,13 +19,7 @@ namespace VocaDb.Web.Code.Security
 		/// <summary>
 		/// Gets a value indicating whether the Twitter consumer key and secret are set in the web.config file.
 		/// </summary>
-		private bool IsTwitterConsumerConfigured
-		{
-			get
-			{
-				return !string.IsNullOrEmpty(AppConfig.TwitterConsumerKey) && !string.IsNullOrEmpty(AppConfig.TwitterConsumerSecret);
-			}
-		}
+		private bool IsTwitterConsumerConfigured => !string.IsNullOrEmpty(AppConfig.TwitterConsumerKey) && !string.IsNullOrEmpty(AppConfig.TwitterConsumerSecret);
 
 		private ServiceProviderDescription SignInWithTwitterServiceDescription
 		{
@@ -67,13 +61,7 @@ namespace VocaDb.Web.Code.Security
 			}
 		}
 
-		public WebConsumer TwitterSignIn
-		{
-			get
-			{
-				return new WebConsumer(SignInWithTwitterServiceDescription, TokenManager);
-			}
-		}
+		public WebConsumer TwitterSignIn => new WebConsumer(SignInWithTwitterServiceDescription, TokenManager);
 
 		public AuthorizedTokenResponse ProcessUserAuthorization(string hostname)
 		{

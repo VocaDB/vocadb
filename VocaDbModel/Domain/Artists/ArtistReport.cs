@@ -16,13 +16,7 @@ namespace VocaDb.Model.Domain.Artists
 		public ArtistReport(Artist artist, ArtistReportType reportType, User user, string hostname, string notes, int? versionNumber)
 			: base(artist, reportType, user, hostname, notes, versionNumber) { }
 
-		public virtual ArchivedArtistVersion Version
-		{
-			get
-			{
-				return VersionNumber.HasValue ? Entry.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
-			}
-		}
+		public virtual ArchivedArtistVersion Version => VersionNumber.HasValue ? Entry.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
 
 		public override ArchivedObjectVersion VersionBase => Version;
 	}

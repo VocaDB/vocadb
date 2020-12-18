@@ -32,7 +32,7 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual TEntry Entry
 		{
-			get { return song; }
+			get => song;
 			set
 			{
 				ParamIs.NotNull(() => value);

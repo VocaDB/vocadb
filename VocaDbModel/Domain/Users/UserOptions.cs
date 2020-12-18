@@ -48,7 +48,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual string AboutMe
 		{
-			get { return aboutMe; }
+			get => aboutMe;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -58,7 +58,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual string AlbumFormatString
 		{
-			get { return albumFormatString; }
+			get => albumFormatString;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -74,7 +74,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual OptionalCultureCode LastLoginCulture
 		{
-			get { return lastLoginCulture ?? (lastLoginCulture = new OptionalCultureCode()); }
+			get => lastLoginCulture ?? (lastLoginCulture = new OptionalCultureCode());
 			set
 			{
 				lastLoginCulture = value ?? OptionalCultureCode.Empty;
@@ -83,7 +83,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual string LastLoginAddress
 		{
-			get { return lastLoginAddress; }
+			get => lastLoginAddress;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -93,7 +93,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual string Location
 		{
-			get { return location; }
+			get => location;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -119,7 +119,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual string Realname
 		{
-			get { return realname; }
+			get => realname;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -142,7 +142,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual string TwitterName
 		{
-			get { return twitterName; }
+			get => twitterName;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -152,7 +152,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual string TwitterOAuthToken
 		{
-			get { return oauthToken; }
+			get => oauthToken;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -162,7 +162,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual string TwitterOAuthTokenSecret
 		{
-			get { return oauthTokenSecret; }
+			get => oauthTokenSecret;
 			set
 			{
 				oauthTokenSecret = value;
@@ -174,7 +174,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual User User
 		{
-			get { return user; }
+			get => user;
 			set
 			{
 				ParamIs.NotNull(() => value);

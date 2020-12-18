@@ -6,13 +6,7 @@ namespace VocaDb.Model.DataContracts.Albums
 {
 	public class RelatedAlbumsContract
 	{
-		public bool Any
-		{
-			get
-			{
-				return ArtistMatches.Any() || LikeMatches.Any() || TagMatches.Any();
-			}
-		}
+		public bool Any => ArtistMatches.Any() || LikeMatches.Any() || TagMatches.Any();
 
 		public AlbumContract[] ArtistMatches { get; set; }
 

@@ -50,13 +50,7 @@ namespace VocaDb.Web.Models.Search
 
 		public EntryType SearchType { get; set; }
 
-		public string SearchTypeName
-		{
-			get
-			{
-				return SearchType != EntryType.Undefined ? SearchType.ToString() : "Anything";
-			}
-		}
+		public string SearchTypeName => SearchType != EntryType.Undefined ? SearchType.ToString() : "Anything";
 
 		public bool? Shuffle { get; set; }
 

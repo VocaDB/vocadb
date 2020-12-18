@@ -21,10 +21,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		private EntryUrlParser entryUrlParser;
 		private SongQueryParams queryParams;
 
-		private TestDatabase Db
-		{
-			get { return TestContainerManager.TestDatabase; }
-		}
+		private TestDatabase Db => TestContainerManager.TestDatabase;
 
 		private void AssertHasSong(PartialFindResult<Song> result, Song expected)
 		{

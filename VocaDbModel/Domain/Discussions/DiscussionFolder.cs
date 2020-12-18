@@ -29,7 +29,7 @@ namespace VocaDb.Model.Domain.Discussions
 		/// </summary>
 		public virtual IList<DiscussionTopic> AllTopics
 		{
-			get { return topics; }
+			get => topics;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -41,7 +41,7 @@ namespace VocaDb.Model.Domain.Discussions
 
 		public virtual string Description
 		{
-			get { return description; }
+			get => description;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -53,7 +53,7 @@ namespace VocaDb.Model.Domain.Discussions
 
 		public virtual string Name
 		{
-			get { return title; }
+			get => title;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -69,13 +69,7 @@ namespace VocaDb.Model.Domain.Discussions
 		/// List of discussion topics for this folder.
 		/// This list does not include deleted topics.
 		/// </summary>
-		public virtual IEnumerable<DiscussionTopic> Topics
-		{
-			get
-			{
-				return AllTopics.Where(t => !t.Deleted);
-			}
-		}
+		public virtual IEnumerable<DiscussionTopic> Topics => AllTopics.Where(t => !t.Deleted);
 
 		public override string ToString()
 		{

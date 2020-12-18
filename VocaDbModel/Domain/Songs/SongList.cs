@@ -162,13 +162,7 @@ namespace VocaDb.Model.Domain.Songs
 			}
 		}
 
-		public virtual IEnumerable<SongInList> SongLinks
-		{
-			get
-			{
-				return AllSongs.Where(s => !s.Song.Deleted);
-			}
-		}
+		public virtual IEnumerable<SongInList> SongLinks => AllSongs.Where(s => !s.Song.Deleted);
 
 		public virtual EntryStatus Status { get; set; }
 

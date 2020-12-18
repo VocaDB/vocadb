@@ -15,13 +15,7 @@ namespace VocaDb.Model.Service
 	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
-		private static string ConnectionStringName
-		{
-			get
-			{
-				return ConfigurationManager.AppSettings["ConnectionStringName"];
-			}
-		}
+		private static string ConnectionStringName => ConfigurationManager.AppSettings["ConnectionStringName"];
 
 		private static string GetConnectionString(string connectionStringName)
 		{

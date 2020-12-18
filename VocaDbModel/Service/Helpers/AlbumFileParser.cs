@@ -159,13 +159,7 @@ namespace VocaDb.Model.Service.Helpers
 			return cols[index];
 		}
 
-		public bool IsConfigured
-		{
-			get
-			{
-				return fieldCols.Any();
-			}
-		}
+		public bool IsConfigured => fieldCols.Any();
 	}
 
 	public class DataRow

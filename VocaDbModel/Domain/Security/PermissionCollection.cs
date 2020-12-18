@@ -51,7 +51,7 @@ namespace VocaDb.Model.Domain.Security
 
 		public ISet<PermissionToken> Permissions
 		{
-			get { return permissions; }
+			get => permissions;
 			protected set
 			{
 				ParamIs.NotNull(() => value);
@@ -59,10 +59,7 @@ namespace VocaDb.Model.Domain.Security
 			}
 		}
 
-		public IEnumerable<PermissionToken> PermissionTokens
-		{
-			get { return permissions; }
-		}
+		public IEnumerable<PermissionToken> PermissionTokens => permissions;
 
 		public IEnumerator<PermissionToken> GetEnumerator()
 		{

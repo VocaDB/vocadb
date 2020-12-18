@@ -98,10 +98,7 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IStopForumSpamClient sfsClient;
 		private readonly IUserIconFactory userIconFactory;
 
-		public IEntryLinkFactory EntryLinkFactory
-		{
-			get { return entryLinkFactory; }
-		}
+		public IEntryLinkFactory EntryLinkFactory => entryLinkFactory;
 
 		private IQueryable<User> AddOrder(IQueryable<User> query, UserSortRule sortRule) => sortRule switch
 		{

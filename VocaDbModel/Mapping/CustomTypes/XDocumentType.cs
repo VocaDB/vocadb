@@ -33,11 +33,8 @@ namespace VocaDb.Model.Mapping.CustomTypes
 			return DeepCopy(value);
 		}
 
-		public SqlType[] SqlTypes
-		{
-			get { return new[] { new SqlXmlType() }; }
-		}
-		public Type ReturnedType { get { return typeof(XDocument); } }
+		public SqlType[] SqlTypes => new[] { new SqlXmlType() };
+		public Type ReturnedType { get => typeof(XDocument); }
 
 		public new bool Equals(object x, object y)
 		{
@@ -57,10 +54,7 @@ namespace VocaDb.Model.Mapping.CustomTypes
 			return new XDocument(source);
 		}
 
-		public bool IsMutable
-		{
-			get { return true; }
-		}
+		public bool IsMutable => true;
 
 		public object NullSafeGet(DbDataReader dr, string[] names, ISessionImplementor session, object owner)
 		{

@@ -28,15 +28,9 @@ namespace VocaDb.Model.Service
 		protected readonly IUserPermissionContext permissionContext;
 		protected readonly TRepo repository;
 
-		protected ContentLanguagePreference LanguagePreference
-		{
-			get { return permissionContext.LanguagePreference; }
-		}
+		protected ContentLanguagePreference LanguagePreference => permissionContext.LanguagePreference;
 
-		protected IUserPermissionContext PermissionContext
-		{
-			get { return permissionContext; }
-		}
+		protected IUserPermissionContext PermissionContext => permissionContext;
 
 		protected void AddActivityfeedEntry(IDatabaseContext<ActivityEntry> ctx, ActivityEntry entry)
 		{

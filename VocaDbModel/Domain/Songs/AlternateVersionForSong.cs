@@ -22,7 +22,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Derived
 		{
-			get { return derived; }
+			get => derived;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -34,7 +34,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Original
 		{
-			get { return original; }
+			get => original;
 			set
 			{
 				ParamIs.NotNull(() => value);

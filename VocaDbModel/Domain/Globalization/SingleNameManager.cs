@@ -20,29 +20,11 @@ namespace VocaDb.Model.Domain.Globalization
 			return new EntryNameContract(name);
 		}
 
-		public TranslatedString SortNames
-		{
-			get
-			{
-				return TranslatedString.Create(name);
-			}
-		}
+		public TranslatedString SortNames => TranslatedString.Create(name);
 
-		public IEnumerable<string> AllValues
-		{
-			get
-			{
-				return new[] { name };
-			}
-		}
+		public IEnumerable<string> AllValues => new[] { name };
 
-		public IEnumerable<LocalizedStringWithId> NamesBase
-		{
-			get
-			{
-				return new[] { new LocalizedStringWithId(name, ContentLanguageSelection.Unspecified) };
-			}
-		}
+		public IEnumerable<LocalizedStringWithId> NamesBase => new[] { new LocalizedStringWithId(name, ContentLanguageSelection.Unspecified) };
 
 		public LocalizedStringWithId FirstNameBase(ContentLanguageSelection languageSelection)
 		{

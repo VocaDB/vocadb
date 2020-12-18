@@ -26,13 +26,7 @@ namespace VocaDb.Model.Domain.Tags
 		/// <summary>
 		/// Tags sorted descending by the number of votes. Cannot be null.
 		/// </summary>
-		public virtual IEnumerable<Tag> TagsByVotes
-		{
-			get
-			{
-				return Usages.OrderByDescending(u => u.Count).Select(u => u.Tag);
-			}
-		}
+		public virtual IEnumerable<Tag> TagsByVotes => Usages.OrderByDescending(u => u.Count).Select(u => u.Tag);
 
 		/// <summary>
 		/// List of all tag usages. Cannot be null.
@@ -40,7 +34,7 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		public virtual ISet<T> Usages
 		{
-			get { return tags; }
+			get => tags;
 			set
 			{
 				ParamIs.NotNull(() => value);

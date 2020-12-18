@@ -33,13 +33,7 @@ namespace VocaDb.Model.Domain
 		/// Extension for this picture file, determined based on the MIME type.
 		/// Cannot be null. Can be empty if the MIME is not recognized.
 		/// </summary>
-		protected string Extension
-		{
-			get
-			{
-				return ImageHelper.GetExtensionFromMime(Mime) ?? string.Empty;
-			}
-		}
+		protected string Extension => ImageHelper.GetExtensionFromMime(Mime) ?? string.Empty;
 
 		protected EntryPictureFile()
 		{
@@ -59,7 +53,7 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual User Author
 		{
-			get { return author; }
+			get => author;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -86,7 +80,7 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual string Mime
 		{
-			get { return mime; }
+			get => mime;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -99,7 +93,7 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual string Name
 		{
-			get { return name; }
+			get => name;
 			set
 			{
 				ParamIs.NotNull(() => value);

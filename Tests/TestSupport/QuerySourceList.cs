@@ -63,13 +63,7 @@ namespace VocaDb.Tests.TestSupport
 		{
 		}
 
-		public IAuditLogger AuditLogger
-		{
-			get
-			{
-				return new FakeAuditLogger();
-			}
-		}
+		public IAuditLogger AuditLogger => new FakeAuditLogger();
 
 		public void Flush()
 		{

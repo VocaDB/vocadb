@@ -18,7 +18,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual Artist Artist
 		{
-			get { return artist; }
+			get => artist;
 			set
 			{
 				ParamIs.NotNull(() => value);

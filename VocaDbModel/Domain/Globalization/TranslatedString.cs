@@ -88,13 +88,7 @@ namespace VocaDb.Model.Domain.Globalization
 			}
 		}
 
-		public string this[ContentLanguagePreference preference]
-		{
-			get
-			{
-				return GetBestMatch(preference);
-			}
-		}
+		public string this[ContentLanguagePreference preference] => GetBestMatch(preference);
 
 		/// <summary>
 		/// All names in prioritized order.
@@ -138,10 +132,7 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual string Default
 		{
-			get
-			{
-				return GetDefaultOrFirst();
-			}
+			get => GetDefaultOrFirst();
 			set
 			{
 				switch (DefaultLanguage)
@@ -170,7 +161,7 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual string English
 		{
-			get { return english; }
+			get => english;
 			set
 			{
 				english = value;
@@ -184,7 +175,7 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual string Japanese
 		{
-			get { return original; }
+			get => original;
 			set
 			{
 				original = value;
@@ -197,7 +188,7 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual string Romaji
 		{
-			get { return romaji; }
+			get => romaji;
 			set
 			{
 				romaji = value;

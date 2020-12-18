@@ -11,12 +11,6 @@ namespace VocaDb.Model.Service.Search.Artists
 
 		public string Name { get; set; }
 
-		public bool HasNameQuery
-		{
-			get
-			{
-				return !string.IsNullOrEmpty(Name);
-			}
-		}
+		public bool HasNameQuery => !string.IsNullOrEmpty(Name);
 	}
 }

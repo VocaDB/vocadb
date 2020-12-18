@@ -37,8 +37,8 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual SongDiff Diff
 		{
-			get { return diff; }
-			protected set { diff = value; }
+			get => diff;
+			protected set => diff = value;
 		}
 
 		public override IEntryDiff DiffBase => Diff;
@@ -58,7 +58,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Song
 		{
-			get { return song; }
+			get => song;
 			protected set
 			{
 				ParamIs.NotNull(() => value);

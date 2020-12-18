@@ -20,7 +20,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual Artist Parent
 		{
-			get { return parent; }
+			get => parent;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -34,7 +34,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual Artist Member
 		{
-			get { return member; }
+			get => member;
 			set
 			{
 				ParamIs.NotNull(() => value);

@@ -25,7 +25,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual string Value
 		{
-			get { return val; }
+			get => val;
 			set
 			{
 				ParamIs.NotNull(() => value);

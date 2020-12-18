@@ -43,7 +43,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual Artist Artist
 		{
-			get { return artist; }
+			get => artist;
 			protected set
 			{
 				ParamIs.NotNull(() => value);
@@ -53,27 +53,15 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual ArtistDiff Diff
 		{
-			get { return diff; }
-			protected set { diff = value; }
+			get => diff;
+			protected set => diff = value;
 		}
 
-		public override IEntryDiff DiffBase
-		{
-			get { return Diff; }
-		}
+		public override IEntryDiff DiffBase => Diff;
 
-		public override EntryEditEvent EditEvent
-		{
-			get
-			{
-				return (Reason == ArtistArchiveReason.Created ? EntryEditEvent.Created : EntryEditEvent.Updated);
-			}
-		}
+		public override EntryEditEvent EditEvent => (Reason == ArtistArchiveReason.Created ? EntryEditEvent.Created : EntryEditEvent.Updated);
 
-		public override IEntryWithNames EntryBase
-		{
-			get { return Artist; }
-		}
+		public override IEntryWithNames EntryBase => Artist;
 
 		public virtual PictureData Picture { get; set; }
 

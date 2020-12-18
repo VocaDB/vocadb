@@ -402,10 +402,7 @@ namespace VocaDb.Model.Service
 
 		public LoginError Error { get; set; }
 
-		public bool IsOk
-		{
-			get { return Error == LoginError.Nothing; }
-		}
+		public bool IsOk => Error == LoginError.Nothing;
 
 		public UserContract User { get; set; }
 	}

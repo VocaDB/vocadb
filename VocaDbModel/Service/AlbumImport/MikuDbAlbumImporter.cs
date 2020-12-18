@@ -329,9 +329,6 @@ namespace VocaDb.Model.Service.AlbumImport
 			return false;
 		}
 
-		public string ServiceName
-		{
-			get { return "MikuDB"; }
-		}
+		public string ServiceName => "MikuDB";
 	}
 }

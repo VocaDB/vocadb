@@ -57,7 +57,7 @@ namespace VocaDb.Model.Domain.Versioning
 
 		public virtual string Notes
 		{
-			get { return notes; }
+			get => notes;
 			protected set
 			{
 				ParamIs.NotNull(() => value);

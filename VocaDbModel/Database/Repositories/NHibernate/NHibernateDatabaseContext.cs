@@ -21,10 +21,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			PermissionContext = permissionContext;
 		}
 
-		public IAuditLogger AuditLogger
-		{
-			get { return new NHibernateAuditLogger(OfType<AuditLogEntry>(), PermissionContext); }
-		}
+		public IAuditLogger AuditLogger => new NHibernateAuditLogger(OfType<AuditLogEntry>(), PermissionContext);
 
 		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel)
 		{

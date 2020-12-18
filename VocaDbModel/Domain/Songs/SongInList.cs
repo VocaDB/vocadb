@@ -26,7 +26,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Song
 		{
-			get { return song; }
+			get => song;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -36,7 +36,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual SongList List
 		{
-			get { return list; }
+			get => list;
 			set
 			{
 				ParamIs.NotNull(() => value);
@@ -46,7 +46,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual string Notes
 		{
-			get { return notes; }
+			get => notes;
 			set
 			{
 				ParamIs.NotNull(() => value);

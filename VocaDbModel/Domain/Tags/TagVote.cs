@@ -24,7 +24,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual User User
 		{
-			get { return user; }
+			get => user;
 			set
 			{
 				ParamIs.NotNull(() => value);
