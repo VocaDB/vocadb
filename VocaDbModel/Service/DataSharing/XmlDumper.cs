@@ -26,7 +26,7 @@ namespace VocaDb.Model.Service.DataSharing
 	{
 		public class Loader
 		{
-			private const int maxEntries = 100;
+			private const int MaxEntries = 100;
 			private readonly PackageCreator packageCreator;
 			private readonly ISession session;
 
@@ -49,12 +49,12 @@ namespace VocaDb.Model.Service.DataSharing
 
 			public void DumpSkipDeleted<TEntry, TContract>(string folder, Func<TEntry, TContract> fac) where TEntry : IDeletableEntry
 			{
-				packageCreator.Dump(start => LoadSkipDeleted<TEntry>(session, start, maxEntries), folder, fac);
+				packageCreator.Dump(start => LoadSkipDeleted<TEntry>(session, start, MaxEntries), folder, fac);
 			}
 
 			public void Dump<TEntry, TContract>(string folder, Func<TEntry, TContract> fac) where TEntry : IDeletableEntry
 			{
-				packageCreator.Dump(start => Load<TEntry>(session, start, maxEntries), folder, fac);
+				packageCreator.Dump(start => Load<TEntry>(session, start, MaxEntries), folder, fac);
 			}
 		}
 

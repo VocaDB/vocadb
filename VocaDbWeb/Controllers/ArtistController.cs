@@ -58,9 +58,9 @@ namespace VocaDb.Web.Controllers
 			return Picture(contract);
 		}
 
-		public ActionResult ArchivedVersionXml(int id = invalidId)
+		public ActionResult ArchivedVersionXml(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var doc = queries.GetVersionXml<ArchivedArtistVersion>(id);
@@ -123,9 +123,9 @@ namespace VocaDb.Web.Controllers
 		//
 		// GET: /Artist/Details/5
 
-		public ActionResult Details(int id = invalidId)
+		public ActionResult Details(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return HttpNotFound();
 
 			WebHelper.VerifyUserAgent(Request);
@@ -146,9 +146,9 @@ namespace VocaDb.Web.Controllers
 			return View(model);
 		}
 
-		public ActionResult Picture(int id = invalidId)
+		public ActionResult Picture(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var artist = Service.GetArtistPicture(id);
@@ -156,18 +156,18 @@ namespace VocaDb.Web.Controllers
 			return Picture(artist);
 		}
 
-		public ActionResult PictureThumb(int id = invalidId)
+		public ActionResult PictureThumb(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var artist = queries.GetPictureThumb(id);
 			return Picture(artist);
 		}
 
-		public ActionResult PopupContent(int id = invalidId)
+		public ActionResult PopupContent(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var artist = Service.GetArtist(id);
@@ -215,9 +215,9 @@ namespace VocaDb.Web.Controllers
 		//
 		// GET: /Artist/Edit/5
 		[Authorize]
-		public ActionResult Edit(int id = invalidId)
+		public ActionResult Edit(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			CheckConcurrentEdit(EntryType.Artist, id);
@@ -320,9 +320,9 @@ namespace VocaDb.Web.Controllers
 			return View(new Versions(contract));
 		}
 
-		public ActionResult ViewVersion(int id = invalidId, int? ComparedVersionId = null)
+		public ActionResult ViewVersion(int id = InvalidId, int? ComparedVersionId = null)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var contract = Service.GetVersionDetails(id, ComparedVersionId ?? 0);

@@ -24,7 +24,7 @@ namespace VocaDb.Web.Controllers
 			this.enumTranslations = enumTranslations;
 		}
 
-		public ActionResult Details(int id = invalidId)
+		public ActionResult Details(int id = InvalidId)
 		{
 			var venue = queries.GetDetails(id);
 
@@ -86,7 +86,7 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 		}
 
-		public ActionResult Versions(int id = invalidId)
+		public ActionResult Versions(int id = InvalidId)
 		{
 			var contract = queries.GetWithArchivedVersions(id);
 

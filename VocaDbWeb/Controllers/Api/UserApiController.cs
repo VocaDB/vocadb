@@ -46,8 +46,8 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/users")]
 	public class UserApiController : ApiController
 	{
-		private const int absoluteMax = 100;
-		private const int defaultMax = 10;
+		private const int AbsoluteMax = 100;
+		private const int DefaultMax = 10;
 		private readonly UserMessageQueries messageQueries;
 		private readonly IUserPermissionContext permissionContext;
 		private readonly UserQueries queries;
@@ -127,14 +127,14 @@ namespace VocaDb.Web.Controllers.Api
 			DiscType albumTypes = DiscType.Unknown,
 			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0,
-			int maxResults = defaultMax,
+			int maxResults = DefaultMax,
 			bool getTotalCount = false,
 			AlbumSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			AlbumOptionalFields fields = AlbumOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-			maxResults = Math.Min(maxResults, absoluteMax);
+			maxResults = Math.Min(maxResults, AbsoluteMax);
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
 			var queryParams = new AlbumCollectionQueryParams(id, new PagingProperties(start, maxResults, getTotalCount))
@@ -203,14 +203,14 @@ namespace VocaDb.Web.Controllers.Api
 			[FromUri] int[] tagId = null,
 			ArtistType artistType = ArtistType.Unknown,
 			int start = 0,
-			int maxResults = defaultMax,
+			int maxResults = DefaultMax,
 			bool getTotalCount = false,
 			ArtistSortRule sort = ArtistSortRule.Name,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			ArtistOptionalFields fields = ArtistOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-			maxResults = Math.Min(maxResults, absoluteMax);
+			maxResults = Math.Min(maxResults, AbsoluteMax);
 			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
 
 			var queryParams = new FollowedArtistQueryParams
@@ -373,7 +373,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("{id:int}/profileComments")]
 		public PartialFindResult<CommentForApiContract> GetProfileComments(
 			int id,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false
 			)
 		{
 			var paging = new PagingProperties(start, maxResults, getTotalCount);
@@ -421,13 +421,13 @@ namespace VocaDb.Web.Controllers.Api
 			bool groupByRating = true,
 			[FromUri] PVServices? pvServices = null,
 			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			RatedSongForUserSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-			maxResults = Math.Min(maxResults, absoluteMax);
+			maxResults = Math.Min(maxResults, AbsoluteMax);
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
 			var queryParams = new RatedSongQueryParams(id, new PagingProperties(start, maxResults, getTotalCount))
@@ -471,7 +471,7 @@ namespace VocaDb.Web.Controllers.Api
 			[FromUri] int[] tagId = null,
 			bool childTags = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongListSortRule sort = SongListSortRule.Name,
 			SongListOptionalFields? fields = null)
 		{

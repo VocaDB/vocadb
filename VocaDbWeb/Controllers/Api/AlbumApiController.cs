@@ -30,9 +30,9 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/albums")]
 	public class AlbumApiController : ApiController
 	{
-		private const int hourInSeconds = 3600;
-		private const int absoluteMax = 100;
-		private const int defaultMax = 10;
+		private const int HourInSeconds = 3600;
+		private const int AbsoluteMax = 100;
+		private const int DefaultMax = 10;
 		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 		private readonly OtherService otherService;
 		private readonly AlbumQueries queries;
@@ -169,7 +169,7 @@ namespace VocaDb.Web.Controllers.Api
 			DateTime? releaseDateBefore = null,
 			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0,
-			int maxResults = defaultMax,
+			int maxResults = DefaultMax,
 			bool getTotalCount = false,
 			AlbumSortRule? sort = null,
 			bool preferAccurateMatches = false,
@@ -180,7 +180,7 @@ namespace VocaDb.Web.Controllers.Api
 		{
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 
-			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort ?? AlbumSortRule.Name, preferAccurateMatches)
+			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, AbsoluteMax), getTotalCount, sort ?? AlbumSortRule.Name, preferAccurateMatches)
 			{
 				ArtistParticipation = {
 					ArtistIds = artistId,
@@ -222,7 +222,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// Output is cached for 1 hour.
 		/// </remarks>
 		[Route("new")]
-		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
+		[CacheOutput(ClientTimeSpan = HourInSeconds, ServerTimeSpan = HourInSeconds)]
 		public IEnumerable<AlbumForApiContract> GetNewAlbums(
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
 			AlbumOptionalFields fields = AlbumOptionalFields.None) => otherService.GetRecentAlbums(languagePreference, fields);
@@ -248,7 +248,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// Output is cached for 1 hour.
 		/// </remarks>
 		[Route("top")]
-		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
+		[CacheOutput(ClientTimeSpan = HourInSeconds, ServerTimeSpan = HourInSeconds)]
 		public IEnumerable<AlbumForApiContract> GetTopAlbums(
 			[FromUri] int[] ignoreIds = null,
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,

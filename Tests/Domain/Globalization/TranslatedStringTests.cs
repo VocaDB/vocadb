@@ -11,15 +11,15 @@ namespace VocaDb.Tests.Domain.Globalization
 	[TestClass]
 	public class TranslatedStringTests
 	{
-		private const string eng = "Miku Miku! (English)";
-		private const string orig = "Miku Miku! (original)";
-		private const string rom = "Miku Miku! (Romaji)";
+		private const string Eng = "Miku Miku! (English)";
+		private const string Orig = "Miku Miku! (original)";
+		private const string Rom = "Miku Miku! (Romaji)";
 		private TranslatedString str;
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			str = new TranslatedString(orig, rom, eng);
+			str = new TranslatedString(Orig, Rom, Eng);
 		}
 
 		/// <summary>
@@ -30,7 +30,7 @@ namespace VocaDb.Tests.Domain.Globalization
 		{
 			str.DefaultLanguage = ContentLanguageSelection.Unspecified;
 
-			Assert.AreEqual(orig, str.Default, "result is original");
+			Assert.AreEqual(Orig, str.Default, "result is original");
 		}
 
 		/// <summary>
@@ -41,7 +41,7 @@ namespace VocaDb.Tests.Domain.Globalization
 		{
 			str.DefaultLanguage = ContentLanguageSelection.Japanese;
 
-			Assert.AreEqual(orig, str.Default, "result is original");
+			Assert.AreEqual(Orig, str.Default, "result is original");
 		}
 
 		/// <summary>
@@ -52,7 +52,7 @@ namespace VocaDb.Tests.Domain.Globalization
 		{
 			str.DefaultLanguage = ContentLanguageSelection.Romaji;
 
-			Assert.AreEqual(rom, str.Default, "result is Romaji");
+			Assert.AreEqual(Rom, str.Default, "result is Romaji");
 		}
 
 		/// <summary>
@@ -63,7 +63,7 @@ namespace VocaDb.Tests.Domain.Globalization
 		{
 			str.DefaultLanguage = ContentLanguageSelection.English;
 
-			Assert.AreEqual(eng, str.Default, "result is English");
+			Assert.AreEqual(Eng, str.Default, "result is English");
 		}
 
 		/// <summary>
@@ -75,7 +75,7 @@ namespace VocaDb.Tests.Domain.Globalization
 			str.Japanese = string.Empty;
 			str.DefaultLanguage = ContentLanguageSelection.Japanese;
 
-			Assert.AreEqual(rom, str.Default, "result is Romaji");
+			Assert.AreEqual(Rom, str.Default, "result is Romaji");
 		}
 
 		/// <summary>
@@ -98,7 +98,7 @@ namespace VocaDb.Tests.Domain.Globalization
 			str.DefaultLanguage = ContentLanguageSelection.Japanese;
 
 			var result = str.GetDefaultOrFirst(ContentLanguageSelection.Unspecified);
-			Assert.AreEqual(orig, result, "result is first");
+			Assert.AreEqual(Orig, result, "result is first");
 		}
 
 		/// <summary>
@@ -110,7 +110,7 @@ namespace VocaDb.Tests.Domain.Globalization
 			str.DefaultLanguage = ContentLanguageSelection.English;
 
 			var result = str.GetDefaultOrFirst(ContentLanguageSelection.Unspecified);
-			Assert.AreEqual(eng, result, "result is English");
+			Assert.AreEqual(Eng, result, "result is English");
 		}
 
 		/// <summary>
@@ -122,7 +122,7 @@ namespace VocaDb.Tests.Domain.Globalization
 			str.DefaultLanguage = ContentLanguageSelection.Unspecified;
 
 			var result = str.GetDefaultOrFirst(ContentLanguageSelection.Unspecified);
-			Assert.AreEqual(orig, result, "result is first");
+			Assert.AreEqual(Orig, result, "result is first");
 		}
 
 		/// <summary>
@@ -134,7 +134,7 @@ namespace VocaDb.Tests.Domain.Globalization
 			str.DefaultLanguage = ContentLanguageSelection.Japanese;
 
 			var result = str.GetDefaultOrFirst(ContentLanguageSelection.English);
-			Assert.AreEqual(eng, result, "result is English");
+			Assert.AreEqual(Eng, result, "result is English");
 		}
 
 		/// <summary>
@@ -146,7 +146,7 @@ namespace VocaDb.Tests.Domain.Globalization
 			str.DefaultLanguage = ContentLanguageSelection.English;
 
 			var result = str.GetDefaultOrFirst(ContentLanguageSelection.English);
-			Assert.AreEqual(eng, result, "result is English");
+			Assert.AreEqual(Eng, result, "result is English");
 		}
 
 		/// <summary>
@@ -158,7 +158,7 @@ namespace VocaDb.Tests.Domain.Globalization
 			str.DefaultLanguage = ContentLanguageSelection.Unspecified;
 
 			var result = str.GetDefaultOrFirst(ContentLanguageSelection.English);
-			Assert.AreEqual(eng, result, "result is English");
+			Assert.AreEqual(Eng, result, "result is English");
 		}
 
 		/// <summary>
@@ -171,7 +171,7 @@ namespace VocaDb.Tests.Domain.Globalization
 			str.Japanese = string.Empty;
 
 			var result = str.GetDefaultOrFirst(ContentLanguageSelection.Unspecified);
-			Assert.AreEqual(rom, result, "result is Romaji");
+			Assert.AreEqual(Rom, result, "result is Romaji");
 		}
 
 		/// <summary>
@@ -184,7 +184,7 @@ namespace VocaDb.Tests.Domain.Globalization
 			str.Japanese = string.Empty;
 
 			var result = str.GetDefaultOrFirst(ContentLanguageSelection.Japanese);
-			Assert.AreEqual(rom, result, "result is Romaji");
+			Assert.AreEqual(Rom, result, "result is Romaji");
 		}
 
 		/// <summary>
@@ -197,7 +197,7 @@ namespace VocaDb.Tests.Domain.Globalization
 			str.Japanese = string.Empty;
 
 			var result = str.GetDefaultOrFirst(ContentLanguageSelection.English);
-			Assert.AreEqual(eng, result, "result is English");
+			Assert.AreEqual(Eng, result, "result is English");
 		}
 	}
 }

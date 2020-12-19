@@ -58,9 +58,9 @@ namespace VocaDb.Web.Controllers
 			this.markdownParser = markdownParser;
 		}
 
-		public ActionResult ArchivedVersionCoverPicture(int id = invalidId)
+		public ActionResult ArchivedVersionCoverPicture(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var contract = Service.GetArchivedAlbumPicture(id);
@@ -105,18 +105,18 @@ namespace VocaDb.Web.Controllers
 			return LowercaseJson(contracts);
 		}
 
-		public ActionResult PopupContent(int id = invalidId)
+		public ActionResult PopupContent(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return HttpNotFound();
 
 			var album = Service.GetAlbum(id);
 			return PartialView("AlbumPopupContent", album);
 		}
 
-		public ActionResult PopupWithCoverContent(int id = invalidId)
+		public ActionResult PopupWithCoverContent(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return HttpNotFound();
 
 			var album = Service.GetAlbum(id);
@@ -126,9 +126,9 @@ namespace VocaDb.Web.Controllers
 		//
 		// GET: /Album/Details/5
 
-		public ActionResult Details(int id = invalidId)
+		public ActionResult Details(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			WebHelper.VerifyUserAgent(Request);
@@ -165,9 +165,9 @@ namespace VocaDb.Web.Controllers
 			return View(new AlbumDetails(model, PermissionContext));
 		}
 
-		public ActionResult DownloadTags(int id = invalidId, string formatString = "", int? discNumber = null, bool setFormatString = false, bool includeHeader = false)
+		public ActionResult DownloadTags(int id = InvalidId, string formatString = "", int? discNumber = null, bool setFormatString = false, bool includeHeader = false)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			if (setFormatString)
@@ -192,9 +192,9 @@ namespace VocaDb.Web.Controllers
 		}
 
 		//[OutputCache(Duration = pictureCacheDurationSec, Location = OutputCacheLocation.Any, VaryByParam = "id,v")]
-		public ActionResult CoverPicture(int id = invalidId)
+		public ActionResult CoverPicture(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return HttpNotFound();
 
 			var album = Service.GetCoverPicture(id);
@@ -202,9 +202,9 @@ namespace VocaDb.Web.Controllers
 			return Picture(album);
 		}
 
-		public ActionResult CoverPictureThumb(int id = invalidId)
+		public ActionResult CoverPictureThumb(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return HttpNotFound();
 
 			var data = queries.GetCoverPictureThumb(id);
@@ -316,9 +316,9 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Details", new { id = model.Id });
 		}
 
-		public ActionResult Related(int id = invalidId)
+		public ActionResult Related(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var related = queries.GetRelatedAlbums(id);
@@ -394,18 +394,18 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 		}
 
-		public ActionResult UsersWithAlbumInCollection(int albumId = invalidId)
+		public ActionResult UsersWithAlbumInCollection(int albumId = InvalidId)
 		{
-			if (albumId == invalidId)
+			if (albumId == InvalidId)
 				return NoId();
 
 			var users = Service.GetUsersWithAlbumInCollection(albumId);
 			return PartialView(users);
 		}
 
-		public ActionResult Versions(int id = invalidId)
+		public ActionResult Versions(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var contract = Service.GetAlbumWithArchivedVersions(id);
@@ -413,9 +413,9 @@ namespace VocaDb.Web.Controllers
 			return View(new Versions(contract));
 		}
 
-		public ActionResult ViewVersion(int id = invalidId, int? ComparedVersionId = 0)
+		public ActionResult ViewVersion(int id = InvalidId, int? ComparedVersionId = 0)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var contract = Service.GetVersionDetails(id, ComparedVersionId ?? 0);

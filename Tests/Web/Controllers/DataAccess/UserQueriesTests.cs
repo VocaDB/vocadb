@@ -36,8 +36,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 	[TestClass]
 	public class UserQueriesTests
 	{
-		private const string defaultCulture = "ja-JP";
-		private const string defaultHostname = "crypton.jp";
+		private const string DefaultCulture = "ja-JP";
+		private const string DefaultHostname = "crypton.jp";
 		private UserQueries data;
 		private FakeUserMessageMailer mailer;
 		private PasswordResetRequest request;
@@ -62,8 +62,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			Assert.IsTrue(userWithEmail.Albums.Any(a => a.Album == album), "User has album");
 		}
 
-		private Task<UserContract> CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = defaultHostname,
-			string culture = defaultCulture, TimeSpan? timeSpan = null)
+		private Task<UserContract> CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = DefaultHostname,
+			string culture = DefaultCulture, TimeSpan? timeSpan = null)
 		{
 			return data.Create(name, pass, email, hostname, null,
 				culture,
@@ -114,7 +114,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void CheckAuthentication()
 		{
-			var result = data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", defaultCulture, false);
+			var result = data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", DefaultCulture, false);
 
 			Assert.AreEqual(true, result.IsOk, "IsOk");
 			AssertEqual(userWithEmail, result.User);
@@ -124,7 +124,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void CheckAuthentication_DifferentCase()
 		{
 			userWithEmail.Name = "Already_Exists";
-			var result = data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", defaultCulture, false);
+			var result = data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", DefaultCulture, false);
 
 			Assert.AreEqual(true, result.IsOk, "IsOk");
 			AssertEqual(userWithEmail, result.User);
@@ -133,7 +133,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void CheckAuthentication_WrongPassword()
 		{
-			var result = data.CheckAuthentication("already_exists", "3939", "miku@crypton.jp", defaultCulture, false);
+			var result = data.CheckAuthentication("already_exists", "3939", "miku@crypton.jp", DefaultCulture, false);
 
 			Assert.AreEqual(false, result.IsOk, "IsOk");
 			Assert.AreEqual(LoginError.InvalidPassword, result.Error, "Error");
@@ -142,7 +142,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void CheckAuthentication_NotFound()
 		{
-			var result = data.CheckAuthentication("does_not_exist", "3939", "miku@crypton.jp", defaultCulture, false);
+			var result = data.CheckAuthentication("does_not_exist", "3939", "miku@crypton.jp", DefaultCulture, false);
 
 			Assert.AreEqual(false, result.IsOk, "IsOk");
 			Assert.AreEqual(LoginError.NotFound, result.Error, "Error");
@@ -152,7 +152,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void CheckAuthentication_Poisoned()
 		{
 			userWithEmail.Options.Poisoned = true;
-			var result = data.CheckAuthentication(userWithEmail.Name, userWithEmail.Password, "miku@crypton.jp", defaultCulture, false);
+			var result = data.CheckAuthentication(userWithEmail.Name, userWithEmail.Password, "miku@crypton.jp", DefaultCulture, false);
 
 			Assert.AreEqual(false, result.IsOk, "IsOk");
 			Assert.AreEqual(LoginError.AccountPoisoned, result.Error, "Error");
@@ -162,7 +162,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void CheckAuthentication_LoginWithEmail()
 		{
 			userWithEmail.Options.EmailVerified = true; // For now, logging in with email is allowed only if the email is verified
-			var result = data.CheckAuthentication(userWithEmail.Email, "123", "miku@crypton.jp", defaultCulture, false);
+			var result = data.CheckAuthentication(userWithEmail.Email, "123", "miku@crypton.jp", DefaultCulture, false);
 
 			Assert.AreEqual(true, result.IsOk, "IsOk");
 			AssertEqual(userWithEmail, result.User);
@@ -266,7 +266,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var report = repository.List<UserReport>().FirstOrDefault();
 			report.Should().NotBeNull(because: "User was reported");
 			report.ReportType.Should().Be(UserReportType.MaliciousIP);
-			report.Hostname.Should().Be(defaultHostname);
+			report.Hostname.Should().Be(DefaultHostname);
 
 			var user = GetUserFromRepo(result.Name);
 			user.GroupId.Should().Be(UserGroupId.Regular, because: "User is not limited");
@@ -293,7 +293,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var report = repository.List<UserReport>().FirstOrDefault();
 			Assert.IsNotNull(report, "User was reported");
 			Assert.AreEqual(UserReportType.MaliciousIP, report.ReportType, "Report type");
-			Assert.AreEqual(defaultHostname, report.Hostname, "Hostname");
+			Assert.AreEqual(DefaultHostname, report.Hostname, "Hostname");
 
 			var user = GetUserFromRepo(result.Name);
 			user.GroupId.Should().Be(UserGroupId.Limited, because: "User was limited");
@@ -305,11 +305,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 99d, Frequency = 100 };
 			this.Invoking(self => self.CallCreate()).Should().Throw<RestrictedIPException>("User is malicious");
-			ipRuleManager.PermBannedIPs.Contains(defaultHostname).Should().BeTrue("User was banned");
+			ipRuleManager.PermBannedIPs.Contains(DefaultHostname).Should().BeTrue("User was banned");
 
 			repository.List<UserReport>().Should().BeEmpty("Report was not created");
 
-			var ipRule = repository.List<IPRule>().Should().Contain(rule => rule.Address == defaultHostname).Subject;
+			var ipRule = repository.List<IPRule>().Should().Contain(rule => rule.Address == DefaultHostname).Subject;
 			repository.IsCommitted(ipRule).Should().BeTrue("IPRule was committed despite exception");
 		}
 
@@ -318,7 +318,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public async Task Create_RegistrationTimeTrigger()
 		{
 			await CallCreate(timeSpan: TimeSpan.FromSeconds(4));
-			Assert.IsTrue(ipRuleManager.IsAllowed(defaultHostname), "Was not banned");
+			Assert.IsTrue(ipRuleManager.IsAllowed(DefaultHostname), "Was not banned");
 		}
 
 		[TestMethod]
@@ -326,7 +326,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public async Task Create_RegistrationTimeAndBanTrigger()
 		{
 			await CallCreate(timeSpan: TimeSpan.FromSeconds(1));
-			Assert.IsFalse(ipRuleManager.IsAllowed(defaultHostname), "Was banned");
+			Assert.IsFalse(ipRuleManager.IsAllowed(DefaultHostname), "Was banned");
 		}
 
 		[TestMethod]

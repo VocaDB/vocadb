@@ -28,9 +28,9 @@ namespace VocaDb.Web.Controllers
 			this.entryLinkFactory = entryLinkFactory;
 		}
 
-		public ActionResult Details(int id = invalidId)
+		public ActionResult Details(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var contract = queries.GetDetails(id);
@@ -128,9 +128,9 @@ namespace VocaDb.Web.Controllers
 			return View();
 		}
 
-		public ActionResult Versions(int id = invalidId)
+		public ActionResult Versions(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var contract = queries.GetSongListWithArchivedVersions(id);

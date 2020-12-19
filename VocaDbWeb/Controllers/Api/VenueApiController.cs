@@ -21,7 +21,7 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/venues")]
 	public class VenueApiController : ApiController
 	{
-		private const int defaultMax = 10;
+		private const int DefaultMax = 10;
 		private readonly VenueQueries queries;
 
 		public VenueApiController(VenueQueries queries)
@@ -74,7 +74,7 @@ namespace VocaDb.Web.Controllers.Api
 		public PartialFindResult<VenueForApiContract> GetList(
 			string query = "",
 			VenueOptionalFields fields = VenueOptionalFields.None,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			VenueSortRule sortRule = VenueSortRule.Name,

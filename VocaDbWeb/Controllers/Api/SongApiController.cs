@@ -38,9 +38,9 @@ namespace VocaDb.Web.Controllers.Api
 	[System.Web.Http.RoutePrefix("api/songs")]
 	public class SongApiController : ApiController
 	{
-		private const int hourInSeconds = 3600;
-		private const int absoluteMax = 100;
-		private const int defaultMax = 10;
+		private const int HourInSeconds = 3600;
+		private const int AbsoluteMax = 100;
+		private const int DefaultMax = 10;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly OtherService otherService;
 		private readonly SongQueries queries;
@@ -149,7 +149,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// Output is cached for 1 hour.
 		/// </remarks>
 		[Route("highlighted")]
-		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
+		[CacheOutput(ClientTimeSpan = HourInSeconds, ServerTimeSpan = HourInSeconds)]
 		public async Task<IEnumerable<SongForApiContract>> GetHighlightedSongs(
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
 			SongOptionalFields fields = SongOptionalFields.None) => await otherService.GetHighlightedSongs(languagePreference, fields);
@@ -271,7 +271,7 @@ namespace VocaDb.Web.Controllers.Api
 			int? parentSongId = null,
 			EntryStatus? status = null,
 			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongSortRule sort = SongSortRule.Name,
 			bool preferAccurateMatches = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
@@ -281,7 +281,7 @@ namespace VocaDb.Web.Controllers.Api
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
-			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort, false, preferAccurateMatches, null)
+			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, AbsoluteMax), getTotalCount, sort, false, preferAccurateMatches, null)
 			{
 				ArtistParticipation = {
 					ArtistIds = artistId,

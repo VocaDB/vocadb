@@ -26,7 +26,7 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/releaseEvents")]
 	public class ReleaseEventApiController : ApiController
 	{
-		private const int defaultMax = 10;
+		private const int DefaultMax = 10;
 		private readonly EventQueries queries;
 		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 
@@ -130,7 +130,7 @@ namespace VocaDb.Web.Controllers.Api
 			bool includeMembers = false,
 			EntryStatus? status = null,
 			int start = 0,
-			int maxResults = defaultMax,
+			int maxResults = DefaultMax,
 			bool getTotalCount = false,
 			EventSortRule sort = EventSortRule.Name,
 			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None,

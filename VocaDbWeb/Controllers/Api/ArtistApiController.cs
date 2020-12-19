@@ -29,8 +29,8 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/artists")]
 	public class ArtistApiController : ApiController
 	{
-		private const int absoluteMax = 100;
-		private const int defaultMax = 10;
+		private const int AbsoluteMax = 100;
+		private const int DefaultMax = 10;
 		private readonly ObjectCache cache;
 		private readonly ArtistQueries queries;
 		private readonly ArtistService service;
@@ -149,7 +149,7 @@ namespace VocaDb.Web.Controllers.Api
 			int? followedByUserId = null,
 			EntryStatus? status = null,
 			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			ArtistSortRule sort = ArtistSortRule.Name,
 			bool preferAccurateMatches = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
@@ -159,7 +159,7 @@ namespace VocaDb.Web.Controllers.Api
 			var textQuery = ArtistSearchTextQuery.Create(query, nameMatchMode);
 			var types = EnumVal<ArtistType>.ParseMultiple(artistTypes);
 
-			var param = new ArtistQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort, preferAccurateMatches)
+			var param = new ArtistQueryParams(textQuery, types, start, Math.Min(maxResults, AbsoluteMax), getTotalCount, sort, preferAccurateMatches)
 			{
 				Tags = tagName,
 				TagIds = tagId,

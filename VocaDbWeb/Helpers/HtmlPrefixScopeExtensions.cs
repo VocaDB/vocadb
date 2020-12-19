@@ -9,7 +9,7 @@ namespace VocaDb.Web.Helpers
 {
 	public static class HtmlPrefixScopeExtensions
 	{
-		private const string idsToReuseKey = "__htmlPrefixScopeExtensions_IdsToReuse_";
+		private const string IdsToReuseKey = "__htmlPrefixScopeExtensions_IdsToReuse_";
 
 		public static IDisposable BeginCollectionItem(this HtmlHelper html, string collectionName)
 		{
@@ -31,7 +31,7 @@ namespace VocaDb.Web.Helpers
 		{
 			// We need to use the same sequence of IDs following a server-side validation failure,  
 			// otherwise the framework won't render the validation error messages next to each item.
-			string key = idsToReuseKey + collectionName;
+			string key = IdsToReuseKey + collectionName;
 			var queue = (Queue<string>)httpContext.Items[key];
 			if (queue == null)
 			{

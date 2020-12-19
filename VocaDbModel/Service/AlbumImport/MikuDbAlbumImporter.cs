@@ -19,9 +19,9 @@ namespace VocaDb.Model.Service.AlbumImport
 	/// </summary>
 	public class MikuDbAlbumImporter : IAlbumImporter
 	{
-		private const string albumIndexUrl = "http://mikudb.com/album-index/";
+		private const string AlbumIndexUrl = "http://mikudb.com/album-index/";
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private const int maxResults = 5;
+		private const int MaxResults = 5;
 
 		private readonly HashSet<string> existingUrls;
 
@@ -248,7 +248,7 @@ namespace VocaDb.Model.Service.AlbumImport
 					}
 				});*/
 
-				if (list.Count >= maxResults)
+				if (list.Count >= MaxResults)
 					break;
 
 				Thread.Sleep(300);
@@ -303,7 +303,7 @@ namespace VocaDb.Model.Service.AlbumImport
 
 			try
 			{
-				albumIndex = HtmlRequestHelper.Download(albumIndexUrl);
+				albumIndex = HtmlRequestHelper.Download(AlbumIndexUrl);
 			}
 			catch (WebException x)
 			{

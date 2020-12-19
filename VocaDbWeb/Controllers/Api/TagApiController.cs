@@ -32,8 +32,8 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/tags")]
 	public class TagApiController : ApiController
 	{
-		private const int absoluteMax = 100;
-		private const int defaultMax = 10;
+		private const int AbsoluteMax = 100;
+		private const int DefaultMax = 10;
 		private readonly TagQueries queries;
 		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
 
@@ -163,7 +163,7 @@ namespace VocaDb.Web.Controllers.Api
 			string query = "",
 			bool allowChildren = true,
 			string categoryName = "",
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			TagSortRule? sort = null,
 			bool preferAccurateMatches = false,
@@ -171,7 +171,7 @@ namespace VocaDb.Web.Controllers.Api
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			TagTargetTypes target = TagTargetTypes.All)
 		{
-			maxResults = Math.Min(maxResults, fields != TagOptionalFields.None ? absoluteMax : int.MaxValue);
+			maxResults = Math.Min(maxResults, fields != TagOptionalFields.None ? AbsoluteMax : int.MaxValue);
 			var queryParams = new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(query, nameMatchMode), false, preferAccurateMatches),
 				new PagingProperties(start, maxResults, getTotalCount))
 			{
@@ -194,7 +194,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public PartialFindResult<TagMappingContract> GetMappings(
-			int start = 0, int maxEntries = defaultMax, bool getTotalCount = false) => queries.GetMappings(new PagingProperties(start, maxEntries, getTotalCount));
+			int start = 0, int maxEntries = DefaultMax, bool getTotalCount = false) => queries.GetMappings(new PagingProperties(start, maxEntries, getTotalCount));
 
 		/// <summary>
 		/// Find tag names by a part of name.

@@ -94,7 +94,7 @@ namespace VocaDb.Tests.DatabaseTests
 	{
 		private static void EnsureContainerInitialized()
 		{
-			lock (containerLock)
+			lock (ContainerLock)
 			{
 				if (container == null)
 				{
@@ -105,7 +105,7 @@ namespace VocaDb.Tests.DatabaseTests
 		}
 
 		private static IContainer container;
-		private const string containerLock = "container";
+		private const string ContainerLock = "container";
 		private static TestDatabase testDatabase;
 
 		public static IContainer Container

@@ -27,11 +27,11 @@ namespace VocaDb.Web.Controllers
 	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		protected static readonly TimeSpan imageExpirationTime = TimeSpan.FromMinutes(5);
-		protected const int entriesPerPage = 30;
-		protected const int invalidId = 0;
+		protected const int EntriesPerPage = 30;
+		protected const int InvalidId = 0;
 		protected static readonly TimeSpan pictureCacheDuration = TimeSpan.FromDays(30);
-		protected const int pictureCacheDurationSec = 30 * 24 * 60 * 60;
-		protected const int statsCacheDurationSec = 24 * 60 * 60;
+		protected const int PictureCacheDurationSec = 30 * 24 * 60 * 60;
+		protected const int StatsCacheDurationSec = 24 * 60 * 60;
 
 		protected ControllerBase()
 		{

@@ -20,7 +20,7 @@ namespace VocaDb.Model.Database.Queries
 {
 	public class DiscussionQueries : QueriesBase<IDiscussionFolderRepository, DiscussionFolder>
 	{
-		private const int defaultMax = 10;
+		private const int DefaultMax = 10;
 		private readonly IEntryLinkFactory entryLinkFactory;
 		private readonly IUserIconFactory userIconFactory;
 
@@ -180,7 +180,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public PartialFindResult<DiscussionTopicContract> GetTopics(
 			int? folderId = null,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
  			DiscussionTopicSortRule sort = DiscussionTopicSortRule.DateCreated,
 			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None)
 		{

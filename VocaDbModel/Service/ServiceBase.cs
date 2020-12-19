@@ -29,7 +29,7 @@ namespace VocaDb.Model.Service
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
 		private readonly IEntryLinkFactory entryLinkFactory;
-		protected const int maxEntryCount = 500;
+		protected const int MaxEntryCount = 500;
 		private readonly ISessionFactory sessionFactory;
 		private readonly IUserPermissionContext permissionContext;
 

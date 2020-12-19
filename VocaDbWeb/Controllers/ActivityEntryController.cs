@@ -8,7 +8,7 @@ namespace VocaDb.Web.Controllers
 {
 	public class ActivityEntryController : ControllerBase
 	{
-		private new const int entriesPerPage = 50;
+		private new const int EntriesPerPage = 50;
 
 		private readonly ActivityFeedService service;
 
@@ -21,7 +21,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult FollowedArtistActivity()
 		{
-			var result = Service.GetFollowedArtistActivity(entriesPerPage);
+			var result = Service.GetFollowedArtistActivity(EntriesPerPage);
 			return View(result.Items);
 		}
 

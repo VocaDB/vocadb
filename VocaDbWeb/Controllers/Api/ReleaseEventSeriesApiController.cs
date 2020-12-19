@@ -16,7 +16,7 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/releaseEventSeries")]
 	public class ReleaseEventSeriesApiController : ApiController
 	{
-		private const int defaultMax = 10;
+		private const int DefaultMax = 10;
 		private readonly EventQueries queries;
 
 		public ReleaseEventSeriesApiController(EventQueries queries)
@@ -64,7 +64,7 @@ namespace VocaDb.Web.Controllers.Api
 		public PartialFindResult<ReleaseEventSeriesForApiContract> GetList(
 			string query = "",
 			ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.FindSeries(SearchTextQuery.Create(query, nameMatchMode), new PagingProperties(start, maxResults, getTotalCount), lang, fields);
 

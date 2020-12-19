@@ -1392,13 +1392,13 @@ order by Created");
 	[Migration(201512011830)]
 	public class TagPrimaryKey : Migration
 	{
-		private const string pkName = "PK_Tags";
-		private const string ixName = "IX_Tags";
+		private const string PkName = "PK_Tags";
+		private const string IxName = "IX_Tags";
 
 		public override void Up()
 		{
-			Delete.PrimaryKey(pkName).FromTable(TableNames.Tags);
-			Create.PrimaryKey(pkName).OnTable(TableNames.Tags).Column("Id");
+			Delete.PrimaryKey(PkName).FromTable(TableNames.Tags);
+			Create.PrimaryKey(PkName).OnTable(TableNames.Tags).Column("Id");
 
 			Delete.ForeignKey("FK_Tags_Tags").OnTable(TableNames.Tags);
 			Delete.ForeignKey("FK_Tags_Tags1").OnTable(TableNames.Tags);
@@ -1409,7 +1409,7 @@ order by Created");
 			Delete.ForeignKey("FK_SongTagUsages_Tags").OnTable(TableNames.SongTagUsages);
 			Delete.ForeignKey("FK_TagComments_Tags").OnTable(TableNames.TagComments);
 
-			Delete.UniqueConstraint(ixName).FromTable(TableNames.Tags);
+			Delete.UniqueConstraint(IxName).FromTable(TableNames.Tags);
 
 			Create.ForeignKey("FK_Tags_Tags").FromTable(TableNames.Tags).ForeignColumn("AliasedTo").ToTable(TableNames.Tags).PrimaryColumn("Id");
 			Create.ForeignKey("FK_Tags_Tags1").FromTable(TableNames.Tags).ForeignColumn("Parent").ToTable(TableNames.Tags).PrimaryColumn("Id");
@@ -1653,18 +1653,18 @@ order by Created");
 	[Migration(201509032103)]
 	public class VerifiedArtistForUsers : Migration
 	{
-		private const string col = "VerifiedArtist";
+		private const string Col = "VerifiedArtist";
 
 		public override void Up()
 		{
-			Create.Column(col).OnTable(TableNames.Users).AsBoolean().NotNullable().WithDefaultValue(false);
+			Create.Column(Col).OnTable(TableNames.Users).AsBoolean().NotNullable().WithDefaultValue(false);
 
 			Execute.Sql("UPDATE usr SET usr.VerifiedArtist = 1 FROM [Users] usr WHERE usr.Id IN (SELECT DISTINCT [User] FROM OwnedArtistsForUsers)");
 		}
 
 		public override void Down()
 		{
-			Delete.Column(col).FromTable(TableNames.Users);
+			Delete.Column(Col).FromTable(TableNames.Users);
 		}
 	}
 

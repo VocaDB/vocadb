@@ -38,7 +38,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult Index(string titleFilter, AlbumStatus? status)
 		{
 			var s = status ?? AlbumStatus.New;
-			var albums = Service.GetAlbums(titleFilter, s, new PagingProperties(0, entriesPerPage, false));
+			var albums = Service.GetAlbums(titleFilter, s, new PagingProperties(0, EntriesPerPage, false));
 			var model = new Index(albums, titleFilter, s);
 
 			return View(model);

@@ -63,9 +63,9 @@ namespace VocaDb.Web.Controllers
 			return Xml(content);
 		}
 
-		public ActionResult Details(int id = invalidId, string slug = null)
+		public ActionResult Details(int id = InvalidId, string slug = null)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			slug = slug ?? string.Empty;
@@ -270,10 +270,10 @@ namespace VocaDb.Web.Controllers
 
 		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
 		public ActionResult PopupContent(
-			int id = invalidId,
+			int id = InvalidId,
 			string culture = InterfaceLanguage.DefaultCultureCode)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return HttpNotFound();
 
 			var releaseEvent = queries.Load(id, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series);
@@ -303,9 +303,9 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("EditSeries", new { id });
 		}
 
-		public ActionResult SeriesDetails(int id = invalidId, string slug = null)
+		public ActionResult SeriesDetails(int id = InvalidId, string slug = null)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			slug = slug ?? string.Empty;
@@ -336,9 +336,9 @@ namespace VocaDb.Web.Controllers
 			return View(series);
 		}
 
-		public ActionResult SeriesVersions(int id = invalidId)
+		public ActionResult SeriesVersions(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var contract = Service.GetReleaseEventSeriesWithArchivedVersions(id);
@@ -367,9 +367,9 @@ namespace VocaDb.Web.Controllers
 			return View(new ViewVersion<ArchivedEventSeriesVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
 		}
 
-		public ActionResult Versions(int id = invalidId)
+		public ActionResult Versions(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var contract = Service.GetReleaseEventWithArchivedVersions(id);

@@ -43,7 +43,7 @@ namespace VocaDb.Web.Controllers
 	public class UserController : ControllerBase
 	{
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private const int clientCacheDurationSec = 86400;
+		private const int ClientCacheDurationSec = 86400;
 
 		private readonly ActivityEntryQueries activityEntryQueries;
 		private readonly ArtistQueries artistQueries;
@@ -105,7 +105,7 @@ namespace VocaDb.Web.Controllers
 		{
 			var id = routeParams.id;
 
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			return View(new AlbumCollection(Service.GetUser(id, true), routeParams));
@@ -175,9 +175,9 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("MySettings");
 		}
 
-		public ActionResult EntryEdits(int id = invalidId, bool onlySubmissions = true)
+		public ActionResult EntryEdits(int id = InvalidId, bool onlySubmissions = true)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var user = Service.GetUser(id);
@@ -186,9 +186,9 @@ namespace VocaDb.Web.Controllers
 			return View(user);
 		}
 
-		public ActionResult FavoriteSongs(int id = invalidId, int? page = null, SongVoteRating? rating = null, RatedSongForUserSortRule? sort = null, bool? groupByRating = null)
+		public ActionResult FavoriteSongs(int id = InvalidId, int? page = null, SongVoteRating? rating = null, RatedSongForUserSortRule? sort = null, bool? groupByRating = null)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			return View(new FavoriteSongs(Service.GetUser(id), rating ?? SongVoteRating.Nothing, sort, groupByRating));
@@ -252,9 +252,9 @@ namespace VocaDb.Web.Controllers
 		//
 		// GET: /User/Details/5
 
-		public ActionResult Details(int id = invalidId)
+		public ActionResult Details(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var model = Data.GetUserDetails(id);
@@ -635,7 +635,7 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Details", new { id = model.Id });
 		}
 
-		[OutputCache(Duration = clientCacheDurationSec)]
+		[OutputCache(Duration = ClientCacheDurationSec)]
 		public ActionResult Stats_EditsPerDay(int id)
 		{
 			var points = activityEntryQueries.GetEditsPerDay(id, null);

@@ -16,7 +16,7 @@ namespace VocaDb.Tests.Service.TagFormatting
 	[TestClass]
 	public class AlbumSongFormatterTests
 	{
-		private const string defaultFormat = "%title%%featvocalists%;%producers%;%album%;%discnumber%;%track%";
+		private const string Format = "%title%%featvocalists%;%producers%;%album%;%discnumber%;%track%";
 		private Album album;
 		private Artist producer;
 		private Song song;
@@ -48,7 +48,7 @@ namespace VocaDb.Tests.Service.TagFormatting
 		[TestMethod]
 		public void DefaultFormat()
 		{
-			var result = ApplyFormat(defaultFormat, ContentLanguagePreference.Romaji).Trim();
+			var result = ApplyFormat(Format, ContentLanguagePreference.Romaji).Trim();
 
 			Assert.AreEqual("Nebula feat. Hatsune Miku;Tripshots;Synthesis;1;5", result);
 		}
@@ -59,7 +59,7 @@ namespace VocaDb.Tests.Service.TagFormatting
 			song.RemoveArtist(producer);
 			song.RemoveArtist(vocalist);
 
-			var result = ApplyFormat(defaultFormat, ContentLanguagePreference.Romaji).Trim();
+			var result = ApplyFormat(Format, ContentLanguagePreference.Romaji).Trim();
 
 			Assert.AreEqual("Nebula;;Synthesis;1;5", result);
 		}
@@ -69,7 +69,7 @@ namespace VocaDb.Tests.Service.TagFormatting
 		{
 			producer.TranslatedName.Romaji = "re;mo";
 
-			var result = ApplyFormat(defaultFormat, ContentLanguagePreference.Romaji).Trim();
+			var result = ApplyFormat(Format, ContentLanguagePreference.Romaji).Trim();
 
 			Assert.AreEqual("Nebula feat. Hatsune Miku;\"re;mo\";Synthesis;1;5", result);
 		}

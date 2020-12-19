@@ -13,16 +13,16 @@ namespace VocaDb.Tests.Service
 	[TestClass]
 	public class EntryUrlParserTests
 	{
-		private const string baseUrl = "https://test.vocadb.net";
+		private const string BaseUrl = "https://test.vocadb.net";
 
 		private string GetAbsoluteUrl(string relative)
 		{
-			return VocaUriBuilder.MergeUrls(baseUrl, relative);
+			return VocaUriBuilder.MergeUrls(BaseUrl, relative);
 		}
 
 		private void TestParseAbsolute(string url, int expectedId, EntryType expectedType)
 		{
-			var result = new EntryUrlParser(baseUrl).Parse(GetAbsoluteUrl(url));
+			var result = new EntryUrlParser(BaseUrl).Parse(GetAbsoluteUrl(url));
 
 			Assert.AreEqual(expectedId, result.Id, "Id");
 			Assert.AreEqual(expectedType, result.EntryType, "EntryType");
@@ -30,7 +30,7 @@ namespace VocaDb.Tests.Service
 
 		private void TestParseRelative(string url, int expectedId, EntryType expectedType)
 		{
-			var result = new EntryUrlParser(baseUrl).Parse(url, true);
+			var result = new EntryUrlParser(BaseUrl).Parse(url, true);
 
 			Assert.AreEqual(expectedId, result.Id, "Id");
 			Assert.AreEqual(expectedType, result.EntryType, "EntryType");
@@ -39,7 +39,7 @@ namespace VocaDb.Tests.Service
 		[TestMethod]
 		public void HostAddressesAreSame()
 		{
-			var result = new EntryUrlParser(baseUrl).Parse(GetAbsoluteUrl("/Artist/Details/39"));
+			var result = new EntryUrlParser(BaseUrl).Parse(GetAbsoluteUrl("/Artist/Details/39"));
 			Assert.AreEqual(39, result.Id, "Id");
 			Assert.AreEqual(EntryType.Artist, result.EntryType, "EntryType");
 		}
@@ -77,7 +77,7 @@ namespace VocaDb.Tests.Service
 		[TestMethod]
 		public void Absolute_DifferentScheme()
 		{
-			var result = new EntryUrlParser(baseUrl).Parse("http://test.vocadb.net/S/39");
+			var result = new EntryUrlParser(BaseUrl).Parse("http://test.vocadb.net/S/39");
 
 			Assert.AreEqual(39, result.Id, "Id");
 			Assert.AreEqual(EntryType.Song, result.EntryType, "EntryType");

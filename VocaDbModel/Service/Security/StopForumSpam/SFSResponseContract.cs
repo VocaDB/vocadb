@@ -11,7 +11,7 @@ namespace VocaDb.Model.Service.Security.StopForumSpam
 		/// <summary>
 		/// Confidence threshold when user is considered spammer.
 		/// </summary>
-		public const double confidenceTreshold = 75d;
+		public const double ConfidenceTreshold = 75d;
 
 		/// <summary>
 		/// IP/email appears in SFS database.
@@ -23,7 +23,7 @@ namespace VocaDb.Model.Service.Security.StopForumSpam
 		{
 			get
 			{
-				if (Appears && Confidence > confidenceTreshold)
+				if (Appears && Confidence > ConfidenceTreshold)
 					return SFSCheckResultType.Malicious;
 				if (Appears)
 					return SFSCheckResultType.Uncertain;

@@ -20,8 +20,8 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/entries")]
 	public class EntryApiController : ApiController
 	{
-		private const int absoluteMax = 50;
-		private const int defaultMax = 10;
+		private const int AbsoluteMax = 50;
+		private const int DefaultMax = 10;
 
 		private readonly AlbumService albumService;
 		private readonly ArtistService artistService;
@@ -30,7 +30,7 @@ namespace VocaDb.Web.Controllers.Api
 		private readonly OtherService otherService;
 		private readonly SongQueries songQueries;
 
-		private int GetMaxResults(int max) => Math.Min(max, absoluteMax);
+		private int GetMaxResults(int max) => Math.Min(max, AbsoluteMax);
 
 		public EntryApiController(EntryQueries queries, OtherService otherService, AlbumService albumService, ArtistService artistService, SongQueries songQueries, IEntryUrlParser entryUrlParser)
 		{
@@ -68,7 +68,7 @@ namespace VocaDb.Web.Controllers.Api
 			bool childTags = false,
 			EntryTypes? entryTypes = null,
 			EntryStatus? status = null,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			EntrySortRule sort = EntrySortRule.Name,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			EntryOptionalFields fields = EntryOptionalFields.None,

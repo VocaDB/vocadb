@@ -11,15 +11,15 @@ namespace VocaDb.SiteMapGenerator.Sitemap
 {
 	public class SitemapGenerator
 	{
-		private const string ns_sitemap = "http://www.sitemaps.org/schemas/sitemap/0.9";
-		private const int maxEntriesPerSitemap = 50000;
+		private const string Ns_sitemap = "http://www.sitemaps.org/schemas/sitemap/0.9";
+		private const int MaxEntriesPerSitemap = 50000;
 		private readonly string sitemapRootUrl;
 		private readonly string siteRoot;
 
 		private XElement CreateUrlElement(EntryType entryType, EntryReference id)
 		{
-			return new XElement(XName.Get("url", ns_sitemap),
-				 new XElement(XName.Get("loc", ns_sitemap), GenerateEntryUrl(entryType, id))
+			return new XElement(XName.Get("url", Ns_sitemap),
+				 new XElement(XName.Get("loc", Ns_sitemap), GenerateEntryUrl(entryType, id))
 			);
 		}
 
@@ -53,19 +53,19 @@ namespace VocaDb.SiteMapGenerator.Sitemap
 		{
 			var indexDoc = new XDocument(
 				new XDeclaration("1.0", "UTF-8", "yes"),
-				new XElement(XName.Get("sitemapindex", ns_sitemap)));
+				new XElement(XName.Get("sitemapindex", Ns_sitemap)));
 
 			var totalEntries = entries.Sum(e => e.Value.Count());
 			var allUrlElements = CreateUrlElements(entries);
-			var sitemapCount = Math.Ceiling(totalEntries / (double)maxEntriesPerSitemap);
+			var sitemapCount = Math.Ceiling(totalEntries / (double)MaxEntriesPerSitemap);
 
 			for (int sitemapNumber = 1; sitemapNumber <= sitemapCount; ++sitemapNumber)
 			{
 				var sitemapDoc = new XDocument(new XDeclaration("1.0", "UTF-8", "yes"),
-					new XElement(XName.Get("urlset", ns_sitemap)));
+					new XElement(XName.Get("urlset", Ns_sitemap)));
 
-				var begin = (sitemapNumber - 1) * maxEntriesPerSitemap;
-				var sitemapElements = allUrlElements.Skip(begin).Take(maxEntriesPerSitemap);
+				var begin = (sitemapNumber - 1) * MaxEntriesPerSitemap;
+				var sitemapElements = allUrlElements.Skip(begin).Take(MaxEntriesPerSitemap);
 
 				foreach (var element in sitemapElements)
 				{
@@ -77,8 +77,8 @@ namespace VocaDb.SiteMapGenerator.Sitemap
 				var sitemapUrl = sitemapRootUrl + sitemapFile;
 				sitemapDoc.Save(sitemapPath);
 
-				var sitemapReferenceElement = new XElement(XName.Get("sitemap", ns_sitemap),
-					new XElement(XName.Get("loc", ns_sitemap), sitemapUrl)
+				var sitemapReferenceElement = new XElement(XName.Get("sitemap", Ns_sitemap),
+					new XElement(XName.Get("loc", Ns_sitemap), sitemapUrl)
 				);
 
 				indexDoc.Root.Add(sitemapReferenceElement);

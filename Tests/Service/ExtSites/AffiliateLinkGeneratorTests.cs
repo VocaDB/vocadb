@@ -10,7 +10,7 @@ namespace VocaDb.Tests.Service.ExtSites
 	public class AffiliateLinkGeneratorTests
 	{
 		private AffiliateLinkGenerator generator;
-		private const string paAffId = "852809";
+		private const string PaAffId = "852809";
 
 		[TestInitialize]
 		public void SetUp()

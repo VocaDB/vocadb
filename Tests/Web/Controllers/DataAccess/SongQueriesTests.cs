@@ -40,7 +40,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 	[TestClass]
 	public class SongQueriesTests
 	{
-		private const int shortVersionTagId = 4717;
+		private const int ShortVersionTagId = 4717;
 		private EntryAnchorFactory entryLinkFactory;
 		private FakeUserMessageMailer mailer;
 		private CreateSongContract newSongContract;
@@ -710,7 +710,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task GetTagSuggestions_ShortVersion()
 		{
-			var shortVersionTag = repository.Save(CreateEntry.Tag("short version", shortVersionTagId));
+			var shortVersionTag = repository.Save(CreateEntry.Tag("short version", ShortVersionTagId));
 
 			song.LengthSeconds = 3939;
 

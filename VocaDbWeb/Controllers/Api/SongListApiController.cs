@@ -34,8 +34,8 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/songLists")]
 	public class SongListApiController : ApiController
 	{
-		private const int absoluteMax = 100;
-		private const int defaultMax = 10;
+		private const int AbsoluteMax = 100;
+		private const int DefaultMax = 10;
 		private readonly SongListQueries queries;
 		private readonly IUserIconFactory userIconFactory;
 		private readonly IAggregatedEntryImageUrlFactory entryImagePersister;
@@ -118,7 +118,7 @@ namespace VocaDb.Web.Controllers.Api
 			bool childTags = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongListSortRule sort = SongListSortRule.Name,
 			SongListOptionalFields fields = SongListOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
@@ -183,13 +183,13 @@ namespace VocaDb.Web.Controllers.Api
 			[FromUri] int[] artistId = null,
 			bool childVoicebanks = false,
 			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-			maxResults = Math.Min(maxResults, absoluteMax);
+			maxResults = Math.Min(maxResults, AbsoluteMax);
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
 			return queries.GetSongsInList(

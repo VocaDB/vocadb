@@ -81,9 +81,9 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrEmpty(id))
 				return NoId();
 
-			var tagId = queries.GetTagByName(id, t => t.Id, invalidId);
+			var tagId = queries.GetTagByName(id, t => t.Id, InvalidId);
 
-			if (tagId == invalidId)
+			if (tagId == InvalidId)
 			{
 				log.Info("Tag not found: {0}, referrer {1}", id, Request.UrlReferrer);
 				return HttpNotFound();
@@ -110,9 +110,9 @@ namespace VocaDb.Web.Controllers
 			}
 		}
 
-		public async Task<ActionResult> DetailsById(int id = invalidId, string slug = null)
+		public async Task<ActionResult> DetailsById(int id = InvalidId, string slug = null)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			// TODO: write test for null slug
@@ -237,11 +237,11 @@ namespace VocaDb.Web.Controllers
 
 		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
 		public ActionResult PopupContent(
-			int id = invalidId,
+			int id = InvalidId,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			string culture = InterfaceLanguage.DefaultCultureCode)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return HttpNotFound();
 
 			var tag = queries.LoadTag(id, t => new TagForApiContract(t, entryThumbPersister,
@@ -256,9 +256,9 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 		}
 
-		public ActionResult Versions(int id = invalidId)
+		public ActionResult Versions(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var contract = queries.GetTagWithArchivedVersions(id);

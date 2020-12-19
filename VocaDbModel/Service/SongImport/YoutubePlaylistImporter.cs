@@ -19,10 +19,10 @@ namespace VocaDb.Model.Service.SongImport
 		private static readonly Logger log = LogManager.GetCurrentClassLogger();
 		private static readonly Regex regex = new Regex(@"www\.youtube\.com/playlist\?list=([\w\-_]+)");
 
-		private const string playlistsFormat =
+		private const string PlaylistsFormat =
 			"https://www.googleapis.com/youtube/v3/playlists?part=snippet&key={0}&id={1}";
 
-		private const string playlistItemsFormat =
+		private const string PlaylistItemsFormat =
 			"https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key={0}&playlistId={1}&maxResults={2}&pageToken={3}";
 
 		private string YoutubeApiKey => AppConfig.YoutubeApiKey;
@@ -45,7 +45,7 @@ namespace VocaDb.Model.Service.SongImport
 		{
 			var songs = new List<ImportedSongInListContract>();
 
-			var requestUrl = string.Format(playlistItemsFormat, YoutubeApiKey, playlistId, maxResults, pageToken);
+			var requestUrl = string.Format(PlaylistItemsFormat, YoutubeApiKey, playlistId, maxResults, pageToken);
 
 			YoutubePlaylistItemResponse result;
 
@@ -82,7 +82,7 @@ namespace VocaDb.Model.Service.SongImport
 		{
 			var id = GetId(url);
 
-			var requestUrl = string.Format(playlistsFormat, YoutubeApiKey, id);
+			var requestUrl = string.Format(PlaylistsFormat, YoutubeApiKey, id);
 			YoutubePlaylistResponse result;
 
 			try

@@ -26,8 +26,8 @@ namespace VocaDb.Model.Database.Queries
 			public int Year { get; set; }
 		}
 
-		private const int absoluteMax = 500;
-		private const int defaultMax = 50;
+		private const int AbsoluteMax = 500;
+		private const int DefaultMax = 50;
 
 		private readonly IRepository repository;
 		private readonly IUserIconFactory userIconFactory;
@@ -88,14 +88,14 @@ namespace VocaDb.Model.Database.Queries
  			int? userId = null,
 			EntryEditEvent? editEvent = null,
 			EntryType entryType = EntryType.Undefined,
-			int maxResults = defaultMax,
+			int maxResults = DefaultMax,
 			bool getTotalCount = false,
 			ActivityEntryOptionalFields fields = ActivityEntryOptionalFields.None,
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			ActivityEntrySortRule sortRule = ActivityEntrySortRule.CreateDateDescending)
 		{
-			maxResults = Math.Min(maxResults, absoluteMax);
+			maxResults = Math.Min(maxResults, AbsoluteMax);
 
 			return repository.HandleQuery(ctx =>
 			{
