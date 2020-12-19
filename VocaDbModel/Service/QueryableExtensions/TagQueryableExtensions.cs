@@ -98,7 +98,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<Tag> WhereHasName(this IQueryable<Tag> query, params string[] names)
 		{
-			names = names ?? new string[0];
+			names ??= new string[0];
 
 			var queries = names.Select(n => SearchTextQuery.Create(n, NameMatchMode.Exact));
 			return query.WhereHasNameGeneric<Tag, TagName>(queries);

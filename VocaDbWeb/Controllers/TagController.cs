@@ -116,7 +116,7 @@ namespace VocaDb.Web.Controllers
 				return NoId();
 
 			// TODO: write test for null slug
-			slug = slug ?? string.Empty;
+			slug ??= string.Empty;
 
 			var tagName = await queries.LoadTagAsync(id, t => t.UrlSlug ?? string.Empty);
 

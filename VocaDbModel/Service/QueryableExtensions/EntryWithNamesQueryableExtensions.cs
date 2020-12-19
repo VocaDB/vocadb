@@ -56,7 +56,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		public static IQueryable<TEntry> WhereHasNameGeneric<TEntry, TName>(this IQueryable<TEntry> query, IEnumerable<SearchTextQuery> names)
 			where TEntry : IEntryWithNames<TName> where TName : LocalizedStringWithId
 		{
-			names = names ?? new SearchTextQuery[0];
+			names ??= new SearchTextQuery[0];
 
 			var predicate = names.Aggregate(PredicateBuilder.False<TEntry>(), (nameExp, name) => nameExp.Or(WhereHasNameExpression<TEntry, TName>(name)));
 			return query.Where(predicate);

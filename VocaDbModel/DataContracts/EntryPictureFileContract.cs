@@ -67,7 +67,7 @@ namespace VocaDb.Model.DataContracts
 
 		public EntryPictureFileContract NullToEmpty()
 		{
-			Name = Name ?? string.Empty;
+			Name ??= string.Empty;
 			return this;
 		}
 	}

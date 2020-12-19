@@ -375,7 +375,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = ClientCacheDurationSec)]
 		public ActionResult ArtistsPerMonth(DateTime? cutoff = null)
 		{
-			cutoff = cutoff ?? DefaultMinDate;
+			cutoff ??= DefaultMinDate;
 
 			var values = queries.ArtistsPerMonth(cutoff);
 
@@ -529,7 +529,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = ClientCacheDurationSec, VaryByParam = "unit")]
 		public ActionResult SongsPublishedPerDay(DateTime? cutoff = null, TimeUnit unit = TimeUnit.Day)
 		{
-			cutoff = cutoff ?? DefaultMinDate;
+			cutoff ??= DefaultMinDate;
 			var values = songAggregateQueries.SongsOverTime(unit, false, cutoff, s => s.PublishDate.DateTime <= DateTime.Now, null)[0];
 
 			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();

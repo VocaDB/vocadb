@@ -35,7 +35,7 @@ namespace VocaDb.Web.Code
 
 		private string GetUrl(string basePart, EntryType entryType, int id, string slug)
 		{
-			slug = slug ?? string.Empty;
+			slug ??= string.Empty;
 
 			var slashForSlug = slug != string.Empty ? "/" : string.Empty;
 			var relative = entryType switch

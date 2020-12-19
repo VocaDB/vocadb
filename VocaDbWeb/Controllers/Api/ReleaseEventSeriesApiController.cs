@@ -37,7 +37,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		public void Delete(int id, string notes = "", bool hardDelete = false)
 		{
-			notes = notes ?? string.Empty;
+			notes ??= string.Empty;
 
 			if (hardDelete)
 			{

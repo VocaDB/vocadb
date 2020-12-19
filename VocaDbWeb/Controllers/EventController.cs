@@ -68,7 +68,7 @@ namespace VocaDb.Web.Controllers
 			if (id == InvalidId)
 				return NoId();
 
-			slug = slug ?? string.Empty;
+			slug ??= string.Empty;
 
 			var ev = queries.GetDetails(id);
 
@@ -308,7 +308,7 @@ namespace VocaDb.Web.Controllers
 			if (id == InvalidId)
 				return NoId();
 
-			slug = slug ?? string.Empty;
+			slug ??= string.Empty;
 
 			var series = Service.GetReleaseEventSeriesDetails(id);
 
