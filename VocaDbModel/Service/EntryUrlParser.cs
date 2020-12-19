@@ -27,8 +27,8 @@ namespace VocaDb.Model.Service
 			{ "T", EntryType.Tag }
 		};
 
-		private readonly Regex entryUrlRegex;
-		private readonly Regex entryUrlRegexOptionalPrefix;
+		private readonly Regex _entryUrlRegex;
+		private readonly Regex _entryUrlRegexOptionalPrefix;
 
 		public EntryUrlParser()
 			: this(AppConfig.HostAddress) { }
@@ -40,9 +40,9 @@ namespace VocaDb.Model.Service
 
 			var entryUrlRegexTemplate = @"^(?:{0}){1}/(Al|Ar|E|Es|S|L|T|Album/Details|Artist/Details|Song/Details)/(\d+)";
 
-			entryUrlRegex = new Regex(string.Format(entryUrlRegexTemplate, hostAddresses, string.Empty), RegexOptions.IgnoreCase);
+			_entryUrlRegex = new Regex(string.Format(entryUrlRegexTemplate, hostAddresses, string.Empty), RegexOptions.IgnoreCase);
 
-			entryUrlRegexOptionalPrefix = new Regex(string.Format(entryUrlRegexTemplate, hostAddresses, "?"), RegexOptions.IgnoreCase);
+			_entryUrlRegexOptionalPrefix = new Regex(string.Format(entryUrlRegexTemplate, hostAddresses, "?"), RegexOptions.IgnoreCase);
 		}
 
 		public GlobalEntryId Parse(string url, bool allowRelative = false)
@@ -50,7 +50,7 @@ namespace VocaDb.Model.Service
 			if (string.IsNullOrEmpty(url))
 				return GlobalEntryId.Empty;
 
-			var match = allowRelative ? entryUrlRegexOptionalPrefix.Match(url) : entryUrlRegex.Match(url);
+			var match = allowRelative ? _entryUrlRegexOptionalPrefix.Match(url) : _entryUrlRegex.Match(url);
 
 			if (!match.Success)
 				return GlobalEntryId.Empty;

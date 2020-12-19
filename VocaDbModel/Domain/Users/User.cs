@@ -26,7 +26,7 @@ namespace VocaDb.Model.Domain.Users
 {
 	public class User : IEntryWithNames, IUserWithEmail, IEquatable<IUser>, IWebLinkFactory<UserWebLink>, IEntryWithComments
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 		public const string NameRegex = "^[a-zA-Z0-9_]+$";
 		public static readonly TimeSpan UsernameCooldown = TimeSpan.FromDays(365);
 
@@ -39,29 +39,29 @@ namespace VocaDb.Model.Domain.Users
 		INameManager IEntryWithNames.Names => new SingleNameManager(Name);
 		int IEntryBase.Version => 0;
 
-		private string accessKey;
-		private PermissionCollection additionalPermissions = new();
-		private IList<AlbumForUser> albums = new List<AlbumForUser>();
-		private IList<ArtistForUser> artists = new List<ArtistForUser>();
-		private IList<UserComment> comments = new List<UserComment>();
-		private string culture;
-		private string email;
-		private IList<EventForUser> events = new List<EventForUser>();
-		private IList<FavoriteSongForUser> favoriteSongs = new List<FavoriteSongForUser>();
-		private OptionalCultureCode language;
-		private IList<UserKnownLanguage> knownLanguages = new List<UserKnownLanguage>();
-		private IList<UserMessage> messages = new List<UserMessage>();
-		private string name;
-		private string nameLc;
-		private string normalizedEmail;
-		private IList<OldUsername> oldUsernames = new List<OldUsername>();
-		private UserOptions options;
-		private IList<OwnedArtistForUser> ownedArtists = new List<OwnedArtistForUser>();
-		private string password;
-		private IList<UserMessage> receivedMessages = new List<UserMessage>();
-		private IList<UserMessage> sentMessages = new List<UserMessage>();
-		private IList<SongList> songLists = new List<SongList>();
-		private IList<UserWebLink> webLinks = new List<UserWebLink>();
+		private string _accessKey;
+		private PermissionCollection _additionalPermissions = new();
+		private IList<AlbumForUser> _albums = new List<AlbumForUser>();
+		private IList<ArtistForUser> _artists = new List<ArtistForUser>();
+		private IList<UserComment> _comments = new List<UserComment>();
+		private string _culture;
+		private string _email;
+		private IList<EventForUser> _events = new List<EventForUser>();
+		private IList<FavoriteSongForUser> _favoriteSongs = new List<FavoriteSongForUser>();
+		private OptionalCultureCode _language;
+		private IList<UserKnownLanguage> _knownLanguages = new List<UserKnownLanguage>();
+		private IList<UserMessage> _messages = new List<UserMessage>();
+		private string _name;
+		private string _nameLc;
+		private string _normalizedEmail;
+		private IList<OldUsername> _oldUsernames = new List<OldUsername>();
+		private UserOptions _options;
+		private IList<OwnedArtistForUser> _ownedArtists = new List<OwnedArtistForUser>();
+		private string _password;
+		private IList<UserMessage> _receivedMessages = new List<UserMessage>();
+		private IList<UserMessage> _sentMessages = new List<UserMessage>();
+		private IList<SongList> _songLists = new List<SongList>();
+		private IList<UserWebLink> _webLinks = new List<UserWebLink>();
 
 		private PermissionCollection StatusPermissions
 		{
@@ -115,11 +115,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual string AccessKey
 		{
-			get => accessKey;
+			get => _accessKey;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				accessKey = value;
+				_accessKey = value;
 			}
 		}
 
@@ -133,19 +133,19 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public virtual PermissionCollection AdditionalPermissions
 		{
-			get => additionalPermissions;
-			set => additionalPermissions = value ?? new PermissionCollection();
+			get => _additionalPermissions;
+			set => _additionalPermissions = value ?? new PermissionCollection();
 		}
 
 		public virtual IEnumerable<AlbumForUser> Albums => AllAlbums.Where(a => !a.Album.Deleted);
 
 		public virtual IList<AlbumForUser> AllAlbums
 		{
-			get => albums;
+			get => _albums;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				albums = value;
+				_albums = value;
 			}
 		}
 
@@ -159,11 +159,11 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public virtual IList<ArtistForUser> AllArtists
 		{
-			get => artists;
+			get => _artists;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				artists = value;
+				_artists = value;
 			}
 		}
 
@@ -172,11 +172,11 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public virtual IList<OwnedArtistForUser> AllOwnedArtists
 		{
-			get => ownedArtists;
+			get => _ownedArtists;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				ownedArtists = value;
+				_ownedArtists = value;
 			}
 		}
 
@@ -195,11 +195,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual IList<UserComment> AllComments
 		{
-			get => comments;
+			get => _comments;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				comments = value;
+				_comments = value;
 			}
 		}
 
@@ -223,11 +223,11 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public virtual string Culture
 		{
-			get => culture;
+			get => _culture;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				culture = value;
+				_culture = value;
 			}
 		}
 
@@ -263,11 +263,11 @@ namespace VocaDb.Model.Domain.Users
 		/// </remarks>
 		public virtual string Email
 		{
-			get => email;
+			get => _email;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				email = value;
+				_email = value;
 			}
 		}
 
@@ -277,21 +277,21 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual IList<EventForUser> Events
 		{
-			get => events;
+			get => _events;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				events = value;
+				_events = value;
 			}
 		}
 
 		public virtual IList<FavoriteSongForUser> FavoriteSongs
 		{
-			get => favoriteSongs;
+			get => _favoriteSongs;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				favoriteSongs = value;
+				_favoriteSongs = value;
 			}
 		}
 
@@ -310,11 +310,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual IList<UserKnownLanguage> KnownLanguages
 		{
-			get => knownLanguages;
+			get => _knownLanguages;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				knownLanguages = value;
+				_knownLanguages = value;
 			}
 		}
 
@@ -326,8 +326,8 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public virtual OptionalCultureCode Language
 		{
-			get => language ?? (language = new OptionalCultureCode());
-			set => language = value ?? OptionalCultureCode.Empty;
+			get => _language ?? (_language = new OptionalCultureCode());
+			set => _language = value ?? OptionalCultureCode.Empty;
 		}
 
 		/// <summary>
@@ -340,11 +340,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual IList<UserMessage> Messages
 		{
-			get => messages;
+			get => _messages;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				messages = value;
+				_messages = value;
 			}
 		}
 
@@ -364,11 +364,11 @@ namespace VocaDb.Model.Domain.Users
 		/// </remarks>
 		public virtual string Name
 		{
-			get => name;
+			get => _name;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				name = value;
+				_name = value;
 			}
 		}
 
@@ -378,11 +378,11 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public virtual string NameLC
 		{
-			get => nameLc;
+			get => _nameLc;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				nameLc = value;
+				_nameLc = value;
 			}
 		}
 
@@ -391,27 +391,27 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public virtual string NormalizedEmail
 		{
-			get => normalizedEmail;
+			get => _normalizedEmail;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				normalizedEmail = value;
+				_normalizedEmail = value;
 			}
 		}
 
 		public virtual UserOptions Options
 		{
-			get => options;
-			set => options = value ?? new UserOptions(this);
+			get => _options;
+			set => _options = value ?? new UserOptions(this);
 		}
 
 		public virtual IList<OldUsername> OldUsernames
 		{
-			get => oldUsernames;
+			get => _oldUsernames;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				oldUsernames = value;
+				_oldUsernames = value;
 			}
 		}
 
@@ -426,11 +426,11 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public virtual string Password
 		{
-			get => password;
+			get => _password;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				password = value;
+				_password = value;
 			}
 		}
 
@@ -440,11 +440,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual IList<UserMessage> ReceivedMessages
 		{
-			get => receivedMessages;
+			get => _receivedMessages;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				receivedMessages = value;
+				_receivedMessages = value;
 			}
 		}
 
@@ -455,21 +455,21 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual IList<UserMessage> SentMessages
 		{
-			get => sentMessages;
+			get => _sentMessages;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				sentMessages = value;
+				_sentMessages = value;
 			}
 		}
 
 		public virtual IList<SongList> SongLists
 		{
-			get => songLists;
+			get => _songLists;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				songLists = value;
+				_songLists = value;
 			}
 		}
 
@@ -480,11 +480,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual IList<UserWebLink> WebLinks
 		{
-			get => webLinks;
+			get => _webLinks;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				webLinks = value;
+				_webLinks = value;
 			}
 		}
 
@@ -544,7 +544,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual UserMessage CreateNotification(string subject, string body)
 		{
-			log.Debug("Creating notification for {0} with subject '{1}'", this, subject);
+			_log.Debug("Creating notification for {0} with subject '{1}'", this, subject);
 
 			var msg = new UserMessage(this, subject, body, false);
 			Messages.Add(msg);
@@ -555,7 +555,7 @@ namespace VocaDb.Model.Domain.Users
 		{
 			ParamIs.NotNull(() => artist);
 
-			var old = ownedArtists.FirstOrDefault(a => a.Artist.Equals(artist));
+			var old = _ownedArtists.FirstOrDefault(a => a.Artist.Equals(artist));
 
 			if (old != null)
 				throw new ArgumentException("Unable to add the same artist again", nameof(artist));
@@ -704,7 +704,7 @@ namespace VocaDb.Model.Domain.Users
 
 			if (PasswordHashAlgorithm != algorithm.AlgorithmType)
 			{
-				log.Info("Updating password hash algorithm to {0}", algorithm.AlgorithmType);
+				_log.Info("Updating password hash algorithm to {0}", algorithm.AlgorithmType);
 
 				PasswordHashAlgorithm = algorithm.AlgorithmType;
 				Salt = algorithm.GenerateSalt(); // Salt needs to be regenerated too because its length may change

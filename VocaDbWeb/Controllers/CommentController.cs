@@ -8,11 +8,11 @@ namespace VocaDb.Web.Controllers
 {
 	public class CommentController : ControllerBase
 	{
-		private readonly OtherService otherService;
+		private readonly OtherService _otherService;
 
 		public CommentController(OtherService otherService)
 		{
-			this.otherService = otherService;
+			this._otherService = otherService;
 		}
 
 		//
@@ -20,7 +20,7 @@ namespace VocaDb.Web.Controllers
 
 		public async Task<ActionResult> Index()
 		{
-			var comments = await otherService.GetRecentComments();
+			var comments = await _otherService.GetRecentComments();
 			return View(comments);
 		}
 	}

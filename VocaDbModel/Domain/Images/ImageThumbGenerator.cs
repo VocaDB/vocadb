@@ -8,7 +8,7 @@ namespace VocaDb.Model.Domain.Images
 {
 	public class ImageThumbGenerator
 	{
-		private readonly IEntryImagePersister persister;
+		private readonly IEntryImagePersister _persister;
 
 		public const int Unlimited = ImageHelper.ImageSizeUnlimited;
 
@@ -16,7 +16,7 @@ namespace VocaDb.Model.Domain.Images
 		{
 			ParamIs.NotNull(() => persister);
 
-			this.persister = persister;
+			this._persister = persister;
 		}
 
 		/// <summary>
@@ -36,12 +36,12 @@ namespace VocaDb.Model.Domain.Images
 			{
 				using (var thumb = ImageHelper.ResizeToFixedSize(original, dimensions, dimensions))
 				{
-					persister.Write(imageInfo, size, thumb);
+					_persister.Write(imageInfo, size, thumb);
 				}
 			}
 			else
 			{
-				persister.Write(imageInfo, size, input);
+				_persister.Write(imageInfo, size, input);
 			}
 		}
 

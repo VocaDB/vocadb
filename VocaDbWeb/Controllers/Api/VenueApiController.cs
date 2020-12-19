@@ -22,11 +22,11 @@ namespace VocaDb.Web.Controllers.Api
 	public class VenueApiController : ApiController
 	{
 		private const int DefaultMax = 10;
-		private readonly VenueQueries queries;
+		private readonly VenueQueries _queries;
 
 		public VenueApiController(VenueQueries queries)
 		{
-			this.queries = queries;
+			this._queries = queries;
 		}
 
 		/// <summary>
@@ -46,11 +46,11 @@ namespace VocaDb.Web.Controllers.Api
 
 			if (hardDelete)
 			{
-				queries.MoveToTrash(id, notes);
+				_queries.MoveToTrash(id, notes);
 			}
 			else
 			{
-				queries.Delete(id, notes);
+				_queries.Delete(id, notes);
 			}
 		}
 
@@ -91,7 +91,7 @@ namespace VocaDb.Web.Controllers.Api
 				TextQuery = textQuery
 			};
 
-			return queries.Find(v => new VenueForApiContract(v, lang, fields), queryParams);
+			return _queries.Find(v => new VenueForApiContract(v, lang, fields), queryParams);
 		}
 
 		/// <summary>
@@ -103,6 +103,6 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
 		[Route("{id:int}/reports")]
 		[RestrictBannedIP]
-		public void PostReport(int id, VenueReportType reportType, string notes, int? versionNumber) => queries.CreateReport(id, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+		public void PostReport(int id, VenueReportType reportType, string notes, int? versionNumber) => _queries.CreateReport(id, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 	}
 }

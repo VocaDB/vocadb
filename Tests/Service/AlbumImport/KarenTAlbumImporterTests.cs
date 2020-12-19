@@ -16,10 +16,10 @@ namespace VocaDb.Tests.Service.AlbumImport
 	[TestClass]
 	public class KarenTAlbumImporterTests
 	{
-		private KarenTAlbumImporter importer;
-		private MikuDbAlbumContract importedAlbum;
-		private ImportedAlbumDataContract importedData;
-		private HtmlDocument karenTDoc;
+		private KarenTAlbumImporter _importer;
+		private MikuDbAlbumContract _importedAlbum;
+		private ImportedAlbumDataContract _importedData;
+		private HtmlDocument _karenTDoc;
 
 		private void AssertTrack(string expectedTitle, string expectedVocalists, ImportedAlbumTrack track)
 		{
@@ -30,55 +30,55 @@ namespace VocaDb.Tests.Service.AlbumImport
 
 		private ImportedAlbumTrack ParseTrack(string trackString)
 		{
-			return importer.ParseTrackRow(1, trackString);
+			return _importer.ParseTrackRow(1, trackString);
 		}
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			karenTDoc = ResourceHelper.ReadHtmlDocument("KarenT_SystemindParadox.htm");
-			importer = new KarenTAlbumImporter(new PictureDownloaderStub());
-			importedAlbum = importer.GetAlbumData(karenTDoc, "http://");
-			importedData = importedAlbum.Data;
+			_karenTDoc = ResourceHelper.ReadHtmlDocument("KarenT_SystemindParadox.htm");
+			_importer = new KarenTAlbumImporter(new PictureDownloaderStub());
+			_importedAlbum = _importer.GetAlbumData(_karenTDoc, "http://");
+			_importedData = _importedAlbum.Data;
 		}
 
 		[TestMethod]
 		public void Title()
 		{
-			Assert.AreEqual("Systemind Paradox", importedData.Title, "Title");
+			Assert.AreEqual("Systemind Paradox", _importedData.Title, "Title");
 		}
 
 		[TestMethod]
 		public void Description()
 		{
-			Assert.AreEqual("Heavenz 1st Album", importedData.Description, "Description");
+			Assert.AreEqual("Heavenz 1st Album", _importedData.Description, "Description");
 		}
 
 		[TestMethod]
 		public void Artists()
 		{
-			Assert.AreEqual(1, importedData.ArtistNames.Length, "1 artist");
-			Assert.AreEqual("Heavenz", importedData.ArtistNames.FirstOrDefault(), "Artist name");
+			Assert.AreEqual(1, _importedData.ArtistNames.Length, "1 artist");
+			Assert.AreEqual("Heavenz", _importedData.ArtistNames.FirstOrDefault(), "Artist name");
 		}
 
 		[TestMethod]
 		public void Vocalists()
 		{
-			Assert.AreEqual(1, importedData.VocalistNames.Length, "1 vocalist");
-			Assert.AreEqual("Hatsune Miku", importedData.VocalistNames.FirstOrDefault(), "Vocalist name");
+			Assert.AreEqual(1, _importedData.VocalistNames.Length, "1 vocalist");
+			Assert.AreEqual("Hatsune Miku", _importedData.VocalistNames.FirstOrDefault(), "Vocalist name");
 		}
 
 		[TestMethod]
 		public void ReleaseDate()
 		{
-			Assert.AreEqual(2012, importedData.ReleaseYear, "Release year");
+			Assert.AreEqual(2012, _importedData.ReleaseYear, "Release year");
 		}
 
 		[TestMethod]
 		public void CoverPicture()
 		{
-			Assert.IsNotNull(importedAlbum.CoverPicture, "Cover picture downloaded");
-			Assert.AreEqual("https://karent.jp/npdca/1048_20120502165707.jpg", importedAlbum.CoverPicture.Mime, "Downloaded URL was correct");
+			Assert.IsNotNull(_importedAlbum.CoverPicture, "Cover picture downloaded");
+			Assert.AreEqual("https://karent.jp/npdca/1048_20120502165707.jpg", _importedAlbum.CoverPicture.Mime, "Downloaded URL was correct");
 		}
 
 		[TestMethod]
@@ -117,7 +117,7 @@ namespace VocaDb.Tests.Service.AlbumImport
 		[TestMethod]
 		public void Tracks()
 		{
-			Assert.AreEqual(11, importedData.Tracks.Length, "11 tracks");
+			Assert.AreEqual(11, _importedData.Tracks.Length, "11 tracks");
 		}
 	}
 }

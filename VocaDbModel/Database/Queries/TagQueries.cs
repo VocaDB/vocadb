@@ -46,13 +46,13 @@ namespace VocaDb.Model.Database.Queries
 	/// </summary>
 	public class TagQueries : QueriesBase<ITagRepository, Tag>
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly ObjectCache cache;
-		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IEnumTranslations enumTranslations;
-		private readonly IAggregatedEntryImageUrlFactory thumbStore;
-		private readonly IEntryThumbPersister imagePersister;
-		private readonly IUserIconFactory userIconFactory;
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private readonly ObjectCache _cache;
+		private readonly IEntryLinkFactory _entryLinkFactory;
+		private readonly IEnumTranslations _enumTranslations;
+		private readonly IAggregatedEntryImageUrlFactory _thumbStore;
+		private readonly IEntryThumbPersister _imagePersister;
+		private readonly IUserIconFactory _userIconFactory;
 
 		private class TagTopUsagesAndCount<T>
 		{
@@ -118,7 +118,7 @@ namespace VocaDb.Model.Database.Queries
 			}
 			catch (Exception x) when (x is SqlException or GenericADOException)
 			{
-				log.Warn(x, "Unable to get tag usages");
+				_log.Warn(x, "Unable to get tag usages");
 				topUsages = new TEntry[0];
 				usageCount = 0;
 			}
@@ -173,12 +173,12 @@ namespace VocaDb.Model.Database.Queries
 			IEnumTranslations enumTranslations, ObjectCache cache)
 			: base(repository, permissionContext)
 		{
-			this.entryLinkFactory = entryLinkFactory;
-			this.imagePersister = imagePersister;
-			this.thumbStore = thumbStore;
-			this.userIconFactory = userIconFactory;
-			this.enumTranslations = enumTranslations;
-			this.cache = cache;
+			this._entryLinkFactory = entryLinkFactory;
+			this._imagePersister = imagePersister;
+			this._thumbStore = thumbStore;
+			this._userIconFactory = userIconFactory;
+			this._enumTranslations = enumTranslations;
+			this._cache = cache;
 		}
 
 		public ArchivedTagVersion Archive(IDatabaseContext<Tag> ctx, Tag tag, TagDiff diff, EntryEditEvent reason, string notes = "")
@@ -191,7 +191,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public ICommentQueries Comments(IDatabaseContext<Tag> ctx)
 		{
-			return new CommentQueries<TagComment, Tag>(ctx.OfType<TagComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+			return new CommentQueries<TagComment, Tag>(ctx.OfType<TagComment>(), PermissionContext, _userIconFactory, _entryLinkFactory);
 		}
 
 		/// <summary>
@@ -206,7 +206,7 @@ namespace VocaDb.Model.Database.Queries
 
 			PermissionContext.VerifyManageDatabase();
 
-			return await repository.HandleTransactionAsync(async ctx =>
+			return await _repository.HandleTransactionAsync(async ctx =>
 			{
 				var duplicateName = await ctx.Query<TagName>()
 					.Select(t => t.Value)
@@ -221,7 +221,7 @@ namespace VocaDb.Model.Database.Queries
 				var factory = new TagFactoryRepository(ctx, ctx.CreateAgentLoginData(PermissionContext));
 				var tag = await factory.CreateTagAsync(name);
 
-				await ctx.AuditLogger.AuditLogAsync($"created tag {entryLinkFactory.CreateEntryLink(tag)}");
+				await ctx.AuditLogger.AuditLogAsync($"created tag {_entryLinkFactory.CreateEntryLink(tag)}");
 
 				return new TagBaseContract(tag, PermissionContext.LanguagePreference);
 			});
@@ -240,9 +240,9 @@ namespace VocaDb.Model.Database.Queries
 			return HandleTransaction(ctx =>
 			{
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
-					entryLinkFactory,
+					_entryLinkFactory,
 					(song, reporter, notesTruncated) => new TagReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
-					() => reportType != TagReportType.Other ? enumTranslations.Translation(reportType) : null,
+					() => reportType != TagReportType.Other ? _enumTranslations.Translation(reportType) : null,
 					tagId, reportType, hostname, notes);
 			});
 		}
@@ -251,15 +251,15 @@ namespace VocaDb.Model.Database.Queries
 		{
 			PermissionContext.VerifyManageDatabase();
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var tag = LoadTagById(ctx, id);
 
-				permissionContext.VerifyEntryDelete(tag);
+				_permissionContext.VerifyEntryDelete(tag);
 
 				tag.Deleted = true;
 
-				ctx.AuditLogger.AuditLog($"deleted {entryLinkFactory.CreateEntryLink(tag)}");
+				ctx.AuditLogger.AuditLog($"deleted {_entryLinkFactory.CreateEntryLink(tag)}");
 
 				Archive(ctx, tag, new TagDiff(false), EntryEditEvent.Deleted, notes);
 
@@ -294,7 +294,7 @@ namespace VocaDb.Model.Database.Queries
 			ContentLanguagePreference lang)
 		{
 			return Find(tag => new TagForApiContract(
-				tag, thumbStore, lang, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
+				tag, _thumbStore, lang, optionalFields), queryParams, optionalFields == TagOptionalFields.None);
 		}
 
 		public string[] FindCategories(SearchTextQuery textQuery)
@@ -367,7 +367,7 @@ namespace VocaDb.Model.Database.Queries
 		private async Task<TagStatsContract> GetStatsAsync(IDatabaseContext<Tag> ctx, int tagId)
 		{
 			var key = $"TagQueries.GetStats.{tagId}.{LanguagePreference}";
-			return await cache.GetOrInsertAsync(key, CachePolicy.AbsoluteExpiration(1), async () =>
+			return await _cache.GetOrInsertAsync(key, CachePolicy.AbsoluteExpiration(1), async () =>
 			{
 				var artists = await GetTopUsagesAndCountAsync<ArtistTagUsage, Artist, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.Id, t => t.Entry);
 				var albums = await GetTopUsagesAndCountAsync<AlbumTagUsage, Album, int>(ctx, tagId, t => !t.Entry.Deleted, t => t.Entry.RatingTotal, t => t.Entry);
@@ -381,7 +381,7 @@ namespace VocaDb.Model.Database.Queries
 					&& (t.Entry.Series == null || (t.Entry.Date.DateTime != null && t.Entry.Date.DateTime >= eventDateCutoff) || !seriesIds.Contains(t.Entry.Series.Id)), t => t.Entry.Id, t => t.Entry, maxCount: 6);
 				var followerCount = await ctx.Query<TagForUser>().Where(t => t.Tag.Id == tagId).VdbCountAsync();
 
-				var stats = new TagStatsContract(LanguagePreference, thumbStore,
+				var stats = new TagStatsContract(LanguagePreference, _thumbStore,
 					artists.TopUsages, artists.TotalCount,
 					albums.TopUsages, albums.TotalCount,
 					songLists.TopUsages, songLists.TotalCount,
@@ -396,7 +396,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public async Task<TagDetailsContract> GetDetailsAsync(int tagId)
 		{
-			return await repository.HandleQueryAsync(async ctx =>
+			return await _repository.HandleQueryAsync(async ctx =>
 			{
 				var tag = await ctx.LoadAsync(tagId);
 				var stats = await GetStatsAsync(ctx, tagId);
@@ -405,7 +405,7 @@ namespace VocaDb.Model.Database.Queries
 
 				var entryTypeMapping = await ctx.Query<EntryTypeToTagMapping>().Where(etm => etm.Tag == tag).VdbFirstOrDefaultAsync();
 				var commentCount = await Comments(ctx).GetCountAsync(tag.Id);
-				var isFollowing = permissionContext.IsLoggedIn && (await ctx.Query<TagForUser>().Where(t => t.Tag.Id == tagId && t.User.Id == permissionContext.LoggedUserId).VdbAnyAsync());
+				var isFollowing = _permissionContext.IsLoggedIn && (await ctx.Query<TagForUser>().Where(t => t.Tag.Id == tagId && t.User.Id == _permissionContext.LoggedUserId).VdbAnyAsync());
 
 				return new TagDetailsContract(tag,
 					stats,
@@ -577,7 +577,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public async Task<T> LoadTagAsync<T>(int id, Func<Tag, T> fac)
 		{
-			return await repository.HandleQueryAsync(async ctx =>
+			return await _repository.HandleQueryAsync(async ctx =>
 			{
 				var tag = await ctx.LoadAsync(id);
 				return fac(tag);
@@ -612,14 +612,14 @@ namespace VocaDb.Model.Database.Queries
 			if (sourceId == targetId)
 				throw new ArgumentException("Source and target songs can't be the same", nameof(targetId));
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var source = ctx.Load(sourceId);
 				var target = ctx.Load(targetId);
 				var diff = new TagDiff(false);
 				diff.Names.Set();
 
-				ctx.AuditLogger.AuditLog($"Merging {source} to {entryLinkFactory.CreateEntryLink(target)}");
+				ctx.AuditLogger.AuditLog($"Merging {source} to {_entryLinkFactory.CreateEntryLink(target)}");
 
 				// Other properties
 				if (string.IsNullOrEmpty(target.CategoryName) && !string.IsNullOrEmpty(source.CategoryName))
@@ -705,11 +705,11 @@ namespace VocaDb.Model.Database.Queries
 		{
 			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var tag = LoadTagById(ctx, id);
 
-				permissionContext.VerifyEntryDelete(tag);
+				_permissionContext.VerifyEntryDelete(tag);
 
 				CreateTrashedEntry(ctx, tag, notes);
 
@@ -736,7 +736,7 @@ namespace VocaDb.Model.Database.Queries
 
 				Archive(session, tag, new TagDiff(false), EntryEditEvent.Updated);
 
-				AuditLog("restored " + entryLinkFactory.CreateEntryLink(tag), session);
+				AuditLog("restored " + _entryLinkFactory.CreateEntryLink(tag), session);
 			});
 		}
 
@@ -796,11 +796,11 @@ namespace VocaDb.Model.Database.Queries
 
 			PermissionContext.VerifyPermission(PermissionToken.EditTags);
 
-			return repository.HandleTransaction(ctx =>
+			return _repository.HandleTransaction(ctx =>
 			{
 				var tag = LoadTagById(ctx, contract.Id);
 
-				permissionContext.VerifyEntryEdit(tag);
+				_permissionContext.VerifyEntryEdit(tag);
 
 				var diff = new TagDiff();
 
@@ -863,11 +863,11 @@ namespace VocaDb.Model.Database.Queries
 
 					var thumb = new EntryThumbMain(tag, uploadedImage.Mime);
 					tag.Thumb = thumb;
-					var thumbGenerator = new ImageThumbGenerator(imagePersister);
+					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(uploadedImage.Stream, thumb, Tag.ImageSizes, originalSize: Constants.RestrictedImageOriginalSize);
 				}
 
-				var logStr = $"updated properties for tag {entryLinkFactory.CreateEntryLink(tag)} ({diff.ChangedFieldsString})";
+				var logStr = $"updated properties for tag {_entryLinkFactory.CreateEntryLink(tag)} ({diff.ChangedFieldsString})";
 				ctx.AuditLogger.AuditLog(logStr);
 
 				var archived = Archive(ctx, tag, diff, EntryEditEvent.Updated, contract.UpdateNotes);
@@ -926,7 +926,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public TagForApiContract[] GetChildTags(int tagId,
 			TagOptionalFields fields = TagOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => HandleQuery(ctx => ctx.Load(tagId).Children.Select(t => new TagForApiContract(t, thumbStore, lang, fields)).ToArray());
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => HandleQuery(ctx => ctx.Load(tagId).Children.Select(t => new TagForApiContract(t, _thumbStore, lang, fields)).ToArray());
 
 		public TagBaseContract[] GetTopTags(string categoryName = null, EntryType? entryType = null,
 			int maxResults = 15,

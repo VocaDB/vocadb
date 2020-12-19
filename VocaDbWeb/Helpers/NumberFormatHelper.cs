@@ -6,11 +6,11 @@ namespace VocaDb.Web.Helpers
 {
 	public static class NumberFormatHelper
 	{
-		private static readonly NumberFormatInfo dotNumberFormatInfo = new() { NumberDecimalSeparator = "." };
+		private static readonly NumberFormatInfo _dotNumberFormatInfo = new() { NumberDecimalSeparator = "." };
 
 		public static string DecimalDot(double val)
 		{
-			return val.ToString(dotNumberFormatInfo);
+			return val.ToString(_dotNumberFormatInfo);
 		}
 	}
 }

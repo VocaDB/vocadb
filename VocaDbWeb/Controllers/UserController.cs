@@ -42,20 +42,20 @@ namespace VocaDb.Web.Controllers
 {
 	public class UserController : ControllerBase
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 		private const int ClientCacheDurationSec = 86400;
 
-		private readonly ActivityEntryQueries activityEntryQueries;
-		private readonly ArtistQueries artistQueries;
-		private readonly ArtistService artistService;
-		private readonly VdbConfigManager config;
+		private readonly ActivityEntryQueries _activityEntryQueries;
+		private readonly ArtistQueries _artistQueries;
+		private readonly ArtistService _artistService;
+		private readonly VdbConfigManager _config;
 		private UserQueries Data { get; set; }
-		private readonly IPRuleManager ipRuleManager;
-		private readonly LoginManager loginManager;
-		private readonly MarkdownParser markdownParser;
-		private readonly UserMessageQueries messageQueries;
-		private readonly OtherService otherService;
-		private readonly IRepository repository;
+		private readonly IPRuleManager _ipRuleManager;
+		private readonly LoginManager _loginManager;
+		private readonly MarkdownParser _markdownParser;
+		private readonly UserMessageQueries _messageQueries;
+		private readonly OtherService _otherService;
+		private readonly IRepository _repository;
 		private UserService Service { get; set; }
 
 		private UserForMySettingsContract GetUserForMySettings()
@@ -83,16 +83,16 @@ namespace VocaDb.Web.Controllers
 		{
 			Service = service;
 			Data = data;
-			this.activityEntryQueries = activityEntryQueries;
-			this.artistQueries = artistQueries;
-			this.artistService = artistService;
-			this.repository = repository;
-			this.otherService = otherService;
-			this.messageQueries = messageQueries;
-			this.ipRuleManager = ipRuleManager;
-			this.config = config;
-			this.markdownParser = markdownParser;
-			this.loginManager = loginManager;
+			this._activityEntryQueries = activityEntryQueries;
+			this._artistQueries = artistQueries;
+			this._artistService = artistService;
+			this._repository = repository;
+			this._otherService = otherService;
+			this._messageQueries = messageQueries;
+			this._ipRuleManager = ipRuleManager;
+			this._config = config;
+			this._markdownParser = markdownParser;
+			this._loginManager = loginManager;
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]
@@ -129,7 +129,7 @@ namespace VocaDb.Web.Controllers
 			}
 			catch (ProtocolException x)
 			{
-				log.Fatal(x, "Exception while attempting to sent Twitter request");
+				_log.Fatal(x, "Exception while attempting to sent Twitter request");
 				TempData.SetErrorMessage("There was an error while connecting to Twitter - please try again later.");
 				return RedirectToAction("MySettings", "User");
 			}
@@ -264,7 +264,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public PartialViewResult OwnedArtistForUserEditRow(int artistId)
 		{
-			var artist = artistService.GetArtist(artistId);
+			var artist = _artistService.GetArtist(artistId);
 			var ownedArtist = new ArtistForUserContract(artist);
 
 			return PartialView(ownedArtist);
@@ -319,7 +319,7 @@ namespace VocaDb.Web.Controllers
 					ModelState.AddModelError("", ViewRes.User.LoginStrings.WrongPassword);
 
 					if (result.Error == LoginError.AccountPoisoned)
-						ipRuleManager.AddTempBannedIP(host, "Account poisoned");
+						_ipRuleManager.AddTempBannedIP(host, "Account poisoned");
 				}
 				else
 				{
@@ -335,7 +335,7 @@ namespace VocaDb.Web.Controllers
 					}
 					catch (HttpException x)
 					{
-						log.Warn(x, "Unable to get redirect URL");
+						_log.Warn(x, "Unable to get redirect URL");
 					}
 
 					string targetUrl;
@@ -369,7 +369,7 @@ namespace VocaDb.Web.Controllers
 		[RestrictBannedIP]
 		public ActionResult LoginTwitter(string returnUrl)
 		{
-			log.Info($"{WebHelper.GetRealHost(Request)} login via Twitter");
+			_log.Info($"{WebHelper.GetRealHost(Request)} login via Twitter");
 
 			// Make sure session ID is initialized
 			// ReSharper disable UnusedVariable
@@ -391,7 +391,7 @@ namespace VocaDb.Web.Controllers
 			}
 			catch (ProtocolException x)
 			{
-				log.Error(x, "Exception while attempting to send Twitter request");
+				_log.Error(x, "Exception while attempting to send Twitter request");
 				TempData.SetErrorMessage("There was an error while connecting to Twitter - please try again later.");
 
 				return RedirectToAction("Login");
@@ -515,12 +515,12 @@ namespace VocaDb.Web.Controllers
 
 			if (!ModelState.IsValidField("Extra"))
 			{
-				log.Warn("An attempt was made to fill the bot decoy field from {0} with the value '{1}'.", Hostname, ModelState["Extra"]);
-				ipRuleManager.AddTempBannedIP(Hostname, "Attempt to fill the bot decoy field");
+				_log.Warn("An attempt was made to fill the bot decoy field from {0} with the value '{1}'.", Hostname, ModelState["Extra"]);
+				_ipRuleManager.AddTempBannedIP(Hostname, "Attempt to fill the bot decoy field");
 				return View(model);
 			}
 
-			if (config.SiteSettings.SignupsDisabled)
+			if (_config.SiteSettings.SignupsDisabled)
 			{
 				ModelState.AddModelError(string.Empty, "Signups are disabled");
 			}
@@ -529,16 +529,16 @@ namespace VocaDb.Web.Controllers
 			if (!recaptchaResult.Success)
 			{
 				ErrorLogger.LogMessage(Request, $"Invalid CAPTCHA (error {recaptchaResult.Error})", LogLevel.Warn);
-				otherService.AuditLog("failed CAPTCHA", Hostname, AuditLogCategory.UserCreateFailCaptcha);
+				_otherService.AuditLog("failed CAPTCHA", Hostname, AuditLogCategory.UserCreateFailCaptcha);
 				ModelState.AddModelError("CAPTCHA", ViewRes.User.CreateStrings.CaptchaInvalid);
 			}
 
 			if (!ModelState.IsValid)
 				return View(model);
 
-			if (!ipRuleManager.IsAllowed(Hostname))
+			if (!_ipRuleManager.IsAllowed(Hostname))
 			{
-				log.Warn("Restricting blocked IP {0}.", Hostname);
+				_log.Warn("Restricting blocked IP {0}.", Hostname);
 				ModelState.AddModelError("Restricted", restrictedErr);
 				return View(model);
 			}
@@ -552,7 +552,7 @@ namespace VocaDb.Web.Controllers
 				var user = await Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname,
 					Request.UserAgent,
 					WebHelper.GetInterfaceCultureName(Request),
-					time, ipRuleManager, url);
+					time, _ipRuleManager, url);
 				FormsAuthentication.SetAuthCookie(user.Name, false);
 				return RedirectToAction("Index", "Home");
 			}
@@ -587,7 +587,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public void DeleteMessage(int messageId)
 		{
-			messageQueries.Delete(messageId);
+			_messageQueries.Delete(messageId);
 		}
 
 		//
@@ -638,7 +638,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = ClientCacheDurationSec)]
 		public ActionResult Stats_EditsPerDay(int id)
 		{
-			var points = activityEntryQueries.GetEditsPerDay(id, null);
+			var points = _activityEntryQueries.GetEditsPerDay(id, null);
 
 			return LowercaseJson(HighchartsHelper.DateLineChartWithAverage("Edits per day", "Edits", "Number of edits", points));
 		}
@@ -706,7 +706,7 @@ namespace VocaDb.Web.Controllers
 			try
 			{
 				newUser = Data.UpdateUserSettings(contract);
-				loginManager.SetLoggedUser(newUser);
+				_loginManager.SetLoggedUser(newUser);
 				PermissionContext.LanguagePreferenceSetting.Value = model.DefaultLanguageSelection;
 			}
 			catch (InvalidPasswordException x)
@@ -818,7 +818,7 @@ namespace VocaDb.Web.Controllers
 
 			var fullMessage = "Proof: " + linkToProof + ", Message: " + message;
 
-			artistQueries.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, $"Account verification request: {fullMessage}", null);
+			_artistQueries.CreateReport(selectedArtist.Id, ArtistReportType.OwnershipClaim, Hostname, $"Account verification request: {fullMessage}", null);
 
 			TempData.SetSuccessMessage("Request sent");
 			return View();

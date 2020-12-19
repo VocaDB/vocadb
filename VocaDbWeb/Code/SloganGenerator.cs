@@ -19,17 +19,17 @@ namespace VocaDb.Web.Code
 			"Passwords secured with HMIC"
 		};
 
-		private static string[] slogans;
+		private static string[] _slogans;
 
 		private static string[] GetValues()
 		{
-			if (slogans == null)
+			if (_slogans == null)
 			{
 				var config = AppConfig.GetSlogansSection();
-				slogans = config?.Slogans?.Select(s => s.Value).ToArray() ?? defaultSlogans;
+				_slogans = config?.Slogans?.Select(s => s.Value).ToArray() ?? defaultSlogans;
 			}
 
-			return slogans;
+			return _slogans;
 		}
 
 		public static string Generate()

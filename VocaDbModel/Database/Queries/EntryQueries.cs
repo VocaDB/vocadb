@@ -21,12 +21,12 @@ namespace VocaDb.Model.Database.Queries
 {
 	public class EntryQueries : QueriesBase<IAlbumRepository, Album>
 	{
-		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
+		private readonly IAggregatedEntryImageUrlFactory _entryThumbPersister;
 
 		public EntryQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IAggregatedEntryImageUrlFactory entryThumbPersister)
 			: base(repository, permissionContext)
 		{
-			this.entryThumbPersister = entryThumbPersister;
+			this._entryThumbPersister = entryThumbPersister;
 		}
 
 		public PartialFindResult<EntryForApiContract> GetList(
@@ -48,7 +48,7 @@ namespace VocaDb.Model.Database.Queries
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var artistTextQuery = ArtistSearchTextQuery.Create(query, nameMatchMode); // Can't use the existing words collection here as they are noncanonized
 
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				// Get all applicable names per entry type
 				var artistQuery = ctx.OfType<Artist>().Query()
@@ -139,12 +139,12 @@ namespace VocaDb.Model.Database.Queries
 				var artists = artistIds.Any() ? ctx.OfType<Artist>().Query()
 					.Where(a => artistIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, _entryThumbPersister, fields)) : new EntryForApiContract[0];
 
 				var albums = albumIds.Any() ? ctx.OfType<Album>().Query()
 					.Where(a => albumIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, _entryThumbPersister, fields)) : new EntryForApiContract[0];
 
 				var songs = songIds.Any() ? ctx.OfType<Song>().Query()
 					.Where(a => songIds.Contains(a.Id))
@@ -154,12 +154,12 @@ namespace VocaDb.Model.Database.Queries
 				var searchedTags = searchTags && searchedTagIds.Any() ? ctx.OfType<Tag>().Query()
 					.Where(a => searchedTagIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, _entryThumbPersister, fields)) : new EntryForApiContract[0];
 
 				var events = searchEvents && eventIds.Any() ? ctx.OfType<ReleaseEvent>().Query()
 					.Where(a => eventIds.Contains(a.Id))
 					.ToArray()
-					.Select(a => new EntryForApiContract(a, lang, entryThumbPersister, fields)) : new EntryForApiContract[0];
+					.Select(a => new EntryForApiContract(a, lang, _entryThumbPersister, fields)) : new EntryForApiContract[0];
 
 				// Merge and sort the final list
 				var entries = artists.Concat(albums).Concat(songs).Concat(searchedTags).Concat(events);

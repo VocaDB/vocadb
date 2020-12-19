@@ -7,7 +7,7 @@ namespace VocaDb.Model.Domain.Albums
 {
 	public class PVForAlbum : PV, IEntryWithIntId
 	{
-		private Album album;
+		private Album _album;
 
 		public PVForAlbum() { }
 
@@ -19,11 +19,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual Album Album
 		{
-			get => album;
+			get => _album;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 

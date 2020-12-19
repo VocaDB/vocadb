@@ -13,8 +13,8 @@ namespace VocaDb.SiteMapGenerator.Sitemap
 	{
 		private const string Ns_sitemap = "http://www.sitemaps.org/schemas/sitemap/0.9";
 		private const int MaxEntriesPerSitemap = 50000;
-		private readonly string sitemapRootUrl;
-		private readonly string siteRoot;
+		private readonly string _sitemapRootUrl;
+		private readonly string _siteRoot;
 
 		private XElement CreateUrlElement(EntryType entryType, EntryReference id)
 		{
@@ -25,11 +25,11 @@ namespace VocaDb.SiteMapGenerator.Sitemap
 
 		private string GenerateEntryUrl(EntryType entryType, EntryReference id) => entryType switch
 		{
-			EntryType.Album => $"{siteRoot}Al/{id.Id}",
-			EntryType.Artist => $"{siteRoot}Ar/{id.Id}",
-			EntryType.ReleaseEvent => $"{siteRoot}E/{id.Id}/{id.UrlSlug}",
-			EntryType.Song => $"{siteRoot}S/{id.Id}",
-			EntryType.Tag => $"{siteRoot}T/{id.Id}/{id.UrlSlug}",
+			EntryType.Album => $"{_siteRoot}Al/{id.Id}",
+			EntryType.Artist => $"{_siteRoot}Ar/{id.Id}",
+			EntryType.ReleaseEvent => $"{_siteRoot}E/{id.Id}/{id.UrlSlug}",
+			EntryType.Song => $"{_siteRoot}S/{id.Id}",
+			EntryType.Tag => $"{_siteRoot}T/{id.Id}/{id.UrlSlug}",
 			_ => string.Empty,
 		};
 
@@ -45,8 +45,8 @@ namespace VocaDb.SiteMapGenerator.Sitemap
 
 		public SitemapGenerator(string siteRoot, string sitemapRootUrl)
 		{
-			this.siteRoot = siteRoot;
-			this.sitemapRootUrl = sitemapRootUrl;
+			this._siteRoot = siteRoot;
+			this._sitemapRootUrl = sitemapRootUrl;
 		}
 
 		public void Generate(string outFolder, Dictionary<EntryType, IEnumerable<EntryReference>> entries)
@@ -74,7 +74,7 @@ namespace VocaDb.SiteMapGenerator.Sitemap
 
 				var sitemapFile = $"sitemap-{sitemapNumber}.xml";
 				var sitemapPath = Path.Combine(outFolder, sitemapFile);
-				var sitemapUrl = sitemapRootUrl + sitemapFile;
+				var sitemapUrl = _sitemapRootUrl + sitemapFile;
 				sitemapDoc.Save(sitemapPath);
 
 				var sitemapReferenceElement = new XElement(XName.Get("sitemap", Ns_sitemap),

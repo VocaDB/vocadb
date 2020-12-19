@@ -37,65 +37,65 @@ namespace VocaDb.Model.Service.Queries
 
 	public class CommentQueries<T, TEntry> : ICommentQueries where T : GenericComment<TEntry> where TEntry : class, IEntryWithComments
 	{
-		private readonly IDatabaseContext ctx;
-		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly Func<int, TEntry> entryLoaderFunc;
-		private readonly IUserPermissionContext permissionContext;
-		private readonly IUserIconFactory userIconFactory;
+		private readonly IDatabaseContext _ctx;
+		private readonly IEntryLinkFactory _entryLinkFactory;
+		private readonly Func<int, TEntry> _entryLoaderFunc;
+		private readonly IUserPermissionContext _permissionContext;
+		private readonly IUserIconFactory _userIconFactory;
 
 		private TEntry Load(int entryId)
 		{
-			return entryLoaderFunc != null ? entryLoaderFunc(entryId) : ctx.OfType<TEntry>().Load(entryId);
+			return _entryLoaderFunc != null ? _entryLoaderFunc(entryId) : _ctx.OfType<TEntry>().Load(entryId);
 		}
 
 		public CommentQueries(IDatabaseContext ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory,
 			Func<int, TEntry> entryLoaderFunc = null)
 		{
-			this.ctx = ctx;
-			this.entryLinkFactory = entryLinkFactory;
-			this.permissionContext = permissionContext;
-			this.userIconFactory = userIconFactory;
-			this.entryLoaderFunc = entryLoaderFunc;
+			this._ctx = ctx;
+			this._entryLinkFactory = entryLinkFactory;
+			this._permissionContext = permissionContext;
+			this._userIconFactory = userIconFactory;
+			this._entryLoaderFunc = entryLoaderFunc;
 		}
 
 		public CommentForApiContract Create(int entryId, CommentForApiContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 
-			permissionContext.VerifyPermission(PermissionToken.CreateComments);
+			_permissionContext.VerifyPermission(PermissionToken.CreateComments);
 
-			if (contract.Author == null || contract.Author.Id != permissionContext.LoggedUserId)
+			if (contract.Author == null || contract.Author.Id != _permissionContext.LoggedUserId)
 			{
 				throw new NotAllowedException("Can only post as self");
 			}
 
 			var entry = Load(entryId);
-			var agent = ctx.OfType<User>().CreateAgentLoginData(permissionContext, ctx.OfType<User>().Load(contract.Author.Id));
+			var agent = _ctx.OfType<User>().CreateAgentLoginData(_permissionContext, _ctx.OfType<User>().Load(contract.Author.Id));
 
 			var comment = entry.CreateComment(contract.Message, agent);
 
-			ctx.Save(comment);
+			_ctx.Save(comment);
 
-			ctx.AuditLogger.AuditLog($"creating comment for {entryLinkFactory.CreateEntryLink(entry)}: '{HttpUtility.HtmlEncode(contract.Message)}'",
+			_ctx.AuditLogger.AuditLog($"creating comment for {_entryLinkFactory.CreateEntryLink(entry)}: '{HttpUtility.HtmlEncode(contract.Message)}'",
 				agent);
 
-			new UserCommentNotifier().CheckComment(comment, entryLinkFactory, ctx.OfType<User>());
+			new UserCommentNotifier().CheckComment(comment, _entryLinkFactory, _ctx.OfType<User>());
 
-			return new CommentForApiContract(comment, userIconFactory);
+			return new CommentForApiContract(comment, _userIconFactory);
 		}
 
 		public void Delete(int commentId)
 		{
-			var comment = ctx.OfType<T>().Load(commentId);
-			var user = ctx.OfType<User>().GetLoggedUser(permissionContext);
+			var comment = _ctx.OfType<T>().Load(commentId);
+			var user = _ctx.OfType<User>().GetLoggedUser(_permissionContext);
 
-			ctx.AuditLogger.AuditLog("deleting " + comment, user);
+			_ctx.AuditLogger.AuditLog("deleting " + comment, user);
 
 			if (!user.Equals(comment.Author))
-				permissionContext.VerifyPermission(PermissionToken.DeleteComments);
+				_permissionContext.VerifyPermission(PermissionToken.DeleteComments);
 
 			comment.Delete();
-			ctx.Update(comment);
+			_ctx.Update(comment);
 		}
 
 		public CommentForApiContract[] GetAll(int entryId)
@@ -103,11 +103,11 @@ namespace VocaDb.Model.Service.Queries
 			return Load(entryId)
 				.Comments
 				.OrderByDescending(c => c.Created)
-				.Select(c => new CommentForApiContract(c, userIconFactory))
+				.Select(c => new CommentForApiContract(c, _userIconFactory))
 				.ToArray();
 		}
 
-		private IQueryable<Comment> GetComments(int entryId) => ctx.Query<T>()
+		private IQueryable<Comment> GetComments(int entryId) => _ctx.Query<T>()
 			.WhereNotDeleted()
 			.Where(c => c.EntryForComment.Id == entryId);
 
@@ -119,7 +119,7 @@ namespace VocaDb.Model.Service.Queries
 		{
 			return GetComments(entryId)
 				.OrderByDescending(c => c.Created).Take(count).ToArray()
-				.Select(c => new CommentForApiContract(c, userIconFactory))
+				.Select(c => new CommentForApiContract(c, _userIconFactory))
 				.ToArray();
 		}
 
@@ -130,7 +130,7 @@ namespace VocaDb.Model.Service.Queries
 				.VdbToListAsync();
 
 			return comments
-				.Select(c => new CommentForApiContract(c, userIconFactory))
+				.Select(c => new CommentForApiContract(c, _userIconFactory))
 				.ToArray();
 		}
 
@@ -138,17 +138,17 @@ namespace VocaDb.Model.Service.Queries
 		{
 			ParamIs.NotNull(() => contract);
 
-			permissionContext.VerifyPermission(PermissionToken.CreateComments);
+			_permissionContext.VerifyPermission(PermissionToken.CreateComments);
 
-			var comment = ctx.OfType<T>().Load(commentId);
+			var comment = _ctx.OfType<T>().Load(commentId);
 
-			permissionContext.VerifyAccess(comment, EntryPermissionManager.CanEdit);
+			_permissionContext.VerifyAccess(comment, EntryPermissionManager.CanEdit);
 
 			comment.Message = contract.Message;
 
-			ctx.Update(comment);
+			_ctx.Update(comment);
 
-			ctx.AuditLogger.AuditLog($"updated comment for {entryLinkFactory.CreateEntryLink(comment.Entry)}: '{HttpUtility.HtmlEncode(contract.Message)}'");
+			_ctx.AuditLogger.AuditLog($"updated comment for {_entryLinkFactory.CreateEntryLink(comment.Entry)}: '{HttpUtility.HtmlEncode(contract.Message)}'");
 		}
 	}
 }

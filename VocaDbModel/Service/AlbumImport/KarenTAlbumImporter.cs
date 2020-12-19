@@ -17,13 +17,13 @@ namespace VocaDb.Model.Service.AlbumImport
 {
 	public class KarenTAlbumImporter : IAlbumImporter
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private static readonly RegexLinkMatcher matcher = new("https://karent.jp/album/{0}", @"http(?:s?)://karent.jp/album/(\d+)");
-		private readonly IPictureDownloader pictureDownloader;
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly RegexLinkMatcher _matcher = new("https://karent.jp/album/{0}", @"http(?:s?)://karent.jp/album/(\d+)");
+		private readonly IPictureDownloader _pictureDownloader;
 
 		public KarenTAlbumImporter(IPictureDownloader pictureDownloader)
 		{
-			this.pictureDownloader = pictureDownloader;
+			this._pictureDownloader = pictureDownloader;
 		}
 
 		private PictureDataContract DownloadCoverPicture(string url)
@@ -32,13 +32,13 @@ namespace VocaDb.Model.Service.AlbumImport
 			{
 				var fullUrl = url.Replace("_0280_0280", string.Empty);
 
-				var pic = pictureDownloader.Create(fullUrl);
+				var pic = _pictureDownloader.Create(fullUrl);
 
 				if (pic != null)
 					return pic;
 			}
 
-			return pictureDownloader.Create(url);
+			return _pictureDownloader.Create(url);
 		}
 
 		public MikuDbAlbumContract GetAlbumData(HtmlDocument doc, string url)
@@ -178,7 +178,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			}
 			catch (WebException x)
 			{
-				log.Warn("Unable to download album post '" + url + "'", x);
+				_log.Warn("Unable to download album post '" + url + "'", x);
 				throw;
 			}
 
@@ -189,7 +189,7 @@ namespace VocaDb.Model.Service.AlbumImport
 
 		public bool IsValidFor(string url)
 		{
-			return matcher.IsMatch(url);
+			return _matcher.IsMatch(url);
 		}
 
 		public string ServiceName => "KarenT";

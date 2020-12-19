@@ -13,18 +13,18 @@ namespace VocaDb.Tests.Web.Controllers
 	[TestClass]
 	public class EventControllerTests
 	{
-		private EventController controller;
+		private EventController _controller;
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			controller = new EventController(null, null, null, new FakeEntryLinkFactory(), null);
+			_controller = new EventController(null, null, null, new FakeEntryLinkFactory(), null);
 		}
 
 		[TestMethod]
 		public void Details_NoId()
 		{
-			var result = controller.Details();
+			var result = _controller.Details();
 
 			Assert.IsInstanceOfType(result, typeof(HttpNotFoundResult));
 		}

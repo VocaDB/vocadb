@@ -6,8 +6,8 @@ namespace VocaDb.Model.Domain.Users
 {
 	public class EventForUser : IEntryWithIntId
 	{
-		private ReleaseEvent releaseEvent;
-		private User user;
+		private ReleaseEvent _releaseEvent;
+		private User _user;
 
 		public EventForUser() { }
 
@@ -27,21 +27,21 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual ReleaseEvent ReleaseEvent
 		{
-			get => releaseEvent;
+			get => _releaseEvent;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				releaseEvent = value;
+				_releaseEvent = value;
 			}
 		}
 
 		public virtual User User
 		{
-			get => user;
+			get => _user;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				user = value;
+				_user = value;
 			}
 		}
 

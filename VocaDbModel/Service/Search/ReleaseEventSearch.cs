@@ -14,25 +14,25 @@ namespace VocaDb.Model.Service.Search
 {
 	public class ReleaseEventSearch
 	{
-		private static readonly Regex eventNameRegex = new(@"([^\d]+)(\d+)(?:\s(\w+))?");
-		private static readonly Regex eventNumberRegex = new(@"^(\d+)(?:\s(\w+))?");
+		private static readonly Regex _eventNameRegex = new(@"([^\d]+)(\d+)(?:\s(\w+))?");
+		private static readonly Regex _eventNumberRegex = new(@"^(\d+)(?:\s(\w+))?");
 
-		private readonly IDatabaseContext querySource;
+		private readonly IDatabaseContext _querySource;
 
 		private IQueryable<T> Query<T>() where T : class, IDatabaseObject
 		{
-			return querySource.Query<T>();
+			return _querySource.Query<T>();
 		}
 
 		public ReleaseEventSearch(IDatabaseContext querySource)
 		{
-			this.querySource = querySource;
+			this._querySource = querySource;
 		}
 
 		private ReleaseEventFindResultContract AttemptSeriesMatch(string seriesName, ReleaseEventSeries series, string query, ContentLanguagePreference languagePreference)
 		{
 			var queryWithoutSeries = query.Remove(0, seriesName.Length).TrimStart();
-			var match = eventNumberRegex.Match(queryWithoutSeries);
+			var match = _eventNumberRegex.Match(queryWithoutSeries);
 
 			if (!match.Success)
 				return null;
@@ -80,7 +80,7 @@ namespace VocaDb.Model.Service.Search
 				}
 			}
 
-			var match = eventNameRegex.Match(query);
+			var match = _eventNameRegex.Match(query);
 
 			if (match.Success)
 			{

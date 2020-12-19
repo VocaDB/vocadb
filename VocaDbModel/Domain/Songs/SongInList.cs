@@ -4,9 +4,9 @@ namespace VocaDb.Model.Domain.Songs
 {
 	public class SongInList : IEntryWithIntId, ISongLink
 	{
-		private SongList list;
-		private string notes;
-		private Song song;
+		private SongList _list;
+		private string _notes;
+		private Song _song;
 
 		public SongInList()
 		{
@@ -26,31 +26,31 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Song
 		{
-			get => song;
+			get => _song;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				song = value;
+				_song = value;
 			}
 		}
 
 		public virtual SongList List
 		{
-			get => list;
+			get => _list;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				list = value;
+				_list = value;
 			}
 		}
 
 		public virtual string Notes
 		{
-			get => notes;
+			get => _notes;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				notes = value;
+				_notes = value;
 			}
 		}
 

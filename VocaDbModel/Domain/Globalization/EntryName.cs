@@ -5,7 +5,7 @@ namespace VocaDb.Model.Domain.Globalization
 {
 	public class EntryName<TEntry> : LocalizedStringWithId where TEntry : class
 	{
-		private TEntry entry;
+		private TEntry _entry;
 
 		public EntryName() { }
 
@@ -17,11 +17,11 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual TEntry Entry
 		{
-			get => entry;
+			get => _entry;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				entry = value;
+				_entry = value;
 			}
 		}
 

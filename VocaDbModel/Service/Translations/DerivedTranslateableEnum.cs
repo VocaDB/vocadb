@@ -11,26 +11,26 @@ namespace VocaDb.Model.Service.Translations
 	// Supports loading translations from a "base" enum
 	public class DerivedTranslateableEnum<TEnum, TEnumBase> : TranslateableEnum<TEnum> where TEnum : struct, Enum where TEnumBase : struct, Enum
 	{
-		private readonly TranslateableEnum<TEnumBase> baseEnum;
+		private readonly TranslateableEnum<TEnumBase> _baseEnum;
 
 		internal override string GetName(string val, ResourceManager res, CultureInfo cultureInfo)
 		{
-			return base.GetName(val, res, cultureInfo).EmptyToNull() ?? baseEnum.GetName(val, baseEnum.ResourceManager, cultureInfo);
+			return base.GetName(val, res, cultureInfo).EmptyToNull() ?? _baseEnum.GetName(val, _baseEnum.ResourceManager, cultureInfo);
 		}
 
 		internal override string GetName(string val, ResourceManager res)
 		{
-			return base.GetName(val, res).EmptyToNull() ?? baseEnum.GetName(val, baseEnum.ResourceManager);
+			return base.GetName(val, res).EmptyToNull() ?? _baseEnum.GetName(val, _baseEnum.ResourceManager);
 		}
 
 		public DerivedTranslateableEnum(TranslateableEnum<TEnumBase> baseEnum, Func<ResourceManager> resourceManager) : base(resourceManager)
 		{
-			this.baseEnum = baseEnum;
+			this._baseEnum = baseEnum;
 		}
 
 		public DerivedTranslateableEnum(TranslateableEnum<TEnumBase> baseEnum, Func<ResourceManager> resourceManager, IEnumerable<TEnum> values) : base(resourceManager, values)
 		{
-			this.baseEnum = baseEnum;
+			this._baseEnum = baseEnum;
 		}
 	}
 }

@@ -71,8 +71,8 @@ namespace VocaDb.Model.Domain.ExtLinks
 			return new CollectionDiff<T, T>(created, diff.Removed, diff.Unchanged);
 		}
 
-		private string description;
-		private string url;
+		private string _description;
+		private string _url;
 
 		public WebLink() { }
 
@@ -106,11 +106,11 @@ namespace VocaDb.Model.Domain.ExtLinks
 		/// </summary>
 		public virtual string Description
 		{
-			get => description;
+			get => _description;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				description = value;
+				_description = value;
 			}
 		}
 
@@ -126,11 +126,11 @@ namespace VocaDb.Model.Domain.ExtLinks
 		/// </summary>
 		public virtual string Url
 		{
-			get => url;
+			get => _url;
 			set
 			{
 				ParamIs.NotNullOrWhiteSpace(() => value);
-				url = value;
+				_url = value;
 			}
 		}
 

@@ -24,22 +24,22 @@ namespace VocaDb.Model.Service
 {
 	public class ArtistService : ServiceBase
 	{
-		private readonly IEntryUrlParser entryUrlParser;
+		private readonly IEntryUrlParser _entryUrlParser;
 
 		// ReSharper disable UnusedMember.Local
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 		// ReSharper restore UnusedMember.Local
 
 		public PartialFindResult<Artist> Find(ISession session, ArtistQueryParams queryParams)
 		{
 			var context = new NHibernateDatabaseContext<Artist>(session, PermissionContext);
-			return new ArtistSearch(queryParams.LanguagePreference, context, entryUrlParser).Find(queryParams);
+			return new ArtistSearch(queryParams.LanguagePreference, context, _entryUrlParser).Find(queryParams);
 		}
 
 		public ArtistService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
-			this.entryUrlParser = entryUrlParser;
+			this._entryUrlParser = entryUrlParser;
 		}
 
 		public void Archive(ISession session, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "")

@@ -21,25 +21,25 @@ namespace VocaDb.Web.Controllers.Api
 	{
 		public IPRuleApiController(IUserPermissionContext userContext, IRepository repo, IPRuleManager ipRuleManager)
 		{
-			this.userContext = userContext;
-			this.repo = repo;
-			this.ipRuleManager = ipRuleManager;
+			this._userContext = userContext;
+			this._repo = repo;
+			this._ipRuleManager = ipRuleManager;
 		}
 
-		private readonly IPRuleManager ipRuleManager;
-		private readonly IRepository repo;
-		private readonly IUserPermissionContext userContext;
+		private readonly IPRuleManager _ipRuleManager;
+		private readonly IRepository _repo;
+		private readonly IUserPermissionContext _userContext;
 
 		[Route("{id:int}")]
 		public async Task DeleteIPRule(int ruleID)
 		{
-			userContext.VerifyPermission(PermissionToken.ManageIPRules);
+			_userContext.VerifyPermission(PermissionToken.ManageIPRules);
 
-			await repo.HandleTransactionAsync(async ctx =>
+			await _repo.HandleTransactionAsync(async ctx =>
 			{
 				var rule = await ctx.LoadAsync<IPRule>(ruleID);
 				await ctx.DeleteAsync(rule);
-				ipRuleManager.RemovePermBannedIP(rule.Address);
+				_ipRuleManager.RemovePermBannedIP(rule.Address);
 				ctx.AuditLogger.SysLog($"removed {rule.Address} from banned IPs");
 			});
 		}
@@ -47,9 +47,9 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("")]
 		public async Task<IEnumerable<IPRule>> GetIPRules()
 		{
-			userContext.VerifyPermission(PermissionToken.ManageIPRules);
+			_userContext.VerifyPermission(PermissionToken.ManageIPRules);
 
-			return await repo.HandleQueryAsync(async ctx =>
+			return await _repo.HandleQueryAsync(async ctx =>
 			{
 				return await ctx.Query<IPRule>().ToListAsync();
 			});
@@ -58,7 +58,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("")]
 		public bool PostNewIPRule(IPRule rule)
 		{
-			userContext.VerifyPermission(PermissionToken.ManageIPRules);
+			_userContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			if (string.IsNullOrEmpty(rule?.Address))
 			{
@@ -67,9 +67,9 @@ namespace VocaDb.Web.Controllers.Api
 
 			bool result = false;
 
-			repo.HandleTransaction(ctx =>
+			_repo.HandleTransaction(ctx =>
 			{
-				result = ipRuleManager.AddPermBannedIP(ctx, rule);
+				result = _ipRuleManager.AddPermBannedIP(ctx, rule);
 				ctx.AuditLogger.SysLog($"added {rule.Address} to banned IPs");
 			});
 

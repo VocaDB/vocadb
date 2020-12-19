@@ -13,7 +13,7 @@ namespace VocaDb.Web.Code.Feeds
 {
 	public class SongFeedFactory
 	{
-		private static readonly XNamespace mediaNs = XNamespace.Get(@"http://search.yahoo.com/mrss/");
+		private static readonly XNamespace _mediaNs = XNamespace.Get(@"http://search.yahoo.com/mrss/");
 
 		private SyndicationItem CreateFeedItem(SongContract song, Func<SongContract, string> contentFac, Func<SongContract, string> urlFac)
 		{
@@ -22,7 +22,7 @@ namespace VocaDb.Web.Code.Feeds
 
 			item.Summary = new TextSyndicationContent(contentFac(song), TextSyndicationContentKind.Html);
 			if (!string.IsNullOrEmpty(song.ThumbUrl))
-				item.ElementExtensions.Add(new XElement(mediaNs + "thumbnail", new XAttribute("url", song.ThumbUrl)));
+				item.ElementExtensions.Add(new XElement(_mediaNs + "thumbnail", new XAttribute("url", song.ThumbUrl)));
 
 			return item;
 		}
@@ -32,7 +32,7 @@ namespace VocaDb.Web.Code.Feeds
 			var items = songs.Select(s => CreateFeedItem(s, contentFac, urlFac));
 
 			var feed = new SyndicationFeed("Latest songs with videos", string.Empty, uri, items);
-			feed.AttributeExtensions.Add(new XmlQualifiedName("media", XNamespace.Xmlns.ToString()), mediaNs.ToString());
+			feed.AttributeExtensions.Add(new XmlQualifiedName("media", XNamespace.Xmlns.ToString()), _mediaNs.ToString());
 
 			return feed;
 		}

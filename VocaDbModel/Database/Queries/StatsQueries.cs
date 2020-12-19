@@ -43,11 +43,11 @@ namespace VocaDb.Model.Database.Queries
 
 	public class StatsQueries
 	{
-		private readonly IRepository repository;
+		private readonly IRepository _repository;
 
 		public StatsQueries(IRepository repository)
 		{
-			this.repository = repository;
+			this._repository = repository;
 		}
 
 		private int GetRootVb(int vb, Dictionary<int, int> voicebankMap)
@@ -108,7 +108,7 @@ namespace VocaDb.Model.Database.Queries
 			var end = DateTime.Now.AddMonths(-1);
 
 			// TODO: report not verified
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				return ctx.Query<ArtistForSong>()
 					.WhereSongHasPublishDate(true)
@@ -145,7 +145,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public IEnumerable<CountPerDayContract> SongsAddedPerDay(DateTime? cutoff)
 		{
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				var query = ctx.Query<Song>();
 
@@ -171,7 +171,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public IEnumerable<Tuple<Artist, SongsPerArtistPerDate[]>> SongsPerVocaloidOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
 		{
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				// Note: the same song may be included multiple times for different artists
 				var points = ctx.Query<ArtistForSong>()
@@ -209,7 +209,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public IEnumerable<IGrouping<ArtistType, Tuple<DateTime, ArtistType, int>>> GetSongsPerVoicebankTypeOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
 		{
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				// Note: the same song may be included multiple times for different artists
 				var points = ctx.Query<ArtistForSong>()
@@ -240,7 +240,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public IEnumerable<EntryWithIdAndData<LocalizedValue>> HitsPerSongOverTime(DateTime? cutoff)
 		{
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				var topSongIds = ctx.Query<SongHit>()
 					.Where(s => !s.Entry.Deleted && s.Entry.PublishDate.DateTime != null)
@@ -303,7 +303,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public EntryWithIdAndData<LocalizedValue>[] ScorePerSongOverTime(DateTime? cutoff)
 		{
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				var topSongIds = ctx.Query<FavoriteSongForUser>()
 					.Where(s => !s.Song.Deleted && s.Song.PublishDate.DateTime != null)

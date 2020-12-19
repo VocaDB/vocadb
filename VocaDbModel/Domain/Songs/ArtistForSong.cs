@@ -9,8 +9,8 @@ namespace VocaDb.Model.Domain.Songs
 {
 	public class ArtistForSong : IEquatable<ArtistForSong>, IArtistLinkWithRoles, ISongLink, IEntryWithIntId
 	{
-		private string notes;
-		private Song song;
+		private string _notes;
+		private Song _song;
 
 		public ArtistForSong()
 		{
@@ -52,11 +52,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual string Notes
 		{
-			get => notes;
+			get => _notes;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				notes = value;
+				_notes = value;
 			}
 		}
 
@@ -64,11 +64,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Song
 		{
-			get => song;
+			get => _song;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				song = value;
+				_song = value;
 			}
 		}
 

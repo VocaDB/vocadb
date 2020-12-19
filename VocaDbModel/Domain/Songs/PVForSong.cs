@@ -12,8 +12,8 @@ namespace VocaDb.Model.Domain.Songs
 {
 	public class PVForSong : PV, IPVWithThumbnail, ISongLink, IEntryWithIntId
 	{
-		private Song song;
-		private string thumbUrl;
+		private Song _song;
+		private string _thumbUrl;
 
 		public PVForSong()
 		{
@@ -45,21 +45,21 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Song
 		{
-			get => song;
+			get => _song;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				song = value;
+				_song = value;
 			}
 		}
 
 		public virtual string ThumbUrl
 		{
-			get => thumbUrl;
+			get => _thumbUrl;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				thumbUrl = value;
+				_thumbUrl = value;
 			}
 		}
 

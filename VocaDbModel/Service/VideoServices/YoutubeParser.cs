@@ -13,11 +13,11 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class YoutubeParser : IVideoServiceParser
 	{
-		private YoutubeService service;
+		private YoutubeService _service;
 
 		public YoutubeParser()
 		{
-			service = new YoutubeService(AppConfig.YoutubeApiKey);
+			_service = new YoutubeService(AppConfig.YoutubeApiKey);
 		}
 
 		private int? GetLength(YoutubeVideoItem video)
@@ -66,7 +66,7 @@ namespace VocaDb.Model.Service.VideoServices
 			YoutubeVideoResponse result;
 			try
 			{
-				result = await service.VideoAsync(id);
+				result = await _service.VideoAsync(id);
 			}
 			catch (HttpRequestException x)
 			{

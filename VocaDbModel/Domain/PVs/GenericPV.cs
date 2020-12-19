@@ -8,7 +8,7 @@ namespace VocaDb.Model.Domain.PVs
 	public abstract class GenericPV<TEntry> : PV, IEntryWithIntId
 		where TEntry : class
 	{
-		private TEntry entry;
+		private TEntry _entry;
 
 		protected GenericPV()
 		{
@@ -24,11 +24,11 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual TEntry Entry
 		{
-			get => entry;
+			get => _entry;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				entry = value;
+				_entry = value;
 			}
 		}
 

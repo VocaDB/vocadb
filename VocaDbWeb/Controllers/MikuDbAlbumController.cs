@@ -13,13 +13,13 @@ namespace VocaDb.Web.Controllers
 {
 	public class MikuDbAlbumController : ControllerBase
 	{
-		private readonly MikuDbAlbumService service;
+		private readonly MikuDbAlbumService _service;
 
-		private MikuDbAlbumService Service => service;
+		private MikuDbAlbumService Service => _service;
 
 		public MikuDbAlbumController(MikuDbAlbumService service)
 		{
-			this.service = service;
+			this._service = service;
 		}
 
 		public FileResult CoverPicture(int id)

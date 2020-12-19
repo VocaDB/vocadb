@@ -15,7 +15,7 @@ namespace VocaDb.Model.Domain.Activityfeed
 	/// </summary>
 	public abstract class ActivityEntry : IEntryWithIntId
 	{
-		private User author;
+		private User _author;
 
 		protected ActivityEntry()
 		{
@@ -36,11 +36,11 @@ namespace VocaDb.Model.Domain.Activityfeed
 
 		public virtual User Author
 		{
-			get => author;
+			get => _author;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				author = value;
+				_author = value;
 			}
 		}
 

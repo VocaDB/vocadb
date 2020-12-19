@@ -14,9 +14,9 @@ namespace VocaDb.Model.Service.Translations
 	public class TranslateableEnum<TEnum> : ITranslateableEnum, IEnumerable<TranslateableEnumField<TEnum>>
 		where TEnum : struct, Enum
 	{
-		private readonly Func<ResourceManager> resourceManager;
+		private readonly Func<ResourceManager> _resourceManager;
 
-		internal ResourceManager ResourceManager => resourceManager();
+		internal ResourceManager ResourceManager => _resourceManager();
 
 		internal virtual string GetName(string val, ResourceManager res) => res.GetString(val);
 
@@ -34,13 +34,13 @@ namespace VocaDb.Model.Service.Translations
 
 		public TranslateableEnum(Func<ResourceManager> resourceManager)
 		{
-			this.resourceManager = resourceManager;
+			this._resourceManager = resourceManager;
 			this.Values = EnumVal<TEnum>.Values;
 		}
 
 		public TranslateableEnum(Func<ResourceManager> resourceManager, IEnumerable<TEnum> values)
 		{
-			this.resourceManager = resourceManager;
+			this._resourceManager = resourceManager;
 			this.Values = values.ToArray();
 		}
 

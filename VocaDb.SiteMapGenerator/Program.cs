@@ -12,14 +12,14 @@ namespace VocaDb.SiteMapGenerator
 {
 	class Program
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
 		private static async Task GenerateSitemap()
 		{
 			var config = new Config();
 			var client = new VocaDbClient(config.SiteRootUrl);
 
-			log.Info("Getting entries from VocaDB");
+			_log.Info("Getting entries from VocaDB");
 
 			var artists = await client.GetArtists();
 			var albums = await client.GetAlbums();
@@ -27,7 +27,7 @@ namespace VocaDb.SiteMapGenerator
 			var songs = await client.GetSongs();
 			var tags = await client.GetTags();
 
-			log.Info("Generating sitemap");
+			_log.Info("Generating sitemap");
 
 			var generator = new SitemapGenerator(config.SiteRootUrl, config.SitemapRootUrl);
 			generator.Generate(config.OutFolder, new Dictionary<EntryType, IEnumerable<EntryReference>> {

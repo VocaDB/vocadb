@@ -25,9 +25,9 @@ namespace VocaDb.Model.Domain.Globalization
 			return new TranslatedString(uniform, uniform, uniform);
 		}
 
-		private string english;
-		private string original;
-		private string romaji;
+		private string _english;
+		private string _original;
+		private string _romaji;
 
 		public TranslatedString()
 		{
@@ -161,10 +161,10 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual string English
 		{
-			get => english;
+			get => _english;
 			set
 			{
-				english = value;
+				_english = value;
 				//UpdateDefault();
 			}
 		}
@@ -175,10 +175,10 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual string Japanese
 		{
-			get => original;
+			get => _original;
 			set
 			{
-				original = value;
+				_original = value;
 			}
 		}
 
@@ -188,10 +188,10 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual string Romaji
 		{
-			get => romaji;
+			get => _romaji;
 			set
 			{
-				romaji = value;
+				_romaji = value;
 			}
 		}
 

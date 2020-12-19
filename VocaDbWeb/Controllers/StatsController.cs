@@ -30,15 +30,15 @@ namespace VocaDb.Web.Controllers
 	public class StatsController : ControllerBase
 	{
 		private const int ClientCacheDurationSec = 86400;
-		private readonly VdbConfigManager config;
-		private readonly ActivityEntryQueries activityEntryQueries;
-		private readonly StatsQueries queries;
-		private readonly SongAggregateQueries songAggregateQueries;
+		private readonly VdbConfigManager _config;
+		private readonly ActivityEntryQueries _activityEntryQueries;
+		private readonly StatsQueries _queries;
+		private readonly SongAggregateQueries _songAggregateQueries;
 
 		private T GetCachedReport<T>() where T : class
 		{
 			var name = ControllerContext.RouteData.Values["action"] + "_" + ControllerContext.RouteData.Values["cutoff"];
-			var item = context.Cache["report_" + name];
+			var item = _context.Cache["report_" + name];
 
 			if (item == null)
 				return null;
@@ -49,7 +49,7 @@ namespace VocaDb.Web.Controllers
 		private void SaveCachedReport<T>(T data) where T : class
 		{
 			var name = ControllerContext.RouteData.Values["action"];
-			context.Cache.Add("report_" + name, data, null, Cache.NoAbsoluteExpiration, TimeSpan.FromDays(1), CacheItemPriority.Default, null);
+			_context.Cache.Add("report_" + name, data, null, Cache.NoAbsoluteExpiration, TimeSpan.FromDays(1), CacheItemPriority.Default, null);
 		}
 
 		private ActionResult AreaChart(string title, params Series[] dataSeries)
@@ -182,7 +182,7 @@ namespace VocaDb.Web.Controllers
 		{
 			var values = GetTopValues(func);
 
-			var categories = values.Select(p => p.Name[permissionContext.LanguagePreference]).ToArray();
+			var categories = values.Select(p => p.Name[_permissionContext.LanguagePreference]).ToArray();
 			var data = values.Select(p => p.Value).ToArray();
 
 			return SimpleBarChart(title, seriesName, categories, data);
@@ -200,7 +200,7 @@ namespace VocaDb.Web.Controllers
 
 		private ICollection<Tuple<string, int>> GetGenreTagUsages<T>() where T : TagUsage
 		{
-			return userRepository.HandleQuery(ctx =>
+			return _userRepository.HandleQuery(ctx =>
 			{
 				var genres = ctx.OfType<T>()
 					.Query()
@@ -241,7 +241,7 @@ namespace VocaDb.Web.Controllers
 			if (cached != null)
 				return cached;
 
-			var data = userRepository.HandleQuery(ctx =>
+			var data = _userRepository.HandleQuery(ctx =>
 			{
 				return func(ctx.OfType<T>().Query())
 					.OrderByDescending(a => a.Value)
@@ -254,22 +254,22 @@ namespace VocaDb.Web.Controllers
 			return data;
 		}
 
-		private readonly HttpContextBase context;
-		private readonly IUserPermissionContext permissionContext;
-		private readonly IUserRepository userRepository;
+		private readonly HttpContextBase _context;
+		private readonly IUserPermissionContext _permissionContext;
+		private readonly IUserRepository _userRepository;
 
-		private DateTime DefaultMinDate => new DateTime(config.SiteSettings.MinAlbumYear, 1, 1);
+		private DateTime DefaultMinDate => new DateTime(_config.SiteSettings.MinAlbumYear, 1, 1);
 
 		public StatsController(IUserRepository userRepository, IUserPermissionContext permissionContext, SongAggregateQueries songAggregateQueries,
 			HttpContextBase context, VdbConfigManager config, ActivityEntryQueries activityEntryQueries, StatsQueries queries)
 		{
-			this.userRepository = userRepository;
-			this.permissionContext = permissionContext;
-			this.activityEntryQueries = activityEntryQueries;
-			this.queries = queries;
-			this.songAggregateQueries = songAggregateQueries;
-			this.context = context;
-			this.config = config;
+			this._userRepository = userRepository;
+			this._permissionContext = permissionContext;
+			this._activityEntryQueries = activityEntryQueries;
+			this._queries = queries;
+			this._songAggregateQueries = songAggregateQueries;
+			this._context = context;
+			this._config = config;
 		}
 
 		[OutputCache(Duration = ClientCacheDurationSec)]
@@ -284,7 +284,7 @@ namespace VocaDb.Web.Controllers
 		{
 			var now = DateTime.Now;
 
-			var values = userRepository.HandleQuery(ctx =>
+			var values = _userRepository.HandleQuery(ctx =>
 			{
 				return ctx.OfType<Album>().Query()
 					.Where(a => !a.Deleted
@@ -364,7 +364,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = ClientCacheDurationSec)]
 		public ActionResult AlbumSongsOverTime()
 		{
-			var data = songAggregateQueries.SongsOverTime(TimeUnit.Month, false, null, a => a.AllAlbums.Any(), a => a.AllAlbums.Count == 0);
+			var data = _songAggregateQueries.SongsOverTime(TimeUnit.Month, false, null, a => a.AllAlbums.Any(), a => a.AllAlbums.Count == 0);
 
 			return AreaChart("Album songs over time",
 				new Series("Album songs", Series.DateData(data[0])),
@@ -377,7 +377,7 @@ namespace VocaDb.Web.Controllers
 		{
 			cutoff ??= DefaultMinDate;
 
-			var values = queries.ArtistsPerMonth(cutoff);
+			var values = _queries.ArtistsPerMonth(cutoff);
 
 			var points = values.ToDatePoints();
 
@@ -387,7 +387,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = ClientCacheDurationSec)]
 		public ActionResult CumulativeAlbums()
 		{
-			var values = userRepository.HandleQuery(ctx =>
+			var values = _userRepository.HandleQuery(ctx =>
 			{
 				return ctx.Query<Album>()
 					.WhereNotDeleted()
@@ -417,7 +417,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = ClientCacheDurationSec)]
 		public ActionResult CumulativeSongsPublished(DateTime? cutoff)
 		{
-			var values = songAggregateQueries.SongsOverTime(TimeUnit.Month, false, cutoff, a => a.PVs.PVs.Any(), a => a.PVs.PVs.Count == 0).First();
+			var values = _songAggregateQueries.SongsOverTime(TimeUnit.Month, false, cutoff, a => a.PVs.PVs.Any(), a => a.PVs.PVs.Count == 0).First();
 
 			var points = values.CumulativeSum();
 
@@ -427,7 +427,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = ClientCacheDurationSec, VaryByParam = "cutoff")]
 		public ActionResult EditsPerDay(DateTime? cutoff)
 		{
-			var points = activityEntryQueries.GetEditsPerDay(null, cutoff);
+			var points = _activityEntryQueries.GetEditsPerDay(null, cutoff);
 
 			return DateLineChartWithAverage("Edits per day", "Edits", "Number of edits", points);
 		}
@@ -455,7 +455,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = ClientCacheDurationSec, VaryByParam = "cutoff,onlyOriginal")]
 		public ActionResult PVsPerService(DateTime? cutoff, bool onlyOriginal = false)
 		{
-			var result = userRepository.HandleQuery(ctx =>
+			var result = _userRepository.HandleQuery(ctx =>
 			{
 				var pvs = ctx.Query<PVForSong>()
 					.FilterIfNotNull(cutoff, pv => pv.PublishDate >= cutoff)
@@ -479,7 +479,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = ClientCacheDurationSec)]
 		public ActionResult PVsPerServiceOverTime()
 		{
-			var data = userRepository.HandleQuery(ctx =>
+			var data = _userRepository.HandleQuery(ctx =>
 			{
 				return ctx.Query<PVForSong>()
 					.Where(a => a.PublishDate != null)
@@ -519,7 +519,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = ClientCacheDurationSec, VaryByParam = "cutoff")]
 		public ActionResult SongsAddedPerDay(DateTime? cutoff)
 		{
-			var values = queries.SongsAddedPerDay(cutoff);
+			var values = _queries.SongsAddedPerDay(cutoff);
 
 			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
 
@@ -530,7 +530,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult SongsPublishedPerDay(DateTime? cutoff = null, TimeUnit unit = TimeUnit.Day)
 		{
 			cutoff ??= DefaultMinDate;
-			var values = songAggregateQueries.SongsOverTime(unit, false, cutoff, s => s.PublishDate.DateTime <= DateTime.Now, null)[0];
+			var values = _songAggregateQueries.SongsOverTime(unit, false, cutoff, s => s.PublishDate.DateTime <= DateTime.Now, null)[0];
 
 			var points = values.Select(v => Tuple.Create(new DateTime(v.Year, v.Month, v.Day), v.Count)).ToArray();
 
@@ -592,7 +592,7 @@ namespace VocaDb.Web.Controllers
 			if (vocalistTypes == null)
 				vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
 
-			var data = queries.SongsPerVocaloidOverTime(cutoff, vocalistTypes, startYear);
+			var data = _queries.SongsPerVocaloidOverTime(cutoff, vocalistTypes, startYear);
 
 			var dataSeries = data.Select(ser => new Series
 			{
@@ -609,7 +609,7 @@ namespace VocaDb.Web.Controllers
 			if (vocalistTypes == null)
 				vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
 
-			var data = queries.GetSongsPerVoicebankTypeOverTime(cutoff, vocalistTypes, startYear);
+			var data = _queries.GetSongsPerVoicebankTypeOverTime(cutoff, vocalistTypes, startYear);
 
 			var dataSeries = data
 				.Select(ser => new Series
@@ -625,7 +625,7 @@ namespace VocaDb.Web.Controllers
 		[OutputCache(Duration = ClientCacheDurationSec)]
 		public ActionResult SongsWithoutPVOverTime()
 		{
-			var data = songAggregateQueries.SongsOverTime(TimeUnit.Month, false, null, a => a.PVs.PVs.Any(), a => a.PVs.PVs.Count == 0);
+			var data = _songAggregateQueries.SongsOverTime(TimeUnit.Month, false, null, a => a.PVs.PVs.Any(), a => a.PVs.PVs.Count == 0);
 
 			return AreaChart("Songs with and without PV over time",
 				new Series("Songs with a PV", Series.DateData(data[0])),
@@ -652,7 +652,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult HitsPerAlbum(DateTime? cutoff)
 		{
-			var values = userRepository.HandleQuery(ctx =>
+			var values = _userRepository.HandleQuery(ctx =>
 			{
 				var idsAndHits = ctx.OfType<AlbumHit>().Query()
 					.FilterIfNotNull(cutoff, s => s.Date > cutoff)
@@ -688,7 +688,7 @@ namespace VocaDb.Web.Controllers
 				return albums.OrderByDescending(a => a.Value);
 			});
 
-			var categories = values.Select(p => p.Name[permissionContext.LanguagePreference]).ToArray();
+			var categories = values.Select(p => p.Name[_permissionContext.LanguagePreference]).ToArray();
 			var data = values.Select(p => p.Value).ToArray();
 
 			return SimpleBarChart("Hits per album", "Hits", categories, data);
@@ -696,7 +696,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult HitsPerSong(DateTime? cutoff)
 		{
-			var values = userRepository.HandleQuery(ctx =>
+			var values = _userRepository.HandleQuery(ctx =>
 			{
 				var idsAndHits = ctx.OfType<SongHit>().Query()
 					.FilterIfNotNull(cutoff, s => s.Date > cutoff)
@@ -720,7 +720,7 @@ namespace VocaDb.Web.Controllers
 				return songs.OrderByDescending(a => a.Value);
 			});
 
-			var categories = values.Select(p => p.Name[permissionContext.LanguagePreference]).ToArray();
+			var categories = values.Select(p => p.Name[_permissionContext.LanguagePreference]).ToArray();
 			var data = values.Select(p => p.Value).ToArray();
 
 			return SimpleBarChart("Views per song", "Hits", categories, data);
@@ -728,7 +728,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult HitsPerSongOverTime(DateTime? cutoff)
 		{
-			var data = queries.HitsPerSongOverTime(cutoff);
+			var data = _queries.HitsPerSongOverTime(cutoff);
 
 			var dataSeries = data.Select(ser => new Series
 			{
@@ -741,7 +741,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult ScorePerSongOverTime(DateTime? cutoff)
 		{
-			var data = queries.ScorePerSongOverTime(cutoff);
+			var data = _queries.ScorePerSongOverTime(cutoff);
 
 			var dataSeries = data.Select(ser => new Series
 			{

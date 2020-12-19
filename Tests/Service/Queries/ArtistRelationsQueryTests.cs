@@ -17,53 +17,53 @@ namespace VocaDb.Tests.Service.Queries
 	[TestClass]
 	public class ArtistRelationsQueryTests
 	{
-		private readonly Artist artist;
-		private readonly FakeUserRepository repository = new();
-		private readonly ArtistRelationsQuery query;
-		private readonly Song song;
-		private readonly Song song2;
-		private readonly Artist voicebank;
+		private readonly Artist _artist;
+		private readonly FakeUserRepository _repository = new();
+		private readonly ArtistRelationsQuery _query;
+		private readonly Song _song;
+		private readonly Song _song2;
+		private readonly Artist _voicebank;
 
 		public ArtistRelationsQueryTests()
 		{
-			artist = repository.Save(CreateEntry.Artist(ArtistType.Producer));
-			voicebank = repository.Save(CreateEntry.Artist(ArtistType.Vocaloid));
-			song = repository.Save(CreateEntry.Song());
-			song2 = repository.Save(CreateEntry.Song());
-			repository.Save(song.AddArtist(artist));
-			repository.Save(song.AddArtist(voicebank));
-			repository.Save(song2.AddArtist(artist));
-			query = new ArtistRelationsQuery(repository.CreateContext(), Model.Domain.Globalization.ContentLanguagePreference.English, new FakeObjectCache(), new InMemoryImagePersister());
+			_artist = _repository.Save(CreateEntry.Artist(ArtistType.Producer));
+			_voicebank = _repository.Save(CreateEntry.Artist(ArtistType.Vocaloid));
+			_song = _repository.Save(CreateEntry.Song());
+			_song2 = _repository.Save(CreateEntry.Song());
+			_repository.Save(_song.AddArtist(_artist));
+			_repository.Save(_song.AddArtist(_voicebank));
+			_repository.Save(_song2.AddArtist(_artist));
+			_query = new ArtistRelationsQuery(_repository.CreateContext(), Model.Domain.Globalization.ContentLanguagePreference.English, new FakeObjectCache(), new InMemoryImagePersister());
 		}
 
 		[TestMethod]
 		public void LatestSongs()
 		{
-			var result = query.GetRelations(artist, ArtistRelationsFields.LatestSongs);
+			var result = _query.GetRelations(_artist, ArtistRelationsFields.LatestSongs);
 
 			Assert.AreEqual(2, result.LatestSongs.Length, "Number of songs");
-			Assert.IsTrue(result.LatestSongs.Any(s => s.Id == song.Id), "Song as expected");
+			Assert.IsTrue(result.LatestSongs.Any(s => s.Id == _song.Id), "Song as expected");
 		}
 
 		// Songs for the vocal data provider are ignored
 		[TestMethod]
 		public void LatestSongs_VocalDataProvider()
 		{
-			song.GetArtistLink(artist).Roles = ArtistRoles.VocalDataProvider;
-			var result = query.GetRelations(artist, ArtistRelationsFields.LatestSongs);
+			_song.GetArtistLink(_artist).Roles = ArtistRoles.VocalDataProvider;
+			var result = _query.GetRelations(_artist, ArtistRelationsFields.LatestSongs);
 
 			Assert.AreEqual(1, result.LatestSongs.Length, "Number of songs");
-			Assert.AreEqual(song2.Id, result.LatestSongs.First().Id, "Song as expected");
+			Assert.AreEqual(_song2.Id, result.LatestSongs.First().Id, "Song as expected");
 		}
 
 		[TestMethod]
 		public void TopVoicebanks()
 		{
-			var result = query.GetTopVoicebanks(artist);
+			var result = _query.GetTopVoicebanks(_artist);
 
 			// artist has song with voicebank
 			Assert.AreEqual(1, result.Length, "Number of voicebanks");
-			Assert.AreEqual(voicebank.Id, result[0].Data.Id, "Artist as expected");
+			Assert.AreEqual(_voicebank.Id, result[0].Data.Id, "Artist as expected");
 		}
 
 		// Only producer roles count
@@ -71,8 +71,8 @@ namespace VocaDb.Tests.Service.Queries
 		public void TopVoicebanks_IgnoredRoles()
 		{
 			// Vocal data provider role is ignored
-			song.GetArtistLink(artist).Roles = ArtistRoles.VocalDataProvider;
-			var result = query.GetTopVoicebanks(artist);
+			_song.GetArtistLink(_artist).Roles = ArtistRoles.VocalDataProvider;
+			var result = _query.GetTopVoicebanks(_artist);
 
 			Assert.AreEqual(0, result.Length, "Number of voicebanks");
 		}
@@ -81,8 +81,8 @@ namespace VocaDb.Tests.Service.Queries
 		public void TopVoicebanks_IgnoredAndAllowedRoles()
 		{
 			// Vocal data provider role is ignored, but VoiceManipulator allows the song to be included.
-			song.GetArtistLink(artist).Roles = ArtistRoles.VoiceManipulator | ArtistRoles.VocalDataProvider;
-			var result = query.GetTopVoicebanks(artist);
+			_song.GetArtistLink(_artist).Roles = ArtistRoles.VoiceManipulator | ArtistRoles.VocalDataProvider;
+			var result = _query.GetTopVoicebanks(_artist);
 
 			Assert.AreEqual(1, result.Length, "Number of voicebanks");
 		}

@@ -29,11 +29,11 @@ namespace VocaDb.Model.Database.Queries
 {
 	public class SongListQueries : QueriesBase<ISongListRepository, SongList>
 	{
-		private readonly IEntryLinkFactory entryLinkFactory;
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly IAggregatedEntryImageUrlFactory thumbStore;
-		private readonly IEntryThumbPersister imagePersister;
-		private readonly IUserIconFactory userIconFactory;
+		private readonly IEntryLinkFactory _entryLinkFactory;
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private readonly IAggregatedEntryImageUrlFactory _thumbStore;
+		private readonly IEntryThumbPersister _imagePersister;
+		private readonly IUserIconFactory _userIconFactory;
 
 		public ArchivedSongListVersion Archive(IDatabaseContext<SongList> ctx, SongList songList, SongListDiff diff, EntryEditEvent reason, string notes = "")
 		{
@@ -89,7 +89,7 @@ namespace VocaDb.Model.Database.Queries
 			newList.Description = contract.Description ?? string.Empty;
 			newList.EventDate = contract.EventDate;
 
-			if (EntryPermissionManager.CanManageFeaturedLists(permissionContext))
+			if (EntryPermissionManager.CanManageFeaturedLists(_permissionContext))
 				newList.FeaturedCategory = contract.FeaturedCategory;
 
 			ctx.Save(newList);
@@ -101,7 +101,7 @@ namespace VocaDb.Model.Database.Queries
 
 			ctx.Update(newList);
 
-			ctx.AuditLogger.AuditLog($"created song list {entryLinkFactory.CreateEntryLink(newList)}", user);
+			ctx.AuditLogger.AuditLog($"created song list {_entryLinkFactory.CreateEntryLink(newList)}", user);
 			var archived = Archive(ctx, newList, new SongListDiff(), EntryEditEvent.Created, contract.UpdateNotes);
 
 			if (newList.FeaturedList)
@@ -118,7 +118,7 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var thumb = new EntryThumbMain(list, uploadedFile.Mime);
 				list.Thumb = thumb;
-				var thumbGenerator = new ImageThumbGenerator(imagePersister);
+				var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 				thumbGenerator.GenerateThumbsAndMoveImage(uploadedFile.Stream, thumb, SongList.ImageSizes, originalSize: Constants.RestrictedImageOriginalSize);
 			}
 		}
@@ -127,15 +127,15 @@ namespace VocaDb.Model.Database.Queries
 			IEntryThumbPersister imagePersister, IAggregatedEntryImageUrlFactory thumbStore, IUserIconFactory userIconFactory)
 			: base(repository, permissionContext)
 		{
-			this.entryLinkFactory = entryLinkFactory;
-			this.imagePersister = imagePersister;
-			this.thumbStore = thumbStore;
-			this.userIconFactory = userIconFactory;
+			this._entryLinkFactory = entryLinkFactory;
+			this._imagePersister = imagePersister;
+			this._thumbStore = thumbStore;
+			this._userIconFactory = userIconFactory;
 		}
 
 		public ICommentQueries Comments(IDatabaseContext<SongList> ctx)
 		{
-			return new CommentQueries<SongListComment, SongList>(ctx.OfType<SongListComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+			return new CommentQueries<SongListComment, SongList>(ctx.OfType<SongListComment>(), PermissionContext, _userIconFactory, _entryLinkFactory);
 		}
 
 		public CommentForApiContract CreateComment(int songId, CommentForApiContract contract)
@@ -145,9 +145,9 @@ namespace VocaDb.Model.Database.Queries
 
 		public void Delete(int listId, string notes)
 		{
-			permissionContext.VerifyManageDatabase();
+			_permissionContext.VerifyManageDatabase();
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var entry = ctx.Load(listId);
 
@@ -216,9 +216,9 @@ namespace VocaDb.Model.Database.Queries
 
 		public SongListForApiContract GetDetails(int listId)
 		{
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
-				return new SongListForApiContract(ctx.Load(listId), LanguagePreference, userIconFactory, thumbStore, SongListOptionalFields.Description | SongListOptionalFields.Events | SongListOptionalFields.MainPicture | SongListOptionalFields.Tags)
+				return new SongListForApiContract(ctx.Load(listId), LanguagePreference, _userIconFactory, _thumbStore, SongListOptionalFields.Description | SongListOptionalFields.Events | SongListOptionalFields.MainPicture | SongListOptionalFields.Tags)
 				{
 					LatestComments = Comments(ctx).GetList(listId, 3)
 				};
@@ -227,27 +227,27 @@ namespace VocaDb.Model.Database.Queries
 
 		public PartialFindResult<SongInListContract> GetSongsInList(SongInListQueryParams queryParams)
 		{
-			return repository.HandleQuery(session => GetSongsInList(session, queryParams, s => new SongInListContract(s, PermissionContext.LanguagePreference)));
+			return _repository.HandleQuery(session => GetSongsInList(session, queryParams, s => new SongInListContract(s, PermissionContext.LanguagePreference)));
 		}
 
 		public PartialFindResult<T> GetSongsInList<T>(SongInListQueryParams queryParams, Func<SongInList, T> fac)
 		{
-			return repository.HandleQuery(ctx => GetSongsInList(ctx, queryParams, fac));
+			return _repository.HandleQuery(ctx => GetSongsInList(ctx, queryParams, fac));
 		}
 
 		public SongListContract GetSongList(int listId)
 		{
-			return repository.HandleQuery(session => new SongListContract(session.Load(listId), PermissionContext));
+			return _repository.HandleQuery(session => new SongListContract(session.Load(listId), PermissionContext));
 		}
 
 		public SongListForEditContract GetSongListForEdit(int listId)
 		{
-			return repository.HandleQuery(session => new SongListForEditContract(session.Load(listId), PermissionContext));
+			return _repository.HandleQuery(session => new SongListForEditContract(session.Load(listId), PermissionContext));
 		}
 
 		public SongListWithArchivedVersionsContract GetSongListWithArchivedVersions(int id)
 		{
-			return repository.HandleQuery(session => new SongListWithArchivedVersionsContract(session.Load(id), PermissionContext));
+			return _repository.HandleQuery(session => new SongListWithArchivedVersionsContract(session.Load(id), PermissionContext));
 		}
 
 		public async Task<ImportedSongListContract> Import(string url, bool parseAll)
@@ -271,7 +271,7 @@ namespace VocaDb.Model.Database.Queries
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			return repository.HandleTransaction(ctx =>
+			return _repository.HandleTransaction(ctx =>
 			{
 				var user = GetLoggedUser(ctx);
 				SongList list;
@@ -335,7 +335,7 @@ namespace VocaDb.Model.Database.Queries
 					ctx.Update(list);
 
 					ctx.AuditLogger.AuditLog(
-						$"updated song list {entryLinkFactory.CreateEntryLink(list)} ({diff.ChangedFieldsString})", user);
+						$"updated song list {_entryLinkFactory.CreateEntryLink(list)} ({diff.ChangedFieldsString})", user);
 
 					var archived = Archive(ctx, list, diff, EntryEditEvent.Updated, contract.UpdateNotes);
 
@@ -373,6 +373,6 @@ namespace VocaDb.Model.Database.Queries
 
 		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
 
-		public string GetTagString(int id, string formatString) => HandleQuery(ctx => new SongListFormatter(entryLinkFactory).ApplyFormat(ctx.Load(id), formatString, PermissionContext.LanguagePreference, true));
+		public string GetTagString(int id, string formatString) => HandleQuery(ctx => new SongListFormatter(_entryLinkFactory).ApplyFormat(ctx.Load(id), formatString, PermissionContext.LanguagePreference, true));
 	}
 }

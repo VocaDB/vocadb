@@ -19,8 +19,8 @@ namespace VocaDb.Model.Service.Queries
 {
 	public class TagUsageQueries
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly IUserPermissionContext permissionContext;
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private readonly IUserPermissionContext _permissionContext;
 
 		private bool IsValid(TagBaseContract contract)
 		{
@@ -40,7 +40,7 @@ namespace VocaDb.Model.Service.Queries
 
 		public TagUsageQueries(IUserPermissionContext permissionContext)
 		{
-			this.permissionContext = permissionContext;
+			this._permissionContext = permissionContext;
 		}
 
 		public async Task<TagUsageForApiContract[]> AddTags<TEntry, TTag>(int entryId,
@@ -56,7 +56,7 @@ namespace VocaDb.Model.Service.Queries
 		{
 			ParamIs.NotNull(() => tags);
 
-			permissionContext.VerifyPermission(PermissionToken.EditTags);
+			_permissionContext.VerifyPermission(PermissionToken.EditTags);
 
 			tags = tags.Where(IsValid).ToArray();
 
@@ -78,7 +78,7 @@ namespace VocaDb.Model.Service.Queries
 				// Figure out tags that don't exist yet (no ID and no matching name).
 				var newTagNames = translatedTagNames.Except(tagsFromNames.SelectMany(t => t.Names.AllValues), StringComparer.InvariantCultureIgnoreCase).ToArray();
 
-				var user = await ctx.OfType<User>().GetLoggedUserAsync(permissionContext);
+				var user = await ctx.OfType<User>().GetLoggedUserAsync(_permissionContext);
 				var tagFactory = new TagFactoryRepository(ctx.OfType<Tag>(), new AgentLoginData(user));
 				var newTags = await tagFactory.CreateTagsAsync(newTagNames);
 
@@ -87,7 +87,7 @@ namespace VocaDb.Model.Service.Queries
 				// Get the final list of tag names with translations
 				var appliedTags = tagsFromNames
 					.Concat(tagsFromIds)
-					.Where(t => permissionContext.HasPermission(PermissionToken.ApplyAnyTag) || t.IsValidFor(entry.EntryType))
+					.Where(t => _permissionContext.HasPermission(PermissionToken.ApplyAnyTag) || t.IsValidFor(entry.EntryType))
 					.Concat(newTags)
 					.Distinct()
 					.ToArray();
@@ -114,7 +114,7 @@ namespace VocaDb.Model.Service.Queries
 
 				ctx.AuditLogger.SysLog("finished tagging");
 
-				return tagFunc(entry).ActiveUsages.Select(t => new TagUsageForApiContract(t, permissionContext.LanguagePreference)).ToArray();
+				return tagFunc(entry).ActiveUsages.Select(t => new TagUsageForApiContract(t, _permissionContext.LanguagePreference)).ToArray();
 			});
 		}
 
@@ -128,7 +128,7 @@ namespace VocaDb.Model.Service.Queries
 
 				var tagUsage = ctx.Load<TUsage>(tagUsageId);
 
-				EntryPermissionManager.VerifyAccess(permissionContext, tagUsage.EntryBase, EntryPermissionManager.CanRemoveTagUsages);
+				EntryPermissionManager.VerifyAccess(_permissionContext, tagUsage.EntryBase, EntryPermissionManager.CanRemoveTagUsages);
 
 				tagUsage.Delete();
 				ctx.Delete(tagUsage);
@@ -166,7 +166,7 @@ namespace VocaDb.Model.Service.Queries
 				{
 					// This is expected for tests
 					// TODO: come up with a proper fix that works for tests and the real DB
-					log.Warn("Tag usage count doesn't match for {0}: expected {1}, actual {2}", tag, usages[tag.Id], tag.UsageCount);
+					_log.Warn("Tag usage count doesn't match for {0}: expected {1}, actual {2}", tag, usages[tag.Id], tag.UsageCount);
 				}
 			}
 		}

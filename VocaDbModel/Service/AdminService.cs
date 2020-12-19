@@ -36,8 +36,8 @@ namespace VocaDb.Model.Service
 {
 	public class AdminService : ServiceBase
 	{
-		private readonly IEnumTranslations enumTranslations;
-		private readonly IUserIconFactory userIconFactory;
+		private readonly IEnumTranslations _enumTranslations;
+		private readonly IUserIconFactory _userIconFactory;
 
 		private void VerifyAdmin()
 		{
@@ -48,8 +48,8 @@ namespace VocaDb.Model.Service
 			IEnumTranslations enumTranslations, IUserIconFactory userIconFactory)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
-			this.enumTranslations = enumTranslations;
-			this.userIconFactory = userIconFactory;
+			this._enumTranslations = enumTranslations;
+			this._userIconFactory = userIconFactory;
 		}
 
 		public int CleanupOldLogEntries()
@@ -207,7 +207,7 @@ namespace VocaDb.Model.Service
 
 				foreach (var report in reports)
 				{
-					AuditLog($"closed entry report {report.TranslatedReportTypeName(enumTranslations, CultureInfo.DefaultThreadCurrentCulture)}{(!string.IsNullOrEmpty(report.Notes) ? " (" + report.Notes + ")" : string.Empty)} for {EntryLinkFactory.CreateEntryLink(report.EntryBase)}", session);
+					AuditLog($"closed entry report {report.TranslatedReportTypeName(_enumTranslations, CultureInfo.DefaultThreadCurrentCulture)}{(!string.IsNullOrEmpty(report.Notes) ? " (" + report.Notes + ")" : string.Empty)} for {EntryLinkFactory.CreateEntryLink(report.EntryBase)}", session);
 					report.Status = ReportStatus.Closed;
 					report.ClosedBy = GetLoggedUser(session);
 					report.ClosedAt = DateTime.UtcNow;
@@ -288,7 +288,7 @@ namespace VocaDb.Model.Service
 					.ToArray();
 				var fac = new EntryForApiContractFactory(null);
 				return reports.Select(r => new EntryReportContract(r, fac.Create(r.EntryBase, EntryOptionalFields.AdditionalNames, LanguagePreference),
-					enumTranslations, userIconFactory)).ToArray();
+					_enumTranslations, _userIconFactory)).ToArray();
 			});
 		}
 

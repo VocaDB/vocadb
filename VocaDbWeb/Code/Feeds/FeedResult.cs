@@ -11,16 +11,16 @@ namespace VocaDb.Web.Code.Feeds
 {
 	public class FeedResult : ActionResult
 	{
-		private readonly SyndicationFeedFormatter feed;
+		private readonly SyndicationFeedFormatter _feed;
 
 		public Encoding ContentEncoding { get; set; }
 		public string ContentType { get; set; }
 
-		public SyndicationFeedFormatter Feed => feed;
+		public SyndicationFeedFormatter Feed => _feed;
 
 		public FeedResult(SyndicationFeedFormatter feed)
 		{
-			this.feed = feed;
+			this._feed = feed;
 		}
 
 		public override void ExecuteResult(ControllerContext context)
@@ -34,12 +34,12 @@ namespace VocaDb.Web.Code.Feeds
 			if (ContentEncoding != null)
 				response.ContentEncoding = ContentEncoding;
 
-			if (feed != null)
+			if (_feed != null)
 			{
 				using (var xmlWriter = new XmlTextWriter(response.Output))
 				{
 					xmlWriter.Formatting = Formatting.Indented;
-					feed.WriteTo(xmlWriter);
+					_feed.WriteTo(xmlWriter);
 				}
 			}
 		}

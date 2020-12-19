@@ -8,8 +8,8 @@ namespace VocaDb.Model.Domain.Songs
 {
 	public class ArchivedSongListVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<SongListEditableFields>
 	{
-		private SongListDiff diff;
-		private SongList songList;
+		private SongListDiff _diff;
+		private SongList _songList;
 
 		public ArchivedSongListVersion()
 		{
@@ -34,11 +34,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual SongListDiff Diff
 		{
-			get => diff;
+			get => _diff;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				diff = value;
+				_diff = value;
 			}
 		}
 
@@ -48,11 +48,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual SongList SongList
 		{
-			get => songList;
+			get => _songList;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				songList = value;
+				_songList = value;
 			}
 		}
 

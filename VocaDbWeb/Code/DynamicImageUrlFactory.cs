@@ -11,14 +11,14 @@ namespace VocaDb.Web.Code
 	{
 		public DynamicImageUrlFactory(Lazy<UrlHelper> urlHelper)
 		{
-			this.urlHelperAccessor = urlHelper;
+			this._urlHelperAccessor = urlHelper;
 		}
 
-		private readonly Lazy<UrlHelper> urlHelperAccessor;
+		private readonly Lazy<UrlHelper> _urlHelperAccessor;
 
 		public VocaDbUrl GetUrl(IEntryImageInformation imageInfo, ImageSize size)
 		{
-			var urlHelper = urlHelperAccessor.Value;
+			var urlHelper = _urlHelperAccessor.Value;
 			string dynamicUrl = null;
 			if (imageInfo.EntryType == EntryType.Album)
 			{

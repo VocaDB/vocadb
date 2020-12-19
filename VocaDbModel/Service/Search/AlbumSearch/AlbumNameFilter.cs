@@ -11,11 +11,11 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 {
 	public class AlbumNameFilter : ISearchFilter<Album>
 	{
-		private readonly string[] names;
+		private readonly string[] _names;
 
 		public AlbumNameFilter(IEnumerable<string> names)
 		{
-			this.names = names.ToArray();
+			this._names = names.ToArray();
 		}
 
 		public QueryCost Cost => QueryCost.Medium;
@@ -38,12 +38,12 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 
 		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session)
 		{
-			return query.WhereHasNameGeneric<Album, AlbumName>(SearchTextQuery.Create(names, NameMatchMode.Words));
+			return query.WhereHasNameGeneric<Album, AlbumName>(SearchTextQuery.Create(_names, NameMatchMode.Words));
 		}
 
 		public IQueryable<Album> Query(IDatabaseContext session)
 		{
-			return session.Query<Album>().WhereHasName(new SearchTextQuery(string.Empty, NameMatchMode.Words, string.Empty, names));
+			return session.Query<Album>().WhereHasName(new SearchTextQuery(string.Empty, NameMatchMode.Words, string.Empty, _names));
 		}
 	}
 }

@@ -15,18 +15,18 @@ namespace VocaDb.Web.Controllers
 {
 	public class VenueController : ControllerBase
 	{
-		private readonly IEnumTranslations enumTranslations;
-		private readonly VenueQueries queries;
+		private readonly IEnumTranslations _enumTranslations;
+		private readonly VenueQueries _queries;
 
 		public VenueController(VenueQueries queries, IEnumTranslations enumTranslations)
 		{
-			this.queries = queries;
-			this.enumTranslations = enumTranslations;
+			this._queries = queries;
+			this._enumTranslations = enumTranslations;
 		}
 
 		public ActionResult Details(int id = InvalidId)
 		{
-			var venue = queries.GetDetails(id);
+			var venue = _queries.GetDetails(id);
 
 			PageProperties.Title = venue.Name;
 			PageProperties.Subtitle = ViewRes.Venue.DetailsStrings.Venue;
@@ -42,7 +42,7 @@ namespace VocaDb.Web.Controllers
 				CheckConcurrentEdit(EntryType.Venue, id.Value);
 			}
 
-			var contract = id.HasValue ? queries.GetForEdit(id.Value) : new VenueForEditContract();
+			var contract = id.HasValue ? _queries.GetForEdit(id.Value) : new VenueForEditContract();
 			return View(new VenueEditViewModel(contract, PermissionContext));
 		}
 
@@ -67,37 +67,37 @@ namespace VocaDb.Web.Controllers
 				return View(model);
 			}
 
-			var id = queries.Update(model.ToContract());
+			var id = _queries.Update(model.ToContract());
 
 			return RedirectToAction("Details", new { id });
 		}
 
 		public ActionResult Restore(int id)
 		{
-			queries.Restore(id);
+			_queries.Restore(id);
 
 			return RedirectToAction("Edit", new { id });
 		}
 
 		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
 		{
-			queries.UpdateVersionVisibility<ArchivedVenueVersion>(archivedVersionId, hidden);
+			_queries.UpdateVersionVisibility<ArchivedVenueVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 		}
 
 		public ActionResult Versions(int id = InvalidId)
 		{
-			var contract = queries.GetWithArchivedVersions(id);
+			var contract = _queries.GetWithArchivedVersions(id);
 
-			return View(new Versions(contract, enumTranslations));
+			return View(new Versions(contract, _enumTranslations));
 		}
 
 		public ActionResult ViewVersion(int id, int? ComparedVersionId)
 		{
-			var contract = queries.GetVersionDetails(id, ComparedVersionId ?? 0);
+			var contract = _queries.GetVersionDetails(id, ComparedVersionId ?? 0);
 
-			return View(new ViewVersion<ArchivedVenueVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
+			return View(new ViewVersion<ArchivedVenueVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
 		}
 	}
 }

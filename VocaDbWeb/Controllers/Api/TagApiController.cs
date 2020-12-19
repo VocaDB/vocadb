@@ -34,13 +34,13 @@ namespace VocaDb.Web.Controllers.Api
 	{
 		private const int AbsoluteMax = 100;
 		private const int DefaultMax = 10;
-		private readonly TagQueries queries;
-		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
+		private readonly TagQueries _queries;
+		private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
 
 		public TagApiController(TagQueries queries, IAggregatedEntryImageUrlFactory thumbPersister)
 		{
-			this.queries = queries;
-			this.thumbPersister = thumbPersister;
+			this._queries = queries;
+			this._thumbPersister = thumbPersister;
 		}
 
 		/// <summary>
@@ -60,11 +60,11 @@ namespace VocaDb.Web.Controllers.Api
 
 			if (hardDelete)
 			{
-				queries.MoveToTrash(id, notes);
+				_queries.MoveToTrash(id, notes);
 			}
 			else
 			{
-				queries.Delete(id, notes);
+				_queries.Delete(id, notes);
 			}
 		}
 
@@ -76,7 +76,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="commentId">ID of the comment to be deleted.</param>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(int commentId) => queries.DeleteComment(commentId);
+		public void DeleteComment(int commentId) => _queries.DeleteComment(commentId);
 
 		/// <summary>
 		/// Gets a tag by ID.
@@ -90,7 +90,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>Tag data.</returns>
 		[Route("{id:int}")]
 		public TagForApiContract GetById(int id, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default)
-			=> queries.LoadTag(id, t => new TagForApiContract(t, thumbPersister, lang, fields));
+			=> _queries.LoadTag(id, t => new TagForApiContract(t, _thumbPersister, lang, fields));
 
 		/// <summary>
 		/// DEPRECATED. Gets a tag by name.
@@ -105,14 +105,14 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("byName/{name}")]
 		[Obsolete]
 		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default)
-			=> queries.GetTagByName(name, t => new TagForApiContract(t, thumbPersister, lang, fields));
+			=> _queries.GetTagByName(name, t => new TagForApiContract(t, _thumbPersister, lang, fields));
 
 		/// <summary>
 		/// Gets a list of tag category names.
 		/// </summary>
 		[Route("categoryNames")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
-		public string[] GetCategoryNamesList(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto) => queries.FindCategories(SearchTextQuery.Create(query, nameMatchMode));
+		public string[] GetCategoryNamesList(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto) => _queries.FindCategories(SearchTextQuery.Create(query, nameMatchMode));
 
 		/// <summary>
 		/// Gets a list of child tags for a tag.
@@ -126,7 +126,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("{tagId:int}/children")]
 		public TagForApiContract[] GetChildTags(int tagId,
 			TagOptionalFields fields = TagOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetChildTags(tagId, fields, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetChildTags(tagId, fields, lang);
 
 		/// <summary>
 		/// Gets a list of comments for a tag.
@@ -135,7 +135,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="tagId">ID of the tag whose comments to load.</param>
 		/// <returns>List of comments in no particular order.</returns>
 		[Route("{tagId:int}/comments")]
-		public PartialFindResult<CommentForApiContract> GetComments(int tagId) => new PartialFindResult<CommentForApiContract>(queries.GetComments(tagId), 0);
+		public PartialFindResult<CommentForApiContract> GetComments(int tagId) => new PartialFindResult<CommentForApiContract>(_queries.GetComments(tagId), 0);
 
 		/// <summary>
 		/// Find tags.
@@ -182,19 +182,19 @@ namespace VocaDb.Web.Controllers.Api
 				Target = target
 			};
 
-			var tags = queries.Find(queryParams, fields, lang);
+			var tags = _queries.Find(queryParams, fields, lang);
 
 			return tags;
 		}
 
 		[Route("entry-type-mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public TagEntryMappingContract[] GetEntryMappings() => queries.GetEntryMappings();
+		public TagEntryMappingContract[] GetEntryMappings() => _queries.GetEntryMappings();
 
 		[Route("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public PartialFindResult<TagMappingContract> GetMappings(
-			int start = 0, int maxEntries = DefaultMax, bool getTotalCount = false) => queries.GetMappings(new PagingProperties(start, maxEntries, getTotalCount));
+			int start = 0, int maxEntries = DefaultMax, bool getTotalCount = false) => _queries.GetMappings(new PagingProperties(start, maxEntries, getTotalCount));
 
 		/// <summary>
 		/// Find tag names by a part of name.
@@ -213,7 +213,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("names")]
 		public string[] GetNames(
 			string query = "", bool allowAliases = true,
-			int maxResults = 10) => queries.FindNames(TagSearchTextQuery.Create(query), allowAliases, maxResults);
+			int maxResults = 10) => _queries.FindNames(TagSearchTextQuery.Create(query), allowAliases, maxResults);
 
 		/// <summary>
 		/// Gets the most common tags in a category.
@@ -227,7 +227,7 @@ namespace VocaDb.Web.Controllers.Api
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
 		public TagBaseContract[] GetTopTags(string categoryName = null, EntryType? entryType = null,
 			int maxResults = 15,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetTopTags(categoryName, entryType, maxResults, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetTopTags(categoryName, entryType, maxResults, lang);
 
 		/// <summary>
 		/// Creates a new report.
@@ -238,7 +238,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
 		[Route("{tagId:int}/reports")]
 		[RestrictBannedIP]
-		public void PostReport(int tagId, TagReportType reportType, string notes, int? versionNumber) => queries.CreateReport(tagId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+		public void PostReport(int tagId, TagReportType reportType, string notes, int? versionNumber) => _queries.CreateReport(tagId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 
 		/// <summary>
 		/// Creates a new tag.
@@ -253,7 +253,7 @@ namespace VocaDb.Web.Controllers.Api
 		{
 			try
 			{
-				return await queries.Create(name);
+				return await _queries.Create(name);
 			}
 			catch (DuplicateTagNameException)
 			{
@@ -270,7 +270,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="contract">New comment data. Only message can be edited.</param>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.PostEditComment(commentId, contract);
+		public void PostEditComment(int commentId, CommentForApiContract contract) => _queries.PostEditComment(commentId, contract);
 
 		/// <summary>
 		/// Posts a new comment.
@@ -280,7 +280,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[Route("{tagId:int}/comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(int tagId, CommentForApiContract contract) => queries.CreateComment(tagId, contract);
+		public CommentForApiContract PostNewComment(int tagId, CommentForApiContract contract) => _queries.CreateComment(tagId, contract);
 
 		[Authorize]
 		[Route("entry-type-mappings")]
@@ -292,7 +292,7 @@ namespace VocaDb.Web.Controllers.Api
 				throw new HttpBadRequestException("Mappings cannot be null");
 			}
 
-			queries.UpdateEntryMappings(mappings.ToArray());
+			_queries.UpdateEntryMappings(mappings.ToArray());
 		}
 
 		[Authorize]
@@ -305,7 +305,7 @@ namespace VocaDb.Web.Controllers.Api
 				throw new HttpBadRequestException("Mappings cannot be null");
 			}
 
-			queries.UpdateMappings(mappings.ToArray());
+			_queries.UpdateMappings(mappings.ToArray());
 		}
 	}
 }

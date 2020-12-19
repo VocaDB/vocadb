@@ -19,34 +19,34 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 	[TestClass]
 	public class DiscussionQueriesTests
 	{
-		private DiscussionFolder folder;
-		private FakeDiscussionFolderRepository repo;
-		private DiscussionQueries queries;
-		private User user;
+		private DiscussionFolder _folder;
+		private FakeDiscussionFolderRepository _repo;
+		private DiscussionQueries _queries;
+		private User _user;
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			user = CreateEntry.User();
-			folder = new DiscussionFolder("Test folder");
-			repo = new FakeDiscussionFolderRepository(folder);
-			repo.Save(user);
-			queries = new DiscussionQueries(repo, new FakePermissionContext(user), new FakeUserIconFactory(), new FakeEntryLinkFactory());
+			_user = CreateEntry.User();
+			_folder = new DiscussionFolder("Test folder");
+			_repo = new FakeDiscussionFolderRepository(_folder);
+			_repo.Save(_user);
+			_queries = new DiscussionQueries(_repo, new FakePermissionContext(_user), new FakeUserIconFactory(), new FakeEntryLinkFactory());
 		}
 
 		[TestMethod]
 		public void CreateTopic()
 		{
-			var contract = new DiscussionTopicContract { Author = new UserForApiContract(user), Name = "New topic", Content = "Content" };
-			var result = queries.CreateTopic(folder.Id, contract);
+			var contract = new DiscussionTopicContract { Author = new UserForApiContract(_user), Name = "New topic", Content = "Content" };
+			var result = _queries.CreateTopic(_folder.Id, contract);
 
 			Assert.AreNotEqual(0, result.Id, "Id was assigned");
-			Assert.AreEqual(1, repo.List<DiscussionTopic>().Count, "Number of discussion topics in repo");
+			Assert.AreEqual(1, _repo.List<DiscussionTopic>().Count, "Number of discussion topics in repo");
 
-			Assert.AreEqual(1, folder.AllTopics.Count, "Topic was added to folder");
-			Assert.IsTrue(result.Id == folder.AllTopics.First().Id, "Topic Id in folder matches returned topic ID");
+			Assert.AreEqual(1, _folder.AllTopics.Count, "Topic was added to folder");
+			Assert.IsTrue(result.Id == _folder.AllTopics.First().Id, "Topic Id in folder matches returned topic ID");
 
-			var topicInRepo = repo.List<DiscussionTopic>().First();
+			var topicInRepo = _repo.List<DiscussionTopic>().First();
 
 			Assert.IsTrue(result.Id == topicInRepo.Id, "Persisted topic ID matches returned topic ID");
 			Assert.AreEqual("New topic", topicInRepo.Name, "Name");
@@ -58,7 +58,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void CreateTopic_NoPermission()
 		{
 			var contract = new DiscussionTopicContract { Author = new UserForApiContract { Id = 2 }, Name = "New topic", Content = "Content" };
-			queries.CreateTopic(folder.Id, contract);
+			_queries.CreateTopic(_folder.Id, contract);
 		}
 	}
 }

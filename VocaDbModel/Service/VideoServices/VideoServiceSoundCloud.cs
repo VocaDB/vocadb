@@ -41,7 +41,7 @@ namespace VocaDb.Model.Service.VideoServices
 			public string Username { get; set; }
 		}
 
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
 		public VideoServiceSoundCloud(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
 			: base(service, parser, linkMatchers) { }
@@ -49,7 +49,7 @@ namespace VocaDb.Model.Service.VideoServices
 		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null)
 		{
 			var compositeId = new SoundCloudId(id);
-			var matcher = linkMatchers.First();
+			var matcher = _linkMatchers.First();
 			return $"http://{matcher.MakeLinkFromId(compositeId.SoundCloudUrl)}";
 		}
 
@@ -67,7 +67,7 @@ namespace VocaDb.Model.Service.VideoServices
 			VideoUrlParseResult ReturnError(Exception x, string additionalInfo = null)
 			{
 				var msg = $"Unable to load SoundCloud URL '{url}'.{(additionalInfo != null ? " " + additionalInfo + "." : string.Empty)}";
-				log.Warn(x, msg);
+				_log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			}
 
@@ -124,7 +124,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public override Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
 		{
-			var soundCloudUrl = linkMatchers[0].GetId(url);
+			var soundCloudUrl = _linkMatchers[0].GetId(url);
 
 			return ParseBySoundCloudUrl(soundCloudUrl);
 		}

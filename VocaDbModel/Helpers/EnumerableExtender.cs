@@ -79,13 +79,13 @@ namespace VocaDb.Model.Helpers
 
 	public class DistinctPropertyEqualityComparer<T, T2> : IEqualityComparer<T>
 	{
-		private readonly IEqualityComparer<T2> propertyEquality;
-		private readonly Func<T, T2> func;
+		private readonly IEqualityComparer<T2> _propertyEquality;
+		private readonly Func<T, T2> _func;
 
 		public DistinctPropertyEqualityComparer(Func<T, T2> func, IEqualityComparer<T2> propertyEquality)
 		{
-			this.func = func;
-			this.propertyEquality = propertyEquality;
+			this._func = func;
+			this._propertyEquality = propertyEquality;
 		}
 
 		public DistinctPropertyEqualityComparer(Func<T, T2> func)
@@ -96,12 +96,12 @@ namespace VocaDb.Model.Helpers
 			if (ReferenceEquals(x, y))
 				return true;
 
-			return propertyEquality.Equals(func(x), func(y));
+			return _propertyEquality.Equals(_func(x), _func(y));
 		}
 
 		public int GetHashCode(T obj)
 		{
-			return propertyEquality.GetHashCode(func(obj));
+			return _propertyEquality.GetHashCode(_func(obj));
 		}
 	}
 }

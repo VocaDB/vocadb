@@ -1867,11 +1867,11 @@ order by Created");
 	[Migration(201502131812)]
 	public class ExtendCommentTextLength : Migration
 	{
-		private readonly string[] tables = { "AlbumComments", "ArtistComments", "SongComments", "UserComments" };
+		private readonly string[] _tables = { "AlbumComments", "ArtistComments", "SongComments", "UserComments" };
 
 		public override void Up()
 		{
-			foreach (var table in tables)
+			foreach (var table in _tables)
 			{
 				Alter.Column("Message").OnTable(table).AsString(4000);
 			}
@@ -1881,7 +1881,7 @@ order by Created");
 
 		public override void Down()
 		{
-			foreach (var table in tables)
+			foreach (var table in _tables)
 			{
 				Alter.Column("Message").OnTable(table).AsString(800);
 			}

@@ -14,14 +14,14 @@ namespace VocaDb.Web.Code
 		public const int Code_NotFound = (int)HttpStatusCode.NotFound;
 		public const int Code_InternalServerError = (int)HttpStatusCode.InternalServerError;
 
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
 		public static void LogHttpError(HttpRequestBase request, int code, string msg = null, LogLevel level = null)
 		{
 			if (string.IsNullOrEmpty(msg))
-				log.Log(level ?? LogLevel.Warn, RequestInfo($"HTTP error code {code} for", request));
+				_log.Log(level ?? LogLevel.Warn, RequestInfo($"HTTP error code {code} for", request));
 			else
-				log.Log(level ?? LogLevel.Warn, RequestInfo($"HTTP error code {code} ({msg}) for", request));
+				_log.Log(level ?? LogLevel.Warn, RequestInfo($"HTTP error code {code} ({msg}) for", request));
 		}
 
 		/// <summary>
@@ -42,12 +42,12 @@ namespace VocaDb.Web.Code
 
 		public static void LogException(HttpRequest request, Exception ex, LogLevel level = null)
 		{
-			log.Log(level ?? LogLevel.Error, ex, RequestInfo("Exception for", new HttpRequestWrapper(request)));
+			_log.Log(level ?? LogLevel.Error, ex, RequestInfo("Exception for", new HttpRequestWrapper(request)));
 		}
 
 		public static void LogMessage(HttpRequestBase request, string msg, LogLevel level = null)
 		{
-			log.Log(level ?? LogLevel.Error, RequestInfo(msg + " for", request));
+			_log.Log(level ?? LogLevel.Error, RequestInfo(msg + " for", request));
 		}
 
 		public static void LogMessage(HttpRequest request, string msg, LogLevel level = null)

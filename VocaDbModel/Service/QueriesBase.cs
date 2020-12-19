@@ -25,12 +25,12 @@ namespace VocaDb.Model.Service
 		where TRepo : class, IRepository<TEntity>
 		where TEntity : class, IDatabaseObject
 	{
-		protected readonly IUserPermissionContext permissionContext;
-		protected readonly TRepo repository;
+		protected readonly IUserPermissionContext _permissionContext;
+		protected readonly TRepo _repository;
 
-		protected ContentLanguagePreference LanguagePreference => permissionContext.LanguagePreference;
+		protected ContentLanguagePreference LanguagePreference => _permissionContext.LanguagePreference;
 
-		protected IUserPermissionContext PermissionContext => permissionContext;
+		protected IUserPermissionContext PermissionContext => _permissionContext;
 
 		protected void AddActivityfeedEntry(IDatabaseContext<ActivityEntry> ctx, ActivityEntry entry)
 		{
@@ -169,8 +169,8 @@ namespace VocaDb.Model.Service
 			ParamIs.NotNull(() => repository);
 			ParamIs.NotNull(() => permissionContext);
 
-			this.repository = repository;
-			this.permissionContext = permissionContext;
+			this._repository = repository;
+			this._permissionContext = permissionContext;
 		}
 
 		/// <summary>
@@ -182,7 +182,7 @@ namespace VocaDb.Model.Service
 		/// <returns>Result. Can be null.</returns>
 		protected TResult HandleQuery<TResult>(Func<IDatabaseContext<TEntity>, TResult> func, string failMsg = "Unexpected database error")
 		{
-			return repository.HandleQuery(func, failMsg);
+			return _repository.HandleQuery(func, failMsg);
 		}
 
 		/// <summary>
@@ -193,7 +193,7 @@ namespace VocaDb.Model.Service
 		/// <returns>Result. Can be null.</returns>
 		protected void HandleTransaction(Action<IDatabaseContext<TEntity>> func, string failMsg = "Unexpected database error")
 		{
-			repository.HandleTransaction(func, failMsg);
+			_repository.HandleTransaction(func, failMsg);
 		}
 
 		/// <summary>
@@ -205,12 +205,12 @@ namespace VocaDb.Model.Service
 		/// <returns>Result. Can be null.</returns>
 		protected TResult HandleTransaction<TResult>(Func<IDatabaseContext<TEntity>, TResult> func, string failMsg = "Unexpected database error")
 		{
-			return repository.HandleTransaction(func, failMsg);
+			return _repository.HandleTransaction(func, failMsg);
 		}
 
 		protected Task<TResult> HandleTransactionAsync<TResult>(Func<IDatabaseContext<TEntity>, Task<TResult>> func, string failMsg = "Unexpected database error")
 		{
-			return repository.HandleTransactionAsync(func, failMsg);
+			return _repository.HandleTransactionAsync(func, failMsg);
 		}
 
 		public XDocument GetVersionXml<TArchivedVersion>(int id) where TArchivedVersion : class, IArchivedObjectVersion
@@ -230,9 +230,9 @@ namespace VocaDb.Model.Service
 
 		public void UpdateVersionVisibility<TArchivedVersion>(int archivedVersionId, bool hidden) where TArchivedVersion : class, IArchivedObjectVersion
 		{
-			permissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
+			_permissionContext.VerifyPermission(PermissionToken.ViewHiddenRevisions);
 
-			repository.HandleTransaction(session =>
+			_repository.HandleTransaction(session =>
 			{
 				var archivedVersion = session.Load<TArchivedVersion>(archivedVersionId);
 

@@ -22,15 +22,15 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/pvs")]
 	public class PVApiController : ApiController
 	{
-		private readonly IPVParser pvParser;
-		private readonly IUserPermissionContext permissionContext;
-		private readonly PVQueries queries;
+		private readonly IPVParser _pvParser;
+		private readonly IUserPermissionContext _permissionContext;
+		private readonly PVQueries _queries;
 
 		public PVApiController(IPVParser pvParser, IUserPermissionContext permissionContext, PVQueries queries)
 		{
-			this.pvParser = pvParser;
-			this.permissionContext = permissionContext;
-			this.queries = queries;
+			this._pvParser = pvParser;
+			this._permissionContext = permissionContext;
+			this._queries = queries;
 		}
 
 		/// <summary>
@@ -47,7 +47,7 @@ namespace VocaDb.Web.Controllers.Api
 		public PartialFindResult<PVForSongContract> GetList(string name = null, string author = null,
 			PVService? service = null,
 			int maxResults = 10, bool getTotalCount = false,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetList(name, author, service, maxResults, getTotalCount, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetList(name, author, service, maxResults, getTotalCount, lang);
 
 		[Route("")]
 		[ApiExplorerSettings(IgnoreApi = true)]
@@ -56,7 +56,7 @@ namespace VocaDb.Web.Controllers.Api
 			if (string.IsNullOrEmpty(pvUrl))
 				throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-			var result = await pvParser.ParseByUrlAsync(pvUrl, getTitle, permissionContext);
+			var result = await _pvParser.ParseByUrlAsync(pvUrl, getTitle, _permissionContext);
 
 			if (!result.IsOk)
 			{

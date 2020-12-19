@@ -52,18 +52,18 @@ namespace VocaDb.Model.Database.Queries
 	/// </summary>
 	public class AlbumQueries : QueriesBase<IAlbumRepository, Album>
 	{
-		private readonly ObjectCache cache;
-		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IAggregatedEntryImageUrlFactory imageUrlFactory;
-		private readonly IEnumTranslations enumTranslations;
-		private readonly IFollowedArtistNotifier followedArtistNotifier;
-		private readonly IEntryThumbPersister imagePersister;
-		private readonly IEntryPictureFilePersister pictureFilePersister;
-		private readonly IUserMessageMailer mailer;
-		private readonly IPVParser pvParser;
-		private readonly IUserIconFactory userIconFactory;
+		private readonly ObjectCache _cache;
+		private readonly IEntryLinkFactory _entryLinkFactory;
+		private readonly IAggregatedEntryImageUrlFactory _imageUrlFactory;
+		private readonly IEnumTranslations _enumTranslations;
+		private readonly IFollowedArtistNotifier _followedArtistNotifier;
+		private readonly IEntryThumbPersister _imagePersister;
+		private readonly IEntryPictureFilePersister _pictureFilePersister;
+		private readonly IUserMessageMailer _mailer;
+		private readonly IPVParser _pvParser;
+		private readonly IUserIconFactory _userIconFactory;
 
-		private IEntryLinkFactory EntryLinkFactory => entryLinkFactory;
+		private IEntryLinkFactory EntryLinkFactory => _entryLinkFactory;
 
 		private async Task<ArchivedSongVersion> ArchiveSongAsync(IDatabaseContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "")
 		{
@@ -90,7 +90,7 @@ namespace VocaDb.Model.Database.Queries
 		private SharedAlbumStatsContract GetSharedAlbumStats(IDatabaseContext ctx, Album album)
 		{
 			var key = $"AlbumQueries.SharedAlbumStatsContract.{album.Id}";
-			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () =>
+			return _cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () =>
 			{
 				var latestReview = album.LastReview;
 				var latestRatingScore = latestReview != null ? album.UserCollections.FirstOrDefault(uc => uc.User.Equals(latestReview.Author)) : null;
@@ -98,7 +98,7 @@ namespace VocaDb.Model.Database.Queries
 				return new SharedAlbumStatsContract
 				{
 					ReviewCount = album.Reviews.Count(),
-					LatestReview = latestReview != null ? new AlbumReviewContract(latestReview, userIconFactory) : null,
+					LatestReview = latestReview != null ? new AlbumReviewContract(latestReview, _userIconFactory) : null,
 					LatestReviewRatingScore = latestRatingScore?.Rating ?? 0,
 					OwnedCount = album.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Owned),
 					WishlistCount = album.UserCollections.Count(au => au.PurchaseStatus == PurchaseStatus.Wishlisted),
@@ -146,7 +146,7 @@ namespace VocaDb.Model.Database.Queries
 				var archived = await ArchiveSongAsync(ctx.OfType<Song>(), song, diff, SongArchiveReason.PropertiesUpdated);
 				await ctx.UpdateAsync(song);
 
-				await ctx.AuditLogger.AuditLogAsync("updated artists for " + entryLinkFactory.CreateEntryLink(song));
+				await ctx.AuditLogger.AuditLogAsync("updated artists for " + _entryLinkFactory.CreateEntryLink(song));
 				await AddEntryEditedEntryAsync(ctx.OfType<ActivityEntry>(), song, EntryEditEvent.Updated, archived);
 			}
 		}
@@ -157,16 +157,16 @@ namespace VocaDb.Model.Database.Queries
 			IFollowedArtistNotifier followedArtistNotifier, IAggregatedEntryImageUrlFactory entryThumbPersister, ObjectCache cache)
 			: base(repository, permissionContext)
 		{
-			this.entryLinkFactory = entryLinkFactory;
-			this.imagePersister = imagePersister;
-			this.pictureFilePersister = pictureFilePersister;
-			this.mailer = mailer;
-			this.userIconFactory = userIconFactory;
-			this.enumTranslations = enumTranslations;
-			this.pvParser = pvParser;
-			this.followedArtistNotifier = followedArtistNotifier;
-			this.imageUrlFactory = entryThumbPersister;
-			this.cache = cache;
+			this._entryLinkFactory = entryLinkFactory;
+			this._imagePersister = imagePersister;
+			this._pictureFilePersister = pictureFilePersister;
+			this._mailer = mailer;
+			this._userIconFactory = userIconFactory;
+			this._enumTranslations = enumTranslations;
+			this._pvParser = pvParser;
+			this._followedArtistNotifier = followedArtistNotifier;
+			this._imageUrlFactory = entryThumbPersister;
+			this._cache = cache;
 		}
 
 		public AlbumReviewContract AddReview(int albumId, AlbumReviewContract contract)
@@ -207,9 +207,9 @@ namespace VocaDb.Model.Database.Queries
 					ctx.Update(review);
 				}
 
-				ctx.AuditLogger.AuditLog($"submitted review for {entryLinkFactory.CreateEntryLink(review.EntryForComment)}");
+				ctx.AuditLogger.AuditLog($"submitted review for {_entryLinkFactory.CreateEntryLink(review.EntryForComment)}");
 
-				return new AlbumReviewContract(review, userIconFactory);
+				return new AlbumReviewContract(review, _userIconFactory);
 			});
 		}
 
@@ -217,7 +217,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var review = ctx.Load<AlbumReview>(reviewId);
 
@@ -233,26 +233,26 @@ namespace VocaDb.Model.Database.Queries
 
 		public async Task<IEnumerable<AlbumReviewContract>> GetReviews(int albumId, string languageCode)
 		{
-			return await repository.HandleQueryAsync(async ctx =>
+			return await _repository.HandleQueryAsync(async ctx =>
 			{
 				var album = await ctx.LoadAsync(albumId);
 
 				return album.Reviews
 					.Where(review => string.IsNullOrEmpty(languageCode) || review.LanguageCode == languageCode)
 					.OrderBy(review => review.Created)
-					.Select(review => new AlbumReviewContract(review, userIconFactory))
+					.Select(review => new AlbumReviewContract(review, _userIconFactory))
 					.ToArray();
 			});
 		}
 
 		public async Task<IEnumerable<AlbumForUserForApiContract>> GetUserCollections(int albumId, ContentLanguagePreference languagePreference)
 		{
-			return await repository.HandleQueryAsync(async ctx =>
+			return await _repository.HandleQueryAsync(async ctx =>
 			{
 				var album = await ctx.LoadAsync(albumId);
 
 				return album.UserCollections
-					.Select(uc => new AlbumForUserForApiContract(uc, languagePreference, imageUrlFactory, AlbumOptionalFields.None,
+					.Select(uc => new AlbumForUserForApiContract(uc, languagePreference, _imageUrlFactory, AlbumOptionalFields.None,
 						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection,
 						uc.User.Id == PermissionContext.LoggedUserId || uc.User.Options.PublicAlbumCollection))
 					.ToArray();
@@ -287,7 +287,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public ICommentQueries Comments(IDatabaseContext<Album> ctx)
 		{
-			return new CommentQueries<AlbumComment, Album>(ctx.OfType<AlbumComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+			return new CommentQueries<AlbumComment, Album>(ctx.OfType<AlbumComment>(), PermissionContext, _userIconFactory, _entryLinkFactory);
 		}
 
 		public async Task<AlbumContract> Create(CreateAlbumContract contract)
@@ -299,7 +299,7 @@ namespace VocaDb.Model.Database.Queries
 
 			VerifyManageDatabase();
 
-			return await repository.HandleTransactionAsync(async ctx =>
+			return await _repository.HandleTransactionAsync(async ctx =>
 			{
 				ctx.AuditLogger.SysLog($"creating a new album with name '{contract.Names.First().Value}'");
 
@@ -322,10 +322,10 @@ namespace VocaDb.Model.Database.Queries
 				var archived = await ArchiveAsync(ctx, album, AlbumArchiveReason.Created);
 				await ctx.UpdateAsync(album);
 
-				await ctx.AuditLogger.AuditLogAsync($"created album {entryLinkFactory.CreateEntryLink(album)} ({album.DiscType})");
+				await ctx.AuditLogger.AuditLogAsync($"created album {_entryLinkFactory.CreateEntryLink(album)} ({album.DiscType})");
 				await AddEntryEditedEntryAsync(ctx.OfType<ActivityEntry>(), album, EntryEditEvent.Created, archived);
 
-				await followedArtistNotifier.SendNotificationsAsync(ctx, album, album.ArtistList, PermissionContext.LoggedUser);
+				await _followedArtistNotifier.SendNotificationsAsync(ctx, album, album.ArtistList, PermissionContext.LoggedUser);
 
 				return new AlbumContract(album, PermissionContext.LanguagePreference);
 			});
@@ -344,9 +344,9 @@ namespace VocaDb.Model.Database.Queries
 			return HandleTransaction(ctx =>
 			{
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
-					entryLinkFactory,
+					_entryLinkFactory,
 					(album, reporter, notesTruncated) => new AlbumReport(album, reportType, reporter, hostname, notesTruncated, versionNumber),
-					() => reportType != AlbumReportType.Other ? enumTranslations.AlbumReportTypeNames[reportType] : null,
+					() => reportType != AlbumReportType.Other ? _enumTranslations.AlbumReportTypeNames[reportType] : null,
 					albumId, reportType, hostname, notes);
 			});
 		}
@@ -372,7 +372,7 @@ namespace VocaDb.Model.Database.Queries
 					return user != null && song != null ? (SongVoteRating?)session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).Select(r => r.Rating).FirstOrDefault() : null;
 				}
 
-				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, imageUrlFactory, GetRatingFunc,
+				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, _imageUrlFactory, GetRatingFunc,
 					discTypeTag: new EntryTypeTags(session).GetTag(EntryType.Album, album.DiscType))
 				{
 					CommentCount = Comments(session).GetCount(id),
@@ -394,7 +394,7 @@ namespace VocaDb.Model.Database.Queries
 					.OrderByDescending(c => c.Created)
 					.Take(3)
 					.ToArray()
-					.Select(c => new CommentForApiContract(c, userIconFactory))
+					.Select(c => new CommentForApiContract(c, _userIconFactory))
 					.ToArray();
 
 				if (album.Deleted)
@@ -451,7 +451,7 @@ namespace VocaDb.Model.Database.Queries
 			var size = ImageSize.Thumb;
 
 			// TODO: this all should be moved to DynamicImageUrlFactory
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				var album = ctx.Load(albumId);
 
@@ -461,9 +461,9 @@ namespace VocaDb.Model.Database.Queries
 
 				// Try to read thumbnail from file system.
 				var data = album.Thumb;
-				if (imagePersister.HasImage(data, size))
+				if (_imagePersister.HasImage(data, size))
 				{
-					var bytes = imagePersister.ReadBytes(data, size);
+					var bytes = _imagePersister.ReadBytes(data, size);
 					return EntryForPictureDisplayContract.Create(album, data.Mime, bytes, PermissionContext.LanguagePreference);
 				}
 
@@ -476,12 +476,12 @@ namespace VocaDb.Model.Database.Queries
 		{
 			return
 				HandleQuery(session =>
-					new AlbumForEditContract(session.Load<Album>(id), PermissionContext.LanguagePreference, imageUrlFactory));
+					new AlbumForEditContract(session.Load<Album>(id), PermissionContext.LanguagePreference, _imageUrlFactory));
 		}
 
 		public RelatedAlbumsContract GetRelatedAlbums(int albumId)
 		{
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				var album = ctx.Load(albumId);
 				var q = new RelatedAlbumsQuery(ctx);
@@ -491,17 +491,17 @@ namespace VocaDb.Model.Database.Queries
 				{
 					ArtistMatches =
 						albums.ArtistMatches
-						.Select(a => new AlbumContract(a, permissionContext.LanguagePreference))
+						.Select(a => new AlbumContract(a, _permissionContext.LanguagePreference))
 						.OrderBy(a => a.Name)
 						.ToArray(),
 					LikeMatches =
 						albums.LikeMatches
-						.Select(a => new AlbumContract(a, permissionContext.LanguagePreference))
+						.Select(a => new AlbumContract(a, _permissionContext.LanguagePreference))
 						.OrderBy(a => a.Name)
 						.ToArray(),
 					TagMatches =
 						albums.TagMatches
-						.Select(a => new AlbumContract(a, permissionContext.LanguagePreference))
+						.Select(a => new AlbumContract(a, _permissionContext.LanguagePreference))
 						.OrderBy(a => a.Name)
 						.ToArray()
 				};
@@ -512,7 +512,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			var maxResults = 3;
 
-			return repository.HandleQueryAsync(async ctx =>
+			return _repository.HandleQueryAsync(async ctx =>
 			{
 				var album = ctx.Load<Album>(albumId);
 				var albumTags = album.Tags.Tags.Select(t => t.Id);
@@ -536,9 +536,9 @@ namespace VocaDb.Model.Database.Queries
 
 				if (songUsages.Length < 3)
 				{
-					var pvResults = await pvParser.ParseByUrlsAsync(album.PVs
+					var pvResults = await _pvParser.ParseByUrlsAsync(album.PVs
 						.Where(pv => pv.Service == PVService.NicoNicoDouga)
-						.Select(pv => pv.Url), true, permissionContext);
+						.Select(pv => pv.Url), true, _permissionContext);
 
 					var nicoTags = pvResults.SelectMany(pv => pv.Tags).Distinct().ToArray();
 					var mappedTags = new TagMapper().MapTags(ctx, nicoTags)
@@ -558,7 +558,7 @@ namespace VocaDb.Model.Database.Queries
 			if (fields == null || fields.Length == 0)
 				fields = new[] { "id", "title" };
 
-			return HandleQuery(db => new AlbumSongFormatter(entryLinkFactory).ApplyFormatDict(db.Load(id), fields, discNumber, lang));
+			return HandleQuery(db => new AlbumSongFormatter(_entryLinkFactory).ApplyFormatDict(db.Load(id), fields, discNumber, lang));
 		}
 
 		public void Merge(int sourceId, int targetId)
@@ -568,7 +568,7 @@ namespace VocaDb.Model.Database.Queries
 			if (sourceId == targetId)
 				throw new ArgumentException("Source and target albums can't be the same", "targetId");
 
-			repository.HandleTransaction(session =>
+			_repository.HandleTransaction(session =>
 			{
 				var source = session.Load(sourceId);
 				var target = session.Load(targetId);
@@ -692,7 +692,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public int RemoveTagUsage(long tagUsageId)
 		{
-			return new TagUsageQueries(PermissionContext).RemoveTagUsage<AlbumTagUsage, Album>(tagUsageId, repository);
+			return new TagUsageQueries(PermissionContext).RemoveTagUsage<AlbumTagUsage, Album>(tagUsageId, _repository);
 		}
 
 		public EntryRevertedContract RevertToVersion(int archivedAlbumVersionId)
@@ -731,7 +731,7 @@ namespace VocaDb.Model.Database.Queries
 
 					if (versionWithPic.CoverPicture != null)
 					{
-						var thumbGenerator = new ImageThumbGenerator(imagePersister);
+						var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 						using (var stream = new MemoryStream(versionWithPic.CoverPicture.Bytes))
 						{
 							var thumb = new EntryThumb(album, versionWithPic.CoverPictureMime, ImagePurpose.Main);
@@ -810,7 +810,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			ParamIs.NotNull(() => properties);
 
-			return await repository.HandleTransactionAsync(async session =>
+			return await _repository.HandleTransactionAsync(async session =>
 			{
 				var album = await session.LoadAsync(properties.Id);
 
@@ -881,7 +881,7 @@ namespace VocaDb.Model.Database.Queries
 
 					pictureData.Id = album.Id;
 					pictureData.EntryType = EntryType.Album;
-					var thumbGenerator = new ImageThumbGenerator(imagePersister);
+					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.AllThumbs);
 
 					diff.Cover.Set();
@@ -937,7 +937,7 @@ namespace VocaDb.Model.Database.Queries
 						var archived = await ArchiveSongAsync(session.OfType<Song>(), song, songDiff, SongArchiveReason.Created,
 							$"Created for album '{album.DefaultName.TruncateWithEllipsis(100)}'");
 
-						await session.AuditLogger.AuditLogAsync($"created {entryLinkFactory.CreateEntryLink(song)} for {entryLinkFactory.CreateEntryLink(album)}");
+						await session.AuditLogger.AuditLogAsync($"created {_entryLinkFactory.CreateEntryLink(song)} for {_entryLinkFactory.CreateEntryLink(album)}");
 						await AddEntryEditedEntryAsync(session.OfType<ActivityEntry>(), song, EntryEditEvent.Created, archived);
 
 						return song;
@@ -965,7 +965,7 @@ namespace VocaDb.Model.Database.Queries
 
 				var picsDiff = album.Pictures.SyncPictures(properties.Pictures, session.OfType<User>().GetLoggedUser(PermissionContext), album.CreatePicture);
 				await session.OfType<AlbumPictureFile>().SyncAsync(picsDiff);
-				var entryPictureFileThumbGenerator = new ImageThumbGenerator(pictureFilePersister);
+				var entryPictureFileThumbGenerator = new ImageThumbGenerator(_pictureFilePersister);
 				album.Pictures.GenerateThumbsAndMoveImage(entryPictureFileThumbGenerator, picsDiff.Added, ImageSizes.Original | ImageSizes.Thumb);
 
 				if (picsDiff.Changed)
@@ -977,7 +977,7 @@ namespace VocaDb.Model.Database.Queries
 				if (pvDiff.Changed)
 					diff.PVs.Set();
 
-				var logStr = $"updated properties for album {entryLinkFactory.CreateEntryLink(album)} ({diff.ChangedFieldsString})"
+				var logStr = $"updated properties for album {_entryLinkFactory.CreateEntryLink(album)} ({diff.ChangedFieldsString})"
 					+ (properties.UpdateNotes != string.Empty ? " " + properties.UpdateNotes : string.Empty)
 					.Truncate(400);
 
@@ -995,11 +995,11 @@ namespace VocaDb.Model.Database.Queries
 
 					if (addedArtists.Any())
 					{
-						await followedArtistNotifier.SendNotificationsAsync(session, album, addedArtists, PermissionContext.LoggedUser);
+						await _followedArtistNotifier.SendNotificationsAsync(session, album, addedArtists, PermissionContext.LoggedUser);
 					}
 				}
 
-				return new AlbumForEditContract(album, PermissionContext.LanguagePreference, imageUrlFactory);
+				return new AlbumForEditContract(album, PermissionContext.LanguagePreference, _imageUrlFactory);
 			});
 		}
 
@@ -1017,7 +1017,7 @@ namespace VocaDb.Model.Database.Queries
 				album.PersonalDescriptionAuthorId = data.PersonalDescriptionAuthor?.Id;
 
 				ctx.Update(album);
-				ctx.AuditLogger.AuditLog($"updated personal description for {entryLinkFactory.CreateEntryLink(album)}");
+				ctx.AuditLogger.AuditLog($"updated personal description for {_entryLinkFactory.CreateEntryLink(album)}");
 			});
 		}
 

@@ -9,7 +9,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 {
 	public class WebLinkManager<T> where T : WebLink
 	{
-		private IList<T> links = new List<T>();
+		private IList<T> _links = new List<T>();
 
 		public virtual bool HasLink(string url)
 		{
@@ -18,11 +18,11 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public virtual IList<T> Links
 		{
-			get => links;
+			get => _links;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				links = value;
+				_links = value;
 			}
 		}
 

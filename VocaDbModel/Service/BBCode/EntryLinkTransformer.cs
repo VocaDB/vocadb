@@ -12,13 +12,13 @@ namespace VocaDb.Model.Service.BBCode
 	/// </summary>
 	public class EntryLinkTransformer : IBBCodeElementTransformer
 	{
-		private readonly IEntryLinkFactory linkFactory;
+		private readonly IEntryLinkFactory _linkFactory;
 
 		public EntryLinkTransformer(IEntryLinkFactory linkFactory)
 		{
 			ParamIs.NotNull(() => linkFactory);
 
-			this.linkFactory = linkFactory;
+			this._linkFactory = linkFactory;
 		}
 
 		private readonly Regex[] linkMatchers = new[] {
@@ -35,7 +35,7 @@ namespace VocaDb.Model.Service.BBCode
 				entryTypeName = "Song";
 
 			if (Enum.TryParse(entryTypeName, true, out EntryType entryType) && int.TryParse(entryIdStr, out int entryId))
-				return linkFactory.CreateEntryLink(entryType, entryId, match.Value);
+				return _linkFactory.CreateEntryLink(entryType, entryId, match.Value);
 			else
 				return match.Value;
 		}

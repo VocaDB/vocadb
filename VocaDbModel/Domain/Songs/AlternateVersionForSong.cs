@@ -9,8 +9,8 @@ namespace VocaDb.Model.Domain.Songs
 {
 	public class AlternateVersionForSong
 	{
-		private Song derived;
-		private Song original;
+		private Song _derived;
+		private Song _original;
 
 		public AlternateVersionForSong() { }
 
@@ -22,11 +22,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Derived
 		{
-			get => derived;
+			get => _derived;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				derived = value;
+				_derived = value;
 			}
 		}
 
@@ -34,11 +34,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Original
 		{
-			get => original;
+			get => _original;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				original = value;
+				_original = value;
 			}
 		}
 	}

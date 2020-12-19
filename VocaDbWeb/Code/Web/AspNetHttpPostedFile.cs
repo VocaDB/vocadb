@@ -9,15 +9,15 @@ namespace VocaDb.Web
 	{
 		public AspNetHttpPostedFile(HttpPostedFileBase file)
 		{
-			this.file = file;
+			this._file = file;
 		}
 
-		private readonly HttpPostedFileBase file;
+		private readonly HttpPostedFileBase _file;
 
-		public string ContentType => file.ContentType;
+		public string ContentType => _file.ContentType;
 
-		public string FileName => file.FileName;
+		public string FileName => _file.FileName;
 
-		public void SaveAs(string path) => file.SaveAs(path);
+		public void SaveAs(string path) => _file.SaveAs(path);
 	}
 }

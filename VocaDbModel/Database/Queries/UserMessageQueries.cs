@@ -36,7 +36,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var msg = ctx.Load(messageId);
 
@@ -60,7 +60,7 @@ namespace VocaDb.Model.Database.Queries
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var messages = ctx.LoadMultiple<UserMessage>(messageIds);
 
@@ -77,7 +77,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			return repository.HandleTransaction(ctx =>
+			return _repository.HandleTransaction(ctx =>
 			{
 				var msg = ctx.Load(messageId);
 

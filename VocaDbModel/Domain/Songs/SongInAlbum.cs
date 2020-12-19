@@ -7,8 +7,8 @@ namespace VocaDb.Model.Domain.Songs
 {
 	public class SongInAlbum : ISongLink, IEntryWithIntId
 	{
-		private Album album;
-		private Song song;
+		private Album _album;
+		private Song _song;
 
 		public SongInAlbum() { }
 
@@ -45,17 +45,17 @@ namespace VocaDb.Model.Domain.Songs
 		/// </summary>
 		public virtual Song Song
 		{
-			get => song;
-			set => song = value;
+			get => _song;
+			set => _song = value;
 		}
 
 		public virtual Album Album
 		{
-			get => album;
+			get => _album;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 

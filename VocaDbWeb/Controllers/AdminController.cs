@@ -24,18 +24,18 @@ namespace VocaDb.Web.Controllers
 {
 	public class AdminController : ControllerBase
 	{
-		private readonly IPRuleManager ipRuleManager;
-		private readonly ISessionFactory sessionFactory;
+		private readonly IPRuleManager _ipRuleManager;
+		private readonly ISessionFactory _sessionFactory;
 		private AdminService Service { get; set; }
-		private readonly OtherService otherService;
+		private readonly OtherService _otherService;
 
 		public AdminController(AdminService service, OtherService otherService,
 			IPRuleManager ipRuleManager, ISessionFactory sessionFactory)
 		{
 			Service = service;
-			this.otherService = otherService;
-			this.ipRuleManager = ipRuleManager;
-			this.sessionFactory = sessionFactory;
+			this._otherService = otherService;
+			this._ipRuleManager = ipRuleManager;
+			this._sessionFactory = sessionFactory;
 		}
 
 		[Authorize]
@@ -163,7 +163,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
-			var rules = otherService.GetIPRules();
+			var rules = _otherService.GetIPRules();
 			return View(rules);
 		}
 
@@ -174,7 +174,7 @@ namespace VocaDb.Web.Controllers
 			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			Service.UpdateIPRules(rules);
-			ipRuleManager.Reset(rules.Select(i => i.Address));
+			_ipRuleManager.Reset(rules.Select(i => i.Address));
 
 			TempData.SetSuccessMessage("IP rules updated.");
 
@@ -206,7 +206,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult RefreshDbCache()
 		{
-			DatabaseHelper.ClearSecondLevelCache(sessionFactory);
+			DatabaseHelper.ClearSecondLevelCache(_sessionFactory);
 
 			return RedirectToAction("Index");
 		}

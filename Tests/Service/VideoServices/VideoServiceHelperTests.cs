@@ -13,14 +13,14 @@ namespace VocaDb.Tests.Service.VideoServices
 	[TestClass]
 	public class VideoServiceHelperTests
 	{
-		private PVForSong originalWithThumb;
-		private PVForSong reprintWithThumb;
+		private PVForSong _originalWithThumb;
+		private PVForSong _reprintWithThumb;
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			originalWithThumb = new PVForSong { Service = PVService.NicoNicoDouga, PVType = PVType.Original, PVId = "original_id", ThumbUrl = "original" };
-			reprintWithThumb = new PVForSong { Service = PVService.Youtube, PVType = PVType.Reprint, PVId = "reprint_id", ThumbUrl = "reprint" };
+			_originalWithThumb = new PVForSong { Service = PVService.NicoNicoDouga, PVType = PVType.Original, PVId = "original_id", ThumbUrl = "original" };
+			_reprintWithThumb = new PVForSong { Service = PVService.Youtube, PVType = PVType.Reprint, PVId = "reprint_id", ThumbUrl = "reprint" };
 		}
 
 		[TestMethod]
@@ -34,7 +34,7 @@ namespace VocaDb.Tests.Service.VideoServices
 		[TestMethod]
 		public void GetThumbUrl_HasOriginalWithThumb()
 		{
-			var pvs = new[] { reprintWithThumb, originalWithThumb };
+			var pvs = new[] { _reprintWithThumb, _originalWithThumb };
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
@@ -44,7 +44,7 @@ namespace VocaDb.Tests.Service.VideoServices
 		[TestMethod]
 		public void GetThumbUrl_HasOnlyReprint()
 		{
-			var pvs = new[] { reprintWithThumb };
+			var pvs = new[] { _reprintWithThumb };
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
@@ -54,8 +54,8 @@ namespace VocaDb.Tests.Service.VideoServices
 		[TestMethod]
 		public void GetThumbUrl_HasReprintWithThumb()
 		{
-			originalWithThumb.ThumbUrl = string.Empty;
-			var pvs = new[] { reprintWithThumb, originalWithThumb };
+			_originalWithThumb.ThumbUrl = string.Empty;
+			var pvs = new[] { _reprintWithThumb, _originalWithThumb };
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
@@ -65,9 +65,9 @@ namespace VocaDb.Tests.Service.VideoServices
 		[TestMethod]
 		public void GetThumbUrl_HasOtherWithThumb()
 		{
-			originalWithThumb.ThumbUrl = string.Empty;
-			reprintWithThumb.PVType = PVType.Other;
-			var pvs = new[] { reprintWithThumb, originalWithThumb };
+			_originalWithThumb.ThumbUrl = string.Empty;
+			_reprintWithThumb.PVType = PVType.Other;
+			var pvs = new[] { _reprintWithThumb, _originalWithThumb };
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
@@ -80,10 +80,10 @@ namespace VocaDb.Tests.Service.VideoServices
 		[TestMethod]
 		public void GetThumbUrl_HasNoThumbs()
 		{
-			originalWithThumb.ThumbUrl = string.Empty;
-			reprintWithThumb.ThumbUrl = string.Empty;
-			var pvs = new[] { reprintWithThumb, originalWithThumb };
-			var nicoThumb = VideoService.NicoNicoDouga.GetThumbUrlById(originalWithThumb.PVId);
+			_originalWithThumb.ThumbUrl = string.Empty;
+			_reprintWithThumb.ThumbUrl = string.Empty;
+			var pvs = new[] { _reprintWithThumb, _originalWithThumb };
+			var nicoThumb = VideoService.NicoNicoDouga.GetThumbUrlById(_originalWithThumb.PVId);
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
@@ -93,8 +93,8 @@ namespace VocaDb.Tests.Service.VideoServices
 		[TestMethod]
 		public void GetThumbUrl_Disabled()
 		{
-			originalWithThumb.Disabled = true;
-			var pvs = new[] { reprintWithThumb, originalWithThumb };
+			_originalWithThumb.Disabled = true;
+			var pvs = new[] { _reprintWithThumb, _originalWithThumb };
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
@@ -104,9 +104,9 @@ namespace VocaDb.Tests.Service.VideoServices
 		[TestMethod]
 		public void GetThumbUrl_OnlyDisabledWithThumb()
 		{
-			originalWithThumb.ThumbUrl = string.Empty;
-			reprintWithThumb.Disabled = true;
-			var pvs = new[] { reprintWithThumb, originalWithThumb };
+			_originalWithThumb.ThumbUrl = string.Empty;
+			_reprintWithThumb.Disabled = true;
+			var pvs = new[] { _reprintWithThumb, _originalWithThumb };
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
@@ -116,7 +116,7 @@ namespace VocaDb.Tests.Service.VideoServices
 		[TestMethod]
 		public void GetThumbUrl_PreferNotNico()
 		{
-			var pvs = new[] { reprintWithThumb, originalWithThumb };
+			var pvs = new[] { _reprintWithThumb, _originalWithThumb };
 
 			var result = VideoServiceHelper.GetThumbUrlPreferNotNico(pvs);
 

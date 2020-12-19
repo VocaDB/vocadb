@@ -10,7 +10,7 @@ namespace VocaDb.Tests.TestSupport
 	{
 		public override ListDatabaseContext<Tag> CreateContext()
 		{
-			return new TagListDatabaseContext(querySource);
+			return new TagListDatabaseContext(_querySource);
 		}
 
 		public FakeTagRepository(params Tag[] tags)

@@ -19,8 +19,8 @@ namespace VocaDb.Model.Domain.Artists
 			return artist.CreateArchivedVersion(data, diff, author, reason, notes);
 		}
 
-		private Artist artist;
-		private ArtistDiff diff;
+		private Artist _artist;
+		private ArtistDiff _diff;
 
 		public ArchivedArtistVersion() { }
 
@@ -43,18 +43,18 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual Artist Artist
 		{
-			get => artist;
+			get => _artist;
 			protected set
 			{
 				ParamIs.NotNull(() => value);
-				artist = value;
+				_artist = value;
 			}
 		}
 
 		public virtual ArtistDiff Diff
 		{
-			get => diff;
-			protected set => diff = value;
+			get => _diff;
+			protected set => _diff = value;
 		}
 
 		public override IEntryDiff DiffBase => Diff;

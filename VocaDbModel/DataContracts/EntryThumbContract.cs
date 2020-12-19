@@ -11,8 +11,8 @@ namespace VocaDb.Model.DataContracts
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class EntryThumbContract : IEntryImageInformation
 	{
-		private readonly ImagePurpose purpose;
-		ImagePurpose IEntryImageInformation.Purpose => purpose;
+		private readonly ImagePurpose _purpose;
+		ImagePurpose IEntryImageInformation.Purpose => _purpose;
 
 		public EntryThumbContract() { }
 
@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts
 			EntryType = entryThumb.EntryType;
 			Id = entryThumb.Id;
 			Mime = entryThumb.Mime;
-			purpose = entryThumb.Purpose;
+			_purpose = entryThumb.Purpose;
 			Version = entryThumb.Version;
 		}
 

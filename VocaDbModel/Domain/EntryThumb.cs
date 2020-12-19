@@ -11,7 +11,7 @@ namespace VocaDb.Model.Domain
 			return !string.IsNullOrEmpty(entry?.Mime) ? new EntryThumb(entry, entry.Mime, entry.Purpose) : null;
 		}
 
-		private IEntryBase entry;
+		private IEntryBase _entry;
 
 		public EntryThumb() { }
 
@@ -24,11 +24,11 @@ namespace VocaDb.Model.Domain
 
 		public IEntryBase Entry
 		{
-			get => entry;
+			get => _entry;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				entry = value;
+				_entry = value;
 			}
 		}
 

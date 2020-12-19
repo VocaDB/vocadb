@@ -10,13 +10,13 @@ namespace VocaDb.Web.Controllers
 	{
 		private new const int EntriesPerPage = 50;
 
-		private readonly ActivityFeedService service;
+		private readonly ActivityFeedService _service;
 
-		private ActivityFeedService Service => service;
+		private ActivityFeedService Service => _service;
 
 		public ActivityEntryController(ActivityFeedService service)
 		{
-			this.service = service;
+			this._service = service;
 		}
 
 		public ActionResult FollowedArtistActivity()

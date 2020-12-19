@@ -38,23 +38,22 @@ namespace VocaDb.Model.Domain.Tags
 			return left?.Id == right?.Id;
 		}
 
-		private ISet<AlbumTagUsage> albumTagUsages = new HashSet<AlbumTagUsage>();
-		private ArchivedVersionManager<ArchivedTagVersion, TagEditableFields> archivedVersions
-			= new ArchivedVersionManager<ArchivedTagVersion, TagEditableFields>();
-		private ISet<ArtistTagUsage> artistTagUsages = new HashSet<ArtistTagUsage>();
-		private string categoryName;
-		private ISet<Tag> children = new HashSet<Tag>();
-		private IList<TagComment> comments = new List<TagComment>();
-		private EnglishTranslatedString description;
-		private ISet<EventTagUsage> eventTagUsages = new HashSet<EventTagUsage>();
-		private ISet<EventSeriesTagUsage> eventSeriesTagUsages = new HashSet<EventSeriesTagUsage>();
-		private IList<TagMapping> mappings = new List<TagMapping>();
-		private NameManager<TagName> names = new();
-		private ISet<RelatedTag> relatedTags = new HashSet<RelatedTag>();
-		private ISet<SongTagUsage> songTagUsages = new HashSet<SongTagUsage>();
-		private ISet<SongListTagUsage> songListTagUsages = new HashSet<SongListTagUsage>();
-		private IList<TagForUser> tagsForUsers = new List<TagForUser>();
-		private WebLinkManager<TagWebLink> webLinks = new();
+		private ISet<AlbumTagUsage> _albumTagUsages = new HashSet<AlbumTagUsage>();
+		private ArchivedVersionManager<ArchivedTagVersion, TagEditableFields> _archivedVersions = new();
+		private ISet<ArtistTagUsage> _artistTagUsages = new HashSet<ArtistTagUsage>();
+		private string _categoryName;
+		private ISet<Tag> _children = new HashSet<Tag>();
+		private IList<TagComment> _comments = new List<TagComment>();
+		private EnglishTranslatedString _description;
+		private ISet<EventTagUsage> _eventTagUsages = new HashSet<EventTagUsage>();
+		private ISet<EventSeriesTagUsage> _eventSeriesTagUsages = new HashSet<EventSeriesTagUsage>();
+		private IList<TagMapping> _mappings = new List<TagMapping>();
+		private NameManager<TagName> _names = new();
+		private ISet<RelatedTag> _relatedTags = new HashSet<RelatedTag>();
+		private ISet<SongTagUsage> _songTagUsages = new HashSet<SongTagUsage>();
+		private ISet<SongListTagUsage> _songListTagUsages = new HashSet<SongListTagUsage>();
+		private IList<TagForUser> _tagsForUsers = new List<TagForUser>();
+		private WebLinkManager<TagWebLink> _webLinks = new();
 
 		public Tag()
 		{
@@ -84,11 +83,11 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		public virtual ISet<AlbumTagUsage> AllAlbumTagUsages
 		{
-			get => albumTagUsages;
+			get => _albumTagUsages;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				albumTagUsages = value;
+				_albumTagUsages = value;
 			}
 		}
 
@@ -104,11 +103,11 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		public virtual ISet<ArtistTagUsage> AllArtistTagUsages
 		{
-			get => artistTagUsages;
+			get => _artistTagUsages;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				artistTagUsages = value;
+				_artistTagUsages = value;
 			}
 		}
 
@@ -117,11 +116,11 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		public virtual ISet<Tag> AllChildren
 		{
-			get => children;
+			get => _children;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				children = value;
+				_children = value;
 			}
 		}
 
@@ -134,11 +133,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual ArchivedVersionManager<ArchivedTagVersion, TagEditableFields> ArchivedVersionsManager
 		{
-			get => archivedVersions;
+			get => _archivedVersions;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				archivedVersions = value;
+				_archivedVersions = value;
 			}
 		}
 
@@ -152,11 +151,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual string CategoryName
 		{
-			get => categoryName;
+			get => _categoryName;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				categoryName = value;
+				_categoryName = value;
 			}
 		}
 
@@ -167,11 +166,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual IList<TagComment> AllComments
 		{
-			get => comments;
+			get => _comments;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				comments = value;
+				_comments = value;
 			}
 		}
 
@@ -202,11 +201,11 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		public virtual EnglishTranslatedString Description
 		{
-			get => description;
+			get => _description;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				description = value;
+				_description = value;
 			}
 		}
 
@@ -223,21 +222,21 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual IList<TagMapping> Mappings
 		{
-			get => mappings;
+			get => _mappings;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				mappings = value;
+				_mappings = value;
 			}
 		}
 
 		public virtual NameManager<TagName> Names
 		{
-			get => names;
+			get => _names;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				names = value;
+				_names = value;
 			}
 		}
 
@@ -393,21 +392,21 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual ISet<EventTagUsage> AllEventTagUsages
 		{
-			get => eventTagUsages;
+			get => _eventTagUsages;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				eventTagUsages = value;
+				_eventTagUsages = value;
 			}
 		}
 
 		public virtual ISet<EventSeriesTagUsage> AllEventSeriesTagUsages
 		{
-			get => eventSeriesTagUsages;
+			get => _eventSeriesTagUsages;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				eventSeriesTagUsages = value;
+				_eventSeriesTagUsages = value;
 			}
 		}
 
@@ -417,21 +416,21 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		public virtual ISet<SongTagUsage> AllSongTagUsages
 		{
-			get => songTagUsages;
+			get => _songTagUsages;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				songTagUsages = value;
+				_songTagUsages = value;
 			}
 		}
 
 		public virtual ISet<SongListTagUsage> AllSongListTagUsages
 		{
-			get => songListTagUsages;
+			get => _songListTagUsages;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				songListTagUsages = value;
+				_songListTagUsages = value;
 			}
 		}
 
@@ -455,11 +454,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual ISet<RelatedTag> RelatedTags
 		{
-			get => relatedTags;
+			get => _relatedTags;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				relatedTags = value;
+				_relatedTags = value;
 			}
 		}
 
@@ -479,11 +478,11 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		public virtual IList<TagForUser> TagsForUsers
 		{
-			get => tagsForUsers;
+			get => _tagsForUsers;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				tagsForUsers = value;
+				_tagsForUsers = value;
 			}
 		}
 
@@ -499,11 +498,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual WebLinkManager<TagWebLink> WebLinks
 		{
-			get => webLinks;
+			get => _webLinks;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				webLinks = value;
+				_webLinks = value;
 			}
 		}
 

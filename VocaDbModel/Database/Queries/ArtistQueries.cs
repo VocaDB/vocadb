@@ -43,14 +43,14 @@ namespace VocaDb.Model.Database.Queries
 	/// </summary>
 	public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly ObjectCache cache;
-		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IEnumTranslations enumTranslations;
-		private readonly IEntryThumbPersister imagePersister;
-		private readonly IAggregatedEntryImageUrlFactory imageUrlFactory;
-		private readonly IEntryPictureFilePersister pictureFilePersister;
-		private readonly IUserIconFactory userIconFactory;
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private readonly ObjectCache _cache;
+		private readonly IEntryLinkFactory _entryLinkFactory;
+		private readonly IEnumTranslations _enumTranslations;
+		private readonly IEntryThumbPersister _imagePersister;
+		private readonly IAggregatedEntryImageUrlFactory _imageUrlFactory;
+		private readonly IEntryPictureFilePersister _pictureFilePersister;
+		private readonly IUserIconFactory _userIconFactory;
 
 		class CachedAdvancedArtistStatsContract
 		{
@@ -68,9 +68,9 @@ namespace VocaDb.Model.Database.Queries
 
 			var key = $"ArtistQueries.AdvancedArtistStatsContract.{artist.Id}";
 
-			var cached = cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () =>
+			var cached = _cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(24), () =>
 			{
-				var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, cache, imageUrlFactory).GetTopVoicebanks(artist);
+				var topVocaloids = new ArtistRelationsQuery(ctx, LanguagePreference, _cache, _imageUrlFactory).GetTopVoicebanks(artist);
 
 				return new CachedAdvancedArtistStatsContract
 				{
@@ -98,7 +98,7 @@ namespace VocaDb.Model.Database.Queries
 				return null;
 
 			var key = $"ArtistQueries.PersonalArtistStatsContract.{artist.Id}.{PermissionContext.LoggedUserId}";
-			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () =>
+			return _cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () =>
 			{
 				return new PersonalArtistStatsContract
 				{
@@ -115,7 +115,7 @@ namespace VocaDb.Model.Database.Queries
 		private SharedArtistStatsContract GetSharedArtistStats(IDatabaseContext<Artist> ctx, Artist artist)
 		{
 			var key = $"ArtistQueries.SharedArtistStatsContract.{artist.Id}";
-			return cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () =>
+			return _cache.GetOrInsert(key, CachePolicy.AbsoluteExpiration(1), () =>
 			{
 				try
 				{
@@ -149,7 +149,7 @@ namespace VocaDb.Model.Database.Queries
 				{
 					// TODO: Loading of stats timeouts sometimes. Since they're not essential we can accept returning only partial stats.
 					// However, this should be fixed by tuning the queries further.
-					log.Error(x, "Unable to load shared artist stats");
+					_log.Error(x, "Unable to load shared artist stats");
 					return new SharedArtistStatsContract();
 				}
 			});
@@ -165,18 +165,18 @@ namespace VocaDb.Model.Database.Queries
 			ObjectCache cache, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IAggregatedEntryImageUrlFactory imageUrlFactory)
 			: base(repository, permissionContext)
 		{
-			this.entryLinkFactory = entryLinkFactory;
-			this.imagePersister = imagePersister;
-			this.pictureFilePersister = pictureFilePersister;
-			this.cache = cache;
-			this.userIconFactory = userIconFactory;
-			this.enumTranslations = enumTranslations;
-			this.imageUrlFactory = imageUrlFactory;
+			this._entryLinkFactory = entryLinkFactory;
+			this._imagePersister = imagePersister;
+			this._pictureFilePersister = pictureFilePersister;
+			this._cache = cache;
+			this._userIconFactory = userIconFactory;
+			this._enumTranslations = enumTranslations;
+			this._imageUrlFactory = imageUrlFactory;
 		}
 
 		public ICommentQueries Comments(IDatabaseContext<Artist> ctx)
 		{
-			return new CommentQueries<ArtistComment, Artist>(ctx.OfType<ArtistComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+			return new CommentQueries<ArtistComment, Artist>(ctx.OfType<ArtistComment>(), PermissionContext, _userIconFactory, _entryLinkFactory);
 		}
 
 		public async Task<ArchivedArtistVersion> ArchiveAsync(IDatabaseContext<Artist> ctx, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "")
@@ -206,7 +206,7 @@ namespace VocaDb.Model.Database.Queries
 			var diff = new ArtistDiff();
 			diff.Names.Set();
 
-			return await repository.HandleTransactionAsync(async ctx =>
+			return await _repository.HandleTransactionAsync(async ctx =>
 			{
 				ctx.AuditLogger.SysLog($"creating a new artist with name '{contract.Names.First().Value}'");
 
@@ -237,7 +237,7 @@ namespace VocaDb.Model.Database.Queries
 
 					pictureData.Id = artist.Id;
 					pictureData.EntryType = EntryType.Artist;
-					var thumbGenerator = new ImageThumbGenerator(imagePersister);
+					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 
 					diff.Picture.Set();
@@ -246,7 +246,7 @@ namespace VocaDb.Model.Database.Queries
 				var archived = await ArchiveAsync(ctx, artist, diff, ArtistArchiveReason.Created);
 				await ctx.UpdateAsync(artist);
 
-				await ctx.AuditLogger.AuditLogAsync($"created artist {entryLinkFactory.CreateEntryLink(artist)} ({artist.ArtistType})");
+				await ctx.AuditLogger.AuditLogAsync($"created artist {_entryLinkFactory.CreateEntryLink(artist)} ({artist.ArtistType})");
 				await AddEntryEditedEntryAsync(ctx.OfType<ActivityEntry>(), artist, EntryEditEvent.Created, archived);
 
 				return new ArtistContract(artist, PermissionContext.LanguagePreference);
@@ -266,9 +266,9 @@ namespace VocaDb.Model.Database.Queries
 			return HandleTransaction(ctx =>
 			{
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
-					entryLinkFactory,
+					_entryLinkFactory,
 					(artist, reporter, notesTruncated) => new ArtistReport(artist, reportType, reporter, hostname, notesTruncated, versionNumber),
-					() => reportType != ArtistReportType.Other ? enumTranslations.ArtistReportTypeNames[reportType] : null,
+					() => reportType != ArtistReportType.Other ? _enumTranslations.ArtistReportTypeNames[reportType] : null,
 					artistId, reportType, hostname, notes, reportType != ArtistReportType.OwnershipClaim);
 			});
 		}
@@ -314,12 +314,12 @@ namespace VocaDb.Model.Database.Queries
 		{
 			return
 				HandleQuery(session =>
-					new ArtistForEditContract(session.Load<Artist>(id), PermissionContext.LanguagePreference, imageUrlFactory));
+					new ArtistForEditContract(session.Load<Artist>(id), PermissionContext.LanguagePreference, _imageUrlFactory));
 		}
 
 		public CommentForApiContract[] GetComments(int artistId)
 		{
-			return HandleQuery(ctx => ctx.Load(artistId).Comments.Select(c => new CommentForApiContract(c, userIconFactory, true)).ToArray());
+			return HandleQuery(ctx => ctx.Load(artistId).Comments.Select(c => new CommentForApiContract(c, _userIconFactory, true)).ToArray());
 		}
 
 		public ArtistDetailsContract GetDetails(int id, string hostname)
@@ -328,7 +328,7 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var artist = session.Load(id);
 
-				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, imageUrlFactory,
+				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, _imageUrlFactory,
 					new EntryTypeTags(session).GetTag(EntryType.Artist, artist.ArtistType))
 				{
 					CommentCount = Comments(session).GetCount(id),
@@ -351,7 +351,7 @@ namespace VocaDb.Model.Database.Queries
 					}
 				}
 
-				var relations = (new ArtistRelationsQuery(session, LanguagePreference, cache, imageUrlFactory)).GetRelations(artist, ArtistRelationsFields.All);
+				var relations = (new ArtistRelationsQuery(session, LanguagePreference, _cache, _imageUrlFactory)).GetRelations(artist, ArtistRelationsFields.All);
 				contract.LatestAlbums = relations.LatestAlbums;
 				contract.TopAlbums = relations.PopularAlbums;
 				contract.LatestSongs = relations.LatestSongs;
@@ -389,7 +389,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			var size = ImageSize.Thumb;
 
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				var artist = ctx.Load(artistId);
 
@@ -398,9 +398,9 @@ namespace VocaDb.Model.Database.Queries
 
 				var data = artist.Thumb;
 
-				if (imagePersister.HasImage(data, size))
+				if (_imagePersister.HasImage(data, size))
 				{
-					var bytes = imagePersister.ReadBytes(data, size);
+					var bytes = _imagePersister.ReadBytes(data, size);
 					return EntryForPictureDisplayContract.Create(artist, data.Mime, bytes, PermissionContext.LanguagePreference);
 				}
 
@@ -410,7 +410,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public TagUsageForApiContract[] GetTagSuggestions(int artistId)
 		{
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				var artist = ctx.Load<Artist>(artistId);
 				var artistTags = artist.Tags.Tags.Select(t => t.Id);
@@ -456,7 +456,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public int RemoveTagUsage(long tagUsageId)
 		{
-			return new TagUsageQueries(PermissionContext).RemoveTagUsage<ArtistTagUsage, Artist>(tagUsageId, repository);
+			return new TagUsageQueries(PermissionContext).RemoveTagUsage<ArtistTagUsage, Artist>(tagUsageId, _repository);
 		}
 
 		/// <summary>
@@ -502,7 +502,7 @@ namespace VocaDb.Model.Database.Queries
 
 					if (versionWithPic.Picture != null)
 					{
-						var thumbGenerator = new ImageThumbGenerator(imagePersister);
+						var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 						using (var stream = new MemoryStream(versionWithPic.Picture.Bytes))
 						{
 							var thumb = new EntryThumb(artist, versionWithPic.PictureMime, ImagePurpose.Main);
@@ -540,7 +540,7 @@ namespace VocaDb.Model.Database.Queries
 				}
 
 				await ArchiveAsync(session, artist, diff, ArtistArchiveReason.Reverted, $"Reverted to version {archivedVersion.Version}");
-				await AuditLogAsync($"reverted {entryLinkFactory.CreateEntryLink(artist)} to revision {archivedVersion.Version}", session);
+				await AuditLogAsync($"reverted {_entryLinkFactory.CreateEntryLink(artist)} to revision {archivedVersion.Version}", session);
 
 				return new EntryRevertedContract(artist, warnings);
 			});
@@ -551,7 +551,7 @@ namespace VocaDb.Model.Database.Queries
 			ParamIs.NotNull(() => properties);
 			ParamIs.NotNull(() => permissionContext);
 
-			return await repository.HandleTransactionAsync(async ctx =>
+			return await _repository.HandleTransactionAsync(async ctx =>
 			{
 				var artist = await ctx.LoadAsync(properties.Id);
 
@@ -586,7 +586,7 @@ namespace VocaDb.Model.Database.Queries
 
 					pictureData.Id = artist.Id;
 					pictureData.EntryType = EntryType.Artist;
-					var thumbGenerator = new ImageThumbGenerator(imagePersister);
+					var thumbGenerator = new ImageThumbGenerator(_imagePersister);
 					thumbGenerator.GenerateThumbsAndMoveImage(pictureData.UploadedFile, pictureData, ImageSizes.Thumb | ImageSizes.SmallThumb | ImageSizes.TinyThumb);
 
 					diff.Picture.Set();
@@ -665,13 +665,13 @@ namespace VocaDb.Model.Database.Queries
 
 				var picsDiff = artist.Pictures.SyncPictures(properties.Pictures, ctx.OfType<User>().GetLoggedUser(permissionContext), artist.CreatePicture);
 				ctx.OfType<ArtistPictureFile>().Sync(picsDiff);
-				var entryPictureFileThumbGenerator = new ImageThumbGenerator(pictureFilePersister);
+				var entryPictureFileThumbGenerator = new ImageThumbGenerator(_pictureFilePersister);
 				artist.Pictures.GenerateThumbsAndMoveImage(entryPictureFileThumbGenerator, picsDiff.Added, ImageSizes.Original | ImageSizes.Thumb);
 
 				if (picsDiff.Changed)
 					diff.Pictures.Set();
 
-				var logStr = $"updated properties for artist {entryLinkFactory.CreateEntryLink(artist)} ({diff.ChangedFieldsString})"
+				var logStr = $"updated properties for artist {_entryLinkFactory.CreateEntryLink(artist)} ({diff.ChangedFieldsString})"
 					+ (properties.UpdateNotes != string.Empty ? " " + properties.UpdateNotes : string.Empty)
 					.Truncate(400);
 

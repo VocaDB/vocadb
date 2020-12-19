@@ -34,23 +34,23 @@ namespace VocaDb.Model.Service
 	public class SongService : ServiceBase
 	{
 #pragma warning disable 169
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 #pragma warning restore 169
 
-		private readonly VdbConfigManager config;
-		private readonly IEntryUrlParser entryUrlParser;
+		private readonly VdbConfigManager _config;
+		private readonly IEntryUrlParser _entryUrlParser;
 
 		private PartialFindResult<Song> Find(ISession session, SongQueryParams queryParams)
 		{
-			return new SongSearch(new NHibernateDatabaseContext(session, PermissionContext), queryParams.LanguagePreference, entryUrlParser).Find(queryParams);
+			return new SongSearch(new NHibernateDatabaseContext(session, PermissionContext), queryParams.LanguagePreference, _entryUrlParser).Find(queryParams);
 		}
 
 		public SongService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser,
 			VdbConfigManager config)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
-			this.entryUrlParser = entryUrlParser;
-			this.config = config;
+			this._entryUrlParser = entryUrlParser;
+			this._config = config;
 		}
 
 		public void AddSongToList(int listId, int songId, string notes)
@@ -136,7 +136,7 @@ namespace VocaDb.Model.Service
 		public SongDetailsContract FindFirstDetails(SearchTextQuery textQuery)
 		{
 			return FindFirst((s, session) => new SongDetailsContract(s, PermissionContext.LanguagePreference, new SongListBaseContract[0],
-				config.SpecialTags, GetEntryTypeTags(session), PermissionContext, null, null),
+				_config.SpecialTags, GetEntryTypeTags(session), PermissionContext, null, null),
 				new[] { textQuery.Query }, textQuery.MatchMode);
 		}
 

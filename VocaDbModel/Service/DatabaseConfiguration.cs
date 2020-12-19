@@ -13,7 +13,7 @@ namespace VocaDb.Model.Service
 {
 	public static class DatabaseConfiguration
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
 		private static string ConnectionStringName => ConfigurationManager.AppSettings["ConnectionStringName"];
 
@@ -65,12 +65,12 @@ namespace VocaDb.Model.Service
 			}
 			catch (ArgumentException x)
 			{
-				log.Fatal(x, "Error while building session factory");
+				_log.Fatal(x, "Error while building session factory");
 				throw;
 			}
 			catch (FluentConfigurationException x)
 			{
-				log.Fatal(x, "Error while building session factory");
+				_log.Fatal(x, "Error while building session factory");
 				throw;
 			}
 		}

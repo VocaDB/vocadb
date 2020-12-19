@@ -25,7 +25,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public override string GetUrlById(string id, PVExtendedMetadata _)
 		{
-			var matcher = linkMatchers.First();
+			var matcher = _linkMatchers.First();
 			return $"https://{matcher.MakeLinkFromId(id)}";
 		}
 

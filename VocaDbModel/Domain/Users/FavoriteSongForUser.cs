@@ -18,8 +18,8 @@ namespace VocaDb.Model.Domain.Users
 			_ => 0,
 		};
 
-		private Song song;
-		private User user;
+		private Song _song;
+		private User _user;
 
 		public FavoriteSongForUser()
 		{
@@ -42,21 +42,21 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual Song Song
 		{
-			get => song;
+			get => _song;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				song = value;
+				_song = value;
 			}
 		}
 
 		public virtual User User
 		{
-			get => user;
+			get => _user;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				user = value;
+				_user = value;
 			}
 		}
 
@@ -124,13 +124,13 @@ namespace VocaDb.Model.Domain.Users
 				return;
 
 			if (newRating == SongVoteRating.Favorite)
-				song.FavoritedTimes++;
+				_song.FavoritedTimes++;
 
 			if (Rating == SongVoteRating.Favorite)
-				song.FavoritedTimes--;
+				_song.FavoritedTimes--;
 
-			song.RatingScore -= GetRatingScore(Rating);
-			song.RatingScore += GetRatingScore(newRating);
+			_song.RatingScore -= GetRatingScore(Rating);
+			_song.RatingScore += GetRatingScore(newRating);
 
 			Rating = newRating;
 		}

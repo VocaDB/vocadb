@@ -31,17 +31,17 @@ namespace VocaDb.Web.Controllers.Api
 	{
 		private const int AbsoluteMax = 100;
 		private const int DefaultMax = 10;
-		private readonly ObjectCache cache;
-		private readonly ArtistQueries queries;
-		private readonly ArtistService service;
-		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
+		private readonly ObjectCache _cache;
+		private readonly ArtistQueries _queries;
+		private readonly ArtistService _service;
+		private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
 
 		public ArtistApiController(ArtistQueries queries, ArtistService service, IAggregatedEntryImageUrlFactory thumbPersister, ObjectCache cache)
 		{
-			this.queries = queries;
-			this.service = service;
-			this.thumbPersister = thumbPersister;
-			this.cache = cache;
+			this._queries = queries;
+			this._service = service;
+			this._thumbPersister = thumbPersister;
+			this._cache = cache;
 		}
 
 		private ArtistForApiContract GetArtist(Artist a, ArtistMergeRecord m,
@@ -50,11 +50,11 @@ namespace VocaDb.Web.Controllers.Api
 			ContentLanguagePreference lang,
 			IDatabaseContext<Artist> ctx)
 		{
-			var contract = new ArtistForApiContract(a, lang, thumbPersister, fields);
+			var contract = new ArtistForApiContract(a, lang, _thumbPersister, fields);
 
 			if (relations != ArtistRelationsFields.None)
 			{
-				contract.Relations = new ArtistRelationsQuery(ctx, lang, cache, thumbPersister).GetRelations(a, relations);
+				contract.Relations = new ArtistRelationsQuery(ctx, lang, _cache, _thumbPersister).GetRelations(a, relations);
 			}
 
 			return contract;
@@ -67,7 +67,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="notes">Notes.</param>
 		[Route("{id:int}")]
 		[Authorize]
-		public void Delete(int id, string notes = "") => service.Delete(id, notes ?? string.Empty);
+		public void Delete(int id, string notes = "") => _service.Delete(id, notes ?? string.Empty);
 
 		/// <summary>
 		/// Deletes a comment.
@@ -79,7 +79,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(int commentId) => queries.DeleteComment(commentId);
+		public void DeleteComment(int commentId) => _queries.DeleteComment(commentId);
 
 		/// <summary>
 		/// Gets a list of comments for an artist.
@@ -90,11 +90,11 @@ namespace VocaDb.Web.Controllers.Api
 		/// Pagination and sorting might be added later.
 		/// </remarks>
 		[Route("{id:int}/comments")]
-		public IEnumerable<CommentForApiContract> GetComments(int id) => queries.GetComments(id);
+		public IEnumerable<CommentForApiContract> GetComments(int id) => _queries.GetComments(id);
 
 		[Route("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public ArtistForEditContract GetForEdit(int id) => queries.GetArtistForEdit(id);
+		public ArtistForEditContract GetForEdit(int id) => _queries.GetArtistForEdit(id);
 
 		/// <summary>
 		/// Gets an artist by Id.
@@ -109,7 +109,7 @@ namespace VocaDb.Web.Controllers.Api
 		public ArtistForApiContract GetOne(int id,
 			ArtistOptionalFields fields = ArtistOptionalFields.None,
 			ArtistRelationsFields relations = ArtistRelationsFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetWithMergeRecord(id, (a, m, ctx) => GetArtist(a, m, fields, relations, lang, ctx));
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetWithMergeRecord(id, (a, m, ctx) => GetArtist(a, m, fields, relations, lang, ctx));
 
 		/// <summary>
 		/// Find artists.
@@ -170,14 +170,14 @@ namespace VocaDb.Web.Controllers.Api
 			};
 			param.Common.EntryStatus = status;
 
-			var artists = service.FindArtists(s => new ArtistForApiContract(s, lang, thumbPersister, fields), param);
+			var artists = _service.FindArtists(s => new ArtistForApiContract(s, lang, _thumbPersister, fields), param);
 
 			return artists;
 		}
 
 		[Route("ids")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public IEnumerable<int> GetIds() => queries.GetIds();
+		public IEnumerable<int> GetIds() => _queries.GetIds();
 
 		/// <summary>
 		/// Gets a list of artist names. Ideal for autocomplete boxes.
@@ -187,15 +187,15 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="maxResults">Maximum number of results.</param>
 		/// <returns>List of artist names.</returns>
 		[Route("names")]
-		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 15) => service.FindNames(ArtistSearchTextQuery.Create(query, nameMatchMode), maxResults);
+		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 15) => _service.FindNames(ArtistSearchTextQuery.Create(query, nameMatchMode), maxResults);
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Route("{id:int}/tagSuggestions")]
-		public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) => queries.GetTagSuggestions(id);
+		public IEnumerable<TagUsageForApiContract> GetTagSuggestions(int id) => _queries.GetTagSuggestions(id);
 
 		[Route("versions")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public EntryIdAndVersionContract[] GetVersions() => queries.GetVersions();
+		public EntryIdAndVersionContract[] GetVersions() => _queries.GetVersions();
 
 		/// <summary>
 		/// Updates a comment.
@@ -208,7 +208,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.PostEditComment(commentId, contract);
+		public void PostEditComment(int commentId, CommentForApiContract contract) => _queries.PostEditComment(commentId, contract);
 
 		/// <summary>
 		/// Posts a new comment.
@@ -218,6 +218,6 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[Route("{id:int}/comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) => queries.CreateComment(id, contract);
+		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) => _queries.CreateComment(id, contract);
 	}
 }

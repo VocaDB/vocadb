@@ -19,7 +19,7 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class VideoServiceBilibili : VideoService
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
 		public static readonly RegexLinkMatcher[] Matchers =
 			{
@@ -50,7 +50,7 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 			catch (Exception x) when (x is HttpRequestException || x is WebException || x is JsonSerializationException || x is IOException)
 			{
-				log.Warn(x, "Unable to load Bilibili URL {0}", url);
+				_log.Warn(x, "Unable to load Bilibili URL {0}", url);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException($"Unable to load Bilibili URL: {x.Message}", x));
 			}
 

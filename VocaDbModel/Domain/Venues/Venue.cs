@@ -20,11 +20,11 @@ namespace VocaDb.Model.Domain.Venues
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<VenueName> IEntryWithNames<VenueName>.Names => Names;
 
-		private ArchivedVersionManager<ArchivedVenueVersion, VenueEditableFields> archivedVersions = new();
-		private OptionalGeoPoint coordinates;
-		private IList<ReleaseEvent> events = new List<ReleaseEvent>();
-		private NameManager<VenueName> names = new();
-		private WebLinkManager<VenueWebLink> webLinks = new();
+		private ArchivedVersionManager<ArchivedVenueVersion, VenueEditableFields> _archivedVersions = new();
+		private OptionalGeoPoint _coordinates;
+		private IList<ReleaseEvent> _events = new List<ReleaseEvent>();
+		private NameManager<VenueName> _names = new();
+		private WebLinkManager<VenueWebLink> _webLinks = new();
 
 		public Venue() { }
 
@@ -50,18 +50,18 @@ namespace VocaDb.Model.Domain.Venues
 
 		public virtual ArchivedVersionManager<ArchivedVenueVersion, VenueEditableFields> ArchivedVersionsManager
 		{
-			get => archivedVersions;
+			get => _archivedVersions;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				archivedVersions = value;
+				_archivedVersions = value;
 			}
 		}
 
 		public virtual OptionalGeoPoint Coordinates
 		{
-			get => coordinates ?? (coordinates = new OptionalGeoPoint());
-			set => coordinates = value;
+			get => _coordinates ?? (_coordinates = new OptionalGeoPoint());
+			set => _coordinates = value;
 		}
 
 		public virtual DateTime CreateDate { get; set; } = DateTime.Now;
@@ -76,11 +76,11 @@ namespace VocaDb.Model.Domain.Venues
 
 		public virtual IList<ReleaseEvent> AllEvents
 		{
-			get => events;
+			get => _events;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				events = value;
+				_events = value;
 			}
 		}
 
@@ -90,11 +90,11 @@ namespace VocaDb.Model.Domain.Venues
 
 		public virtual NameManager<VenueName> Names
 		{
-			get => names;
+			get => _names;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				names = value;
+				_names = value;
 			}
 		}
 
@@ -106,11 +106,11 @@ namespace VocaDb.Model.Domain.Venues
 
 		public virtual WebLinkManager<VenueWebLink> WebLinks
 		{
-			get => webLinks;
+			get => _webLinks;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				webLinks = value;
+				_webLinks = value;
 			}
 		}
 

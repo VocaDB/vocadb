@@ -10,19 +10,19 @@ namespace VocaDb.Web
 	{
 		public AspNetHttpResponse(HttpResponseBase response)
 		{
-			this.response = response;
+			this._response = response;
 		}
 
 		public AspNetHttpResponse(HttpResponse response)
 		{
-			this.response = new HttpResponseWrapper(response);
+			this._response = new HttpResponseWrapper(response);
 		}
 
-		private readonly HttpResponseBase response;
+		private readonly HttpResponseBase _response;
 
 		public void AddCookie(string name, string value, DateTime expires)
 		{
-			response.AppendCookie(new HttpCookie(name, value) { Expires = expires });
+			_response.AppendCookie(new HttpCookie(name, value) { Expires = expires });
 		}
 	}
 }

@@ -10,13 +10,13 @@ namespace VocaDb.Model.Service.VideoServices.Youtube
 		private const string VideoQueryFormat =
 			"https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&key={0}&id={1}";
 
-		private readonly string apiKey;
+		private readonly string _apiKey;
 
-		private string Url(string id) => string.Format(VideoQueryFormat, apiKey, id);
+		private string Url(string id) => string.Format(VideoQueryFormat, _apiKey, id);
 
 		public YoutubeService(string apiKey)
 		{
-			this.apiKey = apiKey;
+			this._apiKey = apiKey;
 		}
 
 		public Task<YoutubeVideoResponse> VideoAsync(string id) => JsonRequest.ReadObjectAsync<YoutubeVideoResponse>(Url(id));

@@ -13,18 +13,18 @@ namespace VocaDb.Tests.Web.Controllers
 	[TestClass]
 	public class SongListControllerTests
 	{
-		private SongListController controller;
+		private SongListController _controller;
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			controller = new SongListController(null, new FakeEntryLinkFactory());
+			_controller = new SongListController(null, new FakeEntryLinkFactory());
 		}
 
 		[TestMethod]
 		public void Details_NoId()
 		{
-			var result = controller.Details();
+			var result = _controller.Details();
 
 			Assert.IsInstanceOfType(result, typeof(HttpNotFoundResult));
 		}

@@ -26,24 +26,24 @@ namespace VocaDb.Model.Service
 	{
 		public EntryTypeTags(IDatabaseContext ctx)
 		{
-			this.ctx = ctx;
+			this._ctx = ctx;
 		}
 
 		private int GetTagId(EntryType entryType, string subType)
 		{
-			return ctx.Query<EntryTypeToTagMapping>()
+			return _ctx.Query<EntryTypeToTagMapping>()
 				.Where(etm => etm.EntryType == entryType && etm.SubType == subType)
 				.Select(etm => etm.Tag.Id)
 				.FirstOrDefault();
 		}
 
-		private readonly IDatabaseContext ctx;
+		private readonly IDatabaseContext _ctx;
 
 		public int Cover => SongTypeTagId(SongType.Cover);
 		public int Instrumental => SongTypeTagId(SongType.Instrumental);
 		public int Remix => SongTypeTagId(SongType.Remix);
-		public Tag GetTag<TSubType>(EntryType entryType, TSubType subType) where TSubType : Enum => ctx.NullSafeLoad<Tag>(GetTagId(entryType, subType.ToString()));
-		public Tag GetTag(EntryTypeAndSubType fullEntryType) => ctx.NullSafeLoad<Tag>(GetTagId(fullEntryType.EntryType, fullEntryType.SubType));
+		public Tag GetTag<TSubType>(EntryType entryType, TSubType subType) where TSubType : Enum => _ctx.NullSafeLoad<Tag>(GetTagId(entryType, subType.ToString()));
+		public Tag GetTag(EntryTypeAndSubType fullEntryType) => _ctx.NullSafeLoad<Tag>(GetTagId(fullEntryType.EntryType, fullEntryType.SubType));
 		public int SongTypeTagId(SongType songType) => GetTagId(EntryType.Song, songType.ToString());
 	}
 }

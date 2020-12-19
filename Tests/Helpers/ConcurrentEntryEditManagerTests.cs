@@ -15,16 +15,16 @@ namespace VocaDb.Tests.Helpers
 	[TestClass]
 	public class ConcurrentEntryEditManagerTests
 	{
-		private EntryRef entryRef;
-		private ConcurrentEntryEditManager manager;
-		private User miku;
+		private EntryRef _entryRef;
+		private ConcurrentEntryEditManager _manager;
+		private User _miku;
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			entryRef = new EntryRef(EntryType.Artist, 39);
-			manager = new ConcurrentEntryEditManager();
-			miku = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { Id = 1 };
+			_entryRef = new EntryRef(EntryType.Artist, 39);
+			_manager = new ConcurrentEntryEditManager();
+			_miku = new User("Miku", "3939", "miku@vocadb.net", PasswordHashAlgorithms.Default) { Id = 1 };
 		}
 
 		/// <summary>
@@ -33,7 +33,7 @@ namespace VocaDb.Tests.Helpers
 		[TestMethod]
 		public void CheckConcurrentEdits_NoOneEditing()
 		{
-			var result = manager.CheckConcurrentEditsInst(entryRef, miku);
+			var result = _manager.CheckConcurrentEditsInst(_entryRef, _miku);
 
 			Assert.AreEqual(ConcurrentEntryEditManager.Nothing.UserId, result.UserId, "no one editing");
 		}
@@ -45,8 +45,8 @@ namespace VocaDb.Tests.Helpers
 		public void CheckConcurrentEdits_PreviousEditor()
 		{
 			var rin = new User("Rin", "222", "rin@vocadb.net", PasswordHashAlgorithms.Default) { Id = 2 };
-			manager.CheckConcurrentEditsInst(entryRef, rin);
-			var result = manager.CheckConcurrentEditsInst(entryRef, miku);
+			_manager.CheckConcurrentEditsInst(_entryRef, rin);
+			var result = _manager.CheckConcurrentEditsInst(_entryRef, _miku);
 
 			Assert.AreEqual(rin.Id, result.UserId, "Rin still editing");
 		}
@@ -58,10 +58,10 @@ namespace VocaDb.Tests.Helpers
 		public void CheckConcurrentEdits_PreviousEditorExpired()
 		{
 			var rin = new User("Rin", "222", "rin@vocadb.net", PasswordHashAlgorithms.Default) { Id = 2 };
-			manager.CheckConcurrentEditsInst(entryRef, rin);
-			var result = manager.CheckConcurrentEditsInst(entryRef, miku);
+			_manager.CheckConcurrentEditsInst(_entryRef, rin);
+			var result = _manager.CheckConcurrentEditsInst(_entryRef, _miku);
 			result.Time = DateTime.MinValue;
-			result = manager.CheckConcurrentEditsInst(entryRef, miku);
+			result = _manager.CheckConcurrentEditsInst(_entryRef, _miku);
 
 			Assert.AreEqual(ConcurrentEntryEditManager.Nothing.UserId, result.UserId, "no one editing");
 		}

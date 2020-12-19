@@ -12,9 +12,9 @@ namespace VocaDb.Tests.Helpers
 	[TestClass]
 	public class ArtistHelperTests
 	{
-		private IArtistLinkWithRoles circle;
-		private IArtistLinkWithRoles producer;
-		private IArtistLinkWithRoles producer2;
+		private IArtistLinkWithRoles _circle;
+		private IArtistLinkWithRoles _producer;
+		private IArtistLinkWithRoles _producer2;
 
 		private IArtistLinkWithRoles CreateArtist(ArtistType artistType, string name)
 		{
@@ -26,10 +26,10 @@ namespace VocaDb.Tests.Helpers
 		[TestInitialize]
 		public void SetUp()
 		{
-			circle = CreateArtist(ArtistType.Circle, "S.C.X.");
+			_circle = CreateArtist(ArtistType.Circle, "S.C.X.");
 
-			producer = CreateArtist(ArtistType.Producer, "devilishP");
-			producer2 = CreateArtist(ArtistType.Producer, "40mP");
+			_producer = CreateArtist(ArtistType.Producer, "devilishP");
+			_producer2 = CreateArtist(ArtistType.Producer, "40mP");
 		}
 
 		[TestMethod]
@@ -101,28 +101,28 @@ namespace VocaDb.Tests.Helpers
 		[TestMethod]
 		public void GetMainCircle_HasCircle()
 		{
-			producer.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
-			producer2.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
+			_producer.Artist.AddGroup(_circle.Artist, ArtistLinkType.Group);
+			_producer2.Artist.AddGroup(_circle.Artist, ArtistLinkType.Group);
 
-			var result = ArtistHelper.GetMainCircle(new[] { producer, producer2, circle }, ContentFocus.Music);
+			var result = ArtistHelper.GetMainCircle(new[] { _producer, _producer2, _circle }, ContentFocus.Music);
 
-			Assert.AreEqual(circle.Artist, result, "Circle was returned");
+			Assert.AreEqual(_circle.Artist, result, "Circle was returned");
 		}
 
 		[TestMethod]
 		public void GetMainCircle_OnlyCircle()
 		{
-			var result = ArtistHelper.GetMainCircle(new[] { circle }, ContentFocus.Music);
+			var result = ArtistHelper.GetMainCircle(new[] { _circle }, ContentFocus.Music);
 
-			Assert.AreEqual(circle.Artist, result, "Circle was returned");
+			Assert.AreEqual(_circle.Artist, result, "Circle was returned");
 		}
 
 		[TestMethod]
 		public void GetMainCircle_ProducerNotInCircle()
 		{
-			producer.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
+			_producer.Artist.AddGroup(_circle.Artist, ArtistLinkType.Group);
 
-			var result = ArtistHelper.GetMainCircle(new[] { producer, producer2, circle }, ContentFocus.Music);
+			var result = ArtistHelper.GetMainCircle(new[] { _producer, _producer2, _circle }, ContentFocus.Music);
 
 			Assert.IsNull(result, "No common circle found");
 		}
@@ -130,10 +130,10 @@ namespace VocaDb.Tests.Helpers
 		[TestMethod]
 		public void GetMainCircle_NoCircle()
 		{
-			producer.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
-			producer2.Artist.AddGroup(circle.Artist, ArtistLinkType.Group);
+			_producer.Artist.AddGroup(_circle.Artist, ArtistLinkType.Group);
+			_producer2.Artist.AddGroup(_circle.Artist, ArtistLinkType.Group);
 
-			var result = ArtistHelper.GetMainCircle(new[] { producer, producer2 }, ContentFocus.Music);
+			var result = ArtistHelper.GetMainCircle(new[] { _producer, _producer2 }, ContentFocus.Music);
 
 			Assert.IsNull(result, "No circle found");
 		}

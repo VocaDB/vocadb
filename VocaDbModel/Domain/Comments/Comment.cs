@@ -12,8 +12,8 @@ namespace VocaDb.Model.Domain.Comments
 	/// </summary>
 	public abstract class Comment : ICommentWithEntry, IDeletableEntry
 	{
-		private string authorName;
-		private string message;
+		private string _authorName;
+		private string _message;
 
 		protected Comment()
 		{
@@ -34,11 +34,11 @@ namespace VocaDb.Model.Domain.Comments
 
 		public virtual string AuthorName
 		{
-			get => authorName;
+			get => _authorName;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				authorName = value;
+				_authorName = value;
 			}
 		}
 
@@ -59,11 +59,11 @@ namespace VocaDb.Model.Domain.Comments
 
 		public virtual string Message
 		{
-			get => message;
+			get => _message;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				message = value;
+				_message = value;
 			}
 		}
 

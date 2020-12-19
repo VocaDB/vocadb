@@ -29,23 +29,23 @@ namespace VocaDb.Model.Database.Queries
 		private const int AbsoluteMax = 500;
 		private const int DefaultMax = 50;
 
-		private readonly IRepository repository;
-		private readonly IUserIconFactory userIconFactory;
-		private readonly IUserPermissionContext permissionContext;
-		private readonly EntryForApiContractFactory entryForApiContractFactory;
+		private readonly IRepository _repository;
+		private readonly IUserIconFactory _userIconFactory;
+		private readonly IUserPermissionContext _permissionContext;
+		private readonly EntryForApiContractFactory _entryForApiContractFactory;
 
 		public ActivityEntryQueries(IRepository repository, IUserIconFactory userIconFactory,
 			IUserPermissionContext permissionContext, EntryForApiContractFactory entryForApiContractFactory)
 		{
-			this.repository = repository;
-			this.userIconFactory = userIconFactory;
-			this.permissionContext = permissionContext;
-			this.entryForApiContractFactory = entryForApiContractFactory;
+			this._repository = repository;
+			this._userIconFactory = userIconFactory;
+			this._permissionContext = permissionContext;
+			this._entryForApiContractFactory = entryForApiContractFactory;
 		}
 
 		public ICollection<Tuple<DateTime, int>> GetEditsPerDay(int? userId, DateTime? cutoff)
 		{
-			var values = repository.HandleQuery(ctx =>
+			var values = _repository.HandleQuery(ctx =>
 			{
 				var query = ctx.Query<ActivityEntry>();
 
@@ -97,7 +97,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			maxResults = Math.Min(maxResults, AbsoluteMax);
 
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				var query = ctx.Query<ActivityEntry>();
 
@@ -125,8 +125,8 @@ namespace VocaDb.Model.Database.Queries
 					.ToArray()
 					.Where(a => !a.EntryBase.Deleted)
 					.Select(a => new ActivityEntryForApiContract(a,
-						fields.HasFlag(ActivityEntryOptionalFields.Entry) ? entryForApiContractFactory.Create(a.EntryBase, entryFields, lang) : null,
-						userIconFactory, permissionContext, fields))
+						fields.HasFlag(ActivityEntryOptionalFields.Entry) ? _entryForApiContractFactory.Create(a.EntryBase, entryFields, lang) : null,
+						_userIconFactory, _permissionContext, fields))
 					.ToArray();
 
 				var count = getTotalCount ? query.Count() : 0;

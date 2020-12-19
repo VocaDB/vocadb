@@ -16,7 +16,7 @@ namespace VocaDb.Tests.TestSupport
 	/// </summary>
 	public class InMemoryImagePersisterStore
 	{
-		private readonly Dictionary<string, byte[]> images = new();
+		private readonly Dictionary<string, byte[]> _images = new();
 
 		private ImageFormat GetImageFormat(IEntryImageInformation imageInfo) => imageInfo.Mime switch
 		{
@@ -35,12 +35,12 @@ namespace VocaDb.Tests.TestSupport
 
 		public Stream GetReadStream(IEntryImageInformation picture, ImageSize size)
 		{
-			return new MemoryStream(images[GetUrl(picture, size).Url]);
+			return new MemoryStream(_images[GetUrl(picture, size).Url]);
 		}
 
 		public bool HasImage(IEntryImageInformation picture, ImageSize size)
 		{
-			return images.ContainsKey(GetUrl(picture, size).Url);
+			return _images.ContainsKey(GetUrl(picture, size).Url);
 		}
 
 		public void Write(IEntryImageInformation picture, ImageSize size, Stream stream)
@@ -48,7 +48,7 @@ namespace VocaDb.Tests.TestSupport
 			var bytes = StreamHelper.ReadStream(stream);
 
 			var url = GetUrl(picture, size).Url;
-			images[url] = bytes;
+			_images[url] = bytes;
 		}
 
 		public void Write(IEntryImageInformation picture, ImageSize size, Image image)
@@ -67,20 +67,20 @@ namespace VocaDb.Tests.TestSupport
 
 		public InMemoryImagePersisterBase(InMemoryImagePersisterStore store)
 		{
-			this.store = store;
+			this._store = store;
 		}
 
-		private readonly InMemoryImagePersisterStore store;
+		private readonly InMemoryImagePersisterStore _store;
 
-		public Stream GetReadStream(IEntryImageInformation picture, ImageSize size) => store.GetReadStream(picture, size);
+		public Stream GetReadStream(IEntryImageInformation picture, ImageSize size) => _store.GetReadStream(picture, size);
 
-		public void Write(IEntryImageInformation picture, ImageSize size, Stream stream) => store.Write(picture, size, stream);
+		public void Write(IEntryImageInformation picture, ImageSize size, Stream stream) => _store.Write(picture, size, stream);
 
-		public void Write(IEntryImageInformation picture, ImageSize size, Image image) => store.Write(picture, size, image);
+		public void Write(IEntryImageInformation picture, ImageSize size, Image image) => _store.Write(picture, size, image);
 
-		public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size) => store.GetUrl(picture, size);
+		public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size) => _store.GetUrl(picture, size);
 
-		public bool HasImage(IEntryImageInformation picture, ImageSize size) => store.HasImage(picture, size);
+		public bool HasImage(IEntryImageInformation picture, ImageSize size) => _store.HasImage(picture, size);
 
 		public abstract bool IsSupported(IEntryImageInformation picture, ImageSize size);
 	}

@@ -28,14 +28,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 	[TestClass]
 	public class SongListQueriesTests
 	{
-		private InMemoryImagePersister imagePersister;
-		private FakePermissionContext permissionContext;
-		private FakeSongListRepository repository;
-		private SongListForEditContract songListContract;
-		private SongListQueries queries;
-		private Song song1;
-		private Song song2;
-		private User userWithSongList;
+		private InMemoryImagePersister _imagePersister;
+		private FakePermissionContext _permissionContext;
+		private FakeSongListRepository _repository;
+		private SongListForEditContract _songListContract;
+		private SongListQueries _queries;
+		private Song _song1;
+		private Song _song2;
+		private User _userWithSongList;
 
 		private SongInListEditContract[] SongInListEditContracts(params Song[] songs)
 		{
@@ -50,37 +50,37 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestInitialize]
 		public void SetUp()
 		{
-			repository = new FakeSongListRepository();
-			userWithSongList = new User("User with songlist", "123", "test@test.com", PasswordHashAlgorithms.Default);
-			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(userWithSongList, ContentLanguagePreference.Default));
+			_repository = new FakeSongListRepository();
+			_userWithSongList = new User("User with songlist", "123", "test@test.com", PasswordHashAlgorithms.Default);
+			_permissionContext = new FakePermissionContext(new UserWithPermissionsContract(_userWithSongList, ContentLanguagePreference.Default));
 
-			imagePersister = new InMemoryImagePersister();
-			queries = new SongListQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, imagePersister, new FakeUserIconFactory());
+			_imagePersister = new InMemoryImagePersister();
+			_queries = new SongListQueries(_repository, _permissionContext, new FakeEntryLinkFactory(), _imagePersister, _imagePersister, new FakeUserIconFactory());
 
-			song1 = new Song(TranslatedString.Create("Project Diva desu.")) { Id = 1 };
-			song2 = new Song(TranslatedString.Create("World is Mine")) { Id = 2 };
+			_song1 = new Song(TranslatedString.Create("Project Diva desu.")) { Id = 1 };
+			_song2 = new Song(TranslatedString.Create("World is Mine")) { Id = 2 };
 
-			repository.Add(userWithSongList);
-			repository.Add(song1, song2);
+			_repository.Add(_userWithSongList);
+			_repository.Add(_song1, _song2);
 
-			songListContract = new SongListForEditContract
+			_songListContract = new SongListForEditContract
 			{
 				Name = "Mikunopolis Setlist",
 				Description = "MIKUNOPOLIS in LOS ANGELES - Hatsune Miku US debut concert held at Nokia Theatre for Anime Expo 2011 on 2nd July 2011.",
-				SongLinks = SongInListEditContracts(song1, song2)
+				SongLinks = SongInListEditContracts(_song1, _song2)
 			};
 		}
 
 		[TestMethod]
 		public void Create()
 		{
-			queries.UpdateSongList(songListContract, null);
+			_queries.UpdateSongList(_songListContract, null);
 
-			var songList = repository.List<SongList>().FirstOrDefault();
+			var songList = _repository.List<SongList>().FirstOrDefault();
 			Assert.IsNotNull(songList, "List was saved to repository");
 
-			Assert.AreEqual(songListContract.Name, songList.Name, "Name");
-			Assert.AreEqual(songListContract.Description, songList.Description, "Description");
+			Assert.AreEqual(_songListContract.Name, songList.Name, "Name");
+			Assert.AreEqual(_songListContract.Description, songList.Description, "Description");
 			Assert.AreEqual(2, songList.AllSongs.Count, "Number of songs");
 			Assert.AreEqual("Project Diva desu.", songList.AllSongs[0].Song.DefaultName, "First song as expected");
 			Assert.AreEqual("World is Mine", songList.AllSongs[1].Song.DefaultName, "Second song as expected");
@@ -89,38 +89,38 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Delete()
 		{
-			var list = repository.Save(new SongList("Mikulist", userWithSongList));
-			var archived = repository.Save(list.CreateArchivedVersion(new SongListDiff(), new AgentLoginData(userWithSongList), EntryEditEvent.Created, string.Empty));
-			repository.Save(new SongListActivityEntry(list, EntryEditEvent.Created, userWithSongList, archived)); // Note: activity entries are generally only created for featured song lists.
+			var list = _repository.Save(new SongList("Mikulist", _userWithSongList));
+			var archived = _repository.Save(list.CreateArchivedVersion(new SongListDiff(), new AgentLoginData(_userWithSongList), EntryEditEvent.Created, string.Empty));
+			_repository.Save(new SongListActivityEntry(list, EntryEditEvent.Created, _userWithSongList, archived)); // Note: activity entries are generally only created for featured song lists.
 
-			queries.MoveToTrash(list.Id);
+			_queries.MoveToTrash(list.Id);
 
-			Assert.AreEqual(0, repository.Count<SongList>(), "Song list was removed");
-			Assert.AreEqual(0, repository.Count<ArchivedSongListVersion>(), "Song list archived version was removed");
-			Assert.AreEqual(0, repository.Count<SongListActivityEntry>(), "Activity entry was deleted");
+			Assert.AreEqual(0, _repository.Count<SongList>(), "Song list was removed");
+			Assert.AreEqual(0, _repository.Count<ArchivedSongListVersion>(), "Song list archived version was removed");
+			Assert.AreEqual(0, _repository.Count<SongListActivityEntry>(), "Activity entry was deleted");
 		}
 
 		[TestMethod]
 		public void GetSongsInList_ByName()
 		{
-			var list = repository.Save(new SongList("Mikulist", userWithSongList));
-			repository.Save(list.AddSong(song1));
-			repository.Save(list.AddSong(song2));
+			var list = _repository.Save(new SongList("Mikulist", _userWithSongList));
+			_repository.Save(list.AddSong(_song1));
+			_repository.Save(list.AddSong(_song2));
 
-			var result = queries.GetSongsInList(new SongInListQueryParams { ListId = list.Id, TextQuery = SearchTextQuery.Create("Diva") });
+			var result = _queries.GetSongsInList(new SongInListQueryParams { ListId = list.Id, TextQuery = SearchTextQuery.Create("Diva") });
 
 			Assert.AreEqual(1, result.Items.Length);
-			Assert.AreEqual(song1.DefaultName, result.Items[0].Song.Name);
+			Assert.AreEqual(_song1.DefaultName, result.Items[0].Song.Name);
 		}
 
 		[TestMethod]
 		public void GetSongsInList_ByDescription()
 		{
-			var list = repository.Save(new SongList("Mikulist", userWithSongList));
-			repository.Save(list.AddSong(song1, 1, "encore"));
-			repository.Save(list.AddSong(song2, 2, "encore"));
+			var list = _repository.Save(new SongList("Mikulist", _userWithSongList));
+			_repository.Save(list.AddSong(_song1, 1, "encore"));
+			_repository.Save(list.AddSong(_song2, 2, "encore"));
 
-			var result = queries.GetSongsInList(new SongInListQueryParams { ListId = list.Id, TextQuery = SearchTextQuery.Create("enc") });
+			var result = _queries.GetSongsInList(new SongInListQueryParams { ListId = list.Id, TextQuery = SearchTextQuery.Create("enc") });
 
 			Assert.AreEqual(2, result.Items.Length);
 		}
@@ -129,17 +129,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void UpdateSongLinks()
 		{
 			// Create list
-			songListContract.Id = queries.UpdateSongList(songListContract, null);
+			_songListContract.Id = _queries.UpdateSongList(_songListContract, null);
 
 			var newSong = new Song(TranslatedString.Create("Electric Angel"));
-			repository.Save(newSong);
+			_repository.Save(newSong);
 
-			songListContract.SongLinks = songListContract.SongLinks.Concat(SongInListEditContracts(newSong)).ToArray();
+			_songListContract.SongLinks = _songListContract.SongLinks.Concat(SongInListEditContracts(newSong)).ToArray();
 
 			// Update list
-			queries.UpdateSongList(songListContract, null);
+			_queries.UpdateSongList(_songListContract, null);
 
-			var songList = repository.List<SongList>().First();
+			var songList = _repository.List<SongList>().First();
 			Assert.AreEqual(3, songList.AllSongs.Count, "Number of songs");
 			Assert.AreEqual("Electric Angel", songList.AllSongs[2].Song.DefaultName, "New song as expected");
 		}
@@ -150,14 +150,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			int id;
 			using (var stream = TestImage())
 			{
-				id = queries.UpdateSongList(songListContract, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });
+				id = _queries.UpdateSongList(_songListContract, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });
 			}
 
-			var songList = repository.Load(id);
+			var songList = _repository.Load(id);
 
 			var thumb = new EntryThumb(songList, MediaTypeNames.Image.Jpeg, ImagePurpose.Main);
-			Assert.IsTrue(imagePersister.HasImage(thumb, ImageSize.Original), "Original image was saved");
-			Assert.IsTrue(imagePersister.HasImage(thumb, ImageSize.SmallThumb), "Thumbnail was saved");
+			Assert.IsTrue(_imagePersister.HasImage(thumb, ImageSize.Original), "Original image was saved");
+			Assert.IsTrue(_imagePersister.HasImage(thumb, ImageSize.SmallThumb), "Thumbnail was saved");
 		}
 	}
 }

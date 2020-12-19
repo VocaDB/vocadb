@@ -16,10 +16,10 @@ namespace VocaDb.Tests.Domain.Security
 	[TestClass]
 	public class EntryPermissionManagerTests
 	{
-		private Artist artist;
-		private User user;
-		private Artist verifiedArtist;
-		private User verifiedUser;
+		private Artist _artist;
+		private User _user;
+		private Artist _verifiedArtist;
+		private User _verifiedUser;
 
 		private bool CanDelete<T>(User user, T entry) where T : IEntryWithVersions, IEntryWithStatus
 		{
@@ -28,19 +28,19 @@ namespace VocaDb.Tests.Domain.Security
 
 		private void TestCanDelete(bool expected, EntryStatus entryStatus = EntryStatus.Finished, UserGroupId userGroup = UserGroupId.Regular)
 		{
-			artist.Status = entryStatus;
-			user.GroupId = userGroup;
+			_artist.Status = entryStatus;
+			_user.GroupId = userGroup;
 
-			var result = CanDelete(user, artist);
+			var result = CanDelete(_user, _artist);
 			Assert.AreEqual(expected, result, "result");
 		}
 
 		private void TestCanEdit(bool expected, EntryStatus entryStatus = EntryStatus.Finished, UserGroupId userGroup = UserGroupId.Regular)
 		{
-			artist.Status = entryStatus;
-			user.GroupId = userGroup;
+			_artist.Status = entryStatus;
+			_user.GroupId = userGroup;
 
-			var result = EntryPermissionManager.CanEdit(new FakePermissionContext(user), artist);
+			var result = EntryPermissionManager.CanEdit(new FakePermissionContext(_user), _artist);
 			Assert.AreEqual(expected, result, "result");
 		}
 
@@ -48,16 +48,16 @@ namespace VocaDb.Tests.Domain.Security
 		public void SetUp()
 		{
 			var anotherUser = CreateEntry.User(id: 2);
-			artist = CreateEntry.Artist(ArtistType.Producer);
-			ArchivedArtistVersion.Create(artist, new ArtistDiff(), new AgentLoginData(anotherUser), ArtistArchiveReason.Created, string.Empty);
-			user = CreateEntry.User(id: 1);
+			_artist = CreateEntry.Artist(ArtistType.Producer);
+			ArchivedArtistVersion.Create(_artist, new ArtistDiff(), new AgentLoginData(anotherUser), ArtistArchiveReason.Created, string.Empty);
+			_user = CreateEntry.User(id: 1);
 
-			verifiedArtist = CreateEntry.Artist(ArtistType.Producer);
-			verifiedUser = CreateEntry.User(id: 3);
+			_verifiedArtist = CreateEntry.Artist(ArtistType.Producer);
+			_verifiedUser = CreateEntry.User(id: 3);
 
-			verifiedArtist.Status = EntryStatus.Approved;
-			verifiedUser.GroupId = UserGroupId.Regular;
-			verifiedUser.AddOwnedArtist(verifiedArtist);
+			_verifiedArtist.Status = EntryStatus.Approved;
+			_verifiedUser.GroupId = UserGroupId.Regular;
+			_verifiedUser.AddOwnedArtist(_verifiedArtist);
 		}
 
 		[TestMethod]
@@ -81,26 +81,26 @@ namespace VocaDb.Tests.Domain.Security
 		[TestMethod]
 		public void CanDelete_Owner_Direct()
 		{
-			Assert.IsTrue(CanDelete(verifiedUser, verifiedArtist));
+			Assert.IsTrue(CanDelete(_verifiedUser, _verifiedArtist));
 		}
 
 		[TestMethod]
 		public void CanDelete_Owner_Transitive()
 		{
 			var song = CreateEntry.Song();
-			song.AddArtist(verifiedArtist);
+			song.AddArtist(_verifiedArtist);
 
-			Assert.IsTrue(CanDelete(verifiedUser, song));
+			Assert.IsTrue(CanDelete(_verifiedUser, song));
 		}
 
 		[TestMethod]
 		public void CanDelete_Owner_Transitive_Voicebank()
 		{
-			verifiedArtist.ArtistType = ArtistType.UTAU;
+			_verifiedArtist.ArtistType = ArtistType.UTAU;
 			var song = CreateEntry.Song();
-			song.AddArtist(verifiedArtist);
+			song.AddArtist(_verifiedArtist);
 
-			Assert.IsFalse(CanDelete(verifiedUser, song));
+			Assert.IsFalse(CanDelete(_verifiedUser, song));
 		}
 
 		[TestMethod]
@@ -130,7 +130,7 @@ namespace VocaDb.Tests.Domain.Security
 		[TestMethod]
 		public void CanEdit_ApprovedEntry_OwnerUser()
 		{
-			var result = EntryPermissionManager.CanEdit(new FakePermissionContext(verifiedUser), verifiedArtist);
+			var result = EntryPermissionManager.CanEdit(new FakePermissionContext(_verifiedUser), _verifiedArtist);
 
 			Assert.IsTrue(result, "result");
 		}

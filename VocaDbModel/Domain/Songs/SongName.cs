@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Songs
 {
 	public class SongName : LocalizedStringWithId
 	{
-		private Song song;
+		private Song _song;
 
 		public SongName() { }
 
@@ -18,11 +18,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Song
 		{
-			get => song;
+			get => _song;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				song = value;
+				_song = value;
 			}
 		}
 

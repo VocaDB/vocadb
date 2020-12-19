@@ -23,95 +23,95 @@ namespace VocaDb.Tests.Service.Helpers
 	[TestClass]
 	public class FollowedArtistNotifierTests
 	{
-		private Album album;
-		private User creator;
-		private FakeEntryLinkFactory entryLinkFactory;
-		private FakeUserMessageMailer mailer;
-		private Artist producer;
-		private FakeRepository<UserMessage> repository;
-		private User user;
-		private Artist vocalist;
+		private Album _album;
+		private User _creator;
+		private FakeEntryLinkFactory _entryLinkFactory;
+		private FakeUserMessageMailer _mailer;
+		private Artist _producer;
+		private FakeRepository<UserMessage> _repository;
+		private User _user;
+		private Artist _vocalist;
 
 		private Task CallSendNotifications(IUser creator)
 		{
-			return repository.HandleTransactionAsync(ctx =>
+			return _repository.HandleTransactionAsync(ctx =>
 			{
-				return new FollowedArtistNotifier(entryLinkFactory, mailer, new EnumTranslations(), new EntrySubTypeNameFactory())
-					.SendNotificationsAsync(ctx, album, new[] { producer, vocalist }, creator);
+				return new FollowedArtistNotifier(_entryLinkFactory, _mailer, new EnumTranslations(), new EntrySubTypeNameFactory())
+					.SendNotificationsAsync(ctx, _album, new[] { _producer, _vocalist }, creator);
 			});
 		}
 
 		private T Save<T>(T entry) where T : class, IDatabaseObject
 		{
-			return repository.Save(entry);
+			return _repository.Save(entry);
 		}
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			entryLinkFactory = new FakeEntryLinkFactory();
-			repository = new FakeRepository<UserMessage>();
-			mailer = new FakeUserMessageMailer();
+			_entryLinkFactory = new FakeEntryLinkFactory();
+			_repository = new FakeRepository<UserMessage>();
+			_mailer = new FakeUserMessageMailer();
 
-			album = Save(new Album(new LocalizedString("New Album", ContentLanguageSelection.English)));
-			producer = Save(new Artist(TranslatedString.Create("Tripshots")) { Id = 1, ArtistType = ArtistType.Producer });
-			vocalist = Save(new Artist(TranslatedString.Create("Hatsune Miku")) { Id = 2, ArtistType = ArtistType.Vocaloid });
-			user = Save(new User("Miku", "123", string.Empty, PasswordHashAlgorithms.Default) { Id = 1 });
-			creator = Save(new User("Rin", "123", string.Empty, PasswordHashAlgorithms.Default) { Id = 2 });
+			_album = Save(new Album(new LocalizedString("New Album", ContentLanguageSelection.English)));
+			_producer = Save(new Artist(TranslatedString.Create("Tripshots")) { Id = 1, ArtistType = ArtistType.Producer });
+			_vocalist = Save(new Artist(TranslatedString.Create("Hatsune Miku")) { Id = 2, ArtistType = ArtistType.Vocaloid });
+			_user = Save(new User("Miku", "123", string.Empty, PasswordHashAlgorithms.Default) { Id = 1 });
+			_creator = Save(new User("Rin", "123", string.Empty, PasswordHashAlgorithms.Default) { Id = 2 });
 
-			Save(user.AddArtist(producer));
+			Save(_user.AddArtist(_producer));
 		}
 
 		[TestMethod]
 		public async Task SendNotifications()
 		{
-			await CallSendNotifications(creator);
+			await CallSendNotifications(_creator);
 
-			var notification = repository.List<UserMessage>().FirstOrDefault();
+			var notification = _repository.List<UserMessage>().FirstOrDefault();
 
 			Assert.IsNotNull(notification, "Notification was created");
-			Assert.AreEqual(user, notification.Receiver, "Receiver");
+			Assert.AreEqual(_user, notification.Receiver, "Receiver");
 			Assert.AreEqual("New album (original album) by Tripshots", notification.Subject, "Subject");
 		}
 
 		[TestMethod]
 		public async Task SendNotifications_Email()
 		{
-			user.Email = "miku@vocadb.net";
-			user.AllArtists.First().EmailNotifications = true;
+			_user.Email = "miku@vocadb.net";
+			_user.AllArtists.First().EmailNotifications = true;
 
-			await CallSendNotifications(creator);
+			await CallSendNotifications(_creator);
 
-			Assert.IsNotNull(mailer.Body, "Body");
-			Assert.AreEqual(user.Name, mailer.ReceiverName, "ReceiverName");
-			Assert.AreEqual("New album (original album) by Tripshots", mailer.Subject, "Subject");
+			Assert.IsNotNull(_mailer.Body, "Body");
+			Assert.AreEqual(_user.Name, _mailer.ReceiverName, "ReceiverName");
+			Assert.AreEqual("New album (original album) by Tripshots", _mailer.Subject, "Subject");
 		}
 
 		[TestMethod]
 		public async Task SendNotifications_SameUser()
 		{
-			await CallSendNotifications(user);
+			await CallSendNotifications(_user);
 
-			Assert.IsFalse(repository.List<UserMessage>().Any(), "No notification created");
+			Assert.IsFalse(_repository.List<UserMessage>().Any(), "No notification created");
 		}
 
 		[TestMethod]
 		public async Task SendNotifications_DisabledUser()
 		{
-			user.Active = false;
-			await CallSendNotifications(creator);
+			_user.Active = false;
+			await CallSendNotifications(_creator);
 
-			Assert.IsFalse(repository.List<UserMessage>().Any(), "No notification created");
+			Assert.IsFalse(_repository.List<UserMessage>().Any(), "No notification created");
 		}
 
 		[TestMethod]
 		public async Task SendNotifications_MultipleFollowedArtists()
 		{
-			Save(user.AddArtist(vocalist));
+			Save(_user.AddArtist(_vocalist));
 
-			await CallSendNotifications(creator);
+			await CallSendNotifications(_creator);
 
-			var notification = repository.List<UserMessage>().FirstOrDefault();
+			var notification = _repository.List<UserMessage>().FirstOrDefault();
 
 			Assert.IsNotNull(notification, "Notification was created");
 			Assert.AreEqual("New album (original album)", notification.Subject, "Subject");
@@ -123,13 +123,13 @@ namespace VocaDb.Tests.Service.Helpers
 		{
 			for (int i = 0; i < 10; ++i)
 			{
-				user.ReceivedMessages.Add(repository.Save(new UserMessage(user, "New message!", i.ToString(), false)));
+				_user.ReceivedMessages.Add(_repository.Save(new UserMessage(_user, "New message!", i.ToString(), false)));
 			}
 
-			await CallSendNotifications(creator);
+			await CallSendNotifications(_creator);
 
-			Assert.AreEqual(10, repository.List<UserMessage>().Count, "No notification created");
-			Assert.IsTrue(repository.List<UserMessage>().All(m => m.Subject == "New message!"), "No notification created");
+			Assert.AreEqual(10, _repository.List<UserMessage>().Count, "No notification created");
+			Assert.IsTrue(_repository.List<UserMessage>().All(m => m.Subject == "New message!"), "No notification created");
 		}
 
 		// Too many messages limit only counts notifications
@@ -139,20 +139,20 @@ namespace VocaDb.Tests.Service.Helpers
 			// Not counted since the messages are not notifications
 			for (int i = 0; i < 5; ++i)
 			{
-				user.ReceivedMessages.Add(repository.Save(UserMessage.CreateReceived(creator, user, "New message!", i.ToString(), false)));
-				user.ReceivedMessages.Add(repository.Save(UserMessage.CreateSent(creator, user, "New message!", i.ToString(), false)));
+				_user.ReceivedMessages.Add(_repository.Save(UserMessage.CreateReceived(_creator, _user, "New message!", i.ToString(), false)));
+				_user.ReceivedMessages.Add(_repository.Save(UserMessage.CreateSent(_creator, _user, "New message!", i.ToString(), false)));
 			}
 
-			Assert.AreEqual(10, repository.List<UserMessage>().Count, "Number of messages before sending");
+			Assert.AreEqual(10, _repository.List<UserMessage>().Count, "Number of messages before sending");
 
-			await CallSendNotifications(creator);
+			await CallSendNotifications(_creator);
 
-			Assert.AreEqual(11, repository.List<UserMessage>().Count, "Number of messages after sending");
+			Assert.AreEqual(11, _repository.List<UserMessage>().Count, "Number of messages after sending");
 
-			var notification = repository.List<UserMessage>().FirstOrDefault(m => m.Subject != "New message!");
+			var notification = _repository.List<UserMessage>().FirstOrDefault(m => m.Subject != "New message!");
 
 			Assert.IsNotNull(notification, "Notification was created");
-			Assert.AreEqual(user, notification.Receiver, "Receiver");
+			Assert.AreEqual(_user, notification.Receiver, "Receiver");
 		}
 	}
 }

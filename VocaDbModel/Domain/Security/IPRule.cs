@@ -6,12 +6,12 @@ namespace VocaDb.Model.Domain.Security
 {
 	public class IPRule : IEntryWithIntId
 	{
-		private string address;
-		private string notes;
+		private string _address;
+		private string _notes;
 
 		public IPRule()
 		{
-			address = string.Empty;
+			_address = string.Empty;
 			Created = DateTime.Now;
 			Notes = string.Empty;
 		}
@@ -25,11 +25,11 @@ namespace VocaDb.Model.Domain.Security
 
 		public virtual string Address
 		{
-			get => address;
+			get => _address;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				address = value;
+				_address = value;
 			}
 		}
 
@@ -39,11 +39,11 @@ namespace VocaDb.Model.Domain.Security
 
 		public virtual string Notes
 		{
-			get => notes;
+			get => _notes;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				notes = value;
+				_notes = value;
 			}
 		}
 

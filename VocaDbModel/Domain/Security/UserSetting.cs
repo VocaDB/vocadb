@@ -32,7 +32,7 @@ namespace VocaDb.Model.Domain.Security
 	{
 		private string GetCookieValue(IHttpRequest request, string cookieName)
 		{
-			if (context == null)
+			if (_context == null)
 				return null;
 
 			var cookie = request.Cookies.GetValueOrDefault(cookieName);
@@ -73,8 +73,8 @@ namespace VocaDb.Model.Domain.Security
 			return valueGetter(request.QueryString[paramName], out value);
 		}
 
-		private readonly IHttpContext context;
-		private readonly IUserPermissionContext permissionContext;
+		private readonly IHttpContext _context;
+		private readonly IUserPermissionContext _permissionContext;
 
 		protected virtual TimeSpan CookieExpires => TimeSpan.FromHours(24);
 
@@ -82,11 +82,11 @@ namespace VocaDb.Model.Domain.Security
 
 		protected virtual T Default => default(T);
 
-		private bool IsRequestValueOverridden => context != null && context.Items.Contains(RequestItemName);
+		private bool IsRequestValueOverridden => _context != null && _context.Items.Contains(RequestItemName);
 
 		private T ParseValue(string str) => TryParseValue(str, out T val) ? val : Default;
 
-		private IHttpRequest Request => context != null ? context.Request : null;
+		private IHttpRequest Request => _context != null ? _context.Request : null;
 
 		protected virtual string RequestParamName => null;
 
@@ -96,17 +96,17 @@ namespace VocaDb.Model.Domain.Security
 		{
 			get
 			{
-				if (context == null)
+				if (_context == null)
 					throw new InvalidOperationException("HttpContext is not initialized");
 
-				return (T)context.Items[RequestItemName];
+				return (T)_context.Items[RequestItemName];
 			}
 			set
 			{
-				if (context == null)
+				if (_context == null)
 					throw new InvalidOperationException("HttpContext is not initialized");
 
-				context.Items[RequestItemName] = value;
+				_context.Items[RequestItemName] = value;
 			}
 		}
 
@@ -137,8 +137,8 @@ namespace VocaDb.Model.Domain.Security
 
 		protected UserSetting(IHttpContext context, IUserPermissionContext permissionContext)
 		{
-			this.context = context;
-			this.permissionContext = permissionContext;
+			this._context = context;
+			this._permissionContext = permissionContext;
 		}
 
 		public void UpdateUser(User user)
@@ -161,8 +161,8 @@ namespace VocaDb.Model.Domain.Security
 				if (TryGetFromQueryString(Request, RequestParamName, ref val, TryParseValue))
 					return val;
 
-				if (permissionContext.IsLoggedIn)
-					return GetPersistedValue(permissionContext.LoggedUser);
+				if (_permissionContext.IsLoggedIn)
+					return GetPersistedValue(_permissionContext.LoggedUser);
 
 				if (TryGetCookieValue(Request, CookieName, ref val, ParseValue))
 					return val;
@@ -174,10 +174,10 @@ namespace VocaDb.Model.Domain.Security
 				if (IsRequestValueOverridden)
 					OverrideRequestValue(value);
 
-				if (permissionContext.IsLoggedIn)
-					SetPersistedValue(permissionContext.LoggedUser, value);
+				if (_permissionContext.IsLoggedIn)
+					SetPersistedValue(_permissionContext.LoggedUser, value);
 
-				SetCookie(context, CookieName, value.ToString(), CookieExpires);
+				SetCookie(_context, CookieName, value.ToString(), CookieExpires);
 			}
 		}
 	}

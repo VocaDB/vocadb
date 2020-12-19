@@ -11,31 +11,31 @@ namespace VocaDb.Web
 	{
 		public AspNetHttpContext(HttpContext context)
 		{
-			this.context = context;
+			this._context = context;
 		}
 
-		private readonly HttpContext context;
+		private readonly HttpContext _context;
 
-		public IDictionary Items => context.Items;
+		public IDictionary Items => _context.Items;
 
-		public IHttpRequest Request => new AspNetHttpRequest(context.Request);
+		public IHttpRequest Request => new AspNetHttpRequest(_context.Request);
 
-		public IHttpResponse Response => new AspNetHttpResponse(context.Response);
+		public IHttpResponse Response => new AspNetHttpResponse(_context.Response);
 
 		public IPrincipal User
 		{
-			get => context?.User;
+			get => _context?.User;
 			set
 			{
-				if (context == null)
+				if (_context == null)
 					return;
 
-				context.User = value;
+				_context.User = value;
 			}
 		}
 
 		public IServerPathMapper ServerPathMapper => this;
 
-		public string MapPath(string relative) => context.Server.MapPath(relative);
+		public string MapPath(string relative) => _context.Server.MapPath(relative);
 	}
 }

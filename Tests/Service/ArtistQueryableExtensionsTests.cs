@@ -20,11 +20,11 @@ namespace VocaDb.Tests.Service
 			return names.Select(name => new ArtistName { Value = name }).ToList();
 		}
 
-		private List<ArtistName> artists;
+		private List<ArtistName> _artists;
 
 		private IQueryable<ArtistName> FilterByArtistName(string artistName)
 		{
-			return artists.AsQueryable().WhereArtistNameIs(ArtistSearchTextQuery.Create(artistName));
+			return _artists.AsQueryable().WhereArtistNameIs(ArtistSearchTextQuery.Create(artistName));
 		}
 
 		private void SequenceEqual(IEnumerable<ArtistName> actual, string message, params string[] expected)
@@ -35,7 +35,7 @@ namespace VocaDb.Tests.Service
 		[TestInitialize]
 		public void SetUp()
 		{
-			artists = CreateArtistNames("HSP", "Hiroyuki ODA", "8#Prince");
+			_artists = CreateArtistNames("HSP", "Hiroyuki ODA", "8#Prince");
 		}
 
 		/// <summary>

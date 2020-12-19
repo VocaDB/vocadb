@@ -18,29 +18,29 @@ namespace VocaDb.Tests.Domain.Globalization
 	{
 		class NameFactory : INameFactory<LocalizedStringWithId>
 		{
-			private readonly NameManager<LocalizedStringWithId> nameManager;
+			private readonly NameManager<LocalizedStringWithId> _nameManager;
 
 			public NameFactory(NameManager<LocalizedStringWithId> nameManager)
 			{
-				this.nameManager = nameManager;
+				this._nameManager = nameManager;
 			}
 
 			public LocalizedStringWithId CreateName(string val, ContentLanguageSelection language)
 			{
 				var name = new LocalizedStringWithId(val, language);
-				nameManager.Add(name);
+				_nameManager.Add(name);
 				return name;
 			}
 		}
 
-		private int id = 1;
-		private NameFactory nameFactory;
-		private NameManager<LocalizedStringWithId> nameManager;
+		private int _id = 1;
+		private NameFactory _nameFactory;
+		private NameManager<LocalizedStringWithId> _nameManager;
 
 		private LocalizedStringWithId AddName(string name, ContentLanguageSelection lang = ContentLanguageSelection.English)
 		{
-			var str = new LocalizedStringWithId(name, lang) { Id = id++ };
-			nameManager.Add(str);
+			var str = new LocalizedStringWithId(name, lang) { Id = _id++ };
+			_nameManager.Add(str);
 			return str;
 		}
 
@@ -74,8 +74,8 @@ namespace VocaDb.Tests.Domain.Globalization
 		[TestInitialize]
 		public void SetUp()
 		{
-			nameManager = new NameManager<LocalizedStringWithId>();
-			nameFactory = new NameFactory(nameManager);
+			_nameManager = new NameManager<LocalizedStringWithId>();
+			_nameFactory = new NameFactory(_nameManager);
 		}
 
 		[TestMethod]
@@ -85,7 +85,7 @@ namespace VocaDb.Tests.Domain.Globalization
 			AddName("あの双子が円周率1000桁に挑戦", ContentLanguageSelection.Japanese);
 			AddName("Ano Futago ga Enshuuritsu 1000 Keta ni Chousen", ContentLanguageSelection.Romaji);
 
-			var additionalNames = nameManager.GetAdditionalNamesStringForLanguage(ContentLanguagePreference.English);
+			var additionalNames = _nameManager.GetAdditionalNamesStringForLanguage(ContentLanguagePreference.English);
 
 			Assert.AreEqual("あの双子が円周率1000桁に挑戦, Ano Futago ga Enshuuritsu 1000 Keta ni Chousen", additionalNames, "Result");
 		}
@@ -93,9 +93,9 @@ namespace VocaDb.Tests.Domain.Globalization
 		[TestMethod]
 		public void GetAdditionalNamesStringForLanguage_NoNames()
 		{
-			nameManager.UpdateSortNames();
+			_nameManager.UpdateSortNames();
 
-			Assert.AreEqual(string.Empty, nameManager.GetAdditionalNamesStringForLanguage(ContentLanguagePreference.English), "Additional names string is empty");
+			Assert.AreEqual(string.Empty, _nameManager.GetAdditionalNamesStringForLanguage(ContentLanguagePreference.English), "Additional names string is empty");
 		}
 
 		[TestMethod]
@@ -103,10 +103,10 @@ namespace VocaDb.Tests.Domain.Globalization
 		{
 			var added = new[] { Contract("Miku", ContentLanguageSelection.English) };
 
-			var result = nameManager.Sync(added, nameFactory);
+			var result = _nameManager.Sync(added, _nameFactory);
 
 			AssertNames(result, added: added);
-			Assert.AreEqual(1, nameManager.Names.Count, "Number of names");
+			Assert.AreEqual(1, _nameManager.Names.Count, "Number of names");
 		}
 
 		[TestMethod]
@@ -116,11 +116,11 @@ namespace VocaDb.Tests.Domain.Globalization
 
 			var added = new[] { Contract("Miku", ContentLanguageSelection.English) };
 
-			var result = nameManager.Sync(added, nameFactory);
+			var result = _nameManager.Sync(added, _nameFactory);
 
 			AssertCollection(result.Added, added, "added");
 			Assert.AreEqual(1, result.Removed.Length, "Number of items removed");
-			Assert.AreEqual(1, nameManager.Names.Count, "Number of names");
+			Assert.AreEqual(1, _nameManager.Names.Count, "Number of names");
 		}
 
 		[TestMethod]
@@ -131,20 +131,20 @@ namespace VocaDb.Tests.Domain.Globalization
 			name.Value = "Miku Miku";
 			var updated = new[] { name };
 
-			var result = nameManager.Sync(updated, nameFactory);
+			var result = _nameManager.Sync(updated, _nameFactory);
 
 			AssertCollection(result.Edited, updated, "edited");
-			Assert.AreEqual(1, nameManager.Names.Count, "Number of names");
-			Assert.AreEqual("Miku Miku", nameManager.Names[0].Value, "Name was updated");
-			Assert.AreEqual(nameId, nameManager.Names[0].Id, "Id remains unchanged");
+			Assert.AreEqual(1, _nameManager.Names.Count, "Number of names");
+			Assert.AreEqual("Miku Miku", _nameManager.Names[0].Value, "Name was updated");
+			Assert.AreEqual(nameId, _nameManager.Names[0].Id, "Id remains unchanged");
 		}
 
 		[TestMethod]
 		public void UpdateSortNames_NoNames()
 		{
-			nameManager.UpdateSortNames();
+			_nameManager.UpdateSortNames();
 
-			Assert.AreEqual(string.Empty, nameManager.SortNames[ContentLanguagePreference.Japanese], "Japanese name is empty");
+			Assert.AreEqual(string.Empty, _nameManager.SortNames[ContentLanguagePreference.Japanese], "Japanese name is empty");
 		}
 
 		[TestMethod]
@@ -153,9 +153,9 @@ namespace VocaDb.Tests.Domain.Globalization
 			AddName("VocaliodP", ContentLanguageSelection.English);
 			AddName("ぼーかりおどP", ContentLanguageSelection.Japanese);
 
-			Assert.AreEqual("VocaliodP", nameManager.SortNames[ContentLanguageSelection.English], "Primary English name");
-			Assert.AreEqual("ぼーかりおどP", nameManager.SortNames[ContentLanguageSelection.Japanese], "Primary Japanese name");
-			Assert.AreEqual("VocaliodP", nameManager.SortNames[ContentLanguageSelection.Romaji], "Primary Romaji name");
+			Assert.AreEqual("VocaliodP", _nameManager.SortNames[ContentLanguageSelection.English], "Primary English name");
+			Assert.AreEqual("ぼーかりおどP", _nameManager.SortNames[ContentLanguageSelection.Japanese], "Primary Japanese name");
+			Assert.AreEqual("VocaliodP", _nameManager.SortNames[ContentLanguageSelection.Romaji], "Primary Romaji name");
 		}
 
 		[TestMethod]
@@ -165,9 +165,9 @@ namespace VocaDb.Tests.Domain.Globalization
 			AddName("noa", ContentLanguageSelection.Unspecified);
 			AddName("noa", ContentLanguageSelection.Unspecified);
 
-			Assert.AreEqual("VocaliodP", nameManager.SortNames[ContentLanguageSelection.English], "Primary English name");
-			Assert.AreEqual("VocaliodP", nameManager.SortNames[ContentLanguageSelection.Japanese], "Primary Japanese name");
-			Assert.AreEqual("noa", nameManager.AdditionalNamesString, "Additional names");
+			Assert.AreEqual("VocaliodP", _nameManager.SortNames[ContentLanguageSelection.English], "Primary English name");
+			Assert.AreEqual("VocaliodP", _nameManager.SortNames[ContentLanguageSelection.Japanese], "Primary Japanese name");
+			Assert.AreEqual("noa", _nameManager.AdditionalNamesString, "Additional names");
 		}
 	}
 }

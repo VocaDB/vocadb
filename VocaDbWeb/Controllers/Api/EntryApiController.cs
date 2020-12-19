@@ -23,23 +23,23 @@ namespace VocaDb.Web.Controllers.Api
 		private const int AbsoluteMax = 50;
 		private const int DefaultMax = 10;
 
-		private readonly AlbumService albumService;
-		private readonly ArtistService artistService;
-		private readonly IEntryUrlParser entryUrlParser;
-		private readonly EntryQueries queries;
-		private readonly OtherService otherService;
-		private readonly SongQueries songQueries;
+		private readonly AlbumService _albumService;
+		private readonly ArtistService _artistService;
+		private readonly IEntryUrlParser _entryUrlParser;
+		private readonly EntryQueries _queries;
+		private readonly OtherService _otherService;
+		private readonly SongQueries _songQueries;
 
 		private int GetMaxResults(int max) => Math.Min(max, AbsoluteMax);
 
 		public EntryApiController(EntryQueries queries, OtherService otherService, AlbumService albumService, ArtistService artistService, SongQueries songQueries, IEntryUrlParser entryUrlParser)
 		{
-			this.queries = queries;
-			this.otherService = otherService;
-			this.albumService = albumService;
-			this.artistService = artistService;
-			this.songQueries = songQueries;
-			this.entryUrlParser = entryUrlParser;
+			this._queries = queries;
+			this._otherService = otherService;
+			this._albumService = albumService;
+			this._artistService = artistService;
+			this._songQueries = songQueries;
+			this._entryUrlParser = entryUrlParser;
 		}
 
 		/// <summary>
@@ -77,7 +77,7 @@ namespace VocaDb.Web.Controllers.Api
 		{
 			maxResults = GetMaxResults(maxResults);
 
-			return queries.GetList(query, tagId, tagName, childTags, status, entryTypes,
+			return _queries.GetList(query, tagId, tagName, childTags, status, entryTypes,
 				start, maxResults, getTotalCount, sort, nameMatchMode, fields, lang, searchEvents: true);
 		}
 
@@ -89,7 +89,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="maxResults">Maximum number of results.</param>
 		/// <returns>List of entry names.</returns>
 		[Route("names")]
-		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) => otherService.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
+		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) => _otherService.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Route("tooltip")]
@@ -100,7 +100,7 @@ namespace VocaDb.Web.Controllers.Api
 				throw new HttpBadRequestException("URL must be specified");
 			}
 
-			var entryId = entryUrlParser.Parse(url, allowRelative: true);
+			var entryId = _entryUrlParser.Parse(url, allowRelative: true);
 
 			if (entryId.IsEmpty)
 			{
@@ -113,13 +113,13 @@ namespace VocaDb.Web.Controllers.Api
 			switch (entryId.EntryType)
 			{
 				case EntryType.Album:
-					data = RazorHelper.RenderPartialViewToString("AlbumWithCoverPopupContent", albumService.GetAlbum(id), "EntryApiController", Request);
+					data = RazorHelper.RenderPartialViewToString("AlbumWithCoverPopupContent", _albumService.GetAlbum(id), "EntryApiController", Request);
 					break;
 				case EntryType.Artist:
-					data = RazorHelper.RenderPartialViewToString("ArtistPopupContent", artistService.GetArtist(id), "EntryApiController", Request);
+					data = RazorHelper.RenderPartialViewToString("ArtistPopupContent", _artistService.GetArtist(id), "EntryApiController", Request);
 					break;
 				case EntryType.Song:
-					data = RazorHelper.RenderPartialViewToString("SongPopupContent", songQueries.GetSong(id), "EntryApiController", Request);
+					data = RazorHelper.RenderPartialViewToString("SongPopupContent", _songQueries.GetSong(id), "EntryApiController", Request);
 					break;
 			}
 

@@ -11,10 +11,10 @@ namespace VocaDb.Model.Utils
 {
 	public static class AppConfig
 	{
-		private static DiscType[] albumTypes;
-		private static ArtistType[] artistTypes;
-		private static ArtistRoles[] artistRoles;
-		private static SongType[] songTypes;
+		private static DiscType[] _albumTypes;
+		private static ArtistType[] _artistTypes;
+		private static ArtistRoles[] _artistRoles;
+		private static SongType[] _songTypes;
 
 		/// <summary>
 		/// List of roles that can be assigned to artist added to songs and albums.
@@ -86,13 +86,13 @@ namespace VocaDb.Model.Utils
 		{
 			get
 			{
-				if (albumTypes == null)
+				if (_albumTypes == null)
 				{
 					var val = Val("AlbumTypes");
-					albumTypes = !string.IsNullOrEmpty(val) ? EnumVal<DiscType>.ParseMultiple(val) : DefaultDiscTypes;
+					_albumTypes = !string.IsNullOrEmpty(val) ? EnumVal<DiscType>.ParseMultiple(val) : DefaultDiscTypes;
 				}
 
-				return albumTypes;
+				return _albumTypes;
 			}
 		}
 
@@ -112,13 +112,13 @@ namespace VocaDb.Model.Utils
 		{
 			get
 			{
-				if (artistTypes == null)
+				if (_artistTypes == null)
 				{
 					var val = Val("ArtistTypes");
-					artistTypes = !string.IsNullOrEmpty(val) ? EnumVal<ArtistType>.ParseMultiple(val) : EnumVal<ArtistType>.Values;
+					_artistTypes = !string.IsNullOrEmpty(val) ? EnumVal<ArtistType>.ParseMultiple(val) : EnumVal<ArtistType>.Values;
 				}
 
-				return artistTypes;
+				return _artistTypes;
 			}
 		}
 
@@ -126,13 +126,13 @@ namespace VocaDb.Model.Utils
 		{
 			get
 			{
-				if (artistRoles == null)
+				if (_artistRoles == null)
 				{
 					var val = Val("ArtistRoles");
-					artistRoles = !string.IsNullOrEmpty(val) ? EnumVal<ArtistRoles>.ParseMultiple(val) : DefaultValidRoles;
+					_artistRoles = !string.IsNullOrEmpty(val) ? EnumVal<ArtistRoles>.ParseMultiple(val) : DefaultValidRoles;
 				}
 
-				return artistRoles;
+				return _artistRoles;
 			}
 		}
 
@@ -204,13 +204,13 @@ namespace VocaDb.Model.Utils
 		{
 			get
 			{
-				if (songTypes == null)
+				if (_songTypes == null)
 				{
 					var val = Val("SongTypes");
-					songTypes = !string.IsNullOrEmpty(val) ? EnumVal<SongType>.ParseMultiple(val) : DefaultSongTypes;
+					_songTypes = !string.IsNullOrEmpty(val) ? EnumVal<SongType>.ParseMultiple(val) : DefaultSongTypes;
 				}
 
-				return songTypes;
+				return _songTypes;
 			}
 		}
 

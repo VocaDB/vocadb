@@ -25,15 +25,15 @@ namespace VocaDb.Web.Controllers
 	[SessionState(SessionStateBehavior.Disabled)]
 	public class ExtController : ControllerBase
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
-		private readonly AlbumService albumService;
-		private readonly ArtistService artistService;
-		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
-		private readonly IEntryUrlParser entryUrlParser;
-		private readonly EventQueries eventQueries;
-		private readonly SongQueries songService;
-		private readonly TagQueries tagQueries;
+		private readonly AlbumService _albumService;
+		private readonly ArtistService _artistService;
+		private readonly IAggregatedEntryImageUrlFactory _entryThumbPersister;
+		private readonly IEntryUrlParser _entryUrlParser;
+		private readonly EventQueries _eventQueries;
+		private readonly SongQueries _songService;
+		private readonly TagQueries _tagQueries;
 
 		protected ActionResult Object<T>(T obj, DataFormat format) where T : class
 		{
@@ -55,13 +55,13 @@ namespace VocaDb.Web.Controllers
 		public ExtController(IEntryUrlParser entryUrlParser, IAggregatedEntryImageUrlFactory entryThumbPersister,
 			AlbumService albumService, ArtistService artistService, EventQueries eventQueries, SongQueries songService, TagQueries tagQueries)
 		{
-			this.entryUrlParser = entryUrlParser;
-			this.entryThumbPersister = entryThumbPersister;
-			this.albumService = albumService;
-			this.artistService = artistService;
-			this.eventQueries = eventQueries;
-			this.songService = songService;
-			this.tagQueries = tagQueries;
+			this._entryUrlParser = entryUrlParser;
+			this._entryThumbPersister = entryThumbPersister;
+			this._albumService = albumService;
+			this._artistService = artistService;
+			this._eventQueries = eventQueries;
+			this._songService = songService;
+			this._tagQueries = tagQueries;
 		}
 
 #if !DEBUG
@@ -73,7 +73,7 @@ namespace VocaDb.Web.Controllers
 			if (songId == InvalidId)
 				return NoId();
 
-			var song = songService.GetSongForApi(songId, SongOptionalFields.AdditionalNames | SongOptionalFields.PVs, lang);
+			var song = _songService.GetSongForApi(songId, SongOptionalFields.AdditionalNames | SongOptionalFields.PVs, lang);
 
 			PVContract current = null;
 
@@ -103,7 +103,7 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrWhiteSpace(url))
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "URL must be specified");
 
-			var entryId = entryUrlParser.Parse(url, allowRelative: true);
+			var entryId = _entryUrlParser.Parse(url, allowRelative: true);
 
 			if (entryId.IsEmpty)
 			{
@@ -116,20 +116,20 @@ namespace VocaDb.Web.Controllers
 			switch (entryId.EntryType)
 			{
 				case EntryType.Album:
-					data = RenderPartialViewToString("AlbumWithCoverPopupContent", albumService.GetAlbum(id));
+					data = RenderPartialViewToString("AlbumWithCoverPopupContent", _albumService.GetAlbum(id));
 					break;
 				case EntryType.Artist:
-					data = RenderPartialViewToString("ArtistPopupContent", artistService.GetArtist(id));
+					data = RenderPartialViewToString("ArtistPopupContent", _artistService.GetArtist(id));
 					break;
 				case EntryType.ReleaseEvent:
-					data = RenderPartialViewToString("_EventPopupContent", eventQueries.GetOne(id, ContentLanguagePreference.Default, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series));
+					data = RenderPartialViewToString("_EventPopupContent", _eventQueries.GetOne(id, ContentLanguagePreference.Default, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series));
 					break;
 				case EntryType.Song:
-					data = RenderPartialViewToString("SongPopupContent", songService.GetSong(id));
+					data = RenderPartialViewToString("SongPopupContent", _songService.GetSong(id));
 					break;
 				case EntryType.Tag:
-					data = RenderPartialViewToString("_TagPopupContent", tagQueries.LoadTag(id, t =>
-						new TagForApiContract(t, entryThumbPersister, ContentLanguagePreference.Default, TagOptionalFields.AdditionalNames | TagOptionalFields.MainPicture)));
+					data = RenderPartialViewToString("_TagPopupContent", _tagQueries.LoadTag(id, t =>
+						new TagForApiContract(t, _entryThumbPersister, ContentLanguagePreference.Default, TagOptionalFields.AdditionalNames | TagOptionalFields.MainPicture)));
 					break;
 			}
 
@@ -141,7 +141,7 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrEmpty(url))
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "URL must be specified");
 
-			var entryId = entryUrlParser.Parse(url);
+			var entryId = _entryUrlParser.Parse(url);
 
 			if (entryId.IsEmpty)
 			{
@@ -155,7 +155,7 @@ namespace VocaDb.Web.Controllers
 
 			var id = entryId.Id;
 
-			var song = songService.GetSongForApi(entryId.Id, SongOptionalFields.ThumbUrl);
+			var song = _songService.GetSongForApi(entryId.Id, SongOptionalFields.ThumbUrl);
 			var src = VocaUriBuilder.CreateAbsolute(Url.Action("EmbedSong", new { songId = id })).ToString();
 			string html;
 

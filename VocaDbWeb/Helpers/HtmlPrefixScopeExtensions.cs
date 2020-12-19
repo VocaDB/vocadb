@@ -46,20 +46,20 @@ namespace VocaDb.Web.Helpers
 
 		private class HtmlFieldPrefixScope : IDisposable
 		{
-			private readonly TemplateInfo templateInfo;
-			private readonly string previousHtmlFieldPrefix;
+			private readonly TemplateInfo _templateInfo;
+			private readonly string _previousHtmlFieldPrefix;
 
 			public HtmlFieldPrefixScope(TemplateInfo templateInfo, string htmlFieldPrefix)
 			{
-				this.templateInfo = templateInfo;
+				this._templateInfo = templateInfo;
 
-				previousHtmlFieldPrefix = templateInfo.HtmlFieldPrefix;
+				_previousHtmlFieldPrefix = templateInfo.HtmlFieldPrefix;
 				templateInfo.HtmlFieldPrefix = htmlFieldPrefix;
 			}
 
 			public void Dispose()
 			{
-				templateInfo.HtmlFieldPrefix = previousHtmlFieldPrefix;
+				_templateInfo.HtmlFieldPrefix = _previousHtmlFieldPrefix;
 			}
 		}
 	}

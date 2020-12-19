@@ -26,11 +26,11 @@ namespace VocaDb.Web.Models
 {
 	public class AlbumDetails : IEntryImageInformation
 	{
-		private readonly string mime;
+		private readonly string _mime;
 
 		public EntryType EntryType => EntryType.Album;
 
-		public string Mime => mime;
+		public string Mime => _mime;
 
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 
@@ -74,7 +74,7 @@ namespace VocaDb.Web.Models
 			Version = contract.Version;
 			WebLinks = contract.WebLinks;
 			WishlistedBy = contract.Stats.WishlistCount;
-			mime = contract.CoverPictureMime;
+			_mime = contract.CoverPictureMime;
 
 			var songsByDiscs = contract.Songs.GroupBy(s => s.DiscNumber);
 			Discs =

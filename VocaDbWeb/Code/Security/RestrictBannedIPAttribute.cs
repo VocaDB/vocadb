@@ -12,7 +12,7 @@ namespace VocaDb.Web.Code.Security
 	/// </summary>
 	public class RestrictBannedIPAttribute : ActionFilterAttribute
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
 		// Injected by AutoFac.
 		public IPRuleManager IPRules { get; set; }
@@ -23,7 +23,7 @@ namespace VocaDb.Web.Code.Security
 
 			if (!IPRules.IsAllowed(host))
 			{
-				log.Warn("Restricting banned host '{0}' for '{1}'.", host, filterContext.HttpContext.Request.Url);
+				_log.Warn("Restricting banned host '{0}' for '{1}'.", host, filterContext.HttpContext.Request.Url);
 
 				if (filterContext.HttpContext.Request.IsAjaxRequest())
 				{

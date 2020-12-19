@@ -6,23 +6,23 @@ namespace VocaDb.Model.Domain.Albums
 {
 	public class AlbumPictureFile : EntryPictureFile, IEntryWithIntId
 	{
-		private Album album;
+		private Album _album;
 
 		public AlbumPictureFile() { }
 
 		public AlbumPictureFile(string name, string mime, User author, Album album)
 			: base(name, mime, author)
 		{
-			this.album = album;
+			this._album = album;
 		}
 
 		public virtual Album Album
 		{
-			get => album;
+			get => _album;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 

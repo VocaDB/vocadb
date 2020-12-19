@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Artists
 {
 	public class ArtistName : LocalizedStringWithId
 	{
-		private Artist artist;
+		private Artist _artist;
 
 		public ArtistName() { }
 
@@ -18,11 +18,11 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual Artist Artist
 		{
-			get => artist;
+			get => _artist;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				artist = value;
+				_artist = value;
 			}
 		}
 

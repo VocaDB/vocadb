@@ -13,17 +13,17 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 	public class NHibernateSessionPerRequestRepository<T> : NHibernateRepository<T>
 		where T : class, IDatabaseObject
 	{
-		private readonly ISession session;
+		private readonly ISession _session;
 
 		protected override NHibernateDatabaseContext<T> OpenSessionForContext()
 		{
-			return new NHibernateSessionPerRequestContext<T>(session, PermissionContext);
+			return new NHibernateSessionPerRequestContext<T>(_session, PermissionContext);
 		}
 
 		public NHibernateSessionPerRequestRepository(ISession session, ISessionFactory sessionFactory, IUserPermissionContext permissionContext)
 			: base(sessionFactory, permissionContext)
 		{
-			this.session = session;
+			this._session = session;
 		}
 	}
 }

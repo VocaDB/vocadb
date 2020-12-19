@@ -14,28 +14,28 @@ namespace VocaDb.Tests.Domain.Versioning
 	[TestClass]
 	public class ArchivedVersionManagerTests
 	{
-		private ArchivedVersionManager<ArchivedSongVersion, SongEditableFields> archivedVersionManager;
-		private Song entry;
+		private ArchivedVersionManager<ArchivedSongVersion, SongEditableFields> _archivedVersionManager;
+		private Song _entry;
 
 		private ArchivedSongVersion CreateVersion()
 		{
-			var version = entry.CreateArchivedVersion(new System.Xml.Linq.XDocument(), new SongDiff(), new AgentLoginData("Miku"), SongArchiveReason.Unknown, string.Empty);
-			archivedVersionManager.Add(version);
+			var version = _entry.CreateArchivedVersion(new System.Xml.Linq.XDocument(), new SongDiff(), new AgentLoginData("Miku"), SongArchiveReason.Unknown, string.Empty);
+			_archivedVersionManager.Add(version);
 			return version;
 		}
 
 		private ArchivedSongVersion CreateVersion(int versionNumber)
 		{
-			var version = new ArchivedSongVersion(entry, new System.Xml.Linq.XDocument(), new SongDiff(), new AgentLoginData("Miku"), versionNumber, entry.Status, SongArchiveReason.Unknown, string.Empty);
-			archivedVersionManager.Add(version);
+			var version = new ArchivedSongVersion(_entry, new System.Xml.Linq.XDocument(), new SongDiff(), new AgentLoginData("Miku"), versionNumber, _entry.Status, SongArchiveReason.Unknown, string.Empty);
+			_archivedVersionManager.Add(version);
 			return version;
 		}
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			archivedVersionManager = new ArchivedVersionManager<ArchivedSongVersion, SongEditableFields>();
-			entry = CreateEntry.Song();
+			_archivedVersionManager = new ArchivedVersionManager<ArchivedSongVersion, SongEditableFields>();
+			_entry = CreateEntry.Song();
 		}
 
 		[TestMethod]
@@ -44,9 +44,9 @@ namespace VocaDb.Tests.Domain.Versioning
 			CreateVersion();
 			CreateVersion();
 			var version3 = CreateVersion();
-			Assert.AreEqual(3, archivedVersionManager.Versions.Count, "Number of versions");
+			Assert.AreEqual(3, _archivedVersionManager.Versions.Count, "Number of versions");
 
-			var latest = archivedVersionManager.GetLatestVersion();
+			var latest = _archivedVersionManager.GetLatestVersion();
 			Assert.AreSame(version3, latest, "Latest version is the 3rd version");
 			Assert.AreEqual(2, latest.Version, "Latest version number");
 		}

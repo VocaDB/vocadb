@@ -17,11 +17,11 @@ namespace VocaDb.Web.Controllers.Api
 	public class ReleaseEventSeriesApiController : ApiController
 	{
 		private const int DefaultMax = 10;
-		private readonly EventQueries queries;
+		private readonly EventQueries _queries;
 
 		public ReleaseEventSeriesApiController(EventQueries queries)
 		{
-			this.queries = queries;
+			this._queries = queries;
 		}
 
 		/// <summary>
@@ -41,11 +41,11 @@ namespace VocaDb.Web.Controllers.Api
 
 			if (hardDelete)
 			{
-				queries.MoveSeriesToTrash(id, notes);
+				_queries.MoveSeriesToTrash(id, notes);
 			}
 			else
 			{
-				queries.DeleteSeries(id, notes);
+				_queries.DeleteSeries(id, notes);
 			}
 		}
 
@@ -66,7 +66,7 @@ namespace VocaDb.Web.Controllers.Api
 			ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None,
 			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.FindSeries(SearchTextQuery.Create(query, nameMatchMode), new PagingProperties(start, maxResults, getTotalCount), lang, fields);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.FindSeries(SearchTextQuery.Create(query, nameMatchMode), new PagingProperties(start, maxResults, getTotalCount), lang, fields);
 
 		/// <summary>
 		/// Gets single event series by ID.
@@ -75,6 +75,6 @@ namespace VocaDb.Web.Controllers.Api
 		public ReleaseEventSeriesForApiContract GetOne(
 			int id,
 			ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetOneSeries(id, lang, fields);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetOneSeries(id, lang, fields);
 	}
 }

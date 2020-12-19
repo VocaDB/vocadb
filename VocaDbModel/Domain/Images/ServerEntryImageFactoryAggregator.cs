@@ -17,18 +17,18 @@ namespace VocaDb.Model.Domain.Images
 	public class ServerEntryImageFactoryAggregator : IAggregatedEntryImageUrlFactory
 	{
 		// TODO: optimize with lookups
-		private readonly IEntryImageUrlFactory[] factories;
+		private readonly IEntryImageUrlFactory[] _factories;
 
 		public ServerEntryImageFactoryAggregator(IDynamicImageUrlFactory dynamicImageUrlFactory, IEntryThumbPersister thumbPersister)
 		{
-			factories = new IEntryImageUrlFactory[] {
+			_factories = new IEntryImageUrlFactory[] {
 				thumbPersister,
 				dynamicImageUrlFactory
 			};
 		}
 
 		private IEnumerable<IEntryImageUrlFactory> Factories(IEntryImageInformation imageInfo, ImageSize size) =>
-			factories.Where(f => f.IsSupported(imageInfo, size));
+			_factories.Where(f => f.IsSupported(imageInfo, size));
 
 		private IEnumerable<IEntryImageUrlFactory> FactoriesCheckExist(IEntryImageInformation imageInfo, ImageSize size) =>
 			Factories(imageInfo, size).Where(f => f.HasImage(imageInfo, size));

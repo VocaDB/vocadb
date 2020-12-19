@@ -33,34 +33,34 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 	[TestClass]
 	public class TagQueriesTests
 	{
-		private InMemoryImagePersister imagePersister;
-		private FakePermissionContext permissionContext;
-		private TagQueries queries;
-		private FakeTagRepository repository;
-		private Tag tag;
-		private Tag tag2;
-		private User user;
+		private InMemoryImagePersister _imagePersister;
+		private FakePermissionContext _permissionContext;
+		private TagQueries _queries;
+		private FakeTagRepository _repository;
+		private Tag _tag;
+		private Tag _tag2;
+		private User _user;
 
 		private ArchivedTagVersion GetArchivedVersion(Tag tag)
 		{
-			return repository.List<ArchivedTagVersion>().FirstOrDefault(a => a.Tag.Id == tag.Id);
+			return _repository.List<ArchivedTagVersion>().FirstOrDefault(a => a.Tag.Id == tag.Id);
 		}
 
 		private Tag CreateAndSaveTag(string englishName)
 		{
 			var t = CreateEntry.Tag(englishName);
 
-			repository.Save(t);
+			_repository.Save(t);
 
 			foreach (var name in t.Names)
-				repository.Save(name);
+				_repository.Save(name);
 
 			return t;
 		}
 
 		private TagUsage CreateTagUsage(Tag tag, ReleaseEvent releaseEvent)
 		{
-			var usage = repository.Save(new EventTagUsage(releaseEvent, tag));
+			var usage = _repository.Save(new EventTagUsage(releaseEvent, tag));
 			tag.AllEventTagUsages.Add(usage);
 			releaseEvent.Tags.Usages.Add(usage);
 			return usage;
@@ -74,27 +74,27 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestInitialize]
 		public void SetUp()
 		{
-			repository = new FakeTagRepository();
+			_repository = new FakeTagRepository();
 
-			tag = CreateAndSaveTag("Appearance Miku");
-			tag2 = CreateAndSaveTag("MMD");
+			_tag = CreateAndSaveTag("Appearance Miku");
+			_tag2 = CreateAndSaveTag("MMD");
 
-			user = new User("User", "123", "test@test.com", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Moderator };
-			repository.Add(user);
+			_user = new User("User", "123", "test@test.com", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Moderator };
+			_repository.Add(_user);
 
-			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(user, ContentLanguagePreference.Default));
+			_permissionContext = new FakePermissionContext(new UserWithPermissionsContract(_user, ContentLanguagePreference.Default));
 
-			imagePersister = new InMemoryImagePersister();
-			queries = new TagQueries(repository, permissionContext, new FakeEntryLinkFactory(), imagePersister, imagePersister, new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());
+			_imagePersister = new InMemoryImagePersister();
+			_queries = new TagQueries(_repository, _permissionContext, new FakeEntryLinkFactory(), _imagePersister, _imagePersister, new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());
 		}
 
 		[TestMethod]
 		public async Task Create()
 		{
-			var result = await queries.Create("Apimiku");
+			var result = await _queries.Create("Apimiku");
 
 			Assert.AreEqual("Apimiku", result.Name, "Created tag name");
-			var tagFromRepo = repository.Load(result.Id);
+			var tagFromRepo = _repository.Load(result.Id);
 			Assert.AreEqual("Apimiku", tagFromRepo.DefaultName, "Tag found from repository");
 		}
 
@@ -102,7 +102,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[ExpectedException(typeof(DuplicateTagNameException))]
 		public async Task Create_Duplicate()
 		{
-			await queries.Create("Appearance Miku");
+			await _queries.Create("Appearance Miku");
 		}
 
 		[TestMethod]
@@ -116,18 +116,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var standaloneEvent = CreateEntry.ReleaseEvent("Miku party");
 			var otherEvent = CreateEntry.ReleaseEvent("Magical Mirai");
 			var eventSeries = CreateEntry.EventSeries("VocaTRAVers");
-			var seriesUsage = repository.Save(new EventSeriesTagUsage(eventSeries, tag));
+			var seriesUsage = _repository.Save(new EventSeriesTagUsage(eventSeries, _tag));
 			eventSeries.Tags.Usages.Add(seriesUsage);
-			tag.AllEventSeriesTagUsages.Add(seriesUsage);
+			_tag.AllEventSeriesTagUsages.Add(seriesUsage);
 			var oldSeriesEvent = CreateEntry.ReleaseEvent("VocaTRAVers 1", date: DateTime.Now.AddDays(-30));
 			oldSeriesEvent.SetSeries(eventSeries);
 			var recentSeriesEvent = CreateEntry.ReleaseEvent("VocaTRAVers 2", date: DateTime.Now);
 			recentSeriesEvent.SetSeries(eventSeries);
-			repository.Save(standaloneEvent, otherEvent, oldSeriesEvent, recentSeriesEvent);
-			repository.Save(eventSeries);
-			repository.Save(CreateTagUsage(tag, standaloneEvent), CreateTagUsage(tag, oldSeriesEvent), CreateTagUsage(tag, recentSeriesEvent));
+			_repository.Save(standaloneEvent, otherEvent, oldSeriesEvent, recentSeriesEvent);
+			_repository.Save(eventSeries);
+			_repository.Save(CreateTagUsage(_tag, standaloneEvent), CreateTagUsage(_tag, oldSeriesEvent), CreateTagUsage(_tag, recentSeriesEvent));
 
-			var result = await queries.GetDetailsAsync(tag.Id);
+			var result = await _queries.GetDetailsAsync(_tag.Id);
 
 			Assert.AreEqual(2, result.Stats.EventCount, "EventCount");
 			Assert.AreEqual(2, result.Stats.Events.Length, "Events.Length");
@@ -141,63 +141,63 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void MoveToTrash()
 		{
-			var oldCount = repository.Count<Tag>();
+			var oldCount = _repository.Count<Tag>();
 
-			queries.MoveToTrash(tag.Id, string.Empty);
+			_queries.MoveToTrash(_tag.Id, string.Empty);
 
-			Assert.AreEqual(oldCount - 1, repository.Count<Tag>(), "One tag was removed");
-			Assert.IsFalse(repository.Contains(tag), "Tag was removed from repository");
+			Assert.AreEqual(oldCount - 1, _repository.Count<Tag>(), "One tag was removed");
+			Assert.IsFalse(_repository.Contains(_tag), "Tag was removed from repository");
 
-			Assert.AreEqual(1, repository.Count<TrashedEntry>(), "Trashed entry was created");
-			var trashed = repository.List<TrashedEntry>().First();
+			Assert.AreEqual(1, _repository.Count<TrashedEntry>(), "Trashed entry was created");
+			var trashed = _repository.List<TrashedEntry>().First();
 			Assert.AreEqual(EntryType.Tag, trashed.EntryType, "Trashed entry type");
-			Assert.AreEqual(tag.Id, trashed.EntryId, "Trashed entry ID");
-			Assert.AreEqual(tag.DefaultName, trashed.Name, "Trashed entry name");
+			Assert.AreEqual(_tag.Id, trashed.EntryId, "Trashed entry ID");
+			Assert.AreEqual(_tag.DefaultName, trashed.Name, "Trashed entry name");
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
 		public void MoveToTrash_NoDeletePermission()
 		{
-			user.GroupId = UserGroupId.Regular;
-			permissionContext.RefreshLoggedUser(repository);
+			_user.GroupId = UserGroupId.Regular;
+			_permissionContext.RefreshLoggedUser(_repository);
 
-			queries.MoveToTrash(tag.Id, string.Empty);
+			_queries.MoveToTrash(_tag.Id, string.Empty);
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(NotAllowedException))]
 		public void MoveToTrash_NoEditPermission()
 		{
-			user.GroupId = UserGroupId.Trusted;
-			permissionContext.RefreshLoggedUser(repository);
-			tag.Status = EntryStatus.Locked;
+			_user.GroupId = UserGroupId.Trusted;
+			_permissionContext.RefreshLoggedUser(_repository);
+			_tag.Status = EntryStatus.Locked;
 
-			queries.MoveToTrash(tag.Id, string.Empty);
+			_queries.MoveToTrash(_tag.Id, string.Empty);
 		}
 
 		[TestMethod]
 		public void MoveToTrash_DeleteRelatedEntries()
 		{
-			repository.Save(new TagReport(tag, TagReportType.InvalidInfo, user, "test", "test", null));
-			repository.Save(new TagReport(tag2, TagReportType.InvalidInfo, user, "test", "test", null));
-			var song = repository.Save(CreateEntry.Song());
-			var tagUsage = repository.Save(song.AddTag(tag).Result);
-			tag.AllSongTagUsages.Add(tagUsage);
+			_repository.Save(new TagReport(_tag, TagReportType.InvalidInfo, _user, "test", "test", null));
+			_repository.Save(new TagReport(_tag2, TagReportType.InvalidInfo, _user, "test", "test", null));
+			var song = _repository.Save(CreateEntry.Song());
+			var tagUsage = _repository.Save(song.AddTag(_tag).Result);
+			_tag.AllSongTagUsages.Add(tagUsage);
 
-			queries.MoveToTrash(tag.Id, "test");
+			_queries.MoveToTrash(_tag.Id, "test");
 
-			Assert.AreEqual(1, repository.Count<TagReport>(), "Tag report was deleted");
-			Assert.AreEqual(tag2, repository.List<TagReport>().First().Entry, "Report for the other tag still exists");
-			Assert.IsFalse(song.Tags.HasTag(tag), "Tag was removed from song");
+			Assert.AreEqual(1, _repository.Count<TagReport>(), "Tag report was deleted");
+			Assert.AreEqual(_tag2, _repository.List<TagReport>().First().Entry, "Report for the other tag still exists");
+			Assert.IsFalse(song.Tags.HasTag(_tag), "Tag was removed from song");
 		}
 
 		[TestMethod]
 		public void GetTagsByCategories()
 		{
-			tag.CategoryName = "Animation";
+			_tag.CategoryName = "Animation";
 
-			var result = queries.GetTagsByCategories();
+			var result = _queries.GetTagsByCategories();
 
 			Assert.AreEqual(2, result.Length, "Number of categories");
 			var firstCategory = result[0];
@@ -209,13 +209,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Merge_ToEmpty()
 		{
-			var target = repository.Save(new Tag());
+			var target = _repository.Save(new Tag());
 
-			queries.Merge(tag.Id, target.Id);
+			_queries.Merge(_tag.Id, target.Id);
 
 			Assert.AreEqual("Appearance Miku", target.Names.AllValues.FirstOrDefault(), "Name was copied");
 
-			var mergeRecord = repository.List<TagMergeRecord>().FirstOrDefault(m => m.Source == tag.Id);
+			var mergeRecord = _repository.List<TagMergeRecord>().FirstOrDefault(m => m.Source == _tag.Id);
 			Assert.IsNotNull(mergeRecord, "Merge record was created");
 			Assert.AreEqual(target, mergeRecord.Target, "Merge record target");
 		}
@@ -228,23 +228,23 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			{
 				var u = s.AddTag(tag);
 				tag.AllSongTagUsages.Add(u.Result);
-				u.Result.CreateVote(user);
+				u.Result.CreateVote(_user);
 			};
 
 			var song = CreateEntry.Song();
 			var song2 = CreateEntry.Song();
 			var song3 = CreateEntry.Song();
-			repository.Save(song, song2, song3);
+			_repository.Save(song, song2, song3);
 
-			AddTag(song, tag);
-			AddTag(song2, tag);
+			AddTag(song, _tag);
+			AddTag(song2, _tag);
 
-			var target = repository.Save(new Tag());
+			var target = _repository.Save(new Tag());
 			AddTag(song2, target);
 			AddTag(song3, target);
 
 			// Act
-			queries.Merge(tag.Id, target.Id);
+			_queries.Merge(_tag.Id, target.Id);
 
 			// Assert
 			Assert.AreEqual(3, target.UsageCount, "Tag's UsageCount");
@@ -261,13 +261,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[ExpectedException(typeof(NotAllowedException))]
 		public void Merge_NoPermissions()
 		{
-			user.GroupId = UserGroupId.Regular;
-			permissionContext.RefreshLoggedUser(repository);
+			_user.GroupId = UserGroupId.Regular;
+			_permissionContext.RefreshLoggedUser(_repository);
 
 			var target = new Tag();
-			repository.Save(target);
+			_repository.Save(target);
 
-			queries.Merge(tag.Id, target.Id);
+			_queries.Merge(_tag.Id, target.Id);
 		}
 
 		[TestMethod]
@@ -276,11 +276,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var target = CreateAndSaveTag("target");
 			var newTarget = CreateAndSaveTag("newTarget");
 
-			queries.Merge(tag.Id, target.Id);
-			queries.Merge(target.Id, newTarget.Id);
+			_queries.Merge(_tag.Id, target.Id);
+			_queries.Merge(target.Id, newTarget.Id);
 
-			Assert.AreEqual(2, repository.Count<TagMergeRecord>(), "Two merge records created");
-			var mergeRecord = repository.List<TagMergeRecord>().FirstOrDefault(m => m.Source == tag.Id);
+			Assert.AreEqual(2, _repository.Count<TagMergeRecord>(), "Two merge records created");
+			var mergeRecord = _repository.List<TagMergeRecord>().FirstOrDefault(m => m.Source == _tag.Id);
 			Assert.IsNotNull(mergeRecord, "Found merge record");
 			Assert.AreEqual(newTarget.Id, mergeRecord.Target.Id, "Target was updated");
 		}
@@ -289,11 +289,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Merge_TargetInRelatedTags()
 		{
-			var target = repository.Save(new Tag());
-			tag.AddRelatedTag(target);
+			var target = _repository.Save(new Tag());
+			_tag.AddRelatedTag(target);
 			Assert.AreEqual(1, target.RelatedTags.Count, "Number of related tags");
 
-			queries.Merge(tag.Id, target.Id);
+			_queries.Merge(_tag.Id, target.Id);
 
 			Assert.AreEqual(0, target.RelatedTags.Count, "Related tag (self) was not added");
 		}
@@ -301,11 +301,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Merge_Parent()
 		{
-			var parent = repository.Save(new Tag("parent"));
-			var target = repository.Save(new Tag("target"));
-			tag.SetParent(parent);
+			var parent = _repository.Save(new Tag("parent"));
+			var target = _repository.Save(new Tag("target"));
+			_tag.SetParent(parent);
 
-			queries.Merge(tag.Id, target.Id);
+			_queries.Merge(_tag.Id, target.Id);
 
 			Assert.AreEqual(parent, target.Parent, "Parent was set");
 		}
@@ -313,10 +313,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Merge_Parent_IgnoreSelf()
 		{
-			var target = repository.Save(new Tag("target"));
-			tag.SetParent(target);
+			var target = _repository.Save(new Tag("target"));
+			_tag.SetParent(target);
 
-			queries.Merge(tag.Id, target.Id);
+			_queries.Merge(_tag.Id, target.Id);
 
 			Assert.IsNull(target.Parent, "Parent was not set");
 		}
@@ -324,39 +324,39 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Merge_FollowedTags()
 		{
-			var user2 = repository.Save(CreateEntry.User());
-			var target = repository.Save(new Tag("target"));
-			user.AddTag(tag);
+			var user2 = _repository.Save(CreateEntry.User());
+			var target = _repository.Save(new Tag("target"));
+			_user.AddTag(_tag);
 			user2.AddTag(target);
 
-			queries.Merge(tag.Id, target.Id);
+			_queries.Merge(_tag.Id, target.Id);
 
 			Assert.AreEqual(2, target.TagsForUsers.Count, "Followed tags were migrated");
-			Assert.IsTrue(target.TagsForUsers.Any(t => t.User == user), "Follow was migrated");
+			Assert.IsTrue(target.TagsForUsers.Any(t => t.User == _user), "Follow was migrated");
 		}
 
 		[TestMethod]
 		public void Merge_TagMappings()
 		{
-			repository.Save(tag.CreateMapping("ApiMiku"));
-			var target = repository.Save(new Tag("target"));
-			queries.Merge(tag.Id, target.Id);
+			_repository.Save(_tag.CreateMapping("ApiMiku"));
+			var target = _repository.Save(new Tag("target"));
+			_queries.Merge(_tag.Id, target.Id);
 
 			Assert.IsTrue(target.Mappings.Any(m => m.SourceTag == "ApiMiku"), "Mapping was moved to target tag");
-			Assert.IsTrue(repository.List<TagMapping>().Any(m => m.SourceTag == "ApiMiku" && m.Tag.Equals(target)), "Mapped was saved to DB");
+			Assert.IsTrue(_repository.List<TagMapping>().Any(m => m.SourceTag == "ApiMiku" && m.Tag.Equals(target)), "Mapped was saved to DB");
 		}
 
 		[TestMethod]
 		public void Update_Description()
 		{
-			var updated = new TagForEditContract(tag, false, permissionContext);
+			var updated = new TagForEditContract(_tag, false, _permissionContext);
 			updated.Description = new EnglishTranslatedStringContract { Original = "mikumikudance.wikia.com/wiki/Miku_Hatsune_Appearance_(Mamama)", English = string.Empty };
 
-			queries.Update(updated, null);
+			_queries.Update(updated, null);
 
-			Assert.AreEqual(updated.Description.Original, tag.Description.Original, "Description was updated");
+			Assert.AreEqual(updated.Description.Original, _tag.Description.Original, "Description was updated");
 
-			var archivedVersion = repository.List<ArchivedTagVersion>().FirstOrDefault(a => a.Tag.Id == tag.Id);
+			var archivedVersion = _repository.List<ArchivedTagVersion>().FirstOrDefault(a => a.Tag.Id == _tag.Id);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(TagEditableFields.Description, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 		}
@@ -364,17 +364,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_Image()
 		{
-			var updated = new TagForEditContract(tag, false, permissionContext);
+			var updated = new TagForEditContract(_tag, false, _permissionContext);
 			using (var stream = TestImage())
 			{
-				queries.Update(updated, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });
+				_queries.Update(updated, new UploadedFileContract { Mime = MediaTypeNames.Image.Jpeg, Stream = stream });
 			}
 
-			var thumb = new EntryThumb(tag, MediaTypeNames.Image.Jpeg, ImagePurpose.Main);
-			Assert.IsTrue(imagePersister.HasImage(thumb, ImageSize.Original), "Original image was saved");
-			Assert.IsTrue(imagePersister.HasImage(thumb, ImageSize.SmallThumb), "Small thumbnail was saved");
+			var thumb = new EntryThumb(_tag, MediaTypeNames.Image.Jpeg, ImagePurpose.Main);
+			Assert.IsTrue(_imagePersister.HasImage(thumb, ImageSize.Original), "Original image was saved");
+			Assert.IsTrue(_imagePersister.HasImage(thumb, ImageSize.SmallThumb), "Small thumbnail was saved");
 
-			var archivedVersion = GetArchivedVersion(tag);
+			var archivedVersion = GetArchivedVersion(_tag);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(TagEditableFields.Picture, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 		}
@@ -382,14 +382,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_Name()
 		{
-			var updated = new TagForEditContract(tag, false, permissionContext);
+			var updated = new TagForEditContract(_tag, false, _permissionContext);
 			updated.Names[0].Value = "Api Miku";
 
-			queries.Update(updated, null);
+			_queries.Update(updated, null);
 
-			Assert.AreEqual("Api Miku", tag.DefaultName, "EnglishName");
+			Assert.AreEqual("Api Miku", _tag.DefaultName, "EnglishName");
 
-			var archivedVersion = GetArchivedVersion(tag);
+			var archivedVersion = GetArchivedVersion(_tag);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(TagEditableFields.Names, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 		}
@@ -398,20 +398,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[ExpectedException(typeof(DuplicateTagNameException))]
 		public void Update_Name_DuplicateWithAnotherTag()
 		{
-			var updated = new TagForEditContract(tag, false, permissionContext);
+			var updated = new TagForEditContract(_tag, false, _permissionContext);
 			updated.Names[0].Value = "MMD";
 
-			queries.Update(updated, null);
+			_queries.Update(updated, null);
 		}
 
 		[TestMethod]
 		[ExpectedException(typeof(DuplicateTagNameException))]
 		public void Update_Name_DuplicateTranslation()
 		{
-			var updated = new TagForEditContract(tag, false, permissionContext);
+			var updated = new TagForEditContract(_tag, false, _permissionContext);
 			updated.Names = updated.Names.Concat(new[] { new LocalizedStringWithIdContract { Value = "Appearance Miku", Language = ContentLanguageSelection.Romaji } }).ToArray();
 
-			queries.Update(updated, null);
+			_queries.Update(updated, null);
 		}
 
 
@@ -419,7 +419,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[ExpectedException(typeof(DuplicateTagNameException))]
 		public void Update_Name_DuplicateKana()
 		{
-			var updated = new TagForEditContract(tag, false, permissionContext)
+			var updated = new TagForEditContract(_tag, false, _permissionContext)
 			{
 				Names = new[] {
 					new LocalizedStringWithIdContract {Value = "コノザマ", Language = ContentLanguageSelection.Japanese},
@@ -427,21 +427,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				}.ToArray()
 			};
 
-			queries.Update(updated, null);
+			_queries.Update(updated, null);
 		}
 
 		[TestMethod]
 		public void Update_Parent()
 		{
-			var updated = new TagForEditContract(tag, false, permissionContext);
-			updated.Parent = new TagBaseContract(tag2, ContentLanguagePreference.English);
+			var updated = new TagForEditContract(_tag, false, _permissionContext);
+			updated.Parent = new TagBaseContract(_tag2, ContentLanguagePreference.English);
 
-			queries.Update(updated, null);
+			_queries.Update(updated, null);
 
-			Assert.AreEqual(tag2, tag.Parent, "Parent");
-			Assert.IsTrue(tag2.Children.Contains(tag), "Parent contains child tag");
+			Assert.AreEqual(_tag2, _tag.Parent, "Parent");
+			Assert.IsTrue(_tag2.Children.Contains(_tag), "Parent contains child tag");
 
-			var archivedVersion = GetArchivedVersion(tag);
+			var archivedVersion = GetArchivedVersion(_tag);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(TagEditableFields.Parent, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 		}
@@ -449,14 +449,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_Parent_IgnoreSelf()
 		{
-			var updated = new TagForEditContract(tag, false, permissionContext);
-			updated.Parent = new TagBaseContract(tag, ContentLanguagePreference.English);
+			var updated = new TagForEditContract(_tag, false, _permissionContext);
+			updated.Parent = new TagBaseContract(_tag, ContentLanguagePreference.English);
 
-			queries.Update(updated, null);
+			_queries.Update(updated, null);
 
-			Assert.IsNull(tag.Parent, "Parent");
+			Assert.IsNull(_tag.Parent, "Parent");
 
-			var archivedVersion = GetArchivedVersion(tag);
+			var archivedVersion = GetArchivedVersion(_tag);
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(TagEditableFields.Nothing, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 		}
@@ -464,44 +464,44 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Update_Parent_Renamed()
 		{
-			var updated = new TagForEditContract(tag, false, permissionContext);
-			tag2.TranslatedName.Default = "Api Miku";
-			updated.Parent = new TagBaseContract(tag2, ContentLanguagePreference.English);
+			var updated = new TagForEditContract(_tag, false, _permissionContext);
+			_tag2.TranslatedName.Default = "Api Miku";
+			updated.Parent = new TagBaseContract(_tag2, ContentLanguagePreference.English);
 
-			queries.Update(updated, null);
+			_queries.Update(updated, null);
 
-			Assert.AreEqual(tag2, tag.Parent, "Parent");
-			Assert.IsTrue(tag2.Children.Contains(tag), "Parent contains child tag");
+			Assert.AreEqual(_tag2, _tag.Parent, "Parent");
+			Assert.IsTrue(_tag2.Children.Contains(_tag), "Parent contains child tag");
 		}
 
 		[TestMethod]
 		public void UpdateMappings_Add()
 		{
-			queries.UpdateMappings(new[] {
+			_queries.UpdateMappings(new[] {
 				new TagMappingContract {
 					SourceTag = "apimiku",
-					Tag = new TagBaseContract(tag, ContentLanguagePreference.Default)
+					Tag = new TagBaseContract(_tag, ContentLanguagePreference.Default)
 				}
 			});
 
-			var mappings = repository.List<TagMapping>();
+			var mappings = _repository.List<TagMapping>();
 			Assert.AreEqual(1, mappings.Count, "Mapping was saved");
-			Assert.AreEqual(tag, mappings[0].Tag, "Tag");
+			Assert.AreEqual(_tag, mappings[0].Tag, "Tag");
 			Assert.AreEqual("apimiku", mappings[0].SourceTag, "SourceTag");
 		}
 
 		[TestMethod]
 		public void UpdateMappings_Remove()
 		{
-			repository.Save(tag.CreateMapping("apimiku"));
+			_repository.Save(_tag.CreateMapping("apimiku"));
 
-			Assert.AreEqual(1, repository.List<TagMapping>().Count, "Precondition: mapping exists in database");
-			Assert.AreEqual(1, tag.Mappings.Count, "Precondition: mapping exists for tag");
+			Assert.AreEqual(1, _repository.List<TagMapping>().Count, "Precondition: mapping exists in database");
+			Assert.AreEqual(1, _tag.Mappings.Count, "Precondition: mapping exists for tag");
 
-			queries.UpdateMappings(new TagMappingContract[0]);
+			_queries.UpdateMappings(new TagMappingContract[0]);
 
-			Assert.AreEqual(0, repository.List<TagMapping>().Count, "Mapping was deleted");
-			Assert.AreEqual(0, tag.Mappings.Count, "Mapping was removed from tag");
+			Assert.AreEqual(0, _repository.List<TagMapping>().Count, "Mapping was deleted");
+			Assert.AreEqual(0, _tag.Mappings.Count, "Mapping was removed from tag");
 		}
 	}
 }

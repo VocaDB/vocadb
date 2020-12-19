@@ -14,7 +14,7 @@ namespace VocaDb.Model.Database.Queries.Partial
 {
 	public class CreateEntryHitQuery
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
 		public void CreateHit<TEntry, THit>(IDatabaseContext ctx, TEntry entry, string hostname, IUserPermissionContext userContext, Func<TEntry, int, THit> factory)
 			where TEntry : class, IEntryBase where THit : GenericEntryHit<TEntry>
@@ -42,7 +42,7 @@ namespace VocaDb.Model.Database.Queries.Partial
 					catch (GenericADOException x)
 					{
 						// This can happen if the uniqueness constraint is violated. We could use pessimistic locking, but it's not important enough here.
-						log.Warn("Unable to save hit for {0}: {1}", entry, x.Message);
+						_log.Warn("Unable to save hit for {0}: {1}", entry, x.Message);
 						return;
 					}
 
@@ -52,7 +52,7 @@ namespace VocaDb.Model.Database.Queries.Partial
 					}
 					catch (TransactionException x)
 					{
-						log.Warn(x, "Unable to save hit for {0}", entry);
+						_log.Warn(x, "Unable to save hit for {0}", entry);
 					}
 				}
 			}

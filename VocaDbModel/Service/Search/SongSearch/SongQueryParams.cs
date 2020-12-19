@@ -15,8 +15,8 @@ namespace VocaDb.Model.Service.Search.SongSearch
 	/// </summary>
 	public class SongQueryParams
 	{
-		private int[] ignoredIds;
-		private SongType[] songTypes;
+		private int[] _ignoredIds;
+		private SongType[] _songTypes;
 
 		public SongQueryParams()
 		{
@@ -76,10 +76,10 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		/// </summary>
 		public int[] IgnoredIds
 		{
-			get => ignoredIds;
+			get => _ignoredIds;
 			set
 			{
-				ignoredIds = value ?? new int[] { };
+				_ignoredIds = value ?? new int[] { };
 			}
 		}
 
@@ -111,10 +111,10 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		/// </summary>
 		public SongType[] SongTypes
 		{
-			get => songTypes;
+			get => _songTypes;
 			set
 			{
-				songTypes = value ?? new SongType[] { };
+				_songTypes = value ?? new SongType[] { };
 			}
 		}
 

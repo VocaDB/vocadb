@@ -20,11 +20,11 @@ namespace VocaDb.Web.Controllers.Api
 	public class ActivityEntryApiController : ApiController
 	{
 		private const int DefaultMax = 50;
-		private readonly ActivityEntryQueries queries;
+		private readonly ActivityEntryQueries _queries;
 
 		public ActivityEntryApiController(ActivityEntryQueries queries)
 		{
-			this.queries = queries;
+			this._queries = queries;
 		}
 
 		/// <summary>
@@ -59,6 +59,6 @@ namespace VocaDb.Web.Controllers.Api
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			ActivityEntrySortRule sortRule = ActivityEntrySortRule.CreateDateDescending
-		) => queries.GetList(before, since, userId, editEvent, entryType, maxResults, getTotalCount, fields, entryFields, lang, sortRule);
+		) => _queries.GetList(before, since, userId, editEvent, entryType, maxResults, getTotalCount, fields, entryFields, lang, sortRule);
 	}
 }

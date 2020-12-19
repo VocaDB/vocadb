@@ -11,11 +11,11 @@ namespace VocaDb.Tests.Web.Code
 	[TestClass]
 	public class MarkdownParserTests
 	{
-		private readonly MarkdownParser parser = new(new FakeObjectCache());
+		private readonly MarkdownParser _parser = new(new FakeObjectCache());
 
 		private string GetHtml(string markdownText)
 		{
-			return parser.GetHtml(markdownText);
+			return _parser.GetHtml(markdownText);
 		}
 
 		private void TestGetHtml(string expected, string markdownText)
@@ -26,7 +26,7 @@ namespace VocaDb.Tests.Web.Code
 
 		private void TestGetPlainText(string expected, string input)
 		{
-			var result = parser.GetPlainText(input)?.Trim();
+			var result = _parser.GetPlainText(input)?.Trim();
 			Assert.AreEqual(expected, result, input);
 		}
 

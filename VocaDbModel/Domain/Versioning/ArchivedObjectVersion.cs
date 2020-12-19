@@ -10,7 +10,7 @@ namespace VocaDb.Model.Domain.Versioning
 {
 	public abstract class ArchivedObjectVersion : IDatabaseObject
 	{
-		private string notes;
+		private string _notes;
 
 		protected ArchivedObjectVersion()
 		{
@@ -57,11 +57,11 @@ namespace VocaDb.Model.Domain.Versioning
 
 		public virtual string Notes
 		{
-			get => notes;
+			get => _notes;
 			protected set
 			{
 				ParamIs.NotNull(() => value);
-				notes = value;
+				_notes = value;
 			}
 		}
 

@@ -16,7 +16,7 @@ namespace VocaDb.Model.Domain.Globalization
 			return !string.IsNullOrEmpty(cultureCode) ? CultureInfo.GetCultureInfo(cultureCode) : null;
 		}
 
-		private string cultureCode;
+		private string _cultureCode;
 
 		public OptionalCultureCode() : this(string.Empty) { }
 
@@ -37,8 +37,8 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual string CultureCode
 		{
-			get => cultureCode;
-			set => cultureCode = value ?? string.Empty;
+			get => _cultureCode;
+			set => _cultureCode = value ?? string.Empty;
 		}
 
 		public virtual bool IsEmpty => string.IsNullOrEmpty(CultureCode);

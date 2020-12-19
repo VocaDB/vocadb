@@ -12,11 +12,11 @@ namespace VocaDb.Model.Database.Queries
 {
 	public class PVQueries
 	{
-		private readonly IRepository repository;
+		private readonly IRepository _repository;
 
 		public PVQueries(IRepository repository)
 		{
-			this.repository = repository;
+			this._repository = repository;
 		}
 
 		public PartialFindResult<PVForSongContract> GetList(string name = null, string author = null,
@@ -24,7 +24,7 @@ namespace VocaDb.Model.Database.Queries
 			int maxResults = 10, bool getTotalCount = false,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-			return repository.HandleQuery(db =>
+			return _repository.HandleQuery(db =>
 			{
 				var query = db.Query<PVForSong>();
 

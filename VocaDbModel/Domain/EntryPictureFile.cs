@@ -25,9 +25,9 @@ namespace VocaDb.Model.Domain
 		// Not versioned.
 		int IEntryImageInformation.Version => 0;
 
-		private User author;
-		private string mime;
-		private string name;
+		private User _author;
+		private string _mime;
+		private string _name;
 
 		/// <summary>
 		/// Extension for this picture file, determined based on the MIME type.
@@ -53,11 +53,11 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual User Author
 		{
-			get => author;
+			get => _author;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				author = value;
+				_author = value;
 			}
 		}
 
@@ -80,11 +80,11 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual string Mime
 		{
-			get => mime;
+			get => _mime;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				mime = value;
+				_mime = value;
 			}
 		}
 
@@ -93,11 +93,11 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual string Name
 		{
-			get => name;
+			get => _name;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				name = value;
+				_name = value;
 			}
 		}
 

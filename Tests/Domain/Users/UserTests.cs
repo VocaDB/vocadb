@@ -19,14 +19,14 @@ namespace VocaDb.Tests.Domain.Users
 	[TestClass]
 	public class UserTests
 	{
-		private Song song;
-		private User user;
+		private Song _song;
+		private User _user;
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			user = new User();
-			song = new Song(new LocalizedString("I just wanna say...", ContentLanguageSelection.English));
+			_user = new User();
+			_song = new Song(new LocalizedString("I just wanna say...", ContentLanguageSelection.English));
 		}
 
 		[TestMethod]
@@ -34,7 +34,7 @@ namespace VocaDb.Tests.Domain.Users
 		{
 			var artist = new Artist { Id = 1 };
 
-			var result = user.AddOwnedArtist(artist);
+			var result = _user.AddOwnedArtist(artist);
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual(artist, result.Artist, "Artist");
@@ -46,41 +46,41 @@ namespace VocaDb.Tests.Domain.Users
 		{
 			var artist = new Artist { Id = 1 };
 
-			user.AddOwnedArtist(artist);
-			user.AddOwnedArtist(artist);
+			_user.AddOwnedArtist(artist);
+			_user.AddOwnedArtist(artist);
 		}
 
 		[TestMethod]
 		public void AddSongToFavorites_Like()
 		{
-			var rating = user.AddSongToFavorites(song, SongVoteRating.Like);
+			var rating = _user.AddSongToFavorites(_song, SongVoteRating.Like);
 
 			Assert.IsNotNull(rating, "result is not null");
 			Assert.AreEqual(SongVoteRating.Like, rating.Rating, "rating is as expected");
-			Assert.AreEqual(0, song.FavoritedTimes, "not favorited");
-			Assert.AreEqual(FavoriteSongForUser.GetRatingScore(SongVoteRating.Like), song.RatingScore, "rating score");
-			Assert.IsTrue(song.IsFavoritedBy(user), "song is favorited by user");
+			Assert.AreEqual(0, _song.FavoritedTimes, "not favorited");
+			Assert.AreEqual(FavoriteSongForUser.GetRatingScore(SongVoteRating.Like), _song.RatingScore, "rating score");
+			Assert.IsTrue(_song.IsFavoritedBy(_user), "song is favorited by user");
 		}
 
 		[TestMethod]
 		public void AddSongToFavorites_Favorite()
 		{
-			var rating = user.AddSongToFavorites(song, SongVoteRating.Favorite);
+			var rating = _user.AddSongToFavorites(_song, SongVoteRating.Favorite);
 
 			Assert.IsNotNull(rating, "result is not null");
 			Assert.AreEqual(SongVoteRating.Favorite, rating.Rating, "rating is as expected");
-			Assert.AreEqual(1, song.FavoritedTimes, "favorited once");
-			Assert.AreEqual(FavoriteSongForUser.GetRatingScore(SongVoteRating.Favorite), song.RatingScore, "rating score");
-			Assert.IsTrue(song.IsFavoritedBy(user), "song is favorited by user");
+			Assert.AreEqual(1, _song.FavoritedTimes, "favorited once");
+			Assert.AreEqual(FavoriteSongForUser.GetRatingScore(SongVoteRating.Favorite), _song.RatingScore, "rating score");
+			Assert.IsTrue(_song.IsFavoritedBy(_user), "song is favorited by user");
 		}
 
 		[TestMethod]
 		public void CreateWebLink()
 		{
-			user.CreateWebLink(new WebLinkContract("http://www.test.com", "test link", WebLinkCategory.Other, disabled: false));
+			_user.CreateWebLink(new WebLinkContract("http://www.test.com", "test link", WebLinkCategory.Other, disabled: false));
 
-			Assert.AreEqual(1, user.WebLinks.Count, "Should have one link");
-			var link = user.WebLinks.First();
+			Assert.AreEqual(1, _user.WebLinks.Count, "Should have one link");
+			var link = _user.WebLinks.First();
 			Assert.AreEqual("test link", link.Description, "description");
 			Assert.AreEqual("http://www.test.com", link.Url, "url");
 			Assert.AreEqual(WebLinkCategory.Other, link.Category, "category");

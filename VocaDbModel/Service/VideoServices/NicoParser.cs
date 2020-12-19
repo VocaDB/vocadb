@@ -24,7 +24,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 	public static class NicoHelper
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
 		private static string GetUserName(Stream htmlStream, Encoding encoding)
 		{
@@ -35,7 +35,7 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 			catch (IOException x)
 			{
-				log.Warn(x, "Unable to load document for user name");
+				_log.Warn(x, "Unable to load document for user name");
 			}
 
 			var titleElem = doc.DocumentNode.SelectSingleNode("//html/body/div/p[2]/a/strong");
@@ -63,7 +63,7 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 			catch (WebException x)
 			{
-				log.Warn(x, "Unable to get response for user name");
+				_log.Warn(x, "Unable to get response for user name");
 				return null;
 			}
 

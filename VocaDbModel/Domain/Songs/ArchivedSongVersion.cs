@@ -19,8 +19,8 @@ namespace VocaDb.Model.Domain.Songs
 			return song.CreateArchivedVersion(data, diff, author, reason, notes);
 		}
 
-		private SongDiff diff;
-		private Song song;
+		private SongDiff _diff;
+		private Song _song;
 
 		public ArchivedSongVersion() { }
 
@@ -37,8 +37,8 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual SongDiff Diff
 		{
-			get => diff;
-			protected set => diff = value;
+			get => _diff;
+			protected set => _diff = value;
 		}
 
 		public override IEntryDiff DiffBase => Diff;
@@ -58,11 +58,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Song
 		{
-			get => song;
+			get => _song;
 			protected set
 			{
 				ParamIs.NotNull(() => value);
-				song = value;
+				_song = value;
 			}
 		}
 

@@ -8,7 +8,7 @@ namespace VocaDb.Web.Helpers
 {
 	public static class DateTimeUtils
 	{
-		private static readonly Regex simpleTimeRegex = new(@"(\d+)([dhm]?)");
+		private static readonly Regex _simpleTimeRegex = new(@"(\d+)([dhm]?)");
 
 		public static string FormatFromSeconds(int seconds)
 		{
@@ -23,7 +23,7 @@ namespace VocaDb.Web.Helpers
 			if (string.IsNullOrEmpty(timeSpanStr))
 				return TimeSpan.Zero;
 
-			var match = simpleTimeRegex.Match(timeSpanStr);
+			var match = _simpleTimeRegex.Match(timeSpanStr);
 
 			if (!match.Success)
 				return TimeSpan.Zero;

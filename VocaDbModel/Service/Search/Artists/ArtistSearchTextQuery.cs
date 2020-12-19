@@ -35,7 +35,7 @@ namespace VocaDb.Model.Service.Search.Artists
 
 		public ArtistSearchTextQuery OverrideMatchMode(NameMatchMode? matchMode)
 		{
-			return matchMode.HasValue ? new ArtistSearchTextQuery(Query, matchMode.Value, OriginalQuery, words) : this;
+			return matchMode.HasValue ? new ArtistSearchTextQuery(Query, matchMode.Value, OriginalQuery, _words) : this;
 		}
 	}
 }

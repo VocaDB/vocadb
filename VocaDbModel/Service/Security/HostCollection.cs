@@ -17,68 +17,68 @@ namespace VocaDb.Model.Service.Security
 	/// </summary>
 	public class HostCollection : IHostCollection
 	{
-		private HashSet<string> ips;
-		private readonly ReaderWriterLockSlim readerWriterLock = new();
+		private HashSet<string> _ips;
+		private readonly ReaderWriterLockSlim _readerWriterLock = new();
 
 		public HostCollection()
 		{
-			ips = new HashSet<string>();
+			_ips = new HashSet<string>();
 		}
 
 		public HostCollection(IEnumerable<string> ips)
 		{
-			this.ips = new HashSet<string>(ips);
+			this._ips = new HashSet<string>(ips);
 		}
 
 		public void Add(string host)
 		{
-			readerWriterLock.EnterWriteLock();
+			_readerWriterLock.EnterWriteLock();
 			try
 			{
-				ips.Add(host);
+				_ips.Add(host);
 			}
 			finally
 			{
-				readerWriterLock.ExitWriteLock();
+				_readerWriterLock.ExitWriteLock();
 			}
 		}
 
 		public void Reset(IEnumerable<string> ips)
 		{
-			readerWriterLock.EnterWriteLock();
+			_readerWriterLock.EnterWriteLock();
 			try
 			{
-				this.ips = new HashSet<string>(ips);
+				this._ips = new HashSet<string>(ips);
 			}
 			finally
 			{
-				readerWriterLock.ExitWriteLock();
+				_readerWriterLock.ExitWriteLock();
 			}
 		}
 
 		public bool Contains(string host)
 		{
-			readerWriterLock.EnterReadLock();
+			_readerWriterLock.EnterReadLock();
 			try
 			{
-				return ips.Contains(host);
+				return _ips.Contains(host);
 			}
 			finally
 			{
-				readerWriterLock.ExitReadLock();
+				_readerWriterLock.ExitReadLock();
 			}
 		}
 
 		public void Remove(string host)
 		{
-			readerWriterLock.EnterWriteLock();
+			_readerWriterLock.EnterWriteLock();
 			try
 			{
-				ips.Remove(host);
+				_ips.Remove(host);
 			}
 			finally
 			{
-				readerWriterLock.ExitWriteLock();
+				_readerWriterLock.ExitWriteLock();
 			}
 		}
 
@@ -86,14 +86,14 @@ namespace VocaDb.Model.Service.Security
 		{
 			get
 			{
-				readerWriterLock.EnterReadLock();
+				_readerWriterLock.EnterReadLock();
 				try
 				{
-					return ips.ToArray();
+					return _ips.ToArray();
 				}
 				finally
 				{
-					readerWriterLock.ExitReadLock();
+					_readerWriterLock.ExitReadLock();
 				}
 			}
 		}

@@ -11,7 +11,7 @@ namespace VocaDb.Model.Domain.Artists
 {
 	public class ArtistStringFactory
 	{
-		private readonly bool allowRepeatingProducerAsPerformer;
+		private readonly bool _allowRepeatingProducerAsPerformer;
 
 		/// <summary>
 		/// Gets the sort order for an artist in an artist string. 
@@ -51,7 +51,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public ArtistStringFactory(bool allowRepeatingProducerAsPerformer)
 		{
-			this.allowRepeatingProducerAsPerformer = allowRepeatingProducerAsPerformer;
+			this._allowRepeatingProducerAsPerformer = allowRepeatingProducerAsPerformer;
 		}
 
 		public TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus)
@@ -67,7 +67,7 @@ namespace VocaDb.Model.Domain.Artists
 
 			var performers = matched
 				.Where(a => ArtistHelper.GetCategories(a).HasFlag(ArtistCategories.Vocalist)
-					&& (!producers.Contains(a) || allowRepeatingProducerAsPerformer)
+					&& (!producers.Contains(a) || _allowRepeatingProducerAsPerformer)
 					&& (a.Roles.HasFlag(ArtistRoles.Vocalist) || !a.Roles.HasFlag(ArtistRoles.Chorus)))
 				.ToArray();
 

@@ -14,7 +14,7 @@ namespace VocaDb.Model.Service.BrandableStrings
 {
 	public class BrandableStringsManager
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
 		private bool LoadBrandedStrings()
 		{
@@ -31,7 +31,7 @@ namespace VocaDb.Model.Service.BrandableStrings
 			}
 			catch (FileNotFoundException)
 			{
-				log.Warn("Branded strings assembly '{0}' not found.", brandedStringsAssembly);
+				_log.Warn("Branded strings assembly '{0}' not found.", brandedStringsAssembly);
 				return false;
 			}
 
@@ -39,7 +39,7 @@ namespace VocaDb.Model.Service.BrandableStrings
 
 			if (headerType == null)
 			{
-				log.Warn("No header type found in branded strings assembly.");
+				_log.Warn("No header type found in branded strings assembly.");
 				return false;
 			}
 
@@ -57,7 +57,7 @@ namespace VocaDb.Model.Service.BrandableStrings
 
 		public BrandableStringsManager(VdbConfigManager config)
 		{
-			this.config = config;
+			this._config = config;
 
 			if (!LoadBrandedStrings())
 			{
@@ -70,7 +70,7 @@ namespace VocaDb.Model.Service.BrandableStrings
 			}
 		}
 
-		private readonly VdbConfigManager config;
+		private readonly VdbConfigManager _config;
 
 		public AlbumStrings Album { get; private set; }
 
@@ -84,7 +84,7 @@ namespace VocaDb.Model.Service.BrandableStrings
 
 		public UserStrings User { get; private set; }
 
-		public string SiteName => config.SiteSettings.SiteName.EmptyToNull() ?? Layout.SiteName;
-		public string SiteTitle => config.SiteSettings.SiteTitle.EmptyToNull() ?? Layout.SiteTitle;
+		public string SiteName => _config.SiteSettings.SiteName.EmptyToNull() ?? Layout.SiteName;
+		public string SiteTitle => _config.SiteSettings.SiteTitle.EmptyToNull() ?? Layout.SiteTitle;
 	}
 }

@@ -9,18 +9,18 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 {
 	public class AlbumArtistNameFilter : ISearchFilter<Album>
 	{
-		private readonly string[] artistNames;
+		private readonly string[] _artistNames;
 
 		public AlbumArtistNameFilter(IEnumerable<string> artistNames)
 		{
-			this.artistNames = artistNames.ToArray();
+			this._artistNames = artistNames.ToArray();
 		}
 
 		public QueryCost Cost => QueryCost.High;
 
 		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session)
 		{
-			return query.Where(a => a.AllArtists.Any(u => u.Artist.Names.Names.Any(a2 => artistNames.Any(na => a2.Value.Contains(na)))));
+			return query.Where(a => a.AllArtists.Any(u => u.Artist.Names.Names.Any(a2 => _artistNames.Any(na => a2.Value.Contains(na)))));
 		}
 
 		public IQueryable<Album> Query(IDatabaseContext session)
@@ -38,10 +38,10 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 				.Select(an => an.Album)
 				.Distinct();				*/
 
-			if (artistNames.Length == 2)
+			if (_artistNames.Length == 2)
 			{
-				var n1 = artistNames.ElementAt(0);
-				var n2 = artistNames.ElementAt(1);
+				var n1 = _artistNames.ElementAt(0);
+				var n2 = _artistNames.ElementAt(1);
 				return session.Query<Album>().Where(a => a.AllArtists.Any(u => u.Artist.Names.Names.Any(an => an.Value.Contains(n1)))
 					&& a.AllArtists.Any(u => u.Artist.Names.Names.Any(an => an.Value.Contains(n2))));
 			}

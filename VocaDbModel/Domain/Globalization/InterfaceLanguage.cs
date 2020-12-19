@@ -9,11 +9,11 @@ namespace VocaDb.Model.Domain.Globalization
 {
 	public static class InterfaceLanguage
 	{
-		private static readonly ImmutableHashSet<string> twoLetterLanguageCodes;
+		private static readonly ImmutableHashSet<string> _twoLetterLanguageCodes;
 
 		static InterfaceLanguage()
 		{
-			twoLetterLanguageCodes = ImmutableHashSet.CreateRange(Cultures.Cultures.Select(c => c.TwoLetterISOLanguageName));
+			_twoLetterLanguageCodes = ImmutableHashSet.CreateRange(Cultures.Cultures.Select(c => c.TwoLetterISOLanguageName));
 		}
 
 		public static CultureCollection Cultures => new CultureCollection(LanguageCodes);
@@ -33,7 +33,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public static bool IsValidUserInterfaceCulture(CultureInfo culture)
 		{
-			return twoLetterLanguageCodes.Contains(culture.TwoLetterISOLanguageName);
+			return _twoLetterLanguageCodes.Contains(culture.TwoLetterISOLanguageName);
 		}
 
 		public static readonly string[] LanguageCodes = {

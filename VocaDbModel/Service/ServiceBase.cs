@@ -26,12 +26,12 @@ namespace VocaDb.Model.Service
 {
 	public abstract class ServiceBase
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
-		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEntryLinkFactory _entryLinkFactory;
 		protected const int MaxEntryCount = 500;
-		private readonly ISessionFactory sessionFactory;
-		private readonly IUserPermissionContext permissionContext;
+		private readonly ISessionFactory _sessionFactory;
+		private readonly IUserPermissionContext _permissionContext;
 
 		protected string CreateEntryLink(IEntryBase entry)
 		{
@@ -55,13 +55,13 @@ namespace VocaDb.Model.Service
 			return (PermissionContext.LoggedUser != null ? session.Load<User>(PermissionContext.LoggedUser.Id) : null);
 		}
 
-		protected IEntryLinkFactory EntryLinkFactory => entryLinkFactory;
+		protected IEntryLinkFactory EntryLinkFactory => _entryLinkFactory;
 
 		protected ContentLanguagePreference LanguagePreference => PermissionContext.LanguagePreference;
 
-		protected IUserPermissionContext PermissionContext => permissionContext;
+		protected IUserPermissionContext PermissionContext => _permissionContext;
 
-		protected ISessionFactory SessionFactory => sessionFactory;
+		protected ISessionFactory SessionFactory => _sessionFactory;
 
 		protected void AddActivityfeedEntry(ISession session, ActivityEntry entry)
 		{
@@ -116,7 +116,7 @@ namespace VocaDb.Model.Service
 		/// <param name="who">Who made the action.</param>
 		protected void SysLog(string doingWhat, string who)
 		{
-			log.Info(GetAuditLogMessage(doingWhat, who));
+			_log.Info(GetAuditLogMessage(doingWhat, who));
 		}
 
 		protected void AuditLog(string doingWhat, ISession session, AgentLoginData who, AuditLogCategory category = AuditLogCategory.Unspecified)
@@ -173,12 +173,12 @@ namespace VocaDb.Model.Service
 			}
 			catch (ObjectNotFoundException x)
 			{
-				log.Error(x.Message);
+				_log.Error(x.Message);
 				throw;
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -194,12 +194,12 @@ namespace VocaDb.Model.Service
 			}
 			catch (ObjectNotFoundException x)
 			{
-				log.Error(x.Message);
+				_log.Error(x.Message);
 				throw;
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -215,12 +215,12 @@ namespace VocaDb.Model.Service
 			}
 			catch (ObjectNotFoundException x)
 			{
-				log.Error(x.Message);
+				_log.Error(x.Message);
 				throw;
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -239,7 +239,7 @@ namespace VocaDb.Model.Service
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -258,7 +258,7 @@ namespace VocaDb.Model.Service
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -277,7 +277,7 @@ namespace VocaDb.Model.Service
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -295,7 +295,7 @@ namespace VocaDb.Model.Service
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -313,14 +313,14 @@ namespace VocaDb.Model.Service
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				_log.Error(x, failMsg);
 				throw;
 			}
 		}
 
 		protected ISession OpenSession()
 		{
-			return sessionFactory.OpenSession();
+			return _sessionFactory.OpenSession();
 		}
 
 		protected ServiceBase(
@@ -328,9 +328,9 @@ namespace VocaDb.Model.Service
 		{
 			ParamIs.NotNull(() => sessionFactory);
 
-			this.sessionFactory = sessionFactory;
-			this.permissionContext = permissionContext;
-			this.entryLinkFactory = entryLinkFactory;
+			this._sessionFactory = sessionFactory;
+			this._permissionContext = permissionContext;
+			this._entryLinkFactory = entryLinkFactory;
 		}
 
 		protected void DeleteEntity<TEntity>(int id, PermissionToken permissionFlags, bool skipLog = false)

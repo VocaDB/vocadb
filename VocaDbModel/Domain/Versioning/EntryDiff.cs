@@ -103,30 +103,30 @@ namespace VocaDb.Model.Domain.Versioning
 
 	public struct EnumFieldAccessor<T> where T : struct, Enum
 	{
-		private readonly EnumVal<T> val;
-		private readonly T field;
+		private readonly EnumVal<T> _val;
+		private readonly T _field;
 
 		public EnumFieldAccessor(EnumVal<T> val, T field)
 			: this()
 		{
-			this.val = val;
-			this.field = field;
+			this._val = val;
+			this._field = field;
 		}
 
 		public bool IsChanged
 		{
-			get => val.FlagIsSet(field);
-			set => val.SetFlag(field, value);
+			get => _val.FlagIsSet(_field);
+			set => _val.SetFlag(_field, value);
 		}
 
 		public void Set(bool value = true)
 		{
-			val.SetFlag(field, value);
+			_val.SetFlag(_field, value);
 		}
 
 		public override string ToString()
 		{
-			return $"{field} changed: {IsChanged}";
+			return $"{_field} changed: {IsChanged}";
 		}
 	}
 }

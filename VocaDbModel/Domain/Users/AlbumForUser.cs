@@ -8,8 +8,8 @@ namespace VocaDb.Model.Domain.Users
 	{
 		public const int NotRated = 0;
 
-		private Album album;
-		private User user;
+		private Album _album;
+		private User _user;
 
 		public AlbumForUser()
 		{
@@ -30,11 +30,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual Album Album
 		{
-			get => album;
+			get => _album;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 
@@ -51,11 +51,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual User User
 		{
-			get => user;
+			get => _user;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				user = value;
+				_user = value;
 			}
 		}
 
@@ -93,7 +93,7 @@ namespace VocaDb.Model.Domain.Users
 				return;
 
 			Album.UserCollections.Remove(this);
-			album.UpdateRatingTotals();
+			_album.UpdateRatingTotals();
 			Album = target;
 			target.UserCollections.Add(this);
 			target.UpdateRatingTotals();

@@ -17,24 +17,24 @@ namespace VocaDb.Model.Service
 	{
 		public MaybeOrderedQueryable(IQueryable<T> query, bool isOrdered)
 		{
-			this.query = query;
+			this._query = query;
 			IsOrdered = isOrdered;
 		}
 
 		public MaybeOrderedQueryable(IOrderedQueryable<T> query)
 		{
-			this.query = query;
+			this._query = query;
 			IsOrdered = true;
 		}
 
-		private readonly IQueryable<T> query;
+		private readonly IQueryable<T> _query;
 
-		public Expression Expression => query.Expression;
-		public Type ElementType => query.ElementType;
+		public Expression Expression => _query.Expression;
+		public Type ElementType => _query.ElementType;
 		public bool IsOrdered { get; }
-		public IQueryProvider Provider => query.Provider;
-		public IEnumerator<T> GetEnumerator() => query.GetEnumerator();
-		IEnumerator IEnumerable.GetEnumerator() => query.GetEnumerator();
+		public IQueryProvider Provider => _query.Provider;
+		public IEnumerator<T> GetEnumerator() => _query.GetEnumerator();
+		IEnumerator IEnumerable.GetEnumerator() => _query.GetEnumerator();
 	}
 
 	public static class MaybeOrderedQueryable

@@ -16,14 +16,14 @@ namespace VocaDb.Tests.Domain.Images
 	[TestClass]
 	public class ImageThumbGeneratorTests
 	{
-		private InMemoryImagePersister persister;
-		private ImageThumbGenerator target;
+		private InMemoryImagePersister _persister;
+		private ImageThumbGenerator _target;
 
 		private Stream TestImage() => ResourceHelper.TestImage();
 
 		private void AssertDimensions(IEntryImageInformation imageInfo, ImageSize size, int width, int height)
 		{
-			using (var stream = persister.GetReadStream(imageInfo, size))
+			using (var stream = _persister.GetReadStream(imageInfo, size))
 			using (var img = Image.FromStream(stream))
 			{
 				Assert.AreEqual(width, img.Width, "Image width");
@@ -37,7 +37,7 @@ namespace VocaDb.Tests.Domain.Images
 
 			using (var input = TestImage())
 			{
-				target.GenerateThumbsAndMoveImage(input, thumb, sizes);
+				_target.GenerateThumbsAndMoveImage(input, thumb, sizes);
 			}
 
 			return thumb;
@@ -46,8 +46,8 @@ namespace VocaDb.Tests.Domain.Images
 		[TestInitialize]
 		public void SetUp()
 		{
-			persister = new InMemoryImagePersister();
-			target = new ImageThumbGenerator(persister);
+			_persister = new InMemoryImagePersister();
+			_target = new ImageThumbGenerator(_persister);
 		}
 
 		[TestMethod]
@@ -55,7 +55,7 @@ namespace VocaDb.Tests.Domain.Images
 		{
 			var thumb = CallGenerateThumbsAndMoveImage(ImageSizes.Original);
 
-			Assert.IsTrue(persister.HasImage(thumb, ImageSize.Original), "Image was created");
+			Assert.IsTrue(_persister.HasImage(thumb, ImageSize.Original), "Image was created");
 			AssertDimensions(thumb, ImageSize.Original, 480, 800);
 		}
 
@@ -64,7 +64,7 @@ namespace VocaDb.Tests.Domain.Images
 		{
 			var thumb = CallGenerateThumbsAndMoveImage(ImageSizes.Thumb);
 
-			Assert.IsTrue(persister.HasImage(thumb, ImageSize.Thumb), "Image was created");
+			Assert.IsTrue(_persister.HasImage(thumb, ImageSize.Thumb), "Image was created");
 			AssertDimensions(thumb, ImageSize.Thumb, 150, 250);
 		}
 
@@ -73,9 +73,9 @@ namespace VocaDb.Tests.Domain.Images
 		{
 			var thumb = CallGenerateThumbsAndMoveImage(ImageSizes.Original | ImageSizes.SmallThumb);
 
-			Assert.IsTrue(persister.HasImage(thumb, ImageSize.Original), "Image was created");
+			Assert.IsTrue(_persister.HasImage(thumb, ImageSize.Original), "Image was created");
 			AssertDimensions(thumb, ImageSize.Original, 480, 800);
-			Assert.IsTrue(persister.HasImage(thumb, ImageSize.SmallThumb), "Thumbnail was created");
+			Assert.IsTrue(_persister.HasImage(thumb, ImageSize.SmallThumb), "Thumbnail was created");
 			AssertDimensions(thumb, ImageSize.SmallThumb, 90, 150);
 		}
 	}

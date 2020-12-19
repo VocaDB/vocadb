@@ -6,23 +6,23 @@ namespace VocaDb.Model.Domain.Artists
 {
 	public class ArtistPictureFile : EntryPictureFile, IEntryWithIntId
 	{
-		private Artist artist;
+		private Artist _artist;
 
 		public ArtistPictureFile() { }
 
 		public ArtistPictureFile(string name, string mime, User author, Artist artist)
 			: base(name, mime, author)
 		{
-			this.artist = artist;
+			this._artist = artist;
 		}
 
 		public virtual Artist Artist
 		{
-			get => artist;
+			get => _artist;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				artist = value;
+				_artist = value;
 			}
 		}
 

@@ -6,8 +6,8 @@ namespace VocaDb.Model.Domain.Artists
 {
 	public class ArtistForArtist : IEntryWithIntId
 	{
-		private Artist parent;
-		private Artist member;
+		private Artist _parent;
+		private Artist _member;
 
 		public ArtistForArtist() { }
 
@@ -20,11 +20,11 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual Artist Parent
 		{
-			get => parent;
+			get => _parent;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				parent = value;
+				_parent = value;
 			}
 		}
 
@@ -34,11 +34,11 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual Artist Member
 		{
-			get => member;
+			get => _member;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				member = value;
+				_member = value;
 			}
 		}
 

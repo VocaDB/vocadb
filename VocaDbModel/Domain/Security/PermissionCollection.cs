@@ -20,46 +20,46 @@ namespace VocaDb.Model.Domain.Security
 
 		public static readonly PermissionCollection Empty = new();
 
-		private ISet<PermissionToken> permissions;
+		private ISet<PermissionToken> _permissions;
 
 		private void AddAll(IEnumerable<PermissionToken> flags)
 		{
 			foreach (var flag in flags)
-				permissions.Add(flag);
+				_permissions.Add(flag);
 		}
 
 		public PermissionCollection()
 		{
-			permissions = new HashSet<PermissionToken>();
+			_permissions = new HashSet<PermissionToken>();
 		}
 
 		public PermissionCollection(IEnumerable<PermissionToken> permissions)
 		{
-			this.permissions = new HashSet<PermissionToken>();
+			this._permissions = new HashSet<PermissionToken>();
 			AddAll(permissions);
 		}
 
 		public PermissionCollection(ICollection<PermissionToken> permissions)
 		{
-			this.permissions = new HashSet<PermissionToken>(permissions);
+			this._permissions = new HashSet<PermissionToken>(permissions);
 		}
 
 		public void Add(PermissionToken permissionToken)
 		{
-			permissions.Add(permissionToken);
+			_permissions.Add(permissionToken);
 		}
 
 		public ISet<PermissionToken> Permissions
 		{
-			get => permissions;
+			get => _permissions;
 			protected set
 			{
 				ParamIs.NotNull(() => value);
-				permissions = value;
+				_permissions = value;
 			}
 		}
 
-		public IEnumerable<PermissionToken> PermissionTokens => permissions;
+		public IEnumerable<PermissionToken> PermissionTokens => _permissions;
 
 		public IEnumerator<PermissionToken> GetEnumerator()
 		{
@@ -73,7 +73,7 @@ namespace VocaDb.Model.Domain.Security
 
 		public bool Has(PermissionToken flag)
 		{
-			return (flag == PermissionToken.Nothing || permissions.Contains(flag));
+			return (flag == PermissionToken.Nothing || _permissions.Contains(flag));
 		}
 
 		public PermissionCollection Merge(PermissionCollection collection)

@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain.Tags
 	/// </summary>
 	public abstract class TagUsage : IEntryWithLongId, ITagLink
 	{
-		private Tag tag;
+		private Tag _tag;
 
 		protected TagUsage()
 		{
@@ -46,11 +46,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual Tag Tag
 		{
-			get => tag;
+			get => _tag;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				tag = value;
+				_tag = value;
 			}
 		}
 

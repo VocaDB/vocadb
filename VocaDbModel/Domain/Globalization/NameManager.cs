@@ -12,9 +12,9 @@ namespace VocaDb.Model.Domain.Globalization
 {
 	public class NameManager<T> : INameManager<T>, IEnumerable<T> where T : LocalizedStringWithId
 	{
-		private string additionalNamesString;
-		private IList<T> names = new List<T>();
-		private TranslatedString sortNames = new();
+		private string _additionalNamesString;
+		private IList<T> _names = new List<T>();
+		private TranslatedString _sortNames = new();
 
 		public NameManager()
 		{
@@ -26,7 +26,7 @@ namespace VocaDb.Model.Domain.Globalization
 			if (!Names.Any())
 				return null;
 
-			var name = FirstName(sortNames.DefaultLanguage);
+			var name = FirstName(_sortNames.DefaultLanguage);
 
 			return name ?? Names.First();
 		}
@@ -69,11 +69,11 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual string AdditionalNamesString
 		{
-			get => additionalNamesString;
+			get => _additionalNamesString;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				additionalNamesString = value;
+				_additionalNamesString = value;
 			}
 		}
 
@@ -102,11 +102,11 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual IList<T> Names
 		{
-			get => names;
+			get => _names;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				names = value;
+				_names = value;
 			}
 		}
 
@@ -114,11 +114,11 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual TranslatedString SortNames
 		{
-			get => sortNames;
+			get => _sortNames;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				sortNames = value;
+				_sortNames = value;
 			}
 		}
 

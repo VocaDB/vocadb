@@ -13,15 +13,15 @@ namespace VocaDb.Model.Service
 {
 	public class ActivityFeedService : ServiceBase
 	{
-		private readonly IUserIconFactory userIconFactory;
-		private readonly EntryForApiContractFactory entryForApiContractFactory;
+		private readonly IUserIconFactory _userIconFactory;
+		private readonly EntryForApiContractFactory _entryForApiContractFactory;
 
 		public ActivityFeedService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
 			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
-			this.userIconFactory = userIconFactory;
-			this.entryForApiContractFactory = entryForApiContractFactory;
+			this._userIconFactory = userIconFactory;
+			this._entryForApiContractFactory = entryForApiContractFactory;
 		}
 
 		public PartialFindResult<ActivityEntryForApiContract> GetFollowedArtistActivity(int maxEntries)
@@ -49,8 +49,8 @@ namespace VocaDb.Model.Service
 					.Concat(songEntries)
 					.OrderByDescending(a => a.CreateDate)
 					.Take(maxEntries)
-					.Select(e => new ActivityEntryForApiContract(e, entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture,
-						LanguagePreference), userIconFactory,
+					.Select(e => new ActivityEntryForApiContract(e, _entryForApiContractFactory.Create(e.EntryBase, EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture,
+						LanguagePreference), _userIconFactory,
 					PermissionContext, ActivityEntryOptionalFields.None))
 					.ToArray();
 

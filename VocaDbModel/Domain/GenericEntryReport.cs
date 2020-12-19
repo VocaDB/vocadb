@@ -11,7 +11,7 @@ namespace VocaDb.Model.Domain
 		where TEntry : class, IEntryWithNames
 		where TReport : struct, Enum
 	{
-		private TEntry song;
+		private TEntry _song;
 
 		protected GenericEntryReport() { }
 
@@ -32,11 +32,11 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual TEntry Entry
 		{
-			get => song;
+			get => _song;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				song = value;
+				_song = value;
 			}
 		}
 

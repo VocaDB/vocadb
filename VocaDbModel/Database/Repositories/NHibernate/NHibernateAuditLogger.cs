@@ -10,7 +10,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 {
 	public class NHibernateAuditLogger : IAuditLogger
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
 		private IDatabaseContext<AuditLogEntry> Ctx { get; set; }
 		private IUserPermissionContext PermissionContext { get; set; }
@@ -61,7 +61,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		/// <param name="who">Who made the action.</param>
 		public void SysLog(string doingWhat, string who)
 		{
-			log.Info(GetAuditLogMessage(doingWhat, who));
+			_log.Info(GetAuditLogMessage(doingWhat, who));
 		}
 
 		public void AuditLog(string doingWhat, AgentLoginData who, AuditLogCategory category = AuditLogCategory.Unspecified)

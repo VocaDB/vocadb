@@ -27,13 +27,13 @@ namespace VocaDb.Web.Controllers.Api
 	public class ReleaseEventApiController : ApiController
 	{
 		private const int DefaultMax = 10;
-		private readonly EventQueries queries;
-		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
+		private readonly EventQueries _queries;
+		private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
 
 		public ReleaseEventApiController(EventQueries queries, IAggregatedEntryImageUrlFactory thumbPersister)
 		{
-			this.queries = queries;
-			this.thumbPersister = thumbPersister;
+			this._queries = queries;
+			this._thumbPersister = thumbPersister;
 		}
 
 		/// <summary>
@@ -53,11 +53,11 @@ namespace VocaDb.Web.Controllers.Api
 
 			if (hardDelete)
 			{
-				queries.MoveToTrash(id, notes);
+				_queries.MoveToTrash(id, notes);
 			}
 			else
 			{
-				queries.Delete(id, notes);
+				_queries.Delete(id, notes);
 			}
 		}
 
@@ -71,7 +71,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("{eventId:int}/albums")]
 		public AlbumForApiContract[] GetAlbums(int eventId,
 			AlbumOptionalFields fields = AlbumOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetAlbums(eventId, fields, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetAlbums(eventId, fields, lang);
 
 		/// <summary>
 		/// Gets a list of songs for a specific event.
@@ -83,7 +83,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("{eventId:int}/published-songs")]
 		public SongForApiContract[] GetPublishedSongs(int eventId,
 			SongOptionalFields fields = SongOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetPublishedSongs(eventId, fields, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetPublishedSongs(eventId, fields, lang);
 
 		/// <summary>
 		/// Gets a page of events.
@@ -156,7 +156,7 @@ namespace VocaDb.Web.Controllers.Api
 				SortRule = sort
 			};
 
-			return queries.Find(e => new ReleaseEventForApiContract(e, lang, fields, thumbPersister), queryParams);
+			return _queries.Find(e => new ReleaseEventForApiContract(e, lang, fields, _thumbPersister), queryParams);
 		}
 
 		/// <summary>
@@ -172,12 +172,12 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("names")]
 		public string[] GetNames(
 			string query = "",
-			int maxResults = 10) => queries.GetNames(query, maxResults);
+			int maxResults = 10) => _queries.GetNames(query, maxResults);
 
 		[Route("{id:int}")]
 		public ReleaseEventForApiContract GetOne(int id,
 			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetOne(id, lang, fields);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetOne(id, lang, fields);
 
 		/// <summary>
 		/// Creates a new report.
@@ -188,6 +188,6 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
 		[Route("{eventId:int}/reports")]
 		[RestrictBannedIP]
-		public void PostReport(int eventId, EventReportType reportType, string notes, int? versionNumber) => queries.CreateReport(eventId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+		public void PostReport(int eventId, EventReportType reportType, string notes, int? versionNumber) => _queries.CreateReport(eventId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 	}
 }

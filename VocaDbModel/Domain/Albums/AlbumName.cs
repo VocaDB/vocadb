@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Albums
 {
 	public class AlbumName : LocalizedStringWithId
 	{
-		private Album album;
+		private Album _album;
 
 		public AlbumName() { }
 
@@ -18,11 +18,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual Album Album
 		{
-			get => album;
+			get => _album;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 

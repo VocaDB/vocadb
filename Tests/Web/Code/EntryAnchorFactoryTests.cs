@@ -15,18 +15,18 @@ namespace VocaDb.Tests.Web.Code
 	[TestClass]
 	public class EntryAnchorFactoryTests
 	{
-		private EntryAnchorFactory factory;
+		private EntryAnchorFactory _factory;
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			factory = new EntryAnchorFactory("http://test.vocadb.net");
+			_factory = new EntryAnchorFactory("http://test.vocadb.net");
 		}
 
 		[TestMethod]
 		public void CreateEntryLink_Components()
 		{
-			var result = factory.CreateEntryLink(EntryType.Artist, 39, "Hatsune Miku");
+			var result = _factory.CreateEntryLink(EntryType.Artist, 39, "Hatsune Miku");
 
 			Assert.AreEqual("<a href=\"/Ar/39\">Hatsune Miku</a>", result, "result");
 		}
@@ -35,7 +35,7 @@ namespace VocaDb.Tests.Web.Code
 		public void CreateEntryLink_Entry()
 		{
 			var artist = new Artist(TranslatedString.Create("Hatsune Miku")) { Id = 39 };
-			var result = factory.CreateEntryLink(artist);
+			var result = _factory.CreateEntryLink(artist);
 
 			Assert.AreEqual("<a href=\"/Ar/39\">Hatsune Miku</a>", result, "result");
 		}
@@ -44,7 +44,7 @@ namespace VocaDb.Tests.Web.Code
 		public void CreateEntryLink_HtmlEncode()
 		{
 			var song = new Song(TranslatedString.Create("Sentaku <love or dead>")) { Id = 39 };
-			var result = factory.CreateEntryLink(song);
+			var result = _factory.CreateEntryLink(song);
 
 			Assert.AreEqual("<a href=\"/S/39\">Sentaku &lt;love or dead&gt;</a>", result, "result");
 		}

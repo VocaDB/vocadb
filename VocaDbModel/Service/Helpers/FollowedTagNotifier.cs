@@ -18,7 +18,7 @@ namespace VocaDb.Model.Service.Helpers
 {
 	public class FollowedTagNotifier
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 
 		private string CreateMessageBody(Tag[] followedArtists, User user, IEntryWithNames entry, IEntryLinkFactory entryLinkFactory, bool markdown,
 			string entryTypeName)
@@ -79,7 +79,7 @@ namespace VocaDb.Model.Service.Helpers
 			}
 			catch (GenericADOException x)
 			{
-				log.Error(x, "Unable to send notifications");
+				_log.Error(x, "Unable to send notifications");
 			}
 		}
 
@@ -90,7 +90,7 @@ namespace VocaDb.Model.Service.Helpers
 			var coll = tags.Distinct().ToArray();
 			var tagIds = coll.Select(a => a.Id).ToArray();
 
-			log.Info("Sending notifications for {0} tags", tagIds.Length);
+			_log.Info("Sending notifications for {0} tags", tagIds.Length);
 
 			// Get users with less than maximum number of unread messages, following any of the tags
 			var usersWithTagsArr = await ctx.Query<TagForUser>()
@@ -109,11 +109,11 @@ namespace VocaDb.Model.Service.Helpers
 
 			var userIds = usersWithTags.Keys.Except(ignoreUsers).ToArray();
 
-			log.Debug("Found {0} users subscribed to tags", userIds.Length);
+			_log.Debug("Found {0} users subscribed to tags", userIds.Length);
 
 			if (!userIds.Any())
 			{
-				log.Info("No users subscribed to tags - skipping.");
+				_log.Info("No users subscribed to tags - skipping.");
 				return;
 			}
 
@@ -151,7 +151,7 @@ namespace VocaDb.Model.Service.Helpers
 				await ctx.SaveAsync(notification);
 			}
 
-			log.Info($"Sent notifications to {users.Count} users");
+			_log.Info($"Sent notifications to {users.Count} users");
 		}
 	}
 }

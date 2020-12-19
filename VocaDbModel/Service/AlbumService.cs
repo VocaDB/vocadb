@@ -32,7 +32,7 @@ namespace VocaDb.Model.Service
 	public class AlbumService : ServiceBase
 	{
 		// ReSharper disable UnusedMember.Local
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
 		// ReSharper restore UnusedMember.Local
 
 		private PartialFindResult<Album> Find(ISession session, AlbumQueryParams queryParams)

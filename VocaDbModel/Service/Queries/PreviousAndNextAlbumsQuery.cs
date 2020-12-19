@@ -15,7 +15,7 @@ namespace VocaDb.Model.Service.Queries
 	/// </summary>
 	public class PreviousAndNextAlbumsQuery
 	{
-		private readonly IDatabaseContext<Album> ctx;
+		private readonly IDatabaseContext<Album> _ctx;
 
 		private IQueryable<Album> AddReleaseRestrictionAfter(IQueryable<Album> criteria, DateTime date)
 		{
@@ -46,7 +46,7 @@ namespace VocaDb.Model.Service.Queries
 			var albumId = album.Id;
 			var producerRoles = ArtistRoles.Composer | ArtistRoles.Arranger;
 
-			return ctx.OfType<ArtistForAlbum>().Query()
+			return _ctx.OfType<ArtistForAlbum>().Query()
 				.Where(a => a.Artist.Id == artist.Id && !a.Album.Deleted && a.Album.Id != albumId && !a.IsSupport
 				&& ((a.Roles == ArtistRoles.Default) || ((a.Roles & producerRoles) != ArtistRoles.Default))
 				&& a.Album.ArtistString.Default != ArtistHelper.VariousArtists)
@@ -63,7 +63,7 @@ namespace VocaDb.Model.Service.Queries
 
 		public PreviousAndNextAlbumsQuery(IDatabaseContext<Album> ctx)
 		{
-			this.ctx = ctx;
+			this._ctx = ctx;
 		}
 
 		public Album[] GetRelatedAlbums(Album album)

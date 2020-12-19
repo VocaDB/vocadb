@@ -9,7 +9,7 @@ namespace VocaDb.Model.Domain.Tags
 	/// </summary>
 	public abstract class TagVote : IEntryWithLongId
 	{
-		private User user;
+		private User _user;
 
 		protected TagVote() { }
 
@@ -24,11 +24,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual User User
 		{
-			get => user;
+			get => _user;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				user = value;
+				_user = value;
 			}
 		}
 

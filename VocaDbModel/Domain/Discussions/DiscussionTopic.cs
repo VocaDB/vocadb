@@ -20,10 +20,10 @@ namespace VocaDb.Model.Domain.Discussions
 
 		int IEntryBase.Version => 0;
 
-		private string authorName;
-		private IList<DiscussionComment> comments = new List<DiscussionComment>();
-		private DiscussionFolder folder;
-		private string title;
+		private string _authorName;
+		private IList<DiscussionComment> _comments = new List<DiscussionComment>();
+		private DiscussionFolder _folder;
+		private string _title;
 
 		public DiscussionTopic()
 		{
@@ -43,21 +43,21 @@ namespace VocaDb.Model.Domain.Discussions
 
 		public virtual string AuthorName
 		{
-			get => authorName;
+			get => _authorName;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				authorName = value;
+				_authorName = value;
 			}
 		}
 
 		public virtual IList<DiscussionComment> AllComments
 		{
-			get => comments;
+			get => _comments;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				comments = value;
+				_comments = value;
 			}
 		}
 
@@ -81,11 +81,11 @@ namespace VocaDb.Model.Domain.Discussions
 		/// </summary>
 		public virtual DiscussionFolder Folder
 		{
-			get => folder;
+			get => _folder;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				folder = value;
+				_folder = value;
 			}
 		}
 
@@ -95,11 +95,11 @@ namespace VocaDb.Model.Domain.Discussions
 
 		public virtual string Name
 		{
-			get => title;
+			get => _title;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				title = value;
+				_title = value;
 			}
 		}
 

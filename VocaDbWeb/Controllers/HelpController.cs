@@ -11,13 +11,13 @@ namespace VocaDb.Web.Controllers
 {
 	public class HelpController : ControllerBase
 	{
-		private readonly VdbConfigManager config;
-		private readonly TagQueries tagQueries;
+		private readonly VdbConfigManager _config;
+		private readonly TagQueries _tagQueries;
 
 		public HelpController(VdbConfigManager config, TagQueries tagQueries)
 		{
-			this.config = config;
-			this.tagQueries = tagQueries;
+			this._config = config;
+			this._tagQueries = tagQueries;
 		}
 
 		//
@@ -28,8 +28,8 @@ namespace VocaDb.Web.Controllers
 			if (!string.IsNullOrEmpty(AppConfig.ExternalHelpPath))
 				return View("External");
 
-			ViewBag.FreeTagId = config.SpecialTags.Free;
-			ViewBag.InstrumentalTagId = tagQueries.InstrumentalTagId;
+			ViewBag.FreeTagId = _config.SpecialTags.Free;
+			ViewBag.InstrumentalTagId = _tagQueries.InstrumentalTagId;
 
 			return CultureInfo.CurrentUICulture.TwoLetterISOLanguageName switch
 			{

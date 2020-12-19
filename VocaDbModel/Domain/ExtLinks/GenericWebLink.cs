@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 {
 	public abstract class GenericWebLink<TEntry> : WebLink where TEntry : class
 	{
-		private TEntry entry;
+		private TEntry _entry;
 
 		protected GenericWebLink() { }
 
@@ -31,11 +31,11 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public virtual TEntry Entry
 		{
-			get => entry;
+			get => _entry;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				entry = value;
+				_entry = value;
 			}
 		}
 

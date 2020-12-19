@@ -8,9 +8,9 @@ namespace VocaDb.Model.Domain.Discussions
 {
 	public class DiscussionFolder : IEntryWithIntId
 	{
-		private string description;
-		private string title;
-		private IList<DiscussionTopic> topics = new List<DiscussionTopic>();
+		private string _description;
+		private string _title;
+		private IList<DiscussionTopic> _topics = new List<DiscussionTopic>();
 
 		public DiscussionFolder()
 		{
@@ -29,11 +29,11 @@ namespace VocaDb.Model.Domain.Discussions
 		/// </summary>
 		public virtual IList<DiscussionTopic> AllTopics
 		{
-			get => topics;
+			get => _topics;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				topics = value;
+				_topics = value;
 			}
 		}
 
@@ -41,11 +41,11 @@ namespace VocaDb.Model.Domain.Discussions
 
 		public virtual string Description
 		{
-			get => description;
+			get => _description;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				description = value;
+				_description = value;
 			}
 		}
 
@@ -53,11 +53,11 @@ namespace VocaDb.Model.Domain.Discussions
 
 		public virtual string Name
 		{
-			get => title;
+			get => _title;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				title = value;
+				_title = value;
 			}
 		}
 

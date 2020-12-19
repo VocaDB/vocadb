@@ -12,7 +12,7 @@ namespace VocaDb.Model.Service.Queries
 {
 	public class RelatedAlbumsQuery
 	{
-		private readonly IDatabaseContext<Album> ctx;
+		private readonly IDatabaseContext<Album> _ctx;
 
 		private Artist[] GetMainArtists(Album album, IList<IArtistLinkWithRoles> creditableArtists)
 		{
@@ -37,7 +37,7 @@ namespace VocaDb.Model.Service.Queries
 		{
 			ParamIs.NotNull(() => ctx);
 
-			this.ctx = ctx;
+			this._ctx = ctx;
 		}
 
 		public RelatedAlbums GetRelatedAlbums(Album album)
@@ -54,7 +54,7 @@ namespace VocaDb.Model.Service.Queries
 			if (mainArtists != null && mainArtists.Any())
 			{
 				var mainArtistIds = mainArtists.Select(a => a.Id).ToArray();
-				var albumsByMainArtists = ctx.Query()
+				var albumsByMainArtists = _ctx.Query()
 					.Where(al =>
 						al.Id != albumId
 						&& !al.Deleted
@@ -76,7 +76,7 @@ namespace VocaDb.Model.Service.Queries
 			if (album.RatingTotal > 0)
 			{
 				var userIds = album.UserCollections.Where(c => c.Rating > 3).Take(30).Select(u => u.User.Id).ToArray();
-				var likeMatches = ctx.OfType<AlbumForUser>()
+				var likeMatches = _ctx.OfType<AlbumForUser>()
 					.Query()
 					.Where(f =>
 						userIds.Contains(f.User.Id)
@@ -89,7 +89,7 @@ namespace VocaDb.Model.Service.Queries
 					.Take(12)
 					.ToArray();
 
-				albums.LikeMatches = ctx.Query().Where(s => likeMatches.Contains(s.Id)).ToArray();
+				albums.LikeMatches = _ctx.Query().Where(s => likeMatches.Contains(s.Id)).ToArray();
 				loadedAlbums.AddRange(likeMatches);
 			}
 
@@ -99,7 +99,7 @@ namespace VocaDb.Model.Service.Queries
 				var tagIds = album.Tags.Usages.OrderByDescending(u => u.Count).Take(5).Select(t => t.Tag.Id).ToArray();
 
 				var albumsWithTags =
-					ctx.Query().Where(al =>
+					_ctx.Query().Where(al =>
 						al.Id != albumId
 						&& !loadedAlbums.Contains(al.Id)
 						&& !al.Deleted

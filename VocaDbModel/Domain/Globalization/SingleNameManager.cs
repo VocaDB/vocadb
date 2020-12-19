@@ -8,32 +8,32 @@ namespace VocaDb.Model.Domain.Globalization
 {
 	public class SingleNameManager : INameManager
 	{
-		private readonly string name;
+		private readonly string _name;
 
 		public SingleNameManager(string name)
 		{
-			this.name = name;
+			this._name = name;
 		}
 
 		public EntryNameContract GetEntryName(ContentLanguagePreference languagePreference)
 		{
-			return new EntryNameContract(name);
+			return new EntryNameContract(_name);
 		}
 
-		public TranslatedString SortNames => TranslatedString.Create(name);
+		public TranslatedString SortNames => TranslatedString.Create(_name);
 
-		public IEnumerable<string> AllValues => new[] { name };
+		public IEnumerable<string> AllValues => new[] { _name };
 
-		public IEnumerable<LocalizedStringWithId> NamesBase => new[] { new LocalizedStringWithId(name, ContentLanguageSelection.Unspecified) };
+		public IEnumerable<LocalizedStringWithId> NamesBase => new[] { new LocalizedStringWithId(_name, ContentLanguageSelection.Unspecified) };
 
 		public LocalizedStringWithId FirstNameBase(ContentLanguageSelection languageSelection)
 		{
-			return new LocalizedStringWithId(name, languageSelection);
+			return new LocalizedStringWithId(_name, languageSelection);
 		}
 
 		public string FirstNameValue(ContentLanguageSelection languageSelection)
 		{
-			return name;
+			return _name;
 		}
 
 		public string GetAdditionalNamesStringForLanguage(ContentLanguagePreference languagePreference)

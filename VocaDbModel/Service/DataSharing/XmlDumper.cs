@@ -27,8 +27,8 @@ namespace VocaDb.Model.Service.DataSharing
 		public class Loader
 		{
 			private const int MaxEntries = 100;
-			private readonly PackageCreator packageCreator;
-			private readonly ISession session;
+			private readonly PackageCreator _packageCreator;
+			private readonly ISession _session;
 
 
 			private TEntry[] LoadSkipDeleted<TEntry>(ISession session, int first, int max) where TEntry : IDeletableEntry
@@ -43,18 +43,18 @@ namespace VocaDb.Model.Service.DataSharing
 
 			public Loader(ISession session, Package package)
 			{
-				this.session = session;
-				this.packageCreator = new PackageCreator(package, session.Clear);
+				this._session = session;
+				this._packageCreator = new PackageCreator(package, session.Clear);
 			}
 
 			public void DumpSkipDeleted<TEntry, TContract>(string folder, Func<TEntry, TContract> fac) where TEntry : IDeletableEntry
 			{
-				packageCreator.Dump(start => LoadSkipDeleted<TEntry>(session, start, MaxEntries), folder, fac);
+				_packageCreator.Dump(start => LoadSkipDeleted<TEntry>(_session, start, MaxEntries), folder, fac);
 			}
 
 			public void Dump<TEntry, TContract>(string folder, Func<TEntry, TContract> fac) where TEntry : IDeletableEntry
 			{
-				packageCreator.Dump(start => Load<TEntry>(session, start, MaxEntries), folder, fac);
+				_packageCreator.Dump(start => Load<TEntry>(_session, start, MaxEntries), folder, fac);
 			}
 		}
 
@@ -75,14 +75,14 @@ namespace VocaDb.Model.Service.DataSharing
 
 	public class PackageCreator
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly Package package;
-		private readonly Action cleanup;
+		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private readonly Package _package;
+		private readonly Action _cleanup;
 
 		public PackageCreator(Package package, Action cleanup)
 		{
-			this.package = package;
-			this.cleanup = cleanup;
+			this._package = package;
+			this._cleanup = cleanup;
 		}
 
 		public void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac)
@@ -100,7 +100,7 @@ namespace VocaDb.Model.Service.DataSharing
 				run = entries.Any();
 
 				// Cleanup
-				cleanup();
+				_cleanup();
 				GC.Collect();
 			}
 		}
@@ -109,13 +109,13 @@ namespace VocaDb.Model.Service.DataSharing
 		{
 			var partUri = PackUriHelper.CreatePartUri(new Uri($"{folder}{id}.xml", UriKind.Relative));
 
-			if (package.PartExists(partUri))
+			if (_package.PartExists(partUri))
 			{
-				log.Warn("Duplicate path: {0}", partUri);
+				_log.Warn("Duplicate path: {0}", partUri);
 				return;
 			}
 
-			var packagePart = package.CreatePart(partUri, System.Net.Mime.MediaTypeNames.Text.Xml, CompressionOption.Normal);
+			var packagePart = _package.CreatePart(partUri, System.Net.Mime.MediaTypeNames.Text.Xml, CompressionOption.Normal);
 
 			var data = XmlHelper.SerializeToXml(contract);
 

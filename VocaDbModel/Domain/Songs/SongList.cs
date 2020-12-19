@@ -33,15 +33,14 @@ namespace VocaDb.Model.Domain.Songs
 		/// </summary>
 		public static ImageSizes ImageSizes = ImageSizes.Original | ImageSizes.SmallThumb;
 
-		private ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> archivedVersions
-			= new ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields>();
-		private User author;
-		private IList<SongListComment> comments = new List<SongListComment>();
-		private string description;
-		private IList<ReleaseEvent> events = new List<ReleaseEvent>();
-		private string name;
-		private IList<SongInList> songs = new List<SongInList>();
-		private TagManager<SongListTagUsage> tags = new();
+		private ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> _archivedVersions = new();
+		private User _author;
+		private IList<SongListComment> _comments = new List<SongListComment>();
+		private string _description;
+		private IList<ReleaseEvent> _events = new List<ReleaseEvent>();
+		private string _name;
+		private IList<SongInList> _songs = new List<SongInList>();
+		private TagManager<SongListTagUsage> _tags = new();
 
 		public SongList()
 		{
@@ -58,11 +57,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<SongInList> AllSongs
 		{
-			get => songs;
+			get => _songs;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				songs = value;
+				_songs = value;
 			}
 		}
 
@@ -72,31 +71,31 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual ArchivedVersionManager<ArchivedSongListVersion, SongListEditableFields> ArchivedVersionsManager
 		{
-			get => archivedVersions;
+			get => _archivedVersions;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				archivedVersions = value;
+				_archivedVersions = value;
 			}
 		}
 
 		public virtual User Author
 		{
-			get => author;
+			get => _author;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				author = value;
+				_author = value;
 			}
 		}
 
 		public virtual IList<SongListComment> AllComments
 		{
-			get => comments;
+			get => _comments;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				comments = value;
+				_comments = value;
 			}
 		}
 
@@ -124,11 +123,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual string Description
 		{
-			get => description;
+			get => _description;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				description = value;
+				_description = value;
 			}
 		}
 
@@ -138,11 +137,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<ReleaseEvent> Events
 		{
-			get => events;
+			get => _events;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				events = value;
+				_events = value;
 			}
 		}
 
@@ -154,11 +153,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual string Name
 		{
-			get => name;
+			get => _name;
 			set
 			{
 				ParamIs.NotNullOrWhiteSpace(() => value);
-				name = value;
+				_name = value;
 			}
 		}
 
@@ -168,11 +167,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual TagManager<SongListTagUsage> Tags
 		{
-			get => tags;
+			get => _tags;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				tags = value;
+				_tags = value;
 			}
 		}
 

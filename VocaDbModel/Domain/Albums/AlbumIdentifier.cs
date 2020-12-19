@@ -4,8 +4,8 @@ namespace VocaDb.Model.Domain.Albums
 {
 	public class AlbumIdentifier : IEntryWithIntId
 	{
-		private Album album;
-		private string value;
+		private Album _album;
+		private string _value;
 
 		public AlbumIdentifier() { }
 
@@ -17,11 +17,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual Album Album
 		{
-			get => album;
+			get => _album;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 
@@ -29,11 +29,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual string Value
 		{
-			get => value;
+			get => _value;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				this.value = value;
+				this._value = value;
 			}
 		}
 

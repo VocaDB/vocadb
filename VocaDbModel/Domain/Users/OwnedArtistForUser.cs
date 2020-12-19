@@ -20,8 +20,8 @@ namespace VocaDb.Model.Domain.Users
 			return CollectionHelper.Sync(oldLinks, newLinks, (n1, n2) => n1.Id == n2.Id, fac);
 		}
 
-		private Artist artist;
-		private User user;
+		private Artist _artist;
+		private User _user;
 
 		public OwnedArtistForUser() { }
 
@@ -35,21 +35,21 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual Artist Artist
 		{
-			get => artist;
+			get => _artist;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				artist = value;
+				_artist = value;
 			}
 		}
 
 		public virtual User User
 		{
-			get => user;
+			get => _user;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				user = value;
+				_user = value;
 			}
 		}
 

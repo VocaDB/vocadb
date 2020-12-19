@@ -17,24 +17,24 @@ namespace VocaDb.Tests.Service.Search.Artists
 	[TestClass]
 	public class ArtistSearchTests
 	{
-		private readonly ArtistSearch artistSearch;
-		private readonly FakeArtistRepository db = new();
+		private readonly ArtistSearch _artistSearch;
+		private readonly FakeArtistRepository _db = new();
 
 		public ArtistSearchTests()
 		{
-			artistSearch = new ArtistSearch(ContentLanguagePreference.Default, db.CreateContext(), new EntryUrlParser());
+			_artistSearch = new ArtistSearch(ContentLanguagePreference.Default, _db.CreateContext(), new EntryUrlParser());
 
-			var artist1 = db.Save(CreateEntry.Artist(ArtistType.Producer, name: "XenonP"));
-			db.SaveNames(artist1);
-			db.Save(artist1.CreateWebLink("Twitter", "https://twitter.com/XenonP_XM", WebLinkCategory.Official, disabled: false));
-			db.SaveNames(db.Save(CreateEntry.Artist(ArtistType.Producer, name: "Clean Tears")));
-			db.SaveNames(db.Save(CreateEntry.Artist(ArtistType.Vocaloid, name: "Hatsune Miku")));
+			var artist1 = _db.Save(CreateEntry.Artist(ArtistType.Producer, name: "XenonP"));
+			_db.SaveNames(artist1);
+			_db.Save(artist1.CreateWebLink("Twitter", "https://twitter.com/XenonP_XM", WebLinkCategory.Official, disabled: false));
+			_db.SaveNames(_db.Save(CreateEntry.Artist(ArtistType.Producer, name: "Clean Tears")));
+			_db.SaveNames(_db.Save(CreateEntry.Artist(ArtistType.Vocaloid, name: "Hatsune Miku")));
 		}
 
 		[TestMethod]
 		public void Find()
 		{
-			var result = artistSearch.Find(new ArtistQueryParams
+			var result = _artistSearch.Find(new ArtistQueryParams
 			{
 				Common = {
 					TextQuery = ArtistSearchTextQuery.Create("XenonP")
@@ -48,7 +48,7 @@ namespace VocaDb.Tests.Service.Search.Artists
 		[TestMethod]
 		public void Find_ByTwitter()
 		{
-			var result = artistSearch.Find(new ArtistQueryParams
+			var result = _artistSearch.Find(new ArtistQueryParams
 			{
 				Common = {
 					TextQuery = ArtistSearchTextQuery.Create("https://twitter.com/XenonP_XM")
@@ -62,11 +62,11 @@ namespace VocaDb.Tests.Service.Search.Artists
 		[TestMethod]
 		public void Find_ByTwitter_EndsWithP()
 		{
-			var artist = db.Save(CreateEntry.Artist(ArtistType.Producer, name: "Uji"));
-			db.SaveNames(artist);
-			db.Save(artist.CreateWebLink("Twitter", "https://twitter.com/Uji_RaychoruiP", WebLinkCategory.Official, disabled: false));
+			var artist = _db.Save(CreateEntry.Artist(ArtistType.Producer, name: "Uji"));
+			_db.SaveNames(artist);
+			_db.Save(artist.CreateWebLink("Twitter", "https://twitter.com/Uji_RaychoruiP", WebLinkCategory.Official, disabled: false));
 
-			var result = artistSearch.Find(new ArtistQueryParams
+			var result = _artistSearch.Find(new ArtistQueryParams
 			{
 				Common = {
 					TextQuery = ArtistSearchTextQuery.Create("https://twitter.com/Uji_RaychoruiP")

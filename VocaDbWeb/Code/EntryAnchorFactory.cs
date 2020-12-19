@@ -10,8 +10,8 @@ namespace VocaDb.Web.Code
 {
 	public class EntryAnchorFactory : IEntryLinkFactory
 	{
-		private readonly string baseUrl;
-		private readonly string hostAddress;
+		private readonly string _baseUrl;
+		private readonly string _hostAddress;
 
 		private string CreateAnchor(string href, string text)
 		{
@@ -29,8 +29,8 @@ namespace VocaDb.Web.Code
 		{
 			ParamIs.NotNull(() => baseUrl);
 
-			this.hostAddress = hostAddress;
-			this.baseUrl = baseUrl;
+			this._hostAddress = hostAddress;
+			this._baseUrl = baseUrl;
 		}
 
 		private string GetUrl(string basePart, EntryType entryType, int id, string slug)
@@ -54,12 +54,12 @@ namespace VocaDb.Web.Code
 
 		public string GetFullEntryUrl(EntryType entryType, int id, string slug = null)
 		{
-			return GetUrl(hostAddress, entryType, id, slug);
+			return GetUrl(_hostAddress, entryType, id, slug);
 		}
 
 		public string CreateEntryLink(EntryType entryType, int id, string name, string slug = null)
 		{
-			var url = GetUrl(baseUrl, entryType, id, slug);
+			var url = GetUrl(_baseUrl, entryType, id, slug);
 
 			return CreateAnchor(url, name);
 		}

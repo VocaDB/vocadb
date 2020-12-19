@@ -27,13 +27,12 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		INameManager IEntryWithNames.Names => Names;
 		INameManager<EventSeriesName> IEntryWithNames<EventSeriesName>.Names => Names;
 
-		private ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields> archivedVersions
-			= new ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields>();
-		private string description;
-		private IList<ReleaseEvent> events = new List<ReleaseEvent>();
-		private NameManager<EventSeriesName> names = new();
-		private TagManager<EventSeriesTagUsage> tags = new();
-		private IList<ReleaseEventSeriesWebLink> webLinks = new List<ReleaseEventSeriesWebLink>();
+		private ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields> _archivedVersions = new();
+		private string _description;
+		private IList<ReleaseEvent> _events = new List<ReleaseEvent>();
+		private NameManager<EventSeriesName> _names = new();
+		private TagManager<EventSeriesTagUsage> _tags = new();
+		private IList<ReleaseEventSeriesWebLink> _webLinks = new List<ReleaseEventSeriesWebLink>();
 
 		public ReleaseEventSeries()
 		{
@@ -62,11 +61,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual IList<ReleaseEvent> AllEvents
 		{
-			get => events;
+			get => _events;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				events = value;
+				_events = value;
 			}
 		}
 
@@ -76,11 +75,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual ArchivedVersionManager<ArchivedReleaseEventSeriesVersion, ReleaseEventSeriesEditableFields> ArchivedVersionsManager
 		{
-			get => archivedVersions;
+			get => _archivedVersions;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				archivedVersions = value;
+				_archivedVersions = value;
 			}
 		}
 
@@ -90,11 +89,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual string Description
 		{
-			get => description;
+			get => _description;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				description = value;
+				_description = value;
 			}
 		}
 
@@ -106,11 +105,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual NameManager<EventSeriesName> Names
 		{
-			get => names;
+			get => _names;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				names = value;
+				_names = value;
 			}
 		}
 
@@ -120,11 +119,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual TagManager<EventSeriesTagUsage> Tags
 		{
-			get => tags;
+			get => _tags;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				tags = value;
+				_tags = value;
 			}
 		}
 
@@ -141,11 +140,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual IList<ReleaseEventSeriesWebLink> WebLinks
 		{
-			get => webLinks;
+			get => _webLinks;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				webLinks = value;
+				_webLinks = value;
 			}
 		}
 

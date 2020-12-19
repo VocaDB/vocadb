@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain.Comments
 {
 	public class GenericComment<T> : Comment where T : class, IEntryWithNames
 	{
-		private T entry;
+		private T _entry;
 
 		public GenericComment() { }
 
@@ -27,11 +27,11 @@ namespace VocaDb.Model.Domain.Comments
 
 		public virtual T EntryForComment
 		{
-			get => entry;
+			get => _entry;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				entry = value;
+				_entry = value;
 			}
 		}
 

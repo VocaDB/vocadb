@@ -15,15 +15,15 @@ namespace VocaDb.Model.Domain.PVs
 			return VideoServiceHelper.Services[service].GetUrlById(pvId, extendedMetadata);
 		}
 
-		private string author;
-		private PVExtendedMetadata extendedMetadata;
-		private string name;
-		private string pvId;
+		private string _author;
+		private PVExtendedMetadata _extendedMetadata;
+		private string _name;
+		private string _pvId;
 
 		public PV()
 		{
 			Author = string.Empty;
-			pvId = string.Empty;
+			_pvId = string.Empty;
 			Name = string.Empty;
 			Service = PVService.Youtube;
 			PVType = PVType.Other;
@@ -45,11 +45,11 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual string Author
 		{
-			get => author;
+			get => _author;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				author = value;
+				_author = value;
 			}
 		}
 
@@ -63,17 +63,17 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual PVExtendedMetadata ExtendedMetadata
 		{
-			get => extendedMetadata;
-			set => extendedMetadata = value;
+			get => _extendedMetadata;
+			set => _extendedMetadata = value;
 		}
 
 		public virtual string Name
 		{
-			get => name;
+			get => _name;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				name = value;
+				_name = value;
 			}
 		}
 
@@ -81,11 +81,11 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual string PVId
 		{
-			get => pvId;
+			get => _pvId;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				pvId = value;
+				_pvId = value;
 			}
 		}
 

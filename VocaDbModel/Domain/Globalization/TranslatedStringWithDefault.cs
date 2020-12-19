@@ -16,7 +16,7 @@ namespace VocaDb.Model.Domain.Globalization
 			);
 		}
 
-		private string def;
+		private string _def;
 
 		public TranslatedStringWithDefault() { }
 
@@ -57,11 +57,11 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public override string Default
 		{
-			get => def;
+			get => _def;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				def = value;
+				_def = value;
 			}
 		}
 

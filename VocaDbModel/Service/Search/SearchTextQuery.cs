@@ -17,10 +17,10 @@ namespace VocaDb.Model.Service.Search
 	/// </remarks>
 	public class SearchTextQuery
 	{
-		protected string[] words;
-		private readonly NameMatchMode matchMode;
-		private readonly string originalQuery;
-		private readonly string query;
+		protected string[] _words;
+		private readonly NameMatchMode _matchMode;
+		private readonly string _originalQuery;
+		private readonly string _query;
 
 		public static SearchTextQuery Empty => new SearchTextQuery();
 
@@ -54,7 +54,7 @@ namespace VocaDb.Model.Service.Search
 
 		public SearchTextQuery()
 		{
-			query = string.Empty;
+			_query = string.Empty;
 		}
 
 		/// <summary>
@@ -74,10 +74,10 @@ namespace VocaDb.Model.Service.Search
 			if (!string.IsNullOrEmpty(query) && matchMode == NameMatchMode.Auto)
 				throw new ArgumentException("'Auto' is not allowed here; specific name match mode is required", nameof(MatchMode));
 
-			this.query = query;
-			this.matchMode = matchMode;
-			this.originalQuery = originalQuery;
-			this.words = words;
+			this._query = query;
+			this._matchMode = matchMode;
+			this._originalQuery = originalQuery;
+			this._words = words;
 		}
 
 		/// <summary>
@@ -95,13 +95,13 @@ namespace VocaDb.Model.Service.Search
 		/// Selected name match mode. 
 		/// This can never be "Auto" (checked in the constructor).
 		/// </summary>
-		public NameMatchMode MatchMode => matchMode;
+		public NameMatchMode MatchMode => _matchMode;
 
 		/// <summary>
 		/// Original query without any processing.
 		/// Can be null or empty.
 		/// </summary>
-		public string OriginalQuery => originalQuery;
+		public string OriginalQuery => _originalQuery;
 
 		/// <summary>
 		/// Textual filter for entry name.
@@ -111,13 +111,13 @@ namespace VocaDb.Model.Service.Search
 		/// Usually this field is processed by trimming any whitespace, 
 		/// and by removing any SQL or query wildcards (such as asterisks and quotes).
 		/// </remarks>
-		public string Query => query;
+		public string Query => _query;
 
 		/// <summary>
 		/// List of search query words.
 		/// This list will be cached.
 		/// </summary>
-		public string[] Words => words ?? (words = FindHelpers.GetQueryWords(Query));
+		public string[] Words => _words ?? (_words = FindHelpers.GetQueryWords(Query));
 
 		public override string ToString()
 		{

@@ -54,21 +54,21 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public static readonly VideoServiceLocalFile LocalFile = new();
 
-		protected readonly RegexLinkMatcher[] linkMatchers;
-		private readonly IVideoServiceParser parser;
+		protected readonly RegexLinkMatcher[] _linkMatchers;
+		private readonly IVideoServiceParser _parser;
 
 		protected VideoService(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
 		{
 			Service = service;
-			this.parser = parser;
-			this.linkMatchers = linkMatchers;
+			this._parser = parser;
+			this._linkMatchers = linkMatchers;
 		}
 
 		public PVService Service { get; private set; }
 
 		public virtual string GetIdByUrl(string url)
 		{
-			var matcher = linkMatchers.FirstOrDefault(m => m.IsMatch(url));
+			var matcher = _linkMatchers.FirstOrDefault(m => m.IsMatch(url));
 
 			if (matcher == null)
 				return null;
@@ -85,13 +85,13 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public virtual string GetUrlById(string id, PVExtendedMetadata extendedMetadata)
 		{
-			var matcher = linkMatchers.First();
+			var matcher = _linkMatchers.First();
 			return $"http://{matcher.MakeLinkFromId(id)}";
 		}
 
 		public virtual IEnumerable<string> GetUserProfileUrls(string authorId) => Enumerable.Empty<string>();
 
-		public virtual Task<VideoTitleParseResult> GetVideoTitleAsync(string id) => (parser != null ? parser.GetTitleAsync(id) : null);
+		public virtual Task<VideoTitleParseResult> GetVideoTitleAsync(string id) => (_parser != null ? _parser.GetTitleAsync(id) : null);
 
 		/// <summary>
 		/// Tests whether the user has the required permissions to add PVs for this service.
@@ -105,7 +105,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public virtual bool IsValidFor(string url)
 		{
-			return linkMatchers.Any(m => m.IsMatch(url));
+			return _linkMatchers.Any(m => m.IsMatch(url));
 		}
 
 		public virtual Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
