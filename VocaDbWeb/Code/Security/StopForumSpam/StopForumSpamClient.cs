@@ -17,7 +17,7 @@ namespace VocaDb.Web.Code.Security
 	public class StopForumSpamClient : IStopForumSpamClient
 	{
 		private const string ApiUrl = "https://www.stopforumspam.com/api?ip={0}&confidence&f=json";
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		public async Task<SFSResponseContract> CallApiAsync(string ip)
 		{
@@ -35,18 +35,18 @@ namespace VocaDb.Web.Code.Security
 			}
 			catch (WebException x)
 			{
-				_log.Warn(x, "Unable to get response");
+				s_log.Warn(x, "Unable to get response");
 				return null;
 			}
 			catch (JsonSerializationException x)
 			{
-				_log.Warn(x, "Unable to get response");
+				s_log.Warn(x, "Unable to get response");
 				return null;
 			}
 
 			if (!result.Success)
 			{
-				_log.Warn("Request was not successful");
+				s_log.Warn("Request was not successful");
 				return null;
 			}
 

@@ -12,7 +12,7 @@ namespace VocaDb.Web.Code.Security
 	/// </summary>
 	public class RestrictBlockedIPAttribute : ActionFilterAttribute
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		private readonly IPRuleManager _ipRuleManager;
 
@@ -30,7 +30,7 @@ namespace VocaDb.Web.Code.Security
 
 			if (filterContext.ActionDescriptor.IsDefined(typeof(AuthorizeAttribute), false))
 			{
-				_log.Warn("Restricting blocked IP {0}.", host);
+				s_log.Warn("Restricting blocked IP {0}.", host);
 				filterContext.Result = new HttpUnauthorizedResult();
 			}
 		}

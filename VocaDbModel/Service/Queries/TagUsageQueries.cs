@@ -19,7 +19,7 @@ namespace VocaDb.Model.Service.Queries
 {
 	public class TagUsageQueries
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly IUserPermissionContext _permissionContext;
 
 		private bool IsValid(TagBaseContract contract)
@@ -166,7 +166,7 @@ namespace VocaDb.Model.Service.Queries
 				{
 					// This is expected for tests
 					// TODO: come up with a proper fix that works for tests and the real DB
-					_log.Warn("Tag usage count doesn't match for {0}: expected {1}, actual {2}", tag, usages[tag.Id], tag.UsageCount);
+					s_log.Warn("Tag usage count doesn't match for {0}: expected {1}, actual {2}", tag, usages[tag.Id], tag.UsageCount);
 				}
 			}
 		}

@@ -10,7 +10,7 @@ namespace VocaDb.Model.Service.Helpers
 {
 	public class UserMessageMailer : IUserMessageMailer
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly BrandableStringsManager _brandableStringsManager;
 
 		public UserMessageMailer(BrandableStringsManager brandableStringsManager)
@@ -31,7 +31,7 @@ namespace VocaDb.Model.Service.Helpers
 			}
 			catch (FormatException x)
 			{
-				_log.Warn(x, "Unable to validate receiver email");
+				s_log.Warn(x, "Unable to validate receiver email");
 				return false;
 			}
 
@@ -54,12 +54,12 @@ namespace VocaDb.Model.Service.Helpers
 			}
 			catch (SmtpException x)
 			{
-				_log.Error(x, "Unable to send mail");
+				s_log.Error(x, "Unable to send mail");
 				return false;
 			}
 			catch (InvalidOperationException x)
 			{
-				_log.Error(x, "Unable to send mail");
+				s_log.Error(x, "Unable to send mail");
 				return false;
 			}
 
@@ -79,7 +79,7 @@ namespace VocaDb.Model.Service.Helpers
 			}
 			catch (FormatException x)
 			{
-				_log.Warn(x, "Unable to validate receiver email");
+				s_log.Warn(x, "Unable to validate receiver email");
 				return false;
 			}
 
@@ -102,12 +102,12 @@ namespace VocaDb.Model.Service.Helpers
 			}
 			catch (SmtpException x)
 			{
-				_log.Error(x, "Unable to send mail");
+				s_log.Error(x, "Unable to send mail");
 				return false;
 			}
 			catch (InvalidOperationException x)
 			{
-				_log.Error(x, "Unable to send mail");
+				s_log.Error(x, "Unable to send mail");
 				return false;
 			}
 

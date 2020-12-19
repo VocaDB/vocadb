@@ -51,7 +51,7 @@ namespace VocaDb.Model.Database.Queries
 	/// </summary>
 	public class SongQueries : QueriesBase<ISongRepository, Song>
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly ObjectCache _cache;
 		private readonly VdbConfigManager _config;
 		private readonly IEntryLinkFactory _entryLinkFactory;

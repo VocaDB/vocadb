@@ -46,7 +46,7 @@ namespace VocaDb.Model.Database.Queries
 	/// </summary>
 	public class TagQueries : QueriesBase<ITagRepository, Tag>
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly ObjectCache _cache;
 		private readonly IEntryLinkFactory _entryLinkFactory;
 		private readonly IEnumTranslations _enumTranslations;
@@ -118,7 +118,7 @@ namespace VocaDb.Model.Database.Queries
 			}
 			catch (Exception x) when (x is SqlException or GenericADOException)
 			{
-				_log.Warn(x, "Unable to get tag usages");
+				s_log.Warn(x, "Unable to get tag usages");
 				topUsages = new TEntry[0];
 				usageCount = 0;
 			}

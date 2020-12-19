@@ -22,7 +22,7 @@ namespace VocaDb.Model.Service.Queries
 	/// </remarks>
 	public class EntryReportQueries
 	{
-		private static readonly ILogger _log = LogManager.GetCurrentClassLogger();
+		private static readonly ILogger s_log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
 		/// Creates entry report.
@@ -72,7 +72,7 @@ namespace VocaDb.Model.Service.Queries
 
 			if (duplicate && (!permissionContext.IsLoggedIn || existing.Status == ReportStatus.Open))
 			{
-				_log.Info("Report already exists: {0}", existing);
+				s_log.Info("Report already exists: {0}", existing);
 				return (false, existing.Id);
 			}
 

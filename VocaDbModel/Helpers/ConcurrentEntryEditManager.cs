@@ -14,8 +14,8 @@ namespace VocaDb.Model.Helpers
 	/// </summary>
 	public class ConcurrentEntryEditManager
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
-		private static readonly ConcurrentEntryEditManager _staticInstance = new();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private static readonly ConcurrentEntryEditManager s_staticInstance = new();
 
 		public static readonly EntryEditData Nothing = new();
 
@@ -44,11 +44,11 @@ namespace VocaDb.Model.Helpers
 			}
 		}
 
-		public static IEnumerable<KeyValuePair<EntryRef, EntryEditData>> Editors => _staticInstance._editors;
+		public static IEnumerable<KeyValuePair<EntryRef, EntryEditData>> Editors => s_staticInstance._editors;
 
 		public static EntryEditData CheckConcurrentEdits(EntryRef entry, IUser user)
 		{
-			return _staticInstance.CheckConcurrentEditsInst(entry, user);
+			return s_staticInstance.CheckConcurrentEditsInst(entry, user);
 		}
 
 		private readonly Dictionary<EntryRef, EntryEditData> _editors = new();
@@ -77,7 +77,7 @@ namespace VocaDb.Model.Helpers
 					_editors[entry].Refresh(user);
 				else
 				{
-					_log.Debug("{0} starting to edit {1}", user, entry);
+					s_log.Debug("{0} starting to edit {1}", user, entry);
 					_editors.Add(entry, CreateEntryEditData(user));
 				}
 			}

@@ -34,7 +34,7 @@ namespace VocaDb.Web.Controllers
 {
 	public class AlbumController : ControllerBase
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly AlbumDescriptionGenerator _albumDescriptionGenerator;
 		private readonly MarkdownParser _markdownParser;
 		private readonly AlbumQueries _queries;
@@ -256,7 +256,7 @@ namespace VocaDb.Web.Controllers
 			// Unable to continue if viewmodel is null because we need the ID at least
 			if (viewModel == null || viewModel.EditedAlbum == null)
 			{
-				_log.Warn("Viewmodel was null");
+				s_log.Warn("Viewmodel was null");
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");
 			}
 

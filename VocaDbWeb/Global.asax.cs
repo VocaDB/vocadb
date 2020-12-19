@@ -23,7 +23,7 @@ namespace VocaDb.Web
 {
 	public class MvcApplication : HttpApplication
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		private static UserService UserService => DependencyResolver.Current.GetService<UserService>();
 
@@ -144,7 +144,7 @@ namespace VocaDb.Web
 
 		protected void Application_Start()
 		{
-			_log.Info("Web application starting.");
+			s_log.Info("Web application starting.");
 
 			MvcHandler.DisableMvcResponseHeader = true;
 
@@ -157,7 +157,7 @@ namespace VocaDb.Web
 
 			GlobalServerPathMapper.Configure(() => new AspNetHttpContext(HttpContext.Current));
 
-			_log.Debug("Web application started successfully.");
+			s_log.Debug("Web application started successfully.");
 		}
 	}
 }

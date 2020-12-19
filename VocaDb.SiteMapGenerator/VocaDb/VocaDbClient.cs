@@ -11,7 +11,7 @@ namespace VocaDb.SiteMapGenerator.VocaDb
 {
 	public class VocaDbClient
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly string _apiRoot;
 
 		private async Task<T> GetEntries<T>(string apiUrl)
@@ -30,7 +30,7 @@ namespace VocaDb.SiteMapGenerator.VocaDb
 				}
 				catch (HttpRequestException x)
 				{
-					_log.Fatal(x, "Unable to get entries from VocaDB API");
+					s_log.Fatal(x, "Unable to get entries from VocaDB API");
 					throw;
 				}
 
@@ -41,7 +41,7 @@ namespace VocaDb.SiteMapGenerator.VocaDb
 				}
 				catch (UnsupportedMediaTypeException x)
 				{
-					_log.Fatal(x, "Unable to get entries from VocaDB API");
+					s_log.Fatal(x, "Unable to get entries from VocaDB API");
 					throw;
 				}
 			}
@@ -54,31 +54,31 @@ namespace VocaDb.SiteMapGenerator.VocaDb
 
 		public async Task<int[]> GetAlbums()
 		{
-			_log.Info("Getting albums");
+			s_log.Info("Getting albums");
 			return await GetEntries<int[]>($"{_apiRoot}api/albums/ids");
 		}
 
 		public async Task<int[]> GetArtists()
 		{
-			_log.Info("Getting artists");
+			s_log.Info("Getting artists");
 			return await GetEntries<int[]>($"{_apiRoot}api/artists/ids");
 		}
 
 		public async Task<PartialFindResult<EntryBaseContract>> GetEvents()
 		{
-			_log.Info("Getting artists");
+			s_log.Info("Getting artists");
 			return await GetEntries<PartialFindResult<EntryBaseContract>>($"{_apiRoot}api/releaseEvents?maxResults=100000");
 		}
 
 		public async Task<int[]> GetSongs()
 		{
-			_log.Info("Getting songs");
+			s_log.Info("Getting songs");
 			return await GetEntries<int[]>($"{_apiRoot}api/songs/ids");
 		}
 
 		public async Task<PartialFindResult<EntryBaseContract>> GetTags()
 		{
-			_log.Info("Getting tags");
+			s_log.Info("Getting tags");
 			return await GetEntries<PartialFindResult<EntryBaseContract>>($"{_apiRoot}api/tags?maxResults=100000");
 		}
 	}

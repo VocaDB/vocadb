@@ -96,24 +96,24 @@ namespace VocaDb.Tests.DatabaseTests
 		{
 			lock (ContainerLock)
 			{
-				if (_container == null)
+				if (s_container == null)
 				{
-					_container = TestContainerFactory.BuildContainer();
-					_testDatabase = _container.Resolve<TestDatabase>();
+					s_container = TestContainerFactory.BuildContainer();
+					s_testDatabase = s_container.Resolve<TestDatabase>();
 				}
 			}
 		}
 
-		private static IContainer _container;
+		private static IContainer s_container;
 		private const string ContainerLock = "container";
-		private static TestDatabase _testDatabase;
+		private static TestDatabase s_testDatabase;
 
 		public static IContainer Container
 		{
 			get
 			{
 				EnsureContainerInitialized();
-				return _container;
+				return s_container;
 			}
 		}
 
@@ -122,7 +122,7 @@ namespace VocaDb.Tests.DatabaseTests
 			get
 			{
 				EnsureContainerInitialized();
-				return _testDatabase;
+				return s_testDatabase;
 			}
 		}
 	}

@@ -43,7 +43,7 @@ namespace VocaDb.Model.Database.Queries
 	/// </summary>
 	public class ArtistQueries : QueriesBase<IArtistRepository, Artist>
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly ObjectCache _cache;
 		private readonly IEntryLinkFactory _entryLinkFactory;
 		private readonly IEnumTranslations _enumTranslations;
@@ -149,7 +149,7 @@ namespace VocaDb.Model.Database.Queries
 				{
 					// TODO: Loading of stats timeouts sometimes. Since they're not essential we can accept returning only partial stats.
 					// However, this should be fixed by tuning the queries further.
-					_log.Error(x, "Unable to load shared artist stats");
+					s_log.Error(x, "Unable to load shared artist stats");
 					return new SharedArtistStatsContract();
 				}
 			});

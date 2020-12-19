@@ -28,7 +28,7 @@ namespace VocaDb.Web.Helpers
 {
 	public static class Translate
 	{
-		private static readonly Dictionary<Type, ITranslateableEnum> _allResourceManagers;
+		private static readonly Dictionary<Type, ITranslateableEnum> s_allResourceManagers;
 
 		private static Type GetEnumType(FieldInfo property)
 		{
@@ -43,7 +43,7 @@ namespace VocaDb.Web.Helpers
 		static Translate()
 		{
 			var enums = typeof(Translate).GetFields().Where(p => typeof(ITranslateableEnum).IsAssignableFrom(p.FieldType));
-			_allResourceManagers = enums
+			s_allResourceManagers = enums
 				.Select(p => new
 				{
 					TranslateableEnum = GetResourceManager(p),
@@ -284,7 +284,7 @@ namespace VocaDb.Web.Helpers
 
 		public static TranslateableEnum<TEnum> Translations<TEnum>() where TEnum : struct, Enum
 		{
-			return (TranslateableEnum<TEnum>)_allResourceManagers[typeof(TEnum)];
+			return (TranslateableEnum<TEnum>)s_allResourceManagers[typeof(TEnum)];
 		}
 	}
 }

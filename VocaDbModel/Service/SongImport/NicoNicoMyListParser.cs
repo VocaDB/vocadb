@@ -17,8 +17,8 @@ namespace VocaDb.Model.Service.SongImport
 {
 	public class NicoNicoMyListParser : ISongListImporter
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
-		private static readonly Regex _wvrIdRegex = new(@"#(\d{3})");
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private static readonly Regex s_wvrIdRegex = new(@"#(\d{3})");
 
 		public Task<PartialImportedSongs> GetSongsAsync(string url, string nextPageToken, int maxResults, bool parseAll)
 		{
@@ -47,25 +47,25 @@ namespace VocaDb.Model.Service.SongImport
 			}
 			catch (UriFormatException x)
 			{
-				_log.Warn(x, "Unable to parse URL");
+				s_log.Warn(x, "Unable to parse URL");
 				throw new UnableToImportException("Unable to parse URL", x);
 			}
 			catch (WebException x)
 			{
-				_log.Error(x, "Unable to parse feed");
+				s_log.Error(x, "Unable to parse feed");
 				throw new UnableToImportException("Unable to parse feed", x);
 			}
 
 			if (feed.Exceptions.LastException != null)
 			{
-				_log.Error(feed.Exceptions.LastException, "Unable to parse feed");
+				s_log.Error(feed.Exceptions.LastException, "Unable to parse feed");
 				throw new UnableToImportException("Unable to parse feed", feed.Exceptions.LastException);
 			}
 
 			var result = new ImportedSongListContract();
 			var channel = feed.Channels[0];
 			result.Name = channel.Title;
-			var wvrIdMatch = _wvrIdRegex.Match(result.Name);
+			var wvrIdMatch = s_wvrIdRegex.Match(result.Name);
 
 			if (wvrIdMatch.Success)
 				result.WVRNumber = int.Parse(wvrIdMatch.Groups[1].Value);

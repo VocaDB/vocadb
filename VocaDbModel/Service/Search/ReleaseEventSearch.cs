@@ -14,8 +14,8 @@ namespace VocaDb.Model.Service.Search
 {
 	public class ReleaseEventSearch
 	{
-		private static readonly Regex _eventNameRegex = new(@"([^\d]+)(\d+)(?:\s(\w+))?");
-		private static readonly Regex _eventNumberRegex = new(@"^(\d+)(?:\s(\w+))?");
+		private static readonly Regex s_eventNameRegex = new(@"([^\d]+)(\d+)(?:\s(\w+))?");
+		private static readonly Regex s_eventNumberRegex = new(@"^(\d+)(?:\s(\w+))?");
 
 		private readonly IDatabaseContext _querySource;
 
@@ -32,7 +32,7 @@ namespace VocaDb.Model.Service.Search
 		private ReleaseEventFindResultContract AttemptSeriesMatch(string seriesName, ReleaseEventSeries series, string query, ContentLanguagePreference languagePreference)
 		{
 			var queryWithoutSeries = query.Remove(0, seriesName.Length).TrimStart();
-			var match = _eventNumberRegex.Match(queryWithoutSeries);
+			var match = s_eventNumberRegex.Match(queryWithoutSeries);
 
 			if (!match.Success)
 				return null;
@@ -80,7 +80,7 @@ namespace VocaDb.Model.Service.Search
 				}
 			}
 
-			var match = _eventNameRegex.Match(query);
+			var match = s_eventNameRegex.Match(query);
 
 			if (match.Success)
 			{

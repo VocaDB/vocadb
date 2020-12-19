@@ -25,7 +25,7 @@ namespace VocaDb.Web.Controllers
 	[SessionState(SessionStateBehavior.Disabled)]
 	public class ExtController : ControllerBase
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		private readonly AlbumService _albumService;
 		private readonly ArtistService _artistService;

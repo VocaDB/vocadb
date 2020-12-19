@@ -36,7 +36,7 @@ namespace VocaDb.Model.Service.Helpers
 	/// </summary>
 	public class FollowedArtistNotifier : IFollowedArtistNotifier
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly IEntryLinkFactory _entryLinkFactory;
 		private readonly IUserMessageMailer _mailer;
 		private readonly IEnumTranslations _enumTranslations;
@@ -91,7 +91,7 @@ namespace VocaDb.Model.Service.Helpers
 			}
 			catch (GenericADOException x)
 			{
-				_log.Error(x, "Unable to send notifications");
+				s_log.Error(x, "Unable to send notifications");
 				return new User[0];
 			}
 		}
@@ -108,7 +108,7 @@ namespace VocaDb.Model.Service.Helpers
 			var coll = artists.ToArray();
 			var artistIds = coll.Select(a => a.Id).ToArray();
 
-			_log.Info("Sending notifications for {0} artists", artistIds.Length);
+			s_log.Info("Sending notifications for {0} artists", artistIds.Length);
 
 			// Get users with less than maximum number of unread messages, following any of the artists
 			var usersWithArtistsArr = await ctx.Query<ArtistForUser>()
@@ -129,11 +129,11 @@ namespace VocaDb.Model.Service.Helpers
 
 			var userIds = usersWithArtists.Keys;
 
-			_log.Debug("Found {0} users subscribed to artists", userIds.Count);
+			s_log.Debug("Found {0} users subscribed to artists", userIds.Count);
 
 			if (!userIds.Any())
 			{
-				_log.Info("No users found - skipping.");
+				s_log.Info("No users found - skipping.");
 				return new User[0];
 			}
 
@@ -186,7 +186,7 @@ namespace VocaDb.Model.Service.Helpers
 				}
 			}
 
-			_log.Info($"Sent notifications to {users.Count} users");
+			s_log.Info($"Sent notifications to {users.Count} users");
 
 			return users;
 		}

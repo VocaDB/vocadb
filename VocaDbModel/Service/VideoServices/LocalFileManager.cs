@@ -20,7 +20,7 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class LocalFileManager
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		public const int MaxMediaSizeMB = 20;
 		public const int MaxMediaSizeBytes = MaxMediaSizeMB * 1024 * 1024;
 		public static readonly string[] Extensions = { ".mp3", ".jpg", ".png" };
@@ -114,7 +114,7 @@ namespace VocaDb.Model.Service.VideoServices
 				}
 				catch (IOException x)
 				{
-					_log.Error(x, "Unable to move local media file: " + oldFull);
+					s_log.Error(x, "Unable to move local media file: " + oldFull);
 					throw;
 				}
 			}
@@ -130,7 +130,7 @@ namespace VocaDb.Model.Service.VideoServices
 					}
 					catch (IOException x)
 					{
-						_log.Error(x, "Unable to delete local media file: " + fullPath);
+						s_log.Error(x, "Unable to delete local media file: " + fullPath);
 					}
 				}
 			}

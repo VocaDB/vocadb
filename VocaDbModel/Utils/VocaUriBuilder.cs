@@ -9,10 +9,10 @@ namespace VocaDb.Model.Utils
 	/// </summary>
 	public static class VocaUriBuilder
 	{
-		private static readonly string _hostAddress = RemoveTrailingSlash(AppConfig.HostAddress);
+		private static readonly string s_hostAddress = RemoveTrailingSlash(AppConfig.HostAddress);
 
 		// Path to static files root, for example https://static.vocadb.net. Possible trailing slash is removed.
-		private static readonly string _staticResourceBase = RemoveTrailingSlash(AppConfig.StaticContentHost);
+		private static readonly string s_staticResourceBase = RemoveTrailingSlash(AppConfig.StaticContentHost);
 
 		/// <summary>
 		/// Returns an absolute URL when the URL is known to be relative.
@@ -57,7 +57,7 @@ namespace VocaDb.Model.Utils
 		/// Gets the host address including scheme, for example https://vocadb.net.
 		/// Does not include the trailing slash.
 		/// </summary>
-		public static string HostAddress => _hostAddress;
+		public static string HostAddress => s_hostAddress;
 
 		[Obsolete]
 		public static string MakeSSL(string relative) => Absolute(relative);
@@ -116,7 +116,7 @@ namespace VocaDb.Model.Utils
 		/// </returns>
 		public static string StaticResource(string relative)
 		{
-			return MergeUrls_BaseNoTrailingSlash(_staticResourceBase, relative);
+			return MergeUrls_BaseNoTrailingSlash(s_staticResourceBase, relative);
 		}
 	}
 }

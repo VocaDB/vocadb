@@ -17,8 +17,8 @@ namespace VocaDb.Model.Service.AlbumImport
 {
 	public class KarenTAlbumImporter : IAlbumImporter
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
-		private static readonly RegexLinkMatcher _matcher = new("https://karent.jp/album/{0}", @"http(?:s?)://karent.jp/album/(\d+)");
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private static readonly RegexLinkMatcher s_matcher = new("https://karent.jp/album/{0}", @"http(?:s?)://karent.jp/album/(\d+)");
 		private readonly IPictureDownloader _pictureDownloader;
 
 		public KarenTAlbumImporter(IPictureDownloader pictureDownloader)
@@ -178,7 +178,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			}
 			catch (WebException x)
 			{
-				_log.Warn("Unable to download album post '" + url + "'", x);
+				s_log.Warn("Unable to download album post '" + url + "'", x);
 				throw;
 			}
 
@@ -189,7 +189,7 @@ namespace VocaDb.Model.Service.AlbumImport
 
 		public bool IsValidFor(string url)
 		{
-			return _matcher.IsMatch(url);
+			return s_matcher.IsMatch(url);
 		}
 
 		public string ServiceName => "KarenT";

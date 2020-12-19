@@ -26,7 +26,7 @@ namespace VocaDb.Model.Service
 	public class UserService : QueriesBase<IUserRepository, User>
 	{
 		// ReSharper disable UnusedMember.Local
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		// ReSharper restore UnusedMember.Local
 
 		private IEntryLinkFactory EntryLinkFactory { get; }

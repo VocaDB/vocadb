@@ -9,7 +9,7 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class VideoServiceNND : VideoService
 	{
-		private static readonly Regex _numIdRegex = new(@"(\d{6,12})");
+		private static readonly Regex s_numIdRegex = new(@"(\d{6,12})");
 
 		public VideoServiceNND(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
 			: base(service, parser, linkMatchers) { }
@@ -17,7 +17,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public override string GetThumbUrlById(string id)
 		{
-			var numId = _numIdRegex.Match(id);
+			var numId = s_numIdRegex.Match(id);
 
 			if (!numId.Success)
 				return null;

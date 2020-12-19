@@ -41,7 +41,7 @@ namespace VocaDb.Model.Service.VideoServices
 			public string Username { get; set; }
 		}
 
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		public VideoServiceSoundCloud(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
 			: base(service, parser, linkMatchers) { }
@@ -67,7 +67,7 @@ namespace VocaDb.Model.Service.VideoServices
 			VideoUrlParseResult ReturnError(Exception x, string additionalInfo = null)
 			{
 				var msg = $"Unable to load SoundCloud URL '{url}'.{(additionalInfo != null ? " " + additionalInfo + "." : string.Empty)}";
-				_log.Warn(x, msg);
+				s_log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			}
 

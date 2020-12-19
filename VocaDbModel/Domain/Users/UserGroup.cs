@@ -13,10 +13,10 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public static readonly UserGroup Nothing = new(UserGroupId.Nothing);
 
-		private static readonly UserGroup _limited = new(UserGroupId.Limited, PermissionToken.EditProfile);
+		private static readonly UserGroup s_limited = new(UserGroupId.Limited, PermissionToken.EditProfile);
 
-		private static readonly UserGroup _regular = new(UserGroupId.Regular,
-			_limited,
+		private static readonly UserGroup s_regular = new(UserGroupId.Regular,
+			s_limited,
 			PermissionToken.CreateComments,
 			PermissionToken.ManageDatabase,
 			PermissionToken.EditTags,
@@ -24,8 +24,8 @@ namespace VocaDb.Model.Domain.Users
 			PermissionToken.ManageEventSeries
 		);
 
-		private static readonly UserGroup _trusted = new(UserGroupId.Trusted,
-			_regular,
+		private static readonly UserGroup s_trusted = new(UserGroupId.Trusted,
+			s_regular,
 			PermissionToken.AddRawFileMedia,
 			PermissionToken.ApproveEntries,
 			PermissionToken.DeleteEntries,
@@ -36,8 +36,8 @@ namespace VocaDb.Model.Domain.Users
 			PermissionToken.RemoveTagUsages
 		);
 
-		private static readonly UserGroup _mod = new(UserGroupId.Moderator,
-			_trusted,
+		private static readonly UserGroup s_mod = new(UserGroupId.Moderator,
+			s_trusted,
 			PermissionToken.AccessManageMenu,
 			PermissionToken.ApplyAnyTag,
 			PermissionToken.BulkDeletePVs,
@@ -58,11 +58,11 @@ namespace VocaDb.Model.Domain.Users
 			PermissionToken.UploadMedia
 		);
 
-		private static readonly UserGroup _admin = new(UserGroupId.Admin,
-			_mod, PermissionToken.Admin);
+		private static readonly UserGroup s_admin = new(UserGroupId.Admin,
+			s_mod, PermissionToken.Admin);
 
-		private static readonly Dictionary<UserGroupId, UserGroup> _groups = new[] {
-			_limited, _regular, _trusted, _mod, _admin
+		private static readonly Dictionary<UserGroupId, UserGroup> s_groups = new[] {
+			s_limited, s_regular, s_trusted, s_mod, s_admin
 		}.ToDictionary(g => g.Id);
 
 		/// <summary>
@@ -72,18 +72,18 @@ namespace VocaDb.Model.Domain.Users
 		/// <returns>User group matching the Id, or <see cref="Nothing"/>, if no matching group is found.</returns>
 		public static UserGroup GetGroup(UserGroupId groupId)
 		{
-			if (!_groups.ContainsKey(groupId))
+			if (!s_groups.ContainsKey(groupId))
 				return Nothing;
 
-			return _groups[groupId];
+			return s_groups[groupId];
 		}
 
 		public static PermissionCollection GetPermissions(UserGroupId groupId)
 		{
-			if (!_groups.ContainsKey(groupId))
+			if (!s_groups.ContainsKey(groupId))
 				return new PermissionCollection();
 
-			return _groups[groupId].Permissions;
+			return s_groups[groupId].Permissions;
 		}
 
 		public static UserGroupId[] GroupIds => EnumVal<UserGroupId>.Values;

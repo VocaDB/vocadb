@@ -23,7 +23,7 @@ namespace VocaDb.Model.Database.Queries.Partial
 	/// </remarks>
 	public class UpdateEventNamesQuery
 	{
-		private static readonly ILogger _log = LogManager.GetCurrentClassLogger();
+		private static readonly ILogger s_log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
 		/// Checks for duplicate event names.
@@ -45,7 +45,7 @@ namespace VocaDb.Model.Database.Queries.Partial
 
 			if (duplicateName != null)
 			{
-				_log.Info($"Duplicate name '{duplicateName}' for event {eventId}.");
+				s_log.Info($"Duplicate name '{duplicateName}' for event {eventId}.");
 				throw new DuplicateEventNameException(duplicateName, eventId);
 			}
 
@@ -54,7 +54,7 @@ namespace VocaDb.Model.Database.Queries.Partial
 
 			if (duplicate != null)
 			{
-				_log.Info($"Duplicate name '{duplicateName}' for event {eventId}. Also used for {duplicate.Entry}.");
+				s_log.Info($"Duplicate name '{duplicateName}' for event {eventId}. Also used for {duplicate.Entry}.");
 				throw new DuplicateEventNameException(duplicate.Value, duplicate.Entry.Id);
 			}
 		}

@@ -28,7 +28,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		IArchivedVersionsManager IEntryWithVersions.ArchivedVersionsManager => ArchivedVersionsManager;
 
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		private IList<ArtistForAlbum> _albums = new List<ArtistForAlbum>();
 		private ArchivedVersionManager<ArchivedArtistVersion, ArtistEditableFields> _archivedVersions = new();
@@ -436,7 +436,7 @@ namespace VocaDb.Model.Domain.Artists
 			var f = new ArtistPictureFile(name, mime, author, this);
 			Pictures.Add(f);
 
-			_log.Info("{0} created {1}", author, f);
+			s_log.Info("{0} created {1}", author, f);
 
 			return f;
 		}

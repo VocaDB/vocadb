@@ -18,7 +18,7 @@ namespace VocaDb.Web.Code
 	/// </remarks>
 	public class EnumArrayModelBinder : IModelBinder
 	{
-		private static readonly Type _genericEnumValType = typeof(EnumVal<>);
+		private static readonly Type s_genericEnumValType = typeof(EnumVal<>);
 
 		public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
 		{
@@ -39,7 +39,7 @@ namespace VocaDb.Web.Code
 			}
 
 			// EnumVal<> -> EnumVal<EnumType>
-			var enumValType = _genericEnumValType.MakeGenericType(paramType);
+			var enumValType = s_genericEnumValType.MakeGenericType(paramType);
 
 			// EnumVal<EnumType>.ParseMultiple()
 			var result = enumValType.GetMethod("ParseMultiple", BindingFlags.Public | BindingFlags.Static).Invoke(null, new[] { val.AttemptedValue });

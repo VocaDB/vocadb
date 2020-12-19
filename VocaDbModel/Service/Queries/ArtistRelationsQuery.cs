@@ -23,7 +23,7 @@ namespace VocaDb.Model.Service.Queries
 {
 	public class ArtistRelationsQuery
 	{
-		private static readonly SongOptionalFields _songFields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl;
+		private static readonly SongOptionalFields s_songFields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl;
 		private readonly ObjectCache _cache;
 		private readonly IDatabaseContext _ctx;
 		private readonly IAggregatedEntryImageUrlFactory _entryThumbPersister;
@@ -118,7 +118,7 @@ namespace VocaDb.Model.Service.Queries
 				.LoadMultiple<Song>(GetLatestSongIds(ctx, artist))
 				.OrderByPublishDate(SortDirection.Descending)
 				.ToArray()
-				.Select(s => new SongForApiContract(s, _languagePreference, _songFields))
+				.Select(s => new SongForApiContract(s, _languagePreference, s_songFields))
 				.ToArray();
 		}
 
@@ -149,7 +149,7 @@ namespace VocaDb.Model.Service.Queries
 			return ctx.LoadMultiple<Song>(GetTopSongIds(ctx, artist, latestSongs))
 				.OrderByDescending(s => s.RatingScore)
 				.ToArray()
-				.Select(s => new SongForApiContract(s, _languagePreference, _songFields))
+				.Select(s => new SongForApiContract(s, _languagePreference, s_songFields))
 				.ToArray();
 		}
 

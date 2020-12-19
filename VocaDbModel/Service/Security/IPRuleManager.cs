@@ -14,8 +14,8 @@ namespace VocaDb.Model.Service.Security
 	/// </summary>
 	public class IPRuleManager
 	{
-		private static readonly string _lockStr = "lock";
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly string s_lockStr = "lock";
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		public IPRuleManager()
 		{
@@ -42,7 +42,7 @@ namespace VocaDb.Model.Service.Security
 			if (ipRule == null)
 				throw new ArgumentNullException(nameof(ipRule));
 
-			lock (_lockStr)
+			lock (s_lockStr)
 			{
 				if (_permBannedIPs.Contains(ipRule.Address))
 					return false;
@@ -59,7 +59,7 @@ namespace VocaDb.Model.Service.Security
 
 		public void AddTempBannedIP(string host, string reason = "")
 		{
-			_log.Info("Adding temp banned IP {0}. Reason: {1}", host, reason);
+			s_log.Info("Adding temp banned IP {0}. Reason: {1}", host, reason);
 			_tempBannedIPs.Add(host);
 		}
 

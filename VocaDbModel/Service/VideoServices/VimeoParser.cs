@@ -16,7 +16,7 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class VimeoParser : IVideoServiceParser
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		public async Task<VideoTitleParseResult> GetTitleAsync(string id)
 		{
@@ -38,17 +38,17 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 			catch (WebException x)
 			{
-				_log.Warn(x, "Unable to load Vimeo URL {0}", url);
+				s_log.Warn(x, "Unable to load Vimeo URL {0}", url);
 				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
 			}
 			catch (HttpRequestException x)
 			{
-				_log.Warn(x, "Unable to load Vimeo URL {0}", url);
+				s_log.Warn(x, "Unable to load Vimeo URL {0}", url);
 				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
 			}
 			catch (JsonSerializationException x)
 			{
-				_log.Warn(x, "Unable to load Vimeo URL {0}", url);
+				s_log.Warn(x, "Unable to load Vimeo URL {0}", url);
 				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
 			}
 

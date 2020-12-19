@@ -75,7 +75,7 @@ namespace VocaDb.Model.Service.DataSharing
 
 	public class PackageCreator
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly Package _package;
 		private readonly Action _cleanup;
 
@@ -111,7 +111,7 @@ namespace VocaDb.Model.Service.DataSharing
 
 			if (_package.PartExists(partUri))
 			{
-				_log.Warn("Duplicate path: {0}", partUri);
+				s_log.Warn("Duplicate path: {0}", partUri);
 				return;
 			}
 

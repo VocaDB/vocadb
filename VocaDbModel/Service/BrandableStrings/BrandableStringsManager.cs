@@ -14,7 +14,7 @@ namespace VocaDb.Model.Service.BrandableStrings
 {
 	public class BrandableStringsManager
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		private bool LoadBrandedStrings()
 		{
@@ -31,7 +31,7 @@ namespace VocaDb.Model.Service.BrandableStrings
 			}
 			catch (FileNotFoundException)
 			{
-				_log.Warn("Branded strings assembly '{0}' not found.", brandedStringsAssembly);
+				s_log.Warn("Branded strings assembly '{0}' not found.", brandedStringsAssembly);
 				return false;
 			}
 
@@ -39,7 +39,7 @@ namespace VocaDb.Model.Service.BrandableStrings
 
 			if (headerType == null)
 			{
-				_log.Warn("No header type found in branded strings assembly.");
+				s_log.Warn("No header type found in branded strings assembly.");
 				return false;
 			}
 

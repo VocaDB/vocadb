@@ -26,7 +26,7 @@ namespace VocaDb.Model.Domain.Users
 {
 	public class User : IEntryWithNames, IUserWithEmail, IEquatable<IUser>, IWebLinkFactory<UserWebLink>, IEntryWithComments
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		public const string NameRegex = "^[a-zA-Z0-9_]+$";
 		public static readonly TimeSpan UsernameCooldown = TimeSpan.FromDays(365);
 
@@ -544,7 +544,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual UserMessage CreateNotification(string subject, string body)
 		{
-			_log.Debug("Creating notification for {0} with subject '{1}'", this, subject);
+			s_log.Debug("Creating notification for {0} with subject '{1}'", this, subject);
 
 			var msg = new UserMessage(this, subject, body, false);
 			Messages.Add(msg);
@@ -704,7 +704,7 @@ namespace VocaDb.Model.Domain.Users
 
 			if (PasswordHashAlgorithm != algorithm.AlgorithmType)
 			{
-				_log.Info("Updating password hash algorithm to {0}", algorithm.AlgorithmType);
+				s_log.Info("Updating password hash algorithm to {0}", algorithm.AlgorithmType);
 
 				PasswordHashAlgorithm = algorithm.AlgorithmType;
 				Salt = algorithm.GenerateSalt(); // Salt needs to be regenerated too because its length may change

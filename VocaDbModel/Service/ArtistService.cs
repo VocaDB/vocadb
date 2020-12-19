@@ -27,7 +27,7 @@ namespace VocaDb.Model.Service
 		private readonly IEntryUrlParser _entryUrlParser;
 
 		// ReSharper disable UnusedMember.Local
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		// ReSharper restore UnusedMember.Local
 
 		public PartialFindResult<Artist> Find(ISession session, ArtistQueryParams queryParams)

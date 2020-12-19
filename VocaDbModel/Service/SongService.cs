@@ -34,7 +34,7 @@ namespace VocaDb.Model.Service
 	public class SongService : ServiceBase
 	{
 #pragma warning disable 169
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 #pragma warning restore 169
 
 		private readonly VdbConfigManager _config;

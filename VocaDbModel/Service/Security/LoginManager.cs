@@ -29,7 +29,7 @@ namespace VocaDb.Model.Service.Security
 		public const int InvalidId = 0;
 		public const string LangParamName = "lang";
 
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		private UserWithPermissionsContract _user;
 
@@ -50,7 +50,7 @@ namespace VocaDb.Model.Service.Security
 			}
 			catch (ArgumentException x)
 			{
-				_log.Warn(x, "Unable to set culture");
+				s_log.Warn(x, "Unable to set culture");
 			}
 		}
 
@@ -152,7 +152,7 @@ namespace VocaDb.Model.Service.Security
 		{
 			if (!HasPermission(flag))
 			{
-				_log.Warn("User '{0}' does not have the requested permission '{1}'", Name, flag);
+				s_log.Warn("User '{0}' does not have the requested permission '{1}'", Name, flag);
 				throw new NotAllowedException();
 			}
 		}

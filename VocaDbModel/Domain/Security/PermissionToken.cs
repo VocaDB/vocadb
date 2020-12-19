@@ -16,12 +16,12 @@ namespace VocaDb.Model.Domain.Security
 		private Guid _id;
 		private string _name;
 
-		private static readonly IDictionary<Guid, PermissionToken> _all = new Dictionary<Guid, PermissionToken>(50);
+		private static readonly IDictionary<Guid, PermissionToken> s_all = new Dictionary<Guid, PermissionToken>(50);
 
 		private static PermissionToken New(string guid, string name)
 		{
 			var token = new PermissionToken(new Guid(guid), name);
-			_all.Add(token.Id, token);
+			s_all.Add(token.Id, token);
 			return token;
 		}
 
@@ -90,11 +90,11 @@ namespace VocaDb.Model.Domain.Security
 		/// <summary>
 		/// All tokens except Nothing
 		/// </summary>
-		public static readonly IEnumerable<PermissionToken> All = _all.Values;
+		public static readonly IEnumerable<PermissionToken> All = s_all.Values;
 
 		public static PermissionToken GetById(Guid id)
 		{
-			if (_all.TryGetValue(id, out PermissionToken token))
+			if (s_all.TryGetValue(id, out PermissionToken token))
 				return token;
 
 			throw new ArgumentException($"Invalid permission token: {id}.", "id");
@@ -102,12 +102,12 @@ namespace VocaDb.Model.Domain.Security
 
 		public static bool IsValid(PermissionToken token)
 		{
-			return _all.ContainsKey(token.Id);
+			return s_all.ContainsKey(token.Id);
 		}
 
 		public static bool TryGetById(Guid id, out PermissionToken token)
 		{
-			if (_all.TryGetValue(id, out token))
+			if (s_all.TryGetValue(id, out token))
 				return true;
 
 			return false;

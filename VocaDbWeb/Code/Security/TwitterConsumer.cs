@@ -14,7 +14,7 @@ namespace VocaDb.Web.Code.Security
 {
 	public class TwitterConsumer
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
 		/// Gets a value indicating whether the Twitter consumer key and secret are set in the web.config file.
@@ -47,7 +47,7 @@ namespace VocaDb.Web.Code.Security
 					string consumerSecret = AppConfig.TwitterConsumerSecret;
 					if (IsTwitterConsumerConfigured)
 					{
-						_log.Info("Creating token manager");
+						s_log.Info("Creating token manager");
 						tokenManager = new InMemoryTokenManager(consumerKey, consumerSecret);
 						store["TwitterShortTermUserSessionTokenManager"] = tokenManager;
 					}
@@ -67,12 +67,12 @@ namespace VocaDb.Web.Code.Security
 		{
 			try
 			{
-				_log.Info("Processing Twitter authorization from {0}.", hostname);
+				s_log.Info("Processing Twitter authorization from {0}.", hostname);
 				return TwitterSignIn.ProcessUserAuthorization();
 			}
 			catch (ProtocolException x)
 			{
-				_log.Error(x, "Unable to process Twitter authentication");
+				s_log.Error(x, "Unable to process Twitter authentication");
 				return null;
 			}
 		}

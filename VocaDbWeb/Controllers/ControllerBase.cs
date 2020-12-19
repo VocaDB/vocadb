@@ -25,11 +25,11 @@ namespace VocaDb.Web.Controllers
 {
 	public class ControllerBase : Controller
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
-		protected static readonly TimeSpan _imageExpirationTime = TimeSpan.FromMinutes(5);
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		protected static readonly TimeSpan ImageExpirationTime = TimeSpan.FromMinutes(5);
 		protected const int EntriesPerPage = 30;
 		protected const int InvalidId = 0;
-		protected static readonly TimeSpan _pictureCacheDuration = TimeSpan.FromDays(30);
+		protected static readonly TimeSpan PictureCacheDuration = TimeSpan.FromDays(30);
 		protected const int PictureCacheDurationSec = 30 * 24 * 60 * 60;
 		protected const int StatsCacheDurationSec = 24 * 60 * 60;
 
@@ -66,7 +66,7 @@ namespace VocaDb.Web.Controllers
 
 		protected void AddFormSubmissionError(string details)
 		{
-			_log.Warn("Form submission error: {0}", details);
+			s_log.Warn("Form submission error: {0}", details);
 			ModelState.AddModelError(string.Empty, $"Error while sending form contents - please try again. Diagnostic error message: {details}.");
 		}
 
@@ -82,7 +82,7 @@ namespace VocaDb.Web.Controllers
 			// Cached version indicated by the "v" request parameter.
 			// If no version is specified, assume no caching.
 			if (contract.Version > 0 && !string.IsNullOrEmpty(Request.Params["v"]))
-				Response.Cache.SetMaxAge(_pictureCacheDuration);
+				Response.Cache.SetMaxAge(PictureCacheDuration);
 
 			return Picture(contract.Picture, contract.Name);
 		}

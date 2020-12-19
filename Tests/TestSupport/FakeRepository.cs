@@ -173,9 +173,9 @@ namespace VocaDb.Tests.TestSupport
 	public class ListDatabaseContext<T> : IDatabaseContext<T>
 		where T : class, IDatabaseObject
 	{
-		private static readonly bool _isEntityWithId = typeof(IEntryWithIntId).IsAssignableFrom(typeof(T)) || typeof(IEntryWithLongId).IsAssignableFrom(typeof(T));
+		private static readonly bool s_isEntityWithId = typeof(IEntryWithIntId).IsAssignableFrom(typeof(T)) || typeof(IEntryWithLongId).IsAssignableFrom(typeof(T));
 
-		protected bool IsEntityWithId => _isEntityWithId;
+		protected bool IsEntityWithId => s_isEntityWithId;
 
 		// Get next Id
 		private void AssignNewId(T obj)

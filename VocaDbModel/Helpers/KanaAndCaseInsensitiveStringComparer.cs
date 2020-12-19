@@ -12,17 +12,17 @@ namespace VocaDb.Model.Helpers
 	/// </summary>
 	public class KanaAndCaseInsensitiveStringComparer : IEqualityComparer<string>
 	{
-		private static readonly CompareInfo _compareInfo = CompareInfo.GetCompareInfo("en-US");
+		private static readonly CompareInfo s_compareInfo = CompareInfo.GetCompareInfo("en-US");
 		private const CompareOptions Options = CompareOptions.IgnoreKanaType | CompareOptions.IgnoreCase;
 
 		public bool Equals(string x, string y)
 		{
-			return _compareInfo.Compare(x, y, Options) == 0;
+			return s_compareInfo.Compare(x, y, Options) == 0;
 		}
 
 		public int GetHashCode(string obj)
 		{
-			return _compareInfo.GetHashCode(obj, Options);
+			return s_compareInfo.GetHashCode(obj, Options);
 		}
 	}
 }

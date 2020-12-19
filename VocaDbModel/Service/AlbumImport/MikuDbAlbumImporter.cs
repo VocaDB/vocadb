@@ -20,7 +20,7 @@ namespace VocaDb.Model.Service.AlbumImport
 	public class MikuDbAlbumImporter : IAlbumImporter
 	{
 		private const string AlbumIndexUrl = "http://mikudb.com/album-index/";
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private const int MaxResults = 5;
 
 		private readonly HashSet<string> _existingUrls;
@@ -212,7 +212,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			}
 			catch (WebException x)
 			{
-				_log.Warn("Unable to download album post '" + url + "'", x);
+				s_log.Warn("Unable to download album post '" + url + "'", x);
 				throw;
 			}
 
@@ -307,7 +307,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			}
 			catch (WebException x)
 			{
-				_log.Warn("Unable to read albums index", x);
+				s_log.Warn("Unable to read albums index", x);
 				throw;
 			}
 

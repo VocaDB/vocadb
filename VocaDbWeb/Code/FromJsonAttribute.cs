@@ -37,8 +37,8 @@ namespace VocaDb.Web.Code
 
 	public class JsonModelBinder : IModelBinder, IPropertyBinder
 	{
-		private static readonly Attribute _allowHtmlAttribute = new AllowHtmlAttribute();
-		private static readonly ILogger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Attribute s_allowHtmlAttribute = new AllowHtmlAttribute();
+		private static readonly ILogger s_log = LogManager.GetCurrentClassLogger();
 
 		private object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext, string propertyName, Type type, bool allowHtml)
 		{
@@ -55,7 +55,7 @@ namespace VocaDb.Web.Code
 			}
 			catch (JsonReaderException x)
 			{
-				_log.Error(x, "Unable to process JSON, content is " + stringified);
+				s_log.Error(x, "Unable to process JSON, content is " + stringified);
 				throw;
 			}
 
@@ -69,7 +69,7 @@ namespace VocaDb.Web.Code
 
 		public object BindProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, PropertyDescriptor propertyDescriptor)
 		{
-			return BindModel(controllerContext, bindingContext, propertyDescriptor.Name, propertyDescriptor.PropertyType, propertyDescriptor.Attributes.Contains(_allowHtmlAttribute));
+			return BindModel(controllerContext, bindingContext, propertyDescriptor.Name, propertyDescriptor.PropertyType, propertyDescriptor.Attributes.Contains(s_allowHtmlAttribute));
 		}
 	}
 }

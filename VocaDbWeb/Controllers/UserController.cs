@@ -42,7 +42,7 @@ namespace VocaDb.Web.Controllers
 {
 	public class UserController : ControllerBase
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private const int ClientCacheDurationSec = 86400;
 
 		private readonly ActivityEntryQueries _activityEntryQueries;
@@ -129,7 +129,7 @@ namespace VocaDb.Web.Controllers
 			}
 			catch (ProtocolException x)
 			{
-				_log.Fatal(x, "Exception while attempting to sent Twitter request");
+				s_log.Fatal(x, "Exception while attempting to sent Twitter request");
 				TempData.SetErrorMessage("There was an error while connecting to Twitter - please try again later.");
 				return RedirectToAction("MySettings", "User");
 			}
@@ -335,7 +335,7 @@ namespace VocaDb.Web.Controllers
 					}
 					catch (HttpException x)
 					{
-						_log.Warn(x, "Unable to get redirect URL");
+						s_log.Warn(x, "Unable to get redirect URL");
 					}
 
 					string targetUrl;
@@ -369,7 +369,7 @@ namespace VocaDb.Web.Controllers
 		[RestrictBannedIP]
 		public ActionResult LoginTwitter(string returnUrl)
 		{
-			_log.Info($"{WebHelper.GetRealHost(Request)} login via Twitter");
+			s_log.Info($"{WebHelper.GetRealHost(Request)} login via Twitter");
 
 			// Make sure session ID is initialized
 			// ReSharper disable UnusedVariable
@@ -391,7 +391,7 @@ namespace VocaDb.Web.Controllers
 			}
 			catch (ProtocolException x)
 			{
-				_log.Error(x, "Exception while attempting to send Twitter request");
+				s_log.Error(x, "Exception while attempting to send Twitter request");
 				TempData.SetErrorMessage("There was an error while connecting to Twitter - please try again later.");
 
 				return RedirectToAction("Login");
@@ -515,7 +515,7 @@ namespace VocaDb.Web.Controllers
 
 			if (!ModelState.IsValidField("Extra"))
 			{
-				_log.Warn("An attempt was made to fill the bot decoy field from {0} with the value '{1}'.", Hostname, ModelState["Extra"]);
+				s_log.Warn("An attempt was made to fill the bot decoy field from {0} with the value '{1}'.", Hostname, ModelState["Extra"]);
 				_ipRuleManager.AddTempBannedIP(Hostname, "Attempt to fill the bot decoy field");
 				return View(model);
 			}
@@ -538,7 +538,7 @@ namespace VocaDb.Web.Controllers
 
 			if (!_ipRuleManager.IsAllowed(Hostname))
 			{
-				_log.Warn("Restricting blocked IP {0}.", Hostname);
+				s_log.Warn("Restricting blocked IP {0}.", Hostname);
 				ModelState.AddModelError("Restricted", restrictedErr);
 				return View(model);
 			}

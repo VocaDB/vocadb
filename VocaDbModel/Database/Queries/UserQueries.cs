@@ -88,7 +88,7 @@ namespace VocaDb.Model.Database.Queries
 			public int TagVotes { get; set; }
 		}
 
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly BrandableStringsManager _brandableStringsManager;
 		private readonly ObjectCache _cache;
 		private readonly IEntryLinkFactory _entryLinkFactory;
@@ -197,7 +197,7 @@ namespace VocaDb.Model.Database.Queries
 				{
 					// TODO: Loading of stats timeouts sometimes. Since they're not essential we can accept returning only partial stats.
 					// However, this should be fixed by tuning the queries further.
-					_log.Error(x, "Unable to load user stats");
+					s_log.Error(x, "Unable to load user stats");
 				}
 
 				return stats;
@@ -508,7 +508,7 @@ namespace VocaDb.Model.Database.Queries
 
 			if (string.IsNullOrEmpty(notes))
 			{
-				_log.Error("Notes are required");
+				s_log.Error("Notes are required");
 				return (false, 0);
 			}
 
@@ -523,7 +523,7 @@ namespace VocaDb.Model.Database.Queries
 
 				if (existing != null)
 				{
-					_log.Info("Report already exists");
+					s_log.Info("Report already exists");
 					return (false, existing.Id);
 				}
 
@@ -541,13 +541,13 @@ namespace VocaDb.Model.Database.Queries
 						.Count();
 					if (activeReportCount >= reportCountDisable)
 					{
-						_log.Info("User disabled");
+						s_log.Info("User disabled");
 						user.Active = false;
 						ctx.Update(user);
 					}
 					else if (activeReportCount >= reportCountLimit)
 					{
-						_log.Info("User set to limited");
+						s_log.Info("User set to limited");
 						user.GroupId = UserGroupId.Limited;
 						ctx.Update(user);
 					}
@@ -667,7 +667,7 @@ namespace VocaDb.Model.Database.Queries
 
 			if (timeSpan < TimeSpan.FromSeconds(5))
 			{
-				_log.Warn("Suspicious registration form fill time ({0}) from {1}.", timeSpan, hostname);
+				s_log.Warn("Suspicious registration form fill time ({0}) from {1}.", timeSpan, hostname);
 
 				if (timeSpan < TimeSpan.FromSeconds(2))
 				{
@@ -1285,7 +1285,7 @@ namespace VocaDb.Model.Database.Queries
 
 				if (user == null)
 				{
-					_log.Info("User not found or not active: {0}", username);
+					s_log.Info("User not found or not active: {0}", username);
 					throw new UserNotFoundException();
 				}
 
@@ -1410,7 +1410,7 @@ namespace VocaDb.Model.Database.Queries
 					var sentMessageCount = await session.Query<UserMessage>()
 						.Where(msg => msg.Sender.Id == sender.Id && msg.Created >= cutoffTime)
 						.VdbCountAsync();
-					_log.Debug($"Sent messages count for sender {sender} is {sentMessageCount}");
+					s_log.Debug($"Sent messages count for sender {sender} is {sentMessageCount}");
 					if (sentMessageCount > 10)
 					{
 						throw new RateLimitException("Too many messages");
@@ -1453,7 +1453,7 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var loggedUser = ctx.GetLoggedUser(PermissionContext);
 				var msg = $"{loggedUser} (level {loggedUser.GroupId}) not allowed to edit {user} (level {user.GroupId})";
-				_log.Error(msg);
+				s_log.Error(msg);
 				throw new NotAllowedException(msg);
 			}
 		}
@@ -1793,7 +1793,7 @@ namespace VocaDb.Model.Database.Queries
 
 				if (!user.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase))
 				{
-					_log.Info($"Email {request.Email} not valid for {user}");
+					s_log.Info($"Email {request.Email} not valid for {user}");
 					throw new RequestNotValidException("Email verification request not valid for this user");
 
 					/*

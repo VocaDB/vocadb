@@ -27,7 +27,7 @@ namespace VocaDb.Web.Controllers
 {
 	public class TagController : ControllerBase
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly IEnumTranslations _enumTranslations;
 		private readonly IEntryLinkFactory _entryLinkFactory;
 		private readonly MarkdownParser _markdownParser;
@@ -85,7 +85,7 @@ namespace VocaDb.Web.Controllers
 
 			if (tagId == InvalidId)
 			{
-				_log.Info("Tag not found: {0}, referrer {1}", id, Request.UrlReferrer);
+				s_log.Info("Tag not found: {0}, referrer {1}", id, Request.UrlReferrer);
 				return HttpNotFound();
 			}
 

@@ -339,23 +339,23 @@ namespace VocaDb.Model
 			return genericArgumentsTypes.ToArray();
 		}
 
-		private static OpCode[] _singleByteOpCodes;
+		private static OpCode[] s_singleByteOpCodes;
 
 		public static OpCode[] SingleByteOpCodes
 		{
 			get
 			{
-				if (_singleByteOpCodes == null)
+				if (s_singleByteOpCodes == null)
 				{
 					LoadOpCodes();
 				}
-				return _singleByteOpCodes;
+				return s_singleByteOpCodes;
 			}
 		}
 
 		private static void LoadOpCodes()
 		{
-			_singleByteOpCodes = new OpCode[0x100];
+			s_singleByteOpCodes = new OpCode[0x100];
 
 			FieldInfo[] opcodeFieldInfos = typeof(OpCodes).GetFields();
 
@@ -371,7 +371,7 @@ namespace VocaDb.Model
 
 					if (singleByteOpcodeIndex < 0x100)
 					{
-						_singleByteOpCodes[singleByteOpcodeIndex] = singleByteOpCode;
+						s_singleByteOpCodes[singleByteOpcodeIndex] = singleByteOpCode;
 					}
 				}
 			}

@@ -19,7 +19,7 @@ namespace VocaDb.Model.Helpers
 	/// </summary>
 	public static class ImageHelper
 	{
-		private static readonly string[] _allowedExt = { ".bmp", ".gif", ".jpg", ".jpeg", ".png" };
+		private static readonly string[] s_allowedExt = { ".bmp", ".gif", ".jpg", ".jpeg", ".png" };
 		public const int DefaultSmallThumbSize = 150;
 		public const int DefaultThumbSize = 250;
 		public const int DefaultTinyThumbSize = 70;
@@ -28,7 +28,7 @@ namespace VocaDb.Model.Helpers
 		public const int UserSmallThumbSize = 40;
 		public const int UserTinyThumbSize = 20;
 		public const int ImageSizeUnlimited = 0;
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
 		/// Opens image and logs an exception if the image cannot be opened.
@@ -44,7 +44,7 @@ namespace VocaDb.Model.Helpers
 			}
 			catch (ArgumentException x)
 			{
-				_log.Error(x, "Unable to open image");
+				s_log.Error(x, "Unable to open image");
 				throw new InvalidPictureException("Unable to open image", x);
 			}
 		}
@@ -52,7 +52,7 @@ namespace VocaDb.Model.Helpers
 		public const int MaxImageSizeMB = 8;
 		public const int MaxImageSizeBytes = MaxImageSizeMB * 1024 * 1024;
 
-		public static string[] AllowedExtensions => _allowedExt;
+		public static string[] AllowedExtensions => s_allowedExt;
 
 		/// <summary>
 		/// Gets image extension from MIME type.
@@ -102,7 +102,7 @@ namespace VocaDb.Model.Helpers
 		{
 			var ext = Path.GetExtension(fileName);
 
-			return (_allowedExt.Any(e => string.Equals(e, ext, StringComparison.InvariantCultureIgnoreCase)));
+			return (s_allowedExt.Any(e => string.Equals(e, ext, StringComparison.InvariantCultureIgnoreCase)));
 		}
 
 		public static Image ResizeToFixedSize(Image imgPhoto, int width, int height)

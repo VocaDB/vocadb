@@ -17,8 +17,8 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class VideoServiceFile : VideoService
 	{
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
-		private static readonly HashSet<string> _mimeTypes = new(new[] { "audio/mpeg" }, StringComparer.InvariantCultureIgnoreCase);
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private static readonly HashSet<string> s_mimeTypes = new(new[] { "audio/mpeg" }, StringComparer.InvariantCultureIgnoreCase);
 
 		public VideoServiceFile()
 			: base(PVService.File, null, new[] {
@@ -77,7 +77,7 @@ namespace VocaDb.Model.Service.VideoServices
 			catch (UriFormatException x)
 			{
 				var msg = $"{url} could not be parsed as a valid URL.";
-				_log.Warn(x, msg);
+				s_log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			}
 
@@ -96,7 +96,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 						var mime = response.Content.Headers.ContentType?.MediaType;
 
-						if (!_mimeTypes.Contains(mime))
+						if (!s_mimeTypes.Contains(mime))
 						{
 							return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, $"Unsupported content type: {mime}");
 						}
@@ -106,7 +106,7 @@ namespace VocaDb.Model.Service.VideoServices
 			catch (WebException x)
 			{
 				var msg = $"Unable to load file URL {url}. The file might not be publicly accessible";
-				_log.Warn(x, msg);
+				s_log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			}
 

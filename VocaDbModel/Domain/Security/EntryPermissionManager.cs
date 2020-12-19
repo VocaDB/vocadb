@@ -23,13 +23,13 @@ namespace VocaDb.Model.Domain.Security
 			return ImmutableSortedSet.CreateRange(vals);
 		}
 
-		private static readonly ImmutableSortedSet<EntryStatus> _allPermissions = Set(EnumVal<EntryStatus>.Values);
+		private static readonly StatusSet s_allPermissions = Set(EnumVal<EntryStatus>.Values);
 
 		// Entry statuses allowed for normal users
-		private static readonly ImmutableSortedSet<EntryStatus> _normalStatusPermissions = Set(EntryStatus.Draft, EntryStatus.Finished);
+		private static readonly StatusSet s_normalStatusPermissions = Set(EntryStatus.Draft, EntryStatus.Finished);
 
 		// Entry statuses allowed for trusted users
-		private static readonly ImmutableSortedSet<EntryStatus> _trustedStatusPermissions = Set(EntryStatus.Draft, EntryStatus.Finished, EntryStatus.Approved);
+		private static readonly StatusSet s_trustedStatusPermissions = Set(EntryStatus.Draft, EntryStatus.Finished, EntryStatus.Approved);
 
 		/* DIRECT OWNERSHIP:
 		 * User is a direct owner of an entry if the user is marked as a verified owner of the entry. This only applies to artist entries.
@@ -99,21 +99,21 @@ namespace VocaDb.Model.Domain.Security
 
 			// Moderators with lock permissions can edit everything
 			if (permissionContext.HasPermission(PermissionToken.LockEntries))
-				return _allPermissions;
+				return s_allPermissions;
 
 			// Trusted users can edit approved entries
 			if (permissionContext.HasPermission(PermissionToken.ApproveEntries))
-				return _trustedStatusPermissions;
+				return s_trustedStatusPermissions;
 
 			// Verified artists get trusted permissions for their own entry
 			if (IsDirectlyVerifiedFor(permissionContext, entry))
 			{
-				return _trustedStatusPermissions;
+				return s_trustedStatusPermissions;
 			}
 
 			// Normal user permissions
 			if (permissionContext.HasPermission(PermissionToken.ManageDatabase))
-				return _normalStatusPermissions;
+				return s_normalStatusPermissions;
 
 			return StatusSet.Empty;
 		}

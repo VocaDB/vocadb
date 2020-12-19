@@ -30,7 +30,7 @@ namespace VocaDb.Model.Database.Queries
 	public class SongListQueries : QueriesBase<ISongListRepository, SongList>
 	{
 		private readonly IEntryLinkFactory _entryLinkFactory;
-		private static readonly Logger _log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly IAggregatedEntryImageUrlFactory _thumbStore;
 		private readonly IEntryThumbPersister _imagePersister;
 		private readonly IUserIconFactory _userIconFactory;
