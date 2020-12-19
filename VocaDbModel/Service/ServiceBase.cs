@@ -328,9 +328,9 @@ namespace VocaDb.Model.Service
 		{
 			ParamIs.NotNull(() => sessionFactory);
 
-			this._sessionFactory = sessionFactory;
-			this._permissionContext = permissionContext;
-			this._entryLinkFactory = entryLinkFactory;
+			_sessionFactory = sessionFactory;
+			_permissionContext = permissionContext;
+			_entryLinkFactory = entryLinkFactory;
 		}
 
 		protected void DeleteEntity<TEntity>(int id, PermissionToken permissionFlags, bool skipLog = false)

@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain.Artists
 		public ArtistPictureFile(string name, string mime, User author, Artist artist)
 			: base(name, mime, author)
 		{
-			this._artist = artist;
+			_artist = artist;
 		}
 
 		public virtual Artist Artist

@@ -12,12 +12,12 @@ namespace VocaDb.Web
 	{
 		public AspNetHttpRequest(HttpRequestBase request)
 		{
-			this._request = request;
+			_request = request;
 		}
 
 		public AspNetHttpRequest(HttpRequest request)
 		{
-			this._request = new HttpRequestWrapper(request);
+			_request = new HttpRequestWrapper(request);
 		}
 
 		private readonly HttpRequestBase _request;

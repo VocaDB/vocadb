@@ -51,7 +51,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public ArtistStringFactory(bool allowRepeatingProducerAsPerformer)
 		{
-			this._allowRepeatingProducerAsPerformer = allowRepeatingProducerAsPerformer;
+			_allowRepeatingProducerAsPerformer = allowRepeatingProducerAsPerformer;
 		}
 
 		public TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus)

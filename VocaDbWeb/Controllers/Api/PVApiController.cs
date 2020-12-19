@@ -28,9 +28,9 @@ namespace VocaDb.Web.Controllers.Api
 
 		public PVApiController(IPVParser pvParser, IUserPermissionContext permissionContext, PVQueries queries)
 		{
-			this._pvParser = pvParser;
-			this._permissionContext = permissionContext;
-			this._queries = queries;
+			_pvParser = pvParser;
+			_permissionContext = permissionContext;
+			_queries = queries;
 		}
 
 		/// <summary>

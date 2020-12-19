@@ -13,7 +13,7 @@ namespace VocaDb.Model.Service.Search
 
 		public QueryProcessor(IDatabaseContext querySource)
 		{
-			this._querySource = querySource;
+			_querySource = querySource;
 		}
 
 		public PartialFindResult<T> Query(

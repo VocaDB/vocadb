@@ -15,7 +15,7 @@ namespace VocaDb.Model.DataContracts.Api
 
 		public EntryForApiContractFactory(IAggregatedEntryImageUrlFactory thumbPersister)
 		{
-			this._thumbPersister = thumbPersister;
+			_thumbPersister = thumbPersister;
 		}
 
 		public EntryForApiContract Create(IEntryWithNames entry, EntryOptionalFields includedFields, ContentLanguagePreference languagePreference)

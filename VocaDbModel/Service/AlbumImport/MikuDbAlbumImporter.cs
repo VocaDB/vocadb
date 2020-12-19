@@ -294,7 +294,7 @@ namespace VocaDb.Model.Service.AlbumImport
 		{
 			ParamIs.NotNull(() => existingUrls);
 
-			this._existingUrls = new HashSet<string>(existingUrls.Select(a => a.SourceUrl));
+			_existingUrls = new HashSet<string>(existingUrls.Select(a => a.SourceUrl));
 		}
 
 		public AlbumImportResult[] ImportNew()

@@ -52,10 +52,10 @@ namespace VocaDb.Web.Controllers
 			MarkdownParser markdownParser)
 		{
 			Service = service;
-			this._queries = queries;
-			this._userQueries = userQueries;
-			this._albumDescriptionGenerator = albumDescriptionGenerator;
-			this._markdownParser = markdownParser;
+			_queries = queries;
+			_userQueries = userQueries;
+			_albumDescriptionGenerator = albumDescriptionGenerator;
+			_markdownParser = markdownParser;
 		}
 
 		public ActionResult ArchivedVersionCoverPicture(int id = InvalidId)

@@ -25,7 +25,7 @@ namespace VocaDb.Model.Service.Queries
 		{
 			ParamIs.NotNull(() => ctx);
 
-			this._ctx = ctx;
+			_ctx = ctx;
 		}
 
 		public int[] GetLikeMatches(Song song, IList<int> ignoreIds, int count)

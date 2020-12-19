@@ -12,7 +12,7 @@ namespace VocaDb.Model.Service.Security
 		public VocaDbPrincipal(IIdentity identity, UserWithPermissionsContract user)
 			: base(identity, new string[] { })
 		{
-			this._user = user;
+			_user = user;
 		}
 
 		public UserWithPermissionsContract User => _user;

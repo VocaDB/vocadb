@@ -18,7 +18,7 @@ namespace VocaDb.Model.Service.BBCode
 		{
 			ParamIs.NotNull(() => linkFactory);
 
-			this._linkFactory = linkFactory;
+			_linkFactory = linkFactory;
 		}
 
 		private readonly Regex[] linkMatchers = new[] {

@@ -49,8 +49,8 @@ namespace VocaDb.Model.Service
 			VdbConfigManager config)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
-			this._entryUrlParser = entryUrlParser;
-			this._config = config;
+			_entryUrlParser = entryUrlParser;
+			_config = config;
 		}
 
 		public void AddSongToList(int listId, int songId, string notes)

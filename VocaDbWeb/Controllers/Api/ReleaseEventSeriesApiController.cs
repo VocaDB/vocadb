@@ -21,7 +21,7 @@ namespace VocaDb.Web.Controllers.Api
 
 		public ReleaseEventSeriesApiController(EventQueries queries)
 		{
-			this._queries = queries;
+			_queries = queries;
 		}
 
 		/// <summary>

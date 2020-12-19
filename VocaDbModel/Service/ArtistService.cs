@@ -39,7 +39,7 @@ namespace VocaDb.Model.Service
 		public ArtistService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
-			this._entryUrlParser = entryUrlParser;
+			_entryUrlParser = entryUrlParser;
 		}
 
 		public void Archive(ISession session, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "")

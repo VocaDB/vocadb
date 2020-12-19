@@ -16,8 +16,8 @@ namespace VocaDb.Model.Service.Search.Tags
 
 		public TagSearch(IDatabaseContext<Tag> dbContext, ContentLanguagePreference languagePreference)
 		{
-			this._dbContext = dbContext;
-			this._languagePreference = languagePreference;
+			_dbContext = dbContext;
+			_languagePreference = languagePreference;
 		}
 
 		private IQueryable<Tag> CreateQuery(TagQueryParams queryParams, string queryText, NameMatchMode nameMatchMode)

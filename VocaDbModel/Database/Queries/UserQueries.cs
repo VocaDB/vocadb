@@ -373,14 +373,14 @@ namespace VocaDb.Model.Database.Queries
 			ParamIs.NotNull(() => sfsClient);
 			ParamIs.NotNull(() => mailer);
 
-			this._entryLinkFactory = entryLinkFactory;
-			this._sfsClient = sfsClient;
-			this._mailer = mailer;
-			this._userIconFactory = userIconFactory;
-			this._entryImagePersister = entryImagePersister;
-			this._cache = cache;
-			this._brandableStringsManager = brandableStringsManager;
-			this._enumTranslations = enumTranslations;
+			_entryLinkFactory = entryLinkFactory;
+			_sfsClient = sfsClient;
+			_mailer = mailer;
+			_userIconFactory = userIconFactory;
+			_entryImagePersister = entryImagePersister;
+			_cache = cache;
+			_brandableStringsManager = brandableStringsManager;
+			_enumTranslations = enumTranslations;
 		}
 
 		public void AddFollowedTag(int userId, int tagId)
@@ -1831,8 +1831,8 @@ namespace VocaDb.Model.Database.Queries
 
 		public AlbumTagUsageFactory(IDatabaseContext session, Album album)
 		{
-			this._session = session;
-			this._album = album;
+			_session = session;
+			_album = album;
 		}
 
 		public AlbumTagUsage CreateTagUsage(Tag tag)
@@ -1859,8 +1859,8 @@ namespace VocaDb.Model.Database.Queries
 
 		public ArtistTagUsageFactory(IDatabaseContext session, Artist artist)
 		{
-			this._session = session;
-			this._artist = artist;
+			_session = session;
+			_artist = artist;
 		}
 
 		public ArtistTagUsage CreateTagUsage(Tag tag)
@@ -1887,8 +1887,8 @@ namespace VocaDb.Model.Database.Queries
 
 		public EventTagUsageFactory(IDatabaseContext ctx, ReleaseEvent releaseEvent)
 		{
-			this._ctx = ctx;
-			this._releaseEvent = releaseEvent;
+			_ctx = ctx;
+			_releaseEvent = releaseEvent;
 		}
 
 		public EventTagUsage CreateTagUsage(Tag tag)
@@ -1915,8 +1915,8 @@ namespace VocaDb.Model.Database.Queries
 
 		public EventSeriesTagUsageFactory(IDatabaseContext ctx, ReleaseEventSeries releaseEvent)
 		{
-			this._ctx = ctx;
-			this._releaseEvent = releaseEvent;
+			_ctx = ctx;
+			_releaseEvent = releaseEvent;
 		}
 
 		public EventSeriesTagUsage CreateTagUsage(Tag tag)
@@ -1943,8 +1943,8 @@ namespace VocaDb.Model.Database.Queries
 
 		public SongListTagUsageFactory(IDatabaseContext ctx, SongList songList)
 		{
-			this._ctx = ctx;
-			this._songList = songList;
+			_ctx = ctx;
+			_songList = songList;
 		}
 
 		public SongListTagUsage CreateTagUsage(Tag tag)
@@ -1971,8 +1971,8 @@ namespace VocaDb.Model.Database.Queries
 
 		public SongTagUsageFactory(IDatabaseContext ctx, Song song)
 		{
-			this._ctx = ctx;
-			this._song = song;
+			_ctx = ctx;
+			_song = song;
 		}
 
 		public SongTagUsage CreateTagUsage(Tag tag)

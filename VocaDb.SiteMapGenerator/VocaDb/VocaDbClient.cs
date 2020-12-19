@@ -49,7 +49,7 @@ namespace VocaDb.SiteMapGenerator.VocaDb
 
 		public VocaDbClient(string apiRoot)
 		{
-			this._apiRoot = apiRoot;
+			_apiRoot = apiRoot;
 		}
 
 		public async Task<int[]> GetAlbums()

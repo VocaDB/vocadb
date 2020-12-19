@@ -66,8 +66,8 @@ namespace VocaDb.Web.Models
 
 		public LoginModel(string returnUrl, bool returnToMainSite)
 		{
-			this.ReturnUrl = returnUrl;
-			this.ReturnToMainSite = returnToMainSite;
+			ReturnUrl = returnUrl;
+			ReturnToMainSite = returnToMainSite;
 		}
 
 		[Display(ResourceType = typeof(ViewRes.User.LoginStrings), Name = "KeepMeLoggedIn")]
@@ -243,26 +243,26 @@ namespace VocaDb.Web.Models
 
 			return new UpdateUserSettingsContract
 			{
-				AboutMe = this.AboutMe ?? string.Empty,
-				AnonymousActivity = !this.ShowActivity,
-				Culture = this.CultureSelection ?? string.Empty,
-				Id = this.Id,
+				AboutMe = AboutMe ?? string.Empty,
+				AnonymousActivity = !ShowActivity,
+				Culture = CultureSelection ?? string.Empty,
+				Id = Id,
 				Name = Username,
-				DefaultLanguageSelection = this.DefaultLanguageSelection,
-				Email = this.Email ?? string.Empty,
-				EmailOptions = this.EmailOptions,
-				Language = this.InterfaceLanguageSelection ?? string.Empty,
-				Location = this.Location ?? string.Empty,
+				DefaultLanguageSelection = DefaultLanguageSelection,
+				Email = Email ?? string.Empty,
+				EmailOptions = EmailOptions,
+				Language = InterfaceLanguageSelection ?? string.Empty,
+				Location = Location ?? string.Empty,
 				KnownLanguages = KnownLanguages ?? new UserKnownLanguageContract[0],
-				OldPass = this.OldPass,
-				PreferredVideoService = this.PreferredVideoService,
-				PublicAlbumCollection = this.PublicAlbumCollection,
-				PublicRatings = this.PublicRatings,
-				ShowChatbox = this.ShowChatbox,
+				OldPass = OldPass,
+				PreferredVideoService = PreferredVideoService,
+				PublicAlbumCollection = PublicAlbumCollection,
+				PublicRatings = PublicRatings,
+				ShowChatbox = ShowChatbox,
 				Stylesheet = Stylesheet,
-				NewPass = this.NewPass,
-				UnreadNotificationsToKeep = this.UnreadNotificationsToKeep,
-				WebLinks = this.WebLinks.Select(w => w.ToContract()).ToArray(),
+				NewPass = NewPass,
+				UnreadNotificationsToKeep = UnreadNotificationsToKeep,
+				WebLinks = WebLinks.Select(w => w.ToContract()).ToArray(),
 			};
 		}
 	}
@@ -321,14 +321,14 @@ namespace VocaDb.Web.Models
 		{
 			return new UserWithPermissionsContract
 			{
-				Active = this.Active,
+				Active = Active,
 				Email = Email ?? string.Empty,
-				GroupId = this.GroupId,
-				Id = this.Id,
-				Name = this.Name,
+				GroupId = GroupId,
+				Id = Id,
+				Name = Name,
 				OwnedArtistEntries = OwnedArtists.ToArray(),
-				Poisoned = this.Poisoned,
-				Supporter = this.Supporter,
+				Poisoned = Poisoned,
+				Supporter = Supporter,
 				AdditionalPermissions = new HashSet<PermissionToken>(Permissions.Where(p => p.HasFlag).Select(p => PermissionToken.GetById(p.PermissionType.Id)))
 			};
 		}

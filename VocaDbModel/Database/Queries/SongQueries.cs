@@ -278,16 +278,16 @@ namespace VocaDb.Model.Database.Queries
 			ObjectCache cache, VdbConfigManager config, IEntrySubTypeNameFactory entrySubTypeNameFactory, IFollowedArtistNotifier followedArtistNotifier)
 			: base(repository, permissionContext)
 		{
-			this._entryLinkFactory = entryLinkFactory;
-			this._pvParser = pvParser;
-			this._mailer = mailer;
-			this._languageDetector = languageDetector;
-			this._userIconFactory = userIconFactory;
-			this._enumTranslations = enumTranslations;
-			this._entryThumbPersister = entryThumbPersister;
-			this._cache = cache;
-			this._config = config;
-			this._followedArtistNotifier = followedArtistNotifier;
+			_entryLinkFactory = entryLinkFactory;
+			_pvParser = pvParser;
+			_mailer = mailer;
+			_languageDetector = languageDetector;
+			_userIconFactory = userIconFactory;
+			_enumTranslations = enumTranslations;
+			_entryThumbPersister = entryThumbPersister;
+			_cache = cache;
+			_config = config;
+			_followedArtistNotifier = followedArtistNotifier;
 		}
 
 		public ICommentQueries Comments(IDatabaseContext<Song> ctx)

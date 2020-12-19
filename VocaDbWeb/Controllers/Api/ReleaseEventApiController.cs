@@ -32,8 +32,8 @@ namespace VocaDb.Web.Controllers.Api
 
 		public ReleaseEventApiController(EventQueries queries, IAggregatedEntryImageUrlFactory thumbPersister)
 		{
-			this._queries = queries;
-			this._thumbPersister = thumbPersister;
+			_queries = queries;
+			_thumbPersister = thumbPersister;
 		}
 
 		/// <summary>

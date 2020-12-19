@@ -35,13 +35,13 @@ namespace VocaDb.Model.Domain.Security
 
 		public PermissionCollection(IEnumerable<PermissionToken> permissions)
 		{
-			this._permissions = new HashSet<PermissionToken>();
+			_permissions = new HashSet<PermissionToken>();
 			AddAll(permissions);
 		}
 
 		public PermissionCollection(ICollection<PermissionToken> permissions)
 		{
-			this._permissions = new HashSet<PermissionToken>(permissions);
+			_permissions = new HashSet<PermissionToken>(permissions);
 		}
 
 		public void Add(PermissionToken permissionToken)

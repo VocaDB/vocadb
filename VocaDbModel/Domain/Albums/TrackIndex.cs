@@ -13,8 +13,8 @@ namespace VocaDb.Model.Domain.Albums
 		public TrackIndex(int discNum, int trackNum)
 			: this()
 		{
-			this.DiscNumber = discNum;
-			this.TrackNumber = trackNum;
+			DiscNumber = discNum;
+			TrackNumber = trackNum;
 		}
 
 		public int DiscNumber { get; }

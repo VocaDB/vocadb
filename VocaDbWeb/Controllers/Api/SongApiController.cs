@@ -56,13 +56,13 @@ namespace VocaDb.Web.Controllers.Api
 			IEntryLinkFactory entryLinkFactory, IUserPermissionContext userPermissionContext,
 			UserService userService, OtherService otherService)
 		{
-			this._service = service;
-			this._queries = queries;
-			this._userService = userService;
-			this._songAggregateQueries = songAggregateQueries;
-			this._entryLinkFactory = entryLinkFactory;
-			this._userPermissionContext = userPermissionContext;
-			this._otherService = otherService;
+			_service = service;
+			_queries = queries;
+			_userService = userService;
+			_songAggregateQueries = songAggregateQueries;
+			_entryLinkFactory = entryLinkFactory;
+			_userPermissionContext = userPermissionContext;
+			_otherService = otherService;
 		}
 
 		/// <summary>

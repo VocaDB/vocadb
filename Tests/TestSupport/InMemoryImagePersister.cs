@@ -67,7 +67,7 @@ namespace VocaDb.Tests.TestSupport
 
 		public InMemoryImagePersisterBase(InMemoryImagePersisterStore store)
 		{
-			this._store = store;
+			_store = store;
 		}
 
 		private readonly InMemoryImagePersisterStore _store;

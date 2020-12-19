@@ -23,9 +23,9 @@ namespace VocaDb.Web.Controllers
 
 		public HomeController(SongQueries songService, OtherService otherService, BrandableStringsManager brandableStringsManager)
 		{
-			this._songService = songService;
-			this._otherService = otherService;
-			this._brandableStringsManager = brandableStringsManager;
+			_songService = songService;
+			_otherService = otherService;
+			_brandableStringsManager = brandableStringsManager;
 		}
 
 		public ActionResult Chat()

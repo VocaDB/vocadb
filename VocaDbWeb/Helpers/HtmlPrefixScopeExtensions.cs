@@ -51,7 +51,7 @@ namespace VocaDb.Web.Helpers
 
 			public HtmlFieldPrefixScope(TemplateInfo templateInfo, string htmlFieldPrefix)
 			{
-				this._templateInfo = templateInfo;
+				_templateInfo = templateInfo;
 
 				_previousHtmlFieldPrefix = templateInfo.HtmlFieldPrefix;
 				templateInfo.HtmlFieldPrefix = htmlFieldPrefix;

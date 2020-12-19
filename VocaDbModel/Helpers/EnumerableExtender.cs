@@ -84,8 +84,8 @@ namespace VocaDb.Model.Helpers
 
 		public DistinctPropertyEqualityComparer(Func<T, T2> func, IEqualityComparer<T2> propertyEquality)
 		{
-			this._func = func;
-			this._propertyEquality = propertyEquality;
+			_func = func;
+			_propertyEquality = propertyEquality;
 		}
 
 		public DistinctPropertyEqualityComparer(Func<T, T2> func)

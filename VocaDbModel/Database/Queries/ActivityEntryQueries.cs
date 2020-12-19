@@ -37,10 +37,10 @@ namespace VocaDb.Model.Database.Queries
 		public ActivityEntryQueries(IRepository repository, IUserIconFactory userIconFactory,
 			IUserPermissionContext permissionContext, EntryForApiContractFactory entryForApiContractFactory)
 		{
-			this._repository = repository;
-			this._userIconFactory = userIconFactory;
-			this._permissionContext = permissionContext;
-			this._entryForApiContractFactory = entryForApiContractFactory;
+			_repository = repository;
+			_userIconFactory = userIconFactory;
+			_permissionContext = permissionContext;
+			_entryForApiContractFactory = entryForApiContractFactory;
 		}
 
 		public ICollection<Tuple<DateTime, int>> GetEditsPerDay(int? userId, DateTime? cutoff)

@@ -16,8 +16,8 @@ namespace VocaDb.Web.Controllers
 
 		public HelpController(VdbConfigManager config, TagQueries tagQueries)
 		{
-			this._config = config;
-			this._tagQueries = tagQueries;
+			_config = config;
+			_tagQueries = tagQueries;
 		}
 
 		//

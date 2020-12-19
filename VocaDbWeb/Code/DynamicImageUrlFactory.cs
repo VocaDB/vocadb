@@ -11,7 +11,7 @@ namespace VocaDb.Web.Code
 	{
 		public DynamicImageUrlFactory(Lazy<UrlHelper> urlHelper)
 		{
-			this._urlHelperAccessor = urlHelper;
+			_urlHelperAccessor = urlHelper;
 		}
 
 		private readonly Lazy<UrlHelper> _urlHelperAccessor;

@@ -60,8 +60,8 @@ namespace VocaDb.Model.Service.VideoServices
 		protected VideoService(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
 		{
 			Service = service;
-			this._parser = parser;
-			this._linkMatchers = linkMatchers;
+			_parser = parser;
+			_linkMatchers = linkMatchers;
 		}
 
 		public PVService Service { get; private set; }

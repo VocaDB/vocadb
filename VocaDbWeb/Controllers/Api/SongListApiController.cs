@@ -42,9 +42,9 @@ namespace VocaDb.Web.Controllers.Api
 
 		public SongListApiController(SongListQueries queries, IUserIconFactory userIconFactory, IAggregatedEntryImageUrlFactory entryImagePersister)
 		{
-			this._queries = queries;
-			this._userIconFactory = userIconFactory;
-			this._entryImagePersister = entryImagePersister;
+			_queries = queries;
+			_userIconFactory = userIconFactory;
+			_entryImagePersister = entryImagePersister;
 		}
 
 		/// <summary>

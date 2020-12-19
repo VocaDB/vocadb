@@ -33,7 +33,7 @@ namespace VocaDb.Model.Domain.Albums
 			set
 			{
 				ParamIs.NotNull(() => value);
-				this._value = value;
+				_value = value;
 			}
 		}
 

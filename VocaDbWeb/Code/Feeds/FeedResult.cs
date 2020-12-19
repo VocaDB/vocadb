@@ -20,7 +20,7 @@ namespace VocaDb.Web.Code.Feeds
 
 		public FeedResult(SyndicationFeedFormatter feed)
 		{
-			this._feed = feed;
+			_feed = feed;
 		}
 
 		public override void ExecuteResult(ControllerContext context)

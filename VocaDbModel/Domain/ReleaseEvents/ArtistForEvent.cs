@@ -13,8 +13,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public ArtistForEvent(ReleaseEvent releaseEvent, Artist artist)
 		{
-			this.Artist = artist;
-			this._releaseEvent = releaseEvent;
+			Artist = artist;
+			_releaseEvent = releaseEvent;
 		}
 
 		/// <summary>

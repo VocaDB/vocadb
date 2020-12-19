@@ -12,7 +12,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public SingleNameManager(string name)
 		{
-			this._name = name;
+			_name = name;
 		}
 
 		public EntryNameContract GetEntryName(ContentLanguagePreference languagePreference)

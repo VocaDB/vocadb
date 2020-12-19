@@ -18,7 +18,7 @@ namespace VocaDb.Web.Code.Security
 
 		public RestrictBlockedIPAttribute(IPRuleManager ipRuleManager)
 		{
-			this._ipRuleManager = ipRuleManager;
+			_ipRuleManager = ipRuleManager;
 		}
 
 		public override void OnActionExecuting(ActionExecutingContext filterContext)

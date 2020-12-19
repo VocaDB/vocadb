@@ -47,7 +47,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public StatsQueries(IRepository repository)
 		{
-			this._repository = repository;
+			_repository = repository;
 		}
 
 		private int GetRootVb(int vb, Dictionary<int, int> voicebankMap)

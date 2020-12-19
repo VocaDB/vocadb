@@ -40,11 +40,11 @@ namespace VocaDb.Web.Controllers
 		public EventController(EventQueries queries, ReleaseEventService service, IEnumTranslations enumTranslations, IEntryLinkFactory entryLinkFactory,
 			IAggregatedEntryImageUrlFactory thumbPersister)
 		{
-			this._queries = queries;
-			this._service = service;
-			this._enumTranslations = enumTranslations;
-			this._entryLinkFactory = entryLinkFactory;
-			this._thumbPersister = thumbPersister;
+			_queries = queries;
+			_service = service;
+			_enumTranslations = enumTranslations;
+			_entryLinkFactory = entryLinkFactory;
+			_thumbPersister = thumbPersister;
 		}
 
 		public ActionResult ArchivedSeriesVersionXml(int id)

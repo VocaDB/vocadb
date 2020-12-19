@@ -169,8 +169,8 @@ namespace VocaDb.Model.Service
 			ParamIs.NotNull(() => repository);
 			ParamIs.NotNull(() => permissionContext);
 
-			this._repository = repository;
-			this._permissionContext = permissionContext;
+			_repository = repository;
+			_permissionContext = permissionContext;
 		}
 
 		/// <summary>

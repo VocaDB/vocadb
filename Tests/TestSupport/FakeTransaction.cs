@@ -12,8 +12,8 @@ namespace VocaDb.Tests.TestSupport
 
 		public FakeTransaction(Action commitAction = null, Action rollbackAction = null)
 		{
-			this._commitAction = commitAction;
-			this._rollbackAction = rollbackAction;
+			_commitAction = commitAction;
+			_rollbackAction = rollbackAction;
 		}
 
 		private readonly Action _commitAction;

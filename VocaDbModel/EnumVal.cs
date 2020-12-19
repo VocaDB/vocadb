@@ -113,7 +113,7 @@ namespace VocaDb.Model
 		/// <param name="flags">Enum flags to set.</param>
 		public EnumVal(T flags)
 		{
-			this._val = flags;
+			_val = flags;
 		}
 
 		public bool IsDefaultVal => _val.Equals(default(T));

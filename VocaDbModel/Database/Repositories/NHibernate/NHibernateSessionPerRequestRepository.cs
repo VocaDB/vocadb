@@ -23,7 +23,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		public NHibernateSessionPerRequestRepository(ISession session, ISessionFactory sessionFactory, IUserPermissionContext permissionContext)
 			: base(sessionFactory, permissionContext)
 		{
-			this._session = session;
+			_session = session;
 		}
 	}
 }

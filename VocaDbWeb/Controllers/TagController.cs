@@ -37,11 +37,11 @@ namespace VocaDb.Web.Controllers
 		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory, IEnumTranslations enumTranslations, MarkdownParser markdownParser,
 			IAggregatedEntryImageUrlFactory entryThumbPersister)
 		{
-			this._queries = queries;
-			this._entryLinkFactory = entryLinkFactory;
-			this._enumTranslations = enumTranslations;
-			this._markdownParser = markdownParser;
-			this._entryThumbPersister = entryThumbPersister;
+			_queries = queries;
+			_entryLinkFactory = entryLinkFactory;
+			_enumTranslations = enumTranslations;
+			_markdownParser = markdownParser;
+			_entryThumbPersister = entryThumbPersister;
 		}
 
 		public ActionResult ArchivedVersionXml(int id)

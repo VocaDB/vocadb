@@ -25,7 +25,7 @@ namespace VocaDb.Web.Code
 		{
 			AddMainScripts = true;
 			GlobalSearchType = EntryType.Undefined;
-			this._viewBag = viewBag;
+			_viewBag = viewBag;
 			OpenGraph = new OpenGraphModel(this);
 		}
 
@@ -111,7 +111,7 @@ namespace VocaDb.Web.Code
 
 		public OpenGraphModel(PagePropertiesData pageProperties)
 		{
-			this._pageProperties = pageProperties;
+			_pageProperties = pageProperties;
 		}
 
 		/// <summary>

@@ -11,7 +11,7 @@ namespace VocaDb.Web
 	{
 		public AspNetHttpContext(HttpContext context)
 		{
-			this._context = context;
+			_context = context;
 		}
 
 		private readonly HttpContext _context;

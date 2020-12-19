@@ -15,7 +15,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 
 		public AlbumNameFilter(IEnumerable<string> names)
 		{
-			this._names = names.ToArray();
+			_names = names.ToArray();
 		}
 
 		public QueryCost Cost => QueryCost.Medium;

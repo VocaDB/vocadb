@@ -57,7 +57,7 @@ namespace VocaDb.Model.Service.BrandableStrings
 
 		public BrandableStringsManager(VdbConfigManager config)
 		{
-			this._config = config;
+			_config = config;
 
 			if (!LoadBrandedStrings())
 			{

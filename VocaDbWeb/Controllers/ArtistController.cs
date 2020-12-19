@@ -44,9 +44,9 @@ namespace VocaDb.Web.Controllers
 
 		public ArtistController(ArtistService service, ArtistQueries queries, MarkdownParser markdownParser)
 		{
-			this._service = service;
-			this._queries = queries;
-			this._markdownParser = markdownParser;
+			_service = service;
+			_queries = queries;
+			_markdownParser = markdownParser;
 		}
 
 		private ArtistService Service => _service;

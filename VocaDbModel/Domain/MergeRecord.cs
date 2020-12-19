@@ -22,8 +22,8 @@ namespace VocaDb.Model.Domain
 			ParamIs.NotNull(() => source);
 			ParamIs.NotNull(() => target);
 
-			this.Source = source.Id;
-			this.Target = target;
+			Source = source.Id;
+			Target = target;
 		}
 
 		public virtual int Id { get; set; }

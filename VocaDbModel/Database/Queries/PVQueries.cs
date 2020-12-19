@@ -16,7 +16,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public PVQueries(IRepository repository)
 		{
-			this._repository = repository;
+			_repository = repository;
 		}
 
 		public PartialFindResult<PVForSongContract> GetList(string name = null, string author = null,

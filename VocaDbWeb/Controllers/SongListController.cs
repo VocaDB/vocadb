@@ -24,8 +24,8 @@ namespace VocaDb.Web.Controllers
 
 		public SongListController(SongListQueries queries, IEntryLinkFactory entryLinkFactory)
 		{
-			this._queries = queries;
-			this._entryLinkFactory = entryLinkFactory;
+			_queries = queries;
+			_entryLinkFactory = entryLinkFactory;
 		}
 
 		public ActionResult Details(int id = InvalidId)

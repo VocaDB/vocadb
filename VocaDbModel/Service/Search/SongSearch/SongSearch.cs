@@ -205,9 +205,9 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 		public SongSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference, IEntryUrlParser entryUrlParser)
 		{
-			this._querySource = querySource;
-			this._languagePreference = languagePreference;
-			this._entryUrlParser = entryUrlParser;
+			_querySource = querySource;
+			_languagePreference = languagePreference;
+			_entryUrlParser = entryUrlParser;
 		}
 
 		/// <summary>

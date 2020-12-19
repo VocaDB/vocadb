@@ -24,8 +24,8 @@ namespace VocaDb.Web.Controllers.Api
 
 		public DiscussionApiController(DiscussionQueries queries, IUserIconFactory userIconFactory)
 		{
-			this._queries = queries;
-			this._userIconFactory = userIconFactory;
+			_queries = queries;
+			_userIconFactory = userIconFactory;
 		}
 
 		[Route("comments/{commentId:int}")]

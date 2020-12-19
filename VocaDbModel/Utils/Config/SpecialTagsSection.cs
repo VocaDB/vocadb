@@ -9,7 +9,7 @@ namespace VocaDb.Model.Utils.Config
 	{
 		private int TagId(string name)
 		{
-			return this.Properties.Contains(name) ? (int)this[name] : 0;
+			return Properties.Contains(name) ? (int)this[name] : 0;
 		}
 
 		[ConfigurationProperty("changedLyrics")]

@@ -52,18 +52,18 @@ namespace VocaDb.Web.Services
 			EntryQueries entryQueries,
 			IUserPermissionContext userPermissionContext)
 		{
-			this._artistQueries = artistQueries;
-			this._tagQueries = tagQueries;
-			this._userQueries = userQueries;
-			this._albumService = albumService;
-			this._albumQueries = albumQueries;
-			this._artistService = artistService;
-			this._songQueries = songQueries;
-			this._entryQueries = entryQueries;
-			this._songService = songService;
-			this._songListQueries = songListQueries;
-			this._userService = userService;
-			this._userPermissionContext = userPermissionContext;
+			_artistQueries = artistQueries;
+			_tagQueries = tagQueries;
+			_userQueries = userQueries;
+			_albumService = albumService;
+			_albumQueries = albumQueries;
+			_artistService = artistService;
+			_songQueries = songQueries;
+			_entryQueries = entryQueries;
+			_songService = songService;
+			_songListQueries = songListQueries;
+			_userService = userService;
+			_userPermissionContext = userPermissionContext;
 		}
 
 		#region Common queries

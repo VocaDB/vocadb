@@ -33,9 +33,9 @@ namespace VocaDb.Web.Controllers
 			IPRuleManager ipRuleManager, ISessionFactory sessionFactory)
 		{
 			Service = service;
-			this._otherService = otherService;
-			this._ipRuleManager = ipRuleManager;
-			this._sessionFactory = sessionFactory;
+			_otherService = otherService;
+			_ipRuleManager = ipRuleManager;
+			_sessionFactory = sessionFactory;
 		}
 
 		[Authorize]

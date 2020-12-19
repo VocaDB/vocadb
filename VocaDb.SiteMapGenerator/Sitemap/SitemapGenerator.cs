@@ -45,8 +45,8 @@ namespace VocaDb.SiteMapGenerator.Sitemap
 
 		public SitemapGenerator(string siteRoot, string sitemapRootUrl)
 		{
-			this._siteRoot = siteRoot;
-			this._sitemapRootUrl = sitemapRootUrl;
+			_siteRoot = siteRoot;
+			_sitemapRootUrl = sitemapRootUrl;
 		}
 
 		public void Generate(string outFolder, Dictionary<EntryType, IEnumerable<EntryReference>> entries)

@@ -16,7 +16,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActivityEntryController(ActivityFeedService service)
 		{
-			this._service = service;
+			_service = service;
 		}
 
 		public ActionResult FollowedArtistActivity()

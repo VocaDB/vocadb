@@ -94,7 +94,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 		private (bool created, ArtistReport report) CallCreateReport(ArtistReportType reportType, int? versionNumber = null, Artist artist = null)
 		{
-			artist ??= this._artist;
+			artist ??= _artist;
 			var result = _queries.CreateReport(artist.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
 			var report = _repository.Load<ArtistReport>(result.reportId);
 			return (result.created, report);

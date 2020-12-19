@@ -123,7 +123,7 @@ namespace VocaDb.Model.Domain.PVs
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)

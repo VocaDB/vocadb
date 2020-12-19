@@ -15,7 +15,7 @@ namespace VocaDb.Web.Controllers
 
 		public EntryReportsController(EntryReportQueries queries)
 		{
-			this._queries = queries;
+			_queries = queries;
 		}
 
 		[Authorize]

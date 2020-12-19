@@ -25,14 +25,14 @@ namespace VocaDb.Model.DataContracts.UseCases
 
 		public NewSongCheckResultContract(DuplicateEntryResultContract<SongMatchProperty>[] matches, NicoTitleParseResult titleParseResult, ContentLanguagePreference languagePreference)
 		{
-			this.Matches = matches;
+			Matches = matches;
 
 			if (titleParseResult != null)
 			{
-				this.Artists = titleParseResult.Artists.Where(a => a != null).Select(a => new ArtistContract(a, languagePreference)).ToArray();
-				this.SongType = titleParseResult.SongType;
-				this.Title = titleParseResult.Title;
-				this.TitleLanguage = titleParseResult.TitleLanguage;
+				Artists = titleParseResult.Artists.Where(a => a != null).Select(a => new ArtistContract(a, languagePreference)).ToArray();
+				SongType = titleParseResult.SongType;
+				Title = titleParseResult.Title;
+				TitleLanguage = titleParseResult.TitleLanguage;
 			}
 		}
 

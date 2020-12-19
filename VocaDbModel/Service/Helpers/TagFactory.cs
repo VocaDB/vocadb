@@ -17,8 +17,8 @@ namespace VocaDb.Model.Service.Helpers
 
 		public TagFactoryRepository(IDatabaseContext<Tag> ctx, AgentLoginData loginData)
 		{
-			this._ctx = ctx;
-			this._loginData = loginData;
+			_ctx = ctx;
+			_loginData = loginData;
 		}
 
 		public async Task<Tag> CreateTagAsync(string englishName)

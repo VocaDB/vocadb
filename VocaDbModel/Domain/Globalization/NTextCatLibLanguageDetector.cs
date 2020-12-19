@@ -12,7 +12,7 @@ namespace VocaDb.Model.Domain.Globalization
 	{
 		public NTextCatLibLanguageDetector(IHttpContext context)
 		{
-			this._context = context;
+			_context = context;
 		}
 
 		private readonly IHttpContext _context;

@@ -155,10 +155,10 @@ namespace VocaDb.Model.Service.Queries
 
 		public ArtistRelationsQuery(IDatabaseContext ctx, ContentLanguagePreference languagePreference, ObjectCache cache, IAggregatedEntryImageUrlFactory entryThumbPersister)
 		{
-			this._ctx = ctx;
-			this._languagePreference = languagePreference;
-			this._cache = cache;
-			this._entryThumbPersister = entryThumbPersister;
+			_ctx = ctx;
+			_languagePreference = languagePreference;
+			_cache = cache;
+			_entryThumbPersister = entryThumbPersister;
 		}
 
 		public ArtistRelationsForApi GetRelations(Artist artist, ArtistRelationsFields fields)

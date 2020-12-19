@@ -70,7 +70,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 		private (bool created, SongReport report) CallCreateReport(SongReportType reportType, int? versionNumber = null, Song song = null, DateTime? created = null)
 		{
-			song ??= this._song;
+			song ??= _song;
 			var result = _queries.CreateReport(song.Id, reportType, "39.39.39.39", "It's Miku, not Rin", versionNumber);
 			var report = _repository.Load<SongReport>(result.reportId);
 			if (created != null)

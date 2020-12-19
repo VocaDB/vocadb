@@ -12,7 +12,7 @@ namespace VocaDb.Web.Controllers
 
 		public CommentController(OtherService otherService)
 		{
-			this._otherService = otherService;
+			_otherService = otherService;
 		}
 
 		//

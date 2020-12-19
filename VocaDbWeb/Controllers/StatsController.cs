@@ -263,13 +263,13 @@ namespace VocaDb.Web.Controllers
 		public StatsController(IUserRepository userRepository, IUserPermissionContext permissionContext, SongAggregateQueries songAggregateQueries,
 			HttpContextBase context, VdbConfigManager config, ActivityEntryQueries activityEntryQueries, StatsQueries queries)
 		{
-			this._userRepository = userRepository;
-			this._permissionContext = permissionContext;
-			this._activityEntryQueries = activityEntryQueries;
-			this._queries = queries;
-			this._songAggregateQueries = songAggregateQueries;
-			this._context = context;
-			this._config = config;
+			_userRepository = userRepository;
+			_permissionContext = permissionContext;
+			_activityEntryQueries = activityEntryQueries;
+			_queries = queries;
+			_songAggregateQueries = songAggregateQueries;
+			_context = context;
+			_config = config;
 		}
 
 		[OutputCache(Duration = ClientCacheDurationSec)]

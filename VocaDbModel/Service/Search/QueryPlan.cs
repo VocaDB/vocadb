@@ -14,7 +14,7 @@ namespace VocaDb.Model.Service.Search
 
 		public QueryPlan(IEnumerable<ISearchFilter<TEntry>> filters)
 		{
-			this._filters = filters.OrderBy(f => f.Cost).ToList();
+			_filters = filters.OrderBy(f => f.Cost).ToList();
 		}
 
 		public IEnumerator<ISearchFilter<TEntry>> GetEnumerator()

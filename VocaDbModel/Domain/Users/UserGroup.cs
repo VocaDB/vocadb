@@ -90,20 +90,20 @@ namespace VocaDb.Model.Domain.Users
 
 		public UserGroup(UserGroupId id, UserGroup parent, params PermissionToken[] permissions)
 		{
-			this.Id = id;
-			this.Permissions = parent.Permissions + new PermissionCollection(permissions);
+			Id = id;
+			Permissions = parent.Permissions + new PermissionCollection(permissions);
 		}
 
 		public UserGroup(UserGroupId id, params PermissionToken[] permissions)
 		{
-			this.Id = id;
-			this.Permissions = new PermissionCollection(permissions);
+			Id = id;
+			Permissions = new PermissionCollection(permissions);
 		}
 
 		public UserGroup(UserGroupId id, PermissionCollection permissions)
 		{
-			this.Id = id;
-			this.Permissions = permissions;
+			Id = id;
+			Permissions = permissions;
 		}
 
 		public UserGroupId Id { get; private set; }

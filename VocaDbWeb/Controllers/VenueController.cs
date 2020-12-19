@@ -20,8 +20,8 @@ namespace VocaDb.Web.Controllers
 
 		public VenueController(VenueQueries queries, IEnumTranslations enumTranslations)
 		{
-			this._queries = queries;
-			this._enumTranslations = enumTranslations;
+			_queries = queries;
+			_enumTranslations = enumTranslations;
 		}
 
 		public ActionResult Details(int id = InvalidId)

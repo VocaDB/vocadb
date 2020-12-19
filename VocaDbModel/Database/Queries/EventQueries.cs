@@ -69,13 +69,13 @@ namespace VocaDb.Model.Database.Queries
 			IUserMessageMailer mailer, IFollowedArtistNotifier followedArtistNotifier, IAggregatedEntryImageUrlFactory imageUrlFactory)
 			: base(eventRepository, permissionContext)
 		{
-			this._entryLinkFactory = entryLinkFactory;
-			this._imagePersister = imagePersister;
-			this._userIconFactory = userIconFactory;
-			this._enumTranslations = enumTranslations;
-			this._mailer = mailer;
-			this._followedArtistNotifier = followedArtistNotifier;
-			this._imageUrlFactory = imageUrlFactory;
+			_entryLinkFactory = entryLinkFactory;
+			_imagePersister = imagePersister;
+			_userIconFactory = userIconFactory;
+			_enumTranslations = enumTranslations;
+			_mailer = mailer;
+			_followedArtistNotifier = followedArtistNotifier;
+			_imageUrlFactory = imageUrlFactory;
 		}
 
 		public (bool created, int reportId) CreateReport(int eventId, EventReportType reportType, string hostname, string notes, int? versionNumber)

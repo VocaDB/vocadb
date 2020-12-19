@@ -169,8 +169,8 @@ namespace VocaDb.Model.Service.Helpers
 
 		public DataRow(DataRowParser rowParser, string row)
 		{
-			this._rowParser = rowParser;
-			this._cols = row.Split(';');
+			_rowParser = rowParser;
+			_cols = row.Split(';');
 		}
 
 		public int GetIntOrDefault(AlbumFileField field, int def)

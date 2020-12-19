@@ -173,12 +173,12 @@ namespace VocaDb.Model.Database.Queries
 			IEnumTranslations enumTranslations, ObjectCache cache)
 			: base(repository, permissionContext)
 		{
-			this._entryLinkFactory = entryLinkFactory;
-			this._imagePersister = imagePersister;
-			this._thumbStore = thumbStore;
-			this._userIconFactory = userIconFactory;
-			this._enumTranslations = enumTranslations;
-			this._cache = cache;
+			_entryLinkFactory = entryLinkFactory;
+			_imagePersister = imagePersister;
+			_thumbStore = thumbStore;
+			_userIconFactory = userIconFactory;
+			_enumTranslations = enumTranslations;
+			_cache = cache;
 		}
 
 		public ArchivedTagVersion Archive(IDatabaseContext<Tag> ctx, Tag tag, TagDiff diff, EntryEditEvent reason, string notes = "")

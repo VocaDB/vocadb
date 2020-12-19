@@ -210,7 +210,7 @@ namespace VocaDb.Model
 
 		internal FieldInfoReader(Func<TParameter> arg)
 		{
-			this._arg = arg;
+			_arg = arg;
 		}
 
 		public FieldInfo GetFieldToken()

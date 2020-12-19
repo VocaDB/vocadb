@@ -165,7 +165,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 
 		public AlbumSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference)
 		{
-			this._querySource = querySource;
+			_querySource = querySource;
 			LanguagePreference = languagePreference;
 		}
 

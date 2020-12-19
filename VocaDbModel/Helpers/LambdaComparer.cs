@@ -12,7 +12,7 @@ namespace VocaDb.Model.Helpers
 		public LambdaComparer(Func<T, T, int> comparer)
 		{
 			ParamIs.NotNull(() => comparer);
-			this._comparer = comparer;
+			_comparer = comparer;
 		}
 
 		public int Compare(T x, T y)

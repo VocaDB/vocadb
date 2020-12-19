@@ -55,13 +55,13 @@ namespace VocaDb.Web.Controllers
 		public ExtController(IEntryUrlParser entryUrlParser, IAggregatedEntryImageUrlFactory entryThumbPersister,
 			AlbumService albumService, ArtistService artistService, EventQueries eventQueries, SongQueries songService, TagQueries tagQueries)
 		{
-			this._entryUrlParser = entryUrlParser;
-			this._entryThumbPersister = entryThumbPersister;
-			this._albumService = albumService;
-			this._artistService = artistService;
-			this._eventQueries = eventQueries;
-			this._songService = songService;
-			this._tagQueries = tagQueries;
+			_entryUrlParser = entryUrlParser;
+			_entryThumbPersister = entryThumbPersister;
+			_albumService = albumService;
+			_artistService = artistService;
+			_eventQueries = eventQueries;
+			_songService = songService;
+			_tagQueries = tagQueries;
 		}
 
 #if !DEBUG

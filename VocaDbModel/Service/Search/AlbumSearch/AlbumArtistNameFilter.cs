@@ -13,7 +13,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 
 		public AlbumArtistNameFilter(IEnumerable<string> artistNames)
 		{
-			this._artistNames = artistNames.ToArray();
+			_artistNames = artistNames.ToArray();
 		}
 
 		public QueryCost Cost => QueryCost.High;

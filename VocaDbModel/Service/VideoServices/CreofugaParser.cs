@@ -45,7 +45,7 @@ namespace VocaDb.Model.Service.VideoServices
 		{
 			var doc = new HtmlDocument();
 			doc.Load(htmlStream, encoding);
-			return this.ParseDocument(doc, url);
+			return ParseDocument(doc, url);
 		}
 
 		public Task<VideoTitleParseResult> GetTitleAsync(string id)

@@ -131,18 +131,18 @@ namespace VocaDb.Web.Models.Tag
 		{
 			return new TagForEditContract
 			{
-				Id = this.Id,
-				Name = this.Name,
+				Id = Id,
+				Name = Name,
 				Names = Names,
-				CategoryName = this.CategoryName ?? string.Empty,
+				CategoryName = CategoryName ?? string.Empty,
 				DefaultNameLanguage = DefaultNameLanguage,
-				Description = this.Description,
+				Description = Description,
 				HideFromSuggestions = HideFromSuggestions,
-				Parent = this.Parent,
+				Parent = Parent,
 				RelatedTags = RelatedTags,
-				Status = this.Status,
+				Status = Status,
 				Targets = Targets,
-				UpdateNotes = this.UpdateNotes ?? string.Empty,
+				UpdateNotes = UpdateNotes ?? string.Empty,
 				WebLinks = WebLinks
 			};
 		}

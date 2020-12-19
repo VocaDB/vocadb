@@ -51,11 +51,11 @@ namespace VocaDb.Model.Service.Queries
 		public CommentQueries(IDatabaseContext ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory,
 			Func<int, TEntry> entryLoaderFunc = null)
 		{
-			this._ctx = ctx;
-			this._entryLinkFactory = entryLinkFactory;
-			this._permissionContext = permissionContext;
-			this._userIconFactory = userIconFactory;
-			this._entryLoaderFunc = entryLoaderFunc;
+			_ctx = ctx;
+			_entryLinkFactory = entryLinkFactory;
+			_permissionContext = permissionContext;
+			_userIconFactory = userIconFactory;
+			_entryLoaderFunc = entryLoaderFunc;
 		}
 
 		public CommentForApiContract Create(int entryId, CommentForApiContract contract)

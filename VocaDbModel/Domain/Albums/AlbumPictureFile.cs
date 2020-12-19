@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain.Albums
 		public AlbumPictureFile(string name, string mime, User author, Album album)
 			: base(name, mime, author)
 		{
-			this._album = album;
+			_album = album;
 		}
 
 		public virtual Album Album

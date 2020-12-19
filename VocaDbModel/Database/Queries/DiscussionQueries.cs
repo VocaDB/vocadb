@@ -33,8 +33,8 @@ namespace VocaDb.Model.Database.Queries
 			IEntryLinkFactory entryLinkFactory)
 			: base(repository, permissionContext)
 		{
-			this._userIconFactory = userIconFactory;
-			this._entryLinkFactory = entryLinkFactory;
+			_userIconFactory = userIconFactory;
+			_entryLinkFactory = entryLinkFactory;
 		}
 
 		public CommentForApiContract CreateComment(int topicId, CommentForApiContract contract)

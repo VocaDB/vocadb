@@ -15,7 +15,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 
 		public AlbumUniversalFilter(string term)
 		{
-			this._term = term;
+			_term = term;
 		}
 
 		public QueryCost Cost => QueryCost.VeryHigh;

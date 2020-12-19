@@ -16,7 +16,7 @@ namespace VocaDb.Model.Service.VideoServices.Youtube
 
 		public YoutubeService(string apiKey)
 		{
-			this._apiKey = apiKey;
+			_apiKey = apiKey;
 		}
 
 		public Task<YoutubeVideoResponse> VideoAsync(string id) => JsonRequest.ReadObjectAsync<YoutubeVideoResponse>(Url(id));

@@ -27,7 +27,7 @@ namespace VocaDb.Model.Service.Security
 
 		public HostCollection(IEnumerable<string> ips)
 		{
-			this._ips = new HashSet<string>(ips);
+			_ips = new HashSet<string>(ips);
 		}
 
 		public void Add(string host)
@@ -48,7 +48,7 @@ namespace VocaDb.Model.Service.Security
 			_readerWriterLock.EnterWriteLock();
 			try
 			{
-				this._ips = new HashSet<string>(ips);
+				_ips = new HashSet<string>(ips);
 			}
 			finally
 			{

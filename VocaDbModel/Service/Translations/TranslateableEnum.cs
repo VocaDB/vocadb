@@ -34,14 +34,14 @@ namespace VocaDb.Model.Service.Translations
 
 		public TranslateableEnum(Func<ResourceManager> resourceManager)
 		{
-			this._resourceManager = resourceManager;
-			this.Values = EnumVal<TEnum>.Values;
+			_resourceManager = resourceManager;
+			Values = EnumVal<TEnum>.Values;
 		}
 
 		public TranslateableEnum(Func<ResourceManager> resourceManager, IEnumerable<TEnum> values)
 		{
-			this._resourceManager = resourceManager;
-			this.Values = values.ToArray();
+			_resourceManager = resourceManager;
+			Values = values.ToArray();
 		}
 
 		public string this[TEnum val] => GetName(val);

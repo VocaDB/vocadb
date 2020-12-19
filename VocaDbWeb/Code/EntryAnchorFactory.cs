@@ -29,8 +29,8 @@ namespace VocaDb.Web.Code
 		{
 			ParamIs.NotNull(() => baseUrl);
 
-			this._hostAddress = hostAddress;
-			this._baseUrl = baseUrl;
+			_hostAddress = hostAddress;
+			_baseUrl = baseUrl;
 		}
 
 		private string GetUrl(string basePart, EntryType entryType, int id, string slug)

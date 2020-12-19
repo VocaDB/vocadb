@@ -63,7 +63,7 @@ namespace VocaDb.Model.Service.Queries
 
 		public PreviousAndNextAlbumsQuery(IDatabaseContext<Album> ctx)
 		{
-			this._ctx = ctx;
+			_ctx = ctx;
 		}
 
 		public Album[] GetRelatedAlbums(Album album)

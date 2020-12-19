@@ -24,7 +24,7 @@ namespace VocaDb.Model.Service.TagFormatting
 
 		protected SongCsvFileFormatter(IEntryLinkFactory entryLinkFactory)
 		{
-			this._entryLinkFactory = entryLinkFactory;
+			_entryLinkFactory = entryLinkFactory;
 		}
 
 		protected string GetPvUrl(Song song, PVType? type, PVServices services)

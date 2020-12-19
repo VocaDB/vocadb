@@ -24,7 +24,7 @@ namespace VocaDb.Web.Controllers.Api
 
 		public ActivityEntryApiController(ActivityEntryQueries queries)
 		{
-			this._queries = queries;
+			_queries = queries;
 		}
 
 		/// <summary>

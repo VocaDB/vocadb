@@ -152,23 +152,23 @@ namespace VocaDb.Web.Models.Event
 			{
 				Artists = Artists,
 				Category = Category,
-				CustomName = this.CustomName,
-				Date = this.Date,
+				CustomName = CustomName,
+				Date = Date,
 				DefaultNameLanguage = DefaultNameLanguage,
-				Description = this.Description ?? string.Empty,
-				EndDate = this.EndDate,
-				Id = this.Id,
-				Name = this.Name,
+				Description = Description ?? string.Empty,
+				EndDate = EndDate,
+				Id = Id,
+				Name = Name,
 				Names = Names,
 				PVs = PVs,
-				Series = this.Series,
-				SeriesNumber = this.SeriesNumber,
-				SeriesSuffix = this.SeriesSuffix ?? string.Empty,
+				Series = Series,
+				SeriesNumber = SeriesNumber,
+				SeriesSuffix = SeriesSuffix ?? string.Empty,
 				SongList = SongList,
 				Status = Status,
 				Venue = Venue,
 				VenueName = VenueName,
-				WebLinks = this.WebLinks
+				WebLinks = WebLinks
 			};
 		}
 	}

@@ -21,9 +21,9 @@ namespace VocaDb.Web.Controllers.Api
 	{
 		public IPRuleApiController(IUserPermissionContext userContext, IRepository repo, IPRuleManager ipRuleManager)
 		{
-			this._userContext = userContext;
-			this._repo = repo;
-			this._ipRuleManager = ipRuleManager;
+			_userContext = userContext;
+			_repo = repo;
+			_ipRuleManager = ipRuleManager;
 		}
 
 		private readonly IPRuleManager _ipRuleManager;

@@ -10,12 +10,12 @@ namespace VocaDb.Web
 	{
 		public AspNetHttpResponse(HttpResponseBase response)
 		{
-			this._response = response;
+			_response = response;
 		}
 
 		public AspNetHttpResponse(HttpResponse response)
 		{
-			this._response = new HttpResponseWrapper(response);
+			_response = new HttpResponseWrapper(response);
 		}
 
 		private readonly HttpResponseBase _response;

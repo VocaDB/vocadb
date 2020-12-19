@@ -19,9 +19,9 @@ namespace VocaDb.Model.DataContracts.Discussions
 		{
 			ParamIs.NotNull(() => folder);
 
-			this.Description = folder.Description;
-			this.Id = folder.Id;
-			this.Name = folder.Name;
+			Description = folder.Description;
+			Id = folder.Id;
+			Name = folder.Name;
 
 			if (fields.HasFlag(DiscussionFolderOptionalFields.LastTopic) && folder.Topics.Any())
 			{
@@ -33,7 +33,7 @@ namespace VocaDb.Model.DataContracts.Discussions
 
 			if (fields.HasFlag(DiscussionFolderOptionalFields.TopicCount))
 			{
-				this.TopicCount = folder.Topics.Count();
+				TopicCount = folder.Topics.Count();
 			}
 		}
 

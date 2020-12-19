@@ -41,10 +41,10 @@ namespace VocaDb.Web.Controllers.Api
 		public AlbumApiController(AlbumQueries queries, AlbumService service,
 			OtherService otherService, IAggregatedEntryImageUrlFactory thumbPersister)
 		{
-			this._queries = queries;
-			this._service = service;
-			this._otherService = otherService;
-			this._thumbPersister = thumbPersister;
+			_queries = queries;
+			_service = service;
+			_otherService = otherService;
+			_thumbPersister = thumbPersister;
 		}
 
 		/// <summary>

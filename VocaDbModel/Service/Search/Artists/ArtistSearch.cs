@@ -109,9 +109,9 @@ namespace VocaDb.Model.Service.Search.Artists
 
 		public ArtistSearch(ContentLanguagePreference languagePreference, IDatabaseContext<Artist> context, IEntryUrlParser entryUrlParser)
 		{
-			this.LanguagePreference = languagePreference;
-			this._context = context;
-			this._entryUrlParser = entryUrlParser;
+			LanguagePreference = languagePreference;
+			_context = context;
+			_entryUrlParser = entryUrlParser;
 		}
 
 		public PartialFindResult<Artist> Find(ArtistQueryParams queryParams)

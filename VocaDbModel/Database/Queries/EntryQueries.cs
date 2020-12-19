@@ -26,7 +26,7 @@ namespace VocaDb.Model.Database.Queries
 		public EntryQueries(IAlbumRepository repository, IUserPermissionContext permissionContext, IAggregatedEntryImageUrlFactory entryThumbPersister)
 			: base(repository, permissionContext)
 		{
-			this._entryThumbPersister = entryThumbPersister;
+			_entryThumbPersister = entryThumbPersister;
 		}
 
 		public PartialFindResult<EntryForApiContract> GetList(

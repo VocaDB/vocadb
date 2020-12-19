@@ -86,7 +86,7 @@ namespace VocaDb.Model.Domain.Songs
 			set
 			{
 				ParamIs.NotNull(() => value);
-				this._value = value;
+				_value = value;
 			}
 		}
 
@@ -113,7 +113,7 @@ namespace VocaDb.Model.Domain.Songs
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)

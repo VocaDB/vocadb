@@ -46,7 +46,7 @@ namespace VocaDb.Model.Domain.Comments
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)

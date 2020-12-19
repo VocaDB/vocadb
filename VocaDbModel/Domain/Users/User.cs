@@ -638,7 +638,7 @@ namespace VocaDb.Model.Domain.Users
 			if (ReferenceEquals(this, another))
 				return true;
 
-			return string.Equals(this.Name, another.Name, StringComparison.InvariantCultureIgnoreCase);
+			return string.Equals(Name, another.Name, StringComparison.InvariantCultureIgnoreCase);
 		}
 
 		public override bool Equals(object obj)

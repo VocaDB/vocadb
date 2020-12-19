@@ -26,7 +26,7 @@ namespace VocaDb.Model.Service.Search
 
 		public ReleaseEventSearch(IDatabaseContext querySource)
 		{
-			this._querySource = querySource;
+			_querySource = querySource;
 		}
 
 		private ReleaseEventFindResultContract AttemptSeriesMatch(string seriesName, ReleaseEventSeries series, string query, ContentLanguagePreference languagePreference)

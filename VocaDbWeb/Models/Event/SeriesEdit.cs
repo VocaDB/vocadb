@@ -78,12 +78,12 @@ namespace VocaDb.Web.Models.Event
 			{
 				Category = Category,
 				DefaultNameLanguage = DefaultNameLanguage,
-				Description = this.Description ?? string.Empty,
-				Id = this.Id,
-				Name = this.Name,
-				Names = this.Names.ToArray(),
+				Description = Description ?? string.Empty,
+				Id = Id,
+				Name = Name,
+				Names = Names.ToArray(),
 				Status = Status,
-				WebLinks = this.WebLinks
+				WebLinks = WebLinks
 			};
 		}
 	}

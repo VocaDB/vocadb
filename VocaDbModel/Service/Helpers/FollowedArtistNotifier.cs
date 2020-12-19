@@ -45,10 +45,10 @@ namespace VocaDb.Model.Service.Helpers
 		public FollowedArtistNotifier(IEntryLinkFactory entryLinkFactory, IUserMessageMailer mailer,
 			IEnumTranslations enumTranslations, IEntrySubTypeNameFactory entrySubTypeNameFactory)
 		{
-			this._entryLinkFactory = entryLinkFactory;
-			this._mailer = mailer;
-			this._enumTranslations = enumTranslations;
-			this._entrySubTypeNameFactory = entrySubTypeNameFactory;
+			_entryLinkFactory = entryLinkFactory;
+			_mailer = mailer;
+			_enumTranslations = enumTranslations;
+			_entrySubTypeNameFactory = entrySubTypeNameFactory;
 		}
 
 		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, bool markdown,

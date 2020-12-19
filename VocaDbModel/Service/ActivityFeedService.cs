@@ -20,8 +20,8 @@ namespace VocaDb.Model.Service
 			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
-			this._userIconFactory = userIconFactory;
-			this._entryForApiContractFactory = entryForApiContractFactory;
+			_userIconFactory = userIconFactory;
+			_entryForApiContractFactory = entryForApiContractFactory;
 		}
 
 		public PartialFindResult<ActivityEntryForApiContract> GetFollowedArtistActivity(int maxEntries)

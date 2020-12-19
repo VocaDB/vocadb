@@ -23,7 +23,7 @@ namespace VocaDb.Model.Service.AlbumImport
 
 		public KarenTAlbumImporter(IPictureDownloader pictureDownloader)
 		{
-			this._pictureDownloader = pictureDownloader;
+			_pictureDownloader = pictureDownloader;
 		}
 
 		private PictureDataContract DownloadCoverPicture(string url)

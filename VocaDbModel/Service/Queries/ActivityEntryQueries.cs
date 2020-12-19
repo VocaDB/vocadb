@@ -18,8 +18,8 @@ namespace VocaDb.Model.Service.Queries
 
 		public ActivityEntryQueries(IDatabaseContext<ActivityEntry> ctx, IUserPermissionContext permissionContext)
 		{
-			this._ctx = ctx;
-			this._permissionContext = permissionContext;
+			_ctx = ctx;
+			_permissionContext = permissionContext;
 		}
 
 		public void AddActivityfeedEntry(ActivityEntry entry)

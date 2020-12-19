@@ -43,8 +43,8 @@ namespace VocaDb.Model.Service.DataSharing
 
 			public Loader(ISession session, Package package)
 			{
-				this._session = session;
-				this._packageCreator = new PackageCreator(package, session.Clear);
+				_session = session;
+				_packageCreator = new PackageCreator(package, session.Clear);
 			}
 
 			public void DumpSkipDeleted<TEntry, TContract>(string folder, Func<TEntry, TContract> fac) where TEntry : IDeletableEntry
@@ -81,8 +81,8 @@ namespace VocaDb.Model.Service.DataSharing
 
 		public PackageCreator(Package package, Action cleanup)
 		{
-			this._package = package;
-			this._cleanup = cleanup;
+			_package = package;
+			_cleanup = cleanup;
 		}
 
 		public void Dump<TEntry, TContract>(Func<int, TEntry[]> loadFunc, string folder, Func<TEntry, TContract> fac)

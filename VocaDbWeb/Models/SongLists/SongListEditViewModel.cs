@@ -78,14 +78,14 @@ namespace VocaDb.Web.Models.SongLists
 		{
 			return new SongListForEditContract
 			{
-				Description = this.Description ?? string.Empty,
-				EventDate = this.EventDate,
-				FeaturedCategory = this.FeaturedCategory,
-				Id = this.Id,
-				Name = this.Name,
-				SongLinks = this.SongLinks.ToArray(),
-				Status = this.Status,
-				UpdateNotes = this.UpdateNotes ?? string.Empty
+				Description = Description ?? string.Empty,
+				EventDate = EventDate,
+				FeaturedCategory = FeaturedCategory,
+				Id = Id,
+				Name = Name,
+				SongLinks = SongLinks.ToArray(),
+				Status = Status,
+				UpdateNotes = UpdateNotes ?? string.Empty
 			};
 		}
 	}

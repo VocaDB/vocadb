@@ -26,7 +26,7 @@ namespace VocaDb.Model.Service
 	{
 		public EntryTypeTags(IDatabaseContext ctx)
 		{
-			this._ctx = ctx;
+			_ctx = ctx;
 		}
 
 		private int GetTagId(EntryType entryType, string subType)

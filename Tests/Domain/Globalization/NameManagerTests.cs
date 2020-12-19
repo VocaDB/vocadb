@@ -22,7 +22,7 @@ namespace VocaDb.Tests.Domain.Globalization
 
 			public NameFactory(NameManager<LocalizedStringWithId> nameManager)
 			{
-				this._nameManager = nameManager;
+				_nameManager = nameManager;
 			}
 
 			public LocalizedStringWithId CreateName(string val, ContentLanguageSelection language)

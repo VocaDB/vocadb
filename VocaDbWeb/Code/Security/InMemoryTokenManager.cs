@@ -42,8 +42,8 @@ namespace VocaDb.Web.Code.Security
 				throw new ArgumentNullException("consumerKey");
 			}
 
-			this.ConsumerKey = consumerKey;
-			this.ConsumerSecret = consumerSecret;
+			ConsumerKey = consumerKey;
+			ConsumerSecret = consumerSecret;
 		}
 
 		/// <summary>
@@ -71,7 +71,7 @@ namespace VocaDb.Web.Code.Security
 		public string GetTokenSecret(string token)
 		{
 			_log.Info("Requesting secret for token " + token);
-			return this._tokensAndSecrets[token];
+			return _tokensAndSecrets[token];
 		}
 
 		/// <summary>
@@ -90,7 +90,7 @@ namespace VocaDb.Web.Code.Security
 		public void StoreNewRequestToken(UnauthorizedTokenRequest request, ITokenSecretContainingMessage response)
 		{
 			_log.Info($"Storing token {response.Token}");
-			this._tokensAndSecrets[response.Token] = response.TokenSecret;
+			_tokensAndSecrets[response.Token] = response.TokenSecret;
 		}
 
 		/// <summary>
@@ -119,8 +119,8 @@ namespace VocaDb.Web.Code.Security
 		public void ExpireRequestTokenAndStoreNewAccessToken(string consumerKey, string requestToken, string accessToken, string accessTokenSecret)
 		{
 			_log.Info("Expiring tokens");
-			this._tokensAndSecrets.Remove(requestToken);
-			this._tokensAndSecrets[accessToken] = accessTokenSecret;
+			_tokensAndSecrets.Remove(requestToken);
+			_tokensAndSecrets[accessToken] = accessTokenSecret;
 		}
 
 		/// <summary>
@@ -152,7 +152,7 @@ namespace VocaDb.Web.Code.Security
 		public void StoreOpenIdAuthorizedRequestToken(string consumerKey, AuthorizationApprovedResponse authorization)
 		{
 			_log.Info("Storing openId auth request token " + authorization.RequestToken);
-			this._tokensAndSecrets[authorization.RequestToken] = string.Empty;
+			_tokensAndSecrets[authorization.RequestToken] = string.Empty;
 		}
 
 		#endregion

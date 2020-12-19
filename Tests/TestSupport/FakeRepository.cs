@@ -34,7 +34,7 @@ namespace VocaDb.Tests.TestSupport
 
 		public FakeRepository(QuerySourceList querySource)
 		{
-			this._querySource = querySource;
+			_querySource = querySource;
 		}
 
 		public int AbortedTransactionCount => _querySource.AbortedTransactionCount;
@@ -239,7 +239,7 @@ namespace VocaDb.Tests.TestSupport
 
 		public ListDatabaseContext(QuerySourceList querySource)
 		{
-			this._querySource = querySource;
+			_querySource = querySource;
 		}
 
 		public IAuditLogger AuditLogger => new FakeAuditLogger();

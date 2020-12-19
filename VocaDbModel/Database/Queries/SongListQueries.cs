@@ -127,10 +127,10 @@ namespace VocaDb.Model.Database.Queries
 			IEntryThumbPersister imagePersister, IAggregatedEntryImageUrlFactory thumbStore, IUserIconFactory userIconFactory)
 			: base(repository, permissionContext)
 		{
-			this._entryLinkFactory = entryLinkFactory;
-			this._imagePersister = imagePersister;
-			this._thumbStore = thumbStore;
-			this._userIconFactory = userIconFactory;
+			_entryLinkFactory = entryLinkFactory;
+			_imagePersister = imagePersister;
+			_thumbStore = thumbStore;
+			_userIconFactory = userIconFactory;
 		}
 
 		public ICommentQueries Comments(IDatabaseContext<SongList> ctx)

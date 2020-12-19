@@ -38,10 +38,10 @@ namespace VocaDb.Web.Controllers.Api
 
 		public ArtistApiController(ArtistQueries queries, ArtistService service, IAggregatedEntryImageUrlFactory thumbPersister, ObjectCache cache)
 		{
-			this._queries = queries;
-			this._service = service;
-			this._thumbPersister = thumbPersister;
-			this._cache = cache;
+			_queries = queries;
+			_service = service;
+			_thumbPersister = thumbPersister;
+			_cache = cache;
 		}
 
 		private ArtistForApiContract GetArtist(Artist a, ArtistMergeRecord m,

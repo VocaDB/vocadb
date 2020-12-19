@@ -291,10 +291,10 @@ namespace VocaDb.Model.Service
 			IUserIconFactory userIconFactory, EntryForApiContractFactory entryForApiContractFactory, ObjectCache cache, IAggregatedEntryImageUrlFactory thumbPersister)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
-			this._userIconFactory = userIconFactory;
-			this._entryForApiContractFactory = entryForApiContractFactory;
-			this._cache = cache;
-			this._thumbPersister = thumbPersister;
+			_userIconFactory = userIconFactory;
+			_entryForApiContractFactory = entryForApiContractFactory;
+			_cache = cache;
+			_thumbPersister = thumbPersister;
 		}
 
 		public void AuditLog(string doingWhat, string who, AuditLogCategory category = AuditLogCategory.Unspecified)

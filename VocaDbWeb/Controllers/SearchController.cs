@@ -178,15 +178,15 @@ namespace VocaDb.Web.Controllers
 		public SearchController(OtherService services, ArtistService artistService, AlbumService albumService, SongService songService, SongListQueries songListQueries,
 			TagQueries tagQueries, EventQueries eventQueries, EntryQueries entryQueries, IUserPermissionContext permissionContext)
 		{
-			this._services = services;
-			this._artistService = artistService;
-			this._albumService = albumService;
-			this._songService = songService;
-			this._songListQueries = songListQueries;
-			this._tagQueries = tagQueries;
-			this._eventQueries = eventQueries;
-			this._entryQueries = entryQueries;
-			this._permissionContext = permissionContext;
+			_services = services;
+			_artistService = artistService;
+			_albumService = albumService;
+			_songService = songService;
+			_songListQueries = songListQueries;
+			_tagQueries = tagQueries;
+			_eventQueries = eventQueries;
+			_entryQueries = entryQueries;
+			_permissionContext = permissionContext;
 		}
 
 		public ActionResult Index(SearchIndexViewModel viewModel)

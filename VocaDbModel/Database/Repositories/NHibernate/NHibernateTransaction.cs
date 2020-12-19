@@ -12,7 +12,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		public NHibernateTransaction(ITransaction tx)
 		{
 			ParamIs.NotNull(() => tx);
-			this._tx = tx;
+			_tx = tx;
 		}
 
 		public void Dispose() => _tx.Dispose();

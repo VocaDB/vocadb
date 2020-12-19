@@ -125,8 +125,8 @@ namespace VocaDb.Model.Domain.Security
 
 		public PermissionToken(Guid id, string name)
 		{
-			this._id = id;
-			this._name = name;
+			_id = id;
+			_name = name;
 		}
 
 		[DataMember]

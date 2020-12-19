@@ -12,7 +12,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 
 		public AlbumArtistFilter(int artistId)
 		{
-			this._artistId = artistId;
+			_artistId = artistId;
 		}
 
 		public QueryCost Cost => QueryCost.Medium;

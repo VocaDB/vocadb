@@ -165,13 +165,13 @@ namespace VocaDb.Model.Database.Queries
 			ObjectCache cache, IUserIconFactory userIconFactory, IEnumTranslations enumTranslations, IAggregatedEntryImageUrlFactory imageUrlFactory)
 			: base(repository, permissionContext)
 		{
-			this._entryLinkFactory = entryLinkFactory;
-			this._imagePersister = imagePersister;
-			this._pictureFilePersister = pictureFilePersister;
-			this._cache = cache;
-			this._userIconFactory = userIconFactory;
-			this._enumTranslations = enumTranslations;
-			this._imageUrlFactory = imageUrlFactory;
+			_entryLinkFactory = entryLinkFactory;
+			_imagePersister = imagePersister;
+			_pictureFilePersister = pictureFilePersister;
+			_cache = cache;
+			_userIconFactory = userIconFactory;
+			_enumTranslations = enumTranslations;
+			_imageUrlFactory = imageUrlFactory;
 		}
 
 		public ICommentQueries Comments(IDatabaseContext<Artist> ctx)

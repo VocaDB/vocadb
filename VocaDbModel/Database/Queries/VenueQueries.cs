@@ -26,8 +26,8 @@ namespace VocaDb.Model.Database.Queries
 		public VenueQueries(IVenueRepository venueRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext, IEnumTranslations enumTranslations)
 			: base(venueRepository, permissionContext)
 		{
-			this._entryLinkFactory = entryLinkFactory;
-			this._enumTranslations = enumTranslations;
+			_entryLinkFactory = entryLinkFactory;
+			_enumTranslations = enumTranslations;
 		}
 
 		private ArchivedVenueVersion Archive(IDatabaseContext<Venue> ctx, Venue venue, VenueDiff diff, EntryEditEvent reason, string notes)

@@ -58,12 +58,12 @@ namespace VocaDb.Web.Controllers.Api
 		public UserApiController(UserQueries queries, UserMessageQueries messageQueries, UserService service, IUserPermissionContext permissionContext, IAggregatedEntryImageUrlFactory thumbPersister,
 			IUserIconFactory userIconFactory)
 		{
-			this._queries = queries;
-			this._messageQueries = messageQueries;
-			this._service = service;
-			this._permissionContext = permissionContext;
-			this._thumbPersister = thumbPersister;
-			this._userIconFactory = userIconFactory;
+			_queries = queries;
+			_messageQueries = messageQueries;
+			_service = service;
+			_permissionContext = permissionContext;
+			_thumbPersister = thumbPersister;
+			_userIconFactory = userIconFactory;
 		}
 
 		[Authorize]

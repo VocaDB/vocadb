@@ -137,8 +137,8 @@ namespace VocaDb.Model.Domain.Security
 
 		protected UserSetting(IHttpContext context, IUserPermissionContext permissionContext)
 		{
-			this._context = context;
-			this._permissionContext = permissionContext;
+			_context = context;
+			_permissionContext = permissionContext;
 		}
 
 		public void UpdateUser(User user)

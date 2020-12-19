@@ -17,7 +17,7 @@ namespace VocaDb.Model.Helpers
 
 		public AlphaPassGenerator(bool ucChar, bool lcChar, bool digits)
 		{
-			this._random = new Random();
+			_random = new Random();
 
 			_allowedChars =
 				(ucChar ? Enumerable.Range('A', 'Z' - 'A' + 1).Select(c => (char)c) : Enumerable.Empty<char>()).Concat

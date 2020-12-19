@@ -79,7 +79,7 @@ namespace VocaDb.Model.Domain.Songs
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public virtual void Delete()

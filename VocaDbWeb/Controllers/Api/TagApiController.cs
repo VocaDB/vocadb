@@ -39,8 +39,8 @@ namespace VocaDb.Web.Controllers.Api
 
 		public TagApiController(TagQueries queries, IAggregatedEntryImageUrlFactory thumbPersister)
 		{
-			this._queries = queries;
-			this._thumbPersister = thumbPersister;
+			_queries = queries;
+			_thumbPersister = thumbPersister;
 		}
 
 		/// <summary>

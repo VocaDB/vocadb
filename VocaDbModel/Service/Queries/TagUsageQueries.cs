@@ -40,7 +40,7 @@ namespace VocaDb.Model.Service.Queries
 
 		public TagUsageQueries(IUserPermissionContext permissionContext)
 		{
-			this._permissionContext = permissionContext;
+			_permissionContext = permissionContext;
 		}
 
 		public async Task<TagUsageForApiContract[]> AddTags<TEntry, TTag>(int entryId,

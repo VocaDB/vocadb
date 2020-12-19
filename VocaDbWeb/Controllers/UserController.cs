@@ -83,16 +83,16 @@ namespace VocaDb.Web.Controllers
 		{
 			Service = service;
 			Data = data;
-			this._activityEntryQueries = activityEntryQueries;
-			this._artistQueries = artistQueries;
-			this._artistService = artistService;
-			this._repository = repository;
-			this._otherService = otherService;
-			this._messageQueries = messageQueries;
-			this._ipRuleManager = ipRuleManager;
-			this._config = config;
-			this._markdownParser = markdownParser;
-			this._loginManager = loginManager;
+			_activityEntryQueries = activityEntryQueries;
+			_artistQueries = artistQueries;
+			_artistService = artistService;
+			_repository = repository;
+			_otherService = otherService;
+			_messageQueries = messageQueries;
+			_ipRuleManager = ipRuleManager;
+			_config = config;
+			_markdownParser = markdownParser;
+			_loginManager = loginManager;
 		}
 
 		[AcceptVerbs(HttpVerbs.Post)]

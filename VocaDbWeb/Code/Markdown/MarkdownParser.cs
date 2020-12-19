@@ -35,7 +35,7 @@ namespace VocaDb.Web.Code.Markdown
 
 		public MarkdownParser(ObjectCache cache)
 		{
-			this._cache = cache;
+			_cache = cache;
 		}
 
 		/// <summary>

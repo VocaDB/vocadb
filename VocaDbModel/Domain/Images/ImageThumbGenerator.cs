@@ -16,7 +16,7 @@ namespace VocaDb.Model.Domain.Images
 		{
 			ParamIs.NotNull(() => persister);
 
-			this._persister = persister;
+			_persister = persister;
 		}
 
 		/// <summary>

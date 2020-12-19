@@ -41,8 +41,8 @@ namespace VocaDb.Model.Service
 			AlbumService albumService, SongService songService)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
-			this._albumService = albumService;
-			this._songService = songService;
+			_albumService = albumService;
+			_songService = songService;
 		}
 
 		private AlbumContract AcceptImportedAlbum(ISession session, IAlbumImporter importer, ContentLanguageSelection languageSelection,

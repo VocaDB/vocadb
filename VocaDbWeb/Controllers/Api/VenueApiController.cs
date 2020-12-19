@@ -26,7 +26,7 @@ namespace VocaDb.Web.Controllers.Api
 
 		public VenueApiController(VenueQueries queries)
 		{
-			this._queries = queries;
+			_queries = queries;
 		}
 
 		/// <summary>

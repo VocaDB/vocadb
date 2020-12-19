@@ -24,7 +24,7 @@ namespace VocaDb.Model.Service.VideoServices
 		public RegexLinkMatcher(string template, string regexStr)
 		{
 			_regex = new Regex(regexStr, RegexOptions.IgnoreCase);
-			this._template = template;
+			_template = template;
 		}
 
 		public string GetId(string url)

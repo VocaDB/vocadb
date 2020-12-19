@@ -37,7 +37,7 @@ namespace VocaDb.Model.Service.Queries
 		{
 			ParamIs.NotNull(() => ctx);
 
-			this._ctx = ctx;
+			_ctx = ctx;
 		}
 
 		public RelatedAlbums GetRelatedAlbums(Album album)

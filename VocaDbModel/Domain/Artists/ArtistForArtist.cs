@@ -56,7 +56,7 @@ namespace VocaDb.Model.Domain.Artists
 			if (ReferenceEquals(this, another))
 				return true;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)

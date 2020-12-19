@@ -25,12 +25,12 @@ namespace VocaDb.Model.Service.Translations
 
 		public DerivedTranslateableEnum(TranslateableEnum<TEnumBase> baseEnum, Func<ResourceManager> resourceManager) : base(resourceManager)
 		{
-			this._baseEnum = baseEnum;
+			_baseEnum = baseEnum;
 		}
 
 		public DerivedTranslateableEnum(TranslateableEnum<TEnumBase> baseEnum, Func<ResourceManager> resourceManager, IEnumerable<TEnum> values) : base(resourceManager, values)
 		{
-			this._baseEnum = baseEnum;
+			_baseEnum = baseEnum;
 		}
 	}
 }

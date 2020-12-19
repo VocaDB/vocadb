@@ -109,8 +109,8 @@ namespace VocaDb.Model.Domain.Versioning
 		public EnumFieldAccessor(EnumVal<T> val, T field)
 			: this()
 		{
-			this._val = val;
-			this._field = field;
+			_val = val;
+			_field = field;
 		}
 
 		public bool IsChanged

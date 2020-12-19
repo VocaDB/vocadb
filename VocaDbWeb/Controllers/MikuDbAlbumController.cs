@@ -19,7 +19,7 @@ namespace VocaDb.Web.Controllers
 
 		public MikuDbAlbumController(MikuDbAlbumService service)
 		{
-			this._service = service;
+			_service = service;
 		}
 
 		public FileResult CoverPicture(int id)

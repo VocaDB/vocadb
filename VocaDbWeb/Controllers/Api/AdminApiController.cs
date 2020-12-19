@@ -18,8 +18,8 @@ namespace VocaDb.Web.Controllers.Api
 
 		public AdminApiController(IUserPermissionContext userContext, IPRuleManager ipRuleManager)
 		{
-			this._userContext = userContext;
-			this._ipRuleManager = ipRuleManager;
+			_userContext = userContext;
+			_ipRuleManager = ipRuleManager;
 		}
 
 		[Route("tempBannedIPs")]

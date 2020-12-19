@@ -74,10 +74,10 @@ namespace VocaDb.Model.Service.Search
 			if (!string.IsNullOrEmpty(query) && matchMode == NameMatchMode.Auto)
 				throw new ArgumentException("'Auto' is not allowed here; specific name match mode is required", nameof(MatchMode));
 
-			this._query = query;
-			this._matchMode = matchMode;
-			this._originalQuery = originalQuery;
-			this._words = words;
+			_query = query;
+			_matchMode = matchMode;
+			_originalQuery = originalQuery;
+			_words = words;
 		}
 
 		/// <summary>

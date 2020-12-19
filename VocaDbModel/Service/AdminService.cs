@@ -48,8 +48,8 @@ namespace VocaDb.Model.Service
 			IEnumTranslations enumTranslations, IUserIconFactory userIconFactory)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
-			this._enumTranslations = enumTranslations;
-			this._userIconFactory = userIconFactory;
+			_enumTranslations = enumTranslations;
+			_userIconFactory = userIconFactory;
 		}
 
 		public int CleanupOldLogEntries()

@@ -17,13 +17,13 @@ namespace VocaDb.Model.Service
 	{
 		public MaybeOrderedQueryable(IQueryable<T> query, bool isOrdered)
 		{
-			this._query = query;
+			_query = query;
 			IsOrdered = isOrdered;
 		}
 
 		public MaybeOrderedQueryable(IOrderedQueryable<T> query)
 		{
-			this._query = query;
+			_query = query;
 			IsOrdered = true;
 		}
 

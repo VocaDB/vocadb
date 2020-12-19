@@ -157,16 +157,16 @@ namespace VocaDb.Model.Database.Queries
 			IFollowedArtistNotifier followedArtistNotifier, IAggregatedEntryImageUrlFactory entryThumbPersister, ObjectCache cache)
 			: base(repository, permissionContext)
 		{
-			this._entryLinkFactory = entryLinkFactory;
-			this._imagePersister = imagePersister;
-			this._pictureFilePersister = pictureFilePersister;
-			this._mailer = mailer;
-			this._userIconFactory = userIconFactory;
-			this._enumTranslations = enumTranslations;
-			this._pvParser = pvParser;
-			this._followedArtistNotifier = followedArtistNotifier;
-			this._imageUrlFactory = entryThumbPersister;
-			this._cache = cache;
+			_entryLinkFactory = entryLinkFactory;
+			_imagePersister = imagePersister;
+			_pictureFilePersister = pictureFilePersister;
+			_mailer = mailer;
+			_userIconFactory = userIconFactory;
+			_enumTranslations = enumTranslations;
+			_pvParser = pvParser;
+			_followedArtistNotifier = followedArtistNotifier;
+			_imageUrlFactory = entryThumbPersister;
+			_cache = cache;
 		}
 
 		public AlbumReviewContract AddReview(int albumId, AlbumReviewContract contract)

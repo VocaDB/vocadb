@@ -33,10 +33,10 @@ namespace VocaDb.Web.Controllers.Api
 
 		public CommentApiController(IRepository db, IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory)
 		{
-			this._db = db;
-			this._userContext = userContext;
-			this._userIconFactory = userIconFactory;
-			this._entryLinkFactory = entryLinkFactory;
+			_db = db;
+			_userContext = userContext;
+			_userIconFactory = userIconFactory;
+			_entryLinkFactory = entryLinkFactory;
 		}
 
 		/// <summary>

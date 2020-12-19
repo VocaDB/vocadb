@@ -34,12 +34,12 @@ namespace VocaDb.Web.Controllers.Api
 
 		public EntryApiController(EntryQueries queries, OtherService otherService, AlbumService albumService, ArtistService artistService, SongQueries songQueries, IEntryUrlParser entryUrlParser)
 		{
-			this._queries = queries;
-			this._otherService = otherService;
-			this._albumService = albumService;
-			this._artistService = artistService;
-			this._songQueries = songQueries;
-			this._entryUrlParser = entryUrlParser;
+			_queries = queries;
+			_otherService = otherService;
+			_albumService = albumService;
+			_artistService = artistService;
+			_songQueries = songQueries;
+			_entryUrlParser = entryUrlParser;
 		}
 
 		/// <summary>

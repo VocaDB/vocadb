@@ -47,10 +47,10 @@ namespace VocaDb.Web.Controllers
 
 		public SongController(SongService service, SongQueries queries, SongListQueries songListQueries, MarkdownParser markdownParser)
 		{
-			this._service = service;
-			this._queries = queries;
-			this._songListQueries = songListQueries;
-			this._markdownParser = markdownParser;
+			_service = service;
+			_queries = queries;
+			_songListQueries = songListQueries;
+			_markdownParser = markdownParser;
 		}
 
 		// Used from the song page

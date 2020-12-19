@@ -17,7 +17,7 @@ namespace VocaDb.Tests.TestSupport
 
 		public DatabaseContextAsRepositoryWrapper(IDatabaseContext dbContext)
 		{
-			this._dbContext = dbContext;
+			_dbContext = dbContext;
 		}
 
 		public TResult HandleQuery<TResult>(Func<IDatabaseContext, TResult> func, string failMsg = "Unexpected database error")
@@ -58,7 +58,7 @@ namespace VocaDb.Tests.TestSupport
 
 		public DatabaseContextAsRepositoryWrapper(IDatabaseContext<TRepo> dbContext)
 		{
-			this._dbContext = dbContext;
+			_dbContext = dbContext;
 		}
 
 		public TResult HandleQuery<TResult>(Func<IDatabaseContext<TRepo>, TResult> func, string failMsg = "Unexpected database error")
