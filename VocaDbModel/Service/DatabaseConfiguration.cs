@@ -23,7 +23,7 @@ namespace VocaDb.Model.Service
 				?? throw new ArgumentException("Connection string not found: " + connectionStringName);
 		}
 
-		public static FluentConfiguration Configure(string connectionStringName = null)
+		public static FluentConfiguration Configure(string connectionStringName = null, bool useSysCache = true)
 		{
 			var config = Fluently.Configure()
 				.Database(
@@ -33,11 +33,6 @@ namespace VocaDb.Model.Service
 #if !DEBUG
 					.UseReflectionOptimizer()
 #endif
-				)
-				.Cache(c => c
-					.ProviderClass<NHibernate.Caches.SysCache2.SysCacheProvider>()
-					.UseSecondLevelCache()
-					.UseQueryCache()
 				)
 				.Mappings(m => m
 					.FluentMappings.AddFromAssemblyOf<SongMap>()
@@ -49,12 +44,22 @@ namespace VocaDb.Model.Service
 				)*/
 				;
 
+			if (useSysCache)
+			{
+				config
+					.Cache(c => c
+						.ProviderClass<NHibernate.Caches.SysCache2.SysCacheProvider>()
+						.UseSecondLevelCache()
+						.UseQueryCache()
+					);
+			}
+
 			return config;
 		}
 
-		public static ISessionFactory BuildSessionFactory(string connectionStringName = null)
+		public static ISessionFactory BuildSessionFactory(string connectionStringName = null, bool useSysCache = true)
 		{
-			return BuildSessionFactory(Configure(connectionStringName));
+			return BuildSessionFactory(Configure(connectionStringName, useSysCache));
 		}
 
 		public static ISessionFactory BuildSessionFactory(FluentConfiguration config)
