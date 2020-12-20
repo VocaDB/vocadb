@@ -8,21 +8,14 @@ namespace VocaDb.Model.Domain.Albums
 {
 	public class AlbumReport : GenericEntryReport<Album, AlbumReportType>
 	{
-		public static readonly HashSet<AlbumReportType> ReportTypesWithRequiredNotes =
-			new HashSet<AlbumReportType> { AlbumReportType.InvalidInfo, AlbumReportType.Other };
+		public static readonly HashSet<AlbumReportType> ReportTypesWithRequiredNotes = new() { AlbumReportType.InvalidInfo, AlbumReportType.Other };
 
 		public AlbumReport() { }
 
 		public AlbumReport(Album album, AlbumReportType reportType, User user, string hostname, string notes, int? versionNumber)
 			: base(album, reportType, user, hostname, notes, versionNumber) { }
 
-		public virtual ArchivedAlbumVersion Version
-		{
-			get
-			{
-				return VersionNumber.HasValue ? Entry.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
-			}
-		}
+		public virtual ArchivedAlbumVersion Version => VersionNumber.HasValue ? Entry.ArchivedVersionsManager.GetVersion(VersionNumber.Value) : null;
 
 		public override ArchivedObjectVersion VersionBase => Version;
 	}

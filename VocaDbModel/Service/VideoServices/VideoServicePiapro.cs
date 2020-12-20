@@ -13,7 +13,7 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class VideoServicePiapro : VideoService
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		public VideoServicePiapro(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
 			: base(service, parser, linkMatchers) { }
@@ -44,7 +44,7 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 			catch (PiaproException x)
 			{
-				log.Warn(x, "Unable to load Piapro URL {0}", url);
+				s_log.Warn(x, "Unable to load Piapro URL {0}", url);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(x.Message, x));
 			}
 
@@ -54,8 +54,8 @@ namespace VocaDb.Model.Service.VideoServices
 		public override IEnumerable<string> GetUserProfileUrls(string authorId)
 		{
 			return new[] {
-				string.Format("http://piapro.jp/{0}", authorId),
-				string.Format("https://piapro.jp/{0}", authorId),
+				$"http://piapro.jp/{authorId}",
+				$"https://piapro.jp/{authorId}",
 			};
 		}
 	}

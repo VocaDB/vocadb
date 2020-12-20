@@ -17,13 +17,13 @@ namespace VocaDb.Model.Service.AlbumImport
 {
 	public class KarenTAlbumImporter : IAlbumImporter
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private static readonly RegexLinkMatcher matcher = new RegexLinkMatcher("https://karent.jp/album/{0}", @"http(?:s?)://karent.jp/album/(\d+)");
-		private readonly IPictureDownloader pictureDownloader;
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private static readonly RegexLinkMatcher s_matcher = new("https://karent.jp/album/{0}", @"http(?:s?)://karent.jp/album/(\d+)");
+		private readonly IPictureDownloader _pictureDownloader;
 
 		public KarenTAlbumImporter(IPictureDownloader pictureDownloader)
 		{
-			this.pictureDownloader = pictureDownloader;
+			_pictureDownloader = pictureDownloader;
 		}
 
 		private PictureDataContract DownloadCoverPicture(string url)
@@ -32,13 +32,13 @@ namespace VocaDb.Model.Service.AlbumImport
 			{
 				var fullUrl = url.Replace("_0280_0280", string.Empty);
 
-				var pic = pictureDownloader.Create(fullUrl);
+				var pic = _pictureDownloader.Create(fullUrl);
 
 				if (pic != null)
 					return pic;
 			}
 
-			return pictureDownloader.Create(url);
+			return _pictureDownloader.Create(url);
 		}
 
 		public MikuDbAlbumContract GetAlbumData(HtmlDocument doc, string url)
@@ -81,26 +81,16 @@ namespace VocaDb.Model.Service.AlbumImport
 			return new MikuDbAlbumContract(data) { CoverPicture = coverPic, SourceUrl = url };
 		}
 
-		private string GetVocalistName(string portraitImg)
+		private string GetVocalistName(string portraitImg) => portraitImg switch
 		{
-			switch (portraitImg)
-			{
-				case "/modpub/images/ico/ico_cv_1.png":
-					return "Hatsune Miku";
-				case "/modpub/images/ico/ico_cv_2.png":
-					return "Kagamine Rin";
-				case "/modpub/images/ico/ico_cv_3.png":
-					return "Kagamine Len";
-				case "/modpub/images/ico/ico_cv_4.png":
-					return "Megurine Luka";
-				case "/modpub/images/ico/ico_cv_5.png":
-					return "MEIKO";
-				case "/modpub/images/ico/ico_cv_6.png":
-					return "KAITO";
-				default:
-					return null;
-			}
-		}
+			"/modpub/images/ico/ico_cv_1.png" => "Hatsune Miku",
+			"/modpub/images/ico/ico_cv_2.png" => "Kagamine Rin",
+			"/modpub/images/ico/ico_cv_3.png" => "Kagamine Len",
+			"/modpub/images/ico/ico_cv_4.png" => "Megurine Luka",
+			"/modpub/images/ico/ico_cv_5.png" => "MEIKO",
+			"/modpub/images/ico/ico_cv_6.png" => "KAITO",
+			_ => null,
+		};
 
 		private HtmlNode GetInfoElem(HtmlNodeCollection nodes, string title)
 		{
@@ -123,8 +113,7 @@ namespace VocaDb.Model.Service.AlbumImport
 
 			if (releaseDateRow != null)
 			{
-				DateTime releaseDate;
-				if (DateTime.TryParseExact(releaseDateRow.Element("#text").InnerText, "yyyy.MM.dd", null, DateTimeStyles.None, out releaseDate))
+				if (DateTime.TryParseExact(releaseDateRow.Element("#text").InnerText, "yyyy.MM.dd", null, DateTimeStyles.None, out DateTime releaseDate))
 					data.ReleaseYear = releaseDate.Year;
 			}
 
@@ -189,7 +178,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			}
 			catch (WebException x)
 			{
-				log.Warn("Unable to download album post '" + url + "'", x);
+				s_log.Warn("Unable to download album post '" + url + "'", x);
 				throw;
 			}
 
@@ -200,13 +189,10 @@ namespace VocaDb.Model.Service.AlbumImport
 
 		public bool IsValidFor(string url)
 		{
-			return matcher.IsMatch(url);
+			return s_matcher.IsMatch(url);
 		}
 
-		public string ServiceName
-		{
-			get { return "KarenT"; }
-		}
+		public string ServiceName => "KarenT";
 
 		public override string ToString()
 		{

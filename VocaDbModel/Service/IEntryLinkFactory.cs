@@ -22,7 +22,7 @@ namespace VocaDb.Model.Service
 		string GetFullEntryUrl(EntryType entryType, int id, string slug = null);
 	}
 
-	public static class IEntryLinkFactoryExtender
+	public static class IEntryLinkFactoryExtensions
 	{
 		public static string GetFullEntryUrl(this IEntryLinkFactory entryLinkFactory, IEntryBase entryBase, string slug = null)
 		{

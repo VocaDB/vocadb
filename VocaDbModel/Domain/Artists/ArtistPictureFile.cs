@@ -6,35 +6,29 @@ namespace VocaDb.Model.Domain.Artists
 {
 	public class ArtistPictureFile : EntryPictureFile, IEntryWithIntId
 	{
-		private Artist artist;
+		private Artist _artist;
 
 		public ArtistPictureFile() { }
 
 		public ArtistPictureFile(string name, string mime, User author, Artist artist)
 			: base(name, mime, author)
 		{
-			this.artist = artist;
+			_artist = artist;
 		}
 
 		public virtual Artist Artist
 		{
-			get { return artist; }
+			get => _artist;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				artist = value;
+				_artist = value;
 			}
 		}
 
-		public override EntryType EntryType
-		{
-			get { return EntryType.Artist; }
-		}
+		public override EntryType EntryType => EntryType.Artist;
 
-		public override int OwnerEntryId
-		{
-			get { return Artist.Id; }
-		}
+		public override int OwnerEntryId => Artist.Id;
 
 		public virtual void Move(Artist target)
 		{

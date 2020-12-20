@@ -27,7 +27,7 @@ namespace VocaDb.Model.Service.SongImport
 			var importer = importers.FirstOrDefault(i => i.MatchUrl(url));
 
 			if (importer == null)
-				throw new UnableToImportException(string.Format("URL {0} is not recognized. Check the URL and try again", url));
+				throw new UnableToImportException($"URL {url} is not recognized. Check the URL and try again");
 
 			return importer;
 		}

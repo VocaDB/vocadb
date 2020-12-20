@@ -9,7 +9,7 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class VideoServiceNND : VideoService
 	{
-		private static readonly Regex numIdRegex = new Regex(@"(\d{6,12})");
+		private static readonly Regex s_numIdRegex = new(@"(\d{6,12})");
 
 		public VideoServiceNND(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
 			: base(service, parser, linkMatchers) { }
@@ -17,12 +17,12 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public override string GetThumbUrlById(string id)
 		{
-			var numId = numIdRegex.Match(id);
+			var numId = s_numIdRegex.Match(id);
 
 			if (!numId.Success)
 				return null;
 
-			return string.Format("https://tn.smilevideo.jp/smile?i={0}", numId.Value);
+			return $"https://tn.smilevideo.jp/smile?i={numId.Value}";
 		}
 
 		public override IEnumerable<string> GetUserProfileUrls(string authorId) => NicoHelper.GetUserProfileUrlById(authorId);

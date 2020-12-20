@@ -89,7 +89,7 @@ namespace VocaDb.Model.Database.Repositories
 			var obj = session.Get(objRef.Id);
 			if (obj == null)
 			{
-				warnings.Add(string.Format("Referenced {0} {1} not found", typeof(TEntry).Name, objRef));
+				warnings.Add($"Referenced {typeof(TEntry).Name} {objRef} not found");
 			}
 
 			return obj;

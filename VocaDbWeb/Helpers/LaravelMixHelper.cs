@@ -8,20 +8,20 @@ using System.Web;
 using System.Web.Optimization;
 using Newtonsoft.Json;
 
-namespace VocaDb.Web.Helpers {
-
+namespace VocaDb.Web.Helpers
+{
 	/// <summary>
 	/// Represents a helper class for rendering link and script elements.
 	/// </summary>
-	public static class LaravelMixHelper {
-
+	public static class LaravelMixHelper
+	{
 		/// <summary>
 		/// Gets the path to a <see href="https://laravel.com/docs/5.8/mix">versioned Mix file</see>.
 		/// </summary>
 		/// <param name="path">The file path.</param>
 		/// <returns>The path to a versioned Mix file.</returns>
-		private static string GetPathToVersionedMixFile(string path) {
-
+		private static string GetPathToVersionedMixFile(string path)
+		{
 			var manifestPath = HttpContext.Current.Server.MapPath("~/mix-manifest.json");
 			var json = File.ReadAllText(manifestPath);
 			var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);

@@ -206,11 +206,11 @@ namespace VocaDb.Model
 	/// <remarks>Code from http://bronumski.blogspot.com/2010/06/taking-pain-out-of-parameter-validation.html </remarks>
 	internal class FieldInfoReader<TParameter>
 	{
-		private readonly Func<TParameter> arg;
+		private readonly Func<TParameter> _arg;
 
 		internal FieldInfoReader(Func<TParameter> arg)
 		{
-			this.arg = arg;
+			_arg = arg;
 		}
 
 		public FieldInfo GetFieldToken()
@@ -228,9 +228,9 @@ namespace VocaDb.Model
 
 			if (fieldToken > 0)
 			{
-				Type argType = arg.Target.GetType();
+				Type argType = _arg.Target.GetType();
 				Type[] genericTypeArguments = GetSubclassGenericTypes(argType);
-				Type[] genericMethodArguments = arg.Method.GetGenericArguments();
+				Type[] genericMethodArguments = _arg.Method.GetGenericArguments();
 
 				fieldInfo = argType.Module.ResolveField(fieldToken, genericTypeArguments, genericMethodArguments);
 			}
@@ -307,7 +307,7 @@ namespace VocaDb.Model
 
 		private byte[] GetMethodBodyIlByteArray()
 		{
-			MethodBody methodBody = arg.Method.GetMethodBody();
+			MethodBody methodBody = _arg.Method.GetMethodBody();
 
 			if (methodBody == null)
 			{
@@ -339,23 +339,23 @@ namespace VocaDb.Model
 			return genericArgumentsTypes.ToArray();
 		}
 
-		private static OpCode[] singleByteOpCodes;
+		private static OpCode[] s_singleByteOpCodes;
 
 		public static OpCode[] SingleByteOpCodes
 		{
 			get
 			{
-				if (singleByteOpCodes == null)
+				if (s_singleByteOpCodes == null)
 				{
 					LoadOpCodes();
 				}
-				return singleByteOpCodes;
+				return s_singleByteOpCodes;
 			}
 		}
 
 		private static void LoadOpCodes()
 		{
-			singleByteOpCodes = new OpCode[0x100];
+			s_singleByteOpCodes = new OpCode[0x100];
 
 			FieldInfo[] opcodeFieldInfos = typeof(OpCodes).GetFields();
 
@@ -371,7 +371,7 @@ namespace VocaDb.Model
 
 					if (singleByteOpcodeIndex < 0x100)
 					{
-						singleByteOpCodes[singleByteOpcodeIndex] = singleByteOpCode;
+						s_singleByteOpCodes[singleByteOpcodeIndex] = singleByteOpCode;
 					}
 				}
 			}

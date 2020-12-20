@@ -9,11 +9,11 @@ namespace VocaDb.Model.Service.Search
 {
 	public class QueryProcessor<T>
 	{
-		private readonly IDatabaseContext querySource;
+		private readonly IDatabaseContext _querySource;
 
 		public QueryProcessor(IDatabaseContext querySource)
 		{
-			this.querySource = querySource;
+			_querySource = querySource;
 		}
 
 		public PartialFindResult<T> Query(
@@ -28,9 +28,9 @@ namespace VocaDb.Model.Service.Search
 			foreach (var filter in queryPlan)
 			{
 				if (entries == null)
-					entries = filter.Query(querySource);
+					entries = filter.Query(_querySource);
 				else
-					entries = filter.Filter(entries, querySource);
+					entries = filter.Filter(entries, _querySource);
 			}
 
 			if (entries == null)

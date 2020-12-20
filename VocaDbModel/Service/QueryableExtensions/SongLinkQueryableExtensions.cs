@@ -25,38 +25,23 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		}
 
 		public static IOrderedQueryable<T> OrderBySongName<T>(this IQueryable<T> query, ContentLanguagePreference languagePreference)
-			where T : ISongLink
+			where T : ISongLink => languagePreference switch
 		{
-			switch (languagePreference)
-			{
-				case ContentLanguagePreference.Japanese:
-					return query.OrderBy(e => e.Song.Names.SortNames.Japanese);
-				case ContentLanguagePreference.English:
-					return query.OrderBy(e => e.Song.Names.SortNames.English);
-				default:
-					return query.OrderBy(e => e.Song.Names.SortNames.Romaji);
-			}
-		}
+			ContentLanguagePreference.Japanese => query.OrderBy(e => e.Song.Names.SortNames.Japanese),
+			ContentLanguagePreference.English => query.OrderBy(e => e.Song.Names.SortNames.English),
+			_ => query.OrderBy(e => e.Song.Names.SortNames.Romaji),
+		};
 
 		public static IQueryable<T> OrderBy<T>(this IQueryable<T> query, SongSortRule sortRule, ContentLanguagePreference languagePreference)
-			where T : ISongLink
+			where T : ISongLink => sortRule switch
 		{
-			switch (sortRule)
-			{
-				case SongSortRule.Name:
-					return query.OrderBySongName(languagePreference);
-				case SongSortRule.AdditionDate:
-					return query.OrderByDescending(a => a.Song.CreateDate);
-				case SongSortRule.FavoritedTimes:
-					return query.OrderByDescending(a => a.Song.FavoritedTimes);
-				case SongSortRule.RatingScore:
-					return query.OrderByDescending(a => a.Song.RatingScore);
-				case SongSortRule.PublishDate:
-					return query.OrderByDescending(a => a.Song.PublishDate.DateTime);
-			}
-
-			return query;
-		}
+			SongSortRule.Name => query.OrderBySongName(languagePreference),
+			SongSortRule.AdditionDate => query.OrderByDescending(a => a.Song.CreateDate),
+			SongSortRule.FavoritedTimes => query.OrderByDescending(a => a.Song.FavoritedTimes),
+			SongSortRule.RatingScore => query.OrderByDescending(a => a.Song.RatingScore),
+			SongSortRule.PublishDate => query.OrderByDescending(a => a.Song.PublishDate.DateTime),
+			_ => query,
+		};
 
 		public static Expression<Func<TEntry, bool>> GetChildHasNameExpression<TEntry>(SearchTextQuery textQuery)
 			where TEntry : ISongLink

@@ -116,17 +116,12 @@ namespace VocaDb.Web.Models.Tag
 			Thumb = contract.Thumb;
 			UrlSlug = contract.UrlSlug;
 
-			string GetTagTargetTypeName(TagTargetTypes t)
+			string GetTagTargetTypeName(TagTargetTypes t) => t switch
 			{
-				switch (t)
-				{
-					case TagTargetTypes.Nothing:
-						return "Nothing";
-					case TagTargetTypes.All:
-						return "Anything";
-				}
-				return string.Join(", ", EnumVal<EntryType>.Values.Where(e => e != EntryType.Undefined).Where(e => t.HasFlag((TagTargetTypes)e)).Select(e => Translate.EntryTypeNames[e]));
-			}
+				TagTargetTypes.Nothing => "Nothing",
+				TagTargetTypes.All => "Anything",
+				_ => string.Join(", ", EnumVal<EntryType>.Values.Where(e => e != EntryType.Undefined).Where(e => t.HasFlag((TagTargetTypes)e)).Select(e => Translate.EntryTypeNames[e])),
+			};
 
 			AllTagTargetTypes = new[] { TagTargetTypes.Album, TagTargetTypes.Artist, TagTargetTypes.Song, TagTargetTypes.Event }
 				.ToDictionary(t => t, GetTagTargetTypeName);
@@ -136,18 +131,18 @@ namespace VocaDb.Web.Models.Tag
 		{
 			return new TagForEditContract
 			{
-				Id = this.Id,
-				Name = this.Name,
+				Id = Id,
+				Name = Name,
 				Names = Names,
-				CategoryName = this.CategoryName ?? string.Empty,
+				CategoryName = CategoryName ?? string.Empty,
 				DefaultNameLanguage = DefaultNameLanguage,
-				Description = this.Description,
+				Description = Description,
 				HideFromSuggestions = HideFromSuggestions,
-				Parent = this.Parent,
+				Parent = Parent,
 				RelatedTags = RelatedTags,
-				Status = this.Status,
+				Status = Status,
 				Targets = Targets,
-				UpdateNotes = this.UpdateNotes ?? string.Empty,
+				UpdateNotes = UpdateNotes ?? string.Empty,
 				WebLinks = WebLinks
 			};
 		}

@@ -10,21 +10,12 @@ namespace VocaDb.Model.Domain.Artists
 			Roles = roles;
 		}
 
-		public bool IsSupport
-		{
-			get { return false; }
-		}
+		public bool IsSupport => false;
 
 		public string Name { get; set; }
 
 		public ArtistRoles Roles { get; set; }
 
-		public Artist Artist
-		{
-			get
-			{
-				return null;
-			}
-		}
+		public Artist Artist => null;
 	}
 }

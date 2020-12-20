@@ -20,53 +20,53 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 	[TestClass]
 	public class AlbumSearchTests
 	{
-		private Artist artist;
-		private AlbumQueryParams queryParams;
-		private QuerySourceList querySource;
-		private Model.Service.Search.AlbumSearch.AlbumSearch search;
-		private Album album;
-		private Album albumWithArtist;
+		private Artist _artist;
+		private AlbumQueryParams _queryParams;
+		private QuerySourceList _querySource;
+		private Model.Service.Search.AlbumSearch.AlbumSearch _search;
+		private Album _album;
+		private Album _albumWithArtist;
 
 		private void AddAlbum(Album album)
 		{
-			querySource.Add(album);
+			_querySource.Add(album);
 
 			foreach (var name in album.Names)
-				querySource.Add(name);
+				_querySource.Add(name);
 
 			foreach (var artistLink in album.AllArtists)
-				querySource.Add(artistLink);
+				_querySource.Add(artistLink);
 		}
 
 		private void CreateName(Album album, string val, ContentLanguageSelection language)
 		{
 			var name = album.CreateName(val, language);
-			querySource.Add(name);
+			_querySource.Add(name);
 		}
 
 		private PartialFindResult<Album> Find()
 		{
-			return search.Find(queryParams);
+			return _search.Find(_queryParams);
 		}
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			querySource = new QuerySourceList();
+			_querySource = new QuerySourceList();
 
-			artist = new Artist(TranslatedString.Create("XenonP")) { Id = 64 };
-			querySource.Add(artist);
+			_artist = new Artist(TranslatedString.Create("XenonP")) { Id = 64 };
+			_querySource.Add(_artist);
 
-			album = new Album(new LocalizedString("Synthesis", ContentLanguageSelection.English)) { Id = 1, DiscType = DiscType.Album, CreateDate = new DateTime(2011, 1, 16) };
-			AddAlbum(album);
+			_album = new Album(new LocalizedString("Synthesis", ContentLanguageSelection.English)) { Id = 1, DiscType = DiscType.Album, CreateDate = new DateTime(2011, 1, 16) };
+			AddAlbum(_album);
 
-			albumWithArtist = new Album(new LocalizedString("DIVINE", ContentLanguageSelection.English)) { Id = 1010, DiscType = DiscType.Unknown, RatingAverage = 4.5, CreateDate = new DateTime(2012, 1, 15) };
-			albumWithArtist.AddArtist(artist);
-			AddAlbum(albumWithArtist);
+			_albumWithArtist = new Album(new LocalizedString("DIVINE", ContentLanguageSelection.English)) { Id = 1010, DiscType = DiscType.Unknown, RatingAverage = 4.5, CreateDate = new DateTime(2012, 1, 15) };
+			_albumWithArtist.AddArtist(_artist);
+			AddAlbum(_albumWithArtist);
 
-			queryParams = new AlbumQueryParams();
+			_queryParams = new AlbumQueryParams();
 
-			search = new Model.Service.Search.AlbumSearch.AlbumSearch(querySource, ContentLanguagePreference.Default);
+			_search = new Model.Service.Search.AlbumSearch.AlbumSearch(_querySource, ContentLanguagePreference.Default);
 		}
 
 		/// <summary>
@@ -79,8 +79,8 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 
 			Assert.AreEqual(2, result.Items.Length, "2 results");
 			Assert.AreEqual(2, result.TotalCount, "total result count");
-			Assert.AreEqual(album.DefaultName, result.Items[0].DefaultName);
-			Assert.AreEqual(albumWithArtist, result.Items[1]);
+			Assert.AreEqual(_album.DefaultName, result.Items[0].DefaultName);
+			Assert.AreEqual(_albumWithArtist, result.Items[1]);
 		}
 
 		/// <summary>
@@ -89,13 +89,13 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void ListSkip()
 		{
-			queryParams.Paging.Start = 1;
+			_queryParams.Paging.Start = 1;
 
 			var result = Find();
 
 			Assert.AreEqual(1, result.Items.Length, "1 result");
 			Assert.AreEqual(2, result.TotalCount, "total result count");
-			Assert.AreEqual(albumWithArtist, result.Items[0]);
+			Assert.AreEqual(_albumWithArtist, result.Items[0]);
 		}
 
 		/// <summary>
@@ -104,7 +104,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void ListSortName()
 		{
-			queryParams.SortRule = AlbumSortRule.Name;
+			_queryParams.SortRule = AlbumSortRule.Name;
 
 			var result = Find();
 
@@ -120,7 +120,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void ListSortRating()
 		{
-			queryParams.SortRule = AlbumSortRule.RatingAverage;
+			_queryParams.SortRule = AlbumSortRule.RatingAverage;
 
 			var result = Find();
 
@@ -136,7 +136,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void ListSortAdditionDate()
 		{
-			queryParams.SortRule = AlbumSortRule.AdditionDate;
+			_queryParams.SortRule = AlbumSortRule.AdditionDate;
 
 			var result = Find();
 
@@ -152,7 +152,7 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void QueryName()
 		{
-			queryParams.Common.TextQuery = SearchTextQuery.Create("DIVINE");
+			_queryParams.Common.TextQuery = SearchTextQuery.Create("DIVINE");
 
 			var result = Find();
 
@@ -182,36 +182,36 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void QueryNameWords_SkipFirstPage()
 		{
-			CreateName(album, "Synthesis Miku", ContentLanguageSelection.Unspecified);
-			CreateName(albumWithArtist, "DIVINE Miku", ContentLanguageSelection.Unspecified);
+			CreateName(_album, "Synthesis Miku", ContentLanguageSelection.Unspecified);
+			CreateName(_albumWithArtist, "DIVINE Miku", ContentLanguageSelection.Unspecified);
 
-			queryParams.Common.TextQuery = SearchTextQuery.Create("Miku Miku");
-			queryParams.Paging.Start = 1;       // Skip the first result
-			queryParams.Paging.MaxEntries = 1;
+			_queryParams.Common.TextQuery = SearchTextQuery.Create("Miku Miku");
+			_queryParams.Paging.Start = 1;       // Skip the first result
+			_queryParams.Paging.MaxEntries = 1;
 
 			var result = Find();
 
 			Assert.AreEqual(2, result.TotalCount, "2 results total");
 			Assert.AreEqual(1, result.Items.Length, "1 result");
-			Assert.AreEqual(albumWithArtist, result.Items.First(), "result is expected album");
+			Assert.AreEqual(_albumWithArtist, result.Items.First(), "result is expected album");
 		}
 
 		[TestMethod]
 		public void QueryCatNum()
 		{
-			CreateName(album, "Synthesis", ContentLanguageSelection.Unspecified);
-			CreateName(albumWithArtist, "DIVINE", ContentLanguageSelection.Unspecified);
-			album.OriginalRelease.CatNum = "KRHS-90035";
-			albumWithArtist.OriginalRelease.CatNum = "XMCD-1003";
-			querySource.Add(CreateEntry.Album(name: "Reverberations"));
+			CreateName(_album, "Synthesis", ContentLanguageSelection.Unspecified);
+			CreateName(_albumWithArtist, "DIVINE", ContentLanguageSelection.Unspecified);
+			_album.OriginalRelease.CatNum = "KRHS-90035";
+			_albumWithArtist.OriginalRelease.CatNum = "XMCD-1003";
+			_querySource.Add(CreateEntry.Album(name: "Reverberations"));
 
-			queryParams.Common.TextQuery = SearchTextQuery.Create("XMCD-1003");
+			_queryParams.Common.TextQuery = SearchTextQuery.Create("XMCD-1003");
 
 			var result = Find();
 
 			Assert.AreEqual(1, result.TotalCount, "Total results");
 			Assert.AreEqual(1, result.Items.Length, "1 result");
-			Assert.AreEqual(albumWithArtist, result.Items.First(), "result is expected album");
+			Assert.AreEqual(_albumWithArtist, result.Items.First(), "result is expected album");
 		}
 
 		/// <summary>
@@ -220,13 +220,13 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void QueryType()
 		{
-			queryParams.AlbumType = DiscType.Album;
+			_queryParams.AlbumType = DiscType.Album;
 
 			var result = Find();
 
 			Assert.AreEqual(1, result.Items.Length, "1 result");
 			Assert.AreEqual(1, result.TotalCount, "total result count");
-			Assert.AreEqual(album, result.Items[0]);
+			Assert.AreEqual(_album, result.Items[0]);
 		}
 
 		/// <summary>
@@ -235,41 +235,41 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		[TestMethod]
 		public void QueryArtist()
 		{
-			queryParams.ArtistParticipation.ArtistIds = new[] { artist.Id };
+			_queryParams.ArtistParticipation.ArtistIds = new[] { _artist.Id };
 
 			var result = Find();
 
 			Assert.AreEqual(1, result.Items.Length, "1 result");
 			Assert.AreEqual(1, result.TotalCount, "total result count");
-			Assert.AreEqual(albumWithArtist, result.Items[0], "albums are equal");
+			Assert.AreEqual(_albumWithArtist, result.Items[0], "albums are equal");
 		}
 
 		[TestMethod]
 		public void QueryArtistParticipationStatus_FoundMain()
 		{
-			album.AddArtist(artist, true, ArtistRoles.Default);
-			queryParams.ArtistParticipation.ArtistIds = new[] { artist.Id };
-			queryParams.ArtistParticipation.Participation = ArtistAlbumParticipationStatus.OnlyMainAlbums;
+			_album.AddArtist(_artist, true, ArtistRoles.Default);
+			_queryParams.ArtistParticipation.ArtistIds = new[] { _artist.Id };
+			_queryParams.ArtistParticipation.Participation = ArtistAlbumParticipationStatus.OnlyMainAlbums;
 
 			var result = Find();
 
 			Assert.AreEqual(1, result.Items.Length, "1 result");
 			Assert.AreEqual(1, result.TotalCount, "total result count");
-			Assert.AreEqual(albumWithArtist, result.Items[0], "albums are equal");
+			Assert.AreEqual(_albumWithArtist, result.Items[0], "albums are equal");
 		}
 
 		[TestMethod]
 		public void QueryArtistParticipationStatus_FoundCollab()
 		{
-			album.AddArtist(artist, true, ArtistRoles.Default);
-			queryParams.ArtistParticipation.ArtistIds = new[] { artist.Id };
-			queryParams.ArtistParticipation.Participation = ArtistAlbumParticipationStatus.OnlyCollaborations;
+			_album.AddArtist(_artist, true, ArtistRoles.Default);
+			_queryParams.ArtistParticipation.ArtistIds = new[] { _artist.Id };
+			_queryParams.ArtistParticipation.Participation = ArtistAlbumParticipationStatus.OnlyCollaborations;
 
 			var result = Find();
 
 			Assert.AreEqual(1, result.Items.Length, "1 result");
 			Assert.AreEqual(1, result.TotalCount, "total result count");
-			Assert.AreEqual(album, result.Items[0], "albums are equal");
+			Assert.AreEqual(_album, result.Items[0], "albums are equal");
 		}
 	}
 }

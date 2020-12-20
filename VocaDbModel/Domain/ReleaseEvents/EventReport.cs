@@ -8,8 +8,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 {
 	public class EventReport : GenericEntryReport<ReleaseEvent, EventReportType>
 	{
-		public static readonly HashSet<EventReportType> ReportTypesWithRequiredNotes =
-			new HashSet<EventReportType> { EventReportType.InvalidInfo, EventReportType.Other };
+		public static readonly HashSet<EventReportType> ReportTypesWithRequiredNotes = new() { EventReportType.InvalidInfo, EventReportType.Other };
 
 		public EventReport() { }
 

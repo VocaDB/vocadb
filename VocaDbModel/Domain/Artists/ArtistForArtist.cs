@@ -6,8 +6,8 @@ namespace VocaDb.Model.Domain.Artists
 {
 	public class ArtistForArtist : IEntryWithIntId
 	{
-		private Artist parent;
-		private Artist member;
+		private Artist _parent;
+		private Artist _member;
 
 		public ArtistForArtist() { }
 
@@ -20,11 +20,11 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual Artist Parent
 		{
-			get { return parent; }
+			get => _parent;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				parent = value;
+				_parent = value;
 			}
 		}
 
@@ -34,11 +34,11 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual Artist Member
 		{
-			get { return member; }
+			get => _member;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				member = value;
+				_member = value;
 			}
 		}
 
@@ -56,7 +56,7 @@ namespace VocaDb.Model.Domain.Artists
 			if (ReferenceEquals(this, another))
 				return true;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)

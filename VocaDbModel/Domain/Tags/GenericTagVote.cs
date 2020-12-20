@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Tags
 {
 	public abstract class GenericTagVote<TUsage> : TagVote where TUsage : TagUsage
 	{
-		private TUsage tagUsage;
+		private TUsage _tagUsage;
 
 		public GenericTagVote() { }
 
@@ -18,11 +18,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual TUsage Usage
 		{
-			get => tagUsage;
+			get => _tagUsage;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				tagUsage = value;
+				_tagUsage = value;
 			}
 		}
 

@@ -11,12 +11,12 @@ namespace VocaDb.Model.Domain.Users
 		/// <summary>
 		/// User group with no permissions.
 		/// </summary>
-		public static readonly UserGroup Nothing = new UserGroup(UserGroupId.Nothing);
+		public static readonly UserGroup Nothing = new(UserGroupId.Nothing);
 
-		private static readonly UserGroup limited = new UserGroup(UserGroupId.Limited, PermissionToken.EditProfile);
+		private static readonly UserGroup s_limited = new(UserGroupId.Limited, PermissionToken.EditProfile);
 
-		private static readonly UserGroup regular = new UserGroup(UserGroupId.Regular,
-			limited,
+		private static readonly UserGroup s_regular = new(UserGroupId.Regular,
+			s_limited,
 			PermissionToken.CreateComments,
 			PermissionToken.ManageDatabase,
 			PermissionToken.EditTags,
@@ -24,8 +24,8 @@ namespace VocaDb.Model.Domain.Users
 			PermissionToken.ManageEventSeries
 		);
 
-		private static readonly UserGroup trusted = new UserGroup(UserGroupId.Trusted,
-			regular,
+		private static readonly UserGroup s_trusted = new(UserGroupId.Trusted,
+			s_regular,
 			PermissionToken.AddRawFileMedia,
 			PermissionToken.ApproveEntries,
 			PermissionToken.DeleteEntries,
@@ -36,8 +36,8 @@ namespace VocaDb.Model.Domain.Users
 			PermissionToken.RemoveTagUsages
 		);
 
-		private static readonly UserGroup mod = new UserGroup(UserGroupId.Moderator,
-			trusted,
+		private static readonly UserGroup s_mod = new(UserGroupId.Moderator,
+			s_trusted,
 			PermissionToken.AccessManageMenu,
 			PermissionToken.ApplyAnyTag,
 			PermissionToken.BulkDeletePVs,
@@ -58,11 +58,11 @@ namespace VocaDb.Model.Domain.Users
 			PermissionToken.UploadMedia
 		);
 
-		private static readonly UserGroup admin = new UserGroup(UserGroupId.Admin,
-			mod, PermissionToken.Admin);
+		private static readonly UserGroup s_admin = new(UserGroupId.Admin,
+			s_mod, PermissionToken.Admin);
 
-		private static readonly Dictionary<UserGroupId, UserGroup> groups = new[] {
-			limited, regular, trusted, mod, admin
+		private static readonly Dictionary<UserGroupId, UserGroup> s_groups = new[] {
+			s_limited, s_regular, s_trusted, s_mod, s_admin
 		}.ToDictionary(g => g.Id);
 
 		/// <summary>
@@ -72,44 +72,38 @@ namespace VocaDb.Model.Domain.Users
 		/// <returns>User group matching the Id, or <see cref="Nothing"/>, if no matching group is found.</returns>
 		public static UserGroup GetGroup(UserGroupId groupId)
 		{
-			if (!groups.ContainsKey(groupId))
+			if (!s_groups.ContainsKey(groupId))
 				return Nothing;
 
-			return groups[groupId];
+			return s_groups[groupId];
 		}
 
 		public static PermissionCollection GetPermissions(UserGroupId groupId)
 		{
-			if (!groups.ContainsKey(groupId))
+			if (!s_groups.ContainsKey(groupId))
 				return new PermissionCollection();
 
-			return groups[groupId].Permissions;
+			return s_groups[groupId].Permissions;
 		}
 
-		public static UserGroupId[] GroupIds
-		{
-			get
-			{
-				return EnumVal<UserGroupId>.Values;
-			}
-		}
+		public static UserGroupId[] GroupIds => EnumVal<UserGroupId>.Values;
 
 		public UserGroup(UserGroupId id, UserGroup parent, params PermissionToken[] permissions)
 		{
-			this.Id = id;
-			this.Permissions = parent.Permissions + new PermissionCollection(permissions);
+			Id = id;
+			Permissions = parent.Permissions + new PermissionCollection(permissions);
 		}
 
 		public UserGroup(UserGroupId id, params PermissionToken[] permissions)
 		{
-			this.Id = id;
-			this.Permissions = new PermissionCollection(permissions);
+			Id = id;
+			Permissions = new PermissionCollection(permissions);
 		}
 
 		public UserGroup(UserGroupId id, PermissionCollection permissions)
 		{
-			this.Id = id;
-			this.Permissions = permissions;
+			Id = id;
+			Permissions = permissions;
 		}
 
 		public UserGroupId Id { get; private set; }

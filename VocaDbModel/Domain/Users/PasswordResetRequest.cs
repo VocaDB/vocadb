@@ -8,7 +8,7 @@ namespace VocaDb.Model.Domain.Users
 	{
 		public static readonly TimeSpan ExpirationTime = TimeSpan.FromDays(1);
 
-		private User user;
+		private User _user;
 
 		public PasswordResetRequest()
 		{
@@ -36,11 +36,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual User User
 		{
-			get => user;
+			get => _user;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				user = value;
+				_user = value;
 			}
 		}
 	}

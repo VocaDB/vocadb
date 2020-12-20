@@ -60,13 +60,13 @@ namespace VocaDb.Web.Models.Song
 		{
 			return new CreateSongContract
 			{
-				Artists = this.Artists.ToArray(),
-				Draft = this.Draft,
+				Artists = Artists.ToArray(),
+				Draft = Draft,
 				Names = LocalizedStringHelper.SkipNullAndEmpty(NameOriginal, NameRomaji, NameEnglish).ToArray(),
 				OriginalVersion = OriginalVersion,
-				PVUrls = new[] { this.PVUrl },
-				ReprintPVUrl = this.ReprintPVUrl,
-				SongType = this.SongType
+				PVUrls = new[] { PVUrl },
+				ReprintPVUrl = ReprintPVUrl,
+				SongType = SongType
 			};
 		}
 	}

@@ -9,28 +9,28 @@ namespace VocaDb.Model.Utils.Config
 	{
 		private int TagId(string name)
 		{
-			return this.Properties.Contains(name) ? (int)this[name] : 0;
+			return Properties.Contains(name) ? (int)this[name] : 0;
 		}
 
 		[ConfigurationProperty("changedLyrics")]
 		public int ChangedLyrics
 		{
-			get { return TagId("changedLyrics"); }
-			set { this["changedLyrics"] = value; }
+			get => TagId("changedLyrics");
+			set => this["changedLyrics"] = value;
 		}
 
 		[ConfigurationProperty("free")]
 		public int Free
 		{
-			get { return TagId("free"); }
-			set { this["free"] = value; }
+			get => TagId("free");
+			set => this["free"] = value;
 		}
 
 		[ConfigurationProperty("shortVersion")]
 		public int ShortVersion
 		{
-			get { return TagId("shortVersion"); }
-			set { this["shortVersion"] = value; }
+			get => TagId("shortVersion");
+			set => this["shortVersion"] = value;
 		}
 	}
 

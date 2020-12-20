@@ -25,18 +25,11 @@ namespace VocaDb.Model.Helpers
 			return genres.ToArray();
 		}
 
-		public static ContentFocus GetContentFocus(SongType songType)
+		public static ContentFocus GetContentFocus(SongType songType) => songType switch
 		{
-			switch (songType)
-			{
-				case SongType.DramaPV:
-				case SongType.MusicPV:
-					return ContentFocus.Video;
-				case SongType.Illustration:
-					return ContentFocus.Illustration;
-				default:
-					return ContentFocus.Music;
-			}
-		}
+			SongType.DramaPV or SongType.MusicPV => ContentFocus.Video,
+			SongType.Illustration => ContentFocus.Illustration,
+			_ => ContentFocus.Music,
+		};
 	}
 }

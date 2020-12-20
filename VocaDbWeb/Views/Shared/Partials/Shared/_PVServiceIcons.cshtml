@@ -1,6 +1,6 @@
-﻿@using VocaDb.Model;
-@using VocaDb.Model.Domain.PVs;
-@using VocaDb.Web.Models.Shared.Partials.Shared;
+﻿@using VocaDb.Model
+@using VocaDb.Model.Domain.PVs
+@using VocaDb.Web.Models.Shared.Partials.Shared
 @model PVServiceIconsViewModel
 
 @foreach (var service in EnumVal<PVService>.Values.Where(service => Model.Services.HasFlag((PVServices)service)))

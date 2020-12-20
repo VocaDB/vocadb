@@ -9,8 +9,8 @@ namespace VocaDb.Model.Domain.Songs
 {
 	public class ArtistForSong : IEquatable<ArtistForSong>, IArtistLinkWithRoles, ISongLink, IEntryWithIntId
 	{
-		private string notes;
-		private Song song;
+		private string _notes;
+		private Song _song;
 
 		public ArtistForSong()
 		{
@@ -42,13 +42,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual string ArtistToStringOrName => Artist?.ToString() ?? Name;
 
-		public virtual ArtistRoles EffectiveRoles
-		{
-			get
-			{
-				return (Roles != ArtistRoles.Default || Artist == null) ? Roles : ArtistHelper.GetOtherArtistRoles(Artist.ArtistType);
-			}
-		}
+		public virtual ArtistRoles EffectiveRoles => (Roles != ArtistRoles.Default || Artist == null) ? Roles : ArtistHelper.GetOtherArtistRoles(Artist.ArtistType);
 
 		public virtual int Id { get; set; }
 
@@ -58,11 +52,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual string Notes
 		{
-			get => notes;
+			get => _notes;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				notes = value;
+				_notes = value;
 			}
 		}
 
@@ -70,11 +64,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Song
 		{
-			get => song;
+			get => _song;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				song = value;
+				_song = value;
 			}
 		}
 
@@ -116,7 +110,7 @@ namespace VocaDb.Model.Domain.Songs
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -157,7 +151,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public override string ToString()
 		{
-			return string.Format("{0} for {1}", ArtistToStringOrName, Song);
+			return $"{ArtistToStringOrName} for {Song}";
 		}
 	}
 }

@@ -67,7 +67,7 @@ namespace VocaDb.Model.Domain.PVs
 		Bandcamp = PVService.Bandcamp
 	}
 
-	public static class PVServicesExtender
+	public static class PVServicesExtensions
 	{
 		public static IEnumerable<PVService> ToIndividualSelections(this PVServices selections)
 		{

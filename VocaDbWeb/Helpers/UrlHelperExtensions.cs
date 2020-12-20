@@ -15,28 +15,16 @@ using VocaDb.Model.Utils.Search;
 
 namespace VocaDb.Web.Helpers
 {
-	public static class UrlHelperExtender
+	public static class UrlHelperExtensions
 	{
-		private static string EntryDetails(UrlHelper urlHelper, EntryType entryType, int id, string urlSlug)
+		private static string EntryDetails(UrlHelper urlHelper, EntryType entryType, int id, string urlSlug) => entryType switch
 		{
-			switch (entryType)
-			{
-				case EntryType.DiscussionTopic:
-					return urlHelper.Action("Index", "Discussion", new { clientPath = string.Format("topics/{0}", id) });
-
-				case EntryType.ReleaseEvent:
-					return urlHelper.Action("Details", "Event", new { id, slug = urlSlug });
-
-				case EntryType.ReleaseEventSeries:
-					return urlHelper.Action("SeriesDetails", "Event", new { id, slug = urlSlug });
-
-				case EntryType.Tag:
-					return urlHelper.Action("DetailsById", "Tag", new { id, slug = urlSlug });
-
-				default:
-					return urlHelper.Action("Details", entryType.ToString(), new { id });
-			}
-		}
+			EntryType.DiscussionTopic => urlHelper.Action("Index", "Discussion", new { clientPath = $"topics/{id}" }),
+			EntryType.ReleaseEvent => urlHelper.Action("Details", "Event", new { id, slug = urlSlug }),
+			EntryType.ReleaseEventSeries => urlHelper.Action("SeriesDetails", "Event", new { id, slug = urlSlug }),
+			EntryType.Tag => urlHelper.Action("DetailsById", "Tag", new { id, slug = urlSlug }),
+			_ => urlHelper.Action("Details", entryType.ToString(), new { id }),
+		};
 
 		public static string EntryDetails(this UrlHelper urlHelper, IEntryBase entryBase, string urlSlug = null)
 		{

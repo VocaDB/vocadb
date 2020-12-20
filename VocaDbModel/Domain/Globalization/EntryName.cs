@@ -5,7 +5,7 @@ namespace VocaDb.Model.Domain.Globalization
 {
 	public class EntryName<TEntry> : LocalizedStringWithId where TEntry : class
 	{
-		private TEntry entry;
+		private TEntry _entry;
 
 		public EntryName() { }
 
@@ -17,11 +17,11 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual TEntry Entry
 		{
-			get { return entry; }
+			get => _entry;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				entry = value;
+				_entry = value;
 			}
 		}
 
@@ -36,7 +36,7 @@ namespace VocaDb.Model.Domain.Globalization
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -51,7 +51,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public override string ToString()
 		{
-			return string.Format("name '{0}' for {1}", Value, Entry);
+			return $"name '{Value}' for {Entry}";
 		}
 	}
 }

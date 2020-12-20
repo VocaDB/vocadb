@@ -12,8 +12,8 @@ namespace VocaDb.Model.Domain.Songs
 {
 	public class PVForSong : PV, IPVWithThumbnail, ISongLink, IEntryWithIntId
 	{
-		private Song song;
-		private string thumbUrl;
+		private Song _song;
+		private string _thumbUrl;
 
 		public PVForSong()
 		{
@@ -45,21 +45,21 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual Song Song
 		{
-			get => song;
+			get => _song;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				song = value;
+				_song = value;
 			}
 		}
 
 		public virtual string ThumbUrl
 		{
-			get => thumbUrl;
+			get => _thumbUrl;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				thumbUrl = value;
+				_thumbUrl = value;
 			}
 		}
 
@@ -87,7 +87,7 @@ namespace VocaDb.Model.Domain.Songs
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -123,7 +123,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public override string ToString()
 		{
-			return string.Format("PV '{0}' [{1}] for {2}", PVId, Id, Song);
+			return $"PV '{PVId}' [{Id}] for {Song}";
 		}
 	}
 }

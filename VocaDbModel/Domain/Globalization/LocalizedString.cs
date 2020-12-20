@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Globalization
 {
 	public class LocalizedString : ILocalizedString, IEquatable<LocalizedString>
 	{
-		private string val;
+		private string _val;
 
 		public LocalizedString()
 		{
@@ -25,11 +25,11 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual string Value
 		{
-			get { return val; }
+			get => _val;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				val = value;
+				_val = value;
 			}
 		}
 

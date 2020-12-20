@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts
 
 		public override string ToString()
 		{
-			return string.Format("Localized string '{0}' in {2} [{1}]", Value, Id, Language);
+			return $"Localized string '{Value}' in {Language} [{Id}]";
 		}
 	}
 }

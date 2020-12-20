@@ -11,7 +11,7 @@ namespace VocaDb.Web.Code.WebApi
 {
 	public class ObjectNotFoundExceptionFilterAttribute : ExceptionFilterAttribute
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		public override void OnException(HttpActionExecutedContext context)
 		{
@@ -20,9 +20,9 @@ namespace VocaDb.Web.Code.WebApi
 			if (ex == null)
 				return;
 
-			var msg = string.Format("Object not found: {0}#{1}", ex.EntityName, ex.Identifier);
+			var msg = $"Object not found: {ex.EntityName}#{ex.Identifier}";
 
-			log.Warn(msg);
+			s_log.Warn(msg);
 
 			var resp = new HttpResponseMessage(HttpStatusCode.NotFound)
 			{

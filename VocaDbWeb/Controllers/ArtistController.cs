@@ -30,29 +30,26 @@ namespace VocaDb.Web.Controllers
 {
 	public class ArtistController : ControllerBase
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
-		private readonly ArtistQueries queries;
-		private readonly ArtistService service;
-		private readonly MarkdownParser markdownParser;
+		private readonly ArtistQueries _queries;
+		private readonly ArtistService _service;
+		private readonly MarkdownParser _markdownParser;
 
 		private ArtistEditViewModel CreateArtistEditViewModel(int id, ArtistForEditContract editedArtist)
 		{
-			return queries.Get(id, album => new ArtistEditViewModel(new ArtistContract(album, PermissionContext.LanguagePreference), PermissionContext,
+			return _queries.Get(id, album => new ArtistEditViewModel(new ArtistContract(album, PermissionContext.LanguagePreference), PermissionContext,
 				EntryPermissionManager.CanDelete(PermissionContext, album), editedArtist));
 		}
 
 		public ArtistController(ArtistService service, ArtistQueries queries, MarkdownParser markdownParser)
 		{
-			this.service = service;
-			this.queries = queries;
-			this.markdownParser = markdownParser;
+			_service = service;
+			_queries = queries;
+			_markdownParser = markdownParser;
 		}
 
-		private ArtistService Service
-		{
-			get { return service; }
-		}
+		private ArtistService Service => _service;
 
 		public ActionResult ArchivedVersionPicture(int id)
 		{
@@ -61,12 +58,12 @@ namespace VocaDb.Web.Controllers
 			return Picture(contract);
 		}
 
-		public ActionResult ArchivedVersionXml(int id = invalidId)
+		public ActionResult ArchivedVersionXml(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
-			var doc = queries.GetVersionXml<ArchivedArtistVersion>(id);
+			var doc = _queries.GetVersionXml<ArchivedArtistVersion>(id);
 			var content = XmlHelper.SerializeToUTF8XmlString(doc);
 
 			return Xml(content);
@@ -76,7 +73,7 @@ namespace VocaDb.Web.Controllers
 		[RestrictBannedIP]
 		public void CreateReport(int artistId, ArtistReportType reportType, string notes, int? versionNumber)
 		{
-			queries.CreateReport(artistId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+			_queries.CreateReport(artistId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 		}
 
 		[Obsolete]
@@ -94,7 +91,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult RemoveTagUsage(long id)
 		{
-			var artistId = queries.RemoveTagUsage(id);
+			var artistId = _queries.RemoveTagUsage(id);
 			TempData.SetStatusMessage("Tag usage removed");
 
 			return RedirectToAction("ManageTagUsages", new { id = artistId });
@@ -109,7 +106,7 @@ namespace VocaDb.Web.Controllers
 
 		public async Task<ActionResult> RevertToVersion(int archivedArtistVersionId)
 		{
-			var result = await queries.RevertToVersion(archivedArtistVersionId);
+			var result = await _queries.RevertToVersion(archivedArtistVersionId);
 
 			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
 
@@ -119,39 +116,39 @@ namespace VocaDb.Web.Controllers
 		[HttpPost]
 		public ActionResult FindDuplicate(string term1, string term2, string term3, string linkUrl)
 		{
-			var result = queries.FindDuplicates(new[] { term1, term2, term3 }, linkUrl).Select(e => new DuplicateEntryResultContract<ArtistEditableFields>(e, ArtistEditableFields.Names));
+			var result = _queries.FindDuplicates(new[] { term1, term2, term3 }, linkUrl).Select(e => new DuplicateEntryResultContract<ArtistEditableFields>(e, ArtistEditableFields.Names));
 			return LowercaseJson(result);
 		}
 
 		//
 		// GET: /Artist/Details/5
 
-		public ActionResult Details(int id = invalidId)
+		public ActionResult Details(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return HttpNotFound();
 
 			WebHelper.VerifyUserAgent(Request);
 
-			var model = queries.GetDetails(id, GetHostnameForValidHit());
+			var model = _queries.GetDetails(id, GetHostnameForValidHit());
 
 			var hasDescription = !model.Description.IsEmpty;
 			var prop = PageProperties;
 			prop.GlobalSearchType = EntryType.Artist;
 			prop.Title = model.Name;
-			prop.Subtitle = string.Format("({0})", Translate.ArtistTypeName(model.ArtistType));
-			prop.Description = new ArtistDescriptionGenerator().GenerateDescription(model, markdownParser.GetPlainText(model.Description.EnglishOrOriginal), Translate.ArtistTypeNames);
+			prop.Subtitle = $"({Translate.ArtistTypeName(model.ArtistType)})";
+			prop.Description = new ArtistDescriptionGenerator().GenerateDescription(model, _markdownParser.GetPlainText(model.Description.EnglishOrOriginal), Translate.ArtistTypeNames);
 			prop.CanonicalUrl = UrlMapper.FullAbsolute(Url.Action("Details", new { id }));
 			prop.OpenGraph.Image = Url.ImageThumb(model, Model.Domain.Images.ImageSize.Original, fullUrl: true);
-			prop.OpenGraph.Title = hasDescription ? string.Format("{0} ({1})", model.Name, Translate.ArtistTypeName(model.ArtistType)) : model.Name;
+			prop.OpenGraph.Title = hasDescription ? $"{model.Name} ({Translate.ArtistTypeName(model.ArtistType)})" : model.Name;
 			prop.OpenGraph.ShowTwitterCard = true;
 
 			return View(model);
 		}
 
-		public ActionResult Picture(int id = invalidId)
+		public ActionResult Picture(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var artist = Service.GetArtistPicture(id);
@@ -159,18 +156,18 @@ namespace VocaDb.Web.Controllers
 			return Picture(artist);
 		}
 
-		public ActionResult PictureThumb(int id = invalidId)
+		public ActionResult PictureThumb(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
-			var artist = queries.GetPictureThumb(id);
+			var artist = _queries.GetPictureThumb(id);
 			return Picture(artist);
 		}
 
-		public ActionResult PopupContent(int id = invalidId)
+		public ActionResult PopupContent(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var artist = Service.GetArtist(id);
@@ -204,7 +201,7 @@ namespace VocaDb.Web.Controllers
 			ArtistContract artist;
 			try
 			{
-				artist = await queries.Create(contract);
+				artist = await _queries.Create(contract);
 			}
 			catch (InvalidPictureException)
 			{
@@ -218,9 +215,9 @@ namespace VocaDb.Web.Controllers
 		//
 		// GET: /Artist/Edit/5
 		[Authorize]
-		public ActionResult Edit(int id = invalidId)
+		public ActionResult Edit(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			CheckConcurrentEdit(EntryType.Artist, id);
@@ -238,7 +235,7 @@ namespace VocaDb.Web.Controllers
 			// Unable to continue if viewmodel is null because we need the ID at least
 			if (viewModel == null || viewModel.EditedArtist == null)
 			{
-				log.Warn("Viewmodel was null");
+				s_log.Warn("Viewmodel was null");
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");
 			}
 
@@ -271,7 +268,7 @@ namespace VocaDb.Web.Controllers
 
 			try
 			{
-				await queries.Update(model, pictureData, PermissionContext);
+				await _queries.Update(model, pictureData, PermissionContext);
 			}
 			catch (InvalidPictureException)
 			{
@@ -311,7 +308,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
 		{
-			queries.UpdateVersionVisibility<ArchivedArtistVersion>(archivedVersionId, hidden);
+			_queries.UpdateVersionVisibility<ArchivedArtistVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 		}
@@ -323,9 +320,9 @@ namespace VocaDb.Web.Controllers
 			return View(new Versions(contract));
 		}
 
-		public ActionResult ViewVersion(int id = invalidId, int? ComparedVersionId = null)
+		public ActionResult ViewVersion(int id = InvalidId, int? ComparedVersionId = null)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var contract = Service.GetVersionDetails(id, ComparedVersionId ?? 0);

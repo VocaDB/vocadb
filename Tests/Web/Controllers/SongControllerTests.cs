@@ -27,23 +27,23 @@ namespace VocaDb.Tests.Web.Controllers
 	[TestClass]
 	public class SongControllerTests
 	{
-		private readonly SongController controller;
-		private readonly FakePermissionContext permissionContext = new FakePermissionContext();
-		private readonly FakeSongRepository repository = new FakeSongRepository();
+		private readonly SongController _controller;
+		private readonly FakePermissionContext _permissionContext = new();
+		private readonly FakeSongRepository _repository = new();
 
 		public SongControllerTests()
 		{
-			permissionContext.SetLoggedUser(repository.Save(CreateEntry.User()));
-			var queries = new SongQueries(repository, permissionContext, new FakeEntryLinkFactory(),
+			_permissionContext.SetLoggedUser(_repository.Save(CreateEntry.User()));
+			var queries = new SongQueries(_repository, _permissionContext, new FakeEntryLinkFactory(),
 				new FakePVParser(), new FakeUserMessageMailer(), new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(),
 				new FakeObjectCache(), new VdbConfigManager(), new EntrySubTypeNameFactory(), new FakeFollowedArtistNotifier());
-			controller = new SongController(null, queries, null, null);
+			_controller = new SongController(null, queries, null, null);
 		}
 
 		[TestMethod]
 		public async Task Create()
 		{
-			var artist = repository.Save(CreateEntry.Artist(ArtistType.Producer));
+			var artist = _repository.Save(CreateEntry.Artist(ArtistType.Producer));
 
 			var model = new Create
 			{
@@ -56,12 +56,12 @@ namespace VocaDb.Tests.Web.Controllers
 				}
 			};
 
-			var result = await controller.Create(model);
+			var result = await _controller.Create(model);
 			Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult), "result");
 			var routeResult = (RedirectToRouteResult)result;
 			Assert.AreEqual("Edit", routeResult.RouteValues["Action"], "Action");
 
-			Assert.AreEqual(1, repository.List<Song>().Count, "Song was created");
+			Assert.AreEqual(1, _repository.List<Song>().Count, "Song was created");
 		}
 	}
 }

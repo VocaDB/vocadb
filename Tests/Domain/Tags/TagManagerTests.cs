@@ -17,7 +17,7 @@ namespace VocaDb.Tests.Domain.Tags
 	{
 		class TagFactory : ITagFactory, ITagUsageFactory<SongTagUsage>
 		{
-			private readonly Song song = new Song();
+			private readonly Song _song = new();
 
 			public Task<Tag> CreateTagAsync(string name)
 			{
@@ -26,7 +26,7 @@ namespace VocaDb.Tests.Domain.Tags
 
 			public SongTagUsage CreateTagUsage(Tag tag)
 			{
-				return new SongTagUsage(song, tag);
+				return new SongTagUsage(_song, tag);
 			}
 
 			public SongTagUsage CreateTagUsage(Tag tag, SongTagUsage usage)
@@ -35,23 +35,23 @@ namespace VocaDb.Tests.Domain.Tags
 			}
 		}
 
-		private TagManager<SongTagUsage> manager;
-		private Tag tag;
-		private TagFactory tagFactory;
-		private User user;
+		private TagManager<SongTagUsage> _manager;
+		private Tag _tag;
+		private TagFactory _tagFactory;
+		private User _user;
 
 		private void SyncVotes(params Tag[] tags)
 		{
-			manager.SyncVotes(user, tags, tagFactory);
+			_manager.SyncVotes(_user, tags, _tagFactory);
 		}
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			tagFactory = new TagFactory();
-			tag = new Tag("drumnbass");
-			manager = new TagManager<SongTagUsage>();
-			user = new User();
+			_tagFactory = new TagFactory();
+			_tag = new Tag("drumnbass");
+			_manager = new TagManager<SongTagUsage>();
+			_user = new User();
 		}
 	}
 }

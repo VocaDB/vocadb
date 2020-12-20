@@ -16,7 +16,7 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class VimeoParser : IVideoServiceParser
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		public async Task<VideoTitleParseResult> GetTitleAsync(string id)
 		{
@@ -26,7 +26,7 @@ namespace VocaDb.Model.Service.VideoServices
 				headers.Authorization = new AuthenticationHeaderValue("bearer", apiKey);
 			}
 
-			var url = string.Format("https://api.vimeo.com/videos/{0}", id);
+			var url = $"https://api.vimeo.com/videos/{id}";
 
 			VimeoResult result;
 
@@ -38,17 +38,17 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 			catch (WebException x)
 			{
-				log.Warn(x, "Unable to load Vimeo URL {0}", url);
+				s_log.Warn(x, "Unable to load Vimeo URL {0}", url);
 				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
 			}
 			catch (HttpRequestException x)
 			{
-				log.Warn(x, "Unable to load Vimeo URL {0}", url);
+				s_log.Warn(x, "Unable to load Vimeo URL {0}", url);
 				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
 			}
 			catch (JsonSerializationException x)
 			{
-				log.Warn(x, "Unable to load Vimeo URL {0}", url);
+				s_log.Warn(x, "Unable to load Vimeo URL {0}", url);
 				return VideoTitleParseResult.CreateError("Vimeo (error): " + x.Message);
 			}
 

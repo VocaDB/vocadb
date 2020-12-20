@@ -10,16 +10,16 @@ namespace VocaDb.Model.Domain.Users
 	/// </summary>
 	public class UserOptions : IDatabaseObject
 	{
-		private string aboutMe;
-		private string albumFormatString;
-		private string lastLoginAddress;
-		private string location;
-		private string oauthToken;
-		private string oauthTokenSecret;
-		private string realname;
-		private string twitterName;
-		private User user;
-		private OptionalCultureCode lastLoginCulture;
+		private string _aboutMe;
+		private string _albumFormatString;
+		private string _lastLoginAddress;
+		private string _location;
+		private string _oauthToken;
+		private string _oauthTokenSecret;
+		private string _realname;
+		private string _twitterName;
+		private User _user;
+		private OptionalCultureCode _lastLoginCulture;
 
 		public UserOptions()
 		{
@@ -48,21 +48,21 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual string AboutMe
 		{
-			get { return aboutMe; }
+			get => _aboutMe;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				aboutMe = value;
+				_aboutMe = value;
 			}
 		}
 
 		public virtual string AlbumFormatString
 		{
-			get { return albumFormatString; }
+			get => _albumFormatString;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				albumFormatString = value;
+				_albumFormatString = value;
 			}
 		}
 
@@ -74,30 +74,30 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual OptionalCultureCode LastLoginCulture
 		{
-			get { return lastLoginCulture ?? (lastLoginCulture = new OptionalCultureCode()); }
+			get => _lastLoginCulture ?? (_lastLoginCulture = new OptionalCultureCode());
 			set
 			{
-				lastLoginCulture = value ?? OptionalCultureCode.Empty;
+				_lastLoginCulture = value ?? OptionalCultureCode.Empty;
 			}
 		}
 
 		public virtual string LastLoginAddress
 		{
-			get { return lastLoginAddress; }
+			get => _lastLoginAddress;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				lastLoginAddress = value;
+				_lastLoginAddress = value;
 			}
 		}
 
 		public virtual string Location
 		{
-			get { return location; }
+			get => _location;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				location = value;
+				_location = value;
 			}
 		}
 
@@ -119,11 +119,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual string Realname
 		{
-			get { return realname; }
+			get => _realname;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				realname = value;
+				_realname = value;
 			}
 		}
 
@@ -142,30 +142,30 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual string TwitterName
 		{
-			get { return twitterName; }
+			get => _twitterName;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				twitterName = value;
+				_twitterName = value;
 			}
 		}
 
 		public virtual string TwitterOAuthToken
 		{
-			get { return oauthToken; }
+			get => _oauthToken;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				oauthToken = value;
+				_oauthToken = value;
 			}
 		}
 
 		public virtual string TwitterOAuthTokenSecret
 		{
-			get { return oauthTokenSecret; }
+			get => _oauthTokenSecret;
 			set
 			{
-				oauthTokenSecret = value;
+				_oauthTokenSecret = value;
 				ParamIs.NotNull(() => value);
 			}
 		}
@@ -174,11 +174,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual User User
 		{
-			get { return user; }
+			get => _user;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				user = value;
+				_user = value;
 			}
 		}
 	}

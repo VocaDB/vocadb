@@ -34,36 +34,36 @@ namespace VocaDb.Web.Services
 	[ServiceContract(Namespace = Schemas.VocaDb)]
 	public class QueryService
 	{
-		private readonly AlbumQueries albumQueries;
-		private readonly AlbumService albumService;
-		private readonly ArtistQueries artistQueries;
-		private readonly ArtistService artistService;
-		private readonly EntryQueries entryQueries;
-		private readonly TagQueries tagQueries;
-		private readonly IUserPermissionContext userPermissionContext;
-		private readonly SongQueries songQueries;
-		private readonly SongService songService;
-		private readonly SongListQueries songListQueries;
-		private readonly UserQueries userQueries;
-		private readonly UserService userService;
+		private readonly AlbumQueries _albumQueries;
+		private readonly AlbumService _albumService;
+		private readonly ArtistQueries _artistQueries;
+		private readonly ArtistService _artistService;
+		private readonly EntryQueries _entryQueries;
+		private readonly TagQueries _tagQueries;
+		private readonly IUserPermissionContext _userPermissionContext;
+		private readonly SongQueries _songQueries;
+		private readonly SongService _songService;
+		private readonly SongListQueries _songListQueries;
+		private readonly UserQueries _userQueries;
+		private readonly UserService _userService;
 
 		public QueryService(ArtistQueries artistQueries, TagQueries tagQueries, UserQueries userQueries,
 			AlbumService albumService, AlbumQueries albumQueries, ArtistService artistService, SongQueries songQueries, SongService songService, SongListQueries songListQueries, UserService userService,
 			EntryQueries entryQueries,
 			IUserPermissionContext userPermissionContext)
 		{
-			this.artistQueries = artistQueries;
-			this.tagQueries = tagQueries;
-			this.userQueries = userQueries;
-			this.albumService = albumService;
-			this.albumQueries = albumQueries;
-			this.artistService = artistService;
-			this.songQueries = songQueries;
-			this.entryQueries = entryQueries;
-			this.songService = songService;
-			this.songListQueries = songListQueries;
-			this.userService = userService;
-			this.userPermissionContext = userPermissionContext;
+			_artistQueries = artistQueries;
+			_tagQueries = tagQueries;
+			_userQueries = userQueries;
+			_albumService = albumService;
+			_albumQueries = albumQueries;
+			_artistService = artistService;
+			_songQueries = songQueries;
+			_entryQueries = entryQueries;
+			_songService = songService;
+			_songListQueries = songListQueries;
+			_userService = userService;
+			_userPermissionContext = userPermissionContext;
 		}
 
 		#region Common queries
@@ -71,32 +71,32 @@ namespace VocaDb.Web.Services
 		public PartialFindResult<AlbumContract> FindAlbums(string term, int maxResults,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto, AlbumSortRule sort = AlbumSortRule.NameThenReleaseDate)
 		{
-			return albumService.Find(SearchTextQuery.Create(term, nameMatchMode), DiscType.Unknown, 0, maxResults, true, moveExactToTop: true, sortRule: sort);
+			return _albumService.Find(SearchTextQuery.Create(term, nameMatchMode), DiscType.Unknown, 0, maxResults, true, moveExactToTop: true, sortRule: sort);
 		}
 
 		[OperationContract]
 		public PartialFindResult<AlbumContract> FindAlbumsAdvanced(string term, int maxResults)
 		{
-			return albumService.FindAdvanced(term, new PagingProperties(0, maxResults, true), AlbumSortRule.Name);
+			return _albumService.FindAdvanced(term, new PagingProperties(0, maxResults, true), AlbumSortRule.Name);
 		}
 
 		[OperationContract]
 		public PartialFindResult<EntryForApiContract> FindAll(string term, int maxResults, ContentLanguagePreference languagePreference)
 		{
-			return entryQueries.GetList(term, null, null, false, null, null, 0, maxResults, true, EntrySortRule.Name,
+			return _entryQueries.GetList(term, null, null, false, null, null, 0, maxResults, true, EntrySortRule.Name,
 				NameMatchMode.Auto, EntryOptionalFields.AdditionalNames, languagePreference, false);
 		}
 
 		[OperationContract]
 		public PartialFindResult<ArtistContract> FindArtists(string term, int maxResults, NameMatchMode nameMatchMode = NameMatchMode.Auto)
 		{
-			return artistService.FindArtists(new ArtistQueryParams(ArtistSearchTextQuery.Create(term, nameMatchMode), new ArtistType[] { }, 0, maxResults, true, ArtistSortRule.Name, true));
+			return _artistService.FindArtists(new ArtistQueryParams(ArtistSearchTextQuery.Create(term, nameMatchMode), new ArtistType[] { }, 0, maxResults, true, ArtistSortRule.Name, true));
 		}
 
 		[OperationContract]
 		public NewSongCheckResultContract FindDuplicate(string[] names, string[] pvs, int[] artistIds, bool getPVInfo = false)
 		{
-			return songQueries.FindDuplicates(names, pvs, artistIds, getPVInfo).Result;
+			return _songQueries.FindDuplicates(names, pvs, artistIds, getPVInfo).Result;
 		}
 
 		[OperationContract]
@@ -104,7 +104,7 @@ namespace VocaDb.Web.Services
 		{
 			var sampleSize = Math.Min(maxResults * 2, 30);
 
-			var results = songService.FindWithAlbum(new SongQueryParams(
+			var results = _songService.FindWithAlbum(new SongQueryParams(
 				SearchTextQuery.Create(term, nameMatchMode), new SongType[] { }, 0, sampleSize, true, SongSortRule.Name, false, true, null), false);
 
 			return new PartialFindResult<SongWithAlbumAndPVsContract>(results.Items.Take(maxResults).ToArray(), results.TotalCount, results.Term);
@@ -113,89 +113,89 @@ namespace VocaDb.Web.Services
 		[OperationContract]
 		public string[] FindTags(string term, int maxResults)
 		{
-			return tagQueries.FindNames(TagSearchTextQuery.Create(term), true, 10);
+			return _tagQueries.FindNames(TagSearchTextQuery.Create(term), true, 10);
 		}
 
 		[OperationContract]
 		public AlbumContract GetAlbumDetails(string term, AlbumSortRule sort = AlbumSortRule.NameThenReleaseDate)
 		{
-			var albums = albumService.Find(SearchTextQuery.Create(term), DiscType.Unknown, 0, 10, false, moveExactToTop: true, sortRule: sort);
+			var albums = _albumService.Find(SearchTextQuery.Create(term), DiscType.Unknown, 0, 10, false, moveExactToTop: true, sortRule: sort);
 			return albums.Items.FirstOrDefault();
 		}
 
 		[OperationContract]
 		public AlbumDetailsContract GetAlbumById(int id)
 		{
-			var album = albumQueries.GetAlbumDetails(id, null);
+			var album = _albumQueries.GetAlbumDetails(id, null);
 			return album;
 		}
 
 		[OperationContract]
 		public ArtistDetailsContract GetArtistDetails(string term)
 		{
-			var artists = artistService.FindArtists(new ArtistQueryParams(ArtistSearchTextQuery.Create(term), new ArtistType[] { }, 0, 10,
+			var artists = _artistService.FindArtists(new ArtistQueryParams(ArtistSearchTextQuery.Create(term), new ArtistType[] { }, 0, 10,
 				false, ArtistSortRule.Name, true));
 
 			if (!artists.Items.Any())
 				return null;
 
-			return artistQueries.GetDetails(artists.Items[0].Id, null);
+			return _artistQueries.GetDetails(artists.Items[0].Id, null);
 		}
 
 		[OperationContract]
 		public ArtistDetailsContract GetArtistById(int id)
 		{
-			var artist = artistQueries.GetDetails(id, null);
+			var artist = _artistQueries.GetDetails(id, null);
 			return artist;
 		}
 
 		[OperationContract]
 		public ArtistForApiContract[] GetArtistsWithYoutubeChannels(ContentLanguagePreference languagePreference = ContentLanguagePreference.Default)
 		{
-			return artistService.GetArtistsWithYoutubeChannels(languagePreference);
+			return _artistService.GetArtistsWithYoutubeChannels(languagePreference);
 		}
 
 		[OperationContract]
 		public SongDetailsContract GetSongById(int id, ContentLanguagePreference? language)
 		{
-			var song = songQueries.GetSongDetails(id, 0, null, language, null);
+			var song = _songQueries.GetSongDetails(id, 0, null, language, null);
 			return song;
 		}
 
 		[OperationContract]
 		public SongDetailsContract GetSongDetailsByNameArtistAndAlbum(string name, string artist, string album)
 		{
-			return songService.XGetSongByNameArtistAndAlbum(name, artist, album);
+			return _songService.XGetSongByNameArtistAndAlbum(name, artist, album);
 		}
 
 		[OperationContract]
 		public SongDetailsContract GetSongDetails(string term, ContentLanguagePreference? language = null, NameMatchMode matchMode = NameMatchMode.Auto)
 		{
 			if (language.HasValue)
-				userPermissionContext.LanguagePreferenceSetting.OverrideRequestValue(language.Value);
+				_userPermissionContext.LanguagePreferenceSetting.OverrideRequestValue(language.Value);
 
-			var song = songService.FindFirstDetails(SearchTextQuery.Create(term, matchMode));
+			var song = _songService.FindFirstDetails(SearchTextQuery.Create(term, matchMode));
 			return song;
 		}
 
 		[OperationContract]
 		public SongListContract GetSongListById(int id)
 		{
-			var list = songListQueries.GetSongList(id);
+			var list = _songListQueries.GetSongList(id);
 			return list;
 		}
 
 		[OperationContract]
 		public TagContract GetTagById(int id, ContentLanguagePreference? language = null)
 		{
-			var tag = tagQueries.GetTag(id, t => new TagContract(t, language ?? userPermissionContext.LanguagePreference, true));
+			var tag = _tagQueries.GetTag(id, t => new TagContract(t, language ?? _userPermissionContext.LanguagePreference, true));
 			return tag;
 		}
 
 		[OperationContract]
 		public TagContract GetTagByName(string name)
 		{
-			var tag = tagQueries.Find(t => new TagContract(t, ContentLanguagePreference.Default, true), new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(name), false, true),
+			var tag = _tagQueries.Find(t => new TagContract(t, ContentLanguagePreference.Default, true), new TagQueryParams(new CommonSearchParams(TagSearchTextQuery.Create(name), false, true),
 				new PagingProperties(0, 1, false))).Items.FirstOrDefault();
 
 			return tag;
@@ -210,7 +210,7 @@ namespace VocaDb.Web.Services
 				Paging = new PagingProperties(0, 1, false)
 			};
 
-			var users = userQueries.GetUsers(queryParams, u => new UserContract(u));
+			var users = _userQueries.GetUsers(queryParams, u => new UserContract(u));
 			return users.Items.FirstOrDefault();
 		}
 
@@ -220,28 +220,28 @@ namespace VocaDb.Web.Services
 		[OperationContract]
 		public AlbumContract GetAlbumByLinkUrl(string url)
 		{
-			return albumService.GetAlbumByLink(url);
+			return _albumService.GetAlbumByLink(url);
 		}
 
 		[OperationContract]
 		public LyricsForSongContract GetRandomSongLyrics(string query)
 		{
 			if (string.IsNullOrEmpty(query))
-				return songService.GetRandomSongWithLyricsDetails();
+				return _songService.GetRandomSongWithLyricsDetails();
 			else
-				return songService.GetRandomLyricsForSong(query);
+				return _songService.GetRandomLyricsForSong(query);
 		}
 
 		[OperationContract]
 		public SongWithAlbumContract GetSongWithPV(PVService service, string pvId)
 		{
-			return songService.GetSongWithPVAndAlbum(service, pvId);
+			return _songService.GetSongWithPVAndAlbum(service, pvId);
 		}
 
 		[OperationContract]
 		public UserContract GetUser(string name, string accessKey)
 		{
-			return userService.CheckAccessWithKey(name, accessKey, "localhost", true);
+			return _userService.CheckAccessWithKey(name, accessKey, "localhost", true);
 		}
 
 		#endregion

@@ -20,11 +20,11 @@ namespace VocaDb.Model.Service.TagFormatting
 			public string TokenStr { get; set; }
 		}
 
-		private readonly IEntryLinkFactory entryLinkFactory;
+		private readonly IEntryLinkFactory _entryLinkFactory;
 
 		protected SongCsvFileFormatter(IEntryLinkFactory entryLinkFactory)
 		{
-			this.entryLinkFactory = entryLinkFactory;
+			_entryLinkFactory = entryLinkFactory;
 		}
 
 		protected string GetPvUrl(Song song, PVType? type, PVServices services)
@@ -89,7 +89,7 @@ namespace VocaDb.Model.Service.TagFormatting
 				case "title.original":
 					return song.Names.SortNames.Japanese;
 				case "url":
-					return entryLinkFactory.GetFullEntryUrl(EntryType.Song, song.Id);
+					return _entryLinkFactory.GetFullEntryUrl(EntryType.Song, song.Id);
 
 				// List of vocalists, separated by comma.
 				case "vocalists":
@@ -132,7 +132,7 @@ namespace VocaDb.Model.Service.TagFormatting
 			if (!val.Contains(";"))
 				return val;
 			else
-				return string.Format("\"{0}\"", val);
+				return $"\"{val}\"";
 		}
 
 		private IEnumerable<FieldMatch> GetMatches(string format)

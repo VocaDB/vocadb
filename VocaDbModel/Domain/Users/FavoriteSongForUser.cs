@@ -10,23 +10,16 @@ namespace VocaDb.Model.Domain.Users
 	/// </summary>
 	public class FavoriteSongForUser : ISongLink, IEntryWithIntId
 	{
-		public static int GetRatingScore(SongVoteRating rating)
+		public static int GetRatingScore(SongVoteRating rating) => rating switch
 		{
-			switch (rating)
-			{
-				case SongVoteRating.Favorite:
-					return 3;
-				case SongVoteRating.Like:
-					return 2;
-				case SongVoteRating.Dislike:
-					return -1;
-				default:
-					return 0;
-			}
-		}
+			SongVoteRating.Favorite => 3,
+			SongVoteRating.Like => 2,
+			SongVoteRating.Dislike => -1,
+			_ => 0,
+		};
 
-		private Song song;
-		private User user;
+		private Song _song;
+		private User _user;
 
 		public FavoriteSongForUser()
 		{
@@ -49,21 +42,21 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual Song Song
 		{
-			get { return song; }
+			get => _song;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				song = value;
+				_song = value;
 			}
 		}
 
 		public virtual User User
 		{
-			get { return user; }
+			get => _user;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				user = value;
+				_user = value;
 			}
 		}
 
@@ -90,7 +83,7 @@ namespace VocaDb.Model.Domain.Users
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -131,20 +124,20 @@ namespace VocaDb.Model.Domain.Users
 				return;
 
 			if (newRating == SongVoteRating.Favorite)
-				song.FavoritedTimes++;
+				_song.FavoritedTimes++;
 
 			if (Rating == SongVoteRating.Favorite)
-				song.FavoritedTimes--;
+				_song.FavoritedTimes--;
 
-			song.RatingScore -= GetRatingScore(Rating);
-			song.RatingScore += GetRatingScore(newRating);
+			_song.RatingScore -= GetRatingScore(Rating);
+			_song.RatingScore += GetRatingScore(newRating);
 
 			Rating = newRating;
 		}
 
 		public override string ToString()
 		{
-			return string.Format("favorited {0} for {1}", Song, User);
+			return $"favorited {Song} for {User}";
 		}
 	}
 }

@@ -102,10 +102,7 @@ namespace VocaDb.Model.Domain
 		/// </remarks>
 		public virtual DateTime SortableDateTime
 		{
-			get
-			{
-				return new DateTime(Year ?? 1970, Month ?? 1, Day ?? 1);
-			}
+			get => new DateTime(Year ?? 1970, Month ?? 1, Day ?? 1);
 			// ReSharper disable ValueParameterNotUsed
 			protected set { }
 			// ReSharper restore ValueParameterNotUsed

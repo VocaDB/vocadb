@@ -11,44 +11,41 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 {
 	public class AlbumUniversalFilter : ISearchFilter<Album>
 	{
-		private readonly string term;
+		private readonly string _term;
 
 		public AlbumUniversalFilter(string term)
 		{
-			this.term = term;
+			_term = term;
 		}
 
-		public QueryCost Cost
-		{
-			get { return QueryCost.VeryHigh; }
-		}
+		public QueryCost Cost => QueryCost.VeryHigh;
 
 		public void FilterResults(List<Album> albums, IDatabaseContext session)
 		{
 			albums.RemoveAll(a => !(
-				a.Names.Any(n => n.Value.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) != -1)
-				|| (a.ArtistString.Default.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) != -1
-				&& a.ArtistString.Japanese.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) != -1
-				&& a.ArtistString.Romaji.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) != -1
-				&& a.ArtistString.English.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) != -1)));
+				a.Names.Any(n => n.Value.IndexOf(_term, StringComparison.InvariantCultureIgnoreCase) != -1)
+				|| (a.ArtistString.Default.IndexOf(_term, StringComparison.InvariantCultureIgnoreCase) != -1
+				&& a.ArtistString.Japanese.IndexOf(_term, StringComparison.InvariantCultureIgnoreCase) != -1
+				&& a.ArtistString.Romaji.IndexOf(_term, StringComparison.InvariantCultureIgnoreCase) != -1
+				&& a.ArtistString.English.IndexOf(_term, StringComparison.InvariantCultureIgnoreCase) != -1)));
 		}
 
 		public List<Album> GetResults(IDatabaseContext session)
 		{
-			var nameRes = session.Query<AlbumName>().Where(n => n.Value.Contains(term))
+			var nameRes = session.Query<AlbumName>().Where(n => n.Value.Contains(_term))
 				.Select(n => n.Album)
 				.Distinct()
 				.ToList();
 
 			var artistRes = session.Query<ArtistName>()
-				.Where(an => an.Value.Contains(term))
+				.Where(an => an.Value.Contains(_term))
 				.SelectMany(an => an.Artist.AllAlbums)
 				.Select(an => an.Album)
 				.Distinct()
 				.ToList();
 
 			var albumRes = session.Query<Album>()
-				.Where(an => an.OriginalRelease.CatNum.Contains(term))
+				.Where(an => an.OriginalRelease.CatNum.Contains(_term))
 				.ToList();
 
 			return nameRes.Union(artistRes).Union(albumRes)

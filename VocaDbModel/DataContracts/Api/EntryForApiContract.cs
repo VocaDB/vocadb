@@ -26,25 +26,17 @@ namespace VocaDb.Model.DataContracts.Api
 		{
 			ParamIs.NotNull(() => entry);
 
-			switch (entry.EntryType)
+			return entry.EntryType switch
 			{
-				case EntryType.Album:
-					return new EntryForApiContract((Album)entry, languagePreference, thumbPersister, includedFields);
-				case EntryType.Artist:
-					return new EntryForApiContract((Artist)entry, languagePreference, thumbPersister, includedFields);
-				case EntryType.DiscussionTopic:
-					return new EntryForApiContract((DiscussionTopic)entry, languagePreference);
-				case EntryType.ReleaseEvent:
-					return new EntryForApiContract((ReleaseEvent)entry, languagePreference, thumbPersister, includedFields);
-				case EntryType.Song:
-					return new EntryForApiContract((Song)entry, languagePreference, includedFields);
-				case EntryType.SongList:
-					return new EntryForApiContract((SongList)entry, thumbPersister, includedFields);
-				case EntryType.Tag:
-					return new EntryForApiContract((Tag)entry, languagePreference, thumbPersister, includedFields);
-			}
-
-			return new EntryForApiContract(entry, languagePreference, includedFields);
+				EntryType.Album => new EntryForApiContract((Album)entry, languagePreference, thumbPersister, includedFields),
+				EntryType.Artist => new EntryForApiContract((Artist)entry, languagePreference, thumbPersister, includedFields),
+				EntryType.DiscussionTopic => new EntryForApiContract((DiscussionTopic)entry, languagePreference),
+				EntryType.ReleaseEvent => new EntryForApiContract((ReleaseEvent)entry, languagePreference, thumbPersister, includedFields),
+				EntryType.Song => new EntryForApiContract((Song)entry, languagePreference, includedFields),
+				EntryType.SongList => new EntryForApiContract((SongList)entry, thumbPersister, includedFields),
+				EntryType.Tag => new EntryForApiContract((Tag)entry, languagePreference, thumbPersister, includedFields),
+				_ => new EntryForApiContract(entry, languagePreference, includedFields),
+			};
 		}
 
 		private EntryForApiContract(IEntryWithNames entry, ContentLanguagePreference languagePreference, EntryOptionalFields fields)

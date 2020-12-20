@@ -85,7 +85,7 @@ namespace VocaDb.Model.DataContracts.Artists
 
 		public override string ToString()
 		{
-			return string.Format("Artist {0} [{1}]", Name, Id);
+			return $"Artist {Name} [{Id}]";
 		}
 	}
 }

@@ -21,9 +21,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 	[TestClass]
 	public class EntryQueriesTests
 	{
-		private FakeAlbumRepository repository;
-		private EntryQueries queries;
-		private Tag tag;
+		private FakeAlbumRepository _repository;
+		private EntryQueries _queries;
+		private Tag _tag;
 
 		private EntryForApiContract AssertHasEntry(PartialFindResult<EntryForApiContract> result, string name, EntryType entryType)
 		{
@@ -43,30 +43,30 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			EntryOptionalFields fields = EntryOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-			return queries.GetList(query, tag, null, false, status, null, start, maxResults, getTotalCount, EntrySortRule.Name, nameMatchMode, fields, lang);
+			return _queries.GetList(query, tag, null, false, status, null, start, maxResults, getTotalCount, EntrySortRule.Name, nameMatchMode, fields, lang);
 		}
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			repository = new FakeAlbumRepository();
+			_repository = new FakeAlbumRepository();
 			var permissionContext = new FakePermissionContext();
 			var thumbPersister = new InMemoryImagePersister();
 
-			queries = new EntryQueries(repository, permissionContext, thumbPersister);
+			_queries = new EntryQueries(_repository, permissionContext, thumbPersister);
 
 			var group = CreateEntry.Artist(ArtistType.OtherGroup, name: "1640mP");
 			var artist = CreateEntry.Producer(name: "40mP");
-			tag = new Tag("pop_rock");
-			artist.Tags.Usages.Add(new ArtistTagUsage(artist, tag));
+			_tag = new Tag("pop_rock");
+			artist.Tags.Usages.Add(new ArtistTagUsage(artist, _tag));
 			var artist2 = CreateEntry.Producer(name: "Tripshots");
 			var album = CreateEntry.Album(name: "40mP Piano Arrange Album");
 			var song = CreateEntry.Song(name: "Mosaik Role [40mP ver.]");
 
-			repository.Save(group, artist, artist2);
-			repository.Save(album);
-			repository.Save(song);
-			repository.Save(tag);
+			_repository.Save(group, artist, artist2);
+			_repository.Save(album);
+			_repository.Save(song);
+			_repository.Save(_tag);
 		}
 
 		/// <summary>
@@ -93,7 +93,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void List_FilterByCanonizedArtistName()
 		{
 			var artist = CreateEntry.Producer(name: "nightmare-P");
-			repository.Save(artist);
+			_repository.Save(artist);
 
 			var resultExact = CallGetList(query: "nightmare-P");
 			var resultVariant = CallGetList(query: "nightmareP");
@@ -110,7 +110,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void List_FilterByTag()
 		{
-			var result = CallGetList(tag: new[] { tag.Id });
+			var result = CallGetList(tag: new[] { _tag.Id });
 
 			Assert.AreEqual(1, result.TotalCount, "TotalCount");
 			AssertHasEntry(result, "40mP", EntryType.Artist);

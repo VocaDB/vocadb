@@ -16,39 +16,39 @@ namespace VocaDb.Tests.Service.TagFormatting
 	[TestClass]
 	public class AlbumSongFormatterTests
 	{
-		private const string defaultFormat = "%title%%featvocalists%;%producers%;%album%;%discnumber%;%track%";
-		private Album album;
-		private Artist producer;
-		private Song song;
-		private AlbumSongFormatter target;
-		private Artist vocalist;
+		private const string Format = "%title%%featvocalists%;%producers%;%album%;%discnumber%;%track%";
+		private Album _album;
+		private Artist _producer;
+		private Song _song;
+		private AlbumSongFormatter _target;
+		private Artist _vocalist;
 
 		private string ApplyFormat(string format, ContentLanguagePreference languageSelection)
 		{
-			return target.ApplyFormat(album, format, null, languageSelection, false);
+			return _target.ApplyFormat(_album, format, null, languageSelection, false);
 		}
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			producer = new Artist(TranslatedString.Create("Tripshots")) { ArtistType = ArtistType.Producer };
-			vocalist = new Artist(new TranslatedString("初音ミク", "Hatsune Miku", "Hatsune Miku")) { ArtistType = ArtistType.Vocaloid };
+			_producer = new Artist(TranslatedString.Create("Tripshots")) { ArtistType = ArtistType.Producer };
+			_vocalist = new Artist(new TranslatedString("初音ミク", "Hatsune Miku", "Hatsune Miku")) { ArtistType = ArtistType.Vocaloid };
 
-			song = new Song(new LocalizedString("Nebula", ContentLanguageSelection.English));
-			song.AddArtist(producer);
-			song.AddArtist(vocalist);
-			song.UpdateArtistString();
+			_song = new Song(new LocalizedString("Nebula", ContentLanguageSelection.English));
+			_song.AddArtist(_producer);
+			_song.AddArtist(_vocalist);
+			_song.UpdateArtistString();
 
-			album = new Album(new LocalizedString("Synthesis", ContentLanguageSelection.English));
-			album.AddSong(song, trackNum: 5, discNum: 1);
+			_album = new Album(new LocalizedString("Synthesis", ContentLanguageSelection.English));
+			_album.AddSong(_song, trackNum: 5, discNum: 1);
 
-			target = new AlbumSongFormatter(new FakeEntryLinkFactory());
+			_target = new AlbumSongFormatter(new FakeEntryLinkFactory());
 		}
 
 		[TestMethod]
 		public void DefaultFormat()
 		{
-			var result = ApplyFormat(defaultFormat, ContentLanguagePreference.Romaji).Trim();
+			var result = ApplyFormat(Format, ContentLanguagePreference.Romaji).Trim();
 
 			Assert.AreEqual("Nebula feat. Hatsune Miku;Tripshots;Synthesis;1;5", result);
 		}
@@ -56,10 +56,10 @@ namespace VocaDb.Tests.Service.TagFormatting
 		[TestMethod]
 		public void NoArtists()
 		{
-			song.RemoveArtist(producer);
-			song.RemoveArtist(vocalist);
+			_song.RemoveArtist(_producer);
+			_song.RemoveArtist(_vocalist);
 
-			var result = ApplyFormat(defaultFormat, ContentLanguagePreference.Romaji).Trim();
+			var result = ApplyFormat(Format, ContentLanguagePreference.Romaji).Trim();
 
 			Assert.AreEqual("Nebula;;Synthesis;1;5", result);
 		}
@@ -67,9 +67,9 @@ namespace VocaDb.Tests.Service.TagFormatting
 		[TestMethod]
 		public void Semicolon()
 		{
-			producer.TranslatedName.Romaji = "re;mo";
+			_producer.TranslatedName.Romaji = "re;mo";
 
-			var result = ApplyFormat(defaultFormat, ContentLanguagePreference.Romaji).Trim();
+			var result = ApplyFormat(Format, ContentLanguagePreference.Romaji).Trim();
 
 			Assert.AreEqual("Nebula feat. Hatsune Miku;\"re;mo\";Synthesis;1;5", result);
 		}

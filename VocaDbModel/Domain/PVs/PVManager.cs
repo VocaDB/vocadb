@@ -14,15 +14,15 @@ namespace VocaDb.Model.Domain.PVs
 	/// </summary>
 	public class PVManager<T> : IEnumerable<T> where T : class, IEditablePV
 	{
-		private IList<T> pvs = new List<T>();
+		private IList<T> _pvs = new List<T>();
 
 		public virtual IList<T> PVs
 		{
-			get { return pvs; }
+			get => _pvs;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				pvs = value;
+				_pvs = value;
 			}
 		}
 

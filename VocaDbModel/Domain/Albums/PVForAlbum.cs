@@ -7,7 +7,7 @@ namespace VocaDb.Model.Domain.Albums
 {
 	public class PVForAlbum : PV, IEntryWithIntId
 	{
-		private Album album;
+		private Album _album;
 
 		public PVForAlbum() { }
 
@@ -19,11 +19,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual Album Album
 		{
-			get { return album; }
+			get => _album;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 
@@ -38,7 +38,7 @@ namespace VocaDb.Model.Domain.Albums
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -58,7 +58,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public override string ToString()
 		{
-			return string.Format("PV '{0}' [{1}] for {2}", PVId, Id, Album);
+			return $"PV '{PVId}' [{Id}] for {Album}";
 		}
 	}
 }

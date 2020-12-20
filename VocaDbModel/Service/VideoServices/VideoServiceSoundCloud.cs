@@ -41,7 +41,7 @@ namespace VocaDb.Model.Service.VideoServices
 			public string Username { get; set; }
 		}
 
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		public VideoServiceSoundCloud(PVService service, IVideoServiceParser parser, RegexLinkMatcher[] linkMatchers)
 			: base(service, parser, linkMatchers) { }
@@ -49,7 +49,7 @@ namespace VocaDb.Model.Service.VideoServices
 		public override string GetUrlById(string id, PVExtendedMetadata extendedMetadata = null)
 		{
 			var compositeId = new SoundCloudId(id);
-			var matcher = linkMatchers.First();
+			var matcher = _linkMatchers.First();
 			return $"http://{matcher.MakeLinkFromId(compositeId.SoundCloudUrl)}";
 		}
 
@@ -58,7 +58,7 @@ namespace VocaDb.Model.Service.VideoServices
 			SslHelper.ForceStrongTLS();
 
 			var apikey = AppConfig.SoundCloudClientId;
-			var apiUrl = string.Format("https://api.soundcloud.com/resolve?url=http://soundcloud.com/{0}&client_id={1}", url, apikey);
+			var apiUrl = $"https://api.soundcloud.com/resolve?url=http://soundcloud.com/{url}&client_id={apikey}";
 
 			SoundCloudResult result;
 
@@ -66,8 +66,8 @@ namespace VocaDb.Model.Service.VideoServices
 
 			VideoUrlParseResult ReturnError(Exception x, string additionalInfo = null)
 			{
-				var msg = string.Format("Unable to load SoundCloud URL '{0}'.{1}", url, additionalInfo != null ? " " + additionalInfo + "." : string.Empty);
-				log.Warn(x, msg);
+				var msg = $"Unable to load SoundCloud URL '{url}'.{(additionalInfo != null ? " " + additionalInfo + "." : string.Empty)}";
+				s_log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			}
 
@@ -124,7 +124,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public override Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle)
 		{
-			var soundCloudUrl = linkMatchers[0].GetId(url);
+			var soundCloudUrl = _linkMatchers[0].GetId(url);
 
 			return ParseBySoundCloudUrl(soundCloudUrl);
 		}
@@ -132,8 +132,8 @@ namespace VocaDb.Model.Service.VideoServices
 		public override IEnumerable<string> GetUserProfileUrls(string authorId)
 		{
 			return new[] {
-				string.Format("http://soundcloud.com/{0}", authorId),
-				string.Format("https://soundcloud.com/{0}", authorId),
+				$"http://soundcloud.com/{authorId}",
+				$"https://soundcloud.com/{authorId}",
 			};
 		}
 	}
@@ -189,7 +189,7 @@ namespace VocaDb.Model.Service.VideoServices
 		/// <returns>Composite ID, for example "8431571 tamagotaso/nightcruise"</returns>
 		public override string ToString()
 		{
-			return string.Format("{0} {1}", TrackId, SoundCloudUrl);
+			return $"{TrackId} {SoundCloudUrl}";
 		}
 	}
 }

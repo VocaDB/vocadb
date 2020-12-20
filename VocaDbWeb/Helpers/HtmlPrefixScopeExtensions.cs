@@ -9,7 +9,7 @@ namespace VocaDb.Web.Helpers
 {
 	public static class HtmlPrefixScopeExtensions
 	{
-		private const string idsToReuseKey = "__htmlPrefixScopeExtensions_IdsToReuse_";
+		private const string IdsToReuseKey = "__htmlPrefixScopeExtensions_IdsToReuse_";
 
 		public static IDisposable BeginCollectionItem(this HtmlHelper html, string collectionName)
 		{
@@ -17,9 +17,9 @@ namespace VocaDb.Web.Helpers
 			string itemIndex = idsToReuse.Count > 0 ? idsToReuse.Dequeue() : Guid.NewGuid().ToString();
 
 			// autocomplete="off" is needed to work around a very annoying Chrome behaviour whereby it reuses old values after the user clicks "Back", which causes the xyz.index and xyz[...] values to get out of sync.
-			html.ViewContext.Writer.WriteLine(string.Format("<input type=\"hidden\" name=\"{0}.index\" autocomplete=\"off\" value=\"{1}\" />", collectionName, html.Encode(itemIndex)));
+			html.ViewContext.Writer.WriteLine($"<input type=\"hidden\" name=\"{collectionName}.index\" autocomplete=\"off\" value=\"{html.Encode(itemIndex)}\" />");
 
-			return BeginHtmlFieldPrefixScope(html, string.Format("{0}[{1}]", collectionName, itemIndex));
+			return BeginHtmlFieldPrefixScope(html, $"{collectionName}[{itemIndex}]");
 		}
 
 		public static IDisposable BeginHtmlFieldPrefixScope(this HtmlHelper html, string htmlFieldPrefix)
@@ -31,7 +31,7 @@ namespace VocaDb.Web.Helpers
 		{
 			// We need to use the same sequence of IDs following a server-side validation failure,  
 			// otherwise the framework won't render the validation error messages next to each item.
-			string key = idsToReuseKey + collectionName;
+			string key = IdsToReuseKey + collectionName;
 			var queue = (Queue<string>)httpContext.Items[key];
 			if (queue == null)
 			{
@@ -46,20 +46,20 @@ namespace VocaDb.Web.Helpers
 
 		private class HtmlFieldPrefixScope : IDisposable
 		{
-			private readonly TemplateInfo templateInfo;
-			private readonly string previousHtmlFieldPrefix;
+			private readonly TemplateInfo _templateInfo;
+			private readonly string _previousHtmlFieldPrefix;
 
 			public HtmlFieldPrefixScope(TemplateInfo templateInfo, string htmlFieldPrefix)
 			{
-				this.templateInfo = templateInfo;
+				_templateInfo = templateInfo;
 
-				previousHtmlFieldPrefix = templateInfo.HtmlFieldPrefix;
+				_previousHtmlFieldPrefix = templateInfo.HtmlFieldPrefix;
 				templateInfo.HtmlFieldPrefix = htmlFieldPrefix;
 			}
 
 			public void Dispose()
 			{
-				templateInfo.HtmlFieldPrefix = previousHtmlFieldPrefix;
+				_templateInfo.HtmlFieldPrefix = _previousHtmlFieldPrefix;
 			}
 		}
 	}

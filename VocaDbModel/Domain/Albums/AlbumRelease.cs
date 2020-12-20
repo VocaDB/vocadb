@@ -7,7 +7,7 @@ namespace VocaDb.Model.Domain.Albums
 {
 	public class AlbumRelease : IAlbumRelease
 	{
-		private string catNum;
+		private string _catNum;
 
 		public AlbumRelease() { }
 
@@ -22,8 +22,8 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual string CatNum
 		{
-			get { return catNum; }
-			set { catNum = value; }
+			get => _catNum;
+			set => _catNum = value;
 		}
 
 		public virtual bool IsEmpty
@@ -38,10 +38,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual OptionalDateTime ReleaseDate { get; set; }
 
-		IOptionalDateTime IAlbumRelease.ReleaseDate
-		{
-			get { return ReleaseDate; }
-		}
+		IOptionalDateTime IAlbumRelease.ReleaseDate => ReleaseDate;
 
 		public virtual ReleaseEvent ReleaseEvent { get; set; }
 

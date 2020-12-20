@@ -9,7 +9,7 @@ namespace VocaDb.Model.Domain.Tags
 	/// </summary>
 	public abstract class TagVote : IEntryWithLongId
 	{
-		private User user;
+		private User _user;
 
 		protected TagVote() { }
 
@@ -24,11 +24,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual User User
 		{
-			get { return user; }
+			get => _user;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				user = value;
+				_user = value;
 			}
 		}
 
@@ -43,7 +43,7 @@ namespace VocaDb.Model.Domain.Tags
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj) => Equals(obj as TagVote);
@@ -52,7 +52,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public override string ToString()
 		{
-			return string.Format("Vote for {0} by {1}", UsageBase, User);
+			return $"Vote for {UsageBase} by {User}";
 		}
 	}
 }

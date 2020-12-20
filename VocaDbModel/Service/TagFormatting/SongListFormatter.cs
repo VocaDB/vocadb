@@ -12,16 +12,11 @@ namespace VocaDb.Model.Service.TagFormatting
 		{
 		}
 
-		protected override string GetFieldValue(string fieldName, SongInList songInList, ContentLanguagePreference languagePreference)
+		protected override string GetFieldValue(string fieldName, SongInList songInList, ContentLanguagePreference languagePreference) => fieldName switch
 		{
-			switch (fieldName)
-			{
-				case "notes":
-					return songInList.Notes;
-				default:
-					return GetFieldValue(fieldName, (ISongLink)songInList, languagePreference);
-			}
-		}
+			"notes" => songInList.Notes,
+			_ => GetFieldValue(fieldName, (ISongLink)songInList, languagePreference),
+		};
 
 		public string ApplyFormat(SongList songList, string format, ContentLanguagePreference languagePreference, bool includeHeader)
 		{

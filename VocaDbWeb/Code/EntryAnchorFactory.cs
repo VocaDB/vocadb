@@ -10,12 +10,12 @@ namespace VocaDb.Web.Code
 {
 	public class EntryAnchorFactory : IEntryLinkFactory
 	{
-		private readonly string baseUrl;
-		private readonly string hostAddress;
+		private readonly string _baseUrl;
+		private readonly string _hostAddress;
 
 		private string CreateAnchor(string href, string text)
 		{
-			return string.Format("<a href=\"{0}\">{1}</a>", href, HttpUtility.HtmlEncode(text));
+			return $"<a href=\"{href}\">{HttpUtility.HtmlEncode(text)}</a>";
 		}
 
 		/// <summary>
@@ -29,63 +29,37 @@ namespace VocaDb.Web.Code
 		{
 			ParamIs.NotNull(() => baseUrl);
 
-			this.hostAddress = hostAddress;
-			this.baseUrl = baseUrl;
+			_hostAddress = hostAddress;
+			_baseUrl = baseUrl;
 		}
 
 		private string GetUrl(string basePart, EntryType entryType, int id, string slug)
 		{
-			string relative;
-			slug = slug ?? string.Empty;
+			slug ??= string.Empty;
 
 			var slashForSlug = slug != string.Empty ? "/" : string.Empty;
-
-			switch (entryType)
+			var relative = entryType switch
 			{
-				case EntryType.Album:
-					relative = string.Format("Al/{0}", id);
-					break;
-
-				case EntryType.Artist:
-					relative = string.Format("Ar/{0}", id);
-					break;
-
-				case EntryType.DiscussionTopic:
-					relative = string.Format("discussion/topics/{0}", id);
-					break;
-
-				case EntryType.ReleaseEvent:
-					relative = string.Format("E/{0}{1}{2}", id, slashForSlug, slug);
-					break;
-
-				case EntryType.ReleaseEventSeries:
-					relative = string.Format("Event/SeriesDetails/{0}", id);
-					break;
-
-				case EntryType.Song:
-					relative = string.Format("S/{0}", id);
-					break;
-
-				case EntryType.Tag:
-					relative = string.Format("T/{0}{1}{2}", id, slashForSlug, slug);
-					break;
-
-				default:
-					relative = string.Format("{0}/Details/{1}", entryType, id);
-					break;
-			}
-
+				EntryType.Album => $"Al/{id}",
+				EntryType.Artist => $"Ar/{id}",
+				EntryType.DiscussionTopic => $"discussion/topics/{id}",
+				EntryType.ReleaseEvent => $"E/{id}{slashForSlug}{slug}",
+				EntryType.ReleaseEventSeries => $"Event/SeriesDetails/{id}",
+				EntryType.Song => $"S/{id}",
+				EntryType.Tag => $"T/{id}{slashForSlug}{slug}",
+				_ => $"{entryType}/Details/{id}",
+			};
 			return VocaUriBuilder.MergeUrls(basePart, relative);
 		}
 
 		public string GetFullEntryUrl(EntryType entryType, int id, string slug = null)
 		{
-			return GetUrl(hostAddress, entryType, id, slug);
+			return GetUrl(_hostAddress, entryType, id, slug);
 		}
 
 		public string CreateEntryLink(EntryType entryType, int id, string name, string slug = null)
 		{
-			var url = GetUrl(baseUrl, entryType, id, slug);
+			var url = GetUrl(_baseUrl, entryType, id, slug);
 
 			return CreateAnchor(url, name);
 		}

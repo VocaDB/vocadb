@@ -11,7 +11,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 {
 	public class NHibernateRepository : IRepository
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		public IUserPermissionContext PermissionContext { get; private set; }
 		public ISessionFactory SessionFactory { get; private set; }
 
@@ -37,12 +37,12 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			}
 			catch (ObjectNotFoundException x)
 			{
-				log.Error(x.Message);
+				s_log.Error(x.Message);
 				throw;
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -59,12 +59,12 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			}
 			catch (ObjectNotFoundException x)
 			{
-				log.Error(x.Message);
+				s_log.Error(x.Message);
 				throw;
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -83,7 +83,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -102,7 +102,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -120,7 +120,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -138,7 +138,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -146,7 +146,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 
 	public abstract class NHibernateRepository<T> : IRepository<T> where T : class, IDatabaseObject
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		public IUserPermissionContext PermissionContext { get; private set; }
 		public ISessionFactory SessionFactory { get; private set; }
 
@@ -172,12 +172,12 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			}
 			catch (ObjectNotFoundException x)
 			{
-				log.Error(x.Message);
+				s_log.Error(x.Message);
 				throw;
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -194,12 +194,12 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			}
 			catch (ObjectNotFoundException x)
 			{
-				log.Error(x.Message);
+				s_log.Error(x.Message);
 				throw;
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -218,7 +218,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -236,7 +236,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -255,7 +255,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -273,7 +273,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}

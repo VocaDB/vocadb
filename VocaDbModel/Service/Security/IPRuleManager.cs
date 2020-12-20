@@ -14,42 +14,42 @@ namespace VocaDb.Model.Service.Security
 	/// </summary>
 	public class IPRuleManager
 	{
-		private static readonly string lockStr = "lock";
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly string s_lockStr = "lock";
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		public IPRuleManager()
 		{
-			permBannedIPs = new HostCollection();
+			_permBannedIPs = new HostCollection();
 		}
 
 		public IPRuleManager(IEnumerable<string> ips)
 		{
-			permBannedIPs = new HostCollection(ips);
+			_permBannedIPs = new HostCollection(ips);
 		}
 
-		private readonly HostCollection permBannedIPs;
-		private readonly HostCollection tempBannedIPs = new HostCollection();
+		private readonly HostCollection _permBannedIPs;
+		private readonly HostCollection _tempBannedIPs = new();
 
-		public IHostCollection PermBannedIPs => permBannedIPs;
+		public IHostCollection PermBannedIPs => _permBannedIPs;
 
 		/// <summary>
 		/// Temporarily banned IPs. These are persisted in memory and are cleared on application restart.
 		/// </summary>
-		public IHostCollection TempBannedIPs => tempBannedIPs;
+		public IHostCollection TempBannedIPs => _tempBannedIPs;
 
 		public bool AddPermBannedIP(IDatabaseContext db, IPRule ipRule)
 		{
 			if (ipRule == null)
 				throw new ArgumentNullException(nameof(ipRule));
 
-			lock (lockStr)
+			lock (s_lockStr)
 			{
-				if (permBannedIPs.Contains(ipRule.Address))
+				if (_permBannedIPs.Contains(ipRule.Address))
 					return false;
 
 				db.Save(ipRule);
 
-				permBannedIPs.Add(ipRule.Address);
+				_permBannedIPs.Add(ipRule.Address);
 				return true;
 			}
 		}
@@ -59,8 +59,8 @@ namespace VocaDb.Model.Service.Security
 
 		public void AddTempBannedIP(string host, string reason = "")
 		{
-			log.Info("Adding temp banned IP {0}. Reason: {1}", host, reason);
-			tempBannedIPs.Add(host);
+			s_log.Info("Adding temp banned IP {0}. Reason: {1}", host, reason);
+			_tempBannedIPs.Add(host);
 		}
 
 		/// <summary>
@@ -71,17 +71,17 @@ namespace VocaDb.Model.Service.Security
 		/// <returns>True if the host is allowed access (not banned).</returns>
 		public bool IsAllowed(string hostAddress)
 		{
-			return !permBannedIPs.Contains(hostAddress) && !tempBannedIPs.Contains(hostAddress);
+			return !_permBannedIPs.Contains(hostAddress) && !_tempBannedIPs.Contains(hostAddress);
 		}
 
 		public void RemovePermBannedIP(string address)
 		{
-			permBannedIPs.Remove(address);
+			_permBannedIPs.Remove(address);
 		}
 
 		public void Reset(IEnumerable<string> ips)
 		{
-			permBannedIPs.Reset(ips);
+			_permBannedIPs.Reset(ips);
 		}
 	}
 }

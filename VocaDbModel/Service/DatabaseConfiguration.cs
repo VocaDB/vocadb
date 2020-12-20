@@ -13,15 +13,9 @@ namespace VocaDb.Model.Service
 {
 	public static class DatabaseConfiguration
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
-		private static string ConnectionStringName
-		{
-			get
-			{
-				return ConfigurationManager.AppSettings["ConnectionStringName"];
-			}
-		}
+		private static string ConnectionStringName => ConfigurationManager.AppSettings["ConnectionStringName"];
 
 		private static string GetConnectionString(string connectionStringName)
 		{
@@ -29,7 +23,7 @@ namespace VocaDb.Model.Service
 				?? throw new ArgumentException("Connection string not found: " + connectionStringName);
 		}
 
-		public static FluentConfiguration Configure(string connectionStringName = null)
+		public static FluentConfiguration Configure(string connectionStringName = null, bool useSysCache = true)
 		{
 			var config = Fluently.Configure()
 				.Database(
@@ -39,11 +33,6 @@ namespace VocaDb.Model.Service
 #if !DEBUG
 					.UseReflectionOptimizer()
 #endif
-				)
-				.Cache(c => c
-					.ProviderClass<NHibernate.Caches.SysCache2.SysCacheProvider>()
-					.UseSecondLevelCache()
-					.UseQueryCache()
 				)
 				.Mappings(m => m
 					.FluentMappings.AddFromAssemblyOf<SongMap>()
@@ -55,12 +44,22 @@ namespace VocaDb.Model.Service
 				)*/
 				;
 
+			if (useSysCache)
+			{
+				config
+					.Cache(c => c
+						.ProviderClass<NHibernate.Caches.SysCache2.SysCacheProvider>()
+						.UseSecondLevelCache()
+						.UseQueryCache()
+					);
+			}
+
 			return config;
 		}
 
-		public static ISessionFactory BuildSessionFactory(string connectionStringName = null)
+		public static ISessionFactory BuildSessionFactory(string connectionStringName = null, bool useSysCache = true)
 		{
-			return BuildSessionFactory(Configure(connectionStringName));
+			return BuildSessionFactory(Configure(connectionStringName, useSysCache));
 		}
 
 		public static ISessionFactory BuildSessionFactory(FluentConfiguration config)
@@ -71,12 +70,12 @@ namespace VocaDb.Model.Service
 			}
 			catch (ArgumentException x)
 			{
-				log.Fatal(x, "Error while building session factory");
+				s_log.Fatal(x, "Error while building session factory");
 				throw;
 			}
 			catch (FluentConfigurationException x)
 			{
-				log.Fatal(x, "Error while building session factory");
+				s_log.Fatal(x, "Error while building session factory");
 				throw;
 			}
 		}

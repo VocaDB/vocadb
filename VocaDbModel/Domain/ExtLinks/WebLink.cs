@@ -71,8 +71,8 @@ namespace VocaDb.Model.Domain.ExtLinks
 			return new CollectionDiff<T, T>(created, diff.Removed, diff.Unchanged);
 		}
 
-		private string description;
-		private string url;
+		private string _description;
+		private string _url;
 
 		public WebLink() { }
 
@@ -106,24 +106,18 @@ namespace VocaDb.Model.Domain.ExtLinks
 		/// </summary>
 		public virtual string Description
 		{
-			get { return description; }
+			get => _description;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				description = value;
+				_description = value;
 			}
 		}
 
 		/// <summary>
 		/// Link description if the description is not empty. Otherwise URL.
 		/// </summary>
-		public virtual string DescriptionOrUrl
-		{
-			get
-			{
-				return !string.IsNullOrEmpty(Description) ? Description : Url;
-			}
-		}
+		public virtual string DescriptionOrUrl => !string.IsNullOrEmpty(Description) ? Description : Url;
 
 		public virtual int Id { get; set; }
 
@@ -132,11 +126,11 @@ namespace VocaDb.Model.Domain.ExtLinks
 		/// </summary>
 		public virtual string Url
 		{
-			get { return url; }
+			get => _url;
 			set
 			{
 				ParamIs.NotNullOrWhiteSpace(() => value);
-				url = value;
+				_url = value;
 			}
 		}
 
@@ -150,7 +144,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public override string ToString()
 		{
-			return string.Format("web link '{0}'", Url);
+			return $"web link '{Url}'";
 		}
 	}
 

@@ -31,13 +31,7 @@ namespace VocaDb.Model.Domain.Security
 
 		public User User { get; private set; }
 
-		public string UserNameOrFallback
-		{
-			get
-			{
-				return User != null ? User.Name : Name;
-			}
-		}
+		public string UserNameOrFallback => User != null ? User.Name : Name;
 
 		public override string ToString()
 		{

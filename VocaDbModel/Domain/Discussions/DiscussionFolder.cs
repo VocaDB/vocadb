@@ -8,9 +8,9 @@ namespace VocaDb.Model.Domain.Discussions
 {
 	public class DiscussionFolder : IEntryWithIntId
 	{
-		private string description;
-		private string title;
-		private IList<DiscussionTopic> topics = new List<DiscussionTopic>();
+		private string _description;
+		private string _title;
+		private IList<DiscussionTopic> _topics = new List<DiscussionTopic>();
 
 		public DiscussionFolder()
 		{
@@ -29,11 +29,11 @@ namespace VocaDb.Model.Domain.Discussions
 		/// </summary>
 		public virtual IList<DiscussionTopic> AllTopics
 		{
-			get { return topics; }
+			get => _topics;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				topics = value;
+				_topics = value;
 			}
 		}
 
@@ -41,11 +41,11 @@ namespace VocaDb.Model.Domain.Discussions
 
 		public virtual string Description
 		{
-			get { return description; }
+			get => _description;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				description = value;
+				_description = value;
 			}
 		}
 
@@ -53,11 +53,11 @@ namespace VocaDb.Model.Domain.Discussions
 
 		public virtual string Name
 		{
-			get { return title; }
+			get => _title;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				title = value;
+				_title = value;
 			}
 		}
 
@@ -69,17 +69,11 @@ namespace VocaDb.Model.Domain.Discussions
 		/// List of discussion topics for this folder.
 		/// This list does not include deleted topics.
 		/// </summary>
-		public virtual IEnumerable<DiscussionTopic> Topics
-		{
-			get
-			{
-				return AllTopics.Where(t => !t.Deleted);
-			}
-		}
+		public virtual IEnumerable<DiscussionTopic> Topics => AllTopics.Where(t => !t.Deleted);
 
 		public override string ToString()
 		{
-			return string.Format("Discussion folder '{0}' [{1}]", Name, Id);
+			return $"Discussion folder '{Name}' [{Id}]";
 		}
 	}
 }

@@ -17,7 +17,7 @@ namespace VocaDb.Model.DataContracts.Users
 		public UserWithEmailContract(User user)
 			: base(user)
 		{
-			this.Email = user.Email;
+			Email = user.Email;
 		}
 
 		[DataMember]

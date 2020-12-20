@@ -17,38 +17,35 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 	[TestClass]
 	public class SongSearchDatabaseTests
 	{
-		private DatabaseTestContext<IDatabaseContext> context;
-		private EntryUrlParser entryUrlParser;
-		private SongQueryParams queryParams;
+		private DatabaseTestContext<IDatabaseContext> _context;
+		private EntryUrlParser _entryUrlParser;
+		private SongQueryParams _queryParams;
 
-		private TestDatabase Db
-		{
-			get { return TestContainerManager.TestDatabase; }
-		}
+		private TestDatabase Db => TestContainerManager.TestDatabase;
 
 		private void AssertHasSong(PartialFindResult<Song> result, Song expected)
 		{
-			Assert.IsTrue(result.Items.Any(s => s.Equals(expected)), string.Format("Found {0}", expected));
+			Assert.IsTrue(result.Items.Any(s => s.Equals(expected)), $"Found {expected}");
 		}
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			queryParams = new SongQueryParams { SortRule = SongSortRule.Name };
-			entryUrlParser = new EntryUrlParser();
-			context = new DatabaseTestContext<IDatabaseContext>();
+			_queryParams = new SongQueryParams { SortRule = SongSortRule.Name };
+			_entryUrlParser = new EntryUrlParser();
+			_context = new DatabaseTestContext<IDatabaseContext>();
 		}
 
 		private PartialFindResult<Song> CallFind(ContentLanguagePreference languagePreference = ContentLanguagePreference.Default)
 		{
-			return context.RunTest(querySource =>
+			return _context.RunTest(querySource =>
 			{
-				var search = new Model.Service.Search.SongSearch.SongSearch(querySource, languagePreference, entryUrlParser);
+				var search = new Model.Service.Search.SongSearch.SongSearch(querySource, languagePreference, _entryUrlParser);
 
 				var watch = new Stopwatch();
 				watch.Start();
 
-				var result = search.Find(queryParams);
+				var result = search.Find(_queryParams);
 
 				Console.WriteLine("Test finished in {0}ms", watch.ElapsedMilliseconds);
 
@@ -79,7 +76,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void ListSkip()
 		{
-			queryParams.Paging.Start = 1;
+			_queryParams.Paging.Start = 1;
 
 			var result = CallFind();
 
@@ -95,7 +92,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void ListSortName()
 		{
-			queryParams.SortRule = SongSortRule.Name;
+			_queryParams.SortRule = SongSortRule.Name;
 
 			var result = CallFind();
 
@@ -112,7 +109,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void ListSortFavorites()
 		{
-			queryParams.SortRule = SongSortRule.FavoritedTimes;
+			_queryParams.SortRule = SongSortRule.FavoritedTimes;
 
 			var result = CallFind();
 
@@ -129,7 +126,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void ListSortAdditionDate()
 		{
-			queryParams.SortRule = SongSortRule.AdditionDate;
+			_queryParams.SortRule = SongSortRule.AdditionDate;
 
 			var result = CallFind();
 
@@ -147,7 +144,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void QueryNamePartial()
 		{
-			queryParams.Common.TextQuery = SearchTextQuery.Create("Tears", NameMatchMode.Partial);
+			_queryParams.Common.TextQuery = SearchTextQuery.Create("Tears", NameMatchMode.Partial);
 
 			var result = CallFind();
 
@@ -165,7 +162,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void QueryNameWords()
 		{
-			queryParams.Common.TextQuery = SearchTextQuery.Create("Tears Crystal", NameMatchMode.Words);
+			_queryParams.Common.TextQuery = SearchTextQuery.Create("Tears Crystal", NameMatchMode.Words);
 
 			var result = CallFind();
 
@@ -185,9 +182,9 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void QueryNameMoveExactToTop()
 		{
-			queryParams.Common.TextQuery = SearchTextQuery.Create("Tears");
-			queryParams.Common.MoveExactToTop = true;
-			queryParams.Paging.MaxEntries = 1;
+			_queryParams.Common.TextQuery = SearchTextQuery.Create("Tears");
+			_queryParams.Common.MoveExactToTop = true;
+			_queryParams.Paging.MaxEntries = 1;
 
 			var result = CallFind();
 
@@ -203,8 +200,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void QueryNameWithSqlWildcards()
 		{
-			queryParams.Common.TextQuery = SearchTextQuery.Create("Nebula [Extend RMX]");
-			queryParams.Paging.MaxEntries = 1;
+			_queryParams.Common.TextQuery = SearchTextQuery.Create("Nebula [Extend RMX]");
+			_queryParams.Paging.MaxEntries = 1;
 
 			var result = CallFind();
 
@@ -220,7 +217,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void QueryTag()
 		{
-			queryParams.Common.TextQuery = SearchTextQuery.Create("tag:Electronic");
+			_queryParams.Common.TextQuery = SearchTextQuery.Create("tag:Electronic");
 
 			var result = CallFind();
 
@@ -236,7 +233,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void QueryType()
 		{
-			queryParams.SongTypes = new[] { SongType.Original };
+			_queryParams.SongTypes = new[] { SongType.Original };
 
 			var result = CallFind();
 
@@ -252,7 +249,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void QueryArtist()
 		{
-			queryParams.ArtistParticipation.ArtistIds = new[] { Db.Producer.Id };
+			_queryParams.ArtistParticipation.ArtistIds = new[] { Db.Producer.Id };
 
 			var result = CallFind();
 
@@ -266,8 +263,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void QueryArtistAndName()
 		{
-			queryParams.ArtistParticipation.ArtistIds = new[] { Db.Producer.Id };
-			queryParams.Common.TextQuery = SearchTextQuery.Create("Azalea");
+			_queryParams.ArtistParticipation.ArtistIds = new[] { Db.Producer.Id };
+			_queryParams.Common.TextQuery = SearchTextQuery.Create("Azalea");
 
 			var result = CallFind();
 
@@ -283,7 +280,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void QueryOnlyWithPVs()
 		{
-			queryParams.OnlyWithPVs = true;
+			_queryParams.OnlyWithPVs = true;
 
 			var result = CallFind();
 
@@ -296,7 +293,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void QueryLyrics_SingleLanguage()
 		{
-			queryParams.AdvancedFilters = new[] { new AdvancedSearchFilter {
+			_queryParams.AdvancedFilters = new[] { new AdvancedSearchFilter {
 				FilterType = AdvancedFilterType.Lyrics,
 				Param = OptionalCultureCode.LanguageCode_English
 			} };
@@ -311,7 +308,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		[TestCategory(TestCategories.Database)]
 		public void QueryLyrics_AnyLanguage()
 		{
-			queryParams.AdvancedFilters = new[] { new AdvancedSearchFilter {
+			_queryParams.AdvancedFilters = new[] { new AdvancedSearchFilter {
 				FilterType = AdvancedFilterType.Lyrics,
 				Param = AdvancedSearchFilter.Any
 			} };

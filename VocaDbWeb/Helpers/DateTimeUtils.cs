@@ -8,7 +8,7 @@ namespace VocaDb.Web.Helpers
 {
 	public static class DateTimeUtils
 	{
-		private static readonly Regex simpleTimeRegex = new Regex(@"(\d+)([dhm]?)");
+		private static readonly Regex s_simpleTimeRegex = new(@"(\d+)([dhm]?)");
 
 		public static string FormatFromSeconds(int seconds)
 		{
@@ -23,7 +23,7 @@ namespace VocaDb.Web.Helpers
 			if (string.IsNullOrEmpty(timeSpanStr))
 				return TimeSpan.Zero;
 
-			var match = simpleTimeRegex.Match(timeSpanStr);
+			var match = s_simpleTimeRegex.Match(timeSpanStr);
 
 			if (!match.Success)
 				return TimeSpan.Zero;
@@ -31,15 +31,12 @@ namespace VocaDb.Web.Helpers
 			var quantity = int.Parse(match.Groups[1].Value);
 			var unit = (match.Groups.Count >= 3 ? match.Groups[2].Value : string.Empty).ToLowerInvariant();
 
-			switch (unit)
+			return unit switch
 			{
-				case "d":
-					return TimeSpan.FromDays(quantity);
-				case "m":
-					return TimeSpan.FromMinutes(quantity);
-				default:
-					return TimeSpan.FromHours(quantity);
-			}
+				"d" => TimeSpan.FromDays(quantity),
+				"m" => TimeSpan.FromMinutes(quantity),
+				_ => TimeSpan.FromHours(quantity),
+			};
 		}
 	}
 }

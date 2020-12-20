@@ -21,15 +21,15 @@ namespace VocaDb.Model.Domain.Versioning
 		where TVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<TField>
 		where TField : struct, IConvertible
 	{
-		private IList<TVersion> archivedVersions = new List<TVersion>();
+		private IList<TVersion> _archivedVersions = new List<TVersion>();
 
 		public virtual IList<TVersion> Versions
 		{
-			get { return archivedVersions; }
+			get => _archivedVersions;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				archivedVersions = value;
+				_archivedVersions = value;
 			}
 		}
 

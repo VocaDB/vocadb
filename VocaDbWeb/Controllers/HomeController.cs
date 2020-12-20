@@ -17,15 +17,15 @@ namespace VocaDb.Web.Controllers
 	[SessionState(SessionStateBehavior.ReadOnly)]
 	public class HomeController : ControllerBase
 	{
-		private readonly BrandableStringsManager brandableStringsManager;
-		private readonly OtherService otherService;
-		private readonly SongQueries songService;
+		private readonly BrandableStringsManager _brandableStringsManager;
+		private readonly OtherService _otherService;
+		private readonly SongQueries _songService;
 
 		public HomeController(SongQueries songService, OtherService otherService, BrandableStringsManager brandableStringsManager)
 		{
-			this.songService = songService;
-			this.otherService = otherService;
-			this.brandableStringsManager = brandableStringsManager;
+			_songService = songService;
+			_otherService = otherService;
+			_brandableStringsManager = brandableStringsManager;
 		}
 
 		public ActionResult Chat()
@@ -37,7 +37,7 @@ namespace VocaDb.Web.Controllers
 		[Obsolete("Moved to web api")]
 		public ActionResult FindNames(string term)
 		{
-			var result = otherService.FindNames(SearchTextQuery.Create(term), 10);
+			var result = _otherService.FindNames(SearchTextQuery.Create(term), 10);
 
 			return Json(result);
 		}
@@ -47,10 +47,10 @@ namespace VocaDb.Web.Controllers
 
 		public async Task<ActionResult> Index()
 		{
-			PageProperties.Description = brandableStringsManager.Home.SiteDescription;
+			PageProperties.Description = _brandableStringsManager.Home.SiteDescription;
 			PageProperties.AddMainScripts = false;
 
-			var contract = await otherService.GetFrontPageContent();
+			var contract = await _otherService.GetFrontPageContent();
 
 			return View(contract);
 		}
@@ -84,12 +84,12 @@ namespace VocaDb.Web.Controllers
 			}
 		}
 
-		public ActionResult PVContent(int songId = invalidId)
+		public ActionResult PVContent(int songId = InvalidId)
 		{
-			if (songId == invalidId)
+			if (songId == InvalidId)
 				return NoId();
 
-			var song = songService.GetSongWithPVAndVote(songId, false);
+			var song = _songService.GetSongWithPVAndVote(songId, false);
 
 			return PartialView("PVs/_PVContent", song);
 		}

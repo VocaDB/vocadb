@@ -106,7 +106,7 @@ namespace VocaDb.Tests.TestSupport
 		public override object this[string key]
 		{
 			get { throw new NotImplementedException(); }
-			set { throw new NotImplementedException(); }
+			set => throw new NotImplementedException();
 		}
 	}
 }

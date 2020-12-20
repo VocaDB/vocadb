@@ -15,20 +15,15 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		{
 			var query = textQuery.Query;
 
-			switch (textQuery.MatchMode)
+			return textQuery.MatchMode switch
 			{
-				case NameMatchMode.Exact:
-					return s => s.Notes != null && s.Notes == query;
-				case NameMatchMode.Partial:
-					return s => s.Notes != null && s.Notes.Contains(query);
-				case NameMatchMode.StartsWith:
-					return s => s.Notes != null && s.Notes.StartsWith(query);
-				case NameMatchMode.Words:
-					// Note: NHibernate does not support All
-					return textQuery.Words.Aggregate(PredicateBuilder.True<SongInList>(), (nameExp, name) => nameExp.And(song => song.Notes != null && song.Notes.Contains(name)));
-			}
-
-			return m => true;
+				NameMatchMode.Exact => s => s.Notes != null && s.Notes == query,
+				NameMatchMode.Partial => s => s.Notes != null && s.Notes.Contains(query),
+				NameMatchMode.StartsWith => s => s.Notes != null && s.Notes.StartsWith(query),
+				// Note: NHibernate does not support All
+				NameMatchMode.Words => textQuery.Words.Aggregate(PredicateBuilder.True<SongInList>(), (nameExp, name) => nameExp.And(song => song.Notes != null && song.Notes.Contains(name))),
+				_ => m => true,
+			};
 		}
 
 		public static IQueryable<SongInList> OrderBy(this IQueryable<SongInList> query, SongSortRule? sortRule, ContentLanguagePreference languagePreference)

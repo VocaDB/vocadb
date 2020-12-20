@@ -11,7 +11,7 @@ namespace VocaDb.Model.Service.Helpers
 {
 	public class AlbumFileParser
 	{
-		private readonly Regex numRegex = new Regex(@"(\d+)");
+		private readonly Regex _numRegex = new(@"(\d+)");
 
 		private string[] GetArtistNames(string artistString)
 		{
@@ -28,7 +28,7 @@ namespace VocaDb.Model.Service.Helpers
 			var track = new ImportedAlbumTrack();
 
 			track.Title = dataRow.GetString(AlbumFileField.Title);
-			var trackNumMatch = numRegex.Match(dataRow.GetString(AlbumFileField.Track, string.Empty));
+			var trackNumMatch = _numRegex.Match(dataRow.GetString(AlbumFileField.Track, string.Empty));
 			if (trackNumMatch.Success)
 				track.TrackNum = int.Parse(trackNumMatch.Groups[1].Value);
 			else
@@ -124,11 +124,11 @@ namespace VocaDb.Model.Service.Helpers
 
 	public class DataRowParser
 	{
-		private readonly Dictionary<AlbumFileField, int> fieldCols = new Dictionary<AlbumFileField, int>();
+		private readonly Dictionary<AlbumFileField, int> _fieldCols = new();
 
 		public bool Configure(string headerRow)
 		{
-			fieldCols.Clear();
+			_fieldCols.Clear();
 			var cols = headerRow.Split(';');
 
 			if (!cols.Any(c => Enum.IsDefined(typeof(AlbumFileField), c)))
@@ -136,11 +136,8 @@ namespace VocaDb.Model.Service.Helpers
 
 			for (int i = 0; i < cols.Length; ++i)
 			{
-				AlbumFileField field;
-				if (Enum.TryParse(cols[i], true, out field))
-				{
-					fieldCols.Add(field, i);
-				}
+				if (Enum.TryParse(cols[i], true, out AlbumFileField field))
+					_fieldCols.Add(field, i);
 			}
 
 			return true;
@@ -151,10 +148,10 @@ namespace VocaDb.Model.Service.Helpers
 			if (!IsConfigured)
 				throw new InvalidOperationException("Field column indices not configured");
 
-			if (!fieldCols.ContainsKey(field))
+			if (!_fieldCols.ContainsKey(field))
 				return string.Empty;
 
-			var index = fieldCols[field];
+			var index = _fieldCols[field];
 
 			if (cols.Length <= index)
 				return string.Empty;
@@ -162,44 +159,33 @@ namespace VocaDb.Model.Service.Helpers
 			return cols[index];
 		}
 
-		public bool IsConfigured
-		{
-			get
-			{
-				return fieldCols.Any();
-			}
-		}
+		public bool IsConfigured => _fieldCols.Any();
 	}
 
 	public class DataRow
 	{
-		private readonly string[] cols;
-		private readonly DataRowParser rowParser;
+		private readonly string[] _cols;
+		private readonly DataRowParser _rowParser;
 
 		public DataRow(DataRowParser rowParser, string row)
 		{
-			this.rowParser = rowParser;
-			this.cols = row.Split(';');
+			_rowParser = rowParser;
+			_cols = row.Split(';');
 		}
 
 		public int GetIntOrDefault(AlbumFileField field, int def)
 		{
-			var val = rowParser.GetFieldOrEmpty(cols, field);
+			var val = _rowParser.GetFieldOrEmpty(_cols, field);
 
 			if (val == string.Empty)
 				return def;
 
-			int i;
-
-			if (int.TryParse(val, out i))
-				return i;
-
-			return def;
+			return int.TryParse(val, out int i) ? i : def;
 		}
 
 		public string GetString(AlbumFileField field)
 		{
-			var val = rowParser.GetFieldOrEmpty(cols, field);
+			var val = _rowParser.GetFieldOrEmpty(_cols, field);
 
 			if (val == string.Empty)
 				throw new InvalidOperationException("Required field " + field + " is empty");
@@ -209,7 +195,7 @@ namespace VocaDb.Model.Service.Helpers
 
 		public string GetString(AlbumFileField field, string def)
 		{
-			var val = rowParser.GetFieldOrEmpty(cols, field);
+			var val = _rowParser.GetFieldOrEmpty(_cols, field);
 
 			if (val == string.Empty)
 				return def;

@@ -9,8 +9,8 @@ namespace VocaDb.Model.Domain.Globalization
 	/// </summary>
 	public class EnglishTranslatedString
 	{
-		private string english;
-		private string original;
+		private string _english;
+		private string _original;
 
 		public EnglishTranslatedString() :
 			this(string.Empty)
@@ -25,11 +25,11 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual string English
 		{
-			get => english;
+			get => _english;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				english = value;
+				_english = value;
 			}
 		}
 
@@ -44,11 +44,11 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual string Original
 		{
-			get { return original; }
+			get => _original;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				original = value;
+				_original = value;
 			}
 		}
 

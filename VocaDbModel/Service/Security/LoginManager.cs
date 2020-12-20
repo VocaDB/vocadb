@@ -22,16 +22,16 @@ namespace VocaDb.Model.Service.Security
 	{
 		public LoginManager(IHttpContext context)
 		{
-			this.context = context;
+			_context = context;
 		}
 
-		private readonly IHttpContext context;
+		private readonly IHttpContext _context;
 		public const int InvalidId = 0;
 		public const string LangParamName = "lang";
 
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
-		private UserWithPermissionsContract user;
+		private UserWithPermissionsContract _user;
 
 		private void SetCultureSafe(string name, bool culture, bool uiCulture)
 		{
@@ -50,7 +50,7 @@ namespace VocaDb.Model.Service.Security
 			}
 			catch (ArgumentException x)
 			{
-				log.Warn(x, "Unable to set culture");
+				s_log.Warn(x, "Unable to set culture");
 			}
 		}
 
@@ -65,13 +65,13 @@ namespace VocaDb.Model.Service.Security
 		{
 			ParamIs.NotNull(() => user);
 
-			if (!context.User.Identity.IsAuthenticated)
+			if (!_context.User.Identity.IsAuthenticated)
 				throw new InvalidOperationException("Must be authenticated");
 
-			context.User = new VocaDbPrincipal(context.User.Identity, user);
+			_context.User = new VocaDbPrincipal(_context.User.Identity, user);
 		}
 
-		protected IPrincipal User => context?.User;
+		protected IPrincipal User => _context?.User;
 
 		public bool HasPermission(PermissionToken token)
 		{
@@ -87,17 +87,11 @@ namespace VocaDb.Model.Service.Security
 			return (LoggedUser.EffectivePermissions.Contains(token));
 		}
 
-		public bool IsLoggedIn
-		{
-			get
-			{
-				return (context != null && User != null && User.Identity.IsAuthenticated && User is VocaDbPrincipal);
-			}
-		}
+		public bool IsLoggedIn => (_context != null && User != null && User.Identity.IsAuthenticated && User is VocaDbPrincipal);
 
 		public ContentLanguagePreference LanguagePreference => LanguagePreferenceSetting.Value;
 
-		public UserSettingLanguagePreference LanguagePreferenceSetting => new UserSettingLanguagePreference(context, this);
+		public UserSettingLanguagePreference LanguagePreferenceSetting => new UserSettingLanguagePreference(_context, this);
 
 		public bool LockdownEnabled => !string.IsNullOrEmpty(AppConfig.LockdownMessage);
 
@@ -108,11 +102,11 @@ namespace VocaDb.Model.Service.Security
 		{
 			get
 			{
-				if (user != null)
-					return user;
+				if (_user != null)
+					return _user;
 
-				user = (IsLoggedIn ? ((VocaDbPrincipal)User).User : null);
-				return user;
+				_user = (IsLoggedIn ? ((VocaDbPrincipal)User).User : null);
+				return _user;
 			}
 		}
 
@@ -136,9 +130,9 @@ namespace VocaDb.Model.Service.Security
 
 		public void InitLanguage()
 		{
-			if (context != null && !string.IsNullOrEmpty(context.Request.Params["culture"]))
+			if (_context != null && !string.IsNullOrEmpty(_context.Request.Params["culture"]))
 			{
-				var cName = context.Request.Params["culture"];
+				var cName = _context.Request.Params["culture"];
 				SetCultureSafe(cName, true, true);
 			}
 			else if (IsLoggedIn)
@@ -158,7 +152,7 @@ namespace VocaDb.Model.Service.Security
 		{
 			if (!HasPermission(flag))
 			{
-				log.Warn("User '{0}' does not have the requested permission '{1}'", Name, flag);
+				s_log.Warn("User '{0}' does not have the requested permission '{1}'", Name, flag);
 				throw new NotAllowedException();
 			}
 		}

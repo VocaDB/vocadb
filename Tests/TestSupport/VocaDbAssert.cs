@@ -17,7 +17,7 @@ namespace VocaDb.Tests.TestSupport
 			foreach (var artistName in artistNames)
 			{
 				Assert.IsTrue(artistLinks.Any(a => a.Artist != null && artistName.Equals(a.Artist.DefaultName)),
-					string.Format("Found artist '{0}'", artistName));
+					$"Found artist '{artistName}'");
 			}
 		}
 
@@ -25,38 +25,38 @@ namespace VocaDb.Tests.TestSupport
 		{
 			var link = album.AllArtists.FirstOrDefault(a => (a.Artist != null && a.Artist.DefaultName.Equals(artistName)) || (a.Artist == null && string.Equals(a.Name, artistName)));
 
-			Assert.IsNotNull(link, string.Format("Artist '{0}' exists for {1}", artistName, album));
+			Assert.IsNotNull(link, $"Artist '{artistName}' exists for {album}");
 
 			if (roles.HasValue)
-				Assert.AreEqual(roles, link.Roles, string.Format("Roles for {0}", link));
+				Assert.AreEqual(roles, link.Roles, $"Roles for {link}");
 		}
 
 		public static void HasArtist(Album album, Artist artist, ArtistRoles? roles)
 		{
 			var link = album.GetArtistLink(artist);
 
-			Assert.IsNotNull(link, string.Format("{0} exists for {1}", artist, album));
+			Assert.IsNotNull(link, $"{artist} exists for {album}");
 
 			if (roles.HasValue)
-				Assert.AreEqual(roles, link.Roles, string.Format("Roles for {0}", link));
+				Assert.AreEqual(roles, link.Roles, $"Roles for {link}");
 		}
 
 		public static void HasSong(Album album, Song song, int trackNumber)
 		{
 			var link = album.AllSongs.FirstOrDefault(s => s.Song != null && s.Song.Equals(song));
 
-			Assert.IsNotNull(link, string.Format("{0} exists for {1}", song, album));
+			Assert.IsNotNull(link, $"{song} exists for {album}");
 
-			Assert.AreEqual(trackNumber, link.TrackNumber, string.Format("Track number for {0}", link));
+			Assert.AreEqual(trackNumber, link.TrackNumber, $"Track number for {link}");
 		}
 
 		public static void HasSong(Album album, string songName, int trackNumber)
 		{
 			var link = album.AllSongs.FirstOrDefault(s => string.Equals(s.Name, songName));
 
-			Assert.IsNotNull(link, string.Format("Song '{0}' exists for {1}", songName, album));
+			Assert.IsNotNull(link, $"Song '{songName}' exists for {album}");
 
-			Assert.AreEqual(trackNumber, link.TrackNumber, string.Format("Track number for {0}", link));
+			Assert.AreEqual(trackNumber, link.TrackNumber, $"Track number for {link}");
 		}
 	}
 }

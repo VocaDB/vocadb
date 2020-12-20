@@ -131,7 +131,7 @@ namespace VocaDb.Model.Helpers
 			{
 				if (!idToIndex.ContainsKey(entry.Id))
 				{
-					throw new InvalidOperationException(string.Format("No ID mapping found for {0}", entry));
+					throw new InvalidOperationException($"No ID mapping found for {entry}");
 				}
 
 				var idx = idToIndex[entry.Id];

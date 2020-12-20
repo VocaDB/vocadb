@@ -14,18 +14,12 @@ namespace VocaDb.Web.Code.Security
 {
 	public class TwitterConsumer
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
 		/// Gets a value indicating whether the Twitter consumer key and secret are set in the web.config file.
 		/// </summary>
-		private bool IsTwitterConsumerConfigured
-		{
-			get
-			{
-				return !string.IsNullOrEmpty(AppConfig.TwitterConsumerKey) && !string.IsNullOrEmpty(AppConfig.TwitterConsumerSecret);
-			}
-		}
+		private bool IsTwitterConsumerConfigured => !string.IsNullOrEmpty(AppConfig.TwitterConsumerKey) && !string.IsNullOrEmpty(AppConfig.TwitterConsumerSecret);
 
 		private ServiceProviderDescription SignInWithTwitterServiceDescription
 		{
@@ -53,7 +47,7 @@ namespace VocaDb.Web.Code.Security
 					string consumerSecret = AppConfig.TwitterConsumerSecret;
 					if (IsTwitterConsumerConfigured)
 					{
-						log.Info("Creating token manager");
+						s_log.Info("Creating token manager");
 						tokenManager = new InMemoryTokenManager(consumerKey, consumerSecret);
 						store["TwitterShortTermUserSessionTokenManager"] = tokenManager;
 					}
@@ -67,24 +61,18 @@ namespace VocaDb.Web.Code.Security
 			}
 		}
 
-		public WebConsumer TwitterSignIn
-		{
-			get
-			{
-				return new WebConsumer(SignInWithTwitterServiceDescription, TokenManager);
-			}
-		}
+		public WebConsumer TwitterSignIn => new WebConsumer(SignInWithTwitterServiceDescription, TokenManager);
 
 		public AuthorizedTokenResponse ProcessUserAuthorization(string hostname)
 		{
 			try
 			{
-				log.Info("Processing Twitter authorization from {0}.", hostname);
+				s_log.Info("Processing Twitter authorization from {0}.", hostname);
 				return TwitterSignIn.ProcessUserAuthorization();
 			}
 			catch (ProtocolException x)
 			{
-				log.Error(x, "Unable to process Twitter authentication");
+				s_log.Error(x, "Unable to process Twitter authentication");
 				return null;
 			}
 		}

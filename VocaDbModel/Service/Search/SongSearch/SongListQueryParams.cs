@@ -12,7 +12,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 		public SongListFeaturedCategory? FeaturedCategory { get; set; }
 
-		public PagingProperties Paging { get; set; } = new PagingProperties(0, 30, true);
+		public PagingProperties Paging { get; set; } = new(0, 30, true);
 
 		public SongListSortRule SortRule { get; set; }
 

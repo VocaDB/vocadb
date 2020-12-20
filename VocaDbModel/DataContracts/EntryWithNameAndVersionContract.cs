@@ -10,15 +10,9 @@ namespace VocaDb.Model.DataContracts
 	/// </summary>
 	public class EntryWithNameAndVersionContract : EntryRefWithNameContract, IEntryBase
 	{
-		string IEntryBase.DefaultName
-		{
-			get { return Name.DisplayName; }
-		}
+		string IEntryBase.DefaultName => Name.DisplayName;
 
-		bool IDeletableEntry.Deleted
-		{
-			get { return false; }
-		}
+		bool IDeletableEntry.Deleted => false;
 
 		public EntryWithNameAndVersionContract(IEntryWithNames entry, ContentLanguagePreference languagePreference)
 			: base(entry, languagePreference)

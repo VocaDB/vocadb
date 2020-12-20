@@ -12,114 +12,39 @@ namespace VocaDb.Web.Helpers
 {
 	public static class Login
 	{
-		public static bool CanAccessManageMenu
-		{
-			get
-			{
-				return Manager.HasPermission(PermissionToken.AccessManageMenu);
-			}
-		}
+		public static bool CanAccessManageMenu => Manager.HasPermission(PermissionToken.AccessManageMenu);
 
-		public static bool CanDeleteEntries
-		{
-			get
-			{
-				return Manager.HasPermission(PermissionToken.DeleteEntries);
-			}
-		}
+		public static bool CanDeleteEntries => Manager.HasPermission(PermissionToken.DeleteEntries);
 
-		public static bool CanManageDb
-		{
-			get
-			{
-				return Manager.HasPermission(PermissionToken.ManageDatabase);
-			}
-		}
+		public static bool CanManageDb => Manager.HasPermission(PermissionToken.ManageDatabase);
 
 		public static bool CanEditTags => Manager.HasPermission(PermissionToken.EditTags);
 
-		public static bool CanManageEntryReports
-		{
-			get
-			{
-				return Manager.HasPermission(PermissionToken.ManageEntryReports);
-			}
-		}
+		public static bool CanManageEntryReports => Manager.HasPermission(PermissionToken.ManageEntryReports);
 
 		[Obsolete]
-		public static bool CanManageEventSeries
-		{
-			get { return Manager.HasPermission(PermissionToken.ManageEventSeries); }
-		}
+		public static bool CanManageEventSeries => Manager.HasPermission(PermissionToken.ManageEventSeries);
 
-		public static bool CanManageUsers
-		{
-			get
-			{
-				return Manager.HasPermission(PermissionToken.ManageUserPermissions);
-			}
-		}
+		public static bool CanManageUsers => Manager.HasPermission(PermissionToken.ManageUserPermissions);
 
-		public static bool CanMergeEntries
-		{
-			get
-			{
-				return Manager.HasPermission(PermissionToken.MergeEntries);
-			}
-		}
+		public static bool CanMergeEntries => Manager.HasPermission(PermissionToken.MergeEntries);
 
-		public static bool CanModerateUsers
-		{
-			get
-			{
-				return Manager.HasPermission(PermissionToken.DisableUsers);
-			}
-		}
+		public static bool CanModerateUsers => Manager.HasPermission(PermissionToken.DisableUsers);
 
-		public static bool CanMoveToTrash
-		{
-			get
-			{
-				return Manager.HasPermission(PermissionToken.MoveToTrash);
-			}
-		}
+		public static bool CanMoveToTrash => Manager.HasPermission(PermissionToken.MoveToTrash);
 
-		public static bool CanRevertEntryVersions
-		{
-			get
-			{
-				return Manager.HasPermission(PermissionToken.RestoreRevisions);
-			}
-		}
+		public static bool CanRevertEntryVersions => Manager.HasPermission(PermissionToken.RestoreRevisions);
 
 		public static bool CanViewHiddenRevisions => Manager.HasPermission(PermissionToken.ViewHiddenRevisions);
 
-		public static bool IsLoggedIn
-		{
-			get
-			{
-				return Manager.IsLoggedIn;
-			}
-		}
+		public static bool IsLoggedIn => Manager.IsLoggedIn;
 
-		public static LoginManager Manager
-		{
-			get
-			{
-				return MvcApplication.LoginManager;
-			}
-		}
+		public static LoginManager Manager => MvcApplication.LoginManager;
 
 		/// <summary>
 		/// Currently logged in user. Can be null.
 		/// </summary>
-		public static UserWithPermissionsContract User
-		{
-			get
-			{
-				return Manager.LoggedUser;
-			}
-		}
+		public static UserWithPermissionsContract User => Manager.LoggedUser;
 
 		public static bool CanDeleteComment(CommentContract comment)
 		{

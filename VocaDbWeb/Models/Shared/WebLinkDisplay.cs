@@ -45,10 +45,10 @@ namespace VocaDb.Web.Models.Shared
 		{
 			return new WebLinkContract
 			{
-				Id = this.Id,
-				Description = this.Description ?? string.Empty,
-				Url = this.Url,
-				Category = this.Category
+				Id = Id,
+				Description = Description ?? string.Empty,
+				Url = Url,
+				Category = Category
 			};
 		}
 	}

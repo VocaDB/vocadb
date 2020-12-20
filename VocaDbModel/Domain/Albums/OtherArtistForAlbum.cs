@@ -6,8 +6,8 @@ namespace VocaDb.Model.Domain.Albums
 {
 	public class OtherArtistForAlbum
 	{
-		private Album album;
-		private string name;
+		private Album _album;
+		private string _name;
 
 		public OtherArtistForAlbum() { }
 
@@ -21,11 +21,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual Album Album
 		{
-			get { return album; }
+			get => _album;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 
@@ -33,11 +33,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual string Name
 		{
-			get { return name; }
+			get => _name;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				name = value;
+				_name = value;
 			}
 		}
 
@@ -56,7 +56,7 @@ namespace VocaDb.Model.Domain.Albums
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)

@@ -14,7 +14,7 @@ namespace VocaDb.Model.Service
 	/// </summary>
 	public class EntryUrlParser : IEntryUrlParser
 	{
-		private readonly Dictionary<string, EntryType> entryTypeNames = new Dictionary<string, EntryType>(StringComparer.InvariantCultureIgnoreCase) {
+		private readonly Dictionary<string, EntryType> entryTypeNames = new(StringComparer.InvariantCultureIgnoreCase) {
 			{ "Al", EntryType.Album },
 			{ "Album/Details", EntryType.Album },
 			{ "Ar", EntryType.Artist },
@@ -27,8 +27,8 @@ namespace VocaDb.Model.Service
 			{ "T", EntryType.Tag }
 		};
 
-		private readonly Regex entryUrlRegex;
-		private readonly Regex entryUrlRegexOptionalPrefix;
+		private readonly Regex _entryUrlRegex;
+		private readonly Regex _entryUrlRegexOptionalPrefix;
 
 		public EntryUrlParser()
 			: this(AppConfig.HostAddress) { }
@@ -40,9 +40,9 @@ namespace VocaDb.Model.Service
 
 			var entryUrlRegexTemplate = @"^(?:{0}){1}/(Al|Ar|E|Es|S|L|T|Album/Details|Artist/Details|Song/Details)/(\d+)";
 
-			entryUrlRegex = new Regex(string.Format(entryUrlRegexTemplate, hostAddresses, string.Empty), RegexOptions.IgnoreCase);
+			_entryUrlRegex = new Regex(string.Format(entryUrlRegexTemplate, hostAddresses, string.Empty), RegexOptions.IgnoreCase);
 
-			entryUrlRegexOptionalPrefix = new Regex(string.Format(entryUrlRegexTemplate, hostAddresses, "?"), RegexOptions.IgnoreCase);
+			_entryUrlRegexOptionalPrefix = new Regex(string.Format(entryUrlRegexTemplate, hostAddresses, "?"), RegexOptions.IgnoreCase);
 		}
 
 		public GlobalEntryId Parse(string url, bool allowRelative = false)
@@ -50,23 +50,18 @@ namespace VocaDb.Model.Service
 			if (string.IsNullOrEmpty(url))
 				return GlobalEntryId.Empty;
 
-			var match = allowRelative ? entryUrlRegexOptionalPrefix.Match(url) : entryUrlRegex.Match(url);
+			var match = allowRelative ? _entryUrlRegexOptionalPrefix.Match(url) : _entryUrlRegex.Match(url);
 
 			if (!match.Success)
 				return GlobalEntryId.Empty;
 
 			var entryTypeStr = match.Groups[1].Value; // URL portion that identifies the entry type, for example "Al" or "Album/Details".
 			var entryId = match.Groups[2].Value; // Entry ID, integer
-			EntryType entryType;
 
-			if (entryTypeNames.TryGetValue(entryTypeStr, out entryType))
-			{
+			if (entryTypeNames.TryGetValue(entryTypeStr, out EntryType entryType))
 				return new GlobalEntryId(entryType, int.Parse(entryId));
-			}
 			else
-			{
 				return GlobalEntryId.Empty;
-			}
 		}
 	}
 

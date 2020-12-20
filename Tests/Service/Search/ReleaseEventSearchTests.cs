@@ -18,12 +18,12 @@ namespace VocaDb.Tests.Service.Search
 	[TestClass]
 	public class ReleaseEventSearchTests
 	{
-		private ReleaseEvent eventInSeries;
-		private ReleaseEvent unsortedEvent;
-		private QuerySourceList querySource;
-		private ReleaseEventSeries series;
-		private int eventId;
-		private ReleaseEventSearch target;
+		private ReleaseEvent _eventInSeries;
+		private ReleaseEvent _unsortedEvent;
+		private QuerySourceList _querySource;
+		private ReleaseEventSeries _series;
+		private int _eventId;
+		private ReleaseEventSearch _target;
 
 		private void AreEqual(ReleaseEvent expected, ReleaseEventFindResultContract actual)
 		{
@@ -34,8 +34,8 @@ namespace VocaDb.Tests.Service.Search
 
 		private ReleaseEvent CreateEvent(ReleaseEventSeries series, int number, string suffix = "")
 		{
-			var e = CreateEntry.SeriesEvent(series, number, suffix, id: eventId++);
-			querySource.Add(e);
+			var e = CreateEntry.SeriesEvent(series, number, suffix, id: _eventId++);
+			_querySource.Add(e);
 			series.AllEvents.Add(e);
 
 			return e;
@@ -43,8 +43,8 @@ namespace VocaDb.Tests.Service.Search
 
 		private ReleaseEvent CreateEvent(string name)
 		{
-			var e = CreateEntry.ReleaseEvent(name, id: eventId++);
-			querySource.Add(e);
+			var e = CreateEntry.ReleaseEvent(name, id: _eventId++);
+			_querySource.Add(e);
 
 			return e;
 		}
@@ -52,7 +52,7 @@ namespace VocaDb.Tests.Service.Search
 		private ReleaseEventSeries CreateSeries(params string[] aliases)
 		{
 			var s = new ReleaseEventSeries(ContentLanguageSelection.English, aliases.Select(a => new LocalizedString(a, ContentLanguageSelection.English)).ToArray(), string.Empty);
-			querySource.Add(s);
+			_querySource.Add(s);
 
 			return s;
 		}
@@ -60,19 +60,19 @@ namespace VocaDb.Tests.Service.Search
 		[TestInitialize]
 		public void SetUp()
 		{
-			querySource = new QuerySourceList();
+			_querySource = new QuerySourceList();
 
-			target = new ReleaseEventSearch(querySource);
+			_target = new ReleaseEventSearch(_querySource);
 
-			series = CreateSeries("Comiket", "C", "c", "Comic Market");
+			_series = CreateSeries("Comiket", "C", "c", "Comic Market");
 
-			eventInSeries = CreateEvent(series, 84);
-			unsortedEvent = CreateEvent("Vocaloid Festa");
+			_eventInSeries = CreateEvent(_series, 84);
+			_unsortedEvent = CreateEvent("Vocaloid Festa");
 		}
 
 		private ReleaseEventFindResultContract Find(string query)
 		{
-			return target.Find(query, ContentLanguagePreference.English);
+			return _target.Find(query, ContentLanguagePreference.English);
 		}
 
 		/// <summary>
@@ -81,8 +81,8 @@ namespace VocaDb.Tests.Service.Search
 		[TestMethod]
 		public void Ctor()
 		{
-			Assert.AreEqual("Comiket 84", eventInSeries.DefaultName, "Name");
-			Assert.AreEqual("Vocaloid Festa", unsortedEvent.DefaultName, "Name");
+			Assert.AreEqual("Comiket 84", _eventInSeries.DefaultName, "Name");
+			Assert.AreEqual("Vocaloid Festa", _unsortedEvent.DefaultName, "Name");
 		}
 
 		/// <summary>
@@ -93,7 +93,7 @@ namespace VocaDb.Tests.Service.Search
 		{
 			var result = Find("Comiket 84");
 
-			AreEqual(eventInSeries, result);
+			AreEqual(_eventInSeries, result);
 		}
 
 		/// <summary>
@@ -104,7 +104,7 @@ namespace VocaDb.Tests.Service.Search
 		{
 			var result = Find("C84");
 
-			AreEqual(eventInSeries, result);
+			AreEqual(_eventInSeries, result);
 		}
 
 		/// <summary>
@@ -192,8 +192,8 @@ namespace VocaDb.Tests.Service.Search
 		[TestMethod]
 		public void FindSeriesWithNumberAndSuffix_Exact()
 		{
-			series = CreateSeries("M3");
-			CreateEvent(series, 2013, "Fall");
+			_series = CreateSeries("M3");
+			CreateEvent(_series, 2013, "Fall");
 
 			var result = Find("M3 2013 Fall");
 
@@ -210,7 +210,7 @@ namespace VocaDb.Tests.Service.Search
 		{
 			var result = Find("The Vocaloid Festa");
 
-			AreEqual(unsortedEvent, result);
+			AreEqual(_unsortedEvent, result);
 		}
 
 		/// <summary>

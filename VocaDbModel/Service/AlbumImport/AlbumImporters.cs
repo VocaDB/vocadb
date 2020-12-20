@@ -6,19 +6,19 @@ namespace VocaDb.Model.Service.AlbumImport
 {
 	public class AlbumImporters
 	{
-		private readonly IAlbumImporter[] importers;
+		private readonly IAlbumImporter[] _importers;
 
 		public AlbumImporters()
 			: this(new WebPictureDownloader()) { }
 
 		public AlbumImporters(IPictureDownloader pictureDownloader)
 		{
-			importers = new IAlbumImporter[] { new KarenTAlbumImporter(pictureDownloader) };
+			_importers = new IAlbumImporter[] { new KarenTAlbumImporter(pictureDownloader) };
 		}
 
 		public IAlbumImporter FindImporter(string url)
 		{
-			return importers.FirstOrDefault(i => i.IsValidFor(url));
+			return _importers.FirstOrDefault(i => i.IsValidFor(url));
 		}
 
 		public AlbumImportResult ImportOne(string url)

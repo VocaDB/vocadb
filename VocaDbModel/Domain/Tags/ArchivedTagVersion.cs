@@ -19,8 +19,8 @@ namespace VocaDb.Model.Domain.Tags
 			return tag.CreateArchivedVersion(data, diff, author, commonEditEvent, notes);
 		}
 
-		private TagDiff diff;
-		private Tag tag;
+		private TagDiff _diff;
+		private Tag _tag;
 
 		public ArchivedTagVersion()
 		{
@@ -44,11 +44,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual TagDiff Diff
 		{
-			get { return diff; }
+			get => _diff;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				diff = value;
+				_diff = value;
 			}
 		}
 
@@ -58,11 +58,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual Tag Tag
 		{
-			get { return tag; }
+			get => _tag;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				tag = value;
+				_tag = value;
 			}
 		}
 

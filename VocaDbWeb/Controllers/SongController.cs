@@ -37,20 +37,20 @@ namespace VocaDb.Web.Controllers
 {
 	public class SongController : ControllerBase
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly MarkdownParser markdownParser;
-		private readonly SongQueries queries;
-		private readonly SongService service;
-		private readonly SongListQueries songListQueries;
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private readonly MarkdownParser _markdownParser;
+		private readonly SongQueries _queries;
+		private readonly SongService _service;
+		private readonly SongListQueries _songListQueries;
 
-		private SongService Service => service;
+		private SongService Service => _service;
 
 		public SongController(SongService service, SongQueries queries, SongListQueries songListQueries, MarkdownParser markdownParser)
 		{
-			this.service = service;
-			this.queries = queries;
-			this.songListQueries = songListQueries;
-			this.markdownParser = markdownParser;
+			_service = service;
+			_queries = queries;
+			_songListQueries = songListQueries;
+			_markdownParser = markdownParser;
 		}
 
 		// Used from the song page
@@ -73,13 +73,13 @@ namespace VocaDb.Web.Controllers
 					}}
 				};
 
-				songListQueries.UpdateSongList(contract, null);
+				_songListQueries.UpdateSongList(contract, null);
 			}
 		}
 
 		public ActionResult ArchivedVersionXml(int id)
 		{
-			var doc = queries.GetVersionXml<ArchivedSongVersion>(id);
+			var doc = _queries.GetVersionXml<ArchivedSongVersion>(id);
 			var content = XmlHelper.SerializeToUTF8XmlString(doc);
 
 			return Xml(content);
@@ -89,7 +89,7 @@ namespace VocaDb.Web.Controllers
 		[RestrictBannedIP]
 		public void CreateReport(int songId, SongReportType reportType, string notes, int? versionNumber)
 		{
-			queries.CreateReport(songId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+			_queries.CreateReport(songId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 		}
 
 		public ActionResult Index(IndexRouteParams indexParams)
@@ -105,18 +105,18 @@ namespace VocaDb.Web.Controllers
 			});
 		}
 
-		public ActionResult SongListsForSong(int songId = invalidId)
+		public ActionResult SongListsForSong(int songId = InvalidId)
 		{
-			if (songId == invalidId)
+			if (songId == InvalidId)
 				return NoId();
 
 			var lists = Service.GetPublicSongListsForSong(songId);
 			return PartialView("Partials/_SongInListsDialogContent", lists);
 		}
 
-		public ActionResult SongListsForUser(int ignoreSongId = invalidId)
+		public ActionResult SongListsForUser(int ignoreSongId = InvalidId)
 		{
-			if (ignoreSongId == invalidId)
+			if (ignoreSongId == InvalidId)
 				return NoId();
 
 			var result = Service.GetSongListsForCurrentUser(ignoreSongId);
@@ -126,14 +126,14 @@ namespace VocaDb.Web.Controllers
 		//
 		// GET: /Song/Details/5
 
-		public ActionResult Details(int id = invalidId, int albumId = 0)
+		public ActionResult Details(int id = InvalidId, int albumId = 0)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			WebHelper.VerifyUserAgent(Request);
 
-			var contract = queries.GetSongDetails(id, albumId, GetHostnameForValidHit(), null, WebHelper.GetUserLanguageCodes(Request));
+			var contract = _queries.GetSongDetails(id, albumId, GetHostnameForValidHit(), null, WebHelper.GetUserLanguageCodes(Request));
 			var model = new SongDetails(contract, PermissionContext);
 
 			var hasDescription = !model.Notes.IsEmpty;
@@ -141,14 +141,14 @@ namespace VocaDb.Web.Controllers
 			prop.GlobalSearchType = EntryType.Song;
 			prop.Title = model.Name;
 			prop.Description = hasDescription ?
-				markdownParser.GetPlainText(model.Notes.EnglishOrOriginal) :
+				_markdownParser.GetPlainText(model.Notes.EnglishOrOriginal) :
 				new SongDescriptionGenerator().GenerateDescription(contract.Song, Translate.SongTypeNames);
 			prop.OpenGraph.ShowTwitterCard = true;
 
 			string titleAndArtist;
 			if (!string.IsNullOrEmpty(model.ArtistString))
 			{
-				titleAndArtist = string.Format("{0} - {1}", model.Name, model.ArtistString);
+				titleAndArtist = $"{model.Name} - {model.ArtistString}";
 			}
 			else
 			{
@@ -156,7 +156,7 @@ namespace VocaDb.Web.Controllers
 			}
 			prop.PageTitle = titleAndArtist;
 
-			prop.Subtitle = string.Format("{0} ({1})", model.ArtistString, Translate.SongTypeNames[model.SongType]);
+			prop.Subtitle = $"{model.ArtistString} ({Translate.SongTypeNames[model.SongType]})";
 
 			if (!string.IsNullOrEmpty(model.ThumbUrlMaxSize))
 			{
@@ -164,7 +164,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			prop.CanonicalUrl = VocaUriBuilder.CreateAbsolute(Url.Action("Details", new { id })).ToString();
-			prop.OpenGraph.Title = hasDescription ? string.Format("{0} ({1})", titleAndArtist, Translate.SongTypeNames[model.SongType]) : model.Name;
+			prop.OpenGraph.Title = hasDescription ? $"{titleAndArtist} ({Translate.SongTypeNames[model.SongType]})" : model.Name;
 			prop.OpenGraph.Type = OpenGraphTypes.Song;
 
 			return View(model);
@@ -194,7 +194,7 @@ namespace VocaDb.Web.Controllers
 
 			try
 			{
-				var song = await queries.Create(contract);
+				var song = await _queries.Create(contract);
 				return RedirectToAction("Edit", new { id = song.Id });
 			}
 			catch (VideoParseException x)
@@ -204,7 +204,7 @@ namespace VocaDb.Web.Controllers
 			}
 		}
 
-		private int InstrumentalTagId => queries.InstrumentalTagId;
+		private int InstrumentalTagId => _queries.InstrumentalTagId;
 
 		//
 		// GET: /Song/Edit/5 
@@ -228,7 +228,7 @@ namespace VocaDb.Web.Controllers
 			// Unable to continue if viewmodel is null because we need the ID at least
 			if (viewModel?.EditedSong == null)
 			{
-				log.Warn("Viewmodel was null");
+				s_log.Warn("Viewmodel was null");
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");
 			}
 
@@ -260,7 +260,7 @@ namespace VocaDb.Web.Controllers
 					PermissionContext, EntryPermissionManager.CanDelete(PermissionContext, song), InstrumentalTagId, model)));
 			}
 
-			await queries.UpdateBasicProperties(model);
+			await _queries.UpdateBasicProperties(model);
 
 			return RedirectToAction("Details", new { id = model.Id, albumId = viewModel.AlbumId });
 		}
@@ -290,22 +290,22 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Client, Duration = 3600)]
-		public ActionResult PopupContent(int id = invalidId)
+		public ActionResult PopupContent(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return HttpNotFound();
 
-			var song = queries.GetSong(id);
+			var song = _queries.GetSong(id);
 			return PartialView("SongPopupContent", song);
 		}
 
 		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Client, Duration = 3600)]
-		public ActionResult PopupContentWithVote(int id = invalidId, int? version = null, string callback = null)
+		public ActionResult PopupContentWithVote(int id = InvalidId, int? version = null, string callback = null)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return HttpNotFound();
 
-			var song = queries.GetSongWithPVAndVote(id, false, includePVs: false);
+			var song = _queries.GetSongWithPVAndVote(id, false, includePVs: false);
 
 			if (string.IsNullOrEmpty(callback))
 			{
@@ -370,7 +370,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Merge(int id)
 		{
-			var song = queries.GetSong(id);
+			var song = _queries.GetSong(id);
 			return View(song);
 		}
 
@@ -383,7 +383,7 @@ namespace VocaDb.Web.Controllers
 				return Merge(id);
 			}
 
-			queries.Merge(id, targetSongId.Value);
+			_queries.Merge(id, targetSongId.Value);
 
 			return RedirectToAction("Edit", new { id = targetSongId.Value });
 		}
@@ -391,40 +391,40 @@ namespace VocaDb.Web.Controllers
 		/// <summary>
 		/// Returns a PV player HTML by PV id (unique)
 		/// </summary>
-		public ActionResult PVForSong(int pvId = invalidId)
+		public ActionResult PVForSong(int pvId = InvalidId)
 		{
-			if (pvId == invalidId)
+			if (pvId == InvalidId)
 				return NoId();
 
-			var pv = queries.PVForSong(pvId);
+			var pv = _queries.PVForSong(pvId);
 			return PartialView("PVs/_PVEmbedDynamic", pv);
 		}
 
 		/// <summary>
 		/// Returns PV player HTML by song Id and PV service. Primary PV of that type will be selected.
 		/// </summary>
-		public ActionResult PVForSongAndService(int songId = invalidId, PVService? service = null)
+		public ActionResult PVForSongAndService(int songId = InvalidId, PVService? service = null)
 		{
-			if (songId == invalidId)
+			if (songId == InvalidId)
 				return NoId();
 
 			if (service == null)
 				return NoId();
 
-			var pv = queries.PVForSongAndService(songId, service.Value);
+			var pv = _queries.PVForSongAndService(songId, service.Value);
 			return PartialView("PVs/_PVEmbedDynamic", pv);
 		}
 
 		/// <summary>
 		/// Returns a PV player with song rating by song Id. Primary PV will be chosen.
 		/// </summary>
-		public ActionResult PVPlayer(int id = invalidId, bool enableScriptAccess = false, string elementId = null,
+		public ActionResult PVPlayer(int id = InvalidId, bool enableScriptAccess = false, string elementId = null,
 			PVServices? pvServices = null)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
-			var pv = queries.PrimaryPVForSong(id, pvServices);
+			var pv = _queries.PrimaryPVForSong(id, pvServices);
 
 			if (pv == null)
 				return new EmptyResult();
@@ -443,12 +443,12 @@ namespace VocaDb.Web.Controllers
 		/// <summary>
 		/// Returns a PV player with song rating by song Id. Primary PV will be chosen.
 		/// </summary>
-		public ActionResult PVPlayerWithRating(int songId = invalidId)
+		public ActionResult PVPlayerWithRating(int songId = InvalidId)
 		{
-			if (songId == invalidId)
+			if (songId == InvalidId)
 				return NoId();
 
-			var song = queries.GetSongWithPVAndVote(songId, true, GetHostnameForValidHit());
+			var song = _queries.GetSongWithPVAndVote(songId, true, GetHostnameForValidHit());
 			var pv = PVHelper.PrimaryPV(song.PVs);
 
 			if (pv == null)
@@ -480,19 +480,19 @@ namespace VocaDb.Web.Controllers
 			return View();
 		}
 
-		public ActionResult Related(int id = invalidId)
+		public ActionResult Related(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
-			var related = queries.GetRelatedSongs(id, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl, null);
+			var related = _queries.GetRelatedSongs(id, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl, null);
 			return PartialView("RelatedSongs", related);
 		}
 
 		[Authorize]
 		public ActionResult RemoveTagUsage(long id)
 		{
-			var songId = queries.RemoveTagUsage(id);
+			var songId = _queries.RemoveTagUsage(id);
 			TempData.SetStatusMessage("Tag usage removed");
 
 			return RedirectToAction("ManageTagUsages", new { id = songId });
@@ -507,7 +507,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult RevertToVersion(int archivedSongVersionId)
 		{
-			var result = queries.RevertToVersion(archivedSongVersionId);
+			var result = _queries.RevertToVersion(archivedSongVersionId);
 
 			TempData.SetStatusMessage(string.Join("\n", result.Warnings));
 
@@ -516,7 +516,7 @@ namespace VocaDb.Web.Controllers
 
 		public string ThumbUrl(int id)
 		{
-			return queries.GetSong(id, s => s.GetThumbUrl());
+			return _queries.GetSong(id, s => s.GetThumbUrl());
 		}
 
 		public ActionResult TopRated()
@@ -527,7 +527,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult UpdateArtistString(int id)
 		{
-			queries.UpdateArtistString(id);
+			_queries.UpdateArtistString(id);
 
 			TempData.SetSuccessMessage("Artist string refreshed");
 
@@ -537,7 +537,7 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult UpdateThumbUrl(int id)
 		{
-			queries.UpdateThumbUrl(id);
+			_queries.UpdateThumbUrl(id);
 
 			TempData.SetSuccessMessage("Thumbnail refreshed");
 
@@ -546,7 +546,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
 		{
-			queries.UpdateVersionVisibility<ArchivedSongVersion>(archivedVersionId, hidden);
+			_queries.UpdateVersionVisibility<ArchivedSongVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 		}
@@ -557,16 +557,16 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public async Task<ActionResult> RefreshPVMetadatas(int id)
 		{
-			await queries.RefreshPVMetadatas(id);
+			await _queries.RefreshPVMetadatas(id);
 
 			TempData.SetSuccessMessage("PV metadata refreshed");
 
 			return RedirectToAction("Details", new { id });
 		}
 
-		public ActionResult Versions(int id = invalidId)
+		public ActionResult Versions(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var contract = Service.GetSongWithArchivedVersions(id);

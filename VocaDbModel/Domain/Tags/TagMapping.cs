@@ -24,8 +24,8 @@ namespace VocaDb.Model.Domain.Tags
 			SourceTag = sourceTag;
 		}
 
-		private Tag tag;
-		private string sourceTag;
+		private Tag _tag;
+		private string _sourceTag;
 
 		public virtual DateTime CreateDate { get; set; }
 
@@ -39,11 +39,11 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		public virtual string SourceTag
 		{
-			get => sourceTag;
+			get => _sourceTag;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				sourceTag = value;
+				_sourceTag = value;
 			}
 		}
 
@@ -52,11 +52,11 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		public virtual Tag Tag
 		{
-			get => tag;
+			get => _tag;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				tag = value;
+				_tag = value;
 			}
 		}
 

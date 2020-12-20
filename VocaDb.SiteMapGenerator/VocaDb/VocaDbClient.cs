@@ -11,8 +11,8 @@ namespace VocaDb.SiteMapGenerator.VocaDb
 {
 	public class VocaDbClient
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly string apiRoot;
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private readonly string _apiRoot;
 
 		private async Task<T> GetEntries<T>(string apiUrl)
 		{
@@ -30,7 +30,7 @@ namespace VocaDb.SiteMapGenerator.VocaDb
 				}
 				catch (HttpRequestException x)
 				{
-					log.Fatal(x, "Unable to get entries from VocaDB API");
+					s_log.Fatal(x, "Unable to get entries from VocaDB API");
 					throw;
 				}
 
@@ -41,7 +41,7 @@ namespace VocaDb.SiteMapGenerator.VocaDb
 				}
 				catch (UnsupportedMediaTypeException x)
 				{
-					log.Fatal(x, "Unable to get entries from VocaDB API");
+					s_log.Fatal(x, "Unable to get entries from VocaDB API");
 					throw;
 				}
 			}
@@ -49,37 +49,37 @@ namespace VocaDb.SiteMapGenerator.VocaDb
 
 		public VocaDbClient(string apiRoot)
 		{
-			this.apiRoot = apiRoot;
+			_apiRoot = apiRoot;
 		}
 
 		public async Task<int[]> GetAlbums()
 		{
-			log.Info("Getting albums");
-			return await GetEntries<int[]>(string.Format("{0}api/albums/ids", apiRoot));
+			s_log.Info("Getting albums");
+			return await GetEntries<int[]>($"{_apiRoot}api/albums/ids");
 		}
 
 		public async Task<int[]> GetArtists()
 		{
-			log.Info("Getting artists");
-			return await GetEntries<int[]>(string.Format("{0}api/artists/ids", apiRoot));
+			s_log.Info("Getting artists");
+			return await GetEntries<int[]>($"{_apiRoot}api/artists/ids");
 		}
 
 		public async Task<PartialFindResult<EntryBaseContract>> GetEvents()
 		{
-			log.Info("Getting artists");
-			return await GetEntries<PartialFindResult<EntryBaseContract>>(string.Format("{0}api/releaseEvents?maxResults=100000", apiRoot));
+			s_log.Info("Getting artists");
+			return await GetEntries<PartialFindResult<EntryBaseContract>>($"{_apiRoot}api/releaseEvents?maxResults=100000");
 		}
 
 		public async Task<int[]> GetSongs()
 		{
-			log.Info("Getting songs");
-			return await GetEntries<int[]>(string.Format("{0}api/songs/ids", apiRoot));
+			s_log.Info("Getting songs");
+			return await GetEntries<int[]>($"{_apiRoot}api/songs/ids");
 		}
 
 		public async Task<PartialFindResult<EntryBaseContract>> GetTags()
 		{
-			log.Info("Getting tags");
-			return await GetEntries<PartialFindResult<EntryBaseContract>>(string.Format("{0}api/tags?maxResults=100000", apiRoot));
+			s_log.Info("Getting tags");
+			return await GetEntries<PartialFindResult<EntryBaseContract>>($"{_apiRoot}api/tags?maxResults=100000");
 		}
 	}
 }

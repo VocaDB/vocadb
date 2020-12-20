@@ -11,7 +11,7 @@ namespace VocaDb.Model.Domain.Security
 	/// <summary>
 	/// Extension methods for <see cref="IUserPermissionContext"/>.
 	/// </summary>
-	public static class IUserPermissionContextExtender
+	public static class IUserPermissionContextExtensions
 	{
 		public static void VerifyEntryDelete<TEntry>(this IUserPermissionContext permissionContext, TEntry entry)
 			where TEntry : class, IEntryWithVersions, IEntryWithStatus

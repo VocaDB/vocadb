@@ -23,11 +23,11 @@ namespace VocaDb.Model.Service.Queries
 {
 	public class ArtistRelationsQuery
 	{
-		private static readonly SongOptionalFields songFields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl;
-		private readonly ObjectCache cache;
-		private readonly IDatabaseContext ctx;
-		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
-		private readonly ContentLanguagePreference languagePreference;
+		private static readonly SongOptionalFields s_songFields = SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl;
+		private readonly ObjectCache _cache;
+		private readonly IDatabaseContext _ctx;
+		private readonly IAggregatedEntryImageUrlFactory _entryThumbPersister;
+		private readonly ContentLanguagePreference _languagePreference;
 
 		private AlbumForApiContract[] GetLatestAlbums(IDatabaseContext session, Artist artist)
 		{
@@ -47,7 +47,7 @@ namespace VocaDb.Model.Service.Queries
 				.Select(s => s.Album)
 				.OrderByReleaseDate(SortDirection.Descending)
 				.Take(6).ToArray()
-				.Select(s => new AlbumForApiContract(s, languagePreference, entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
+				.Select(s => new AlbumForApiContract(s, _languagePreference, _entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
 				.ToArray();
 		}
 
@@ -55,9 +55,9 @@ namespace VocaDb.Model.Service.Queries
 		{
 			var id = artist.Id;
 
-			var cacheKey = $"{nameof(ArtistRelationsQuery)}.{nameof(GetLatestEvents)}.{id}.{languagePreference}";
+			var cacheKey = $"{nameof(ArtistRelationsQuery)}.{nameof(GetLatestEvents)}.{id}.{_languagePreference}";
 
-			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromHours(4)), () =>
+			return _cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromHours(4)), () =>
 			{
 				return session.Query<ReleaseEvent>()
 					.WhereNotDeleted()
@@ -65,9 +65,9 @@ namespace VocaDb.Model.Service.Queries
 					.WhereDateIsBetween(begin: null, end: DateTime.Today.AddMonths(6))
 					.OrderByDate(SortDirection.Descending)
 					.Take(3).ToArray()
-					.Select(s => new ReleaseEventForApiContract(s, languagePreference,
+					.Select(s => new ReleaseEventForApiContract(s, _languagePreference,
 						ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue,
-						entryThumbPersister))
+						_entryThumbPersister))
 					.ToArray();
 			});
 		}
@@ -92,15 +92,15 @@ namespace VocaDb.Model.Service.Queries
 				.OrderByDescending(s => s.RatingAverageInt)
 				.ThenByDescending(s => s.RatingCount)
 				.Take(6).ToArray()
-				.Select(s => new AlbumForApiContract(s, languagePreference, entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
+				.Select(s => new AlbumForApiContract(s, _languagePreference, _entryThumbPersister, AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture))
 				.ToArray();
 		}
 
 		private int[] GetLatestSongIds(IDatabaseContext ctx, Artist artist)
 		{
-			var cacheKey = string.Format("ArtistRelationsQuery.GetLatestSongs.{0}", artist.Id);
+			var cacheKey = $"ArtistRelationsQuery.GetLatestSongs.{artist.Id}";
 
-			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromMinutes(5)), () =>
+			return _cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(TimeSpan.FromMinutes(5)), () =>
 			{
 				return ctx.Query<ArtistForSong>()
 					.Where(s => !s.Song.Deleted && s.Artist.Id == artist.Id && !s.IsSupport)
@@ -118,15 +118,15 @@ namespace VocaDb.Model.Service.Queries
 				.LoadMultiple<Song>(GetLatestSongIds(ctx, artist))
 				.OrderByPublishDate(SortDirection.Descending)
 				.ToArray()
-				.Select(s => new SongForApiContract(s, languagePreference, songFields))
+				.Select(s => new SongForApiContract(s, _languagePreference, s_songFields))
 				.ToArray();
 		}
 
 		private int[] GetTopSongIds(IDatabaseContext ctx, Artist artist, SongForApiContract[] latestSongs)
 		{
-			var cacheKey = string.Format("ArtistRelationsQuery.GetTopSongs.{0}", artist.Id);
+			var cacheKey = $"ArtistRelationsQuery.GetTopSongs.{artist.Id}";
 
-			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(1), () =>
+			return _cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(1), () =>
 			{
 				var latestSongIds = latestSongs != null ? latestSongs.Select(s => s.Id).ToArray() : new int[0];
 
@@ -137,7 +137,7 @@ namespace VocaDb.Model.Service.Queries
 						&& s.Roles != ArtistRoles.VocalDataProvider
 						&& s.Song.RatingScore > 0
 						&& !latestSongIds.Contains(s.Song.Id))
-					.OrderBy(SongSortRule.RatingScore, languagePreference)
+					.OrderBy(SongSortRule.RatingScore, _languagePreference)
 					.Select(s => s.Song.Id)
 					.Take(8)
 					.ToArray();
@@ -149,16 +149,16 @@ namespace VocaDb.Model.Service.Queries
 			return ctx.LoadMultiple<Song>(GetTopSongIds(ctx, artist, latestSongs))
 				.OrderByDescending(s => s.RatingScore)
 				.ToArray()
-				.Select(s => new SongForApiContract(s, languagePreference, songFields))
+				.Select(s => new SongForApiContract(s, _languagePreference, s_songFields))
 				.ToArray();
 		}
 
 		public ArtistRelationsQuery(IDatabaseContext ctx, ContentLanguagePreference languagePreference, ObjectCache cache, IAggregatedEntryImageUrlFactory entryThumbPersister)
 		{
-			this.ctx = ctx;
-			this.languagePreference = languagePreference;
-			this.cache = cache;
-			this.entryThumbPersister = entryThumbPersister;
+			_ctx = ctx;
+			_languagePreference = languagePreference;
+			_cache = cache;
+			_entryThumbPersister = entryThumbPersister;
 		}
 
 		public ArtistRelationsForApi GetRelations(Artist artist, ArtistRelationsFields fields)
@@ -167,28 +167,28 @@ namespace VocaDb.Model.Service.Queries
 
 			if (fields.HasFlag(ArtistRelationsFields.LatestAlbums))
 			{
-				contract.LatestAlbums = GetLatestAlbums(ctx, artist);
+				contract.LatestAlbums = GetLatestAlbums(_ctx, artist);
 			}
 
 			if (fields.HasFlag(ArtistRelationsFields.PopularAlbums))
 			{
 				var latestAlbumIds = contract.LatestAlbums != null ? contract.LatestAlbums.Select(a => a.Id).ToArray() : new int[0];
-				contract.PopularAlbums = GetTopAlbums(ctx, artist, latestAlbumIds);
+				contract.PopularAlbums = GetTopAlbums(_ctx, artist, latestAlbumIds);
 			}
 
 			if (fields.HasFlag(ArtistRelationsFields.LatestSongs))
 			{
-				contract.LatestSongs = GetLatestSongs(ctx, artist);
+				contract.LatestSongs = GetLatestSongs(_ctx, artist);
 			}
 
 			if (fields.HasFlag(ArtistRelationsFields.PopularSongs))
 			{
-				contract.PopularSongs = GetTopSongs(ctx, artist, contract.LatestSongs);
+				contract.PopularSongs = GetTopSongs(_ctx, artist, contract.LatestSongs);
 			}
 
 			if (fields.HasFlag(ArtistRelationsFields.LatestEvents))
 			{
-				contract.LatestEvents = GetLatestEvents(ctx, artist);
+				contract.LatestEvents = GetLatestEvents(_ctx, artist);
 			}
 
 			return contract;
@@ -199,7 +199,7 @@ namespace VocaDb.Model.Service.Queries
 			var types = ArtistHelper.VoiceSynthesizerTypes;
 			var roles = ArtistRoles.Arranger | ArtistRoles.Composer | ArtistRoles.Other | ArtistRoles.VoiceManipulator;
 
-			var topVocaloidIdsAndCounts = ctx
+			var topVocaloidIdsAndCounts = _ctx
 				.Query<ArtistForSong>()
 				.Where(a => types.Contains(a.Artist.ArtistType) && !a.Song.Deleted
 					&& a.Song.AllArtists.Any(ar => !ar.IsSupport && ar.Artist.Id == artist.Id && (ar.Roles == ArtistRoles.Default || (ar.Roles & roles) != ArtistRoles.Default)))
@@ -215,7 +215,7 @@ namespace VocaDb.Model.Service.Queries
 
 			var topVocaloidIds = topVocaloidIdsAndCounts.Select(i => i.Key).ToArray();
 
-			var topVocaloids = ctx.Query<Artist>()
+			var topVocaloids = _ctx.Query<Artist>()
 				.Where(a => topVocaloidIds.Contains(a.Id))
 				.ToArray()
 				.Select(a => new TopStatContract<TranslatedArtistContract>

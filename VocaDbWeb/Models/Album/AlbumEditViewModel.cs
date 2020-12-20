@@ -25,8 +25,7 @@ namespace VocaDb.Web.Models.Album
 
 			DiscTypeDescriptions = ViewRes.Album.EditStrings.BaDiscTypeExplanation
 								   + "<br /><br /><ul>" + string.Join("",
-									   EnumVal<DiscType>.Values.Where(v => v != DiscType.Unknown).Select(v => string.Format("<li><strong>{0}</strong>: {1}</li>",
-										   Translate.DiscTypeName(v), global::Resources.DiscTypeDescriptions.ResourceManager.GetString(v.ToString()))));
+									   EnumVal<DiscType>.Values.Where(v => v != DiscType.Unknown).Select(v => $"<li><strong>{Translate.DiscTypeName(v)}</strong>: {(global::Resources.DiscTypeDescriptions.ResourceManager.GetString(v.ToString()))}</li>"));
 		}
 
 		public AlbumEditViewModel(AlbumContract album, IUserPermissionContext permissionContext,
@@ -53,35 +52,17 @@ namespace VocaDb.Web.Models.Album
 
 		public string DiscTypeDescriptions { get; set; }
 
-		public bool Draft
-		{
-			get
-			{
-				return Album != null && Album.Status == EntryStatus.Draft;
-			}
-		}
+		public bool Draft => Album != null && Album.Status == EntryStatus.Draft;
 
 		[FromJson]
 		[AllowHtml]
 		public AlbumForEditContract EditedAlbum { get; set; }
 
-		public bool HasCoverPicture
-		{
-			get
-			{
-				return Album != null && !string.IsNullOrEmpty(Album.CoverPictureMime);
-			}
-		}
+		public bool HasCoverPicture => Album != null && !string.IsNullOrEmpty(Album.CoverPictureMime);
 
-		public int Id
-		{
-			get { return Album != null ? Album.Id : 0; }
-		}
+		public int Id => Album != null ? Album.Id : 0;
 
-		public string Name
-		{
-			get { return Album != null ? Album.Name : null; }
-		}
+		public string Name => Album != null ? Album.Name : null;
 
 		public void CheckModel()
 		{

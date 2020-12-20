@@ -13,21 +13,21 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/admin")]
 	public class AdminApiController : ApiController
 	{
-		private readonly IPRuleManager ipRuleManager;
-		private readonly IUserPermissionContext userContext;
+		private readonly IPRuleManager _ipRuleManager;
+		private readonly IUserPermissionContext _userContext;
 
 		public AdminApiController(IUserPermissionContext userContext, IPRuleManager ipRuleManager)
 		{
-			this.userContext = userContext;
-			this.ipRuleManager = ipRuleManager;
+			_userContext = userContext;
+			_ipRuleManager = ipRuleManager;
 		}
 
 		[Route("tempBannedIPs")]
 		public string[] GetTempBannedIPs()
 		{
-			userContext.VerifyPermission(PermissionToken.ManageIPRules);
+			_userContext.VerifyPermission(PermissionToken.ManageIPRules);
 
-			var hosts = ipRuleManager.TempBannedIPs.Hosts;
+			var hosts = _ipRuleManager.TempBannedIPs.Hosts;
 			return hosts.ToArray();
 		}
 	}

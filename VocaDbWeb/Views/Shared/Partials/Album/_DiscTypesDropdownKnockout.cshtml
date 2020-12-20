@@ -1,8 +1,8 @@
-﻿@using System.Web.Mvc.Html;
-@using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.Album;
-@using VocaDb.Web.Models.Shared.Partials.Knockout;
-@using VocaDb.Model.Utils;
+﻿@using System.Web.Mvc.Html
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Album
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@using VocaDb.Model.Utils
 @model DiscTypesDropdownKnockoutViewModel
 
 @Html.Partial("Partials/Knockout/_CheckBoxButtons", new CheckBoxButtonsViewModel(Translate.DiscTypeNames.GetValuesAndNamesStrings(AppConfig.AlbumTypes), Model.Binding))

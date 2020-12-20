@@ -22,40 +22,24 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		/// <param name="sortRule">Sort rule.</param>
 		/// <param name="direction">Sort direction. If null, default direction is used.</param>
 		/// <returns>Sorted query. Cannot be null.</returns>
-		public static IQueryable<ReleaseEvent> OrderBy(this IQueryable<ReleaseEvent> query, EventSortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction)
+		public static IQueryable<ReleaseEvent> OrderBy(this IQueryable<ReleaseEvent> query, EventSortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction) => sortRule switch
 		{
-			switch (sortRule)
-			{
-				case EventSortRule.Date:
-					return query.OrderByDate(direction);
-				case EventSortRule.AdditionDate:
-					return query.OrderBy(e => e.CreateDate, direction ?? SortDirection.Descending);
-				case EventSortRule.Name:
-					return query.OrderByName(languagePreference);
-				case EventSortRule.SeriesName:
-					return query.OrderBySeriesName(languagePreference);
-				case EventSortRule.VenueName:
-					return query.OrderByVenueName(languagePreference);
-			}
-
-			return query;
-		}
+			EventSortRule.Date => query.OrderByDate(direction),
+			EventSortRule.AdditionDate => query.OrderBy(e => e.CreateDate, direction ?? SortDirection.Descending),
+			EventSortRule.Name => query.OrderByName(languagePreference),
+			EventSortRule.SeriesName => query.OrderBySeriesName(languagePreference),
+			EventSortRule.VenueName => query.OrderByVenueName(languagePreference),
+			_ => query,
+		};
 
 		public static IQueryable<ReleaseEvent> OrderBy(
-			this IQueryable<ReleaseEvent> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction)
+			this IQueryable<ReleaseEvent> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference, SortDirection? direction) => sortRule switch
 		{
-			switch (sortRule)
-			{
-				case EntrySortRule.Name:
-					return query.OrderByName(languagePreference);
-				case EntrySortRule.AdditionDate:
-					return query.OrderBy(e => e.CreateDate, direction ?? SortDirection.Descending);
-				case EntrySortRule.ActivityDate:
-					return query.OrderByDate(direction);
-			}
-
-			return query;
-		}
+			EntrySortRule.Name => query.OrderByName(languagePreference),
+			EntrySortRule.AdditionDate => query.OrderBy(e => e.CreateDate, direction ?? SortDirection.Descending),
+			EntrySortRule.ActivityDate => query.OrderByDate(direction),
+			_ => query,
+		};
 
 		public static IOrderedQueryable<ReleaseEvent> OrderByName(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference)
 		{
@@ -64,21 +48,12 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 		public static IOrderedQueryable<ReleaseEvent> OrderBySeriesName(this IQueryable<ReleaseEvent> query, ContentLanguagePreference languagePreference)
 		{
-			IOrderedQueryable<ReleaseEvent> ordered;
-
-			switch (languagePreference)
+			var ordered = languagePreference switch
 			{
-				case ContentLanguagePreference.English:
-					ordered = query.OrderBy(e => e.Series.Names.SortNames.English);
-					break;
-				case ContentLanguagePreference.Romaji:
-					ordered = query.OrderBy(e => e.Series.Names.SortNames.Romaji);
-					break;
-				default:
-					ordered = query.OrderBy(e => e.Series.Names.SortNames.Japanese);
-					break;
-			}
-
+				ContentLanguagePreference.English => query.OrderBy(e => e.Series.Names.SortNames.English),
+				ContentLanguagePreference.Romaji => query.OrderBy(e => e.Series.Names.SortNames.Romaji),
+				_ => query.OrderBy(e => e.Series.Names.SortNames.Japanese),
+			};
 			return ordered.ThenBy(e => e.SeriesNumber);
 		}
 

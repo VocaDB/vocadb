@@ -19,8 +19,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			return series.CreateArchivedVersion(data, diff, author, commonEditEvent, notes);
 		}
 
-		private ReleaseEventSeriesDiff diff;
-		private ReleaseEventSeries series;
+		private ReleaseEventSeriesDiff _diff;
+		private ReleaseEventSeries _series;
 
 		public ArchivedReleaseEventSeriesVersion()
 		{
@@ -44,11 +44,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual ReleaseEventSeriesDiff Diff
 		{
-			get => diff;
+			get => _diff;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				diff = value;
+				_diff = value;
 			}
 		}
 
@@ -58,11 +58,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual ReleaseEventSeries Entry
 		{
-			get => series;
+			get => _series;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				series = value;
+				_series = value;
 			}
 		}
 

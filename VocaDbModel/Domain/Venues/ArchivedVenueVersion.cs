@@ -19,8 +19,8 @@ namespace VocaDb.Model.Domain.Venues
 			return venue.CreateArchivedVersion(data, diff, author, commonEditEvent, notes);
 		}
 
-		private VenueDiff diff;
-		private Venue venue;
+		private VenueDiff _diff;
+		private Venue _venue;
 
 		public ArchivedVenueVersion()
 		{
@@ -44,11 +44,11 @@ namespace VocaDb.Model.Domain.Venues
 
 		public virtual VenueDiff Diff
 		{
-			get => diff;
+			get => _diff;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				diff = value;
+				_diff = value;
 			}
 		}
 
@@ -58,11 +58,11 @@ namespace VocaDb.Model.Domain.Venues
 
 		public virtual Venue Entry
 		{
-			get => venue;
+			get => _venue;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				venue = value;
+				_venue = value;
 			}
 		}
 

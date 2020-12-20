@@ -38,7 +38,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 		/// </summary>
 		public DiscType AlbumType { get; set; }
 
-		public ArtistParticipationQueryParams ArtistParticipation { get; set; } = new ArtistParticipationQueryParams();
+		public ArtistParticipationQueryParams ArtistParticipation { get; set; } = new();
 
 		public string Barcode { get; set; }
 

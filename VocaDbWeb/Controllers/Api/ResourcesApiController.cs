@@ -33,9 +33,10 @@ namespace VocaDb.Web.Controllers.Api
 			}
 		}
 
-		private const int cacheDuration = Constants.SecondsInADay;
+		private const int CacheDuration = Constants.SecondsInADay;
 
-		private readonly Dictionary<string, ResourceManager> allSets = new Dictionary<string, ResourceManager> {
+		private readonly Dictionary<string, ResourceManager> allSets = new()
+		{
 			{ "activityEntry_activityFeedEventNames", HelperRes.ActivityFeedHelperStrings.ResourceManager },
 			{ "album_albumEditableFieldNames", global::Resources.AlbumEditableFieldNames.ResourceManager },
 			{ "artist_artistEditableFieldNames", global::Resources.ArtistEditableFieldNames.ResourceManager },
@@ -64,8 +65,7 @@ namespace VocaDb.Web.Controllers.Api
 
 		private Dictionary<string, string> GetResources(string setName, CultureInfo culture)
 		{
-			ResourceManager resourceManager;
-			if (!allSets.TryGetValue(setName, out resourceManager))
+			if (!allSets.TryGetValue(setName, out ResourceManager resourceManager))
 				return new Dictionary<string, string>();
 
 			var set = resourceManager.GetResourceSet(culture, true, true);
@@ -79,7 +79,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="setNames">Names of resource sets to be returned. More than one value can be specified. For example "artistTypeNames"</param>
 		/// <returns>Resource sets. Cannot be null.</returns>
 		[Route("{cultureCode}")]
-		[CacheOutput(ClientTimeSpan = cacheDuration, ServerTimeSpan = cacheDuration)]
+		[CacheOutput(ClientTimeSpan = CacheDuration, ServerTimeSpan = CacheDuration)]
 		public Dictionary<string, Dictionary<string, string>> GetList(string cultureCode, [FromUri] string[] setNames)
 		{
 			if (setNames == null || !setNames.Any())

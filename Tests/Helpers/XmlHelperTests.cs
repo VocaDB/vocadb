@@ -87,7 +87,7 @@ namespace VocaDb.Tests.Helpers
 		public void SerializeToXml_MultipleForbiddenChars()
 		{
 			var name = "Miku Miku!";
-			var album = new ArchivedAlbumContract { Description = string.Format("\x01{0}\x02", name) };
+			var album = new ArchivedAlbumContract { Description = $"\x01{name}\x02" };
 
 			Assert.IsTrue(album.Description.IsNormalized());
 

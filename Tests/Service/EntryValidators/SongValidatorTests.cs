@@ -15,9 +15,9 @@ namespace VocaDb.Tests.Service.EntryValidators
 	[TestClass]
 	public class SongValidatorTests
 	{
-		private Artist producer;
-		private Song song;
-		private Artist vocalist;
+		private Artist _producer;
+		private Song _song;
+		private Artist _vocalist;
 
 		private void TestValidate(bool expectedResult, Song song)
 		{
@@ -27,20 +27,20 @@ namespace VocaDb.Tests.Service.EntryValidators
 		[TestInitialize]
 		public void SetUp()
 		{
-			vocalist = CreateEntry.Artist(ArtistType.Vocaloid, id: 1, name: "GUMI");
-			vocalist.ArtistType = ArtistType.Vocaloid;
+			_vocalist = CreateEntry.Artist(ArtistType.Vocaloid, id: 1, name: "GUMI");
+			_vocalist.ArtistType = ArtistType.Vocaloid;
 
-			producer = CreateEntry.Artist(ArtistType.Producer, id: 2, name: "devilishP");
-			producer.ArtistType = ArtistType.Producer;
+			_producer = CreateEntry.Artist(ArtistType.Producer, id: 2, name: "devilishP");
+			_producer.ArtistType = ArtistType.Producer;
 
-			song = new Song(new LocalizedString("5150", ContentLanguageSelection.English)) { SongType = SongType.Original };
-			song.AddArtist(vocalist);
+			_song = new Song(new LocalizedString("5150", ContentLanguageSelection.English)) { SongType = SongType.Original };
+			_song.AddArtist(_vocalist);
 		}
 
 		[TestMethod]
 		public void MissingProducer()
 		{
-			TestValidate(false, song);
+			TestValidate(false, _song);
 		}
 
 		/// <summary>
@@ -49,45 +49,45 @@ namespace VocaDb.Tests.Service.EntryValidators
 		[TestMethod]
 		public void MissingRealProducer()
 		{
-			song.AddArtist("devilishP", false, ArtistRoles.Composer);
+			_song.AddArtist("devilishP", false, ArtistRoles.Composer);
 
-			TestValidate(false, song);
+			TestValidate(false, _song);
 		}
 
 		[TestMethod]
 		public void HasProducer()
 		{
-			song.AddArtist(producer);
+			_song.AddArtist(_producer);
 
-			TestValidate(true, song);
+			TestValidate(true, _song);
 		}
 
 		[TestMethod]
 		public void MissingVocalist()
 		{
-			song.RemoveArtist(vocalist);
+			_song.RemoveArtist(_vocalist);
 
-			TestValidate(false, song);
+			TestValidate(false, _song);
 		}
 
 		[TestMethod]
 		public void InstrumentalDoesNotNeedVocalist()
 		{
-			song.AddArtist(producer);
-			song.RemoveArtist(vocalist);
-			song.SongType = SongType.Instrumental;
-			song.Notes.Original = "Instrumental song";
+			_song.AddArtist(_producer);
+			_song.RemoveArtist(_vocalist);
+			_song.SongType = SongType.Instrumental;
+			_song.Notes.Original = "Instrumental song";
 
-			TestValidate(true, song);
+			TestValidate(true, _song);
 		}
 
 		[TestMethod]
 		public void DuplicateArtist()
 		{
-			song.AddArtist(producer);
-			song.AddArtist(producer);
+			_song.AddArtist(_producer);
+			_song.AddArtist(_producer);
 
-			TestValidate(false, song);
+			TestValidate(false, _song);
 		}
 	}
 }

@@ -12,8 +12,8 @@ namespace VocaDb.Model.Domain
 	{
 		public const int MaxNotesLength = 400;
 
-		private string hostname;
-		private string notes;
+		private string _hostname;
+		private string _notes;
 
 		protected EntryReport()
 		{
@@ -46,8 +46,8 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual string Hostname
 		{
-			get => hostname;
-			set => hostname = value;
+			get => _hostname;
+			set => _hostname = value;
 		}
 
 		public virtual int Id { get; set; }
@@ -57,11 +57,11 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual string Notes
 		{
-			get => notes;
+			get => _notes;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				notes = value;
+				_notes = value;
 			}
 		}
 

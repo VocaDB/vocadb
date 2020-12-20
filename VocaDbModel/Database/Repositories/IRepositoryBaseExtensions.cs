@@ -6,7 +6,7 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Database.Repositories
 {
-	public static class IRepositoryBaseExtender
+	public static class IRepositoryBaseExtensions
 	{
 		public static void UpdateEntity<TEntity, TRepositoryContext>(this IRepositoryBase<TRepositoryContext> repository, int id,
 			Action<TRepositoryContext, TEntity> func, PermissionToken permissionFlags, IUserPermissionContext permissionContext,
@@ -20,7 +20,7 @@ namespace VocaDb.Model.Database.Repositories
 
 			repository.HandleTransaction(session =>
 			{
-				session.AuditLogger.SysLog(string.Format("is about to update {0} with Id {1}", typeName, id));
+				session.AuditLogger.SysLog($"is about to update {typeName} with Id {id}");
 
 				var entity = session.Load<TEntity>(id);
 

@@ -21,12 +21,12 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/venues")]
 	public class VenueApiController : ApiController
 	{
-		private const int defaultMax = 10;
-		private readonly VenueQueries queries;
+		private const int DefaultMax = 10;
+		private readonly VenueQueries _queries;
 
 		public VenueApiController(VenueQueries queries)
 		{
-			this.queries = queries;
+			_queries = queries;
 		}
 
 		/// <summary>
@@ -42,15 +42,15 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		public void Delete(int id, string notes = "", bool hardDelete = false)
 		{
-			notes = notes ?? string.Empty;
+			notes ??= string.Empty;
 
 			if (hardDelete)
 			{
-				queries.MoveToTrash(id, notes);
+				_queries.MoveToTrash(id, notes);
 			}
 			else
 			{
-				queries.Delete(id, notes);
+				_queries.Delete(id, notes);
 			}
 		}
 
@@ -74,7 +74,7 @@ namespace VocaDb.Web.Controllers.Api
 		public PartialFindResult<VenueForApiContract> GetList(
 			string query = "",
 			VenueOptionalFields fields = VenueOptionalFields.None,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			VenueSortRule sortRule = VenueSortRule.Name,
@@ -91,7 +91,7 @@ namespace VocaDb.Web.Controllers.Api
 				TextQuery = textQuery
 			};
 
-			return queries.Find(v => new VenueForApiContract(v, lang, fields), queryParams);
+			return _queries.Find(v => new VenueForApiContract(v, lang, fields), queryParams);
 		}
 
 		/// <summary>
@@ -103,6 +103,6 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
 		[Route("{id:int}/reports")]
 		[RestrictBannedIP]
-		public void PostReport(int id, VenueReportType reportType, string notes, int? versionNumber) => queries.CreateReport(id, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
+		public void PostReport(int id, VenueReportType reportType, string notes, int? versionNumber) => _queries.CreateReport(id, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 	}
 }

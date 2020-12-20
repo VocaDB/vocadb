@@ -14,10 +14,10 @@ namespace VocaDb.Model.Helpers
 	/// </summary>
 	public class ConcurrentEntryEditManager
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private static readonly ConcurrentEntryEditManager staticInstance = new ConcurrentEntryEditManager();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private static readonly ConcurrentEntryEditManager s_staticInstance = new();
 
-		public static readonly EntryEditData Nothing = new EntryEditData();
+		public static readonly EntryEditData Nothing = new();
 
 		public class EntryEditData
 		{
@@ -44,25 +44,25 @@ namespace VocaDb.Model.Helpers
 			}
 		}
 
-		public static IEnumerable<KeyValuePair<EntryRef, EntryEditData>> Editors => staticInstance.editors;
+		public static IEnumerable<KeyValuePair<EntryRef, EntryEditData>> Editors => s_staticInstance._editors;
 
 		public static EntryEditData CheckConcurrentEdits(EntryRef entry, IUser user)
 		{
-			return staticInstance.CheckConcurrentEditsInst(entry, user);
+			return s_staticInstance.CheckConcurrentEditsInst(entry, user);
 		}
 
-		private readonly Dictionary<EntryRef, EntryEditData> editors = new Dictionary<EntryRef, EntryEditData>();
+		private readonly Dictionary<EntryRef, EntryEditData> _editors = new();
 
 		private void ClearExpiredUsages()
 		{
 			var cutoffDate = DateTime.Now - TimeSpan.FromMinutes(3);
 
-			lock (editors)
+			lock (_editors)
 			{
-				var expired = editors.Where(e => e.Value.Time < cutoffDate).Select(e => e.Key).ToArray();
+				var expired = _editors.Where(e => e.Value.Time < cutoffDate).Select(e => e.Key).ToArray();
 
 				foreach (var e in expired)
-					editors.Remove(e);
+					_editors.Remove(e);
 			}
 		}
 
@@ -71,14 +71,14 @@ namespace VocaDb.Model.Helpers
 			ParamIs.NotNull(() => entry);
 			ParamIs.NotNull(() => user);
 
-			lock (editors)
+			lock (_editors)
 			{
-				if (editors.ContainsKey(entry))
-					editors[entry].Refresh(user);
+				if (_editors.ContainsKey(entry))
+					_editors[entry].Refresh(user);
 				else
 				{
-					log.Debug("{0} starting to edit {1}", user, entry);
-					editors.Add(entry, CreateEntryEditData(user));
+					s_log.Debug("{0} starting to edit {1}", user, entry);
+					_editors.Add(entry, CreateEntryEditData(user));
 				}
 			}
 		}
@@ -87,10 +87,10 @@ namespace VocaDb.Model.Helpers
 		{
 			ParamIs.NotNull(() => entry);
 
-			lock (editors)
+			lock (_editors)
 			{
-				if (editors.ContainsKey(entry))
-					return editors[entry];
+				if (_editors.ContainsKey(entry))
+					return _editors[entry];
 			}
 
 			return Nothing;

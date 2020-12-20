@@ -13,7 +13,7 @@ namespace VocaDb.Web.Helpers
 {
 	public static class WebHelper
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
 		/// User agent strings for which hits won't be counted
@@ -56,8 +56,7 @@ namespace VocaDb.Web.Helpers
 			if (HttpContext.Current != null)
 				return HttpContext.Current.Request.UserHostAddress;
 
-			object property;
-			if (request.Properties.TryGetValue(typeof(RemoteEndpointMessageProperty).FullName, out property))
+			if (request.Properties.TryGetValue(typeof(RemoteEndpointMessageProperty).FullName, out object property))
 			{
 				var remoteProperty = (RemoteEndpointMessageProperty)property;
 				return remoteProperty.Address;
@@ -89,7 +88,7 @@ namespace VocaDb.Web.Helpers
 
 			if (string.IsNullOrEmpty(ua))
 			{
-				log.Warn(ErrorLogger.RequestInfo("Blank user agent from", request));
+				s_log.Warn(ErrorLogger.RequestInfo("Blank user agent from", request));
 				return false;
 			}
 
@@ -101,7 +100,7 @@ namespace VocaDb.Web.Helpers
 			var ua = request.UserAgent;
 			if (string.IsNullOrEmpty(ua))
 			{
-				log.Warn(ErrorLogger.RequestInfo("Blank user agent from", request));
+				s_log.Warn(ErrorLogger.RequestInfo("Blank user agent from", request));
 				//throw new NotAllowedException();
 			}
 		}

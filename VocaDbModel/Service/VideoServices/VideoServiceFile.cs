@@ -17,8 +17,8 @@ namespace VocaDb.Model.Service.VideoServices
 {
 	public class VideoServiceFile : VideoService
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private static readonly HashSet<string> mimeTypes = new HashSet<string>(new[] { "audio/mpeg" }, StringComparer.InvariantCultureIgnoreCase);
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private static readonly HashSet<string> s_mimeTypes = new(new[] { "audio/mpeg" }, StringComparer.InvariantCultureIgnoreCase);
 
 		public VideoServiceFile()
 			: base(PVService.File, null, new[] {
@@ -48,12 +48,9 @@ namespace VocaDb.Model.Service.VideoServices
 
 		private VideoTitleParseResult GetVideoTitle(string id)
 		{
-			Uri uri;
 			string name = string.Empty;
-			if (Uri.TryCreate(id, UriKind.Absolute, out uri))
-			{
+			if (Uri.TryCreate(id, UriKind.Absolute, out Uri uri))
 				name = HttpUtility.UrlDecode(uri.Segments.Last());
-			}
 
 			return VideoTitleParseResult.CreateSuccess(name, string.Empty, string.Empty, string.Empty);
 		}
@@ -79,8 +76,8 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 			catch (UriFormatException x)
 			{
-				var msg = string.Format("{0} could not be parsed as a valid URL.", url);
-				log.Warn(x, msg);
+				var msg = $"{url} could not be parsed as a valid URL.";
+				s_log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			}
 
@@ -99,17 +96,17 @@ namespace VocaDb.Model.Service.VideoServices
 
 						var mime = response.Content.Headers.ContentType?.MediaType;
 
-						if (!mimeTypes.Contains(mime))
+						if (!s_mimeTypes.Contains(mime))
 						{
-							return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, string.Format("Unsupported content type: {0}", mime));
+							return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, $"Unsupported content type: {mime}");
 						}
 					}
 				}
 			}
 			catch (WebException x)
 			{
-				var msg = string.Format("Unable to load file URL {0}. The file might not be publicly accessible", url);
-				log.Warn(x, msg);
+				var msg = $"Unable to load file URL {url}. The file might not be publicly accessible";
+				s_log.Warn(x, msg);
 				return VideoUrlParseResult.CreateError(url, VideoUrlParseResultType.LoadError, new VideoParseException(msg, x));
 			}
 

@@ -8,16 +8,16 @@ namespace VocaDb.Model.Utils
 {
 	public class XmlCache<T>
 	{
-		private readonly IDictionary<int, T> cached = new Dictionary<int, T>();
+		private readonly IDictionary<int, T> _cached = new Dictionary<int, T>();
 
 		public T Deserialize(int key, XDocument doc)
 		{
-			if (cached.ContainsKey(key))
-				return cached[key];
+			if (_cached.ContainsKey(key))
+				return _cached[key];
 
 			var data = XmlHelper.DeserializeFromXml<T>(doc);
 
-			cached.Add(key, data);
+			_cached.Add(key, data);
 
 			return data;
 		}

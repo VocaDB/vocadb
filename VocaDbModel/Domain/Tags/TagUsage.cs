@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain.Tags
 	/// </summary>
 	public abstract class TagUsage : IEntryWithLongId, ITagLink
 	{
-		private Tag tag;
+		private Tag _tag;
 
 		protected TagUsage()
 		{
@@ -46,11 +46,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual Tag Tag
 		{
-			get { return tag; }
+			get => _tag;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				tag = value;
+				_tag = value;
 			}
 		}
 
@@ -92,7 +92,7 @@ namespace VocaDb.Model.Domain.Tags
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -102,7 +102,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public override int GetHashCode()
 		{
-			var format = string.Format("{0}_{1}{2}", Tag.Id, EntryBase.EntryType, EntryBase.Id);
+			var format = $"{Tag.Id}_{EntryBase.EntryType}{EntryBase.Id}";
 			return format.GetHashCode();
 		}
 
@@ -123,7 +123,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public override string ToString()
 		{
-			return string.Format("{0} for {1} [{2}]", Tag, EntryBase, Id);
+			return $"{Tag} for {EntryBase} [{Id}]";
 		}
 	}
 }

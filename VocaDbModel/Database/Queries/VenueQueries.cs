@@ -20,19 +20,19 @@ namespace VocaDb.Model.Database.Queries
 {
 	public class VenueQueries : QueriesBase<IVenueRepository, Venue>
 	{
-		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IEnumTranslations enumTranslations;
+		private readonly IEntryLinkFactory _entryLinkFactory;
+		private readonly IEnumTranslations _enumTranslations;
 
 		public VenueQueries(IVenueRepository venueRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext, IEnumTranslations enumTranslations)
 			: base(venueRepository, permissionContext)
 		{
-			this.entryLinkFactory = entryLinkFactory;
-			this.enumTranslations = enumTranslations;
+			_entryLinkFactory = entryLinkFactory;
+			_enumTranslations = enumTranslations;
 		}
 
 		private ArchivedVenueVersion Archive(IDatabaseContext<Venue> ctx, Venue venue, VenueDiff diff, EntryEditEvent reason, string notes)
 		{
-			var agentLoginData = ctx.OfType<User>().CreateAgentLoginData(permissionContext);
+			var agentLoginData = ctx.OfType<User>().CreateAgentLoginData(_permissionContext);
 			var archived = ArchivedVenueVersion.Create(venue, diff, agentLoginData, reason, notes);
 			ctx.Save(archived);
 			return archived;
@@ -46,9 +46,9 @@ namespace VocaDb.Model.Database.Queries
 			return HandleTransaction(ctx =>
 			{
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
-					entryLinkFactory,
+					_entryLinkFactory,
 					(song, reporter, notesTruncated) => new VenueReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
-					() => reportType != VenueReportType.Other ? enumTranslations.Translation(reportType) : null,
+					() => reportType != VenueReportType.Other ? _enumTranslations.Translation(reportType) : null,
 					venueId, reportType, hostname, notes);
 			});
 		}
@@ -64,9 +64,9 @@ namespace VocaDb.Model.Database.Queries
 
 		public void Delete(int id, string notes)
 		{
-			permissionContext.VerifyManageDatabase();
+			_permissionContext.VerifyManageDatabase();
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var entry = ctx.Load(id);
 
@@ -77,7 +77,7 @@ namespace VocaDb.Model.Database.Queries
 
 				Archive(ctx, entry, new VenueDiff(false), EntryEditEvent.Deleted, notes);
 
-				ctx.AuditLogger.AuditLog(string.Format("deleted {0}", entry));
+				ctx.AuditLogger.AuditLog($"deleted {entry}");
 			});
 		}
 
@@ -142,13 +142,13 @@ namespace VocaDb.Model.Database.Queries
 		{
 			PermissionContext.VerifyPermission(PermissionToken.MoveToTrash);
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var entry = ctx.Load(id);
 
 				PermissionContext.VerifyEntryDelete(entry);
 
-				ctx.AuditLogger.SysLog(string.Format("moving {0} to trash", entry));
+				ctx.AuditLogger.SysLog($"moving {entry} to trash");
 
 				CreateTrashedEntry(ctx, entry, notes);
 
@@ -166,7 +166,7 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Delete(entry);
 
-				ctx.AuditLogger.AuditLog(string.Format("moved {0} to trash", entry));
+				ctx.AuditLogger.AuditLog($"moved {entry} to trash");
 			});
 		}
 
@@ -184,7 +184,7 @@ namespace VocaDb.Model.Database.Queries
 
 				Archive(ctx, venue, new VenueDiff(false), EntryEditEvent.Restored, string.Empty);
 
-				ctx.AuditLogger.AuditLog(string.Format("restored {0}", venue));
+				ctx.AuditLogger.AuditLog($"restored {venue}");
 			});
 		}
 
@@ -231,12 +231,12 @@ namespace VocaDb.Model.Database.Queries
 					var archived = Archive(ctx, venue, diff, EntryEditEvent.Created, string.Empty);
 					AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), venue, EntryEditEvent.Created, archived);
 
-					AuditLog(string.Format("created {0}", entryLinkFactory.CreateEntryLink(venue)), ctx);
+					AuditLog($"created {_entryLinkFactory.CreateEntryLink(venue)}", ctx);
 				}
 				else
 				{
 					venue = ctx.Load<Venue>(contract.Id);
-					permissionContext.VerifyEntryEdit(venue);
+					_permissionContext.VerifyEntryEdit(venue);
 					var diff = new VenueDiff(DoSnapshot(venue, ctx));
 
 					if (venue.TranslatedName.DefaultLanguage != contract.DefaultNameLanguage)
@@ -294,7 +294,7 @@ namespace VocaDb.Model.Database.Queries
 					var archived = Archive(ctx, venue, diff, EntryEditEvent.Updated, string.Empty);
 					AddEntryEditedEntry(ctx.OfType<ActivityEntry>(), venue, EntryEditEvent.Updated, archived);
 
-					AuditLog(string.Format("updated {0}", entryLinkFactory.CreateEntryLink(venue)), ctx);
+					AuditLog($"updated {_entryLinkFactory.CreateEntryLink(venue)}", ctx);
 				}
 
 				return venue.Id;

@@ -15,13 +15,7 @@ namespace VocaDb.Web.Models.Ext
 
 		public PVContract CurrentPV { get; set; }
 
-		public string CurrentServiceName
-		{
-			get
-			{
-				return CurrentPV?.Service.ToString().ToLowerInvariant() ?? string.Empty;
-			}
-		}
+		public string CurrentServiceName => CurrentPV?.Service.ToString().ToLowerInvariant() ?? string.Empty;
 
 		public int? Height { get; set; }
 

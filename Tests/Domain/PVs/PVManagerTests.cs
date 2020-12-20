@@ -14,9 +14,9 @@ namespace VocaDb.Tests.Domain.PVs
 	[TestClass]
 	public class PVManagerTests
 	{
-		private PVManager<PVForSong> manager;
-		private PVContract pvContract;
-		private PVContract pvContract2;
+		private PVManager<PVForSong> _manager;
+		private PVContract _pvContract;
+		private PVContract _pvContract2;
 
 		private PVForSong CreatePV(PVContract contract)
 		{
@@ -26,23 +26,23 @@ namespace VocaDb.Tests.Domain.PVs
 		[TestInitialize]
 		public void SetUp()
 		{
-			manager = new PVManager<PVForSong>();
-			pvContract = new PVContract { Id = 1, Author = "Miku!", Name = "A cool Miku PV", PVId = "3939", ThumbUrl = "http://youtube.com/thumb", Url = "http://youtube.com/39" };
-			pvContract2 = new PVContract { Id = 2, Author = "Luka!", Name = "A cool Luka PV", PVId = "0303", ThumbUrl = "http://youtube.com/thumb3", Url = "http://youtube.com/3" };
+			_manager = new PVManager<PVForSong>();
+			_pvContract = new PVContract { Id = 1, Author = "Miku!", Name = "A cool Miku PV", PVId = "3939", ThumbUrl = "http://youtube.com/thumb", Url = "http://youtube.com/39" };
+			_pvContract2 = new PVContract { Id = 2, Author = "Luka!", Name = "A cool Luka PV", PVId = "0303", ThumbUrl = "http://youtube.com/thumb3", Url = "http://youtube.com/3" };
 		}
 
 		[TestMethod]
 		public void Preconditions()
 		{
-			Assert.IsFalse(pvContract.ContentEquals(pvContract2), "PVContracts are not equal");
+			Assert.IsFalse(_pvContract.ContentEquals(_pvContract2), "PVContracts are not equal");
 		}
 
 		[TestMethod]
 		public void Sync_Contracts_NoExistingLinks()
 		{
-			var newPVs = new[] { pvContract };
+			var newPVs = new[] { _pvContract };
 
-			var result = manager.Sync(newPVs, CreatePV);
+			var result = _manager.Sync(newPVs, CreatePV);
 
 			Assert.IsNotNull(result, "result is not null");
 			Assert.IsTrue(result.Changed, "is changed");
@@ -50,16 +50,16 @@ namespace VocaDb.Tests.Domain.PVs
 			Assert.AreEqual(0, result.Edited.Length, "none edited");
 			Assert.AreEqual(0, result.Removed.Length, "none removed");
 			Assert.AreEqual(0, result.Unchanged.Length, "none unchanged");
-			Assert.IsTrue(result.Added.First().ContentEquals(pvContract), "added PV matches contract");
+			Assert.IsTrue(result.Added.First().ContentEquals(_pvContract), "added PV matches contract");
 		}
 
 		[TestMethod]
 		public void Sync_Contracts_NotChanged()
 		{
-			manager.PVs.Add(CreatePV(pvContract));
-			var newLinks = new[] { pvContract };
+			_manager.PVs.Add(CreatePV(_pvContract));
+			var newLinks = new[] { _pvContract };
 
-			var result = manager.Sync(newLinks, CreatePV);
+			var result = _manager.Sync(newLinks, CreatePV);
 
 			Assert.IsNotNull(result, "result is not null");
 			Assert.IsFalse(result.Changed, "is not changed");
@@ -67,18 +67,18 @@ namespace VocaDb.Tests.Domain.PVs
 			Assert.AreEqual(0, result.Edited.Length, "none edited");
 			Assert.AreEqual(0, result.Removed.Length, "none removed");
 			Assert.AreEqual(1, result.Unchanged.Length, "1 unchanged");
-			Assert.IsTrue(result.Unchanged.First().ContentEquals(pvContract), "unchanged PV matches contract");
+			Assert.IsTrue(result.Unchanged.First().ContentEquals(_pvContract), "unchanged PV matches contract");
 		}
 
 		[TestMethod]
 		public void Sync_Contracts_Edited()
 		{
-			var oldPV = CreatePV(pvContract);
+			var oldPV = CreatePV(_pvContract);
 			oldPV.Id = 2;
-			manager.PVs.Add(oldPV);
-			var newLinks = new[] { pvContract2 };
+			_manager.PVs.Add(oldPV);
+			var newLinks = new[] { _pvContract2 };
 
-			var result = manager.Sync(newLinks, CreatePV);
+			var result = _manager.Sync(newLinks, CreatePV);
 
 			Assert.IsNotNull(result, "result is not null");
 			Assert.IsTrue(result.Changed, "is changed");
@@ -86,16 +86,16 @@ namespace VocaDb.Tests.Domain.PVs
 			Assert.AreEqual(1, result.Edited.Length, "1 edited");
 			Assert.AreEqual(0, result.Removed.Length, "none removed");
 			Assert.AreEqual(1, result.Unchanged.Length, "1 unchanged");
-			Assert.IsTrue(result.Edited.First().ContentEquals(pvContract2), "edited link matches new contract");
+			Assert.IsTrue(result.Edited.First().ContentEquals(_pvContract2), "edited link matches new contract");
 		}
 
 		[TestMethod]
 		public void Sync_Contracts_Removed()
 		{
-			manager.PVs.Add(CreatePV(pvContract));
+			_manager.PVs.Add(CreatePV(_pvContract));
 			var newLinks = new PVContract[] { };
 
-			var result = manager.Sync(newLinks, CreatePV);
+			var result = _manager.Sync(newLinks, CreatePV);
 
 			Assert.IsNotNull(result, "result is not null");
 			Assert.IsTrue(result.Changed, "is changed");
@@ -103,7 +103,7 @@ namespace VocaDb.Tests.Domain.PVs
 			Assert.AreEqual(0, result.Edited.Length, "none edited");
 			Assert.AreEqual(1, result.Removed.Length, "1 removed");
 			Assert.AreEqual(0, result.Unchanged.Length, "none unchanged");
-			Assert.IsTrue(result.Removed.First().ContentEquals(pvContract), "removed link matches contract");
+			Assert.IsTrue(result.Removed.First().ContentEquals(_pvContract), "removed link matches contract");
 		}
 	}
 }

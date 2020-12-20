@@ -36,13 +36,13 @@ namespace VocaDb.Model.Database.Queries
 		{
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var msg = ctx.Load(messageId);
 
 				DoDelete(ctx, msg);
 
-				ctx.AuditLogger.SysLog(string.Format("deleted {0}", msg));
+				ctx.AuditLogger.SysLog($"deleted {msg}");
 			});
 		}
 
@@ -60,7 +60,7 @@ namespace VocaDb.Model.Database.Queries
 
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var messages = ctx.LoadMultiple<UserMessage>(messageIds);
 
@@ -69,7 +69,7 @@ namespace VocaDb.Model.Database.Queries
 					DoDelete(ctx, msg);
 				}
 
-				ctx.AuditLogger.SysLog(string.Format("deleted {0} messages", messageIds.Length));
+				ctx.AuditLogger.SysLog($"deleted {messageIds.Length} messages");
 			});
 		}
 
@@ -77,7 +77,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			PermissionContext.VerifyPermission(PermissionToken.EditProfile);
 
-			return repository.HandleTransaction(ctx =>
+			return _repository.HandleTransaction(ctx =>
 			{
 				var msg = ctx.Load(messageId);
 

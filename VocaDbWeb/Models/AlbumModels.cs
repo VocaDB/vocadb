@@ -26,11 +26,11 @@ namespace VocaDb.Web.Models
 {
 	public class AlbumDetails : IEntryImageInformation
 	{
-		private readonly string mime;
+		private readonly string _mime;
 
 		public EntryType EntryType => EntryType.Album;
 
-		public string Mime => mime;
+		public string Mime => _mime;
 
 		ImagePurpose IEntryImageInformation.Purpose => ImagePurpose.Main;
 
@@ -74,7 +74,7 @@ namespace VocaDb.Web.Models
 			Version = contract.Version;
 			WebLinks = contract.WebLinks;
 			WishlistedBy = contract.Stats.WishlistCount;
-			mime = contract.CoverPictureMime;
+			_mime = contract.CoverPictureMime;
 
 			var songsByDiscs = contract.Songs.GroupBy(s => s.DiscNumber);
 			Discs =
@@ -163,13 +163,7 @@ namespace VocaDb.Web.Models
 
 		public ArtistForAlbumContract[] Illustrators { get; set; }
 
-		public string Json
-		{
-			get
-			{
-				return JsonHelpers.Serialize(new AlbumDetailsAjax(this));
-			}
-		}
+		public string Json => JsonHelpers.Serialize(new AlbumDetailsAjax(this));
 
 		public ArtistForAlbumContract[] Labels { get; set; }
 
@@ -207,29 +201,11 @@ namespace VocaDb.Web.Models
 
 		public OptionalDateTimeContract ReleaseDate { get; set; }
 
-		public bool ReleaseDateIsInTheFarFuture
-		{
-			get
-			{
-				return FullReleaseDate.HasValue && FullReleaseDate.Value > DateTime.Now.AddDays(7);
-			}
-		}
+		public bool ReleaseDateIsInTheFarFuture => FullReleaseDate.HasValue && FullReleaseDate.Value > DateTime.Now.AddDays(7);
 
-		public bool ReleaseDateIsInTheNearFuture
-		{
-			get
-			{
-				return FullReleaseDate.HasValue && FullReleaseDate.Value > DateTime.Now && FullReleaseDate.Value <= DateTime.Now.AddDays(7);
-			}
-		}
+		public bool ReleaseDateIsInTheNearFuture => FullReleaseDate.HasValue && FullReleaseDate.Value > DateTime.Now && FullReleaseDate.Value <= DateTime.Now.AddDays(7);
 
-		public bool ReleaseDateIsInThePast
-		{
-			get
-			{
-				return FullReleaseDate.HasValue && FullReleaseDate.Value <= DateTime.Now;
-			}
-		}
+		public bool ReleaseDateIsInThePast => FullReleaseDate.HasValue && FullReleaseDate.Value <= DateTime.Now;
 
 		public int ReviewCount { get; set; }
 

@@ -14,7 +14,7 @@ namespace VocaDb.Model.Domain.Tags
 	/// <typeparam name="T">Type of tag usage.</typeparam>
 	public class TagManager<T> : ITagManager where T : TagUsage
 	{
-		private ISet<T> tags = new HashSet<T>();
+		private ISet<T> _tags = new HashSet<T>();
 
 		/// <summary>
 		/// Usages of tags that are not deleted.
@@ -26,13 +26,7 @@ namespace VocaDb.Model.Domain.Tags
 		/// <summary>
 		/// Tags sorted descending by the number of votes. Cannot be null.
 		/// </summary>
-		public virtual IEnumerable<Tag> TagsByVotes
-		{
-			get
-			{
-				return Usages.OrderByDescending(u => u.Count).Select(u => u.Tag);
-			}
-		}
+		public virtual IEnumerable<Tag> TagsByVotes => Usages.OrderByDescending(u => u.Count).Select(u => u.Tag);
 
 		/// <summary>
 		/// List of all tag usages. Cannot be null.
@@ -40,11 +34,11 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		public virtual ISet<T> Usages
 		{
-			get { return tags; }
+			get => _tags;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				tags = value;
+				_tags = value;
 			}
 		}
 

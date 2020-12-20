@@ -1,5 +1,5 @@
-﻿@using VocaDb.Web.Helpers;
-@using VocaDb.Web.Models.Shared.Partials.User;
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.User
 @model UserIconLink_UserContractViewModel
 
 <a href="@Url.UserDetails(Model.User)" @Html.ConditionalAttribute(Model.Tooltip && Model.User != null, "data-bind", "userToolTip: " + (Model.User != null ? Model.User.Id : 0))

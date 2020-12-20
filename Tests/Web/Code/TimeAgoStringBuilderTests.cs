@@ -13,7 +13,7 @@ namespace VocaDb.Tests.Web.Code
 	[TestClass]
 	public class TimeAgoStringBuilderTests
 	{
-		private DateTime now;
+		private DateTime _now;
 
 		private string FormatExpected(int amount, string suffix)
 		{
@@ -22,13 +22,13 @@ namespace VocaDb.Tests.Web.Code
 
 		private string FormatTimeAgo(TimeSpan ago)
 		{
-			return TimeAgoStringBuilder.FormatTimeAgo(now, now - ago);
+			return TimeAgoStringBuilder.FormatTimeAgo(_now, _now - ago);
 		}
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			now = new DateTime(2013, 6, 1, 12, 0, 0);
+			_now = new DateTime(2013, 6, 1, 12, 0, 0);
 		}
 
 		[TestMethod]

@@ -16,7 +16,7 @@ namespace VocaDb.Model.Domain.Globalization
 			);
 		}
 
-		private string def;
+		private string _def;
 
 		public TranslatedStringWithDefault() { }
 
@@ -28,20 +28,13 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public override string this[ContentLanguageSelection language]
 		{
-			get
+			get => language switch
 			{
-				switch (language)
-				{
-					case ContentLanguageSelection.English:
-						return English;
-					case ContentLanguageSelection.Japanese:
-						return Japanese;
-					case ContentLanguageSelection.Romaji:
-						return Romaji;
-					default:
-						return Default;
-				}
-			}
+				ContentLanguageSelection.English => English,
+				ContentLanguageSelection.Japanese => Japanese,
+				ContentLanguageSelection.Romaji => Romaji,
+				_ => Default,
+			};
 			set
 			{
 				switch (language)
@@ -64,11 +57,11 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public override string Default
 		{
-			get => def;
+			get => _def;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				def = value;
+				_def = value;
 			}
 		}
 
@@ -102,7 +95,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public override string ToString()
 		{
-			return string.Format("Default: {0}, Japanese: {1}, Romaji: {2}, English: {3}", Default, Japanese, Romaji, English);
+			return $"Default: {Default}, Japanese: {Japanese}, Romaji: {Romaji}, English: {English}";
 		}
 	}
 }

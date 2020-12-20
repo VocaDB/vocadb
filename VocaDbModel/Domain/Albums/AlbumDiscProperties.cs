@@ -6,8 +6,8 @@ namespace VocaDb.Model.Domain.Albums
 {
 	public class AlbumDiscProperties : IEntryWithIntId
 	{
-		private Album album;
-		private string name;
+		private Album _album;
+		private string _name;
 
 		public AlbumDiscProperties()
 		{
@@ -24,11 +24,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual Album Album
 		{
-			get { return album; }
+			get => _album;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 
@@ -40,11 +40,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual string Name
 		{
-			get { return name; }
+			get => _name;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				name = value;
+				_name = value;
 			}
 		}
 

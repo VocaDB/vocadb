@@ -59,9 +59,9 @@ namespace VocaDb.Web.Models.Artist
 		{
 			return new CreateArtistContract
 			{
-				ArtistType = this.ArtistType,
-				Description = this.Description ?? string.Empty,
-				Draft = this.Draft,
+				ArtistType = ArtistType,
+				Description = Description ?? string.Empty,
+				Draft = Draft,
 				Names = LocalizedStringHelper.SkipNullAndEmpty(NameOriginal, NameRomaji, NameEnglish).ToArray(),
 				WebLink = (!string.IsNullOrWhiteSpace(WebLinkUrl) ? new WebLinkContract
 				{

@@ -12,12 +12,12 @@ namespace VocaDb.Model.Domain.Globalization
 	{
 		public NTextCatLibLanguageDetector(IHttpContext context)
 		{
-			this.context = context;
+			_context = context;
 		}
 
-		private readonly IHttpContext context;
+		private readonly IHttpContext _context;
 
-		private string LanguageFilePath => context.ServerPathMapper.MapPath("~/App_Data/Core14.profile.xml");
+		private string LanguageFilePath => _context.ServerPathMapper.MapPath("~/App_Data/Core14.profile.xml");
 
 		public ContentLanguageSelection Detect(string str, ContentLanguageSelection def = ContentLanguageSelection.Unspecified)
 		{

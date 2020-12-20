@@ -13,17 +13,17 @@ namespace VocaDb.Model.Helpers
 	/// </summary>
 	public class ImpersonateUICulture : IDisposable
 	{
-		private readonly CultureInfo old;
+		private readonly CultureInfo _old;
 
 		public ImpersonateUICulture(CultureInfo impersonated)
 		{
-			old = Thread.CurrentThread.CurrentUICulture;
+			_old = Thread.CurrentThread.CurrentUICulture;
 			Thread.CurrentThread.CurrentUICulture = impersonated;
 		}
 
 		public void Dispose()
 		{
-			Thread.CurrentThread.CurrentUICulture = old;
+			Thread.CurrentThread.CurrentUICulture = _old;
 		}
 	}
 }

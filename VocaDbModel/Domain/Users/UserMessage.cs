@@ -20,9 +20,9 @@ namespace VocaDb.Model.Domain.Users
 			return new UserMessage(from, UserInboxType.Sent, from, to, subject, body, highPriority);
 		}
 
-		private string message;
-		private User receiver;
-		private string subject;
+		private string _message;
+		private User _receiver;
+		private string _subject;
 
 		public UserMessage()
 		{
@@ -84,11 +84,11 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public virtual string Message
 		{
-			get => message;
+			get => _message;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				message = value;
+				_message = value;
 			}
 		}
 
@@ -99,11 +99,11 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public virtual User Receiver
 		{
-			get => receiver;
+			get => _receiver;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				receiver = value;
+				_receiver = value;
 			}
 		}
 
@@ -114,11 +114,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual string Subject
 		{
-			get => subject;
+			get => _subject;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				subject = value;
+				_subject = value;
 			}
 		}
 
@@ -131,7 +131,7 @@ namespace VocaDb.Model.Domain.Users
 		public override string ToString()
 		{
 			// Note: no message contents in ToString because personal information might be logged
-			return string.Format("User message [{0}]", Id);
+			return $"User message [{Id}]";
 		}
 	}
 

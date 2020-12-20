@@ -7,8 +7,8 @@ namespace VocaDb.Model.Domain.Songs
 {
 	public class SongInAlbum : ISongLink, IEntryWithIntId
 	{
-		private Album album;
-		private Song song;
+		private Album _album;
+		private Song _song;
 
 		public SongInAlbum() { }
 
@@ -45,27 +45,21 @@ namespace VocaDb.Model.Domain.Songs
 		/// </summary>
 		public virtual Song Song
 		{
-			get { return song; }
-			set { song = value; }
+			get => _song;
+			set => _song = value;
 		}
 
 		public virtual Album Album
 		{
-			get { return album; }
+			get => _album;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 
-		public virtual string SongToStringOrName
-		{
-			get
-			{
-				return Song != null ? Song.ToString() : Name;
-			}
-		}
+		public virtual string SongToStringOrName => Song != null ? Song.ToString() : Name;
 
 		public virtual int TrackNumber { get; set; }
 
@@ -80,7 +74,7 @@ namespace VocaDb.Model.Domain.Songs
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public virtual void Delete()
@@ -140,7 +134,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public override string ToString()
 		{
-			return string.Format("({0}.{1}) {2} in {3}", DiscNumber, TrackNumber, SongToStringOrName, Album);
+			return $"({DiscNumber}.{TrackNumber}) {SongToStringOrName} in {Album}";
 		}
 	}
 }

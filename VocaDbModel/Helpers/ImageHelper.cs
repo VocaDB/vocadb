@@ -19,7 +19,7 @@ namespace VocaDb.Model.Helpers
 	/// </summary>
 	public static class ImageHelper
 	{
-		private static readonly string[] allowedExt = { ".bmp", ".gif", ".jpg", ".jpeg", ".png" };
+		private static readonly string[] s_allowedExt = { ".bmp", ".gif", ".jpg", ".jpeg", ".png" };
 		public const int DefaultSmallThumbSize = 150;
 		public const int DefaultThumbSize = 250;
 		public const int DefaultTinyThumbSize = 70;
@@ -28,7 +28,7 @@ namespace VocaDb.Model.Helpers
 		public const int UserSmallThumbSize = 40;
 		public const int UserTinyThumbSize = 20;
 		public const int ImageSizeUnlimited = 0;
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		/// <summary>
 		/// Opens image and logs an exception if the image cannot be opened.
@@ -44,7 +44,7 @@ namespace VocaDb.Model.Helpers
 			}
 			catch (ArgumentException x)
 			{
-				log.Error(x, "Unable to open image");
+				s_log.Error(x, "Unable to open image");
 				throw new InvalidPictureException("Unable to open image", x);
 			}
 		}
@@ -52,72 +52,43 @@ namespace VocaDb.Model.Helpers
 		public const int MaxImageSizeMB = 8;
 		public const int MaxImageSizeBytes = MaxImageSizeMB * 1024 * 1024;
 
-		public static string[] AllowedExtensions => allowedExt;
+		public static string[] AllowedExtensions => s_allowedExt;
 
 		/// <summary>
 		/// Gets image extension from MIME type.
 		/// </summary>
 		/// <param name="mime">MIME type. Can be null or empty.</param>
 		/// <returns>File extension, for example ".jpg". Can be null if MIME type is not recognized.</returns>
-		public static string GetExtensionFromMime(string mime)
+		public static string GetExtensionFromMime(string mime) => mime switch
 		{
-			switch (mime)
-			{
-				case MediaTypeNames.Image.Jpeg:
-					return ".jpg";
-				case "image/pjpeg":
-					return ".jpg";
-				case "image/png":
-					return ".png";
-				case MediaTypeNames.Image.Gif:
-					return ".gif";
-				case "image/bmp":
-					return ".bmp";
-				case "image/x-ms-bmp":
-					return ".bmp";
-				case "audio/mp3":
-				case "audio/mpeg":
-					return ".mp3";
-				default:
-					return string.Empty;
-			}
-		}
+			MediaTypeNames.Image.Jpeg => ".jpg",
+			"image/pjpeg" => ".jpg",
+			"image/png" => ".png",
+			MediaTypeNames.Image.Gif => ".gif",
+			"image/bmp" => ".bmp",
+			"image/x-ms-bmp" => ".bmp",
+			"audio/mp3" or "audio/mpeg" => ".mp3",
+			_ => string.Empty,
+		};
 
-		public static int GetDefaultImageSizePx(ImageSize size)
+		public static int GetDefaultImageSizePx(ImageSize size) => size switch
 		{
-			switch (size)
-			{
-				case ImageSize.Thumb:
-					return DefaultThumbSize;
-				case ImageSize.SmallThumb:
-					return DefaultSmallThumbSize;
-				case ImageSize.TinyThumb:
-					return DefaultTinyThumbSize;
-				default:
-					return ImageSizeUnlimited;
-			}
-		}
+			ImageSize.Thumb => DefaultThumbSize,
+			ImageSize.SmallThumb => DefaultSmallThumbSize,
+			ImageSize.TinyThumb => DefaultTinyThumbSize,
+			_ => ImageSizeUnlimited,
+		};
 
 		/// <summary>
 		/// Gets the size in pixels for user's profile picture.
 		/// </summary>
-		public static int GetUserImageSizePx(ImageSize size)
+		public static int GetUserImageSizePx(ImageSize size) => size switch
 		{
-			switch (size)
-			{
-				case ImageSize.Original:
-					return UserThumbMax;
-
-				case ImageSize.Thumb:
-				case ImageSize.SmallThumb:
-					return UserThumbSize;
-
-				case ImageSize.TinyThumb:
-					return UserTinyThumbSize;
-			}
-
-			return UserThumbMax;
-		}
+			ImageSize.Original => UserThumbMax,
+			ImageSize.Thumb or ImageSize.SmallThumb => UserThumbSize,
+			ImageSize.TinyThumb => UserTinyThumbSize,
+			_ => UserThumbMax,
+		};
 
 		public static PictureDataContract GetOriginal(Stream input, int length, string contentType)
 		{
@@ -131,7 +102,7 @@ namespace VocaDb.Model.Helpers
 		{
 			var ext = Path.GetExtension(fileName);
 
-			return (allowedExt.Any(e => string.Equals(e, ext, StringComparison.InvariantCultureIgnoreCase)));
+			return (s_allowedExt.Any(e => string.Equals(e, ext, StringComparison.InvariantCultureIgnoreCase)));
 		}
 
 		public static Image ResizeToFixedSize(Image imgPhoto, int width, int height)

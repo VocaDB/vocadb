@@ -31,7 +31,7 @@ namespace VocaDb.Model.Domain.Users
 		All = Wishlisted | Ordered | Owned
 	}
 
-	public static class PurchaseStatusesExtender
+	public static class PurchaseStatusesExtensions
 	{
 		public static IEnumerable<PurchaseStatus> ToIndividualSelections(this PurchaseStatuses selections)
 		{

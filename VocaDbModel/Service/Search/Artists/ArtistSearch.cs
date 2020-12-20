@@ -14,8 +14,8 @@ namespace VocaDb.Model.Service.Search.Artists
 {
 	public class ArtistSearch
 	{
-		private readonly IEntryUrlParser entryUrlParser;
-		private readonly IDatabaseContext<Artist> context;
+		private readonly IEntryUrlParser _entryUrlParser;
+		private readonly IDatabaseContext<Artist> _context;
 
 		private ContentLanguagePreference LanguagePreference { get; }
 
@@ -26,7 +26,7 @@ namespace VocaDb.Model.Service.Search.Artists
 		{
 			var textQuery = (parsedQuery.HasNameQuery ? queryParams.Common.TextQuery.OverrideMatchMode(nameMatchMode) : ArtistSearchTextQuery.Empty);
 
-			var query = context.Query()
+			var query = _context.Query()
 				.Where(s => !s.Deleted)
 				.WhereHasName_Canonized(textQuery)
 				.WhereStatusIs(queryParams.Common.EntryStatus)
@@ -46,7 +46,7 @@ namespace VocaDb.Model.Service.Search.Artists
 		{
 			if (trimmedLc.StartsWith("/ar/") || trimmedLc.StartsWith("http"))
 			{
-				var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
+				var entryId = _entryUrlParser.Parse(trimmed, allowRelative: true);
 
 				if (entryId.EntryType == EntryType.Artist)
 					return new ParsedArtistQuery { Id = entryId.Id };
@@ -109,9 +109,9 @@ namespace VocaDb.Model.Service.Search.Artists
 
 		public ArtistSearch(ContentLanguagePreference languagePreference, IDatabaseContext<Artist> context, IEntryUrlParser entryUrlParser)
 		{
-			this.LanguagePreference = languagePreference;
-			this.context = context;
-			this.entryUrlParser = entryUrlParser;
+			LanguagePreference = languagePreference;
+			_context = context;
+			_entryUrlParser = entryUrlParser;
 		}
 
 		public PartialFindResult<Artist> Find(ArtistQueryParams queryParams)
@@ -137,7 +137,7 @@ namespace VocaDb.Model.Service.Search.Artists
 				.Paged(queryParams.Paging)
 				.ToArray();
 
-			var artists = SortByIds(context
+			var artists = SortByIds(_context
 				.Query()
 				.Where(s => ids.Contains(s.Id))
 				.ToArray(), ids);
@@ -194,7 +194,7 @@ namespace VocaDb.Model.Service.Search.Artists
 				count = getCount ? directQ.Count() : 0;
 			}
 
-			var artist = SortByIds(context
+			var artist = SortByIds(_context
 				.Query()
 				.Where(s => ids.Contains(s.Id))
 				.ToArray(), ids);

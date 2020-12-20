@@ -18,8 +18,8 @@ namespace VocaDb.Model.DataContracts.Users
 		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, IUserIconFactory userIconFactory, UserOptionalFields userFields,
 			IUserPermissionContext userPermissionContext)
 		{
-			this.Date = ratedSong.Date;
-			this.Rating = ratedSong.Rating;
+			Date = ratedSong.Date;
+			Rating = ratedSong.Rating;
 			if (ratedSong.User.Options.PublicRatings || userPermissionContext.HasPermission(PermissionToken.ViewHiddenRatings))
 			{
 				User = new UserForApiContract(ratedSong.User, userIconFactory, userFields);
@@ -28,9 +28,9 @@ namespace VocaDb.Model.DataContracts.Users
 
 		public RatedSongForUserForApiContract(FavoriteSongForUser ratedSong, ContentLanguagePreference languagePreference, SongOptionalFields fields)
 		{
-			this.Date = ratedSong.Date;
-			this.Rating = ratedSong.Rating;
-			this.Song = new SongForApiContract(ratedSong.Song, null, languagePreference, fields);
+			Date = ratedSong.Date;
+			Rating = ratedSong.Rating;
+			Song = new SongForApiContract(ratedSong.Song, null, languagePreference, fields);
 		}
 
 		[DataMember]

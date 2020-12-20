@@ -12,25 +12,25 @@ namespace VocaDb.Web.Code.Security
 	/// </summary>
 	public class RestrictBlockedIPAttribute : ActionFilterAttribute
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
-		private readonly IPRuleManager ipRuleManager;
+		private readonly IPRuleManager _ipRuleManager;
 
 		public RestrictBlockedIPAttribute(IPRuleManager ipRuleManager)
 		{
-			this.ipRuleManager = ipRuleManager;
+			_ipRuleManager = ipRuleManager;
 		}
 
 		public override void OnActionExecuting(ActionExecutingContext filterContext)
 		{
 			var host = filterContext.HttpContext.Request.UserHostAddress;
 
-			if (ipRuleManager.IsAllowed(host))
+			if (_ipRuleManager.IsAllowed(host))
 				return;
 
 			if (filterContext.ActionDescriptor.IsDefined(typeof(AuthorizeAttribute), false))
 			{
-				log.Warn("Restricting blocked IP {0}.", host);
+				s_log.Warn("Restricting blocked IP {0}.", host);
 				filterContext.Result = new HttpUnauthorizedResult();
 			}
 		}

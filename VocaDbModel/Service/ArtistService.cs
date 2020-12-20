@@ -24,22 +24,22 @@ namespace VocaDb.Model.Service
 {
 	public class ArtistService : ServiceBase
 	{
-		private readonly IEntryUrlParser entryUrlParser;
+		private readonly IEntryUrlParser _entryUrlParser;
 
 		// ReSharper disable UnusedMember.Local
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		// ReSharper restore UnusedMember.Local
 
 		public PartialFindResult<Artist> Find(ISession session, ArtistQueryParams queryParams)
 		{
 			var context = new NHibernateDatabaseContext<Artist>(session, PermissionContext);
-			return new ArtistSearch(queryParams.LanguagePreference, context, entryUrlParser).Find(queryParams);
+			return new ArtistSearch(queryParams.LanguagePreference, context, _entryUrlParser).Find(queryParams);
 		}
 
 		public ArtistService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
-			this.entryUrlParser = entryUrlParser;
+			_entryUrlParser = entryUrlParser;
 		}
 
 		public void Archive(ISession session, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "")
@@ -62,7 +62,7 @@ namespace VocaDb.Model.Service
 			{
 				EntryPermissionManager.VerifyDelete(PermissionContext, a);
 
-				AuditLog(string.Format("deleting artist {0}{1}", EntryLinkFactory.CreateEntryLink(a), !string.IsNullOrEmpty(notes) ? " " + notes : string.Empty), session);
+				AuditLog($"deleting artist {EntryLinkFactory.CreateEntryLink(a)}{(!string.IsNullOrEmpty(notes) ? " " + notes : string.Empty)}", session);
 
 				NHibernateUtil.Initialize(a.Picture);
 				a.Delete();
@@ -196,8 +196,7 @@ namespace VocaDb.Model.Service
 				var source = session.Load<Artist>(sourceId);
 				var target = session.Load<Artist>(targetId);
 
-				AuditLog(string.Format("Merging {0} to {1}",
-					EntryLinkFactory.CreateEntryLink(source), EntryLinkFactory.CreateEntryLink(target)), session);
+				AuditLog($"Merging {EntryLinkFactory.CreateEntryLink(source)} to {EntryLinkFactory.CreateEntryLink(target)}", session);
 
 				NHibernateUtil.Initialize(source.Picture);
 				NHibernateUtil.Initialize(target.Picture);
@@ -271,8 +270,8 @@ namespace VocaDb.Model.Service
 
 				source.Deleted = true;
 
-				Archive(session, source, ArtistArchiveReason.Deleted, string.Format("Merged to {0}", target));
-				Archive(session, target, ArtistArchiveReason.Merged, string.Format("Merged from '{0}'", source));
+				Archive(session, source, ArtistArchiveReason.Deleted, $"Merged to {target}");
+				Archive(session, target, ArtistArchiveReason.Merged, $"Merged from '{source}'");
 
 				NHibernateUtil.Initialize(source.Picture);
 				NHibernateUtil.Initialize(target.Picture);

@@ -25,9 +25,9 @@ namespace VocaDb.Model.Domain.Globalization
 			return new TranslatedString(uniform, uniform, uniform);
 		}
 
-		private string english;
-		private string original;
-		private string romaji;
+		private string _english;
+		private string _original;
+		private string _romaji;
 
 		public TranslatedString()
 		{
@@ -61,20 +61,13 @@ namespace VocaDb.Model.Domain.Globalization
 
 		public virtual string this[ContentLanguageSelection language]
 		{
-			get
+			get => language switch
 			{
-				switch (language)
-				{
-					case ContentLanguageSelection.English:
-						return English;
-					case ContentLanguageSelection.Japanese:
-						return Japanese;
-					case ContentLanguageSelection.Romaji:
-						return Romaji;
-					default:
-						return Default;
-				}
-			}
+				ContentLanguageSelection.English => English,
+				ContentLanguageSelection.Japanese => Japanese,
+				ContentLanguageSelection.Romaji => Romaji,
+				_ => Default,
+			};
 			set
 			{
 				switch (language)
@@ -95,13 +88,7 @@ namespace VocaDb.Model.Domain.Globalization
 			}
 		}
 
-		public string this[ContentLanguagePreference preference]
-		{
-			get
-			{
-				return GetBestMatch(preference);
-			}
-		}
+		public string this[ContentLanguagePreference preference] => GetBestMatch(preference);
 
 		/// <summary>
 		/// All names in prioritized order.
@@ -145,10 +132,7 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual string Default
 		{
-			get
-			{
-				return GetDefaultOrFirst();
-			}
+			get => GetDefaultOrFirst();
 			set
 			{
 				switch (DefaultLanguage)
@@ -177,10 +161,10 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual string English
 		{
-			get { return english; }
+			get => _english;
 			set
 			{
-				english = value;
+				_english = value;
 				//UpdateDefault();
 			}
 		}
@@ -191,10 +175,10 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual string Japanese
 		{
-			get { return original; }
+			get => _original;
 			set
 			{
-				original = value;
+				_original = value;
 			}
 		}
 
@@ -204,10 +188,10 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </summary>
 		public virtual string Romaji
 		{
-			get { return romaji; }
+			get => _romaji;
 			set
 			{
-				romaji = value;
+				_romaji = value;
 			}
 		}
 

@@ -26,7 +26,7 @@ namespace VocaDb.Model.Mapping
 			Map(m => m.Description).Length(512).Not.Nullable();
 			Map(m => m.Url).Length(512).Not.Nullable();
 
-			References(m => m.Entry).Column(string.Format("[{0}]", typeof(TEntry).Name)).Not.Nullable();
+			References(m => m.Entry).Column($"[{typeof(TEntry).Name}]").Not.Nullable();
 		}
 	}
 

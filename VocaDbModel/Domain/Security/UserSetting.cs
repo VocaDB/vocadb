@@ -32,7 +32,7 @@ namespace VocaDb.Model.Domain.Security
 	{
 		private string GetCookieValue(IHttpRequest request, string cookieName)
 		{
-			if (context == null)
+			if (_context == null)
 				return null;
 
 			var cookie = request.Cookies.GetValueOrDefault(cookieName);
@@ -73,44 +73,40 @@ namespace VocaDb.Model.Domain.Security
 			return valueGetter(request.QueryString[paramName], out value);
 		}
 
-		private readonly IHttpContext context;
-		private readonly IUserPermissionContext permissionContext;
+		private readonly IHttpContext _context;
+		private readonly IUserPermissionContext _permissionContext;
 
 		protected virtual TimeSpan CookieExpires => TimeSpan.FromHours(24);
 
-		protected virtual string CookieName => string.Format("UserSettings.{0}", SettingName);
+		protected virtual string CookieName => $"UserSettings.{SettingName}";
 
 		protected virtual T Default => default(T);
 
-		private bool IsRequestValueOverridden => context != null && context.Items.Contains(RequestItemName);
+		private bool IsRequestValueOverridden => _context != null && _context.Items.Contains(RequestItemName);
 
-		private T ParseValue(string str)
-		{
-			T val;
-			return TryParseValue(str, out val) ? val : Default;
-		}
+		private T ParseValue(string str) => TryParseValue(str, out T val) ? val : Default;
 
-		private IHttpRequest Request => context != null ? context.Request : null;
+		private IHttpRequest Request => _context != null ? _context.Request : null;
 
 		protected virtual string RequestParamName => null;
 
-		private string RequestItemName => string.Format("UserSettings.{0}", SettingName);
+		private string RequestItemName => $"UserSettings.{SettingName}";
 
 		private T RequestValue
 		{
 			get
 			{
-				if (context == null)
+				if (_context == null)
 					throw new InvalidOperationException("HttpContext is not initialized");
 
-				return (T)context.Items[RequestItemName];
+				return (T)_context.Items[RequestItemName];
 			}
 			set
 			{
-				if (context == null)
+				if (_context == null)
 					throw new InvalidOperationException("HttpContext is not initialized");
 
-				context.Items[RequestItemName] = value;
+				_context.Items[RequestItemName] = value;
 			}
 		}
 
@@ -134,15 +130,15 @@ namespace VocaDb.Model.Domain.Security
 
 		public override string ToString()
 		{
-			return string.Format("User setting {0}: {1}", SettingName, Value);
+			return $"User setting {SettingName}: {Value}";
 		}
 
 		protected abstract bool TryParseValue(string str, out T val);
 
 		protected UserSetting(IHttpContext context, IUserPermissionContext permissionContext)
 		{
-			this.context = context;
-			this.permissionContext = permissionContext;
+			_context = context;
+			_permissionContext = permissionContext;
 		}
 
 		public void UpdateUser(User user)
@@ -165,8 +161,8 @@ namespace VocaDb.Model.Domain.Security
 				if (TryGetFromQueryString(Request, RequestParamName, ref val, TryParseValue))
 					return val;
 
-				if (permissionContext.IsLoggedIn)
-					return GetPersistedValue(permissionContext.LoggedUser);
+				if (_permissionContext.IsLoggedIn)
+					return GetPersistedValue(_permissionContext.LoggedUser);
 
 				if (TryGetCookieValue(Request, CookieName, ref val, ParseValue))
 					return val;
@@ -178,10 +174,10 @@ namespace VocaDb.Model.Domain.Security
 				if (IsRequestValueOverridden)
 					OverrideRequestValue(value);
 
-				if (permissionContext.IsLoggedIn)
-					SetPersistedValue(permissionContext.LoggedUser, value);
+				if (_permissionContext.IsLoggedIn)
+					SetPersistedValue(_permissionContext.LoggedUser, value);
 
-				SetCookie(context, CookieName, value.ToString(), CookieExpires);
+				SetCookie(_context, CookieName, value.ToString(), CookieExpires);
 			}
 		}
 	}

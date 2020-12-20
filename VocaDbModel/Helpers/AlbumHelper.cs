@@ -7,17 +7,11 @@ namespace VocaDb.Model.Helpers
 {
 	public static class AlbumHelper
 	{
-		public static ContentFocus GetContentFocus(DiscType t)
+		public static ContentFocus GetContentFocus(DiscType t) => t switch
 		{
-			switch (t)
-			{
-				case DiscType.Artbook:
-					return ContentFocus.Illustration;
-				case DiscType.Video:
-					return ContentFocus.Video;
-				default:
-					return ContentFocus.Music;
-			}
-		}
+			DiscType.Artbook => ContentFocus.Illustration,
+			DiscType.Video => ContentFocus.Video,
+			_ => ContentFocus.Music,
+		};
 	}
 }

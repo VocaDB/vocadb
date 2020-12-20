@@ -18,7 +18,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 		public SearchTextQuery TextQuery { get; set; }
 
-		public PagingProperties Paging { get; set; } = new PagingProperties(0, 30, true);
+		public PagingProperties Paging { get; set; } = new(0, 30, true);
 
 		public PVServices? PVServices { get; set; }
 

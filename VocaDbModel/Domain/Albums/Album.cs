@@ -48,25 +48,24 @@ namespace VocaDb.Model.Domain.Albums
 				   && second.Artists.All(a => first.ArtistList.Any(a2 => a.Id == a2.Id));
 		}
 
-		private ArchivedVersionManager<ArchivedAlbumVersion, AlbumEditableFields> archivedVersions
-			= new ArchivedVersionManager<ArchivedAlbumVersion, AlbumEditableFields>();
-		private TranslatedStringWithDefault artistString;
-		private IList<ArtistForAlbum> artists = new List<ArtistForAlbum>();
-		private IList<AlbumComment> comments = new List<AlbumComment>();
-		private EnglishTranslatedString description;
-		private IList<AlbumDiscProperties> discs = new List<AlbumDiscProperties>();
-		private IList<AlbumHit> hits = new List<AlbumHit>();
-		private IList<AlbumIdentifier> identifiers = new List<AlbumIdentifier>();
-		private NameManager<AlbumName> names = new NameManager<AlbumName>();
-		private AlbumRelease originalRelease = new AlbumRelease();
-		private IList<OtherArtistForAlbum> otherArtists = new List<OtherArtistForAlbum>();
-		private EntryPictureFileManager<AlbumPictureFile> pictureManager = new EntryPictureFileManager<AlbumPictureFile>();
-		private IList<PVForAlbum> pvs = new List<PVForAlbum>();
-		private IList<AlbumReview> reviews = new List<AlbumReview>();
-		private IList<SongInAlbum> songs = new List<SongInAlbum>();
-		private TagManager<AlbumTagUsage> tags = new TagManager<AlbumTagUsage>();
-		private IList<AlbumForUser> userCollections = new List<AlbumForUser>();
-		private IList<AlbumWebLink> webLinks = new List<AlbumWebLink>();
+		private ArchivedVersionManager<ArchivedAlbumVersion, AlbumEditableFields> _archivedVersions = new();
+		private TranslatedStringWithDefault _artistString;
+		private IList<ArtistForAlbum> _artists = new List<ArtistForAlbum>();
+		private IList<AlbumComment> _comments = new List<AlbumComment>();
+		private EnglishTranslatedString _description;
+		private IList<AlbumDiscProperties> _discs = new List<AlbumDiscProperties>();
+		private IList<AlbumHit> _hits = new List<AlbumHit>();
+		private IList<AlbumIdentifier> _identifiers = new List<AlbumIdentifier>();
+		private NameManager<AlbumName> _names = new();
+		private AlbumRelease _originalRelease = new();
+		private IList<OtherArtistForAlbum> _otherArtists = new List<OtherArtistForAlbum>();
+		private EntryPictureFileManager<AlbumPictureFile> _pictureManager = new();
+		private IList<PVForAlbum> _pvs = new List<PVForAlbum>();
+		private IList<AlbumReview> _reviews = new List<AlbumReview>();
+		private IList<SongInAlbum> _songs = new List<SongInAlbum>();
+		private TagManager<AlbumTagUsage> _tags = new();
+		private IList<AlbumForUser> _userCollections = new List<AlbumForUser>();
+		private IList<AlbumWebLink> _webLinks = new List<AlbumWebLink>();
 
 		public Album()
 		{
@@ -98,26 +97,23 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual IList<ArtistForAlbum> AllArtists
 		{
-			get { return artists; }
+			get => _artists;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				artists = value;
+				_artists = value;
 			}
 		}
 
-		public virtual IEnumerable<string> AllNames
-		{
-			get { return Names.AllValues; }
-		}
+		public virtual IEnumerable<string> AllNames => Names.AllValues;
 
 		public virtual IList<SongInAlbum> AllSongs
 		{
-			get { return songs; }
+			get => _songs;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				songs = value;
+				_songs = value;
 			}
 		}
 
@@ -125,21 +121,15 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual ArchivedVersionManager<ArchivedAlbumVersion, AlbumEditableFields> ArchivedVersionsManager
 		{
-			get { return archivedVersions; }
+			get => _archivedVersions;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				archivedVersions = value;
+				_archivedVersions = value;
 			}
 		}
 
-		public virtual IEnumerable<ArtistForAlbum> Artists
-		{
-			get
-			{
-				return AllArtists.Where(a => a.Artist == null || !a.Artist.Deleted);
-			}
-		}
+		public virtual IEnumerable<ArtistForAlbum> Artists => AllArtists.Where(a => a.Artist == null || !a.Artist.Deleted);
 
 		public virtual IEnumerable<Artist> ArtistList
 		{
@@ -153,21 +143,21 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual TranslatedStringWithDefault ArtistString
 		{
-			get { return artistString; }
+			get => _artistString;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				artistString = value;
+				_artistString = value;
 			}
 		}
 
 		public virtual IList<AlbumComment> AllComments
 		{
-			get { return comments; }
+			get => _comments;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				comments = value;
+				_comments = value;
 			}
 		}
 
@@ -192,61 +182,49 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual DateTime CreateDate { get; set; }
 
-		public virtual string DefaultName
-		{
-			get
-			{
-				return TranslatedName.Default;
-			}
-		}
+		public virtual string DefaultName => TranslatedName.Default;
 
 		public virtual bool Deleted { get; set; }
 
 		public virtual EnglishTranslatedString Description
 		{
-			get { return description; }
+			get => _description;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				description = value;
+				_description = value;
 			}
 		}
 
 		public virtual IList<AlbumDiscProperties> Discs
 		{
-			get { return discs; }
+			get => _discs;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				discs = value;
+				_discs = value;
 			}
 		}
 
 		public virtual DiscType DiscType { get; set; }
 
-		public virtual EntryType EntryType
-		{
-			get
-			{
-				return EntryType.Album;
-			}
-		}
+		public virtual EntryType EntryType => EntryType.Album;
 
 		public virtual IList<AlbumHit> Hits
 		{
-			get { return hits; }
-			set { hits = value; }
+			get => _hits;
+			set => _hits = value;
 		}
 
 		public virtual int Id { get; set; }
 
 		public virtual IList<AlbumIdentifier> Identifiers
 		{
-			get { return identifiers; }
+			get => _identifiers;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				identifiers = value;
+				_identifiers = value;
 			}
 		}
 
@@ -258,28 +236,19 @@ namespace VocaDb.Model.Domain.Albums
 		/// <summary>
 		/// Gets the ordinal number of the last disc for this album, starting from 1.
 		/// </summary>
-		public virtual int LastDiscNumber
-		{
-			get
-			{
-				return (Songs.Any() ? Songs.Max(s => s.DiscNumber) : 1);
-			}
-		}
+		public virtual int LastDiscNumber => (Songs.Any() ? Songs.Max(s => s.DiscNumber) : 1);
 
 		public virtual AlbumReview LastReview => Reviews.OrderByDescending(r => r.Created).FirstOrDefault();
 
-		public virtual TranslatedString TranslatedName
-		{
-			get { return Names.SortNames; }
-		}
+		public virtual TranslatedString TranslatedName => Names.SortNames;
 
 		public virtual NameManager<AlbumName> Names
 		{
-			get { return names; }
+			get => _names;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				names = value;
+				_names = value;
 			}
 		}
 
@@ -289,10 +258,10 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual AlbumRelease OriginalRelease
 		{
-			get { return originalRelease; }
+			get => _originalRelease;
 			set
 			{
-				originalRelease = value;
+				_originalRelease = value;
 			}
 		}
 
@@ -333,11 +302,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual IList<OtherArtistForAlbum> OtherArtists
 		{
-			get { return otherArtists; }
+			get => _otherArtists;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				otherArtists = value;
+				_otherArtists = value;
 			}
 		}
 
@@ -347,21 +316,21 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual EntryPictureFileManager<AlbumPictureFile> Pictures
 		{
-			get { return pictureManager; }
+			get => _pictureManager;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				pictureManager = value;
+				_pictureManager = value;
 			}
 		}
 
 		public virtual IList<PVForAlbum> PVs
 		{
-			get { return pvs; }
+			get => _pvs;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				pvs = value;
+				_pvs = value;
 			}
 		}
 
@@ -379,10 +348,7 @@ namespace VocaDb.Model.Domain.Albums
 		/// </summary>
 		public virtual double RatingAverage
 		{
-			get
-			{
-				return Math.Round(RatingAverageInt / 100.0f, 2);
-			}
+			get => Math.Round(RatingAverageInt / 100.0f, 2);
 			set
 			{
 				RatingAverageInt = (int)(value * 100);
@@ -395,33 +361,27 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual IList<AlbumReview> AllReviews
 		{
-			get => reviews;
+			get => _reviews;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				reviews = value;
+				_reviews = value;
 			}
 		}
 
 		public virtual IEnumerable<AlbumReview> Reviews => AllReviews.Where(r => !r.Deleted);
 
-		public virtual IEnumerable<SongInAlbum> Songs
-		{
-			get
-			{
-				return AllSongs.Where(s => s.Song == null || !s.Song.Deleted);
-			}
-		}
+		public virtual IEnumerable<SongInAlbum> Songs => AllSongs.Where(s => s.Song == null || !s.Song.Deleted);
 
 		public virtual EntryStatus Status { get; set; }
 
 		public virtual TagManager<AlbumTagUsage> Tags
 		{
-			get { return tags; }
+			get => _tags;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				tags = value;
+				_tags = value;
 			}
 		}
 
@@ -431,11 +391,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual IList<AlbumForUser> UserCollections
 		{
-			get { return userCollections; }
+			get => _userCollections;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				userCollections = value;
+				_userCollections = value;
 			}
 		}
 
@@ -443,11 +403,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual IList<AlbumWebLink> WebLinks
 		{
-			get { return webLinks; }
+			get => _webLinks;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				webLinks = value;
+				_webLinks = value;
 			}
 		}
 
@@ -607,7 +567,7 @@ namespace VocaDb.Model.Domain.Albums
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -953,7 +913,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public override string ToString()
 		{
-			return string.Format("album '{0}' [{1}]", DefaultName, Id);
+			return $"album '{DefaultName}' [{Id}]";
 		}
 
 		public virtual void UpdateArtistString()

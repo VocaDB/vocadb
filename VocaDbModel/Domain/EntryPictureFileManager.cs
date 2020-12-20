@@ -13,21 +13,21 @@ namespace VocaDb.Model.Domain
 {
 	public class EntryPictureFileManager<T> : IEnumerable<T> where T : EntryPictureFile
 	{
-		private IList<T> pictures = new List<T>();
+		private IList<T> _pictures = new List<T>();
 
 		public virtual IList<T> Pictures
 		{
-			get { return pictures; }
+			get => _pictures;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				pictures = value;
+				_pictures = value;
 			}
 		}
 
 		public virtual void Add(T pic)
 		{
-			pictures.Add(pic);
+			_pictures.Add(pic);
 		}
 
 		public virtual CollectionDiffWithValue<T, T> SyncPictures(

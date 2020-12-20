@@ -47,38 +47,23 @@ namespace VocaDb.Web.Models.Song
 
 		public PVType[] AllPVTypes { get; set; }
 
-		public Dictionary<string, string> AllSongTypes
-		{
-			get
-			{
-				return Translate.SongTypeNames.GetValuesAndNamesStrings(AppConfig.SongTypes);
-			}
-		}
+		public Dictionary<string, string> AllSongTypes => Translate.SongTypeNames.GetValuesAndNamesStrings(AppConfig.SongTypes);
 
 		public PVService[] AllVideoServices { get; set; }
 
 		public bool CanDelete { get; set; }
 
-		public bool Draft
-		{
-			get { return Song != null && Song.Status == EntryStatus.Draft; }
-		}
+		public bool Draft => Song != null && Song.Status == EntryStatus.Draft;
 
 		[FromJson]
 		[AllowHtml]
 		public SongForEditContract EditedSong { get; set; }
 
-		public int Id
-		{
-			get { return Song != null ? Song.Id : 0; }
-		}
+		public int Id => Song != null ? Song.Id : 0;
 
 		public int InstrumentalTagId { get; set; }
 
-		public string Name
-		{
-			get { return Song != null ? Song.Name : null; }
-		}
+		public string Name => Song != null ? Song.Name : null;
 
 		public SongContract Song { get; set; }
 

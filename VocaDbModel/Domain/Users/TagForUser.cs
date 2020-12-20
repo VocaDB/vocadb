@@ -9,8 +9,8 @@ namespace VocaDb.Model.Domain.Users
 	/// </summary>
 	public class TagForUser : IEntryWithIntId
 	{
-		private Tag tag;
-		private User user;
+		private Tag _tag;
+		private User _user;
 
 		public TagForUser() { }
 
@@ -25,27 +25,27 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual Tag Tag
 		{
-			get { return tag; }
+			get => _tag;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				tag = value;
+				_tag = value;
 			}
 		}
 
 		public virtual User User
 		{
-			get { return user; }
+			get => _user;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				user = value;
+				_user = value;
 			}
 		}
 
 		public override string ToString()
 		{
-			return string.Format("{0} following {1}", User, Tag);
+			return $"{User} following {Tag}";
 		}
 	}
 }

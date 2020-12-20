@@ -51,18 +51,18 @@ namespace VocaDb.Model.Database.Queries
 	/// </summary>
 	public class SongQueries : QueriesBase<ISongRepository, Song>
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly ObjectCache cache;
-		private readonly VdbConfigManager config;
-		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
-		private readonly IEnumTranslations enumTranslations;
-		private readonly IFollowedArtistNotifier followedArtistNotifier;
-		private readonly ILanguageDetector languageDetector;
-		private readonly IUserMessageMailer mailer;
-		private readonly IPVParser pvParser;
-		private readonly TagMapper tagMapper = new TagMapper();
-		private readonly IUserIconFactory userIconFactory;
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private readonly ObjectCache _cache;
+		private readonly VdbConfigManager _config;
+		private readonly IEntryLinkFactory _entryLinkFactory;
+		private readonly IAggregatedEntryImageUrlFactory _entryThumbPersister;
+		private readonly IEnumTranslations _enumTranslations;
+		private readonly IFollowedArtistNotifier _followedArtistNotifier;
+		private readonly ILanguageDetector _languageDetector;
+		private readonly IUserMessageMailer _mailer;
+		private readonly IPVParser _pvParser;
+		private readonly TagMapper _tagMapper = new();
+		private readonly IUserIconFactory _userIconFactory;
 
 		private void AddSongHit(IDatabaseContext<Song> session, Song song, string hostname)
 		{
@@ -79,7 +79,7 @@ namespace VocaDb.Model.Database.Queries
 
 			foreach (var tag in tags)
 			{
-				if (tagMapper.TagIsRedundantForSong(song.SongType, tag.Id, new EntryTypeTags(ctx)))
+				if (_tagMapper.TagIsRedundantForSong(song.SongType, tag.Id, new EntryTypeTags(ctx)))
 				{
 					continue;
 				}
@@ -129,9 +129,9 @@ namespace VocaDb.Model.Database.Queries
 
 		private Song[] GetSongSuggestions(IDatabaseContext<Song> ctx, Song song)
 		{
-			var cacheKey = string.Format("GetSongSuggestions.{0}", song.Id);
+			var cacheKey = $"GetSongSuggestions.{song.Id}";
 
-			var songIds = cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(24), () =>
+			var songIds = _cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(24), () =>
 			{
 				var related = new RelatedSongsQuery(ctx).GetLikeMatches(song, new[] { song.Id }, 4);
 				return related;
@@ -147,8 +147,8 @@ namespace VocaDb.Model.Database.Queries
 
 		private SongListBaseContract[] GetSongPools(IDatabaseContext<Song> ctx, int songId)
 		{
-			var cacheKey = string.Format("GetSongPools.{0}", songId);
-			return cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(1), () =>
+			var cacheKey = $"GetSongPools.{songId}";
+			return _cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(1), () =>
 			{
 				var lists = ctx
 					.Query<SongList>()
@@ -209,7 +209,7 @@ namespace VocaDb.Model.Database.Queries
 			var titleParseResult = NicoHelper.ParseTitle(res.Title, a => GetArtist(a, ctx, AppConfig.PreferredNicoArtistTypes));
 
 			if (!string.IsNullOrEmpty(titleParseResult.Title))
-				titleParseResult.TitleLanguage = languageDetector.Detect(titleParseResult.Title, ContentLanguageSelection.Unspecified);
+				titleParseResult.TitleLanguage = _languageDetector.Detect(titleParseResult.Title, ContentLanguageSelection.Unspecified);
 
 			if (titleParseResult.SongType == SongType.Unspecified)
 			{
@@ -245,7 +245,7 @@ namespace VocaDb.Model.Database.Queries
 			if (string.IsNullOrEmpty(url))
 				return null;
 
-			var pvResult = await pvParser.ParseByUrlAsync(url, true, PermissionContext);
+			var pvResult = await _pvParser.ParseByUrlAsync(url, true, PermissionContext);
 
 			if (!pvResult.IsOk)
 				throw pvResult.Exception;
@@ -255,8 +255,7 @@ namespace VocaDb.Model.Database.Queries
 
 			if (existing != null)
 			{
-				throw new VideoParseException(string.Format("Song '{0}' already contains this PV",
-					existing.Song.TranslatedName[PermissionContext.LanguagePreference]));
+				throw new VideoParseException($"Song '{existing.Song.TranslatedName[PermissionContext.LanguagePreference]}' already contains this PV");
 			}
 
 			return pvResult;
@@ -279,21 +278,21 @@ namespace VocaDb.Model.Database.Queries
 			ObjectCache cache, VdbConfigManager config, IEntrySubTypeNameFactory entrySubTypeNameFactory, IFollowedArtistNotifier followedArtistNotifier)
 			: base(repository, permissionContext)
 		{
-			this.entryLinkFactory = entryLinkFactory;
-			this.pvParser = pvParser;
-			this.mailer = mailer;
-			this.languageDetector = languageDetector;
-			this.userIconFactory = userIconFactory;
-			this.enumTranslations = enumTranslations;
-			this.entryThumbPersister = entryThumbPersister;
-			this.cache = cache;
-			this.config = config;
-			this.followedArtistNotifier = followedArtistNotifier;
+			_entryLinkFactory = entryLinkFactory;
+			_pvParser = pvParser;
+			_mailer = mailer;
+			_languageDetector = languageDetector;
+			_userIconFactory = userIconFactory;
+			_enumTranslations = enumTranslations;
+			_entryThumbPersister = entryThumbPersister;
+			_cache = cache;
+			_config = config;
+			_followedArtistNotifier = followedArtistNotifier;
 		}
 
 		public ICommentQueries Comments(IDatabaseContext<Song> ctx)
 		{
-			return new CommentQueries<SongComment, Song>(ctx.OfType<SongComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+			return new CommentQueries<SongComment, Song>(ctx.OfType<SongComment>(), PermissionContext, _userIconFactory, _entryLinkFactory);
 		}
 
 		public ArchivedSongVersion Archive(IDatabaseContext<Song> ctx, Song song, SongDiff diff, SongArchiveReason reason, string notes = "")
@@ -326,12 +325,12 @@ namespace VocaDb.Model.Database.Queries
 
 			VerifyManageDatabase();
 
-			return repository.HandleTransactionAsync(async ctx =>
+			return _repository.HandleTransactionAsync(async ctx =>
 			{
 				var pvResults = (await ParsePVs(ctx.OfType<PVForSong>(), contract.PVUrls)).Where(p => p != null).ToArray() ?? new VideoUrlParseResult[0];
 				var reprintPvResult = await ParsePV(ctx.OfType<PVForSong>(), contract.ReprintPVUrl);
 
-				ctx.AuditLogger.SysLog(string.Format("creating a new song with name '{0}'", contract.Names.First().Value));
+				ctx.AuditLogger.SysLog($"creating a new song with name '{contract.Names.First().Value}'");
 
 				var diff = new SongDiff();
 				diff.Names.Set();
@@ -404,7 +403,7 @@ namespace VocaDb.Model.Database.Queries
 				var archived = await ArchiveAsync(ctx, song, diff, SongArchiveReason.Created, contract.UpdateNotes ?? string.Empty);
 				await ctx.UpdateAsync(song);
 
-				var logStr = string.Format("created song {0} of type {1} ({2})", entryLinkFactory.CreateEntryLink(song), song.SongType, diff.ChangedFieldsString)
+				var logStr = $"created song {_entryLinkFactory.CreateEntryLink(song)} of type {song.SongType} ({diff.ChangedFieldsString})"
 					+ (!string.IsNullOrEmpty(contract.UpdateNotes) ? " " + HttpUtility.HtmlEncode(contract.UpdateNotes) : string.Empty)
 					.Truncate(400);
 
@@ -414,11 +413,11 @@ namespace VocaDb.Model.Database.Queries
 				var user = PermissionContext.LoggedUser;
 
 				// Send notifications. Avoid sending notification to the same users twice.
-				var notifiedUsers = await followedArtistNotifier.SendNotificationsAsync(ctx, song, song.ArtistList, user);
+				var notifiedUsers = await _followedArtistNotifier.SendNotificationsAsync(ctx, song, song.ArtistList, user);
 
 				if (addedTags != null && addedTags.Length > 0)
 				{
-					await new FollowedTagNotifier().SendNotificationsAsync(ctx, song, addedTags, notifiedUsers.Select(u => u.Id).Concat(new[] { user.Id }).ToArray(), entryLinkFactory, enumTranslations);
+					await new FollowedTagNotifier().SendNotificationsAsync(ctx, song, addedTags, notifiedUsers.Select(u => u.Id).Concat(new[] { user.Id }).ToArray(), _entryLinkFactory, _enumTranslations);
 				}
 
 				return new SongContract(song, PermissionContext.LanguagePreference);
@@ -438,9 +437,9 @@ namespace VocaDb.Model.Database.Queries
 			return HandleTransaction(ctx =>
 			{
 				return new Model.Service.Queries.EntryReportQueries().CreateReport(ctx, PermissionContext,
-					entryLinkFactory,
+					_entryLinkFactory,
 					(song, reporter, notesTruncated) => new SongReport(song, reportType, reporter, hostname, notesTruncated, versionNumber),
-					() => reportType != SongReportType.Other ? enumTranslations.SongReportTypeNames[reportType] : null,
+					() => reportType != SongReportType.Other ? _enumTranslations.SongReportTypeNames[reportType] : null,
 					songId, reportType, hostname, notes);
 			});
 		}
@@ -485,7 +484,7 @@ namespace VocaDb.Model.Database.Queries
 				var lang = languagePreference ?? PermissionContext.LanguagePreference;
 				var song = session.Load<Song>(songId);
 				var contract = new SongDetailsContract(song, lang, GetSongPools(session, songId),
-					config.SpecialTags, new EntryTypeTags(session), PermissionContext, entryThumbPersister,
+					_config.SpecialTags, new EntryTypeTags(session), PermissionContext, _entryThumbPersister,
 					GetSongTypeTag(session, song.SongType)
 					);
 				var user = PermissionContext.LoggedUser;
@@ -503,13 +502,13 @@ namespace VocaDb.Model.Database.Queries
 					.WhereNotDeleted()
 					.Where(c => c.EntryForComment.Id == songId)
 					.OrderByDescending(c => c.Created).Take(3).ToArray()
-					.Select(c => new CommentForApiContract(c, userIconFactory)).ToArray();
+					.Select(c => new CommentForApiContract(c, _userIconFactory)).ToArray();
 				contract.Hits = session.Query<SongHit>().Count(h => h.Entry.Id == songId);
 				contract.ListCount = session.Query<SongInList>().Count(l => l.Song.Id == songId);
 				contract.Suggestions = GetSongSuggestions(session, song).Select(s => new SongForApiContract(s, lang, SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl)).ToArray();
 
 				contract.PreferredLyrics = LyricsHelper.GetDefaultLyrics(contract.LyricsFromParents, new OptionalCultureCode(CultureInfo.CurrentUICulture, true), userLanguages,
-					new Lazy<IEnumerable<UserKnownLanguage>>(() => session.OfType<User>().GetLoggedUserOrNull(permissionContext)?.KnownLanguages, false));
+					new Lazy<IEnumerable<UserKnownLanguage>>(() => session.OfType<User>().GetLoggedUserOrNull(_permissionContext)?.KnownLanguages, false));
 
 				if (albumId != 0)
 				{
@@ -597,15 +596,15 @@ namespace VocaDb.Model.Database.Queries
 		{
 			var maxResults = 3;
 
-			return repository.HandleQueryAsync(async ctx =>
+			return _repository.HandleQueryAsync(async ctx =>
 			{
 				var song = await ctx.LoadAsync<Song>(songId);
 
 				var songTags = new HashSet<int>(song.Tags.Tags.Select(t => t.Id));
 
-				var pvResults = await pvParser.ParseByUrlsAsync(song.PVs
+				var pvResults = await _pvParser.ParseByUrlsAsync(song.PVs
 					.Where(pv => pv.PVType == PVType.Original && pv.Service == PVService.NicoNicoDouga)
-					.Select(pv => pv.Url), true, permissionContext);
+					.Select(pv => pv.Url), true, _permissionContext);
 
 				var tagMapper = new TagMapper();
 				var nicoTags = pvResults.Where(p => p != null).SelectMany(pv => pv.Tags).Distinct().ToArray();
@@ -616,7 +615,7 @@ namespace VocaDb.Model.Database.Queries
 					&& song.LengthSeconds > 0
 					&& song.OriginalVersion.LengthSeconds > song.LengthSeconds + 30)
 				{
-					mappedTags = mappedTags.Append(config.SpecialTags.ShortVersion);
+					mappedTags = mappedTags.Append(_config.SpecialTags.ShortVersion);
 				}
 
 				var instrumentalTagId = entryTypeTags.Instrumental;
@@ -646,7 +645,7 @@ namespace VocaDb.Model.Database.Queries
 			SongOptionalFields fields,
 			ContentLanguagePreference languagePreference)
 		{
-			return await repository.HandleQueryAsync(async ctx =>
+			return await _repository.HandleQueryAsync(async ctx =>
 			{
 				var query = ctx.Query()
 					.Where(s => !s.Deleted && s.RatingScore > 0)
@@ -795,7 +794,7 @@ namespace VocaDb.Model.Database.Queries
 			var checkedPV = getPVInfo ? anyPv.FirstOrDefault(p => VideoService.NicoNicoDouga.IsValidFor(p)) ?? anyPv.FirstOrDefault() : null; // For downloading video info
 
 			// Parse PV URLs (gets ID and service for each PV). Metadata will be parsed only for the first Nico PV, and only if it's needed.
-			var pvs = await Task.WhenAll(anyPv.Select(p => pvParser.ParseByUrlAsync(p, getPVInfo && p == checkedPV, PermissionContext)));
+			var pvs = await Task.WhenAll(anyPv.Select(p => _pvParser.ParseByUrlAsync(p, getPVInfo && p == checkedPV, PermissionContext)));
 			pvs = pvs.Where(p => p.IsOk).ToArray();
 
 			if (!names.Any() && !pvs.Any())
@@ -830,17 +829,17 @@ namespace VocaDb.Model.Database.Queries
 
 		public RatedSongForUserForApiContract[] GetRatings(int songId, UserOptionalFields userFields, ContentLanguagePreference lang)
 		{
-			return repository.HandleQuery(ctx => ctx.Load<Song>(songId).UserFavorites.Select(r =>
-			new RatedSongForUserForApiContract(r, userIconFactory, userFields, PermissionContext)).ToArray());
+			return _repository.HandleQuery(ctx => ctx.Load<Song>(songId).UserFavorites.Select(r =>
+			new RatedSongForUserForApiContract(r, _userIconFactory, userFields, PermissionContext)).ToArray());
 		}
 
 		public RelatedSongsContract GetRelatedSongs(int songId,
 			SongOptionalFields fields,
 			ContentLanguagePreference? lang = null)
 		{
-			var language = lang ?? permissionContext.LanguagePreference;
+			var language = lang ?? _permissionContext.LanguagePreference;
 
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				var song = ctx.Load(songId);
 				var songs = new RelatedSongsQuery(ctx).GetRelatedSongs(song);
@@ -870,13 +869,12 @@ namespace VocaDb.Model.Database.Queries
 			if (sourceId == targetId)
 				throw new ArgumentException("Source and target songs can't be the same", "targetId");
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var source = ctx.Load(sourceId);
 				var target = ctx.Load(targetId);
 
-				ctx.AuditLogger.AuditLog(string.Format("Merging {0} to {1}",
-					entryLinkFactory.CreateEntryLink(source), entryLinkFactory.CreateEntryLink(target)));
+				ctx.AuditLogger.AuditLog($"Merging {_entryLinkFactory.CreateEntryLink(source)} to {_entryLinkFactory.CreateEntryLink(target)}");
 
 				// Names
 				foreach (var n in source.Names.Names.Where(n => !target.HasName(n)))
@@ -964,8 +962,8 @@ namespace VocaDb.Model.Database.Queries
 				target.UpdateArtistString();
 				target.UpdateNicoId();
 
-				Archive(ctx, source, SongArchiveReason.Deleted, string.Format("Merged to {0}", target));
-				Archive(ctx, target, SongArchiveReason.Merged, string.Format("Merged from {0}", source));
+				Archive(ctx, source, SongArchiveReason.Deleted, $"Merged to {target}");
+				Archive(ctx, target, SongArchiveReason.Merged, $"Merged from {source}");
 
 				ctx.Update(source);
 				ctx.Update(target);
@@ -1004,12 +1002,12 @@ namespace VocaDb.Model.Database.Queries
 		{
 			PermissionContext.VerifyPermission(PermissionToken.AccessManageMenu);
 
-			await repository.HandleTransactionAsync(async ctx =>
+			await _repository.HandleTransactionAsync(async ctx =>
 			{
 				var song = await ctx.LoadAsync(songId);
 				foreach (var pv in song.PVs)
 				{
-					await pv.RefreshMetadata(pvParser, PermissionContext);
+					await pv.RefreshMetadata(_pvParser, PermissionContext);
 					await ctx.UpdateAsync(pv);
 				}
 				ctx.AuditLogger.SysLog("Updated PV metadata for " + song);
@@ -1018,7 +1016,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public int RemoveTagUsage(long tagUsageId)
 		{
-			return new TagUsageQueries(PermissionContext).RemoveTagUsage<SongTagUsage, Song>(tagUsageId, repository);
+			return new TagUsageQueries(PermissionContext).RemoveTagUsage<SongTagUsage, Song>(tagUsageId, _repository);
 		}
 
 		public EntryRevertedContract RevertToVersion(int archivedSongVersionId)
@@ -1122,8 +1120,8 @@ namespace VocaDb.Model.Database.Queries
 
 				song.UpdateFavoritedTimes();
 
-				Archive(session, song, SongArchiveReason.Reverted, string.Format("Reverted to version {0}", archivedVersion.Version));
-				AuditLog(string.Format("reverted {0} to revision {1}", entryLinkFactory.CreateEntryLink(song), archivedVersion.Version), session);
+				Archive(session, song, SongArchiveReason.Reverted, $"Reverted to version {archivedVersion.Version}");
+				AuditLog($"reverted {_entryLinkFactory.CreateEntryLink(song)} to revision {archivedVersion.Version}", session);
 
 				return new EntryRevertedContract(song, warnings);
 			});
@@ -1155,7 +1153,7 @@ namespace VocaDb.Model.Database.Queries
 
 			VerifyManageDatabase();
 
-			return await repository.HandleTransactionAsync(async ctx =>
+			return await _repository.HandleTransactionAsync(async ctx =>
 			{
 				var song = await ctx.LoadAsync(properties.Id);
 
@@ -1163,7 +1161,7 @@ namespace VocaDb.Model.Database.Queries
 
 				var diff = new SongDiff(DoSnapshot(song.GetLatestVersion(), ctx.OfType<User>().GetLoggedUser(PermissionContext)));
 
-				ctx.AuditLogger.SysLog(string.Format("updating properties for {0}", song));
+				ctx.AuditLogger.SysLog($"updating properties for {song}");
 
 				var oldPvCount = song.PVs.OfType(PVType.Original).Count();
 				diff.Notes.Set(song.Notes.CopyFrom(properties.Notes));
@@ -1242,7 +1240,7 @@ namespace VocaDb.Model.Database.Queries
 				if (lyricsDiff.Changed)
 					diff.Lyrics.Set();
 
-				var logStr = string.Format("updated properties for song {0} ({1})", entryLinkFactory.CreateEntryLink(song), diff.ChangedFieldsString)
+				var logStr = $"updated properties for song {_entryLinkFactory.CreateEntryLink(song)} ({diff.ChangedFieldsString})"
 					+ (properties.UpdateNotes != string.Empty ? " " + HttpUtility.HtmlEncode(properties.UpdateNotes) : string.Empty)
 					.Truncate(400);
 
@@ -1255,7 +1253,7 @@ namespace VocaDb.Model.Database.Queries
 				var newPVCutoff = TimeSpan.FromDays(7);
 				if (oldPvCount == 0 && song.PVs.OfType(PVType.Original).Any() && song.CreateDate <= DateTime.Now - newPVCutoff)
 				{
-					await followedArtistNotifier.SendNotificationsAsync(ctx, song, song.ArtistList, PermissionContext.LoggedUser);
+					await _followedArtistNotifier.SendNotificationsAsync(ctx, song, song.ArtistList, PermissionContext.LoggedUser);
 				}
 
 				var newSongCutoff = TimeSpan.FromHours(1);
@@ -1265,7 +1263,7 @@ namespace VocaDb.Model.Database.Queries
 
 					if (addedArtists.Any())
 					{
-						await followedArtistNotifier.SendNotificationsAsync(ctx, song, addedArtists, PermissionContext.LoggedUser);
+						await _followedArtistNotifier.SendNotificationsAsync(ctx, song, addedArtists, PermissionContext.LoggedUser);
 					}
 				}
 
@@ -1287,7 +1285,7 @@ namespace VocaDb.Model.Database.Queries
 				song.PersonalDescriptionAuthorId = data.PersonalDescriptionAuthor?.Id;
 
 				ctx.Update(song);
-				ctx.AuditLogger.AuditLog(string.Format("updated personal description for {0}", entryLinkFactory.CreateEntryLink(song)));
+				ctx.AuditLogger.AuditLog($"updated personal description for {_entryLinkFactory.CreateEntryLink(song)}");
 			});
 		}
 
@@ -1323,7 +1321,7 @@ namespace VocaDb.Model.Database.Queries
 
 				if (pvDiff.Changed)
 				{
-					var logStr = string.Format("updated PVs for song {0}", entryLinkFactory.CreateEntryLink(song)).Truncate(400);
+					var logStr = $"updated PVs for song {_entryLinkFactory.CreateEntryLink(song)}".Truncate(400);
 
 					await ArchiveAsync(ctx, song, diff, SongArchiveReason.PropertiesUpdated, string.Empty);
 					await ctx.UpdateAsync(song);

@@ -11,17 +11,17 @@ namespace VocaDb.Web.Controllers
 	/// </summary>
 	public class EntryReportsController : Controller
 	{
-		private readonly EntryReportQueries queries;
+		private readonly EntryReportQueries _queries;
 
 		public EntryReportsController(EntryReportQueries queries)
 		{
-			this.queries = queries;
+			_queries = queries;
 		}
 
 		[Authorize]
 		public int NewReportsCount()
 		{
-			return queries.GetNewReportsCount();
+			return _queries.GetNewReportsCount();
 		}
 	}
 }

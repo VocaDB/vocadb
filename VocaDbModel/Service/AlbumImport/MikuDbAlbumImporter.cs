@@ -19,11 +19,11 @@ namespace VocaDb.Model.Service.AlbumImport
 	/// </summary>
 	public class MikuDbAlbumImporter : IAlbumImporter
 	{
-		private const string albumIndexUrl = "http://mikudb.com/album-index/";
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private const int maxResults = 5;
+		private const string AlbumIndexUrl = "http://mikudb.com/album-index/";
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private const int MaxResults = 5;
 
-		private readonly HashSet<string> existingUrls;
+		private readonly HashSet<string> _existingUrls;
 
 		private bool ContainsTracklist(HtmlNode node)
 		{
@@ -119,8 +119,7 @@ namespace VocaDb.Model.Service.AlbumImport
 				}
 				else if (LineMatch(stripped, "Year"))
 				{
-					int year;
-					if (int.TryParse(stripped.Substring(6), out year))
+					if (int.TryParse(stripped.Substring(6), out int year))
 						data.ReleaseYear = year;
 				}
 			}
@@ -141,9 +140,7 @@ namespace VocaDb.Model.Service.AlbumImport
 
 				var trackText = line.Substring(0, dotPos);
 
-				int trackNum;
-
-				if (int.TryParse(trackText, out trackNum))
+				if (int.TryParse(trackText, out int trackNum))
 				{
 					if (trackNum == 1 && tracks.Any())
 						discNum++;
@@ -215,7 +212,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			}
 			catch (WebException x)
 			{
-				log.Warn("Unable to download album post '" + url + "'", x);
+				s_log.Warn("Unable to download album post '" + url + "'", x);
 				throw;
 			}
 
@@ -237,7 +234,7 @@ namespace VocaDb.Model.Service.AlbumImport
 
 				var url = link.Attributes["href"].Value;
 
-				if (existingUrls.Contains(url))
+				if (_existingUrls.Contains(url))
 					continue;
 
 				//var name = HtmlEntity.DeEntitize(link.InnerText);
@@ -251,7 +248,7 @@ namespace VocaDb.Model.Service.AlbumImport
 					}
 				});*/
 
-				if (list.Count >= maxResults)
+				if (list.Count >= MaxResults)
 					break;
 
 				Thread.Sleep(300);
@@ -297,7 +294,7 @@ namespace VocaDb.Model.Service.AlbumImport
 		{
 			ParamIs.NotNull(() => existingUrls);
 
-			this.existingUrls = new HashSet<string>(existingUrls.Select(a => a.SourceUrl));
+			_existingUrls = new HashSet<string>(existingUrls.Select(a => a.SourceUrl));
 		}
 
 		public AlbumImportResult[] ImportNew()
@@ -306,11 +303,11 @@ namespace VocaDb.Model.Service.AlbumImport
 
 			try
 			{
-				albumIndex = HtmlRequestHelper.Download(albumIndexUrl);
+				albumIndex = HtmlRequestHelper.Download(AlbumIndexUrl);
 			}
 			catch (WebException x)
 			{
-				log.Warn("Unable to read albums index", x);
+				s_log.Warn("Unable to read albums index", x);
 				throw;
 			}
 
@@ -319,7 +316,7 @@ namespace VocaDb.Model.Service.AlbumImport
 
 		public AlbumImportResult ImportOne(string url)
 		{
-			if (existingUrls.Contains(url))
+			if (_existingUrls.Contains(url))
 				return new AlbumImportResult { Message = "Album already imported" };
 
 			var data = GetAlbumData(url);
@@ -332,9 +329,6 @@ namespace VocaDb.Model.Service.AlbumImport
 			return false;
 		}
 
-		public string ServiceName
-		{
-			get { return "MikuDB"; }
-		}
+		public string ServiceName => "MikuDB";
 	}
 }

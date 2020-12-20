@@ -7,7 +7,7 @@ namespace VocaDb.Model.Domain
 {
 	public abstract class EntryHit : IEntryWithLongId
 	{
-		private int agent;
+		private int _agent;
 
 		protected EntryHit() { }
 
@@ -18,8 +18,8 @@ namespace VocaDb.Model.Domain
 
 		public virtual int Agent
 		{
-			get { return agent; }
-			set { agent = value; }
+			get => _agent;
+			set => _agent = value;
 		}
 
 		/// <summary>
@@ -32,7 +32,7 @@ namespace VocaDb.Model.Domain
 
 	public class GenericEntryHit<TEntry> : EntryHit where TEntry : class
 	{
-		private TEntry entry;
+		private TEntry _entry;
 
 		public GenericEntryHit() { }
 		public GenericEntryHit(TEntry entry, int agent) : base(agent)
@@ -42,11 +42,11 @@ namespace VocaDb.Model.Domain
 
 		public virtual TEntry Entry
 		{
-			get { return entry; }
+			get => _entry;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				entry = value;
+				_entry = value;
 			}
 		}
 

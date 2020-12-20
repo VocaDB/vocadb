@@ -7,7 +7,7 @@ using VocaDb.Model.Database.Queries;
 
 namespace VocaDb.Model.DataContracts.Aggregate
 {
-	public static class CountPerDayContractExtender
+	public static class CountPerDayContractExtensions
 	{
 		public static IEnumerable<TResult> CumulativeSelect<TSource, TResult>(this IEnumerable<TSource> sequence, Func<TSource, TResult, TResult> func)
 		{

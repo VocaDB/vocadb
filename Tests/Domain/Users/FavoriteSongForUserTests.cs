@@ -18,34 +18,34 @@ namespace VocaDb.Tests.Domain.Users
 	[TestClass]
 	public class FavoriteSongForUserTests
 	{
-		private FavoriteSongForUser rating;
-		private Song song;
-		private User user;
+		private FavoriteSongForUser _rating;
+		private Song _song;
+		private User _user;
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			song = new Song(new LocalizedString("I just wanna say...", ContentLanguageSelection.English));
-			user = new User { Name = "Miku" };
-			rating = user.AddSongToFavorites(song, SongVoteRating.Like);
+			_song = new Song(new LocalizedString("I just wanna say...", ContentLanguageSelection.English));
+			_user = new User { Name = "Miku" };
+			_rating = _user.AddSongToFavorites(_song, SongVoteRating.Like);
 		}
 
 		[TestMethod]
 		public void Delete()
 		{
-			rating.Delete();
+			_rating.Delete();
 
-			Assert.IsFalse(song.IsFavoritedBy(user), "not favorited by user");
-			Assert.AreEqual(0, song.RatingScore, "rating score is updated");
+			Assert.IsFalse(_song.IsFavoritedBy(_user), "not favorited by user");
+			Assert.AreEqual(0, _song.RatingScore, "rating score is updated");
 		}
 
 		[TestMethod]
 		public void SetRating_Changed()
 		{
-			rating.SetRating(SongVoteRating.Favorite);
+			_rating.SetRating(SongVoteRating.Favorite);
 
-			Assert.AreEqual(1, song.FavoritedTimes, "1 favorite");
-			Assert.AreEqual(FavoriteSongForUser.GetRatingScore(SongVoteRating.Favorite), song.RatingScore, "rating score is updated");
+			Assert.AreEqual(1, _song.FavoritedTimes, "1 favorite");
+			Assert.AreEqual(FavoriteSongForUser.GetRatingScore(SongVoteRating.Favorite), _song.RatingScore, "rating score is updated");
 		}
 	}
 }

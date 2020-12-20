@@ -10,7 +10,7 @@ namespace VocaDb.Web.Code.WebApi
 {
 	public class UnhandledExceptionLogger : ExceptionLogger
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		public override bool ShouldLog(ExceptionLoggerContext context)
 		{
@@ -24,7 +24,7 @@ namespace VocaDb.Web.Code.WebApi
 			if (!ShouldLog(context))
 				return;
 
-			log.Error(context.Exception, "Exception raised by web API");
+			s_log.Error(context.Exception, "Exception raised by web API");
 		}
 	}
 }

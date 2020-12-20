@@ -11,7 +11,7 @@ namespace VocaDb.Model.Helpers
 	public class ReCaptcha2
 	{
 		public const string ResponseFieldName = "g-recaptcha-response";
-		private static readonly ILogger log = LogManager.GetCurrentClassLogger();
+		private static readonly ILogger s_log = LogManager.GetCurrentClassLogger();
 		private const string VerifyApi = "https://www.google.com/recaptcha/api/siteverify";
 
 		public static async Task<ValidateCaptchaResponse> ValidateAsync(IHttpRequest request, string privateKey)
@@ -20,13 +20,13 @@ namespace VocaDb.Model.Helpers
 
 			if (string.IsNullOrEmpty(userResponse))
 			{
-				log.Warn("CAPTCHA response was empty");
+				s_log.Warn("CAPTCHA response was empty");
 				return new ValidateCaptchaResponse(false);
 			}
 
 			var userIp = request.UserHostAddress;
 
-			var requestUrl = string.Format("{0}?secret={1}&response={2}&remoteip={3}", VerifyApi, privateKey, userResponse, userIp);
+			var requestUrl = $"{VerifyApi}?secret={privateKey}&response={userResponse}&remoteip={userIp}";
 			VerifyResponse verifyResponse;
 
 			try
@@ -35,7 +35,7 @@ namespace VocaDb.Model.Helpers
 			}
 			catch (WebException x)
 			{
-				log.Error(x, "Unable to get response from ReCAPTCHA");
+				s_log.Error(x, "Unable to get response from ReCAPTCHA");
 				return new ValidateCaptchaResponse(false);
 			}
 

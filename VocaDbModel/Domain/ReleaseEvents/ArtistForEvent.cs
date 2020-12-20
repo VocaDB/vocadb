@@ -6,15 +6,15 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 {
 	public class ArtistForEvent : IEntryWithIntId, IArtistLink
 	{
-		private ReleaseEvent releaseEvent;
-		private string name;
+		private ReleaseEvent _releaseEvent;
+		private string _name;
 
 		public ArtistForEvent() { }
 
 		public ArtistForEvent(ReleaseEvent releaseEvent, Artist artist)
 		{
-			this.Artist = artist;
-			this.releaseEvent = releaseEvent;
+			Artist = artist;
+			_releaseEvent = releaseEvent;
 		}
 
 		/// <summary>
@@ -26,14 +26,14 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 		public virtual string Name
 		{
-			get => name;
-			set => name = value;
+			get => _name;
+			set => _name = value;
 		}
 
 		public virtual ReleaseEvent ReleaseEvent
 		{
-			get => releaseEvent;
-			set => releaseEvent = value;
+			get => _releaseEvent;
+			set => _releaseEvent = value;
 		}
 
 		public virtual ArtistEventRoles Roles { get; set; }

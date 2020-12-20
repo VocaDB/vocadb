@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Artists
 {
 	public class ArtistName : LocalizedStringWithId
 	{
-		private Artist artist;
+		private Artist _artist;
 
 		public ArtistName() { }
 
@@ -18,11 +18,11 @@ namespace VocaDb.Model.Domain.Artists
 
 		public virtual Artist Artist
 		{
-			get { return artist; }
+			get => _artist;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				artist = value;
+				_artist = value;
 			}
 		}
 
@@ -34,7 +34,7 @@ namespace VocaDb.Model.Domain.Artists
 			if (ReferenceEquals(this, another))
 				return true;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -49,7 +49,7 @@ namespace VocaDb.Model.Domain.Artists
 
 		public override string ToString()
 		{
-			return string.Format("name '{0}' for {1}", Value, Artist);
+			return $"name '{Value}' for {Artist}";
 		}
 	}
 }

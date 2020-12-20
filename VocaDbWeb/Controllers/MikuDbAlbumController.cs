@@ -13,16 +13,13 @@ namespace VocaDb.Web.Controllers
 {
 	public class MikuDbAlbumController : ControllerBase
 	{
-		private readonly MikuDbAlbumService service;
+		private readonly MikuDbAlbumService _service;
 
-		private MikuDbAlbumService Service
-		{
-			get { return service; }
-		}
+		private MikuDbAlbumService Service => _service;
 
 		public MikuDbAlbumController(MikuDbAlbumService service)
 		{
-			this.service = service;
+			_service = service;
 		}
 
 		public FileResult CoverPicture(int id)
@@ -41,7 +38,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult Index(string titleFilter, AlbumStatus? status)
 		{
 			var s = status ?? AlbumStatus.New;
-			var albums = Service.GetAlbums(titleFilter, s, new PagingProperties(0, entriesPerPage, false));
+			var albums = Service.GetAlbums(titleFilter, s, new PagingProperties(0, EntriesPerPage, false));
 			var model = new Index(albums, titleFilter, s);
 
 			return View(model);

@@ -17,18 +17,12 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			_ => throw new ArgumentException()
 		};
 
-		public static IQueryable<Venue> OrderBy(this IQueryable<Venue> query, VenueSortRule sortRule, ContentLanguagePreference languagePreference, GeoPointQueryParams coordinates, DistanceUnit distanceUnit)
+		public static IQueryable<Venue> OrderBy(this IQueryable<Venue> query, VenueSortRule sortRule, ContentLanguagePreference languagePreference, GeoPointQueryParams coordinates, DistanceUnit distanceUnit) => sortRule switch
 		{
-			switch (sortRule)
-			{
-				case VenueSortRule.Name:
-					return query.OrderByName(languagePreference);
-				case VenueSortRule.Distance:
-					return query.OrderByDistance(coordinates, distanceUnit);
-			}
-
-			return query;
-		}
+			VenueSortRule.Name => query.OrderByName(languagePreference),
+			VenueSortRule.Distance => query.OrderByDistance(coordinates, distanceUnit),
+			_ => query,
+		};
 
 		public static IQueryable<Venue> OrderByDistance(this IQueryable<Venue> query, GeoPointQueryParams coordinates, DistanceUnit distanceUnit)
 		{

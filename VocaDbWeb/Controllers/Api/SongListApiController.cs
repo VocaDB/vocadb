@@ -34,17 +34,17 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/songLists")]
 	public class SongListApiController : ApiController
 	{
-		private const int absoluteMax = 100;
-		private const int defaultMax = 10;
-		private readonly SongListQueries queries;
-		private readonly IUserIconFactory userIconFactory;
-		private readonly IAggregatedEntryImageUrlFactory entryImagePersister;
+		private const int AbsoluteMax = 100;
+		private const int DefaultMax = 10;
+		private readonly SongListQueries _queries;
+		private readonly IUserIconFactory _userIconFactory;
+		private readonly IAggregatedEntryImageUrlFactory _entryImagePersister;
 
 		public SongListApiController(SongListQueries queries, IUserIconFactory userIconFactory, IAggregatedEntryImageUrlFactory entryImagePersister)
 		{
-			this.queries = queries;
-			this.userIconFactory = userIconFactory;
-			this.entryImagePersister = entryImagePersister;
+			_queries = queries;
+			_userIconFactory = userIconFactory;
+			_entryImagePersister = entryImagePersister;
 		}
 
 		/// <summary>
@@ -60,15 +60,15 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		public void Delete(int id, string notes = "", bool hardDelete = false)
 		{
-			notes = notes ?? string.Empty;
+			notes ??= string.Empty;
 
 			if (hardDelete)
 			{
-				queries.MoveToTrash(id);
+				_queries.MoveToTrash(id);
 			}
 			else
 			{
-				queries.Delete(id, notes);
+				_queries.Delete(id, notes);
 			}
 		}
 
@@ -82,7 +82,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[Route("comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(int commentId) => queries.DeleteComment(commentId);
+		public void DeleteComment(int commentId) => _queries.DeleteComment(commentId);
 
 		/// <summary>
 		/// Gets a list of comments for a song list.
@@ -90,11 +90,11 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="listId">ID of the list whose comments to load.</param>
 		/// <returns>List of comments in no particular order.</returns>
 		[Route("{listId:int}/comments")]
-		public PartialFindResult<CommentForApiContract> GetComments(int listId) => new PartialFindResult<CommentForApiContract>(queries.GetComments(listId), 0);
+		public PartialFindResult<CommentForApiContract> GetComments(int listId) => new PartialFindResult<CommentForApiContract>(_queries.GetComments(listId), 0);
 
 		[Route("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public SongListForEditContract GetForEdit(int id) => queries.GetSongListForEdit(id);
+		public SongListForEditContract GetForEdit(int id) => _queries.GetSongListForEdit(id);
 
 		/// <summary>
 		/// Gets a list of featured song lists.
@@ -118,7 +118,7 @@ namespace VocaDb.Web.Controllers.Api
 			bool childTags = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongListSortRule sort = SongListSortRule.Name,
 			SongListOptionalFields fields = SongListOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
@@ -134,7 +134,7 @@ namespace VocaDb.Web.Controllers.Api
 				ChildTags = childTags
 			};
 
-			return queries.Find(s => new SongListForApiContract(s, lang, userIconFactory, entryImagePersister, fields), queryParams);
+			return _queries.Find(s => new SongListForApiContract(s, lang, _userIconFactory, _entryImagePersister, fields), queryParams);
 		}
 
 		/// <summary>
@@ -149,7 +149,7 @@ namespace VocaDb.Web.Controllers.Api
 		public IEnumerable<string> GetFeaturedListNames(string query = "",
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
-			int maxResults = 10) => queries.GetFeaturedListNames(query, nameMatchMode, featuredCategory, maxResults);
+			int maxResults = 10) => _queries.GetFeaturedListNames(query, nameMatchMode, featuredCategory, maxResults);
 
 		/// <summary>
 		/// Gets a list of songs in a song list.
@@ -183,16 +183,16 @@ namespace VocaDb.Web.Controllers.Api
 			[FromUri] int[] artistId = null,
 			bool childVoicebanks = false,
 			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
 		{
-			maxResults = Math.Min(maxResults, absoluteMax);
+			maxResults = Math.Min(maxResults, AbsoluteMax);
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
-			return queries.GetSongsInList(
+			return _queries.GetSongsInList(
 				new SongInListQueryParams
 				{
 					TextQuery = SearchTextQuery.Create(query, nameMatchMode),
@@ -215,7 +215,7 @@ namespace VocaDb.Web.Controllers.Api
 		{
 			try
 			{
-				return await queries.Import(url, parseAll);
+				return await _queries.Import(url, parseAll);
 			}
 			catch (UnableToImportException x)
 			{
@@ -229,7 +229,7 @@ namespace VocaDb.Web.Controllers.Api
 		{
 			try
 			{
-				return await queries.ImportSongs(url, pageToken, maxResults, parseAll);
+				return await _queries.ImportSongs(url, pageToken, maxResults, parseAll);
 			}
 			catch (UnableToImportException x)
 			{
@@ -249,7 +249,7 @@ namespace VocaDb.Web.Controllers.Api
 			if (list == null)
 				throw new HttpBadRequestException();
 
-			return queries.UpdateSongList(list, null);
+			return _queries.UpdateSongList(list, null);
 		}
 
 		/// <summary>
@@ -263,7 +263,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[System.Web.Http.Route("comments/{commentId:int}")]
 		[System.Web.Http.Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.PostEditComment(commentId, contract);
+		public void PostEditComment(int commentId, CommentForApiContract contract) => _queries.PostEditComment(commentId, contract);
 
 		/// <summary>
 		/// Posts a new comment.
@@ -273,6 +273,6 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[Route("{listId:int}/comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(int listId, CommentForApiContract contract) => queries.CreateComment(listId, contract);
+		public CommentForApiContract PostNewComment(int listId, CommentForApiContract contract) => _queries.CreateComment(listId, contract);
 	}
 }

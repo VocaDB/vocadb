@@ -7,20 +7,20 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 {
 	public class NHibernateTransaction : IMinimalTransaction
 	{
-		private readonly ITransaction tx;
+		private readonly ITransaction _tx;
 
 		public NHibernateTransaction(ITransaction tx)
 		{
 			ParamIs.NotNull(() => tx);
-			this.tx = tx;
+			_tx = tx;
 		}
 
-		public void Dispose() => tx.Dispose();
+		public void Dispose() => _tx.Dispose();
 
-		public void Commit() => tx.Commit();
+		public void Commit() => _tx.Commit();
 
-		public Task CommitAsync() => tx.CommitAsync();
+		public Task CommitAsync() => _tx.CommitAsync();
 
-		public void Rollback() => tx.Rollback();
+		public void Rollback() => _tx.Rollback();
 	}
 }

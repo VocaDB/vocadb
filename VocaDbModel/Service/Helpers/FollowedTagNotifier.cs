@@ -18,7 +18,7 @@ namespace VocaDb.Model.Service.Helpers
 {
 	public class FollowedTagNotifier
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		private string CreateMessageBody(Tag[] followedArtists, User user, IEntryWithNames entry, IEntryLinkFactory entryLinkFactory, bool markdown,
 			string entryTypeName)
@@ -33,7 +33,7 @@ namespace VocaDb.Model.Service.Helpers
 			}
 			else
 			{
-				entryLink = string.Format("{0} ( {1} )", entryName, url);
+				entryLink = $"{entryName} ( {url} )";
 			}
 
 			string msg;
@@ -41,13 +41,11 @@ namespace VocaDb.Model.Service.Helpers
 			if (followedArtists.Length == 1)
 			{
 				var artistName = followedArtists.First().TranslatedName[user.DefaultLanguageSelection];
-				msg = string.Format("A new {0}, '{1}', tagged with {2} was just added.",
-					entryTypeName, entryLink, artistName);
+				msg = $"A new {entryTypeName}, '{entryLink}', tagged with {artistName} was just added.";
 			}
 			else
 			{
-				msg = string.Format("A new {0}, '{1}', tagged with multiple tags you're following was just added.",
-					entryTypeName, entryLink);
+				msg = $"A new {entryTypeName}, '{entryLink}', tagged with multiple tags you're following was just added.";
 			}
 
 			msg += "\nYou're receiving this notification because you're following the tag(s).";
@@ -81,7 +79,7 @@ namespace VocaDb.Model.Service.Helpers
 			}
 			catch (GenericADOException x)
 			{
-				log.Error(x, "Unable to send notifications");
+				s_log.Error(x, "Unable to send notifications");
 			}
 		}
 
@@ -92,7 +90,7 @@ namespace VocaDb.Model.Service.Helpers
 			var coll = tags.Distinct().ToArray();
 			var tagIds = coll.Select(a => a.Id).ToArray();
 
-			log.Info("Sending notifications for {0} tags", tagIds.Length);
+			s_log.Info("Sending notifications for {0} tags", tagIds.Length);
 
 			// Get users with less than maximum number of unread messages, following any of the tags
 			var usersWithTagsArr = await ctx.Query<TagForUser>()
@@ -111,11 +109,11 @@ namespace VocaDb.Model.Service.Helpers
 
 			var userIds = usersWithTags.Keys.Except(ignoreUsers).ToArray();
 
-			log.Debug("Found {0} users subscribed to tags", userIds.Length);
+			s_log.Debug("Found {0} users subscribed to tags", userIds.Length);
 
 			if (!userIds.Any())
 			{
-				log.Info("No users subscribed to tags - skipping.");
+				s_log.Info("No users subscribed to tags - skipping.");
 				return;
 			}
 
@@ -142,18 +140,18 @@ namespace VocaDb.Model.Service.Helpers
 				if (followedTags.Length == 1)
 				{
 					var artistName = followedTags.First().TranslatedName[user.DefaultLanguageSelection];
-					title = string.Format("New {0} tagged with {1}", entryTypeName, artistName);
+					title = $"New {entryTypeName} tagged with {artistName}";
 				}
 				else
 				{
-					title = string.Format("New {0}", entryTypeName);
+					title = $"New {entryTypeName}";
 				}
 
 				var notification = user.CreateNotification(title, msg);
 				await ctx.SaveAsync(notification);
 			}
 
-			log.Info($"Sent notifications to {users.Count} users");
+			s_log.Info($"Sent notifications to {users.Count} users");
 		}
 	}
 }

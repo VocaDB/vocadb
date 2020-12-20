@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 {
 	public abstract class GenericWebLink<TEntry> : WebLink where TEntry : class
 	{
-		private TEntry entry;
+		private TEntry _entry;
 
 		protected GenericWebLink() { }
 
@@ -31,11 +31,11 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public virtual TEntry Entry
 		{
-			get { return entry; }
+			get => _entry;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				entry = value;
+				_entry = value;
 			}
 		}
 
@@ -50,7 +50,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -65,7 +65,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public override string ToString()
 		{
-			return string.Format("{0} for {1}", base.ToString(), Entry);
+			return $"{base.ToString()} for {Entry}";
 		}
 	}
 

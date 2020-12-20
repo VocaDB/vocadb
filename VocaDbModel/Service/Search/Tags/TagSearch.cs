@@ -11,20 +11,20 @@ namespace VocaDb.Model.Service.Search.Tags
 {
 	public class TagSearch
 	{
-		private readonly IDatabaseContext<Tag> dbContext;
-		private readonly ContentLanguagePreference languagePreference;
+		private readonly IDatabaseContext<Tag> _dbContext;
+		private readonly ContentLanguagePreference _languagePreference;
 
 		public TagSearch(IDatabaseContext<Tag> dbContext, ContentLanguagePreference languagePreference)
 		{
-			this.dbContext = dbContext;
-			this.languagePreference = languagePreference;
+			_dbContext = dbContext;
+			_languagePreference = languagePreference;
 		}
 
 		private IQueryable<Tag> CreateQuery(TagQueryParams queryParams, string queryText, NameMatchMode nameMatchMode)
 		{
 			var textQuery = TagSearchTextQuery.Create(queryText, nameMatchMode);
 
-			var query = dbContext.Query()
+			var query = _dbContext.Query()
 				.WhereIsDeleted(false)
 				.WhereHasName(textQuery)
 				.WhereAllowChildren(queryParams.AllowChildren)
@@ -50,7 +50,7 @@ namespace VocaDb.Model.Service.Search.Tags
 			var query = CreateQuery(queryParams, queryParams.Common.Query, queryParams.Common.NameMatchMode);
 
 			var orderedAndPaged = query
-				.OrderBy(queryParams.SortRule, languagePreference)
+				.OrderBy(queryParams.SortRule, _languagePreference)
 				.Paged(queryParams.Paging);
 
 			Tag[] tags;
@@ -108,7 +108,7 @@ namespace VocaDb.Model.Service.Search.Tags
 			int count;
 			int[] ids;
 			var exactResults = exactQ
-				.OrderBy(sortRule, languagePreference)
+				.OrderBy(sortRule, _languagePreference)
 				.Select(s => s.Id)
 				.Take(maxResults)
 				.ToArray();
@@ -123,7 +123,7 @@ namespace VocaDb.Model.Service.Search.Tags
 				var directQ = CreateQuery(queryParams, queryParams.Common.Query, queryParams.Common.NameMatchMode);
 
 				var direct = directQ
-					.OrderBy(sortRule, languagePreference)
+					.OrderBy(sortRule, _languagePreference)
 					.Select(s => s.Id)
 					.Take(maxResults)
 					.ToArray();
@@ -137,7 +137,7 @@ namespace VocaDb.Model.Service.Search.Tags
 				count = getCount ? directQ.Count() : 0;
 			}
 
-			var tags = dbContext
+			var tags = _dbContext
 				.LoadMultiple<Tag>(ids)
 				.ToArray()
 				.OrderByIds(ids);

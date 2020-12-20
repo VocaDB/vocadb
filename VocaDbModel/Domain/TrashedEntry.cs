@@ -8,10 +8,10 @@ namespace VocaDb.Model.Domain
 {
 	public class TrashedEntry : IEntryWithIntId
 	{
-		private XDocument data;
-		private string name;
-		private string notes;
-		private User user;
+		private XDocument _data;
+		private string _name;
+		private string _notes;
+		private User _user;
 
 		public TrashedEntry()
 		{
@@ -36,11 +36,11 @@ namespace VocaDb.Model.Domain
 
 		public virtual XDocument Data
 		{
-			get { return data; }
+			get => _data;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				data = value;
+				_data = value;
 			}
 		}
 
@@ -58,21 +58,21 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual string Name
 		{
-			get { return name; }
+			get => _name;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				name = value;
+				_name = value;
 			}
 		}
 
 		public virtual string Notes
 		{
-			get { return notes; }
+			get => _notes;
 			protected set
 			{
 				ParamIs.NotNull(() => value);
-				notes = value;
+				_notes = value;
 			}
 		}
 
@@ -81,11 +81,11 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual User User
 		{
-			get { return user; }
+			get => _user;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				user = value;
+				_user = value;
 			}
 		}
 	}

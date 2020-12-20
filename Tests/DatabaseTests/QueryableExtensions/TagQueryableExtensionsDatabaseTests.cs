@@ -15,11 +15,11 @@ namespace VocaDb.Tests.DatabaseTests.QueryableExtensions
 	[TestClass]
 	public class TagQueryableExtensionsDatabaseTests
 	{
-		private readonly DatabaseTestContext<IDatabaseContext> context = new DatabaseTestContext<IDatabaseContext>();
+		private readonly DatabaseTestContext<IDatabaseContext> _context = new();
 
 		private Tag[] WhereHasName(params string[] names)
 		{
-			return context.RunTest(ctx =>
+			return _context.RunTest(ctx =>
 			{
 				return ctx.Query<Tag>().WhereHasName(names).ToArray();
 			});

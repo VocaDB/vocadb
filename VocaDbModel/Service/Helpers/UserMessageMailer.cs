@@ -10,12 +10,12 @@ namespace VocaDb.Model.Service.Helpers
 {
 	public class UserMessageMailer : IUserMessageMailer
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly BrandableStringsManager brandableStringsManager;
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private readonly BrandableStringsManager _brandableStringsManager;
 
 		public UserMessageMailer(BrandableStringsManager brandableStringsManager)
 		{
-			this.brandableStringsManager = brandableStringsManager;
+			_brandableStringsManager = brandableStringsManager;
 		}
 
 		public bool SendEmail(string toEmail, string receiverName, string subject, string body)
@@ -31,7 +31,7 @@ namespace VocaDb.Model.Service.Helpers
 			}
 			catch (FormatException x)
 			{
-				log.Warn(x, "Unable to validate receiver email");
+				s_log.Warn(x, "Unable to validate receiver email");
 				return false;
 			}
 
@@ -44,7 +44,7 @@ namespace VocaDb.Model.Service.Helpers
 					"{1}" +
 					"\n\n" +
 					"- {2} mailer",
-				receiverName, body, brandableStringsManager.Layout.SiteName);
+				receiverName, body, _brandableStringsManager.Layout.SiteName);
 
 			var client = new SmtpClient();
 
@@ -54,12 +54,12 @@ namespace VocaDb.Model.Service.Helpers
 			}
 			catch (SmtpException x)
 			{
-				log.Error(x, "Unable to send mail");
+				s_log.Error(x, "Unable to send mail");
 				return false;
 			}
 			catch (InvalidOperationException x)
 			{
-				log.Error(x, "Unable to send mail");
+				s_log.Error(x, "Unable to send mail");
 				return false;
 			}
 
@@ -79,7 +79,7 @@ namespace VocaDb.Model.Service.Helpers
 			}
 			catch (FormatException x)
 			{
-				log.Warn(x, "Unable to validate receiver email");
+				s_log.Warn(x, "Unable to validate receiver email");
 				return false;
 			}
 
@@ -92,7 +92,7 @@ namespace VocaDb.Model.Service.Helpers
 					"{1}" +
 					"\n\n" +
 					"- {2} mailer",
-				receiverName, body, brandableStringsManager.Layout.SiteName);
+				receiverName, body, _brandableStringsManager.Layout.SiteName);
 
 			var client = new SmtpClient();
 
@@ -102,12 +102,12 @@ namespace VocaDb.Model.Service.Helpers
 			}
 			catch (SmtpException x)
 			{
-				log.Error(x, "Unable to send mail");
+				s_log.Error(x, "Unable to send mail");
 				return false;
 			}
 			catch (InvalidOperationException x)
 			{
-				log.Error(x, "Unable to send mail");
+				s_log.Error(x, "Unable to send mail");
 				return false;
 			}
 

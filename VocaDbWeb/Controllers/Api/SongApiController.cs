@@ -38,16 +38,16 @@ namespace VocaDb.Web.Controllers.Api
 	[System.Web.Http.RoutePrefix("api/songs")]
 	public class SongApiController : ApiController
 	{
-		private const int hourInSeconds = 3600;
-		private const int absoluteMax = 100;
-		private const int defaultMax = 10;
-		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly OtherService otherService;
-		private readonly SongQueries queries;
-		private readonly SongService service;
-		private readonly SongAggregateQueries songAggregateQueries;
-		private readonly UserService userService;
-		private readonly IUserPermissionContext userPermissionContext;
+		private const int HourInSeconds = 3600;
+		private const int AbsoluteMax = 100;
+		private const int DefaultMax = 10;
+		private readonly IEntryLinkFactory _entryLinkFactory;
+		private readonly OtherService _otherService;
+		private readonly SongQueries _queries;
+		private readonly SongService _service;
+		private readonly SongAggregateQueries _songAggregateQueries;
+		private readonly UserService _userService;
+		private readonly IUserPermissionContext _userPermissionContext;
 
 		/// <summary>
 		/// Initializes controller.
@@ -56,13 +56,13 @@ namespace VocaDb.Web.Controllers.Api
 			IEntryLinkFactory entryLinkFactory, IUserPermissionContext userPermissionContext,
 			UserService userService, OtherService otherService)
 		{
-			this.service = service;
-			this.queries = queries;
-			this.userService = userService;
-			this.songAggregateQueries = songAggregateQueries;
-			this.entryLinkFactory = entryLinkFactory;
-			this.userPermissionContext = userPermissionContext;
-			this.otherService = otherService;
+			_service = service;
+			_queries = queries;
+			_userService = userService;
+			_songAggregateQueries = songAggregateQueries;
+			_entryLinkFactory = entryLinkFactory;
+			_userPermissionContext = userPermissionContext;
+			_otherService = otherService;
 		}
 
 		/// <summary>
@@ -75,7 +75,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[System.Web.Http.Route("comments/{commentId:int}")]
 		[System.Web.Http.Authorize]
-		public void DeleteComment(int commentId) => queries.DeleteComment(commentId);
+		public void DeleteComment(int commentId) => _queries.DeleteComment(commentId);
 
 		/// <summary>
 		/// Deletes a song.
@@ -84,7 +84,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="notes">Notes.</param>
 		[Route("{id:int}")]
 		[Authorize]
-		public void Delete(int id, string notes = "") => service.Delete(id, notes ?? string.Empty);
+		public void Delete(int id, string notes = "") => _service.Delete(id, notes ?? string.Empty);
 
 		/// <summary>
 		/// Gets a list of comments for a song.
@@ -95,13 +95,13 @@ namespace VocaDb.Web.Controllers.Api
 		/// Pagination and sorting might be added later.
 		/// </remarks>
 		[System.Web.Http.Route("{id:int}/comments")]
-		public IEnumerable<CommentForApiContract> GetComments(int id) => queries.GetComments(id);
+		public IEnumerable<CommentForApiContract> GetComments(int id) => _queries.GetComments(id);
 
 		[System.Web.Http.Route("findDuplicate")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[System.Web.Http.HttpGet]
 		public async Task<NewSongCheckResultContract> GetFindDuplicate([FromUri] string[] term = null, [FromUri] string[] pv = null, [FromUri] int[] artistIds = null, bool getPVInfo = false)
-			=> await queries.FindDuplicates(
+			=> await _queries.FindDuplicates(
 				(term ?? new string[0]).Where(p => p != null).ToArray(),
 				(pv ?? new string[0]).Where(p => p != null).ToArray(),
 				artistIds, getPVInfo);
@@ -122,11 +122,11 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[System.Web.Http.Route("{id:int}/derived")]
 		public IEnumerable<SongForApiContract> GetDerived(int id, SongOptionalFields fields = SongOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetDerived(id, fields, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetDerived(id, fields, lang);
 
 		[System.Web.Http.Route("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public SongForEditContract GetForEdit(int id) => queries.GetSongForEdit(id);
+		public SongForEditContract GetForEdit(int id) => _queries.GetSongForEdit(id);
 
 		/// <summary>
 		/// Gets a song by Id.
@@ -140,7 +140,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <example>http://vocadb.net/api/songs/121</example>
 		/// <returns>Song data.</returns>
 		[System.Web.Http.Route("{id:int}")]
-		public SongForApiContract GetById(int id, SongOptionalFields fields = SongOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetSongForApi(id, fields, lang);
+		public SongForApiContract GetById(int id, SongOptionalFields fields = SongOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetSongForApi(id, fields, lang);
 
 		/// <summary>
 		/// Gets list of highlighted songs, same as front page.
@@ -149,10 +149,10 @@ namespace VocaDb.Web.Controllers.Api
 		/// Output is cached for 1 hour.
 		/// </remarks>
 		[Route("highlighted")]
-		[CacheOutput(ClientTimeSpan = hourInSeconds, ServerTimeSpan = hourInSeconds)]
+		[CacheOutput(ClientTimeSpan = HourInSeconds, ServerTimeSpan = HourInSeconds)]
 		public async Task<IEnumerable<SongForApiContract>> GetHighlightedSongs(
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
-			SongOptionalFields fields = SongOptionalFields.None) => await otherService.GetHighlightedSongs(languagePreference, fields);
+			SongOptionalFields fields = SongOptionalFields.None) => await _otherService.GetHighlightedSongs(languagePreference, fields);
 
 		/// <summary>
 		/// Get ratings for a song.
@@ -167,7 +167,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[Route("{id:int}/ratings")]
 		public IEnumerable<RatedSongForUserForApiContract> GetRatings(int id, UserOptionalFields userFields,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetRatings(id, userFields, lang);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetRatings(id, userFields, lang);
 
 		/// <summary>
 		/// Add or update rating for a specific song, for the currently logged in user.
@@ -182,12 +182,12 @@ namespace VocaDb.Web.Controllers.Api
 		[Route("{id:int}/ratings")]
 		[Authorize]
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Post)]
-		public void PostRating(int id, SongRatingContract rating) => userService.UpdateSongRating(userPermissionContext.LoggedUserId, id, rating.Rating);
+		public void PostRating(int id, SongRatingContract rating) => _userService.UpdateSongRating(_userPermissionContext.LoggedUserId, id, rating.Rating);
 
 		[Route("by-names")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public SongForApiContract[] GetByNames([FromUri] string[] names, [FromUri] int[] ignoreIds, ContentLanguagePreference lang, [FromUri] SongType[] songTypes = null, int maxResults = 3)
-			=> queries.GetByNames(names, songTypes, ignoreIds, lang, maxResults);
+			=> _queries.GetByNames(names, songTypes, ignoreIds, lang, maxResults);
 
 		/// <summary>
 		/// Gets related songs.
@@ -197,7 +197,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference.</param>
 		/// <returns>Related songs.</returns>
 		[Route("{id:int}/related")]
-		public RelatedSongsContract GetRelated(int id, SongOptionalFields fields = SongOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) => queries.GetRelatedSongs(id, fields, lang);
+		public RelatedSongsContract GetRelated(int id, SongOptionalFields fields = SongOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetRelatedSongs(id, fields, lang);
 
 		/// <summary>
 		/// Find songs.
@@ -271,7 +271,7 @@ namespace VocaDb.Web.Controllers.Api
 			int? parentSongId = null,
 			EntryStatus? status = null,
 			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongSortRule sort = SongSortRule.Name,
 			bool preferAccurateMatches = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
@@ -281,7 +281,7 @@ namespace VocaDb.Web.Controllers.Api
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
 
-			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, absoluteMax), getTotalCount, sort, false, preferAccurateMatches, null)
+			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, AbsoluteMax), getTotalCount, sort, false, preferAccurateMatches, null)
 			{
 				ArtistParticipation = {
 					ArtistIds = artistId,
@@ -307,7 +307,7 @@ namespace VocaDb.Web.Controllers.Api
 			};
 			param.Common.EntryStatus = status;
 
-			var artists = service.Find(s => new SongForApiContract(s, null, lang, fields), param);
+			var artists = _service.Find(s => new SongForApiContract(s, null, lang, fields), param);
 
 			return artists;
 		}
@@ -322,7 +322,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[Route("lyrics/{lyricsId:int}")]
 		[CacheOutput(ClientTimeSpan = 3600, ServerTimeSpan = 3600)]
-		public LyricsForSongContract GetLyrics(int lyricsId) => queries.GetLyrics(lyricsId);
+		public LyricsForSongContract GetLyrics(int lyricsId) => _queries.GetLyrics(lyricsId);
 
 		/// <summary>
 		/// Gets a list of song names. Ideal for autocomplete boxes.
@@ -332,7 +332,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="maxResults">Maximum number of results.</param>
 		/// <returns>List of song names.</returns>
 		[System.Web.Http.Route("names")]
-		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 15) => service.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
+		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 15) => _service.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
 
 		/// <summary>
 		/// Gets a song by PV.
@@ -353,24 +353,24 @@ namespace VocaDb.Web.Controllers.Api
 			PVService pvService,
 			string pvId,
 			SongOptionalFields fields = SongOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default) => service.GetSongWithPV(s => new SongForApiContract(s, null, lang, fields), pvService, pvId);
+			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _service.GetSongWithPV(s => new SongForApiContract(s, null, lang, fields), pvService, pvId);
 
 		[System.Web.Http.Route("ids")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public IEnumerable<int> GetIds() => queries.GetIds();
+		public IEnumerable<int> GetIds() => _queries.GetIds();
 
 		[System.Web.Http.Route("{id:int}/pvs")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public string GetPVId(int id, PVService service) => queries.PVForSongAndService(id, service).PVId;
+		public string GetPVId(int id, PVService service) => _queries.PVForSongAndService(id, service).PVId;
 
 		[Route("over-time")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[CacheOutput(ClientTimeSpan = 600, ServerTimeSpan = 600)]
-		public CountPerDayContract[] GetSongsOverTime(TimeUnit timeUnit, int artistId = 0, int tagId = 0) => songAggregateQueries.SongsOverTime(timeUnit, true, null, artistId, tagId);
+		public CountPerDayContract[] GetSongsOverTime(TimeUnit timeUnit, int artistId = 0, int tagId = 0) => _songAggregateQueries.SongsOverTime(timeUnit, true, null, artistId, tagId);
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Route("{id:int}/tagSuggestions")]
-		public async Task<IEnumerable<TagUsageForApiContract>> GetTagSuggestions(int id) => await queries.GetTagSuggestionsAsync(id);
+		public async Task<IEnumerable<TagUsageForApiContract>> GetTagSuggestions(int id) => await _queries.GetTagSuggestionsAsync(id);
 
 		/// <summary>
 		/// Gets top rated songs.
@@ -392,7 +392,7 @@ namespace VocaDb.Web.Controllers.Api
 			SongVocalistSelection? vocalist = null,
 			int maxResults = 25,
 			SongOptionalFields fields = SongOptionalFields.None,
-			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) => await queries.GetTopRated(durationHours, startDate, filterBy, vocalist, maxResults, fields, languagePreference);
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) => await _queries.GetTopRated(durationHours, startDate, filterBy, vocalist, maxResults, fields, languagePreference);
 
 		/// <summary>
 		/// Updates a comment.
@@ -405,7 +405,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[System.Web.Http.Route("comments/{commentId:int}")]
 		[System.Web.Http.Authorize]
-		public void PostEditComment(int commentId, CommentForApiContract contract) => queries.PostEditComment(commentId, contract);
+		public void PostEditComment(int commentId, CommentForApiContract contract) => _queries.PostEditComment(commentId, contract);
 
 		/// <summary>
 		/// Posts a new comment.
@@ -415,7 +415,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[System.Web.Http.Route("{id:int}/comments")]
 		[System.Web.Http.Authorize]
-		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) => queries.CreateComment(id, contract);
+		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) => _queries.CreateComment(id, contract);
 
 		[Route("")]
 		[Authorize]
@@ -429,7 +429,7 @@ namespace VocaDb.Web.Controllers.Api
 
 			try
 			{
-				return queries.Create(contract);
+				return _queries.Create(contract);
 			}
 			catch (VideoParseException x)
 			{
@@ -444,11 +444,11 @@ namespace VocaDb.Web.Controllers.Api
 		[System.Web.Http.Route("{id:int}/pvs")]
 		[System.Web.Http.Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task PostPVs(int id, PVContract[] pvs) => await queries.PostPVs(id, pvs);
+		public async Task PostPVs(int id, PVContract[] pvs) => await _queries.PostPVs(id, pvs);
 
 		[Route("{id:int}/personal-description")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Authorize]
-		public void PostPersonalDescription(int id, SongDetailsContract data) => queries.UpdatePersonalDescription(id, data);
+		public void PostPersonalDescription(int id, SongDetailsContract data) => _queries.UpdatePersonalDescription(id, data);
 	}
 }

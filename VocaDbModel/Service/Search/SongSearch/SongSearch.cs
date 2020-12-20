@@ -18,11 +18,11 @@ namespace VocaDb.Model.Service.Search.SongSearch
 {
 	public class SongSearch
 	{
-		private readonly IEntryUrlParser entryUrlParser;
-		private readonly ContentLanguagePreference languagePreference;
-		private readonly IDatabaseContext querySource;
+		private readonly IEntryUrlParser _entryUrlParser;
+		private readonly ContentLanguagePreference _languagePreference;
+		private readonly IDatabaseContext _querySource;
 
-		private ContentLanguagePreference LanguagePreference => languagePreference;
+		private ContentLanguagePreference LanguagePreference => _languagePreference;
 
 		private IQueryable<Song> CreateQuery(
 			SongQueryParams queryParams,
@@ -40,7 +40,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			var query = Query<Song>()
 				.WhereNotDeleted()
 				.WhereHasName(textQuery)
-				.WhereHasArtistParticipationStatus(queryParams.ArtistParticipation, querySource.OfType<Artist>())
+				.WhereHasArtistParticipationStatus(queryParams.ArtistParticipation, _querySource.OfType<Artist>())
 				.WhereHasArtists<Song, ArtistForSong>(queryParams.ArtistNames)
 				.WhereStatusIs(queryParams.Common.EntryStatus)
 				.WhereHasType(queryParams.SongTypes)
@@ -80,7 +80,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			if (queryParams.UnifyEntryTypesAndTags)
 			{
-				typesAndTags = EntryTypeAndTagCollection<SongType>.Create(EntryType.Song, queryParams.SongTypes, queryParams.TagIds, querySource);
+				typesAndTags = EntryTypeAndTagCollection<SongType>.Create(EntryType.Song, queryParams.SongTypes, queryParams.TagIds, _querySource);
 				queryParams.TagIds = queryParams.TagIds.Except(typesAndTags.TagIds).ToArray();
 				queryParams.SongTypes = queryParams.SongTypes.Except(typesAndTags.SubTypes).ToArray();
 			}
@@ -122,17 +122,10 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 		private IQueryable<T> Query<T>() where T : class, IDatabaseObject
 		{
-			return querySource.Query<T>();
+			return _querySource.Query<T>();
 		}
 
-		private DateTime? ParseDateOrNull(string str)
-		{
-			DateTime parsed;
-			if (DateTime.TryParse(str, CultureInfo.InvariantCulture, DateTimeStyles.None, out parsed))
-				return parsed;
-			else
-				return null;
-		}
+		private DateTime? ParseDateOrNull(string str) => DateTime.TryParse(str, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsed) ? parsed : null;
 
 		private ParsedSongQuery ParseDateRange(string str)
 		{
@@ -156,7 +149,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			// Optimization: check prefix, in most cases the user won't be searching by URL
 			if (trimmed.StartsWith("/s/", StringComparison.InvariantCultureIgnoreCase))
 			{
-				var entryId = entryUrlParser.Parse(trimmed, allowRelative: true);
+				var entryId = _entryUrlParser.Parse(trimmed, allowRelative: true);
 
 				if (entryId.EntryType == EntryType.Song)
 					return new ParsedSongQuery { Id = entryId.Id };
@@ -179,7 +172,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 					}
 				}
 
-				var entryId = entryUrlParser.Parse(trimmed, allowRelative: false);
+				var entryId = _entryUrlParser.Parse(trimmed, allowRelative: false);
 
 				if (entryId.EntryType == EntryType.Song)
 					return new ParsedSongQuery { Id = entryId.Id };
@@ -199,28 +192,22 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			var term = GetTerm(trimmed, "id", "tag", "artist-tag", "artist-type", "publish-date");
 
-			switch (term?.PropertyName)
+			return (term?.PropertyName) switch
 			{
-				case "tag":
-					return new ParsedSongQuery { TagName = term.Value };
-				case "artist-tag":
-					return new ParsedSongQuery { ArtistTag = term.Value };
-				case "artist-type":
-					return new ParsedSongQuery { ArtistType = EnumVal<ArtistType>.ParseSafe(term.Value, ArtistType.Unknown) };
-				case "id":
-					return new ParsedSongQuery { Id = PrimitiveParseHelper.ParseIntOrDefault(term.Value, 0) };
-				case "publish-date":
-					return ParseDateRange(term.Value);
-				default:
-					return ParseReferenceQuery(trimmed, query) ?? new ParsedSongQuery { Name = textQuery };
-			}
+				"tag" => new ParsedSongQuery { TagName = term.Value },
+				"artist-tag" => new ParsedSongQuery { ArtistTag = term.Value },
+				"artist-type" => new ParsedSongQuery { ArtistType = EnumVal<ArtistType>.ParseSafe(term.Value, ArtistType.Unknown) },
+				"id" => new ParsedSongQuery { Id = PrimitiveParseHelper.ParseIntOrDefault(term.Value, 0) },
+				"publish-date" => ParseDateRange(term.Value),
+				_ => ParseReferenceQuery(trimmed, query) ?? new ParsedSongQuery { Name = textQuery },
+			};
 		}
 
 		public SongSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference, IEntryUrlParser entryUrlParser)
 		{
-			this.querySource = querySource;
-			this.languagePreference = languagePreference;
-			this.entryUrlParser = entryUrlParser;
+			_querySource = querySource;
+			_languagePreference = languagePreference;
+			_entryUrlParser = entryUrlParser;
 		}
 
 		/// <summary>
@@ -296,7 +283,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				count = getCount ? directQ.Count() : 0;
 			}
 
-			var songs = querySource
+			var songs = _querySource
 				.LoadMultiple<Song>(ids)
 				.ToArray()
 				.OrderByIds(ids);
@@ -314,7 +301,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				.Paged(queryParams.Paging)
 				.ToArray();
 
-			var songs = SortByIds(querySource
+			var songs = SortByIds(_querySource
 				.Query<Song>()
 				.Where(s => ids.Contains(s.Id))
 				.ToArray(), ids);

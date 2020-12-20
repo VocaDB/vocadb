@@ -4,12 +4,12 @@ using System.Web.Mvc;
 
 namespace VocaDb.Web.Helpers
 {
-	public static class TempDataExtender
+	public static class TempDataExtensions
 	{
-		private const string errorKey = "ErrorMessage";
-		private const string statusKey = "StatusMessage";
-		private const string successKey = "SuccessMessage";
-		private const string warnKey = "WarnMessage";
+		private const string ErrorKey = "ErrorMessage";
+		private const string StatusKey = "StatusMessage";
+		private const string SuccessKey = "SuccessMessage";
+		private const string WarnKey = "WarnMessage";
 
 		private static string Get(TempDataDictionary temp, string key)
 		{
@@ -24,42 +24,42 @@ namespace VocaDb.Web.Helpers
 
 		public static void SetErrorMessage(this TempDataDictionary temp, string val)
 		{
-			Set(temp, errorKey, val);
+			Set(temp, ErrorKey, val);
 		}
 
 		public static string ErrorMessage(this TempDataDictionary temp)
 		{
-			return Get(temp, errorKey);
+			return Get(temp, ErrorKey);
 		}
 
 		public static void SetStatusMessage(this TempDataDictionary temp, string val)
 		{
-			Set(temp, statusKey, val);
+			Set(temp, StatusKey, val);
 		}
 
 		public static string StatusMessage(this TempDataDictionary temp)
 		{
-			return Get(temp, statusKey);
+			return Get(temp, StatusKey);
 		}
 
 		public static void SetSuccessMessage(this TempDataDictionary temp, string val)
 		{
-			Set(temp, successKey, val);
+			Set(temp, SuccessKey, val);
 		}
 
 		public static string SuccessMessage(this TempDataDictionary temp)
 		{
-			return Get(temp, successKey);
+			return Get(temp, SuccessKey);
 		}
 
 		public static void SetWarnMessage(this TempDataDictionary temp, string val)
 		{
-			Set(temp, warnKey, val);
+			Set(temp, WarnKey, val);
 		}
 
 		public static string WarnMessage(this TempDataDictionary temp)
 		{
-			return Get(temp, warnKey);
+			return Get(temp, WarnKey);
 		}
 	}
 }

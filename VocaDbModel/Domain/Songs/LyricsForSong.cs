@@ -8,12 +8,12 @@ namespace VocaDb.Model.Domain.Songs
 {
 	public class LyricsForSong : IEquatable<LyricsForSong>, IDatabaseObject
 	{
-		private OptionalCultureCode cultureCode;
-		private string notes;
-		private Song song;
-		private string source;
-		private string value;
-		private string url;
+		private OptionalCultureCode _cultureCode;
+		private string _notes;
+		private Song _song;
+		private string _source;
+		private string _value;
+		private string _url;
 
 		public LyricsForSong() { }
 
@@ -29,10 +29,10 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual OptionalCultureCode CultureCode
 		{
-			get { return cultureCode ?? (cultureCode = OptionalCultureCode.Empty); }
+			get => _cultureCode ?? (_cultureCode = OptionalCultureCode.Empty);
 			set
 			{
-				cultureCode = value ?? OptionalCultureCode.Empty;
+				_cultureCode = value ?? OptionalCultureCode.Empty;
 			}
 		}
 
@@ -40,31 +40,31 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual string Notes
 		{
-			get { return notes; }
+			get => _notes;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				notes = value;
+				_notes = value;
 			}
 		}
 
 		public virtual Song Song
 		{
-			get { return song; }
+			get => _song;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				song = value;
+				_song = value;
 			}
 		}
 
 		public virtual string Source
 		{
-			get { return source; }
+			get => _source;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				source = value;
+				_source = value;
 			}
 		}
 
@@ -72,21 +72,21 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual string URL
 		{
-			get { return url; }
+			get => _url;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				url = value;
+				_url = value;
 			}
 		}
 
 		public virtual string Value
 		{
-			get { return value; }
+			get => _value;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				this.value = value;
+				_value = value;
 			}
 		}
 
@@ -113,7 +113,7 @@ namespace VocaDb.Model.Domain.Songs
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)

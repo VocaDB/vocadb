@@ -4,8 +4,8 @@ namespace VocaDb.Model.Domain.Tags
 {
 	public class RelatedTag : IEntryWithIntId
 	{
-		private Tag ownerTag;
-		private Tag linkedTag;
+		private Tag _ownerTag;
+		private Tag _linkedTag;
 
 		public RelatedTag() { }
 
@@ -22,21 +22,21 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual Tag OwnerTag
 		{
-			get { return ownerTag; }
+			get => _ownerTag;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				ownerTag = value;
+				_ownerTag = value;
 			}
 		}
 
 		public virtual Tag LinkedTag
 		{
-			get { return linkedTag; }
+			get => _linkedTag;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				linkedTag = value;
+				_linkedTag = value;
 			}
 		}
 
@@ -60,7 +60,7 @@ namespace VocaDb.Model.Domain.Tags
 		{
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != this.GetType()) return false;
+			if (obj.GetType() != GetType()) return false;
 			return Equals((RelatedTag)obj);
 		}
 

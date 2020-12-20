@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain
 	public abstract class MergeRecord<T> : IEntryWithIntId
 		where T : class, IEntryBase
 	{
-		private T target;
+		private T _target;
 
 		protected MergeRecord() { }
 
@@ -22,8 +22,8 @@ namespace VocaDb.Model.Domain
 			ParamIs.NotNull(() => source);
 			ParamIs.NotNull(() => target);
 
-			this.Source = source.Id;
-			this.Target = target;
+			Source = source.Id;
+			Target = target;
 		}
 
 		public virtual int Id { get; set; }
@@ -41,11 +41,11 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual T Target
 		{
-			get { return target; }
+			get => _target;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				target = value;
+				_target = value;
 			}
 		}
 	}

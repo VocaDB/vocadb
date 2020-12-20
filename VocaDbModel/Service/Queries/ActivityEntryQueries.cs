@@ -13,18 +13,18 @@ namespace VocaDb.Model.Service.Queries
 {
 	public class ActivityEntryQueries
 	{
-		private readonly IDatabaseContext<ActivityEntry> ctx;
-		private readonly IUserPermissionContext permissionContext;
+		private readonly IDatabaseContext<ActivityEntry> _ctx;
+		private readonly IUserPermissionContext _permissionContext;
 
 		public ActivityEntryQueries(IDatabaseContext<ActivityEntry> ctx, IUserPermissionContext permissionContext)
 		{
-			this.ctx = ctx;
-			this.permissionContext = permissionContext;
+			_ctx = ctx;
+			_permissionContext = permissionContext;
 		}
 
 		public void AddActivityfeedEntry(ActivityEntry entry)
 		{
-			var latestEntries = ctx.Query()
+			var latestEntries = _ctx.Query()
 				.OrderByDescending(a => a.CreateDate)
 				.Take(10)   // time cutoff would be better instead of an arbitrary number of activity entries
 				.ToArray();
@@ -32,12 +32,12 @@ namespace VocaDb.Model.Service.Queries
 			if (latestEntries.Any(e => e.IsDuplicate(entry)))
 				return;
 
-			ctx.Save(entry);
+			_ctx.Save(entry);
 		}
 
 		public async Task AddActivityfeedEntryAsync(ActivityEntry entry)
 		{
-			var latestEntries = await ctx.Query()
+			var latestEntries = await _ctx.Query()
 				.OrderByDescending(a => a.CreateDate)
 				.Take(10)   // time cutoff would be better instead of an arbitrary number of activity entries
 				.VdbToListAsync();
@@ -45,12 +45,12 @@ namespace VocaDb.Model.Service.Queries
 			if (latestEntries.Any(e => e.IsDuplicate(entry)))
 				return;
 
-			await ctx.SaveAsync(entry);
+			await _ctx.SaveAsync(entry);
 		}
 
 		public void AddEntryEditedEntry(Tag entry, EntryEditEvent editEvent, ArchivedTagVersion archivedVersion)
 		{
-			var user = ctx.OfType<User>().GetLoggedUser(permissionContext);
+			var user = _ctx.OfType<User>().GetLoggedUser(_permissionContext);
 			var activityEntry = new TagActivityEntry(entry, editEvent, user, archivedVersion);
 			AddActivityfeedEntry(activityEntry);
 		}

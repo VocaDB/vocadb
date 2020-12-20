@@ -80,7 +80,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 		public override string ToString()
 		{
-			return string.Format("release event series {0} [{1}]", Name, Id);
+			return $"release event series {Name} [{Id}]";
 		}
 	}
 }

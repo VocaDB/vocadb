@@ -16,31 +16,25 @@ namespace VocaDb.Model.Service.SongImport
 {
 	public class YoutubePlaylistImporter : ISongListImporter
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private static readonly Regex regex = new Regex(@"www\.youtube\.com/playlist\?list=([\w\-_]+)");
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private static readonly Regex s_regex = new(@"www\.youtube\.com/playlist\?list=([\w\-_]+)");
 
-		private const string playlistsFormat =
+		private const string PlaylistsFormat =
 			"https://www.googleapis.com/youtube/v3/playlists?part=snippet&key={0}&id={1}";
 
-		private const string playlistItemsFormat =
+		private const string PlaylistItemsFormat =
 			"https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key={0}&playlistId={1}&maxResults={2}&pageToken={3}";
 
-		private string YoutubeApiKey
-		{
-			get
-			{
-				return AppConfig.YoutubeApiKey;
-			}
-		}
+		private string YoutubeApiKey => AppConfig.YoutubeApiKey;
 
 		private string GetId(string url)
 		{
-			var match = regex.Match(url);
+			var match = s_regex.Match(url);
 
 			if (!match.Success)
 			{
-				log.Warn("Youtube URL not regonized: {0}", url);
-				throw new UnableToImportException(string.Format("Youtube URL not regonized: {0}", url));
+				s_log.Warn("Youtube URL not regonized: {0}", url);
+				throw new UnableToImportException($"Youtube URL not regonized: {url}");
 			}
 
 			var id = match.Groups[1].Value;
@@ -51,7 +45,7 @@ namespace VocaDb.Model.Service.SongImport
 		{
 			var songs = new List<ImportedSongInListContract>();
 
-			var requestUrl = string.Format(playlistItemsFormat, YoutubeApiKey, playlistId, maxResults, pageToken);
+			var requestUrl = string.Format(PlaylistItemsFormat, YoutubeApiKey, playlistId, maxResults, pageToken);
 
 			YoutubePlaylistItemResponse result;
 
@@ -61,7 +55,7 @@ namespace VocaDb.Model.Service.SongImport
 			}
 			catch (Exception x)
 			{
-				log.Warn(x, "Unable to read Youtube playlist");
+				s_log.Warn(x, "Unable to read Youtube playlist");
 				throw new UnableToImportException("Unable to read Youtube playlist", x);
 			}
 
@@ -71,7 +65,7 @@ namespace VocaDb.Model.Service.SongImport
 				{
 					Name = item.Snippet.Title,
 					SortIndex = ((int?)item.Snippet.Position ?? 0) + 1,
-					Url = string.Format("https://www.youtube.com/watch?v={0}", item.Snippet.ResourceId.VideoId)
+					Url = $"https://www.youtube.com/watch?v={item.Snippet.ResourceId.VideoId}"
 				};
 				songs.Add(song);
 			}
@@ -88,7 +82,7 @@ namespace VocaDb.Model.Service.SongImport
 		{
 			var id = GetId(url);
 
-			var requestUrl = string.Format(playlistsFormat, YoutubeApiKey, id);
+			var requestUrl = string.Format(PlaylistsFormat, YoutubeApiKey, id);
 			YoutubePlaylistResponse result;
 
 			try
@@ -97,14 +91,14 @@ namespace VocaDb.Model.Service.SongImport
 			}
 			catch (Exception x)
 			{
-				log.Warn(x, "Unable to read Youtube playlist");
+				s_log.Warn(x, "Unable to read Youtube playlist");
 				throw new UnableToImportException("Unable to read Youtube playlist");
 			}
 
 			if (!result.Items.Any())
 			{
-				log.Info("Youtube playlist not found");
-				throw new UnableToImportException(string.Format("Youtube playlist not found: {0}", url));
+				s_log.Info("Youtube playlist not found");
+				throw new UnableToImportException($"Youtube playlist not found: {url}");
 			}
 
 			var name = result.Items[0].Snippet.Title;
@@ -118,7 +112,7 @@ namespace VocaDb.Model.Service.SongImport
 
 		public bool MatchUrl(string url)
 		{
-			return regex.IsMatch(url);
+			return s_regex.IsMatch(url);
 		}
 
 		public class YoutubePlaylistResponse : YoutubeResponse<YoutubePlaylistItem> { }

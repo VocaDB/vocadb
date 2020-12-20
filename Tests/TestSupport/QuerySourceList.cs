@@ -13,14 +13,14 @@ namespace VocaDb.Tests.TestSupport
 	public class QuerySourceList : IDatabaseContext
 	{
 		// Objects added (but not yet committed) during this transaction
-		private readonly List<IDatabaseObject> added = new List<IDatabaseObject>();
+		private readonly List<IDatabaseObject> _added = new();
 		// Objects that were committed
-		private readonly List<IDatabaseObject> committed = new List<IDatabaseObject>();
-		private readonly Dictionary<Type, IList> entities;
+		private readonly List<IDatabaseObject> _committed = new();
+		private readonly Dictionary<Type, IList> _entities;
 
 		public QuerySourceList()
 		{
-			entities = new Dictionary<Type, IList>();
+			_entities = new Dictionary<Type, IList>();
 		}
 
 		public int AbortedTransactionCount { get; private set; }
@@ -28,32 +28,32 @@ namespace VocaDb.Tests.TestSupport
 
 		public void Add<TEntity>(TEntity entity) where TEntity : class, IDatabaseObject
 		{
-			added.Add(entity);
+			_added.Add(entity);
 			List<TEntity>().Add(entity);
 		}
 
 		public void AddRange<TEntity>(IEnumerable<TEntity> entities) where TEntity : class, IDatabaseObject
 		{
-			added.AddRange(entities);
+			_added.AddRange(entities);
 			List<TEntity>().AddRange(entities);
 		}
 
 		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel)
 		{
-			added.Clear();
-			committed.Clear();
+			_added.Clear();
+			_committed.Clear();
 
 			void CommitTransaction()
 			{
 				CommittedTransactionCount++;
-				committed.AddRange(added);
-				added.Clear();
+				_committed.AddRange(_added);
+				_added.Clear();
 			}
 
 			void RollbackTransaction()
 			{
 				AbortedTransactionCount++;
-				added.Clear();
+				_added.Clear();
 			}
 
 			return new FakeTransaction(CommitTransaction, RollbackTransaction);
@@ -63,13 +63,7 @@ namespace VocaDb.Tests.TestSupport
 		{
 		}
 
-		public IAuditLogger AuditLogger
-		{
-			get
-			{
-				return new FakeAuditLogger();
-			}
-		}
+		public IAuditLogger AuditLogger => new FakeAuditLogger();
 
 		public void Flush()
 		{
@@ -79,7 +73,7 @@ namespace VocaDb.Tests.TestSupport
 		/// Tests that an object was saved to database during an active transaction and the transaction was committed.
 		/// </summary>
 		public bool IsCommitted<TEntity>(TEntity entity) where TEntity : class, IDatabaseObject
-			=> committed.Contains(entity);
+			=> _committed.Contains(entity);
 
 		public IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject => new ListDatabaseContext<T2>(this);
 
@@ -87,10 +81,10 @@ namespace VocaDb.Tests.TestSupport
 		{
 			var t = typeof(TEntity);
 
-			if (!entities.ContainsKey(t))
-				entities.Add(t, new List<TEntity>());
+			if (!_entities.ContainsKey(t))
+				_entities.Add(t, new List<TEntity>());
 
-			return (List<TEntity>)entities[t];
+			return (List<TEntity>)_entities[t];
 		}
 
 		public T Load<T>(object id) where T : class, IDatabaseObject
@@ -108,8 +102,8 @@ namespace VocaDb.Tests.TestSupport
 		{
 			var t = typeof(T);
 
-			if (entities.ContainsKey(t))
-				return ((List<T>)entities[t]).AsQueryable();
+			if (_entities.ContainsKey(t))
+				return ((List<T>)_entities[t]).AsQueryable();
 			else
 				return (new T[] { }).AsQueryable();
 		}
@@ -119,8 +113,8 @@ namespace VocaDb.Tests.TestSupport
 		/// </summary>
 		public void Reset()
 		{
-			added.Clear();
-			committed.Clear();
+			_added.Clear();
+			_committed.Clear();
 			CommittedTransactionCount = AbortedTransactionCount = 0;
 		}
 	}

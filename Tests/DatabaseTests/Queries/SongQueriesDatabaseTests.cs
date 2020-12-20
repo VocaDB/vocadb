@@ -24,25 +24,25 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 	[TestClass]
 	public class SongQueriesDatabaseTests
 	{
-		private readonly DatabaseTestContext<ISongRepository> context = new DatabaseTestContext<ISongRepository>();
-		private readonly FakePermissionContext userContext;
+		private readonly DatabaseTestContext<ISongRepository> _context = new();
+		private readonly FakePermissionContext _userContext;
 		private TestDatabase Db => TestContainerManager.TestDatabase;
 
 		public SongQueriesDatabaseTests()
 		{
-			userContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
+			_userContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 		}
 
 		private SongQueries Queries(ISongRepository repository)
 		{
-			return new SongQueries(repository, userContext, new FakeEntryLinkFactory(), new FakePVParser(),
+			return new SongQueries(repository, _userContext, new FakeEntryLinkFactory(), new FakePVParser(),
 				new FakeUserMessageMailer(), new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(), new FakeObjectCache(), new VdbConfigManager(), new EntrySubTypeNameFactory(),
 				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()));
 		}
 
 		private async Task<SongForEditContract> Update(SongForEditContract contract)
 		{
-			return await context.RunTestAsync(async repository =>
+			return await _context.RunTestAsync(async repository =>
 			{
 				var queries = Queries(repository);
 
@@ -66,7 +66,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 				ReleaseEvent = null
 			};
 
-			await context.RunTestAsync(async repository =>
+			await _context.RunTestAsync(async repository =>
 			{
 				var queries = Queries(repository);
 
@@ -83,7 +83,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 		[TestCategory(TestCategories.Database)]
 		public async Task Update_ReleaseEvent_Change()
 		{
-			await context.RunTestAsync(async repository =>
+			await _context.RunTestAsync(async repository =>
 			{
 				var queries = Queries(repository);
 

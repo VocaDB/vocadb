@@ -8,7 +8,7 @@ namespace VocaDb.Model.Domain
 	/// </summary>
 	public readonly struct GlobalEntryId
 	{
-		public static readonly GlobalEntryId Empty = new GlobalEntryId();
+		public static readonly GlobalEntryId Empty = new();
 
 		public GlobalEntryId(EntryType entryType, int id)
 			: this()
@@ -25,7 +25,7 @@ namespace VocaDb.Model.Domain
 
 		public override string ToString()
 		{
-			return string.Format("{0}.{1}", EntryType, Id);
+			return $"{EntryType}.{Id}";
 		}
 
 		public bool Equals(GlobalEntryId other)

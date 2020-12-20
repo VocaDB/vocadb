@@ -26,14 +26,14 @@ namespace VocaDb.Model.Service
 	public class UserService : QueriesBase<IUserRepository, User>
 	{
 		// ReSharper disable UnusedMember.Local
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		// ReSharper restore UnusedMember.Local
 
 		private IEntryLinkFactory EntryLinkFactory { get; }
 
 		private string MakeGeoIpToolLink(string hostname)
 		{
-			return string.Format("<a href='http://www.geoiptool.com/?IP={0}'>{0}</a>", hostname);
+			return $"<a href='http://www.geoiptool.com/?IP={hostname}'>{hostname}</a>";
 		}
 
 		public UserService(IUserRepository sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
@@ -61,7 +61,7 @@ namespace VocaDb.Model.Service
 
 				session.Update(user);
 
-				AuditLog(string.Format("followed {0}", artist), session, user);
+				AuditLog($"followed {artist}", session, user);
 			});
 		}
 
@@ -74,7 +74,7 @@ namespace VocaDb.Model.Service
 
 				if (user == null)
 				{
-					AuditLog(string.Format("failed login from {0} - no user.", MakeGeoIpToolLink(hostname)), session, name);
+					AuditLog($"failed login from {MakeGeoIpToolLink(hostname)} - no user.", session, name);
 
 					if (delayFailedLogin)
 						Thread.Sleep(2000);
@@ -86,7 +86,7 @@ namespace VocaDb.Model.Service
 
 				if (accessKey != hashed)
 				{
-					AuditLog(string.Format("failed login from {0} - wrong password.", MakeGeoIpToolLink(hostname)), session, name);
+					AuditLog($"failed login from {MakeGeoIpToolLink(hostname)} - wrong password.", session, name);
 
 					if (delayFailedLogin)
 						Thread.Sleep(2000);
@@ -94,7 +94,7 @@ namespace VocaDb.Model.Service
 					return null;
 				}
 
-				AuditLog(string.Format("logged in from {0} with access key.", MakeGeoIpToolLink(hostname)), session, user);
+				AuditLog($"logged in from {MakeGeoIpToolLink(hostname)} with access key.", session, user);
 
 				return new UserContract(user);
 			});
@@ -109,7 +109,7 @@ namespace VocaDb.Model.Service
 				if (user == null)
 					return null;
 
-				AuditLog(string.Format("logged in from {0} with twitter.", MakeGeoIpToolLink(hostname)), session, user);
+				AuditLog($"logged in from {MakeGeoIpToolLink(hostname)} with twitter.", session, user);
 
 				user.UpdateLastLogin(hostname, culture);
 				session.Update(user);
@@ -138,7 +138,7 @@ namespace VocaDb.Model.Service
 				user.Options.TwitterOAuthToken = authToken;
 				session.Update(user);
 
-				AuditLog(string.Format("connected to Twitter account '{0}' from {1}.", twitterName, MakeGeoIpToolLink(hostname)), session, user);
+				AuditLog($"connected to Twitter account '{twitterName}' from {MakeGeoIpToolLink(hostname)}.", session, user);
 
 				return true;
 			});
@@ -260,7 +260,7 @@ namespace VocaDb.Model.Service
 				var link = session.Query<ArtistForUser>()
 					.FirstOrDefault(a => a.Artist.Id == artistId && a.User.Id == userId);
 
-				AuditLog(string.Format("removing {0}", link), session);
+				AuditLog($"removing {link}", session);
 
 				if (link != null)
 				{
@@ -317,9 +317,9 @@ namespace VocaDb.Model.Service
 
 				session.Update(song);
 
-				AuditLog(string.Format("rating {0} as '{1}'.", EntryLinkFactory.CreateEntryLink(song), rating),
+				AuditLog($"rating {EntryLinkFactory.CreateEntryLink(song)} as '{rating}'.",
 					session, agent);
-			}, string.Format("Unable to rate song with ID '{0}'.", songId));
+			}, $"Unable to rate song with ID '{songId}'.");
 		}
 	}
 
@@ -353,7 +353,7 @@ namespace VocaDb.Model.Service
 			: base("Specified username is invalid") { }
 
 		public InvalidUserNameException(string name)
-			: base(string.Format("Specified username is invalid: '{0}'", name)) { }
+			: base($"Specified username is invalid: '{name}'") { }
 	}
 
 	public class UserNameTooSoonException : Exception
@@ -402,10 +402,7 @@ namespace VocaDb.Model.Service
 
 		public LoginError Error { get; set; }
 
-		public bool IsOk
-		{
-			get { return Error == LoginError.Nothing; }
-		}
+		public bool IsOk => Error == LoginError.Nothing;
 
 		public UserContract User { get; set; }
 	}

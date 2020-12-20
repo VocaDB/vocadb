@@ -24,18 +24,18 @@ namespace VocaDb.Web.Controllers
 {
 	public class AdminController : ControllerBase
 	{
-		private readonly IPRuleManager ipRuleManager;
-		private readonly ISessionFactory sessionFactory;
+		private readonly IPRuleManager _ipRuleManager;
+		private readonly ISessionFactory _sessionFactory;
 		private AdminService Service { get; set; }
-		private readonly OtherService otherService;
+		private readonly OtherService _otherService;
 
 		public AdminController(AdminService service, OtherService otherService,
 			IPRuleManager ipRuleManager, ISessionFactory sessionFactory)
 		{
 			Service = service;
-			this.otherService = otherService;
-			this.ipRuleManager = ipRuleManager;
-			this.sessionFactory = sessionFactory;
+			_otherService = otherService;
+			_ipRuleManager = ipRuleManager;
+			_sessionFactory = sessionFactory;
 		}
 
 		[Authorize]
@@ -134,7 +134,7 @@ namespace VocaDb.Web.Controllers
 		{
 			var count = Service.DeletePVsByAuthor(author, PVService.Youtube);
 
-			TempData.SetSuccessMessage(string.Format("Deleted {0} PVs by '{1}'.", count, author));
+			TempData.SetSuccessMessage($"Deleted {count} PVs by '{author}'.");
 
 			return View("PVsByAuthor", new PVsByAuthor(author ?? string.Empty, new PVForSongContract[] { }));
 		}
@@ -163,7 +163,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
-			var rules = otherService.GetIPRules();
+			var rules = _otherService.GetIPRules();
 			return View(rules);
 		}
 
@@ -174,7 +174,7 @@ namespace VocaDb.Web.Controllers
 			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			Service.UpdateIPRules(rules);
-			ipRuleManager.Reset(rules.Select(i => i.Address));
+			_ipRuleManager.Reset(rules.Select(i => i.Address));
 
 			TempData.SetSuccessMessage("IP rules updated.");
 
@@ -206,7 +206,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult RefreshDbCache()
 		{
-			DatabaseHelper.ClearSecondLevelCache(sessionFactory);
+			DatabaseHelper.ClearSecondLevelCache(_sessionFactory);
 
 			return RedirectToAction("Index");
 		}
@@ -272,7 +272,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult UpdateTagVoteCounts()
 		{
 			var count = Service.UpdateTagVoteCounts();
-			TempData.SetStatusMessage(string.Format("Updated tag vote counts, {0} corrections made", count));
+			TempData.SetStatusMessage($"Updated tag vote counts, {count} corrections made");
 			return RedirectToAction("Index");
 		}
 

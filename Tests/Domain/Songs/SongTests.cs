@@ -41,78 +41,78 @@ namespace VocaDb.Tests.Domain.Songs
 			public Tag GetTag(EntryTypeAndSubType fullEntryType) => null;
 		}
 
-		private Artist artist;
-		private readonly List<Artist> artists = new List<Artist>();
-		private Tag changedLyricsTag;
-		private EntryTypeTags entryTypeTags;
-		private Tag instrumentalTag;
-		private LyricsForSong lyrics;
-		private Song song;
-		private SpecialTags specialTags;
-		private Artist vocalist;
+		private Artist _artist;
+		private readonly List<Artist> _artists = new();
+		private Tag _changedLyricsTag;
+		private EntryTypeTags _entryTypeTags;
+		private Tag _instrumentalTag;
+		private LyricsForSong _lyrics;
+		private Song _song;
+		private SpecialTags _specialTags;
+		private Artist _vocalist;
 
-		private Func<ArtistForSongContract, Artist> artistFunc;
+		private Func<ArtistForSongContract, Artist> _artistFunc;
 
 		private IList<LyricsForSong> CallGetLyricsFromParents(Song song)
 		{
-			return song.GetLyricsFromParents(specialTags, entryTypeTags);
+			return song.GetLyricsFromParents(_specialTags, _entryTypeTags);
 		}
 
 		private PVForSong CreatePV(PVService service = PVService.Youtube, PVType pvType = PVType.Original, DateTime? publishDate = null)
 		{
-			return song.CreatePV(new PVContract { Service = service, PVId = "test", Name = "test", PublishDate = publishDate, PVType = pvType });
+			return _song.CreatePV(new PVContract { Service = service, PVId = "test", Name = "test", PublishDate = publishDate, PVType = pvType });
 		}
 
 		private void TestUpdatePublishDateFromPVs(DateTime? expected, params PVForSong[] pvs)
 		{
-			song.UpdatePublishDateFromPVs();
+			_song.UpdatePublishDateFromPVs();
 
-			Assert.AreEqual(expected, song.PublishDate.DateTime, "PublishDate");
+			Assert.AreEqual(expected, _song.PublishDate.DateTime, "PublishDate");
 		}
 
 		[TestInitialize]
 		public void Setup()
 		{
-			artist = new Artist(TranslatedString.Create("Minato")) { Id = 1, ArtistType = ArtistType.Producer };
-			vocalist = CreateEntry.Vocalist(39);
-			artists.Add(artist);
-			artists.Add(vocalist);
-			song = new Song(new LocalizedString("Soar", ContentLanguageSelection.English));
-			lyrics = song.CreateLyrics("Miku!", "miku", string.Empty, TranslationType.Original, "ja");
-			instrumentalTag = CreateEntry.Tag("instrumental", 1);
-			changedLyricsTag = CreateEntry.Tag("changed lyrics", 2);
-			specialTags = new SpecialTags
+			_artist = new Artist(TranslatedString.Create("Minato")) { Id = 1, ArtistType = ArtistType.Producer };
+			_vocalist = CreateEntry.Vocalist(39);
+			_artists.Add(_artist);
+			_artists.Add(_vocalist);
+			_song = new Song(new LocalizedString("Soar", ContentLanguageSelection.English));
+			_lyrics = _song.CreateLyrics("Miku!", "miku", string.Empty, TranslationType.Original, "ja");
+			_instrumentalTag = CreateEntry.Tag("instrumental", 1);
+			_changedLyricsTag = CreateEntry.Tag("changed lyrics", 2);
+			_specialTags = new SpecialTags
 			{
-				ChangedLyrics = changedLyricsTag.Id
+				ChangedLyrics = _changedLyricsTag.Id
 			};
-			entryTypeTags = new EntryTypeTags
+			_entryTypeTags = new EntryTypeTags
 			{
-				Instrumental = instrumentalTag.Id,
+				Instrumental = _instrumentalTag.Id,
 			};
-			artistFunc = (contract => artists.FirstOrDefault(a => a.Id == contract.Artist?.Id));
+			_artistFunc = (contract => _artists.FirstOrDefault(a => a.Id == contract.Artist?.Id));
 		}
 
 		[TestMethod]
 		public void Ctor_LocalizedString()
 		{
-			song = new Song(new LocalizedString("song", ContentLanguageSelection.Romaji));
+			_song = new Song(new LocalizedString("song", ContentLanguageSelection.Romaji));
 
-			Assert.AreEqual(1, song.Names.Count(), "Names count");
-			Assert.IsTrue(song.Names.HasNameForLanguage(ContentLanguageSelection.Romaji), "Has name for Romaji");
-			Assert.IsFalse(song.Names.HasNameForLanguage(ContentLanguageSelection.English), "Does not have name for English");
-			Assert.AreEqual("song", song.Names.GetEntryName(ContentLanguagePreference.Romaji).DisplayName, "Display name");
+			Assert.AreEqual(1, _song.Names.Count(), "Names count");
+			Assert.IsTrue(_song.Names.HasNameForLanguage(ContentLanguageSelection.Romaji), "Has name for Romaji");
+			Assert.IsFalse(_song.Names.HasNameForLanguage(ContentLanguageSelection.English), "Does not have name for English");
+			Assert.AreEqual("song", _song.Names.GetEntryName(ContentLanguagePreference.Romaji).DisplayName, "Display name");
 		}
 
 		[TestMethod]
 		public void AddTag_NewTag()
 		{
 			var tag = CreateEntry.Tag("rock");
-			var result = song.AddTag(tag);
+			var result = _song.AddTag(tag);
 
 			Assert.IsNotNull(result, "result");
 			Assert.IsTrue(result.IsNew, "Is new");
 			Assert.AreEqual(tag, result.Result.Tag, "Added tag");
-			Assert.AreEqual(1, song.Tags.Usages.Count, "Number of tag usages for song");
+			Assert.AreEqual(1, _song.Tags.Usages.Count, "Number of tag usages for song");
 			Assert.AreEqual(1, tag.UsageCount, "Number of usages for tag");
 		}
 
@@ -120,13 +120,13 @@ namespace VocaDb.Tests.Domain.Songs
 		public void AddTag_ExistingTag()
 		{
 			var tag = CreateEntry.Tag("rock");
-			song.AddTag(tag);
-			var result = song.AddTag(tag);
+			_song.AddTag(tag);
+			var result = _song.AddTag(tag);
 
 			Assert.IsNotNull(result, "result");
 			Assert.IsFalse(result.IsNew, "Is new");
 			Assert.AreEqual(tag, result.Result.Tag, "Added tag");
-			Assert.AreEqual(1, song.Tags.Usages.Count, "Number of tag usages for song");
+			Assert.AreEqual(1, _song.Tags.Usages.Count, "Number of tag usages for song");
 			Assert.AreEqual(1, tag.UsageCount, "Number of usages for tag");
 		}
 
@@ -141,10 +141,10 @@ namespace VocaDb.Tests.Domain.Songs
 		[TestMethod]
 		public void LyricsFromParents_NoParent()
 		{
-			var result = CallGetLyricsFromParents(song);
+			var result = CallGetLyricsFromParents(_song);
 
 			Assert.AreEqual(1, result.Count, "one entry");
-			Assert.AreSame(lyrics, result.First(), "returned lyrics from entry");
+			Assert.AreSame(_lyrics, result.First(), "returned lyrics from entry");
 		}
 
 		[TestMethod]
@@ -153,7 +153,7 @@ namespace VocaDb.Tests.Domain.Songs
 			var derived = new Song
 			{
 				SongType = SongType.Instrumental,
-				OriginalVersion = song
+				OriginalVersion = _song
 			};
 
 			var result = CallGetLyricsFromParents(derived);
@@ -165,12 +165,12 @@ namespace VocaDb.Tests.Domain.Songs
 		{
 			var derived = new Song
 			{
-				OriginalVersion = song
+				OriginalVersion = _song
 			};
 			var result = CallGetLyricsFromParents(derived);
 
 			Assert.AreEqual(1, result.Count, "one entry");
-			Assert.AreSame(lyrics, result.First(), "returned lyrics from entry");
+			Assert.AreSame(_lyrics, result.First(), "returned lyrics from entry");
 		}
 
 		[TestMethod]
@@ -180,7 +180,7 @@ namespace VocaDb.Tests.Domain.Songs
 			var instrumental = new Song
 			{
 				SongType = SongType.Instrumental,
-				OriginalVersion = song
+				OriginalVersion = _song
 			};
 
 			var derived = new Song
@@ -189,21 +189,21 @@ namespace VocaDb.Tests.Domain.Songs
 			};
 
 			var result = CallGetLyricsFromParents(derived);
-			Assert.AreSame(lyrics, result.FirstOrDefault(), "returned lyrics from entry");
+			Assert.AreSame(_lyrics, result.FirstOrDefault(), "returned lyrics from entry");
 		}
 
 		[TestMethod]
 		public void SyncArtists_Duplicate()
 		{
 			var newArtists = new[] {
-				new ArtistForSongContract(new ArtistForSong(song, artist, false, ArtistRoles.Default), ContentLanguagePreference.Default),
-				new ArtistForSongContract(new ArtistForSong(song, artist, false, ArtistRoles.Composer), ContentLanguagePreference.Default),
+				new ArtistForSongContract(new ArtistForSong(_song, _artist, false, ArtistRoles.Default), ContentLanguagePreference.Default),
+				new ArtistForSongContract(new ArtistForSong(_song, _artist, false, ArtistRoles.Composer), ContentLanguagePreference.Default),
 			};
 
-			song.SyncArtists(newArtists, c => c.Artist.Id == artist.Id ? artist : null);
+			_song.SyncArtists(newArtists, c => c.Artist.Id == _artist.Id ? _artist : null);
 
-			Assert.AreEqual(1, song.AllArtists.Count, "Only one artist");
-			Assert.AreEqual(artist, song.AllArtists.First().Artist, "Artist is as expected");
+			Assert.AreEqual(1, _song.AllArtists.Count, "Only one artist");
+			Assert.AreEqual(_artist, _song.AllArtists.First().Artist, "Artist is as expected");
 		}
 
 		/// <summary>
@@ -212,13 +212,13 @@ namespace VocaDb.Tests.Domain.Songs
 		[TestMethod]
 		public async Task SyncArtists_WillNotRemoveExtraArtists()
 		{
-			var link = song.AddArtist("Extra artist", false, ArtistRoles.Composer);
-			var newArtists = new[] { new ArtistContract(artist, ContentLanguagePreference.Default) };
+			var link = _song.AddArtist("Extra artist", false, ArtistRoles.Composer);
+			var newArtists = new[] { new ArtistContract(_artist, ContentLanguagePreference.Default) };
 
-			await song.SyncArtistsAsync(newArtists, ac => Task.FromResult(new List<Artist> { artist }));
+			await _song.SyncArtistsAsync(newArtists, ac => Task.FromResult(new List<Artist> { _artist }));
 
-			Assert.AreEqual(2, song.AllArtists.Count, "artists count");
-			Assert.IsTrue(song.HasArtistLink(link), "Still has the extra artist");
+			Assert.AreEqual(2, _song.AllArtists.Count, "artists count");
+			Assert.IsTrue(_song.HasArtistLink(link), "Still has the extra artist");
 		}
 
 		[TestMethod]
@@ -226,26 +226,26 @@ namespace VocaDb.Tests.Domain.Songs
 		{
 			var contract = new ArtistForSongContract
 			{
-				Artist = new ArtistContract(artist, ContentLanguagePreference.Default),
+				Artist = new ArtistContract(_artist, ContentLanguagePreference.Default),
 				Name = "RyuuseiP",
 				IsCustomName = true
 			};
 
-			song.SyncArtists(new[] { contract, new ArtistForSongContract(new ArtistContract(vocalist, ContentLanguagePreference.Default)) }, artistFunc);
+			_song.SyncArtists(new[] { contract, new ArtistForSongContract(new ArtistContract(_vocalist, ContentLanguagePreference.Default)) }, _artistFunc);
 
-			Assert.AreEqual(2, song.Artists.Count(), "Number of artists");
-			var producerLink = song.Artists.FirstOrDefault(a => a.Artist?.Id == artist.Id);
+			Assert.AreEqual(2, _song.Artists.Count(), "Number of artists");
+			var producerLink = _song.Artists.FirstOrDefault(a => a.Artist?.Id == _artist.Id);
 			Assert.IsNotNull(producerLink, "Artist link was added");
 			Assert.AreEqual("RyuuseiP", producerLink.Name, "Added link name");
-			Assert.AreEqual("RyuuseiP feat. Hatsune Miku", song.ArtistString.Default, "Artist string");
+			Assert.AreEqual("RyuuseiP feat. Hatsune Miku", _song.ArtistString.Default, "Artist string");
 		}
 
 		[TestMethod]
 		public void UpdatePVServices_None()
 		{
-			song.UpdatePVServices();
+			_song.UpdatePVServices();
 
-			Assert.AreEqual(PVServices.Nothing, song.PVServices);
+			Assert.AreEqual(PVServices.Nothing, _song.PVServices);
 		}
 
 		[TestMethod]
@@ -253,9 +253,9 @@ namespace VocaDb.Tests.Domain.Songs
 		{
 			CreatePV(PVService.Youtube);
 
-			song.UpdatePVServices();
+			_song.UpdatePVServices();
 
-			Assert.AreEqual(PVServices.Youtube, song.PVServices);
+			Assert.AreEqual(PVServices.Youtube, _song.PVServices);
 		}
 
 		[TestMethod]
@@ -265,9 +265,9 @@ namespace VocaDb.Tests.Domain.Songs
 			CreatePV(PVService.SoundCloud);
 			CreatePV(PVService.Youtube);
 
-			song.UpdatePVServices();
+			_song.UpdatePVServices();
 
-			Assert.AreEqual(PVServices.NicoNicoDouga | PVServices.SoundCloud | PVServices.Youtube, song.PVServices);
+			Assert.AreEqual(PVServices.NicoNicoDouga | PVServices.SoundCloud | PVServices.Youtube, _song.PVServices);
 		}
 
 		[TestMethod]
@@ -305,7 +305,7 @@ namespace VocaDb.Tests.Domain.Songs
 			album.OriginalReleaseDate.Month = 6;
 			album.OriginalReleaseDate.Day = 1;
 
-			album.AddSong(song, 1, 1);
+			album.AddSong(_song, 1, 1);
 
 			TestUpdatePublishDateFromPVs(new DateTime(2007, 6, 1),
 				CreatePV(publishDate: new DateTime(2010, 1, 1))

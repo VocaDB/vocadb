@@ -12,7 +12,7 @@ namespace VocaDb.Web.Code.WebApi
 {
 	public class RestrictBannedIPAttribute : ActionFilterAttribute
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		public override void OnActionExecuting(HttpActionContext actionContext)
 		{
@@ -22,7 +22,7 @@ namespace VocaDb.Web.Code.WebApi
 
 			if (!ipRules.IsAllowed(host))
 			{
-				log.Warn("Restricting banned host '{0}' for '{1}'.", host, actionContext.Request.RequestUri);
+				s_log.Warn("Restricting banned host '{0}' for '{1}'.", host, actionContext.Request.RequestUri);
 
 				actionContext.Response = new HttpResponseMessage(HttpStatusCode.Forbidden);
 			}

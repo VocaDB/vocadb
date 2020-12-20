@@ -19,8 +19,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.Tags
 	[TestClass]
 	public class TagSearchDatabaseTests
 	{
-		private readonly DatabaseTestContext context = new DatabaseTestContext();
-		private readonly TagQueryParams queryParams = new TagQueryParams
+		private readonly DatabaseTestContext _context = new();
+		private readonly TagQueryParams _queryParams = new()
 		{
 			SortRule = TagSortRule.Name,
 			Common = new CommonSearchParams(),
@@ -30,20 +30,20 @@ namespace VocaDb.Tests.DatabaseTests.Search.Tags
 
 		private void AssertHasTag(PartialFindResult<Tag> result, Tag expected)
 		{
-			Assert.IsTrue(result.Items.Any(s => s.Equals(expected)), string.Format("Found {0}", expected));
+			Assert.IsTrue(result.Items.Any(s => s.Equals(expected)), $"Found {expected}");
 		}
 
 		private PartialFindResult<Tag> CallFind(ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
 			bool onlyMinimalFields = false)
 		{
-			return context.RunTest(querySource =>
+			return _context.RunTest(querySource =>
 			{
 				var search = new TagSearch(querySource.OfType<Tag>(), languagePreference);
 
 				var watch = new Stopwatch();
 				watch.Start();
 
-				var result = search.Find(queryParams, onlyMinimalFields);
+				var result = search.Find(_queryParams, onlyMinimalFields);
 
 				Console.WriteLine("Test finished in {0}ms", watch.ElapsedMilliseconds);
 

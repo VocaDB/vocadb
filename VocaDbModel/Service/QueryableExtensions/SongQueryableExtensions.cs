@@ -24,42 +24,25 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		}
 
 		public static IQueryable<Song> OrderBy(this IQueryable<Song> query, SongSortRule sortRule,
-			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default, int tagId = 0)
+			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default, int tagId = 0) => sortRule switch
 		{
-			switch (sortRule)
-			{
-				case SongSortRule.Name:
-					return query.OrderByEntryName(languagePreference);
-				case SongSortRule.AdditionDate:
-					return query.OrderByDescending(a => a.CreateDate);
-				case SongSortRule.FavoritedTimes:
-					return query.OrderByDescending(a => a.FavoritedTimes);
-				case SongSortRule.PublishDate:
-					return query.OrderByPublishDate(SortDirection.Descending);
-				case SongSortRule.RatingScore:
-					return query.OrderByDescending(a => a.RatingScore);
-				case SongSortRule.TagUsageCount:
-					return query.OrderByTagUsage(tagId);
-			}
-
-			return query;
-		}
+			SongSortRule.Name => query.OrderByEntryName(languagePreference),
+			SongSortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
+			SongSortRule.FavoritedTimes => query.OrderByDescending(a => a.FavoritedTimes),
+			SongSortRule.PublishDate => query.OrderByPublishDate(SortDirection.Descending),
+			SongSortRule.RatingScore => query.OrderByDescending(a => a.RatingScore),
+			SongSortRule.TagUsageCount => query.OrderByTagUsage(tagId),
+			_ => query,
+		};
 
 		public static IQueryable<Song> OrderBy(
-			this IQueryable<Song> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference)
+			this IQueryable<Song> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference) => sortRule switch
 		{
-			switch (sortRule)
-			{
-				case EntrySortRule.Name:
-					return query.OrderByEntryName(languagePreference);
-				case EntrySortRule.AdditionDate:
-					return query.OrderByDescending(a => a.CreateDate);
-				case EntrySortRule.ActivityDate:
-					return query.OrderByDescending(a => a.PublishDate.DateTime);
-			}
-
-			return query;
-		}
+			EntrySortRule.Name => query.OrderByEntryName(languagePreference),
+			EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
+			EntrySortRule.ActivityDate => query.OrderByDescending(a => a.PublishDate.DateTime),
+			_ => query,
+		};
 
 		public static IMaybeOrderedQueryable<Song> OrderByTagUsage(this IQueryable<Song> query, int tagId)
 		{
@@ -297,20 +280,13 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query.Where(s => s.SongType == songType);
 		}
 
-		public static IQueryable<Song> WhereHasVocalist(this IQueryable<Song> query, SongVocalistSelection vocalist)
+		public static IQueryable<Song> WhereHasVocalist(this IQueryable<Song> query, SongVocalistSelection vocalist) => vocalist switch
 		{
-			switch (vocalist)
-			{
-				case SongVocalistSelection.Vocaloid:
-					return query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.Vocaloid));
-				case SongVocalistSelection.UTAU:
-					return query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.UTAU));
-				case SongVocalistSelection.CeVIO:
-					return query.Where(s => s.AllArtists.Any(a => !a.IsSupport && (a.Artist.ArtistType == ArtistType.CeVIO || a.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer)));
-			}
-
-			return query;
-		}
+			SongVocalistSelection.Vocaloid => query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.Vocaloid)),
+			SongVocalistSelection.UTAU => query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.UTAU)),
+			SongVocalistSelection.CeVIO => query.Where(s => s.AllArtists.Any(a => !a.IsSupport && (a.Artist.ArtistType == ArtistType.CeVIO || a.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer))),
+			_ => query,
+		};
 
 		public static IQueryable<Song> WhereIdIs(this IQueryable<Song> query, int id)
 		{

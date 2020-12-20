@@ -8,27 +8,24 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 {
 	public class AlbumArtistFilter : ISearchFilter<Album>
 	{
-		private readonly int artistId;
+		private readonly int _artistId;
 
 		public AlbumArtistFilter(int artistId)
 		{
-			this.artistId = artistId;
+			_artistId = artistId;
 		}
 
-		public QueryCost Cost
-		{
-			get { return QueryCost.Medium; }
-		}
+		public QueryCost Cost => QueryCost.Medium;
 
 		public IQueryable<Album> Filter(IQueryable<Album> query, IDatabaseContext session)
 		{
-			return query.Where(a => a.AllArtists.Any(u => u.Artist.Id == artistId));
+			return query.Where(a => a.AllArtists.Any(u => u.Artist.Id == _artistId));
 		}
 
 		public IQueryable<Album> Query(IDatabaseContext session)
 		{
 			return session.Query<ArtistForAlbum>()
-				.Where(a => a.Artist.Id == artistId)
+				.Where(a => a.Artist.Id == _artistId)
 				.Select(a => a.Album);
 		}
 	}

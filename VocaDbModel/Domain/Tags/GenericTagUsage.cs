@@ -8,8 +8,8 @@ namespace VocaDb.Model.Domain.Tags
 {
 	public abstract class GenericTagUsage<TEntry, TVote> : TagUsage where TEntry : class, IEntryBase where TVote : TagVote
 	{
-		private TEntry entry;
-		private IList<TVote> votes = new List<TVote>();
+		private TEntry _entry;
+		private IList<TVote> _votes = new List<TVote>();
 
 		public GenericTagUsage() { }
 
@@ -21,11 +21,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual TEntry Entry
 		{
-			get => entry;
+			get => _entry;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				entry = value;
+				_entry = value;
 			}
 		}
 
@@ -33,11 +33,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public virtual IList<TVote> Votes
 		{
-			get => votes;
+			get => _votes;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				votes = value;
+				_votes = value;
 			}
 		}
 

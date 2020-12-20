@@ -20,8 +20,8 @@ namespace VocaDb.Model.Domain.Users
 			return CollectionHelper.Sync(oldLinks, newLinks, (n1, n2) => n1.Id == n2.Id, fac);
 		}
 
-		private Artist artist;
-		private User user;
+		private Artist _artist;
+		private User _user;
 
 		public OwnedArtistForUser() { }
 
@@ -35,21 +35,21 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual Artist Artist
 		{
-			get { return artist; }
+			get => _artist;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				artist = value;
+				_artist = value;
 			}
 		}
 
 		public virtual User User
 		{
-			get { return user; }
+			get => _user;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				user = value;
+				_user = value;
 			}
 		}
 
@@ -70,7 +70,7 @@ namespace VocaDb.Model.Domain.Users
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -97,7 +97,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public override string ToString()
 		{
-			return string.Format("Owned {0} for {1}", Artist, User);
+			return $"Owned {Artist} for {User}";
 		}
 	}
 }

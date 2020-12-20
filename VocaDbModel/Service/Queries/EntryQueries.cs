@@ -14,27 +14,16 @@ namespace VocaDb.Model.Service.Queries
 {
 	public class EntryQueries
 	{
-		public IEntryWithNames Load(EntryRef entryRef, IDatabaseContext ctx)
+		public IEntryWithNames Load(EntryRef entryRef, IDatabaseContext ctx) => entryRef.EntryType switch
 		{
-			switch (entryRef.EntryType)
-			{
-				case EntryType.Album:
-					return ctx.Load<Album>(entryRef.Id);
-				case EntryType.Artist:
-					return ctx.Load<Artist>(entryRef.Id);
-				case EntryType.ReleaseEvent:
-					return ctx.Load<ReleaseEvent>(entryRef.Id);
-				case EntryType.ReleaseEventSeries:
-					return ctx.Load<ReleaseEventSeries>(entryRef.Id);
-				case EntryType.Song:
-					return ctx.Load<Song>(entryRef.Id);
-				case EntryType.Tag:
-					return ctx.Load<Tag>(entryRef.Id);
-				case EntryType.Venue:
-					return ctx.Load<Venue>(entryRef.Id);
-			}
-
-			throw new ArgumentException("Unsupported entry type: " + entryRef.EntryType);
-		}
+			EntryType.Album => ctx.Load<Album>(entryRef.Id),
+			EntryType.Artist => ctx.Load<Artist>(entryRef.Id),
+			EntryType.ReleaseEvent => ctx.Load<ReleaseEvent>(entryRef.Id),
+			EntryType.ReleaseEventSeries => ctx.Load<ReleaseEventSeries>(entryRef.Id),
+			EntryType.Song => ctx.Load<Song>(entryRef.Id),
+			EntryType.Tag => ctx.Load<Tag>(entryRef.Id),
+			EntryType.Venue => ctx.Load<Venue>(entryRef.Id),
+			_ => throw new ArgumentException("Unsupported entry type: " + entryRef.EntryType),
+		};
 	}
 }

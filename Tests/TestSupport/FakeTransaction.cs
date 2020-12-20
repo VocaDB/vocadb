@@ -12,12 +12,12 @@ namespace VocaDb.Tests.TestSupport
 
 		public FakeTransaction(Action commitAction = null, Action rollbackAction = null)
 		{
-			this.commitAction = commitAction;
-			this.rollbackAction = rollbackAction;
+			_commitAction = commitAction;
+			_rollbackAction = rollbackAction;
 		}
 
-		private readonly Action commitAction;
-		private readonly Action rollbackAction;
+		private readonly Action _commitAction;
+		private readonly Action _rollbackAction;
 
 		public bool Committed { get; private set; }
 		public bool Disposed { get; private set; }
@@ -35,7 +35,7 @@ namespace VocaDb.Tests.TestSupport
 		{
 			if (Disposed)
 				throw new InvalidOperationException("Cannot commit after dispose");
-			commitAction?.Invoke();
+			_commitAction?.Invoke();
 			Committed = true;
 		}
 
@@ -47,7 +47,7 @@ namespace VocaDb.Tests.TestSupport
 
 		public void Rollback()
 		{
-			rollbackAction?.Invoke();
+			_rollbackAction?.Invoke();
 		}
 	}
 }

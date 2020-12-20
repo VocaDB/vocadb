@@ -20,26 +20,26 @@ namespace VocaDb.Model.Database.Queries
 {
 	public class DiscussionQueries : QueriesBase<IDiscussionFolderRepository, DiscussionFolder>
 	{
-		private const int defaultMax = 10;
-		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IUserIconFactory userIconFactory;
+		private const int DefaultMax = 10;
+		private readonly IEntryLinkFactory _entryLinkFactory;
+		private readonly IUserIconFactory _userIconFactory;
 
 		private ICommentQueries Comments<T>(IDatabaseContext<T> ctx)
 		{
-			return new CommentQueries<DiscussionComment, DiscussionTopic>(ctx.OfType<DiscussionComment>(), PermissionContext, userIconFactory, entryLinkFactory);
+			return new CommentQueries<DiscussionComment, DiscussionTopic>(ctx.OfType<DiscussionComment>(), PermissionContext, _userIconFactory, _entryLinkFactory);
 		}
 
 		public DiscussionQueries(IDiscussionFolderRepository repository, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory,
 			IEntryLinkFactory entryLinkFactory)
 			: base(repository, permissionContext)
 		{
-			this.userIconFactory = userIconFactory;
-			this.entryLinkFactory = entryLinkFactory;
+			_userIconFactory = userIconFactory;
+			_entryLinkFactory = entryLinkFactory;
 		}
 
 		public CommentForApiContract CreateComment(int topicId, CommentForApiContract contract)
 		{
-			return repository.HandleTransaction(ctx =>
+			return _repository.HandleTransaction(ctx =>
 			{
 				var topic = ctx.Load<DiscussionTopic>(topicId);
 
@@ -55,7 +55,7 @@ namespace VocaDb.Model.Database.Queries
 			// TODO
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
-			return repository.HandleTransaction(ctx =>
+			return _repository.HandleTransaction(ctx =>
 			{
 				var folder = new DiscussionFolder
 				{
@@ -66,7 +66,7 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.AuditLogger.AuditLog("created " + folder);
 
-				return new DiscussionFolderContract(folder, DiscussionFolderOptionalFields.None, userIconFactory);
+				return new DiscussionFolderContract(folder, DiscussionFolderOptionalFields.None, _userIconFactory);
 			});
 		}
 
@@ -79,7 +79,7 @@ namespace VocaDb.Model.Database.Queries
 				throw new NotAllowedException("Can only post as self");
 			}
 
-			return repository.HandleTransaction(ctx =>
+			return _repository.HandleTransaction(ctx =>
 			{
 				var folder = ctx.Load(folderId);
 				var agent = ctx.OfType<User>().CreateAgentLoginData(PermissionContext, ctx.OfType<User>().Load(contract.Author.Id));
@@ -91,13 +91,13 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.AuditLogger.AuditLog("created " + topic, agent);
 
-				return new DiscussionTopicContract(topic, userIconFactory, DiscussionTopicOptionalFields.None);
+				return new DiscussionTopicContract(topic, _userIconFactory, DiscussionTopicOptionalFields.None);
 			});
 		}
 
 		public void DeleteComment(int commentId)
 		{
-			repository.HandleTransaction(ctx => Comments(ctx).Delete(commentId));
+			_repository.HandleTransaction(ctx => Comments(ctx).Delete(commentId));
 		}
 
 		/// <summary>
@@ -108,7 +108,7 @@ namespace VocaDb.Model.Database.Queries
 		/// <param name="topicId">Id of the topic to be deleted.</param>
 		public void DeleteTopic(int topicId)
 		{
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var topic = ctx.OfType<DiscussionTopic>().Load(topicId);
 				var user = ctx.OfType<User>().GetLoggedUser(PermissionContext);
@@ -129,21 +129,21 @@ namespace VocaDb.Model.Database.Queries
 
 			var folder = ctx.Load<DiscussionFolder>(targetFolderId);
 
-			ctx.AuditLogger.AuditLog(string.Format("Moving {0} to {1}", topic, folder));
+			ctx.AuditLogger.AuditLog($"Moving {topic} to {folder}");
 
 			topic.MoveToFolder(folder);
 		}
 
 		public void UpdateComment(int commentId, IComment contract)
 		{
-			repository.HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
+			_repository.HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
 		}
 
 		public void UpdateTopic(int topicId, DiscussionTopicContract contract)
 		{
 			PermissionContext.VerifyPermission(PermissionToken.CreateComments);
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
 				var topic = ctx.OfType<DiscussionTopic>().Load(topicId);
 
@@ -173,14 +173,14 @@ namespace VocaDb.Model.Database.Queries
 					.OrderBy(f => f.SortIndex)
 					.ThenBy(f => f.Name)
 					.ToArray()
-					.Select(f => new DiscussionFolderContract(f, fields, userIconFactory))
+					.Select(f => new DiscussionFolderContract(f, fields, _userIconFactory))
 					.ToArray();
 			});
 		}
 
 		public PartialFindResult<DiscussionTopicContract> GetTopics(
 			int? folderId = null,
-			int start = 0, int maxResults = defaultMax, bool getTotalCount = false,
+			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
  			DiscussionTopicSortRule sort = DiscussionTopicSortRule.DateCreated,
 			DiscussionTopicOptionalFields fields = DiscussionTopicOptionalFields.None)
 		{
@@ -195,7 +195,7 @@ namespace VocaDb.Model.Database.Queries
 					.OrderBy(sort)
 					.Paged(new PagingProperties(start, maxResults, getTotalCount))
 					.ToArray()
-					.Select(f => new DiscussionTopicContract(f, userIconFactory, fields))
+					.Select(f => new DiscussionTopicContract(f, _userIconFactory, fields))
 					.ToArray();
 
 				var count = (getTotalCount ? query.Count() : 0);
@@ -213,7 +213,7 @@ namespace VocaDb.Model.Database.Queries
 				var folder = ctx.Load(folderId);
 
 				return folder.Topics
-					.Select(t => new DiscussionTopicContract(t, userIconFactory, fields))
+					.Select(t => new DiscussionTopicContract(t, _userIconFactory, fields))
 					.OrderByDescending(t => t.LastComment != null ? t.LastComment.Created : t.Created)
 					.ToArray();
 			});
@@ -224,7 +224,7 @@ namespace VocaDb.Model.Database.Queries
 		{
 			return HandleQuery(ctx =>
 			{
-				return new DiscussionTopicContract(ctx.OfType<DiscussionTopic>().Load(topicId), userIconFactory, fields);
+				return new DiscussionTopicContract(ctx.OfType<DiscussionTopic>().Load(topicId), _userIconFactory, fields);
 			});
 		}
 	}

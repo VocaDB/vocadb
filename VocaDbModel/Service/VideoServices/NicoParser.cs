@@ -24,7 +24,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 	public static class NicoHelper
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		private static string GetUserName(Stream htmlStream, Encoding encoding)
 		{
@@ -35,7 +35,7 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 			catch (IOException x)
 			{
-				log.Warn(x, "Unable to load document for user name");
+				s_log.Warn(x, "Unable to load document for user name");
 			}
 
 			var titleElem = doc.DocumentNode.SelectSingleNode("//html/body/div/p[2]/a/strong");
@@ -51,7 +51,7 @@ namespace VocaDb.Model.Service.VideoServices
 		/// </summary>
 		private static string GetUserName(string userId)
 		{
-			var url = string.Format("http://ext.nicovideo.jp/thumb_user/{0}", userId);
+			var url = $"http://ext.nicovideo.jp/thumb_user/{userId}";
 
 			var request = WebRequest.Create(url);
 			request.Timeout = 10000;
@@ -63,7 +63,7 @@ namespace VocaDb.Model.Service.VideoServices
 			}
 			catch (WebException x)
 			{
-				log.Warn(x, "Unable to get response for user name");
+				s_log.Warn(x, "Unable to get response for user name");
 				return null;
 			}
 
@@ -85,8 +85,8 @@ namespace VocaDb.Model.Service.VideoServices
 		public static IEnumerable<string> GetUserProfileUrlById(string userId)
 		{
 			return new[] {
-				string.Format("http://www.nicovideo.jp/user/{0}", userId),
-				string.Format("https://www.nicovideo.jp/user/{0}", userId),
+				$"http://www.nicovideo.jp/user/{userId}",
+				$"https://www.nicovideo.jp/user/{userId}",
 			};
 		}
 

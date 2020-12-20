@@ -9,8 +9,8 @@ namespace VocaDb.Model.Domain.Albums
 {
 	public class ArtistForAlbum : IArtistLinkWithRoles, IEquatable<ArtistForAlbum>, IEntryWithIntId
 	{
-		private Album album;
-		private string notes;
+		private Album _album;
+		private string _notes;
 
 		public ArtistForAlbum()
 		{
@@ -39,11 +39,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual Album Album
 		{
-			get { return album; }
+			get => _album;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 
@@ -63,11 +63,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual string Notes
 		{
-			get => notes;
+			get => _notes;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				notes = value;
+				_notes = value;
 			}
 		}
 
@@ -107,7 +107,7 @@ namespace VocaDb.Model.Domain.Albums
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -146,7 +146,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public override string ToString()
 		{
-			return string.Format("{0} for {1} [{2}]", ArtistToStringOrName, Album, Id);
+			return $"{ArtistToStringOrName} for {Album} [{Id}]";
 		}
 	}
 }

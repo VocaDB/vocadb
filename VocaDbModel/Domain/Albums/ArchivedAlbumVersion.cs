@@ -35,8 +35,8 @@ namespace VocaDb.Model.Domain.Albums
 			return album.CreateArchivedVersion(data, diff, author, reason, notes);
 		}
 
-		private Album album;
-		private AlbumDiff diff;
+		private Album _album;
+		private AlbumDiff _diff;
 
 		public ArchivedAlbumVersion()
 		{
@@ -67,11 +67,11 @@ namespace VocaDb.Model.Domain.Albums
 		/// </summary>
 		public virtual Album Album
 		{
-			get { return album; }
+			get => _album;
 			protected set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 
@@ -81,14 +81,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual AlbumDiff Diff
 		{
-			get { return diff; }
-			protected set { diff = value; }
+			get => _diff;
+			protected set => _diff = value;
 		}
 
-		public override IEntryDiff DiffBase
-		{
-			get { return Diff; }
-		}
+		public override IEntryDiff DiffBase => Diff;
 
 		public override EntryEditEvent EditEvent
 		{
@@ -99,10 +96,7 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
-		public override IEntryWithNames EntryBase
-		{
-			get { return Album; }
-		}
+		public override IEntryWithNames EntryBase => Album;
 
 		public virtual AlbumArchiveReason Reason { get; set; }
 

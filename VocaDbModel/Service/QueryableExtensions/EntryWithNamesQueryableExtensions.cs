@@ -27,36 +27,22 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		}
 
 		public static IQueryable<EntryIdAndName> SelectIdAndName<T>(this IQueryable<T> query, ContentLanguagePreference languagePreference)
-			where T : class, IEntryWithNames
+			where T : class, IEntryWithNames => languagePreference switch
 		{
-			switch (languagePreference)
-			{
-				case ContentLanguagePreference.English:
-					return query.Select(a => new EntryIdAndName { Name = a.Names.SortNames.English, Id = a.Id });
-				case ContentLanguagePreference.Romaji:
-					return query.Select(a => new EntryIdAndName { Name = a.Names.SortNames.Romaji, Id = a.Id });
-				case ContentLanguagePreference.Japanese:
-					return query.Select(a => new EntryIdAndName { Name = a.Names.SortNames.Japanese, Id = a.Id });
-				default:
-					return query.Select(a => new EntryIdAndName { Name = a.Names.SortNames.Japanese, Id = a.Id });
-			}
-		}
+			ContentLanguagePreference.English => query.Select(a => new EntryIdAndName { Name = a.Names.SortNames.English, Id = a.Id }),
+			ContentLanguagePreference.Romaji => query.Select(a => new EntryIdAndName { Name = a.Names.SortNames.Romaji, Id = a.Id }),
+			ContentLanguagePreference.Japanese => query.Select(a => new EntryIdAndName { Name = a.Names.SortNames.Japanese, Id = a.Id }),
+			_ => query.Select(a => new EntryIdAndName { Name = a.Names.SortNames.Japanese, Id = a.Id }),
+		};
 
 		public static IQueryable<EntryBaseContract> SelectEntryBase<T>(this IQueryable<T> query, ContentLanguagePreference languagePreference, EntryType entryType)
-			where T : class, IEntryWithNames
+			where T : class, IEntryWithNames => languagePreference switch
 		{
-			switch (languagePreference)
-			{
-				case ContentLanguagePreference.English:
-					return query.Select(a => new EntryBaseContract { DefaultName = a.Names.SortNames.English, Id = a.Id, EntryType = entryType });
-				case ContentLanguagePreference.Romaji:
-					return query.Select(a => new EntryBaseContract { DefaultName = a.Names.SortNames.Romaji, Id = a.Id, EntryType = entryType });
-				case ContentLanguagePreference.Japanese:
-					return query.Select(a => new EntryBaseContract { DefaultName = a.Names.SortNames.Japanese, Id = a.Id, EntryType = entryType });
-				default:
-					return query.Select(a => new EntryBaseContract { DefaultName = a.Names.SortNames.Japanese, Id = a.Id, EntryType = entryType });
-			}
-		}
+			ContentLanguagePreference.English => query.Select(a => new EntryBaseContract { DefaultName = a.Names.SortNames.English, Id = a.Id, EntryType = entryType }),
+			ContentLanguagePreference.Romaji => query.Select(a => new EntryBaseContract { DefaultName = a.Names.SortNames.Romaji, Id = a.Id, EntryType = entryType }),
+			ContentLanguagePreference.Japanese => query.Select(a => new EntryBaseContract { DefaultName = a.Names.SortNames.Japanese, Id = a.Id, EntryType = entryType }),
+			_ => query.Select(a => new EntryBaseContract { DefaultName = a.Names.SortNames.Japanese, Id = a.Id, EntryType = entryType }),
+		};
 
 		/// <summary>
 		/// Filters query by one or more tag names.
@@ -70,7 +56,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		public static IQueryable<TEntry> WhereHasNameGeneric<TEntry, TName>(this IQueryable<TEntry> query, IEnumerable<SearchTextQuery> names)
 			where TEntry : IEntryWithNames<TName> where TName : LocalizedStringWithId
 		{
-			names = names ?? new SearchTextQuery[0];
+			names ??= new SearchTextQuery[0];
 
 			var predicate = names.Aggregate(PredicateBuilder.False<TEntry>(), (nameExp, name) => nameExp.Or(WhereHasNameExpression<TEntry, TName>(name)));
 			return query.Where(predicate);

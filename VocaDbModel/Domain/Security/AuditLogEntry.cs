@@ -10,8 +10,8 @@ namespace VocaDb.Model.Domain.Security
 	{
 		public const int MaxActionLength = 400;
 
-		private string action;
-		private string agentName;
+		private string _action;
+		private string _agentName;
 
 		public AuditLogEntry()
 		{
@@ -34,21 +34,21 @@ namespace VocaDb.Model.Domain.Security
 
 		public virtual string Action
 		{
-			get { return action; }
+			get => _action;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				action = value;
+				_action = value;
 			}
 		}
 
 		public virtual string AgentName
 		{
-			get { return agentName; }
+			get => _agentName;
 			set
 			{
 				ParamIs.NotNullOrEmpty(() => value);
-				agentName = value;
+				_agentName = value;
 			}
 		}
 

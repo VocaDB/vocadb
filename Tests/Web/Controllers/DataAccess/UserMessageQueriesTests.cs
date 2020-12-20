@@ -20,43 +20,43 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 	[TestClass]
 	public class UserMessageQueriesTests
 	{
-		private UserMessageQueries queries;
-		private FakePermissionContext permissionContext;
-		private FakeUserMessageRepository repository;
-		private User sender;
-		private UserMessage receivedMessage;
-		private User receiver;
-		private UserMessage sentMessage;
+		private UserMessageQueries _queries;
+		private FakePermissionContext _permissionContext;
+		private FakeUserMessageRepository _repository;
+		private User _sender;
+		private UserMessage _receivedMessage;
+		private User _receiver;
+		private UserMessage _sentMessage;
 
 		private UserMessageContract CallGet(int id)
 		{
-			return queries.Get(id, null);
+			return _queries.Get(id, null);
 		}
 
 		private PartialFindResult<UserMessageContract> CallGetList(UserInboxType inboxType, bool unread = false)
 		{
-			return queries.GetList(receiver.Id, new PagingProperties(0, 10, true), inboxType, unread, null, new FakeUserIconFactory());
+			return _queries.GetList(_receiver.Id, new PagingProperties(0, 10, true), inboxType, unread, null, new FakeUserIconFactory());
 		}
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			sender = new User { Name = "Sender user", Id = 1 };
-			receiver = new User { Name = "Receiver user", Id = 2 };
-			permissionContext = new FakePermissionContext(new UserWithPermissionsContract(receiver, ContentLanguagePreference.Default));
+			_sender = new User { Name = "Sender user", Id = 1 };
+			_receiver = new User { Name = "Receiver user", Id = 2 };
+			_permissionContext = new FakePermissionContext(new UserWithPermissionsContract(_receiver, ContentLanguagePreference.Default));
 
-			var received = sender.SendMessage(receiver, "Hello world", "Message body", false);
-			receivedMessage = received.Item1;
-			receivedMessage.Id = 1;
-			receivedMessage.Read = true;
-			var sent = receiver.SendMessage(sender, "Hello to you too", "Message body", false);
-			sentMessage = sent.Item1;
-			sentMessage.Id = 2;
-			var noPermissionMessage = CreateEntry.UserMessageReceived(id: 39, sender: sender, receiver: sender, subject: "Hello world", body: "Message body");
+			var received = _sender.SendMessage(_receiver, "Hello world", "Message body", false);
+			_receivedMessage = received.Item1;
+			_receivedMessage.Id = 1;
+			_receivedMessage.Read = true;
+			var sent = _receiver.SendMessage(_sender, "Hello to you too", "Message body", false);
+			_sentMessage = sent.Item1;
+			_sentMessage.Id = 2;
+			var noPermissionMessage = CreateEntry.UserMessageReceived(id: 39, sender: _sender, receiver: _sender, subject: "Hello world", body: "Message body");
 
-			repository = new FakeUserMessageRepository(sentMessage, sent.Item2, receivedMessage, received.Item2, noPermissionMessage);
+			_repository = new FakeUserMessageRepository(_sentMessage, sent.Item2, _receivedMessage, received.Item2, noPermissionMessage);
 
-			queries = new UserMessageQueries(repository, permissionContext);
+			_queries = new UserMessageQueries(_repository, _permissionContext);
 		}
 
 		[TestMethod]
@@ -108,9 +108,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void GetList_Unread()
 		{
-			var another = sender.SendMessage(receiver, "Unread message", "Unread message body", false);
+			var another = _sender.SendMessage(_receiver, "Unread message", "Unread message body", false);
 			var anotherMsg = another.Item1;
-			repository.Save(anotherMsg, another.Item2);
+			_repository.Save(anotherMsg, another.Item2);
 
 			var result = CallGetList(UserInboxType.Nothing, unread: true);
 

@@ -15,7 +15,7 @@ namespace VocaDb.Model.Domain.Activityfeed
 		where TEntry : class, IEntryBase, IEntryWithNames
 		where TArchivedVersion : ArchivedObjectVersion
 	{
-		private TEntry entry;
+		private TEntry _entry;
 
 		protected GenericActivityEntry() { }
 
@@ -35,11 +35,11 @@ namespace VocaDb.Model.Domain.Activityfeed
 
 		public virtual TEntry Entry
 		{
-			get => entry;
+			get => _entry;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				entry = value;
+				_entry = value;
 			}
 		}
 

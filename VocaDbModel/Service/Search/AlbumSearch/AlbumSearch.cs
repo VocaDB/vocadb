@@ -15,7 +15,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 {
 	public class AlbumSearch
 	{
-		private readonly IDatabaseContext querySource;
+		private readonly IDatabaseContext _querySource;
 
 		private ContentLanguagePreference LanguagePreference { get; }
 
@@ -31,7 +31,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 				.WhereIsDeleted(queryParams.Deleted)
 				.WhereHasName(textQuery, allowCatNum: true)
 				.WhereStatusIs(queryParams.Common.EntryStatus)
-				.WhereHasArtistParticipationStatus(queryParams.ArtistParticipation, artistIds, querySource.OfType<Artist>())
+				.WhereHasArtistParticipationStatus(queryParams.ArtistParticipation, artistIds, _querySource.OfType<Artist>())
 				.WhereHasBarcode(queryParams.Barcode)
 				.WhereHasType(queryParams.AlbumType)
 				.WhereHasTags(queryParams.TagIds, queryParams.ChildTags)
@@ -68,8 +68,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 					case "tag":
 						return new ParsedAlbumQuery { TagName = term.Value };
 					case "artist":
-						int artistId;
-						if (int.TryParse(term.Value, out artistId))
+						if (int.TryParse(term.Value, out _))
 							return new ParsedAlbumQuery { ArtistId = int.Parse(term.Value) };
 						break;
 				}
@@ -93,7 +92,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 				.Paged(queryParams.Paging)
 				.ToArray();
 
-			var albums = SortByIds(querySource
+			var albums = SortByIds(_querySource
 				.Query<Album>()
 				.Where(s => ids.Contains(s.Id))
 				.ToArray(), ids);
@@ -151,7 +150,7 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 			}
 
 			var albums = SortByIds(
-				querySource
+				_querySource
 					.Query<Album>()
 					.Where(s => ids.Contains(s.Id))
 					.ToArray(), ids);
@@ -161,12 +160,12 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 
 		private IQueryable<T> Query<T>() where T : class, IDatabaseObject
 		{
-			return querySource.Query<T>();
+			return _querySource.Query<T>();
 		}
 
 		public AlbumSearch(IDatabaseContext querySource, ContentLanguagePreference languagePreference)
 		{
-			this.querySource = querySource;
+			_querySource = querySource;
 			LanguagePreference = languagePreference;
 		}
 

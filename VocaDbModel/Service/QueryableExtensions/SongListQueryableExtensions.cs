@@ -10,22 +10,13 @@ namespace VocaDb.Model.Service.QueryableExtensions
 {
 	public static class SongListQueryableExtensions
 	{
-		public static IQueryable<SongList> OrderBy(this IQueryable<SongList> query, SongListSortRule sortRule)
+		public static IQueryable<SongList> OrderBy(this IQueryable<SongList> query, SongListSortRule sortRule) => sortRule switch
 		{
-			switch (sortRule)
-			{
-				case SongListSortRule.Date:
-					return query
-						.OrderByDate(SortDirection.Descending)
-						.ThenBy(r => r.Name);
-				case SongListSortRule.CreateDate:
-					return query.OrderByDescending(r => r.CreateDate);
-				case SongListSortRule.Name:
-					return query.OrderBy(r => r.Name);
-			}
-
-			return query;
-		}
+			SongListSortRule.Date => query.OrderByDate(SortDirection.Descending).ThenBy(r => r.Name),
+			SongListSortRule.CreateDate => query.OrderByDescending(r => r.CreateDate),
+			SongListSortRule.Name => query.OrderBy(r => r.Name),
+			_ => query,
+		};
 
 		public static IOrderedQueryable<SongList> OrderByDate(this IQueryable<SongList> query, SortDirection direction)
 		{
@@ -59,21 +50,14 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			if (textQuery == null || textQuery.IsEmpty)
 				return query;
 
-			switch (textQuery.MatchMode)
+			return textQuery.MatchMode switch
 			{
-				case NameMatchMode.StartsWith:
-					return query.Where(u => u.Name.StartsWith(textQuery.Query));
-				case NameMatchMode.Partial:
-					return query.Where(u => u.Name.Contains(textQuery.Query));
-				case NameMatchMode.Exact:
-					return query.Where(u => u.Name == textQuery.Query);
-				case NameMatchMode.Words:
-					return textQuery.Words
-						.Take(FindHelpers.MaxSearchWords)
-						.Aggregate(query, (q, word) => q.Where(list => list.Name.Contains(word)));
-			}
-
-			return query;
+				NameMatchMode.StartsWith => query.Where(u => u.Name.StartsWith(textQuery.Query)),
+				NameMatchMode.Partial => query.Where(u => u.Name.Contains(textQuery.Query)),
+				NameMatchMode.Exact => query.Where(u => u.Name == textQuery.Query),
+				NameMatchMode.Words => textQuery.Words.Take(FindHelpers.MaxSearchWords).Aggregate(query, (q, word) => q.Where(list => list.Name.Contains(word))),
+				_ => query,
+			};
 		}
 	}
 

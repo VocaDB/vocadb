@@ -37,22 +37,21 @@ namespace VocaDb.Model.Domain.Songs
 
 		IEnumerable<Comment> IEntryWithComments.Comments => Comments;
 
-		private IList<SongInAlbum> albums = new List<SongInAlbum>();
-		private IList<Song> alternateVersions = new List<Song>();
-		private ArchivedVersionManager<ArchivedSongVersion, SongEditableFields> archivedVersions
-			= new ArchivedVersionManager<ArchivedSongVersion, SongEditableFields>();
-		private TranslatedStringWithDefault artistString;
-		private IList<ArtistForSong> artists = new List<ArtistForSong>();
-		private IList<SongComment> comments = new List<SongComment>();
-		private IList<SongHit> hits = new List<SongHit>();
-		private IList<SongInList> lists = new List<SongInList>();
-		private IList<LyricsForSong> lyrics = new List<LyricsForSong>();
-		private NameManager<SongName> names = new NameManager<SongName>();
-		private EnglishTranslatedString notes;
-		private PVManager<PVForSong> pvs = new PVManager<PVForSong>();
-		private TagManager<SongTagUsage> tags = new TagManager<SongTagUsage>();
-		private IList<FavoriteSongForUser> userFavorites = new List<FavoriteSongForUser>();
-		private IList<SongWebLink> webLinks = new List<SongWebLink>();
+		private IList<SongInAlbum> _albums = new List<SongInAlbum>();
+		private IList<Song> _alternateVersions = new List<Song>();
+		private ArchivedVersionManager<ArchivedSongVersion, SongEditableFields> _archivedVersions = new();
+		private TranslatedStringWithDefault _artistString;
+		private IList<ArtistForSong> _artists = new List<ArtistForSong>();
+		private IList<SongComment> _comments = new List<SongComment>();
+		private IList<SongHit> _hits = new List<SongHit>();
+		private IList<SongInList> _lists = new List<SongInList>();
+		private IList<LyricsForSong> _lyrics = new List<LyricsForSong>();
+		private NameManager<SongName> _names = new();
+		private EnglishTranslatedString _notes;
+		private PVManager<PVForSong> _pvs = new();
+		private TagManager<SongTagUsage> _tags = new();
+		private IList<FavoriteSongForUser> _userFavorites = new List<FavoriteSongForUser>();
+		private IList<SongWebLink> _webLinks = new List<SongWebLink>();
 
 		public virtual int GetLengthFromPV()
 		{
@@ -98,21 +97,21 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<SongInAlbum> AllAlbums
 		{
-			get { return albums; }
+			get => _albums;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				albums = value;
+				_albums = value;
 			}
 		}
 
 		public virtual IList<Song> AllAlternateVersions
 		{
-			get { return alternateVersions; }
+			get => _alternateVersions;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				alternateVersions = value;
+				_alternateVersions = value;
 			}
 		}
 
@@ -120,11 +119,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<ArtistForSong> AllArtists
 		{
-			get => artists;
+			get => _artists;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				artists = value;
+				_artists = value;
 			}
 		}
 
@@ -137,11 +136,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual ArchivedVersionManager<ArchivedSongVersion, SongEditableFields> ArchivedVersionsManager
 		{
-			get { return archivedVersions; }
+			get => _archivedVersions;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				archivedVersions = value;
+				_archivedVersions = value;
 			}
 		}
 
@@ -165,21 +164,21 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual TranslatedStringWithDefault ArtistString
 		{
-			get => artistString;
+			get => _artistString;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				artistString = value;
+				_artistString = value;
 			}
 		}
 
 		public virtual IList<SongComment> AllComments
 		{
-			get => comments;
+			get => _comments;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				comments = value;
+				_comments = value;
 			}
 		}
 
@@ -224,8 +223,8 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<SongHit> Hits
 		{
-			get { return hits; }
-			set { hits = value; }
+			get => _hits;
+			set => _hits = value;
 		}
 
 		public virtual int Id { get; set; }
@@ -237,21 +236,21 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<SongInList> ListLinks
 		{
-			get { return lists; }
+			get => _lists;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				lists = value;
+				_lists = value;
 			}
 		}
 
 		public virtual IList<LyricsForSong> Lyrics
 		{
-			get { return lyrics; }
+			get => _lyrics;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				lyrics = value;
+				_lyrics = value;
 			}
 		}
 
@@ -321,11 +320,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual NameManager<SongName> Names
 		{
-			get { return names; }
+			get => _names;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				names = value;
+				_names = value;
 			}
 		}
 
@@ -335,11 +334,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual EnglishTranslatedString Notes
 		{
-			get { return notes; }
+			get => _notes;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				notes = value;
+				_notes = value;
 			}
 		}
 
@@ -366,11 +365,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual PVManager<PVForSong> PVs
 		{
-			get => pvs;
+			get => _pvs;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				pvs = value;
+				_pvs = value;
 			}
 		}
 
@@ -396,11 +395,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual TagManager<SongTagUsage> Tags
 		{
-			get => tags;
+			get => _tags;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				tags = value;
+				_tags = value;
 			}
 		}
 
@@ -423,11 +422,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<FavoriteSongForUser> UserFavorites
 		{
-			get { return userFavorites; }
+			get => _userFavorites;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				userFavorites = value;
+				_userFavorites = value;
 			}
 		}
 
@@ -435,11 +434,11 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IList<SongWebLink> WebLinks
 		{
-			get { return webLinks; }
+			get => _webLinks;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				webLinks = value;
+				_webLinks = value;
 			}
 		}
 
@@ -605,7 +604,7 @@ namespace VocaDb.Model.Domain.Songs
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -874,7 +873,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public override string ToString()
 		{
-			return string.Format("song '{0}' [{1}]", DefaultName, Id);
+			return $"song '{DefaultName}' [{Id}]";
 		}
 
 		public virtual void UpdateArtistString()

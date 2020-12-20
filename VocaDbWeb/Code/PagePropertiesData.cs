@@ -19,13 +19,13 @@ namespace VocaDb.Web.Code
 			return viewBag.PageProperties ?? (viewBag.PageProperties = new PagePropertiesData(viewBag));
 		}
 
-		private readonly dynamic viewBag;
+		private readonly dynamic _viewBag;
 
 		public PagePropertiesData(dynamic viewBag)
 		{
 			AddMainScripts = true;
 			GlobalSearchType = EntryType.Undefined;
-			this.viewBag = viewBag;
+			_viewBag = viewBag;
 			OpenGraph = new OpenGraphModel(this);
 		}
 
@@ -99,19 +99,19 @@ namespace VocaDb.Web.Code
 			set => ViewBag.Title = value;
 		}
 
-		public dynamic ViewBag => viewBag;
+		public dynamic ViewBag => _viewBag;
 	}
 
 	public class OpenGraphModel
 	{
-		private string description;
-		private string image;
-		private readonly PagePropertiesData pageProperties;
-		private string title;
+		private string _description;
+		private string _image;
+		private readonly PagePropertiesData _pageProperties;
+		private string _title;
 
 		public OpenGraphModel(PagePropertiesData pageProperties)
 		{
-			this.pageProperties = pageProperties;
+			_pageProperties = pageProperties;
 		}
 
 		/// <summary>
@@ -119,8 +119,8 @@ namespace VocaDb.Web.Code
 		/// </summary>
 		public string Description
 		{
-			get => !string.IsNullOrEmpty(description) ? description : pageProperties.SummarizedDescription;
-			set => description = value;
+			get => !string.IsNullOrEmpty(_description) ? _description : _pageProperties.SummarizedDescription;
+			set => _description = value;
 		}
 
 		/// <summary>
@@ -128,8 +128,8 @@ namespace VocaDb.Web.Code
 		/// </summary>
 		public string Image
 		{
-			get => !string.IsNullOrEmpty(image) ? image : pageProperties.ViewBag.Banner;
-			set => image = value;
+			get => !string.IsNullOrEmpty(_image) ? _image : _pageProperties.ViewBag.Banner;
+			set => _image = value;
 		}
 
 		public bool ShowTwitterCard { get; set; }
@@ -139,8 +139,8 @@ namespace VocaDb.Web.Code
 		/// </summary>
 		public string Title
 		{
-			get => !string.IsNullOrEmpty(title) ? title : pageProperties.Title;
-			set => title = value;
+			get => !string.IsNullOrEmpty(_title) ? _title : _pageProperties.Title;
+			set => _title = value;
 		}
 
 		/// <summary>

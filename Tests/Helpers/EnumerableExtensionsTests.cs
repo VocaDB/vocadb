@@ -6,10 +6,10 @@ using VocaDb.Model.Helpers;
 namespace VocaDb.Tests.Helpers
 {
 	/// <summary>
-	/// Tests for <see cref="EnumerableExtender"/>.
+	/// Tests for <see cref="EnumerableExtensions"/>.
 	/// </summary>
 	[TestClass]
-	public class EnumerableExtenderTests
+	public class EnumerableExtensionsTests
 	{
 		[TestMethod]
 		public void MinOrNull_NotEmpty()

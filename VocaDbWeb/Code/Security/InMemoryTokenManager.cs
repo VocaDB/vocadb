@@ -27,8 +27,8 @@ namespace VocaDb.Web.Code.Security
 	/// </remarks>
 	internal class InMemoryTokenManager : IConsumerTokenManager, IOpenIdOAuthTokenManager
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly Dictionary<string, string> tokensAndSecrets = new Dictionary<string, string>();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private readonly Dictionary<string, string> _tokensAndSecrets = new();
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="InMemoryTokenManager"/> class.
@@ -42,8 +42,8 @@ namespace VocaDb.Web.Code.Security
 				throw new ArgumentNullException("consumerKey");
 			}
 
-			this.ConsumerKey = consumerKey;
-			this.ConsumerSecret = consumerSecret;
+			ConsumerKey = consumerKey;
+			ConsumerSecret = consumerSecret;
 		}
 
 		/// <summary>
@@ -70,8 +70,8 @@ namespace VocaDb.Web.Code.Security
 		/// <exception cref="ArgumentException">Thrown if the secret cannot be found for the given token.</exception>
 		public string GetTokenSecret(string token)
 		{
-			log.Info("Requesting secret for token " + token);
-			return this.tokensAndSecrets[token];
+			s_log.Info("Requesting secret for token " + token);
+			return _tokensAndSecrets[token];
 		}
 
 		/// <summary>
@@ -89,8 +89,8 @@ namespace VocaDb.Web.Code.Security
 		/// </remarks>
 		public void StoreNewRequestToken(UnauthorizedTokenRequest request, ITokenSecretContainingMessage response)
 		{
-			log.Info($"Storing token {response.Token}");
-			this.tokensAndSecrets[response.Token] = response.TokenSecret;
+			s_log.Info($"Storing token {response.Token}");
+			_tokensAndSecrets[response.Token] = response.TokenSecret;
 		}
 
 		/// <summary>
@@ -118,9 +118,9 @@ namespace VocaDb.Web.Code.Security
 		/// </remarks>
 		public void ExpireRequestTokenAndStoreNewAccessToken(string consumerKey, string requestToken, string accessToken, string accessTokenSecret)
 		{
-			log.Info("Expiring tokens");
-			this.tokensAndSecrets.Remove(requestToken);
-			this.tokensAndSecrets[accessToken] = accessTokenSecret;
+			s_log.Info("Expiring tokens");
+			_tokensAndSecrets.Remove(requestToken);
+			_tokensAndSecrets[accessToken] = accessTokenSecret;
 		}
 
 		/// <summary>
@@ -151,8 +151,8 @@ namespace VocaDb.Web.Code.Security
 		/// </remarks>
 		public void StoreOpenIdAuthorizedRequestToken(string consumerKey, AuthorizationApprovedResponse authorization)
 		{
-			log.Info("Storing openId auth request token " + authorization.RequestToken);
-			this.tokensAndSecrets[authorization.RequestToken] = string.Empty;
+			s_log.Info("Storing openId auth request token " + authorization.RequestToken);
+			_tokensAndSecrets[authorization.RequestToken] = string.Empty;
 		}
 
 		#endregion

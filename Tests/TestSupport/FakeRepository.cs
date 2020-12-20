@@ -19,26 +19,26 @@ namespace VocaDb.Tests.TestSupport
 	public class FakeRepository<T> : IRepository<T>
 		where T : class, IDatabaseObject
 	{
-		protected readonly QuerySourceList querySource;
+		protected readonly QuerySourceList _querySource;
 
 		public FakeRepository()
 		{
-			querySource = new QuerySourceList();
+			_querySource = new QuerySourceList();
 		}
 
 		public FakeRepository(params T[] items)
 		{
-			querySource = new QuerySourceList();
+			_querySource = new QuerySourceList();
 			Save(items);
 		}
 
 		public FakeRepository(QuerySourceList querySource)
 		{
-			this.querySource = querySource;
+			_querySource = querySource;
 		}
 
-		public int AbortedTransactionCount => querySource.AbortedTransactionCount;
-		public int CommittedTransactionCount => querySource.CommittedTransactionCount;
+		public int AbortedTransactionCount => _querySource.AbortedTransactionCount;
+		public int CommittedTransactionCount => _querySource.CommittedTransactionCount;
 
 		/// <summary>
 		/// Adds a list of entities to the repository without performing any additional persisting logic.
@@ -48,18 +48,18 @@ namespace VocaDb.Tests.TestSupport
 		/// <param name="entities">List of entities to be added. Cannot be null.</param>
 		public void Add<TEntity>(params TEntity[] entities) where TEntity : class, IDatabaseObject
 		{
-			querySource.AddRange(entities);
+			_querySource.AddRange(entities);
 		}
 
 		public bool Contains<TEntity>(TEntity entity) where TEntity : class, IDatabaseObject
-			=> querySource.List<TEntity>().Contains(entity);
+			=> _querySource.List<TEntity>().Contains(entity);
 
 		public int Count<TEntity>() where TEntity : class, IDatabaseObject
-			=> querySource.List<TEntity>().Count;
+			=> _querySource.List<TEntity>().Count;
 
 		public virtual ListDatabaseContext<T> CreateContext()
 		{
-			return new ListDatabaseContext<T>(querySource);
+			return new ListDatabaseContext<T>(_querySource);
 		}
 
 		public TResult HandleQuery<TResult>(Func<IDatabaseContext<T>, TResult> func, string failMsg = "Unexpected database error")
@@ -96,10 +96,10 @@ namespace VocaDb.Tests.TestSupport
 		/// Tests that an object was saved to database during an active transaction and the transaction was committed.
 		/// </summary>
 		public bool IsCommitted<T2>(T2 entity) where T2 : class, IDatabaseObject
-			=> querySource.IsCommitted(entity);
+			=> _querySource.IsCommitted(entity);
 
 		public List<TEntity> List<TEntity>() where TEntity : class, IDatabaseObject
-			=> querySource.List<TEntity>();
+			=> _querySource.List<TEntity>();
 
 		public T Load(int id) => HandleQuery(ctx => ctx.Load(id));
 
@@ -109,7 +109,7 @@ namespace VocaDb.Tests.TestSupport
 
 		public FakeRepository<T2> OfType<T2>() where T2 : class, IDatabaseObject
 		{
-			return new FakeRepository<T2>(querySource);
+			return new FakeRepository<T2>(_querySource);
 		}
 
 		/// <summary>
@@ -173,9 +173,9 @@ namespace VocaDb.Tests.TestSupport
 	public class ListDatabaseContext<T> : IDatabaseContext<T>
 		where T : class, IDatabaseObject
 	{
-		private static readonly bool isEntityWithId = typeof(IEntryWithIntId).IsAssignableFrom(typeof(T)) || typeof(IEntryWithLongId).IsAssignableFrom(typeof(T));
+		private static readonly bool s_isEntityWithId = typeof(IEntryWithIntId).IsAssignableFrom(typeof(T)) || typeof(IEntryWithLongId).IsAssignableFrom(typeof(T));
 
-		protected bool IsEntityWithId => isEntityWithId;
+		protected bool IsEntityWithId => s_isEntityWithId;
 
 		// Get next Id
 		private void AssignNewId(T obj)
@@ -235,18 +235,18 @@ namespace VocaDb.Tests.TestSupport
 			return dyn.Id;
 		}
 
-		protected readonly QuerySourceList querySource;
+		protected readonly QuerySourceList _querySource;
 
 		public ListDatabaseContext(QuerySourceList querySource)
 		{
-			this.querySource = querySource;
+			_querySource = querySource;
 		}
 
 		public IAuditLogger AuditLogger => new FakeAuditLogger();
 
-		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) => querySource.BeginTransaction(isolationLevel);
+		public IMinimalTransaction BeginTransaction(IsolationLevel isolationLevel) => _querySource.BeginTransaction(isolationLevel);
 
-		public void Delete(T entity) => querySource.List<T>().Remove(entity);
+		public void Delete(T entity) => _querySource.List<T>().Remove(entity);
 
 		public Task DeleteAsync(T entity)
 		{
@@ -264,16 +264,16 @@ namespace VocaDb.Tests.TestSupport
 
 		public T Get(object id)
 		{
-			var list = querySource.List<T>();
+			var list = _querySource.List<T>();
 			return list.FirstOrDefault(i => IdEquals(i, id));
 		}
 
 		public virtual T Load(object id)
 		{
-			var list = querySource.List<T>();
+			var list = _querySource.List<T>();
 
 			if (list.All(i => !IdEquals(i, id)))
-				throw new InvalidOperationException(string.Format("Entity of type {0} with Id {1} not found", typeof(T), id));
+				throw new InvalidOperationException($"Entity of type {typeof(T)} with Id {id} not found");
 
 			return list.First(i => IdEquals(i, id));
 		}
@@ -281,9 +281,9 @@ namespace VocaDb.Tests.TestSupport
 		public Task<T> LoadAsync(object id) => Task.FromResult(Load(id));
 
 		public virtual IDatabaseContext<T2> OfType<T2>() where T2 : class, IDatabaseObject
-			=> new ListDatabaseContext<T2>(querySource);
+			=> new ListDatabaseContext<T2>(_querySource);
 
-		public IQueryable<T> Query() => querySource.Query<T>();
+		public IQueryable<T> Query() => _querySource.Query<T>();
 
 		public IQueryable<T2> Query<T2>() where T2 : class, IDatabaseObject => OfType<T2>().Query();
 
@@ -294,7 +294,7 @@ namespace VocaDb.Tests.TestSupport
 				AssignNewId(obj);
 			}
 
-			querySource.Add(obj);
+			_querySource.Add(obj);
 			return obj;
 		}
 

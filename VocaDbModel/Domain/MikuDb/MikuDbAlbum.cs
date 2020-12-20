@@ -10,9 +10,9 @@ namespace VocaDb.Model.Domain.MikuDb
 {
 	public class MikuDbAlbum
 	{
-		private XDocument data;
-		private string sourceUrl;
-		private string title;
+		private XDocument _data;
+		private string _sourceUrl;
+		private string _title;
 
 		public MikuDbAlbum()
 		{
@@ -40,8 +40,8 @@ namespace VocaDb.Model.Domain.MikuDb
 
 		public virtual XDocument Data
 		{
-			get { return data; }
-			set { data = value; }
+			get => _data;
+			set => _data = value;
 		}
 
 		public virtual int Id { get; set; }
@@ -50,16 +50,16 @@ namespace VocaDb.Model.Domain.MikuDb
 
 		public virtual string SourceUrl
 		{
-			get { return sourceUrl; }
-			set { sourceUrl = value; }
+			get => _sourceUrl;
+			set => _sourceUrl = value;
 		}
 
 		public virtual AlbumStatus Status { get; set; }
 
 		public virtual string Title
 		{
-			get { return title; }
-			set { title = value; }
+			get => _title;
+			set => _title = value;
 		}
 
 		public virtual bool Equals(MikuDbAlbum another)
@@ -73,7 +73,7 @@ namespace VocaDb.Model.Domain.MikuDb
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -88,7 +88,7 @@ namespace VocaDb.Model.Domain.MikuDb
 
 		public override string ToString()
 		{
-			return string.Format("Imported album '{0}' [{1}]", Title, Id);
+			return $"Imported album '{Title}' [{Id}]";
 		}
 	}
 }

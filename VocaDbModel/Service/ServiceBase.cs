@@ -26,12 +26,12 @@ namespace VocaDb.Model.Service
 {
 	public abstract class ServiceBase
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
-		private readonly IEntryLinkFactory entryLinkFactory;
-		protected const int maxEntryCount = 500;
-		private readonly ISessionFactory sessionFactory;
-		private readonly IUserPermissionContext permissionContext;
+		private readonly IEntryLinkFactory _entryLinkFactory;
+		protected const int MaxEntryCount = 500;
+		private readonly ISessionFactory _sessionFactory;
+		private readonly IUserPermissionContext _permissionContext;
 
 		protected string CreateEntryLink(IEntryBase entry)
 		{
@@ -40,7 +40,7 @@ namespace VocaDb.Model.Service
 
 		private string GetAuditLogMessage(string doingWhat, string who)
 		{
-			return string.Format("'{0}' {1}", who, doingWhat);
+			return $"'{who}' {doingWhat}";
 		}
 
 		protected User GetLoggedUser(ISession session)
@@ -55,25 +55,13 @@ namespace VocaDb.Model.Service
 			return (PermissionContext.LoggedUser != null ? session.Load<User>(PermissionContext.LoggedUser.Id) : null);
 		}
 
-		protected IEntryLinkFactory EntryLinkFactory
-		{
-			get { return entryLinkFactory; }
-		}
+		protected IEntryLinkFactory EntryLinkFactory => _entryLinkFactory;
 
-		protected ContentLanguagePreference LanguagePreference
-		{
-			get { return PermissionContext.LanguagePreference; }
-		}
+		protected ContentLanguagePreference LanguagePreference => PermissionContext.LanguagePreference;
 
-		protected IUserPermissionContext PermissionContext
-		{
-			get { return permissionContext; }
-		}
+		protected IUserPermissionContext PermissionContext => _permissionContext;
 
-		protected ISessionFactory SessionFactory
-		{
-			get { return sessionFactory; }
-		}
+		protected ISessionFactory SessionFactory => _sessionFactory;
 
 		protected void AddActivityfeedEntry(ISession session, ActivityEntry entry)
 		{
@@ -128,7 +116,7 @@ namespace VocaDb.Model.Service
 		/// <param name="who">Who made the action.</param>
 		protected void SysLog(string doingWhat, string who)
 		{
-			log.Info(GetAuditLogMessage(doingWhat, who));
+			s_log.Info(GetAuditLogMessage(doingWhat, who));
 		}
 
 		protected void AuditLog(string doingWhat, ISession session, AgentLoginData who, AuditLogCategory category = AuditLogCategory.Unspecified)
@@ -185,12 +173,12 @@ namespace VocaDb.Model.Service
 			}
 			catch (ObjectNotFoundException x)
 			{
-				log.Error(x.Message);
+				s_log.Error(x.Message);
 				throw;
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -206,12 +194,12 @@ namespace VocaDb.Model.Service
 			}
 			catch (ObjectNotFoundException x)
 			{
-				log.Error(x.Message);
+				s_log.Error(x.Message);
 				throw;
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -227,12 +215,12 @@ namespace VocaDb.Model.Service
 			}
 			catch (ObjectNotFoundException x)
 			{
-				log.Error(x.Message);
+				s_log.Error(x.Message);
 				throw;
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -251,7 +239,7 @@ namespace VocaDb.Model.Service
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -270,7 +258,7 @@ namespace VocaDb.Model.Service
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -289,7 +277,7 @@ namespace VocaDb.Model.Service
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -307,7 +295,7 @@ namespace VocaDb.Model.Service
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
@@ -325,14 +313,14 @@ namespace VocaDb.Model.Service
 			}
 			catch (HibernateException x)
 			{
-				log.Error(x, failMsg);
+				s_log.Error(x, failMsg);
 				throw;
 			}
 		}
 
 		protected ISession OpenSession()
 		{
-			return sessionFactory.OpenSession();
+			return _sessionFactory.OpenSession();
 		}
 
 		protected ServiceBase(
@@ -340,15 +328,15 @@ namespace VocaDb.Model.Service
 		{
 			ParamIs.NotNull(() => sessionFactory);
 
-			this.sessionFactory = sessionFactory;
-			this.permissionContext = permissionContext;
-			this.entryLinkFactory = entryLinkFactory;
+			_sessionFactory = sessionFactory;
+			_permissionContext = permissionContext;
+			_entryLinkFactory = entryLinkFactory;
 		}
 
 		protected void DeleteEntity<TEntity>(int id, PermissionToken permissionFlags, bool skipLog = false)
 		{
 			var typeName = typeof(TEntity).Name;
-			SysLog(string.Format("is about to delete {0} with Id {1}", typeName, id));
+			SysLog($"is about to delete {typeName} with Id {id}");
 			PermissionContext.VerifyPermission(permissionFlags);
 
 			HandleTransaction(session =>
@@ -368,7 +356,7 @@ namespace VocaDb.Model.Service
 		{
 			var typeName = typeof(TEntity).Name;
 
-			SysLog(string.Format("is about to update {0} with Id {1}", typeName, id));
+			SysLog($"is about to update {typeName} with Id {id}");
 			PermissionContext.VerifyPermission(permissionFlags);
 
 			HandleTransaction(session =>
@@ -390,7 +378,7 @@ namespace VocaDb.Model.Service
 		{
 			var typeName = typeof(TEntity).Name;
 
-			SysLog(string.Format("is about to update {0} with Id {1}", typeName, id));
+			SysLog($"is about to update {typeName} with Id {id}");
 			PermissionContext.VerifyPermission(permissionFlags);
 
 			HandleTransaction(session =>

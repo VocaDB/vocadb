@@ -36,21 +36,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 	[TestClass]
 	public class AlbumQueriesTests
 	{
-		private Album album;
-		private InMemoryImagePersister imagePersister;
-		private FakeUserMessageMailer mailer;
-		private CreateAlbumContract newAlbumContract;
-		private FakePermissionContext permissionContext;
-		private Artist producer;
-		private FakeAlbumRepository repository;
-		private AlbumQueries queries;
-		private Song song;
-		private Song song2;
-		private Song song3;
-		private User user;
-		private User user2;
-		private Artist vocalist;
-		private Artist vocalist2;
+		private Album _album;
+		private InMemoryImagePersister _imagePersister;
+		private FakeUserMessageMailer _mailer;
+		private CreateAlbumContract _newAlbumContract;
+		private FakePermissionContext _permissionContext;
+		private Artist _producer;
+		private FakeAlbumRepository _repository;
+		private AlbumQueries _queries;
+		private Song _song;
+		private Song _song2;
+		private Song _song3;
+		private User _user;
+		private User _user2;
+		private Artist _vocalist;
+		private Artist _vocalist2;
 
 		private void AssertHasArtist(Album album, string artistName, ArtistRoles? roles)
 		{
@@ -64,8 +64,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 		private CommentForApiContract CreateComment(int albumId, string message)
 		{
-			var contract = new CommentForApiContract { Message = message, Author = new UserForApiContract(user, null, UserOptionalFields.None) };
-			return queries.CreateComment(albumId, contract);
+			var contract = new CommentForApiContract { Message = message, Author = new UserForApiContract(_user, null, UserOptionalFields.None) };
+			return _queries.CreateComment(albumId, contract);
 		}
 
 		private SongInAlbumEditContract CreateSongInAlbumEditContract(int trackNumber, int songId = 0, string songName = null)
@@ -83,67 +83,67 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 		private Task<AlbumForEditContract> CallUpdate(AlbumForEditContract contract)
 		{
-			return queries.UpdateBasicProperties(contract, null);
+			return _queries.UpdateBasicProperties(contract, null);
 		}
 
 		private async Task<AlbumForEditContract> CallUpdate(Stream image)
 		{
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			using (var stream = image)
 			{
-				return await queries.UpdateBasicProperties(contract, new EntryPictureFileContract(stream, MediaTypeNames.Image.Jpeg, purpose: ImagePurpose.Main));
+				return await _queries.UpdateBasicProperties(contract, new EntryPictureFileContract(stream, MediaTypeNames.Image.Jpeg, purpose: ImagePurpose.Main));
 			}
 		}
 
 		private void Save<T>(params T[] entity) where T : class, IDatabaseObject
 		{
-			repository.Save(entity);
+			_repository.Save(entity);
 		}
 
 		private T Save<T>(T entity) where T : class, IDatabaseObject
 		{
-			return repository.Save(entity);
+			return _repository.Save(entity);
 		}
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			producer = CreateEntry.Producer();
-			vocalist = CreateEntry.Vocalist(name: "Hatsune Miku");
-			vocalist2 = CreateEntry.Vocalist(name: "Rin");
+			_producer = CreateEntry.Producer();
+			_vocalist = CreateEntry.Vocalist(name: "Hatsune Miku");
+			_vocalist2 = CreateEntry.Vocalist(name: "Rin");
 
-			album = CreateEntry.Album(id: 39, name: "Synthesis");
-			repository = new FakeAlbumRepository(album);
-			foreach (var name in album.Names)
+			_album = CreateEntry.Album(id: 39, name: "Synthesis");
+			_repository = new FakeAlbumRepository(_album);
+			foreach (var name in _album.Names)
 				Save(name);
-			user = CreateEntry.User(1, "Miku");
-			user.GroupId = UserGroupId.Moderator;
-			user2 = CreateEntry.User(2, "Luka");
-			Save(user, user2);
-			Save(producer, vocalist, vocalist2);
+			_user = CreateEntry.User(1, "Miku");
+			_user.GroupId = UserGroupId.Moderator;
+			_user2 = CreateEntry.User(2, "Luka");
+			Save(_user, _user2);
+			Save(_producer, _vocalist, _vocalist2);
 
-			song = Save(CreateEntry.Song(name: "Nebula"));
-			song2 = Save(CreateEntry.Song(name: "Anger"));
-			song3 = Save(CreateEntry.Song(name: "Resistance"));
+			_song = Save(CreateEntry.Song(name: "Nebula"));
+			_song2 = Save(CreateEntry.Song(name: "Anger"));
+			_song3 = Save(CreateEntry.Song(name: "Resistance"));
 
-			permissionContext = new FakePermissionContext(user);
+			_permissionContext = new FakePermissionContext(_user);
 			var entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
 
-			newAlbumContract = new CreateAlbumContract
+			_newAlbumContract = new CreateAlbumContract
 			{
 				DiscType = DiscType.Album,
 				Names = new[] {
 					new LocalizedStringContract("Another Dimensions", ContentLanguageSelection.English)
 				},
 				Artists = new[] {
-					new ArtistContract(producer, ContentLanguagePreference.Default),
-					new ArtistContract(vocalist, ContentLanguagePreference.Default),
+					new ArtistContract(_producer, ContentLanguagePreference.Default),
+					new ArtistContract(_vocalist, ContentLanguagePreference.Default),
 				}
 			};
 
-			imagePersister = new InMemoryImagePersister();
-			mailer = new FakeUserMessageMailer();
-			queries = new AlbumQueries(repository, permissionContext, entryLinkFactory, imagePersister, imagePersister, mailer,
+			_imagePersister = new InMemoryImagePersister();
+			_mailer = new FakeUserMessageMailer();
+			_queries = new AlbumQueries(_repository, _permissionContext, entryLinkFactory, _imagePersister, _imagePersister, _mailer,
 				new FakeUserIconFactory(), new EnumTranslations(), new FakePVParser(),
 				new FollowedArtistNotifier(new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new EnumTranslations(), new EntrySubTypeNameFactory()), new InMemoryImagePersister(),
 				new FakeObjectCache());
@@ -152,30 +152,30 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Create()
 		{
-			var result = await queries.Create(newAlbumContract);
+			var result = await _queries.Create(_newAlbumContract);
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual("Another Dimensions", result.Name, "Name");
 
-			album = repository.HandleQuery(q => q.Query().FirstOrDefault(a => a.DefaultName == "Another Dimensions"));
+			_album = _repository.HandleQuery(q => q.Query().FirstOrDefault(a => a.DefaultName == "Another Dimensions"));
 
-			Assert.IsNotNull(album, "Album was saved to repository");
-			Assert.AreEqual("Another Dimensions", album.DefaultName, "Name");
-			Assert.AreEqual(ContentLanguageSelection.English, album.Names.SortNames.DefaultLanguage, "Default language should be English");
-			Assert.AreEqual(2, album.AllArtists.Count, "Artists count");
-			VocaDbAssert.ContainsArtists(album.AllArtists, "Tripshots", "Hatsune Miku");
-			Assert.AreEqual("Tripshots feat. Hatsune Miku", album.ArtistString.Default, "ArtistString");
+			Assert.IsNotNull(_album, "Album was saved to repository");
+			Assert.AreEqual("Another Dimensions", _album.DefaultName, "Name");
+			Assert.AreEqual(ContentLanguageSelection.English, _album.Names.SortNames.DefaultLanguage, "Default language should be English");
+			Assert.AreEqual(2, _album.AllArtists.Count, "Artists count");
+			VocaDbAssert.ContainsArtists(_album.AllArtists, "Tripshots", "Hatsune Miku");
+			Assert.AreEqual("Tripshots feat. Hatsune Miku", _album.ArtistString.Default, "ArtistString");
 
-			var archivedVersion = repository.List<ArchivedAlbumVersion>().FirstOrDefault();
+			var archivedVersion = _repository.List<ArchivedAlbumVersion>().FirstOrDefault();
 
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(album, archivedVersion.Album, "Archived version album");
+			Assert.AreEqual(_album, archivedVersion.Album, "Archived version album");
 			Assert.AreEqual(AlbumArchiveReason.Created, archivedVersion.Reason, "Archived version reason");
 
-			var activityEntry = repository.List<ActivityEntry>().FirstOrDefault();
+			var activityEntry = _repository.List<ActivityEntry>().FirstOrDefault();
 
 			Assert.IsNotNull(activityEntry, "Activity entry was created");
-			Assert.AreEqual(album, activityEntry.EntryBase, "Activity entry's entry");
+			Assert.AreEqual(_album, activityEntry.EntryBase, "Activity entry's entry");
 			Assert.AreEqual(EntryEditEvent.Created, activityEntry.EditEvent, "Activity entry event type");
 		}
 
@@ -183,10 +183,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[ExpectedException(typeof(NotAllowedException))]
 		public async Task Create_NoPermission()
 		{
-			user.GroupId = UserGroupId.Limited;
-			permissionContext.RefreshLoggedUser(repository);
+			_user.GroupId = UserGroupId.Limited;
+			_permissionContext.RefreshLoggedUser(_repository);
 
-			await queries.Create(newAlbumContract);
+			await _queries.Create(_newAlbumContract);
 		}
 
 		[TestMethod]
@@ -195,10 +195,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var result = CreateComment(39, "Hello world");
 			Assert.IsNotNull(result, "Result");
 
-			var comment = repository.List<Comment>().FirstOrDefault();
+			var comment = _repository.List<Comment>().FirstOrDefault();
 			Assert.IsNotNull(comment, "Comment was saved");
-			Assert.AreEqual(user, comment.Author, "Author");
-			Assert.AreEqual(album, comment.Entry, "Album");
+			Assert.AreEqual(_user, comment.Author, "Author");
+			Assert.AreEqual(_album, comment.Entry, "Album");
 			Assert.AreEqual("Hello world", comment.Message, "Comment message");
 		}
 
@@ -206,8 +206,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[ExpectedException(typeof(NotAllowedException))]
 		public void CreateComment_NoPermission()
 		{
-			user.GroupId = UserGroupId.Limited;
-			permissionContext.RefreshLoggedUser(repository);
+			_user.GroupId = UserGroupId.Limited;
+			_permissionContext.RefreshLoggedUser(_repository);
 
 			CreateComment(39, "Hello world");
 		}
@@ -217,7 +217,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var contract = await CallUpdate(ResourceHelper.TestImage());
 
-			var result = queries.GetCoverPictureThumb(contract.Id);
+			var result = _queries.GetCoverPictureThumb(contract.Id);
 
 			Assert.IsNotNull(result, "result");
 			Assert.IsNotNull(result.Picture, "Picture");
@@ -229,11 +229,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void GetAlbumDetails()
 		{
-			repository.Save(album.AddSong(song, 1, 1));
-			repository.Save(album.AddSong(song2, 2, 1));
-			repository.Save(user.AddSongToFavorites(song, SongVoteRating.Favorite));
+			_repository.Save(_album.AddSong(_song, 1, 1));
+			_repository.Save(_album.AddSong(_song2, 2, 1));
+			_repository.Save(_user.AddSongToFavorites(_song, SongVoteRating.Favorite));
 
-			var result = queries.GetAlbumDetails(album.Id, "miku@vocaloid.eu");
+			var result = _queries.GetAlbumDetails(_album.Id, "miku@vocaloid.eu");
 
 			Assert.AreEqual(2, result.Songs.Length, "Number of songs");
 			var track = result.Songs[0];
@@ -244,10 +244,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void GetAlbumDetails_CustomTrack()
 		{
-			repository.Save(album.AddSong("Miku Miku", 1, 1));
-			repository.Save(user.AddSongToFavorites(song, SongVoteRating.Favorite));
+			_repository.Save(_album.AddSong("Miku Miku", 1, 1));
+			_repository.Save(_user.AddSongToFavorites(_song, SongVoteRating.Favorite));
 
-			var result = queries.GetAlbumDetails(album.Id, "miku@vocaloid.eu");
+			var result = _queries.GetAlbumDetails(_album.Id, "miku@vocaloid.eu");
 
 			Assert.AreEqual(1, result.Songs.Length, "Number of songs");
 		}
@@ -255,10 +255,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void GetAlbumDetails_NotLoggedIn()
 		{
-			repository.Save(album.AddSong("Miku Miku", 1, 1));
-			permissionContext.LogOff();
+			_repository.Save(_album.AddSong("Miku Miku", 1, 1));
+			_permissionContext.LogOff();
 
-			var result = queries.GetAlbumDetails(album.Id, "miku@vocaloid.eu");
+			var result = _queries.GetAlbumDetails(_album.Id, "miku@vocaloid.eu");
 			Assert.IsNotNull(result, "result");
 		}
 
@@ -267,17 +267,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			void AddTagUsages(Song[] songs, string[] tagNames)
 			{
-				var (tags, tagUsages, tagVotes) = CreateEntry.TagUsages(songs, tagNames, user, new SongTagUsageFactory(repository.CreateContext(), song));
-				repository.Save(tags);
-				repository.Save(tagUsages);
-				repository.Save(tagVotes);
+				var (tags, tagUsages, tagVotes) = CreateEntry.TagUsages(songs, tagNames, _user, new SongTagUsageFactory(_repository.CreateContext(), _song));
+				_repository.Save(tags);
+				_repository.Save(tagUsages);
+				_repository.Save(tagVotes);
 			}
 
-			AddTagUsages(new[] { song, song2 }, new[] { "vocarock", "techno" });
+			AddTagUsages(new[] { _song, _song2 }, new[] { "vocarock", "techno" });
 
-			repository.Save(album.AddSong(song, 1, 1), album.AddSong(song2, 2, 1));
+			_repository.Save(_album.AddSong(_song, 1, 1), _album.AddSong(_song2, 2, 1));
 
-			var result = await queries.GetTagSuggestions(album.Id);
+			var result = await _queries.GetTagSuggestions(_album.Id);
 
 			Assert.AreEqual(2, result.Length, "Number of tag suggestions");
 			Assert.IsTrue(result.Any(r => r.Tag.Name == "vocarock"), "First tag was returned");
@@ -286,25 +286,25 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Merge_ToEmpty()
 		{
-			Save(album.AddArtist(producer));
-			Save(album.AddArtist(vocalist));
-			Save(album.AddSong(song, 1, 1));
+			Save(_album.AddArtist(_producer));
+			Save(_album.AddArtist(_vocalist));
+			Save(_album.AddSong(_song, 1, 1));
 
 			var album2 = CreateEntry.Album();
 			Save(album2);
 
-			queries.Merge(album.Id, album2.Id);
+			_queries.Merge(_album.Id, album2.Id);
 
-			Assert.IsTrue(album.Deleted, "Original was deleted");
-			Assert.AreEqual(0, album.AllArtists.Count, "All artists removed from original");
-			Assert.AreEqual(0, album.AllSongs.Count, "All songs removed from original");
+			Assert.IsTrue(_album.Deleted, "Original was deleted");
+			Assert.AreEqual(0, _album.AllArtists.Count, "All artists removed from original");
+			Assert.AreEqual(0, _album.AllSongs.Count, "All songs removed from original");
 
 			Assert.AreEqual("Synthesis", album2.DefaultName, "Name");
 			Assert.AreEqual(2, album2.AllArtists.Count, "Number of artists");
 			Assert.AreEqual(1, album2.AllSongs.Count, "Number of songs");
 			Assert.AreEqual("Nebula", album2.AllSongs.First().Song.DefaultName);
 
-			var mergeRecord = repository.List<AlbumMergeRecord>().FirstOrDefault(m => m.Source == album.Id);
+			var mergeRecord = _repository.List<AlbumMergeRecord>().FirstOrDefault(m => m.Source == _album.Id);
 			Assert.IsNotNull(mergeRecord, "Merge record was created");
 			Assert.AreEqual(album2.Id, mergeRecord.Target.Id, "mergeRecord.Target.Id");
 		}
@@ -312,39 +312,39 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Merge_WithArtists()
 		{
-			Save(album.AddArtist(producer, false, ArtistRoles.Instrumentalist));
-			Save(album.AddArtist(vocalist, false, ArtistRoles.Default));
+			Save(_album.AddArtist(_producer, false, ArtistRoles.Instrumentalist));
+			Save(_album.AddArtist(_vocalist, false, ArtistRoles.Default));
 
 			var album2 = Save(CreateEntry.Album());
-			Save(album2.AddArtist(vocalist, false, ArtistRoles.Mastering));
+			Save(album2.AddArtist(_vocalist, false, ArtistRoles.Mastering));
 			Save(album2.AddArtist("Kaito", true, ArtistRoles.Default));
 
-			queries.Merge(album.Id, album2.Id);
+			_queries.Merge(_album.Id, album2.Id);
 
-			Assert.AreEqual(1, album.AllArtists.Count, "Number of artists for source"); // Vocalist was not moved
+			Assert.AreEqual(1, _album.AllArtists.Count, "Number of artists for source"); // Vocalist was not moved
 			Assert.AreEqual(3, album2.AllArtists.Count, "Number of artists for target");
-			AssertHasArtist(album2, producer, ArtistRoles.Instrumentalist);
-			AssertHasArtist(album2, vocalist, ArtistRoles.Mastering);
+			AssertHasArtist(album2, _producer, ArtistRoles.Instrumentalist);
+			AssertHasArtist(album2, _vocalist, ArtistRoles.Mastering);
 			AssertHasArtist(album2, "Kaito", ArtistRoles.Default);
 		}
 
 		[TestMethod]
 		public void Merge_WithTracks()
 		{
-			Save(album.AddSong(song, 1, 1));
-			Save(album.AddSong(song2, 2, 1));
+			Save(_album.AddSong(_song, 1, 1));
+			Save(_album.AddSong(_song2, 2, 1));
 
 			var album2 = Save(CreateEntry.Album());
-			Save(album2.AddSong(song, 1, 1));
-			Save(album2.AddSong(song3, 2, 1));
+			Save(album2.AddSong(_song, 1, 1));
+			Save(album2.AddSong(_song3, 2, 1));
 
-			queries.Merge(album.Id, album2.Id);
+			_queries.Merge(_album.Id, album2.Id);
 
-			Assert.AreEqual(1, album.AllSongs.Count, "Number of songs for source"); // song was not moved
+			Assert.AreEqual(1, _album.AllSongs.Count, "Number of songs for source"); // song was not moved
 			Assert.AreEqual(3, album2.AllSongs.Count, "Number of songs for target");
-			VocaDbAssert.HasSong(album2, song, 1);
-			VocaDbAssert.HasSong(album2, song2, 3);
-			VocaDbAssert.HasSong(album2, song3, 2);
+			VocaDbAssert.HasSong(album2, _song, 1);
+			VocaDbAssert.HasSong(album2, _song2, 3);
+			VocaDbAssert.HasSong(album2, _song3, 2);
 		}
 
 		/// <summary>
@@ -353,17 +353,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void Merge_CustomTracks()
 		{
-			Save(album.AddSong(song, 1, 1));
-			Save(album.AddSong("Bonus song 1", 2, 1));
+			Save(_album.AddSong(_song, 1, 1));
+			Save(_album.AddSong("Bonus song 1", 2, 1));
 
 			var album2 = Save(CreateEntry.Album());
-			Save(album2.AddSong(song, 1, 1));
+			Save(album2.AddSong(_song, 1, 1));
 			Save(album2.AddSong("Bonus song 2", 2, 1));
 
-			queries.Merge(album.Id, album2.Id);
+			_queries.Merge(_album.Id, album2.Id);
 
 			Assert.AreEqual(3, album2.AllSongs.Count, "Number of songs for target");
-			VocaDbAssert.HasSong(album2, song, 1);
+			VocaDbAssert.HasSong(album2, _song, 1);
 			VocaDbAssert.HasSong(album2, "Bonus song 2", 2);
 			VocaDbAssert.HasSong(album2, "Bonus song 1", 3);
 		}
@@ -372,22 +372,22 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void Revert()
 		{
 			// Arrange
-			album.Description.English = "Original";
-			var oldVer = repository.HandleTransaction(ctx => queries.Archive(ctx, album, AlbumArchiveReason.PropertiesUpdated));
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			_album.Description.English = "Original";
+			var oldVer = _repository.HandleTransaction(ctx => _queries.Archive(ctx, _album, AlbumArchiveReason.PropertiesUpdated));
+			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			contract.Description.English = "Updated";
 			CallUpdate(contract);
 
-			var entryFromRepo = repository.Load<Album>(album.Id);
+			var entryFromRepo = _repository.Load<Album>(_album.Id);
 			Assert.AreEqual("Updated", entryFromRepo.Description.English, "Description was updated");
 
 			// Act
-			var result = queries.RevertToVersion(oldVer.Id);
+			var result = _queries.RevertToVersion(oldVer.Id);
 
 			// Assert
 			Assert.AreEqual(0, result.Warnings.Length, "Number of warnings");
 
-			entryFromRepo = repository.Load<Album>(result.Id);
+			entryFromRepo = _repository.Load<Album>(result.Id);
 			Assert.AreEqual("Original", entryFromRepo.Description.English, "Description was restored");
 
 			var lastVersion = entryFromRepo.ArchivedVersionsManager.GetLatestVersion();
@@ -402,12 +402,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Revert_RemoveImage()
 		{
-			var oldVer = repository.HandleTransaction(ctx => queries.Archive(ctx, album, AlbumArchiveReason.PropertiesUpdated));
+			var oldVer = _repository.HandleTransaction(ctx => _queries.Archive(ctx, _album, AlbumArchiveReason.PropertiesUpdated));
 			await CallUpdate(ResourceHelper.TestImage());
 
-			var result = queries.RevertToVersion(oldVer.Id);
+			var result = _queries.RevertToVersion(oldVer.Id);
 
-			var entryFromRepo = repository.Load<Album>(result.Id);
+			var entryFromRepo = _repository.Load<Album>(result.Id);
 			Assert.IsTrue(PictureData.IsNullOrEmpty(entryFromRepo.CoverPictureData), "Picture data was removed");
 			Assert.IsTrue(string.IsNullOrEmpty(entryFromRepo.CoverPictureMime), "Picture MIME was removed");
 
@@ -421,60 +421,60 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_Names()
 		{
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
 
 			contract.Names.First().Value = "Replaced name";
 			contract.UpdateNotes = "Updated album";
 
 			contract = await CallUpdate(contract);
-			Assert.AreEqual(album.Id, contract.Id, "Update album Id as expected");
+			Assert.AreEqual(_album.Id, contract.Id, "Update album Id as expected");
 
-			var albumFromRepo = repository.Load(contract.Id);
+			var albumFromRepo = _repository.Load(contract.Id);
 			Assert.AreEqual("Replaced name", albumFromRepo.DefaultName);
 			Assert.AreEqual(1, albumFromRepo.Version, "Version");
 			Assert.AreEqual(0, albumFromRepo.AllArtists.Count, "No artists");
 			Assert.AreEqual(0, albumFromRepo.AllSongs.Count, "No songs");
 
-			var archivedVersion = repository.List<ArchivedAlbumVersion>().FirstOrDefault();
+			var archivedVersion = _repository.List<ArchivedAlbumVersion>().FirstOrDefault();
 
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(album, archivedVersion.Album, "Archived version album");
+			Assert.AreEqual(_album, archivedVersion.Album, "Archived version album");
 			Assert.AreEqual(AlbumArchiveReason.PropertiesUpdated, archivedVersion.Reason, "Archived version reason");
 			Assert.AreEqual(AlbumEditableFields.Names, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
 
-			var activityEntry = repository.List<ActivityEntry>().FirstOrDefault();
+			var activityEntry = _repository.List<ActivityEntry>().FirstOrDefault();
 
 			Assert.IsNotNull(activityEntry, "Activity entry was created");
-			Assert.AreEqual(album, activityEntry.EntryBase, "Activity entry's entry");
+			Assert.AreEqual(_album, activityEntry.EntryBase, "Activity entry's entry");
 			Assert.AreEqual(EntryEditEvent.Updated, activityEntry.EditEvent, "Activity entry event type");
 		}
 
 		[TestMethod]
 		public void MoveToTrash()
 		{
-			user.AdditionalPermissions.Add(PermissionToken.MoveToTrash);
-			permissionContext.RefreshLoggedUser(repository);
-			var activityEntry = repository.Save(new AlbumActivityEntry(album, EntryEditEvent.Updated, user, null));
-			Assert.IsTrue(repository.Contains(album), "Album is in repository");
-			Assert.IsTrue(repository.Contains(activityEntry), "Activity entry is in repository");
+			_user.AdditionalPermissions.Add(PermissionToken.MoveToTrash);
+			_permissionContext.RefreshLoggedUser(_repository);
+			var activityEntry = _repository.Save(new AlbumActivityEntry(_album, EntryEditEvent.Updated, _user, null));
+			Assert.IsTrue(_repository.Contains(_album), "Album is in repository");
+			Assert.IsTrue(_repository.Contains(activityEntry), "Activity entry is in repository");
 
-			var result = queries.MoveToTrash(album.Id);
+			var result = _queries.MoveToTrash(_album.Id);
 
-			Assert.IsFalse(repository.Contains(album), "Album was deleted from repository");
-			Assert.IsFalse(repository.Contains(activityEntry), "Activity entry was deleted from repository");
+			Assert.IsFalse(_repository.Contains(_album), "Album was deleted from repository");
+			Assert.IsFalse(_repository.Contains(activityEntry), "Activity entry was deleted from repository");
 
-			var trashedFromRepo = repository.Load<TrashedEntry>(result);
+			var trashedFromRepo = _repository.Load<TrashedEntry>(result);
 			Assert.IsNotNull(trashedFromRepo, "Trashed entry was created");
 			Assert.AreEqual(EntryType.Album, trashedFromRepo.EntryType, "Trashed entry type");
-			Assert.AreEqual(album.DefaultName, trashedFromRepo.Name, "Trashed entry name");
+			Assert.AreEqual(_album.DefaultName, trashedFromRepo.Name, "Trashed entry name");
 		}
 
 		[TestMethod]
 		public async Task Update_Tracks()
 		{
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			var existingSong = CreateEntry.Song(name: "Nebula");
-			repository.Save(existingSong);
+			_repository.Save(existingSong);
 
 			contract.Songs = new[] {
 				CreateSongInAlbumEditContract(1, songId: existingSong.Id),
@@ -483,7 +483,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			contract = await CallUpdate(contract);
 
-			var albumFromRepo = repository.Load(contract.Id);
+			var albumFromRepo = _repository.Load(contract.Id);
 
 			Assert.AreEqual(2, albumFromRepo.AllSongs.Count, "Number of songs");
 
@@ -493,7 +493,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var track2 = albumFromRepo.GetSongByTrackNum(1, 2);
 			Assert.AreEqual("Anger", track2.Song.DefaultName, "Second track name");
 
-			var archivedVersion = repository.List<ArchivedAlbumVersion>().FirstOrDefault();
+			var archivedVersion = _repository.List<ArchivedAlbumVersion>().FirstOrDefault();
 
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(AlbumEditableFields.Tracks, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
@@ -502,8 +502,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_Discs()
 		{
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
-			repository.Save(CreateEntry.AlbumDisc(album));
+			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			_repository.Save(CreateEntry.AlbumDisc(_album));
 
 			contract.Discs = new[] {
 				new AlbumDiscPropertiesContract { Id = 1, Name = "Past" },
@@ -512,7 +512,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			contract = await CallUpdate(contract);
 
-			var albumFromRepo = repository.Load(contract.Id);
+			var albumFromRepo = _repository.Load(contract.Id);
 			Assert.AreEqual(2, albumFromRepo.Discs.Count, "Number of discs");
 
 			var disc1 = albumFromRepo.GetDisc(1);
@@ -523,7 +523,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			Assert.IsNotNull(disc2, "disc2");
 			Assert.AreEqual("Present", disc2.Name, "disc2.Name");
 
-			var archivedVersion = repository.List<ArchivedAlbumVersion>().FirstOrDefault();
+			var archivedVersion = _repository.List<ArchivedAlbumVersion>().FirstOrDefault();
 
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(AlbumEditableFields.Discs, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
@@ -534,17 +534,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var contract = await CallUpdate(ResourceHelper.TestImage());
 
-			var albumFromRepo = repository.Load(contract.Id);
+			var albumFromRepo = _repository.Load(contract.Id);
 
 			Assert.IsNotNull(albumFromRepo.CoverPictureData, "CoverPictureData");
 			Assert.IsNotNull(albumFromRepo.CoverPictureData.Bytes, "Original bytes are saved");
 			Assert.AreEqual(MediaTypeNames.Image.Jpeg, albumFromRepo.CoverPictureMime, "CoverPictureData.Mime");
 
 			var thumbData = new EntryThumb(albumFromRepo, albumFromRepo.CoverPictureMime, ImagePurpose.Main);
-			Assert.IsFalse(imagePersister.HasImage(thumbData, ImageSize.Original), "Original file was not created"); // Original saved in CoverPictureData.Bytes
-			Assert.IsTrue(imagePersister.HasImage(thumbData, ImageSize.Thumb), "Thumbnail file was saved");
+			Assert.IsFalse(_imagePersister.HasImage(thumbData, ImageSize.Original), "Original file was not created"); // Original saved in CoverPictureData.Bytes
+			Assert.IsTrue(_imagePersister.HasImage(thumbData, ImageSize.Thumb), "Thumbnail file was saved");
 
-			var archivedVersion = repository.List<ArchivedAlbumVersion>().FirstOrDefault();
+			var archivedVersion = _repository.List<ArchivedAlbumVersion>().FirstOrDefault();
 
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(AlbumEditableFields.Cover, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
@@ -553,23 +553,23 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_Artists()
 		{
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			contract.ArtistLinks = new[] {
-				CreateArtistForAlbumContract(artistId: producer.Id),
-				CreateArtistForAlbumContract(artistId: vocalist.Id)
+				CreateArtistForAlbumContract(artistId: _producer.Id),
+				CreateArtistForAlbumContract(artistId: _vocalist.Id)
 			};
 
 			contract = await CallUpdate(contract);
 
-			var albumFromRepo = repository.Load(contract.Id);
+			var albumFromRepo = _repository.Load(contract.Id);
 
 			Assert.AreEqual(2, albumFromRepo.AllArtists.Count, "Number of artists");
 
-			Assert.IsTrue(albumFromRepo.HasArtist(producer), "Has producer");
-			Assert.IsTrue(albumFromRepo.HasArtist(vocalist), "Has vocalist");
+			Assert.IsTrue(albumFromRepo.HasArtist(_producer), "Has producer");
+			Assert.IsTrue(albumFromRepo.HasArtist(_vocalist), "Has vocalist");
 			Assert.AreEqual("Tripshots feat. Hatsune Miku", albumFromRepo.ArtistString.Default, "Artist string");
 
-			var archivedVersion = repository.List<ArchivedAlbumVersion>().FirstOrDefault();
+			var archivedVersion = _repository.List<ArchivedAlbumVersion>().FirstOrDefault();
 
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(AlbumEditableFields.Artists, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
@@ -578,20 +578,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_Artists_CustomArtist()
 		{
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.English, new InMemoryImagePersister());
+			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.English, new InMemoryImagePersister());
 			contract.ArtistLinks = new[] {
 				CreateArtistForAlbumContract(customArtistName: "Custom artist", roles: ArtistRoles.Composer)
 			};
 
 			contract = await CallUpdate(contract);
 
-			var albumFromRepo = repository.Load(contract.Id);
+			var albumFromRepo = _repository.Load(contract.Id);
 
 			Assert.AreEqual(1, albumFromRepo.AllArtists.Count, "Number of artists");
 			Assert.IsTrue(albumFromRepo.AllArtists.Any(a => a.Name == "Custom artist"), "Has custom artist");
 			Assert.AreEqual("Custom artist", albumFromRepo.ArtistString.Default, "Artist string");
 
-			var archivedVersion = repository.List<ArchivedAlbumVersion>().FirstOrDefault();
+			var archivedVersion = _repository.List<ArchivedAlbumVersion>().FirstOrDefault();
 
 			Assert.IsNotNull(archivedVersion, "Archived version was created");
 			Assert.AreEqual(AlbumEditableFields.Artists, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
@@ -600,28 +600,28 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public async Task Update_Artists_Notify()
 		{
-			Save(user2.AddArtist(vocalist));
+			Save(_user2.AddArtist(_vocalist));
 
-			var contract = new AlbumForEditContract(album, ContentLanguagePreference.Default, new InMemoryImagePersister());
-			contract.ArtistLinks = contract.ArtistLinks.Concat(new[] { CreateArtistForAlbumContract(vocalist.Id) }).ToArray();
+			var contract = new AlbumForEditContract(_album, ContentLanguagePreference.Default, new InMemoryImagePersister());
+			contract.ArtistLinks = contract.ArtistLinks.Concat(new[] { CreateArtistForAlbumContract(_vocalist.Id) }).ToArray();
 
-			await queries.UpdateBasicProperties(contract, null);
+			await _queries.UpdateBasicProperties(contract, null);
 
-			var notification = repository.List<UserMessage>().FirstOrDefault();
+			var notification = _repository.List<UserMessage>().FirstOrDefault();
 
 			Assert.IsNotNull(notification, "Notification was created");
-			Assert.AreEqual(user2, notification.Receiver, "Receiver");
+			Assert.AreEqual(_user2, notification.Receiver, "Receiver");
 		}
 
 		[TestMethod]
 		public void AddReview()
 		{
-			AlbumReviewContract AddReview(int id, string text, string title, string languageCode) => queries.AddReview(album.Id, new AlbumReviewContract
+			AlbumReviewContract AddReview(int id, string text, string title, string languageCode) => _queries.AddReview(_album.Id, new AlbumReviewContract
 			{
 				Id = id,
-				AlbumId = album.Id,
+				AlbumId = _album.Id,
 				Text = text,
-				User = new UserForApiContract(user, null, UserOptionalFields.None),
+				User = new UserForApiContract(_user, null, UserOptionalFields.None),
 				Title = title,
 				LanguageCode = languageCode,
 			});
@@ -630,8 +630,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			{
 				Assert.AreEqual(id, review.Id);
 				Assert.AreEqual(message, review.Message);
-				Assert.AreEqual(user, review.Author, "Author");
-				Assert.AreEqual(album, review.Entry, "Album");
+				Assert.AreEqual(_user, review.Author, "Author");
+				Assert.AreEqual(_album, review.Entry, "Album");
 				Assert.AreEqual(title, review.Title);
 				Assert.AreEqual(languageCode, review.LanguageCode);
 				Assert.AreEqual(deleted, review.Deleted);
@@ -644,7 +644,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				title: "Title",
 				languageCode: "ja");
 
-			var reviewFromRepo = repository.Load<AlbumReview>(review.Id);
+			var reviewFromRepo = _repository.Load<AlbumReview>(review.Id);
 			AssertReview(
 				review.Id,
 				message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -654,9 +654,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				reviewFromRepo);
 
 			// 2. User deletes review (review is marked deleted)
-			queries.DeleteReview(reviewFromRepo.Id);
+			_queries.DeleteReview(reviewFromRepo.Id);
 
-			reviewFromRepo = repository.Load<AlbumReview>(review.Id);
+			reviewFromRepo = _repository.Load<AlbumReview>(review.Id);
 			AssertReview(
 				review.Id,
 				message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -672,7 +672,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				title: "いろはうた",
 				languageCode: "ja");
 
-			var review2FromRepo = repository.Load<AlbumReview>(review2.Id);
+			var review2FromRepo = _repository.Load<AlbumReview>(review2.Id);
 			AssertReview(
 				review2.Id,
 				message: "いろはにほへと ちりぬるを わかよたれそ つねならむ うゐのおくやま けふこえて あさきゆめみし ゑひもせす",
@@ -688,7 +688,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				title: "いろは歌",
 				languageCode: review2FromRepo.LanguageCode);
 
-			var resultFromRepo = repository.Load<AlbumReview>(result.Id);
+			var resultFromRepo = _repository.Load<AlbumReview>(result.Id);
 			AssertReview(
 				review2FromRepo.Id,
 				message: "色は匂へど 散りぬるを 我が世誰ぞ 常ならむ 有為の奥山 今日越えて 浅き夢見じ 酔ひもせず",
@@ -697,7 +697,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				deleted: false,
 				resultFromRepo);
 
-			reviewFromRepo = repository.Load<AlbumReview>(review.Id);
+			reviewFromRepo = _repository.Load<AlbumReview>(review.Id);
 			AssertReview(
 				review.Id,
 				message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",

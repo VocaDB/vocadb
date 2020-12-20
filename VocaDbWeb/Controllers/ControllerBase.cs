@@ -25,13 +25,13 @@ namespace VocaDb.Web.Controllers
 {
 	public class ControllerBase : Controller
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		protected static readonly TimeSpan imageExpirationTime = TimeSpan.FromMinutes(5);
-		protected const int entriesPerPage = 30;
-		protected const int invalidId = 0;
-		protected static readonly TimeSpan pictureCacheDuration = TimeSpan.FromDays(30);
-		protected const int pictureCacheDurationSec = 30 * 24 * 60 * 60;
-		protected const int statsCacheDurationSec = 24 * 60 * 60;
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		protected static readonly TimeSpan ImageExpirationTime = TimeSpan.FromMinutes(5);
+		protected const int EntriesPerPage = 30;
+		protected const int InvalidId = 0;
+		protected static readonly TimeSpan PictureCacheDuration = TimeSpan.FromDays(30);
+		protected const int PictureCacheDurationSec = 30 * 24 * 60 * 60;
+		protected const int StatsCacheDurationSec = 24 * 60 * 60;
 
 		protected ControllerBase()
 		{
@@ -66,8 +66,8 @@ namespace VocaDb.Web.Controllers
 
 		protected void AddFormSubmissionError(string details)
 		{
-			log.Warn("Form submission error: {0}", details);
-			ModelState.AddModelError(string.Empty, string.Format("Error while sending form contents - please try again. Diagnostic error message: {0}.", details));
+			s_log.Warn("Form submission error: {0}", details);
+			ModelState.AddModelError(string.Empty, $"Error while sending form contents - please try again. Diagnostic error message: {details}.");
 		}
 
 		protected ActionResult Picture(EntryForPictureDisplayContract contract)
@@ -77,12 +77,12 @@ namespace VocaDb.Web.Controllers
 			// Allow images to be cached by public proxies, images shouldn't contain anything sensitive so this should be ok.
 			Response.Cache.SetCacheability(HttpCacheability.Public);
 
-			Response.Cache.SetETag(string.Format("{0}{1}v{2}", contract.EntryType, contract.EntryId, contract.Version));
+			Response.Cache.SetETag($"{contract.EntryType}{contract.EntryId}v{contract.Version}");
 
 			// Cached version indicated by the "v" request parameter.
 			// If no version is specified, assume no caching.
 			if (contract.Version > 0 && !string.IsNullOrEmpty(Request.Params["v"]))
-				Response.Cache.SetMaxAge(pictureCacheDuration);
+				Response.Cache.SetMaxAge(PictureCacheDuration);
 
 			return Picture(contract.Picture, contract.Name);
 		}
@@ -203,7 +203,7 @@ namespace VocaDb.Web.Controllers
 			{
 				//var encoded = Url.Encode(title);
 				// Note: there is no good way to encode content-disposition filename (see http://stackoverflow.com/a/216777)
-				Response.AddHeader("content-disposition", string.Format("inline;filename=\"{0}{1}\"", title, ext));
+				Response.AddHeader("content-disposition", $"inline;filename=\"{title}{ext}\"");
 			}
 
 			return File(pictureData.Bytes, pictureData.Mime);
@@ -224,7 +224,7 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrEmpty(jsonPCallback))
 				return Json(obj);
 
-			return Content(string.Format("{0}({1})", jsonPCallback, JsonConvert.SerializeObject(obj)), "application/json");
+			return Content($"{jsonPCallback}({JsonConvert.SerializeObject(obj)})", "application/json");
 		}
 
 		protected string RenderPartialViewToString(string viewName, object model)

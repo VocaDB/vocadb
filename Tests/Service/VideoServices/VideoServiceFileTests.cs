@@ -9,23 +9,23 @@ namespace VocaDb.Tests.Service.VideoServices
 	[TestClass]
 	public class VideoServiceFileTests
 	{
-		private VideoServiceFile videoService;
+		private VideoServiceFile _videoService;
 
 		private async Task TestGetVideoTitle(string url, string expected)
 		{
-			var actual = await videoService.GetVideoTitleAsync(url);
+			var actual = await _videoService.GetVideoTitleAsync(url);
 			Assert.AreEqual(expected, actual.Title);
 		}
 
 		private void TestIsValidFor(string url, bool expected)
 		{
-			Assert.AreEqual(expected, videoService.IsValidFor(url));
+			Assert.AreEqual(expected, _videoService.IsValidFor(url));
 		}
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			videoService = new VideoServiceFile();
+			_videoService = new VideoServiceFile();
 		}
 
 		[TestMethod]

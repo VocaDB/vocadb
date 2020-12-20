@@ -15,7 +15,7 @@ namespace VocaDb.Web.Code.Markdown
 	public class MarkdownParser
 	{
 		// Match "&gt;" at the beginning of each line, to fix markdown blockquotes
-		private static readonly Regex quoteRegex = new Regex("^&gt;", RegexOptions.Multiline);
+		private static readonly Regex s_quoteRegex = new("^&gt;", RegexOptions.Multiline);
 
 		private static string TranformMarkdown(string text)
 		{
@@ -23,7 +23,7 @@ namespace VocaDb.Web.Code.Markdown
 				return text;
 
 			var encoded = HttpUtility.HtmlEncode(text);
-			encoded = quoteRegex.Replace(encoded, ">");
+			encoded = s_quoteRegex.Replace(encoded, ">");
 
 			// StrictBoldItalic is needed because otherwise links with underscores won't work (links are more common on VDB).
 			// These settings roughtly correspond to GitHub-flavored Markdown (https://help.github.com/articles/github-flavored-markdown)
@@ -31,11 +31,11 @@ namespace VocaDb.Web.Code.Markdown
 				.Transform(encoded);
 		}
 
-		private readonly ObjectCache cache;
+		private readonly ObjectCache _cache;
 
 		public MarkdownParser(ObjectCache cache)
 		{
-			this.cache = cache;
+			_cache = cache;
 		}
 
 		/// <summary>
@@ -51,8 +51,8 @@ namespace VocaDb.Web.Code.Markdown
 			if (string.IsNullOrEmpty(markdownText))
 				return markdownText;
 
-			var key = string.Format("MarkdownParser.Html_{0}", markdownText);
-			return cache.GetOrInsert(key, CachePolicy.Never(), () => TranformMarkdown(markdownText));
+			var key = $"MarkdownParser.Html_{markdownText}";
+			return _cache.GetOrInsert(key, CachePolicy.Never(), () => TranformMarkdown(markdownText));
 		}
 
 		/// <summary>

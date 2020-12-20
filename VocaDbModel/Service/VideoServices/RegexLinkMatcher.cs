@@ -12,8 +12,8 @@ namespace VocaDb.Model.Service.VideoServices
 	/// </summary>
 	public class RegexLinkMatcher
 	{
-		private readonly string template;
-		private readonly Regex regex;
+		private readonly string _template;
+		private readonly Regex _regex;
 
 		/// <summary>
 		/// Initializes matcher.
@@ -23,13 +23,13 @@ namespace VocaDb.Model.Service.VideoServices
 		/// <remarks>The number of captured groups in <paramref name="regexStr"/> should match placeholders in <paramref name="template"/>.</remarks>
 		public RegexLinkMatcher(string template, string regexStr)
 		{
-			regex = new Regex(regexStr, RegexOptions.IgnoreCase);
-			this.template = template;
+			_regex = new Regex(regexStr, RegexOptions.IgnoreCase);
+			_template = template;
 		}
 
 		public string GetId(string url)
 		{
-			var match = regex.Match(url);
+			var match = _regex.Match(url);
 
 			if (match.Groups.Count < 2)
 				throw new InvalidOperationException("Regex needs a group for the ID");
@@ -38,11 +38,11 @@ namespace VocaDb.Model.Service.VideoServices
 			return group.Value;
 		}
 
-		public bool IsMatch(string url) => regex.IsMatch(url);
+		public bool IsMatch(string url) => _regex.IsMatch(url);
 
 		public string MakeLinkFromUrl(string url) => MakeLinkFromId(GetId(url));
 
-		public string MakeLinkFromId(string id) => string.Format(template, id);
+		public string MakeLinkFromId(string id) => string.Format(_template, id);
 
 		public (bool success, string formattedUrl) GetLinkFromUrl(string url)
 		{
@@ -52,12 +52,12 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public bool TryGetLinkFromUrl(string url, out string formattedUrl)
 		{
-			var match = regex.Match(url);
+			var match = _regex.Match(url);
 
 			if (match.Success)
 			{
 				var values = match.Groups.Cast<Group>().Skip(1).Select(g => g.Value).ToArray();
-				formattedUrl = string.Format(template, values);
+				formattedUrl = string.Format(_template, values);
 				return true;
 			}
 			else

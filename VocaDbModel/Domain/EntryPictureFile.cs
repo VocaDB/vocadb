@@ -25,21 +25,15 @@ namespace VocaDb.Model.Domain
 		// Not versioned.
 		int IEntryImageInformation.Version => 0;
 
-		private User author;
-		private string mime;
-		private string name;
+		private User _author;
+		private string _mime;
+		private string _name;
 
 		/// <summary>
 		/// Extension for this picture file, determined based on the MIME type.
 		/// Cannot be null. Can be empty if the MIME is not recognized.
 		/// </summary>
-		protected string Extension
-		{
-			get
-			{
-				return ImageHelper.GetExtensionFromMime(Mime) ?? string.Empty;
-			}
-		}
+		protected string Extension => ImageHelper.GetExtensionFromMime(Mime) ?? string.Empty;
 
 		protected EntryPictureFile()
 		{
@@ -59,11 +53,11 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual User Author
 		{
-			get { return author; }
+			get => _author;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				author = value;
+				_author = value;
 			}
 		}
 
@@ -86,11 +80,11 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual string Mime
 		{
-			get { return mime; }
+			get => _mime;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				mime = value;
+				_mime = value;
 			}
 		}
 
@@ -99,11 +93,11 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual string Name
 		{
-			get { return name; }
+			get => _name;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				name = value;
+				_name = value;
 			}
 		}
 
@@ -119,7 +113,7 @@ namespace VocaDb.Model.Domain
 
 		public override string ToString()
 		{
-			return string.Format("Picture file {0} [{1}]", Name, Id);
+			return $"Picture file {Name} [{Id}]";
 		}
 	}
 

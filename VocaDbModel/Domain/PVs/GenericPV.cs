@@ -8,7 +8,7 @@ namespace VocaDb.Model.Domain.PVs
 	public abstract class GenericPV<TEntry> : PV, IEntryWithIntId
 		where TEntry : class
 	{
-		private TEntry entry;
+		private TEntry _entry;
 
 		protected GenericPV()
 		{
@@ -24,11 +24,11 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual TEntry Entry
 		{
-			get => entry;
+			get => _entry;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				entry = value;
+				_entry = value;
 			}
 		}
 
@@ -48,7 +48,7 @@ namespace VocaDb.Model.Domain.PVs
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -63,7 +63,7 @@ namespace VocaDb.Model.Domain.PVs
 
 		public override string ToString()
 		{
-			return string.Format("PV '{0}' on {1} [{2}] for {3}", PVId, Service, Id, Entry);
+			return $"PV '{PVId}' on {Service} [{Id}] for {Entry}";
 		}
 	}
 }

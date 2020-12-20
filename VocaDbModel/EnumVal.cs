@@ -12,12 +12,12 @@ namespace VocaDb.Model
 	/// <typeparam name="T">Enum type</typeparam>
 	public class EnumVal<T> : IEquatable<EnumVal<T>>, IEquatable<T> where T : struct, Enum
 	{
-		private T val;
+		private T _val;
 
 		private int ValInt
 		{
-			get => Convert.ToInt32(val);
-			set => val = (T)Enum.ToObject(typeof(T), value);
+			get => Convert.ToInt32(_val);
+			set => _val = (T)Enum.ToObject(typeof(T), value);
 		}
 
 		public static T All
@@ -113,18 +113,18 @@ namespace VocaDb.Model
 		/// <param name="flags">Enum flags to set.</param>
 		public EnumVal(T flags)
 		{
-			this.val = flags;
+			_val = flags;
 		}
 
-		public bool IsDefaultVal => val.Equals(default(T));
+		public bool IsDefaultVal => _val.Equals(default(T));
 
 		/// <summary>
 		/// Gets or sets the current value
 		/// </summary>
 		public T Value
 		{
-			get => val;
-			set => val = value;
+			get => _val;
+			set => _val = value;
 		}
 
 		public void AddFlag(T flag) => ValInt |= Convert.ToInt32(flag);

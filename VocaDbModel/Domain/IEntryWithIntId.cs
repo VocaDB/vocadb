@@ -20,7 +20,7 @@ namespace VocaDb.Model.Domain
 		long Id { get; set; }
 	}
 
-	public static class IEntryWithIntIdExtender
+	public static class IEntryWithIntIdExtensions
 	{
 		/// <summary>
 		/// Compares the Id of this entry with another.

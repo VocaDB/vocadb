@@ -92,7 +92,7 @@ namespace VocaDb.Model.Database.Queries
 		/// <returns>Results. One result per filter.</returns>
 		public CountPerDayContract[][] SongsOverTime(TimeUnit timeUnit, bool addZeros, DateTime? after, params Expression<Func<Song, bool>>[] filters)
 		{
-			return repository.HandleQuery(ctx =>
+			return _repository.HandleQuery(ctx =>
 			{
 				var results = filters
 					.Select(f => AddZeros(timeUnit == TimeUnit.Month ? SongsPerMonth(ctx, f, after) : SongsPerDay(ctx, f, after), addZeros, timeUnit))

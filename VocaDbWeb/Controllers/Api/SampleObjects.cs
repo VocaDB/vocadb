@@ -21,7 +21,7 @@ namespace VocaDb.Web.Areas.HelpPage.App_Start
 {
 	public static class SampleObjects
 	{
-		private static readonly ArtistContract producer = new ArtistContract
+		private static readonly ArtistContract producer = new()
 		{
 			Id = 10,
 			Name = "Tripshots",
@@ -31,7 +31,7 @@ namespace VocaDb.Web.Areas.HelpPage.App_Start
 			PictureMime = "image/jpeg"
 		};
 
-		private static readonly ArtistContract vocalist = new ArtistContract
+		private static readonly ArtistContract vocalist = new()
 		{
 			Id = 1,
 			Name = "Hatsune Miku",
@@ -41,7 +41,7 @@ namespace VocaDb.Web.Areas.HelpPage.App_Start
 			PictureMime = "image/png"
 		};
 
-		private static readonly AlbumForApiContract sampleAlbum = new AlbumForApiContract
+		private static readonly AlbumForApiContract sampleAlbum = new()
 		{
 			Id = 1,
 			DefaultName = "Synthesis",
@@ -76,7 +76,7 @@ namespace VocaDb.Web.Areas.HelpPage.App_Start
 			}
 		};
 
-		private static readonly ArtistForApiContract sampleArtist = new ArtistForApiContract
+		private static readonly ArtistForApiContract sampleArtist = new()
 		{
 			Id = 10,
 			DefaultName = "Tripshots",
@@ -100,7 +100,7 @@ namespace VocaDb.Web.Areas.HelpPage.App_Start
 			}
 		};
 
-		private static readonly SongForApiContract sampleSong = new SongForApiContract
+		private static readonly SongForApiContract sampleSong = new()
 		{
 			Id = 121,
 			DefaultName = "Nebula",

@@ -104,7 +104,7 @@ namespace VocaDb.Model.DataContracts.Albums
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -119,7 +119,7 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		public override string ToString()
 		{
-			return string.Format("album '{0}' [{1}]", Name, Id);
+			return $"album '{Name}' [{Id}]";
 		}
 	}
 }

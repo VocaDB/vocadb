@@ -20,31 +20,31 @@ namespace VocaDb.Tests.Service.Helpers
 	[TestClass]
 	public class UserCommentNotifierTests
 	{
-		private Album album;
-		private string agentName;
-		private EntryAnchorFactory entryLinkFactory;
-		private FakeUserRepository repository;
-		private User user;
-		private User user2;
+		private Album _album;
+		private string _agentName;
+		private EntryAnchorFactory _entryLinkFactory;
+		private FakeUserRepository _repository;
+		private User _user;
+		private User _user2;
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			album = new Album(TranslatedString.Create("Synthesis")) { Id = 39 };
-			agentName = "Rin";
-			entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
-			user = CreateEntry.User(name: "miku");
-			user2 = CreateEntry.User(name: "luka");
-			repository = new FakeUserRepository(user, user2);
+			_album = new Album(TranslatedString.Create("Synthesis")) { Id = 39 };
+			_agentName = "Rin";
+			_entryLinkFactory = new EntryAnchorFactory("http://test.vocadb.net");
+			_user = CreateEntry.User(name: "miku");
+			_user2 = CreateEntry.User(name: "luka");
+			_repository = new FakeUserRepository(_user, _user2);
 		}
 
 		private void CheckComment(string commentMsg)
 		{
-			var comment = new AlbumComment(album, commentMsg, new AgentLoginData(agentName));
+			var comment = new AlbumComment(_album, commentMsg, new AgentLoginData(_agentName));
 
-			repository.HandleTransaction(ctx =>
+			_repository.HandleTransaction(ctx =>
 			{
-				new UserCommentNotifier().CheckComment(comment, entryLinkFactory, ctx);
+				new UserCommentNotifier().CheckComment(comment, _entryLinkFactory, ctx);
 			});
 		}
 
@@ -53,11 +53,11 @@ namespace VocaDb.Tests.Service.Helpers
 		{
 			CheckComment("Hello world, @miku");
 
-			var notification = repository.List<UserMessage>().FirstOrDefault();
+			var notification = _repository.List<UserMessage>().FirstOrDefault();
 
 			Assert.IsNotNull(notification, "Notification was created");
 			Assert.IsNull(notification.Sender, "Sender");
-			Assert.AreEqual(user.Id, notification.Receiver.Id, "Receiver Id");
+			Assert.AreEqual(_user.Id, notification.Receiver.Id, "Receiver Id");
 			Assert.AreEqual("Mentioned in a comment", notification.Subject, "Subject");
 		}
 
@@ -66,9 +66,9 @@ namespace VocaDb.Tests.Service.Helpers
 		{
 			CheckComment("Hello world, @miku @luka");
 
-			var messages = repository.List<UserMessage>();
+			var messages = _repository.List<UserMessage>();
 			Assert.AreEqual(2, messages.Count, "Messages generated for both users");
-			Assert.AreEqual(user, messages[0].Receiver, "First user as expected");
+			Assert.AreEqual(_user, messages[0].Receiver, "First user as expected");
 		}
 
 		[TestMethod]
@@ -76,16 +76,16 @@ namespace VocaDb.Tests.Service.Helpers
 		{
 			CheckComment("Hello world");
 
-			Assert.IsFalse(repository.List<UserMessage>().Any(), "No notification created");
+			Assert.IsFalse(_repository.List<UserMessage>().Any(), "No notification created");
 		}
 
 		[TestMethod]
 		public void CheckComment_MentionedSkipsDisabled()
 		{
-			user.Active = false;
+			_user.Active = false;
 			CheckComment("Hello world, @miku");
 
-			Assert.IsFalse(repository.List<UserMessage>().Any(), "No notification created");
+			Assert.IsFalse(_repository.List<UserMessage>().Any(), "No notification created");
 		}
 	}
 }

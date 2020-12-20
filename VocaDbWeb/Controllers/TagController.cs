@@ -27,26 +27,26 @@ namespace VocaDb.Web.Controllers
 {
 	public class TagController : ControllerBase
 	{
-		private static readonly Logger log = LogManager.GetCurrentClassLogger();
-		private readonly IEnumTranslations enumTranslations;
-		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly MarkdownParser markdownParser;
-		private readonly TagQueries queries;
-		private readonly IAggregatedEntryImageUrlFactory entryThumbPersister;
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+		private readonly IEnumTranslations _enumTranslations;
+		private readonly IEntryLinkFactory _entryLinkFactory;
+		private readonly MarkdownParser _markdownParser;
+		private readonly TagQueries _queries;
+		private readonly IAggregatedEntryImageUrlFactory _entryThumbPersister;
 
 		public TagController(TagQueries queries, IEntryLinkFactory entryLinkFactory, IEnumTranslations enumTranslations, MarkdownParser markdownParser,
 			IAggregatedEntryImageUrlFactory entryThumbPersister)
 		{
-			this.queries = queries;
-			this.entryLinkFactory = entryLinkFactory;
-			this.enumTranslations = enumTranslations;
-			this.markdownParser = markdownParser;
-			this.entryThumbPersister = entryThumbPersister;
+			_queries = queries;
+			_entryLinkFactory = entryLinkFactory;
+			_enumTranslations = enumTranslations;
+			_markdownParser = markdownParser;
+			_entryThumbPersister = entryThumbPersister;
 		}
 
 		public ActionResult ArchivedVersionXml(int id)
 		{
-			var doc = queries.GetVersionXml<ArchivedTagVersion>(id);
+			var doc = _queries.GetVersionXml<ArchivedTagVersion>(id);
 			var content = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
 
 			return Xml(content);
@@ -54,7 +54,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Restore(int id)
 		{
-			queries.Restore(id);
+			_queries.Restore(id);
 
 			return RedirectToAction("DetailsById", new { id });
 		}
@@ -68,7 +68,7 @@ namespace VocaDb.Web.Controllers
 			PageProperties.PageTitle = contract.Name;
 			PageProperties.Title = contract.Name;
 			PageProperties.Subtitle = DetailsStrings.Tag;
-			PageProperties.CanonicalUrl = entryLinkFactory.GetFullEntryUrl(EntryType.Tag, contract.Id, contract.UrlSlug);
+			PageProperties.CanonicalUrl = _entryLinkFactory.GetFullEntryUrl(EntryType.Tag, contract.Id, contract.UrlSlug);
 			PageProperties.OpenGraph.ShowTwitterCard = true;
 
 			return View("Details", contract);
@@ -81,11 +81,11 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrEmpty(id))
 				return NoId();
 
-			var tagId = queries.GetTagByName(id, t => t.Id, invalidId);
+			var tagId = _queries.GetTagByName(id, t => t.Id, InvalidId);
 
-			if (tagId == invalidId)
+			if (tagId == InvalidId)
 			{
-				log.Info("Tag not found: {0}, referrer {1}", id, Request.UrlReferrer);
+				s_log.Info("Tag not found: {0}, referrer {1}", id, Request.UrlReferrer);
 				return HttpNotFound();
 			}
 
@@ -98,7 +98,7 @@ namespace VocaDb.Web.Controllers
 		/// </summary>
 		public ActionResult DetailsByEntryType(EntryType entryType, string subType = "")
 		{
-			var tag = queries.FindTagForEntryType(new EntryTypeAndSubType(entryType, subType), (tag, lang) => new TagBaseContract(tag, lang));
+			var tag = _queries.FindTagForEntryType(new EntryTypeAndSubType(entryType, subType), (tag, lang) => new TagBaseContract(tag, lang));
 
 			if (tag != null)
 			{
@@ -110,22 +110,22 @@ namespace VocaDb.Web.Controllers
 			}
 		}
 
-		public async Task<ActionResult> DetailsById(int id = invalidId, string slug = null)
+		public async Task<ActionResult> DetailsById(int id = InvalidId, string slug = null)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			// TODO: write test for null slug
-			slug = slug ?? string.Empty;
+			slug ??= string.Empty;
 
-			var tagName = await queries.LoadTagAsync(id, t => t.UrlSlug ?? string.Empty);
+			var tagName = await _queries.LoadTagAsync(id, t => t.UrlSlug ?? string.Empty);
 
 			if (slug != tagName)
 			{
 				return RedirectToActionPermanent("DetailsById", new { id, slug = tagName });
 			}
 
-			var contract = await queries.GetDetailsAsync(id);
+			var contract = await _queries.GetDetailsAsync(id);
 
 			var prop = PageProperties;
 
@@ -135,7 +135,7 @@ namespace VocaDb.Web.Controllers
 				PageProperties.OpenGraph.Image = thumbUrl;
 			}
 
-			prop.Description = markdownParser.GetPlainText(contract.Description.EnglishOrOriginal);
+			prop.Description = _markdownParser.GetPlainText(contract.Description.EnglishOrOriginal);
 
 			return RenderDetails(contract);
 		}
@@ -145,13 +145,13 @@ namespace VocaDb.Web.Controllers
 		{
 			CheckConcurrentEdit(EntryType.Tag, id);
 
-			var model = new TagEditViewModel(queries.GetTagForEdit(id), PermissionContext);
+			var model = new TagEditViewModel(_queries.GetTagForEdit(id), PermissionContext);
 			return View(model);
 		}
 
 		private ActionResult RenderEdit(TagEditViewModel model)
 		{
-			var contract = queries.GetTagForEdit(model.Id);
+			var contract = _queries.GetTagForEdit(model.Id);
 			model.CopyNonEditableProperties(contract, PermissionContext);
 			return View("Edit", model);
 		}
@@ -186,7 +186,7 @@ namespace VocaDb.Web.Controllers
 
 			try
 			{
-				result = queries.Update(model.ToContract(), uploadedPicture);
+				result = _queries.Update(model.ToContract(), uploadedPicture);
 			}
 			catch (DuplicateTagNameException x)
 			{
@@ -201,7 +201,7 @@ namespace VocaDb.Web.Controllers
 		{
 			if (!string.IsNullOrEmpty(filter))
 			{
-				var tag = queries.GetTagByName(filter, t => new { t.Id, t.UrlSlug });
+				var tag = _queries.GetTagByName(filter, t => new { t.Id, t.UrlSlug });
 
 				if (tag != null)
 				{
@@ -211,13 +211,13 @@ namespace VocaDb.Web.Controllers
 				return RedirectToAction("Index", "Search", new SearchIndexViewModel(EntryType.Tag, filter));
 			}
 
-			var tags = queries.GetTagsByCategories();
+			var tags = _queries.GetTagsByCategories();
 			return View(tags);
 		}
 
 		public ActionResult Merge(int id)
 		{
-			var tag = queries.LoadTag(id, t => new TagBaseContract(t, PermissionContext.LanguagePreference));
+			var tag = _queries.LoadTag(id, t => new TagBaseContract(t, PermissionContext.LanguagePreference));
 			return View(tag);
 		}
 
@@ -230,46 +230,46 @@ namespace VocaDb.Web.Controllers
 				return Merge(id);
 			}
 
-			queries.Merge(id, targetTagId.Value);
+			_queries.Merge(id, targetTagId.Value);
 
 			return RedirectToAction("Edit", new { id = targetTagId.Value });
 		}
 
 		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
 		public ActionResult PopupContent(
-			int id = invalidId,
+			int id = InvalidId,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			string culture = InterfaceLanguage.DefaultCultureCode)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return HttpNotFound();
 
-			var tag = queries.LoadTag(id, t => new TagForApiContract(t, entryThumbPersister,
+			var tag = _queries.LoadTag(id, t => new TagForApiContract(t, _entryThumbPersister,
 				lang, TagOptionalFields.AdditionalNames | TagOptionalFields.Description | TagOptionalFields.MainPicture));
 			return PartialView("_TagPopupContent", tag);
 		}
 
 		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
 		{
-			queries.UpdateVersionVisibility<ArchivedTagVersion>(archivedVersionId, hidden);
+			_queries.UpdateVersionVisibility<ArchivedTagVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 		}
 
-		public ActionResult Versions(int id = invalidId)
+		public ActionResult Versions(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
-			var contract = queries.GetTagWithArchivedVersions(id);
-			return View(new Versions(contract, enumTranslations));
+			var contract = _queries.GetTagWithArchivedVersions(id);
+			return View(new Versions(contract, _enumTranslations));
 		}
 
 		public ActionResult ViewVersion(int id, int? ComparedVersionId)
 		{
-			var contract = queries.GetVersionDetails(id, ComparedVersionId ?? 0);
+			var contract = _queries.GetVersionDetails(id, ComparedVersionId ?? 0);
 
-			return View(new ViewVersion<ArchivedTagVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
+			return View(new ViewVersion<ArchivedTagVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
 		}
 	}
 }

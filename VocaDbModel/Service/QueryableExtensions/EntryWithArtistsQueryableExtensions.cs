@@ -95,27 +95,21 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 			if (musicProducerTypes.Contains(artist.ArtistType))
 			{
-				switch (participation)
+				return participation switch
 				{
-					case ArtistAlbumParticipationStatus.OnlyMainAlbums:
-						return query.Where(mainEntriesExpression);
-					case ArtistAlbumParticipationStatus.OnlyCollaborations:
-						return query.Where(collaborationsExpression);
-					default:
-						return query;
-				}
+					ArtistAlbumParticipationStatus.OnlyMainAlbums => query.Where(mainEntriesExpression),
+					ArtistAlbumParticipationStatus.OnlyCollaborations => query.Where(collaborationsExpression),
+					_ => query,
+				};
 			}
 			else
 			{
-				switch (participation)
+				return participation switch
 				{
-					case ArtistAlbumParticipationStatus.OnlyMainAlbums:
-						return query.Where(al => al.AllArtists.Any(a => (a.Artist.Id == artistId || (childVoicebanks && a.Artist.BaseVoicebank.Id == artistId)) && !a.IsSupport));
-					case ArtistAlbumParticipationStatus.OnlyCollaborations:
-						return query.Where(al => al.AllArtists.Any(a => (a.Artist.Id == artistId || (childVoicebanks && a.Artist.BaseVoicebank.Id == artistId)) && a.IsSupport));
-					default:
-						return query;
-				}
+					ArtistAlbumParticipationStatus.OnlyMainAlbums => query.Where(al => al.AllArtists.Any(a => (a.Artist.Id == artistId || (childVoicebanks && a.Artist.BaseVoicebank.Id == artistId)) && !a.IsSupport)),
+					ArtistAlbumParticipationStatus.OnlyCollaborations => query.Where(al => al.AllArtists.Any(a => (a.Artist.Id == artistId || (childVoicebanks && a.Artist.BaseVoicebank.Id == artistId)) && a.IsSupport)),
+					_ => query,
+				};
 			}
 		}
 

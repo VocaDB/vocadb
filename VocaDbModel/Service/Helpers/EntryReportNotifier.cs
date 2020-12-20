@@ -39,7 +39,7 @@ namespace VocaDb.Model.Service.Helpers
 
 			if (!string.IsNullOrEmpty(reportName) && !string.IsNullOrEmpty(notes))
 			{
-				notesAndName = string.Format("{0} ({1})", reportName, notes);
+				notesAndName = $"{reportName} ({notes})";
 			}
 			else if (string.IsNullOrEmpty(notes))
 			{

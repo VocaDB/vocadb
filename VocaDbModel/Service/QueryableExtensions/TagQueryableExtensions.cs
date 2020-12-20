@@ -18,72 +18,41 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		/// <summary>
 		/// Order query by <see cref="TagSortRule"/>.
 		/// </summary>
-		public static IQueryable<Tag> OrderBy(this IQueryable<Tag> query, TagSortRule sortRule, ContentLanguagePreference languagePreference)
+		public static IQueryable<Tag> OrderBy(this IQueryable<Tag> query, TagSortRule sortRule, ContentLanguagePreference languagePreference) => sortRule switch
 		{
-			switch (sortRule)
-			{
-				case TagSortRule.AdditionDate:
-					return query.OrderByDescending(t => t.CreateDate);
-				case TagSortRule.Name:
-					return query.OrderByEntryName(languagePreference);
-				case TagSortRule.UsageCount:
-					return query.OrderByDescending(t => t.UsageCount);
-			}
-
-			return query;
-		}
+			TagSortRule.AdditionDate => query.OrderByDescending(t => t.CreateDate),
+			TagSortRule.Name => query.OrderByEntryName(languagePreference),
+			TagSortRule.UsageCount => query.OrderByDescending(t => t.UsageCount),
+			_ => query,
+		};
 
 		/// <summary>
 		/// Order query by <see cref="EntrySortRule"/>.
 		/// </summary>
 		public static IQueryable<Tag> OrderBy(
-			this IQueryable<Tag> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference)
+			this IQueryable<Tag> query, EntrySortRule sortRule, ContentLanguagePreference languagePreference) => sortRule switch
 		{
-			switch (sortRule)
-			{
-				case EntrySortRule.Name:
-					return query.OrderByEntryName(languagePreference);
-				case EntrySortRule.AdditionDate:
-					return query.OrderByDescending(a => a.CreateDate);
-			}
-
-			return query;
-		}
+			EntrySortRule.Name => query.OrderByEntryName(languagePreference),
+			EntrySortRule.AdditionDate => query.OrderByDescending(a => a.CreateDate),
+			_ => query,
+		};
 
 		/// <summary>
 		/// Order query by usages of specific entry type.
 		/// </summary>
 		public static IQueryable<Tag> OrderByUsageCount(this IQueryable<Tag> query, EntryType? usageType)
 		{
-			Expression<Func<Tag, int>> sortExpression;
-
-			switch (usageType)
+			Expression<Func<Tag, int>> sortExpression = usageType switch
 			{
-				case null:
-					sortExpression = t => t.UsageCount;
-					break;
-				case EntryType.Album:
-					sortExpression = t => t.AllAlbumTagUsages.Count;
-					break;
-				case EntryType.Artist:
-					sortExpression = t => t.AllArtistTagUsages.Count;
-					break;
-				case EntryType.ReleaseEvent:
-					sortExpression = t => t.AllEventTagUsages.Count;
-					break;
-				case EntryType.ReleaseEventSeries:
-					sortExpression = t => t.AllEventSeriesTagUsages.Count;
-					break;
-				case EntryType.Song:
-					sortExpression = t => t.AllSongTagUsages.Count;
-					break;
-				case EntryType.SongList:
-					sortExpression = t => t.AllSongListTagUsages.Count;
-					break;
-				default:
-					throw new ArgumentException("Unrecognized sort field: " + usageType);
-			}
-
+				null => t => t.UsageCount,
+				EntryType.Album => t => t.AllAlbumTagUsages.Count,
+				EntryType.Artist => t => t.AllArtistTagUsages.Count,
+				EntryType.ReleaseEvent => t => t.AllEventTagUsages.Count,
+				EntryType.ReleaseEventSeries => t => t.AllEventSeriesTagUsages.Count,
+				EntryType.Song => t => t.AllSongTagUsages.Count,
+				EntryType.SongList => t => t.AllSongListTagUsages.Count,
+				_ => throw new ArgumentException("Unrecognized sort field: " + usageType),
+			};
 			return query.OrderByDescending(sortExpression);
 		}
 
@@ -105,15 +74,12 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			if (textQuery.IsEmpty)
 				return query;
 
-			switch (textQuery.MatchMode)
+			return textQuery.MatchMode switch
 			{
-				case NameMatchMode.Exact:
-					return query.Where(t => t.CategoryName == textQuery.Query);
-				case NameMatchMode.StartsWith:
-					return query.Where(t => t.CategoryName.StartsWith(textQuery.Query));
-				default:
-					return query.Where(t => t.CategoryName.Contains(textQuery.Query));
-			}
+				NameMatchMode.Exact => query.Where(t => t.CategoryName == textQuery.Query),
+				NameMatchMode.StartsWith => query.Where(t => t.CategoryName.StartsWith(textQuery.Query)),
+				_ => query.Where(t => t.CategoryName.Contains(textQuery.Query)),
+			};
 		}
 
 		public static IQueryable<Tag> WhereHasName(this IQueryable<Tag> query, SearchTextQuery textQuery)
@@ -132,7 +98,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		/// <returns>Filtered query. Cannot be null.</returns>
 		public static IQueryable<Tag> WhereHasName(this IQueryable<Tag> query, params string[] names)
 		{
-			names = names ?? new string[0];
+			names ??= new string[0];
 
 			var queries = names.Select(n => SearchTextQuery.Create(n, NameMatchMode.Exact));
 			return query.WhereHasNameGeneric<Tag, TagName>(queries);

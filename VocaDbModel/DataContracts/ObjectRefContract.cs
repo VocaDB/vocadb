@@ -45,7 +45,7 @@ namespace VocaDb.Model.DataContracts
 
 		public override string ToString()
 		{
-			return string.Format("{0} [{1}]", NameHint, Id);
+			return $"{NameHint} [{Id}]";
 		}
 	}
 }

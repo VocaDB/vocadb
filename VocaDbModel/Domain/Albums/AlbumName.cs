@@ -6,7 +6,7 @@ namespace VocaDb.Model.Domain.Albums
 {
 	public class AlbumName : LocalizedStringWithId
 	{
-		private Album album;
+		private Album _album;
 
 		public AlbumName() { }
 
@@ -18,11 +18,11 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual Album Album
 		{
-			get { return album; }
+			get => _album;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 
@@ -34,7 +34,7 @@ namespace VocaDb.Model.Domain.Albums
 			if (ReferenceEquals(this, another))
 				return true;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -49,7 +49,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public override string ToString()
 		{
-			return string.Format("name '{0}' for {1}", Value, Album);
+			return $"name '{Value}' for {Album}";
 		}
 	}
 }

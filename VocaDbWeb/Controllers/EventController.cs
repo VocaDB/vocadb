@@ -29,27 +29,27 @@ namespace VocaDb.Web.Controllers
 {
 	public class EventController : ControllerBase
 	{
-		private readonly IEnumTranslations enumTranslations;
-		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IAggregatedEntryImageUrlFactory thumbPersister;
-		private readonly EventQueries queries;
-		private readonly ReleaseEventService service;
+		private readonly IEnumTranslations _enumTranslations;
+		private readonly IEntryLinkFactory _entryLinkFactory;
+		private readonly IAggregatedEntryImageUrlFactory _thumbPersister;
+		private readonly EventQueries _queries;
+		private readonly ReleaseEventService _service;
 
-		private ReleaseEventService Service => service;
+		private ReleaseEventService Service => _service;
 
 		public EventController(EventQueries queries, ReleaseEventService service, IEnumTranslations enumTranslations, IEntryLinkFactory entryLinkFactory,
 			IAggregatedEntryImageUrlFactory thumbPersister)
 		{
-			this.queries = queries;
-			this.service = service;
-			this.enumTranslations = enumTranslations;
-			this.entryLinkFactory = entryLinkFactory;
-			this.thumbPersister = thumbPersister;
+			_queries = queries;
+			_service = service;
+			_enumTranslations = enumTranslations;
+			_entryLinkFactory = entryLinkFactory;
+			_thumbPersister = thumbPersister;
 		}
 
 		public ActionResult ArchivedSeriesVersionXml(int id)
 		{
-			var doc = queries.GetVersionXml<ArchivedReleaseEventSeriesVersion>(id);
+			var doc = _queries.GetVersionXml<ArchivedReleaseEventSeriesVersion>(id);
 			var contract = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
 
 			return Xml(contract);
@@ -57,20 +57,20 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult ArchivedVersionXml(int id)
 		{
-			var doc = queries.GetVersionXml<ArchivedReleaseEventVersion>(id);
+			var doc = _queries.GetVersionXml<ArchivedReleaseEventVersion>(id);
 			var content = doc != null ? XmlHelper.SerializeToUTF8XmlString(doc) : string.Empty;
 
 			return Xml(content);
 		}
 
-		public ActionResult Details(int id = invalidId, string slug = null)
+		public ActionResult Details(int id = InvalidId, string slug = null)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
-			slug = slug ?? string.Empty;
+			slug ??= string.Empty;
 
-			var ev = queries.GetDetails(id);
+			var ev = _queries.GetDetails(id);
 
 			if (slug != ev.UrlSlug)
 			{
@@ -91,10 +91,10 @@ namespace VocaDb.Web.Controllers
 
 			var pictureData = !string.IsNullOrEmpty(ev.PictureMime) ? (IEntryImageInformation)ev : ev.Series;
 
-			PageProperties.PageTitle = string.Format("{0} ({1})", ev.Name, subtitle);
+			PageProperties.PageTitle = $"{ev.Name} ({subtitle})";
 			PageProperties.Title = ev.Name;
 			PageProperties.Subtitle = subtitle;
-			PageProperties.CanonicalUrl = entryLinkFactory.GetFullEntryUrl(EntryType.ReleaseEvent, ev.Id, ev.UrlSlug);
+			PageProperties.CanonicalUrl = _entryLinkFactory.GetFullEntryUrl(EntryType.ReleaseEvent, ev.Id, ev.UrlSlug);
 			PageProperties.OpenGraph.Image = Url.ImageThumb(pictureData, ImageSize.Original);
 			// Note: description is set in view
 
@@ -109,10 +109,10 @@ namespace VocaDb.Web.Controllers
 				CheckConcurrentEdit(EntryType.ReleaseEvent, id.Value);
 			}
 
-			var model = (id != null ? new EventEdit(queries.GetEventForEdit(id.Value), PermissionContext)
+			var model = (id != null ? new EventEdit(_queries.GetEventForEdit(id.Value), PermissionContext)
 				: new EventEdit(
 					seriesId.HasValue ? Service.GetReleaseEventSeriesForEdit(seriesId.Value) : null,
-					venueId.HasValue ? service.GetVenueForEdit(venueId.Value) : null,
+					venueId.HasValue ? _service.GetVenueForEdit(venueId.Value) : null,
 					PermissionContext));
 
 			return View(model);
@@ -126,7 +126,7 @@ namespace VocaDb.Web.Controllers
 			{
 				if (model.Id != 0)
 				{
-					var contract = queries.GetEventForEdit(model.Id);
+					var contract = _queries.GetEventForEdit(model.Id);
 					model.CopyNonEditableProperties(contract, PermissionContext);
 				}
 				else
@@ -163,7 +163,7 @@ namespace VocaDb.Web.Controllers
 
 			try
 			{
-				id = (await queries.Update(model.ToContract(), pictureData)).Id;
+				id = (await _queries.Update(model.ToContract(), pictureData)).Id;
 			}
 			catch (DuplicateEventNameException x)
 			{
@@ -212,7 +212,7 @@ namespace VocaDb.Web.Controllers
 			int id;
 			try
 			{
-				id = queries.UpdateSeries(model.ToContract(), pictureData);
+				id = _queries.UpdateSeries(model.ToContract(), pictureData);
 			}
 			catch (DuplicateEventNameException x)
 			{
@@ -225,7 +225,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult EventsByDate()
 		{
-			return View(queries.List(EventSortRule.Date, SortDirection.Descending));
+			return View(_queries.List(EventSortRule.Date, SortDirection.Descending));
 		}
 
 		public ActionResult EventsBySeries()
@@ -236,7 +236,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult EventsByVenue()
 		{
-			var events = queries.GetReleaseEventsByVenue();
+			var events = _queries.GetReleaseEventsByVenue();
 			return View(events);
 		}
 
@@ -253,9 +253,9 @@ namespace VocaDb.Web.Controllers
 				SortDirection = SortDirection.Ascending
 			};
 
-			var events = queries.Find(e =>
+			var events = _queries.Find(e =>
 				new ReleaseEventForApiContract(e, PermissionContext.LanguagePreference,
-					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue, thumbPersister),
+					ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue, _thumbPersister),
 				queryParams);
 
 			return View(events.Items);
@@ -264,26 +264,26 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult ManageTagUsages(int id)
 		{
-			var releaseEvent = queries.GetEntryWithTagUsages(id);
+			var releaseEvent = _queries.GetEntryWithTagUsages(id);
 			return View(releaseEvent);
 		}
 
 		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
 		public ActionResult PopupContent(
-			int id = invalidId,
+			int id = InvalidId,
 			string culture = InterfaceLanguage.DefaultCultureCode)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return HttpNotFound();
 
-			var releaseEvent = queries.Load(id, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series);
+			var releaseEvent = _queries.Load(id, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series);
 			return PartialView("_EventPopupContent", releaseEvent);
 		}
 
 		[Authorize]
 		public ActionResult RemoveTagUsage(long id)
 		{
-			var eventId = queries.RemoveTagUsage(id);
+			var eventId = _queries.RemoveTagUsage(id);
 			TempData.SetStatusMessage("Tag usage removed");
 
 			return RedirectToAction("ManageTagUsages", new { id = eventId });
@@ -291,24 +291,24 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Restore(int id)
 		{
-			queries.Restore(id);
+			_queries.Restore(id);
 
 			return RedirectToAction("Edit", new { id });
 		}
 
 		public ActionResult RestoreSeries(int id)
 		{
-			queries.RestoreSeries(id);
+			_queries.RestoreSeries(id);
 
 			return RedirectToAction("EditSeries", new { id });
 		}
 
-		public ActionResult SeriesDetails(int id = invalidId, string slug = null)
+		public ActionResult SeriesDetails(int id = InvalidId, string slug = null)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
-			slug = slug ?? string.Empty;
+			slug ??= string.Empty;
 
 			var series = Service.GetReleaseEventSeriesDetails(id);
 
@@ -328,7 +328,7 @@ namespace VocaDb.Web.Controllers
 				subtitle = Translate.ReleaseEventCategoryNames[series.Category];
 			}
 
-			PageProperties.PageTitle = string.Format("{0} ({1})", series.Name, subtitle);
+			PageProperties.PageTitle = $"{series.Name} ({subtitle})";
 			PageProperties.Title = series.Name;
 			PageProperties.Subtitle = subtitle;
 			PageProperties.OpenGraph.Image = Url.ImageThumb(series, ImageSize.Original);
@@ -336,52 +336,52 @@ namespace VocaDb.Web.Controllers
 			return View(series);
 		}
 
-		public ActionResult SeriesVersions(int id = invalidId)
+		public ActionResult SeriesVersions(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var contract = Service.GetReleaseEventSeriesWithArchivedVersions(id);
 
-			return View(new Versions<ReleaseEventSeriesContract>(contract, enumTranslations));
+			return View(new Versions<ReleaseEventSeriesContract>(contract, _enumTranslations));
 		}
 
 		public ActionResult UpdateSeriesVersionVisibility(int archivedVersionId, bool hidden)
 		{
-			queries.UpdateVersionVisibility<ArchivedReleaseEventSeriesVersion>(archivedVersionId, hidden);
+			_queries.UpdateVersionVisibility<ArchivedReleaseEventSeriesVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewSeriesVersion", new { id = archivedVersionId });
 		}
 
 		public ActionResult UpdateVersionVisibility(int archivedVersionId, bool hidden)
 		{
-			queries.UpdateVersionVisibility<ArchivedReleaseEventVersion>(archivedVersionId, hidden);
+			_queries.UpdateVersionVisibility<ArchivedReleaseEventVersion>(archivedVersionId, hidden);
 
 			return RedirectToAction("ViewVersion", new { id = archivedVersionId });
 		}
 
 		public ActionResult ViewSeriesVersion(int id, int? ComparedVersionId)
 		{
-			var contract = queries.GetSeriesVersionDetails(id, ComparedVersionId ?? 0);
+			var contract = _queries.GetSeriesVersionDetails(id, ComparedVersionId ?? 0);
 
-			return View(new ViewVersion<ArchivedEventSeriesVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
+			return View(new ViewVersion<ArchivedEventSeriesVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
 		}
 
-		public ActionResult Versions(int id = invalidId)
+		public ActionResult Versions(int id = InvalidId)
 		{
-			if (id == invalidId)
+			if (id == InvalidId)
 				return NoId();
 
 			var contract = Service.GetReleaseEventWithArchivedVersions(id);
 
-			return View(new Versions(contract, enumTranslations));
+			return View(new Versions(contract, _enumTranslations));
 		}
 
 		public ActionResult ViewVersion(int id, int? ComparedVersionId)
 		{
-			var contract = queries.GetVersionDetails(id, ComparedVersionId ?? 0);
+			var contract = _queries.GetVersionDetails(id, ComparedVersionId ?? 0);
 
-			return View(new ViewVersion<ArchivedEventVersionDetailsContract>(contract, enumTranslations, contract.ComparedVersionId));
+			return View(new ViewVersion<ArchivedEventVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
 		}
 	}
 }

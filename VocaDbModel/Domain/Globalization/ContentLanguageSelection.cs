@@ -27,7 +27,7 @@ namespace VocaDb.Model.Domain.Globalization
 		All = Unspecified | Japanese | Romaji | English
 	}
 
-	public static class ContentLanguageSelectionsExtender
+	public static class ContentLanguageSelectionsExtensions
 	{
 		public static IEnumerable<ContentLanguageSelection> ToIndividualSelections(this ContentLanguageSelections selections)
 		{

@@ -50,7 +50,7 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public DateTime? DateTime
 		{
-			get { return dateTime; }
+			get => dateTime;
 			set
 			{
 				// Change Kind to UTC and remove time portion. 

@@ -10,8 +10,8 @@ namespace VocaDb.Model.Domain.Users
 	/// <remarks>For owned artists see <see cref="OwnedArtistForUser"/>.</remarks>
 	public class ArtistForUser : IArtistLink, IEntryWithIntId
 	{
-		private Artist artist;
-		private User user;
+		private Artist _artist;
+		private User _user;
 
 		public ArtistForUser()
 		{
@@ -29,11 +29,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual Artist Artist
 		{
-			get { return artist; }
+			get => _artist;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				artist = value;
+				_artist = value;
 			}
 		}
 
@@ -49,11 +49,11 @@ namespace VocaDb.Model.Domain.Users
 
 		public virtual User User
 		{
-			get { return user; }
+			get => _user;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				user = value;
+				_user = value;
 			}
 		}
 
@@ -78,7 +78,7 @@ namespace VocaDb.Model.Domain.Users
 			if (Id == 0)
 				return false;
 
-			return this.Id == another.Id;
+			return Id == another.Id;
 		}
 
 		public override bool Equals(object obj)
@@ -105,7 +105,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public override string ToString()
 		{
-			return string.Format("{0} following {1}", User, Artist);
+			return $"{User} following {Artist}";
 		}
 	}
 }

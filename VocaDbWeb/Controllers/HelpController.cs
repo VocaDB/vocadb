@@ -11,13 +11,13 @@ namespace VocaDb.Web.Controllers
 {
 	public class HelpController : ControllerBase
 	{
-		private readonly VdbConfigManager config;
-		private readonly TagQueries tagQueries;
+		private readonly VdbConfigManager _config;
+		private readonly TagQueries _tagQueries;
 
 		public HelpController(VdbConfigManager config, TagQueries tagQueries)
 		{
-			this.config = config;
-			this.tagQueries = tagQueries;
+			_config = config;
+			_tagQueries = tagQueries;
 		}
 
 		//
@@ -28,18 +28,15 @@ namespace VocaDb.Web.Controllers
 			if (!string.IsNullOrEmpty(AppConfig.ExternalHelpPath))
 				return View("External");
 
-			ViewBag.FreeTagId = config.SpecialTags.Free;
-			ViewBag.InstrumentalTagId = tagQueries.InstrumentalTagId;
+			ViewBag.FreeTagId = _config.SpecialTags.Free;
+			ViewBag.InstrumentalTagId = _tagQueries.InstrumentalTagId;
 
-			switch (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)
+			return CultureInfo.CurrentUICulture.TwoLetterISOLanguageName switch
 			{
-				case "ja":
-					return View("Index.ja");
-				case "zh":
-					return View("Index.zh-Hans");
-				default:
-					return View();
-			}
+				"ja" => View("Index.ja"),
+				"zh" => View("Index.zh-Hans"),
+				_ => View(),
+			};
 		}
 	}
 }

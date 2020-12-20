@@ -20,28 +20,23 @@ namespace VocaDb.Web.Controllers.Api
 	[RoutePrefix("api/comments")]
 	public class CommentApiController : ApiController
 	{
-		private readonly IRepository db;
-		private readonly IEntryLinkFactory entryLinkFactory;
-		private readonly IUserPermissionContext userContext;
-		private readonly IUserIconFactory userIconFactory;
+		private readonly IRepository _db;
+		private readonly IEntryLinkFactory _entryLinkFactory;
+		private readonly IUserPermissionContext _userContext;
+		private readonly IUserIconFactory _userIconFactory;
 
-		private ICommentQueries GetComments(IDatabaseContext ctx, EntryType entryType)
+		private ICommentQueries GetComments(IDatabaseContext ctx, EntryType entryType) => entryType switch
 		{
-			switch (entryType)
-			{
-				case EntryType.ReleaseEvent:
-					return new CommentQueries<ReleaseEventComment, ReleaseEvent>(ctx, userContext, userIconFactory, entryLinkFactory);
-			}
-
-			throw new ArgumentException("Unsupported entry type: " + entryType, nameof(entryType));
-		}
+			EntryType.ReleaseEvent => new CommentQueries<ReleaseEventComment, ReleaseEvent>(ctx, _userContext, _userIconFactory, _entryLinkFactory),
+			_ => throw new ArgumentException("Unsupported entry type: " + entryType, nameof(entryType)),
+		};
 
 		public CommentApiController(IRepository db, IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory)
 		{
-			this.db = db;
-			this.userContext = userContext;
-			this.userIconFactory = userIconFactory;
-			this.entryLinkFactory = entryLinkFactory;
+			_db = db;
+			_userContext = userContext;
+			_userIconFactory = userIconFactory;
+			_entryLinkFactory = entryLinkFactory;
 		}
 
 		/// <summary>
@@ -55,7 +50,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[Route("{entryType}-comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(EntryType entryType, int commentId) => db.HandleTransaction(ctx => GetComments(ctx, entryType).Delete(commentId));
+		public void DeleteComment(EntryType entryType, int commentId) => _db.HandleTransaction(ctx => GetComments(ctx, entryType).Delete(commentId));
 
 		/// <summary>
 		/// Gets a list of comments for an entry.
@@ -64,7 +59,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="entryId">ID of the entry whose comments to load.</param>
 		/// <returns>List of comments in no particular order.</returns>
 		[Route("{entryType}-comments")]
-		public PartialFindResult<CommentForApiContract> GetComments(EntryType entryType, int entryId) => new PartialFindResult<CommentForApiContract>(db.HandleQuery(ctx => GetComments(ctx, entryType).GetAll(entryId)), 0);
+		public PartialFindResult<CommentForApiContract> GetComments(EntryType entryType, int entryId) => new PartialFindResult<CommentForApiContract>(_db.HandleQuery(ctx => GetComments(ctx, entryType).GetAll(entryId)), 0);
 
 		/// <summary>
 		/// Updates a comment.
@@ -78,7 +73,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[Route("{entryType}-comments/{commentId:int}")]
 		[Authorize]
-		public void PostEditComment(EntryType entryType, int commentId, CommentForApiContract contract) => db.HandleTransaction(ctx => GetComments(ctx, entryType).Update(commentId, contract));
+		public void PostEditComment(EntryType entryType, int commentId, CommentForApiContract contract) => _db.HandleTransaction(ctx => GetComments(ctx, entryType).Update(commentId, contract));
 
 		/// <summary>
 		/// Posts a new comment.
@@ -88,6 +83,6 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[Route("{entryType}-comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(EntryType entryType, CommentForApiContract contract) => db.HandleTransaction(ctx => GetComments(ctx, entryType).Create(contract.Entry.Id, contract));
+		public CommentForApiContract PostNewComment(EntryType entryType, CommentForApiContract contract) => _db.HandleTransaction(ctx => GetComments(ctx, entryType).Create(contract.Entry.Id, contract));
 	}
 }

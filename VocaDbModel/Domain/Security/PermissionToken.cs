@@ -13,22 +13,22 @@ namespace VocaDb.Model.Domain.Security
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public struct PermissionToken : IEquatable<PermissionToken>, IPermissionToken
 	{
-		private Guid id;
-		private string name;
+		private Guid _id;
+		private string _name;
 
-		private static readonly IDictionary<Guid, PermissionToken> all = new Dictionary<Guid, PermissionToken>(50);
+		private static readonly IDictionary<Guid, PermissionToken> s_all = new Dictionary<Guid, PermissionToken>(50);
 
 		private static PermissionToken New(string guid, string name)
 		{
 			var token = new PermissionToken(new Guid(guid), name);
-			all.Add(token.Id, token);
+			s_all.Add(token.Id, token);
 			return token;
 		}
 
 		/// <summary>
 		/// Special token used to indicate the absence of permissions.
 		/// </summary>
-		public static readonly PermissionToken Nothing = new PermissionToken(Guid.Empty, "Nothing");
+		public static readonly PermissionToken Nothing = new(Guid.Empty, "Nothing");
 
 		public static readonly PermissionToken AccessManageMenu = New("b54de61d-9341-4435-8cb1-31e5e295d577", nameof(AccessManageMenu));
 
@@ -90,25 +90,24 @@ namespace VocaDb.Model.Domain.Security
 		/// <summary>
 		/// All tokens except Nothing
 		/// </summary>
-		public static readonly IEnumerable<PermissionToken> All = all.Values;
+		public static readonly IEnumerable<PermissionToken> All = s_all.Values;
 
 		public static PermissionToken GetById(Guid id)
 		{
-			PermissionToken token;
-			if (all.TryGetValue(id, out token))
+			if (s_all.TryGetValue(id, out PermissionToken token))
 				return token;
 
-			throw new ArgumentException(string.Format("Invalid permission token: {0}.", id), "id");
+			throw new ArgumentException($"Invalid permission token: {id}.", "id");
 		}
 
 		public static bool IsValid(PermissionToken token)
 		{
-			return all.ContainsKey(token.Id);
+			return s_all.ContainsKey(token.Id);
 		}
 
 		public static bool TryGetById(Guid id, out PermissionToken token)
 		{
-			if (all.TryGetValue(id, out token))
+			if (s_all.TryGetValue(id, out token))
 				return true;
 
 			return false;
@@ -126,22 +125,22 @@ namespace VocaDb.Model.Domain.Security
 
 		public PermissionToken(Guid id, string name)
 		{
-			this.id = id;
-			this.name = name;
+			_id = id;
+			_name = name;
 		}
 
 		[DataMember]
 		public Guid Id
 		{
-			get { return id; }
-			set { id = value; }
+			get => _id;
+			set => _id = value;
 		}
 
 		[DataMember]
 		public string Name
 		{
-			get { return name; }
-			set { name = value; }
+			get => _name;
+			set => _name = value;
 		}
 
 		public bool Equals(PermissionToken token)

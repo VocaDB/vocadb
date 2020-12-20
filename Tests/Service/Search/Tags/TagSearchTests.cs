@@ -19,17 +19,17 @@ namespace VocaDb.Tests.Service.Search.Tags
 	[TestClass]
 	public class TagSearchTests
 	{
-		private readonly FakeTagRepository repository = new FakeTagRepository();
+		private readonly FakeTagRepository _repository = new();
 
 		private PartialFindResult<Tag> CallFind(TagQueryParams queryParams, bool onlyMinimalFields)
 		{
-			return repository.HandleQuery(ctx => new TagSearch(ctx, ContentLanguagePreference.English).Find(queryParams, onlyMinimalFields));
+			return _repository.HandleQuery(ctx => new TagSearch(ctx, ContentLanguagePreference.English).Find(queryParams, onlyMinimalFields));
 		}
 
 		[TestInitialize]
 		public void SetUp()
 		{
-			repository.Save(
+			_repository.Save(
 				CreateEntry.Tag("electronic"), CreateEntry.Tag("rock"), CreateEntry.Tag("alternative rock"), CreateEntry.Tag("techno"));
 		}
 

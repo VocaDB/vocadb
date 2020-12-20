@@ -6,35 +6,29 @@ namespace VocaDb.Model.Domain.Albums
 {
 	public class AlbumPictureFile : EntryPictureFile, IEntryWithIntId
 	{
-		private Album album;
+		private Album _album;
 
 		public AlbumPictureFile() { }
 
 		public AlbumPictureFile(string name, string mime, User author, Album album)
 			: base(name, mime, author)
 		{
-			this.album = album;
+			_album = album;
 		}
 
 		public virtual Album Album
 		{
-			get { return album; }
+			get => _album;
 			set
 			{
 				ParamIs.NotNull(() => value);
-				album = value;
+				_album = value;
 			}
 		}
 
-		public override EntryType EntryType
-		{
-			get { return EntryType.Album; }
-		}
+		public override EntryType EntryType => EntryType.Album;
 
-		public override int OwnerEntryId
-		{
-			get { return Album.Id; }
-		}
+		public override int OwnerEntryId => Album.Id;
 
 		public virtual void Move(Album target)
 		{
