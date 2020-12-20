@@ -1,0 +1,18 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Song
+@using R = ViewRes.User.DetailsStrings
+@model VocaDb.Model.DataContracts.Users.UserDetailsContract
+
+<!-- UserSongListsViewModel -->
+	
+@{ var ownProfile = UserContext.IsLoggedIn && UserContext.LoggedUserId == Model.Id && UserContext.LoggedUser.Active; }
+
+@{ Html.RenderPartial("Partials/_SongListsFilters"); }
+
+@Html.Partial("Partials/Song/_SongListsKnockout", new SongListsKnockoutViewModel("items", true))
+	
+<h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
+
+@if (ownProfile) {
+	<a href="@Url.Action("Edit", "SongList")" class="textLink addLink">@R.CreateNewList</a>
+	<a href="@Url.Action("Import", "SongList")" class="textLink wandIcon">@R.ImportSongList</a>
+}

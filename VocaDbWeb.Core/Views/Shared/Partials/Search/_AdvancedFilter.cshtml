@@ -1,0 +1,8 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Search
+@model AdvancedFilterViewModel
+
+<li data-bind="visible: !advancedFilters.hasFilter('@Model.FilterType.ToString()', '@Model.Param')">
+	<a href="#" data-bind="click: function() { advancedFilters.add('@Model.FilterType.ToString()', '@Model.Param', '@Model.Description', @ToJS(Model.Negate)); }">
+		@Model.Description
+	</a>
+</li>

@@ -1,0 +1,26 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+@model DataRowListViewModel
+
+@if (Model.Rows != null) {
+	<tr>
+		<td>@Model.Name</td>
+		<td colspan="@(Model.CompareRows != null ? 1 : 2)">
+			<ul>
+			@foreach (var row in Model.Rows) {
+				var isNew = (Model.CompareRows != null && !Model.CompareRows.Any(r => row.ToString().Equals(r.ToString())));
+				<li class="@(isNew ? "archived-entry-compare-modified" : "")">@row</li>
+			}			
+			</ul>
+		</td>
+		@if (Model.CompareRows != null) {
+		<td>
+				<ul>
+				@foreach (var row in Model.CompareRows) {
+					var isRemoved = !Model.Rows.Any(r => row.ToString().Equals(r.ToString()));
+					<li class="@(isRemoved ? "archived-entry-compare-modified" : "")">@row</li>
+				}			
+				</ul>	
+		</td>
+		}		
+	</tr>	
+}

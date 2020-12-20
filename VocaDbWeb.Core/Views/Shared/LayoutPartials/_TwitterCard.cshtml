@@ -1,0 +1,11 @@
+﻿@inherits VocaDb.Web.Code.VocaDbPage
+
+@if (PageProperties.OpenGraph.ShowTwitterCard && !string.IsNullOrEmpty(PageProperties.OpenGraph.Title) && !string.IsNullOrEmpty(PageProperties.OpenGraph.Description)) {
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@("@")@Config.SiteSettings.TwitterAccountName" />
+	<meta name="twitter:title" content="@PageProperties.OpenGraph.Title" />
+	<meta name="twitter:description" content="@PageProperties.OpenGraph.Description" />
+	if (!string.IsNullOrEmpty(PageProperties.OpenGraph.Image)) {
+		<meta name="twitter:image" content="@PageProperties.OpenGraph.Image" />
+	}
+}

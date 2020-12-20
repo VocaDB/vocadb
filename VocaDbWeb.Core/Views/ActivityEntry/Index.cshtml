@@ -1,0 +1,55 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Activityfeed
+@using VocaDb.Web.Helpers
+@using Res = VocaDb.Web.Resources.Views.ActivityEntry.IndexStrings
+@inherits VocaDb.Web.Code.VocaDbPage
+@inject LaravelMixHelper LaravelMixHelper
+@inject Login Login
+
+@{
+	PageProperties.Title = Res.RecentActivity;
+}
+
+<!-- Binding context: ActivityEntryListViewModel -->
+
+<ul class="nav nav-pills">
+	<li class="active">
+		@Html.ActionLink(Res.AllActivity, "Index")
+	</li>
+	@if (Login.IsLoggedIn) {
+		<li>
+			@Html.ActionLink(Res.FollowedArtists, "FollowedArtistActivity")
+		</li>
+	}
+	<li>
+		@Html.ActionLink(Res.Comments, "Index", "Comment")
+	</li>	
+</ul>
+
+<div data-bind="foreach: entries, show" class="js-cloak">
+	@Html.Partial("Partials/Activityfeed/_ActivityEntryKnockout", new ActivityEntryKnockoutViewModel("$parent.getEntryTypeName", "$parent.getActivityFeedEventName", "$parents[1].getChangedFieldNames", true))
+</div>
+
+<hr />
+<h3>
+	<a href="#" data-bind="click: loadMore">@Res.ViewMore</a>
+</h3>
+
+@section BodyScripts {
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/ActivityEntry/Index.js")"></script>
+	<script type="text/javascript">
+		$(function () {
+
+			moment.locale('@Culture');
+			ko.punches.enableAll();
+
+			var urlMapper = new app.UrlMapper("@RootPath");
+			var resourceRepo = new app.ResourceRepository('@RootPath');
+			var languageSelection = '@UserContext.LanguagePreference';
+			var cultureCode = '@UICulture';
+
+			var vm = new app.ActivityEntryListViewModel(urlMapper, resourceRepo, languageSelection, cultureCode);
+			ko.applyBindings(vm);
+
+		});
+	</script>
+}

@@ -1,0 +1,9 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Comment
+@model CreateCommentViewModel
+
+<div class="create-comment @Model.CssClass">
+	<form data-bind="submit: createComment">
+		<textarea data-bind="textInput: newComment" rows="@Model.NewCommentRows" cols="60" maxlength="2000" class="comment-text-edit" placeholder="@ViewRes.DiscussionContentStrings.NewComment" required></textarea>
+		<button type="submit" class="btn btn-primary">@ViewRes.DiscussionContentStrings.AddComment</button>
+	</form>
+</div>

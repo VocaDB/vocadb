@@ -1,0 +1,9 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Knockout
+@model CheckBoxButtonsViewModel
+
+<div style="display: inline-block;">
+	@foreach (var option in Model.Options)
+	{
+		<button class="btn" data-bind="click: function() { @(Model.Binding)('@option.Key'); }, enable: @(Model.Binding)() != '@option.Key'">@option.Value</button>
+	}
+</div>

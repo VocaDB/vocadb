@@ -1,0 +1,7 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Song
+@model SongIconLinkViewModel
+
+<a href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(Model.Song, Model.AlbumId))">
+	<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(Model.Song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin" />
+</a>

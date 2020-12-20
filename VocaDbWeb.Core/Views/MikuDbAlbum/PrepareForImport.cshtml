@@ -1,0 +1,30 @@
+﻿@model VocaDb.Model.DataContracts.MikuDb.InspectedAlbum
+
+@{
+    PageProperties.Title = "Processing albums";
+	ViewBag.Parents = new[] { 
+		Html.ActionLink("Imported albums", "Index"), 
+	};  	
+}
+
+@using (Html.BeginForm("AcceptImported", "MikuDbAlbum")) {
+
+	Html.RenderPartial("InspectedAlbumRow", Model);
+
+    <button type="submit" class="btn btn-primary" name="commit" value="Accept">Approve</button>
+	<a class="btn btn-nomargin" href="@Url.Action("SkipAlbum", new { id = Model.ImportedAlbum.Id })">
+		<i class="icon-remove"></i>
+		Reject
+	</a>
+	
+}
+
+@section BodyScripts {
+<script type="text/javascript">
+
+	$(document).ready(function() { 
+		app.initMikuDbAlbumPrepareForImportPage();
+	});
+
+</script>
+}

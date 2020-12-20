@@ -1,0 +1,101 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Model.Service.Search
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@using VocaDb.Web.Models.Shared.Partials.Search
+@using VocaDb.Web.Models.Shared.Partials.User
+@using VocaDb.Web.Resources.Domain
+@using SharedRes = ViewRes.SharedStrings
+@using SearchRes = ViewRes.Search.IndexStrings
+@using Res = ViewRes.User.RatedSongsStrings
+
+<!-- binding context: RatedSongsSearchViewModel -->
+
+<div class="form-horizontal well well-transparent" data-bind="visible: true" style="display: none;">
+
+	<div class="pull-right">
+		
+		<div class="inline-block">
+			@ViewRes.EntryIndexStrings.SortBy
+			@Html.Partial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.RatedSongForUserSortRuleNames.ValuesAndNamesStrings, "sort", "sortName"))
+		</div>
+
+		<button class="btn" data-bind="click: function() { groupByRating(!groupByRating()); }, css: { active: groupByRating }">
+			@Res.GroupByRating
+		</button>
+		
+		<div class="inline-block">
+			<div class="btn-group">
+				<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@ViewRes.Search.IndexStrings.AlbumDetails">
+					<i class="icon-th-list"></i>
+				</a>
+				<a data-bind="css: { active: viewMode() == 'PlayList' }, click: function() { viewMode('PlayList'); }" class="btn btn-nomargin" href="#" title="@ViewRes.Search.IndexStrings.Playlist">
+					<i class="icon-list"></i>
+				</a>
+			</div>
+		</div>
+		
+		<a data-bind="css: { active: showTags() }, toggleClick: showTags" class="btn btn-nomargin" href="#" title="@Res.ShowTags">
+			<i class="icon-tags"></i>
+		</a>
+
+	</div>
+
+	<div class="control-label">
+		<i class="icon-search"></i>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<div class="input-append">
+				<input type="text" data-bind="textInput: searchTerm" class="input-xlarge" placeholder="@SearchRes.TypeSomething" />
+				<button class="btn btn-danger" data-bind="click: function() { searchTerm(''); }, visible: searchTerm">@SharedRes.Clear</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@SearchRes.Rating</div>
+		<div class="controls">
+			@Html.Partial("Partials/User/_SongVoteRatingsRadioKnockout", new SongVoteRatingsRadioKnockoutViewModel("rating"))
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<div class="control-label">@SharedRes.Tag</div>
+		<div class="controls" data-bind="with: tagFilters">
+			@{ Html.RenderPartial("Partials/_TagFilters"); }
+			<div>
+				<input type="text" class="input-large" data-bind="tagAutoComplete: addTag" placeholder="@ViewRes.SharedStrings.Search" />
+			</div>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@EntryTypeNames.Artist</div>
+		<div class="controls" data-bind="with: artistFilters">
+			@Html.Partial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: false))
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@Res.SongList</div>
+		<div class="controls">
+			<div style="display: inline-block;" class="input-append">
+				<select data-bind="options: songLists, optionsText: 'name', optionsValue: 'id', optionsCaption: '@Res.NoSongListSelection', value: songListId"></select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<div class="control-label"></div>
+		<div class="controls">
+			@Html.Partial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters))
+		</div>
+	</div>
+</div>
+
+<div data-bind="visible: true" style="display: none;">
+
+	@{ Html.RenderPartial("Partials/_SongSearchList"); }
+
+</div>
+

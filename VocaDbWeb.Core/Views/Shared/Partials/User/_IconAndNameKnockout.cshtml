@@ -1,0 +1,5 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.User
+@model IconAndNameKnockoutViewModel
+
+@Html.Partial("Partials/User/_ProfileIconKnockout", new ProfileIconKnockoutViewModel(Model.IconBinding, Model.Size))
+<span data-bind="text: @Model.NameBinding"></span>

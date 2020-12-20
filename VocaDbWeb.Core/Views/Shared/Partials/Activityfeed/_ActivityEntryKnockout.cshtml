@@ -1,0 +1,43 @@
+﻿@using HelperRes
+@using VocaDb.Web.Models.Shared.Partials.Activityfeed
+@using VocaDb.Web.Models.Shared.Partials.User
+@model ActivityEntryKnockoutViewModel
+
+<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
+	<span data-bind="with: $data.author">
+		@Html.Partial("Partials/User/_IconNameAndTypeLinkKnockout", new IconNameAndTypeLinkKnockoutViewModel("$parents[1].resources.resources().userGroupNames"))
+	</span>
+	<span data-bind="visible: !$data.author">@ActivityFeedHelperStrings.Someone</span>
+
+	<span data-bind="text: @(Model.ActivityFeedEventNamesBinding)($data)"></span>
+
+	@if (Model.ShowDetails)
+	{
+		<span data-bind="with: $data.archivedVersion">
+			<span visible="{{ $data.changedFields && $data.changedFields.length }}">({{ @(Model.ChangedFieldNamesBinding)($parent.entry, $data) }})</span>
+			<span visible="{{ $data.notes }}">{{ '\"' + $data.notes + '\"' }}</span>
+
+			<span visible="{{ $parent.entry.entryType !== 'Tag' && $parent.entry.entryType !== 'SongList' && $parent.entry.entryType !== 'ReleaseEvent' }}">
+				(<a href="#" data-bind="attr: { href: '/' + $parent.entry.entryType + '/ViewVersion/' + id }">@ViewRes.MiscStrings.Details</a>)
+			</span>
+		</span>
+	}
+
+	<small class="pull-right extraInfo" data-bind="attr: { title: createDate }, timeAgo: createDate"></small>
+
+	<div class="media">
+		<a class="pull-left" visible="{{ entry.mainPicture && (entry.mainPicture.urlTinyThumb || entry.mainPicture.urlSmallThumb) }}" href="{{ $parent.getEntryUrl(entry) }}" title="{{ entry.additionalNames }}">
+			<img attr.src="{{ entry.mainPicture ? (entry.mainPicture.urlTinyThumb || entry.mainPicture.urlSmallThumb) : '' }}" alt="thumb" class="media-object coverPicThumb" referrerpolicy="same-origin" />
+		</a>
+		<div class="media-body">
+			<h4 class="media-heading">
+				<a href="{{ $parent.getEntryUrl(entry) }}" title="{{ entry.additionalNames }}">
+					<strong>{{ entry.name }}</strong>
+				</a>
+				<span visible="{{ @(Model.EntryTypeNamesBinding)(entry) }}">({{ @(Model.EntryTypeNamesBinding)(entry) }})</span>
+			</h4>
+
+			<span visible="{{ entry.artistString }}">{{ entry.artistString }}</span>
+		</div>
+	</div>
+</div>

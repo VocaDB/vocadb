@@ -1,0 +1,30 @@
+﻿@using VocaDb.Model.Service.Search
+@using VocaDb.Web.Models.Shared.Partials.Album
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@using VocaDb.Web.Models.Shared.Partials.Search
+@using VocaDb.Web.Resources.Domain
+@using Res = ViewRes.Search.IndexStrings
+
+<!-- Album search options -->
+<div data-bind="visible: showAlbumSearch, with: albumSearchViewModel">
+	<div class="control-group">
+		<div class="control-label">@Res.AlbumType</div>
+		<div class="controls">
+			@Html.Partial("Partials/Album/_DiscTypesDropdownKnockout", new DiscTypesDropdownKnockoutViewModel("albumType"))
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@EntryTypeNames.Artist</div>
+		<div class="controls" data-bind="with: artistFilters">
+			@Html.Partial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: true))
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<div class="control-label"></div>
+		<div class="controls">
+			@Html.Partial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.AlbumFilters))
+		</div>
+	</div>
+</div>

@@ -1,0 +1,305 @@
+﻿@using Microsoft.AspNetCore.Html
+@using VocaDb.Model
+@using VocaDb.Model.DataContracts.Tags
+@using VocaDb.Model.Domain
+@using Res = ViewRes.Tag.DetailsStrings
+@using VocaDb.Model.Domain.Images
+@using VocaDb.Model.Domain.Security
+@using VocaDb.Model.Domain.Tags
+@using VocaDb.Web.Code
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared.Partials.Album
+@using VocaDb.Web.Models.Shared.Partials.Artist
+@using VocaDb.Web.Models.Shared.Partials.Comment
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails
+@using VocaDb.Web.Models.Shared.Partials.Html
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@using VocaDb.Web.Models.Shared.Partials.Song
+@using VocaDb.Web.Models.Shared.Partials.Tag
+@using SharedRes = ViewRes.SharedStrings
+@model TagDetailsContract
+@inject LaravelMixHelper LaravelMixHelper
+@inject Login Login
+
+@{
+
+	ViewBag.Parents = new[] { Html.ActionLink(SharedRes.Tags, "Index") };
+
+	var smallThumbUrl = Url.ImageThumb(Model.Thumb, ImageSize.SmallThumb, useUnknownImage: false);
+	var thumbUrl = Url.ImageThumb(Model.Thumb, ImageSize.Original, useUnknownImage: false);
+
+	var url = PageProperties.CanonicalUrl;
+
+	var related = new List<Tuple<TagBaseContract, string>>();
+
+	if (Model.Parent != null) {
+		related.Add(Tuple.Create(Model.Parent, "parent"));
+	}
+
+	related.AddRange(Model.Children.Select(t => Tuple.Create(t, "child")));
+	related.AddRange(Model.Siblings.Select(t => Tuple.Create(t, "sibling")));
+
+	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
+
+}
+
+@section Head {
+	@Html.Partial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties))
+	<link rel="canonical" href="@url" />
+}
+
+@section BodyScripts {
+	<script src="https://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/Tag/Details.js")"></script>
+	<script type="text/javascript">
+
+		$(function () {
+
+			var urlMapper = new app.UrlMapper('@RootPath');
+			var jsonModel = @ToJS(Model.JsonModel);
+			var vm;
+
+			app.initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children, jsonModel.hasMoreSiblings, jsonModel.hasMoreChildren);
+
+			var repo = new app.TagRepository('@RootPath');
+			var userRepo = new app.UserRepository(urlMapper);
+			var latestComments = @ToJS(Model.LatestComments);
+			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+			var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.TagReportTypeNames, TagReport.ReportTypesWithRequiredNotes));
+
+			vm = new app.TagDetailsViewModel(repo, userRepo, latestComments, reportTypes, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments,
+				@ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)), @ToJS(Model.IsFollowing));
+			ko.applyBindings(vm);
+			app.initTagsPage(vm);
+
+		});
+
+	</script>
+}
+
+@section Toolbar {
+	<a href="#" data-bind="click: followTag, jqButton: { icon: 'ui-icon-plus' }, visible: !isFollowed(), disable: !isLoggedIn">@Res.FollowTag</a>
+	<a href="#" data-bind="click: unfollowTag, jqButton: { icon: 'ui-icon-close' }, visible: isFollowed()">@Res.UnfollowTag</a>
+
+	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editTagLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
+	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
+	@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
+}
+
+@{
+	@* REVIEW *@
+	Func<string, IHtmlContent> NicoTagLink = @<text><a href="http://www.nicovideo.jp/tag/@item" class="extLink">@item</a></text>;
+}
+
+@if (Model.Deleted) {
+	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null))
+}
+
+<div class="well well-transparent">
+
+	<div class="media">
+		@if (!string.IsNullOrEmpty(smallThumbUrl)) {
+			<a class="pull-left" href="@thumbUrl">
+				<img class="media-object" src="@smallThumbUrl" alt="Thumb" />
+			</a>
+		}
+
+		<div class="media-body">
+			@if (!Model.Description.IsEmpty) {
+				<div class="entry-description" data-bind="with: description">
+					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", new EnglishTranslatedStringViewModel(Model.Description, 2100, 2000)); }
+				</div>
+			}
+
+			@if (Model.RelatedTags.Any()) {
+				<p>@Res.RelatedTags: @Html.Partial("Partials/Tag/_TagList", new TagListViewModel(Model.RelatedTags, tooltip: true))</p>
+			}
+
+			@if (Model.WebLinks.Any()) {
+				@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.WebLinks, false))
+				<br />
+			}
+			
+			@if (Model.MappedNicoTags.Any()) {
+				<p>@Res.MappedTags: @Html.LinkListHtml(Model.MappedNicoTags, NicoTagLink)</p>
+			}
+
+			@if (Model.CategoryName != string.Empty) {
+				<p>@Res.Category: @Model.CategoryName</p>
+			}
+
+			@if (!string.IsNullOrEmpty(Model.Translations)) {
+				<p>@Res.Translations: @Model.Translations</p>
+			}
+
+			@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
+				<p>
+					@Res.Aliases: @Model.AdditionalNames
+				</p>
+			}
+
+			@if (related.Any()) {
+				<div id="hierarchyContainer" style='width: 1000px; height: @((75 + (Model.Parent != null ? 125 : 0) + (Model.Children.Any() ? 125 : 0)) + "px")'></div>
+				<br />
+			}
+			
+			@if (Model.Targets != TagTargetTypes.Nothing && Model.Targets != TagTargetTypes.All) {
+				<p>
+					@Res.ValidFor: @string.Join(", ", EnumVal<EntryType>.Values.Where(e => e != EntryType.Undefined && Model.Targets.HasFlag((TagTargetTypes)e)))
+				</p>
+			}
+
+			@if (Model.RelatedEntryType.HasValue) {
+				var text = Translate.EntryTypeNames[Model.RelatedEntryType.EntryType] + (Model.RelatedEntryType.HasSubType ? " (" + Translate.EntrySubTypeName(Model.RelatedEntryType) + ")" : "");
+				<p>
+					@Res.AssociatedEntryType: <a href="@Url.EntryIndex(Model.RelatedEntryType)">@text</a>
+				</p>
+			}
+
+			<p>@string.Format(Res.FollowCount, Model.FollowerCount)</p>
+
+			<p>@ViewRes.EntryDetailsStrings.AdditionDate: @Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CreateDate))</p>
+
+			<br />
+
+			<div>
+				@Html.ActionLink(Res.AllEntries + " (" + Model.AllUsageCount + ")", "Index", "Search", UrlMapper.Search.Entries(tagId: Model.Id), null)
+			</div>
+
+			@if (Model.Stats.ArtistCount > 0) {
+				<div>
+					@Html.ActionLink(Res.AllArtists + " (" + Model.Stats.ArtistCount + ")", "Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id), null)
+				</div>
+			}
+
+			@if (Model.Stats.AlbumCount > 0) {
+				<div>
+					@Html.ActionLink(Res.AllAlbums + " (" + Model.Stats.AlbumCount + ")", "Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id), null)
+				</div>
+			}
+
+			@if (Model.Stats.SongCount > 0) {
+				<div>
+					@Html.ActionLink(Res.AllSongs + " (" + Model.Stats.SongCount + ")", "Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id), null)
+				</div>
+			}
+			
+			@if (Model.Stats.EventCount > 0) {
+				<div>
+					@Html.ActionLink(Res.AllEvents + " (" + Model.Stats.EventCount + ")", "Index", "Search", UrlMapper.Search.Events(tagId: Model.Id), null)
+				</div>
+			}
+
+			@if (Model.Stats.SongListCount > 0) {
+				<div>
+					@Html.ActionLink(Res.AllSongLists + " (" + Model.Stats.SongListCount + ")", "Featured", "SongList", new { tagId = Model.Id }, null)
+				</div>
+			}
+		</div>
+	</div>
+</div>
+
+@if (Model.Stats.Artists.Any()) {
+	<div class="well well-transparent">
+		@Html.Partial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id))))
+		<h3>
+			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id))">
+				@Res.TopArtists
+				<small>(@Model.Stats.ArtistCount @SharedRes.Total)</small>
+			</a>
+		</h3>
+		@Html.Partial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.Stats.Artists.Select(a => a), 2, true))
+	</div>
+}
+
+@if (Model.Stats.Albums.Any()) {
+	<div class="well well-transparent">
+		@Html.Partial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id))))
+		<h3>
+			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id))">
+				@Res.TopAlbums
+				<small>(@Model.Stats.AlbumCount @SharedRes.Total)</small>
+			</a>
+		</h3>
+		@Html.Partial("Partials/Album/_AlbumGrid", new AlbumGridViewModel(Model.Stats.Albums.Select(a => a), 2, false, false, true))
+	</div>
+}
+
+@if (Model.Stats.Songs.Any()) {
+	<div class="well well-transparent">
+		@Html.Partial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id))))
+		<h3>
+			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id))">
+				@Res.TopSongs
+				<small>(@Model.Stats.SongCount @SharedRes.Total)</small>
+			</a>
+		</h3>
+		@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.Stats.Songs.Select(s => s), 2, true))
+	</div>
+}
+
+
+@if (Model.Stats.EventSeries.Any()) {
+	<div class="well well-transparent">
+		@Html.Partial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))))
+		<h3>
+			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))">
+				@Res.EventSeries
+			</a>
+		</h3>
+		@Html.Partial("Partials/Shared/_EventSeriesThumbs", new EventSeriesThumbsViewModel(Model.Stats.EventSeries))
+	</div>
+}
+
+@if (Model.Stats.Events.Any()) {
+	<div class="well well-transparent">
+		@Html.Partial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))))
+		<h3>
+			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))">
+				@Res.TopEvents
+				<small>(@Model.Stats.EventCount @SharedRes.Total)</small>
+			</a>
+		</h3>
+		@Html.Partial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model.Stats.Events, ImageSize.TinyThumb))
+	</div>
+}
+
+@if (related.Any()) {
+	<div class="well well-transparent">
+		@if (Model.Siblings.Any()) {
+			<p>@Res.Siblings: @Html.Partial("Partials/Tag/_TagList", new TagListViewModel(Model.Siblings))</p>
+		}
+		@if (Model.Children.Any()) {
+			<p>@Res.Children: @Html.Partial("Partials/Tag/_TagList", new TagListViewModel(Model.Children))</p>
+		}
+	</div>
+}
+
+<div id="tabs" class="js-cloak" data-bind="show, with: comments">
+
+	<ul>
+		<li><a href="#latestCommentsTab">@ViewRes.EntryDetailsStrings.LatestComments</a></li>
+		<li data-tab="Discussion">
+			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>
+		</li>
+	</ul>
+
+	<div id="latestCommentsTab">
+		@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3, pagination: false))
+		<!-- ko ifnot: comments().length -->
+		<p>@ViewRes.EntryDetailsStrings.NoComments</p>
+		<!-- /ko -->
+		<p>
+			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>
+		</p>
+	</div>
+
+	<div id="discussionTab">
+		@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false))
+	</div>
+
+</div>
+
+@Html.Partial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel())

@@ -1,0 +1,62 @@
+﻿@using Res = VocaDb.Web.Resources.Views.Shared.Partials.PlayListStrings
+
+<!-- binding context: PlayListViewModel -->
+
+<div data-bind="with: pvPlayerViewModel" class="songlist-playlist-player">
+	<div>		
+		@* Note: using visible here to avoid regenerating the pv player wrapper element *@
+		<div data-bind="visible: selectedSong() && selectedSong().song">
+			<h4 class="pull-left" data-bind="if: selectedSong() && selectedSong().song">
+				<a data-bind="text: selectedSong().song.name, attr: { href: app.EntryUrlMapper.details_song(selectedSong().song) }" href="#"></a>
+				<span class="songlist-playlist-player-artists" data-bind="text: selectedSong().song.artistString"></span>
+			</h4>
+			
+			<div data-bind="with: ratingButtonsViewModel">
+				@{ Html.RenderPartial("Partials/_PVRatingButtonsForIndex"); }
+			</div>
+
+			<div id="pv-player-wrapper" data-bind="html: playerHtml"></div>
+		</div>
+
+		<a class="btn" data-bind="click: $parent.nextSong, css: { disabled: $parent.paging.totalItems() == 0 }" title="@Res.NextSong">
+			<i class="icon-step-forward noMargin"></i>
+		</a>
+
+		<a class="btn" data-bind="click: function() { shuffle(!shuffle()); }, css: { active: shuffle }" title="@Res.Shuffle">
+			<i class="icon icon-random noMargin"></i>
+		</a>
+
+		<a class="btn" data-bind="click: function() { autoplay(!autoplay()); }, css: { active: autoplay }" title="@Res.AutoplayNote">
+			<i class="icon icon-play noMargin"></i>
+			@Res.Autoplay
+		</a>
+
+		<a class="btn btn-info song-info pull-right" data-bind="attr: { href: app.EntryUrlMapper.details('Song', selectedSong() && selectedSong().song ? selectedSong().song.id : null) }, visible: selectedSong() && selectedSong().song">
+			<i class="icon icon-info-sign"></i>
+			@ViewRes.Home.IndexStrings.ViewSongInfo
+		</a>
+	</div>
+</div>
+
+<div class="songlist-playlist-songs-wrapper">
+	<table class="table table-condensed songlist-playlist-songs" data-bind="scrollEnd: scrollEnd">
+		<tbody data-bind="foreach: page">
+			<tr data-bind="css: { active: ($parent.pvPlayerViewModel.selectedSong() && $parent.pvPlayerViewModel.selectedSong().song.id == song.id) }, click: $parent.pvPlayerViewModel.selectedSong">
+				<td style="width: 30px;">
+					<a data-bind="visible: song.thumbUrl, attr: { href: app.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#">
+						<img data-bind="attr: { src: song.thumbUrl }" title="Cover picture" class="coverPicIcon img-rounded" referrerpolicy="same-origin" />
+					</a>
+				</td>
+				<td>
+					<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details('Song', song.id), title: song.additionalNames }" href="#"></a>
+				</td>
+				<td>
+					<span data-bind="songTypeLabel: song.songType"></span>
+				</td>
+				<td>
+					<span data-bind="visible: song.lengthSeconds, text: $parent.formatLength(song.lengthSeconds)"></span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

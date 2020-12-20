@@ -1,0 +1,5 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@model LanguageSelectionDropDownViewModel
+
+@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.ContentLanguageSelectionNames.ValuesAndNamesStrings, Model.ValueBinding))

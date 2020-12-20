@@ -1,0 +1,77 @@
+﻿@using VocaDb.Web.Helpers
+@model VocaDb.Model.DataContracts.Tags.TagCategoryContract[]
+@inject LaravelMixHelper LaravelMixHelper
+@inject Login Login
+
+@{
+	PageProperties.Title = ViewRes.SharedStrings.Tags;
+	var tagCount = Model.Sum(m => m.Tags.Length);
+	var avgUsageCount = Model.Sum(m => m.Tags.Sum(t => t.UsageCount)) / tagCount;
+}
+
+@functions {
+	int GetFontSizePercent(int usageCount, int avgUsage) {
+		return Math.Min(Math.Max(usageCount * 80 / avgUsage, 60), 100);
+	}
+}
+
+@section Toolbar {
+	@if (Login.CanManageDb) {
+		<a href="#" id="createButton" data-bind="jqButton: { icon: 'ui-icon-plus' }, click: function() { dialogVisible(true); }">Create new</a>
+	}
+}
+
+@foreach (var category in Model) {
+
+	<div class="tag-cloud">
+		@if (category.Name != string.Empty) {
+		<h3>@category.Name</h3>
+		} else {
+		<h3>@ViewRes.SharedStrings.Unsorted</h3>
+		}
+
+		@foreach (var tag in category.Tags) {
+			<span class="tag" style="font-size: @(GetFontSizePercent(tag.UsageCount, avgUsageCount))%">
+				@Html.ActionLink(tag.Name, "DetailsById", new { id = tag.Id, slug = tag.UrlSlug }, new { title = tag.AdditionalNames, style = "font-size: " })
+			</span>
+		}
+	</div>
+
+}
+
+<div style="display:none;" title="Create tag"
+	 data-bind="
+	 dialog: {
+		 autoOpen: false, width: 310, modal: true,
+		 position: { my: 'left top', at: 'left bottom', of: $('#createButton') }
+	 },
+	 dialogVisible: dialogVisible,
+	 dialogButtons: [
+		 { text: 'Create', click: createTag, disabled: !isValid() },
+		 { text: '@ViewRes.SharedStrings.Cancel', click: function() { dialogVisible(false); } }
+	 ]
+	 ">
+
+	<input type="text" data-bind="textInput: newTagName" maxlength="200" />
+	
+	<div class="alert alert-danger" data-bind="visible: duplicateName">
+		Tag name must be unique
+	</div>
+
+</div>
+
+@section BodyScripts {
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/edit.js")"></script>
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/Tag/Index.js")"></script>
+	<script type="text/javascript">
+
+		$(function () {
+
+			var tagRepo = new app.TagRepository('@RootPath');
+			var viewModel = new app.TagCreateViewModel(tagRepo);
+			ko.applyBindings(viewModel);
+
+		});
+
+	</script>
+}

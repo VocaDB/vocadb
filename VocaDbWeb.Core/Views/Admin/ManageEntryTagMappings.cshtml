@@ -1,0 +1,99 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@inherits VocaDb.Web.Code.VocaDbPage
+@inject LaravelMixHelper LaravelMixHelper
+
+@{
+	PageProperties.Title = "Manage entry type to tag mappings";
+	ViewBag.Parents = new[] {
+		Html.ActionLink("Manage", "Index"),
+	};
+	var siteName = BrandableStrings.Layout.SiteName;
+}
+
+<div class="alert alert-info">
+	Only one tag can be mapped to entry type / sub type combination.
+</div>
+
+<form class="form-horizontal">
+	<h3>New mapping</h3>
+	<div class="control-group">
+		<label class="control-label" for="newSourceName">Entry type</label>
+		<div class="controls">
+			<select options="{{entryTypes}}" value="{{newEntryType}}"></select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="newSourceName">Sub type</label>
+		<div class="controls">
+			<select options="{{entrySubTypes}}" value="{{newEntrySubType}}" data-bind="optionsCaption: ''"></select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">Target tag</label>
+		<div class="controls">
+			@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("tagAutoComplete", "newTargetTag"))
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<button type="button" class="btn btn-primary" data-bind="click: addMapping">Add</button>
+		</div>
+	</div>
+</form>
+
+<hr />
+
+<form data-bind="submit: save, show" class="js-cloak">
+	
+	<h3>Mappings</h3>
+	
+	<br />
+	<br />
+
+	@Html.Partial("Partials/Shared/_SaveBtn")
+
+	<table>
+		<thead>
+			<tr>
+				<th>Entry type</th>
+				<th>Tag</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: mappings">
+			<tr data-bind="css: { 'row-new': $data.isNew, 'row-deleted': $data.isDeleted }">
+				<td>
+					{{entryType.entryType}} - {{entryType.subType}}
+				</td>
+				<td>
+					<a class="extLink" href="{{$parent.getTagUrl($data)}}" target="_blank">{{tag.name}}</a>
+				</td>
+				<td>
+					<button class="btn btn-small btn-danger" data-bind="click: deleteMapping, disable: isDeleted">Delete</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br />
+
+	@Html.Partial("Partials/Shared/_SaveBtn")
+
+</form>
+
+@section BodyScripts {
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/edit.js")"></script>
+	<script type="text/javascript">
+		$(function () {
+
+			ko.punches.enableAll();
+
+			var urlMapper = new app.UrlMapper('@RootPath');
+			var tagRepo = new app.TagRepository('@RootPath');
+
+			var viewModel = new app.ManageEntryTagMappingsViewModel(tagRepo);
+			ko.applyBindings(viewModel);
+
+		});
+	</script>
+}

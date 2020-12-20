@@ -1,0 +1,69 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Knockout
+@using SharedRes = ViewRes.SharedStrings
+@using Res = ViewRes.Search.IndexStrings
+
+<div data-bind="visible: showAnythingSearch, with: anythingSearchViewModel">
+
+	@{ Html.RenderPartial("Partials/_EntryCountBox"); }
+
+	<div data-bind="with: paging">
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+	</div>
+
+	<table class="table table-striped" data-bind="css: { loading: loading }">
+		<thead>
+			<tr>
+				<th colspan="2">
+					@SharedRes.Name
+				</th>
+				<th>
+					@Res.EntryType
+				</th>
+				<th data-bind="if: $parent.showTags">
+					@SharedRes.Tags
+				</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: page">
+			<tr>
+				<td style="width: 80px">
+					<a data-bind="visible: $data.mainPicture && mainPicture.urlTinyThumb, attr: { href: $parent.entryUrl($data), title: $data.additionalNames }" href="#" class="coverPicThumb">
+						<img data-bind="attr: { src: ($data.mainPicture ? mainPicture.urlTinyThumb : '') }" title="Cover picture" class="coverPicThumb img-rounded" referrerpolicy="same-origin"/>
+					</a>
+				</td>
+				<td>
+					<a data-bind="text: name, attr: { href: $parent.entryUrl($data), title: $data.additionalNames }" href="#"></a>
+					&nbsp;
+					<span data-bind="artistTypeLabel: $data.artistType"></span>
+					<span data-bind="songTypeLabel: $data.songType"></span>
+					@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
+					<!-- ko if: $data.artistString -->
+					<br />
+					<small class="extraInfo" data-bind="text: artistString"></small>
+					<!-- /ko -->
+				</td>
+				<td>
+					<a data-bind="text: $parent.searchViewModel.resources().entryTypeNames[entryType], click: function() { $parent.searchViewModel.searchType(entryType); }" href="#"></a>
+					<!-- ko if: $data.artistType || $data.discType || $data.songType || $data.eventCategory -->
+					<small class="extraInfo" data-bind="text: '(' + $parent.entryCategoryName($data) + ')'"></small>
+					<!-- /ko -->
+				</td>
+				<td data-bind="if: $parents[1].showTags() && $data.tags" class="search-tags-column">
+					<div data-bind="visible: tags.length">
+						<i class="icon icon-tags"></i>
+						<!-- ko foreach: tags -->
+						<a href="#" data-bind="text: tag.name, click: function() { $parents[1].selectTag(tag); return false; }"></a><span data-bind="visible: $data != _.last($parent.tags)">,</span>
+						<!-- /ko -->
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div data-bind="with: paging">
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+	</div>
+
+</div>
+
+

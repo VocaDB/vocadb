@@ -73,6 +73,12 @@ namespace VocaDb.Web.Code
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
 		public IUserPermissionContext UserContext => Context.RequestServices.GetRequiredService<IUserPermissionContext>();
+
+		// Code from: https://github.com/aspnet/AspNetWebStack/blob/749384689e027a2fcd29eb79a9137b94cea611a8/src/System.Web.WebPages/WebPageRenderingBase.cs#L178
+		public string Culture => Thread.CurrentThread.CurrentCulture.Name;
+
+		// Code from: https://github.com/aspnet/AspNetWebStack/blob/749384689e027a2fcd29eb79a9137b94cea611a8/src/System.Web.WebPages/WebPageRenderingBase.cs#L192
+		public string UICulture => Thread.CurrentThread.CurrentUICulture.Name;
 	}
 
 	public abstract class VocaDbPage : RazorPage
@@ -117,6 +123,9 @@ namespace VocaDb.Web.Code
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
 		public IUserPermissionContext UserContext => Context.RequestServices.GetRequiredService<IUserPermissionContext>();
+
+		// Code from: https://github.com/aspnet/AspNetWebStack/blob/749384689e027a2fcd29eb79a9137b94cea611a8/src/System.Web.WebPages/WebPageRenderingBase.cs#L178
+		public string Culture => Thread.CurrentThread.CurrentCulture.Name;
 
 		// Code from: https://github.com/aspnet/AspNetWebStack/blob/749384689e027a2fcd29eb79a9137b94cea611a8/src/System.Web.WebPages/WebPageRenderingBase.cs#L192
 		public string UICulture => Thread.CurrentThread.CurrentUICulture.Name;

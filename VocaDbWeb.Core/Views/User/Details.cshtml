@@ -1,0 +1,505 @@
+﻿@using System.Globalization
+@using VocaDb.Model.DataContracts.Users
+@using VocaDb.Model.Domain.Users
+@using VocaDb.Web.Code
+@using VocaDb.Web.Helpers
+@using VocaDb.Model.Domain.Security
+@using VocaDb.Model.Utils
+@using VocaDb.Web.Models.Shared.Partials.Album
+@using VocaDb.Web.Models.Shared.Partials.Artist
+@using VocaDb.Web.Models.Shared.Partials.Comment
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails
+@using VocaDb.Web.Models.Shared.Partials.Html
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@using VocaDb.Web.Models.Shared.Partials.Song
+@using VocaDb.Web.Models.Shared.Partials.Tag
+@using VocaDb.Web.Models.Shared.Partials.User
+@using VocaDb.Web.Resources.Domain.Globalization
+@using R = ViewRes.User.DetailsStrings
+@using Res = ViewRes.User.DetailsStrings
+@model UserDetailsContract
+@inject LaravelMixHelper LaravelMixHelper
+@inject Login Login
+
+@{
+	PageProperties.Title = Model.Name;
+	PageProperties.Subtitle = Translate.UserGroups[Model.GroupId];
+	PageProperties.Robots = !Model.Active ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
+
+	ViewBag.Parents = new[] {
+		Html.ActionLink(ViewRes.SharedStrings.Users, "Index"),
+	};
+
+	var ownProfile = (Login.Manager.IsLoggedIn && Login.User.Id == Model.Id && Login.User.Active);
+	var canSeeDetailedStats = (ownProfile || !Model.AnonymousActivity || Login.CanModerateUsers);
+
+	var url = VocaUriBuilder.CreateAbsolute(Url.Action("Profile", new { id = Model.Name })).ToString();
+
+}
+
+@functions {
+	public string GetLanguageName(UserKnownLanguageContract lang) {
+		if (!string.IsNullOrEmpty(lang.CultureCode)) {
+			var culture = CultureInfo.GetCultureInfo(lang.CultureCode);
+			return culture.NativeName + " - " + culture.EnglishName;
+		} else {
+			return InterfaceLanguageStrings.Other;
+		}
+	}
+}
+
+@{
+	void AvatarImg() {
+		if (!string.IsNullOrEmpty(Model.Email)) {
+			@Html.Partial("Partials/User/_ProfileIcon_IUserWithEmail", new ProfileIcon_IUserWithEmailViewModel(Model, 120))
+		} else {
+			<img src="@Url.Content("~/Content/unknown.png")" width="120" height="120" alt="Avatar" />
+		}
+	}
+
+	void Avatar() {
+		if (UserContext.IsLoggedIn && UserContext.LoggedUserId == Model.Id && Login.User.Active) {
+			<a href="http://gravatar.com/emails/" title="@R.SetAvatar" id="avatar" class="user-avatar">
+				@{ AvatarImg(); }
+			</a>
+		} else {
+			AvatarImg();
+		}
+	}
+}
+
+@section Toolbar {
+	@if (ownProfile) {
+		@Html.ActionLink(R.MySettings, "MySettings", null, new { id = "mySettingsLink" });
+		@Html.Raw("&nbsp;")
+		@Html.ActionLink(R.Messages, "Messages", null, new { id = "messagesLink" });
+	}
+
+	@if (UserContext.IsLoggedIn && UserContext.LoggedUserId != Model.Id && Login.User.Active && !Model.Standalone) {
+		@Html.ActionLink(R.ComposeMessage, "Messages", null, null, null, "composeTab", new { receiverName = Model.Name }, new { id = "composeMessageLink" });
+	}
+
+	@if (Login.CanManageUsers && EntryPermissionManager.CanEditUser(UserContext, Model.GroupId)) {
+		@Html.Raw("&nbsp;")
+		@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editUserLink" });
+	}
+	@if (Login.Manager.HasPermission(PermissionToken.ReportUser) && UserContext.LoggedUserId != Model.Id && Model.Active) {
+		@Html.Raw("&nbsp;")
+		<a href="" id="reportUserLink" data-bind="click: function() { reportUserViewModel.show(); }">@Res.ReportSpamming</a>
+	}
+	@if (Login.Manager.HasPermission(PermissionToken.RemoveEditPermission) && UserContext.LoggedUserId != Model.Id && Model.GroupId != UserGroupId.Limited && Model.Active && EntryPermissionManager.CanEditUser(Login.Manager, Model.GroupId)) {
+		@Html.Raw("&nbsp;")
+		<a href="" id="setToLimitedLink" data-bind="click: function() { limitedUserViewModel.show(); }">@ViewRes.SharedStrings.SetToLimited</a>
+	}
+	@if (Login.Manager.HasPermission(PermissionToken.DisableUsers) && UserContext.LoggedUserId != Model.Id && Model.Active) {
+		@Html.Raw("&nbsp;")
+		@Html.ActionLink(R.Disable, "Disable", new { id = Model.Id }, new { id = "disableUserLink" });
+	}
+}
+
+@if (ownProfile && Login.User.GroupId == UserGroupId.Limited) {
+	<div class="alert">
+		<h4>Why is my user group "Limited user"?</h4>
+		<p>
+			In order to prevent spammers and abusers we use automated tools to check users' IP address.
+			If you have a dynamic IP, it's possible that someone with the same IP as you was participating in these activities
+			and your account was mistakenly reduced, preventing you from editing the database.
+		</p><p>
+			If this is the case, please @Html.ActionLink("contact us", "Index", "Help") and we'll take care of it. Thank you.
+		</p>
+	</div>
+}
+@if (ownProfile && Model.PossibleProducerAccount) {
+	<div class="alert alert-info">
+		@Html.Raw(string.Format(Res.PossibleProducerMessage, Html.ActionLink(Res.ArtistVerificationPage, "RequestVerification")))
+	</div>
+}
+
+@if (ownProfile && !Model.KnownLanguages.Any()) {
+	<div class="alert alert-info">
+		@Html.Raw(string.Format(Res.KnownLanguagesMessage, "/User/MySettings#profile"))
+	</div>
+}
+
+<ul class="nav nav-pills">
+	<li data-bind="css: { active: view() == 'Overview' }">
+		<a href="#" data-bind="click: function() { setOverview(); }">@Res.Overview</a>
+	</li>
+	<li data-bind="css: { active: view() == 'Artists' }">
+		<a href="#Artists">@Res.FollowedArtistsTab</a>
+	</li>
+	<li data-bind="css: { active: view() == 'Albums' }">
+		<a href="#Albums">@Res.CollectionTab</a>
+	</li>
+	<li data-bind="css: { active: view() == 'Songs' }">
+		<a href="#Songs">@Res.FavoriteSongsTab</a>
+	</li>
+	<li data-bind="css: { active: view() == 'CustomLists' }">
+		<a href="#CustomLists">@Res.CustomListsTab</a>
+	</li>
+	<li data-bind="css: { active: view() == 'Comments' }">
+		<a href="#Comments">@Res.Comments</a>
+	</li>
+	<li data-bind="css: { active: view() == 'Events' }">
+		<a href="#Events">@Res.Events</a>
+	</li>
+</ul>
+
+<div data-bind="visible: view() == 'Overview'">
+	<div class="row-fluid">
+		<div class="span2 well well-transparent user-stats">
+			<h4>@Model.Name</h4>
+			@{ Avatar(); }
+			<br />
+			<p class="withMargin">
+				@Translate.UserGroups[Model.GroupId]
+				@if (Model.EffectivePermissions.Contains(PermissionToken.DesignatedStaff))
+				{
+					<span class="label label-important">@R.Staff</span>
+				}
+				@if (Model.VerifiedArtist)
+				{
+					<span class="label label-success">@R.VerifiedAccount</span>
+				}
+				@if (Model.IsVeteran) {
+					<span class="label label-success">@string.Format(R.Veteran, BrandableStrings.Layout.SiteName)</span>
+				}
+				@if (!string.IsNullOrEmpty(Model.CustomTitle)) {
+					<span class="label label-info">@Model.CustomTitle</span>
+				}
+				@if (!Model.Active)
+				{
+					<span class="label">@R.AccountDisabled</span>
+				}
+				@if (Model.EmailVerified)
+				{
+					<img src="@Url.Content("~/Content/Icons/tick.png")" title="@R.VerifiedEmail" />
+				}
+			</p>
+
+			<h4 class="withMargin">@R.StatsTab</h4>
+			<span>
+				@{ var submitText = R.Submissions + ": " + Model.SubmitCount; }
+				@if (canSeeDetailedStats)
+				{
+					<text>@Html.ActionLink(submitText, "EntryEdits", new { id = Model.Id, onlySubmissions = true })</text>
+				}
+				else
+				{
+					<text>@submitText</text>
+				}
+			</span><br />
+			<span>
+				@{ var editText = R.TotalEdits + ": " + Model.EditCount; }
+				@if (canSeeDetailedStats)
+				{
+					@Html.ActionLink(editText, "EntryEdits", new { id = Model.Id, onlySubmissions = false })
+				}
+				else
+				{
+					<text>@editText</text>
+				}
+			</span><br />
+			<span>@R.CommentsMade: @Model.CommentCount</span><br />
+			<span>@R.TagVotes: @Model.TagVotes</span><br />
+			<span>@R.Power: @Model.Power (@R.Level @Model.Level)</span>
+
+			<h4 class="withMargin">@R.MemberSince</h4>
+			@Model.CreateDate.ToShortDateString()
+			
+			@if (Model.OldUsernames.Any()) {
+				<h4 class="withMargin">@R.OldUsernames</h4>
+				foreach (var oldName in Model.OldUsernames) {
+					@oldName.OldName@:
+					@(string.Format(R.OldNameUntil, oldName.Date.ToShortDateString()) + (oldName != Model.OldUsernames.Last() ? "," : ""))@:
+				}
+			}
+
+			@if (Model.Supporter) {
+				<div class="withMargin media">
+					<img class="pull-left" style="margin-top: 2px;" src="@Url.Content("~/Content/pixelart-miku.png")" />
+					<div class="media-body">
+						@string.Format(Res.SupporterTitle, BrandableStrings.Layout.SiteName)
+					</div>
+				</div>
+			}
+		</div>
+
+		<div class="span8 well well-transparent">
+
+			@if (!string.IsNullOrEmpty(Model.AboutMe))
+			{
+				<h4>@R.AboutMe</h4>
+				@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.AboutMe))
+				<br />
+			}
+			
+			@if (Model.KnownLanguages.Any()) {
+				<h4>@Res.LanguagesIKnow</h4>
+				<ul class="user-known-languages">
+				@foreach (var lang in Model.KnownLanguages) {
+					<li>
+						@Html.Partial("Partials/Html/_LanguageFlag", new LanguageFlagViewModel(lang.CultureCode))
+						@GetLanguageName(lang)
+						@if (lang.Proficiency != UserLanguageProficiency.Nothing) {
+							@:(@Translate.UserLanguageProficiencyNames[lang.Proficiency])
+						}
+					</li>
+				}
+				</ul>
+			}
+
+			@if (Model.OwnedArtistEntries.Any())
+			{
+				<h4>@R.VerifiedOwner</h4>
+				@Html.Partial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.OwnedArtistEntries.Select(a => a.Artist), 3, true))
+				<br />
+			}
+
+			@if (Model.WebLinks.Any())
+			{
+				<h4 class="withMargin">@ViewRes.EntryDetailsStrings.ExternalLinks</h4>
+				@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.WebLinks))
+				<br />
+			}
+
+			@if (!string.IsNullOrEmpty(Model.TwitterName))
+			{
+				<h4>@R.TwitterAccount</h4>
+				<a href="@("https://twitter.com/" + Model.TwitterName)" class="extLink">@Model.TwitterName</a>
+				<br /><br />
+			}
+
+			@if (!string.IsNullOrEmpty(Model.Location))
+			{
+				<h4>@R.Location</h4>
+				@Model.Location
+				<br /><br />
+			}
+
+			@if (Model.FavoriteTags.Any())
+			{
+				<h4>@R.FavoriteTags</h4>
+				@Html.Partial("Partials/Tag/_TagList", new TagListViewModel(Model.FavoriteTags))
+				<br />
+				<div style="width: 400px; height: 200px;" data-bind="highcharts: ratingsByGenreChart"></div>
+				<br />
+			}
+
+			@if (ownProfile && !Login.CanManageUsers)
+			{
+				if (Model.AdditionalPermissions.Any())
+				{
+					<h4>@R.AdditionalPermissions</h4>
+					@Translate.AllPermissionTokenNames(Model.AdditionalPermissions)
+				}
+			}
+			else if (Login.CanManageUsers)
+			{
+				<h4>@R.LastLogin</h4>
+				@Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.LastLogin))
+				if (Login.CanManageUsers) {
+					@:(@Model.LastLoginAddress)
+					<a href='http://www.geoiptool.com/?IP=@Model.LastLoginAddress'>GeoIpTool</a>
+					<a data-bind="click: checkSFS" href='#'>StopForumSpam</a>
+					<a data-bind="click: addBan" href='#'>Add to banned IPs</a>
+				}
+
+				if (Model.AdditionalPermissions.Any()) {
+					<h4 class="withMargin">@R.AdditionalPermissions</h4>
+					@Translate.AllPermissionTokenNames(Model.AdditionalPermissions)
+				}
+
+				if (!string.IsNullOrEmpty(Model.Email))
+				{
+					<h4 class="withMargin">@R.Email</h4>
+					@Model.Email
+					if (Model.EmailVerified)
+					{
+						<img src="@Url.Content("~/Content/Icons/tick.png")" title="Verified email" />
+					}
+				}
+
+				<h4 class="withMargin">@R.EffectivePermissions</h4>
+				@Translate.AllPermissionTokenNames(Model.EffectivePermissions)
+			}
+
+		</div>
+	</div>
+
+	<br />
+
+	@if (Model.FavoriteAlbums.Any())
+	{
+		<div class="well well-transparent" id="favoriteAlbums">
+			<div class="pull-right">
+				<small>
+					<a href="#Albums">@ViewRes.SharedStrings.ShowMore</a>
+				</small>
+			</div>
+			<h3>
+				<a href="#Albums">
+					@R.SomeAlbumsILike
+					<small>(@string.Format(R.Total, Model.AlbumCollectionCount))</small>
+				</a>
+			</h3>
+			@Html.Partial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.FavoriteAlbums))
+		</div>
+	}
+
+	@if (Model.LatestRatedSongs.Any())
+	{
+		<div class="well well-transparent">
+			<div class="pull-right">
+				<small>
+					<a href="#Songs">@ViewRes.SharedStrings.ShowMore</a>
+				</small>
+			</div>
+			<h3>
+				<a href="#Songs">
+					@R.SomeSongsILike
+					<small>(@string.Format(R.Total, Model.FavoriteSongCount))</small>
+				</a>
+			</h3>
+			@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.LatestRatedSongs, 3))
+		</div>
+	}
+
+	@if (Model.FollowedArtists.Any())
+	{
+		<div class="well well-transparent">
+			<div class="pull-right">
+				<small>
+					<a href="#Artists">@ViewRes.SharedStrings.ShowMore</a>
+				</small>
+			</div>
+			<h3>
+				<a href="#Artists">
+					@R.SomeArtistsIFollow
+					<small>(@string.Format(R.Total, Model.ArtistCount))</small>
+				</a>
+			</h3>
+			@Html.Partial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.FollowedArtists, 3))
+		</div>
+	}
+	
+	<div class="well well-transparent">
+		<div class="pull-right">
+			<small>
+				<a href="#Comments">@ViewRes.SharedStrings.ShowMore</a>
+			</small>
+		</div>
+		<h3>
+			<a href="#Comments">
+				@ViewRes.EntryDetailsStrings.LatestComments
+			</a>
+		</h3>
+		<div data-bind="with: comments">
+			@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3))
+			<!-- ko ifnot: comments().length -->
+			<p>@ViewRes.EntryDetailsStrings.NoComments</p>
+			<!-- /ko -->
+		</div>
+
+	</div>
+</div>
+
+<div data-bind="visible: view() == 'Artists', with: followedArtistsViewModel, show" class="js-cloak">
+	@{ Html.RenderPartial("Partials/_FollowedArtists"); }
+</div>
+
+<div data-bind="visible: view() == 'Albums', with: albumCollectionViewModel, show" class="js-cloak">
+	@{ Html.RenderPartial("Partials/_AlbumCollection"); }
+</div>
+
+<div data-bind="visible: view() == 'Songs', with: ratedSongsViewModel, show" class="js-cloak">
+	@{ Html.RenderPartial("Partials/_RatedSongs"); }
+</div>
+
+<div data-bind="visible: view() == 'CustomLists', with: songLists, show" class="js-cloak">
+	@{ Html.RenderPartial("Partials/_SongLists"); }
+</div>
+
+<div data-bind="visible: view() == 'Comments', show" class="well well-transparent js-cloak">
+	<div data-bind="with: comments">
+		@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false))
+	</div>
+</div>
+
+<div data-bind="visible: view() == 'Events', show" class="js-cloak">
+	@{ Html.RenderPartial("Partials/_Events"); }
+</div>
+
+@if (Login.CanManageUsers) {
+	<div id="sfsCheckDialog" title="StopForumSpam check"></div>
+}
+
+@Html.Partial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel("Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional).", "limitedUserViewModel", "setToLimitedLink", "Remove editing permissions", "Confirm"))
+@Html.Partial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel("Please confirm that you wish to report user. Please provide additional explanation below.", "reportUserViewModel", "reportUserLink", "Report user", "Confirm"))
+
+@section Head {
+	<link rel="stylesheet" href="@LaravelMixHelper.GetPathToVersionedMixFile("~/Scripts/jqwidgets27/styles/css.css")" />
+	<link rel="canonical" href="@url" />
+}
+
+@section BodyScripts {
+	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
+	<script src="https://code.highcharts.com/highcharts.js" type="text/javascript"></script>
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/jqxRating.js")"></script>
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/User/Details.js")"></script>
+	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+	<script type="text/javascript">
+
+		ko.punches.enableAll();
+
+		$(function() {
+
+			var cultureCode = '@UICulture';
+
+			moment.locale(@ToJS(Culture));
+
+			var languageSelection = '@UserContext.LanguagePreference';
+			var lastLoginAddress = '@(UserContext.HasPermission(PermissionToken.ManageIPRules) ? Model.LastLoginAddress : "")';
+			var userId = @Model.Id;
+			var canDeleteComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+			var loggedUserId = @ToJS(UserContext.LoggedUserId);
+			var publicCollection = @ToJS(Model.PublicAlbumCollection || Model.Id == UserContext.LoggedUserId);
+			var rootPath = '@RootPath';
+			var urlMapper = new app.UrlMapper(rootPath);
+			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
+			var adminRepo = repoFactory.adminRepository();
+			var userRepo = repoFactory.userRepository();
+			var artistRepo = repoFactory.artistRepository();
+			var resourceRepo = repoFactory.resourceRepository();
+			var songRepo = repoFactory.songRepository();
+			var tagRepo = repoFactory.tagRepository();
+			var pvPlayersFactory = new app.PVPlayersFactory($("#pv-player-wrapper"));
+			var latestComments = @ToJS(Model.LatestComments);
+
+			var artistId = @ToJS((int?)ViewBag.ArtistId);
+			var childVoicebanks = @ToJS((bool?)ViewBag.ChildVoicebanks);
+			var sort = 'RatingDate';
+			var groupByRating = true;
+
+			var followedArtistsViewModel = new app.FollowedArtistsViewModel(userRepo, resourceRepo, tagRepo, languageSelection, userId, cultureCode);
+
+			var albumCollectionViewModel = new app.AlbumCollectionViewModel(userRepo, artistRepo, resourceRepo, languageSelection, userId, cultureCode,
+				publicCollection, false);
+
+			var ratedSongsViewModel = new app.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, tagRepo, 
+				languageSelection, userId, cultureCode,
+				sort, groupByRating, pvPlayersFactory, false, artistId, childVoicebanks);
+
+			var viewModel = new app.UserDetailsViewModel(userId, cultureCode, loggedUserId, lastLoginAddress, canDeleteComments, urlMapper, 
+				userRepo, adminRepo, resourceRepo, tagRepo, languageSelection, followedArtistsViewModel, albumCollectionViewModel, ratedSongsViewModel, latestComments);
+			ko.applyBindings(viewModel);
+
+			if (window.location.hash && window.location.hash.length >= 1) {
+				viewModel.setView(window.location.hash.substr(1));
+			}
+
+			app.initUserDetailsPage("@R.ConfirmDisable");
+	});
+
+	</script>
+}

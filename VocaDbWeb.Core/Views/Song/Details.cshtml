@@ -1,0 +1,622 @@
+﻿@model SongDetails
+@using System.Globalization
+@using Microsoft.AspNetCore.Html
+@using VocaDb.Model.DataContracts.Albums
+@using VocaDb.Model.DataContracts.Songs
+@using VocaDb.Model.Domain.Globalization
+@using VocaDb.Model.Domain.PVs
+@using VocaDb.Model.Domain.Songs
+@using VocaDb.Web.Models
+@using VocaDb.Web.Helpers
+@using VocaDb.Model.Domain.Security
+@using VocaDb.Model.Service.VideoServices
+@using VocaDb.Web.Code
+@using VocaDb.Web.Models.Shared
+@using VocaDb.Web.Models.Shared.Partials.Album
+@using VocaDb.Web.Models.Shared.Partials.Artist
+@using VocaDb.Web.Models.Shared.Partials.Comment
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails
+@using VocaDb.Web.Models.Shared.Partials.Html 
+@using VocaDb.Web.Models.Shared.Partials.PV
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@using VocaDb.Web.Models.Shared.Partials.Song
+@using R = ViewRes.Song
+@using Res = ViewRes.Song.DetailsStrings
+@using EntryRes = ViewRes.EntryDetailsStrings
+@inject LaravelMixHelper LaravelMixHelper
+@inject Login Login
+
+@{	
+
+	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null) };
+
+	var showAlternateVersions = 3;
+
+	var lyricsLanguageNames = Model.Lyrics
+		.OrderBy(l => l.TranslationType)
+		.Where(l => !string.IsNullOrEmpty(l.CultureCode) || l.TranslationType == TranslationType.Romanized)
+		.Select(l => l.TranslationType != TranslationType.Romanized ? CultureInfo.GetCultureInfo(l.CultureCode).NativeName : VocaDb.Web.Resources.Domain.Globalization.TranslationTypeNames.Romanized)
+		.Take(3)
+		.ToArray();
+
+	var additionalLyrics = lyricsLanguageNames.Any() ? Model.Lyrics.Length - lyricsLanguageNames.Length : 0;
+
+	var lyricsLanguages = lyricsLanguageNames.Any() ? "(" + string.Join(", ", lyricsLanguageNames) + (additionalLyrics > 0 ? " " + string.Format(Res.LyricsPlusOthers, additionalLyrics) : "") + ")" : "";
+
+	var url = PageProperties.CanonicalUrl;
+	var eeLoveIt = Model.Name.Equals("love it!", StringComparison.InvariantCultureIgnoreCase);
+	var favoriteText = eeLoveIt ? "Love It!" : Res.AddToFavorites;
+
+	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
+
+}
+
+@{
+	@* REVIEW *@
+	Func<AlbumContract, IHtmlContent> AlbumLink = @<text>
+		@Html.Partial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(item))
+		@if (!item.ReleaseDate.IsEmpty) {<small class="muted">&nbsp;(@item.ReleaseDate.Year)</small>}
+	</text>;
+
+	void AlternateVersions(IEnumerable<SongContract> songs) {
+		foreach (var alternateVersion in songs) {
+			@Html.Partial("Partials/Song/_SongLink", new SongLinkViewModel(alternateVersion, tooltip: true))
+			if (alternateVersion.LengthSeconds > 0) {
+				@:(@VocaDb.Model.Helpers.DateTimeHelper.FormatMinSec(alternateVersion.LengthSeconds))
+			}
+			@Html.Partial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(alternateVersion.SongType))
+			<br />
+			@alternateVersion.ArtistString<br />
+		}
+	}
+
+	void SongAlbumLink(SongContract song, string icon, int albumId) {
+		<a href="@Url.Action("Details", "Song", new { id = song.Id, albumId })" class="btn" title="@song.AdditionalNames">
+			<i class="@icon noMargin"></i>
+			<span>@song.Name</span>		
+		</a>
+	}
+}
+
+@section Head {
+	<link rel="alternate" type="application/json+oembed" href="@(VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("OEmbed", "Ext", new { url = VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("Details", "Song", new { Model.Id }), format = "json" }))" title="@Model.Name" />	
+	<link rel="alternate" type="text/xml+oembed" href="@(VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("OEmbed", "Ext", new { url = VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("Details", "Song", new { Model.Id }), format = "xml" }))" title="@Model.Name" />
+	<link rel="canonical" href="@url" />
+	@Html.Partial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties))
+	<link href="@Url.Content("~/Scripts/MediaElement/mediaelementplayer.min.css")" rel="stylesheet" type="text/css" />	
+}
+
+@section Toolbar {
+@if (Model.OriginalPVs.Any() || Model.OtherPVs.Any()) {
+	<div id="pvPlayer" class="song-pv-player">
+		@if (Model.PrimaryPV != null) {
+			@Html.Partial("Partials/PV/_EmbedPV", new EmbedPVViewModel(Model.PrimaryPV))
+		}
+	</div>
+}
+
+@if (Login.Manager.IsLoggedIn) {
+	<span data-bind="with: userRating">
+		<span data-bind="visible: isRatingFavorite" style="display: none;" class="icon heartIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Favorite]"></span>
+		<span data-bind="visible: isRatingLike" style="display: none;" class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>        
+		<span data-bind="visible: isRated() == false" style="display: none;" class="js-ratingButtons">
+			<a href="#" data-bind="click: setRating_like, jqButton: { icon: 'ui-icon-plus' }, disable: ratingInProgress">@ViewRes.Song.DetailsStrings.Like</a>
+			<a href="#" data-bind="click: setRating_favorite, jqButton: { icon: 'ui-icon-heart' }, disable: ratingInProgress">@favoriteText</a>
+		</span>
+		<a href="#" data-bind="visible: isRated, click: setRating_nothing, jqButton: { icon: 'ui-icon-close' }, disable: ratingInProgress" style="display: none;">@ViewRes.Song.DetailsStrings.RemoveFromFavorites</a>			
+	</span>
+	<a data-bind="click: songListDialog.showSongLists, jqButton: { icon: 'ui-icon-star' }" href="#" id="addToListLink">@ViewRes.Song.DetailsStrings.AddToCustomList</a>
+} else {
+	<span class="js-ratingButtons">
+		<a data-bind="jqButton: { disabled: true, icon: 'ui-icon-plus' }" href="#">@ViewRes.Song.DetailsStrings.Like</a>
+		<a data-bind="jqButton: { disabled: true, icon: 'ui-icon-heart' }" href="#">@ViewRes.Song.DetailsStrings.AddToFavorites</a>
+	</span>
+	<a data-bind="jqButton: { disabled: true, icon: 'ui-icon-star' }" href="#">@ViewRes.Song.DetailsStrings.AddToCustomList</a>	
+}
+
+<a data-bind="jqButton: { disabled: @ToJS(!Model.CanEdit), icon: 'ui-icon-wrench' }" href="@Url.Action("Edit", new { id = Model.Id, albumId = Model.BrowsedAlbumId })">@ViewRes.SharedStrings.Edit</a>	
+
+@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+
+<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
+	
+@if (UserContext.HasPermission(PermissionToken.AccessManageMenu)) {
+	<a data-bind="jqButton: { icon: 'ui-icon-wrench' }, click: function() { maintenanceDialogVisible(true); }" id="maintenanceActions" href="#">Maintenance actions</a>			 
+}
+	
+@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
+
+@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
+}
+
+@if (Model.Deleted) {
+	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(Model.MergedTo))
+}
+
+@if (Model.Draft && !Model.Deleted) {
+	@Html.Partial("Partials/Shared/_DraftMessage", new DraftMessageViewModel("glsongs"))
+}
+
+<div id="tabs" class="js-cloak" data-bind="show">
+
+	<ul>
+		<li><a href="#basicInfoTab">@ViewRes.EntryDetailsStrings.BasicInfoTab</a></li>
+		@if (Model.Lyrics.Any()) {
+			<li><a href="#lyricsTab" data-bind="click: initLyrics">@Res.Lyrics @lyricsLanguages</a></li>			
+		}
+		<li data-tab="Discussion">
+			<a href="#discussionTab">@ViewRes.EntryDetailsStrings.DiscussionTab (@Model.CommentCount)</a>
+		</li>
+		<li data-tab="Related">
+			<a href="@Url.Action("Related", "Song", new { id = Model.Id })">@R.DetailsStrings.RelatedSongs</a>
+		</li>
+		<li><a href="#shareTab">@Res.Share</a></li>
+	</ul>
+
+	<div id="basicInfoTab">
+		<table>
+			<tr>
+				<td class="entry-field-label-col">@ViewRes.SharedStrings.Name</td>
+				<td>
+					@Model.Name<br />
+					<span class="extraInfo">@Model.AdditionalNames</span>
+				</td>	
+			</tr>
+			@if (Model.Performers.Any()) {
+			<tr>
+				<td>
+					@if (Model.SongType != SongType.Illustration) {
+						@ViewRes.Song.DetailsStrings.Vocalists						
+					} else {
+						@:Subject
+					}
+				</td>
+				<td class="artistList">
+					@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Performers, showRoles: ShowRolesMode.IfNotVocalist, showType: true))
+				</td>
+			</tr>
+			}
+
+			@if (Model.Subject != null && Model.Subject.Any()) {
+				<tr>
+					<td>@EntryRes.Subject</td>
+					<td class="artistList">
+						@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Subject))
+					</td>
+				</tr>
+			}			
+			@if (Model.Producers.Any()) {
+			<tr>
+				<td>@ViewRes.Song.DetailsStrings.Producers</td>
+				<td class="artistList">
+					@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Producers, showRoles: (Model.Producers.Length > 1) ? ShowRolesMode.IfNotDefault : ShowRolesMode.Never))
+				</td>
+			</tr>
+			}
+			@if (Model.Illustrators != null && Model.Illustrators.Any()) {
+				<tr>
+					<td>Illustrators</td>
+					<td class="artistList">
+						@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Illustrators))
+					</td>
+				</tr>
+			}			
+   
+			@if (Model.Bands.Any()) {
+				<tr>
+					<td>@Res.Band</td>
+					<td class="artistList">
+						@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Bands))
+					</td>
+				</tr>
+			}
+
+
+			@if (Model.Animators.Any()) {
+			<tr>
+				<td>@ViewRes.Song.DetailsStrings.Animators</td>
+				<td class="artistList">
+					@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Animators))
+				</td>
+			</tr>
+			}
+			
+			@if (Model.OtherArtists.Any()) {
+			<tr>
+				<td>@ViewRes.Song.DetailsStrings.OtherArtists</td>
+				<td class="artistList">
+					@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.OtherArtists, showRoles: ShowRolesMode.IfNotDefault))
+				</td>
+			</tr>
+			}
+
+			<tr>
+				<td>@ViewRes.SharedStrings.Type</td>
+				<td>
+					@Html.Partial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(Model.SongType))
+					@if (Model.SongTypeTag != null) {
+						<a href="@Url.TagDetails(Model.SongTypeTag)" data-bind="tagToolTip: @Model.SongTypeTag.Id">@Translate.SongTypeNames[Model.SongType]</a>
+					} else {
+						<a href="@Url.TagUrlForEntryType(VocaDb.Model.Domain.EntryType.Song, Model.SongType)">@Translate.SongTypeNames[Model.SongType]</a>
+					}
+				</td>
+			</tr>
+			
+			@if (Model.Length > 0) {
+				<tr>
+					<td>@R.DetailsStrings.Duration</td>
+					<td>
+						@DateTimeUtils.FormatFromSeconds(Model.Length)
+					</td>
+				</tr>
+   }
+
+			@if (Model.Albums.Any()) {
+			<tr>
+				<td>@ViewRes.SharedStrings.Albums</td>
+				<td id="albumList">
+					@Html.LinkListHtml(Model.Albums, AlbumLink)
+				</td>
+			</tr>
+   }
+			
+			<tr>
+				<td>@ViewRes.SharedStrings.Tags</td>
+				<td>
+					<div data-bind="with: tagUsages" class="entry-tag-usages">
+						@{ Html.RenderPartial("Partials/_TagList"); }
+					</div>
+					<a data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
+					@if (Model.CanRemoveTagUsages) {
+						@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new { id = Model.Id }, new { id = "manageTags" })
+					}
+				</td>
+			</tr>
+			
+			@if (Model.ListCount > 0) {
+				<tr>
+					<td>@Res.PoolsAndLists</td>
+					<td>
+						@Html.LinkList(Model.Pools, pool => Html.ActionLink(pool.Name, "Details", "SongList", new { id = pool.Id }, null))
+						@if (Model.Pools.Any()) {
+							@:-
+						}
+						<a id="songInListsLink" data-bind="click: songInListsDialog.show" href="#">
+							@string.Format(Res.ViewAllLists, Model.ListCount)
+						</a>
+					</td>
+				</tr>
+			}	   
+
+			@if (Model.OriginalPVs.Any()) {
+			<tr>
+				<td>@Res.OriginalMedia</td>
+				<td>
+					@{ PVList(Model.OriginalPVs, false); }
+				</td>
+			</tr>
+			}
+
+			@if (Model.OtherPVs.Any()) {
+			<tr>
+				<td>@Res.OtherMedia</td>
+				<td>
+					@{ PVList(Model.OtherPVs, true); }
+				</td>
+			</tr>
+   }
+			
+			@Html.Partial("Partials/EntryDetails/_ExternalLinksRows", new ExternalLinksRowsViewModel(Model.WebLinks))
+			
+			<tr data-bind="if: originalVersion().entry">
+				<td>@Res.OriginalVersion</td>
+				<td>
+					@Html.Partial("Partials/Song/_SongLinkKnockout", new SongLinkKnockoutViewModel("originalVersion().entry", "originalVersion().url", tooltip: true, toolTipDomainBinding: "originalVersion().domain"))
+					<span data-bind="songTypeLabel: originalVersion().entry.songType"></span>
+					<br />
+					<span data-bind="text: originalVersion().entry.artistString"></span>
+				</td>
+			</tr>
+
+			@if (Model.AlternateVersions.Any()) {
+			<tr>
+				<td>@Res.AlternateVersions</td>
+				<td>
+					@{ AlternateVersions(Model.AlternateVersions.Take(showAlternateVersions)); }
+					@if (Model.AlternateVersions.Length > showAlternateVersions) {
+						<a href="#" data-bind="visible: !allVersionsVisible(), click: showAllVersions">@Res.ShowAllVersions (@Model.AlternateVersions.Length)</a>
+						<div style="display: none;" data-bind="visible: allVersionsVisible">
+							@{ AlternateVersions(Model.AlternateVersions.Skip(showAlternateVersions)); }
+						</div>
+	 }		
+				</td>
+			</tr>
+   }
+			
+			@if (!Model.Notes.IsEmpty) {
+			<tr>
+				<td>@Res.Notes</td>
+				<td class="entry-description" data-bind="with: description">
+					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", new EnglishTranslatedStringViewModel(Model.Notes)); }
+				</td>	
+			</tr>
+   }			
+   
+			<tr>
+				<td>@ViewRes.EntryDetailsStrings.Stats</td>
+				<td>
+					<a href="#" id="statsLink" data-bind="click: getUsers">
+						@string.Format(Res.Favorites, Model.FavoritedTimes),
+						@string.Format(Res.Likes, Model.LikedTimes),
+					</a>
+					@string.Format(ViewRes.EntryDetailsStrings.Hits, Model.Hits),
+					@string.Format(Res.TotalScore, Model.RatingScore).
+				</td>
+			</tr>
+			
+			@if (Model.ReleaseEvent != null) {
+				<tr>
+					<td>@Res.ReleaseEvent</td>
+					<td>
+						<a href="@Url.Action("Details", "Event", new { id = Model.ReleaseEvent.Id, slug = Model.ReleaseEvent.UrlSlug })" data-bind="eventToolTip: @Model.ReleaseEvent.Id">@Model.ReleaseEvent.Name</a>
+					</td>
+				</tr>
+			}
+
+			@if (Model.PublishDate.HasValue) {
+			<tr>
+				<td>@ViewRes.EntryDetailsStrings.PublishDate</td>
+				<td>
+					@Model.PublishDate.Value.ToShortDateString()
+				</td>
+			</tr>				
+			}
+
+			<tr>
+				<td>@ViewRes.EntryDetailsStrings.AdditionDate</td>
+				<td>
+					@Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CreateDate))
+				</td>	
+			</tr>
+			
+			@if (Model.Contract.AlbumSong != null) {
+			<tr>
+				<td>@Res.Navigation</td>
+				<td>
+					<p>
+						@if (Model.Contract.AlbumSong.DiscNumber > 1) {
+							@Html.Raw(string.Format(Res.TrackOnAlbumDisc, Model.Contract.AlbumSong.TrackNumber, Model.Contract.AlbumSong.DiscNumber, Html.Partial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(Model.Contract.Album))))
+						} else {
+							@Html.Raw(string.Format(Res.TrackOnAlbum, Model.Contract.AlbumSong.TrackNumber, Html.Partial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(Model.Contract.Album))))
+						}
+					</p>
+					@if (Model.Contract.PreviousSong != null) {
+						SongAlbumLink(Model.Contract.PreviousSong.Song, "icon-fast-backward", Model.Contract.Album.Id);
+					}
+
+					@if (Model.Contract.NextSong != null) {
+						SongAlbumLink(Model.Contract.NextSong.Song, "icon-fast-forward", Model.Contract.Album.Id);
+					}
+				</td>
+
+			</tr>
+			}
+			
+		</table>
+		
+		@if (Model.Suggestions.Any()) {
+			<h3 class="withMargin">@Res.SuggestionsTitle</h3>
+			@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.Suggestions, 2, true, true))
+			<p>
+				<a href="#" id="viewRelatedLink">@Res.SeeRelatedSongs</a>
+			</p>
+		}		
+
+		@if (Model.CanEditPersonalDescription || !string.IsNullOrEmpty(Model.PersonalDescriptionText)) {
+			<h3 class="withMargin helpTip" data-bind="qTip: null" title="@EntryRes.PersonalDescriptionHelp">
+				@EntryRes.PersonalDescription
+			</h3>
+			<div class="media" data-bind="with: personalDescription">
+				<a data-bind="visible: !author.isEmpty() && author.entry().mainPicture, attr: { href: app.EntryUrlMapper.details('Artist', author.id()) }" class="pull-left">
+					<img class="coverPicThumb" alt="Thumb" data-bind="attr: { src: !author.isEmpty() && author.entry().mainPicture ? author.entry().mainPicture.urlSmallThumb : null }" referrerpolicy="same-origin" />
+				</a>
+
+				<div class="media-body">
+					@if (Model.CanEditPersonalDescription) {
+					<div class="pull-right">
+						<a data-bind="click: beginEdit" href="#" class="textLink editLink">@ViewRes.SharedStrings.Edit</a>
+					</div>
+					}
+					<h3 class="media-heading" data-bind="visible: !author.isEmpty()">
+						<a data-bind="attr: { href: app.EntryUrlMapper.details('Artist', author.id()) }, text: author.name"></a>
+					</h3>
+					<div data-bind="visible: !editing()">
+						<p data-bind="markdown: text"></p>
+					</div>
+					<div data-bind="if: editing()">
+						<select data-bind="value: author.id, options: artists, optionsText: 'name', optionsValue: 'id', optionsCaption: '@EntryRes.PersonalDescriptionSelectAuthor'"></select>
+						<br />
+						<textarea data-bind="textInput: text" rows="5" cols="100" maxlength="2000" class="input-xxlarge"></textarea>
+						<br />
+						<button type="button" data-bind="click: save" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
+						<button data-bind="click: cancelEdit" class="btn">@ViewRes.SharedStrings.Cancel</button>
+					</div>
+				</div>
+			</div>
+		}
+
+		@Html.Partial("Partials/Comment/_LatestCommentsKnockout")
+		
+		<p>
+			<a href="#" id="viewCommentsLink">@ViewRes.EntryDetailsStrings.ViewAllComments</a>
+		</p>
+
+	</div>
+
+	@if (Model.Lyrics.Any()) {
+		<div id="lyricsTab" style="height: 400px; overflow: auto">
+			<ul class="nav nav-pills">
+				@foreach (var lyrics in Model.Lyrics.OrderBy(l => l.TranslationType)) {
+					<li data-bind="css: { active: selectedLyricsId() == @lyrics.Id }">
+						<a href="#" data-bind="click: function() { selectedLyricsId(@lyrics.Id); }">
+							@{ var lyricsName = !string.IsNullOrEmpty(lyrics.CultureCode) ? CultureInfo.GetCultureInfo(lyrics.CultureCode).NativeName : Res.LyricsLanguageOther; }
+							@if (lyrics.TranslationType == TranslationType.Romanized) {
+								@:Romanized
+							} else {
+								@lyricsName	
+							}
+							@if (lyrics.TranslationType == TranslationType.Original) {
+								@:(@VocaDb.Web.Resources.Domain.Globalization.TranslationTypeNames.Original)
+							}
+						</a>
+					</li>
+				}
+			</ul>
+			
+			<div data-bind="with: selectedLyrics">
+				<p data-bind="visible: source || url">
+					(@Res.LyricsFrom
+					<span data-bind="visible: url"><a class="extLink" data-bind="text: source || url, attr: { href: url, onclick: 'app.functions.trackOutboundLink(event)' }"></a>)</span>					
+					<span data-bind="visible: !url, text: source + ')'"></span>
+				</p>
+
+				<p class="song-lyrics" data-bind="text: value"></p>				
+			</div>
+
+		</div>
+	 }
+	 
+	<div id="discussionTab" data-bind="with: comments">
+		@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false))
+	</div>	 
+	
+	<div id="shareTab">
+		<div>
+			<label>
+				@ViewRes.EntryDetailsStrings.Social<br />
+				@Html.Partial("Partials/EntryDetails/_LargeShareLinks", new LargeShareLinksViewModel(PageProperties.Title, url))
+				<br /><br />
+			</label>
+		</div>
+		<div>
+			@R.DetailsStrings.Link<br />
+			<input type="text" value="@url" class="input-large" onclick="this.select();" />
+		</div>
+		<div>
+			<a href="http://daringfireball.net/projects/markdown/">Markdown</a><br />
+			<input type="text" value="@VocaDb.Model.Service.Helpers.MarkdownHelper.CreateMarkdownLink(url, Model.Name)" class="input-xxlarge" onclick="this.select();" />
+		</div>
+		<div>
+			@R.DetailsStrings.Embed<br />
+			<textarea class="input-xxlarge" rows="3">@(string.Format("<iframe style=\"overflow: hidden;\" src=\"{0}?songId={1}&lang={2}\" height=\"400\" width=\"570\" frameborder=\"0\" scrolling=\"no\"></iframe>", UrlMapper.FullAbsolute("/Ext/EmbedSong"), Model.Id, Login.Manager.LanguagePreference))</textarea>
+		</div>
+	</div>
+
+</div>
+
+<div data-bind="with: tagsEditViewModel">
+	@{ Html.RenderPartial("Partials/_TagsEdit"); }
+</div>
+
+@{ Html.RenderPartial("Partials/_AddToListDialog"); }
+
+<div data-bind="dialog: {autoOpen: false, modal: true, width: 400, position: { my: 'left top', at: 'left bottom', of: $('#statsLink') } }, dialogVisible: $root.ratingsDialogViewModel.popupVisible" title="@R.DetailsStrings.SongRatings" style="display:none;">
+	
+	<div data-bind="with: ratingsDialogViewModel">
+		@{Html.RenderPartial("Partials/_UsersWithSongRating"); }
+	</div>
+
+</div>
+
+@{ Html.RenderPartial("Partials/_SongInListsDialog"); }
+
+@Html.Partial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel())
+
+<div 
+	data-bind="
+		dialog: {
+			autoOpen: false, width: 400,
+			position: { my: 'left top', at: 'left bottom', of: $('#maintenanceActions') }
+		},
+		dialogVisible: maintenanceDialogVisible"
+	title="Maintenance actions" style="display: none;">
+	
+	<div>			
+		<p><a data-bind="jqButton" href="@Url.Action("UpdateArtistString", new { id = Model.Id})" >Refresh artist string</a></p>
+		<p><a data-bind="jqButton" href="@Url.Action("UpdateThumbUrl", new { id = Model.Id})">Refresh thumbnail</a></p>
+		<p><a data-bind="jqButton" href="@Url.Action("RefreshPVMetadatas", new { id = Model.Id})">Refresh PV metadata</a></p>
+	</div>
+
+</div>
+
+@section BodyScripts {
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/Song/Details.js")"></script>
+	<script type="text/javascript">
+
+	$(document).ready(function() {
+
+		moment.locale('@Culture');
+
+		var resources = @ResourceHelpers.ToJSON(AjaxRes.SongStrings.ResourceManager, true);
+		vdb.resources.song = resources;
+
+		var jsonModel = @Html.Raw(Model.Json);
+		var rootPath = '@RootPath';
+		var urlMapper = new app.UrlMapper(rootPath);
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var repo = repoFactory.songRepository();
+		var userRepo = repoFactory.userRepository();
+		var artistRepo = repoFactory.artistRepository();
+		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+
+		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.SongReportTypeNames, SongReport.ReportTypesWithRequiredNotes));
+
+		var viewModel = new app.SongDetailsViewModel(repo, userRepo, 
+			artistRepo,
+			resources,
+			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)),
+			jsonModel,
+			reportTypes,
+			@UserContext.LoggedUserId, 
+			@LanguagePreferenceInt, 
+			canDeleteAllComments, app.ui.showThankYouForRatingMessage);
+		ko.applyBindings(viewModel);
+
+		viewModel.songListDialog.addedToList = function() { app.ui.showSuccessMessage(resources.addedToList); };
+
+		app.initSongDetailsPage(jsonModel, @Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
+	});
+
+</script>
+}
+
+@{
+	void PVList(IEnumerable<VocaDb.Model.DataContracts.PVs.PVContract> pvs, bool showPVType) {
+
+		foreach (var pv in pvs) {
+			<a class="pvLink btn @(pv.Disabled ? "disabled" : "")" id="pv_@(pv.Id)" data-bind="css: { active: selectedPvId() == @pv.Id }, click: function () { @(pv.Disabled ? "return false;" : "selectedPvId(" + pv.Id + ");") }"
+			   title="@(pv.PublishDate.HasValue && !string.IsNullOrEmpty(pv.Author) ? string.Format(Res.PVDescription, pv.PublishDate.Value.ToShortDateString(), pv.Author) : "") @(pv.Disabled ? Res.PVUnavailable : "")">
+				<img src="@Html.VideoServiceLinkUrl(pv.Service)" alt="@pv.Service" />
+				@(!string.IsNullOrEmpty(pv.Name) ? pv.Name : pv.Service.ToString())
+				@if (showPVType) {
+					@("(" + Translate.PVTypeNames[pv.PVType] + ")")
+				}
+			</a>
+			if (VideoServiceHelper.ShowExternalSiteLink(pv.Service)) {
+				@Html.Raw("&nbsp;")
+				<a href="@pv.Url" onclick="app.functions.trackOutboundLink(event)" target="_blank">
+					<i class="icon-eye-open"></i>
+					@Res.ViewExternal
+				</a>
+			}
+			if (pv.Service == PVService.NicoNicoDouga) {
+				 <a href="http://nicodata.vocaloid.eu/?NicoUrl=@pv.Url" target="_blank">
+					 <i class="icon-info-sign"></i>
+					 @Res.ViewInfo
+				 </a>
+			 }
+			<br />
+		}
+
+	}
+}

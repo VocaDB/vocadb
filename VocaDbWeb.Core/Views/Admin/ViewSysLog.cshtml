@@ -1,0 +1,12 @@
+﻿@model VocaDb.Web.Models.Admin.ViewSysLog
+
+@{
+    PageProperties.Title = "View system log";
+	ViewBag.Parents = new[] { 
+		Html.ActionLink("Manage", "Index"), 
+	};	
+}
+
+<textarea readonly="readonly" class="span9" rows="50">
+	@Model.LogContents
+</textarea>

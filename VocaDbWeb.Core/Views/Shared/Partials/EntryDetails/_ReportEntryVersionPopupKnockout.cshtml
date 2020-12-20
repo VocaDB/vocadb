@@ -1,0 +1,23 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.EntryDetails
+@model ReportEntryVersionPopupKnockoutViewModel
+
+<div style="display:none;" title="@ViewRes.EntryDetailsStrings.ReportAnError"
+	 data-bind="
+			with: @Model.ViewModelBindingName,
+			dialog: {
+				autoOpen: false, width: 310,
+				position: { my: 'left top', at: 'left bottom', of: $('#@Model.ReportButtonId') }
+			},
+			dialogVisible: @(Model.ViewModelBindingName).dialogVisible,
+			dialogButtons: [{ text: '@ViewRes.SharedStrings.Save', click: @(Model.ViewModelBindingName).send, disabled: !@(Model.ViewModelBindingName).isValid() }]">
+
+	<p>
+		@ViewRes.EntryDetailsStrings.ReportArchivedVersionExplanation
+	</p>
+
+	<label>
+		@ViewRes.EntryDetailsStrings.ReportArchivedVersionMessage
+	</label>
+	<textarea data-bind="textInput: notes" class="input-xlarge" maxlength="400" rows="3"></textarea>
+
+</div>

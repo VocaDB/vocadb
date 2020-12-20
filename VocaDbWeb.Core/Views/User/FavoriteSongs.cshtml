@@ -1,0 +1,49 @@
+﻿@using VocaDb.Web.Helpers
+@using Res = ViewRes.User.FavoriteSongsStrings
+@using SharedRes = ViewRes.SharedStrings
+@model VocaDb.Web.Models.User.FavoriteSongs
+@inject LaravelMixHelper LaravelMixHelper
+
+@{
+	PageProperties.Title = "Songs rated by " + Model.User.Name;
+	ViewBag.Parents = new[] {
+		Html.ActionLink(Model.User.Name, "Details", "User", new {id = Model.User.Id}, null)
+	};
+}
+
+@{ Html.RenderPartial("Partials/_RatedSongs"); }
+
+@section BodyScripts {
+	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
+	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/User/RatedSongs.js")"></script>
+
+	<script type="text/javascript">
+
+		$(function () {
+
+			moment.locale('@Culture');
+			var cultureCode = '@UICulture';
+			var languageSelection = '@UserContext.LanguagePreference';
+			var loggedUserId = @Model.User.Id;
+			var sort = @ToJS(Model.Sort.HasValue ? Model.Sort.ToString() : null);
+			var groupByRating = @ToJS(Model.GroupByRating);
+
+			var rootPath = '@RootPath';
+			var urlMapper = new app.UrlMapper(rootPath);
+			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+			var userRepo = repoFactory.userRepository();
+			var artistRepo = repoFactory.artistRepository();
+			var songRepo = repoFactory.songRepository();
+			var resourceRepo = repoFactory.resourceRepository();
+			var pvPlayersFactory = new app.PVPlayersFactory($("#pv-player-wrapper"));
+
+			var vm = new app.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, languageSelection, loggedUserId, cultureCode,
+				sort, groupByRating, pvPlayersFactory, true);
+			ko.applyBindings(vm);
+
+		});
+
+	</script>
+
+}

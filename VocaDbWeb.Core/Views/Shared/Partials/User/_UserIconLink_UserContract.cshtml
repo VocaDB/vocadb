@@ -1,0 +1,6 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.User
+@model UserIconLink_UserContractViewModel
+
+<a href="@Url.UserDetails(Model.User)" @Html.ConditionalAttribute(Model.Tooltip && Model.User != null, "data-bind", "userToolTip: " + (Model.User != null ? Model.User.Id : 0))
+   title='@(Model.UserInfo && Model.User != null ? (Translate.UserGroups[Model.User.GroupId] + "\nJoined: " + Model.User.CreateDate.ToShortDateString()) : "")'>@Html.Partial("Partials/User/_ProfileIcon_IUserWithEmail", new ProfileIcon_IUserWithEmailViewModel(Model.User, Model.Size))<span>@(Model.User != null ? Model.User.Name : "")</span></a>

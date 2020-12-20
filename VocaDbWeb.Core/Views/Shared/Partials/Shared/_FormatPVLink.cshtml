@@ -1,0 +1,11 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@model FormatPVLinkViewModel
+
+<a href="@Model.PV.Url">
+	<img src="@Html.VideoServiceLinkUrl(Model.PV.Service)" alt="@Model.PV.Service" /> @(!string.IsNullOrEmpty(Model.PV.Name) ? Model.PV.Name : Model.PV.Service.ToString())
+	@if (Model.Type)
+	{
+		@("(" + Translate.PVTypeNames[Model.PV.PVType] + ")")
+	}
+</a>

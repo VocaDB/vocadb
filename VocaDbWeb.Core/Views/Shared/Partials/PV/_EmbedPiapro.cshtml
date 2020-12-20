@@ -1,0 +1,22 @@
+﻿@using VocaDb.Model.Service.VideoServices
+@using VocaDb.Web.Models.Shared.Partials.PV
+@model EmbedPiaproViewModel
+
+@{
+	var meta = Model.PV.ExtendedMetadata != null ? Model.PV.ExtendedMetadata.GetExtendedMetadata<PiaproMetadata>() : null;
+}
+
+@if (meta != null && !string.IsNullOrEmpty(meta.Timestamp))
+{
+	var prefix = Model.PV.PVId.Substring(0, 2);
+	<audio controls controlsList="nodownload" src="https://cdn.piapro.jp/mp3_a/@prefix/@(Model.PV.PVId)_@(meta.Timestamp)_audition.mp3"></audio>
+}
+else
+{
+	@* <object> embed instead of iframe because iframe doesn't work with flash disabled *@
+	var piaproSwf = string.Format("//piapro.jp/modpub/swf/player03_h.swf?030503&id={0}&c=1", Model.PV.PVId);
+	<object type="application/x-shockwave-flash" width="340" height="80" style="border: 0" data="@piaproSwf">
+		<param name="movie" value="@piaproSwf" />
+		<param name="quality" value="high" />
+	</object>
+}

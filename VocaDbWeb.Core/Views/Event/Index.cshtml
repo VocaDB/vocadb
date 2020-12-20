@@ -1,0 +1,56 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@using rule = VocaDb.Model.Service.QueryableExtensions.EventSortRule
+@using Res = ViewRes.Event.EventsBySeriesStrings
+@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventForApiContract[]
+@inject Login Login
+
+@{
+	PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
+}
+
+@{
+	void SortDirection(rule rule) {
+		if (ViewBag.SortRule == rule) {
+			<span class="sortDirection_down"></span>
+		}
+	}
+}
+
+@section Toolbar {	
+	
+	<ul class="nav nav-pills">
+		<li class="active">
+			@Html.ActionLink(Res.ViewList, "Index")
+		</li>
+		<li>
+			@Html.ActionLink(Res.ViewBySeries, "EventsBySeries")
+		</li>
+		<li>
+			@Html.ActionLink(Res.ViewByVenue, "EventsByVenue")
+		</li>
+		<li>
+			@Html.ActionLink(Res.ViewByDate, "EventsByDate")
+		</li>
+	</ul>
+
+	@if (Login.CanManageDb) {
+		@Html.ActionLink(Res.CreateEvent, "Edit", null, new { id = "createEventLink" })
+		@:
+		@Html.ActionLink(Res.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
+		@:
+		@Html.ActionLink(Res.CreateVenue, "Edit", "Venue", null, new { id = "createVenueLink" })
+	}
+}
+
+@Html.Partial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model))
+
+@section BodyScripts {
+	<script type="text/javascript">
+		$(function () {
+			$("#createSeriesLink").button({ icons: { primary: 'ui-icon-plus' } });
+			$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
+			$("#createVenueLink").button({ icons: { primary: 'ui-icon-plus' } });
+		});
+	</script>
+}

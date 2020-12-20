@@ -1,0 +1,37 @@
+﻿@using VocaDb.Web.Helpers
+@model VocaDb.Model.DataContracts.Songs.SongContract
+
+<style type="text/css">
+	.popupTitle { color: black; }
+	.coverPicThumb { max-width: 70px; max-height: 70px; }
+</style>
+
+@if (!string.IsNullOrEmpty(Model.ThumbUrl)) {
+<div class="thumbnail">
+	<img src='@Model.ThumbUrl' alt="Thumb" class="coverPicThumb" referrerpolicy="same-origin"/>
+</div>
+}
+
+<strong class="popupTitle">@Model.Name</strong>
+
+@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
+<p>
+    @Model.AdditionalNames
+</p>
+}
+<p>
+	@Model.ArtistString<br />
+	@Translate.SongTypeNames[Model.SongType]<br />
+</p>    
+
+@if (Model.PublishDate.HasValue) {
+	<p>
+		@ViewRes.EntryDetailsStrings.PublishDate @Model.PublishDate.Value.ToShortDateString()		
+	</p>
+}
+
+@if (Model.LengthSeconds > 0) {
+	<p>
+		@DateTimeUtils.FormatFromSeconds(Model.LengthSeconds)
+	</p>
+}

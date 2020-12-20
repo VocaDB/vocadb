@@ -1,0 +1,7 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+@model ObjectRefInfoViewModel
+
+@if (Model.ObjRef != null)
+{
+	<text>@Model.ObjRef.NameHint [@Model.ObjRef.Id]</text>
+}

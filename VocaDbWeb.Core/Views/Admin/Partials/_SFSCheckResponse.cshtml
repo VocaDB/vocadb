@@ -1,0 +1,81 @@
+﻿@using VocaDb.Model.Service.Security.StopForumSpam
+@using VocaDb.Web.Code.Security
+@model SFSResponseContract
+
+<table>
+	<tr>
+		<td>
+			IP:
+		</td>
+		<td>
+			@Model.IP			
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Conclusion:			
+		</td>
+		<td>
+			@if (Model.Conclusion == SFSCheckResultType.Malicious) {
+				<span class="label label-important">
+					Malicious
+				</span>
+			} else if (Model.Conclusion == SFSCheckResultType.Uncertain) {
+				<span class="label label-warning">
+					Suspicious
+				</span>
+			} else {
+				<span class="label label-success">
+					Likely harmless
+				</span>				
+			}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Match:			
+		</td>
+		<td>
+			@if (Model.Appears) {
+				<span class="label label-important">
+					Yes
+				</span>				
+			} else {
+				<span class="label label-success">
+					No
+				</span>
+			}
+		</td>
+	</tr>
+	@if (Model.Appears) {
+		<tr>
+			<td>
+				Frequency:			
+			</td>
+			<td>
+				@Model.Frequency			
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Confidence:			
+			</td>
+			<td>
+				@Model.Confidence %			
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Last seen:			
+			</td>
+			<td>
+				@Model.LastSeen.ToShortDateString()			
+			</td>
+		</tr>
+	}
+</table>
+<br />
+<span class="withMargin">
+	<a href="https://www.stopforumspam.com/search?q=@Model.IP">View on StopForumSpam</a>	
+</span>
+

@@ -1,0 +1,132 @@
+﻿@using VocaDb.Model.Domain.Songs
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Song
+@inherits VocaDb.Web.Code.VocaDbPage
+@using Res = ViewRes.Song.RankingsStrings
+@inject LaravelMixHelper LaravelMixHelper
+
+@{
+	PageProperties.Title = BrandableStrings.Song.RankingsTitle;
+	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null) };
+}
+
+<div class="btn-group">
+	<a href="#" data-bind="click: function() { durationHours(24); }, css: { active: durationHours() == 24 }" class="btn">@Res.DurationDaily</a>
+	<a href="#" data-bind="click: function() { durationHours(168); }, css: { active: durationHours() == 168 }" class="btn">@Res.DurationWeekly</a>
+	<a href="#" data-bind="click: function() { durationHours(720); }, css: { active: durationHours() == 720 }" class="btn">@Res.DurationMonthly</a>
+	<a href="#" data-bind="click: function() { durationHours(null); }, css: { active: durationHours() == null }" class="btn">@Res.DurationOverall</a>
+</div>
+
+<div class="btn-group">
+	<a href="#" data-bind="click: function() { dateFilterType('CreateDate'); }, css: { active: dateFilterType() == 'CreateDate', disabled: !durationHours() }" class="btn" title="@Res.FilterCreateDateDescription">
+		@Res.FilterCreateDate
+	</a>
+	<a href="#" data-bind="click: function() { dateFilterType('PublishDate'); }, css: { active: dateFilterType() == 'PublishDate', disabled: !durationHours() }" class="btn" title="@Res.FilterPublishDateDescription">
+		@Res.FilterPublishDate
+	</a>
+	<a href="#" data-bind="click: function() { dateFilterType('Popularity'); }, css: { active: dateFilterType() == 'Popularity', disabled: !durationHours() }" class="btn" title="@Res.FilterPopularityDescription">
+		@Res.FilterPopularity
+	</a>
+</div>
+
+<div class="btn-group">
+	<a href="#" data-bind="click: function() { vocalistSelection(null); }, css: { active: vocalistSelection() == null }" class="btn">@Res.VocalistAll</a>
+	<a href="#" data-bind="click: function() { vocalistSelection('Vocaloid'); }, css: { active: vocalistSelection() == 'Vocaloid' }" class="btn">@Res.VocalistVocaloid</a>
+	<a href="#" data-bind="click: function() { vocalistSelection('UTAU'); }, css: { active: vocalistSelection() == 'UTAU' }" class="btn">@Res.VocalistUTAU</a>
+	<a href="#" data-bind="click: function() { vocalistSelection('CeVIO'); }, css: { active: vocalistSelection() == 'CeVIO' }" class="btn">@Res.VocalistOther</a>
+</div>
+
+<div class="alert js-cloak withMargin" data-bind="show" visible="{{ songs().length == 0 }}">
+	@Res.NoSongs
+</div>
+
+<table class="table table-striped js-cloak" data-bind="show" visible="{{ songs().length }}">
+	<thead>
+		<tr>
+			<th></th>
+			<th colspan="2">
+				@Res.ColName
+			</th>
+			<th>
+				@Res.ColPublished
+			</th>
+			<th>
+				@Res.ColTags
+			</th>
+			<th>
+				@Res.ColRating
+			</th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach: songs">
+		<tr>
+			<td style="width: 30px">
+				<h1>{{ $index() + 1 }}</h1>				
+			</td>
+			<td style="width: 80px">
+				<a data-bind="visible: $data.thumbUrl, attr: { href: app.EntryUrlMapper.details_song($data), title: $data.additionalNames }" href="#">
+					<img data-bind="attr: { src: $data.thumbUrl }" title="Cover picture" class="coverPicThumb img-rounded" referrerpolicy="same-origin" />
+				</a>
+			</td>
+			<td>
+
+				<div class="pull-right" data-bind="visible: pvServices, with: previewViewModel">
+					<a data-bind="click: togglePreview, css: { active: preview }" class="btn previewSong" href="#">
+						<i class="icon-film"></i>
+						@Res.Preview
+					</a>
+				</div>
+
+				<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details_song($data), title: $data.additionalNames }" href="#"></a>
+				<span data-bind="songTypeLabel: $data.songType"></span>
+				<!-- ko foreach: $parent.getPVServiceIcons($data.pvServices) -->
+				<img data-bind="attr: { src: url, title: service }" />
+				<!-- /ko -->
+				
+				<span data-bind="visible: $data.rating === 'Favorite'" class="icon heartIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Favorite]"></span>
+				<span data-bind="visible: $data.rating === 'Like'" class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>
+				
+				<br />
+				<small class="extraInfo" data-bind="text: artistString"></small>
+
+				<div data-bind="visible: pvServices, with: previewViewModel">
+					@Html.Partial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].getPVServiceIcons"))
+				</div>
+			</td>
+			<td>
+				{{ $data.publishDate | formatDate:'l' }}
+			</td>
+			<td class="search-tags-column">
+				<div data-bind="if: $data.tags && tags.length">
+					<i class="icon icon-tags fix-icon-margin"></i>
+					<!-- ko foreach: tags -->
+					<a data-bind="text: tag.name" href="{{ $parents[1].getTagUrl($data) }}" title="{{ tag.additionalNames }}"></a><span data-bind="visible: $data != _.last($parent.tags)">,</span>
+					<!-- /ko -->
+				</div>
+			</td>
+			<td>
+				<span data-bind="text: ratingScore"></span>
+				@Res.TotalScore
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+@section BodyScripts {	
+<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/Song/TopRated.js")"></script>
+<script type="text/javascript">
+
+	moment.locale('@Culture');
+	ko.punches.enableAll();
+
+	$(function () {
+		var urlMapper = new app.UrlMapper('@RootPath');
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
+		var songRepo = repoFactory.songRepository();
+		var userRepo = repoFactory.userRepository();
+		var viewModel = new app.RankingsViewModel(urlMapper, songRepo, userRepo, @LanguagePreferenceInt);
+		ko.applyBindings(viewModel);
+	});
+
+</script>		
+}

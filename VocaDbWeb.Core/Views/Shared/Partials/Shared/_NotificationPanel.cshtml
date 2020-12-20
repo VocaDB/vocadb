@@ -1,0 +1,7 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Shared
+@model NotificationPanelViewModel
+
+<div class="alert">
+	@Html.Partial("Partials/Shared/_NotificationIcon")
+	<span id="@Model.MessageId">@Model.Message</span>
+</div>

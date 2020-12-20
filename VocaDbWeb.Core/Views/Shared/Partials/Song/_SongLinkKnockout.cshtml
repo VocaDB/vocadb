@@ -1,0 +1,4 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Song
+@model SongLinkKnockoutViewModel
+
+<a href="#" data-bind="attr: { href: @Model.ExtUrlBinding || app.EntryUrlMapper.details_song(@Model.Binding), title: @(Model.Binding).additionalNames }, text: @(Model.Binding).name, css: { extLink: @Model.ExtUrlBinding } @(Model.Tooltip ? ", songToolTip: " + Model.Binding + ".id" : "") @(Model.ToolTipDomainBinding != null ? ", toolTipDomain: " + Model.ToolTipDomainBinding : "")"></a>

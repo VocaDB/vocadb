@@ -1,0 +1,56 @@
+﻿@using VocaDb.Web.Helpers
+@model VocaDb.Model.DataContracts.MikuDb.MikuDbAlbumContract
+
+@{
+	void ImportedAlbumData(VocaDb.Model.DataContracts.MikuDb.ImportedAlbumDataContract album) {
+	
+		if (album != null) {
+			<p class="albumData">
+				Artists: @string.Join(", ", album.ArtistNames)<br />
+				@if (album.VocalistNames.Any()) {
+					<span>Vocalists: @string.Join(", ", album.VocalistNames)<br /></span>
+				}
+				@if (!string.IsNullOrEmpty(album.CircleName)) {
+					<span>Circle: @album.CircleName<br /></span>
+				}
+				@if (album.ReleaseYear != null) {
+					<span>Year: @album.ReleaseYear<br /></span>
+				}
+				<span>Imported: @Model.Created</span>
+			</p>
+		}
+
+	}
+}
+
+<tr>
+	@using (Html.BeginCollectionItem("albums")) {
+	<td>
+		@Html.HiddenFor(m => m.Id)
+		<h4><a href="@Model.SourceUrl">@Model.Title</a></h4>
+		<img src="@Url.Action("CoverPicture", new { id = Model.Id })" alt="Cover picture" class="coverPic" />
+		<br /><br />
+		<a class="btn" title="Approve and process the album." href="@Url.Action("PrepareForImport", new { id = Model.Id })">
+			<i class="icon icon-ok"></i>
+			Process
+		</a>
+		<a class="btn" title="Mark the album as rejected. The album will remain in the system and won't be imported again automatically, but it can always be processed or deleted later." href="@Url.Action("SkipAlbum", new { id = Model.Id })">
+			<i class="icon icon-remove"></i>
+			Reject
+		</a>
+		<a class="btn" title="Delete the album from the system. It might be imported automatically again later." href="@Url.Action("Delete", new { id = Model.Id })">
+			<i class="icon icon-trash"></i>
+			Delete
+		</a>
+		<br />
+	</td>
+	<td>@{ ImportedAlbumData(Model.Data); }</td>
+	<td>
+		@if (Model.Data != null && Model.Data.Tracks.Any()) {
+			foreach (var track in Model.Data.Tracks) {
+				@track.TrackNum<text>.&nbsp;</text>@track.Title<br />
+			}
+		}
+	</td>
+	 }
+</tr>

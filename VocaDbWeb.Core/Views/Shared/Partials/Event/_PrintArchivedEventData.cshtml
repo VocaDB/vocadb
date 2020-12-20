@@ -1,0 +1,27 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+@using VocaDb.Web.Models.Shared.Partials.Event
+@model PrintArchivedEventDataViewModel
+
+<div class="well well-transparent archived-entry-contents">
+	<h4>Content</h4>
+
+	<table class="table table-bordered">
+		@Html.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel("Id", Model.ComparedEvents.FirstData.Id))
+		@Html.TranslatedNameRow(Model.ComparedEvents, d => d.TranslatedName)
+		@Html.DataRowList("Names", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
+		@Html.DataRow("Description", Model.ComparedEvents, d => d.Description)
+		@Html.DataRowList("External links", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
+		@Html.DataRow("Category", Model.ComparedEvents, d => d.Category)
+		@Html.DataRow("Date", Model.ComparedEvents, d => d.Date)
+		@Html.DataRow("Venue", Model.ComparedEvents, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.Venue)))
+		@Html.DataRow("Venue name", Model.ComparedEvents, d => d.VenueName)
+		@Html.DataRow("Main picture MIME", Model.ComparedEvents, d => d.MainPictureMime)
+		@Html.DataRow("Series", Model.ComparedEvents, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.Series)))
+		@Html.DataRow("Series number", Model.ComparedEvents, d => d.SeriesNumber)
+		@Html.DataRowList("Artists", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.Artists, artist => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(artist))))
+		@Html.DataRowList("PVs", Model.ComparedEvents, d => DataFormatUtils.GenerateHtml(d.PVs, pv => Html.Partial("Partials/ArchivedEntry/_PVInfo", new PVInfoViewModel(pv))))
+		@Html.DataRow("Song list", Model.ComparedEvents, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.SongList)))
+	</table>
+
+</div>

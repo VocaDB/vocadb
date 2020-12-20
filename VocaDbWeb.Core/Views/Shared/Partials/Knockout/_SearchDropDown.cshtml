@@ -1,0 +1,18 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Knockout
+@model SearchDropDownViewModel
+
+<div data-bind="visible: @Model.VisibleBinding, with: @Model.ViewModel" class="inline-block search-sort-menu">
+	@ViewRes.EntryIndexStrings.SortBy
+	<div class="btn-group">
+		<button class="btn dropdown-toggle" data-toggle="dropdown">
+			<span data-bind="text: sortName"></span>
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+			@foreach (var sortRule in Model.SortRules)
+			{
+				<li><a data-bind="click: function() { sort('@sortRule.Key'); }" href="#">@sortRule.Value</a></li>
+			}
+		</ul>
+	</div>
+</div>

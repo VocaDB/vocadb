@@ -1,0 +1,26 @@
+﻿@inherits VocaDb.Web.Code.VocaDbPage
+
+@{
+    PageProperties.Title = "Deleted albums";
+	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Albums, "Index") };
+}
+
+<input type="text" data-bind="textInput: searchTerm" maxlength="200" />
+
+@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
+
+@section BodyScripts {
+	
+	<script language="javascript">
+		
+		$(function () {
+
+			var repo = new app.AlbumRepository('@RootPath', @LanguagePreferenceInt);
+			var viewModel = new app.DeletedAlbumsViewModel(repo);
+			ko.applyBindings(viewModel);
+
+		});
+
+	</script>
+
+}

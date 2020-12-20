@@ -1,0 +1,48 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Html
+@using Res = VocaDb.Web.Resources.Views.Shared.Partials.EnglishTranslatedStringStrings
+@model VocaDb.Web.Models.Shared.EnglishTranslatedStringViewModel
+
+<!-- Viewmodel: EnglishTranslatedStringViewModel -->
+
+@{
+	void Text(string str) {
+		var maxLength = Model.MaxLength;
+		var summaryLength = Model.SummaryLength;
+		if (str == null || str.Length <= maxLength) {
+			@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(str))
+		} else {
+			<div data-bind="visible: isFullDescriptionShown()">
+				@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(str))
+			</div>
+			<div data-bind="visible: !isFullDescriptionShown()">
+				@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(str.Substring(0, summaryLength) + "..."))
+				<p><a href="" data-bind="click: showFullDescription">@Res.ShowFullDescription</a></p>
+			</div>
+		}
+	}
+}
+
+@if (Model.String.HasEnglish) {
+	<div>
+		<ul class="nav nav-pills pull-right no-margin">
+			<li data-bind="css: { active: !showTranslatedDescription() }">
+				<a data-bind="click: function() { showTranslatedDescription(false); }" href="#">
+					@Res.Original
+				</a>
+			</li>
+			<li data-bind="css: { active: showTranslatedDescription() }">
+				<a data-bind="click: function() { showTranslatedDescription(true); }" href="#">
+					@Res.Translated
+				</a>
+			</li>
+		</ul>
+		<div data-bind="visible: !showTranslatedDescription()">
+			@{ Text(Model.String.Original); }
+		</div>
+		<div data-bind="visible: showTranslatedDescription()">
+			@{ Text(Model.String.English); }
+		</div>
+	</div>
+} else {
+	Text(Model.String.Original);
+}

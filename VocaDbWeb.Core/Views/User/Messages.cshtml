@@ -1,0 +1,146 @@
+﻿@using VocaDb.Model.Domain.Users
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@using VocaDb.Web.Models.Shared.Partials.User
+@using Res = ViewRes.User.MessagesStrings
+@model VocaDb.Web.Models.User.Messages
+@inject LaravelMixHelper LaravelMixHelper
+
+@{
+	PageProperties.Title = Res.Messages;
+	ViewBag.Parents = new[] {
+		Html.ActionLink(ViewRes.SharedStrings.Users, "Index"),
+		Html.ActionLink(Model.User.Name, "Details", new { id = Model.User.Id })
+	};
+}
+
+@{
+	void MessageFolderTab(string id, string binding, bool colFrom, bool colTo, bool showUnread, bool allowDelete) {
+		<!-- UserMessageFolderViewModel -->
+		<div id="@id" data-bind="with: @binding">
+			<div class="form-horizontal pull-left" data-bind="visible: canFilterByUser()">
+				<div class="control-group">
+					<label class="control-label" data-bind="visible: inbox === @((int)UserInboxType.Received)">@Res.From</label>
+					<label class="control-label" data-bind="visible: inbox === @((int)UserInboxType.Sent)">@Res.To</label>
+					<div class="controls">
+						@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("userAutocomplete", "anotherUser"))
+					</div>
+				</div>
+			</div>
+			<button class="btn btn-danger pull-right clearfix" data-bind="click: deleteSelected">@Res.DeleteSelected</button>
+
+			<table class="table messages" data-bind="if: items().length">
+				<thead>
+					<tr>
+						<th>
+							@if (allowDelete) {
+								<input type="checkbox" data-bind="checked: selectAll" />
+							}
+						</th>
+						<th>@Res.Date</th>
+						@if (colFrom) {
+							<th>@Res.From</th>
+						}
+						@if (colTo) {
+							<th>@Res.To</th>
+						}
+						<th>@Res.Subject</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: items">
+					<tr data-bind="css: { info: selected }">
+						<td>
+							<input type="checkbox" data-bind="checked: checked" />
+						</td>
+						<td data-bind="click: $root.selectMessage"><span title="UTC" data-bind="text: created"></span></td>
+						@if (colFrom) {
+							<td data-bind="click: $root.selectMessage">@Html.Partial("Partials/User/_IconAndNameKnockout", new IconAndNameKnockoutViewModel("sender.iconUrl", "sender.name"))</td>
+						}
+						@if (colTo) {
+							<td data-bind="click: $root.selectMessage">@Html.Partial("Partials/User/_IconAndNameKnockout", new IconAndNameKnockoutViewModel("receiver.iconUrl", "receiver.name"))</td>
+						}
+						<td data-bind="click: $root.selectMessage">
+							<span data-bind="visible: highPriority" style="display: none;">
+								@Html.Partial("Partials/Shared/_NotificationIcon")
+								&nbsp;
+							</span>
+							@if (showUnread) {
+								<span data-bind="visible: !read()" style="display: none;">
+									<img src="@Url.Content("~/Content/star5.png")" alt="unread" />
+								</span>
+							}
+							<span data-bind="text: subject"></span>
+						</td>
+						<td><a data-bind="click: $parent.deleteMessage" href="#" class="btn btn-mini btn-danger">@ViewRes.SharedStrings.Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
+	
+			<h3 data-bind="visible: hasMore"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
+		</div>
+	}
+}
+
+@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(Res.MessageSendError))
+
+<div data-bind="with: selectedMessage, visible: selectedMessage" id="viewMessage" style="display: none;">
+	@{ Html.RenderPartial("Partials/_UserMessageKnockout"); }
+</div>
+
+<div id="tabs" data-bind="visible: true" style="display: none;">
+
+	<ul>
+		<li>
+			<a href="#receivedTabContent" id="receivedTab" data-bind="click: function () { receivedMessages.init(); }">
+				@Res.Received
+				<span data-bind="visible: receivedMessages.unread() > 0, text: receivedMessages.unread" class="badge badge-small badge-important" style="display: none;">!</span>
+			</a>
+		</li>
+		<li>
+			<a href="#sentTabContent" id="sentTab" data-bind="click: function () { sentMessages.init(); }">
+				@Res.Sent
+			</a>
+		</li>
+		<li>
+			<a href="#notificationsTabContent" id="notificationsTab" data-bind="click: function () { notifications.init(); }">
+				@Res.Notifications
+				<span data-bind="visible: notifications.unread() > 0, text: notifications.unread" class="badge badge-small badge-important" style="display: none;">!</span>
+			</a>
+		</li>
+		<li><a href="#composeTab">@Res.Compose</a></li>
+	</ul>
+
+	@{ MessageFolderTab("receivedTabContent", "receivedMessages", true, false, true, false); }
+	@{ MessageFolderTab("sentTabContent", "sentMessages", false, true, false, false); }
+	@{ MessageFolderTab("notificationsTabContent", "notifications", false, false, true, true); }
+
+	<div id="composeTab">
+		@{ Html.RenderPartial("ComposeMessage"); }
+	</div>
+
+</div>
+
+@section BodyScripts {
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/edit.js")"></script>
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/User/Messages.js")"></script>
+	<script type="text/javascript">
+
+		$(function () {
+
+			$("#tabs").tabs();
+
+			var urlMapper = new app.UrlMapper('@RootPath');
+			var repository = new app.UserRepository(urlMapper);
+			var receiverName = @ToJS(Model.ReceiverName);
+			var viewModel = new app.UserMessagesViewModel(repository, @UserContext.LoggedUserId, @((int)Model.Inbox), @ToJS(Model.SelectedMessageId), receiverName);
+			viewModel.messageSent = function () {
+				app.ui.showSuccessMessage(@ToJS(Res.MessageSent));
+			};
+			ko.applyBindings(viewModel);
+
+		});
+
+	</script>
+}

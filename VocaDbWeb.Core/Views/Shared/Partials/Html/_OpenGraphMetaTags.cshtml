@@ -1,0 +1,9 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Html
+@model OpenGraphMetaTagsViewModel
+
+@{
+	@Html.Partial("Partials/Html/_MetaTag", new MetaTagViewModel("og:url", Model.PageProperties.CanonicalUrl))
+	@Html.Partial("Partials/Html/_MetaTag", new MetaTagViewModel("og:title", Model.PageProperties.OpenGraph.Title))
+	@Html.Partial("Partials/Html/_MetaTag", new MetaTagViewModel("og:description", Model.PageProperties.OpenGraph.Description))
+	@Html.Partial("Partials/Html/_MetaTag", new MetaTagViewModel("og:type", Model.PageProperties.OpenGraph.Type))
+}

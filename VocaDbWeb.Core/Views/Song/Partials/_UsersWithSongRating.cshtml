@@ -1,0 +1,29 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.User
+
+<!-- RatingsViewModel -->
+
+<div data-bind="visible: showFavorites">
+	<h4>
+		@ViewRes.Song.DetailsStrings.FavoritedByTitle
+		<span data-bind="text: '@(ViewRes.EntryDetailsStrings.NumTotalParenthesis)'.replace('{0}', favoritesCount())"></span>
+	</h4>
+	<ul class="link-list" data-bind="foreach: favorites">
+		<li class="link-item user-with-rating">
+			@Html.Partial("Partials/User/_IconAndNameLinkKnockout", new IconAndNameLinkKnockoutViewModel())
+		</li>
+	</ul>
+</div>
+
+<div data-bind="visible: showLikes" class="withMargin">
+	<h4>
+		@ViewRes.Song.DetailsStrings.LikedByTitle
+		<span data-bind="text: '@(ViewRes.EntryDetailsStrings.NumTotalParenthesis)'.replace('{0}', likesCount())"></span>
+	</h4>
+	<ul class="link-list" data-bind="foreach: likes">
+		<li class="link-item user-with-rating">
+			@Html.Partial("Partials/User/_IconAndNameLinkKnockout", new IconAndNameLinkKnockoutViewModel())
+		</li>
+	</ul>
+</div>
+
+<h4 data-bind="visible: hiddenRatingsCount, text: hiddenRatingsCount() + ' hidden ratings'" class="withMargin"></h4>

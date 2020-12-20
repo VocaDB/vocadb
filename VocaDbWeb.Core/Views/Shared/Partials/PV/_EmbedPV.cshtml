@@ -1,0 +1,65 @@
+﻿@using VocaDb.Model.Domain.PVs
+@using VocaDb.Model.Service.VideoServices
+@using VocaDb.Web.Models.Shared.Partials.PV
+@model EmbedPVViewModel
+
+@{
+	var widthStr = (Model.Width > 0 ? Model.Width.ToString() : "");
+	var heightStr = (Model.Height > 0 ? Model.Height.ToString() : "");
+	Model.Id = Model.Id ?? string.Empty;
+}
+
+@switch (Model.PV.Service)
+{
+	case PVService.Bandcamp:
+		<iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=@(Model.PV.PVId)/transparent=true/" seamless></iframe>
+		break;
+
+	case PVService.Bilibili:
+		@Html.Partial("Partials/PV/_EmbedBili", new EmbedBiliViewModel(Model.PV, Model.Width, Model.Height))
+		break;
+
+	case PVService.File:
+	case PVService.LocalFile:
+		if (LocalFileManager.IsAudio(Model.PV.Url))
+		{
+			<audio id="@Model.Id" controls controlsList="nodownload" src="@Model.PV.Url"></audio>
+		}
+		else
+		{
+			<div style="width: @(widthStr + "px"); height: @(heightStr + "px")">
+				<a href="@Model.PV.Url">
+					<img style="max-width: 100%; max-height: 100%;" src="@Model.PV.ThumbUrl" alt="@Model.PV.Name" />
+				</a>
+			</div>
+		}
+		break;
+
+	case PVService.NicoNicoDouga:
+		@Html.Partial("Partials/PV/_EmbedNico", new EmbedNicoViewModel(Model.PV.PVId, widthStr, heightStr, Model.Id, Model.EnableApi))
+		break;
+
+	case PVService.Piapro:
+		@Html.Partial("Partials/PV/_EmbedPiapro", new EmbedPiaproViewModel(Model.PV, widthStr, heightStr))
+		break;
+
+	case PVService.SoundCloud:
+		var scId = new VocaDb.Model.Service.VideoServices.SoundCloudId(Model.PV.PVId);
+		<iframe id="@Model.Id" width="@Model.Width" height="@Math.Min(Model.Height, 166)" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F@(scId.TrackId)&amp;auto_play=false&amp;show_artwork=true&amp;color=ff7700"></iframe>
+		break;
+
+	case PVService.Youtube:
+		var apParam = (Model.Autoplay ? 1 : 0);
+		var apiParam = (Model.EnableApi ? 1 : 0);
+		var originParam = (Model.EnableApi ? VocaDb.Model.Utils.VocaUriBuilder.HostAddress : string.Empty);
+		<iframe id="@Model.Id" width="@widthStr" height="@heightStr" src="https://www.youtube.com/embed/@(Model.PV.PVId)?autoplay=@apParam&enablejsapi=@apiParam&origin=@originParam" frameborder="0" wmode="Opaque" allowfullscreen></iframe>
+		break;
+
+	case PVService.Vimeo:
+		<iframe src="https://player.vimeo.com/video/@Model.PV.PVId" width="@Model.Width" height="@Model.Height" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+		break;
+
+	case PVService.Creofuga:
+		<iframe width="@widthStr" height="@Math.Min(Model.Height, 120)" scrolling="no" frameborder="no" src="https://creofuga.net/audios/player?color=black&id=@Model.PV.PVId"></iframe>
+		break;
+}

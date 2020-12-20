@@ -1,0 +1,8 @@
+﻿@using VocaDb.Model.Domain
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@model DraftIconViewModel
+
+@if (Model.Status == EntryStatus.Draft)
+{
+	<img src="@Url.Content("~/Content/draft.png")" title="@HelperRes.HelperStrings.DraftIconTitle" alt="draft" />
+}

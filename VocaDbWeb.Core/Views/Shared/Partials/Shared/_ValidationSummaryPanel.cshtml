@@ -1,0 +1,12 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Shared
+@model ValidationSummaryPanelViewModel
+
+@if (!ViewData.ModelState.IsValid)
+{
+	<div class="alert alert-error">
+		<h4>
+			@Model.Message
+		</h4>
+		@Html.ValidationSummary(false)
+	</div>
+}

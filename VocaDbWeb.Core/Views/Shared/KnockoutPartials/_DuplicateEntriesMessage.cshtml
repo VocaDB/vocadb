@@ -1,0 +1,17 @@
+﻿<!-- 
+	Shows a message for duplicate instances of an entry.
+	Binding context: KnockoutObservableArray<dc.DuplicateEntryResultContract>
+-->
+<div class="alert" style="display:none" data-bind="visible: dupeEntries() && dupeEntries().length > 0">
+	@Html.Partial("Partials/Shared/_NotificationIcon")
+	@ViewRes.EntryCreateStrings.FoundPossibleDuplicates
+	<ul data-bind="foreach: dupeEntries">
+		<li>
+			<a data-bind="text: entry.name.displayName, attr: { href: app.EntryUrlMapper.details_entry(entry) }, entryToolTip: entry"></a> 
+			(<span data-bind="text: entry.entryTypeName"></span>)
+			<div data-bind="if: entry.artistString">
+				<span data-bind="text: entry.artistString"></span>
+			</div>
+		</li>
+	</ul>
+</div>

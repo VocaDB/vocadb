@@ -1,0 +1,92 @@
+﻿@using VocaDb.Model.Domain.Globalization
+@using VocaDb.Model.Domain.Security
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@using VocaDb.Web.Models.Shared.Partials.User
+@using Res = ViewRes.Album.DetailsStrings
+@inherits VocaDb.Web.Code.VocaDbPage
+
+<!-- Viewmodel: AlbumReviewsViewModel -->
+
+@if (UserContext.HasPermission(PermissionToken.CreateComments)) {
+	<button data-bind="visible: !showCreateNewReview(), click: function() { showCreateNewReview(true); }" class="btn create-topic">
+		<i class="icon-comment"></i>
+		@Res.ReviewWrite
+	</button>
+} else {
+	<div class="alert alert-info">@Res.ReviewLoginToReview</div>
+}
+
+<form visible="{{showCreateNewReview}}" submit="{{createNewReview}}">
+	<div>
+		<label>@Res.ReviewLanguage</label>
+		@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull("Choose"), "languageCode", cssClass: "input-xlarge", required: true))
+
+		<div class="alert alert-danger" visible="{{reviewAlreadySubmitted}}">
+			@Res.ReviewAlreadySubmitted
+		</div>
+
+		<label>@Res.ReviewTitle</label>
+		<input data-bind="textInput: newReviewTitle" type="text" class="input-xlarge" maxlength="200"/>
+
+		<label>@Res.ReviewText</label>
+		@Html.Partial("Partials/Shared/_MarkdownNotice")<br />
+		<textarea data-bind="textInput: newReviewText" class="input-xxlarge" cols="100" rows="6" maxlength="4000" minlength="50" required></textarea>
+		
+		<div>
+			<label>@Res.ReviewPreview</label>
+			<div data-bind="markdown: newReviewText"></div>
+		</div>
+	</div>
+
+	<button type="submit" class="btn btn-primary" enabled="{{ !reviewAlreadySubmitted() }}">@Res.ReviewPost</button>
+</form>
+
+<div data-bind="foreach: reviews" class="album-reviews">
+	<div class="album-review media">
+		@Html.Partial("Partials/User/_IconAndLinkKnockout", new IconAndLinkKnockoutViewModel("user", "pull-left"))
+
+		<div class="media-body">
+			<div class="pull-right">
+				<img src="{{ '@Url.StaticResource("/img/languageFlags/")' + languageCode() + '.png' }}" title="{{languageCode}}" alt="{{languageCode}}"/>
+				|
+				<span data-bind="timeAgo: date"></span>
+				
+				<!-- ko if: $data.canBeEdited -->
+				&nbsp;&nbsp;
+				<a data-bind="click: function() { $parent.beginEditReview($data); }" href="#" class="textLink editLink">@ViewRes.SharedStrings.Edit</a>
+				<!-- /ko -->
+
+				<!-- ko if: $data.canBeDeleted -->
+				&nbsp;&nbsp;
+				<a data-bind="confirmClick: { message: 'Are you sure you want to delete this review?', click: function() { $parent.deleteReview($data) } }" href="#" class="textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
+				<!-- /ko -->
+			</div>
+			<h3 class="media-heading">
+				@Html.Partial("Partials/User/_NameLinkKnockout", new NameLinkKnockoutViewModel("user"))
+			</h3>
+			
+			<span data-bind="foreach: $parent.ratingStars($parent.getRatingForUser(user.id))">
+				<img data-bind="attr: { src: enabled ? '/Content/star.png' : '/Content/star_disabled.png' }" />
+			</span>
+			
+			<div data-bind="visible: $parent.editReviewModel() !== $data">
+				<h4 class="album-review-title" visible="{{title}}">{{title}}</h4>
+				<p data-bind="markdown: text"></p>
+			</div>
+			<form data-bind="visible: $parent.editReviewModel() === $data, submit: $parent.saveEditedReview">
+				
+				<input data-bind="textInput: editedTitle" type="text" class="input-xlarge" maxlength="200" placeholder="Title" />
+				<br />
+
+				<textarea data-bind="textInput: editedText" rows="6" cols="100" maxlength="4000" class="input-xxlarge" placeholder="Review" required></textarea>
+				
+				<br />
+				<button type="submit" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
+				<button data-bind="click: $parent.cancelEditReview" class="btn">@ViewRes.SharedStrings.Cancel</button>
+			</form>
+
+			
+		</div>
+	</div>
+</div>

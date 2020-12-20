@@ -1,0 +1,34 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.PV
+@model VocaDb.Model.DataContracts.Songs.SongWithPVAndVoteContract
+@inject PVHelper PVHelper
+
+<input type="hidden" class="js-songId" value="@Model.Id" />
+<h4 class="pvViewer-title">
+	<span id="songPreviewName" class="pvViewer-songName" title="@Model.AdditionalNames">
+		@Html.ActionLink(Model.Name, "Details", "Song", new { id = Model.Id }, null)
+	</span>
+    &nbsp;
+    <small id="songPreviewArtists" class="pvViewer-artists">
+		@Model.ArtistString
+        (@Translate.SongTypeNames[Model.SongType])
+	</small>
+</h4>
+<span class="pvViewer-translatedNames">@Model.AdditionalNames</span>
+<!-- PVRatingButtonsViewModel -->
+<div class="pull-right js-cloak" id="rating-bar" data-song-id="@Model.Id" data-rating="@Model.Vote" data-bind="show">
+	<span class="ratingButtons" data-bind="visible: !isRated()">
+		<a href="#" data-bind="click: setRating_like, css: { disabled: @ToJS(!UserContext.IsLoggedIn) || ratingInProgress }" class="btn btn-inverse">@ViewRes.Song.DetailsStrings.Like</a>
+		<a href="#" data-bind="click: setRating_favorite, css: { disabled: @ToJS(!UserContext.IsLoggedIn) || ratingInProgress }" class="btn btn-inverse">@ViewRes.Song.DetailsStrings.AddToFavorites</a>
+	</span>
+	<a href="#" data-bind="click: setRating_nothing, visible: isRated, css: { disabled: @ToJS(!UserContext.IsLoggedIn) || ratingInProgress }" class="btn btn-inverse ratingButtons">
+		@ViewRes.Song.DetailsStrings.RemoveFromFavorites
+	</a>	
+</div> 
+<div class="pv-embed-wrapper">
+	@Html.Partial("Partials/PV/_EmbedPV", new EmbedPVViewModel(PVHelper.PrimaryPV(Model.PVs), 560, 340))
+</div>
+<a class="btn btn-info songInfoButton pull-right" href="@Url.Action("Details", "Song", ViewHelper.GetRouteParams(Model))">
+	<i class="icon icon-info-sign"></i>
+	@ViewRes.Home.IndexStrings.ViewSongInfo
+</a>

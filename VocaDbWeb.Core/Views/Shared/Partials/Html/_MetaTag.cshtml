@@ -1,0 +1,7 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Html
+@model MetaTagViewModel
+
+@if (!string.IsNullOrEmpty(Model.Content))
+{
+	<meta name="@Model.Name" content="@Model.Content" />
+}

@@ -1,0 +1,125 @@
+﻿@using VocaDb.Model.Domain
+@using VocaDb.Web.Helpers
+@using VocaDb.Model.Utils.Search
+@using VocaDb.Web.Models.Shared.Partials.Activityfeed
+@using VocaDb.Web.Models.Shared.Partials.Album
+@using VocaDb.Web.Models.Shared.Partials.Comment
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@using Res = ViewRes.Home.IndexStrings
+@model VocaDb.Model.DataContracts.UseCases.FrontPageContract
+@inject LaravelMixHelper LaravelMixHelper
+@inject PVHelper PVHelper
+
+@{
+	ViewBag.DisplaySocialLinks = true;
+	ViewBag.ShowTwitterTimeline = true;
+	var br = BrandableStrings.Home;
+}
+
+<h1 class="page-title home-title">
+	@br.Welcome
+	<small>@br.WelcomeSubtitle</small>
+</h1>
+
+@if (Model.NewSongs.Any()) {
+<h3 class="withMargin">@Res.RecentSongs (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null))</h3>
+    
+<div class="pvPlayer">
+	<div class="scrollable-navi">
+		<a class="prev scrollable-browse-up disabled"></a>
+		<div class="scrollable scrollable-vertical" id="songs-navi">
+			<div class="scrollable-items">
+				@for (var i = 0; i * 4 < Model.NewSongs.Length; ++i) {
+				<div>
+					@foreach (var song in Model.NewSongs.Skip(i * 4).Take(4)) {
+						<div class="scrollable-item alignTop" id="@("#songPV_" + PVHelper.PrimaryPV(song.PVs).Id)">
+							<input type="hidden" class="js-songId" value="@song.Id" />
+							@if (!string.IsNullOrEmpty(song.ThumbUrl)) {
+								<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin" />
+							}
+							<strong class="songName">@song.Name</strong>
+							<span class="songArtists">@song.ArtistString</span>
+						</div>
+					}
+				</div>
+				}
+			</div>
+		</div>	
+		<a class="next scrollable-browse-down"></a>    
+	</div>
+
+	<div id="songPreview" class="pvViewerContent" data-bind="stopBinding">
+		@{ Html.RenderPartial("PVs/_PVContent", Model.FirstSong); }
+	</div>
+</div>
+}
+
+<br />
+
+@if (Model.NewAlbums.Any()) {
+	<h3 class="withMargin">@Res.NewAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
+	<div id="newAlbums">
+		@Html.Partial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.NewAlbums))
+	</div>	
+}
+
+@if (Model.TopAlbums.Any()) {
+	<h3 class="withMargin">@Res.TopAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
+	<div id="topAlbums">
+		@Html.Partial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.TopAlbums))
+	</div>	
+}
+	
+@if (Model.NewEvents.Any()) {
+	<h3 class="withMargin">@Res.RecentEvents</h3>
+	@Html.Partial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model.NewEvents))
+}
+
+@{ Html.RenderPartial("Partials/_NewsItems"); }
+
+<div class="row-fluid">
+    <div class="span7">
+        <h3 class="withMargin">@Res.RecentActivity (@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry"))</h3>
+
+        @foreach (var entry in Model.ActivityEntries) {
+			@Html.Partial("Partials/Activityfeed/_ActivityEntry", new ActivityEntryViewModel(entry))
+		}
+		
+		@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry")
+    </div>
+    <div class="span5">
+        <h3 class="withMargin">@ViewRes.Comment.IndexStrings.RecentComments (@Html.ActionLink(Res.ViewMore, "Index", "Comment"))</h3>
+            
+        @foreach (var comment in Model.RecentComments) {
+			@Html.Partial("Partials/Comment/_CommentWithEntryVertical", new CommentWithEntryVerticalViewModel(comment, 400))
+		}
+		
+		@Html.ActionLink(Res.ViewMore, "Index", "Comment")
+    </div>
+</div>
+
+@section Head {
+	<link rel="alternate" type="application/rss+xml" title="RSS" href='@Url.Action("LatestVideos", "Song")'>
+	<link rel="canonical" href="@UrlMapper.HostAddress" />
+}
+
+@section BodyScripts {
+    
+    <script type="text/javascript">
+        vdb.resources.song = {
+            thanksForRating: '@Html.Raw(AjaxRes.SongStrings.ThanksForRating)'
+        };
+    </script>
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/Home/Index.js")"></script>
+
+    <script type="text/javascript">
+    	$(function () {
+
+    		var viewModel = new app.NewsListViewModel('@Config.SiteSettings.BlogUrl');
+			ko.applyBindings(viewModel);
+
+			app.initHomeIndexPage();
+
+    	});
+    </script>
+}

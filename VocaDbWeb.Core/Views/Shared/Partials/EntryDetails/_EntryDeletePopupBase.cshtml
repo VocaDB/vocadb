@@ -1,0 +1,24 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.EntryDetails
+@model EntryDeletePopupBaseViewModel
+
+<!-- Viewmodel: DeleteEntryViewModel -->
+<div style="display:none;" title="@Model.Title"
+	 data-bind="
+		dialog: {
+			autoOpen: false, width: 310, modal: true,
+			position: { my: 'left top', at: 'left bottom', of: $('#@Model.DeleteButtonId') }
+		},
+		dialogVisible: @(Model.ViewModelBindingName).dialogVisible,
+		dialogButtons: [
+			{ text: '@Model.DeleteButtonText', click: @(Model.ViewModelBindingName).deleteEntry, disabled: !@(Model.ViewModelBindingName).isValid() },
+			{ text: '@ViewRes.SharedStrings.Cancel', click: function() { @(Model.ViewModelBindingName).dialogVisible(false); } }
+		]
+		">
+
+	<p>
+		@Model.ConfirmText
+	</p>
+
+	<textarea data-bind="textInput: @(Model.ViewModelBindingName).notes, attr: { required: @(Model.ViewModelBindingName).notesRequired }" class="input-xlarge" maxlength="200"></textarea>
+
+</div>

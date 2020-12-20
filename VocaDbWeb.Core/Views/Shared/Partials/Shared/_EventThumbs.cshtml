@@ -1,0 +1,52 @@
+﻿@using VocaDb.Model.Domain.Images
+@using VocaDb.Model.Domain.ReleaseEvents
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Event
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@model EventThumbsViewModel
+
+@{
+	var css = Model.ImageSize == ImageSize.SmallThumb ? "event-teaser" : "event-teaser-tiny";
+}
+
+<div class="clearfix">
+	@foreach (var ev in Model.Events)
+	{
+		var cat = ev.Series != null ? ev.Series.Category : ev.Category;
+		<div class="well well-transparent @css">
+			@if (ev.MainPicture != null)
+			{
+				<a href="@Url.EntryDetails(ev, ev.UrlSlug)" class="event-image pull-left" title="@ev.AdditionalNames">
+					<img class="media-object" src="@ev.MainPicture.GetSmallestThumb(Model.ImageSize)" alt="Thumb" />
+				</a>
+			}
+			<div>
+				<a href="@Url.EntryDetails(ev, ev.UrlSlug)" title="@ev.AdditionalNames">
+					@ev.Name
+				</a>
+				@if (cat != EventCategory.Unspecified && cat != EventCategory.Other)
+				{
+					@:(@Translate.ReleaseEventCategoryNames[cat])
+				}
+				@if (ev.Date.HasValue)
+				{
+					<br />
+					<small class="extraInfo">
+						@(ev.Date.Value.ToShortDateString())
+						@if (ev.EndDate.HasValue)
+						{
+							@:- @ev.EndDate.Value.ToShortDateString()
+						}
+					</small>
+				}
+				@if (ev.HasVenueOrVenueName)
+				{
+					<br />
+					<small class="extraInfo">
+						@Html.Partial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev))
+					</small>
+				}
+			</div>
+		</div>
+	}
+</div>

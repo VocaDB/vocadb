@@ -1,0 +1,13 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+@model WebLinkInfoViewModel
+
+@if (!string.IsNullOrEmpty(Model.Link.Description))
+{
+	@Model.Link.Description<text>: </text>
+}
+<a href="@VocaDb.Model.Service.Helpers.UrlHelper.MakeLink(Model.Link.Url)">@Model.Link.Url</a>
+@(" (")@Model.Link.Category@(")")
+@if (Model.Link.Disabled)
+{
+	@:(unavailable)
+}

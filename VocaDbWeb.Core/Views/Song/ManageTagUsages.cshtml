@@ -1,0 +1,14 @@
+﻿@using VocaDb.Model.Domain
+@using VocaDb.Web.Models.Shared.Partials.Tag
+@model VocaDb.Model.DataContracts.UseCases.EntryWithTagUsagesContract
+
+@{
+    PageProperties.Title = "Manage tag usages - " + Model.DefaultName;
+	ViewBag.Parents = new[] { 
+		Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null), 
+		Html.ActionLink(Model.DefaultName, "Details", new { id = Model.Id }) 
+	};	
+}
+
+
+@Html.Partial("Partials/Tag/_TagUsagesManageTable", new TagUsagesManageTableViewModel(EntryType.Song, Model.TagUsages, Model.CanRemoveTagUsages))

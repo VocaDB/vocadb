@@ -1,0 +1,51 @@
+﻿@using VocaDb.Model.Domain.Security
+@using VocaDb.Web.Helpers
+@inherits VocaDb.Web.Code.VocaDbPage
+@inject LaravelMixHelper LaravelMixHelper
+
+@{
+	PageProperties.Title = "Discussions";
+}
+
+<link rel="stylesheet" href="@Url.Content("~/Content/Styles/discussions.css")" />
+
+<div id="discussions" class="js-cloak" data-bind="show">
+	<!-- binding context: DiscussionIndexViewModel -->
+
+	<ul class="breadcrumb" data-bind="visible: selectedFolder()">
+		<li>
+			<a href="@Url.Action("Index", "Discussion", new { clientPath = "" })">@ViewRes.Discussion.IndexStrings.Discussions</a>
+			<span data-bind="visible: selectedTopic()" class="divider">/</span>
+		</li>
+		<li>
+			<a href="#" data-bind="visible: selectedTopic(), attr: { href: '/discussion/folders/' + (selectedFolder() != null ? selectedFolder().id : '') }, text: selectedFolder() != null ? selectedFolder().name : ''"></a>
+		</li>
+	</ul>
+
+	@{ Html.RenderPartial("Partials/_ViewFolders"); }
+
+	@{ Html.RenderPartial("Partials/_ViewFolder"); }
+
+	@{ Html.RenderPartial("Partials/_ViewTopic"); }
+</div>
+
+@section BodyScripts {
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/Discussion/Index.js")"></script>
+	<script type="text/javascript">
+
+		$(function () {
+
+			moment.locale('@Culture');
+
+			ko.punches.enableAll();
+
+			var urlMapper = new app.UrlMapper('@RootPath');
+			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+			var repo = repoFactory.discussionRepository();
+			ko.applyBindings(new app.DiscussionIndexViewModel(repo, urlMapper, canDeleteAllComments, @UserContext.LoggedUserId));
+
+		});
+
+	</script>
+}

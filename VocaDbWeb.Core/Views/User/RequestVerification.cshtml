@@ -1,0 +1,87 @@
+﻿@using VocaDb.Web.Helpers
+@using Res = ViewRes.User.RequestVerificationStrings
+@model string
+@inject LaravelMixHelper LaravelMixHelper
+@inject Login Login
+
+@{
+    PageProperties.Title = Res.PageTitle;
+}
+
+<div class="row-fluid">
+
+	@if (!Login.Manager.IsLoggedIn) {
+		<div class="span6 alert">
+			@Html.Raw(string.Format(Res.NotLoggedInMessage, Html.ActionLink(Res.Login, "Login"), Html.ActionLink(Res.Signup, "Create")))
+		</div>
+	} else {
+	
+		<form action="@Url.Action("RequestVerification")" method="POST" class="span6 form">
+			<input type="hidden" name="selectedArtist" data-bind="value: ko.toJSON(selectedArtist)" />
+
+			<label>
+				@Res.ArtistTitle
+			</label>
+			<div data-bind="if: selectedArtist, visible: selectedArtist" style="display: none;">
+				<a data-bind="text: selectedArtist().name, attr: { href: app.EntryUrlMapper.details('Artist', selectedArtist().id) }" href="#"></a>
+				<button data-bind="click: clearArtist" class="btn btn-mini btn-danger">@ViewRes.SharedStrings.Clear</button>
+			</div>
+			<div data-bind="ifnot: selectedArtist">
+				<input type="text" data-bind="artistAutoComplete: artistSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="input-xlarge" required />				
+			</div>
+				
+			<br />
+			<label>
+				<input name="privateMessage" type="radio" data-bind="checked: privateMessage, value: false"/>
+				@Res.NoPrivateMessage
+			</label>
+			<label>
+				<input name="privateMessage" type="radio" data-bind="checked: privateMessage, value: true"/>
+				@Res.PrivateMessage
+			</label>
+			
+			<div data-bind="if: !privateMessage()">
+				<label>
+					@Res.URL
+				</label>
+				<div class="inline input-prepend">
+					<span class="add-on" title="URL">
+						<i class="icon-globe"></i>
+					</span>
+					<input name="linkToProof" type="text" class="input-xlarge" maxlength="255" required />
+				</div>
+			</div>
+	
+			<br />
+			<label>
+				@Res.MessageTitle
+			</label>
+			<textarea name="message" class="span11" cols="50" rows="10">@Model</textarea>
+
+			<br />
+			<button class="btn btn-primary">@Res.Send</button>
+
+		</form>	
+	
+	}
+
+	<div class="span4 alert alert-info">
+		@Html.Raw(BrandableStrings.User.RequestVerificationInfo)
+	</div>
+
+</div>
+
+@section BodyScripts {
+
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/edit.js")"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			var repoFactory = new app.RepositoryFactory(new app.UrlMapper('@RootPath'), @LanguagePreferenceInt);
+			var artistRepo = repoFactory.artistRepository();
+			ko.applyBindings(new app.RequestVerificationViewModel(artistRepo));
+		});
+
+	</script>
+		
+}

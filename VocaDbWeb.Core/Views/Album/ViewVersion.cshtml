@@ -1,0 +1,81 @@
+﻿@using VocaDb.Web.Code
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Album
+@using VocaDb.Web.Models.Shared.Partials.Album
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails
+@model VocaDb.Model.DataContracts.Albums.ArchivedAlbumVersionDetailsContract
+@inject Login Login
+
+@{
+	
+    PageProperties.Title = "Revision " + Model.ArchivedVersion.Version + " for " + Model.Name;
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+	
+	if (Model.Album != null) {
+		ViewBag.Parents = new[] {
+			Html.ActionLink("Albums", "Index"),
+			Html.ActionLink(Model.Album.Name, "Details", new { id = Model.Album.Id }),
+			Html.ActionLink("Revisions", "Versions", new { id = Model.Album.Id })
+		};
+	} else {
+		ViewBag.Parents = new[] {
+			Html.ActionLink("Albums", "Index")
+		};
+	}
+
+}
+
+@section Toolbar {
+@if (Login.CanRevertEntryVersions && Model.CanBeReverted) {
+	@Html.ActionLink(ViewRes.ViewVersionStrings.RevertToVersion, "RevertToVersion", new { archivedAlbumVersionId = Model.ArchivedVersion.Id }, new { id = "revertLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmRevertToVersion) })
+}
+&nbsp;
+<a href="@Url.Action("ArchivedVersionXml", new { id = Model.ArchivedVersion.Id })" id="downloadXmlLink">Download XML</a>
+<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
+@if (Login.CanViewHiddenRevisions) {
+	if (Model.ArchivedVersion.Hidden) {
+		@Html.ActionLink(ViewRes.ViewVersionStrings.UnhideVersion, "UpdateVersionVisibility", new { archivedVersionId = Model.ArchivedVersion.Id, hidden = false }, new { id = "showLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmUnhide) })
+	} else {
+		@Html.ActionLink(ViewRes.ViewVersionStrings.HideVersion, "UpdateVersionVisibility", new { archivedVersionId = Model.ArchivedVersion.Id, hidden = true }, new { id = "hideLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmHide) })
+	}
+}
+}
+
+@if (Model.ArchivedVersion.Hidden) {
+	@Html.Partial("Partials/EntryDetails/_HiddenBanner")
+}
+
+@if (Model.ComparableVersions.Any()) {
+	using (Html.BeginForm("ViewVersion", "Album", FormMethod.Post, new { @class = "form form-inline" })) {
+		@:Compare to: @Html.DropDownListFor(m => m.ComparedVersionId, ViewHelper.CreateSelectList(Model.ComparableVersions, i => i.Id, i => i.Version + " (" + Versions.GetChangeString(i.ChangedFields) + " by " + i.AgentName + ")", Model.ComparedVersionId), new { @class = "input-xlarge", onchange = "$(this).closest('form').submit();" })
+		<button type="submit" class="btn btn-primary">Compare</button>
+	}
+}
+
+@Html.Partial("Partials/ArchivedEntry/_ArchivedObjectVersionProperties", new ArchivedObjectVersionPropertiesViewModel(Versions.CreateForAlbum(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForAlbum(Model.ComparedVersion) : null))
+
+@Html.Partial("Partials/Album/_PrintArchivedAlbumData", new PrintArchivedAlbumDataViewModel(Model.Versions))
+
+@Html.Partial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel())
+
+@section BodyScripts {
+    <script type="text/javascript">
+
+		$(function () {
+
+            $("#revertLink").button({ icons: { primary: 'ui-icon-arrowrefresh-1-w'} });
+            $("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
+			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert' } });
+			$("#showLink").button({ icons: { primary: 'ui-icon-unlocked' } });
+			$("#hideLink").button({ icons: { primary: 'ui-icon-locked' } });
+
+            var rep = new app.AlbumRepository('@RootPath', @LanguagePreferenceInt);
+
+            var viewModel = new app.ArchivedAlbumViewModel(@Model.Album.Id, @Model.ArchivedVersion.Version, rep);
+            ko.applyBindings(viewModel);
+
+        });
+
+    </script>
+}

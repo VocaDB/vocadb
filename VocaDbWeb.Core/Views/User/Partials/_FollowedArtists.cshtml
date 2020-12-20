@@ -1,0 +1,70 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Artist
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+
+<div class="form-horizontal well well-transparent" data-bind="visible: true" style="display: none;">
+	
+	<div class="control-group">
+		<div class="control-label">@ViewRes.Search.IndexStrings.ArtistType</div>
+		<div class="controls">
+			@Html.Partial("Partials/Artist/_ArtistTypesDropdownKnockout", new ArtistTypesDropdownKnockoutViewModel("artistType"))
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@ViewRes.SharedStrings.Tag</div>
+		<div class="controls" data-bind="with: tagFilters">
+			@{ Html.RenderPartial("Partials/_TagFilters"); }
+			<div>
+				<input type="text" class="input-large" data-bind="tagAutoComplete: addTag" placeholder="@ViewRes.SharedStrings.Search" />
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+<div data-bind="css: { loading: loading }, visible: true" style="display: none;">
+
+	<div data-bind="with: paging" class="dropdown pull-right">
+		@Html.Partial("Partials/Knockout/_EntryCount")
+	</div>
+
+	<div data-bind="with: paging">
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+	</div>
+
+	<table class="table table-striped" data-bind="css: { loading: loading }">
+		<thead>
+			<tr>
+				<th colspan="2">
+					@ViewRes.SharedStrings.ArtistName
+				</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: page">
+			<tr data-bind="with: artist">
+				<td style="width: 80px">
+					<a data-bind="visible: $data.mainPicture && mainPicture.urlTinyThumb, attr: { href: app.EntryUrlMapper.details('Artist', id), title: $data.additionalNames }" href="#" class="coverPicThumb">
+						<img data-bind="attr: { src: ($data.mainPicture ? mainPicture.urlTinyThumb : '') }" title="Cover picture" class="coverPicThumb img-rounded" />
+					</a>
+				</td>
+				<td>
+					<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details('Artist', id) }" href="#"></a>
+					&nbsp;
+					<span data-bind="artistTypeLabel: artistType"></span>
+					@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
+					<br />
+					<span data-bind="visible: $data.additionalNames">
+						<small class="extraInfo" data-bind="text: $data.additionalNames"></small><br />						
+					</span>
+					<small class="extraInfo" data-bind="text: $parents[1].resources().artistTypeNames[$data.artistType]"></small>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div data-bind="with: paging">
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+	</div>
+
+</div>
+

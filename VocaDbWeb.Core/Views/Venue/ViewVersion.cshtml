@@ -1,0 +1,75 @@
+﻿@using VocaDb.Web.Code
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails
+@using VocaDb.Web.Models.Shared.Partials.Venue
+@model VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.Venues.ArchivedVenueVersionDetailsContract>
+@inject Login Login
+
+@{
+
+	PageProperties.Title = "Revision " + Model.Entry.ArchivedVersion.Version + " for " + Model.Entry.Name;
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+	
+	if (Model.Entry.Venue != null) {
+		ViewBag.Parents = new[] {
+			Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenue", "Event"),
+			Html.ActionLink(Model.Entry.Venue.Name, "Details", new { id = Model.Entry.Venue.Id }),
+			Html.ActionLink("Revisions", "Versions", new { id = Model.Entry.Venue.Id })
+		};
+	} else {
+		ViewBag.Parents = new[] {
+			Html.ActionLink(ViewRes.SharedStrings.Venues, "EventsByVenue", "Event"),
+		};
+	}
+
+}
+
+@section Toolbar {
+	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
+	@if (Login.CanViewHiddenRevisions) {
+		if (Model.Entry.ArchivedVersion.Hidden) {
+			@Html.ActionLink(ViewRes.ViewVersionStrings.UnhideVersion, "UpdateVersionVisibility", new { archivedVersionId = Model.Entry.ArchivedVersion.Id, hidden = false }, new { id = "showLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmUnhide) })
+		} else {
+			@Html.ActionLink(ViewRes.ViewVersionStrings.HideVersion, "UpdateVersionVisibility", new { archivedVersionId = Model.Entry.ArchivedVersion.Id, hidden = true }, new { id = "hideLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmHide) })
+		}
+	}
+}
+
+@if (Model.Entry.ArchivedVersion.Hidden) {
+	@Html.Partial("Partials/EntryDetails/_HiddenBanner")
+}
+
+@if (Model.Entry.ComparableVersions.Any()) {
+	using (Html.BeginForm("ViewVersion", "Venue", FormMethod.Post, new { @class = "form form-inline" })) {
+		@:Compare to: @Html.DropDownListFor(m => m.ComparedVersionId, ViewHelper.CreateSelectList(Model.Entry.ComparableVersions, i => i.Id, i => i.Version + " (" + i.TranslateChangedFields(Model.EnumTranslations) + " by " + i.AgentName + ")", Model.Entry.ComparedVersionId), new { @class = "input-xlarge", onchange = "$(this).closest('form').submit();" })
+		<button type="submit" class="btn btn-primary">Compare</button>
+	}
+}
+
+@Html.Partial("Partials/ArchivedEntry/_ArchivedObjectVersionProperties", new ArchivedObjectVersionPropertiesViewModel(Model.Version(Model.Entry.ArchivedVersion), Model.Version(Model.Entry.ComparedVersion)))
+
+@Html.Partial("Partials/Venue/_PrintArchivedVenueData", new PrintArchivedVenueDataViewModel(Model.Entry.Versions))
+
+@Html.Partial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel())
+
+@section BodyScripts {
+	<script src="@Url.Content("~/Scripts/Repositories/VenueRepository.js")"></script>
+	<script src="@Url.Content("~/Scripts/ViewModels/ArchivedEntryViewModel.js")"></script>
+	<script type="text/javascript">
+
+		$(function () {
+
+			$("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
+			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert' } });
+			$("#showLink").button({ icons: { primary: 'ui-icon-unlocked' } });
+			$("#hideLink").button({ icons: { primary: 'ui-icon-locked' } });
+
+			var rep = new app.VenueRepository(new app.UrlMapper('@RootPath'));
+			var viewModel = new app.ArchivedEntryViewModel(@Model.Entry.Venue.Id, @Model.Entry.ArchivedVersion.Version, rep);
+			ko.applyBindings(viewModel);
+
+		});
+
+	</script>
+}

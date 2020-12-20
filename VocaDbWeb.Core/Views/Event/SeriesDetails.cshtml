@@ -1,0 +1,115 @@
+﻿@using VocaDb.Web.Code
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@using VocaDb.Web.Resources.Views.Event
+@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesDetailsContract
+@inject LaravelMixHelper LaravelMixHelper
+@inject Login Login
+
+@{
+
+	ViewBag.Parents = new[] {
+		Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index")
+	};
+
+	var descriptionHtml = MarkdownParser.GetHtml(Model.Description);
+	var descriptionStripped = MarkdownParser.GetPlainText(Model.Description);
+
+	PageProperties.Description = descriptionStripped;
+	PageProperties.Robots = Model.Deleted ? PagePropertiesData.Robots_Noindex_Follow : string.Empty;
+
+	var smallThumbUrl = Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.SmallThumb);
+	var fullImageUrl = Url.ImageThumb(Model, VocaDb.Model.Domain.Images.ImageSize.Original);
+
+}
+
+@section Toolbar {
+	@if (Login.CanManageDb && Login.CanEdit(Model)) {
+		@Html.ActionLink(ViewRes.SharedStrings.Edit, "EditSeries", new { id = Model.Id }, new { id = "editEventLink" })
+		@:
+		@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "SeriesVersions", new { id = Model.Id }, new { id = "viewVersions" })
+	}
+	@if (Login.CanManageDb) {
+		<a href="@Url.Action("Edit", new { seriesId = Model.Id != 0 ? (int?)Model.Id : null })" id="createEventLink">@ViewRes.Event.EventsBySeriesStrings.CreateEvent</a>
+	}	
+	@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
+}
+
+@if (Model.Deleted) {
+	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null))
+}
+
+<div class="media">
+	@if (!string.IsNullOrEmpty(Model.PictureMime)) {
+		<a class="pull-left" href="@fullImageUrl">
+			<img class="media-object" src="@smallThumbUrl" alt="Thumb" />
+		</a>
+	}
+	<div class="media-body">
+		@if (!string.IsNullOrEmpty(Model.Description)) {
+			<p>@Html.Raw(descriptionHtml)</p>
+		}
+	</div>
+	
+	<p>
+		@ViewRes.Event.DetailsStrings.Category:
+		@Html.ActionLink(Translate.ReleaseEventCategoryNames[Model.Category], "Index", "Search", UrlMapper.Search.Events(category: Model.Category), null)
+	</p>	
+	
+	@if (Model.WebLinks.Any()) {
+		@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.WebLinks, false))
+		<br />
+	}
+	
+	@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
+		<p>
+			@SeriesDetailsStrings.Aliases: @Model.AdditionalNames
+		</p>		
+	}
+	
+	<p>
+		<div class="inline-block">@ViewRes.SharedStrings.Tags:</div>
+		<div data-bind="with: tagUsages" class="entry-tag-usages inline-block">
+			@{ Html.RenderPartial("Partials/_TagList"); }
+		</div>
+		<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>	
+	</p>
+</div>
+
+<h3>@ViewRes.SharedStrings.ReleaseEvents</h3>
+<ul>
+	@foreach (var ev in Model.Events) {
+		<li>
+			@Html.ActionLink(ev.Name, "Details", new { id = ev.Id, slug = ev.UrlSlug })
+			@if (ev.Date != null) {
+				<small>(@ev.Date.Value.ToString("d"))</small>
+			}
+		</li>
+	}
+</ul>
+
+<div data-bind="with: tagsEditViewModel">
+	@{ Html.RenderPartial("Partials/_TagsEdit"); }
+</div>
+
+@section BodyScripts {
+<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/EventSeries/Details.js")"></script>
+<script type="text/javascript">
+	$(function () {
+		$("#editEventLink").button({ icons: { primary: 'ui-icon-wrench' } });
+		$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
+		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
+
+		var loggedUserId = @UserContext.LoggedUserId;
+		var rootPath = '@RootPath';
+		var urlMapper = new app.UrlMapper(rootPath);
+		var userRepo = new app.UserRepository(urlMapper, loggedUserId);
+		var tags = @ToJS(Model.Tags);
+
+		var vm = new app.EventSeriesDetailsViewModel(userRepo, @Model.Id, tags);
+		ko.applyBindings(vm);
+
+	});
+</script>
+}

@@ -1,0 +1,49 @@
+﻿@using VocaDb.Model.Domain.Globalization
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@using VocaDb.Web.Models.Shared.Partials.Shared
+
+<!-- LyricsForSongEditViewModel -->
+
+<div class="accordion-group">
+	<div class="accordion-heading">
+		<a class="accordion-toggle" data-toggle="collapse" data-parent="#lyricsAccordion" data-bind="click: toggleAccordion">
+			<i class="icon icon-chevron-down"></i>
+			<span data-bind="text: translationType"></span>
+			<span data-bind="visible: showLanguageSelection(), text: '(' + $parents[1].languageNames[cultureCode()] + ')'"></span>
+			<span data-bind="visible: source() || url(), text: 'from ' + (source() || url())"></span>
+		</a>
+	</div>
+	<div class="accordion-body collapse" data-bind="css: { in: isNew }">
+		<div class="accordion-inner">
+			<div>
+				<p data-bind="visible: showLanguageSelection()">
+					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(ViewRes.Song.EditStrings.LyLanguage, "If multiple languages match, select the one that best represents the lyrics. If none of the options match, select 'Other/Unknown'."))
+					@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode"))
+				</p>
+				<div>
+					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Source", "You can fill either label, URL or both"))
+					<div class="inline input-prepend">
+						<span class="add-on" title="Label">
+							<i class="icon-pencil"></i>
+						</span>
+						<input type="text" data-bind="textInput: source" class="input-large" size="45" maxlength="255" placeholder="Label" />						
+					</div>
+					<div class="inline input-prepend">
+						<span class="add-on" title="URL">
+							<i class="icon-globe"></i>
+						</span>
+						<input type="text" data-bind="textInput: url" class="input-xlarge" size="45" maxlength="500" placeholder="URL" />
+					</div>
+				</div>
+			</div>
+
+			<textarea data-bind="value: value" cols="65" rows="30" class="input-xxlarge withMargin"></textarea>
+			<br />
+
+			<a data-bind="click: $parent.remove, visible: translationType() === 'Translation'" href="#" class="textLink deleteLink">@ViewRes.SharedStrings.Delete</a>
+
+			<a data-bind="click: $parent.changeToOriginal, visible: translationType() === 'Translation' && id() && !$parent.original.id()" href="#" class="textLink editLink">Change to original</a>
+			<a data-bind="click: $parent.changeToTranslation, visible: translationType() === 'Original' && id()" href="#" class="textLink editLink">Change to translation</a>
+		</div>
+	</div>
+</div>

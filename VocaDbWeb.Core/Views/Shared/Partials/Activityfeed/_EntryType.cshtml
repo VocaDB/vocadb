@@ -1,0 +1,25 @@
+﻿@using VocaDb.Model.Domain.Activityfeed
+@using VocaDb.Web.Models.Shared.Partials.Activityfeed
+@model EntryTypeViewModel
+
+@{
+	var tr = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString(Model.Entry.EditEvent.ToString() + Model.Entry.Entry.EntryType);
+}
+
+@if (!string.IsNullOrEmpty(tr))
+{
+	<span>@tr</span>
+}
+else
+{
+	var entryTypeName = HelperRes.ActivityFeedHelperStrings.ResourceManager.GetString("Entry" + Model.Entry.Entry.EntryType);
+
+	if (Model.Entry.EditEvent == EntryEditEvent.Created)
+	{
+		<span>@string.Format(HelperRes.ActivityFeedHelperStrings.CreatedNew, entryTypeName)</span>
+	}
+	else
+	{
+		<span>@string.Format(HelperRes.ActivityFeedHelperStrings.Updated, entryTypeName)</span>
+	}
+}

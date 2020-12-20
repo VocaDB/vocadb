@@ -1,0 +1,12 @@
+﻿@using VocaDb.Model.Domain.Images
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Album
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@model AlbumThumbsViewModel
+
+<ul class="smallThumbs">
+	@foreach (var album in Model.Albums)
+	{
+		@Html.Partial("Partials/Shared/_ThumbItem", new ThumbItemViewModel(Url.Action("Details", "Album", new { id = album.Id }), Url.ImageThumb(album.MainPicture, ImageSize.SmallThumb), album.Name, album))
+	}
+</ul>

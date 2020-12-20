@@ -1,0 +1,24 @@
+﻿@using VocaDb.Web.Code
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@model StarsViewModel
+
+@functions {
+
+	string GetAbsoluteUrl(string relative)
+	{
+		return UrlMapper.FullAbsolute(relative);
+	}
+
+}
+
+@for (int i = 1; i <= Model.Max; ++i)
+{
+	if (Model.Current >= i)
+	{
+		<img src="@GetAbsoluteUrl(Url.Content("~/Content/star.png"))" alt="*" />
+	}
+	else
+	{
+		<img src="@GetAbsoluteUrl(Url.Content("~/Content/star_disabled.png"))" alt="" />
+	}
+}

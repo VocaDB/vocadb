@@ -1,0 +1,5 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.User
+@model IconAndNameLinkKnockoutViewModel
+
+@* Has to be one line because of Razor *@
+<a href="#" class="@Model.CssClass" data-bind="attr: { href: app.EntryUrlMapper.details_user_byName(name) }">@Html.Partial("Partials/User/_ProfileIconKnockout", new ProfileIconKnockoutViewModel("$data.mainPicture != null ? $data.mainPicture.urlThumb : null", Model.IconSize))<span data-bind="text: name"></span></a>

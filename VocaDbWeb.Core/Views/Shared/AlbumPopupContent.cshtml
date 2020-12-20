@@ -1,0 +1,48 @@
+﻿@using VocaDb.Model.Domain.Albums
+@using VocaDb.Web.Helpers
+@model VocaDb.Model.DataContracts.Albums.AlbumContract
+
+@{
+	void Stars(int current, int max) {
+		for (int i = 1; i <= max; ++i) {
+			if (current >= i) {
+				<img src="@UrlMapper.FullAbsolute(Url.Content("~/Content/star.png"))" alt="*" />
+			} else {
+				<img src="@UrlMapper.FullAbsolute(Url.Content("~/Content/star_disabled.png"))" alt="" />
+			}
+		}
+	}
+
+	void StarsSpan(double current, int max) {
+		<span title="@Math.Round(current, 2)">
+			@{ Stars((int)Math.Round(current, MidpointRounding.AwayFromZero), max); }
+		</span>
+	}
+}
+
+<p>
+	<strong class="popupTitle">@Model.Name</strong>
+	@if (!string.IsNullOrEmpty(Model.AdditionalNames)) {
+		<br />
+		@Model.AdditionalNames
+	}
+</p>
+
+<p>
+    @Model.ArtistString<br />
+    @if (Model.DiscType != DiscType.Unknown) {
+    @Translate.DiscTypeName(Model.DiscType)<br />
+    }
+</p>
+@if (!Model.ReleaseDate.IsEmpty) {
+<p>
+    @HelperRes.AlbumHelpersStrings.Released @Model.ReleaseDate.Formatted
+	@if (Model.ReleaseEvent != null) {
+		@:(@Model.ReleaseEvent.Name)
+	}
+</p>
+}
+@if (Model.RatingCount > 0) {
+	@* Unable to call helpers here, might need some additional initializations to RazorHelper *@
+    StarsSpan(Model.RatingAverage, 5); @("(" + Model.RatingCount + " " + ViewRes.Album.DetailsStrings.Ratings + ")")
+}

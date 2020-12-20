@@ -1,0 +1,5 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Tag
+@model TagListViewModel
+
+@Html.LinkListHtml(Model.TagNames, t => Html.Partial("Partials/Tag/_TagLink", new TagLinkViewModel(t, Model.Tooltip)))

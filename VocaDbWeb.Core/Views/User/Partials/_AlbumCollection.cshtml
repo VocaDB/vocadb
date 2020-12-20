@@ -1,0 +1,198 @@
+﻿@using VocaDb.Web.Helpers
+@using Resources
+@using VocaDb.Model.Service.Search
+@using VocaDb.Web.Models.Shared.Partials.Album
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@using VocaDb.Web.Models.Shared.Partials.Search
+@using VocaDb.Web.Resources.Domain
+@using SharedRes = ViewRes.SharedStrings
+@using Res = ViewRes.User.AlbumCollectionStrings
+
+<!-- binding context: AlbumCollectionViewModel -->
+
+<div class="form-horizontal well well-transparent" data-bind="visible: true" style="display: none;">
+
+	<div class="pull-right">
+		<div class="inline-block">
+			@ViewRes.EntryIndexStrings.SortBy
+			@Html.Partial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.AlbumSortRuleNames.ValuesAndNamesStrings, "sort", "sortName"))
+
+			<div class="btn-group">
+				<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#">
+					<i class="icon-list"></i>
+				</a>
+				<a data-bind="css: { active: viewMode() == 'Tiles' }, click: function() { viewMode('Tiles'); }" class="btn btn-nomargin" href="#">
+					<i class="icon-th"></i>
+				</a>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="control-label">
+		<i class="icon-search"></i>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<div class="input-append">
+				<input type="text" data-bind="textInput: searchTerm" class="input-xlarge" placeholder="@ViewRes.Search.IndexStrings.TypeSomething" />
+				<button class="btn btn-danger" data-bind="click: function() { searchTerm(''); }, visible: searchTerm">@SharedRes.Clear</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="control-group" data-bind="visible: publicCollection">
+		<div class="control-label">@Res.Status</div>
+		<div class="controls">
+			<button class="btn" data-bind="click: function() { collectionStatus(''); }, css: { active: collectionStatus() == '' }">
+				@Res.CollectionStatusAnything
+			</button>
+			<button class="btn" data-bind="click: function() { collectionStatus('Owned'); }, css: { active: collectionStatus() == 'Owned' }">
+				@AlbumCollectionStatusNames.Owned
+			</button>
+			<button class="btn" data-bind="click: function() { collectionStatus('Wishlisted,Ordered'); }, css: { active: collectionStatus() == 'Wishlisted,Ordered' }">
+				@Res.CollectionWishedOrOrdered
+			</button>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<div class="control-label">@ViewRes.SharedStrings.Tag</div>
+		<div class="controls">
+			<div class="input-append input-prepend">
+				<a href="#" class="btn btn-nomargin" data-bind="visible: tag, attr: { href: tagUrl() }" title="Tag information">
+					<i class="icon icon-info-sign"></i>
+				</a>
+				@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("tagAutoComplete", "tag", "tagName"))
+			</div>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<div class="control-label">@ViewRes.Search.IndexStrings.AlbumType</div>
+		<div class="controls">
+			@Html.Partial("Partials/Album/_DiscTypesDropdownKnockout", new DiscTypesDropdownKnockoutViewModel("albumType"))
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@EntryTypeNames.Artist</div>
+		<div class="controls">
+			<div style="display: inline-block;" class="input-append">
+				@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("artistAutoComplete", "artistSearchParams", textBinding: "artistName", valBinding: "artistId"))
+			</div>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@Res.ReleaseEvent</div>
+		<div class="controls">
+			<div style="display: inline-block;" class="input-append input-prepend">
+				<a href="#" class="btn btn-nomargin" data-bind="visible: !releaseEvent.isEmpty(), attr: { href: releaseEventUrl() }" title="Release event information">
+					<i class="icon icon-info-sign"></i>
+				</a>
+				@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent"))
+			</div>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<div class="control-label"></div>
+		<div class="controls">
+			@Html.Partial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.AlbumFilters))
+		</div>
+	</div>
+
+</div>
+
+<div data-bind="css: { loading: loading }, visible: true" style="display: none;">
+
+	<div data-bind="with: paging" class="dropdown pull-right">
+		@Html.Partial("Partials/Knockout/_EntryCount")
+	</div>
+
+	<div data-bind="with: paging">
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+	</div>
+
+	<!-- ko if: viewMode() == 'Details' -->
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th colspan="2">
+					<a data-bind="click: function() { sort('Name') }" href="#">
+						@Res.Album
+						<span class="sortDirection_down" data-bind="visible: sort() == 'Name'"></span>
+					</a>
+				</th>
+				<th>
+					<a data-bind="click:function() { sort('ReleaseDate') }" href="#">
+						@Res.ReleaseDate
+						<span class="sortDirection_down" data-bind="visible: sort() == 'ReleaseDate'"></span>
+					</a>
+				</th>
+				<th data-bind="visible: publicCollection">
+					@Res.Status
+				</th>
+				<th data-bind="visible: publicCollection">
+					@Res.MediaType
+				</th>
+				<th>
+					@Res.Rating
+				</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: page">
+			<tr>
+				<td style="width: 80px">
+					<a data-bind="visible: album.mainPicture && album.mainPicture.urlTinyThumb, attr: { href: app.EntryUrlMapper.details('Album', album.id), title: album.additionalNames }" href="#" class="coverPicThumb">
+						<img data-bind="attr: { src: (album.mainPicture ? album.mainPicture.urlTinyThumb : '') }" title="Cover picture" class="coverPicThumb img-rounded" />
+					</a>
+				</td>
+				<td>
+					<a data-bind="text: album.name, attr: { href: app.EntryUrlMapper.details('Album', album.id), title: album.additionalNames }" href="#"></a><br />
+					@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
+					<small class="extraInfo" data-bind="text: album.artistString"></small><br />
+					<small class="extraInfo" data-bind="text: $parent.resources().discTypeNames[album.discType]"></small>
+				</td>
+				<td class="search-album-release-date-column">
+					<span data-bind="text: album.releaseDate ? album.releaseDate.formatted : ''"></span>
+					<span data-bind="visible: album.releaseEvent">
+						<br />
+						<a data-bind="text: album.releaseEvent, click: function() { $parent.releaseEventName(album.releaseEvent); }" href="#"></a>
+					</span>
+				</td>
+				<td data-bind="visible: $parent.publicCollection">
+					<span data-bind="text: $parent.resources().albumCollectionStatusNames[$data.purchaseStatus]"></span>
+				</td>
+				<td data-bind="visible: $parent.publicCollection">
+					<span data-bind="text: $parent.resources().albumMediaTypeNames[$data.mediaType]"></span>
+				</td>
+				<td>
+					<span data-bind="attr: { title: rating }, foreach: $parent.ratingStars(rating)">
+						<img data-bind="attr: { src: enabled ? '/Content/star.png' : '/Content/star_disabled.png' }" />
+					</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- /ko -->
+	<!-- ko if: viewMode() == 'Tiles' -->
+	<ul class="smallThumbs" data-bind="foreach: page">
+		<li>
+			<a data-bind="attr: { href: app.EntryUrlMapper.details('Album', album.id), title: album.additionalNames }" href="#">
+				<div class="pictureFrame">
+					<img data-bind="attr: { src: (album.mainPicture ? album.mainPicture.urlSmallThumb : '') }, albumToolTip: album.id" alt="Preview" class="coverPic img-rounded" />
+				</div>
+			</a>
+			<p data-bind="text: album.name"></p>
+		</li>
+	</ul>
+	<!-- /ko -->
+
+	<div data-bind="with: paging">
+		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+	</div>
+
+</div>
+

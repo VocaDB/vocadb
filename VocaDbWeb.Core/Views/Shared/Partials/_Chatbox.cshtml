@@ -1,0 +1,12 @@
+﻿@inherits VocaDb.Web.Code.VocaDbPage
+
+@*
+@if (!string.IsNullOrEmpty(Config.SiteSettings.SpotImAccId) && UserContext.ShowChatbox.Value) {
+	<a href="#" onclick="$('#spot-im-root').hide(); $(this).hide(); userRepository.updateUserSetting(null, 'ShowChatbox', false); return false;" class="chatbox-hide" title="@ViewRes.MiscStrings.HideChatbox">
+		<i class="icon-remove icon-white"></i>
+	</a>
+	<div id="spot-im-root"></div>
+	<script type="text/javascript">!function (t, o, p) { function e() { var t = o.createElement("script"); t.type = "text/javascript", t.async = !0, t.src = ("https:" == o.location.protocol ? "https" : "http") + ":" + p, o.body.appendChild(t) } t.spotId = "@Config.SiteSettings.SpotImAccId", t.spotName = "", t.allowDesktop = !0, t.allowMobile = !1, t.containerId = "spot-im-root", e() }(window.SPOTIM = {}, document, "//www.spot.im/embed/scripts/launcher.js");</script>
+}*@
+
+

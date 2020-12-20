@@ -1,0 +1,20 @@
+﻿@using VocaDb.Model.Service.VideoServices
+@using VocaDb.Web.Models.Shared.Partials.PV
+@model EmbedBiliViewModel
+
+@{
+	var meta = Model.PV.ExtendedMetadata != null ? Model.PV.ExtendedMetadata.GetExtendedMetadata<BiliMetadata>() : null;
+	var widthStr = (Model.Width > 0 ? Model.Width.ToString() : "");
+}
+
+@if (Model.Height >= 274 && Model.Width >= 480)
+{
+	var unmaskedHeight = Model.Height + 67;
+	var unmaskedHeightStr = (Model.Height > 0 ? unmaskedHeight.ToString() : "");
+	<div style="overflow:hidden; width:max-content; height:max-content"><iframe src="https://player.bilibili.com/player.html?aid=@Model.PV.PVId&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="@widthStr" height="@unmaskedHeightStr" style="margin-bottom:-38px; width:@(widthStr)px; height:@(unmaskedHeightStr)px"></iframe></div>
+}
+else
+{
+	var heightStr = (Model.Width > 0 ? Model.Width.ToString() : "");
+	<iframe src="https://player.bilibili.com/player.html?aid=@Model.PV.PVId&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="@widthStr" height="@heightStr"></iframe>
+}

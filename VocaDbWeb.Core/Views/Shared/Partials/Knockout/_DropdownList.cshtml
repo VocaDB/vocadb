@@ -1,0 +1,10 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@model DropdownListViewModel
+
+<select data-bind="value: @Model.ValueBinding" class="@Model.CssClass" @Html.ConditionalAttribute(Model.Required, "required", string.Empty)>
+	@foreach (var item in Model.Items)
+	{
+		<option value="@item.Key">@item.Value</option>
+	}
+</select>

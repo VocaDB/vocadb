@@ -1,0 +1,58 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Tag
+@using VocaDb.Web.Models.Shared.Partials.User
+@model TagUsagesManageTableViewModel
+@inject Login Login
+
+<div class="alert">
+	You can use this to deassociate tags that are no longer valid for this entry. Be careful, this cannot be undone.
+</div>
+
+@if (Model.TagUsages.Any())
+{
+	<table>
+		<thead>
+			<tr>
+				<th>Tag</th>
+				<th>Count</th>
+				@if (Login.CanManageUsers)
+				{
+					<th>Votes</th>
+				}
+				<th>Date</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var usage in Model.TagUsages)
+			{
+				<tr>
+					<td>@Html.Partial("Partials/Tag/_TagLink", new TagLinkViewModel(usage.Tag))</td>
+					<td>@usage.Count</td>
+					@if (Login.CanManageUsers)
+					{
+						<td>
+							@foreach (var user in usage.Votes)
+							{
+								@Html.Partial("Partials/User/_UserIconLink_UserContract", new UserIconLink_UserContractViewModel(user))<br />
+							}
+						</td>
+					}
+					<td>
+						@usage.Date.ToShortDateString()
+					</td>
+					<td>
+						@if (Model.CanRemove)
+						{
+							@Html.ActionLink("Remove tag usage", "RemoveTagUsage", Model.ControllerName ?? Model.EntryType.ToString(), new { id = usage.Id }, new { @class = "removeLink textLink", @onclick = "javascript: return confirm('Really delete?');" })
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	@:No tags
+}

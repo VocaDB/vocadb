@@ -1,0 +1,26 @@
+﻿@using VocaDb.Web.Helpers
+@inject LaravelMixHelper LaravelMixHelper
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>QUnit Tests for VocaDB</title>
+	<link rel="stylesheet" href="@Url.Content("~/Content/qunit-1.19.0.css")" type="text/css" />
+</head>
+<body>
+	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
+
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/libs.js")"></script>
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/VocaDB.js")"></script>
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/common.js")"></script>
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/main.js")"></script>
+	<script src="@Url.Content("~/Scripts/Libraries/qunit-1.19.0.js")"></script>
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/tests.js")"></script>
+</body>
+</html>

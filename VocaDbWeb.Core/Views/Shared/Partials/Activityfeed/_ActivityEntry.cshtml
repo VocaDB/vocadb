@@ -1,0 +1,46 @@
+﻿@using VocaDb.Web.Code
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Activityfeed
+@using VocaDb.Web.Models.Shared.Partials.User
+@model ActivityEntryViewModel
+
+@{
+	var thumbUrl = Model.Entry.Entry.MainPicture != null ? VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(Model.Entry.Entry.MainPicture.GetSmallestThumb(VocaDb.Model.Domain.Images.ImageSize.TinyThumb)) : null;
+}
+
+<div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
+	@if (Model.Entry.Author != null)
+	{
+		@Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(Model.Entry.Author, userInfo: true))
+	}
+	else
+	{
+		@HelperRes.ActivityFeedHelperStrings.Someone
+	}
+
+	@Html.Partial("Partials/Activityfeed/_EntryType", new EntryTypeViewModel(Model.Entry))
+
+	<small class="pull-right extraInfo" title="@Model.Entry.CreateDate.ToUniversalTime().ToString("g") UTC">
+		@TimeAgoStringBuilder.FormatTimeAgo(Model.Entry.CreateDate)
+	</small>
+
+	<div class="media">
+		@if (!string.IsNullOrEmpty(thumbUrl))
+		{
+			<a class="pull-left" href="@Url.EntryDetails(Model.Entry.Entry)" title="@Model.Entry.Entry.AdditionalNames">
+				<img src="@thumbUrl" alt="thumb" class="media-object coverPicThumb" referrerpolicy="same-origin" />
+			</a>
+		}
+		<div class="media-body">
+			<h4 class="media-heading">
+				<a href="@Url.EntryDetails(Model.Entry.Entry)" title="@Model.Entry.Entry.AdditionalNames">
+					<strong>@Model.Entry.Entry.Name</strong>
+				</a>
+			</h4>
+			@if (!string.IsNullOrEmpty(Model.Entry.Entry.ArtistString))
+			{
+				@Model.Entry.Entry.ArtistString
+			}
+		</div>
+	</div>
+</div>

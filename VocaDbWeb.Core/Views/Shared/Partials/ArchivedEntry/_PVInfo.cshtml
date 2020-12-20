@@ -1,0 +1,16 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+@model PVInfoViewModel
+
+@Model.PV.Service (@Model.PV.PVType):
+<a href="@VocaDb.Model.Domain.PVs.PV.GetUrl(Model.PV.Service, Model.PV.PVId, Model.PV.ExtendedMetadata)">@Model.PV.PVId</a>
+by @Model.PV.Author
+(@DateTimeUtils.FormatFromSeconds(Model.PV.Length))
+@if (Model.PV.PublishDate != null)
+{
+	@:at @Model.PV.PublishDate.Value.ToShortDateString()
+}
+@if (Model.PV.Disabled)
+{
+	@:(unavailable)
+}

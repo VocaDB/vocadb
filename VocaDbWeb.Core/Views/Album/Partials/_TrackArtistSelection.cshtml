@@ -1,0 +1,10 @@
+﻿<!--  
+	Binding context: TrackArtistSelection
+	-->
+
+<span class="tag">
+	<input type="checkbox" data-bind="id: 'artistSelection' + artist.id, jqButtonset: selected" class="jqButton" />
+	<label>
+		<span data-bind="text: artist.name, attr: { title: artist.additionalNames }"></span>
+	</label>
+</span>

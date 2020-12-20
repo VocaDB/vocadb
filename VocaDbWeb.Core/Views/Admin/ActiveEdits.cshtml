@@ -1,0 +1,28 @@
+﻿@using VocaDb.Web.Helpers
+@model Tuple<VocaDb.Model.DataContracts.Api.EntryForApiContract, VocaDb.Model.DataContracts.Users.UserContract, DateTime>[]
+
+@{
+	PageProperties.Title = "Active editors";
+	ViewBag.Parents = new[] { 
+		Html.ActionLink("Manage", "Index"), 
+	};	
+}
+
+<table>
+	<thead>
+		<tr>
+			<th>Entry</th>
+			<th>Editor</th>
+			<th>Time</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model) {
+			<tr>
+				<td><a href="@Url.EntryDetails(item.Item1)">@item.Item1.Name</a></td>
+				<td><a href="@Url.UserDetails(item.Item2)">@item.Item2.Name</a></td>
+				<td>@item.Item3</td>
+			</tr>
+		}
+	</tbody>
+</table>

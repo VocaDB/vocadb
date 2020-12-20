@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Html
+@using VocaDb.Model.DataContracts.Users
+@using VocaDb.Model.Domain.Users
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.User
+@model AlbumForUserContract[]
+
+@{
+	void UserGrid(IEnumerable<AlbumForUserContract> users) {
+		@Html.Grid(users, 2, u => new HtmlString(Html.Partial("Partials/User/_UserIconLink_UserContract", new UserIconLink_UserContractViewModel(u.User)).ToHtmlString() + " (" + Translate.AlbumMediaTypeNames[u.MediaType] + ")"))
+	}
+}
+
+@{
+
+	var owned = Model.Where(u => u.User != null && u.PurchaseStatus == PurchaseStatus.Owned).ToArray();
+	var wishlisted = Model.Where(u => u.User != null && u.PurchaseStatus == PurchaseStatus.Wishlisted).ToArray();
+	var hiddenOwnerCount = Model.Count(u => u.PurchaseStatus == PurchaseStatus.Owned && u.User == null);
+	
+}
+
+@if (owned.Any()) {
+	<h4>@ViewRes.Album.DetailsStrings.OwnedByTitle</h4>
+
+	UserGrid(owned);
+
+	if (hiddenOwnerCount > 0) {
+		<p>@string.Format(ViewRes.Album.DetailsStrings.HiddenCollections, hiddenOwnerCount)</p>
+	}
+}
+
+@if (wishlisted.Any()) {
+	<h4 class="withMargin">@ViewRes.Album.DetailsStrings.WishlistedByTitle</h4>
+
+	UserGrid(wishlisted);
+}

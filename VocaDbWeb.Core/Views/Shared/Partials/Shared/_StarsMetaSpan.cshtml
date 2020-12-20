@@ -1,0 +1,7 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@model StarsMetaSpanViewModel
+
+<span title="@NumberFormatHelper.DecimalDot(Math.Round(Model.Current, 2))">
+	@Html.Partial("Partials/Shared/_StarsMeta", new StarsMetaViewModel((int)Math.Round(Model.Current, MidpointRounding.AwayFromZero), Model.Max))
+</span>

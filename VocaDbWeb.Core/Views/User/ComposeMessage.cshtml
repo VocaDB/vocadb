@@ -1,0 +1,47 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Knockout
+@using Res = ViewRes.User.MessagesStrings
+
+<!-- NewMessageViewModel -->
+<form data-bind="with: newMessageViewModel, submit: sendMessage">
+
+	<div class="editor-label">
+		@Res.To
+	</div>
+	<div class="editor-field">
+		@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("userAutocomplete", "receiver"))
+		<div class="alert alert-danger" data-bind="visible: isReceiverInvalid">
+			Receiver must be selected.
+		</div>
+	</div>
+
+	<div class="editor-label">
+		@Res.Subject
+	</div>
+	<div class="editor-field">
+		<input type="text" size="40" class="span3" data-bind="textInput: subject" maxlength="200" required /><br />
+
+		<label class="checkbox">
+			<input type="checkbox" data-bind="checked: highPriority" />
+			@Res.HighPriority
+		</label>
+	</div>
+
+	<div class="editor-label">
+		@Res.Body
+		@Html.Partial("Partials/Shared/_MarkdownNotice")
+	</div>
+	<div class="editor-field">
+		<textarea data-bind="textInput: body" class="span5" rows="10" cols="60" maxlength="10000" required></textarea>
+		<br />
+		
+		Live preview
+		<div data-bind="markdown: body"></div>
+	</div>
+	<br />
+
+	<button type="submit" class="btn btn-primary" data-bind="disable: isSending">
+		<i class="icon-envelope icon-white"></i>
+		&nbsp;@Res.Send
+	</button>
+
+</form>

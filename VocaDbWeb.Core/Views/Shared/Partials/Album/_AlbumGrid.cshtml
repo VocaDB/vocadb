@@ -1,0 +1,41 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Album
+@model AlbumGridViewModel
+
+<table>
+	@{ int i = 0; }
+
+	@foreach (var album in Model.Albums)
+	{
+		if (i % Model.Columns == 0)
+		{
+			@Html.Raw("<tr>")
+		}
+		<td>
+			@Html.Partial("Partials/Album/_AlbumIconLink", new AlbumIconLinkViewModel(album))
+		</td>
+		<td>
+			@Html.ActionLink(album.Name, "Details", "Album", new { id = album.Id }, new { title = album.AdditionalNames })
+			@if (Model.DisplayType)
+			{
+				@("(")@Translate.DiscTypeName(album.DiscType)@(")")
+			}
+			<br />
+			<span class="extraInfo">@album.ArtistString</span>
+			@if (Model.DisplayReleaseDate && !album.ReleaseDate.IsEmpty)
+			{
+				<br />
+				<span>@HelperRes.AlbumHelpersStrings.Released @album.ReleaseDate.Formatted</span>
+			}
+		</td>
+		{ i++; }
+		if (i % Model.Columns == 0)
+		{
+			@Html.Raw("</tr>")
+		}
+	}
+	@if (i % Model.Columns != 0)
+	{
+		@Html.Raw("</tr>")
+	}
+</table>

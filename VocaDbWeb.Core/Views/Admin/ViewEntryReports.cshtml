@@ -1,0 +1,89 @@
+﻿@using VocaDb.Model.DataContracts
+@using VocaDb.Model.DataContracts.Users
+@using VocaDb.Model.Domain
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.User
+@model EntryReportContract[]
+
+@{
+	PageProperties.Title = "View entry reports";
+	ReportStatus status = ViewBag.ReportStatus;
+}
+
+@{
+	void UserIconLinkOrName(UserForApiContract user, string name, int size = 20) {
+		if (user != null) {
+			@Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(user, size))
+		} else {
+			@name
+		}
+	}
+}
+
+<ul class="nav nav-pills">
+	<li @Html.ConditionalAttribute(status == ReportStatus.Open, "class", "active")>
+		<a href="@Url.Action("ViewEntryReports", new { status = ReportStatus.Open })">Open</a>
+	</li>
+	<li @Html.ConditionalAttribute(status == ReportStatus.Closed, "class", "active")>
+		<a href="@Url.Action("ViewEntryReports", new { status = ReportStatus.Closed })">Closed</a>		
+	</li>
+</ul>
+
+<div class="alert alert-info">
+	This list contains entries that have been reported for errors. 
+	<b>The list is shared between all trusted users and moderators, and anyone can take action based on these reported issues.</b>
+	If you have time, please check that the reports are valid, and either notify the user who created the entry in the first place,
+	or correct the errors yourself. After the issue has been resolved you can delete the report, but not before.
+</div>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Time</th>
+			<th>Author</th>
+			<th>Entry</th>
+			<th>Type</th>
+			<th>Notes</th>
+			@if (status == ReportStatus.Open) {
+				<th>Actions</th>				
+			}
+			@if (status == ReportStatus.Closed) {
+				<th>Closed by</th>
+				<th>Closed at</th>
+			}
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var r in Model) {			
+			<tr>
+				<td>@r.Created</td>
+				<td>@{ UserIconLinkOrName(r.User, r.Hostname); }</td>
+				<td>
+					<a href="@Url.EntryDetails(r.Entry)" title="@r.Entry.AdditionalNames">@r.Entry.Name</a>
+					
+					@if (r.Version != null) {
+						var versionUrl = Url.Action("ViewVersion", r.Entry.EntryType.ToString(), new { id = r.Version.Id });
+						@:(<a href="@versionUrl">Version @r.Version.Version</a>)
+					}
+				</td>
+				<td>@r.ReportTypeName</td>
+				<td>
+					<div class="entry-report-notes">@r.Notes</div>
+				</td>
+				@if (status == ReportStatus.Open) {
+					<td>
+						<a href="@Url.Action("DeleteEntryReport", new {id = r.Id})" class="textLink deleteLink">Close</a>						
+					</td>
+				}
+				@if (status == ReportStatus.Closed) {
+					<td>
+						@Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(r.ClosedBy))
+					</td>
+					<td>
+						@r.ClosedAt
+					</td>
+				}
+			</tr>
+		}
+	</tbody>
+</table>

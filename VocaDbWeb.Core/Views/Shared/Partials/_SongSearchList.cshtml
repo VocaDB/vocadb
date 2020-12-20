@@ -1,0 +1,99 @@
+﻿@using VocaDb.Model.Domain.Songs
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@using VocaDb.Web.Models.Shared.Partials.Song
+@using SharedRes = ViewRes.SharedStrings
+@using Res = ViewRes.Search.IndexStrings
+
+<!-- binding context: SongSearchViewModel -->
+	
+<!-- ko if: viewMode() == 'Details' -->
+@{ Html.RenderPartial("Partials/_EntryCountBox"); }
+
+<div data-bind="with: paging">
+	@Html.Partial("Partials/Knockout/_ServerSidePaging")
+</div>
+
+<table class="table table-striped" data-bind="css: { loading: loading }">
+	<thead>
+		<tr>
+			<th colspan="2">
+				<a data-bind="click: function() { sort('Name') }" href="#">
+					@SharedRes.Name
+					<span class="sortDirection_down" data-bind="visible: sort() == 'Name'"></span>
+				</a>
+			</th>
+			<th data-bind="visible: $data.showTags">
+				@SharedRes.Tags
+			</th>
+			<th>
+				<a data-bind="click: function() { sort('RatingScore') }" href="#">
+					@Res.Rating
+					<span class="sortDirection_down" data-bind="visible: sort() == 'RatingScore'"></span>
+				</a>
+			</th>
+		</tr>
+	</thead>
+	<tbody data-bind="foreach: page">
+		<tr>
+			<td style="width: 80px">
+				<a data-bind="visible: $data.thumbUrl, attr: { href: app.EntryUrlMapper.details_song($data), title: $data.additionalNames }" href="#">
+					<img data-bind="attr: { src: $data.thumbUrl }" title="Cover picture" class="coverPicThumb img-rounded" referrerpolicy="same-origin" />
+				</a>
+			</td>
+			<td>
+
+				<div class="pull-right" data-bind="visible: pvServices, with: previewViewModel">
+					<a data-bind="click: togglePreview, css: { active: preview }" class="btn previewSong" href="#">
+						<i class="icon-film"></i>
+						@Res.Preview
+					</a>
+				</div>
+
+				<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details_song($data), title: $data.additionalNames }" href="#"></a>
+				<span data-bind="songTypeLabel: $data.songType"></span>
+				<!-- ko foreach: $parent.getPVServiceIcons($data.pvServices) -->
+				<img data-bind="attr: { src: url, title: service }" />
+				<!-- /ko -->
+				
+				<span data-bind="visible: $data.rating === 'Favorite'" class="icon heartIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Favorite]"></span>
+				<span data-bind="visible: $data.rating === 'Like'" class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>
+				
+				@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
+				
+				<i class="icon-calendar" data-bind="visible: $data.publishDate, attr: { title: ($data.publishDate ? 'Published: ' + $parent.formatDate($data.publishDate) : '') }, tooltip: { placement: 'right' }"></i>
+
+				<br />
+				<small class="extraInfo" data-bind="text: artistString"></small>
+
+				<div data-bind="visible: pvServices, with: previewViewModel">
+					@Html.Partial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].getPVServiceIcons"))
+				</div>
+			</td>
+			<td data-bind="visible: $parent.showTags()" class="search-tags-column">
+				<div data-bind="if: $data.tags && tags.length">
+					<i class="icon icon-tags fix-icon-margin"></i>
+					<!-- ko foreach: tags -->
+					<a href="#" data-bind="text: tag.name, click: function() { $parents[1].selectTag(tag); return false; }"></a><span data-bind="visible: $data != _.last($parent.tags)">,</span>
+					<!-- /ko -->
+				</div>
+			</td>
+			<td>
+				<span data-bind="text: ratingScore"></span>
+				@Res.TotalScore
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<div data-bind="with: paging">
+	@Html.Partial("Partials/Knockout/_ServerSidePaging")
+</div>
+<!-- /ko -->
+	
+<!-- ko if: viewMode() == 'PlayList' -->
+<div data-bind="with: playListViewModel" class="well well-transparent songlist-playlist">
+	@{ Html.RenderPartial("Partials/_PlayList"); }
+</div>
+<!-- /ko -->
+

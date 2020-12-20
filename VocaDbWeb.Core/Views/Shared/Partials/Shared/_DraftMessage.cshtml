@@ -1,0 +1,8 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Shared
+@model DraftMessageViewModel
+
+<div class="alert">
+	@Html.Partial("Partials/Shared/_NotificationIcon")
+	<span>@HelperRes.HelperStrings.DraftMessage</span>
+	<span>@HelperRes.HelperStrings.SeeGuidePre <a href="@(Url.Action("Index", "Help") + "?guidelines+" + Model.Section)">@HelperRes.HelperStrings.SeeGuide</a> @HelperRes.HelperStrings.SeeGuidePost</span>
+</div>

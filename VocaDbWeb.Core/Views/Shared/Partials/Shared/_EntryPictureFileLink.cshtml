@@ -1,0 +1,8 @@
+﻿@using VocaDb.Model.Domain.Images
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@model EntryPictureFileLinkViewModel
+
+<a href="@Url.ImageThumb(Model.EntryPictureFile, ImageSize.Original)">
+	<img src="@Url.ImageThumb(Model.EntryPictureFile, ImageSize.Thumb)" alt="Preview" class="coverPic" />
+</a>

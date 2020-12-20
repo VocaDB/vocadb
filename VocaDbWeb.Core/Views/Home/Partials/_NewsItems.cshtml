@@ -1,0 +1,30 @@
+﻿
+<!-- Binding context: NewsListViewModel -->
+
+<h3 class="withMargin" data-bind="visible: !loaded() || posts().length">@ViewRes.Home.IndexStrings.News</h3>
+
+<div data-bind="visible: loaded, foreach: posts" style="display: none;">
+	<div class="message newsEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
+		<div class="messageTitle ui-widget-header ui-corner-all">
+			<div class="messageTitleText">
+				<h4>
+					<a data-bind="attr: { href: URL }, html: title" href="#"></a>	
+					&nbsp;		
+					<span class="news-title-author">
+						<img data-bind="attr: { src: author.avatar_URL }" src="@Url.Content("~/Content/Unknown.png")" width="15" height="15" alt="Avatar" />
+						<span data-bind="text: author.name"></span>
+						<span> @HelperRes.ActivityFeedHelperStrings.At </span>
+						<span data-bind="text: date"></span>
+					</span>
+				</h4>
+			</div>	
+		</div>	
+		<p class="messageContent">
+			<span data-bind="html: content"></span>
+		</p>
+	</div>
+</div>
+<div data-bind="visible: !loaded()">
+	<img src="@Url.Content("~/Content/ajax-loader.gif")"/>
+	@ViewRes.SharedStrings.Loading
+</div>

@@ -1,0 +1,22 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.Activityfeed
+@model VocaDb.Model.DataContracts.Activityfeed.ActivityEntryForApiContract[]
+
+@{
+	PageProperties.Title = "New activity by followed artists";
+}
+
+<ul class="nav nav-pills">
+	<li>
+		@Html.ActionLink("All activity", "Index")
+	</li>
+	<li class="active">
+		@Html.ActionLink("Only followed artists", "FollowedArtistActivity")
+	</li>
+	<li>
+		@Html.ActionLink("Comments", "Index", "Comment")
+	</li>
+</ul>
+
+@foreach (var entry in Model) {
+	@Html.Partial("Partials/Activityfeed/_ActivityEntry", new ActivityEntryViewModel(entry))
+}

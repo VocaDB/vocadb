@@ -1,0 +1,79 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Html
+@using Res = ViewRes.Event.EventsBySeriesStrings
+@model VocaDb.Model.DataContracts.Venues.VenueForApiContract[]
+@inject Login Login
+
+@{
+	PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
+}
+
+@section Toolbar {
+	
+	<ul class="nav nav-pills">
+		<li>
+			@Html.ActionLink(Res.ViewList, "Index")
+		</li>
+		<li>
+			@Html.ActionLink(Res.ViewBySeries, "EventsBySeries")
+		</li>
+		<li class="active">
+			@Html.ActionLink(Res.ViewByVenue, "EventsByVenue")
+		</li>
+		<li>
+			@Html.ActionLink(Res.ViewByDate, "EventsByDate")
+		</li>
+	</ul>	
+
+	@if (Login.CanManageDb) {
+		@Html.ActionLink(Res.CreateEvent, "Edit", null, new { id = "createEventLink" })
+		@:
+		@Html.ActionLink(Res.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
+		@:
+		@Html.ActionLink(Res.CreateVenue, "Edit", "Venue", null, new { id = "createVenueLink" })
+	}	
+}
+
+@foreach (var venue in Model) {
+
+	<div class="media withMargin">
+		<div class="media-body">
+			<h3 class="media-heading">
+				@if (!string.IsNullOrEmpty(venue.Name)) {
+					@Html.ActionLink(venue.Name, "Details", "Venue", new { id = venue.Id }, null)
+				} else {
+					<text>@ViewRes.SharedStrings.Unsorted</text>
+				}
+			</h3>
+						
+			@if (!string.IsNullOrEmpty(venue.Description)) {
+				<p>@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(venue.Description))</p>
+			}
+		</div>
+	</div>
+	
+	<ul>
+	@foreach (var ev in venue.Events) {
+		<li>
+			@Html.ActionLink(ev.Name, "Details", new { id = ev.Id, slug = ev.UrlSlug })
+		</li>
+	}
+	</ul>
+	
+	if (Login.CanManageDb) {
+		@Html.ActionLink(Res.CreateEvent, "Edit", new { venueId = venue.Id != 0 ? (int?)venue.Id : null }, new { @class = "textLink addLink" })
+	}
+	
+}
+
+@section BodyScripts {
+	<script type="text/javascript">
+
+		$(function () {
+			$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
+			$("#createSeriesLink").button({ icons: { primary: 'ui-icon-plus' } });
+			$("#createVenueLink").button({ icons: { primary: 'ui-icon-plus' } });
+		});
+
+	</script>
+}

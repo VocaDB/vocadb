@@ -1,0 +1,4 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.User
+@model UserLinkViewModel
+
+@Html.ActionLink(Model.User.Name, "Profile", "User", new { id = Model.User.Name }, null)

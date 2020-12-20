@@ -1,0 +1,73 @@
+﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Activityfeed
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@model VocaDb.Model.DataContracts.Users.UserBaseContract
+@inject LaravelMixHelper LaravelMixHelper
+
+@{
+	PageProperties.Title = "Entry edits - " + Model.Name;
+	ViewBag.Parents = new[] {
+		Html.ActionLink("Users", "Index"),
+		Html.ActionLink(Model.Name, "Details", new { id = Model.Id })
+	};
+}
+
+<!-- Binding context: ActivityEntryListViewModel -->
+
+<div class="form-horizontal well well-transparent">
+
+	<div class="pull-right">
+		<div class="inline-block">
+			@ViewRes.EntryIndexStrings.SortBy
+			@Html.Partial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.ActivityEntrySortRuleNames.ValuesAndNamesStrings, "sort", "sortName"))
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@ViewRes.User.EntryEditsStrings.EntryType</div>
+		<div class="controls">
+			@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.ActivityEntryTargetTypeNames.ValuesAndNamesStrings, "entryType"))
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="controls">
+			<label class="checkbox">
+				<input type="checkbox" data-bind="checked: additionsOnly" />
+				@ViewRes.User.EntryEditsStrings.OnlyAdditions
+			</label>
+		</div>
+	</div>
+
+</div>
+
+<div data-bind="foreach: entries, show" class="js-cloak">
+	@Html.Partial("Partials/Activityfeed/_ActivityEntryKnockout", new ActivityEntryKnockoutViewModel("$parent.getEntryTypeName", "$parent.getActivityFeedEventName", "$parents[1].getChangedFieldNames", true))
+</div>
+
+<hr />
+<h3>
+	<a href="#" data-bind="click: loadMore">View more</a>
+</h3>
+
+@section BodyScripts {
+	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/ActivityEntry/Index.js")"></script>
+	<script type="text/javascript">
+		$(function () {
+
+			moment.locale('@Culture');
+			ko.punches.enableAll();
+
+			var urlMapper = new app.UrlMapper("@RootPath");
+			var resourceRepo = new app.ResourceRepository('@RootPath');
+			var languageSelection = '@UserContext.LanguagePreference';
+			var cultureCode = '@UICulture';
+			var userId = @Model.Id;
+			var additionsOnly = @ToJS((bool?)ViewBag.AdditionsOnly);
+
+			var vm = new app.ActivityEntryListViewModel(urlMapper, resourceRepo, languageSelection, cultureCode, userId, additionsOnly);
+			ko.applyBindings(vm);
+
+		});
+	</script>
+}

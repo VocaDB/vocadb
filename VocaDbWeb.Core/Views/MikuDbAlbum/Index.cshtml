@@ -1,0 +1,69 @@
+﻿@using VocaDb.Web.Helpers
+@model VocaDb.Web.Models.MikuDbAlbums.Index
+
+@{
+	PageProperties.Title = "Imported albums";
+}
+
+@section Toolbar {
+}
+
+@using (Html.BeginForm("ImportOne", "MikuDbAlbum", FormMethod.Post, new { @class = "form form-inline" })) {
+
+	<p>Download one album from KarenT: </p>
+	@Html.TextBox("AlbumUrl", null, new { size = 30, maxlength = 255 })
+	
+	<button type="submit" class="btn btn-primary">Download</button>
+	
+}
+
+@using (Html.BeginForm("ImportFromFile", "MikuDbAlbum", FormMethod.Post, new { @class = "form form-inline", enctype = "multipart/form-data" })) {
+
+	<p>Parse from CSV file: </p>
+    <input type="file" name="albumCsv" />
+	
+	<button type="submit" class="btn btn-primary">Parse</button>
+	
+}
+
+	
+@using (Html.BeginForm("Index", "MikuDbAlbum", FormMethod.Post, new { @class = "form form-inline"})) {
+	
+<p>
+	Filter:
+	@Html.TextBoxFor(m => m.TitleFilter)
+	@Html.DropDownListFor(m => m.Status, new SelectList(Model.AllStatuses, "Key", "Value"), new { @class = "input-medium" })
+	&nbsp;
+	<button type="submit" class="btn btn-primary">Apply</button>
+</p>
+
+}
+
+<div class="alert alert-info">
+	Import new albums, or manage imported albums (if any) using the buttons below.
+</div>
+
+@using (Html.BeginForm("PrepareForImport", "MikuDbAlbum")) {
+	
+	<table>
+		<tr>
+			<th>Title</th>
+			<th>Info</th>
+			<th>Tracks</th>
+		</tr>
+		@foreach (var album in Model.Albums) {
+			Html.RenderPartial("MikuDbAlbumRow", album);
+		}
+	</table>
+	
+}
+
+@section BodyScripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#importNewLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s'} });
+        });
+
+    </script>
+}
