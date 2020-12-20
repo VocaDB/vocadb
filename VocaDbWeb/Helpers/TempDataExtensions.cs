@@ -4,7 +4,7 @@ using System.Web.Mvc;
 
 namespace VocaDb.Web.Helpers
 {
-	public static class TempDataExtender
+	public static class TempDataExtensions
 	{
 		private const string ErrorKey = "ErrorMessage";
 		private const string StatusKey = "StatusMessage";

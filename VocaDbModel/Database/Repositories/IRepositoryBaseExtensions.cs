@@ -6,7 +6,7 @@ using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Model.Database.Repositories
 {
-	public static class IRepositoryBaseExtender
+	public static class IRepositoryBaseExtensions
 	{
 		public static void UpdateEntity<TEntity, TRepositoryContext>(this IRepositoryBase<TRepositoryContext> repository, int id,
 			Action<TRepositoryContext, TEntity> func, PermissionToken permissionFlags, IUserPermissionContext permissionContext,

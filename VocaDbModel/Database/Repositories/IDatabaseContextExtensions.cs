@@ -14,7 +14,7 @@ namespace VocaDb.Model.Database.Repositories
 	/// <summary>
 	/// Extension methods for <see cref="IDatabaseContext"/>.
 	/// </summary>
-	public static class IDatabaseContextExtender
+	public static class IDatabaseContextExtensions
 	{
 		public static AgentLoginData CreateAgentLoginData<T>(this IDatabaseContext<T> ctx, IUserPermissionContext permissionContext, User user = null)
 		{

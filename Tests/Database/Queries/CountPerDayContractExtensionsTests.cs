@@ -7,10 +7,10 @@ using VocaDb.Model.DataContracts.Aggregate;
 namespace VocaDb.Tests.Database.Queries
 {
 	/// <summary>
-	/// Tests for <see cref="CountPerDayContractExtender"/>.
+	/// Tests for <see cref="CountPerDayContractExtensions"/>.
 	/// </summary>
 	[TestClass]
-	public class CountPerDayContractExtenderTests
+	public class CountPerDayContractExtensionsTests
 	{
 		private CountPerDayContract[] AddPrevious(TimeUnit timeUnit, params CountPerDayContract[] points)
 		{

@@ -63,7 +63,7 @@ namespace VocaDb.Model.Domain.Songs
 		Other = 1024,
 	}
 
-	public static class SongTypesExtender
+	public static class SongTypesExtensions
 	{
 		public static IEnumerable<SongType> ToIndividualSelections(this SongTypes selections, bool skipUnspecified = false)
 		{

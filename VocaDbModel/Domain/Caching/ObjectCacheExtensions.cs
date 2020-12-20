@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VocaDb.Model.Domain.Caching
 {
-	public static class ObjectCacheExtender
+	public static class ObjectCacheExtensions
 	{
 		/// <summary>
 		/// Get cache item, or insert if it doesn't exist.

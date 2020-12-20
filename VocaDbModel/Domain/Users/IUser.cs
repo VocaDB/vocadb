@@ -13,7 +13,7 @@ namespace VocaDb.Model.Domain.Users
 		string Name { get; set; }
 	}
 
-	public static class IUserExtender
+	public static class IUserExtensions
 	{
 		public static bool IsTheSameUser(this IUser left, IUser right)
 		{

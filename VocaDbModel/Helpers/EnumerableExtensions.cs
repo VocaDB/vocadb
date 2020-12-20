@@ -7,7 +7,7 @@ using VocaDb.Model.Domain;
 
 namespace VocaDb.Model.Helpers
 {
-	public static class EnumerableExtender
+	public static class EnumerableExtensions
 	{
 		public static IEnumerable<T> Distinct<T, T2>(this IEnumerable<T> source, Func<T, T2> func, IEqualityComparer<T2> propertyEquality)
 		{

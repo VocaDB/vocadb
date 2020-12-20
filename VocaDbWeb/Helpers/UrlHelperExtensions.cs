@@ -15,7 +15,7 @@ using VocaDb.Model.Utils.Search;
 
 namespace VocaDb.Web.Helpers
 {
-	public static class UrlHelperExtender
+	public static class UrlHelperExtensions
 	{
 		private static string EntryDetails(UrlHelper urlHelper, EntryType entryType, int id, string urlSlug) => entryType switch
 		{

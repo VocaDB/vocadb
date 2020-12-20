@@ -29,7 +29,7 @@ namespace VocaDb.Model.Domain.Images
 	/// <summary>
 	/// Extensions to <see cref="IEntryImageUrlFactory"/>.
 	/// </summary>
-	public static class IEntryImageUrlFactoryExtender
+	public static class IEntryImageUrlFactoryExtensions
 	{
 		public static VocaDbUrl GetUrlWithFallback(this IEntryImageUrlFactory urlFactory, IEntryImageInformation imageInfo, ImageSize size, VocaDbUrl fallbackUrl)
 		{

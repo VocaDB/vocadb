@@ -13,7 +13,7 @@ namespace VocaDb.Web.Helpers
 	/// <summary>
 	/// Extends <see cref="HtmlHelper"/> with Knockout-specific methods.
 	/// </summary>
-	public static class KnockoutHtmlExtender
+	public static class KnockoutHtmlExtensions
 	{
 		public static IHtmlString CheckboxForKnockout<TModel>(
 			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, bool>> expression,

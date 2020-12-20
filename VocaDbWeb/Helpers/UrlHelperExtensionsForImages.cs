@@ -11,7 +11,7 @@ namespace VocaDb.Web.Helpers
 	/// <summary>
 	/// Extension methods for generating URLs to entry images.
 	/// </summary>
-	public static class UrlHelperExtenderForImages
+	public static class UrlHelperExtensionsForImages
 	{
 		private static IAggregatedEntryImageUrlFactory ImageUrlFactory => DependencyResolver.Current.GetService<IAggregatedEntryImageUrlFactory>();
 
