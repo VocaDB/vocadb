@@ -1,0 +1,27 @@
+﻿body {
+	/*background: url(miku2.jpg)top center no-repeat fixed;*/
+}
+
+.navbar .nav-radio {
+	color: #BBBBBB;	
+	padding: 8px;
+}
+
+.navbar .btn {
+	margin: 5px 0 0 0 !important;
+}
+
+img.coverPic {
+	max-width: 250px;
+	max-height: 250px;
+}
+
+img.coverPicIcon {
+	max-width: 35px;
+	max-height: 35px;
+}
+
+img.coverPicThumb {
+	max-width: 70px;
+	max-height: 70px;
+}

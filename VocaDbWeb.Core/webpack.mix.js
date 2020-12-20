@@ -24,26 +24,26 @@ mix
 
 
 	/*.scripts([
-		"../VocaDbWeb/Scripts/jquery-2.2.1.js",
-		"../VocaDbWeb/Scripts/bootstrap.js",
-		//"../VocaDbWeb/Scripts/jquery-ui-1.10.1.js", // doesn't work if bundled together
-		"../VocaDbWeb/Scripts/knockout-3.4.1.js",
-		"../VocaDbWeb/Scripts/knockout.punches.min.js",
-		"../VocaDbWeb/Scripts/lodash.js",
-		"../VocaDbWeb/Scripts/qTip/jquery.qtip.js",
-		"../VocaDbWeb/Scripts/marked.js"
+		"Scripts/jquery-2.2.1.js",
+		"Scripts/bootstrap.js",
+		//"Scripts/jquery-ui-1.10.1.js", // doesn't work if bundled together
+		"Scripts/knockout-3.4.1.js",
+		"Scripts/knockout.punches.min.js",
+		"Scripts/lodash.js",
+		"Scripts/qTip/jquery.qtip.js",
+		"Scripts/marked.js"
 	], "wwwroot/bundles/shared/libs.js")
 
 	.scripts([
-		"../VocaDbWeb/Scripts/jquery-ui-1.10.4.js"
+		"Scripts/jquery-ui-1.10.4.js"
 	], "wwwroot/bundles/shared/jqui.js")*/
-	.js("../VocaDbWeb/Scripts/libs.js", "wwwroot/bundles/shared")
+	.js("Scripts/libs.js", "wwwroot/bundles/shared")
 
 	// SHARED BUNDLES
 	// Legacy common scripts - should be phased out
-	.scripts(["../VocaDbWeb/Scripts/VocaDB.js"], "wwwroot/bundles/VocaDB.js")
+	.scripts(["Scripts/VocaDB.js"], "wwwroot/bundles/VocaDB.js")
 
-	.ts("../VocaDbWeb/Scripts/App.ts", "wwwroot/bundles")
+	.ts("Scripts/App.ts", "wwwroot/bundles")
 
 	// Included on all pages (including front page)
 	// Generally the references go from viewmodels -> repositories -> models -> support classes
@@ -52,20 +52,20 @@ mix
 
 	// Included on all pages except the front page (to optimize front page load time).
 	.scripts([
-		"../VocaDbWeb/Scripts/moment-with-locales.js",
+		"Scripts/moment-with-locales.js",
 	], "wwwroot/bundles/shared/main.js")
 
 	// Included on all entry edit and create pages (album, artist, my settings etc.)
 	.scripts([
-		"../VocaDbWeb/Scripts/knockout-sortable.js"
+		"Scripts/knockout-sortable.js"
 	], "wwwroot/bundles/shared/edit.js")
 
 	.scripts([
-		"../VocaDbWeb/Scripts/jquery.tools.min.js"	// REVIEW
+		"Scripts/jquery.tools.min.js"	// REVIEW
 	], "wwwroot/bundles/Home/Index.js")
 
 	.scripts([
-		"../VocaDbWeb/Scripts/jqwidgets27/jqxcore.js", "../VocaDbWeb/Scripts/jqwidgets27/jqxrating.js"
+		"Scripts/jqwidgets27/jqxcore.js", "Scripts/jqwidgets27/jqxrating.js"
 	], "wwwroot/bundles/jqxRating.js")
 
 
@@ -92,7 +92,7 @@ mix
 	], "wwwroot/bundles/Artist/Create.js")
 
 	.scripts([
-		"../VocaDbWeb/Scripts/soundcloud-api.js"	// REVIEW
+		"Scripts/soundcloud-api.js"	// REVIEW
 	], "wwwroot/bundles/Artist/Details.js")
 
 	.scripts([
@@ -102,7 +102,7 @@ mix
 	], "wwwroot/bundles/Artist/Merge.js")
 
 	.scripts([
-		"../VocaDbWeb/Scripts/page.js"
+		"Scripts/page.js"
 	], "wwwroot/bundles/Discussion/Index.js")
 
 	.scripts([
@@ -118,14 +118,14 @@ mix
 	], "wwwroot/bundles/ReleaseEvent/Edit.js")
 
 	.scripts([
-		"../VocaDbWeb/Scripts/soundcloud-api.js"	// REVIEW
+		"Scripts/soundcloud-api.js"	// REVIEW
 	], "wwwroot/bundles/Search/Index.js")
 
 	.scripts([
 	], "wwwroot/bundles/Song/Create.js")
 
 	.scripts([
-		"../VocaDbWeb/Scripts/MediaElement/mediaelement-and-player.min.js",
+		"Scripts/MediaElement/mediaelement-and-player.min.js",
 	], "wwwroot/bundles/Song/Details.js")
 
 	.scripts([
@@ -135,11 +135,11 @@ mix
 	], "wwwroot/bundles/Song/Merge.js")
 
 	.scripts([
-		"../VocaDbWeb/Scripts/url.js"
+		"Scripts/url.js"
 	], "wwwroot/bundles/Song/TopRated.js")
 
 	.scripts([
-		"../VocaDbWeb/Scripts/soundcloud-api.js"	// REVIEW
+		"Scripts/soundcloud-api.js"	// REVIEW
 	], "wwwroot/bundles/SongList/Details.js")
 
 	.scripts([
@@ -167,7 +167,7 @@ mix
 	], "wwwroot/bundles/User/AlbumCollection.js")
 
 	.scripts([
-		"../VocaDbWeb/Scripts/soundcloud-api.js"	// REVIEW
+		"Scripts/soundcloud-api.js"	// REVIEW
 	], "wwwroot/bundles/User/Details.js")
 
 	.scripts([
@@ -180,7 +180,7 @@ mix
 	], "wwwroot/bundles/User/MySettings.js")
 
 	.scripts([
-		"../VocaDbWeb/Scripts/soundcloud-api.js"	// REVIEW
+		"Scripts/soundcloud-api.js"	// REVIEW
 	], "wwwroot/bundles/User/RatedSongs.js")
 
 	.scripts([
@@ -191,20 +191,20 @@ mix
 
 
 	// Base CSS
-	.less("../VocaDbWeb/Content/css.less", "wwwroot/Content")
+	.less("wwwroot/Content/css.less", "wwwroot/Content")
 
-	.less("../VocaDbWeb/Content/embedSong.less", "wwwroot/Content")
+	.less("wwwroot/Content/embedSong.less", "wwwroot/Content")
 
 	// CSS for jqxRating
 	.styles([
-		"../VocaDbWeb/Scripts/jqwidgets27/styles/jqx.base.css"
-	], "../VocaDbWeb/Scripts/jqwidgets27/styles/css.css");
+		"Scripts/jqwidgets27/styles/jqx.base.css"
+	], "wwwroot/Scripts/jqwidgets27/styles/css.css");
 
 
 if (mix.inProduction()) {
 	mix.scripts([], "wwwroot/bundles/tests.js");
 } else {
-	mix.ts("../VocaDbWeb/Scripts/tests.ts", "wwwroot/bundles");
+	mix.ts("Scripts/tests.ts", "wwwroot/bundles");
 }
 
 

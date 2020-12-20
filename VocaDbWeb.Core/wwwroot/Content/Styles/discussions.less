@@ -1,0 +1,75 @@
+﻿
+
+.discussion-folders, .discussion-topics {
+
+	cursor: pointer;
+	padding: 5px;
+	background-color: rgba(255, 255, 255, 0.9);
+	border: 1px solid lightgray;
+
+	a {
+		color: black;
+	}
+
+	a:hover {
+		text-decoration: none;		
+	}
+
+	tr {
+
+		padding: 8px;
+
+		&:hover { background-color: #d9edf7; }
+		&.active { background-color: #d9edf7; }
+
+	}
+
+	.discussion-folder-description {
+		display: block;
+		color: gray;
+		font-size: 0.9em;
+	}
+
+}
+
+.create-topic {
+	margin-bottom: 1em;
+}
+
+.discussion-folder-name {
+	display: block;
+}
+
+.discussion-topic-edit-content {
+
+	.edit-text {
+
+		width: 40%;
+		margin-right: 20px;
+
+		textarea {
+			width: 100%;
+		}
+
+	}
+
+	.edit-text, .edit-preview {
+		vertical-align: top;
+		display: inline-block;
+		min-width: 400px;
+	}
+
+}
+
+.discussion-folder {
+
+	.folder-list {
+		margin-bottom: 0.8em;
+	}
+
+	.folder-description {
+		margin-top: 0.8em;
+		margin-bottom: 1em;
+	}
+
+}

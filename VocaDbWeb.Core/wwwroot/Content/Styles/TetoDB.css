@@ -1,0 +1,239 @@
+body {
+	background: url(../teto.jpg)top center no-repeat fixed;
+}
+
+/* Layout */
+
+table.properties tr, .rightFrame, .recentAlbums, .recentSongs, .alignTop {
+	vertical-align: top;
+}
+
+.rightFrame {
+	/*background-color: #E8FAFF;
+	opacity: 0.95;*/
+	background-color: rgb(255, 245, 245);
+	background-color: rgba(255, 245, 245, 0.85);
+	border: solid #FFE0E0 2px;
+	margin-bottom: 0px;
+	margin-left: 5px;
+	margin-right: 0px;
+	margin-top: 0px;
+}
+
+.rightFrame td {
+	/*font-weight: bold;*/
+	color: #000000;
+}
+
+/* TODO: replace colors with defaults or edit bootstrap.css */
+.rightFrame a {
+	color: #89222B !important;
+	margin-bottom: 5px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+}
+
+.rightFrame a.btn-nomargin {
+	margin-bottom: 0;
+}
+
+.rightFrame a:visited {
+	color: #89222B !important;
+}
+
+.rightFrame a:hover {
+	color: #A02832 !important;	
+}
+
+.rightFrame a.btn-danger {
+	color: white !important;
+}
+
+.rightFrame a.btn-danger:visited {
+	color: white !important;
+}
+
+.rightFrame a.btn-danger:hover {
+	color: white !important;
+}
+
+/* Menu */
+.menu > .well {
+	/*background-color: #CDECF4;
+	opacity: 0.95;*/
+	background-color: rgb(255, 239, 242);
+	background-color: rgba(255, 239, 242, 0.90);
+	border: solid #FFAFBB 2px;
+}
+
+.menu a {
+	text-decoration: none;
+	color: #89222B;
+}
+
+.menu a:hover {
+	color: #A02832 !important;
+	text-decoration: underline;
+}
+
+.menu a:visited {
+	color: #89222B;
+}
+
+.user a {
+	text-decoration: none;
+	color: #89222B;
+	border-bottom-color: #333333;
+	border-bottom-style: dashed;
+	border-bottom-width: 1px;
+}
+
+.user a:hover {
+	text-decoration: none;
+	border-bottom-color: #333333;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+
+.user a:visited {
+	color: #89222B;
+}
+
+/* Links */
+
+button.textLink {
+	background:none;
+	border:none; 
+	padding:0!important;
+	border-bottom:1px solid #444;	
+}
+
+.textLink {
+	display: -moz-inline-box;
+	display: inline-block;
+	height: 16px;
+	padding: 4px 4px 4px 24px;
+	margin: 0 10px 0 0;
+	background-position: 4px 4px;
+	background-repeat: no-repeat;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+.textLink:hover {
+	padding: 3px 3px 3px 23px;
+	background-position: 3px 3px;
+	text-decoration: none;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.textLink:hover, .iconLink:hover {
+	border-color: #ddd; 
+	border-right-color: #aaa; 
+	border-bottom-color: #aaa;
+}
+
+input + .textLink {
+	margin-left: 3px;
+}
+
+.iconLink, .tooltipIcon {
+	float: left;
+	width: 24px;
+	height: 24px;
+	background-position: 4px 4px;
+	background-repeat: no-repeat;
+	text-indent: -10000px;
+	overflow: hidden;
+	padding: 0 !important;
+}
+
+.iconLink {
+	cursor: pointer;
+}
+
+.iconLink:hover {
+	left: -1px;
+	top: -1px;
+	width: 22px;
+	height: 22px;
+	background-position: 3px 3px;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.showInfoLink {
+	cursor: help;
+}
+
+h2.pageTitle {
+	margin-bottom: 10px;
+}
+
+.globalSearchBox {
+	margin: 10px;
+}
+
+div.activityEntry p {
+	margin: 4px;	
+}
+
+/* Lists */
+div.albumListItem {
+	display: block;
+	min-height: 85px;
+}
+
+div.songListItem {
+	display: block;
+	min-height: 70px;
+}
+
+
+/* Bootstrap-specific */
+.navbar .nav-radio {
+	color: #FF282F;	
+}
+
+.navbar div.brand a:visited {	
+	color: #D32127;
+}
+
+.navbar-search .search-query {
+	background-color: #7F1419;
+	color: -webkit-input-placeholder(#D1A5A7)
+}
+
+.navbar-search .search-query::-webkit-input-placeholder {
+    color: #D1A5A7;
+}
+
+.navbar-search .search-query:-moz-placeholder {
+    color: #D1A5A7;
+}
+
+.navbar-inner {
+	background-color: #210101;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#350202), to(#210101));	
+	background-image: -webkit-linear-gradient(top, #350202, #210101);
+	background-image: -o-linear-gradient(top, #350202, #210101);
+	background-image: -moz-linear-gradient(center top , #350202, #210101);
+	background-image: linear-gradient(top, #350202, #210101);
+}
+
+.dropdown-menu li > a:hover {
+	color: white !important;
+}
+
+.nav-pills > .active > a,
+.nav-pills > .active > a:hover,
+.nav-pills > .active > a:focus {
+	color: #ffffff;
+	background-color: #F2D7D7;
+}
+
+.rightFrame a.btn.btn-info, .rightFrame a.btn.btn-inverse {
+	color: white !important;
+}

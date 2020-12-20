@@ -1,0 +1,119 @@
+
+/* PV viewer */
+.pvViewerContent {
+  position:relative;
+  overflow:hidden;
+  height: 461px;
+  min-width: 555px;
+  max-width: 560px;
+  padding:10px;
+  background-color:rgba(87, 176, 210, 0.55);
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+
+  a.btn, a.btn:visited, a.btn:hover { 
+	  color: white; 
+  }
+
+}
+
+.pvViewer-translatedNames {
+    margin-left: 5px;
+    color: gray;
+    font-size: smaller;
+}
+
+.pvViewer-artists { 
+	color: #264D5B; 
+}
+
+.scrollable-navi {
+  float:left;
+  padding:0px !important;
+  margin:0px !important;
+  margin-left:-45px;
+  background-color:rgba(87, 176, 210, 0.55);
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.scrollable-item {
+	padding:7px;
+	overflow: hidden;
+  background-color:rgb(87, 176, 210);
+  background-color: rgba(87, 176, 210, 0.56);
+  border-top:1px solid #42859E;
+  clear:both;
+  color:black;
+  font-size:12px;
+  height:81px;
+  list-style-type:none;
+  list-style:none;
+  width:190px;
+  cursor:pointer;
+	margin-top:0 !important;
+	margin-bottom: 0;
+
+    &:hover { background-color:rgb(87, 176, 210); }
+    &.active { background-color:rgb(87, 176, 210); }
+    img {
+        float:left;
+        margin-right:10px;
+    }
+    strong {
+        display:block;
+    }
+}
+
+/* root element for scrollable */
+.scrollable-vertical {
+
+    /* required settings */
+    position:relative;
+    overflow:hidden;
+
+    /* vertical scrollers have typically larger height than width */
+    height: 380px;
+    width: 200px;
+	border-bottom:1px solid #42859E;
+}
+
+/* root element for scrollable items */
+.scrollable-items {
+    position:absolute;
+
+    /* this time we have very large space for height */
+    height:20000em;
+    margin: 0px;
+}
+
+/* Navigation buttons */
+/* prev, next, prevPage and nextPage buttons */
+.scrollable-browse-up, .scrollable-browse-down {
+    display:block;
+    width:30px;
+    height:30px;
+    margin: 10px 85px;
+    cursor:pointer;
+    font-size:1px;
+    background:url(/Content/vert_large.png) no-repeat;
+	&.disabled { visibility:hidden; }
+}
+
+/* up and down */
+.rightFrame .scrollable-browse-up, .rightFrame .scrollable-browse-down {
+    margin: 10px 85px;
+}
+
+/* up */
+.scrollable-browse-up {
+    &:hover { background-position:-30px 0; }
+    &:active { background-position:-60px 0; }
+}
+
+/* down */
+.scrollable-browse-down { 
+    background-position: 0 -30px; 
+    &:hover { background-position:-30px -30px; }
+    &:active { background-position:-60px -30px; }
+}

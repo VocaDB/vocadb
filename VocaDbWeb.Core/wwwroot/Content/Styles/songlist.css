@@ -1,0 +1,72 @@
+﻿.songlist-playlist {
+  display: inline-block;
+}
+.songlist-mode-selection {
+  margin-right: 5px;
+}
+.songlist-sort {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.songlist-sort .btn {
+  margin-bottom: 5px;
+}
+.songlist-text-query input {
+  margin-bottom: 0;
+}
+.songlist-playlist-player {
+  max-width: 560px;
+  margin-bottom: 20px;
+  display: inline-block;
+  vertical-align: top;
+  padding: 4px;
+  border-radius: 3px;
+  background-color: white;
+}
+.songlist-playlist-player .song-info {
+  margin-left: 4px;
+}
+.songlist-playlist-player .song-info,
+.songlist-playlist-player .song-info:hover,
+.songlist-playlist-player .song-info:visited {
+  color: white;
+}
+.songlist-playlist-player-artists {
+  font-size: smaller;
+  color: gray;
+}
+.songlist-playlist-songs-wrapper {
+  padding: 2px;
+  border-radius: 3px;
+  background-color: white;
+  display: inline-block;
+}
+.songlist-playlist-songs {
+  width: auto;
+  overflow-y: auto;
+  min-width: 250px;
+  max-height: 400px;
+  display: inline-block;
+  margin-bottom: 0;
+}
+.songlist-playlist-songs tr {
+  cursor: pointer;
+  height: 36px;
+}
+.songlist-playlist-songs tr.active {
+  background-color: #d9edf7;
+}
+.songlist-playlist-songs tr:hover,
+.songlist-playlist-songs tr.active:hover {
+  background-color: #B2DFF4;
+}
+.songlist-playlist-songs td {
+  vertical-align: middle;
+}
+.songlist-playlist-songs tr:nth-child(odd) > td {
+  background-color: #f9f9f9;
+}
+.songlist-playlist-songs tr:nth-child(odd):hover > td,
+.songlist-playlist-songs tr:nth-child(odd).active > td {
+  background-color: transparent;
+}

@@ -1,0 +1,172 @@
+import { IPVPlayer } from './PVPlayerViewModel';
+import PVService from '../../Models/PVs/PVService';
+
+	/*
+		Note: I'm not terrible happy about the implementation for now.
+		Can't seem to find a way to attach to already loaded player, so we're always loading a new player.
+		The current PV is saved into variable "loadedPv" when the original player is loaded.
+	*/
+
+	export default class PVPlayerNico implements IPVPlayer {
+
+		private static scriptLoaded: boolean = false;
+		private static playerFactory: nico.NicoPlayerFactory = null;
+		private currentPv: string = null;
+		private loadedPv: string;
+
+		constructor(
+			private readonly playerElementId: string,
+			private readonly wrapperElement: HTMLElement,
+			public songFinishedCallback: () => void = null) {
+
+			window.addEventListener("message", (e: nico.PlayerEvent) => {
+				if (e.data.eventName === "loadComplete") {
+					// Save the original loaded PV. This will be used to reconstruct the JavaScript object in play function.
+					this.loadedPv = e.data.data.videoInfo.watchId;
+				}
+			});
+
+		}
+
+		public attach = (reset: boolean = false, readyCallback?: () => void) => {
+
+			if (reset) {
+				$(this.wrapperElement).empty();
+				$(this.wrapperElement).append($("<div id='" + this.playerElementId + "' />"));
+			}
+
+			window.onNicoPlayerFactoryReady = factory => {
+				PVPlayerNico.playerFactory = factory;
+				if (readyCallback) {
+					readyCallback();					
+				}
+			};
+
+			if (!PVPlayerNico.scriptLoaded) {
+				$.getScript("https://static.vocadb.net/script/nico/api.js").then(() => {
+					PVPlayerNico.scriptLoaded = true;
+
+					window.addEventListener("message", (e: nico.PlayerEvent) => {
+						if (e.data.eventName === "playerStatusChange") {
+							if (e.data.data.playerStatus === nico.PlayerStatus.End) {
+								if (this.songFinishedCallback)
+									this.songFinishedCallback();
+							}
+						}
+						if (e.data.eventName === "loadComplete") {
+							this.loadedPv = e.data.data.videoInfo.watchId;
+						}
+						if (e.data.eventName === "error") {
+							const currentPv = this.loadedPv;
+							window.setTimeout(() => {
+								if (this.songFinishedCallback && currentPv === this.loadedPv)
+									this.songFinishedCallback();							
+							}, 3900);
+						}
+					});
+
+					if (readyCallback) {
+						readyCallback();
+					}					
+				});
+			} else {
+				if (readyCallback) {
+					readyCallback();					
+				}
+			}
+
+		}
+
+		public detach = () => {
+			this.player = null;
+		}
+
+		private player: nico.NicoPlayer = null;
+		
+		public play = (pvId) => {
+
+			if (!this.player || this.currentPv !== pvId) {
+
+				if (!pvId) {
+					pvId = this.loadedPv;
+				}
+
+				if (!pvId)
+					return;
+
+				$("#" + this.playerElementId).empty();
+				PVPlayerNico.playerFactory.create($("#" + this.playerElementId)[0], pvId).then(player => {
+					this.player = player;
+					this.player.play();
+				});
+			} else {
+				this.player.play();
+			}
+
+		}
+
+		public service = PVService.NicoNicoDouga;
+
+	}
+
+declare global {
+	interface Window {
+		onNicoPlayerFactoryReady: (callback: nico.NicoPlayerFactory) => void;
+	}
+}
+
+declare namespace nico {
+
+	export interface NicoPlayerFactory {
+		create(element: HTMLElement, watchId: string): Promise<NicoPlayer>;
+	}
+
+	export interface PlayerEvent {
+		data: EventData;
+	}
+
+	export interface StatusEvent {
+		eventName: "playerStatusChange";
+		data: {
+			playerStatus: PlayerStatus;
+		};
+	}
+
+	export interface MetadataEvent {
+		eventName: "playerMetadataChange";
+		data: {
+			currentTime: number;
+			duration: number;
+		};
+	}
+
+	export interface LoadCompleteEvent {
+		eventName: "loadComplete",
+		data: {
+			videoInfo: {
+				watchId: string
+			}
+		}
+	}
+
+	export interface ErrorEvent {
+		eventName: "error";
+		data: {
+			message: string;
+		};
+	}
+
+	type EventData = StatusEvent | MetadataEvent | LoadCompleteEvent | ErrorEvent;
+
+	export interface NicoPlayer {
+		play(): void;
+		pause(): void;
+	}
+
+	export const enum PlayerStatus {
+		Play = 2,
+		Pause = 3,
+		End = 4
+	}
+
+}
