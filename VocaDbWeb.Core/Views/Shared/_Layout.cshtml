@@ -7,8 +7,6 @@
 @using VocaDb.Web.Code
 @using VocaDb.Web.Models.Shared.Partials.Shared
 @model object
-@inject LaravelMixHelper LaravelMixHelper
-@inject Login Login
 
 @{
 	var stylesheet = Login.IsLoggedIn && !string.IsNullOrEmpty(Login.User.Stylesheet) ? Login.User.Stylesheet : Config.SiteSettings.DefaultStylesheet;

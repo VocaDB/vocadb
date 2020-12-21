@@ -21,8 +21,6 @@
 @using R = ViewRes.Artist
 @using Res = ViewRes.Artist.DetailsStrings
 @model ArtistDetailsContract
-@inject LaravelMixHelper LaravelMixHelper
-@inject Login Login
 
 @{
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Artists, "Index") };

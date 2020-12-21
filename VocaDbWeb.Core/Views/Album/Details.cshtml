@@ -21,8 +21,6 @@
 @using Res = ViewRes.Album.DetailsStrings
 @using EntryRes = ViewRes.EntryDetailsStrings
 @model AlbumDetails
-@inject LaravelMixHelper LaravelMixHelper
-@inject Login Login
 
 @{
 	ViewBag.Parents = new[] { Html.ActionLink(ViewRes.SharedStrings.Albums, "Index") };

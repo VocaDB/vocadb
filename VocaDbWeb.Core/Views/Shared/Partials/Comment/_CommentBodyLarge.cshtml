@@ -4,7 +4,6 @@
 @using VocaDb.Web.Models.Shared.Partials.Html
 @using VocaDb.Web.Models.Shared.Partials.User
 @model CommentBodyLargeViewModel
-@inject Login Login
 
 <div class="comment media comment-large">
 	<a class="pull-left" href="@Url.Action("Profile", "User", new { id = Model.Contract.Author.Name })">
