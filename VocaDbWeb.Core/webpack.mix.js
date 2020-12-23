@@ -24,26 +24,26 @@ mix
 
 
 	/*.scripts([
-		"Scripts/jquery-2.2.1.js",
-		"Scripts/bootstrap.js",
-		//"Scripts/jquery-ui-1.10.1.js", // doesn't work if bundled together
-		"Scripts/knockout-3.4.1.js",
-		"Scripts/knockout.punches.min.js",
-		"Scripts/lodash.js",
-		"Scripts/qTip/jquery.qtip.js",
-		"Scripts/marked.js"
+		"wwwroot/Scripts/jquery-2.2.1.js",
+		"wwwroot/Scripts/bootstrap.js",
+		//"wwwroot/Scripts/jquery-ui-1.10.1.js", // doesn't work if bundled together
+		"wwwroot/Scripts/knockout-3.4.1.js",
+		"wwwroot/Scripts/knockout.punches.min.js",
+		"wwwroot/Scripts/lodash.js",
+		"wwwroot/Scripts/qTip/jquery.qtip.js",
+		"wwwroot/Scripts/marked.js"
 	], "wwwroot/bundles/shared/libs.js")
 
 	.scripts([
-		"Scripts/jquery-ui-1.10.4.js"
+		"wwwroot/Scripts/jquery-ui-1.10.4.js"
 	], "wwwroot/bundles/shared/jqui.js")*/
-	.js("Scripts/libs.js", "wwwroot/bundles/shared")
+	.js("wwwroot/Scripts/libs.js", "wwwroot/bundles/shared")
 
 	// SHARED BUNDLES
 	// Legacy common scripts - should be phased out
-	.scripts(["Scripts/VocaDB.js"], "wwwroot/bundles/VocaDB.js")
+	.scripts(["wwwroot/Scripts/VocaDB.js"], "wwwroot/bundles/VocaDB.js")
 
-	.ts("Scripts/App.ts", "wwwroot/bundles")
+	.ts("wwwroot/Scripts/App.ts", "wwwroot/bundles")
 
 	// Included on all pages (including front page)
 	// Generally the references go from viewmodels -> repositories -> models -> support classes
@@ -52,20 +52,20 @@ mix
 
 	// Included on all pages except the front page (to optimize front page load time).
 	.scripts([
-		"Scripts/moment-with-locales.js",
+		"wwwroot/Scripts/moment-with-locales.js",
 	], "wwwroot/bundles/shared/main.js")
 
 	// Included on all entry edit and create pages (album, artist, my settings etc.)
 	.scripts([
-		"Scripts/knockout-sortable.js"
+		"wwwroot/Scripts/knockout-sortable.js"
 	], "wwwroot/bundles/shared/edit.js")
 
 	.scripts([
-		"Scripts/jquery.tools.min.js"	// REVIEW
+		"wwwroot/Scripts/jquery.tools.min.js"	// REVIEW
 	], "wwwroot/bundles/Home/Index.js")
 
 	.scripts([
-		"Scripts/jqwidgets27/jqxcore.js", "Scripts/jqwidgets27/jqxrating.js"
+		"wwwroot/Scripts/jqwidgets27/jqxcore.js", "wwwroot/Scripts/jqwidgets27/jqxrating.js"
 	], "wwwroot/bundles/jqxRating.js")
 
 
@@ -92,7 +92,7 @@ mix
 	], "wwwroot/bundles/Artist/Create.js")
 
 	.scripts([
-		"Scripts/soundcloud-api.js"	// REVIEW
+		"wwwroot/Scripts/soundcloud-api.js"	// REVIEW
 	], "wwwroot/bundles/Artist/Details.js")
 
 	.scripts([
@@ -102,7 +102,7 @@ mix
 	], "wwwroot/bundles/Artist/Merge.js")
 
 	.scripts([
-		"Scripts/page.js"
+		"wwwroot/Scripts/page.js"
 	], "wwwroot/bundles/Discussion/Index.js")
 
 	.scripts([
@@ -118,14 +118,14 @@ mix
 	], "wwwroot/bundles/ReleaseEvent/Edit.js")
 
 	.scripts([
-		"Scripts/soundcloud-api.js"	// REVIEW
+		"wwwroot/Scripts/soundcloud-api.js"	// REVIEW
 	], "wwwroot/bundles/Search/Index.js")
 
 	.scripts([
 	], "wwwroot/bundles/Song/Create.js")
 
 	.scripts([
-		"Scripts/MediaElement/mediaelement-and-player.min.js",
+		"wwwroot/Scripts/MediaElement/mediaelement-and-player.min.js",
 	], "wwwroot/bundles/Song/Details.js")
 
 	.scripts([
@@ -135,11 +135,11 @@ mix
 	], "wwwroot/bundles/Song/Merge.js")
 
 	.scripts([
-		"Scripts/url.js"
+		"wwwroot/Scripts/url.js"
 	], "wwwroot/bundles/Song/TopRated.js")
 
 	.scripts([
-		"Scripts/soundcloud-api.js"	// REVIEW
+		"wwwroot/Scripts/soundcloud-api.js"	// REVIEW
 	], "wwwroot/bundles/SongList/Details.js")
 
 	.scripts([
@@ -167,7 +167,7 @@ mix
 	], "wwwroot/bundles/User/AlbumCollection.js")
 
 	.scripts([
-		"Scripts/soundcloud-api.js"	// REVIEW
+		"wwwroot/Scripts/soundcloud-api.js"	// REVIEW
 	], "wwwroot/bundles/User/Details.js")
 
 	.scripts([
@@ -180,7 +180,7 @@ mix
 	], "wwwroot/bundles/User/MySettings.js")
 
 	.scripts([
-		"Scripts/soundcloud-api.js"	// REVIEW
+		"wwwroot/Scripts/soundcloud-api.js"	// REVIEW
 	], "wwwroot/bundles/User/RatedSongs.js")
 
 	.scripts([
@@ -197,14 +197,14 @@ mix
 
 	// CSS for jqxRating
 	.styles([
-		"Scripts/jqwidgets27/styles/jqx.base.css"
+		"wwwroot/Scripts/jqwidgets27/styles/jqx.base.css"
 	], "wwwroot/Scripts/jqwidgets27/styles/css.css");
 
 
 if (mix.inProduction()) {
 	mix.scripts([], "wwwroot/bundles/tests.js");
 } else {
-	mix.ts("Scripts/tests.ts", "wwwroot/bundles");
+	mix.ts("wwwroot/Scripts/tests.ts", "wwwroot/bundles");
 }
 
 
