@@ -8,13 +8,13 @@ namespace VocaDb.Web
 {
 	public class AspNetCoreHttpResponse : IHttpResponse
 	{
-		private readonly HttpResponse response;
+		private readonly HttpResponse _response;
 
 		public AspNetCoreHttpResponse(HttpResponse response)
 		{
-			this.response = response;
+			_response = response;
 		}
 
-		public void AddCookie(string name, string value, DateTime expires) => response.Cookies.Append(name, value, new CookieOptions { Expires = expires });
+		public void AddCookie(string name, string value, DateTime expires) => _response.Cookies.Append(name, value, new CookieOptions { Expires = expires });
 	}
 }

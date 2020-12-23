@@ -11,19 +11,19 @@ namespace VocaDb.Web
 {
 	public class AspNetCoreHttpRequest : IHttpRequest
 	{
-		private readonly HttpRequest request;
+		private readonly HttpRequest _request;
 
 		public AspNetCoreHttpRequest(HttpRequest request)
 		{
-			this.request = request;
+			_request = request;
 		}
 
-		public IReadOnlyDictionary<string, ICookie> Cookies => request.Cookies.Keys.Distinct().ToDictionary(k => k, v => (ICookie)new ReadOnlyCookie(request.Cookies[v]));
-		public NameValueCollection Form => request.HasFormContentType ? ToNameValueCollection(request.Form) : new NameValueCollection();
+		public IReadOnlyDictionary<string, ICookie> Cookies => _request.Cookies.Keys.Distinct().ToDictionary(k => k, v => (ICookie)new ReadOnlyCookie(_request.Cookies[v]));
+		public NameValueCollection Form => _request.HasFormContentType ? ToNameValueCollection(_request.Form) : new NameValueCollection();
 		// https://docs.microsoft.com/en-us/dotnet/api/system.web.httprequest.params?view=netframework-4.8
-		public NameValueCollection Params => new NameValueCollection { QueryString, Form, ToNameValueCollection(request.Cookies)/* TODO: ServerVariables */ };
-		public NameValueCollection QueryString => ToNameValueCollection(request.Query);
-		public string UserHostAddress => request.HttpContext.Connection.RemoteIpAddress.ToString();
+		public NameValueCollection Params => new NameValueCollection { QueryString, Form, ToNameValueCollection(_request.Cookies)/* TODO: ServerVariables */ };
+		public NameValueCollection QueryString => ToNameValueCollection(_request.Query);
+		public string UserHostAddress => _request.HttpContext.Connection.RemoteIpAddress.ToString();
 
 		private static NameValueCollection ToNameValueCollection(IEnumerable<KeyValuePair<string, string>> source)
 		{
