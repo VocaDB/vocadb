@@ -2,10 +2,13 @@
 
 using System.Linq;
 using System.Runtime.Caching;
+using AspNetCore.CacheOutput.Extensions;
+using AspNetCore.CacheOutput.InMemory.Extensions;
 using Autofac;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Configuration;
@@ -50,7 +53,15 @@ namespace VocaDb.Web
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllersWithViews();
+			// Code from: https://stackoverflow.com/questions/51411693/null-response-returns-a-204/60858295#60858295
+			services.AddControllersWithViews(options =>
+			{
+				// remove formatter that turns nulls into 204 - No Content responses
+				// this formatter breaks Angular's Http response JSON parsing
+				options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
+			});
+
+			services.AddInMemoryCacheOutput();
 		}
 
 		private static string[] LoadBlockedIPs(IComponentContext componentContext) => componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());
@@ -179,6 +190,8 @@ namespace VocaDb.Web
 					name: "default",
 					pattern: "{controller=Home}/{action=Index}/{id?}");
 			});
+
+			app.UseCacheOutput();
 		}
 	}
 }
