@@ -5,6 +5,7 @@
     <RootNamespace>VocaDb.Web</RootNamespace>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <!-- Workaround for FluentNHibernate throwing Exception. This should be removed when possible. -->
     <!-- CA2300: Do not use insecure deserializer BinaryFormatter -->
     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
