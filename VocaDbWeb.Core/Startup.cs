@@ -37,6 +37,7 @@ using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
+using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web
@@ -53,12 +54,14 @@ namespace VocaDb.Web
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			// Code from: https://stackoverflow.com/questions/51411693/null-response-returns-a-204/60858295#60858295
 			services.AddControllersWithViews(options =>
 			{
+				// Code from: https://stackoverflow.com/questions/51411693/null-response-returns-a-204/60858295#60858295
 				// remove formatter that turns nulls into 204 - No Content responses
 				// this formatter breaks Angular's Http response JSON parsing
 				options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
+
+				options.Filters.Add<VoidAndTaskTo204NoContentFilter>();
 			});
 
 			services.AddInMemoryCacheOutput();
