@@ -12,7 +12,6 @@ using VocaDb.Web.Models;
 
 namespace VocaDb.Web.Controllers
 {
-	// TODO: implement [SessionState(SessionStateBehavior.ReadOnly)]
 	public class HomeController : ControllerBase
 	{
 		private readonly BrandableStringsManager _brandableStringsManager;
