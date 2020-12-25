@@ -17,20 +17,8 @@ namespace VocaDb.Web.Controllers.Api
 	/// </summary>
 	[Route("api/resources")]
 	[ApiController]
-	// TODO: implement [DefaultCasingConfig]
 	public class ResourcesApiController : ApiController
 	{
-		// TODO: implement
-		/*class DefaultCasingConfig : Attribute, IControllerConfiguration
-		{
-			public void Initialize(HttpControllerSettings controllerSettings, HttpControllerDescriptor controllerDescriptor)
-			{
-				controllerSettings.Formatters.Clear();
-				controllerSettings.Formatters.Add(new JsonMediaTypeFormatter());
-				controllerSettings.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new DefaultContractResolver();
-			}
-		}*/
-
 		private const int CacheDuration = Model.Domain.Constants.SecondsInADay;
 
 		private readonly Dictionary<string, ResourceManager> allSets = new()
