@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Database.Repositories.NHibernate;
@@ -54,19 +57,27 @@ namespace VocaDb.Web
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllersWithViews(options =>
-			{
-				// Code from: https://stackoverflow.com/questions/51411693/null-response-returns-a-204/60858295#60858295
-				// remove formatter that turns nulls into 204 - No Content responses
-				// this formatter breaks Angular's Http response JSON parsing
-				options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
+			services
+				.AddControllersWithViews(options =>
+				{
+					// Code from: https://stackoverflow.com/questions/51411693/null-response-returns-a-204/60858295#60858295
+					// remove formatter that turns nulls into 204 - No Content responses
+					// this formatter breaks Angular's Http response JSON parsing
+					options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
 
-				options.Filters.Add<VoidAndTaskTo204NoContentFilter>();
-			}).ConfigureApiBehaviorOptions(options =>
-			{
-				// Code from: https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-5.0#apicontroller-attribute
-				options.SuppressModelStateInvalidFilter = true;
-			});
+					options.Filters.Add<VoidAndTaskTo204NoContentFilter>();
+				})
+				.ConfigureApiBehaviorOptions(options =>
+				{
+					// Code from: https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-5.0#apicontroller-attribute
+					options.SuppressModelStateInvalidFilter = true;
+				})
+				.AddNewtonsoftJson(options =>
+				{
+					options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); // All properties in camel case
+					options.SerializerSettings.Converters.Add(new StringEnumConverter());  // All enums as strings by default
+					options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+				});
 
 			services.AddInMemoryCacheOutput();
 		}
