@@ -1,5 +1,6 @@
 #nullable disable
 
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,6 +8,12 @@ using System.Linq;
 using System.Resources;
 using AspNetCore.CacheOutput;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using VocaDb.Web.Resources.Domain.ReleaseEvents;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
@@ -16,9 +23,30 @@ namespace VocaDb.Web.Controllers.Api
 	/// Loads localized string resources.
 	/// </summary>
 	[Route("api/resources")]
+	[DefaultCasingConfig]
 	[ApiController]
 	public class ResourcesApiController : ApiController
 	{
+		// Code from: https://stackoverflow.com/questions/56127510/aspnet-core-input-output-json-serialization-settings-at-controller-level/56127866#56127866
+		class DefaultCasingConfig : ActionFilterAttribute
+		{
+			public override void OnResultExecuting(ResultExecutingContext context)
+			{
+				if (context.Result is ObjectResult objectResult)
+				{
+					var serializerSettings = new JsonSerializerSettings
+					{
+						ContractResolver = new DefaultContractResolver(),
+					};
+					// Code from: https://github.com/aspnet/Mvc/issues/8128#issuecomment-407214518
+					var options = context.HttpContext.RequestServices.GetRequiredService<IOptions<MvcOptions>>();
+					var mvcOptions = options.Value;
+					var jsonFormatter = new NewtonsoftJsonOutputFormatter(serializerSettings, ArrayPool<char>.Shared, mvcOptions);
+					objectResult.Formatters.Add(jsonFormatter);
+				}
+			}
+		}
+
 		private const int CacheDuration = Model.Domain.Constants.SecondsInADay;
 
 		private readonly Dictionary<string, ResourceManager> allSets = new()
