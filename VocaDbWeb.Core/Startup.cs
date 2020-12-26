@@ -62,6 +62,10 @@ namespace VocaDb.Web
 				options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
 
 				options.Filters.Add<VoidAndTaskTo204NoContentFilter>();
+			}).ConfigureApiBehaviorOptions(options =>
+			{
+				// Code from: https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-5.0#apicontroller-attribute
+				options.SuppressModelStateInvalidFilter = true;
 			});
 
 			services.AddInMemoryCacheOutput();
