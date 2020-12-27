@@ -1,5 +1,6 @@
 #nullable disable
 
+using System;
 using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace VocaDb.Web.Controllers.Api
 	public class ResourcesApiController : ApiController
 	{
 		// Code from: https://stackoverflow.com/questions/56127510/aspnet-core-input-output-json-serialization-settings-at-controller-level/56127866#56127866
+		[Obsolete]
 		class DefaultCasingConfig : ActionFilterAttribute
 		{
 			public override void OnResultExecuting(ResultExecutingContext context)
