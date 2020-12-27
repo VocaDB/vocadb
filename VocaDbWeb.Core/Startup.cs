@@ -81,6 +81,8 @@ namespace VocaDb.Web
 				});
 
 			services.AddInMemoryCacheOutput();
+
+			services.AddSwaggerGen();
 		}
 
 		private static string[] LoadBlockedIPs(IComponentContext componentContext) => componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());
@@ -211,6 +213,13 @@ namespace VocaDb.Web
 			});
 
 			app.UseCacheOutput();
+
+			// Code from: https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio
+			app.UseSwagger();
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "VocaDB Web API V1");
+			});
 		}
 	}
 }
