@@ -169,6 +169,7 @@ namespace VocaDb.Web
 			builder.RegisterType<LaravelMixHelper>().AsSelf();
 			builder.RegisterType<Login>().AsSelf();
 			builder.RegisterType<PVHelper>().AsSelf();
+			builder.RegisterType<ViewRenderService>().As<IViewRenderService>();
 
 			// Enable DI for action filters
 			//builder.Register(c => new RestrictBlockedIPAttribute(c.Resolve<IPRuleManager>()))
