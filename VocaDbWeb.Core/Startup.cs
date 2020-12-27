@@ -70,6 +70,7 @@ namespace VocaDb.Web
 				.ConfigureApiBehaviorOptions(options =>
 				{
 					// Code from: https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-5.0#apicontroller-attribute
+					// Disable automatic 400 response. This prevents API controllers from returning an BadRequestObjectResult when an invalid Enum value is passed.
 					options.SuppressModelStateInvalidFilter = true;
 				})
 				.AddNewtonsoftJson(options =>
