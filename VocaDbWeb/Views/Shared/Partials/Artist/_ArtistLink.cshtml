@@ -1,9 +1,11 @@
 ﻿@using VocaDb.Web.Models.Shared.Partials.Artist
 @model ArtistLinkViewModel
 
-@if (Model.TypeLabel)
-{
-	@Html.Partial("Partials/Artist/_ArtistTypeLabel", new ArtistTypeLabelViewModel(Model.Artist.ArtistType))
+@{
+	if (Model.TypeLabel)
+	{
+		@Html.Partial("Partials/Artist/_ArtistTypeLabel", new ArtistTypeLabelViewModel(Model.Artist.ArtistType))
+	}
+	@Html.ActionLink(Model.Name ?? Model.Artist.Name, "Details", "Artist", new RouteValueDictionary { { "id", Model.Artist.Id } }, new Dictionary<string, object> { { "title", Model.Artist.AdditionalNames }, { "data-entry-id", Model.Artist.Id }, { "class", "artistLink" } })
+	if (Model.ReleaseYear && Model.Artist.ReleaseDate.HasValue) {<small class="muted">&nbsp;(@Model.Artist.ReleaseDate.Value.Year)</small>}
 }
-@Html.ActionLink(Model.Name ?? Model.Artist.Name, "Details", "Artist", new RouteValueDictionary { { "id", Model.Artist.Id } }, new Dictionary<string, object> { { "title", Model.Artist.AdditionalNames }, { "data-entry-id", Model.Artist.Id }, { "class", "artistLink" } })
-@if (Model.ReleaseYear && Model.Artist.ReleaseDate.HasValue) {<small class="muted">&nbsp;(@Model.Artist.ReleaseDate.Value.Year)</small>}
