@@ -57,6 +57,8 @@ namespace VocaDb.Model.Domain.Artists
 		Vocalist,
 
 		Character,
+
+		SynthesizerV,
 	}
 
 	/// <summary>
@@ -101,5 +103,7 @@ namespace VocaDb.Model.Domain.Artists
 		Vocalist = 1 << 15,
 
 		Character = 1 << 16,
+
+		SynthesizerV = 1 << 17,
 	}
 }

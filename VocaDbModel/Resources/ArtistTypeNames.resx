@@ -171,4 +171,7 @@
   <data name="Character" xml:space="preserve">
     <value>Character</value>
   </data>
+  <data name="SynthesizerV" xml:space="preserve">
+    <value>Synthesizer V</value>
+  </data>
 </root>
