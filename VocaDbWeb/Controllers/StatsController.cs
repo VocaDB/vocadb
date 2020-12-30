@@ -296,7 +296,8 @@ namespace VocaDb.Web.Controllers
 							|| r.Artist.ArtistType == ArtistType.UTAU
 							|| r.Artist.ArtistType == ArtistType.CeVIO
 							|| r.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer
-							|| r.Artist.ArtistType == ArtistType.Utaite))
+							|| r.Artist.ArtistType == ArtistType.Utaite
+							|| r.Artist.ArtistType == ArtistType.SynthesizerV))
 					.OrderBy(a => a.OriginalRelease.ReleaseDate.Year)
 					.ThenBy(a => a.OriginalRelease.ReleaseDate.Month)
 					.GroupBy(a => new
@@ -345,7 +346,8 @@ namespace VocaDb.Web.Controllers
 						a.ArtistType == ArtistType.Vocaloid ||
 						a.ArtistType == ArtistType.UTAU ||
 						a.ArtistType == ArtistType.CeVIO ||
-						a.ArtistType == ArtistType.Utaite)
+						a.ArtistType == ArtistType.Utaite ||
+						a.ArtistType == ArtistType.SynthesizerV)
 					.Select(a => new StatsQueries.LocalizedValue
 					{
 						Name = new TranslatedString
@@ -572,7 +574,7 @@ namespace VocaDb.Web.Controllers
 			Expression<Func<ArtistForSong, bool>> dateFilter = (song) => (cutoff.HasValue ? song.Song.CreateDate >= cutoff : true);
 
 			return SimpleBarChart<Artist>(q => q
-					.Where(a => a.ArtistType == ArtistType.Vocaloid || a.ArtistType == ArtistType.UTAU || a.ArtistType == ArtistType.Utaite)
+					.Where(a => a.ArtistType == ArtistType.Vocaloid || a.ArtistType == ArtistType.UTAU || a.ArtistType == ArtistType.Utaite || a.ArtistType == ArtistType.SynthesizerV)
 					.Select(a => new StatsQueries.LocalizedValue
 					{
 						Name = new TranslatedString
@@ -590,7 +592,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult SongsPerVocaloidOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
 		{
 			if (vocalistTypes == null)
-				vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
+				vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer, ArtistType.SynthesizerV };
 
 			var data = _queries.SongsPerVocaloidOverTime(cutoff, vocalistTypes, startYear);
 
@@ -607,7 +609,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult GetSongsPerVoicebankTypeOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
 		{
 			if (vocalistTypes == null)
-				vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer };
+				vocalistTypes = new[] { ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer, ArtistType.SynthesizerV };
 
 			var data = _queries.GetSongsPerVoicebankTypeOverTime(cutoff, vocalistTypes, startYear);
 

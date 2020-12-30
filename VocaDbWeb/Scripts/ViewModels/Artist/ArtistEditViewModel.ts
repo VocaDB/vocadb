@@ -204,7 +204,8 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 			this.canHaveReleaseDate = ko.computed(() => {
 				const vocaloidTypes = [
 					ArtistType.Vocaloid, ArtistType.UTAU,
-					ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer
+					ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer,
+					ArtistType.SynthesizerV,
 				];
 				return _.includes(vocaloidTypes, this.artistType());
 			});

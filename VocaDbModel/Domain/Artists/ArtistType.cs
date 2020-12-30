@@ -56,7 +56,9 @@ namespace VocaDb.Model.Domain.Artists
 
 		Vocalist,
 
-		Character
+		Character,
+
+		SynthesizerV,
 	}
 
 	/// <summary>
@@ -68,38 +70,40 @@ namespace VocaDb.Model.Domain.Artists
 	{
 		Unknown = 0,
 
-		Circle = 1,
+		Circle = 1 << 0,
 
-		Label = 2,
+		Label = 1 << 1,
 
-		Producer = 4,
+		Producer = 1 << 2,
 
-		Animator = 8,
+		Animator = 1 << 3,
 
-		Illustrator = 16,
+		Illustrator = 1 << 4,
 
-		Lyricist = 32,
+		Lyricist = 1 << 5,
 
-		Vocaloid = 64,
+		Vocaloid = 1 << 6,
 
-		UTAU = 128,
+		UTAU = 1 << 7,
 
-		CeVIO = 256,
+		CeVIO = 1 << 8,
 
-		OtherVoiceSynthesizer = 512,
+		OtherVoiceSynthesizer = 1 << 9,
 
-		OtherVocalist = 1024,
+		OtherVocalist = 1 << 10,
 
-		OtherGroup = 2048,
+		OtherGroup = 1 << 11,
 
-		OtherIndividual = 4096,
+		OtherIndividual = 1 << 12,
 
-		Utaite = 8192,
+		Utaite = 1 << 13,
 
-		Band = 16384,
+		Band = 1 << 14,
 
-		Vocalist = 32768,
+		Vocalist = 1 << 15,
 
-		Character = 65536
+		Character = 1 << 16,
+
+		SynthesizerV = 1 << 17,
 	}
 }
