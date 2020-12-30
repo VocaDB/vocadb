@@ -12,18 +12,19 @@ import ContentFocus from '../Models/ContentFocus';
 		public static customizableTypes = [
 			ArtistType.Animator, ArtistType.OtherGroup, ArtistType.OtherIndividual, 
 			ArtistType.OtherVocalist, ArtistType.Producer, ArtistType.Illustrator, ArtistType.Lyricist, 
-			ArtistType.Utaite, ArtistType.Band, ArtistType.Vocalist, ArtistType.Unknown
+			ArtistType.Utaite, ArtistType.Band, ArtistType.Vocalist, ArtistType.Unknown,
 		];
 
 		// Artist types that are groups (excluding Unknown)
 		public static groupTypes = [
 			ArtistType.Band, ArtistType.Circle,
-			ArtistType.Label, ArtistType.OtherGroup
+			ArtistType.Label, ArtistType.OtherGroup,
 		];
 
 		private static vocalistTypes = [
 			ArtistType.OtherVocalist, ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite,
-			ArtistType.UTAU, ArtistType.Vocaloid, ArtistType.CeVIO, ArtistType.Vocalist
+			ArtistType.UTAU, ArtistType.Vocaloid, ArtistType.CeVIO, ArtistType.Vocalist,
+			ArtistType.SynthesizerV,
 		];
 
 		public static canHaveChildVoicebanks(at: ArtistType) {
