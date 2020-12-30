@@ -44,7 +44,9 @@
 
 		Vocalist,
 
-		Character
+		Character,
+
+		SynthesizerV,
 
 	}
 

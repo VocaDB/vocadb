@@ -32,7 +32,7 @@
 	<a href="#" data-bind="click: function() { vocalistSelection(null); }, css: { active: vocalistSelection() == null }" class="btn">@Res.VocalistAll</a>
 	<a href="#" data-bind="click: function() { vocalistSelection('Vocaloid'); }, css: { active: vocalistSelection() == 'Vocaloid' }" class="btn">@Res.VocalistVocaloid</a>
 	<a href="#" data-bind="click: function() { vocalistSelection('UTAU'); }, css: { active: vocalistSelection() == 'UTAU' }" class="btn">@Res.VocalistUTAU</a>
-	<a href="#" data-bind="click: function() { vocalistSelection('CeVIO'); }, css: { active: vocalistSelection() == 'CeVIO' }" class="btn">@Res.VocalistOther</a>
+	<a href="#" data-bind="click: function() { vocalistSelection('Other'); }, css: { active: vocalistSelection() == 'Other' }" class="btn">@Res.VocalistOther</a>
 </div>
 
 <div class="alert js-cloak withMargin" data-bind="show" visible="{{ songs().length == 0 }}">

@@ -284,7 +284,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		{
 			SongVocalistSelection.Vocaloid => query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.Vocaloid)),
 			SongVocalistSelection.UTAU => query.Where(s => s.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == ArtistType.UTAU)),
-			SongVocalistSelection.CeVIO => query.Where(s => s.AllArtists.Any(a => !a.IsSupport && (a.Artist.ArtistType == ArtistType.CeVIO || a.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer))),
+			SongVocalistSelection.Other => query.Where(s => s.AllArtists.Any(a => !a.IsSupport && (a.Artist.ArtistType == ArtistType.CeVIO || a.Artist.ArtistType == ArtistType.OtherVoiceSynthesizer || a.Artist.ArtistType == ArtistType.SynthesizerV))),
 			_ => query,
 		};
 
@@ -396,6 +396,6 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		Nothing,
 		Vocaloid,
 		UTAU,
-		CeVIO
+		Other,
 	}
 }

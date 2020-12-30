@@ -65,19 +65,22 @@ namespace VocaDb.Model.Helpers
 			{ ArtistType.UTAU, ArtistCategories.Vocalist },
 			{ ArtistType.CeVIO, ArtistCategories.Vocalist },
 			{ ArtistType.Vocaloid, ArtistCategories.Vocalist },
-			{ ArtistType.Vocalist, ArtistCategories.Vocalist }
+			{ ArtistType.Vocalist, ArtistCategories.Vocalist },
+			{ ArtistType.SynthesizerV, ArtistCategories.Vocalist },
 		};
 
 		/// <summary>
 		/// The roles of these artists can be customized
 		/// </summary>
-		public static readonly ArtistType[] CustomizableTypes = {
+		public static readonly ArtistType[] CustomizableTypes =
+		{
 			ArtistType.Animator, ArtistType.OtherGroup, ArtistType.OtherIndividual,
 			ArtistType.OtherVocalist, ArtistType.Producer, ArtistType.Illustrator, ArtistType.Lyricist,
 			ArtistType.Utaite, ArtistType.Band, ArtistType.Vocalist, ArtistType.Unknown
 		};
 
-		public static readonly ArtistType[] GroupTypes = {
+		public static readonly ArtistType[] GroupTypes =
+		{
 			ArtistType.Label, ArtistType.Circle, ArtistType.OtherGroup, ArtistType.Band
 		};
 
@@ -95,22 +98,28 @@ namespace VocaDb.Model.Helpers
 		/// <summary>
 		/// Artists allowed for a song.
 		/// </summary>
-		public static readonly ArtistType[] SongArtistTypes = {
+		public static readonly ArtistType[] SongArtistTypes =
+		{
 			ArtistType.Unknown, ArtistType.OtherGroup, ArtistType.OtherVocalist,
 			ArtistType.Producer, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.Vocaloid, ArtistType.Animator, ArtistType.Illustrator,
-			ArtistType.Lyricist, ArtistType.OtherIndividual, ArtistType.Character
+			ArtistType.Lyricist, ArtistType.OtherIndividual, ArtistType.Character,
+			ArtistType.SynthesizerV,
 		};
 
-		public static readonly ArtistType[] VocalistTypes = {
+		public static readonly ArtistType[] VocalistTypes =
+		{
 			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVocalist,
-			ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite, ArtistType.Vocalist
+			ArtistType.OtherVoiceSynthesizer, ArtistType.Utaite, ArtistType.Vocalist,
+			ArtistType.SynthesizerV,
 		};
 
 		/// <summary>
 		/// Voice synthesizer artist types, including "other voice synthesizer".
 		/// </summary>
-		public static readonly ArtistType[] VoiceSynthesizerTypes = {
-			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer
+		public static readonly ArtistType[] VoiceSynthesizerTypes =
+		{
+			ArtistType.Vocaloid, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.OtherVoiceSynthesizer,
+			ArtistType.SynthesizerV,
 		};
 
 		/// <summary>
