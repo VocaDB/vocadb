@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace VocaDb.Web.Code.WebApi
 {
+	[Obsolete]
 	[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false)]
 	public class RequireSslAttribute : ActionFilterAttribute
 	{
