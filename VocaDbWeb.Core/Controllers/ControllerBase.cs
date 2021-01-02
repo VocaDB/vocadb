@@ -36,6 +36,16 @@ namespace VocaDb.Web.Controllers
 			return NotFound("No ID specified");
 		}
 
+		protected void RestoreErrorsFromTempData()
+		{
+			// TODO: implement
+		}
+
+		protected void SaveErrorsToTempData()
+		{
+			// TODO: implement
+		}
+
 		protected void SetSearchEntryType(EntryType entryType)
 		{
 			PageProperties.GlobalSearchType = entryType;

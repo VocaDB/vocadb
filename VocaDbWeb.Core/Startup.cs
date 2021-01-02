@@ -5,6 +5,7 @@ using System.Runtime.Caching;
 using AspNetCore.CacheOutput.Extensions;
 using AspNetCore.CacheOutput.InMemory.Extensions;
 using Autofac;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -42,6 +43,7 @@ using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
+using VocaDb.Web.Middleware;
 
 namespace VocaDb.Web
 {
@@ -83,6 +85,13 @@ namespace VocaDb.Web
 			services.AddInMemoryCacheOutput();
 
 			services.AddSwaggerGen();
+
+			services
+				.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(options =>
+				{
+					options.LoginPath = "/User/Login";
+				});
 		}
 
 		private static string[] LoadBlockedIPs(IComponentContext componentContext) => componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());
@@ -204,7 +213,10 @@ namespace VocaDb.Web
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
+
+			app.UseVocaDbPrincipal();
 
 			app.UseEndpoints(endpoints =>
 			{
