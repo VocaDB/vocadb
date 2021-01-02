@@ -12,7 +12,7 @@ namespace VocaDb.Web
 		public static void Main(string[] args)
 		{
 			// Code from: https://autofaccn.readthedocs.io/en/latest/integration/aspnetcore.html#asp-net-core-3-0-and-generic-hosting
-			var host = CreateHostBuilder(args)
+			var host = Host.CreateDefaultBuilder(args)
 				.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 				.ConfigureWebHostDefaults(webHostBuilder =>
 				{
@@ -25,12 +25,5 @@ namespace VocaDb.Web
 
 			host.Run();
 		}
-
-		public static IHostBuilder CreateHostBuilder(string[] args) =>
-			Host.CreateDefaultBuilder(args)
-				.ConfigureWebHostDefaults(webBuilder =>
-				{
-					webBuilder.UseStartup<Startup>();
-				});
 	}
 }
