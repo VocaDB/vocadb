@@ -1,17 +1,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using NLog;
+using VocaDb.Model;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
@@ -40,6 +46,11 @@ namespace VocaDb.Web.Controllers
 		protected IUserPermissionContext PermissionContext => HttpContext.RequestServices.GetRequiredService<IUserPermissionContext>();
 
 		private Login Login => HttpContext.RequestServices.GetRequiredService<Login>();
+
+		protected string GetHostnameForValidHit()
+		{
+			return WebHelper.IsValidHit(Request) ? WebHelper.GetRealHost(Request) : string.Empty;
+		}
 
 		protected ActionResult NoId()
 		{
@@ -92,6 +103,46 @@ namespace VocaDb.Web.Controllers
 			return !errors;
 		}
 
+		protected ActionResult HttpStatusCodeResult(HttpStatusCode code, string message)
+		{
+			Response.StatusCode = (int)code;
+			// TODO: implement Response.StatusDescription = message;
+
+			return Content((int)code + ": " + message);
+		}
+
+		protected void ParseAdditionalPictures(IFormFile mainPic, IList<EntryPictureFileContract> pictures)
+		{
+			ParamIs.NotNull(() => mainPic);
+			ParamIs.NotNull(() => pictures);
+
+			var additionalPics = Enumerable.Range(0, Request.Form.Files.Count)
+				.Select(i => Request.Form.Files[i])
+				.Where(f => f != null && f.FileName != mainPic.FileName)
+				.ToArray();
+
+			var newPics = pictures.Where(p => p.Id == 0).ToArray();
+
+			for (int i = 0; i < additionalPics.Length; ++i)
+			{
+				if (i >= newPics.Length)
+					break;
+
+				var contract = ParsePicture(additionalPics[i], "Pictures", ImagePurpose.Additional);
+
+				if (contract != null)
+				{
+					newPics[i].OriginalFileName = contract.OriginalFileName;
+					newPics[i].UploadedFile = contract.UploadedFile;
+					newPics[i].Mime = contract.Mime;
+					newPics[i].ContentLength = contract.ContentLength;
+					newPics[i].Purpose = contract.Purpose;
+				}
+			}
+
+			CollectionHelper.RemoveAll(pictures, p => p.Id == 0 && p.UploadedFile == null);
+		}
+
 		protected EntryPictureFileContract ParsePicture(IFormFile pictureUpload, string fieldName, ImagePurpose purpose)
 		{
 			EntryPictureFileContract pictureData = null;
@@ -117,12 +168,28 @@ namespace VocaDb.Web.Controllers
 			return pictureData;
 		}
 
-		protected ActionResult HttpStatusCodeResult(HttpStatusCode code, string message)
+		protected ActionResult Picture(PictureContract pictureData, string title)
 		{
-			Response.StatusCode = (int)code;
-			// TODO: implement Response.StatusDescription = message;
+			if (pictureData?.Bytes == null || string.IsNullOrEmpty(pictureData.Mime))
+				return File(HttpContext.RequestServices.GetRequiredService<IHttpContext>().ServerPathMapper.MapPath("~/Content/unknown.png"), "image/png");
 
-			return Content((int)code + ": " + message);
+			var ext = ImageHelper.GetExtensionFromMime(pictureData.Mime);
+
+			if (!string.IsNullOrEmpty(ext))
+			{
+				//var encoded = Url.Encode(title);
+				// Note: there is no good way to encode content-disposition filename (see http://stackoverflow.com/a/216777)
+				Response.Headers.Add("content-disposition", $"inline;filename=\"{title}{ext}\"");
+			}
+
+			return File(pictureData.Bytes, pictureData.Mime);
+		}
+
+		protected ActionResult LowercaseJson(object obj) => Content(JsonHelpers.Serialize(obj), "application/json");
+
+		protected new ActionResult Json(object obj)
+		{
+			return Content(JsonConvert.SerializeObject(obj), "application/json");
 		}
 
 		protected Task<string> RenderPartialViewToStringAsync(string viewName, object model) => HttpContext.RequestServices.GetRequiredService<IViewRenderService>().RenderToStringAsync(viewName, model);
@@ -141,6 +208,8 @@ namespace VocaDb.Web.Controllers
 		{
 			PageProperties.GlobalSearchType = entryType;
 		}
+
+		protected VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
 		protected ActionResult Xml(string content)
 		{
