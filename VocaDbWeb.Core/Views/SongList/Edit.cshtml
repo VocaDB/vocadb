@@ -1,0 +1,174 @@
+﻿@using VocaDb.Model.Domain.Images
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@using VocaDb.Web.Models.SongLists
+@using VocaDb.Web.Helpers
+@using Res = ViewRes.SongList.EditStrings
+@using EditRes = ViewRes.EntryEditStrings
+@model SongListEditViewModel
+@{
+	
+	var isNew = (Model.Id == 0);
+	string parentUrl;
+	
+	if (!isNew) {
+		PageProperties.Title = string.Format(Res.EditTitle, Model.CurrentName);
+		parentUrl = Url.Action("Details", new { id = Model.Id });
+		ViewBag.Parents = new[] { 
+			Html.ActionLink(Model.CurrentName, "Details", new { id = Model.Id }) 
+		};
+	} else {
+		PageProperties.Title = Res.CreateTitle;	
+		parentUrl = Url.Action("Featured");
+	}
+	
+	var thumbUrl = Url.ImageThumb(Model.Thumb, ImageSize.SmallThumb, useUnknownImage: false);
+	
+}
+
+@section Toolbar {
+	@if (!isNew) {
+		if (!Model.Deleted) {
+			<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
+		}
+		<a href="#" id="trashLink" data-bind="click: trashViewModel.show">@EditRes.MoveToTrash</a>
+	}
+}
+
+@section BodyScripts {
+<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/edit.js")"></script>
+<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/SongList/Edit.js")"></script>
+<script type="text/javascript">
+
+	$(document).ready(function () {
+		var urlMapper = new app.UrlMapper('@RootPath');
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		app.initSongListEditPage(repoFactory, urlMapper, @Model.Id);
+	});
+
+</script>
+}
+
+@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(Res.UnableToSave))
+
+<form action="@Url.Action("Edit", "SongList")" id="songListForm" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
+	@Html.HiddenFor(m => m.CanCreateFeaturedLists)
+
+	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(parentUrl))
+
+	<div id="tabs">
+
+		<ul>
+			<li><a href="#propertiesTab">@Res.TabProperties</a></li>
+			<li><a href="#songsTab">@Res.TabSongs</a></li>
+		</ul>
+
+		<div id="propertiesTab">
+
+			<div class="editor-label">
+				@Res.Name
+			</div>
+			<div class="editor-field">
+				<input type="text" data-bind="value: name" class="required input-xxlarge" size="200" required />
+			</div>
+
+			<div class="editor-label">
+				@Res.Description
+				@Html.Partial("Partials/Shared/_MarkdownNotice")
+			</div>
+			<div class="editor-field">
+				<textarea data-bind="textInput: description" rows="6" cols="60" maxlength="3000" class="input-xxlarge"></textarea>
+				
+				<div>
+					@ViewRes.EntryEditStrings.LivePreview
+					<div data-bind="markdown: description"></div>
+				</div>
+			</div>
+
+			@if (Model.CanCreateFeaturedLists) {
+				<div class="editor-label">
+					@Res.FeaturedCategory
+				</div>
+				<div class="editor-field">
+					@Html.EnumDropDownListForDic(m => m.FeaturedCategory, Translate.SongListFeaturedCategoryNames, new Dictionary<string, object> { { "data-bind", "value:featuredCategory" } })
+				</div>
+			}
+			
+			<div class="editor-label">
+				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.EventDate, Res.EventDateHelp))
+			</div>
+			<div class="editor-field">
+				<input type="text" data-bind="datepicker: { value: eventDateDate, dateFormat: 'yy-mm-dd' }" class="span2" maxlength="10" />
+			</div>
+
+			<div class="editor-label">
+				@Res.Thumbnail
+			</div>
+			<div class="editor-field">
+				<div class="media">
+					@if (!string.IsNullOrEmpty(thumbUrl)) {
+						<img class="pull-left media-object" src="@thumbUrl" alt="Thumb" />
+					}
+					<div class="media-body">
+						@Html.Partial("Partials/Shared/_ImageUploadMessage")
+						<input type="file" id="thumbPicUpload" name="thumbPicUpload" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="editor-label">
+				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.Status, Resources.CommonMessages.EntryStatusExplanation))
+			</div>
+			<div class="editor-field">
+				@Html.DropdownForKnockout(m => m.Status, ViewHelper.CreateEnumList(Model.AllowedEntryStatuses, Translate.EntryStatusNames.GetTranslatedFields(Model.AllowedEntryStatuses)), "value: status")
+			</div>
+
+		</div>
+
+		<div id="songsTab">
+
+			<table>
+				<tbody data-bind="sortable: songLinks">
+				<tr class="ui-state-default">
+					<td style="cursor: move">
+						<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+					</td>
+					<td>
+						<span data-bind="text: order"></span>
+					</td>
+					<td>
+						<span data-bind="title: song.additionalNames, text: song.name"></span>
+						<br />
+						<span class="extraInfo" data-bind="text: song.artistString"></span>
+					</td>
+					<td>
+						<input type="text" data-bind="value: notes" maxlength="200" />
+					</td>
+					<td>
+						<a href="#" class="iconLink removeLink" title="@Res.RemoveFromList" data-bind="click: $parent.removeSong">@ViewRes.SharedStrings.Remove</a>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+
+			<br />
+
+			<h4>@Res.AddSong</h4>
+			<input type="text" data-bind="songAutoComplete: songSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="input-xlarge" />
+
+		</div>
+
+	</div>
+	
+	<br />	
+	<p>@ViewRes.EntryEditStrings.UpdateNotes</p>
+	<textarea data-bind="value: updateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
+
+	<input type="hidden" name="model" data-bind="value: ko.toJSON($root)" />
+	<br />
+	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(parentUrl))
+
+</form>
+
+@Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
+@Html.Partial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))

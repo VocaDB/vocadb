@@ -1,6 +1,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -86,6 +87,14 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return !errors;
+		}
+
+		protected ActionResult HttpStatusCodeResult(HttpStatusCode code, string message)
+		{
+			Response.StatusCode = (int)code;
+			// TODO: implement Response.StatusDescription = message;
+
+			return Content((int)code + ": " + message);
 		}
 
 		protected void RestoreErrorsFromTempData()
