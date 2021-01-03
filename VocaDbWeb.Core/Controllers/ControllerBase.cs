@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using NLog;
 using VocaDb.Model;
@@ -61,6 +62,28 @@ namespace VocaDb.Web.Controllers
 		{
 			s_log.Warn("Form submission error: {0}", details);
 			ModelState.AddModelError(string.Empty, $"Error while sending form contents - please try again. Diagnostic error message: {details}.");
+		}
+
+		protected ActionResult Picture(EntryForPictureDisplayContract contract)
+		{
+			ParamIs.NotNull(() => contract);
+
+			var cacheControl = new CacheControlHeaderValue
+			{
+				// Allow images to be cached by public proxies, images shouldn't contain anything sensitive so this should be ok.
+				Public = true,
+			};
+
+			Response.Headers[HeaderNames.ETag] = $"{contract.EntryType}{contract.EntryId}v{contract.Version}";
+
+			// Cached version indicated by the "v" request parameter.
+			// If no version is specified, assume no caching.
+			if (contract.Version > 0 && !string.IsNullOrEmpty(Request.Query["v"]))
+				cacheControl.MaxAge = PictureCacheDuration;
+
+			Response.GetTypedHeaders().CacheControl = cacheControl;
+
+			return Picture(contract.Picture, contract.Name);
 		}
 
 		protected void CheckConcurrentEdit(EntryType entryType, int id)
