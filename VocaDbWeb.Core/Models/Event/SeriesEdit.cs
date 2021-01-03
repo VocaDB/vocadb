@@ -13,7 +13,6 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Event
 {
-	// TODO: implement [PropertyModelBinder]
 	public class SeriesEdit
 	{
 		public SeriesEdit()

@@ -19,7 +19,6 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Event
 {
-	// TODO: implement [PropertyModelBinder]
 	public class EventEdit : IEntryImageInformation
 	{
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEvent;

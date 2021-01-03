@@ -18,7 +18,6 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Models.Tag
 {
-	// TODO: implement [PropertyModelBinder]
 	public class TagEditViewModel
 	{
 		public TagEditViewModel() { }

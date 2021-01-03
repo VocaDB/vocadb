@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace VocaDb.Web.Models.Venue
 {
-	// TODO: implement [PropertyModelBinder]
 	public class VenueEditViewModel
 	{
 		public string Address { get; set; }
