@@ -2,14 +2,26 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using AngleSharp.Io;
 using Microsoft.AspNetCore.Http;
+using NLog;
 using VocaDb.Model.Domain.Globalization;
+using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Helpers
 {
 	// TODO: implement
 	public static class WebHelper
 	{
+		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
+
+		/// <summary>
+		/// User agent strings for which hits won't be counted
+		/// </summary>
+		private static readonly string[] s_forbiddenUserAgents = {
+			"Googlebot", "bingbot"
+		};
+
 		public static IEnumerable<OptionalCultureCode> GetUserLanguageCodes(HttpRequest request) => request.GetTypedHeaders().AcceptLanguage?.Select(l => new OptionalCultureCode(l.ToString().Split(';')[0])); // en-US;q=0.8 -> en-US
 
 		/// <summary>
@@ -39,6 +51,37 @@ namespace VocaDb.Web.Helpers
 
 			var localhosts = new[] { "localhost", "127.0.0.1", "::1" };
 			return localhosts.Contains(hostname);
+		}
+
+		/// <summary>
+		/// Checks whether the request should be counted as a valid hit (view) 
+		/// for an entry.
+		/// 
+		/// Bots and blank user agents are excluded.
+		/// </summary>
+		/// <param name="request">HTTP request. Cannot be null.</param>
+		/// <returns>True if the request should be counted.</returns>
+		public static bool IsValidHit(HttpRequest request)
+		{
+			var ua = request.Headers[HeaderNames.UserAgent];
+
+			if (string.IsNullOrEmpty(ua))
+			{
+				s_log.Warn(ErrorLogger.RequestInfo("Blank user agent from", request));
+				return false;
+			}
+
+			return !s_forbiddenUserAgents.Any(ua.Contains);
+		}
+
+		public static void VerifyUserAgent(HttpRequest request)
+		{
+			var ua = request.Headers[HeaderNames.UserAgent];
+			if (string.IsNullOrEmpty(ua))
+			{
+				s_log.Warn(ErrorLogger.RequestInfo("Blank user agent from", request));
+				//throw new NotAllowedException();
+			}
 		}
 	}
 }
