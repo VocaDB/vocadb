@@ -8,6 +8,7 @@ namespace VocaDb.Model.Domain.Globalization
 {
 	public class RegionCollection
 	{
+		// FIXME
 		public static readonly string[] RegionCodes = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
 			.Select(culture => new RegionInfo(culture.Name).TwoLetterISORegionName)
 			.OrderBy(c => c)
