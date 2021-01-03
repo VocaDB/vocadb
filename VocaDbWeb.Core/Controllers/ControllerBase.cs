@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
+using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
@@ -87,6 +89,31 @@ namespace VocaDb.Web.Controllers
 			}
 
 			return !errors;
+		}
+
+		protected EntryPictureFileContract ParsePicture(IFormFile pictureUpload, string fieldName, ImagePurpose purpose)
+		{
+			EntryPictureFileContract pictureData = null;
+
+			if (Request.Form.Files.Count > 0 && pictureUpload != null && pictureUpload.Length > 0)
+			{
+				if (pictureUpload.Length > ImageHelper.MaxImageSizeBytes)
+				{
+					ModelState.AddModelError(fieldName, "Picture file is too large.");
+					return null;
+				}
+
+				if (!ImageHelper.IsValidImageExtension(pictureUpload.FileName))
+				{
+					ModelState.AddModelError(fieldName, "Picture format is not valid.");
+					return null;
+				}
+
+				pictureData = new EntryPictureFileContract(pictureUpload.OpenReadStream(), pictureUpload.ContentType, (int)pictureUpload.Length, purpose);
+				pictureData.OriginalFileName = pictureUpload.FileName;
+			}
+
+			return pictureData;
 		}
 
 		protected ActionResult HttpStatusCodeResult(HttpStatusCode code, string message)
