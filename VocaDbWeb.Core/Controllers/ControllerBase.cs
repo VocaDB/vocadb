@@ -3,6 +3,7 @@
 using System;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -124,6 +125,8 @@ namespace VocaDb.Web.Controllers
 			return Content((int)code + ": " + message);
 		}
 
+		protected Task<string> RenderPartialViewToStringAsync(string viewName, object model) => HttpContext.RequestServices.GetRequiredService<IViewRenderService>().RenderToStringAsync(viewName, model);
+
 		protected void RestoreErrorsFromTempData()
 		{
 			// TODO: implement
@@ -146,5 +149,14 @@ namespace VocaDb.Web.Controllers
 
 			return Content(content, "text/xml", Encoding.UTF8);
 		}
+	}
+
+	public enum DataFormat
+	{
+		Auto,
+
+		Json,
+
+		Xml
 	}
 }
