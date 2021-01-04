@@ -71,8 +71,12 @@ namespace VocaDb.Web
 				})
 				.ConfigureApiBehaviorOptions(options =>
 				{
-					// Code from: https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-5.0#apicontroller-attribute
-					// Disable automatic 400 response. This prevents API controllers from returning an BadRequestObjectResult when an invalid Enum value is passed.
+					// Code from: https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-5.0#disable-inference-rules
+					// Disable inference rules. This prevents API controllers from returning an UnsupportedMediaTypeResult (415).
+					options.SuppressInferBindingSourcesForParameters = true;
+
+					// Code from: https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-5.0#disable-automatic-400-response
+					// Disable automatic 400 response. This prevents API controllers from returning an BadRequestObjectResult (400) when an invalid Enum value is passed.
 					options.SuppressModelStateInvalidFilter = true;
 				})
 				.AddNewtonsoftJson(options =>
