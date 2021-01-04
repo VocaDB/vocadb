@@ -220,6 +220,38 @@ namespace VocaDb.Web
 
 			app.UseEndpoints(endpoints =>
 			{
+				const string Numeric = "[0-9]+";
+
+				// Ignored files
+				// TODO: implement routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+				// TODO: implement routes.IgnoreRoute("favicon.ico");
+
+				// Invalid routes - redirects to 404
+				endpoints.MapControllerRoute("AlbumDetailsError", "Album/Details/{id}",
+					new { controller = "Error", action = "NotFound" }, new { id = new IdNotNumberConstraint() });
+				endpoints.MapControllerRoute("ArtistDetailsError", "Artist/Details/{id}",
+					new { controller = "Error", action = "NotFound" }, new { id = new IdNotNumberConstraint() });
+				endpoints.MapControllerRoute("SongDetailsError", "Song/Details/{id}",
+					new { controller = "Error", action = "NotFound" }, new { id = new IdNotNumberConstraint() });
+
+				// Action routes
+				endpoints.MapControllerRoute("Album", "Al/{id}/{friendlyName?}", new { controller = "Album", action = "Details" }, new { id = Numeric });
+				endpoints.MapControllerRoute("Artist", "Ar/{id}/{friendlyName?}", new { controller = "Artist", action = "Details" }, new { id = Numeric });
+				endpoints.MapControllerRoute("ReleaseEvent", "E/{id}/{slug?}", new { controller = "Event", action = "Details" }, new { id = Numeric });
+				endpoints.MapControllerRoute("ReleaseEventSeries", "Es/{id}/{slug?}", new { controller = "Event", action = "SeriesDetails" }, new { id = Numeric });
+
+				// Song shortcut, for example /S/393939
+				endpoints.MapControllerRoute("Song", "S/{id}/{friendlyName?}", new { controller = "Song", action = "Details" }, new { id = Numeric });
+
+				endpoints.MapControllerRoute("SongList", "L/{id}/{slug?}", new { controller = "SongList", action = "Details" }, new { id = Numeric });
+
+				endpoints.MapControllerRoute("Tag", "T/{id}/{slug?}", new { controller = "Tag", action = "DetailsById" }, new { id = Numeric });
+
+				// User profile route, for example /Profile/riipah
+				endpoints.MapControllerRoute("User", "Profile/{id}", new { controller = "User", action = "Profile" });
+
+				endpoints.MapControllerRoute("Discussion", "discussion/{**clientPath}", new { controller = "Discussion", action = "Index" });
+
 				endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller=Home}/{action=Index}/{id?}");
