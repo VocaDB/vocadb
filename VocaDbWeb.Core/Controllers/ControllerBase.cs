@@ -42,11 +42,23 @@ namespace VocaDb.Web.Controllers
 			PageProperties.OpenGraph.Image = VocaUriBuilder.StaticResource("/img/vocaDB-title-large.png");
 		}
 
+		protected string Hostname => WebHelper.GetRealHost(Request);
+
+		protected int LoggedUserId
+		{
+			get
+			{
+				PermissionContext.VerifyLogin();
+
+				return PermissionContext.LoggedUser.Id;
+			}
+		}
+
 		protected PagePropertiesData PageProperties => PagePropertiesData.Get(ViewBag);
 
 		protected IUserPermissionContext PermissionContext => HttpContext.RequestServices.GetRequiredService<IUserPermissionContext>();
 
-		private Login Login => HttpContext.RequestServices.GetRequiredService<Login>();
+		protected Login Login => HttpContext.RequestServices.GetRequiredService<Login>();
 
 		protected string GetHostnameForValidHit()
 		{
