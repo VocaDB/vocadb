@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@using VocaDb.Web.Code
+@using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
+@model VocaDb.Web.Models.Song.Versions
+
+@{
+	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Song.Name;
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+	ViewBag.Parents = new[] { 
+		Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null), 
+		Html.ActionLink(Model.Song.Name, "Details", new { id = Model.Song.Id }) 
+	};
+}
+
+@Html.Partial("Partials/ArchivedEntry/_CurrentVersionMessage", new CurrentVersionMessageViewModel(Model.Song.Version, Model.Song.Status))
+
+@Html.Partial("Partials/ArchivedEntry/_ArchivedObjectVersions", new ArchivedObjectVersionsViewModel(Model.ArchivedVersions, id => Url.Action("ViewVersion", new { id = id })))

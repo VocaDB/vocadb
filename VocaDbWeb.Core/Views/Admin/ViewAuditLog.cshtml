@@ -1,0 +1,111 @@
+﻿@using VocaDb.Web.Helpers
+@model VocaDb.Web.Models.Admin.ViewAuditLogModel
+
+@{
+	PageProperties.Title = "View audit log";
+	ViewBag.Parents = new[] { 
+		Html.ActionLink("Manage", "Index"), 
+	};	
+}
+
+<!-- ViewAuditLogViewModel -->
+<div class="alert alert-info">
+	<button data-bind="click: toggleFilter, css: { active: filterVisible }" class="btn dropdown-toggle">
+		<i class="icon-filter"></i> 
+		@ViewRes.SharedStrings.Filter
+	</button>
+	
+	<form action="@Url.Action("ViewAuditLog", "Admin")" method="POST" id="filterForm" data-bind="visible: filterVisible" class="form-horizontal" style="display: none;">
+		@* For posting *@
+		@Html.HiddenForKnockout(m => m.Filter, "value: filter")
+		@Html.HiddenForKnockout(m => m.ExcludeUsers, "value: excludeUsers")
+		@Html.HiddenForKnockout(m => m.OnlyNewUsers, "value: onlyNewUsers")
+		@Html.HiddenForKnockout(m => m.UserName, "value: userName")
+				
+		<div class="control-group">
+			<div class="control-label">Text query</div>
+			<div class="controls">
+				<input type="text" data-bind="value: filter" maxlength="255" class="input-xlarge" />
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="control-label">Show only user</div>
+			<div class="controls">
+				<input type="text" data-bind="value: userName" maxlength="255" class="input-large" id="userNameField" />
+			</div>
+		</div>	  
+		<div class="control-group">
+			<div class="control-label">Exclude users</div>
+			<div class="controls">
+				<input type="text" data-bind="value: excludeUsers" maxlength="255" class="input-xlarge" id="usersList" />
+			</div>
+		</div>	  
+		<div class="control-group">
+			<div class="control-label">User group</div>
+			<div class="controls">
+				@Html.EnumDropDownListFor(m => m.GroupId, Model.UserGroups)
+			</div>
+		</div>	  
+		<div class="control-group">
+			<div class="controls">
+				<label class="checkbox">
+					<input type="checkbox" data-bind="checked: onlyNewUsers" />
+					Only show new users
+				</label>
+			</div>	  
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<button type="submit" class="btn btn-primary">@ViewRes.SharedStrings.Apply</button>
+			</div>	  
+		</div>	  
+	</form>
+
+</div>
+		
+<div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Time</th>
+				<th>User</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody id="logEntries">
+		</tbody>
+	</table>
+</div>
+
+<a href="#" id="loadMoreLink">Load more</a>
+@Html.Hidden("start", 200)
+
+@section BodyScripts {
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		var json = @Html.Raw(JsonHelpers.Serialize(Model));
+		var vm = new app.ViewAuditLogViewModel(json);
+		ko.applyBindings(vm);
+		
+		$("#loadMoreLink").click(function () {
+
+			var params = $.extend({ start: $("#start").val() }, json);
+
+			$.post("AuditLogEntries", params, function (result) {
+				$("#logEntries").append(result);
+				$("#start").val(parseInt($("#start").val()) + 200);
+			});
+			return false;
+		});
+
+		@* HACK: replacement for Html.RenderAction. *@
+		@* Code from: https://stackoverflow.com/questions/41353874/equivalent-of-html-renderaction-in-asp-net-core/45494932#45494932 *@
+		$.get('@Url.Action("AuditLogEntries", Model)', null, function (content) {
+			$("#logEntries").html(content);
+		});
+	});
+
+</script>
+}
