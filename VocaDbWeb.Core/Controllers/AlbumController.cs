@@ -290,20 +290,13 @@ namespace VocaDb.Web.Controllers
 			var coverPicUpload = Request.Form.Files["coverPicUpload"];
 			var pictureData = ParsePicture(coverPicUpload, "CoverPicture", ImagePurpose.Main);
 
-			if (coverPicUpload == null)
-			{
-				AddFormSubmissionError("Cover picture was null");
-			}
-
 			if (model.Pictures == null)
 			{
 				AddFormSubmissionError("List of pictures was null");
 			}
 
 			if (coverPicUpload != null && model.Pictures != null)
-			{
 				ParseAdditionalPictures(coverPicUpload, model.Pictures);
-			}
 
 			if (!ModelState.IsValid)
 			{

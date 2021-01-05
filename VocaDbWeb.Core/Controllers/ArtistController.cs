@@ -257,7 +257,8 @@ namespace VocaDb.Web.Controllers
 			var coverPicUpload = Request.Form.Files["pictureUpload"];
 			var pictureData = ParsePicture(coverPicUpload, "Picture", ImagePurpose.Main);
 
-			ParseAdditionalPictures(coverPicUpload, model.Pictures);
+			if (coverPicUpload != null && model.Pictures != null)
+				ParseAdditionalPictures(coverPicUpload, model.Pictures);
 
 			if (!ModelState.IsValid)
 			{
