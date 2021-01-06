@@ -39,14 +39,14 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public createComment = (albumId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
 
-			$.post(this.urlMapper.mapRelative("/api/albums/" + albumId + "/comments"), contract, callback, 'json');
+			$.postJSON(this.urlMapper.mapRelative("/api/albums/" + albumId + "/comments"), contract, callback, 'json');
 
 		}
 
 		public createOrUpdateReview(albumId: number, reviewContract: AlbumReviewContract) {
 
 			const url = functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews");
-			return this.handleJqueryPromise<AlbumReviewContract>($.post(url, reviewContract, null, 'json'));
+			return this.handleJqueryPromise<AlbumReviewContract>($.postJSON(url, reviewContract, null, 'json'));
 
 		}
 
@@ -156,13 +156,13 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
 
-			$.post(this.urlMapper.mapRelative("/api/albums/comments/" + commentId), contract, callback, 'json');
+			$.postJSON(this.urlMapper.mapRelative("/api/albums/comments/" + commentId), contract, callback, 'json');
 
 		}
 
 		public updatePersonalDescription = (albumId: number, text: string, author: ArtistContract) => {
 
-			$.post(this.urlMapper.mapRelative("/api/albums/" + albumId + "/personal-description/"), { personalDescriptionText: text, personalDescriptionAuthor: author || undefined }, null, 'json');
+			$.postJSON(this.urlMapper.mapRelative("/api/albums/" + albumId + "/personal-description/"), { personalDescriptionText: text, personalDescriptionAuthor: author || undefined }, null, 'json');
 
 		}
 

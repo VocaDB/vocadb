@@ -85,7 +85,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 				songLinks: songs
 			};
 
-			$.post(this.urlMapper.mapRelative('/api/songLists'), contract, (listId: number) => {
+			$.postJSON(this.urlMapper.mapRelative('/api/songLists'), contract, (listId: number) => {
 				window.location.href = EntryUrlMapper.details('SongList', listId);
 			}, 'json');
 

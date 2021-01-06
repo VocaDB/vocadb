@@ -25,13 +25,13 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public create = (name: string, callback?: (result: TagBaseContract) => void) => {
 			var url = functions.mergeUrls(this.baseUrl, "/api/tags?name=" + name);
-			$.post(url, callback);
+			$.postJSON(url, callback);
 		}
 
 		public createReport = (tagId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
 
 			var url = functions.mergeUrls(this.baseUrl, "/api/tags/" + tagId + "/reports?" + AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
-			$.post(url, callback);
+			$.postJSON(url, callback);
 
 		}
 

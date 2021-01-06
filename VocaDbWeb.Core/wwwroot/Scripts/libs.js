@@ -28,3 +28,7 @@ window._ = require('lodash');
 require('qtip2');
 
 window.marked = require('marked');
+
+$.postJSON = function (url, data, success, dataType) {
+	return $.ajax({ url: url, type: "POST", dataType: dataType, contentType: "application/json", data: ko.toJSON(data), success: success });
+};

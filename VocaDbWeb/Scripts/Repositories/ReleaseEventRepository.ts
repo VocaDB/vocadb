@@ -16,7 +16,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public createReport = (eventId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
 			var url = functions.mergeUrls(this.baseUrl, "/api/releaseEvents/" + eventId + "/reports?" + AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
-			$.post(url, callback);
+			$.postJSON(url, callback);
 		}
 
 		public delete = (id: number, notes: string, hardDelete: boolean, callback?: () => void) => {

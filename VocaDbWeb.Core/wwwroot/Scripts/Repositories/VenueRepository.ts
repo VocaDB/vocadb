@@ -14,7 +14,7 @@ import VenueForApiContract from "../DataContracts/Venue/VenueForApiContract";
 
 		public createReport = (venueId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
 			var url = functions.mergeUrls(this.baseUrl, "/api/venues/" + venueId + "/reports?" + AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
-			$.post(url, callback);
+			$.postJSON(url, callback);
 		}
 
 		public delete = (id: number, notes: string, hardDelete: boolean, callback?: () => void) => {

@@ -34,7 +34,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public createComment = (songId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
 
-			$.post(this.urlMapper.mapRelative("/api/songs/" + songId + "/comments"), contract, callback, 'json');
+			$.postJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/comments"), contract, callback, 'json');
 
 		}
 
@@ -202,20 +202,20 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
 
-			$.post(this.urlMapper.mapRelative("/api/songs/comments/" + commentId), contract, callback, 'json');
+			$.postJSON(this.urlMapper.mapRelative("/api/songs/comments/" + commentId), contract, callback, 'json');
 
 		}
 
 		public updatePersonalDescription = (songId: number, text: string, author: ArtistContract) => {
 
-			$.post(this.urlMapper.mapRelative("/api/songs/" + songId + "/personal-description/"), { personalDescriptionText: text, personalDescriptionAuthor: author || undefined }, null, 'json');
+			$.postJSON(this.urlMapper.mapRelative("/api/songs/" + songId + "/personal-description/"), { personalDescriptionText: text, personalDescriptionAuthor: author || undefined }, null, 'json');
 
 		}
 
 		public updateSongRating = (songId: number, rating: SongVoteRating, callback: () => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/songs/" + songId + "/ratings");
-			$.post(url, { rating: SongVoteRating[rating] }, callback);
+			$.postJSON(url, { rating: SongVoteRating[rating] }, callback);
 
 		}
 
