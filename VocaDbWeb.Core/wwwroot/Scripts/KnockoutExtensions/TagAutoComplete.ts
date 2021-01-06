@@ -23,7 +23,7 @@ ko.bindingHandlers.tagAutoComplete = {
 
 		var queryParams = {
 			nameMatchMode: 'Auto',
-			fields: 'AdditionalNames,CategoryName',
+			fields: 'AdditionalNames',
 			lang: ContentLanguagePreference[vdb.values.languagePreference],
 			preferAccurateMatches: true,
 			maxResults: 20,
