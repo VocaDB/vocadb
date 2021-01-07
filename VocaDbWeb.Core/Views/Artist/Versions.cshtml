@@ -14,4 +14,4 @@
 
 <partial name="Partials/ArchivedEntry/_CurrentVersionMessage" model="@(new CurrentVersionMessageViewModel(Model.Artist.Version, Model.Artist.Status))" />
 
-@Html.Partial("Partials/ArchivedEntry/_ArchivedObjectVersions", new ArchivedObjectVersionsViewModel(Model.ArchivedVersions, id => Url.Action("ViewVersion", new { id = id })))
+<partial name="Partials/ArchivedEntry/_ArchivedObjectVersions" model="@(new ArchivedObjectVersionsViewModel(Model.ArchivedVersions, id => Url.Action("ViewVersion", new { id = id })))" />

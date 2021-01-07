@@ -16,4 +16,4 @@
 
 <partial name="Partials/ArchivedEntry/_CurrentVersionMessage" model="@(new CurrentVersionMessageViewModel(Model.Version, EntryStatus.Finished))" />
 
-@Html.Partial("Partials/ArchivedEntry/_ArchivedObjectVersions", new ArchivedObjectVersionsViewModel(Model.ArchivedVersions.Select(a => new ArchivedObjectVersion(a, Translate.SongListEditableFieldNames.GetAllNameNames(a.ChangedFields, SongListEditableFields.Nothing)))))
+<partial name="Partials/ArchivedEntry/_ArchivedObjectVersions" model="@(new ArchivedObjectVersionsViewModel(Model.ArchivedVersions.Select(a => new ArchivedObjectVersion(a, Translate.SongListEditableFieldNames.GetAllNameNames(a.ChangedFields, SongListEditableFields.Nothing)))))" />
