@@ -433,7 +433,7 @@
 }
 
 <partial name="Partials/EntryDetails/_EntryDeletePopupBase" model="@(new EntryDeletePopupBaseViewModel("Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional).", "limitedUserViewModel", "setToLimitedLink", "Remove editing permissions", "Confirm"))" />
-@Html.Partial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel("Please confirm that you wish to report user. Please provide additional explanation below.", "reportUserViewModel", "reportUserLink", "Report user", "Confirm"))
+<partial name="Partials/EntryDetails/_EntryDeletePopupBase" model="@(new EntryDeletePopupBaseViewModel("Please confirm that you wish to report user. Please provide additional explanation below.", "reportUserViewModel", "reportUserLink", "Report user", "Confirm"))" />
 
 @section Head {
 	<link rel="stylesheet" href="@LaravelMixHelper.GetPathToVersionedMixFile("~/Scripts/jqwidgets27/styles/css.css")" />
