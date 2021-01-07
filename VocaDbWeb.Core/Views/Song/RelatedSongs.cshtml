@@ -8,17 +8,17 @@
 
 @if (Model.ArtistMatches.Any()) {
 	<h3>@R.MatchingArtists</h3>
-	@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.ArtistMatches, 2, true))
+	<partial name="Partials/Song/_SongGrid" model="@(new SongGridViewModel(Model.ArtistMatches, 2, true))" />
 	<br />
 }
 
 @if (Model.LikeMatches.Any()) {
 	<h3>@R.MatchingLikes</h3>
-	@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.LikeMatches, 2, true))
+	<partial name="Partials/Song/_SongGrid" model="@(new SongGridViewModel(Model.LikeMatches, 2, true))" />
 	<br />
 }
 
 @if (Model.TagMatches.Any()) {
 	<h3>@R.MatchingTags</h3>
-	@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.TagMatches, 2, true))
+	<partial name="Partials/Song/_SongGrid" model="@(new SongGridViewModel(Model.TagMatches, 2, true))" />
 }

@@ -8,7 +8,7 @@
 
 @if (!string.IsNullOrEmpty(Model.Email)) {
 <div class="thumbnail">
-	@Html.Partial("Partials/User/_ProfileIcon_IUserWithEmail", new ProfileIcon_IUserWithEmailViewModel(Model))
+	<partial name="Partials/User/_ProfileIcon_IUserWithEmail" model="@(new ProfileIcon_IUserWithEmailViewModel(Model))" />
 </div>
 }
 

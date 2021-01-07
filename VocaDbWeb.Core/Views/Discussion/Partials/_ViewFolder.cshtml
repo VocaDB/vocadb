@@ -53,7 +53,7 @@
 				</td>
 				<td>
 					<span data-bind="with: author">
-						@Html.Partial("Partials/User/_ProfileIconKnockout_ImageSize", new ProfileIconKnockout_ImageSizeViewModel(ImageSize.TinyThumb, size: 18))
+						<partial name="Partials/User/_ProfileIconKnockout_ImageSize" model="@(new ProfileIconKnockout_ImageSizeViewModel(ImageSize.TinyThumb, size: 18))" />
 						<span>{{name}}</span>
 					</span>
 				</td>

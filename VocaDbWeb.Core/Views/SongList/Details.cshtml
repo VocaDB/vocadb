@@ -40,7 +40,7 @@
 }
 
 @section Head {
-	@Html.Partial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties))
+	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
 	<link rel="canonical" href="@url" />
 }
 
@@ -53,16 +53,16 @@
 }
 	@Html.ActionLink(Res.Export, "Export", new { id = Model.SongList.Id }, new { id = "export" })
 	@if (Model.IsFeatured) {
-		@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.SongList.Status))
+		<partial name="Partials/Shared/_EntryStatusMessage" model="@(new EntryStatusMessageViewModel(Model.SongList.Status))" />
 	}
 }
 
 @if (Model.IsFeatured && Model.SongList.Status == EntryStatus.Draft && !Model.SongList.Deleted) {
-	@Html.Partial("Partials/Shared/_DraftMessage", new DraftMessageViewModel(string.Empty))
+	<partial name="Partials/Shared/_DraftMessage" model="@(new DraftMessageViewModel(string.Empty))" />
 }
 
 @if (Model.SongList.Deleted) {
-	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null))
+	<partial name="Partials/EntryDetails/_DeletedBanner" model="@(new DeletedBannerViewModel(null))" />
 }
 
 <div class="media">
@@ -132,7 +132,7 @@
 
 	<div class="inline-block songlist-sort pull-left">
 		@ViewRes.EntryIndexStrings.SortBy
-		@Html.Partial("Partials/Knockout/_Dropdown", new DropdownViewModel(Model.SortRules, "sort", "sortName"))
+		<partial name="Partials/Knockout/_Dropdown" model="@(new DropdownViewModel(Model.SortRules, "sort", "sortName"))" />
 	</div>
 
 	<div class="pull-left songlist-text-query">
@@ -149,28 +149,28 @@
 		<div class="control-group">
 			<div class="control-label">@SearchRes.SongType</div>
 			<div class="controls">
-				@Html.Partial("Partials/Song/_SongTypesDropdownKnockout", new SongTypesDropdownKnockoutViewModel("songType"))
+				<partial name="Partials/Song/_SongTypesDropdownKnockout" model="@(new SongTypesDropdownKnockoutViewModel("songType"))" />
 			</div>
 		</div>
 
 		<div class="control-group">
 			<div class="control-label">@EntryTypeNames.Artist</div>
 			<div class="controls" data-bind="with: artistFilters">
-				@Html.Partial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: false))
+				<partial name="Partials/Knockout/_ArtistFilters" model="@(new ArtistFiltersViewModel(artistParticipationStatus: false))" />
 			</div>
 		</div>
 		
 		<div class="control-group">
 			<div class="control-label">@ViewRes.SharedStrings.Tag</div>
 			<div class="controls">
-				@Html.Partial("Partials/Knockout/_TagFilters", new TagFiltersViewModel())
+				<partial name="Partials/Knockout/_TagFilters" model="@(new TagFiltersViewModel())" />
 			</div>
 		</div>
 
 		<div class="control-group">
 			<div class="control-label"></div>
 			<div class="controls">
-				@Html.Partial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters))
+				<partial name="Partials/Search/_AdvancedFilters" model="@(new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters))" />
 			</div>
 		</div>
 	</div>
@@ -215,13 +215,13 @@
 					<img data-bind="attr: { src: url, title: service }" />
 					<!-- /ko -->
 					
-					@Html.Partial("Partials/Knockout/_DraftIcon", new KnockoutDraftIconViewModel("status"))
+					<partial name="Partials/Knockout/_DraftIcon" model="@(new KnockoutDraftIconViewModel("status"))" />
 
 					<br />
 					<small class="extraInfo" data-bind="text: song.artistString"></small>
 
 					<div data-bind="visible: song.pvServices, with: song.previewViewModel">
-						@Html.Partial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].pvServiceIcons.getIconUrls"))
+						<partial name="Partials/Song/_PVPreviewKnockout" model="@(new PVPreviewKnockoutViewModel("$parents[2].pvServiceIcons.getIconUrls"))" />
 					</div>
 				</td>
 				<!-- ko if: $parent.showTags -->

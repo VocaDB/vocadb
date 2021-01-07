@@ -20,7 +20,7 @@
 <form visible="{{showCreateNewReview}}" submit="{{createNewReview}}">
 	<div>
 		<label>@Res.ReviewLanguage</label>
-		@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull("Choose"), "languageCode", cssClass: "input-xlarge", required: true))
+		<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull("Choose"), "languageCode", cssClass: "input-xlarge", required: true))" />
 
 		<div class="alert alert-danger" visible="{{reviewAlreadySubmitted}}">
 			@Res.ReviewAlreadySubmitted
@@ -44,7 +44,7 @@
 
 <div data-bind="foreach: reviews" class="album-reviews">
 	<div class="album-review media">
-		@Html.Partial("Partials/User/_IconAndLinkKnockout", new IconAndLinkKnockoutViewModel("user", "pull-left"))
+		<partial name="Partials/User/_IconAndLinkKnockout" model="@(new IconAndLinkKnockoutViewModel("user", "pull-left"))" />
 
 		<div class="media-body">
 			<div class="pull-right">
@@ -63,7 +63,7 @@
 				<!-- /ko -->
 			</div>
 			<h3 class="media-heading">
-				@Html.Partial("Partials/User/_NameLinkKnockout", new NameLinkKnockoutViewModel("user"))
+				<partial name="Partials/User/_NameLinkKnockout" model="@(new NameLinkKnockoutViewModel("user"))" />
 			</h3>
 			
 			<span data-bind="foreach: $parent.ratingStars($parent.getRatingForUser(user.id))">

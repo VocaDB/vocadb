@@ -10,7 +10,7 @@
 <form class="form-horizontal">
 	<div class="control-group">
 		<div class="control-label">
-			@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.UrlLabel, Res.UrlDescription))
+			<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(Res.UrlLabel, Res.UrlDescription))" />
 		</div>
 		<div class="controls">
 			<input type="text" textInput="{{ url }}" size="60" class="input-xlarge" required />

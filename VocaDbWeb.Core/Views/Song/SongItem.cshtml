@@ -3,7 +3,7 @@
 @model VocaDb.Model.DataContracts.Songs.SongContract
 
 <div style="float:left;">
-	@Html.Partial("Partials/Song/_SongIconLink", new SongIconLinkViewModel(Model))
+	<partial name="Partials/Song/_SongIconLink" model="@(new SongIconLinkViewModel(Model))" />
 </div>
 <br />
 <small>@Model.ArtistString (@Translate.SongTypeNames[Model.SongType])</small>

@@ -42,12 +42,12 @@
 	}
 }
 
-@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save properties."))
+<partial name="Partials/Shared/_ValidationSummaryPanel" model="@(new ValidationSummaryPanelViewModel("Unable to save properties."))" />
 
 <form method="POST" data-bind="submit: submit" enctype="multipart/form-data">
 	@Html.HiddenFor(m => m.Id)
 
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(backAction))" />
 	
 	<div id="tabs">
 		
@@ -81,7 +81,7 @@
 					Series
 				</div>
 				<div class="editor-field">
-					@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("releaseEventSeriesAutoComplete", "series.entry", "series.name"))
+					<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("releaseEventSeriesAutoComplete", "series.entry", "series.name"))" />
 					@Html.HiddenForKnockout(m => m.Series, "value: ko.toJSON(series)")
 				</div>
 
@@ -122,7 +122,7 @@
 					</label>
 				</div>
 				<div class="editor-field">
-					@Html.Partial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage"))
+					<partial name="Partials/Knockout/_LanguageSelectionDropDown" model="@(new LanguageSelectionDropDownViewModel("defaultNameLanguage"))" />
 					@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
 				</div>
 
@@ -160,7 +160,7 @@
 			</div>
 
 			<div class="editor-label">
-				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Date", "Enter event begin date. For events lasting multiple days, end date can be entered as well. Both are optional, and end date does not need to be specified if it's the same as begin date."))
+				<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel("Date", "Enter event begin date. For events lasting multiple days, end date can be entered as well. Both are optional, and end date does not need to be specified if it's the same as begin date."))" />
 			</div>
 			<div class="editor-field">
 				<input type="text" data-bind="datepicker: { value: date, dateFormat: 'yy-mm-dd' }" class="input-small" maxlength="10" />
@@ -172,10 +172,10 @@
 			</div>
 
 			<div class="editor-label">
-				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Setlist", "If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here."))
+				<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel("Setlist", "If this event is a live performance such as concert or club event, a setlist of the songs performed can be specified here."))" />
 			</div>
 			<div class="editor-field">
-				@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("songListAutoComplete", "songList", "songListCategory: 'Concerts'"))
+				<partial name="Partials/Knockout/_BasicEntryLinkLockingAutoComplete" model="@(new BasicEntryLinkLockingAutoCompleteViewModel("songListAutoComplete", "songList", "songListCategory: 'Concerts'"))" />
 				@Html.HiddenForKnockout(m => m.SongList, "value: ko.toJSON(songList.entry())")
 			</div>
 	
@@ -183,13 +183,13 @@
 				Venue
 			</div>
 			<div class="editor-field">
-				@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("venueAutoComplete", "venue.entry", "venue.name"))
+				<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("venueAutoComplete", "venue.entry", "venue.name"))" />
 				@Html.HiddenForKnockout(m => m.Venue, "value: ko.toJSON(venue.entry())")
 			</div>
 
 			<div data-bind="visible: !venue.entry()">
 				<div class="editor-label">
-					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Venue name", "Can be either a physical location such as concert hall, or a virtual location (website)."))
+					<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel("Venue name", "Can be either a physical location such as concert hall, or a virtual location (website)."))" />
 				</div>
 				<div class="editor-field">
 					@Html.TextBoxFor(m => m.VenueName, new { size = 40, @class = "span3", maxlength = 1000 })<br />
@@ -219,12 +219,12 @@
 				</label>
 			</div>
 			<div class="editor-field" data-bind="with: webLinks">
-				@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(false))
+				<partial name="Partials/Knockout/_WebLinksEditViewKnockout" model="@(new WebLinksEditViewKnockoutViewModel(false))" />
 				@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(items)")
 			</div>
 	
 			<div class="editor-label">
-				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation))
+				<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation))" />
 			</div>
 			<div class="editor-field">
 				@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
@@ -309,7 +309,7 @@
 
 			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>
 
-			@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
+			<partial name="Partials/Shared/_AjaxLoader" model="@(new AjaxLoaderViewModel("pvLoader"))" />
 			@Html.HiddenForKnockout(m => m.PVs, "value: ko.toJSON($data.toContracts())")
 
 		</div>
@@ -317,7 +317,7 @@
 	</div>
 
 	<br />
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(backAction))" />
 
 </form>
 
@@ -325,7 +325,7 @@
 	@{ Html.RenderPartial("Partials/_ArtistRolesEditViewModel"); }
 </div>
 
-@Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
+<partial name="Partials/EntryDetails/_EntryDeletePopup" model="@(new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))" />
 @Html.Partial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))
 
 @section BodyScripts {

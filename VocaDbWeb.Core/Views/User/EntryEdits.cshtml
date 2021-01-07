@@ -18,14 +18,14 @@
 	<div class="pull-right">
 		<div class="inline-block">
 			@ViewRes.EntryIndexStrings.SortBy
-			@Html.Partial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.ActivityEntrySortRuleNames.ValuesAndNamesStrings, "sort", "sortName"))
+			<partial name="Partials/Knockout/_Dropdown" model="@(new DropdownViewModel(Translate.ActivityEntrySortRuleNames.ValuesAndNamesStrings, "sort", "sortName"))" />
 		</div>
 	</div>
 
 	<div class="control-group">
 		<div class="control-label">@ViewRes.User.EntryEditsStrings.EntryType</div>
 		<div class="controls">
-			@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.ActivityEntryTargetTypeNames.ValuesAndNamesStrings, "entryType"))
+			<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(Translate.ActivityEntryTargetTypeNames.ValuesAndNamesStrings, "entryType"))" />
 		</div>
 	</div>
 
@@ -41,7 +41,7 @@
 </div>
 
 <div data-bind="foreach: entries, show" class="js-cloak">
-	@Html.Partial("Partials/Activityfeed/_ActivityEntryKnockout", new ActivityEntryKnockoutViewModel("$parent.getEntryTypeName", "$parent.getActivityFeedEventName", "$parents[1].getChangedFieldNames", true))
+	<partial name="Partials/Activityfeed/_ActivityEntryKnockout" model="@(new ActivityEntryKnockoutViewModel("$parent.getEntryTypeName", "$parent.getActivityFeedEventName", "$parents[1].getChangedFieldNames", true))" />
 </div>
 
 <hr />

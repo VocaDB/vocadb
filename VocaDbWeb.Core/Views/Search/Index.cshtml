@@ -40,10 +40,10 @@
 <div id="anythingSearchTab" class="form-horizontal well well-transparent">
 
 	<div class="pull-right">
-		@{ SearchDropDown("showArtistSearch", "artistSearchViewModel", Translate.ArtistSortRuleNames.ValuesAndNamesStrings); }
-		@{ SearchDropDown("showAlbumSearch", "albumSearchViewModel", Translate.AlbumSortRuleNames.ValuesAndNamesStrings); }
-		@{ SearchDropDown("showSongSearch", "songSearchViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings); }
-		@{ SearchDropDown("showEventSearch", "eventSearchViewModel", Translate.EventSortRuleNames.ValuesAndNamesStrings); }
+		@{ await SearchDropDown("showArtistSearch", "artistSearchViewModel", Translate.ArtistSortRuleNames.ValuesAndNamesStrings); }
+		@{ await SearchDropDown("showAlbumSearch", "albumSearchViewModel", Translate.AlbumSortRuleNames.ValuesAndNamesStrings); }
+		@{ await SearchDropDown("showSongSearch", "songSearchViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings); }
+		@{ await SearchDropDown("showEventSearch", "eventSearchViewModel", Translate.EventSortRuleNames.ValuesAndNamesStrings); }
 
 		<div class="inline-block" data-bind="visible: showAlbumSearch(), with: albumSearchViewModel">
 			<div class="btn-group">
@@ -97,7 +97,7 @@
 		<div class="control-group" data-bind="visible: showTagFilter">
 			<div class="control-label">@ViewRes.SharedStrings.Tag</div>
 			<div class="controls" data-bind="with: tagFilters">
-				@Html.Partial("Partials/Knockout/_TagFilters", new TagFiltersViewModel(true))
+				<partial name="Partials/Knockout/_TagFilters" model="@(new TagFiltersViewModel(true))" />
 			</div>
 		</div>
 
@@ -114,7 +114,7 @@
 			<div class="control-label">@Res.TagCategory</div>
 			<div class="controls">
 				<div class="input-append">
-					@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("tagCategoryAutoComplete", "categoryName", extraBindings: "clearValue: true"))
+					<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("tagCategoryAutoComplete", "categoryName", extraBindings: "clearValue: true"))" />
 				</div>
 			</div>
 		</div>
@@ -259,7 +259,7 @@
 }
 
 @{
-	void SearchDropDown(string visibleBinding, string viewModel, Dictionary<string, string> sortRules) {
-		@Html.Partial("Partials/Knockout/_SearchDropDown", new VocaDb.Web.Models.Shared.Partials.Knockout.SearchDropDownViewModel(visibleBinding, viewModel, sortRules))
+	async Task SearchDropDown(string visibleBinding, string viewModel, Dictionary<string, string> sortRules) {
+		<partial name="Partials/Knockout/_SearchDropDown" model="@(new VocaDb.Web.Models.Shared.Partials.Knockout.SearchDropDownViewModel(visibleBinding, viewModel, sortRules))" />
 	}
 }

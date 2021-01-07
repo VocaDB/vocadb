@@ -42,7 +42,7 @@
 	}
 }
 
-@Html.Partial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model))
+<partial name="Partials/Shared/_EventThumbs" model="@(new EventThumbsViewModel(Model))" />
 
 @section BodyScripts {
 	<script type="text/javascript">

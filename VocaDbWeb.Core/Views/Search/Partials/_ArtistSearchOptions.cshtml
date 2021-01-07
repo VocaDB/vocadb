@@ -8,14 +8,14 @@
 	<div class="control-group">
 		<div class="control-label">@Res.ArtistType</div>
 		<div class="controls">
-			@Html.Partial("Partials/Artist/_ArtistTypesDropdownKnockout", new ArtistTypesDropdownKnockoutViewModel("artistType"))
+			<partial name="Partials/Artist/_ArtistTypesDropdownKnockout" model="@(new ArtistTypesDropdownKnockoutViewModel("artistType"))" />
 		</div>
 	</div>
 
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			@Html.Partial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.ArtistFilters))
+			<partial name="Partials/Search/_AdvancedFilters" model="@(new AdvancedFiltersViewModel(AdvancedSearchFilters.ArtistFilters))" />
 		</div>
 	</div>
 </div>

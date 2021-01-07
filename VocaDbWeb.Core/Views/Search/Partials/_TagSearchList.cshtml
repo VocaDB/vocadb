@@ -40,7 +40,7 @@
 				</td>
 				<td>
 					<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details_tag(id, urlSlug) }" href="#"></a>
-					@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
+					<partial name="Partials/Knockout/_DraftIcon" model="@(new DraftIconViewModel("status"))" />
 					<br />
 					<small class="extraInfo" data-bind="text: $data.additionalNames"></small>
 				</td>

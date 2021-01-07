@@ -30,7 +30,7 @@
 }
 
 @section Head {
-	@Html.Partial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties))
+	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
 	<link rel="canonical" href="@url" />
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 }
@@ -48,7 +48,7 @@
 
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 
-	@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
+	<partial name="Partials/Shared/_EntryStatusMessage" model="@(new EntryStatusMessageViewModel(Model.Status))" />
 }
 
 @{
@@ -71,11 +71,11 @@
 }
 
 @if (Model.Deleted) {
-	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(Model.MergedTo))
+	<partial name="Partials/EntryDetails/_DeletedBanner" model="@(new DeletedBannerViewModel(Model.MergedTo))" />
 }
 
 @if (Model.Draft && !Model.Deleted) {
-	@Html.Partial("Partials/Shared/_DraftMessage", new DraftMessageViewModel("glproducers"))
+	<partial name="Partials/Shared/_DraftMessage" model="@(new DraftMessageViewModel("glproducers"))" />
 }
 
 <div id="tabs" class="artist-details-page js-cloak" data-bind="show">
@@ -147,7 +147,7 @@
 				<tr>
 					<td>@ViewRes.SharedStrings.Type</td>
 					<td>
-						@Html.Partial("Partials/Artist/_ArtistTypeLabel", new ArtistTypeLabelViewModel(Model.ArtistType))
+						<partial name="Partials/Artist/_ArtistTypeLabel" model="@(new ArtistTypeLabelViewModel(Model.ArtistType))" />
 						@if (Model.ArtistTypeTag != null) {
 							<a href="@Url.TagDetails(Model.ArtistTypeTag)" data-bind="tagToolTip: @Model.ArtistTypeTag.Id">@Translate.ArtistTypeName(Model.ArtistType)</a>
 						} else {
@@ -169,7 +169,7 @@
 					</td>
 				</tr>
 
-				@Html.Partial("Partials/EntryDetails/_ExternalLinksRows", new ExternalLinksRowsViewModel(Model.WebLinks))
+				<partial name="Partials/EntryDetails/_ExternalLinksRows" model="@(new ExternalLinksRowsViewModel(Model.WebLinks))" />
 
 				@if (Model.OwnerUsers.Any()) {
 					<tr>
@@ -178,7 +178,7 @@
 						</td>
 						<td>
 							@foreach (var user in Model.OwnerUsers) {
-								@Html.Partial("Partials/User/_UserIconLink_UserContract", new UserIconLink_UserContractViewModel(user, tooltip: true))
+								<partial name="Partials/User/_UserIconLink_UserContract" model="@(new UserIconLink_UserContractViewModel(user, tooltip: true))" />
 								<br />
 							}
 						</td>
@@ -193,7 +193,7 @@
 							</span>
 						</td>
 						<td id="baseVoicebank">
-							@Html.Partial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(Model.BaseVoicebank, releaseYear: true))
+							<partial name="Partials/Artist/_ArtistLink" model="@(new ArtistLinkViewModel(Model.BaseVoicebank, releaseYear: true))" />
 						</td>
 					</tr>
 				}
@@ -207,7 +207,7 @@
 						</td>
 						<td id="childVoicebanks">
 							@foreach (var a in Model.ChildVoicebanks) {
-								@Html.Partial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(a, releaseYear: true))
+								<partial name="Partials/Artist/_ArtistLink" model="@(new ArtistLinkViewModel(a, releaseYear: true))" />
 								if (a != Model.ChildVoicebanks.Last()) {
 									@(", ")
 								}
@@ -225,7 +225,7 @@
 						</td>
 						<td id="groups">
 							@foreach (var grp in Model.Groups) {
-								@Html.Partial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(grp))
+								<partial name="Partials/Artist/_ArtistLink" model="@(new ArtistLinkViewModel(grp))" />
 								if (grp != Model.Groups.Last()) {
 									@(", ")
 								}
@@ -259,7 +259,7 @@
 				<tr>
 					<td>@ViewRes.EntryDetailsStrings.AdditionDate</td>
 					<td>
-						@Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CreateDate))
+						<partial name="Partials/Shared/_UniversalTimeLabel" model="@(new UniversalTimeLabelViewModel(Model.CreateDate))" />
 					</td>
 				</tr>
 
@@ -272,11 +272,11 @@
 				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.Members.Length))</small>
 			</h3>
 			<div data-bind="visible: !showAllMembers()">
-				@Html.Partial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.Members.Take(6).Select(g => g), 3, true))
+				<partial name="Partials/Artist/_ArtistGrid" model="@(new ArtistGridViewModel(Model.Members.Take(6).Select(g => g), 3, true))" />
 			</div>
 			if (Model.Members.Length > 6) {
 				<div data-bind="visible: showAllMembers">
-					@Html.Partial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.Members.Select(g => g), 3, true))
+					<partial name="Partials/Artist/_ArtistGrid" model="@(new ArtistGridViewModel(Model.Members.Select(g => g), 3, true))" />
 				</div>
 				<a href="#" data-bind="click: function() { showAllMembers(true); }, visible: !showAllMembers()">@ViewRes.SharedStrings.ShowMore</a>
 			}
@@ -288,7 +288,7 @@
 				<small>@string.Format(ViewRes.EntryDetailsStrings.NumTotalParenthesis, Model.SharedStats.AlbumCount)</small>
 			</h3>
 			<div id="newAlbums">
-				@Html.Partial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.LatestAlbums))
+				<partial name="Partials/Album/_AlbumThumbs" model="@(new AlbumThumbsViewModel(Model.LatestAlbums))" />
 			</div>
 		}
 
@@ -298,7 +298,7 @@
 				<small>(@string.Format(Res.RatedAlbums, Model.SharedStats.RatedAlbumCount))</small>
 			</h3>
 			<div id="topAlbums">
-				@Html.Partial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.TopAlbums))
+				<partial name="Partials/Album/_AlbumThumbs" model="@(new AlbumThumbsViewModel(Model.TopAlbums))" />
 			</div>
 		}
 
@@ -309,7 +309,7 @@
 				@Html.ActionLink(Res.RecentSongs, "Index", "Search", UrlMapper.Search.Songs(artistId: Model.Id, sort: SongSortRule.PublishDate), null)
 				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.SharedStats.SongCount))</small>
 			</h3>
-			@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.LatestSongs, 2, true, true))
+			<partial name="Partials/Song/_SongGrid" model="@(new SongGridViewModel(Model.LatestSongs, 2, true, true))" />
 		}
 
 		@if (Model.TopSongs.Any()) {
@@ -318,7 +318,7 @@
 				@Html.ActionLink(Res.TopSongs, "Index", "Search", UrlMapper.Search.Songs(artistId: Model.Id, sort: SongSortRule.RatingScore), null)
 				<small>(@string.Format(Res.RatedSongsTotal, Model.SharedStats.RatedSongCount))</small>
 			</h3>
-			@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.TopSongs, 2, true, true))
+			<partial name="Partials/Song/_SongGrid" model="@(new SongGridViewModel(Model.TopSongs, 2, true, true))" />
 		}
 		
 		@if (Model.LatestEvents.Any()) {
@@ -326,7 +326,7 @@
 				@Html.ActionLink(Res.RecentEvents, "Index", "Search", UrlMapper.Search.Events(artistId: Model.Id, sort: EventSortRule.Date), null)
 				<small>(@string.Format(ViewRes.EntryDetailsStrings.NumTotal, Model.SharedStats.EventCount))</small>				
 			</h3>
-			@Html.Partial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model.LatestEvents))
+			<partial name="Partials/Shared/_EventThumbs" model="@(new EventThumbsViewModel(Model.LatestEvents))" />
 		}
 
 		<div data-bind="visible: songsOverTimeChart">
@@ -343,25 +343,25 @@
 	</div>
 
 	<div id="discussionTab" data-bind="with: comments">
-		@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false))
+		<partial name="Partials/Comment/_EditableComments" model="@(new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false))" />
 	</div>
 
 	<div id="picturesTab">
 
 		<ul class="thumbs">
-			@Html.Partial("Partials/Shared/_ThumbItem", new ThumbItemViewModel(Url.Action("Picture", "Artist", new { id = Model.Id }), Url.Action("PictureThumb", "Artist", new { id = Model.Id }), ViewRes.Album.DetailsStrings.CoverPicture))
+			<partial name="Partials/Shared/_ThumbItem" model="@(new ThumbItemViewModel(Url.Action("Picture", "Artist", new { id = Model.Id }), Url.Action("PictureThumb", "Artist", new { id = Model.Id }), ViewRes.Album.DetailsStrings.CoverPicture))" />
 			@foreach (var pic in Model.Pictures) {
-				@Html.Partial("Partials/Shared/_ThumbItem", new ThumbItemViewModel(Url.ImageThumb(pic, ImageSize.Original), Url.ImageThumb(pic, ImageSize.Thumb), pic.Name))
+				<partial name="Partials/Shared/_ThumbItem" model="@(new ThumbItemViewModel(Url.ImageThumb(pic, ImageSize.Original), Url.ImageThumb(pic, ImageSize.Thumb), pic.Name))" />
 			}
 		</ul>
 
 	</div>
 
 @{
-	void AlbumOptions(string viewModel) {
+	async Task AlbumOptions(string viewModel) {
 		<div class="clearfix">
 			<div class="pull-right">
-				@Html.Partial("Partials/Knockout/_SearchDropDown", new SearchDropDownViewModel("true", viewModel, Translate.AlbumSortRuleNames.ValuesAndNamesStrings))
+				<partial name="Partials/Knockout/_SearchDropDown" model="@(new SearchDropDownViewModel("true", viewModel, Translate.AlbumSortRuleNames.ValuesAndNamesStrings))" />
 				<div class="btn-group" data-bind="with: @viewModel">
 					<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@Res.ViewModeDetails">
 						<i class="icon-list noMargin"></i>
@@ -378,14 +378,14 @@
 }
 
 	<div id="mainAlbumsTab">
-		@{ AlbumOptions("mainAlbumsViewModel"); }
+		@{ await AlbumOptions("mainAlbumsViewModel"); }
 		<div data-bind="with: mainAlbumsViewModel">
 			@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
 		</div>
 	</div>
 
 	<div id="collaborationAlbumsTab">
-		@{ AlbumOptions("collaborationAlbumsViewModel"); }
+		@{ await AlbumOptions("collaborationAlbumsViewModel"); }
 		<div data-bind="with: collaborationAlbumsViewModel">
 			@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
 		</div>
@@ -394,7 +394,7 @@
 	<div id="songsTab">
 		<div class="clearfix">
 			<div class="pull-right">
-				@Html.Partial("Partials/Knockout/_SearchDropDown", new SearchDropDownViewModel("true", "songsViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings))
+				<partial name="Partials/Knockout/_SearchDropDown" model="@(new SearchDropDownViewModel("true", "songsViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings))" />
 				<div class="btn-group" data-bind="with: songsViewModel">
 					<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#" title="@Res.ViewModeDetails">
 						<i class="icon-th-list noMargin"></i>
@@ -429,7 +429,7 @@
 	@{ Html.RenderPartial("Partials/_TagsEdit"); }
 </div>
 
-@Html.Partial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel())
+<partial name="Partials/EntryDetails/_ReportEntryPopupKnockout" model="@(new ReportEntryPopupKnockoutViewModel())" />
 
 @if (Login.IsLoggedIn) {
 	Html.RenderPartial("Partials/_CustomizeArtistSubscriptionDialog");

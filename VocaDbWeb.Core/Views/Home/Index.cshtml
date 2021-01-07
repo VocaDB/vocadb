@@ -58,20 +58,20 @@
 @if (Model.NewAlbums.Any()) {
 	<h3 class="withMargin">@Res.NewAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.ReleaseDate }, null))</h3>
 	<div id="newAlbums">
-		@Html.Partial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.NewAlbums))
+		<partial name="Partials/Album/_AlbumThumbs" model="@(new AlbumThumbsViewModel(Model.NewAlbums))" />
 	</div>	
 }
 
 @if (Model.TopAlbums.Any()) {
 	<h3 class="withMargin">@Res.TopAlbums (@Html.ActionLink(Res.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingTotal }, null))</h3>
 	<div id="topAlbums">
-		@Html.Partial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.TopAlbums))
+		<partial name="Partials/Album/_AlbumThumbs" model="@(new AlbumThumbsViewModel(Model.TopAlbums))" />
 	</div>	
 }
 	
 @if (Model.NewEvents.Any()) {
 	<h3 class="withMargin">@Res.RecentEvents</h3>
-	@Html.Partial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model.NewEvents))
+	<partial name="Partials/Shared/_EventThumbs" model="@(new EventThumbsViewModel(Model.NewEvents))" />
 }
 
 @{ Html.RenderPartial("Partials/_NewsItems"); }
@@ -81,7 +81,7 @@
         <h3 class="withMargin">@Res.RecentActivity (@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry"))</h3>
 
         @foreach (var entry in Model.ActivityEntries) {
-			@Html.Partial("Partials/Activityfeed/_ActivityEntry", new ActivityEntryViewModel(entry))
+			<partial name="Partials/Activityfeed/_ActivityEntry" model="@(new ActivityEntryViewModel(entry))" />
 		}
 		
 		@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry")
@@ -90,7 +90,7 @@
         <h3 class="withMargin">@ViewRes.Comment.IndexStrings.RecentComments (@Html.ActionLink(Res.ViewMore, "Index", "Comment"))</h3>
             
         @foreach (var comment in Model.RecentComments) {
-			@Html.Partial("Partials/Comment/_CommentWithEntryVertical", new CommentWithEntryVerticalViewModel(comment, 400))
+			<partial name="Partials/Comment/_CommentWithEntryVertical" model="@(new CommentWithEntryVerticalViewModel(comment, 400))" />
 		}
 		
 		@Html.ActionLink(Res.ViewMore, "Index", "Comment")

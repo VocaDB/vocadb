@@ -21,7 +21,7 @@
 	<br />
 	<div class="clearfix">
 		<div class="pull-left">
-			@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("albumAutoComplete", "targetSearchParams", "target.name", "target.id"))
+			<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("albumAutoComplete", "targetSearchParams", "target.name", "target.id"))" />
 		</div>
 		<div class="pull-left entry-field-inline-warning">
 			<div class="alert" data-bind="visible: validationError_targetIsNewer" style="display: none;">

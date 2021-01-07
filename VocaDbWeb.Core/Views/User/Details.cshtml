@@ -47,21 +47,21 @@
 }
 
 @{
-	void AvatarImg() {
+	async Task AvatarImg() {
 		if (!string.IsNullOrEmpty(Model.Email)) {
-			@Html.Partial("Partials/User/_ProfileIcon_IUserWithEmail", new ProfileIcon_IUserWithEmailViewModel(Model, 120))
+			<partial name="Partials/User/_ProfileIcon_IUserWithEmail" model="@(new ProfileIcon_IUserWithEmailViewModel(Model, 120))" />
 		} else {
 			<img src="@Url.Content("~/Content/unknown.png")" width="120" height="120" alt="Avatar" />
 		}
 	}
 
-	void Avatar() {
+	async Task Avatar() {
 		if (UserContext.IsLoggedIn && UserContext.LoggedUserId == Model.Id && Login.User.Active) {
 			<a href="http://gravatar.com/emails/" title="@R.SetAvatar" id="avatar" class="user-avatar">
-				@{ AvatarImg(); }
+				@{ await AvatarImg(); }
 			</a>
 		} else {
-			AvatarImg();
+			await AvatarImg();
 		}
 	}
 }
@@ -147,7 +147,7 @@
 	<div class="row-fluid">
 		<div class="span2 well well-transparent user-stats">
 			<h4>@Model.Name</h4>
-			@{ Avatar(); }
+			@{ await Avatar(); }
 			<br />
 			<p class="withMargin">
 				@Translate.UserGroups[Model.GroupId]
@@ -228,7 +228,7 @@
 			@if (!string.IsNullOrEmpty(Model.AboutMe))
 			{
 				<h4>@R.AboutMe</h4>
-				@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.AboutMe))
+				<partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(Model.AboutMe))" />
 				<br />
 			}
 			
@@ -237,7 +237,7 @@
 				<ul class="user-known-languages">
 				@foreach (var lang in Model.KnownLanguages) {
 					<li>
-						@Html.Partial("Partials/Html/_LanguageFlag", new LanguageFlagViewModel(lang.CultureCode))
+						<partial name="Partials/Html/_LanguageFlag" model="@(new LanguageFlagViewModel(lang.CultureCode))" />
 						@GetLanguageName(lang)
 						@if (lang.Proficiency != UserLanguageProficiency.Nothing) {
 							@:(@Translate.UserLanguageProficiencyNames[lang.Proficiency])
@@ -250,14 +250,14 @@
 			@if (Model.OwnedArtistEntries.Any())
 			{
 				<h4>@R.VerifiedOwner</h4>
-				@Html.Partial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.OwnedArtistEntries.Select(a => a.Artist), 3, true))
+				<partial name="Partials/Artist/_ArtistGrid" model="@(new ArtistGridViewModel(Model.OwnedArtistEntries.Select(a => a.Artist), 3, true))" />
 				<br />
 			}
 
 			@if (Model.WebLinks.Any())
 			{
 				<h4 class="withMargin">@ViewRes.EntryDetailsStrings.ExternalLinks</h4>
-				@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.WebLinks))
+				<partial name="Partials/EntryDetails/_ExternalLinksList" model="@(new ExternalLinksListViewModel(Model.WebLinks))" />
 				<br />
 			}
 
@@ -278,7 +278,7 @@
 			@if (Model.FavoriteTags.Any())
 			{
 				<h4>@R.FavoriteTags</h4>
-				@Html.Partial("Partials/Tag/_TagList", new TagListViewModel(Model.FavoriteTags))
+				<partial name="Partials/Tag/_TagList" model="@(new TagListViewModel(Model.FavoriteTags))" />
 				<br />
 				<div style="width: 400px; height: 200px;" data-bind="highcharts: ratingsByGenreChart"></div>
 				<br />
@@ -295,7 +295,7 @@
 			else if (Login.CanManageUsers)
 			{
 				<h4>@R.LastLogin</h4>
-				@Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.LastLogin))
+				<partial name="Partials/Shared/_UniversalTimeLabel" model="@(new UniversalTimeLabelViewModel(Model.LastLogin))" />
 				if (Login.CanManageUsers) {
 					@:(@Model.LastLoginAddress)
 					<a href='http://www.geoiptool.com/?IP=@Model.LastLoginAddress'>GeoIpTool</a>
@@ -341,7 +341,7 @@
 					<small>(@string.Format(R.Total, Model.AlbumCollectionCount))</small>
 				</a>
 			</h3>
-			@Html.Partial("Partials/Album/_AlbumThumbs", new AlbumThumbsViewModel(Model.FavoriteAlbums))
+			<partial name="Partials/Album/_AlbumThumbs" model="@(new AlbumThumbsViewModel(Model.FavoriteAlbums))" />
 		</div>
 	}
 
@@ -359,7 +359,7 @@
 					<small>(@string.Format(R.Total, Model.FavoriteSongCount))</small>
 				</a>
 			</h3>
-			@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.LatestRatedSongs, 3))
+			<partial name="Partials/Song/_SongGrid" model="@(new SongGridViewModel(Model.LatestRatedSongs, 3))" />
 		</div>
 	}
 
@@ -377,7 +377,7 @@
 					<small>(@string.Format(R.Total, Model.ArtistCount))</small>
 				</a>
 			</h3>
-			@Html.Partial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.FollowedArtists, 3))
+			<partial name="Partials/Artist/_ArtistGrid" model="@(new ArtistGridViewModel(Model.FollowedArtists, 3))" />
 		</div>
 	}
 	
@@ -393,7 +393,7 @@
 			</a>
 		</h3>
 		<div data-bind="with: comments">
-			@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3))
+			<partial name="Partials/Comment/_EditableComments" model="@(new EditableCommentsViewModel(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3))" />
 			<!-- ko ifnot: comments().length -->
 			<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 			<!-- /ko -->
@@ -420,7 +420,7 @@
 
 <div data-bind="visible: view() == 'Comments', show" class="well well-transparent js-cloak">
 	<div data-bind="with: comments">
-		@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false))
+		<partial name="Partials/Comment/_EditableComments" model="@(new EditableCommentsViewModel(!Model.Standalone && UserContext.HasPermission(PermissionToken.CreateComments), well: false))" />
 	</div>
 </div>
 
@@ -432,7 +432,7 @@
 	<div id="sfsCheckDialog" title="StopForumSpam check"></div>
 }
 
-@Html.Partial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel("Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional).", "limitedUserViewModel", "setToLimitedLink", "Remove editing permissions", "Confirm"))
+<partial name="Partials/EntryDetails/_EntryDeletePopupBase" model="@(new EntryDeletePopupBaseViewModel("Please confirm that you wish to remove user's editing permissions. You may provide additional explanation below (optional).", "limitedUserViewModel", "setToLimitedLink", "Remove editing permissions", "Confirm"))" />
 @Html.Partial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel("Please confirm that you wish to report user. Please provide additional explanation below.", "reportUserViewModel", "reportUserLink", "Report user", "Confirm"))
 
 @section Head {

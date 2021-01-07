@@ -13,7 +13,7 @@
 
 <form action="@Url.Action("Create", "Artist")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
 
-	@Html.Partial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(R.CreateStrings.UnableToCreateArtist))
+	<partial name="Partials/Shared/_ValidationSummaryDiv" model="@(new ValidationSummaryDivViewModel(R.CreateStrings.UnableToCreateArtist))" />
 	
 	<div class="row-fluid">
 		<div class="span5 well well-transparent">

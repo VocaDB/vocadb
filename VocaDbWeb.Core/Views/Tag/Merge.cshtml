@@ -22,7 +22,7 @@
 	<br />
 	<div class="clearfix">
 		<div class="pull-left">
-			@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("tagAutoComplete", "target.entry", "target.name", "target.id", extraBindings: "tagFilter: tagFilter"))
+			<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("tagAutoComplete", "target.entry", "target.name", "target.id", extraBindings: "tagFilter: tagFilter"))" />
 		</div>
 		<div class="pull-left entry-field-inline-warning">
 			<div class="alert" data-bind="visible: validationError_targetIsNewer" style="display: none;">

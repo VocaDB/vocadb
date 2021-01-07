@@ -15,7 +15,7 @@
 	};		
 }
 
-@Html.Partial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(R.MySettingsStrings.UnableToSave))
+<partial name="Partials/Shared/_ValidationSummaryDiv" model="@(new ValidationSummaryDivViewModel(R.MySettingsStrings.UnableToSave))" />
 
 @using (Html.BeginForm("MySettings", "User", FormMethod.Post)) {
     
@@ -41,7 +41,7 @@
 		<div id="accountSettings">
 			<div>
 				<div class="editor-label">
-					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.Username, "Username can be changed once per year. Username may contain alphanumeric characters and underscores. After changing your username you need to log in again. Contact staff member if necessary."))
+					<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(Res.Username, "Username can be changed once per year. Username may contain alphanumeric characters and underscores. After changing your username you need to log in again. Contact staff member if necessary."))" />
 				</div>
 				<div class="editor-field">
 					@if (Model.CanChangeName) {
@@ -53,7 +53,7 @@
 				</div>
 
 				<div class="editor-label">
-					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.Email, Res.EmailNote))
+					<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(Res.Email, Res.EmailNote))" />
 				</div>
 				<div class="editor-field">
 					@Html.TextBoxForKnockout(m => m.Email, "value: email", maxLength: 50)
@@ -205,10 +205,10 @@
 						<!-- ko foreach: knownLanguages -->
 							<tr>
 								<td>
-									@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AllUserKnownLanguages.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode", cssClass: "input-xlarge"))
+									<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(Model.AllUserKnownLanguages.ToDictionaryFull(VocaDb.Web.Resources.Domain.Globalization.InterfaceLanguageStrings.Other), "cultureCode", cssClass: "input-xlarge"))" />
 								</td>
 								<td>
-									@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.UserLanguageProficiencyNames.ValuesAndNamesStrings, "proficiency"))
+									<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(Translate.UserLanguageProficiencyNames.ValuesAndNamesStrings, "proficiency"))" />
 								</td>
 								<td>								
 									<a href="#" class="textLink deleteLink" data-bind="click: function() { $parent.knownLanguages.remove($data); }">@ViewRes.SharedStrings.Delete</a>
@@ -232,7 +232,7 @@
 				@R.MySettingsStrings.ExternalLinks
 			</div>
 			<div class="editor-field" data-bind="with: webLinksViewModel">
-				@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(false))
+				<partial name="Partials/Knockout/_WebLinksEditViewKnockout" model="@(new WebLinksEditViewKnockoutViewModel(false))" />
 				<input type="hidden" name="webLinks" data-bind="value: ko.toJSON(items)" />
 			</div>
 

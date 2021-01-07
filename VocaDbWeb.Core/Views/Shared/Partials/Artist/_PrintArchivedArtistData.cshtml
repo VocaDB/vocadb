@@ -8,7 +8,7 @@
 	<h4>Content</h4>
 
 	<table class="table table-bordered">
-		@Html.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel("Id", Model.ComparedArtists.FirstData.Id))
+		<partial name="Partials/ArchivedEntry/_DataRow" model="@(new DataRowViewModel("Id", Model.ComparedArtists.FirstData.Id))" />
 		@Html.PictureRow("Main picture", Model.ComparedArtists, id => Url.Action("ArchivedVersionPicture", "Artist", new { id }))
 		@Html.DataRow("Main picture MIME", Model.ComparedArtists, d => d.MainPictureMime)
 		@Html.TranslatedNameRow(Model.ComparedArtists, d => d.TranslatedName)

@@ -36,7 +36,7 @@
 			@{ SongLink(song); }
 			@if (Model.DisplayType)
 			{
-				@Html.Partial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.SongType))
+				<partial name="Partials/Song/_SongTypeLabel" model="@(new SongTypeLabelViewModel(song.SongType))" />
 			}
 			@if (Model.DisplayPublishDate && song.PublishDate.HasValue)
 			{

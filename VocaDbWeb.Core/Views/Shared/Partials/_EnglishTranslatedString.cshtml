@@ -5,17 +5,17 @@
 <!-- Viewmodel: EnglishTranslatedStringViewModel -->
 
 @{
-	void Text(string str) {
+	async Task Text(string str) {
 		var maxLength = Model.MaxLength;
 		var summaryLength = Model.SummaryLength;
 		if (str == null || str.Length <= maxLength) {
-			@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(str))
+			<partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(str))" />
 		} else {
 			<div data-bind="visible: isFullDescriptionShown()">
-				@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(str))
+				<partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(str))" />
 			</div>
 			<div data-bind="visible: !isFullDescriptionShown()">
-				@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(str.Substring(0, summaryLength) + "..."))
+				<partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(str.Substring(0, summaryLength) + "..."))" />
 				<p><a href="" data-bind="click: showFullDescription">@Res.ShowFullDescription</a></p>
 			</div>
 		}
@@ -37,12 +37,12 @@
 			</li>
 		</ul>
 		<div data-bind="visible: !showTranslatedDescription()">
-			@{ Text(Model.String.Original); }
+			@{ await Text(Model.String.Original); }
 		</div>
 		<div data-bind="visible: showTranslatedDescription()">
-			@{ Text(Model.String.English); }
+			@{ await Text(Model.String.English); }
 		</div>
 	</div>
 } else {
-	Text(Model.String.Original);
+	await Text(Model.String.Original);
 }

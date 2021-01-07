@@ -12,7 +12,7 @@
 
 <form action="@Url.Action("Create", "Album")" method="POST" data-bind="submit: submit">
 
-	@Html.Partial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(R.CreateStrings.UnableToCreateAlbum))
+	<partial name="Partials/Shared/_ValidationSummaryDiv" model="@(new ValidationSummaryDivViewModel(R.CreateStrings.UnableToCreateAlbum))" />
 																								
 	<div class="row-fluid">
 		<div class="span5 well well-transparent">

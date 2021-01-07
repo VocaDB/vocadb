@@ -8,7 +8,7 @@
 	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 }
 
-@Html.Partial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(Res.UnableToLogin))
+<partial name="Partials/Shared/_ValidationSummaryDiv" model="@(new ValidationSummaryDivViewModel(Res.UnableToLogin))" />
 
 @using (Html.BeginForm("Login", "User", FormMethod.Post))
 {

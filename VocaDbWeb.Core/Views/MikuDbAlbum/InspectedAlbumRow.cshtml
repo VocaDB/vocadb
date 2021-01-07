@@ -24,7 +24,7 @@
 					}
 				</p>
 				<br />
-				@Html.Partial("Partials/Shared/_EntrySearchNameBox", new EntrySearchNameBoxViewModel("albumSearchName"))
+				<partial name="Partials/Shared/_EntrySearchNameBox" model="@(new EntrySearchNameBoxViewModel("albumSearchName"))" />
 			</td>
 			<td>
 				<p class="form-inline">

@@ -8,7 +8,7 @@
 		@Res.To
 	</div>
 	<div class="editor-field">
-		@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("userAutocomplete", "receiver"))
+		<partial name="Partials/Knockout/_BasicEntryLinkLockingAutoComplete" model="@(new BasicEntryLinkLockingAutoCompleteViewModel("userAutocomplete", "receiver"))" />
 		<div class="alert alert-danger" data-bind="visible: isReceiverInvalid">
 			Receiver must be selected.
 		</div>

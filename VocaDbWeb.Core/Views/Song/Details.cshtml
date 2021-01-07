@@ -52,17 +52,17 @@
 @{
 	@* REVIEW *@
 	Func<AlbumContract, IHtmlContent> AlbumLink = @<text>
-		@Html.Partial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(item))
+		<partial name="Partials/Album/_AlbumLink" model="@(new AlbumLinkViewModel(item))" />
 		@if (!item.ReleaseDate.IsEmpty) {<small class="muted">&nbsp;(@item.ReleaseDate.Year)</small>}
 	</text>;
 
-	void AlternateVersions(IEnumerable<SongContract> songs) {
+	async Task AlternateVersions(IEnumerable<SongContract> songs) {
 		foreach (var alternateVersion in songs) {
-			@Html.Partial("Partials/Song/_SongLink", new SongLinkViewModel(alternateVersion, tooltip: true))
+			<partial name="Partials/Song/_SongLink" model="@(new SongLinkViewModel(alternateVersion, tooltip: true))" />
 			if (alternateVersion.LengthSeconds > 0) {
 				@:(@VocaDb.Model.Helpers.DateTimeHelper.FormatMinSec(alternateVersion.LengthSeconds))
 			}
-			@Html.Partial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(alternateVersion.SongType))
+			<partial name="Partials/Song/_SongTypeLabel" model="@(new SongTypeLabelViewModel(alternateVersion.SongType))" />
 			<br />
 			@alternateVersion.ArtistString<br />
 		}
@@ -80,7 +80,7 @@
 	<link rel="alternate" type="application/json+oembed" href="@(VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("OEmbed", "Ext", new { url = VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("Details", "Song", new { Model.Id }), format = "json" }))" title="@Model.Name" />	
 	<link rel="alternate" type="text/xml+oembed" href="@(VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("OEmbed", "Ext", new { url = VocaDb.Model.Utils.AppConfig.HostAddress + Url.Action("Details", "Song", new { Model.Id }), format = "xml" }))" title="@Model.Name" />
 	<link rel="canonical" href="@url" />
-	@Html.Partial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties))
+	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
 	<link href="@Url.Content("~/Scripts/MediaElement/mediaelementplayer.min.css")" rel="stylesheet" type="text/css" />	
 }
 
@@ -88,7 +88,7 @@
 @if (Model.OriginalPVs.Any() || Model.OtherPVs.Any()) {
 	<div id="pvPlayer" class="song-pv-player">
 		@if (Model.PrimaryPV != null) {
-			@Html.Partial("Partials/PV/_EmbedPV", new EmbedPVViewModel(Model.PrimaryPV))
+			<partial name="Partials/PV/_EmbedPV" model="@(new EmbedPVViewModel(Model.PrimaryPV))" />
 		}
 	</div>
 }
@@ -122,17 +122,17 @@
 	<a data-bind="jqButton: { icon: 'ui-icon-wrench' }, click: function() { maintenanceDialogVisible(true); }" id="maintenanceActions" href="#">Maintenance actions</a>			 
 }
 	
-@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
+<partial name="Partials/Shared/_EntryStatusMessage" model="@(new EntryStatusMessageViewModel(Model.Status))" />
 
-@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
+<partial name="Partials/Shared/_AjaxLoader" model="@(new AjaxLoaderViewModel("pvLoader"))" />
 }
 
 @if (Model.Deleted) {
-	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(Model.MergedTo))
+	<partial name="Partials/EntryDetails/_DeletedBanner" model="@(new DeletedBannerViewModel(Model.MergedTo))" />
 }
 
 @if (Model.Draft && !Model.Deleted) {
-	@Html.Partial("Partials/Shared/_DraftMessage", new DraftMessageViewModel("glsongs"))
+	<partial name="Partials/Shared/_DraftMessage" model="@(new DraftMessageViewModel("glsongs"))" />
 }
 
 <div id="tabs" class="js-cloak" data-bind="show">
@@ -170,7 +170,7 @@
 					}
 				</td>
 				<td class="artistList">
-					@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Performers, showRoles: ShowRolesMode.IfNotVocalist, showType: true))
+					<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.Performers, showRoles: ShowRolesMode.IfNotVocalist, showType: true))" />
 				</td>
 			</tr>
 			}
@@ -179,7 +179,7 @@
 				<tr>
 					<td>@EntryRes.Subject</td>
 					<td class="artistList">
-						@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Subject))
+						<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.Subject))" />
 					</td>
 				</tr>
 			}			
@@ -187,7 +187,7 @@
 			<tr>
 				<td>@ViewRes.Song.DetailsStrings.Producers</td>
 				<td class="artistList">
-					@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Producers, showRoles: (Model.Producers.Length > 1) ? ShowRolesMode.IfNotDefault : ShowRolesMode.Never))
+					<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.Producers, showRoles: (Model.Producers.Length > 1) ? ShowRolesMode.IfNotDefault : ShowRolesMode.Never))" />
 				</td>
 			</tr>
 			}
@@ -195,7 +195,7 @@
 				<tr>
 					<td>Illustrators</td>
 					<td class="artistList">
-						@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Illustrators))
+						<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.Illustrators))" />
 					</td>
 				</tr>
 			}			
@@ -204,7 +204,7 @@
 				<tr>
 					<td>@Res.Band</td>
 					<td class="artistList">
-						@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Bands))
+						<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.Bands))" />
 					</td>
 				</tr>
 			}
@@ -214,7 +214,7 @@
 			<tr>
 				<td>@ViewRes.Song.DetailsStrings.Animators</td>
 				<td class="artistList">
-					@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Animators))
+					<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.Animators))" />
 				</td>
 			</tr>
 			}
@@ -223,7 +223,7 @@
 			<tr>
 				<td>@ViewRes.Song.DetailsStrings.OtherArtists</td>
 				<td class="artistList">
-					@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.OtherArtists, showRoles: ShowRolesMode.IfNotDefault))
+					<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.OtherArtists, showRoles: ShowRolesMode.IfNotDefault))" />
 				</td>
 			</tr>
 			}
@@ -231,7 +231,7 @@
 			<tr>
 				<td>@ViewRes.SharedStrings.Type</td>
 				<td>
-					@Html.Partial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(Model.SongType))
+					<partial name="Partials/Song/_SongTypeLabel" model="@(new SongTypeLabelViewModel(Model.SongType))" />
 					@if (Model.SongTypeTag != null) {
 						<a href="@Url.TagDetails(Model.SongTypeTag)" data-bind="tagToolTip: @Model.SongTypeTag.Id">@Translate.SongTypeNames[Model.SongType]</a>
 					} else {
@@ -304,12 +304,12 @@
 			</tr>
    }
 			
-			@Html.Partial("Partials/EntryDetails/_ExternalLinksRows", new ExternalLinksRowsViewModel(Model.WebLinks))
+			<partial name="Partials/EntryDetails/_ExternalLinksRows" model="@(new ExternalLinksRowsViewModel(Model.WebLinks))" />
 			
 			<tr data-bind="if: originalVersion().entry">
 				<td>@Res.OriginalVersion</td>
 				<td>
-					@Html.Partial("Partials/Song/_SongLinkKnockout", new SongLinkKnockoutViewModel("originalVersion().entry", "originalVersion().url", tooltip: true, toolTipDomainBinding: "originalVersion().domain"))
+					<partial name="Partials/Song/_SongLinkKnockout" model="@(new SongLinkKnockoutViewModel("originalVersion().entry", "originalVersion().url", tooltip: true, toolTipDomainBinding: "originalVersion().domain"))" />
 					<span data-bind="songTypeLabel: originalVersion().entry.songType"></span>
 					<br />
 					<span data-bind="text: originalVersion().entry.artistString"></span>
@@ -320,11 +320,11 @@
 			<tr>
 				<td>@Res.AlternateVersions</td>
 				<td>
-					@{ AlternateVersions(Model.AlternateVersions.Take(showAlternateVersions)); }
+					@{ await AlternateVersions(Model.AlternateVersions.Take(showAlternateVersions)); }
 					@if (Model.AlternateVersions.Length > showAlternateVersions) {
 						<a href="#" data-bind="visible: !allVersionsVisible(), click: showAllVersions">@Res.ShowAllVersions (@Model.AlternateVersions.Length)</a>
 						<div style="display: none;" data-bind="visible: allVersionsVisible">
-							@{ AlternateVersions(Model.AlternateVersions.Skip(showAlternateVersions)); }
+							@{ await AlternateVersions(Model.AlternateVersions.Skip(showAlternateVersions)); }
 						</div>
 	 }		
 				</td>
@@ -373,7 +373,7 @@
 			<tr>
 				<td>@ViewRes.EntryDetailsStrings.AdditionDate</td>
 				<td>
-					@Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CreateDate))
+					<partial name="Partials/Shared/_UniversalTimeLabel" model="@(new UniversalTimeLabelViewModel(Model.CreateDate))" />
 				</td>	
 			</tr>
 			
@@ -404,7 +404,7 @@
 		
 		@if (Model.Suggestions.Any()) {
 			<h3 class="withMargin">@Res.SuggestionsTitle</h3>
-			@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.Suggestions, 2, true, true))
+			<partial name="Partials/Song/_SongGrid" model="@(new SongGridViewModel(Model.Suggestions, 2, true, true))" />
 			<p>
 				<a href="#" id="viewRelatedLink">@Res.SeeRelatedSongs</a>
 			</p>
@@ -485,14 +485,14 @@
 	 }
 	 
 	<div id="discussionTab" data-bind="with: comments">
-		@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false))
+		<partial name="Partials/Comment/_EditableComments" model="@(new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false))" />
 	</div>	 
 	
 	<div id="shareTab">
 		<div>
 			<label>
 				@ViewRes.EntryDetailsStrings.Social<br />
-				@Html.Partial("Partials/EntryDetails/_LargeShareLinks", new LargeShareLinksViewModel(PageProperties.Title, url))
+				<partial name="Partials/EntryDetails/_LargeShareLinks" model="@(new LargeShareLinksViewModel(PageProperties.Title, url))" />
 				<br /><br />
 			</label>
 		</div>
@@ -528,7 +528,7 @@
 
 @{ Html.RenderPartial("Partials/_SongInListsDialog"); }
 
-@Html.Partial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel())
+<partial name="Partials/EntryDetails/_ReportEntryPopupKnockout" model="@(new ReportEntryPopupKnockoutViewModel())" />
 
 <div 
 	data-bind="

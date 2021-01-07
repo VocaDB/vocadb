@@ -39,14 +39,14 @@
 }
 }
 
-@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save"))
+<partial name="Partials/Shared/_ValidationSummaryPanel" model="@(new ValidationSummaryPanelViewModel("Unable to save"))" />
 
-@Html.Partial("Partials/Knockout/_EntryValidationMessage", new EntryValidationMessageViewModel(Model.Artist.Status == EntryStatus.Draft, validationErrors, "glartists"))
+<partial name="Partials/Knockout/_EntryValidationMessage" model="@(new EntryValidationMessageViewModel(Model.Artist.Status == EntryStatus.Draft, validationErrors, "glartists"))" />
 
 <br />
 <form action="@Url.Action("Edit", "Artist")" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
 
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Artist.Id })))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Artist.Id })))" />
 	
 	<div id="tabs">
 
@@ -65,11 +65,11 @@
 					<label>@EditRes.DefaultLanguageSelection</label>
 				</div>
 				<div class="editor-field">
-					@Html.Partial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage"))
+					<partial name="Partials/Knockout/_LanguageSelectionDropDown" model="@(new LanguageSelectionDropDownViewModel("defaultNameLanguage"))" />
 				</div>
 
 				<div class="editor-label">
-					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.BaNames, ViewRes.EntryEditStrings.NameHelp))
+					<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(Res.BaNames, ViewRes.EntryEditStrings.NameHelp))" />
 					@Html.Partial("Partials/Shared/_RequiredField")
 					<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
 				</div>
@@ -106,13 +106,13 @@
 					<label>@Res.BaArtistType</label>
 				</div>
 				<div class="editor-field">
-					@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AllArtistTypes, "artistTypeStr"))
+					<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(Model.AllArtistTypes, "artistTypeStr"))" />
 					<span data-bind="visible: validationError_needType, qTip" class="icon errorIcon" title="@ValidationErrors.NeedType"></span>
 				</div>
 				
 				<!-- ko if: canHaveRelatedArtists -->
 					<div class="editor-label">
-						@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Associated artists", "Artists related to this voicebank. These are inherited to derived voicebanks. " + "Character designer only needs to be specified if it's different from the illustrator and manager only needs to be specified if it's different from the voice provider."))
+						<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel("Associated artists", "Artists related to this voicebank. These are inherited to derived voicebanks. " + "Character designer only needs to be specified if it's different from the illustrator and manager only needs to be specified if it's different from the voice provider."))" />
 					</div>
 					<div class="editor-field">
 						<table>
@@ -123,25 +123,25 @@
 							</tr>
 							<tr>
 								<td>
-									@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Illustrator", "Person who illustrated the character design. This is inherited to derived voicebanks."))
+									<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel("Illustrator", "Person who illustrated the character design. This is inherited to derived voicebanks."))" />
 								</td>
 								<td>
-									@Html.Partial("Partials/Knockout/_ArtistLockingAutoComplete", new ArtistLockingAutoCompleteViewModel("illustrator", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual"))
+									<partial name="Partials/Knockout/_ArtistLockingAutoComplete" model="@(new ArtistLockingAutoCompleteViewModel("illustrator", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual"))" />
 								</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>
-									@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel("Voice provider", "Person who provided their voice for this voicebank. This is inherited to derived voicebanks."))
+									<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel("Voice provider", "Person who provided their voice for this voicebank. This is inherited to derived voicebanks."))" />
 								</td>
 								<td>
-									@Html.Partial("Partials/Knockout/_ArtistLockingAutoComplete", new ArtistLockingAutoCompleteViewModel("voiceProvider", "Unknown,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherIndividual"))
+									<partial name="Partials/Knockout/_ArtistLockingAutoComplete" model="@(new ArtistLockingAutoCompleteViewModel("voiceProvider", "Unknown,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherIndividual"))" />
 								</td>
 							</tr>
 							<!-- ko foreach: associatedArtists -->
 								<tr>
 									<td>
-										@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AssociatedArtistTypes, "linkType"))
+										<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(Model.AssociatedArtistTypes, "linkType"))" />
 									</td>
 									<td>
 										<div class="input-append">
@@ -153,10 +153,10 @@
 							<!-- /ko -->
 							<tr>
 								<td>
-									@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AssociatedArtistTypes, "newAssociatedArtistType"))
+									<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(Model.AssociatedArtistTypes, "newAssociatedArtistType"))" />
 								</td>
 								<td>
-									@Html.Partial("Partials/Knockout/_ArtistLockingAutoComplete", new ArtistLockingAutoCompleteViewModel("newAssociatedArtist", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual"))
+									<partial name="Partials/Knockout/_ArtistLockingAutoComplete" model="@(new ArtistLockingAutoCompleteViewModel("newAssociatedArtist", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual"))" />
 								</td>
 							</tr>
 						</table>
@@ -194,7 +194,7 @@
 				</div>
 				<div class="editor-field">
 					<div style="display: inline-block;" class="input-append">
-						@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("artistAutoComplete", "baseVoicebankSearchParams", textBinding: "baseVoicebank.name", valBinding: "baseVoicebank.id"))
+						<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("artistAutoComplete", "baseVoicebankSearchParams", textBinding: "baseVoicebank.name", valBinding: "baseVoicebank.id"))" />
 					</div>
 				</div>		
 				<!-- /ko -->		
@@ -211,17 +211,17 @@
 				<!-- /ko -->		
 
 				<div class="editor-label">
-					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.WebLinks, EditRes.ExternalLinksQuickHelp))
+					<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(EditRes.WebLinks, EditRes.ExternalLinksQuickHelp))" />
 				</div>
 				<div class="editor-field" data-bind="with: webLinks">
-					@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(true))
+					<partial name="Partials/Knockout/_WebLinksEditViewKnockout" model="@(new WebLinksEditViewKnockoutViewModel(true))" />
 				</div>
 
 				<div class="editor-label">
-					@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation))
+					<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation))" />
 				</div>
 				<div class="editor-field">
-					@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status"))
+					<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status"))" />
 				</div>
 
 			</div>
@@ -249,14 +249,14 @@
 	<textarea data-bind="value: updateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 	
 	<br />	
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Artist.Id })))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Artist.Id })))" />
 	
 	<!-- JSON model to be posted to the server -->
 	@Html.HiddenForKnockout(m => m.EditedArtist, "value: submittedJson")
 
 </form>
 
-@Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
+<partial name="Partials/EntryDetails/_EntryDeletePopup" model="@(new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))" />
 
 @section BodyScripts {
 <script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/edit.js")"></script>

@@ -26,13 +26,13 @@
 		
 		<div class="span5">
 			@foreach (var comment in entry.Comments) {
-				@Html.Partial("Partials/Comment/_CommentBodyLarge", new CommentBodyLargeViewModel(comment, false))
+				<partial name="Partials/Comment/_CommentBodyLarge" model="@(new CommentBodyLargeViewModel(comment, false))" />
 			}			
 		</div>
 
 		<div class="span5 item">
 
-			@Html.Partial("Partials/Comment/_CommentEntryItem", new CommentEntryItemViewModel(entry.Entry))
+			<partial name="Partials/Comment/_CommentEntryItem" model="@(new CommentEntryItemViewModel(entry.Entry))" />
 
 		</div>
 		    		

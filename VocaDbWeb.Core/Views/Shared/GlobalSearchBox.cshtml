@@ -107,7 +107,7 @@
 						<div class="media">
 							<div class="pull-left media-image-usermessage" style="width: 40px; height: 40px;">
 								<!-- ko if: $data.sender -->
-								@Html.Partial("Partials/User/_ProfileIconKnockout_ImageSize", new ProfileIconKnockout_ImageSizeViewModel(ImageSize.SmallThumb, "sender", 40))
+								<partial name="Partials/User/_ProfileIconKnockout_ImageSize" model="@(new ProfileIconKnockout_ImageSizeViewModel(ImageSize.SmallThumb, "sender", 40))" />
 								<!-- /ko -->
 								<!-- ko ifnot: $data.sender -->
 								<img src="@Url.Content("~/Content/vocadb_40.png")" alt="Notification" />

@@ -49,12 +49,12 @@
 </script>
 }
 
-@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(Res.UnableToSave))
+<partial name="Partials/Shared/_ValidationSummaryPanel" model="@(new ValidationSummaryPanelViewModel(Res.UnableToSave))" />
 
 <form action="@Url.Action("Edit", "SongList")" id="songListForm" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
 	@Html.HiddenFor(m => m.CanCreateFeaturedLists)
 
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(parentUrl))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(parentUrl))" />
 
 	<div id="tabs">
 
@@ -95,7 +95,7 @@
 			}
 			
 			<div class="editor-label">
-				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.EventDate, Res.EventDateHelp))
+				<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(Res.EventDate, Res.EventDateHelp))" />
 			</div>
 			<div class="editor-field">
 				<input type="text" data-bind="datepicker: { value: eventDateDate, dateFormat: 'yy-mm-dd' }" class="span2" maxlength="10" />
@@ -117,7 +117,7 @@
 			</div>
 			
 			<div class="editor-label">
-				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.Status, Resources.CommonMessages.EntryStatusExplanation))
+				<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(Res.Status, Resources.CommonMessages.EntryStatusExplanation))" />
 			</div>
 			<div class="editor-field">
 				@Html.DropdownForKnockout(m => m.Status, ViewHelper.CreateEnumList(Model.AllowedEntryStatuses, Translate.EntryStatusNames.GetTranslatedFields(Model.AllowedEntryStatuses)), "value: status")
@@ -166,9 +166,9 @@
 
 	<input type="hidden" name="model" data-bind="value: ko.toJSON($root)" />
 	<br />
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(parentUrl))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(parentUrl))" />
 
 </form>
 
-@Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
+<partial name="Partials/EntryDetails/_EntryDeletePopup" model="@(new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))" />
 @Html.Partial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))

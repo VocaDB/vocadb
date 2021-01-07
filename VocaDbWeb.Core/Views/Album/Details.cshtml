@@ -30,7 +30,7 @@
 }
 
 @section Head {
-	@Html.Partial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties))
+	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
 	<link rel="canonical" href="@url" />
 	<link rel="stylesheet" href="@LaravelMixHelper.GetPathToVersionedMixFile("~/Scripts/jqwidgets27/styles/css.css")" />
 }
@@ -51,17 +51,17 @@
 
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 
-	@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
+	<partial name="Partials/Shared/_EntryStatusMessage" model="@(new EntryStatusMessageViewModel(Model.Status))" />
 }
 
 @if (Model.Deleted)
 {
-	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(Model.MergedTo))
+	<partial name="Partials/EntryDetails/_DeletedBanner" model="@(new DeletedBannerViewModel(Model.MergedTo))" />
 }
 
 @if (Model.Draft && !Model.Deleted)
 {
-	@Html.Partial("Partials/Shared/_DraftMessage", new DraftMessageViewModel("glalbums"))
+	<partial name="Partials/Shared/_DraftMessage" model="@(new DraftMessageViewModel("glalbums"))" />
 }
 
 <div id="tabs" itemscope itemtype="http://schema.org/MusicAlbum" class="js-cloak" data-bind="show">
@@ -87,12 +87,12 @@
 				<div id="picCarousel" class="carousel slide">
 					<div class="carousel-inner">
 						<div class="active item thumbItem">
-							@Html.Partial("Partials/Album/_CoverLink", new CoverLinkViewModel(Model))
+							<partial name="Partials/Album/_CoverLink" model="@(new CoverLinkViewModel(Model))" />
 						</div>
 						@foreach (var pic in Model.Pictures)
 						{
 							<div class="item thumbItem" itemprop="image">
-								@Html.Partial("Partials/Shared/_EntryPictureFileLink", new EntryPictureFileLinkViewModel(pic))
+								<partial name="Partials/Shared/_EntryPictureFileLink" model="@(new EntryPictureFileLinkViewModel(pic))" />
 								@if (!string.IsNullOrEmpty(pic.Name))
 								{
 									<div class="carousel-caption">
@@ -133,7 +133,7 @@
 					<tr>
 						<td>@Res.Vocalists</td>
 						<td class="artistList">
-							@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Vocalists, showRoles: ShowRolesMode.IfNotVocalist, showType: true))
+							<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.Vocalists, showRoles: ShowRolesMode.IfNotVocalist, showType: true))" />
 						</td>
 					</tr>
 				}
@@ -143,7 +143,7 @@
 					<tr>
 						<td>@EntryRes.Subject</td>
 						<td class="artistList">
-							@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Subject))
+							<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.Subject))" />
 						</td>
 					</tr>
 				}
@@ -153,7 +153,7 @@
 					<tr>
 						<td>@Res.Producers</td>
 						<td class="artistList">
-							@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Producers, showRoles: Model.ShowProducerRoles ? ShowRolesMode.IfNotDefault : ShowRolesMode.Never))
+							<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.Producers, showRoles: Model.ShowProducerRoles ? ShowRolesMode.IfNotDefault : ShowRolesMode.Never))" />
 						</td>
 					</tr>
 				}
@@ -163,7 +163,7 @@
 					<tr>
 						<td>@Res.Illustrators</td>
 						<td class="artistList">
-							@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Illustrators))
+							<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.Illustrators))" />
 						</td>
 					</tr>
 				}
@@ -173,7 +173,7 @@
 					<tr>
 						<td>@Res.Band</td>
 						<td class="artistList">
-							@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Bands))
+							<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.Bands))" />
 						</td>
 					</tr>
 				}
@@ -183,7 +183,7 @@
 					<tr>
 						<td>@Res.Circle</td>
 						<td class="artistList">
-							@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Circles))
+							<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.Circles))" />
 						</td>
 					</tr>
 				}
@@ -193,7 +193,7 @@
 					<tr>
 						<td>@Res.Labels</td>
 						<td class="artistList">
-							@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.Labels))
+							<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.Labels))" />
 						</td>
 					</tr>
 				}
@@ -203,7 +203,7 @@
 					<tr>
 						<td>@Res.OtherArtists</td>
 						<td class="artistList">
-							@Html.Partial("Partials/Artist/_ArtistList", new ArtistListViewModel(Model.OtherArtists, ShowRolesMode.IfNotDefault))
+							<partial name="Partials/Artist/_ArtistList" model="@(new ArtistListViewModel(Model.OtherArtists, ShowRolesMode.IfNotDefault))" />
 						</td>
 					</tr>
 				}
@@ -302,7 +302,7 @@
 					</tr>
 				}
 
-				@Html.Partial("Partials/EntryDetails/_ExternalLinksRows", new ExternalLinksRowsViewModel(Model.WebLinks))
+				<partial name="Partials/EntryDetails/_ExternalLinksRows" model="@(new ExternalLinksRowsViewModel(Model.WebLinks))" />
 
 				<tr>
 					<td>@ViewRes.EntryDetailsStrings.Stats</td>
@@ -317,7 +317,7 @@
 				<tr>
 					<td>@ViewRes.EntryDetailsStrings.AdditionDate</td>
 					<td>
-						@Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CreateDate))
+						<partial name="Partials/Shared/_UniversalTimeLabel" model="@(new UniversalTimeLabelViewModel(Model.CreateDate))" />
 					</td>
 				</tr>
 			</table>
@@ -363,19 +363,19 @@
 								<div class="tracklist-trackTitle">
 									@if (song.Song != null)
 									{
-										@Html.Partial("Partials/Song/_SongLink", new SongLinkViewModel(song.Song, Model.Id, tooltip: true))
+										<partial name="Partials/Song/_SongLink" model="@(new SongLinkViewModel(song.Song, Model.Id, tooltip: true))" />
 										if (song.Song.LengthSeconds > 0)
 										{
 											@(" (" + DateTimeUtils.FormatFromSeconds(song.Song.LengthSeconds) + ")")
 										}
 										@:&nbsp;
-										@Html.Partial("Partials/Shared/_DraftIcon", new DraftIconViewModel(song.Song.Status))
+										<partial name="Partials/Shared/_DraftIcon" model="@(new DraftIconViewModel(song.Song.Status))" />
 										if (song.Song.SongType != SongType.Original && song.Song.SongType != SongType.Unspecified)
 										{
-											@Html.Partial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.Song.SongType))
+											<partial name="Partials/Song/_SongTypeLabel" model="@(new SongTypeLabelViewModel(song.Song.SongType))" />
 										}
-										@Html.Partial("Partials/Shared/_PVServiceIcons", new PVServiceIconsViewModel(song.Song.PVServices))
-										@Html.Partial("Partials/Song/_RatingIcon", new RatingIconViewModel(song.Rating ?? SongVoteRating.Nothing))
+										<partial name="Partials/Shared/_PVServiceIcons" model="@(new PVServiceIconsViewModel(song.Song.PVServices))" />
+										<partial name="Partials/Song/_RatingIcon" model="@(new RatingIconViewModel(song.Rating ?? SongVoteRating.Nothing))" />
 										<br />
 										<small class="muted">@song.Song.ArtistString</small>
 									}
@@ -399,7 +399,7 @@
 		@if (Model.PrimaryPV != null)
 		{
 			<div class="song-pv-player">
-				@Html.Partial("Partials/PV/_EmbedPV", new EmbedPVViewModel(Model.PrimaryPV))
+				<partial name="Partials/PV/_EmbedPV" model="@(new EmbedPVViewModel(Model.PrimaryPV))" />
 			</div>
 		}
 
@@ -450,22 +450,22 @@
 
 			<div class="media">
 				<a class="pull-left" href="@Url.UserDetails(Model.LatestReview.User)">
-					@Html.Partial("Partials/User/_ProfileIcon", new ProfileIconViewModel(Model.LatestReview.User.MainPicture.UrlThumb, 70))
+					<partial name="Partials/User/_ProfileIcon" model="@(new ProfileIconViewModel(Model.LatestReview.User.MainPicture.UrlThumb, 70))" />
 				</a>
 
 				<div class="media-body">
 					<div class="pull-right">
-						@Html.Partial("Partials/Html/_LanguageFlag", new LanguageFlagViewModel(Model.LatestReview.LanguageCode))
+						<partial name="Partials/Html/_LanguageFlag" model="@(new LanguageFlagViewModel(Model.LatestReview.LanguageCode))" />
 						|
 						@VocaDb.Web.Code.TimeAgoStringBuilder.FormatTimeAgo(Model.LatestReview.Date)
 					</div>
 					<h3 class="media-heading">
-						@Html.Partial("Partials/User/_UserLink", new UserLinkViewModel(Model.LatestReview.User))
+						<partial name="Partials/User/_UserLink" model="@(new UserLinkViewModel(Model.LatestReview.User))" />
 					</h3>
 
 					@if (Model.LatestReviewRatingScore > 0)
 					{
-						@Html.Partial("Partials/Shared/_Stars", new StarsViewModel(Model.LatestReviewRatingScore, 5))
+						<partial name="Partials/Shared/_Stars" model="@(new StarsViewModel(Model.LatestReviewRatingScore, 5))" />
 					}
 
 					<div>
@@ -487,7 +487,7 @@
 	</div>
 
 	<div id="discussionTab" data-bind="with: comments">
-		@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false))
+		<partial name="Partials/Comment/_EditableComments" model="@(new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false))" />
 	</div>
 
 	<div id="reviewsTab" data-bind="with: reviewsViewModel">
@@ -497,10 +497,10 @@
 	<div id="picturesTab">
 
 		<ul class="thumbs">
-			@Html.Partial("Partials/Shared/_ThumbItem", new ThumbItemViewModel(Url.Action("CoverPicture", "Album", new { id = Model.Id, v = Model.Version }), Url.ImageThumb(Model, ImageSize.Thumb), ViewRes.Album.DetailsStrings.CoverPicture))
+			<partial name="Partials/Shared/_ThumbItem" model="@(new ThumbItemViewModel(Url.Action("CoverPicture", "Album", new { id = Model.Id, v = Model.Version }), Url.ImageThumb(Model, ImageSize.Thumb), ViewRes.Album.DetailsStrings.CoverPicture))" />
 			@foreach (var pic in Model.Pictures)
 			{
-				@Html.Partial("Partials/Shared/_ThumbItem", new ThumbItemViewModel(Url.ImageThumb(pic, ImageSize.Original), Url.ImageThumb(pic, ImageSize.Thumb), pic.Name))
+				<partial name="Partials/Shared/_ThumbItem" model="@(new ThumbItemViewModel(Url.ImageThumb(pic, ImageSize.Original), Url.ImageThumb(pic, ImageSize.Thumb), pic.Name))" />
 			}
 		</ul>
 
@@ -510,7 +510,7 @@
 		<div>
 			<label>
 				@ViewRes.EntryDetailsStrings.Social<br />
-				@Html.Partial("Partials/EntryDetails/_LargeShareLinks", new LargeShareLinksViewModel(PageProperties.Title, url))
+				<partial name="Partials/EntryDetails/_LargeShareLinks" model="@(new LargeShareLinksViewModel(PageProperties.Title, url))" />
 				<br /><br />
 			</label>
 		</div>
@@ -538,9 +538,9 @@
 
 @{ Html.RenderPartial("Partials/_DownloadTagsDialog"); }
 
-@Html.Partial("Partials/Album/_EditCollectionDialog", new EditCollectionDialogViewModel(Model.AlbumPurchaseStatus, Model.AlbumMediaType))
+<partial name="Partials/Album/_EditCollectionDialog" model="@(new EditCollectionDialogViewModel(Model.AlbumPurchaseStatus, Model.AlbumMediaType))" />
 
-@Html.Partial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel())
+<partial name="Partials/EntryDetails/_ReportEntryPopupKnockout" model="@(new ReportEntryPopupKnockoutViewModel())" />
 
 @section BodyScripts {
 	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/Album/Details.js")"></script>

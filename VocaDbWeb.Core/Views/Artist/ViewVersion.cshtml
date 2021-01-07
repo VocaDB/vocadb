@@ -45,11 +45,11 @@
 	}
 }
 
-@Html.Partial("Partials/ArchivedEntry/_ArchivedObjectVersionProperties", new ArchivedObjectVersionPropertiesViewModel(Versions.CreateForArtist(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForArtist(Model.ComparedVersion) : null))
+<partial name="Partials/ArchivedEntry/_ArchivedObjectVersionProperties" model="@(new ArchivedObjectVersionPropertiesViewModel(Versions.CreateForArtist(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForArtist(Model.ComparedVersion) : null))" />
 
-@Html.Partial("Partials/Artist/_PrintArchivedArtistData", new PrintArchivedArtistDataViewModel(Model.Versions))
+<partial name="Partials/Artist/_PrintArchivedArtistData" model="@(new PrintArchivedArtistDataViewModel(Model.Versions))" />
 
-@Html.Partial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel())
+<partial name="Partials/EntryDetails/_ReportEntryVersionPopupKnockout" model="@(new ReportEntryVersionPopupKnockoutViewModel())" />
 
 @section BodyScripts {
     <script type="text/javascript">

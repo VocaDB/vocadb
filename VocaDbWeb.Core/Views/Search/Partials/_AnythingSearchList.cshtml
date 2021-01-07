@@ -36,7 +36,7 @@
 					&nbsp;
 					<span data-bind="artistTypeLabel: $data.artistType"></span>
 					<span data-bind="songTypeLabel: $data.songType"></span>
-					@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
+					<partial name="Partials/Knockout/_DraftIcon" model="@(new DraftIconViewModel("status"))" />
 					<!-- ko if: $data.artistString -->
 					<br />
 					<small class="extraInfo" data-bind="text: artistString"></small>

@@ -15,7 +15,7 @@
 }
 
 @{
-	void MessageFolderTab(string id, string binding, bool colFrom, bool colTo, bool showUnread, bool allowDelete) {
+	async Task MessageFolderTab(string id, string binding, bool colFrom, bool colTo, bool showUnread, bool allowDelete) {
 		<!-- UserMessageFolderViewModel -->
 		<div id="@id" data-bind="with: @binding">
 			<div class="form-horizontal pull-left" data-bind="visible: canFilterByUser()">
@@ -23,7 +23,7 @@
 					<label class="control-label" data-bind="visible: inbox === @((int)UserInboxType.Received)">@Res.From</label>
 					<label class="control-label" data-bind="visible: inbox === @((int)UserInboxType.Sent)">@Res.To</label>
 					<div class="controls">
-						@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("userAutocomplete", "anotherUser"))
+						<partial name="Partials/Knockout/_BasicEntryLinkLockingAutoComplete" model="@(new BasicEntryLinkLockingAutoCompleteViewModel("userAutocomplete", "anotherUser"))" />
 					</div>
 				</div>
 			</div>
@@ -82,7 +82,7 @@
 	}
 }
 
-@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(Res.MessageSendError))
+<partial name="Partials/Shared/_ValidationSummaryPanel" model="@(new ValidationSummaryPanelViewModel(Res.MessageSendError))" />
 
 <div data-bind="with: selectedMessage, visible: selectedMessage" id="viewMessage" style="display: none;">
 	@{ Html.RenderPartial("Partials/_UserMessageKnockout"); }
@@ -111,9 +111,9 @@
 		<li><a href="#composeTab">@Res.Compose</a></li>
 	</ul>
 
-	@{ MessageFolderTab("receivedTabContent", "receivedMessages", true, false, true, false); }
-	@{ MessageFolderTab("sentTabContent", "sentMessages", false, true, false, false); }
-	@{ MessageFolderTab("notificationsTabContent", "notifications", false, false, true, true); }
+	@{ await MessageFolderTab("receivedTabContent", "receivedMessages", true, false, true, false); }
+	@{ await MessageFolderTab("sentTabContent", "sentMessages", false, true, false, false); }
+	@{ await MessageFolderTab("notificationsTabContent", "notifications", false, false, true, true); }
 
 	<div id="composeTab">
 		@{ Html.RenderPartial("ComposeMessage"); }
