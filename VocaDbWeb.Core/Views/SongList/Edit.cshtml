@@ -74,7 +74,7 @@
 
 			<div class="editor-label">
 				@Res.Description
-				@Html.Partial("Partials/Shared/_MarkdownNotice")
+				<partial name="Partials/Shared/_MarkdownNotice" />
 			</div>
 			<div class="editor-field">
 				<textarea data-bind="textInput: description" rows="6" cols="60" maxlength="3000" class="input-xxlarge"></textarea>
@@ -110,7 +110,7 @@
 						<img class="pull-left media-object" src="@thumbUrl" alt="Thumb" />
 					}
 					<div class="media-body">
-						@Html.Partial("Partials/Shared/_ImageUploadMessage")
+						<partial name="Partials/Shared/_ImageUploadMessage" />
 						<input type="file" id="thumbPicUpload" name="thumbPicUpload" />
 					</div>
 				</div>

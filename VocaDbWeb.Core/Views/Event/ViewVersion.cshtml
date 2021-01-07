@@ -37,7 +37,7 @@
 }
 
 @if (Model.Entry.ArchivedVersion.Hidden) {
-	@Html.Partial("Partials/EntryDetails/_HiddenBanner")
+	<partial name="Partials/EntryDetails/_HiddenBanner" />
 }
 
 @if (Model.Entry.ComparableVersions.Any()) {

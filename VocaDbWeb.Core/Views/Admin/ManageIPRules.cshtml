@@ -10,7 +10,7 @@
 
 <form id="manageRules" data-bind="submit: save, show" class="js-cloak">
     
-	@Html.Partial("Partials/Shared/_SaveBtn")
+	<partial name="Partials/Shared/_SaveBtn" />
 	
 	<button class="btn" data-bind="click: deleteOldRules">Delete rules older than 1 year</button>
     
@@ -45,7 +45,7 @@
 		</tbody>
 	</table>
     
-	@Html.Partial("Partials/Shared/_SaveBtn")
+	<partial name="Partials/Shared/_SaveBtn" />
 
 </form>
 

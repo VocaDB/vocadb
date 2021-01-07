@@ -26,7 +26,7 @@
     @Html.HiddenFor(m => m.TwitterName)
 	@Html.HiddenFor(m => m.CanChangeName)
 
-	@Html.Partial("Partials/Shared/_SaveBtn")
+	<partial name="Partials/Shared/_SaveBtn" />
 	
 	<div id="tabs">
 
@@ -185,7 +185,7 @@
 			
  			<div class="editor-label">
 				@R.MySettingsStrings.AboutMe
-				@Html.Partial("Partials/Shared/_MarkdownNotice")
+				<partial name="Partials/Shared/_MarkdownNotice" />
 			</div>
 			<div class="editor-field">
 				@Html.TextAreaForKnockout(m => m.AboutMe, binding: "textInput: aboutMe", cssClass: "input-xxlarge", rows: 7)
@@ -273,7 +273,7 @@
 	</div>
 	
 	<br />
-	@Html.Partial("Partials/Shared/_SaveBtn")
+	<partial name="Partials/Shared/_SaveBtn" />
 	
 }
 

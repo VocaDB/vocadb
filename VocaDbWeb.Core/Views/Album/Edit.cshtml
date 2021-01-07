@@ -152,7 +152,7 @@
 
 			<div class="editor-label">
 				<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(R.EditStrings.BaNames, ViewRes.EntryEditStrings.NameHelp))" />
-				@Html.Partial("Partials/Shared/_RequiredField")
+				<partial name="Partials/Shared/_RequiredField" />
 				<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
 			</div>
 			<div class="editor-field" data-bind="with: names">
@@ -175,7 +175,7 @@
 
 			<div class="editor-label">
 				<label>@Res.BaDescription</label>
-				@Html.Partial("Partials/Shared/_MarkdownNotice")
+				<partial name="Partials/Shared/_MarkdownNotice" />
 			</div>
 			<div class="editor-field entry-edit-description" data-bind="with: description">
 				@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }

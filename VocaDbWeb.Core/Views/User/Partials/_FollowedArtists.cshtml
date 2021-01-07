@@ -25,11 +25,11 @@
 <div data-bind="css: { loading: loading }, visible: true" style="display: none;">
 
 	<div data-bind="with: paging" class="dropdown pull-right">
-		@Html.Partial("Partials/Knockout/_EntryCount")
+		<partial name="Partials/Knockout/_EntryCount" />
 	</div>
 
 	<div data-bind="with: paging">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 
 	<table class="table table-striped" data-bind="css: { loading: loading }">
@@ -63,7 +63,7 @@
 	</table>
 
 	<div data-bind="with: paging">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 
 </div>

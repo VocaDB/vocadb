@@ -179,11 +179,11 @@
 <div data-bind="css: { loading: loading }, visible: playlistMode() == false" style="display: none;">
 
 	<div data-bind="with: paging" class="dropdown pull-right">
-		@Html.Partial("Partials/Knockout/_EntryCount")
+		<partial name="Partials/Knockout/_EntryCount" />
 	</div>
 
 	<div data-bind="with: paging">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 
 	<table class="table table-striped">
@@ -239,7 +239,7 @@
 	</table>
 
 	<div data-bind="with: paging">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 
 </div>
@@ -250,7 +250,7 @@
 	</div>
 </div>
 
-@Html.Partial("Partials/Comment/_LatestCommentsKnockout")
+<partial name="Partials/Comment/_LatestCommentsKnockout" />
 
 <div data-bind="with: tagsEditViewModel">
 	@{ Html.RenderPartial("Partials/_TagsEdit"); }

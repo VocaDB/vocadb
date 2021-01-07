@@ -87,7 +87,7 @@
 		<label class="helpTip" data-bind="qTip: null">
 			Names
 		</label>
-		@Html.Partial("Partials/Shared/_RequiredField")
+		<partial name="Partials/Shared/_RequiredField" />
 	</div>
 	<div class="editor-field" data-bind="with: names">
 		@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new NamesEditorViewModel()); }
@@ -113,7 +113,7 @@
 
 	<div class="editor-label">
 		@Html.LabelFor(m => m.Description)
-		@Html.Partial("Partials/Shared/_MarkdownNotice")
+		<partial name="Partials/Shared/_MarkdownNotice" />
 	</div>
 	<div class="editor-field entry-edit-description" data-bind="with: description">
 		@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
@@ -129,7 +129,7 @@
 				<img class="pull-left media-object" src="@thumbUrl" alt="Thumb" />
 			}
 			<div class="media-body">
-				@Html.Partial("Partials/Shared/_ImageUploadMessage")
+				<partial name="Partials/Shared/_ImageUploadMessage" />
 				<input type="file" id="thumbPicUpload" name="thumbPicUpload" />
 			</div>
 		</div>

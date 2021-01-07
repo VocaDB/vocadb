@@ -14,7 +14,7 @@
 @using (Html.BeginForm())
 {
 
-	@Html.Partial("Partials/Shared/_MergeEntryInfo")
+	<partial name="Partials/Shared/_MergeEntryInfo" />
 
 	<input type="hidden" name="targetArtistId" id="targetArtistId" data-bind="value: target.id" />
 

@@ -7,7 +7,7 @@
 	@{ Html.RenderPartial("Partials/_EntryCountBox"); }
 
 	<div data-bind="with: paging">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 
 	<table class="table table-striped" data-bind="css: { loading: loading }">
@@ -61,7 +61,7 @@
 	</table>
 
 	<div data-bind="with: paging">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 
 </div>

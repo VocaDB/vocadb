@@ -242,7 +242,7 @@
 	</ul>
 </div>
 
-@Html.Partial("Partials/Comment/_LatestCommentsKnockout")
+<partial name="Partials/Comment/_LatestCommentsKnockout" />
 
 <div data-bind="with: tagsEditViewModel">
 	@{ Html.RenderPartial("Partials/_TagsEdit"); }

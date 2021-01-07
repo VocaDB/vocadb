@@ -30,7 +30,7 @@
 		<input data-bind="textInput: newReviewTitle" type="text" class="input-xlarge" maxlength="200"/>
 
 		<label>@Res.ReviewText</label>
-		@Html.Partial("Partials/Shared/_MarkdownNotice")<br />
+		<partial name="Partials/Shared/_MarkdownNotice" /><br />
 		<textarea data-bind="textInput: newReviewText" class="input-xxlarge" cols="100" rows="6" maxlength="4000" minlength="50" required></textarea>
 		
 		<div>

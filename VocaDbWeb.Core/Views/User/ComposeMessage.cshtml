@@ -28,7 +28,7 @@
 
 	<div class="editor-label">
 		@Res.Body
-		@Html.Partial("Partials/Shared/_MarkdownNotice")
+		<partial name="Partials/Shared/_MarkdownNotice" />
 	</div>
 	<div class="editor-field">
 		<textarea data-bind="textInput: body" class="span5" rows="10" cols="60" maxlength="10000" required></textarea>
