@@ -250,7 +250,7 @@
 						}
 						@if (Model.AdvancedStats != null && Model.AdvancedStats.TopVocaloids.Any()) {
 							<p>
-								@Res.MostlyUses @Html.Partial("Partials/Artist/_ArtistLinkList", new ArtistLinkListViewModel(Model.AdvancedStats.TopVocaloids.Select(a => a.Data), typeLabel: true)).
+								@Res.MostlyUses <partial name="Partials/Artist/_ArtistLinkList" model="@(new ArtistLinkListViewModel(Model.AdvancedStats.TopVocaloids.Select(a => a.Data), typeLabel: true))" />.
 							</p>
 						}
 					</td>
