@@ -23,7 +23,7 @@ import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummary
 	export default class UserRepository implements ICommentRepository {
 
 		public addFollowedTag = (tagId: number, callback?: () => void) => {
-			$.post(this.urlMapper.mapRelative("/api/users/current/followedTags/" + tagId), callback);
+			$.postJSON(this.urlMapper.mapRelative("/api/users/current/followedTags/" + tagId), callback);
 		}
 
 		public createArtistSubscription = (artistId: number, callback?: () => void) => {
@@ -34,13 +34,13 @@ import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummary
 
 		public createComment = (userId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
 
-			$.post(this.urlMapper.mapRelative("/api/users/" + userId + "/profileComments"), contract, callback, 'json');
+			$.postJSON(this.urlMapper.mapRelative("/api/users/" + userId + "/profileComments"), contract, callback, 'json');
 
 		}
 
 		public createMessage = (userId: number, contract: UserApiContract, callback: (result: UserMessageSummaryContract) => void) => {
 
-			return $.post(this.urlMapper.mapRelative("/api/users/" + userId + "/messages"), contract, callback, 'json');
+			return $.postJSON(this.urlMapper.mapRelative("/api/users/" + userId + "/messages"), contract, callback, 'json');
 			
 		}
 
@@ -325,7 +325,7 @@ import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummary
         }
 
 		public refreshEntryEdit = (entryType: EntryType, entryId: number) => {
-			$.post(this.urlMapper.mapRelative("/api/users/current/refreshEntryEdit/?entryType=" + EntryType[entryType] + "&entryId=" + entryId));
+			$.postJSON(this.urlMapper.mapRelative("/api/users/current/refreshEntryEdit/?entryType=" + EntryType[entryType] + "&entryId=" + entryId));
 		}
 
 		public requestEmailVerification = (callback?: () => void) => {
@@ -358,14 +358,14 @@ import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummary
 
 		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
 
-			$.post(this.urlMapper.mapRelative("/api/users/profileComments/" + commentId), contract, callback, 'json');
+			$.postJSON(this.urlMapper.mapRelative("/api/users/profileComments/" + commentId), contract, callback, 'json');
 
 		}
 
 		public updateEventForUser = (eventId: number, associationType: UserEventRelationshipType, callback?: () => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/users/current/events/" + eventId);
-			return $.post(url, { associationType: UserEventRelationshipType[associationType] }, callback) as JQueryPromise<{}>;
+			return $.postJSON(url, { associationType: UserEventRelationshipType[associationType] }, callback) as JQueryPromise<{}>;
 
 		}
 
@@ -390,7 +390,7 @@ import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummary
         public updateSongRating = (songId: number, rating: SongVoteRating, callback: () => void) => {
 
 			var url = this.urlMapper.mapRelative("/api/songs/" + songId + "/ratings");
-			return $.post(url, { rating: SongVoteRating[rating] }, callback) as JQueryPromise<any>;
+			return $.postJSON(url, { rating: SongVoteRating[rating] }, callback) as JQueryPromise<any>;
 
         }
 
@@ -407,7 +407,7 @@ import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummary
 		public updateUserSetting = (userId: number, settingName: string, value: string, callback: () => void) => {
 			
 			var url = this.urlMapper.mapRelative("/api/users/" + (userId || this.loggedUserId) + "/settings/" + settingName);
-			$.post(url, { '': value }, callback);
+			$.postJSON(url, { '': value }, callback);
 
 		}
 

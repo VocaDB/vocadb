@@ -1,0 +1,396 @@
+﻿@using VocaDb.Model.Domain.Globalization
+@using VocaDb.Model.Domain.Security
+@using VocaDb.Model.Service.VideoServices
+@using VocaDb.Model.Utils
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@using ValidationErrors = VocaDb.Model.Resources.SongValidationErrors
+@using Res = ViewRes.Song.EditStrings
+@using EditRes = ViewRes.EntryEditStrings
+@model VocaDb.Web.Models.Song.SongEditViewModel
+
+@{
+	PageProperties.Title = string.Format(Res.EditTitle, Model.Name);
+	ViewBag.Parents = new[] { 
+		Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null), 
+		Html.ActionLink(Model.Name, "Details", new { id = Model.Id }) 
+	};
+	
+	var validationErrors = new Dictionary<string, string> {
+		{ "validationError_duplicateArtist", ValidationErrors.DuplicateArtist },
+		{ "validationError_unspecifiedNames", ValidationErrors.UnspecifiedNames },
+		{ "validationError_needArtist", ValidationErrors.NeedArtist },
+		{ "validationError_needOriginal", ValidationErrors.NeedOriginal },
+		{ "validationError_needProducer", ValidationErrors.NeedProducer },
+		{ "validationError_needReferences", ValidationErrors.NeedReferences },
+		{ "validationError_needType", ValidationErrors.NeedType },
+		{ "validationError_nonInstrumentalSongNeedsVocalists", ValidationErrors.NonInstrumentalSongNeedsVocalists },
+		{ "validationError_redundantEvent", ValidationErrors.RedundantEvent }
+	};
+	
+}
+
+
+@section Toolbar {
+@if (Model.CanDelete) {
+	if (!Model.Song.Deleted) {
+		<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
+	} else if (Login.CanDeleteEntries) {
+		@Html.ActionLink(EditRes.Restore, "Restore", new { id = Model.Id }, new { id = "restoreLink" })		
+	}
+	@Html.Raw("&nbsp")
+}
+@if (Login.CanMergeEntries) {
+	@Html.ActionLink(EditRes.Merge, "Merge", new { id = Model.Id }, new { id = "mergeLink" })
+}
+}
+
+@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save properties."))
+
+@Html.Partial("Partials/Knockout/_EntryValidationMessage", new EntryValidationMessageViewModel(Model.Draft, validationErrors, "glsongs"))
+
+<br />
+<form action="@Url.Action("Edit", "Song")" method="POST" data-bind="submit: submit, visible: true" style="display: none;">
+	@Html.HiddenFor(m => m.AlbumId)
+	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId })))
+	
+	<div id="tabs">
+
+		<ul>
+			<li><a href="#basicInfoTab">@EditRes.BasicInfo</a></li>
+			<li><a href="#artistsTab">@Res.TabArtists</a></li>
+			<li><a href="#pvsTab">@Res.TabMedia</a></li>
+			<li><a href="#lyricsTab">@Res.TabLyrics</a></li>
+		</ul>
+
+		<div id="basicInfoTab">
+
+			<div class="editor-label">
+				<label class="helpTip" data-bind="qTip" title="@EditRes.DefaultLanguageHelp">
+					@EditRes.DefaultLanguageSelection
+				</label>
+			</div>
+			<div class="editor-field">
+				@Html.Partial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage"))
+			</div>
+
+			<div class="editor-label">
+				<label class="helpTip" data-bind="qTip: null" title="@EditRes.NameHelp">
+					@Res.BaNames
+				</label>
+				@Html.Partial("Partials/Shared/_RequiredField")
+				<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
+			</div>
+			<div class="editor-field" data-bind="with: names">
+				@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
+			</div>
+
+			<div class="editor-label">
+				<label>@Res.BaNotes</label>
+				@Html.Partial("Partials/Shared/_MarkdownNotice")
+			</div>
+			<div class="editor-field entry-edit-description" data-bind="with: notes">
+				@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
+			</div>
+
+			<div class="editor-label">
+				<label>@Res.BaSongType</label>
+			</div>
+			<div class="editor-field">
+				<div class="row-fluid">
+					<div class="span4">
+						@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AllSongTypes, "songTypeStr"))
+						<span data-bind="visible: validationError_needType, qTip" class="icon errorIcon" title="@ValidationErrors.NeedType"></span>
+					</div>
+				</div>
+			</div>
+	
+			<!-- ko if: canHaveOriginalVersion -->
+			<div class="editor-label">
+				<label class="helpTip" data-bind="qTip: null" title="@Res.BaOriginalVersionHelp">
+					@Res.BaOriginalVersion
+				</label>
+			</div>
+			<div class="editor-field">
+				<div style="display: inline-block;" class="input-append">
+					@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id"))
+				</div>
+				<div data-bind="visible: originalVersion.isEmpty">
+					<a href="" data-bind="click: findOriginalSongSuggestions" class="textLink searchLink">Find originals</a>
+					<table data-bind="foreach: originalVersionSuggestions">
+						<tr>
+							<td>
+								<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details_song($data) }, songToolTip: id" href="#" target="_blank"></a>
+								(<span data-bind="text: songType"></span>)
+								<div data-bind="if: $data.artistString">
+									<span data-bind="text: artistString"></span>
+								</div>
+							</td>
+							<td style="max-width: 150px;">
+								<a class="textLink acceptLink" href="#" data-bind="click: $parent.selectOriginalVersion">Select</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<!-- /ko -->
+			
+			<div class="editor-label">
+				<label>
+					@Res.BaDuration
+				</label>
+			</div>
+			<div class="editor-field">
+				<input type="text" data-bind="value: lengthFormatted" class="span2" maxlength="10" />
+			</div>
+			
+			<div class="editor-label">
+				<label>
+					Release event
+				</label>
+			</div>
+			<div class="editor-field">
+				@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent", "createNewItem: 'Create new event \\\'{0}\\\''"))
+			</div>
+
+			<div class="editor-label">
+				<label class="helpTip" data-bind="qTip: null" title="@Res.BaPublishDateHelp">
+					@Res.BaPublishDate
+				</label>
+			</div>
+			<div class="editor-field">
+				<input type="text" data-bind="datepicker: { value: publishDate, dateFormat: 'yy-mm-dd' }" maxlength="10" />
+				
+				@* Suggest publish date based on PV date, album release date or event date. Show only earlier of PV and album dates, if present. *@
+				<div data-bind="if: !publishDate() && (suggestedPublishDate() || eventDate())">
+					<div data-bind="with: suggestedPublishDate" class="inline-block">
+						<button class="btn" data-bind="click: function() { $parent.publishDate(date.toDate()); }">
+							<span data-bind="visible: source === 'PV'">@Res.BaUsePvDate</span>
+							<span data-bind="visible: source === 'Album'">@Res.BaUseAlbumDate</span>						
+							<span data-bind="text: date.format('L')"></span>
+						</button>				
+					</div>
+					<div data-bind="with: eventDate, visible: eventDate() && (!suggestedPublishDate() || eventDate() < suggestedPublishDate().date)" class="inline-block">
+						<button class="btn" data-bind="click: function() { $parent.publishDate($data.toDate()); }">
+							@Res.BaUseEventDate
+							<span data-bind="text: $data.format('L')"></span>
+						</button>				
+					</div>
+				</div>
+			</div>
+			
+			<div class="editor-label">
+				<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
+				    @EditRes.WebLinks
+                </label>
+			</div>
+			<div class="editor-field" data-bind="with: webLinks">
+				@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(true))
+			</div>
+
+			<div class="editor-label">
+				<label class="helpTip" data-bind="qTip: null" title="@Resources.CommonMessages.EntryStatusExplanation">
+				    @EditRes.Status
+                </label>
+			</div>
+			<div class="editor-field">
+				@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status"))
+			</div>
+
+		</div>
+
+		<div id="pvsTab" data-bind="with: pvs">
+
+			<div class="alert alert-info" data-bind="visible: $parent.showInstrumentalNote" style="display: none;">
+				@Res.PvInstrumentalNote
+			</div>
+
+			<table data-bind="visible: pvs().length">
+				<thead>
+					<tr>
+						<th>@Res.PvService</th>
+						<th>@Res.PvType</th>
+						<th>@Res.PvName</th>
+						<th>@Res.PvLength</th>
+						<th>@Res.PvDate</th>
+						<th>@Res.PvAuthor</th>
+						<th>
+							<span class="helpTip" data-bind="qTip: null" title="@Res.PvStatusHelp">@Res.PvStatus</span>
+						</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: pvs">
+					@{ Html.RenderPartial("PVs/_PVEdit"); }
+				</tbody>
+			</table>
+
+			<br />
+			<h4>@Res.PvAddMedia</h4>
+
+			<p>@Res.PvSupportedServices</p>
+			<p>
+				@Res.PvUrl
+				<input type="text" data-bind="textInput: newPvUrl" maxlength="255" size="40" class="input-xlarge" />
+			</p>
+			<p>
+				@Res.PvNewType
+				@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.PVTypeDescriptions.ValuesAndNamesStrings, "newPvType", "input-xlarge"))
+			</p>
+
+			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>
+
+			@if (Login.Manager.HasPermission(PermissionToken.UploadMedia)) {
+				<h4 class="withMargin">Upload file</h4>
+				<p>
+					You can use VocaDB for hosting songs you have made (you must be the content creator). Choose the file and click "Upload".<br />
+					Supported formats: .mp3. Maximum file size is @(LocalFileManager.MaxMediaSizeMB)MB. PV type will automatically be "original".
+				</p>
+				<input type="file" id="uploadMedia" />
+				<a data-bind="click: uploadMedia" href="#" class="textLink addLink">Upload</a>
+			}
+
+			@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
+
+		</div>
+
+		<div id="lyricsTab" data-bind="with: lyrics">
+			
+			<div class="alert alert-info" data-bind="visible: $parent.showLyricsNote">
+				@Res.LyInheritanceNote
+			</div>
+			
+			<div class="accordion" id="lyricsAccordion">
+				<div data-bind="with: original">
+					@{ Html.RenderPartial("Partials/_LyricsForSongEdit"); }					
+				</div>
+				<div data-bind="with: romanized">
+					@{ Html.RenderPartial("Partials/_LyricsForSongEdit"); }
+				</div>
+				<!-- ko foreach: items -->
+				@{ Html.RenderPartial("Partials/_LyricsForSongEdit"); }
+				<!-- /ko -->
+			</div>
+
+			<a data-bind="click: add" href="#" class="textLink addLink">@Res.LyAddRow</a>
+
+		</div>
+
+		<div id="artistsTab">
+			<div class="row-fluid">
+				<div class="span6">
+					<table data-bind="visible: artistLinks().length">
+						<thead>
+							<tr>
+								<th>@Res.ArArtist</th>
+								<th>@Res.ArSupport</th>
+								<th>@Res.ArRoles</th>
+								<th>@Res.ArActions</th>
+							</tr>
+						</thead>
+						<tbody data-bind="foreach: artistLinks">
+							@{ Html.RenderPartial("Partials/_ArtistForSongEdit"); }
+						</tbody>
+					</table>
+
+					<br />
+					<h4>@Res.ArAddArtistTitle</h4>
+					<input type="text" data-bind="artistAutoComplete: artistSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="input-xlarge" />
+				</div>
+				<div class="span4">
+					<div class="alert alert-info">
+						<span>@Res.ArVocaloidsNote</span>
+					</div>
+					<div class="alert alert-info" data-bind="visible: hasAlbums">
+						<span>@Res.ArArtistsNote</span>
+					</div>
+					<div class="alert" data-bind="visible: validationError_needArtist">
+						<span>@ValidationErrors.NeedArtist</span>
+					</div>
+					<div class="alert" data-bind="visible: validationError_needProducer">
+						<span>@ValidationErrors.NeedProducer</span>
+					</div>
+					<div class="alert" data-bind="visible: validationError_nonInstrumentalSongNeedsVocalists">
+						<span>@ValidationErrors.NonInstrumentalSongNeedsVocalists</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br />	
+
+	<p>@EditRes.UpdateNotes</p>
+	<textarea data-bind="value: updateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
+	
+	<br />
+	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId })))
+	
+	<!-- JSON model to be posted to the server -->
+	@Html.HiddenForKnockout(m => m.EditedSong, "value: submittedJson")
+
+</form>
+
+<div data-bind="with: artistRolesEditViewModel">
+	@{ Html.RenderPartial("Partials/_ArtistRolesEditViewModel"); }
+</div>
+
+<div data-bind="with: editedArtistLink">
+	@{ Html.RenderPartial("Partials/_CustomNameEdit"); }
+</div>
+
+@Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
+
+@section BodyScripts {
+<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/edit.js")"></script>
+<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/Song/Edit.js")"></script>
+
+<script type="text/javascript">
+
+	$(document).ready(function () {
+
+		moment.locale('@Culture');
+		ko.punches.enableAll();
+
+		vdb.resources.entryEdit = {
+			saveWarning: @ToJS(EditRes.SaveWarning)
+		};
+
+		vdb.resources.song = {
+			addExtraArtist: "@Html.Raw(AjaxRes.SharedStrings.AddExtraArtist)"
+		};
+
+		var editedModel = @Html.Raw(JsonHelpers.Serialize(Model.EditedSong));
+		var canBulkDeletePVs = @ToJS(Login.Manager.HasPermission(VocaDb.Model.Domain.Security.PermissionToken.BulkDeletePVs));
+		var rootPath = '@RootPath';
+		var urlMapper = new app.UrlMapper(rootPath);
+		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
+		var songRepo = repoFactory.songRepository();
+		var artistRepo = repoFactory.artistRepository();
+		var pvRepo = repoFactory.pvRepository();
+		var userRepo = repoFactory.userRepository();
+		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
+		var artistRoleJson = @Html.Raw(JsonHelpers.Serialize(Translate.ArtistRoleNames.GetValuesAndNames(AppConfig.ArtistRoles), false));
+		var instrumentalTagId = @Model.InstrumentalTagId;
+		var languageNames = @Html.Raw(JsonHelpers.Serialize(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull("Other/Unknown")));
+		var vm;
+
+		if (editedModel) {
+			vm = new app.SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, urlMapper, artistRoleJson, webLinkCategoryJson, 
+				editedModel, canBulkDeletePVs, new app.DialogService(), instrumentalTagId, languageNames);
+			ko.applyBindings(vm);
+		} else {
+			songRepo.getForEdit(@Model.Id, function (model) {
+				vm = new app.SongEditViewModel(songRepo, artistRepo, pvRepo, userRepo, urlMapper, artistRoleJson, 
+					webLinkCategoryJson, model, canBulkDeletePVs, new app.DialogService(), instrumentalTagId, languageNames);
+				ko.applyBindings(vm);
+			});
+		}
+
+		app.initSongEditPage();
+
+	});
+
+</script>
+}

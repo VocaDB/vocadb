@@ -1,0 +1,100 @@
+﻿@using VocaDb.Web.Code
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@using R = ViewRes.User.CreateStrings
+@model VocaDb.Web.Models.RegisterModel
+
+@{
+	PageProperties.Title = ViewRes.User.CreateStrings.Register;
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
+}
+
+@section Head {
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>	
+}
+
+@Html.Partial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(ViewRes.User.CreateStrings.RegistrationUnsuccessful))
+
+@if (Config.SiteSettings.SignupsDisabled) {
+	<div class="alert">
+		<h2>Sorry - signups are disabled at the moment on this site.</h2>
+	</div>
+} else {
+	
+	using (Html.BeginForm()) {
+		<div class="row-fluid">
+			<div class="span5 well well-transparent">
+				<div class="editor-label">
+					@Html.LabelFor(m => m.UserName)
+				</div>
+				<div class="editor-field">
+					@Html.TextBoxFor(m => m.UserName, new { size = 40, maxlength = 100 })
+					@Html.ValidationMessageFor(m => m.UserName)
+				</div>
+
+				<div class="editor-label">
+					@Html.LabelFor(m => m.Password)
+				</div>
+				<div class="editor-field">
+					@Html.PasswordFor(m => m.Password, new { size = 40, maxlength = 100 })
+					@Html.ValidationMessageFor(m => m.Password)
+				</div>
+
+				<div class="editor-label">
+					@Html.LabelFor(m => m.Email)
+				</div>
+				<div class="editor-field">
+					@Html.TextBoxFor(m => m.Email, new { size = 40, maxlength = 50 })
+					@Html.ValidationMessageFor(m => m.Email)
+				</div>
+
+				<div class="editor-label">
+					@R.Captcha
+				</div>
+				<div class="editor-field">
+					@Html.Partial("Partials/Shared/_ReCaptcha2")
+
+					@Html.ValidationMessage("CAPTCHA")
+				</div>
+
+				<div class="editor-field" style="display: none;">
+					@Html.TextBoxFor(m => m.Extra)
+				</div>
+
+				@Html.HiddenFor(m => m.EntryTime)
+
+				<br /><br />
+				<p>
+					<button type="submit" class="btn btn-primary">@R.DoRegister</button>
+				</p>
+
+				<hr />
+				<a href="@Url.Action("LoginTwitter")">
+					<img src="@Url.Content("~/Content/Sign-in-with-Twitter-darker.png")" alt="@R.LoginWithTwitter" />
+				</a>
+				
+				<br /><br/>
+				<small>
+					<a href="https://wiki.vocadb.net/wiki/50/privacy-and-cookie-policy" target="_blank">@ViewRes._LayoutStrings.PrivacyPolicy</a>
+				</small>
+			</div>
+
+			<div class="span3">
+				<div class="alert alert-info">
+					@string.Format(R.UsernameNote, 8)
+				</div>
+				<div class="alert alert-info">
+					@R.EmailNote
+				</div>
+				<div class="alert alert-info">
+					@R.TwitterNote
+				</div>
+				<div class="alert alert-info">
+					@R.DuplicateUserWarning
+				</div>
+			</div>
+		</div>
+
+	}
+	
+}
+

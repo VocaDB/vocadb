@@ -1,0 +1,38 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Error</title>
+</head>
+<body>
+    <h2>
+        Sorry, an error occurred while processing your request.
+    </h2>
+
+	@* TODO: implement if (Server.GetLastError() != null) {
+		var ex = Server.GetLastError();
+
+		if (ex is HttpRequestValidationException || ex.GetBaseException() is HttpRequestValidationException) {
+			<p>
+				For some reason your input triggered a HTTP request validation exception. 
+				If you think this is an error, please contant the admin.
+			</p>
+		}	 
+	}*@
+
+	<p>Possible reasons include:</p>
+	<ul>
+		<li>You followed an invalid link.</li>
+		<li>The site is temporarily down because it is being updated. Check back in a few minutes.</li>
+		<li>You entered (possibly accidentally) characters that were automatically detected as HTML and thus were blocked.</li>
+		<li>You have encountered a programming error (bug). If you suspect this is the case, please inform us about it. Please see @Html.ActionLink("Help/Contact us", "Index", "Help") for contact information.</li>
+	</ul>
+
+	<p>
+		@Html.ActionLink("Click here to go to the front page", "Index", "Home")	
+	</p>
+</body>
+</html>

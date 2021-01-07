@@ -1,0 +1,170 @@
+﻿@using VocaDb.Model.Helpers
+@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails
+@using VocaDb.Web.Models.Shared.Partials.Knockout
+@using VocaDb.Web.Models.Shared.Partials.Shared
+@using EditRes = ViewRes.EntryEditStrings
+@model VocaDb.Web.Models.Event.SeriesEdit
+
+@{
+
+	var isNew = (Model.Id == 0);
+	string backAction;
+
+	if (!isNew) {
+		PageProperties.Title = "Edit series - " + Model.Name;
+		backAction = Url.Action("SeriesDetails", new { id = Model.Id });
+		ViewBag.Parents = new[] {
+			Html.ActionLink("Events", "Index"),
+			Html.ActionLink(Model.Name, "SeriesDetails", new { id = Model.Id })
+		};
+	} else {
+		PageProperties.Title = "Create a new series";
+		backAction = Url.Action("Index");
+		ViewBag.Parents = new[] {
+			Html.ActionLink("Events", "Index")
+		};
+	}
+
+}
+
+@section Toolbar {
+	@if (!isNew && Login.CanDeleteEntries) {
+		if (!Model.Deleted) {
+			<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
+		} else {
+			@Html.ActionLink(EditRes.Restore, "RestoreSeries", new { id = Model.Id }, new { id = "restoreLink" })								
+		}
+		if (Login.CanMoveToTrash) {
+			<a href="#" id="trashLink" data-bind="click: trashViewModel.show">@EditRes.MoveToTrash</a>
+		}
+	}
+}
+
+@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save properties."))
+
+<form action="@Url.Action("EditSeries")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
+	@Html.HiddenFor(m => m.Id)
+	@Html.HiddenFor(m => m.Name)
+
+	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction))
+
+	<div class="editor-label">
+		<label class="helpTip" data-bind="qTip" title="@EditRes.DefaultLanguageHelp">
+			@EditRes.DefaultLanguageSelection
+		</label>
+	</div>
+	<div class="editor-field">
+		@Html.Partial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage"))
+		@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
+	</div>
+
+	<div class="editor-label">
+		@Html.LabelFor(m => m.Names)
+	</div>
+	<div class="editor-field">
+		<table>			
+			<tr>
+				<td data-bind="with: names">
+					@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
+					@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
+				</td>
+				<td style="vertical-align: top">
+					<div class="alert" data-bind="visible: duplicateName" style="display: none;">
+						Series already exists with name
+						<span data-bind="text: duplicateName"></span>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>	
+
+	<div class="editor-label">
+		@Html.LabelFor(m => m.Description)
+	</div>
+	<div class="editor-field">
+		@Html.TextAreaForKnockout(m => m.Description, "initialValue, textInput: description", cols: 60, rows: 4, maxLength: 1000, cssClass: "span4")
+		
+		Live preview
+		<div data-bind="markdown: description"></div>
+	</div>
+		
+	<div class="editor-label">
+		<label>Category</label>
+	</div>
+	<div class="editor-field">
+		<div class="row-fluid">
+			<div class="span4">
+				@Html.EnumDropDownListFor(m => m.Category, Translate.ReleaseEventCategoryNames)
+			</div>
+		</div>
+	</div>
+
+	<div class="editor-label">
+		<label>Picture</label>
+	</div>
+	<div class="editor-field">
+		<table>
+			<tr>
+				<td>
+					<img src="@Url.ImageThumb(Model.Contract, VocaDb.Model.Domain.Images.ImageSize.SmallThumb)" alt="Picture" class="coverPic" />
+				</td>
+				<td>
+					<p>@string.Format("Allowed types: {0}. Maximum size is {1} MB.", string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)</p>
+					<input type="file" id="pictureUpload" name="pictureUpload" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="editor-label">
+		<label class="helpTip" data-bind="qTip: null" title="@EditRes.ExternalLinksQuickHelp">
+			@EditRes.WebLinks
+		</label>
+	</div>
+	<div class="editor-field" data-bind="with: webLinks">
+		@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(false))
+		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(items)")
+	</div>
+	
+	<div class="editor-label">
+		@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation))
+	</div>
+	<div class="editor-field">
+		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
+	</div>
+
+	<br />
+	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction))
+
+</form>
+
+@Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
+@Html.Partial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))
+
+@section BodyScripts {
+<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/edit.js")"></script>
+<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/EventSeries/Edit.js")"></script>
+<script type="text/javascript">
+
+	$(function () {
+
+		var urlMapper = new app.UrlMapper('@RootPath');
+		var eventRepo = new app.ReleaseEventRepository(urlMapper);
+		var userRepo = new app.UserRepository(urlMapper);
+		var model = @ToJS(new {
+			 DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
+			 Model.Id,
+			 Model.Names,
+			 Model.WebLinks
+		});
+
+		var vm = new app.ReleaseEventSeriesEditViewModel(eventRepo, userRepo, urlMapper, model.id, model.defaultNameLanguage, model.names, model.webLinks);
+		ko.applyBindings(vm);
+
+		app.initEventSeriesEditPage();
+
+	});
+
+</script>
+}

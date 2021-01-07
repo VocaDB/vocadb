@@ -19,7 +19,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public createComment = (artistId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
 
-			$.post(this.urlMapper.mapRelative("/api/artists/" + artistId + "/comments"), contract, callback, 'json');
+			$.postJSON(this.urlMapper.mapRelative("/api/artists/" + artistId + "/comments"), contract, callback, 'json');
 
 		}
 
@@ -104,7 +104,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
 
-			$.post(this.urlMapper.mapRelative("/api/artists/comments/" + commentId), contract, callback, 'json');
+			$.postJSON(this.urlMapper.mapRelative("/api/artists/comments/" + commentId), contract, callback, 'json');
 
 		}
 

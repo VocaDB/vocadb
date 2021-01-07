@@ -1,27 +1,29 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
-using System.Collections.Generic;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Utils;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Routing;
+using VocaDb.Web.Code.Markdown;
 
 namespace VocaDb.Web.Helpers
 {
-	// TODO: implement
 	public static class ViewHelper
 	{
 		private static Dictionary<ContentLanguageSelection, string> LanguageSelections
@@ -195,7 +197,6 @@ namespace VocaDb.Web.Helpers
 			return new RouteValueDictionary { { "id", contract.Id }, { "albumId", albumId } };
 		}
 
-		// TODO: implement
 		/// <summary>
 		/// Prints a number of items in a grid as HTML table
 		/// </summary>
@@ -207,7 +208,38 @@ namespace VocaDb.Web.Helpers
 		/// Provides the content for individual table cells. Return value is raw HTML. Cannot be null.</param>
 		/// <returns></returns>
 		public static IHtmlContent Grid<T>(this IHtmlHelper htmlHelper, IEnumerable<T> items,
-			int columns, Func<T, IHtmlContent> contentFunc) => throw new NotImplementedException();
+			int columns, Func<T, IHtmlContent> contentFunc)
+		{
+			ParamIs.NotNull(() => htmlHelper);
+			ParamIs.NotNull(() => items);
+			ParamIs.Positive(columns, "columns");
+			ParamIs.NotNull(() => contentFunc);
+
+			var tableTag = new TagBuilder("table");
+			TagBuilder trTag = null;
+			int i = 0;
+
+			foreach (var item in items)
+			{
+				if (i % columns == 0)
+				{
+					if (trTag != null)
+						tableTag.InnerHtml.AppendHtml(trTag);
+
+					trTag = new TagBuilder("tr");
+				}
+
+				var tdTag = new TagBuilder("td");
+				tdTag.InnerHtml.AppendHtml(contentFunc(item));
+				trTag.InnerHtml.AppendHtml(tdTag);
+				i++;
+			}
+
+			if (trTag != null)
+				tableTag.InnerHtml.AppendHtml(trTag);
+
+			return tableTag;
+		}
 
 		public static IHtmlContent LanguagePreferenceDropDownListFor<TModel>(this IHtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, ContentLanguagePreference>> expression)
@@ -237,13 +269,30 @@ namespace VocaDb.Web.Helpers
 			return htmlHelper.DropDownListFor(expression, CreateSongTypesList(selectedValue), htmlAttributes);
 		}
 
-		// TODO: implement
-		public static IHtmlContent FormatMarkdown(this IHtmlHelper htmlHelper, string markdown) => throw new NotImplementedException();
+		public static IHtmlContent FormatMarkdown(this IHtmlHelper htmlHelper, string markdown)
+			=> new HtmlString(htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<MarkdownParser>().GetHtml(markdown));
 
-		// TODO: implement
-		public static string StripMarkdown(this IHtmlHelper htmlHelper, string markdown) => throw new NotImplementedException();
+		public static string StripMarkdown(this IHtmlHelper htmlHelper, string markdown)
+			=> htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<MarkdownParser>().GetPlainText(markdown);
 
-		// TODO: implement
-		public static string VideoServiceLinkUrl(this IHtmlHelper htmlHelper, PVService service) => throw new NotImplementedException();
+		public static string VideoServiceLinkUrl(this IHtmlHelper htmlHelper, PVService service)
+		{
+			// Code from: https://stackoverflow.com/questions/38865163/how-to-get-the-urlhelper-from-html-helper-context-in-asp-net-core-mvc-html-helpe/51519624#51519624
+			var urlHelperFactory = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
+			var urlHelper = urlHelperFactory.GetUrlHelper(htmlHelper.ViewContext);
+			return service switch
+			{
+				PVService.Bandcamp => urlHelper.Content("~/Content/ExtIcons/bandcamp.png"),
+				PVService.Bilibili => urlHelper.Content("~/Content/ExtIcons/bilibili.png"),
+				PVService.File or PVService.LocalFile => urlHelper.Content("~/Content/Icons/music.png"),
+				PVService.NicoNicoDouga => urlHelper.Content("~/Content/nico.png"),
+				PVService.Piapro => urlHelper.Content("~/Content/ExtIcons/piapro.png"),
+				PVService.SoundCloud => urlHelper.Content("~/Content/Icons/soundcloud.png"),
+				PVService.Youtube => urlHelper.Content("~/Content/youtube.png"),
+				PVService.Vimeo => urlHelper.Content("~/Content/ExtIcons/vimeo.png"),
+				PVService.Creofuga => urlHelper.Content("~/Content/ExtIcons/creofuga.png"),
+				_ => string.Empty,
+			};
+		}
 	}
 }

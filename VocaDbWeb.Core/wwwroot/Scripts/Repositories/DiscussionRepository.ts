@@ -16,13 +16,13 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public createComment = (topicId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
 
-			$.post(this.mapUrl("topics/" + topicId + "/comments"), contract, callback, 'json');
+			$.postJSON(this.mapUrl("topics/" + topicId + "/comments"), contract, callback, 'json');
 
 		}
 
 		public createTopic = (folderId: number, contract: DiscussionTopicContract, callback: (contract: DiscussionTopicContract) => void) => {
 
-			$.post(this.mapUrl("folders/" + folderId + "/topics"), contract, callback, 'json');
+			$.postJSON(this.mapUrl("folders/" + folderId + "/topics"), contract, callback, 'json');
 
 		}
 
@@ -74,13 +74,13 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
 
-			$.post(this.mapUrl("comments/" + commentId), contract, callback, 'json');
+			$.postJSON(this.mapUrl("comments/" + commentId), contract, callback, 'json');
 
 		}
 
 		public updateTopic = (topicId: number, contract: DiscussionTopicContract, callback?: () => void) => {
 
-			$.post(this.mapUrl("topics/" + topicId), contract, callback, 'json');
+			$.postJSON(this.mapUrl("topics/" + topicId), contract, callback, 'json');
 
 		}
 

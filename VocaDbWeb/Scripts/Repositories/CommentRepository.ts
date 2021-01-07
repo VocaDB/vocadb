@@ -14,7 +14,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 			contract.entry = { entryType: EntryType[this.entryType], id: entryId };
 			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl("api/comments/" + EntryType[this.entryType] + "-comments"));
-			$.post(url, contract, callback, 'json');
+			$.postJSON(url, contract, callback, 'json');
 
 		}
 
@@ -35,7 +35,7 @@ import UrlMapper from '../Shared/UrlMapper';
 		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
 
 			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl("api/comments/" + EntryType[this.entryType] + "-comments/", commentId.toString()));
-			$.post(url, contract, callback, 'json');
+			$.postJSON(url, contract, callback, 'json');
 
 		}
 	}

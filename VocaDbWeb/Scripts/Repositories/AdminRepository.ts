@@ -6,7 +6,7 @@ import UrlMapper from '../Shared/UrlMapper';
         constructor(private urlMapper: UrlMapper) { }
 
 		public addIpToBanList = (rule: IPRuleContract, callback: (result: boolean) => void) => {
-			return $.post(this.urlMapper.mapRelative("/api/ip-rules"), rule, callback);
+			return $.postJSON(this.urlMapper.mapRelative("/api/ip-rules"), rule, callback);
 		}
 
         public checkSFS = (ip: string, callback: (html: string) => void) => {

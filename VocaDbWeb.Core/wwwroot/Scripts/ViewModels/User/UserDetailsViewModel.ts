@@ -48,20 +48,16 @@ import UserRepository from '../../Repositories/UserRepository';
 		public eventsType = ko.observable(UserEventRelationshipType[UserEventRelationshipType.Attending]);
 
 		public limitedUserViewModel = new DeleteEntryViewModel(notes => {
-			$.ajax(this.urlMapper.mapRelative("api/users/" + this.userId + "/status-limited"), {
-				type: 'POST', data: { reason: notes, createReport: true }, success: () => {
-					window.location.reload();
-				}
-			});
+			$.postJSON(this.urlMapper.mapRelative("api/users/" + this.userId + "/status-limited"), { reason: notes, createReport: true }, () => {
+				window.location.reload();
+			}, 'json');
 		});
 
 		public reportUserViewModel = new DeleteEntryViewModel(notes => {
-			$.ajax(this.urlMapper.mapRelative("api/users/" + this.userId + "/reports"), {
-                type: 'POST', data: { reason: notes, reportType: 'Spamming' }, success: () => {
-                    ui.showSuccessMessage(vdb.resources.shared.reportSent);
-                    this.reportUserViewModel.notes("");
-				}
-			});
+			$.postJSON(this.urlMapper.mapRelative("api/users/" + this.userId + "/reports"), { reason: notes, reportType: 'Spamming' }, () => {
+				ui.showSuccessMessage(vdb.resources.shared.reportSent);
+				this.reportUserViewModel.notes("");
+			}, 'json');
 		}, true);
 
 		public initComments = () => {

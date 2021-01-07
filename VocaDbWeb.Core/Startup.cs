@@ -2,15 +2,22 @@
 
 using System.Linq;
 using System.Runtime.Caching;
+using AspNetCore.CacheOutput.Extensions;
+using AspNetCore.CacheOutput.InMemory.Extensions;
 using Autofac;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Database.Repositories.NHibernate;
@@ -34,7 +41,9 @@ using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
+using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
+using VocaDb.Web.Middleware;
 
 namespace VocaDb.Web
 {
@@ -50,7 +59,39 @@ namespace VocaDb.Web
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllersWithViews();
+			services
+				.AddControllersWithViews(options =>
+				{
+					// Code from: https://stackoverflow.com/questions/51411693/null-response-returns-a-204/60858295#60858295
+					// remove formatter that turns nulls into 204 - No Content responses
+					// this formatter breaks Angular's Http response JSON parsing
+					options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
+
+					options.Filters.Add<VoidAndTaskTo204NoContentFilter>();
+				})
+				.ConfigureApiBehaviorOptions(options =>
+				{
+					// Code from: https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-5.0#disable-automatic-400-response
+					// Disable automatic 400 response. This prevents API controllers from returning an BadRequestObjectResult (400) when an invalid Enum value is passed.
+					options.SuppressModelStateInvalidFilter = true;
+				})
+				.AddNewtonsoftJson(options =>
+				{
+					options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); // All properties in camel case
+					options.SerializerSettings.Converters.Add(new StringEnumConverter());  // All enums as strings by default
+					options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+				});
+
+			services.AddInMemoryCacheOutput();
+
+			services.AddSwaggerGen();
+
+			services
+				.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(options =>
+				{
+					options.LoginPath = "/User/Login";
+				});
 		}
 
 		private static string[] LoadBlockedIPs(IComponentContext componentContext) => componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());
@@ -129,6 +170,7 @@ namespace VocaDb.Web
 			builder.RegisterType<SongQueries>().AsSelf();
 			builder.RegisterType<SongAggregateQueries>().AsSelf();
 			builder.RegisterType<SongListQueries>().AsSelf();
+			builder.RegisterType<StatsQueries>().AsSelf();
 			builder.RegisterType<TagQueries>().AsSelf();
 			builder.RegisterType<UserQueries>().AsSelf();
 			builder.RegisterType<UserMessageQueries>().AsSelf();
@@ -137,6 +179,7 @@ namespace VocaDb.Web
 			builder.RegisterType<LaravelMixHelper>().AsSelf();
 			builder.RegisterType<Login>().AsSelf();
 			builder.RegisterType<PVHelper>().AsSelf();
+			builder.RegisterType<ViewRenderService>().As<IViewRenderService>();
 
 			// Enable DI for action filters
 			//builder.Register(c => new RestrictBlockedIPAttribute(c.Resolve<IPRuleManager>()))
@@ -162,7 +205,7 @@ namespace VocaDb.Web
 			}
 			else
 			{
-				app.UseExceptionHandler("/Home/Error");
+				app.UseExceptionHandler("/Error");
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				//app.UseHsts();
 			}
@@ -171,13 +214,57 @@ namespace VocaDb.Web
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
+
+			app.UseVocaDbPrincipal();
 
 			app.UseEndpoints(endpoints =>
 			{
+				const string Numeric = "[0-9]+";
+
+				// Ignored files
+				// TODO: implement routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+				// TODO: implement routes.IgnoreRoute("favicon.ico");
+
+				// Invalid routes - redirects to 404
+				endpoints.MapControllerRoute("AlbumDetailsError", "Album/Details/{id}",
+					new { controller = "Error", action = "NotFound" }, new { id = new IdNotNumberConstraint() });
+				endpoints.MapControllerRoute("ArtistDetailsError", "Artist/Details/{id}",
+					new { controller = "Error", action = "NotFound" }, new { id = new IdNotNumberConstraint() });
+				endpoints.MapControllerRoute("SongDetailsError", "Song/Details/{id}",
+					new { controller = "Error", action = "NotFound" }, new { id = new IdNotNumberConstraint() });
+
+				// Action routes
+				endpoints.MapControllerRoute("Album", "Al/{id}/{friendlyName?}", new { controller = "Album", action = "Details" }, new { id = Numeric });
+				endpoints.MapControllerRoute("Artist", "Ar/{id}/{friendlyName?}", new { controller = "Artist", action = "Details" }, new { id = Numeric });
+				endpoints.MapControllerRoute("ReleaseEvent", "E/{id}/{slug?}", new { controller = "Event", action = "Details" }, new { id = Numeric });
+				endpoints.MapControllerRoute("ReleaseEventSeries", "Es/{id}/{slug?}", new { controller = "Event", action = "SeriesDetails" }, new { id = Numeric });
+
+				// Song shortcut, for example /S/393939
+				endpoints.MapControllerRoute("Song", "S/{id}/{friendlyName?}", new { controller = "Song", action = "Details" }, new { id = Numeric });
+
+				endpoints.MapControllerRoute("SongList", "L/{id}/{slug?}", new { controller = "SongList", action = "Details" }, new { id = Numeric });
+
+				endpoints.MapControllerRoute("Tag", "T/{id}/{slug?}", new { controller = "Tag", action = "DetailsById" }, new { id = Numeric });
+
+				// User profile route, for example /Profile/riipah
+				endpoints.MapControllerRoute("User", "Profile/{id}", new { controller = "User", action = "Profile" });
+
+				endpoints.MapControllerRoute("Discussion", "discussion/{**clientPath}", new { controller = "Discussion", action = "Index" });
+
 				endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller=Home}/{action=Index}/{id?}");
+			});
+
+			app.UseCacheOutput();
+
+			// Code from: https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio
+			app.UseSwagger();
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "VocaDB Web API V1");
 			});
 		}
 	}

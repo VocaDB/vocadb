@@ -13,7 +13,7 @@ import UrlMapper from '../Shared/UrlMapper';
 		public createComment = (entryId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
 
 			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl(this.baseUrl, entryId.toString(), "/comments"));
-			$.post(url, contract, callback, 'json');
+			$.postJSON(url, contract, callback, 'json');
 
 		}
 
@@ -34,7 +34,7 @@ import UrlMapper from '../Shared/UrlMapper';
 		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
 
 			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl(this.baseUrl, "/comments/", commentId.toString()));
-			$.post(url, contract, callback, 'json');
+			$.postJSON(url, contract, callback, 'json');
 
 		}
 
