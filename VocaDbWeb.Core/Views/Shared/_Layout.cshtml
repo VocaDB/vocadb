@@ -133,7 +133,7 @@
                             </div>
                                                             		
 							@if (!string.IsNullOrEmpty(TempData.StatusMessage())) {
-								@Html.Partial("Partials/Shared/_NotificationPanel", new NotificationPanelViewModel(TempData.StatusMessage()))
+								<partial name="Partials/Shared/_NotificationPanel" model="@(new NotificationPanelViewModel(TempData.StatusMessage()))" />
 							}
 		
 							@RenderBody()

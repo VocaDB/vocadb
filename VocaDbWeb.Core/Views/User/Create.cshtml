@@ -12,7 +12,7 @@
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>	
 }
 
-@Html.Partial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(ViewRes.User.CreateStrings.RegistrationUnsuccessful))
+<partial name="Partials/Shared/_ValidationSummaryDiv" model="@(new ValidationSummaryDivViewModel(ViewRes.User.CreateStrings.RegistrationUnsuccessful))" />
 
 @if (Config.SiteSettings.SignupsDisabled) {
 	<div class="alert">
@@ -51,7 +51,7 @@
 					@R.Captcha
 				</div>
 				<div class="editor-field">
-					@Html.Partial("Partials/Shared/_ReCaptcha2")
+					<partial name="Partials/Shared/_ReCaptcha2" />
 
 					@Html.ValidationMessage("CAPTCHA")
 				</div>

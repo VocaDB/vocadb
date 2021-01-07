@@ -11,9 +11,9 @@
 }
 
 @{
-	void UserIconLinkOrName(UserForApiContract user, string name, int size = 20) {
+	async Task UserIconLinkOrName(UserForApiContract user, string name, int size = 20) {
 		if (user != null) {
-			@Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(user, size))
+			<partial name="Partials/User/_UserIconLink_UserForApiContract" model="@(new UserIconLink_UserForApiContractViewModel(user, size))" />
 		} else {
 			@name
 		}
@@ -57,7 +57,7 @@
 		@foreach (var r in Model) {			
 			<tr>
 				<td>@r.Created</td>
-				<td>@{ UserIconLinkOrName(r.User, r.Hostname); }</td>
+				<td>@{ await UserIconLinkOrName(r.User, r.Hostname); }</td>
 				<td>
 					<a href="@Url.EntryDetails(r.Entry)" title="@r.Entry.AdditionalNames">@r.Entry.Name</a>
 					
@@ -77,7 +77,7 @@
 				}
 				@if (status == ReportStatus.Closed) {
 					<td>
-						@Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(r.ClosedBy))
+						<partial name="Partials/User/_UserIconLink_UserForApiContract" model="@(new UserIconLink_UserForApiContractViewModel(r.ClosedBy))" />
 					</td>
 					<td>
 						@r.ClosedAt

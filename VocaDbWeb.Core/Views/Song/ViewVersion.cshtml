@@ -42,7 +42,7 @@
 }
 
 @if (Model.ArchivedVersion.Hidden) {
-	@Html.Partial("Partials/EntryDetails/_HiddenBanner")
+	<partial name="Partials/EntryDetails/_HiddenBanner" />
 }
 
 @if (Model.ComparableVersions.Any()) {
@@ -52,11 +52,11 @@
 	}
 }
 
-@Html.Partial("Partials/ArchivedEntry/_ArchivedObjectVersionProperties", new ArchivedObjectVersionPropertiesViewModel(Versions.CreateForSong(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForSong(Model.ComparedVersion) : null))
+<partial name="Partials/ArchivedEntry/_ArchivedObjectVersionProperties" model="@(new ArchivedObjectVersionPropertiesViewModel(Versions.CreateForSong(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForSong(Model.ComparedVersion) : null))" />
 
-@Html.Partial("Partials/Song/_PrintArchivedSongData", new PrintArchivedSongDataViewModel(Model.Versions))
+<partial name="Partials/Song/_PrintArchivedSongData" model="@(new PrintArchivedSongDataViewModel(Model.Versions))" />
 
-@Html.Partial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel())
+<partial name="Partials/EntryDetails/_ReportEntryVersionPopupKnockout" model="@(new ReportEntryVersionPopupKnockoutViewModel())" />
 
 @section BodyScripts {
     <script type="text/javascript">

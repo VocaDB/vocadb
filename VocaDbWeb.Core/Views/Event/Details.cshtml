@@ -45,7 +45,7 @@
 }
 
 @section Head {
-	@Html.Partial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties))
+	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
 	<link rel="canonical" href="@PageProperties.CanonicalUrl" />
 }
 
@@ -53,14 +53,14 @@
 	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editEventLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
 	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
-	@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
+	<partial name="Partials/Shared/_EntryStatusMessage" model="@(new EntryStatusMessageViewModel(Model.Status))" />
 }
 
 @{
-	void ArtistList(IList<ArtistForEventContract> artists, bool showRoles = false, bool showType = false) {
+	async Task ArtistList(IList<ArtistForEventContract> artists, bool showRoles = false, bool showType = false) {
 		foreach (var artist in artists) {
 			if (artist.Artist != null) {
-				@Html.Partial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist.Artist, typeLabel: showType))
+				<partial name="Partials/Artist/_ArtistLink" model="@(new ArtistLinkViewModel(artist.Artist, typeLabel: showType))" />
 			} else {
 				@artist.Name
 			}
@@ -76,7 +76,7 @@
 
 
 @if (Model.Deleted) {
-	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null))
+	<partial name="Partials/EntryDetails/_DeletedBanner" model="@(new DeletedBannerViewModel(null))" />
 }
 
 <div class="well well-transparent">
@@ -109,7 +109,7 @@
 			}
 
 			@if (Model.Artists.Any()) {
-				<p>Participating artists: @{ ArtistList(Model.Artists, true, true); }</p>
+				<p>Participating artists: @{ await ArtistList(Model.Artists, true, true); }</p>
 			}
 
 			<p>
@@ -126,7 +126,7 @@
 			}
 
 			@if (Model.WebLinks.Any()) {
-				@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.WebLinks, false))
+				<partial name="Partials/EntryDetails/_ExternalLinksList" model="@(new ExternalLinksListViewModel(Model.WebLinks, false))" />
 				<br/>
 			}
 
@@ -149,9 +149,9 @@
 @if (Model.Series != null) {
 	<h3>@Res.Series: <a href="@Url.Action("SeriesDetails", new { id = Model.Series.Id, slug = Model.Series.UrlSlug })" title="@Model.Series.AdditionalNames">@Model.Series.Name</a></h3>
 	if (!string.IsNullOrEmpty(Model.Series.Description)) {
-		@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Series.Description))
+		<partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(Model.Series.Description))" />
 	}
-	@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.Series.WebLinks, false))
+	<partial name="Partials/EntryDetails/_ExternalLinksList" model="@(new ExternalLinksListViewModel(Model.Series.WebLinks, false))" />
 }
 
 @if (Model.SongList != null) {
@@ -161,9 +161,9 @@
 			@foreach (var song in Model.SongListSongs) {
 				<tr>
 					<td style="width: 50px"><h1>@song.Order</h1></td>
-					<td style="width: 75px">@Html.Partial("Partials/Song/_SongIconLink", new SongIconLinkViewModel(song.Song))</td>
+					<td style="width: 75px"><partial name="Partials/Song/_SongIconLink" model="@(new SongIconLinkViewModel(song.Song))" /></td>
 					<td>
-						@Html.Partial("Partials/Song/_SongLink", new SongLinkViewModel(song.Song))
+						<partial name="Partials/Song/_SongLink" model="@(new SongLinkViewModel(song.Song))" />
 						<br />
 						<small class="extraInfo">@song.Song.ArtistString</small>
 					</td>
@@ -177,13 +177,13 @@
 	<h3 class="withMargin">@Res.Venue: <a href="@Url.Action("Details", "Venue", new { id = Model.Venue.Id }, null)" title="@Model.Venue.AdditionalNames">@Model.Venue.Name</a></h3>
 
 	if (Model.Venue.Coordinates.HasValue) {
-		@Html.Partial("Partials/Shared/_EmbedGoogleMaps", new EmbedGoogleMapsViewModel(Model.Venue.Coordinates))
+		<partial name="Partials/Shared/_EmbedGoogleMaps" model="@(new EmbedGoogleMapsViewModel(Model.Venue.Coordinates))" />
 	}
 
 	if (!string.IsNullOrEmpty(Model.Venue.Description)) {
-		@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Venue.Description))
+		<partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(Model.Venue.Description))" />
 	}
-	@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.Venue.WebLinks, false))
+	<partial name="Partials/EntryDetails/_ExternalLinksList" model="@(new ExternalLinksListViewModel(Model.Venue.WebLinks, false))" />
 }
 
 @if (Model.Albums.Any()) {
@@ -191,7 +191,7 @@
 		@Res.Albums
 		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Albums.Length)</small>
 	</h3>
-	@Html.Partial("Partials/Album/_AlbumGrid", new AlbumGridViewModel(Model.Albums, 2, false, false, true))
+	<partial name="Partials/Album/_AlbumGrid" model="@(new AlbumGridViewModel(Model.Albums, 2, false, false, true))" />
 }
 
 @if (Model.Songs.Any()) {
@@ -199,7 +199,7 @@
 		@Html.ActionLink(Res.Songs, "Index", "Search", UrlMapper.Search.Songs(eventId: Model.Id), null)
 		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Songs.Length)</small>
 	</h3>
-	@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.Songs, 2, true, false))
+	<partial name="Partials/Song/_SongGrid" model="@(new SongGridViewModel(Model.Songs, 2, true, false))" />
 }
 
 @if (Model.PVs.Any()) {
@@ -209,7 +209,7 @@
 
 @if (primaryPV != null) {
 	<div class="song-pv-player">
-		@Html.Partial("Partials/PV/_EmbedPV", new EmbedPVViewModel(primaryPV))
+		<partial name="Partials/PV/_EmbedPV" model="@(new EmbedPVViewModel(primaryPV))" />
 	</div>
 }
 
@@ -237,18 +237,18 @@
 <div data-bind="visible: usersAttending().length" class="withMargin">
 	<ul data-bind="foreach: usersAttending()">
 		<li>
-			@Html.Partial("Partials/User/_IconAndNameLinkKnockout", new IconAndNameLinkKnockoutViewModel())
+			<partial name="Partials/User/_IconAndNameLinkKnockout" model="@(new IconAndNameLinkKnockoutViewModel())" />
 		</li>
 	</ul>
 </div>
 
-@Html.Partial("Partials/Comment/_LatestCommentsKnockout")
+<partial name="Partials/Comment/_LatestCommentsKnockout" />
 
 <div data-bind="with: tagsEditViewModel">
 	@{ Html.RenderPartial("Partials/_TagsEdit"); }
 </div>
 
-@Html.Partial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel())
+<partial name="Partials/EntryDetails/_ReportEntryPopupKnockout" model="@(new ReportEntryPopupKnockoutViewModel())" />
 
 @section BodyScripts {
 <script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/ReleaseEvent/Details.js")"></script>

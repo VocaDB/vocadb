@@ -8,7 +8,7 @@
 @{ Html.RenderPartial("Partials/_EntryCountBox"); }
 
 <div data-bind="with: paging">
-	@Html.Partial("Partials/Knockout/_ServerSidePaging")
+	<partial name="Partials/Knockout/_ServerSidePaging" />
 </div>
 
 <table class="table table-striped" data-bind="css: { loading: loading }">
@@ -53,7 +53,7 @@
 		<td>
 			<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details(@((int)EntryType.ReleaseEvent), id, $data.urlSlug), title: $data.additionalNames }" href="#"></a>
 				
-			@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
+			<partial name="Partials/Knockout/_DraftIcon" model="@(new DraftIconViewModel("status"))" />
 				
 			<br />
 			<small class="extraInfo" data-bind="text: $parent.getCategoryName($data)"></small>
@@ -81,5 +81,5 @@
 </table>
 
 <div data-bind="with: paging">
-	@Html.Partial("Partials/Knockout/_ServerSidePaging")
+	<partial name="Partials/Knockout/_ServerSidePaging" />
 </div>

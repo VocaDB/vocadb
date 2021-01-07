@@ -24,7 +24,7 @@
 	</h4>
 	<div style="height: @(Model.PlayerHeight)px" class="@("embed-pv" + (current != null ? " embed-pv-" + Model.CurrentServiceName : string.Empty))">		
 		@if (current != null) {
-			@Html.Partial("Partials/PV/_EmbedPV", new EmbedPVViewModel(current, Model.PlayerWidth, Model.PlayerHeight))
+			<partial name="Partials/PV/_EmbedPV" model="@(new EmbedPVViewModel(current, Model.PlayerWidth, Model.PlayerHeight))" />
 		}
 	</div>
   

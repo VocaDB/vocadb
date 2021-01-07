@@ -25,7 +25,7 @@
 		<div data-bind="visible: getSuggestions">
 			<p>@Res.Suggestions</p>
 			<div data-bind="visible: !suggestionsLoaded()">
-				@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel())
+				<partial name="Partials/Shared/_AjaxLoader" model="@(new AjaxLoaderViewModel())" />
 			</div>
 			<div data-bind="visible: suggestionsLoaded() && !suggestions().length">
 				@Res.NoSuggestions

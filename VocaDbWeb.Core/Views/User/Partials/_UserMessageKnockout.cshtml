@@ -12,13 +12,13 @@
 			<span data-bind="with: sender">
 				<span>@ViewRes.User.MessagesStrings.From</span>
 				<span>
-					@Html.Partial("Partials/User/_IconAndNameLinkKnockout", new IconAndNameLinkKnockoutViewModel())
+					<partial name="Partials/User/_IconAndNameLinkKnockout" model="@(new IconAndNameLinkKnockoutViewModel())" />
 					<span class="razor-whitespace-fix">.</span>
 				</span>
 			</span>
 			<span>@ViewRes.User.MessagesStrings.To</span>
 			<span data-bind="with: receiver">
-				@Html.Partial("Partials/User/_IconAndNameLinkKnockout", new IconAndNameLinkKnockoutViewModel())
+				<partial name="Partials/User/_IconAndNameLinkKnockout" model="@(new IconAndNameLinkKnockoutViewModel())" />
 				<span class="razor-whitespace-fix">.</span>
 			</span>
 		</div>

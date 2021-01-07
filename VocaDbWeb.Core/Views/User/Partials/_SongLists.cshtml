@@ -8,7 +8,7 @@
 
 @{ Html.RenderPartial("Partials/_SongListsFilters"); }
 
-@Html.Partial("Partials/Song/_SongListsKnockout", new SongListsKnockoutViewModel("items", true))
+<partial name="Partials/Song/_SongListsKnockout" model="@(new SongListsKnockoutViewModel("items", true))" />
 	
 <h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
 

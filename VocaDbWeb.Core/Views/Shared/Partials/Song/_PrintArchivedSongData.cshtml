@@ -8,7 +8,7 @@
 	<h4>Content</h4>
 
 	<table class="table table-bordered">
-		@Html.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel("Id", Model.ComparedSongs.FirstData.Id))
+		<partial name="Partials/ArchivedEntry/_DataRow" model="@(new DataRowViewModel("Id", Model.ComparedSongs.FirstData.Id))" />
 		@Html.TranslatedNameRow(Model.ComparedSongs, d => d.TranslatedName)
 		@Html.DataRowList("Names", Model.ComparedSongs, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
 		@Html.DataRow("Notes", Model.ComparedSongs, d => d.Notes, preserveLineBreaks: true)

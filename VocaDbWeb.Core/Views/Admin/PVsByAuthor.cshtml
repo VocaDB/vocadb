@@ -29,7 +29,7 @@
 					<a href="@pv.Url">@pv.Name</a><br />
 					@pv.Service (@pv.PVType): @pv.PVId
 				</td>
-				<td>@Html.Partial("Partials/Song/_SongLink", new SongLinkViewModel(pv.Song))</td>
+				<td><partial name="Partials/Song/_SongLink" model="@(new SongLinkViewModel(pv.Song))" /></td>
 			</tr>
 		}
 	</table>

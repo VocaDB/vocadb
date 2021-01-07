@@ -14,14 +14,14 @@
 @using (Html.BeginForm())
 {
 
-	@Html.Partial("Partials/Shared/_MergeEntryInfo")
+	<partial name="Partials/Shared/_MergeEntryInfo" />
 
 	<input type="hidden" name="targetArtistId" id="targetArtistId" data-bind="value: target.id" />
 
 	<br />
 	<div class="clearfix">
 		<div class="pull-left">
-			@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("artistAutoComplete", "targetSearchParams", "target.name", "target.id"))
+			<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("artistAutoComplete", "targetSearchParams", "target.name", "target.id"))" />
 		</div>
 		<div class="pull-left entry-field-inline-warning">
 			<div class="alert" data-bind="visible: validationError_targetIsNewer" style="display: none;">

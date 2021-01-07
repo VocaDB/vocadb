@@ -11,14 +11,14 @@
 <div class="message activityEntry ui-tabs ui-widget ui-widget-content ui-corner-all">
 	@if (Model.Entry.Author != null)
 	{
-		@Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(Model.Entry.Author, userInfo: true))
+		<partial name="Partials/User/_UserIconLink_UserForApiContract" model="@(new UserIconLink_UserForApiContractViewModel(Model.Entry.Author, userInfo: true))" />
 	}
 	else
 	{
 		@HelperRes.ActivityFeedHelperStrings.Someone
 	}
 
-	@Html.Partial("Partials/Activityfeed/_EntryType", new EntryTypeViewModel(Model.Entry))
+	<partial name="Partials/Activityfeed/_EntryType" model="@(new EntryTypeViewModel(Model.Entry))" />
 
 	<small class="pull-right extraInfo" title="@Model.Entry.CreateDate.ToUniversalTime().ToString("g") UTC">
 		@TimeAgoStringBuilder.FormatTimeAgo(Model.Entry.CreateDate)

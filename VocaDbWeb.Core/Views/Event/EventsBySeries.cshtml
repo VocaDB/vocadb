@@ -51,7 +51,7 @@
 			</h3>
 						
 			@if (!string.IsNullOrEmpty(series.Description)) {
-				<p>@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(series.Description))</p>
+				<p><partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(series.Description))" /></p>
 			}
 		</div>
 	</div>

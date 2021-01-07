@@ -62,7 +62,7 @@
 }
 }
 
-@Html.Partial("Partials/Knockout/_EntryValidationMessage", new EntryValidationMessageViewModel(Model.Draft, validationErrors, null))
+<partial name="Partials/Knockout/_EntryValidationMessage" model="@(new EntryValidationMessageViewModel(Model.Draft, validationErrors, null))" />
 
 <br />
 <form action="@Url.Action("Edit", "Tag")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
@@ -71,7 +71,7 @@
 	@Html.HiddenFor(m => m.Name)
 	@Html.HiddenFor(m => m.UrlSlug)
 
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug })))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug })))" />
 	
 	<div class="editor-label">
 		<label class="helpTip" data-bind="qTip">
@@ -79,7 +79,7 @@
 		</label>
 	</div>
 	<div class="editor-field">
-		@Html.Partial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage"))
+		<partial name="Partials/Knockout/_LanguageSelectionDropDown" model="@(new LanguageSelectionDropDownViewModel("defaultNameLanguage"))" />
 		@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
 	</div>
 
@@ -87,7 +87,7 @@
 		<label class="helpTip" data-bind="qTip: null">
 			Names
 		</label>
-		@Html.Partial("Partials/Shared/_RequiredField")
+		<partial name="Partials/Shared/_RequiredField" />
 	</div>
 	<div class="editor-field" data-bind="with: names">
 		@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new NamesEditorViewModel()); }
@@ -107,13 +107,13 @@
 		<label for="parent" class="helpTip" title="Parent tag groups related tags under one parent. Child tags are still considered separate.">Parent</label>
 	</div>
 	<div class="editor-field">
-		@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("tagAutoComplete", "parent", "parentName", extraBindings: "tagFilter: denySelf, clearValue: true, allowAliases: false"))
+		<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("tagAutoComplete", "parent", "parentName", extraBindings: "tagFilter: denySelf, clearValue: true, allowAliases: false"))" />
 		@Html.HiddenForKnockout(m => m.Parent, "value: ko.toJSON(parent)")
 	</div>
 
 	<div class="editor-label">
 		@Html.LabelFor(m => m.Description)
-		@Html.Partial("Partials/Shared/_MarkdownNotice")
+		<partial name="Partials/Shared/_MarkdownNotice" />
 	</div>
 	<div class="editor-field entry-edit-description" data-bind="with: description">
 		@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
@@ -129,7 +129,7 @@
 				<img class="pull-left media-object" src="@thumbUrl" alt="Thumb" />
 			}
 			<div class="media-body">
-				@Html.Partial("Partials/Shared/_ImageUploadMessage")
+				<partial name="Partials/Shared/_ImageUploadMessage" />
 				<input type="file" id="thumbPicUpload" name="thumbPicUpload" />
 			</div>
 		</div>
@@ -179,12 +179,12 @@
 		</label>
 	</div>
 	<div class="editor-field" data-bind="with: webLinks">
-		@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(false))
+		<partial name="Partials/Knockout/_WebLinksEditViewKnockout" model="@(new WebLinksEditViewKnockoutViewModel(false))" />
 		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(items)")
 	</div>
 
 	<div class="editor-label">
-		@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation))
+		<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation))" />
 	</div>
 	<div class="editor-field">
 		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
@@ -195,9 +195,9 @@
 	<textarea name="UpdateNotes" id="UpdateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 
 	<br />
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug })))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(Url.Action("DetailsById", new { id = Model.Id, slug = Model.UrlSlug })))" />
 
 </form>
 
-@Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(EditRes.ConfirmDelete))
-@Html.Partial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))
+<partial name="Partials/EntryDetails/_EntryDeletePopup" model="@(new EntryDeletePopupViewModel(EditRes.ConfirmDelete))" />
+<partial name="Partials/EntryDetails/_EntryTrashPopup" model="@(new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))" />

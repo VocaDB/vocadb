@@ -8,7 +8,7 @@
 
 <div class="comment">
 	<h3>
-		@Html.Partial("Partials/User/_UserIconLink_IUserWithEmail", new UserIconLink_IUserWithEmailViewModel(Model.Contract.Author, 25))
+		<partial name="Partials/User/_UserIconLink_IUserWithEmail" model="@(new UserIconLink_IUserWithEmailViewModel(Model.Contract.Author, 25))" />
 
 		@if (Model.AlwaysAllowDelete || (Model.AllowDelete && Login.CanDeleteComment(Model.Contract)))
 		{
@@ -18,5 +18,5 @@
 			@TimeAgoStringBuilder.FormatTimeAgo(Model.Contract.Created)
 		</small>
 	</h3>
-	@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Contract.Message.TruncateWithEllipsis(Model.MaxLength)))
+	<partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(Model.Contract.Message.TruncateWithEllipsis(Model.MaxLength)))" />
 </div>

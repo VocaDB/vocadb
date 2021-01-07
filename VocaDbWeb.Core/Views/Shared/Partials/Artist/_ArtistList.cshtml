@@ -36,9 +36,9 @@
 	{
 		if (Model.ShowType)
 		{
-			@Html.Partial("Partials/Artist/_ArtistTypeLabel", new ArtistTypeLabelViewModel(artist.Artist.ArtistType))
+			<partial name="Partials/Artist/_ArtistTypeLabel" model="@(new ArtistTypeLabelViewModel(artist.Artist.ArtistType))" />
 		}
-		@Html.Partial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist.Artist, name: artist.Name))
+		<partial name="Partials/Artist/_ArtistLink" model="@(new ArtistLinkViewModel(artist.Artist, name: artist.Name))" />
 	}
 	else
 	{

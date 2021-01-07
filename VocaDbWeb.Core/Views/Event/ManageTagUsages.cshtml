@@ -11,4 +11,4 @@
 }
 
 
-@Html.Partial("Partials/Tag/_TagUsagesManageTable", new TagUsagesManageTableViewModel(EntryType.ReleaseEvent, Model.TagUsages, Model.CanRemoveTagUsages, "Event"))
+<partial name="Partials/Tag/_TagUsagesManageTable" model="@(new TagUsagesManageTableViewModel(EntryType.ReleaseEvent, Model.TagUsages, Model.CanRemoveTagUsages, "Event"))" />
