@@ -113,7 +113,7 @@
 				{
 					<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
 						<meta itemprop="ratingValue" content="@DecimalDot(Model.RatingAverage)" />
-						@Html.Partial("Partials/Shared/_StarsMetaSpan", new StarsMetaSpanViewModel(Model.RatingAverage, 5))<br />
+						<partial name="Partials/Shared/_StarsMetaSpan" model="@(new StarsMetaSpanViewModel(Model.RatingAverage, 5))" /><br />
 						(<span itemprop="ratingCount">@Model.RatingCount</span> @Res.Ratings)
 					</div>
 				}
@@ -296,7 +296,7 @@
 						<td>
 							@foreach (var pv in Model.PVs)
 							{
-								@Html.Partial("Partials/Shared/_FormatPVLink", new FormatPVLinkViewModel(pv, false))<br />
+								<partial name="Partials/Shared/_FormatPVLink" model="@(new FormatPVLinkViewModel(pv, false))" /><br />
 							}
 						</td>
 					</tr>
@@ -474,7 +474,7 @@
 							<h4 class="album-review-title">@Model.LatestReview.Title</h4>
 						}
 
-						<div>@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.LatestReview.Text))</div>
+						<div><partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(Model.LatestReview.Text))" /></div>
 					</div>
 				</div>
 			</div>

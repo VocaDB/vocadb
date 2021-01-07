@@ -98,13 +98,13 @@
 						</a>
 						@if (ev.Date.HasValue) {
 							if (ev.HasVenueOrVenueName) {
-								<small>(@ev.Date.Value.ToString("d"), @Html.Partial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev)))</small>
+								<small>(@ev.Date.Value.ToString("d"), <partial name="Partials/Event/_VenueLinkOrVenueName" model="@(new VenueLinkOrVenueNameViewModel(ev))" />)</small>
 							} else {
 								<small>(@ev.Date.Value.ToString("d"))</small>
 							}
 						} else {
 							if (ev.HasVenueOrVenueName) {
-								<small>(@Html.Partial("Partials/Event/_VenueLinkOrVenueName", new VenueLinkOrVenueNameViewModel(ev)))</small>
+								<small>(<partial name="Partials/Event/_VenueLinkOrVenueName" model="@(new VenueLinkOrVenueNameViewModel(ev))" />)</small>
 							}
 						}
 					</li>

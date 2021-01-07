@@ -39,7 +39,7 @@
 		</tr>
 		<tr>
 			<td>Created</td>
-			<td>@Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.Ver.Contract.Created))</td>
+			<td><partial name="Partials/Shared/_UniversalTimeLabel" model="@(new UniversalTimeLabelViewModel(Model.Ver.Contract.Created))" /></td>
 			<td>
 				@if (Model.CompareTo != null)
 				{
@@ -49,7 +49,7 @@
 		</tr>
 		<tr>
 			<td>Author</td>
-			<td>@Html.Partial("Partials/User/_UserIconLinkOrName", new UserIconLinkOrNameViewModel(Model.Ver.Contract.Author, Model.Ver.Contract.AgentName))</td>
+			<td><partial name="Partials/User/_UserIconLinkOrName" model="@(new UserIconLinkOrNameViewModel(Model.Ver.Contract.Author, Model.Ver.Contract.AgentName))" /></td>
 			<td>
 				@if (Model.CompareTo != null)
 				{

@@ -112,7 +112,7 @@
 			}
 
 			@if (Model.RelatedTags.Any()) {
-				<p>@Res.RelatedTags: @Html.Partial("Partials/Tag/_TagList", new TagListViewModel(Model.RelatedTags, tooltip: true))</p>
+				<p>@Res.RelatedTags: <partial name="Partials/Tag/_TagList" model="@(new TagListViewModel(Model.RelatedTags, tooltip: true))" /></p>
 			}
 
 			@if (Model.WebLinks.Any()) {
@@ -158,7 +158,7 @@
 
 			<p>@string.Format(Res.FollowCount, Model.FollowerCount)</p>
 
-			<p>@ViewRes.EntryDetailsStrings.AdditionDate: @Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CreateDate))</p>
+			<p>@ViewRes.EntryDetailsStrings.AdditionDate: <partial name="Partials/Shared/_UniversalTimeLabel" model="@(new UniversalTimeLabelViewModel(Model.CreateDate))" /></p>
 
 			<br />
 
@@ -267,10 +267,10 @@
 @if (related.Any()) {
 	<div class="well well-transparent">
 		@if (Model.Siblings.Any()) {
-			<p>@Res.Siblings: @Html.Partial("Partials/Tag/_TagList", new TagListViewModel(Model.Siblings))</p>
+			<p>@Res.Siblings: <partial name="Partials/Tag/_TagList" model="@(new TagListViewModel(Model.Siblings))" /></p>
 		}
 		@if (Model.Children.Any()) {
-			<p>@Res.Children: @Html.Partial("Partials/Tag/_TagList", new TagListViewModel(Model.Children))</p>
+			<p>@Res.Children: <partial name="Partials/Tag/_TagList" model="@(new TagListViewModel(Model.Children))" /></p>
 		}
 	</div>
 }
