@@ -78,22 +78,22 @@
 
 <div class="row-fluid">
     <div class="span7">
-        <h3 class="withMargin">@Res.RecentActivity (@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry"))</h3>
+        <h3 class="withMargin">@Res.RecentActivity (<a asp-action="Index" asp-controller="ActivityEntry">@(Res.ViewMore)</a>)</h3>
 
         @foreach (var entry in Model.ActivityEntries) {
 			<partial name="Partials/Activityfeed/_ActivityEntry" model="@(new ActivityEntryViewModel(entry))" />
 		}
 		
-		@Html.ActionLink(Res.ViewMore, "Index", "ActivityEntry")
+		<a asp-action="Index" asp-controller="ActivityEntry">@(Res.ViewMore)</a>
     </div>
     <div class="span5">
-        <h3 class="withMargin">@ViewRes.Comment.IndexStrings.RecentComments (@Html.ActionLink(Res.ViewMore, "Index", "Comment"))</h3>
+        <h3 class="withMargin">@ViewRes.Comment.IndexStrings.RecentComments (<a asp-action="Index" asp-controller="Comment">@(Res.ViewMore)</a>)</h3>
             
         @foreach (var comment in Model.RecentComments) {
 			<partial name="Partials/Comment/_CommentWithEntryVertical" model="@(new CommentWithEntryVerticalViewModel(comment, 400))" />
 		}
 		
-		@Html.ActionLink(Res.ViewMore, "Index", "Comment")
+		<a asp-action="Index" asp-controller="Comment">@(Res.ViewMore)</a>
     </div>
 </div>
 

@@ -46,12 +46,12 @@
 
 @section Toolbar {
 	@if (Model.CanEdit) {
-		@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.SongList.Id }, new { id = "editListLink" })
+		<a asp-action="Edit" asp-route-id="@(Model.SongList.Id)" id="@("editListLink")">@(ViewRes.SharedStrings.Edit)</a>
 		@:
-		@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.SongList.Id }, new { id = "viewVersions" })
+		<a asp-action="Versions" asp-route-id="@(Model.SongList.Id)" id="@("viewVersions")">@(ViewRes.EntryDetailsStrings.ViewModifications)</a>
 		@:
 }
-	@Html.ActionLink(Res.Export, "Export", new { id = Model.SongList.Id }, new { id = "export" })
+	<a asp-action="Export" asp-route-id="@(Model.SongList.Id)" id="@("export")">@(Res.Export)</a>
 	@if (Model.IsFeatured) {
 		<partial name="Partials/Shared/_EntryStatusMessage" model="@(new EntryStatusMessageViewModel(Model.SongList.Status))" />
 	}

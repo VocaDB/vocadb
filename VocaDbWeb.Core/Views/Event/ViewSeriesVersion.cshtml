@@ -28,9 +28,9 @@
 	<a href="@Url.Action("ArchivedSeriesVersionXml", new { id = Model.Entry.ArchivedVersion.Id })" id="downloadXmlLink">Download XML</a>
 	@if (Login.CanViewHiddenRevisions) {
 		if (Model.Entry.ArchivedVersion.Hidden) {
-			@Html.ActionLink(ViewRes.ViewVersionStrings.UnhideVersion, "UpdateSeriesVersionVisibility", new { archivedVersionId = Model.Entry.ArchivedVersion.Id, hidden = false }, new { id = "showLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmUnhide) })
+			<a asp-action="UpdateSeriesVersionVisibility" asp-route-archivedVersionId="@(Model.Entry.ArchivedVersion.Id)" asp-route-hidden="@(false)" id="@("showLink")" onclick="@(string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmUnhide))">@(ViewRes.ViewVersionStrings.UnhideVersion)</a>
 		} else {
-			@Html.ActionLink(ViewRes.ViewVersionStrings.HideVersion, "UpdateSeriesVersionVisibility", new { archivedVersionId = Model.Entry.ArchivedVersion.Id, hidden = true }, new { id = "hideLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmHide) })
+			<a asp-action="UpdateSeriesVersionVisibility" asp-route-archivedVersionId="@(Model.Entry.ArchivedVersion.Id)" asp-route-hidden="@(true)" id="@("hideLink")" onclick="@(string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmHide))">@(ViewRes.ViewVersionStrings.HideVersion)</a>
 		}
 	}
 }

@@ -36,7 +36,7 @@
 		@{ Html.RenderPartial("Partials/_MainNavigationItems"); }
 		@if (Login.Manager.IsLoggedIn) {
 			<br />
-			<p class="user">@ViewRes._LayoutStrings.Welcome @Html.ActionLink(Login.User.Name, "Profile", "User", new { id = Login.User.Name }, null)</p>
+			<p class="user">@ViewRes._LayoutStrings.Welcome <a asp-action="Profile" asp-controller="User" asp-route-id="@(Login.User.Name)">@(Login.User.Name)</a></p>
 		}
 	</div>			
 		

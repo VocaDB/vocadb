@@ -11,15 +11,15 @@
 
 <ul class="nav nav-pills">
 	<li class="active">
-		@Html.ActionLink(Res.AllActivity, "Index")
+		<a asp-action="Index">@(Res.AllActivity)</a>
 	</li>
 	@if (Login.IsLoggedIn) {
 		<li>
-			@Html.ActionLink(Res.FollowedArtists, "FollowedArtistActivity")
+			<a asp-action="FollowedArtistActivity">@(Res.FollowedArtists)</a>
 		</li>
 	}
 	<li>
-		@Html.ActionLink(Res.Comments, "Index", "Comment")
+		<a asp-action="Index" asp-controller="Comment">@(Res.Comments)</a>
 	</li>	
 </ul>
 

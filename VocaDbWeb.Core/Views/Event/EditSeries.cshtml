@@ -33,7 +33,7 @@
 		if (!Model.Deleted) {
 			<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
 		} else {
-			@Html.ActionLink(EditRes.Restore, "RestoreSeries", new { id = Model.Id }, new { id = "restoreLink" })								
+			<a asp-action="RestoreSeries" asp-route-id="@(Model.Id)" id="@("restoreLink")">@(EditRes.Restore)</a>								
 		}
 		if (Login.CanMoveToTrash) {
 			<a href="#" id="trashLink" data-bind="click: trashViewModel.show">@EditRes.MoveToTrash</a>

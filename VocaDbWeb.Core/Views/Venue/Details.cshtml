@@ -21,8 +21,8 @@
 }
 
 @section Toolbar {
-	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editVenueLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
-	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	<a asp-action="Edit" asp-route-id="@(Model.Id)" id="@("editVenueLink")" class="@((Login.CanEdit(Model) ? "" : "disabled"))">@(ViewRes.SharedStrings.Edit)</a>
+	<a asp-action="Versions" asp-route-id="@(Model.Id)" id="@("viewVersions")">@(ViewRes.EntryDetailsStrings.ViewModifications)</a>
 	@if (Login.CanManageDb) {
 		<a href="@Url.Action("Edit", "Event", new { venueId = Model.Id != 0 ? (int?)Model.Id : null }, null)" id="createEventLink">@ViewRes.Event.EventsBySeriesStrings.CreateEvent</a>
 	}
@@ -73,7 +73,7 @@
 <ul>
 	@foreach (var ev in Model.Events) {
 		<li>
-			@Html.ActionLink(ev.Name, "Details", "Event", new { id = ev.Id }, null)
+			<a asp-action="Details" asp-controller="Event" asp-route-id="@(ev.Id)">@(ev.Name)</a>
 			@if (ev.Date != null) {
 				<small>(@ev.Date.Value.ToString("d"))</small>
 			}

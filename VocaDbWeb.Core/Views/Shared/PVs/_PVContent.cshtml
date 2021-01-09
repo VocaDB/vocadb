@@ -6,7 +6,7 @@
 <input type="hidden" class="js-songId" value="@Model.Id" />
 <h4 class="pvViewer-title">
 	<span id="songPreviewName" class="pvViewer-songName" title="@Model.AdditionalNames">
-		@Html.ActionLink(Model.Name, "Details", "Song", new { id = Model.Id }, null)
+		<a asp-action="Details" asp-controller="Song" asp-route-id="@(Model.Id)">@(Model.Name)</a>
 	</span>
     &nbsp;
     <small id="songPreviewArtists" class="pvViewer-artists">

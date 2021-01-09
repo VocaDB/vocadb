@@ -7,13 +7,13 @@
 
 <ul class="nav nav-pills">
 	<li>
-		@Html.ActionLink("All activity", "Index")
+		<a asp-action="Index">@("All activity")</a>
 	</li>
 	<li class="active">
-		@Html.ActionLink("Only followed artists", "FollowedArtistActivity")
+		<a asp-action="FollowedArtistActivity">@("Only followed artists")</a>
 	</li>
 	<li>
-		@Html.ActionLink("Comments", "Index", "Comment")
+		<a asp-action="Index" asp-controller="Comment">@("Comments")</a>
 	</li>
 </ul>
 

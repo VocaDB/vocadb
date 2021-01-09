@@ -11,25 +11,25 @@
 	
 	<ul class="nav nav-pills">
 		<li>
-			@Html.ActionLink(Res.ViewList, "Index")
+			<a asp-action="Index">@(Res.ViewList)</a>
 		</li>
 		<li class="active">
-			@Html.ActionLink(Res.ViewBySeries, "EventsBySeries")
+			<a asp-action="EventsBySeries">@(Res.ViewBySeries)</a>
 		</li>
 		<li>
-			@Html.ActionLink(Res.ViewByVenue, "EventsByVenue")
+			<a asp-action="EventsByVenue">@(Res.ViewByVenue)</a>
 		</li>
 		<li>
-			@Html.ActionLink(Res.ViewByDate, "EventsByDate")
+			<a asp-action="EventsByDate">@(Res.ViewByDate)</a>
 		</li>
 	</ul>	
 
 	@if (Login.CanManageDb) {
-		@Html.ActionLink(Res.CreateEvent, "Edit", null, new { id = "createEventLink" })
+		<a asp-action="Edit" id="@("createEventLink")">@(Res.CreateEvent)</a>
 		@:
-		@Html.ActionLink(Res.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
+		<a asp-action="EditSeries" id="@("createSeriesLink")">@(Res.CreateSeries)</a>
 		@:
-		@Html.ActionLink(Res.CreateVenue, "Edit", "Venue", null, new { id = "createVenueLink" })
+		<a asp-action="Edit" asp-controller="Venue" id="@("createVenueLink")">@(Res.CreateVenue)</a>
 	}	
 }
 
@@ -44,7 +44,7 @@
 		<div class="media-body">
 			<h3 class="media-heading">
 				@if (!string.IsNullOrEmpty(series.Name)) {
-					@Html.ActionLink(series.Name, "SeriesDetails", new { id = series.Id })
+					<a asp-action="SeriesDetails" asp-route-id="@(series.Id)">@(series.Name)</a>
 				} else {
 					<text>@ViewRes.SharedStrings.Unsorted</text>
 				}
@@ -59,13 +59,13 @@
 	<ul>
 	@foreach (var ev in series.Events) {
 		<li>
-			@Html.ActionLink(ev.Name, "Details", new { id = ev.Id, slug = ev.UrlSlug })
+			<a asp-action="Details" asp-route-id="@(ev.Id)" asp-route-slug="@(ev.UrlSlug)">@(ev.Name)</a>
 		</li>
 	}
 	</ul>
 	
 	if (Login.CanManageDb) {
-		@Html.ActionLink(Res.CreateEvent, "Edit", new { seriesId = series.Id != 0 ? (int?)series.Id : null }, new { @class = "textLink addLink" })
+		<a asp-action="Edit" asp-route-seriesId="@(series.Id != 0 ? (int?)series.Id : null)" class="@("textLink addLink")">@(Res.CreateEvent)</a>
 	}
 	
 }

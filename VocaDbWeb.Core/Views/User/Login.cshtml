@@ -47,9 +47,9 @@
 
 }
 
-@Res.NoAccount @Html.ActionLink(Res.RegisterHere, "Create")@ViewRes.SharedStrings.Period<br />
+@Res.NoAccount <a asp-action="Create">@(Res.RegisterHere)</a>@ViewRes.SharedStrings.Period<br />
 
-@Res.ForgotPassword @Html.ActionLink(Res.ResetPass, "ForgotPassword")@ViewRes.SharedStrings.Period<br />
+@Res.ForgotPassword <a asp-action="ForgotPassword">@(Res.ResetPass)</a>@ViewRes.SharedStrings.Period<br />
 
 <br />
 <hr />

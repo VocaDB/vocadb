@@ -35,16 +35,16 @@
 	if (!Model.Album.Deleted) {
 		<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
 	} else if (Login.CanDeleteEntries) {
-		@Html.ActionLink(ViewRes.EntryEditStrings.Restore, "Restore", new { id = Model.Id }, new { id = "restoreLink" })
+		<a asp-action="Restore" asp-route-id="@(Model.Id)" id="@("restoreLink")">@(ViewRes.EntryEditStrings.Restore)</a>
         if (Login.CanMoveToTrash) {
 			@Html.Raw("&nbsp;")
-			@Html.ActionLink(R.EditStrings.MoveToTrash, "MoveToTrash", new { id = Model.Id }, new { id = "trashLink", onclick = string.Format("return confirm(\"{0}\");", R.EditStrings.ConfirmMoveToTrash) })
+			<a asp-action="MoveToTrash" asp-route-id="@(Model.Id)" id="@("trashLink")" onclick="@(string.Format("return confirm(\"{0}\");", R.EditStrings.ConfirmMoveToTrash))">@(R.EditStrings.MoveToTrash)</a>
 		}
 	}
 }
 @if (Login.CanMergeEntries) {
 	@Html.Raw("&nbsp;")	
-	@Html.ActionLink(ViewRes.EntryEditStrings.Merge, "Merge", new { id = Model.Id }, new { id = "mergeLink" })
+	<a asp-action="Merge" asp-route-id="@(Model.Id)" id="@("mergeLink")">@(ViewRes.EntryEditStrings.Merge)</a>
 }
 }
 

@@ -15,7 +15,7 @@
 			<partial name="Partials/Album/_AlbumIconLink" model="@(new AlbumIconLinkViewModel(album))" />
 		</td>
 		<td>
-			@Html.ActionLink(album.Name, "Details", "Album", new { id = album.Id }, new { title = album.AdditionalNames })
+			<a asp-action="Details" asp-controller="Album" asp-route-id="@(album.Id)" title="@(album.AdditionalNames)">@(album.Name)</a>
 			@if (Model.DisplayType)
 			{
 				@("(")@Translate.DiscTypeName(album.DiscType)@(")")

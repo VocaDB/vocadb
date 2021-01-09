@@ -28,11 +28,11 @@
 		<li>You followed an invalid link.</li>
 		<li>The site is temporarily down because it is being updated. Check back in a few minutes.</li>
 		<li>You entered (possibly accidentally) characters that were automatically detected as HTML and thus were blocked.</li>
-		<li>You have encountered a programming error (bug). If you suspect this is the case, please inform us about it. Please see @Html.ActionLink("Help/Contact us", "Index", "Help") for contact information.</li>
+		<li>You have encountered a programming error (bug). If you suspect this is the case, please inform us about it. Please see <a asp-action="Index" asp-controller="Help">@("Help/Contact us")</a> for contact information.</li>
 	</ul>
 
 	<p>
-		@Html.ActionLink("Click here to go to the front page", "Index", "Home")	
+		<a asp-action="Index" asp-controller="Home">@("Click here to go to the front page")</a>	
 	</p>
 </body>
 </html>
