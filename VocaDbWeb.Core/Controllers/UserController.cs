@@ -868,9 +868,8 @@ namespace VocaDb.Web.Controllers
 			return View(model);
 		}
 
-		// TODO: implement
-		/*[HttpPost]
-		public ActionResult ResetPassword(ResetPassword model)
+		[HttpPost]
+		public async Task<ActionResult> ResetPassword(ResetPassword model)
 		{
 			if (!Data.CheckPasswordResetRequest(model.RequestId))
 			{
@@ -883,12 +882,12 @@ namespace VocaDb.Web.Controllers
 			}
 
 			var user = Data.ResetPassword(model.RequestId, model.NewPass);
-			FormsAuthentication.SetAuthCookie(user.Name, false);
+			await SetAuthCookieAsync(user.Name, createPersistentCookie: false);
 
 			TempData.SetStatusMessage("Password reset successfully!");
 
 			return RedirectToAction("Index", "Home");
-		}*/
+		}
 
 		[HttpPost]
 		public void UpdateAlbumForUser(int albumid, PurchaseStatus collectionStatus, MediaType mediaType, int rating)
