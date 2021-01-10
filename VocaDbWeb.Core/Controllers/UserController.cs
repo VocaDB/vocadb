@@ -62,6 +62,21 @@ namespace VocaDb.Web.Controllers
 			return Service.GetUserForMySettings(PermissionContext.LoggedUser.Id);
 		}
 
+		private Task SetAuthCookieAsync(string userName, bool createPersistentCookie)
+		{
+			// Code from: https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-5.0
+			var claims = new List<Claim>
+			{
+				new Claim(ClaimTypes.Name, userName),
+			};
+			var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+			var authProperties = new AuthenticationProperties
+			{
+				IsPersistent = createPersistentCookie,
+			};
+			return HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+		}
+
 		// TODO: implement
 		/*private bool HandleCreate(UserContract user)
 		{
@@ -328,17 +343,7 @@ namespace VocaDb.Web.Controllers
 					var user = result.User;
 
 					TempData.SetSuccessMessage(string.Format(ViewRes.User.LoginStrings.Welcome, user.Name));
-					// Code from: https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-5.0
-					var claims = new List<Claim>
-					{
-						new Claim(ClaimTypes.Name, user.Name),
-					};
-					var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-					var authProperties = new AuthenticationProperties
-					{
-						IsPersistent = model.KeepLoggedIn,
-					};
-					await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+					await SetAuthCookieAsync(user.Name, model.KeepLoggedIn);
 
 					string redirectUrl = null;
 					// TODO: implement
