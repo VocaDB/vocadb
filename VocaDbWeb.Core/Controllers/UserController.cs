@@ -93,9 +93,19 @@ namespace VocaDb.Web.Controllers
 			}
 		}*/
 
-		public UserController(UserService service, UserQueries data, ArtistService artistService, ArtistQueries artistQueries, OtherService otherService,
+		public UserController(
+			UserService service,
+			UserQueries data,
+			ArtistService artistService,
+			ArtistQueries artistQueries,
+			OtherService otherService,
 			IRepository repository,
-			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config, MarkdownParser markdownParser, ActivityEntryQueries activityEntryQueries, LoginManager loginManager)
+			UserMessageQueries messageQueries,
+			IPRuleManager ipRuleManager,
+			VdbConfigManager config,
+			MarkdownParser markdownParser,
+			ActivityEntryQueries activityEntryQueries,
+			LoginManager loginManager)
 		{
 			Service = service;
 			Data = data;
