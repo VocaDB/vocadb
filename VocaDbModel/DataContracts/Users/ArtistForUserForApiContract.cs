@@ -20,7 +20,7 @@ namespace VocaDb.Model.DataContracts.Users
 			IAggregatedEntryImageUrlFactory thumbPersister,
 			ArtistOptionalFields includedFields)
 		{
-			Artist = new ArtistForApiContract(artistForUser.Artist, languagePreference, thumbPersister, includedFields);
+			Artist = artistForUser != null ? new ArtistForApiContract(artistForUser.Artist, languagePreference, thumbPersister, includedFields) : null;
 		}
 
 		[DataMember]
