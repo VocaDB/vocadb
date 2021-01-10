@@ -1822,6 +1822,14 @@ namespace VocaDb.Model.Database.Queries
 			return ctx.Query<UserMessage>()
 				.Any(m => m.Id == messageId && m.User.Id == user.Id && m.Inbox == UserInboxType.Notifications);
 		});
+
+		public bool GetFollowedArtist(int userId, int artistId)
+		{
+			if (userId == 0)
+				return false;
+
+			return HandleQuery(ctx => ctx.OfType<ArtistForUser>().Query().Any(s => s.Artist.Id == artistId && s.User.Id == userId));
+		}
 	}
 
 	public class AlbumTagUsageFactory : ITagUsageFactory<AlbumTagUsage>
