@@ -816,11 +816,11 @@ namespace VocaDb.Web.Controllers.Api
 		public void PostStatusLimited(int id, [FromBody] PostStatusLimitedModel model) => _queries.SetUserToLimited(id, model.Reason, WebHelper.GetRealHost(Request), model.CreateReport);
 
 		[Route("{id:int}/followedArtists/{artistId:int}")]
-		public bool GetFollowedArtist(int id, int artistId) => _queries.GetFollowedArtist(id, artistId);
+		public ArtistForUserForApiContract GetArtistForUser(int id, int artistId) => _queries.GetArtistForUser(id, artistId);
 
 		[Route("current/followedArtists/{artistId:int}")]
 		[Authorize]
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Get)]
-		public bool GetFollowedArtist(int artistId) => GetFollowedArtist(_permissionContext.LoggedUserId, artistId);
+		public ArtistForUserForApiContract GetArtistForUser(int artistId) => GetArtistForUser(_permissionContext.LoggedUserId, artistId);
 	}
 }

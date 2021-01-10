@@ -1823,13 +1823,11 @@ namespace VocaDb.Model.Database.Queries
 				.Any(m => m.Id == messageId && m.User.Id == user.Id && m.Inbox == UserInboxType.Notifications);
 		});
 
-		public bool GetFollowedArtist(int userId, int artistId)
+		public ArtistForUserForApiContract GetArtistForUser(int userId, int artistId) => HandleQuery(ctx =>
 		{
-			if (userId == 0)
-				return false;
-
-			return HandleQuery(ctx => ctx.OfType<ArtistForUser>().Query().Any(s => s.Artist.Id == artistId && s.User.Id == userId));
-		}
+			var artistForUser = ctx.OfType<ArtistForUser>().Query().FirstOrDefault(s => s.Artist.Id == artistId && s.User.Id == userId);
+			return new ArtistForUserForApiContract(artistForUser, LanguagePreference, _entryImagePersister, ArtistOptionalFields.None);
+		});
 	}
 
 	public class AlbumTagUsageFactory : ITagUsageFactory<AlbumTagUsage>
