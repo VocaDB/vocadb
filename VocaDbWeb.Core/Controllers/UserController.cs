@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using NLog;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
@@ -527,13 +528,12 @@ namespace VocaDb.Web.Controllers
 		//
 		// POST: /User/Create
 
-		// TODO: implement
-		/*[HttpPost]
+		[HttpPost]
 		public async Task<ActionResult> Create(RegisterModel model)
 		{
 			string restrictedErr = "Sorry, access from your host is restricted. It is possible this restriction is no longer valid. If you think this is the case, please contact support.";
 
-			if (!ModelState.IsValidField("Extra"))
+			if (ModelState[nameof(model.Extra)].Errors.Any())
 			{
 				s_log.Warn("An attempt was made to fill the bot decoy field from {0} with the value '{1}'.", Hostname, ModelState["Extra"]);
 				_ipRuleManager.AddTempBannedIP(Hostname, "Attempt to fill the bot decoy field");
@@ -573,7 +573,7 @@ namespace VocaDb.Web.Controllers
 					Request.Headers[HeaderNames.UserAgent],
 					WebHelper.GetInterfaceCultureName(Request),
 					time, _ipRuleManager, url);
-				FormsAuthentication.SetAuthCookie(user.Name, false);
+				await SetAuthCookieAsync(user.Name, createPersistentCookie: false);
 				return RedirectToAction("Index", "Home");
 			}
 			catch (UserNameAlreadyExistsException)
@@ -601,7 +601,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError("Restricted", restrictedErr);
 				return View(model);
 			}
-		}*/
+		}
 
 		[HttpPost]
 		[Authorize]
