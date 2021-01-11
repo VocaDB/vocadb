@@ -29,6 +29,13 @@ require('qtip2');
 
 window.marked = require('marked');
 
-$.postJSON = function (url, data, success, dataType) {
-	return $.ajax({ url: url, type: "POST", dataType: dataType, contentType: "application/json", data: ko.toJSON(data), success: success });
+$.postJSON = function (url, data, callback, type) {
+	// Shift arguments if data argument was omitted
+	if (jQuery.isFunction(data)) {
+		type = type || callback;
+		callback = data;
+		data = undefined;
+	}
+
+	return $.ajax({ url: url, type: "POST", dataType: type, contentType: "application/json", data: ko.toJSON(data), success: callback });
 };
