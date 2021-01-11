@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -8,27 +6,23 @@ namespace VocaDb.Model.Domain.Globalization
 {
 	public class RegionCollection
 	{
-		// FIXME
-		public static readonly string[] RegionCodes = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
-			.Select(culture => new RegionInfo(culture.Name).TwoLetterISORegionName)
-			.OrderBy(c => c)
-			.Distinct()
+		public static readonly IEnumerable<RegionInfo> DefaultRegions = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+			.Select(culture => new RegionInfo(culture.Name))
+			.GroupBy(region => region.TwoLetterISORegionName)
+			.Select(group => group.First())
+			.OrderBy(region => region.EnglishName)
 			.ToArray();
 
-		public RegionInfo[] Regions { get; }
+		public IEnumerable<RegionInfo> Regions { get; }
 
-		public RegionCollection(string[] regions)
+		public RegionCollection(IEnumerable<RegionInfo> regions)
 		{
-			Regions = regions.Select(r => new RegionInfo(r)).ToArray();
+			Regions = regions;
 		}
 
-		public Dictionary<string, string> ToDictionaryFull(string defaultName = null)
-		{
-			return Enumerable
-				.Repeat(new KeyValuePair<string, string>(string.Empty, defaultName), defaultName != null ? 1 : 0)
-				.Concat(Regions.Select(r => new KeyValuePair<string, string>(r.TwoLetterISORegionName, r.EnglishName))  // TODO: localize
-					.OrderBy(k => k.Value))
-				.ToDictionary(k => k.Key, k => k.Value);
-		}
+		public IReadOnlyDictionary<string, string?> ToDictionaryFull(string? defaultName = null) => Enumerable
+			.Repeat(new KeyValuePair<string, string?>(string.Empty, defaultName), defaultName != null ? 1 : 0)
+			.Concat(Regions.Select(r => new KeyValuePair<string, string?>(r.TwoLetterISORegionName, r.EnglishName/* TODO: localize */)).OrderBy(k => k.Value))
+			.ToDictionary(k => k.Key, k => k.Value);
 	}
 }
