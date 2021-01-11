@@ -4,5 +4,8 @@
 		"module": "es6",
 		"removeComments": true,
 		"target": "es5"
-	}
+	},
+	"include": [
+		"wwwroot/Scripts/**/*"
+	]
 }
