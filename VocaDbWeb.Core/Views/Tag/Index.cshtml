@@ -30,7 +30,7 @@
 
 		@foreach (var tag in category.Tags) {
 			<span class="tag" style="font-size: @(GetFontSizePercent(tag.UsageCount, avgUsageCount))%">
-				@Html.ActionLink(tag.Name, "DetailsById", new { id = tag.Id, slug = tag.UrlSlug }, new { title = tag.AdditionalNames, style = "font-size: " })
+				<a asp-action="DetailsById" asp-route-id="@(tag.Id)" asp-route-slug="@(tag.UrlSlug)" title="@(tag.AdditionalNames)" style="@("font-size: ")">@(tag.Name)</a>
 			</span>
 		}
 	</div>

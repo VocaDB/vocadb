@@ -335,7 +335,7 @@
 		<p>
 			For instrumental songs, you should use the original song type if the instrumental version is the original.
 			In this case, you should indicate that the song is an instrumental by tagging it with the 
-			@Html.ActionLink("instrumental tag", "DetailsById", "Tag", new { id = instTagId, slug = "instrumental" }, null).
+			<a asp-action="DetailsById" asp-controller="Tag" asp-route-id="@(instTagId)" asp-route-slug="@("instrumental")">@("instrumental tag")</a>.
 			The instrumental song type is for instrumental versions of original songs.
 			Usually, if the song is an original work and not a derivative, it should be marked as original.
 			One exception to this rule is drama PVs. Because drama PVs are not songs, they should be separated from songs by using the Drama PV song type, even if the PV is

@@ -30,12 +30,12 @@
 	if (!Model.Artist.Deleted) {
 		<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
 	} else if (Login.CanDeleteEntries) {
-		@Html.ActionLink(EditRes.Restore, "Restore", new { id = Model.Artist.Id }, new { id = "restoreLink" })		
+		<a asp-action="Restore" asp-route-id="@(Model.Artist.Id)" id="@("restoreLink")">@(EditRes.Restore)</a>		
 	}
 }
 @if (Login.CanMergeEntries) {
 	@Html.Raw("&nbsp;")	
-	@Html.ActionLink(EditRes.Merge, "Merge", new { id = Model.Artist.Id }, new { id = "mergeLink" })
+	<a asp-action="Merge" asp-route-id="@(Model.Artist.Id)" id="@("mergeLink")">@(EditRes.Merge)</a>
 }
 }
 

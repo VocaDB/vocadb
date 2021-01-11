@@ -40,12 +40,12 @@
 	<a href="#" id="addAlbumLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")" style="@(Model.UserHasAlbum ? "display: none;" : "")">@ViewRes.Album.DetailsStrings.AddToCollection</a>
 	<a href="#" id="updateAlbumLink" class="@(Login.Manager.IsLoggedIn ? "" : "disabled")" style="@(Model.UserHasAlbum ? "" : "display: none;")">@ViewRes.Album.DetailsStrings.UpdateCollection</a>
 
-	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editAlbumLink", @class = (Model.CanEdit ? "" : "disabled") })
+	<a asp-action="Edit" asp-route-id="@(Model.Id)" id="@("editAlbumLink")" class="@((Model.CanEdit ? "" : "disabled"))">@(ViewRes.SharedStrings.Edit)</a>
 
-	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	<a asp-action="Versions" asp-route-id="@(Model.Id)" id="@("viewVersions")">@(ViewRes.EntryDetailsStrings.ViewModifications)</a>
 
 	<span>
-		@Html.ActionLink(ViewRes.Album.DetailsStrings.DownloadTrackList, "DownloadTags", new { id = Model.Id }, new { id = "downloadTags" })
+		<a asp-action="DownloadTags" asp-route-id="@(Model.Id)" id="@("downloadTags")">@(ViewRes.Album.DetailsStrings.DownloadTrackList)</a>
 		<a data-bind="click: downloadTagsDialog.show" href="#" id="downloadTagsCustom">@R.DetailsStrings.Customize</a>
 	</span>
 
@@ -241,7 +241,7 @@
 						<a data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
 						@if (Model.CanRemoveTagUsages)
 						{
-							@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new { id = Model.Id }, new { id = "manageTags" })
+							<a asp-action="ManageTagUsages" asp-route-id="@(Model.Id)" id="@("manageTags")">@(ViewRes.EntryDetailsStrings.ManageTags)</a>
 						}
 					</td>
 				</tr>

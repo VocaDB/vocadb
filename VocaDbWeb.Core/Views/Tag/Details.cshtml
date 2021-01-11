@@ -80,8 +80,8 @@
 	<a href="#" data-bind="click: followTag, jqButton: { icon: 'ui-icon-plus' }, visible: !isFollowed(), disable: !isLoggedIn">@Res.FollowTag</a>
 	<a href="#" data-bind="click: unfollowTag, jqButton: { icon: 'ui-icon-close' }, visible: isFollowed()">@Res.UnfollowTag</a>
 
-	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editTagLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
-	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	<a asp-action="Edit" asp-route-id="@(Model.Id)" id="@("editTagLink")" class="@((Login.CanEdit(Model) ? "" : "disabled"))">@(ViewRes.SharedStrings.Edit)</a>
+	<a asp-action="Versions" asp-route-id="@(Model.Id)" id="@("viewVersions")">@(ViewRes.EntryDetailsStrings.ViewModifications)</a>
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 	<partial name="Partials/Shared/_EntryStatusMessage" model="@(new EntryStatusMessageViewModel(Model.Status))" />
 }
@@ -192,7 +192,7 @@
 
 			@if (Model.Stats.SongListCount > 0) {
 				<div>
-					@Html.ActionLink(Res.AllSongLists + " (" + Model.Stats.SongListCount + ")", "Featured", "SongList", new { tagId = Model.Id }, null)
+					<a asp-action="Featured" asp-controller="SongList" asp-route-tagId="@(Model.Id)">@(Res.AllSongLists + " (" + Model.Stats.SongListCount + ")")</a>
 				</div>
 			}
 		</div>

@@ -68,9 +68,9 @@
 
 @section Toolbar {
 	@if (ownProfile) {
-		@Html.ActionLink(R.MySettings, "MySettings", null, new { id = "mySettingsLink" });
+		<a asp-action="MySettings" id="@("mySettingsLink")">@(R.MySettings)</a>;
 		@Html.Raw("&nbsp;")
-		@Html.ActionLink(R.Messages, "Messages", null, new { id = "messagesLink" });
+		<a asp-action="Messages" id="@("messagesLink")">@(R.Messages)</a>;
 	}
 
 	@if (UserContext.IsLoggedIn && UserContext.LoggedUserId != Model.Id && Login.User.Active && !Model.Standalone) {
@@ -79,7 +79,7 @@
 
 	@if (Login.CanManageUsers && EntryPermissionManager.CanEditUser(UserContext, Model.GroupId)) {
 		@Html.Raw("&nbsp;")
-		@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editUserLink" });
+		<a asp-action="Edit" asp-route-id="@(Model.Id)" id="@("editUserLink")">@(ViewRes.SharedStrings.Edit)</a>;
 	}
 	@if (Login.Manager.HasPermission(PermissionToken.ReportUser) && UserContext.LoggedUserId != Model.Id && Model.Active) {
 		@Html.Raw("&nbsp;")
@@ -91,7 +91,7 @@
 	}
 	@if (Login.Manager.HasPermission(PermissionToken.DisableUsers) && UserContext.LoggedUserId != Model.Id && Model.Active) {
 		@Html.Raw("&nbsp;")
-		@Html.ActionLink(R.Disable, "Disable", new { id = Model.Id }, new { id = "disableUserLink" });
+		<a asp-action="Disable" asp-route-id="@(Model.Id)" id="@("disableUserLink")">@(R.Disable)</a>;
 	}
 }
 
@@ -103,7 +103,7 @@
 			If you have a dynamic IP, it's possible that someone with the same IP as you was participating in these activities
 			and your account was mistakenly reduced, preventing you from editing the database.
 		</p><p>
-			If this is the case, please @Html.ActionLink("contact us", "Index", "Help") and we'll take care of it. Thank you.
+			If this is the case, please <a asp-action="Index" asp-controller="Help">@("contact us")</a> and we'll take care of it. Thank you.
 		</p>
 	</div>
 }
@@ -180,7 +180,7 @@
 				@{ var submitText = R.Submissions + ": " + Model.SubmitCount; }
 				@if (canSeeDetailedStats)
 				{
-					<text>@Html.ActionLink(submitText, "EntryEdits", new { id = Model.Id, onlySubmissions = true })</text>
+					<text><a asp-action="EntryEdits" asp-route-id="@(Model.Id)" asp-route-onlySubmissions="@(true)">@(submitText)</a></text>
 				}
 				else
 				{
@@ -191,7 +191,7 @@
 				@{ var editText = R.TotalEdits + ": " + Model.EditCount; }
 				@if (canSeeDetailedStats)
 				{
-					@Html.ActionLink(editText, "EntryEdits", new { id = Model.Id, onlySubmissions = false })
+					<a asp-action="EntryEdits" asp-route-id="@(Model.Id)" asp-route-onlySubmissions="@(false)">@(editText)</a>
 				}
 				else
 				{

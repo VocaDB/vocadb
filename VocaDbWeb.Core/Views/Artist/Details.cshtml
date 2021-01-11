@@ -42,9 +42,9 @@
 		<a data-bind="click: customizeSubscriptionDialog.show" href="#" id="customizeSubscription">@R.DetailsStrings.Customize</a>
 	</span>
 
-	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editArtistLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
+	<a asp-action="Edit" asp-route-id="@(Model.Id)" id="@("editArtistLink")" class="@((Login.CanEdit(Model) ? "" : "disabled"))">@(ViewRes.SharedStrings.Edit)</a>
 
-	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	<a asp-action="Versions" asp-route-id="@(Model.Id)" id="@("viewVersions")">@(ViewRes.EntryDetailsStrings.ViewModifications)</a>
 
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 
@@ -164,7 +164,7 @@
 						</div>
 						<a data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
 						@if (Model.CanRemoveTagUsages) {
-							@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new { id = Model.Id }, new { id = "manageTags" })
+							<a asp-action="ManageTagUsages" asp-route-id="@(Model.Id)" id="@("manageTags")">@(ViewRes.EntryDetailsStrings.ManageTags)</a>
 						}
 					</td>
 				</tr>
@@ -284,7 +284,7 @@
 
 		@if (Model.LatestAlbums.Any()) {
 			<h3 class="withMargin">
-				@Html.ActionLink(Res.RecentAlbums, "Index", "Search", new { searchType = EntryType.Album, artistId = Model.Id, sort = AlbumSortRule.AdditionDate }, null)
+				<a asp-action="Index" asp-controller="Search" asp-route-searchType="@(EntryType.Album)" asp-route-artistId="@(Model.Id)" asp-route-sort="@(AlbumSortRule.AdditionDate)">@(Res.RecentAlbums)</a>
 				<small>@string.Format(ViewRes.EntryDetailsStrings.NumTotalParenthesis, Model.SharedStats.AlbumCount)</small>
 			</h3>
 			<div id="newAlbums">
@@ -294,7 +294,7 @@
 
 		@if (Model.TopAlbums.Any()) {
 			<h3 class="withMargin">
-				@Html.ActionLink(Res.TopAlbums, "Index", "Search", new { searchType = EntryType.Album, artistId = Model.Id, sort = AlbumSortRule.RatingTotal }, null)
+				<a asp-action="Index" asp-controller="Search" asp-route-searchType="@(EntryType.Album)" asp-route-artistId="@(Model.Id)" asp-route-sort="@(AlbumSortRule.RatingTotal)">@(Res.TopAlbums)</a>
 				<small>(@string.Format(Res.RatedAlbums, Model.SharedStats.RatedAlbumCount))</small>
 			</h3>
 			<div id="topAlbums">

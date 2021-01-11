@@ -8,15 +8,15 @@
 
 <ul class="nav nav-pills">
 	<li>
-		@Html.ActionLink("All activity", "Index", "ActivityEntry")
+		<a asp-action="Index" asp-controller="ActivityEntry">@("All activity")</a>
 	</li>
 	@if (Login.IsLoggedIn) {
 		<li>
-			@Html.ActionLink("Only followed artists", "FollowedArtistActivity", "ActivityEntry")
+			<a asp-action="FollowedArtistActivity" asp-controller="ActivityEntry">@("Only followed artists")</a>
 		</li>
 	}
 	<li class="active">
-		@Html.ActionLink("Comments", "Index", "Comment")
+		<a asp-action="Index" asp-controller="Comment">@("Comments")</a>
 	</li>	
 </ul>
 

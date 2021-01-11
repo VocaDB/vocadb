@@ -249,7 +249,7 @@
 			</div>
 			<div class="editor-field">
 				@Model.AccessKey
-				@Html.ActionLink(R.MySettingsStrings.Reset, "ResetAccesskey", "User", null, new { onclick = "return confirm(\"" + R.MySettingsStrings.ReallyReset + "\");", @class = "textLink refreshLink" })				
+				<a asp-action="ResetAccesskey" asp-controller="User" onclick="@("return confirm(\"" + R.MySettingsStrings.ReallyReset + "\");")" class="@("textLink refreshLink")">@(R.MySettingsStrings.Reset)</a>				
             </div>
 
 			<div class="editor-label">
@@ -261,11 +261,11 @@
 					
 					if (Model.HasPassword) {
 						@:&nbsp;
-						@Html.ActionLink("Disconnect", "DisconnectTwitter", null, new { @class = "textLink removeLink"})
+						<a asp-action="DisconnectTwitter" class="@("textLink removeLink")">@("Disconnect")</a>
 					}
 					
                 } else {
-				    @Html.ActionLink(R.MySettingsStrings.Connect, "ConnectTwitter", "User", null, new { @class = "textLink addLink" })
+				    <a asp-action="ConnectTwitter" asp-controller="User" class="@("textLink addLink")">@(R.MySettingsStrings.Connect)</a>
                 }
             </div>
 
