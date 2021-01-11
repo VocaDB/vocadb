@@ -72,7 +72,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 #if !DEBUG
-		[OutputCache(Duration = 600, VaryByParam = "songId;pvId;lang;w;h", VaryByHeader = "Accept-Language")]
+		[ResponseCache(Duration = 600, VaryByQueryKeys = new[] { "songId", "pvId", "lang", "w", "h" }, VaryByHeader = "Accept-Language")]
 #endif
 		public ActionResult EmbedSong(int songId = InvalidId, int pvId = InvalidId, int? w = null, int? h = null,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
