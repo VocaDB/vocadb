@@ -268,7 +268,7 @@ export { initPage as initUserEditPage } from './User/Edit';
 export { default as ListUsersViewModel } from './ViewModels/User/ListUsersViewModel';
 
 // ~/bundles/User/Messages
-import './KnockoutExtensions/BindingHandlers/UserAutocomplete';
+import './KnockoutExtensions/BindingHandlers/UserAutoComplete';
 export { default as UserMessagesViewModel } from './ViewModels/User/UserMessagesViewModel';
 
 // ~/bundles/User/MySettings

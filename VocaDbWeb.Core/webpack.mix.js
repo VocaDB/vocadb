@@ -41,7 +41,7 @@ mix
 
 	// SHARED BUNDLES
 	// Legacy common scripts - should be phased out
-	.scripts(["wwwroot/Scripts/VocaDB.js"], "wwwroot/bundles/VocaDB.js")
+	.scripts(["wwwroot/Scripts/VocaDb.js"], "wwwroot/bundles/VocaDB.js")
 
 	.ts("wwwroot/Scripts/App.ts", "wwwroot/bundles")
 
