@@ -38,6 +38,7 @@ using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
+using VocaDb.ReMikus;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
@@ -92,6 +93,8 @@ namespace VocaDb.Web
 				{
 					options.LoginPath = "/User/Login";
 				});
+
+			services.AddLaravelMix();
 		}
 
 		private static string[] LoadBlockedIPs(IComponentContext componentContext) => componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());
@@ -176,7 +179,6 @@ namespace VocaDb.Web
 			builder.RegisterType<UserMessageQueries>().AsSelf();
 			builder.RegisterType<VenueQueries>().AsSelf();
 
-			builder.RegisterType<LaravelMixHelper>().AsSelf();
 			builder.RegisterType<Login>().AsSelf();
 			builder.RegisterType<PVHelper>().AsSelf();
 			builder.RegisterType<ViewRenderService>().As<IViewRenderService>();

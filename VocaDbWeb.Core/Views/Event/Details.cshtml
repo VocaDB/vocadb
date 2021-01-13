@@ -251,7 +251,7 @@
 <partial name="Partials/EntryDetails/_ReportEntryPopupKnockout" model="@(new ReportEntryPopupKnockoutViewModel())" />
 
 @section BodyScripts {
-<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/ReleaseEvent/Details.js")"></script>
+<remikus path="/bundles/ReleaseEvent/Details.js" />
 <script type="text/javascript">
 	$(function () {
 		$("#editEventLink").button({ disabled: $("#editEventLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });

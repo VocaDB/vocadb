@@ -155,8 +155,8 @@
 <partial name="Partials/EntryDetails/_EntryTrashPopup" model="@(new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))" />
 
 @section BodyScripts {
-<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/edit.js")"></script>
-<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/Venue/Edit.js")"></script>
+<remikus path="/bundles/shared/edit.js" />
+<remikus path="/bundles/Venue/Edit.js" />
 <script type="text/javascript">
 
 	$(function () {

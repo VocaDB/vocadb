@@ -343,8 +343,8 @@
 <partial name="Partials/EntryDetails/_EntryDeletePopup" model="@(new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))" />
 
 @section BodyScripts {
-<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/edit.js")"></script>
-<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/Song/Edit.js")"></script>
+<remikus path="/bundles/shared/edit.js" />
+<remikus path="/bundles/Song/Edit.js" />
 
 <script type="text/javascript">
 
