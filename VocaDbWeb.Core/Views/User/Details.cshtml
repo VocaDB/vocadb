@@ -436,15 +436,15 @@
 <partial name="Partials/EntryDetails/_EntryDeletePopupBase" model="@(new EntryDeletePopupBaseViewModel("Please confirm that you wish to report user. Please provide additional explanation below.", "reportUserViewModel", "reportUserLink", "Report user", "Confirm"))" />
 
 @section Head {
-	<link rel="stylesheet" href="@LaravelMixHelper.GetPathToVersionedMixFile("~/Scripts/jqwidgets27/styles/css.css")" />
+	<remikus path="/Scripts/jqwidgets27/styles/css.css" />
 	<link rel="canonical" href="@url" />
 }
 
 @section BodyScripts {
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 	<script src="https://code.highcharts.com/highcharts.js" type="text/javascript"></script>
-	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/jqxRating.js")"></script>
-	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/User/Details.js")"></script>
+	<remikus path="/bundles/jqxRating.js" />
+	<remikus path="/bundles/User/Details.js" />
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
 

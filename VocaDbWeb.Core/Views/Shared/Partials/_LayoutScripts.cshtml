@@ -7,13 +7,13 @@
 }
 
 <!-- Common scripts -->
-<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/libs.js")"></script>
-<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/VocaDB.js")"></script>
-<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/common.js")"></script>
-<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/App.js")"></script>
+<remikus path="/bundles/shared/libs.js" />
+<remikus path="/bundles/VocaDB.js" />
+<remikus path="/bundles/shared/common.js" />
+<remikus path="/bundles/App.js" />
 
 @if (PageProperties.AddMainScripts) {
-	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/shared/main.js")"></script>
+	<remikus path="/bundles/shared/main.js" />
 }
 
 <script type="text/javascript">

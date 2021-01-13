@@ -29,7 +29,7 @@
 	@{ Html.RenderPartial("LayoutPartials/_TwitterCard", Model); }
 
 	<link rel="shortcut icon" href="@(Config.Assets.FavIconUrl.EmptyToNull() ?? Url.Content("~/Content/favicon.ico"))" type="image/x-icon" />
-	<link rel="stylesheet" href="@LaravelMixHelper.GetPathToVersionedMixFile("~/Content/css.css")" />
+	<remikus path="/Content/css.css" />
 	@if (!string.IsNullOrEmpty(stylesheet)) {
 		<link href="@Url.Content("~/Content/Styles/" + stylesheet)" rel="stylesheet" type="text/css" />			
 	}

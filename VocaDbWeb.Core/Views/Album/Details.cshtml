@@ -32,7 +32,7 @@
 @section Head {
 	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
 	<link rel="canonical" href="@url" />
-	<link rel="stylesheet" href="@LaravelMixHelper.GetPathToVersionedMixFile("~/Scripts/jqwidgets27/styles/css.css")" />
+	<remikus path="/Scripts/jqwidgets27/styles/css.css" />
 }
 
 @section Toolbar {
@@ -543,8 +543,8 @@
 <partial name="Partials/EntryDetails/_ReportEntryPopupKnockout" model="@(new ReportEntryPopupKnockoutViewModel())" />
 
 @section BodyScripts {
-	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/Album/Details.js")"></script>
-	<script src="@LaravelMixHelper.GetPathToVersionedMixFile("~/bundles/jqxRating.js")"></script>
+	<remikus path="/bundles/Album/Details.js" />
+	<remikus path="/bundles/jqxRating.js" />
 	<script type="text/javascript">
 
 		$(document).ready(function() {
