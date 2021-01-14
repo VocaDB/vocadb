@@ -821,5 +821,13 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		[AuthenticatedCorsApi(HttpVerbs.Get)]
 		public ArtistForUserForApiContract GetArtistForUser(int artistId) => GetArtistForUser(_permissionContext.LoggedUserId, artistId);
+
+		[HttpGet("{id:int}/album-collection-statuses/{albumId:int}")]
+		public AlbumForUserForApiContract GetAlbumForUser(int id, int albumId) => _queries.GetAlbumForUser(id, albumId);
+
+		[HttpGet("current/album-collection-statuses/{albumId:int}")]
+		[Authorize]
+		[AuthenticatedCorsApi(HttpVerbs.Get)]
+		public AlbumForUserForApiContract GetAlbumForUser(int albumId) => GetAlbumForUser(_permissionContext.LoggedUserId, albumId);
 	}
 }
