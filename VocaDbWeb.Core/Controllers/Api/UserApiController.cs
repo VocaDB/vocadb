@@ -813,5 +813,13 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPost("{id:int}/status-limited")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public void PostStatusLimited(int id, [FromBody] PostStatusLimitedModel model) => _queries.SetUserToLimited(id, model.Reason, WebHelper.GetRealHost(Request), model.CreateReport);
+
+		[HttpGet("{id:int}/followedArtists/{artistId:int}")]
+		public ArtistForUserForApiContract GetArtistForUser(int id, int artistId) => _queries.GetArtistForUser(id, artistId);
+
+		[HttpGet("current/followedArtists/{artistId:int}")]
+		[Authorize]
+		[AuthenticatedCorsApi(HttpVerbs.Get)]
+		public ArtistForUserForApiContract GetArtistForUser(int artistId) => GetArtistForUser(_permissionContext.LoggedUserId, artistId);
 	}
 }
