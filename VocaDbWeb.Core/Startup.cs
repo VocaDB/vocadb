@@ -217,12 +217,22 @@ namespace VocaDb.Web
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 
+			// Code from: https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio
+			app.UseSwagger();
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "VocaDB Web API V1");
+			});
+
 			app.UseRouting();
 
 			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseVocaDbPrincipal();
+
+			// `UseCacheOutput` must go before `UseEndpoints`, otherwise `CacheOutput` throws an `System.InvalidOperationException The response headers cannot be modified because the response has already started`.
+			app.UseCacheOutput();
 
 			app.UseEndpoints(endpoints =>
 			{
@@ -261,15 +271,6 @@ namespace VocaDb.Web
 				endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller=Home}/{action=Index}/{id?}");
-			});
-
-			app.UseCacheOutput();
-
-			// Code from: https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-5.0&tabs=visual-studio
-			app.UseSwagger();
-			app.UseSwaggerUI(c =>
-			{
-				c.SwaggerEndpoint("/swagger/v1/swagger.json", "VocaDB Web API V1");
 			});
 		}
 	}
