@@ -22,18 +22,18 @@ namespace VocaDb.Model.DataContracts.Users
 			bool shouldShowCollectionStatus,
 			bool includeUser = false)
 		{
-			Album = new AlbumForApiContract(albumForUser.Album, null, languagePreference, thumbPersister, fields, SongOptionalFields.None);
-			Rating = albumForUser.Rating;
+			Album = albumForUser != null ? new AlbumForApiContract(albumForUser.Album, null, languagePreference, thumbPersister, fields, SongOptionalFields.None) : null;
+			Rating = albumForUser?.Rating ?? 0;
 
 			if (shouldShowCollectionStatus)
 			{
-				MediaType = albumForUser.MediaType;
-				PurchaseStatus = albumForUser.PurchaseStatus;
+				MediaType = albumForUser?.MediaType ?? null;
+				PurchaseStatus = albumForUser?.PurchaseStatus ?? null;
 			}
 
 			if (includeUser)
 			{
-				User = new UserForApiContract(albumForUser.User);
+				User = albumForUser != null ? new UserForApiContract(albumForUser.User) : null;
 			}
 		}
 

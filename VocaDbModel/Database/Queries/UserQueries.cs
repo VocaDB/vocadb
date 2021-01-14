@@ -1828,6 +1828,12 @@ namespace VocaDb.Model.Database.Queries
 			var artistForUser = ctx.OfType<ArtistForUser>().Query().FirstOrDefault(s => s.Artist.Id == artistId && s.User.Id == userId);
 			return new ArtistForUserForApiContract(artistForUser, LanguagePreference, _entryImagePersister, ArtistOptionalFields.None);
 		});
+
+		public AlbumForUserForApiContract GetAlbumForUser(int userId, int albumId) => HandleQuery(ctx =>
+		{
+			var albumForUser = ctx.OfType<AlbumForUser>().Query().FirstOrDefault(s => s.Album.Id == albumId && s.User.Id == userId);
+			return new AlbumForUserForApiContract(albumForUser, LanguagePreference, _entryImagePersister, AlbumOptionalFields.None, shouldShowCollectionStatus: true);
+		});
 	}
 
 	public class AlbumTagUsageFactory : ITagUsageFactory<AlbumTagUsage>
