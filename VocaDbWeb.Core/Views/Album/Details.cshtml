@@ -213,7 +213,7 @@
 					<tr>
 						<td>@ViewRes.SharedStrings.Description</td>
 						<td class="entry-description" data-bind="with: description">
-							@{ Html.RenderPartial("Partials/_EnglishTranslatedString", new EnglishTranslatedStringViewModel(Model.Description)); }
+							<partial name="Partials/_EnglishTranslatedString" model="@(new EnglishTranslatedStringViewModel(Model.Description))" />
 						</td>
 					</tr>
 				}
@@ -236,7 +236,7 @@
 					<td>@ViewRes.SharedStrings.Tags</td>
 					<td>
 						<div data-bind="with: tagUsages" class="entry-tag-usages">
-							@{ Html.RenderPartial("Partials/_TagList"); }
+							<partial name="Partials/_TagList" />
 						</div>
 						<a data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
 						@if (Model.CanRemoveTagUsages)
@@ -491,7 +491,7 @@
 	</div>
 
 	<div id="reviewsTab" data-bind="with: reviewsViewModel">
-		@{ Html.RenderPartial("Partials/_AlbumReviews"); }
+		<partial name="Partials/_AlbumReviews" />
 	</div>
 
 	<div id="picturesTab">
@@ -527,7 +527,7 @@
 </div>
 
 <div data-bind="with: tagsEditViewModel">
-	@{ Html.RenderPartial("Partials/_TagsEdit"); }
+	<partial name="Partials/_TagsEdit" />
 </div>
 
 <div id="userCollectionsPopup" title="@R.DetailsStrings.AlbumInCollections">
@@ -536,7 +536,7 @@
 
 </div>
 
-@{ Html.RenderPartial("Partials/_DownloadTagsDialog"); }
+<partial name="Partials/_DownloadTagsDialog" />
 
 <partial name="Partials/Album/_EditCollectionDialog" model="@(new EditCollectionDialogViewModel(Model.AlbumPurchaseStatus, Model.AlbumMediaType))" />
 

@@ -33,7 +33,7 @@
 	</div>
 
 	<div class="well sidebar-nav">
-		@{ Html.RenderPartial("Partials/_MainNavigationItems"); }
+		<partial name="Partials/_MainNavigationItems" />
 		@if (Login.Manager.IsLoggedIn) {
 			<br />
 			<p class="user">@ViewRes._LayoutStrings.Welcome <a asp-action="Profile" asp-controller="User" asp-route-id="@(Login.User.Name)">@(Login.User.Name)</a></p>
@@ -71,17 +71,17 @@
 		</div>
 		@if (!string.IsNullOrEmpty(Config.SiteSettings.PatreonLink)) {
 			<hr />
-			Html.RenderPartial("Partials/_PatreonLink");
+			<partial name="Partials/_PatreonLink" />
 		}
 		@if (!string.IsNullOrEmpty(Config.SiteSettings.PaypalDonateCert)) {
 			<hr />
-			Html.RenderPartial("Partials/_PaypalDonateButton");
+			<partial name="Partials/_PaypalDonateButton" />
 		}
 	</div>
 
 	@* HACK: `@section`s don't work in partial views. *@
 	@if (!string.IsNullOrEmpty(Config.SiteSettings.TwitterAccountName) && ViewBag.ShowTwitterTimeline ?? false)
 	{
-		Html.RenderPartial("Partials/_TwitterTimeline");
+		<partial name="Partials/_TwitterTimeline" />
 	}
 </div>

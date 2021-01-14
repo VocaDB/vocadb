@@ -101,13 +101,13 @@
 			</div>
 		</div>
 
-		@{ Html.RenderPartial("Partials/_ArtistSearchOptions"); }
+		<partial name="Partials/_ArtistSearchOptions" />
 
-		@{ Html.RenderPartial("Partials/_AlbumSearchOptions"); }
+		<partial name="Partials/_AlbumSearchOptions" />
 
-		@{ Html.RenderPartial("Partials/_SongSearchOptions"); }
+		<partial name="Partials/_SongSearchOptions" />
 		
-		@{ Html.RenderPartial("Partials/_EventSearchOptions"); }
+		<partial name="Partials/_EventSearchOptions" />
 
 		<!-- Tag search options -->
 		<div class="control-group" data-bind="visible: showTagSearch, with: tagSearchViewModel">
@@ -161,23 +161,23 @@
 
 </div>
 
-@{ Html.RenderPartial("Partials/_AnythingSearchList"); }
+<partial name="Partials/_AnythingSearchList" />
 
-@{ Html.RenderPartial("Partials/_ArtistSearchList"); }
+<partial name="Partials/_ArtistSearchList" />
 
 <div data-bind="visible: showAlbumSearch, with: albumSearchViewModel">
-	@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
+	<partial name="Partials/_AlbumSearchList" />
 </div>
 
 <div data-bind="visible: showSongSearch, with: songSearchViewModel">
-	@{ Html.RenderPartial("Partials/_SongSearchList"); }
+	<partial name="Partials/_SongSearchList" />
 </div>
 
 <div data-bind="visible: showEventSearch, with: eventSearchViewModel">
-	@{ Html.RenderPartial("Partials/_EventSearchList"); }
+	<partial name="Partials/_EventSearchList" />
 </div>
 
-@{ Html.RenderPartial("Partials/_TagSearchList"); }
+<partial name="Partials/_TagSearchList" />
 
 
 <!-- Scripts -->

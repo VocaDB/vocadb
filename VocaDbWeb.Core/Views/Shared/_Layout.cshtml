@@ -26,7 +26,7 @@
 		<meta name="robots" content="@PageProperties.Robots"/>
 	}
 
-	@{ Html.RenderPartial("LayoutPartials/_TwitterCard", Model); }
+	<partial name="LayoutPartials/_TwitterCard" model="@(Model)" />
 
 	<link rel="shortcut icon" href="@(Config.Assets.FavIconUrl.EmptyToNull() ?? Url.Content("~/Content/favicon.ico"))" type="image/x-icon" />
 	<remikus path="/Content/css.css" />
@@ -50,7 +50,7 @@
 
 	@RenderSection("Head", false)
 	
-	@{ Html.RenderPartial("Partials/_GoogleAnalytics"); }
+	<partial name="Partials/_GoogleAnalytics" />
 
 </head>
 
@@ -59,14 +59,14 @@
 	    <div data-bind="stopBinding" class="navbar navbar-inverse navbar-fixed-top">
 		    <div class="navbar-inner">
 			    <div id="topBar" class="container">
-				    @{ Html.RenderPartial("GlobalSearchBox", new VocaDb.Web.Models.GlobalSearchBoxModel(PageProperties.GlobalSearchType, string.Empty)); }
+				    <partial name="GlobalSearchBox" model="@(new VocaDb.Web.Models.GlobalSearchBoxModel(PageProperties.GlobalSearchType, string.Empty))" />
 			    </div>
 		    </div>
 	    </div>
 	
 		<div class="container-fluid">
 			<div class="row-fluid">
-				@{ Html.RenderPartial("Partials/_LeftMenu"); }
+				<partial name="Partials/_LeftMenu" />
 
 				<div class="span10 rightFrame well">
                     
@@ -146,9 +146,9 @@
 		</div>
 			
         <!-- Footer -->	
-		@{ Html.RenderPartial("Partials/_Footer"); }
+		<partial name="Partials/_Footer" />
 
-	    @{ Html.RenderPartial("Partials/_LayoutScripts"); }
+	    <partial name="Partials/_LayoutScripts" />
         
         <!-- Page-specific scripts -->
 	    @RenderSection("BodyScripts", false)

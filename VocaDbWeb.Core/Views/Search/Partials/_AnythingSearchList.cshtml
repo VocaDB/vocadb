@@ -4,7 +4,7 @@
 
 <div data-bind="visible: showAnythingSearch, with: anythingSearchViewModel">
 
-	@{ Html.RenderPartial("Partials/_EntryCountBox"); }
+	<partial name="Partials/_EntryCountBox" />
 
 	<div data-bind="with: paging">
 		<partial name="Partials/Knockout/_ServerSidePaging" />

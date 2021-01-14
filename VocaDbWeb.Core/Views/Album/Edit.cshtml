@@ -156,7 +156,7 @@
 				<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
 			</div>
 			<div class="editor-field" data-bind="with: names">
-				@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
+				<partial name="KnockoutPartials/_NamesEditor" model="@(new VocaDb.Web.Models.Shared.NamesEditorViewModel())" />
 			</div>
 
 			<div class="editor-label">
@@ -178,7 +178,7 @@
 				<partial name="Partials/Shared/_MarkdownNotice" />
 			</div>
 			<div class="editor-field entry-edit-description" data-bind="with: description">
-				@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
+				<partial name="Partials/_EnglishTranslatedStringEdit" />
 			</div>
 
 			<div class="editor-label">
@@ -330,7 +330,7 @@
 					</tr>
 				</thead>
 				<tbody data-bind="sortable: tracks">
-					@{ Html.RenderPartial("Partials/_SongInAlbumEdit"); }
+					<partial name="Partials/_SongInAlbumEdit" />
 				</tbody>
 			</table>
 
@@ -360,7 +360,7 @@
 					</tr>
 				</thead>
 				<tbody data-bind="foreach: artistLinks">
-					@{ Html.RenderPartial("Partials/_ArtistForAlbumEdit"); }
+					<partial name="Partials/_ArtistForAlbumEdit" />
 				</tbody>
 			</table>
 
@@ -377,7 +377,7 @@
 
 			<table>
 				<tbody data-bind="foreach: pictures">
-					@{ Html.RenderPartial("KnockoutPartials/_EntryPictureFileEdit"); }
+					<partial name="KnockoutPartials/_EntryPictureFileEdit" />
 				</tbody>
 			</table>
 			
@@ -401,7 +401,7 @@
 					</tr>
 				</thead>
 				<tbody data-bind="foreach: pvs">
-					@{ Html.RenderPartial("PVs/_PVEdit"); }
+					<partial name="PVs/_PVEdit" />
 				</tbody>
 			</table>
 
@@ -433,16 +433,16 @@
 </form>
 
 <div data-bind="with: artistRolesEditViewModel">
-	@{ Html.RenderPartial("Partials/_ArtistRolesEditViewModel"); }
+	<partial name="Partials/_ArtistRolesEditViewModel" />
 </div>	
 
 <div data-bind="with: editedArtistLink">
-	@{ Html.RenderPartial("Partials/_CustomNameEdit"); }
+	<partial name="Partials/_CustomNameEdit" />
 </div>
 
 <div data-bind="dialog: {autoOpen: false, modal: true, width: 550 }, dialogButtons: trackPropertiesDialogButtons, dialogVisible: trackPropertiesDialogVisible" style="display:none;" title="@R.EditStrings.TrackPropertiesTitle">
 
-	@{ Html.RenderPartial("Partials/_TrackProperties"); }
+	<partial name="Partials/_TrackProperties" />
 
 </div>
 

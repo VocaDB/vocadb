@@ -114,7 +114,7 @@
 				<p>@R.CreateStrings.NameHelp</p>
 			</div>
 
-			@{ Html.RenderPartial("KnockoutPartials/_DuplicateEntriesMessage"); }
+			<partial name="KnockoutPartials/_DuplicateEntriesMessage" />
 
 			<div class="alert alert-info js-cloak" visible="{{artistTypeInfo}}" data-bind="show">				
 				<h3>

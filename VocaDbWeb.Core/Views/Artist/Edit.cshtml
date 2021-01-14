@@ -74,7 +74,7 @@
 					<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
 				</div>
 				<div class="editor-field" data-bind="with: names">
-					@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
+					<partial name="KnockoutPartials/_NamesEditor" model="@(new VocaDb.Web.Models.Shared.NamesEditorViewModel())" />
 				</div>
 
 				<div class="editor-label">
@@ -99,7 +99,7 @@
 					<span data-bind="visible: validationError_needReferences, qTip" class="icon errorIcon" title="@ValidationErrors.NeedReferences"></span>
 				</div>
 				<div class="editor-field entry-edit-description" data-bind="with: description">
-					@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
+					<partial name="Partials/_EnglishTranslatedStringEdit" />
 				</div>
 
 				<div class="editor-label">
@@ -234,7 +234,7 @@
 
 			<table>
 				<tbody data-bind="foreach: pictures">
-					@{ Html.RenderPartial("KnockoutPartials/_EntryPictureFileEdit"); }
+					<partial name="KnockoutPartials/_EntryPictureFileEdit" />
 				</tbody>
 			</table>
 			

@@ -8,7 +8,7 @@
 <!-- binding context: SongSearchViewModel -->
 	
 <!-- ko if: viewMode() == 'Details' -->
-@{ Html.RenderPartial("Partials/_EntryCountBox"); }
+<partial name="Partials/_EntryCountBox" />
 
 <div data-bind="with: paging">
 	<partial name="Partials/Knockout/_ServerSidePaging" />
@@ -93,7 +93,7 @@
 	
 <!-- ko if: viewMode() == 'PlayList' -->
 <div data-bind="with: playListViewModel" class="well well-transparent songlist-playlist">
-	@{ Html.RenderPartial("Partials/_PlayList"); }
+	<partial name="Partials/_PlayList" />
 </div>
 <!-- /ko -->
 

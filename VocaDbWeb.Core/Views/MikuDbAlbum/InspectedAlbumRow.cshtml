@@ -59,7 +59,7 @@
 					<ul>
 					@foreach (var track in Model.Tracks) {
 						<li>
-							@{ Html.RenderPartial("InspectedAlbumTrack", track); }
+							<partial name="InspectedAlbumTrack" model="@(track)" />
 						</li>
 					}				
 					</ul>

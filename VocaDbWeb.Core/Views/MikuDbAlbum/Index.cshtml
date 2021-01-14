@@ -52,7 +52,7 @@
 			<th>Tracks</th>
 		</tr>
 		@foreach (var album in Model.Albums) {
-			Html.RenderPartial("MikuDbAlbumRow", album);
+			<partial name="MikuDbAlbumRow" model="@(album)" />
 		}
 	</table>
 	
