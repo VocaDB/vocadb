@@ -823,10 +823,10 @@ namespace VocaDb.Web.Controllers.Api
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Get)]
 		public ArtistForUserForApiContract GetArtistForUser(int artistId) => GetArtistForUser(_permissionContext.LoggedUserId, artistId);
 
-		[Route("{id:int}/albumCollectionStatuses/{albumId:int}")]
+		[Route("{id:int}/album-collection-statuses/{albumId:int}")]
 		public AlbumForUserForApiContract GetAlbumForUser(int id, int albumId) => _queries.GetAlbumForUser(id, albumId);
 
-		[Route("current/albumCollectionStatuses/{albumId:int}")]
+		[Route("current/album-collection-statuses/{albumId:int}")]
 		[Authorize]
 		[AuthenticatedCorsApi(System.Web.Mvc.HttpVerbs.Get)]
 		public AlbumForUserForApiContract GetAlbumForUser(int albumId) => GetAlbumForUser(_permissionContext.LoggedUserId, albumId);
