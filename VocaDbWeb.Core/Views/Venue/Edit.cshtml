@@ -67,7 +67,7 @@
 		<table>			
 			<tr>
 				<td data-bind="with: names">
-					@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
+					<partial name="KnockoutPartials/_NamesEditor" model="@(new VocaDb.Web.Models.Shared.NamesEditorViewModel())" />
 					@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
 				</td>
 				<td style="vertical-align: top">

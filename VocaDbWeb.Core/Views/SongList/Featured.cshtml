@@ -31,7 +31,7 @@
 @foreach (var cat in categories) {
 <div data-bind="visible: category() == '@cat.Id', with: categories['@cat.Id'], show" class="js-cloak">
 		
-	@{ Html.RenderPartial("Partials/_SongListsFilters"); }
+	<partial name="Partials/_SongListsFilters" />
 
 	<partial name="Partials/Song/_SongListsKnockout" model="@(new SongListsKnockoutViewModel("items", groupByYear: true))" />
 

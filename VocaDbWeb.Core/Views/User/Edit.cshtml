@@ -52,7 +52,7 @@
 	<fieldset>
 		<legend>Additional permissions</legend>
 		@foreach (var entry in Model.Permissions) {	 
-			Html.RenderPartial("PermissionEditRow", entry);
+			<partial name="PermissionEditRow" model="@(entry)" />
 		}
 	</fieldset>
 	        
@@ -63,7 +63,7 @@
 		<table>
 			<tbody id="ownedArtistsTableBody">
 				@foreach (var entry in Model.OwnedArtists) {
-					Html.RenderPartial("OwnedArtistForUserEditRow", entry);
+					<partial name="OwnedArtistForUserEditRow" model="@(entry)" />
 				}				
 			</tbody>			
 		</table>

@@ -262,7 +262,7 @@
 				<td>@ViewRes.SharedStrings.Tags</td>
 				<td>
 					<div data-bind="with: tagUsages" class="entry-tag-usages">
-						@{ Html.RenderPartial("Partials/_TagList"); }
+						<partial name="Partials/_TagList" />
 					</div>
 					<a data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
 					@if (Model.CanRemoveTagUsages) {
@@ -335,7 +335,7 @@
 			<tr>
 				<td>@Res.Notes</td>
 				<td class="entry-description" data-bind="with: description">
-					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", new EnglishTranslatedStringViewModel(Model.Notes)); }
+					<partial name="Partials/_EnglishTranslatedString" model="@(new EnglishTranslatedStringViewModel(Model.Notes))" />
 				</td>	
 			</tr>
    }			
@@ -513,20 +513,20 @@
 </div>
 
 <div data-bind="with: tagsEditViewModel">
-	@{ Html.RenderPartial("Partials/_TagsEdit"); }
+	<partial name="Partials/_TagsEdit" />
 </div>
 
-@{ Html.RenderPartial("Partials/_AddToListDialog"); }
+<partial name="Partials/_AddToListDialog" />
 
 <div data-bind="dialog: {autoOpen: false, modal: true, width: 400, position: { my: 'left top', at: 'left bottom', of: $('#statsLink') } }, dialogVisible: $root.ratingsDialogViewModel.popupVisible" title="@R.DetailsStrings.SongRatings" style="display:none;">
 	
 	<div data-bind="with: ratingsDialogViewModel">
-		@{Html.RenderPartial("Partials/_UsersWithSongRating"); }
+		<partial name="Partials/_UsersWithSongRating" />
 	</div>
 
 </div>
 
-@{ Html.RenderPartial("Partials/_SongInListsDialog"); }
+<partial name="Partials/_SongInListsDialog" />
 
 <partial name="Partials/EntryDetails/_ReportEntryPopupKnockout" model="@(new ReportEntryPopupKnockoutViewModel())" />
 

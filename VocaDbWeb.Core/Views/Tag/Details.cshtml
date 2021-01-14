@@ -107,7 +107,7 @@
 		<div class="media-body">
 			@if (!Model.Description.IsEmpty) {
 				<div class="entry-description" data-bind="with: description">
-					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", new EnglishTranslatedStringViewModel(Model.Description, 2100, 2000)); }
+					<partial name="Partials/_EnglishTranslatedString" model="@(new EnglishTranslatedStringViewModel(Model.Description, 2100, 2000))" />
 				</div>
 			}
 

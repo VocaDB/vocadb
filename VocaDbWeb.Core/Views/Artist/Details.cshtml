@@ -122,7 +122,7 @@
 					<tr>
 						<td>@ViewRes.SharedStrings.Description</td>
 						<td class="entry-description" data-bind="with: description">
-							@{ Html.RenderPartial("Partials/_EnglishTranslatedString", new EnglishTranslatedStringViewModel(Model.Description)); }
+							<partial name="Partials/_EnglishTranslatedString" model="@(new EnglishTranslatedStringViewModel(Model.Description))" />
 						</td>
 					</tr>
 				}
@@ -160,7 +160,7 @@
 					<td>@ViewRes.SharedStrings.Tags</td>
 					<td>
 						<div data-bind="with: tagUsages" class="entry-tag-usages">
-							@{ Html.RenderPartial("Partials/_TagList"); }
+							<partial name="Partials/_TagList" />
 						</div>
 						<a data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
 						@if (Model.CanRemoveTagUsages) {
@@ -380,14 +380,14 @@
 	<div id="mainAlbumsTab">
 		@{ await AlbumOptions("mainAlbumsViewModel"); }
 		<div data-bind="with: mainAlbumsViewModel">
-			@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
+			<partial name="Partials/_AlbumSearchList" />
 		</div>
 	</div>
 
 	<div id="collaborationAlbumsTab">
 		@{ await AlbumOptions("collaborationAlbumsViewModel"); }
 		<div data-bind="with: collaborationAlbumsViewModel">
-			@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
+			<partial name="Partials/_AlbumSearchList" />
 		</div>
 	</div>
 
@@ -408,7 +408,7 @@
 			</div>
 		</div>
 		<div data-bind="with: songsViewModel">
-			@{ Html.RenderPartial("Partials/_SongSearchList"); }
+			<partial name="Partials/_SongSearchList" />
 		</div>
 	</div>
 
@@ -426,13 +426,13 @@
 </div>
 
 <div data-bind="with: tagsEditViewModel">
-	@{ Html.RenderPartial("Partials/_TagsEdit"); }
+	<partial name="Partials/_TagsEdit" />
 </div>
 
 <partial name="Partials/EntryDetails/_ReportEntryPopupKnockout" model="@(new ReportEntryPopupKnockoutViewModel())" />
 
 @if (Login.IsLoggedIn) {
-	Html.RenderPartial("Partials/_CustomizeArtistSubscriptionDialog");
+	<partial name="Partials/_CustomizeArtistSubscriptionDialog" />
 }
 
 @section BodyScripts {

@@ -157,7 +157,7 @@
 				<p>@Res.ArtistHelp</p>
 			</div>	
 			
-			@{ Html.RenderPartial("KnockoutPartials/_DuplicateEntriesMessage"); }
+			<partial name="KnockoutPartials/_DuplicateEntriesMessage" />
 
 			<div class="alert alert-info js-cloak" visible="{{songTypeInfo}}" data-bind="show">				
 				<h3>

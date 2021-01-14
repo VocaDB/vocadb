@@ -85,7 +85,7 @@
 <partial name="Partials/Shared/_ValidationSummaryPanel" model="@(new ValidationSummaryPanelViewModel(Res.MessageSendError))" />
 
 <div data-bind="with: selectedMessage, visible: selectedMessage" id="viewMessage" style="display: none;">
-	@{ Html.RenderPartial("Partials/_UserMessageKnockout"); }
+	<partial name="Partials/_UserMessageKnockout" />
 </div>
 
 <div id="tabs" data-bind="visible: true" style="display: none;">
@@ -116,7 +116,7 @@
 	@{ await MessageFolderTab("notificationsTabContent", "notifications", false, false, true, true); }
 
 	<div id="composeTab">
-		@{ Html.RenderPartial("ComposeMessage"); }
+		<partial name="ComposeMessage" />
 	</div>
 
 </div>

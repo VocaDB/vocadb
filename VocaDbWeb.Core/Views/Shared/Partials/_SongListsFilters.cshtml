@@ -37,7 +37,7 @@
 	<div class="control-group">
 		<div class="control-label">@ViewRes.SharedStrings.Tag</div>
 		<div class="controls" data-bind="with: tagFilters">
-			@{ Html.RenderPartial("Partials/_TagFilters"); }
+			<partial name="Partials/_TagFilters" />
 			<div>
 				<input type="text" class="input-large" data-bind="tagAutoComplete: addTag" placeholder="@ViewRes.SharedStrings.Search" />
 			</div>

@@ -9,7 +9,7 @@
 
 @using (Html.BeginForm("AcceptImported", "MikuDbAlbum")) {
 
-	Html.RenderPartial("InspectedAlbumRow", Model);
+	<partial name="InspectedAlbumRow" model="@(Model)" />
 
     <button type="submit" class="btn btn-primary" name="commit" value="Accept">Approve</button>
 	<a class="btn btn-nomargin" href="@Url.Action("SkipAlbum", new { id = Model.ImportedAlbum.Id })">

@@ -19,7 +19,7 @@
 	
 	<form data-bind="visible: isBeingEdited, submit: saveEditedTopic" class="well well-transparent">
 		<div data-bind="with: editModel">
-			@{ Html.RenderPartial("Partials/_EditTopic"); }
+			<partial name="Partials/_EditTopic" />
 		</div>
 		<button type="submit" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
 		<button data-bind="click: cancelEdit" class="btn">@ViewRes.SharedStrings.Cancel</button>

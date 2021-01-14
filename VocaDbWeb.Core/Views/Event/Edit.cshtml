@@ -130,7 +130,7 @@
 					@Html.LabelFor(m => m.Names)
 				</div>
 				<div class="editor-field" data-bind="with: names">
-					@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
+					<partial name="KnockoutPartials/_NamesEditor" model="@(new VocaDb.Web.Models.Shared.NamesEditorViewModel())" />
 					@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
 				</div>
 
@@ -294,7 +294,7 @@
 				</tr>
 				</thead>
 				<tbody data-bind="foreach: pvs">
-				@{ Html.RenderPartial("PVs/_PVEdit"); }
+				<partial name="PVs/_PVEdit" />
 				</tbody>
 			</table>
 
@@ -322,7 +322,7 @@
 </form>
 
 <div data-bind="with: artistRolesEditViewModel">
-	@{ Html.RenderPartial("Partials/_ArtistRolesEditViewModel"); }
+	<partial name="Partials/_ArtistRolesEditViewModel" />
 </div>
 
 <partial name="Partials/EntryDetails/_EntryDeletePopup" model="@(new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))" />

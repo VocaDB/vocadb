@@ -53,7 +53,7 @@
 	<h2>Automatically banned IPs</h2>
 	<ul data-bind="foreach: bannedIPs">
 		<li>
-			@{ Html.RenderPartial("KnockoutPartials/_IPManage"); }
+			<partial name="KnockoutPartials/_IPManage" />
 		</li>
 	</ul>
 </div>

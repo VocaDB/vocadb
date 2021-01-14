@@ -26,7 +26,7 @@
 
 		<form data-bind="visible: showCreateNewTopic, submit: createNewTopic" class="well well-transparent">
 			<div data-bind="with: newTopic">
-				@{ Html.RenderPartial("Partials/_EditTopic"); }
+				<partial name="Partials/_EditTopic" />
 			</div>
 			<button type="submit" class="btn btn-primary">@Res.DoPost</button>
 		</form>

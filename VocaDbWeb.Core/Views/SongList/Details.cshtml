@@ -82,7 +82,7 @@
 		<p>
 			<div class="inline-block">@ViewRes.SharedStrings.Tags:</div>
 			<div data-bind="with: tagUsages" class="entry-tag-usages inline-block">
-				@{ Html.RenderPartial("Partials/_TagList"); }
+				<partial name="Partials/_TagList" />
 			</div>
 			<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>	
 		</p>
@@ -246,14 +246,14 @@
 
 <div data-bind="visible: playlistMode()" style="display: none;">
 	<div data-bind="with: playlistViewModel" class="well well-transparent songlist-playlist">
-		@{ Html.RenderPartial("Partials/_PlayList"); }
+		<partial name="Partials/_PlayList" />
 	</div>
 </div>
 
 <partial name="Partials/Comment/_LatestCommentsKnockout" />
 
 <div data-bind="with: tagsEditViewModel">
-	@{ Html.RenderPartial("Partials/_TagsEdit"); }
+	<partial name="Partials/_TagsEdit" />
 </div>
 
 @section BodyScripts {

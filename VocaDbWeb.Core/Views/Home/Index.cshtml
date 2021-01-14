@@ -48,7 +48,7 @@
 	</div>
 
 	<div id="songPreview" class="pvViewerContent" data-bind="stopBinding">
-		@{ Html.RenderPartial("PVs/_PVContent", Model.FirstSong); }
+		<partial name="PVs/_PVContent" model="@(Model.FirstSong)" />
 	</div>
 </div>
 }
@@ -74,7 +74,7 @@
 	<partial name="Partials/Shared/_EventThumbs" model="@(new EventThumbsViewModel(Model.NewEvents))" />
 }
 
-@{ Html.RenderPartial("Partials/_NewsItems"); }
+<partial name="Partials/_NewsItems" />
 
 <div class="row-fluid">
     <div class="span7">

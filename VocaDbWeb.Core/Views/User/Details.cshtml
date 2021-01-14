@@ -403,19 +403,19 @@
 </div>
 
 <div data-bind="visible: view() == 'Artists', with: followedArtistsViewModel, show" class="js-cloak">
-	@{ Html.RenderPartial("Partials/_FollowedArtists"); }
+	<partial name="Partials/_FollowedArtists" />
 </div>
 
 <div data-bind="visible: view() == 'Albums', with: albumCollectionViewModel, show" class="js-cloak">
-	@{ Html.RenderPartial("Partials/_AlbumCollection"); }
+	<partial name="Partials/_AlbumCollection" />
 </div>
 
 <div data-bind="visible: view() == 'Songs', with: ratedSongsViewModel, show" class="js-cloak">
-	@{ Html.RenderPartial("Partials/_RatedSongs"); }
+	<partial name="Partials/_RatedSongs" />
 </div>
 
 <div data-bind="visible: view() == 'CustomLists', with: songLists, show" class="js-cloak">
-	@{ Html.RenderPartial("Partials/_SongLists"); }
+	<partial name="Partials/_SongLists" />
 </div>
 
 <div data-bind="visible: view() == 'Comments', show" class="well well-transparent js-cloak">
@@ -425,7 +425,7 @@
 </div>
 
 <div data-bind="visible: view() == 'Events', show" class="js-cloak">
-	@{ Html.RenderPartial("Partials/_Events"); }
+	<partial name="Partials/_Events" />
 </div>
 
 @if (Login.CanManageUsers) {

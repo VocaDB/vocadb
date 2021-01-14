@@ -90,7 +90,7 @@
 		<partial name="Partials/Shared/_RequiredField" />
 	</div>
 	<div class="editor-field" data-bind="with: names">
-		@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new NamesEditorViewModel()); }
+		<partial name="KnockoutPartials/_NamesEditor" model="@(new NamesEditorViewModel())" />
 		@Html.ValidationMessageFor(m => m.Names)
 		@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
 	</div>
@@ -116,7 +116,7 @@
 		<partial name="Partials/Shared/_MarkdownNotice" />
 	</div>
 	<div class="editor-field entry-edit-description" data-bind="with: description">
-		@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
+		<partial name="Partials/_EnglishTranslatedStringEdit" />
 		@Html.HiddenForKnockout(m => m.Description, "value: ko.toJSON($data)")
 	</div>
 
