@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using VocaDb.Model.Helpers;
 
 namespace VocaDb.Model.Domain.Globalization
 {
@@ -8,8 +9,7 @@ namespace VocaDb.Model.Domain.Globalization
 	{
 		public static readonly IEnumerable<RegionInfo> DefaultRegions = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
 			.Select(culture => new RegionInfo(culture.Name))
-			.GroupBy(region => region.TwoLetterISORegionName)
-			.Select(group => group.First())
+			.Distinct(region => region.TwoLetterISORegionName)
 			.OrderBy(region => region.EnglishName)
 			.ToArray();
 
