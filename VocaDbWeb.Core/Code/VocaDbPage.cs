@@ -1,7 +1,6 @@
 #nullable disable
 
 using System.Threading;
-using System.Web;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -61,15 +60,9 @@ namespace VocaDb.Web.Code
 			return val.HasValue ? val.ToString() : "null";
 		}
 
-		public IHtmlContent ToJS(string str)
-		{
-			return new HtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(str))}"")");
-		}
+		public IHtmlContent ToJS(string str) => JsonHelpers.ToJS(str);
 
-		public IHtmlContent ToJS(object obj)
-		{
-			return new HtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(obj))}"")");
-		}
+		public IHtmlContent ToJS(object obj) => JsonHelpers.ToJS(obj);
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
@@ -111,15 +104,9 @@ namespace VocaDb.Web.Code
 			return val.HasValue ? val.ToString() : "null";
 		}
 
-		public IHtmlContent ToJS(string str)
-		{
-			return new HtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(str))}"")");
-		}
+		public IHtmlContent ToJS(string str) => JsonHelpers.ToJS(str);
 
-		public IHtmlContent ToJS(object obj)
-		{
-			return new HtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(obj))}"")");
-		}
+		public IHtmlContent ToJS(object obj) => JsonHelpers.ToJS(obj);
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
