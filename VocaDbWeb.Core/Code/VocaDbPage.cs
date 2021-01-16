@@ -60,15 +60,9 @@ namespace VocaDb.Web.Code
 			return val.HasValue ? val.ToString() : "null";
 		}
 
-		public IHtmlContent ToJS(string str)
-		{
-			return new HtmlString(JsonHelpers.Serialize(str));
-		}
+		public IHtmlContent ToJS(string str) => JsonHelpers.ToJS(str);
 
-		public IHtmlContent ToJS(object obj)
-		{
-			return new HtmlString(JsonHelpers.Serialize(obj));
-		}
+		public IHtmlContent ToJS(object obj) => JsonHelpers.ToJS(obj);
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
@@ -110,15 +104,9 @@ namespace VocaDb.Web.Code
 			return val.HasValue ? val.ToString() : "null";
 		}
 
-		public IHtmlContent ToJS(string str)
-		{
-			return new HtmlString(JsonHelpers.Serialize(str));
-		}
+		public IHtmlContent ToJS(string str) => JsonHelpers.ToJS(str);
 
-		public IHtmlContent ToJS(object obj)
-		{
-			return new HtmlString(JsonHelpers.Serialize(obj));
-		}
+		public IHtmlContent ToJS(object obj) => JsonHelpers.ToJS(obj);
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 

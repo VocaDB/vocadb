@@ -20,7 +20,7 @@ namespace VocaDb.Web.Helpers
 		{
 			var dic = ToDict(resourceManager);
 
-			return new HtmlString(JsonHelpers.Serialize(dic, lowerCase));
+			return JsonHelpers.ToJS(dic, lowerCase);
 		}
 	}
 }
