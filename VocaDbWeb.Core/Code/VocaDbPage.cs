@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Threading;
+using System.Web;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -62,12 +63,12 @@ namespace VocaDb.Web.Code
 
 		public IHtmlContent ToJS(string str)
 		{
-			return new HtmlString(JsonHelpers.Serialize(str));
+			return new HtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(str))}"")");
 		}
 
 		public IHtmlContent ToJS(object obj)
 		{
-			return new HtmlString(JsonHelpers.Serialize(obj));
+			return new HtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(obj))}"")");
 		}
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
@@ -112,12 +113,12 @@ namespace VocaDb.Web.Code
 
 		public IHtmlContent ToJS(string str)
 		{
-			return new HtmlString(JsonHelpers.Serialize(str));
+			return new HtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(str))}"")");
 		}
 
 		public IHtmlContent ToJS(object obj)
 		{
-			return new HtmlString(JsonHelpers.Serialize(obj));
+			return new HtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(obj))}"")");
 		}
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();

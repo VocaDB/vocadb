@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Resources;
+using System.Web;
 using Microsoft.AspNetCore.Html;
 
 namespace VocaDb.Web.Helpers
@@ -20,7 +21,7 @@ namespace VocaDb.Web.Helpers
 		{
 			var dic = ToDict(resourceManager);
 
-			return new HtmlString(JsonHelpers.Serialize(dic, lowerCase));
+			return new HtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(dic, lowerCase))}"")");
 		}
 	}
 }
