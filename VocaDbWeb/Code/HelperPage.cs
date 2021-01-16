@@ -27,7 +27,7 @@ namespace VocaDb.Web.Code
 
 		public static IHtmlString ToJS(string str)
 		{
-			return new MvcHtmlString(JsonHelpers.Serialize(str));
+			return new MvcHtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(str))}"")");
 		}
 
 		public static UrlHelper Url => ((WebViewPage)WebPageContext.Current.Page).Url;

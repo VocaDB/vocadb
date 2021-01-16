@@ -57,12 +57,12 @@ namespace VocaDb.Web.Code
 
 		public IHtmlString ToJS(string str)
 		{
-			return new MvcHtmlString(JsonHelpers.Serialize(str));
+			return new MvcHtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(str))}"")");
 		}
 
 		public IHtmlString ToJS(object obj)
 		{
-			return new MvcHtmlString(JsonHelpers.Serialize(obj));
+			return new MvcHtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(obj))}"")");
 		}
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
@@ -99,12 +99,12 @@ namespace VocaDb.Web.Code
 
 		public IHtmlString ToJS(string str)
 		{
-			return new MvcHtmlString(JsonHelpers.Serialize(str));
+			return new MvcHtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(str))}"")");
 		}
 
 		public IHtmlString ToJS(object obj)
 		{
-			return new MvcHtmlString(JsonHelpers.Serialize(obj));
+			return new MvcHtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(JsonHelpers.Serialize(obj))}"")");
 		}
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
