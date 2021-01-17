@@ -560,7 +560,7 @@
 			vdb.resources.album = {
 				addedToCollection: @ToJS(AjaxRes.AlbumStrings.AddedToCollection)
 				};
-			vdb.resources.albumDetails = @Html.Raw(JsonHelpers.Serialize(new { download = AjaxRes.AlbumStrings.Download }));
+			vdb.resources.albumDetails = @ToJS(new { download = AjaxRes.AlbumStrings.Download });
 
 			var reportTypes = @ToJS(Translate.AlbumReportTypeNames.Select(r => new {
 				r.Id,

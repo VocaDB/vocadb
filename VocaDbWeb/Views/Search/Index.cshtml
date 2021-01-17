@@ -191,7 +191,7 @@
 			moment.locale('@Culture');
 			var cultureCode = '@UICulture';
 			var languageSelection = '@UserContext.LanguagePreference';
-			var query = @Html.Raw(JsonHelpers.Serialize(Model.Filter));
+			var query = @ToJS(Model.Filter);
 			var tagIds = @ToJS(Model.TagId);
 			var searchType = '@Model.SearchTypeName';
 			var sort = '@Model.Sort';
