@@ -39,6 +39,11 @@ var artistTypeInfos = {
 		addClass: "",
 		removeClasses: "label-important label-inverse label-info",
 		content: "O"
+	},
+	SynthesizerV: {
+		addClass: "",
+		removeClasses: "label-important label-inverse label-info",
+		content: "SV"
 	}
 };
 
