@@ -111,7 +111,7 @@ namespace VocaDb.Web.Models
 					ViewRes.Song.DetailsStrings.SearchYoutube, WebLinkCategory.Other, disabled: false));
 			}
 
-			Json = JsonHelpers.Serialize(new SongDetailsAjax(this, contract.PreferredLyrics, contract.Song.Version));
+			JsonModel = new SongDetailsAjax(this, contract.PreferredLyrics, contract.Song.Version);
 		}
 
 		public string AdditionalNames { get; set; }
@@ -163,7 +163,7 @@ namespace VocaDb.Web.Models
 
 		public int ListCount { get; set; }
 
-		public string Json { get; set; }
+		public SongDetailsAjax JsonModel { get; set; }
 
 		public CommentForApiContract[] LatestComments { get; set; }
 

@@ -554,7 +554,7 @@
 		var resources = @ResourceHelpers.ToJSON(AjaxRes.SongStrings.ResourceManager, true);
 		vdb.resources.song = resources;
 
-		var jsonModel = @Html.Raw(Model.Json);
+		var jsonModel = @ToJS(Model.JsonModel);
 		var rootPath = '@RootPath';
 		var urlMapper = new app.UrlMapper(rootPath);
 		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);

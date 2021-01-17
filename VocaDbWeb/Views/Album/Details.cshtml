@@ -568,7 +568,7 @@
 				NotesRequired = AlbumReport.ReportTypesWithRequiredNotes.Contains(r.Id)
 			}));
 
-			var jsonModel = @Html.Raw(Model.Json);
+			var jsonModel = @ToJS(Model.JsonModel);
 			var formatString = '@(Login.Manager.IsLoggedIn ? Login.User.AlbumFormatString : "")';
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 			var viewModel = new app.AlbumDetailsViewModel(albumRepo, userRepo,
