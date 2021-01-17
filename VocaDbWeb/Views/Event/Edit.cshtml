@@ -342,7 +342,7 @@
 		var userRepo = repoFactory.userRepository();
 		var pvRepo = repoFactory.pvRepository();
 		var artistRepo = repoFactory.artistRepository();
-		var artistRoleJson = @Html.Raw(JsonHelpers.Serialize(Translate.ArtistEventRoleNames.ValuesAndNamesStrings, false));
+		var artistRoleJson = @ToJS(Translate.ArtistEventRoleNames.ValuesAndNamesStrings, false);
 		var contract = @ToJS(new {
 			Model.Artists,
 			Model.Date,

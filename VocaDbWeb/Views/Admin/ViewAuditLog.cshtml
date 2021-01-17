@@ -86,7 +86,7 @@
 
 	$(document).ready(function () {
 
-		var json = @Html.Raw(JsonHelpers.Serialize(Model));
+		var json = @ToJS(Model);
 		var vm = new app.ViewAuditLogViewModel(json);
 		ko.applyBindings(vm);
 		
