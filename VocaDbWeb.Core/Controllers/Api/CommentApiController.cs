@@ -1,5 +1,6 @@
 #nullable disable
 
+using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
@@ -69,5 +70,14 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPost("{entryType}-comments")]
 		[Authorize]
 		public CommentForApiContract PostNewComment(EntryType entryType, CommentForApiContract contract) => _queries.PostNewComment(entryType, contract);
+
+		[HttpGet("")]
+		public PartialFindResult<CommentForApiContract> GetList(
+			DateTime? before = null,
+			DateTime? since = null,
+			int? userId = null,
+			int maxResults = CommentQueries.DefaultMax,
+			bool getTotalCount = false
+		) => _queries.GetList(before, since, userId, maxResults, getTotalCount);
 	}
 }
