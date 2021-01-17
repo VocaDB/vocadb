@@ -1,7 +1,7 @@
 ﻿
 <!-- binding context: TagListViewModel -->
 
-<ul data-bind="foreach: displayedTagUsages" class="link-list">
+<ul data-bind="foreach: displayedTagUsages, visible: !expanded()" class="link-list">
 	<li class="link-item">
 		<span><a data-bind="text: tag.name, attr: { href: $parent.getTagUrl($data), title: tag.additionalNames }, tagToolTip: tag.id"></a><small class="muted" data-bind="text: ' (' + count + ')'"></small></span>
 	</li>
@@ -13,3 +13,13 @@
 		(<span data-bind="text: tagUsages().length"></span>)
 	</a>
 </span>
+<dl data-bind="foreach: { data: tagUsagesByCategories, as: 'category' }, visible: expanded()" style="margin: 0;">
+	<dt data-bind="text: category.categoryName" style="font-weight: normal;"></dt>
+	<dd>
+		<ul data-bind="foreach: { data: category.tagUsages, as: 'tagUsage' }" class="link-list">
+			<li class="link-item">
+				<span><a data-bind="text: tagUsage.tag.name, attr: { href: $parents[1].getTagUrl(tagUsage), title: tagUsage.tag.additionalNames }, tagToolTip: tagUsage.tag.id"></a><small class="muted" data-bind="text: ' (' + tagUsage.count + ')'"></small></span>
+			</li>
+		</ul>
+	</dd>
+</dl>
