@@ -459,7 +459,7 @@
 			var userRepository = repoFactory.userRepository();
 			var pvPlayerElem = $("#pv-player-wrapper")[0];
 			var pvPlayersFactory = new app.PVPlayersFactory(pvPlayerElem);
-			var tagUsages = @Html.Raw(JsonHelpers.Serialize(Model.Tags));
+			var tagUsages = @ToJS(Model.Tags);
 			var latestComments = @ToJS(Model.LatestComments);
 
 			var reportTypes = @ToJS(Translate.ArtistReportTypeNames.Where(r => r.Id != ArtistReportType.OwnershipClaim).Select(r => new {

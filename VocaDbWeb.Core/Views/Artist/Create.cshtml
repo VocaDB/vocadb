@@ -138,7 +138,7 @@
 			var repoFactory = new app.RepositoryFactory(new app.UrlMapper('@RootPath'), @LanguagePreferenceInt);
 			var repo = repoFactory.artistRepository();
 			var tagRepo = repoFactory.tagRepository();
-            var json = @Html.Raw(JsonHelpers.Serialize(Model));
+            var json = @ToJS(Model);
             ko.applyBindings(new app.ArtistCreateViewModel(repo, tagRepo, json));
         });
 

@@ -162,7 +162,7 @@ namespace VocaDb.Web.Models
 
 		public ArtistForAlbumContract[] Illustrators { get; set; }
 
-		public string Json => JsonHelpers.Serialize(new AlbumDetailsAjax(this));
+		public AlbumDetailsAjax JsonModel => new AlbumDetailsAjax(this);
 
 		public ArtistForAlbumContract[] Labels { get; set; }
 

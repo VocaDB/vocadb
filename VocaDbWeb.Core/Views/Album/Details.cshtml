@@ -561,7 +561,7 @@
 			vdb.resources.album = {
 				addedToCollection: @ToJS(AjaxRes.AlbumStrings.AddedToCollection)
 				};
-			vdb.resources.albumDetails = @Html.Raw(JsonHelpers.Serialize(new { download = AjaxRes.AlbumStrings.Download }));
+			vdb.resources.albumDetails = @ToJS(new { download = AjaxRes.AlbumStrings.Download });
 
 			var reportTypes = @ToJS(Translate.AlbumReportTypeNames.Select(r => new {
 				r.Id,
@@ -569,7 +569,7 @@
 				NotesRequired = AlbumReport.ReportTypesWithRequiredNotes.Contains(r.Id)
 			}));
 
-			var jsonModel = @Html.Raw(Model.Json);
+			var jsonModel = @ToJS(Model.JsonModel);
 			var formatString = '@(Login.Manager.IsLoggedIn ? Login.User.AlbumFormatString : "")';
 			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
 			var viewModel = new app.AlbumDetailsViewModel(albumRepo, userRepo,

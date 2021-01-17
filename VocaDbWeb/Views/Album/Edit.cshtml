@@ -87,10 +87,10 @@
 		var pvRepo = repoFactory.pvRepository();
 		var userRepo = repoFactory.userRepository();
 		var eventRepo = repoFactory.eventRepository();
-		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
-		var artistRoleJson = @Html.Raw(JsonHelpers.Serialize(Translate.ArtistRoleNames.GetValuesAndNames(AppConfig.ArtistRoles), false));
+		var webLinkCategoryJson = @ToJS(Translate.WebLinkCategoryNames.AllFields);
+		var artistRoleJson = @ToJS(Translate.ArtistRoleNames.GetValuesAndNames(AppConfig.ArtistRoles), false);
 		var allowCustomTracks = @ToJS(VocaDb.Model.Utils.AppConfig.AllowCustomTracks);
-		var editedModel = @Html.Raw(JsonHelpers.Serialize(Model.EditedAlbum));
+		var editedModel = @ToJS(Model.EditedAlbum);
 		var viewModel;
 
 		if (editedModel) {

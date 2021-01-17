@@ -361,7 +361,7 @@
 			addExtraArtist: "@Html.Raw(AjaxRes.SharedStrings.AddExtraArtist)"
 		};
 
-		var editedModel = @Html.Raw(JsonHelpers.Serialize(Model.EditedSong));
+		var editedModel = @ToJS(Model.EditedSong);
 		var canBulkDeletePVs = @ToJS(Login.Manager.HasPermission(VocaDb.Model.Domain.Security.PermissionToken.BulkDeletePVs));
 		var rootPath = '@RootPath';
 		var urlMapper = new app.UrlMapper(rootPath);
@@ -370,10 +370,10 @@
 		var artistRepo = repoFactory.artistRepository();
 		var pvRepo = repoFactory.pvRepository();
 		var userRepo = repoFactory.userRepository();
-		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
-		var artistRoleJson = @Html.Raw(JsonHelpers.Serialize(Translate.ArtistRoleNames.GetValuesAndNames(AppConfig.ArtistRoles), false));
+		var webLinkCategoryJson = @ToJS(Translate.WebLinkCategoryNames.AllFields);
+		var artistRoleJson = @ToJS(Translate.ArtistRoleNames.GetValuesAndNames(AppConfig.ArtistRoles), false);
 		var instrumentalTagId = @Model.InstrumentalTagId;
-		var languageNames = @Html.Raw(JsonHelpers.Serialize(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull("Other/Unknown")));
+		var languageNames = @ToJS(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull("Other/Unknown"));
 		var vm;
 
 		if (editedModel) {
