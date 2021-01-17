@@ -166,6 +166,7 @@ namespace VocaDb.Web
 			builder.RegisterType<ActivityEntryQueries>().AsSelf();
 			builder.RegisterType<AlbumQueries>().AsSelf();
 			builder.RegisterType<ArtistQueries>().AsSelf();
+			builder.RegisterType<CommentQueries>().AsSelf();
 			builder.RegisterType<DiscussionQueries>().AsSelf();
 			builder.RegisterType<EntryQueries>().AsSelf();
 			builder.RegisterType<EntryReportQueries>().AsSelf();
