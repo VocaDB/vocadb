@@ -7,6 +7,7 @@ using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service;
+using VocaDb.Model.Service.QueryableExtensions;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -77,7 +78,8 @@ namespace VocaDb.Web.Controllers.Api
 			DateTime? since = null,
 			int? userId = null,
 			int maxResults = CommentQueries.DefaultMax,
-			bool getTotalCount = false
-		) => _queries.GetList(before, since, userId, maxResults, getTotalCount);
+			bool getTotalCount = false,
+			CommentSortRule sortRule = CommentSortRule.CreateDateDescending
+		) => _queries.GetList(before, since, userId, maxResults, getTotalCount, sortRule);
 	}
 }

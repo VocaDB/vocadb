@@ -54,7 +54,8 @@ namespace VocaDb.Model.Database.Queries
 			DateTime? since = null,
 			int? userId = null,
 			int maxResults = DefaultMax,
-			bool getTotalCount = false)
+			bool getTotalCount = false,
+			CommentSortRule sortRule = CommentSortRule.CreateDateDescending)
 		{
 			maxResults = Math.Min(maxResults, AbsoluteMax);
 
@@ -76,6 +77,7 @@ namespace VocaDb.Model.Database.Queries
 					query = query.Where(a => a.Author.Id == userId.Value);
 
 				var comments = query
+					.OrderBy(sortRule)
 					.Take(maxResults)
 					.ToArray()
 					.Select(c => new CommentForApiContract(c, _userIconFactory))
