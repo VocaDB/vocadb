@@ -60,9 +60,9 @@ namespace VocaDb.Web.Code
 			return val.HasValue ? val.ToString() : "null";
 		}
 
-		public IHtmlContent ToJS(string str) => JsonHelpers.ToJS(str);
+		public IHtmlContent ToJS(string str, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(str, lowerCase, dateTimeConverter);
 
-		public IHtmlContent ToJS(object obj) => JsonHelpers.ToJS(obj);
+		public IHtmlContent ToJS(object obj, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(obj, lowerCase, dateTimeConverter);
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
@@ -104,9 +104,9 @@ namespace VocaDb.Web.Code
 			return val.HasValue ? val.ToString() : "null";
 		}
 
-		public IHtmlContent ToJS(string str) => JsonHelpers.ToJS(str);
+		public IHtmlContent ToJS(string str, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(str, lowerCase, dateTimeConverter);
 
-		public IHtmlContent ToJS(object obj) => JsonHelpers.ToJS(obj);
+		public IHtmlContent ToJS(object obj, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(obj, lowerCase, dateTimeConverter);
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 

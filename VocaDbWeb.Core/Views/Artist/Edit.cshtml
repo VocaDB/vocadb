@@ -274,8 +274,8 @@
 		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
 		var artistRepo = repoFactory.artistRepository();
 		var userRepo = repoFactory.userRepository();
-		var editedModel = @Html.Raw(JsonHelpers.Serialize(Model.EditedArtist));
-		var webLinkCategoryJson = @Html.Raw(JsonHelpers.Serialize(Translate.WebLinkCategoryNames.AllFields));
+		var editedModel = @ToJS(Model.EditedArtist);
+		var webLinkCategoryJson = @ToJS(Translate.WebLinkCategoryNames.AllFields);
 
 		if (editedModel) {
 			ko.applyBindings(new app.ArtistEditViewModel(artistRepo, userRepo, urlMapper, webLinkCategoryJson, editedModel, new app.DialogService()));
