@@ -263,7 +263,7 @@ namespace VocaDb.Model.Service
 		private IEnumerable<EntryWithCommentsContract> CreateEntryWithCommentsContract<T>(IEnumerable<T> comments, Func<T, EntryForApiContract> entryContractFac)
 			where T : Comment
 		{
-			return comments.GroupBy(e => e.Entry, new EntryComparer()).Select(e => new EntryWithCommentsContract(entryContractFac(e.First()), e.Select(c => new CommentContract(c)).ToArray()));
+			return comments.GroupBy(e => e.Entry, new EntryComparer()).Select(e => new EntryWithCommentsContract(entryContractFac(e.First()), e.Select(c => new CommentForApiContract(c, _userIconFactory)).ToArray()));
 		}
 
 		private async Task<EntryWithCommentsContract[]> GetRecentCommentsAsync(ISession session, int maxComments)

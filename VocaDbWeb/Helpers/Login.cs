@@ -46,7 +46,7 @@ namespace VocaDb.Web.Helpers
 		/// </summary>
 		public static UserWithPermissionsContract User => Manager.LoggedUser;
 
-		public static bool CanDeleteComment(CommentContract comment)
+		public static bool CanDeleteComment(CommentForApiContract comment)
 		{
 			ParamIs.NotNull(() => comment);
 
