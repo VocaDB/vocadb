@@ -81,10 +81,12 @@
 	
 		<p>
 			<div class="inline-block">@ViewRes.SharedStrings.Tags:</div>
-			<div data-bind="with: tagUsages" class="entry-tag-usages inline-block">
+			<div data-bind="with: tagUsages, visible: tagUsages.tagUsages().length" class="entry-tag-usages inline-block">
 				<partial name="Partials/_TagList" />
 			</div>
-			<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>	
+			<div>
+				<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
+			</div>
 		</p>
 
 		@if (Model.SongList.Events.Any()) {
