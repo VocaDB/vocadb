@@ -17,7 +17,12 @@ import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContra
 				(this.expanded() ? this.tagUsages() : _.take(this.tagUsages(), TagListViewModel.maxDisplayedTags))
 			);
 
-			this.tagUsagesByCategories = ko.computed(() => _.chain(this.tagUsages()).groupBy(tagUsage => tagUsage.tag.categoryName).map((tagUsages: TagUsageForApiContract[], categoryName: string) => ({ categoryName, tagUsages })).value());
+			this.tagUsagesByCategories = ko.computed(() =>
+				_.chain(this.tagUsages())
+					.groupBy(tagUsage => tagUsage.tag.categoryName)
+					.map((tagUsages: TagUsageForApiContract[], categoryName: string) => ({ categoryName, tagUsages }))
+					.value()
+			);
 
 		}
 
