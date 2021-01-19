@@ -13,9 +13,9 @@
 		(<span data-bind="text: tagUsages().length"></span>)
 	</a>
 </span>
-<dl data-bind="foreach: { data: tagUsagesByCategories, as: 'category' }, visible: expanded()" style="margin: 0;">
-	<dt data-bind="text: category.categoryName" style="font-weight: normal;"></dt>
-	<dd>
+<dl data-bind="foreach: { data: tagUsagesByCategories, as: 'category' }, visible: expanded()" style="margin: 0;" class="dl-horizontal">
+	<dt data-bind="text: category.categoryName" style="font-weight: normal; width: auto; float: left"></dt>
+	<dd style="margin-left: 80px;">
 		<ul data-bind="foreach: { data: category.tagUsages, as: 'tagUsage' }" class="link-list">
 			<li class="link-item">
 				<span><a data-bind="text: tagUsage.tag.name, attr: { href: $parents[1].getTagUrl(tagUsage), title: tagUsage.tag.additionalNames }, tagToolTip: tagUsage.tag.id"></a><small class="muted" data-bind="text: ' (' + tagUsage.count + ')'"></small></span>
