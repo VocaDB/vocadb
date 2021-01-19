@@ -17,12 +17,20 @@ import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContra
 				(this.expanded() ? this.tagUsages() : _.take(this.tagUsages(), TagListViewModel.maxDisplayedTags))
 			);
 
-			this.tagUsagesByCategories = ko.computed(() =>
-				_.chain(this.tagUsages())
+			this.tagUsagesByCategories = ko.computed(() => {
+				var tags = _.chain(this.tagUsages())
+					.orderBy(tagUsage => tagUsage.tag.categoryName)
 					.groupBy(tagUsage => tagUsage.tag.categoryName)
-					.map((tagUsages: TagUsageForApiContract[], categoryName: string) => ({ categoryName, tagUsages }))
-					.value()
-			);
+					.map((tagUsages: TagUsageForApiContract[], categoryName: string) => ({ categoryName, tagUsages }));
+
+				var genres = tags.filter(c => c.categoryName === "Genres").value();
+				var empty = tags.filter(c => c.categoryName === "").value();
+
+				return _.chain(genres)
+					.concat(tags.filter(c => c.categoryName !== "Genres" && c.categoryName !== "").value())
+					.concat(empty)
+					.value();
+			});
 
 		}
 
