@@ -1,6 +1,7 @@
 #nullable disable
 
 using System;
+using Ganss.XSS;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Security;
 
@@ -14,7 +15,7 @@ namespace VocaDb.Model.DataContracts.Security
 		{
 			ParamIs.NotNull(() => entry);
 
-			Action = entry.Action;
+			Action = new HtmlSanitizer().Sanitize(entry.Action);
 			AgentName = entry.AgentName;
 			Id = entry.Id;
 			Time = entry.Time;
