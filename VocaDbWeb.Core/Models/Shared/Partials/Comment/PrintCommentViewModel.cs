@@ -6,7 +6,7 @@ namespace VocaDb.Web.Models.Shared.Partials.Comment
 {
 	public class PrintCommentViewModel
 	{
-		public PrintCommentViewModel(CommentContract contract, bool allowDelete, bool alwaysAllowDelete = false, int maxLength = int.MaxValue)
+		public PrintCommentViewModel(CommentForApiContract contract, bool allowDelete, bool alwaysAllowDelete = false, int maxLength = int.MaxValue)
 		{
 			Contract = contract;
 			AllowDelete = allowDelete;
@@ -14,7 +14,7 @@ namespace VocaDb.Web.Models.Shared.Partials.Comment
 			MaxLength = maxLength;
 		}
 
-		public CommentContract Contract { get; set; }
+		public CommentForApiContract Contract { get; set; }
 
 		public bool AllowDelete { get; set; }
 

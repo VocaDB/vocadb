@@ -22,7 +22,7 @@ namespace VocaDb.Model.DataContracts.Songs
 		{
 			ParamIs.NotNull(() => list);
 
-			Author = new UserWithEmailContract(list.Author);
+			Author = new UserForApiContract(list.Author);
 			CanEdit = EntryPermissionManager.CanEditSongList(permissionContext, list);
 			Deleted = list.Deleted;
 			Description = list.Description;
@@ -33,7 +33,7 @@ namespace VocaDb.Model.DataContracts.Songs
 		}
 
 		[DataMember]
-		public UserWithEmailContract Author { get; set; }
+		public UserForApiContract Author { get; set; }
 
 		[DataMember]
 		public bool CanEdit { get; set; }

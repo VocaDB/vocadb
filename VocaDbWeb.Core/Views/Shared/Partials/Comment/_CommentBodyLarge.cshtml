@@ -7,7 +7,7 @@
 
 <div class="comment media comment-large">
 	<a class="pull-left" href="@Url.Action("Profile", "User", new { id = Model.Contract.Author.Name })">
-		<partial name="Partials/User/_ProfileIcon_IUserWithEmail" model="@(new ProfileIcon_IUserWithEmailViewModel(Model.Contract.Author, 70))" />
+		<partial name="Partials/User/_ProfileIcon" model="@(new ProfileIconViewModel(Model.Contract.Author.MainPicture.UrlThumb, 70))" />
 	</a>
 
 	<div class="media-body">
