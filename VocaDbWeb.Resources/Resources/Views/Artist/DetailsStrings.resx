@@ -177,6 +177,9 @@
   <data name="ManagedBy" xml:space="preserve">
     <value>Managed by</value>
   </data>
+  <data name="ManagerOf" xml:space="preserve">
+    <value>Manager of</value>
+  </data>
   <data name="Members" xml:space="preserve">
     <value>Members</value>
   </data>
