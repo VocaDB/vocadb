@@ -42,6 +42,7 @@
     <PackageReference Include="Antlr3.Runtime" Version="3.5.1" />
     <PackageReference Include="FluentNHibernate" Version="2.1.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.9.2" />
+    <PackageReference Include="HtmlSanitizer" Version="5.0.376" />
     <PackageReference Include="Iesi.Collections" Version="4.0.4" />
     <PackageReference Include="IvanAkcheurov.NTextCat.Lib" Version="0.2.1.1" />
     <PackageReference Include="Microsoft.Bcl.Immutable" Version="1.0.34" />
@@ -59,7 +60,7 @@
     <PackageReference Include="System.IO.Packaging" Version="4.7.0" />
     <PackageReference Include="System.Runtime.Caching" Version="4.7.0" />
     <PackageReference Include="taglib" Version="2.1.0.0" />
-    <PackageReference Include="VocaDb.BandcampMetadataExtractor" Version="1.0.1" />
+    <PackageReference Include="VocaDb.BandcampMetadataExtractor" Version="1.0.2" />
     <PackageReference Include="VocaDb.NicoApiClient" Version="2.0.1" />
     <PackageReference Include="VocaDb.PiaproClient" Version="3.0.1" />
   </ItemGroup>
