@@ -63,7 +63,9 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		private tags: number[];
 		public updateNotes = ko.observable("");
 		public validationExpanded = ko.observable(false);
-        public webLinks: WebLinksEditViewModel;
+		public webLinks: WebLinksEditViewModel;
+		public bpm: KnockoutObservable<number>;
+		public maxBpm: KnockoutObservable<number>;
 
 		// Adds a new artist to the album
 		// artistId: Id of the artist being added, if it's an existing artist. Can be null, if custom artist.
@@ -184,7 +186,9 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 				status: this.status(),
 				tags: this.tags,
 				updateNotes: this.updateNotes(),
-				webLinks: this.webLinks.toContracts()
+				webLinks: this.webLinks.toContracts(),
+				bpm: this.bpm(),
+				maxBpm: this.maxBpm(),
 			};
 
 			this.submittedJson(ko.toJSON(submittedModel));
@@ -242,7 +246,8 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 			this.status = ko.observable(data.status);
 			this.tags = data.tags;
 			this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
-
+			this.bpm = ko.observable(data.bpm);
+			this.maxBpm = ko.observable(data.maxBpm);
 
 			this.artistRolesEditViewModel = new AlbumArtistRolesEditViewModel(artistRoleNames);
 

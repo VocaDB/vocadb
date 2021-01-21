@@ -50,4 +50,8 @@ import WebLinkContract from '../WebLinkContract';
 
 		webLinks: WebLinkContract[];
 
+		bpm?: number;
+
+		maxBpm?: number;
+
 	}
