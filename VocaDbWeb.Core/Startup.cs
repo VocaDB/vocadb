@@ -70,12 +70,6 @@ namespace VocaDb.Web
 
 					options.Filters.Add<VoidAndTaskTo204NoContentFilter>();
 				})
-				.ConfigureApiBehaviorOptions(options =>
-				{
-					// Code from: https://docs.microsoft.com/en-us/aspnet/core/web-api/?view=aspnetcore-5.0#disable-automatic-400-response
-					// Disable automatic 400 response. This prevents API controllers from returning an BadRequestObjectResult (400) when an invalid Enum value is passed.
-					options.SuppressModelStateInvalidFilter = true;
-				})
 				.AddNewtonsoftJson(options =>
 				{
 					options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); // All properties in camel case
