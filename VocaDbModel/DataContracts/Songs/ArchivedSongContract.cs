@@ -70,6 +70,8 @@ namespace VocaDb.Model.DataContracts.Songs
 			data.ReleaseEvent = thisVersion.ReleaseEvent;
 			data.SongType = thisVersion.SongType;
 			data.TranslatedName = thisVersion.TranslatedName;
+			data.Bpm = thisVersion.Bpm;
+			data.MaxBpm = thisVersion.MaxBpm;
 
 			DoIfExists(version, SongEditableFields.Albums, xmlCache, v => data.Albums = v.Albums);
 			DoIfExists(version, SongEditableFields.Artists, xmlCache, (v, doc) => SetArtists(data, v, doc));
@@ -104,6 +106,8 @@ namespace VocaDb.Model.DataContracts.Songs
 			SongType = song.SongType;
 			TranslatedName = new ArchivedTranslatedStringContract(song.TranslatedName);
 			WebLinks = (diff.IncludeWebLinks ? song.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null);
+			Bpm = song.Bpm;
+			MaxBpm = song.MaxBpm;
 		}
 
 		[DataMember]
@@ -153,5 +157,11 @@ namespace VocaDb.Model.DataContracts.Songs
 
 		[DataMember]
 		public ArchivedWebLinkContract[] WebLinks { get; set; }
+
+		[DataMember]
+		public int? Bpm { get; set; }
+
+		[DataMember]
+		public int? MaxBpm { get; set; }
 	}
 }
