@@ -138,6 +138,9 @@
   <data name="ArVocaloidsNote" xml:space="preserve">
     <value>Vocaloids, UTAUs and other singing synthesizer voicebanks are added as artists as well.</value>
   </data>
+  <data name="BaBpm" xml:space="preserve">
+    <value>BPM</value>
+  </data>
   <data name="BaDuration" xml:space="preserve">
     <value>Duration (minutes and seconds)</value>
   </data>
