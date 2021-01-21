@@ -112,6 +112,9 @@ namespace VocaDb.Web.Models
 			}
 
 			JsonModel = new SongDetailsAjax(this, contract.PreferredLyrics, contract.Song.Version);
+
+			Bpm = contract.Bpm;
+			MaxBpm = contract.MaxBpm;
 		}
 
 		public string AdditionalNames { get; set; }
@@ -225,6 +228,10 @@ namespace VocaDb.Web.Models
 		public SongVoteRating UserRating { get; set; }
 
 		public IList<WebLinkContract> WebLinks { get; set; }
+
+		public int? Bpm { get; set; }
+
+		public int? MaxBpm { get; set; }
 	}
 
 	public class SongDetailsAjax

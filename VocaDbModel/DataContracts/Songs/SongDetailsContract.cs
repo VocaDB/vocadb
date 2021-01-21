@@ -56,6 +56,9 @@ namespace VocaDb.Model.DataContracts.Songs
 			WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 
 			Pools = pools;
+
+			Bpm = song.Bpm;
+			MaxBpm = song.MaxBpm;
 		}
 
 		/// <summary>
@@ -173,5 +176,11 @@ namespace VocaDb.Model.DataContracts.Songs
 
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; set; }
+
+		[DataMember]
+		public int? Bpm { get; set; }
+
+		[DataMember]
+		public int? MaxBpm { get; set; }
 	}
 }
