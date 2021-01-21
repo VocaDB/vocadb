@@ -79,6 +79,9 @@ namespace VocaDb.Model.DataContracts.Artists
 			Manager = artist.ArtistLinksOfType(ArtistLinkType.Manager, LinkDirection.ManyToOne, allowInheritance: true)
 				.Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
 
+			ManagerOf = artist.ArtistLinksOfType(ArtistLinkType.Manager, LinkDirection.OneToMany)
+				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
+
 			Members = artist.ArtistLinksOfType(ArtistLinkType.Group, LinkDirection.OneToMany)
 				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(g => g.Name).ToArray();
 
@@ -154,6 +157,9 @@ namespace VocaDb.Model.DataContracts.Artists
 
 		[DataMember]
 		public ArtistContract Manager { get; set; }
+
+		[DataMember]
+		public ArtistContract[] ManagerOf { get; set; }
 
 		[DataMember]
 		public ArtistContract[] Members { get; set; }
