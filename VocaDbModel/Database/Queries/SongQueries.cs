@@ -1240,6 +1240,12 @@ namespace VocaDb.Model.Database.Queries
 				if (lyricsDiff.Changed)
 					diff.Lyrics.Set();
 
+				if (song.Bpm != properties.Bpm || song.MaxBpm != properties.MaxBpm)
+					diff.Bpm.Set();
+
+				song.Bpm = properties.Bpm;
+				song.MaxBpm = (properties.MaxBpm > properties.Bpm) ? properties.MaxBpm : null;
+
 				var logStr = $"updated properties for song {_entryLinkFactory.CreateEntryLink(song)} ({diff.ChangedFieldsString})"
 					+ (properties.UpdateNotes != string.Empty ? " " + HttpUtility.HtmlEncode(properties.UpdateNotes) : string.Empty)
 					.Truncate(400);
