@@ -63,6 +63,8 @@ import SongType from '../../../Models/Songs/SongType';
 				this.fields(),
 				this.draftsOnly() ? "Draft" : null,
 				this.advancedFilters ? this.advancedFilters() : null,
+				null,
+				null,
 				(result: PartialFindResultContract<SongApiContract>) => {
 
 				var mapped = _.map(result.items, (song, idx) => {
