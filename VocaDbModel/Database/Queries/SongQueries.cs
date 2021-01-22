@@ -1246,7 +1246,7 @@ namespace VocaDb.Model.Database.Queries
 					diff.Bpm.Set();
 
 				song.MinBpm = properties.MinBpm;
-				song.MaxBpm = (properties.MaxBpm > properties.MinBpm) ? properties.MaxBpm : null;
+				song.MaxBpm = (properties.MaxBpm > properties.MinBpm) ? properties.MaxBpm : properties.MinBpm;
 
 				var logStr = $"updated properties for song {_entryLinkFactory.CreateEntryLink(song)} ({diff.ChangedFieldsString})"
 					+ (properties.UpdateNotes != string.Empty ? " " + HttpUtility.HtmlEncode(properties.UpdateNotes) : string.Empty)

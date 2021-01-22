@@ -153,17 +153,17 @@
 			</div>
 			<div class="editor-field">
 				<label>
-					<input type="radio" data-bind="checked: isBpmRange, checkedValue: false" />
+					<input type="radio" data-bind="checked: hasMaxBpm, checkedValue: false" />
 					@Res.BaSpecificBpm
 				</label>
 				<label>
-					<input type="radio" data-bind="checked: isBpmRange, checkedValue: true" />
+					<input type="radio" data-bind="checked: hasMaxBpm, checkedValue: true" />
 					@Res.BaBpmRange
 				</label>
-				<div data-bind="visible: !isBpmRange()">
+				<div data-bind="visible: !hasMaxBpm()">
 					<input type="number" data-bind="value: minBpm" class="input-small" maxlength="10" min="0" />
 				</div>
-				<div data-bind="visible: isBpmRange()">
+				<div data-bind="visible: hasMaxBpm()">
 					<input type="number" data-bind="value: minBpm" class="input-small" maxlength="10" min="0" />
 					to
 					<input type="number" data-bind="value: maxBpm" class="input-small" maxlength="10" min="0" />
