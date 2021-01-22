@@ -152,9 +152,22 @@
 				</label>
 			</div>
 			<div class="editor-field">
-				<input type="number" data-bind="value: bpm" class="input-small" maxlength="10" min="0" />
-				to
-				<input type="number" data-bind="value: maxBpm" class="input-small" maxlength="10" min="0" />
+				<label>
+					<input type="radio" data-bind="checked: isBpmRange, checkedValue: false" />
+					@Res.BaSpecificBpm
+				</label>
+				<label>
+					<input type="radio" data-bind="checked: isBpmRange, checkedValue: true" />
+					@Res.BaBpmRange
+				</label>
+				<div data-bind="visible: !isBpmRange()">
+					<input type="number" data-bind="value: bpm" class="input-small" maxlength="10" min="0" />
+				</div>
+				<div data-bind="visible: isBpmRange()">
+					<input type="number" data-bind="value: bpm" class="input-small" maxlength="10" min="0" />
+					to
+					<input type="number" data-bind="value: maxBpm" class="input-small" maxlength="10" min="0" />
+				</div>
 			</div>
 			
 			<div class="editor-label">

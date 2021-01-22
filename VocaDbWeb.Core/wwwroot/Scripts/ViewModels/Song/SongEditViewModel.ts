@@ -64,6 +64,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		public updateNotes = ko.observable("");
 		public validationExpanded = ko.observable(false);
 		public webLinks: WebLinksEditViewModel;
+		public isBpmRange: KnockoutObservable<boolean>;
 		public bpm: KnockoutObservable<number>;
 		public maxBpm: KnockoutObservable<number>;
 
@@ -188,7 +189,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 				updateNotes: this.updateNotes(),
 				webLinks: this.webLinks.toContracts(),
 				bpm: this.bpm(),
-				maxBpm: this.maxBpm(),
+				maxBpm: this.isBpmRange() ? this.maxBpm() : null,
 			};
 
 			this.submittedJson(ko.toJSON(submittedModel));
@@ -246,6 +247,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 			this.status = ko.observable(data.status);
 			this.tags = data.tags;
 			this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
+			this.isBpmRange = ko.observable(data.maxBpm ? true : false);
 			this.bpm = ko.observable(data.bpm);
 			this.maxBpm = ko.observable(data.maxBpm);
 

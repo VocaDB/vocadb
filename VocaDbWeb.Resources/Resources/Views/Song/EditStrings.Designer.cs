@@ -133,6 +133,15 @@ namespace ViewRes.Song {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BPM range.
+        /// </summary>
+        public static string BaBpmRange {
+            get {
+                return ResourceManager.GetString("BaBpmRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duration (minutes and seconds).
         /// </summary>
         public static string BaDuration {
@@ -201,6 +210,15 @@ namespace ViewRes.Song {
         public static string BaSongType {
             get {
                 return ResourceManager.GetString("BaSongType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specific BPM.
+        /// </summary>
+        public static string BaSpecificBpm {
+            get {
+                return ResourceManager.GetString("BaSpecificBpm", resourceCulture);
             }
         }
         
