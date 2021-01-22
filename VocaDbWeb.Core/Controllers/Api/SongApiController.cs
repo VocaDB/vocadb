@@ -276,7 +276,9 @@ namespace VocaDb.Web.Controllers.Api
 			bool preferAccurateMatches = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			SongOptionalFields fields = SongOptionalFields.None,
-			ContentLanguagePreference lang = ContentLanguagePreference.Default)
+			ContentLanguagePreference lang = ContentLanguagePreference.Default,
+			int? minBpm = null,
+			int? maxBpm = null)
 		{
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
@@ -303,7 +305,9 @@ namespace VocaDb.Web.Controllers.Api
 				ReleaseEventId = releaseEventId ?? 0,
 				ParentSongId = parentSongId ?? 0,
 				AdvancedFilters = advancedFilters,
-				LanguagePreference = lang
+				LanguagePreference = lang,
+				MinBpm = minBpm,
+				MaxBpm = maxBpm,
 			};
 			param.Common.EntryStatus = status;
 

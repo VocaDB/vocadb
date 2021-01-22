@@ -93,6 +93,12 @@ namespace VocaDb.Model.DataContracts.Songs
 
 			if (mergeRecord != null)
 				MergedTo = mergeRecord.Target.Id;
+
+			if (fields.HasFlag(SongOptionalFields.Bpm))
+			{
+				MinBpm = song.MinBpm;
+				MaxBpm = song.MaxBpm;
+			}
 		}
 
 		/// <summary>
@@ -245,22 +251,29 @@ namespace VocaDb.Model.DataContracts.Songs
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		public WebLinkForApiContract[] WebLinks { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public int? MinBpm { get; set; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public int? MaxBpm { get; set; }
 	}
 
 	[Flags]
 	public enum SongOptionalFields
 	{
 		None = 0,
-		AdditionalNames = 1,
-		Albums = 2,
-		Artists = 4,
-		Lyrics = 8,
-		MainPicture = 16,
-		Names = 32,
-		PVs = 64,
-		ReleaseEvent = 128,
-		Tags = 256,
-		ThumbUrl = 512,
-		WebLinks = 1024
+		AdditionalNames = 1 << 0,
+		Albums = 1 << 1,
+		Artists = 1 << 2,
+		Lyrics = 1 << 3,
+		MainPicture = 1 << 4,
+		Names = 1 << 5,
+		PVs = 1 << 6,
+		ReleaseEvent = 1 << 7,
+		Tags = 1 << 8,
+		ThumbUrl = 1 << 9,
+		WebLinks = 1 << 10,
+		Bpm = 1 << 11,
 	}
 }
