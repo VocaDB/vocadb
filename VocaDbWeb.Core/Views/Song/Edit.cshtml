@@ -161,10 +161,10 @@
 					@Res.BaBpmRange
 				</label>
 				<div data-bind="visible: !isBpmRange()">
-					<input type="number" data-bind="value: bpm" class="input-small" maxlength="10" min="0" />
+					<input type="number" data-bind="value: minBpm" class="input-small" maxlength="10" min="0" />
 				</div>
 				<div data-bind="visible: isBpmRange()">
-					<input type="number" data-bind="value: bpm" class="input-small" maxlength="10" min="0" />
+					<input type="number" data-bind="value: minBpm" class="input-small" maxlength="10" min="0" />
 					to
 					<input type="number" data-bind="value: maxBpm" class="input-small" maxlength="10" min="0" />
 				</div>

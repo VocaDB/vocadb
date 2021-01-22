@@ -12,7 +12,7 @@ namespace VocaDb.Migrations
 	{
 		public override void Up()
 		{
-			Create.Column("Bpm").OnTable(TableNames.Songs).AsInt32().Nullable();
+			Create.Column("MinBpm").OnTable(TableNames.Songs).AsInt32().Nullable();
 			Create.Column("MaxBpm").OnTable(TableNames.Songs).AsInt32().Nullable();
 		}
 	}

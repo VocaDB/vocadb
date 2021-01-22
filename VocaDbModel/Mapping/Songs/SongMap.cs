@@ -84,7 +84,7 @@ namespace VocaDb.Model.Mapping.Songs
 			HasMany(m => m.UserFavorites).Inverse();
 			HasMany(m => m.WebLinks).Table("SongWebLinks").Inverse().Cascade.All().Cache.ReadWrite();
 
-			Map(m => m.Bpm).Nullable();
+			Map(m => m.MinBpm).Nullable();
 			Map(m => m.MaxBpm).Nullable();
 		}
 	}

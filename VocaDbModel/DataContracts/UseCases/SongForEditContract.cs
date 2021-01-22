@@ -38,7 +38,7 @@ namespace VocaDb.Model.DataContracts.UseCases
 			Tags = song.Tags.Tags.Select(t => t.Id).ToArray();
 			UpdateNotes = string.Empty;
 			WebLinks = song.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
-			Bpm = song.Bpm;
+			MinBpm = song.MinBpm;
 			MaxBpm = song.MaxBpm;
 		}
 
@@ -93,7 +93,7 @@ namespace VocaDb.Model.DataContracts.UseCases
 		public WebLinkContract[] WebLinks { get; set; }
 
 		[DataMember]
-		public int? Bpm { get; set; }
+		public int? MinBpm { get; set; }
 
 		[DataMember]
 		public int? MaxBpm { get; set; }

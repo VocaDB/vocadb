@@ -65,7 +65,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		public validationExpanded = ko.observable(false);
 		public webLinks: WebLinksEditViewModel;
 		public isBpmRange: KnockoutObservable<boolean>;
-		public bpm: KnockoutObservable<number>;
+		public minBpm: KnockoutObservable<number>;
 		public maxBpm: KnockoutObservable<number>;
 
 		// Adds a new artist to the album
@@ -188,7 +188,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 				tags: this.tags,
 				updateNotes: this.updateNotes(),
 				webLinks: this.webLinks.toContracts(),
-				bpm: this.bpm(),
+				minBpm: this.minBpm(),
 				maxBpm: this.isBpmRange() ? this.maxBpm() : null,
 			};
 
@@ -248,7 +248,7 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 			this.tags = data.tags;
 			this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
 			this.isBpmRange = ko.observable(data.maxBpm ? true : false);
-			this.bpm = ko.observable(data.bpm);
+			this.minBpm = ko.observable(data.minBpm);
 			this.maxBpm = ko.observable(data.maxBpm);
 
 			this.artistRolesEditViewModel = new AlbumArtistRolesEditViewModel(artistRoleNames);

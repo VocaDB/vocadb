@@ -318,7 +318,7 @@ namespace VocaDb.Model.Domain.Songs
 			return GetLyricsFromParents(specialTags, entryTypeTags, false, 0);
 		}
 
-		public virtual int? Bpm { get; set; }
+		public virtual int? MinBpm { get; set; }
 
 		public virtual int? MaxBpm { get; set; }
 

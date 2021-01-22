@@ -113,7 +113,7 @@ namespace VocaDb.Web.Models
 
 			JsonModel = new SongDetailsAjax(this, contract.PreferredLyrics, contract.Song.Version);
 
-			Bpm = contract.Bpm;
+			MinBpm = contract.MinBpm;
 			MaxBpm = contract.MaxBpm;
 		}
 
@@ -229,7 +229,7 @@ namespace VocaDb.Web.Models
 
 		public IList<WebLinkContract> WebLinks { get; set; }
 
-		public int? Bpm { get; set; }
+		public int? MinBpm { get; set; }
 
 		public int? MaxBpm { get; set; }
 	}
