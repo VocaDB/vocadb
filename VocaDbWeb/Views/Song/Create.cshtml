@@ -184,7 +184,7 @@
 			var repo = repoFactory.songRepository();
 			var artistRepo = repoFactory.artistRepository();
 			var tagRepo = repoFactory.tagRepository();
-			var json = @Html.Raw(JsonHelpers.Serialize(Model));
+			var json = @ToJS(Model);
 			ko.applyBindings(new app.SongCreateViewModel(repo, artistRepo, tagRepo, json));
 
 			$("#pvLoader")

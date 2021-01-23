@@ -17,6 +17,21 @@ import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContra
 				(this.expanded() ? this.tagUsages() : _.take(this.tagUsages(), TagListViewModel.maxDisplayedTags))
 			);
 
+			this.tagUsagesByCategories = ko.computed(() => {
+				var tags = _.chain(this.tagUsages())
+					.orderBy(tagUsage => tagUsage.tag.categoryName)
+					.groupBy(tagUsage => tagUsage.tag.categoryName)
+					.map((tagUsages: TagUsageForApiContract[], categoryName: string) => ({ categoryName, tagUsages }));
+
+				var genres = tags.filter(c => c.categoryName === "Genres").value();
+				var empty = tags.filter(c => c.categoryName === "").value();
+
+				return _.chain(genres)
+					.concat(tags.filter(c => c.categoryName !== "Genres" && c.categoryName !== "").value())
+					.concat(empty)
+					.value();
+			});
+
 		}
 
 		public displayedTagUsages: KnockoutComputed<TagUsageForApiContract[]>;
@@ -32,5 +47,7 @@ import TagUsageForApiContract from '../../DataContracts/Tag/TagUsageForApiContra
 		public updateTagUsages = (usages: TagUsageForApiContract[]) => {
 			this.tagUsages(_.chain(usages).sortBy(u => u.tag.name.toLowerCase()).sortBy(u => -u.count).value());
 		}
+
+		public tagUsagesByCategories: KnockoutComputed<{ categoryName: string, tagUsages: TagUsageForApiContract[] }[]>;
 
 	}

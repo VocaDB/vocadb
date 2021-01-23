@@ -23,7 +23,7 @@ namespace VocaDb.Tests.Service
 		{
 			_user = CreateEntry.User();
 			_repository = new FakeUserRepository(_user);
-			_service = new UserService(_repository, new FakePermissionContext(_user), new FakeEntryLinkFactory(), new FakeUserMessageMailer());
+			_service = new UserService(_repository, new FakePermissionContext(_user), new FakeEntryLinkFactory(), new FakeUserMessageMailer(), new FakeUserIconFactory());
 		}
 
 		[TestMethod]

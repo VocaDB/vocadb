@@ -8,7 +8,7 @@
 
 <div class="comment">
 	<h3>
-		@Html.Partial("Partials/User/_UserIconLink_IUserWithEmail", new UserIconLink_IUserWithEmailViewModel(Model.Contract.Author, 25))
+		@Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(Model.Contract.Author, 25))
 
 		@if (Model.AlwaysAllowDelete || (Model.AllowDelete && Login.CanDeleteComment(Model.Contract)))
 		{

@@ -8,13 +8,13 @@ namespace VocaDb.Model.DataContracts.Comments
 	{
 		public EntryWithCommentsContract() { }
 
-		public EntryWithCommentsContract(EntryForApiContract entry, CommentContract[] comments)
+		public EntryWithCommentsContract(EntryForApiContract entry, CommentForApiContract[] comments)
 		{
 			Comments = comments;
 			Entry = entry;
 		}
 
-		public CommentContract[] Comments { get; set; }
+		public CommentForApiContract[] Comments { get; set; }
 
 		public EntryForApiContract Entry { get; set; }
 	}

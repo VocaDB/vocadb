@@ -30,17 +30,23 @@ namespace VocaDb.Model.Service
 		// ReSharper restore UnusedMember.Local
 
 		private IEntryLinkFactory EntryLinkFactory { get; }
+		private readonly IUserIconFactory _userIconFactory;
 
 		private string MakeGeoIpToolLink(string hostname)
 		{
 			return $"<a href='http://www.geoiptool.com/?IP={hostname}'>{hostname}</a>";
 		}
 
-		public UserService(IUserRepository sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory,
-			IUserMessageMailer userMessageMailer)
+		public UserService(
+			IUserRepository sessionFactory,
+			IUserPermissionContext permissionContext,
+			IEntryLinkFactory entryLinkFactory,
+			IUserMessageMailer userMessageMailer,
+			IUserIconFactory userIconFactory)
 			: base(sessionFactory, permissionContext)
 		{
 			EntryLinkFactory = entryLinkFactory;
+			_userIconFactory = userIconFactory;
 		}
 
 		public void AddArtist(int userId, int artistId)
@@ -161,7 +167,7 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-		public CommentContract[] GetComments(int userId)
+		public CommentForApiContract[] GetComments(int userId)
 		{
 			return HandleQuery(session =>
 			{
@@ -174,7 +180,7 @@ namespace VocaDb.Model.Service
 						.WhereNotDeleted()
 						.Where(c => c.Author == user && !c.EntryForComment.Deleted)).OrderByDescending(c => c.Created).ToArray();
 
-				return comments.Select(c => new CommentContract(c)).ToArray();
+				return comments.Select(c => new CommentForApiContract(c, _userIconFactory)).ToArray();
 			});
 		}
 

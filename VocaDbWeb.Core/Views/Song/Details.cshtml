@@ -261,13 +261,16 @@
 			<tr>
 				<td>@ViewRes.SharedStrings.Tags</td>
 				<td>
-					<div data-bind="with: tagUsages" class="entry-tag-usages">
+					<div data-bind="with: tagUsages, visible: tagUsages.tagUsages().length" class="entry-tag-usages">
 						<partial name="Partials/_TagList" />
 					</div>
-					<a data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
-					@if (Model.CanRemoveTagUsages) {
-						<a asp-action="ManageTagUsages" asp-route-id="@(Model.Id)" id="@("manageTags")">@(ViewRes.EntryDetailsStrings.ManageTags)</a>
-					}
+					<div>
+						<a data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
+						@if (Model.CanRemoveTagUsages)
+						{
+							<a asp-action="ManageTagUsages" asp-route-id="@(Model.Id)" id="@("manageTags")">@(ViewRes.EntryDetailsStrings.ManageTags)</a>
+						}
+					</div>
 				</td>
 			</tr>
 			
@@ -383,9 +386,9 @@
 				<td>
 					<p>
 						@if (Model.Contract.AlbumSong.DiscNumber > 1) {
-							@Html.Raw(string.Format(Res.TrackOnAlbumDisc, Model.Contract.AlbumSong.TrackNumber, Model.Contract.AlbumSong.DiscNumber, Html.Partial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(Model.Contract.Album))))
+							@Html.Raw(string.Format(Res.TrackOnAlbumDisc, Model.Contract.AlbumSong.TrackNumber, Model.Contract.AlbumSong.DiscNumber, Html.Partial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(Model.Contract.Album)).ToHtmlString()))
 						} else {
-							@Html.Raw(string.Format(Res.TrackOnAlbum, Model.Contract.AlbumSong.TrackNumber, Html.Partial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(Model.Contract.Album))))
+							@Html.Raw(string.Format(Res.TrackOnAlbum, Model.Contract.AlbumSong.TrackNumber, Html.Partial("Partials/Album/_AlbumLink", new AlbumLinkViewModel(Model.Contract.Album)).ToHtmlString()))
 						}
 					</p>
 					@if (Model.Contract.PreviousSong != null) {
@@ -558,7 +561,7 @@
 		var resources = @ResourceHelpers.ToJSON(AjaxRes.SongStrings.ResourceManager, true);
 		vdb.resources.song = resources;
 
-		var jsonModel = @Html.Raw(Model.Json);
+		var jsonModel = @ToJS(Model.JsonModel);
 		var rootPath = '@RootPath';
 		var urlMapper = new app.UrlMapper(rootPath);
 		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
