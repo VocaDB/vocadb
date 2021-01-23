@@ -202,7 +202,7 @@
 				@{ var commentText = R.CommentsMade + ": " + Model.CommentCount; }
 				@if (canSeeDetailedStats)
 				{
-					<a href="#">@commentText</a>
+					<a asp-action="Index" asp-controller="Comment" asp-route-userId="@Model.Id">@commentText</a>
 				}
 				else
 				{
