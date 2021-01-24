@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtensions;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
@@ -79,7 +80,9 @@ namespace VocaDb.Web.Controllers.Api
 			int? userId = null,
 			int maxResults = CommentQueries.DefaultMax,
 			bool getTotalCount = false,
+			CommentOptionalFields fields = CommentOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			CommentSortRule sortRule = CommentSortRule.CreateDateDescending
-		) => _queries.GetList(before, since, userId, maxResults, getTotalCount, sortRule);
+		) => _queries.GetList(before, since, userId, maxResults, getTotalCount, fields, lang, sortRule);
 	}
 }

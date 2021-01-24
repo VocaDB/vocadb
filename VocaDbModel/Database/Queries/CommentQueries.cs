@@ -2,9 +2,11 @@ using System;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Comments;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
@@ -22,17 +24,20 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IEntryLinkFactory _entryLinkFactory;
 		private readonly IUserPermissionContext _userContext;
 		private readonly IUserIconFactory _userIconFactory;
+		private readonly EntryForApiContractFactory _entryForApiContractFactory;
 
 		public CommentQueries(
 			IRepository repository,
 			IUserPermissionContext userContext,
 			IUserIconFactory userIconFactory,
-			IEntryLinkFactory entryLinkFactory)
+			IEntryLinkFactory entryLinkFactory,
+			EntryForApiContractFactory entryForApiContractFactory)
 		{
 			_repository = repository;
 			_userContext = userContext;
 			_userIconFactory = userIconFactory;
 			_entryLinkFactory = entryLinkFactory;
+			_entryForApiContractFactory = entryForApiContractFactory;
 		}
 
 		private ICommentQueries GetComments(IDatabaseContext ctx, EntryType entryType) => entryType switch
@@ -55,6 +60,8 @@ namespace VocaDb.Model.Database.Queries
 			int? userId = null,
 			int maxResults = DefaultMax,
 			bool getTotalCount = false,
+			CommentOptionalFields fields = CommentOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			CommentSortRule sortRule = CommentSortRule.CreateDateDescending)
 		{
 			maxResults = Math.Min(maxResults, AbsoluteMax);
@@ -80,7 +87,10 @@ namespace VocaDb.Model.Database.Queries
 					.OrderBy(sortRule)
 					.Take(maxResults)
 					.ToArray()
-					.Select(c => new CommentForApiContract(c, _userIconFactory))
+					.Select(c => new CommentForApiContract(c, _userIconFactory)
+					{
+						Entry = fields.HasFlag(CommentOptionalFields.Entry) ? _entryForApiContractFactory.Create(c.Entry, EntryOptionalFields.None, lang) : null,
+					})
 					.ToArray();
 
 				var count = getTotalCount ? query.Count() : 0;
