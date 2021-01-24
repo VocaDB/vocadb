@@ -5,6 +5,7 @@
 
 @{
 	PageProperties.Title = "Comments - " + Model.Name;
+	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 	ViewBag.Parents = new[] {
 		Html.ActionLink("Users", "Index", "User"),
 		Html.ActionLink(Model.Name, "Details", "User", new { id = Model.Id })
