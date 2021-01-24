@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts;
@@ -58,6 +59,7 @@ namespace VocaDb.Model.Database.Queries
 			DateTime? before = null,
 			DateTime? since = null,
 			int? userId = null,
+			EntryType entryType = EntryType.Undefined,
 			int maxResults = DefaultMax,
 			bool getTotalCount = false,
 			CommentOptionalFields fields = CommentOptionalFields.None,
@@ -83,6 +85,22 @@ namespace VocaDb.Model.Database.Queries
 
 				if (userId.HasValue)
 					query = query.Where(c => c.Author.Id == userId.Value);
+
+				if (entryType != EntryType.Undefined)
+				{
+					query = entryType switch
+					{
+						EntryType.Album => query.Where(c => c.CommentType == CommentType.AlbumComment || c.CommentType == CommentType.AlbumReview),
+						EntryType.Artist => query.Where(c => c.CommentType == CommentType.ArtistComment),
+						EntryType.DiscussionTopic => query.Where(c => c.CommentType == CommentType.DiscussionComment),
+						EntryType.ReleaseEvent => query.Where(c => c.CommentType == CommentType.ReleaseEventComment),
+						EntryType.Song => query.Where(c => c.CommentType == CommentType.SongComment),
+						EntryType.SongList => query.Where(c => c.CommentType == CommentType.SongListComment),
+						EntryType.Tag => query.Where(c => c.CommentType == CommentType.TagComment),
+						EntryType.User => query.Where(c => c.CommentType == CommentType.UserComment),
+						_ => throw new InvalidEnumArgumentException(),
+					};
+				}
 
 				var comments = query
 					.OrderBy(sortRule)

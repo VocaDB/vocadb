@@ -79,12 +79,13 @@ namespace VocaDb.Web.Controllers.Api
 			DateTime? before = null,
 			DateTime? since = null,
 			int? userId = null,
+			EntryType entryType = EntryType.Undefined,
 			int maxResults = CommentQueries.DefaultMax,
 			bool getTotalCount = false,
 			CommentOptionalFields fields = CommentOptionalFields.None,
 			EntryOptionalFields entryFields = EntryOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			CommentSortRule sortRule = CommentSortRule.CreateDateDescending
-		) => _queries.GetList(before, since, userId, maxResults, getTotalCount, fields, entryFields, lang, sortRule);
+		) => _queries.GetList(before, since, userId, entryType, maxResults, getTotalCount, fields, entryFields, lang, sortRule);
 	}
 }
