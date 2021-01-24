@@ -23,6 +23,10 @@
 	</div>
 
 	<div class="control-group">
+		<div class="control-label">@ViewRes.User.EntryEditsStrings.EntryType</div>
+		<div class="controls">
+			<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(Translate.CommentTargetTypeNames.ValuesAndNamesStrings, "entryType"))" />
+		</div>
 	</div>
 
 </div>
