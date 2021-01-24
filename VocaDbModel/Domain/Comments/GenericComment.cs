@@ -35,6 +35,8 @@ namespace VocaDb.Model.Domain.Comments
 			}
 		}
 
+		public override CommentType CommentType { get; }
+
 		public virtual bool Equals(GenericComment<T> another)
 		{
 			if (another == null)
