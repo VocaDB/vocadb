@@ -1,4 +1,6 @@
+import { EntryUrlMapper } from "../../App";
 import CommentContract from "../../DataContracts/CommentContract";
+import EntryContract from "../../DataContracts/EntryContract";
 import PartialFindResultContract from "../../DataContracts/PartialFindResultContract";
 import EntryType from "../../Models/EntryType";
 import ResourcesManager, { ResourceSetNames } from "../../Models/ResourcesManager";
@@ -47,6 +49,36 @@ export default class CommentListViewModel {
 	public comments = ko.observableArray<CommentContract>([]);
 
 	public entryType: KnockoutObservable<string>;
+
+	public getEntryTypeName = (entry: EntryContract) => {
+
+		var sets = this.resources.resources();
+
+		switch (EntryType[entry.entryType]) {
+			case EntryType.Album:
+				return sets.discTypeNames[entry.discType];
+
+			case EntryType.Artist:
+				return sets.artistTypeNames[entry.artistType];
+
+			case EntryType.Song:
+				return sets.songTypeNames[entry.songType];
+
+			case EntryType.SongList:
+				return sets.songList_songListFeaturedCategoryNames[entry.songListFeaturedCategory];
+
+			case EntryType.Tag:
+				return entry.tagCategoryName;
+
+			default:
+				return null;
+		}
+
+	}
+
+	public getEntryUrl = (entry: EntryContract) => {
+		return EntryUrlMapper.details_entry(entry, entry.urlSlug);
+	}
 
 	private lastCommentDate: Date;
 
