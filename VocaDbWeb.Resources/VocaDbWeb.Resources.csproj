@@ -78,6 +78,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ArtistSortRuleNames.resx</DependentUpon>
     </Compile>
+    <Compile Update="App_GlobalResources\CommentSortRuleNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CommentSortRuleNames.resx</DependentUpon>
+    </Compile>
     <Compile Update="App_GlobalResources\CommonMessages.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -634,6 +639,11 @@
     <EmbeddedResource Update="App_GlobalResources\Artists\ArtistSortRuleNames.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ArtistSortRuleNames.designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\CommentSortRuleNames.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommentSortRuleNames.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\CommonMessages.resx">

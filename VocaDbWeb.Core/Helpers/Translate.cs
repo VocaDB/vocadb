@@ -110,6 +110,9 @@ namespace VocaDb.Web.Helpers
 
 		public static TranslateableEnum<ArtistType> ArtistTypeNames => new(() => Model.Resources.ArtistTypeNames.ResourceManager);
 
+		public static readonly TranslateableEnum<CommentSortRule> CommentSortRuleNames =
+			new(() => global::Resources.CommentSortRuleNames.ResourceManager);
+
 		public static readonly TranslateableEnum<ContentLanguageSelection> ContentLanguageSelectionNames =
 			new(() => global::Resources.ContentLanguageSelectionNames.ResourceManager);
 

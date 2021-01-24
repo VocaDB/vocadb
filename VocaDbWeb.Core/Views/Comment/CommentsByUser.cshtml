@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Knockout
 @using VocaDb.Web.Models.Shared.Partials.User
 @model VocaDb.Model.DataContracts.Users.UserBaseContract
 
@@ -11,6 +12,20 @@
 }
 
 <!-- Binding context: CommentListViewModel -->
+
+<div class="form-horizontal well well-transparent">
+
+	<div class="pull-right">
+		<div class="inline-block">
+			@ViewRes.EntryIndexStrings.SortBy
+			<partial name="Partials/Knockout/_Dropdown" model="@(new DropdownViewModel(Translate.CommentSortRuleNames.ValuesAndNamesStrings, "sort", "sortName"))" />
+		</div>
+	</div>
+
+	<div class="control-group">
+	</div>
+
+</div>
 
 <div data-bind="foreach: comments, show" class="js-cloak">
 	<div class="well well-transparent">

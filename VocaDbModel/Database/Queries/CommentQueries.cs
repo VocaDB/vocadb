@@ -82,7 +82,7 @@ namespace VocaDb.Model.Database.Queries
 					query = query.Where(c => c.Created > since.Value && c.Created < before.Value);
 
 				if (userId.HasValue)
-					query = query.Where(a => a.Author.Id == userId.Value);
+					query = query.Where(c => c.Author.Id == userId.Value);
 
 				var comments = query
 					.OrderBy(sortRule)
