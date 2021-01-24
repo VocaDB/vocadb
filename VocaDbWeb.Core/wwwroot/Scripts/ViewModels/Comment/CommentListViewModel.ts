@@ -17,6 +17,7 @@ export default class CommentListViewModel {
 
 	constructor(private urlMapper: UrlMapper,
 		resourceRepo: ResourceRepository,
+		private languageSelection: string,
 		cultureCode: string,
 		private userId?: number) {
 
@@ -54,6 +55,9 @@ export default class CommentListViewModel {
 		var url = this.urlMapper.mapRelative("/api/comments");
 		var sortRule = CommentSortRule[this.sort()];
 		$.getJSON(url, {
+			fields: 'Entry',
+			entryFields: 'AdditionalNames,MainPicture',
+			lang: this.languageSelection,
 			before: sortRule === CommentSortRule.CreateDateDescending && this.lastCommentDate ? this.lastCommentDate.toISOString() : null,
 			since: sortRule === CommentSortRule.CreateDate && this.lastCommentDate ? this.lastCommentDate.toISOString() : null,
 			userId: this.userId,

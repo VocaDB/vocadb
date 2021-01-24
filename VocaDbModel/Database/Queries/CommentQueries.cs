@@ -61,6 +61,7 @@ namespace VocaDb.Model.Database.Queries
 			int maxResults = DefaultMax,
 			bool getTotalCount = false,
 			CommentOptionalFields fields = CommentOptionalFields.None,
+			EntryOptionalFields entryFields = EntryOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			CommentSortRule sortRule = CommentSortRule.CreateDateDescending)
 		{
@@ -89,7 +90,7 @@ namespace VocaDb.Model.Database.Queries
 					.ToArray()
 					.Select(c => new CommentForApiContract(c, _userIconFactory)
 					{
-						Entry = fields.HasFlag(CommentOptionalFields.Entry) ? _entryForApiContractFactory.Create(c.Entry, EntryOptionalFields.None, lang) : null,
+						Entry = fields.HasFlag(CommentOptionalFields.Entry) ? _entryForApiContractFactory.Create(c.Entry, entryFields, lang) : null,
 					})
 					.ToArray();
 
