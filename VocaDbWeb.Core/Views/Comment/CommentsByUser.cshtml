@@ -1,4 +1,5 @@
 ﻿@using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.User
 @model VocaDb.Model.DataContracts.Users.UserBaseContract
 
 @{
@@ -7,4 +8,40 @@
 		Html.ActionLink("Users", "Index", "User"),
 		Html.ActionLink(Model.Name, "Details", "User", new { id = Model.Id })
 	};
+}
+
+<!-- Binding context: CommentListViewModel -->
+
+<div data-bind="foreach: comments, show" class="js-cloak">
+	<div class="well well-transparent">
+		<div class="media">
+		</div>
+		<div class="comment">
+			<h3>
+				<span data-bind="with: $data.author">
+					<partial name="Partials/User/_IconNameAndTypeLinkKnockout" model="@(new IconNameAndTypeLinkKnockoutViewModel("$parents[1].resources.resources().userGroupNames"))" />
+				</span>
+				<small class="pull-right extraInfo" data-bind="attr: { title: created }, timeAgo: created"></small>
+			</h3>
+			<p data-bind="text: message"></p>
+		</div>
+	</div>
+</div>
+
+@section BodyScripts {
+	<script type="text/javascript">
+		$(function () {
+
+			moment.locale('@Culture');
+
+			var urlMapper = new app.UrlMapper("@RootPath");
+			var resourceRepo = new app.ResourceRepository('@RootPath');
+			var cultureCode = '@UICulture';
+			var userId = @Model.Id;
+
+			var vm = new app.CommentListViewModel(urlMapper, resourceRepo, cultureCode, userId);
+			ko.applyBindings(vm);
+
+		});
+	</script>
 }
