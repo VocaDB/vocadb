@@ -18,6 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="App_GlobalResources\ActivityEntrySortRuleNames.resx">
       <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
