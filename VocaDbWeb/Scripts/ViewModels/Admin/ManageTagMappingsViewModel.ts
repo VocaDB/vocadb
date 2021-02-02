@@ -50,7 +50,7 @@ import ui from '../../Shared/MessagesTyped';
 
 		private loadMappings = async () => {
 
-			const result = await this.tagRepo.getMappings({ start: 0, maxEntries: 1000, getTotalCount: false });
+			const result = await this.tagRepo.getMappings({ start: 0, maxEntries: 10000, getTotalCount: false });
 			this.mappings(_.map(result.items, t => new EditTagMappingViewModel(t)));
 			this.paging.totalItems(this.filteredMappings().length);
 			this.paging.goToFirstPage();

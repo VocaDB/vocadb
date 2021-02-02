@@ -41,6 +41,12 @@
     </None>
     <None Include="Styles\UtaiteDB.less" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
