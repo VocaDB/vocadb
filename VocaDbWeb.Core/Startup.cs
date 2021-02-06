@@ -220,6 +220,10 @@ namespace VocaDb.Web
 
 			app.UseRouting();
 
+			// Quote from: https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-5.0#authentication-concepts
+			// When using endpoint routing, the call to UseAuthentication must go:
+			// After UseRouting, so that route information is available for authentication decisions.
+			// Before UseEndpoints, so that users are authenticated before accessing the endpoints.
 			app.UseAuthentication();
 			app.UseAuthorization();
 
