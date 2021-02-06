@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
@@ -78,8 +80,7 @@ namespace VocaDb.Web.Controllers
 			return HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 		}
 
-		// TODO: implement
-		/*private bool HandleCreate(UserContract user)
+		private async Task<bool> HandleCreateAsync(UserContract user)
 		{
 			if (user == null)
 			{
@@ -88,10 +89,10 @@ namespace VocaDb.Web.Controllers
 			}
 			else
 			{
-				FormsAuthentication.SetAuthCookie(user.Name, true);
+				await SetAuthCookieAsync(user.Name, true);
 				return true;
 			}
-		}*/
+		}
 
 		public UserController(
 			UserService service,
@@ -137,71 +138,33 @@ namespace VocaDb.Web.Controllers
 			return View(new AlbumCollection(Service.GetUser(id, true), routeParams));
 		}
 
-		// TODO: implement
-		/*public ActionResult ConnectTwitter()
+		public ActionResult ConnectTwitter()
 		{
-			// Make sure session ID is initialized
-			// ReSharper disable UnusedVariable
-			var sessionId = Session.SessionID;
-			// ReSharper restore UnusedVariable
-
-			var twitterSignIn = new TwitterConsumer().TwitterSignIn;
-
-			var uri = new Uri(new Uri(AppConfig.HostAddress), Url.Action("ConnectTwitterComplete"));
-
-			UserAuthorizationRequest request;
-			try
+			var props = new AuthenticationProperties
 			{
-				request = twitterSignIn.PrepareRequestUserAuthorization(uri, null, null);
-			}
-			catch (ProtocolException x)
-			{
-				s_log.Fatal(x, "Exception while attempting to sent Twitter request");
-				TempData.SetErrorMessage("There was an error while connecting to Twitter - please try again later.");
-				return RedirectToAction("MySettings", "User");
-			}
+				RedirectUri = "User/ConnectTwitterComplete",
+			};
+			return Challenge(props, TwitterDefaults.AuthenticationScheme);
+		}
 
-			var response = twitterSignIn.Channel.PrepareResponse(request);
-
-			response.Send();
-			Response.End();
-			return new EmptyResult();
-		}*/
-
-		// TODO: implement
-		/*public ActionResult ConnectTwitterComplete()
+		public async Task<ActionResult> ConnectTwitterComplete()
 		{
-			// Denied authorization
-			var param = Request.Query["denied"];
+			var cookie = await HttpContext.AuthenticateAsync("ExternalCookie");
 
-			if (!string.IsNullOrEmpty(param))
-			{
-				TempData.SetStatusMessage(ViewRes.User.LoginUsingAuthStrings.SignInCancelled);
-				return RedirectToAction("MySettings");
-			}
+			var accessToken = cookie.Principal.FindFirst("AccessToken").Value;
 
-			var response = new TwitterConsumer().ProcessUserAuthorization(Hostname);
+			int.TryParse(cookie.Principal.FindFirst("urn:twitter:userid").Value, out var twitterId);
+			var twitterName = cookie.Principal.FindFirst("urn:twitter:screenname").Value;
 
-			if (response == null)
-			{
-				TempData.SetStatusMessage(ViewRes.User.LoginUsingAuthStrings.AuthError);
-				return RedirectToAction("MySettings");
-			}
-
-			int.TryParse(response.ExtraData["user_id"], out int twitterId);
-			var twitterName = response.ExtraData["screen_name"];
-
-			if (Service.ConnectTwitter(response.AccessToken, twitterId, twitterName, WebHelper.GetRealHost(Request)))
-			{
+			if (Service.ConnectTwitter(accessToken, twitterId, twitterName, WebHelper.GetRealHost(Request)))
 				TempData.SetStatusMessage("Connected successfully");
-			}
 			else
-			{
 				ModelState.AddModelError("Authentication", ViewRes.User.LoginUsingAuthStrings.AuthError);
-			}
+
+			await HttpContext.SignOutAsync("ExternalCookie");
 
 			return RedirectToAction("MySettings");
-		}*/
+		}
 
 		public ActionResult EntryEdits(int id = InvalidId, bool onlySubmissions = true)
 		{
@@ -393,94 +356,48 @@ namespace VocaDb.Web.Controllers
 			return View(model);
 		}
 
-		// TODO: implement
-		/*[RestrictBannedIP]
+		[RestrictBannedIP]
 		public ActionResult LoginTwitter(string returnUrl)
 		{
 			s_log.Info($"{WebHelper.GetRealHost(Request)} login via Twitter");
 
-			// Make sure session ID is initialized
-			// ReSharper disable UnusedVariable
-			var sessionId = Session.SessionID;
-			// ReSharper restore UnusedVariable
-
-			var twitterSignIn = new TwitterConsumer().TwitterSignIn;
-
-			var targetUrl = Url.Action("LoginTwitterComplete", new { returnUrl });
-			var uri = new Uri(new Uri(AppConfig.HostAddress), targetUrl);
-
-			SslHelper.ForceStrongTLS();
-
-			UserAuthorizationRequest request;
-
-			try
+			var props = new AuthenticationProperties
 			{
-				request = twitterSignIn.PrepareRequestUserAuthorization(uri, null, null);
-			}
-			catch (ProtocolException x)
-			{
-				s_log.Error(x, "Exception while attempting to send Twitter request");
-				TempData.SetErrorMessage("There was an error while connecting to Twitter - please try again later.");
+				RedirectUri = $"User/LoginTwitterComplete?returnUrl={HttpUtility.UrlEncode(returnUrl)}",
+			};
+			return Challenge(props, TwitterDefaults.AuthenticationScheme);
+		}
 
-				return RedirectToAction("Login");
-			}
-
-			var response = twitterSignIn.Channel.PrepareResponse(request);
-
-			response.Send();
-			Response.End();
-
-			return new EmptyResult();
-		}*/
-
-		// TODO: implement
-		/*[RestrictBannedIP]
-		public ActionResult LoginTwitterComplete(string returnUrl)
+		[RestrictBannedIP]
+		public async Task<ActionResult> LoginTwitterComplete(string returnUrl)
 		{
-			// Denied authorization
-			var param = Request.Query["denied"];
+			var cookie = await HttpContext.AuthenticateAsync("ExternalCookie");
 
-			if (!string.IsNullOrEmpty(param))
-			{
-				TempData.SetStatusMessage(ViewRes.User.LoginUsingAuthStrings.SignInCancelled);
-				return View("Login", new LoginModel(string.Empty, false));
-			}
-
-			var response = new TwitterConsumer().ProcessUserAuthorization(Hostname);
-
-			if (response == null)
-			{
-				ModelState.AddModelError("Authentication", ViewRes.User.LoginUsingAuthStrings.AuthError);
-				return View("Login", new LoginModel(string.Empty, false));
-			}
-
+			var accessToken = cookie.Principal.FindFirst("AccessToken").Value;
 			var culture = WebHelper.GetInterfaceCultureName(Request);
-			var user = Service.CheckTwitterAuthentication(response.AccessToken, Hostname, culture);
+			var user = Service.CheckTwitterAuthentication(accessToken, Hostname, culture);
 
-			if (user == null)
+			if (user is null)
 			{
-				int.TryParse(response.ExtraData["user_id"], out int twitterId);
-				var twitterName = response.ExtraData["screen_name"];
-				return View(new RegisterOpenAuthModel(response.AccessToken, twitterName, twitterId, twitterName));
+				int.TryParse(cookie.Principal.FindFirst("urn:twitter:userid").Value, out var twitterId);
+				var twitterName = cookie.Principal.FindFirst("urn:twitter:screenname").Value;
+				return View(new RegisterOpenAuthModel(accessToken, twitterName, twitterId, twitterName));
 			}
 
-			HandleCreate(user);
+			await HandleCreateAsync(user);
 
-			string targetUrl;
+			await HttpContext.SignOutAsync("ExternalCookie");
 
-			if (!string.IsNullOrEmpty(returnUrl))
-				targetUrl = VocaUriBuilder.AbsoluteFromUnknown(returnUrl, preserveAbsolute: true);
-			else
-				targetUrl = Url.Action("Index", "Home");
-
+			var targetUrl = !string.IsNullOrEmpty(returnUrl)
+				? VocaUriBuilder.AbsoluteFromUnknown(returnUrl, preserveAbsolute: true)
+				: Url.Action("Index", "Home");
 			return Redirect(targetUrl);
-		}*/
+		}
 
-		// TODO: implement
-		/*[HttpPost]
+		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[RestrictBannedIP]
-		public ActionResult LoginTwitterComplete(RegisterOpenAuthModel model)
+		public async Task<ActionResult> LoginTwitterComplete(RegisterOpenAuthModel model)
 		{
 			if (!ModelState.IsValid)
 				return View(model);
@@ -489,7 +406,7 @@ namespace VocaDb.Web.Controllers
 			{
 				var user = Data.CreateTwitter(model.AccessToken, model.UserName, model.Email ?? string.Empty,
 					model.TwitterId, model.TwitterName, Hostname, WebHelper.GetInterfaceCultureName(Request));
-				FormsAuthentication.SetAuthCookie(user.Name, false);
+				await SetAuthCookieAsync(user.Name, false);
 
 				return RedirectToAction("Index", "Home");
 			}
@@ -508,7 +425,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError("Email", ViewRes.User.MySettingsStrings.InvalidEmail);
 				return View(model);
 			}
-		}*/
+		}
 
 		public async Task<ActionResult> Logout()
 		{
