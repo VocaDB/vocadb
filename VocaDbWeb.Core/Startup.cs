@@ -63,6 +63,9 @@ namespace VocaDb.Web
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			// Code from: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-5.0
+			services.Configure<SmtpSettings>(Configuration.GetSection(SmtpSettings.Smtp));
+
 			services
 				.AddControllersWithViews(options =>
 				{
