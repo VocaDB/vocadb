@@ -247,6 +247,13 @@ namespace VocaDb.Web
 
 			app.UseRouting();
 
+			app.UseRequestLocalization(options =>
+			{
+				var supportedCultures = InterfaceLanguage.TwoLetterLanguageCodes.ToArray();
+				options.AddSupportedCultures(supportedCultures);
+				options.AddSupportedUICultures(supportedCultures);
+			});
+
 			// Quote from: https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-5.0#authentication-concepts
 			// When using endpoint routing, the call to UseAuthentication must go:
 			// After UseRouting, so that route information is available for authentication decisions.
