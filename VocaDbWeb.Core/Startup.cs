@@ -87,13 +87,13 @@ namespace VocaDb.Web
 
 			services.AddSwaggerGen();
 
-			// Code from: http://www.tiernok.com/posts/adding-twitter-authentication-to-an-asp-net-core-2-site-w-cosmos-db.html
+			// Code from: https://blogs.lessthandot.com/index.php/webdev/serverprogramming/aspnet/adding-twitter-authentication-to-an-asp-net-core-2-site-w-cosmos-db/
 			services
 				.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-				.AddCookie("ExternalCookie")
+				.AddCookie(AuthenticationConstants.ExternalCookie)
 				.AddTwitter(options =>
 				{
-					options.SignInScheme = "ExternalCookie";
+					options.SignInScheme = AuthenticationConstants.ExternalCookie;
 					options.ConsumerKey = AppConfig.TwitterConsumerKey;
 					options.ConsumerSecret = AppConfig.TwitterConsumerSecret;
 					options.Events = new TwitterEvents
@@ -102,7 +102,7 @@ namespace VocaDb.Web
 						{
 							// Code from: https://qiita.com/yu_ka1984/items/3b7be513a67019e71984
 							var identity = (ClaimsIdentity)context.Principal.Identity;
-							identity.AddClaim(new Claim(nameof(context.AccessToken), context.AccessToken));
+							identity.AddClaim(new Claim(TwitterClaimTypes.AccessToken, context.AccessToken));
 							return Task.CompletedTask;
 						},
 						OnAccessDenied = context =>

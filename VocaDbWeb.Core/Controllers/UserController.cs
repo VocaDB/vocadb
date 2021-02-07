@@ -35,6 +35,7 @@ using VocaDb.Model.Utils.Config;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Markdown;
+using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models;
@@ -149,9 +150,9 @@ namespace VocaDb.Web.Controllers
 
 		public async Task<ActionResult> ConnectTwitterComplete()
 		{
-			var cookie = await HttpContext.AuthenticateAsync("ExternalCookie");
+			var cookie = await HttpContext.AuthenticateAsync(AuthenticationConstants.ExternalCookie);
 
-			var accessToken = cookie.Principal.FindFirst("AccessToken").Value;
+			var accessToken = cookie.Principal.FindFirst(TwitterClaimTypes.AccessToken).Value;
 
 			int.TryParse(cookie.Principal.FindFirst("urn:twitter:userid").Value, out var twitterId);
 			var twitterName = cookie.Principal.FindFirst("urn:twitter:screenname").Value;
@@ -161,7 +162,7 @@ namespace VocaDb.Web.Controllers
 			else
 				ModelState.AddModelError("Authentication", ViewRes.User.LoginUsingAuthStrings.AuthError);
 
-			await HttpContext.SignOutAsync("ExternalCookie");
+			await HttpContext.SignOutAsync(AuthenticationConstants.ExternalCookie);
 
 			return RedirectToAction("MySettings");
 		}
@@ -371,9 +372,9 @@ namespace VocaDb.Web.Controllers
 		[RestrictBannedIP]
 		public async Task<ActionResult> LoginTwitterComplete(string returnUrl)
 		{
-			var cookie = await HttpContext.AuthenticateAsync("ExternalCookie");
+			var cookie = await HttpContext.AuthenticateAsync(AuthenticationConstants.ExternalCookie);
 
-			var accessToken = cookie.Principal.FindFirst("AccessToken").Value;
+			var accessToken = cookie.Principal.FindFirst(TwitterClaimTypes.AccessToken).Value;
 			var culture = WebHelper.GetInterfaceCultureName(Request);
 			var user = Service.CheckTwitterAuthentication(accessToken, Hostname, culture);
 
@@ -386,7 +387,7 @@ namespace VocaDb.Web.Controllers
 
 			await HandleCreateAsync(user);
 
-			await HttpContext.SignOutAsync("ExternalCookie");
+			await HttpContext.SignOutAsync(AuthenticationConstants.ExternalCookie);
 
 			var targetUrl = !string.IsNullOrEmpty(returnUrl)
 				? VocaUriBuilder.AbsoluteFromUnknown(returnUrl, preserveAbsolute: true)
