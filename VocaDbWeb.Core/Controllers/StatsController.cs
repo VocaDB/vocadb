@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Caching;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
@@ -34,27 +35,20 @@ namespace VocaDb.Web.Controllers
 		private readonly ActivityEntryQueries _activityEntryQueries;
 		private readonly StatsQueries _queries;
 		private readonly SongAggregateQueries _songAggregateQueries;
+		private readonly ObjectCache _cache;
 
-		// TODO: implement
-		/*private T GetCachedReport<T>() where T : class
+		private T GetCachedReport<T>() where T : class
 		{
 			var name = ControllerContext.RouteData.Values["action"] + "_" + ControllerContext.RouteData.Values["cutoff"];
-			var item = _context.Cache["report_" + name];
+			var item = _cache.Get($"report_{name}");
+			return item as T;
+		}
 
-			if (item == null)
-				return null;
-
-			return (T)item;
-		}*/
-		private T GetCachedReport<T>() where T : class => throw new NotImplementedException();
-
-		// TODO: implement
-		/*private void SaveCachedReport<T>(T data) where T : class
+		private void SaveCachedReport<T>(T data) where T : class
 		{
 			var name = ControllerContext.RouteData.Values["action"];
-			_context.Cache.Add("report_" + name, data, null, Cache.NoAbsoluteExpiration, TimeSpan.FromDays(1), CacheItemPriority.Default, null);
-		}*/
-		private void SaveCachedReport<T>(T data) where T : class => throw new NotImplementedException();
+			_cache.Add($"report_{name}", data, new CacheItemPolicy { SlidingExpiration = TimeSpan.FromDays(1), Priority = CacheItemPriority.Default });
+		}
 
 		private ActionResult AreaChart(string title, params Series[] dataSeries)
 		{
@@ -272,8 +266,14 @@ namespace VocaDb.Web.Controllers
 
 		private DateTime DefaultMinDate => new DateTime(_config.SiteSettings.MinAlbumYear, 1, 1);
 
-		public StatsController(IUserRepository userRepository, IUserPermissionContext permissionContext, SongAggregateQueries songAggregateQueries,
-			VdbConfigManager config, ActivityEntryQueries activityEntryQueries, StatsQueries queries)
+		public StatsController(
+			IUserRepository userRepository,
+			IUserPermissionContext permissionContext,
+			SongAggregateQueries songAggregateQueries,
+			VdbConfigManager config,
+			ActivityEntryQueries activityEntryQueries,
+			StatsQueries queries,
+			ObjectCache cache)
 		{
 			_userRepository = userRepository;
 			_permissionContext = permissionContext;
@@ -281,6 +281,7 @@ namespace VocaDb.Web.Controllers
 			_queries = queries;
 			_songAggregateQueries = songAggregateQueries;
 			_config = config;
+			_cache = cache;
 		}
 
 		[ResponseCache(Duration = ClientCacheDurationSec)]
