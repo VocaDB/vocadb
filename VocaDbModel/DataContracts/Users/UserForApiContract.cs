@@ -35,7 +35,7 @@ namespace VocaDb.Model.DataContracts.Users
 				KnownLanguages = user.KnownLanguages.Select(l => new UserKnownLanguageContract(l)).ToArray();
 			}
 
-			if (optionalFields.HasFlag(UserOptionalFields.MainPicture) && !string.IsNullOrEmpty(user.Email) && iconFactory != null)
+			if (optionalFields.HasFlag(UserOptionalFields.MainPicture) && iconFactory != null)
 			{
 				MainPicture = iconFactory.GetIcons(user, ImageSizes.All);
 			}
