@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using System.Net;
+using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,11 +19,14 @@ using VocaDb.Model.Helpers;
 using VocaDb.Model.Resources;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.ExtSites;
+using VocaDb.Model.Service.Search;
+using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Search;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
+using VocaDb.Web.Code.Feeds;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
@@ -321,8 +325,7 @@ namespace VocaDb.Web.Controllers
 			}
 		}
 
-		// TODO: implement
-		/*public FeedResult Feed(IndexRouteParams indexParams)
+		public async Task<FeedResult> Feed(IndexRouteParams indexParams)
 		{
 			WebHelper.VerifyUserAgent(Request);
 
@@ -353,19 +356,18 @@ namespace VocaDb.Web.Controllers
 			var result = Service.FindWithThumbPreferNotNico(queryParams);
 
 			var fac = new SongFeedFactory();
-			var feed = fac.Create(result.Items,
+			var feed = await fac.CreateAsync(result.Items,
 				VocaUriBuilder.CreateAbsolute(Url.Action("Index", indexParams)),
-				song => RenderPartialViewToString("SongItem", song),
+				song => RenderPartialViewToStringAsync("SongItem", song),
 				song => Url.Action("Details", new { id = song.Id }));
 
 			return new FeedResult(new Atom10FeedFormatter(feed));
-		}*/
+		}
 
-		// TODO: implement
-		/*public FeedResult LatestVideos()
+		public Task<FeedResult> LatestVideos()
 		{
 			return Feed(new IndexRouteParams { onlyWithPVs = true, pageSize = 20, sort = SongSortRule.AdditionDate });
-		}*/
+		}
 
 		[Authorize]
 		public ActionResult ManageTagUsages(int id)
