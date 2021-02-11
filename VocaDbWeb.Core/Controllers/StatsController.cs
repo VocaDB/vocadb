@@ -15,6 +15,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Caching;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
@@ -36,19 +37,6 @@ namespace VocaDb.Web.Controllers
 		private readonly StatsQueries _queries;
 		private readonly SongAggregateQueries _songAggregateQueries;
 		private readonly ObjectCache _cache;
-
-		private T GetCachedReport<T>() where T : class
-		{
-			var name = ControllerContext.RouteData.Values["action"] + "_" + ControllerContext.RouteData.Values["cutoff"];
-			var item = _cache.Get($"report_{name}");
-			return item as T;
-		}
-
-		private void SaveCachedReport<T>(T data) where T : class
-		{
-			var name = ControllerContext.RouteData.Values["action"];
-			_cache.Add($"report_{name}", data, new CacheItemPolicy { SlidingExpiration = TimeSpan.FromDays(1), Priority = CacheItemPriority.Default });
-		}
 
 		private ActionResult AreaChart(string title, params Series[] dataSeries)
 		{
@@ -243,22 +231,18 @@ namespace VocaDb.Web.Controllers
 		private StatsQueries.LocalizedValue[] GetTopValues<T>(Func<IQueryable<T>, IQueryable<StatsQueries.LocalizedValue>> func)
 			where T : class, IDatabaseObject
 		{
-			var cached = GetCachedReport<StatsQueries.LocalizedValue[]>();
-
-			if (cached != null)
-				return cached;
-
-			var data = _userRepository.HandleQuery(ctx =>
+			var name = $"{ControllerContext.RouteData.Values["action"]}_{ControllerContext.RouteData.Values["cutoff"]}";
+			return _cache.GetOrInsert($"report_{name}", new CacheItemPolicy { SlidingExpiration = TimeSpan.FromDays(1), Priority = CacheItemPriority.Default }, () =>
 			{
-				return func(ctx.OfType<T>().Query())
-					.OrderByDescending(a => a.Value)
-					.Take(25)
-					.ToArray();
+				var data = _userRepository.HandleQuery(ctx =>
+				{
+					return func(ctx.OfType<T>().Query())
+						.OrderByDescending(a => a.Value)
+						.Take(25)
+						.ToArray();
+				});
+				return data;
 			});
-
-			SaveCachedReport(data);
-
-			return data;
 		}
 
 		private readonly IUserPermissionContext _permissionContext;
