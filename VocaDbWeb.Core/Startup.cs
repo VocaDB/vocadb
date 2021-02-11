@@ -266,6 +266,8 @@ namespace VocaDb.Web
 
 			app.UseVocaDbPrincipal();
 
+			app.UseResponseCaching();
+
 			// `UseCacheOutput` must go before `UseEndpoints`, otherwise `CacheOutput` throws an `System.InvalidOperationException The response headers cannot be modified because the response has already started`.
 			app.UseCacheOutput();
 
