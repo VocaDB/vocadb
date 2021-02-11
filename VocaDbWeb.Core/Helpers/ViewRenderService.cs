@@ -1,4 +1,5 @@
 // Code from: https://ppolyzos.com/2016/09/09/asp-net-core-render-view-to-string/
+// See also: https://stackoverflow.com/questions/59301912/rendering-view-to-string-in-core-3-0-could-not-find-an-irouter-associated-with
 
 using System;
 using System.IO;
@@ -24,24 +25,24 @@ namespace VocaDb.Web.Helpers
 		private readonly IRazorViewEngine _razorViewEngine;
 		private readonly ITempDataProvider _tempDataProvider;
 		private readonly IServiceProvider _serviceProvider;
+		private readonly IHttpContextAccessor _contextAccessor;
 
 		public ViewRenderService(
 			IRazorViewEngine razorViewEngine,
 			ITempDataProvider tempDataProvider,
-			IServiceProvider serviceProvider)
+			IServiceProvider serviceProvider,
+			IHttpContextAccessor contextAccessor)
 		{
 			_razorViewEngine = razorViewEngine;
 			_tempDataProvider = tempDataProvider;
 			_serviceProvider = serviceProvider;
+			_contextAccessor = contextAccessor;
 		}
 
 		public async Task<string> RenderToStringAsync(string viewName, object model)
 		{
-			var httpContext = new DefaultHttpContext
-			{
-				RequestServices = _serviceProvider
-			};
-			var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
+			var httpContext = _contextAccessor.HttpContext ?? new DefaultHttpContext { RequestServices = _serviceProvider };
+			var actionContext = new ActionContext(httpContext, httpContext.GetRouteData(), new ActionDescriptor());
 
 			using var sw = new StringWriter();
 			var viewResult = _razorViewEngine.FindView(actionContext, viewName, isMainPage: false);
