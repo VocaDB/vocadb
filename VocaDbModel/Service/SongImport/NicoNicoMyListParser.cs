@@ -20,6 +20,12 @@ namespace VocaDb.Model.Service.SongImport
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private static readonly Regex s_wvrIdRegex = new(@"#(\d{3})");
 
+		private static readonly Regex[] s_linkMatchers = new[]
+		{
+			new Regex(@"www.nicovideo.jp/user/\d+/mylist/\d+"),
+			new Regex(@"www.nicovideo.jp/mylist/\d+"),
+		};
+
 		public Task<PartialImportedSongs> GetSongsAsync(string url, string nextPageToken, int maxResults, bool parseAll)
 		{
 			throw new NotSupportedException();
@@ -92,10 +98,6 @@ namespace VocaDb.Model.Service.SongImport
 			return Task.FromResult(result);
 		}
 
-		public bool MatchUrl(string url)
-		{
-			var regex = new Regex(@"www.nicovideo.jp/mylist/\d+");
-			return regex.IsMatch(url);
-		}
+		public bool MatchUrl(string url) => s_linkMatchers.Any(linkMatcher => linkMatcher.IsMatch(url));
 	}
 }
