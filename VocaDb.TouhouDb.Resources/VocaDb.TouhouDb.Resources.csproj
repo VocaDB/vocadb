@@ -39,7 +39,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="1.0.0">
+    <PackageReference Include="VocaDb.ResXFileCodeGenerator" Version="1.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

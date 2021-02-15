@@ -55,7 +55,7 @@ namespace VocaDb.Model.DataContracts.Tags
 
 		public new EnglishTranslatedString Description { get; set; }
 
-		public int FollowerCount { get; set; }
+		public int FollowerCount => Stats.FollowerCount;
 
 		public bool IsFollowing { get; set; }
 

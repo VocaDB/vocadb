@@ -2,10 +2,13 @@
 
 using System.Linq;
 using System.Runtime.Caching;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using AspNetCore.CacheOutput.Extensions;
 using AspNetCore.CacheOutput.InMemory.Extensions;
 using Autofac;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -60,6 +63,9 @@ namespace VocaDb.Web
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			// Code from: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-5.0
+			services.Configure<SmtpSettings>(Configuration.GetSection(SmtpSettings.Smtp));
+
 			services
 				.AddControllersWithViews(options =>
 				{
@@ -81,11 +87,35 @@ namespace VocaDb.Web
 
 			services.AddSwaggerGen();
 
+			// Code from: https://blogs.lessthandot.com/index.php/webdev/serverprogramming/aspnet/adding-twitter-authentication-to-an-asp-net-core-2-site-w-cosmos-db/
 			services
 				.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(AuthenticationConstants.ExternalCookie)
+				.AddTwitter(options =>
+				{
+					options.SignInScheme = AuthenticationConstants.ExternalCookie;
+					options.ConsumerKey = AppConfig.TwitterConsumerKey;
+					options.ConsumerSecret = AppConfig.TwitterConsumerSecret;
+					options.Events = new TwitterEvents
+					{
+						OnCreatingTicket = context =>
+						{
+							// Code from: https://qiita.com/yu_ka1984/items/3b7be513a67019e71984
+							var identity = (ClaimsIdentity)context.Principal.Identity;
+							identity.AddClaim(new Claim(TwitterClaimTypes.AccessToken, context.AccessToken));
+							return Task.CompletedTask;
+						},
+						OnAccessDenied = context =>
+						{
+							context.Response.Redirect("/");
+							context.HandleResponse();
+							return Task.CompletedTask;
+						},
+					};
+				})
 				.AddCookie(options =>
 				{
-					options.LoginPath = "/User/Login";
+					options.LoginPath = new PathString("/User/Login");
 				});
 
 			services.AddLaravelMix();
@@ -221,10 +251,23 @@ namespace VocaDb.Web
 
 			app.UseRouting();
 
+			app.UseRequestLocalization(options =>
+			{
+				var supportedCultures = InterfaceLanguage.TwoLetterLanguageCodes.ToArray();
+				options.AddSupportedCultures(supportedCultures);
+				options.AddSupportedUICultures(supportedCultures);
+			});
+
+			// Quote from: https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-5.0#authentication-concepts
+			// When using endpoint routing, the call to UseAuthentication must go:
+			// After UseRouting, so that route information is available for authentication decisions.
+			// Before UseEndpoints, so that users are authenticated before accessing the endpoints.
 			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseVocaDbPrincipal();
+
+			app.UseResponseCaching();
 
 			// `UseCacheOutput` must go before `UseEndpoints`, otherwise `CacheOutput` throws an `System.InvalidOperationException The response headers cannot be modified because the response has already started`.
 			app.UseCacheOutput();
