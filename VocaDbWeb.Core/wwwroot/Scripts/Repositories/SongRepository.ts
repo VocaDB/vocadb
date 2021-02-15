@@ -132,7 +132,10 @@ import UrlMapper from '../Shared/UrlMapper';
 			fields: string,
 			status: string,
 			advancedFilters: AdvancedSearchFilter[],
-			callback) => {
+			minBpm: number,
+			maxBpm: number,
+			callback
+		) => {
 
 			var url = functions.mergeUrls(this.baseUrl, "/api/songs");
 			var data = {
@@ -156,7 +159,9 @@ import UrlMapper from '../Shared/UrlMapper';
 				userCollectionId: userCollectionId,
 				parentSongId: parentSongId || undefined,
 				status: status,
-				advancedFilters: advancedFilters
+				advancedFilters: advancedFilters,
+				minBpm: minBpm,
+				maxBpm: maxBpm,
 			};
 
 			$.getJSON(url, data, callback);

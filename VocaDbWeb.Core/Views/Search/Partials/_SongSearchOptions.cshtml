@@ -1,4 +1,5 @@
-﻿@using VocaDb.Model.Service.Search
+﻿@using VocaDb.Model.Domain
+@using VocaDb.Model.Service.Search
 @using VocaDb.Web.Models.Shared.Partials.Knockout
 @using VocaDb.Web.Models.Shared.Partials.Search
 @using VocaDb.Web.Models.Shared.Partials.Song
@@ -75,6 +76,15 @@
 		<div class="control-label">@Res.ParentVersion</div>
 		<div class="controls">
 			<partial name="Partials/Knockout/_SongLockingAutoComplete" model="@(new SongLockingAutoCompleteViewModel("parentVersion"))" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@Res.Bpm</div>
+		<div class="controls">
+			<input type="number" data-bind="textInput: minBpm" class="input-small" maxlength="10" min="@Constants.MinBpm" max="@Constants.MaxBpm" />
+			-
+			<input type="number" data-bind="textInput: maxBpm" class="input-small" maxlength="10" min="@Constants.MinBpm" max="@Constants.MaxBpm" />
 		</div>
 	</div>
 

@@ -291,4 +291,7 @@
   <data name="ViewInfo" xml:space="preserve">
     <value>View info</value>
   </data>
+  <data name="Bpm" xml:space="preserve">
+    <value>BPM</value>
+  </data>
 </root>

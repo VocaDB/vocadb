@@ -12,32 +12,34 @@ namespace VocaDb.Model.Domain.Songs
 	{
 		Nothing = 0,
 
-		Albums = 1,
+		Albums = 1 << 0,
 
-		Artists = 2,
+		Artists = 1 << 1,
 
-		Length = 4,
+		Length = 1 << 2,
 
-		Lyrics = 8,
+		Lyrics = 1 << 3,
 
-		Names = 16,
+		Names = 1 << 4,
 
-		Notes = 32,
+		Notes = 1 << 5,
 
-		OriginalName = 64,
+		OriginalName = 1 << 6,
 
-		OriginalVersion = 128,
+		OriginalVersion = 1 << 7,
 
-		PublishDate = 256,
+		PublishDate = 1 << 8,
 
-		PVs = 512,
+		PVs = 1 << 9,
 
-		ReleaseEvent = 1024,
+		ReleaseEvent = 1 << 10,
 
-		SongType = 2048,
+		SongType = 1 << 11,
 
-		Status = 4096,
+		Status = 1 << 12,
 
-		WebLinks = 8192
+		WebLinks = 1 << 13,
+
+		Bpm = 1 << 14,
 	}
 }

@@ -7,6 +7,16 @@ namespace VocaDb.Migrations
 {
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2021_01_21_2200)]
+	public class SongBpm : AutoReversingMigration
+	{
+		public override void Up()
+		{
+			Create.Column("MinBpm").OnTable(TableNames.Songs).AsInt32().Nullable();
+			Create.Column("MaxBpm").OnTable(TableNames.Songs).AsInt32().Nullable();
+		}
+	}
+
 	[Migration(2020_12_03_2000)]
 	public class WebLinkDisabled : AutoReversingMigration
 	{

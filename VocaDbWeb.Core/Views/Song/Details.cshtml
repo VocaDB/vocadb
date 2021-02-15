@@ -249,6 +249,20 @@
 				</tr>
    }
 
+			@if (Model.MinBpm != null)
+			{
+				<tr>
+					<td>@R.DetailsStrings.Bpm</td>
+					<td>
+						@Model.MinBpm.Value
+						@if (Model.MaxBpm != null && Model.MaxBpm.Value > Model.MinBpm.Value)
+						{
+							@:- @Model.MaxBpm.Value
+						}
+					</td>
+				</tr>
+			}
+
 			@if (Model.Albums.Any()) {
 			<tr>
 				<td>@ViewRes.SharedStrings.Albums</td>

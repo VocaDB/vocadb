@@ -136,5 +136,9 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		/// 0 = no filtering (default).
 		/// </summary>
 		public int UserCollectionId { get; set; }
+
+		public int? MinBpm { get; set; }
+
+		public int? MaxBpm { get; set; }
 	}
 }
