@@ -1,6 +1,6 @@
 ﻿@using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Knockout
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.TagBaseContract>
+@model VocaDb.Model.DataContracts.Tags.TagBaseContract
 
 @{
 	PageProperties.Title = "Merge tag - " + Model.Name;
@@ -15,14 +15,14 @@
 @using (Html.BeginForm())
 {
 
-	@Html.Partial("Partials/Shared/_MergeEntryInfo")
+	<partial name="Partials/Shared/_MergeEntryInfo" />
 
 	<input type="hidden" name="targetTagId" id="targetTagId" data-bind="value: target.id" />
 
 	<br />
 	<div class="clearfix">
 		<div class="pull-left">
-			@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("tagAutoComplete", "target.entry", "target.name", "target.id", extraBindings: "tagFilter: tagFilter"))
+			<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("tagAutoComplete", "target.entry", "target.name", "target.id", extraBindings: "tagFilter: tagFilter"))" />
 		</div>
 		<div class="pull-left entry-field-inline-warning">
 			<div class="alert" data-bind="visible: validationError_targetIsNewer" style="display: none;">
@@ -44,7 +44,8 @@
 }
 
 @section BodyScripts {
-	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Tag/Merge.js")
+	<remikus path="/bundles/shared/edit.js" />
+	<remikus path="/bundles/Tag/Merge.js" />
 	<script type="text/javascript">
 
 		$(function () {

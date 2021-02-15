@@ -1,5 +1,5 @@
 ﻿@using VocaDb.Web.Helpers
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Tags.TagCategoryContract[]>
+@model VocaDb.Model.DataContracts.Tags.TagCategoryContract[]
 
 @{
 	PageProperties.Title = ViewRes.SharedStrings.Tags;
@@ -30,7 +30,7 @@
 
 		@foreach (var tag in category.Tags) {
 			<span class="tag" style="font-size: @(GetFontSizePercent(tag.UsageCount, avgUsageCount))%">
-				@Html.ActionLink(tag.Name, "DetailsById", new { id = tag.Id, slug = tag.UrlSlug }, new { title = tag.AdditionalNames, style = "font-size: " })
+				<a asp-action="DetailsById" asp-route-id="@(tag.Id)" asp-route-slug="@(tag.UrlSlug)" title="@(tag.AdditionalNames)" style="@("font-size: ")">@(tag.Name)</a>
 			</span>
 		}
 	</div>
@@ -59,7 +59,8 @@
 </div>
 
 @section BodyScripts {
-	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Tag/Index.js")
+	<remikus path="/bundles/shared/edit.js" />
+	<remikus path="/bundles/Tag/Index.js" />
 	<script type="text/javascript">
 
 		$(function () {

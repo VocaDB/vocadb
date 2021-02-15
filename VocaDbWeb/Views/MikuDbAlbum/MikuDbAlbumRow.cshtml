@@ -1,24 +1,27 @@
-﻿@using VocaDb.Web.Helpers
+﻿@using HtmlHelpers.BeginCollectionItemCore
+@using VocaDb.Web.Helpers
 @model VocaDb.Model.DataContracts.MikuDb.MikuDbAlbumContract
 
-@helper ImportedAlbumData(VocaDb.Model.DataContracts.MikuDb.ImportedAlbumDataContract album) {
+@{
+	void ImportedAlbumData(VocaDb.Model.DataContracts.MikuDb.ImportedAlbumDataContract album) {
 	
-	if (album != null) {
-		<p class="albumData">
-			Artists: @string.Join(", ", album.ArtistNames)<br />
-			@if (album.VocalistNames.Any()) {
-				<span>Vocalists: @string.Join(", ", album.VocalistNames)<br /></span>
-			}
-			@if (!string.IsNullOrEmpty(album.CircleName)) {
-				<span>Circle: @album.CircleName<br /></span>
-			}
-			@if (album.ReleaseYear != null) {
-				<span>Year: @album.ReleaseYear<br /></span>
-			}
-			<span>Imported: @Model.Created</span>
-		</p>
-	}
+		if (album != null) {
+			<p class="albumData">
+				Artists: @string.Join(", ", album.ArtistNames)<br />
+				@if (album.VocalistNames.Any()) {
+					<span>Vocalists: @string.Join(", ", album.VocalistNames)<br /></span>
+				}
+				@if (!string.IsNullOrEmpty(album.CircleName)) {
+					<span>Circle: @album.CircleName<br /></span>
+				}
+				@if (album.ReleaseYear != null) {
+					<span>Year: @album.ReleaseYear<br /></span>
+				}
+				<span>Imported: @Model.Created</span>
+			</p>
+		}
 
+	}
 }
 
 <tr>
@@ -42,7 +45,7 @@
 		</a>
 		<br />
 	</td>
-	<td>@ImportedAlbumData(Model.Data)</td>
+	<td>@{ ImportedAlbumData(Model.Data); }</td>
 	<td>
 		@if (Model.Data != null && Model.Data.Tracks.Any()) {
 			foreach (var track in Model.Data.Tracks) {

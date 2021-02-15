@@ -2,8 +2,8 @@
 
 using System.Linq;
 using System.Net;
-using System.Web.Mvc;
-using System.Web.SessionState;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using NLog;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.PVs;
@@ -15,14 +15,12 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Security;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Ext;
 
 namespace VocaDb.Web.Controllers
 {
-	[SessionState(SessionStateBehavior.Disabled)]
 	public class ExtController : ControllerBase
 	{
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
@@ -34,6 +32,7 @@ namespace VocaDb.Web.Controllers
 		private readonly EventQueries _eventQueries;
 		private readonly SongQueries _songService;
 		private readonly TagQueries _tagQueries;
+		private readonly PVHelper _pvHelper;
 
 		protected ActionResult Object<T>(T obj, DataFormat format) where T : class
 		{
@@ -52,8 +51,15 @@ namespace VocaDb.Web.Controllers
 			return base.Xml(content);
 		}
 
-		public ExtController(IEntryUrlParser entryUrlParser, IAggregatedEntryImageUrlFactory entryThumbPersister,
-			AlbumService albumService, ArtistService artistService, EventQueries eventQueries, SongQueries songService, TagQueries tagQueries)
+		public ExtController(
+			IEntryUrlParser entryUrlParser,
+			IAggregatedEntryImageUrlFactory entryThumbPersister,
+			AlbumService albumService,
+			ArtistService artistService,
+			EventQueries eventQueries,
+			SongQueries songService,
+			TagQueries tagQueries,
+			PVHelper pvHelper)
 		{
 			_entryUrlParser = entryUrlParser;
 			_entryThumbPersister = entryThumbPersister;
@@ -62,10 +68,11 @@ namespace VocaDb.Web.Controllers
 			_eventQueries = eventQueries;
 			_songService = songService;
 			_tagQueries = tagQueries;
+			_pvHelper = pvHelper;
 		}
 
 #if !DEBUG
-		[OutputCache(Duration = 600, VaryByParam = "songId;pvId;lang;w;h", VaryByHeader = "Accept-Language")]
+		[ResponseCache(Duration = 600, VaryByQueryKeys = new[] { "songId", "pvId", "lang", "w", "h" }, VaryByHeader = "Accept-Language")]
 #endif
 		public ActionResult EmbedSong(int songId = InvalidId, int pvId = InvalidId, int? w = null, int? h = null,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default)
@@ -84,10 +91,10 @@ namespace VocaDb.Web.Controllers
 
 			if (current == null)
 			{
-				current = PVHelper.PrimaryPV(song.PVs);
+				current = _pvHelper.PrimaryPV(song.PVs);
 			}
 
-			var viewModel = new EmbedSongViewModel
+			var viewModel = new EmbedSongViewModel(_pvHelper)
 			{
 				Song = song,
 				CurrentPV = current,
@@ -98,7 +105,7 @@ namespace VocaDb.Web.Controllers
 			return PartialView(viewModel);
 		}
 
-		public ActionResult EntryToolTip(string url, string callback)
+		public async Task<ActionResult> EntryToolTip(string url, string callback)
 		{
 			if (string.IsNullOrWhiteSpace(url))
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "URL must be specified");
@@ -116,19 +123,19 @@ namespace VocaDb.Web.Controllers
 			switch (entryId.EntryType)
 			{
 				case EntryType.Album:
-					data = RenderPartialViewToString("AlbumWithCoverPopupContent", _albumService.GetAlbum(id));
+					data = await RenderPartialViewToStringAsync("AlbumWithCoverPopupContent", _albumService.GetAlbum(id));
 					break;
 				case EntryType.Artist:
-					data = RenderPartialViewToString("ArtistPopupContent", _artistService.GetArtist(id));
+					data = await RenderPartialViewToStringAsync("ArtistPopupContent", _artistService.GetArtist(id));
 					break;
 				case EntryType.ReleaseEvent:
-					data = RenderPartialViewToString("_EventPopupContent", _eventQueries.GetOne(id, ContentLanguagePreference.Default, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series));
+					data = await RenderPartialViewToStringAsync("_EventPopupContent", _eventQueries.GetOne(id, ContentLanguagePreference.Default, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series));
 					break;
 				case EntryType.Song:
-					data = RenderPartialViewToString("SongPopupContent", _songService.GetSong(id));
+					data = await RenderPartialViewToStringAsync("SongPopupContent", _songService.GetSong(id));
 					break;
 				case EntryType.Tag:
-					data = RenderPartialViewToString("_TagPopupContent", _tagQueries.LoadTag(id, t =>
+					data = await RenderPartialViewToStringAsync("_TagPopupContent", _tagQueries.LoadTag(id, t =>
 						new TagForApiContract(t, _entryThumbPersister, ContentLanguagePreference.Default, TagOptionalFields.AdditionalNames | TagOptionalFields.MainPicture)));
 					break;
 			}
@@ -136,7 +143,7 @@ namespace VocaDb.Web.Controllers
 			return Json(data, callback);
 		}
 
-		public ActionResult OEmbed(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json, bool responsiveWrapper = false)
+		public async Task<ActionResult> OEmbed(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json, bool responsiveWrapper = false)
 		{
 			if (string.IsNullOrEmpty(url))
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "URL must be specified");
@@ -161,7 +168,7 @@ namespace VocaDb.Web.Controllers
 
 			if (responsiveWrapper)
 			{
-				html = RenderPartialViewToString("OEmbedResponsive", new OEmbedParams { Width = maxwidth, Height = maxheight, Src = src });
+				html = await RenderPartialViewToStringAsync("OEmbedResponsive", new OEmbedParams { Width = maxwidth, Height = maxheight, Src = src });
 			}
 			else
 			{
@@ -171,7 +178,7 @@ namespace VocaDb.Web.Controllers
 			return Object(new SongOEmbedResponse(song, maxwidth, maxheight, html), format);
 		}
 
-		public ActionResult OEmbedResponsive(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json)
+		public Task<ActionResult> OEmbedResponsive(string url, int maxwidth = 570, int maxheight = 400, DataFormat format = DataFormat.Json)
 		{
 			return OEmbed(url, maxwidth, maxheight, format, true);
 		}

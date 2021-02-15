@@ -1,7 +1,7 @@
 #nullable disable
 
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Tags;
@@ -17,7 +17,7 @@ namespace VocaDb.Web.Helpers
 {
 	public static class UrlHelperExtensions
 	{
-		private static string EntryDetails(UrlHelper urlHelper, EntryType entryType, int id, string urlSlug) => entryType switch
+		private static string EntryDetails(IUrlHelper urlHelper, EntryType entryType, int id, string urlSlug) => entryType switch
 		{
 			EntryType.DiscussionTopic => urlHelper.Action("Index", "Discussion", new { clientPath = $"topics/{id}" }),
 			EntryType.ReleaseEvent => urlHelper.Action("Details", "Event", new { id, slug = urlSlug }),
@@ -26,21 +26,21 @@ namespace VocaDb.Web.Helpers
 			_ => urlHelper.Action("Details", entryType.ToString(), new { id }),
 		};
 
-		public static string EntryDetails(this UrlHelper urlHelper, IEntryBase entryBase, string urlSlug = null)
+		public static string EntryDetails(this IUrlHelper urlHelper, IEntryBase entryBase, string urlSlug = null)
 		{
 			ParamIs.NotNull(() => entryBase);
 
 			return EntryDetails(urlHelper, entryBase.EntryType, entryBase.Id, urlSlug);
 		}
 
-		public static string EntryDetails(this UrlHelper urlHelper, EntryForApiContract entry)
+		public static string EntryDetails(this IUrlHelper urlHelper, EntryForApiContract entry)
 		{
 			ParamIs.NotNull(() => entry);
 
 			return EntryDetails(urlHelper, entry.EntryType, entry.Id, entry.UrlSlug);
 		}
 
-		public static string EntryIndex(this UrlHelper urlHelper, EntryTypeAndSubType fullEntryType)
+		public static string EntryIndex(this IUrlHelper urlHelper, EntryTypeAndSubType fullEntryType)
 		{
 			SearchRouteParams searchRouteParams = null;
 			switch (fullEntryType.EntryType)
@@ -70,37 +70,37 @@ namespace VocaDb.Web.Helpers
 			return "";
 		}
 
-		public static string SongDetails(this UrlHelper urlHelper, IEntryBase song, int? albumId = null)
+		public static string SongDetails(this IUrlHelper urlHelper, IEntryBase song, int? albumId = null)
 		{
 			ParamIs.NotNull(() => song);
 
 			return urlHelper.Action("Details", "Song", new { id = song.Id, albumId });
 		}
 
-		public static string StaticResource(this UrlHelper urlHelper, string url)
+		public static string StaticResource(this IUrlHelper urlHelper, string url)
 		{
 			return VocaUriBuilder.StaticResource(url);
 		}
 
-		public static string TagDetails(this UrlHelper urlHelper, TagBaseContract tagContract)
+		public static string TagDetails(this IUrlHelper urlHelper, TagBaseContract tagContract)
 		{
 			ParamIs.NotNull(() => tagContract);
 
 			return EntryDetails(urlHelper, EntryType.Tag, tagContract.Id, tagContract.UrlSlug);
 		}
 
-		public static string TagUrlForEntryType<TSubType>(this UrlHelper urlHelper, EntryType entryType, TSubType subType)
+		public static string TagUrlForEntryType<TSubType>(this IUrlHelper urlHelper, EntryType entryType, TSubType subType)
 			where TSubType : struct, Enum
 		{
 			return TagUrlForEntryType(urlHelper, EntryTypeAndSubType.Create(entryType, subType));
 		}
 
-		public static string TagUrlForEntryType(this UrlHelper urlHelper, EntryTypeAndSubType entryType)
+		public static string TagUrlForEntryType(this IUrlHelper urlHelper, EntryTypeAndSubType entryType)
 		{
 			return urlHelper.Action("DetailsByEntryType", "Tag", new { entryType = entryType.EntryType, subType = entryType.SubType });
 		}
 
-		public static string UserDetails(this UrlHelper urlHelper, IUser user)
+		public static string UserDetails(this IUrlHelper urlHelper, IUser user)
 		{
 			ParamIs.NotNull(() => user);
 

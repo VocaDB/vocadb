@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using ViewRes;
 using ViewRes.Album;
 using VocaDb.Model.DataContracts.Albums;
@@ -13,7 +14,6 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Album
 {
-	[PropertyModelBinder]
 	public class Create
 	{
 		public Create()
@@ -23,7 +23,7 @@ namespace VocaDb.Web.Models.Album
 		}
 
 		[Display(ResourceType = typeof(SharedStrings), Name = "Artists")]
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public IList<ArtistContract> Artists { get; set; }
 
 		[Display(ResourceType = typeof(CreateStrings), Name = "DiscType")]

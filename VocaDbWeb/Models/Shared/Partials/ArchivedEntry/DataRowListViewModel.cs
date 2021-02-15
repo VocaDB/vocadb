@@ -1,13 +1,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Web;
+using Microsoft.AspNetCore.Html;
 
 namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry
 {
 	public class DataRowListViewModel
 	{
-		public DataRowListViewModel(string name, IEnumerable<IHtmlString> rows, IEnumerable<IHtmlString> compareRows = null)
+		public DataRowListViewModel(string name, IEnumerable<IHtmlContent> rows, IEnumerable<IHtmlContent> compareRows = null)
 		{
 			Name = name;
 			Rows = rows;
@@ -16,8 +16,8 @@ namespace VocaDb.Web.Models.Shared.Partials.ArchivedEntry
 
 		public string Name { get; set; }
 
-		public IEnumerable<IHtmlString> Rows { get; set; }
+		public IEnumerable<IHtmlContent> Rows { get; set; }
 
-		public IEnumerable<IHtmlString> CompareRows { get; set; }
+		public IEnumerable<IHtmlContent> CompareRows { get; set; }
 	}
 }

@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Web.Models.Shared.Partials.Activityfeed
+﻿@using VocaDb.Web.Models.Shared.Partials.Activityfeed
 @using VocaDb.Web.Helpers
 @using Res = VocaDb.Web.Resources.Views.ActivityEntry.IndexStrings
 @inherits VocaDb.Web.Code.VocaDbPage
@@ -12,20 +11,20 @@
 
 <ul class="nav nav-pills">
 	<li class="active">
-		@Html.ActionLink(Res.AllActivity, "Index")
+		<a asp-action="Index">@(Res.AllActivity)</a>
 	</li>
 	@if (Login.IsLoggedIn) {
 		<li>
-			@Html.ActionLink(Res.FollowedArtists, "FollowedArtistActivity")
+			<a asp-action="FollowedArtistActivity">@(Res.FollowedArtists)</a>
 		</li>
 	}
 	<li>
-		@Html.ActionLink(Res.Comments, "Index", "Comment")
+		<a asp-action="Index" asp-controller="Comment">@(Res.Comments)</a>
 	</li>	
 </ul>
 
 <div data-bind="foreach: entries, show" class="js-cloak">
-	@Html.Partial("Partials/Activityfeed/_ActivityEntryKnockout", new ActivityEntryKnockoutViewModel("$parent.getEntryTypeName", "$parent.getActivityFeedEventName", "$parents[1].getChangedFieldNames", true))
+	<partial name="Partials/Activityfeed/_ActivityEntryKnockout" model="@(new ActivityEntryKnockoutViewModel("$parent.getEntryTypeName", "$parent.getActivityFeedEventName", "$parents[1].getChangedFieldNames", true))" />
 </div>
 
 <hr />
@@ -34,7 +33,7 @@
 </h3>
 
 @section BodyScripts {
-	@LaravelMixHelper.RenderScripts("~/bundles/ActivityEntry/Index.js")
+	<remikus path="/bundles/ActivityEntry/Index.js" />
 	<script type="text/javascript">
 		$(function () {
 

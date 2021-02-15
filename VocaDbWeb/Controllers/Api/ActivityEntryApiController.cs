@@ -1,7 +1,7 @@
 #nullable disable
 
 using System;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Activityfeed;
 using VocaDb.Model.DataContracts.Api;
@@ -10,13 +10,15 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtensions;
+using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
 	/// <summary>
 	/// API queries for activity feed.
 	/// </summary>
-	[RoutePrefix("api/activityEntries")]
+	[Route("api/activityEntries")]
+	[ApiController]
 	public class ActivityEntryApiController : ApiController
 	{
 		private const int DefaultMax = 50;
@@ -46,7 +48,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// Entries are always returned sorted from newest to oldest.
 		/// Activity for deleted entries is not returned.
 		/// </remarks>
-		[Route("")]
+		[HttpGet("")]
 		public PartialFindResult<ActivityEntryForApiContract> GetList(
 			DateTime? before = null,
 			DateTime? since = null,

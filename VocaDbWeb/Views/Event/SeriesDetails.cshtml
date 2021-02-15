@@ -1,10 +1,9 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Web.Code
+﻿@using VocaDb.Web.Code
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails
 @using VocaDb.Web.Models.Shared.Partials.Shared
 @using VocaDb.Web.Resources.Views.Event
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesDetailsContract>
+@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesDetailsContract
 
 @{
 
@@ -25,18 +24,18 @@
 
 @section Toolbar {
 	@if (Login.CanManageDb && Login.CanEdit(Model)) {
-		@Html.ActionLink(ViewRes.SharedStrings.Edit, "EditSeries", new { id = Model.Id }, new { id = "editEventLink" })
+		<a asp-action="EditSeries" asp-route-id="@(Model.Id)" id="@("editEventLink")">@(ViewRes.SharedStrings.Edit)</a>
 		@:
-		@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "SeriesVersions", new { id = Model.Id }, new { id = "viewVersions" })
+		<a asp-action="SeriesVersions" asp-route-id="@(Model.Id)" id="@("viewVersions")">@(ViewRes.EntryDetailsStrings.ViewModifications)</a>
 	}
 	@if (Login.CanManageDb) {
 		<a href="@Url.Action("Edit", new { seriesId = Model.Id != 0 ? (int?)Model.Id : null })" id="createEventLink">@ViewRes.Event.EventsBySeriesStrings.CreateEvent</a>
 	}	
-	@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
+	<partial name="Partials/Shared/_EntryStatusMessage" model="@(new EntryStatusMessageViewModel(Model.Status))" />
 }
 
 @if (Model.Deleted) {
-	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null))
+	<partial name="Partials/EntryDetails/_DeletedBanner" model="@(new DeletedBannerViewModel(null))" />
 }
 
 <div class="media">
@@ -57,7 +56,7 @@
 	</p>	
 	
 	@if (Model.WebLinks.Any()) {
-		@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.WebLinks, false))
+		<partial name="Partials/EntryDetails/_ExternalLinksList" model="@(new ExternalLinksListViewModel(Model.WebLinks, false))" />
 		<br />
 	}
 	
@@ -69,10 +68,12 @@
 	
 	<p>
 		<div class="inline-block">@ViewRes.SharedStrings.Tags:</div>
-		<div data-bind="with: tagUsages" class="entry-tag-usages inline-block">
-			@{ Html.RenderPartial("Partials/_TagList"); }
+		<div data-bind="with: tagUsages, visible: tagUsages.tagUsages().length" class="entry-tag-usages inline-block">
+			<partial name="Partials/_TagList" />
 		</div>
-		<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>	
+		<div>
+			<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
+		</div>
 	</p>
 </div>
 
@@ -80,7 +81,7 @@
 <ul>
 	@foreach (var ev in Model.Events) {
 		<li>
-			@Html.ActionLink(ev.Name, "Details", new { id = ev.Id, slug = ev.UrlSlug })
+			<a asp-action="Details" asp-route-id="@(ev.Id)" asp-route-slug="@(ev.UrlSlug)">@(ev.Name)</a>
 			@if (ev.Date != null) {
 				<small>(@ev.Date.Value.ToString("d"))</small>
 			}
@@ -89,11 +90,11 @@
 </ul>
 
 <div data-bind="with: tagsEditViewModel">
-	@{ Html.RenderPartial("Partials/_TagsEdit"); }
+	<partial name="Partials/_TagsEdit" />
 </div>
 
 @section BodyScripts {
-@LaravelMixHelper.RenderScripts("~/bundles/EventSeries/Details.js")
+<remikus path="/bundles/EventSeries/Details.js" />
 <script type="text/javascript">
 	$(function () {
 		$("#editEventLink").button({ icons: { primary: 'ui-icon-wrench' } });

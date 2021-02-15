@@ -5,7 +5,7 @@
 	<tr>
 		<td>@entry.Time.ToUniversalTime()</td>
 		<td>
-			@Html.Partial("Partials/User/_UserLinkOrName", new UserLinkOrNameViewModel(entry.User, entry.AgentName))
+			<partial name="Partials/User/_UserLinkOrName" model="@(new UserLinkOrNameViewModel(entry.User, entry.AgentName))" />
 		</td>
 		<td>
 			@Html.Raw(entry.Action)

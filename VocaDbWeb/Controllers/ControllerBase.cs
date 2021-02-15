@@ -3,26 +3,30 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
 using System.Net;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using NLog;
-using VocaDb.Model.DataContracts;
-using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Helpers;
-using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model;
+using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Images;
+using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Web;
+using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
 using VocaDb.Web.Helpers;
-using VocaDb.Model.Domain.Images;
 
 namespace VocaDb.Web.Controllers
 {
+	// TODO: implement
 	public class ControllerBase : Controller
 	{
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
@@ -52,7 +56,9 @@ namespace VocaDb.Web.Controllers
 
 		protected PagePropertiesData PageProperties => PagePropertiesData.Get(ViewBag);
 
-		protected IUserPermissionContext PermissionContext => MvcApplication.LoginManager;
+		protected IUserPermissionContext PermissionContext => HttpContext.RequestServices.GetRequiredService<IUserPermissionContext>();
+
+		protected Login Login => HttpContext.RequestServices.GetRequiredService<Login>();
 
 		protected string GetHostnameForValidHit()
 		{
@@ -61,7 +67,7 @@ namespace VocaDb.Web.Controllers
 
 		protected ActionResult NoId()
 		{
-			return HttpNotFound("No ID specified");
+			return NotFound("No ID specified");
 		}
 
 		protected void AddFormSubmissionError(string details)
@@ -74,15 +80,20 @@ namespace VocaDb.Web.Controllers
 		{
 			ParamIs.NotNull(() => contract);
 
-			// Allow images to be cached by public proxies, images shouldn't contain anything sensitive so this should be ok.
-			Response.Cache.SetCacheability(HttpCacheability.Public);
+			var cacheControl = new CacheControlHeaderValue
+			{
+				// Allow images to be cached by public proxies, images shouldn't contain anything sensitive so this should be ok.
+				Public = true,
+			};
 
-			Response.Cache.SetETag($"{contract.EntryType}{contract.EntryId}v{contract.Version}");
+			Response.Headers[HeaderNames.ETag] = $"{contract.EntryType}{contract.EntryId}v{contract.Version}";
 
 			// Cached version indicated by the "v" request parameter.
 			// If no version is specified, assume no caching.
-			if (contract.Version > 0 && !string.IsNullOrEmpty(Request.Params["v"]))
-				Response.Cache.SetMaxAge(PictureCacheDuration);
+			if (contract.Version > 0 && !string.IsNullOrEmpty(Request.Query["v"]))
+				cacheControl.MaxAge = PictureCacheDuration;
+
+			Response.GetTypedHeaders().CacheControl = cacheControl;
 
 			return Picture(contract.Picture, contract.Name);
 		}
@@ -108,11 +119,11 @@ namespace VocaDb.Web.Controllers
 			}
 		}
 
-		protected bool CheckUploadedPicture(HttpPostedFileBase pictureUpload, string fieldName)
+		protected bool CheckUploadedPicture(IFormFile pictureUpload, string fieldName)
 		{
 			bool errors = false;
 
-			if (pictureUpload.ContentLength > ImageHelper.MaxImageSizeBytes)
+			if (pictureUpload.Length > ImageHelper.MaxImageSizeBytes)
 			{
 				ModelState.AddModelError(fieldName, "Picture file is too large.");
 				errors = true;
@@ -130,18 +141,18 @@ namespace VocaDb.Web.Controllers
 		protected ActionResult HttpStatusCodeResult(HttpStatusCode code, string message)
 		{
 			Response.StatusCode = (int)code;
-			Response.StatusDescription = message;
+			// TODO: implement Response.StatusDescription = message;
 
 			return Content((int)code + ": " + message);
 		}
 
-		protected void ParseAdditionalPictures(HttpPostedFileBase mainPic, IList<EntryPictureFileContract> pictures)
+		protected void ParseAdditionalPictures(IFormFile mainPic, IList<EntryPictureFileContract> pictures)
 		{
 			ParamIs.NotNull(() => mainPic);
 			ParamIs.NotNull(() => pictures);
 
-			var additionalPics = Enumerable.Range(0, Request.Files.Count)
-				.Select(i => Request.Files.Get(i))
+			var additionalPics = Enumerable.Range(0, Request.Form.Files.Count)
+				.Select(i => Request.Form.Files[i])
 				.Where(f => f != null && f.FileName != mainPic.FileName)
 				.ToArray();
 
@@ -167,13 +178,13 @@ namespace VocaDb.Web.Controllers
 			CollectionHelper.RemoveAll(pictures, p => p.Id == 0 && p.UploadedFile == null);
 		}
 
-		protected EntryPictureFileContract ParsePicture(HttpPostedFileBase pictureUpload, string fieldName, ImagePurpose purpose)
+		protected EntryPictureFileContract ParsePicture(IFormFile pictureUpload, string fieldName, ImagePurpose purpose)
 		{
 			EntryPictureFileContract pictureData = null;
 
-			if (Request.Files.Count > 0 && pictureUpload != null && pictureUpload.ContentLength > 0)
+			if (Request.Form.Files.Count > 0 && pictureUpload != null && pictureUpload.Length > 0)
 			{
-				if (pictureUpload.ContentLength > ImageHelper.MaxImageSizeBytes)
+				if (pictureUpload.Length > ImageHelper.MaxImageSizeBytes)
 				{
 					ModelState.AddModelError(fieldName, "Picture file is too large.");
 					return null;
@@ -185,7 +196,7 @@ namespace VocaDb.Web.Controllers
 					return null;
 				}
 
-				pictureData = new EntryPictureFileContract(pictureUpload.InputStream, pictureUpload.ContentType, pictureUpload.ContentLength, purpose);
+				pictureData = new EntryPictureFileContract(pictureUpload.OpenReadStream(), pictureUpload.ContentType, (int)pictureUpload.Length, purpose);
 				pictureData.OriginalFileName = pictureUpload.FileName;
 			}
 
@@ -195,7 +206,7 @@ namespace VocaDb.Web.Controllers
 		protected ActionResult Picture(PictureContract pictureData, string title)
 		{
 			if (pictureData?.Bytes == null || string.IsNullOrEmpty(pictureData.Mime))
-				return File(Server.MapPath("~/Content/unknown.png"), "image/png");
+				return File(HttpContext.RequestServices.GetRequiredService<IHttpContext>().ServerPathMapper.MapPath("~/Content/unknown.png"), "image/png");
 
 			var ext = ImageHelper.GetExtensionFromMime(pictureData.Mime);
 
@@ -203,78 +214,29 @@ namespace VocaDb.Web.Controllers
 			{
 				//var encoded = Url.Encode(title);
 				// Note: there is no good way to encode content-disposition filename (see http://stackoverflow.com/a/216777)
-				Response.AddHeader("content-disposition", $"inline;filename=\"{title}{ext}\"");
+				Response.Headers.Add("content-disposition", $"inline;filename=\"{title}{ext}\"");
 			}
 
 			return File(pictureData.Bytes, pictureData.Mime);
 		}
 
-		protected ActionResult LowercaseJson(object obj)
-		{
-			return new JsonNetResult { Data = obj };
-		}
+		protected ActionResult LowercaseJson(object obj) => Content(JsonHelpers.Serialize(obj), "application/json");
 
 		protected new ActionResult Json(object obj)
 		{
 			return Content(JsonConvert.SerializeObject(obj), "application/json");
 		}
 
-		protected new ActionResult Json(object obj, string jsonPCallback)
-		{
-			if (string.IsNullOrEmpty(jsonPCallback))
-				return Json(obj);
-
-			return Content($"{jsonPCallback}({JsonConvert.SerializeObject(obj)})", "application/json");
-		}
-
-		protected string RenderPartialViewToString(string viewName, object model)
-		{
-			if (string.IsNullOrEmpty(viewName))
-				viewName = ControllerContext.RouteData.GetRequiredString("action");
-
-			ViewData.Model = model;
-
-			using (var sw = new StringWriter())
-			{
-				var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
-				var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
-				viewResult.View.Render(viewContext, sw);
-
-				return sw.GetStringBuilder().ToString();
-			}
-		}
+		protected Task<string> RenderPartialViewToStringAsync(string viewName, object model) => HttpContext.RequestServices.GetRequiredService<IViewRenderService>().RenderToStringAsync(viewName, model);
 
 		protected void RestoreErrorsFromTempData()
 		{
-			var list = TempData["ModelErrors"] as ModelStateList;
-
-			if (list == null)
-				return;
-
-			foreach (var state in list.ModelStates)
-			{
-				if (ModelState[state.Key] == null || !ModelState[state.Key].Errors.Any())
-				{
-					foreach (var err in state.Errors)
-					{
-						if (err.Exception != null)
-							ModelState.AddModelError(state.Key, err.Exception);
-						else
-							ModelState.AddModelError(state.Key, err.ErrorMessage);
-					}
-				}
-			}
+			// TODO: implement
 		}
 
 		protected void SaveErrorsToTempData()
 		{
-			var list = new ModelStateList
-			{
-				ModelStates
-				= ViewData.ModelState.Select(m => new ModelStateErrors(m.Key, m.Value)).ToArray()
-			};
-
-			TempData["ModelErrors"] = list;
+			// TODO: implement
 		}
 
 		protected void SetSearchEntryType(EntryType entryType)
@@ -289,33 +251,8 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrEmpty(content))
 				return new EmptyResult();
 
-			return new ContentResult
-			{
-				ContentType = "text/xml",
-				Content = content,
-				ContentEncoding = Encoding.UTF8
-			};
+			return Content(content, "text/xml", Encoding.UTF8);
 		}
-	}
-
-	class ModelStateList
-	{
-		public ModelStateErrors[] ModelStates;
-	}
-
-	class ModelStateErrors
-	{
-		public ModelStateErrors() { }
-
-		public ModelStateErrors(string key, ModelState state)
-		{
-			Key = key;
-			Errors = state.Errors;
-		}
-
-		public string Key { get; set; }
-
-		public ModelErrorCollection Errors { get; set; }
 	}
 
 	public enum DataFormat

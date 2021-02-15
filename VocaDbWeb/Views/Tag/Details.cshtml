@@ -1,4 +1,5 @@
-﻿@using VocaDb.Model
+﻿@using Microsoft.AspNetCore.Html
+@using VocaDb.Model
 @using VocaDb.Model.DataContracts.Tags
 @using VocaDb.Model.Domain
 @using Res = ViewRes.Tag.DetailsStrings
@@ -17,7 +18,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Song
 @using VocaDb.Web.Models.Shared.Partials.Tag
 @using SharedRes = ViewRes.SharedStrings
-@inherits VocaDb.Web.Code.VocaDbPage<TagDetailsContract>
+@model TagDetailsContract
 
 @{
 
@@ -42,13 +43,13 @@
 }
 
 @section Head {
-	@Html.Partial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties))
+	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
 	<link rel="canonical" href="@url" />
 }
 
 @section BodyScripts {
 	<script src="https://code.highcharts.com/highcharts.js" type="text/javascript"></script>
-	@LaravelMixHelper.RenderScripts("~/bundles/Tag/Details.js")
+	<remikus path="/bundles/Tag/Details.js" />
 	<script type="text/javascript">
 
 		$(function () {
@@ -79,16 +80,19 @@
 	<a href="#" data-bind="click: followTag, jqButton: { icon: 'ui-icon-plus' }, visible: !isFollowed(), disable: !isLoggedIn">@Res.FollowTag</a>
 	<a href="#" data-bind="click: unfollowTag, jqButton: { icon: 'ui-icon-close' }, visible: isFollowed()">@Res.UnfollowTag</a>
 
-	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editTagLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
-	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	<a asp-action="Edit" asp-route-id="@(Model.Id)" id="@("editTagLink")" class="@((Login.CanEdit(Model) ? "" : "disabled"))">@(ViewRes.SharedStrings.Edit)</a>
+	<a asp-action="Versions" asp-route-id="@(Model.Id)" id="@("viewVersions")">@(ViewRes.EntryDetailsStrings.ViewModifications)</a>
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
-	@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
+	<partial name="Partials/Shared/_EntryStatusMessage" model="@(new EntryStatusMessageViewModel(Model.Status))" />
 }
 
-@helper NicoTagLink(string nicoTag) {<a href="http://www.nicovideo.jp/tag/@nicoTag" class="extLink">@nicoTag</a>}
+@{
+	@* REVIEW *@
+	Func<string, IHtmlContent> NicoTagLink = @<text><a href="http://www.nicovideo.jp/tag/@item" class="extLink">@item</a></text>;
+}
 
 @if (Model.Deleted) {
-	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null))
+	<partial name="Partials/EntryDetails/_DeletedBanner" model="@(new DeletedBannerViewModel(null))" />
 }
 
 <div class="well well-transparent">
@@ -103,16 +107,16 @@
 		<div class="media-body">
 			@if (!Model.Description.IsEmpty) {
 				<div class="entry-description" data-bind="with: description">
-					@{ Html.RenderPartial("Partials/_EnglishTranslatedString", new EnglishTranslatedStringViewModel(Model.Description, 2100, 2000)); }
+					<partial name="Partials/_EnglishTranslatedString" model="@(new EnglishTranslatedStringViewModel(Model.Description, 2100, 2000))" />
 				</div>
 			}
 
 			@if (Model.RelatedTags.Any()) {
-				<p>@Res.RelatedTags: @Html.Partial("Partials/Tag/_TagList", new TagListViewModel(Model.RelatedTags, tooltip: true))</p>
+				<p>@Res.RelatedTags: <partial name="Partials/Tag/_TagList" model="@(new TagListViewModel(Model.RelatedTags, tooltip: true))" /></p>
 			}
 
 			@if (Model.WebLinks.Any()) {
-				@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.WebLinks, false))
+				<partial name="Partials/EntryDetails/_ExternalLinksList" model="@(new ExternalLinksListViewModel(Model.WebLinks, false))" />
 				<br />
 			}
 			
@@ -154,7 +158,7 @@
 
 			<p>@string.Format(Res.FollowCount, Model.FollowerCount)</p>
 
-			<p>@ViewRes.EntryDetailsStrings.AdditionDate: @Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(Model.CreateDate))</p>
+			<p>@ViewRes.EntryDetailsStrings.AdditionDate: <partial name="Partials/Shared/_UniversalTimeLabel" model="@(new UniversalTimeLabelViewModel(Model.CreateDate))" /></p>
 
 			<br />
 
@@ -188,7 +192,7 @@
 
 			@if (Model.Stats.SongListCount > 0) {
 				<div>
-					@Html.ActionLink(Res.AllSongLists + " (" + Model.Stats.SongListCount + ")", "Featured", "SongList", new { tagId = Model.Id }, null)
+					<a asp-action="Featured" asp-controller="SongList" asp-route-tagId="@(Model.Id)">@(Res.AllSongLists + " (" + Model.Stats.SongListCount + ")")</a>
 				</div>
 			}
 		</div>
@@ -197,76 +201,76 @@
 
 @if (Model.Stats.Artists.Any()) {
 	<div class="well well-transparent">
-		@Html.Partial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id))))
+		<partial name="Partials/Shared/_ShowMore" model="@(new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id))))" />
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Artists(tagId: Model.Id))">
 				@Res.TopArtists
 				<small>(@Model.Stats.ArtistCount @SharedRes.Total)</small>
 			</a>
 		</h3>
-		@Html.Partial("Partials/Artist/_ArtistGrid", new ArtistGridViewModel(Model.Stats.Artists.Select(a => a), 2, true))
+		<partial name="Partials/Artist/_ArtistGrid" model="@(new ArtistGridViewModel(Model.Stats.Artists.Select(a => a), 2, true))" />
 	</div>
 }
 
 @if (Model.Stats.Albums.Any()) {
 	<div class="well well-transparent">
-		@Html.Partial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id))))
+		<partial name="Partials/Shared/_ShowMore" model="@(new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id))))" />
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Albums(tagId: Model.Id))">
 				@Res.TopAlbums
 				<small>(@Model.Stats.AlbumCount @SharedRes.Total)</small>
 			</a>
 		</h3>
-		@Html.Partial("Partials/Album/_AlbumGrid", new AlbumGridViewModel(Model.Stats.Albums.Select(a => a), 2, false, false, true))
+		<partial name="Partials/Album/_AlbumGrid" model="@(new AlbumGridViewModel(Model.Stats.Albums.Select(a => a), 2, false, false, true))" />
 	</div>
 }
 
 @if (Model.Stats.Songs.Any()) {
 	<div class="well well-transparent">
-		@Html.Partial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id))))
+		<partial name="Partials/Shared/_ShowMore" model="@(new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id))))" />
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Songs(tagId: Model.Id))">
 				@Res.TopSongs
 				<small>(@Model.Stats.SongCount @SharedRes.Total)</small>
 			</a>
 		</h3>
-		@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.Stats.Songs.Select(s => s), 2, true))
+		<partial name="Partials/Song/_SongGrid" model="@(new SongGridViewModel(Model.Stats.Songs.Select(s => s), 2, true))" />
 	</div>
 }
 
 
 @if (Model.Stats.EventSeries.Any()) {
 	<div class="well well-transparent">
-		@Html.Partial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))))
+		<partial name="Partials/Shared/_ShowMore" model="@(new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))))" />
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))">
 				@Res.EventSeries
 			</a>
 		</h3>
-		@Html.Partial("Partials/Shared/_EventSeriesThumbs", new EventSeriesThumbsViewModel(Model.Stats.EventSeries))
+		<partial name="Partials/Shared/_EventSeriesThumbs" model="@(new EventSeriesThumbsViewModel(Model.Stats.EventSeries))" />
 	</div>
 }
 
 @if (Model.Stats.Events.Any()) {
 	<div class="well well-transparent">
-		@Html.Partial("Partials/Shared/_ShowMore", new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))))
+		<partial name="Partials/Shared/_ShowMore" model="@(new ShowMoreViewModel(href: Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))))" />
 		<h3>
 			<a href="@Url.Action("Index", "Search", UrlMapper.Search.Events(tagId: Model.Id))">
 				@Res.TopEvents
 				<small>(@Model.Stats.EventCount @SharedRes.Total)</small>
 			</a>
 		</h3>
-		@Html.Partial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model.Stats.Events, ImageSize.TinyThumb))
+		<partial name="Partials/Shared/_EventThumbs" model="@(new EventThumbsViewModel(Model.Stats.Events, ImageSize.TinyThumb))" />
 	</div>
 }
 
 @if (related.Any()) {
 	<div class="well well-transparent">
 		@if (Model.Siblings.Any()) {
-			<p>@Res.Siblings: @Html.Partial("Partials/Tag/_TagList", new TagListViewModel(Model.Siblings))</p>
+			<p>@Res.Siblings: <partial name="Partials/Tag/_TagList" model="@(new TagListViewModel(Model.Siblings))" /></p>
 		}
 		@if (Model.Children.Any()) {
-			<p>@Res.Children: @Html.Partial("Partials/Tag/_TagList", new TagListViewModel(Model.Children))</p>
+			<p>@Res.Children: <partial name="Partials/Tag/_TagList" model="@(new TagListViewModel(Model.Children))" /></p>
 		}
 	</div>
 }
@@ -281,7 +285,7 @@
 	</ul>
 
 	<div id="latestCommentsTab">
-		@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3, pagination: false))
+		<partial name="Partials/Comment/_EditableComments" model="@(new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false, commentsBinding: "topComments", newCommentRows: 3, pagination: false))" />
 		<!-- ko ifnot: comments().length -->
 		<p>@ViewRes.EntryDetailsStrings.NoComments</p>
 		<!-- /ko -->
@@ -291,9 +295,9 @@
 	</div>
 
 	<div id="discussionTab">
-		@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false))
+		<partial name="Partials/Comment/_EditableComments" model="@(new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), well: false))" />
 	</div>
 
 </div>
 
-@Html.Partial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel())
+<partial name="Partials/EntryDetails/_ReportEntryPopupKnockout" model="@(new ReportEntryPopupKnockoutViewModel())" />

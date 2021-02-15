@@ -1,6 +1,6 @@
 ﻿@using VocaDb.Web.Code
 @using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.Versions<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesContract>>
+@model VocaDb.Web.Models.Shared.Versions<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventSeriesContract>
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Entry.Name;
@@ -11,6 +11,6 @@
 	};
 }
 
-@Html.Partial("Partials/ArchivedEntry/_CurrentVersionMessage", new CurrentVersionMessageViewModel(Model.Entry.Version, Model.Entry.Status))
+<partial name="Partials/ArchivedEntry/_CurrentVersionMessage" model="@(new CurrentVersionMessageViewModel(Model.Entry.Version, Model.Entry.Status))" />
 
-@Html.Partial("Partials/ArchivedEntry/_ArchivedObjectVersions", new ArchivedObjectVersionsViewModel(Model.ArchivedVersions, id => Url.Action("ViewSeriesVersion", new { id = id })))
+<partial name="Partials/ArchivedEntry/_ArchivedObjectVersions" model="@(new ArchivedObjectVersionsViewModel(Model.ArchivedVersions, id => Url.Action("ViewSeriesVersion", new { id = id })))" />

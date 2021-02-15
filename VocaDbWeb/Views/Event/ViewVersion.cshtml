@@ -3,7 +3,7 @@
 @using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails
 @using VocaDb.Web.Models.Shared.Partials.Event
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.ReleaseEvents.ArchivedEventVersionDetailsContract>>
+@model VocaDb.Web.Models.Shared.ViewVersion<VocaDb.Model.DataContracts.ReleaseEvents.ArchivedEventVersionDetailsContract>
 
 @{
 
@@ -29,15 +29,15 @@
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 	@if (Login.CanViewHiddenRevisions) {
 		if (Model.Entry.ArchivedVersion.Hidden) {
-			@Html.ActionLink(ViewRes.ViewVersionStrings.UnhideVersion, "UpdateVersionVisibility", new { archivedVersionId = Model.Entry.ArchivedVersion.Id, hidden = false }, new { id = "showLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmUnhide) })
+			<a asp-action="UpdateVersionVisibility" asp-route-archivedVersionId="@(Model.Entry.ArchivedVersion.Id)" asp-route-hidden="@(false)" id="@("showLink")" onclick="@(string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmUnhide))">@(ViewRes.ViewVersionStrings.UnhideVersion)</a>
 		} else {
-			@Html.ActionLink(ViewRes.ViewVersionStrings.HideVersion, "UpdateVersionVisibility", new { archivedVersionId = Model.Entry.ArchivedVersion.Id, hidden = true }, new { id = "hideLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmHide) })
+			<a asp-action="UpdateVersionVisibility" asp-route-archivedVersionId="@(Model.Entry.ArchivedVersion.Id)" asp-route-hidden="@(true)" id="@("hideLink")" onclick="@(string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmHide))">@(ViewRes.ViewVersionStrings.HideVersion)</a>
 		}
 	}
 }
 
 @if (Model.Entry.ArchivedVersion.Hidden) {
-	@Html.Partial("Partials/EntryDetails/_HiddenBanner")
+	<partial name="Partials/EntryDetails/_HiddenBanner" />
 }
 
 @if (Model.Entry.ComparableVersions.Any()) {
@@ -47,11 +47,11 @@
 	}
 }
 
-@Html.Partial("Partials/ArchivedEntry/_ArchivedObjectVersionProperties", new ArchivedObjectVersionPropertiesViewModel(Model.Version(Model.Entry.ArchivedVersion), Model.Version(Model.Entry.ComparedVersion)))
+<partial name="Partials/ArchivedEntry/_ArchivedObjectVersionProperties" model="@(new ArchivedObjectVersionPropertiesViewModel(Model.Version(Model.Entry.ArchivedVersion), Model.Version(Model.Entry.ComparedVersion)))" />
 
-@Html.Partial("Partials/Event/_PrintArchivedEventData", new PrintArchivedEventDataViewModel(Model.Entry.Versions))
+<partial name="Partials/Event/_PrintArchivedEventData" model="@(new PrintArchivedEventDataViewModel(Model.Entry.Versions))" />
 
-@Html.Partial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel())
+<partial name="Partials/EntryDetails/_ReportEntryVersionPopupKnockout" model="@(new ReportEntryVersionPopupKnockoutViewModel())" />
 
 @section BodyScripts {
 	<script type="text/javascript">

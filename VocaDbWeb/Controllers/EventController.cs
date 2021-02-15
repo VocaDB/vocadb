@@ -2,28 +2,27 @@
 
 using System;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
-using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Service;
 using VocaDb.Model.DataContracts.ReleaseEvents;
-using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service;
 using VocaDb.Model.Service.Exceptions;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
-using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Events;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Event;
 using VocaDb.Web.Models.Shared;
-using System.Threading.Tasks;
 
 namespace VocaDb.Web.Controllers
 {
@@ -120,7 +119,7 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public async Task<ActionResult> Edit(EventEdit model, HttpPostedFileBase pictureUpload = null)
+		public async Task<ActionResult> Edit(EventEdit model, IFormFile pictureUpload = null)
 		{
 			ActionResult RenderEdit()
 			{
@@ -188,7 +187,7 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public ActionResult EditSeries(SeriesEdit model, HttpPostedFileBase pictureUpload = null)
+		public ActionResult EditSeries(SeriesEdit model, IFormFile pictureUpload = null)
 		{
 			ActionResult RenderEdit()
 			{
@@ -268,13 +267,13 @@ namespace VocaDb.Web.Controllers
 			return View(releaseEvent);
 		}
 
-		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
+		[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600)]
 		public ActionResult PopupContent(
 			int id = InvalidId,
 			string culture = InterfaceLanguage.DefaultCultureCode)
 		{
 			if (id == InvalidId)
-				return HttpNotFound();
+				return NotFound();
 
 			var releaseEvent = _queries.Load(id, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series);
 			return PartialView("_EventPopupContent", releaseEvent);

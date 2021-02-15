@@ -4,7 +4,7 @@
 @using VocaDb.Web.Models.Shared.Partials.Song
 @using VocaDb.Web.Models.SongLists
 @using Res = ViewRes.SongList.FeaturedStrings
-@inherits VocaDb.Web.Code.VocaDbPage<FeaturedViewModel>
+@model FeaturedViewModel
 
 @{
     PageProperties.Title = ViewRes.SharedStrings.FeaturedSongLists;	
@@ -13,10 +13,10 @@
 
 @section Toolbar {
 	@if (Login.Manager.HasPermission(PermissionToken.EditFeaturedLists)) {
-		@Html.ActionLink(ViewRes.User.DetailsStrings.CreateNewList, "Edit", null, new { id = "createLink" })
+		<a asp-action="Edit" id="@("createLink")">@(ViewRes.User.DetailsStrings.CreateNewList)</a>
 	}
 	@if (Login.Manager.HasPermission(PermissionToken.EditProfile)) {
-		@Html.ActionLink(Res.Import, "Import", null, new { id = "importLink" })
+		<a asp-action="Import" id="@("importLink")">@(Res.Import)</a>
 	}
 }
 
@@ -31,9 +31,9 @@
 @foreach (var cat in categories) {
 <div data-bind="visible: category() == '@cat.Id', with: categories['@cat.Id'], show" class="js-cloak">
 		
-	@{ Html.RenderPartial("Partials/_SongListsFilters"); }
+	<partial name="Partials/_SongListsFilters" />
 
-	@Html.Partial("Partials/Song/_SongListsKnockout", new SongListsKnockoutViewModel("items", groupByYear: true))
+	<partial name="Partials/Song/_SongListsKnockout" model="@(new SongListsKnockoutViewModel("items", groupByYear: true))" />
 
 	<h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
 
@@ -41,7 +41,7 @@
 }
 
 @section BodyScripts {
-@LaravelMixHelper.RenderScripts("~/bundles/SongList/Featured.js")
+<remikus path="/bundles/SongList/Featured.js" />
 <script type="text/javascript">
 	
 	moment.locale('@Culture');

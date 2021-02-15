@@ -1,8 +1,9 @@
 #nullable disable
 
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Web.Controllers;
 using VocaDb.Web.Models.Artist;
@@ -16,29 +17,29 @@ namespace VocaDb.Tests.Web.Controllers
 	public class ArtistControllerTests
 	{
 		private ArtistController _controller;
-		private HttpResponseBase _response;
+		private HttpResponse _response;
 
 		[TestInitialize]
 		public void SetUp()
 		{
 			_controller = new ArtistController(null, null, null);
 
-			var responseMock = new Moq.Mock<HttpResponseBase>();
+			var responseMock = new Moq.Mock<HttpResponse>();
 			responseMock.SetupProperty(m => m.StatusCode);
-			responseMock.SetupProperty(m => m.StatusDescription);
 			_response = responseMock.Object;
 
-			var context = new Moq.Mock<HttpContextBase>();
+			var context = new Moq.Mock<HttpContext>();
 			context.SetupGet(m => m.Response).Returns(_response);
-			var controllerContext = new Moq.Mock<ControllerContext>();
-			controllerContext.SetupGet(m => m.HttpContext).Returns(context.Object);
-			_controller.ControllerContext = controllerContext.Object;
+			var controllerContextMock = new Moq.Mock<ControllerContext>();
+			var controllerContext = controllerContextMock.Object;
+			controllerContext.HttpContext = context.Object;
+			_controller.ControllerContext = controllerContext;
 		}
 
 		[TestMethod]
-		public void Edit_ModelIsNull()
+		public async Task Edit_ModelIsNull()
 		{
-			var result = _controller.Edit(new ArtistEditViewModel());
+			var result = await _controller.Edit(new ArtistEditViewModel()) as ContentResult;
 
 			Assert.IsNotNull(result, "result");
 			Assert.AreEqual((int)HttpStatusCode.BadRequest, _response.StatusCode, "Response status code");
@@ -49,7 +50,7 @@ namespace VocaDb.Tests.Web.Controllers
 		{
 			var result = _controller.ViewVersion();
 
-			Assert.IsInstanceOfType(result, typeof(HttpNotFoundResult));
+			Assert.IsInstanceOfType(result, typeof(NotFoundObjectResult));
 		}
 	}
 }

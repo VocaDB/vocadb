@@ -1,7 +1,7 @@
 ﻿@using VocaDb.Model.Domain.Security
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Shared
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.UserEdit>
+@model VocaDb.Web.Models.UserEdit
 
 @{
 	PageProperties.Title = "Edit user - " + Model.OldName;
@@ -18,7 +18,7 @@
 }
 
 @using(Html.BeginForm()) {	
-	@Html.Partial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel("Unable to edit user."/* TODO: localize */))
+	<partial name="Partials/Shared/_ValidationSummaryDiv" model="@(new ValidationSummaryDivViewModel("Unable to edit user."/* TODO: localize */))" />
 	
 	@Html.HiddenFor(m => m.Id)
 
@@ -52,7 +52,7 @@
 	<fieldset>
 		<legend>Additional permissions</legend>
 		@foreach (var entry in Model.Permissions) {	 
-			Html.RenderPartial("PermissionEditRow", entry);
+			<partial name="PermissionEditRow" model="@(entry)" />
 		}
 	</fieldset>
 	        
@@ -63,14 +63,14 @@
 		<table>
 			<tbody id="ownedArtistsTableBody">
 				@foreach (var entry in Model.OwnedArtists) {
-					Html.RenderPartial("OwnedArtistForUserEditRow", entry);
+					<partial name="OwnedArtistForUserEditRow" model="@(entry)" />
 				}				
 			</tbody>			
 		</table>
-		@Html.Partial("Partials/Shared/_EntrySearchNameBox", new EntrySearchNameBoxViewModel("ownedArtistAddName"))
+		<partial name="Partials/Shared/_EntrySearchNameBox" model="@(new EntrySearchNameBoxViewModel("ownedArtistAddName"))" />
 	</fieldset>
 		
-	@Html.Partial("Partials/Shared/_SaveBtn")
+	<partial name="Partials/Shared/_SaveBtn" />
 	
 }
 

@@ -1,7 +1,10 @@
 #nullable disable
 
-using System.Web;
-using System.Web.Mvc;
+using System.Threading;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.DependencyInjection;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Utils;
@@ -11,20 +14,22 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Code
 {
-	public abstract class VocaDbPage<TModel> : WebViewPage<TModel>
+	public abstract class VocaDbPage<TModel> : RazorPage<TModel>
 	{
-		public BrandableStringsManager BrandableStrings => DependencyResolver.Current.GetService<BrandableStringsManager>();
+		public BrandableStringsManager BrandableStrings => Context.RequestServices.GetRequiredService<BrandableStringsManager>();
 
-		public VdbConfigManager Config => DependencyResolver.Current.GetService<VdbConfigManager>();
+		public VdbConfigManager Config => Context.RequestServices.GetRequiredService<VdbConfigManager>();
 
 		/// <summary>
 		/// Current language preference as integer.
 		/// </summary>
 		public int LanguagePreferenceInt => (int)UserContext.LanguagePreference;
 
-		public MarkdownParser MarkdownParser => DependencyResolver.Current.GetService<MarkdownParser>();
+		public MarkdownParser MarkdownParser => Context.RequestServices.GetRequiredService<MarkdownParser>();
 
 		public PagePropertiesData PageProperties => PagePropertiesData.Get(ViewBag);
+
+		private IUrlHelper Url => Context.RequestServices.GetRequiredService<IUrlHelper>();
 
 		/// <summary>
 		/// Relative path to application root.
@@ -55,24 +60,32 @@ namespace VocaDb.Web.Code
 			return val.HasValue ? val.ToString() : "null";
 		}
 
-		public IHtmlString ToJS(string str, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(str, lowerCase, dateTimeConverter);
+		public IHtmlContent ToJS(string str, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(str, lowerCase, dateTimeConverter);
 
-		public IHtmlString ToJS(object obj, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(obj, lowerCase, dateTimeConverter);
+		public IHtmlContent ToJS(object obj, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(obj, lowerCase, dateTimeConverter);
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
-		public IUserPermissionContext UserContext => DependencyResolver.Current.GetService<IUserPermissionContext>();
+		public IUserPermissionContext UserContext => Context.RequestServices.GetRequiredService<IUserPermissionContext>();
+
+		// Code from: https://github.com/aspnet/AspNetWebStack/blob/749384689e027a2fcd29eb79a9137b94cea611a8/src/System.Web.WebPages/WebPageRenderingBase.cs#L178
+		public string Culture => Thread.CurrentThread.CurrentCulture.Name;
+
+		// Code from: https://github.com/aspnet/AspNetWebStack/blob/749384689e027a2fcd29eb79a9137b94cea611a8/src/System.Web.WebPages/WebPageRenderingBase.cs#L192
+		public string UICulture => Thread.CurrentThread.CurrentUICulture.Name;
 	}
 
-	public abstract class VocaDbPage : WebViewPage
+	public abstract class VocaDbPage : RazorPage
 	{
-		public BrandableStringsManager BrandableStrings => DependencyResolver.Current.GetService<BrandableStringsManager>();
+		public BrandableStringsManager BrandableStrings => Context.RequestServices.GetRequiredService<BrandableStringsManager>();
 
-		public VdbConfigManager Config => DependencyResolver.Current.GetService<VdbConfigManager>();
+		public VdbConfigManager Config => Context.RequestServices.GetRequiredService<VdbConfigManager>();
 
 		public int LanguagePreferenceInt => (int)UserContext.LanguagePreference;
 
 		public PagePropertiesData PageProperties => PagePropertiesData.Get(ViewBag);
+
+		private IUrlHelper Url => Context.RequestServices.GetRequiredService<IUrlHelper>();
 
 		public string RootPath => Url.Content("~/");
 
@@ -91,12 +104,18 @@ namespace VocaDb.Web.Code
 			return val.HasValue ? val.ToString() : "null";
 		}
 
-		public IHtmlString ToJS(string str, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(str, lowerCase, dateTimeConverter);
+		public IHtmlContent ToJS(string str, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(str, lowerCase, dateTimeConverter);
 
-		public IHtmlString ToJS(object obj, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(obj, lowerCase, dateTimeConverter);
+		public IHtmlContent ToJS(object obj, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(obj, lowerCase, dateTimeConverter);
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
-		public IUserPermissionContext UserContext => DependencyResolver.Current.GetService<IUserPermissionContext>();
+		public IUserPermissionContext UserContext => Context.RequestServices.GetRequiredService<IUserPermissionContext>();
+
+		// Code from: https://github.com/aspnet/AspNetWebStack/blob/749384689e027a2fcd29eb79a9137b94cea611a8/src/System.Web.WebPages/WebPageRenderingBase.cs#L178
+		public string Culture => Thread.CurrentThread.CurrentCulture.Name;
+
+		// Code from: https://github.com/aspnet/AspNetWebStack/blob/749384689e027a2fcd29eb79a9137b94cea611a8/src/System.Web.WebPages/WebPageRenderingBase.cs#L192
+		public string UICulture => Thread.CurrentThread.CurrentUICulture.Name;
 	}
 }

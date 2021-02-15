@@ -1,39 +1,55 @@
 #nullable disable
 
 using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Net.Http.Formatting;
 using System.Resources;
-using System.Web.Http;
-using System.Web.Http.Controllers;
+using AspNetCore.CacheOutput;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using VocaDb.Model.Domain;
 using VocaDb.Web.Resources.Domain.ReleaseEvents;
-using WebApi.OutputCache.V2;
+using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
 	/// <summary>
 	/// Loads localized string resources.
 	/// </summary>
-	[RoutePrefix("api/resources")]
+	[Route("api/resources")]
 	[DefaultCasingConfig]
+	[ApiController]
 	public class ResourcesApiController : ApiController
 	{
-		class DefaultCasingConfig : Attribute, IControllerConfiguration
+		// Code from: https://stackoverflow.com/questions/56127510/aspnet-core-input-output-json-serialization-settings-at-controller-level/56127866#56127866
+		[Obsolete]
+		class DefaultCasingConfig : ActionFilterAttribute
 		{
-			public void Initialize(HttpControllerSettings controllerSettings, HttpControllerDescriptor controllerDescriptor)
+			public override void OnResultExecuting(ResultExecutingContext context)
 			{
-				controllerSettings.Formatters.Clear();
-				controllerSettings.Formatters.Add(new JsonMediaTypeFormatter());
-				controllerSettings.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new DefaultContractResolver();
+				if (context.Result is ObjectResult objectResult)
+				{
+					var serializerSettings = new JsonSerializerSettings
+					{
+						ContractResolver = new DefaultContractResolver(),
+					};
+					// Code from: https://github.com/aspnet/Mvc/issues/8128#issuecomment-407214518
+					var options = context.HttpContext.RequestServices.GetRequiredService<IOptions<MvcOptions>>();
+					var mvcOptions = options.Value;
+					var jsonFormatter = new NewtonsoftJsonOutputFormatter(serializerSettings, ArrayPool<char>.Shared, mvcOptions);
+					objectResult.Formatters.Add(jsonFormatter);
+				}
 			}
 		}
 
-		private const int CacheDuration = Constants.SecondsInADay;
+		private const int CacheDuration = Model.Domain.Constants.SecondsInADay;
 
 		private readonly Dictionary<string, ResourceManager> allSets = new()
 		{
@@ -52,6 +68,7 @@ namespace VocaDb.Web.Controllers.Api
 			{ "albumSortRuleNames", global::Resources.AlbumSortRuleNames.ResourceManager },
 			{ "artistSortRuleNames", global::Resources.ArtistSortRuleNames.ResourceManager },
 			{ "artistTypeNames", Model.Resources.ArtistTypeNames.ResourceManager },
+			{ "commentSortRuleNames", global::Resources.CommentSortRuleNames.ResourceManager },
 			{ "contentLanguageSelectionNames", global::Resources.ContentLanguageSelectionNames.ResourceManager },
 			{ "discTypeNames", Model.Resources.Albums.DiscTypeNames.ResourceManager },
 			{ "entryTypeNames", Resources.Domain.EntryTypeNames.ResourceManager },
@@ -78,9 +95,9 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="cultureCode">Culture code, for example "en-US" or "fi-FI".</param>
 		/// <param name="setNames">Names of resource sets to be returned. More than one value can be specified. For example "artistTypeNames"</param>
 		/// <returns>Resource sets. Cannot be null.</returns>
-		[Route("{cultureCode}")]
+		[HttpGet("{cultureCode}")]
 		[CacheOutput(ClientTimeSpan = CacheDuration, ServerTimeSpan = CacheDuration)]
-		public Dictionary<string, Dictionary<string, string>> GetList(string cultureCode, [FromUri] string[] setNames)
+		public Dictionary<string, Dictionary<string, string>> GetList(string cultureCode, [FromQuery(Name = "setNames[]")] string[] setNames)
 		{
 			if (setNames == null || !setNames.Any())
 			{

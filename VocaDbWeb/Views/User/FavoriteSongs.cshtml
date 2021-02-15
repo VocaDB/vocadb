@@ -1,7 +1,7 @@
 ﻿@using VocaDb.Web.Helpers
 @using Res = ViewRes.User.FavoriteSongsStrings
 @using SharedRes = ViewRes.SharedStrings
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.FavoriteSongs>
+@model VocaDb.Web.Models.User.FavoriteSongs
 
 @{
 	PageProperties.Title = "Songs rated by " + Model.User.Name;
@@ -10,12 +10,12 @@
 	};
 }
 
-@{ Html.RenderPartial("Partials/_RatedSongs"); }
+<partial name="Partials/_RatedSongs" />
 
 @section BodyScripts {
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
-	@LaravelMixHelper.RenderScripts("~/bundles/User/RatedSongs.js")
+	<remikus path="/bundles/User/RatedSongs.js" />
 
 	<script type="text/javascript">
 

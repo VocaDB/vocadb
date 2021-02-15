@@ -8,10 +8,10 @@
 <!-- binding context: SongSearchViewModel -->
 	
 <!-- ko if: viewMode() == 'Details' -->
-@{ Html.RenderPartial("Partials/_EntryCountBox"); }
+<partial name="Partials/_EntryCountBox" />
 
 <div data-bind="with: paging">
-	@Html.Partial("Partials/Knockout/_ServerSidePaging")
+	<partial name="Partials/Knockout/_ServerSidePaging" />
 </div>
 
 <table class="table table-striped" data-bind="css: { loading: loading }">
@@ -59,7 +59,7 @@
 				<span data-bind="visible: $data.rating === 'Favorite'" class="icon heartIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Favorite]"></span>
 				<span data-bind="visible: $data.rating === 'Like'" class="icon starIcon" title="@Translate.SongVoteRatingNames[SongVoteRating.Like]"></span>
 				
-				@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
+				<partial name="Partials/Knockout/_DraftIcon" model="@(new DraftIconViewModel("status"))" />
 				
 				<i class="icon-calendar" data-bind="visible: $data.publishDate, attr: { title: ($data.publishDate ? 'Published: ' + $parent.formatDate($data.publishDate) : '') }, tooltip: { placement: 'right' }"></i>
 
@@ -67,7 +67,7 @@
 				<small class="extraInfo" data-bind="text: artistString"></small>
 
 				<div data-bind="visible: pvServices, with: previewViewModel">
-					@Html.Partial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].getPVServiceIcons"))
+					<partial name="Partials/Song/_PVPreviewKnockout" model="@(new PVPreviewKnockoutViewModel("$parents[2].getPVServiceIcons"))" />
 				</div>
 			</td>
 			<td data-bind="visible: $parent.showTags()" class="search-tags-column">
@@ -87,13 +87,13 @@
 </table>
 
 <div data-bind="with: paging">
-	@Html.Partial("Partials/Knockout/_ServerSidePaging")
+	<partial name="Partials/Knockout/_ServerSidePaging" />
 </div>
 <!-- /ko -->
 	
 <!-- ko if: viewMode() == 'PlayList' -->
 <div data-bind="with: playListViewModel" class="well well-transparent songlist-playlist">
-	@{ Html.RenderPartial("Partials/_PlayList"); }
+	<partial name="Partials/_PlayList" />
 </div>
 <!-- /ko -->
 

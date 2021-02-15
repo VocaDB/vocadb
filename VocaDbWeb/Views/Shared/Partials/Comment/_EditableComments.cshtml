@@ -8,30 +8,30 @@
 <!-- binding context: EditableCommentsViewModel -->
 @if (Model.AllowCreateComment && !Model.CommentBoxEnd)
 {
-	@Html.Partial("Partials/Comment/_CreateComment", new CreateCommentViewModel(cssClass, Model.NewCommentRows))
+	<partial name="Partials/Comment/_CreateComment" model="@(new CreateCommentViewModel(cssClass, Model.NewCommentRows))" />
 }
 
 @if (Model.Pagination)
 {
 	<div data-bind="with: paging, visible: paging.hasMultiplePages">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 }
 
 <div data-bind="foreach: @Model.CommentsBinding">
 	<div class="editable-comment @cssClass">
-		@Html.Partial("Partials/Comment/_CommentKnockout", new CommentKnockoutViewModel("message", false, editHandler: "$parent.beginEditComment", standalone: !Model.Well, body: Html.Partial("Partials/Comment/_CommentBodyEditableKnockout", new CommentBodyEditableKnockoutViewModel("message"))))
+		<partial name="Partials/Comment/_CommentKnockout" model="@(new CommentKnockoutViewModel("message", false, editHandler: "$parent.beginEditComment", standalone: !Model.Well, body: Html.Partial("Partials/Comment/_CommentBodyEditableKnockout", new CommentBodyEditableKnockoutViewModel("message"))))" />
 	</div>
 </div>
 
 @if (Model.Pagination)
 {
 	<div data-bind="with: paging, visible: paging.hasMultiplePages">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 }
 
 @if (Model.AllowCreateComment && Model.CommentBoxEnd)
 {
-	@Html.Partial("Partials/Comment/_CreateComment", new CreateCommentViewModel(cssClass, Model.NewCommentRows))
+	<partial name="Partials/Comment/_CreateComment" model="@(new CreateCommentViewModel(cssClass, Model.NewCommentRows))" />
 }

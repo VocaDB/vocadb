@@ -1,6 +1,6 @@
 ﻿@using VocaDb.Web.Helpers
 @using SharedRes = ViewRes.SharedStrings
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.AlbumCollection>
+@model VocaDb.Web.Models.User.AlbumCollection
 
 @{
     PageProperties.Title = "Album collection for " + Model.User.Name;
@@ -9,10 +9,10 @@
 	};	
 }
 
-@{ Html.RenderPartial("Partials/_AlbumCollection"); }
+<partial name="Partials/_AlbumCollection" />
 
 @section BodyScripts {
-@LaravelMixHelper.RenderScripts("~/bundles/User/AlbumCollection.js")
+<remikus path="/bundles/User/AlbumCollection.js" />
 
 <script type="text/javascript">
 

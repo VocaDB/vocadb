@@ -5,8 +5,9 @@ using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using NLog;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Songs;
@@ -27,7 +28,7 @@ using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Feeds;
 using VocaDb.Web.Code.Markdown;
-using VocaDb.Web.Code.Security;
+using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models;
 using VocaDb.Web.Models.Shared;
@@ -42,15 +43,22 @@ namespace VocaDb.Web.Controllers
 		private readonly SongQueries _queries;
 		private readonly SongService _service;
 		private readonly SongListQueries _songListQueries;
+		private readonly PVHelper _pvHelper;
 
 		private SongService Service => _service;
 
-		public SongController(SongService service, SongQueries queries, SongListQueries songListQueries, MarkdownParser markdownParser)
+		public SongController(
+			SongService service,
+			SongQueries queries,
+			SongListQueries songListQueries,
+			MarkdownParser markdownParser,
+			PVHelper pvHelper)
 		{
 			_service = service;
 			_queries = queries;
 			_songListQueries = songListQueries;
 			_markdownParser = markdownParser;
+			_pvHelper = pvHelper;
 		}
 
 		// Used from the song page
@@ -134,7 +142,7 @@ namespace VocaDb.Web.Controllers
 			WebHelper.VerifyUserAgent(Request);
 
 			var contract = _queries.GetSongDetails(id, albumId, GetHostnameForValidHit(), null, WebHelper.GetUserLanguageCodes(Request));
-			var model = new SongDetails(contract, PermissionContext);
+			var model = new SongDetails(contract, PermissionContext, _pvHelper);
 
 			var hasDescription = !model.Notes.IsEmpty;
 			var prop = PageProperties;
@@ -267,9 +275,9 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public ActionResult PostMedia(HttpPostedFileBase file)
+		public ActionResult PostMedia(IFormFile file)
 		{
-			if (file == null || file.ContentLength == 0)
+			if (file == null || file.Length == 0)
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "File cannot be empty");
 
 			PermissionContext.VerifyPermission(PermissionToken.UploadMedia);
@@ -279,31 +287,31 @@ namespace VocaDb.Web.Controllers
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Unsupported file type");
 			}
 
-			if (file.ContentLength > LocalFileManager.MaxMediaSizeBytes)
+			if (file.Length > LocalFileManager.MaxMediaSizeBytes)
 			{
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "File too large");
 			}
 
-			var pv = new LocalFileManager().CreatePVContract(new AspNetHttpPostedFile(file), User.Identity, PermissionContext.LoggedUser);
+			var pv = new LocalFileManager().CreatePVContract(new AspNetCoreHttpPostedFile(file), User.Identity, PermissionContext.LoggedUser);
 
 			return LowercaseJson(pv);
 		}
 
-		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Client, Duration = 3600)]
+		[ResponseCache(Location = ResponseCacheLocation.Client, Duration = 3600)]
 		public ActionResult PopupContent(int id = InvalidId)
 		{
 			if (id == InvalidId)
-				return HttpNotFound();
+				return NotFound();
 
 			var song = _queries.GetSong(id);
 			return PartialView("SongPopupContent", song);
 		}
 
-		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Client, Duration = 3600)]
-		public ActionResult PopupContentWithVote(int id = InvalidId, int? version = null, string callback = null)
+		[ResponseCache(Location = ResponseCacheLocation.Client, Duration = 3600)]
+		public async Task<ActionResult> PopupContentWithVote(int id = InvalidId, int? version = null, string callback = null)
 		{
 			if (id == InvalidId)
-				return HttpNotFound();
+				return NotFound();
 
 			var song = _queries.GetSongWithPVAndVote(id, false, includePVs: false);
 
@@ -313,11 +321,11 @@ namespace VocaDb.Web.Controllers
 			}
 			else
 			{
-				return Json(RenderPartialViewToString("_SongWithVotePopupContent", song), callback);
+				return Json(await RenderPartialViewToStringAsync("_SongWithVotePopupContent", song), callback);
 			}
 		}
 
-		public FeedResult Feed(IndexRouteParams indexParams)
+		public async Task<FeedResult> Feed(IndexRouteParams indexParams)
 		{
 			WebHelper.VerifyUserAgent(Request);
 
@@ -348,15 +356,15 @@ namespace VocaDb.Web.Controllers
 			var result = Service.FindWithThumbPreferNotNico(queryParams);
 
 			var fac = new SongFeedFactory();
-			var feed = fac.Create(result.Items,
+			var feed = await fac.CreateAsync(result.Items,
 				VocaUriBuilder.CreateAbsolute(Url.Action("Index", indexParams)),
-				song => RenderPartialViewToString("SongItem", song),
+				song => RenderPartialViewToStringAsync("SongItem", song),
 				song => Url.Action("Details", new { id = song.Id }));
 
 			return new FeedResult(new Atom10FeedFormatter(feed));
 		}
 
-		public FeedResult LatestVideos()
+		public Task<FeedResult> LatestVideos()
 		{
 			return Feed(new IndexRouteParams { onlyWithPVs = true, pageSize = 20, sort = SongSortRule.AdditionDate });
 		}
@@ -418,7 +426,7 @@ namespace VocaDb.Web.Controllers
 		/// <summary>
 		/// Returns a PV player with song rating by song Id. Primary PV will be chosen.
 		/// </summary>
-		public ActionResult PVPlayer(int id = InvalidId, bool enableScriptAccess = false, string elementId = null,
+		public async Task<ActionResult> PVPlayer(int id = InvalidId, bool enableScriptAccess = false, string elementId = null,
 			PVServices? pvServices = null)
 		{
 			if (id == InvalidId)
@@ -430,7 +438,7 @@ namespace VocaDb.Web.Controllers
 				return new EmptyResult();
 
 			var embedParams = new PVEmbedParams { PV = pv, EnableScriptAccess = enableScriptAccess, ElementId = elementId };
-			var view = RenderPartialViewToString("PVs/_PVEmbedDynamicCustom", embedParams);
+			var view = await RenderPartialViewToStringAsync("PVs/_PVEmbedDynamicCustom", embedParams);
 
 			return LowercaseJson(new SongWithPVPlayerAndVoteContract
 			{
@@ -443,18 +451,18 @@ namespace VocaDb.Web.Controllers
 		/// <summary>
 		/// Returns a PV player with song rating by song Id. Primary PV will be chosen.
 		/// </summary>
-		public ActionResult PVPlayerWithRating(int songId = InvalidId)
+		public async Task<ActionResult> PVPlayerWithRating(int songId = InvalidId)
 		{
 			if (songId == InvalidId)
 				return NoId();
 
 			var song = _queries.GetSongWithPVAndVote(songId, true, GetHostnameForValidHit());
-			var pv = PVHelper.PrimaryPV(song.PVs);
+			var pv = _pvHelper.PrimaryPV(song.PVs);
 
 			if (pv == null)
 				return new EmptyResult();
 
-			var view = RenderPartialViewToString("PVs/_PVEmbedDynamic", pv);
+			var view = await RenderPartialViewToStringAsync("PVs/_PVEmbedDynamic", pv);
 
 			return LowercaseJson(new SongWithPVPlayerAndVoteContract { Song = song, PlayerHtml = view, PVService = pv.Service });
 		}

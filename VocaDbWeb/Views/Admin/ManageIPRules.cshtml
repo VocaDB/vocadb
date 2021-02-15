@@ -1,5 +1,5 @@
 ﻿@using VocaDb.Web.Helpers
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.Domain.Security.IPRule[]>
+@model VocaDb.Model.Domain.Security.IPRule[]
 
 @{
     PageProperties.Title = "Manage blocked IPs";
@@ -10,7 +10,7 @@
 
 <form id="manageRules" data-bind="submit: save, show" class="js-cloak">
     
-	@Html.Partial("Partials/Shared/_SaveBtn")
+	<partial name="Partials/Shared/_SaveBtn" />
 	
 	<button class="btn" data-bind="click: deleteOldRules">Delete rules older than 1 year</button>
     
@@ -45,7 +45,7 @@
 		</tbody>
 	</table>
     
-	@Html.Partial("Partials/Shared/_SaveBtn")
+	<partial name="Partials/Shared/_SaveBtn" />
 
 </form>
 
@@ -53,7 +53,7 @@
 	<h2>Automatically banned IPs</h2>
 	<ul data-bind="foreach: bannedIPs">
 		<li>
-			@{ Html.RenderPartial("KnockoutPartials/_IPManage"); }
+			<partial name="KnockoutPartials/_IPManage" />
 		</li>
 	</ul>
 </div>

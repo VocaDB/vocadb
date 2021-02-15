@@ -162,4 +162,7 @@
   <data name="ReleaseEvent" xml:space="preserve">
     <value>Release event</value>
   </data>
+  <data name="Bpm" xml:space="preserve">
+    <value>BPM</value>
+  </data>
 </root>

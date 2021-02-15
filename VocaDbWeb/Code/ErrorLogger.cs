@@ -2,7 +2,9 @@
 
 using System;
 using System.Net;
-using System.Web;
+using AngleSharp.Io;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using NLog;
 
 namespace VocaDb.Web.Code
@@ -15,14 +17,6 @@ namespace VocaDb.Web.Code
 		public const int Code_InternalServerError = (int)HttpStatusCode.InternalServerError;
 
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
-
-		public static void LogHttpError(HttpRequestBase request, int code, string msg = null, LogLevel level = null)
-		{
-			if (string.IsNullOrEmpty(msg))
-				s_log.Log(level ?? LogLevel.Warn, RequestInfo($"HTTP error code {code} for", request));
-			else
-				s_log.Log(level ?? LogLevel.Warn, RequestInfo($"HTTP error code {code} ({msg}) for", request));
-		}
 
 		/// <summary>
 		/// Logs HTTP error code sent to a client.
@@ -37,27 +31,31 @@ namespace VocaDb.Web.Code
 		/// <param name="level">Logging level, optional.</param>
 		public static void LogHttpError(HttpRequest request, int code, string msg = null, LogLevel level = null)
 		{
-			LogHttpError(new HttpRequestWrapper(request), code, msg, level);
+			if (string.IsNullOrEmpty(msg))
+				s_log.Log(level ?? LogLevel.Warn, RequestInfo($"HTTP error code {code} for", request));
+			else
+				s_log.Log(level ?? LogLevel.Warn, RequestInfo($"HTTP error code {code} ({msg}) for", request));
 		}
 
 		public static void LogException(HttpRequest request, Exception ex, LogLevel level = null)
 		{
-			s_log.Log(level ?? LogLevel.Error, ex, RequestInfo("Exception for", new HttpRequestWrapper(request)));
-		}
-
-		public static void LogMessage(HttpRequestBase request, string msg, LogLevel level = null)
-		{
-			s_log.Log(level ?? LogLevel.Error, RequestInfo(msg + " for", request));
+			s_log.Log(level ?? LogLevel.Error, ex, RequestInfo("Exception for", request));
 		}
 
 		public static void LogMessage(HttpRequest request, string msg, LogLevel level = null)
 		{
-			LogMessage(new HttpRequestWrapper(request), msg, level);
+			s_log.Log(level ?? LogLevel.Error, RequestInfo(msg + " for", request));
 		}
 
-		public static string RequestInfo(string msg, HttpRequestBase request)
+		public static string RequestInfo(string msg, HttpRequest request)
 		{
-			return $"{msg} '{request.UserHostAddress}' [{request.UserHostName}], URL {request.HttpMethod} '{request.Unvalidated.Url.PathAndQuery}', UA '{request.UserAgent}', referrer '{request.UrlReferrer}'";
+			var userHostAddress = request.HttpContext.Connection.RemoteIpAddress;
+			var userHostName = request.GetTypedHeaders().Host;
+			var httpMethod = request.Method;
+			var pathAndQuery = request.GetEncodedPathAndQuery();
+			var userAgent = request.Headers[HeaderNames.UserAgent];
+			var urlReferrer = request.GetTypedHeaders().Referer;
+			return $"{msg} '{userHostAddress}' [{userHostName}], URL {httpMethod} '{pathAndQuery}', UA '{userAgent}', referrer '{urlReferrer}'";
 		}
 	}
 }

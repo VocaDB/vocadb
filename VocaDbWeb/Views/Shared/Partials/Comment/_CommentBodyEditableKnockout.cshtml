@@ -2,7 +2,7 @@
 @model CommentBodyEditableKnockoutViewModel
 
 <div data-bind="visible: $parent.editCommentModel() !== $data">
-	@Html.Partial("Partials/Comment/_CommentBodyKnockout", new CommentBodyKnockoutViewModel(Model.MessageBinding))
+	<partial name="Partials/Comment/_CommentBodyKnockout" model="@(new CommentBodyKnockoutViewModel(Model.MessageBinding))" />
 </div>
 <form data-bind="visible: $parent.editCommentModel() === $data, submit: $parent.saveEditedComment">
 	<textarea data-bind="textInput: editedMessage" rows="6" cols="60" maxlength="3000" class="comment-text-edit" required></textarea>

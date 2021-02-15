@@ -2,9 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Html;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain;
@@ -15,7 +14,7 @@ namespace VocaDb.Web.Helpers
 {
 	public static class ArchivedEntryHtmlExtensions
 	{
-		public static IHtmlString DataRow<T>(this HtmlHelper htmlHelper, string name, T primary, T compared, Func<T, object> valGetter, bool preserveLineBreaks = false)
+		public static IHtmlContent DataRow<T>(this IHtmlHelper htmlHelper, string name, T primary, T compared, Func<T, object> valGetter, bool preserveLineBreaks = false)
 			where T : class
 		{
 
@@ -26,7 +25,7 @@ namespace VocaDb.Web.Helpers
 
 		}
 
-		public static IHtmlString DataRow<T>(this HtmlHelper htmlHelper, string name, ComparedVersionsContract<T> comparedVersions, Func<T, object> valGetter, bool preserveLineBreaks = false)
+		public static IHtmlContent DataRow<T>(this IHtmlHelper htmlHelper, string name, ComparedVersionsContract<T> comparedVersions, Func<T, object> valGetter, bool preserveLineBreaks = false)
 			where T : class
 		{
 
@@ -37,7 +36,7 @@ namespace VocaDb.Web.Helpers
 
 		}
 
-		public static IHtmlString DataRowList<T>(this HtmlHelper htmlHelper, string name, T primary, T compared, Func<T, IEnumerable<IHtmlString>> valGetter)
+		public static IHtmlContent DataRowList<T>(this IHtmlHelper htmlHelper, string name, T primary, T compared, Func<T, IEnumerable<IHtmlContent>> valGetter)
 			where T : class
 		{
 
@@ -48,7 +47,7 @@ namespace VocaDb.Web.Helpers
 
 		}
 
-		public static IHtmlString DataRowList<T>(this HtmlHelper htmlHelper, string name, ComparedVersionsContract<T> comparedVersions, Func<T, IEnumerable<IHtmlString>> valGetter)
+		public static IHtmlContent DataRowList<T>(this IHtmlHelper htmlHelper, string name, ComparedVersionsContract<T> comparedVersions, Func<T, IEnumerable<IHtmlContent>> valGetter)
 			where T : class
 		{
 
@@ -64,7 +63,7 @@ namespace VocaDb.Web.Helpers
 			return OptionalDateTime.ToDateTime(contract.Year, contract.Month, contract.Day).ToShortDateString();
 		}
 
-		public static IHtmlString ObjectRefList<T>(this HtmlHelper htmlHelper, string name, ComparedVersionsContract<T> comparedVersions,
+		public static IHtmlContent ObjectRefList<T>(this IHtmlHelper htmlHelper, string name, ComparedVersionsContract<T> comparedVersions,
 			Func<T, IEnumerable<ObjectRefContract>> valGetter) where T : class
 		{
 
@@ -72,7 +71,7 @@ namespace VocaDb.Web.Helpers
 
 		}
 
-		public static IHtmlString PictureRow<T>(this HtmlHelper htmlHelper, string name, ComparedVersionsContract<T> comparedVersions, Func<int, string> urlGetter)
+		public static IHtmlContent PictureRow<T>(this IHtmlHelper htmlHelper, string name, ComparedVersionsContract<T> comparedVersions, Func<int, string> urlGetter)
 			where T : class
 		{
 
@@ -83,7 +82,7 @@ namespace VocaDb.Web.Helpers
 
 		}
 
-		public static IHtmlString TranslatedNameRow<T>(this HtmlHelper htmlHelper, ComparedVersionsContract<T> comparedVersions, Func<T, ITranslatedString> valGetter)
+		public static IHtmlContent TranslatedNameRow<T>(this IHtmlHelper htmlHelper, ComparedVersionsContract<T> comparedVersions, Func<T, ITranslatedString> valGetter)
 			where T : class
 		{
 

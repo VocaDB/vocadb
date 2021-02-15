@@ -1,11 +1,10 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.Users
+﻿@using VocaDb.Model.Domain.Users
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Knockout
 @using VocaDb.Web.Models.Shared.Partials.Shared
 @using VocaDb.Web.Models.Shared.Partials.User
 @using Res = ViewRes.User.MessagesStrings
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.Messages>
+@model VocaDb.Web.Models.User.Messages
 
 @{
 	PageProperties.Title = Res.Messages;
@@ -15,76 +14,78 @@
 	};
 }
 
-@helper MessageFolderTab(string id, string binding, bool colFrom, bool colTo, bool showUnread, bool allowDelete) {
-	<!-- UserMessageFolderViewModel -->
-	<div id="@id" data-bind="with: @binding">
-		<div class="form-horizontal pull-left" data-bind="visible: canFilterByUser()">
-			<div class="control-group">
-				<label class="control-label" data-bind="visible: inbox === @((int)UserInboxType.Received)">@Res.From</label>
-				<label class="control-label" data-bind="visible: inbox === @((int)UserInboxType.Sent)">@Res.To</label>
-				<div class="controls">
-					@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("userAutocomplete", "anotherUser"))
+@{
+	async Task MessageFolderTab(string id, string binding, bool colFrom, bool colTo, bool showUnread, bool allowDelete) {
+		<!-- UserMessageFolderViewModel -->
+		<div id="@id" data-bind="with: @binding">
+			<div class="form-horizontal pull-left" data-bind="visible: canFilterByUser()">
+				<div class="control-group">
+					<label class="control-label" data-bind="visible: inbox === @((int)UserInboxType.Received)">@Res.From</label>
+					<label class="control-label" data-bind="visible: inbox === @((int)UserInboxType.Sent)">@Res.To</label>
+					<div class="controls">
+						<partial name="Partials/Knockout/_BasicEntryLinkLockingAutoComplete" model="@(new BasicEntryLinkLockingAutoCompleteViewModel("userAutocomplete", "anotherUser"))" />
+					</div>
 				</div>
 			</div>
-		</div>
-		<button class="btn btn-danger pull-right clearfix" data-bind="click: deleteSelected">@Res.DeleteSelected</button>
+			<button class="btn btn-danger pull-right clearfix" data-bind="click: deleteSelected">@Res.DeleteSelected</button>
 
-		<table class="table messages" data-bind="if: items().length">
-			<thead>
-				<tr>
-					<th>
-						@if (allowDelete) {
-							<input type="checkbox" data-bind="checked: selectAll" />
+			<table class="table messages" data-bind="if: items().length">
+				<thead>
+					<tr>
+						<th>
+							@if (allowDelete) {
+								<input type="checkbox" data-bind="checked: selectAll" />
+							}
+						</th>
+						<th>@Res.Date</th>
+						@if (colFrom) {
+							<th>@Res.From</th>
 						}
-					</th>
-					<th>@Res.Date</th>
-					@if (colFrom) {
-						<th>@Res.From</th>
-					}
-					@if (colTo) {
-						<th>@Res.To</th>
-					}
-					<th>@Res.Subject</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody data-bind="foreach: items">
-				<tr data-bind="css: { info: selected }">
-					<td>
-						<input type="checkbox" data-bind="checked: checked" />
-					</td>
-					<td data-bind="click: $root.selectMessage"><span title="UTC" data-bind="text: created"></span></td>
-					@if (colFrom) {
-						<td data-bind="click: $root.selectMessage">@Html.Partial("Partials/User/_IconAndNameKnockout", new IconAndNameKnockoutViewModel("sender.iconUrl", "sender.name"))</td>
-					}
-					@if (colTo) {
-						<td data-bind="click: $root.selectMessage">@Html.Partial("Partials/User/_IconAndNameKnockout", new IconAndNameKnockoutViewModel("receiver.iconUrl", "receiver.name"))</td>
-					}
-					<td data-bind="click: $root.selectMessage">
-						<span data-bind="visible: highPriority" style="display: none;">
-							@Html.Partial("Partials/Shared/_NotificationIcon")
-							&nbsp;
-						</span>
-						@if (showUnread) {
-							<span data-bind="visible: !read()" style="display: none;">
-								<img src="@Url.Content("~/Content/star5.png")" alt="unread" />
+						@if (colTo) {
+							<th>@Res.To</th>
+						}
+						<th>@Res.Subject</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: items">
+					<tr data-bind="css: { info: selected }">
+						<td>
+							<input type="checkbox" data-bind="checked: checked" />
+						</td>
+						<td data-bind="click: $root.selectMessage"><span title="UTC" data-bind="text: created"></span></td>
+						@if (colFrom) {
+							<td data-bind="click: $root.selectMessage"><partial name="Partials/User/_IconAndNameKnockout" model="@(new IconAndNameKnockoutViewModel("sender.iconUrl", "sender.name"))" /></td>
+						}
+						@if (colTo) {
+							<td data-bind="click: $root.selectMessage"><partial name="Partials/User/_IconAndNameKnockout" model="@(new IconAndNameKnockoutViewModel("receiver.iconUrl", "receiver.name"))" /></td>
+						}
+						<td data-bind="click: $root.selectMessage">
+							<span data-bind="visible: highPriority" style="display: none;">
+								<partial name="Partials/Shared/_NotificationIcon" />
+								&nbsp;
 							</span>
-						}
-						<span data-bind="text: subject"></span>
-					</td>
-					<td><a data-bind="click: $parent.deleteMessage" href="#" class="btn btn-mini btn-danger">@ViewRes.SharedStrings.Delete</a></td>
-				</tr>
-			</tbody>
-		</table>
+							@if (showUnread) {
+								<span data-bind="visible: !read()" style="display: none;">
+									<img src="@Url.Content("~/Content/star5.png")" alt="unread" />
+								</span>
+							}
+							<span data-bind="text: subject"></span>
+						</td>
+						<td><a data-bind="click: $parent.deleteMessage" href="#" class="btn btn-mini btn-danger">@ViewRes.SharedStrings.Delete</a></td>
+					</tr>
+				</tbody>
+			</table>
 	
-		<h3 data-bind="visible: hasMore"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
-	</div>
+			<h3 data-bind="visible: hasMore"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
+		</div>
+	}
 }
 
-@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(Res.MessageSendError))
+<partial name="Partials/Shared/_ValidationSummaryPanel" model="@(new ValidationSummaryPanelViewModel(Res.MessageSendError))" />
 
 <div data-bind="with: selectedMessage, visible: selectedMessage" id="viewMessage" style="display: none;">
-	@{ Html.RenderPartial("Partials/_UserMessageKnockout"); }
+	<partial name="Partials/_UserMessageKnockout" />
 </div>
 
 <div id="tabs" data-bind="visible: true" style="display: none;">
@@ -110,18 +111,19 @@
 		<li><a href="#composeTab">@Res.Compose</a></li>
 	</ul>
 
-	@MessageFolderTab("receivedTabContent", "receivedMessages", true, false, true, false)
-	@MessageFolderTab("sentTabContent", "sentMessages", false, true, false, false)
-	@MessageFolderTab("notificationsTabContent", "notifications", false, false, true, true)
+	@{ await MessageFolderTab("receivedTabContent", "receivedMessages", true, false, true, false); }
+	@{ await MessageFolderTab("sentTabContent", "sentMessages", false, true, false, false); }
+	@{ await MessageFolderTab("notificationsTabContent", "notifications", false, false, true, true); }
 
 	<div id="composeTab">
-		@{ Html.RenderPartial("ComposeMessage"); }
+		<partial name="ComposeMessage" />
 	</div>
 
 </div>
 
 @section BodyScripts {
-	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/User/Messages.js")
+	<remikus path="/bundles/shared/edit.js" />
+	<remikus path="/bundles/User/Messages.js" />
 	<script type="text/javascript">
 
 		$(function () {

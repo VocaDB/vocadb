@@ -1,4 +1,5 @@
-﻿@using VocaDb.Web.Helpers
+﻿@using HtmlHelpers.BeginCollectionItemCore
+@using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Artist
 @model VocaDb.Model.DataContracts.Users.ArtistForUserContract
 
@@ -8,7 +9,7 @@
 			@Html.HiddenFor(m => m.Id)
 			@Html.HiddenFor(m => m.Artist.Id)
 			@Html.HiddenFor(m => m.Artist.Name)
-			@Html.Partial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(Model.Artist))
+			<partial name="Partials/Artist/_ArtistLink" model="@(new ArtistLinkViewModel(Model.Artist))" />
 		}
 	</td>
 	<td>

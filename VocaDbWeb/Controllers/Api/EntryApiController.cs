@@ -1,23 +1,24 @@
 #nullable disable
 
 using System;
-using System.Web.Http;
-using System.Web.Http.Description;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
-using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Helpers;
+using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
 	/// <summary>
 	/// Controller for managing base class for common entries.
 	/// </summary>
-	[RoutePrefix("api/entries")]
+	[Route("api/entries")]
+	[ApiController]
 	public class EntryApiController : ApiController
 	{
 		private const int AbsoluteMax = 50;
@@ -26,13 +27,21 @@ namespace VocaDb.Web.Controllers.Api
 		private readonly AlbumService _albumService;
 		private readonly ArtistService _artistService;
 		private readonly IEntryUrlParser _entryUrlParser;
-		private readonly EntryQueries _queries;
 		private readonly OtherService _otherService;
+		private readonly EntryQueries _queries;
 		private readonly SongQueries _songQueries;
+		private readonly IViewRenderService _viewRenderService;
 
 		private int GetMaxResults(int max) => Math.Min(max, AbsoluteMax);
 
-		public EntryApiController(EntryQueries queries, OtherService otherService, AlbumService albumService, ArtistService artistService, SongQueries songQueries, IEntryUrlParser entryUrlParser)
+		public EntryApiController(
+			EntryQueries queries,
+			OtherService otherService,
+			AlbumService albumService,
+			ArtistService artistService,
+			SongQueries songQueries,
+			IEntryUrlParser entryUrlParser,
+			IViewRenderService viewRenderService)
 		{
 			_queries = queries;
 			_otherService = otherService;
@@ -40,6 +49,7 @@ namespace VocaDb.Web.Controllers.Api
 			_artistService = artistService;
 			_songQueries = songQueries;
 			_entryUrlParser = entryUrlParser;
+			_viewRenderService = viewRenderService;
 		}
 
 		/// <summary>
@@ -60,11 +70,11 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of entries.</returns>
 		/// <example>http://vocadb.net/api/entries?query=164&amp;fields=MainPicture</example>
-		[Route("")]
+		[HttpGet("")]
 		public PartialFindResult<EntryForApiContract> GetList(
 			string query = "",
-			[FromUri] string[] tagName = null,
-			[FromUri] int[] tagId = null,
+			[FromQuery(Name = "tagName[]")] string[] tagName = null,
+			[FromQuery(Name = "tagId[]")] int[] tagId = null,
 			bool childTags = false,
 			EntryTypes? entryTypes = null,
 			EntryStatus? status = null,
@@ -88,24 +98,20 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="nameMatchMode">Name match mode.</param>
 		/// <param name="maxResults">Maximum number of results.</param>
 		/// <returns>List of entry names.</returns>
-		[Route("names")]
+		[HttpGet("names")]
 		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 10) => _otherService.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
 
 		[ApiExplorerSettings(IgnoreApi = true)]
-		[Route("tooltip")]
-		public string GetToolTip(string url)
+		[HttpGet("tooltip")]
+		public async Task<ActionResult<string>> GetToolTip(string url)
 		{
 			if (string.IsNullOrWhiteSpace(url))
-			{
-				throw new HttpBadRequestException("URL must be specified");
-			}
+				return BadRequest("URL must be specified");
 
 			var entryId = _entryUrlParser.Parse(url, allowRelative: true);
 
 			if (entryId.IsEmpty)
-			{
-				throw new HttpBadRequestException("Invalid URL");
-			}
+				return BadRequest("Invalid URL");
 
 			var data = string.Empty;
 			var id = entryId.Id;
@@ -113,13 +119,13 @@ namespace VocaDb.Web.Controllers.Api
 			switch (entryId.EntryType)
 			{
 				case EntryType.Album:
-					data = RazorHelper.RenderPartialViewToString("AlbumWithCoverPopupContent", _albumService.GetAlbum(id), "EntryApiController", Request);
+					data = await _viewRenderService.RenderToStringAsync("AlbumWithCoverPopupContent", _albumService.GetAlbum(id));
 					break;
 				case EntryType.Artist:
-					data = RazorHelper.RenderPartialViewToString("ArtistPopupContent", _artistService.GetArtist(id), "EntryApiController", Request);
+					data = await _viewRenderService.RenderToStringAsync("ArtistPopupContent", _artistService.GetArtist(id));
 					break;
 				case EntryType.Song:
-					data = RazorHelper.RenderPartialViewToString("SongPopupContent", _songQueries.GetSong(id), "EntryApiController", Request);
+					data = await _viewRenderService.RenderToStringAsync("SongPopupContent", _songQueries.GetSong(id));
 					break;
 			}
 

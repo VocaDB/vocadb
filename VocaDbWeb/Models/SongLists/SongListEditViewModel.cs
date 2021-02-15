@@ -2,13 +2,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -16,7 +17,7 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.SongLists
 {
-	[FromJson]
+	[ModelBinder(BinderType = typeof(JsonModelBinder))]
 	public class SongListEditViewModel
 	{
 		public SongListEditViewModel()

@@ -1,22 +1,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
-using System.Web.Mvc.Html;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.Domain.Albums;
+using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.Routing;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code.Markdown;
@@ -54,14 +55,14 @@ namespace VocaDb.Web.Helpers
 
 		public static SelectList LanguagePreferenceList => new SelectList(LanguagePreferences, "Key", "Value");
 
-		public static IHtmlString ConditionalAttribute(this HtmlHelper html, bool condition, string attributeName, string value)
+		public static IHtmlContent ConditionalAttribute(this IHtmlHelper html, bool condition, string attributeName, string value)
 		{
 			if (condition)
 			{
-				return new MvcHtmlString(!string.IsNullOrEmpty(value) ? attributeName + "=\"" + html.Encode(value) + "\"" : attributeName);
+				return new HtmlString(!string.IsNullOrEmpty(value) ? attributeName + "=\"" + html.Encode(value) + "\"" : attributeName);
 			}
 
-			return MvcHtmlString.Empty;
+			return HtmlString.Empty;
 		}
 
 		public static SelectList CreateArtistTypesList(object selectedValue)
@@ -118,39 +119,39 @@ namespace VocaDb.Web.Helpers
 			return new SelectList(AppConfig.SongTypes.ToDictionary(s => s, Translate.SongTypeNames.GetName), "Key", "Value", selectedValue);
 		}
 
-		public static IHtmlString ArtistTypeDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlContent ArtistTypeDropDownListFor<TModel>(this IHtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, ArtistType>> expression, object htmlAttributes = null, object selectedValue = null)
 		{
 			return htmlHelper.DropDownListFor(expression, CreateArtistTypesList(selectedValue), htmlAttributes);
 		}
 
-		public static IHtmlString DiscTypeDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlContent DiscTypeDropDownListFor<TModel>(this IHtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, DiscType>> expression, object htmlAttributes = null, object selectedValue = null)
 		{
 			return htmlHelper.DropDownListFor(expression, CreateDiscTypesList(selectedValue), htmlAttributes);
 		}
 
-		public static IHtmlString EmailOptionsDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlContent EmailOptionsDropDownListFor<TModel>(this IHtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, UserEmailOptions>> expression, object htmlAttributes = null, object selectedValue = null)
 		{
 			return htmlHelper.DropDownListFor(expression, CreateEmailOptionsList(selectedValue), htmlAttributes);
 		}
 
-		public static IHtmlString EnumDropDownList<TEnum>(this HtmlHelper htmlHelper, string name,
+		public static IHtmlContent EnumDropDownList<TEnum>(this IHtmlHelper htmlHelper, string name,
 			TranslateableEnum<TEnum> enumType, object htmlAttributes = null, object selectedValue = null)
 			where TEnum : struct, Enum
 		{
 			return htmlHelper.DropDownList(name, CreateEnumList(selectedValue, enumType), htmlAttributes);
 		}
 
-		public static IHtmlString EnumDropDownList<TEnum>(this HtmlHelper htmlHelper, string name,
+		public static IHtmlContent EnumDropDownList<TEnum>(this IHtmlHelper htmlHelper, string name,
 			IEnumerable<TranslateableEnumField<TEnum>> enumType, object htmlAttributes = null, object selectedValue = null)
 			where TEnum : struct, Enum
 		{
 			return htmlHelper.DropDownList(name, CreateEnumList(selectedValue, enumType), htmlAttributes);
 		}
 
-		public static IHtmlString EnumDropDownListFor<TModel, TEnum>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlContent EnumDropDownListFor<TModel, TEnum>(this IHtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, TEnum>> expression,
 			TranslateableEnum<TEnum> enumType, object htmlAttributes = null, object selectedValue = null)
 			where TEnum : struct, Enum
@@ -158,7 +159,7 @@ namespace VocaDb.Web.Helpers
 			return htmlHelper.DropDownListFor(expression, CreateEnumList(selectedValue, enumType), htmlAttributes);
 		}
 
-		public static IHtmlString EnumDropDownListForDic<TModel, TEnum>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlContent EnumDropDownListForDic<TModel, TEnum>(this IHtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, TEnum>> expression,
 			TranslateableEnum<TEnum> enumType, IDictionary<string, object> htmlAttributes = null, object selectedValue = null)
 			where TEnum : struct, Enum
@@ -166,7 +167,7 @@ namespace VocaDb.Web.Helpers
 			return htmlHelper.DropDownListFor(expression, CreateEnumList(selectedValue, enumType), htmlAttributes);
 		}
 
-		public static IHtmlString EnumDropDownListFor<TModel, TEnum>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlContent EnumDropDownListFor<TModel, TEnum>(this IHtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, TEnum>> expression,
 			IEnumerable<KeyValuePair<TEnum, string>> values, object htmlAttributes = null, object selectedValue = null)
 			where TEnum : struct, IConvertible
@@ -206,8 +207,8 @@ namespace VocaDb.Web.Helpers
 		/// <param name="contentFunc">
 		/// Provides the content for individual table cells. Return value is raw HTML. Cannot be null.</param>
 		/// <returns></returns>
-		public static IHtmlString Grid<T>(this HtmlHelper htmlHelper, IEnumerable<T> items,
-			int columns, Func<T, IHtmlString> contentFunc)
+		public static IHtmlContent Grid<T>(this IHtmlHelper htmlHelper, IEnumerable<T> items,
+			int columns, Func<T, IHtmlContent> contentFunc)
 		{
 			ParamIs.NotNull(() => htmlHelper);
 			ParamIs.NotNull(() => items);
@@ -223,73 +224,75 @@ namespace VocaDb.Web.Helpers
 				if (i % columns == 0)
 				{
 					if (trTag != null)
-						tableTag.InnerHtml += trTag.ToString();
+						tableTag.InnerHtml.AppendHtml(trTag);
 
 					trTag = new TagBuilder("tr");
 				}
 
 				var tdTag = new TagBuilder("td");
-				tdTag.InnerHtml = contentFunc(item).ToHtmlString();
-				trTag.InnerHtml += tdTag.ToString();
+				tdTag.InnerHtml.AppendHtml(contentFunc(item));
+				trTag.InnerHtml.AppendHtml(tdTag);
 				i++;
 			}
 
 			if (trTag != null)
-				tableTag.InnerHtml += trTag.ToString();
+				tableTag.InnerHtml.AppendHtml(trTag);
 
-			return new MvcHtmlString(tableTag.ToString());
+			return tableTag;
 		}
 
-		public static IHtmlString LanguagePreferenceDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlContent LanguagePreferenceDropDownListFor<TModel>(this IHtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, ContentLanguagePreference>> expression)
 		{
 			return htmlHelper.DropDownListFor(expression, LanguagePreferenceList);
 		}
 
-		public static IHtmlString LanguageSelectionDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlContent LanguageSelectionDropDownListFor<TModel>(this IHtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, ContentLanguageSelection>> expression, object htmlAttributes = null, bool allowUnspecified = false, object selectedValue = null)
 		{
 			return htmlHelper.DropDownListFor(expression, allowUnspecified ? CreateLanguageSelectionList(selectedValue) : CreateLanguageSelectionListWithoutUnspecified(selectedValue), htmlAttributes);
 		}
 
-		public static IHtmlString LinkList<T>(this HtmlHelper htmlHelper, IEnumerable<T> list, Func<T, IHtmlString> linkFunc)
+		public static IHtmlContent LinkList<T>(this IHtmlHelper htmlHelper, IEnumerable<T> list, Func<T, IHtmlContent> linkFunc)
 		{
 			return StringHelper.Join(", ", list.Select(linkFunc));
 		}
 
-		public static IHtmlString LinkListHtml<T>(this HtmlHelper htmlHelper, IEnumerable<T> list, Func<T, IHtmlString> linkFunc)
+		public static IHtmlContent LinkListHtml<T>(this IHtmlHelper htmlHelper, IEnumerable<T> list, Func<T, IHtmlContent> linkFunc)
 		{
 			return StringHelper.Join(", ", list.Select(linkFunc));
 		}
 
-		public static IHtmlString SongTypeDropDownListFor<TModel>(this HtmlHelper<TModel> htmlHelper,
+		public static IHtmlContent SongTypeDropDownListFor<TModel>(this IHtmlHelper<TModel> htmlHelper,
 			Expression<Func<TModel, SongType>> expression, object htmlAttributes = null, object selectedValue = null)
 		{
 			return htmlHelper.DropDownListFor(expression, CreateSongTypesList(selectedValue), htmlAttributes);
 		}
 
-		public static IHtmlString FormatMarkdown(this HtmlHelper htmlHelper, string markdown)
-		{
-			return new MvcHtmlString(DependencyResolver.Current.GetService<MarkdownParser>().GetHtml(markdown));
-		}
+		public static IHtmlContent FormatMarkdown(this IHtmlHelper htmlHelper, string markdown)
+			=> new HtmlString(htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<MarkdownParser>().GetHtml(markdown));
 
-		public static string StripMarkdown(this HtmlHelper htmlHelper, string markdown)
-		{
-			return DependencyResolver.Current.GetService<MarkdownParser>().GetPlainText(markdown);
-		}
+		public static string StripMarkdown(this IHtmlHelper htmlHelper, string markdown)
+			=> htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<MarkdownParser>().GetPlainText(markdown);
 
-		public static string VideoServiceLinkUrl(this HtmlHelper htmlHelper, PVService service) => service switch
+		public static string VideoServiceLinkUrl(this IHtmlHelper htmlHelper, PVService service)
 		{
-			PVService.Bandcamp => UrlHelper.GenerateContentUrl("~/Content/ExtIcons/bandcamp.png", new HttpContextWrapper(HttpContext.Current)),
-			PVService.Bilibili => UrlHelper.GenerateContentUrl("~/Content/ExtIcons/bilibili.png", new HttpContextWrapper(HttpContext.Current)),
-			PVService.File or PVService.LocalFile => UrlHelper.GenerateContentUrl("~/Content/Icons/music.png", new HttpContextWrapper(HttpContext.Current)),
-			PVService.NicoNicoDouga => UrlHelper.GenerateContentUrl("~/Content/nico.png", new HttpContextWrapper(HttpContext.Current)),
-			PVService.Piapro => UrlHelper.GenerateContentUrl("~/Content/ExtIcons/piapro.png", new HttpContextWrapper(HttpContext.Current)),
-			PVService.SoundCloud => UrlHelper.GenerateContentUrl("~/Content/Icons/soundcloud.png", new HttpContextWrapper(HttpContext.Current)),
-			PVService.Youtube => UrlHelper.GenerateContentUrl("~/Content/youtube.png", new HttpContextWrapper(HttpContext.Current)),
-			PVService.Vimeo => UrlHelper.GenerateContentUrl("~/Content/ExtIcons/vimeo.png", new HttpContextWrapper(HttpContext.Current)),
-			PVService.Creofuga => UrlHelper.GenerateContentUrl("~/Content/ExtIcons/creofuga.png", new HttpContextWrapper(HttpContext.Current)),
-			_ => string.Empty,
-		};
+			// Code from: https://stackoverflow.com/questions/38865163/how-to-get-the-urlhelper-from-html-helper-context-in-asp-net-core-mvc-html-helpe/51519624#51519624
+			var urlHelperFactory = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
+			var urlHelper = urlHelperFactory.GetUrlHelper(htmlHelper.ViewContext);
+			return service switch
+			{
+				PVService.Bandcamp => urlHelper.Content("~/Content/ExtIcons/bandcamp.png"),
+				PVService.Bilibili => urlHelper.Content("~/Content/ExtIcons/bilibili.png"),
+				PVService.File or PVService.LocalFile => urlHelper.Content("~/Content/Icons/music.png"),
+				PVService.NicoNicoDouga => urlHelper.Content("~/Content/nico.png"),
+				PVService.Piapro => urlHelper.Content("~/Content/ExtIcons/piapro.png"),
+				PVService.SoundCloud => urlHelper.Content("~/Content/Icons/soundcloud.png"),
+				PVService.Youtube => urlHelper.Content("~/Content/youtube.png"),
+				PVService.Vimeo => urlHelper.Content("~/Content/ExtIcons/vimeo.png"),
+				PVService.Creofuga => urlHelper.Content("~/Content/ExtIcons/creofuga.png"),
+				_ => string.Empty,
+			};
+		}
 	}
 }

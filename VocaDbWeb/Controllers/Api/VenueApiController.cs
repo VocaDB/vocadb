@@ -1,6 +1,7 @@
 #nullable disable
 
-using System.Web.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain.Globalization;
@@ -12,13 +13,15 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Venues;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
+using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
 	/// <summary>
 	/// API queries for venues.
 	/// </summary>
-	[RoutePrefix("api/venues")]
+	[Route("api/venues")]
+	[ApiController]
 	public class VenueApiController : ApiController
 	{
 		private const int DefaultMax = 10;
@@ -38,7 +41,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// If true, the entry is hard deleted. Hard deleted entries cannot be restored normally, but they will be moved to trash.
 		/// If false, the entry is soft deleted, meaning it can still be restored.
 		/// </param>
-		[Route("{id:int}")]
+		[HttpDelete("{id:int}")]
 		[Authorize]
 		public void Delete(int id, string notes = "", bool hardDelete = false)
 		{
@@ -70,7 +73,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="radius">Radius (optional).</param>
 		/// <param name="distanceUnit">Unit of length (optional). Possible values are Kilometers, Miles.</param>
 		/// <returns>Page of venue.</returns>
-		[Route("")]
+		[HttpGet("")]
 		public PartialFindResult<VenueForApiContract> GetList(
 			string query = "",
 			VenueOptionalFields fields = VenueOptionalFields.None,
@@ -101,7 +104,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="reportType">Report type.</param>
 		/// <param name="notes">Notes. Optional.</param>
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
-		[Route("{id:int}/reports")]
+		[HttpPost("{id:int}/reports")]
 		[RestrictBannedIP]
 		public void PostReport(int id, VenueReportType reportType, string notes, int? versionNumber) => _queries.CreateReport(id, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 	}

@@ -1,10 +1,7 @@
 #nullable disable
 
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.DataContracts.Songs;
@@ -13,13 +10,15 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.VideoServices;
+using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
 	/// <summary>
 	/// API queries for PVs
 	/// </summary>
-	[RoutePrefix("api/pvs")]
+	[Route("api/pvs")]
+	[ApiController]
 	public class PVApiController : ApiController
 	{
 		private readonly IPVParser _pvParser;
@@ -43,29 +42,25 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="getTotalCount">Whether to load total number of items (optional, default to false).</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of PVs.</returns>
-		[Route("for-songs")]
+		[HttpGet("for-songs")]
 		public PartialFindResult<PVForSongContract> GetList(string name = null, string author = null,
 			PVService? service = null,
 			int maxResults = 10, bool getTotalCount = false,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetList(name, author, service, maxResults, getTotalCount, lang);
 
-		[Route("")]
+		[HttpGet("")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public async Task<PVContract> GetPVByUrl(string pvUrl, PVType type = PVType.Original, bool getTitle = true)
+		public async Task<ActionResult<PVContract>> GetPVByUrl(string pvUrl, PVType type = PVType.Original, bool getTitle = true)
 		{
 			if (string.IsNullOrEmpty(pvUrl))
-				throw new HttpResponseException(HttpStatusCode.BadRequest);
+				return BadRequest();
 
 			var result = await _pvParser.ParseByUrlAsync(pvUrl, getTitle, _permissionContext);
 
 			if (!result.IsOk)
 			{
 				var msg = result.Exception.Message;
-				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest)
-				{
-					ReasonPhrase = msg,
-					Content = new StringContent(msg)
-				});
+				return BadRequest(msg);
 			}
 
 			var contract = new PVContract(result, type);

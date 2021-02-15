@@ -1,7 +1,8 @@
 #nullable disable
 
 using System;
-using System.Web.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.ReleaseEvents;
@@ -12,18 +13,20 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
-using VocaDb.Model.Service.Search;
-using VocaDb.Web.Helpers;
 using VocaDb.Model.Service.QueryableExtensions;
+using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Events;
 using VocaDb.Web.Code.WebApi;
+using VocaDb.Web.Helpers;
+using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
 	/// <summary>
 	/// API queries for album release events.
 	/// </summary>
-	[RoutePrefix("api/releaseEvents")]
+	[Route("api/releaseEvents")]
+	[ApiController]
 	public class ReleaseEventApiController : ApiController
 	{
 		private const int DefaultMax = 10;
@@ -45,7 +48,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// If true, the entry is hard deleted. Hard deleted entries cannot be restored normally, but they will be moved to trash.
 		/// If false, the entry is soft deleted, meaning it can still be restored.
 		/// </param>
-		[Route("{id:int}")]
+		[HttpDelete("{id:int}")]
 		[Authorize]
 		public void Delete(int id, string notes = "", bool hardDelete = false)
 		{
@@ -68,7 +71,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="fields">List of optional album fields.</param>
 		/// <param name="lang">Content language preference.</param>
 		/// <returns>List of albums.</returns>
-		[Route("{eventId:int}/albums")]
+		[HttpGet("{eventId:int}/albums")]
 		public AlbumForApiContract[] GetAlbums(int eventId,
 			AlbumOptionalFields fields = AlbumOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetAlbums(eventId, fields, lang);
@@ -80,7 +83,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="fields">List of optional song fields.</param>
 		/// <param name="lang">Content language preference.</param>
 		/// <returns>List of songs.</returns>
-		[Route("{eventId:int}/published-songs")]
+		[HttpGet("{eventId:int}/published-songs")]
 		public SongForApiContract[] GetPublishedSongs(int eventId,
 			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetPublishedSongs(eventId, fields, lang);
@@ -114,7 +117,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference.</param>
 		/// <returns>Page of events.</returns>
 		/// <example>http://vocadb.net/api/releaseEvents?query=Voc@loid</example>
-		[Route("")]
+		[HttpGet("")]
 		public PartialFindResult<ReleaseEventForApiContract> GetList(
 			string query = "",
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
@@ -123,9 +126,9 @@ namespace VocaDb.Web.Controllers.Api
 			DateTime? beforeDate = null,
 			EventCategory category = EventCategory.Unspecified,
 			int? userCollectionId = null,
-			[FromUri] int[] tagId = null,
+			[FromQuery(Name = "tagId[]")] int[] tagId = null,
 			bool childTags = false,
-			[FromUri] int[] artistId = null,
+			[FromQuery(Name = "artistId[]")] int[] artistId = null,
 			bool childVoicebanks = false,
 			bool includeMembers = false,
 			EntryStatus? status = null,
@@ -169,12 +172,12 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>
 		/// List of event names, for example "The Voc@loid M@ster 1", matching the query. Cannot be null.
 		/// </returns>
-		[Route("names")]
+		[HttpGet("names")]
 		public string[] GetNames(
 			string query = "",
 			int maxResults = 10) => _queries.GetNames(query, maxResults);
 
-		[Route("{id:int}")]
+		[HttpGet("{id:int}")]
 		public ReleaseEventForApiContract GetOne(int id,
 			ReleaseEventOptionalFields fields = ReleaseEventOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetOne(id, lang, fields);
@@ -186,7 +189,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="reportType">Report type.</param>
 		/// <param name="notes">Notes. Optional.</param>
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
-		[Route("{eventId:int}/reports")]
+		[HttpPost("{eventId:int}/reports")]
 		[RestrictBannedIP]
 		public void PostReport(int eventId, EventReportType reportType, string notes, int? versionNumber) => _queries.CreateReport(eventId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 	}

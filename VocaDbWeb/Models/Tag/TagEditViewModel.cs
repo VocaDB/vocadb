@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Globalization;
@@ -14,11 +15,9 @@ using VocaDb.Model.Domain.Tags;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Helpers;
-using VocaDb.Web.Resources.Domain;
 
 namespace VocaDb.Web.Models.Tag
 {
-	[PropertyModelBinder]
 	public class TagEditViewModel
 	{
 		public TagEditViewModel() { }
@@ -58,7 +57,7 @@ namespace VocaDb.Web.Models.Tag
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		[Display(Name = "Description")]
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public EnglishTranslatedStringContract Description { get; set; }
 
 		public bool Draft => Status == EntryStatus.Draft;
@@ -71,13 +70,13 @@ namespace VocaDb.Web.Models.Tag
 
 		public string Name { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public LocalizedStringWithIdContract[] Names { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public TagBaseContract Parent { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public TagBaseContract[] RelatedTags { get; set; }
 
 		public EntryStatus Status { get; set; }
@@ -90,7 +89,7 @@ namespace VocaDb.Web.Models.Tag
 
 		public string UrlSlug { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public WebLinkContract[] WebLinks { get; set; }
 
 		public void CheckModel()

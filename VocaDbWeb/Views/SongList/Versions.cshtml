@@ -4,7 +4,7 @@
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared
 @using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Songs.SongListWithArchivedVersionsContract>
+@model VocaDb.Model.DataContracts.Songs.SongListWithArchivedVersionsContract
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Name;
@@ -14,6 +14,6 @@
 	};
 }
 
-@Html.Partial("Partials/ArchivedEntry/_CurrentVersionMessage", new CurrentVersionMessageViewModel(Model.Version, EntryStatus.Finished))
+<partial name="Partials/ArchivedEntry/_CurrentVersionMessage" model="@(new CurrentVersionMessageViewModel(Model.Version, EntryStatus.Finished))" />
 
-@Html.Partial("Partials/ArchivedEntry/_ArchivedObjectVersions", new ArchivedObjectVersionsViewModel(Model.ArchivedVersions.Select(a => new ArchivedObjectVersion(a, Translate.SongListEditableFieldNames.GetAllNameNames(a.ChangedFields, SongListEditableFields.Nothing)))))
+<partial name="Partials/ArchivedEntry/_ArchivedObjectVersions" model="@(new ArchivedObjectVersionsViewModel(Model.ArchivedVersions.Select(a => new ArchivedObjectVersion(a, Translate.SongListEditableFieldNames.GetAllNameNames(a.ChangedFields, SongListEditableFields.Nothing)))))" />

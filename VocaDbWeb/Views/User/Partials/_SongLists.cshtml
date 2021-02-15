@@ -1,14 +1,14 @@
 ﻿@using VocaDb.Web.Models.Shared.Partials.Song
 @using R = ViewRes.User.DetailsStrings
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Users.UserDetailsContract>
+@model VocaDb.Model.DataContracts.Users.UserDetailsContract
 
 <!-- UserSongListsViewModel -->
 	
 @{ var ownProfile = UserContext.IsLoggedIn && UserContext.LoggedUserId == Model.Id && UserContext.LoggedUser.Active; }
 
-@{ Html.RenderPartial("Partials/_SongListsFilters"); }
+<partial name="Partials/_SongListsFilters" />
 
-@Html.Partial("Partials/Song/_SongListsKnockout", new SongListsKnockoutViewModel("items", true))
+<partial name="Partials/Song/_SongListsKnockout" model="@(new SongListsKnockoutViewModel("items", true))" />
 	
 <h3 visible="{{ hasMore }}"><a href="#" data-bind="click: loadMore">@ViewRes.SharedStrings.ShowMore</a></h3>
 

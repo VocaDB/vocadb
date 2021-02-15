@@ -1,6 +1,6 @@
 #nullable disable
 
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace VocaDb.Web.Helpers
 {
@@ -11,53 +11,53 @@ namespace VocaDb.Web.Helpers
 		private const string SuccessKey = "SuccessMessage";
 		private const string WarnKey = "WarnMessage";
 
-		private static string Get(TempDataDictionary temp, string key)
+		private static string Get(ITempDataDictionary temp, string key)
 		{
 			var msg = temp[key];
 			return (msg != null ? msg.ToString() : string.Empty);
 		}
 
-		private static void Set(TempDataDictionary temp, string key, string val)
+		private static void Set(ITempDataDictionary temp, string key, string val)
 		{
 			temp[key] = val;
 		}
 
-		public static void SetErrorMessage(this TempDataDictionary temp, string val)
+		public static void SetErrorMessage(this ITempDataDictionary temp, string val)
 		{
 			Set(temp, ErrorKey, val);
 		}
 
-		public static string ErrorMessage(this TempDataDictionary temp)
+		public static string ErrorMessage(this ITempDataDictionary temp)
 		{
 			return Get(temp, ErrorKey);
 		}
 
-		public static void SetStatusMessage(this TempDataDictionary temp, string val)
+		public static void SetStatusMessage(this ITempDataDictionary temp, string val)
 		{
 			Set(temp, StatusKey, val);
 		}
 
-		public static string StatusMessage(this TempDataDictionary temp)
+		public static string StatusMessage(this ITempDataDictionary temp)
 		{
 			return Get(temp, StatusKey);
 		}
 
-		public static void SetSuccessMessage(this TempDataDictionary temp, string val)
+		public static void SetSuccessMessage(this ITempDataDictionary temp, string val)
 		{
 			Set(temp, SuccessKey, val);
 		}
 
-		public static string SuccessMessage(this TempDataDictionary temp)
+		public static string SuccessMessage(this ITempDataDictionary temp)
 		{
 			return Get(temp, SuccessKey);
 		}
 
-		public static void SetWarnMessage(this TempDataDictionary temp, string val)
+		public static void SetWarnMessage(this ITempDataDictionary temp, string val)
 		{
 			Set(temp, WarnKey, val);
 		}
 
-		public static string WarnMessage(this TempDataDictionary temp)
+		public static string WarnMessage(this ITempDataDictionary temp)
 		{
 			return Get(temp, WarnKey);
 		}

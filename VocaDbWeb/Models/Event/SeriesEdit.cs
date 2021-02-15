@@ -1,8 +1,7 @@
 #nullable disable
 
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.ReleaseEvents;
@@ -14,7 +13,6 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Event
 {
-	[PropertyModelBinder]
 	public class SeriesEdit
 	{
 		public SeriesEdit()
@@ -54,12 +52,12 @@ namespace VocaDb.Web.Models.Event
 
 		public string Name { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public LocalizedStringWithIdContract[] Names { get; set; }
 
 		public EntryStatus Status { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public WebLinkContract[] WebLinks { get; set; }
 
 		public void CopyNonEditableProperties(ReleaseEventSeriesForEditContract contract, IUserPermissionContext userContext)

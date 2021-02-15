@@ -5,7 +5,7 @@
 
 <div class="comment media @(Model.Standalone ? "comment-large" : "")">
 	<a data-bind="attr: { href: app.EntryUrlMapper.details_user_byName(author.name) }" class="pull-left">
-		@Html.Partial("Partials/User/_ProfileIconKnockout_ImageSize", new ProfileIconKnockout_ImageSizeViewModel(ImageSize.Thumb, binding: "author", size: 70))
+		<partial name="Partials/User/_ProfileIconKnockout_ImageSize" model="@(new ProfileIconKnockout_ImageSizeViewModel(ImageSize.Thumb, binding: "author", size: 70))" />
 	</a>
 
 	<div class="media-body">
@@ -34,7 +34,7 @@
 		}
 		else
 		{
-			@Html.Partial("Partials/Comment/_CommentBodyKnockout", new CommentBodyKnockoutViewModel(Model.MessageBinding))
+			<partial name="Partials/Comment/_CommentBodyKnockout" model="@(new CommentBodyKnockoutViewModel(Model.MessageBinding))" />
 		}
 	</div>
 </div>

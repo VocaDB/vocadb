@@ -1,9 +1,8 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Knockout
 @using VocaDb.Web.Models.Shared.Partials.Shared
 @using Res = ViewRes.Song.CreateStrings
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Song.Create>
+@model VocaDb.Web.Models.Song.Create
 
 @{
 	PageProperties.Title = Res.SubmitSong;
@@ -14,13 +13,13 @@
 
 <form action="@Url.Action("Create", "Song")" method="POST" data-bind="submit: submit">
 
-	@Html.Partial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(Res.UnableToCreateSong))
+	<partial name="Partials/Shared/_ValidationSummaryDiv" model="@(new ValidationSummaryDivViewModel(Res.UnableToCreateSong))" />
 																								
 	<div class="row-fluid">
 		<div class="span5 well well-transparent">
 			
 			<div class="pull-right">
-				@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
+				<partial name="Partials/Shared/_AjaxLoader" model="@(new AjaxLoaderViewModel("pvLoader"))" />
 			</div>
 
 			<div class="alert alert-danger" data-bind="visible: isDuplicatePV" style="display:none">
@@ -45,7 +44,7 @@
 
 			<div class="editor-label">
 				@Res.Name
-				@Html.Partial("Partials/Shared/_RequiredField")
+				<partial name="Partials/Shared/_RequiredField" />
 			</div>
 
 			<div class="editor-field">
@@ -86,7 +85,7 @@
 			</div>
 			<div class="editor-field">
 				<div style="display: inline-block;" class="input-append">
-					@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id"))
+					<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id"))" />
 				</div>
 				<div data-bind="visible: originalVersion.isEmpty() && originalSongSuggestions().length" style="display: none;">
 					<h4>@Res.OriginalSuggestionsTitle</h4>
@@ -111,7 +110,7 @@
 
 			<div class="editor-label">
 				<span>@Res.ArtistsInfo</span>
-				@Html.Partial("Partials/Shared/_RequiredField")
+				<partial name="Partials/Shared/_RequiredField" />
 				<br />
 				<span class="extraInfo">@Res.ArtistDesc</span>
 			</div>
@@ -158,7 +157,7 @@
 				<p>@Res.ArtistHelp</p>
 			</div>	
 			
-			@{ Html.RenderPartial("KnockoutPartials/_DuplicateEntriesMessage"); }
+			<partial name="KnockoutPartials/_DuplicateEntriesMessage" />
 
 			<div class="alert alert-info js-cloak" visible="{{songTypeInfo}}" data-bind="show">				
 				<h3>
@@ -175,7 +174,8 @@
 
 @section BodyScripts {
 
-	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Song/Create.js")
+	<remikus path="/bundles/shared/edit.js" />
+	<remikus path="/bundles/Song/Create.js" />
 	<script type="text/javascript">
 
 		$(document).ready(function () {

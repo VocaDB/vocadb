@@ -2,7 +2,7 @@
 @model UserLinkOrNameViewModel
 
 @if (Model.User != null) {
-	@Html.Partial("Partials/User/_UserLink", new UserLinkViewModel(Model.User))
+	<partial name="Partials/User/_UserLink" model="@(new UserLinkViewModel(Model.User))" />
 } else {
 	@Model.Name
 }

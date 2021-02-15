@@ -10,5 +10,5 @@
 		{ ArtistAlbumParticipationStatus.OnlyMainAlbums.ToString(), "Only main songs" },
 		{ ArtistAlbumParticipationStatus.OnlyCollaborations.ToString(), "Only collaborations" },
 	};
-	@Html.Partial("Partials/Knockout/_CheckBoxButtons", new CheckBoxButtonsViewModel(options, Model.Binding))
+	<partial name="Partials/Knockout/_CheckBoxButtons" model="@(new CheckBoxButtonsViewModel(options, Model.Binding))" />
 }

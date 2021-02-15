@@ -1,6 +1,7 @@
 #nullable disable
 
-using System.Web;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using VocaDb.Web.Helpers;
@@ -12,8 +13,11 @@ namespace VocaDb.Tests.Web.Helpers
 	{
 		private void TestGetInterfaceCultureName(string expected, params string[] input)
 		{
-			var requestMock = new Mock<HttpRequestBase>();
-			requestMock.SetupGet(r => r.UserLanguages).Returns(input);
+			var requestMock = new Mock<HttpRequest>();
+			requestMock.SetupGet(m => m.Headers).Returns(new HeaderDictionary
+			{
+				{ HeaderNames.AcceptLanguage, input }
+			});
 
 			var result = WebHelper.GetInterfaceCultureName(requestMock.Object);
 

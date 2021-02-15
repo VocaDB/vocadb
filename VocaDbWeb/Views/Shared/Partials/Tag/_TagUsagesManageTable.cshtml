@@ -1,5 +1,4 @@
-﻿@using System.Web.Mvc.Html
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Tag
 @using VocaDb.Web.Models.Shared.Partials.User
 @model TagUsagesManageTableViewModel
@@ -27,14 +26,14 @@
 			@foreach (var usage in Model.TagUsages)
 			{
 				<tr>
-					<td>@Html.Partial("Partials/Tag/_TagLink", new TagLinkViewModel(usage.Tag))</td>
+					<td><partial name="Partials/Tag/_TagLink" model="@(new TagLinkViewModel(usage.Tag))" /></td>
 					<td>@usage.Count</td>
 					@if (Login.CanManageUsers)
 					{
 						<td>
 							@foreach (var user in usage.Votes)
 							{
-								@Html.Partial("Partials/User/_UserIconLink_UserContract", new UserIconLink_UserContractViewModel(user))<br />
+								<partial name="Partials/User/_UserIconLink_UserContract" model="@(new UserIconLink_UserContractViewModel(user))" /><br />
 							}
 						</td>
 					}

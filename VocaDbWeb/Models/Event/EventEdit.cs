@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.PVs;
@@ -18,7 +19,6 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Event
 {
-	[PropertyModelBinder]
 	public class EventEdit : IEntryImageInformation
 	{
 		EntryType IEntryImageInformation.EntryType => EntryType.ReleaseEvent;
@@ -71,14 +71,14 @@ namespace VocaDb.Web.Models.Event
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public ArtistForEventContract[] Artists { get; set; }
 
 		public EventCategory Category { get; set; }
 
 		public bool CustomName { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public DateTime? Date { get; set; }
 
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
@@ -88,7 +88,7 @@ namespace VocaDb.Web.Models.Event
 		[StringLength(1000)]
 		public string Description { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public DateTime? EndDate { get; set; }
 
 		public int Id { get; set; }
@@ -96,17 +96,17 @@ namespace VocaDb.Web.Models.Event
 		[StringLength(50)]
 		public string Name { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public LocalizedStringWithIdContract[] Names { get; set; }
 
 		public string OldName { get; set; }
 
 		public string PictureMime { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public PVContract[] PVs { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public ReleaseEventSeriesContract Series { get; set; }
 
 		[Display(Name = "Series suffix")]
@@ -115,21 +115,21 @@ namespace VocaDb.Web.Models.Event
 		[Display(Name = "Series number")]
 		public int SeriesNumber { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public SongListBaseContract SongList { get; set; }
 
 		public EntryStatus Status { get; set; }
 
 		public string UrlSlug { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public VenueContract Venue { get; set; }
 
 		public string VenueName { get; set; }
 
 		public int Version { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public WebLinkContract[] WebLinks { get; set; }
 
 		public void CopyNonEditableProperties(ReleaseEventDetailsContract contract, IUserPermissionContext userContext)

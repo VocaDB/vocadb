@@ -1046,6 +1046,8 @@ namespace VocaDb.Model.Database.Queries
 				song.PublishDate = fullProperties.PublishDate;
 				song.SongType = fullProperties.SongType;
 				song.TranslatedName.DefaultLanguage = fullProperties.TranslatedName.DefaultLanguage;
+				song.MinBpm = fullProperties.MinBpm;
+				song.MaxBpm = fullProperties.MaxBpm;
 
 				// Artists
 				var artistDiff = DatabaseContextHelper.RestoreObjectRefs<ArtistForSong, Artist, ArchivedArtistForSongContract>(
@@ -1239,6 +1241,12 @@ namespace VocaDb.Model.Database.Queries
 
 				if (lyricsDiff.Changed)
 					diff.Lyrics.Set();
+
+				if (song.MinBpm != properties.MinBpm || song.MaxBpm != properties.MaxBpm)
+					diff.Bpm.Set();
+
+				song.MinBpm = properties.MinBpm;
+				song.MaxBpm = (properties.MaxBpm > properties.MinBpm) ? properties.MaxBpm : properties.MinBpm;
 
 				var logStr = $"updated properties for song {_entryLinkFactory.CreateEntryLink(song)} ({diff.ChangedFieldsString})"
 					+ (properties.UpdateNotes != string.Empty ? " " + HttpUtility.HtmlEncode(properties.UpdateNotes) : string.Empty)

@@ -12,7 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix
-	.setPublicPath('./')
+	.setPublicPath('./wwwroot/')
 	.webpackConfig({
 		output: {
 			library: 'app'
@@ -24,187 +24,187 @@ mix
 
 
 	/*.scripts([
-		"Scripts/jquery-2.2.1.js",
-		"Scripts/bootstrap.js",
-		//"Scripts/jquery-ui-1.10.1.js", // doesn't work if bundled together
-		"Scripts/knockout-3.4.1.js",
-		"Scripts/knockout.punches.min.js",
-		"Scripts/lodash.js",
-		"Scripts/qTip/jquery.qtip.js",
-		"Scripts/marked.js"
-	], "bundles/shared/libs.js")
+		"wwwroot/Scripts/jquery-2.2.1.js",
+		"wwwroot/Scripts/bootstrap.js",
+		//"wwwroot/Scripts/jquery-ui-1.10.1.js", // doesn't work if bundled together
+		"wwwroot/Scripts/knockout-3.4.1.js",
+		"wwwroot/Scripts/knockout.punches.min.js",
+		"wwwroot/Scripts/lodash.js",
+		"wwwroot/Scripts/qTip/jquery.qtip.js",
+		"wwwroot/Scripts/marked.js"
+	], "wwwroot/bundles/shared/libs.js")
 
 	.scripts([
-		"Scripts/jquery-ui-1.10.4.js"
-	], "bundles/shared/jqui.js")*/
-	.js("Scripts/libs.js", "bundles/shared")
+		"wwwroot/Scripts/jquery-ui-1.10.4.js"
+	], "wwwroot/bundles/shared/jqui.js")*/
+	.js("wwwroot/Scripts/libs.js", "wwwroot/bundles/shared")
 
 	// SHARED BUNDLES
 	// Legacy common scripts - should be phased out
-	.scripts(["Scripts/VocaDB.js"], "bundles/VocaDB.js")
+	.scripts(["wwwroot/Scripts/VocaDb.js"], "wwwroot/bundles/VocaDB.js")
 
-	.ts("Scripts/App.ts", "bundles")
+	.ts("wwwroot/Scripts/App.ts", "wwwroot/bundles")
 
 	// Included on all pages (including front page)
 	// Generally the references go from viewmodels -> repositories -> models -> support classes
 	.scripts([
-	], "bundles/shared/common.js")
+	], "wwwroot/bundles/shared/common.js")
 
 	// Included on all pages except the front page (to optimize front page load time).
 	.scripts([
-		"Scripts/moment-with-locales.js",
-	], "bundles/shared/main.js")
+		"wwwroot/Scripts/moment-with-locales.js",
+	], "wwwroot/bundles/shared/main.js")
 
 	// Included on all entry edit and create pages (album, artist, my settings etc.)
 	.scripts([
-		"Scripts/knockout-sortable.js"
-	], "bundles/shared/edit.js")
+		"wwwroot/Scripts/knockout-sortable.js"
+	], "wwwroot/bundles/shared/edit.js")
 
 	.scripts([
-		"Scripts/jquery.tools.min.js"	// REVIEW
-	], "bundles/Home/Index.js")
+		"wwwroot/Scripts/jquery.tools.min.js"	// REVIEW
+	], "wwwroot/bundles/Home/Index.js")
 
 	.scripts([
-		"Scripts/jqwidgets27/jqxcore.js", "Scripts/jqwidgets27/jqxrating.js"
-	], "bundles/jqxRating.js")
+		"wwwroot/Scripts/jqwidgets27/jqxcore.js", "wwwroot/Scripts/jqwidgets27/jqxrating.js"
+	], "wwwroot/bundles/jqxRating.js")
 
 
 	// VIEW-SPECIFIC BUNDLES
 	.scripts([
-	], "bundles/ActivityEntry/Index.js")
+	], "wwwroot/bundles/ActivityEntry/Index.js")
 
 
 	// HACK: this produces an empty file called Create.js to prevent 404 errors.
 	// TODO: these scripts commands must be removed along with the corresponding RenderScripts in .cshtml files.
 	.scripts([
-	], "bundles/Album/Create.js")
+	], "wwwroot/bundles/Album/Create.js")
 
 	.scripts([
-	], "bundles/Album/Details.js")
+	], "wwwroot/bundles/Album/Details.js")
 
 	.scripts([
-	], "bundles/Album/Edit.js")
+	], "wwwroot/bundles/Album/Edit.js")
 
 	.scripts([
-	], "bundles/Album/Merge.js")
+	], "wwwroot/bundles/Album/Merge.js")
 
 	.scripts([
-	], "bundles/Artist/Create.js")
+	], "wwwroot/bundles/Artist/Create.js")
 
 	.scripts([
-		"Scripts/soundcloud-api.js"	// REVIEW
-	], "bundles/Artist/Details.js")
+		"wwwroot/Scripts/soundcloud-api.js"	// REVIEW
+	], "wwwroot/bundles/Artist/Details.js")
 
 	.scripts([
-	], "bundles/Artist/Edit.js")
+	], "wwwroot/bundles/Artist/Edit.js")
 
 	.scripts([
-	], "bundles/Artist/Merge.js")
+	], "wwwroot/bundles/Artist/Merge.js")
 
 	.scripts([
-		"Scripts/page.js"
-	], "bundles/Discussion/Index.js")
+		"wwwroot/Scripts/page.js"
+	], "wwwroot/bundles/Discussion/Index.js")
 
 	.scripts([
-	], "bundles/EventSeries/Details.js")
+	], "wwwroot/bundles/EventSeries/Details.js")
 
 	.scripts([
-	], "bundles/EventSeries/Edit.js")
+	], "wwwroot/bundles/EventSeries/Edit.js")
 
 	.scripts([
-	], "bundles/ReleaseEvent/Details.js")
+	], "wwwroot/bundles/ReleaseEvent/Details.js")
 
 	.scripts([
-	], "bundles/ReleaseEvent/Edit.js")
+	], "wwwroot/bundles/ReleaseEvent/Edit.js")
 
 	.scripts([
-		"Scripts/soundcloud-api.js"	// REVIEW
-	], "bundles/Search/Index.js")
+		"wwwroot/Scripts/soundcloud-api.js"	// REVIEW
+	], "wwwroot/bundles/Search/Index.js")
 
 	.scripts([
-	], "bundles/Song/Create.js")
+	], "wwwroot/bundles/Song/Create.js")
 
 	.scripts([
-		"Scripts/MediaElement/mediaelement-and-player.min.js",
-	], "bundles/Song/Details.js")
+		"wwwroot/Scripts/MediaElement/mediaelement-and-player.min.js",
+	], "wwwroot/bundles/Song/Details.js")
 
 	.scripts([
-	], "bundles/Song/Edit.js")
+	], "wwwroot/bundles/Song/Edit.js")
 
 	.scripts([
-	], "bundles/Song/Merge.js")
+	], "wwwroot/bundles/Song/Merge.js")
 
 	.scripts([
-		"Scripts/url.js"
-	], "bundles/Song/TopRated.js")
+		"wwwroot/Scripts/url.js"
+	], "wwwroot/bundles/Song/TopRated.js")
 
 	.scripts([
-		"Scripts/soundcloud-api.js"	// REVIEW
-	], "bundles/SongList/Details.js")
+		"wwwroot/Scripts/soundcloud-api.js"	// REVIEW
+	], "wwwroot/bundles/SongList/Details.js")
 
 	.scripts([
-	], "bundles/SongList/Edit.js")
+	], "wwwroot/bundles/SongList/Edit.js")
 
 	.scripts([
-	], "bundles/SongList/Featured.js")
+	], "wwwroot/bundles/SongList/Featured.js")
 
 	.scripts([
-	], "bundles/SongList/Import.js")
+	], "wwwroot/bundles/SongList/Import.js")
 
 	.scripts([
-	], "bundles/Tag/Details.js")
+	], "wwwroot/bundles/Tag/Details.js")
 
 	.scripts([
-	], "bundles/Tag/Edit.js")
+	], "wwwroot/bundles/Tag/Edit.js")
 
 	.scripts([
-	], "bundles/Tag/Index.js")
+	], "wwwroot/bundles/Tag/Index.js")
 
 	.scripts([
-	], "bundles/Tag/Merge.js")
+	], "wwwroot/bundles/Tag/Merge.js")
 
 	.scripts([
-	], "bundles/User/AlbumCollection.js")
+	], "wwwroot/bundles/User/AlbumCollection.js")
 
 	.scripts([
-		"Scripts/soundcloud-api.js"	// REVIEW
-	], "bundles/User/Details.js")
+		"wwwroot/Scripts/soundcloud-api.js"	// REVIEW
+	], "wwwroot/bundles/User/Details.js")
 
 	.scripts([
-	], "bundles/User/Index.js")
+	], "wwwroot/bundles/User/Index.js")
 
 	.scripts([
-	], "bundles/User/Messages.js")
+	], "wwwroot/bundles/User/Messages.js")
 
 	.scripts([
-	], "bundles/User/MySettings.js")
+	], "wwwroot/bundles/User/MySettings.js")
 
 	.scripts([
-		"Scripts/soundcloud-api.js"	// REVIEW
-	], "bundles/User/RatedSongs.js")
+		"wwwroot/Scripts/soundcloud-api.js"	// REVIEW
+	], "wwwroot/bundles/User/RatedSongs.js")
 
 	.scripts([
-	], "bundles/Venue/Details.js")
+	], "wwwroot/bundles/Venue/Details.js")
 
 	.scripts([
-	], "bundles/Venue/Edit.js")
+	], "wwwroot/bundles/Venue/Edit.js")
 
 
 	// Base CSS
-	.less("Content/css.less", "Content")
+	.less("wwwroot/Content/css.less", "wwwroot/Content")
 
-	.less("Content/embedSong.less", "Content")
+	.less("wwwroot/Content/embedSong.less", "wwwroot/Content")
 
 	// CSS for jqxRating
 	.styles([
-		"Scripts/jqwidgets27/styles/jqx.base.css"
-	], "Scripts/jqwidgets27/styles/css.css");
+		"wwwroot/Scripts/jqwidgets27/styles/jqx.base.css"
+	], "wwwroot/Scripts/jqwidgets27/styles/css.css");
 
 
 if (mix.inProduction()) {
-	mix.scripts([], "bundles/tests.js");
+	mix.scripts([], "wwwroot/bundles/tests.js");
 } else {
-	mix.ts("Scripts/tests.ts", "bundles");
+	mix.ts("wwwroot/Scripts/tests.ts", "wwwroot/bundles");
 }
 
 

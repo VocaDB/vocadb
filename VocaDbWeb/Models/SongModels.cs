@@ -30,7 +30,7 @@ namespace VocaDb.Web.Models
 {
 	public class SongDetails
 	{
-		public SongDetails(SongDetailsContract contract, IUserPermissionContext userContext)
+		public SongDetails(SongDetailsContract contract, IUserPermissionContext userContext, PVHelper pvHelper)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -93,7 +93,7 @@ namespace VocaDb.Web.Models
 
 			OriginalPVs = pvs.Where(p => p.PVType == PVType.Original).ToArray();
 			OtherPVs = pvs.Where(p => p.PVType != PVType.Original).ToArray();
-			PrimaryPV = PVHelper.PrimaryPV(pvs);
+			PrimaryPV = pvHelper.PrimaryPV(pvs);
 			ThumbUrl = VideoServiceHelper.GetThumbUrlPreferNotNico(pvs);
 			ThumbUrlMaxSize = VideoServiceHelper.GetMaxSizeThumbUrl(pvs) ?? ThumbUrl;
 
@@ -112,6 +112,9 @@ namespace VocaDb.Web.Models
 			}
 
 			JsonModel = new SongDetailsAjax(this, contract.PreferredLyrics, contract.Song.Version);
+
+			MinBpm = contract.MinBpm;
+			MaxBpm = contract.MaxBpm;
 		}
 
 		public string AdditionalNames { get; set; }
@@ -225,6 +228,10 @@ namespace VocaDb.Web.Models
 		public SongVoteRating UserRating { get; set; }
 
 		public IList<WebLinkContract> WebLinks { get; set; }
+
+		public int? MinBpm { get; set; }
+
+		public int? MaxBpm { get; set; }
 	}
 
 	public class SongDetailsAjax

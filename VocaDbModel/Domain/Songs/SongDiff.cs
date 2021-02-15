@@ -22,6 +22,7 @@ namespace VocaDb.Model.Domain.Songs
 		public EnumFieldAccessor<SongEditableFields> SongType => Field(SongEditableFields.SongType);
 		public EnumFieldAccessor<SongEditableFields> Status => Field(SongEditableFields.Status);
 		public EnumFieldAccessor<SongEditableFields> WebLinks => Field(SongEditableFields.WebLinks);
+		public EnumFieldAccessor<SongEditableFields> Bpm => Field(SongEditableFields.Bpm);
 
 		public virtual bool IncludeAlbums => IsSnapshot;
 		public virtual bool IncludeArtists => IsSnapshot || Artists.IsChanged;

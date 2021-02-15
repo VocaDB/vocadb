@@ -15,8 +15,11 @@
 	<div id="qunit"></div>
 	<div id="qunit-fixture"></div>
 
-	@LaravelMixHelper.RenderScripts("~/bundles/shared/libs.js"/*, "~/bundles/shared/jqui.js"*/, "~/bundles/VocaDB.js", "~/bundles/shared/common.js", "~/bundles/shared/main.js")
+	<remikus path="/bundles/shared/libs.js" />
+	<remikus path="/bundles/VocaDB.js" />
+	<remikus path="/bundles/shared/common.js" />
+	<remikus path="/bundles/shared/main.js" />
 	<script src="@Url.Content("~/Scripts/Libraries/qunit-1.19.0.js")"></script>
-	@LaravelMixHelper.RenderScripts("~/bundles/tests.js")
+	<remikus path="/bundles/tests.js" />
 </body>
 </html>

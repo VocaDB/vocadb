@@ -4,4 +4,4 @@
 
 <img src="@Url.ImageThumb(Model, ImageSize.SmallThumb, fullUrl: true)" alt="Cover" class="smallCover" />
 <br /><br />
-@{ Html.RenderPartial("AlbumPopupContent", Model); }
+<partial name="AlbumPopupContent" model="@(Model)" />

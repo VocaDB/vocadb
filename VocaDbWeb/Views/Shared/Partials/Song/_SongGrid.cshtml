@@ -3,16 +3,18 @@
 @using VocaDb.Web.Models.Shared.Partials.Song
 @model SongGridViewModel
 
-@helper SongIconLink(SongForApiContract song) {
-	<a href="@Url.SongDetails(song)">
-		<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin"/>
-	</a>
-}
+@{
+	void SongIconLink(SongForApiContract song) {
+		<a href="@Url.SongDetails(song)">
+			<img src="@VocaDb.Model.Service.Helpers.UrlHelper.UpgradeToHttps(song.ThumbUrl)" alt="Cover" class="coverPicThumb" referrerpolicy="same-origin"/>
+		</a>
+	}
 
-@helper SongLink(SongForApiContract song, int? albumId = null) {
-	<a href="@Url.SongDetails(song, albumId)" title="@song.AdditionalNames">
-		@song.Name
-	</a>
+	void SongLink(SongForApiContract song, int? albumId = null) {
+		<a href="@Url.SongDetails(song, albumId)" title="@song.AdditionalNames">
+			@song.Name
+		</a>
+	}
 }
 
 <table>
@@ -27,14 +29,14 @@
 		<td>
 			@if (!string.IsNullOrEmpty(song.ThumbUrl))
 			{
-				@SongIconLink(song)
+				SongIconLink(song);
 			}
 		</td>
 		<td>
-			@SongLink(song)
+			@{ SongLink(song); }
 			@if (Model.DisplayType)
 			{
-				@Html.Partial("Partials/Song/_SongTypeLabel", new SongTypeLabelViewModel(song.SongType))
+				<partial name="Partials/Song/_SongTypeLabel" model="@(new SongTypeLabelViewModel(song.SongType))" />
 			}
 			@if (Model.DisplayPublishDate && song.PublishDate.HasValue)
 			{

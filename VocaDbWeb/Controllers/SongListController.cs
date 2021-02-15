@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Songs;
@@ -87,12 +89,12 @@ namespace VocaDb.Web.Controllers
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "View model was null - probably JavaScript is disabled");
 			}
 
-			var coverPicUpload = Request.Files["thumbPicUpload"];
+			var coverPicUpload = Request.Form.Files["thumbPicUpload"];
 			UploadedFileContract uploadedPicture = null;
-			if (coverPicUpload != null && coverPicUpload.ContentLength > 0)
+			if (coverPicUpload != null && coverPicUpload.Length > 0)
 			{
 				CheckUploadedPicture(coverPicUpload, "thumbPicUpload");
-				uploadedPicture = new UploadedFileContract { Mime = coverPicUpload.ContentType, Stream = coverPicUpload.InputStream };
+				uploadedPicture = new UploadedFileContract { Mime = coverPicUpload.ContentType, Stream = coverPicUpload.OpenReadStream() };
 			}
 
 			if (!ModelState.IsValid)
@@ -136,7 +138,7 @@ namespace VocaDb.Web.Controllers
 			var contract = _queries.GetSongListWithArchivedVersions(id);
 
 			if (contract == null)
-				return HttpNotFound();
+				return NotFound();
 
 			return View(contract);
 		}

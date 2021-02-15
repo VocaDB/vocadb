@@ -3,18 +3,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
-using DotNetOpenAuth.Messaging;
-using DotNetOpenAuth.OAuth.Messages;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Twitter;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using NLog;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
@@ -34,6 +36,7 @@ using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.Markdown;
 using VocaDb.Web.Code.Security;
+using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using VocaDb.Web.Models;
 using VocaDb.Web.Models.User;
@@ -63,7 +66,22 @@ namespace VocaDb.Web.Controllers
 			return Service.GetUserForMySettings(PermissionContext.LoggedUser.Id);
 		}
 
-		private bool HandleCreate(UserContract user)
+		private Task SetAuthCookieAsync(string userName, bool createPersistentCookie)
+		{
+			// Code from: https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-5.0
+			var claims = new List<Claim>
+			{
+				new Claim(ClaimTypes.Name, userName),
+			};
+			var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+			var authProperties = new AuthenticationProperties
+			{
+				IsPersistent = createPersistentCookie,
+			};
+			return HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+		}
+
+		private async Task<bool> HandleCreateAsync(UserContract user)
 		{
 			if (user == null)
 			{
@@ -72,14 +90,24 @@ namespace VocaDb.Web.Controllers
 			}
 			else
 			{
-				FormsAuthentication.SetAuthCookie(user.Name, true);
+				await SetAuthCookieAsync(user.Name, true);
 				return true;
 			}
 		}
 
-		public UserController(UserService service, UserQueries data, ArtistService artistService, ArtistQueries artistQueries, OtherService otherService,
+		public UserController(
+			UserService service,
+			UserQueries data,
+			ArtistService artistService,
+			ArtistQueries artistQueries,
+			OtherService otherService,
 			IRepository repository,
-			UserMessageQueries messageQueries, IPRuleManager ipRuleManager, VdbConfigManager config, MarkdownParser markdownParser, ActivityEntryQueries activityEntryQueries, LoginManager loginManager)
+			UserMessageQueries messageQueries,
+			IPRuleManager ipRuleManager,
+			VdbConfigManager config,
+			MarkdownParser markdownParser,
+			ActivityEntryQueries activityEntryQueries,
+			LoginManager loginManager)
 		{
 			Service = service;
 			Data = data;
@@ -95,7 +123,7 @@ namespace VocaDb.Web.Controllers
 			_loginManager = loginManager;
 		}
 
-		[AcceptVerbs(HttpVerbs.Post)]
+		[HttpPost]
 		public void AddArtistForUser(int artistId)
 		{
 			Service.AddArtist(LoggedUserId, artistId);
@@ -113,64 +141,28 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult ConnectTwitter()
 		{
-			// Make sure session ID is initialized
-			// ReSharper disable UnusedVariable
-			var sessionId = Session.SessionID;
-			// ReSharper restore UnusedVariable
-
-			var twitterSignIn = new TwitterConsumer().TwitterSignIn;
-
-			var uri = new Uri(new Uri(AppConfig.HostAddress), Url.Action("ConnectTwitterComplete"));
-
-			UserAuthorizationRequest request;
-			try
+			var props = new AuthenticationProperties
 			{
-				request = twitterSignIn.PrepareRequestUserAuthorization(uri, null, null);
-			}
-			catch (ProtocolException x)
-			{
-				s_log.Fatal(x, "Exception while attempting to sent Twitter request");
-				TempData.SetErrorMessage("There was an error while connecting to Twitter - please try again later.");
-				return RedirectToAction("MySettings", "User");
-			}
-
-			var response = twitterSignIn.Channel.PrepareResponse(request);
-
-			response.Send();
-			Response.End();
-			return new EmptyResult();
+				RedirectUri = "User/ConnectTwitterComplete",
+			};
+			return Challenge(props, TwitterDefaults.AuthenticationScheme);
 		}
 
-		public ActionResult ConnectTwitterComplete()
+		public async Task<ActionResult> ConnectTwitterComplete()
 		{
-			// Denied authorization
-			var param = Request.QueryString["denied"];
+			var cookie = await HttpContext.AuthenticateAsync(AuthenticationConstants.ExternalCookie);
 
-			if (!string.IsNullOrEmpty(param))
-			{
-				TempData.SetStatusMessage(ViewRes.User.LoginUsingAuthStrings.SignInCancelled);
-				return RedirectToAction("MySettings");
-			}
+			var accessToken = cookie.Principal.FindFirst(TwitterClaimTypes.AccessToken).Value;
 
-			var response = new TwitterConsumer().ProcessUserAuthorization(Hostname);
+			int.TryParse(cookie.Principal.FindFirst("urn:twitter:userid").Value, out var twitterId);
+			var twitterName = cookie.Principal.FindFirst("urn:twitter:screenname").Value;
 
-			if (response == null)
-			{
-				TempData.SetStatusMessage(ViewRes.User.LoginUsingAuthStrings.AuthError);
-				return RedirectToAction("MySettings");
-			}
-
-			int.TryParse(response.ExtraData["user_id"], out int twitterId);
-			var twitterName = response.ExtraData["screen_name"];
-
-			if (Service.ConnectTwitter(response.AccessToken, twitterId, twitterName, WebHelper.GetRealHost(Request)))
-			{
+			if (Service.ConnectTwitter(accessToken, twitterId, twitterName, WebHelper.GetRealHost(Request)))
 				TempData.SetStatusMessage("Connected successfully");
-			}
 			else
-			{
 				ModelState.AddModelError("Authentication", ViewRes.User.LoginUsingAuthStrings.AuthError);
-			}
+
+			await HttpContext.SignOutAsync(AuthenticationConstants.ExternalCookie);
 
 			return RedirectToAction("MySettings");
 		}
@@ -202,7 +194,7 @@ namespace VocaDb.Web.Controllers
 		[HttpPost]
 		public async Task<ActionResult> ForgotPassword(ForgotPassword model)
 		{
-			var captchaResult = await ReCaptcha2.ValidateAsync(new AspNetHttpRequest(Request), AppConfig.ReCAPTCHAKey);
+			var captchaResult = await ReCaptcha2.ValidateAsync(new AspNetCoreHttpRequest(Request), AppConfig.ReCAPTCHAKey);
 			if (!captchaResult.Success)
 				ModelState.AddModelError("CAPTCHA", ViewRes.User.ForgotPasswordStrings.CaptchaIsInvalid);
 
@@ -227,7 +219,7 @@ namespace VocaDb.Web.Controllers
 
 		public ActionResult Index(string filter = null, UserGroupId? groupId = null)
 		{
-			var vm = new Index { Filter = filter, GroupId = groupId };
+			var vm = new Models.User.Index { Filter = filter, GroupId = groupId };
 
 			if (!string.IsNullOrEmpty(filter))
 			{
@@ -270,19 +262,19 @@ namespace VocaDb.Web.Controllers
 			return PartialView(ownedArtist);
 		}
 
-		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
+		[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600)]
 		public PartialViewResult PopupContent(int id, string culture = InterfaceLanguage.DefaultCultureCode)
 		{
 			var user = Service.GetUser(id);
 			return PartialView("_UserPopupContent", user);
 		}
 
-		public new ActionResult Profile(string id, int? artistId = null, bool? childVoicebanks = null)
+		public ActionResult Profile(string id, int? artistId = null, bool? childVoicebanks = null)
 		{
 			var model = Data.GetUserByNameNonSensitive(id);
 
 			if (model == null)
-				return HttpNotFound();
+				return NotFound();
 
 			ViewBag.ArtistId = artistId;
 			ViewBag.ChildVoicebanks = childVoicebanks;
@@ -291,7 +283,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[RestrictBannedIP]
-		public ActionResult Login(string returnUrl = null)
+		public new ActionResult Login(string returnUrl = null)
 		{
 			RestoreErrorsFromTempData();
 
@@ -306,7 +298,7 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[RestrictBannedIP]
-		public ActionResult Login(LoginModel model)
+		public new async Task<ActionResult> Login(LoginModel model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -326,25 +318,24 @@ namespace VocaDb.Web.Controllers
 					var user = result.User;
 
 					TempData.SetSuccessMessage(string.Format(ViewRes.User.LoginStrings.Welcome, user.Name));
-					FormsAuthentication.SetAuthCookie(user.Name, model.KeepLoggedIn);
+					await SetAuthCookieAsync(user.Name, model.KeepLoggedIn);
 
 					string redirectUrl = null;
-					try
+					// TODO: implement
+					/*try
 					{
 						redirectUrl = FormsAuthentication.GetRedirectUrl(model.UserName, true);
 					}
 					catch (HttpException x)
 					{
 						s_log.Warn(x, "Unable to get redirect URL");
-					}
+					}*/
 
 					string targetUrl;
 
 					// TODO: should not allow redirection to URLs outside the site
 					if (!string.IsNullOrEmpty(model.ReturnUrl))
-					{
 						targetUrl = model.ReturnUrl;
-					}
 					else if (!string.IsNullOrEmpty(redirectUrl))
 						targetUrl = redirectUrl;
 					else
@@ -371,86 +362,43 @@ namespace VocaDb.Web.Controllers
 		{
 			s_log.Info($"{WebHelper.GetRealHost(Request)} login via Twitter");
 
-			// Make sure session ID is initialized
-			// ReSharper disable UnusedVariable
-			var sessionId = Session.SessionID;
-			// ReSharper restore UnusedVariable
-
-			var twitterSignIn = new TwitterConsumer().TwitterSignIn;
-
-			var targetUrl = Url.Action("LoginTwitterComplete", new { returnUrl });
-			var uri = new Uri(new Uri(AppConfig.HostAddress), targetUrl);
-
-			SslHelper.ForceStrongTLS();
-
-			UserAuthorizationRequest request;
-
-			try
+			var props = new AuthenticationProperties
 			{
-				request = twitterSignIn.PrepareRequestUserAuthorization(uri, null, null);
-			}
-			catch (ProtocolException x)
-			{
-				s_log.Error(x, "Exception while attempting to send Twitter request");
-				TempData.SetErrorMessage("There was an error while connecting to Twitter - please try again later.");
-
-				return RedirectToAction("Login");
-			}
-
-			var response = twitterSignIn.Channel.PrepareResponse(request);
-
-			response.Send();
-			Response.End();
-
-			return new EmptyResult();
+				RedirectUri = $"User/LoginTwitterComplete?returnUrl={HttpUtility.UrlEncode(returnUrl)}",
+			};
+			return Challenge(props, TwitterDefaults.AuthenticationScheme);
 		}
 
 		[RestrictBannedIP]
-		public ActionResult LoginTwitterComplete(string returnUrl)
+		public async Task<ActionResult> LoginTwitterComplete(string returnUrl)
 		{
-			// Denied authorization
-			var param = Request.QueryString["denied"];
+			var cookie = await HttpContext.AuthenticateAsync(AuthenticationConstants.ExternalCookie);
 
-			if (!string.IsNullOrEmpty(param))
-			{
-				TempData.SetStatusMessage(ViewRes.User.LoginUsingAuthStrings.SignInCancelled);
-				return View("Login", new LoginModel(string.Empty, false));
-			}
-
-			var response = new TwitterConsumer().ProcessUserAuthorization(Hostname);
-
-			if (response == null)
-			{
-				ModelState.AddModelError("Authentication", ViewRes.User.LoginUsingAuthStrings.AuthError);
-				return View("Login", new LoginModel(string.Empty, false));
-			}
-
+			var accessToken = cookie.Principal.FindFirst(TwitterClaimTypes.AccessToken).Value;
 			var culture = WebHelper.GetInterfaceCultureName(Request);
-			var user = Service.CheckTwitterAuthentication(response.AccessToken, Hostname, culture);
+			var user = Service.CheckTwitterAuthentication(accessToken, Hostname, culture);
 
-			if (user == null)
+			if (user is null)
 			{
-				int.TryParse(response.ExtraData["user_id"], out int twitterId);
-				var twitterName = response.ExtraData["screen_name"];
-				return View(new RegisterOpenAuthModel(response.AccessToken, twitterName, twitterId, twitterName));
+				int.TryParse(cookie.Principal.FindFirst("urn:twitter:userid").Value, out var twitterId);
+				var twitterName = cookie.Principal.FindFirst("urn:twitter:screenname").Value;
+				return View(new RegisterOpenAuthModel(accessToken, twitterName, twitterId, twitterName));
 			}
 
-			HandleCreate(user);
+			await HandleCreateAsync(user);
 
-			string targetUrl;
+			await HttpContext.SignOutAsync(AuthenticationConstants.ExternalCookie);
 
-			if (!string.IsNullOrEmpty(returnUrl))
-				targetUrl = VocaUriBuilder.AbsoluteFromUnknown(returnUrl, preserveAbsolute: true);
-			else
-				targetUrl = Url.Action("Index", "Home");
-
+			var targetUrl = !string.IsNullOrEmpty(returnUrl)
+				? VocaUriBuilder.AbsoluteFromUnknown(returnUrl, preserveAbsolute: true)
+				: Url.Action("Index", "Home");
 			return Redirect(targetUrl);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[RestrictBannedIP]
-		public ActionResult LoginTwitterComplete(RegisterOpenAuthModel model)
+		public async Task<ActionResult> LoginTwitterComplete(RegisterOpenAuthModel model)
 		{
 			if (!ModelState.IsValid)
 				return View(model);
@@ -459,7 +407,7 @@ namespace VocaDb.Web.Controllers
 			{
 				var user = Data.CreateTwitter(model.AccessToken, model.UserName, model.Email ?? string.Empty,
 					model.TwitterId, model.TwitterName, Hostname, WebHelper.GetInterfaceCultureName(Request));
-				FormsAuthentication.SetAuthCookie(user.Name, false);
+				await SetAuthCookieAsync(user.Name, false);
 
 				return RedirectToAction("Index", "Home");
 			}
@@ -480,9 +428,9 @@ namespace VocaDb.Web.Controllers
 			}
 		}
 
-		public ActionResult Logout()
+		public async Task<ActionResult> Logout()
 		{
-			FormsAuthentication.SignOut();
+			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 			return RedirectToAction("Index", "Home");
 		}
 
@@ -513,7 +461,7 @@ namespace VocaDb.Web.Controllers
 		{
 			string restrictedErr = "Sorry, access from your host is restricted. It is possible this restriction is no longer valid. If you think this is the case, please contact support.";
 
-			if (!ModelState.IsValidField("Extra"))
+			if (ModelState[nameof(model.Extra)].Errors.Any())
 			{
 				s_log.Warn("An attempt was made to fill the bot decoy field from {0} with the value '{1}'.", Hostname, ModelState["Extra"]);
 				_ipRuleManager.AddTempBannedIP(Hostname, "Attempt to fill the bot decoy field");
@@ -525,7 +473,7 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError(string.Empty, "Signups are disabled");
 			}
 
-			var recaptchaResult = await ReCaptcha2.ValidateAsync(new AspNetHttpRequest(Request), AppConfig.ReCAPTCHAKey);
+			var recaptchaResult = await ReCaptcha2.ValidateAsync(new AspNetCoreHttpRequest(Request), AppConfig.ReCAPTCHAKey);
 			if (!recaptchaResult.Success)
 			{
 				ErrorLogger.LogMessage(Request, $"Invalid CAPTCHA (error {recaptchaResult.Error})", LogLevel.Warn);
@@ -550,10 +498,10 @@ namespace VocaDb.Web.Controllers
 			{
 				var url = VocaUriBuilder.CreateAbsolute(Url.Action("VerifyEmail", "User")).ToString();
 				var user = await Data.Create(model.UserName, model.Password, model.Email ?? string.Empty, Hostname,
-					Request.UserAgent,
+					Request.Headers[HeaderNames.UserAgent],
 					WebHelper.GetInterfaceCultureName(Request),
 					time, _ipRuleManager, url);
-				FormsAuthentication.SetAuthCookie(user.Name, false);
+				await SetAuthCookieAsync(user.Name, createPersistentCookie: false);
 				return RedirectToAction("Index", "Home");
 			}
 			catch (UserNameAlreadyExistsException)
@@ -598,7 +546,7 @@ namespace VocaDb.Web.Controllers
 			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
 			var user = Service.GetUserWithPermissions(id);
-			return View(new UserEdit(user));
+			return View(new UserEdit(base.Login, user));
 		}
 
 		//
@@ -635,7 +583,7 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Details", new { id = model.Id });
 		}
 
-		[OutputCache(Duration = ClientCacheDurationSec)]
+		[ResponseCache(Duration = ClientCacheDurationSec)]
 		public ActionResult Stats_EditsPerDay(int id)
 		{
 			var points = _activityEntryQueries.GetEditsPerDay(id, null);
@@ -679,12 +627,12 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult MySettings(MySettingsModel model)
+		public async Task<ActionResult> MySettings(MySettingsModel model)
 		{
 			var user = PermissionContext.LoggedUser;
 
 			if (user == null || user.Id != model.Id)
-				return new HttpStatusCodeResult(403);
+				return Forbid();
 
 			if (!ModelState.IsValid)
 				return View(new MySettingsModel(GetUserForMySettings()));
@@ -743,7 +691,7 @@ namespace VocaDb.Web.Controllers
 			// Updating username currently requires signing in again
 			if (newUser.Name != user.Name)
 			{
-				FormsAuthentication.SignOut();
+				await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 			}
 
 			TempData.SetSuccessMessage(ViewRes.User.MySettingsStrings.SettingsUpdated);
@@ -751,7 +699,7 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Profile", new { id = newUser.Name });
 		}
 
-		[AcceptVerbs(HttpVerbs.Post)]
+		[HttpPost]
 		public void RemoveArtistFromUser(int artistId)
 		{
 			Service.RemoveArtistFromUser(LoggedUserId, artistId);
@@ -797,12 +745,12 @@ namespace VocaDb.Web.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public ActionResult RequestVerification([FromJson] ArtistContract selectedArtist, string message, string linkToProof, bool privateMessage)
+		public ActionResult RequestVerification([ModelBinder(BinderType = typeof(JsonModelBinder))] ArtistContract selectedArtist, string message, string linkToProof, bool privateMessage)
 		{
 			if (selectedArtist == null)
 			{
 				TempData.SetErrorMessage("Artist must be selected");
-				return View("RequestVerification", null, message);
+				return View("RequestVerification", message);
 			}
 
 			if (string.IsNullOrEmpty(linkToProof) && !privateMessage)
@@ -849,7 +797,7 @@ namespace VocaDb.Web.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult ResetPassword(ResetPassword model)
+		public async Task<ActionResult> ResetPassword(ResetPassword model)
 		{
 			if (!Data.CheckPasswordResetRequest(model.RequestId))
 			{
@@ -862,20 +810,20 @@ namespace VocaDb.Web.Controllers
 			}
 
 			var user = Data.ResetPassword(model.RequestId, model.NewPass);
-			FormsAuthentication.SetAuthCookie(user.Name, false);
+			await SetAuthCookieAsync(user.Name, createPersistentCookie: false);
 
 			TempData.SetStatusMessage("Password reset successfully!");
 
 			return RedirectToAction("Index", "Home");
 		}
 
-		[AcceptVerbs(HttpVerbs.Post)]
+		[HttpPost]
 		public void UpdateAlbumForUser(int albumid, PurchaseStatus collectionStatus, MediaType mediaType, int rating)
 		{
 			Data.UpdateAlbumForUser(LoggedUserId, albumid, collectionStatus, mediaType, rating);
 		}
 
-		[AcceptVerbs(HttpVerbs.Post)]
+		[HttpPost]
 		public void UpdateArtistSubscription(int artistId, bool? emailNotifications, bool? siteNotifications)
 		{
 			Data.UpdateArtistSubscriptionForCurrentUser(artistId, emailNotifications, siteNotifications);

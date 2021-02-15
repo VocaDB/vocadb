@@ -1,5 +1,5 @@
 ﻿@using VocaDb.Web.Helpers
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.MikuDbAlbums.Index>
+@model VocaDb.Web.Models.MikuDbAlbums.Index
 
 @{
 	PageProperties.Title = "Imported albums";
@@ -52,7 +52,7 @@
 			<th>Tracks</th>
 		</tr>
 		@foreach (var album in Model.Albums) {
-			Html.RenderPartial("MikuDbAlbumRow", album);
+			<partial name="MikuDbAlbumRow" model="@(album)" />
 		}
 	</table>
 	

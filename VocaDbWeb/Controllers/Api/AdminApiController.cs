@@ -1,16 +1,18 @@
 #nullable disable
 
 using System.Linq;
-using System.Web.Http;
-using System.Web.Http.Description;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.Security;
+using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
 	[Authorize]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	[RoutePrefix("api/admin")]
+	[Route("api/admin")]
+	[ApiController]
 	public class AdminApiController : ApiController
 	{
 		private readonly IPRuleManager _ipRuleManager;
@@ -22,7 +24,7 @@ namespace VocaDb.Web.Controllers.Api
 			_ipRuleManager = ipRuleManager;
 		}
 
-		[Route("tempBannedIPs")]
+		[HttpGet("tempBannedIPs")]
 		public string[] GetTempBannedIPs()
 		{
 			_userContext.VerifyPermission(PermissionToken.ManageIPRules);

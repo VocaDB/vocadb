@@ -1,9 +1,12 @@
 #nullable disable
 
 using System.Linq;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using VocaDb.Model.DataContracts.MikuDb;
 using VocaDb.Model.Domain.MikuDb;
+using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Web.Helpers;
@@ -27,7 +30,7 @@ namespace VocaDb.Web.Controllers
 			var pictureData = Service.GetCoverPicture(id);
 
 			if (pictureData == null)
-				return File(Server.MapPath("~/Content/unknown.png"), "image/png");
+				return File(HttpContext.RequestServices.GetRequiredService<IHttpContext>().ServerPathMapper.MapPath("~/Content/unknown.png"), "image/png");
 
 			return File(pictureData.Bytes, pictureData.Mime);
 		}
@@ -68,11 +71,11 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult ImportFromFile()
 		{
-			if (Request.Files.Count == 0 || Request.Files[0].ContentLength == 0)
+			if (Request.Form.Files.Count == 0 || Request.Form.Files[0].Length == 0)
 				return RedirectToAction("Index");
 
-			var file = Request.Files[0];
-			var id = Service.ImportFromFile(file.InputStream);
+			var file = Request.Form.Files[0];
+			var id = Service.ImportFromFile(file.OpenReadStream());
 
 			return RedirectToAction("PrepareForImport", new { id });
 		}

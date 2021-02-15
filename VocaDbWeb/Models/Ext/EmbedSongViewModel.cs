@@ -11,6 +11,13 @@ namespace VocaDb.Web.Models.Ext
 		private const int DefaultHeight = 315;
 		private const int DefaultWidth = 560;
 
+		private readonly PVHelper _pvHelper;
+
+		public EmbedSongViewModel(PVHelper pvHelper)
+		{
+			_pvHelper = pvHelper;
+		}
+
 		public int ContainerHeight => PlayerHeight + 55;
 
 		public PVContract CurrentPV { get; set; }
@@ -23,7 +30,7 @@ namespace VocaDb.Web.Models.Ext
 
 		public int? Width { get; set; }
 
-		public PVContract[] MainPVs => PVHelper.GetMainPVs(Song.PVs);
+		public PVContract[] MainPVs => _pvHelper.GetMainPVs(Song.PVs);
 
 		public int PlayerHeight => Height ?? DefaultHeight;
 

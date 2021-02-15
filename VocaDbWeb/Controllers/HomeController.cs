@@ -2,19 +2,16 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Web.Mvc;
-using System.Web.SessionState;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.BrandableStrings;
 using VocaDb.Model.Service.Search;
-using VocaDb.Web.Helpers;
 using VocaDb.Web.Models;
 
 namespace VocaDb.Web.Controllers
 {
-	[SessionState(SessionStateBehavior.ReadOnly)]
 	public class HomeController : ControllerBase
 	{
 		private readonly BrandableStringsManager _brandableStringsManager;
