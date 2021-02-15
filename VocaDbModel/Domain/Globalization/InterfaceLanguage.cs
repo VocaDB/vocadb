@@ -45,5 +45,7 @@ namespace VocaDb.Model.Domain.Globalization
 		};
 
 		public static CultureCollection UserLanguageCultures => new CultureCollection(UserLanguageCodes);
+
+		public static IEnumerable<string> TwoLetterLanguageCodes => s_twoLetterLanguageCodes;
 	}
 }

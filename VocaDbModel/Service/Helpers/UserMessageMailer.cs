@@ -1,21 +1,36 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using NLog;
 using VocaDb.Model.Service.BrandableStrings;
 
 namespace VocaDb.Model.Service.Helpers
 {
+	public record SmtpSettings
+	{
+		public const string Smtp = "Smtp";
+
+		public string From { get; set; }
+		public string Host { get; set; }
+		public int Port { get; set; }
+		public string UserName { get; set; }
+		public string Password { get; set; }
+	}
+
 	public class UserMessageMailer : IUserMessageMailer
 	{
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		private readonly BrandableStringsManager _brandableStringsManager;
+		private readonly SmtpSettings _smtpSettings;
 
-		public UserMessageMailer(BrandableStringsManager brandableStringsManager)
+		public UserMessageMailer(BrandableStringsManager brandableStringsManager, IOptions<SmtpSettings> smtpSettings)
 		{
 			_brandableStringsManager = brandableStringsManager;
+			_smtpSettings = smtpSettings.Value;
 		}
 
 		public bool SendEmail(string toEmail, string receiverName, string subject, string body)
@@ -35,18 +50,24 @@ namespace VocaDb.Model.Service.Helpers
 				return false;
 			}
 
-			var mailMessage = new MailMessage();
+			var mailMessage = new MailMessage
+			{
+				From = new MailAddress(_smtpSettings.From),
+				Subject = subject,
+				Body =
+					$"Hi {receiverName},\n\n" +
+					$"{body}" +
+					$"\n\n" +
+					$"- {_brandableStringsManager.Layout.SiteName} mailer",
+			};
 			mailMessage.To.Add(to);
-			mailMessage.Subject = subject;
-			mailMessage.Body =
-				string.Format(
-					"Hi {0},\n\n" +
-					"{1}" +
-					"\n\n" +
-					"- {2} mailer",
-				receiverName, body, _brandableStringsManager.Layout.SiteName);
 
-			var client = new SmtpClient();
+			var client = new SmtpClient(_smtpSettings.Host)
+			{
+				Port = _smtpSettings.Port,
+				Credentials = new NetworkCredential(_smtpSettings.UserName, _smtpSettings.Password),
+				EnableSsl = true,
+			};
 
 			try
 			{
@@ -83,18 +104,24 @@ namespace VocaDb.Model.Service.Helpers
 				return false;
 			}
 
-			var mailMessage = new MailMessage();
+			var mailMessage = new MailMessage
+			{
+				From = new MailAddress(_smtpSettings.From),
+				Subject = subject,
+				Body =
+					$"Hi {receiverName},\n\n" +
+					$"{body}" +
+					$"\n\n" +
+					$"- {_brandableStringsManager.Layout.SiteName} mailer",
+			};
 			mailMessage.To.Add(to);
-			mailMessage.Subject = subject;
-			mailMessage.Body =
-				string.Format(
-					"Hi {0},\n\n" +
-					"{1}" +
-					"\n\n" +
-					"- {2} mailer",
-				receiverName, body, _brandableStringsManager.Layout.SiteName);
 
-			var client = new SmtpClient();
+			var client = new SmtpClient(_smtpSettings.Host)
+			{
+				Port = _smtpSettings.Port,
+				Credentials = new NetworkCredential(_smtpSettings.UserName, _smtpSettings.Password),
+				EnableSsl = true,
+			};
 
 			try
 			{
