@@ -1,7 +1,7 @@
 #nullable disable
 
 using System.Linq;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
@@ -16,7 +16,6 @@ using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.Events;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Search.Tags;
-using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Search;
 
 namespace VocaDb.Web.Controllers

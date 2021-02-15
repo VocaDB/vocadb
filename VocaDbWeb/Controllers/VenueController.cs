@@ -1,7 +1,8 @@
 #nullable disable
 
 using System.Linq;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;

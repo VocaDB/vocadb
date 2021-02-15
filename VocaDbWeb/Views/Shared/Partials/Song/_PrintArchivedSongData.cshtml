@@ -1,4 +1,5 @@
-﻿@using VocaDb.Web.Helpers
+﻿@using Microsoft.AspNetCore.Html
+@using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
 @using VocaDb.Web.Models.Shared.Partials.Song
 @model PrintArchivedSongDataViewModel
@@ -7,7 +8,7 @@
 	<h4>Content</h4>
 
 	<table class="table table-bordered">
-		@Html.Partial("Partials/ArchivedEntry/_DataRow", new DataRowViewModel("Id", Model.ComparedSongs.FirstData.Id))
+		<partial name="Partials/ArchivedEntry/_DataRow" model="@(new DataRowViewModel("Id", Model.ComparedSongs.FirstData.Id))" />
 		@Html.TranslatedNameRow(Model.ComparedSongs, d => d.TranslatedName)
 		@Html.DataRowList("Names", Model.ComparedSongs, d => DataFormatUtils.GenerateHtml(d.Names, name => Html.Partial("Partials/ArchivedEntry/_NameInfo", new NameInfoViewModel(name))))
 		@Html.DataRow("Notes", Model.ComparedSongs, d => d.Notes, preserveLineBreaks: true)
@@ -15,10 +16,11 @@
 		@Html.DataRow("Song type", Model.ComparedSongs, d => d.SongType)
 		@Html.DataRow("Original version", Model.ComparedSongs, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.OriginalVersion)))
 		@Html.DataRow("Duration", Model.ComparedSongs, d => DateTimeUtils.FormatFromSeconds(d.LengthSeconds))
+		@Html.DataRow("BPM", Model.ComparedSongs, d => d.MinBpm)
 		@Html.DataRow("Release event", Model.ComparedSongs, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.ReleaseEvent)))
 		@Html.DataRow("Publish date", Model.ComparedSongs, d => d.PublishDate)
 		@Html.DataRowList("External links", Model.ComparedSongs, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))
-		@Html.DataRowList("Artists", Model.ComparedSongs, d => DataFormatUtils.GenerateHtml(d.Artists != null ? (d.Artists.OrderBy(a => a.NameHint)) : null, artist => MvcHtmlString.Create(artist.NameHint + " [" + artist.Id + "] - IsSupport: " + artist.IsSupport + ", Roles: " + artist.Roles)))
+		@Html.DataRowList("Artists", Model.ComparedSongs, d => DataFormatUtils.GenerateHtml(d.Artists != null ? (d.Artists.OrderBy(a => a.NameHint)) : null, artist => new HtmlString(artist.NameHint + " [" + artist.Id + "] - IsSupport: " + artist.IsSupport + ", Roles: " + artist.Roles)))
 		@Html.DataRowList("PVs", Model.ComparedSongs, d => DataFormatUtils.GenerateHtml(d.PVs, pv => Html.Partial("Partials/ArchivedEntry/_PVInfo", new PVInfoViewModel(pv))))
 		@Html.DataRowList("Lyrics", Model.ComparedSongs, d => DataFormatUtils.GenerateHtml(d.Lyrics, lyrics => Html.Partial("Partials/Song/_LyricsInfo", new LyricsInfoViewModel(lyrics))))
 	</table>

@@ -12,7 +12,7 @@
 			</h4>
 			
 			<div data-bind="with: ratingButtonsViewModel">
-				@{ Html.RenderPartial("Partials/_PVRatingButtonsForIndex"); }
+				<partial name="Partials/_PVRatingButtonsForIndex" />
 			</div>
 
 			<div id="pv-player-wrapper" data-bind="html: playerHtml"></div>

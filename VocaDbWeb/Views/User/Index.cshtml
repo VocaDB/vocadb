@@ -1,15 +1,15 @@
 ﻿@using VocaDb.Web.Helpers
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.User.Index>
+@model VocaDb.Web.Models.User.Index
 
 @{
 	PageProperties.Title = ViewRes.SharedStrings.Users;
 }
 
-@{ Html.RenderPartial("Partials/_ListUsers"); }
+<partial name="Partials/_ListUsers" />
 
 @section BodyScripts {
 
-	@LaravelMixHelper.RenderScripts("~/bundles/User/Index.js")
+	<remikus path="/bundles/User/Index.js" />
 
 	<script type="text/javascript">
 		$(function () {

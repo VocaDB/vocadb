@@ -2,11 +2,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -24,14 +22,15 @@ using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.SongImport;
-using VocaDb.Web.Code.Exceptions;
+using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
 	/// <summary>
 	/// API queries for song lists.
 	/// </summary>
-	[RoutePrefix("api/songLists")]
+	[Route("api/songLists")]
+	[ApiController]
 	public class SongListApiController : ApiController
 	{
 		private const int AbsoluteMax = 100;
@@ -56,7 +55,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// If true, the entry is hard deleted. Hard deleted entries cannot be restored normally, but they will be moved to trash.
 		/// If false, the entry is soft deleted, meaning it can still be restored.
 		/// </param>
-		[Route("{id:int}")]
+		[HttpDelete("{id:int}")]
 		[Authorize]
 		public void Delete(int id, string notes = "", bool hardDelete = false)
 		{
@@ -80,7 +79,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// Normal users can delete their own comments, moderators can delete all comments.
 		/// Requires login.
 		/// </remarks>
-		[Route("comments/{commentId:int}")]
+		[HttpDelete("comments/{commentId:int}")]
 		[Authorize]
 		public void DeleteComment(int commentId) => _queries.DeleteComment(commentId);
 
@@ -89,10 +88,10 @@ namespace VocaDb.Web.Controllers.Api
 		/// </summary>
 		/// <param name="listId">ID of the list whose comments to load.</param>
 		/// <returns>List of comments in no particular order.</returns>
-		[Route("{listId:int}/comments")]
+		[HttpGet("{listId:int}/comments")]
 		public PartialFindResult<CommentForApiContract> GetComments(int listId) => new PartialFindResult<CommentForApiContract>(_queries.GetComments(listId), 0);
 
-		[Route("{id:int}/for-edit")]
+		[HttpGet("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public SongListForEditContract GetForEdit(int id) => _queries.GetSongListForEdit(id);
 
@@ -111,10 +110,10 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="fields">List of optional fields (optional).</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of song lists.</returns>
-		[Route("featured")]
+		[HttpGet("featured")]
 		public PartialFindResult<SongListForApiContract> GetFeaturedLists(
 			string query = "",
-			[FromUri] int[] tagId = null,
+			[FromQuery(Name = "tagId[]")] int[] tagId = null,
 			bool childTags = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
@@ -145,7 +144,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="featuredCategory">Filter by a specific featured category. If empty, all categories are returned.</param>
 		/// <param name="maxResults">Maximum number of results.</param>
 		/// <returns>List of list names.</returns>
-		[Route("featured/names")]
+		[HttpGet("featured/names")]
 		public IEnumerable<string> GetFeaturedListNames(string query = "",
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
@@ -174,15 +173,15 @@ namespace VocaDb.Web.Controllers.Api
 		/// </param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of songs.</returns>
-		[Route("{listId:int}/songs")]
+		[HttpGet("{listId:int}/songs")]
 		public PartialFindResult<SongInListForApiContract> GetSongs(int listId,
 			string query = "",
 			string songTypes = null,
-			[FromUri] PVServices? pvServices = null,
-			[FromUri] int[] tagId = null,
-			[FromUri] int[] artistId = null,
+			PVServices? pvServices = null,
+			[FromQuery(Name = "tagId[]")] int[] tagId = null,
+			[FromQuery(Name = "artistId[]")] int[] artistId = null,
 			bool childVoicebanks = false,
-			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters[]")] AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
@@ -210,8 +209,8 @@ namespace VocaDb.Web.Controllers.Api
 		}
 
 		[ApiExplorerSettings(IgnoreApi = true)]
-		[Route("import")]
-		public async Task<ImportedSongListContract> GetImport(string url, bool parseAll = true)
+		[HttpGet("import")]
+		public async Task<ActionResult<ImportedSongListContract>> GetImport(string url, bool parseAll = true)
 		{
 			try
 			{
@@ -219,13 +218,13 @@ namespace VocaDb.Web.Controllers.Api
 			}
 			catch (UnableToImportException x)
 			{
-				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = x.Message });
+				return BadRequest(x.Message);
 			}
 		}
 
 		[ApiExplorerSettings(IgnoreApi = true)]
-		[Route("import-songs")]
-		public async Task<PartialImportedSongs> GetImportSongs(string url, string pageToken, int maxResults = 20, bool parseAll = true)
+		[HttpGet("import-songs")]
+		public async Task<ActionResult<PartialImportedSongs>> GetImportSongs(string url, string pageToken, int maxResults = 20, bool parseAll = true)
 		{
 			try
 			{
@@ -233,7 +232,7 @@ namespace VocaDb.Web.Controllers.Api
 			}
 			catch (UnableToImportException x)
 			{
-				throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest) { ReasonPhrase = x.Message });
+				return BadRequest(x.Message);
 			}
 		}
 
@@ -242,12 +241,12 @@ namespace VocaDb.Web.Controllers.Api
 		/// </summary>
 		/// <param name="list">Song list properties.</param>
 		/// <returns>ID of the created list.</returns>
-		[Route("")]
+		[HttpPost("")]
 		[Authorize]
-		public int Post(SongListForEditContract list)
+		public ActionResult<int> Post(SongListForEditContract list)
 		{
 			if (list == null)
-				throw new HttpBadRequestException();
+				return BadRequest();
 
 			return _queries.UpdateSongList(list, null);
 		}
@@ -261,8 +260,8 @@ namespace VocaDb.Web.Controllers.Api
 		/// Normal users can edit their own comments, moderators can edit all comments.
 		/// Requires login.
 		/// </remarks>
-		[System.Web.Http.Route("comments/{commentId:int}")]
-		[System.Web.Http.Authorize]
+		[HttpPost("comments/{commentId:int}")]
+		[Authorize]
 		public void PostEditComment(int commentId, CommentForApiContract contract) => _queries.PostEditComment(commentId, contract);
 
 		/// <summary>
@@ -271,7 +270,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="listId">ID of the song list for which to create the comment.</param>
 		/// <param name="contract">Comment data. Message and author must be specified. Author must match the logged in user.</param>
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
-		[Route("{listId:int}/comments")]
+		[HttpPost("{listId:int}/comments")]
 		[Authorize]
 		public CommentForApiContract PostNewComment(int listId, CommentForApiContract contract) => _queries.CreateComment(listId, contract);
 	}

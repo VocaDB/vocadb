@@ -1,26 +1,27 @@
-﻿@using VocaDb.Model.Domain
-@using VocaDb.Web.Helpers
-@using VocaDb.Model.Domain.Security
-@using VocaDb.Web.Models.Song
+﻿@using VocaDb.Web.Helpers
 @using VocaDb.Web.Code
-@using VocaDb.Model.Utils
-@using VocaDb.Model.Utils.Search
 @inherits MenuPage
 
-@helper BannerLink(string title, string url, string img) {
-	<a href="@url" onclick="app.functions.trackOutboundLink(event)"><img src="@VocaUrlHelper.StaticResource("/banners/" + img)" alt="@title" title="@title" /></a>
-}
+@{
+	void BannerLink(string title, string url, string img)
+	{
+		<a href="@url" onclick="app.functions.trackOutboundLink(event)"><img src="@VocaUrlHelper.StaticResource("/banners/" + img)" alt="@title" title="@title" /></a>
+	}
 
-@helper Banner(string title, string url, string img) {
-    <li>@BannerLink(title, url, img)</li>
-}
+	void Banner(string title, string url, string img)
+	{
+		<li>@{ BannerLink(title, url, img); }</li>
+	}
 
-@helper SmallBanner(string title, string url, string img) {
-    <div>@BannerLink(title, url, img)</div>
-}
+	void SmallBanner(string title, string url, string img)
+	{
+		<div>@{ BannerLink(title, url, img); }</div>
+	}
 
-@helper SocialLink(string title, string url, string img ){
-    @BannerLink(title, url, img)
+	void SocialLink(string title, string url, string img)
+	{
+		BannerLink(title, url, img);
+	}
 }
 
 <div class="span2 menu">
@@ -32,10 +33,10 @@
 	</div>
 
 	<div class="well sidebar-nav">
-		@{ Html.RenderPartial("Partials/_MainNavigationItems"); }
+		<partial name="Partials/_MainNavigationItems" />
 		@if (Login.Manager.IsLoggedIn) {
 			<br />
-			<p class="user">@ViewRes._LayoutStrings.Welcome @Html.ActionLink(Login.User.Name, "Profile", "User", new { id = Login.User.Name }, null)</p>
+			<p class="user">@ViewRes._LayoutStrings.Welcome <a asp-action="Profile" asp-controller="User" asp-route-id="@(Login.User.Name)">@(Login.User.Name)</a></p>
 		}
 	</div>			
 		
@@ -43,7 +44,7 @@
 		@if (AppLinks.Any()) {
 			<div id="appLinks">
 				@foreach (var link in AppLinks) {
-					@SmallBanner(link.Title, link.Url, link.BannerImg)
+					SmallBanner(link.Title, link.Url, link.BannerImg);
 				}
 				<br />
 			</div>
@@ -52,7 +53,7 @@
 		<h4>@ViewRes._LayoutStrings.SocialSites</h4>
 		<div id="socialSites">
 			@foreach (var link in SocialLinks) {
-				@SocialLink(link.Title, link.Url, link.BannerImg)
+				SocialLink(link.Title, link.Url, link.BannerImg);
 			}
 		</div>
 
@@ -60,27 +61,27 @@
 		<h4>@ViewRes._LayoutStrings.RelatedSites</h4>
 		<ul id="banners">
 			@foreach (var link in BigBanners) {
-				@Banner(link.Title, link.Url, link.BannerImg)
+				Banner(link.Title, link.Url, link.BannerImg);
 			}
 		</ul>					
 		<div id="banners-small">
 			@foreach (var link in SmallBanners) {
-				@SmallBanner(link.Title, link.Url, link.BannerImg)
+				SmallBanner(link.Title, link.Url, link.BannerImg);
 			}
 		</div>
 		@if (!string.IsNullOrEmpty(Config.SiteSettings.PatreonLink)) {
 			<hr />
-			Html.RenderPartial("Partials/_PatreonLink");
+			<partial name="Partials/_PatreonLink" />
 		}
 		@if (!string.IsNullOrEmpty(Config.SiteSettings.PaypalDonateCert)) {
 			<hr />
-			Html.RenderPartial("Partials/_PaypalDonateButton");
+			<partial name="Partials/_PaypalDonateButton" />
 		}
 	</div>
 
 	@* HACK: `@section`s don't work in partial views. *@
 	@if (!string.IsNullOrEmpty(Config.SiteSettings.TwitterAccountName) && ViewBag.ShowTwitterTimeline ?? false)
 	{
-		Html.RenderPartial("Partials/_TwitterTimeline");
+		<partial name="Partials/_TwitterTimeline" />
 	}
 </div>

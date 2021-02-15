@@ -1,6 +1,6 @@
 #nullable disable
 
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace VocaDb.Web.Controllers
 {

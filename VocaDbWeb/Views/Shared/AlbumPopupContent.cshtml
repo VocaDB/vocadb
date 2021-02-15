@@ -1,21 +1,23 @@
 ﻿@using VocaDb.Model.Domain.Albums
 @using VocaDb.Web.Helpers
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Albums.AlbumContract>
+@model VocaDb.Model.DataContracts.Albums.AlbumContract
 
-@helper Stars(int current, int max) {
-	for (int i = 1; i <= max; ++i) {
-		if (current >= i) {
-			<img src="@UrlMapper.FullAbsolute(Url.Content("~/Content/star.png"))" alt="*" />
-		} else {
-			<img src="@UrlMapper.FullAbsolute(Url.Content("~/Content/star_disabled.png"))" alt="" />
+@{
+	void Stars(int current, int max) {
+		for (int i = 1; i <= max; ++i) {
+			if (current >= i) {
+				<img src="@UrlMapper.FullAbsolute(Url.Content("~/Content/star.png"))" alt="*" />
+			} else {
+				<img src="@UrlMapper.FullAbsolute(Url.Content("~/Content/star_disabled.png"))" alt="" />
+			}
 		}
 	}
-}
 
-@helper Stars(double current, int max) {
-	<span title="@Math.Round(current, 2)">
-		@Stars((int)Math.Round(current, MidpointRounding.AwayFromZero), max)
-	</span>
+	void StarsSpan(double current, int max) {
+		<span title="@Math.Round(current, 2)">
+			@{ Stars((int)Math.Round(current, MidpointRounding.AwayFromZero), max); }
+		</span>
+	}
 }
 
 <p>
@@ -42,5 +44,5 @@
 }
 @if (Model.RatingCount > 0) {
 	@* Unable to call helpers here, might need some additional initializations to RazorHelper *@
-    @Stars(Model.RatingAverage, 5) @("(" + Model.RatingCount + " " + ViewRes.Album.DetailsStrings.Ratings + ")")
+    StarsSpan(Model.RatingAverage, 5); @("(" + Model.RatingCount + " " + ViewRes.Album.DetailsStrings.Ratings + ")")
 }

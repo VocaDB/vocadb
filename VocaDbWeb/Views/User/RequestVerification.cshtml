@@ -1,6 +1,6 @@
 ﻿@using VocaDb.Web.Helpers
 @using Res = ViewRes.User.RequestVerificationStrings
-@inherits VocaDb.Web.Code.VocaDbPage<string>
+@model string
 
 @{
     PageProperties.Title = Res.PageTitle;
@@ -71,7 +71,7 @@
 
 @section BodyScripts {
 
-	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js")
+	<remikus path="/bundles/shared/edit.js" />
 	<script type="text/javascript">
 
 		$(document).ready(function () {

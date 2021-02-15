@@ -1,4 +1,5 @@
-﻿@using VocaDb.Model.Service.Search
+﻿@using VocaDb.Model.Domain
+@using VocaDb.Model.Service.Search
 @using VocaDb.Web.Models.Shared.Partials.Knockout
 @using VocaDb.Web.Models.Shared.Partials.Search
 @using VocaDb.Web.Models.Shared.Partials.Song
@@ -13,7 +14,7 @@
 		<div class="control-label">@Res.SongType</div>
 		<div class="controls">
 			<div class="control-group">
-				@Html.Partial("Partials/Song/_SongTypesDropdownKnockout", new SongTypesDropdownKnockoutViewModel("songType"))
+				<partial name="Partials/Song/_SongTypesDropdownKnockout" model="@(new SongTypesDropdownKnockoutViewModel("songType"))" />
 			</div>
 			<div class="control-group" data-bind="visible: showUnifyEntryTypesAndTags">
 				<label class="checkbox" >
@@ -27,7 +28,7 @@
 	<div class="control-group">
 		<div class="control-label">@EntryTypeNames.Artist</div>
 		<div class="controls" data-bind="with: artistFilters">
-			@Html.Partial("Partials/Knockout/_ArtistFilters", new ArtistFiltersViewModel(artistParticipationStatus: true))
+			<partial name="Partials/Knockout/_ArtistFilters" model="@(new ArtistFiltersViewModel(artistParticipationStatus: true))" />
 		</div>
 	</div>
 
@@ -59,7 +60,7 @@
 	<div class="control-group">
 		<div class="control-label">@Res.ReleaseEvent</div>
 		<div class="controls">
-			@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent"))
+			<partial name="Partials/Knockout/_BasicEntryLinkLockingAutoComplete" model="@(new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent"))" />
 		</div>
 	</div>
 	
@@ -74,14 +75,23 @@
 	<div class="control-group">
 		<div class="control-label">@Res.ParentVersion</div>
 		<div class="controls">
-			@Html.Partial("Partials/Knockout/_SongLockingAutoComplete", new SongLockingAutoCompleteViewModel("parentVersion"))
+			<partial name="Partials/Knockout/_SongLockingAutoComplete" model="@(new SongLockingAutoCompleteViewModel("parentVersion"))" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@Res.Bpm</div>
+		<div class="controls">
+			<input type="number" data-bind="textInput: minBpm" class="input-small" maxlength="10" min="@Constants.MinBpm" max="@Constants.MaxBpm" />
+			-
+			<input type="number" data-bind="textInput: maxBpm" class="input-small" maxlength="10" min="@Constants.MinBpm" max="@Constants.MaxBpm" />
 		</div>
 	</div>
 
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			@Html.Partial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters))
+			<partial name="Partials/Search/_AdvancedFilters" model="@(new AdvancedFiltersViewModel(AdvancedSearchFilters.SongFilters))" />
 		</div>
 	</div>
 </div>

@@ -1,11 +1,13 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Net;
 using System.ServiceModel.Syndication;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using System.Threading.Tasks;
 using System.Xml;
+using Microsoft.AspNetCore.Mvc;
 
 namespace VocaDb.Web.Code.Feeds
 {
@@ -23,24 +25,22 @@ namespace VocaDb.Web.Code.Feeds
 			_feed = feed;
 		}
 
-		public override void ExecuteResult(ControllerContext context)
+		public override async Task ExecuteResultAsync(ActionContext context)
 		{
 			if (context == null)
 				throw new ArgumentNullException("context");
 
-			HttpResponseBase response = context.HttpContext.Response;
-			response.ContentType = !string.IsNullOrEmpty(ContentType) ? ContentType : "application/rss+xml";
-
-			if (ContentEncoding != null)
-				response.ContentEncoding = ContentEncoding;
-
 			if (_feed != null)
 			{
-				using (var xmlWriter = new XmlTextWriter(response.Output))
+				using var stringWriter = new StringWriter();
+				using var xmlWriter = new XmlTextWriter(stringWriter);
+				_feed.WriteTo(xmlWriter);
+				await new ContentResult
 				{
-					xmlWriter.Formatting = Formatting.Indented;
-					_feed.WriteTo(xmlWriter);
-				}
+					Content = stringWriter.ToString(),
+					ContentType = !string.IsNullOrEmpty(ContentType) ? ContentType : "application/rss+xml",
+					StatusCode = (int)HttpStatusCode.OK,
+				}.ExecuteResultAsync(context);
 			}
 		}
 	}

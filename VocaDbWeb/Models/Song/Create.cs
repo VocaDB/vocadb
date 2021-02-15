@@ -3,11 +3,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using ViewRes;
 using ViewRes.Song;
-using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
-using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Helpers;
@@ -15,7 +14,6 @@ using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Models.Song
 {
-	[PropertyModelBinder]
 	public class Create
 	{
 		public Create()
@@ -24,7 +22,7 @@ namespace VocaDb.Web.Models.Song
 		}
 
 		[Display(ResourceType = typeof(SharedStrings), Name = "Artists")]
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public IList<ArtistForSongContract> Artists { get; set; } = new List<ArtistForSongContract>();
 
 		[Display(ResourceType = typeof(CreateStrings), Name = "Draft")]
@@ -38,7 +36,7 @@ namespace VocaDb.Web.Models.Song
 		[StringLength(255)]
 		public string NameOriginal { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public SongContract OriginalVersion { get; set; }
 
 		[Display(ResourceType = typeof(CreateStrings), Name = "OriginalPV")]

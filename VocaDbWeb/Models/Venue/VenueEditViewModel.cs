@@ -8,10 +8,10 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Web.Code;
+using Microsoft.AspNetCore.Mvc;
 
 namespace VocaDb.Web.Models.Venue
 {
-	[PropertyModelBinder]
 	public class VenueEditViewModel
 	{
 		public string Address { get; set; }
@@ -20,7 +20,7 @@ namespace VocaDb.Web.Models.Venue
 
 		public EntryStatus[] AllowedEntryStatuses { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public OptionalGeoPointContract Coordinates { get; set; }
 
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
@@ -33,12 +33,12 @@ namespace VocaDb.Web.Models.Venue
 
 		public string Name { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public LocalizedStringWithIdContract[] Names { get; set; }
 
 		public EntryStatus Status { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public WebLinkContract[] WebLinks { get; set; }
 
 		public VenueEditViewModel() { }

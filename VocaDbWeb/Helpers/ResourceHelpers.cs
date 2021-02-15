@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Resources;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Html;
 
 namespace VocaDb.Web.Helpers
 {
@@ -17,7 +16,7 @@ namespace VocaDb.Web.Helpers
 			return resourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true).Cast<DictionaryEntry>().ToDictionary(k => k.Key, v => v.Value);
 		}
 
-		public static IHtmlString ToJSON(ResourceManager resourceManager, bool lowerCase = false)
+		public static IHtmlContent ToJSON(ResourceManager resourceManager, bool lowerCase = false)
 		{
 			var dic = ToDict(resourceManager);
 

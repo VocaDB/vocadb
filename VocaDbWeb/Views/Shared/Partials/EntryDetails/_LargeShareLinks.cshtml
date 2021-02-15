@@ -1,8 +1,10 @@
-﻿@using VocaDb.Web.Models.Shared.Partials.EntryDetails
+﻿@using System.Web
+@using VocaDb.Web.Models.Shared.Partials.EntryDetails
 @model LargeShareLinksViewModel
 
 @{
-	var urlEncodedTitle = Url.Encode(Model.Title);
+	// Code from: https://github.com/aspnet/AspNetWebStack/blob/ba26cfbfbf958d548e4c0a96e853250f13450dc6/src/System.Web.Mvc/UrlHelper.cs#L134
+	var urlEncodedTitle = HttpUtility.UrlEncode(Model.Title);
 }
 
 <a href="https://www.facebook.com/sharer/sharer.php?u=@Model.Url" target="_blank"><img alt="Share on Facebook" src="@Url.Content("~/Content/ExtIcons/facebook32.png")" style="border:0; height:32px; width:32px; margin:0 1px;" title="Share on Facebook"></a>

@@ -2,7 +2,9 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using NLog;
 using ViewRes.Tag;
 using VocaDb.Model.Database.Queries;
@@ -62,7 +64,7 @@ namespace VocaDb.Web.Controllers
 		private ActionResult RenderDetails(TagDetailsContract contract)
 		{
 			if (contract == null)
-				return HttpNotFound();
+				return NotFound();
 
 			PageProperties.GlobalSearchType = EntryType.Tag;
 			PageProperties.PageTitle = contract.Name;
@@ -85,8 +87,8 @@ namespace VocaDb.Web.Controllers
 
 			if (tagId == InvalidId)
 			{
-				s_log.Info("Tag not found: {0}, referrer {1}", id, Request.UrlReferrer);
-				return HttpNotFound();
+				s_log.Info("Tag not found: {0}, referrer {1}", id, Request.GetTypedHeaders().Referer);
+				return NotFound();
 			}
 
 			return RedirectToActionPermanent("DetailsById", new { id = tagId, slug = id });
@@ -160,12 +162,12 @@ namespace VocaDb.Web.Controllers
 		[Authorize]
 		public ActionResult Edit(TagEditViewModel model)
 		{
-			var coverPicUpload = Request.Files["thumbPicUpload"];
+			var coverPicUpload = Request.Form.Files["thumbPicUpload"];
 			UploadedFileContract uploadedPicture = null;
-			if (coverPicUpload != null && coverPicUpload.ContentLength > 0)
+			if (coverPicUpload != null && coverPicUpload.Length > 0)
 			{
 				CheckUploadedPicture(coverPicUpload, "thumbPicUpload");
-				uploadedPicture = new UploadedFileContract { Mime = coverPicUpload.ContentType, Stream = coverPicUpload.InputStream };
+				uploadedPicture = new UploadedFileContract { Mime = coverPicUpload.ContentType, Stream = coverPicUpload.OpenReadStream() };
 			}
 
 			try
@@ -235,14 +237,14 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Edit", new { id = targetTagId.Value });
 		}
 
-		[OutputCache(Location = System.Web.UI.OutputCacheLocation.Any, Duration = 3600)]
+		[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600)]
 		public ActionResult PopupContent(
 			int id = InvalidId,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			string culture = InterfaceLanguage.DefaultCultureCode)
 		{
 			if (id == InvalidId)
-				return HttpNotFound();
+				return NotFound();
 
 			var tag = _queries.LoadTag(id, t => new TagForApiContract(t, _entryThumbPersister,
 				lang, TagOptionalFields.AdditionalNames | TagOptionalFields.Description | TagOptionalFields.MainPicture));

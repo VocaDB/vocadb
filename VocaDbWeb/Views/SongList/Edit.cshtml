@@ -1,12 +1,11 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.Images
+﻿@using VocaDb.Model.Domain.Images
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails
 @using VocaDb.Web.Models.Shared.Partials.Shared
 @using VocaDb.Web.Models.SongLists
 @using VocaDb.Web.Helpers
 @using Res = ViewRes.SongList.EditStrings
 @using EditRes = ViewRes.EntryEditStrings
-@inherits VocaDb.Web.Code.VocaDbPage<SongListEditViewModel>
+@model SongListEditViewModel
 @{
 	
 	var isNew = (Model.Id == 0);
@@ -37,7 +36,8 @@
 }
 
 @section BodyScripts {
-@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/SongList/Edit.js")
+<remikus path="/bundles/shared/edit.js" />
+<remikus path="/bundles/SongList/Edit.js" />
 <script type="text/javascript">
 
 	$(document).ready(function () {
@@ -49,12 +49,12 @@
 </script>
 }
 
-@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel(Res.UnableToSave))
+<partial name="Partials/Shared/_ValidationSummaryPanel" model="@(new ValidationSummaryPanelViewModel(Res.UnableToSave))" />
 
 <form action="@Url.Action("Edit", "SongList")" id="songListForm" method="POST" enctype="multipart/form-data" data-bind="submit: submit, visible: true" style="display: none;">
 	@Html.HiddenFor(m => m.CanCreateFeaturedLists)
 
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(parentUrl))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(parentUrl))" />
 
 	<div id="tabs">
 
@@ -74,7 +74,7 @@
 
 			<div class="editor-label">
 				@Res.Description
-				@Html.Partial("Partials/Shared/_MarkdownNotice")
+				<partial name="Partials/Shared/_MarkdownNotice" />
 			</div>
 			<div class="editor-field">
 				<textarea data-bind="textInput: description" rows="6" cols="60" maxlength="3000" class="input-xxlarge"></textarea>
@@ -95,7 +95,7 @@
 			}
 			
 			<div class="editor-label">
-				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.EventDate, Res.EventDateHelp))
+				<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(Res.EventDate, Res.EventDateHelp))" />
 			</div>
 			<div class="editor-field">
 				<input type="text" data-bind="datepicker: { value: eventDateDate, dateFormat: 'yy-mm-dd' }" class="span2" maxlength="10" />
@@ -110,14 +110,14 @@
 						<img class="pull-left media-object" src="@thumbUrl" alt="Thumb" />
 					}
 					<div class="media-body">
-						@Html.Partial("Partials/Shared/_ImageUploadMessage")
+						<partial name="Partials/Shared/_ImageUploadMessage" />
 						<input type="file" id="thumbPicUpload" name="thumbPicUpload" />
 					</div>
 				</div>
 			</div>
 			
 			<div class="editor-label">
-				@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(Res.Status, Resources.CommonMessages.EntryStatusExplanation))
+				<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(Res.Status, Resources.CommonMessages.EntryStatusExplanation))" />
 			</div>
 			<div class="editor-field">
 				@Html.DropdownForKnockout(m => m.Status, ViewHelper.CreateEnumList(Model.AllowedEntryStatuses, Translate.EntryStatusNames.GetTranslatedFields(Model.AllowedEntryStatuses)), "value: status")
@@ -166,9 +166,9 @@
 
 	<input type="hidden" name="model" data-bind="value: ko.toJSON($root)" />
 	<br />
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(parentUrl))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(parentUrl))" />
 
 </form>
 
-@Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
-@Html.Partial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))
+<partial name="Partials/EntryDetails/_EntryDeletePopup" model="@(new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))" />
+<partial name="Partials/EntryDetails/_EntryTrashPopup" model="@(new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))" />

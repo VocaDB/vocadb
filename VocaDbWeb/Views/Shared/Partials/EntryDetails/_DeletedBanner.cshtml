@@ -8,7 +8,7 @@
 	@if (Model.MergedTo != null)
 	{
 		@(Resources.CommonMessages.EntryMergedTo + " ")
-		@Html.Partial("Partials/Shared/_EntryLink", new EntryLinkViewModel(new EntryBaseContract(Model.MergedTo)))
+		<partial name="Partials/Shared/_EntryLink" model="@(new EntryLinkViewModel(new EntryBaseContract(Model.MergedTo)))" />
 		@(".")
 	}
 </div>

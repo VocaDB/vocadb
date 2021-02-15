@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Domain.Songs
+﻿@using VocaDb.Model.Domain.Songs
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Song
 @inherits VocaDb.Web.Code.VocaDbPage
@@ -90,7 +89,7 @@
 				<small class="extraInfo" data-bind="text: artistString"></small>
 
 				<div data-bind="visible: pvServices, with: previewViewModel">
-					@Html.Partial("Partials/Song/_PVPreviewKnockout", new PVPreviewKnockoutViewModel("$parents[2].getPVServiceIcons"))
+					<partial name="Partials/Song/_PVPreviewKnockout" model="@(new PVPreviewKnockoutViewModel("$parents[2].getPVServiceIcons"))" />
 				</div>
 			</td>
 			<td>
@@ -113,7 +112,7 @@
 </table>
 
 @section BodyScripts {	
-@LaravelMixHelper.RenderScripts("~/bundles/Song/TopRated.js")
+<remikus path="/bundles/Song/TopRated.js" />
 <script type="text/javascript">
 
 	moment.locale('@Culture');

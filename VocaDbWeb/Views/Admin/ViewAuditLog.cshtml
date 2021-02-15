@@ -1,5 +1,5 @@
 ﻿@using VocaDb.Web.Helpers
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Admin.ViewAuditLogModel>
+@model VocaDb.Web.Models.Admin.ViewAuditLogModel
 
 @{
 	PageProperties.Title = "View audit log";
@@ -73,7 +73,6 @@
 			</tr>
 		</thead>
 		<tbody id="logEntries">
-			@{ Html.RenderAction("AuditLogEntries", Model); }						
 		</tbody>
 	</table>
 </div>
@@ -99,6 +98,13 @@
 				$("#start").val(parseInt($("#start").val()) + 200);
 			});
 			return false;
+		});
+
+		@* HACK: replacement for Html.RenderAction. *@
+		@* TODO: replace with view components *@
+		@* Code from: https://stackoverflow.com/questions/41353874/equivalent-of-html-renderaction-in-asp-net-core/45494932#45494932 *@
+		$.get('@Url.Action("AuditLogEntries", Model)', null, function (content) {
+			$("#logEntries").html(content);
 		});
 	});
 

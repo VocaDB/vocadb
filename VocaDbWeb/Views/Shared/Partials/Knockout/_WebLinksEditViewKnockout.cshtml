@@ -8,7 +8,7 @@
 		<tr data-bind="visible: items && items().length">
 			<th>
 				@HelperRes.HelperStrings.WebLinkUrlTitle
-				@Html.Partial("Partials/Shared/_RequiredField")
+				<partial name="Partials/Shared/_RequiredField" />
 			</th>
 			<th>@HelperRes.HelperStrings.WebLinkDescriptionTitle</th>
 			@if (Model.ShowCategory)

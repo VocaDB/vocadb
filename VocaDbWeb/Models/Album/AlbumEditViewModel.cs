@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.DataContracts.UseCases;
@@ -16,7 +16,6 @@ using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Models.Album
 {
-	[PropertyModelBinder]
 	public class AlbumEditViewModel
 	{
 		public AlbumEditViewModel()
@@ -54,8 +53,8 @@ namespace VocaDb.Web.Models.Album
 
 		public bool Draft => Album != null && Album.Status == EntryStatus.Draft;
 
-		[FromJson]
-		[AllowHtml]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
+		// TODO: implement [AllowHtml]
 		public AlbumForEditContract EditedAlbum { get; set; }
 
 		public bool HasCoverPicture => Album != null && !string.IsNullOrEmpty(Album.CoverPictureMime);

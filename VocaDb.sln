@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28721.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDbWeb", "VocaDbWeb\VocaDbWeb.csproj", "{543CB31E-8641-44AA-95D4-DF0E06D41D02}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.Model", "VocaDbModel\VocaDb.Model.csproj", "{024D07DF-F669-46E9-9514-3AB8094F74AC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.Tests", "Tests\VocaDb.Tests.csproj", "{BEB958BD-DA22-4597-B492-4F943328CBB0}"
@@ -29,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDb.TouhouDb.Resources",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDbWeb.Resources", "VocaDbWeb.Resources\VocaDbWeb.Resources.csproj", "{A08B80F0-5124-4674-86DC-D128ECC7A885}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VocaDbWeb.Core", "VocaDbWeb.Core\VocaDbWeb.Core.csproj", "{BFADA915-6E0F-4AD1-8ECF-AF16AD9858C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VocaDbWeb", "VocaDbWeb\VocaDbWeb.csproj", "{565D8308-1887-499A-9F71-E51431480360}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +35,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{543CB31E-8641-44AA-95D4-DF0E06D41D02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{543CB31E-8641-44AA-95D4-DF0E06D41D02}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{543CB31E-8641-44AA-95D4-DF0E06D41D02}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{543CB31E-8641-44AA-95D4-DF0E06D41D02}.Release|Any CPU.Build.0 = Release|Any CPU
 		{024D07DF-F669-46E9-9514-3AB8094F74AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{024D07DF-F669-46E9-9514-3AB8094F74AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{024D07DF-F669-46E9-9514-3AB8094F74AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -65,14 +59,14 @@ Global
 		{BF02D394-4900-4DFB-9348-C9A39762614A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF02D394-4900-4DFB-9348-C9A39762614A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF02D394-4900-4DFB-9348-C9A39762614A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BFADA915-6E0F-4AD1-8ECF-AF16AD9858C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BFADA915-6E0F-4AD1-8ECF-AF16AD9858C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BFADA915-6E0F-4AD1-8ECF-AF16AD9858C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BFADA915-6E0F-4AD1-8ECF-AF16AD9858C0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A08B80F0-5124-4674-86DC-D128ECC7A885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A08B80F0-5124-4674-86DC-D128ECC7A885}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A08B80F0-5124-4674-86DC-D128ECC7A885}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A08B80F0-5124-4674-86DC-D128ECC7A885}.Release|Any CPU.Build.0 = Release|Any CPU
+		{565D8308-1887-499A-9F71-E51431480360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{565D8308-1887-499A-9F71-E51431480360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{565D8308-1887-499A-9F71-E51431480360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{565D8308-1887-499A-9F71-E51431480360}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,6 @@
 #nullable disable
 
-using System.Web.Mvc;
-using NLog;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Web.Code;
 
 namespace VocaDb.Web.Controllers
@@ -56,7 +55,7 @@ namespace VocaDb.Web.Controllers
 
 			// 403.6: IP address of the client has been rejected.
 			Response.StatusCode = ErrorLogger.Code_Forbidden;
-			Response.SubStatusCode = 6;
+			// TODO: implement Response.SubStatusCode = 6;
 			return View("IPForbidden");
 		}
 

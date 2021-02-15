@@ -1,7 +1,7 @@
 ﻿@using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Html
 @using Res = ViewRes.Event.EventsBySeriesStrings
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Venues.VenueForApiContract[]>
+@model VocaDb.Model.DataContracts.Venues.VenueForApiContract[]
 
 @{
 	PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
@@ -11,25 +11,25 @@
 	
 	<ul class="nav nav-pills">
 		<li>
-			@Html.ActionLink(Res.ViewList, "Index")
+			<a asp-action="Index">@(Res.ViewList)</a>
 		</li>
 		<li>
-			@Html.ActionLink(Res.ViewBySeries, "EventsBySeries")
+			<a asp-action="EventsBySeries">@(Res.ViewBySeries)</a>
 		</li>
 		<li class="active">
-			@Html.ActionLink(Res.ViewByVenue, "EventsByVenue")
+			<a asp-action="EventsByVenue">@(Res.ViewByVenue)</a>
 		</li>
 		<li>
-			@Html.ActionLink(Res.ViewByDate, "EventsByDate")
+			<a asp-action="EventsByDate">@(Res.ViewByDate)</a>
 		</li>
 	</ul>	
 
 	@if (Login.CanManageDb) {
-		@Html.ActionLink(Res.CreateEvent, "Edit", null, new { id = "createEventLink" })
+		<a asp-action="Edit" id="@("createEventLink")">@(Res.CreateEvent)</a>
 		@:
-		@Html.ActionLink(Res.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
+		<a asp-action="EditSeries" id="@("createSeriesLink")">@(Res.CreateSeries)</a>
 		@:
-		@Html.ActionLink(Res.CreateVenue, "Edit", "Venue", null, new { id = "createVenueLink" })
+		<a asp-action="Edit" asp-controller="Venue" id="@("createVenueLink")">@(Res.CreateVenue)</a>
 	}	
 }
 
@@ -39,14 +39,14 @@
 		<div class="media-body">
 			<h3 class="media-heading">
 				@if (!string.IsNullOrEmpty(venue.Name)) {
-					@Html.ActionLink(venue.Name, "Details", "Venue", new { id = venue.Id }, null)
+					<a asp-action="Details" asp-controller="Venue" asp-route-id="@(venue.Id)">@(venue.Name)</a>
 				} else {
 					<text>@ViewRes.SharedStrings.Unsorted</text>
 				}
 			</h3>
 						
 			@if (!string.IsNullOrEmpty(venue.Description)) {
-				<p>@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(venue.Description))</p>
+				<p><partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(venue.Description))" /></p>
 			}
 		</div>
 	</div>
@@ -54,13 +54,13 @@
 	<ul>
 	@foreach (var ev in venue.Events) {
 		<li>
-			@Html.ActionLink(ev.Name, "Details", new { id = ev.Id, slug = ev.UrlSlug })
+			<a asp-action="Details" asp-route-id="@(ev.Id)" asp-route-slug="@(ev.UrlSlug)">@(ev.Name)</a>
 		</li>
 	}
 	</ul>
 	
 	if (Login.CanManageDb) {
-		@Html.ActionLink(Res.CreateEvent, "Edit", new { venueId = venue.Id != 0 ? (int?)venue.Id : null }, new { @class = "textLink addLink" })
+		<a asp-action="Edit" asp-route-venueId="@(venue.Id != 0 ? (int?)venue.Id : null)" class="@("textLink addLink")">@(Res.CreateEvent)</a>
 	}
 	
 }

@@ -1,9 +1,8 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.Helpers
+﻿@using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Shared
 @using R = ViewRes.Artist
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Artist.Create>
+@model VocaDb.Web.Models.Artist.Create
 
 @{
 	PageProperties.Title = R.CreateStrings.AddArtist;
@@ -14,14 +13,14 @@
 
 <form action="@Url.Action("Create", "Artist")" method="POST" enctype="multipart/form-data" data-bind="submit: submit">
 
-	@Html.Partial("Partials/Shared/_ValidationSummaryDiv", new ValidationSummaryDivViewModel(R.CreateStrings.UnableToCreateArtist))
+	<partial name="Partials/Shared/_ValidationSummaryDiv" model="@(new ValidationSummaryDivViewModel(R.CreateStrings.UnableToCreateArtist))" />
 	
 	<div class="row-fluid">
 		<div class="span5 well well-transparent">
 
 			<div class="editor-label">
 				@R.CreateStrings.Name
-				@Html.Partial("Partials/Shared/_RequiredField")
+				<partial name="Partials/Shared/_RequiredField" />
 			</div>
 
 			<div class="editor-field">
@@ -67,7 +66,7 @@
 				<table>
 					<tr><td class="formLabel">
 						@R.CreateStrings.WebLinkURL
-						@Html.Partial("Partials/Shared/_RequiredField")
+						<partial name="Partials/Shared/_RequiredField" />
 					</td><td>
 						@Html.TextBoxForKnockout(m => m.WebLinkUrl, "value: webLink.url, focusout: checkDuplicates",  "input-xlarge", maxLength: 512)     
 					</td></tr>
@@ -115,7 +114,7 @@
 				<p>@R.CreateStrings.NameHelp</p>
 			</div>
 
-			@{ Html.RenderPartial("KnockoutPartials/_DuplicateEntriesMessage"); }
+			<partial name="KnockoutPartials/_DuplicateEntriesMessage" />
 
 			<div class="alert alert-info js-cloak" visible="{{artistTypeInfo}}" data-bind="show">				
 				<h3>
@@ -130,7 +129,8 @@
 </form>
 
 @section BodyScripts {
-    @LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Artist/Create.js")
+    <remikus path="/bundles/shared/edit.js" />
+    <remikus path="/bundles/Artist/Create.js" />
     <script type="text/javascript">
 
 		$(document).ready(function () {

@@ -1,34 +1,34 @@
 #nullable disable
 
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Web.Mvc;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NLog;
-using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Albums;
-using VocaDb.Model.Resources;
-using VocaDb.Model.Service;
-using VocaDb.Model.Service.TagFormatting;
-using VocaDb.Model.Utils.Search;
-using VocaDb.Web.Code.Exceptions;
-using VocaDb.Web.Helpers;
-using VocaDb.Web.Models;
-using System.Drawing;
-using System.Globalization;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Albums;
-using VocaDb.Model.Helpers;
-using VocaDb.Web.Models.Album;
 using VocaDb.Model.DataContracts.UseCases;
-using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Service.ExtSites;
-using VocaDb.Model.Utils;
-using VocaDb.Web.Code;
-using VocaDb.Web.Code.Markdown;
-using VocaDb.Web.Code.Security;
+using VocaDb.Model.Domain;
+using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Images;
-using System.Threading.Tasks;
+using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Helpers;
+using VocaDb.Model.Resources;
+using VocaDb.Model.Service;
+using VocaDb.Model.Service.ExtSites;
+using VocaDb.Model.Service.TagFormatting;
+using VocaDb.Model.Utils;
+using VocaDb.Model.Utils.Search;
+using VocaDb.Web.Code;
+using VocaDb.Web.Code.Exceptions;
+using VocaDb.Web.Code.Markdown;
+using VocaDb.Web.Code.WebApi;
+using VocaDb.Web.Helpers;
+using VocaDb.Web.Models;
+using VocaDb.Web.Models.Album;
 
 namespace VocaDb.Web.Controllers
 {
@@ -39,6 +39,7 @@ namespace VocaDb.Web.Controllers
 		private readonly MarkdownParser _markdownParser;
 		private readonly AlbumQueries _queries;
 		private readonly UserQueries _userQueries;
+		private readonly PVHelper _pvHelper;
 
 		private AlbumService Service { get; set; }
 
@@ -48,14 +49,20 @@ namespace VocaDb.Web.Controllers
 				EntryPermissionManager.CanDelete(PermissionContext, album), editedAlbum));
 		}
 
-		public AlbumController(AlbumService service, AlbumQueries queries, UserQueries userQueries, AlbumDescriptionGenerator albumDescriptionGenerator,
-			MarkdownParser markdownParser)
+		public AlbumController(
+			AlbumService service,
+			AlbumQueries queries,
+			UserQueries userQueries,
+			AlbumDescriptionGenerator albumDescriptionGenerator,
+			MarkdownParser markdownParser,
+			PVHelper pvHelper)
 		{
 			Service = service;
 			_queries = queries;
 			_userQueries = userQueries;
 			_albumDescriptionGenerator = albumDescriptionGenerator;
 			_markdownParser = markdownParser;
+			_pvHelper = pvHelper;
 		}
 
 		public ActionResult ArchivedVersionCoverPicture(int id = InvalidId)
@@ -108,7 +115,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult PopupContent(int id = InvalidId)
 		{
 			if (id == InvalidId)
-				return HttpNotFound();
+				return NotFound();
 
 			var album = Service.GetAlbum(id);
 			return PartialView("AlbumPopupContent", album);
@@ -117,7 +124,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult PopupWithCoverContent(int id = InvalidId)
 		{
 			if (id == InvalidId)
-				return HttpNotFound();
+				return NotFound();
 
 			var album = Service.GetAlbum(id);
 			return PartialView("AlbumWithCoverPopupContent", album);
@@ -162,7 +169,7 @@ namespace VocaDb.Web.Controllers
 				_markdownParser.GetPlainText(model.Description.EnglishOrOriginal) :
 				_albumDescriptionGenerator.GenerateDescription(model, d => Translate.DiscTypeNames.GetName(d, CultureInfo.InvariantCulture));
 
-			return View(new AlbumDetails(model, PermissionContext));
+			return View(new AlbumDetails(model, PermissionContext, _pvHelper));
 		}
 
 		public ActionResult DownloadTags(int id = InvalidId, string formatString = "", int? discNumber = null, bool setFormatString = false, bool includeHeader = false)
@@ -195,7 +202,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult CoverPicture(int id = InvalidId)
 		{
 			if (id == InvalidId)
-				return HttpNotFound();
+				return NotFound();
 
 			var album = Service.GetCoverPicture(id);
 
@@ -205,7 +212,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult CoverPictureThumb(int id = InvalidId)
 		{
 			if (id == InvalidId)
-				return HttpNotFound();
+				return NotFound();
 
 			var data = _queries.GetCoverPictureThumb(id);
 			return Picture(data);
@@ -280,13 +287,8 @@ namespace VocaDb.Web.Controllers
 			if (model.OriginalRelease != null && model.OriginalRelease.ReleaseDate != null && !OptionalDateTime.IsValid(model.OriginalRelease.ReleaseDate.Year, model.OriginalRelease.ReleaseDate.Day, model.OriginalRelease.ReleaseDate.Month))
 				ModelState.AddModelError("ReleaseYear", "Invalid date");
 
-			var coverPicUpload = Request.Files["coverPicUpload"];
+			var coverPicUpload = Request.Form.Files["coverPicUpload"];
 			var pictureData = ParsePicture(coverPicUpload, "CoverPicture", ImagePurpose.Main);
-
-			if (coverPicUpload == null)
-			{
-				AddFormSubmissionError("Cover picture was null");
-			}
 
 			if (model.Pictures == null)
 			{
@@ -294,9 +296,7 @@ namespace VocaDb.Web.Controllers
 			}
 
 			if (coverPicUpload != null && model.Pictures != null)
-			{
 				ParseAdditionalPictures(coverPicUpload, model.Pictures);
-			}
 
 			if (!ModelState.IsValid)
 			{

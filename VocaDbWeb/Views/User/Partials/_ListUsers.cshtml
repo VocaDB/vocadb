@@ -23,14 +23,14 @@
 	<div class="control-group">
 		<div class="control-label">@Res.Group</div>
 		<div class="controls">
-			@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.UserGroups.ValuesAndNamesStrings, "group"))
+			<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(Translate.UserGroups.ValuesAndNamesStrings, "group"))" />
 		</div>
 	</div>
 
 	<div class="control-group">
 		<div class="control-label">@Res.KnowsLanguage</div>
 		<div class="controls">
-			@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull(string.Empty), "knowsLanguage"))
+			<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(InterfaceLanguage.UserLanguageCultures.ToDictionaryFull(string.Empty), "knowsLanguage"))" />
 		</div>
 	</div>
 
@@ -52,11 +52,11 @@
 <div data-bind="css: { loading: loading }, visible: true" style="display: none;">
 
 	<div data-bind="with: paging" class="dropdown pull-right">
-		@Html.Partial("Partials/Knockout/_EntryCount")
+		<partial name="Partials/Knockout/_EntryCount" />
 	</div>
 
 	<div data-bind="with: paging">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 
 	<table class="table table-striped">
@@ -103,7 +103,7 @@
 	</table>
 
 	<div data-bind="with: paging">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 
 </div>

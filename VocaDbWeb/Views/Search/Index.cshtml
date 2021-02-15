@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using Resources
+﻿@using Resources
 @using VocaDb.Model.Domain
 @using VocaDb.Web.Code
 @using VocaDb.Web.Helpers
@@ -7,16 +6,18 @@
 @using VocaDb.Web.Resources.Domain
 @using Res = ViewRes.Search.IndexStrings
 @using SharedRes = ViewRes.SharedStrings
-@inherits VocaDbPage<VocaDb.Web.Models.Search.SearchIndexViewModel>
+@model VocaDb.Web.Models.Search.SearchIndexViewModel
 
 @section Head {
 	<link rel="stylesheet" href="@Url.Content("~/Content/Styles/songlist.css")" type="text/css" />
 }
 
-@helper SearchCategory(EntryType entryType, string title) {
-	<li data-bind="css: { active: searchType() == '@entryType.ToString()' }">
-		<a href="#" data-bind="click: function() { searchType('@entryType.ToString()'); }">@title</a>
-	</li>
+@{
+	void SearchCategory(EntryType entryType, string title) {
+		<li data-bind="css: { active: searchType() == '@entryType.ToString()' }">
+			<a href="#" data-bind="click: function() { searchType('@entryType.ToString()'); }">@title</a>
+		</li>
+	}
 }
 
 <ul class="nav nav-pills">
@@ -32,17 +33,17 @@
 	<li data-bind="css: { active: searchType() == 'Song' }">
 		<a href="#" data-bind="click: function() { searchType('Song'); }">@ViewRes.SharedStrings.Songs</a>
 	</li>
-	@SearchCategory(EntryType.ReleaseEvent, ViewRes.SharedStrings.ReleaseEvents)
-	@SearchCategory(EntryType.Tag, ViewRes.SharedStrings.Tags)
+	@{ SearchCategory(EntryType.ReleaseEvent, ViewRes.SharedStrings.ReleaseEvents); }
+	@{ SearchCategory(EntryType.Tag, ViewRes.SharedStrings.Tags); }
 </ul>
 
 <div id="anythingSearchTab" class="form-horizontal well well-transparent">
 
 	<div class="pull-right">
-		@SearchDropDown("showArtistSearch", "artistSearchViewModel", Translate.ArtistSortRuleNames.ValuesAndNamesStrings)
-		@SearchDropDown("showAlbumSearch", "albumSearchViewModel", Translate.AlbumSortRuleNames.ValuesAndNamesStrings)
-		@SearchDropDown("showSongSearch", "songSearchViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings)
-		@SearchDropDown("showEventSearch", "eventSearchViewModel", Translate.EventSortRuleNames.ValuesAndNamesStrings)
+		@{ await SearchDropDown("showArtistSearch", "artistSearchViewModel", Translate.ArtistSortRuleNames.ValuesAndNamesStrings); }
+		@{ await SearchDropDown("showAlbumSearch", "albumSearchViewModel", Translate.AlbumSortRuleNames.ValuesAndNamesStrings); }
+		@{ await SearchDropDown("showSongSearch", "songSearchViewModel", Translate.SongSortRuleNames.ValuesAndNamesStrings); }
+		@{ await SearchDropDown("showEventSearch", "eventSearchViewModel", Translate.EventSortRuleNames.ValuesAndNamesStrings); }
 
 		<div class="inline-block" data-bind="visible: showAlbumSearch(), with: albumSearchViewModel">
 			<div class="btn-group">
@@ -96,24 +97,24 @@
 		<div class="control-group" data-bind="visible: showTagFilter">
 			<div class="control-label">@ViewRes.SharedStrings.Tag</div>
 			<div class="controls" data-bind="with: tagFilters">
-				@Html.Partial("Partials/Knockout/_TagFilters", new TagFiltersViewModel(true))
+				<partial name="Partials/Knockout/_TagFilters" model="@(new TagFiltersViewModel(true))" />
 			</div>
 		</div>
 
-		@{ Html.RenderPartial("Partials/_ArtistSearchOptions"); }
+		<partial name="Partials/_ArtistSearchOptions" />
 
-		@{ Html.RenderPartial("Partials/_AlbumSearchOptions"); }
+		<partial name="Partials/_AlbumSearchOptions" />
 
-		@{ Html.RenderPartial("Partials/_SongSearchOptions"); }
+		<partial name="Partials/_SongSearchOptions" />
 		
-		@{ Html.RenderPartial("Partials/_EventSearchOptions"); }
+		<partial name="Partials/_EventSearchOptions" />
 
 		<!-- Tag search options -->
 		<div class="control-group" data-bind="visible: showTagSearch, with: tagSearchViewModel">
 			<div class="control-label">@Res.TagCategory</div>
 			<div class="controls">
 				<div class="input-append">
-					@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("tagCategoryAutoComplete", "categoryName", extraBindings: "clearValue: true"))
+					<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("tagCategoryAutoComplete", "categoryName", extraBindings: "clearValue: true"))" />
 				</div>
 			</div>
 		</div>
@@ -160,28 +161,28 @@
 
 </div>
 
-@{ Html.RenderPartial("Partials/_AnythingSearchList"); }
+<partial name="Partials/_AnythingSearchList" />
 
-@{ Html.RenderPartial("Partials/_ArtistSearchList"); }
+<partial name="Partials/_ArtistSearchList" />
 
 <div data-bind="visible: showAlbumSearch, with: albumSearchViewModel">
-	@{ Html.RenderPartial("Partials/_AlbumSearchList"); }
+	<partial name="Partials/_AlbumSearchList" />
 </div>
 
 <div data-bind="visible: showSongSearch, with: songSearchViewModel">
-	@{ Html.RenderPartial("Partials/_SongSearchList"); }
+	<partial name="Partials/_SongSearchList" />
 </div>
 
 <div data-bind="visible: showEventSearch, with: eventSearchViewModel">
-	@{ Html.RenderPartial("Partials/_EventSearchList"); }
+	<partial name="Partials/_EventSearchList" />
 </div>
 
-@{ Html.RenderPartial("Partials/_TagSearchList"); }
+<partial name="Partials/_TagSearchList" />
 
 
 <!-- Scripts -->
 @section BodyScripts {
-	@LaravelMixHelper.RenderScripts("~/bundles/Search/Index.js")
+	<remikus path="/bundles/Search/Index.js" />
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 
 	<script type="text/javascript">
@@ -257,6 +258,8 @@
 
 }
 
-@helper SearchDropDown(string visibleBinding, string viewModel, Dictionary<string, string> sortRules) {
-	@Html.Partial("Partials/Knockout/_SearchDropDown", new VocaDb.Web.Models.Shared.Partials.Knockout.SearchDropDownViewModel(visibleBinding, viewModel, sortRules))
+@{
+	async Task SearchDropDown(string visibleBinding, string viewModel, Dictionary<string, string> sortRules) {
+		<partial name="Partials/Knockout/_SearchDropDown" model="@(new VocaDb.Web.Models.Shared.Partials.Knockout.SearchDropDownViewModel(visibleBinding, viewModel, sortRules))" />
+	}
 }

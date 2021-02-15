@@ -1,12 +1,12 @@
 #nullable disable
 
-using System.Web;
+using Microsoft.AspNetCore.Html;
 
 namespace VocaDb.Web.Models.Shared.Partials.Comment
 {
 	public class CommentKnockoutViewModel
 	{
-		public CommentKnockoutViewModel(string messageBinding, bool allowMarkdown, string deleteHandler = "$parent.deleteComment", string editHandler = null, bool standalone = true, IHtmlString body = null)
+		public CommentKnockoutViewModel(string messageBinding, bool allowMarkdown, string deleteHandler = "$parent.deleteComment", string editHandler = null, bool standalone = true, IHtmlContent body = null)
 		{
 			MessageBinding = messageBinding;
 			AllowMarkdown = allowMarkdown;
@@ -26,6 +26,6 @@ namespace VocaDb.Web.Models.Shared.Partials.Comment
 
 		public bool Standalone { get; set; }
 
-		public IHtmlString Body { get; set; }
+		public IHtmlContent Body { get; set; }
 	}
 }

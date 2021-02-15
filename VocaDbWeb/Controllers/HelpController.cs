@@ -1,9 +1,8 @@
 #nullable disable
 
 using System.Globalization;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
-using VocaDb.Model.Service;
 using VocaDb.Model.Utils;
 using VocaDb.Model.Utils.Config;
 

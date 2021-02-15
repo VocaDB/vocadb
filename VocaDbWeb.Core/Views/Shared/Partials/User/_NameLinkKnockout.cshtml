@@ -1,5 +1,0 @@
-﻿@using VocaDb.Web.Models.Shared.Partials.User
-@model NameLinkKnockoutViewModel
-
-@* User name inside anchor *@
-<a href="#" data-bind="attr: { href: app.EntryUrlMapper.details_user_byName(@(Model.UserBinding + ".name")) }"><span data-bind="text: @(Model.UserBinding + ".name")"></span></a>

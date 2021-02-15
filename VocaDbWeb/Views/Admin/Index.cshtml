@@ -15,84 +15,84 @@
 
 <h3>Common tasks</h3>
 
-<p>@Html.ActionLink("View users list", "Index", "User")</p>
+<p><a asp-action="Index" asp-controller="User">@("View users list")</a></p>
 
-<p>@Html.ActionLink("View recent comments", "Index", "Comment")</p>	
+<p><a asp-action="Index" asp-controller="Comment">@("View recent comments")</a></p>	
 
 @if (UserContext.HasPermission(PermissionToken.ViewAuditLog)) {
-<p>@Html.ActionLink("View audit log", "ViewAuditLog")</p>
+<p><a asp-action="ViewAuditLog">@("View audit log")</a></p>
 }
 
 @if (HasPermission(PermissionToken.ManageTagMappings)) {
-	<p>@Html.ActionLink("Manage tag mappings", "ManageTagMappings")</p>
-	<p>@Html.ActionLink("Manage entry type to tag mappings", "ManageEntryTagMappings")</p>
+	<p><a asp-action="ManageTagMappings">@("Manage tag mappings")</a></p>
+	<p><a asp-action="ManageEntryTagMappings">@("Manage entry type to tag mappings")</a></p>
 }
 
 @if (UserContext.HasPermission(PermissionToken.ManageEntryReports)) {
-<p>@Html.ActionLink("Manage entry reports", "ViewEntryReports")</p>	
+<p><a asp-action="ViewEntryReports">@("Manage entry reports")</a></p>	
 }
 
 @if (UserContext.HasPermission(PermissionToken.BulkDeletePVs)) {
-<p>@Html.ActionLink("Delete PVs by author", "PVsByAuthor")</p>	
+<p><a asp-action="PVsByAuthor">@("Delete PVs by author")</a></p>	
 }
 
 @if (UserContext.HasPermission(PermissionToken.MoveToTrash)) {
-	<p>@Html.ActionLink("Manage deleted albums", "Deleted", "Album")</p>
+	<p><a asp-action="Deleted" asp-controller="Album">@("Manage deleted albums")</a></p>
 }
 
 @if (UserContext.HasPermission(PermissionToken.ManageIPRules)) {
-<p>@Html.ActionLink("Manage IP rules", "ManageIPRules")</p>	
+<p><a asp-action="ManageIPRules">@("Manage IP rules")</a></p>	
 }
 <br />
 
 @if (UserContext.HasPermission(PermissionToken.Admin)) {
 <h3>Database maintenance tasks</h3>
 <p>
-	@Html.ActionLink("View active editors", "ActiveEdits")	
+	<a asp-action="ActiveEdits">@("View active editors")</a>	
 </p>
 <p>
-	@Html.ActionLink("Create XML dump", "CreateXmlDump")
+	<a asp-action="CreateXmlDump">@("Create XML dump")</a>
 </p>	
 <p>
-	@Html.ActionLink("Refresh NHibernate 2nd level cache", "RefreshDbCache")
+	<a asp-action="RefreshDbCache">@("Refresh NHibernate 2nd level cache")</a>
 </p>
 <p>
-	@Html.ActionLink("Refresh .NET memory cache", "ClearCaches")
+	<a asp-action="ClearCaches">@("Refresh .NET memory cache")</a>
 </p>
 
 @*
 	<p>
-		@Html.ActionLink("Cleanup old log entries", "CleanupOldLogEntries")
+		<a asp-action="CleanupOldLogEntries">@("Cleanup old log entries")</a>
 	</p>
 	<p>
-		@Html.ActionLink("Missing thumbs", "CreateMissingThumbs")
+		<a asp-action="CreateMissingThumbs">@("Missing thumbs")</a>
 	</p>
 	<p>
-	@Html.ActionLink("Generate image thumbnails", "GeneratePictureThumbs")
+	<a asp-action="GeneratePictureThumbs">@("Generate image thumbnails")</a>
 	</p>
 	<p>
-	@Html.ActionLink("Update entry sort names", "UpdateAdditionalNames")
+	<a asp-action="UpdateAdditionalNames">@("Update entry sort names")</a>
 	</p>
 	<p>
-	@Html.ActionLink("Update NicoIDs", "UpdateNicoIds")
+	<a asp-action="UpdateNicoIds">@("Update NicoIDs")</a>
 	</p>
 	<p>
-	@Html.ActionLink("Update all artist strings", "UpdateArtistStrings")
+	<a asp-action="UpdateArtistStrings">@("Update all artist strings")</a>
 	</p>
 	<p>
-	@Html.ActionLink("Update album ratings", "UpdateAlbumRatingTotals")
+	<a asp-action="UpdateAlbumRatingTotals">@("Update album ratings")</a>
 	</p>
 	<p>
-	@Html.ActionLink("Update link categories", "UpdateLinkCategories")
+	<a asp-action="UpdateLinkCategories">@("Update link categories")</a>
 	</p>
 	<p>
-	@Html.ActionLink("Update PV Icons", "UpdatePVIcons")
+	<a asp-action="UpdatePVIcons">@("Update PV Icons")</a>
 	</p>
 	<p>
-	@Html.ActionLink("Update favorited song counts", "UpdateSongFavoritedTimes")
+	<a asp-action="UpdateSongFavoritedTimes">@("Update favorited song counts")</a>
 	</p>
 	<p>
-	@Html.ActionLink("Update tag vote counts", "UpdateTagVoteCounts")
+	<a asp-action="UpdateTagVoteCounts">@("Update tag vote counts")</a>
 	</p>
 *@
 }

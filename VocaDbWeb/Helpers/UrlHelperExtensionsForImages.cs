@@ -1,6 +1,8 @@
 #nullable disable
 
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
@@ -13,9 +15,9 @@ namespace VocaDb.Web.Helpers
 	/// </summary>
 	public static class UrlHelperExtensionsForImages
 	{
-		private static IAggregatedEntryImageUrlFactory ImageUrlFactory => DependencyResolver.Current.GetService<IAggregatedEntryImageUrlFactory>();
+		private static IAggregatedEntryImageUrlFactory GetImageUrlFactory(HttpContext context) => context.RequestServices.GetRequiredService<IAggregatedEntryImageUrlFactory>();
 
-		private static VocaDbUrl GetUnknownImageUrl(UrlHelper urlHelper)
+		private static VocaDbUrl GetUnknownImageUrl(IUrlHelper urlHelper)
 		{
 			return new VocaDbUrl(urlHelper.Content("~/Content/unknown.png"), UrlDomain.Main, System.UriKind.Relative);
 		}
@@ -27,7 +29,7 @@ namespace VocaDb.Web.Helpers
 		/// <param name="imageInfo">Image information. Cannot be null.</param>
 		/// <param name="size">Requested image size.</param>
 		/// <returns>URL to the image thumbnail (may be placeholder).</returns>
-		public static string ImageThumb(this UrlHelper urlHelper, EntryThumbForApiContract imageInfo, ImageSize size)
+		public static string ImageThumb(this IUrlHelper urlHelper, EntryThumbForApiContract imageInfo, ImageSize size)
 		{
 			return imageInfo?.GetSmallestThumb(size).EmptyToNull() ?? GetUnknownImageUrl(urlHelper).Url;
 		}
@@ -50,10 +52,10 @@ namespace VocaDb.Web.Helpers
 		/// </param>
 		/// <param name="useUnknownImage">Use unknown image as fallback if image does not exist.</param>
 		/// <returns>URL to the image thumbnail.</returns>
-		public static string ImageThumb(this UrlHelper urlHelper, IEntryImageInformation imageInfo, ImageSize size, bool fullUrl = false, bool useUnknownImage = true)
+		public static string ImageThumb(this IUrlHelper urlHelper, IEntryImageInformation imageInfo, ImageSize size, bool fullUrl = false, bool useUnknownImage = true)
 		{
 			var unknown = useUnknownImage ? GetUnknownImageUrl(urlHelper) : VocaDbUrl.Empty;
-			var url = ImageUrlFactory.GetUrlWithFallback(imageInfo, size, unknown).ToAbsoluteIfNotMain();
+			var url = GetImageUrlFactory(urlHelper.ActionContext.HttpContext).GetUrlWithFallback(imageInfo, size, unknown).ToAbsoluteIfNotMain();
 			return fullUrl ? url.ToAbsolute().Url : url.Url;
 		}
 	}

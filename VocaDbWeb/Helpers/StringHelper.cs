@@ -2,16 +2,15 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Html;
 
 namespace VocaDb.Web.Helpers
 {
 	public static class StringHelper
 	{
-		public static IHtmlString Join(string separator, IEnumerable<IHtmlString> strings)
+		public static IHtmlContent Join(string separator, IEnumerable<IHtmlContent> strings)
 		{
-			return new MvcHtmlString(string.Join(separator, strings.Select(s => s.ToHtmlString())));
+			return new HtmlString(string.Join(separator, strings.Select(s => s.ToHtmlString())));
 		}
 	}
 }

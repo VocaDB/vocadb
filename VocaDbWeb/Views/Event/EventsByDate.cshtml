@@ -1,5 +1,5 @@
 ﻿@using Res = ViewRes.Event.EventsBySeriesStrings
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventContract[]>
+@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventContract[]
 
 @{
 	PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
@@ -10,16 +10,16 @@
 
 <ul class="nav nav-pills">
 	<li>
-		@Html.ActionLink(Res.ViewList, "Index")
+		<a asp-action="Index">@(Res.ViewList)</a>
 	</li>
 	<li>
-		@Html.ActionLink(Res.ViewBySeries, "EventsBySeries")
+		<a asp-action="EventsBySeries">@(Res.ViewBySeries)</a>
 	</li>
 	<li>
-		@Html.ActionLink(Res.ViewByVenue, "EventsByVenue")
+		<a asp-action="EventsByVenue">@(Res.ViewByVenue)</a>
 	</li>
 	<li class="active">
-		@Html.ActionLink(Res.ViewByDate, "EventsByDate")
+		<a asp-action="EventsByDate">@(Res.ViewByDate)</a>
 	</li>
 </ul>
 

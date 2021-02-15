@@ -1,11 +1,11 @@
 #nullable disable
 
-using Microsoft.Web.Helpers;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
+using VocaDb.Web.Helpers;
 
 namespace VocaDb.Web.Code
 {
@@ -14,7 +14,7 @@ namespace VocaDb.Web.Code
 	/// </summary>
 	public class GravatarUserIconFactory : IUserIconFactory
 	{
-		private string GetUrl(IUserWithEmail user, int sizePx) => Gravatar.GetUrl(user.Email, sizePx, scheme: "https");
+		private string GetUrl(IUserWithEmail user, int sizePx) => Gravatar.GetUrl(user.Email, sizePx);
 
 		public GravatarUserIconFactory() { }
 

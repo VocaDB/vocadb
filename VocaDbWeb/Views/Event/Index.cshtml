@@ -2,15 +2,17 @@
 @using VocaDb.Web.Models.Shared.Partials.Shared
 @using rule = VocaDb.Model.Service.QueryableExtensions.EventSortRule
 @using Res = ViewRes.Event.EventsBySeriesStrings
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventForApiContract[]>
+@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventForApiContract[]
 
 @{
 	PageProperties.Title = ViewRes.SharedStrings.ReleaseEvents;
 }
 
-@helper SortDirection(rule rule) {
-	if (ViewBag.SortRule == rule) {
-		<span class="sortDirection_down"></span>
+@{
+	void SortDirection(rule rule) {
+		if (ViewBag.SortRule == rule) {
+			<span class="sortDirection_down"></span>
+		}
 	}
 }
 
@@ -18,29 +20,29 @@
 	
 	<ul class="nav nav-pills">
 		<li class="active">
-			@Html.ActionLink(Res.ViewList, "Index")
+			<a asp-action="Index">@(Res.ViewList)</a>
 		</li>
 		<li>
-			@Html.ActionLink(Res.ViewBySeries, "EventsBySeries")
+			<a asp-action="EventsBySeries">@(Res.ViewBySeries)</a>
 		</li>
 		<li>
-			@Html.ActionLink(Res.ViewByVenue, "EventsByVenue")
+			<a asp-action="EventsByVenue">@(Res.ViewByVenue)</a>
 		</li>
 		<li>
-			@Html.ActionLink(Res.ViewByDate, "EventsByDate")
+			<a asp-action="EventsByDate">@(Res.ViewByDate)</a>
 		</li>
 	</ul>
 
 	@if (Login.CanManageDb) {
-		@Html.ActionLink(Res.CreateEvent, "Edit", null, new { id = "createEventLink" })
+		<a asp-action="Edit" id="@("createEventLink")">@(Res.CreateEvent)</a>
 		@:
-		@Html.ActionLink(Res.CreateSeries, "EditSeries", null, new { id = "createSeriesLink" })
+		<a asp-action="EditSeries" id="@("createSeriesLink")">@(Res.CreateSeries)</a>
 		@:
-		@Html.ActionLink(Res.CreateVenue, "Edit", "Venue", null, new { id = "createVenueLink" })
+		<a asp-action="Edit" asp-controller="Venue" id="@("createVenueLink")">@(Res.CreateVenue)</a>
 	}
 }
 
-@Html.Partial("Partials/Shared/_EventThumbs", new EventThumbsViewModel(Model))
+<partial name="Partials/Shared/_EventThumbs" model="@(new EventThumbsViewModel(Model))" />
 
 @section BodyScripts {
 	<script type="text/javascript">

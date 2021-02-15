@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
+using AspNetCore.CacheOutput;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Albums;
@@ -20,14 +21,15 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
-using WebApi.OutputCache.V2;
+using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
 	/// <summary>
 	/// API queries for albums.
 	/// </summary>
-	[RoutePrefix("api/albums")]
+	[Route("api/albums")]
+	[ApiController]
 	public class AlbumApiController : ApiController
 	{
 		private const int HourInSeconds = 3600;
@@ -52,7 +54,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </summary>
 		/// <param name="id">ID of the album to be deleted.</param>
 		/// <param name="notes">Notes.</param>
-		[Route("{id:int}")]
+		[HttpDelete("{id:int}")]
 		[Authorize]
 		public void Delete(int id, string notes = "") => _service.Delete(id, notes ?? string.Empty);
 
@@ -64,7 +66,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// Normal users can delete their own comments, moderators can delete all comments.
 		/// Requires login.
 		/// </remarks>
-		[Route("comments/{commentId:int}")]
+		[HttpDelete("comments/{commentId:int}")]
 		[Authorize]
 		public void DeleteComment(int commentId) => _queries.DeleteComment(commentId);
 
@@ -76,10 +78,10 @@ namespace VocaDb.Web.Controllers.Api
 		/// <remarks>
 		/// Pagination and sorting might be added later.
 		/// </remarks>
-		[Route("{id:int}/comments")]
+		[HttpGet("{id:int}/comments")]
 		public IEnumerable<CommentForApiContract> GetComments(int id) => _queries.GetComments(id);
 
-		[Route("{id:int}/for-edit")]
+		[HttpGet("{id:int}/for-edit")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public AlbumForEditContract GetForEdit(int id) => _queries.GetForEdit(id);
 
@@ -96,7 +98,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <example>https://vocadb.net/api/albums/1</example>
 		/// <returns>Album data.</returns>
-		[Route("{id:int}")]
+		[HttpGet("{id:int}")]
 		public AlbumForApiContract GetOne(
 			int id,
 			AlbumOptionalFields fields = AlbumOptionalFields.None,
@@ -152,14 +154,14 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of albums.</returns>
 		/// <example>https://vocadb.net/api/albums?query=Synthesis&amp;discTypes=Album</example>
-		[Route("")]
+		[HttpGet("")]
 		public PartialFindResult<AlbumForApiContract> GetList(
 			string query = "",
 			DiscType discTypes = DiscType.Unknown,
-			[FromUri] string[] tagName = null,
-			[FromUri] int[] tagId = null,
+			[FromQuery(Name = "tagName[]")] string[] tagName = null,
+			[FromQuery(Name = "tagId[]")] int[] tagId = null,
 			bool childTags = false,
-			[FromUri] int[] artistId = null,
+			[FromQuery(Name = "artistId[]")] int[] artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
 			bool includeMembers = false,
@@ -167,7 +169,7 @@ namespace VocaDb.Web.Controllers.Api
 			EntryStatus? status = null,
 			DateTime? releaseDateAfter = null,
 			DateTime? releaseDateBefore = null,
-			[FromUri] AdvancedSearchFilter[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters[]")] AdvancedSearchFilter[] advancedFilters = null,
 			int start = 0,
 			int maxResults = DefaultMax,
 			bool getTotalCount = false,
@@ -212,7 +214,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="nameMatchMode">Name match mode.</param>
 		/// <param name="maxResults">Maximum number of results.</param>
 		/// <returns>List of album names.</returns>
-		[Route("names")]
+		[HttpGet("names")]
 		public string[] GetNames(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto, int maxResults = 15) => _service.FindNames(SearchTextQuery.Create(query, nameMatchMode), maxResults);
 
 		/// <summary>
@@ -221,24 +223,24 @@ namespace VocaDb.Web.Controllers.Api
 		/// <remarks>
 		/// Output is cached for 1 hour.
 		/// </remarks>
-		[Route("new")]
+		[HttpGet("new")]
 		[CacheOutput(ClientTimeSpan = HourInSeconds, ServerTimeSpan = HourInSeconds)]
 		public IEnumerable<AlbumForApiContract> GetNewAlbums(
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
 			AlbumOptionalFields fields = AlbumOptionalFields.None) => _otherService.GetRecentAlbums(languagePreference, fields);
 
-		[Route("{id:int}/reviews")]
+		[HttpGet("{id:int}/reviews")]
 		public Task<IEnumerable<AlbumReviewContract>> GetReviews(int id, string languageCode = null) => _queries.GetReviews(id, languageCode);
 
-		[Route("{id:int}/user-collections")]
+		[HttpGet("{id:int}/user-collections")]
 		public Task<IEnumerable<AlbumForUserForApiContract>> GetUserCollections(int id, ContentLanguagePreference languagePreference = ContentLanguagePreference.Default) => _queries.GetUserCollections(id, languagePreference);
 
 		[Authorize]
-		[Route("{id:int}/reviews")]
+		[HttpPost("{id:int}/reviews")]
 		public AlbumReviewContract PostReview(int id, AlbumReviewContract reviewContract) => _queries.AddReview(id, reviewContract);
 
 		[Authorize]
-		[Route("{id:int}/reviews/{reviewId:int}")]
+		[HttpDelete("{id:int}/reviews/{reviewId:int}")]
 		public void DeleteReview(int reviewId) => _queries.DeleteReview(reviewId);
 
 		/// <summary>
@@ -247,10 +249,10 @@ namespace VocaDb.Web.Controllers.Api
 		/// <remarks>
 		/// Output is cached for 1 hour.
 		/// </remarks>
-		[Route("top")]
+		[HttpGet("top")]
 		[CacheOutput(ClientTimeSpan = HourInSeconds, ServerTimeSpan = HourInSeconds)]
 		public IEnumerable<AlbumForApiContract> GetTopAlbums(
-			[FromUri] int[] ignoreIds = null,
+			[FromQuery(Name = "ignoreIds[]")] int[] ignoreIds = null,
 			ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
 			AlbumOptionalFields fields = AlbumOptionalFields.None)
 		{
@@ -259,7 +261,7 @@ namespace VocaDb.Web.Controllers.Api
 		}
 
 		[ApiExplorerSettings(IgnoreApi = true)]
-		[Route("{id:int}/tagSuggestions")]
+		[HttpGet("{id:int}/tagSuggestions")]
 		public Task<TagUsageForApiContract[]> GetTagSuggestions(int id) => _queries.GetTagSuggestions(id);
 
 		/// <summary>
@@ -272,7 +274,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of tracks for the album.</returns>
 		/// <example>https://vocadb.net/api/albums/1/tracks</example>
-		[Route("{id:int}/tracks")]
+		[HttpGet("{id:int}/tracks")]
 		public SongInAlbumForApiContract[] GetTracks(
 			int id,
 			SongOptionalFields fields = SongOptionalFields.None,
@@ -287,12 +289,12 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Language preference.</param>
 		/// <returns>List of songs with the specified fields.</returns>
 		/// <example>https://vocadb.net/api/albums/5111/tracks/fields?field=title&field=featvocalists</example>
-		[Route("{id:int}/tracks/fields")]
-		public IEnumerable<Dictionary<string, string>> GetTracksFields(int id, [FromUri] string[] field = null,
+		[HttpGet("{id:int}/tracks/fields")]
+		public IEnumerable<Dictionary<string, string>> GetTracksFields(int id, [FromQuery(Name = "field[]")] string[] field = null,
 			int? discNumber = null,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetTracksFormatted(id, discNumber, field, lang);
 
-		[Route("ids")]
+		[HttpGet("ids")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public IEnumerable<int> GetIds() => _queries.GetIds();
 
@@ -301,7 +303,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// Intended for integration to other systems.
 		/// </summary>
 		/// <returns>List of album IDs with versions.</returns>
-		[Route("versions")]
+		[HttpGet("versions")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public EntryIdAndVersionContract[] GetVersions() => _queries.GetVersions();
 
@@ -314,7 +316,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// Normal users can edit their own comments, moderators can edit all comments.
 		/// Requires login.
 		/// </remarks>
-		[Route("comments/{commentId:int}")]
+		[HttpPost("comments/{commentId:int}")]
 		[Authorize]
 		public void PostEditComment(int commentId, CommentForApiContract contract) => _queries.PostEditComment(commentId, contract);
 
@@ -324,11 +326,11 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="id">ID of the album for which to create the comment.</param>
 		/// <param name="contract">Comment data. Message and author must be specified. Author must match the logged in user.</param>
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
-		[Route("{id:int}/comments")]
+		[HttpPost("{id:int}/comments")]
 		[Authorize]
 		public CommentForApiContract PostNewComment(int id, CommentForApiContract contract) => _queries.CreateComment(id, contract);
 
-		[Route("{id:int}/personal-description")]
+		[HttpPost("{id:int}/personal-description")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Authorize]
 		public void PostPersonalDescription(int id, AlbumDetailsContract data) => _queries.UpdatePersonalDescription(id, data);

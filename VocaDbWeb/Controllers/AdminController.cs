@@ -7,11 +7,15 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using NHibernate;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.Security;
@@ -169,7 +173,7 @@ namespace VocaDb.Web.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public ActionResult ManageIPRules([FromJson] IPRule[] rules)
+		public ActionResult ManageIPRules([ModelBinder(BinderType = typeof(JsonModelBinder))] IPRule[] rules)
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ManageIPRules);
 
@@ -281,7 +285,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
-			var deployFile = Path.Combine(Server.MapPath("~"), "..", "..", "deploy.cmd");
+			var deployFile = Path.Combine(HttpContext.RequestServices.GetRequiredService<IHttpContext>().ServerPathMapper.MapPath("~"), "..", "..", "deploy.cmd");
 
 			Process.Start(deployFile, "doNotPause");
 

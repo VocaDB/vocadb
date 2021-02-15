@@ -1,13 +1,14 @@
 #nullable disable
 
-using NHibernate.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using NHibernate.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.Security;
+using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
@@ -16,7 +17,8 @@ namespace VocaDb.Web.Controllers.Api
 	/// </summary>
 	[Authorize]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	[RoutePrefix("api/ip-rules")]
+	[Route("api/ip-rules")]
+	[ApiController]
 	public class IPRuleApiController : ApiController
 	{
 		public IPRuleApiController(IUserPermissionContext userContext, IRepository repo, IPRuleManager ipRuleManager)
@@ -30,7 +32,7 @@ namespace VocaDb.Web.Controllers.Api
 		private readonly IRepository _repo;
 		private readonly IUserPermissionContext _userContext;
 
-		[Route("{id:int}")]
+		[HttpDelete("{id:int}")]
 		public async Task DeleteIPRule(int ruleID)
 		{
 			_userContext.VerifyPermission(PermissionToken.ManageIPRules);
@@ -44,7 +46,7 @@ namespace VocaDb.Web.Controllers.Api
 			});
 		}
 
-		[Route("")]
+		[HttpGet("")]
 		public async Task<IEnumerable<IPRule>> GetIPRules()
 		{
 			_userContext.VerifyPermission(PermissionToken.ManageIPRules);
@@ -55,15 +57,13 @@ namespace VocaDb.Web.Controllers.Api
 			});
 		}
 
-		[Route("")]
-		public bool PostNewIPRule(IPRule rule)
+		[HttpPost("")]
+		public ActionResult<bool> PostNewIPRule(IPRule rule)
 		{
 			_userContext.VerifyPermission(PermissionToken.ManageIPRules);
 
 			if (string.IsNullOrEmpty(rule?.Address))
-			{
-				throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
-			}
+				return BadRequest();
 
 			bool result = false;
 

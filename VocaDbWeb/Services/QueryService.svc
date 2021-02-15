@@ -1,7 +1,0 @@
-﻿<%@ ServiceHost 
-	Language="C#" 
-	Debug="true" 
-	Service="VocaDb.Web.Services.QueryService, VocaDb.Web"
-	Factory="Autofac.Integration.Wcf.AutofacServiceHostFactory, Autofac.Integration.Wcf" 
-	CodeBehind="QueryService.svc.cs" 
-%>

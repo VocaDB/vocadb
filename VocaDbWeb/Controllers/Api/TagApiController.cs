@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
+using AspNetCore.CacheOutput;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.Tags;
@@ -19,17 +20,17 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
-using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
-using WebApi.OutputCache.V2;
+using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
 	/// <summary>
 	/// API queries for tags.
 	/// </summary>
-	[RoutePrefix("api/tags")]
+	[Route("api/tags")]
+	[ApiController]
 	public class TagApiController : ApiController
 	{
 		private const int AbsoluteMax = 100;
@@ -52,7 +53,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// If true, the entry is hard deleted. Hard deleted entries cannot be restored normally, but they will be moved to trash.
 		/// If false, the entry is soft deleted, meaning it can still be restored.
 		/// </param>
-		[Route("{id:int}")]
+		[HttpDelete("{id:int}")]
 		[Authorize]
 		public void Delete(int id, string notes = "", bool hardDelete = false)
 		{
@@ -74,7 +75,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// Requires login.
 		/// </summary>
 		/// <param name="commentId">ID of the comment to be deleted.</param>
-		[Route("comments/{commentId:int}")]
+		[HttpDelete("comments/{commentId:int}")]
 		[Authorize]
 		public void DeleteComment(int commentId) => _queries.DeleteComment(commentId);
 
@@ -88,7 +89,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <example>http://vocadb.net/api/tags/1</example>
 		/// <returns>Tag data.</returns>
-		[Route("{id:int}")]
+		[HttpGet("{id:int}")]
 		public TagForApiContract GetById(int id, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default)
 			=> _queries.LoadTag(id, t => new TagForApiContract(t, _thumbPersister, lang, fields));
 
@@ -102,7 +103,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <example>http://vocadb.net/api/tags/byName/vocarock</example>
 		/// <returns>Tag data.</returns>
-		[Route("byName/{name}")]
+		[HttpGet("byName/{name}")]
 		[Obsolete]
 		public TagForApiContract GetByName(string name, TagOptionalFields fields = TagOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default)
 			=> _queries.GetTagByName(name, t => new TagForApiContract(t, _thumbPersister, lang, fields));
@@ -110,7 +111,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <summary>
 		/// Gets a list of tag category names.
 		/// </summary>
-		[Route("categoryNames")]
+		[HttpGet("categoryNames")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
 		public string[] GetCategoryNamesList(string query = "", NameMatchMode nameMatchMode = NameMatchMode.Auto) => _queries.FindCategories(SearchTextQuery.Create(query, nameMatchMode));
 
@@ -123,7 +124,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of child tags.</returns>
 		/// <example>http://vocadb.net/api/tags/481/children</example>
-		[Route("{tagId:int}/children")]
+		[HttpGet("{tagId:int}/children")]
 		public TagForApiContract[] GetChildTags(int tagId,
 			TagOptionalFields fields = TagOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetChildTags(tagId, fields, lang);
@@ -134,7 +135,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </summary>
 		/// <param name="tagId">ID of the tag whose comments to load.</param>
 		/// <returns>List of comments in no particular order.</returns>
-		[Route("{tagId:int}/comments")]
+		[HttpGet("{tagId:int}/comments")]
 		public PartialFindResult<CommentForApiContract> GetComments(int tagId) => new PartialFindResult<CommentForApiContract>(_queries.GetComments(tagId), 0);
 
 		/// <summary>
@@ -158,7 +159,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of tags.</returns>
 		/// <example>http://vocadb.net/api/tags?query=voca&amp;nameMatchMode=StartsWith</example>
-		[Route("")]
+		[HttpGet("")]
 		public PartialFindResult<TagForApiContract> GetList(
 			string query = "",
 			bool allowChildren = true,
@@ -187,11 +188,11 @@ namespace VocaDb.Web.Controllers.Api
 			return tags;
 		}
 
-		[Route("entry-type-mappings")]
+		[HttpGet("entry-type-mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public TagEntryMappingContract[] GetEntryMappings() => _queries.GetEntryMappings();
 
-		[Route("mappings")]
+		[HttpGet("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public PartialFindResult<TagMappingContract> GetMappings(
 			int start = 0, int maxEntries = DefaultMax, bool getTotalCount = false) => _queries.GetMappings(new PagingProperties(start, maxEntries, getTotalCount));
@@ -210,7 +211,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>
 		/// List of tag names, for example "vocarock", matching the query. Cannot be null.
 		/// </returns>
-		[Route("names")]
+		[HttpGet("names")]
 		public string[] GetNames(
 			string query = "", bool allowAliases = true,
 			int maxResults = 10) => _queries.FindNames(TagSearchTextQuery.Create(query), allowAliases, maxResults);
@@ -223,7 +224,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="maxResults">Maximum number of tags to return.</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>List of names of the most commonly used tags in that category.</returns>
-		[Route("top")]
+		[HttpGet("top")]
 		[CacheOutput(ClientTimeSpan = 86400, ServerTimeSpan = 86400)]
 		public TagBaseContract[] GetTopTags(string categoryName = null, EntryType? entryType = null,
 			int maxResults = 15,
@@ -236,7 +237,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="reportType">Report type.</param>
 		/// <param name="notes">Notes. Optional.</param>
 		/// <param name="versionNumber">Version to be reported. Optional.</param>
-		[Route("{tagId:int}/reports")]
+		[HttpPost("{tagId:int}/reports")]
 		[RestrictBannedIP]
 		public void PostReport(int tagId, TagReportType reportType, string notes, int? versionNumber) => _queries.CreateReport(tagId, reportType, WebHelper.GetRealHost(Request), notes ?? string.Empty, versionNumber);
 
@@ -247,9 +248,9 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>The created tag.</returns>
 		/// <response code="200">OK</response>		
 		/// <response code="400">If tag name is already in use</response>
-		[Route("")]
+		[HttpPost("")]
 		[Authorize]
-		public async Task<TagBaseContract> PostNewTag(string name)
+		public async Task<ActionResult<TagBaseContract>> PostNewTag(string name)
 		{
 			try
 			{
@@ -257,7 +258,7 @@ namespace VocaDb.Web.Controllers.Api
 			}
 			catch (DuplicateTagNameException)
 			{
-				throw new HttpBadRequestException("Tag name is already in use");
+				return BadRequest("Tag name is already in use");
 			}
 		}
 
@@ -268,7 +269,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </summary>
 		/// <param name="commentId">ID of the comment to be edited.</param>
 		/// <param name="contract">New comment data. Only message can be edited.</param>
-		[Route("comments/{commentId:int}")]
+		[HttpPost("comments/{commentId:int}")]
 		[Authorize]
 		public void PostEditComment(int commentId, CommentForApiContract contract) => _queries.PostEditComment(commentId, contract);
 
@@ -278,34 +279,32 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="tagId">ID of the tag for which to create the comment.</param>
 		/// <param name="contract">Comment data. Message and author must be specified. Author must match the logged in user.</param>
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
-		[Route("{tagId:int}/comments")]
+		[HttpPost("{tagId:int}/comments")]
 		[Authorize]
 		public CommentForApiContract PostNewComment(int tagId, CommentForApiContract contract) => _queries.CreateComment(tagId, contract);
 
 		[Authorize]
-		[Route("entry-type-mappings")]
+		[HttpPut("entry-type-mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public void PutEntryMappings(IEnumerable<TagEntryMappingContract> mappings)
+		public IActionResult PutEntryMappings(IEnumerable<TagEntryMappingContract> mappings)
 		{
 			if (mappings == null)
-			{
-				throw new HttpBadRequestException("Mappings cannot be null");
-			}
+				return BadRequest("Mappings cannot be null");
 
 			_queries.UpdateEntryMappings(mappings.ToArray());
+			return NoContent();
 		}
 
 		[Authorize]
-		[Route("mappings")]
+		[HttpPut("mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public void PutMappings(IEnumerable<TagMappingContract> mappings)
+		public IActionResult PutMappings(IEnumerable<TagMappingContract> mappings)
 		{
 			if (mappings == null)
-			{
-				throw new HttpBadRequestException("Mappings cannot be null");
-			}
+				return BadRequest("Mappings cannot be null");
 
 			_queries.UpdateMappings(mappings.ToArray());
+			return NoContent();
 		}
 	}
 }

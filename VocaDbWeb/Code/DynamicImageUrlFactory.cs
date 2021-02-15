@@ -1,7 +1,7 @@
 #nullable disable
 
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 
@@ -9,12 +9,12 @@ namespace VocaDb.Web.Code
 {
 	public class DynamicImageUrlFactory : IDynamicImageUrlFactory
 	{
-		public DynamicImageUrlFactory(Lazy<UrlHelper> urlHelper)
+		public DynamicImageUrlFactory(Lazy<IUrlHelper> urlHelper)
 		{
 			_urlHelperAccessor = urlHelper;
 		}
 
-		private readonly Lazy<UrlHelper> _urlHelperAccessor;
+		private readonly Lazy<IUrlHelper> _urlHelperAccessor;
 
 		public VocaDbUrl GetUrl(IEntryImageInformation imageInfo, ImageSize size)
 		{

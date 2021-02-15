@@ -37,11 +37,11 @@
 			</td>
 			<td>
 				<span class="@style">
-					@Html.Partial("Partials/Shared/_UniversalTimeLabel", new UniversalTimeLabelViewModel(ver.Contract.Created))
+					<partial name="Partials/Shared/_UniversalTimeLabel" model="@(new UniversalTimeLabelViewModel(ver.Contract.Created))" />
 				</span>
 			</td>
 			<td>					
-				@Html.Partial("Partials/User/_UserIconLinkOrName", new UserIconLinkOrNameViewModel(ver.Contract.Author, ver.Contract.AgentName))
+				<partial name="Partials/User/_UserIconLinkOrName" model="@(new UserIconLinkOrNameViewModel(ver.Contract.Author, ver.Contract.AgentName))" />
 			</td>
 			<td>
 				<span class="@style">						

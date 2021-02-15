@@ -1,4 +1,5 @@
-﻿@using VocaDb.Model.Domain.Globalization
+﻿@using VocaDb.Model.Domain
+@using VocaDb.Model.Domain.Globalization
 @using VocaDb.Model.Domain.Security
 @using VocaDb.Model.Service.VideoServices
 @using VocaDb.Model.Utils
@@ -9,7 +10,7 @@
 @using ValidationErrors = VocaDb.Model.Resources.SongValidationErrors
 @using Res = ViewRes.Song.EditStrings
 @using EditRes = ViewRes.EntryEditStrings
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Song.SongEditViewModel>
+@model VocaDb.Web.Models.Song.SongEditViewModel
 
 @{
 	PageProperties.Title = string.Format(Res.EditTitle, Model.Name);
@@ -38,23 +39,23 @@
 	if (!Model.Song.Deleted) {
 		<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>
 	} else if (Login.CanDeleteEntries) {
-		@Html.ActionLink(EditRes.Restore, "Restore", new { id = Model.Id }, new { id = "restoreLink" })		
+		<a asp-action="Restore" asp-route-id="@(Model.Id)" id="@("restoreLink")">@(EditRes.Restore)</a>		
 	}
 	@Html.Raw("&nbsp")
 }
 @if (Login.CanMergeEntries) {
-	@Html.ActionLink(EditRes.Merge, "Merge", new { id = Model.Id }, new { id = "mergeLink" })
+	<a asp-action="Merge" asp-route-id="@(Model.Id)" id="@("mergeLink")">@(EditRes.Merge)</a>
 }
 }
 
-@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save properties."))
+<partial name="Partials/Shared/_ValidationSummaryPanel" model="@(new ValidationSummaryPanelViewModel("Unable to save properties."))" />
 
-@Html.Partial("Partials/Knockout/_EntryValidationMessage", new EntryValidationMessageViewModel(Model.Draft, validationErrors, "glsongs"))
+<partial name="Partials/Knockout/_EntryValidationMessage" model="@(new EntryValidationMessageViewModel(Model.Draft, validationErrors, "glsongs"))" />
 
 <br />
 <form action="@Url.Action("Edit", "Song")" method="POST" data-bind="submit: submit, visible: true" style="display: none;">
 	@Html.HiddenFor(m => m.AlbumId)
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId })))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId })))" />
 	
 	<div id="tabs">
 
@@ -73,26 +74,26 @@
 				</label>
 			</div>
 			<div class="editor-field">
-				@Html.Partial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage"))
+				<partial name="Partials/Knockout/_LanguageSelectionDropDown" model="@(new LanguageSelectionDropDownViewModel("defaultNameLanguage"))" />
 			</div>
 
 			<div class="editor-label">
 				<label class="helpTip" data-bind="qTip: null" title="@EditRes.NameHelp">
 					@Res.BaNames
 				</label>
-				@Html.Partial("Partials/Shared/_RequiredField")
+				<partial name="Partials/Shared/_RequiredField" />
 				<span data-bind="visible: validationError_unspecifiedNames, qTip" class="icon errorIcon" title="@ValidationErrors.UnspecifiedNames"></span>
 			</div>
 			<div class="editor-field" data-bind="with: names">
-				@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
+				<partial name="KnockoutPartials/_NamesEditor" model="@(new VocaDb.Web.Models.Shared.NamesEditorViewModel())" />
 			</div>
 
 			<div class="editor-label">
 				<label>@Res.BaNotes</label>
-				@Html.Partial("Partials/Shared/_MarkdownNotice")
+				<partial name="Partials/Shared/_MarkdownNotice" />
 			</div>
 			<div class="editor-field entry-edit-description" data-bind="with: notes">
-				@{ Html.RenderPartial("Partials/_EnglishTranslatedStringEdit"); }
+				<partial name="Partials/_EnglishTranslatedStringEdit" />
 			</div>
 
 			<div class="editor-label">
@@ -101,7 +102,7 @@
 			<div class="editor-field">
 				<div class="row-fluid">
 					<div class="span4">
-						@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Model.AllSongTypes, "songTypeStr"))
+						<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(Model.AllSongTypes, "songTypeStr"))" />
 						<span data-bind="visible: validationError_needType, qTip" class="icon errorIcon" title="@ValidationErrors.NeedType"></span>
 					</div>
 				</div>
@@ -115,7 +116,7 @@
 			</div>
 			<div class="editor-field">
 				<div style="display: inline-block;" class="input-append">
-					@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id"))
+					<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id"))" />
 				</div>
 				<div data-bind="visible: originalVersion.isEmpty">
 					<a href="" data-bind="click: findOriginalSongSuggestions" class="textLink searchLink">Find originals</a>
@@ -145,6 +146,30 @@
 			<div class="editor-field">
 				<input type="text" data-bind="value: lengthFormatted" class="span2" maxlength="10" />
 			</div>
+
+			<div class="editor-label">
+				<label>
+					@Res.BaBpm
+				</label>
+			</div>
+			<div class="editor-field">
+				<label>
+					<input type="radio" data-bind="checked: hasMaxBpm, checkedValue: false" />
+					@Res.BaSpecificBpm
+				</label>
+				<label>
+					<input type="radio" data-bind="checked: hasMaxBpm, checkedValue: true" />
+					@Res.BaBpmRange
+				</label>
+				<div data-bind="visible: !hasMaxBpm()">
+					<input type="number" data-bind="value: minBpm" class="input-small" maxlength="10" min="@Constants.MinBpm" max="@Constants.MaxBpm" />
+				</div>
+				<div data-bind="visible: hasMaxBpm()">
+					<input type="number" data-bind="value: minBpm" class="input-small" maxlength="10" min="@Constants.MinBpm" max="@Constants.MaxBpm" />
+					to
+					<input type="number" data-bind="value: maxBpm" class="input-small" maxlength="10" min="@Constants.MinBpm" max="@Constants.MaxBpm" />
+				</div>
+			</div>
 			
 			<div class="editor-label">
 				<label>
@@ -152,7 +177,7 @@
 				</label>
 			</div>
 			<div class="editor-field">
-				@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent", "createNewItem: 'Create new event \\\'{0}\\\''"))
+				<partial name="Partials/Knockout/_BasicEntryLinkLockingAutoComplete" model="@(new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent", "createNewItem: 'Create new event \\\'{0}\\\''"))" />
 			</div>
 
 			<div class="editor-label">
@@ -187,7 +212,7 @@
                 </label>
 			</div>
 			<div class="editor-field" data-bind="with: webLinks">
-				@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(true))
+				<partial name="Partials/Knockout/_WebLinksEditViewKnockout" model="@(new WebLinksEditViewKnockoutViewModel(true))" />
 			</div>
 
 			<div class="editor-label">
@@ -196,7 +221,7 @@
                 </label>
 			</div>
 			<div class="editor-field">
-				@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status"))
+				<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(Translate.EntryStatusNames.GetValuesAndNamesStrings(Model.AllowedEntryStatuses), "status"))" />
 			</div>
 
 		</div>
@@ -223,7 +248,7 @@
 					</tr>
 				</thead>
 				<tbody data-bind="foreach: pvs">
-					@{ Html.RenderPartial("PVs/_PVEdit"); }
+					<partial name="PVs/_PVEdit" />
 				</tbody>
 			</table>
 
@@ -237,7 +262,7 @@
 			</p>
 			<p>
 				@Res.PvNewType
-				@Html.Partial("Partials/Knockout/_DropdownList", new DropdownListViewModel(Translate.PVTypeDescriptions.ValuesAndNamesStrings, "newPvType", "input-xlarge"))
+				<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(Translate.PVTypeDescriptions.ValuesAndNamesStrings, "newPvType", "input-xlarge"))" />
 			</p>
 
 			<a data-bind="click: add" href="#" class="textLink addLink">@ViewRes.SharedStrings.Add</a>
@@ -252,7 +277,7 @@
 				<a data-bind="click: uploadMedia" href="#" class="textLink addLink">Upload</a>
 			}
 
-			@Html.Partial("Partials/Shared/_AjaxLoader", new AjaxLoaderViewModel("pvLoader"))
+			<partial name="Partials/Shared/_AjaxLoader" model="@(new AjaxLoaderViewModel("pvLoader"))" />
 
 		</div>
 
@@ -264,13 +289,13 @@
 			
 			<div class="accordion" id="lyricsAccordion">
 				<div data-bind="with: original">
-					@{ Html.RenderPartial("Partials/_LyricsForSongEdit"); }					
+					<partial name="Partials/_LyricsForSongEdit" />					
 				</div>
 				<div data-bind="with: romanized">
-					@{ Html.RenderPartial("Partials/_LyricsForSongEdit"); }
+					<partial name="Partials/_LyricsForSongEdit" />
 				</div>
 				<!-- ko foreach: items -->
-				@{ Html.RenderPartial("Partials/_LyricsForSongEdit"); }
+				<partial name="Partials/_LyricsForSongEdit" />
 				<!-- /ko -->
 			</div>
 
@@ -291,7 +316,7 @@
 							</tr>
 						</thead>
 						<tbody data-bind="foreach: artistLinks">
-							@{ Html.RenderPartial("Partials/_ArtistForSongEdit"); }
+							<partial name="Partials/_ArtistForSongEdit" />
 						</tbody>
 					</table>
 
@@ -325,7 +350,7 @@
 	<textarea data-bind="value: updateNotes" class="input-xxlarge" rows="4" maxlength="200"></textarea>
 	
 	<br />
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId })))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(Url.Action("Details", new { Model.Id, albumId = Model.AlbumId })))" />
 	
 	<!-- JSON model to be posted to the server -->
 	@Html.HiddenForKnockout(m => m.EditedSong, "value: submittedJson")
@@ -333,17 +358,18 @@
 </form>
 
 <div data-bind="with: artistRolesEditViewModel">
-	@{ Html.RenderPartial("Partials/_ArtistRolesEditViewModel"); }
+	<partial name="Partials/_ArtistRolesEditViewModel" />
 </div>
 
 <div data-bind="with: editedArtistLink">
-	@{ Html.RenderPartial("Partials/_CustomNameEdit"); }
+	<partial name="Partials/_CustomNameEdit" />
 </div>
 
-@Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
+<partial name="Partials/EntryDetails/_EntryDeletePopup" model="@(new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))" />
 
 @section BodyScripts {
-@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Song/Edit.js")
+<remikus path="/bundles/shared/edit.js" />
+<remikus path="/bundles/Song/Edit.js" />
 
 <script type="text/javascript">
 

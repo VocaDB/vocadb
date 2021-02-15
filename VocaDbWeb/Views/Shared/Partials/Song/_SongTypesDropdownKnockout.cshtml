@@ -4,4 +4,4 @@
 @using VocaDb.Web.Models.Shared.Partials.Song
 @model SongTypesDropdownKnockoutViewModel
 
-@Html.Partial("Partials/Knockout/_CheckBoxButtons", new CheckBoxButtonsViewModel(Translate.SongTypeNames.GetValuesAndNamesStrings(AppConfig.SongTypes), Model.Binding))
+<partial name="Partials/Knockout/_CheckBoxButtons" model="@(new CheckBoxButtonsViewModel(Translate.SongTypeNames.GetValuesAndNamesStrings(AppConfig.SongTypes), Model.Binding))" />

@@ -1,4 +1,0 @@
-﻿@using VocaDb.Web.Models.Shared.Partials.Knockout
-@model ArtistLockingAutoCompleteViewModel
-
-<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("artistAutoComplete", "{ acceptSelection: " + Model.Binding + ".id, extraQueryParams: { artistTypes: '" + Model.ArtistTypes + "' }, ignoreId: " + Model.IgnoreId + " }", textBinding: Model.Binding + ".name", valBinding: Model.Binding + ".id"))" />

@@ -4,7 +4,7 @@
 
 @if (Model.Event.Venue != null)
 {
-	@Html.Partial("Partials/Venue/_VenueLink", new VenueLinkViewModel(Model.Event.Venue))
+	<partial name="Partials/Venue/_VenueLink" model="@(new VenueLinkViewModel(Model.Event.Venue))" />
 }
 else if (!string.IsNullOrEmpty(Model.Event.VenueName))
 {

@@ -1,8 +1,0 @@
-﻿@using VocaDb.Web.Models.Shared.Partials.User
-@model UserLinkOrNameViewModel
-
-@if (Model.User != null) {
-	<partial name="Partials/User/_UserLink" model="@(new UserLinkViewModel(Model.User))" />
-} else {
-	@Model.Name
-}

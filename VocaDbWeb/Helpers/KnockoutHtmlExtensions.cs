@@ -3,20 +3,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Html;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using VocaDb.Model;
 
 namespace VocaDb.Web.Helpers
 {
 	/// <summary>
-	/// Extends <see cref="HtmlHelper"/> with Knockout-specific methods.
+	/// Extends <see cref="IHtmlHelper"/> with Knockout-specific methods.
 	/// </summary>
 	public static class KnockoutHtmlExtensions
 	{
-		public static IHtmlString CheckboxForKnockout<TModel>(
-			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, bool>> expression,
+		public static IHtmlContent CheckboxForKnockout<TModel>(
+			this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, bool>> expression,
 			string binding, string id = null)
 		{
 			ParamIs.NotNull(() => htmlHelper);
@@ -34,8 +33,8 @@ namespace VocaDb.Web.Helpers
 		/// <summary>
 		/// Dropdown list bound to knockout model.
 		/// </summary>
-		public static IHtmlString DropdownForKnockout<TModel, TProperty>(
-			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression,
+		public static IHtmlContent DropdownForKnockout<TModel, TProperty>(
+			this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression,
 			SelectList selectList,
 			string binding, string cssClass = null, string id = null)
 		{
@@ -54,8 +53,8 @@ namespace VocaDb.Web.Helpers
 			return htmlHelper.DropDownListFor(expression, selectList, htmlAttributes);
 		}
 
-		public static IHtmlString HiddenForKnockout<TModel, TProperty>(
-			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression,
+		public static IHtmlContent HiddenForKnockout<TModel, TProperty>(
+			this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression,
 			string binding, string id = null)
 		{
 			ParamIs.NotNull(() => htmlHelper);
@@ -84,8 +83,8 @@ namespace VocaDb.Web.Helpers
 		/// <param name="rows">Rows attribute. Can be null, in which case this attribute is not specified.</param>
 		/// <param name="cols">Cols attribute. Can be null, in which case this attribute is not specified.</param>
 		/// <returns></returns>
-		public static IHtmlString TextAreaForKnockout<TModel, TProperty>(
-			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression,
+		public static IHtmlContent TextAreaForKnockout<TModel, TProperty>(
+			this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression,
 			string binding, string cssClass = null, string id = null, int? maxLength = null, int? rows = null, int? cols = null)
 		{
 			ParamIs.NotNull(() => htmlHelper);
@@ -126,8 +125,8 @@ namespace VocaDb.Web.Helpers
 		/// <param name="size">Size attribute. Can be null, in which case this attribute is not specified.</param>
 		/// <param name="placeholder">Placeholder attribute. Can be null.</param>
 		/// <returns></returns>
-		public static IHtmlString TextBoxForKnockout<TModel, TProperty>(
-			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression,
+		public static IHtmlContent TextBoxForKnockout<TModel, TProperty>(
+			this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression,
 			string binding, string cssClass = null, string id = null, int? maxLength = null, int? size = null,
 			string placeholder = null)
 		{
@@ -155,8 +154,8 @@ namespace VocaDb.Web.Helpers
 			return htmlHelper.TextBoxFor(expression, htmlAttributes);
 		}
 
-		public static IHtmlString NumericTextBoxForKnockout<TModel, TProperty>(
-			this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression,
+		public static IHtmlContent NumericTextBoxForKnockout<TModel, TProperty>(
+			this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression,
 			string binding, string cssClass = null, string id = null, int? size = null,
 			string placeholder = null, decimal? step = null, int? min = null, int? max = null)
 		{

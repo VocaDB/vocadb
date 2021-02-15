@@ -2,20 +2,20 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
 using VocaDb.Web.Code.Exceptions;
 using VocaDb.Web.Helpers;
-using VocaDb.Model.Domain.Security;
 
 namespace VocaDb.Web.Models.Artist
 {
-	[PropertyModelBinder]
 	public class ArtistEditViewModel
 	{
 		public ArtistEditViewModel()
@@ -48,7 +48,7 @@ namespace VocaDb.Web.Models.Artist
 
 		public bool CanDelete { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public ArtistForEditContract EditedArtist { get; set; }
 
 		public void CheckModel()

@@ -1,4 +1,4 @@
 ﻿@using VocaDb.Web.Models.Shared.Partials.EntryDetails
 @model EntryDeletePopupViewModel
 
-@Html.Partial("Partials/EntryDetails/_EntryDeletePopupBase", new EntryDeletePopupBaseViewModel(Model.ConfirmText, Model.ViewModelBindingName, Model.DeleteButtonId, ViewRes.SharedStrings.Delete, ViewRes.SharedStrings.Delete))
+<partial name="Partials/EntryDetails/_EntryDeletePopupBase" model="@(new EntryDeletePopupBaseViewModel(Model.ConfirmText, Model.ViewModelBindingName, Model.DeleteButtonId, ViewRes.SharedStrings.Delete, ViewRes.SharedStrings.Delete))" />

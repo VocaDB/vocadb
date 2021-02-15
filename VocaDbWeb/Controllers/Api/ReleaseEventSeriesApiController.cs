@@ -1,19 +1,22 @@
 #nullable disable
 
-using System.Web.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
+using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
 	/// <summary>
 	/// API queries for album release event series.
 	/// </summary>
-	[RoutePrefix("api/releaseEventSeries")]
+	[Route("api/releaseEventSeries")]
+	[ApiController]
 	public class ReleaseEventSeriesApiController : ApiController
 	{
 		private const int DefaultMax = 10;
@@ -33,7 +36,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// If true, the entry is hard deleted. Hard deleted entries cannot be restored normally, but they will be moved to trash.
 		/// If false, the entry is soft deleted, meaning it can still be restored.
 		/// </param>
-		[Route("{id:int}")]
+		[HttpDelete("{id:int}")]
 		[Authorize]
 		public void Delete(int id, string notes = "", bool hardDelete = false)
 		{
@@ -60,7 +63,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="nameMatchMode">Match mode for event name (optional).</param>
 		/// <param name="lang">Content language preference (optional).</param>
 		/// <returns>Page of event series.</returns>
-		[Route("")]
+		[HttpGet("")]
 		public PartialFindResult<ReleaseEventSeriesForApiContract> GetList(
 			string query = "",
 			ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None,
@@ -71,7 +74,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <summary>
 		/// Gets single event series by ID.
 		/// </summary>
-		[Route("{id:int}")]
+		[HttpGet("{id:int}")]
 		public ReleaseEventSeriesForApiContract GetOne(
 			int id,
 			ReleaseEventSeriesOptionalFields fields = ReleaseEventSeriesOptionalFields.None,

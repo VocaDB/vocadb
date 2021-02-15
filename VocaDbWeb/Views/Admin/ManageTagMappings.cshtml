@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Web.Helpers
+﻿@using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Knockout
 @inherits VocaDb.Web.Code.VocaDbPage
 
@@ -28,7 +27,7 @@
 	<div class="control-group">
 		<label class="control-label">Target tag</label>
 		<div class="controls">
-			@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("tagAutoComplete", "newTargetTag"))
+			<partial name="Partials/Knockout/_BasicEntryLinkLockingAutoComplete" model="@(new BasicEntryLinkLockingAutoCompleteViewModel("tagAutoComplete", "newTargetTag"))" />
 		</div>
 	</div>
 	<div class="control-group">
@@ -53,10 +52,10 @@
 	<br />
 	<br />
 
-	@Html.Partial("Partials/Shared/_SaveBtn")
+	<partial name="Partials/Shared/_SaveBtn" />
 
 	<div data-bind="with: paging">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 
 	<table>
@@ -84,15 +83,15 @@
 	<br />
 
 	<div data-bind="with: paging">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 
-	@Html.Partial("Partials/Shared/_SaveBtn")
+	<partial name="Partials/Shared/_SaveBtn" />
 
 </form>
 
 @section BodyScripts {
-	@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js")
+	<remikus path="/bundles/shared/edit.js" />
 	<script type="text/javascript">
 		$(function () {
 

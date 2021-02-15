@@ -1,6 +1,6 @@
 ﻿@using VocaDb.Model.Domain
 @using VocaDb.Web.Models.Shared.Partials.Tag
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.UseCases.EntryWithTagUsagesContract>
+@model VocaDb.Model.DataContracts.UseCases.EntryWithTagUsagesContract
 
 @{
     PageProperties.Title = "Manage tag usages - " + Model.DefaultName;
@@ -11,4 +11,4 @@
 }
 
 
-@Html.Partial("Partials/Tag/_TagUsagesManageTable", new TagUsagesManageTableViewModel(EntryType.Album, Model.TagUsages, Model.CanRemoveTagUsages))
+<partial name="Partials/Tag/_TagUsagesManageTable" model="@(new TagUsagesManageTableViewModel(EntryType.Album, Model.TagUsages, Model.CanRemoveTagUsages))" />

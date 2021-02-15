@@ -1,5 +1,0 @@
-﻿@using Microsoft.AspNetCore.Routing
-@using VocaDb.Web.Models.Shared.Partials.Album
-@model AlbumLinkViewModel
-
-@Html.ActionLink(Model.Album.Name, "Details", "Album", new RouteValueDictionary { { "id", Model.Album.Id } }, new Dictionary<string, object> { { "title", Model.Album.AdditionalNames }, { "data-entry-id", Model.Album.Id }, { "class", "albumLink" } })

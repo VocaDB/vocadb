@@ -5,20 +5,30 @@ using System.Linq;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.PVs;
 using VocaDb.Model.Domain.PVs;
+using VocaDb.Model.Service.Security;
 using VocaDb.Model.Service.VideoServices;
 
 namespace VocaDb.Web.Helpers
 {
-	public static class PVHelper
+	public class PVHelper
 	{
-		private static PVService? PreferredVideoService => MvcApplication.LoginManager.IsLoggedIn ? (PVService?)MvcApplication.LoginManager.LoggedUser.PreferredVideoService : null;
+		private readonly LoginManager _manager;
 
-		public static PVContract[] GetMainPVs(PVContract[] allPvs)
+		public PVHelper(LoginManager manager)
+		{
+			_manager = manager;
+		}
+
+		public LoginManager LoginManager => _manager;
+
+		private PVService? PreferredVideoService => LoginManager.IsLoggedIn ? (PVService?)LoginManager.LoggedUser.PreferredVideoService : null;
+
+		public PVContract[] GetMainPVs(PVContract[] allPvs)
 		{
 			return EnumVal<PVService>.Values.Select(service => VideoServiceHelper.GetPV(allPvs, service)).Where(p => p != null).ToArray();
 		}
 
-		public static PVContract PrimaryPV(IEnumerable<PVContract> pvs)
+		public PVContract PrimaryPV(IEnumerable<PVContract> pvs)
 		{
 			return VideoServiceHelper.PrimaryPV(pvs, PreferredVideoService);
 		}

@@ -1,9 +1,0 @@
-﻿@using VocaDb.Web.Helpers
-@using VocaDb.Web.Models.Shared.Partials.Shared
-@model PVServiceIconViewModel
-
-@{
-	var iconUrl = @Html.VideoServiceLinkUrl(Model.Service);
-}
-
-<img src="@iconUrl" alt="@Model.Service.ToString()" title="@Model.Service.ToString()" />

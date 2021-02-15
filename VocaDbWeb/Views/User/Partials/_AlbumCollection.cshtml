@@ -15,7 +15,7 @@
 	<div class="pull-right">
 		<div class="inline-block">
 			@ViewRes.EntryIndexStrings.SortBy
-			@Html.Partial("Partials/Knockout/_Dropdown", new DropdownViewModel(Translate.AlbumSortRuleNames.ValuesAndNamesStrings, "sort", "sortName"))
+			<partial name="Partials/Knockout/_Dropdown" model="@(new DropdownViewModel(Translate.AlbumSortRuleNames.ValuesAndNamesStrings, "sort", "sortName"))" />
 
 			<div class="btn-group">
 				<a data-bind="css: { active: viewMode() == 'Details' }, click: function() { viewMode('Details'); }" class="btn btn-nomargin" href="#">
@@ -63,7 +63,7 @@
 				<a href="#" class="btn btn-nomargin" data-bind="visible: tag, attr: { href: tagUrl() }" title="Tag information">
 					<i class="icon icon-info-sign"></i>
 				</a>
-				@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("tagAutoComplete", "tag", "tagName"))
+				<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("tagAutoComplete", "tag", "tagName"))" />
 			</div>
 		</div>
 	</div>
@@ -71,7 +71,7 @@
 	<div class="control-group">
 		<div class="control-label">@ViewRes.Search.IndexStrings.AlbumType</div>
 		<div class="controls">
-			@Html.Partial("Partials/Album/_DiscTypesDropdownKnockout", new DiscTypesDropdownKnockoutViewModel("albumType"))
+			<partial name="Partials/Album/_DiscTypesDropdownKnockout" model="@(new DiscTypesDropdownKnockoutViewModel("albumType"))" />
 		</div>
 	</div>
 
@@ -79,7 +79,7 @@
 		<div class="control-label">@EntryTypeNames.Artist</div>
 		<div class="controls">
 			<div style="display: inline-block;" class="input-append">
-				@Html.Partial("Partials/Knockout/_LockingAutoComplete", new LockingAutoCompleteViewModel("artistAutoComplete", "artistSearchParams", textBinding: "artistName", valBinding: "artistId"))
+				<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("artistAutoComplete", "artistSearchParams", textBinding: "artistName", valBinding: "artistId"))" />
 			</div>
 		</div>
 	</div>
@@ -91,7 +91,7 @@
 				<a href="#" class="btn btn-nomargin" data-bind="visible: !releaseEvent.isEmpty(), attr: { href: releaseEventUrl() }" title="Release event information">
 					<i class="icon icon-info-sign"></i>
 				</a>
-				@Html.Partial("Partials/Knockout/_BasicEntryLinkLockingAutoComplete", new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent"))
+				<partial name="Partials/Knockout/_BasicEntryLinkLockingAutoComplete" model="@(new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent"))" />
 			</div>
 		</div>
 	</div>
@@ -99,7 +99,7 @@
 	<div class="control-group">
 		<div class="control-label"></div>
 		<div class="controls">
-			@Html.Partial("Partials/Search/_AdvancedFilters", new AdvancedFiltersViewModel(AdvancedSearchFilters.AlbumFilters))
+			<partial name="Partials/Search/_AdvancedFilters" model="@(new AdvancedFiltersViewModel(AdvancedSearchFilters.AlbumFilters))" />
 		</div>
 	</div>
 
@@ -108,11 +108,11 @@
 <div data-bind="css: { loading: loading }, visible: true" style="display: none;">
 
 	<div data-bind="with: paging" class="dropdown pull-right">
-		@Html.Partial("Partials/Knockout/_EntryCount")
+		<partial name="Partials/Knockout/_EntryCount" />
 	</div>
 
 	<div data-bind="with: paging">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 
 	<!-- ko if: viewMode() == 'Details' -->
@@ -151,7 +151,7 @@
 				</td>
 				<td>
 					<a data-bind="text: album.name, attr: { href: app.EntryUrlMapper.details('Album', album.id), title: album.additionalNames }" href="#"></a><br />
-					@Html.Partial("Partials/Knockout/_DraftIcon", new DraftIconViewModel("status"))
+					<partial name="Partials/Knockout/_DraftIcon" model="@(new DraftIconViewModel("status"))" />
 					<small class="extraInfo" data-bind="text: album.artistString"></small><br />
 					<small class="extraInfo" data-bind="text: $parent.resources().discTypeNames[album.discType]"></small>
 				</td>
@@ -191,7 +191,7 @@
 	<!-- /ko -->
 
 	<div data-bind="with: paging">
-		@Html.Partial("Partials/Knockout/_ServerSidePaging")
+		<partial name="Partials/Knockout/_ServerSidePaging" />
 	</div>
 
 </div>

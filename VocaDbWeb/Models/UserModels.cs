@@ -3,9 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts.Security;
 using VocaDb.Model.DataContracts.Users;
@@ -13,12 +13,12 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
-using VocaDb.Web.Code;
-using VocaDb.Web.Code.Exceptions;
-using VocaDb.Web.Helpers;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Utils;
+using VocaDb.Web.Code;
+using VocaDb.Web.Code.Exceptions;
+using VocaDb.Web.Helpers;
 using VocaDb.Web.Models.Shared;
 
 namespace VocaDb.Web.Models
@@ -99,7 +99,6 @@ namespace VocaDb.Web.Models
 		public string ReturnUrl { get; set; }
 	}
 
-	[PropertyModelBinder]
 	public class MySettingsModel
 	{
 		public MySettingsModel()
@@ -180,7 +179,7 @@ namespace VocaDb.Web.Models
 		[Display(Name = "Interface language")]
 		public string InterfaceLanguageSelection { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public UserKnownLanguageContract[] KnownLanguages { get; set; }
 
 		[StringLength(50)]
@@ -210,7 +209,7 @@ namespace VocaDb.Web.Models
 		[StringLength(100, MinimumLength = 3)]
 		public string Username { get; set; }
 
-		[FromJson]
+		[ModelBinder(BinderType = typeof(JsonModelBinder))]
 		public IList<WebLinkDisplay> WebLinks { get; set; }
 
 		[Display(Name = "Old password")]
@@ -269,16 +268,16 @@ namespace VocaDb.Web.Models
 
 	public class UserEdit
 	{
-		public UserEdit()
+		public UserEdit(Login login)
 		{
-			var groups = EnumVal<UserGroupId>.Values.Where(g => EntryPermissionManager.CanEditGroupTo(Login.Manager, g)).ToArray();
+			var groups = EnumVal<UserGroupId>.Values.Where(g => EntryPermissionManager.CanEditGroupTo(login.Manager, g)).ToArray();
 			EditableGroups = new TranslateableEnum<UserGroupId>(() => global::Resources.UserGroupNames.ResourceManager, groups);
 			OwnedArtists = new List<ArtistForUserContract>();
 			Permissions = new List<PermissionFlagEntry>();
 		}
 
-		public UserEdit(UserWithPermissionsContract contract)
-			: this()
+		public UserEdit(Login login, UserWithPermissionsContract contract)
+			: this(login)
 		{
 			Active = contract.Active;
 			Email = contract.Email;

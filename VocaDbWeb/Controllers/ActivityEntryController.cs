@@ -1,7 +1,7 @@
 #nullable disable
 
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Service;
 
 namespace VocaDb.Web.Controllers

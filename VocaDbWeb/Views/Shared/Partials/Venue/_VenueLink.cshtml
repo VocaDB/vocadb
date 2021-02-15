@@ -1,4 +1,4 @@
 ﻿@using VocaDb.Web.Models.Shared.Partials.Venue
 @model VenueLinkViewModel
 
-@Html.ActionLink(Model.Venue.Name, "Details", "Venue", new { id = Model.Venue.Id }, new { title = Model.Venue.AdditionalNames })
+<a asp-action="Details" asp-controller="Venue" asp-route-id="@(Model.Venue.Id)" title="@(Model.Venue.AdditionalNames)">@(Model.Venue.Name)</a>

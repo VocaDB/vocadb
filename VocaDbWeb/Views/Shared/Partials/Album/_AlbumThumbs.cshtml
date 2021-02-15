@@ -7,6 +7,6 @@
 <ul class="smallThumbs">
 	@foreach (var album in Model.Albums)
 	{
-		@Html.Partial("Partials/Shared/_ThumbItem", new ThumbItemViewModel(Url.Action("Details", "Album", new { id = album.Id }), Url.ImageThumb(album.MainPicture, ImageSize.SmallThumb), album.Name, album))
+		<partial name="Partials/Shared/_ThumbItem" model="@(new ThumbItemViewModel(Url.Action("Details", "Album", new { id = album.Id }), Url.ImageThumb(album.MainPicture, ImageSize.SmallThumb), album.Name, album))" />
 	}
 </ul>

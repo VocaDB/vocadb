@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.UI;
 using VocaDb.Model;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.DataContracts.PVs;
@@ -36,7 +35,7 @@ namespace VocaDb.Web.Models
 
 		public AlbumDetails() { }
 
-		public AlbumDetails(AlbumDetailsContract contract, IUserPermissionContext permissionContext)
+		public AlbumDetails(AlbumDetailsContract contract, IUserPermissionContext permissionContext, PVHelper pvHelper)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -112,7 +111,7 @@ namespace VocaDb.Web.Models
 				|| a.Categories.HasFlag(ArtistCategories.Animator)
 				|| (ContentFocus != ContentFocus.Illustration && a.Categories.HasFlag(ArtistCategories.Illustrator))).ToArray();
 
-			PrimaryPV = PVHelper.PrimaryPV(PVs);
+			PrimaryPV = pvHelper.PrimaryPV(PVs);
 		}
 
 		public string AdditionalNames { get; set; }

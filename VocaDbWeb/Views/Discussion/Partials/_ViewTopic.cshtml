@@ -10,7 +10,7 @@
 			<h3 data-bind="text: contract().name"></h3>
 
 			<div data-bind="with: contract">
-				@Html.Partial("Partials/Comment/_CommentKnockout", new CommentKnockoutViewModel("content", true, "$parents[1].deleteTopic", "$parent.beginEditTopic"))
+				<partial name="Partials/Comment/_CommentKnockout" model="@(new CommentKnockoutViewModel("content", true, "$parents[1].deleteTopic", "$parent.beginEditTopic"))" />
 			</div>
 
 		</div>	
@@ -19,14 +19,14 @@
 	
 	<form data-bind="visible: isBeingEdited, submit: saveEditedTopic" class="well well-transparent">
 		<div data-bind="with: editModel">
-			@{ Html.RenderPartial("Partials/_EditTopic"); }
+			<partial name="Partials/_EditTopic" />
 		</div>
 		<button type="submit" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
 		<button data-bind="click: cancelEdit" class="btn">@ViewRes.SharedStrings.Cancel</button>
 	</form>
 	
 	<div data-bind="with: comments, visible: !contract().locked">
-		@Html.Partial("Partials/Comment/_EditableComments", new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), commentBoxEnd: true))
+		<partial name="Partials/Comment/_EditableComments" model="@(new EditableCommentsViewModel(UserContext.HasPermission(PermissionToken.CreateComments), commentBoxEnd: true))" />
 	</div>
 	<div class="alert" data-bind="visible: contract().locked">
 		Comments have been disabled for this topic.

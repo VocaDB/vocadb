@@ -1,12 +1,11 @@
 ﻿@using VocaDb.Model.Domain.Globalization
-@using System.Web.Optimization
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails
 @using VocaDb.Web.Models.Shared.Partials.Knockout
 @using VocaDb.Web.Models.Shared.Partials.Shared
 @using Res = ViewRes.Venue.EditStrings
 @using EditRes = ViewRes.EntryEditStrings
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Venue.VenueEditViewModel>
+@model VocaDb.Web.Models.Venue.VenueEditViewModel
 
 @{
 
@@ -35,7 +34,7 @@
 		if (!Model.Deleted) {
 			<a href="#" id="deleteLink" data-bind="click: function() { deleteViewModel.dialogVisible(true); }">@ViewRes.SharedStrings.Delete</a>			
 		} else {
-			@Html.ActionLink(EditRes.Restore, "Restore", new { id = Model.Id }, new { id = "restoreLink" })					
+			<a asp-action="Restore" asp-route-id="@(Model.Id)" id="@("restoreLink")">@(EditRes.Restore)</a>					
 		}
 		if (Login.CanMoveToTrash) {
 			<a href="#" id="trashLink" data-bind="click: trashViewModel.show">@EditRes.MoveToTrash</a>
@@ -43,13 +42,13 @@
 	}
 }
 
-@Html.Partial("Partials/Shared/_ValidationSummaryPanel", new ValidationSummaryPanelViewModel("Unable to save properties."))
+<partial name="Partials/Shared/_ValidationSummaryPanel" model="@(new ValidationSummaryPanelViewModel("Unable to save properties."))" />
 
 @using(Html.BeginForm("Edit", "Venue", FormMethod.Post, new { enctype = "multipart/form-data", data_bind = "submit: submit" })) {
 	@Html.HiddenFor(m => m.Id)
 	@Html.HiddenFor(m => m.Name)
 	
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(backAction))" />
 	
 	<div class="editor-label">
 		<label class="helpTip" data-bind="qTip" title="@EditRes.DefaultLanguageHelp">
@@ -57,7 +56,7 @@
 		</label>
 	</div>
 	<div class="editor-field">
-		@Html.Partial("Partials/Knockout/_LanguageSelectionDropDown", new LanguageSelectionDropDownViewModel("defaultNameLanguage"))
+		<partial name="Partials/Knockout/_LanguageSelectionDropDown" model="@(new LanguageSelectionDropDownViewModel("defaultNameLanguage"))" />
 		@Html.HiddenForKnockout(m => m.DefaultNameLanguage, "value: defaultNameLanguage()")
 	</div>
 
@@ -68,7 +67,7 @@
 		<table>			
 			<tr>
 				<td data-bind="with: names">
-					@{ Html.RenderPartial("KnockoutPartials/_NamesEditor", new VocaDb.Web.Models.Shared.NamesEditorViewModel()); }
+					<partial name="KnockoutPartials/_NamesEditor" model="@(new VocaDb.Web.Models.Shared.NamesEditorViewModel())" />
 					@Html.HiddenForKnockout(m => m.Names, "value: ko.toJSON($data.toContracts())")
 				</td>
 				<td style="vertical-align: top">
@@ -136,27 +135,28 @@
 		</label>
 	</div>
 	<div class="editor-field" data-bind="with: webLinks">
-		@Html.Partial("Partials/Knockout/_WebLinksEditViewKnockout", new WebLinksEditViewKnockoutViewModel(false))
+		<partial name="Partials/Knockout/_WebLinksEditViewKnockout" model="@(new WebLinksEditViewKnockoutViewModel(false))" />
 		@Html.HiddenForKnockout(m => m.WebLinks, "value: ko.toJSON(items)")
 	</div>
 	
 	<div class="editor-label">
-		@Html.Partial("Partials/Shared/_HelpLabel", new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation))
+		<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel(EditRes.Status, Resources.CommonMessages.EntryStatusExplanation))" />
 	</div>
 	<div class="editor-field">
 		@Html.EnumDropDownListFor(m => m.Status, Translate.EntryStatusNames.GetValuesAndNames(Model.AllowedEntryStatuses))
 	</div>
 
 	<br />
-	@Html.Partial("Partials/Shared/_SaveAndBackBtn", new SaveAndBackBtnViewModel(backAction))
+	<partial name="Partials/Shared/_SaveAndBackBtn" model="@(new SaveAndBackBtnViewModel(backAction))" />
 
 }
 
-@Html.Partial("Partials/EntryDetails/_EntryDeletePopup", new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))
-@Html.Partial("Partials/EntryDetails/_EntryTrashPopup", new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))
+<partial name="Partials/EntryDetails/_EntryDeletePopup" model="@(new EntryDeletePopupViewModel(ViewRes.EntryEditStrings.ConfirmDelete))" />
+<partial name="Partials/EntryDetails/_EntryTrashPopup" model="@(new EntryTrashPopupViewModel(EditRes.ConfirmMoveToTrash))" />
 
 @section BodyScripts {
-@LaravelMixHelper.RenderScripts("~/bundles/shared/edit.js", "~/bundles/Venue/Edit.js")
+<remikus path="/bundles/shared/edit.js" />
+<remikus path="/bundles/Venue/Edit.js" />
 <script type="text/javascript">
 
 	$(function () {

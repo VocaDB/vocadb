@@ -4,7 +4,7 @@
 @using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
 @using VocaDb.Web.Models.Shared.Partials.Artist
 @using VocaDb.Web.Models.Shared.Partials.EntryDetails
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.Artists.ArchivedArtistVersionDetailsContract>
+@model VocaDb.Model.DataContracts.Artists.ArchivedArtistVersionDetailsContract
 
 @{
 	
@@ -20,22 +20,22 @@
 
 @section Toolbar {
 @if (Login.CanRevertEntryVersions && Model.CanBeReverted) {
-	@Html.ActionLink(ViewRes.ViewVersionStrings.RevertToVersion, "RevertToVersion", new { archivedArtistVersionId = Model.ArchivedVersion.Id }, new { id = "revertLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmRevertToVersion) })
+	<a asp-action="RevertToVersion" asp-route-archivedArtistVersionId="@(Model.ArchivedVersion.Id)" id="@("revertLink")" onclick="@(string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmRevertToVersion))">@(ViewRes.ViewVersionStrings.RevertToVersion)</a>
 }
 &nbsp;
 <a href="@Url.Action("ArchivedVersionXml", new { id = Model.ArchivedVersion.Id })" id="downloadXmlLink">Download XML</a>
 <a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
 @if (Login.CanViewHiddenRevisions) {
 	if (Model.ArchivedVersion.Hidden) {
-		@Html.ActionLink(ViewRes.ViewVersionStrings.UnhideVersion, "UpdateVersionVisibility", new { archivedVersionId = Model.ArchivedVersion.Id, hidden = false }, new { id = "showLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmUnhide) })
+		<a asp-action="UpdateVersionVisibility" asp-route-archivedVersionId="@(Model.ArchivedVersion.Id)" asp-route-hidden="@(false)" id="@("showLink")" onclick="@(string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmUnhide))">@(ViewRes.ViewVersionStrings.UnhideVersion)</a>
 	} else {
-		@Html.ActionLink(ViewRes.ViewVersionStrings.HideVersion, "UpdateVersionVisibility", new { archivedVersionId = Model.ArchivedVersion.Id, hidden = true }, new { id = "hideLink", onclick = string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmHide) })
+		<a asp-action="UpdateVersionVisibility" asp-route-archivedVersionId="@(Model.ArchivedVersion.Id)" asp-route-hidden="@(true)" id="@("hideLink")" onclick="@(string.Format("return confirm(\"{0}\");", ViewRes.ViewVersionStrings.ConfirmHide))">@(ViewRes.ViewVersionStrings.HideVersion)</a>
 	}
 }
 }
 
 @if (Model.ArchivedVersion.Hidden) {
-	@Html.Partial("Partials/EntryDetails/_HiddenBanner")
+	<partial name="Partials/EntryDetails/_HiddenBanner" />
 }
 
 @if (Model.ComparableVersions.Any()) {
@@ -45,11 +45,11 @@
 	}
 }
 
-@Html.Partial("Partials/ArchivedEntry/_ArchivedObjectVersionProperties", new ArchivedObjectVersionPropertiesViewModel(Versions.CreateForArtist(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForArtist(Model.ComparedVersion) : null))
+<partial name="Partials/ArchivedEntry/_ArchivedObjectVersionProperties" model="@(new ArchivedObjectVersionPropertiesViewModel(Versions.CreateForArtist(Model.ArchivedVersion), Model.ComparedVersion != null ? Versions.CreateForArtist(Model.ComparedVersion) : null))" />
 
-@Html.Partial("Partials/Artist/_PrintArchivedArtistData", new PrintArchivedArtistDataViewModel(Model.Versions))
+<partial name="Partials/Artist/_PrintArchivedArtistData" model="@(new PrintArchivedArtistDataViewModel(Model.Versions))" />
 
-@Html.Partial("Partials/EntryDetails/_ReportEntryVersionPopupKnockout", new ReportEntryVersionPopupKnockoutViewModel())
+<partial name="Partials/EntryDetails/_ReportEntryVersionPopupKnockout" model="@(new ReportEntryVersionPopupKnockoutViewModel())" />
 
 @section BodyScripts {
     <script type="text/javascript">

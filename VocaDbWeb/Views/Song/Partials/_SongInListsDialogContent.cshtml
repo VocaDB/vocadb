@@ -29,7 +29,7 @@
 	
 	foreach (var list in customLists) {
 		<a href="@Url.Action("Details", "SongList", new { id = list.Id })">@list.Name</a>				
-		@("(")@Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(list.Author))@(")")
+		@("(")<partial name="Partials/User/_UserIconLink_UserForApiContract" model="@(new UserIconLink_UserForApiContractViewModel(list.Author))" />@(")")
 		<br />
 	}
 	

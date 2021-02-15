@@ -4,7 +4,7 @@
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.User
 @using Res = ViewRes.TopBarStrings
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.GlobalSearchBoxModel>
+@model VocaDb.Web.Models.GlobalSearchBoxModel
 
 @using (Html.BeginForm("GlobalSearch", "Home", FormMethod.Post, new { @class = "navbar-form form-inline pull-left navbar-search", id = "globalSearchBox" })) {
 
@@ -17,7 +17,7 @@
 	</a>
 
 	<div class="brand hidden-phone">
-		@Html.ActionLink(BrandableStrings.SiteName, "Index", "Home")
+		<a asp-action="Index" asp-controller="Home">@(BrandableStrings.SiteName)</a>
 	</div>
 
 	<div class="input-prepend input-append navbar-searchBox">
@@ -53,16 +53,16 @@
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
 			@if (!Login.Manager.IsLoggedIn) {
 				<li><a href="@Url.Action("Login", "User")" onclick=" vdb.functions.showLoginPopup(); return false; ">@ViewRes._LayoutStrings.LogIn</a></li>
-				<li>@Html.ActionLink(ViewRes._LayoutStrings.Register, "Create", "User")</li>
+				<li><a asp-action="Create" asp-controller="User">@(ViewRes._LayoutStrings.Register)</a></li>
 			} else {
-				<li>@Html.ActionLink(ViewRes.User.MySettingsStrings.Profile, "Profile", "User", new { id = Login.Manager.Name }, null)</li>
+				<li><a asp-action="Profile" asp-controller="User" asp-route-id="@(Login.Manager.Name)">@(ViewRes.User.MySettingsStrings.Profile)</a></li>
 				<li>
 					<a href="@Url.Action("Profile", "User", new { id = Login.Manager.Name })#Albums">@Res.MyAlbums</a>
 				</li>
 				<li>
 					<a href="@Url.Action("Profile", "User", new { id = Login.Manager.Name })#Songs">@Res.MySongs</a>
 				</li>
-				<li>@Html.ActionLink(ViewRes.User.DetailsStrings.MySettings, "MySettings", "User")</li>
+				<li><a asp-action="MySettings" asp-controller="User">@(ViewRes.User.DetailsStrings.MySettings)</a></li>
 				if (Login.CanManageEntryReports) {
 					<li>
 						<a href="@Url.Action("ViewEntryReports", "Admin")">
@@ -71,7 +71,7 @@
 						</a>
 					</li>
 				}
-				<li>@Html.ActionLink(ViewRes._LayoutStrings.LogOut, "Logout", "User")</li>
+				<li><a asp-action="Logout" asp-controller="User">@(ViewRes._LayoutStrings.LogOut)</a></li>
 			}
 			<li class="divider"></li>
 			<li><h6>@ViewRes.User.MySettingsStrings.DefaultLanguageSelection</h6></li>
@@ -107,7 +107,7 @@
 						<div class="media">
 							<div class="pull-left media-image-usermessage" style="width: 40px; height: 40px;">
 								<!-- ko if: $data.sender -->
-								@Html.Partial("Partials/User/_ProfileIconKnockout_ImageSize", new ProfileIconKnockout_ImageSizeViewModel(ImageSize.SmallThumb, "sender", 40))
+								<partial name="Partials/User/_ProfileIconKnockout_ImageSize" model="@(new ProfileIconKnockout_ImageSizeViewModel(ImageSize.SmallThumb, "sender", 40))" />
 								<!-- /ko -->
 								<!-- ko ifnot: $data.sender -->
 								<img src="@Url.Content("~/Content/vocadb_40.png")" alt="Notification" />
@@ -136,7 +136,7 @@
 	}
 
 	<div class="nav-collapse collapse">
-		@Html.Partial("Partials/_MainNavigationItems")
+		<partial name="Partials/_MainNavigationItems" />
 	</div>
 
 }

@@ -10,7 +10,7 @@
 	
 	<img src="http://static.vocadb.net/img/844a799896b0ffe44129bf92d2fa55a5.jpg" alt="ERROR, image by つむつむ" title="ERROR, image by つむつむ" />
 
-	@if (Server.GetLastError() != null) {
+	@* TODO: implement if (Server.GetLastError() != null) {
 		var ex = Server.GetLastError();
 
 		if (ex is HttpRequestValidationException || ex.GetBaseException() is HttpRequestValidationException) {
@@ -19,18 +19,18 @@
 				If you think this is an error, please contant the admin.
 			</p>
 		}
-	}
+	}*@
 
 	<h3>Possible reasons include</h3>
 	<ul>
 		<li>You followed an invalid link.</li>
 		<li>The site is temporarily down because it is being updated. Check back in a few minutes.</li>
 		<li>You entered (possibly accidentally) characters that were automatically detected as HTML and thus were blocked.</li>
-		<li>You have encountered a programming error (bug). If you suspect this is the case, please inform us about it. Please see @Html.ActionLink("Help/Contact us", "Index", "Help") for contact information.</li>
+		<li>You have encountered a programming error (bug). If you suspect this is the case, please inform us about it. Please see <a asp-action="Index" asp-controller="Help">@("Help/Contact us")</a> for contact information.</li>
 	</ul>
 
 	<p>
-		@Html.ActionLink("Return to the front page", "Index", "Home")
+		<a asp-action="Index" asp-controller="Home">@("Return to the front page")</a>
 	</p>
 </div>
 

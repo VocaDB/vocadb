@@ -8,16 +8,16 @@
 
 @if (Model.ArtistMatches.Any()) {
 	<h3>@R.MatchingArtists</h3>
-	@Html.Partial("Partials/Album/_AlbumGrid", new AlbumGridViewModel(Model.ArtistMatches, 2, true, false, true))
+	<partial name="Partials/Album/_AlbumGrid" model="@(new AlbumGridViewModel(Model.ArtistMatches, 2, true, false, true))" />
 	<br />
 }
 	
 @if (Model.LikeMatches.Any()) {
 	<h3>@R.MatchingLikes</h3>
-	@Html.Partial("Partials/Album/_AlbumGrid", new AlbumGridViewModel(Model.LikeMatches, 2, true, false, true))
+	<partial name="Partials/Album/_AlbumGrid" model="@(new AlbumGridViewModel(Model.LikeMatches, 2, true, false, true))" />
 }
 
 @if (Model.TagMatches.Any()) {
 	<h3>@R.MatchingTags</h3>
-	@Html.Partial("Partials/Album/_AlbumGrid", new AlbumGridViewModel(Model.TagMatches, 2, true, false, true))
+	<partial name="Partials/Album/_AlbumGrid" model="@(new AlbumGridViewModel(Model.TagMatches, 2, true, false, true))" />
 }

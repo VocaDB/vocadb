@@ -1,16 +1,17 @@
-﻿@using VocaDb.Web.Code
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@using VocaDb.Web.Code
 @using VocaDb.Web.Models.Shared.Partials.ArchivedEntry
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Web.Models.Song.Versions>
+@model VocaDb.Web.Models.Song.Versions
 
 @{
 	PageProperties.Title = ViewRes.EntryDetailsStrings.Revisions + " - " + Model.Song.Name;
 	PageProperties.Robots = PagePropertiesData.Robots_Noindex_Nofollow;
 	ViewBag.Parents = new[] { 
 		Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null), 
-		LinkExtensions.ActionLink(Html, Model.Song.Name, "Details", new { id = Model.Song.Id }) 
+		Html.ActionLink(Model.Song.Name, "Details", new { id = Model.Song.Id }) 
 	};
 }
 
-@Html.Partial("Partials/ArchivedEntry/_CurrentVersionMessage", new CurrentVersionMessageViewModel(Model.Song.Version, Model.Song.Status))
+<partial name="Partials/ArchivedEntry/_CurrentVersionMessage" model="@(new CurrentVersionMessageViewModel(Model.Song.Version, Model.Song.Status))" />
 
-@Html.Partial("Partials/ArchivedEntry/_ArchivedObjectVersions", new ArchivedObjectVersionsViewModel(Model.ArchivedVersions, id => Url.Action("ViewVersion", new { id = id })))
+<partial name="Partials/ArchivedEntry/_ArchivedObjectVersions" model="@(new ArchivedObjectVersionsViewModel(Model.ArchivedVersions, id => Url.Action("ViewVersion", new { id = id })))" />

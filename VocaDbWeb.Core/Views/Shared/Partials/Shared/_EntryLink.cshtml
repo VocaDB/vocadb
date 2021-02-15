@@ -1,4 +1,0 @@
-﻿@using VocaDb.Web.Models.Shared.Partials.Shared
-@model EntryLinkViewModel
-
-@Html.ActionLink(Model.Entry.DefaultName, "Details", Model.Entry.EntryType.ToString(), new { id = Model.Entry.Id }, null)

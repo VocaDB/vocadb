@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-@using VocaDb.Model.DataContracts.ReleaseEvents
+﻿@using VocaDb.Model.DataContracts.ReleaseEvents
 @using VocaDb.Model.Domain.Images
 @using VocaDb.Model.Domain.ReleaseEvents
 @using VocaDb.Model.Domain.Security
@@ -15,7 +14,8 @@
 @using VocaDb.Web.Models.Shared.Partials.User
 @using Res = ViewRes.Event.DetailsStrings
 @using EntryRes = ViewRes.EntryDetailsStrings
-@inherits VocaDb.Web.Code.VocaDbPage<VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract>
+@model VocaDb.Model.DataContracts.ReleaseEvents.ReleaseEventDetailsContract
+@inject PVHelper PVHelper
 
 @{
 
@@ -45,36 +45,38 @@
 }
 
 @section Head {
-	@Html.Partial("Partials/Html/_OpenGraphMetaTags", new OpenGraphMetaTagsViewModel(PageProperties))
+	<partial name="Partials/Html/_OpenGraphMetaTags" model="@(new OpenGraphMetaTagsViewModel(PageProperties))" />
 	<link rel="canonical" href="@PageProperties.CanonicalUrl" />
 }
 
 @section Toolbar {
-	@Html.ActionLink(ViewRes.SharedStrings.Edit, "Edit", new { id = Model.Id }, new { id = "editEventLink", @class = (Login.CanEdit(Model) ? "" : "disabled") })
-	@Html.ActionLink(ViewRes.EntryDetailsStrings.ViewModifications, "Versions", new { id = Model.Id }, new { id = "viewVersions" })
+	<a asp-action="Edit" asp-route-id="@(Model.Id)" id="@("editEventLink")" class="@((Login.CanEdit(Model) ? "" : "disabled"))">@(ViewRes.SharedStrings.Edit)</a>
+	<a asp-action="Versions" asp-route-id="@(Model.Id)" id="@("viewVersions")">@(ViewRes.EntryDetailsStrings.ViewModifications)</a>
 	<a href="#" id="reportEntryLink" data-bind="click: reportViewModel.show">@ViewRes.EntryDetailsStrings.ReportAnError</a>
-	@Html.Partial("Partials/Shared/_EntryStatusMessage", new EntryStatusMessageViewModel(Model.Status))
+	<partial name="Partials/Shared/_EntryStatusMessage" model="@(new EntryStatusMessageViewModel(Model.Status))" />
 }
 
-@helper ArtistList(IList<ArtistForEventContract> artists, bool showRoles = false, bool showType = false) {
-	foreach (var artist in artists) {
-		if (artist.Artist != null) {
-			@Html.Partial("Partials/Artist/_ArtistLink", new ArtistLinkViewModel(artist.Artist, typeLabel: showType))
-		} else {
-			@artist.Name
-		}
-		if (showRoles && artist.EffectiveRoles != ArtistEventRoles.Default) {
-			@Html.Raw("&nbsp;<small class='muted'>(" + Translate.ArtistEventRoleNames.GetAllNameNames(artist.EffectiveRoles, ArtistEventRoles.Default) + ")</small>")
-		}
-		if (artist != artists.Last()) {
-			@(", ")
+@{
+	async Task ArtistList(IList<ArtistForEventContract> artists, bool showRoles = false, bool showType = false) {
+		foreach (var artist in artists) {
+			if (artist.Artist != null) {
+				<partial name="Partials/Artist/_ArtistLink" model="@(new ArtistLinkViewModel(artist.Artist, typeLabel: showType))" />
+			} else {
+				@artist.Name
+			}
+			if (showRoles && artist.EffectiveRoles != ArtistEventRoles.Default) {
+				@Html.Raw("&nbsp;<small class='muted'>(" + Translate.ArtistEventRoleNames.GetAllNameNames(artist.EffectiveRoles, ArtistEventRoles.Default) + ")</small>")
+			}
+			if (artist != artists.Last()) {
+				@(", ")
+			}
 		}
 	}
 }
 
 
 @if (Model.Deleted) {
-	@Html.Partial("Partials/EntryDetails/_DeletedBanner", new DeletedBannerViewModel(null))
+	<partial name="Partials/EntryDetails/_DeletedBanner" model="@(new DeletedBannerViewModel(null))" />
 }
 
 <div class="well well-transparent">
@@ -107,7 +109,7 @@
 			}
 
 			@if (Model.Artists.Any()) {
-				<p>Participating artists: @ArtistList(Model.Artists, true, true)</p>
+				<p>Participating artists: @{ await ArtistList(Model.Artists, true, true); }</p>
 			}
 
 			<p>
@@ -124,19 +126,22 @@
 			}
 
 			@if (Model.WebLinks.Any()) {
-				@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.WebLinks, false))
+				<partial name="Partials/EntryDetails/_ExternalLinksList" model="@(new ExternalLinksListViewModel(Model.WebLinks, false))" />
 				<br/>
 			}
 
 			<p>
 				<div class="inline-block">@ViewRes.SharedStrings.Tags:</div>
-				<div data-bind="with: tagUsages" class="entry-tag-usages inline-block">
-					@{ Html.RenderPartial("Partials/_TagList"); }
+				<div data-bind="with: tagUsages, visible: tagUsages.tagUsages().length" class="entry-tag-usages inline-block">
+					<partial name="Partials/_TagList" />
 				</div>
-				<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
-				@if (Model.CanRemoveTagUsages) {
-					@Html.ActionLink(ViewRes.EntryDetailsStrings.ManageTags, "ManageTagUsages", new {id = Model.Id}, new {id = "manageTags"})
-				}
+				<div>
+					<a class="inline-block" data-bind="jqButton: { disabled: @ToJS(!Login.CanEditTags), icon: 'ui-icon-tag' }, click: tagsEditViewModel.show" href="#">@ViewRes.EntryDetailsStrings.EditTags</a>
+					@if (Model.CanRemoveTagUsages)
+					{
+						<a asp-action="ManageTagUsages" asp-route-id="@(Model.Id)" id="@("manageTags")">@(ViewRes.EntryDetailsStrings.ManageTags)</a>
+					}
+				</div>
 			</p>
 
 		</div>
@@ -147,21 +152,21 @@
 @if (Model.Series != null) {
 	<h3>@Res.Series: <a href="@Url.Action("SeriesDetails", new { id = Model.Series.Id, slug = Model.Series.UrlSlug })" title="@Model.Series.AdditionalNames">@Model.Series.Name</a></h3>
 	if (!string.IsNullOrEmpty(Model.Series.Description)) {
-		@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Series.Description))
+		<partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(Model.Series.Description))" />
 	}
-	@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.Series.WebLinks, false))
+	<partial name="Partials/EntryDetails/_ExternalLinksList" model="@(new ExternalLinksListViewModel(Model.Series.WebLinks, false))" />
 }
 
 @if (Model.SongList != null) {
-	<h3 class="withMargin">@Res.SongList: @Html.ActionLink(Model.SongList.Name, "Details", "SongList", new { id = Model.SongList.Id }, null)</h3>
+	<h3 class="withMargin">@Res.SongList: <a asp-action="Details" asp-controller="SongList" asp-route-id="@(Model.SongList.Id)">@(Model.SongList.Name)</a></h3>
 	if (Model.SongListSongs.Any()) {
 		<table class="table">
 			@foreach (var song in Model.SongListSongs) {
 				<tr>
 					<td style="width: 50px"><h1>@song.Order</h1></td>
-					<td style="width: 75px">@Html.Partial("Partials/Song/_SongIconLink", new SongIconLinkViewModel(song.Song))</td>
+					<td style="width: 75px"><partial name="Partials/Song/_SongIconLink" model="@(new SongIconLinkViewModel(song.Song))" /></td>
 					<td>
-						@Html.Partial("Partials/Song/_SongLink", new SongLinkViewModel(song.Song))
+						<partial name="Partials/Song/_SongLink" model="@(new SongLinkViewModel(song.Song))" />
 						<br />
 						<small class="extraInfo">@song.Song.ArtistString</small>
 					</td>
@@ -175,13 +180,13 @@
 	<h3 class="withMargin">@Res.Venue: <a href="@Url.Action("Details", "Venue", new { id = Model.Venue.Id }, null)" title="@Model.Venue.AdditionalNames">@Model.Venue.Name</a></h3>
 
 	if (Model.Venue.Coordinates.HasValue) {
-		@Html.Partial("Partials/Shared/_EmbedGoogleMaps", new EmbedGoogleMapsViewModel(Model.Venue.Coordinates))
+		<partial name="Partials/Shared/_EmbedGoogleMaps" model="@(new EmbedGoogleMapsViewModel(Model.Venue.Coordinates))" />
 	}
 
 	if (!string.IsNullOrEmpty(Model.Venue.Description)) {
-		@Html.Partial("Partials/Html/_FormatMarkdown", new FormatMarkdownViewModel(Model.Venue.Description))
+		<partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(Model.Venue.Description))" />
 	}
-	@Html.Partial("Partials/EntryDetails/_ExternalLinksList", new ExternalLinksListViewModel(Model.Venue.WebLinks, false))
+	<partial name="Partials/EntryDetails/_ExternalLinksList" model="@(new ExternalLinksListViewModel(Model.Venue.WebLinks, false))" />
 }
 
 @if (Model.Albums.Any()) {
@@ -189,7 +194,7 @@
 		@Res.Albums
 		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Albums.Length)</small>
 	</h3>
-	@Html.Partial("Partials/Album/_AlbumGrid", new AlbumGridViewModel(Model.Albums, 2, false, false, true))
+	<partial name="Partials/Album/_AlbumGrid" model="@(new AlbumGridViewModel(Model.Albums, 2, false, false, true))" />
 }
 
 @if (Model.Songs.Any()) {
@@ -197,7 +202,7 @@
 		@Html.ActionLink(Res.Songs, "Index", "Search", UrlMapper.Search.Songs(eventId: Model.Id), null)
 		<small>@string.Format(EntryRes.NumTotalParenthesis, Model.Songs.Length)</small>
 	</h3>
-	@Html.Partial("Partials/Song/_SongGrid", new SongGridViewModel(Model.Songs, 2, true, false))
+	<partial name="Partials/Song/_SongGrid" model="@(new SongGridViewModel(Model.Songs, 2, true, false))" />
 }
 
 @if (Model.PVs.Any()) {
@@ -207,7 +212,7 @@
 
 @if (primaryPV != null) {
 	<div class="song-pv-player">
-		@Html.Partial("Partials/PV/_EmbedPV", new EmbedPVViewModel(primaryPV))
+		<partial name="Partials/PV/_EmbedPV" model="@(new EmbedPVViewModel(primaryPV))" />
 	</div>
 }
 
@@ -235,21 +240,21 @@
 <div data-bind="visible: usersAttending().length" class="withMargin">
 	<ul data-bind="foreach: usersAttending()">
 		<li>
-			@Html.Partial("Partials/User/_IconAndNameLinkKnockout", new IconAndNameLinkKnockoutViewModel())
+			<partial name="Partials/User/_IconAndNameLinkKnockout" model="@(new IconAndNameLinkKnockoutViewModel())" />
 		</li>
 	</ul>
 </div>
 
-@Html.Partial("Partials/Comment/_LatestCommentsKnockout")
+<partial name="Partials/Comment/_LatestCommentsKnockout" />
 
 <div data-bind="with: tagsEditViewModel">
-	@{ Html.RenderPartial("Partials/_TagsEdit"); }
+	<partial name="Partials/_TagsEdit" />
 </div>
 
-@Html.Partial("Partials/EntryDetails/_ReportEntryPopupKnockout", new ReportEntryPopupKnockoutViewModel())
+<partial name="Partials/EntryDetails/_ReportEntryPopupKnockout" model="@(new ReportEntryPopupKnockoutViewModel())" />
 
 @section BodyScripts {
-@LaravelMixHelper.RenderScripts("~/bundles/ReleaseEvent/Details.js")
+<remikus path="/bundles/ReleaseEvent/Details.js" />
 <script type="text/javascript">
 	$(function () {
 		$("#editEventLink").button({ disabled: $("#editEventLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });

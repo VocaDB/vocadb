@@ -1,17 +1,16 @@
 #nullable disable
 
-using System;
-using System.Web.Http;
-using System.Web.Http.Description;
-using System.Web.Http.Results;
+using Microsoft.AspNetCore.Mvc;
+using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
-	[System.Web.Http.RoutePrefix("api")]
+	[Route("api")]
+	[ApiController]
 	public class ApiRootController : ApiController
 	{
-		[System.Web.Http.Route("")]
+		[HttpGet("")]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		public RedirectResult Get() => Redirect(new Uri("/swagger", UriKind.Relative));
+		public RedirectResult Get() => Redirect("~/swagger");
 	}
 }

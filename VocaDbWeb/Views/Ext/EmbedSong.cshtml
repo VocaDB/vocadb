@@ -3,7 +3,7 @@
 @using VocaDb.Web.Models.Shared.Partials.PV
 @model VocaDb.Web.Models.Ext.EmbedSongViewModel
 
-@LaravelMixHelper.RenderStyles("~/Content/embedSong.css")
+<remikus path="/Content/embedSong.css" />
 
 @{
 	var current = Model.CurrentPV;
@@ -24,13 +24,13 @@
 	</h4>
 	<div style="height: @(Model.PlayerHeight)px" class="@("embed-pv" + (current != null ? " embed-pv-" + Model.CurrentServiceName : string.Empty))">		
 		@if (current != null) {
-			@Html.Partial("Partials/PV/_EmbedPV", new EmbedPVViewModel(current, Model.PlayerWidth, Model.PlayerHeight))
+			<partial name="Partials/PV/_EmbedPV" model="@(new EmbedPVViewModel(current, Model.PlayerWidth, Model.PlayerHeight))" />
 		}
 	</div>
   
     <div class="pvLinks">
     @foreach (var pv in Model.MainPVs) {
-	    <a href="@Url.Action("EmbedSong", new { songId = Model.Song.Id, pvId = pv.Id, w = Model.Width, h = Model.Height, lang = Request.Params[LoginManager.LangParamName] })">			
+	    <a href="@Url.Action("EmbedSong", new { songId = Model.Song.Id, pvId = pv.Id, w = Model.Width, h = Model.Height, lang = Context.Request.Query[LoginManager.LangParamName] })">			
     	    <div class="item@(current != null && pv.Id == current.Id ? " active" : string.Empty)">
 		        <img src="@Html.VideoServiceLinkUrl(pv.Service)" alt="@pv.Service" /> 
                 @pv.Service

@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VocaDbModel\VocaDb.Model.csproj" />
-    <ProjectReference Include="..\VocaDbWeb.Core\VocaDbWeb.Core.csproj" />
+    <ProjectReference Include="..\VocaDbWeb\VocaDbWeb.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="testhost.dll.config">

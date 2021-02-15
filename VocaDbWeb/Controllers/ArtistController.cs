@@ -3,28 +3,26 @@
 using System;
 using System.Linq;
 using System.Net;
-using System.Web.Mvc;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NLog;
-using VocaDb.Model.DataContracts.UseCases;
-using VocaDb.Model.Domain;
-using VocaDb.Model.Helpers;
-using VocaDb.Model.Service;
-using VocaDb.Model.Utils.Search;
-using VocaDb.Web.Code.Exceptions;
-using System.Drawing;
-using System.Globalization;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.UseCases;
+using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
-using VocaDb.Model.Utils;
-using VocaDb.Web.Code.Markdown;
-using VocaDb.Web.Models.Artist;
-using VocaDb.Web.Helpers;
-using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Service.ExtSites;
-using VocaDb.Web.Code.Security;
 using VocaDb.Model.Domain.Images;
-using System.Threading.Tasks;
+using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Helpers;
+using VocaDb.Model.Service;
+using VocaDb.Model.Service.ExtSites;
+using VocaDb.Model.Utils.Search;
+using VocaDb.Web.Code.Exceptions;
+using VocaDb.Web.Code.Markdown;
+using VocaDb.Web.Code.WebApi;
+using VocaDb.Web.Helpers;
+using VocaDb.Web.Models.Artist;
 
 namespace VocaDb.Web.Controllers
 {
@@ -126,7 +124,7 @@ namespace VocaDb.Web.Controllers
 		public ActionResult Details(int id = InvalidId)
 		{
 			if (id == InvalidId)
-				return HttpNotFound();
+				return NotFound();
 
 			WebHelper.VerifyUserAgent(Request);
 
@@ -189,7 +187,7 @@ namespace VocaDb.Web.Controllers
 			if (string.IsNullOrWhiteSpace(model.Description) && string.IsNullOrWhiteSpace(model.WebLinkUrl))
 				ModelState.AddModelError("Description", ViewRes.Artist.CreateStrings.NeedWebLinkOrDescription);
 
-			var coverPicUpload = Request.Files["pictureUpload"];
+			var coverPicUpload = Request.Form.Files["pictureUpload"];
 			var pictureData = ParsePicture(coverPicUpload, "Picture", ImagePurpose.Main);
 
 			if (!ModelState.IsValid)
@@ -256,10 +254,11 @@ namespace VocaDb.Web.Controllers
 				ModelState.AddModelError("Names", Model.Resources.ArtistValidationErrors.UnspecifiedNames);
 			}
 
-			var coverPicUpload = Request.Files["pictureUpload"];
+			var coverPicUpload = Request.Form.Files["pictureUpload"];
 			var pictureData = ParsePicture(coverPicUpload, "Picture", ImagePurpose.Main);
 
-			ParseAdditionalPictures(coverPicUpload, model.Pictures);
+			if (coverPicUpload != null && model.Pictures != null)
+				ParseAdditionalPictures(coverPicUpload, model.Pictures);
 
 			if (!ModelState.IsValid)
 			{
