@@ -2,6 +2,7 @@
 
 using System;
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Comments;
 
@@ -36,12 +37,19 @@ namespace VocaDb.Model.DataContracts
 		public DateTime Created { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public EntryRefContract Entry { get; set; }
+		public EntryForApiContract Entry { get; set; }
 
 		[DataMember]
 		public int Id { get; set; }
 
 		[DataMember]
 		public string Message { get; set; }
+	}
+
+	[Flags]
+	public enum CommentOptionalFields
+	{
+		None = 0,
+		Entry = 1 << 0,
 	}
 }

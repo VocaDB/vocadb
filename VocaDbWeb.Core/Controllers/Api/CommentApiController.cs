@@ -3,15 +3,13 @@
 using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
-using VocaDb.Model.DataContracts.Users;
+using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.Domain;
-using VocaDb.Model.Domain.Comments;
-using VocaDb.Model.Domain.ReleaseEvents;
-using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
-using VocaDb.Model.Service.Queries;
+using VocaDb.Model.Service.QueryableExtensions;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -23,23 +21,11 @@ namespace VocaDb.Web.Controllers.Api
 	[ApiController]
 	public class CommentApiController : ApiController
 	{
-		private readonly IRepository _db;
-		private readonly IEntryLinkFactory _entryLinkFactory;
-		private readonly IUserPermissionContext _userContext;
-		private readonly IUserIconFactory _userIconFactory;
+		private readonly CommentQueries _queries;
 
-		private ICommentQueries GetComments(IDatabaseContext ctx, EntryType entryType) => entryType switch
+		public CommentApiController(CommentQueries queries)
 		{
-			EntryType.ReleaseEvent => new CommentQueries<ReleaseEventComment, ReleaseEvent>(ctx, _userContext, _userIconFactory, _entryLinkFactory),
-			_ => throw new ArgumentException("Unsupported entry type: " + entryType, nameof(entryType)),
-		};
-
-		public CommentApiController(IRepository db, IUserPermissionContext userContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory)
-		{
-			_db = db;
-			_userContext = userContext;
-			_userIconFactory = userIconFactory;
-			_entryLinkFactory = entryLinkFactory;
+			_queries = queries;
 		}
 
 		/// <summary>
@@ -53,7 +39,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[HttpDelete("{entryType}-comments/{commentId:int}")]
 		[Authorize]
-		public void DeleteComment(EntryType entryType, int commentId) => _db.HandleTransaction(ctx => GetComments(ctx, entryType).Delete(commentId));
+		public void DeleteComment(EntryType entryType, int commentId) => _queries.DeleteComment(entryType, commentId);
 
 		/// <summary>
 		/// Gets a list of comments for an entry.
@@ -62,7 +48,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="entryId">ID of the entry whose comments to load.</param>
 		/// <returns>List of comments in no particular order.</returns>
 		[HttpGet("{entryType}-comments")]
-		public PartialFindResult<CommentForApiContract> GetComments(EntryType entryType, int entryId) => new PartialFindResult<CommentForApiContract>(_db.HandleQuery(ctx => GetComments(ctx, entryType).GetAll(entryId)), 0);
+		public PartialFindResult<CommentForApiContract> GetComments(EntryType entryType, int entryId) => _queries.GetComments(entryType, entryId);
 
 		/// <summary>
 		/// Updates a comment.
@@ -76,7 +62,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[HttpPost("{entryType}-comments/{commentId:int}")]
 		[Authorize]
-		public void PostEditComment(EntryType entryType, int commentId, CommentForApiContract contract) => _db.HandleTransaction(ctx => GetComments(ctx, entryType).Update(commentId, contract));
+		public void PostEditComment(EntryType entryType, int commentId, CommentForApiContract contract) => _queries.PostEditComment(entryType, commentId, contract);
 
 		/// <summary>
 		/// Posts a new comment.
@@ -86,6 +72,20 @@ namespace VocaDb.Web.Controllers.Api
 		/// <returns>Data for the created comment. Includes ID and timestamp.</returns>
 		[HttpPost("{entryType}-comments")]
 		[Authorize]
-		public CommentForApiContract PostNewComment(EntryType entryType, CommentForApiContract contract) => _db.HandleTransaction(ctx => GetComments(ctx, entryType).Create(contract.Entry.Id, contract));
+		public CommentForApiContract PostNewComment(EntryType entryType, CommentForApiContract contract) => _queries.PostNewComment(entryType, contract);
+
+		[HttpGet("")]
+		public PartialFindResult<CommentForApiContract> GetList(
+			DateTime? before = null,
+			DateTime? since = null,
+			int? userId = null,
+			EntryType entryType = EntryType.Undefined,
+			int maxResults = CommentQueries.DefaultMax,
+			bool getTotalCount = false,
+			CommentOptionalFields fields = CommentOptionalFields.None,
+			EntryOptionalFields entryFields = EntryOptionalFields.None,
+			ContentLanguagePreference lang = ContentLanguagePreference.Default,
+			CommentSortRule sortRule = CommentSortRule.CreateDateDescending
+		) => _queries.GetList(before, since, userId, entryType, maxResults, getTotalCount, fields, entryFields, lang, sortRule);
 	}
 }

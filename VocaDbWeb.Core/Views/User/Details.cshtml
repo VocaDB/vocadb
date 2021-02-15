@@ -198,7 +198,17 @@
 					<text>@editText</text>
 				}
 			</span><br />
-			<span>@R.CommentsMade: @Model.CommentCount</span><br />
+			<span>
+				@{ var commentText = R.CommentsMade + ": " + Model.CommentCount; }
+				@if (canSeeDetailedStats)
+				{
+					<a asp-action="Index" asp-controller="Comment" asp-route-userId="@Model.Id">@commentText</a>
+				}
+				else
+				{
+					<text>@commentText</text>
+				}
+			</span><br />
 			<span>@R.TagVotes: @Model.TagVotes</span><br />
 			<span>@R.Power: @Model.Power (@R.Level @Model.Level)</span>
 

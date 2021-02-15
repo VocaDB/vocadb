@@ -1,4 +1,4 @@
-import EntryRefContract from './EntryRefContract';
+import EntryContract from './EntryContract';
 import UserApiContract from './User/UserApiContract';
 
 	export default interface CommentContract {
@@ -13,7 +13,7 @@ import UserApiContract from './User/UserApiContract';
 
 		created?: Date;
 
-		entry?: EntryRefContract;
+		entry?: EntryContract;
 
 		id?: number;
 

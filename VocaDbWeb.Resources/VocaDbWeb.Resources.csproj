@@ -61,6 +61,9 @@
     <EmbeddedResource Update="App_GlobalResources\Artists\ArtistSortRuleNames.resx">
       <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Update="App_GlobalResources\CommentSortRuleNames.resx">
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Update="App_GlobalResources\CommonMessages.resx">
       <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>

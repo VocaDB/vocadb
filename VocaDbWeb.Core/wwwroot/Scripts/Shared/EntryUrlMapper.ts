@@ -26,6 +26,9 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 				case EntryType.Artist:
 					prefix = functions.mapAbsoluteUrl("/Ar/" + id);
 					break;
+				case EntryType.DiscussionTopic:
+					prefix = functions.mapAbsoluteUrl("/discussion/topics/" + id);
+					break;
 				case EntryType.ReleaseEvent:
 					prefix = functions.mapAbsoluteUrl("/E/" + id);
 					break;
@@ -40,6 +43,9 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 					break;
 				case EntryType.Tag:
 					prefix = functions.mapAbsoluteUrl("/T/" + id);
+					break;
+				case EntryType.User:
+					prefix = functions.mapAbsoluteUrl("/User/Details/" + id);
 					break;
 				case EntryType.Venue:
 					prefix = functions.mapAbsoluteUrl("/Venue/Details/" + id);

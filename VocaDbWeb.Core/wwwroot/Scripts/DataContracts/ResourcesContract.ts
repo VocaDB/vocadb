@@ -18,6 +18,7 @@
 		albumSortRuleNames?: { [key: string]: string; }
 		artistSortRuleNames?: { [key: string]: string; }
 		artistTypeNames?: { [key: string]: string; }
+		commentSortRuleNames?: { [key: string]: string; }
 		discTypeNames?: { [key: string]: string; }
 		entryTypeNames?: { [key: string]: string; }
 		eventCategoryNames?: { [key: string]: string; }

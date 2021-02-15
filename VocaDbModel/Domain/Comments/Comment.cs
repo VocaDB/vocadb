@@ -6,6 +6,20 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.Domain.Comments
 {
+	public enum CommentType
+	{
+		Undefined,
+		AlbumComment,
+		ArtistComment,
+		DiscussionComment,
+		ReleaseEventComment,
+		SongComment,
+		SongListComment,
+		TagComment,
+		UserComment,
+		AlbumReview,
+	}
+
 	/// <summary>
 	/// Base class for comments.
 	/// Comments can be added for entries such as albums and users.
@@ -66,6 +80,8 @@ namespace VocaDb.Model.Domain.Comments
 				_message = value;
 			}
 		}
+
+		public abstract CommentType CommentType { get; }
 
 		public virtual void Delete() => Deleted = true;
 

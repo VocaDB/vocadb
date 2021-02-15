@@ -5,7 +5,7 @@ import EntryWithTagUsagesContract from './Base/EntryWithTagUsagesContract';
 	// Corresponds to C# datacontract EntryForApiContract.
 	export default interface EntryContract extends EntryWithTagUsagesContract {
 
-		additionalNames: string;
+		additionalNames?: string;
 
 		artistType?: string;
 
@@ -17,7 +17,7 @@ import EntryWithTagUsagesContract from './Base/EntryWithTagUsagesContract';
 
 		id: number;
 
-		mainPicture: EntryThumbContract;
+		mainPicture?: EntryThumbContract;
 
 		name: string;
 

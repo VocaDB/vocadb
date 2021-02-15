@@ -116,6 +116,9 @@ export { default as ArtistMergeViewModel } from './ViewModels/Artist/ArtistMerge
 // ~/bundles/Artist/ViewVersion
 export { default as ArchivedArtistViewModel } from './ViewModels/Artist/ArchivedArtistViewModel';
 
+// ~/bundles/Comment/Index
+export { default as CommentListViewModel } from './ViewModels/Comment/CommentListViewModel';
+
 // ~/bundles/Discussion/Index
 import './KnockoutExtensions/FormatDateFilter';
 import './KnockoutExtensions/MomentJsTimeAgo';

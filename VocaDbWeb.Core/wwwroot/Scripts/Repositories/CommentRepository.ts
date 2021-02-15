@@ -12,7 +12,7 @@ import UrlMapper from '../Shared/UrlMapper';
 
 		public createComment = (entryId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
 
-			contract.entry = { entryType: EntryType[this.entryType], id: entryId };
+			contract.entry = { entryType: EntryType[this.entryType], id: entryId, name: null };
 			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl("api/comments/" + EntryType[this.entryType] + "-comments"));
 			$.postJSON(url, contract, callback, 'json');
 
