@@ -1,6 +1,6 @@
 #nullable disable
 
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Controllers;
@@ -26,7 +26,7 @@ namespace VocaDb.Tests.Web.Controllers
 		{
 			var result = _controller.Details();
 
-			Assert.IsInstanceOfType(result, typeof(HttpNotFoundResult));
+			Assert.IsInstanceOfType(result, typeof(NotFoundObjectResult));
 		}
 	}
 }
