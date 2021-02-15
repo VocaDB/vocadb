@@ -81,7 +81,7 @@ namespace VocaDb.Tests.TestSupport
 		public ISessionFactory BuildTestSessionFactory()
 		{
 			var testDatabaseConnectionString = "LocalDB";
-			var config = DatabaseConfiguration.Configure(testDatabaseConnectionString);
+			var config = DatabaseConfiguration.Configure(testDatabaseConnectionString, useSysCache: false);
 
 			// Database schemas need to be created BEFORE NHibernate schema export.
 			CreateSchemas(testDatabaseConnectionString);

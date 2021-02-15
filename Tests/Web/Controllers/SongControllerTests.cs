@@ -1,8 +1,7 @@
 #nullable disable
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Artists;
@@ -10,7 +9,6 @@ using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Utils.Config;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
@@ -37,7 +35,7 @@ namespace VocaDb.Tests.Web.Controllers
 			var queries = new SongQueries(_repository, _permissionContext, new FakeEntryLinkFactory(),
 				new FakePVParser(), new FakeUserMessageMailer(), new FakeLanguageDetector(), new FakeUserIconFactory(), new EnumTranslations(), new InMemoryImagePersister(),
 				new FakeObjectCache(), new VdbConfigManager(), new EntrySubTypeNameFactory(), new FakeFollowedArtistNotifier());
-			_controller = new SongController(null, queries, null, null);
+			_controller = new SongController(null, queries, null, null, null);
 		}
 
 		[TestMethod]
@@ -57,9 +55,9 @@ namespace VocaDb.Tests.Web.Controllers
 			};
 
 			var result = await _controller.Create(model);
-			Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult), "result");
-			var routeResult = (RedirectToRouteResult)result;
-			Assert.AreEqual("Edit", routeResult.RouteValues["Action"], "Action");
+			Assert.IsInstanceOfType(result, typeof(RedirectToActionResult), "result");
+			var routeResult = (RedirectToActionResult)result;
+			Assert.AreEqual("Edit", routeResult.ActionName, "Action");
 
 			Assert.AreEqual(1, _repository.List<Song>().Count, "Song was created");
 		}

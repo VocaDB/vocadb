@@ -1,6 +1,8 @@
 #nullable disable
 
 using System;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Web.Code;
@@ -9,11 +11,11 @@ namespace VocaDb.Tests.TestSupport
 {
 	public class FakeDynamicImageUrlFactory : IDynamicImageUrlFactory
 	{
-		private Lazy<System.Web.Mvc.UrlHelper> UrlHelper => new Lazy<System.Web.Mvc.UrlHelper>(() => new System.Web.Mvc.UrlHelper());
+		private Lazy<IUrlHelper> UrlHelper => new(() => new UrlHelperFactory().GetUrlHelper(context: null/* FIXME */));
 
 		public VocaDbUrl GetUrl(IEntryImageInformation picture, ImageSize size)
 		{
-			return new VocaDbUrl($"{picture.EntryType}/{picture.Id}/{(size == ImageSize.Original ? "Picture" : "PictureThumb")}", UrlDomain.Main, System.UriKind.Relative);
+			return new VocaDbUrl($"{picture.EntryType}/{picture.Id}/{(size == ImageSize.Original ? "Picture" : "PictureThumb")}", UrlDomain.Main, UriKind.Relative);
 		}
 
 		public bool HasImage(IEntryImageInformation picture, ImageSize size)
