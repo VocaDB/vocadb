@@ -1,8 +1,8 @@
 #nullable disable
 
 using System;
+using System.IO;
 using System.Linq;
-using System.Web;
 using IvanAkcheurov.NTextCat.Lib;
 using VocaDb.Model.Domain.Web;
 
@@ -17,7 +17,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 		private readonly IHttpContext _context;
 
-		private string LanguageFilePath => _context.ServerPathMapper.MapPath("~/App_Data/Core14.profile.xml");
+		private string LanguageFilePath => Path.Combine(_context.ServerPathMapper.MapPath("~"), "..", "App_Data/Core14.profile.xml");
 
 		public ContentLanguageSelection Detect(string str, ContentLanguageSelection def = ContentLanguageSelection.Unspecified)
 		{
