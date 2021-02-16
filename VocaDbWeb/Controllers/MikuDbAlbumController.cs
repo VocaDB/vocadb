@@ -30,7 +30,7 @@ namespace VocaDb.Web.Controllers
 			var pictureData = Service.GetCoverPicture(id);
 
 			if (pictureData == null)
-				return File(HttpContext.RequestServices.GetRequiredService<IHttpContext>().ServerPathMapper.MapPath("~/Content/unknown.png"), "image/png");
+				return File("~/Content/unknown.png", "image/png");
 
 			return File(pictureData.Bytes, pictureData.Mime);
 		}

@@ -206,7 +206,7 @@ namespace VocaDb.Web.Controllers
 		protected ActionResult Picture(PictureContract pictureData, string title)
 		{
 			if (pictureData?.Bytes == null || string.IsNullOrEmpty(pictureData.Mime))
-				return File(HttpContext.RequestServices.GetRequiredService<IHttpContext>().ServerPathMapper.MapPath("~/Content/unknown.png"), "image/png");
+				return File("~/Content/unknown.png", "image/png");
 
 			var ext = ImageHelper.GetExtensionFromMime(pictureData.Mime);
 
