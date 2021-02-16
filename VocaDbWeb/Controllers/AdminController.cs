@@ -285,7 +285,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
-			var deployFile = Path.Combine(HttpContext.RequestServices.GetRequiredService<IHttpContext>().ServerPathMapper.MapPath("~"), "..", "..", "deploy.cmd");
+			var deployFile = Path.Combine(HttpContext.RequestServices.GetRequiredService<IHttpContext>().ServerPathMapper.MapPath("~"), "..", "..", "..", "deploy.cmd");
 
 			Process.Start(deployFile, "doNotPause");
 
