@@ -18,7 +18,6 @@ using VocaDb.Model.DataContracts.UseCases;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
-using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Helpers;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
@@ -225,6 +224,14 @@ namespace VocaDb.Web.Controllers
 		protected new ActionResult Json(object obj)
 		{
 			return Content(JsonConvert.SerializeObject(obj), "application/json");
+		}
+
+		protected ActionResult Json(object obj, string jsonPCallback)
+		{
+			if (string.IsNullOrEmpty(jsonPCallback))
+				return Json(obj);
+
+			return Content($"{jsonPCallback}({JsonConvert.SerializeObject(obj)})", "application/json");
 		}
 
 		protected Task<string> RenderPartialViewToStringAsync(string viewName, object model) => HttpContext.RequestServices.GetRequiredService<IViewRenderService>().RenderToStringAsync(viewName, model);
