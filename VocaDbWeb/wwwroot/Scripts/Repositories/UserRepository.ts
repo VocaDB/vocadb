@@ -407,7 +407,7 @@ import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummary
 		public updateUserSetting = (userId: number, settingName: string, value: string, callback: () => void) => {
 			
 			var url = this.urlMapper.mapRelative("/api/users/" + (userId || this.loggedUserId) + "/settings/" + settingName);
-			$.postJSON(url, { '': value }, callback);
+			$.postJSON(url, value, callback);
 
 		}
 
