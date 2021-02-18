@@ -10,11 +10,11 @@ namespace VocaDb.Model.Domain.Globalization
 	{
 		Unspecified = 0,
 
-		Japanese = 1,
+		Japanese = 1 << 0,
 
-		Romaji = 2,
+		Romaji = 1 << 1,
 
-		English = 4,
+		English = 1 << 2,
 	}
 
 	[Flags]
@@ -24,7 +24,7 @@ namespace VocaDb.Model.Domain.Globalization
 		Japanese = ContentLanguageSelection.Japanese,
 		Romaji = ContentLanguageSelection.Romaji,
 		English = ContentLanguageSelection.English,
-		All = Unspecified | Japanese | Romaji | English
+		All = Unspecified | Japanese | Romaji | English,
 	}
 
 	public static class ContentLanguageSelectionsExtensions

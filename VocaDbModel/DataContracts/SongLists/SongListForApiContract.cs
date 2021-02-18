@@ -87,9 +87,9 @@ namespace VocaDb.Model.DataContracts.SongLists
 	public enum SongListOptionalFields
 	{
 		None = 0,
-		Description = 1,
-		Events = 2,
-		MainPicture = 4,
-		Tags = 8
+		Description = 1 << 0,
+		Events = 1 << 1,
+		MainPicture = 1 << 2,
+		Tags = 1 << 3,
 	}
 }

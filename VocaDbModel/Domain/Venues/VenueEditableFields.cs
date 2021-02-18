@@ -9,20 +9,20 @@ namespace VocaDb.Model.Domain.Venues
 	{
 		Nothing = 0,
 
-		Address = 1,
+		Address = 1 << 0,
 
-		AddressCountryCode = 2,
+		AddressCountryCode = 1 << 1,
 
-		Coordinates = 4,
+		Coordinates = 1 << 2,
 
-		Description = 8,
+		Description = 1 << 3,
 
-		Names = 16,
+		Names = 1 << 4,
 
-		OriginalName = 32,
+		OriginalName = 1 << 5,
 
-		Status = 64,
+		Status = 1 << 6,
 
-		WebLinks = 128
+		WebLinks = 1 << 7,
 	}
 }

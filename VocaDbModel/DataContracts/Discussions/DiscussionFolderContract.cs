@@ -63,7 +63,7 @@ namespace VocaDb.Model.DataContracts.Discussions
 	public enum DiscussionFolderOptionalFields
 	{
 		None = 0,
-		LastTopic = 1,
-		TopicCount = 2
+		LastTopic = 1 << 0,
+		TopicCount = 1 << 1,
 	}
 }

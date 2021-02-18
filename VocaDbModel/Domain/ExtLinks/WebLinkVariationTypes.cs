@@ -14,14 +14,14 @@ namespace VocaDb.Model.Domain.ExtLinks
 		/// <summary>
 		/// Include all variations regardless of scheme (no scheme, http, https).
 		/// </summary>
-		IgnoreScheme = 1,
+		IgnoreScheme = 1 << 0,
 		/// <summary>
 		/// Include variations with and without trailing slash (for example https://www.nicovideo.jp and https://www.nicovideo.jp/)
 		/// </summary>
-		IgnoreTrailingSlash = 2,
+		IgnoreTrailingSlash = 1 << 1,
 		/// <summary>
 		/// Include all variations (scheme and trailing slash)
 		/// </summary>
-		All = IgnoreScheme | IgnoreTrailingSlash
+		All = IgnoreScheme | IgnoreTrailingSlash,
 	}
 }

@@ -101,11 +101,11 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	public enum ReleaseEventSeriesOptionalFields
 	{
 		None = 0,
-		AdditionalNames = 1,
-		Description = 2,
-		Events = 4,
-		MainPicture = 8,
-		Names = 16,
-		WebLinks = 32
+		AdditionalNames = 1 << 0,
+		Description = 1 << 1,
+		Events = 1 << 2,
+		MainPicture = 1 << 3,
+		Names = 1 << 4,
+		WebLinks = 1 << 5,
 	}
 }

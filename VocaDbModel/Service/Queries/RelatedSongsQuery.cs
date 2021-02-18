@@ -149,9 +149,9 @@ namespace VocaDb.Model.Service.Queries
 	public enum SongRelationsFields
 	{
 		None = 0,
-		ArtistMatches = 1,
-		LikeMatches = 2,
-		TagMatches = 4,
-		All = ArtistMatches | LikeMatches | TagMatches
+		ArtistMatches = 1 << 0,
+		LikeMatches = 1 << 1,
+		TagMatches = 1 << 2,
+		All = ArtistMatches | LikeMatches | TagMatches,
 	}
 }

@@ -112,10 +112,10 @@ namespace VocaDb.Model.DataContracts.Venues
 	public enum VenueOptionalFields
 	{
 		None = 0,
-		AdditionalNames = 1,
-		Description = 2,
-		Events = 4,
-		Names = 8,
-		WebLinks = 16
+		AdditionalNames = 1 << 0,
+		Description = 1 << 1,
+		Events = 1 << 2,
+		Names = 1 << 3,
+		WebLinks = 1 << 4,
 	}
 }

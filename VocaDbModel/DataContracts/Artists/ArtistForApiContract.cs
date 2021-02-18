@@ -193,15 +193,15 @@ namespace VocaDb.Model.DataContracts.Artists
 	public enum ArtistOptionalFields
 	{
 		None = 0,
-		AdditionalNames = 1,
-		ArtistLinks = 2,
-		ArtistLinksReverse = 4,
-		BaseVoicebank = 8,
-		Description = 16,
-		MainPicture = 32,
-		Names = 64,
-		Tags = 128,
-		WebLinks = 256
+		AdditionalNames = 1 << 0,
+		ArtistLinks = 1 << 1,
+		ArtistLinksReverse = 1 << 2,
+		BaseVoicebank = 1 << 3,
+		Description = 1 << 4,
+		MainPicture = 1 << 5,
+		Names = 1 << 6,
+		Tags = 1 << 7,
+		WebLinks = 1 << 8,
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
@@ -227,11 +227,11 @@ namespace VocaDb.Model.DataContracts.Artists
 	public enum ArtistRelationsFields
 	{
 		None = 0,
-		LatestAlbums = 1,
-		LatestEvents = 2,
-		LatestSongs = 4,
-		PopularAlbums = 8,
-		PopularSongs = 16,
-		All = LatestAlbums | LatestEvents | LatestSongs | PopularAlbums | PopularSongs
+		LatestAlbums = 1 << 0,
+		LatestEvents = 1 << 1,
+		LatestSongs = 1 << 2,
+		PopularAlbums = 1 << 3,
+		PopularSongs = 1 << 4,
+		All = LatestAlbums | LatestEvents | LatestSongs | PopularAlbums | PopularSongs,
 	}
 }

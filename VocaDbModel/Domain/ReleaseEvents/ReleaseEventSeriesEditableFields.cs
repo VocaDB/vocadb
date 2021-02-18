@@ -9,21 +9,21 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 	{
 		Nothing = 0,
 
-		Category = 1,
+		Category = 1 << 0,
 
-		Description = 2,
+		Description = 1 << 1,
 
 		[Obsolete]
-		Name = 4,
+		Name = 1 << 2,
 
-		Names = 8,
+		Names = 1 << 3,
 
-		OriginalName = 16,
+		OriginalName = 1 << 4,
 
-		Picture = 32,
+		Picture = 1 << 5,
 
-		Status = 64,
+		Status = 1 << 6,
 
-		WebLinks = 128
+		WebLinks = 1 << 7,
 	}
 }

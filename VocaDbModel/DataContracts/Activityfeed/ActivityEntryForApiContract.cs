@@ -58,7 +58,7 @@ namespace VocaDb.Model.DataContracts.Activityfeed
 	public enum ActivityEntryOptionalFields
 	{
 		None = 0,
-		ArchivedVersion = 1,
-		Entry = 2
+		ArchivedVersion = 1 << 0,
+		Entry = 1 << 1,
 	}
 }
