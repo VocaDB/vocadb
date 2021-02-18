@@ -163,15 +163,15 @@ namespace VocaDb.Model.DataContracts.Tags
 	public enum TagOptionalFields
 	{
 		None = 0,
-		AdditionalNames = 1,
+		AdditionalNames = 1 << 0,
 		[Obsolete("Tag aliases are now just names")]
-		AliasedTo = 2,
-		Description = 4,
-		MainPicture = 8,
-		Names = 16,
-		Parent = 32,
-		RelatedTags = 64,
-		TranslatedDescription = 128,
-		WebLinks = 256
+		AliasedTo = 1 << 1,
+		Description = 1 << 2,
+		MainPicture = 1 << 3,
+		Names = 1 << 4,
+		Parent = 1 << 5,
+		RelatedTags = 1 << 6,
+		TranslatedDescription = 1 << 7,
+		WebLinks = 1 << 8,
 	}
 }

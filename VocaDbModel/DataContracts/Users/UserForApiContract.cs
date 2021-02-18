@@ -75,8 +75,8 @@ namespace VocaDb.Model.DataContracts.Users
 	public enum UserOptionalFields
 	{
 		None = 0,
-		KnownLanguages = 1,
-		MainPicture = 2,
-		OldUsernames = 4
+		KnownLanguages = 1 << 0,
+		MainPicture = 1 << 1,
+		OldUsernames = 1 << 2,
 	}
 }

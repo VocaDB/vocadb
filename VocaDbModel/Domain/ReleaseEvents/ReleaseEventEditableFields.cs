@@ -9,39 +9,39 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 	{
 		Nothing = 0,
 
-		Artists = 1,
+		Artists = 1 << 0,
 
-		Category = 2,
+		Category = 1 << 1,
 
-		Date = 4,
+		Date = 1 << 2,
 
-		Description = 8,
+		Description = 1 << 3,
 
-		MainPicture = 16,
+		MainPicture = 1 << 4,
 
 		[Obsolete]
-		Name = 32,
+		Name = 1 << 5,
 
-		Names = 64,
+		Names = 1 << 6,
 
-		OriginalName = 128,
+		OriginalName = 1 << 7,
 
-		PVs = 256,
+		PVs = 1 << 8,
 
-		Series = 512,
+		Series = 1 << 9,
 
-		SeriesNumber = 1024,
+		SeriesNumber = 1 << 10,
 
-		SeriesSuffix = 2048,
+		SeriesSuffix = 1 << 11,
 
-		SongList = 4096,
+		SongList = 1 << 12,
 
-		Status = 8192,
+		Status = 1 << 13,
 
-		Venue = 16384,
+		Venue = 1 << 14,
 
-		VenueName = 32768,
+		VenueName = 1 << 15,
 
-		WebLinks = 65536
+		WebLinks = 1 << 16,
 	}
 }

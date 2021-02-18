@@ -12,28 +12,28 @@ namespace VocaDb.Model.Domain.Artists
 	{
 		Nothing = 0,
 
-		Albums = 1,
+		Albums = 1 << 0,
 
-		ArtistType = 2,
+		ArtistType = 1 << 1,
 
-		BaseVoicebank = 4,
+		BaseVoicebank = 1 << 2,
 
-		Description = 8,
+		Description = 1 << 3,
 
-		Groups = 16,
+		Groups = 1 << 4,
 
-		Names = 32,
+		Names = 1 << 5,
 
-		OriginalName = 64,
+		OriginalName = 1 << 6,
 
-		Picture = 128,
+		Picture = 1 << 7,
 
-		Pictures = 256,
+		Pictures = 1 << 8,
 
-		ReleaseDate = 512,
+		ReleaseDate = 1 << 9,
 
-		Status = 1024,
+		Status = 1 << 10,
 
-		WebLinks = 2048
+		WebLinks = 1 << 11,
 	}
 }

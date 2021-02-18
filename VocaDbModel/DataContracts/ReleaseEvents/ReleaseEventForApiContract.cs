@@ -182,15 +182,15 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	public enum ReleaseEventOptionalFields
 	{
 		None = 0,
-		AdditionalNames = 1,
-		Artists = 2,
-		Description = 4,
-		MainPicture = 8,
-		Names = 16,
-		Series = 32,
-		SongList = 64,
-		Tags = 128,
-		Venue = 256,
-		WebLinks = 512
+		AdditionalNames = 1 << 0,
+		Artists = 1 << 1,
+		Description = 1 << 2,
+		MainPicture = 1 << 3,
+		Names = 1 << 4,
+		Series = 1 << 5,
+		SongList = 1 << 6,
+		Tags = 1 << 7,
+		Venue = 1 << 8,
+		WebLinks = 1 << 9,
 	}
 }

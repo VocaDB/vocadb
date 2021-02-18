@@ -15,18 +15,18 @@ namespace VocaDb.Model.Domain.Users
 		/// <summary>
 		/// Found a match on StopForumSpam, identifying the user as malicious.
 		/// </summary>
-		MaliciousIP = 1,
+		MaliciousIP = 1 << 0,
 
 		/// <summary>
 		/// Other users reported for spamming.
 		/// </summary>
-		Spamming = 2,
+		Spamming = 1 << 1,
 
 		/// <summary>
 		/// User's editing permissions were removed by a staff member.
 		/// </summary>
-		RemovePermissions = 4,
+		RemovePermissions = 1 << 2,
 
-		Other = 8
+		Other = 1 << 3,
 	}
 }

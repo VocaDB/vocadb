@@ -10,22 +10,22 @@ namespace VocaDb.Model.Domain.Images
 		/// Original image. 
 		/// Typically full size, although a maximum size can be placed as well.
 		/// </summary>
-		Original = 1,
+		Original = 1 << 0,
 
 		/// <summary>
 		/// Large thumbnail, default size is 250x250px.
 		/// </summary>
-		Thumb = 2,
+		Thumb = 1 << 1,
 
 		/// <summary>
 		/// Small thumbnail, default size is 150x150px.
 		/// </summary>
-		SmallThumb = 4,
+		SmallThumb = 1 << 2,
 
 		/// <summary>
 		/// Tiny thumbnail, default size is 70x70px.
 		/// </summary>
-		TinyThumb = 8,
+		TinyThumb = 1 << 3,
 	}
 
 	[Flags]
@@ -36,25 +36,25 @@ namespace VocaDb.Model.Domain.Images
 		/// <summary>
 		/// See <see cref="ImageSize.Original"/>
 		/// </summary>
-		Original = 1,
+		Original = 1 << 0,
 
 		/// <summary>
 		/// See <see cref="ImageSize.Thumb"/>
 		/// </summary>
-		Thumb = 2,
+		Thumb = 1 << 1,
 
 		/// <summary>
 		/// See <see cref="ImageSize.SmallThumb"/>
 		/// </summary>
-		SmallThumb = 4,
+		SmallThumb = 1 << 2,
 
 		/// <summary>
 		/// See <see cref="ImageSize.TinyThumb"/>
 		/// </summary>
-		TinyThumb = 8,
+		TinyThumb = 1 << 3,
 
 		AllThumbs = Thumb | SmallThumb | TinyThumb,
 
-		All = Original | Thumb | SmallThumb | TinyThumb
+		All = Original | Thumb | SmallThumb | TinyThumb,
 	}
 }

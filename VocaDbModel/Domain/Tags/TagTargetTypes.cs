@@ -37,6 +37,6 @@ namespace VocaDb.Model.Domain.Tags
 		/// <summary>
 		/// Valid for all entry types (default)
 		/// </summary>
-		All = 1073741823
+		All = 1073741823,
 	}
 }

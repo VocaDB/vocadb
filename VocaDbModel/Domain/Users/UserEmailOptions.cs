@@ -9,8 +9,8 @@ namespace VocaDb.Model.Domain.Users
 	{
 		NoEmail = 0,
 
-		PrivateMessagesFromAdmins = 1,
+		PrivateMessagesFromAdmins = 1 << 0,
 
-		PrivateMessagesFromAll = 2
+		PrivateMessagesFromAll = 1 << 1,
 	}
 }

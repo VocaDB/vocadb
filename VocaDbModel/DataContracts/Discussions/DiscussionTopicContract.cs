@@ -91,11 +91,11 @@ namespace VocaDb.Model.DataContracts.Discussions
 	{
 		None = 0,
 
-		Comments = 1,
-		CommentCount = 2,
-		Content = 4,
-		LastComment = 8,
+		Comments = 1 << 0,
+		CommentCount = 1 << 1,
+		Content = 1 << 2,
+		LastComment = 1 << 3,
 
-		All = (Comments | CommentCount | Content | LastComment)
+		All = Comments | CommentCount | Content | LastComment,
 	}
 }

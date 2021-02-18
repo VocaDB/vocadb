@@ -8,21 +8,21 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		/// <summary>
 		/// Comiket, VoMas
 		/// </summary>
-		AlbumRelease = 1,
-		Anniversary = 2,
+		AlbumRelease = 1 << 0,
+		Anniversary = 1 << 1,
 		/// <summary>
 		/// Vocaloid Freak
 		/// </summary>
-		Club = 4,
+		Club = 1 << 2,
 		/// <summary>
 		/// Magical Mirai
 		/// </summary>
-		Concert = 8,
-		Contest = 16,
+		Concert = 1 << 3,
+		Contest = 1 << 4,
 		/// <summary>
 		/// Nico Chokaigi
 		/// </summary>
-		Convention = 32,
-		Other = 64
+		Convention = 1 << 5,
+		Other = 1 << 6,
 	}
 }

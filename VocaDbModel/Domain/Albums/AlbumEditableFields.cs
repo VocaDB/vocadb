@@ -12,38 +12,38 @@ namespace VocaDb.Model.Domain.Albums
 	{
 		Nothing = 0,
 
-		Artists = 1,
+		Artists = 1 << 0,
 
 		/// <summary>
 		/// Identifiers list
 		/// </summary>
 		[Obsolete("Replaced by Identifiers")]
-		Barcode = 2,
+		Barcode = 1 << 1,
 
-		Cover = 4,
+		Cover = 1 << 2,
 
-		Description = 8,
+		Description = 1 << 3,
 
-		Discs = 16,
+		Discs = 1 << 4,
 
-		DiscType = 32,
+		DiscType = 1 << 5,
 
-		Identifiers = 64,
+		Identifiers = 1 << 6,
 
-		Names = 128,
+		Names = 1 << 7,
 
-		OriginalName = 256,
+		OriginalName = 1 << 8,
 
-		OriginalRelease = 512,
+		OriginalRelease = 1 << 9,
 
-		Pictures = 1024,
+		Pictures = 1 << 10,
 
-		PVs = 2048,
+		PVs = 1 << 11,
 
-		Status = 4096,
+		Status = 1 << 12,
 
-		Tracks = 8192,
+		Tracks = 1 << 13,
 
-		WebLinks = 16384
+		WebLinks = 1 << 14,
 	}
 }

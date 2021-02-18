@@ -14,28 +14,28 @@ namespace VocaDb.Model.Domain.Tags
 		Nothing = 0,
 
 		[Obsolete]
-		AliasedTo = 1,
+		AliasedTo = 1 << 0,
 
-		CategoryName = 2,
+		CategoryName = 1 << 1,
 
-		Description = 4,
+		Description = 1 << 2,
 
-		HideFromSuggestions = 8,
+		HideFromSuggestions = 1 << 3,
 
-		Names = 16,
+		Names = 1 << 4,
 
-		OriginalName = 32,
+		OriginalName = 1 << 5,
 
-		Parent = 64,
+		Parent = 1 << 6,
 
-		Picture = 128,
+		Picture = 1 << 7,
 
-		RelatedTags = 256,
+		RelatedTags = 1 << 8,
 
-		Status = 512,
+		Status = 1 << 9,
 
-		Targets = 1024,
+		Targets = 1 << 10,
 
-		WebLinks = 2048
+		WebLinks = 1 << 11,
 	}
 }

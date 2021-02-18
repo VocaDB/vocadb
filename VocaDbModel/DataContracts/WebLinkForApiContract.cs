@@ -52,6 +52,6 @@ namespace VocaDb.Model.DataContracts
 	public enum WebLinkOptionalFields
 	{
 		None = 0,
-		DescriptionOrUrl = 1
+		DescriptionOrUrl = 1 << 0,
 	}
 }

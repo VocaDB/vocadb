@@ -13,25 +13,25 @@ namespace VocaDb.Model.Domain.Artists
 	{
 		Nothing = 0,
 
-		Vocalist = 1,
+		Vocalist = 1 << 0,
 
-		Producer = 2,
+		Producer = 1 << 1,
 
-		Animator = 4,
+		Animator = 1 << 2,
 
-		Label = 8,
+		Label = 1 << 3,
 
-		Circle = 16,
+		Circle = 1 << 4,
 
 		/// <summary>
 		/// Instrumentalist, lyricist, etc.
 		/// </summary>
-		Other = 32,
+		Other = 1 << 5,
 
-		Band = 64,
+		Band = 1 << 6,
 
-		Illustrator = 128,
+		Illustrator = 1 << 7,
 
-		Subject = 256
+		Subject = 1 << 8,
 	}
 }

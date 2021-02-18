@@ -10,11 +10,11 @@ namespace VocaDb.Model.Domain.Users
 	{
 		Nothing = 0,
 
-		Wishlisted = 1,
+		Wishlisted = 1 << 0,
 
-		Ordered = 2,
+		Ordered = 1 << 1,
 
-		Owned = 4
+		Owned = 1 << 2,
 	}
 
 	[Flags]
@@ -28,7 +28,7 @@ namespace VocaDb.Model.Domain.Users
 
 		Owned = PurchaseStatus.Owned,
 
-		All = Wishlisted | Ordered | Owned
+		All = Wishlisted | Ordered | Owned,
 	}
 
 	public static class PurchaseStatusesExtensions

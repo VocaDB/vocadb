@@ -323,17 +323,17 @@ namespace VocaDb.Model.DataContracts.Api
 	public enum EntryOptionalFields
 	{
 		None = 0,
-		AdditionalNames = 1,
-		Description = 2,
-		MainPicture = 4,
-		Names = 8,
+		AdditionalNames = 1 << 0,
+		Description = 1 << 1,
+		MainPicture = 1 << 2,
+		Names = 1 << 3,
 
 		/// <summary>
 		/// List of PVs, for songs and albums
 		/// </summary>
-		PVs = 16,
+		PVs = 1 << 4,
 
-		Tags = 32,
-		WebLinks = 64
+		Tags = 1 << 5,
+		WebLinks = 1 << 6,
 	}
 }

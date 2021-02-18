@@ -17,61 +17,61 @@ namespace VocaDb.Model.Domain.Artists
 		/// <summary>
 		/// Mostly PVs
 		/// </summary>
-		Animator = 1,
+		Animator = 1 << 0,
 
 		/// <summary>
 		/// Usually associated with remixes/covers
 		/// </summary>
-		Arranger = 2,
+		Arranger = 1 << 1,
 
-		Composer = 4,
+		Composer = 1 << 2,
 
 		/// <summary>
 		/// Usually circle/label
 		/// </summary>
-		Distributor = 8,
+		Distributor = 1 << 3,
 
 		/// <summary>
 		/// PVs, cover art, booklet
 		/// </summary>
-		Illustrator = 16,
+		Illustrator = 1 << 4,
 
 		/// <summary>
 		/// Plays instruments
 		/// </summary>
-		Instrumentalist = 32,
+		Instrumentalist = 1 << 5,
 
-		Lyricist = 64,
+		Lyricist = 1 << 6,
 
-		Mastering = 128,
+		Mastering = 1 << 7,
 
 		/// <summary>
 		/// Usually circle/label
 		/// </summary>
-		Publisher = 256,
+		Publisher = 1 << 8,
 
-		Vocalist = 512,
+		Vocalist = 1 << 9,
 
 		/// <summary>
 		/// Vocaloid voice manipulator
 		/// </summary>
-		VoiceManipulator = 1024,
+		VoiceManipulator = 1 << 10,
 
-		Other = 2048,
+		Other = 1 << 11,
 
-		Mixer = 4096,
+		Mixer = 1 << 12,
 
 		/// <summary>
 		/// For UtaiteDB.
 		/// "Utaites sometimes like to provide backing vocals for other utaites, and it happens frequently enough that it should be defined as a role."
 		/// </summary>
-		Chorus = 8192,
+		Chorus = 1 << 13,
 
 		/// <summary>
 		/// For UtaiteDB.
 		/// </summary>
-		Encoder = 16384,
+		Encoder = 1 << 14,
 
-		VocalDataProvider = 32768
+		VocalDataProvider = 1 << 15,
 	}
 }

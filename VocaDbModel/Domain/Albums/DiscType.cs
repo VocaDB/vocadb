@@ -12,32 +12,32 @@ namespace VocaDb.Model.Domain.Albums
 		/// <summary>
 		/// Original album (default)
 		/// </summary>
-		Album = 1,
+		Album = 1 << 0,
 
-		Single = 2,
+		Single = 1 << 1,
 
-		EP = 4,
+		EP = 1 << 2,
 
-		SplitAlbum = 8,
+		SplitAlbum = 1 << 3,
 
-		Compilation = 16,
+		Compilation = 1 << 4,
 
-		Video = 32,
+		Video = 1 << 5,
 
-		Artbook = 64,
-
-		/// <summary>
-		/// For TouhouDB
-		/// </summary>
-		Game = 128,
+		Artbook = 1 << 6,
 
 		/// <summary>
 		/// For TouhouDB
 		/// </summary>
-		Fanmade = 256,
+		Game = 1 << 7,
 
-		Instrumental = 512,
+		/// <summary>
+		/// For TouhouDB
+		/// </summary>
+		Fanmade = 1 << 8,
 
-		Other = 1024
+		Instrumental = 1 << 9,
+
+		Other = 1 << 10,
 	}
 }
