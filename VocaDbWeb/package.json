@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "bootstrap-sass": "^2.3.2",
+        "decimal.js-light": "^2.5.1",
         "jquery": "^2.2.1",
         "jquery-ui": "^1.10.4",
         "knockout": "^3.5.1",

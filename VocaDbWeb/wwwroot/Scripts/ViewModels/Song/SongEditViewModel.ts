@@ -27,6 +27,7 @@ import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
+import Decimal from 'decimal.js-light';
 
     export default class SongEditViewModel {
 
@@ -67,6 +68,8 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		public hasMaxMilliBpm: KnockoutObservable<boolean>;
 		public minMilliBpm: KnockoutObservable<number>;
 		public maxMilliBpm: KnockoutObservable<number>;
+		public minBpm: KnockoutComputed<string>;
+		public maxBpm: KnockoutComputed<string>;
 
 		// Adds a new artist to the album
 		// artistId: Id of the artist being added, if it's an existing artist. Can be null, if custom artist.
@@ -373,6 +376,24 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 				.sortBy(d => d.date)
 				.head<_.LoDashExplicitObjectWrapper<PotentialDate>>()
 				.value());
+
+			this.minBpm = ko.computed({
+				read: () => {
+					return this.minMilliBpm() ? new Decimal(this.minMilliBpm()).div(1000).toString() : null;
+				},
+				write: (value: string) => {
+					this.minMilliBpm(value ? new Decimal(value).mul(1000).toNumber() : null);
+				}
+			});
+
+			this.maxBpm = ko.computed({
+				read: () => {
+					return this.maxMilliBpm() ? new Decimal(this.maxMilliBpm()).div(1000).toString() : null;
+				},
+				write: (value: string) => {
+					this.maxMilliBpm(value ? new Decimal(value).mul(1000).toNumber() : null);
+				}
+			});
 
 			window.setInterval(() => userRepository.refreshEntryEdit(EntryType.Song, data.id), 10000);
 

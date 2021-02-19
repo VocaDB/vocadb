@@ -3,7 +3,8 @@
 		"alwaysStrict": true,
 		"module": "es6",
 		"removeComments": true,
-		"target": "es5"
+		"target": "es5",
+		"moduleResolution": "node"
 	},
 	"include": [
 		"wwwroot/Scripts/**/*"
