@@ -20,6 +20,7 @@ import SongWithPreviewViewModel from '../Song/SongWithPreviewViewModel';
 import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
+import Decimal from 'decimal.js-light';
 
 	export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
 
@@ -179,6 +180,24 @@ import UserRepository from '../../Repositories/UserRepository';
 
 			}
 
+			this.minBpm = ko.computed({
+				read: () => {
+					return this.minMilliBpm() ? new Decimal(this.minMilliBpm()).div(1000).toString() : null;
+				},
+				write: (value: string) => {
+					this.minMilliBpm(value ? new Decimal(value).mul(1000).toNumber() : null);
+				}
+			});
+
+			this.maxBpm = ko.computed({
+				read: () => {
+					return this.maxMilliBpm() ? new Decimal(this.maxMilliBpm()).div(1000).toString() : null;
+				},
+				write: (value: string) => {
+					this.maxMilliBpm(value ? new Decimal(value).mul(1000).toNumber() : null);
+				}
+			});
+
 		}
 
 		public artistFilters: ArtistFilters;
@@ -201,6 +220,8 @@ import UserRepository from '../../Repositories/UserRepository';
 		public viewMode: KnockoutObservable<string>;
 		public minMilliBpm: KnockoutObservable<number>;
 		public maxMilliBpm: KnockoutObservable<number>;
+		public minBpm: KnockoutComputed<string>;
+		public maxBpm: KnockoutComputed<string>;
 
         // Remember, JavaScript months start from 0 (who came up with that??)
 		private toDateOrNull = (mom: moment.Moment) => mom.isValid() ? mom.toDate() : null;
