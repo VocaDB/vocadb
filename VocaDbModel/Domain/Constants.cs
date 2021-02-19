@@ -15,8 +15,8 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public const int SecondsInADay = 86400;
 
-		public const int MinBpm = 20;
+		public const int AbsoluteMinBpm = 20;
 
-		public const int MaxBpm = 400;
+		public const int AbsoluteMaxBpm = 400;
 	}
 }
