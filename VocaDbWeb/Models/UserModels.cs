@@ -14,6 +14,7 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
+using VocaDb.Model.Service.Security;
 using VocaDb.Model.Service.Translations;
 using VocaDb.Model.Utils;
 using VocaDb.Web.Code;
@@ -268,16 +269,16 @@ namespace VocaDb.Web.Models
 
 	public class UserEdit
 	{
-		public UserEdit(Login login)
+		public static TranslateableEnum<UserGroupId> GetEditableGroups(LoginManager manager)
 		{
-			var groups = EnumVal<UserGroupId>.Values.Where(g => EntryPermissionManager.CanEditGroupTo(login.Manager, g)).ToArray();
-			EditableGroups = new TranslateableEnum<UserGroupId>(() => global::Resources.UserGroupNames.ResourceManager, groups);
-			OwnedArtists = new List<ArtistForUserContract>();
-			Permissions = new List<PermissionFlagEntry>();
+			var groups = EnumVal<UserGroupId>.Values.Where(g => EntryPermissionManager.CanEditGroupTo(manager, g)).ToArray();
+			return new TranslateableEnum<UserGroupId>(() => global::Resources.UserGroupNames.ResourceManager, groups);
 		}
 
-		public UserEdit(Login login, UserWithPermissionsContract contract)
-			: this(login)
+		public UserEdit() { }
+
+		public UserEdit(UserWithPermissionsContract contract)
+			: this()
 		{
 			Active = contract.Active;
 			Email = contract.Email;
@@ -308,9 +309,9 @@ namespace VocaDb.Web.Models
 		// `Name` may be replaced by the user. So we need a copy of that.
 		public string OldName { get; set; }
 
-		public IList<ArtistForUserContract> OwnedArtists { get; set; }
+		public IList<ArtistForUserContract> OwnedArtists { get; set; } = new List<ArtistForUserContract>();
 
-		public IList<PermissionFlagEntry> Permissions { get; set; }
+		public IList<PermissionFlagEntry> Permissions { get; set; } = new List<PermissionFlagEntry>();
 
 		public bool Poisoned { get; set; }
 
