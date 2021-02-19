@@ -185,7 +185,7 @@ import Decimal from 'decimal.js-light';
 					return this.minMilliBpm() ? new Decimal(this.minMilliBpm()).div(1000).toString() : null;
 				},
 				write: (value: string) => {
-					this.minMilliBpm(value ? new Decimal(value).mul(1000).toNumber() : null);
+					this.minMilliBpm(value ? new Decimal(value).mul(1000).toInteger().toNumber() : null);
 				}
 			});
 
@@ -194,7 +194,7 @@ import Decimal from 'decimal.js-light';
 					return this.maxMilliBpm() ? new Decimal(this.maxMilliBpm()).div(1000).toString() : null;
 				},
 				write: (value: string) => {
-					this.maxMilliBpm(value ? new Decimal(value).mul(1000).toNumber() : null);
+					this.maxMilliBpm(value ? new Decimal(value).mul(1000).toInteger().toNumber() : null);
 				}
 			});
 
