@@ -390,16 +390,16 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query.Where(s => s.ReleaseEvent.Id == eventId);
 		}
 
-		public static IQueryable<Song> WhereBpmIsBetween(this IQueryable<Song> query, int? minBpm, int? maxBpm)
+		public static IQueryable<Song> WhereMilliBpmIsBetween(this IQueryable<Song> query, int? minMilliBpm, int? maxMilliBpm)
 		{
-			if (minBpm.HasValue && maxBpm.HasValue)
-				return query.Where(s => s.MinBpm != null && s.MaxBpm != null && s.MinBpm >= minBpm && s.MaxBpm <= maxBpm);
+			if (minMilliBpm.HasValue && maxMilliBpm.HasValue)
+				return query.Where(s => s.MinMilliBpm != null && s.MaxMilliBpm != null && s.MinMilliBpm >= minMilliBpm && s.MaxMilliBpm <= maxMilliBpm);
 
-			if (minBpm.HasValue)
-				return query.Where(s => s.MinBpm != null && s.MinBpm >= minBpm);
+			if (minMilliBpm.HasValue)
+				return query.Where(s => s.MinMilliBpm != null && s.MinMilliBpm >= minMilliBpm);
 
-			if (maxBpm.HasValue)
-				return query.Where(s => s.MaxBpm != null && s.MaxBpm <= maxBpm);
+			if (maxMilliBpm.HasValue)
+				return query.Where(s => s.MaxMilliBpm != null && s.MaxMilliBpm <= maxMilliBpm);
 
 			return query;
 		}

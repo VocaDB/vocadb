@@ -16,7 +16,7 @@
 		@Html.DataRow("Song type", Model.ComparedSongs, d => d.SongType)
 		@Html.DataRow("Original version", Model.ComparedSongs, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.OriginalVersion)))
 		@Html.DataRow("Duration", Model.ComparedSongs, d => DateTimeUtils.FormatFromSeconds(d.LengthSeconds))
-		@Html.DataRow("BPM", Model.ComparedSongs, d => d.MinBpm)
+		@Html.DataRow("BPM", Model.ComparedSongs, d => d.MinMilliBpm)
 		@Html.DataRow("Release event", Model.ComparedSongs, d => Html.Partial("Partials/ArchivedEntry/_ObjectRefInfo", new ObjectRefInfoViewModel(d.ReleaseEvent)))
 		@Html.DataRow("Publish date", Model.ComparedSongs, d => d.PublishDate)
 		@Html.DataRowList("External links", Model.ComparedSongs, d => DataFormatUtils.GenerateHtml(d.WebLinks, webLink => Html.Partial("Partials/ArchivedEntry/_WebLinkInfo", new WebLinkInfoViewModel(webLink))))

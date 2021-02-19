@@ -249,15 +249,15 @@
 				</tr>
    }
 
-			@if (Model.MinBpm != null)
+			@if (Model.MinMilliBpm != null)
 			{
 				<tr>
 					<td>@R.DetailsStrings.Bpm</td>
 					<td>
-						@Model.MinBpm.Value
-						@if (Model.MaxBpm != null && Model.MaxBpm.Value > Model.MinBpm.Value)
+						@Model.MinMilliBpm.Value
+						@if (Model.MaxMilliBpm != null && Model.MaxMilliBpm.Value > Model.MinMilliBpm.Value)
 						{
-							@:- @Model.MaxBpm.Value
+							@:- @Model.MaxMilliBpm.Value
 						}
 					</td>
 				</tr>

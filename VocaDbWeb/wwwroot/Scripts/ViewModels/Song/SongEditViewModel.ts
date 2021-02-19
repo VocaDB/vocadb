@@ -64,9 +64,9 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		public updateNotes = ko.observable("");
 		public validationExpanded = ko.observable(false);
 		public webLinks: WebLinksEditViewModel;
-		public hasMaxBpm: KnockoutObservable<boolean>;
-		public minBpm: KnockoutObservable<number>;
-		public maxBpm: KnockoutObservable<number>;
+		public hasMaxMilliBpm: KnockoutObservable<boolean>;
+		public minMilliBpm: KnockoutObservable<number>;
+		public maxMilliBpm: KnockoutObservable<number>;
 
 		// Adds a new artist to the album
 		// artistId: Id of the artist being added, if it's an existing artist. Can be null, if custom artist.
@@ -188,8 +188,8 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 				tags: this.tags,
 				updateNotes: this.updateNotes(),
 				webLinks: this.webLinks.toContracts(),
-				minBpm: this.minBpm(),
-				maxBpm: this.hasMaxBpm() ? this.maxBpm() : null,
+				minMilliBpm: this.minMilliBpm(),
+				maxMilliBpm: this.hasMaxMilliBpm() ? this.maxMilliBpm() : null,
 			};
 
 			this.submittedJson(ko.toJSON(submittedModel));
@@ -247,9 +247,9 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 			this.status = ko.observable(data.status);
 			this.tags = data.tags;
 			this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
-			this.hasMaxBpm = ko.observable(data.maxBpm > data.minBpm);
-			this.minBpm = ko.observable(data.minBpm);
-			this.maxBpm = ko.observable(data.maxBpm > data.minBpm ? data.maxBpm : null);
+			this.hasMaxMilliBpm = ko.observable(data.maxMilliBpm > data.minMilliBpm);
+			this.minMilliBpm = ko.observable(data.minMilliBpm);
+			this.maxMilliBpm = ko.observable(data.maxMilliBpm > data.minMilliBpm ? data.maxMilliBpm : null);
 
 			this.artistRolesEditViewModel = new AlbumArtistRolesEditViewModel(artistRoleNames);
 

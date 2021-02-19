@@ -85,8 +85,8 @@ import UserRepository from '../../Repositories/UserRepository';
 			this.since = ko.observable(since);
 			this.viewMode = ko.observable(viewMode || "Details");
 
-			this.minBpm = ko.observable(undefined).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
-			this.maxBpm = ko.observable(undefined).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
+			this.minMilliBpm = ko.observable(undefined).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
+			this.maxMilliBpm = ko.observable(undefined).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 
 			this.parentVersion = new BasicEntryLinkViewModel<IEntryWithIdAndName>(null, this.songRepo.getOne);
 
@@ -104,8 +104,8 @@ import UserRepository from '../../Repositories/UserRepository';
 			this.sort.subscribe(this.updateResultsWithTotalCount);
 			this.unifyEntryTypesAndTags.subscribe(this.updateResultsWithTotalCount);
 			this.viewMode.subscribe(this.updateResultsWithTotalCount);
-			this.minBpm.subscribe(this.updateResultsWithTotalCount);
-			this.maxBpm.subscribe(this.updateResultsWithTotalCount);
+			this.minMilliBpm.subscribe(this.updateResultsWithTotalCount);
+			this.maxMilliBpm.subscribe(this.updateResultsWithTotalCount);
 
 			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
 
@@ -156,8 +156,8 @@ import UserRepository from '../../Repositories/UserRepository';
 						this.fields(),
 						status,
 						this.advancedFilters.filters(),
-						this.minBpm(),
-						this.maxBpm(),
+						this.minMilliBpm(),
+						this.maxMilliBpm(),
 						result => {
 
 							_.each(result.items, (song: ISongSearchItem) => {
@@ -199,8 +199,8 @@ import UserRepository from '../../Repositories/UserRepository';
 		public sortName: KnockoutComputed<string>;
 		public unifyEntryTypesAndTags = ko.observable(false);
 		public viewMode: KnockoutObservable<string>;
-		public minBpm: KnockoutObservable<number>;
-		public maxBpm: KnockoutObservable<number>;
+		public minMilliBpm: KnockoutObservable<number>;
+		public maxMilliBpm: KnockoutObservable<number>;
 
         // Remember, JavaScript months start from 0 (who came up with that??)
 		private toDateOrNull = (mom: moment.Moment) => mom.isValid() ? mom.toDate() : null;
