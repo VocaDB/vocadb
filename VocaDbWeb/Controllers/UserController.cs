@@ -546,7 +546,7 @@ namespace VocaDb.Web.Controllers
 			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
 			var user = Service.GetUserWithPermissions(id);
-			return View(new UserEdit(base.Login, user));
+			return View(new UserEdit(user) { EditableGroups = UserEdit.GetEditableGroups(_loginManager) });
 		}
 
 		//
@@ -557,6 +557,7 @@ namespace VocaDb.Web.Controllers
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ManageUserPermissions);
 
+			model.EditableGroups = UserEdit.GetEditableGroups(_loginManager);
 			model.OldName = Service.GetUser(model.Id).Name;
 
 			if (permissions != null)
