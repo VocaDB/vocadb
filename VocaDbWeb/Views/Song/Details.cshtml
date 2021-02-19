@@ -254,10 +254,10 @@
 				<tr>
 					<td>@R.DetailsStrings.Bpm</td>
 					<td>
-						@Model.MinMilliBpm.Value
+						@(Model.MinMilliBpm.Value / 1000M)
 						@if (Model.MaxMilliBpm != null && Model.MaxMilliBpm.Value > Model.MinMilliBpm.Value)
 						{
-							@:- @Model.MaxMilliBpm.Value
+							@:- @(Model.MaxMilliBpm.Value / 1000M)
 						}
 					</td>
 				</tr>
