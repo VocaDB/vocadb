@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
-using System.Web.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -321,16 +320,6 @@ namespace VocaDb.Web.Controllers
 			return Content(logContents, "text/plain");
 
 			//return View(new ViewSysLog(logContents));
-		}
-
-		[Authorize]
-		public ActionResult ConvertBpmToMilliBpm()
-		{
-			PermissionContext.VerifyPermission(PermissionToken.Admin);
-
-			Service.ConvertBpmToMilliBpm();
-
-			return RedirectToAction("Index");
 		}
 	}
 }

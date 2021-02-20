@@ -615,24 +615,6 @@ namespace VocaDb.Model.Service
 			UpdateWebLinkCategories<ArtistWebLink>();
 			UpdateWebLinkCategories<SongWebLink>();
 		}
-
-		public void ConvertBpmToMilliBpm()
-		{
-			VerifyAdmin();
-
-			HandleTransaction(session =>
-			{
-				var archivedSongVersions = session.Query<ArchivedSongVersion>().Where(archivedSongVersion => archivedSongVersion.Diff.ChangedFieldsString.Contains(nameof(SongEditableFields.Bpm)));
-				foreach (var archivedSongVersion in archivedSongVersions)
-				{
-					var contract = XmlHelper.DeserializeFromXml<ArchivedSongContract>(archivedSongVersion.Data);
-					contract.MinMilliBpm *= 1000;
-					contract.MaxMilliBpm *= 1000;
-					archivedSongVersion.Data = XmlHelper.SerializeToXml(contract);
-					session.Update(archivedSongVersion);
-				}
-			});
-		}
 	}
 
 	public enum AuditLogUserGroupFilter
