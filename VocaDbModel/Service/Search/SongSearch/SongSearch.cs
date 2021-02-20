@@ -65,7 +65,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 				.WhereCreateDateIsWithin(queryParams.TimeFilter)
 				.WhereHasPV(queryParams.OnlyWithPVs)
 				.WhereMatchFilters(queryParams.AdvancedFilters)
-				.WhereBpmIsBetween(queryParams.MinBpm, queryParams.MaxBpm);
+				.WhereMilliBpmIsBetween(queryParams.MinMilliBpm, queryParams.MaxMilliBpm);
 
 			return query;
 		}

@@ -132,8 +132,8 @@ import UrlMapper from '../Shared/UrlMapper';
 			fields: string,
 			status: string,
 			advancedFilters: AdvancedSearchFilter[],
-			minBpm: number,
-			maxBpm: number,
+			minMilliBpm: number,
+			maxMilliBpm: number,
 			callback
 		) => {
 
@@ -160,8 +160,8 @@ import UrlMapper from '../Shared/UrlMapper';
 				parentSongId: parentSongId || undefined,
 				status: status,
 				advancedFilters: advancedFilters,
-				minBpm: minBpm,
-				maxBpm: maxBpm,
+				minMilliBpm: minMilliBpm,
+				maxMilliBpm: maxMilliBpm,
 			};
 
 			$.getJSON(url, data, callback);

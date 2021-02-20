@@ -96,8 +96,8 @@ namespace VocaDb.Model.DataContracts.Songs
 
 			if (fields.HasFlag(SongOptionalFields.Bpm))
 			{
-				MinBpm = song.MinBpm;
-				MaxBpm = song.MaxBpm;
+				MinMilliBpm = song.MinMilliBpm;
+				MaxMilliBpm = song.MaxMilliBpm;
 			}
 		}
 
@@ -253,10 +253,10 @@ namespace VocaDb.Model.DataContracts.Songs
 		public WebLinkForApiContract[] WebLinks { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public int? MinBpm { get; set; }
+		public int? MinMilliBpm { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public int? MaxBpm { get; set; }
+		public int? MaxMilliBpm { get; set; }
 	}
 
 	[Flags]

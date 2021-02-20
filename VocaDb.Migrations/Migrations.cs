@@ -1,5 +1,6 @@
 #nullable disable
 
+using System;
 using System.Data;
 using FluentMigrator;
 
@@ -7,11 +8,34 @@ namespace VocaDb.Migrations
 {
 	// Migration version format: YYYY_MM_DD_HHmm
 
+	[Migration(2021_02_19_0000)]
+	public class SongMilliBpm : Migration
+	{
+		public override void Up()
+		{
+			Create.Column("MinMilliBpm").OnTable(TableNames.Songs).AsInt32().Nullable();
+			Create.Column("MaxMilliBpm").OnTable(TableNames.Songs).AsInt32().Nullable();
+
+			// TODO: remove this column
+			Create.Column("OldData").OnTable(TableNames.ArchivedSongVersions).AsXml().Nullable();
+
+			Execute.Sql($"update {TableNames.Songs} set MinMilliBpm = MinBpm * 1000, MaxMilliBpm = MaxBpm * 1000");
+			Execute.Sql($"update {TableNames.ArchivedSongVersions} set OldData = [Data]");
+			Execute.Sql($"update {TableNames.ArchivedSongVersions} set [Data] = replace(replace(replace(replace(cast([Data] as nvarchar(max)), '<MinBpm', '<MinMilliBpm'), '<MaxBpm', '<MaxMilliBpm'), '</MinBpm>', '</MinMilliBpm>'), '</MaxBpm>', '</MaxMilliBpm>') where ChangedFields like '%Bpm%'");
+		}
+
+		public override void Down()
+		{
+			throw new NotImplementedException();
+		}
+	}
+
 	[Migration(2021_01_21_2200)]
 	public class SongBpm : AutoReversingMigration
 	{
 		public override void Up()
 		{
+			// TODO: remove these columns
 			Create.Column("MinBpm").OnTable(TableNames.Songs).AsInt32().Nullable();
 			Create.Column("MaxBpm").OnTable(TableNames.Songs).AsInt32().Nullable();
 		}
@@ -105,7 +129,7 @@ order by Created");
 
 		public override void Down()
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 	}
 

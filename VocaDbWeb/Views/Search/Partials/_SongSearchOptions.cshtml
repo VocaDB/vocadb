@@ -82,9 +82,9 @@
 	<div class="control-group">
 		<div class="control-label">@Res.Bpm</div>
 		<div class="controls">
-			<input type="number" data-bind="textInput: minBpm" class="input-small" maxlength="10" min="@Constants.AbsoluteMinBpm" max="@Constants.AbsoluteMaxBpm" />
+			<input type="number" data-bind="textInput: minBpm" class="input-small" maxlength="10" min="@Constants.AbsoluteMinBpm" max="@Constants.AbsoluteMaxBpm" step="@Constants.BpmStep" />
 			-
-			<input type="number" data-bind="textInput: maxBpm" class="input-small" maxlength="10" min="@Constants.AbsoluteMinBpm" max="@Constants.AbsoluteMaxBpm" />
+			<input type="number" data-bind="textInput: maxBpm" class="input-small" maxlength="10" min="@Constants.AbsoluteMinBpm" max="@Constants.AbsoluteMaxBpm" step="@Constants.BpmStep" />
 		</div>
 	</div>
 

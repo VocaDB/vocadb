@@ -57,8 +57,8 @@ namespace VocaDb.Model.DataContracts.Songs
 
 			Pools = pools;
 
-			MinBpm = song.MinBpm;
-			MaxBpm = song.MaxBpm;
+			MinMilliBpm = song.MinMilliBpm;
+			MaxMilliBpm = song.MaxMilliBpm;
 		}
 
 		/// <summary>
@@ -178,9 +178,9 @@ namespace VocaDb.Model.DataContracts.Songs
 		public WebLinkContract[] WebLinks { get; set; }
 
 		[DataMember]
-		public int? MinBpm { get; set; }
+		public int? MinMilliBpm { get; set; }
 
 		[DataMember]
-		public int? MaxBpm { get; set; }
+		public int? MaxMilliBpm { get; set; }
 	}
 }

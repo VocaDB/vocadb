@@ -249,17 +249,11 @@
 				</tr>
    }
 
-			@if (Model.MinBpm != null)
+			@if (Model.MinMilliBpm != null)
 			{
 				<tr>
 					<td>@R.DetailsStrings.Bpm</td>
-					<td>
-						@Model.MinBpm.Value
-						@if (Model.MaxBpm != null && Model.MaxBpm.Value > Model.MinBpm.Value)
-						{
-							@:- @Model.MaxBpm.Value
-						}
-					</td>
+					<td>@BpmUtils.FormatFromMilliBpm(Model.MinMilliBpm, Model.MaxMilliBpm)</td>
 				</tr>
 			}
 

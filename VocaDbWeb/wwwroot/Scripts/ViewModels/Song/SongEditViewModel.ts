@@ -27,6 +27,7 @@ import TranslatedEnumField from '../../DataContracts/TranslatedEnumField';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
+import Decimal from 'decimal.js-light';
 
     export default class SongEditViewModel {
 
@@ -64,9 +65,11 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 		public updateNotes = ko.observable("");
 		public validationExpanded = ko.observable(false);
 		public webLinks: WebLinksEditViewModel;
-		public hasMaxBpm: KnockoutObservable<boolean>;
-		public minBpm: KnockoutObservable<number>;
-		public maxBpm: KnockoutObservable<number>;
+		public hasMaxMilliBpm: KnockoutObservable<boolean>;
+		public minMilliBpm: KnockoutObservable<number>;
+		public maxMilliBpm: KnockoutObservable<number>;
+		public minBpm: KnockoutComputed<string>;
+		public maxBpm: KnockoutComputed<string>;
 
 		// Adds a new artist to the album
 		// artistId: Id of the artist being added, if it's an existing artist. Can be null, if custom artist.
@@ -188,8 +191,8 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 				tags: this.tags,
 				updateNotes: this.updateNotes(),
 				webLinks: this.webLinks.toContracts(),
-				minBpm: this.minBpm(),
-				maxBpm: this.hasMaxBpm() ? this.maxBpm() : null,
+				minMilliBpm: this.minMilliBpm(),
+				maxMilliBpm: this.hasMaxMilliBpm() ? this.maxMilliBpm() : null,
 			};
 
 			this.submittedJson(ko.toJSON(submittedModel));
@@ -247,9 +250,9 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 			this.status = ko.observable(data.status);
 			this.tags = data.tags;
 			this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
-			this.hasMaxBpm = ko.observable(data.maxBpm > data.minBpm);
-			this.minBpm = ko.observable(data.minBpm);
-			this.maxBpm = ko.observable(data.maxBpm > data.minBpm ? data.maxBpm : null);
+			this.hasMaxMilliBpm = ko.observable(data.maxMilliBpm > data.minMilliBpm);
+			this.minMilliBpm = ko.observable(data.minMilliBpm);
+			this.maxMilliBpm = ko.observable(data.maxMilliBpm > data.minMilliBpm ? data.maxMilliBpm : null);
 
 			this.artistRolesEditViewModel = new AlbumArtistRolesEditViewModel(artistRoleNames);
 
@@ -373,6 +376,24 @@ import WebLinksEditViewModel from '../WebLinksEditViewModel';
 				.sortBy(d => d.date)
 				.head<_.LoDashExplicitObjectWrapper<PotentialDate>>()
 				.value());
+
+			this.minBpm = ko.computed({
+				read: () => {
+					return this.minMilliBpm() ? new Decimal(this.minMilliBpm()).div(1000).toString() : null;
+				},
+				write: (value: string) => {
+					this.minMilliBpm(value ? new Decimal(value).mul(1000).toInteger().toNumber() : null);
+				}
+			});
+
+			this.maxBpm = ko.computed({
+				read: () => {
+					return this.maxMilliBpm() ? new Decimal(this.maxMilliBpm()).div(1000).toString() : null;
+				},
+				write: (value: string) => {
+					this.maxMilliBpm(value ? new Decimal(value).mul(1000).toInteger().toNumber() : null);
+				}
+			});
 
 			window.setInterval(() => userRepository.refreshEntryEdit(EntryType.Song, data.id), 10000);
 

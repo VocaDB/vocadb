@@ -277,8 +277,8 @@ namespace VocaDb.Web.Controllers.Api
 			NameMatchMode nameMatchMode = NameMatchMode.Exact,
 			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
-			int? minBpm = null,
-			int? maxBpm = null)
+			int? minMilliBpm = null,
+			int? maxMilliBpm = null)
 		{
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
@@ -306,8 +306,8 @@ namespace VocaDb.Web.Controllers.Api
 				ParentSongId = parentSongId ?? 0,
 				AdvancedFilters = advancedFilters,
 				LanguagePreference = lang,
-				MinBpm = minBpm,
-				MaxBpm = maxBpm,
+				MinMilliBpm = minMilliBpm,
+				MaxMilliBpm = maxMilliBpm,
 			};
 			param.Common.EntryStatus = status;
 

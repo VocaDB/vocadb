@@ -154,20 +154,20 @@
 			</div>
 			<div class="editor-field">
 				<label>
-					<input type="radio" data-bind="checked: hasMaxBpm, checkedValue: false" />
+					<input type="radio" data-bind="checked: hasMaxMilliBpm, checkedValue: false" />
 					@Res.BaSpecificBpm
 				</label>
 				<label>
-					<input type="radio" data-bind="checked: hasMaxBpm, checkedValue: true" />
+					<input type="radio" data-bind="checked: hasMaxMilliBpm, checkedValue: true" />
 					@Res.BaBpmRange
 				</label>
-				<div data-bind="visible: !hasMaxBpm()">
-					<input type="number" data-bind="value: minBpm" class="input-small" maxlength="10" min="@Constants.AbsoluteMinBpm" max="@Constants.AbsoluteMaxBpm" />
+				<div data-bind="visible: !hasMaxMilliBpm()">
+					<input type="number" data-bind="value: minBpm" class="input-small" maxlength="10" min="@Constants.AbsoluteMinBpm" max="@Constants.AbsoluteMaxBpm" step="@Constants.BpmStep" />
 				</div>
-				<div data-bind="visible: hasMaxBpm()">
-					<input type="number" data-bind="value: minBpm" class="input-small" maxlength="10" min="@Constants.AbsoluteMinBpm" max="@Constants.AbsoluteMaxBpm" />
+				<div data-bind="visible: hasMaxMilliBpm()">
+					<input type="number" data-bind="value: minBpm" class="input-small" maxlength="10" min="@Constants.AbsoluteMinBpm" max="@Constants.AbsoluteMaxBpm" step="@Constants.BpmStep" />
 					to
-					<input type="number" data-bind="value: maxBpm" class="input-small" maxlength="10" min="@Constants.AbsoluteMinBpm" max="@Constants.AbsoluteMaxBpm" />
+					<input type="number" data-bind="value: maxBpm" class="input-small" maxlength="10" min="@Constants.AbsoluteMinBpm" max="@Constants.AbsoluteMaxBpm" step="@Constants.BpmStep" />
 				</div>
 			</div>
 			
