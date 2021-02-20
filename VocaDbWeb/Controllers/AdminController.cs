@@ -322,5 +322,15 @@ namespace VocaDb.Web.Controllers
 
 			//return View(new ViewSysLog(logContents));
 		}
+
+		[Authorize]
+		public ActionResult ConvertBpmToMilliBpm()
+		{
+			PermissionContext.VerifyPermission(PermissionToken.Admin);
+
+			Service.ConvertBpmToMilliBpm();
+
+			return RedirectToAction("Index");
+		}
 	}
 }

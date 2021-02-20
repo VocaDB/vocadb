@@ -43,7 +43,7 @@ namespace VocaDb.Model.Domain.Versioning
 		/// Archived data serialized as XML.
 		/// </summary>
 		/// <remarks>For most types of entries, this will be non-null, but that is not guaranteed.</remarks>
-		public virtual XDocument Data { get; protected set; }
+		public virtual XDocument Data { get; set; }
 
 		public abstract IEntryDiff DiffBase { get; }
 

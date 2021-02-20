@@ -7,14 +7,17 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using NHibernate;
-using NHibernate.Linq;
 using VocaDb.Model.Database.Repositories.NHibernate;
+using VocaDb.Model.DataContracts;
+using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Security;
 using VocaDb.Model.DataContracts.Songs;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
+using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
@@ -22,10 +25,6 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Helpers;
-using VocaDb.Model.DataContracts;
-using VocaDb.Model.DataContracts.Api;
-using VocaDb.Model.DataContracts.Users;
-using VocaDb.Model.Domain.ExtLinks;
 using VocaDb.Model.Service.DataSharing;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.QueryableExtensions;
@@ -615,6 +614,24 @@ namespace VocaDb.Model.Service
 			UpdateWebLinkCategories<AlbumWebLink>();
 			UpdateWebLinkCategories<ArtistWebLink>();
 			UpdateWebLinkCategories<SongWebLink>();
+		}
+
+		public void ConvertBpmToMilliBpm()
+		{
+			VerifyAdmin();
+
+			HandleTransaction(session =>
+			{
+				var archivedSongVersions = session.Query<ArchivedSongVersion>().Where(archivedSongVersion => archivedSongVersion.Diff.ChangedFieldsString.Contains(nameof(SongEditableFields.Bpm)));
+				foreach (var archivedSongVersion in archivedSongVersions)
+				{
+					var contract = XmlHelper.DeserializeFromXml<ArchivedSongContract>(archivedSongVersion.Data);
+					contract.MinMilliBpm *= 1000;
+					contract.MaxMilliBpm *= 1000;
+					archivedSongVersion.Data = XmlHelper.SerializeToXml(contract);
+					session.Update(archivedSongVersion);
+				}
+			});
 		}
 	}
 
