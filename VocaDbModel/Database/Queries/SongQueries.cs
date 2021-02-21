@@ -1242,11 +1242,14 @@ namespace VocaDb.Model.Database.Queries
 				if (lyricsDiff.Changed)
 					diff.Lyrics.Set();
 
-				if (song.MinMilliBpm != properties.MinMilliBpm || song.MaxMilliBpm != properties.MaxMilliBpm)
+				var newMinMilliBpm = properties.MinMilliBpm;
+				var newMaxMilliBpm = (properties.MaxMilliBpm > properties.MinMilliBpm) ? properties.MaxMilliBpm : properties.MinMilliBpm;
+				if (song.MinMilliBpm != newMinMilliBpm || song.MaxMilliBpm != newMaxMilliBpm)
+				{
+					song.MinMilliBpm = newMinMilliBpm;
+					song.MaxMilliBpm = newMaxMilliBpm;
 					diff.Bpm.Set();
-
-				song.MinMilliBpm = properties.MinMilliBpm;
-				song.MaxMilliBpm = (properties.MaxMilliBpm > properties.MinMilliBpm) ? properties.MaxMilliBpm : properties.MinMilliBpm;
+				}
 
 				var logStr = $"updated properties for song {_entryLinkFactory.CreateEntryLink(song)} ({diff.ChangedFieldsString})"
 					+ (properties.UpdateNotes != string.Empty ? " " + HttpUtility.HtmlEncode(properties.UpdateNotes) : string.Empty)
