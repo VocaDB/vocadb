@@ -103,7 +103,7 @@
 		@* HACK: replacement for Html.RenderAction. *@
 		@* TODO: replace with view components *@
 		@* Code from: https://stackoverflow.com/questions/41353874/equivalent-of-html-renderaction-in-asp-net-core/45494932#45494932 *@
-		$.get('@Url.Action("AuditLogEntries", Model)', null, function (content) {
+		$.get('@Html.Raw(Url.Action("AuditLogEntries", Model))', null, function (content) {
 			$("#logEntries").html(content);
 		});
 	});
