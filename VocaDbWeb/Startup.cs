@@ -119,6 +119,33 @@ namespace VocaDb.Web
 				});
 
 			services.AddLaravelMix();
+
+			services.AddCors(options =>
+			{
+				options.AddDefaultPolicy(builder =>
+				{
+					builder
+						.AllowAnyOrigin()
+						.AllowAnyHeader()
+						.WithMethods("GET");
+				});
+
+				options.AddPolicy(AuthenticationConstants.AuthenticatedCorsApiPolicy, builder =>
+				{
+					builder
+						.AllowAnyHeader()
+						.WithMethods("GET", "POST", "PUT", "OPTIONS");
+
+					var origins = AppConfig.AllowedCorsOrigins;
+					if (!string.IsNullOrEmpty(origins))
+					{
+						if (origins != "*")
+							builder.WithOrigins(origins.Split(','));
+						else
+							builder.AllowAnyOrigin();
+					}
+				});
+			});
 		}
 
 		private static string[] LoadBlockedIPs(IComponentContext componentContext) => componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());
@@ -258,6 +285,10 @@ namespace VocaDb.Web
 				options.AddSupportedCultures(supportedCultures);
 				options.AddSupportedUICultures(supportedCultures);
 			});
+
+			// Quote from: https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0
+			// UseCors must be called before UseResponseCaching when using UseResponseCaching.
+			app.UseCors();
 
 			// Quote from: https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-5.0#authentication-concepts
 			// When using endpoint routing, the call to UseAuthentication must go:

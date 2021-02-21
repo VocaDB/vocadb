@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.CacheOutput;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -34,6 +35,7 @@ using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Search.User;
 using VocaDb.Model.Utils;
+using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
@@ -168,7 +170,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[HttpGet("current")]
 		[Authorize]
-		[AuthenticatedCorsApi(HttpVerbs.Get)]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 		[RequireSsl]
 		public UserForApiContract GetCurrent(UserOptionalFields fields = UserOptionalFields.None) => _queries.GetUser(_permissionContext.LoggedUserId, fields);
 
@@ -505,7 +507,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[HttpGet("current/ratedSongs/{songId:int}")]
 		[Authorize]
-		[AuthenticatedCorsApi(HttpVerbs.Get)]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 		public SongVoteRating GetSongRatingForCurrent(int songId) => GetSongRating(_permissionContext.LoggedUserId, songId);
 
 		/// <summary>
@@ -658,7 +660,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[HttpPost("current/ratedSongs/{songId:int}")]
 		[Authorize]
-		[AuthenticatedCorsApi(HttpVerbs.Post)]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Obsolete]
 		public string PostSongRating(int songId, SongVoteRating rating)
@@ -740,7 +742,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[HttpPost("current/songTags/{songId:int}")]
 		[Authorize]
-		[AuthenticatedCorsApi(HttpVerbs.Post)]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 		public async Task<IActionResult> PostSongTags(int songId, TagBaseContract[] tags)
 		{
 			if (tags == null)
@@ -819,7 +821,7 @@ namespace VocaDb.Web.Controllers.Api
 
 		[HttpGet("current/followedArtists/{artistId:int}")]
 		[Authorize]
-		[AuthenticatedCorsApi(HttpVerbs.Get)]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 		public ArtistForUserForApiContract GetArtistForUser(int artistId) => GetArtistForUser(_permissionContext.LoggedUserId, artistId);
 
 		[HttpGet("{id:int}/album-collection-statuses/{albumId:int}")]
@@ -827,7 +829,7 @@ namespace VocaDb.Web.Controllers.Api
 
 		[HttpGet("current/album-collection-statuses/{albumId:int}")]
 		[Authorize]
-		[AuthenticatedCorsApi(HttpVerbs.Get)]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 		public AlbumForUserForApiContract GetAlbumForUser(int albumId) => GetAlbumForUser(_permissionContext.LoggedUserId, albumId);
 	}
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.CacheOutput;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.Database.Queries;
@@ -27,7 +28,7 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.VideoServices;
-using VocaDb.Web.Code.WebApi;
+using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -181,7 +182,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// </remarks>
 		[HttpPost("{id:int}/ratings")]
 		[Authorize]
-		[AuthenticatedCorsApi(HttpVerbs.Post)]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 		public void PostRating(int id, SongRatingContract rating) => _userService.UpdateSongRating(_userPermissionContext.LoggedUserId, id, rating.Rating);
 
 		[HttpGet("by-names")]
@@ -423,7 +424,7 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPost("")]
 		[Authorize]
 		[ApiExplorerSettings(IgnoreApi = true)]
-		[AuthenticatedCorsApi(HttpVerbs.Post)]
+		[EnableCors(AuthenticationConstants.AuthenticatedCorsApiPolicy)]
 		public async Task<ActionResult<SongContract>> PostNewSong(CreateSongContract contract)
 		{
 			if (contract == null)
