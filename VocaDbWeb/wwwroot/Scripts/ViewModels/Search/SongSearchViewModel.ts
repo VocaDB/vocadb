@@ -21,6 +21,7 @@ import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 import Decimal from 'decimal.js-light';
+import DateTimeHelper from '../../Helpers/DateTimeHelper';
 
 	export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
 
@@ -86,10 +87,13 @@ import Decimal from 'decimal.js-light';
 			this.since = ko.observable(since);
 			this.viewMode = ko.observable(viewMode || "Details");
 
+			this.parentVersion = new BasicEntryLinkViewModel<IEntryWithIdAndName>(null, this.songRepo.getOne);
+
 			this.minMilliBpm = ko.observable(undefined).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 			this.maxMilliBpm = ko.observable(undefined).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 
-			this.parentVersion = new BasicEntryLinkViewModel<IEntryWithIdAndName>(null, this.songRepo.getOne);
+			this.minLength = ko.observable(0).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
+			this.maxLength = ko.observable(0).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 
 			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
@@ -107,6 +111,8 @@ import Decimal from 'decimal.js-light';
 			this.viewMode.subscribe(this.updateResultsWithTotalCount);
 			this.minMilliBpm.subscribe(this.updateResultsWithTotalCount);
 			this.maxMilliBpm.subscribe(this.updateResultsWithTotalCount);
+			this.minLength.subscribe(this.updateResultsWithoutTotalCount);
+			this.maxLength.subscribe(this.updateResultsWithoutTotalCount);
 
 			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
 
@@ -159,6 +165,8 @@ import Decimal from 'decimal.js-light';
 						this.advancedFilters.filters(),
 						this.minMilliBpm(),
 						this.maxMilliBpm(),
+						this.minLength() ? this.minLength() : null,
+						this.maxLength() ? this.maxLength() : null,
 						result => {
 
 							_.each(result.items, (song: ISongSearchItem) => {
@@ -198,6 +206,38 @@ import Decimal from 'decimal.js-light';
 				}
 			});
 
+			this.minLengthFormatted = ko.computed({
+				read: () => {
+					return DateTimeHelper.formatFromSeconds(this.minLength());
+				},
+				write: (value: string) => {
+					var parts = value.split(":");
+					if (parts.length == 2 && parseInt(parts[0], 10) != NaN && parseInt(parts[1], 10) != NaN) {
+						this.minLength(parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10));
+					} else if (parts.length == 1 && !isNaN(parseInt(parts[0], 10))) {
+						this.minLength(parseInt(parts[0], 10));
+					} else {
+						this.minLength(0);
+					}
+				}
+			});
+
+			this.maxLengthFormatted = ko.computed({
+				read: () => {
+					return DateTimeHelper.formatFromSeconds(this.maxLength());
+				},
+				write: (value: string) => {
+					var parts = value.split(":");
+					if (parts.length == 2 && parseInt(parts[0], 10) != NaN && parseInt(parts[1], 10) != NaN) {
+						this.maxLength(parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10));
+					} else if (parts.length == 1 && !isNaN(parseInt(parts[0], 10))) {
+						this.maxLength(parseInt(parts[0], 10));
+					} else {
+						this.maxLength(0);
+					}
+				}
+			});
+
 		}
 
 		public artistFilters: ArtistFilters;
@@ -222,6 +262,10 @@ import Decimal from 'decimal.js-light';
 		public maxMilliBpm: KnockoutObservable<number>;
 		public minBpm: KnockoutComputed<string>;
 		public maxBpm: KnockoutComputed<string>;
+		public minLength: KnockoutObservable<number>;
+		public maxLength: KnockoutObservable<number>;
+		public minLengthFormatted: KnockoutComputed<string>;
+		public maxLengthFormatted: KnockoutComputed<string>;
 
         // Remember, JavaScript months start from 0 (who came up with that??)
 		private toDateOrNull = (mom: moment.Moment) => mom.isValid() ? mom.toDate() : null;
