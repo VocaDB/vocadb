@@ -339,7 +339,7 @@ namespace VocaDb.Web.Controllers.Api
 		/// <param name="messageId">IDs of messages.</param>
 		[HttpDelete("{id:int}/messages")]
 		[Authorize]
-		public IActionResult DeleteMessages(int id, [FromQuery(Name = "messageId[]")] int[] messageId)
+		public IActionResult DeleteMessages(int id, [FromQuery] int[] messageId)
 		{
 			if (id != _permissionContext.LoggedUserId)
 				return Forbid();
