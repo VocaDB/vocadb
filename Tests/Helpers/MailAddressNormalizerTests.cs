@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Helpers;
 
@@ -18,7 +19,7 @@ namespace VocaDb.Tests.Helpers
 
 		private void TestNormalizedEmail(string expected, string given)
 		{
-			Assert.AreEqual(expected, NormalizedAddress(given));
+			NormalizedAddress(given).Should().Be(expected);
 		}
 
 		[TestMethod]

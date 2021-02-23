@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Text;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.BBCode;
 using VocaDb.Web.Code;
@@ -26,7 +27,7 @@ namespace VocaDb.Tests.Service.BBCode
 		{
 			var result = ApplyTransform("/Artist/Details/39");
 
-			Assert.AreEqual("<a href=\"/Ar/39\">/Artist/Details/39</a>", result, "result");
+			result.Should().Be("<a href=\"/Ar/39\">/Artist/Details/39</a>", "result");
 		}
 
 		[TestMethod]
@@ -34,7 +35,7 @@ namespace VocaDb.Tests.Service.BBCode
 		{
 			var result = ApplyTransform("/S/39");
 
-			Assert.AreEqual("<a href=\"/S/39\">/S/39</a>", result, "result");
+			result.Should().Be("<a href=\"/S/39\">/S/39</a>", "result");
 		}
 	}
 }

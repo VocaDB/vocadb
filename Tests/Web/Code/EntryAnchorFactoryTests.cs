@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
@@ -28,7 +29,7 @@ namespace VocaDb.Tests.Web.Code
 		{
 			var result = _factory.CreateEntryLink(EntryType.Artist, 39, "Hatsune Miku");
 
-			Assert.AreEqual("<a href=\"/Ar/39\">Hatsune Miku</a>", result, "result");
+			result.Should().Be("<a href=\"/Ar/39\">Hatsune Miku</a>", "result");
 		}
 
 		[TestMethod]
@@ -37,7 +38,7 @@ namespace VocaDb.Tests.Web.Code
 			var artist = new Artist(TranslatedString.Create("Hatsune Miku")) { Id = 39 };
 			var result = _factory.CreateEntryLink(artist);
 
-			Assert.AreEqual("<a href=\"/Ar/39\">Hatsune Miku</a>", result, "result");
+			result.Should().Be("<a href=\"/Ar/39\">Hatsune Miku</a>", "result");
 		}
 
 		[TestMethod]
@@ -46,7 +47,7 @@ namespace VocaDb.Tests.Web.Code
 			var song = new Song(TranslatedString.Create("Sentaku <love or dead>")) { Id = 39 };
 			var result = _factory.CreateEntryLink(song);
 
-			Assert.AreEqual("<a href=\"/S/39\">Sentaku &lt;love or dead&gt;</a>", result, "result");
+			result.Should().Be("<a href=\"/S/39\">Sentaku &lt;love or dead&gt;</a>", "result");
 		}
 	}
 }

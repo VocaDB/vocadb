@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Tests.TestSupport;
@@ -26,7 +27,7 @@ namespace VocaDb.Tests.Web.Controllers
 		{
 			var result = _controller.Details();
 
-			Assert.IsInstanceOfType(result, typeof(NotFoundObjectResult));
+			result.Should().BeOfType<NotFoundObjectResult>();
 		}
 	}
 }

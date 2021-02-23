@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Utils;
@@ -14,7 +15,7 @@ namespace VocaDb.Tests.Utils
 			private void CallGetUrlFriendlyName(string expected, string input)
 			{
 				var result = UrlFriendlyNameFactory.GetUrlFriendlyName(input);
-				Assert.AreEqual(expected, result, input);
+				result.Should().Be(expected, input);
 			}
 
 			[TestMethod]
@@ -63,7 +64,7 @@ namespace VocaDb.Tests.Utils
 
 				var result = UrlFriendlyNameFactory.GetUrlFriendlyName(nameManager);
 
-				Assert.AreEqual("romaji-name", result);
+				result.Should().Be("romaji-name");
 			}
 
 			[TestMethod]
@@ -78,7 +79,7 @@ namespace VocaDb.Tests.Utils
 
 				var result = UrlFriendlyNameFactory.GetUrlFriendlyName(nameManager);
 
-				Assert.AreEqual("english-name", result);
+				result.Should().Be("english-name");
 			}
 		}
 
@@ -88,7 +89,7 @@ namespace VocaDb.Tests.Utils
 			private void CallGetUrlFriendlyName(string expected, TranslatedString input)
 			{
 				var result = UrlFriendlyNameFactory.GetUrlFriendlyName(input);
-				Assert.AreEqual(expected, result, input.ToString());
+				result.Should().Be(expected, input.ToString());
 			}
 
 			[TestMethod]

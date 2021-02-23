@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
@@ -35,43 +36,43 @@ namespace VocaDb.Tests.Helpers
 		[TestMethod]
 		public void CanHaveRelatedArtists_ProductCannotHaveVoiceProvider()
 		{
-			Assert.IsFalse(ArtistHelper.CanHaveRelatedArtists(ArtistType.Producer, ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne));
+			ArtistHelper.CanHaveRelatedArtists(ArtistType.Producer, ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne).Should().BeFalse();
 		}
 
 		[TestMethod]
 		public void CanHaveRelatedArtists_ProductCanHaveGroup()
 		{
-			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.Producer, ArtistLinkType.Group, LinkDirection.ManyToOne));
+			ArtistHelper.CanHaveRelatedArtists(ArtistType.Producer, ArtistLinkType.Group, LinkDirection.ManyToOne).Should().BeTrue();
 		}
 
 		[TestMethod]
 		public void CanHaveRelatedArtists_VocaloidCanHaveVoiceProvider()
 		{
-			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.Vocaloid, ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne));
+			ArtistHelper.CanHaveRelatedArtists(ArtistType.Vocaloid, ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne).Should().BeTrue();
 		}
 
 		[TestMethod]
 		public void CanHaveRelatedArtists_OtherVocalistCanHaveVoiceProvider()
 		{
-			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.OtherVocalist, ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne));
+			ArtistHelper.CanHaveRelatedArtists(ArtistType.OtherVocalist, ArtistLinkType.VoiceProvider, LinkDirection.ManyToOne).Should().BeTrue();
 		}
 
 		[TestMethod]
 		public void CanHaveRelatedArtists_ProducerCanHaveVoicesProvided()
 		{
-			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.Producer, ArtistLinkType.VoiceProvider, LinkDirection.OneToMany));
+			ArtistHelper.CanHaveRelatedArtists(ArtistType.Producer, ArtistLinkType.VoiceProvider, LinkDirection.OneToMany).Should().BeTrue();
 		}
 
 		[TestMethod]
 		public void CanHaveRelatedArtists_VocaloidCannotHaveVoicesProvided()
 		{
-			Assert.IsFalse(ArtistHelper.CanHaveRelatedArtists(ArtistType.Vocaloid, ArtistLinkType.VoiceProvider, LinkDirection.OneToMany));
+			ArtistHelper.CanHaveRelatedArtists(ArtistType.Vocaloid, ArtistLinkType.VoiceProvider, LinkDirection.OneToMany).Should().BeFalse();
 		}
 
 		[TestMethod]
 		public void CanHaveRelatedArtists_OtherVocalistCanHaveVoicesProvided()
 		{
-			Assert.IsTrue(ArtistHelper.CanHaveRelatedArtists(ArtistType.OtherVocalist, ArtistLinkType.VoiceProvider, LinkDirection.OneToMany));
+			ArtistHelper.CanHaveRelatedArtists(ArtistType.OtherVocalist, ArtistLinkType.VoiceProvider, LinkDirection.OneToMany).Should().BeTrue();
 		}
 
 		[TestMethod]
@@ -79,7 +80,7 @@ namespace VocaDb.Tests.Helpers
 		{
 			var result = ArtistHelper.GetCanonizedName("devilish5150");
 
-			Assert.AreEqual("devilish5150", result, "result");
+			result.Should().Be("devilish5150", "result");
 		}
 
 		[TestMethod]
@@ -87,7 +88,7 @@ namespace VocaDb.Tests.Helpers
 		{
 			var result = ArtistHelper.GetCanonizedName("devilishP");
 
-			Assert.AreEqual("devilish", result, "result");
+			result.Should().Be("devilish", "result");
 		}
 
 		[TestMethod]
@@ -95,7 +96,7 @@ namespace VocaDb.Tests.Helpers
 		{
 			var result = ArtistHelper.GetCanonizedName("devilish-P");
 
-			Assert.AreEqual("devilish", result, "result");
+			result.Should().Be("devilish", "result");
 		}
 
 		[TestMethod]
@@ -106,7 +107,7 @@ namespace VocaDb.Tests.Helpers
 
 			var result = ArtistHelper.GetMainCircle(new[] { _producer, _producer2, _circle }, ContentFocus.Music);
 
-			Assert.AreEqual(_circle.Artist, result, "Circle was returned");
+			result.Should().Be(_circle.Artist, "Circle was returned");
 		}
 
 		[TestMethod]
@@ -114,7 +115,7 @@ namespace VocaDb.Tests.Helpers
 		{
 			var result = ArtistHelper.GetMainCircle(new[] { _circle }, ContentFocus.Music);
 
-			Assert.AreEqual(_circle.Artist, result, "Circle was returned");
+			result.Should().Be(_circle.Artist, "Circle was returned");
 		}
 
 		[TestMethod]
@@ -124,7 +125,7 @@ namespace VocaDb.Tests.Helpers
 
 			var result = ArtistHelper.GetMainCircle(new[] { _producer, _producer2, _circle }, ContentFocus.Music);
 
-			Assert.IsNull(result, "No common circle found");
+			result.Should().BeNull("No common circle found");
 		}
 
 		[TestMethod]
@@ -135,7 +136,7 @@ namespace VocaDb.Tests.Helpers
 
 			var result = ArtistHelper.GetMainCircle(new[] { _producer, _producer2 }, ContentFocus.Music);
 
-			Assert.IsNull(result, "No circle found");
+			result.Should().BeNull("No circle found");
 		}
 	}
 }

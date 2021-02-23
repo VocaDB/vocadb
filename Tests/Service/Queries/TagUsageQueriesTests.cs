@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Tags;
@@ -65,14 +66,14 @@ namespace VocaDb.Tests.Service.Queries
 
 			AddSongTags(_entry.Id, tags);
 
-			Assert.AreEqual(1, _entry.Tags.Tags.Count(), "Number of tags");
+			_entry.Tags.Tags.Count().Should().Be(1, "Number of tags");
 			var usage = _entry.Tags.Usages.First();
-			Assert.AreEqual("vocarock", usage.Tag.DefaultName, "Added tag name");
-			Assert.IsTrue(usage.HasVoteByUser(_user), "Vote is by the logged in user");
-			Assert.AreEqual(1, usage.Tag.UsageCount, "Number of usages for tag");
+			usage.Tag.DefaultName.Should().Be("vocarock", "Added tag name");
+			usage.HasVoteByUser(_user).Should().BeTrue("Vote is by the logged in user");
+			usage.Tag.UsageCount.Should().Be(1, "Number of usages for tag");
 
-			Assert.AreEqual(2, _repository.List<Tag>().Count, "Number of tags in the repository");
-			Assert.IsTrue(_repository.List<Tag>().Contains(usage.Tag), "Tag in repository is the same as the one applied");
+			_repository.List<Tag>().Count.Should().Be(2, "Number of tags in the repository");
+			_repository.List<Tag>().Contains(usage.Tag).Should().BeTrue("Tag in repository is the same as the one applied");
 		}
 
 		[TestMethod]
@@ -83,8 +84,8 @@ namespace VocaDb.Tests.Service.Queries
 			AddSongTags(_entry.Id, Contract("vocarock"));
 
 			var entryTags = _entry.Tags.Tags.ToArray();
-			Assert.AreEqual(1, entryTags.Length, "Number of tags");
-			Assert.IsTrue(entryTags.Any(t => t.Id == 39), "vocarock tag is added");
+			entryTags.Length.Should().Be(1, "Number of tags");
+			entryTags.Any(t => t.Id == 39).Should().BeTrue("vocarock tag is added");
 		}
 
 		[TestMethod]
@@ -94,11 +95,11 @@ namespace VocaDb.Tests.Service.Queries
 
 			AddSongTags(_entry.Id, Contract(tag.Id));
 
-			Assert.AreEqual(1, _entry.Tags.Tags.Count(), "Number of tags");
+			_entry.Tags.Tags.Count().Should().Be(1, "Number of tags");
 			var usage = _entry.Tags.Usages.First();
-			Assert.AreEqual("vocarock", usage.Tag.DefaultName, "Added tag name");
-			Assert.AreEqual(tag.Id, usage.Tag.Id, "Added tag Id");
-			Assert.AreEqual(1, tag.UsageCount, "Number of usages for tag");
+			usage.Tag.DefaultName.Should().Be("vocarock", "Added tag name");
+			usage.Tag.Id.Should().Be(tag.Id, "Added tag Id");
+			tag.UsageCount.Should().Be(1, "Number of usages for tag");
 		}
 
 		/// <summary>
@@ -112,10 +113,10 @@ namespace VocaDb.Tests.Service.Queries
 
 			AddSongTags(_entry.Id, Contract("ロック"));
 
-			Assert.AreEqual(1, _entry.Tags.Tags.Count(), "Number of tags");
+			_entry.Tags.Tags.Count().Should().Be(1, "Number of tags");
 			var usage = _entry.Tags.Usages.First();
-			Assert.AreEqual("rock", usage.Tag.DefaultName, "Added tag name");
-			Assert.AreEqual(tag.Id, usage.Tag.Id, "Added tag Id");
+			usage.Tag.DefaultName.Should().Be("rock", "Added tag name");
+			usage.Tag.Id.Should().Be(tag.Id, "Added tag Id");
 		}
 
 		/// <summary>
@@ -132,9 +133,9 @@ namespace VocaDb.Tests.Service.Queries
 			AddSongTags(_entry.Id, Contract("vocarock"));
 
 			var entryTags = _entry.Tags.Tags.ToArray();
-			Assert.AreEqual(1, entryTags.Length, "Number of tags");
-			Assert.IsTrue(entryTags.Any(t => t.DefaultName == "vocarock"), "vocarock tag is added");
-			Assert.IsTrue(entryTags.Any(t => t.Id != 39), "tag name cannot be the same as rock tag");
+			entryTags.Length.Should().Be(1, "Number of tags");
+			entryTags.Any(t => t.DefaultName == "vocarock").Should().BeTrue("vocarock tag is added");
+			entryTags.Any(t => t.Id != 39).Should().BeTrue("tag name cannot be the same as rock tag");
 		}
 
 		[TestMethod]
@@ -151,10 +152,10 @@ namespace VocaDb.Tests.Service.Queries
 
 			AddSongTags(_entry.Id, tags);
 
-			Assert.AreEqual(1, _entry.Tags.Tags.Count(), "Number of tags");
+			_entry.Tags.Tags.Count().Should().Be(1, "Number of tags");
 			var usage = _entry.Tags.Usages.First();
-			Assert.AreEqual(tag.Id, usage.Tag.Id, "Added tag name");
-			Assert.AreEqual(1, tag.UsageCount, "Number of usages for tag");
+			usage.Tag.Id.Should().Be(tag.Id, "Added tag name");
+			tag.UsageCount.Should().Be(1, "Number of usages for tag");
 		}
 
 		[TestMethod]
@@ -170,10 +171,10 @@ namespace VocaDb.Tests.Service.Queries
 			AddSongTags(_entry.Id, tags);
 
 			var entryTags = _entry.Tags.Tags.ToArray();
-			Assert.AreEqual(2, entryTags.Length, "Number of applied tags");
-			Assert.IsTrue(entryTags.Any(t => t.DefaultName == "vocarock"), "vocarock tag is added");
-			Assert.IsTrue(entryTags.Any(t => t.DefaultName == "power metal"), "power metal tag is added");
-			Assert.AreEqual(1, entryTags[0].UsageCount, "Number of usages for tag");
+			entryTags.Length.Should().Be(2, "Number of applied tags");
+			entryTags.Any(t => t.DefaultName == "vocarock").Should().BeTrue("vocarock tag is added");
+			entryTags.Any(t => t.DefaultName == "power metal").Should().BeTrue("power metal tag is added");
+			entryTags[0].UsageCount.Should().Be(1, "Number of usages for tag");
 		}
 
 		[TestMethod]
@@ -190,10 +191,10 @@ namespace VocaDb.Tests.Service.Queries
 			AddSongTags(_entry.Id, tags);
 
 			var entryTags = _entry.Tags.Tags.ToArray();
-			Assert.AreEqual(1, entryTags.Length, "Number of tags");
-			Assert.IsTrue(entryTags.Any(t => t.DefaultName == "power metal"), "power metal tag is added");
-			Assert.AreEqual(1, entryTags[0].UsageCount, "Number of usages for the added tag");
-			Assert.AreEqual(0, tag1.UsageCount, "Number of usages for the removed tag");
+			entryTags.Length.Should().Be(1, "Number of tags");
+			entryTags.Any(t => t.DefaultName == "power metal").Should().BeTrue("power metal tag is added");
+			entryTags[0].UsageCount.Should().Be(1, "Number of usages for the added tag");
+			tag1.UsageCount.Should().Be(0, "Number of usages for the removed tag");
 		}
 
 		[TestMethod]
@@ -206,9 +207,9 @@ namespace VocaDb.Tests.Service.Queries
 
 			_queries.RemoveTagUsage<SongTagUsage, Song>(usage.Id, _repository.OfType<Song>());
 
-			Assert.AreEqual(1, _entry.Tags.Usages.Count, "Number of tag usages for entry");
-			Assert.AreEqual(0, tag.UsageCount, "Number of usages for tag");
-			Assert.IsFalse(_entry.Tags.HasTag(tag), "Tag was removed from entry");
+			_entry.Tags.Usages.Count.Should().Be(1, "Number of tag usages for entry");
+			tag.UsageCount.Should().Be(0, "Number of usages for tag");
+			_entry.Tags.HasTag(tag).Should().BeFalse("Tag was removed from entry");
 		}
 
 		[TestMethod]
@@ -221,8 +222,8 @@ namespace VocaDb.Tests.Service.Queries
 			AddSongTags(_entry.Id, Contract(tag.Id));
 
 			var message = _repository.List<UserMessage>().FirstOrDefault();
-			Assert.IsNotNull("message", "Message was sent");
-			Assert.AreEqual(followingUser, message?.User, "User as expected");
+			message.Should().NotBeNull("Message was sent");
+			message?.User.Should().Be(followingUser, "User as expected");
 		}
 
 		[TestMethod]
@@ -233,7 +234,7 @@ namespace VocaDb.Tests.Service.Queries
 
 			AddSongTags(_entry.Id, Contract(tag.Id));
 
-			Assert.AreEqual(0, _repository.List<UserMessage>().Count, "No message was sent");
+			_repository.List<UserMessage>().Count.Should().Be(0, "No message was sent");
 		}
 
 		[TestMethod]
@@ -246,7 +247,7 @@ namespace VocaDb.Tests.Service.Queries
 			var list = _repository.Save(new SongList("Mikulist", _user));
 			AddSongListTags(list.Id, Contract(tag.Id));
 
-			Assert.AreEqual(0, _repository.List<UserMessage>().Count, "No message was sent");
+			_repository.List<UserMessage>().Count.Should().Be(0, "No message was sent");
 		}
 
 		[TestMethod]
@@ -258,8 +259,8 @@ namespace VocaDb.Tests.Service.Queries
 			AddSongTags(_entry.Id, Contract(_existingTag.Id), Contract(tag.Id));
 
 			var entryTags = _entry.Tags.Tags.ToArray();
-			Assert.AreEqual(1, entryTags.Length, "Number of tags");
-			Assert.IsTrue(entryTags.Any(t => t.Id == 39), "vocarock tag is added");
+			entryTags.Length.Should().Be(1, "Number of tags");
+			entryTags.Any(t => t.Id == 39).Should().BeTrue("vocarock tag is added");
 		}
 	}
 }

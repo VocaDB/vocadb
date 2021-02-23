@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 
@@ -19,7 +20,7 @@ namespace VocaDb.Tests.Domain
 		private void TestCompareTo(int expected,
 			OptionalDateTime first, OptionalDateTime second)
 		{
-			Assert.AreEqual(expected, first.CompareTo(second), "Comparing " + first + " to " + second);
+			first.CompareTo(second).Should().Be(expected, "Comparing " + first + " to " + second);
 		}
 
 		private void TestEquals(bool equals,
@@ -30,9 +31,9 @@ namespace VocaDb.Tests.Domain
 			var second = Date(secondYear, secondMonth, secondDay);
 
 			if (equals)
-				Assert.AreEqual(first, second, "Dates are equal");
+				second.As<object>()/* Casting is required. */.Should().Be(first, "Dates are equal");
 			else
-				Assert.AreNotEqual(first, second, "Dates are not equal");
+				second.As<object>()/* Casting is required. */.Should().NotBe(first, "Dates are not equal");
 		}
 
 		[TestMethod]

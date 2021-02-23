@@ -1,6 +1,7 @@
 #nullable disable
 
 using System;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Web.Code;
 using VocaDb.Web.Resources.Views.Shared;
@@ -37,7 +38,7 @@ namespace VocaDb.Tests.Web.Code
 			var result = FormatTimeAgo(TimeSpan.FromMinutes(5));
 			var expected = FormatExpected(5, TimeStrings.Minutes);
 
-			Assert.AreEqual(expected, result, "Result");
+			result.Should().Be(expected, "Result");
 		}
 
 		[TestMethod]
@@ -46,7 +47,7 @@ namespace VocaDb.Tests.Web.Code
 			var result = FormatTimeAgo(TimeSpan.FromHours(3));
 			var expected = FormatExpected(3, TimeStrings.Hours);
 
-			Assert.AreEqual(expected, result, "Result");
+			result.Should().Be(expected, "Result");
 		}
 
 		[TestMethod]
@@ -55,7 +56,7 @@ namespace VocaDb.Tests.Web.Code
 			var result = FormatTimeAgo(TimeSpan.FromDays(10));
 			var expected = FormatExpected(10, TimeStrings.Days);
 
-			Assert.AreEqual(expected, result, "Result");
+			result.Should().Be(expected, "Result");
 		}
 
 		[TestMethod]
@@ -64,7 +65,7 @@ namespace VocaDb.Tests.Web.Code
 			var result = FormatTimeAgo(TimeSpan.FromDays(70));
 			var expected = FormatExpected(3, TimeStrings.Months);
 
-			Assert.AreEqual(expected, result, "Result");
+			result.Should().Be(expected, "Result");
 		}
 
 		[TestMethod]
@@ -73,7 +74,7 @@ namespace VocaDb.Tests.Web.Code
 			var result = FormatTimeAgo(TimeSpan.FromDays(730));
 			var expected = FormatExpected(24, TimeStrings.Months);
 
-			Assert.AreEqual(expected, result, "Result");
+			result.Should().Be(expected, "Result");
 		}
 	}
 }

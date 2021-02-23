@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.Search;
 
@@ -16,17 +17,17 @@ namespace VocaDb.Tests.Service.Search
 		{
 			var words = result.TakeAll(propName);
 
-			Assert.AreEqual(values.Length, words.Length, "Number of words matches");
+			words.Length.Should().Be(values.Length, "Number of words matches");
 
 			if (values.Length == 1 && words.Length == 1)
 			{
-				Assert.AreEqual(values.First(), words.First().Value);
+				words.First().Value.Should().Be(values.First());
 			}
 			else
 			{
 				foreach (var value in values)
 				{
-					Assert.IsTrue(words.Any(w => w.Value == value));
+					words.Any(w => w.Value == value).Should().BeTrue();
 				}
 			}
 		}

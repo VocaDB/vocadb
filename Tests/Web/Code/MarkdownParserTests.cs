@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Text.RegularExpressions;
+using FluentAssertions;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Tests.TestSupport;
@@ -21,13 +22,13 @@ namespace VocaDb.Tests.Web.Code
 		private void TestGetHtml(string expected, string markdownText)
 		{
 			var result = GetHtml(markdownText)?.Trim();
-			Assert.AreEqual(expected, result, markdownText);
+			result.Should().Be(expected, markdownText);
 		}
 
 		private void TestGetPlainText(string expected, string input)
 		{
 			var result = _parser.GetPlainText(input)?.Trim();
-			Assert.AreEqual(expected, result, input);
+			result.Should().Be(expected, input);
 		}
 
 		private HtmlDocument GetHtmlDocument(string markdownText)
@@ -50,14 +51,14 @@ namespace VocaDb.Tests.Web.Code
 		{
 			var result = GetHtmlDocument("VocaDB homepage: http://vocadb.net").DocumentNode.ChildNodes[0];
 
-			Assert.AreEqual(2, result.ChildNodes.Count, "Number of nodes");
-			Assert.AreEqual("VocaDB homepage: ", result.ChildNodes[0].InnerHtml);
+			result.ChildNodes.Count.Should().Be(2, "Number of nodes");
+			result.ChildNodes[0].InnerHtml.Should().Be("VocaDB homepage: ");
 
 			var linkNode = result.ChildNodes[1];
-			Assert.AreEqual(HtmlNodeType.Element, linkNode.NodeType, "linkNode.NodeType");
-			Assert.AreEqual("a", linkNode.Name, "linkNode.Name");
-			Assert.IsNotNull(linkNode.Attributes["href"], "linkNode.href");
-			Assert.AreEqual("http://vocadb.net", linkNode.Attributes["href"].Value, "linkNode.href");
+			linkNode.NodeType.Should().Be(HtmlNodeType.Element, "linkNode.NodeType");
+			linkNode.Name.Should().Be("a", "linkNode.Name");
+			linkNode.Attributes["href"].Should().NotBeNull("linkNode.href");
+			linkNode.Attributes["href"].Value.Should().Be("http://vocadb.net", "linkNode.href");
 		}
 
 		// Test automatic newlines
@@ -100,7 +101,7 @@ namespace VocaDb.Tests.Web.Code
 		{
 			var result = GetHtml(">Miku Miku!\n>by Miku\n\nThis needs to be encoded :>");
 
-			Assert.AreEqual(StripWhitespace("<blockquote><p>Miku Miku!<br />by Miku</p></blockquote><p>This needs to be encoded :&gt;</p>"), StripWhitespace(result), "result");
+			StripWhitespace(result).Should().Be(StripWhitespace("<blockquote><p>Miku Miku!<br />by Miku</p></blockquote><p>This needs to be encoded :&gt;</p>"), "result");
 		}
 
 		[TestMethod]

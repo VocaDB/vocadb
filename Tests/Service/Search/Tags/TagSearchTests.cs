@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Tags;
@@ -40,11 +41,11 @@ namespace VocaDb.Tests.Service.Search.Tags
 				SortRule = TagSortRule.Name
 			}, false);
 
-			Assert.IsNotNull(result, "result");
-			Assert.AreEqual(2, result.Items.Length, "Number of items returned");
-			Assert.AreEqual(2, result.TotalCount, "Total number of items");
-			Assert.AreEqual("alternative rock", result.Items[0].DefaultName, "First tag name");
-			Assert.AreEqual("rock", result.Items[1].DefaultName, "Second tag name");
+			result.Should().NotBeNull("result");
+			result.Items.Length.Should().Be(2, "Number of items returned");
+			result.TotalCount.Should().Be(2, "Total number of items");
+			result.Items[0].DefaultName.Should().Be("alternative rock", "First tag name");
+			result.Items[1].DefaultName.Should().Be("rock", "Second tag name");
 		}
 
 		[TestMethod]
@@ -55,8 +56,8 @@ namespace VocaDb.Tests.Service.Search.Tags
 				SortRule = TagSortRule.Name
 			}, true);
 
-			Assert.AreEqual(4, result.Items.Length, "Number of items returned");
-			Assert.AreEqual("alternative rock", result.Items[0].DefaultName, "First tag name");
+			result.Items.Length.Should().Be(4, "Number of items returned");
+			result.Items[0].DefaultName.Should().Be("alternative rock", "First tag name");
 		}
 	}
 }

@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -23,14 +24,13 @@ using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Tags;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Resources.Messages;
+using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Tests.TestData;
 using VocaDb.Tests.TestSupport;
 using VocaDb.Web.Code;
-using VocaDb.Model.Service;
 using VocaDb.Web.Helpers;
-using FluentAssertions;
 
 namespace VocaDb.Tests.Web.Controllers.DataAccess
 {
@@ -85,9 +85,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 		private void AssertHasArtist(Song song, Artist artist, ArtistRoles? roles = null)
 		{
-			Assert.IsTrue(song.Artists.Any(a => a.Artist.Equals(artist)), song + " has " + artist);
+			song.Artists.Any(a => a.Artist.Equals(artist)).Should().BeTrue(song + " has " + artist);
 			if (roles.HasValue)
-				Assert.IsTrue(song.Artists.Any(a => a.Artist.Equals(artist) && a.Roles == roles), artist + " has roles " + roles);
+				song.Artists.Any(a => a.Artist.Equals(artist) && a.Roles == roles).Should().BeTrue(artist + " has roles " + roles);
 		}
 
 		private ArtistForSongContract CreateArtistForSongContract(int artistId = 0, string artistName = null, ArtistRoles roles = ArtistRoles.Default)
@@ -163,37 +163,37 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = await CallCreate();
 
-			Assert.IsNotNull(result, "result");
-			Assert.AreEqual("Resistance", result.Name, "Name");
+			result.Should().NotBeNull("result");
+			result.Name.Should().Be("Resistance", "Name");
 
 			_song = _repository.HandleQuery(q => q.Query().FirstOrDefault(a => a.DefaultName == "Resistance"));
 
-			Assert.IsNotNull(_song, "Song was saved to repository");
-			Assert.AreEqual("Resistance", _song.DefaultName, "Name");
-			Assert.AreEqual(ContentLanguageSelection.English, _song.Names.SortNames.DefaultLanguage, "Default language should be English");
-			Assert.AreEqual(2, _song.AllArtists.Count, "Artists count");
+			_song.Should().NotBeNull("Song was saved to repository");
+			_song.DefaultName.Should().Be("Resistance", "Name");
+			_song.Names.SortNames.DefaultLanguage.Should().Be(ContentLanguageSelection.English, "Default language should be English");
+			_song.AllArtists.Count.Should().Be(2, "Artists count");
 			VocaDbAssert.ContainsArtists(_song.AllArtists, "Tripshots", "Hatsune Miku");
-			Assert.AreEqual("Tripshots feat. Hatsune Miku", _song.ArtistString.Default, "ArtistString");
-			Assert.AreEqual(39, _song.LengthSeconds, "Length");  // From PV
-			Assert.AreEqual(PVServices.NicoNicoDouga, _song.PVServices, "PVServices");
+			_song.ArtistString.Default.Should().Be("Tripshots feat. Hatsune Miku", "ArtistString");
+			_song.LengthSeconds.Should().Be(39, "Length");  // From PV
+			_song.PVServices.Should().Be(PVServices.NicoNicoDouga, "PVServices");
 
 			var archivedVersion = _repository.List<ArchivedSongVersion>().FirstOrDefault();
 
-			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(_song, archivedVersion.Song, "Archived version song");
-			Assert.AreEqual(SongArchiveReason.Created, archivedVersion.Reason, "Archived version reason");
+			archivedVersion.Should().NotBeNull("Archived version was created");
+			archivedVersion.Song.Should().Be(_song, "Archived version song");
+			archivedVersion.Reason.Should().Be(SongArchiveReason.Created, "Archived version reason");
 
 			var activityEntry = _repository.List<ActivityEntry>().FirstOrDefault();
 
-			Assert.IsNotNull(activityEntry, "Activity entry was created");
-			Assert.AreEqual(_song, activityEntry.EntryBase, "Activity entry's entry");
-			Assert.AreEqual(EntryEditEvent.Created, activityEntry.EditEvent, "Activity entry event type");
+			activityEntry.Should().NotBeNull("Activity entry was created");
+			activityEntry.EntryBase.Should().Be(_song, "Activity entry's entry");
+			activityEntry.EditEvent.Should().Be(EntryEditEvent.Created, "Activity entry event type");
 
 			var pv = _repository.List<PVForSong>().FirstOrDefault(p => p.Song.Id == _song.Id);
 
-			Assert.IsNotNull(pv, "PV was created");
-			Assert.AreEqual(_song, pv.Song, "pv.Song");
-			Assert.AreEqual("Resistance", pv.Name, "pv.Name");
+			pv.Should().NotBeNull("PV was created");
+			pv.Song.Should().Be(_song, "pv.Song");
+			pv.Name.Should().Be("Resistance", "pv.Name");
 		}
 
 		[TestMethod]
@@ -205,8 +205,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var notification = _repository.List<UserMessage>().FirstOrDefault();
 
-			Assert.IsNotNull(notification, "Notification was created");
-			Assert.AreEqual(_user2, notification.Receiver, "Receiver");
+			notification.Should().NotBeNull("Notification was created");
+			notification.Receiver.Should().Be(_user2, "Receiver");
 		}
 
 		[TestMethod]
@@ -216,7 +216,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			CallCreate();
 
-			Assert.IsFalse(_repository.List<UserMessage>().Any(), "No notification was created");
+			_repository.List<UserMessage>().Any().Should().BeFalse("No notification was created");
 		}
 
 		[TestMethod]
@@ -229,9 +229,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var notification = _repository.List<UserMessage>().First();
 
-			Assert.AreEqual(notification.Subject, _mailer.Subject, "Subject");
-			Assert.IsNotNull(_mailer.Body, "Body");
-			Assert.AreEqual(notification.Receiver.Name, _mailer.ReceiverName, "ReceiverName");
+			_mailer.Subject.Should().Be(notification.Subject, "Subject");
+			_mailer.Body.Should().NotBeNull("Body");
+			_mailer.ReceiverName.Should().Be(notification.Receiver.Name, "ReceiverName");
 		}
 
 		[TestMethod]
@@ -244,8 +244,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			CallCreate();
 
 			var notification = _repository.List<UserMessage>().FirstOrDefault();
-			Assert.IsNotNull(notification, "Notification was created");
-			Assert.AreEqual(_user2, notification.User, "Notified user");
+			notification.Should().NotBeNull("Notification was created");
+			notification.User.Should().Be(_user2, "Notified user");
 		}
 
 		[TestMethod]
@@ -268,8 +268,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_song = _repository.HandleQuery(q => q.Query().FirstOrDefault(a => a.DefaultName == "Resistance"));
 
-			Assert.AreEqual(1, _song.Tags.Tags.Count(), "Tags.Count");
-			Assert.IsTrue(_song.Tags.HasTag(_tag), "Has vocarock tag");
+			_song.Tags.Tags.Count().Should().Be(1, "Tags.Count");
+			_song.Tags.HasTag(_tag).Should().BeTrue("Has vocarock tag");
 		}
 
 		[TestMethod]
@@ -284,14 +284,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_song = _repository.HandleQuery(q => q.Query().FirstOrDefault(a => a.DefaultName == "Resistance"));
 
-			Assert.AreEqual(1, _song.Tags.Tags.Count(), "Tags.Count");
-			Assert.IsTrue(_song.Tags.HasTag(_tag), "Has vocarock tag");
-			Assert.AreEqual(1, _song.Tags.GetTagUsage(_tag).Count, "Tag vote count");
+			_song.Tags.Tags.Count().Should().Be(1, "Tags.Count");
+			_song.Tags.HasTag(_tag).Should().BeTrue("Has vocarock tag");
+			_song.Tags.GetTagUsage(_tag).Count.Should().Be(1, "Tag vote count");
 			var messages = _repository.List<UserMessage>().Where(u => u.User.Equals(_user2)).ToArray();
-			Assert.AreEqual(1, messages.Length, "Notification was sent");
+			messages.Length.Should().Be(1, "Notification was sent");
 			var message = messages[0];
-			Assert.AreEqual(_user2, message.Receiver, "Message receiver");
-			Assert.AreEqual("New song tagged with vocarock", message.Subject, "Message subject"); // Test subject to make sure it's for one tag
+			message.Receiver.Should().Be(_user2, "Message receiver");
+			message.Subject.Should().Be("New song tagged with vocarock", "Message subject"); // Test subject to make sure it's for one tag
 		}
 
 		[TestMethod]
@@ -308,8 +308,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_song = _repository.Load(id);
 
-			Assert.AreEqual(SongType.Cover, _song.SongType, "SongType");
-			Assert.AreEqual(0, _song.Tags.Tags.Count(), "No tags added");
+			_song.SongType.Should().Be(SongType.Cover, "SongType");
+			_song.Tags.Tags.Count().Should().Be(0, "No tags added");
 		}
 
 		[TestMethod]
@@ -319,8 +319,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await CallCreate();
 
-			Assert.IsNotNull(result, "result");
-			Assert.AreEqual(PVServices.Nothing, result.PVServices, "PVServices");
+			result.Should().NotBeNull("result");
+			result.PVServices.Should().Be(PVServices.Nothing, "PVServices");
 		}
 
 		[TestMethod]
@@ -330,8 +330,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await CallCreate();
 
-			Assert.IsNotNull(result, "result");
-			Assert.AreEqual(PVServices.Nothing, result.PVServices, "PVServices");
+			result.Should().NotBeNull("result");
+			result.PVServices.Should().Be(PVServices.Nothing, "PVServices");
 		}
 
 		/// <summary>
@@ -342,10 +342,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var (created, report) = CallCreateReport(SongReportType.InvalidInfo);
 
-			Assert.IsTrue(created, "Report was created");
-			Assert.AreEqual(_song.Id, report.EntryBase.Id, "Entry Id");
-			Assert.AreEqual(_user, report.User, "Report author");
-			Assert.AreEqual(SongReportType.InvalidInfo, report.ReportType, "Report type");
+			created.Should().BeTrue("Report was created");
+			report.EntryBase.Id.Should().Be(_song.Id, "Entry Id");
+			report.User.Should().Be(_user, "Report author");
+			report.ReportType.Should().Be(SongReportType.InvalidInfo, "Report type");
 		}
 
 		/// <summary>
@@ -360,17 +360,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var report = _repository.List<SongReport>().First();
 
-			Assert.AreEqual(version.Version, report.VersionNumber, "Version number");
-			Assert.IsNotNull(report.VersionBase, "VersionBase");
+			report.VersionNumber.Should().Be(version.Version, "Version number");
+			report.VersionBase.Should().NotBeNull("VersionBase");
 
 			var notification = _repository.List<UserMessage>().FirstOrDefault();
 
-			Assert.IsNotNull(notification, "Notification was created");
-			Assert.AreEqual(_user, notification.Receiver, "Notification receiver");
-			Assert.AreEqual(string.Format(EntryReportStrings.EntryVersionReportTitle, _song.DefaultName), notification.Subject, "Notification subject");
-			Assert.AreEqual(string.Format(EntryReportStrings.EntryVersionReportBody,
-				MarkdownHelper.CreateMarkdownLink(_entryLinkFactory.GetFullEntryUrl(_song), _song.DefaultName), "It's Miku, not Rin"),
-				notification.Message, "Notification message");
+			notification.Should().NotBeNull("Notification was created");
+			notification.Receiver.Should().Be(_user, "Notification receiver");
+			notification.Subject.Should().Be(string.Format(EntryReportStrings.EntryVersionReportTitle, _song.DefaultName), "Notification subject");
+			notification.Message.Should().Be(string.Format(EntryReportStrings.EntryVersionReportBody, MarkdownHelper.CreateMarkdownLink(_entryLinkFactory.GetFullEntryUrl(_song), _song.DefaultName), "It's Miku, not Rin"), "Notification message");
 		}
 
 		/// <summary>
@@ -385,8 +383,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var reports = _repository.List<SongReport>();
 
-			Assert.AreEqual(2, reports.Count, "Number of reports");
-			Assert.IsTrue(secondResult.created, "Second report was created");
+			reports.Count.Should().Be(2, "Number of reports");
+			secondResult.created.Should().BeTrue("Second report was created");
 		}
 
 		/// <summary>
@@ -400,9 +398,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var reports = _repository.List<SongReport>();
 
-			Assert.AreEqual(1, reports.Count, "Number of reports");
-			Assert.AreEqual(SongReportType.InvalidInfo, report.ReportType, "Report type");
-			Assert.IsFalse(secondResult.created, "Second report was not created");
+			reports.Count.Should().Be(1, "Number of reports");
+			report.ReportType.Should().Be(SongReportType.InvalidInfo, "Report type");
+			secondResult.created.Should().BeFalse("Second report was not created");
 		}
 
 		/// <summary>
@@ -417,8 +415,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var reports = _repository.List<SongReport>();
 
-			Assert.AreEqual(2, reports.Count, "Number of reports");
-			Assert.IsTrue(secondCreated, "Second report was created");
+			reports.Count.Should().Be(2, "Number of reports");
+			secondCreated.Should().BeTrue("Second report was created");
 		}
 
 		/// <summary>
@@ -434,8 +432,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var reports = _repository.List<SongReport>();
 
-			Assert.AreEqual(1, reports.Count, "Number of reports");
-			Assert.IsFalse(secondCreated, "Second report was not created");
+			reports.Count.Should().Be(1, "Number of reports");
+			secondCreated.Should().BeFalse("Second report was not created");
 		}
 
 		/// <summary>
@@ -453,7 +451,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var reports = _repository.List<SongReport>();
 
 			reports.Should().HaveCount(2);
-			Assert.IsFalse(thirdCreated, "Third report was not created");
+			thirdCreated.Should().BeFalse("Third report was not created");
 		}
 
 		/// <summary>
@@ -468,9 +466,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var report = _repository.List<SongReport>().FirstOrDefault();
 
-			Assert.IsNotNull(report, "Report was created");
-			Assert.IsNull(report.User, "User is null");
-			Assert.AreEqual("39.39.39.39", report.Hostname, "Hostname");
+			report.Should().NotBeNull("Report was created");
+			report.User.Should().BeNull("User is null");
+			report.Hostname.Should().Be("39.39.39.39", "Hostname");
 		}
 
 		// Create report, notify the user who created the entry if they're the only editor.
@@ -482,13 +480,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_queries.CreateReport(_song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", null);
 
 			var report = _repository.List<SongReport>().First();
-			Assert.AreEqual(_song, report.Entry, "Report was created for song");
-			Assert.IsNull(report.Version, "Version");
+			report.Entry.Should().Be(_song, "Report was created for song");
+			report.Version.Should().BeNull("Version");
 
 			var notification = _repository.List<UserMessage>().FirstOrDefault();
-			Assert.IsNotNull(notification, "notification was created");
-			Assert.AreEqual(editor, notification.Receiver, "notification was receiver is editor");
-			Assert.AreEqual(string.Format(EntryReportStrings.EntryVersionReportTitle, _song.DefaultName), notification.Subject, "Notification subject");
+			notification.Should().NotBeNull("notification was created");
+			notification.Receiver.Should().Be(editor, "notification was receiver is editor");
+			notification.Subject.Should().Be(string.Format(EntryReportStrings.EntryVersionReportTitle, _song.DefaultName), "Notification subject");
 		}
 
 		[TestMethod]
@@ -499,11 +497,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_queries.CreateReport(_song.Id, SongReportType.Other, "39.39.39.39", "It's Miku, not Rin", null);
 
 			var report = _repository.List<SongReport>().First();
-			Assert.AreEqual(_song, report.Entry, "Report was created for song");
-			Assert.IsNull(report.Version, "Version");
+			report.Entry.Should().Be(_song, "Report was created for song");
+			report.Version.Should().BeNull("Version");
 
 			var notification = _repository.List<UserMessage>().FirstOrDefault();
-			Assert.IsNull(notification, "notification was not created");
+			notification.Should().BeNull("notification was not created");
 		}
 
 		// Create report, with both report type name and notes
@@ -517,9 +515,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var entryLink = MarkdownHelper.CreateMarkdownLink(_entryLinkFactory.GetFullEntryUrl(_song), _song.DefaultName);
 
 			var notification = _repository.List<UserMessage>().FirstOrDefault();
-			Assert.IsNotNull(notification, "notification was created");
-			Assert.AreEqual(string.Format(EntryReportStrings.EntryVersionReportTitle, _song.DefaultName), notification.Subject, "Notification subject");
-			Assert.AreEqual(string.Format(EntryReportStrings.EntryVersionReportBody, entryLink, "Broken PV (It's Miku, not Rin)"), notification.Message, "Notification body");
+			notification.Should().NotBeNull("notification was created");
+			notification.Subject.Should().Be(string.Format(EntryReportStrings.EntryVersionReportTitle, _song.DefaultName), "Notification subject");
+			notification.Message.Should().Be(string.Format(EntryReportStrings.EntryVersionReportBody, entryLink, "Broken PV (It's Miku, not Rin)"), "Notification body");
 		}
 
 
@@ -538,8 +536,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await CallFindDuplicates(new[] { "【初音ミク】anger【VOCALOID3DPV】" }, new[] { "http://youtu.be/123456567", "http://www.nicovideo.jp/watch/sm3183550" });
 
-			Assert.AreEqual("anger", result.Title, "Title"); // Title from PV
-			Assert.AreEqual(0, result.Matches.Length, "No matches");
+			result.Title.Should().Be("anger", "Title"); // Title from PV
+			result.Matches.Length.Should().Be(0, "No matches");
 		}
 
 		[TestMethod]
@@ -557,9 +555,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await CallFindDuplicates(new string[0], new[] { "https://youtu.be/aJKY_EeAeYc" });
 
-			Assert.AreEqual("Clean Tears - Ruby", result.Title, "Title"); // Title from PV
-			Assert.AreEqual(1, result.Artists.Length, "Number of matched artists");
-			Assert.AreEqual(artist.Id, result.Artists[0].Id, "Matched artist");
+			result.Title.Should().Be("Clean Tears - Ruby", "Title"); // Title from PV
+			result.Artists.Length.Should().Be(1, "Number of matched artists");
+			result.Artists[0].Id.Should().Be(artist.Id, "Matched artist");
 		}
 
 		[TestMethod]
@@ -567,10 +565,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = await CallFindDuplicates(new[] { "Nebula" });
 
-			Assert.AreEqual(1, result.Matches.Length, "Matches");
+			result.Matches.Length.Should().Be(1, "Matches");
 			var match = result.Matches.First();
-			Assert.AreEqual(_song.Id, match.Entry.Id, "Matched song");
-			Assert.AreEqual(SongMatchProperty.Title, match.MatchProperty, "Matched property");
+			match.Entry.Id.Should().Be(_song.Id, "Matched song");
+			match.MatchProperty.Should().Be(SongMatchProperty.Title, "Matched property");
 		}
 
 		[TestMethod]
@@ -583,10 +581,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var result = await CallFindDuplicates(new[] { "Nebula" }, artistIds: new[] { producer2.Id });
 
 			// 2 songs, the one with both artist and title match appears first
-			Assert.AreEqual(2, result.Matches.Length, "Matches");
+			result.Matches.Length.Should().Be(2, "Matches");
 			var match = result.Matches.First();
-			Assert.AreEqual(song2.Id, match.Entry.Id, "Matched song");
-			Assert.AreEqual(SongMatchProperty.Title, match.MatchProperty, "Matched property");
+			match.Entry.Id.Should().Be(song2.Id, "Matched song");
+			match.MatchProperty.Should().Be(SongMatchProperty.Title, "Matched property");
 		}
 
 		[TestMethod]
@@ -594,8 +592,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = await CallFindDuplicates(new[] { "Anger" }, new[] { "http://www.nicovideo.jp/watch/sm393939" }, getPvInfo: false);
 
-			Assert.IsNull(result.Title, "Title");
-			Assert.AreEqual(0, result.Matches.Length, "No matches");
+			result.Title.Should().BeNull("Title");
+			result.Matches.Length.Should().Be(0, "No matches");
 		}
 
 		[TestMethod]
@@ -606,10 +604,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await CallFindDuplicates(anyPv: new[] { "http://youtu.be/hoLu7c2XZYU" });
 
-			Assert.AreEqual(1, result.Matches.Length, "Matches");
+			result.Matches.Length.Should().Be(1, "Matches");
 			var match = result.Matches.First();
-			Assert.AreEqual(_song.Id, match.Entry.Id, "Matched song");
-			Assert.AreEqual(SongMatchProperty.PV, match.MatchProperty, "Matched property");
+			match.Entry.Id.Should().Be(_song.Id, "Matched song");
+			match.MatchProperty.Should().Be(SongMatchProperty.PV, "Matched property");
 		}
 
 		[TestMethod]
@@ -621,7 +619,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await CallFindDuplicates(anyPv: new[] { "http://www.nicovideo.jp/watch/sm27114783" });
 
-			Assert.AreEqual(SongType.Cover, result.SongType, "SongType is cover because of the 'cover' in title");
+			result.SongType.Should().Be(SongType.Cover, "SongType is cover because of the 'cover' in title");
 		}
 
 		[TestMethod]
@@ -643,13 +641,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = _queries.GetRelatedSongs(_song.Id, SongOptionalFields.AdditionalNames);
 
-			Assert.IsNotNull(result, "result");
-			Assert.AreEqual(1, result.ArtistMatches.Length, "Number of artist matches");
-			Assert.AreEqual(matchingArtist.Id, result.ArtistMatches.First().Id, "Matching artist");
-			Assert.AreEqual(1, result.TagMatches.Length, "Number of tag matches");
-			Assert.AreEqual(matchingTag.Id, result.TagMatches.First().Id, "Matching tag");
-			Assert.AreEqual(1, result.LikeMatches.Length, "Number of like matches");
-			Assert.AreEqual(matchingLike.Id, result.LikeMatches.First().Id, "Matching like");
+			result.Should().NotBeNull("result");
+			result.ArtistMatches.Length.Should().Be(1, "Number of artist matches");
+			result.ArtistMatches.First().Id.Should().Be(matchingArtist.Id, "Matching artist");
+			result.TagMatches.Length.Should().Be(1, "Number of tag matches");
+			result.TagMatches.First().Id.Should().Be(matchingTag.Id, "Matching tag");
+			result.LikeMatches.Length.Should().Be(1, "Number of like matches");
+			result.LikeMatches.First().Id.Should().Be(matchingLike.Id, "Matching like");
 		}
 
 		[TestMethod]
@@ -667,8 +665,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = _queries.GetSongForEdit(_song.Id);
 
-			Assert.IsNotNull(result, "result");
-			Assert.AreEqual(relEvent.Id, result.AlbumEventId, "AlbumEventId");
+			result.Should().NotBeNull("result");
+			result.AlbumEventId.Should().Be(relEvent.Id, "AlbumEventId");
 		}
 
 		[TestMethod]
@@ -687,8 +685,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await _queries.GetTagSuggestionsAsync(_song.Id);
 
-			Assert.AreEqual(1, result.Count, "One suggestion");
-			Assert.AreEqual("metalcore", result[0].Tag.Name, "Tag name");
+			result.Count.Should().Be(1, "One suggestion");
+			result[0].Tag.Name.Should().Be("metalcore", "Tag name");
 		}
 
 		[TestMethod]
@@ -704,7 +702,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await _queries.GetTagSuggestionsAsync(_song.Id);
 
-			Assert.AreEqual(0, result.Count, "Cover tag suggestion ignored");
+			result.Count.Should().Be(0, "Cover tag suggestion ignored");
 		}
 
 		[TestMethod]
@@ -721,7 +719,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await _queries.GetTagSuggestionsAsync(remix.Id);
 
-			Assert.AreEqual("short version", result.FirstOrDefault()?.Tag.Name, "Short version tag was returned");
+			result.FirstOrDefault()?.Tag.Name.Should().Be("short version", "Short version tag was returned");
 		}
 
 		[TestMethod]
@@ -733,17 +731,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_queries.Merge(_song.Id, song2.Id);
 
-			Assert.AreEqual("Nebula", song2.Names.AllValues.FirstOrDefault(), "Name");
-			Assert.AreEqual(2, song2.AllArtists.Count, "Artists");
+			song2.Names.AllValues.FirstOrDefault().Should().Be("Nebula", "Name");
+			song2.AllArtists.Count.Should().Be(2, "Artists");
 			AssertHasArtist(song2, _producer);
 			AssertHasArtist(song2, _vocalist);
-			Assert.AreEqual(_song.LengthSeconds, song2.LengthSeconds, "LengthSeconds");
-			Assert.AreEqual(_song.Notes.Original, song2.Notes.Original, "Notes were copied");
+			song2.LengthSeconds.Should().Be(_song.LengthSeconds, "LengthSeconds");
+			song2.Notes.Original.Should().Be(_song.Notes.Original, "Notes were copied");
 
 			var mergeRecord = _repository.List<SongMergeRecord>().FirstOrDefault();
-			Assert.IsNotNull(mergeRecord, "Merge record was created");
-			Assert.AreEqual(_song.Id, mergeRecord.Source, "mergeRecord.Source");
-			Assert.AreEqual(song2.Id, mergeRecord.Target.Id, "mergeRecord.Target.Id");
+			mergeRecord.Should().NotBeNull("Merge record was created");
+			mergeRecord.Source.Should().Be(_song.Id, "mergeRecord.Source");
+			mergeRecord.Target.Id.Should().Be(song2.Id, "mergeRecord.Target.Id");
 		}
 
 		[TestMethod]
@@ -756,7 +754,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			song2.AddArtist(_vocalist2).Roles = ArtistRoles.Other;
 
 			_queries.Merge(_song.Id, song2.Id);
-			Assert.AreEqual(3, song2.AllArtists.Count, "Artists");
+			song2.AllArtists.Count.Should().Be(3, "Artists");
 			AssertHasArtist(song2, _producer, ArtistRoles.Instrumentalist);
 			AssertHasArtist(song2, _vocalist2, ArtistRoles.Other);
 		}
@@ -792,18 +790,18 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			await _queries.UpdateBasicProperties(contract);
 
 			var latestVersionBeforeRevert = _song.ArchivedVersionsManager.GetLatestVersion();
-			Assert.IsNotNull(latestVersionBeforeRevert, "latestVersion");
-			Assert.AreEqual(2, _song.Version, "Version number before revert");
+			latestVersionBeforeRevert.Should().NotBeNull("latestVersion");
+			_song.Version.Should().Be(2, "Version number before revert");
 
 			_queries.RevertToVersion(latestVersionBeforeRevert.Id);
 
-			Assert.AreEqual(3, _song.Version, "Version was incremented");
-			Assert.AreEqual(2, _song.Artists.Count(), "Artist links were restored");
-			Assert.AreNotEqual(_song.ArtistString?.Default, string.Empty, "Artist string was restored");
+			_song.Version.Should().Be(3, "Version was incremented");
+			_song.Artists.Count().Should().Be(2, "Artist links were restored");
+			string.Empty.Should().NotBe(_song.ArtistString?.Default, "Artist string was restored");
 
 			var latestVersion = _song.ArchivedVersionsManager.GetLatestVersion();
-			Assert.AreEqual(SongArchiveReason.Reverted, latestVersion.Reason, "Reason");
-			Assert.IsTrue(latestVersion.IsIncluded(SongEditableFields.Artists), "Artists are included in diff");
+			latestVersion.Reason.Should().Be(SongArchiveReason.Reverted, "Reason");
+			latestVersion.IsIncluded(SongEditableFields.Artists).Should().BeTrue("Artists are included in diff");
 		}
 
 		[TestMethod]
@@ -816,23 +814,23 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			contract = await _queries.UpdateBasicProperties(contract);
 
 			var songFromRepo = _repository.Load(contract.Id);
-			Assert.AreEqual("Replaced name", songFromRepo.DefaultName);
-			Assert.AreEqual(1, songFromRepo.Version, "Version");
-			Assert.AreEqual(2, songFromRepo.AllArtists.Count, "Number of artists");
-			Assert.AreEqual(0, songFromRepo.AllAlbums.Count, "No albums");
+			songFromRepo.DefaultName.Should().Be("Replaced name");
+			songFromRepo.Version.Should().Be(1, "Version");
+			songFromRepo.AllArtists.Count.Should().Be(2, "Number of artists");
+			songFromRepo.AllAlbums.Count.Should().Be(0, "No albums");
 
 			var archivedVersion = _repository.List<ArchivedSongVersion>().FirstOrDefault();
 
-			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(_song, archivedVersion.Song, "Archived version song");
-			Assert.AreEqual(SongArchiveReason.PropertiesUpdated, archivedVersion.Reason, "Archived version reason");
-			Assert.AreEqual(SongEditableFields.Names, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
+			archivedVersion.Should().NotBeNull("Archived version was created");
+			archivedVersion.Song.Should().Be(_song, "Archived version song");
+			archivedVersion.Reason.Should().Be(SongArchiveReason.PropertiesUpdated, "Archived version reason");
+			archivedVersion.Diff.ChangedFields.Value.Should().Be(SongEditableFields.Names, "Changed fields");
 
 			var activityEntry = _repository.List<ActivityEntry>().FirstOrDefault();
 
-			Assert.IsNotNull(activityEntry, "Activity entry was created");
-			Assert.AreEqual(_song, activityEntry.EntryBase, "Activity entry's entry");
-			Assert.AreEqual(EntryEditEvent.Updated, activityEntry.EditEvent, "Activity entry event type");
+			activityEntry.Should().NotBeNull("Activity entry was created");
+			activityEntry.EntryBase.Should().Be(_song, "Activity entry's entry");
+			activityEntry.EditEvent.Should().Be(EntryEditEvent.Updated, "Activity entry event type");
 		}
 
 		[TestMethod]
@@ -856,16 +854,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var songFromRepo = _repository.Load(contract.Id);
 
-			Assert.AreEqual(3, songFromRepo.AllArtists.Count, "Number of artists");
+			songFromRepo.AllArtists.Count.Should().Be(3, "Number of artists");
 
 			AssertHasArtist(songFromRepo, _producer);
 			AssertHasArtist(songFromRepo, _vocalist);
-			Assert.AreEqual("Tripshots feat. Hatsune Miku, Goomeh", songFromRepo.ArtistString.Default, "Artist string");
+			songFromRepo.ArtistString.Default.Should().Be("Tripshots feat. Hatsune Miku, Goomeh", "Artist string");
 
 			var archivedVersion = _repository.List<ArchivedSongVersion>().FirstOrDefault();
 
-			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(SongEditableFields.Artists, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
+			archivedVersion.Should().NotBeNull("Archived version was created");
+			archivedVersion.Diff.ChangedFields.Value.Should().Be(SongEditableFields.Artists, "Changed fields");
 		}
 
 		[TestMethod]
@@ -881,8 +879,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var notification = _repository.List<UserMessage>().FirstOrDefault();
 
-			Assert.IsNotNull(notification, "Notification was created");
-			Assert.AreEqual(_user2, notification.Receiver, "Receiver");
+			notification.Should().NotBeNull("Notification was created");
+			notification.Receiver.Should().Be(_user2, "Receiver");
 		}
 
 		[TestMethod]
@@ -896,7 +894,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			await _queries.UpdateBasicProperties(contract);
 
-			Assert.IsFalse(_song.AllArtists.Any(a => Equals(_vocalist2, a.Artist)), "vocalist2 was removed from song");
+			_song.AllArtists.Any(a => Equals(_vocalist2, a.Artist)).Should().BeFalse("vocalist2 was removed from song");
 		}
 
 		[TestMethod]
@@ -909,9 +907,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			await _queries.UpdateBasicProperties(contract);
 
-			Assert.AreEqual(1, _song.Lyrics.Count, "Lyrics were added");
+			_song.Lyrics.Count.Should().Be(1, "Lyrics were added");
 			var lyrics = _song.Lyrics.First();
-			Assert.AreEqual("Miku Miku", lyrics.Value, "Lyrics text");
+			lyrics.Value.Should().Be("Miku Miku", "Lyrics text");
 		}
 
 		[TestMethod]
@@ -926,8 +924,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			contract = await _queries.UpdateBasicProperties(contract);
 
 			var songFromRepo = _repository.Load(contract.Id);
-			Assert.AreEqual(2, songFromRepo.PVs.PVs.Count, "Number of PVs");
-			Assert.AreEqual(new DateTime(2015, 4, 9), songFromRepo.PublishDate.DateTime, "Song publish date was updated");
+			songFromRepo.PVs.PVs.Count.Should().Be(2, "Number of PVs");
+			songFromRepo.PublishDate.DateTime.Should().Be(new DateTime(2015, 4, 9), "Song publish date was updated");
 		}
 
 		[TestMethod]
@@ -940,8 +938,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			contract = await _queries.UpdateBasicProperties(contract);
 			var songFromRepo = _repository.Load(contract.Id);
-			Assert.AreEqual(1, songFromRepo.WebLinks.Count, "Number of weblinks");
-			Assert.AreEqual("http://vocadb.net", songFromRepo.WebLinks[0].Url, "Weblink URL");
+			songFromRepo.WebLinks.Count.Should().Be(1, "Number of weblinks");
+			songFromRepo.WebLinks[0].Url.Should().Be("http://vocadb.net", "Weblink URL");
 		}
 
 		[TestMethod]
@@ -954,7 +952,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			contract = await _queries.UpdateBasicProperties(contract);
 			var songFromRepo = _repository.Load(contract.Id);
-			Assert.AreEqual(0, songFromRepo.WebLinks.Count, "Number of weblinks");
+			songFromRepo.WebLinks.Count.Should().Be(0, "Number of weblinks");
 		}
 
 		/// <summary>
@@ -968,7 +966,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			await _queries.UpdateBasicProperties(contract);
 
-			Assert.AreSame(_releaseEvent, _song.ReleaseEvent, "ReleaseEvent");
+			_song.ReleaseEvent.Should().BeSameAs(_releaseEvent, "ReleaseEvent");
 		}
 
 		/// <summary>
@@ -982,7 +980,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			await _queries.UpdateBasicProperties(contract);
 
-			Assert.AreSame(_releaseEvent, _song.ReleaseEvent, "ReleaseEvent");
+			_song.ReleaseEvent.Should().BeSameAs(_releaseEvent, "ReleaseEvent");
 		}
 
 		[TestMethod]
@@ -993,10 +991,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			await _queries.UpdateBasicProperties(contract);
 
-			Assert.IsNotNull(_song.ReleaseEvent, "ReleaseEvent");
-			Assert.AreSame("Comiket 40", _song.ReleaseEvent.DefaultName, "ReleaseEvent.Name");
+			_song.ReleaseEvent.Should().NotBeNull("ReleaseEvent");
+			_song.ReleaseEvent.DefaultName.Should().BeSameAs("Comiket 40", "ReleaseEvent.Name");
 
-			Assert.AreEqual(1, _song.ReleaseEvent.ArchivedVersionsManager.Versions.Count, "New release event was archived");
+			_song.ReleaseEvent.ArchivedVersionsManager.Versions.Count.Should().Be(1, "New release event was archived");
 		}
 
 		[TestMethod]
@@ -1008,9 +1006,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			await _queries.UpdateBasicProperties(contract);
 
-			Assert.IsNotNull(_song.ReleaseEvent, "ReleaseEvent");
-			Assert.AreEqual(series, _song.ReleaseEvent.Series, "Series");
-			Assert.AreEqual(40, _song.ReleaseEvent.SeriesNumber, "SeriesNumber");
+			_song.ReleaseEvent.Should().NotBeNull("ReleaseEvent");
+			_song.ReleaseEvent.Series.Should().Be(series, "Series");
+			_song.ReleaseEvent.SeriesNumber.Should().Be(40, "SeriesNumber");
 		}
 
 		[TestMethod]
@@ -1025,9 +1023,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			await _queries.UpdateBasicProperties(contract);
 
 			var notifications = _repository.List<UserMessage>();
-			Assert.AreEqual(1, notifications.Count, "Notification was sent");
+			notifications.Count.Should().Be(1, "Notification was sent");
 			var notification = notifications.First();
-			Assert.AreEqual(_user2, notification.User, "Notification was sent to user");
+			notification.User.Should().Be(_user2, "Notification was sent to user");
 		}
 
 		[TestMethod]
@@ -1041,7 +1039,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			await _queries.UpdateBasicProperties(contract);
 
-			Assert.AreEqual(0, _repository.Count<UserMessage>(), "No notification was sent");
+			_repository.Count<UserMessage>().Should().Be(0, "No notification was sent");
 		}
 	}
 }

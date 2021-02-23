@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
@@ -32,7 +33,7 @@ namespace VocaDb.Tests.Domain.Security
 			_user.GroupId = userGroup;
 
 			var result = CanDelete(_user, _artist);
-			Assert.AreEqual(expected, result, "result");
+			result.Should().Be(expected, "result");
 		}
 
 		private void TestCanEdit(bool expected, EntryStatus entryStatus = EntryStatus.Finished, UserGroupId userGroup = UserGroupId.Regular)
@@ -41,7 +42,7 @@ namespace VocaDb.Tests.Domain.Security
 			_user.GroupId = userGroup;
 
 			var result = EntryPermissionManager.CanEdit(new FakePermissionContext(_user), _artist);
-			Assert.AreEqual(expected, result, "result");
+			result.Should().Be(expected, "result");
 		}
 
 		[TestInitialize]
@@ -81,7 +82,7 @@ namespace VocaDb.Tests.Domain.Security
 		[TestMethod]
 		public void CanDelete_Owner_Direct()
 		{
-			Assert.IsTrue(CanDelete(_verifiedUser, _verifiedArtist));
+			CanDelete(_verifiedUser, _verifiedArtist).Should().BeTrue();
 		}
 
 		[TestMethod]
@@ -90,7 +91,7 @@ namespace VocaDb.Tests.Domain.Security
 			var song = CreateEntry.Song();
 			song.AddArtist(_verifiedArtist);
 
-			Assert.IsTrue(CanDelete(_verifiedUser, song));
+			CanDelete(_verifiedUser, song).Should().BeTrue();
 		}
 
 		[TestMethod]
@@ -100,7 +101,7 @@ namespace VocaDb.Tests.Domain.Security
 			var song = CreateEntry.Song();
 			song.AddArtist(_verifiedArtist);
 
-			Assert.IsFalse(CanDelete(_verifiedUser, song));
+			CanDelete(_verifiedUser, song).Should().BeFalse();
 		}
 
 		[TestMethod]
@@ -132,7 +133,7 @@ namespace VocaDb.Tests.Domain.Security
 		{
 			var result = EntryPermissionManager.CanEdit(new FakePermissionContext(_verifiedUser), _verifiedArtist);
 
-			Assert.IsTrue(result, "result");
+			result.Should().BeTrue("result");
 		}
 	}
 }

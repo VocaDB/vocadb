@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.ExtSites;
 using VocaDb.Model.Utils.Config;
@@ -26,7 +27,7 @@ namespace VocaDb.Tests.Service.ExtSites
 
 			var result = _generator.GenerateAffiliateLink(input);
 
-			Assert.AreEqual(expected, result, "Play-asia affiliate link matches");
+			result.Should().Be(expected, "Play-asia affiliate link matches");
 		}
 
 		[TestMethod]
@@ -37,7 +38,7 @@ namespace VocaDb.Tests.Service.ExtSites
 
 			var result = _generator.GenerateAffiliateLink(input);
 
-			Assert.AreEqual(expected, result, "Play-asia affiliate link matches");
+			result.Should().Be(expected, "Play-asia affiliate link matches");
 		}
 
 		[TestMethod]
@@ -48,7 +49,7 @@ namespace VocaDb.Tests.Service.ExtSites
 
 			var result = _generator.GenerateAffiliateLink(input);
 
-			Assert.AreEqual(expected, result, "Amazon affiliate link matches");
+			result.Should().Be(expected, "Amazon affiliate link matches");
 		}
 
 		[TestMethod]
@@ -59,7 +60,7 @@ namespace VocaDb.Tests.Service.ExtSites
 
 			var result = _generator.GenerateAffiliateLink(input);
 
-			Assert.AreEqual(expected, result, "Amazon affiliate link matches");
+			result.Should().Be(expected, "Amazon affiliate link matches");
 		}
 	}
 }

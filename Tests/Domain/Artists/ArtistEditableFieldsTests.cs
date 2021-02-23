@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Artists;
 
@@ -22,7 +23,7 @@ namespace VocaDb.Tests.Domain.Artists
 		[TestMethod]
 		public void Name(string expected, string actual)
 		{
-			Assert.AreEqual(expected, actual);
+			actual.Should().Be(expected);
 		}
 	}
 }

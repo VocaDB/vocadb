@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.Helpers;
 
@@ -12,7 +13,7 @@ namespace VocaDb.Tests.Service.Helpers
 		{
 			var result = new ArtistExternalUrlParser().GetExternalUrl(input);
 
-			Assert.AreEqual(expected, result, input);
+			result.Should().Be(expected, input);
 		}
 
 		[TestMethod]

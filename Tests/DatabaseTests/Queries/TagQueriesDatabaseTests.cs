@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
@@ -65,7 +66,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 		{
 			var target = Merge(Db.Tag.Id, Db.Tag2.Id);
 
-			Assert.AreEqual(1, target.UsageCount, "UsageCount for the target tag");
+			target.UsageCount.Should().Be(1, "UsageCount for the target tag");
 		}
 
 		[TestMethod]
@@ -81,11 +82,11 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 
 			var result = Update(contract);
 
-			Assert.AreEqual(1, result.Names.Length, "Number of names");
+			result.Names.Length.Should().Be(1, "Number of names");
 			var name = result.Names[0];
-			Assert.AreEqual(ContentLanguageSelection.Japanese, name.Language, "Name language");
-			Assert.AreEqual("electronic", name.Value, "Name value");
-			Assert.AreNotEqual(0, name.Id, "Id was assigned");
+			name.Language.Should().Be(ContentLanguageSelection.Japanese, "Name language");
+			name.Value.Should().Be("electronic", "Name value");
+			name.Id.Should().NotBe(0, "Id was assigned");
 		}
 
 		[TestMethod]
@@ -98,9 +99,9 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 
 			var result = Update(contract);
 
-			Assert.AreEqual(2, result.Names.Length, "Number of names");
+			result.Names.Length.Should().Be(2, "Number of names");
 			var name = result.Names[0];
-			Assert.AreEqual("ロック", name.Value, "Name value");
+			name.Value.Should().Be("ロック", "Name value");
 		}
 	}
 }

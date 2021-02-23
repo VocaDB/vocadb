@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
@@ -48,7 +49,7 @@ namespace VocaDb.Tests.Domain.Artists
 		{
 			var result = _artistStringFactory.GetArtistString(_producers.Take(producerCount).Concat(_vocalists.Take(vocalistCount)), ContentFocus.Music);
 
-			Assert.AreEqual(expected, result.Default, message);
+			result.Default.Should().Be(expected, message);
 		}
 
 		[TestInitialize]
@@ -123,7 +124,7 @@ namespace VocaDb.Tests.Domain.Artists
 		{
 			var result = ArtistHelper.GetArtistString(new[] { _circle, _producer }, ContentFocus.Music);
 
-			Assert.AreEqual(GetNames(_producer, _circle), result.Default, "Producer is shown first");
+			result.Default.Should().Be(GetNames(_producer, _circle), "Producer is shown first");
 		}
 
 		[TestMethod]
@@ -137,7 +138,7 @@ namespace VocaDb.Tests.Domain.Artists
 		{
 			var result = ArtistHelper.GetArtistString(new[] { _producer, _animator }, ContentFocus.Music);
 
-			Assert.AreEqual(_producer.Artist.DefaultName, result.Default, "artist string has one producer");
+			result.Default.Should().Be(_producer.Artist.DefaultName, "artist string has one producer");
 		}
 
 		/// <summary>
@@ -148,7 +149,7 @@ namespace VocaDb.Tests.Domain.Artists
 		{
 			var result = ArtistHelper.GetArtistString(new[] { _producer, _animator }, ContentFocus.Video);
 
-			Assert.AreEqual(GetNames(_animator, _producer), result.Default, "artist string has one producer and animator");
+			result.Default.Should().Be(GetNames(_animator, _producer), "artist string has one producer and animator");
 		}
 
 		/// <summary>
@@ -161,7 +162,7 @@ namespace VocaDb.Tests.Domain.Artists
 
 			var result = GetArtistString(_producer);
 
-			Assert.AreEqual("devilishP", result, "result");
+			result.Should().Be("devilishP", "result");
 		}
 
 		[TestMethod]
@@ -171,7 +172,7 @@ namespace VocaDb.Tests.Domain.Artists
 
 			var result = GetArtistString(_producer, _vocalist);
 
-			Assert.AreEqual("devilishP feat. Hatsune Miku", result, "result");
+			result.Should().Be("devilishP feat. Hatsune Miku", "result");
 		}
 
 		/// <summary>
@@ -185,7 +186,7 @@ namespace VocaDb.Tests.Domain.Artists
 
 			var result = GetArtistString(_producer);
 
-			Assert.AreEqual("devilishP feat. devilishP", result, "result");
+			result.Should().Be("devilishP feat. devilishP", "result");
 		}
 
 		[TestMethod]
@@ -196,7 +197,7 @@ namespace VocaDb.Tests.Domain.Artists
 
 			var result = GetArtistString(_producer, _vocalist);
 
-			Assert.AreEqual("devilishP feat. devilishP, Hatsune Miku", result, "result");
+			result.Should().Be("devilishP feat. devilishP, Hatsune Miku", "result");
 		}
 	}
 }

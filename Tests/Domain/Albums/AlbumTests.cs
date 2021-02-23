@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.Songs;
@@ -29,8 +30,8 @@ namespace VocaDb.Tests.Domain.Albums
 
 		private void AssertEquals(SongInAlbum first, SongInAlbumEditContract second, string message)
 		{
-			Assert.IsTrue(Album.TrackPropertiesEqual(first, second), message);
-			Assert.IsTrue(Album.TrackArtistsEqual(first.Song, second), message);
+			Album.TrackPropertiesEqual(first, second).Should().BeTrue(message);
+			Album.TrackArtistsEqual(first.Song, second).Should().BeTrue(message);
 		}
 
 		private SongInAlbumEditContract CreateSongInAlbumEditContract(int id, string name, int trackNum)
@@ -89,10 +90,10 @@ namespace VocaDb.Tests.Domain.Albums
 		{
 			var result = new Album(new LocalizedString("album", ContentLanguageSelection.Romaji));
 
-			Assert.AreEqual(1, result.Names.Count(), "Names count");
-			Assert.IsTrue(result.Names.HasNameForLanguage(ContentLanguageSelection.Romaji), "Has name for Romaji");
-			Assert.IsFalse(result.Names.HasNameForLanguage(ContentLanguageSelection.English), "Does not have name for English");
-			Assert.AreEqual("album", result.Names.GetEntryName(ContentLanguagePreference.Romaji).DisplayName, "Display name");
+			result.Names.Count().Should().Be(1, "Names count");
+			result.Names.HasNameForLanguage(ContentLanguageSelection.Romaji).Should().BeTrue("Has name for Romaji");
+			result.Names.HasNameForLanguage(ContentLanguageSelection.English).Should().BeFalse("Does not have name for English");
+			result.Names.GetEntryName(ContentLanguagePreference.Romaji).DisplayName.Should().Be("album", "Display name");
 		}
 
 		[TestMethod]
@@ -100,11 +101,11 @@ namespace VocaDb.Tests.Domain.Albums
 		{
 			_album.CreateWebLink("test link", "http://www.test.com", WebLinkCategory.Other, disabled: false);
 
-			Assert.AreEqual(1, _album.WebLinks.Count, "Should have one link");
+			_album.WebLinks.Count.Should().Be(1, "Should have one link");
 			var link = _album.WebLinks.First();
-			Assert.AreEqual("test link", link.Description, "description");
-			Assert.AreEqual("http://www.test.com", link.Url, "url");
-			Assert.AreEqual(WebLinkCategory.Other, link.Category, "category");
+			link.Description.Should().Be("test link", "description");
+			link.Url.Should().Be("http://www.test.com", "url");
+			link.Category.Should().Be(WebLinkCategory.Other, "category");
 		}
 
 		[TestMethod]
@@ -114,14 +115,14 @@ namespace VocaDb.Tests.Domain.Albums
 
 			var result = await SyncSongs(newSongs);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.IsTrue(result.Changed, "is changed");
-			Assert.AreEqual(1, result.Added.Length, "1 added");
-			Assert.AreEqual(0, result.Edited.Length, "none edited");
-			Assert.AreEqual(0, result.Removed.Length, "none removed");
-			Assert.AreEqual(0, result.Unchanged.Length, "none unchanged");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().BeTrue("is changed");
+			result.Added.Length.Should().Be(1, "1 added");
+			result.Edited.Length.Should().Be(0, "none edited");
+			result.Removed.Length.Should().Be(0, "none removed");
+			result.Unchanged.Length.Should().Be(0, "none unchanged");
 			AssertEquals(result.Added.First(), _songInAlbumContract, "added song matches contract");
-			Assert.AreEqual(result.Added.First().Song.ArtistList.Count(), 1, "one artist");
+			1.Should().Be(result.Added.First().Song.ArtistList.Count(), "one artist");
 		}
 
 		[TestMethod]
@@ -132,12 +133,12 @@ namespace VocaDb.Tests.Domain.Albums
 
 			var result = await SyncSongs(newSongs);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.IsFalse(result.Changed, "is not changed");
-			Assert.AreEqual(0, result.Added.Length, "none added");
-			Assert.AreEqual(0, result.Edited.Length, "none edited");
-			Assert.AreEqual(0, result.Removed.Length, "none removed");
-			Assert.AreEqual(1, result.Unchanged.Length, "1 unchanged");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().BeFalse("is not changed");
+			result.Added.Length.Should().Be(0, "none added");
+			result.Edited.Length.Should().Be(0, "none edited");
+			result.Removed.Length.Should().Be(0, "none removed");
+			result.Unchanged.Length.Should().Be(1, "1 unchanged");
 			AssertEquals(result.Unchanged.First(), _songInAlbumContract, "unchanged song matches contract");
 		}
 
@@ -153,14 +154,14 @@ namespace VocaDb.Tests.Domain.Albums
 
 			var result = await SyncSongs(newSongs);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.IsTrue(result.Changed, "is changed");
-			Assert.AreEqual(0, result.Added.Length, "none added");
-			Assert.AreEqual(1, result.Edited.Length, "1 edited");
-			Assert.AreEqual(0, result.Removed.Length, "none removed");
-			Assert.AreEqual(1, result.Unchanged.Length, "1 unchanged");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().BeTrue("is changed");
+			result.Added.Length.Should().Be(0, "none added");
+			result.Edited.Length.Should().Be(1, "1 edited");
+			result.Removed.Length.Should().Be(0, "none removed");
+			result.Unchanged.Length.Should().Be(1, "1 unchanged");
 			AssertEquals(result.Edited.First(), _songInAlbumContract, "edited song matches contract");
-			Assert.AreEqual(2, result.Edited.First().TrackNumber, "edited song track number is updated");
+			result.Edited.First().TrackNumber.Should().Be(2, "edited song track number is updated");
 		}
 
 		/// <summary>
@@ -175,10 +176,10 @@ namespace VocaDb.Tests.Domain.Albums
 
 			var result = await SyncSongs(newSongs);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.AreEqual(1, result.Unchanged.Length, "1 unchanged");
+			result.Should().NotBeNull("result is not null");
+			result.Unchanged.Length.Should().Be(1, "1 unchanged");
 			AssertEquals(result.Unchanged.First(), _songInAlbumContract, "edited song matches contract");
-			Assert.AreEqual("Tripshots feat. Hatsune Miku", result.Unchanged.First().Song.ArtistString.Default, "edited song artist string is updated");
+			result.Unchanged.First().Song.ArtistString.Default.Should().Be("Tripshots feat. Hatsune Miku", "edited song artist string is updated");
 		}
 
 		[TestMethod]
@@ -189,12 +190,12 @@ namespace VocaDb.Tests.Domain.Albums
 
 			var result = await SyncSongs(newSongs);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.IsTrue(result.Changed, "is changed");
-			Assert.AreEqual(0, result.Added.Length, "none added");
-			Assert.AreEqual(0, result.Edited.Length, "none edited");
-			Assert.AreEqual(1, result.Removed.Length, "1 removed");
-			Assert.AreEqual(0, result.Unchanged.Length, "none unchanged");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().BeTrue("is changed");
+			result.Added.Length.Should().Be(0, "none added");
+			result.Edited.Length.Should().Be(0, "none edited");
+			result.Removed.Length.Should().Be(1, "1 removed");
+			result.Unchanged.Length.Should().Be(0, "none unchanged");
 			AssertEquals(result.Removed.First(), _songInAlbumContract, "removed song matches contract");
 		}
 
@@ -211,10 +212,10 @@ namespace VocaDb.Tests.Domain.Albums
 
 			var result = await SyncSongs(newSongs);
 
-			Assert.AreEqual(1, result.Added.Length, "Added");
-			Assert.AreEqual(1, result.Unchanged.Length, "Edited");
-			Assert.AreEqual("Track 1", result.Unchanged.First().Name, "Unchanged track name");
-			Assert.AreEqual("Track 2", result.Added.First().Name, "Added track name");
+			result.Added.Length.Should().Be(1, "Added");
+			result.Unchanged.Length.Should().Be(1, "Edited");
+			result.Unchanged.First().Name.Should().Be("Track 1", "Unchanged track name");
+			result.Added.First().Name.Should().Be("Track 2", "Added track name");
 		}
 
 		/*[TestMethod]
@@ -227,8 +228,8 @@ namespace VocaDb.Tests.Domain.Albums
 
 			album.SyncArtists(newArtists, c => c.Artist.Id == artist.Id ? artist : null);
 
-			Assert.AreEqual(1, song.AllArtists.Count, "Only one artist");
-			Assert.AreEqual(artist, song.AllArtists.First().Artist, "Artist is as expected");
+			song.AllArtists.Count.Should().Be(1, "Only one artist");
+			song.AllArtists.First().Artist.Should().Be(artist, "Artist is as expected");
 		}*/
 	}
 }

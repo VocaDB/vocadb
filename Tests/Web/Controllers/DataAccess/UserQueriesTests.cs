@@ -52,14 +52,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 		private void AssertEqual(User expected, UserContract actual)
 		{
-			Assert.IsNotNull(actual, "Cannot be null");
-			Assert.AreEqual(expected.Name, actual.Name, "Name");
-			Assert.AreEqual(expected.Id, actual.Id, "Id");
+			actual.Should().NotBeNull("Cannot be null");
+			actual.Name.Should().Be(expected.Name, "Name");
+			actual.Id.Should().Be(expected.Id, "Id");
 		}
 
 		private void AssertHasAlbum(User user, Album album)
 		{
-			Assert.IsTrue(_userWithEmail.Albums.Any(a => a.Album == album), "User has album");
+			_userWithEmail.Albums.Any(a => a.Album == album).Should().BeTrue("User has album");
 		}
 
 		private Task<UserContract> CallCreate(string name = "hatsune_miku", string pass = "3939", string email = "", string hostname = DefaultHostname,
@@ -116,7 +116,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = _data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", DefaultCulture, false);
 
-			Assert.AreEqual(true, result.IsOk, "IsOk");
+			result.IsOk.Should().Be(true, "IsOk");
 			AssertEqual(_userWithEmail, result.User);
 		}
 
@@ -126,7 +126,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_userWithEmail.Name = "Already_Exists";
 			var result = _data.CheckAuthentication("already_exists", "123", "miku@crypton.jp", DefaultCulture, false);
 
-			Assert.AreEqual(true, result.IsOk, "IsOk");
+			result.IsOk.Should().Be(true, "IsOk");
 			AssertEqual(_userWithEmail, result.User);
 		}
 
@@ -135,8 +135,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = _data.CheckAuthentication("already_exists", "3939", "miku@crypton.jp", DefaultCulture, false);
 
-			Assert.AreEqual(false, result.IsOk, "IsOk");
-			Assert.AreEqual(LoginError.InvalidPassword, result.Error, "Error");
+			result.IsOk.Should().Be(false, "IsOk");
+			result.Error.Should().Be(LoginError.InvalidPassword, "Error");
 		}
 
 		[TestMethod]
@@ -144,8 +144,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = _data.CheckAuthentication("does_not_exist", "3939", "miku@crypton.jp", DefaultCulture, false);
 
-			Assert.AreEqual(false, result.IsOk, "IsOk");
-			Assert.AreEqual(LoginError.NotFound, result.Error, "Error");
+			result.IsOk.Should().Be(false, "IsOk");
+			result.Error.Should().Be(LoginError.NotFound, "Error");
 		}
 
 		[TestMethod]
@@ -154,8 +154,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_userWithEmail.Options.Poisoned = true;
 			var result = _data.CheckAuthentication(_userWithEmail.Name, _userWithEmail.Password, "miku@crypton.jp", DefaultCulture, false);
 
-			Assert.AreEqual(false, result.IsOk, "IsOk");
-			Assert.AreEqual(LoginError.AccountPoisoned, result.Error, "Error");
+			result.IsOk.Should().Be(false, "IsOk");
+			result.Error.Should().Be(LoginError.AccountPoisoned, "Error");
 		}
 
 		[TestMethod]
@@ -164,7 +164,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_userWithEmail.Options.EmailVerified = true; // For now, logging in with email is allowed only if the email is verified
 			var result = _data.CheckAuthentication(_userWithEmail.Email, "123", "miku@crypton.jp", DefaultCulture, false);
 
-			Assert.AreEqual(true, result.IsOk, "IsOk");
+			result.IsOk.Should().Be(true, "IsOk");
 			AssertEqual(_userWithEmail, result.User);
 		}
 
@@ -182,12 +182,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_data.ClearRatings(_userWithoutEmail.Id);
 
-			Assert.AreEqual(0, _userWithoutEmail.AllAlbums.Count, "No albums for user");
-			Assert.AreEqual(0, _userWithoutEmail.FavoriteSongs.Count, "No songs for user");
-			Assert.AreEqual(0, album.UserCollections.Count, "Number of users for the album");
-			Assert.AreEqual(0, song.UserFavorites.Count, "Number of users for the song");
-			Assert.AreEqual(0, album.RatingTotal, "Album RatingTotal");
-			Assert.AreEqual(0, song.RatingScore, "Song RatingScore");
+			_userWithoutEmail.AllAlbums.Count.Should().Be(0, "No albums for user");
+			_userWithoutEmail.FavoriteSongs.Count.Should().Be(0, "No songs for user");
+			album.UserCollections.Count.Should().Be(0, "Number of users for the album");
+			song.UserFavorites.Count.Should().Be(0, "Number of users for the song");
+			album.RatingTotal.Should().Be(0, "Album RatingTotal");
+			song.RatingScore.Should().Be(0, "Song RatingScore");
 		}
 
 		[TestMethod]
@@ -203,19 +203,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var name = "hatsune_miku";
 			var result = await CallCreate(name: name, email: "mikumiku@crypton.jp");
 
-			Assert.IsNotNull(result, "Result is not null");
-			Assert.AreEqual(name, result.Name, "Name");
+			result.Should().NotBeNull("Result is not null");
+			result.Name.Should().Be(name, "Name");
 
 			var user = GetUserFromRepo(name);
-			Assert.IsNotNull(user, "User found in repository");
-			Assert.AreEqual(name, user.Name, "Name");
-			Assert.AreEqual("mikumiku@crypton.jp", user.Email, "Email");
-			Assert.AreEqual(UserGroupId.Regular, user.GroupId, "GroupId");
+			user.Should().NotBeNull("User found in repository");
+			user.Name.Should().Be(name, "Name");
+			user.Email.Should().Be("mikumiku@crypton.jp", "Email");
+			user.GroupId.Should().Be(UserGroupId.Regular, "GroupId");
 			_repository.List<UserReport>().Should().BeEmpty();
 			_repository.IsCommitted(user).Should().BeTrue();
 
 			var verificationRequest = _repository.List<PasswordResetRequest>().FirstOrDefault(r => r.User.Equals(user));
-			Assert.IsNotNull(verificationRequest, "Verification request was created");
+			verificationRequest.Should().NotBeNull("Verification request was created");
 		}
 
 		[TestMethod]
@@ -245,8 +245,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_userWithEmail.Active = false;
 			var result = await CallCreate(email: "already_in_use@vocadb.net");
 
-			Assert.IsNotNull(result, "Result is not null");
-			Assert.AreEqual("hatsune_miku", result.Name, "Name");
+			result.Should().NotBeNull("Result is not null");
+			result.Name.Should().Be("hatsune_miku", "Name");
 		}
 
 		[TestMethod]
@@ -289,11 +289,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_stopForumSpamClient.Response = new SFSResponseContract { Appears = true, Confidence = 60d, Frequency = 100 };
 			var result = await CallCreate();
 
-			Assert.IsNotNull(result, "result");
+			result.Should().NotBeNull("result");
 			var report = _repository.List<UserReport>().FirstOrDefault();
-			Assert.IsNotNull(report, "User was reported");
-			Assert.AreEqual(UserReportType.MaliciousIP, report.ReportType, "Report type");
-			Assert.AreEqual(DefaultHostname, report.Hostname, "Hostname");
+			report.Should().NotBeNull("User was reported");
+			report.ReportType.Should().Be(UserReportType.MaliciousIP, "Report type");
+			report.Hostname.Should().Be(DefaultHostname, "Hostname");
 
 			var user = GetUserFromRepo(result.Name);
 			user.GroupId.Should().Be(UserGroupId.Limited, because: "User was limited");
@@ -318,7 +318,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public async Task Create_RegistrationTimeTrigger()
 		{
 			await CallCreate(timeSpan: TimeSpan.FromSeconds(4));
-			Assert.IsTrue(_ipRuleManager.IsAllowed(DefaultHostname), "Was not banned");
+			_ipRuleManager.IsAllowed(DefaultHostname).Should().BeTrue("Was not banned");
 		}
 
 		[TestMethod]
@@ -326,7 +326,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public async Task Create_RegistrationTimeAndBanTrigger()
 		{
 			await CallCreate(timeSpan: TimeSpan.FromSeconds(1));
-			Assert.IsFalse(_ipRuleManager.IsAllowed(DefaultHostname), "Was banned");
+			_ipRuleManager.IsAllowed(DefaultHostname).Should().BeFalse("Was banned");
 		}
 
 		[TestMethod]
@@ -336,20 +336,20 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var receiver = _userWithoutEmail;
 			var result = _data.CreateComment(receiver.Id, "Hello world");
 
-			Assert.IsNotNull(result, "result");
-			Assert.AreEqual("Hello world", result.Message, "Message");
+			result.Should().NotBeNull("result");
+			result.Message.Should().Be("Hello world", "Message");
 
 			var comment = _repository.List<Comment>().FirstOrDefault();
-			Assert.IsNotNull(comment, "Comment was saved");
-			Assert.AreEqual("Hello world", comment.Message, "Message");
-			Assert.AreEqual(sender.Id, comment.Author.Id, "Sender Id");
-			Assert.AreEqual(receiver.Id, comment.Entry.Id, "Receiver Id");
+			comment.Should().NotBeNull("Comment was saved");
+			comment.Message.Should().Be("Hello world", "Message");
+			comment.Author.Id.Should().Be(sender.Id, "Sender Id");
+			comment.Entry.Id.Should().Be(receiver.Id, "Receiver Id");
 
 			var notificationMsg = $"{sender.Name} posted a comment on your profile.\n\n{comment.Message}";
 			var notification = _repository.List<UserMessage>().FirstOrDefault();
-			Assert.IsNotNull(notification, "Notification was saved");
-			Assert.AreEqual(notificationMsg, notification.Message, "Notification message");
-			Assert.AreEqual(receiver.Id, notification.Receiver.Id, "Receiver Id");
+			notification.Should().NotBeNull("Notification was saved");
+			notification.Message.Should().Be(notificationMsg, "Notification message");
+			notification.Receiver.Id.Should().Be(receiver.Id, "Receiver Id");
 		}
 
 		[TestMethod]
@@ -358,19 +358,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var name = "hatsune_miku";
 			var result = _data.CreateTwitter("auth_token", name, "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
 
-			Assert.IsNotNull(result, "Result is not null");
-			Assert.AreEqual(name, result.Name, "Name");
+			result.Should().NotBeNull("Result is not null");
+			result.Name.Should().Be(name, "Name");
 
 			var user = GetUserFromRepo(name);
-			Assert.IsNotNull(user, "User found in repository");
-			Assert.AreEqual(name, user.Name, "Name");
-			Assert.AreEqual("mikumiku@crypton.jp", user.Email, "Email");
-			Assert.AreEqual(UserGroupId.Regular, user.GroupId, "GroupId");
-			Assert.AreEqual("ja-JP", user.Options.LastLoginCulture.CultureCode, "LastLoginCulture");
+			user.Should().NotBeNull("User found in repository");
+			user.Name.Should().Be(name, "Name");
+			user.Email.Should().Be("mikumiku@crypton.jp", "Email");
+			user.GroupId.Should().Be(UserGroupId.Regular, "GroupId");
+			user.Options.LastLoginCulture.CultureCode.Should().Be("ja-JP", "LastLoginCulture");
 
-			Assert.AreEqual("auth_token", user.Options.TwitterOAuthToken, "TwitterOAuthToken");
-			Assert.AreEqual(39, user.Options.TwitterId, "TwitterId");
-			Assert.AreEqual("Miku_Crypton", user.Options.TwitterName, "TwitterName");
+			user.Options.TwitterOAuthToken.Should().Be("auth_token", "TwitterOAuthToken");
+			user.Options.TwitterId.Should().Be(39, "TwitterId");
+			user.Options.TwitterName.Should().Be("Miku_Crypton", "TwitterName");
 		}
 
 		[TestMethod]
@@ -461,7 +461,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_data.DisableUser(_userWithoutEmail.Id);
 
-			Assert.AreEqual(false, _userWithoutEmail.Active, "User was disabled");
+			_userWithoutEmail.Active.Should().Be(false, "User was disabled");
 		}
 
 		[TestMethod]
@@ -511,14 +511,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = _data.GetRatingsByGenre(_userWithEmail.Id);
 
-			Assert.AreEqual(2, result.Length, "Number of results");
+			result.Length.Should().Be(2, "Number of results");
 			var first = result[0];
-			Assert.AreEqual(electronic.DefaultName, first.Item1, "First result is Electronic");
-			Assert.AreEqual(3, first.Item2, "Votes for Electronic");
+			first.Item1.Should().Be(electronic.DefaultName, "First result is Electronic");
+			first.Item2.Should().Be(3, "Votes for Electronic");
 
 			var second = result[1];
-			Assert.AreEqual(vocarock.DefaultName, second.Item1, "First result is Vocarock");
-			Assert.AreEqual(2, second.Item2, "Votes for Vocarock");
+			second.Item1.Should().Be(vocarock.DefaultName, "First result is Vocarock");
+			second.Item2.Should().Be(2, "Votes for Vocarock");
 		}
 
 		[TestMethod]
@@ -526,9 +526,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = CallGetUsers();
 
-			Assert.IsNotNull(result, "result");
-			Assert.AreEqual(2, result.Items.Length, "Result items");
-			Assert.AreEqual(2, result.TotalCount, "Total count");
+			result.Should().NotBeNull("result");
+			result.Items.Length.Should().Be(2, "Result items");
+			result.TotalCount.Should().Be(2, "Total count");
 		}
 
 		[TestMethod]
@@ -536,9 +536,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = CallGetUsers(name: "already");
 
-			Assert.IsNotNull(result, "result");
-			Assert.AreEqual(1, result.Items.Length, "Result items");
-			Assert.AreEqual(1, result.TotalCount, "Total count");
+			result.Should().NotBeNull("result");
+			result.Items.Length.Should().Be(1, "Result items");
+			result.TotalCount.Should().Be(1, "Total count");
 			AssertEqual(_userWithEmail, result.Items.First());
 		}
 
@@ -546,9 +546,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		public void GetUsers_Paging()
 		{
 			var result = CallGetUsers(paging: new PagingProperties(1, 10, true));
-			Assert.IsNotNull(result, "result");
-			Assert.AreEqual(1, result.Items.Length, "Result items");
-			Assert.AreEqual(2, result.TotalCount, "Total count");
+			result.Should().NotBeNull("result");
+			result.Items.Length.Should().Be(1, "Result items");
+			result.TotalCount.Should().Be(2, "Total count");
 			AssertEqual(_userWithoutEmail, result.Items.First());
 		}
 
@@ -559,9 +559,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			await _data.RequestEmailVerification(_userWithEmail.Id, string.Empty);
 
-			Assert.AreEqual("Verify your email at VocaDB.", _mailer.Subject, "Subject");
-			Assert.AreEqual(_userWithEmail.Email, _mailer.ToEmail, "ToEmail");
-			Assert.AreEqual(num + 1, _repository.List<PasswordResetRequest>().Count, "Number of password reset requests");
+			_mailer.Subject.Should().Be("Verify your email at VocaDB.", "Subject");
+			_mailer.ToEmail.Should().Be(_userWithEmail.Email, "ToEmail");
+			_repository.List<PasswordResetRequest>().Count.Should().Be(num + 1, "Number of password reset requests");
 		}
 
 		[TestMethod]
@@ -571,9 +571,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			await _data.RequestPasswordReset(_userWithEmail.Name, _userWithEmail.Email, string.Empty);
 
-			Assert.AreEqual("Password reset requested.", _mailer.Subject, "Subject");
-			Assert.AreEqual(_userWithEmail.Email, _mailer.ToEmail, "ToEmail");
-			Assert.AreEqual(num + 1, _repository.List<PasswordResetRequest>().Count, "Number of password reset requests");
+			_mailer.Subject.Should().Be("Password reset requested.", "Subject");
+			_mailer.ToEmail.Should().Be(_userWithEmail.Email, "ToEmail");
+			_repository.List<PasswordResetRequest>().Count.Should().Be(num + 1, "Number of password reset requests");
 		}
 
 		[TestMethod]
@@ -598,8 +598,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var hashed = PasswordHashAlgorithms.Default.HashPassword("123", _request.User.Salt, _request.User.NameLC);
 
-			Assert.AreEqual(hashed, _userWithEmail.Password, "Hashed password");
-			Assert.AreEqual(0, _repository.List<PasswordResetRequest>().Count, "Number of requests");
+			_userWithEmail.Password.Should().Be(hashed, "Hashed password");
+			_repository.List<PasswordResetRequest>().Count.Should().Be(0, "Number of requests");
 		}
 
 		[TestMethod]
@@ -613,30 +613,30 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			await _data.SendMessage(contract, string.Empty, string.Empty);
 
-			Assert.AreEqual(1, sender.Messages.Count, "Number of messages for sender");
-			Assert.AreEqual(1, receiver.Messages.Count, "Number of messages for receiver");
+			sender.Messages.Count.Should().Be(1, "Number of messages for sender");
+			receiver.Messages.Count.Should().Be(1, "Number of messages for receiver");
 
 			var messagesInRepo = _repository.List<UserMessage>();
-			Assert.AreEqual(2, messagesInRepo.Count, "Number of messages created");
+			messagesInRepo.Count.Should().Be(2, "Number of messages created");
 
 			var sentMessage = messagesInRepo.FirstOrDefault(m => m.Inbox == UserInboxType.Sent);
-			Assert.IsNotNull(sentMessage, "Sent message");
-			Assert.AreEqual(sender.Messages[0], sentMessage, "Sent message is the same in user collection and repository");
-			Assert.AreEqual("Subject", sentMessage.Subject, "sentMessage.Subject");
-			Assert.AreEqual(sender, sentMessage.User, "Sent message user is the sender");
-			Assert.AreEqual(receiver, sentMessage.Receiver, "sentMessage.Receiver");
-			Assert.AreEqual(sender, sentMessage.Sender, "sentMessage.Sender");
+			sentMessage.Should().NotBeNull("Sent message");
+			sentMessage.Should().Be(sender.Messages[0], "Sent message is the same in user collection and repository");
+			sentMessage.Subject.Should().Be("Subject", "sentMessage.Subject");
+			sentMessage.User.Should().Be(sender, "Sent message user is the sender");
+			sentMessage.Receiver.Should().Be(receiver, "sentMessage.Receiver");
+			sentMessage.Sender.Should().Be(sender, "sentMessage.Sender");
 
 			var receivedMessage = messagesInRepo.FirstOrDefault(m => m.Inbox == UserInboxType.Received);
-			Assert.IsNotNull(receivedMessage, "Received message");
-			Assert.AreEqual(receiver.Messages[0], receivedMessage, "Received message is the same in user collection and repository");
-			Assert.AreEqual("Subject", receivedMessage.Subject, "receivedMessage.Subject");
-			Assert.AreEqual(receiver, receivedMessage.User, "Received message user is the receiver");
-			Assert.AreEqual(receiver, receivedMessage.Receiver, "receivedMessage.Receiver");
-			Assert.AreEqual(sender, receivedMessage.Sender, "receivedMessage.Sender");
+			receivedMessage.Should().NotBeNull("Received message");
+			receivedMessage.Should().Be(receiver.Messages[0], "Received message is the same in user collection and repository");
+			receivedMessage.Subject.Should().Be("Subject", "receivedMessage.Subject");
+			receivedMessage.User.Should().Be(receiver, "Received message user is the receiver");
+			receivedMessage.Receiver.Should().Be(receiver, "receivedMessage.Receiver");
+			receivedMessage.Sender.Should().Be(sender, "receivedMessage.Sender");
 
-			Assert.IsNotNull(_mailer.Subject, "mailer.Subject");
-			Assert.AreEqual("test@vocadb.net", _mailer.ToEmail, "mailer.ToEmail");
+			_mailer.Subject.Should().NotBeNull("mailer.Subject");
+			_mailer.ToEmail.Should().Be("test@vocadb.net", "mailer.ToEmail");
 		}
 
 		[TestMethod]
@@ -669,9 +669,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_data.UpdateAlbumForUser(_userWithEmail.Id, album.Id, PurchaseStatus.Owned, MediaType.DigitalDownload, 5);
 
 			var albumForUser = _userWithEmail.Albums.First(a => a.Album == album);
-			Assert.AreEqual(MediaType.DigitalDownload, albumForUser.MediaType, "Media type was updated");
-			Assert.AreEqual(1, _userWithEmail.Albums.Count(), "Number of albums for user");
-			Assert.AreEqual(1, _repository.List<AlbumForUser>().Count, "Number of album links in the repo");
+			albumForUser.MediaType.Should().Be(MediaType.DigitalDownload, "Media type was updated");
+			_userWithEmail.Albums.Count().Should().Be(1, "Number of albums for user");
+			_repository.List<AlbumForUser>().Count.Should().Be(1, "Number of album links in the repo");
 		}
 
 		[TestMethod]
@@ -682,9 +682,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_data.UpdateAlbumForUser(_userWithEmail.Id, album.Id, PurchaseStatus.Nothing, MediaType.Other, 0);
 
-			Assert.IsFalse(_userWithEmail.Albums.Any(a => a.Album == album), "Album was removed");
-			Assert.AreEqual(0, _userWithEmail.Albums.Count(), "Number of albums for user");
-			Assert.AreEqual(0, _repository.List<AlbumForUser>().Count, "Number of album links in the repo");
+			_userWithEmail.Albums.Any(a => a.Album == album).Should().BeFalse("Album was removed");
+			_userWithEmail.Albums.Count().Should().Be(0, "Number of albums for user");
+			_repository.List<AlbumForUser>().Count.Should().Be(0, "Number of album links in the repo");
 		}
 
 		[TestMethod]
@@ -694,8 +694,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_data.UpdateEventForUser(_userWithEmail.Id, releaseEvent.Id, UserEventRelationshipType.Attending);
 
 			var link = _userWithEmail.Events.FirstOrDefault(e => e.ReleaseEvent == releaseEvent);
-			Assert.IsNotNull(link, "Event was added for user");
-			Assert.AreEqual(UserEventRelationshipType.Attending, link.RelationshipType, "Link relationship type");
+			link.Should().NotBeNull("Event was added for user");
+			link.RelationshipType.Should().Be(UserEventRelationshipType.Attending, "Link relationship type");
 		}
 
 		[TestMethod]
@@ -709,7 +709,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_data.UpdateUser(contract);
 
 			var user = _repository.Load(contract.Id);
-			Assert.IsTrue(user.AdditionalPermissions.Has(PermissionToken.DesignatedStaff), "User has the given permission");
+			user.AdditionalPermissions.Has(PermissionToken.DesignatedStaff).Should().BeTrue("User has the given permission");
 		}
 
 		[TestMethod]
@@ -725,12 +725,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_data.UpdateUser(contract);
 
 			var user = _repository.Load(contract.Id);
-			Assert.AreEqual("HatsuneMiku", user.Name, "Name was updated");
-			Assert.AreEqual("hatsunemiku", user.NameLC, "Name was updated");
+			user.Name.Should().Be("HatsuneMiku", "Name was updated");
+			user.NameLC.Should().Be("hatsunemiku", "Name was updated");
 
 			var oldNameEntry = _repository.List<OldUsername>().FirstOrDefault(u => u.User.Id == _userWithoutEmail.Id);
-			Assert.IsNotNull(oldNameEntry, "Old name entry was created");
-			Assert.AreEqual(oldName, oldNameEntry.OldName, "Old name as expected");
+			oldNameEntry.Should().NotBeNull("Old name entry was created");
+			oldNameEntry.OldName.Should().Be(oldName, "Old name as expected");
 		}
 
 		[TestMethod]
@@ -774,11 +774,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_userWithEmail.Options.EmailVerified = true;
 			var result = _data.UpdateUserSettings(contract);
 
-			Assert.IsNotNull(result, "Result");
+			result.Should().NotBeNull("Result");
 			var user = GetUserFromRepo(_userWithEmail.Name);
-			Assert.IsNotNull(user, "User was found in repository");
-			Assert.AreEqual("new_email@vocadb.net", user.Email, "Email");
-			Assert.IsFalse(user.Options.EmailVerified, "EmailVerified"); // Cancel verification
+			user.Should().NotBeNull("User was found in repository");
+			user.Email.Should().Be("new_email@vocadb.net", "Email");
+			user.Options.EmailVerified.Should().BeFalse("EmailVerified"); // Cancel verification
 		}
 
 		[TestMethod]
@@ -794,7 +794,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_data.UpdateUserSettings(contract);
 
-			Assert.AreEqual(algo.HashPassword("3939", _userWithEmail.Salt), _userWithEmail.Password, "Password was updated");
+			_userWithEmail.Password.Should().Be(algo.HashPassword("3939", _userWithEmail.Salt), "Password was updated");
 		}
 
 		[TestMethod]
@@ -837,8 +837,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_data.UpdateUserSettings(contract);
 
 			var user = GetUserFromRepo(_userWithoutEmail.Name);
-			Assert.IsNotNull(user, "User was found in repository");
-			Assert.AreEqual("already_in_use@vocadb.net", user.Email, "Email");
+			user.Should().NotBeNull("User was found in repository");
+			user.Email.Should().Be("already_in_use@vocadb.net", "Email");
 		}
 
 		[TestMethod]
@@ -858,9 +858,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_data.UpdateUserSettings(contract);
 
-			Assert.AreEqual("mikumiku", _userWithEmail.Name, "Name was changed");
-			Assert.AreEqual(1, _userWithEmail.OldUsernames.Count, "Old username was added");
-			Assert.AreEqual("already_exists", _userWithEmail.OldUsernames[0].OldName, "Old name was recorded");
+			_userWithEmail.Name.Should().Be("mikumiku", "Name was changed");
+			_userWithEmail.OldUsernames.Count.Should().Be(1, "Old username was added");
+			_userWithEmail.OldUsernames[0].OldName.Should().Be("already_exists", "Old name was recorded");
 		}
 
 		[TestMethod]
@@ -893,12 +893,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		[TestMethod]
 		public void VerifyEmail()
 		{
-			Assert.IsFalse(_userWithEmail.Options.EmailVerified, "EmailVerified");
+			_userWithEmail.Options.EmailVerified.Should().BeFalse("EmailVerified");
 
 			_data.VerifyEmail(_request.Id);
 
-			Assert.IsTrue(_userWithEmail.Options.EmailVerified, "EmailVerified");
-			Assert.AreEqual(0, _repository.List<PasswordResetRequest>().Count, "Number of requests");
+			_userWithEmail.Options.EmailVerified.Should().BeTrue("EmailVerified");
+			_repository.List<PasswordResetRequest>().Count.Should().Be(0, "Number of requests");
 		}
 
 		[TestMethod]
@@ -917,8 +917,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_data.VerifyEmail(_request.Id);
 
 			/*
-			Assert.IsTrue(userWithEmail.Options.EmailVerified, "EmailVerified");
-			Assert.AreEqual(request.Email, userWithEmail.Email, "Email");*/
+			userWithEmail.Options.EmailVerified.Should().BeTrue("EmailVerified");
+			userWithEmail.Email.Should().Be(request.Email, "Email");*/
 		}
 	}
 }

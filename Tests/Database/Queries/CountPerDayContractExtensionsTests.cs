@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Aggregate;
@@ -28,12 +29,12 @@ namespace VocaDb.Tests.Database.Queries
 
 			var result = points.AddZeros(true, TimeUnit.Day);
 
-			Assert.AreEqual(9, result.Length, "Number of data points");
-			Assert.AreEqual(39, result[0].Count, "First point (assigned)");
-			Assert.AreEqual(1, result[0].Day, "First point day");
-			Assert.AreEqual(0, result[1].Count, "Second point (generated, zero)");
-			Assert.AreEqual(2, result[1].Day, "Second point day");
-			Assert.AreEqual(393, result[2].Count, "Third point (assigned)");
+			result.Length.Should().Be(9, "Number of data points");
+			result[0].Count.Should().Be(39, "First point (assigned)");
+			result[0].Day.Should().Be(1, "First point day");
+			result[1].Count.Should().Be(0, "Second point (generated, zero)");
+			result[1].Day.Should().Be(2, "Second point day");
+			result[2].Count.Should().Be(393, "Third point (assigned)");
 		}
 
 		[TestMethod]
@@ -46,9 +47,9 @@ namespace VocaDb.Tests.Database.Queries
 
 			var result = points.AddZeros(true, TimeUnit.Month);
 
-			Assert.AreEqual(13, result.Length, "Number of data points");
-			Assert.AreEqual(39, result[0].Count, "First point (assigned)");
-			Assert.AreEqual(0, result[1].Count, "Second point (generated, zero)");
+			result.Length.Should().Be(13, "Number of data points");
+			result[0].Count.Should().Be(39, "First point (assigned)");
+			result[1].Count.Should().Be(0, "Second point (generated, zero)");
 		}
 
 		[TestMethod]
@@ -60,8 +61,8 @@ namespace VocaDb.Tests.Database.Queries
 
 			var result = points.AddZeros(true, TimeUnit.Day);
 
-			Assert.AreEqual(1, result.Length, "Number of data points");
-			Assert.AreEqual(39, result[0].Count, "First point (assigned)");
+			result.Length.Should().Be(1, "Number of data points");
+			result[0].Count.Should().Be(39, "First point (assigned)");
 		}
 
 		[TestMethod]
@@ -71,7 +72,7 @@ namespace VocaDb.Tests.Database.Queries
 
 			var result = points.AddZeros(true, TimeUnit.Day);
 
-			Assert.AreEqual(0, result.Length, "Number of data points");
+			result.Length.Should().Be(0, "Number of data points");
 		}
 
 		[TestMethod]
@@ -79,7 +80,7 @@ namespace VocaDb.Tests.Database.Queries
 		{
 			var result = AddPrevious(TimeUnit.Day);
 
-			Assert.AreEqual(0, result.Length, "Number of data points");
+			result.Length.Should().Be(0, "Number of data points");
 		}
 
 		[TestMethod]
@@ -87,8 +88,8 @@ namespace VocaDb.Tests.Database.Queries
 		{
 			var result = AddPrevious(TimeUnit.Day, new CountPerDayContract(2039, 1, 1, 39));
 
-			Assert.AreEqual(1, result.Length, "Number of data points");
-			Assert.AreEqual(39, result[0].Count, "First point (assigned)");
+			result.Length.Should().Be(1, "Number of data points");
+			result[0].Count.Should().Be(39, "First point (assigned)");
 		}
 
 		[TestMethod]
@@ -100,13 +101,13 @@ namespace VocaDb.Tests.Database.Queries
 				new CountPerDayContract(2039, 1, 9, 3939)
 			);
 
-			Assert.AreEqual(9, result.Length, "Number of data points");
-			Assert.AreEqual(39, result[0].Count, "First point (assigned)");
-			Assert.AreEqual(1, result[0].Day, "First point day");
-			Assert.AreEqual(39, result[1].Count, "Second point (generated, previous)");
-			Assert.AreEqual(2, result[1].Day, "Second point day");
-			Assert.AreEqual(393, result[2].Count, "Third point (assigned)");
-			Assert.AreEqual(393, result[3].Count, "4th point (generated, previous)");
+			result.Length.Should().Be(9, "Number of data points");
+			result[0].Count.Should().Be(39, "First point (assigned)");
+			result[0].Day.Should().Be(1, "First point day");
+			result[1].Count.Should().Be(39, "Second point (generated, previous)");
+			result[1].Day.Should().Be(2, "Second point day");
+			result[2].Count.Should().Be(393, "Third point (assigned)");
+			result[3].Count.Should().Be(393, "4th point (generated, previous)");
 		}
 	}
 }

@@ -1,6 +1,7 @@
 #nullable disable
 
 using System;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Users;
@@ -35,7 +36,7 @@ namespace VocaDb.Tests.Helpers
 		{
 			var result = _manager.CheckConcurrentEditsInst(_entryRef, _miku);
 
-			Assert.AreEqual(ConcurrentEntryEditManager.Nothing.UserId, result.UserId, "no one editing");
+			result.UserId.Should().Be(ConcurrentEntryEditManager.Nothing.UserId, "no one editing");
 		}
 
 		/// <summary>
@@ -48,7 +49,7 @@ namespace VocaDb.Tests.Helpers
 			_manager.CheckConcurrentEditsInst(_entryRef, rin);
 			var result = _manager.CheckConcurrentEditsInst(_entryRef, _miku);
 
-			Assert.AreEqual(rin.Id, result.UserId, "Rin still editing");
+			result.UserId.Should().Be(rin.Id, "Rin still editing");
 		}
 
 		/// <summary>
@@ -63,7 +64,7 @@ namespace VocaDb.Tests.Helpers
 			result.Time = DateTime.MinValue;
 			result = _manager.CheckConcurrentEditsInst(_entryRef, _miku);
 
-			Assert.AreEqual(ConcurrentEntryEditManager.Nothing.UserId, result.UserId, "no one editing");
+			result.UserId.Should().Be(ConcurrentEntryEditManager.Nothing.UserId, "no one editing");
 		}
 	}
 }

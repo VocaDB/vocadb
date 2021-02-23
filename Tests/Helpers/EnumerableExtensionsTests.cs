@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Helpers;
 
@@ -14,13 +15,13 @@ namespace VocaDb.Tests.Helpers
 		[TestMethod]
 		public void MinOrNull_NotEmpty()
 		{
-			Assert.AreEqual(3, new int[] { 39, 3, 9 }.MinOrNull());
+			new int[] { 39, 3, 9 }.MinOrNull().Should().Be(3);
 		}
 
 		[TestMethod]
 		public void MinOrNull_Empty_NotNullable()
 		{
-			Assert.IsNull(new int[0].MinOrNull());
+			new int[0].MinOrNull().Should().BeNull();
 		}
 	}
 }

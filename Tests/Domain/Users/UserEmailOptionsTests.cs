@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Users;
 
@@ -12,7 +13,7 @@ namespace VocaDb.Tests.Domain.Users
 		[TestMethod]
 		public void Value(int expected, UserEmailOptions actual)
 		{
-			Assert.AreEqual(expected, (int)actual);
+			((int)actual).Should().Be(expected);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Service;
@@ -24,24 +25,24 @@ namespace VocaDb.Tests.Service
 		{
 			var result = new EntryUrlParser(BaseUrl).Parse(GetAbsoluteUrl(url));
 
-			Assert.AreEqual(expectedId, result.Id, "Id");
-			Assert.AreEqual(expectedType, result.EntryType, "EntryType");
+			result.Id.Should().Be(expectedId, "Id");
+			result.EntryType.Should().Be(expectedType, "EntryType");
 		}
 
 		private void TestParseRelative(string url, int expectedId, EntryType expectedType)
 		{
 			var result = new EntryUrlParser(BaseUrl).Parse(url, true);
 
-			Assert.AreEqual(expectedId, result.Id, "Id");
-			Assert.AreEqual(expectedType, result.EntryType, "EntryType");
+			result.Id.Should().Be(expectedId, "Id");
+			result.EntryType.Should().Be(expectedType, "EntryType");
 		}
 
 		[TestMethod]
 		public void HostAddressesAreSame()
 		{
 			var result = new EntryUrlParser(BaseUrl).Parse(GetAbsoluteUrl("/Artist/Details/39"));
-			Assert.AreEqual(39, result.Id, "Id");
-			Assert.AreEqual(EntryType.Artist, result.EntryType, "EntryType");
+			result.Id.Should().Be(39, "Id");
+			result.EntryType.Should().Be(EntryType.Artist, "EntryType");
 		}
 
 		[TestMethod]
@@ -79,8 +80,8 @@ namespace VocaDb.Tests.Service
 		{
 			var result = new EntryUrlParser(BaseUrl).Parse("http://test.vocadb.net/S/39");
 
-			Assert.AreEqual(39, result.Id, "Id");
-			Assert.AreEqual(EntryType.Song, result.EntryType, "EntryType");
+			result.Id.Should().Be(39, "Id");
+			result.EntryType.Should().Be(EntryType.Song, "EntryType");
 		}
 
 		[TestMethod]

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.DataContracts.PVs;
@@ -67,7 +68,7 @@ namespace VocaDb.Tests.Domain.Songs
 		{
 			_song.UpdatePublishDateFromPVs();
 
-			Assert.AreEqual(expected, _song.PublishDate.DateTime, "PublishDate");
+			_song.PublishDate.DateTime.Should().Be(expected, "PublishDate");
 		}
 
 		[TestInitialize]
@@ -97,10 +98,10 @@ namespace VocaDb.Tests.Domain.Songs
 		{
 			_song = new Song(new LocalizedString("song", ContentLanguageSelection.Romaji));
 
-			Assert.AreEqual(1, _song.Names.Count(), "Names count");
-			Assert.IsTrue(_song.Names.HasNameForLanguage(ContentLanguageSelection.Romaji), "Has name for Romaji");
-			Assert.IsFalse(_song.Names.HasNameForLanguage(ContentLanguageSelection.English), "Does not have name for English");
-			Assert.AreEqual("song", _song.Names.GetEntryName(ContentLanguagePreference.Romaji).DisplayName, "Display name");
+			_song.Names.Count().Should().Be(1, "Names count");
+			_song.Names.HasNameForLanguage(ContentLanguageSelection.Romaji).Should().BeTrue("Has name for Romaji");
+			_song.Names.HasNameForLanguage(ContentLanguageSelection.English).Should().BeFalse("Does not have name for English");
+			_song.Names.GetEntryName(ContentLanguagePreference.Romaji).DisplayName.Should().Be("song", "Display name");
 		}
 
 		[TestMethod]
@@ -109,11 +110,11 @@ namespace VocaDb.Tests.Domain.Songs
 			var tag = CreateEntry.Tag("rock");
 			var result = _song.AddTag(tag);
 
-			Assert.IsNotNull(result, "result");
-			Assert.IsTrue(result.IsNew, "Is new");
-			Assert.AreEqual(tag, result.Result.Tag, "Added tag");
-			Assert.AreEqual(1, _song.Tags.Usages.Count, "Number of tag usages for song");
-			Assert.AreEqual(1, tag.UsageCount, "Number of usages for tag");
+			result.Should().NotBeNull("result");
+			result.IsNew.Should().BeTrue("Is new");
+			result.Result.Tag.Should().Be(tag, "Added tag");
+			_song.Tags.Usages.Count.Should().Be(1, "Number of tag usages for song");
+			tag.UsageCount.Should().Be(1, "Number of usages for tag");
 		}
 
 		[TestMethod]
@@ -123,11 +124,11 @@ namespace VocaDb.Tests.Domain.Songs
 			_song.AddTag(tag);
 			var result = _song.AddTag(tag);
 
-			Assert.IsNotNull(result, "result");
-			Assert.IsFalse(result.IsNew, "Is new");
-			Assert.AreEqual(tag, result.Result.Tag, "Added tag");
-			Assert.AreEqual(1, _song.Tags.Usages.Count, "Number of tag usages for song");
-			Assert.AreEqual(1, tag.UsageCount, "Number of usages for tag");
+			result.Should().NotBeNull("result");
+			result.IsNew.Should().BeFalse("Is new");
+			result.Result.Tag.Should().Be(tag, "Added tag");
+			_song.Tags.Usages.Count.Should().Be(1, "Number of tag usages for song");
+			tag.UsageCount.Should().Be(1, "Number of usages for tag");
 		}
 
 		[TestMethod]
@@ -135,7 +136,7 @@ namespace VocaDb.Tests.Domain.Songs
 		{
 			var result = CallGetLyricsFromParents(new Song());
 
-			Assert.AreEqual(0, result.Count, "no lyrics");
+			result.Count.Should().Be(0, "no lyrics");
 		}
 
 		[TestMethod]
@@ -143,8 +144,8 @@ namespace VocaDb.Tests.Domain.Songs
 		{
 			var result = CallGetLyricsFromParents(_song);
 
-			Assert.AreEqual(1, result.Count, "one entry");
-			Assert.AreSame(_lyrics, result.First(), "returned lyrics from entry");
+			result.Count.Should().Be(1, "one entry");
+			result.First().Should().BeSameAs(_lyrics, "returned lyrics from entry");
 		}
 
 		[TestMethod]
@@ -157,7 +158,7 @@ namespace VocaDb.Tests.Domain.Songs
 			};
 
 			var result = CallGetLyricsFromParents(derived);
-			Assert.AreEqual(0, result.Count, "No lyrics inherited for instrumental");
+			result.Count.Should().Be(0, "No lyrics inherited for instrumental");
 		}
 
 		[TestMethod]
@@ -169,8 +170,8 @@ namespace VocaDb.Tests.Domain.Songs
 			};
 			var result = CallGetLyricsFromParents(derived);
 
-			Assert.AreEqual(1, result.Count, "one entry");
-			Assert.AreSame(_lyrics, result.First(), "returned lyrics from entry");
+			result.Count.Should().Be(1, "one entry");
+			result.First().Should().BeSameAs(_lyrics, "returned lyrics from entry");
 		}
 
 		[TestMethod]
@@ -189,7 +190,7 @@ namespace VocaDb.Tests.Domain.Songs
 			};
 
 			var result = CallGetLyricsFromParents(derived);
-			Assert.AreSame(_lyrics, result.FirstOrDefault(), "returned lyrics from entry");
+			result.FirstOrDefault().Should().BeSameAs(_lyrics, "returned lyrics from entry");
 		}
 
 		[TestMethod]
@@ -202,8 +203,8 @@ namespace VocaDb.Tests.Domain.Songs
 
 			_song.SyncArtists(newArtists, c => c.Artist.Id == _artist.Id ? _artist : null);
 
-			Assert.AreEqual(1, _song.AllArtists.Count, "Only one artist");
-			Assert.AreEqual(_artist, _song.AllArtists.First().Artist, "Artist is as expected");
+			_song.AllArtists.Count.Should().Be(1, "Only one artist");
+			_song.AllArtists.First().Artist.Should().Be(_artist, "Artist is as expected");
 		}
 
 		/// <summary>
@@ -217,8 +218,8 @@ namespace VocaDb.Tests.Domain.Songs
 
 			await _song.SyncArtistsAsync(newArtists, ac => Task.FromResult(new List<Artist> { _artist }));
 
-			Assert.AreEqual(2, _song.AllArtists.Count, "artists count");
-			Assert.IsTrue(_song.HasArtistLink(link), "Still has the extra artist");
+			_song.AllArtists.Count.Should().Be(2, "artists count");
+			_song.HasArtistLink(link).Should().BeTrue("Still has the extra artist");
 		}
 
 		[TestMethod]
@@ -233,11 +234,11 @@ namespace VocaDb.Tests.Domain.Songs
 
 			_song.SyncArtists(new[] { contract, new ArtistForSongContract(new ArtistContract(_vocalist, ContentLanguagePreference.Default)) }, _artistFunc);
 
-			Assert.AreEqual(2, _song.Artists.Count(), "Number of artists");
+			_song.Artists.Count().Should().Be(2, "Number of artists");
 			var producerLink = _song.Artists.FirstOrDefault(a => a.Artist?.Id == _artist.Id);
-			Assert.IsNotNull(producerLink, "Artist link was added");
-			Assert.AreEqual("RyuuseiP", producerLink.Name, "Added link name");
-			Assert.AreEqual("RyuuseiP feat. Hatsune Miku", _song.ArtistString.Default, "Artist string");
+			producerLink.Should().NotBeNull("Artist link was added");
+			producerLink.Name.Should().Be("RyuuseiP", "Added link name");
+			_song.ArtistString.Default.Should().Be("RyuuseiP feat. Hatsune Miku", "Artist string");
 		}
 
 		[TestMethod]
@@ -245,7 +246,7 @@ namespace VocaDb.Tests.Domain.Songs
 		{
 			_song.UpdatePVServices();
 
-			Assert.AreEqual(PVServices.Nothing, _song.PVServices);
+			_song.PVServices.Should().Be(PVServices.Nothing);
 		}
 
 		[TestMethod]
@@ -255,7 +256,7 @@ namespace VocaDb.Tests.Domain.Songs
 
 			_song.UpdatePVServices();
 
-			Assert.AreEqual(PVServices.Youtube, _song.PVServices);
+			_song.PVServices.Should().Be(PVServices.Youtube);
 		}
 
 		[TestMethod]
@@ -267,7 +268,7 @@ namespace VocaDb.Tests.Domain.Songs
 
 			_song.UpdatePVServices();
 
-			Assert.AreEqual(PVServices.NicoNicoDouga | PVServices.SoundCloud | PVServices.Youtube, _song.PVServices);
+			_song.PVServices.Should().Be(PVServices.NicoNicoDouga | PVServices.SoundCloud | PVServices.Youtube);
 		}
 
 		[TestMethod]

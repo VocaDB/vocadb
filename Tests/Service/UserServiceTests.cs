@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Domain.Users;
@@ -31,8 +32,8 @@ namespace VocaDb.Tests.Service
 		{
 			var result = _service.CheckAccessWithKey(_user.Name, LoginManager.GetHashedAccessKey(_user.AccessKey), "localhatsune", false);
 
-			Assert.IsNotNull(result, "result");
-			Assert.AreEqual(_user.Name, result.Name, "Name");
+			result.Should().NotBeNull("result");
+			result.Name.Should().Be(_user.Name, "Name");
 		}
 
 		[TestMethod]
@@ -40,7 +41,7 @@ namespace VocaDb.Tests.Service
 		{
 			var result = _service.CheckAccessWithKey(_user.Name, LoginManager.GetHashedAccessKey("rinrin"), "localhatsune", false);
 
-			Assert.IsNull(result, "result");
+			result.Should().BeNull("result");
 		}
 
 		[TestMethod]
@@ -49,9 +50,9 @@ namespace VocaDb.Tests.Service
 			var song = _repository.Save(CreateEntry.Song());
 			_service.UpdateSongRating(_user.Id, song.Id, SongVoteRating.Favorite);
 
-			Assert.IsTrue(_user.FavoriteSongs.Any(s => s.Song == song), "Song was added to user");
-			Assert.AreEqual(1, _user.FavoriteSongs.Count, "Number of favorite songs for user");
-			Assert.AreEqual(1, _repository.List<FavoriteSongForUser>().Count, "Number of links in repo");
+			_user.FavoriteSongs.Any(s => s.Song == song).Should().BeTrue("Song was added to user");
+			_user.FavoriteSongs.Count.Should().Be(1, "Number of favorite songs for user");
+			_repository.List<FavoriteSongForUser>().Count.Should().Be(1, "Number of links in repo");
 		}
 
 		[TestMethod]
@@ -62,9 +63,9 @@ namespace VocaDb.Tests.Service
 			_service.UpdateSongRating(_user.Id, song.Id, SongVoteRating.Like);
 
 			var rating = _user.FavoriteSongs.First(s => s.Song == song);
-			Assert.AreEqual(SongVoteRating.Like, rating.Rating, "Rating");
-			Assert.AreEqual(1, _user.FavoriteSongs.Count, "Number of favorite songs for user");
-			Assert.AreEqual(1, _repository.List<FavoriteSongForUser>().Count, "Number of links in repo");
+			rating.Rating.Should().Be(SongVoteRating.Like, "Rating");
+			_user.FavoriteSongs.Count.Should().Be(1, "Number of favorite songs for user");
+			_repository.List<FavoriteSongForUser>().Count.Should().Be(1, "Number of links in repo");
 		}
 
 		[TestMethod]
@@ -74,9 +75,9 @@ namespace VocaDb.Tests.Service
 			_service.UpdateSongRating(_user.Id, song.Id, SongVoteRating.Favorite);
 			_service.UpdateSongRating(_user.Id, song.Id, SongVoteRating.Nothing);
 
-			Assert.IsFalse(_user.FavoriteSongs.Any(s => s.Song == song), "Song was removed from user");
-			Assert.AreEqual(0, _user.FavoriteSongs.Count, "Number of favorite songs for user");
-			Assert.AreEqual(0, _repository.List<FavoriteSongForUser>().Count, "Number of links in repo");
+			_user.FavoriteSongs.Any(s => s.Song == song).Should().BeFalse("Song was removed from user");
+			_user.FavoriteSongs.Count.Should().Be(0, "Number of favorite songs for user");
+			_repository.List<FavoriteSongForUser>().Count.Should().Be(0, "Number of links in repo");
 		}
 	}
 }

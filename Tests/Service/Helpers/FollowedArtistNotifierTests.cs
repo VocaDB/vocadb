@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
@@ -69,9 +70,9 @@ namespace VocaDb.Tests.Service.Helpers
 
 			var notification = _repository.List<UserMessage>().FirstOrDefault();
 
-			Assert.IsNotNull(notification, "Notification was created");
-			Assert.AreEqual(_user, notification.Receiver, "Receiver");
-			Assert.AreEqual("New album (original album) by Tripshots", notification.Subject, "Subject");
+			notification.Should().NotBeNull("Notification was created");
+			notification.Receiver.Should().Be(_user, "Receiver");
+			notification.Subject.Should().Be("New album (original album) by Tripshots", "Subject");
 		}
 
 		[TestMethod]
@@ -82,9 +83,9 @@ namespace VocaDb.Tests.Service.Helpers
 
 			await CallSendNotifications(_creator);
 
-			Assert.IsNotNull(_mailer.Body, "Body");
-			Assert.AreEqual(_user.Name, _mailer.ReceiverName, "ReceiverName");
-			Assert.AreEqual("New album (original album) by Tripshots", _mailer.Subject, "Subject");
+			_mailer.Body.Should().NotBeNull("Body");
+			_mailer.ReceiverName.Should().Be(_user.Name, "ReceiverName");
+			_mailer.Subject.Should().Be("New album (original album) by Tripshots", "Subject");
 		}
 
 		[TestMethod]
@@ -92,7 +93,7 @@ namespace VocaDb.Tests.Service.Helpers
 		{
 			await CallSendNotifications(_user);
 
-			Assert.IsFalse(_repository.List<UserMessage>().Any(), "No notification created");
+			_repository.List<UserMessage>().Any().Should().BeFalse("No notification created");
 		}
 
 		[TestMethod]
@@ -101,7 +102,7 @@ namespace VocaDb.Tests.Service.Helpers
 			_user.Active = false;
 			await CallSendNotifications(_creator);
 
-			Assert.IsFalse(_repository.List<UserMessage>().Any(), "No notification created");
+			_repository.List<UserMessage>().Any().Should().BeFalse("No notification created");
 		}
 
 		[TestMethod]
@@ -113,8 +114,8 @@ namespace VocaDb.Tests.Service.Helpers
 
 			var notification = _repository.List<UserMessage>().FirstOrDefault();
 
-			Assert.IsNotNull(notification, "Notification was created");
-			Assert.AreEqual("New album (original album)", notification.Subject, "Subject");
+			notification.Should().NotBeNull("Notification was created");
+			notification.Subject.Should().Be("New album (original album)", "Subject");
 		}
 
 		// User has too many unread notifications
@@ -128,8 +129,8 @@ namespace VocaDb.Tests.Service.Helpers
 
 			await CallSendNotifications(_creator);
 
-			Assert.AreEqual(10, _repository.List<UserMessage>().Count, "No notification created");
-			Assert.IsTrue(_repository.List<UserMessage>().All(m => m.Subject == "New message!"), "No notification created");
+			_repository.List<UserMessage>().Count.Should().Be(10, "No notification created");
+			_repository.List<UserMessage>().All(m => m.Subject == "New message!").Should().BeTrue("No notification created");
 		}
 
 		// Too many messages limit only counts notifications
@@ -143,16 +144,16 @@ namespace VocaDb.Tests.Service.Helpers
 				_user.ReceivedMessages.Add(_repository.Save(UserMessage.CreateSent(_creator, _user, "New message!", i.ToString(), false)));
 			}
 
-			Assert.AreEqual(10, _repository.List<UserMessage>().Count, "Number of messages before sending");
+			_repository.List<UserMessage>().Count.Should().Be(10, "Number of messages before sending");
 
 			await CallSendNotifications(_creator);
 
-			Assert.AreEqual(11, _repository.List<UserMessage>().Count, "Number of messages after sending");
+			_repository.List<UserMessage>().Count.Should().Be(11, "Number of messages after sending");
 
 			var notification = _repository.List<UserMessage>().FirstOrDefault(m => m.Subject != "New message!");
 
-			Assert.IsNotNull(notification, "Notification was created");
-			Assert.AreEqual(_user, notification.Receiver, "Receiver");
+			notification.Should().NotBeNull("Notification was created");
+			notification.Receiver.Should().Be(_user, "Receiver");
 		}
 	}
 }

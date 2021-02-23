@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Comments;
@@ -55,10 +56,10 @@ namespace VocaDb.Tests.Service.Helpers
 
 			var notification = _repository.List<UserMessage>().FirstOrDefault();
 
-			Assert.IsNotNull(notification, "Notification was created");
-			Assert.IsNull(notification.Sender, "Sender");
-			Assert.AreEqual(_user.Id, notification.Receiver.Id, "Receiver Id");
-			Assert.AreEqual("Mentioned in a comment", notification.Subject, "Subject");
+			notification.Should().NotBeNull("Notification was created");
+			notification.Sender.Should().BeNull("Sender");
+			notification.Receiver.Id.Should().Be(_user.Id, "Receiver Id");
+			notification.Subject.Should().Be("Mentioned in a comment", "Subject");
 		}
 
 		[TestMethod]
@@ -67,8 +68,8 @@ namespace VocaDb.Tests.Service.Helpers
 			CheckComment("Hello world, @miku @luka");
 
 			var messages = _repository.List<UserMessage>();
-			Assert.AreEqual(2, messages.Count, "Messages generated for both users");
-			Assert.AreEqual(_user, messages[0].Receiver, "First user as expected");
+			messages.Count.Should().Be(2, "Messages generated for both users");
+			messages[0].Receiver.Should().Be(_user, "First user as expected");
 		}
 
 		[TestMethod]
@@ -76,7 +77,7 @@ namespace VocaDb.Tests.Service.Helpers
 		{
 			CheckComment("Hello world");
 
-			Assert.IsFalse(_repository.List<UserMessage>().Any(), "No notification created");
+			_repository.List<UserMessage>().Any().Should().BeFalse("No notification created");
 		}
 
 		[TestMethod]
@@ -85,7 +86,7 @@ namespace VocaDb.Tests.Service.Helpers
 			_user.Active = false;
 			CheckComment("Hello world, @miku");
 
-			Assert.IsFalse(_repository.List<UserMessage>().Any(), "No notification created");
+			_repository.List<UserMessage>().Any().Should().BeFalse("No notification created");
 		}
 	}
 }

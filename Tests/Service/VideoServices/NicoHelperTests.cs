@@ -3,13 +3,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Tests.TestData;
-using VocaDb.Tests.TestSupport;
 
 namespace VocaDb.Tests.Service.VideoServices
 {
@@ -32,10 +32,10 @@ namespace VocaDb.Tests.Service.VideoServices
 
 		private void AssertArtists(NicoTitleParseResult result, params string[] artists)
 		{
-			Assert.AreEqual(artists.Length, result.Artists.Count, "Number of artists");
+			result.Artists.Count.Should().Be(artists.Length, "Number of artists");
 			foreach (var artist in artists)
 			{
-				Assert.IsTrue(result.Artists.Any(a => a.DefaultName == artist), $"Has artist {artist}");
+				result.Artists.Any(a => a.DefaultName == artist).Should().BeTrue($"Has artist {artist}");
 			}
 		}
 
@@ -44,10 +44,10 @@ namespace VocaDb.Tests.Service.VideoServices
 			var result = CallParseTitle(nicoTitle);
 
 			if (expectedTitle != null)
-				Assert.AreEqual(expectedTitle, result.Title, "title");
+				result.Title.Should().Be(expectedTitle, "title");
 
 			if (expectedSongType.HasValue)
-				Assert.AreEqual(expectedSongType.Value, result.SongType, "song type");
+				result.SongType.Should().Be(expectedSongType.Value, "song type");
 
 			if (artists != null)
 				AssertArtists(result, artists);
@@ -90,9 +90,9 @@ namespace VocaDb.Tests.Service.VideoServices
 		{
 			var result = NicoHelper.ParseTitle("【 鏡音リン 】　sister's noise　(FULL) 【とある科学の超電磁砲S】", ArtistFunc);
 
-			Assert.AreEqual(1, result.Artists.Count, "1 artist");
-			Assert.AreEqual("鏡音リン", result.Artists.First().DefaultName, "artist");
-			Assert.AreEqual("sister's noise　(FULL)", result.Title, "title");
+			result.Artists.Count.Should().Be(1, "1 artist");
+			result.Artists.First().DefaultName.Should().Be("鏡音リン", "artist");
+			result.Title.Should().Be("sister's noise　(FULL)", "title");
 		}
 
 		/// <summary>
@@ -112,10 +112,10 @@ namespace VocaDb.Tests.Service.VideoServices
 		{
 			var result = NicoHelper.ParseTitle("【初音ミク】恋風～liebe wind～【鏡音リン】", ArtistFunc);
 
-			Assert.AreEqual(2, result.Artists.Count, "2 artists");
-			Assert.AreEqual("初音ミク", result.Artists.First().DefaultName, "artist");
-			Assert.AreEqual("鏡音リン", result.Artists[1].DefaultName, "artist");
-			Assert.AreEqual("恋風～liebe wind～", result.Title, "title");
+			result.Artists.Count.Should().Be(2, "2 artists");
+			result.Artists.First().DefaultName.Should().Be("初音ミク", "artist");
+			result.Artists[1].DefaultName.Should().Be("鏡音リン", "artist");
+			result.Title.Should().Be("恋風～liebe wind～", "title");
 		}
 
 		/// <summary>
@@ -126,10 +126,10 @@ namespace VocaDb.Tests.Service.VideoServices
 		{
 			var result = NicoHelper.ParseTitle("libido / L.A.M.B 【MEIKOオリジナル】", ArtistFunc);
 
-			Assert.AreEqual(1, result.Artists.Count, "1 artist");
-			Assert.AreEqual("MEIKO", result.Artists.First().DefaultName, "artist");
-			Assert.AreEqual("libido / L.A.M.B", result.Title, "title");
-			Assert.AreEqual(SongType.Original, result.SongType, "song type");
+			result.Artists.Count.Should().Be(1, "1 artist");
+			result.Artists.First().DefaultName.Should().Be("MEIKO", "artist");
+			result.Title.Should().Be("libido / L.A.M.B", "title");
+			result.SongType.Should().Be(SongType.Original, "song type");
 		}
 
 		[TestMethod]
@@ -139,14 +139,16 @@ namespace VocaDb.Tests.Service.VideoServices
 			// The database collation matches this with an invalid artist, so empty artist searches are ignored.
 			var result = NicoHelper.ParseTitle("【初音ミク】心闇【オリジナル・PV】", val =>
 			{
-				if (string.IsNullOrEmpty(val))
+				Action action = () =>
 				{
-					Assert.Fail("Empty name not allowed");
-				}
+					if (string.IsNullOrEmpty(val))
+						throw new InvalidOperationException("Empty name not allowed");
+				};
+				action.Should().NotThrow<InvalidOperationException>();
 				return CreateEntry.Artist(ArtistType.Producer, name: val);
 			});
 
-			Assert.AreEqual(2, result.Artists.Count, "Number of parsed artists");
+			result.Artists.Count.Should().Be(2, "Number of parsed artists");
 		}
 	}
 }

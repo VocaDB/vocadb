@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -93,9 +94,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = await _queries.Create("Apimiku");
 
-			Assert.AreEqual("Apimiku", result.Name, "Created tag name");
+			result.Name.Should().Be("Apimiku", "Created tag name");
 			var tagFromRepo = _repository.Load(result.Id);
-			Assert.AreEqual("Apimiku", tagFromRepo.DefaultName, "Tag found from repository");
+			tagFromRepo.DefaultName.Should().Be("Apimiku", "Tag found from repository");
 		}
 
 		[TestMethod]
@@ -110,7 +111,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			void AssertContainsEvent(TagDetailsContract details, ReleaseEvent releaseEvent)
 			{
-				Assert.IsTrue(details.Stats.Events.Any(e => e.Id == releaseEvent.Id), "Contains " + releaseEvent);
+				details.Stats.Events.Any(e => e.Id == releaseEvent.Id).Should().BeTrue("Contains " + releaseEvent);
 			}
 
 			var standaloneEvent = CreateEntry.ReleaseEvent("Miku party");
@@ -129,13 +130,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await _queries.GetDetailsAsync(_tag.Id);
 
-			Assert.AreEqual(2, result.Stats.EventCount, "EventCount");
-			Assert.AreEqual(2, result.Stats.Events.Length, "Events.Length");
-			Assert.AreEqual(1, result.Stats.EventSeriesCount, "EventSeriesCount");
-			Assert.AreEqual(1, result.Stats.EventSeries.Length, "EventSeries.Length");
+			result.Stats.EventCount.Should().Be(2, "EventCount");
+			result.Stats.Events.Length.Should().Be(2, "Events.Length");
+			result.Stats.EventSeriesCount.Should().Be(1, "EventSeriesCount");
+			result.Stats.EventSeries.Length.Should().Be(1, "EventSeries.Length");
 			AssertContainsEvent(result, standaloneEvent);
 			AssertContainsEvent(result, recentSeriesEvent);
-			Assert.IsTrue(result.Stats.EventSeries.Any(e => e.Id == eventSeries.Id), "Contains " + eventSeries);
+			result.Stats.EventSeries.Any(e => e.Id == eventSeries.Id).Should().BeTrue("Contains " + eventSeries);
 		}
 
 		[TestMethod]
@@ -145,14 +146,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_queries.MoveToTrash(_tag.Id, string.Empty);
 
-			Assert.AreEqual(oldCount - 1, _repository.Count<Tag>(), "One tag was removed");
-			Assert.IsFalse(_repository.Contains(_tag), "Tag was removed from repository");
+			_repository.Count<Tag>().Should().Be(oldCount - 1, "One tag was removed");
+			_repository.Contains(_tag).Should().BeFalse("Tag was removed from repository");
 
-			Assert.AreEqual(1, _repository.Count<TrashedEntry>(), "Trashed entry was created");
+			_repository.Count<TrashedEntry>().Should().Be(1, "Trashed entry was created");
 			var trashed = _repository.List<TrashedEntry>().First();
-			Assert.AreEqual(EntryType.Tag, trashed.EntryType, "Trashed entry type");
-			Assert.AreEqual(_tag.Id, trashed.EntryId, "Trashed entry ID");
-			Assert.AreEqual(_tag.DefaultName, trashed.Name, "Trashed entry name");
+			trashed.EntryType.Should().Be(EntryType.Tag, "Trashed entry type");
+			trashed.EntryId.Should().Be(_tag.Id, "Trashed entry ID");
+			trashed.Name.Should().Be(_tag.DefaultName, "Trashed entry name");
 		}
 
 		[TestMethod]
@@ -187,9 +188,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_queries.MoveToTrash(_tag.Id, "test");
 
-			Assert.AreEqual(1, _repository.Count<TagReport>(), "Tag report was deleted");
-			Assert.AreEqual(_tag2, _repository.List<TagReport>().First().Entry, "Report for the other tag still exists");
-			Assert.IsFalse(song.Tags.HasTag(_tag), "Tag was removed from song");
+			_repository.Count<TagReport>().Should().Be(1, "Tag report was deleted");
+			_repository.List<TagReport>().First().Entry.Should().Be(_tag2, "Report for the other tag still exists");
+			song.Tags.HasTag(_tag).Should().BeFalse("Tag was removed from song");
 		}
 
 		[TestMethod]
@@ -199,11 +200,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = _queries.GetTagsByCategories();
 
-			Assert.AreEqual(2, result.Length, "Number of categories");
+			result.Length.Should().Be(2, "Number of categories");
 			var firstCategory = result[0];
-			Assert.AreEqual("Animation", firstCategory.Name, "First category name");
-			Assert.AreEqual(1, firstCategory.Tags.Length, "Number of tags in the Animation category");
-			Assert.AreEqual("Appearance Miku", firstCategory.Tags[0].Name, "First tag in the Animation category");
+			firstCategory.Name.Should().Be("Animation", "First category name");
+			firstCategory.Tags.Length.Should().Be(1, "Number of tags in the Animation category");
+			firstCategory.Tags[0].Name.Should().Be("Appearance Miku", "First tag in the Animation category");
 		}
 
 		[TestMethod]
@@ -213,11 +214,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_queries.Merge(_tag.Id, target.Id);
 
-			Assert.AreEqual("Appearance Miku", target.Names.AllValues.FirstOrDefault(), "Name was copied");
+			target.Names.AllValues.FirstOrDefault().Should().Be("Appearance Miku", "Name was copied");
 
 			var mergeRecord = _repository.List<TagMergeRecord>().FirstOrDefault(m => m.Source == _tag.Id);
-			Assert.IsNotNull(mergeRecord, "Merge record was created");
-			Assert.AreEqual(target, mergeRecord.Target, "Merge record target");
+			mergeRecord.Should().NotBeNull("Merge record was created");
+			mergeRecord.Target.Should().Be(target, "Merge record target");
 		}
 
 		[TestMethod]
@@ -247,14 +248,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_queries.Merge(_tag.Id, target.Id);
 
 			// Assert
-			Assert.AreEqual(3, target.UsageCount, "Tag's UsageCount");
-			Assert.AreEqual(3, target.AllSongTagUsages.Count, "Number of song tag usages");
-			Assert.AreEqual(1, song.Tags.Usages.Count, "Number of usages for the first song");
+			target.UsageCount.Should().Be(3, "Tag's UsageCount");
+			target.AllSongTagUsages.Count.Should().Be(3, "Number of song tag usages");
+			song.Tags.Usages.Count.Should().Be(1, "Number of usages for the first song");
 
 			var usage = target.AllSongTagUsages.FirstOrDefault(s => s.Entry == song);
-			Assert.IsNotNull(usage, "Found usage");
-			Assert.AreEqual(1, usage.Votes.Count, "Number of votes");
-			Assert.IsTrue(song.Tags.Usages.Contains(usage), "Same usage was added to song");
+			usage.Should().NotBeNull("Found usage");
+			usage.Votes.Count.Should().Be(1, "Number of votes");
+			song.Tags.Usages.Contains(usage).Should().BeTrue("Same usage was added to song");
 		}
 
 		[TestMethod]
@@ -279,10 +280,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_queries.Merge(_tag.Id, target.Id);
 			_queries.Merge(target.Id, newTarget.Id);
 
-			Assert.AreEqual(2, _repository.Count<TagMergeRecord>(), "Two merge records created");
+			_repository.Count<TagMergeRecord>().Should().Be(2, "Two merge records created");
 			var mergeRecord = _repository.List<TagMergeRecord>().FirstOrDefault(m => m.Source == _tag.Id);
-			Assert.IsNotNull(mergeRecord, "Found merge record");
-			Assert.AreEqual(newTarget.Id, mergeRecord.Target.Id, "Target was updated");
+			mergeRecord.Should().NotBeNull("Found merge record");
+			mergeRecord.Target.Id.Should().Be(newTarget.Id, "Target was updated");
 		}
 
 		// Merge target is in related tags. Tag cannot be related to itself, so this it's skipped.
@@ -291,11 +292,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var target = _repository.Save(new Tag());
 			_tag.AddRelatedTag(target);
-			Assert.AreEqual(1, target.RelatedTags.Count, "Number of related tags");
+			target.RelatedTags.Count.Should().Be(1, "Number of related tags");
 
 			_queries.Merge(_tag.Id, target.Id);
 
-			Assert.AreEqual(0, target.RelatedTags.Count, "Related tag (self) was not added");
+			target.RelatedTags.Count.Should().Be(0, "Related tag (self) was not added");
 		}
 
 		[TestMethod]
@@ -307,7 +308,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_queries.Merge(_tag.Id, target.Id);
 
-			Assert.AreEqual(parent, target.Parent, "Parent was set");
+			target.Parent.Should().Be(parent, "Parent was set");
 		}
 
 		[TestMethod]
@@ -318,7 +319,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_queries.Merge(_tag.Id, target.Id);
 
-			Assert.IsNull(target.Parent, "Parent was not set");
+			target.Parent.Should().BeNull("Parent was not set");
 		}
 
 		[TestMethod]
@@ -331,8 +332,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_queries.Merge(_tag.Id, target.Id);
 
-			Assert.AreEqual(2, target.TagsForUsers.Count, "Followed tags were migrated");
-			Assert.IsTrue(target.TagsForUsers.Any(t => t.User == _user), "Follow was migrated");
+			target.TagsForUsers.Count.Should().Be(2, "Followed tags were migrated");
+			target.TagsForUsers.Any(t => t.User == _user).Should().BeTrue("Follow was migrated");
 		}
 
 		[TestMethod]
@@ -342,8 +343,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var target = _repository.Save(new Tag("target"));
 			_queries.Merge(_tag.Id, target.Id);
 
-			Assert.IsTrue(target.Mappings.Any(m => m.SourceTag == "ApiMiku"), "Mapping was moved to target tag");
-			Assert.IsTrue(_repository.List<TagMapping>().Any(m => m.SourceTag == "ApiMiku" && m.Tag.Equals(target)), "Mapped was saved to DB");
+			target.Mappings.Any(m => m.SourceTag == "ApiMiku").Should().BeTrue("Mapping was moved to target tag");
+			_repository.List<TagMapping>().Any(m => m.SourceTag == "ApiMiku" && m.Tag.Equals(target)).Should().BeTrue("Mapped was saved to DB");
 		}
 
 		[TestMethod]
@@ -354,11 +355,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_queries.Update(updated, null);
 
-			Assert.AreEqual(updated.Description.Original, _tag.Description.Original, "Description was updated");
+			_tag.Description.Original.Should().Be(updated.Description.Original, "Description was updated");
 
 			var archivedVersion = _repository.List<ArchivedTagVersion>().FirstOrDefault(a => a.Tag.Id == _tag.Id);
-			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(TagEditableFields.Description, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
+			archivedVersion.Should().NotBeNull("Archived version was created");
+			archivedVersion.Diff.ChangedFields.Value.Should().Be(TagEditableFields.Description, "Changed fields");
 		}
 
 		[TestMethod]
@@ -371,12 +372,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			}
 
 			var thumb = new EntryThumb(_tag, MediaTypeNames.Image.Jpeg, ImagePurpose.Main);
-			Assert.IsTrue(_imagePersister.HasImage(thumb, ImageSize.Original), "Original image was saved");
-			Assert.IsTrue(_imagePersister.HasImage(thumb, ImageSize.SmallThumb), "Small thumbnail was saved");
+			_imagePersister.HasImage(thumb, ImageSize.Original).Should().BeTrue("Original image was saved");
+			_imagePersister.HasImage(thumb, ImageSize.SmallThumb).Should().BeTrue("Small thumbnail was saved");
 
 			var archivedVersion = GetArchivedVersion(_tag);
-			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(TagEditableFields.Picture, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
+			archivedVersion.Should().NotBeNull("Archived version was created");
+			archivedVersion.Diff.ChangedFields.Value.Should().Be(TagEditableFields.Picture, "Changed fields");
 		}
 
 		[TestMethod]
@@ -387,11 +388,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_queries.Update(updated, null);
 
-			Assert.AreEqual("Api Miku", _tag.DefaultName, "EnglishName");
+			_tag.DefaultName.Should().Be("Api Miku", "EnglishName");
 
 			var archivedVersion = GetArchivedVersion(_tag);
-			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(TagEditableFields.Names, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
+			archivedVersion.Should().NotBeNull("Archived version was created");
+			archivedVersion.Diff.ChangedFields.Value.Should().Be(TagEditableFields.Names, "Changed fields");
 		}
 
 		[TestMethod]
@@ -438,12 +439,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_queries.Update(updated, null);
 
-			Assert.AreEqual(_tag2, _tag.Parent, "Parent");
-			Assert.IsTrue(_tag2.Children.Contains(_tag), "Parent contains child tag");
+			_tag.Parent.Should().Be(_tag2, "Parent");
+			_tag2.Children.Contains(_tag).Should().BeTrue("Parent contains child tag");
 
 			var archivedVersion = GetArchivedVersion(_tag);
-			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(TagEditableFields.Parent, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
+			archivedVersion.Should().NotBeNull("Archived version was created");
+			archivedVersion.Diff.ChangedFields.Value.Should().Be(TagEditableFields.Parent, "Changed fields");
 		}
 
 		[TestMethod]
@@ -454,11 +455,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_queries.Update(updated, null);
 
-			Assert.IsNull(_tag.Parent, "Parent");
+			_tag.Parent.Should().BeNull("Parent");
 
 			var archivedVersion = GetArchivedVersion(_tag);
-			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(TagEditableFields.Nothing, archivedVersion.Diff.ChangedFields.Value, "Changed fields");
+			archivedVersion.Should().NotBeNull("Archived version was created");
+			archivedVersion.Diff.ChangedFields.Value.Should().Be(TagEditableFields.Nothing, "Changed fields");
 		}
 
 		[TestMethod]
@@ -470,8 +471,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_queries.Update(updated, null);
 
-			Assert.AreEqual(_tag2, _tag.Parent, "Parent");
-			Assert.IsTrue(_tag2.Children.Contains(_tag), "Parent contains child tag");
+			_tag.Parent.Should().Be(_tag2, "Parent");
+			_tag2.Children.Contains(_tag).Should().BeTrue("Parent contains child tag");
 		}
 
 		[TestMethod]
@@ -485,9 +486,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			});
 
 			var mappings = _repository.List<TagMapping>();
-			Assert.AreEqual(1, mappings.Count, "Mapping was saved");
-			Assert.AreEqual(_tag, mappings[0].Tag, "Tag");
-			Assert.AreEqual("apimiku", mappings[0].SourceTag, "SourceTag");
+			mappings.Count.Should().Be(1, "Mapping was saved");
+			mappings[0].Tag.Should().Be(_tag, "Tag");
+			mappings[0].SourceTag.Should().Be("apimiku", "SourceTag");
 		}
 
 		[TestMethod]
@@ -495,13 +496,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			_repository.Save(_tag.CreateMapping("apimiku"));
 
-			Assert.AreEqual(1, _repository.List<TagMapping>().Count, "Precondition: mapping exists in database");
-			Assert.AreEqual(1, _tag.Mappings.Count, "Precondition: mapping exists for tag");
+			_repository.List<TagMapping>().Count.Should().Be(1, "Precondition: mapping exists in database");
+			_tag.Mappings.Count.Should().Be(1, "Precondition: mapping exists for tag");
 
 			_queries.UpdateMappings(new TagMappingContract[0]);
 
-			Assert.AreEqual(0, _repository.List<TagMapping>().Count, "Mapping was deleted");
-			Assert.AreEqual(0, _tag.Mappings.Count, "Mapping was removed from tag");
+			_repository.List<TagMapping>().Count.Should().Be(0, "Mapping was deleted");
+			_tag.Mappings.Count.Should().Be(0, "Mapping was removed from tag");
 		}
 	}
 }

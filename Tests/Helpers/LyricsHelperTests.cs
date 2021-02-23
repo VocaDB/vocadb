@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.Domain.Globalization;
@@ -33,7 +34,7 @@ namespace VocaDb.Tests.Helpers
 		{
 			var result = LyricsHelper.GetDefaultLyrics(lyrics, new OptionalCultureCode(OptionalCultureCode.LanguageCode_English), null, null);
 
-			Assert.AreEqual(OptionalCultureCode.LanguageCode_English, result?.CultureCode, "CultureCode");
+			result?.CultureCode.Should().Be(OptionalCultureCode.LanguageCode_English, "CultureCode");
 		}
 
 		[TestMethod]
@@ -42,7 +43,7 @@ namespace VocaDb.Tests.Helpers
 			var result = LyricsHelper.GetDefaultLyrics(lyrics, new OptionalCultureCode("es"),
 				new[] { new OptionalCultureCode("mi-ku"), new OptionalCultureCode(OptionalCultureCode.LanguageCode_English) }, null);
 
-			Assert.AreEqual(OptionalCultureCode.LanguageCode_English, result?.CultureCode, "CultureCode");
+			result?.CultureCode.Should().Be(OptionalCultureCode.LanguageCode_English, "CultureCode");
 		}
 
 		[TestMethod]
@@ -51,7 +52,7 @@ namespace VocaDb.Tests.Helpers
 			var result = LyricsHelper.GetDefaultLyrics(lyrics, new OptionalCultureCode("es"),
 				new[] { new OptionalCultureCode("mi-ku") }, new Lazy<IEnumerable<UserKnownLanguage>>(() => null));
 
-			Assert.AreEqual(OptionalCultureCode.LanguageCode_Japanese, result?.CultureCode, "CultureCode");
+			result?.CultureCode.Should().Be(OptionalCultureCode.LanguageCode_Japanese, "CultureCode");
 		}
 	}
 }

@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Globalization;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Globalization;
 
@@ -12,7 +13,7 @@ namespace VocaDb.Tests.Domain.Globalization
 		private void TestAvailableLanguageCode(string expected, string cultureName)
 		{
 			var result = InterfaceLanguage.GetAvailableLanguageCode(CultureInfo.GetCultureInfo(cultureName));
-			Assert.AreEqual(expected, result, cultureName);
+			result.Should().Be(expected, cultureName);
 		}
 
 		[TestMethod]

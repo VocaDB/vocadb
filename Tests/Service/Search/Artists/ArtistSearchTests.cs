@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.ExtLinks;
@@ -41,8 +42,8 @@ namespace VocaDb.Tests.Service.Search.Artists
 				}
 			});
 
-			Assert.AreEqual(1, result.Items.Length, "Got 1 result");
-			Assert.AreEqual("XenonP", result.Items[0].DefaultName, "Result as expected");
+			result.Items.Length.Should().Be(1, "Got 1 result");
+			result.Items[0].DefaultName.Should().Be("XenonP", "Result as expected");
 		}
 
 		[TestMethod]
@@ -55,8 +56,8 @@ namespace VocaDb.Tests.Service.Search.Artists
 				}
 			});
 
-			Assert.AreEqual(1, result.Items.Length, "Got 1 result");
-			Assert.AreEqual("XenonP", result.Items[0].DefaultName, "Result as expected");
+			result.Items.Length.Should().Be(1, "Got 1 result");
+			result.Items[0].DefaultName.Should().Be("XenonP", "Result as expected");
 		}
 
 		[TestMethod]
@@ -73,8 +74,8 @@ namespace VocaDb.Tests.Service.Search.Artists
 				}
 			});
 
-			Assert.AreEqual(1, result.Items.Length, "Got 1 result");
-			Assert.AreEqual("Uji", result.Items[0].DefaultName, "Result as expected");
+			result.Items.Length.Should().Be(1, "Got 1 result");
+			result.Items[0].DefaultName.Should().Be("Uji", "Result as expected");
 		}
 	}
 }

@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.ReleaseEvents;
 using VocaDb.Model.Domain.Albums;
@@ -27,9 +28,9 @@ namespace VocaDb.Tests.Service.Search
 
 		private void AreEqual(ReleaseEvent expected, ReleaseEventFindResultContract actual)
 		{
-			Assert.IsNotNull(actual, "Result");
-			Assert.AreEqual(expected.DefaultName, actual.EventName, "EventName");
-			Assert.AreEqual(expected.Id, actual.EventId, "EventId");
+			actual.Should().NotBeNull("Result");
+			actual.EventName.Should().Be(expected.DefaultName, "EventName");
+			actual.EventId.Should().Be(expected.Id, "EventId");
 		}
 
 		private ReleaseEvent CreateEvent(ReleaseEventSeries series, int number, string suffix = "")
@@ -81,8 +82,8 @@ namespace VocaDb.Tests.Service.Search
 		[TestMethod]
 		public void Ctor()
 		{
-			Assert.AreEqual("Comiket 84", _eventInSeries.DefaultName, "Name");
-			Assert.AreEqual("Vocaloid Festa", _unsortedEvent.DefaultName, "Name");
+			_eventInSeries.DefaultName.Should().Be("Comiket 84", "Name");
+			_unsortedEvent.DefaultName.Should().Be("Vocaloid Festa", "Name");
 		}
 
 		/// <summary>
@@ -115,10 +116,10 @@ namespace VocaDb.Tests.Service.Search
 		{
 			var result = Find("Comiket 85");
 
-			Assert.IsNotNull(result, "Result");
-			Assert.IsNotNull(result.Series, "Series");
-			Assert.AreEqual("Comiket", result.Series.Name, "Series");
-			Assert.AreEqual(85, result.SeriesNumber, "SeriesNumber");
+			result.Should().NotBeNull("Result");
+			result.Series.Should().NotBeNull("Series");
+			result.Series.Name.Should().Be("Comiket", "Series");
+			result.SeriesNumber.Should().Be(85, "SeriesNumber");
 		}
 
 		/// <summary>
@@ -144,9 +145,9 @@ namespace VocaDb.Tests.Service.Search
 			var result = Find("Gackpoid's birthday 2011");
 
 			// Note: could also return assumed series and allow creating the series as well. Right now, only an ungrouped event can be created.
-			Assert.IsNotNull(result, "Result");
-			Assert.AreEqual(null, result.Series, "Series"); // Series not found
-			Assert.AreEqual("Gackpoid's birthday 2011", result.EventName, "EventName");
+			result.Should().NotBeNull("Result");
+			result.Series.Should().Be(null, "Series"); // Series not found
+			result.EventName.Should().Be("Gackpoid's birthday 2011", "EventName");
 		}
 
 		/// <summary>
@@ -161,10 +162,10 @@ namespace VocaDb.Tests.Service.Search
 
 			var result = Find("M3 2013");
 
-			Assert.IsNotNull(result, "Result");
-			Assert.IsNotNull(result.Series, "Series");
-			Assert.AreEqual("M3", result.Series.Name, "Series");
-			Assert.AreEqual(2013, result.SeriesNumber, "SeriesNumber");
+			result.Should().NotBeNull("Result");
+			result.Series.Should().NotBeNull("Series");
+			result.Series.Name.Should().Be("M3", "Series");
+			result.SeriesNumber.Should().Be(2013, "SeriesNumber");
 		}
 
 		/// <summary>
@@ -179,11 +180,11 @@ namespace VocaDb.Tests.Service.Search
 
 			var result = Find("M3 2013 Spring");
 
-			Assert.IsNotNull(result, "Result");
-			Assert.IsNotNull(result.Series, "Series");
-			Assert.AreEqual("M3", result.Series.Name, "Series");
-			Assert.AreEqual(2013, result.SeriesNumber, "SeriesNumber");
-			Assert.AreEqual("Spring", result.SeriesSuffix, "SeriesSuffix");
+			result.Should().NotBeNull("Result");
+			result.Series.Should().NotBeNull("Series");
+			result.Series.Name.Should().Be("M3", "Series");
+			result.SeriesNumber.Should().Be(2013, "SeriesNumber");
+			result.SeriesSuffix.Should().Be("Spring", "SeriesSuffix");
 		}
 
 		/// <summary>
@@ -197,9 +198,9 @@ namespace VocaDb.Tests.Service.Search
 
 			var result = Find("M3 2013 Fall");
 
-			Assert.IsNotNull(result, "Result");
-			Assert.IsTrue(result.IsKnownEvent, "IsKnownEvent");
-			Assert.AreEqual("M3 2013 Fall", result.EventName, "EventName");
+			result.Should().NotBeNull("Result");
+			result.IsKnownEvent.Should().BeTrue("IsKnownEvent");
+			result.EventName.Should().Be("M3 2013 Fall", "EventName");
 		}
 
 		/// <summary>
@@ -221,8 +222,8 @@ namespace VocaDb.Tests.Service.Search
 		{
 			var result = Find("Does not exist");
 
-			Assert.IsNotNull(result, "Result");
-			Assert.AreEqual("Does not exist", result.EventName, "EventName");
+			result.Should().NotBeNull("Result");
+			result.EventName.Should().Be("Does not exist", "EventName");
 		}
 	}
 }

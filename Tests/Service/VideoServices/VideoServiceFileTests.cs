@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service.VideoServices;
 
@@ -14,12 +15,12 @@ namespace VocaDb.Tests.Service.VideoServices
 		private async Task TestGetVideoTitle(string url, string expected)
 		{
 			var actual = await _videoService.GetVideoTitleAsync(url);
-			Assert.AreEqual(expected, actual.Title);
+			actual.Title.Should().Be(expected);
 		}
 
 		private void TestIsValidFor(string url, bool expected)
 		{
-			Assert.AreEqual(expected, _videoService.IsValidFor(url));
+			_videoService.IsValidFor(url).Should().Be(expected);
 		}
 
 		[TestInitialize]

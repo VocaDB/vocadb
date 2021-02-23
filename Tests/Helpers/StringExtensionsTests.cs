@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Helpers;
 
@@ -13,7 +14,7 @@ namespace VocaDb.Tests.Helpers
 	{
 		private void TestSummarize(string expected, string input, int minLength, int maxLength)
 		{
-			Assert.AreEqual(expected, input.Summarize(minLength, maxLength));
+			input.Summarize(minLength, maxLength).Should().Be(expected);
 		}
 
 		[TestMethod]

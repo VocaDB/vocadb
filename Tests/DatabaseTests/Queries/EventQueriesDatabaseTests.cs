@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
@@ -72,9 +73,9 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 					};
 				});
 
-				Assert.IsNull(query.EventFromDb, "Release event was deleted");
-				Assert.IsNotNull(query.TrashedEntry, "Trashed entry was created");
-				Assert.AreEqual("Deleted", query.TrashedEntry.Notes, "TrashedEntry.Notes");
+				query.EventFromDb.Should().BeNull("Release event was deleted");
+				query.TrashedEntry.Should().NotBeNull("Trashed entry was created");
+				query.TrashedEntry.Notes.Should().Be("Deleted", "TrashedEntry.Notes");
 			});
 		}
 
@@ -91,7 +92,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 
 			var result = await Update(contract);
 
-			Assert.IsNotNull(result, "result");
+			result.Should().NotBeNull("result");
 		}
 
 		[TestMethod]
@@ -131,9 +132,9 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 
 			var result = await Update(contract);
 
-			Assert.AreEqual(2, result.Names.Length, "Number of names");
+			result.Names.Length.Should().Be(2, "Number of names");
 			var name = result.Names[0];
-			Assert.AreEqual("ミク誕生祭", name.Value, "Name value");
+			name.Value.Should().Be("ミク誕生祭", "Name value");
 		}
 	}
 }

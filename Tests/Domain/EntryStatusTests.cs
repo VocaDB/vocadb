@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 
@@ -13,7 +14,7 @@ namespace VocaDb.Tests.Domain
 		[TestMethod]
 		public void Value(int expected, EntryStatus actual)
 		{
-			Assert.AreEqual(expected, (int)actual);
+			((int)actual).Should().Be(expected);
 		}
 	}
 }

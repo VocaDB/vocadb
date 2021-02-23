@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Tags;
 
@@ -18,7 +19,7 @@ namespace VocaDb.Tests.Domain.Tags
 		[TestMethod]
 		public void Value(int expected, TagTargetTypes actual)
 		{
-			Assert.AreEqual(expected, (int)actual);
+			((int)actual).Should().Be(expected);
 		}
 	}
 }

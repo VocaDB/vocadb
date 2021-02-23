@@ -3,6 +3,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Globalization;
@@ -25,7 +26,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 		private void AssertHasSong(PartialFindResult<Song> result, Song expected)
 		{
-			Assert.IsTrue(result.Items.Any(s => s.Equals(expected)), $"Found {expected}");
+			result.Items.Any(s => s.Equals(expected)).Should().BeTrue($"Found {expected}");
 		}
 
 		[TestInitialize]
@@ -62,8 +63,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 		{
 			var result = CallFind();
 
-			Assert.AreEqual(7, result.Items.Length, "Number of results");
-			Assert.AreEqual(7, result.TotalCount, "Total result count");
+			result.Items.Length.Should().Be(7, "Number of results");
+			result.TotalCount.Should().Be(7, "Total result count");
 			AssertHasSong(result, Db.Song);
 			AssertHasSong(result, Db.Song2);
 			AssertHasSong(result, Db.Song3);
@@ -80,8 +81,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(6, result.Items.Length, "Number of results");
-			Assert.AreEqual(7, result.TotalCount, "Total result count");
+			result.Items.Length.Should().Be(6, "Number of results");
+			result.TotalCount.Should().Be(7, "Total result count");
 			AssertHasSong(result, Db.Song);
 		}
 
@@ -96,10 +97,10 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(7, result.Items.Length, "Number of results");
-			Assert.AreEqual(7, result.TotalCount, "Total result count");
-			Assert.AreEqual("Azalea", result.Items[0].DefaultName);
-			Assert.AreEqual("Crystal Tears", result.Items[1].DefaultName);
+			result.Items.Length.Should().Be(7, "Number of results");
+			result.TotalCount.Should().Be(7, "Total result count");
+			result.Items[0].DefaultName.Should().Be("Azalea");
+			result.Items[1].DefaultName.Should().Be("Crystal Tears");
 		}
 
 		/// <summary>
@@ -113,10 +114,10 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(7, result.Items.Length, "Number of results");
-			Assert.AreEqual(7, result.TotalCount, "Total result count");
-			Assert.AreEqual("Crystal Tears", result.Items[0].DefaultName);
-			Assert.AreEqual("Nebula", result.Items[1].DefaultName);
+			result.Items.Length.Should().Be(7, "Number of results");
+			result.TotalCount.Should().Be(7, "Total result count");
+			result.Items[0].DefaultName.Should().Be("Crystal Tears");
+			result.Items[1].DefaultName.Should().Be("Nebula");
 		}
 
 		/// <summary>
@@ -130,11 +131,11 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(7, result.Items.Length, "Number of results");
-			Assert.AreEqual(7, result.TotalCount, "Total result count");
-			Assert.AreEqual("Nebula", result.Items[0].DefaultName);
-			Assert.AreEqual("Tears of Palm", result.Items[1].DefaultName);
-			Assert.AreEqual("Crystal Tears", result.Items[2].DefaultName);
+			result.Items.Length.Should().Be(7, "Number of results");
+			result.TotalCount.Should().Be(7, "Total result count");
+			result.Items[0].DefaultName.Should().Be("Nebula");
+			result.Items[1].DefaultName.Should().Be("Tears of Palm");
+			result.Items[2].DefaultName.Should().Be("Crystal Tears");
 		}
 
 		/// <summary>
@@ -148,8 +149,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(3, result.Items.Length, "Number of results");
-			Assert.AreEqual(3, result.TotalCount, "total result count");
+			result.Items.Length.Should().Be(3, "Number of results");
+			result.TotalCount.Should().Be(3, "total result count");
 			AssertHasSong(result, Db.Song2);
 			AssertHasSong(result, Db.Song3);
 			AssertHasSong(result, Db.Song6);
@@ -166,9 +167,9 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(1, result.Items.Length, "1 result");
-			Assert.AreEqual(1, result.TotalCount, "total result count");
-			Assert.AreEqual("Crystal Tears", result.Items[0].DefaultName);
+			result.Items.Length.Should().Be(1, "1 result");
+			result.TotalCount.Should().Be(1, "total result count");
+			result.Items[0].DefaultName.Should().Be("Crystal Tears");
 		}
 
 		/// <summary>
@@ -188,9 +189,9 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(1, result.Items.Length, "Number of results");
-			Assert.AreEqual(3, result.TotalCount, "Total number of results");
-			Assert.AreEqual(Db.Song6, result.Items[0], "result is as expected");
+			result.Items.Length.Should().Be(1, "Number of results");
+			result.TotalCount.Should().Be(3, "Total number of results");
+			result.Items[0].Should().Be(Db.Song6, "result is as expected");
 		}
 
 		/// <summary>
@@ -205,9 +206,9 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(1, result.Items.Length, "Number of results");
-			Assert.AreEqual(1, result.TotalCount, "Total number of results");
-			Assert.AreEqual(Db.SongWithSpecialChars, result.Items[0], "result is as expected");
+			result.Items.Length.Should().Be(1, "Number of results");
+			result.TotalCount.Should().Be(1, "Total number of results");
+			result.Items[0].Should().Be(Db.SongWithSpecialChars, "result is as expected");
 		}
 
 		/// <summary>
@@ -221,9 +222,9 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(1, result.Items.Length, "1 result");
-			Assert.AreEqual(1, result.TotalCount, "1 total count");
-			Assert.AreEqual(Db.Song, result.Items[0], "result is as expected");
+			result.Items.Length.Should().Be(1, "1 result");
+			result.TotalCount.Should().Be(1, "1 total count");
+			result.Items[0].Should().Be(Db.Song, "result is as expected");
 		}
 
 		/// <summary>
@@ -237,9 +238,9 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(2, result.Items.Length, "Number of results");
-			Assert.AreEqual(2, result.TotalCount, "Total result count");
-			Assert.AreEqual(Db.Song, result.Items[0]);
+			result.Items.Length.Should().Be(2, "Number of results");
+			result.TotalCount.Should().Be(2, "Total result count");
+			result.Items[0].Should().Be(Db.Song);
 		}
 
 		/// <summary>
@@ -253,8 +254,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(2, result.Items.Length, "Number of results");
-			Assert.AreEqual(2, result.TotalCount, "Total result count");
+			result.Items.Length.Should().Be(2, "Number of results");
+			result.TotalCount.Should().Be(2, "Total result count");
 			AssertHasSong(result, Db.Song3);
 			AssertHasSong(result, Db.Song4);
 		}
@@ -268,9 +269,9 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(1, result.Items.Length, "Number of results");
-			Assert.AreEqual(1, result.TotalCount, "Total result count");
-			Assert.AreEqual("Azalea", result.Items.First().DefaultName, "Song as expected");
+			result.Items.Length.Should().Be(1, "Number of results");
+			result.TotalCount.Should().Be(1, "Total result count");
+			result.Items.First().DefaultName.Should().Be("Azalea", "Song as expected");
 		}
 
 		/// <summary>
@@ -284,9 +285,9 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(2, result.Items.Length, "Number of results");
-			Assert.AreEqual(2, result.TotalCount, "Total result count");
-			Assert.AreEqual(Db.Song, result.Items[0], "songs are equal");
+			result.Items.Length.Should().Be(2, "Number of results");
+			result.TotalCount.Should().Be(2, "Total result count");
+			result.Items[0].Should().Be(Db.Song, "songs are equal");
 		}
 
 		[TestMethod]
@@ -300,7 +301,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(1, result.TotalCount, "Total result count");
+			result.TotalCount.Should().Be(1, "Total result count");
 			AssertHasSong(result, Db.Song);
 		}
 
@@ -315,7 +316,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.SongSearch
 
 			var result = CallFind();
 
-			Assert.AreEqual(2, result.TotalCount, "Total result count");
+			result.TotalCount.Should().Be(2, "Total result count");
 			AssertHasSong(result, Db.Song);
 			AssertHasSong(result, Db.Song2);
 		}

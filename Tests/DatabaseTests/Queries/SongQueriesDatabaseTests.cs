@@ -1,7 +1,8 @@
 #nullable disable
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.ReleaseEvents;
@@ -57,8 +58,8 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 		public async Task Update_ReleaseEvent_Remove()
 		{
 			// Preconditions (arrange)
-			Assert.IsNotNull(Db.Song.ReleaseEvent, "ReleaseEvent");
-			Assert.IsTrue(Db.ReleaseEvent.AllSongs.Contains(Db.Song), "Release event has song");
+			Db.Song.ReleaseEvent.Should().NotBeNull("ReleaseEvent");
+			Db.ReleaseEvent.AllSongs.Contains(Db.Song).Should().BeTrue("Release event has song");
 
 			// Act
 			var contract = new SongForEditContract(Db.Song, ContentLanguagePreference.English)
@@ -73,9 +74,9 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 				var updated = await queries.UpdateBasicProperties(contract);
 
 				// Assert
-				Assert.IsNull(updated.ReleaseEvent, "Release event was cleared");
+				updated.ReleaseEvent.Should().BeNull("Release event was cleared");
 				var releaseEvent = repository.HandleQuery(ctx => ctx.Load<ReleaseEvent>(Db.ReleaseEvent.Id));
-				Assert.AreEqual(0, releaseEvent.AllSongs.Count, "Song was removed from event");
+				releaseEvent.AllSongs.Count.Should().Be(0, "Song was removed from event");
 			});
 		}
 
@@ -98,9 +99,9 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 				var updated = await queries.UpdateBasicProperties(contract);
 
 				// Assert
-				Assert.AreEqual(newEvent.Id, updated.ReleaseEvent?.Id, "Release event was changed");
+				updated.ReleaseEvent?.Id.Should().Be(newEvent.Id, "Release event was changed");
 				var releaseEvent = repository.HandleQuery(ctx => ctx.Load<ReleaseEvent>(newEvent.Id));
-				Assert.AreEqual(1, releaseEvent.AllSongs.Count, "Song was added to event");
+				releaseEvent.AllSongs.Count.Should().Be(1, "Song was added to event");
 			});
 		}
 
@@ -115,7 +116,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 
 			var song = await Update(contract);
 
-			Assert.AreEqual(1, song.Lyrics.Length, "Lyrics created");
+			song.Lyrics.Length.Should().Be(1, "Lyrics created");
 		}
 	}
 }

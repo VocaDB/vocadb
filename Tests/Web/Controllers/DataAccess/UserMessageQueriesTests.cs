@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Users;
@@ -64,9 +65,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = CallGet(1);
 
-			Assert.IsNotNull(result, "Message was loaded");
-			Assert.AreEqual("Hello world", result.Subject, "Message subject");
-			Assert.AreEqual("Message body", result.Body, "Message body");
+			result.Should().NotBeNull("Message was loaded");
+			result.Subject.Should().Be("Hello world", "Message subject");
+			result.Body.Should().Be("Message body", "Message body");
 		}
 
 		[TestMethod]
@@ -81,10 +82,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = CallGetList(UserInboxType.Nothing);
 
-			Assert.AreEqual(2, result.Items.Length, "Number of messages returned");
-			Assert.AreEqual(2, result.TotalCount, "Total number of messages");
-			Assert.AreEqual("Hello to you too", result.Items[0].Subject, "Sent message subject");
-			Assert.AreEqual("Hello world", result.Items[1].Subject, "Received message subject");
+			result.Items.Length.Should().Be(2, "Number of messages returned");
+			result.TotalCount.Should().Be(2, "Total number of messages");
+			result.Items[0].Subject.Should().Be("Hello to you too", "Sent message subject");
+			result.Items[1].Subject.Should().Be("Hello world", "Received message subject");
 		}
 
 		[TestMethod]
@@ -92,8 +93,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = CallGetList(UserInboxType.Received).Items;
 
-			Assert.AreEqual(1, result.Length, "Number of received messages");
-			Assert.AreEqual("Hello world", result.First().Subject, "Received message subject");
+			result.Length.Should().Be(1, "Number of received messages");
+			result.First().Subject.Should().Be("Hello world", "Received message subject");
 		}
 
 		[TestMethod]
@@ -101,8 +102,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = CallGetList(UserInboxType.Sent).Items;
 
-			Assert.AreEqual(1, result.Length, "Number of sent messages");
-			Assert.AreEqual("Hello to you too", result.First().Subject, "Sent message subject");
+			result.Length.Should().Be(1, "Number of sent messages");
+			result.First().Subject.Should().Be("Hello to you too", "Sent message subject");
 		}
 
 		[TestMethod]
@@ -114,8 +115,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = CallGetList(UserInboxType.Nothing, unread: true);
 
-			Assert.AreEqual(1, result.Items.Length, "Number of received messages");
-			Assert.AreEqual("Unread message", result.Items.First().Subject, "Received message subject");
+			result.Items.Length.Should().Be(1, "Number of received messages");
+			result.Items.First().Subject.Should().Be("Unread message", "Received message subject");
 		}
 	}
 }

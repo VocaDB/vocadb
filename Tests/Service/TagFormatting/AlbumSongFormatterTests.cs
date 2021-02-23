@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -50,7 +51,7 @@ namespace VocaDb.Tests.Service.TagFormatting
 		{
 			var result = ApplyFormat(Format, ContentLanguagePreference.Romaji).Trim();
 
-			Assert.AreEqual("Nebula feat. Hatsune Miku;Tripshots;Synthesis;1;5", result);
+			result.Should().Be("Nebula feat. Hatsune Miku;Tripshots;Synthesis;1;5");
 		}
 
 		[TestMethod]
@@ -61,7 +62,7 @@ namespace VocaDb.Tests.Service.TagFormatting
 
 			var result = ApplyFormat(Format, ContentLanguagePreference.Romaji).Trim();
 
-			Assert.AreEqual("Nebula;;Synthesis;1;5", result);
+			result.Should().Be("Nebula;;Synthesis;1;5");
 		}
 
 		[TestMethod]
@@ -71,7 +72,7 @@ namespace VocaDb.Tests.Service.TagFormatting
 
 			var result = ApplyFormat(Format, ContentLanguagePreference.Romaji).Trim();
 
-			Assert.AreEqual("Nebula feat. Hatsune Miku;\"re;mo\";Synthesis;1;5", result);
+			result.Should().Be("Nebula feat. Hatsune Miku;\"re;mo\";Synthesis;1;5");
 		}
 
 		[TestMethod]
@@ -79,7 +80,7 @@ namespace VocaDb.Tests.Service.TagFormatting
 		{
 			var result = ApplyFormat("%title%;%artist%", ContentLanguagePreference.Romaji).Trim();
 
-			Assert.AreEqual("Nebula;Tripshots feat. Hatsune Miku", result);
+			result.Should().Be("Nebula;Tripshots feat. Hatsune Miku");
 		}
 	}
 }

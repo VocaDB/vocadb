@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using VocaDb.Model.DataContracts;
@@ -35,7 +36,7 @@ namespace VocaDb.Tests.Domain
 		{
 			var result = new WebLink(_webLinkContract);
 
-			Assert.IsTrue(result.ContentEquals(_webLinkContract), "constructed object is equal to contract");
+			result.ContentEquals(_webLinkContract).Should().BeTrue("constructed object is equal to contract");
 		}
 
 		[TestMethod]
@@ -45,7 +46,7 @@ namespace VocaDb.Tests.Domain
 
 			var result = copy.ContentEquals(_webLinkContract);
 
-			Assert.IsTrue(result, "are equal");
+			result.Should().BeTrue("are equal");
 		}
 
 		[TestMethod]
@@ -55,7 +56,7 @@ namespace VocaDb.Tests.Domain
 
 			var result = copy.ContentEquals(_webLinkContract2);
 
-			Assert.IsFalse(result, "are not equal");
+			result.Should().BeFalse("are not equal");
 		}
 
 		[TestMethod]
@@ -65,13 +66,13 @@ namespace VocaDb.Tests.Domain
 
 			var result = WebLink.Sync(new WebLink[] { }, newLinks, _webLinkFactory);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.IsTrue(result.Changed, "is changed");
-			Assert.AreEqual(1, result.Added.Length, "1 added");
-			Assert.AreEqual(0, result.Edited.Length, "none edited");
-			Assert.AreEqual(0, result.Removed.Length, "none removed");
-			Assert.AreEqual(0, result.Unchanged.Length, "none unchanged");
-			Assert.IsTrue(result.Added.First().ContentEquals(_webLinkContract), "added link matches contract");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().BeTrue("is changed");
+			result.Added.Length.Should().Be(1, "1 added");
+			result.Edited.Length.Should().Be(0, "none edited");
+			result.Removed.Length.Should().Be(0, "none removed");
+			result.Unchanged.Length.Should().Be(0, "none unchanged");
+			result.Added.First().ContentEquals(_webLinkContract).Should().BeTrue("added link matches contract");
 		}
 
 		[TestMethod]
@@ -82,13 +83,13 @@ namespace VocaDb.Tests.Domain
 
 			var result = WebLink.Sync(oldLinks, newLinks, _webLinkFactory);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.IsFalse(result.Changed, "is not changed");
-			Assert.AreEqual(0, result.Added.Length, "none added");
-			Assert.AreEqual(0, result.Edited.Length, "none edited");
-			Assert.AreEqual(0, result.Removed.Length, "none removed");
-			Assert.AreEqual(1, result.Unchanged.Length, "1 unchanged");
-			Assert.IsTrue(result.Unchanged.First().ContentEquals(_webLinkContract), "unchanged link matches contract");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().BeFalse("is not changed");
+			result.Added.Length.Should().Be(0, "none added");
+			result.Edited.Length.Should().Be(0, "none edited");
+			result.Removed.Length.Should().Be(0, "none removed");
+			result.Unchanged.Length.Should().Be(1, "1 unchanged");
+			result.Unchanged.First().ContentEquals(_webLinkContract).Should().BeTrue("unchanged link matches contract");
 		}
 
 		[TestMethod]
@@ -99,13 +100,13 @@ namespace VocaDb.Tests.Domain
 
 			var result = WebLink.Sync(oldLinks, newLinks, _webLinkFactory);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.IsTrue(result.Changed, "is changed");
-			Assert.AreEqual(0, result.Added.Length, "none added");
-			Assert.AreEqual(1, result.Edited.Length, "1 edited");
-			Assert.AreEqual(0, result.Removed.Length, "none removed");
-			Assert.AreEqual(1, result.Unchanged.Length, "1 unchanged");
-			Assert.IsTrue(result.Edited.First().ContentEquals(_webLinkContract2), "edited link matches new contract");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().BeTrue("is changed");
+			result.Added.Length.Should().Be(0, "none added");
+			result.Edited.Length.Should().Be(1, "1 edited");
+			result.Removed.Length.Should().Be(0, "none removed");
+			result.Unchanged.Length.Should().Be(1, "1 unchanged");
+			result.Edited.First().ContentEquals(_webLinkContract2).Should().BeTrue("edited link matches new contract");
 		}
 
 		[TestMethod]
@@ -116,13 +117,13 @@ namespace VocaDb.Tests.Domain
 
 			var result = WebLink.Sync(oldLinks, newLinks, _webLinkFactory);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.IsTrue(result.Changed, "is changed");
-			Assert.AreEqual(0, result.Added.Length, "none added");
-			Assert.AreEqual(0, result.Edited.Length, "none edited");
-			Assert.AreEqual(1, result.Removed.Length, "1 removed");
-			Assert.AreEqual(0, result.Unchanged.Length, "none unchanged");
-			Assert.IsTrue(result.Removed.First().ContentEquals(_webLinkContract), "removed link matches contract");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().BeTrue("is changed");
+			result.Added.Length.Should().Be(0, "none added");
+			result.Edited.Length.Should().Be(0, "none edited");
+			result.Removed.Length.Should().Be(1, "1 removed");
+			result.Unchanged.Length.Should().Be(0, "none unchanged");
+			result.Removed.First().ContentEquals(_webLinkContract).Should().BeTrue("removed link matches contract");
 		}
 
 		[TestMethod]
@@ -132,12 +133,12 @@ namespace VocaDb.Tests.Domain
 
 			var result = WebLink.Sync(new WebLink[] { }, newLinks, _webLinkFactory);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.IsFalse(result.Changed, "is changed");
-			Assert.AreEqual(0, result.Added.Length, "1 added");
-			Assert.AreEqual(0, result.Edited.Length, "none edited");
-			Assert.AreEqual(0, result.Removed.Length, "none removed");
-			Assert.AreEqual(0, result.Unchanged.Length, "none unchanged");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().BeFalse("is changed");
+			result.Added.Length.Should().Be(0, "1 added");
+			result.Edited.Length.Should().Be(0, "none edited");
+			result.Removed.Length.Should().Be(0, "none removed");
+			result.Unchanged.Length.Should().Be(0, "none unchanged");
 		}
 	}
 }

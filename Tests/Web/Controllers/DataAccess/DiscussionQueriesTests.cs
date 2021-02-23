@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Discussions;
@@ -40,17 +41,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var contract = new DiscussionTopicContract { Author = new UserForApiContract(_user), Name = "New topic", Content = "Content" };
 			var result = _queries.CreateTopic(_folder.Id, contract);
 
-			Assert.AreNotEqual(0, result.Id, "Id was assigned");
-			Assert.AreEqual(1, _repo.List<DiscussionTopic>().Count, "Number of discussion topics in repo");
+			result.Id.Should().NotBe(0, "Id was assigned");
+			_repo.List<DiscussionTopic>().Count.Should().Be(1, "Number of discussion topics in repo");
 
-			Assert.AreEqual(1, _folder.AllTopics.Count, "Topic was added to folder");
-			Assert.IsTrue(result.Id == _folder.AllTopics.First().Id, "Topic Id in folder matches returned topic ID");
+			_folder.AllTopics.Count.Should().Be(1, "Topic was added to folder");
+			(result.Id == _folder.AllTopics.First().Id).Should().BeTrue("Topic Id in folder matches returned topic ID");
 
 			var topicInRepo = _repo.List<DiscussionTopic>().First();
 
-			Assert.IsTrue(result.Id == topicInRepo.Id, "Persisted topic ID matches returned topic ID");
-			Assert.AreEqual("New topic", topicInRepo.Name, "Name");
-			Assert.AreEqual("Content", topicInRepo.Content, "Content");
+			(result.Id == topicInRepo.Id).Should().BeTrue("Persisted topic ID matches returned topic ID");
+			topicInRepo.Name.Should().Be("New topic", "Name");
+			topicInRepo.Content.Should().Be("Content", "Content");
 		}
 
 		[TestMethod]

@@ -2,6 +2,7 @@
 
 using System;
 using System.Xml.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Albums;
 using VocaDb.Model.Helpers;
@@ -18,7 +19,7 @@ namespace VocaDb.Tests.Helpers
 		{
 			var xml = XmlHelper.SerializeToXml(obj);
 
-			Assert.IsNotNull(xml, "result is not null");
+			xml.Should().NotBeNull("result is not null");
 
 			return XmlHelper.DeserializeFromXml<T>(xml);
 		}
@@ -33,8 +34,8 @@ namespace VocaDb.Tests.Helpers
 
 			var res = XmlHelper.SerializeToUTF8XmlString(album);
 
-			Assert.IsTrue(res.StartsWith("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>"), "Header is correct");
-			Assert.AreEqual(reference, res, "Result as expected");
+			res.StartsWith("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>").Should().BeTrue("Header is correct");
+			res.Should().Be(reference, "Result as expected");
 		}
 
 		[TestMethod]
@@ -46,8 +47,8 @@ namespace VocaDb.Tests.Helpers
 
 			var res = XmlHelper.SerializeToUTF8XmlString(doc);
 
-			Assert.IsTrue(res.StartsWith("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>"), "Header is correct");
-			Assert.AreEqual(reference, res, "Result as expected");
+			res.StartsWith("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>").Should().BeTrue("Header is correct");
+			res.Should().Be(reference, "Result as expected");
 		}
 
 		[TestMethod]
@@ -57,7 +58,7 @@ namespace VocaDb.Tests.Helpers
 
 			var res = SerializeToObjectAndBack(album);
 
-			Assert.AreEqual(album.Description, res.Description, "string is intact");
+			res.Description.Should().Be(album.Description, "string is intact");
 		}
 
 		[TestMethod]
@@ -67,7 +68,7 @@ namespace VocaDb.Tests.Helpers
 
 			var res = SerializeToObjectAndBack(album);
 
-			Assert.AreEqual(album.Description, res.Description, "string is intact");
+			res.Description.Should().Be(album.Description, "string is intact");
 		}
 
 		[TestMethod]
@@ -76,11 +77,11 @@ namespace VocaDb.Tests.Helpers
 			var name = "Miku Miku!";
 			var album = new ArchivedAlbumContract { Description = name + '\x02' };
 
-			Assert.IsTrue(album.Description.IsNormalized());
+			album.Description.IsNormalized().Should().BeTrue();
 
 			var res = SerializeToObjectAndBack(album);
 
-			Assert.AreEqual(name, res.Description, "string is intact");
+			res.Description.Should().Be(name, "string is intact");
 		}
 
 		[TestMethod]
@@ -89,11 +90,11 @@ namespace VocaDb.Tests.Helpers
 			var name = "Miku Miku!";
 			var album = new ArchivedAlbumContract { Description = $"\x01{name}\x02" };
 
-			Assert.IsTrue(album.Description.IsNormalized());
+			album.Description.IsNormalized().Should().BeTrue();
 
 			var res = SerializeToObjectAndBack(album);
 
-			Assert.AreEqual(name, res.Description, "string is intact");
+			res.Description.Should().Be(name, "string is intact");
 		}
 	}
 }
