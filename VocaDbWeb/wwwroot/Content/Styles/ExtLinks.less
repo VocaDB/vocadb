@@ -14,7 +14,7 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/aboutme.png"));
 	}
 
-	&[href^="http://ec.akbh.jp/products/detail.php"], &[href^="https://ec.akbh.jp/products/detail.php"] {
+	&[href*=".akbh.jp/"] {
 		background-image: url("/Content/ExtIcons/akibahobby.png");
 	}
 
@@ -66,12 +66,24 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/google-play.png"));
 	}
 
+	&[href^="http://www.grep-shop.com/"] {
+		.extLink(url("/Content/ExtIcons/grepshop.png"));
+	}
+
 	&[href^="http://www.hmv.co.jp/"], &[href^="https://www.hmv.co.jp/"] {
 		.extLink(url("/Content/ExtIcons/hmv.png"));
 	}
 
 	&[href^="https://www.instagram.com/"], &[href^="https://instagram.com/"] {
 		.extLink(url("/Content/ExtIcons/instagram.png"));
+	}
+
+	&[href^="https://kkbox.fm/"], &[href^="https://kkbox.fm/"] {
+		.extLink(url("/Content/ExtIcons/kkbox.png"));
+	}
+
+	&[href^="https://music.line.me/"], &[href^="http://music.line.me/"] {
+		.extLink(url("/Content/ExtIcons/linemusic.png"));
 	}
 
 	&[href^="http://shop.melonbooks.co.jp/"], &[href^="https://www.melonbooks.co.jp/"] {
@@ -82,8 +94,16 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/mmdwiki.png"));
 	}
 
+	&[href^="http://music-book.jp/"] {
+		.extLink(url("/Content/ExtIcons/musicbook.png"));
+	}
+
 	&[href^="https://musicbrainz.org/"] {
 		.extLink(url("/Content/ExtIcons/musicbrainz.png"));
+	}
+
+	&[href^="https://mysound.jp/"] {
+		.extLink(url("/Content/ExtIcons/mysound.png"));
 	}
 
 	&[href^="http://www.pixiv.net/"], &[href^="https://www.pixiv.net/"] {
@@ -106,6 +126,18 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/ma.png"));
 	}
 
+	&[href^="http://music.oricon.co.jp/"], &[href^="https://music.oricon.co.jp/"] {
+		.extLink(url("/Content/ExtIcons/oricon.png"));
+	}
+
+	&[href^="https://ototoy.jp/"], &[href^="http://ototoy.jp/"] {
+		.extLink(url("/Content/ExtIcons/ototoy.png"));
+	}
+
+	&[href^="https://potune.jp/"], &[href^="http://ototoy.jp/"] {
+		.extLink(url("/Content/ExtIcons/potune.png"));
+	}
+
 	&[href^="http://sonicwire.com"], &[href^="https://sonicwire.com"] {
 		.extLink(url("/Content/ExtIcons/sonicwire.png"));
 	}
@@ -114,11 +146,23 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/itemtaobao.png"));
 	}
 
-	&[href^="http://www.toranoana.jp/"], &[href^="https://www.toranoana.jp/"] {
+	&[href^="https://www.tanocstore.net/"], &[href^="http://www.tanocstore.net/"] {
+		.extLink(url("/Content/ExtIcons/tanocstore.png"));
+	}
+
+	&[href*=".toranoana.jp/"] {
+		.extLink(url("/Content/ExtIcons/tora.png"));
+	}
+
+	&[href*=".toranoana.shop/"] {
 		.extLink(url("/Content/ExtIcons/tora.png"));
 	}
 
 	&[href^="http://www.tower.com/"], &[href^="https://www.tower.com/"] {
+		.extLink(url("/Content/ExtIcons/towerrecords.png"));
+	}
+
+	&[href^="http://www.tower.jp/"], &[href^="https://www.tower.jp/"] {
 		.extLink(url("/Content/ExtIcons/towerrecords.png"));
 	}
 
@@ -144,6 +188,10 @@ a.extLink {
 
 	&[href^="http://utaite.wikia.com/wiki/"], &[href^="https://utaite.fandom.com/wiki/"] {
 		.extLink(url("/Content/ExtIcons/utaitewikia.png"));
+	}
+
+	&[href^="https://vvstore.jp/"], &[href^="http://vvstore.jp/"] {
+		.extLink(url("/Content/ExtIcons/villagevanguard.png"));
 	}
 
 	&[href^="http://vgmdb.net/"], &[href^="https://vgmdb.net/"] {
@@ -197,6 +245,14 @@ a.extLink {
 	&[href*=".lofter.com/"] {
 		background-image: url("/Content/ExtIcons/lofter.png");
 	}
+
+	&[href^="http://www.akibaoo.com/"] {
+		background-image: url("/Content/ExtIcons/akibaoo.png");
+	}
+
+	&[href^="http://diverse.direct/"], &[href^="https://diverse.direct/"] {
+		background-image: url("/Content/ExtIcons/diversedirect.png");
+	}
 }
 
 a.extLink[href^="mailto:"] {
@@ -239,7 +295,7 @@ a.extLink[href^="https://plus.google.com/"] {
 	background: url("/Content/ExtIcons/google_plus.png") no-repeat left 50%;
 }
 
-a.extLink[href^="http://itunes.apple.com/"], a.extLink[href^="https://itunes.apple.com/"] {
+a.extLink[href*=".apple.com/"], {
 	background: url("/Content/ExtIcons/itunes.png") no-repeat left 50%;
 }
 
