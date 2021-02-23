@@ -14,7 +14,8 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/aboutme.png"));
 	}
 
-	&[href*=".akbh.jp/"] {
+	&[href^="http://ec.akbh.jp/products/detail.php"], &[href^="https://ec.akbh.jp/products/detail.php"],
+	&[href^="http://shop.akbh.jp/"], &[href^="https://shop.akbh.jp/"] {
 		background-image: url("/Content/ExtIcons/akibahobby.png");
 	}
 
@@ -78,7 +79,7 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/instagram.png"));
 	}
 
-	&[href^="https://kkbox.fm/"], &[href^="https://kkbox.fm/"] {
+	&[href^="https://kkbox.fm/"], &[href^="http://kkbox.fm/"] {
 		.extLink(url("/Content/ExtIcons/kkbox.png"));
 	}
 
@@ -94,7 +95,7 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/mmdwiki.png"));
 	}
 
-	&[href^="http://music-book.jp/"] {
+	&[href^="http://music-book.jp/"], &[href^="https://music-book.jp/"] {
 		.extLink(url("/Content/ExtIcons/musicbook.png"));
 	}
 
@@ -150,11 +151,12 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/tanocstore.png"));
 	}
 
-	&[href*=".toranoana.jp/"] {
+	&[href^="http://www.toranoana.jp/"], &[href^="https://www.toranoana.jp/"] {
 		.extLink(url("/Content/ExtIcons/tora.png"));
 	}
 
-	&[href*=".toranoana.shop/"] {
+	&[href*="https://ec.toranoana.shop/"], &[href*="http://ec.toranoana.shop/"],
+	&[href*="https://ecs.toranoana.shop/"], &[href*="http://ec.toranoana.shop/"] {
 		.extLink(url("/Content/ExtIcons/tora.png"));
 	}
 
@@ -295,7 +297,9 @@ a.extLink[href^="https://plus.google.com/"] {
 	background: url("/Content/ExtIcons/google_plus.png") no-repeat left 50%;
 }
 
-a.extLink[href*=".apple.com/"], {
+a.extLink[href^="https://itunes.apple.com/"], a.extLink[href^="http://itunes.apple.com/"],
+a.extLink[href^="https://www.apple.com"], a.extLink[href^="http://www.apple.com"],
+a.extLink[href^="https://music.apple.com"], a.extLink[href^="https://music.apple.com"], {
 	background: url("/Content/ExtIcons/itunes.png") no-repeat left 50%;
 }
 
