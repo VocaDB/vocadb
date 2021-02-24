@@ -267,7 +267,7 @@ namespace VocaDb.Web.Controllers
 			return View(releaseEvent);
 		}
 
-		[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600)]
+		[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600, VaryByQueryKeys = new[] { "id" })]
 		public ActionResult PopupContent(
 			int id = InvalidId,
 			string culture = InterfaceLanguage.DefaultCultureCode)

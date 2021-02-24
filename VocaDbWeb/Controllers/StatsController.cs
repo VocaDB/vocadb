@@ -370,7 +370,7 @@ namespace VocaDb.Web.Controllers
 			);
 		}
 
-		[ResponseCache(Duration = ClientCacheDurationSec)]
+		[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "cutoff" })]
 		public ActionResult ArtistsPerMonth(DateTime? cutoff = null)
 		{
 			cutoff ??= DefaultMinDate;
@@ -412,7 +412,7 @@ namespace VocaDb.Web.Controllers
 			return DateLineChartWithAverage("Cumulative albums per day", "Albums", "Number of albums", points, false);
 		}
 
-		[ResponseCache(Duration = ClientCacheDurationSec)]
+		[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "cutoff" })]
 		public ActionResult CumulativeSongsPublished(DateTime? cutoff)
 		{
 			var values = _songAggregateQueries.SongsOverTime(TimeUnit.Month, false, cutoff, a => a.PVs.PVs.Any(), a => a.PVs.PVs.Count == 0).First();
@@ -524,7 +524,7 @@ namespace VocaDb.Web.Controllers
 			return DateLineChartWithAverage("Songs added per day", "Songs", "Number of songs", points);
 		}
 
-		[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "unit" })]
+		[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "cutoff", "unit" })]
 		public ActionResult SongsPublishedPerDay(DateTime? cutoff = null, TimeUnit unit = TimeUnit.Day)
 		{
 			cutoff ??= DefaultMinDate;
@@ -601,7 +601,7 @@ namespace VocaDb.Web.Controllers
 			return AreaChart("Songs per voicebank over time", dataSeries);
 		}
 
-		[ResponseCache(Duration = ClientCacheDurationSec)]
+		[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "cutoff", "vocalistTypes", "startYear" })]
 		public ActionResult GetSongsPerVoicebankTypeOverTime(DateTime? cutoff, ArtistType[] vocalistTypes = null, int startYear = 2007)
 		{
 			if (vocalistTypes == null)
