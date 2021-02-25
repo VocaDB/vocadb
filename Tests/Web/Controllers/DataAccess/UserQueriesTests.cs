@@ -191,10 +191,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
 		public void ClearRatings_NoPermission()
 		{
-			_data.ClearRatings(_userWithoutEmail.Id);
+			_data.Invoking(subject => subject.ClearRatings(_userWithoutEmail.Id)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -219,24 +218,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(UserNameAlreadyExistsException))]
-		public async Task Create_NameAlreadyExists()
+		public void Create_NameAlreadyExists()
 		{
-			await CallCreate(name: "already_exists");
+			this.Awaiting(subject => subject.CallCreate(name: "already_exists")).Should().Throw<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(UserNameAlreadyExistsException))]
-		public async Task Create_NameAlreadyExistsDifferentCase()
+		public void Create_NameAlreadyExistsDifferentCase()
 		{
-			await CallCreate(name: "Already_Exists");
+			this.Awaiting(subject => subject.CallCreate(name: "Already_Exists")).Should().Throw<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(UserEmailAlreadyExistsException))]
-		public async Task Create_EmailAlreadyExists()
+		public void Create_EmailAlreadyExists()
 		{
-			await CallCreate(email: "already_in_use@vocadb.net");
+			this.Awaiting(subject => subject.CallCreate(email: "already_in_use@vocadb.net")).Should().Throw<UserEmailAlreadyExistsException>();
 		}
 
 		[TestMethod]
@@ -250,10 +246,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(InvalidEmailFormatException))]
-		public async Task Create_InvalidEmailFormat()
+		public void Create_InvalidEmailFormat()
 		{
-			await CallCreate(email: "mikumiku");
+			this.Awaiting(subject => subject.CallCreate(email: "mikumiku")).Should().Throw<InvalidEmailFormatException>();
 		}
 
 		[TestMethod]
@@ -314,18 +309,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(TooFastRegistrationException))]
-		public async Task Create_RegistrationTimeTrigger()
+		public void Create_RegistrationTimeTrigger()
 		{
-			await CallCreate(timeSpan: TimeSpan.FromSeconds(4));
+			this.Awaiting(subject => subject.CallCreate(timeSpan: TimeSpan.FromSeconds(4))).Should().Throw<TooFastRegistrationException>();
 			_ipRuleManager.IsAllowed(DefaultHostname).Should().BeTrue("Was not banned");
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(TooFastRegistrationException))]
-		public async Task Create_RegistrationTimeAndBanTrigger()
+		public void Create_RegistrationTimeAndBanTrigger()
 		{
-			await CallCreate(timeSpan: TimeSpan.FromSeconds(1));
+			this.Awaiting(subject => subject.CallCreate(timeSpan: TimeSpan.FromSeconds(1))).Should().Throw<TooFastRegistrationException>();
 			_ipRuleManager.IsAllowed(DefaultHostname).Should().BeFalse("Was banned");
 		}
 
@@ -374,24 +367,21 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(UserNameAlreadyExistsException))]
 		public void CreateTwitter_NameAlreadyExists()
 		{
-			_data.CreateTwitter("auth_token", "already_exists", "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
+			_data.Invoking(subject => subject.CreateTwitter("auth_token", "already_exists", "mikumiku@crypton.jp", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().Throw<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(UserEmailAlreadyExistsException))]
 		public void CreateTwitter_EmailAlreadyExists()
 		{
-			_data.CreateTwitter("auth_token", "hatsune_miku", "already_in_use@vocadb.net", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
+			_data.Invoking(subject => subject.CreateTwitter("auth_token", "hatsune_miku", "already_in_use@vocadb.net", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().Throw<UserEmailAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(InvalidEmailFormatException))]
 		public void CreateTwitter_InvalidEmailFormat()
 		{
-			_data.CreateTwitter("auth_token", "hatsune_miku", "mikumiku", 39, "Miku_Crypton", "crypton.jp", "ja-JP");
+			_data.Invoking(subject => subject.CreateTwitter("auth_token", "hatsune_miku", "mikumiku", 39, "Miku_Crypton", "crypton.jp", "ja-JP")).Should().Throw<InvalidEmailFormatException>();
 		}
 
 		[TestMethod]
@@ -465,21 +455,19 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
 		public void DisableUser_NoPermission()
 		{
-			_data.DisableUser(_userWithoutEmail.Id);
+			_data.Invoking(subject => subject.DisableUser(_userWithoutEmail.Id)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
 		public void DisableUser_CannotBeDisabled()
 		{
 			_userWithEmail.AdditionalPermissions.Add(PermissionToken.DisableUsers);
 			_userWithoutEmail.AdditionalPermissions.Add(PermissionToken.DisableUsers);
 			RefreshLoggedUser();
 
-			_data.DisableUser(_userWithoutEmail.Id);
+			_data.Invoking(subject => subject.DisableUser(_userWithoutEmail.Id)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -577,18 +565,16 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(UserNotFoundException))]
-		public async Task RequestPasswordReset_NotFound()
+		public void RequestPasswordReset_NotFound()
 		{
-			await _data.RequestPasswordReset(_userWithEmail.Name, "notfound@vocadb.net", string.Empty);
+			_data.Awaiting(subject => subject.RequestPasswordReset(_userWithEmail.Name, "notfound@vocadb.net", string.Empty)).Should().Throw<UserNotFoundException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(UserNotFoundException))]
-		public async Task RequestPasswordReset_Disabled()
+		public void RequestPasswordReset_Disabled()
 		{
 			_userWithEmail.Active = false;
-			await _data.RequestPasswordReset(_userWithEmail.Name, _userWithEmail.Email, string.Empty);
+			_data.Awaiting(subject => subject.RequestPasswordReset(_userWithEmail.Name, _userWithEmail.Email, string.Empty)).Should().Throw<UserNotFoundException>();
 		}
 
 		[TestMethod]
@@ -640,15 +626,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
-		public async Task SendMessage_NoPermission()
+		public void SendMessage_NoPermission()
 		{
 			var sender = CreateEntry.User(name: "sender");
 			var receiver = CreateEntry.User(name: "receiver");
 			_repository.Save(sender, receiver);
 
 			var contract = new UserMessageContract { Sender = new UserForApiContract(sender), Receiver = new UserForApiContract(receiver), Subject = "Subject", Body = "Body" };
-			await _data.SendMessage(contract, string.Empty, string.Empty);
+			_data.Awaiting(subject => subject.SendMessage(contract, string.Empty, string.Empty)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -734,7 +719,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(UserNameAlreadyExistsException))]
 		public void UpdateUser_Name_AlreadyInUse()
 		{
 			LoggedUser.GroupId = UserGroupId.Admin;
@@ -743,11 +727,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var contract = new UserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
 			contract.Name = _userWithEmail.Name;
 
-			_data.UpdateUser(contract);
+			_data.Invoking(subject => subject.UpdateUser(contract)).Should().Throw<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(InvalidUserNameException))]
 		public void UpdateUser_Name_InvalidCharacters()
 		{
 			LoggedUser.GroupId = UserGroupId.Admin;
@@ -756,15 +739,14 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var contract = new UserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
 			contract.Name = "Miku!";
 
-			_data.UpdateUser(contract);
+			_data.Invoking(subject => subject.UpdateUser(contract)).Should().Throw<InvalidUserNameException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
 		public void UpdateUser_NotAllowed()
 		{
 			var contract = new UserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
-			_data.UpdateUser(contract);
+			_data.Invoking(subject => subject.UpdateUser(contract)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -798,7 +780,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(InvalidPasswordException))]
 		public void UpdateUserSettings_Password_InvalidOldPassword()
 		{
 			var contract = new UpdateUserSettingsContract(_userWithEmail)
@@ -807,24 +788,22 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				NewPass = "3939"
 			};
 
-			_data.UpdateUserSettings(contract);
+			_data.Invoking(subject => subject.UpdateUserSettings(contract)).Should().Throw<InvalidPasswordException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
 		public void UpdateUserSettings_NoPermission()
 		{
-			_data.UpdateUserSettings(new UpdateUserSettingsContract(_userWithoutEmail));
+			_data.Invoking(subject => subject.UpdateUserSettings(new UpdateUserSettingsContract(_userWithoutEmail))).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(UserEmailAlreadyExistsException))]
 		public void UpdateUserSettings_EmailTaken()
 		{
 			_permissionContext.LoggedUser = new UserWithPermissionsContract(_userWithoutEmail, ContentLanguagePreference.Default);
 			var contract = new UpdateUserSettingsContract(_userWithoutEmail) { Email = _userWithEmail.Email };
 
-			_data.UpdateUserSettings(contract);
+			_data.Invoking(subject => subject.UpdateUserSettings(contract)).Should().Throw<UserEmailAlreadyExistsException>();
 		}
 
 		[TestMethod]
@@ -842,12 +821,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(InvalidEmailFormatException))]
 		public void UpdateUserSettings_InvalidEmailFormat()
 		{
 			var contract = new UpdateUserSettingsContract(_userWithEmail) { Email = "mikumiku" };
 
-			_data.UpdateUserSettings(contract);
+			_data.Invoking(subject => subject.UpdateUserSettings(contract)).Should().Throw<InvalidEmailFormatException>();
 		}
 
 		[TestMethod]
@@ -864,30 +842,27 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(InvalidUserNameException))]
 		public void UpdateUserSettings_ChangeName_Invalid()
 		{
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
 			var contract = new UpdateUserSettingsContract(_userWithEmail) { Name = "miku miku" };
-			_data.UpdateUserSettings(contract);
+			_data.Invoking(subject => subject.UpdateUserSettings(contract)).Should().Throw<InvalidUserNameException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(UserNameAlreadyExistsException))]
 		public void UpdateUserSettings_ChangeName_AlreadyInUse()
 		{
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(720);
 			var contract = new UpdateUserSettingsContract(_userWithEmail) { Name = _userWithoutEmail.Name };
-			_data.UpdateUserSettings(contract);
+			_data.Invoking(subject => subject.UpdateUserSettings(contract)).Should().Throw<UserNameAlreadyExistsException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(UserNameTooSoonException))]
 		public void UpdateUserSettings_ChangeName_TooSoon()
 		{
 			_userWithEmail.CreateDate = DateTime.Now - TimeSpan.FromDays(39);
 			var contract = new UpdateUserSettingsContract(_userWithEmail) { Name = "mikumiku" };
-			_data.UpdateUserSettings(contract);
+			_data.Invoking(subject => subject.UpdateUserSettings(contract)).Should().Throw<UserNameTooSoonException>();
 		}
 
 		[TestMethod]
@@ -902,19 +877,17 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(RequestNotValidException))]
 		public void VerifyEmail_DifferentUser()
 		{
 			_request.User = _userWithoutEmail;
-			_data.VerifyEmail(_request.Id);
+			_data.Invoking(subject => subject.VerifyEmail(_request.Id)).Should().Throw<RequestNotValidException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(RequestNotValidException))]
 		public void VerifyEmail_DifferentEmail()
 		{
 			_request.Email = "new@vocadb.net";
-			_data.VerifyEmail(_request.Id);
+			_data.Invoking(subject => subject.VerifyEmail(_request.Id)).Should().Throw<RequestNotValidException>();
 
 			/*
 			userWithEmail.Options.EmailVerified.Should().BeTrue("EmailVerified");
