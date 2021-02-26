@@ -48,6 +48,8 @@
 
 		SynthesizerV,
 
+		DJ,
+
 	}
 
 	export default ArtistType;

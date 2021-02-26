@@ -12,7 +12,7 @@ import ContentFocus from '../Models/ContentFocus';
 		public static customizableTypes = [
 			ArtistType.Animator, ArtistType.OtherGroup, ArtistType.OtherIndividual, 
 			ArtistType.OtherVocalist, ArtistType.Producer, ArtistType.Illustrator, ArtistType.Lyricist, 
-			ArtistType.Utaite, ArtistType.Band, ArtistType.Vocalist, ArtistType.Unknown,
+			ArtistType.Utaite, ArtistType.Band, ArtistType.Vocalist, ArtistType.Unknown, ArtistType.DJ,
 		];
 
 		// Artist types that are groups (excluding Unknown)
@@ -103,6 +103,7 @@ import ContentFocus from '../Models/ContentFocus';
 			return (artistType === ArtistType.Producer
 				|| artistType === ArtistType.Circle
 				|| artistType === ArtistType.Band
+				|| artistType === ArtistType.DJ
 				|| (artistType === ArtistType.Animator && focus === ContentFocus.Video)
 				|| (artistType === ArtistType.Illustrator && focus === ContentFocus.Illustration));
 

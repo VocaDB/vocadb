@@ -67,6 +67,7 @@ namespace VocaDb.Model.Helpers
 			{ ArtistType.Vocaloid, ArtistCategories.Vocalist },
 			{ ArtistType.Vocalist, ArtistCategories.Vocalist },
 			{ ArtistType.SynthesizerV, ArtistCategories.Vocalist },
+			{ ArtistType.DJ, ArtistCategories.Producer},
 		};
 
 		/// <summary>
@@ -76,7 +77,7 @@ namespace VocaDb.Model.Helpers
 		{
 			ArtistType.Animator, ArtistType.OtherGroup, ArtistType.OtherIndividual,
 			ArtistType.OtherVocalist, ArtistType.Producer, ArtistType.Illustrator, ArtistType.Lyricist,
-			ArtistType.Utaite, ArtistType.Band, ArtistType.Vocalist, ArtistType.Unknown
+			ArtistType.Utaite, ArtistType.Band, ArtistType.Vocalist, ArtistType.Unknown, ArtistType.DJ,
 		};
 
 		public static readonly ArtistType[] GroupTypes =
@@ -103,7 +104,7 @@ namespace VocaDb.Model.Helpers
 			ArtistType.Unknown, ArtistType.OtherGroup, ArtistType.OtherVocalist,
 			ArtistType.Producer, ArtistType.UTAU, ArtistType.CeVIO, ArtistType.Vocaloid, ArtistType.Animator, ArtistType.Illustrator,
 			ArtistType.Lyricist, ArtistType.OtherIndividual, ArtistType.Character,
-			ArtistType.SynthesizerV,
+			ArtistType.SynthesizerV, ArtistType.DJ,
 		};
 
 		public static readonly ArtistType[] VocalistTypes =
