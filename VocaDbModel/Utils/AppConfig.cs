@@ -35,7 +35,8 @@ namespace VocaDb.Model.Utils
 			Domain.Artists.ArtistRoles.Vocalist,
 			Domain.Artists.ArtistRoles.VoiceManipulator,
 			Domain.Artists.ArtistRoles.VocalDataProvider,
-			Domain.Artists.ArtistRoles.Other
+			Domain.Artists.ArtistRoles.Other,
+			Domain.Artists.ArtistRoles.OriginalPerformer,
 		};
 
 		private static readonly DiscType[] DefaultDiscTypes = {

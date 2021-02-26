@@ -73,5 +73,7 @@ namespace VocaDb.Model.Domain.Artists
 		Encoder = 1 << 14,
 
 		VocalDataProvider = 1 << 15,
+
+		OriginalPerformer = 1 << 16,
 	}
 }

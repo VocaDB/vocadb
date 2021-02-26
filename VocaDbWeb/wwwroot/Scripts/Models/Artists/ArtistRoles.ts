@@ -61,8 +61,9 @@
 		/// </summary>
 		Encoder				= 16384,
 
-		VocalDataProvider	= 32768
+		VocalDataProvider	= 32768,
 
+		OriginalPerformer	= 65536,
 	}
 
 	export default ArtistRoles;
