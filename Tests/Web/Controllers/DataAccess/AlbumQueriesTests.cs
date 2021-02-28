@@ -181,13 +181,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
-		public async Task Create_NoPermission()
+		public void Create_NoPermission()
 		{
 			_user.GroupId = UserGroupId.Limited;
 			_permissionContext.RefreshLoggedUser(_repository);
 
-			await _queries.Create(_newAlbumContract);
+			_queries.Awaiting(subject => subject.Create(_newAlbumContract)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -204,13 +203,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
 		public void CreateComment_NoPermission()
 		{
 			_user.GroupId = UserGroupId.Limited;
 			_permissionContext.RefreshLoggedUser(_repository);
 
-			CreateComment(39, "Hello world");
+			this.Invoking(subject => subject.CreateComment(39, "Hello world")).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]

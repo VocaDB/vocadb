@@ -71,10 +71,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
 		public void Get_NoPermission()
 		{
-			CallGet(39);
+			this.Invoking(subject => subject.CallGet(39)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]

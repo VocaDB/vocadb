@@ -42,13 +42,12 @@ namespace VocaDb.Tests.Domain.Users
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(ArgumentException))]
 		public void AddOwnedArtist_AlreadyAdded()
 		{
 			var artist = new Artist { Id = 1 };
 
 			_user.AddOwnedArtist(artist);
-			_user.AddOwnedArtist(artist);
+			_user.Invoking(subject => subject.AddOwnedArtist(artist)).Should().Throw<ArgumentException>();
 		}
 
 		[TestMethod]

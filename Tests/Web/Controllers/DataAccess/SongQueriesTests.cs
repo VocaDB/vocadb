@@ -249,13 +249,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
 		public void Create_NoPermission()
 		{
 			_user.GroupId = UserGroupId.Limited;
 			_permissionContext.RefreshLoggedUser(_repository);
 
-			CallCreate();
+			this.Invoking(subject => subject.CallCreate()).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -760,7 +759,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
 		public void Merge_NoPermissions()
 		{
 			_user.GroupId = UserGroupId.Regular;
@@ -769,7 +767,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var song2 = new Song();
 			_repository.Save(song2);
 
-			_queries.Merge(_song.Id, song2.Id);
+			_queries.Invoking(subject => subject.Merge(_song.Id, song2.Id)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]

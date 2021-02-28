@@ -100,10 +100,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DuplicateTagNameException))]
-		public async Task Create_Duplicate()
+		public void Create_Duplicate()
 		{
-			await _queries.Create("Appearance Miku");
+			_queries.Awaiting(subject => subject.Create("Appearance Miku")).Should().Throw<DuplicateTagNameException>();
 		}
 
 		[TestMethod]
@@ -157,24 +156,22 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
 		public void MoveToTrash_NoDeletePermission()
 		{
 			_user.GroupId = UserGroupId.Regular;
 			_permissionContext.RefreshLoggedUser(_repository);
 
-			_queries.MoveToTrash(_tag.Id, string.Empty);
+			_queries.Invoking(subject => subject.MoveToTrash(_tag.Id, string.Empty)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
 		public void MoveToTrash_NoEditPermission()
 		{
 			_user.GroupId = UserGroupId.Trusted;
 			_permissionContext.RefreshLoggedUser(_repository);
 			_tag.Status = EntryStatus.Locked;
 
-			_queries.MoveToTrash(_tag.Id, string.Empty);
+			_queries.Invoking(subject => subject.MoveToTrash(_tag.Id, string.Empty)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -259,7 +256,6 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotAllowedException))]
 		public void Merge_NoPermissions()
 		{
 			_user.GroupId = UserGroupId.Regular;
@@ -268,7 +264,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var target = new Tag();
 			_repository.Save(target);
 
-			_queries.Merge(_tag.Id, target.Id);
+			_queries.Invoking(subject => subject.Merge(_tag.Id, target.Id)).Should().Throw<NotAllowedException>();
 		}
 
 		[TestMethod]
@@ -396,28 +392,25 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DuplicateTagNameException))]
 		public void Update_Name_DuplicateWithAnotherTag()
 		{
 			var updated = new TagForEditContract(_tag, false, _permissionContext);
 			updated.Names[0].Value = "MMD";
 
-			_queries.Update(updated, null);
+			_queries.Invoking(subject => subject.Update(updated, null)).Should().Throw<DuplicateTagNameException>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DuplicateTagNameException))]
 		public void Update_Name_DuplicateTranslation()
 		{
 			var updated = new TagForEditContract(_tag, false, _permissionContext);
 			updated.Names = updated.Names.Concat(new[] { new LocalizedStringWithIdContract { Value = "Appearance Miku", Language = ContentLanguageSelection.Romaji } }).ToArray();
 
-			_queries.Update(updated, null);
+			_queries.Invoking(subject => subject.Update(updated, null)).Should().Throw<DuplicateTagNameException>();
 		}
 
 
 		[TestMethod]
-		[ExpectedException(typeof(DuplicateTagNameException))]
 		public void Update_Name_DuplicateKana()
 		{
 			var updated = new TagForEditContract(_tag, false, _permissionContext)
@@ -428,7 +421,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 				}.ToArray()
 			};
 
-			_queries.Update(updated, null);
+			_queries.Invoking(subject => subject.Update(updated, null)).Should().Throw<DuplicateTagNameException>();
 		}
 
 		[TestMethod]
