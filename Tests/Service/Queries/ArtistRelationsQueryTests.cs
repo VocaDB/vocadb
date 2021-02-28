@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Artists;
@@ -41,8 +42,8 @@ namespace VocaDb.Tests.Service.Queries
 		{
 			var result = _query.GetRelations(_artist, ArtistRelationsFields.LatestSongs);
 
-			Assert.AreEqual(2, result.LatestSongs.Length, "Number of songs");
-			Assert.IsTrue(result.LatestSongs.Any(s => s.Id == _song.Id), "Song as expected");
+			result.LatestSongs.Length.Should().Be(2, "Number of songs");
+			result.LatestSongs.Any(s => s.Id == _song.Id).Should().BeTrue("Song as expected");
 		}
 
 		// Songs for the vocal data provider are ignored
@@ -52,8 +53,8 @@ namespace VocaDb.Tests.Service.Queries
 			_song.GetArtistLink(_artist).Roles = ArtistRoles.VocalDataProvider;
 			var result = _query.GetRelations(_artist, ArtistRelationsFields.LatestSongs);
 
-			Assert.AreEqual(1, result.LatestSongs.Length, "Number of songs");
-			Assert.AreEqual(_song2.Id, result.LatestSongs.First().Id, "Song as expected");
+			result.LatestSongs.Length.Should().Be(1, "Number of songs");
+			result.LatestSongs.First().Id.Should().Be(_song2.Id, "Song as expected");
 		}
 
 		[TestMethod]
@@ -62,8 +63,8 @@ namespace VocaDb.Tests.Service.Queries
 			var result = _query.GetTopVoicebanks(_artist);
 
 			// artist has song with voicebank
-			Assert.AreEqual(1, result.Length, "Number of voicebanks");
-			Assert.AreEqual(_voicebank.Id, result[0].Data.Id, "Artist as expected");
+			result.Length.Should().Be(1, "Number of voicebanks");
+			result[0].Data.Id.Should().Be(_voicebank.Id, "Artist as expected");
 		}
 
 		// Only producer roles count
@@ -74,7 +75,7 @@ namespace VocaDb.Tests.Service.Queries
 			_song.GetArtistLink(_artist).Roles = ArtistRoles.VocalDataProvider;
 			var result = _query.GetTopVoicebanks(_artist);
 
-			Assert.AreEqual(0, result.Length, "Number of voicebanks");
+			result.Length.Should().Be(0, "Number of voicebanks");
 		}
 
 		[TestMethod]
@@ -84,7 +85,7 @@ namespace VocaDb.Tests.Service.Queries
 			_song.GetArtistLink(_artist).Roles = ArtistRoles.VoiceManipulator | ArtistRoles.VocalDataProvider;
 			var result = _query.GetTopVoicebanks(_artist);
 
-			Assert.AreEqual(1, result.Length, "Number of voicebanks");
+			result.Length.Should().Be(1, "Number of voicebanks");
 		}
 	}
 }

@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -27,7 +28,7 @@ namespace VocaDb.Tests.Domain.Albums
 		{
 			var link = new ArtistForAlbum(_album, _artist, false, ArtistRoles.Default);
 
-			Assert.AreEqual(ArtistRoles.Default, link.EffectiveRoles, "default roles");
+			link.EffectiveRoles.Should().Be(ArtistRoles.Default, "default roles");
 		}
 
 		[TestMethod]
@@ -35,7 +36,7 @@ namespace VocaDb.Tests.Domain.Albums
 		{
 			var link = new ArtistForAlbum(_album, _artist, false, ArtistRoles.Mastering);
 
-			Assert.AreEqual(ArtistRoles.Mastering, link.EffectiveRoles, "mastering role");
+			link.EffectiveRoles.Should().Be(ArtistRoles.Mastering, "mastering role");
 		}
 
 		[TestMethod]
@@ -43,7 +44,7 @@ namespace VocaDb.Tests.Domain.Albums
 		{
 			var link = new ArtistForAlbum(_album, "Miku!", false, ArtistRoles.Default);
 
-			Assert.AreEqual(ArtistRoles.Default, link.EffectiveRoles, "default roles");
+			link.EffectiveRoles.Should().Be(ArtistRoles.Default, "default roles");
 		}
 
 		[TestMethod]
@@ -51,7 +52,7 @@ namespace VocaDb.Tests.Domain.Albums
 		{
 			var link = new ArtistForAlbum(_album, new Artist { ArtistType = ArtistType.Illustrator }, false, ArtistRoles.Default);
 
-			Assert.AreEqual(ArtistRoles.Illustrator, link.EffectiveRoles, "illustrator has illustrator role");
+			link.EffectiveRoles.Should().Be(ArtistRoles.Illustrator, "illustrator has illustrator role");
 		}
 	}
 }

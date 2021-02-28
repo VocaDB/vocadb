@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
@@ -36,8 +37,8 @@ namespace VocaDb.Tests.Domain.Users
 
 			var result = _user.AddOwnedArtist(artist);
 
-			Assert.IsNotNull(result, "result");
-			Assert.AreEqual(artist, result.Artist, "Artist");
+			result.Should().NotBeNull("result");
+			result.Artist.Should().Be(artist, "Artist");
 		}
 
 		[TestMethod]
@@ -55,11 +56,11 @@ namespace VocaDb.Tests.Domain.Users
 		{
 			var rating = _user.AddSongToFavorites(_song, SongVoteRating.Like);
 
-			Assert.IsNotNull(rating, "result is not null");
-			Assert.AreEqual(SongVoteRating.Like, rating.Rating, "rating is as expected");
-			Assert.AreEqual(0, _song.FavoritedTimes, "not favorited");
-			Assert.AreEqual(FavoriteSongForUser.GetRatingScore(SongVoteRating.Like), _song.RatingScore, "rating score");
-			Assert.IsTrue(_song.IsFavoritedBy(_user), "song is favorited by user");
+			rating.Should().NotBeNull("result is not null");
+			rating.Rating.Should().Be(SongVoteRating.Like, "rating is as expected");
+			_song.FavoritedTimes.Should().Be(0, "not favorited");
+			_song.RatingScore.Should().Be(FavoriteSongForUser.GetRatingScore(SongVoteRating.Like), "rating score");
+			_song.IsFavoritedBy(_user).Should().BeTrue("song is favorited by user");
 		}
 
 		[TestMethod]
@@ -67,11 +68,11 @@ namespace VocaDb.Tests.Domain.Users
 		{
 			var rating = _user.AddSongToFavorites(_song, SongVoteRating.Favorite);
 
-			Assert.IsNotNull(rating, "result is not null");
-			Assert.AreEqual(SongVoteRating.Favorite, rating.Rating, "rating is as expected");
-			Assert.AreEqual(1, _song.FavoritedTimes, "favorited once");
-			Assert.AreEqual(FavoriteSongForUser.GetRatingScore(SongVoteRating.Favorite), _song.RatingScore, "rating score");
-			Assert.IsTrue(_song.IsFavoritedBy(_user), "song is favorited by user");
+			rating.Should().NotBeNull("result is not null");
+			rating.Rating.Should().Be(SongVoteRating.Favorite, "rating is as expected");
+			_song.FavoritedTimes.Should().Be(1, "favorited once");
+			_song.RatingScore.Should().Be(FavoriteSongForUser.GetRatingScore(SongVoteRating.Favorite), "rating score");
+			_song.IsFavoritedBy(_user).Should().BeTrue("song is favorited by user");
 		}
 
 		[TestMethod]
@@ -79,11 +80,11 @@ namespace VocaDb.Tests.Domain.Users
 		{
 			_user.CreateWebLink(new WebLinkContract("http://www.test.com", "test link", WebLinkCategory.Other, disabled: false));
 
-			Assert.AreEqual(1, _user.WebLinks.Count, "Should have one link");
+			_user.WebLinks.Count.Should().Be(1, "Should have one link");
 			var link = _user.WebLinks.First();
-			Assert.AreEqual("test link", link.Description, "description");
-			Assert.AreEqual("http://www.test.com", link.Url, "url");
-			Assert.AreEqual(WebLinkCategory.Other, link.Category, "category");
+			link.Description.Should().Be("test link", "description");
+			link.Url.Should().Be("http://www.test.com", "url");
+			link.Category.Should().Be(WebLinkCategory.Other, "category");
 		}
 	}
 }

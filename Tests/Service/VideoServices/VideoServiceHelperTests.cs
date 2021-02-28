@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Songs;
@@ -28,7 +29,7 @@ namespace VocaDb.Tests.Service.VideoServices
 		{
 			var result = VideoServiceHelper.GetThumbUrl(new IPVWithThumbnail[0]);
 
-			Assert.AreEqual(string.Empty, result, "result");
+			result.Should().Be(string.Empty, "result");
 		}
 
 		[TestMethod]
@@ -38,7 +39,7 @@ namespace VocaDb.Tests.Service.VideoServices
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
-			Assert.AreEqual("original", result, "result");
+			result.Should().Be("original", "result");
 		}
 
 		[TestMethod]
@@ -48,7 +49,7 @@ namespace VocaDb.Tests.Service.VideoServices
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
-			Assert.AreEqual("reprint", result, "result");
+			result.Should().Be("reprint", "result");
 		}
 
 		[TestMethod]
@@ -59,7 +60,7 @@ namespace VocaDb.Tests.Service.VideoServices
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
-			Assert.AreEqual("reprint", result, "result");
+			result.Should().Be("reprint", "result");
 		}
 
 		[TestMethod]
@@ -71,7 +72,7 @@ namespace VocaDb.Tests.Service.VideoServices
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
-			Assert.AreEqual("reprint", result, "result");
+			result.Should().Be("reprint", "result");
 		}
 
 		/// <summary>
@@ -87,7 +88,7 @@ namespace VocaDb.Tests.Service.VideoServices
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
-			Assert.AreEqual(nicoThumb, result, "result");
+			result.Should().Be(nicoThumb, "result");
 		}
 
 		[TestMethod]
@@ -98,7 +99,7 @@ namespace VocaDb.Tests.Service.VideoServices
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
-			Assert.AreEqual("reprint", result, "result");
+			result.Should().Be("reprint", "result");
 		}
 
 		[TestMethod]
@@ -110,7 +111,7 @@ namespace VocaDb.Tests.Service.VideoServices
 
 			var result = VideoServiceHelper.GetThumbUrl(pvs);
 
-			Assert.AreEqual("reprint", result, "result");
+			result.Should().Be("reprint", "result");
 		}
 
 		[TestMethod]
@@ -120,7 +121,7 @@ namespace VocaDb.Tests.Service.VideoServices
 
 			var result = VideoServiceHelper.GetThumbUrlPreferNotNico(pvs);
 
-			Assert.AreEqual("reprint", result, "result");
+			result.Should().Be("reprint", "result");
 		}
 	}
 }

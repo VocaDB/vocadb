@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.PVs;
 
@@ -20,7 +21,7 @@ namespace VocaDb.Tests.Domain.PVs
 		[TestMethod]
 		public void Value(int expected, PVServices actual)
 		{
-			Assert.AreEqual(expected, (int)actual);
+			((int)actual).Should().Be(expected);
 		}
 	}
 }

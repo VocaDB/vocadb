@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Tags;
@@ -31,9 +32,9 @@ namespace VocaDb.Tests.DatabaseTests.QueryableExtensions
 		{
 			var tags = WhereHasName("rock", "electronic");
 
-			Assert.AreEqual(2, tags.Length, "Number of tags returned");
-			Assert.IsTrue(tags.Any(t => t.DefaultName == "rock"), "Found 'rock' tag");
-			Assert.IsTrue(tags.Any(t => t.DefaultName == "electronic"), "Found 'electronic' tag");
+			tags.Length.Should().Be(2, "Number of tags returned");
+			tags.Any(t => t.DefaultName == "rock").Should().BeTrue("Found 'rock' tag");
+			tags.Any(t => t.DefaultName == "electronic").Should().BeTrue("Found 'electronic' tag");
 		}
 
 
@@ -43,7 +44,7 @@ namespace VocaDb.Tests.DatabaseTests.QueryableExtensions
 		{
 			var tags = WhereHasName(new string[0]);
 
-			Assert.AreEqual(0, tags.Length, "Number of tags returned");
+			tags.Length.Should().Be(0, "Number of tags returned");
 		}
 	}
 }

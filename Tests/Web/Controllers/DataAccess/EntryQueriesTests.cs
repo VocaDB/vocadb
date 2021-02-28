@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Api;
@@ -30,7 +31,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var entry = result.Items.FirstOrDefault(a => string.Equals(a.DefaultName, name, StringComparison.InvariantCultureIgnoreCase)
 				&& a.EntryType == entryType);
 
-			Assert.IsNotNull(entry, "Entry found");
+			entry.Should().NotBeNull("Entry found");
 			return entry;
 		}
 
@@ -77,8 +78,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = CallGetList(query: "40mP");
 
-			Assert.AreEqual(4, result.TotalCount, "TotalCount");
-			Assert.AreEqual(4, result.Items.Length, "Items.Length");
+			result.TotalCount.Should().Be(4, "TotalCount");
+			result.Items.Length.Should().Be(4, "Items.Length");
 
 			AssertHasEntry(result, "40mP", EntryType.Artist);
 			AssertHasEntry(result, "1640mP", EntryType.Artist);
@@ -112,7 +113,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = CallGetList(tag: new[] { _tag.Id });
 
-			Assert.AreEqual(1, result.TotalCount, "TotalCount");
+			result.TotalCount.Should().Be(1, "TotalCount");
 			AssertHasEntry(result, "40mP", EntryType.Artist);
 		}
 
@@ -124,8 +125,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			var result = CallGetList("40mP", start: 1, maxResults: 1);
 
-			Assert.AreEqual(1, result.Items.Length, "Items.Length");
-			Assert.AreEqual(4, result.TotalCount, "TotalCount");
+			result.Items.Length.Should().Be(1, "Items.Length");
+			result.TotalCount.Should().Be(4, "TotalCount");
 			AssertHasEntry(result, "40mP", EntryType.Artist);
 		}
 	}

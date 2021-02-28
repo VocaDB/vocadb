@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.Globalization;
 using VocaDb.Model.Domain.Globalization;
@@ -20,8 +21,8 @@ namespace VocaDb.Tests.Domain.Globalization
 
 			var changed = source.CopyFrom(target);
 
-			Assert.IsTrue(changed, "changed");
-			Assert.AreEqual("ミクさんマジ天使", source.Original, "Original");
+			changed.Should().BeTrue("changed");
+			source.Original.Should().Be("ミクさんマジ天使", "Original");
 		}
 
 		[TestMethod]
@@ -32,8 +33,8 @@ namespace VocaDb.Tests.Domain.Globalization
 
 			var changed = source.CopyFrom(target);
 
-			Assert.IsFalse(changed, "changed");
-			Assert.AreEqual(string.Empty, source.Original, "Original");
+			changed.Should().BeFalse("changed");
+			source.Original.Should().Be(string.Empty, "Original");
 		}
 	}
 }

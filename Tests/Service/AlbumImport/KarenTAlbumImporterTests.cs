@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Text;
+using FluentAssertions;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts.MikuDb;
@@ -23,9 +24,9 @@ namespace VocaDb.Tests.Service.AlbumImport
 
 		private void AssertTrack(string expectedTitle, string expectedVocalists, ImportedAlbumTrack track)
 		{
-			Assert.IsNotNull(track, "Track was parsed successfully");
-			Assert.AreEqual(expectedTitle, track.Title, "Title");
-			Assert.AreEqual(expectedVocalists, string.Join(", ", track.VocalistNames), "Vocalists");
+			track.Should().NotBeNull("Track was parsed successfully");
+			track.Title.Should().Be(expectedTitle, "Title");
+			string.Join(", ", track.VocalistNames).Should().Be(expectedVocalists, "Vocalists");
 		}
 
 		private ImportedAlbumTrack ParseTrack(string trackString)
@@ -45,40 +46,40 @@ namespace VocaDb.Tests.Service.AlbumImport
 		[TestMethod]
 		public void Title()
 		{
-			Assert.AreEqual("Systemind Paradox", _importedData.Title, "Title");
+			_importedData.Title.Should().Be("Systemind Paradox", "Title");
 		}
 
 		[TestMethod]
 		public void Description()
 		{
-			Assert.AreEqual("Heavenz 1st Album", _importedData.Description, "Description");
+			_importedData.Description.Should().Be("Heavenz 1st Album", "Description");
 		}
 
 		[TestMethod]
 		public void Artists()
 		{
-			Assert.AreEqual(1, _importedData.ArtistNames.Length, "1 artist");
-			Assert.AreEqual("Heavenz", _importedData.ArtistNames.FirstOrDefault(), "Artist name");
+			_importedData.ArtistNames.Length.Should().Be(1, "1 artist");
+			_importedData.ArtistNames.FirstOrDefault().Should().Be("Heavenz", "Artist name");
 		}
 
 		[TestMethod]
 		public void Vocalists()
 		{
-			Assert.AreEqual(1, _importedData.VocalistNames.Length, "1 vocalist");
-			Assert.AreEqual("Hatsune Miku", _importedData.VocalistNames.FirstOrDefault(), "Vocalist name");
+			_importedData.VocalistNames.Length.Should().Be(1, "1 vocalist");
+			_importedData.VocalistNames.FirstOrDefault().Should().Be("Hatsune Miku", "Vocalist name");
 		}
 
 		[TestMethod]
 		public void ReleaseDate()
 		{
-			Assert.AreEqual(2012, _importedData.ReleaseYear, "Release year");
+			_importedData.ReleaseYear.Should().Be(2012, "Release year");
 		}
 
 		[TestMethod]
 		public void CoverPicture()
 		{
-			Assert.IsNotNull(_importedAlbum.CoverPicture, "Cover picture downloaded");
-			Assert.AreEqual("https://karent.jp/npdca/1048_20120502165707.jpg", _importedAlbum.CoverPicture.Mime, "Downloaded URL was correct");
+			_importedAlbum.CoverPicture.Should().NotBeNull("Cover picture downloaded");
+			_importedAlbum.CoverPicture.Mime.Should().Be("https://karent.jp/npdca/1048_20120502165707.jpg", "Downloaded URL was correct");
 		}
 
 		[TestMethod]
@@ -117,7 +118,7 @@ namespace VocaDb.Tests.Service.AlbumImport
 		[TestMethod]
 		public void Tracks()
 		{
-			Assert.AreEqual(11, _importedData.Tracks.Length, "11 tracks");
+			_importedData.Tracks.Length.Should().Be(11, "11 tracks");
 		}
 	}
 }

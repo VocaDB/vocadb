@@ -3,6 +3,7 @@
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -11,10 +12,10 @@ using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
-using VocaDb.Model.Domain.Songs;
-using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.Security;
+using VocaDb.Model.Domain.Songs;
+using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Security;
@@ -77,13 +78,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_queries.UpdateSongList(_songListContract, null);
 
 			var songList = _repository.List<SongList>().FirstOrDefault();
-			Assert.IsNotNull(songList, "List was saved to repository");
+			songList.Should().NotBeNull("List was saved to repository");
 
-			Assert.AreEqual(_songListContract.Name, songList.Name, "Name");
-			Assert.AreEqual(_songListContract.Description, songList.Description, "Description");
-			Assert.AreEqual(2, songList.AllSongs.Count, "Number of songs");
-			Assert.AreEqual("Project Diva desu.", songList.AllSongs[0].Song.DefaultName, "First song as expected");
-			Assert.AreEqual("World is Mine", songList.AllSongs[1].Song.DefaultName, "Second song as expected");
+			songList.Name.Should().Be(_songListContract.Name, "Name");
+			songList.Description.Should().Be(_songListContract.Description, "Description");
+			songList.AllSongs.Count.Should().Be(2, "Number of songs");
+			songList.AllSongs[0].Song.DefaultName.Should().Be("Project Diva desu.", "First song as expected");
+			songList.AllSongs[1].Song.DefaultName.Should().Be("World is Mine", "Second song as expected");
 		}
 
 		[TestMethod]
@@ -95,9 +96,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			_queries.MoveToTrash(list.Id);
 
-			Assert.AreEqual(0, _repository.Count<SongList>(), "Song list was removed");
-			Assert.AreEqual(0, _repository.Count<ArchivedSongListVersion>(), "Song list archived version was removed");
-			Assert.AreEqual(0, _repository.Count<SongListActivityEntry>(), "Activity entry was deleted");
+			_repository.Count<SongList>().Should().Be(0, "Song list was removed");
+			_repository.Count<ArchivedSongListVersion>().Should().Be(0, "Song list archived version was removed");
+			_repository.Count<SongListActivityEntry>().Should().Be(0, "Activity entry was deleted");
 		}
 
 		[TestMethod]
@@ -109,8 +110,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = _queries.GetSongsInList(new SongInListQueryParams { ListId = list.Id, TextQuery = SearchTextQuery.Create("Diva") });
 
-			Assert.AreEqual(1, result.Items.Length);
-			Assert.AreEqual(_song1.DefaultName, result.Items[0].Song.Name);
+			result.Items.Length.Should().Be(1);
+			result.Items[0].Song.Name.Should().Be(_song1.DefaultName);
 		}
 
 		[TestMethod]
@@ -122,7 +123,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = _queries.GetSongsInList(new SongInListQueryParams { ListId = list.Id, TextQuery = SearchTextQuery.Create("enc") });
 
-			Assert.AreEqual(2, result.Items.Length);
+			result.Items.Length.Should().Be(2);
 		}
 
 		[TestMethod]
@@ -140,8 +141,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_queries.UpdateSongList(_songListContract, null);
 
 			var songList = _repository.List<SongList>().First();
-			Assert.AreEqual(3, songList.AllSongs.Count, "Number of songs");
-			Assert.AreEqual("Electric Angel", songList.AllSongs[2].Song.DefaultName, "New song as expected");
+			songList.AllSongs.Count.Should().Be(3, "Number of songs");
+			songList.AllSongs[2].Song.DefaultName.Should().Be("Electric Angel", "New song as expected");
 		}
 
 		[TestMethod]
@@ -156,8 +157,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			var songList = _repository.Load(id);
 
 			var thumb = new EntryThumb(songList, MediaTypeNames.Image.Jpeg, ImagePurpose.Main);
-			Assert.IsTrue(_imagePersister.HasImage(thumb, ImageSize.Original), "Original image was saved");
-			Assert.IsTrue(_imagePersister.HasImage(thumb, ImageSize.SmallThumb), "Thumbnail was saved");
+			_imagePersister.HasImage(thumb, ImageSize.Original).Should().BeTrue("Original image was saved");
+			_imagePersister.HasImage(thumb, ImageSize.SmallThumb).Should().BeTrue("Thumbnail was saved");
 		}
 	}
 }

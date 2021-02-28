@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -21,7 +22,7 @@ namespace VocaDb.Tests.Service.EntryValidators
 
 		private void TestValidate(bool expectedResult, Song song)
 		{
-			Assert.AreEqual(expectedResult, new SongValidator().IsValid(song, 0));
+			new SongValidator().IsValid(song, 0).Should().Be(expectedResult);
 		}
 
 		[TestInitialize]

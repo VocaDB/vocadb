@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
@@ -39,11 +40,11 @@ namespace VocaDb.Tests.Service.QueryableExtensions
 
 		private void AssertSong(Song[] list, params string[] expectedNames)
 		{
-			Assert.AreEqual(expectedNames.Length, list.Length);
+			list.Length.Should().Be(expectedNames.Length);
 
 			foreach (var name in expectedNames)
 			{
-				Assert.IsTrue(list.Any(s => s.DefaultName == name), name);
+				list.Any(s => s.DefaultName == name).Should().BeTrue(name);
 			}
 		}
 

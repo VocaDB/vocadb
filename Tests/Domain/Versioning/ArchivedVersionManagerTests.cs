@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -44,11 +45,11 @@ namespace VocaDb.Tests.Domain.Versioning
 			CreateVersion();
 			CreateVersion();
 			var version3 = CreateVersion();
-			Assert.AreEqual(3, _archivedVersionManager.Versions.Count, "Number of versions");
+			_archivedVersionManager.Versions.Count.Should().Be(3, "Number of versions");
 
 			var latest = _archivedVersionManager.GetLatestVersion();
-			Assert.AreSame(version3, latest, "Latest version is the 3rd version");
-			Assert.AreEqual(2, latest.Version, "Latest version number");
+			latest.Should().BeSameAs(version3, "Latest version is the 3rd version");
+			latest.Version.Should().Be(2, "Latest version number");
 		}
 	}
 }

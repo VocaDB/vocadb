@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
@@ -55,11 +56,11 @@ namespace VocaDb.Tests.Web.Controllers
 			};
 
 			var result = await _controller.Create(model);
-			Assert.IsInstanceOfType(result, typeof(RedirectToActionResult), "result");
+			result.Should().BeOfType<RedirectToActionResult>("result");
 			var routeResult = (RedirectToActionResult)result;
-			Assert.AreEqual("Edit", routeResult.ActionName, "Action");
+			routeResult.ActionName.Should().Be("Edit", "Action");
 
-			Assert.AreEqual(1, _repository.List<Song>().Count, "Song was created");
+			_repository.List<Song>().Count.Should().Be(1, "Song was created");
 		}
 	}
 }

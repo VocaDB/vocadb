@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Songs;
@@ -35,8 +36,8 @@ namespace VocaDb.Tests.Domain.Users
 		{
 			_rating.Delete();
 
-			Assert.IsFalse(_song.IsFavoritedBy(_user), "not favorited by user");
-			Assert.AreEqual(0, _song.RatingScore, "rating score is updated");
+			_song.IsFavoritedBy(_user).Should().BeFalse("not favorited by user");
+			_song.RatingScore.Should().Be(0, "rating score is updated");
 		}
 
 		[TestMethod]
@@ -44,8 +45,8 @@ namespace VocaDb.Tests.Domain.Users
 		{
 			_rating.SetRating(SongVoteRating.Favorite);
 
-			Assert.AreEqual(1, _song.FavoritedTimes, "1 favorite");
-			Assert.AreEqual(FavoriteSongForUser.GetRatingScore(SongVoteRating.Favorite), _song.RatingScore, "rating score is updated");
+			_song.FavoritedTimes.Should().Be(1, "1 favorite");
+			_song.RatingScore.Should().Be(FavoriteSongForUser.GetRatingScore(SongVoteRating.Favorite), "rating score is updated");
 		}
 	}
 }

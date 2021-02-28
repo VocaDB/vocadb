@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -21,7 +22,7 @@ namespace VocaDb.Tests.Web.Helpers
 
 			var result = WebHelper.GetInterfaceCultureName(requestMock.Object);
 
-			Assert.AreEqual(expected, result, "result");
+			result.Should().Be(expected, "result");
 		}
 
 		[TestMethod]

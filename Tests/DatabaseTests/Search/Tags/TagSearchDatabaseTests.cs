@@ -3,6 +3,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Globalization;
@@ -30,7 +31,7 @@ namespace VocaDb.Tests.DatabaseTests.Search.Tags
 
 		private void AssertHasTag(PartialFindResult<Tag> result, Tag expected)
 		{
-			Assert.IsTrue(result.Items.Any(s => s.Equals(expected)), $"Found {expected}");
+			result.Items.Any(s => s.Equals(expected)).Should().BeTrue($"Found {expected}");
 		}
 
 		private PartialFindResult<Tag> CallFind(ContentLanguagePreference languagePreference = ContentLanguagePreference.Default,
@@ -60,8 +61,8 @@ namespace VocaDb.Tests.DatabaseTests.Search.Tags
 		{
 			var result = CallFind();
 
-			Assert.AreEqual(4, result.Items.Length, "Number of results");
-			Assert.AreEqual(4, result.TotalCount, "Total result count");
+			result.Items.Length.Should().Be(4, "Number of results");
+			result.TotalCount.Should().Be(4, "Total result count");
 			AssertHasTag(result, Db.Tag);
 			AssertHasTag(result, Db.Tag2);
 			AssertHasTag(result, Db.Tag3);
@@ -73,13 +74,13 @@ namespace VocaDb.Tests.DatabaseTests.Search.Tags
 		{
 			var result = CallFind(onlyMinimalFields: true);
 
-			Assert.AreEqual(4, result.Items.Length, "Number of results");
-			Assert.AreEqual(4, result.TotalCount, "Total result count");
+			result.Items.Length.Should().Be(4, "Number of results");
+			result.TotalCount.Should().Be(4, "Total result count");
 
 			var sampleTag = result.Items[0];
-			Assert.IsNotNull(sampleTag.TranslatedName, "Translated name");
-			Assert.AreEqual("alternative rock", sampleTag.TranslatedName.Default, "Sample tag default name");
-			Assert.AreEqual(ContentLanguageSelection.English, sampleTag.TranslatedName.DefaultLanguage, "Sample tag default language");
+			sampleTag.TranslatedName.Should().NotBeNull("Translated name");
+			sampleTag.TranslatedName.Default.Should().Be("alternative rock", "Sample tag default name");
+			sampleTag.TranslatedName.DefaultLanguage.Should().Be(ContentLanguageSelection.English, "Sample tag default language");
 		}
 	}
 }

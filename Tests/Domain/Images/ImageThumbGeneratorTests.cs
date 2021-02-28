@@ -2,6 +2,7 @@
 
 using System.Drawing;
 using System.IO;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Domain;
@@ -26,8 +27,8 @@ namespace VocaDb.Tests.Domain.Images
 			using (var stream = _persister.GetReadStream(imageInfo, size))
 			using (var img = Image.FromStream(stream))
 			{
-				Assert.AreEqual(width, img.Width, "Image width");
-				Assert.AreEqual(height, img.Height, "Image height");
+				img.Width.Should().Be(width, "Image width");
+				img.Height.Should().Be(height, "Image height");
 			}
 		}
 
@@ -55,7 +56,7 @@ namespace VocaDb.Tests.Domain.Images
 		{
 			var thumb = CallGenerateThumbsAndMoveImage(ImageSizes.Original);
 
-			Assert.IsTrue(_persister.HasImage(thumb, ImageSize.Original), "Image was created");
+			_persister.HasImage(thumb, ImageSize.Original).Should().BeTrue("Image was created");
 			AssertDimensions(thumb, ImageSize.Original, 480, 800);
 		}
 
@@ -64,7 +65,7 @@ namespace VocaDb.Tests.Domain.Images
 		{
 			var thumb = CallGenerateThumbsAndMoveImage(ImageSizes.Thumb);
 
-			Assert.IsTrue(_persister.HasImage(thumb, ImageSize.Thumb), "Image was created");
+			_persister.HasImage(thumb, ImageSize.Thumb).Should().BeTrue("Image was created");
 			AssertDimensions(thumb, ImageSize.Thumb, 150, 250);
 		}
 
@@ -73,9 +74,9 @@ namespace VocaDb.Tests.Domain.Images
 		{
 			var thumb = CallGenerateThumbsAndMoveImage(ImageSizes.Original | ImageSizes.SmallThumb);
 
-			Assert.IsTrue(_persister.HasImage(thumb, ImageSize.Original), "Image was created");
+			_persister.HasImage(thumb, ImageSize.Original).Should().BeTrue("Image was created");
 			AssertDimensions(thumb, ImageSize.Original, 480, 800);
-			Assert.IsTrue(_persister.HasImage(thumb, ImageSize.SmallThumb), "Thumbnail was created");
+			_persister.HasImage(thumb, ImageSize.SmallThumb).Should().BeTrue("Thumbnail was created");
 			AssertDimensions(thumb, ImageSize.SmallThumb, 90, 150);
 		}
 	}

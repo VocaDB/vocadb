@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Helpers;
 
@@ -11,13 +12,13 @@ namespace VocaDb.Tests.Helpers
 		private void TestRemoveControlChars(string expected, string input)
 		{
 			var actual = StringHelper.RemoveControlChars(input);
-			Assert.AreEqual(expected, actual);
+			actual.Should().Be(expected);
 		}
 
 		private void TestTrimIfNotWhitespace(string expected, string input)
 		{
 			var actual = StringHelper.TrimIfNotWhitespace(input);
-			Assert.AreEqual(expected, actual);
+			actual.Should().Be(expected);
 		}
 
 		[TestMethod]

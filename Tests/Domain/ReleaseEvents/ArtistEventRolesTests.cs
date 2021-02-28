@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.ReleaseEvents;
 
@@ -20,7 +21,7 @@ namespace VocaDb.Tests.Domain.ReleaseEvents
 		[TestMethod]
 		public void Value(int expected, ArtistEventRoles actual)
 		{
-			Assert.AreEqual(expected, (int)actual);
+			((int)actual).Should().Be(expected);
 		}
 	}
 }

@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service;
@@ -38,12 +39,12 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 
 		private void AssertResults(PartialFindResult<Song> result, params string[] songNames)
 		{
-			Assert.AreEqual(songNames.Length, result.TotalCount, "Total number of results");
-			Assert.AreEqual(songNames.Length, result.Items.Length, "Number of returned items");
+			result.TotalCount.Should().Be(songNames.Length, "Total number of results");
+			result.Items.Length.Should().Be(songNames.Length, "Number of returned items");
 
 			foreach (var songName in songNames)
 			{
-				Assert.IsTrue(result.Items.Any(s => s.DefaultName == songName), $"Song named '{songName}' was returned");
+				result.Items.Any(s => s.DefaultName == songName).Should().BeTrue($"Song named '{songName}' was returned");
 			}
 		}
 
@@ -90,7 +91,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 		{
 			var result = _songSearch.ParseTextQuery(SearchTextQuery.Empty);
 
-			Assert.IsFalse(result.HasNameQuery, "HasNameQuery");
+			result.HasNameQuery.Should().BeFalse("HasNameQuery");
 		}
 
 		[TestMethod]
@@ -98,8 +99,8 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 		{
 			var result = _songSearch.ParseTextQuery(SearchTextQuery.Create("Hatsune Miku"));
 
-			Assert.IsTrue(result.HasNameQuery, "HasNameQuery");
-			Assert.AreEqual("Hatsune Miku", result.Name.Query, "Name query");
+			result.HasNameQuery.Should().BeTrue("HasNameQuery");
+			result.Name.Query.Should().Be("Hatsune Miku", "Name query");
 		}
 
 		[TestMethod]
@@ -107,8 +108,8 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 		{
 			var result = _songSearch.ParseTextQuery(SearchTextQuery.Create("id:3939"));
 
-			Assert.IsFalse(result.HasNameQuery, "HasNameQuery");
-			Assert.AreEqual(3939, result.Id, "Id query");
+			result.HasNameQuery.Should().BeFalse("HasNameQuery");
+			result.Id.Should().Be(3939, "Id query");
 		}
 
 		[TestMethod]
@@ -116,7 +117,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 		{
 			var result = _songSearch.ParseTextQuery(SearchTextQuery.Create("id:miku!"));
 
-			Assert.AreEqual(0, result.Id, "Id query");
+			result.Id.Should().Be(0, "Id query");
 		}
 
 		[TestMethod]
@@ -124,7 +125,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 		{
 			var result = _songSearch.ParseTextQuery(SearchTextQuery.Create("publish-date:2015/9/3"));
 
-			Assert.AreEqual(new DateTime(2015, 9, 3), result.PublishedAfter, "Publish date after");
+			result.PublishedAfter.Should().Be(new DateTime(2015, 9, 3), "Publish date after");
 		}
 
 		[TestMethod]
@@ -132,8 +133,8 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 		{
 			var result = _songSearch.ParseTextQuery(SearchTextQuery.Create("publish-date:2015/9/3-2015/10/1"));
 
-			Assert.AreEqual(new DateTime(2015, 9, 3), result.PublishedAfter, "Publish date after");
-			Assert.AreEqual(new DateTime(2015, 10, 1), result.PublishedBefore, "Publish date before");
+			result.PublishedAfter.Should().Be(new DateTime(2015, 9, 3), "Publish date after");
+			result.PublishedBefore.Should().Be(new DateTime(2015, 10, 1), "Publish date before");
 		}
 
 		[TestMethod]
@@ -141,7 +142,7 @@ namespace VocaDb.Tests.Service.Search.SongSearch
 		{
 			var result = _songSearch.ParseTextQuery(SearchTextQuery.Create("publish-date:Miku!"));
 
-			Assert.IsNull(result.PublishedAfter, "Publish date after");
+			result.PublishedAfter.Should().BeNull("Publish date after");
 		}
 	}
 }

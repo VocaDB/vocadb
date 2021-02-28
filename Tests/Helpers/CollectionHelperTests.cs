@@ -83,12 +83,12 @@ namespace VocaDb.Tests.Helpers
 			var list = oldItems.ToList();
 			var result = await CollectionHelper.SyncWithContentAsync(list, newItems, EqualityEntity, FacEntity, Update, null);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.AreEqual(addedCount > 0 || removedCount > 0 || editedCount > 0, result.Changed, "is changed");
-			Assert.AreEqual(addedCount, result.Added.Length, "Aadded");
-			Assert.AreEqual(editedCount, result.Edited.Length, "Edited");
-			Assert.AreEqual(removedCount, result.Removed.Length, "Removed");
-			Assert.AreEqual(unchangedCount, result.Unchanged.Length, "Unchanged");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().Be(addedCount > 0 || removedCount > 0 || editedCount > 0, "is changed");
+			result.Added.Length.Should().Be(addedCount, "Aadded");
+			result.Edited.Length.Should().Be(editedCount, "Edited");
+			result.Removed.Length.Should().Be(removedCount, "Removed");
+			result.Unchanged.Length.Should().Be(unchangedCount, "Unchanged");
 			return result;
 		}
 
@@ -131,12 +131,12 @@ namespace VocaDb.Tests.Helpers
 
 			var result = CollectionHelper.Sync(oldItems, newItems, Equality, Fac);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.IsTrue(result.Changed, "is changed");
-			Assert.AreEqual(1, result.Added.Length, "1 added");
-			Assert.AreEqual(0, result.Removed.Length, "none removed");
-			Assert.AreEqual(0, result.Unchanged.Length, "none unchanged");
-			Assert.AreEqual("39", result.Added.First(), "added items matches prototype");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().BeTrue("is changed");
+			result.Added.Length.Should().Be(1, "1 added");
+			result.Removed.Length.Should().Be(0, "none removed");
+			result.Unchanged.Length.Should().Be(0, "none unchanged");
+			result.Added.First().Should().Be("39", "added items matches prototype");
 		}
 
 		[TestMethod]
@@ -147,12 +147,12 @@ namespace VocaDb.Tests.Helpers
 
 			var result = CollectionHelper.Sync(oldItems, newItems, Equality, Fac);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.IsFalse(result.Changed, "is not changed");
-			Assert.AreEqual(0, result.Added.Length, "none added");
-			Assert.AreEqual(0, result.Removed.Length, "none removed");
-			Assert.AreEqual(1, result.Unchanged.Length, "1 unchanged");
-			Assert.AreEqual("39", result.Unchanged.First(), "unchanged item matches prototype");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().BeFalse("is not changed");
+			result.Added.Length.Should().Be(0, "none added");
+			result.Removed.Length.Should().Be(0, "none removed");
+			result.Unchanged.Length.Should().Be(1, "1 unchanged");
+			result.Unchanged.First().Should().Be("39", "unchanged item matches prototype");
 		}
 
 		[TestMethod]
@@ -163,13 +163,13 @@ namespace VocaDb.Tests.Helpers
 
 			var result = CollectionHelper.Sync(oldItems, newItems, Equality, Fac);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.IsTrue(result.Changed, "is changed");
-			Assert.AreEqual(1, result.Added.Length, "1 added");
-			Assert.AreEqual(1, result.Removed.Length, "1 removed");
-			Assert.AreEqual(0, result.Unchanged.Length, "none unchanged");
-			Assert.AreEqual("3939", result.Added.First(), "added item matches prototype");
-			Assert.AreEqual("39", result.Removed.First(), "removed item matches prototype");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().BeTrue("is changed");
+			result.Added.Length.Should().Be(1, "1 added");
+			result.Removed.Length.Should().Be(1, "1 removed");
+			result.Unchanged.Length.Should().Be(0, "none unchanged");
+			result.Added.First().Should().Be("3939", "added item matches prototype");
+			result.Removed.First().Should().Be("39", "removed item matches prototype");
 		}
 
 		[TestMethod]
@@ -180,40 +180,40 @@ namespace VocaDb.Tests.Helpers
 
 			var result = CollectionHelper.Sync(oldItems, newItems, Equality, Fac);
 
-			Assert.IsNotNull(result, "result is not null");
-			Assert.IsTrue(result.Changed, "is changed");
-			Assert.AreEqual(0, result.Added.Length, "none added");
-			Assert.AreEqual(1, result.Removed.Length, "1 removed");
-			Assert.AreEqual(0, result.Unchanged.Length, "none unchanged");
-			Assert.AreEqual("39", result.Removed.First(), "removed item matches prototype");
+			result.Should().NotBeNull("result is not null");
+			result.Changed.Should().BeTrue("is changed");
+			result.Added.Length.Should().Be(0, "none added");
+			result.Removed.Length.Should().Be(1, "1 removed");
+			result.Unchanged.Length.Should().Be(0, "none unchanged");
+			result.Removed.First().Should().Be("39", "removed item matches prototype");
 		}
 
 		[TestMethod]
 		public async Task SyncWithContent_Added()
 		{
 			var result = await TestSyncWithValue(EntityList(), EntityProtoList(39), addedCount: 1);
-			Assert.AreEqual("39", result.Added.First().Val, "Added entity matches prototype");
+			result.Added.First().Val.Should().Be("39", "Added entity matches prototype");
 		}
 
 		[TestMethod]
 		public async Task SyncWithContent_Removed()
 		{
 			var result = await TestSyncWithValue(EntityList("39"), EntityProtoList(), removedCount: 1);
-			Assert.AreEqual("39", result.Removed.First().Val, "Removed entity matches prototype");
+			result.Removed.First().Val.Should().Be("39", "Removed entity matches prototype");
 		}
 
 		[TestMethod]
 		public async Task SyncWithContent_Unchanged()
 		{
 			var result = await TestSyncWithValue(EntityList("39"), EntityProtoList(39), unchangedCount: 1);
-			Assert.AreEqual("39", result.Unchanged.First().Val, "Unchanged entity matches prototype");
+			result.Unchanged.First().Val.Should().Be("39", "Unchanged entity matches prototype");
 		}
 
 		[TestMethod]
 		public async Task SyncWithContent_Edited()
 		{
 			var result = await TestSyncWithValue(EntityList("39"), EntityProtoList(3939), editedCount: 1, unchangedCount: 1);
-			Assert.AreEqual("3939", result.Edited.First().Val, "Edited entity matches prototype");
+			result.Edited.First().Val.Should().Be("3939", "Edited entity matches prototype");
 		}
 
 		// Replace the entity in the list with a completely new one.
@@ -225,8 +225,8 @@ namespace VocaDb.Tests.Helpers
 			newList.First().Id = 2;
 
 			var result = await TestSyncWithValue(oldList, newList, addedCount: 1, removedCount: 1);
-			Assert.AreEqual("3939", result.Added.First().Val, "Added entity matches prototype");
-			Assert.AreEqual("39", result.Removed.First().Val, "Removed entity matches prototype");
+			result.Added.First().Val.Should().Be("3939", "Added entity matches prototype");
+			result.Removed.First().Val.Should().Be("39", "Removed entity matches prototype");
 		}
 	}
 }

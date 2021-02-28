@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -77,10 +78,10 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 		{
 			var result = Find();
 
-			Assert.AreEqual(2, result.Items.Length, "2 results");
-			Assert.AreEqual(2, result.TotalCount, "total result count");
-			Assert.AreEqual(_album.DefaultName, result.Items[0].DefaultName);
-			Assert.AreEqual(_albumWithArtist, result.Items[1]);
+			result.Items.Length.Should().Be(2, "2 results");
+			result.TotalCount.Should().Be(2, "total result count");
+			result.Items[0].DefaultName.Should().Be(_album.DefaultName);
+			result.Items[1].Should().Be(_albumWithArtist);
 		}
 
 		/// <summary>
@@ -93,9 +94,9 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 
 			var result = Find();
 
-			Assert.AreEqual(1, result.Items.Length, "1 result");
-			Assert.AreEqual(2, result.TotalCount, "total result count");
-			Assert.AreEqual(_albumWithArtist, result.Items[0]);
+			result.Items.Length.Should().Be(1, "1 result");
+			result.TotalCount.Should().Be(2, "total result count");
+			result.Items[0].Should().Be(_albumWithArtist);
 		}
 
 		/// <summary>
@@ -108,10 +109,10 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 
 			var result = Find();
 
-			Assert.AreEqual(2, result.Items.Length, "2 results");
-			Assert.AreEqual(2, result.TotalCount, "total result count");
-			Assert.AreEqual("DIVINE", result.Items[0].DefaultName);
-			Assert.AreEqual("Synthesis", result.Items[1].DefaultName);
+			result.Items.Length.Should().Be(2, "2 results");
+			result.TotalCount.Should().Be(2, "total result count");
+			result.Items[0].DefaultName.Should().Be("DIVINE");
+			result.Items[1].DefaultName.Should().Be("Synthesis");
 		}
 
 		/// <summary>
@@ -124,10 +125,10 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 
 			var result = Find();
 
-			Assert.AreEqual(2, result.Items.Length, "2 results");
-			Assert.AreEqual(2, result.TotalCount, "total result count");
-			Assert.AreEqual("DIVINE", result.Items[0].DefaultName);
-			Assert.AreEqual("Synthesis", result.Items[1].DefaultName);
+			result.Items.Length.Should().Be(2, "2 results");
+			result.TotalCount.Should().Be(2, "total result count");
+			result.Items[0].DefaultName.Should().Be("DIVINE");
+			result.Items[1].DefaultName.Should().Be("Synthesis");
 		}
 
 		/// <summary>
@@ -140,10 +141,10 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 
 			var result = Find();
 
-			Assert.AreEqual(2, result.Items.Length, "2 results");
-			Assert.AreEqual(2, result.TotalCount, "total result count");
-			Assert.AreEqual("DIVINE", result.Items[0].DefaultName);
-			Assert.AreEqual("Synthesis", result.Items[1].DefaultName);
+			result.Items.Length.Should().Be(2, "2 results");
+			result.TotalCount.Should().Be(2, "total result count");
+			result.Items[0].DefaultName.Should().Be("DIVINE");
+			result.Items[1].DefaultName.Should().Be("Synthesis");
 		}
 
 		/// <summary>
@@ -156,9 +157,9 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 
 			var result = Find();
 
-			Assert.AreEqual(1, result.Items.Length, "1 result");
-			Assert.AreEqual(1, result.TotalCount, "total result count");
-			Assert.AreEqual("DIVINE", result.Items[0].DefaultName);
+			result.Items.Length.Should().Be(1, "1 result");
+			result.TotalCount.Should().Be(1, "total result count");
+			result.Items[0].DefaultName.Should().Be("DIVINE");
 		}
 
 		/// <summary>
@@ -191,9 +192,9 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 
 			var result = Find();
 
-			Assert.AreEqual(2, result.TotalCount, "2 results total");
-			Assert.AreEqual(1, result.Items.Length, "1 result");
-			Assert.AreEqual(_albumWithArtist, result.Items.First(), "result is expected album");
+			result.TotalCount.Should().Be(2, "2 results total");
+			result.Items.Length.Should().Be(1, "1 result");
+			result.Items.First().Should().Be(_albumWithArtist, "result is expected album");
 		}
 
 		[TestMethod]
@@ -209,9 +210,9 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 
 			var result = Find();
 
-			Assert.AreEqual(1, result.TotalCount, "Total results");
-			Assert.AreEqual(1, result.Items.Length, "1 result");
-			Assert.AreEqual(_albumWithArtist, result.Items.First(), "result is expected album");
+			result.TotalCount.Should().Be(1, "Total results");
+			result.Items.Length.Should().Be(1, "1 result");
+			result.Items.First().Should().Be(_albumWithArtist, "result is expected album");
 		}
 
 		/// <summary>
@@ -224,9 +225,9 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 
 			var result = Find();
 
-			Assert.AreEqual(1, result.Items.Length, "1 result");
-			Assert.AreEqual(1, result.TotalCount, "total result count");
-			Assert.AreEqual(_album, result.Items[0]);
+			result.Items.Length.Should().Be(1, "1 result");
+			result.TotalCount.Should().Be(1, "total result count");
+			result.Items[0].Should().Be(_album);
 		}
 
 		/// <summary>
@@ -239,9 +240,9 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 
 			var result = Find();
 
-			Assert.AreEqual(1, result.Items.Length, "1 result");
-			Assert.AreEqual(1, result.TotalCount, "total result count");
-			Assert.AreEqual(_albumWithArtist, result.Items[0], "albums are equal");
+			result.Items.Length.Should().Be(1, "1 result");
+			result.TotalCount.Should().Be(1, "total result count");
+			result.Items[0].Should().Be(_albumWithArtist, "albums are equal");
 		}
 
 		[TestMethod]
@@ -253,9 +254,9 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 
 			var result = Find();
 
-			Assert.AreEqual(1, result.Items.Length, "1 result");
-			Assert.AreEqual(1, result.TotalCount, "total result count");
-			Assert.AreEqual(_albumWithArtist, result.Items[0], "albums are equal");
+			result.Items.Length.Should().Be(1, "1 result");
+			result.TotalCount.Should().Be(1, "total result count");
+			result.Items[0].Should().Be(_albumWithArtist, "albums are equal");
 		}
 
 		[TestMethod]
@@ -267,9 +268,9 @@ namespace VocaDb.Tests.Service.Search.AlbumSearch
 
 			var result = Find();
 
-			Assert.AreEqual(1, result.Items.Length, "1 result");
-			Assert.AreEqual(1, result.TotalCount, "total result count");
-			Assert.AreEqual(_album, result.Items[0], "albums are equal");
+			result.Items.Length.Should().Be(1, "1 result");
+			result.TotalCount.Should().Be(1, "total result count");
+			result.Items[0].Should().Be(_album, "albums are equal");
 		}
 	}
 }

@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain;
 
@@ -19,9 +20,9 @@ namespace VocaDb.Tests.Domain
 			var second = GeoPoint(secondLatitude, secondLongitude);
 
 			if (equals)
-				Assert.AreEqual(first, second, "GeoPoints are equal");
+				second.Should().Be(first, "GeoPoints are equal");
 			else
-				Assert.AreNotEqual(first, second, "GeoPoints are not equal");
+				second.Should().NotBe(first, "GeoPoints are not equal");
 		}
 
 		[TestMethod]

@@ -2,6 +2,7 @@
 
 using System.Net;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -41,8 +42,8 @@ namespace VocaDb.Tests.Web.Controllers
 		{
 			var result = await _controller.Edit(new ArtistEditViewModel()) as ContentResult;
 
-			Assert.IsNotNull(result, "result");
-			Assert.AreEqual((int)HttpStatusCode.BadRequest, _response.StatusCode, "Response status code");
+			result.Should().NotBeNull("result");
+			_response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest, "Response status code");
 		}
 
 		[TestMethod]
@@ -50,7 +51,7 @@ namespace VocaDb.Tests.Web.Controllers
 		{
 			var result = _controller.ViewVersion();
 
-			Assert.IsInstanceOfType(result, typeof(NotFoundObjectResult));
+			result.Should().BeOfType<NotFoundObjectResult>();
 		}
 	}
 }

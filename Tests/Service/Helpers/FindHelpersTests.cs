@@ -1,5 +1,6 @@
 #nullable disable
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Helpers;
@@ -16,9 +17,9 @@ namespace VocaDb.Tests.Service.Helpers
 		{
 			var result = FindHelpers.GetMatchModeAndQueryForSearch(query, ref originalMode);
 
-			Assert.AreEqual(expectedQuery, result, "query");
+			result.Should().Be(expectedQuery, "query");
 			if (expectedMode != null)
-				Assert.AreEqual(expectedMode, originalMode, "matchMode");
+				originalMode.Should().Be(expectedMode, "matchMode");
 		}
 
 		[TestMethod]

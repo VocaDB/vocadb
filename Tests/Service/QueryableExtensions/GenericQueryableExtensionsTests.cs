@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Songs;
 using VocaDb.Model.Service.QueryableExtensions;
@@ -49,9 +50,9 @@ namespace VocaDb.Tests.Service.QueryableExtensions
 			{
 				var result = songs.SelectObject<Song, SongDto>().ToArray();
 
-				Assert.AreEqual(2, result.Length, "Number of results");
-				Assert.AreEqual("Nebula", result[0].Name, "First song name");
-				Assert.AreEqual(3939, result[0].Length, "First song length");
+				result.Length.Should().Be(2, "Number of results");
+				result[0].Name.Should().Be("Nebula", "First song name");
+				result[0].Length.Should().Be(3939, "First song length");
 			}
 
 			[TestMethod]
@@ -59,9 +60,9 @@ namespace VocaDb.Tests.Service.QueryableExtensions
 			{
 				var result = songs.SelectObject<Song, SongDto2>().ToArray();
 
-				Assert.AreEqual(2, result.Length, "Number of results");
-				Assert.AreEqual("Nebula", result[0].Name, "First song name");
-				Assert.AreEqual(0, result[0].Length, "First song length");
+				result.Length.Should().Be(2, "Number of results");
+				result[0].Name.Should().Be("Nebula", "First song name");
+				result[0].Length.Should().Be(0, "First song length");
 			}
 		}
 	}

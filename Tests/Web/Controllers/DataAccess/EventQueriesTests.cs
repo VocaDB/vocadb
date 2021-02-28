@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -91,9 +92,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await CallUpdate(contract);
 
-			Assert.IsTrue(_repository.Contains(result), "Event was saved to repository");
-			Assert.AreEqual("Vocaloid Paradise", result.DefaultName, "Name");
-			Assert.IsNull(result.Series, "Series");
+			_repository.Contains(result).Should().BeTrue("Event was saved to repository");
+			result.DefaultName.Should().Be("Vocaloid Paradise", "Name");
+			result.Series.Should().BeNull("Series");
 		}
 
 		[TestMethod]
@@ -109,13 +110,13 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await CallUpdate(contract);
 
-			Assert.IsTrue(_repository.Contains(result), "Event was saved to repository");
-			Assert.AreEqual("M3 2014 Spring", result.DefaultName, "Name");
-			Assert.AreEqual(1, result.Names.Names.Count, "Number of names");
-			Assert.AreEqual("M3 2014 Spring", result.Names.Names[0].Value, "First name");
-			Assert.AreEqual(2014, result.SeriesNumber, "SeriesNumber");
-			Assert.AreEqual("Spring", result.SeriesSuffix, "SeriesSuffix");
-			Assert.AreSame(_series, result.Series, "Series");
+			_repository.Contains(result).Should().BeTrue("Event was saved to repository");
+			result.DefaultName.Should().Be("M3 2014 Spring", "Name");
+			result.Names.Names.Count.Should().Be(1, "Number of names");
+			result.Names.Names[0].Value.Should().Be("M3 2014 Spring", "First name");
+			result.SeriesNumber.Should().Be(2014, "SeriesNumber");
+			result.SeriesSuffix.Should().Be("Spring", "SeriesSuffix");
+			result.Series.Should().BeSameAs(_series, "Series");
 		}
 
 		[TestMethod]
@@ -131,11 +132,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await CallUpdate(contract);
 
-			Assert.IsTrue(_repository.Contains(result), "Event was saved to repository");
-			Assert.AreEqual("M3 2014", result.DefaultName, "Name");
-			Assert.AreEqual(2014, result.SeriesNumber, "SeriesNumber");
-			Assert.AreEqual(string.Empty, result.SeriesSuffix, "SeriesSuffix");
-			Assert.AreSame(_series, result.Series, "Series");
+			_repository.Contains(result).Should().BeTrue("Event was saved to repository");
+			result.DefaultName.Should().Be("M3 2014", "Name");
+			result.SeriesNumber.Should().Be(2014, "SeriesNumber");
+			result.SeriesSuffix.Should().Be(string.Empty, "SeriesSuffix");
+			result.Series.Should().BeSameAs(_series, "Series");
 		}
 
 		[TestMethod]
@@ -157,11 +158,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await CallUpdate(contract);
 
-			Assert.AreEqual(3, result.Names.Names.Count, "Number of names");
-			Assert.IsTrue(result.Names.HasName("Comiket 39"), "Found English name");
-			Assert.IsTrue(result.Names.HasName("コミケ 39"), "Found Japanese name");
-			Assert.AreEqual("Comiket 39", result.TranslatedName.English, "English name");
-			Assert.AreEqual("コミケ 39", result.TranslatedName.Japanese, "Japanese name");
+			result.Names.Names.Count.Should().Be(3, "Number of names");
+			result.Names.HasName("Comiket 39").Should().BeTrue("Found English name");
+			result.Names.HasName("コミケ 39").Should().BeTrue("Found Japanese name");
+			result.TranslatedName.English.Should().Be("Comiket 39", "English name");
+			result.TranslatedName.Japanese.Should().Be("コミケ 39", "Japanese name");
 		}
 
 		[TestMethod]
@@ -186,10 +187,10 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			_queries.Delete(_existingEvent.Id, "Deleted");
 
-			Assert.IsTrue(_existingEvent.Deleted, "Deleted");
+			_existingEvent.Deleted.Should().BeTrue("Deleted");
 			var archivedVersion = _existingEvent.ArchivedVersionsManager.Versions.FirstOrDefault();
-			Assert.IsNotNull(archivedVersion, "Archived version was created");
-			Assert.AreEqual(EntryEditEvent.Deleted, archivedVersion.EditEvent, "EditEvent");
+			archivedVersion.Should().NotBeNull("Archived version was created");
+			archivedVersion.EditEvent.Should().Be(EntryEditEvent.Deleted, "EditEvent");
 		}
 
 		[TestMethod]
@@ -200,15 +201,15 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await CallUpdate(contract);
 
-			Assert.AreEqual(2013, contract.SeriesNumber, "SeriesNumber");
-			Assert.AreEqual("Fall", contract.SeriesSuffix, "SeriesSuffix");
-			Assert.AreEqual("M3 2013 Fall", result.DefaultName, "Name");
-			Assert.AreEqual("M3 2013 Fall", _album.OriginalReleaseEvent?.DefaultName, "OriginalReleaseEventName for album");
+			contract.SeriesNumber.Should().Be(2013, "SeriesNumber");
+			contract.SeriesSuffix.Should().Be("Fall", "SeriesSuffix");
+			result.DefaultName.Should().Be("M3 2013 Fall", "Name");
+			_album.OriginalReleaseEvent?.DefaultName.Should().Be("M3 2013 Fall", "OriginalReleaseEventName for album");
 
 			var archivedVersions = _repository.List<ArchivedReleaseEventVersion>();
-			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");
+			archivedVersions.Count.Should().Be(1, "Archived version was created");
 			// Names are changed too when suffix changes
-			Assert.AreEqual(ReleaseEventEditableFields.Names | ReleaseEventEditableFields.SeriesSuffix, archivedVersions[0].Diff.ChangedFields.Value, "Changed fields in diff");
+			archivedVersions[0].Diff.ChangedFields.Value.Should().Be(ReleaseEventEditableFields.Names | ReleaseEventEditableFields.SeriesSuffix, "Changed fields in diff");
 		}
 
 		[TestMethod]
@@ -220,11 +221,11 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await CallUpdate(contract);
 
-			Assert.AreEqual("M3 2013 Fall X2", result.DefaultName, "Name was updated");
+			result.DefaultName.Should().Be("M3 2013 Fall X2", "Name was updated");
 
 			var archivedVersions = _repository.List<ArchivedReleaseEventVersion>();
-			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");
-			Assert.AreEqual(ReleaseEventEditableFields.Names, archivedVersions[0].Diff.ChangedFields.Value, "Changed fields in diff");
+			archivedVersions.Count.Should().Be(1, "Archived version was created");
+			archivedVersions[0].Diff.ChangedFields.Value.Should().Be(ReleaseEventEditableFields.Names, "Changed fields in diff");
 		}
 
 		[TestMethod]
@@ -236,12 +237,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var result = await CallUpdate(contract);
 
-			Assert.AreEqual("M3 2013 Spring", result.DefaultName, "Name was not updated");
-			Assert.AreEqual(ContentLanguageSelection.English, result.TranslatedName.DefaultLanguage, "Default language was not updated");
+			result.DefaultName.Should().Be("M3 2013 Spring", "Name was not updated");
+			result.TranslatedName.DefaultLanguage.Should().Be(ContentLanguageSelection.English, "Default language was not updated");
 
 			var archivedVersions = _repository.List<ArchivedReleaseEventVersion>();
-			Assert.AreEqual(1, archivedVersions.Count, "Archived version was created");
-			Assert.AreEqual(ReleaseEventEditableFields.Nothing, archivedVersions[0].Diff.ChangedFields.Value, "Changed fields in diff");
+			archivedVersions.Count.Should().Be(1, "Archived version was created");
+			archivedVersions[0].Diff.ChangedFields.Value.Should().Be(ReleaseEventEditableFields.Nothing, "Changed fields in diff");
 		}
 
 		[TestMethod]
@@ -279,8 +280,8 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			await _queries.Update(contract, null);
 
-			Assert.AreEqual(_series, releaseEvent.Series, "Series");
-			Assert.IsTrue(_series.AllEvents.Contains(releaseEvent), "Series contains event");
+			releaseEvent.Series.Should().Be(_series, "Series");
+			_series.AllEvents.Contains(releaseEvent).Should().BeTrue("Series contains event");
 		}
 
 		[TestMethod]
@@ -295,9 +296,9 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var seriesFromRepo = _repository.Load<ReleaseEventSeries>(result);
 
-			Assert.AreEqual(2, _repository.List<ReleaseEventSeries>().Count, "Number of series in repo");
-			Assert.IsNotNull(seriesFromRepo, "Series was loaded successfully");
-			Assert.AreEqual("Comiket", seriesFromRepo.TranslatedName.Default, "Name was updated");
+			_repository.List<ReleaseEventSeries>().Count.Should().Be(2, "Number of series in repo");
+			seriesFromRepo.Should().NotBeNull("Series was loaded successfully");
+			seriesFromRepo.TranslatedName.Default.Should().Be("Comiket", "Name was updated");
 		}
 
 		/// <summary>
@@ -313,12 +314,12 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 
 			var seriesFromRepo = _repository.Load<ReleaseEventSeries>(result);
 
-			Assert.AreEqual(1, _repository.List<ReleaseEventSeries>().Count, "Number of series in repo");
-			Assert.IsNotNull(seriesFromRepo, "Series was loaded successfully");
-			Assert.AreEqual("M3.9", seriesFromRepo.TranslatedName.Default, "Name was updated");
+			_repository.List<ReleaseEventSeries>().Count.Should().Be(1, "Number of series in repo");
+			seriesFromRepo.Should().NotBeNull("Series was loaded successfully");
+			seriesFromRepo.TranslatedName.Default.Should().Be("M3.9", "Name was updated");
 
-			Assert.AreEqual(1, _existingEvent.Names.Names.Count, "Number of event names");
-			Assert.AreEqual("M3.9 2013 Spring", _existingEvent.Names.Names[0].Value, "Event name value");
+			_existingEvent.Names.Names.Count.Should().Be(1, "Number of event names");
+			_existingEvent.Names.Names[0].Value.Should().Be("M3.9 2013 Spring", "Event name value");
 		}
 
 		/// <summary>
@@ -333,7 +334,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			};
 
 			var result = _queries.UpdateSeries(contract, null);
-			Assert.AreEqual(ContentLanguageSelection.Japanese, _existingEvent.TranslatedName.DefaultLanguage, "Default language");
+			_existingEvent.TranslatedName.DefaultLanguage.Should().Be(ContentLanguageSelection.Japanese, "Default language");
 		}
 
 		[TestMethod]

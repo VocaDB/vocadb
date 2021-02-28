@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Service.QueryableExtensions;
@@ -29,7 +30,7 @@ namespace VocaDb.Tests.Service
 
 		private void SequenceEqual(IEnumerable<ArtistName> actual, string message, params string[] expected)
 		{
-			Assert.IsTrue(actual.Select(n => n.Value).SequenceEqual(expected), message);
+			actual.Select(n => n.Value).SequenceEqual(expected).Should().BeTrue(message);
 		}
 
 		[TestInitialize]

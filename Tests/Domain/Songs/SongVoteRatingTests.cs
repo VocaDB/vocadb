@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VocaDb.Model.Domain.Songs;
 
@@ -13,7 +14,7 @@ namespace VocaDb.Tests.Domain.Songs
 		[TestMethod]
 		public void Value(int expected, SongVoteRating actual)
 		{
-			Assert.AreEqual(expected, (int)actual);
+			((int)actual).Should().Be(expected);
 		}
 	}
 }
