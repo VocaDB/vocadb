@@ -237,7 +237,7 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Edit", new { id = targetTagId.Value });
 		}
 
-		[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600, VaryByQueryKeys = new[] { "id", "lang" })]
+		[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600, VaryByQueryKeys = new[] { "*" })]
 		public ActionResult PopupContent(
 			int id = InvalidId,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
