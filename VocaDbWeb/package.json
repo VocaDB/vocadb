@@ -13,8 +13,8 @@
         "cross-env": "^5.1",
         "less": "^3.10.3",
         "less-loader": "^5.0.0",
-        "ts-loader": "^6.2.1",
-        "typescript": "^3.7.4",
+        "ts-loader": "^6.2.2",
+        "typescript": "^3.9.9",
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {

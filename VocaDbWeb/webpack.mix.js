@@ -194,6 +194,9 @@ mix
 	.less("wwwroot/Content/css.less", "wwwroot/Content")
 
 	.less("wwwroot/Content/embedSong.less", "wwwroot/Content")
+	.less("wwwroot/Content/Styles/DarkAngel.less", "wwwroot/Content/Styles")
+	.less("wwwroot/Content/Styles/discussions.less", "wwwroot/Content/Styles")
+	.less("wwwroot/Content/Styles/songlist.less", "wwwroot/Content/Styles")
 
 	// CSS for jqxRating
 	.styles([
