@@ -62,7 +62,7 @@ import UserRepository from '../../Repositories/UserRepository';
 
 			const repo = new SongRepository(siteUrl, this.languagePreference);
 			// TODO: this should be cached, but first we need to make sure the other instances are not cached.
-			repo.getOneWithComponents(id, 'Nothing', null, song => {
+			repo.getOneWithComponents(id, 'None', null, song => {
 				if (song.songType === SongType[SongType.Original])
 					this.originalVersion({ entry: song, url: page, domain: siteUrl });
 			});
