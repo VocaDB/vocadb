@@ -262,7 +262,7 @@ namespace VocaDb.Web.Controllers
 			return PartialView(ownedArtist);
 		}
 
-		[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600)]
+		[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600, VaryByQueryKeys = new[] { "*" })]
 		public PartialViewResult PopupContent(int id, string culture = InterfaceLanguage.DefaultCultureCode)
 		{
 			var user = Service.GetUser(id);
@@ -584,7 +584,7 @@ namespace VocaDb.Web.Controllers
 			return RedirectToAction("Details", new { id = model.Id });
 		}
 
-		[ResponseCache(Duration = ClientCacheDurationSec)]
+		[ResponseCache(Duration = ClientCacheDurationSec, VaryByQueryKeys = new[] { "*" })]
 		public ActionResult Stats_EditsPerDay(int id)
 		{
 			var points = _activityEntryQueries.GetEditsPerDay(id, null);
