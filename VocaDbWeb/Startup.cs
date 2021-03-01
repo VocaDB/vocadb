@@ -1,5 +1,6 @@
 #nullable disable
 
+using System;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Security.Claims;
@@ -116,6 +117,8 @@ namespace VocaDb.Web
 				.AddCookie(options =>
 				{
 					options.LoginPath = new PathString("/User/Login");
+					// See https://github.com/aspnet/Security/issues/1569#issuecomment-350947198
+					options.Cookie.SameSite = SameSiteMode.None;
 				});
 
 			services.AddLaravelMix();
@@ -134,16 +137,9 @@ namespace VocaDb.Web
 				{
 					builder
 						.AllowAnyHeader()
-						.WithMethods("GET", "POST", "PUT", "OPTIONS");
-
-					var origins = AppConfig.AllowedCorsOrigins;
-					if (!string.IsNullOrEmpty(origins))
-					{
-						if (origins != "*")
-							builder.WithOrigins(origins.Split(','));
-						else
-							builder.AllowAnyOrigin();
-					}
+						.WithMethods("GET", "POST")
+						.WithOrigins(AppConfig.AllowedCorsOrigins.Split(',', StringSplitOptions.RemoveEmptyEntries))
+						.AllowCredentials();
 				});
 			});
 		}
