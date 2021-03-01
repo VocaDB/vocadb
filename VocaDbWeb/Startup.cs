@@ -117,7 +117,8 @@ namespace VocaDb.Web
 				.AddCookie(options =>
 				{
 					options.LoginPath = new PathString("/User/Login");
-					// See https://github.com/aspnet/Security/issues/1569#issuecomment-350947198
+					// This is for external services like UTAU Wiki importer.
+					// See also: https://github.com/VocaDB/vocadb/pull/783
 					options.Cookie.SameSite = SameSiteMode.None;
 				});
 
