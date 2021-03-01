@@ -1,5 +1,6 @@
 #nullable disable
 
+using System;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Security.Claims;
@@ -116,9 +117,32 @@ namespace VocaDb.Web
 				.AddCookie(options =>
 				{
 					options.LoginPath = new PathString("/User/Login");
+					// This is for external services like UTAU Wiki importer.
+					// See also: https://github.com/VocaDB/vocadb/pull/783
+					options.Cookie.SameSite = SameSiteMode.None;
 				});
 
 			services.AddLaravelMix();
+
+			services.AddCors(options =>
+			{
+				options.AddDefaultPolicy(builder =>
+				{
+					builder
+						.AllowAnyOrigin()
+						.AllowAnyHeader()
+						.WithMethods("GET");
+				});
+
+				options.AddPolicy(AuthenticationConstants.AuthenticatedCorsApiPolicy, builder =>
+				{
+					builder
+						.AllowAnyHeader()
+						.AllowAnyMethod()
+						.WithOrigins(AppConfig.AllowedCorsOrigins.Split(',', StringSplitOptions.RemoveEmptyEntries))
+						.AllowCredentials();
+				});
+			});
 		}
 
 		private static string[] LoadBlockedIPs(IComponentContext componentContext) => componentContext.Resolve<IRepository>().HandleQuery(q => q.Query<IPRule>().Select(i => i.Address).ToArray());
@@ -258,6 +282,10 @@ namespace VocaDb.Web
 				options.AddSupportedCultures(supportedCultures);
 				options.AddSupportedUICultures(supportedCultures);
 			});
+
+			// Quote from: https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0
+			// UseCors must be called before UseResponseCaching when using UseResponseCaching.
+			app.UseCors();
 
 			// Quote from: https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-5.0#authentication-concepts
 			// When using endpoint routing, the call to UseAuthentication must go:
