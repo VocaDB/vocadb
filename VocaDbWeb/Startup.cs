@@ -138,7 +138,7 @@ namespace VocaDb.Web
 				{
 					builder
 						.AllowAnyHeader()
-						.WithMethods("GET", "POST")
+						.AllowAnyMethod()
 						.WithOrigins(AppConfig.AllowedCorsOrigins.Split(',', StringSplitOptions.RemoveEmptyEntries))
 						.AllowCredentials();
 				});
