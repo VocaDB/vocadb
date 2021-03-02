@@ -87,7 +87,7 @@
 								<img src="@Url.Action("PictureThumb", new { id = Model.Artist.Id })" alt="Artist picture" class="coverPic" />					
 							</td><td>
 								<p>@string.Format(Res.BaPictureInfo, string.Join(", ", ImageHelper.AllowedExtensions), ImageHelper.MaxImageSizeMB)</p>
-								<input type="file" id="pictureUpload" name="pictureUpload" />					
+								<input type="file" id="coverPicUpload" name="coverPicUpload" />
 							</td>
 						</tr>
 					</table>

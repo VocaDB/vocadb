@@ -253,6 +253,7 @@ namespace VocaDb.Web.Controllers
 			return View(CreateAlbumEditViewModel(id, null));
 		}
 
+#nullable enable
 		//
 		// POST: /Album/Edit/5
 
@@ -261,7 +262,7 @@ namespace VocaDb.Web.Controllers
 		public async Task<ActionResult> Edit(AlbumEditViewModel viewModel)
 		{
 			// Unable to continue if viewmodel is null because we need the ID at least
-			if (viewModel == null || viewModel.EditedAlbum == null)
+			if (viewModel is null || viewModel.EditedAlbum is null)
 			{
 				s_log.Warn("Viewmodel was null");
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");
@@ -279,23 +280,23 @@ namespace VocaDb.Web.Controllers
 			var model = viewModel.EditedAlbum;
 
 			// Note: name is allowed to be whitespace, but not empty.
-			if (model.Names != null && model.Names.All(n => n == null || string.IsNullOrEmpty(n.Value)))
+			if (model.Names is not null && model.Names.All(n => n is null || string.IsNullOrEmpty(n.Value)))
 			{
 				ModelState.AddModelError("Names", AlbumValidationErrors.UnspecifiedNames);
 			}
 
-			if (model.OriginalRelease != null && model.OriginalRelease.ReleaseDate != null && !OptionalDateTime.IsValid(model.OriginalRelease.ReleaseDate.Year, model.OriginalRelease.ReleaseDate.Day, model.OriginalRelease.ReleaseDate.Month))
+			if (model.OriginalRelease is not null && model.OriginalRelease.ReleaseDate is not null && !OptionalDateTime.IsValid(model.OriginalRelease.ReleaseDate.Year, model.OriginalRelease.ReleaseDate.Day, model.OriginalRelease.ReleaseDate.Month))
 				ModelState.AddModelError("ReleaseYear", "Invalid date");
 
 			var coverPicUpload = Request.Form.Files["coverPicUpload"];
 			var pictureData = ParsePicture(coverPicUpload, "CoverPicture", ImagePurpose.Main);
 
-			if (model.Pictures == null)
+			if (model.Pictures is null)
 			{
 				AddFormSubmissionError("List of pictures was null");
 			}
 
-			if (coverPicUpload != null && model.Pictures != null)
+			if (model.Pictures is not null)
 				ParseAdditionalPictures(coverPicUpload, model.Pictures);
 
 			if (!ModelState.IsValid)
@@ -315,6 +316,7 @@ namespace VocaDb.Web.Controllers
 
 			return RedirectToAction("Details", new { id = model.Id });
 		}
+#nullable disable
 
 		public ActionResult Related(int id = InvalidId)
 		{

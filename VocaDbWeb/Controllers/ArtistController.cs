@@ -224,6 +224,7 @@ namespace VocaDb.Web.Controllers
 			return View(model);
 		}
 
+#nullable enable
 		//
 		// POST: /Artist/Edit/5
 		[HttpPost]
@@ -231,7 +232,7 @@ namespace VocaDb.Web.Controllers
 		public async Task<ActionResult> Edit(ArtistEditViewModel viewModel)
 		{
 			// Unable to continue if viewmodel is null because we need the ID at least
-			if (viewModel == null || viewModel.EditedArtist == null)
+			if (viewModel is null || viewModel.EditedArtist is null)
 			{
 				s_log.Warn("Viewmodel was null");
 				return HttpStatusCodeResult(HttpStatusCode.BadRequest, "Viewmodel was null - probably JavaScript is disabled");
@@ -249,15 +250,15 @@ namespace VocaDb.Web.Controllers
 			var model = viewModel.EditedArtist;
 
 			// Note: name is allowed to be whitespace, but not empty.
-			if (model.Names.All(n => n == null || string.IsNullOrEmpty(n.Value)))
+			if (model.Names.All(n => n is null || string.IsNullOrEmpty(n.Value)))
 			{
 				ModelState.AddModelError("Names", Model.Resources.ArtistValidationErrors.UnspecifiedNames);
 			}
 
-			var coverPicUpload = Request.Form.Files["pictureUpload"];
+			var coverPicUpload = Request.Form.Files["coverPicUpload"];
 			var pictureData = ParsePicture(coverPicUpload, "Picture", ImagePurpose.Main);
 
-			if (coverPicUpload != null && model.Pictures != null)
+			if (model.Pictures is not null)
 				ParseAdditionalPictures(coverPicUpload, model.Pictures);
 
 			if (!ModelState.IsValid)
@@ -277,6 +278,7 @@ namespace VocaDb.Web.Controllers
 
 			return RedirectToAction("Details", new { id = model.Id });
 		}
+#nullable disable
 
 		[Authorize]
 		public ActionResult ManageTagUsages(int id)
