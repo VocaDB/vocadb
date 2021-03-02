@@ -145,14 +145,14 @@ namespace VocaDb.Web.Controllers
 			return Content((int)code + ": " + message);
 		}
 
-		protected void ParseAdditionalPictures(IFormFile mainPic, IList<EntryPictureFileContract> pictures)
+#nullable enable
+		protected void ParseAdditionalPictures(IFormFile? mainPic, IList<EntryPictureFileContract> pictures)
 		{
-			ParamIs.NotNull(() => mainPic);
 			ParamIs.NotNull(() => pictures);
 
 			var additionalPics = Enumerable.Range(0, Request.Form.Files.Count)
 				.Select(i => Request.Form.Files[i])
-				.Where(f => f != null && f.FileName != mainPic.FileName)
+				.Where(f => f is not null && f.FileName != mainPic?.FileName)
 				.ToArray();
 
 			var newPics = pictures.Where(p => p.Id == 0).ToArray();
@@ -164,7 +164,7 @@ namespace VocaDb.Web.Controllers
 
 				var contract = ParsePicture(additionalPics[i], "Pictures", ImagePurpose.Additional);
 
-				if (contract != null)
+				if (contract is not null)
 				{
 					newPics[i].OriginalFileName = contract.OriginalFileName;
 					newPics[i].UploadedFile = contract.UploadedFile;
@@ -174,14 +174,14 @@ namespace VocaDb.Web.Controllers
 				}
 			}
 
-			CollectionHelper.RemoveAll(pictures, p => p.Id == 0 && p.UploadedFile == null);
+			CollectionHelper.RemoveAll(pictures, p => p.Id == 0 && p.UploadedFile is null);
 		}
 
-		protected EntryPictureFileContract ParsePicture(IFormFile pictureUpload, string fieldName, ImagePurpose purpose)
+		protected EntryPictureFileContract? ParsePicture(IFormFile? pictureUpload, string fieldName, ImagePurpose purpose)
 		{
-			EntryPictureFileContract pictureData = null;
+			EntryPictureFileContract? pictureData = null;
 
-			if (Request.Form.Files.Count > 0 && pictureUpload != null && pictureUpload.Length > 0)
+			if (Request.Form.Files.Count > 0 && pictureUpload is not null && pictureUpload.Length > 0)
 			{
 				if (pictureUpload.Length > ImageHelper.MaxImageSizeBytes)
 				{
@@ -201,6 +201,7 @@ namespace VocaDb.Web.Controllers
 
 			return pictureData;
 		}
+#nullable disable
 
 		protected ActionResult Picture(PictureContract pictureData, string title)
 		{
