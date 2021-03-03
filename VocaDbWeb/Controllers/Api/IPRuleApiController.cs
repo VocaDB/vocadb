@@ -3,11 +3,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using NHibernate.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.Security;
+using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -15,6 +17,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// Manages <see cref="IPRule"/>s
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Authorize]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	[Route("api/ip-rules")]

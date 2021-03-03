@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -10,6 +11,7 @@ using VocaDb.Model.DataContracts.Discussions;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtensions;
+using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -17,6 +19,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// API queries for discussions.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/discussions")]
 	[ApiController]
 	public class DiscussionApiController : ApiController

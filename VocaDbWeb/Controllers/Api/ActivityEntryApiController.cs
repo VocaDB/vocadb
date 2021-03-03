@@ -1,6 +1,7 @@
 #nullable disable
 
 using System;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Activityfeed;
@@ -10,6 +11,7 @@ using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtensions;
+using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -17,6 +19,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// API queries for activity feed.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/activityEntries")]
 	[ApiController]
 	public class ActivityEntryApiController : ApiController

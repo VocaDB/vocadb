@@ -2,13 +2,16 @@
 
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service.Security;
+using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
 {
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Authorize]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	[Route("api/admin")]

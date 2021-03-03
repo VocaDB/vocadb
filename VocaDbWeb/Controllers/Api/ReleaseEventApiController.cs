@@ -2,6 +2,7 @@
 
 using System;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Albums;
@@ -16,6 +17,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Events;
+using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
@@ -25,6 +27,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// API queries for album release events.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/releaseEvents")]
 	[ApiController]
 	public class ReleaseEventApiController : ApiController

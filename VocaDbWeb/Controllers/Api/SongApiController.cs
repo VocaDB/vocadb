@@ -36,6 +36,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// API queries for songs.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/songs")]
 	[ApiController]
 	public class SongApiController : ApiController

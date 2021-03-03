@@ -8,6 +8,8 @@ namespace VocaDb.Web.Code.Security
 		/// </summary>
 		public const string ExternalCookie = nameof(ExternalCookie);
 
+		public const string WebApiCorsPolicy = nameof(WebApiCorsPolicy);
+
 		/// <summary>
 		/// CORS policy for APIs that require authentication. Origins are restricted.
 		/// </summary>

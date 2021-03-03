@@ -1,9 +1,11 @@
 #nullable disable
 
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
+using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -11,6 +13,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// Gets information about <see cref="EntryType"/>.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/entry-types")]
 	[ApiController]
 	public class EntryTypesApiController : ApiController
