@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.CacheOutput;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -20,6 +21,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Tags;
+using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
@@ -29,6 +31,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// API queries for tags.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/tags")]
 	[ApiController]
 	public class TagApiController : ApiController

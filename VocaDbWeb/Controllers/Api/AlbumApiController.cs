@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.CacheOutput;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -21,6 +22,7 @@ using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
+using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -28,6 +30,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// API queries for albums.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/albums")]
 	[ApiController]
 	public class AlbumApiController : ApiController

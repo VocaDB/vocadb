@@ -126,7 +126,7 @@ namespace VocaDb.Web
 
 			services.AddCors(options =>
 			{
-				options.AddDefaultPolicy(builder =>
+				options.AddPolicy(AuthenticationConstants.WebApiCorsPolicy, builder =>
 				{
 					builder
 						.AllowAnyOrigin()

@@ -2,6 +2,7 @@
 
 using System;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts;
@@ -10,6 +11,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.QueryableExtensions;
+using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -17,6 +19,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// API queries for entry comments.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/comments")]
 	[ApiController]
 	public class CommentApiController : ApiController

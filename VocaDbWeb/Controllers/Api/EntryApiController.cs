@@ -2,6 +2,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Api;
@@ -9,6 +10,7 @@ using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
+using VocaDb.Web.Code.Security;
 using VocaDb.Web.Helpers;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
@@ -17,6 +19,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// Controller for managing base class for common entries.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/entries")]
 	[ApiController]
 	public class EntryApiController : ApiController

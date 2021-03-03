@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Caching;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model;
 using VocaDb.Model.Database.Queries;
@@ -20,6 +21,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
+using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -27,6 +29,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// API queries for artists.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/artists")]
 	[ApiController]
 	public class ArtistApiController : ApiController

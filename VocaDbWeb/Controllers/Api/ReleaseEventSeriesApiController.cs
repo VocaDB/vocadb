@@ -1,6 +1,7 @@
 #nullable disable
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.ReleaseEvents;
@@ -8,6 +9,7 @@ using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.Search;
+using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -15,6 +17,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// API queries for album release event series.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/releaseEventSeries")]
 	[ApiController]
 	public class ReleaseEventSeriesApiController : ApiController

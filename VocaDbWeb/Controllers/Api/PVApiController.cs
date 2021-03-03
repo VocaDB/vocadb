@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.PVs;
@@ -10,6 +11,7 @@ using VocaDb.Model.Domain.PVs;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Service;
 using VocaDb.Model.Service.VideoServices;
+using VocaDb.Web.Code.Security;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -17,6 +19,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// API queries for PVs
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/pvs")]
 	[ApiController]
 	public class PVApiController : ApiController

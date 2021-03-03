@@ -45,6 +45,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// API queries for users.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/users")]
 	[ApiController]
 	public class UserApiController : ApiController

@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Resources;
 using AspNetCore.CacheOutput;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using VocaDb.Web.Code.Security;
 using VocaDb.Web.Resources.Domain.ReleaseEvents;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
@@ -23,6 +25,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// Loads localized string resources.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/resources")]
 	[DefaultCasingConfig]
 	[ApiController]

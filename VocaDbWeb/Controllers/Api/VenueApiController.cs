@@ -1,6 +1,7 @@
 #nullable disable
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
 using VocaDb.Model.DataContracts.Venues;
@@ -11,6 +12,7 @@ using VocaDb.Model.Service.Paging;
 using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Venues;
+using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
@@ -20,6 +22,7 @@ namespace VocaDb.Web.Controllers.Api
 	/// <summary>
 	/// API queries for venues.
 	/// </summary>
+	[EnableCors(AuthenticationConstants.WebApiCorsPolicy)]
 	[Route("api/venues")]
 	[ApiController]
 	public class VenueApiController : ApiController
