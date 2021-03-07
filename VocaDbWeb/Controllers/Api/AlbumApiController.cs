@@ -23,6 +23,7 @@ using VocaDb.Model.Service;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Web.Code.Security;
+using VocaDb.Web.Models.Shared;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -172,7 +173,7 @@ namespace VocaDb.Web.Controllers.Api
 			EntryStatus? status = null,
 			DateTime? releaseDateAfter = null,
 			DateTime? releaseDateBefore = null,
-			[FromQuery(Name = "advancedFilters[]")] AdvancedSearchFilter[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[] advancedFilters = null,
 			int start = 0,
 			int maxResults = DefaultMax,
 			bool getTotalCount = false,
@@ -187,7 +188,8 @@ namespace VocaDb.Web.Controllers.Api
 
 			var queryParams = new AlbumQueryParams(textQuery, discTypes, start, Math.Min(maxResults, AbsoluteMax), getTotalCount, sort ?? AlbumSortRule.Name, preferAccurateMatches)
 			{
-				ArtistParticipation = {
+				ArtistParticipation =
+				{
 					ArtistIds = artistId,
 					Participation = artistParticipationStatus,
 					ChildVoicebanks = childVoicebanks,
@@ -200,8 +202,8 @@ namespace VocaDb.Web.Controllers.Api
 				Deleted = deleted,
 				ReleaseDateAfter = releaseDateAfter,
 				ReleaseDateBefore = releaseDateBefore,
-				AdvancedFilters = advancedFilters,
-				LanguagePreference = lang
+				AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+				LanguagePreference = lang,
 			};
 			queryParams.Common.EntryStatus = status;
 

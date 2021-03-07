@@ -38,6 +38,7 @@ using VocaDb.Model.Utils;
 using VocaDb.Web.Code.Security;
 using VocaDb.Web.Code.WebApi;
 using VocaDb.Web.Helpers;
+using VocaDb.Web.Models.Shared;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -129,7 +130,7 @@ namespace VocaDb.Web.Controllers.Api
 			PurchaseStatuses? purchaseStatuses = null,
 			int releaseEventId = 0,
 			DiscType albumTypes = DiscType.Unknown,
-			[FromQuery(Name = "advancedFilters[]")] AdvancedSearchFilter[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[] advancedFilters = null,
 			int start = 0,
 			int maxResults = DefaultMax,
 			bool getTotalCount = false,
@@ -151,7 +152,7 @@ namespace VocaDb.Web.Controllers.Api
 				Sort = sort ?? AlbumSortRule.Name,
 				TagId = tagId ?? 0,
 				Tag = tag,
-				AdvancedFilters = advancedFilters
+				AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 			};
 
 			var albums = _queries.GetAlbumCollection(queryParams, (afu, shouldShowCollectionStatus) =>
@@ -421,7 +422,7 @@ namespace VocaDb.Web.Controllers.Api
 			int? songListId = null,
 			bool groupByRating = true,
 			PVServices? pvServices = null,
-			[FromQuery(Name = "advancedFilters[]")] AdvancedSearchFilter[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[] advancedFilters = null,
 			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			RatedSongForUserSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
@@ -444,7 +445,7 @@ namespace VocaDb.Web.Controllers.Api
 				SonglistId = songListId ?? 0,
 				TagIds = tagId,
 				TagName = tagName,
-				AdvancedFilters = advancedFilters
+				AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 			};
 
 			var songs = _queries.GetRatedSongs(queryParams, ratedSong => new RatedSongForUserForApiContract(ratedSong, lang, fields));
