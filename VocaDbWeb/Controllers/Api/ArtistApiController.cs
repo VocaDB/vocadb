@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Caching;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -22,6 +23,7 @@ using VocaDb.Model.Service.Queries;
 using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Web.Code.Security;
+using VocaDb.Web.Models.Shared;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -153,7 +155,7 @@ namespace VocaDb.Web.Controllers.Api
 			bool childTags = false,
 			int? followedByUserId = null,
 			EntryStatus? status = null,
-			[FromQuery(Name = "advancedFilters[]")] AdvancedSearchFilter[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[] advancedFilters = null,
 			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			ArtistSortRule sort = ArtistSortRule.Name,
 			bool preferAccurateMatches = false,
@@ -171,7 +173,7 @@ namespace VocaDb.Web.Controllers.Api
 				ChildTags = childTags,
 				UserFollowerId = followedByUserId ?? 0,
 				AllowBaseVoicebanks = allowBaseVoicebanks,
-				AdvancedFilters = advancedFilters
+				AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 			};
 			param.Common.EntryStatus = status;
 

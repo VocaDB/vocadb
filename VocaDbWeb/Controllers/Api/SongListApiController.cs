@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -24,6 +25,7 @@ using VocaDb.Model.Service.Search;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.SongImport;
 using VocaDb.Web.Code.Security;
+using VocaDb.Web.Models.Shared;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -184,7 +186,7 @@ namespace VocaDb.Web.Controllers.Api
 			[FromQuery(Name = "tagId[]")] int[] tagId = null,
 			[FromQuery(Name = "artistId[]")] int[] artistId = null,
 			bool childVoicebanks = false,
-			[FromQuery(Name = "advancedFilters[]")] AdvancedSearchFilter[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[] advancedFilters = null,
 			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
@@ -205,8 +207,8 @@ namespace VocaDb.Web.Controllers.Api
 					ChildVoicebanks = childVoicebanks,
 					TagIds = tagId,
 					SortRule = sort,
-					AdvancedFilters = advancedFilters,
-					SongTypes = types
+					AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+					SongTypes = types,
 				},
 				songInList => new SongInListForApiContract(songInList, lang, fields));
 		}

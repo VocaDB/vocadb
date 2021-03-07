@@ -29,6 +29,7 @@ using VocaDb.Model.Service.Search.AlbumSearch;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.VideoServices;
 using VocaDb.Web.Code.Security;
+using VocaDb.Web.Models.Shared;
 using ApiController = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace VocaDb.Web.Controllers.Api
@@ -272,7 +273,7 @@ namespace VocaDb.Web.Controllers.Api
 			int? releaseEventId = null,
 			int? parentSongId = null,
 			EntryStatus? status = null,
-			[FromQuery(Name = "advancedFilters[]")] AdvancedSearchFilter[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[] advancedFilters = null,
 			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongSortRule sort = SongSortRule.Name,
 			bool preferAccurateMatches = false,
@@ -287,7 +288,8 @@ namespace VocaDb.Web.Controllers.Api
 
 			var param = new SongQueryParams(textQuery, types, start, Math.Min(maxResults, AbsoluteMax), getTotalCount, sort, false, preferAccurateMatches, null)
 			{
-				ArtistParticipation = {
+				ArtistParticipation =
+				{
 					ArtistIds = artistId,
 					Participation = artistParticipationStatus,
 					ChildVoicebanks = childVoicebanks,
@@ -306,7 +308,7 @@ namespace VocaDb.Web.Controllers.Api
 				UserCollectionId = userCollectionId ?? 0,
 				ReleaseEventId = releaseEventId ?? 0,
 				ParentSongId = parentSongId ?? 0,
-				AdvancedFilters = advancedFilters,
+				AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 				LanguagePreference = lang,
 				MinMilliBpm = minMilliBpm,
 				MaxMilliBpm = maxMilliBpm,
