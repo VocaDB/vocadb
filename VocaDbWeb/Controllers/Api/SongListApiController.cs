@@ -155,6 +155,7 @@ namespace VocaDb.Web.Controllers.Api
 			SongListFeaturedCategory? featuredCategory = null,
 			int maxResults = 10) => _queries.GetFeaturedListNames(query, nameMatchMode, featuredCategory, maxResults);
 
+#nullable enable
 		/// <summary>
 		/// Gets a list of songs in a song list.
 		/// </summary>
@@ -181,12 +182,12 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("{listId:int}/songs")]
 		public PartialFindResult<SongInListForApiContract> GetSongs(int listId,
 			string query = "",
-			string songTypes = null,
+			string? songTypes = null,
 			PVServices? pvServices = null,
-			[FromQuery(Name = "tagId[]")] int[] tagId = null,
-			[FromQuery(Name = "artistId[]")] int[] artistId = null,
+			[FromQuery(Name = "tagId[]")] int[]? tagId = null,
+			[FromQuery(Name = "artistId[]")] int[]? artistId = null,
 			bool childVoicebanks = false,
-			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[]? advancedFilters = null,
 			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
@@ -207,11 +208,12 @@ namespace VocaDb.Web.Controllers.Api
 					ChildVoicebanks = childVoicebanks,
 					TagIds = tagId,
 					SortRule = sort,
-					AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+					AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 					SongTypes = types,
 				},
 				songInList => new SongInListForApiContract(songInList, lang, fields));
 		}
+#nullable disable
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[HttpGet("import")]

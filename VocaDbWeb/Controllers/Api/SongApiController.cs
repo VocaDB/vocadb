@@ -202,6 +202,7 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("{id:int}/related")]
 		public RelatedSongsContract GetRelated(int id, SongOptionalFields fields = SongOptionalFields.None, ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetRelatedSongs(id, fields, lang);
 
+#nullable enable
 		/// <summary>
 		/// Find songs.
 		/// </summary>
@@ -254,14 +255,14 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("")]
 		public PartialFindResult<SongForApiContract> GetList(
 			string query = "",
-			string songTypes = null,
+			string? songTypes = null,
 			DateTime? afterDate = null,
 			DateTime? beforeDate = null,
-			[FromQuery(Name = "tagName[]")] string[] tagName = null,
-			[FromQuery(Name = "tagId[]")] int[] tagId = null,
+			[FromQuery(Name = "tagName[]")] string[]? tagName = null,
+			[FromQuery(Name = "tagId[]")] int[]? tagId = null,
 			bool childTags = false,
 			bool unifyTypesAndTags = false,
-			[FromQuery(Name = "artistId[]")] int[] artistId = null,
+			[FromQuery(Name = "artistId[]")] int[]? artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
 			bool includeMembers = false,
@@ -273,7 +274,7 @@ namespace VocaDb.Web.Controllers.Api
 			int? releaseEventId = null,
 			int? parentSongId = null,
 			EntryStatus? status = null,
-			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[]? advancedFilters = null,
 			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongSortRule sort = SongSortRule.Name,
 			bool preferAccurateMatches = false,
@@ -308,7 +309,7 @@ namespace VocaDb.Web.Controllers.Api
 				UserCollectionId = userCollectionId ?? 0,
 				ReleaseEventId = releaseEventId ?? 0,
 				ParentSongId = parentSongId ?? 0,
-				AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+				AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 				LanguagePreference = lang,
 				MinMilliBpm = minMilliBpm,
 				MaxMilliBpm = maxMilliBpm,
@@ -319,6 +320,7 @@ namespace VocaDb.Web.Controllers.Api
 
 			return artists;
 		}
+#nullable disable
 
 		/// <summary>
 		/// Gets lyrics by ID.

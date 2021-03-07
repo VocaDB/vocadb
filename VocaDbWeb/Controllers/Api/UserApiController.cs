@@ -92,6 +92,7 @@ namespace VocaDb.Web.Controllers.Api
 		[Authorize]
 		public void DeleteProfileComment(int commentId) => _service.DeleteComment(commentId);
 
+#nullable enable
 		/// <summary>
 		/// Gets a list of albums in a user's collection.
 		/// </summary>
@@ -125,12 +126,12 @@ namespace VocaDb.Web.Controllers.Api
 			int id,
 			string query = "",
 			int? tagId = null,
-			string tag = null,
+			string? tag = null,
 			int? artistId = null,
 			PurchaseStatuses? purchaseStatuses = null,
 			int releaseEventId = 0,
 			DiscType albumTypes = DiscType.Unknown,
-			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[]? advancedFilters = null,
 			int start = 0,
 			int maxResults = DefaultMax,
 			bool getTotalCount = false,
@@ -152,7 +153,7 @@ namespace VocaDb.Web.Controllers.Api
 				Sort = sort ?? AlbumSortRule.Name,
 				TagId = tagId ?? 0,
 				Tag = tag,
-				AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+				AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 			};
 
 			var albums = _queries.GetAlbumCollection(queryParams, (afu, shouldShowCollectionStatus) =>
@@ -160,6 +161,7 @@ namespace VocaDb.Web.Controllers.Api
 
 			return albums;
 		}
+#nullable disable
 
 		/// <summary>
 		/// Gets information about the currently logged in user.
@@ -384,6 +386,7 @@ namespace VocaDb.Web.Controllers.Api
 			return result;
 		}
 
+#nullable enable
 		/// <summary>
 		/// Gets a list of songs rated by a user.
 		/// </summary>
@@ -413,16 +416,16 @@ namespace VocaDb.Web.Controllers.Api
 		public PartialFindResult<RatedSongForUserForApiContract> GetRatedSongs(
 			int id,
 			string query = "",
-			string tagName = null,
-			[FromQuery(Name = "tagId[]")] int[] tagId = null,
-			[FromQuery(Name = "artistId[]")] int[] artistId = null,
+			string? tagName = null,
+			[FromQuery(Name = "tagId[]")] int[]? tagId = null,
+			[FromQuery(Name = "artistId[]")] int[]? artistId = null,
 			bool childVoicebanks = false,
 			LogicalGrouping artistGrouping = LogicalGrouping.And,
 			SongVoteRating? rating = null,
 			int? songListId = null,
 			bool groupByRating = true,
 			PVServices? pvServices = null,
-			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[]? advancedFilters = null,
 			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			RatedSongForUserSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
@@ -445,12 +448,13 @@ namespace VocaDb.Web.Controllers.Api
 				SonglistId = songListId ?? 0,
 				TagIds = tagId,
 				TagName = tagName,
-				AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+				AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 			};
 
 			var songs = _queries.GetRatedSongs(queryParams, ratedSong => new RatedSongForUserForApiContract(ratedSong, lang, fields));
 			return songs;
 		}
+#nullable disable
 
 		/// <summary>
 		/// Gets a list of song lists for a user.
