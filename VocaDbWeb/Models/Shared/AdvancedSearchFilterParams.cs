@@ -3,6 +3,12 @@ using VocaDb.Model.Service.Search;
 
 namespace VocaDb.Web.Models.Shared
 {
+	/// <summary>
+	/// Advanced search filter.
+	/// </summary>
+	/// <remarks>
+	/// <seealso href="https://stackoverflow.com/questions/51423649/how-do-i-reproduce-the-fromuri-behavior-for-complex-parameters-in-net-core-2/51426635#51426635"/>
+	/// </remarks>
 	public sealed record AdvancedSearchFilterParams
 	{
 		[FromQuery(Name = "[filterType]")]
