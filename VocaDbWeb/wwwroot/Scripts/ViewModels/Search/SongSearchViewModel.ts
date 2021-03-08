@@ -111,8 +111,8 @@ import DateTimeHelper from '../../Helpers/DateTimeHelper';
 			this.viewMode.subscribe(this.updateResultsWithTotalCount);
 			this.minMilliBpm.subscribe(this.updateResultsWithTotalCount);
 			this.maxMilliBpm.subscribe(this.updateResultsWithTotalCount);
-			this.minLength.subscribe(this.updateResultsWithoutTotalCount);
-			this.maxLength.subscribe(this.updateResultsWithoutTotalCount);
+			this.minLength.subscribe(this.updateResultsWithTotalCount);
+			this.maxLength.subscribe(this.updateResultsWithTotalCount);
 
 			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
 
