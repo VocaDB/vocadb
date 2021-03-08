@@ -173,7 +173,7 @@ namespace VocaDb.Web.Controllers.Api
 				ChildTags = childTags,
 				UserFollowerId = followedByUserId ?? 0,
 				AllowBaseVoicebanks = allowBaseVoicebanks,
-				AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+				AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 			};
 			param.Common.EntryStatus = status;
 

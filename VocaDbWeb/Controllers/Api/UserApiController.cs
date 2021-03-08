@@ -152,7 +152,7 @@ namespace VocaDb.Web.Controllers.Api
 				Sort = sort ?? AlbumSortRule.Name,
 				TagId = tagId ?? 0,
 				Tag = tag,
-				AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+				AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 			};
 
 			var albums = _queries.GetAlbumCollection(queryParams, (afu, shouldShowCollectionStatus) =>
@@ -445,7 +445,7 @@ namespace VocaDb.Web.Controllers.Api
 				SonglistId = songListId ?? 0,
 				TagIds = tagId,
 				TagName = tagName,
-				AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+				AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 			};
 
 			var songs = _queries.GetRatedSongs(queryParams, ratedSong => new RatedSongForUserForApiContract(ratedSong, lang, fields));

@@ -202,7 +202,7 @@ namespace VocaDb.Web.Controllers.Api
 				Deleted = deleted,
 				ReleaseDateAfter = releaseDateAfter,
 				ReleaseDateBefore = releaseDateBefore,
-				AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+				AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 				LanguagePreference = lang,
 			};
 			queryParams.Common.EntryStatus = status;

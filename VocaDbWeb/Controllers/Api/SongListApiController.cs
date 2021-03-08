@@ -207,7 +207,7 @@ namespace VocaDb.Web.Controllers.Api
 					ChildVoicebanks = childVoicebanks,
 					TagIds = tagId,
 					SortRule = sort,
-					AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+					AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 					SongTypes = types,
 				},
 				songInList => new SongInListForApiContract(songInList, lang, fields));

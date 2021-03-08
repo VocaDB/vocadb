@@ -310,7 +310,7 @@ namespace VocaDb.Web.Controllers.Api
 				UserCollectionId = userCollectionId ?? 0,
 				ReleaseEventId = releaseEventId ?? 0,
 				ParentSongId = parentSongId ?? 0,
-				AdvancedFilters = advancedFilters.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
+				AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 				LanguagePreference = lang,
 				MinMilliBpm = minMilliBpm,
 				MaxMilliBpm = maxMilliBpm,
