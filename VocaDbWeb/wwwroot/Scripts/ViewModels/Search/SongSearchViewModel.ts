@@ -22,6 +22,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 import Decimal from 'decimal.js-light';
 import DateTimeHelper from '../../Helpers/DateTimeHelper';
+import KnockoutHelper from '../../Helpers/KnockoutHelper';
 
 	export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
 
@@ -188,41 +189,13 @@ import DateTimeHelper from '../../Helpers/DateTimeHelper';
 
 			}
 
-			this.minBpm = ko.computed({
-				read: () => {
-					return this.minMilliBpm() ? new Decimal(this.minMilliBpm()).div(1000).toString() : null;
-				},
-				write: (value: string) => {
-					this.minMilliBpm(value ? new Decimal(value).mul(1000).toInteger().toNumber() : null);
-				}
-			});
+			this.minBpm = KnockoutHelper.bpm(this.minMilliBpm);
 
-			this.maxBpm = ko.computed({
-				read: () => {
-					return this.maxMilliBpm() ? new Decimal(this.maxMilliBpm()).div(1000).toString() : null;
-				},
-				write: (value: string) => {
-					this.maxMilliBpm(value ? new Decimal(value).mul(1000).toInteger().toNumber() : null);
-				}
-			});
+			this.maxBpm = KnockoutHelper.bpm(this.maxMilliBpm);
 
-			this.minLengthFormatted = ko.computed({
-				read: () => {
-					return DateTimeHelper.formatFromSeconds(this.minLength());
-				},
-				write: (value: string) => {
-					this.minLength(DateTimeHelper.parseToSeconds(value));
-				}
-			});
+			this.minLengthFormatted = KnockoutHelper.lengthFormatted(this.minLength);
 
-			this.maxLengthFormatted = ko.computed({
-				read: () => {
-					return DateTimeHelper.formatFromSeconds(this.maxLength());
-				},
-				write: (value: string) => {
-					this.maxLength(DateTimeHelper.parseToSeconds(value));
-				}
-			});
+			this.maxLengthFormatted = KnockoutHelper.lengthFormatted(this.maxLength);
 
 		}
 
