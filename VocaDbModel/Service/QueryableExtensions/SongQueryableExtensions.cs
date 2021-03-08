@@ -403,6 +403,20 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 			return query;
 		}
+
+		public static IQueryable<Song> WhereLengthIsBetween(this IQueryable<Song> query, int? minLength, int? maxLength)
+		{
+			if (minLength.HasValue && maxLength.HasValue)
+				return query.Where(s => s.LengthSeconds >= minLength && s.LengthSeconds <= maxLength);
+
+			if (minLength.HasValue)
+				return query.Where(s => s.LengthSeconds >= minLength);
+
+			if (maxLength.HasValue)
+				return query.Where(s => s.LengthSeconds <= maxLength);
+
+			return query;
+		}
 	}
 
 	public enum SongVocalistSelection

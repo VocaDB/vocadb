@@ -281,7 +281,9 @@ namespace VocaDb.Web.Controllers.Api
 			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default,
 			int? minMilliBpm = null,
-			int? maxMilliBpm = null)
+			int? maxMilliBpm = null,
+			int? minLength = null,
+			int? maxLength = null)
 		{
 			var textQuery = SearchTextQuery.Create(query, nameMatchMode);
 			var types = EnumVal<SongType>.ParseMultiple(songTypes);
@@ -312,6 +314,8 @@ namespace VocaDb.Web.Controllers.Api
 				LanguagePreference = lang,
 				MinMilliBpm = minMilliBpm,
 				MaxMilliBpm = maxMilliBpm,
+				MinLength = minLength,
+				MaxLength = maxLength,
 			};
 			param.Common.EntryStatus = status;
 

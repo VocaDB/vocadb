@@ -134,6 +134,8 @@ import UrlMapper from '../Shared/UrlMapper';
 			advancedFilters: AdvancedSearchFilter[],
 			minMilliBpm: number,
 			maxMilliBpm: number,
+			minLength: number,
+			maxLength: number,
 			callback
 		) => {
 
@@ -162,6 +164,8 @@ import UrlMapper from '../Shared/UrlMapper';
 				advancedFilters: advancedFilters,
 				minMilliBpm: minMilliBpm,
 				maxMilliBpm: maxMilliBpm,
+				minLength: minLength,
+				maxLength: maxLength,
 			};
 
 			$.getJSON(url, data, callback);
