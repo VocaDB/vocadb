@@ -211,14 +211,7 @@ import DateTimeHelper from '../../Helpers/DateTimeHelper';
 					return DateTimeHelper.formatFromSeconds(this.minLength());
 				},
 				write: (value: string) => {
-					var parts = value.split(":");
-					if (parts.length == 2 && parseInt(parts[0], 10) != NaN && parseInt(parts[1], 10) != NaN) {
-						this.minLength(parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10));
-					} else if (parts.length == 1 && !isNaN(parseInt(parts[0], 10))) {
-						this.minLength(parseInt(parts[0], 10));
-					} else {
-						this.minLength(0);
-					}
+					this.minLength(DateTimeHelper.parseToSeconds(value));
 				}
 			});
 
@@ -227,14 +220,7 @@ import DateTimeHelper from '../../Helpers/DateTimeHelper';
 					return DateTimeHelper.formatFromSeconds(this.maxLength());
 				},
 				write: (value: string) => {
-					var parts = value.split(":");
-					if (parts.length == 2 && parseInt(parts[0], 10) != NaN && parseInt(parts[1], 10) != NaN) {
-						this.maxLength(parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10));
-					} else if (parts.length == 1 && !isNaN(parseInt(parts[0], 10))) {
-						this.maxLength(parseInt(parts[0], 10));
-					} else {
-						this.maxLength(0);
-					}
+					this.maxLength(DateTimeHelper.parseToSeconds(value));
 				}
 			});
 

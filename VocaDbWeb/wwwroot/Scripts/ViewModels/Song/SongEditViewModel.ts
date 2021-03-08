@@ -275,21 +275,13 @@ import Decimal from 'decimal.js-light';
 				height: 250
 			};
 
-            
-            this.lengthFormatted = ko.computed({
+			this.lengthFormatted = ko.computed({
 				read: () => {
 					return DateTimeHelper.formatFromSeconds(this.length());
-                },
-                write: (value: string) => {
-                    var parts = value.split(":");
-                    if (parts.length == 2 && parseInt(parts[0], 10) != NaN && parseInt(parts[1], 10) != NaN) {
-                        this.length(parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10));
-                    } else if (parts.length == 1 && !isNaN(parseInt(parts[0], 10))) {
-                        this.length(parseInt(parts[0], 10));
-                    } else {
-                        this.length(0);
-                    }
-                }
+				},
+				write: (value: string) => {
+					this.length(DateTimeHelper.parseToSeconds(value));
+				}
 			});
 
 			this.showInstrumentalNote = ko.computed(() => {
