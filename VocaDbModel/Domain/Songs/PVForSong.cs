@@ -119,6 +119,7 @@ namespace VocaDb.Model.Domain.Songs
 			Author = result.Author;
 			ExtendedMetadata = result.ExtendedMetadata;
 			ThumbUrl = result.ThumbUrl;
+			Length = result.LengthSeconds ?? 0;
 		}
 
 		public override string ToString()

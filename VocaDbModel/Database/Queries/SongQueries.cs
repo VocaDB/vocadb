@@ -1010,6 +1010,10 @@ namespace VocaDb.Model.Database.Queries
 					await pv.RefreshMetadata(_pvParser, PermissionContext);
 					await ctx.UpdateAsync(pv);
 				}
+
+				song.UpdateLengthFromPV();
+				await ctx.UpdateAsync(song);
+
 				ctx.AuditLogger.SysLog("Updated PV metadata for " + song);
 			});
 		}
