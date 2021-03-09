@@ -39,27 +39,27 @@ namespace VocaDb.Model.DataContracts.Users
 
 
 		[DataMember]
-		public AlbumForApiContract Album { get; set; }
+		public AlbumForApiContract Album { get; init; }
 
 		/// <summary>
 		/// Media type. Can be null if hidden by privacy settings, but otherwise not.
 		/// </summary>
 		[DataMember]
-		public MediaType? MediaType { get; set; }
+		public MediaType? MediaType { get; init; }
 
 		/// <summary>
 		/// Purchase status. Can be null if hidden privacy setting, but otherwise not.
 		/// </summary>
 		[DataMember]
-		public PurchaseStatus? PurchaseStatus { get; set; }
+		public PurchaseStatus? PurchaseStatus { get; init; }
 
 		/// <summary>
 		/// Given rating, generally from 0 to 5.
 		/// </summary>
 		[DataMember]
-		public int Rating { get; set; }
+		public int Rating { get; init; }
 
 		[DataMember]
-		public UserForApiContract User { get; set; }
+		public UserForApiContract User { get; init; }
 	}
 }

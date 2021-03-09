@@ -18,6 +18,6 @@ namespace VocaDb.Model.DataContracts.Songs
 		}
 
 		[DataMember]
-		public AlbumContract Album { get; set; }
+		public AlbumContract Album { get; init; }
 	}
 }

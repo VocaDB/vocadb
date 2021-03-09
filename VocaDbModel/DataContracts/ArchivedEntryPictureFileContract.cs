@@ -23,18 +23,18 @@ namespace VocaDb.Model.DataContracts
 		}
 
 		[DataMember]
-		public ObjectRefContract Author { get; set; }
+		public ObjectRefContract Author { get; init; }
 
 		[DataMember]
-		public DateTime Created { get; set; }
+		public DateTime Created { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
-		public string Mime { get; set; }
+		public string Mime { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 	}
 }

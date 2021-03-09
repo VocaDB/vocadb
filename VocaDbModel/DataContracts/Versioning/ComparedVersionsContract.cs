@@ -33,12 +33,12 @@ namespace VocaDb.Model.DataContracts.Versioning
 		public ComparedVersionsContract(ComparedVersionsContract<T> another)
 			: this(another.FirstId, another.FirstData, another.SecondId, another.SecondData) { }
 
-		public int FirstId { get; set; }
+		public int FirstId { get; init; }
 
-		public T FirstData { get; set; }
+		public T FirstData { get; init; }
 
-		public int SecondId { get; set; }
+		public int SecondId { get; init; }
 
-		public T SecondData { get; set; }
+		public T SecondData { get; init; }
 	}
 }

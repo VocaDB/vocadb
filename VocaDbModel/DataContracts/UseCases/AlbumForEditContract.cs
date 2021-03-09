@@ -41,28 +41,28 @@ namespace VocaDb.Model.DataContracts.UseCases
 		public ArtistForAlbumContract[] ArtistLinks { get; set; }
 
 		[DataMember]
-		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+		public ContentLanguageSelection DefaultNameLanguage { get; init; }
 
 		[DataMember]
-		public EnglishTranslatedStringContract Description { get; set; }
+		public EnglishTranslatedStringContract Description { get; init; }
 
 		[DataMember]
 		public AlbumDiscPropertiesContract[] Discs { get; set; }
 
 		[DataMember]
-		public string[] Identifiers { get; set; }
+		public string[] Identifiers { get; init; }
 
 		[DataMember]
-		public AlbumReleaseContract OriginalRelease { get; set; }
+		public AlbumReleaseContract OriginalRelease { get; init; }
 
 		[DataMember]
-		public LocalizedStringWithIdContract[] Names { get; set; }
+		public LocalizedStringWithIdContract[] Names { get; init; }
 
 		[DataMember]
-		public IList<EntryPictureFileContract> Pictures { get; set; }
+		public IList<EntryPictureFileContract> Pictures { get; init; }
 
 		[DataMember(Name = "pvs")]
-		public PVContract[] PVs { get; set; }
+		public PVContract[] PVs { get; init; }
 
 		[DataMember]
 		public SongInAlbumEditContract[] Songs { get; set; }
@@ -71,6 +71,6 @@ namespace VocaDb.Model.DataContracts.UseCases
 		public string UpdateNotes { get; set; }
 
 		[DataMember]
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 	}
 }

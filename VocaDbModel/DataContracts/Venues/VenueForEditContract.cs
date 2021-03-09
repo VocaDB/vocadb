@@ -8,9 +8,9 @@ namespace VocaDb.Model.DataContracts.Venues
 {
 	public class VenueForEditContract : VenueContract
 	{
-		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+		public ContentLanguageSelection DefaultNameLanguage { get; init; }
 
-		public LocalizedStringWithIdContract[] Names { get; set; }
+		public LocalizedStringWithIdContract[] Names { get; init; }
 
 		public VenueForEditContract() { }
 

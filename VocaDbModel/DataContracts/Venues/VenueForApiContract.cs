@@ -20,51 +20,51 @@ namespace VocaDb.Model.DataContracts.Venues
 		/// Comma-separated list of all other names that aren't the display name.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
 		/// <summary>
 		/// Venue address, without country, for example "2-1, Nakase, Mihama-ku, Chiba-city, 261-8550".
 		/// </summary>
 		[DataMember]
-		public string Address { get; set; }
+		public string Address { get; init; }
 
 		/// <summary>
 		/// The two-letter code defined in ISO 3166 for the country/region.
 		/// </summary>
 		[DataMember]
-		public string AddressCountryCode { get; set; }
+		public string AddressCountryCode { get; init; }
 
 		[DataMember]
-		public OptionalGeoPointContract Coordinates { get; set; }
+		public OptionalGeoPointContract Coordinates { get; init; }
 
-		public bool Deleted { get; set; }
-
-		[DataMember(EmitDefaultValue = false)]
-		public string Description { get; set; }
+		public bool Deleted { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public ReleaseEventContract[] Events { get; set; }
+		public string Description { get; init; }
+
+		[DataMember(EmitDefaultValue = false)]
+		public ReleaseEventContract[] Events { get; init; }
 
 		[DataMember]
 		public int Id { get; set; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		/// <summary>
 		/// List of all names for this entry. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[] Names { get; init; }
 
 		[DataMember]
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public int Version { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public WebLinkForApiContract[] WebLinks { get; set; }
+		public WebLinkForApiContract[] WebLinks { get; init; }
 
 		public VenueForApiContract() { }
 

@@ -87,76 +87,76 @@ namespace VocaDb.Model.DataContracts.Tags
 		/// Comma-separated list of all other names that aren't the display name.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
 		[Obsolete("Tag aliases are now just names")]
-		public TagBaseContract AliasedTo { get; set; }
+		public TagBaseContract AliasedTo { get; init; }
 
 		[DataMember]
-		public string CategoryName { get; set; }
+		public string CategoryName { get; init; }
 
 		/// <summary>
 		/// Date this entry was created.
 		/// </summary>
 		[DataMember]
-		public DateTime CreateDate { get; set; }
+		public DateTime CreateDate { get; init; }
 
 		/// <summary>
 		/// Language selection of the original name.
 		/// </summary>
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+		public ContentLanguageSelection DefaultNameLanguage { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string Description { get; set; }
+		public string Description { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public EntryThumbForApiContract MainPicture { get; set; }
+		public EntryThumbForApiContract MainPicture { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		/// <summary>
 		/// List of all names for this entry. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public LocalizedStringWithIdContract[] Names { get; set; }
+		public LocalizedStringWithIdContract[] Names { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public TagBaseContract Parent { get; set; }
+		public TagBaseContract Parent { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public TagBaseContract[] RelatedTags { get; set; }
+		public TagBaseContract[] RelatedTags { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
 		[DataMember]
-		public int Targets { get; set; }
+		public int Targets { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public EnglishTranslatedStringContract TranslatedDescription { get; set; }
+		public EnglishTranslatedStringContract TranslatedDescription { get; init; }
 
 		[DataMember]
-		public string UrlSlug { get; set; }
+		public string UrlSlug { get; init; }
 
 		[DataMember]
-		public int UsageCount { get; set; }
+		public int UsageCount { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public int Version { get; init; }
 
 		/// <summary>
 		/// List of external links. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public WebLinkForApiContract[] WebLinks { get; set; }
+		public WebLinkForApiContract[] WebLinks { get; init; }
 	}
 
 	[Flags]

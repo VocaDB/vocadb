@@ -21,6 +21,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			Names = releaseEvent.Names.Select(n => new LocalizedStringWithIdContract(n)).ToArray();
 		}
 
-		public LocalizedStringWithIdContract[] Names { get; set; }
+		public LocalizedStringWithIdContract[] Names { get; init; }
 	}
 }

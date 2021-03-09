@@ -31,21 +31,21 @@ namespace VocaDb.Model.DataContracts.Albums
 		}
 
 		[DataMember]
-		public ArtistContract Artist { get; set; }
+		public ArtistContract Artist { get; init; }
 
 		[DataMember]
-		public ArtistCategories Categories { get; set; }
+		public ArtistCategories Categories { get; init; }
 
 		[DataMember]
-		public ArtistRoles EffectiveRoles { get; set; }
+		public ArtistRoles EffectiveRoles { get; init; }
 
 		[DataMember]
-		public bool IsSupport { get; set; }
+		public bool IsSupport { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember]
-		public ArtistRoles Roles { get; set; }
+		public ArtistRoles Roles { get; init; }
 	}
 }

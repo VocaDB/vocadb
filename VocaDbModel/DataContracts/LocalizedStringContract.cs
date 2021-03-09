@@ -28,7 +28,7 @@ namespace VocaDb.Model.DataContracts
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public ContentLanguageSelection Language { get; set; }
+		public ContentLanguageSelection Language { get; init; }
 
 		[DataMember]
 		public string Value { get; set; }

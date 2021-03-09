@@ -11,16 +11,16 @@ namespace VocaDb.Model.DataContracts.Songs
 	public class SongWithPVPlayerAndVoteContract : SongContract
 	{
 		[DataMember]
-		public string PlayerHtml { get; set; }
+		public string PlayerHtml { get; init; }
 
 		[DataMember]
-		public string PVId { get; set; }
+		public string PVId { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public PVService PVService { get; set; }
+		public PVService PVService { get; init; }
 
 		[DataMember]
-		public SongWithPVAndVoteContract Song { get; set; }
+		public SongWithPVAndVoteContract Song { get; init; }
 	}
 }

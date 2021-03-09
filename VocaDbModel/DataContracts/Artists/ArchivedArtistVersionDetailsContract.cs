@@ -32,22 +32,22 @@ namespace VocaDb.Model.DataContracts.Artists
 			ComparedVersionId = Versions.SecondId;
 		}
 
-		public ArchivedArtistVersionContract ArchivedVersion { get; set; }
+		public ArchivedArtistVersionContract ArchivedVersion { get; init; }
 
-		public ArtistContract Artist { get; set; }
+		public ArtistContract Artist { get; init; }
 
 		public bool CanBeReverted => ArchivedVersion.Version < Artist.Version - 1;
 
-		public ArchivedObjectVersionWithFieldsContract<ArtistEditableFields, ArtistArchiveReason>[] ComparableVersions { get; set; }
+		public ArchivedObjectVersionWithFieldsContract<ArtistEditableFields, ArtistArchiveReason>[] ComparableVersions { get; init; }
 
-		public ArchivedArtistVersionContract ComparedVersion { get; set; }
+		public ArchivedArtistVersionContract ComparedVersion { get; init; }
 
-		public int ComparedVersionId { get; set; }
+		public int ComparedVersionId { get; init; }
 
 		public bool Hidden => ArchivedVersion.Hidden || (ComparedVersion != null && ComparedVersion.Hidden);
 
-		public string Name { get; set; }
+		public string Name { get; init; }
 
-		public ComparedArtistsContract Versions { get; set; }
+		public ComparedArtistsContract Versions { get; init; }
 	}
 }

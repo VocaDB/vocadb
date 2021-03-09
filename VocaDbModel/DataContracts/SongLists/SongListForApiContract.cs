@@ -54,33 +54,33 @@ namespace VocaDb.Model.DataContracts.SongLists
 		}
 
 		[DataMember]
-		public UserForApiContract Author { get; set; }
+		public UserForApiContract Author { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public bool Deleted { get; set; }
+		public bool Deleted { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string Description { get; set; }
+		public string Description { get; init; }
 
 		[DataMember]
-		public DateTime? EventDate { get; set; }
+		public DateTime? EventDate { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public ReleaseEventForApiContract[] Events { get; set; }
+		public ReleaseEventForApiContract[] Events { get; init; }
 
 		public bool FeaturedList => FeaturedCategory != SongListFeaturedCategory.Nothing;
 
 		[DataMember(EmitDefaultValue = false)]
-		public CommentForApiContract[] LatestComments { get; set; }
+		public CommentForApiContract[] LatestComments { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public EntryThumbForApiContract MainPicture { get; set; }
+		public EntryThumbForApiContract MainPicture { get; init; }
 
 		[DataMember]
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public TagUsageForApiContract[] Tags { get; set; }
+		public TagUsageForApiContract[] Tags { get; init; }
 	}
 
 	[Flags]

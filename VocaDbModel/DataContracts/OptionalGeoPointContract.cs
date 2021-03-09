@@ -9,16 +9,16 @@ namespace VocaDb.Model.DataContracts
 	public class OptionalGeoPointContract : IOptionalGeoPoint
 	{
 		[DataMember]
-		public string Formatted { get; set; }
+		public string Formatted { get; init; }
 
 		[DataMember]
-		public bool HasValue { get; set; }
+		public bool HasValue { get; init; }
 
 		[DataMember]
-		public double? Latitude { get; set; }
+		public double? Latitude { get; init; }
 
 		[DataMember]
-		public double? Longitude { get; set; }
+		public double? Longitude { get; init; }
 
 		public OptionalGeoPointContract() { }
 

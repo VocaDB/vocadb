@@ -17,8 +17,8 @@ namespace VocaDb.Model.DataContracts.Songs
 			Version = songList.Version;
 		}
 
-		public ArchivedSongListVersionContract[] ArchivedVersions { get; set; }
+		public ArchivedSongListVersionContract[] ArchivedVersions { get; init; }
 
-		public int Version { get; set; }
+		public int Version { get; init; }
 	}
 }

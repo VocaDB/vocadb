@@ -23,9 +23,9 @@ namespace VocaDb.Model.DataContracts.Versioning
 			Reason = reason;
 		}
 
-		public TFields ChangedFields { get; set; }
+		public TFields ChangedFields { get; init; }
 
-		public TReason Reason { get; set; }
+		public TReason Reason { get; init; }
 
 		public override bool IsAnythingChanged()
 		{

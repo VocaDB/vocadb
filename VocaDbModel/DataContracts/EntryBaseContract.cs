@@ -17,6 +17,6 @@ namespace VocaDb.Model.DataContracts
 		}
 
 		[DataMember]
-		public string DefaultName { get; set; }
+		public string DefaultName { get; init; }
 	}
 }

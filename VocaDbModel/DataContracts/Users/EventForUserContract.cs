@@ -18,10 +18,10 @@ namespace VocaDb.Model.DataContracts.Users
 			};
 		}
 
-		public UserEventRelationshipType RelationshipType { get; set; }
+		public UserEventRelationshipType RelationshipType { get; init; }
 
-		public ReleaseEventForApiContract ReleaseEvent { get; set; }
+		public ReleaseEventForApiContract ReleaseEvent { get; init; }
 
-		public UserForApiContract User { get; set; }
+		public UserForApiContract User { get; init; }
 	}
 }

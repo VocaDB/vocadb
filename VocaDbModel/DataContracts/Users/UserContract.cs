@@ -41,13 +41,13 @@ namespace VocaDb.Model.DataContracts.Users
 		}
 
 		[DataMember]
-		public bool Active { get; set; }
+		public bool Active { get; init; }
 
 		[DataMember]
-		public bool AnonymousActivity { get; set; }
+		public bool AnonymousActivity { get; init; }
 
 		[DataMember]
-		public DateTime CreateDate { get; set; }
+		public DateTime CreateDate { get; init; }
 
 		[DataMember]
 		public string Culture { get; set; }
@@ -56,21 +56,21 @@ namespace VocaDb.Model.DataContracts.Users
 		public ContentLanguagePreference DefaultLanguageSelection { get; set; }
 
 		[DataMember]
-		public UserEmailOptions EmailOptions { get; set; }
+		public UserEmailOptions EmailOptions { get; init; }
 
 		[DataMember]
-		public UserGroupId GroupId { get; set; }
+		public UserGroupId GroupId { get; init; }
 
 		[DataMember]
 		public string Language { get; set; }
 
 		[DataMember]
-		public PVService PreferredVideoService { get; set; }
+		public PVService PreferredVideoService { get; init; }
 
 		[DataMember]
-		public bool PublicAlbumCollection { get; set; }
+		public bool PublicAlbumCollection { get; init; }
 
 		[DataMember]
-		public bool VerifiedArtist { get; set; }
+		public bool VerifiedArtist { get; init; }
 	}
 }

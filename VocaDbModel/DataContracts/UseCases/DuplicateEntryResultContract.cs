@@ -16,10 +16,10 @@ namespace VocaDb.Model.DataContracts.UseCases
 		}
 
 		[DataMember]
-		public EntryRefWithCommonPropertiesContract Entry { get; set; }
+		public EntryRefWithCommonPropertiesContract Entry { get; init; }
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		[DataMember]
-		public T MatchProperty { get; set; }
+		public T MatchProperty { get; init; }
 	}
 }

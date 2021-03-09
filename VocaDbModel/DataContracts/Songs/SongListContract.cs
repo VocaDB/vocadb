@@ -33,27 +33,27 @@ namespace VocaDb.Model.DataContracts.Songs
 		}
 
 		[DataMember]
-		public UserForApiContract Author { get; set; }
+		public UserForApiContract Author { get; init; }
 
 		[DataMember]
-		public bool CanEdit { get; set; }
+		public bool CanEdit { get; init; }
 
 		[DataMember]
-		public bool Deleted { get; set; }
+		public bool Deleted { get; init; }
 
 		[DataMember]
-		public string Description { get; set; }
+		public string Description { get; init; }
 
 		[DataMember]
-		public DateTime? EventDate { get; set; }
+		public DateTime? EventDate { get; init; }
 
 		[DataMember]
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
 		[DataMember]
-		public EntryThumbContract Thumb { get; set; }
+		public EntryThumbContract Thumb { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public int Version { get; init; }
 	}
 }

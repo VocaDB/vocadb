@@ -19,12 +19,12 @@ namespace VocaDb.Model.DataContracts.Songs
 		}
 
 		[DataMember]
-		public string Notes { get; set; }
+		public string Notes { get; init; }
 
 		[DataMember]
-		public int Order { get; set; }
+		public int Order { get; init; }
 
 		[DataMember]
-		public SongForApiContract Song { get; set; }
+		public SongForApiContract Song { get; init; }
 	}
 }

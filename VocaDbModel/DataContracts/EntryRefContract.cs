@@ -30,7 +30,7 @@ namespace VocaDb.Model.DataContracts
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public EntryType EntryType { get; set; }
+		public EntryType EntryType { get; init; }
 
 		[DataMember]
 		public int Id { get; set; }

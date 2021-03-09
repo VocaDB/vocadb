@@ -39,12 +39,12 @@ namespace VocaDb.Model.DataContracts
 		}
 
 		[DataMember]
-		public string ArtistString { get; set; }
+		public string ArtistString { get; init; }
 
 		/// <summary>
 		/// Translated entry type name.
 		/// </summary>
 		[DataMember]
-		public string EntryTypeName { get; set; }
+		public string EntryTypeName { get; init; }
 	}
 }

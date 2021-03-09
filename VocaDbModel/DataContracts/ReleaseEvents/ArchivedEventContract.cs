@@ -93,7 +93,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		public string MainPictureMime { get; set; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember]
 		public LocalizedStringContract[] Names { get; set; }

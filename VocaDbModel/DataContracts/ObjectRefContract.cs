@@ -41,7 +41,7 @@ namespace VocaDb.Model.DataContracts
 		public int Id { get; set; }
 
 		[DataMember]
-		public string NameHint { get; set; }
+		public string NameHint { get; init; }
 
 		public override string ToString()
 		{

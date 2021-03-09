@@ -11,12 +11,12 @@ namespace VocaDb.Model.DataContracts.Songs
 		public bool Any => ArtistMatches.Any() || LikeMatches.Any() || TagMatches.Any();
 
 		[DataMember]
-		public SongForApiContract[] ArtistMatches { get; set; }
+		public SongForApiContract[] ArtistMatches { get; init; }
 
 		[DataMember]
-		public SongForApiContract[] LikeMatches { get; set; }
+		public SongForApiContract[] LikeMatches { get; init; }
 
 		[DataMember]
-		public SongForApiContract[] TagMatches { get; set; }
+		public SongForApiContract[] TagMatches { get; init; }
 	}
 }

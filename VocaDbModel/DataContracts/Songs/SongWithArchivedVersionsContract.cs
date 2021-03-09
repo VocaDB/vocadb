@@ -18,8 +18,8 @@ namespace VocaDb.Model.DataContracts.Songs
 			//Author = (ArchivedVersions.Any() && ArchivedVersions.Last().Author != null ? ArchivedVersions.Last().Author : null);
 		}
 
-		public ArchivedSongVersionContract[] ArchivedVersions { get; set; }
+		public ArchivedSongVersionContract[] ArchivedVersions { get; init; }
 
-		//public UserContract Author { get; set; }
+		//public UserContract Author { get; init; }
 	}
 }

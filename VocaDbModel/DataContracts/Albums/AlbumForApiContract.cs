@@ -121,56 +121,56 @@ namespace VocaDb.Model.DataContracts.Albums
 		/// Comma-separated list of all other names that aren't the display name.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
 		/// <summary>
 		/// List of artists for this song. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public ArtistForAlbumForApiContract[] Artists { get; set; }
+		public ArtistForAlbumForApiContract[] Artists { get; init; }
 
 		/// <summary>
 		/// Artist string, for example "Tripshots feat. Hatsune Miku".
 		/// </summary>
 		[DataMember]
-		public string ArtistString { get; set; }
+		public string ArtistString { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string Barcode { get; set; }
+		public string Barcode { get; init; }
 
 		[DataMember]
-		public string CatalogNumber { get; set; }
+		public string CatalogNumber { get; init; }
 
 		/// <summary>
 		/// Date this entry was created.
 		/// </summary>
 		[DataMember]
-		public DateTime CreateDate { get; set; }
+		public DateTime CreateDate { get; init; }
 
 		/// <summary>
 		/// Name in default language.
 		/// </summary>
 		[DataMember]
-		public string DefaultName { get; set; }
+		public string DefaultName { get; init; }
 
 		/// <summary>
 		/// Language selection of the original name.
 		/// </summary>
 		[DataMember]
-		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+		public ContentLanguageSelection DefaultNameLanguage { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public bool Deleted { get; set; }
+		public bool Deleted { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string Description { get; set; }
+		public string Description { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public AlbumDiscPropertiesContract[] Discs { get; set; }
+		public AlbumDiscPropertiesContract[] Discs { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public DiscType DiscType { get; set; }
+		public DiscType DiscType { get; init; }
 
 		[DataMember]
 		public int Id { get; set; }
@@ -179,83 +179,83 @@ namespace VocaDb.Model.DataContracts.Albums
 		/// List of album identifiers such as barcodes. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public AlbumIdentifierContract[] Identifiers { get; set; }
+		public AlbumIdentifierContract[] Identifiers { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public EntryThumbForApiContract MainPicture { get; set; }
+		public EntryThumbForApiContract MainPicture { get; init; }
 
 		/// <summary>
 		/// Id of the entry this entry was merged to, if any.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public int MergedTo { get; set; }
+		public int MergedTo { get; init; }
 
 		/// <summary>
 		/// Display name (primary name in selected language, or default language).
 		/// </summary>
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		/// <summary>
 		/// List of all names for this entry. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[] Names { get; init; }
 
 		/// <summary>
 		/// List of PVs. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
 		[JsonProperty("pvs")]
-		public PVContract[] PVs { get; set; }
+		public PVContract[] PVs { get; init; }
 
 		/// <summary>
 		/// Average of all user ratings (1-5).
 		/// </summary>
 		[DataMember]
-		public double RatingAverage { get; set; }
+		public double RatingAverage { get; init; }
 
 		/// <summary>
 		/// Number of users who have rated this album.
 		/// </summary>
 		[DataMember]
-		public int RatingCount { get; set; }
+		public int RatingCount { get; init; }
 
 		/// <summary>
 		/// Date when this album was released. May be only the year, or year, month and day.
 		/// </summary>
 		[DataMember]
-		public OptionalDateTimeContract ReleaseDate { get; set; }
+		public OptionalDateTimeContract ReleaseDate { get; init; }
 
 		/// <summary>
 		/// Event where this album was first distributed.
 		/// </summary>
 		[DataMember]
-		public ReleaseEventForApiContract ReleaseEvent { get; set; }
+		public ReleaseEventForApiContract ReleaseEvent { get; init; }
 
 		[DataMember]
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
 		/// <summary>
 		/// List of tags. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public TagUsageForApiContract[] Tags { get; set; }
+		public TagUsageForApiContract[] Tags { get; init; }
 
 		/// <summary>
 		/// List of tracks (songs). Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public SongInAlbumForApiContract[] Tracks { get; set; }
+		public SongInAlbumForApiContract[] Tracks { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public int Version { get; init; }
 
 		/// <summary>
 		/// List of external links. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public WebLinkForApiContract[] WebLinks { get; set; }
+		public WebLinkForApiContract[] WebLinks { get; init; }
 	}
 
 	[Flags]

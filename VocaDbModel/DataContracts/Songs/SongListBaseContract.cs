@@ -28,12 +28,12 @@ namespace VocaDb.Model.DataContracts.Songs
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public SongListFeaturedCategory FeaturedCategory { get; set; }
+		public SongListFeaturedCategory FeaturedCategory { get; init; }
 
 		[DataMember]
 		public int Id { get; set; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 	}
 }

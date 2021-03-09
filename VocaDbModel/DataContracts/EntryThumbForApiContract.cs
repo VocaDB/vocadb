@@ -61,13 +61,13 @@ namespace VocaDb.Model.DataContracts
 		/// MIME type, for example "image/jpeg".
 		/// </summary>
 		[DataMember]
-		public string Mime { get; set; }
+		public string Mime { get; init; }
 
 		/// <summary>
 		/// URL to original image.
 		/// </summary>
 		[DataMember]
-		public string UrlOriginal { get; set; }
+		public string UrlOriginal { get; init; }
 
 		/// <summary>
 		/// URL to small thumbnail.

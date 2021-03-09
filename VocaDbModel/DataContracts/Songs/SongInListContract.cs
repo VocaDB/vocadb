@@ -16,10 +16,10 @@ namespace VocaDb.Model.DataContracts.Songs
 			Song = new SongContract(songInList.Song, languagePreference);
 		}
 
-		public int Order { get; set; }
+		public int Order { get; init; }
 
-		public string Notes { get; set; }
+		public string Notes { get; init; }
 
-		public SongContract Song { get; set; }
+		public SongContract Song { get; init; }
 	}
 }

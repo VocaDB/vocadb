@@ -24,24 +24,24 @@ namespace VocaDb.Model.DataContracts.Users
 			WebLinks = user.WebLinks.Select(w => new WebLinkContract(w)).ToArray();
 		}
 
-		public string AboutMe { get; set; }
+		public string AboutMe { get; init; }
 
-		public string Location { get; set; }
+		public string Location { get; init; }
 
-		public UserKnownLanguageContract[] KnownLanguages { get; set; }
+		public UserKnownLanguageContract[] KnownLanguages { get; init; }
 
-		public string NewPass { get; set; }
+		public string NewPass { get; init; }
 
-		public string OldPass { get; set; }
+		public string OldPass { get; init; }
 
-		public bool PublicRatings { get; set; }
+		public bool PublicRatings { get; init; }
 
-		public bool ShowChatbox { get; set; }
+		public bool ShowChatbox { get; init; }
 
-		public string Stylesheet { get; set; }
+		public string Stylesheet { get; init; }
 
-		public int UnreadNotificationsToKeep { get; set; }
+		public int UnreadNotificationsToKeep { get; init; }
 
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 	}
 }

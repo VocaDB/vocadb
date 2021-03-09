@@ -23,10 +23,10 @@ namespace VocaDb.Model.DataContracts.SongImport
 		}
 
 		[DataMember]
-		public DateTime CreateDate { get; set; }
+		public DateTime CreateDate { get; init; }
 
 		[DataMember]
-		public string Description { get; set; }
+		public string Description { get; init; }
 
 		[DataMember]
 		public string Name { get; set; }

@@ -16,9 +16,9 @@ namespace VocaDb.Model.DataContracts.UseCases
 		}
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public int Version { get; init; }
 	}
 }

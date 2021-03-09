@@ -27,24 +27,24 @@ namespace VocaDb.Model.DataContracts
 			Version = (report.VersionBase != null ? new ArchivedObjectVersionContract(report.VersionBase) : null);
 		}
 
-		public UserForApiContract ClosedBy { get; set; }
+		public UserForApiContract ClosedBy { get; init; }
 
-		public DateTime? ClosedAt { get; set; }
+		public DateTime? ClosedAt { get; init; }
 
-		public DateTime Created { get; set; }
+		public DateTime Created { get; init; }
 
-		public EntryForApiContract Entry { get; set; }
+		public EntryForApiContract Entry { get; init; }
 
-		public string Hostname { get; set; }
+		public string Hostname { get; init; }
 
-		public int Id { get; set; }
+		public int Id { get; init; }
 
-		public string Notes { get; set; }
+		public string Notes { get; init; }
 
-		public string ReportTypeName { get; set; }
+		public string ReportTypeName { get; init; }
 
-		public UserForApiContract User { get; set; }
+		public UserForApiContract User { get; init; }
 
-		public ArchivedObjectVersionContract Version { get; set; }
+		public ArchivedObjectVersionContract Version { get; init; }
 	}
 }

@@ -96,29 +96,29 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		/// Comma-separated list of all other names that aren't the display name.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
 		/// <summary>
 		/// List of artist links.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public ArtistForEventContract[] Artists { get; set; }
+		public ArtistForEventContract[] Artists { get; init; }
 
 		/// <summary>
 		/// Event category. 
 		/// This is NOT inherited from series at the moment (you need to check <see cref="Series"/> for the category).
 		/// </summary>
 		[DataMember]
-		public EventCategory Category { get; set; }
+		public EventCategory Category { get; init; }
 
 		[DataMember]
-		public DateTime? Date { get; set; }
+		public DateTime? Date { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string Description { get; set; }
+		public string Description { get; init; }
 
 		[DataMember]
-		public DateTime? EndDate { get; set; }
+		public DateTime? EndDate { get; init; }
 
 		public bool HasVenueOrVenueName => Venue != null || !string.IsNullOrEmpty(VenueName);
 
@@ -130,52 +130,52 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		/// This IS inherited from series.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public EntryThumbForApiContract MainPicture { get; set; }
+		public EntryThumbForApiContract MainPicture { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		/// <summary>
 		/// List of all names for this entry. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[] Names { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public ReleaseEventSeriesContract Series { get; set; }
+		public ReleaseEventSeriesContract Series { get; init; }
 
 		[DataMember]
-		public int? SeriesId { get; set; }
+		public int? SeriesId { get; init; }
 
 		[DataMember]
-		public int SeriesNumber { get; set; }
+		public int SeriesNumber { get; init; }
 
 		[DataMember]
-		public string SeriesSuffix { get; set; }
+		public string SeriesSuffix { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public SongListBaseContract SongList { get; set; }
+		public SongListBaseContract SongList { get; init; }
 
 		[DataMember]
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public TagUsageForApiContract[] Tags { get; set; }
+		public TagUsageForApiContract[] Tags { get; init; }
 
 		[DataMember]
-		public string UrlSlug { get; set; }
+		public string UrlSlug { get; init; }
 
 		[DataMember]
-		public VenueForApiContract Venue { get; set; }
+		public VenueForApiContract Venue { get; init; }
 
 		[DataMember]
-		public string VenueName { get; set; }
+		public string VenueName { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public int Version { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public WebLinkForApiContract[] WebLinks { get; set; }
+		public WebLinkForApiContract[] WebLinks { get; init; }
 	}
 
 	[Flags]

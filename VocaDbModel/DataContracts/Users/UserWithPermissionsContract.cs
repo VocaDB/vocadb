@@ -34,25 +34,25 @@ namespace VocaDb.Model.DataContracts.Users
 		public HashSet<PermissionToken> AdditionalPermissions { get; set; }
 
 		[DataMember]
-		public string AlbumFormatString { get; set; }
+		public string AlbumFormatString { get; init; }
 
 		[DataMember]
-		public HashSet<PermissionToken> EffectivePermissions { get; set; }
+		public HashSet<PermissionToken> EffectivePermissions { get; init; }
 
 		/// <summary>
 		/// List of artist entries owned by the user. Cannot be null.
 		/// </summary>
 		[DataMember]
-		public ArtistForUserContract[] OwnedArtistEntries { get; set; }
+		public ArtistForUserContract[] OwnedArtistEntries { get; init; }
 
 		[DataMember]
-		public bool Poisoned { get; set; }
+		public bool Poisoned { get; init; }
 
 		[DataMember]
-		public string Stylesheet { get; set; }
+		public string Stylesheet { get; init; }
 
 		[DataMember]
-		public bool Supporter { get; set; }
+		public bool Supporter { get; init; }
 
 		[DataMember]
 		public int UnreadMessagesCount { get; set; }

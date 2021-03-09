@@ -24,12 +24,12 @@ namespace VocaDb.Model.DataContracts.Albums
 		public int DiscNumber { get; set; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
-		public DiscMediaType MediaType { get; set; }
+		public DiscMediaType MediaType { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 	}
 }

@@ -21,10 +21,10 @@ namespace VocaDb.Model.DataContracts.Users
 		}
 
 		[DataMember]
-		public string CultureCode { get; set; }
+		public string CultureCode { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public UserLanguageProficiency Proficiency { get; set; }
+		public UserLanguageProficiency Proficiency { get; init; }
 	}
 }

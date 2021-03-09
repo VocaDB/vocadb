@@ -20,8 +20,8 @@ namespace VocaDb.Model.DataContracts.Tags
 			Tags = tags.Select(t => new TagForApiContract(t, languagePreference, TagOptionalFields.AdditionalNames)).ToArray();
 		}
 
-		public string Name { get; set; }
+		public string Name { get; init; }
 
-		public TagForApiContract[] Tags { get; set; }
+		public TagForApiContract[] Tags { get; init; }
 	}
 }

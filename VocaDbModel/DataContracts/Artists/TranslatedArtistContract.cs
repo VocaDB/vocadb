@@ -18,7 +18,7 @@ namespace VocaDb.Model.DataContracts.Artists
 			Names = new BasicNameManager(artist.Names);
 		}
 
-		public BasicNameManager Names { get; set; }
+		public BasicNameManager Names { get; init; }
 
 		public override string ToString()
 		{

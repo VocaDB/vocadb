@@ -40,36 +40,36 @@ namespace VocaDb.Model.DataContracts.UseCases
 		}
 
 		[DataMember]
-		public ArtistForArtistContract[] AssociatedArtists { get; set; }
+		public ArtistForArtistContract[] AssociatedArtists { get; init; }
 
 		[DataMember]
-		public ArtistContract BaseVoicebank { get; set; }
+		public ArtistContract BaseVoicebank { get; init; }
 
 		[DataMember]
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
 		[DataMember]
-		public EnglishTranslatedStringContract Description { get; set; }
+		public EnglishTranslatedStringContract Description { get; init; }
 
 		[DataMember]
-		public ArtistForArtistContract[] Groups { get; set; }
+		public ArtistForArtistContract[] Groups { get; init; }
 
 		[DataMember]
-		public ArtistContract Illustrator { get; set; }
+		public ArtistContract Illustrator { get; init; }
 
 		[DataMember]
-		public LocalizedStringWithIdContract[] Names { get; set; }
+		public LocalizedStringWithIdContract[] Names { get; init; }
 
 		[DataMember]
-		public IList<EntryPictureFileContract> Pictures { get; set; }
+		public IList<EntryPictureFileContract> Pictures { get; init; }
 
 		[DataMember]
 		public string UpdateNotes { get; set; }
 
 		[DataMember]
-		public ArtistContract VoiceProvider { get; set; }
+		public ArtistContract VoiceProvider { get; init; }
 
 		[DataMember]
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 	}
 }

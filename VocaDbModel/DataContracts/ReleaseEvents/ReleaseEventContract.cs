@@ -52,19 +52,19 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			}
 		}
 
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
-		public EventCategory Category { get; set; }
+		public EventCategory Category { get; init; }
 
 		public bool CustomName { get; set; }
 
-		public DateTime? Date { get; set; }
+		public DateTime? Date { get; init; }
 
-		public bool Deleted { get; set; }
+		public bool Deleted { get; init; }
 
-		public string Description { get; set; }
+		public string Description { get; init; }
 
-		public DateTime? EndDate { get; set; }
+		public DateTime? EndDate { get; init; }
 
 		public bool HasVenueOrVenueName => Venue != null || !string.IsNullOrEmpty(VenueName);
 
@@ -72,22 +72,22 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 		public EventCategory InheritedCategory => Series?.Category ?? Category;
 
-		public string Name { get; set; }
+		public string Name { get; init; }
 
-		public string PictureMime { get; set; }
+		public string PictureMime { get; init; }
 
 		public ReleaseEventSeriesContract Series { get; set; }
 
-		public SongListBaseContract SongList { get; set; }
+		public SongListBaseContract SongList { get; init; }
 
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
-		public string UrlSlug { get; set; }
+		public string UrlSlug { get; init; }
 
-		public VenueContract Venue { get; set; }
+		public VenueContract Venue { get; init; }
 
-		public string VenueName { get; set; }
+		public string VenueName { get; init; }
 
-		public int Version { get; set; }
+		public int Version { get; init; }
 	}
 }

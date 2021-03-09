@@ -34,26 +34,26 @@ namespace VocaDb.Model.DataContracts.Tags
 		/// Date this entry was created.
 		/// </summary>
 		[DataMember]
-		public DateTime CreateDate { get; set; }
+		public DateTime CreateDate { get; init; }
 
-		public bool Deleted { get; set; }
-
-		[DataMember]
-		public string Description { get; set; }
+		public bool Deleted { get; init; }
 
 		[DataMember]
-		public bool HideFromSuggestions { get; set; }
+		public string Description { get; init; }
+
+		[DataMember]
+		public bool HideFromSuggestions { get; init; }
 
 		[DataMember]
 		public TagBaseContract Parent { get; set; }
 
 		[DataMember]
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
 		[DataMember]
-		public TagTargetTypes Targets { get; set; }
+		public TagTargetTypes Targets { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public int Version { get; init; }
 	}
 }

@@ -39,19 +39,19 @@ namespace VocaDb.Model.DataContracts.Activityfeed
 		}
 
 		[DataMember(EmitDefaultValue = false)]
-		public ArchivedObjectVersionForApiContract ArchivedVersion { get; set; }
+		public ArchivedObjectVersionForApiContract ArchivedVersion { get; init; }
 
 		[DataMember]
-		public UserForApiContract Author { get; set; }
+		public UserForApiContract Author { get; init; }
 
 		[DataMember]
-		public DateTime CreateDate { get; set; }
+		public DateTime CreateDate { get; init; }
 
 		[DataMember]
-		public EntryEditEvent EditEvent { get; set; }
+		public EntryEditEvent EditEvent { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public EntryForApiContract Entry { get; set; }
+		public EntryForApiContract Entry { get; init; }
 	}
 
 	[Flags]

@@ -16,8 +16,8 @@ namespace VocaDb.Model.DataContracts.UseCases
 			Selected = selected;
 		}
 
-		public ArtistContract Artist { get; set; }
+		public ArtistContract Artist { get; init; }
 
-		public bool Selected { get; set; }
+		public bool Selected { get; init; }
 	}
 }

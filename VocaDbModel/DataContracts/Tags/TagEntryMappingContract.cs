@@ -16,8 +16,8 @@ namespace VocaDb.Model.DataContracts.Tags
 			Tag = new TagBaseContract(mapping.Tag, languagePreference);
 		}
 
-		public EntryTypeAndSubType EntryType { get; set; }
+		public EntryTypeAndSubType EntryType { get; init; }
 
-		public TagBaseContract Tag { get; set; }
+		public TagBaseContract Tag { get; init; }
 	}
 }

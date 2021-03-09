@@ -34,35 +34,35 @@ namespace VocaDb.Model.DataContracts.Users
 		}
 
 		[DataMember]
-		public string Body { get; set; }
+		public string Body { get; init; }
 
 		// Currently unable to parse raw datetime on client side, therefore only sending formatted datetime instead.
-		public DateTime Created { get; set; }
+		public DateTime Created { get; init; }
 
 		[DataMember]
-		public string CreatedFormatted { get; set; }
+		public string CreatedFormatted { get; init; }
 
 		[DataMember]
-		public bool HighPriority { get; set; }
+		public bool HighPriority { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public UserInboxType Inbox { get; set; }
+		public UserInboxType Inbox { get; init; }
 
 		[DataMember]
-		public bool Read { get; set; }
+		public bool Read { get; init; }
 
 		[DataMember]
-		public UserForApiContract Receiver { get; set; }
+		public UserForApiContract Receiver { get; init; }
 
 		[DataMember]
-		public UserForApiContract Sender { get; set; }
+		public UserForApiContract Sender { get; init; }
 
 		[DataMember]
-		public string Subject { get; set; }
+		public string Subject { get; init; }
 
 		public override string ToString()
 		{

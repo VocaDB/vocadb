@@ -17,7 +17,7 @@ namespace VocaDb.Model.DataContracts
 		}
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		public override string ToString()
 		{

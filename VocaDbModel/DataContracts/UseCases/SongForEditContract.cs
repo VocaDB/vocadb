@@ -47,34 +47,34 @@ namespace VocaDb.Model.DataContracts.UseCases
 		/// Used for validation warnings.
 		/// </summary>
 		[DataMember]
-		public int? AlbumEventId { get; set; }
+		public int? AlbumEventId { get; init; }
 
 		[DataMember]
-		public DateTime? AlbumReleaseDate { get; set; }
+		public DateTime? AlbumReleaseDate { get; init; }
 
 		[DataMember]
 		public ArtistForSongContract[] Artists { get; set; }
 
 		[DataMember]
-		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+		public ContentLanguageSelection DefaultNameLanguage { get; init; }
 
 		/// <summary>
 		/// Song is on one or more albums
 		/// </summary>
 		[DataMember]
-		public bool HasAlbums { get; set; }
+		public bool HasAlbums { get; init; }
 
 		[DataMember]
 		public LyricsForSongContract[] Lyrics { get; set; }
 
 		[DataMember]
-		public LocalizedStringWithIdContract[] Names { get; set; }
+		public LocalizedStringWithIdContract[] Names { get; init; }
 
 		[DataMember]
-		public EnglishTranslatedStringContract Notes { get; set; }
+		public EnglishTranslatedStringContract Notes { get; init; }
 
 		[DataMember]
-		public SongContract OriginalVersion { get; set; }
+		public SongContract OriginalVersion { get; init; }
 
 		[DataMember(Name = "pvs")]
 		public PVContract[] PVs { get; set; }
@@ -84,7 +84,7 @@ namespace VocaDb.Model.DataContracts.UseCases
 
 		// Required here for validation
 		[DataMember]
-		public int[] Tags { get; set; }
+		public int[] Tags { get; init; }
 
 		[DataMember]
 		public string UpdateNotes { get; set; }
@@ -93,9 +93,9 @@ namespace VocaDb.Model.DataContracts.UseCases
 		public WebLinkContract[] WebLinks { get; set; }
 
 		[DataMember]
-		public int? MinMilliBpm { get; set; }
+		public int? MinMilliBpm { get; init; }
 
 		[DataMember]
-		public int? MaxMilliBpm { get; set; }
+		public int? MaxMilliBpm { get; init; }
 	}
 }

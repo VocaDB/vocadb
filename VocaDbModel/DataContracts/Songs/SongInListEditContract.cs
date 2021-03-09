@@ -20,6 +20,6 @@ namespace VocaDb.Model.DataContracts.Songs
 		}
 
 		[DataMember]
-		public int SongInListId { get; set; }
+		public int SongInListId { get; init; }
 	}
 }

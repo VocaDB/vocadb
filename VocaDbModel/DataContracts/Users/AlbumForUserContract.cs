@@ -30,27 +30,27 @@ namespace VocaDb.Model.DataContracts.Users
 		}
 
 		[DataMember]
-		public AlbumContract Album { get; set; }
+		public AlbumContract Album { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
-		public MediaType MediaType { get; set; }
+		public MediaType MediaType { get; init; }
 
 		[DataMember]
-		public PurchaseStatus PurchaseStatus { get; set; }
+		public PurchaseStatus PurchaseStatus { get; init; }
 
 		[DataMember]
-		public int Rating { get; set; }
+		public int Rating { get; init; }
 
 		// Note: only needed for album collection. True if public collection or viewer is the user himself.
-		public bool ShouldShowCollectionStatus { get; set; }
+		public bool ShouldShowCollectionStatus { get; init; }
 
 		/// <summary>
 		/// User who rated the album. Can be null for anonymous ratings.
 		/// </summary>
 		[DataMember]
-		public UserContract User { get; set; }
+		public UserContract User { get; init; }
 	}
 }

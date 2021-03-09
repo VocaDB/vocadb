@@ -53,12 +53,12 @@ namespace VocaDb.Model.DataContracts
 		public string OriginalFileName { get; set; }
 
 		[DataMember]
-		public int OwnerEntryId { get; set; }
+		public int OwnerEntryId { get; init; }
 
 		public ImagePurpose Purpose { get; set; }
 
 		[DataMember]
-		public string ThumbUrl { get; set; }
+		public string ThumbUrl { get; init; }
 
 		/// <summary>
 		/// File data stream. Only used for uploads.

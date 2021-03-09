@@ -22,14 +22,14 @@ namespace VocaDb.Model.DataContracts.Security
 			User = (entry.User != null ? new UserContract(entry.User) : null);
 		}
 
-		public string Action { get; set; }
+		public string Action { get; init; }
 
-		public string AgentName { get; set; }
+		public string AgentName { get; init; }
 
-		public long Id { get; set; }
+		public long Id { get; init; }
 
-		public DateTime Time { get; set; }
+		public DateTime Time { get; init; }
 
-		public UserContract User { get; set; }
+		public UserContract User { get; init; }
 	}
 }
