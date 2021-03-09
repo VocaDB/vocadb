@@ -21,10 +21,10 @@
 
 		// Formats seconds as minutes and seconds, for example 12:34
 		public static formatFromSeconds = (seconds: number) => {
-			
+			seconds = Math.max(seconds, 0);
 			var mins = Math.floor(seconds / 60);
-			return mins + ":" + DateTimeHelper.addLeadingZero(seconds % 60);
-
+			const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+			return clamp(mins, 0, 3939) + ":" + DateTimeHelper.addLeadingZero(seconds % 60);
 		}
 
 		public static parseToSeconds = (formatted: string): number => {
