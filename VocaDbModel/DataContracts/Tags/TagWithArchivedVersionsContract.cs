@@ -15,6 +15,6 @@ namespace VocaDb.Model.DataContracts.Tags
 				a => new ArchivedTagVersionContract(a)).ToArray();
 		}
 
-		public ArchivedTagVersionContract[] ArchivedVersions { get; set; }
+		public ArchivedTagVersionContract[] ArchivedVersions { get; init; }
 	}
 }

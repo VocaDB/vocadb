@@ -15,6 +15,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 				a => new ArchivedEventVersionContract(a)).ToArray();
 		}
 
-		public ArchivedEventVersionContract[] ArchivedVersions { get; set; }
+		public ArchivedEventVersionContract[] ArchivedVersions { get; init; }
 	}
 }

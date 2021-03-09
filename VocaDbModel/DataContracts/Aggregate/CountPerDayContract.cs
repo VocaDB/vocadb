@@ -27,10 +27,10 @@ namespace VocaDb.Model.DataContracts.Aggregate
 			Count = count;
 		}
 
-		public int Year { get; set; }
-		public int Month { get; set; }
-		public int Day { get; set; }
-		public int Count { get; set; }
+		public int Year { get; init; }
+		public int Month { get; init; }
+		public int Day { get; init; }
+		public int Count { get; init; }
 
 		public DateTime ToDateTime()
 		{

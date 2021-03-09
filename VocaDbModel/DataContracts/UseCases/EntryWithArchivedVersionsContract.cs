@@ -17,9 +17,9 @@ namespace VocaDb.Model.DataContracts.UseCases
 			Entry = entry;
 		}
 
-		public TVersion[] ArchivedVersions { get; set; }
+		public TVersion[] ArchivedVersions { get; init; }
 
-		public TEntry Entry { get; set; }
+		public TEntry Entry { get; init; }
 	}
 
 	public interface IEntryWithArchivedVersionsContract<TEntry, out TVersion>

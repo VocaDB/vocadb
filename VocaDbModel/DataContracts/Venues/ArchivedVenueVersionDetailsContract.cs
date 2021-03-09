@@ -28,20 +28,20 @@ namespace VocaDb.Model.DataContracts.Venues
 			ComparedVersionId = Versions.SecondId;
 		}
 
-		public ArchivedVenueVersionContract ArchivedVersion { get; set; }
+		public ArchivedVenueVersionContract ArchivedVersion { get; init; }
 
-		public ArchivedObjectVersionContract[] ComparableVersions { get; set; }
+		public ArchivedObjectVersionContract[] ComparableVersions { get; init; }
 
-		public ArchivedObjectVersionContract ComparedVersion { get; set; }
+		public ArchivedObjectVersionContract ComparedVersion { get; init; }
 
-		public int ComparedVersionId { get; set; }
+		public int ComparedVersionId { get; init; }
 
 		public bool Hidden => ArchivedVersion.Hidden || (ComparedVersion != null && ComparedVersion.Hidden);
 
-		public string Name { get; set; }
+		public string Name { get; init; }
 
-		public VenueContract Venue { get; set; }
+		public VenueContract Venue { get; init; }
 
-		public ComparedVenueContract Versions { get; set; }
+		public ComparedVenueContract Versions { get; init; }
 	}
 }

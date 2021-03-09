@@ -44,19 +44,19 @@ namespace VocaDb.Model.DataContracts.Songs
 
 		public ArtistContract[] Artists { get; set; }
 
-		public string ArtistString { get; set; }
+		public string ArtistString { get; init; }
 
-		public int DiscNumber { get; set; }
+		public int DiscNumber { get; init; }
 
-		public bool IsCustomTrack { get; set; }
+		public bool IsCustomTrack { get; init; }
 
-		public string SongAdditionalNames { get; set; }
+		public string SongAdditionalNames { get; init; }
 
-		public int SongId { get; set; }
+		public int SongId { get; init; }
 
-		public int SongInAlbumId { get; set; }
+		public int SongInAlbumId { get; init; }
 
-		public string SongName { get; set; }
+		public string SongName { get; init; }
 
 		public int TrackNumber { get; set; }
 	}

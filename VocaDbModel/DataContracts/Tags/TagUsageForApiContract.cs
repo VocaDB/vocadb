@@ -24,9 +24,9 @@ namespace VocaDb.Model.DataContracts.Tags
 		}
 
 		[DataMember]
-		public int Count { get; set; }
+		public int Count { get; init; }
 
 		[DataMember]
-		public TagBaseContract Tag { get; set; }
+		public TagBaseContract Tag { get; init; }
 	}
 }

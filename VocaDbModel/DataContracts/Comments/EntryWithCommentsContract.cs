@@ -14,8 +14,8 @@ namespace VocaDb.Model.DataContracts.Comments
 			Entry = entry;
 		}
 
-		public CommentForApiContract[] Comments { get; set; }
+		public CommentForApiContract[] Comments { get; init; }
 
-		public EntryForApiContract Entry { get; set; }
+		public EntryForApiContract Entry { get; init; }
 	}
 }

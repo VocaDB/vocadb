@@ -22,18 +22,18 @@ namespace VocaDb.Model.DataContracts
 		}
 
 		[DataMember]
-		public int? Day { get; set; }
+		public int? Day { get; init; }
 
 		[DataMember]
 		public string Formatted { get; set; }
 
 		[DataMember]
-		public bool IsEmpty { get; set; }
+		public bool IsEmpty { get; init; }
 
 		[DataMember]
-		public int? Month { get; set; }
+		public int? Month { get; init; }
 
 		[DataMember]
-		public int? Year { get; set; }
+		public int? Year { get; init; }
 	}
 }

@@ -31,30 +31,30 @@ namespace VocaDb.Model.DataContracts.Albums
 		}
 
 		[DataMember]
-		public ArtistContract Artist { get; set; }
+		public ArtistContract Artist { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public ArtistCategories Categories { get; set; }
+		public ArtistCategories Categories { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public ArtistRoles EffectiveRoles { get; set; }
+		public ArtistRoles EffectiveRoles { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
-		public bool IsCustomName { get; set; }
+		public bool IsCustomName { get; init; }
 
 		[DataMember]
-		public bool IsSupport { get; set; }
+		public bool IsSupport { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public ArtistRoles Roles { get; set; }
+		public ArtistRoles Roles { get; init; }
 	}
 }

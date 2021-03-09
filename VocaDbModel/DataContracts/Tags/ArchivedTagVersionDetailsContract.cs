@@ -31,20 +31,20 @@ namespace VocaDb.Model.DataContracts.Tags
 			ComparedVersionId = Versions.SecondId;
 		}
 
-		public ArchivedObjectVersionContract ArchivedVersion { get; set; }
+		public ArchivedObjectVersionContract ArchivedVersion { get; init; }
 
-		public ArchivedObjectVersionContract[] ComparableVersions { get; set; }
+		public ArchivedObjectVersionContract[] ComparableVersions { get; init; }
 
-		public ArchivedObjectVersionContract ComparedVersion { get; set; }
+		public ArchivedObjectVersionContract ComparedVersion { get; init; }
 
-		public int ComparedVersionId { get; set; }
+		public int ComparedVersionId { get; init; }
 
 		public bool Hidden => ArchivedVersion.Hidden || (ComparedVersion != null && ComparedVersion.Hidden);
 
-		public string Name { get; set; }
+		public string Name { get; init; }
 
-		public TagContract Tag { get; set; }
+		public TagContract Tag { get; init; }
 
-		public ComparedTagsContract Versions { get; set; }
+		public ComparedTagsContract Versions { get; init; }
 	}
 }

@@ -38,20 +38,20 @@ namespace VocaDb.Model.DataContracts.MikuDb
 			Title = data.Title;
 		}
 
-		public PictureDataContract CoverPicture { get; set; }
+		public PictureDataContract CoverPicture { get; init; }
 
-		public DateTime Created { get; set; }
+		public DateTime Created { get; init; }
 
-		public ImportedAlbumDataContract Data { get; set; }
+		public ImportedAlbumDataContract Data { get; init; }
 
 		public int Id { get; set; }
 
-		public bool Selected { get; set; }
+		public bool Selected { get; init; }
 
-		public string SourceUrl { get; set; }
+		public string SourceUrl { get; init; }
 
-		public AlbumStatus Status { get; set; }
+		public AlbumStatus Status { get; init; }
 
-		public string Title { get; set; }
+		public string Title { get; init; }
 	}
 }

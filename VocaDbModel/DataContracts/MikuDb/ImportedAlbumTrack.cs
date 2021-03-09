@@ -32,7 +32,7 @@ namespace VocaDb.Model.DataContracts.MikuDb
 		}
 
 		[DataMember]
-		public int DiscNum { get; set; }
+		public int DiscNum { get; init; }
 
 		[DataMember]
 		public string Title { get; set; }

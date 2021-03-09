@@ -21,18 +21,18 @@ namespace VocaDb.Model.DataContracts.SongImport
 		public SongForApiContract MatchedSong { get; set; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember]
-		public string PVId { get; set; }
+		public string PVId { get; init; }
 
 		[DataMember]
-		public PVService PVService { get; set; }
+		public PVService PVService { get; init; }
 
 		[DataMember]
-		public int SortIndex { get; set; }
+		public int SortIndex { get; init; }
 
 		[DataMember]
-		public string Url { get; set; }
+		public string Url { get; init; }
 	}
 }

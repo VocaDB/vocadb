@@ -40,27 +40,27 @@ namespace VocaDb.Model.DataContracts.UseCases
 		/// List of parsed artists for the song, identified based on the PVs.
 		/// </summary>
 		[DataMember]
-		public ArtistContract[] Artists { get; set; }
+		public ArtistContract[] Artists { get; init; }
 
 		/// <summary>
 		/// List of matched duplicate songs already in the database.
 		/// </summary>
 		[DataMember]
-		public DuplicateEntryResultContract<SongMatchProperty>[] Matches { get; set; }
+		public DuplicateEntryResultContract<SongMatchProperty>[] Matches { get; init; }
 
 		/// <summary>
 		/// Type of song, identified based on the PVs.
 		/// </summary>
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public SongType SongType { get; set; }
+		public SongType SongType { get; init; }
 
 		/// <summary>
 		/// Parsed song title, based on the PV.
 		/// This is not the user-entered song title.
 		/// </summary>
 		[DataMember]
-		public string Title { get; set; }
+		public string Title { get; init; }
 
 		/// <summary>
 		/// Possible language of the title.
@@ -68,6 +68,6 @@ namespace VocaDb.Model.DataContracts.UseCases
 		/// </summary>
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public ContentLanguageSelection TitleLanguage { get; set; }
+		public ContentLanguageSelection TitleLanguage { get; init; }
 	}
 }

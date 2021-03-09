@@ -34,34 +34,34 @@ namespace VocaDb.Model.DataContracts.Users
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
 		}
 
-		public string AboutMe { get; set; }
+		public string AboutMe { get; init; }
 
-		public bool CanChangeName { get; set; }
+		public bool CanChangeName { get; init; }
 
-		public bool EmailVerified { get; set; }
+		public bool EmailVerified { get; init; }
 
-		public string HashedAccessKey { get; set; }
+		public string HashedAccessKey { get; init; }
 
-		public bool HasPassword { get; set; }
+		public bool HasPassword { get; init; }
 
-		public bool HasTwitterToken { get; set; }
+		public bool HasTwitterToken { get; init; }
 
-		public UserKnownLanguageContract[] KnownLanguages { get; set; }
+		public UserKnownLanguageContract[] KnownLanguages { get; init; }
 
-		public string Location { get; set; }
+		public string Location { get; init; }
 
-		public bool PublicRatings { get; set; }
+		public bool PublicRatings { get; init; }
 
-		public bool ShowChatbox { get; set; }
+		public bool ShowChatbox { get; init; }
 
-		public string Stylesheet { get; set; }
+		public string Stylesheet { get; init; }
 
-		public int TwitterId { get; set; }
+		public int TwitterId { get; init; }
 
-		public string TwitterName { get; set; }
+		public string TwitterName { get; init; }
 
-		public int UnreadNotificationsToKeep { get; set; }
+		public int UnreadNotificationsToKeep { get; init; }
 
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 	}
 }

@@ -27,22 +27,22 @@ namespace VocaDb.Model.DataContracts.Songs
 		}
 
 		[DataMember]
-		public int DiscNumber { get; set; }
+		public int DiscNumber { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember]
-		public SongVoteRating? Rating { get; set; }
+		public SongVoteRating? Rating { get; init; }
 
 		[DataMember]
-		public SongContract Song { get; set; }
+		public SongContract Song { get; init; }
 
 		[DataMember]
-		public int TrackNumber { get; set; }
+		public int TrackNumber { get; init; }
 
 		public override string ToString()
 		{

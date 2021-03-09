@@ -48,37 +48,37 @@ namespace VocaDb.Model.DataContracts.Discussions
 		}
 
 		[DataMember]
-		public UserForApiContract Author { get; set; }
+		public UserForApiContract Author { get; init; }
 
 		[DataMember]
-		public int CommentCount { get; set; }
+		public int CommentCount { get; init; }
 
 		[DataMember]
-		public CommentForApiContract[] Comments { get; set; }
+		public CommentForApiContract[] Comments { get; init; }
 
 		[DataMember]
-		public string Content { get; set; }
+		public string Content { get; init; }
 
 		/// <summary>
 		/// Date and time when this topic was posted, in UTC.
 		/// </summary>
 		[DataMember]
-		public DateTime Created { get; set; }
+		public DateTime Created { get; init; }
 
 		[DataMember]
-		public int FolderId { get; set; }
+		public int FolderId { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
-		public CommentForApiContract LastComment { get; set; }
+		public CommentForApiContract LastComment { get; init; }
 
 		[DataMember]
-		public bool Locked { get; set; }
+		public bool Locked { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		public override string ToString()
 		{

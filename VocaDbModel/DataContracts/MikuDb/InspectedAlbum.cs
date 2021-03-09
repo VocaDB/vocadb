@@ -23,7 +23,7 @@ namespace VocaDb.Model.DataContracts.MikuDb
 
 		public AlbumContract[] ExistingAlbums { get; set; }
 
-		public MikuDbAlbumContract ImportedAlbum { get; set; }
+		public MikuDbAlbumContract ImportedAlbum { get; init; }
 
 		public AlbumContract MergedAlbum { get; set; }
 
@@ -31,7 +31,7 @@ namespace VocaDb.Model.DataContracts.MikuDb
 
 		public bool MergeTracks { get; set; }
 
-		public ContentLanguageSelection SelectedLanguage { get; set; }
+		public ContentLanguageSelection SelectedLanguage { get; init; }
 
 		public InspectedTrack[] Tracks { get; set; }
 	}
@@ -47,7 +47,7 @@ namespace VocaDb.Model.DataContracts.MikuDb
 
 		public ArtistContract ExistingArtist { get; set; }
 
-		public string Name { get; set; }
+		public string Name { get; init; }
 	}
 
 	public class InspectedTrack
@@ -61,7 +61,7 @@ namespace VocaDb.Model.DataContracts.MikuDb
 
 		public SongContract ExistingSong { get; set; }
 
-		public ImportedAlbumTrack ImportedTrack { get; set; }
+		public ImportedAlbumTrack ImportedTrack { get; init; }
 
 		public bool Selected { get; set; }
 	}

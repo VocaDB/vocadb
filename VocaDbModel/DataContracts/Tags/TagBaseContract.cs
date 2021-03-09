@@ -36,18 +36,18 @@ namespace VocaDb.Model.DataContracts.Tags
 		/// Additional names - optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string CategoryName { get; set; }
+		public string CategoryName { get; init; }
 
 		[DataMember]
 		public int Id { get; set; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember]
-		public string UrlSlug { get; set; }
+		public string UrlSlug { get; init; }
 	}
 }

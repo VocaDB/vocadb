@@ -19,6 +19,6 @@ namespace VocaDb.Model.DataContracts
 		}
 
 		[DataMember]
-		public EntryNameContract Name { get; set; }
+		public EntryNameContract Name { get; init; }
 	}
 }

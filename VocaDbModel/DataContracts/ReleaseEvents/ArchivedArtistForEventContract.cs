@@ -26,6 +26,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		}
 
 		[DataMember]
-		public ArtistEventRoles Roles { get; set; }
+		public ArtistEventRoles Roles { get; init; }
 	}
 }

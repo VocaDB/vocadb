@@ -45,13 +45,13 @@ namespace VocaDb.Model.DataContracts
 		public string Description { get; set; }
 
 		[DataMember]
-		public string DescriptionOrUrl { get; set; }
+		public string DescriptionOrUrl { get; init; }
 
 		[DataMember]
 		public bool Disabled { get; set; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
 		public string Url { get; set; }

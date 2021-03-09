@@ -10,13 +10,13 @@ namespace VocaDb.Model.DataContracts.Artists
 		/// <summary>
 		/// "Mostly uses"
 		/// </summary>
-		public TopStatContract<ArtistContract>[] TopVocaloids { get; set; }
+		public TopStatContract<ArtistContract>[] TopVocaloids { get; init; }
 	}
 
 	public class TopStatContract<T>
 	{
-		public int Count { get; set; }
+		public int Count { get; init; }
 
-		public T Data { get; set; }
+		public T Data { get; init; }
 	}
 }

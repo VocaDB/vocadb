@@ -79,14 +79,14 @@ namespace VocaDb.Model.DataContracts.UseCases
 			Picture = pictureContract;
 		}
 
-		public int EntryId { get; set; }
+		public int EntryId { get; init; }
 
-		public EntryType EntryType { get; set; }
+		public EntryType EntryType { get; init; }
 
-		public string Name { get; set; }
+		public string Name { get; init; }
 
-		public PictureContract Picture { get; set; }
+		public PictureContract Picture { get; init; }
 
-		public int Version { get; set; }
+		public int Version { get; init; }
 	}
 }

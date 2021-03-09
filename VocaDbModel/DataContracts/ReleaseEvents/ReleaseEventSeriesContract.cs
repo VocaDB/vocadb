@@ -46,37 +46,37 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		}
 
 		[DataMember]
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
 		[DataMember]
-		public EventCategory Category { get; set; }
+		public EventCategory Category { get; init; }
 
 		[DataMember]
-		public bool Deleted { get; set; }
+		public bool Deleted { get; init; }
 
 		[DataMember]
-		public string Description { get; set; }
+		public string Description { get; init; }
 
 		[DataMember]
 		public int Id { get; set; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember]
-		public string PictureMime { get; set; }
+		public string PictureMime { get; init; }
 
 		[DataMember]
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
 		[DataMember]
-		public string UrlSlug { get; set; }
+		public string UrlSlug { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public int Version { get; init; }
 
 		[DataMember]
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 
 		public override string ToString()
 		{

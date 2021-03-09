@@ -50,30 +50,30 @@ namespace VocaDb.Model.DataContracts.Tags
 			FollowerCount = followerCount;
 		}
 
-		public int AlbumCount { get; set; }
+		public int AlbumCount { get; init; }
 
-		public int ArtistCount { get; set; }
+		public int ArtistCount { get; init; }
 
-		public AlbumContract[] Albums { get; set; }
+		public AlbumContract[] Albums { get; init; }
 
-		public ArtistContract[] Artists { get; set; }
+		public ArtistContract[] Artists { get; init; }
 
-		public int EventCount { get; set; }
+		public int EventCount { get; init; }
 
-		public int EventSeriesCount { get; set; }
+		public int EventSeriesCount { get; init; }
 
-		public ReleaseEventForApiContract[] Events { get; set; }
+		public ReleaseEventForApiContract[] Events { get; init; }
 
-		public ReleaseEventSeriesContract[] EventSeries { get; set; }
+		public ReleaseEventSeriesContract[] EventSeries { get; init; }
 
-		public int FollowerCount { get; set; }
+		public int FollowerCount { get; init; }
 
-		public int SongListCount { get; set; }
+		public int SongListCount { get; init; }
 
-		public SongListBaseContract[] SongLists { get; set; }
+		public SongListBaseContract[] SongLists { get; init; }
 
-		public SongForApiContract[] Songs { get; set; }
+		public SongForApiContract[] Songs { get; init; }
 
-		public int SongCount { get; set; }
+		public int SongCount { get; init; }
 	}
 }

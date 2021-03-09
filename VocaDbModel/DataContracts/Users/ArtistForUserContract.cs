@@ -25,10 +25,10 @@ namespace VocaDb.Model.DataContracts.Users
 			Artist = artist;
 		}
 
-		public ArtistContract Artist { get; set; }
+		public ArtistContract Artist { get; init; }
 
-		public int Id { get; set; }
+		public int Id { get; init; }
 
-		public UserContract User { get; set; }
+		public UserContract User { get; init; }
 	}
 }

@@ -18,12 +18,12 @@ namespace VocaDb.Model.DataContracts
 		}
 
 		[DataMember]
-		public Byte[] Bytes { get; set; }
+		public Byte[] Bytes { get; init; }
 
 		[DataMember]
-		public string Mime { get; set; }
+		public string Mime { get; init; }
 
 		[DataMember]
-		public Byte[] Thumb250 { get; set; }
+		public Byte[] Thumb250 { get; init; }
 	}
 }

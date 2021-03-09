@@ -22,14 +22,14 @@ namespace VocaDb.Model.DataContracts.Tags
 
 		public TagUsageWithVotesContract() { }
 
-		public DateTime Date { get; set; }
+		public DateTime Date { get; init; }
 
-		public int Count { get; set; }
+		public int Count { get; init; }
 
-		public long Id { get; set; }
+		public long Id { get; init; }
 
-		public TagBaseContract Tag { get; set; }
+		public TagBaseContract Tag { get; init; }
 
-		public UserContract[] Votes { get; set; }
+		public UserContract[] Votes { get; init; }
 	}
 }

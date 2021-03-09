@@ -47,28 +47,28 @@ namespace VocaDb.Model.DataContracts.Users
 		}
 
 		[DataMember]
-		public bool Active { get; set; }
+		public bool Active { get; init; }
 
 		[DataMember]
-		public UserGroupId GroupId { get; set; }
+		public UserGroupId GroupId { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public UserKnownLanguageContract[] KnownLanguages { get; set; }
+		public UserKnownLanguageContract[] KnownLanguages { get; init; }
 
 		/// <summary>
 		/// Can be null.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public EntryThumbForApiContract MainPicture { get; set; }
+		public EntryThumbForApiContract MainPicture { get; init; }
 
 		[DataMember]
-		public DateTime MemberSince { get; set; }
+		public DateTime MemberSince { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public OldUsernameContract[] OldUsernames { get; set; }
+		public OldUsernameContract[] OldUsernames { get; init; }
 
 		[DataMember]
-		public bool VerifiedArtist { get; set; }
+		public bool VerifiedArtist { get; init; }
 	}
 
 	[Flags]

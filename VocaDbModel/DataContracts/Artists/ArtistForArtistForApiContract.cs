@@ -19,9 +19,9 @@ namespace VocaDb.Model.DataContracts.Artists
 		}
 
 		[DataMember]
-		public ArtistContract Artist { get; set; }
+		public ArtistContract Artist { get; init; }
 
 		[DataMember]
-		public ArtistLinkType LinkType { get; set; }
+		public ArtistLinkType LinkType { get; init; }
 	}
 }

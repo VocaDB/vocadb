@@ -17,8 +17,8 @@ namespace VocaDb.Model.DataContracts.Users
 			OldName = oldUsername.OldName;
 		}
 
-		public DateTime Date { get; set; }
+		public DateTime Date { get; init; }
 
-		public string OldName { get; set; }
+		public string OldName { get; init; }
 	}
 }

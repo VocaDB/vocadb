@@ -57,7 +57,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		}
 
 		[DataMember]
-		public string[] Aliases { get; set; }
+		public string[] Aliases { get; init; }
 
 		[DataMember]
 		public EventCategory Category { get; set; }

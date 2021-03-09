@@ -24,9 +24,9 @@ namespace VocaDb.Model.DataContracts.Songs
 		}
 
 		[DataMember]
-		public int DiscNumber { get; set; }
+		public int DiscNumber { get; init; }
 
 		[DataMember]
-		public int TrackNumber { get; set; }
+		public int TrackNumber { get; init; }
 	}
 }

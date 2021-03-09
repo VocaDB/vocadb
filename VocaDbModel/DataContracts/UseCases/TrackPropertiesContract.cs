@@ -22,10 +22,10 @@ namespace VocaDb.Model.DataContracts.UseCases
 					.OrderBy(a => a.Artist.Name).ToArray();
 		}
 
-		public ArtistSelectionForTrackContract[] ArtistSelections { get; set; }
+		public ArtistSelectionForTrackContract[] ArtistSelections { get; init; }
 
-		public int Id { get; set; }
+		public int Id { get; init; }
 
-		public string Name { get; set; }
+		public string Name { get; init; }
 	}
 }

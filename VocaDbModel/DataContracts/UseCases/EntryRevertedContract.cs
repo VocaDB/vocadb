@@ -19,8 +19,8 @@ namespace VocaDb.Model.DataContracts.UseCases
 			Warnings = warnings.ToArray();
 		}
 
-		public int Id { get; set; }
+		public int Id { get; init; }
 
-		public string[] Warnings { get; set; }
+		public string[] Warnings { get; init; }
 	}
 }

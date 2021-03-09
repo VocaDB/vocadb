@@ -15,8 +15,8 @@ namespace VocaDb.Model.DataContracts.Tags
 			Selected = selected;
 		}
 
-		public bool Selected { get; set; }
+		public bool Selected { get; init; }
 
-		public TagBaseContract Tag { get; set; }
+		public TagBaseContract Tag { get; init; }
 	}
 }

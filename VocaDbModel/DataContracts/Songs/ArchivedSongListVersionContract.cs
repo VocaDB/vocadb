@@ -16,8 +16,8 @@ namespace VocaDb.Model.DataContracts.Songs
 			Reason = archivedVersion.CommonEditEvent;
 		}
 
-		public SongListEditableFields ChangedFields { get; set; }
+		public SongListEditableFields ChangedFields { get; init; }
 
-		public EntryEditEvent Reason { get; set; }
+		public EntryEditEvent Reason { get; init; }
 	}
 }

@@ -36,7 +36,7 @@ namespace VocaDb.Model.DataContracts.Users
 			WebLinks = user.WebLinks.OrderBy(w => w.DescriptionOrUrl).Select(w => new WebLinkContract(w)).ToArray();
 		}
 
-		public string AboutMe { get; set; }
+		public string AboutMe { get; init; }
 
 		public int AlbumCollectionCount { get; set; }
 
@@ -44,9 +44,9 @@ namespace VocaDb.Model.DataContracts.Users
 
 		public int CommentCount { get; set; }
 
-		public string CustomTitle { get; set; }
+		public string CustomTitle { get; init; }
 
-		public bool EmailVerified { get; set; }
+		public bool EmailVerified { get; init; }
 
 		public int EditCount { get; set; }
 
@@ -60,9 +60,9 @@ namespace VocaDb.Model.DataContracts.Users
 
 		public bool IsVeteran { get; set; }
 
-		public DateTime LastLogin { get; set; }
+		public DateTime LastLogin { get; init; }
 
-		public string LastLoginAddress { get; set; }
+		public string LastLoginAddress { get; init; }
 
 		[DataMember]
 		public CommentForApiContract[] LatestComments { get; set; }
@@ -71,11 +71,11 @@ namespace VocaDb.Model.DataContracts.Users
 
 		public int Level { get; set; }
 
-		public string Location { get; set; }
+		public string Location { get; init; }
 
-		public UserKnownLanguageContract[] KnownLanguages { get; set; }
+		public UserKnownLanguageContract[] KnownLanguages { get; init; }
 
-		public OldUsernameContract[] OldUsernames { get; set; }
+		public OldUsernameContract[] OldUsernames { get; init; }
 
 		public int Power { get; set; }
 
@@ -85,17 +85,17 @@ namespace VocaDb.Model.DataContracts.Users
 		/// </summary>
 		public bool PossibleProducerAccount { get; set; }
 
-		public SongListContract[] SongLists { get; set; }
+		public SongListContract[] SongLists { get; init; }
 
-		public bool Standalone { get; set; }
+		public bool Standalone { get; init; }
 
 		public int SubmitCount { get; set; }
 
 		public int TagVotes { get; set; }
 
-		public string TwitterName { get; set; }
+		public string TwitterName { get; init; }
 
 		[DataMember]
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 	}
 }

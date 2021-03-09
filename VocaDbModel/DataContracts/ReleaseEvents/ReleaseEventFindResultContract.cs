@@ -34,16 +34,16 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			EventName = eventName;
 		}
 
-		public int EventId { get; set; }
+		public int EventId { get; init; }
 
-		public string EventName { get; set; }
+		public string EventName { get; init; }
 
 		public bool IsKnownEvent => EventId != 0;
 
-		public ReleaseEventSeriesContract Series { get; set; }
+		public ReleaseEventSeriesContract Series { get; init; }
 
-		public int SeriesNumber { get; set; }
+		public int SeriesNumber { get; init; }
 
-		public string SeriesSuffix { get; set; }
+		public string SeriesSuffix { get; init; }
 	}
 }

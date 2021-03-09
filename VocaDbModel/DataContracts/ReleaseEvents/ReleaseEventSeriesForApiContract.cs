@@ -58,43 +58,43 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		/// Comma-separated list of all other names that aren't the display name.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
 		[DataMember]
-		public EventCategory Category { get; set; }
+		public EventCategory Category { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string Description { get; set; }
+		public string Description { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public ReleaseEventForApiContract[] Events { get; set; }
+		public ReleaseEventForApiContract[] Events { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public EntryThumbForApiContract MainPicture { get; set; }
+		public EntryThumbForApiContract MainPicture { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		/// <summary>
 		/// List of all names for this entry. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[] Names { get; init; }
 
 		[DataMember]
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
 		[DataMember]
-		public string UrlSlug { get; set; }
+		public string UrlSlug { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public int Version { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public WebLinkForApiContract[] WebLinks { get; set; }
+		public WebLinkForApiContract[] WebLinks { get; init; }
 	}
 
 	[Flags]

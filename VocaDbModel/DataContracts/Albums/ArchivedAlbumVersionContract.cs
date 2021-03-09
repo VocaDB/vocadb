@@ -15,8 +15,8 @@ namespace VocaDb.Model.DataContracts.Albums
 			Reason = archivedVersion.Reason;
 		}
 
-		public AlbumEditableFields ChangedFields { get; set; }
+		public AlbumEditableFields ChangedFields { get; init; }
 
-		public AlbumArchiveReason Reason { get; set; }
+		public AlbumArchiveReason Reason { get; init; }
 	}
 }
