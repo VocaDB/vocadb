@@ -29,12 +29,19 @@
 
 		public static parseToSeconds = (formatted: string): number => {
 			var parts = formatted.split(":");
-			if (parts.length == 2 && parseInt(parts[0], 10) != NaN && parseInt(parts[1], 10) != NaN) {
-				return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
-			} else if (parts.length == 1 && !isNaN(parseInt(parts[0], 10))) {
-				return parseInt(parts[0], 10);
-			} else {
-				return 0;
+			switch (parts.length) {
+				case 1: {
+					var seconds = parseInt(parts[0]) || 0;
+					return seconds;
+				}
+				case 2: {
+					var mins = parseInt(parts[0]) || 0;
+					var seconds = parseInt(parts[1]) || 0;
+					return mins * 60 + seconds;
+				}
+				default: {
+					return 0;
+				}
 			}
 		}
 
