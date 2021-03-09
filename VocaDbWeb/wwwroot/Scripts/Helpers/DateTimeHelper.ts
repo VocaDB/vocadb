@@ -23,26 +23,30 @@
 		public static formatFromSeconds = (seconds: number) => {
 			seconds = Math.max(seconds, 0);
 			var mins = Math.floor(seconds / 60);
-			const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
-			return clamp(mins, 0, 3939) + ":" + DateTimeHelper.addLeadingZero(seconds % 60);
+			return mins + ":" + DateTimeHelper.addLeadingZero(seconds % 60);
 		}
 
 		public static parseToSeconds = (formatted: string): number => {
-			var parts = formatted.split(":");
-			switch (parts.length) {
-				case 1: {
-					var seconds = parseInt(parts[0]) || 0;
-					return seconds;
+			const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+			const parseToSecondsInternal = (formatted: string): number => {
+				var parts = formatted.split(":");
+				switch (parts.length) {
+					case 1: {
+						var seconds = parseInt(parts[0]) || 0;
+						return seconds;
+					}
+					case 2: {
+						var mins = parseInt(parts[0]) || 0;
+						var seconds = parseInt(parts[1]) || 0;
+						return mins * 60 + seconds;
+					}
+					default: {
+						return 0;
+					}
 				}
-				case 2: {
-					var mins = parseInt(parts[0]) || 0;
-					var seconds = parseInt(parts[1]) || 0;
-					return mins * 60 + seconds;
-				}
-				default: {
-					return 0;
-				}
-			}
+			};
+			return clamp(parseToSecondsInternal(formatted), 0, 60 * 3939);
 		}
+
 
 	}
