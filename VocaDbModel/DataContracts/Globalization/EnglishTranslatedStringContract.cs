@@ -13,6 +13,7 @@ namespace VocaDb.Model.DataContracts.Globalization
 			English = Original = string.Empty;
 		}
 
+#nullable enable
 		public EnglishTranslatedStringContract(EnglishTranslatedString str)
 		{
 			ParamIs.NotNull(() => str);
@@ -20,6 +21,7 @@ namespace VocaDb.Model.DataContracts.Globalization
 			English = str.English;
 			Original = str.Original;
 		}
+#nullable disable
 
 		[DataMember]
 		public string English { get; set; }

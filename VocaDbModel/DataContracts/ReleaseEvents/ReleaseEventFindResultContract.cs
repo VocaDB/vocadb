@@ -13,6 +13,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	{
 		public ReleaseEventFindResultContract() { }
 
+#nullable enable
 		public ReleaseEventFindResultContract(ReleaseEvent releaseEvent, ContentLanguagePreference languagePreference)
 		{
 			ParamIs.NotNull(() => releaseEvent);
@@ -20,6 +21,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			EventId = releaseEvent.Id;
 			EventName = releaseEvent.TranslatedName[languagePreference];
 		}
+#nullable disable
 
 		public ReleaseEventFindResultContract(string eventName)
 		{

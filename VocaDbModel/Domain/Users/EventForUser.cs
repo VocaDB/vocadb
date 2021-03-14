@@ -11,6 +11,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public EventForUser() { }
 
+#nullable enable
 		public EventForUser(User user, ReleaseEvent releaseEvent, UserEventRelationshipType relationshipType)
 		{
 			ParamIs.NotNull(() => user);
@@ -20,6 +21,7 @@ namespace VocaDb.Model.Domain.Users
 			ReleaseEvent = releaseEvent;
 			RelationshipType = relationshipType;
 		}
+#nullable disable
 
 		public virtual int Id { get; set; }
 

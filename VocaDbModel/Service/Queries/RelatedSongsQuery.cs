@@ -21,12 +21,14 @@ namespace VocaDb.Model.Service.Queries
 			return ArtistHelper.GetProducers(creditableArtists, SongHelper.GetContentFocus(song.SongType)).Select(a => a.Artist).ToArray();
 		}
 
+#nullable enable
 		public RelatedSongsQuery(IDatabaseContext<Song> ctx)
 		{
 			ParamIs.NotNull(() => ctx);
 
 			_ctx = ctx;
 		}
+#nullable disable
 
 		public int[] GetLikeMatches(Song song, IList<int> ignoreIds, int count)
 		{
@@ -62,6 +64,7 @@ namespace VocaDb.Model.Service.Queries
 				.ToArray();
 		}
 
+#nullable enable
 		public RelatedSongs GetRelatedSongs(Song song, SongRelationsFields fields = SongRelationsFields.All, int count = 12)
 		{
 			ParamIs.NotNull(() => song);
@@ -127,6 +130,7 @@ namespace VocaDb.Model.Service.Queries
 
 			return songs;
 		}
+#nullable disable
 	}
 
 	public class RelatedSongs

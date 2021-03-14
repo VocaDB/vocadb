@@ -181,6 +181,7 @@ namespace VocaDb.Model.Domain.Tags
 		/// </summary>
 		public virtual DateTime CreateDate { get; set; }
 
+#nullable enable
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
 			ParamIs.NotNullOrEmpty(() => message);
@@ -191,6 +192,7 @@ namespace VocaDb.Model.Domain.Tags
 
 			return comment;
 		}
+#nullable disable
 
 		public virtual string DefaultName => TranslatedName.Default;
 
@@ -273,6 +275,7 @@ namespace VocaDb.Model.Domain.Tags
 			return archived;
 		}
 
+#nullable enable
 		public virtual TagMapping CreateMapping(string sourceTag)
 		{
 			ParamIs.NotNullOrEmpty(() => sourceTag);
@@ -309,6 +312,7 @@ namespace VocaDb.Model.Domain.Tags
 
 			return link;
 		}
+#nullable disable
 
 		public virtual void Delete()
 		{
@@ -506,6 +510,7 @@ namespace VocaDb.Model.Domain.Tags
 			}
 		}
 
+#nullable enable
 		public virtual RelatedTag AddRelatedTag(Tag tag)
 		{
 			ParamIs.NotNull(() => tag);
@@ -521,6 +526,7 @@ namespace VocaDb.Model.Domain.Tags
 
 			return link;
 		}
+#nullable disable
 
 		public virtual CollectionDiff<RelatedTag> SyncRelatedTags(IEnumerable<ITag> newRelatedTags, Func<int, Tag> loadTagFunc)
 		{

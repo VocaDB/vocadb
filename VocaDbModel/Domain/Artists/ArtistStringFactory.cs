@@ -54,6 +54,7 @@ namespace VocaDb.Model.Domain.Artists
 			_allowRepeatingProducerAsPerformer = allowRepeatingProducerAsPerformer;
 		}
 
+#nullable enable
 		public TranslatedStringWithDefault GetArtistString(IEnumerable<IArtistLinkWithRoles> artists, ContentFocus focus)
 		{
 			ParamIs.NotNull(() => artists);
@@ -92,5 +93,6 @@ namespace VocaDb.Model.Domain.Artists
 				return TranslatedStringWithDefault.Create(lang => string.Join(", ", (producers.Any() ? producers : performers).Select(a => ArtistHelper.GetTranslatedName(a)[lang])));
 			}
 		}
+#nullable disable
 	}
 }

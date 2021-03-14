@@ -13,6 +13,7 @@ namespace VocaDb.Model.DataContracts
 	{
 		public ArchivedObjectVersionContract() { }
 
+#nullable enable
 		public ArchivedObjectVersionContract(ArchivedObjectVersion archivedObjectVersion)
 		{
 			ParamIs.NotNull(() => archivedObjectVersion);
@@ -28,6 +29,7 @@ namespace VocaDb.Model.DataContracts
 			Status = archivedObjectVersion.Status;
 			Version = archivedObjectVersion.Version;
 		}
+#nullable disable
 
 		public string AgentName { get; init; }
 

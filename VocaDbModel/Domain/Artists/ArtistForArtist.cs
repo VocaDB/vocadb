@@ -74,6 +74,7 @@ namespace VocaDb.Model.Domain.Artists
 			return base.GetHashCode();
 		}
 
+#nullable enable
 		public virtual void MoveToGroup(Artist target)
 		{
 			ParamIs.NotNull(() => target);
@@ -97,6 +98,7 @@ namespace VocaDb.Model.Domain.Artists
 			Member = target;
 			target.AllGroups.Add(this);
 		}
+#nullable disable
 
 		public override string ToString()
 		{

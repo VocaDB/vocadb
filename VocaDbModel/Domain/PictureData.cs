@@ -18,12 +18,14 @@ namespace VocaDb.Model.Domain
 
 		public PictureData() { }
 
+#nullable enable
 		public PictureData(PictureDataContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 
 			Bytes = contract.Bytes;
 		}
+#nullable disable
 
 		public virtual Byte[] Bytes { get; set; }
 

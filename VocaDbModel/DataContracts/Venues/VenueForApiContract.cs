@@ -68,6 +68,7 @@ namespace VocaDb.Model.DataContracts.Venues
 
 		public VenueForApiContract() { }
 
+#nullable enable
 		public VenueForApiContract(Venue venue, ContentLanguagePreference languagePreference, VenueOptionalFields fields)
 		{
 			ParamIs.NotNull(() => venue);
@@ -106,6 +107,7 @@ namespace VocaDb.Model.DataContracts.Venues
 				WebLinks = venue.WebLinks.Links.Select(w => new WebLinkForApiContract(w, WebLinkOptionalFields.DescriptionOrUrl)).ToArray();
 			}
 		}
+#nullable disable
 	}
 
 	[Flags]

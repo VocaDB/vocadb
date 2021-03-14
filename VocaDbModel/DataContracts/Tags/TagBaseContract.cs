@@ -16,6 +16,7 @@ namespace VocaDb.Model.DataContracts.Tags
 	{
 		public TagBaseContract() { }
 
+#nullable enable
 		public TagBaseContract(Tag tag, ContentLanguagePreference languagePreference,
 			bool includeAdditionalNames = false, bool includeCategory = false)
 		{
@@ -31,6 +32,7 @@ namespace VocaDb.Model.DataContracts.Tags
 			if (includeCategory)
 				CategoryName = tag.CategoryName;
 		}
+#nullable disable
 
 		/// <summary>
 		/// Additional names - optional field.

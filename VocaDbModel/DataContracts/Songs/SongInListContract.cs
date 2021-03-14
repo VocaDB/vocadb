@@ -7,6 +7,7 @@ namespace VocaDb.Model.DataContracts.Songs
 {
 	public class SongInListContract
 	{
+#nullable enable
 		public SongInListContract(SongInList songInList, ContentLanguagePreference languagePreference)
 		{
 			ParamIs.NotNull(() => songInList);
@@ -15,6 +16,7 @@ namespace VocaDb.Model.DataContracts.Songs
 			Notes = songInList.Notes;
 			Song = new SongContract(songInList.Song, languagePreference);
 		}
+#nullable disable
 
 		public int Order { get; init; }
 

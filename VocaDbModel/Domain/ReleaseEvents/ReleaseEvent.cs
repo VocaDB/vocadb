@@ -289,6 +289,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			return archived;
 		}
 
+#nullable enable
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
 			ParamIs.NotNullOrEmpty(() => message);
@@ -299,12 +300,14 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 			return comment;
 		}
+#nullable disable
 
 		public virtual EventName CreateName(string val, ContentLanguageSelection language)
 		{
 			return CreateName(new LocalizedString(val, language));
 		}
 
+#nullable enable
 		public virtual EventName CreateName(ILocalizedString localizedString)
 		{
 			ParamIs.NotNull(() => localizedString);
@@ -335,6 +338,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 			return link;
 		}
+#nullable disable
 
 		public virtual bool Equals(ReleaseEvent another)
 		{
@@ -360,6 +364,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			return Id.GetHashCode();
 		}
 
+#nullable enable
 		private async Task<ArtistForEvent> AddArtist(ArtistForEventContract contract, Func<int, Task<Artist>> artistGetter)
 		{
 			ArtistForEvent link;
@@ -384,6 +389,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			AllArtists.Add(link);
 			return link;
 		}
+#nullable disable
 
 		public virtual IEnumerable<LocalizedString> GetNamesFromSeries()
 		{
@@ -410,6 +416,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			Venue = newVenue;
 		}
 
+#nullable enable
 		public virtual async Task<CollectionDiffWithValue<ArtistForEvent, ArtistForEvent>> SyncArtists(
 			IList<ArtistForEventContract> newArtists, Func<int, Task<Artist>> artistGetter)
 		{
@@ -428,6 +435,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			var diff = await CollectionHelper.SyncWithContentAsync(AllArtists, newArtists, (a1, a2) => a1.Id == a2.Id, async a => await AddArtist(a, artistGetter), Update, null);
 			return diff;
 		}
+#nullable disable
 
 		public override string ToString()
 		{

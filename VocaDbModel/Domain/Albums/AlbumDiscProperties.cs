@@ -14,6 +14,7 @@ namespace VocaDb.Model.Domain.Albums
 			MediaType = DiscMediaType.Audio;
 		}
 
+#nullable enable
 		public AlbumDiscProperties(Album album, AlbumDiscPropertiesContract contract)
 		{
 			ParamIs.NotNull(() => album);
@@ -21,6 +22,7 @@ namespace VocaDb.Model.Domain.Albums
 			Album = album;
 			CopyContentFrom(contract);
 		}
+#nullable disable
 
 		public virtual Album Album
 		{
@@ -48,6 +50,7 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
+#nullable enable
 		public virtual void CopyContentFrom(AlbumDiscPropertiesContract contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -56,6 +59,7 @@ namespace VocaDb.Model.Domain.Albums
 			MediaType = contract.MediaType;
 			Name = contract.Name;
 		}
+#nullable disable
 	}
 
 	public enum DiscMediaType

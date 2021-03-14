@@ -11,6 +11,7 @@ namespace VocaDb.Model.DataContracts.Songs
 	{
 		public SongInListEditContract() { }
 
+#nullable enable
 		public SongInListEditContract(SongInList songInList, ContentLanguagePreference languagePreference)
 			: base(songInList, languagePreference, SongOptionalFields.AdditionalNames)
 		{
@@ -18,6 +19,7 @@ namespace VocaDb.Model.DataContracts.Songs
 
 			SongInListId = songInList.Id;
 		}
+#nullable disable
 
 		[DataMember]
 		public int SongInListId { get; init; }

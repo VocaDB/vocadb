@@ -52,6 +52,7 @@ namespace VocaDb.Model.Domain.Globalization
 			}
 		}
 
+#nullable enable
 		public virtual bool CopyFrom(EnglishTranslatedStringContract contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -75,6 +76,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 			return changed;
 		}
+#nullable disable
 
 		public virtual bool CopyIfEmpty(EnglishTranslatedString source)
 		{

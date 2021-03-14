@@ -14,12 +14,14 @@ namespace VocaDb.Model.Service.BBCode
 	{
 		private readonly IEntryLinkFactory _linkFactory;
 
+#nullable enable
 		public EntryLinkTransformer(IEntryLinkFactory linkFactory)
 		{
 			ParamIs.NotNull(() => linkFactory);
 
 			_linkFactory = linkFactory;
 		}
+#nullable disable
 
 		private readonly Regex[] linkMatchers = new[] {
 			new Regex(@"/(Album|Artist|Song|SongList|Tag|User)/Details/(\w+)"),
@@ -40,6 +42,7 @@ namespace VocaDb.Model.Service.BBCode
 				return match.Value;
 		}
 
+#nullable enable
 		public void ApplyTransform(StringBuilder bbCode)
 		{
 			ParamIs.NotNull(() => bbCode);
@@ -47,5 +50,6 @@ namespace VocaDb.Model.Service.BBCode
 			BBCodeConverter.RegexReplace(bbCode, linkMatchers[0], GetLink);
 			BBCodeConverter.RegexReplace(bbCode, linkMatchers[1], GetLink);
 		}
+#nullable disable
 	}
 }

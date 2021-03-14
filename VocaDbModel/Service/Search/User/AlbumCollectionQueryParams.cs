@@ -8,6 +8,7 @@ namespace VocaDb.Model.Service.Search.User
 {
 	public class AlbumCollectionQueryParams
 	{
+#nullable enable
 		public AlbumCollectionQueryParams(int userId, PagingProperties paging)
 		{
 			ParamIs.NotNull(() => paging);
@@ -19,6 +20,7 @@ namespace VocaDb.Model.Service.Search.User
 			Sort = AlbumSortRule.Name;
 			TextQuery = new SearchTextQuery();
 		}
+#nullable disable
 
 		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
 

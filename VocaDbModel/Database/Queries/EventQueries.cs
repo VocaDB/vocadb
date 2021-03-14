@@ -78,6 +78,7 @@ namespace VocaDb.Model.Database.Queries
 			_imageUrlFactory = imageUrlFactory;
 		}
 
+#nullable enable
 		public (bool created, int reportId) CreateReport(int eventId, EventReportType reportType, string hostname, string notes, int? versionNumber)
 		{
 			ParamIs.NotNull(() => hostname);
@@ -92,6 +93,7 @@ namespace VocaDb.Model.Database.Queries
 					eventId, reportType, hostname, notes);
 			});
 		}
+#nullable disable
 
 		public void Delete(int eventId, string notes)
 		{
@@ -433,6 +435,7 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
+#nullable enable
 		/// <summary>
 		/// Updates or creates release event.
 		/// 
@@ -441,7 +444,7 @@ namespace VocaDb.Model.Database.Queries
 		/// <param name="contract">Updated contract. Cannot be null.</param>
 		/// <returns>Updated release event data. Cannot be null.</returns>
 		/// <exception cref="DuplicateEventNameException">If the event name is already in use.</exception>
-		public async Task<ReleaseEventContract> Update(ReleaseEventForEditContract contract, EntryPictureFileContract pictureData)
+		public async Task<ReleaseEventContract> Update(ReleaseEventForEditContract contract, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -649,6 +652,7 @@ namespace VocaDb.Model.Database.Queries
 				return new ReleaseEventContract(ev, LanguagePreference);
 			});
 		}
+#nullable disable
 
 		private PictureDataContract SaveImage(IEntryImageInformation entry, EntryPictureFileContract pictureData)
 		{
@@ -675,7 +679,8 @@ namespace VocaDb.Model.Database.Queries
 			ev.PictureMime = parsed.Mime;
 		}
 
-		public int UpdateSeries(ReleaseEventSeriesForEditContract contract, EntryPictureFileContract pictureData)
+#nullable enable
+		public int UpdateSeries(ReleaseEventSeriesForEditContract contract, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -793,6 +798,7 @@ namespace VocaDb.Model.Database.Queries
 				return series.Id;
 			});
 		}
+#nullable disable
 
 		public AlbumForApiContract[] GetAlbums(int eventId,
 			AlbumOptionalFields fields = AlbumOptionalFields.None,

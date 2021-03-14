@@ -70,6 +70,7 @@ namespace VocaDb.Model.Service.VideoServices
 
 		public static string GetThumbUrl(IPVWithThumbnail pv) => Services[pv.Service].GetThumbUrlById(pv.PVId);
 
+#nullable enable
 		public static string GetThumbUrl<T>(IList<T> pvs) where T : class, IPVWithThumbnail
 		{
 			ParamIs.NotNull(() => pvs);
@@ -116,7 +117,7 @@ namespace VocaDb.Model.Service.VideoServices
 			return (pv != null ? (!string.IsNullOrEmpty(pv.ThumbUrl) ? pv.ThumbUrl : GetThumbUrl(pv)) : string.Empty);
 		}
 
-		public static string GetMaxSizeThumbUrl<T>(IList<T> pvs) where T : class, IPVWithThumbnail
+		public static string? GetMaxSizeThumbUrl<T>(IList<T> pvs) where T : class, IPVWithThumbnail
 		{
 			ParamIs.NotNull(() => pvs);
 
@@ -145,6 +146,7 @@ namespace VocaDb.Model.Service.VideoServices
 			else
 				return GetPV(p);
 		}
+#nullable disable
 
 		public static Task<VideoUrlParseResult> ParseByUrlAsync(string url, bool getTitle, IUserPermissionContext permissionContext)
 		{

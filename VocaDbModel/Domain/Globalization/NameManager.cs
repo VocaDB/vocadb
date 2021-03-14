@@ -209,6 +209,7 @@ namespace VocaDb.Model.Domain.Globalization
 			return Names.Any(n => n.Value.Equals(val, StringComparison.InvariantCultureIgnoreCase));
 		}
 
+#nullable enable
 		public virtual void Init(IEnumerable<LocalizedStringContract> names, INameFactory<T> nameFactory)
 		{
 			ParamIs.NotNull(() => names);
@@ -224,6 +225,7 @@ namespace VocaDb.Model.Domain.Globalization
 			else if (names.Any(n => n.Language == ContentLanguageSelection.English))
 				SortNames.DefaultLanguage = ContentLanguageSelection.English;
 		}
+#nullable disable
 
 		public virtual void Remove(T name, bool update = true)
 		{
@@ -233,6 +235,7 @@ namespace VocaDb.Model.Domain.Globalization
 				UpdateSortNames();
 		}
 
+#nullable enable
 		/// <summary>
 		/// Sync names. Adds new names, updates existing names (unless immutable), and deletes removed names.
 		/// </summary>
@@ -248,7 +251,7 @@ namespace VocaDb.Model.Domain.Globalization
 		/// </param>
 		/// <returns>Resulted diff for name update. Cannot be null.</returns>
 		public virtual CollectionDiffWithValue<T, T> Sync(IEnumerable<LocalizedStringWithIdContract> newNames, INameFactory<T> nameFactory,
-			Action<T[]> deletedCallback = null, Action<T[]> editedCallback = null, bool immutable = false)
+			Action<T[]>? deletedCallback = null, Action<T[]>? editedCallback = null, bool immutable = false)
 		{
 			ParamIs.NotNull(() => newNames);
 			ParamIs.NotNull(() => nameFactory);
@@ -289,7 +292,7 @@ namespace VocaDb.Model.Domain.Globalization
 			return new CollectionDiffWithValue<T, T>(created, diff.Removed, diff.Unchanged, edited);
 		}
 
-		public virtual CollectionDiff<T, T> SyncByContent(IEnumerable<ILocalizedString> newNames, INameFactory<T> nameFactory, Action<T[]> deletedCallback = null)
+		public virtual CollectionDiff<T, T> SyncByContent(IEnumerable<ILocalizedString> newNames, INameFactory<T> nameFactory, Action<T[]>? deletedCallback = null)
 		{
 			ParamIs.NotNull(() => newNames);
 			ParamIs.NotNull(() => nameFactory);
@@ -314,6 +317,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 			return new CollectionDiff<T, T>(created, diff.Removed, diff.Unchanged);
 		}
+#nullable disable
 
 		public virtual void UpdateSortNames()
 		{
@@ -334,6 +338,7 @@ namespace VocaDb.Model.Domain.Globalization
 	{
 		public BasicNameManager() { }
 
+#nullable enable
 		public BasicNameManager(INameManager nameManager)
 		{
 			ParamIs.NotNull(() => nameManager);
@@ -341,5 +346,6 @@ namespace VocaDb.Model.Domain.Globalization
 			Names = nameManager.NamesBase.Select(n => new LocalizedStringWithId(n.Value, n.Language)).ToArray();
 			SortNames = new TranslatedString(nameManager.SortNames);
 		}
+#nullable disable
 	}
 }

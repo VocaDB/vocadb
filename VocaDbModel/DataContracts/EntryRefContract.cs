@@ -12,6 +12,7 @@ namespace VocaDb.Model.DataContracts
 	{
 		public EntryRefContract() { }
 
+#nullable enable
 		public EntryRefContract(IEntryBase entryBase)
 		{
 			ParamIs.NotNull(() => entryBase);
@@ -27,6 +28,7 @@ namespace VocaDb.Model.DataContracts
 			EntryType = entryRef.EntryType;
 			Id = entryRef.Id;
 		}
+#nullable disable
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]

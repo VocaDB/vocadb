@@ -17,6 +17,7 @@ namespace VocaDb.Model.DataContracts.UseCases
 	{
 		public SongForEditContract() { }
 
+#nullable enable
 		public SongForEditContract(Song song, ContentLanguagePreference languagePreference)
 			: base(song, languagePreference)
 		{
@@ -41,6 +42,7 @@ namespace VocaDb.Model.DataContracts.UseCases
 			MinMilliBpm = song.MinMilliBpm;
 			MaxMilliBpm = song.MaxMilliBpm;
 		}
+#nullable disable
 
 		/// <summary>
 		/// ID of the first album's release event.

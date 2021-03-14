@@ -9,12 +9,14 @@ namespace VocaDb.Model.Service
 	{
 		private readonly ConcurrentDictionary<GlobalEntryId, string> _cachedNames = new();
 
+#nullable enable
 		public string GetUrlFriendlyName(IEntryWithNames entry)
 		{
 			ParamIs.NotNull(() => entry);
 
 			return _cachedNames.GetOrAdd(new GlobalEntryId(entry.EntryType, entry.Id), _ => entry.Names.GetUrlFriendlyName());
 		}
+#nullable disable
 	}
 
 	public interface IEntryUrlFriendlyNameFactory

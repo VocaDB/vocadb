@@ -58,6 +58,7 @@ namespace VocaDb.Model.Domain.Artists
 			Version = 0;
 		}
 
+#nullable enable
 		public Artist(TranslatedString translatedName)
 			: this()
 		{
@@ -66,6 +67,7 @@ namespace VocaDb.Model.Domain.Artists
 			foreach (var name in translatedName.AllLocalized)
 				Names.Add(new ArtistName(this, name));
 		}
+#nullable disable
 
 		/// <summary>
 		/// List of albums for this artist (not including deleted). 
@@ -352,6 +354,7 @@ namespace VocaDb.Model.Domain.Artists
 			return AddAlbum(album, false, ArtistRoles.Default);
 		}
 
+#nullable enable
 		public virtual ArtistForAlbum AddAlbum(Album album, bool support, ArtistRoles roles)
 		{
 			ParamIs.NotNull(() => album);
@@ -384,12 +387,14 @@ namespace VocaDb.Model.Domain.Artists
 
 			return member.AddGroup(this, linkType);
 		}
+#nullable disable
 
 		public virtual ArtistForSong AddSong(Song song)
 		{
 			return AddSong(song, false, ArtistRoles.Default);
 		}
 
+#nullable enable
 		public virtual ArtistForSong AddSong(Song song, bool support, ArtistRoles roles)
 		{
 			ParamIs.NotNull(() => song);
@@ -400,6 +405,7 @@ namespace VocaDb.Model.Domain.Artists
 
 			return link;
 		}
+#nullable disable
 
 		public virtual ArchivedArtistVersion CreateArchivedVersion(XDocument data, ArtistDiff diff, AgentLoginData author, ArtistArchiveReason reason, string notes)
 		{
@@ -410,6 +416,7 @@ namespace VocaDb.Model.Domain.Artists
 			return archived;
 		}
 
+#nullable enable
 		public virtual Comment CreateComment(string message, AgentLoginData author)
 		{
 			ParamIs.NotNullOrEmpty(() => message);
@@ -430,6 +437,7 @@ namespace VocaDb.Model.Domain.Artists
 
 			return name;
 		}
+#nullable disable
 
 		public virtual ArtistPictureFile CreatePicture(string name, string mime, User author)
 		{
@@ -441,6 +449,7 @@ namespace VocaDb.Model.Domain.Artists
 			return f;
 		}
 
+#nullable enable
 		public virtual ArtistWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
 			ParamIs.NotNull(() => description);
@@ -451,6 +460,7 @@ namespace VocaDb.Model.Domain.Artists
 
 			return link;
 		}
+#nullable disable
 
 		public virtual void Delete()
 		{
@@ -486,6 +496,7 @@ namespace VocaDb.Model.Domain.Artists
 			return ArchivedVersionsManager.GetLatestVersion();
 		}
 
+#nullable enable
 		/// <summary>
 		/// Checks whether this artist has a specific album.
 		/// </summary>
@@ -501,6 +512,7 @@ namespace VocaDb.Model.Domain.Artists
 
 			return Albums.Any(a => a.Album.Equals(album));
 		}
+#nullable disable
 
 		/// <summary>
 		/// Tests whether this artist has a specific artist as base voicebank.
@@ -512,6 +524,7 @@ namespace VocaDb.Model.Domain.Artists
 			return BaseVoicebank != null && (BaseVoicebank.Equals(artist) || BaseVoicebank.HasBaseVoicebank(artist));
 		}
 
+#nullable enable
 		public virtual bool HasGroup(Artist grp)
 		{
 			ParamIs.NotNull(() => grp);
@@ -553,6 +566,7 @@ namespace VocaDb.Model.Domain.Artists
 
 			return WebLinks.Any(w => w.Url == url);
 		}
+#nullable disable
 
 		public virtual void SetBaseVoicebank(Artist newBaseVoicebank)
 		{

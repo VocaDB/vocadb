@@ -22,6 +22,7 @@ namespace VocaDb.Model.DataContracts
 
 		public OptionalGeoPointContract() { }
 
+#nullable enable
 		public OptionalGeoPointContract(OptionalGeoPoint geoPoint)
 		{
 			ParamIs.NotNull(() => geoPoint);
@@ -31,5 +32,6 @@ namespace VocaDb.Model.DataContracts
 			Latitude = geoPoint.Latitude;
 			Longitude = geoPoint.Longitude;
 		}
+#nullable disable
 	}
 }

@@ -61,6 +61,7 @@ namespace VocaDb.Model.Service.Security
 			return CryptoHelper.HashSHA1(key + salt);
 		}
 
+#nullable enable
 		public void SetLoggedUser(UserWithPermissionsContract user)
 		{
 			ParamIs.NotNull(() => user);
@@ -70,6 +71,7 @@ namespace VocaDb.Model.Service.Security
 
 			_context.User = new VocaDbPrincipal(_context.User.Identity, user);
 		}
+#nullable disable
 
 		protected IPrincipal User => _context?.User;
 

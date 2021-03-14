@@ -265,7 +265,8 @@ namespace VocaDb.Model.Database.Queries
 			return FindSongs(songs);
 		}
 
-		public int UpdateSongList(SongListForEditContract contract, UploadedFileContract uploadedFile)
+#nullable enable
+		public int UpdateSongList(SongListForEditContract contract, UploadedFileContract? uploadedFile)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -348,6 +349,7 @@ namespace VocaDb.Model.Database.Queries
 				return list.Id;
 			});
 		}
+#nullable disable
 
 		public void DeleteComment(int commentId) => HandleTransaction(ctx => Comments(ctx).Delete(commentId));
 

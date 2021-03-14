@@ -12,6 +12,7 @@ namespace VocaDb.Model.Service.Search.User
 	/// </summary>
 	public class RatedSongQueryParams
 	{
+#nullable enable
 		public RatedSongQueryParams(int userId, PagingProperties paging)
 		{
 			ParamIs.NotNull(() => paging);
@@ -24,6 +25,7 @@ namespace VocaDb.Model.Service.Search.User
 			SortRule = RatedSongForUserSortRule.Name;
 			TextQuery = new SearchTextQuery();
 		}
+#nullable disable
 
 		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
 

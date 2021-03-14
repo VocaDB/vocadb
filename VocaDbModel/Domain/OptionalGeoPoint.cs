@@ -22,6 +22,7 @@ namespace VocaDb.Model.Domain
 
 		public OptionalGeoPoint() { }
 
+#nullable enable
 		public OptionalGeoPoint(IOptionalGeoPoint geoPoint)
 		{
 			ParamIs.NotNull(() => geoPoint);
@@ -30,6 +31,7 @@ namespace VocaDb.Model.Domain
 			Latitude = geoPoint.Latitude;
 			Longitude = geoPoint.Longitude;
 		}
+#nullable disable
 
 		public static bool IsValid(double? latitude, double? longitude)
 		{

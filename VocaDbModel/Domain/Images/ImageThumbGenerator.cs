@@ -12,12 +12,14 @@ namespace VocaDb.Model.Domain.Images
 
 		public const int Unlimited = ImageHelper.ImageSizeUnlimited;
 
+#nullable enable
 		public ImageThumbGenerator(IEntryImagePersister persister)
 		{
 			ParamIs.NotNull(() => persister);
 
 			_persister = persister;
 		}
+#nullable disable
 
 		/// <summary>
 		/// Writes an image to a file, overwriting any existing file.

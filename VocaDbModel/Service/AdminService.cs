@@ -194,6 +194,7 @@ namespace VocaDb.Model.Service
 			});
 		}
 
+#nullable enable
 		public void DeleteEntryReports(int[] reportIds)
 		{
 			ParamIs.NotNull(() => reportIds);
@@ -214,6 +215,7 @@ namespace VocaDb.Model.Service
 				}
 			});
 		}
+#nullable disable
 
 		public int DeletePVsByAuthor(string author, PVService service)
 		{

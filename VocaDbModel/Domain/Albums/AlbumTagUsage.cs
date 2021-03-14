@@ -31,6 +31,7 @@ namespace VocaDb.Model.Domain.Albums
 			Tag.AllAlbumTagUsages.Remove(this);
 		}
 
+#nullable enable
 		public override TagUsage Move(Tag target)
 		{
 			ParamIs.NotNull(() => target);
@@ -48,5 +49,6 @@ namespace VocaDb.Model.Domain.Albums
 
 			return newUsage;
 		}
+#nullable disable
 	}
 }

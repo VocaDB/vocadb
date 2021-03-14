@@ -37,6 +37,7 @@ namespace VocaDb.Model.DataContracts.Venues
 
 		public ArchivedVenueContract() { }
 
+#nullable enable
 		public ArchivedVenueContract(Venue venue, VenueDiff diff)
 		{
 			ParamIs.NotNull(() => venue);
@@ -50,6 +51,7 @@ namespace VocaDb.Model.DataContracts.Venues
 			TranslatedName = new ArchivedTranslatedStringContract(venue.TranslatedName);
 			WebLinks = diff.IncludeWebLinks ? venue.WebLinks.Links.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 		}
+#nullable disable
 
 		private static void DoIfExists(ArchivedVenueVersion version, VenueEditableFields field, XmlCache<ArchivedVenueContract> xmlCache, Action<ArchivedVenueContract> func)
 		{

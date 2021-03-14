@@ -11,7 +11,8 @@ namespace VocaDb.Model.DataContracts.Tags
 	{
 		public ArchivedTagVersionDetailsContract() { }
 
-		public ArchivedTagVersionDetailsContract(ArchivedTagVersion archived, ArchivedTagVersion comparedVersion, IUserPermissionContext permissionContext)
+#nullable enable
+		public ArchivedTagVersionDetailsContract(ArchivedTagVersion archived, ArchivedTagVersion? comparedVersion, IUserPermissionContext permissionContext)
 		{
 			ParamIs.NotNull(() => archived);
 
@@ -30,6 +31,7 @@ namespace VocaDb.Model.DataContracts.Tags
 
 			ComparedVersionId = Versions.SecondId;
 		}
+#nullable disable
 
 		public ArchivedObjectVersionContract ArchivedVersion { get; init; }
 

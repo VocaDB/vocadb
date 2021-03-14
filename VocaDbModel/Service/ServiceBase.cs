@@ -119,6 +119,7 @@ namespace VocaDb.Model.Service
 			s_log.Info(GetAuditLogMessage(doingWhat, who));
 		}
 
+#nullable enable
 		protected void AuditLog(string doingWhat, ISession session, AgentLoginData who, AuditLogCategory category = AuditLogCategory.Unspecified)
 		{
 			ParamIs.NotNull(() => session);
@@ -143,7 +144,7 @@ namespace VocaDb.Model.Service
 			session.Save(entry);
 		}
 
-		protected void AuditLog(string doingWhat, ISession session, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified)
+		protected void AuditLog(string doingWhat, ISession session, User? user = null, AuditLogCategory category = AuditLogCategory.Unspecified)
 		{
 			ParamIs.NotNull(() => session);
 
@@ -153,6 +154,7 @@ namespace VocaDb.Model.Service
 
 			session.Save(entry);
 		}
+#nullable disable
 
 		protected bool DoSnapshot(ArchivedObjectVersion latestVersion, User user)
 		{

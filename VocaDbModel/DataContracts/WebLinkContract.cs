@@ -25,6 +25,7 @@ namespace VocaDb.Model.DataContracts
 			DescriptionOrUrl = !string.IsNullOrEmpty(description) ? description : url;
 		}
 
+#nullable enable
 		public WebLinkContract(WebLink link)
 		{
 			ParamIs.NotNull(() => link);
@@ -36,6 +37,7 @@ namespace VocaDb.Model.DataContracts
 			Id = link.Id;
 			Url = link.Url;
 		}
+#nullable disable
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]

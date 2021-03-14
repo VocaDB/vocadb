@@ -143,6 +143,7 @@ namespace VocaDb.Model.Database.Repositories
 			return entry != null && entry.Id != 0 ? await ctx.LoadAsync<T>(entry.Id) : default;
 		}
 
+#nullable enable
 		public static void Sync<T>(this IDatabaseContext<T> ctx, CollectionDiff<T, T> diff)
 		{
 			ParamIs.NotNull(() => ctx);
@@ -229,6 +230,7 @@ namespace VocaDb.Model.Database.Repositories
 			foreach (var n in diff.Edited)
 				await ctx.UpdateAsync(n);
 		}
+#nullable disable
 
 		public static T2 Save<T, T2>(this IDatabaseContext<T> ctx, T2 obj) where T2 : class, IDatabaseObject =>
 			ctx.OfType<T2>().Save(obj);

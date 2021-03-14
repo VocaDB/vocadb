@@ -290,6 +290,7 @@ namespace VocaDb.Model.Database.Queries
 			return new CommentQueries<AlbumComment, Album>(ctx.OfType<AlbumComment>(), PermissionContext, _userIconFactory, _entryLinkFactory);
 		}
 
+#nullable enable
 		public async Task<AlbumContract> Create(CreateAlbumContract contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -330,12 +331,14 @@ namespace VocaDb.Model.Database.Queries
 				return new AlbumContract(album, PermissionContext.LanguagePreference);
 			});
 		}
+#nullable disable
 
 		public CommentForApiContract CreateComment(int albumId, CommentForApiContract contract)
 		{
 			return HandleTransaction(ctx => Comments(ctx).Create(albumId, contract));
 		}
 
+#nullable enable
 		public (bool created, int reportId) CreateReport(int albumId, AlbumReportType reportType, string hostname, string notes, int? versionNumber)
 		{
 			ParamIs.NotNull(() => hostname);
@@ -350,6 +353,7 @@ namespace VocaDb.Model.Database.Queries
 					albumId, reportType, hostname, notes);
 			});
 		}
+#nullable disable
 
 		/// <summary>
 		/// Gets album details, and updates hit count if necessary.
@@ -806,7 +810,8 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public async Task<AlbumForEditContract> UpdateBasicProperties(AlbumForEditContract properties, EntryPictureFileContract pictureData)
+#nullable enable
+		public async Task<AlbumForEditContract> UpdateBasicProperties(AlbumForEditContract properties, EntryPictureFileContract? pictureData)
 		{
 			ParamIs.NotNull(() => properties);
 
@@ -1002,6 +1007,7 @@ namespace VocaDb.Model.Database.Queries
 				return new AlbumForEditContract(album, PermissionContext.LanguagePreference, _imageUrlFactory);
 			});
 		}
+#nullable disable
 
 		public void UpdatePersonalDescription(int albumId, AlbumDetailsContract data)
 		{

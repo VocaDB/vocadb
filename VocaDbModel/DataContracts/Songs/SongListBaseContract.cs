@@ -16,6 +16,7 @@ namespace VocaDb.Model.DataContracts.Songs
 			Name = string.Empty;
 		}
 
+#nullable enable
 		public SongListBaseContract(SongList songList)
 			: this()
 		{
@@ -25,6 +26,7 @@ namespace VocaDb.Model.DataContracts.Songs
 			Id = songList.Id;
 			Name = songList.Name;
 		}
+#nullable disable
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]

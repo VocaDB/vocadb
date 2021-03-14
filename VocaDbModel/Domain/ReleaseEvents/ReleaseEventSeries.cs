@@ -153,6 +153,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			return CreateName(new LocalizedString(val, language));
 		}
 
+#nullable enable
 		public virtual EventSeriesName CreateName(ILocalizedString localizedString)
 		{
 			ParamIs.NotNull(() => localizedString);
@@ -162,6 +163,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 			return name;
 		}
+#nullable disable
 
 		public virtual ArchivedReleaseEventSeriesVersion CreateArchivedVersion(XDocument data, ReleaseEventSeriesDiff diff, AgentLoginData author, EntryEditEvent reason, string notes)
 		{
@@ -172,6 +174,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			return archived;
 		}
 
+#nullable enable
 		public virtual ReleaseEventSeriesWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
 			ParamIs.NotNull(() => description);
@@ -182,6 +185,7 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 			return link;
 		}
+#nullable disable
 
 		public virtual bool Equals(ReleaseEventSeries another)
 		{

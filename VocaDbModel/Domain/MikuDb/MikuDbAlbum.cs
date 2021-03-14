@@ -19,6 +19,7 @@ namespace VocaDb.Model.Domain.MikuDb
 			Created = DateTime.Now;
 		}
 
+#nullable enable
 		public MikuDbAlbum(MikuDbAlbumContract contract)
 			: this()
 		{
@@ -31,6 +32,7 @@ namespace VocaDb.Model.Domain.MikuDb
 			Status = contract.Status;
 			Title = contract.Title;
 		}
+#nullable disable
 
 		public virtual PictureData CoverPicture { get; set; }
 

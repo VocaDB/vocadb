@@ -11,6 +11,7 @@ namespace VocaDb.Model.DataContracts.Songs
 	{
 		public SongInAlbumForApiContract() { }
 
+#nullable enable
 		public SongInAlbumForApiContract(SongInAlbum songInAlbum, ContentLanguagePreference languagePreference, SongOptionalFields fields)
 		{
 			ParamIs.NotNull(() => songInAlbum);
@@ -23,6 +24,7 @@ namespace VocaDb.Model.DataContracts.Songs
 			Song = song != null ? new SongForApiContract(song, null, languagePreference, fields) : null;
 			Name = Song != null ? Song.Name : songInAlbum.Name;
 		}
+#nullable disable
 
 		[DataMember]
 		public int DiscNumber { get; init; }
