@@ -25,6 +25,6 @@ namespace VocaDb.Model.DataContracts.Globalization
 		public string English { get; set; }
 
 		[DataMember]
-		public string Original { get; set; }
+		public string Original { get; init; }
 	}
 }

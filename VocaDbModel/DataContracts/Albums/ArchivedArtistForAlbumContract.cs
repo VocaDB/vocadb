@@ -28,9 +28,9 @@ namespace VocaDb.Model.DataContracts.Albums
 		}
 
 		[DataMember]
-		public bool IsSupport { get; set; }
+		public bool IsSupport { get; init; }
 
 		[DataMember]
-		public ArtistRoles Roles { get; set; }
+		public ArtistRoles Roles { get; init; }
 	}
 }

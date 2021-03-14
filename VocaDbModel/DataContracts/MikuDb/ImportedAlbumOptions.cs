@@ -19,12 +19,12 @@ namespace VocaDb.Model.DataContracts.MikuDb
 			SelectedLanguage = inspectedAlbum.SelectedLanguage;
 		}
 
-		public int ImportedDbAlbumId { get; set; }
+		public int ImportedDbAlbumId { get; init; }
 
-		public int? MergedAlbumId { get; set; }
+		public int? MergedAlbumId { get; init; }
 
-		public bool? MergeTracks { get; set; }
+		public bool? MergeTracks { get; init; }
 
-		public ContentLanguageSelection SelectedLanguage { get; set; }
+		public ContentLanguageSelection SelectedLanguage { get; init; }
 	}
 }

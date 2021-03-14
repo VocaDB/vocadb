@@ -17,7 +17,7 @@
 				<partial name="Partials/Song/_SongTypesDropdownKnockout" model="@(new SongTypesDropdownKnockoutViewModel("songType"))" />
 			</div>
 			<div class="control-group" data-bind="visible: showUnifyEntryTypesAndTags">
-				<label class="checkbox" >
+				<label class="checkbox">
 					<input type="checkbox" data-bind="checked: unifyEntryTypesAndTags" />
 					Also search associated tag
 				</label>
@@ -63,7 +63,7 @@
 			<partial name="Partials/Knockout/_BasicEntryLinkLockingAutoComplete" model="@(new BasicEntryLinkLockingAutoCompleteViewModel("releaseEventAutoComplete", "releaseEvent"))" />
 		</div>
 	</div>
-	
+
 	<div class="control-group">
 		<div class="control-label">@Res.ReleaseDate</div>
 		<div class="controls">
@@ -76,6 +76,15 @@
 		<div class="control-label">@Res.ParentVersion</div>
 		<div class="controls">
 			<partial name="Partials/Knockout/_SongLockingAutoComplete" model="@(new SongLockingAutoCompleteViewModel("parentVersion"))" />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<div class="control-label">@Res.Duration</div>
+		<div class="controls">
+			<input type="text" data-bind="value: minLengthFormatted" class="input-small" maxlength="10" />
+			-
+			<input type="text" data-bind="value: maxLengthFormatted" class="input-small" maxlength="10" />
 		</div>
 	</div>
 

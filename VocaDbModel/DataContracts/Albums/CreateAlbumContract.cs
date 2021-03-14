@@ -7,10 +7,10 @@ namespace VocaDb.Model.DataContracts.Albums
 {
 	public class CreateAlbumContract
 	{
-		public ArtistContract[] Artists { get; set; }
+		public ArtistContract[] Artists { get; init; }
 
-		public DiscType DiscType { get; set; }
+		public DiscType DiscType { get; init; }
 
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[] Names { get; init; }
 	}
 }

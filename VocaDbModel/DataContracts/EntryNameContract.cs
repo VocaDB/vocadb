@@ -25,12 +25,12 @@ namespace VocaDb.Model.DataContracts
 		/// Comma-separated list of additional names (excluding the primary display name).
 		/// </summary>
 		[DataMember]
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
 		/// <summary>
 		/// Display name is the primary name localized to the requested language.
 		/// </summary>
 		[DataMember]
-		public string DisplayName { get; set; }
+		public string DisplayName { get; init; }
 	}
 }

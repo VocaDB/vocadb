@@ -21,6 +21,6 @@ namespace VocaDb.Model.DataContracts.Songs
 		}
 
 		[DataMember]
-		public PVContract[] PVs { get; set; }
+		public PVContract[] PVs { get; init; }
 	}
 }

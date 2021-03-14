@@ -97,39 +97,39 @@ namespace VocaDb.Model.DataContracts.Artists
 		}
 
 		[DataMember]
-		public AdvancedArtistStatsContract AdvancedStats { get; set; }
+		public AdvancedArtistStatsContract AdvancedStats { get; init; }
 
 		[DataMember]
-		public string AllNames { get; set; }
+		public string AllNames { get; init; }
 
 		[DataMember]
-		public TagBaseContract ArtistTypeTag { get; set; }
+		public TagBaseContract ArtistTypeTag { get; init; }
 
 		[DataMember]
-		public ArtistContract BaseVoicebank { get; set; }
+		public ArtistContract BaseVoicebank { get; init; }
 
-		public bool CanRemoveTagUsages { get; set; }
-
-		[DataMember]
-		public ArtistContract CharacterDesigner { get; set; }
+		public bool CanRemoveTagUsages { get; init; }
 
 		[DataMember]
-		public ArtistContract[] CharacterDesignerOf { get; set; }
+		public ArtistContract CharacterDesigner { get; init; }
 
 		[DataMember]
-		public ArtistContract[] ChildVoicebanks { get; set; }
+		public ArtistContract[] CharacterDesignerOf { get; init; }
 
 		[DataMember]
-		public int CommentCount { get; set; }
+		public ArtistContract[] ChildVoicebanks { get; init; }
 
 		[DataMember]
-		public DateTime CreateDate { get; set; }
+		public int CommentCount { get; init; }
 
 		[DataMember]
-		public EnglishTranslatedString Description { get; set; }
+		public DateTime CreateDate { get; init; }
 
 		[DataMember]
-		public bool Draft { get; set; }
+		public EnglishTranslatedString Description { get; init; }
+
+		[DataMember]
+		public bool Draft { get; init; }
 
 		/// <summary>
 		/// Logged in user has subscribed to email notifications.
@@ -138,7 +138,7 @@ namespace VocaDb.Model.DataContracts.Artists
 		public bool EmailNotifications { get; set; }
 
 		[DataMember]
-		public ArtistContract[] Groups { get; set; }
+		public ArtistContract[] Groups { get; init; }
 
 		/// <summary>
 		/// Logged in user is following this artist.
@@ -147,22 +147,22 @@ namespace VocaDb.Model.DataContracts.Artists
 		public bool IsAdded { get; set; }
 
 		[DataMember]
-		public ArtistContract[] Illustrators { get; set; }
+		public ArtistContract[] Illustrators { get; init; }
 
 		[DataMember]
-		public ArtistContract[] IllustratorOf { get; set; }
+		public ArtistContract[] IllustratorOf { get; init; }
 
 		[DataMember]
 		public CommentForApiContract[] LatestComments { get; set; }
 
 		[DataMember]
-		public ArtistContract Manager { get; set; }
+		public ArtistContract Manager { get; init; }
 
 		[DataMember]
-		public ArtistContract[] ManagerOf { get; set; }
+		public ArtistContract[] ManagerOf { get; init; }
 
 		[DataMember]
-		public ArtistContract[] Members { get; set; }
+		public ArtistContract[] Members { get; init; }
 
 		[DataMember]
 		public ArtistContract MergedTo { get; set; }
@@ -177,26 +177,26 @@ namespace VocaDb.Model.DataContracts.Artists
 		public SongForApiContract[] LatestSongs { get; set; }
 
 		[DataMember]
-		public UserContract[] OwnerUsers { get; set; }
+		public UserContract[] OwnerUsers { get; init; }
 
 		/// <summary>
 		/// Personal stats for the logged in user. 
 		/// Can be null if the user isn't logged in.
 		/// </summary>
 		[DataMember]
-		public PersonalArtistStatsContract PersonalStats { get; set; }
+		public PersonalArtistStatsContract PersonalStats { get; init; }
 
 		[DataMember]
-		public EntryPictureFileContract[] Pictures { get; set; }
+		public EntryPictureFileContract[] Pictures { get; init; }
 
 		[DataMember]
-		public SharedArtistStatsContract SharedStats { get; set; }
+		public SharedArtistStatsContract SharedStats { get; init; }
 
 		[DataMember]
 		public bool SiteNotifications { get; set; }
 
 		[DataMember]
-		public TagUsageForApiContract[] Tags { get; set; }
+		public TagUsageForApiContract[] Tags { get; init; }
 
 		[DataMember]
 		public AlbumForApiContract[] TopAlbums { get; set; }
@@ -205,16 +205,16 @@ namespace VocaDb.Model.DataContracts.Artists
 		public SongForApiContract[] TopSongs { get; set; }
 
 		[DataMember]
-		public TranslatedStringContract TranslatedName { get; set; }
+		public TranslatedStringContract TranslatedName { get; init; }
 
 		[DataMember]
-		public ArtistContract[] Voicebanks { get; set; }
+		public ArtistContract[] Voicebanks { get; init; }
 
 		[DataMember]
-		public ArtistContract[] VoiceProviders { get; set; }
+		public ArtistContract[] VoiceProviders { get; init; }
 
 		[DataMember]
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
@@ -224,7 +224,7 @@ namespace VocaDb.Model.DataContracts.Artists
 		/// Number of times logged user has rated songs by this artist.
 		/// </summary>
 		[DataMember]
-		public int SongRatingCount { get; set; }
+		public int SongRatingCount { get; init; }
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
@@ -234,16 +234,16 @@ namespace VocaDb.Model.DataContracts.Artists
 		public int AlbumCount { get; set; }
 
 		[DataMember]
-		public double AlbumRatingAverage { get; set; }
+		public double AlbumRatingAverage { get; init; }
 
 		[DataMember]
-		public int EventCount { get; set; }
+		public int EventCount { get; init; }
 
 		[DataMember]
-		public int FollowerCount { get; set; }
+		public int FollowerCount { get; init; }
 
 		[DataMember]
-		public int RatedAlbumCount { get; set; }
+		public int RatedAlbumCount { get; init; }
 
 		[DataMember]
 		public int SongCount { get; set; }
@@ -252,6 +252,6 @@ namespace VocaDb.Model.DataContracts.Artists
 		/// Total rating score for this artist.
 		/// </summary>
 		[DataMember]
-		public int RatedSongCount { get; set; }
+		public int RatedSongCount { get; init; }
 	}
 }

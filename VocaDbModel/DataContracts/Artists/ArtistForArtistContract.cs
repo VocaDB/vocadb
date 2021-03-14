@@ -22,15 +22,15 @@ namespace VocaDb.Model.DataContracts.Artists
 		}
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
-		public ArtistLinkType LinkType { get; set; }
+		public ArtistLinkType LinkType { get; init; }
 
 		[DataMember]
-		public ArtistContract Member { get; set; }
+		public ArtistContract Member { get; init; }
 
 		[DataMember]
-		public ArtistContract Parent { get; set; }
+		public ArtistContract Parent { get; init; }
 	}
 }

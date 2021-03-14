@@ -54,26 +54,26 @@ namespace VocaDb.Model.DataContracts.Albums
 		public AlbumForUserContract AlbumForUser { get; set; }
 
 		[DataMember]
-		public ArtistForAlbumContract[] ArtistLinks { get; set; }
+		public ArtistForAlbumContract[] ArtistLinks { get; init; }
 
-		public bool CanEditPersonalDescription { get; set; }
+		public bool CanEditPersonalDescription { get; init; }
 
-		public bool CanRemoveTagUsages { get; set; }
-
-		[DataMember]
-		public int CommentCount { get; set; }
+		public bool CanRemoveTagUsages { get; init; }
 
 		[DataMember]
-		public EnglishTranslatedString Description { get; set; }
+		public int CommentCount { get; init; }
 
 		[DataMember]
-		public Dictionary<int, AlbumDiscPropertiesContract> Discs { get; set; }
+		public EnglishTranslatedString Description { get; init; }
 
 		[DataMember]
-		public TagBaseContract DiscTypeTypeTag { get; set; }
+		public Dictionary<int, AlbumDiscPropertiesContract> Discs { get; init; }
 
 		[DataMember]
-		public int Hits { get; set; }
+		public TagBaseContract DiscTypeTypeTag { get; init; }
+
+		[DataMember]
+		public int Hits { get; init; }
 
 		[DataMember]
 		public CommentForApiContract[] LatestComments { get; set; }
@@ -82,52 +82,52 @@ namespace VocaDb.Model.DataContracts.Albums
 		public AlbumContract MergedTo { get; set; }
 
 		[DataMember]
-		public AlbumReleaseContract OriginalRelease { get; set; }
+		public AlbumReleaseContract OriginalRelease { get; init; }
 
 		[DataMember]
-		public string PersonalDescriptionText { get; set; }
+		public string PersonalDescriptionText { get; init; }
 
 		[DataMember]
-		public ArtistForApiContract PersonalDescriptionAuthor { get; set; }
+		public ArtistForApiContract PersonalDescriptionAuthor { get; init; }
 
 		[DataMember]
-		public EntryPictureFileContract[] Pictures { get; set; }
+		public EntryPictureFileContract[] Pictures { get; init; }
 
 		[DataMember]
-		public PVContract[] PVs { get; set; }
+		public PVContract[] PVs { get; init; }
 
 		[DataMember]
-		public SongInAlbumContract[] Songs { get; set; }
+		public SongInAlbumContract[] Songs { get; init; }
 
 		[DataMember]
-		public SharedAlbumStatsContract Stats { get; set; }
+		public SharedAlbumStatsContract Stats { get; init; }
 
 		[DataMember]
-		public TagUsageForApiContract[] Tags { get; set; }
+		public TagUsageForApiContract[] Tags { get; init; }
 
 		[DataMember]
-		public TimeSpan TotalLength { get; set; }
+		public TimeSpan TotalLength { get; init; }
 
 		[DataMember]
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SharedAlbumStatsContract
 	{
 		[DataMember]
-		public AlbumReviewContract LatestReview { get; set; }
+		public AlbumReviewContract LatestReview { get; init; }
 
 		[DataMember]
-		public int LatestReviewRatingScore { get; set; }
+		public int LatestReviewRatingScore { get; init; }
 
 		[DataMember]
-		public int OwnedCount { get; set; }
+		public int OwnedCount { get; init; }
 
 		[DataMember]
-		public int ReviewCount { get; set; }
+		public int ReviewCount { get; init; }
 
 		[DataMember]
-		public int WishlistCount { get; set; }
+		public int WishlistCount { get; init; }
 	}
 }

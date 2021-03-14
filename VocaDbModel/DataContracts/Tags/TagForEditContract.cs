@@ -32,30 +32,30 @@ namespace VocaDb.Model.DataContracts.Tags
 		}
 
 		[DataMember]
-		public bool CanDelete { get; set; }
+		public bool CanDelete { get; init; }
 
 		[DataMember]
-		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+		public ContentLanguageSelection DefaultNameLanguage { get; init; }
 
 		[DataMember]
 		public new EnglishTranslatedStringContract Description { get; set; }
 
 		[DataMember]
-		public bool IsEmpty { get; set; }
+		public bool IsEmpty { get; init; }
 
 		[DataMember]
 		public LocalizedStringWithIdContract[] Names { get; set; }
 
 		[DataMember]
-		public TagBaseContract[] RelatedTags { get; set; }
+		public TagBaseContract[] RelatedTags { get; init; }
 
 		[DataMember]
-		public EntryThumbContract Thumb { get; set; }
+		public EntryThumbContract Thumb { get; init; }
 
 		[DataMember]
-		public string UpdateNotes { get; set; }
+		public string UpdateNotes { get; init; }
 
 		[DataMember]
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 	}
 }

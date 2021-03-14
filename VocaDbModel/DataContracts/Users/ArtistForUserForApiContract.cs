@@ -24,6 +24,6 @@ namespace VocaDb.Model.DataContracts.Users
 		}
 
 		[DataMember]
-		public ArtistForApiContract Artist { get; set; }
+		public ArtistForApiContract Artist { get; init; }
 	}
 }

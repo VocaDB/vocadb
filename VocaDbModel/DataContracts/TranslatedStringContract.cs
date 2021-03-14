@@ -32,7 +32,7 @@ namespace VocaDb.Model.DataContracts
 		}
 
 		[DataMember]
-		public string Default { get; set; }
+		public string Default { get; init; }
 
 		[DataMember]
 		public ContentLanguageSelection DefaultLanguage { get; set; }
@@ -44,7 +44,7 @@ namespace VocaDb.Model.DataContracts
 		public string Japanese { get; set; }
 
 		//[DataMember]
-		//public string Other { get; set; }
+		//public string Other { get; init; }
 
 		[DataMember]
 		public string Romaji { get; set; }

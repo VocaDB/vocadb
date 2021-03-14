@@ -48,50 +48,50 @@ namespace VocaDb.Model.DataContracts.Albums
 		}
 
 		[DataMember]
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
 		[DataMember]
-		public string ArtistString { get; set; }
+		public string ArtistString { get; init; }
 
 		[DataMember]
-		public string CoverPictureMime { get; set; }
+		public string CoverPictureMime { get; init; }
 
 		[DataMember]
-		public DateTime CreateDate { get; set; }
+		public DateTime CreateDate { get; init; }
 
 		[DataMember]
-		public bool Deleted { get; set; }
+		public bool Deleted { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public DiscType DiscType { get; set; }
+		public DiscType DiscType { get; init; }
 
 		[DataMember]
 		public int Id { get; set; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember]
-		public double RatingAverage { get; set; }
+		public double RatingAverage { get; init; }
 
 		[DataMember]
-		public int RatingCount { get; set; }
+		public int RatingCount { get; init; }
 
 		/// <summary>
 		/// Release date. Cannot be null (but can be empty).
 		/// </summary>
 		[DataMember]
-		public OptionalDateTimeContract ReleaseDate { get; set; }
+		public OptionalDateTimeContract ReleaseDate { get; init; }
 
 		[DataMember]
-		public ReleaseEventForApiContract ReleaseEvent { get; set; }
+		public ReleaseEventForApiContract ReleaseEvent { get; init; }
 
 		[DataMember]
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public int Version { get; init; }
 
 		public bool Equals(AlbumContract another)
 		{

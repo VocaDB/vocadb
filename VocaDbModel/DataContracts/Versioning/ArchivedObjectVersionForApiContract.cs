@@ -21,15 +21,15 @@ namespace VocaDb.Model.DataContracts.Versioning
 		}
 
 		[DataMember]
-		public string[] ChangedFields { get; set; }
+		public string[] ChangedFields { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
-		public string Notes { get; set; }
+		public string Notes { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public int Version { get; init; }
 	}
 }

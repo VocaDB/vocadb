@@ -21,6 +21,8 @@ import ui from '../../Shared/MessagesTyped';
 import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 import Decimal from 'decimal.js-light';
+import DateTimeHelper from '../../Helpers/DateTimeHelper';
+import KnockoutHelper from '../../Helpers/KnockoutHelper';
 
 	export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISongSearchItem> {
 
@@ -86,10 +88,13 @@ import Decimal from 'decimal.js-light';
 			this.since = ko.observable(since);
 			this.viewMode = ko.observable(viewMode || "Details");
 
+			this.parentVersion = new BasicEntryLinkViewModel<IEntryWithIdAndName>(null, this.songRepo.getOne);
+
 			this.minMilliBpm = ko.observable(undefined).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 			this.maxMilliBpm = ko.observable(undefined).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 
-			this.parentVersion = new BasicEntryLinkViewModel<IEntryWithIdAndName>(null, this.songRepo.getOne);
+			this.minLength = ko.observable(0).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
+			this.maxLength = ko.observable(0).extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
 
 			this.advancedFilters.filters.subscribe(this.updateResultsWithTotalCount);
 			this.artistFilters.filters.subscribe(this.updateResultsWithTotalCount);
@@ -107,6 +112,8 @@ import Decimal from 'decimal.js-light';
 			this.viewMode.subscribe(this.updateResultsWithTotalCount);
 			this.minMilliBpm.subscribe(this.updateResultsWithTotalCount);
 			this.maxMilliBpm.subscribe(this.updateResultsWithTotalCount);
+			this.minLength.subscribe(this.updateResultsWithTotalCount);
+			this.maxLength.subscribe(this.updateResultsWithTotalCount);
 
 			this.sortName = ko.computed(() => this.resourceManager.resources().songSortRuleNames != null ? this.resourceManager.resources().songSortRuleNames[this.sort()] : "");
 
@@ -159,6 +166,8 @@ import Decimal from 'decimal.js-light';
 						this.advancedFilters.filters(),
 						this.minMilliBpm(),
 						this.maxMilliBpm(),
+						this.minLength() ? this.minLength() : null,
+						this.maxLength() ? this.maxLength() : null,
 						result => {
 
 							_.each(result.items, (song: ISongSearchItem) => {
@@ -180,23 +189,13 @@ import Decimal from 'decimal.js-light';
 
 			}
 
-			this.minBpm = ko.computed({
-				read: () => {
-					return this.minMilliBpm() ? new Decimal(this.minMilliBpm()).div(1000).toString() : null;
-				},
-				write: (value: string) => {
-					this.minMilliBpm(value ? new Decimal(value).mul(1000).toInteger().toNumber() : null);
-				}
-			});
+			this.minBpm = KnockoutHelper.bpm(this.minMilliBpm);
 
-			this.maxBpm = ko.computed({
-				read: () => {
-					return this.maxMilliBpm() ? new Decimal(this.maxMilliBpm()).div(1000).toString() : null;
-				},
-				write: (value: string) => {
-					this.maxMilliBpm(value ? new Decimal(value).mul(1000).toInteger().toNumber() : null);
-				}
-			});
+			this.maxBpm = KnockoutHelper.bpm(this.maxMilliBpm);
+
+			this.minLengthFormatted = KnockoutHelper.lengthFormatted(this.minLength);
+
+			this.maxLengthFormatted = KnockoutHelper.lengthFormatted(this.maxLength);
 
 		}
 
@@ -222,6 +221,10 @@ import Decimal from 'decimal.js-light';
 		public maxMilliBpm: KnockoutObservable<number>;
 		public minBpm: KnockoutComputed<string>;
 		public maxBpm: KnockoutComputed<string>;
+		public minLength: KnockoutObservable<number>;
+		public maxLength: KnockoutObservable<number>;
+		public minLengthFormatted: KnockoutComputed<string>;
+		public maxLengthFormatted: KnockoutComputed<string>;
 
         // Remember, JavaScript months start from 0 (who came up with that??)
 		private toDateOrNull = (mom: moment.Moment) => mom.isValid() ? mom.toDate() : null;

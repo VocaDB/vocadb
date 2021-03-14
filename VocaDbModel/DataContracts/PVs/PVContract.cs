@@ -74,13 +74,13 @@ namespace VocaDb.Model.DataContracts.PVs
 		public int? CreatedBy { get; set; }
 
 		[DataMember]
-		public bool Disabled { get; set; }
+		public bool Disabled { get; init; }
 
 		[DataMember]
-		public PVExtendedMetadata ExtendedMetadata { get; set; }
+		public PVExtendedMetadata ExtendedMetadata { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		/// <summary>
 		/// Length in seconds, 0 if not specified.
@@ -92,24 +92,24 @@ namespace VocaDb.Model.DataContracts.PVs
 		public string Name { get; set; }
 
 		[DataMember]
-		public DateTime? PublishDate { get; set; }
+		public DateTime? PublishDate { get; init; }
 
 		[DataMember]
-		public string PVId { get; set; }
-
-		[DataMember]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public PVService Service { get; set; }
+		public string PVId { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public PVType PVType { get; set; }
+		public PVService Service { get; init; }
+
+		[DataMember]
+		[JsonConverter(typeof(StringEnumConverter))]
+		public PVType PVType { get; init; }
 
 		[DataMember]
 		public string ThumbUrl { get; set; }
 
 		[DataMember]
-		public string Url { get; set; }
+		public string Url { get; init; }
 
 		/// <summary>
 		/// Compares editable properties.

@@ -19,8 +19,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			WebLinks = series.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 		}
 
-		public TagUsageForApiContract[] Tags { get; set; }
+		public TagUsageForApiContract[] Tags { get; init; }
 
-		public TranslatedStringContract TranslatedName { get; set; }
+		public TranslatedStringContract TranslatedName { get; init; }
 	}
 }

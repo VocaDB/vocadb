@@ -99,7 +99,7 @@ namespace VocaDb.Model.DataContracts.Tags
 		public TagTargetTypes Targets { get; set; }
 
 		[DataMember]
-		public string ThumbMime { get; set; }
+		public string ThumbMime { get; init; }
 
 		[DataMember]
 		public ArchivedTranslatedStringContract TranslatedName { get; set; }

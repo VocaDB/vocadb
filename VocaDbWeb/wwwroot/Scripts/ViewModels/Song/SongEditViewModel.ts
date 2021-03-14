@@ -28,6 +28,7 @@ import UrlMapper from '../../Shared/UrlMapper';
 import UserRepository from '../../Repositories/UserRepository';
 import WebLinksEditViewModel from '../WebLinksEditViewModel';
 import Decimal from 'decimal.js-light';
+import KnockoutHelper from '../../Helpers/KnockoutHelper';
 
     export default class SongEditViewModel {
 
@@ -275,22 +276,7 @@ import Decimal from 'decimal.js-light';
 				height: 250
 			};
 
-            
-            this.lengthFormatted = ko.computed({
-				read: () => {
-					return DateTimeHelper.formatFromSeconds(this.length());
-                },
-                write: (value: string) => {
-                    var parts = value.split(":");
-                    if (parts.length == 2 && parseInt(parts[0], 10) != NaN && parseInt(parts[1], 10) != NaN) {
-                        this.length(parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10));
-                    } else if (parts.length == 1 && !isNaN(parseInt(parts[0], 10))) {
-                        this.length(parseInt(parts[0], 10));
-                    } else {
-                        this.length(0);
-                    }
-                }
-			});
+			this.lengthFormatted = KnockoutHelper.lengthFormatted(this.length);
 
 			this.showInstrumentalNote = ko.computed(() => {
 				return this.pvs.isPossibleInstrumental()
@@ -377,23 +363,9 @@ import Decimal from 'decimal.js-light';
 				.head<_.LoDashExplicitObjectWrapper<PotentialDate>>()
 				.value());
 
-			this.minBpm = ko.computed({
-				read: () => {
-					return this.minMilliBpm() ? new Decimal(this.minMilliBpm()).div(1000).toString() : null;
-				},
-				write: (value: string) => {
-					this.minMilliBpm(value ? new Decimal(value).mul(1000).toInteger().toNumber() : null);
-				}
-			});
+			this.minBpm = KnockoutHelper.bpm(this.minMilliBpm);
 
-			this.maxBpm = ko.computed({
-				read: () => {
-					return this.maxMilliBpm() ? new Decimal(this.maxMilliBpm()).div(1000).toString() : null;
-				},
-				write: (value: string) => {
-					this.maxMilliBpm(value ? new Decimal(value).mul(1000).toInteger().toNumber() : null);
-				}
-			});
+			this.maxBpm = KnockoutHelper.bpm(this.maxMilliBpm);
 
 			window.setInterval(() => userRepository.refreshEntryEdit(EntryType.Song, data.id), 10000);
 

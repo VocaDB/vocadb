@@ -7,24 +7,24 @@ namespace VocaDb.Model.DataContracts.UseCases
 {
 	public class CreateSongContract
 	{
-		public ArtistForSongContract[] Artists { get; set; }
+		public ArtistForSongContract[] Artists { get; init; }
 
-		public bool Draft { get; set; }
+		public bool Draft { get; init; }
 
-		public LyricsForSongContract[] Lyrics { get; set; }
+		public LyricsForSongContract[] Lyrics { get; init; }
 
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[] Names { get; init; }
 
-		public SongContract OriginalVersion { get; set; }
+		public SongContract OriginalVersion { get; init; }
 
 		public string[] PVUrls { get; set; }
 
-		public string ReprintPVUrl { get; set; }
+		public string ReprintPVUrl { get; init; }
 
 		public SongType SongType { get; set; }
 
-		public string UpdateNotes { get; set; }
+		public string UpdateNotes { get; init; }
 
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 	}
 }

@@ -28,20 +28,20 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			ComparedVersionId = Versions.SecondId;
 		}
 
-		public ArchivedEventSeriesVersionContract ArchivedVersion { get; set; }
+		public ArchivedEventSeriesVersionContract ArchivedVersion { get; init; }
 
-		public ArchivedObjectVersionContract[] ComparableVersions { get; set; }
+		public ArchivedObjectVersionContract[] ComparableVersions { get; init; }
 
-		public ArchivedObjectVersionContract ComparedVersion { get; set; }
+		public ArchivedObjectVersionContract ComparedVersion { get; init; }
 
-		public int ComparedVersionId { get; set; }
+		public int ComparedVersionId { get; init; }
 
-		public ReleaseEventSeriesContract ReleaseEventSeries { get; set; }
+		public ReleaseEventSeriesContract ReleaseEventSeries { get; init; }
 
 		public bool Hidden => ArchivedVersion.Hidden || (ComparedVersion != null && ComparedVersion.Hidden);
 
-		public string Name { get; set; }
+		public string Name { get; init; }
 
-		public ComparedEventSeriesContract Versions { get; set; }
+		public ComparedEventSeriesContract Versions { get; init; }
 	}
 }

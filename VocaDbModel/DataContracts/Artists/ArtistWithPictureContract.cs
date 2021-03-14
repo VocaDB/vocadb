@@ -13,6 +13,6 @@ namespace VocaDb.Model.DataContracts.Artists
 			CoverPicture = (artist.Picture != null ? new PictureContract(artist.Picture, artist.PictureMime) : null);
 		}
 
-		public PictureContract CoverPicture { get; set; }
+		public PictureContract CoverPicture { get; init; }
 	}
 }

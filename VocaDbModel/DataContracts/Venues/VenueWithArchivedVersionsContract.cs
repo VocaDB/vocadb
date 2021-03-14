@@ -8,7 +8,7 @@ namespace VocaDb.Model.DataContracts.Venues
 {
 	public class VenueWithArchivedVersionsContract : VenueContract
 	{
-		public ArchivedVenueVersionContract[] ArchivedVersions { get; set; }
+		public ArchivedVenueVersionContract[] ArchivedVersions { get; init; }
 
 		public VenueWithArchivedVersionsContract(Venue venue, ContentLanguagePreference languagePreference) : base(venue, languagePreference)
 		{

@@ -49,33 +49,33 @@ namespace VocaDb.Model.DataContracts.Tags
 
 		public int AllUsageCount => Stats.ArtistCount + Stats.AlbumCount + Stats.SongCount + Stats.EventCount + Stats.SongListCount;
 
-		public TagBaseContract[] Children { get; set; }
+		public TagBaseContract[] Children { get; init; }
 
-		public int CommentCount { get; set; }
+		public int CommentCount { get; init; }
 
-		public new EnglishTranslatedString Description { get; set; }
+		public new EnglishTranslatedString Description { get; init; }
 
 		public int FollowerCount => Stats.FollowerCount;
 
-		public bool IsFollowing { get; set; }
+		public bool IsFollowing { get; init; }
 
-		public CommentForApiContract[] LatestComments { get; set; }
+		public CommentForApiContract[] LatestComments { get; init; }
 
-		public string[] MappedNicoTags { get; set; }
+		public string[] MappedNicoTags { get; init; }
 
-		public EntryTypeAndSubType RelatedEntryType { get; set; }
+		public EntryTypeAndSubType RelatedEntryType { get; init; }
 
-		public TagBaseContract[] RelatedTags { get; set; }
+		public TagBaseContract[] RelatedTags { get; init; }
 
-		public TagBaseContract[] Siblings { get; set; }
+		public TagBaseContract[] Siblings { get; init; }
 
-		public TagStatsContract Stats { get; set; }
+		public TagStatsContract Stats { get; init; }
 
-		public EntryThumbContract Thumb { get; set; }
+		public EntryThumbContract Thumb { get; init; }
 
-		public string Translations { get; set; }
+		public string Translations { get; init; }
 
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 
 		public object JsonModel => new
 		{

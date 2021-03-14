@@ -14,6 +14,6 @@ namespace VocaDb.Model.DataContracts.Artists
 			LinkType = link.LinkType;
 		}
 
-		public ArtistLinkType LinkType { get; set; }
+		public ArtistLinkType LinkType { get; init; }
 	}
 }

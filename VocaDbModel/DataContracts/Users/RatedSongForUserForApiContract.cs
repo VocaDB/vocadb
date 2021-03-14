@@ -34,19 +34,19 @@ namespace VocaDb.Model.DataContracts.Users
 		}
 
 		[DataMember]
-		public DateTime Date { get; set; }
+		public DateTime Date { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public SongForApiContract Song { get; set; }
+		public SongForApiContract Song { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public UserForApiContract User { get; set; }
+		public UserForApiContract User { get; init; }
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
 	public class SongRatingContract
 	{
 		[DataMember]
-		public SongVoteRating Rating { get; set; }
+		public SongVoteRating Rating { get; init; }
 	}
 }

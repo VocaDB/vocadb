@@ -8,10 +8,10 @@ namespace VocaDb.Model.DataContracts.Albums
 	{
 		public bool Any => ArtistMatches.Any() || LikeMatches.Any() || TagMatches.Any();
 
-		public AlbumContract[] ArtistMatches { get; set; }
+		public AlbumContract[] ArtistMatches { get; init; }
 
-		public AlbumContract[] LikeMatches { get; set; }
+		public AlbumContract[] LikeMatches { get; init; }
 
-		public AlbumContract[] TagMatches { get; set; }
+		public AlbumContract[] TagMatches { get; init; }
 	}
 }

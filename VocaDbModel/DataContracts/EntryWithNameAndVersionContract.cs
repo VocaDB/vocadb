@@ -20,6 +20,6 @@ namespace VocaDb.Model.DataContracts
 			Version = entry.Version;
 		}
 
-		public int Version { get; set; }
+		public int Version { get; init; }
 	}
 }

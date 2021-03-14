@@ -23,14 +23,14 @@ namespace VocaDb.Model.DataContracts.Albums
 		}
 
 		[DataMember]
-		public string CatNum { get; set; }
+		public string CatNum { get; init; }
 
 		[DataMember]
-		public OptionalDateTimeContract ReleaseDate { get; set; }
+		public OptionalDateTimeContract ReleaseDate { get; init; }
 
 		IOptionalDateTime IAlbumRelease.ReleaseDate => ReleaseDate;
 
 		[DataMember]
-		public ReleaseEventForApiContract ReleaseEvent { get; set; }
+		public ReleaseEventForApiContract ReleaseEvent { get; init; }
 	}
 }

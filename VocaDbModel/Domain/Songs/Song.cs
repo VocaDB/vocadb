@@ -557,6 +557,12 @@ namespace VocaDb.Model.Domain.Songs
 			return name;
 		}
 
+		public virtual void UpdateLengthFromPV()
+		{
+			if (LengthSeconds <= 0)
+				LengthSeconds = GetLengthFromPV();
+		}
+
 		public virtual PVForSong CreatePV(PVContract contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -566,9 +572,7 @@ namespace VocaDb.Model.Domain.Songs
 
 			UpdateNicoId();
 			UpdatePVServices();
-
-			if (LengthSeconds <= 0)
-				LengthSeconds = GetLengthFromPV();
+			UpdateLengthFromPV();
 
 			return pv;
 		}

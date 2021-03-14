@@ -228,4 +228,7 @@
   <data name="Bpm" xml:space="preserve">
     <value>BPM</value>
   </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
 </root>

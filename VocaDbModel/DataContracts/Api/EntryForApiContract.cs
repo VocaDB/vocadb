@@ -233,41 +233,41 @@ namespace VocaDb.Model.DataContracts.Api
 		/// For events and song lists: event date.
 		/// </remarks>
 		[DataMember(EmitDefaultValue = false)]
-		public DateTime? ActivityDate { get; set; }
+		public DateTime? ActivityDate { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string ArtistString { get; set; }
+		public string ArtistString { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public ArtistType? ArtistType { get; set; }
+		public ArtistType? ArtistType { get; init; }
 
 		[DataMember]
-		public DateTime CreateDate { get; set; }
+		public DateTime CreateDate { get; init; }
 
 		[DataMember]
-		public string DefaultName { get; set; }
+		public string DefaultName { get; init; }
 
 		[DataMember]
-		public ContentLanguageSelection DefaultNameLanguage { get; set; }
+		public ContentLanguageSelection DefaultNameLanguage { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string Description { get; set; }
+		public string Description { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public DiscType? DiscType { get; set; }
+		public DiscType? DiscType { get; init; }
 
 		[DataMember]
-		public EntryType EntryType { get; set; }
+		public EntryType EntryType { get; init; }
 
 		/// <summary>
 		/// Event category.
 		/// Inherited from event series, if the event has series.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public EventCategory? EventCategory { get; set; }
+		public EventCategory? EventCategory { get; init; }
 
 		[DataMember]
 		public int Id { get; set; }
@@ -277,46 +277,46 @@ namespace VocaDb.Model.DataContracts.Api
 		/// For songs this is the thumbnail.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public EntryThumbForApiContract MainPicture { get; set; }
+		public EntryThumbForApiContract MainPicture { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[] Names { get; init; }
 
 		/// <summary>
 		/// List of PVs, for songs and albums. Optional field.
 		/// </summary>
 		[DataMember(EmitDefaultValue = false)]
-		public PVContract[] PVs { get; set; }
+		public PVContract[] PVs { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public SongListFeaturedCategory? SongListFeaturedCategory { get; set; }
+		public SongListFeaturedCategory? SongListFeaturedCategory { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public SongType? SongType { get; set; }
+		public SongType? SongType { get; init; }
 
 		[DataMember]
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string ReleaseEventSeriesName { get; set; }
+		public string ReleaseEventSeriesName { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string TagCategoryName { get; set; }
+		public string TagCategoryName { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public TagUsageForApiContract[] Tags { get; set; }
+		public TagUsageForApiContract[] Tags { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string UrlSlug { get; set; }
+		public string UrlSlug { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public int Version { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public ArchivedWebLinkContract[] WebLinks { get; set; }
+		public ArchivedWebLinkContract[] WebLinks { get; init; }
 	}
 
 	[Flags]

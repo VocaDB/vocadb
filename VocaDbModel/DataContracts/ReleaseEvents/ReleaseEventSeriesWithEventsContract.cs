@@ -25,6 +25,6 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			Events = events.OrderBy(e => e.SeriesNumber).ThenBy(e => e.Date.DateTime).Select(e => new ReleaseEventContract(e, languagePreference)).ToArray();
 		}
 
-		public ReleaseEventContract[] Events { get; set; }
+		public ReleaseEventContract[] Events { get; init; }
 	}
 }

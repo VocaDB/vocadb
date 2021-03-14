@@ -69,38 +69,38 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			}
 		}
 
-		public AlbumContract[] Albums { get; set; }
+		public AlbumContract[] Albums { get; init; }
 
-		public ReleaseEventSeriesContract[] AllSeries { get; set; }
+		public ReleaseEventSeriesContract[] AllSeries { get; init; }
 
-		public ArtistForEventContract[] Artists { get; set; }
+		public ArtistForEventContract[] Artists { get; init; }
 
-		public bool CanRemoveTagUsages { get; set; }
+		public bool CanRemoveTagUsages { get; init; }
 
 		public ContentLanguageSelection DefaultNameLanguage { get; set; }
 
-		public UserEventRelationshipType? EventAssociationType { get; set; }
+		public UserEventRelationshipType? EventAssociationType { get; init; }
 
-		public TagBaseContract InheritedCategoryTag { get; set; }
+		public TagBaseContract InheritedCategoryTag { get; init; }
 
-		public CommentForApiContract[] LatestComments { get; set; }
+		public CommentForApiContract[] LatestComments { get; init; }
 
-		public PVContract[] PVs { get; set; }
+		public PVContract[] PVs { get; init; }
 
-		public int SeriesNumber { get; set; }
+		public int SeriesNumber { get; init; }
 
 		public string SeriesSuffix { get; set; }
 
-		public SongInListContract[] SongListSongs { get; set; }
+		public SongInListContract[] SongListSongs { get; init; }
 
-		public SongForApiContract[] Songs { get; set; }
+		public SongForApiContract[] Songs { get; init; }
 
-		public TagUsageForApiContract[] Tags { get; set; }
+		public TagUsageForApiContract[] Tags { get; init; }
 
-		public TranslatedStringContract TranslatedName { get; set; }
+		public TranslatedStringContract TranslatedName { get; init; }
 
-		public UserForApiContract[] UsersAttending { get; set; }
+		public UserForApiContract[] UsersAttending { get; init; }
 
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 	}
 }

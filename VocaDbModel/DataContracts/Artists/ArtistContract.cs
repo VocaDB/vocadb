@@ -55,33 +55,33 @@ namespace VocaDb.Model.DataContracts.Artists
 		}
 
 		[DataMember]
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public ArtistType ArtistType { get; set; }
+		public ArtistType ArtistType { get; init; }
 
 		[DataMember]
-		public bool Deleted { get; set; }
+		public bool Deleted { get; init; }
 
 		[DataMember]
 		public int Id { get; set; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember]
 		public string PictureMime { get; set; }
 
 		[DataMember]
-		public DateTime? ReleaseDate { get; set; }
+		public DateTime? ReleaseDate { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public int Version { get; init; }
 
 		public override string ToString()
 		{

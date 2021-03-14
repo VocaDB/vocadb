@@ -16,6 +16,6 @@ namespace VocaDb.Model.DataContracts.Albums
 			ArchivedVersions = album.ArchivedVersionsManager.Versions.Select(a => new ArchivedAlbumVersionContract(a)).ToArray();
 		}
 
-		public ArchivedAlbumVersionContract[] ArchivedVersions { get; set; }
+		public ArchivedAlbumVersionContract[] ArchivedVersions { get; init; }
 	}
 }

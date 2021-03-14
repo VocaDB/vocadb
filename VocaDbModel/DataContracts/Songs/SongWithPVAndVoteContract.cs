@@ -24,10 +24,10 @@ namespace VocaDb.Model.DataContracts.Songs
 		}
 
 		[DataMember]
-		public PVContract[] PVs { get; set; }
+		public PVContract[] PVs { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public SongVoteRating Vote { get; set; }
+		public SongVoteRating Vote { get; init; }
 	}
 }

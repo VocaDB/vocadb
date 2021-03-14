@@ -17,6 +17,6 @@ namespace VocaDb.Model.DataContracts.Songs
 		}
 
 		[DataMember]
-		public SongContract Song { get; set; }
+		public SongContract Song { get; init; }
 	}
 }

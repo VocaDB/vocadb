@@ -6,16 +6,16 @@ namespace VocaDb.Model.DataContracts.Artists
 {
 	public class CreateArtistContract
 	{
-		public ArtistType ArtistType { get; set; }
+		public ArtistType ArtistType { get; init; }
 
-		public string Description { get; set; }
+		public string Description { get; init; }
 
-		public bool Draft { get; set; }
+		public bool Draft { get; init; }
 
-		public LocalizedStringContract[] Names { get; set; }
+		public LocalizedStringContract[] Names { get; init; }
 
 		public EntryPictureFileContract PictureData { get; set; }
 
-		public WebLinkContract WebLink { get; set; }
+		public WebLinkContract WebLink { get; init; }
 	}
 }

@@ -12,27 +12,27 @@ namespace VocaDb.Model.DataContracts.Venues
 		EntryType IEntryBase.EntryType => EntryType.Venue;
 		string IEntryBase.DefaultName => Name;
 
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
-		public string Address { get; set; } = string.Empty;
+		public string Address { get; init; } = string.Empty;
 
-		public string AddressCountryCode { get; set; } = string.Empty;
+		public string AddressCountryCode { get; init; } = string.Empty;
 
-		public OptionalGeoPointContract Coordinates { get; set; }
+		public OptionalGeoPointContract Coordinates { get; init; }
 
-		public bool Deleted { get; set; }
+		public bool Deleted { get; init; }
 
-		public string Description { get; set; } = string.Empty;
+		public string Description { get; init; } = string.Empty;
 
 		public int Id { get; set; }
 
-		public string Name { get; set; }
+		public string Name { get; init; }
 
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
-		public int Version { get; set; }
+		public int Version { get; init; }
 
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 
 		public VenueContract() { }
 

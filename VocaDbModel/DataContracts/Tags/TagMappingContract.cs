@@ -17,8 +17,8 @@ namespace VocaDb.Model.DataContracts.Tags
 			Tag = new TagBaseContract(tagMapping.Tag, lang);
 		}
 
-		public string SourceTag { get; set; }
+		public string SourceTag { get; init; }
 
-		public TagBaseContract Tag { get; set; }
+		public TagBaseContract Tag { get; init; }
 	}
 }

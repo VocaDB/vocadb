@@ -28,22 +28,22 @@ namespace VocaDb.Model.DataContracts.Albums
 			User = new UserForApiContract(review.Author, userIconFactory, UserOptionalFields.MainPicture);
 		}
 
-		public virtual int Id { get; set; }
+		public virtual int Id { get; init; }
 
-		public virtual int AlbumId { get; set; }
+		public virtual int AlbumId { get; init; }
 
-		public virtual DateTime Date { get; set; }
+		public virtual DateTime Date { get; init; }
 
-		public virtual string LanguageCode { get; set; }
+		public virtual string LanguageCode { get; init; }
 
-		public virtual string Text { get; set; }
+		public virtual string Text { get; init; }
 
 		/// <summary>
 		/// See https://stackoverflow.com/a/9323209
 		/// </summary>
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
-		public virtual string Title { get; set; }
+		public virtual string Title { get; init; }
 
-		public virtual UserForApiContract User { get; set; }
+		public virtual UserForApiContract User { get; init; }
 	}
 }

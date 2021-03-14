@@ -26,20 +26,20 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		}
 
 		[DataMember]
-		public ArtistContract Artist { get; set; }
+		public ArtistContract Artist { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public ArtistEventRoles EffectiveRoles { get; set; }
+		public ArtistEventRoles EffectiveRoles { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public ArtistEventRoles Roles { get; set; }
+		public ArtistEventRoles Roles { get; init; }
 	}
 }

@@ -25,25 +25,25 @@ namespace VocaDb.Model.DataContracts
 		}
 
 		[DataMember]
-		public UserForApiContract Author { get; set; }
+		public UserForApiContract Author { get; init; }
 
 		[DataMember]
-		public string AuthorName { get; set; }
+		public string AuthorName { get; init; }
 
 		/// <summary>
 		/// Comment creation date in UTC.
 		/// </summary>
 		[DataMember]
-		public DateTime Created { get; set; }
+		public DateTime Created { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public EntryForApiContract Entry { get; set; }
+		public EntryForApiContract Entry { get; init; }
 
 		[DataMember]
 		public int Id { get; set; }
 
 		[DataMember]
-		public string Message { get; set; }
+		public string Message { get; init; }
 	}
 
 	[Flags]

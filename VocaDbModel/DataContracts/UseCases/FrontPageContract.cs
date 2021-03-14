@@ -41,18 +41,18 @@ namespace VocaDb.Model.DataContracts.UseCases
 			FirstSong = (newSongs.Any() ? new SongWithPVAndVoteContract(newSongs.First(), firstSongRating, languagePreference) : null);
 		}
 
-		public ActivityEntryForApiContract[] ActivityEntries { get; set; }
+		public ActivityEntryForApiContract[] ActivityEntries { get; init; }
 
-		public SongWithPVAndVoteContract FirstSong { get; set; }
+		public SongWithPVAndVoteContract FirstSong { get; init; }
 
-		public AlbumForApiContract[] NewAlbums { get; set; }
+		public AlbumForApiContract[] NewAlbums { get; init; }
 
-		public ReleaseEventForApiContract[] NewEvents { get; set; }
+		public ReleaseEventForApiContract[] NewEvents { get; init; }
 
-		public SongWithPVAndVoteContract[] NewSongs { get; set; }
+		public SongWithPVAndVoteContract[] NewSongs { get; init; }
 
-		public EntryWithCommentsContract[] RecentComments { get; set; }
+		public EntryWithCommentsContract[] RecentComments { get; init; }
 
-		public AlbumForApiContract[] TopAlbums { get; set; }
+		public AlbumForApiContract[] TopAlbums { get; init; }
 	}
 }

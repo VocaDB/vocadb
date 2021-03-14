@@ -68,35 +68,35 @@ namespace VocaDb.Model.DataContracts.Songs
 		public AlbumContract Album { get; set; }
 
 		[DataMember]
-		public AlbumContract[] Albums { get; set; }
+		public AlbumContract[] Albums { get; init; }
 
 		[DataMember]
 		public SongInAlbumContract AlbumSong { get; set; }
 
 		[DataMember]
-		public SongContract[] AlternateVersions { get; set; }
+		public SongContract[] AlternateVersions { get; init; }
 
 		[DataMember]
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
 		[DataMember]
-		public ArtistForSongContract[] Artists { get; set; }
+		public ArtistForSongContract[] Artists { get; init; }
 
 		[DataMember]
-		public string ArtistString { get; set; }
+		public string ArtistString { get; init; }
 
-		public bool CanEditPersonalDescription { get; set; }
+		public bool CanEditPersonalDescription { get; init; }
 
-		public bool CanRemoveTagUsages { get; set; }
+		public bool CanRemoveTagUsages { get; init; }
 
 		[DataMember]
 		public int CommentCount { get; set; }
 
 		[DataMember]
-		public DateTime CreateDate { get; set; }
+		public DateTime CreateDate { get; init; }
 
 		[DataMember]
-		public bool Deleted { get; set; }
+		public bool Deleted { get; init; }
 
 		[DataMember]
 		public int Hits { get; set; }
@@ -105,13 +105,13 @@ namespace VocaDb.Model.DataContracts.Songs
 		public CommentForApiContract[] LatestComments { get; set; }
 
 		[DataMember]
-		public int LikeCount { get; set; }
+		public int LikeCount { get; init; }
 
 		[DataMember]
 		public int ListCount { get; set; }
 
 		[DataMember]
-		public LyricsForSongContract[] LyricsFromParents { get; set; }
+		public LyricsForSongContract[] LyricsFromParents { get; init; }
 
 		[DataMember]
 		public SongContract MergedTo { get; set; }
@@ -124,19 +124,19 @@ namespace VocaDb.Model.DataContracts.Songs
 		public SongInAlbumContract NextSong { get; set; }
 
 		[DataMember]
-		public EnglishTranslatedString Notes { get; set; }
+		public EnglishTranslatedString Notes { get; init; }
 
 		[DataMember]
-		public SongForApiContract OriginalVersion { get; set; }
+		public SongForApiContract OriginalVersion { get; init; }
 
 		[DataMember]
-		public string PersonalDescriptionText { get; set; }
+		public string PersonalDescriptionText { get; init; }
 
 		[DataMember]
-		public ArtistForApiContract PersonalDescriptionAuthor { get; set; }
+		public ArtistForApiContract PersonalDescriptionAuthor { get; init; }
 
 		[DataMember]
-		public SongListBaseContract[] Pools { get; set; }
+		public SongListBaseContract[] Pools { get; init; }
 
 		public LyricsForSongContract PreferredLyrics { get; set; }
 
@@ -148,39 +148,39 @@ namespace VocaDb.Model.DataContracts.Songs
 		public SongInAlbumContract PreviousSong { get; set; }
 
 		[DataMember(Name = "pvs")]
-		public PVContract[] PVs { get; set; }
+		public PVContract[] PVs { get; init; }
 
 		[DataMember]
-		public ReleaseEventForApiContract ReleaseEvent { get; set; }
+		public ReleaseEventForApiContract ReleaseEvent { get; init; }
 
 		[DataMember]
-		public SongContract Song { get; set; }
+		public SongContract Song { get; init; }
 
 		[DataMember]
-		public TagBaseContract SongTypeTag { get; set; }
+		public TagBaseContract SongTypeTag { get; init; }
 
 		[DataMember]
-		public ArtistForSongContract[] SubjectsFromParents { get; set; }
+		public ArtistForSongContract[] SubjectsFromParents { get; init; }
 
 		[DataMember]
 		public SongForApiContract[] Suggestions { get; set; }
 
 		[DataMember]
-		public TagUsageForApiContract[] Tags { get; set; }
+		public TagUsageForApiContract[] Tags { get; init; }
 
 		[DataMember]
-		public TranslatedStringContract TranslatedName { get; set; }
+		public TranslatedStringContract TranslatedName { get; init; }
 
 		[DataMember]
 		public SongVoteRating UserRating { get; set; }
 
 		[DataMember]
-		public WebLinkContract[] WebLinks { get; set; }
+		public WebLinkContract[] WebLinks { get; init; }
 
 		[DataMember]
-		public int? MinMilliBpm { get; set; }
+		public int? MinMilliBpm { get; init; }
 
 		[DataMember]
-		public int? MaxMilliBpm { get; set; }
+		public int? MaxMilliBpm { get; init; }
 	}
 }

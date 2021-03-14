@@ -29,6 +29,6 @@ namespace VocaDb.Model.DataContracts.Songs
 		public SongInListEditContract[] SongLinks { get; set; }
 
 		[DataMember]
-		public string UpdateNotes { get; set; }
+		public string UpdateNotes { get; init; }
 	}
 }

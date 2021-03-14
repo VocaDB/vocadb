@@ -29,25 +29,25 @@ namespace VocaDb.Model.DataContracts
 			Version = archivedObjectVersion.Version;
 		}
 
-		public string AgentName { get; set; }
+		public string AgentName { get; init; }
 
-		public UserContract Author { get; set; }
+		public UserContract Author { get; init; }
 
-		public DateTime Created { get; set; }
+		public DateTime Created { get; init; }
 
-		public EntryEditEvent EditEvent { get; set; }
+		public EntryEditEvent EditEvent { get; init; }
 
-		public bool Hidden { get; set; }
+		public bool Hidden { get; init; }
 
-		public int Id { get; set; }
+		public int Id { get; init; }
 
-		public bool IsSnapshot { get; set; }
+		public bool IsSnapshot { get; init; }
 
-		public string Notes { get; set; }
+		public string Notes { get; init; }
 
-		public EntryStatus Status { get; set; }
+		public EntryStatus Status { get; init; }
 
-		public int Version { get; set; }
+		public int Version { get; init; }
 
 		public virtual bool IsAnythingChanged()
 		{

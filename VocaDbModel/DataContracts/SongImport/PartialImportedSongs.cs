@@ -17,12 +17,12 @@ namespace VocaDb.Model.DataContracts.SongImport
 		}
 
 		[DataMember]
-		public ImportedSongInListContract[] Items { get; set; }
+		public ImportedSongInListContract[] Items { get; init; }
 
 		[DataMember]
-		public string NextPageToken { get; set; }
+		public string NextPageToken { get; init; }
 
 		[DataMember]
-		public int TotalCount { get; set; }
+		public int TotalCount { get; init; }
 	}
 }

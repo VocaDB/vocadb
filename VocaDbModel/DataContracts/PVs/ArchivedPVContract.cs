@@ -38,33 +38,33 @@ namespace VocaDb.Model.DataContracts.PVs
 		}
 
 		[DataMember]
-		public string Author { get; set; }
+		public string Author { get; init; }
 
 		[DataMember]
-		public bool Disabled { get; set; }
+		public bool Disabled { get; init; }
 
 		[DataMember]
-		public PVExtendedMetadata ExtendedMetadata { get; set; }
+		public PVExtendedMetadata ExtendedMetadata { get; init; }
 
 		[DataMember]
-		public int Length { get; set; }
+		public int Length { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember]
-		public DateTime? PublishDate { get; set; }
+		public DateTime? PublishDate { get; init; }
 
 		[DataMember]
-		public string PVId { get; set; }
+		public string PVId { get; init; }
 
 		[DataMember]
-		public PVService Service { get; set; }
+		public PVService Service { get; init; }
 
 		[DataMember]
-		public PVType PVType { get; set; }
+		public PVType PVType { get; init; }
 
 		[DataMember]
-		public string ThumbUrl { get; set; }
+		public string ThumbUrl { get; init; }
 	}
 }

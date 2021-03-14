@@ -21,8 +21,8 @@ namespace VocaDb.Model.DataContracts.UseCases
 			TagUsages = tagUsages.Select(u => new TagUsageWithVotesContract(u, languagePreference)).ToArray();
 		}
 
-		public bool CanRemoveTagUsages { get; set; }
+		public bool CanRemoveTagUsages { get; init; }
 
-		public TagUsageWithVotesContract[] TagUsages { get; set; }
+		public TagUsageWithVotesContract[] TagUsages { get; init; }
 	}
 }

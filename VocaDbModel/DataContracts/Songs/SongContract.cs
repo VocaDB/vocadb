@@ -52,54 +52,54 @@ namespace VocaDb.Model.DataContracts.Songs
 		}
 
 		[DataMember]
-		public string AdditionalNames { get; set; }
+		public string AdditionalNames { get; init; }
 
 		[DataMember]
-		public string ArtistString { get; set; }
+		public string ArtistString { get; init; }
 
 		[DataMember]
-		public DateTime CreateDate { get; set; }
+		public DateTime CreateDate { get; init; }
 
 		[DataMember]
-		public bool Deleted { get; set; }
+		public bool Deleted { get; init; }
 
 		[DataMember]
-		public int FavoritedTimes { get; set; }
+		public int FavoritedTimes { get; init; }
 
 		[DataMember]
 		public int Id { get; set; }
 
 		[DataMember]
-		public int LengthSeconds { get; set; }
+		public int LengthSeconds { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember]
-		public string NicoId { get; set; }
+		public string NicoId { get; init; }
 
 		[DataMember]
-		public DateTime? PublishDate { get; set; }
+		public DateTime? PublishDate { get; init; }
 
 		[DataMember]
-		public PVServices PVServices { get; set; }
+		public PVServices PVServices { get; init; }
 
 		[DataMember]
-		public int RatingScore { get; set; }
-
-		[DataMember]
-		[JsonConverter(typeof(StringEnumConverter))]
-		public SongType SongType { get; set; }
+		public int RatingScore { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public EntryStatus Status { get; set; }
+		public SongType SongType { get; init; }
 
 		[DataMember]
-		public string ThumbUrl { get; set; }
+		[JsonConverter(typeof(StringEnumConverter))]
+		public EntryStatus Status { get; init; }
 
 		[DataMember]
-		public int Version { get; set; }
+		public string ThumbUrl { get; init; }
+
+		[DataMember]
+		public int Version { get; init; }
 
 		public override string ToString()
 		{

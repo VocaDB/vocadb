@@ -38,25 +38,25 @@ namespace VocaDb.Model.DataContracts.Discussions
 		}
 
 		[DataMember]
-		public string Description { get; set; }
+		public string Description { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
-		public UserForApiContract LastTopicAuthor { get; set; }
+		public UserForApiContract LastTopicAuthor { get; init; }
 
 		/// <summary>
 		/// Date of the latest topic posted, in UTC.
 		/// </summary>
 		[DataMember]
-		public DateTime? LastTopicDate { get; set; }
+		public DateTime? LastTopicDate { get; init; }
 
 		[DataMember]
-		public string Name { get; set; }
+		public string Name { get; init; }
 
 		[DataMember]
-		public int TopicCount { get; set; }
+		public int TopicCount { get; init; }
 	}
 
 	[Flags]

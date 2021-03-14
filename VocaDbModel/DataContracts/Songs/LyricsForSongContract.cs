@@ -33,26 +33,26 @@ namespace VocaDb.Model.DataContracts.Songs
 		[DataMember]
 		[DefaultValue("")]
 		[JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
-		public string CultureCode { get; set; }
+		public string CultureCode { get; init; }
 
 		[DataMember]
-		public int Id { get; set; }
+		public int Id { get; init; }
 
 		[DataMember]
 		[DefaultValue("")]
 		[JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
-		public string Source { get; set; }
+		public string Source { get; init; }
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public TranslationType TranslationType { get; set; }
+		public TranslationType TranslationType { get; init; }
 
 		[DataMember]
 		[DefaultValue("")]
 		[JsonProperty(DefaultValueHandling = DefaultValueHandling.Populate)]
-		public string URL { get; set; }
+		public string URL { get; init; }
 
 		[DataMember(EmitDefaultValue = false)]
-		public string Value { get; set; }
+		public string Value { get; init; }
 	}
 }
