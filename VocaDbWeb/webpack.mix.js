@@ -201,7 +201,10 @@ mix
 	// CSS for jqxRating
 	.styles([
 		"wwwroot/Scripts/jqwidgets27/styles/jqx.base.css"
-	], "wwwroot/Scripts/jqwidgets27/styles/css.css");
+	], "wwwroot/Scripts/jqwidgets27/styles/css.css")
+
+
+	.ts("Scripts/app.tsx", "wwwroot/js").react();
 
 
 if (mix.inProduction()) {

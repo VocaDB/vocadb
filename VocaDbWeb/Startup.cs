@@ -301,6 +301,9 @@ namespace VocaDb.Web
 			// `UseCacheOutput` must go before `UseEndpoints`, otherwise `CacheOutput` throws an `System.InvalidOperationException The response headers cannot be modified because the response has already started`.
 			app.UseCacheOutput();
 
+			app.UseMiddleware<HandleInertiaRequests>();
+			app.UseInertia();
+
 			app.UseEndpoints(endpoints =>
 			{
 				const string Numeric = "[0-9]+";
