@@ -1,0 +1,31 @@
+{
+  "Import": {
+    "Accept": "Aceptar",
+    "InvalidUrlError": "Verifica que la URL es valida y es la correcta hacia la NicoNico MyList correspondiente, lista de reproducción de YouTube o RSS.",
+    "ItemsLoaded": "Cargado",
+    "ListDescription": "Descripción",
+    "ListName": "Nombre",
+    "LoadMoreHelp": "(Haz clic en \"mostrar mas\" para cargar mas canciones de la lista.)",
+    "MylistDescription": "Lista de propiedades",
+    "NicoPV": "PV importado",
+    "OnlyRanked": "Incluir solo canciones en ranking (a partir de los rankings de NicoNicoDounga)",
+    "Order": "Ordenar",
+    "ParseAll": "Incluir todas las canciones en la lista (no solo las calificadas en ranking)",
+    "Process": "Proceso",
+    "SongMissing": "FALTANTE",
+    "SongsInList": "Canciones en la lista",
+    "SongsMissingError": "Algunas de las canciones de la lista no se encuentran en VocaDB. Para que puedas crear esta lista, primero deberás añadir las canciones faltantes a la base de datos.",
+    "Submit": "Subir",
+    "Title": "Crear una lista de canciones via NicoNico MyList o una lista de reproducción de YouTube",
+    "TotalSongs": "Total de canciones",
+    "UnableToParse": "No se ha podido analizar grámaticalmente (\"parsear\") la lista",
+    "UrlDescription": "Puede ser una lista de NicoNico MyList (por ejemplo: http://www.nicovideo.jp/mylist/1234567 ) o una lista de reproducción de YouTube (por ejemplo: https://www.youtube.com/playlist?list=MIKUMIKU3939 )",
+    "UrlLabel": "URL de la Lista de reproducción YouTube/NND Mylist",
+    "VocaDbEntry": "Entrada de canción en VocaDB"
+  },
+  "SongListSortRuleNames": {
+    "CreateDate": "Fecha de creación",
+    "Date": "Fecha del evento",
+    "Name": "Nombre"
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "AlbumCollectionStatusNames": {
+    "Nothing": "Ei mitään",
+    "Ordered": "Tilattu",
+    "Owned": "Omistettu",
+    "Wishlisted": "Toivottu"
+  },
+  "AlbumMediaTypeNames": {
+    "DigitalDownload": "Digitaalinen lataus",
+    "Other": "Muu",
+    "PhysicalDisc": "Fyysinen media"
+  },
+  "AlbumSortRuleNames": {
+    "AdditionDate": "Lisäyspäivän mukaan",
+    "CollectionCount": "Kokoelmien lukumäärä",
+    "Name": "Nimen mukaan",
+    "RatingAverage": "Arvostelun mukaan",
+    "RatingTotal": "Kokonaispisteiden mukaan",
+    "ReleaseDate": "Julkaisupäivän mukaan"
+  },
+  "ArtistRoleNames": {
+    "Animator": "Animoija",
+    "Arranger": "Sovittaja",
+    "Chorus": "Kuoro",
+    "Composer": "Säveltäjä",
+    "Default": "Oletus",
+    "Distributor": "Jakelija",
+    "Illustrator": "Kuvittaja",
+    "Instrumentalist": "Instrumentalisti",
+    "Lyricist": "Sanoittaja",
+    "Mastering": "Masteroija",
+    "Mixer": "Miksaaja",
+    "Other": "Muu",
+    "Publisher": "Julkaisija",
+    "Vocalist": "Laulaja",
+    "VoiceManipulator": "Äänen manipuloija"
+  },
+  "ArtistSortRuleNames": {
+    "AdditionDate": "Lisäyspäivän mukaan (laskeva)",
+    "AdditionDateAsc": "Lisäyspäivän mukaan (nouseva)",
+    "Name": "Nimen mukaan",
+    "SongCount": "Kappaleiden lukumäärän mukaan",
+    "SongRating": "Kappaleiden yhteenlasketun pistemäärän mukaan"
+  },
+  "ContentLanguageSelectionNames": {
+    "Default": "Alkuperäinen",
+    "English": "Englanti",
+    "Japanese": "Muu kuin Englanti",
+    "Romaji": "Romanisoitu",
+    "Unspecified": "Ei määritelty"
+  },
+  "EntryStatusNames": {
+    "Approved": "Hyväksytty",
+    "Draft": "Luonnos",
+    "Finished": "Valmis",
+    "Locked": "Lukittu"
+  },
+  "PermissionTokenNames": {
+    "AccessManageMenu": "Hallintavalikon käyttö",
+    "Admin": "Tietokannan ylläpitotoiminnot",
+    "ApproveEntries": "Merkintöjen hyväksyntä",
+    "BulkDeletePVs": "Videoiden massapoisto",
+    "CreateComments": "Kommenttien luonti",
+    "DeleteComments": "Kommenttien poisto",
+    "DeleteEntries": "Merkintöjen poisto",
+    "DesignatedStaff": "Ylläpitokäyttäjä",
+    "DisableUsers": "Tunnusten poistaminen",
+    "EditFeaturedLists": "Julkisten kappalelistojen hallinta",
+    "EditNews": "Uutisten hallinta",
+    "EditProfile": "Oman profiilin hallinta",
+    "LockEntries": "Merkintöjen lukitseminen",
+    "ManageDatabase": "Tietokannan muokkaus",
+    "ManageEntryReports": "Raporttien hallinta",
+    "ManageEventSeries": "Tapahtumajoukkojen hallinta",
+    "ManageIPRules": "IP-sääntöjen hallinta",
+    "ManageUserPermissions": "Käyttöoikeuksien hallinta",
+    "MergeEntries": "Merkintöjen yhdistäminen",
+    "MikuDbImport": "Albumien tuonti",
+    "MoveToTrash": "Merkintöjen siirtäminen roskakoriin",
+    "Nothing": "Ei mitään",
+    "ReadRecentComments": "Uusien kommenttien tarkastelu",
+    "RestoreRevisions": "Merkintöjen palauttaminen",
+    "ViewAuditLog": "Käyttölokin tarkastelu"
+  },
+  "PVTypeNames": {
+    "Original": "Alkuperäinen",
+    "Other": "Muu",
+    "Reprint": "Kopio"
+  },
+  "SongListFeaturedCategoryNames": {
+    "Concerts": "Konserttien settilistat",
+    "Nothing": "Ei mitään",
+    "Other": "Muut",
+    "Pools": "Joukko",
+    "VocaloidRanking": "Vocaloid ranking -listat"
+  },
+  "SongSortRuleNames": {
+    "AdditionDate": "Lisäyspäivän mukaan",
+    "FavoritedTimes": "Suosikeiden mukaan",
+    "Name": "Nimen mukaan",
+    "RatingScore": "Arvosteluiden mukaan"
+  },
+  "SongVoteRatingNames": {
+    "Favorite": "Suosikki",
+    "Like": "Tykkää"
+  },
+  "UserGroupNames": {
+    "Admin": "Pääkäyttäjä",
+    "Limited": "Rajoitettu käyttäjä",
+    "Moderator": "Moderaattori",
+    "Nothing": "Ei mitään",
+    "Regular": "Tavallinen käyttäjä",
+    "Trusted": "Luotettu käyttäjä"
+  },
+  "WebLinkCategoryNames": {
+    "Commercial": "Kaupallinen",
+    "Official": "Virallinen",
+    "Other": "Muu",
+    "Reference": "Viite"
+  }
+}

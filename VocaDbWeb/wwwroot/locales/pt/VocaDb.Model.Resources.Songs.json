@@ -1,0 +1,15 @@
+{
+  "SongTypeNames": {
+    "Cover": "Cover",
+    "DramaPV": "Drama PV",
+    "Instrumental": "Instrumental",
+    "Live": "Gravação ao vivo",
+    "Mashup": "Mashup",
+    "MusicPV": "PV da música",
+    "Original": "Música original",
+    "Other": "Outro",
+    "Remaster": "Remaster",
+    "Remix": "Remix",
+    "Unspecified": "Não especificado"
+  }
+}

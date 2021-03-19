@@ -1,0 +1,12 @@
+{
+  "DiscTypeNames": {
+    "Album": "Оригинальный альбом",
+    "Compilation": "Сборник",
+    "EP": "E.P.",
+    "Other": "Прочее",
+    "Single": "Сингл",
+    "SplitAlbum": "Сплит",
+    "Unknown": "Неизвестно",
+    "Video": "Видео"
+  }
+}

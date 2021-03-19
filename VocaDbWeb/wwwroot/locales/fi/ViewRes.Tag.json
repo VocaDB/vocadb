@@ -1,0 +1,14 @@
+{
+  "Details": {
+    "AllAlbums": "Kaikki albumit",
+    "AllArtists": "Kaikki artistit",
+    "AllSongs": "Kaikki kappaleet",
+    "Category": "Kategoria",
+    "Overview": "Yleiskuva",
+    "Tag": "Tägi",
+    "TagDetails": "Tägin tiedot",
+    "TopAlbums": "Suosituimmat albumit",
+    "TopArtists": "Suosituimmat artistit",
+    "TopSongs": "Suosituimmat kappaleet"
+  }
+}

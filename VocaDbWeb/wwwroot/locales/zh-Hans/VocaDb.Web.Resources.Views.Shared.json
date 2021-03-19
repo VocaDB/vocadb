@@ -1,0 +1,9 @@
+{
+  "Time": {
+    "Days": "days",
+    "Hours": "小时",
+    "Minutes": "分钟",
+    "Months": "months",
+    "TimeAgo": "{{0}} {{1}} 之前"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "AlbumRes": {
+    "NewAlbumArtistDesc": "Produtores e vocalistas associados a este álbum.",
+    "NewAlbumInfo": "Lembre-se que o VocaDB não é o UtaiteDB. <strong>O álbum precisa de ter pelo menos uma música com Vocaloid para ser submetido no VocaDB (outros sintetizadores de voz como o UTAU também são permitidos, mas vozes de humanos não)</strong>. Compilação feitas por fãs (bootlegs) também não são permitidas. Para mais informações leia Ajuda/Guias."
+  },
+  "ArtistRes": {
+    "AuthoredBy": "Conta na VocaDB.",
+    "NewArtistExternalLink": "Link externo (para o site do artista, Hatsune Miku wiki, NND MyList, etc.)"
+  },
+  "HomeRes": {
+    "SiteDescription": "VocaDB é uma base de dados de Vocaloid, com artistas, álbuns e músicas traduzidas.",
+    "Welcome": "Bem-vindo ao VocaDB!",
+    "WelcomeSubtitle": "A base de dados colaborativa, com artistas de Vocaloid, discografias, PVs e mais."
+  },
+  "LayoutRes": {
+    "Keywords": "Vocaloid, VocaDB, Vocaloid database, Hatsune Miku",
+    "PaypalDonateTitle": "O VocaDB é um projeto não-lucrativo. Todos os fundos doados serão utilizados para desenvolver o site, suportá-lo e obter as licenças necessárias.",
+    "SiteName": "VocaDB",
+    "SiteTitle": "Vocaloid Database"
+  },
+  "SongRes": {
+    "NewSongInfo": "Por favor verifique que a música que vai adicionar já não foi adicionada. Precisa de escolher pelo menos um nome e artista. Link para o PV original é recomendado.<br /><br />\nLembre-se que músicas sem Vocaloid só são permitidas se estiverem num álbum juntamente com músicas com Vocaloid. UTAU e outros sintetizadores de vozes são também permitidos, mas covers de humanos não.",
+    "RankingsTitle": "Classificações de músicas VocaDB"
+  }
+}

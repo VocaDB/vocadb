@@ -1,0 +1,8 @@
+{
+  "PlayList": {
+    "Autoplay": "Automaattinen toisto",
+    "AutoplayNote": "Automaattista toistoa tuetaan vain Youtuben ja SoundCloudin kanssa",
+    "NextSong": "Seuraava kappale",
+    "Shuffle": "Sekoita"
+  }
+}

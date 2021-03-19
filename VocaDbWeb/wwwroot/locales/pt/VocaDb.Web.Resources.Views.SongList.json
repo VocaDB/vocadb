@@ -1,0 +1,30 @@
+{
+  "Import": {
+    "Accept": "Aceitar",
+    "InvalidUrlError": "Verifique que o URL é válido e corresponde a uma NicoNico MyList, RSS feed ou playlist do YouTube.",
+    "ItemsLoaded": "carregado",
+    "ListDescription": "Descrição",
+    "ListName": "Nome",
+    "LoadMoreHelp": "(Clique \"Mostrar mais\" para carregar mais músicas da lista.)",
+    "MylistDescription": "Propriedades da lista",
+    "NicoPV": "PV importado",
+    "OnlyRanked": "Incluir só músicas classficiadas (dos rankings do NicoNico)",
+    "Order": "Encomenda",
+    "ParseAll": "Incluir todas as músicas na lista (não só classificadas)",
+    "Process": "Proceder",
+    "SongMissing": "EM FALTA",
+    "SongsInList": "Músicas na lista",
+    "SongsMissingError": "Algumas destas músicas não estão no VocaDB ainda. Precisa de adicionar todas as música para as incluir na lista.",
+    "Submit": "Submeter",
+    "Title": "Criar lista de músicas a partir de uma NicoNico MyList ou YouTube playlist",
+    "TotalSongs": "Todas as músicas",
+    "UnableToParse": "Erro em mostrar a lista",
+    "UrlDescription": "Pode ser qualquer NicoNico MyList, por exemplo http://www.nicovideo.jp/mylist/1234567, ou YouTube playlist, por exemplo https://www.youtube.com/playlist?list=MIKUMIKU3939",
+    "VocaDbEntry": "Página de música no VocaDB"
+  },
+  "SongListSortRuleNames": {
+    "CreateDate": "Data de criação",
+    "Date": "Data de evento",
+    "Name": "Nome"
+  }
+}

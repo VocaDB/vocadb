@@ -1,0 +1,13 @@
+{
+  "EnglishTranslatedString": {
+    "Original": "原文",
+    "ShowFullDescription": "全文を読む",
+    "Translated": "訳文"
+  },
+  "PlayList": {
+    "Autoplay": "自動再生",
+    "NextSong": "次の曲",
+    "Shuffle": "シャッフル",
+    "AutoplayNote": "自動再生はYoutubeとSoundcloudしか対応していません。"
+  }
+}

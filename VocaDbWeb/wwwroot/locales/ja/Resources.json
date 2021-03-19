@@ -1,0 +1,242 @@
+{
+  "AlbumArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "自動インポート",
+    "Created": "作成",
+    "Merged": "別項目とマージされた",
+    "PropertiesUpdated": "プロパティー更新",
+    "Reverted": "以前のバージョンに戻された",
+    "Unknown": "不明",
+    "Deleted": "削除",
+    "Restored": "リストア"
+  },
+  "AlbumCollectionStatusNames": {
+    "Nothing": "なし",
+    "Ordered": "注文した",
+    "Owned": "所有した",
+    "Wishlisted": "ウィッシュリストに入れた"
+  },
+  "AlbumEditableFieldNames": {
+    "Artists": "アーティスト",
+    "Barcode": "バーコード",
+    "Cover": "ジャケット",
+    "Description": "詳細",
+    "DiscType": "ディスクタイプ",
+    "Identifiers": "識別子",
+    "Names": "名前",
+    "Nothing": "なし",
+    "OriginalName": "オリジナル名",
+    "OriginalRelease": "オリジナル・リリース",
+    "Pictures": "画像",
+    "PVs": "PV",
+    "Status": "ステータス",
+    "Tracks": "トラック",
+    "WebLinks": "外部リンク"
+  },
+  "AlbumMediaTypeNames": {
+    "DigitalDownload": "デジタルダウンロード",
+    "Other": "その他",
+    "PhysicalDisc": "CD実物等"
+  },
+  "AlbumSortRuleNames": {
+    "AdditionDate": "追加日時",
+    "CollectionCount": "ユーザーコレクション数",
+    "Name": "名称",
+    "RatingAverage": "平均評価",
+    "RatingTotal": "総スコア",
+    "ReleaseDate": "発売日時"
+  },
+  "ArtistArchiveReasonNames": {
+    "Created": "作成",
+    "Merged": "別項目とマージされた",
+    "Reverted": "以前のバージョンに戻された",
+    "Unknown": "不明",
+    "PropertiesUpdated": "プロパティー更新",
+    "Deleted": "削除",
+    "Restored": "リストア"
+  },
+  "ArtistEditableFieldNames": {
+    "Albums": "アルバム",
+    "ArtistType": "アーティストタイプ",
+    "BaseVoicebank": "原ボイスバンク",
+    "Description": "説明",
+    "Groups": "グループ",
+    "Names": "名前",
+    "Nothing": "なし",
+    "Picture": "主な画像",
+    "Pictures": "画像",
+    "Status": "ステータス",
+    "WebLinks": "外部リンク",
+    "OriginalName": ""
+  },
+  "ArtistRoleNames": {
+    "Animator": "動画",
+    "Arranger": "編曲",
+    "Composer": "作曲",
+    "Default": "Default",
+    "Distributor": "配給",
+    "Illustrator": "イラスト",
+    "Instrumentalist": "演奏",
+    "Lyricist": "作詞",
+    "Mastering": "マスタリング",
+    "Other": "その他",
+    "Publisher": "出版",
+    "Vocalist": "ボーカル",
+    "VoiceManipulator": "調声",
+    "Chorus": "コーラス",
+    "Encoder": "エンコード",
+    "Mixer": "ミキシング"
+  },
+  "ArtistSortRuleNames": {
+    "AdditionDate": "追加された日時（降順）",
+    "AdditionDateAsc": "追加された日時（昇順）",
+    "FollowerCount": "フォロワー数",
+    "Name": "アーティスト名",
+    "SongCount": "曲数",
+    "SongRating": "総評価数"
+  },
+  "CommonMessages": {
+    "EntryDeleted": "この項目は削除されました。一時的アクセスは可能ですが、検索などには表示されません。",
+    "EntryMergedTo": "この項目はマージされました：",
+    "EntryStatusExplanation": "下書き：項目は必須情報が抜けています。<br/>\n完成した：項目は全て必須情報がありますが、信用されたユーザーに見直しされていません。<br/>\n承認された：項目は信用されたユーザーに見直され、承認されています。承認された項目は信用されたユーザーしか編集できません。",
+    "Locked": "この項目はロックされています。モデレーターしか編集できません。",
+    "NameLanguageHelp": ""
+  },
+  "ContentLanguageSelectionNames": {
+    "Default": "原言語",
+    "English": "英語",
+    "Japanese": "非英語",
+    "Romaji": "ローマ字",
+    "Unspecified": "Unspecified"
+  },
+  "DiscTypeDescriptions": {
+    "Album": "未発売曲がほとんどのアルバム",
+    "Compilation": "もともと別のアルバムに入っていた曲を、一定の意図に基づいて集めて作るアルバム。\"best of...\"など。",
+    "EP": "Extended Playの略。主に３，４曲収録されているアルバム。バージョン違い（インストなど）はトラック数として数えないことが多いです。",
+    "Other": "上記のタイプが適応しないアルバム。",
+    "Single": "１、２曲収録されているアルバム。バージョン違い（インストやリミックスなど）はトラック数として数えないことが多いです。",
+    "SplitAlbum": "アーティスト二名以上（ほとんどの場合は２名）のコラボレーション。",
+    "Video": "ミュージックビデオがメインなディスク。主にDVDまたはblu-ray。"
+  },
+  "EntryEditEventNames": {
+    "Created": "作成",
+    "Updated": "更新"
+  },
+  "EntryStatusNames": {
+    "Approved": "承認された",
+    "Draft": "下書き",
+    "Finished": "完成した",
+    "Locked": "ロック"
+  },
+  "PermissionTokenNames": {
+    "ViewAuditLog": "イベントログを観察",
+    "Nothing": "なし",
+    "MoveToTrash": "ゴミ箱に移動",
+    "MikuDbImport": "アルバムインポート",
+    "MergeEntries": "項目をマージ",
+    "ManageUserPermissions": "ユーザー権利の管理",
+    "ManageIPRules": "IPルールの管理",
+    "ReadRecentComments": "最近のコメントを読む",
+    "RemoveTagUsages": "タグ使用を削除"
+  },
+  "PVTypeDescriptions": {
+    "Original": "オリジナル（公式・許可されたアップロード）",
+    "Other": "その他",
+    "Reprint": "転載"
+  },
+  "PVTypeNames": {
+    "Original": "オリジン",
+    "Other": "その他",
+    "Reprint": "増刷"
+  },
+  "ReleaseEventEditableFieldNames": {
+    "Artists": "アーティスト",
+    "Category": "カテゴリ",
+    "Date": "日時",
+    "Description": "概要",
+    "Name": "名前",
+    "Series": "シリーズ",
+    "SeriesNumber": "シリーズ番号",
+    "SeriesSuffix": "接尾辞"
+  },
+  "SongArchiveReasonNames": {
+    "Unknown": "不明",
+    "Reverted": "以前のバージョンに戻された",
+    "AutoImportedFromMikuDb": "自動インポート",
+    "Created": "作成",
+    "Merged": "別項目とマージされた",
+    "PropertiesUpdated": "プロパティー更新",
+    "Deleted": "削除",
+    "Restored": "レストア"
+  },
+  "SongEditableFieldNames": {
+    "Artists": "アーティスト",
+    "Groups": "グループ",
+    "Length": "継続時間",
+    "Lyrics": "歌詞",
+    "Names": "名前",
+    "Notes": "メモ",
+    "Nothing": "なし",
+    "OriginalName": "",
+    "PVs": "PV",
+    "SongType": "曲タイプ",
+    "Status": "ステータス",
+    "WebLinks": "外部リンク",
+    "OriginalVersion": "オリジナルバージョン",
+    "PublishDate": "公開日"
+  },
+  "SongListEditableFieldNames": {
+    "Thumbnail": "サムネール",
+    "Songs": "曲",
+    "Name": "名前",
+    "FeaturedCategory": "注目カテゴリー",
+    "Description": "説明",
+    "EventDate": "イベント日",
+    "Status": "ステータス"
+  },
+  "SongListFeaturedCategoryNames": {
+    "Concerts": "コンサートのセットリスト",
+    "Nothing": "なし",
+    "Other": "その他",
+    "VocaloidRanking": "ボカロランキング",
+    "Pools": "プール"
+  },
+  "SongSortRuleNames": {
+    "AdditionDate": "追加日時",
+    "FavoritedTimes": "お気に入り登録された数",
+    "Name": "名称",
+    "RatingScore": "評価点数",
+    "None": "なし",
+    "PublishDate": "公開日"
+  },
+  "SongVoteRatingNames": {
+    "Favorite": "お気に入りに追加",
+    "Like": "いいね"
+  },
+  "TagEditableFieldNames": {
+    "Status": "ステータス",
+    "Picture": "画像",
+    "CategoryName": "カテゴリー",
+    "Parent": "親",
+    "Description": "説明",
+    "AliasedTo": "別名"
+  },
+  "UserEmailOptionsNames": {
+    "NoEmail": "プライベートメッセージの通知なし",
+    "PrivateMessagesFromAdmins": "管理者からのプライベートメッセージ",
+    "PrivateMessagesFromAll": "すべてのユーザーからのプライベートメッセージ"
+  },
+  "UserGroupNames": {
+    "Admin": "管理者",
+    "Limited": "限られたユーザー",
+    "Moderator": "モデレータ",
+    "Nothing": "なし",
+    "Regular": "通常のユーザー",
+    "Trusted": "信頼されたユーザー"
+  },
+  "WebLinkCategoryNames": {
+    "Commercial": "商業",
+    "Official": "公式",
+    "Other": "その他",
+    "Reference": "参照"
+  }
+}

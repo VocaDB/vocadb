@@ -1,0 +1,25 @@
+{
+  "Details": {
+    "Albums": "アルバム",
+    "Attending": "参加",
+    "Category": "カテゴリ",
+    "Event": "イベント",
+    "OccurrenceDate": "イベント日時",
+    "Series": "シリーズ",
+    "SongList": "セットリスト",
+    "UserAttending": "参加予定",
+    "UserInterested": "興味あり",
+    "Venue": "会場"
+  },
+  "EventsBySeries": {
+    "CreateEvent": "イベントを登録",
+    "CreateSeries": "シリーズを登録"
+  },
+  "Find": {
+    "CreateEvent": "イベントを登録",
+    "EventNotFound": "イベントが見つかりませんでした。おそらくまだ登録されていません。",
+    "FindEvent": "イベントを検索",
+    "Series": "シリーズ",
+    "YouMayAddTheEvent": "イベントを登録できます。"
+  }
+}

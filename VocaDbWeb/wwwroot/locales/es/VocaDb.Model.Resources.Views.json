@@ -1,0 +1,25 @@
+{
+  "AlbumRes": {
+    "NewAlbumArtistDesc": "Productores y vocalistas asociados con este album.",
+    "NewAlbumInfo": "Notesé que VocaDB y UtaiteDB son dos bases de datos distintas. <strong>El Album necesita al menos una pista con vocales Vocaloid para ser admitido en VocaDB (tambien se admiten vocales de otros tipos de banco de voz, tales como UTAU o CeVio, mas no albumes que íntegramente esten interpetados por vocalistas humanos)</strong>. Tampoco se admiten compliaciones fan-made (bootlegs). Para mas información, vease la página de Ayuda e Indicaciones."
+  },
+  "ArtistRes": {
+    "AuthoredBy": "Cuenta de VocaDB",
+    "NewArtistExternalLink": "Link referencial externo (al sitio web del artista, Hatsune Miku wiki, NND MyList, etcétera)."
+  },
+  "HomeRes": {
+    "SiteDescription": "VocaDB es una base de datos para musica Vocaloid con información de artistas, albumes y canciones.",
+    "Welcome": "¡Bienvenido a la base de datos de Vocaloid!",
+    "WelcomeSubtitle": "\\r\\nLa base de datos colaborativa sobre artistas de la escena Vocaloid, discografías, PVs y mas."
+  },
+  "LayoutRes": {
+    "Keywords": "Vocaloid, VocaDB, Base de datos Vocaloid, Hatsune Miku",
+    "PaypalDonateTitle": "VocaDB es un proyecto sin ánimos de lucro. Todo el dinero recaudado mediante donaciones  es invertido en el desarrollo a futuro de la plataforma, renta de hosteo web y licencias de software de terceros utilizado en el desarrollo y manejo de la misma.",
+    "SiteName": "VocaDB",
+    "SiteTitle": "Base de datos Vocaloid"
+  },
+  "SongRes": {
+    "NewSongInfo": "Por favor, cersiorate de que la entrada que estas por añadir a la base de datos no ha sido subida anteriormente. Se requiere que especifiques al menos un nombre y artista. Porcura incluir un link al PV ORIGINAL (NO REPRINTS SIN AUTORIZACIÓN).<br /><br />\nLas canciones que no son interpretadas por uno o mas Vocaloids (Es decir, canciones de vocalistas humanos) solo son admitidas si están incluidas en albumes que sí tienen pistas interpretadas por al menos un vocaloid. Interpretes de UTAU o cualquier otro tipo de plataformas de sintesís de voz tambien se admiten, mas no las interpretadas por humanos originalmente (a menos la especificación inicial).",
+    "RankingsTitle": "Ranking de canciones en VocaDB"
+  }
+}

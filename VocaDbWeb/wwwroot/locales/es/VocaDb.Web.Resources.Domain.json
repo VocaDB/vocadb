@@ -1,0 +1,21 @@
+{
+  "EntryReportTypeNames": {
+    "BrokenPV": "Link del PV roto o volcado",
+    "Duplicate": "Entrada duplicada",
+    "Inappropriate": "Contenido inapropiado",
+    "InvalidInfo": "Información invalida o sin sustento",
+    "MaliciousIP": "IP maliciosa",
+    "Other": "Otro (especifiquése en las notas)",
+    "OwnershipClaim": "Reclamo de propiedad"
+  },
+  "EntryTypeNames": {
+    "Album": "Album",
+    "Artist": "Artista",
+    "ReleaseEvent": "Evento",
+    "Song": "Canción",
+    "SongList": "Lista de canciones",
+    "Tag": "Etiqueta",
+    "Undefined": "Cualquier contenido",
+    "User": "Usuario"
+  }
+}

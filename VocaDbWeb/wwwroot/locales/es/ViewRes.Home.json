@@ -1,0 +1,16 @@
+{
+  "Index": {
+    "NewAlbums": "Albumes lanzados recientemente o proximamente en ser lanzados",
+    "News": "Noticias",
+    "RecentActivity": "Actividad reciente",
+    "RecentEvents": "Proximos eventos/pasando ahora mismo",
+    "RecentSongs": "Canciones recientes",
+    "SearchSite": "Busca algo dentro del sitio usando Google custom search",
+    "TopAlbums": "Albumes populares al azar",
+    "ViewAll": "Ver todo",
+    "ViewMore": "Ver mas",
+    "ViewSongInfo": "Ver información sobre esta canción",
+    "Welcome": "¡Bienvenido a la base de datos de Vocaloid!",
+    "WelcomeSubtitle": "\\r\\nLa base de datos colaborativa con artistas de la escena Vocaloid, discografías, PVs y mas."
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "EntryReportTypeNames": {
+    "BrokenPV": "Устаревшая ссылка на видео",
+    "Duplicate": "Дубликат",
+    "Inappropriate": "Недопустимый материал",
+    "InvalidInfo": "Неверная или неполная информация",
+    "Other": "Прочее (опишите в сноске)"
+  },
+  "EntryTypeNames": {
+    "Album": "Альбом",
+    "Artist": "Артист",
+    "Song": "Песня",
+    "SongList": "Список песен",
+    "Undefined": "Всё",
+    "User": "Пользователь"
+  }
+}

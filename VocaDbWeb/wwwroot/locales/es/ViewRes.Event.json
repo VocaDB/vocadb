@@ -1,0 +1,23 @@
+{
+  "Details": {
+    "Event": "Evento",
+    "OccurrenceDate": "Fecha de realización",
+    "Series": "Serie"
+  },
+  "EventsBySeries": {
+    "CreateEvent": "Crear evento",
+    "CreateSeries": "Crear serie",
+    "ViewByDate": "Por fecha",
+    "ViewBySeries": "Por serie de eventos",
+    "ViewList": "Lista"
+  },
+  "Find": {
+    "CreateEvent": "Crear evento",
+    "EventNotFound": "Parece que no hay ningún evento con ese nombre en nuestra base de datos, puedes revisar si has escrito incorrectamente el nombre, probar con denominaciones distitnas, nombres alternativos, etc. Si aún así no lo encuentras, lo mas probable es que aún no esté en nuestra base de datos.",
+    "FindEvent": "Encontrar evento",
+    "Number": "número",
+    "Series": "serie",
+    "UngroupedEventNamed": "evento sin agrupar llamado:",
+    "YouMayAddTheEvent": "Puedes añadir el evento a la base de datos."
+  }
+}

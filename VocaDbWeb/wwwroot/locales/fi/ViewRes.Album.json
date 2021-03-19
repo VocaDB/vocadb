@@ -1,0 +1,53 @@
+{
+  "ArtistForAlbumEditRow": {
+    "Customize": "Kustomoi",
+    "Support": "Tuki"
+  },
+  "Create": {
+    "AlbumInfo2": "Varmista ettei albumia ole jo tietokannssa. Sinun täytyy antaa ainakin yksi nimi ja artisti.",
+    "ArtistsInfo": "Artistit (tarvitaan vähintään yksi)",
+    "DiscType": "Levyn tyyppi",
+    "NeedArtist": "Tarvitaan ainakin yksi artisti.",
+    "SubmitAlbum": "Lisää albumi",
+    "UnableToCreateAlbum": "Albumin lisäys ei onnistu. Tarkista virheet ja yritä uudelleen."
+  },
+  "Details": {
+    "AddToCollection": "Lisää kokoelmaani",
+    "AlbumDetails": "Albumi",
+    "CatalogNumber": "Tuotenumero",
+    "Circle": "Doujin-piiri",
+    "CoverPicture": "Kansikuva",
+    "DownloadTrackList": "Lataa kappaletiedot CSV-tiedostona",
+    "EditAlbumInCollection": "Muokkaa kokoelmassa",
+    "Labels": "Levy-yhtiö(t)",
+    "MediaType": "Median tyyppi",
+    "MyRating": "Arvostelu",
+    "NoTracklist": "Ei kappalelistaa annettu. Kuka tahansa rekisteröitynyt käyttäjä voi täyttää listan.",
+    "OtherArtists": "Muut artistit",
+    "Producers": "Tuottajat",
+    "PVs": "Mainokset / koosteet",
+    "Ratings": "arvostelua",
+    "ReleaseDate": "Julkaisupäivä",
+    "ReleaseEvent": "Julkaisutapahtuma",
+    "Status": "Tila",
+    "Tracklist": "Kappalelista",
+    "UpdateCollection": "Päivitä kokoelmassani",
+    "Vocalists": "Laulajat",
+    "Disc": "Levy",
+    "OwnedBy": "Omistettu {{0}} kertaa",
+    "WishlistedBy": "Toivottu {{0}} kertaa",
+    "AlbumInCollections": "Albumi kokoelmissa",
+    "OwnedByTitle": "Omistavat",
+    "WishlistedByTitle": "Toivoneet",
+    "RelatedAlbums": "Samankaltaiset albumit",
+    "CustomFormatStringLabel": "Kustomoitu formatointi (oletusarvo on tyhjä)",
+    "Customize": "Kustomoi",
+    "Reset": "Resetoi",
+    "Band": "Yhtye/yksikkö",
+    "Share": "Jaa"
+  },
+  "TopRated": {
+    "Average": "keskiarvo",
+    "RatedTimes": "arvioitu {{0}} kertaa"
+  }
+}

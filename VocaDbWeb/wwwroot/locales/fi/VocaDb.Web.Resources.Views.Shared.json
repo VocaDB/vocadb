@@ -1,0 +1,9 @@
+{
+  "Time": {
+    "Days": "päivää",
+    "Hours": "tuntia",
+    "Minutes": "minuuttia",
+    "Months": "kuukautta",
+    "TimeAgo": "{{0}} {{1}} sitten"
+  }
+}

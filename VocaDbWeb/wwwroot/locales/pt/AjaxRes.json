@@ -1,0 +1,29 @@
+{
+  "Album": {
+    "AddedToCollection": "Adicionado à coleção.",
+    "AddNewSong": "Adicionar nova música chamada '{{0}}'",
+    "AddToTracks": "Adicionar às músicas",
+    "Download": "Download",
+    "RemoveFromTracks": "Apagar das minhas músicas"
+  },
+  "EntryIndex": {
+    "DraftsOnlyFilter": "Estado do draft",
+    "ExactTitleFilter": "título exato '{{0}}",
+    "FilterPre": "Filtrando",
+    "StartsWithTitleFilter": "começando com o título '{{0}}'",
+    "TitleFilter": "título '{{0}}'"
+  },
+  "Shared": {
+    "AddExtraArtist": "Adicionar artista chamado '{{0}}'",
+    "ReportSent": "Denúncia feita. Obrigado!",
+    "Save": "Gravar",
+    "ThanksForRating": "Obrigado por classificar!"
+  },
+  "Song": {
+    "AddedToList": "Adicionado à lista.",
+    "OnlyWithPVsFilter": "Só PVs",
+    "SinceFilter": "mais recente que {{0}}",
+    "SongTypeFilter": "tipo de música '{{0}}'",
+    "ThanksForRating": "Obrigado por classificar!"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "ActivityFeedHelper": {
+    "At": "-",
+    "CreatedAlbum": "さんが新しくアルバムを登録しました",
+    "CreatedArtist": "さんが新しくアーティストを登録しました",
+    "CreatedNew": "さんが新しい{{0}}を登録しました",
+    "CreatedSong": "さんが新しい曲を登録しました",
+    "Updated": "さんが{{0}}を更新しました",
+    "UpdatedAlbum": "さんがアルバムを更新しました",
+    "UpdatedArtist": "さんがアーティストを更新しました",
+    "UpdatedSong": "さんが曲を更新しました",
+    "EntryAlbum": "アルバム",
+    "EntryArtist": "アーティスト",
+    "EntrySong": "曲",
+    "Someone": "投稿者",
+    "EntryReleaseEvent": "イベント",
+    "EntrySongList": "曲リスト",
+    "EntryTag": "タグ"
+  },
+  "AlbumHelpers": {
+    "Released": "発売日"
+  },
+  "Helper": {
+    "DraftMessage": "これは書きかけの項目です。不足する情報を書き足して記事を完成させることが出来ます。",
+    "EntryIsMissingInformation": "この項目は下記の情報が不足しています。",
+    "EntryValidationWarningDetails": "詳細",
+    "SeeGuide": "ガイドライン",
+    "SeeGuidePost": "のページを御覧下さい。",
+    "SeeGuidePre": "詳しくは",
+    "DraftIconTitle": "この項目は書きかけです。",
+    "GitHubMarkdown": "Github マークダウン",
+    "NameLangTitle": "言語",
+    "SaveChanges": "変更を保存",
+    "ReturnWithoutSaving": "保存せず戻る",
+    "EntryValidationNoErrors": "この項目の必要情報は全て記入されています。",
+    "EntryValidationNoErrorsDraft": "この項目は「完成」とみなすための必要情報が記入されています。",
+    "IsSupportedForFormatting": "フォーマット使用",
+    "StatusDescriptionApproved": "承認された項目は信用されたユーザーがレビューされてます。承認された項目の編集は限られています。",
+    "StatusDescriptionDraft": "下書きの項目は必要な情報が不足しています。",
+    "StatusDescriptionFinished": "完成項目は必要情報が全て含まれていますが、信用されたユーザーに承認されていません。",
+    "StatusDescriptionLocked": "ロックされた項目はスタッフ以外編集できません。",
+    "WebLinkCategoryTitle": "カテゴリー",
+    "WebLinkDescriptionTitle": "記述",
+    "WebLinkNewRow": "もう一つの行"
+  },
+  "SongHelpers": {
+    "FromAlbum": "アルバムから"
+  }
+}

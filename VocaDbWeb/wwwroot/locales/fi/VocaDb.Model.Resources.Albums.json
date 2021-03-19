@@ -1,0 +1,12 @@
+{
+  "DiscTypeNames": {
+    "Album": "Albumi",
+    "Compilation": "Kokoelma",
+    "EP": "Pitkäsoitto",
+    "Other": "Muu",
+    "Single": "Single",
+    "SplitAlbum": "Split-albumi",
+    "Unknown": "Ei määritelty",
+    "Video": "Video"
+  }
+}

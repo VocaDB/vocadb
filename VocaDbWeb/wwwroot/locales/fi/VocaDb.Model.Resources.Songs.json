@@ -1,0 +1,15 @@
+{
+  "SongTypeNames": {
+    "Cover": "Cover",
+    "DramaPV": "Draamavideo",
+    "Instrumental": "Instrumentaali",
+    "Live": "Live-tallenne",
+    "Mashup": "Mashup",
+    "MusicPV": "Musiikkivideo",
+    "Original": "Alkuperäinen kappale",
+    "Other": "Muu",
+    "Remaster": "Uudelleenmasterointi",
+    "Remix": "Remiksi",
+    "Unspecified": "Ei määritelty"
+  }
+}

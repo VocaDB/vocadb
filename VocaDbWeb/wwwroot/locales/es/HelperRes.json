@@ -1,0 +1,48 @@
+{
+  "ActivityFeedHelper": {
+    "At": "a",
+    "CreatedNew": "ha añadido un(a) nuev@ {{0}}",
+    "EntryAlbum": "album",
+    "EntryArtist": "artista",
+    "EntryReleaseEvent": "evento",
+    "EntrySong": "canción",
+    "EntrySongList": "lista de canciones",
+    "EntryTag": "etiqueta",
+    "Someone": "contribuyente",
+    "Updated": "ha actualizado a un(a) {{0}}"
+  },
+  "AlbumHelpers": {
+    "Released": "Lanzado"
+  },
+  "Helper": {
+    "Added": "añadido",
+    "DraftIconTitle": "Esta entradaes un borrador.",
+    "DraftMessage": "Esta entrada es un borrador. Puedes ayudar editando la entrada y añadiendo la información faltante.",
+    "EntryIsMissingInformation": "A esta entrada le falta la siguiente información:",
+    "EntryValidationNoErrors": "Esta entrada contiene toda la información básica requerida.",
+    "EntryValidationNoErrorsDraft": "Esta entrada contiene toda la información para considerarsele terminada (dejar de ser un borrador).",
+    "EntryValidationWarningDetails": "Detalles",
+    "GitHubMarkdown": "Puedes escribir la descripción en formato Markdown (Tipo GitHub),",
+    "IsSupportedForFormatting": "el cual es soportado por nuestra plataforma.",
+    "NameLangTitle": "idioma",
+    "NameNewRow": "Nueva fila",
+    "NameValueTitle": "Nombre (requerido)",
+    "ReturnWithoutSaving": "Regresar sin guardar",
+    "SaveChanges": "Guardar cambios",
+    "SeeGuide": "guía",
+    "SeeGuidePost": "para mas información",
+    "SeeGuidePre": "Ver la",
+    "StatusDescriptionApproved": "Las entradas aprobadas han sido inspeccionadas y verificadas por una fuente de confianza. La edición en la entradas aprobadas es limitada.",
+    "StatusDescriptionDraft": "Los borradores carecen de alguna información requerida indispensablemente.",
+    "StatusDescriptionFinished": "Las entradas terminadas contienen toda la información requerida pero aún no han sido aprobadas.",
+    "StatusDescriptionLocked": "Las entradas aseguradas solo pueden ser editadas por moderadores y/o miembros del staff.",
+    "UploadPictureInfo": "Se admiten los formatos: {{0}}. El archivo no puede pesar mas de {{1}} MB para ser admitido en el sistema. Favor de respetar las normas de copyright y hacer mención en formato de la fuente de la imágen en las notas/descripción de ser posible.",
+    "WebLinkCategoryTitle": "Categoría",
+    "WebLinkDescriptionTitle": "Descripción",
+    "WebLinkNewRow": "Nueva fila",
+    "WebLinkUrlTitle": "URL"
+  },
+  "SongHelpers": {
+    "FromAlbum": "Del album"
+  }
+}

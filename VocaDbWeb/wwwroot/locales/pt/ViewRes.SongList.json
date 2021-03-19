@@ -1,0 +1,30 @@
+{
+  "Details": {
+    "Date": "Data: {{0}}.",
+    "DefaultSortRule": "Predefinição",
+    "Details": "Detalhes",
+    "Export": "Exportar",
+    "Playlist": "Playlist",
+    "Preview": "Previsualização",
+    "ShowTags": "Mostrar tags",
+    "SongList": "Lista de músicas",
+    "Songs": "música(s)"
+  },
+  "Edit": {
+    "ConfirmDelete": "De certeza que quer apagar esta lista?",
+    "CreateTitle": "Criar uma lista de músicas",
+    "Description": "Descrição",
+    "EditTitle": "Editar lista - {{0}}",
+    "EventDate": "Data do evento",
+    "EventDateHelp": "Se esta lista pertence a um evento (como concertos ou classificações), a data do evento pode ser introduzida aqui.",
+    "FeaturedCategory": "Categoria destacada",
+    "Name": "Nome",
+    "Status": "Estado da página",
+    "TabProperties": "Propriedades",
+    "TabSongs": "Músicas"
+  },
+  "Featured": {
+    "Import": "Importar do YouTube ou NicoNico",
+    "SortBy": "Organizar por"
+  }
+}

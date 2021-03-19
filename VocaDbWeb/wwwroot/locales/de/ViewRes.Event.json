@@ -1,0 +1,21 @@
+{
+  "Details": {
+    "Attending": "Nehme Teil",
+    "Event": "Event",
+    "OccurrenceDate": "Ereignistermin",
+    "Series": "Reihe"
+  },
+  "EventsBySeries": {
+    "CreateEvent": "Event erstellen",
+    "CreateSeries": "Reihe erstellen"
+  },
+  "Find": {
+    "CreateEvent": "Event erstellen",
+    "EventNotFound": "Tut uns leid, ein Event mit diesem Namen konnte nicht gefunden werden. Vermutlich wurde es noch nicht zur Datenbank hinzugefügt.",
+    "FindEvent": "Event finden",
+    "Number": "Nummer",
+    "Series": "Reihe",
+    "UngroupedEventNamed": "ungruppiertes Event mit dem Namen:",
+    "YouMayAddTheEvent": "Du kannst das Event in die Datenbank mitaufnehmen."
+  }
+}

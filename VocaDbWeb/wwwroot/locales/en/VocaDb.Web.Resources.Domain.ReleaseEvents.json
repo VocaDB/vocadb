@@ -1,0 +1,41 @@
+{
+  "ArtistEventRoleNames": {
+    "Dancer": "Dancer",
+    "Default": "Default",
+    "DJ": "DJ",
+    "Instrumentalist": "Instrumentalist",
+    "Organizer": "Organizer",
+    "Other": "Other",
+    "OtherPerformer": "Other performer",
+    "Promoter": "Promoter",
+    "VJ": "VJ",
+    "Vocalist": "Vocalist",
+    "VoiceManipulator": "Voice manipulator"
+  },
+  "EventCategoryNames": {
+    "AlbumRelease": "Album release fair",
+    "Anniversary": "Character anniversary",
+    "Club": "Club",
+    "Concert": "Concert",
+    "Contest": "Contest",
+    "Convention": "Convention",
+    "Other": "Other",
+    "Unspecified": "Unspecified"
+  },
+  "EventSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "Date": "Date",
+    "Name": "Name",
+    "SeriesName": "Series",
+    "VenueName": "Venue"
+  },
+  "ReleaseEventSeriesEditableFieldNames": {
+    "Category": "Category",
+    "Description": "Description",
+    "Name": "Name",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "Picture": "Main picture",
+    "WebLinks": "External links"
+  }
+}
