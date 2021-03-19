@@ -425,7 +425,7 @@ namespace VocaDb.Model.Service
 		}
 	}
 
-	public static class PartialFindResult
+	public abstract class PartialFindResult
 	{
 		public static PartialFindResult<T> Create<T>(T[] items, int totalCount)
 		{
@@ -434,7 +434,7 @@ namespace VocaDb.Model.Service
 	}
 
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class PartialFindResult<T>
+	public class PartialFindResult<T> : PartialFindResult
 	{
 		public PartialFindResult()
 		{

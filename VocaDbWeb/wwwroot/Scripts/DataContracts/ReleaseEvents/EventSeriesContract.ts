@@ -16,6 +16,8 @@ import WebLinkContract from '../WebLinkContract';
 
 		names?: LocalizedStringWithIdContract[];
 
+		urlSlug?: string;
+
 		webLinks: WebLinkContract[];
 
 	}

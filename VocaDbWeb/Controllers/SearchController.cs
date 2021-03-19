@@ -3,6 +3,11 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Database.Queries;
+using VocaDb.Model.DataContracts.Albums;
+using VocaDb.Model.DataContracts.Api;
+using VocaDb.Model.DataContracts.Artists;
+using VocaDb.Model.DataContracts.ReleaseEvents;
+using VocaDb.Model.DataContracts.Songs;
 using VocaDb.Model.DataContracts.Tags;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Albums;
@@ -16,6 +21,8 @@ using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Service.Search.Events;
 using VocaDb.Model.Service.Search.SongSearch;
 using VocaDb.Model.Service.Search.Tags;
+using VocaDb.ReMikus;
+using VocaDb.Web.Controllers.Api;
 using VocaDb.Web.Models.Search;
 
 namespace VocaDb.Web.Controllers
@@ -31,6 +38,12 @@ namespace VocaDb.Web.Controllers
 		private readonly SongListQueries _songListQueries;
 		private readonly TagQueries _tagQueries;
 		private readonly IUserPermissionContext _permissionContext;
+		private readonly AlbumApiController _albumApiController;
+		private readonly ArtistApiController _artistApiController;
+		private readonly EntryApiController _entryApiController;
+		private readonly ReleaseEventApiController _releaseEventApiController;
+		private readonly SongApiController _songApiController;
+		private readonly TagApiController _tagApiController;
 
 		private ActionResult RedirectToAlbum(int id)
 		{
@@ -174,8 +187,22 @@ namespace VocaDb.Web.Controllers
 			return null;
 		}
 
-		public SearchController(OtherService services, ArtistService artistService, AlbumService albumService, SongService songService, SongListQueries songListQueries,
-			TagQueries tagQueries, EventQueries eventQueries, EntryQueries entryQueries, IUserPermissionContext permissionContext)
+		public SearchController(
+			OtherService services,
+			ArtistService artistService,
+			AlbumService albumService,
+			SongService songService,
+			SongListQueries songListQueries,
+			TagQueries tagQueries,
+			EventQueries eventQueries,
+			EntryQueries entryQueries,
+			IUserPermissionContext permissionContext,
+			AlbumApiController albumApiController,
+			ArtistApiController artistApiController,
+			EntryApiController entryApiController,
+			ReleaseEventApiController releaseEventApiController,
+			SongApiController songApiController,
+			TagApiController tagApiController)
 		{
 			_services = services;
 			_artistService = artistService;
@@ -186,9 +213,16 @@ namespace VocaDb.Web.Controllers
 			_eventQueries = eventQueries;
 			_entryQueries = entryQueries;
 			_permissionContext = permissionContext;
+			_albumApiController = albumApiController;
+			_artistApiController = artistApiController;
+			_entryApiController = entryApiController;
+			_releaseEventApiController = releaseEventApiController;
+			_songApiController = songApiController;
+			_tagApiController = tagApiController;
+
 		}
 
-		public ActionResult Index(SearchIndexViewModel viewModel)
+		public IActionResult Index(SearchIndexViewModel viewModel)
 		{
 			if (viewModel == null)
 				viewModel = new SearchIndexViewModel();
@@ -213,10 +247,50 @@ namespace VocaDb.Web.Controllers
 
 			SetSearchEntryType(viewModel.SearchType);
 
-			return View("Index", viewModel);
+			PartialFindResult result = viewModel.SearchType switch
+			{
+				EntryType.Album => _albumApiController.GetList(
+					query: viewModel.Filter,
+					start: viewModel.PageSize * (viewModel.Page - 1)/* REVIEW: React */,
+					maxResults: viewModel.PageSize,
+					getTotalCount: true/* REVIEW: React */,
+					fields: AlbumOptionalFields.AdditionalNames | AlbumOptionalFields.MainPicture | AlbumOptionalFields.ReleaseEvent | AlbumOptionalFields.Tags/* TODO: React */),
+				EntryType.Artist => _artistApiController.GetList(
+					query: viewModel.Filter,
+					start: viewModel.PageSize * (viewModel.Page - 1)/* REVIEW: React */,
+					maxResults: viewModel.PageSize,
+					getTotalCount: true/* REVIEW: React */,
+					fields: ArtistOptionalFields.AdditionalNames | ArtistOptionalFields.MainPicture | ArtistOptionalFields.Tags/* TODO: React */),
+				EntryType.ReleaseEvent => _releaseEventApiController.GetList(
+					query: viewModel.Filter,
+					start: viewModel.PageSize * (viewModel.Page - 1)/* REVIEW: React */,
+					maxResults: viewModel.PageSize,
+					getTotalCount: true/* REVIEW: React */,
+					fields: ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series | ReleaseEventOptionalFields.Venue | ReleaseEventOptionalFields.Tags/* TODO: React */),
+				EntryType.Song => _songApiController.GetList(
+					query: viewModel.Filter,
+					start: viewModel.PageSize * (viewModel.Page - 1)/* REVIEW: React */,
+					maxResults: viewModel.PageSize,
+					getTotalCount: true/* REVIEW: React */,
+					fields: SongOptionalFields.AdditionalNames | SongOptionalFields.ThumbUrl | SongOptionalFields.Tags/* TODO: React */),
+				EntryType.Tag => _tagApiController.GetList(
+					query: viewModel.Filter,
+					start: viewModel.PageSize * (viewModel.Page - 1)/* REVIEW: React */,
+					maxResults: viewModel.PageSize,
+					getTotalCount: true/* REVIEW: React */,
+					fields: TagOptionalFields.AdditionalNames | TagOptionalFields.MainPicture),
+				_ => _entryApiController.GetList(
+					query: viewModel.Filter,
+					start: viewModel.PageSize * (viewModel.Page - 1)/* REVIEW: React */,
+					maxResults: viewModel.PageSize,
+					getTotalCount: true/* REVIEW: React */,
+					fields: EntryOptionalFields.AdditionalNames | EntryOptionalFields.MainPicture | EntryOptionalFields.Tags/* TODO: React */),
+			};
+
+			return Inertia.Render(new { viewModel, result });
 		}
 
-		public ActionResult Radio()
+		public IActionResult Radio()
 		{
 			return Index(new SearchIndexViewModel(EntryType.Song) { MinScore = 1, Sort = "AdditionDate", ViewMode = "PlayList", Autoplay = true, Shuffle = true });
 		}

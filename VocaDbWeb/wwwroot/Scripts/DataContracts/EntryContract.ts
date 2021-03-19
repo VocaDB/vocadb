@@ -7,6 +7,8 @@ import EntryWithTagUsagesContract from './Base/EntryWithTagUsagesContract';
 
 		additionalNames?: string;
 
+		artistString?: string;
+
 		artistType?: string;
 
 		discType?: string;
@@ -26,6 +28,8 @@ import EntryWithTagUsagesContract from './Base/EntryWithTagUsagesContract';
 		songListFeaturedCategory?: string;
 
 		songType?: string;
+
+		status?: string;
 
 		tagCategoryName?: string;
 

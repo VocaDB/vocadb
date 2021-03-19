@@ -1,9 +1,11 @@
 import React, { ReactElement } from 'react';
 import Layout from '../../Shared/Layout';
 
-export default (): ReactElement => {
+const Index = (): ReactElement => {
 	return (
 		<Layout>
 		</Layout>
 	);
 };
+
+export default Index;

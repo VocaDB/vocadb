@@ -82,7 +82,8 @@ namespace VocaDb.Web
 					options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); // All properties in camel case
 					options.SerializerSettings.Converters.Add(new StringEnumConverter());  // All enums as strings by default
 					options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-				});
+				})
+				.AddControllersAsServices();
 
 			services.AddInMemoryCacheOutput();
 

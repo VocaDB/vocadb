@@ -6,9 +6,12 @@ import PVContract from '../PVs/PVContract';
 import SongListBaseContract from '../SongListBaseContract';
 import VenueForApiContract from '../Venue/VenueForApiContract';
 import WebLinkContract from '../WebLinkContract';
+import TagUsageForApiContract from '../Tag/TagUsageForApiContract';
 
 	// Matches ReleaseEventForApiContract
 	export default interface ReleaseEventContract {
+
+		additionalNames?/* REVIEW: React */: string;
 
 		artists: ArtistForEventContract[];
 
@@ -34,7 +37,15 @@ import WebLinkContract from '../WebLinkContract';
 
 		songList?: SongListBaseContract;
 
+		status?: string;
+
+		tags?: TagUsageForApiContract[];
+
+		urlSlug?/* REVIEW: React */: string;
+
 		venue?: VenueForApiContract;
+
+		venueName?: string;
 
 		webLinks: WebLinkContract[];
 

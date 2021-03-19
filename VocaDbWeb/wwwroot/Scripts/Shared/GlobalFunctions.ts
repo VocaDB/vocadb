@@ -20,7 +20,7 @@ export default class functions {
 
 	public static mapAbsoluteUrl(relative: string) {
 
-        return functions.mergeUrls(vdb.values.baseAddress, relative);
+        return functions.mergeUrls('/'/* REVIEW: React */, relative);
 
     };
 
