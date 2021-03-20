@@ -117,9 +117,7 @@ namespace VocaDb.Web
 				.AddCookie(options =>
 				{
 					options.LoginPath = new PathString("/User/Login");
-					// This is for external services like UTAU Wiki importer.
-					// See also: https://github.com/VocaDB/vocadb/pull/783
-					options.Cookie.SameSite = SameSiteMode.None;
+					options.Cookie.Domain = Configuration["CookieDomain"];
 				});
 
 			services.AddLaravelMix();
