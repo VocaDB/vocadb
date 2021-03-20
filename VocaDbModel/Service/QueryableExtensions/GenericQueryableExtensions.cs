@@ -14,6 +14,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 {
 	public static class GenericQueryableExtensions
 	{
+#nullable enable
 		public static IOrderedQueryable<TSource> OrderBy<TSource, TKey>(this IQueryable<TSource> query, Expression<Func<TSource, TKey>> keySelector, SortDirection direction)
 		{
 			return direction == SortDirection.Ascending ?
@@ -36,7 +37,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		/// <param name="paging">Paging properties. Can be null.</param>
 		/// <param name="allowEmpty">Allow empty result if MaxResults is less than 1</param>
 		/// <returns>Query which is filtered for paging.</returns>
-		public static IQueryable<T> Paged<T>(this IQueryable<T> query, PagingProperties paging, bool allowEmpty = false)
+		public static IQueryable<T> Paged<T>(this IQueryable<T> query, PagingProperties? paging, bool allowEmpty = false)
 		{
 			if (paging == null)
 				return query;
@@ -49,6 +50,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 			return query.Skip(start).Take(maxEntries);
 		}
+#nullable disable
 
 		// http://blog.jukkahyv.com/2016/04/09/transform-object-to-another-type-in-a-linq-query/
 		public static IQueryable<TResult> SelectObject<TSource, TResult>(this IQueryable<TSource> query)
@@ -64,6 +66,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query.Select(Expression.Lambda<Func<TSource, TResult>>(memberInit, param));
 		}
 
+#nullable enable
 		public static Task<bool> VdbAnyAsync<TSource>(this IQueryable<TSource> source)
 		{
 			if (source.Provider is INhQueryProvider)
@@ -83,6 +86,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 			return Task.FromResult(source.Count());
 		}
+#nullable disable
 
 		public static Task<TSource> VdbFirstOrDefaultAsync<TSource>(this IQueryable<TSource> source)
 		{
@@ -94,6 +98,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return Task.FromResult(source.FirstOrDefault());
 		}
 
+#nullable enable
 		/// <summary>
 		/// Executes the query and returns its result as <see cref="IList{T}"/>.
 		/// To be used instead of the NHibernate extension method to make the query testable.
@@ -119,6 +124,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 		public static IQueryable<T> WhereIdIn<T>(this IQueryable<T> query, IEnumerable<int> ids) where T : IEntryWithIntId
 			=> query.Where(e => ids.Contains(e.Id));
+#nullable disable
 	}
 
 	public enum SortDirection
