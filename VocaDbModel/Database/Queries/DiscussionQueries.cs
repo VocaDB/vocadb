@@ -37,6 +37,7 @@ namespace VocaDb.Model.Database.Queries
 			_entryLinkFactory = entryLinkFactory;
 		}
 
+#nullable enable
 		public CommentForApiContract CreateComment(int topicId, CommentForApiContract contract)
 		{
 			return _repository.HandleTransaction(ctx =>
@@ -49,6 +50,7 @@ namespace VocaDb.Model.Database.Queries
 				return Comments(ctx).Create(topicId, contract);
 			});
 		}
+#nullable disable
 
 		public DiscussionFolderContract CreateFolder(DiscussionFolderContract contract)
 		{

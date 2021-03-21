@@ -331,14 +331,12 @@ namespace VocaDb.Model.Database.Queries
 				return new AlbumContract(album, PermissionContext.LanguagePreference);
 			});
 		}
-#nullable disable
 
 		public CommentForApiContract CreateComment(int albumId, CommentForApiContract contract)
 		{
 			return HandleTransaction(ctx => Comments(ctx).Create(albumId, contract));
 		}
 
-#nullable enable
 		public (bool created, int reportId) CreateReport(int albumId, AlbumReportType reportType, string hostname, string notes, int? versionNumber)
 		{
 			ParamIs.NotNull(() => hostname);

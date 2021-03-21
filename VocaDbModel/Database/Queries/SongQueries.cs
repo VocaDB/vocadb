@@ -424,14 +424,12 @@ namespace VocaDb.Model.Database.Queries
 				return new SongContract(song, PermissionContext.LanguagePreference);
 			});
 		}
-#nullable disable
 
 		public CommentForApiContract CreateComment(int songId, CommentForApiContract contract)
 		{
 			return HandleTransaction(ctx => Comments(ctx).Create(songId, contract));
 		}
 
-#nullable enable
 		public (bool created, int reportId) CreateReport(int songId, SongReportType reportType, string hostname, string notes, int? versionNumber)
 		{
 			ParamIs.NotNull(() => hostname);

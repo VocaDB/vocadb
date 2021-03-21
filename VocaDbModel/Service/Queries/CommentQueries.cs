@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +37,7 @@ namespace VocaDb.Model.Service.Queries
 	{
 		private readonly IDatabaseContext _ctx;
 		private readonly IEntryLinkFactory _entryLinkFactory;
-		private readonly Func<int, TEntry> _entryLoaderFunc;
+		private readonly Func<int, TEntry>? _entryLoaderFunc;
 		private readonly IUserPermissionContext _permissionContext;
 		private readonly IUserIconFactory _userIconFactory;
 
@@ -49,7 +47,7 @@ namespace VocaDb.Model.Service.Queries
 		}
 
 		public CommentQueries(IDatabaseContext ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory,
-			Func<int, TEntry> entryLoaderFunc = null)
+			Func<int, TEntry>? entryLoaderFunc = null)
 		{
 			_ctx = ctx;
 			_entryLinkFactory = entryLinkFactory;
@@ -58,7 +56,6 @@ namespace VocaDb.Model.Service.Queries
 			_entryLoaderFunc = entryLoaderFunc;
 		}
 
-#nullable enable
 		public CommentForApiContract Create(int entryId, CommentForApiContract contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -84,7 +81,6 @@ namespace VocaDb.Model.Service.Queries
 
 			return new CommentForApiContract(comment, _userIconFactory);
 		}
-#nullable disable
 
 		public void Delete(int commentId)
 		{
@@ -136,7 +132,6 @@ namespace VocaDb.Model.Service.Queries
 				.ToArray();
 		}
 
-#nullable enable
 		public void Update(int commentId, IComment contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -153,6 +148,5 @@ namespace VocaDb.Model.Service.Queries
 
 			_ctx.AuditLogger.AuditLog($"updated comment for {_entryLinkFactory.CreateEntryLink(comment.Entry)}: '{HttpUtility.HtmlEncode(contract.Message)}'");
 		}
-#nullable disable
 	}
 }

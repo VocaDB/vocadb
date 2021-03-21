@@ -227,14 +227,12 @@ namespace VocaDb.Model.Database.Queries
 				return new TagBaseContract(tag, PermissionContext.LanguagePreference);
 			});
 		}
-#nullable disable
 
 		public CommentForApiContract CreateComment(int tagId, CommentForApiContract contract)
 		{
 			return HandleTransaction(ctx => Comments(ctx).Create(tagId, contract));
 		}
 
-#nullable enable
 		public (bool created, int reportId) CreateReport(int tagId, TagReportType reportType, string hostname, string notes, int? versionNumber)
 		{
 			ParamIs.NotNull(() => hostname);
