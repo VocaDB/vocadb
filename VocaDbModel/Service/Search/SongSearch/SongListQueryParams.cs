@@ -16,7 +16,9 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 		public SongListSortRule SortRule { get; set; }
 
-		public int[] TagIds { get; set; }
+#nullable enable
+		public int[]? TagIds { get; set; }
+#nullable disable
 
 		public SearchTextQuery TextQuery { get; set; }
 	}

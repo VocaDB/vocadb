@@ -91,6 +91,7 @@ namespace VocaDb.Web.Controllers.Api
 			SongOptionalFields fields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetPublishedSongs(eventId, fields, lang);
 
+#nullable enable
 		/// <summary>
 		/// Gets a page of events.
 		/// </summary>
@@ -129,9 +130,9 @@ namespace VocaDb.Web.Controllers.Api
 			DateTime? beforeDate = null,
 			EventCategory category = EventCategory.Unspecified,
 			int? userCollectionId = null,
-			[FromQuery(Name = "tagId[]")] int[] tagId = null,
+			[FromQuery(Name = "tagId[]")] int[]? tagId = null,
 			bool childTags = false,
-			[FromQuery(Name = "artistId[]")] int[] artistId = null,
+			[FromQuery(Name = "artistId[]")] int[]? artistId = null,
 			bool childVoicebanks = false,
 			bool includeMembers = false,
 			EntryStatus? status = null,
@@ -164,6 +165,7 @@ namespace VocaDb.Web.Controllers.Api
 
 			return _queries.Find(e => new ReleaseEventForApiContract(e, lang, fields, _thumbPersister), queryParams);
 		}
+#nullable disable
 
 		/// <summary>
 		/// Find event names by a part of name.

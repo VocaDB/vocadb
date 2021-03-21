@@ -100,6 +100,7 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public SongListForEditContract GetForEdit(int id) => _queries.GetSongListForEdit(id);
 
+#nullable enable
 		/// <summary>
 		/// Gets a list of featured song lists.
 		/// </summary>
@@ -118,7 +119,7 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("featured")]
 		public PartialFindResult<SongListForApiContract> GetFeaturedLists(
 			string query = "",
-			[FromQuery(Name = "tagId[]")] int[] tagId = null,
+			[FromQuery(Name = "tagId[]")] int[]? tagId = null,
 			bool childTags = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
@@ -140,6 +141,7 @@ namespace VocaDb.Web.Controllers.Api
 
 			return _queries.Find(s => new SongListForApiContract(s, lang, _userIconFactory, _entryImagePersister, fields), queryParams);
 		}
+#nullable disable
 
 		/// <summary>
 		/// Gets a list of featuedd list names. Ideal for autocomplete boxes.

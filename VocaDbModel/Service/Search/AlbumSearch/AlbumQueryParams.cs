@@ -30,7 +30,9 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 			SortRule = sortRule;
 		}
 
-		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+#nullable enable
+		public AdvancedSearchFilter[]? AdvancedFilters { get; set; }
+#nullable disable
 
 		/// <summary>
 		/// Album type that should be searched for. Cannot be null.
@@ -40,7 +42,9 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 
 		public ArtistParticipationQueryParams ArtistParticipation { get; set; } = new();
 
-		public string Barcode { get; set; }
+#nullable enable
+		public string? Barcode { get; set; }
+#nullable disable
 
 		public bool ChildTags { get; set; }
 
@@ -58,8 +62,10 @@ namespace VocaDb.Model.Service.Search.AlbumSearch
 
 		public AlbumSortRule SortRule { get; set; }
 
-		public string[] Tags { get; set; }
+#nullable enable
+		public string[]? Tags { get; set; }
 
-		public int[] TagIds { get; set; }
+		public int[]? TagIds { get; set; }
+#nullable disable
 	}
 }

@@ -26,6 +26,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			SongTypes = new SongType[] { };
 		}
 
+#nullable enable
 		/// <param name="query">Query search string. Can be null or empty, in which case no filtering by name is done.</param>
 		/// <param name="songTypes">Allowed song types. Can be null or empy, in which case no filtering by song type is done.</param>
 		/// <param name="start">0-based order number of the first item to be returned.</param>
@@ -38,7 +39,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 		/// <param name="ignoredIds">List of entries to be ignored. Can be null in which case no filtering is done.</param>
 		public SongQueryParams(SearchTextQuery textQuery, SongType[] songTypes, int start, int maxResults,
 			bool getTotalCount, SongSortRule sortRule,
-			bool onlyByName, bool moveExactToTop, int[] ignoredIds)
+			bool onlyByName, bool moveExactToTop, int[]? ignoredIds)
 		{
 			Common = new CommonSearchParams(textQuery, onlyByName, moveExactToTop);
 			Paging = new PagingProperties(start, maxResults, getTotalCount);
@@ -50,7 +51,8 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			OnlyWithPVs = false;
 		}
 
-		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+		public AdvancedSearchFilter[]? AdvancedFilters { get; set; }
+#nullable disable
 
 		public DateTime? AfterDate { get; set; }
 		public ArtistParticipationQueryParams ArtistParticipation { get; set; } = new();
@@ -120,9 +122,11 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 		public SongSortRule SortRule { get; set; }
 
-		public string[] Tags { get; set; }
+#nullable enable
+		public string[]? Tags { get; set; }
 
-		public int[] TagIds { get; set; }
+		public int[]? TagIds { get; set; }
+#nullable disable
 
 		public TimeSpan TimeFilter { get; set; }
 

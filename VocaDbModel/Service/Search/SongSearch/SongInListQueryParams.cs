@@ -8,9 +8,11 @@ namespace VocaDb.Model.Service.Search.SongSearch
 {
 	public class SongInListQueryParams
 	{
-		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+#nullable enable
+		public AdvancedSearchFilter[]? AdvancedFilters { get; set; }
 
-		public int[] ArtistIds { get; set; }
+		public int[]? ArtistIds { get; set; }
+#nullable disable
 
 		public bool ChildVoicebanks { get; set; }
 
@@ -29,6 +31,8 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 		public SongType[] SongTypes { get; set; }
 
-		public int[] TagIds { get; set; }
+#nullable enable
+		public int[]? TagIds { get; set; }
+#nullable disable
 	}
 }

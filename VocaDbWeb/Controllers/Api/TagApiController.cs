@@ -141,6 +141,7 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("{tagId:int}/comments")]
 		public PartialFindResult<CommentForApiContract> GetComments(int tagId) => new PartialFindResult<CommentForApiContract>(_queries.GetComments(tagId), 0);
 
+#nullable enable
 		/// <summary>
 		/// Find tags.
 		/// </summary>
@@ -190,6 +191,7 @@ namespace VocaDb.Web.Controllers.Api
 
 			return tags;
 		}
+#nullable disable
 
 		[HttpGet("entry-type-mappings")]
 		[ApiExplorerSettings(IgnoreApi = true)]

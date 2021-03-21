@@ -25,13 +25,15 @@ namespace VocaDb.Model.Service.Search.User
 			SortRule = RatedSongForUserSortRule.Name;
 			TextQuery = new SearchTextQuery();
 		}
-#nullable disable
 
-		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+		public AdvancedSearchFilter[]? AdvancedFilters { get; set; }
+#nullable disable
 
 		public LogicalGrouping ArtistGrouping { get; set; }
 
-		public int[] ArtistIds { get; set; }
+#nullable enable
+		public int[]? ArtistIds { get; set; }
+#nullable disable
 
 		public bool ChildVoicebanks { get; set; }
 
@@ -56,9 +58,11 @@ namespace VocaDb.Model.Service.Search.User
 		/// </summary>
 		public RatedSongForUserSortRule SortRule { get; set; }
 
-		public string TagName { get; set; }
+#nullable enable
+		public string? TagName { get; set; }
 
-		public int[] TagIds { get; set; }
+		public int[]? TagIds { get; set; }
+#nullable disable
 
 		public SearchTextQuery TextQuery { get; set; }
 

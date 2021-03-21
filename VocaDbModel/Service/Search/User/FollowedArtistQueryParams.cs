@@ -17,7 +17,9 @@ namespace VocaDb.Model.Service.Search.User
 
 		public ArtistSortRule SortRule { get; set; }
 
-		public int[] TagIds { get; set; }
+#nullable enable
+		public int[]? TagIds { get; set; }
+#nullable disable
 
 		public ArtistSearchTextQuery TextQuery { get; set; }
 

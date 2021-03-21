@@ -20,15 +20,17 @@ namespace VocaDb.Model.Service.Search.User
 			Sort = AlbumSortRule.Name;
 			TextQuery = new SearchTextQuery();
 		}
-#nullable disable
 
-		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+		public AdvancedSearchFilter[]? AdvancedFilters { get; set; }
+#nullable disable
 
 		public DiscType AlbumType { get; set; }
 
 		public int ArtistId { get; set; }
 
-		public PurchaseStatus[] FilterByStatus { get; set; }
+#nullable enable
+		public PurchaseStatus[]? FilterByStatus { get; set; }
+#nullable disable
 
 		public SearchTextQuery TextQuery { get; set; }
 
@@ -41,7 +43,9 @@ namespace VocaDb.Model.Service.Search.User
 
 		public AlbumSortRule Sort { get; set; }
 
-		public string Tag { get; set; }
+#nullable enable
+		public string? Tag { get; set; }
+#nullable disable
 
 		public int TagId { get; set; }
 

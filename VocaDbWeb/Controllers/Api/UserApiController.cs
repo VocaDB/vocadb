@@ -188,6 +188,7 @@ namespace VocaDb.Web.Controllers.Api
 		public ReleaseEventForApiContract[] GetEvents(int id, UserEventRelationshipType relationshipType) =>
 			_queries.GetEvents(id, relationshipType, ReleaseEventOptionalFields.AdditionalNames | ReleaseEventOptionalFields.MainPicture | ReleaseEventOptionalFields.Series);
 
+#nullable enable
 		/// <summary>
 		/// Gets a list of artists followed by a user.
 		/// </summary>
@@ -207,7 +208,7 @@ namespace VocaDb.Web.Controllers.Api
 		public PartialFindResult<ArtistForUserForApiContract> GetFollowedArtists(
 			int id,
 			string query = "",
-			[FromQuery(Name = "tagId[]")] int[] tagId = null,
+			[FromQuery(Name = "tagId[]")] int[]? tagId = null,
 			ArtistType artistType = ArtistType.Unknown,
 			int start = 0,
 			int maxResults = DefaultMax,
@@ -267,7 +268,7 @@ namespace VocaDb.Web.Controllers.Api
 			UserSortRule? sort = null,
 			bool includeDisabled = false,
 			bool onlyVerified = false,
-			string knowsLanguage = null,
+			string? knowsLanguage = null,
 			UserOptionalFields fields = UserOptionalFields.None)
 		{
 			var queryParams = new UserQueryParams
@@ -285,6 +286,7 @@ namespace VocaDb.Web.Controllers.Api
 
 			return _queries.GetUsers(queryParams, user => new UserForApiContract(user, _userIconFactory, fields));
 		}
+#nullable disable
 
 		/// <summary>
 		/// Gets user by ID.
@@ -454,7 +456,6 @@ namespace VocaDb.Web.Controllers.Api
 			var songs = _queries.GetRatedSongs(queryParams, ratedSong => new RatedSongForUserForApiContract(ratedSong, lang, fields));
 			return songs;
 		}
-#nullable disable
 
 		/// <summary>
 		/// Gets a list of song lists for a user.
@@ -474,7 +475,7 @@ namespace VocaDb.Web.Controllers.Api
 		public PartialFindResult<SongListForApiContract> GetSongLists(
 			int id,
 			string query = "",
-			[FromQuery(Name = "tagId[]")] int[] tagId = null,
+			[FromQuery(Name = "tagId[]")] int[]? tagId = null,
 			bool childTags = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
@@ -493,6 +494,7 @@ namespace VocaDb.Web.Controllers.Api
 
 			return _queries.GetCustomSongLists(id, queryParams, fields ?? SongListOptionalFields.None);
 		}
+#nullable disable
 
 		/// <summary>
 		/// Gets a specific user's rating for a song.
