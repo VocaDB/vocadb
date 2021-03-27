@@ -821,8 +821,10 @@ namespace VocaDb.Model.Database.Queries
 
 				var matches = pvMatches.Union(nameMatches)
 					.Select(s => new DuplicateEntryResultContract<SongMatchProperty>(new EntryRefWithCommonPropertiesContract(s.song, PermissionContext.LanguagePreference), s.property))
+					.GroupBy(s => s.Entry.Id)
+					.Select(s => s.First())
 					.ToArray();
-
+				
 				return new NewSongCheckResultContract(matches, titleParseResult, PermissionContext.LanguagePreference);
 			});
 		}

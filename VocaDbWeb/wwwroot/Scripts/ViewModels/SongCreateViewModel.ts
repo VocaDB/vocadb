@@ -49,12 +49,6 @@ import TagRepository from '../Repositories/TagRepository';
 				{ term: [ term1, term2, term3 ], pv: [ pv1, pv2 ], artistIds: artists, getPVInfo: getPVInfo },
 				result => {
 
-				result.matches = result.matches.filter((element, index, self) =>
-					index === self.findIndex((t) => (
-						t.entry.id === element.entry.id
-					))		
-				)
-
                 this.dupeEntries(result.matches);
 
 				if (result.title && !this.hasName()) {
