@@ -823,7 +823,7 @@ namespace VocaDb.Model.Database.Queries
 					.Select(s => new DuplicateEntryResultContract<SongMatchProperty>(new EntryRefWithCommonPropertiesContract(s.song, PermissionContext.LanguagePreference), s.property))
 					.Distinct(s => s.Entry.Id)
 					.ToArray();
-				var matches2 = matches;
+				
 				return new NewSongCheckResultContract(matches, titleParseResult, PermissionContext.LanguagePreference);
 			});
 		}
