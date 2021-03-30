@@ -71,7 +71,7 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 		}
 
 		public static details_artist(entry: ArtistContract) {
-			return EntryUrlMapper.details(EntryType.Artist, entry.id, entry.name);
+			return EntryUrlMapper.details(EntryType.Artist, entry.id);
 		}
 
 		public static details_tag(id: number, slug?: string) {
