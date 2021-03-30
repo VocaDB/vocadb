@@ -1,5 +1,6 @@
 ﻿<!--
 	Shows a message for cover artists in an original song.
+	Binding context:  KnockoutComputed<dc.ArtistContract[]>
 -->
 <div class="alert" style="display:none" data-bind="visible: coverArtists() && coverArtists().length > 0 && !canHaveOriginalVersion()">
 	<partial name="Partials/Shared/_NotificationIcon" />
