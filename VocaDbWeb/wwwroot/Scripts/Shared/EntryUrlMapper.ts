@@ -1,3 +1,4 @@
+import ArtistContract from '../DataContracts/Artist/ArtistContract'
 import EntryRefContract from '../DataContracts/EntryRefContract';
 import EntryType from '../Models/EntryType';
 import functions from './GlobalFunctions';
@@ -67,6 +68,10 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 
 		public static details_song(entry: SongApiContract) {
 			return EntryUrlMapper.details(EntryType.Song, entry.id, entry.urlFriendlyName);
+		}
+
+		public static details_artist(entry: ArtistContract) {
+			return EntryUrlMapper.details(EntryType.Artist, entry.id, entry.name);
 		}
 
 		public static details_tag(id: number, slug?: string) {

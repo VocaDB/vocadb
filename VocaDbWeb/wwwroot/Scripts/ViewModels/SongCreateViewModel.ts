@@ -3,6 +3,7 @@ import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import ArtistForAlbumContract from '../DataContracts/ArtistForAlbumContract';
 import ArtistRepository from '../Repositories/ArtistRepository';
 import ArtistRoles from '../Models/Artists/ArtistRoles';
+import ArtistType from '../Models/Artists/ArtistType'
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
 import DuplicateEntryResultContract from '../DataContracts/DuplicateEntryResultContract';
 import EntryType from '../Models/EntryType';
@@ -108,6 +109,8 @@ import TagRepository from '../Repositories/TagRepository';
 		songTypeInfo = ko.computed(() => this.songTypeTag()?.description);
 		songTypeTagUrl = ko.computed(() => EntryUrlMapper.details_tag_contract(this.songTypeTag()));
 
+		coverArtists: KnockoutComputed<ArtistContract[]>;
+
 		canHaveOriginalVersion = ko.computed(() => SongType[this.songType()] !== SongType.Original);
 
         hasName: KnockoutComputed<boolean>;
@@ -190,6 +193,10 @@ import TagRepository from '../Repositories/TagRepository';
 
 			this.songType.subscribe(this.getSongTypeTag);
 			this.getSongTypeTag(this.songType());
+
+			this.coverArtists = ko.computed(() => {
+				return _.filter(this.artists(), a => ArtistType[a.artistType] == ArtistType.CoverArtist);
+			});
 
         }
     
