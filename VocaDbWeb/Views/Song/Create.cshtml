@@ -16,8 +16,8 @@
 	<partial name="Partials/Shared/_ValidationSummaryDiv" model="@(new ValidationSummaryDivViewModel(Res.UnableToCreateSong))" />
 																								
 	<div class="row-fluid">
-		<div class="span5 well well-transparent">
-			
+		<div class="span7 well well-transparent">
+
 			<div class="pull-right">
 				<partial name="Partials/Shared/_AjaxLoader" model="@(new AjaxLoaderViewModel("pvLoader"))" />
 			</div>
@@ -25,115 +25,150 @@
 			<div class="alert alert-danger" data-bind="visible: isDuplicatePV" style="display:none">
 				@Res.DuplicatePV
 			</div>
-			
-			<div class="editor-label">
-				@Html.LabelFor(m => m.PVUrl)
-			</div>
-			<div class="editor-field">
-				@Html.TextBoxForKnockout(m => m.PVUrl, "value: pv1, event: { change: checkDuplicatesAndPV }", cssClass: "span8", maxLength: 255, size: 30)
-				@Html.ValidationMessageFor(m => m.PVUrl)
+
+			<div class="alert alert-info pre-line">
+				@Html.Raw(BrandableStrings.Song.NewSongInfo)
 			</div>
 
-			<div class="editor-label">
-				@Html.LabelFor(m => m.ReprintPVUrl)
-			</div>
-			<div class="editor-field">
-				@Html.TextBoxForKnockout(m => m.ReprintPVUrl, "value: pv2, event: { change: checkDuplicates }", cssClass: "span8", maxLength: 255, size: 30)
-				@Html.ValidationMessageFor(m => m.ReprintPVUrl)
+			<div class="alert alert-info">
+				<p>@Res.NoArtistsToName</p>
+				<p>@Res.NameHelp</p>
+				<p>@Res.ArtistHelp</p>
 			</div>
 
-			<div class="editor-label">
-				@Res.Name
-				<partial name="Partials/Shared/_RequiredField" />
-			</div>
+			<fieldset>
+				<legend>Media</legend>
 
-			<div class="editor-field">
-				@Html.ValidationMessage("Names")
-
-				<table><tr><td class="formLabel">				
-					@Html.LabelFor(m => m.NameOriginal)
-				</td><td>
-					<!-- change event is fired when the field is focused out AND content has changed -->
-					@Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameOriginal, event: { change: checkDuplicates }", cssClass: "span12", maxLength: 255, size: 40)
-				</td></tr>
-
-				<tr><td class="formLabel">
-					@Html.LabelFor(m => m.NameRomaji)
-				</td><td>
-					@Html.TextBoxForKnockout(m => m.NameRomaji, "textInput: nameRomaji, event: { change: checkDuplicates }", cssClass: "span12", maxLength: 255, size: 40)
-				</td></tr>
-					
-				<tr><td class="formLabel">
-					@Html.LabelFor(m => m.NameEnglish)
-				</td><td>
-					@Html.TextBoxForKnockout(m => m.NameEnglish, "textInput: nameEnglish, event: { change: checkDuplicates }", cssClass: "span12", maxLength: 255, size: 40)
-				</td></tr></table>
-			</div>
-
-			<div class="editor-label">
-				@Html.LabelFor(m => m.SongType)
-			</div>
-			<div class="editor-field">
-				@Html.DropdownForKnockout(m => m.SongType, ViewHelper.CreateSongTypesList(null), "value: songType")
-			</div>
-			
-			<!-- ko if: canHaveOriginalVersion -->
-			<div class="editor-label">
-				<label class="helpTip" data-bind="qTip: null" title="@ViewRes.Song.EditStrings.BaOriginalVersionHelp">
-					@ViewRes.Song.EditStrings.BaOriginalVersion
-				</label>
-			</div>
-			<div class="editor-field">
-				<div style="display: inline-block;" class="input-append">
-					<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id"))" />
+				<div class="editor-label">
+					@Html.LabelFor(m => m.PVUrl)
 				</div>
-				<div data-bind="visible: originalVersion.isEmpty() && originalSongSuggestions().length" style="display: none;">
-					<h4>@Res.OriginalSuggestionsTitle</h4>
-					<table data-bind="foreach: originalSongSuggestions">
-						<tr >
-							<td>
-								<a data-bind="text: entry.name.displayName, attr: { href: app.EntryUrlMapper.details_entry(entry) }, entryToolTip: entry" href="#" target="_blank"></a>
-								(<span data-bind="text: entry.entryTypeName"></span>)
-								<div data-bind="if: entry.artistString">
-									<span data-bind="text: entry.artistString"></span>
-								</div>
+
+				<div class="editor-field">
+					@Html.TextBoxForKnockout(m => m.PVUrl, "value: pv1, event: { change: checkDuplicatesAndPV }", cssClass: "span8", maxLength: 255, size: 30)
+					@Html.ValidationMessageFor(m => m.PVUrl)
+				</div>
+
+				<div class="editor-label">
+					@Html.LabelFor(m => m.ReprintPVUrl)
+				</div>
+
+				<div class="editor-field">
+					@Html.TextBoxForKnockout(m => m.ReprintPVUrl, "value: pv2, event: { change: checkDuplicates }", cssClass: "span8", maxLength: 255, size: 30)
+					@Html.ValidationMessageFor(m => m.ReprintPVUrl)
+				</div>
+			</fieldset>
+
+			<div class="editor-field">
+				<fieldset>
+					<legend>
+						@Res.Name
+						<partial name="Partials/Shared/_RequiredField" />
+					</legend>
+
+					@Html.ValidationMessage("Names")
+					<table>
+						<tr>
+							<td class="formLabel">
+								@Html.LabelFor(m => m.NameOriginal)
 							</td>
-							<td style="max-width: 150px;">
-								<a class="textLink acceptLink" href="#" data-bind="click: $parent.selectOriginal">@Res.Select</a>
+							<td>
+								<!-- change event is fired when the field is focused out AND content has changed -->
+								@Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameOriginal, event: { change: checkDuplicates }", cssClass: "span12", maxLength: 255, size: 40)
 							</td>
 						</tr>
-					</table>					
-				</div>
-				@Html.HiddenForKnockout(m => m.OriginalVersion, "value: ko.toJSON(originalVersion)")
+
+						<tr>
+							<td class="formLabel">
+								<a style="text-decoration: underline dashed">
+									@Html.LabelFor(m => m.NameRomaji, htmlAttributes: new { onclick = "window.open('https://wiki.vocadb.net/SiteSettings/Wiki/Index/20?title=Romanization-walkthrough')" })
+								</a>
+							</td>
+							<td>
+								@Html.TextBoxForKnockout(m => m.NameRomaji, "textInput: nameRomaji, event: { change: checkDuplicates }", cssClass: "span12", maxLength: 255, size: 40)
+							</td>
+						</tr>
+
+						<tr>
+							<td class="formLabel">
+								@Html.LabelFor(m => m.NameEnglish)
+							</td>
+							<td>
+								@Html.TextBoxForKnockout(m => m.NameEnglish, "textInput: nameEnglish, event: { change: checkDuplicates }", cssClass: "span12", maxLength: 255, size: 40)
+							</td>
+						</tr>
+					</table>
+				</fieldset>
 			</div>
+
+			<fieldset>
+				<legend>
+					@Res.SongType
+				</legend>
+				<div class="editor-field">
+					@Html.DropdownForKnockout(m => m.SongType, ViewHelper.CreateSongTypesList(null), "value: songType")
+				</div>
+				<div class="alert alert-info js-cloak" visible="{{songTypeInfo}}" data-bind="show">
+					<span data-bind="markdown: songTypeInfo, maxLength: 500"></span>
+				</div>
+			</fieldset>
+		
+
+			<!-- ko if: canHaveOriginalVersion -->
+			<fieldset>
+				<legend>@ViewRes.Song.EditStrings.BaOriginalVersion</legend>
+				<div class="editor-field">
+					<div style="display: inline-block;" class="input-append">
+						<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id"))" />
+					</div>
+					<div data-bind="visible: originalVersion.isEmpty() && originalSongSuggestions().length" style="display: none;">
+						<h4>@Res.OriginalSuggestionsTitle</h4>
+						<table data-bind="foreach: originalSongSuggestions">
+							<tr>
+								<td>
+									<a data-bind="text: entry.name.displayName, attr: { href: app.EntryUrlMapper.details_entry(entry) }, entryToolTip: entry" href="#" target="_blank"></a>
+									(<span data-bind="text: entry.entryTypeName"></span>)
+									<div data-bind="if: entry.artistString">
+										<span data-bind="text: entry.artistString"></span>
+									</div>
+								</td>
+								<td style="max-width: 150px;">
+									<a class="textLink acceptLink" href="#" data-bind="click: $parent.selectOriginal">@Res.Select</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+					@Html.HiddenForKnockout(m => m.OriginalVersion, "value: ko.toJSON(originalVersion)")
+				</div>
+			</fieldset>
 			<!-- /ko -->
 
-			<div class="editor-label">
-				<span>@Res.ArtistsInfo</span>
-				<partial name="Partials/Shared/_RequiredField" />
-				<br />
-				<span class="extraInfo">@Res.ArtistDesc</span>
-			</div>
-			<div class="editor-field">
-				@Html.ValidationMessage("Artists")
-				<table data-bind="foreach: artists">
-					<tbody>
-						<tr>
-							<td>
-								<a data-bind="attr: { href: app.EntryUrlMapper.details('Artist', id) }, text: name, artistToolTip: id"></a>								
-								<span data-bind="artistTypeLabel: artistType, typeLabelShowTitle: true"></span>
-							</td>
-							<td>
-								<a data-bind="click: $parent.removeArtist" href="#" class="textLink removeLink">@ViewRes.SharedStrings.Remove</a>								
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				<br />
-				<input type="text" data-bind="artistAutoComplete: artistSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="span8" />
-				<input type="hidden" name="artists" data-bind="value: ko.toJSON(artistsWithRoles)" />
-			</div>
-			
+			<fieldset>
+				<legend>
+					@Res.ArtistsInfo
+					<partial name="Partials/Shared/_RequiredField" />
+				</legend>
+				<p>@Res.ArtistDesc</p>
+				<div class="editor-field">
+					@Html.ValidationMessage("Artists")
+					<table data-bind="foreach: artists">
+						<tbody>
+							<tr>
+								<td>
+									<a data-bind="attr: { href: app.EntryUrlMapper.details('Artist', id) }, text: name, artistToolTip: id"></a>
+									<span data-bind="artistTypeLabel: artistType, typeLabelShowTitle: true"></span>
+								</td>
+								<td>
+									<a data-bind="click: $parent.removeArtist" href="#" class="textLink removeLink">@ViewRes.SharedStrings.Remove</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<br />
+					<input type="text" data-bind="artistAutoComplete: artistSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="span8" />
+					<input type="hidden" name="artists" data-bind="value: ko.toJSON(artistsWithRoles)" />
+				</div>
+			</fieldset>
+
 			<br />
 			<p>
 				<label class="checkbox">
@@ -141,30 +176,15 @@
 					@Res.Draft
 				</label>
 			</p>
-			
+
 			<br />
 			<button type="submit" data-bind="disable: submitting" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
 
 		</div>
 		
-		<div class="span4">
-			<div class="alert alert-info pre-line">
-				@Html.Raw(BrandableStrings.Song.NewSongInfo)
-			</div>			     
-			<div class="alert alert-info">
-				<p>@Res.NoArtistsToName</p>
-				<p>@Res.NameHelp</p>
-				<p>@Res.ArtistHelp</p>
-			</div>	
+		<div class="span3 vcenter">
 			
 			<partial name="KnockoutPartials/_DuplicateEntriesMessage" />
-
-			<div class="alert alert-info js-cloak" visible="{{songTypeInfo}}" data-bind="show">				
-				<h3>
-					<a href="{{songTypeTagUrl}}">{{songTypeName}}</a>
-				</h3>
-				<span data-bind="markdown: songTypeInfo, maxLength: 500"></span>
-			</div>
 
 		</div>
 		
