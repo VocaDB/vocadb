@@ -27,10 +27,11 @@
 				@Res.DuplicatePV
 			</div>
 
-			<div class="alert alert-info pre-line">
+			<div class="alert alert-info">
 				@Html.Raw(SongRes.NewSongNote)
 			</div>
-			<div class="alert alert-info pre-line">
+
+			<div class="alert alert-info">
 				@Html.Raw(SongRes.WithoutVocalNote)
 			</div>
 
@@ -43,7 +44,7 @@
 			-->
 
 			<fieldset>
-				<legend>Media</legend>
+				<legend>@Res.Media</legend>
 
 				<div class="editor-label">
 					@Html.LabelFor(m => m.PVUrl)
@@ -62,6 +63,11 @@
 					@Html.TextBoxForKnockout(m => m.ReprintPVUrl, "value: pv2, event: { change: checkDuplicates }", cssClass: "span8", maxLength: 255, size: 30)
 					@Html.ValidationMessageFor(m => m.ReprintPVUrl)
 				</div>
+
+				<div class="alert alert-info" style="float: right; padding-right: 14px; margin-bottom: 10px;">
+					@Html.Raw(Res.AddPVInfo)
+				</div>
+
 			</fieldset>
 
 			<div class="editor-field">

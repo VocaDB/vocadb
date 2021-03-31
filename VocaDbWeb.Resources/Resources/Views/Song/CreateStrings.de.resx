@@ -159,4 +159,10 @@
   <data name="UnableToCreateSong" xml:space="preserve">
     <value>Der Song konnte nicht erstellt werden. Bitte behebe die Fehler und versuche es erneut.</value>
   </data>
+  <data name="AddPVInfo" xml:space="preserve">
+    <value>Du wirst später mehr PVs hinzufügen können.</value>
+  </data>
+  <data name="Media" xml:space="preserve">
+    <value>Medien</value>
+  </data>
 </root>
