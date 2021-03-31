@@ -7,7 +7,7 @@
 	@ViewRes.EntryCreateStrings.FoundCoverArtist
 	<ul data-bind="foreach: coverArtists">
 		<li>
-			<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details_artist($data) }"></a>
+			<a data-bind="text: name, attr: { href: app.EntryUrlMapper.details(EntryType.Artist, id) }"></a>
 			<div data-bind="if: additionalNames">
 				<span data-bind="text: additionalNames"></span>
 			</div>
