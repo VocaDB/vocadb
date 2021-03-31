@@ -2,19 +2,20 @@
 @using VocaDb.Web.Models.Shared.Partials.Knockout
 @using VocaDb.Web.Models.Shared.Partials.Shared
 @using Res = ViewRes.Song.CreateStrings
+@using VocaDb.Model.Resources.Views
 @model VocaDb.Web.Models.Song.Create
 
 @{
 	PageProperties.Title = Res.SubmitSong;
-	ViewBag.Parents = new[] { 
+ ViewBag.Parents = new[] {
 		Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", UrlMapper.Search.Songs(), null)
-	};	
+	};
 }
 
 <form action="@Url.Action("Create", "Song")" method="POST" data-bind="submit: submit">
 
 	<partial name="Partials/Shared/_ValidationSummaryDiv" model="@(new ValidationSummaryDivViewModel(Res.UnableToCreateSong))" />
-																								
+
 	<div class="row-fluid">
 		<div class="span7 well well-transparent">
 
@@ -27,14 +28,19 @@
 			</div>
 
 			<div class="alert alert-info pre-line">
-				@Html.Raw(BrandableStrings.Song.NewSongInfo)
+				@Html.Raw(SongRes.NewSongNote)
+			</div>
+			<div class="alert alert-info pre-line">
+				@Html.Raw(SongRes.WithoutVocalNote)
 			</div>
 
+			<!--
 			<div class="alert alert-info">
 				<p>@Res.NoArtistsToName</p>
 				<p>@Res.NameHelp</p>
 				<p>@Res.ArtistHelp</p>
 			</div>
+			-->
 
 			<fieldset>
 				<legend>Media</legend>
@@ -80,7 +86,11 @@
 						<tr>
 							<td class="formLabel">
 								<a style="text-decoration: underline dashed">
-									@Html.LabelFor(m => m.NameRomaji, htmlAttributes: new { onclick = "window.open('https://wiki.vocadb.net/SiteSettings/Wiki/Index/20?title=Romanization-walkthrough')" })
+									@Html.LabelFor(m => m.NameRomaji, htmlAttributes: new
+									{
+										onclick = "window.open('https://wiki.vocadb.net/SiteSettings/Wiki/Index/20?title=Romanization-walkthrough')",
+										title = "Learn about romanization"
+									})
 								</a>
 							</td>
 							<td>
@@ -111,7 +121,7 @@
 					<span data-bind="markdown: songTypeInfo, maxLength: 500"></span>
 				</div>
 			</fieldset>
-		
+
 
 			<!-- ko if: canHaveOriginalVersion -->
 			<fieldset>
@@ -181,15 +191,15 @@
 			<button type="submit" data-bind="disable: submitting" class="btn btn-primary">@ViewRes.SharedStrings.Save</button>
 
 		</div>
-		
+
 		<div class="span3 vcenter">
-			
+
 			<partial name="KnockoutPartials/_DuplicateEntriesMessage" />
 
 		</div>
-		
+
 	</div>
-	
+
 </form>
 
 @section BodyScripts {
@@ -213,6 +223,6 @@
 
 		});
 
-</script>
-		
+	</script>
+
 }
