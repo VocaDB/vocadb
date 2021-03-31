@@ -70,10 +70,6 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 			return EntryUrlMapper.details(EntryType.Song, entry.id, entry.urlFriendlyName);
 		}
 
-		public static details_artist(entry: ArtistContract) {
-			return EntryUrlMapper.details(EntryType.Artist, entry.id);
-		}
-
 		public static details_tag(id: number, slug?: string) {
 			return EntryUrlMapper.details(EntryType.Tag, id, slug);
 		}
