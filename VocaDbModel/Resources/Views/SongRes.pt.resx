@@ -125,11 +125,9 @@ Lembre-se que músicas sem Vocaloid só são permitidas se estiverem num álbum 
     <value>Classificações de músicas VocaDB</value>
   </data>
   <data name="NewSongNote" xml:space="preserve">
-    <value>Por favor verifique que a música que vai adicionar já não foi adicionada. Precisa de escolher pelo menos um nome e artista.
-</value>
+    <value>Por favor verifique que a música que vai adicionar já não foi adicionada. Precisa de escolher pelo menos um nome e artista.</value>
   </data>
   <data name="WithoutVocalNote" xml:space="preserve">
-    <value>Lembre-se que músicas sem Vocaloid só são permitidas se estiverem num álbum juntamente com músicas com Vocaloid. UTAU e outros sintetizadores de vozes são também permitidos, mas covers de humanos não.
-</value>
+    <value>Lembre-se que músicas sem Vocaloid só são permitidas se estiverem num álbum juntamente com músicas com Vocaloid. UTAU e outros sintetizadores de vozes são também permitidos, mas covers de humanos não.</value>
   </data>
 </root>

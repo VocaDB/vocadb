@@ -122,12 +122,10 @@
 Bitte beachte, dass Songs ohne Vocaloid-Stimmen nur genehmigt werden, wenn sie sich auf einem Album mit Vocaloid-Songs befinden. UTAU und andere Sprach-Synthesizer sind auch erlaubt, aber von Menschen gesungene Cover sind es nicht.</value>
   </data>
   <data name="NewSongNote" xml:space="preserve">
-    <value>Bitte versichere dich, dass der Song den du einreichen willst noch nicht hinzugefügt wurde. Du musst mindestens einen Namen und einen Künstler angeben.
-</value>
+    <value>Bitte versichere dich, dass der Song den du einreichen willst noch nicht hinzugefügt wurde. Du musst mindestens einen Namen und einen Künstler angeben.</value>
   </data>
   <data name="WithoutVocalNote" xml:space="preserve">
-    <value>Bitte beachte, dass Songs ohne Vocaloid-Stimmen nur genehmigt werden, wenn sie sich auf einem Album mit Vocaloid-Songs befinden. UTAU und andere Sprach-Synthesizer sind auch erlaubt, aber von Menschen gesungene Cover sind es nicht.
-</value>
+    <value>Bitte beachte, dass Songs ohne Vocaloid-Stimmen nur genehmigt werden, wenn sie sich auf einem Album mit Vocaloid-Songs befinden. UTAU und andere Sprach-Synthesizer sind auch erlaubt, aber von Menschen gesungene Cover sind es nicht.</value>
   </data>
   <data name="RankingsTitle" xml:space="preserve">
     <value>VocaDB Song Rangliste</value>

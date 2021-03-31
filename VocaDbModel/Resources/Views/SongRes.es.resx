@@ -125,11 +125,9 @@ Las canciones que no son interpretadas por uno o mas Vocaloids (Es decir, cancio
     <value>Ranking de canciones en VocaDB</value>
   </data>
   <data name="NewSongNote" xml:space="preserve">
-    <value>Por favor, cersiorate de que la entrada que estas por añadir a la base de datos no ha sido subida anteriormente. Se requiere que especifiques al menos un nombre y artista.
-</value>
+    <value>Por favor, cersiorate de que la entrada que estas por añadir a la base de datos no ha sido subida anteriormente. Se requiere que especifiques al menos un nombre y artista.</value>
   </data>
   <data name="WithoutVocalNote" xml:space="preserve">
-    <value>Las canciones que no son interpretadas por uno o mas Vocaloids (Es decir, canciones de vocalistas humanos) solo son admitidas si están incluidas en albumes que sí tienen pistas interpretadas por al menos un vocaloid. Interpretes de UTAU o cualquier otro tipo de plataformas de sintesís de voz tambien se admiten, mas no las interpretadas por humanos originalmente (a menos la especificación inicial).
-</value>
+    <value>Las canciones que no son interpretadas por uno o mas Vocaloids (Es decir, canciones de vocalistas humanos) solo son admitidas si están incluidas en albumes que sí tienen pistas interpretadas por al menos un vocaloid. Interpretes de UTAU o cualquier otro tipo de plataformas de sintesís de voz tambien se admiten, mas no las interpretadas por humanos originalmente (a menos la especificación inicial).</value>
   </data>
 </root>
