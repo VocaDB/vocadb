@@ -165,4 +165,7 @@
   <data name="Media" xml:space="preserve">
     <value>Medien</value>
   </data>
+  <data name="AddArtistInfo" xml:space="preserve">
+    <value>Geben Sie in diese Felder keine Interpretennamen ein. Verwenden Sie stattdessen das Feld "Künstler" unten.</value>
+  </data>
 </root>

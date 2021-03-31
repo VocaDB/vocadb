@@ -36,11 +36,11 @@
 			</div>
 
 			<!--
-			<div class="alert alert-info">
-				<p>@Res.NoArtistsToName</p>
-				<p>@Res.NameHelp</p>
-				<p>@Res.ArtistHelp</p>
-			</div>
+				<div class="alert alert-info">
+					<p>@Res.NoArtistsToName</p>
+					<p>@Res.NameHelp</p>
+					<p>@Res.ArtistHelp</p>
+				</div>
 			-->
 
 			<fieldset>
@@ -51,7 +51,7 @@
 				</div>
 
 				<div class="editor-field">
-					@Html.TextBoxForKnockout(m => m.PVUrl, "value: pv1, event: { change: checkDuplicatesAndPV }", cssClass: "span8", maxLength: 255, size: 30)
+					@Html.TextBoxForKnockout(m => m.PVUrl, "value: pv1, event: { change: checkDuplicatesAndPV }", cssClass: "span8 input-field", maxLength: 255, size: 30)
 					@Html.ValidationMessageFor(m => m.PVUrl)
 				</div>
 
@@ -60,7 +60,7 @@
 				</div>
 
 				<div class="editor-field">
-					@Html.TextBoxForKnockout(m => m.ReprintPVUrl, "value: pv2, event: { change: checkDuplicates }", cssClass: "span8", maxLength: 255, size: 30)
+					@Html.TextBoxForKnockout(m => m.ReprintPVUrl, "value: pv2, event: { change: checkDuplicates }", cssClass: "span8 input-field", maxLength: 255, size: 30)
 					@Html.ValidationMessageFor(m => m.ReprintPVUrl)
 				</div>
 
@@ -77,15 +77,19 @@
 						<partial name="Partials/Shared/_RequiredField" />
 					</legend>
 
+					<div class="alert alert-info">
+						@Html.Raw(Res.AddArtistInfo)
+					</div>
+
 					@Html.ValidationMessage("Names")
 					<table>
 						<tr>
 							<td class="formLabel">
 								@Html.LabelFor(m => m.NameOriginal)
 							</td>
-							<td>
+							<td class="input-field">
 								<!-- change event is fired when the field is focused out AND content has changed -->
-								@Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameOriginal, event: { change: checkDuplicates }", cssClass: "span12", maxLength: 255, size: 40)
+								@Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameOriginal, event: { change: checkDuplicates }", cssClass: "span12 input-field", maxLength: 255, size: 40)
 							</td>
 						</tr>
 
@@ -100,7 +104,7 @@
 								</a>
 							</td>
 							<td>
-								@Html.TextBoxForKnockout(m => m.NameRomaji, "textInput: nameRomaji, event: { change: checkDuplicates }", cssClass: "span12", maxLength: 255, size: 40)
+								@Html.TextBoxForKnockout(m => m.NameRomaji, "textInput: nameRomaji, event: { change: checkDuplicates }", cssClass: "span12 input-field", maxLength: 255, size: 40)
 							</td>
 						</tr>
 
@@ -109,7 +113,7 @@
 								@Html.LabelFor(m => m.NameEnglish)
 							</td>
 							<td>
-								@Html.TextBoxForKnockout(m => m.NameEnglish, "textInput: nameEnglish, event: { change: checkDuplicates }", cssClass: "span12", maxLength: 255, size: 40)
+								@Html.TextBoxForKnockout(m => m.NameEnglish, "textInput: nameEnglish, event: { change: checkDuplicates }", cssClass: "span12 input-field", maxLength: 255, size: 40)
 							</td>
 						</tr>
 					</table>
@@ -180,7 +184,7 @@
 						</tbody>
 					</table>
 					<br />
-					<input type="text" data-bind="artistAutoComplete: artistSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="span8" />
+					<input type="text" data-bind="artistAutoComplete: artistSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="span8 input-field" />
 					<input type="hidden" name="artists" data-bind="value: ko.toJSON(artistsWithRoles)" />
 				</div>
 			</fieldset>

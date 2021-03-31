@@ -169,7 +169,7 @@
     <value>You will be able to add more PV's later.</value>
   </data>
   <data name="AddArtistInfo" xml:space="preserve">
-    <value>You will be able to add more PV's later.</value>
+    <value>Do not include artist names in these fields. Instead, use the "Artists" field below.</value>
   </data>
   <data name="Media" xml:space="preserve">
     <value>Media</value>
