@@ -127,7 +127,7 @@
 				<div class="editor-field">
 					@Html.DropdownForKnockout(m => m.SongType, ViewHelper.CreateSongTypesList(null), "value: songType")
 				</div>
-				<div class="alert alert-info js-cloak" visible="{{songTypeInfo}}" data-bind="show">
+				<div class="alert alert-info js-cloak" visible="{{songTypeInfo}}" data-bind="show" style="padding-bottom: 0">
 					<span data-bind="markdown: songTypeInfo, maxLength: 500"></span>
 				</div>
 			</fieldset>
@@ -170,6 +170,7 @@
 				<p>@Res.ArtistDesc</p>
 				<div class="editor-field">
 					@Html.ValidationMessage("Artists")
+
 					<table data-bind="foreach: artists">
 						<tbody>
 							<tr>
@@ -183,10 +184,16 @@
 							</tr>
 						</tbody>
 					</table>
-					<br />
+
 					<input type="text" data-bind="artistAutoComplete: artistSearchParams" maxlength="128" placeholder="@ViewRes.SharedStrings.Search" class="span8 input-field" />
 					<input type="hidden" name="artists" data-bind="value: ko.toJSON(artistsWithRoles)" />
+
 				</div>
+
+				<div class="alert alert-info" style="float: right; padding-right: 14px; margin-bottom: 10px;" title="@Res.MissingArtistExplanation">
+					@Html.Raw(Res.MissingArtistInfo)
+				</div>
+
 			</fieldset>
 
 			<br />

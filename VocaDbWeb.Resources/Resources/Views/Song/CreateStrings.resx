@@ -174,4 +174,10 @@
   <data name="Media" xml:space="preserve">
     <value>Media</value>
   </data>
+  <data name="MissingArtistInfo" xml:space="preserve">
+    <value>Can't find the artist?</value>
+  </data>
+  <data name="MissingArtistExplanation" xml:space="preserve">
+    <value>You cannot create a new Artist entry in this page! You will need to use the "Add an artist" page to create an entry. You can also do this after the song has been created.</value>
+  </data>
 </root>

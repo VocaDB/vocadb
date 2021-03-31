@@ -168,4 +168,10 @@
   <data name="AddArtistInfo" xml:space="preserve">
     <value>Geben Sie in diese Felder keine Interpretennamen ein. Verwenden Sie stattdessen das Feld "Künstler" unten.</value>
   </data>
+  <data name="MissingArtistInfo" xml:space="preserve">
+    <value>Kann der Künstler nicht gefunden werden?</value>
+  </data>
+  <data name="MissingArtistExplanation" xml:space="preserve">
+    <value>Sie können auf dieser Seite keinen neuen Künstlereintrag erstellen! Sie müssen die Seite "Künstler hinzufügen" verwenden, um einen Eintrag zu erstellen. Sie können dies auch tun, nachdem der Song erstellt wurde.</value>
+  </data>
 </root>
