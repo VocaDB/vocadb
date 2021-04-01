@@ -162,4 +162,16 @@
   <data name="SongInfo" xml:space="preserve">
     <value>曲情報</value>
   </data>
+  <data name="Media" xml:space="preserve">
+    <value>メディア</value>
+  </data>
+  <data name="AddPVInfo" xml:space="preserve">
+    <value>他のPVは後でも追加できます。</value>
+  </data>
+  <data name="AddArtistInfo" xml:space="preserve">
+    <value>アーティストの明示は下のアーティスト欄を使用してください。</value>
+  </data>
+  <data name="MissingArtistExplanation" xml:space="preserve">
+    <value>アーティストの新規登録はその専用ページにて行われます。曲の登録後でもできます。</value>
+  </data>
 </root>

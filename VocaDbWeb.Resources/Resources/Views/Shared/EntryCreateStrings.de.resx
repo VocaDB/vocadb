@@ -144,4 +144,7 @@
   <data name="RomajiName" xml:space="preserve">
     <value>Romanisierter Name</value>
   </data>
+  <data name="LearnRomanization" xml:space="preserve">
+    <value>Erfahren Sie mehr über Romanisierung</value>
+  </data>
 </root>

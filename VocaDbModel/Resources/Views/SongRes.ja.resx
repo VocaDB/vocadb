@@ -123,4 +123,10 @@
   <data name="RankingsTitle" xml:space="preserve">
     <value>VocaDB 曲ランキング</value>
   </data>
+  <data name="NewSongNote" xml:space="preserve">
+    <value>曲を登録する前に、既に登録済みでないかを確認して下さい。タイトルとアーティストのフィールドには記入が必要です。</value>
+  </data>
+  <data name="WithoutVocalNote" xml:space="preserve">
+    <value>ボーカルがボーカロイドでない曲の登録は、収録されているアルバムに他にボーカロイド曲がある場合に限ります。UTAUなど音声合成ソフトも許可されていますが、人間カバー（歌ってみた）は許可されていません。</value>
+  </data>
 </root>

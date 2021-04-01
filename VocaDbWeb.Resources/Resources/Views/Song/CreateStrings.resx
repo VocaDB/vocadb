@@ -165,4 +165,19 @@
   <data name="UnableToCreateSong" xml:space="preserve">
     <value>Unable to create song. Please correct the errors and try again.</value>
   </data>
+  <data name="AddPVInfo" xml:space="preserve">
+    <value>You will be able to add more PV's later.</value>
+  </data>
+  <data name="AddArtistInfo" xml:space="preserve">
+    <value>Do not include artist names in these fields. Instead, use the "Artists" field below.</value>
+  </data>
+  <data name="Media" xml:space="preserve">
+    <value>Media</value>
+  </data>
+  <data name="MissingArtistInfo" xml:space="preserve">
+    <value>Can't find the artist?</value>
+  </data>
+  <data name="MissingArtistExplanation" xml:space="preserve">
+    <value>You cannot create a new Artist entry in this page! You will need to use the "Add an artist" page to create an entry. You can also do this after the song has been created.</value>
+  </data>
 </root>
