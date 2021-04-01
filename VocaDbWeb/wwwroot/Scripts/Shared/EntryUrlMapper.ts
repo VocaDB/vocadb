@@ -1,3 +1,4 @@
+import ArtistContract from '../DataContracts/Artist/ArtistContract'
 import EntryRefContract from '../DataContracts/EntryRefContract';
 import EntryType from '../Models/EntryType';
 import functions from './GlobalFunctions';
