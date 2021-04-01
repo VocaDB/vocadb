@@ -115,7 +115,7 @@ a.extLink {
 		.extLink(url("/Content/ExtIcons/playasia.png"));
 	}
 
-	&[href^="https://play.spotify.com/"], [href^="https://open.spotify.com/"] {
+	&[href^="https://play.spotify.com/"], &[href^="https://open.spotify.com/"] {
 		.extLink(url("/Content/ExtIcons/spotify.png"));
 	}
 
@@ -278,7 +278,7 @@ a.extLink[href*="bandcamp.com"] {
 	.extLink(url("/Content/ExtIcons/bandcamp.png"));
 }
 
-a.extLink[href^="http://www.cdjapan.co.jp/"] {
+a.extLink[href^="http://www.cdjapan.co.jp/"], a.extLink[href^="https://www.cdjapan.co.jp/"] {
 	background: url("/Content/ExtIcons/cdjapan.png") no-repeat left 50%;
 }
 
