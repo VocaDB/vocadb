@@ -48,6 +48,8 @@
 
 		SynthesizerV,
 
+		CoverArtist,
+
 	}
 
 	export default ArtistType;
