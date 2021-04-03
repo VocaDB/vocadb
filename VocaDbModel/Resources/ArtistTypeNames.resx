@@ -174,4 +174,7 @@
   <data name="SynthesizerV" xml:space="preserve">
     <value>Synthesizer V</value>
   </data>
+  <data name="CoverArtist" xml:space="preserve">
+    <value>Cover artist</value>
+  </data>
 </root>
