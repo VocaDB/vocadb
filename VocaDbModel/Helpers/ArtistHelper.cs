@@ -77,7 +77,7 @@ namespace VocaDb.Model.Helpers
 		{
 			ArtistType.Animator, ArtistType.OtherGroup, ArtistType.OtherIndividual,
 			ArtistType.OtherVocalist, ArtistType.Producer, ArtistType.Illustrator, ArtistType.Lyricist,
-			ArtistType.Utaite, ArtistType.Band, ArtistType.Vocalist, ArtistType.Unknown
+			ArtistType.Utaite, ArtistType.Band, ArtistType.Vocalist, ArtistType.Unknown, ArtistType.CoverArtist
 		};
 
 		public static readonly ArtistType[] GroupTypes =
