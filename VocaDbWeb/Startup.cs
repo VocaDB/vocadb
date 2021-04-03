@@ -87,6 +87,8 @@ namespace VocaDb.Web
 			services.AddInMemoryCacheOutput();
 
 			services.AddSwaggerGen();
+			// Code from: https://stackoverflow.com/questions/36452468/swagger-ui-web-api-documentation-present-enums-as-strings/55541764#55541764
+			services.AddSwaggerGenNewtonsoftSupport();
 
 			// Code from: https://blogs.lessthandot.com/index.php/webdev/serverprogramming/aspnet/adding-twitter-authentication-to-an-asp-net-core-2-site-w-cosmos-db/
 			services
