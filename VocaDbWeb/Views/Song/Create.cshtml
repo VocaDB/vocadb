@@ -44,6 +44,7 @@
 			-->
 
 			<fieldset>
+				
 				<legend>@Res.Media</legend>
 
 				<div class="editor-label">
@@ -71,6 +72,7 @@
 			</fieldset>
 
 			<div class="editor-field">
+				
 				<fieldset>
 					<legend>
 						@Res.Name
@@ -121,6 +123,7 @@
 			</div>
 
 			<fieldset>
+				
 				<legend>
 					@Res.SongType
 				</legend>
@@ -135,11 +138,13 @@
 
 			<!-- ko if: canHaveOriginalVersion -->
 			<fieldset>
+				
 				<legend>@ViewRes.Song.EditStrings.BaOriginalVersion</legend>
 				<div class="editor-field">
 					<div style="display: inline-block;" class="input-append">
 						<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id"))" />
 					</div>
+					
 					<div data-bind="visible: originalVersion.isEmpty() && originalSongSuggestions().length" style="display: none;">
 						<h4>@Res.OriginalSuggestionsTitle</h4>
 						<table data-bind="foreach: originalSongSuggestions">
@@ -157,17 +162,21 @@
 							</tr>
 						</table>
 					</div>
+					
 					@Html.HiddenForKnockout(m => m.OriginalVersion, "value: ko.toJSON(originalVersion)")
 				</div>
+				
 			</fieldset>
 			<!-- /ko -->
 
 			<fieldset>
+				
 				<legend>
 					@Res.ArtistsInfo
 					<partial name="Partials/Shared/_RequiredField" />
 				</legend>
 				<p>@Res.ArtistDesc</p>
+				
 				<div class="editor-field">
 					@Html.ValidationMessage("Artists")
 
