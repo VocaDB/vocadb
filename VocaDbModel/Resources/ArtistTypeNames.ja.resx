@@ -168,4 +168,7 @@
   <data name="Vocalist" xml:space="preserve">
     <value>ボーカリスト</value>
   </data>
+  <data name="CoverArtist" xml:space="preserve">
+    <value>カバーアーティスト</value>
+  </data>
 </root>
