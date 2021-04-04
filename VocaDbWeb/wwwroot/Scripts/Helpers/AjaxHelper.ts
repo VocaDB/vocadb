@@ -9,7 +9,7 @@
 			var par = [];
 
 			_.forOwn(params, (val, key) => {
-				par.push(key + "=" + _.map(<string[]>val, v => encodeURIComponent(v)).join("&" + key + "="));
+				par.push(key + "=" + _.map(<string[]>val, v => encodeURIComponent(v || "")).join("&" + key + "="));
 			});
 
 			var query = par.join("&");
