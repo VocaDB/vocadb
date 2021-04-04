@@ -76,6 +76,9 @@ namespace VocaDb.Web
 					options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
 
 					options.Filters.Add<VoidAndTaskTo204NoContentFilter>();
+
+					// See: https://github.com/VocaDB/vocadb/issues/801
+					options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
 				})
 				.AddNewtonsoftJson(options =>
 				{

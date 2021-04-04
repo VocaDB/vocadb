@@ -9,6 +9,7 @@ namespace VocaDb.Model.DataContracts.Songs
 {
 	public class SongWithArchivedVersionsContract : SongContract
 	{
+#nullable enable
 		public SongWithArchivedVersionsContract(Song song, ContentLanguagePreference languagePreference)
 			: base(song, languagePreference)
 		{
@@ -17,6 +18,7 @@ namespace VocaDb.Model.DataContracts.Songs
 			ArchivedVersions = song.ArchivedVersionsManager.Versions.Select(a => new ArchivedSongVersionContract(a)).OrderByDescending(v => v.Version).ToArray();
 			//Author = (ArchivedVersions.Any() && ArchivedVersions.Last().Author != null ? ArchivedVersions.Last().Author : null);
 		}
+#nullable disable
 
 		public ArchivedSongVersionContract[] ArchivedVersions { get; init; }
 

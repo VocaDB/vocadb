@@ -70,6 +70,7 @@ namespace VocaDb.Model.Domain.Songs
 			Status = EntryStatus.Draft;
 		}
 
+#nullable enable
 		public Song(LocalizedString name)
 			: this()
 		{
@@ -86,6 +87,7 @@ namespace VocaDb.Model.Domain.Songs
 			foreach (var name in translatedName.AllLocalized)
 				Names.Add(new SongName(this, name));
 		}
+#nullable disable
 
 		/// <summary>
 		/// List of album links for this song. 
@@ -451,6 +453,7 @@ namespace VocaDb.Model.Domain.Songs
 			return AddArtist(artist, false, ArtistRoles.Default);
 		}
 
+#nullable enable
 		public virtual ArtistForSong AddArtist(Artist artist, bool support, ArtistRoles roles)
 		{
 			ParamIs.NotNull(() => artist);
@@ -467,6 +470,7 @@ namespace VocaDb.Model.Domain.Songs
 
 			return link;
 		}
+
 		public virtual void AddAlternateVersion(Song song)
 		{
 			ParamIs.NotNull(() => song);
@@ -501,6 +505,7 @@ namespace VocaDb.Model.Domain.Songs
 
 			return CollectionAddResult.Create(usage, true);
 		}
+#nullable disable
 
 		public virtual ArchivedSongVersion CreateArchivedVersion(XDocument data, SongDiff diff, AgentLoginData author, SongArchiveReason reason, string notes)
 		{
@@ -511,6 +516,7 @@ namespace VocaDb.Model.Domain.Songs
 			return archived;
 		}
 
+#nullable enable
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
 			ParamIs.NotNullOrEmpty(() => message);
@@ -527,6 +533,7 @@ namespace VocaDb.Model.Domain.Songs
 			ParamIs.NotNull(() => lyrics);
 			return CreateLyrics(lyrics.Value, lyrics.Source, lyrics.URL, lyrics.TranslationType, lyrics.CultureCode);
 		}
+#nullable disable
 
 		public virtual LyricsForSong CreateLyrics(string val, string source, string url, TranslationType translationType, string cultureCode)
 		{
@@ -540,6 +547,7 @@ namespace VocaDb.Model.Domain.Songs
 			return entry;
 		}
 
+#nullable enable
 		public virtual SongName CreateName(string val, ContentLanguageSelection language)
 		{
 			ParamIs.NotNullOrEmpty(() => val);
@@ -556,6 +564,7 @@ namespace VocaDb.Model.Domain.Songs
 
 			return name;
 		}
+#nullable disable
 
 		public virtual void UpdateLengthFromPV()
 		{
@@ -563,6 +572,7 @@ namespace VocaDb.Model.Domain.Songs
 				LengthSeconds = GetLengthFromPV();
 		}
 
+#nullable enable
 		public virtual PVForSong CreatePV(PVContract contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -587,6 +597,7 @@ namespace VocaDb.Model.Domain.Songs
 
 			return link;
 		}
+#nullable disable
 
 		public virtual void Delete()
 		{
@@ -655,6 +666,7 @@ namespace VocaDb.Model.Domain.Songs
 			return ArtistList.Contains(artist);
 		}
 
+#nullable enable
 		/// <summary>
 		/// Checks whether this song has a specific artist.
 		/// </summary>
@@ -701,6 +713,7 @@ namespace VocaDb.Model.Domain.Songs
 
 			return UserFavorites.Any(a => a.User.Equals(user));
 		}
+#nullable disable
 
 		public virtual ArtistForSong RemoveArtist(Artist artist)
 		{
@@ -762,6 +775,7 @@ namespace VocaDb.Model.Domain.Songs
 			return new CollectionDiff<ArtistForSong, ArtistForSong>(created, artistDiff.Removed, artistDiff.Unchanged);
 		}
 
+#nullable enable
 		public virtual CollectionDiffWithValue<ArtistForSong, ArtistForSong> SyncArtists(
 			IEnumerable<ArtistForSongContract> newArtists, Func<ArtistForSongContract, Artist> artistGetter)
 		{
@@ -854,6 +868,7 @@ namespace VocaDb.Model.Domain.Songs
 
 			return new CollectionDiffWithValue<LyricsForSong, LyricsForSong>(created, diff.Removed, diff.Unchanged, edited);
 		}
+#nullable disable
 
 		/// <summary>
 		/// Adds new PVs and removes deleted PVs.

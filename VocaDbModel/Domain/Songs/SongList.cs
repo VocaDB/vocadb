@@ -101,6 +101,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual IEnumerable<SongListComment> Comments => AllComments.Where(c => !c.Deleted);
 
+#nullable enable
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
 			ParamIs.NotNullOrEmpty(() => message);
@@ -111,6 +112,7 @@ namespace VocaDb.Model.Domain.Songs
 
 			return comment;
 		}
+#nullable disable
 
 		/// <summary>
 		/// Date when this entry was created.

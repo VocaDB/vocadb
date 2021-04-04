@@ -12,6 +12,7 @@ namespace VocaDb.Model.Domain.Albums
 {
 	public class ArchivedAlbumVersion : ArchivedObjectVersion, IArchivedObjectVersionWithFields<AlbumEditableFields>
 	{
+#nullable enable
 		/// <summary>
 		/// Creates an archived version of an album.
 		/// </summary>
@@ -34,6 +35,7 @@ namespace VocaDb.Model.Domain.Albums
 
 			return album.CreateArchivedVersion(data, diff, author, reason, notes);
 		}
+#nullable disable
 
 		private Album _album;
 		private AlbumDiff _diff;

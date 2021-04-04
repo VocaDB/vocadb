@@ -27,6 +27,7 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		public AlbumContract() { }
 
+#nullable enable
 		public AlbumContract(Album album, ContentLanguagePreference languagePreference)
 		{
 			ParamIs.NotNull(() => album);
@@ -46,6 +47,7 @@ namespace VocaDb.Model.DataContracts.Albums
 			Status = album.Status;
 			Version = album.Version;
 		}
+#nullable disable
 
 		[DataMember]
 		public string AdditionalNames { get; init; }

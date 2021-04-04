@@ -38,6 +38,7 @@ namespace VocaDb.Model.Database.Queries
 			return archived;
 		}
 
+#nullable enable
 		public (bool created, int reportId) CreateReport(int venueId, VenueReportType reportType, string hostname, string notes, int? versionNumber)
 		{
 			ParamIs.NotNull(() => hostname);
@@ -52,6 +53,7 @@ namespace VocaDb.Model.Database.Queries
 					venueId, reportType, hostname, notes);
 			});
 		}
+#nullable disable
 
 		private void CreateTrashedEntry(IDatabaseContext ctx, Venue venue, string notes)
 		{
@@ -188,6 +190,7 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
+#nullable enable
 		public int Update(VenueForEditContract contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -300,5 +303,6 @@ namespace VocaDb.Model.Database.Queries
 				return venue.Id;
 			});
 		}
+#nullable disable
 	}
 }

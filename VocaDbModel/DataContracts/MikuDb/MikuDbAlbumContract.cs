@@ -13,6 +13,7 @@ namespace VocaDb.Model.DataContracts.MikuDb
 			SourceUrl = Title = string.Empty;
 		}
 
+#nullable enable
 		public MikuDbAlbumContract(MikuDbAlbum album)
 			: this()
 		{
@@ -37,6 +38,7 @@ namespace VocaDb.Model.DataContracts.MikuDb
 			Created = DateTime.Now;
 			Title = data.Title;
 		}
+#nullable disable
 
 		public PictureDataContract CoverPicture { get; init; }
 

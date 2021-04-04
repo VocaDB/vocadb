@@ -95,6 +95,7 @@ namespace VocaDb.Model.Domain.Songs
 			return base.GetHashCode();
 		}
 
+#nullable enable
 		public virtual void Move(Album target)
 		{
 			ParamIs.NotNull(() => target);
@@ -126,6 +127,7 @@ namespace VocaDb.Model.Domain.Songs
 			target.AllAlbums.Add(this);
 			Song = target;
 		}
+#nullable disable
 
 		public virtual void OnDeleting()
 		{

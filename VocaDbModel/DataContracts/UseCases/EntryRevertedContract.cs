@@ -10,6 +10,7 @@ namespace VocaDb.Model.DataContracts.UseCases
 {
 	public class EntryRevertedContract
 	{
+#nullable enable
 		public EntryRevertedContract(IEntryBase entryBase, IEnumerable<string> warnings)
 		{
 			ParamIs.NotNull(() => entryBase);
@@ -18,6 +19,7 @@ namespace VocaDb.Model.DataContracts.UseCases
 			Id = entryBase.Id;
 			Warnings = warnings.ToArray();
 		}
+#nullable disable
 
 		public int Id { get; init; }
 

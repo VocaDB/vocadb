@@ -8,6 +8,7 @@ namespace VocaDb.Model.DataContracts.Albums
 {
 	public class AlbumWithArchivedVersionsContract : AlbumContract
 	{
+#nullable enable
 		public AlbumWithArchivedVersionsContract(Album album, ContentLanguagePreference languagePreference)
 			: base(album, languagePreference)
 		{
@@ -15,6 +16,7 @@ namespace VocaDb.Model.DataContracts.Albums
 
 			ArchivedVersions = album.ArchivedVersionsManager.Versions.Select(a => new ArchivedAlbumVersionContract(a)).ToArray();
 		}
+#nullable disable
 
 		public ArchivedAlbumVersionContract[] ArchivedVersions { get; init; }
 	}

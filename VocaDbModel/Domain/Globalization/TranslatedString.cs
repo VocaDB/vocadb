@@ -51,6 +51,7 @@ namespace VocaDb.Model.Domain.Globalization
 			DefaultLanguage = defaultLanguage;
 		}
 
+#nullable enable
 		public TranslatedString(ITranslatedString contract)
 			: this()
 		{
@@ -58,6 +59,7 @@ namespace VocaDb.Model.Domain.Globalization
 
 			CopyFrom(contract);
 		}
+#nullable disable
 
 		public virtual string this[ContentLanguageSelection language]
 		{
@@ -200,6 +202,7 @@ namespace VocaDb.Model.Domain.Globalization
 			Japanese = Romaji = English = string.Empty;
 		}
 
+#nullable enable
 		public virtual void CopyFrom(ITranslatedString contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -209,6 +212,7 @@ namespace VocaDb.Model.Domain.Globalization
 			Japanese = contract.Japanese;
 			Romaji = contract.Romaji;
 		}
+#nullable disable
 
 		public virtual string GetBestMatch(ContentLanguagePreference preference)
 		{

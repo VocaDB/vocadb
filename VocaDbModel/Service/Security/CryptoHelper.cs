@@ -27,6 +27,7 @@ namespace VocaDb.Model.Service.Security
 			return HashString(str, SHA1);
 		}
 
+#nullable enable
 		/// <summary>
 		/// From http://carson63000-tech.blogspot.com/2010/08/dont-use-formsauthenticationhashpasswor_11.html
 		/// </summary>
@@ -46,5 +47,6 @@ namespace VocaDb.Model.Service.Security
 			byte[] hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(inputString));
 			return ByteArrayToString(hash);
 		}
+#nullable disable
 	}
 }

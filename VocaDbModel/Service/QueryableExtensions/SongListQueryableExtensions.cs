@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Linq;
 using VocaDb.Model.Domain.Songs;
@@ -45,7 +43,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query.Where(s => s.FeaturedCategory == featuredCategory.Value);
 		}
 
-		public static IQueryable<SongList> WhereHasName(this IQueryable<SongList> query, SearchTextQuery textQuery)
+		public static IQueryable<SongList> WhereHasName(this IQueryable<SongList> query, SearchTextQuery? textQuery)
 		{
 			if (textQuery == null || textQuery.IsEmpty)
 				return query;

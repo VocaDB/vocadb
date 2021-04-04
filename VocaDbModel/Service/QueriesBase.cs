@@ -164,6 +164,7 @@ namespace VocaDb.Model.Service
 				throw new NotAllowedException("You do not have access to this resource.");
 		}
 
+#nullable enable
 		protected QueriesBase(TRepo repository, IUserPermissionContext permissionContext)
 		{
 			ParamIs.NotNull(() => repository);
@@ -172,6 +173,7 @@ namespace VocaDb.Model.Service
 			_repository = repository;
 			_permissionContext = permissionContext;
 		}
+#nullable disable
 
 		/// <summary>
 		/// Runs an unit of work that queries the database without saving anything. No explicit transaction will be opened.

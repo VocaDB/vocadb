@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +51,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		/// <param name="query">Query to be filtered. Cannot be null.</param>
 		/// <param name="names">List of names to filter by. Can be null or empty, but in that case no tags will be matched.</param>
 		/// <returns>Filtered query. Cannot be null.</returns>
-		public static IQueryable<TEntry> WhereHasNameGeneric<TEntry, TName>(this IQueryable<TEntry> query, IEnumerable<SearchTextQuery> names)
+		public static IQueryable<TEntry> WhereHasNameGeneric<TEntry, TName>(this IQueryable<TEntry> query, IEnumerable<SearchTextQuery>? names)
 			where TEntry : IEntryWithNames<TName> where TName : LocalizedStringWithId
 		{
 			names ??= new SearchTextQuery[0];

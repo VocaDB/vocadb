@@ -118,6 +118,7 @@ namespace VocaDb.Web.Controllers.Api
 			ArtistRelationsFields relations = ArtistRelationsFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetWithMergeRecord(id, (a, m, ctx) => GetArtist(a, m, fields, relations, lang, ctx));
 
+#nullable enable
 		/// <summary>
 		/// Find artists.
 		/// </summary>
@@ -148,14 +149,14 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("")]
 		public PartialFindResult<ArtistForApiContract> GetList(
 			string query = "",
-			string artistTypes = null,
+			string? artistTypes = null,
 			bool allowBaseVoicebanks = true,
-			[FromQuery(Name = "tagName[]")] string[] tagName = null,
-			[FromQuery(Name = "tagId[]")] int[] tagId = null,
+			[FromQuery(Name = "tagName[]")] string[]? tagName = null,
+			[FromQuery(Name = "tagId[]")] int[]? tagId = null,
 			bool childTags = false,
 			int? followedByUserId = null,
 			EntryStatus? status = null,
-			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[]? advancedFilters = null,
 			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			ArtistSortRule sort = ArtistSortRule.Name,
 			bool preferAccurateMatches = false,
@@ -181,6 +182,7 @@ namespace VocaDb.Web.Controllers.Api
 
 			return artists;
 		}
+#nullable disable
 
 		[HttpGet("ids")]
 		[ApiExplorerSettings(IgnoreApi = true)]

@@ -9,11 +9,13 @@ namespace VocaDb.Model.Helpers
 	{
 		private readonly Func<T, T, int> _comparer;
 
+#nullable enable
 		public LambdaComparer(Func<T, T, int> comparer)
 		{
 			ParamIs.NotNull(() => comparer);
 			_comparer = comparer;
 		}
+#nullable disable
 
 		public int Compare(T x, T y)
 		{

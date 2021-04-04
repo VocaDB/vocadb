@@ -11,6 +11,7 @@ namespace VocaDb.Model.DataContracts
 	{
 		public ArchivedEntryPictureFileContract() { }
 
+#nullable enable
 		public ArchivedEntryPictureFileContract(EntryPictureFile entryPictureFile)
 		{
 			ParamIs.NotNull(() => entryPictureFile);
@@ -21,6 +22,7 @@ namespace VocaDb.Model.DataContracts
 			Mime = entryPictureFile.Mime;
 			Name = entryPictureFile.Name;
 		}
+#nullable disable
 
 		[DataMember]
 		public ObjectRefContract Author { get; init; }

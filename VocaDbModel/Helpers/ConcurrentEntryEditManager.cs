@@ -66,6 +66,7 @@ namespace VocaDb.Model.Helpers
 			}
 		}
 
+#nullable enable
 		private void AddOrUpdate(EntryRef entry, IUser user)
 		{
 			ParamIs.NotNull(() => entry);
@@ -118,6 +119,7 @@ namespace VocaDb.Model.Helpers
 
 			return Nothing;
 		}
+#nullable disable
 
 		public virtual EntryEditData CreateEntryEditData(IUser user)
 		{

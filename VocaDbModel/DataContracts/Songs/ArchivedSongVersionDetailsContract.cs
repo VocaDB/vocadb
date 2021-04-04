@@ -11,7 +11,8 @@ namespace VocaDb.Model.DataContracts.Songs
 	{
 		public ArchivedSongVersionDetailsContract() { }
 
-		public ArchivedSongVersionDetailsContract(ArchivedSongVersion archived, ArchivedSongVersion comparedVersion, IUserPermissionContext permissionContext)
+#nullable enable
+		public ArchivedSongVersionDetailsContract(ArchivedSongVersion archived, ArchivedSongVersion? comparedVersion, IUserPermissionContext permissionContext)
 		{
 			ParamIs.NotNull(() => archived);
 
@@ -30,6 +31,7 @@ namespace VocaDb.Model.DataContracts.Songs
 
 			ComparedVersionId = Versions.SecondId;
 		}
+#nullable disable
 
 		public ArchivedSongVersionContract ArchivedVersion { get; init; }
 

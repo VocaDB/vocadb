@@ -35,6 +35,7 @@ namespace VocaDb.Model.Domain.Versioning
 
 		public IEnumerable<ArchivedObjectVersion> VersionsBase => Versions;
 
+#nullable enable
 		public virtual TVersion Add(TVersion newVersion)
 		{
 			ParamIs.NotNull(() => newVersion);
@@ -42,6 +43,7 @@ namespace VocaDb.Model.Domain.Versioning
 			Versions.Add(newVersion);
 			return newVersion;
 		}
+#nullable disable
 
 		public virtual void Clear()
 		{

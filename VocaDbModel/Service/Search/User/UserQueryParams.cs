@@ -21,7 +21,9 @@ namespace VocaDb.Model.Service.Search.User
 
 		public DateTime? JoinDateBefore { get; set; }
 
-		public string KnowsLanguage { get; set; }
+#nullable enable
+		public string? KnowsLanguage { get; set; }
+#nullable disable
 
 		public bool OnlyVerifiedArtists { get; set; }
 

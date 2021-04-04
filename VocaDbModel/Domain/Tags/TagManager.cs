@@ -53,7 +53,8 @@ namespace VocaDb.Model.Domain.Tags
 				usage.Delete();
 		}
 
-		public virtual T GetTagUsage(Tag tag)
+#nullable enable
+		public virtual T? GetTagUsage(Tag tag)
 		{
 			ParamIs.NotNull(() => tag);
 			return Usages.FirstOrDefault(t => t.Tag.Equals(tag));
@@ -65,6 +66,7 @@ namespace VocaDb.Model.Domain.Tags
 
 			return Usages.Any(u => u.Tag.Equals(tag));
 		}
+#nullable disable
 
 		public virtual bool HasTag(int tagId) => Usages.Any(u => u.Tag.Id == tagId);
 

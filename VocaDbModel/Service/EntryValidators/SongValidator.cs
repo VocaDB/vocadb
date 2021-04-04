@@ -11,6 +11,7 @@ namespace VocaDb.Model.Service.EntryValidators
 {
 	public class SongValidator
 	{
+#nullable enable
 		public bool IsValid(Song song, int instrumentalTagId)
 		{
 			ParamIs.NotNull(() => song);
@@ -47,5 +48,6 @@ namespace VocaDb.Model.Service.EntryValidators
 
 			return !errors.Any();
 		}
+#nullable disable
 	}
 }

@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Linq;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Songs;

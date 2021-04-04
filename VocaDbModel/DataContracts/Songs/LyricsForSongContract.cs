@@ -14,6 +14,7 @@ namespace VocaDb.Model.DataContracts.Songs
 	{
 		public LyricsForSongContract() { }
 
+#nullable enable
 		public LyricsForSongContract(LyricsForSong lyrics, bool includeValue = true)
 		{
 			ParamIs.NotNull(() => lyrics);
@@ -29,6 +30,7 @@ namespace VocaDb.Model.DataContracts.Songs
 				Value = lyrics.Value;
 			}
 		}
+#nullable disable
 
 		[DataMember]
 		[DefaultValue("")]

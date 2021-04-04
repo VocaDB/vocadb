@@ -33,6 +33,7 @@ namespace VocaDb.Model.Service.Queries
 			return ArtistHelper.GetProducers(creditableArtists, AlbumHelper.GetContentFocus(album.DiscType)).Select(a => a.Artist).ToArray();
 		}
 
+#nullable enable
 		public RelatedAlbumsQuery(IDatabaseContext<Album> ctx)
 		{
 			ParamIs.NotNull(() => ctx);
@@ -113,6 +114,7 @@ namespace VocaDb.Model.Service.Queries
 
 			return albums;
 		}
+#nullable disable
 	}
 
 	public class RelatedAlbums

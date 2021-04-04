@@ -138,10 +138,12 @@ namespace VocaDb.Model.Database.Queries
 			return new CommentQueries<SongListComment, SongList>(ctx.OfType<SongListComment>(), PermissionContext, _userIconFactory, _entryLinkFactory);
 		}
 
+#nullable enable
 		public CommentForApiContract CreateComment(int songId, CommentForApiContract contract)
 		{
 			return HandleTransaction(ctx => Comments(ctx).Create(songId, contract));
 		}
+#nullable disable
 
 		public void Delete(int listId, string notes)
 		{
@@ -265,7 +267,8 @@ namespace VocaDb.Model.Database.Queries
 			return FindSongs(songs);
 		}
 
-		public int UpdateSongList(SongListForEditContract contract, UploadedFileContract uploadedFile)
+#nullable enable
+		public int UpdateSongList(SongListForEditContract contract, UploadedFileContract? uploadedFile)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -348,6 +351,7 @@ namespace VocaDb.Model.Database.Queries
 				return list.Id;
 			});
 		}
+#nullable disable
 
 		public void DeleteComment(int commentId) => HandleTransaction(ctx => Comments(ctx).Delete(commentId));
 

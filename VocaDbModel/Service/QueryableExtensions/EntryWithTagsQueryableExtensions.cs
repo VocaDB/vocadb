@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Tags;
@@ -20,7 +18,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return MaybeOrderedQueryable.Create(query);
 		}
 
-		public static IQueryable<TEntry> WhereHasTag<TEntry, TTagLink>(this IQueryable<TEntry> query, string tagName)
+		public static IQueryable<TEntry> WhereHasTag<TEntry, TTagLink>(this IQueryable<TEntry> query, string? tagName)
 			where TEntry : IEntryWithTags<TTagLink> where TTagLink : TagUsage
 		{
 			if (string.IsNullOrEmpty(tagName))
@@ -29,7 +27,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query.Where(s => s.Tags.Usages.Any(t => t.Tag.Names.Names.Any(n => n.Value == tagName)));
 		}
 
-		public static IQueryable<TEntry> WhereHasTags<TEntry, TTagLink>(this IQueryable<TEntry> query, string[] tagNames)
+		public static IQueryable<TEntry> WhereHasTags<TEntry, TTagLink>(this IQueryable<TEntry> query, string[]? tagNames)
 			where TEntry : IEntryWithTags<TTagLink> where TTagLink : TagUsage
 		{
 			if (tagNames == null || !tagNames.Any())
@@ -60,7 +58,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		/// <param name="tagIds">List of tag IDs to filter by. All tags need to be present. If null or empty no filtering is done.</param>
 		/// <param name="childTags">Whether to search by child tags as well. Maximum of 3 levels will be searched.</param>
 		/// <returns>Filtered query. Cannot be null.</returns>
-		public static IQueryable<TEntry> WhereHasTags<TEntry, TTagLink>(this IQueryable<TEntry> query, int[] tagIds, bool childTags = false)
+		public static IQueryable<TEntry> WhereHasTags<TEntry, TTagLink>(this IQueryable<TEntry> query, int[]? tagIds, bool childTags = false)
 			where TEntry : IEntryWithTags<TTagLink>
 			where TTagLink : TagUsage
 		{

@@ -290,12 +290,14 @@ namespace VocaDb.Model.Service.AlbumImport
 			}
 		}
 
+#nullable enable
 		public MikuDbAlbumImporter(IEnumerable<MikuDbAlbumContract> existingUrls)
 		{
 			ParamIs.NotNull(() => existingUrls);
 
 			_existingUrls = new HashSet<string>(existingUrls.Select(a => a.SourceUrl));
 		}
+#nullable disable
 
 		public AlbumImportResult[] ImportNew()
 		{

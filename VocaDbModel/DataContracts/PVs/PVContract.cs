@@ -15,6 +15,7 @@ namespace VocaDb.Model.DataContracts.PVs
 	{
 		public PVContract() { }
 
+#nullable enable
 		public PVContract(PV pv)
 		{
 			ParamIs.NotNull(() => pv);
@@ -41,6 +42,7 @@ namespace VocaDb.Model.DataContracts.PVs
 			Service = contract.Service;
 			PVType = contract.PVType;
 		}
+#nullable disable
 
 		public PVContract(PVForSong pv)
 			: this((PV)pv)

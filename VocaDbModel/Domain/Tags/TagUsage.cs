@@ -106,12 +106,14 @@ namespace VocaDb.Model.Domain.Tags
 			return format.GetHashCode();
 		}
 
+#nullable enable
 		public virtual bool HasVoteByUser(User user)
 		{
 			ParamIs.NotNull(() => user);
 
 			return VotesBase.Any(v => v.User.Equals(user));
 		}
+#nullable disable
 
 		/// <summary>
 		/// Moves this tag usage from one tag to another.

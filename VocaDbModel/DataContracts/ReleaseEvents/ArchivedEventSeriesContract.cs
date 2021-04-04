@@ -43,6 +43,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 		public ArchivedEventSeriesContract() { }
 
+#nullable enable
 		public ArchivedEventSeriesContract(ReleaseEventSeries series, ReleaseEventSeriesDiff diff)
 		{
 			ParamIs.NotNull(() => series);
@@ -55,6 +56,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			TranslatedName = new ArchivedTranslatedStringContract(series.TranslatedName);
 			WebLinks = diff.IncludeWebLinks ? series.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 		}
+#nullable disable
 
 		[DataMember]
 		public string[] Aliases { get; init; }

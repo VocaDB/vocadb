@@ -15,6 +15,7 @@ namespace VocaDb.Model.DataContracts
 			Category = WebLinkCategory.Other;
 		}
 
+#nullable enable
 		public ArchivedWebLinkContract(WebLink webLink)
 		{
 			ParamIs.NotNull(() => webLink);
@@ -24,6 +25,7 @@ namespace VocaDb.Model.DataContracts
 			Disabled = webLink.Disabled;
 			Url = webLink.Url;
 		}
+#nullable disable
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]

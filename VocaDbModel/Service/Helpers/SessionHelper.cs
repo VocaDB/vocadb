@@ -111,6 +111,7 @@ namespace VocaDb.Model.Service.Helpers
 			return obj;
 		}
 
+#nullable enable
 		public static void Sync<T>(ISession session, CollectionDiff<T, T> diff)
 		{
 			ParamIs.NotNull(() => session);
@@ -140,5 +141,6 @@ namespace VocaDb.Model.Service.Helpers
 			foreach (var n in diff.Edited)
 				session.Update(n);
 		}
+#nullable disable
 	}
 }

@@ -10,6 +10,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 {
 	public static class VenueQueryableExtensions
 	{
+#nullable enable
 		private static double GetEarthRadius(DistanceUnit unit) => unit switch
 		{
 			DistanceUnit.Kilometers => 6371,
@@ -23,6 +24,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			VenueSortRule.Distance => query.OrderByDistance(coordinates, distanceUnit),
 			_ => query,
 		};
+#nullable disable
 
 		public static IQueryable<Venue> OrderByDistance(this IQueryable<Venue> query, GeoPointQueryParams coordinates, DistanceUnit distanceUnit)
 		{
@@ -39,6 +41,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 				* Math.Pow(Math.Sin((coordinates.Longitude.Value - v.Coordinates.Longitude.Value) * Math.PI / 180 / 2), 2))));
 		}
 
+#nullable enable
 		public static IQueryable<Venue> OrderByName(this IQueryable<Venue> query, ContentLanguagePreference languagePreference)
 		{
 			return query.OrderByEntryName(languagePreference);
@@ -48,6 +51,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		{
 			return query.WhereHasNameGeneric<Venue, VenueName>(textQuery);
 		}
+#nullable disable
 
 		public static IQueryable<Venue> WhereInCircle(this IQueryable<Venue> query, GeoPointQueryParams queryParams, double? radius, DistanceUnit distanceUnit)
 		{

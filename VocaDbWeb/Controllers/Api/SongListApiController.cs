@@ -100,6 +100,7 @@ namespace VocaDb.Web.Controllers.Api
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public SongListForEditContract GetForEdit(int id) => _queries.GetSongListForEdit(id);
 
+#nullable enable
 		/// <summary>
 		/// Gets a list of featured song lists.
 		/// </summary>
@@ -118,7 +119,7 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("featured")]
 		public PartialFindResult<SongListForApiContract> GetFeaturedLists(
 			string query = "",
-			[FromQuery(Name = "tagId[]")] int[] tagId = null,
+			[FromQuery(Name = "tagId[]")] int[]? tagId = null,
 			bool childTags = false,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
 			SongListFeaturedCategory? featuredCategory = null,
@@ -140,6 +141,7 @@ namespace VocaDb.Web.Controllers.Api
 
 			return _queries.Find(s => new SongListForApiContract(s, lang, _userIconFactory, _entryImagePersister, fields), queryParams);
 		}
+#nullable disable
 
 		/// <summary>
 		/// Gets a list of featuedd list names. Ideal for autocomplete boxes.
@@ -155,6 +157,7 @@ namespace VocaDb.Web.Controllers.Api
 			SongListFeaturedCategory? featuredCategory = null,
 			int maxResults = 10) => _queries.GetFeaturedListNames(query, nameMatchMode, featuredCategory, maxResults);
 
+#nullable enable
 		/// <summary>
 		/// Gets a list of songs in a song list.
 		/// </summary>
@@ -181,12 +184,12 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpGet("{listId:int}/songs")]
 		public PartialFindResult<SongInListForApiContract> GetSongs(int listId,
 			string query = "",
-			string songTypes = null,
+			string? songTypes = null,
 			PVServices? pvServices = null,
-			[FromQuery(Name = "tagId[]")] int[] tagId = null,
-			[FromQuery(Name = "artistId[]")] int[] artistId = null,
+			[FromQuery(Name = "tagId[]")] int[]? tagId = null,
+			[FromQuery(Name = "artistId[]")] int[]? artistId = null,
 			bool childVoicebanks = false,
-			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[]? advancedFilters = null,
 			int start = 0, int maxResults = DefaultMax, bool getTotalCount = false,
 			SongSortRule? sort = null,
 			NameMatchMode nameMatchMode = NameMatchMode.Auto,
@@ -212,6 +215,7 @@ namespace VocaDb.Web.Controllers.Api
 				},
 				songInList => new SongInListForApiContract(songInList, lang, fields));
 		}
+#nullable disable
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[HttpGet("import")]

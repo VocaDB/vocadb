@@ -12,6 +12,7 @@ namespace VocaDb.Model.DataContracts.Users
 	{
 		public AlbumForUserContract() { }
 
+#nullable enable
 		public AlbumForUserContract(AlbumForUser albumForUser,
 			ContentLanguagePreference languagePreference, bool includeUser = true)
 		{
@@ -28,6 +29,7 @@ namespace VocaDb.Model.DataContracts.Users
 				User = new UserContract(albumForUser.User);
 			}
 		}
+#nullable disable
 
 		[DataMember]
 		public AlbumContract Album { get; init; }

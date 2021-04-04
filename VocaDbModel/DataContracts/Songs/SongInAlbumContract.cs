@@ -11,6 +11,7 @@ namespace VocaDb.Model.DataContracts.Songs
 	{
 		public SongInAlbumContract() { }
 
+#nullable enable
 		public SongInAlbumContract(SongInAlbum songInAlbum, ContentLanguagePreference languagePreference, bool getThumbUrl = true,
 			SongVoteRating? rating = null)
 		{
@@ -25,6 +26,7 @@ namespace VocaDb.Model.DataContracts.Songs
 			Name = Song != null ? Song.Name : songInAlbum.Name;
 			Rating = rating;
 		}
+#nullable disable
 
 		[DataMember]
 		public int DiscNumber { get; init; }

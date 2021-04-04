@@ -49,6 +49,7 @@ namespace VocaDb.Model.Helpers
 			return TruncateWithEllipsis(str, maxLength);
 		}
 
+#nullable enable
 		public static string Truncate(this string str, int length)
 		{
 			ParamIs.NotNull(() => str);
@@ -68,5 +69,6 @@ namespace VocaDb.Model.Helpers
 
 			return (str.Length > length ? $"{str.Substring(0, length)}..." : str);
 		}
+#nullable disable
 	}
 }

@@ -84,6 +84,7 @@ namespace VocaDb.Model.DataContracts.Albums
 
 		public ArchivedAlbumContract() { }
 
+#nullable enable
 		public ArchivedAlbumContract(Album album, AlbumDiff diff)
 		{
 			ParamIs.NotNull(() => album);
@@ -105,6 +106,7 @@ namespace VocaDb.Model.DataContracts.Albums
 			TranslatedName = new TranslatedStringContract(album.TranslatedName);
 			WebLinks = (diff.IncludeWebLinks ? album.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null);
 		}
+#nullable disable
 
 		[DataMember]
 		public ArchivedArtistForAlbumContract[] Artists { get; set; }

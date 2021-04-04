@@ -25,6 +25,7 @@ namespace VocaDb.Model.Helpers
 			return GetNodeTextOrEmpty(doc.XPathSelectElement(xpath));
 		}
 
+#nullable enable
 		/// <summary>
 		/// Serializes an object to a string in UTF-8 format, 
 		/// including the XML declaration.
@@ -48,6 +49,7 @@ namespace VocaDb.Model.Helpers
 				}
 			}
 		}
+#nullable disable
 
 		/// <summary>
 		/// Serializes an object to a string in UTF-8 format, 
@@ -95,6 +97,7 @@ namespace VocaDb.Model.Helpers
 			return doc;
 		}
 
+#nullable enable
 		/// <summary>
 		/// Deserializes an object from XML.
 		/// </summary>
@@ -115,5 +118,6 @@ namespace VocaDb.Model.Helpers
 
 			return obj;
 		}
+#nullable disable
 	}
 }

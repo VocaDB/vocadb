@@ -24,6 +24,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			Description = string.Empty;
 		}
 
+#nullable enable
 		public ReleaseEventContract(ReleaseEvent ev, ContentLanguagePreference languagePreference, bool includeSeries = false, bool includeSeriesLinks = false)
 			: this()
 		{
@@ -51,6 +52,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 				Series = new ReleaseEventSeriesContract(ev.Series, languagePreference, includeSeriesLinks);
 			}
 		}
+#nullable disable
 
 		public string AdditionalNames { get; init; }
 

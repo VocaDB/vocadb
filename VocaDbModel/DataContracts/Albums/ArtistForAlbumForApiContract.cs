@@ -18,6 +18,7 @@ namespace VocaDb.Model.DataContracts.Albums
 	{
 		public ArtistForAlbumForApiContract() { }
 
+#nullable enable
 		public ArtistForAlbumForApiContract(ArtistForAlbum artistForAlbum, ContentLanguagePreference languagePreference)
 		{
 			ParamIs.NotNull(() => artistForAlbum);
@@ -29,6 +30,7 @@ namespace VocaDb.Model.DataContracts.Albums
 			Name = (Artist != null ? Artist.Name : artistForAlbum.Name);
 			Roles = artistForAlbum.Roles;
 		}
+#nullable disable
 
 		[DataMember]
 		public ArtistContract Artist { get; init; }

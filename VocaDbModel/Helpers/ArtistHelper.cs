@@ -164,12 +164,14 @@ namespace VocaDb.Model.Helpers
 			return queryWithoutP;
 		}
 
+#nullable enable
 		public static ArtistCategories GetCategories(IArtistLinkWithRoles artist)
 		{
 			ParamIs.NotNull(() => artist);
 
 			return GetCategories(artist.Artist != null ? artist.Artist.ArtistType : ArtistType.Unknown, artist.Roles);
 		}
+#nullable disable
 
 		public static ArtistCategories GetCategories(ArtistType type, ArtistRoles roles)
 		{

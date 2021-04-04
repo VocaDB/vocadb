@@ -36,7 +36,9 @@ namespace VocaDb.Model.Service.Search.Artists
 			SortRule = sortRule;
 		}
 
-		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+#nullable enable
+		public AdvancedSearchFilter[]? AdvancedFilters { get; set; }
+#nullable disable
 
 		public bool AllowBaseVoicebanks { get; set; } = true;
 
@@ -52,9 +54,11 @@ namespace VocaDb.Model.Service.Search.Artists
 
 		public ArtistSortRule SortRule { get; set; }
 
-		public string[] Tags { get; set; }
+#nullable enable
+		public string[]? Tags { get; set; }
 
-		public int[] TagIds { get; set; }
+		public int[]? TagIds { get; set; }
+#nullable disable
 
 		public int UserFollowerId { get; set; }
 	}

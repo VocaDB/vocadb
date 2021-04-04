@@ -15,6 +15,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 	/// </summary>
 	public static class TagQueryableExtensions
 	{
+#nullable enable
 		/// <summary>
 		/// Order query by <see cref="TagSortRule"/>.
 		/// </summary>
@@ -63,12 +64,14 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 			return query.Where(t => t.Parent == null);
 		}
+#nullable disable
 
 		public static IQueryable<Tag> WhereHasCategoryName(this IQueryable<Tag> query, string categoryName)
 		{
 			return WhereHasCategoryName(query, SearchTextQuery.Create(categoryName, NameMatchMode.Exact));
 		}
 
+#nullable enable
 		public static IQueryable<Tag> WhereHasCategoryName(this IQueryable<Tag> query, SearchTextQuery textQuery)
 		{
 			if (textQuery.IsEmpty)
@@ -96,7 +99,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		/// <param name="query">Query to be filtered. Cannot be null.</param>
 		/// <param name="names">List of names to filter by. Can be null or empty, but in that case no tags will be matched.</param>
 		/// <returns>Filtered query. Cannot be null.</returns>
-		public static IQueryable<Tag> WhereHasName(this IQueryable<Tag> query, params string[] names)
+		public static IQueryable<Tag> WhereHasName(this IQueryable<Tag> query, params string[]? names)
 		{
 			names ??= new string[0];
 
@@ -111,6 +114,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 			return query.Where(t => (t.Targets & target) == target);
 		}
+#nullable disable
 	}
 
 	public enum TagSortRule

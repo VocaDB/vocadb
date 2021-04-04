@@ -12,6 +12,7 @@ namespace VocaDb.Model.DataContracts.Users
 	{
 		public UserKnownLanguageContract() { }
 
+#nullable enable
 		public UserKnownLanguageContract(UserKnownLanguage userKnownLanguage)
 		{
 			ParamIs.NotNull(() => userKnownLanguage);
@@ -19,6 +20,7 @@ namespace VocaDb.Model.DataContracts.Users
 			CultureCode = userKnownLanguage.CultureCode.CultureCode;
 			Proficiency = userKnownLanguage.Proficiency;
 		}
+#nullable disable
 
 		[DataMember]
 		public string CultureCode { get; init; }

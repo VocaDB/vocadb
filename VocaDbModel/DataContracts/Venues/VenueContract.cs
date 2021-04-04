@@ -36,6 +36,7 @@ namespace VocaDb.Model.DataContracts.Venues
 
 		public VenueContract() { }
 
+#nullable enable
 		public VenueContract(Venue venue, ContentLanguagePreference languagePreference, bool includeLinks = false)
 		{
 			ParamIs.NotNull(() => venue);
@@ -56,6 +57,7 @@ namespace VocaDb.Model.DataContracts.Venues
 				WebLinks = venue.WebLinks.Links.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 			}
 		}
+#nullable disable
 
 		public override string ToString() => $"venue '{Name}' [{Id}]";
 	}

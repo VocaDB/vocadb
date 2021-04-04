@@ -10,6 +10,7 @@ namespace VocaDb.Model.DataContracts.Versioning
 	{
 		public ArchivedObjectVersionForApiContract() { }
 
+#nullable enable
 		public ArchivedObjectVersionForApiContract(ArchivedObjectVersion archivedObjectVersion)
 		{
 			ParamIs.NotNull(() => archivedObjectVersion);
@@ -19,6 +20,7 @@ namespace VocaDb.Model.DataContracts.Versioning
 			Notes = archivedObjectVersion.Notes;
 			Version = archivedObjectVersion.Version;
 		}
+#nullable disable
 
 		[DataMember]
 		public string[] ChangedFields { get; init; }

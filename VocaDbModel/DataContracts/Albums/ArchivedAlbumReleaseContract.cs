@@ -11,6 +11,7 @@ namespace VocaDb.Model.DataContracts.Albums
 	{
 		public ArchivedAlbumReleaseContract() { }
 
+#nullable enable
 		public ArchivedAlbumReleaseContract(AlbumRelease release)
 		{
 			ParamIs.NotNull(() => release);
@@ -23,6 +24,7 @@ namespace VocaDb.Model.DataContracts.Albums
 
 			ReleaseEvent = ObjectRefContract.Create(release.ReleaseEvent);
 		}
+#nullable disable
 
 		[DataMember]
 		public string CatNum { get; init; }

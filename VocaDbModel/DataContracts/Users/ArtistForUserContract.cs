@@ -11,6 +11,7 @@ namespace VocaDb.Model.DataContracts.Users
 	{
 		public ArtistForUserContract() { }
 
+#nullable enable
 		public ArtistForUserContract(OwnedArtistForUser ownedArtistForUser, ContentLanguagePreference languagePreference)
 		{
 			ParamIs.NotNull(() => ownedArtistForUser);
@@ -19,6 +20,7 @@ namespace VocaDb.Model.DataContracts.Users
 			Id = ownedArtistForUser.Id;
 			User = new UserContract(ownedArtistForUser.User);
 		}
+#nullable disable
 
 		public ArtistForUserContract(ArtistContract artist)
 		{

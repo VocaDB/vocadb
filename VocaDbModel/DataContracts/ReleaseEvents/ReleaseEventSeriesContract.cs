@@ -23,6 +23,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			Description = string.Empty;
 		}
 
+#nullable enable
 		public ReleaseEventSeriesContract(ReleaseEventSeries series, ContentLanguagePreference languagePreference, bool includeLinks = false)
 			: this()
 		{
@@ -44,6 +45,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 				WebLinks = series.WebLinks.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 			}
 		}
+#nullable disable
 
 		[DataMember]
 		public string AdditionalNames { get; init; }

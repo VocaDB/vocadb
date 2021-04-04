@@ -26,6 +26,7 @@ namespace VocaDb.Model.DataContracts
 			NameHint = nameHint;
 		}
 
+#nullable enable
 		public ObjectRefContract(IEntryBase entry)
 		{
 			ParamIs.NotNull(() => entry);
@@ -33,6 +34,7 @@ namespace VocaDb.Model.DataContracts
 			Id = entry.Id;
 			NameHint = entry.DefaultName;
 		}
+#nullable disable
 
 		/// <summary>
 		/// Id of the referred object.

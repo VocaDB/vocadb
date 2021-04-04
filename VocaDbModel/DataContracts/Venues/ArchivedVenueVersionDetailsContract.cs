@@ -9,7 +9,8 @@ namespace VocaDb.Model.DataContracts.Venues
 {
 	public class ArchivedVenueVersionDetailsContract
 	{
-		public ArchivedVenueVersionDetailsContract(ArchivedVenueVersion archived, ArchivedVenueVersion comparedVersion, IUserPermissionContext permissionContext)
+#nullable enable
+		public ArchivedVenueVersionDetailsContract(ArchivedVenueVersion archived, ArchivedVenueVersion? comparedVersion, IUserPermissionContext permissionContext)
 		{
 			ParamIs.NotNull(() => archived);
 
@@ -27,6 +28,7 @@ namespace VocaDb.Model.DataContracts.Venues
 
 			ComparedVersionId = Versions.SecondId;
 		}
+#nullable disable
 
 		public ArchivedVenueVersionContract ArchivedVersion { get; init; }
 

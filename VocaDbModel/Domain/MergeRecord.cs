@@ -17,6 +17,7 @@ namespace VocaDb.Model.Domain
 
 		protected MergeRecord() { }
 
+#nullable enable
 		protected MergeRecord(T source, T target)
 		{
 			ParamIs.NotNull(() => source);
@@ -25,6 +26,7 @@ namespace VocaDb.Model.Domain
 			Source = source.Id;
 			Target = target;
 		}
+#nullable disable
 
 		public virtual int Id { get; set; }
 

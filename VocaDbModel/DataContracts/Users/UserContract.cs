@@ -20,6 +20,7 @@ namespace VocaDb.Model.DataContracts.Users
 			Language = string.Empty;
 		}
 
+#nullable enable
 		public UserContract(User user, bool getPublicCollection = false)
 			: base(user)
 		{
@@ -39,6 +40,7 @@ namespace VocaDb.Model.DataContracts.Users
 			if (getPublicCollection)
 				PublicAlbumCollection = user.Options.PublicAlbumCollection;
 		}
+#nullable disable
 
 		[DataMember]
 		public bool Active { get; init; }

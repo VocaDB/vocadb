@@ -212,6 +212,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 			_entryUrlParser = entryUrlParser;
 		}
 
+#nullable enable
 		/// <summary>
 		/// Finds songs based on criteria.
 		/// </summary>
@@ -237,6 +238,7 @@ namespace VocaDb.Model.Service.Search.SongSearch
 
 			return GetSongs(queryParams, parsedQuery);
 		}
+#nullable disable
 
 		/// <summary>
 		/// Get songs, searching by exact matches FIRST.

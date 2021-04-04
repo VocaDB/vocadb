@@ -8,6 +8,7 @@ namespace VocaDb.Model.Domain
 	{
 		public EntryRef() { }
 
+#nullable enable
 		public EntryRef(IEntryBase entryBase)
 		{
 			ParamIs.NotNull(() => entryBase);
@@ -15,6 +16,7 @@ namespace VocaDb.Model.Domain
 			EntryType = entryBase.EntryType;
 			Id = entryBase.Id;
 		}
+#nullable disable
 
 		public EntryRef(EntryType entryType, int id)
 		{
