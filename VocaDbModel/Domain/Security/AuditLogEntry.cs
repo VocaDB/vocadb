@@ -19,6 +19,7 @@ namespace VocaDb.Model.Domain.Security
 			Time = DateTime.Now;
 		}
 
+#nullable enable
 		public AuditLogEntry(AgentLoginData agentLoginData, string action, AuditLogCategory category, GlobalEntryId entryId)
 			: this()
 		{
@@ -31,6 +32,7 @@ namespace VocaDb.Model.Domain.Security
 			User = agentLoginData.User;
 			EntryId = entryId;
 		}
+#nullable disable
 
 		public virtual string Action
 		{

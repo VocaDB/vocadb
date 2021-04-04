@@ -87,6 +87,7 @@ namespace VocaDb.Model.Service
 			}, PermissionToken.Nothing, skipLog: true);
 		}
 
+#nullable enable
 		public PartialFindResult<T> Find<T>(Func<Album, T> fac, AlbumQueryParams queryParams)
 			where T : class
 		{
@@ -100,6 +101,7 @@ namespace VocaDb.Model.Service
 					result.TotalCount, result.Term);
 			});
 		}
+#nullable disable
 
 		public PartialFindResult<AlbumContract> Find(AlbumQueryParams queryParams)
 		{

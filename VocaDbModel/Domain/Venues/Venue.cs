@@ -128,6 +128,7 @@ namespace VocaDb.Model.Domain.Venues
 			return CreateName(new LocalizedString(val, language));
 		}
 
+#nullable enable
 		public virtual VenueName CreateName(ILocalizedString localizedString)
 		{
 			ParamIs.NotNull(() => localizedString);
@@ -148,6 +149,7 @@ namespace VocaDb.Model.Domain.Venues
 
 			return link;
 		}
+#nullable disable
 
 		public override string ToString() => $"venue '{DefaultName}' [{Id}]";
 	}

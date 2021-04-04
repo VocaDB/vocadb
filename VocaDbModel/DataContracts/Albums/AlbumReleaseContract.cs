@@ -13,6 +13,7 @@ namespace VocaDb.Model.DataContracts.Albums
 	{
 		public AlbumReleaseContract() { }
 
+#nullable enable
 		public AlbumReleaseContract(AlbumRelease release, ContentLanguagePreference languagePreference)
 		{
 			ParamIs.NotNull(() => release);
@@ -21,6 +22,7 @@ namespace VocaDb.Model.DataContracts.Albums
 			ReleaseDate = (release.ReleaseDate != null ? new OptionalDateTimeContract(release.ReleaseDate) : null);
 			ReleaseEvent = release.ReleaseEvent != null ? new ReleaseEventForApiContract(release.ReleaseEvent, languagePreference, ReleaseEventOptionalFields.None, null) : null;
 		}
+#nullable disable
 
 		[DataMember]
 		public string CatNum { get; init; }

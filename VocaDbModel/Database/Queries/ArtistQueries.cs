@@ -194,6 +194,7 @@ namespace VocaDb.Model.Database.Queries
 			return ArchiveAsync(ctx, artist, new ArtistDiff(), reason, notes);
 		}
 
+#nullable enable
 		public async Task<ArtistContract> Create(CreateArtistContract contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -272,6 +273,7 @@ namespace VocaDb.Model.Database.Queries
 					artistId, reportType, hostname, notes, reportType != ArtistReportType.OwnershipClaim);
 			});
 		}
+#nullable disable
 
 		public EntryRefWithCommonPropertiesContract[] FindDuplicates(string[] anyName, string url)
 		{
@@ -546,7 +548,8 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public async Task<int> Update(ArtistForEditContract properties, EntryPictureFileContract pictureData, IUserPermissionContext permissionContext)
+#nullable enable
+		public async Task<int> Update(ArtistForEditContract properties, EntryPictureFileContract? pictureData, IUserPermissionContext permissionContext)
 		{
 			ParamIs.NotNull(() => properties);
 			ParamIs.NotNull(() => permissionContext);
@@ -684,6 +687,7 @@ namespace VocaDb.Model.Database.Queries
 				return artist.Id;
 			});
 		}
+#nullable disable
 
 		public void DeleteComment(int commentId) => HandleTransaction(ctx => Comments(ctx).Delete(commentId));
 

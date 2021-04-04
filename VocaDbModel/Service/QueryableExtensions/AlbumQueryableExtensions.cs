@@ -16,6 +16,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 {
 	public static class AlbumQueryableExtensions
 	{
+#nullable enable
 		public static IQueryable<Album> OrderByReleaseDate(this IQueryable<Album> query, SortDirection direction)
 		{
 			return query
@@ -66,6 +67,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 			return query.WhereHasArtist<Album, ArtistForAlbum>(artistId, false, false);
 		}
+#nullable disable
 
 		public static IQueryable<Album> WhereHasArtistParticipationStatus(
 			this IQueryable<Album> query,
@@ -83,7 +85,8 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			));
 		}
 
-		public static IQueryable<Album> WhereHasBarcode(this IQueryable<Album> query, string barcode)
+#nullable enable
+		public static IQueryable<Album> WhereHasBarcode(this IQueryable<Album> query, string? barcode)
 		{
 			if (string.IsNullOrEmpty(barcode))
 				return query;
@@ -130,17 +133,17 @@ namespace VocaDb.Model.Service.QueryableExtensions
 				&& a.OriginalRelease.ReleaseDate.Day != null);
 		}
 
-		public static IQueryable<Album> WhereHasTag(this IQueryable<Album> query, string tagName)
+		public static IQueryable<Album> WhereHasTag(this IQueryable<Album> query, string? tagName)
 		{
 			return query.WhereHasTag<Album, AlbumTagUsage>(tagName);
 		}
 
-		public static IQueryable<Album> WhereHasTags(this IQueryable<Album> query, string[] tagName)
+		public static IQueryable<Album> WhereHasTags(this IQueryable<Album> query, string[]? tagName)
 		{
 			return query.WhereHasTags<Album, AlbumTagUsage>(tagName);
 		}
 
-		public static IQueryable<Album> WhereHasTags(this IQueryable<Album> query, int[] tagId, bool childTags = false)
+		public static IQueryable<Album> WhereHasTags(this IQueryable<Album> query, int[]? tagId, bool childTags = false)
 		{
 			return query.WhereHasTags<Album, AlbumTagUsage>(tagId, childTags);
 		}
@@ -183,7 +186,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query;
 		}
 
-		public static IQueryable<Album> WhereMatchFilters(this IQueryable<Album> query, IEnumerable<AdvancedSearchFilter> filters)
+		public static IQueryable<Album> WhereMatchFilters(this IQueryable<Album> query, IEnumerable<AdvancedSearchFilter>? filters)
 		{
 			return filters?.Aggregate(query, WhereMatchFilter) ?? query;
 		}
@@ -225,5 +228,6 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			AlbumSortRule.ReleaseDate => query.WhereHasReleaseDate(),
 			_ => query,
 		};
+#nullable disable
 	}
 }

@@ -149,6 +149,7 @@ namespace VocaDb.Model.Service.VideoServices
 		/// </summary>
 		private string CleanUrl(string url) => url.Split('?')[0];
 
+#nullable enable
 		public SoundCloudId(string trackId, string soundCloudUrl)
 		{
 			ParamIs.NotNullOrEmpty(() => trackId);
@@ -172,6 +173,7 @@ namespace VocaDb.Model.Service.VideoServices
 			TrackId = parts[0];
 			SoundCloudUrl = parts[1];
 		}
+#nullable disable
 
 		/// <summary>
 		/// Relative URL, for example tamagotaso/nightcruise

@@ -194,6 +194,7 @@ namespace VocaDb.Model.Database.Queries
 			return new CommentQueries<TagComment, Tag>(ctx.OfType<TagComment>(), PermissionContext, _userIconFactory, _entryLinkFactory);
 		}
 
+#nullable enable
 		/// <summary>
 		/// Creates a new tag.
 		/// </summary>
@@ -246,6 +247,7 @@ namespace VocaDb.Model.Database.Queries
 					tagId, reportType, hostname, notes);
 			});
 		}
+#nullable disable
 
 		public void Delete(int id, string notes)
 		{
@@ -449,6 +451,7 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
+#nullable enable
 		/// <summary>
 		/// Get tag by (exact) name. Returns null if the tag does not exist.
 		/// </summary>
@@ -457,7 +460,7 @@ namespace VocaDb.Model.Database.Queries
 		/// <param name="fac">Return value factory. Cannot be null.</param>
 		/// <param name="def">Value to be returned if the tag doesn't exist.</param>
 		/// <returns>Return value. This will be <paramref name="def"/> if the tag doesn't exist.</returns>
-		public T GetTagByName<T>(string tagName, Func<Tag, T> fac, T def = default(T))
+		public T? GetTagByName<T>(string tagName, Func<Tag, T> fac, T? def = default(T))
 		{
 			ParamIs.NotNullOrEmpty(() => tagName);
 
@@ -471,6 +474,7 @@ namespace VocaDb.Model.Database.Queries
 				return fac(tag);
 			});
 		}
+#nullable disable
 
 		public TagCategoryContract[] GetTagsByCategories()
 		{
@@ -740,6 +744,7 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
+#nullable enable
 		private CollectionDiffWithValue<TagName, TagName> SyncNames(IDatabaseContext<TagName> ctx, Tag tag, LocalizedStringWithIdContract[] names)
 		{
 			ParamIs.NotNull(() => tag);
@@ -790,7 +795,7 @@ namespace VocaDb.Model.Database.Queries
 			return diff;
 		}
 
-		public TagBaseContract Update(TagForEditContract contract, UploadedFileContract uploadedImage)
+		public TagBaseContract Update(TagForEditContract contract, UploadedFileContract? uploadedImage)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -878,6 +883,7 @@ namespace VocaDb.Model.Database.Queries
 				return new TagBaseContract(tag, LanguagePreference);
 			});
 		}
+#nullable disable
 
 		public void UpdateEntryMappings(TagEntryMappingContract[] mappings)
 		{

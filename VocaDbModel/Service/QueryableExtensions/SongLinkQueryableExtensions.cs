@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -143,7 +141,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query.Where(s => s.Song.AllArtists.Any(a => !a.IsSupport && a.Artist.ArtistType == artistType));
 		}
 
-		public static IQueryable<T> WhereSongHasLyrics<T>(this IQueryable<T> query, string[] languageCodes, bool any)
+		public static IQueryable<T> WhereSongHasLyrics<T>(this IQueryable<T> query, string[]? languageCodes, bool any)
 			where T : ISongLink
 		{
 			if (any)
@@ -191,7 +189,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query.Where(s => (s.Song.PVServices & pvServices) != PVServices.Nothing);
 		}
 
-		public static IQueryable<T> WhereSongHasTag<T>(this IQueryable<T> query, string tagName)
+		public static IQueryable<T> WhereSongHasTag<T>(this IQueryable<T> query, string? tagName)
 			where T : ISongLink
 		{
 			if (string.IsNullOrEmpty(tagName))
@@ -209,7 +207,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query.Where(s => s.Song.Tags.Usages.Any(t => t.Tag.Id == tagId));
 		}
 
-		public static IQueryable<T> WhereSongHasTags<T>(this IQueryable<T> query, int[] tagIds)
+		public static IQueryable<T> WhereSongHasTags<T>(this IQueryable<T> query, int[]? tagIds)
 			where T : ISongLink
 		{
 			if (tagIds == null || !tagIds.Any())
@@ -218,7 +216,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return tagIds.Aggregate(query, WhereSongHasTag);
 		}
 
-		public static IQueryable<T> WhereSongHasType<T>(this IQueryable<T> query, SongType[] songTypes)
+		public static IQueryable<T> WhereSongHasType<T>(this IQueryable<T> query, SongType[]? songTypes)
 			where T : ISongLink
 		{
 			if (songTypes == null || !songTypes.Any())
@@ -241,7 +239,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query;
 		}
 
-		public static IQueryable<T> WhereMatchFilter<T>(this IQueryable<T> query, AdvancedSearchFilter filter)
+		public static IQueryable<T> WhereMatchFilter<T>(this IQueryable<T> query, AdvancedSearchFilter? filter)
 			where T : ISongLink
 		{
 			if (filter == null)
@@ -285,7 +283,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query;
 		}
 
-		public static IQueryable<T> WhereMatchFilters<T>(this IQueryable<T> query, IEnumerable<AdvancedSearchFilter> filters)
+		public static IQueryable<T> WhereMatchFilters<T>(this IQueryable<T> query, IEnumerable<AdvancedSearchFilter>? filters)
 			where T : ISongLink
 		{
 			return filters?.Aggregate(query, WhereMatchFilter) ?? query;

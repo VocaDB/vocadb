@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Linq;
 using VocaDb.Model.Domain.Globalization;
@@ -46,7 +44,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query.Where(s => s.Album.AllArtists.Any(a => a.Artist.Id == artistId));
 		}
 
-		public static IQueryable<AlbumForUser> WhereHasCollectionStatus(this IQueryable<AlbumForUser> query, PurchaseStatus[] statuses)
+		public static IQueryable<AlbumForUser> WhereHasCollectionStatus(this IQueryable<AlbumForUser> query, PurchaseStatus[]? statuses)
 		{
 			if (statuses == null || !statuses.Any())
 				return query;

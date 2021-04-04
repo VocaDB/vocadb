@@ -30,6 +30,7 @@ namespace VocaDb.Model.Domain.Albums
 
 		public override int OwnerEntryId => Album.Id;
 
+#nullable enable
 		public virtual void Move(Album target)
 		{
 			ParamIs.NotNull(() => target);
@@ -41,5 +42,6 @@ namespace VocaDb.Model.Domain.Albums
 			Album = target;
 			target.Pictures.Add(this);
 		}
+#nullable disable
 	}
 }

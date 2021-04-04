@@ -19,6 +19,7 @@ namespace VocaDb.Model.DataContracts.UseCases
 			return new EntryForPictureDisplayContract(entry.EntryType, entry.Id, name, entry.Version, pic);
 		}
 
+#nullable enable
 		public static EntryForPictureDisplayContract Create(Album album, ContentLanguagePreference languagePreference)
 		{
 			ParamIs.NotNull(() => album);
@@ -36,7 +37,7 @@ namespace VocaDb.Model.DataContracts.UseCases
 
 			var name = archivedVersion.Album.TranslatedName[languagePreference];
 			var versionWithPic = archivedVersion.GetLatestVersionWithField(AlbumEditableFields.Cover);
-			PictureContract pic = null;
+			PictureContract? pic = null;
 
 			if (versionWithPic != null && versionWithPic.CoverPicture != null)
 				pic = new PictureContract(versionWithPic.CoverPicture, versionWithPic.CoverPictureMime);
@@ -62,13 +63,14 @@ namespace VocaDb.Model.DataContracts.UseCases
 
 			var name = archivedVersion.Artist.TranslatedName[languagePreference];
 			var versionWithPic = archivedVersion.GetLatestVersionWithField(ArtistEditableFields.Picture);
-			PictureContract pic = null;
+			PictureContract? pic = null;
 
 			if (versionWithPic != null && versionWithPic.Picture != null)
 				pic = new PictureContract(versionWithPic.Picture, versionWithPic.PictureMime);
 
 			return new EntryForPictureDisplayContract(EntryType.Artist, archivedVersion.Artist.Id, name, archivedVersion.Version, pic);
 		}
+#nullable disable
 
 		public EntryForPictureDisplayContract(EntryType entryType, int entryId, string name, int version, PictureContract pictureContract)
 		{

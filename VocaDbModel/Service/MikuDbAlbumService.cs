@@ -580,6 +580,7 @@ namespace VocaDb.Model.Service
 			return imported;
 		}
 
+#nullable enable
 		public InspectedAlbum[] Inspect(ImportedAlbumOptions[] importedAlbumIds)
 		{
 			ParamIs.NotNull(() => importedAlbumIds);
@@ -593,6 +594,7 @@ namespace VocaDb.Model.Service
 
 			return HandleQuery(session => Inspect(session, importedAlbum));
 		}
+#nullable disable
 
 		public void SkipAlbum(int importedAlbumId)
 		{

@@ -56,6 +56,7 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual int Order { get; set; }
 
+#nullable enable
 		public virtual void ChangeSong(Song target)
 		{
 			ParamIs.NotNull(() => target);
@@ -67,6 +68,7 @@ namespace VocaDb.Model.Domain.Songs
 			target.ListLinks.Add(this);
 			Song = target;
 		}
+#nullable disable
 
 		public virtual bool Equals(SongInList another)
 		{

@@ -15,6 +15,7 @@ namespace VocaDb.Model.DataContracts.Songs
 	{
 		public ArtistForSongContract() { }
 
+#nullable enable
 		public ArtistForSongContract(ArtistForSong artistForSong, ContentLanguagePreference languagePreference)
 		{
 			ParamIs.NotNull(() => artistForSong);
@@ -42,6 +43,7 @@ namespace VocaDb.Model.DataContracts.Songs
 
 			Name = name;
 		}
+#nullable disable
 
 		[DataMember]
 		public ArtistContract Artist { get; init; }

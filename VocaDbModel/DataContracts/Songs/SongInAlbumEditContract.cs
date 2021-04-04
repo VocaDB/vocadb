@@ -12,6 +12,7 @@ namespace VocaDb.Model.DataContracts.Songs
 	{
 		public SongInAlbumEditContract() { }
 
+#nullable enable
 		public SongInAlbumEditContract(SongInAlbum songInAlbum, ContentLanguagePreference languagePreference)
 		{
 			ParamIs.NotNull(() => songInAlbum);
@@ -41,6 +42,7 @@ namespace VocaDb.Model.DataContracts.Songs
 
 			IsCustomTrack = song == null;
 		}
+#nullable disable
 
 		public ArtistContract[] Artists { get; set; }
 

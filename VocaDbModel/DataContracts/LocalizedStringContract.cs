@@ -12,6 +12,7 @@ namespace VocaDb.Model.DataContracts
 	{
 		public LocalizedStringContract() { }
 
+#nullable enable
 		public LocalizedStringContract(LocalizedString str)
 		{
 			ParamIs.NotNull(() => str);
@@ -19,6 +20,7 @@ namespace VocaDb.Model.DataContracts
 			Language = str.Language;
 			Value = str.Value;
 		}
+#nullable disable
 
 		public LocalizedStringContract(string value, ContentLanguageSelection language)
 		{

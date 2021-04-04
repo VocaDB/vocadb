@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
@@ -113,7 +111,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			}
 		}
 
-		public static IQueryable<TEntry> WhereHasArtists<TEntry, TArtistLink>(this IQueryable<TEntry> query, string[] artistNames)
+		public static IQueryable<TEntry> WhereHasArtists<TEntry, TArtistLink>(this IQueryable<TEntry> query, string[]? artistNames)
 			where TEntry : IEntryWithArtistLinks<TArtistLink> where TArtistLink : IArtistLink
 		{
 			if (artistNames == null || artistNames.Length == 0)

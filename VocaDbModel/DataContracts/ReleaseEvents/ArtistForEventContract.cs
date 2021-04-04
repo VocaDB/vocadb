@@ -14,6 +14,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	{
 		public ArtistForEventContract() { }
 
+#nullable enable
 		public ArtistForEventContract(ArtistForEvent artistForEvent, ContentLanguagePreference languagePreference)
 		{
 			ParamIs.NotNull(() => artistForEvent);
@@ -24,6 +25,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			Roles = artistForEvent.Roles;
 			EffectiveRoles = artistForEvent.Roles;
 		}
+#nullable disable
 
 		[DataMember]
 		public ArtistContract Artist { get; init; }

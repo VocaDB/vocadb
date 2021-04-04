@@ -76,6 +76,9 @@ namespace VocaDb.Web
 					options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
 
 					options.Filters.Add<VoidAndTaskTo204NoContentFilter>();
+
+					// See: https://github.com/VocaDB/vocadb/issues/801
+					options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
 				})
 				.AddNewtonsoftJson(options =>
 				{
@@ -87,6 +90,8 @@ namespace VocaDb.Web
 			services.AddInMemoryCacheOutput();
 
 			services.AddSwaggerGen();
+			// Code from: https://stackoverflow.com/questions/36452468/swagger-ui-web-api-documentation-present-enums-as-strings/55541764#55541764
+			services.AddSwaggerGenNewtonsoftSupport();
 
 			// Code from: https://blogs.lessthandot.com/index.php/webdev/serverprogramming/aspnet/adding-twitter-authentication-to-an-asp-net-core-2-site-w-cosmos-db/
 			services

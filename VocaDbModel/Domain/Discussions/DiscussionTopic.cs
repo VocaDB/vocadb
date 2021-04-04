@@ -118,6 +118,7 @@ namespace VocaDb.Model.Domain.Discussions
 			FirstComment.Deleted = true;
 		}
 
+#nullable enable
 		public virtual void MoveToFolder(DiscussionFolder targetFolder)
 		{
 			ParamIs.NotNull(() => targetFolder);
@@ -129,6 +130,7 @@ namespace VocaDb.Model.Domain.Discussions
 			Folder = targetFolder;
 			Folder.AllTopics.Add(this);
 		}
+#nullable disable
 
 		public override string ToString()
 		{

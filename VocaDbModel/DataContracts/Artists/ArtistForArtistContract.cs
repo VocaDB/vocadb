@@ -11,6 +11,7 @@ namespace VocaDb.Model.DataContracts.Artists
 	{
 		public ArtistForArtistContract() { }
 
+#nullable enable
 		public ArtistForArtistContract(ArtistForArtist groupForArtist, ContentLanguagePreference languagePreference)
 		{
 			ParamIs.NotNull(() => groupForArtist);
@@ -20,6 +21,7 @@ namespace VocaDb.Model.DataContracts.Artists
 			LinkType = groupForArtist.LinkType;
 			Member = new ArtistContract(groupForArtist.Member, languagePreference);
 		}
+#nullable disable
 
 		[DataMember]
 		public int Id { get; init; }

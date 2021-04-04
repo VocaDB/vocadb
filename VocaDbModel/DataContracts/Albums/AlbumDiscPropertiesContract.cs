@@ -10,6 +10,7 @@ namespace VocaDb.Model.DataContracts.Albums
 	{
 		public AlbumDiscPropertiesContract() { }
 
+#nullable enable
 		public AlbumDiscPropertiesContract(AlbumDiscProperties discProperties)
 		{
 			ParamIs.NotNull(() => discProperties);
@@ -19,6 +20,7 @@ namespace VocaDb.Model.DataContracts.Albums
 			MediaType = discProperties.MediaType;
 			Name = discProperties.Name;
 		}
+#nullable disable
 
 		[DataMember]
 		public int DiscNumber { get; set; }

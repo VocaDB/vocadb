@@ -53,6 +53,7 @@ namespace VocaDb.Model.DataContracts.Tags
 			Targets = TagTargetTypes.All;
 		}
 
+#nullable enable
 		public ArchivedTagContract(Tag tag, TagDiff diff) : this()
 		{
 			ParamIs.NotNull(() => tag);
@@ -70,6 +71,7 @@ namespace VocaDb.Model.DataContracts.Tags
 			TranslatedName = new ArchivedTranslatedStringContract(tag.TranslatedName);
 			WebLinks = diff.IncludeWebLinks ? tag.WebLinks.Links.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 		}
+#nullable disable
 
 		[DataMember]
 		public string CategoryName { get; set; }

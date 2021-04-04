@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Linq;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -30,7 +28,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			_ => criteria.OrderBy(e => e.Artist.Names.SortNames.Romaji),
 		};
 
-		public static IQueryable<T> WhereArtistHasName<T>(this IQueryable<T> query, ArtistSearchTextQuery textQuery) where T : IArtistLink
+		public static IQueryable<T> WhereArtistHasName<T>(this IQueryable<T> query, ArtistSearchTextQuery? textQuery) where T : IArtistLink
 		{
 			if (textQuery == null || textQuery.IsEmpty)
 				return query;
@@ -72,7 +70,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query.Where(a => a.Artist.Tags.Usages.Any(t => t.Tag.Id == tagId));
 		}
 
-		public static IQueryable<T> WhereArtistHasTags<T>(this IQueryable<T> query, int[] tagIds)
+		public static IQueryable<T> WhereArtistHasTags<T>(this IQueryable<T> query, int[]? tagIds)
 		 where T : IArtistLink
 		{
 			if (tagIds == null || !tagIds.Any())

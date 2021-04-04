@@ -9,6 +9,7 @@ namespace VocaDb.Model.DataContracts.Tags
 	{
 		public TagMappingContract() { }
 
+#nullable enable
 		public TagMappingContract(TagMapping tagMapping, ContentLanguagePreference lang)
 		{
 			ParamIs.NotNull(() => tagMapping);
@@ -16,6 +17,7 @@ namespace VocaDb.Model.DataContracts.Tags
 			SourceTag = tagMapping.SourceTag;
 			Tag = new TagBaseContract(tagMapping.Tag, lang);
 		}
+#nullable disable
 
 		public string SourceTag { get; init; }
 

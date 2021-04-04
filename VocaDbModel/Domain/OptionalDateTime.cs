@@ -22,12 +22,14 @@ namespace VocaDb.Model.Domain
 			return !(p1 == p2);
 		}
 
+#nullable enable
 		public static OptionalDateTime Create(IOptionalDateTime contract)
 		{
 			ParamIs.NotNull(() => contract);
 
 			return new OptionalDateTime(contract.Year, contract.Month, contract.Day);
 		}
+#nullable disable
 
 		public static bool IsValid(int? year, int? day, int? month)
 		{

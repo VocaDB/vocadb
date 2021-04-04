@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Linq;
 using VocaDb.Model.Domain.Globalization;
@@ -112,7 +110,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query.Where(e => e.Series.Id == seriesId);
 		}
 
-		public static IQueryable<ReleaseEvent> WhereHasTags(this IQueryable<ReleaseEvent> query, int[] tagId, bool childTags = false)
+		public static IQueryable<ReleaseEvent> WhereHasTags(this IQueryable<ReleaseEvent> query, int[]? tagId, bool childTags = false)
 		{
 			return query.WhereHasTags<ReleaseEvent, EventTagUsage>(tagId, childTags);
 		}

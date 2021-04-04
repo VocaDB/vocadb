@@ -85,6 +85,7 @@ namespace VocaDb.Model.DataContracts.Songs
 
 		public ArchivedSongContract() { }
 
+#nullable enable
 		public ArchivedSongContract(Song song, SongDiff diff)
 		{
 			ParamIs.NotNull(() => song);
@@ -109,6 +110,7 @@ namespace VocaDb.Model.DataContracts.Songs
 			MinMilliBpm = song.MinMilliBpm;
 			MaxMilliBpm = song.MaxMilliBpm;
 		}
+#nullable disable
 
 		[DataMember]
 		public AlbumForSongRefContract[] Albums { get; set; }

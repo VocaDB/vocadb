@@ -29,6 +29,7 @@ namespace VocaDb.Model.Domain.PVs
 			PVType = PVType.Other;
 		}
 
+#nullable enable
 		public PV(PVContract contract)
 			: this()
 		{
@@ -42,6 +43,7 @@ namespace VocaDb.Model.Domain.PVs
 			Author = contract.Author ?? string.Empty;
 			ExtendedMetadata = contract.ExtendedMetadata;
 		}
+#nullable disable
 
 		public virtual string Author
 		{
@@ -103,6 +105,7 @@ namespace VocaDb.Model.Domain.PVs
 			return (Name == pv.Name);
 		}
 
+#nullable enable
 		public virtual void CopyMetaFrom(PVContract contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -111,6 +114,7 @@ namespace VocaDb.Model.Domain.PVs
 			Name = contract.Name;
 			PVType = contract.PVType;
 		}
+#nullable disable
 
 		public virtual bool Equals(PV another)
 		{

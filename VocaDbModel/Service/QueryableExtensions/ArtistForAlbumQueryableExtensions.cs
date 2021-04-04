@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Linq;
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Artists;
@@ -10,7 +8,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 {
 	public static class ArtistForAlbumQueryableExtensions
 	{
-		public static IQueryable<ArtistForAlbum> WhereHasArtistParticipationStatus(this IQueryable<ArtistForAlbum> query, Artist artist, ArtistAlbumParticipationStatus participation)
+		public static IQueryable<ArtistForAlbum> WhereHasArtistParticipationStatus(this IQueryable<ArtistForAlbum> query, Artist? artist, ArtistAlbumParticipationStatus participation)
 		{
 			if (participation == ArtistAlbumParticipationStatus.Everything || artist == null)
 				return query;

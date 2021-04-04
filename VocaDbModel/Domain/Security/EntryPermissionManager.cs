@@ -77,6 +77,7 @@ namespace VocaDb.Model.Domain.Security
 			return entryWithArtists != null && entryWithArtists.ArtistList.Any(a => !ArtistHelper.IsVoiceSynthesizer(a.ArtistType) && IsDirectlyVerifiedFor(userContext, a));
 		}
 
+#nullable enable
 		/// <summary>
 		/// Gets a list of entry statuses that the user can edit or set.
 		/// This means, the user is allowed to edit entries with any of these statuses, 
@@ -89,7 +90,7 @@ namespace VocaDb.Model.Domain.Security
 		/// <param name="permissionContext">User permission context identifying the user's global permissions.</param>
 		/// <param name="entry">Entry to be checked. Can be null. If null, only global permissions will be checked.</param>
 		/// <returns>A list of permissions that can be set by the user.</returns>
-		public static StatusSet AllowedEntryStatuses(IUserPermissionContext permissionContext, IEntryBase entry = null)
+		public static StatusSet AllowedEntryStatuses(IUserPermissionContext permissionContext, IEntryBase? entry = null)
 		{
 			// Check for basic edit permissions, without these the user is limited or disabled
 			if (!permissionContext.HasPermission(PermissionToken.ManageDatabase))
@@ -117,6 +118,7 @@ namespace VocaDb.Model.Domain.Security
 
 			return StatusSet.Empty;
 		}
+#nullable disable
 
 		public static bool CanDelete<TEntry>(IUserPermissionContext permissionContext, TEntry entry)
 			where TEntry : IEntryWithVersions, IEntryWithStatus
@@ -179,6 +181,7 @@ namespace VocaDb.Model.Domain.Security
 		///	}
 
 
+#nullable enable
 		/// <summary>
 		/// Tests whether the user can edit a specific entry.
 		/// The permission depends on both the user's global permissions and entry status.
@@ -206,6 +209,7 @@ namespace VocaDb.Model.Domain.Security
 
 			return permissionContext.UserGroupId == UserGroupId.Admin || permissionContext.UserGroupId > groupId;
 		}
+#nullable disable
 
 		public static bool CanEditPersonalDescription(IUserPermissionContext userContext, IEntryBase entry)
 		{
@@ -214,12 +218,14 @@ namespace VocaDb.Model.Domain.Security
 			return userContext.UserGroupId >= UserGroupId.Moderator || IsVerifiedFor(userContext, entry);
 		}
 
+#nullable enable
 		public static bool CanEditUser(IUserPermissionContext permissionContext, UserGroupId groupId)
 		{
 			ParamIs.NotNull(() => permissionContext);
 
 			return CanEditGroupTo(permissionContext, groupId);
 		}
+#nullable disable
 
 		public static bool CanManageFeaturedLists(IUserPermissionContext permissionContext)
 		{
@@ -237,6 +243,7 @@ namespace VocaDb.Model.Domain.Security
 			return IsVerifiedFor(permissionContext, entry);
 		}
 
+#nullable enable
 		/// <summary>
 		/// Verifies that user passes an access check for an entry.
 		/// </summary>
@@ -252,6 +259,7 @@ namespace VocaDb.Model.Domain.Security
 			if (!accessCheck(permissionContext, entry))
 				throw new NotAllowedException();
 		}
+#nullable disable
 
 		/// <summary>
 		/// Verifies that user is allowed to delete an entry.

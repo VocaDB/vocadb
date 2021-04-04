@@ -123,6 +123,7 @@ namespace VocaDb.Model.Domain.Songs
 			return Id.GetHashCode();
 		}
 
+#nullable enable
 		public virtual void Move(Artist target)
 		{
 			ParamIs.NotNull(() => target);
@@ -148,6 +149,7 @@ namespace VocaDb.Model.Domain.Songs
 			Song = target;
 			target.AllArtists.Add(this);
 		}
+#nullable disable
 
 		public override string ToString()
 		{

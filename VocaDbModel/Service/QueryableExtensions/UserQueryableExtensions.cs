@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Linq;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Search;
@@ -25,7 +23,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 
 		public static IQueryable<User> WhereIsActive(this IQueryable<User> query) => query.Where(u => u.Active);
 
-		public static IQueryable<User> WhereKnowsLanguage(this IQueryable<User> query, string langCode)
+		public static IQueryable<User> WhereKnowsLanguage(this IQueryable<User> query, string? langCode)
 		{
 			if (string.IsNullOrEmpty(langCode))
 				return query;

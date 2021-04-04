@@ -85,6 +85,7 @@ namespace VocaDb.Model.Domain.Users
 
 		public override int GetHashCode() => base.GetHashCode();
 
+#nullable enable
 		public virtual void Move(Album target)
 		{
 			ParamIs.NotNull(() => target);
@@ -98,6 +99,7 @@ namespace VocaDb.Model.Domain.Users
 			target.UserCollections.Add(this);
 			target.UpdateRatingTotals();
 		}
+#nullable disable
 
 		public override string ToString() => $"{Album} for {User}";
 	}

@@ -11,6 +11,7 @@ namespace VocaDb.Model.Domain.Users
 			Date = DateTime.Now;
 		}
 
+#nullable enable
 		public OldUsername(User user, string oldName) : this()
 		{
 			ParamIs.NotNull(() => user);
@@ -19,6 +20,7 @@ namespace VocaDb.Model.Domain.Users
 			User = user;
 			OldName = oldName;
 		}
+#nullable disable
 
 		public virtual DateTime Date { get; set; }
 

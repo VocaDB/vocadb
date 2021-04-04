@@ -316,6 +316,7 @@ namespace VocaDb.Model.Database.Queries
 			return Archive(ctx, song, new SongDiff(), reason, notes);
 		}
 
+#nullable enable
 		public Task<SongContract> Create(CreateSongContract contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -365,7 +366,7 @@ namespace VocaDb.Model.Database.Queries
 				diff.Artists.Set(contract.Artists.Any());
 
 				var pvs = new List<PVContract>();
-				Tag[] addedTags = null;
+				Tag[]? addedTags = null;
 
 				foreach (var pvResult in pvResults)
 				{
@@ -443,6 +444,7 @@ namespace VocaDb.Model.Database.Queries
 					songId, reportType, hostname, notes);
 			});
 		}
+#nullable disable
 
 		public SongForApiContract[] GetByNames(string[] names, SongType[] songTypes, int[] ignoreIds, ContentLanguagePreference lang, int maxResults)
 		{
@@ -1154,6 +1156,7 @@ namespace VocaDb.Model.Database.Queries
 			return pvDiff;
 		}
 
+#nullable enable
 		public async Task<SongForEditContract> UpdateBasicProperties(SongForEditContract properties)
 		{
 			ParamIs.NotNull(() => properties);
@@ -1286,6 +1289,7 @@ namespace VocaDb.Model.Database.Queries
 				return new SongForEditContract(song, PermissionContext.LanguagePreference);
 			});
 		}
+#nullable disable
 
 		public void UpdatePersonalDescription(int songId, SongDetailsContract data)
 		{

@@ -11,6 +11,7 @@ namespace VocaDb.Model.DataContracts.Security
 	{
 		public AuditLogEntryContract() { }
 
+#nullable enable
 		public AuditLogEntryContract(AuditLogEntry entry)
 		{
 			ParamIs.NotNull(() => entry);
@@ -21,6 +22,7 @@ namespace VocaDb.Model.DataContracts.Security
 			Time = entry.Time;
 			User = (entry.User != null ? new UserContract(entry.User) : null);
 		}
+#nullable disable
 
 		public string Action { get; init; }
 

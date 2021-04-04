@@ -96,6 +96,7 @@ namespace VocaDb.Model.Domain.Users
 			return Id.GetHashCode();
 		}
 
+#nullable enable
 		public virtual void Move(Song target)
 		{
 			ParamIs.NotNull(() => target);
@@ -117,6 +118,7 @@ namespace VocaDb.Model.Domain.Users
 
 			Song = target;
 		}
+#nullable disable
 
 		public virtual void SetRating(SongVoteRating newRating)
 		{

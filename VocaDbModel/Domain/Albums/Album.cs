@@ -78,6 +78,7 @@ namespace VocaDb.Model.Domain.Albums
 			Status = EntryStatus.Draft;
 		}
 
+#nullable enable
 		public Album(LocalizedString name)
 			: this()
 		{
@@ -94,6 +95,7 @@ namespace VocaDb.Model.Domain.Albums
 			foreach (var name in translatedName.AllLocalized)
 				Names.Add(new AlbumName(this, name));
 		}
+#nullable disable
 
 		public virtual IList<ArtistForAlbum> AllArtists
 		{
@@ -411,6 +413,7 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
+#nullable enable
 		public virtual ArtistForAlbum AddArtist(Artist artist)
 		{
 			ParamIs.NotNull(() => artist);
@@ -456,6 +459,7 @@ namespace VocaDb.Model.Domain.Albums
 
 			return track;
 		}
+#nullable disable
 
 		public virtual ArchivedAlbumVersion CreateArchivedVersion(XDocument data, AlbumDiff diff, AgentLoginData author, AlbumArchiveReason reason, string notes)
 		{
@@ -466,6 +470,7 @@ namespace VocaDb.Model.Domain.Albums
 			return archived;
 		}
 
+#nullable enable
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
 			ParamIs.NotNullOrEmpty(() => message);
@@ -486,6 +491,7 @@ namespace VocaDb.Model.Domain.Albums
 
 			return name;
 		}
+#nullable disable
 
 		public virtual AlbumPictureFile CreatePicture(string name, string mime, User author)
 		{
@@ -495,6 +501,7 @@ namespace VocaDb.Model.Domain.Albums
 			return f;
 		}
 
+#nullable enable
 		public virtual PVForAlbum CreatePV(PVContract contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -515,6 +522,7 @@ namespace VocaDb.Model.Domain.Albums
 
 			return link;
 		}
+#nullable disable
 
 		public virtual void Delete()
 		{
@@ -619,6 +627,7 @@ namespace VocaDb.Model.Domain.Albums
 			return Artists.Any(a => artist.Equals(a.Artist));
 		}
 
+#nullable enable
 		/// <summary>
 		/// Checks whether this album has a specific artist.
 		/// </summary>
@@ -658,6 +667,7 @@ namespace VocaDb.Model.Domain.Albums
 
 			return UserCollections.Any(w => w.User.Equals(user));
 		}
+#nullable disable
 
 		/// <summary>
 		/// Returns the index for the next track counted from a track index,
@@ -677,6 +687,7 @@ namespace VocaDb.Model.Domain.Albums
 			return new TrackIndex(index.DiscNumber, index.TrackNumber + 1);
 		}
 
+#nullable enable
 		public virtual void OnSongDeleting(SongInAlbum songInAlbum)
 		{
 			ParamIs.NotNull(() => songInAlbum);
@@ -691,6 +702,7 @@ namespace VocaDb.Model.Domain.Albums
 
 			AllSongs.Remove(songInAlbum);
 		}
+#nullable disable
 
 		/// <summary>
 		/// Returns the index for the previous track counted from a track index,
@@ -824,6 +836,7 @@ namespace VocaDb.Model.Domain.Albums
 			return diff;
 		}
 
+#nullable enable
 		public virtual CollectionDiffWithValue<PVForAlbum, PVForAlbum> SyncPVs(IEnumerable<PVContract> newPVs)
 		{
 			ParamIs.NotNull(() => newPVs);
@@ -857,6 +870,7 @@ namespace VocaDb.Model.Domain.Albums
 
 			return new CollectionDiffWithValue<PVForAlbum, PVForAlbum>(created, diff.Removed, diff.Unchanged, edited);
 		}
+#nullable disable
 
 		public virtual async Task<CollectionDiffWithValue<SongInAlbum, SongInAlbum>> SyncSongs(
 			IEnumerable<SongInAlbumEditContract> newTracks, Func<SongInAlbumEditContract, Task<Song>> songGetter,

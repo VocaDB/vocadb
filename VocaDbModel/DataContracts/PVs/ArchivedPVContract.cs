@@ -15,6 +15,7 @@ namespace VocaDb.Model.DataContracts.PVs
 			Author = ThumbUrl = string.Empty;
 		}
 
+#nullable enable
 		public ArchivedPVContract(PV pv)
 			: this()
 		{
@@ -27,6 +28,7 @@ namespace VocaDb.Model.DataContracts.PVs
 			Service = pv.Service;
 			PVType = pv.PVType;
 		}
+#nullable disable
 
 		public ArchivedPVContract(PVForSong pv)
 			: this((PV)pv)

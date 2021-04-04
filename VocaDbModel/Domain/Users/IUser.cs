@@ -15,7 +15,8 @@ namespace VocaDb.Model.Domain.Users
 
 	public static class IUserExtensions
 	{
-		public static bool IsTheSameUser(this IUser left, IUser right)
+#nullable enable
+		public static bool IsTheSameUser(this IUser left, IUser? right)
 		{
 			ParamIs.NotNull(() => left);
 
@@ -24,5 +25,6 @@ namespace VocaDb.Model.Domain.Users
 
 			return left.Id == right.Id;
 		}
+#nullable disable
 	}
 }

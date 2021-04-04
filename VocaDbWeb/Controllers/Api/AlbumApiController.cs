@@ -109,6 +109,7 @@ namespace VocaDb.Web.Controllers.Api
 			SongOptionalFields songFields = SongOptionalFields.None,
 			ContentLanguagePreference lang = ContentLanguagePreference.Default) => _queries.GetAlbumWithMergeRecord(id, (a, m) => new AlbumForApiContract(a, m, lang, _thumbPersister, fields, songFields));
 
+#nullable enable
 		/// <summary>
 		/// Gets a page of albums.
 		/// </summary>
@@ -162,18 +163,18 @@ namespace VocaDb.Web.Controllers.Api
 		public PartialFindResult<AlbumForApiContract> GetList(
 			string query = "",
 			DiscType discTypes = DiscType.Unknown,
-			[FromQuery(Name = "tagName[]")] string[] tagName = null,
-			[FromQuery(Name = "tagId[]")] int[] tagId = null,
+			[FromQuery(Name = "tagName[]")] string[]? tagName = null,
+			[FromQuery(Name = "tagId[]")] int[]? tagId = null,
 			bool childTags = false,
-			[FromQuery(Name = "artistId[]")] int[] artistId = null,
+			[FromQuery(Name = "artistId[]")] int[]? artistId = null,
 			ArtistAlbumParticipationStatus artistParticipationStatus = ArtistAlbumParticipationStatus.Everything,
 			bool childVoicebanks = false,
 			bool includeMembers = false,
-			string barcode = null,
+			string? barcode = null,
 			EntryStatus? status = null,
 			DateTime? releaseDateAfter = null,
 			DateTime? releaseDateBefore = null,
-			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[] advancedFilters = null,
+			[FromQuery(Name = "advancedFilters")] AdvancedSearchFilterParams[]? advancedFilters = null,
 			int start = 0,
 			int maxResults = DefaultMax,
 			bool getTotalCount = false,
@@ -211,6 +212,7 @@ namespace VocaDb.Web.Controllers.Api
 
 			return entries;
 		}
+#nullable disable
 
 		/// <summary>
 		/// Gets a list of album names. Ideal for autocomplete boxes.

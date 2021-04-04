@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -34,7 +32,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return SongLinkQueryableExtensions.OrderBy(query, sortRule.Value, languagePreference);
 		}
 
-		public static IQueryable<SongList> WhereHasTags(this IQueryable<SongList> query, int[] tagId, bool childTags = false)
+		public static IQueryable<SongList> WhereHasTags(this IQueryable<SongList> query, int[]? tagId, bool childTags = false)
 		{
 			return query.WhereHasTags<SongList, SongListTagUsage>(tagId, childTags);
 		}

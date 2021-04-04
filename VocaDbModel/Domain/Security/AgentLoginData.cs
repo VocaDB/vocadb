@@ -6,6 +6,7 @@ namespace VocaDb.Model.Domain.Security
 {
 	public class AgentLoginData
 	{
+#nullable enable
 		public AgentLoginData(string name)
 		{
 			ParamIs.NotNullOrEmpty(() => name);
@@ -20,6 +21,7 @@ namespace VocaDb.Model.Domain.Security
 			Name = user.Name;
 			User = user;
 		}
+#nullable disable
 
 		public AgentLoginData(User user, string name)
 		{

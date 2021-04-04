@@ -15,6 +15,7 @@ namespace VocaDb.Model.Domain.Tags
 			MappingType = TagMappingType.Automatic;
 		}
 
+#nullable enable
 		public TagMapping(Tag tag, string sourceTag) : this()
 		{
 			ParamIs.NotNull(() => tag);
@@ -23,6 +24,7 @@ namespace VocaDb.Model.Domain.Tags
 			Tag = tag;
 			SourceTag = sourceTag;
 		}
+#nullable disable
 
 		private Tag _tag;
 		private string _sourceTag;

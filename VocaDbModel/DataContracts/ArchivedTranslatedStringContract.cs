@@ -10,6 +10,7 @@ namespace VocaDb.Model.DataContracts
 	{
 		public ArchivedTranslatedStringContract() { }
 
+#nullable enable
 		public ArchivedTranslatedStringContract(TranslatedString translatedString)
 		{
 			ParamIs.NotNull(() => translatedString);
@@ -19,6 +20,7 @@ namespace VocaDb.Model.DataContracts
 			Japanese = translatedString.Japanese;
 			Romaji = translatedString.Romaji;
 		}
+#nullable disable
 
 		[DataMember]
 		public ContentLanguageSelection DefaultLanguage { get; set; }

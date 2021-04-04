@@ -76,6 +76,7 @@ namespace VocaDb.Model
 			return (T)Enum.Parse(typeof(T), value);
 		}
 
+#nullable enable
 		public static T[] ParseAll(string[] values)
 		{
 			ParamIs.NotNull(() => values);
@@ -90,6 +91,7 @@ namespace VocaDb.Model
 
 			return list.ToArray();
 		}
+#nullable disable
 
 		public static T[] ParseMultiple(string value)
 		{

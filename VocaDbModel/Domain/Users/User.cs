@@ -488,6 +488,7 @@ namespace VocaDb.Model.Domain.Users
 			}
 		}
 
+#nullable enable
 		/// <summary>
 		/// Add album to user collection.
 		/// </summary>
@@ -534,6 +535,7 @@ namespace VocaDb.Model.Domain.Users
 
 			return link;
 		}
+#nullable disable
 
 		public virtual UserKnownLanguage AddKnownLanguage(string cultureCode, UserLanguageProficiency proficiency)
 		{
@@ -551,6 +553,7 @@ namespace VocaDb.Model.Domain.Users
 			return msg;
 		}
 
+#nullable enable
 		public virtual OwnedArtistForUser AddOwnedArtist(Artist artist)
 		{
 			ParamIs.NotNull(() => artist);
@@ -592,6 +595,7 @@ namespace VocaDb.Model.Domain.Users
 			tag.TagsForUsers.Add(link);
 			return link;
 		}
+#nullable disable
 
 		public virtual void ClearTwitter()
 		{
@@ -604,6 +608,7 @@ namespace VocaDb.Model.Domain.Users
 			Options.TwitterId = 0;
 		}
 
+#nullable enable
 		public virtual Comment CreateComment(string message, AgentLoginData loginData)
 		{
 			ParamIs.NotNullOrEmpty(() => message);
@@ -624,6 +629,7 @@ namespace VocaDb.Model.Domain.Users
 
 			return link;
 		}
+#nullable disable
 
 		public virtual UserWebLink CreateWebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
@@ -671,6 +677,7 @@ namespace VocaDb.Model.Domain.Users
 			return (received, sent);
 		}
 
+#nullable enable
 		public virtual void SetEmail(string newEmail)
 		{
 			ParamIs.NotNull(() => newEmail);
@@ -685,6 +692,7 @@ namespace VocaDb.Model.Domain.Users
 				Options.EmailVerified = false;
 			}
 		}
+#nullable disable
 
 		public override string ToString()
 		{

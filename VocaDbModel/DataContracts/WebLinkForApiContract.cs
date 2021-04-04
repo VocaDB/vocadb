@@ -13,6 +13,7 @@ namespace VocaDb.Model.DataContracts
 	{
 		public WebLinkForApiContract() { }
 
+#nullable enable
 		public WebLinkForApiContract(WebLink webLink, WebLinkOptionalFields fields = WebLinkOptionalFields.None)
 		{
 			ParamIs.NotNull(() => webLink);
@@ -27,6 +28,7 @@ namespace VocaDb.Model.DataContracts
 			Id = webLink.Id;
 			Url = webLink.Url;
 		}
+#nullable disable
 
 		[DataMember]
 		[JsonConverter(typeof(StringEnumConverter))]

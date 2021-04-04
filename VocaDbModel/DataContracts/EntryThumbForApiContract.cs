@@ -27,6 +27,7 @@ namespace VocaDb.Model.DataContracts
 
 		public EntryThumbForApiContract() { }
 
+#nullable enable
 		/// <summary>
 		/// Initializes image data.
 		/// </summary>
@@ -56,6 +57,7 @@ namespace VocaDb.Model.DataContracts
 			if (sizes.HasFlag(ImageSizes.TinyThumb))
 				UrlTinyThumb = thumbPersister.GetUrlAbsolute(image, ImageSize.TinyThumb);
 		}
+#nullable disable
 
 		/// <summary>
 		/// MIME type, for example "image/jpeg".

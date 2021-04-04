@@ -11,7 +11,8 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	{
 		public ArchivedEventVersionDetailsContract() { }
 
-		public ArchivedEventVersionDetailsContract(ArchivedReleaseEventVersion archived, ArchivedReleaseEventVersion comparedVersion, IUserPermissionContext permissionContext)
+#nullable enable
+		public ArchivedEventVersionDetailsContract(ArchivedReleaseEventVersion archived, ArchivedReleaseEventVersion? comparedVersion, IUserPermissionContext permissionContext)
 		{
 			ParamIs.NotNull(() => archived);
 
@@ -29,6 +30,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 			ComparedVersionId = Versions.SecondId;
 		}
+#nullable disable
 
 		public ArchivedObjectVersionContract ArchivedVersion { get; init; }
 

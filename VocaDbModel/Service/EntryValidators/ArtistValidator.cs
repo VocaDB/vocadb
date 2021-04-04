@@ -10,6 +10,7 @@ namespace VocaDb.Model.Service.EntryValidators
 {
 	public class ArtistValidator
 	{
+#nullable enable
 		public bool IsValid(Artist artist)
 		{
 			ParamIs.NotNull(() => artist);
@@ -27,5 +28,6 @@ namespace VocaDb.Model.Service.EntryValidators
 
 			return !errors.Any();
 		}
+#nullable disable
 	}
 }

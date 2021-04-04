@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain;
@@ -32,7 +30,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			}
 		}
 
-		public static IQueryable<ArtistName> WhereArtistTypeIn(this IQueryable<ArtistName> queryable, ArtistType[] types)
+		public static IQueryable<ArtistName> WhereArtistTypeIn(this IQueryable<ArtistName> queryable, ArtistType[]? types)
 		{
 			if (types == null || !types.Any())
 				return queryable;
@@ -83,7 +81,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 		/// External link URL, for example http://www.nicovideo.jp/mylist/6667938.
 		/// </param>
 		/// <returns>Filtered query. Cannot be null.</returns>
-		public static IQueryable<Artist> WhereHasExternalLinkUrl(this IQueryable<Artist> query, string extLinkUrl)
+		public static IQueryable<Artist> WhereHasExternalLinkUrl(this IQueryable<Artist> query, string? extLinkUrl)
 		{
 			if (string.IsNullOrEmpty(extLinkUrl) || extLinkUrl.Length <= 1)
 				return query;
@@ -129,17 +127,17 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			}
 		}
 
-		public static IQueryable<Artist> WhereHasTag(this IQueryable<Artist> query, string tagName)
+		public static IQueryable<Artist> WhereHasTag(this IQueryable<Artist> query, string? tagName)
 		{
 			return query.WhereHasTag<Artist, ArtistTagUsage>(tagName);
 		}
 
-		public static IQueryable<Artist> WhereHasTags(this IQueryable<Artist> query, string[] tagName)
+		public static IQueryable<Artist> WhereHasTags(this IQueryable<Artist> query, string[]? tagName)
 		{
 			return query.WhereHasTags<Artist, ArtistTagUsage>(tagName);
 		}
 
-		public static IQueryable<Artist> WhereHasTags(this IQueryable<Artist> query, int[] tagId, bool childTags = false)
+		public static IQueryable<Artist> WhereHasTags(this IQueryable<Artist> query, int[]? tagId, bool childTags = false)
 		{
 			return query.WhereHasTags<Artist, ArtistTagUsage>(tagId, childTags);
 		}
@@ -206,7 +204,7 @@ namespace VocaDb.Model.Service.QueryableExtensions
 			return query;
 		}
 
-		public static IQueryable<Artist> WhereMatchFilters(this IQueryable<Artist> query, IEnumerable<AdvancedSearchFilter> filters)
+		public static IQueryable<Artist> WhereMatchFilters(this IQueryable<Artist> query, IEnumerable<AdvancedSearchFilter>? filters)
 		{
 			return filters?.Aggregate(query, WhereMatchFilter) ?? query;
 		}

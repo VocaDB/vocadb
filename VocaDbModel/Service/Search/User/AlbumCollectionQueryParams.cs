@@ -8,6 +8,7 @@ namespace VocaDb.Model.Service.Search.User
 {
 	public class AlbumCollectionQueryParams
 	{
+#nullable enable
 		public AlbumCollectionQueryParams(int userId, PagingProperties paging)
 		{
 			ParamIs.NotNull(() => paging);
@@ -20,13 +21,16 @@ namespace VocaDb.Model.Service.Search.User
 			TextQuery = new SearchTextQuery();
 		}
 
-		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+		public AdvancedSearchFilter[]? AdvancedFilters { get; set; }
+#nullable disable
 
 		public DiscType AlbumType { get; set; }
 
 		public int ArtistId { get; set; }
 
-		public PurchaseStatus[] FilterByStatus { get; set; }
+#nullable enable
+		public PurchaseStatus[]? FilterByStatus { get; set; }
+#nullable disable
 
 		public SearchTextQuery TextQuery { get; set; }
 
@@ -39,7 +43,9 @@ namespace VocaDb.Model.Service.Search.User
 
 		public AlbumSortRule Sort { get; set; }
 
-		public string Tag { get; set; }
+#nullable enable
+		public string? Tag { get; set; }
+#nullable disable
 
 		public int TagId { get; set; }
 

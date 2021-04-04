@@ -9,6 +9,7 @@ namespace VocaDb.Model.Domain.Tags
 
 		public RelatedTag() { }
 
+#nullable enable
 		public RelatedTag(Tag ownerTag, Tag linkedTag)
 		{
 			ParamIs.NotNull(() => ownerTag);
@@ -17,6 +18,7 @@ namespace VocaDb.Model.Domain.Tags
 			OwnerTag = ownerTag;
 			LinkedTag = linkedTag;
 		}
+#nullable disable
 
 		public virtual int Id { get; set; }
 

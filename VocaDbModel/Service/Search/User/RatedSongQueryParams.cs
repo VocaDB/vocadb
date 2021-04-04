@@ -12,6 +12,7 @@ namespace VocaDb.Model.Service.Search.User
 	/// </summary>
 	public class RatedSongQueryParams
 	{
+#nullable enable
 		public RatedSongQueryParams(int userId, PagingProperties paging)
 		{
 			ParamIs.NotNull(() => paging);
@@ -25,11 +26,14 @@ namespace VocaDb.Model.Service.Search.User
 			TextQuery = new SearchTextQuery();
 		}
 
-		public AdvancedSearchFilter[] AdvancedFilters { get; set; }
+		public AdvancedSearchFilter[]? AdvancedFilters { get; set; }
+#nullable disable
 
 		public LogicalGrouping ArtistGrouping { get; set; }
 
-		public int[] ArtistIds { get; set; }
+#nullable enable
+		public int[]? ArtistIds { get; set; }
+#nullable disable
 
 		public bool ChildVoicebanks { get; set; }
 
@@ -54,9 +58,11 @@ namespace VocaDb.Model.Service.Search.User
 		/// </summary>
 		public RatedSongForUserSortRule SortRule { get; set; }
 
-		public string TagName { get; set; }
+#nullable enable
+		public string? TagName { get; set; }
 
-		public int[] TagIds { get; set; }
+		public int[]? TagIds { get; set; }
+#nullable disable
 
 		public SearchTextQuery TextQuery { get; set; }
 

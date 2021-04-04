@@ -77,7 +77,7 @@ namespace VocaDb.Model.Helpers
 		{
 			ArtistType.Animator, ArtistType.OtherGroup, ArtistType.OtherIndividual,
 			ArtistType.OtherVocalist, ArtistType.Producer, ArtistType.Illustrator, ArtistType.Lyricist,
-			ArtistType.Utaite, ArtistType.Band, ArtistType.Vocalist, ArtistType.Unknown
+			ArtistType.Utaite, ArtistType.Band, ArtistType.Vocalist, ArtistType.Unknown, ArtistType.CoverArtist
 		};
 
 		public static readonly ArtistType[] GroupTypes =
@@ -164,12 +164,14 @@ namespace VocaDb.Model.Helpers
 			return queryWithoutP;
 		}
 
+#nullable enable
 		public static ArtistCategories GetCategories(IArtistLinkWithRoles artist)
 		{
 			ParamIs.NotNull(() => artist);
 
 			return GetCategories(artist.Artist != null ? artist.Artist.ArtistType : ArtistType.Unknown, artist.Roles);
 		}
+#nullable disable
 
 		public static ArtistCategories GetCategories(ArtistType type, ArtistRoles roles)
 		{

@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +37,7 @@ namespace VocaDb.Model.Service.Queries
 	{
 		private readonly IDatabaseContext _ctx;
 		private readonly IEntryLinkFactory _entryLinkFactory;
-		private readonly Func<int, TEntry> _entryLoaderFunc;
+		private readonly Func<int, TEntry>? _entryLoaderFunc;
 		private readonly IUserPermissionContext _permissionContext;
 		private readonly IUserIconFactory _userIconFactory;
 
@@ -49,7 +47,7 @@ namespace VocaDb.Model.Service.Queries
 		}
 
 		public CommentQueries(IDatabaseContext ctx, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory, IEntryLinkFactory entryLinkFactory,
-			Func<int, TEntry> entryLoaderFunc = null)
+			Func<int, TEntry>? entryLoaderFunc = null)
 		{
 			_ctx = ctx;
 			_entryLinkFactory = entryLinkFactory;

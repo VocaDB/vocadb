@@ -8,6 +8,7 @@ namespace VocaDb.Model.DataContracts.Artists
 {
 	public class ArtistWithArchivedVersionsContract : ArtistContract
 	{
+#nullable enable
 		public ArtistWithArchivedVersionsContract(Artist artist, ContentLanguagePreference languagePreference)
 			: base(artist, languagePreference)
 		{
@@ -15,6 +16,7 @@ namespace VocaDb.Model.DataContracts.Artists
 
 			ArchivedVersions = artist.ArchivedVersionsManager.Versions.Select(a => new ArchivedArtistVersionContract(a)).ToArray();
 		}
+#nullable disable
 
 		public ArchivedArtistVersionContract[] ArchivedVersions { get; init; }
 	}

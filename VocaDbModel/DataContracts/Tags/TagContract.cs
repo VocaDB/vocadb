@@ -15,6 +15,7 @@ namespace VocaDb.Model.DataContracts.Tags
 		{
 		}
 
+#nullable enable
 		public TagContract(Tag tag, ContentLanguagePreference languagePreference, bool includeAdditionalNames = false)
 			: base(tag, languagePreference, includeAdditionalNames, true)
 		{
@@ -29,6 +30,7 @@ namespace VocaDb.Model.DataContracts.Tags
 			Targets = tag.Targets;
 			Version = tag.Version;
 		}
+#nullable disable
 
 		/// <summary>
 		/// Date this entry was created.

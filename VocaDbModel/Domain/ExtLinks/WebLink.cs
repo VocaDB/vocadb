@@ -9,6 +9,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 {
 	public class WebLink : IWebLink, IEntryWithIntId
 	{
+#nullable enable
 		public static CollectionDiffWithValue<T, T> Sync<T>(IList<T> oldLinks, IEnumerable<WebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
 			where T : WebLink
 		{
@@ -50,6 +51,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 			return new CollectionDiffWithValue<T, T>(created, diff.Removed, diff.Unchanged, edited);
 		}
+#nullable disable
 
 		public static CollectionDiff<T, T> SyncByValue<T>(IList<T> oldLinks, IEnumerable<ArchivedWebLinkContract> newLinks, IWebLinkFactory<T> webLinkFactory)
 			where T : WebLink
@@ -76,6 +78,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 		public WebLink() { }
 
+#nullable enable
 		public WebLink(string description, string url, WebLinkCategory category, bool disabled)
 		{
 			ParamIs.NotNull(() => description);
@@ -96,6 +99,7 @@ namespace VocaDb.Model.Domain.ExtLinks
 			Url = contract.Url;
 			Disabled = contract.Disabled;
 		}
+#nullable disable
 
 		public virtual WebLinkCategory Category { get; set; }
 

@@ -52,6 +52,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 
 		public ArchivedEventContract() { }
 
+#nullable enable
 		public ArchivedEventContract(ReleaseEvent ev, ReleaseEventDiff diff)
 		{
 			ParamIs.NotNull(() => ev);
@@ -73,6 +74,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 			VenueName = ev.VenueName;
 			WebLinks = diff.IncludeWebLinks ? ev.WebLinks.Select(l => new ArchivedWebLinkContract(l)).ToArray() : null;
 		}
+#nullable disable
 
 		[DataMember]
 		public ArchivedArtistForEventContract[] Artists { get; set; }

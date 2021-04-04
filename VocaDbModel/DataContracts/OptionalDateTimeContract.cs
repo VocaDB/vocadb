@@ -10,6 +10,7 @@ namespace VocaDb.Model.DataContracts
 	{
 		public OptionalDateTimeContract() { }
 
+#nullable enable
 		public OptionalDateTimeContract(OptionalDateTime dateTime)
 		{
 			ParamIs.NotNull(() => dateTime);
@@ -20,6 +21,7 @@ namespace VocaDb.Model.DataContracts
 			Year = dateTime.Year;
 			Formatted = dateTime.ToString();
 		}
+#nullable disable
 
 		[DataMember]
 		public int? Day { get; init; }
