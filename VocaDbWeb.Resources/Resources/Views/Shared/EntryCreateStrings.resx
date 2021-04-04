@@ -123,6 +123,9 @@
   <data name="FoundPossibleDuplicates" xml:space="preserve">
     <value>Possible matching entries found in the database. Please verify that these are not duplicates.</value>
   </data>
+  <data name="FoundCoverArtist" xml:space="preserve">
+    <value>A "Cover artist" was found in the entry. Please change the artist type to "Producer" if this is an original song.</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name (need at least one)</value>
   </data>
