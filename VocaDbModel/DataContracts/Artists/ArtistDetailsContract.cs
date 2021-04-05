@@ -76,8 +76,8 @@ namespace VocaDb.Model.DataContracts.Artists
 			IllustratorOf = artist.ArtistLinksOfType(ArtistLinkType.Illustrator, LinkDirection.OneToMany)
 				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
 
-			Manager = artist.ArtistLinksOfType(ArtistLinkType.Manager, LinkDirection.ManyToOne, allowInheritance: true)
-				.Select(g => new ArtistContract(g, languagePreference)).FirstOrDefault();
+			Managers = artist.ArtistLinksOfType(ArtistLinkType.Manager, LinkDirection.ManyToOne, allowInheritance: true)
+				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
 
 			ManagerOf = artist.ArtistLinksOfType(ArtistLinkType.Manager, LinkDirection.OneToMany)
 				.Select(g => new ArtistContract(g, languagePreference)).OrderBy(a => a.Name).ToArray();
@@ -156,7 +156,7 @@ namespace VocaDb.Model.DataContracts.Artists
 		public CommentForApiContract[] LatestComments { get; set; }
 
 		[DataMember]
-		public ArtistContract Manager { get; init; }
+		public ArtistContract[] Managers { get; init; }
 
 		[DataMember]
 		public ArtistContract[] ManagerOf { get; init; }
