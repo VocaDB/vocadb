@@ -214,10 +214,10 @@ namespace VocaDb.Model.Service
 				session.Load<Album>(id), PermissionContext.LanguagePreference));
 		}
 
-		public AlbumWithArchivedVersionsContract GetAlbumWithArchivedVersions(int albumId)
+		public ServerOnlyAlbumWithArchivedVersionsContract GetAlbumWithArchivedVersions(int albumId)
 		{
 			return HandleQuery(session =>
-				new AlbumWithArchivedVersionsContract(session.Load<Album>(albumId), PermissionContext.LanguagePreference));
+				new ServerOnlyAlbumWithArchivedVersionsContract(session.Load<Album>(albumId), PermissionContext.LanguagePreference));
 		}
 
 		public EntryForPictureDisplayContract GetArchivedAlbumPicture(int archivedVersionId)
@@ -239,16 +239,16 @@ namespace VocaDb.Model.Service
 				EntryForPictureDisplayContract.Create(session.Load<Album>(id), PermissionContext.LanguagePreference));
 		}
 
-		public EntryWithTagUsagesContract GetEntryWithTagUsages(int albumId)
+		public ServerOnlyEntryWithTagUsagesContract GetEntryWithTagUsages(int albumId)
 		{
 			return HandleQuery(session =>
 			{
 				var album = session.Load<Album>(albumId);
-				return new EntryWithTagUsagesContract(album, album.Tags.ActiveUsages, LanguagePreference, PermissionContext);
+				return new ServerOnlyEntryWithTagUsagesContract(album, album.Tags.ActiveUsages, LanguagePreference, PermissionContext);
 			});
 		}
 
-		public AlbumForUserContract[] GetUsersWithAlbumInCollection(int albumId)
+		public ServerOnlyAlbumForUserContract[] GetUsersWithAlbumInCollection(int albumId)
 		{
 			return HandleQuery(session =>
 
@@ -256,14 +256,14 @@ namespace VocaDb.Model.Service
 					.UserCollections
 					.Where(a => a.PurchaseStatus != PurchaseStatus.Nothing)
 					.OrderBy(u => u.User.Name)
-					.Select(u => new AlbumForUserContract(u, LanguagePreference, includeUser: u.User.Options.PublicAlbumCollection)).ToArray());
+					.Select(u => new ServerOnlyAlbumForUserContract(u, LanguagePreference, includeUser: u.User.Options.PublicAlbumCollection)).ToArray());
 		}
 
-		public ArchivedAlbumVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
+		public ServerOnlyArchivedAlbumVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
 			{
-				var contract = new ArchivedAlbumVersionDetailsContract(session.Load<ArchivedAlbumVersion>(id),
+				var contract = new ServerOnlyArchivedAlbumVersionDetailsContract(session.Load<ArchivedAlbumVersion>(id),
 					(comparedVersionId != 0 ? session.Load<ArchivedAlbumVersion>(comparedVersionId) : null), PermissionContext);
 
 				if (contract.Hidden)

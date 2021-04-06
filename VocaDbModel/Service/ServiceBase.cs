@@ -413,7 +413,7 @@ namespace VocaDb.Model.Service
 			VerifyResourceAccess(owners.Select(o => o.Id));
 		}
 
-		protected void VerifyResourceAccess(params UserContract[] owners)
+		protected void VerifyResourceAccess(params ServerOnlyUserContract[] owners)
 		{
 			VerifyResourceAccess(owners.Select(o => o.Id));
 		}

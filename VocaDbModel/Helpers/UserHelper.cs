@@ -17,7 +17,7 @@ namespace VocaDb.Model.Helpers
 		}
 
 #nullable enable
-		public static int GetPower(UserDetailsContract detailsContract, int ownedAlbumCount, int albumRatingCount, int songListCount)
+		public static int GetPower(ServerOnlyUserDetailsContract detailsContract, int ownedAlbumCount, int albumRatingCount, int songListCount)
 		{
 			ParamIs.NotNull(() => detailsContract);
 
@@ -37,7 +37,7 @@ namespace VocaDb.Model.Helpers
 		}
 #nullable disable
 
-		public static bool IsVeteran(UserDetailsContract details)
+		public static bool IsVeteran(ServerOnlyUserDetailsContract details)
 		{
 			var timeOnSite = DateTime.Now - details.CreateDate;
 			return

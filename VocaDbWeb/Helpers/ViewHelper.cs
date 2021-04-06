@@ -175,8 +175,8 @@ namespace VocaDb.Web.Helpers
 			return htmlHelper.DropDownListFor(expression, CreateEnumList(selectedValue, values), htmlAttributes);
 		}
 
-		public static int GetComparedEntryId(ArchivedObjectVersionContract archivedVersion, int comparedEntryId,
-			IEnumerable<ArchivedObjectVersionContract> allVersions)
+		public static int GetComparedEntryId(ServerOnlyArchivedObjectVersionContract archivedVersion, int comparedEntryId,
+			IEnumerable<ServerOnlyArchivedObjectVersionContract> allVersions)
 		{
 			if (comparedEntryId != 0)
 				return comparedEntryId;

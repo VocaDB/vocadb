@@ -23,7 +23,7 @@ namespace VocaDb.Model.Domain.Security
 		/// <summary>
 		/// Currently logged in user. Can be null.
 		/// </summary>
-		UserWithPermissionsContract LoggedUser { get; }
+		ServerOnlyUserWithPermissionsContract LoggedUser { get; }
 
 		/// <summary>
 		/// Id of the logged in user. If not logged in, 0 (InvalidId) will be returned.

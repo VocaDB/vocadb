@@ -83,7 +83,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 			_user = new User("User", "123", "test@test.com", PasswordHashAlgorithms.Default) { GroupId = UserGroupId.Moderator };
 			_repository.Add(_user);
 
-			_permissionContext = new FakePermissionContext(new UserWithPermissionsContract(_user, ContentLanguagePreference.Default));
+			_permissionContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(_user, ContentLanguagePreference.Default));
 
 			_imagePersister = new InMemoryImagePersister();
 			_queries = new TagQueries(_repository, _permissionContext, new FakeEntryLinkFactory(), _imagePersister, _imagePersister, new FakeUserIconFactory(), new EnumTranslations(), new FakeObjectCache());

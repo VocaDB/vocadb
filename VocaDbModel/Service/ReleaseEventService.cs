@@ -36,18 +36,18 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-		public ReleaseEventWithArchivedVersionsContract GetReleaseEventWithArchivedVersions(int id)
+		public ServerOnlyReleaseEventWithArchivedVersionsContract GetReleaseEventWithArchivedVersions(int id)
 		{
 			return HandleQuery(session =>
-				new ReleaseEventWithArchivedVersionsContract(session.Load<ReleaseEvent>(id), LanguagePreference));
+				new ServerOnlyReleaseEventWithArchivedVersionsContract(session.Load<ReleaseEvent>(id), LanguagePreference));
 		}
 
-		public EntryWithArchivedVersionsContract<ReleaseEventSeriesContract, ArchivedEventSeriesVersionContract> GetReleaseEventSeriesWithArchivedVersions(int id)
+		public EntryWithArchivedVersionsContract<ReleaseEventSeriesContract, ServerOnlyArchivedEventSeriesVersionContract> GetReleaseEventSeriesWithArchivedVersions(int id)
 		{
 			return HandleQuery(session =>
 			{
 				var series = session.Load<ReleaseEventSeries>(id);
-				return EntryWithArchivedVersionsContract.Create(new ReleaseEventSeriesContract(series, LanguagePreference), series.ArchivedVersionsManager.Versions.Select(v => new ArchivedEventSeriesVersionContract(v)).ToArray());
+				return EntryWithArchivedVersionsContract.Create(new ReleaseEventSeriesContract(series, LanguagePreference), series.ArchivedVersionsManager.Versions.Select(v => new ServerOnlyArchivedEventSeriesVersionContract(v)).ToArray());
 			});
 		}
 

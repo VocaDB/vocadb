@@ -218,12 +218,12 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-		public EntryWithTagUsagesContract GetEntryWithTagUsages(int songId)
+		public ServerOnlyEntryWithTagUsagesContract GetEntryWithTagUsages(int songId)
 		{
 			return HandleQuery(session =>
 			{
 				var song = session.Load<Song>(songId);
-				return new EntryWithTagUsagesContract(song, song.Tags.ActiveUsages, LanguagePreference, PermissionContext);
+				return new ServerOnlyEntryWithTagUsagesContract(song, song.Tags.ActiveUsages, LanguagePreference, PermissionContext);
 			});
 		}
 
@@ -320,9 +320,9 @@ namespace VocaDb.Model.Service
 				session => new SongContract(session.Load<Song>(id), PermissionContext.LanguagePreference));
 		}
 
-		public SongWithArchivedVersionsContract GetSongWithArchivedVersions(int songId)
+		public ServerOnlySongWithArchivedVersionsContract GetSongWithArchivedVersions(int songId)
 		{
-			return HandleQuery(session => new SongWithArchivedVersionsContract(session.Load<Song>(songId), PermissionContext.LanguagePreference));
+			return HandleQuery(session => new ServerOnlySongWithArchivedVersionsContract(session.Load<Song>(songId), PermissionContext.LanguagePreference));
 		}
 
 		public T GetSongWithPV<T>(Func<Song, T> fac, PVService service, string pvId)
@@ -361,11 +361,11 @@ namespace VocaDb.Model.Service
 				.ToArray());
 		}
 
-		public ArchivedSongVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
+		public ServerOnlyArchivedSongVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
 			{
-				var contract = new ArchivedSongVersionDetailsContract(session.Load<ArchivedSongVersion>(id),
+				var contract = new ServerOnlyArchivedSongVersionDetailsContract(session.Load<ArchivedSongVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedSongVersion>(comparedVersionId) : null,
 					PermissionContext);
 

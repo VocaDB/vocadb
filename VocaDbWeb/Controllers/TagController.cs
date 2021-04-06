@@ -271,7 +271,7 @@ namespace VocaDb.Web.Controllers
 		{
 			var contract = _queries.GetVersionDetails(id, ComparedVersionId ?? 0);
 
-			return View(new ViewVersion<ArchivedTagVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
+			return View(new ViewVersion<ServerOnlyArchivedTagVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
 		}
 	}
 }

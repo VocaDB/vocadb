@@ -13,13 +13,13 @@ namespace VocaDb.Tests.TestSupport
 	{
 		public FakePermissionContext() { }
 
-		public FakePermissionContext(UserWithPermissionsContract loggedUser)
+		public FakePermissionContext(ServerOnlyUserWithPermissionsContract loggedUser)
 		{
 			LoggedUser = loggedUser;
 		}
 
 		public FakePermissionContext(User user)
-			: this(new UserWithPermissionsContract(user, ContentLanguagePreference.Default)) { }
+			: this(new ServerOnlyUserWithPermissionsContract(user, ContentLanguagePreference.Default)) { }
 
 		public bool HasPermission(PermissionToken token)
 		{
@@ -38,7 +38,7 @@ namespace VocaDb.Tests.TestSupport
 
 		public UserSettingLanguagePreference LanguagePreferenceSetting => throw new System.NotImplementedException();
 
-		public UserWithPermissionsContract LoggedUser { get; set; }
+		public ServerOnlyUserWithPermissionsContract LoggedUser { get; set; }
 
 		public int LoggedUserId => LoggedUser?.Id ?? 0;
 
@@ -63,12 +63,12 @@ namespace VocaDb.Tests.TestSupport
 		/// <param name="repository">Repository. Cannot be null.</param>
 		public void RefreshLoggedUser<T>(IRepository<T> repository) where T : class, IDatabaseObject
 		{
-			LoggedUser = repository.HandleQuery(ctx => new UserWithPermissionsContract(ctx.OfType<User>().Load(LoggedUserId), ContentLanguagePreference.Default));
+			LoggedUser = repository.HandleQuery(ctx => new ServerOnlyUserWithPermissionsContract(ctx.OfType<User>().Load(LoggedUserId), ContentLanguagePreference.Default));
 		}
 
 		public void SetLoggedUser(User user)
 		{
-			LoggedUser = new UserWithPermissionsContract(user, ContentLanguagePreference.Default);
+			LoggedUser = new ServerOnlyUserWithPermissionsContract(user, ContentLanguagePreference.Default);
 		}
 
 		public void VerifyLogin()

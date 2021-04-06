@@ -20,7 +20,7 @@ namespace VocaDb.Web.Models.Shared
 
 		public TEntry Entry { get; set; }
 
-		public ArchivedObjectVersion Version(ArchivedObjectVersionContract contract)
+		public ArchivedObjectVersion Version(ServerOnlyArchivedObjectVersionContract contract)
 		{
 			return contract != null ? ArchivedObjectVersion.Create(contract, EnumTranslations) : null;
 		}

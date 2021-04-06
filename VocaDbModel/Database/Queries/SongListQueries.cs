@@ -247,9 +247,9 @@ namespace VocaDb.Model.Database.Queries
 			return _repository.HandleQuery(session => new SongListForEditContract(session.Load(listId), PermissionContext));
 		}
 
-		public SongListWithArchivedVersionsContract GetSongListWithArchivedVersions(int id)
+		public ServerOnlySongListWithArchivedVersionsContract GetSongListWithArchivedVersions(int id)
 		{
-			return _repository.HandleQuery(session => new SongListWithArchivedVersionsContract(session.Load(id), PermissionContext));
+			return _repository.HandleQuery(session => new ServerOnlySongListWithArchivedVersionsContract(session.Load(id), PermissionContext));
 		}
 
 		public async Task<ImportedSongListContract> Import(string url, bool parseAll)

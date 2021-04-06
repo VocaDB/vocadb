@@ -7,14 +7,14 @@ namespace VocaDb.Model.Service.Security
 {
 	public class VocaDbPrincipal : GenericPrincipal
 	{
-		private readonly UserWithPermissionsContract _user;
+		private readonly ServerOnlyUserWithPermissionsContract _user;
 
-		public VocaDbPrincipal(IIdentity identity, UserWithPermissionsContract user)
+		public VocaDbPrincipal(IIdentity identity, ServerOnlyUserWithPermissionsContract user)
 			: base(identity, new string[] { })
 		{
 			_user = user;
 		}
 
-		public UserWithPermissionsContract User => _user;
+		public ServerOnlyUserWithPermissionsContract User => _user;
 	}
 }

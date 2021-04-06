@@ -11,7 +11,7 @@ namespace VocaDb.Web.Models.Song
 {
 	public class Versions
 	{
-		public static ArchivedObjectVersion CreateForSong(ArchivedSongVersionContract song)
+		public static ArchivedObjectVersion CreateForSong(ServerOnlyArchivedSongVersionContract song)
 		{
 			return new ArchivedObjectVersion(song, GetReasonName(song.Reason, song.Notes),
 				GetChangeString(song.ChangedFields), song.Reason != SongArchiveReason.PropertiesUpdated || song.ChangedFields != SongEditableFields.Nothing);
@@ -35,7 +35,7 @@ namespace VocaDb.Web.Models.Song
 
 		public Versions() { }
 
-		public Versions(SongWithArchivedVersionsContract contract)
+		public Versions(ServerOnlySongWithArchivedVersionsContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 

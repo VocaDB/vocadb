@@ -15,7 +15,7 @@ namespace VocaDb.Model.Domain.Users
 	public class OwnedArtistForUser : IEntryWithIntId
 	{
 		public static CollectionDiff<OwnedArtistForUser, OwnedArtistForUser> Sync(
-			IList<OwnedArtistForUser> oldLinks, IEnumerable<ArtistForUserContract> newLinks, Func<ArtistForUserContract, OwnedArtistForUser> fac)
+			IList<OwnedArtistForUser> oldLinks, IEnumerable<ServerOnlyArtistForUserContract> newLinks, Func<ServerOnlyArtistForUserContract, OwnedArtistForUser> fac)
 		{
 			return CollectionHelper.Sync(oldLinks, newLinks, (n1, n2) => n1.Id == n2.Id, fac);
 		}

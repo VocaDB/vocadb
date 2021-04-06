@@ -3,10 +3,10 @@
 @using VocaDb.Model.Domain.Users
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.User
-@model AlbumForUserContract[]
+@model ServerOnlyAlbumForUserContract[]
 
 @{
-	void UserGrid(IEnumerable<AlbumForUserContract> users) {
+	void UserGrid(IEnumerable<ServerOnlyAlbumForUserContract> users) {
 		@Html.Grid(users, 2, u => new HtmlString(Html.Partial("Partials/User/_UserIconLink_UserContract", new UserIconLink_UserContractViewModel(u.User)).ToHtmlString() + " (" + Translate.AlbumMediaTypeNames[u.MediaType] + ")"))
 	}
 }

@@ -9,7 +9,7 @@ namespace VocaDb.Web.Models.User
 	{
 		public AlbumCollection() { }
 
-		public AlbumCollection(UserContract user, AlbumCollectionRouteParams routeParams)
+		public AlbumCollection(ServerOnlyUserContract user, AlbumCollectionRouteParams routeParams)
 		{
 			User = user;
 			RouteParams = routeParams;
@@ -21,7 +21,7 @@ namespace VocaDb.Web.Models.User
 
 		public AlbumCollectionRouteParams RouteParams { get; set; }
 
-		public UserContract User { get; set; }
+		public ServerOnlyUserContract User { get; set; }
 	}
 
 	public class AlbumCollectionRouteParams

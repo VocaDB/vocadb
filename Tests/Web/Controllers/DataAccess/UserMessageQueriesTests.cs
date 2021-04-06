@@ -44,7 +44,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			_sender = new User { Name = "Sender user", Id = 1 };
 			_receiver = new User { Name = "Receiver user", Id = 2 };
-			_permissionContext = new FakePermissionContext(new UserWithPermissionsContract(_receiver, ContentLanguagePreference.Default));
+			_permissionContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(_receiver, ContentLanguagePreference.Default));
 
 			var received = _sender.SendMessage(_receiver, "Hello world", "Message body", false);
 			_receivedMessage = received.Item1;

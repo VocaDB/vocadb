@@ -256,7 +256,7 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-		public (EntryForApiContract entry, UserContract user, DateTime time)[] GetActiveEditors()
+		public (EntryForApiContract entry, ServerOnlyUserContract user, DateTime time)[] GetActiveEditors()
 		{
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
@@ -269,13 +269,13 @@ namespace VocaDb.Model.Service
 				return editors
 					.Select(i =>
 						(EntryForApiContract.Create(entryLoader.Load(i.Key, db), LanguagePreference, null, EntryOptionalFields.None),
-						new UserContract(ctx.Load<User>(i.Value.UserId)),
+						new ServerOnlyUserContract(ctx.Load<User>(i.Value.UserId)),
 						i.Value.Time))
 					.ToArray();
 			});
 		}
 
-		public EntryReportContract[] GetEntryReports(ReportStatus status)
+		public ServerOnlyEntryReportContract[] GetEntryReports(ReportStatus status)
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
 
@@ -288,7 +288,7 @@ namespace VocaDb.Model.Service
 					.Take(200)
 					.ToArray();
 				var fac = new EntryForApiContractFactory(null);
-				return reports.Select(r => new EntryReportContract(r, fac.Create(r.EntryBase, EntryOptionalFields.AdditionalNames, LanguagePreference),
+				return reports.Select(r => new ServerOnlyEntryReportContract(r, fac.Create(r.EntryBase, EntryOptionalFields.AdditionalNames, LanguagePreference),
 					_enumTranslations, _userIconFactory)).ToArray();
 			});
 		}
@@ -300,7 +300,7 @@ namespace VocaDb.Model.Service
 			throw new NotImplementedException();
 		}
 
-		public AuditLogEntryContract[] GetAuditLog(string filter, int start, int maxEntries, int timeCutoffDays,
+		public ServerOnlyAuditLogEntryContract[] GetAuditLog(string filter, int start, int maxEntries, int timeCutoffDays,
  			string userName, string[] excludeUsers, bool onlyNewUsers,
 			AuditLogUserGroupFilter filterByGroup = AuditLogUserGroupFilter.Nothing)
 		{
@@ -351,7 +351,7 @@ namespace VocaDb.Model.Service
 					.Skip(start)
 					.Take(maxEntries)
 					.ToArray()
-					.Select(e => new AuditLogEntryContract(e))
+					.Select(e => new ServerOnlyAuditLogEntryContract(e))
 					.ToArray();
 
 				return entries;

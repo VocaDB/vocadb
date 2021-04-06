@@ -340,6 +340,6 @@ namespace VocaDb.Web.Controllers.Api
 		[HttpPost("{id:int}/personal-description")]
 		[ApiExplorerSettings(IgnoreApi = true)]
 		[Authorize]
-		public void PostPersonalDescription(int id, AlbumDetailsContract data) => _queries.UpdatePersonalDescription(id, data);
+		public void PostPersonalDescription(int id, ServerOnlyAlbumDetailsContract data) => _queries.UpdatePersonalDescription(id, data);
 	}
 }

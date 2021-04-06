@@ -10,7 +10,7 @@ namespace VocaDb.Web.Models.Event
 	{
 		public Versions() { }
 
-		public Versions(ReleaseEventWithArchivedVersionsContract contract, IEnumTranslations translator)
+		public Versions(ServerOnlyReleaseEventWithArchivedVersionsContract contract, IEnumTranslations translator)
 			: base(contract, contract.ArchivedVersions, translator) { }
 	}
 }

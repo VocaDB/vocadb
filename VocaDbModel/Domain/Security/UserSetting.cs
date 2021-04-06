@@ -112,7 +112,7 @@ namespace VocaDb.Model.Domain.Security
 
 		protected abstract string SettingName { get; }
 
-		protected abstract T GetPersistedValue(UserWithPermissionsContract permissionContext);
+		protected abstract T GetPersistedValue(ServerOnlyUserWithPermissionsContract permissionContext);
 
 		public void OverrideRequestValue(T val)
 		{
@@ -126,7 +126,7 @@ namespace VocaDb.Model.Domain.Security
 
 		protected abstract void SetPersistedValue(User user, T val);
 
-		protected abstract void SetPersistedValue(UserWithPermissionsContract user, T val);
+		protected abstract void SetPersistedValue(ServerOnlyUserWithPermissionsContract user, T val);
 
 		public override string ToString()
 		{
@@ -193,7 +193,7 @@ namespace VocaDb.Model.Domain.Security
 
 		protected override string SettingName => "LanguagePreference";
 
-		protected override ContentLanguagePreference GetPersistedValue(UserWithPermissionsContract user)
+		protected override ContentLanguagePreference GetPersistedValue(ServerOnlyUserWithPermissionsContract user)
 		{
 			return user.DefaultLanguageSelection;
 		}
@@ -203,7 +203,7 @@ namespace VocaDb.Model.Domain.Security
 			user.DefaultLanguageSelection = val;
 		}
 
-		protected override void SetPersistedValue(UserWithPermissionsContract user, ContentLanguagePreference val)
+		protected override void SetPersistedValue(ServerOnlyUserWithPermissionsContract user, ContentLanguagePreference val)
 		{
 			user.DefaultLanguageSelection = val;
 		}

@@ -549,16 +549,16 @@ namespace VocaDb.Model.Database.Queries
 			return GetTagByName(name, t => t.Id);
 		}
 
-		public TagWithArchivedVersionsContract GetTagWithArchivedVersions(int id)
+		public ServerOnlyTagWithArchivedVersionsContract GetTagWithArchivedVersions(int id)
 		{
-			return LoadTag(id, tag => new TagWithArchivedVersionsContract(tag, LanguagePreference));
+			return LoadTag(id, tag => new ServerOnlyTagWithArchivedVersionsContract(tag, LanguagePreference));
 		}
 
-		public ArchivedTagVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
+		public ServerOnlyArchivedTagVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
 			{
-				var contract = new ArchivedTagVersionDetailsContract(session.Load<ArchivedTagVersion>(id),
+				var contract = new ServerOnlyArchivedTagVersionDetailsContract(session.Load<ArchivedTagVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedTagVersion>(comparedVersionId) : null,
 					PermissionContext);
 

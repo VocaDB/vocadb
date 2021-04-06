@@ -39,7 +39,7 @@ namespace VocaDb.Model.Domain.Security
 			permissionContext.VerifyResourceAccess(owners.Select(o => o.Id));
 		}
 
-		public static void VerifyResourceAccess(this IUserPermissionContext permissionContext, params UserContract[] owners)
+		public static void VerifyResourceAccess(this IUserPermissionContext permissionContext, params ServerOnlyUserContract[] owners)
 		{
 			permissionContext.VerifyResourceAccess(owners.Select(o => o.Id));
 		}

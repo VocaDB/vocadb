@@ -118,11 +118,11 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(ctx => new VenueForEditContract(ctx.Load(id), LanguagePreference));
 		}
 
-		public ArchivedVenueVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
+		public ServerOnlyArchivedVenueVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
 			{
-				var contract = new ArchivedVenueVersionDetailsContract(session.Load<ArchivedVenueVersion>(id),
+				var contract = new ServerOnlyArchivedVenueVersionDetailsContract(session.Load<ArchivedVenueVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedVenueVersion>(comparedVersionId) : null,
 					PermissionContext);
 
@@ -135,9 +135,9 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public VenueWithArchivedVersionsContract GetWithArchivedVersions(int id)
+		public ServerOnlyVenueWithArchivedVersionsContract GetWithArchivedVersions(int id)
 		{
-			return HandleQuery(ctx => new VenueWithArchivedVersionsContract(ctx.Load(id), LanguagePreference));
+			return HandleQuery(ctx => new ServerOnlyVenueWithArchivedVersionsContract(ctx.Load(id), LanguagePreference));
 		}
 
 		public void MoveToTrash(int id, string notes)

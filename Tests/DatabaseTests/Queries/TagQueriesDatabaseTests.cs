@@ -25,12 +25,12 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 
 		public TagQueriesDatabaseTests()
 		{
-			_userContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
+			_userContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 		}
 
 		private TagForApiContract Merge(int sourceId, int targetId)
 		{
-			var permissionContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
+			var permissionContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 
 			return _context.RunTest(repository =>
 			{
@@ -47,7 +47,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 
 		private TagForEditContract Update(TagForEditContract contract)
 		{
-			var permissionContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
+			var permissionContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 
 			return _context.RunTest(repository =>
 			{

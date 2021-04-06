@@ -9,7 +9,7 @@ namespace VocaDb.Web.Models.Shared
 {
 	public class ArchivedObjectVersion
 	{
-		public static ArchivedObjectVersion Create(ArchivedObjectVersionContract contract, IEnumTranslations translator)
+		public static ArchivedObjectVersion Create(ServerOnlyArchivedObjectVersionContract contract, IEnumTranslations translator)
 		{
 			return new ArchivedObjectVersion(contract, contract.TranslateReason(translator),
 				contract.TranslateChangedFields(translator), contract.IsAnythingChanged());
@@ -17,7 +17,7 @@ namespace VocaDb.Web.Models.Shared
 
 		public ArchivedObjectVersion() { }
 
-		public ArchivedObjectVersion(ArchivedObjectVersionContract contract, string reasonName, string changeMessage, bool anythingChanged = true)
+		public ArchivedObjectVersion(ServerOnlyArchivedObjectVersionContract contract, string reasonName, string changeMessage, bool anythingChanged = true)
 		{
 			Contract = contract;
 			Hidden = contract.Hidden;
@@ -29,7 +29,7 @@ namespace VocaDb.Web.Models.Shared
 			AnythingChanged = anythingChanged;
 		}
 
-		public ArchivedObjectVersion(ArchivedObjectVersionContract contract, string changeMessage, bool anythingChanged = true)
+		public ArchivedObjectVersion(ServerOnlyArchivedObjectVersionContract contract, string changeMessage, bool anythingChanged = true)
 		{
 			Contract = contract;
 			Hidden = contract.Hidden;
@@ -45,7 +45,7 @@ namespace VocaDb.Web.Models.Shared
 
 		public string ChangeMessage { get; set; }
 
-		public ArchivedObjectVersionContract Contract { get; set; }
+		public ServerOnlyArchivedObjectVersionContract Contract { get; set; }
 
 		public bool Hidden { get; set; }
 
