@@ -7,7 +7,7 @@ namespace VocaDb.Web.Models.Shared.Partials.Tag
 {
 	public class TagUsagesManageTableViewModel
 	{
-		public TagUsagesManageTableViewModel(EntryType entryType, ServerOnlyTagUsageWithVotesContract[] tagUsages, bool canRemove, string controllerName = null)
+		public TagUsagesManageTableViewModel(EntryType entryType, TagUsageWithVotesContract[] tagUsages, bool canRemove, string controllerName = null)
 		{
 			EntryType = entryType;
 			TagUsages = tagUsages;
@@ -17,7 +17,7 @@ namespace VocaDb.Web.Models.Shared.Partials.Tag
 
 		public EntryType EntryType { get; set; }
 
-		public ServerOnlyTagUsageWithVotesContract[] TagUsages { get; set; }
+		public TagUsageWithVotesContract[] TagUsages { get; set; }
 
 		public bool CanRemove { get; set; }
 

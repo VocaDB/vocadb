@@ -257,7 +257,7 @@ namespace VocaDb.Web.Controllers
 		public PartialViewResult OwnedArtistForUserEditRow(int artistId)
 		{
 			var artist = _artistService.GetArtist(artistId);
-			var ownedArtist = new ServerOnlyArtistForUserContract(artist);
+			var ownedArtist = new ArtistForUserContract(artist);
 
 			return PartialView(ownedArtist);
 		}

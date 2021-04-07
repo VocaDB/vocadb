@@ -309,7 +309,7 @@ namespace VocaDb.Web.Models
 		// `Name` may be replaced by the user. So we need a copy of that.
 		public string OldName { get; set; }
 
-		public IList<ServerOnlyArtistForUserContract> OwnedArtists { get; set; } = new List<ServerOnlyArtistForUserContract>();
+		public IList<ArtistForUserContract> OwnedArtists { get; set; } = new List<ArtistForUserContract>();
 
 		public IList<PermissionFlagEntry> Permissions { get; set; } = new List<PermissionFlagEntry>();
 

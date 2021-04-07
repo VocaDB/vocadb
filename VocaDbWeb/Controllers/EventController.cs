@@ -363,7 +363,7 @@ namespace VocaDb.Web.Controllers
 		{
 			var contract = _queries.GetSeriesVersionDetails(id, ComparedVersionId ?? 0);
 
-			return View(new ViewVersion<ServerOnlyArchivedEventSeriesVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
+			return View(new ViewVersion<ArchivedEventSeriesVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
 		}
 
 		public ActionResult Versions(int id = InvalidId)
@@ -380,7 +380,7 @@ namespace VocaDb.Web.Controllers
 		{
 			var contract = _queries.GetVersionDetails(id, ComparedVersionId ?? 0);
 
-			return View(new ViewVersion<ServerOnlyArchivedEventVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
+			return View(new ViewVersion<ArchivedEventVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
 		}
 	}
 }

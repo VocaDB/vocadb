@@ -275,7 +275,7 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-		public ServerOnlyEntryReportContract[] GetEntryReports(ReportStatus status)
+		public EntryReportContract[] GetEntryReports(ReportStatus status)
 		{
 			PermissionContext.VerifyPermission(PermissionToken.ManageEntryReports);
 
@@ -288,7 +288,7 @@ namespace VocaDb.Model.Service
 					.Take(200)
 					.ToArray();
 				var fac = new EntryForApiContractFactory(null);
-				return reports.Select(r => new ServerOnlyEntryReportContract(r, fac.Create(r.EntryBase, EntryOptionalFields.AdditionalNames, LanguagePreference),
+				return reports.Select(r => new EntryReportContract(r, fac.Create(r.EntryBase, EntryOptionalFields.AdditionalNames, LanguagePreference),
 					_enumTranslations, _userIconFactory)).ToArray();
 			});
 		}
@@ -300,7 +300,7 @@ namespace VocaDb.Model.Service
 			throw new NotImplementedException();
 		}
 
-		public ServerOnlyAuditLogEntryContract[] GetAuditLog(string filter, int start, int maxEntries, int timeCutoffDays,
+		public AuditLogEntryContract[] GetAuditLog(string filter, int start, int maxEntries, int timeCutoffDays,
  			string userName, string[] excludeUsers, bool onlyNewUsers,
 			AuditLogUserGroupFilter filterByGroup = AuditLogUserGroupFilter.Nothing)
 		{
@@ -351,7 +351,7 @@ namespace VocaDb.Model.Service
 					.Skip(start)
 					.Take(maxEntries)
 					.ToArray()
-					.Select(e => new ServerOnlyAuditLogEntryContract(e))
+					.Select(e => new AuditLogEntryContract(e))
 					.ToArray();
 
 				return entries;

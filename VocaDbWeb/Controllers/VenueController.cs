@@ -98,7 +98,7 @@ namespace VocaDb.Web.Controllers
 		{
 			var contract = _queries.GetVersionDetails(id, ComparedVersionId ?? 0);
 
-			return View(new ViewVersion<ServerOnlyArchivedVenueVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
+			return View(new ViewVersion<ArchivedVenueVersionDetailsContract>(contract, _enumTranslations, contract.ComparedVersionId));
 		}
 	}
 }

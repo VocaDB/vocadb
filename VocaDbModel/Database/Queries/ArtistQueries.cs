@@ -324,13 +324,13 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(ctx => ctx.Load(artistId).Comments.Select(c => new CommentForApiContract(c, _userIconFactory, true)).ToArray());
 		}
 
-		public ServerOnlyArtistDetailsContract GetDetails(int id, string hostname)
+		public ArtistDetailsContract GetDetails(int id, string hostname)
 		{
 			return HandleQuery(session =>
 			{
 				var artist = session.Load(id);
 
-				var contract = new ServerOnlyArtistDetailsContract(artist, LanguagePreference, PermissionContext, _imageUrlFactory, _userIconFactory,
+				var contract = new ArtistDetailsContract(artist, LanguagePreference, PermissionContext, _imageUrlFactory, _userIconFactory,
 					new EntryTypeTags(session).GetTag(EntryType.Artist, artist.ArtistType))
 				{
 					CommentCount = Comments(session).GetCount(id),

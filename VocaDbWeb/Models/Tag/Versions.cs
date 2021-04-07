@@ -10,7 +10,7 @@ namespace VocaDb.Web.Models.Tag
 	{
 		public Versions() { }
 
-		public Versions(ServerOnlyTagWithArchivedVersionsContract contract, IEnumTranslations translator)
+		public Versions(TagWithArchivedVersionsContract contract, IEnumTranslations translator)
 			: base(contract, contract.ArchivedVersions, translator) { }
 	}
 }

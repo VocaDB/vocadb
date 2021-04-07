@@ -10,6 +10,6 @@ namespace VocaDb.Web.Models.Venue
 	{
 		public Versions() { }
 
-		public Versions(ServerOnlyVenueWithArchivedVersionsContract contract, IEnumTranslations translator) : base(contract, contract.ArchivedVersions, translator) { }
+		public Versions(VenueWithArchivedVersionsContract contract, IEnumTranslations translator) : base(contract, contract.ArchivedVersions, translator) { }
 	}
 }

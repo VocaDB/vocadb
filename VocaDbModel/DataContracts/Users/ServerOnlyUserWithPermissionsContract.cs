@@ -24,7 +24,7 @@ namespace VocaDb.Model.DataContracts.Users
 			AdditionalPermissions = new HashSet<PermissionToken>(user.AdditionalPermissions.PermissionTokens);
 			AlbumFormatString = user.Options.AlbumFormatString;
 			EffectivePermissions = new HashSet<PermissionToken>(user.EffectivePermissions.PermissionTokens);
-			OwnedArtistEntries = user.OwnedArtists.Select(a => new ServerOnlyArtistForUserContract(a, languagePreference)).ToArray();
+			OwnedArtistEntries = user.OwnedArtists.Select(a => new ArtistForUserContract(a, languagePreference)).ToArray();
 			Poisoned = user.Options.Poisoned;
 			Stylesheet = user.Options.Stylesheet;
 			Supporter = user.Options.Supporter;
@@ -43,7 +43,7 @@ namespace VocaDb.Model.DataContracts.Users
 		/// List of artist entries owned by the user. Cannot be null.
 		/// </summary>
 		[DataMember]
-		public ServerOnlyArtistForUserContract[] OwnedArtistEntries { get; init; }
+		public ArtistForUserContract[] OwnedArtistEntries { get; init; }
 
 		[DataMember]
 		public bool Poisoned { get; init; }

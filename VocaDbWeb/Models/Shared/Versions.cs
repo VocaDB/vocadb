@@ -13,7 +13,7 @@ namespace VocaDb.Web.Models.Shared
 	{
 		public Versions() { }
 
-		public Versions(TEntry contract, IEnumerable<ServerOnlyArchivedObjectVersionContract> archivedVersions, IEnumTranslations translator)
+		public Versions(TEntry contract, IEnumerable<ArchivedObjectVersionContract> archivedVersions, IEnumTranslations translator)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -21,7 +21,7 @@ namespace VocaDb.Web.Models.Shared
 			ArchivedVersions = archivedVersions.Select(t => ArchivedObjectVersion.Create(t, translator)).ToArray();
 		}
 
-		public Versions(IEntryWithArchivedVersionsContract<TEntry, ServerOnlyArchivedObjectVersionContract> contract, IEnumTranslations translator)
+		public Versions(IEntryWithArchivedVersionsContract<TEntry, ArchivedObjectVersionContract> contract, IEnumTranslations translator)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -36,7 +36,7 @@ namespace VocaDb.Web.Models.Shared
 
 	/*public static class Versions {
 		
-		public static Versions<TEntry> Create<TEntry>(IEntryWithArchivedVersionsContract<TEntry, ServerOnlyArchivedObjectVersionContract> contract, IEnumTranslations translator) where TEntry : class {
+		public static Versions<TEntry> Create<TEntry>(IEntryWithArchivedVersionsContract<TEntry, ArchivedObjectVersionContract> contract, IEnumTranslations translator) where TEntry : class {
 			return new Versions<TEntry>(contract, translator);
 		}
 	}*/

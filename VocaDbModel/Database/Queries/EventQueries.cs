@@ -218,12 +218,12 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public ServerOnlyEntryWithTagUsagesContract GetEntryWithTagUsages(int eventId)
+		public EntryWithTagUsagesContract GetEntryWithTagUsages(int eventId)
 		{
 			return HandleQuery(session =>
 			{
 				var releaseEvent = session.Load<ReleaseEvent>(eventId);
-				return new ServerOnlyEntryWithTagUsagesContract(releaseEvent, releaseEvent.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
+				return new EntryWithTagUsagesContract(releaseEvent, releaseEvent.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
 			});
 		}
 
@@ -267,11 +267,11 @@ namespace VocaDb.Model.Database.Queries
 			return _repository.HandleQuery(ctx => new ReleaseEventSeriesForApiContract(ctx.Load<ReleaseEventSeries>(id), lang, fields, _imageUrlFactory));
 		}
 
-		public ServerOnlyArchivedEventSeriesVersionDetailsContract GetSeriesVersionDetails(int id, int comparedVersionId)
+		public ArchivedEventSeriesVersionDetailsContract GetSeriesVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
 			{
-				var contract = new ServerOnlyArchivedEventSeriesVersionDetailsContract(session.Load<ArchivedReleaseEventSeriesVersion>(id),
+				var contract = new ArchivedEventSeriesVersionDetailsContract(session.Load<ArchivedReleaseEventSeriesVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventSeriesVersion>(comparedVersionId) : null,
 					PermissionContext, _userIconFactory);
 
@@ -284,11 +284,11 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public ServerOnlyArchivedEventVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
+		public ArchivedEventVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
 			{
-				var contract = new ServerOnlyArchivedEventVersionDetailsContract(session.Load<ArchivedReleaseEventVersion>(id),
+				var contract = new ArchivedEventVersionDetailsContract(session.Load<ArchivedReleaseEventVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventVersion>(comparedVersionId) : null,
 					PermissionContext, _userIconFactory);
 

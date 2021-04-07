@@ -361,7 +361,7 @@ namespace VocaDb.Model.Database.Queries
 		/// Hostname of the user requestin the album. Used to hit counting when no user is logged in. If null or empty, and no user is logged in, hit count won't be updated.
 		/// </param>
 		/// <returns>Album details contract. Cannot be null.</returns>
-		public ServerOnlyAlbumDetailsContract GetAlbumDetails(int id, string hostname)
+		public AlbumDetailsContract GetAlbumDetails(int id, string hostname)
 		{
 			return HandleQuery(session =>
 			{
@@ -374,7 +374,7 @@ namespace VocaDb.Model.Database.Queries
 					return user != null && song != null ? (SongVoteRating?)session.Query<FavoriteSongForUser>().Where(s => s.Song.Id == song.Id && s.User.Id == user.Id).Select(r => r.Rating).FirstOrDefault() : null;
 				}
 
-				var contract = new ServerOnlyAlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, _imageUrlFactory, GetRatingFunc,
+				var contract = new AlbumDetailsContract(album, PermissionContext.LanguagePreference, PermissionContext, _imageUrlFactory, GetRatingFunc,
 					discTypeTag: new EntryTypeTags(session).GetTag(EntryType.Album, album.DiscType))
 				{
 					CommentCount = Comments(session).GetCount(id),
@@ -387,7 +387,7 @@ namespace VocaDb.Model.Database.Queries
 					var albumForUser = session.Query<AlbumForUser>()
 						.FirstOrDefault(a => a.Album.Id == id && a.User.Id == user.Id);
 
-					contract.AlbumForUser = (albumForUser != null ? new ServerOnlyAlbumForUserContract(albumForUser, PermissionContext.LanguagePreference, _userIconFactory) : null);
+					contract.AlbumForUser = (albumForUser != null ? new AlbumForUserContract(albumForUser, PermissionContext.LanguagePreference, _userIconFactory) : null);
 				}
 
 				contract.LatestComments = session.Query<AlbumComment>()
@@ -1007,7 +1007,7 @@ namespace VocaDb.Model.Database.Queries
 		}
 #nullable disable
 
-		public void UpdatePersonalDescription(int albumId, ServerOnlyAlbumDetailsContract data)
+		public void UpdatePersonalDescription(int albumId, AlbumDetailsContract data)
 		{
 			PermissionContext.VerifyLogin();
 

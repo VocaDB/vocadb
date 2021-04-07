@@ -138,9 +138,9 @@ namespace VocaDb.Model.Service
 				EntryForPictureDisplayContract.Create(session.Load<Artist>(id), PermissionContext.LanguagePreference));
 		}
 
-		public ServerOnlyArtistWithArchivedVersionsContract GetArtistWithArchivedVersions(int artistId)
+		public ArtistWithArchivedVersionsContract GetArtistWithArchivedVersions(int artistId)
 		{
-			return HandleQuery(session => new ServerOnlyArtistWithArchivedVersionsContract(
+			return HandleQuery(session => new ArtistWithArchivedVersionsContract(
 				session.Load<Artist>(artistId), PermissionContext.LanguagePreference, _userIconFactory));
 		}
 
@@ -162,20 +162,20 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-		public ServerOnlyEntryWithTagUsagesContract GetEntryWithTagUsages(int artistId)
+		public EntryWithTagUsagesContract GetEntryWithTagUsages(int artistId)
 		{
 			return HandleQuery(session =>
 			{
 				var artist = session.Load<Artist>(artistId);
-				return new ServerOnlyEntryWithTagUsagesContract(artist, artist.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
+				return new EntryWithTagUsagesContract(artist, artist.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
 			});
 		}
 
-		public ServerOnlyArchivedArtistVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
+		public ArchivedArtistVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
 		{
 			return HandleQuery(session =>
 			{
-				var contract = new ServerOnlyArchivedArtistVersionDetailsContract(session.Load<ArchivedArtistVersion>(id),
+				var contract = new ArchivedArtistVersionDetailsContract(session.Load<ArchivedArtistVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedArtistVersion>(comparedVersionId) : null, PermissionContext, _userIconFactory);
 
 				if (contract.Hidden)

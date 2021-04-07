@@ -34,7 +34,7 @@ namespace VocaDb.Model.Service.ExtSites
 			return sb.ToString();
 		}
 
-		public string GenerateDescription(ServerOnlyAlbumDetailsContract album, Func<DiscType, string> albumTypeNames)
+		public string GenerateDescription(AlbumDetailsContract album, Func<DiscType, string> albumTypeNames)
 		{
 			var sb = new StringBuilder();
 

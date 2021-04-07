@@ -35,7 +35,7 @@ namespace VocaDb.Web.Models
 
 		public AlbumDetails() { }
 
-		public AlbumDetails(ServerOnlyAlbumDetailsContract contract, IUserPermissionContext permissionContext, PVHelper pvHelper)
+		public AlbumDetails(AlbumDetailsContract contract, IUserPermissionContext permissionContext, PVHelper pvHelper)
 		{
 			ParamIs.NotNull(() => contract);
 
