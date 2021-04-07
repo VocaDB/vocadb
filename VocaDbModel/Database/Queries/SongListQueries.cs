@@ -249,7 +249,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public ServerOnlySongListWithArchivedVersionsContract GetSongListWithArchivedVersions(int id)
 		{
-			return _repository.HandleQuery(session => new ServerOnlySongListWithArchivedVersionsContract(session.Load(id), PermissionContext));
+			return _repository.HandleQuery(session => new ServerOnlySongListWithArchivedVersionsContract(session.Load(id), PermissionContext, _userIconFactory));
 		}
 
 		public async Task<ImportedSongListContract> Import(string url, bool parseAll)

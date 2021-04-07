@@ -15,12 +15,12 @@ namespace VocaDb.Model.DataContracts
 		public ServerOnlyArchivedObjectVersionContract() { }
 
 #nullable enable
-		public ServerOnlyArchivedObjectVersionContract(ArchivedObjectVersion archivedObjectVersion)
+		public ServerOnlyArchivedObjectVersionContract(ArchivedObjectVersion archivedObjectVersion, IUserIconFactory userIconFactory)
 		{
 			ParamIs.NotNull(() => archivedObjectVersion);
 
 			AgentName = !string.IsNullOrEmpty(archivedObjectVersion.AgentName) || archivedObjectVersion.Author == null ? archivedObjectVersion.AgentName : archivedObjectVersion.Author.Name;
-			Author = (archivedObjectVersion.Author != null ? new ServerOnlyUserContract(archivedObjectVersion.Author) : null);
+			Author = (archivedObjectVersion.Author != null ? new UserForApiContract(archivedObjectVersion.Author, userIconFactory, UserOptionalFields.MainPicture) : null);
 			Created = archivedObjectVersion.Created;
 			EditEvent = archivedObjectVersion.EditEvent;
 			Hidden = archivedObjectVersion.Hidden;
@@ -34,7 +34,7 @@ namespace VocaDb.Model.DataContracts
 
 		public string AgentName { get; init; }
 
-		public ServerOnlyUserContract Author { get; init; }
+		public UserForApiContract Author { get; init; }
 
 		public DateTime Created { get; init; }
 

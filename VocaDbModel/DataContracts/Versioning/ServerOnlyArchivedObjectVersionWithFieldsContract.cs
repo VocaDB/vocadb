@@ -2,6 +2,7 @@
 
 using System;
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Service.Translations;
 
@@ -16,9 +17,9 @@ namespace VocaDb.Model.DataContracts.Versioning
 
 		public ServerOnlyArchivedObjectVersionWithFieldsContract() { }
 
-		public ServerOnlyArchivedObjectVersionWithFieldsContract(ArchivedObjectVersion archivedVersion,
+		public ServerOnlyArchivedObjectVersionWithFieldsContract(ArchivedObjectVersion archivedVersion, IUserIconFactory userIconFactory,
 			TFields fields, TReason reason)
-			: base(archivedVersion)
+			: base(archivedVersion, userIconFactory)
 		{
 			ChangedFields = fields;
 			Reason = reason;
@@ -47,10 +48,10 @@ namespace VocaDb.Model.DataContracts.Versioning
 	public static class ServerOnlyArchivedObjectVersionWithFieldsContract
 	{
 		public static ServerOnlyArchivedObjectVersionWithFieldsContract<TFields, TReason> Create<TFields, TReason>(
-			ArchivedObjectVersion archivedVersion,
+			ArchivedObjectVersion archivedVersion, IUserIconFactory userIconFactory,
 			TFields fields, TReason reason) where TFields : struct, Enum where TReason : struct, Enum
 		{
-			return new ServerOnlyArchivedObjectVersionWithFieldsContract<TFields, TReason>(archivedVersion, fields, reason);
+			return new ServerOnlyArchivedObjectVersionWithFieldsContract<TFields, TReason>(archivedVersion, userIconFactory, fields, reason);
 		}
 	}
 }

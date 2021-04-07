@@ -21,7 +21,7 @@ namespace VocaDb.Model.DataContracts.Security
 			AgentName = entry.AgentName;
 			Id = entry.Id;
 			Time = entry.Time;
-			User = (entry.User != null ? new ServerOnlyUserContract(entry.User) : null);
+			User = (entry.User != null ? new UserForApiContract(entry.User) : null);
 		}
 #nullable disable
 
@@ -33,6 +33,6 @@ namespace VocaDb.Model.DataContracts.Security
 
 		public DateTime Time { get; init; }
 
-		public ServerOnlyUserContract User { get; init; }
+		public UserForApiContract User { get; init; }
 	}
 }

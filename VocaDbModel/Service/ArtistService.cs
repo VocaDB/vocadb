@@ -19,12 +19,14 @@ using VocaDb.Model.Service.QueryableExtensions;
 using VocaDb.Model.Service.Search.Artists;
 using VocaDb.Model.Domain.Images;
 using VocaDb.Model.Domain.ExtLinks;
+using VocaDb.Model.DataContracts.Users;
 
 namespace VocaDb.Model.Service
 {
 	public class ArtistService : ServiceBase
 	{
 		private readonly IEntryUrlParser _entryUrlParser;
+		private readonly IUserIconFactory _userIconFactory;
 
 		// ReSharper disable UnusedMember.Local
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
@@ -36,10 +38,11 @@ namespace VocaDb.Model.Service
 			return new ArtistSearch(queryParams.LanguagePreference, context, _entryUrlParser).Find(queryParams);
 		}
 
-		public ArtistService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser)
+		public ArtistService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser, IUserIconFactory userIconFactory)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
 			_entryUrlParser = entryUrlParser;
+			_userIconFactory = userIconFactory;
 		}
 
 		public void Archive(ISession session, Artist artist, ArtistDiff diff, ArtistArchiveReason reason, string notes = "")
@@ -138,7 +141,7 @@ namespace VocaDb.Model.Service
 		public ServerOnlyArtistWithArchivedVersionsContract GetArtistWithArchivedVersions(int artistId)
 		{
 			return HandleQuery(session => new ServerOnlyArtistWithArchivedVersionsContract(
-				session.Load<Artist>(artistId), PermissionContext.LanguagePreference));
+				session.Load<Artist>(artistId), PermissionContext.LanguagePreference, _userIconFactory));
 		}
 
 		public ArtistForApiContract[] GetArtistsWithYoutubeChannels(ContentLanguagePreference languagePreference)
@@ -164,7 +167,7 @@ namespace VocaDb.Model.Service
 			return HandleQuery(session =>
 			{
 				var artist = session.Load<Artist>(artistId);
-				return new ServerOnlyEntryWithTagUsagesContract(artist, artist.Tags.ActiveUsages, LanguagePreference, PermissionContext);
+				return new ServerOnlyEntryWithTagUsagesContract(artist, artist.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
 			});
 		}
 
@@ -173,7 +176,7 @@ namespace VocaDb.Model.Service
 			return HandleQuery(session =>
 			{
 				var contract = new ServerOnlyArchivedArtistVersionDetailsContract(session.Load<ArchivedArtistVersion>(id),
-					comparedVersionId != 0 ? session.Load<ArchivedArtistVersion>(comparedVersionId) : null, PermissionContext);
+					comparedVersionId != 0 ? session.Load<ArchivedArtistVersion>(comparedVersionId) : null, PermissionContext, _userIconFactory);
 
 				if (contract.Hidden)
 				{

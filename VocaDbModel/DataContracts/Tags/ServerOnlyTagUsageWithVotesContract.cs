@@ -11,14 +11,14 @@ namespace VocaDb.Model.DataContracts.Tags
 {
 	public class ServerOnlyTagUsageWithVotesContract
 	{
-		public ServerOnlyTagUsageWithVotesContract(TagUsage usage, ContentLanguagePreference languagePreference)
+		public ServerOnlyTagUsageWithVotesContract(TagUsage usage, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory)
 		{
 			Count = usage.Count;
 			Date = usage.Date;
 			Id = usage.Id;
 			Tag = new TagBaseContract(usage.Tag, languagePreference);
 
-			Votes = usage.VotesBase.Select(v => new ServerOnlyUserContract(v.User)).ToArray();
+			Votes = usage.VotesBase.Select(v => new UserForApiContract(v.User, userIconFactory, UserOptionalFields.MainPicture)).ToArray();
 		}
 
 		public ServerOnlyTagUsageWithVotesContract() { }
@@ -31,6 +31,6 @@ namespace VocaDb.Model.DataContracts.Tags
 
 		public TagBaseContract Tag { get; init; }
 
-		public ServerOnlyUserContract[] Votes { get; init; }
+		public UserForApiContract[] Votes { get; init; }
 	}
 }

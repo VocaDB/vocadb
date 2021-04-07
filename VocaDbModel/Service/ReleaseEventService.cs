@@ -9,13 +9,19 @@ using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Venues;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Service.QueryableExtensions;
+using VocaDb.Model.DataContracts.Users;
 
 namespace VocaDb.Model.Service
 {
 	public class ReleaseEventService : ServiceBase
 	{
-		public ReleaseEventService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory)
-			: base(sessionFactory, permissionContext, entryLinkFactory) { }
+		private readonly IUserIconFactory _userIconFactory;
+
+		public ReleaseEventService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IUserIconFactory userIconFactory)
+			: base(sessionFactory, permissionContext, entryLinkFactory)
+		{
+			_userIconFactory = userIconFactory;
+		}
 
 		public ReleaseEventSeriesWithEventsContract[] GetReleaseEventsBySeries()
 		{
@@ -39,7 +45,7 @@ namespace VocaDb.Model.Service
 		public ServerOnlyReleaseEventWithArchivedVersionsContract GetReleaseEventWithArchivedVersions(int id)
 		{
 			return HandleQuery(session =>
-				new ServerOnlyReleaseEventWithArchivedVersionsContract(session.Load<ReleaseEvent>(id), LanguagePreference));
+				new ServerOnlyReleaseEventWithArchivedVersionsContract(session.Load<ReleaseEvent>(id), LanguagePreference, _userIconFactory));
 		}
 
 		public EntryWithArchivedVersionsContract<ReleaseEventSeriesContract, ServerOnlyArchivedEventSeriesVersionContract> GetReleaseEventSeriesWithArchivedVersions(int id)
@@ -47,7 +53,7 @@ namespace VocaDb.Model.Service
 			return HandleQuery(session =>
 			{
 				var series = session.Load<ReleaseEventSeries>(id);
-				return EntryWithArchivedVersionsContract.Create(new ReleaseEventSeriesContract(series, LanguagePreference), series.ArchivedVersionsManager.Versions.Select(v => new ServerOnlyArchivedEventSeriesVersionContract(v)).ToArray());
+				return EntryWithArchivedVersionsContract.Create(new ReleaseEventSeriesContract(series, LanguagePreference), series.ArchivedVersionsManager.Versions.Select(v => new ServerOnlyArchivedEventSeriesVersionContract(v, _userIconFactory)).ToArray());
 			});
 		}
 

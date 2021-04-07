@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Artists;
 
 namespace VocaDb.Model.DataContracts.Artists
@@ -9,8 +10,8 @@ namespace VocaDb.Model.DataContracts.Artists
 	{
 		public ServerOnlyArchivedArtistVersionContract() { }
 
-		public ServerOnlyArchivedArtistVersionContract(ArchivedArtistVersion archivedVersion)
-			: base(archivedVersion)
+		public ServerOnlyArchivedArtistVersionContract(ArchivedArtistVersion archivedVersion, IUserIconFactory userIconFactory)
+			: base(archivedVersion, userIconFactory)
 		{
 			ChangedFields = (archivedVersion.Diff != null ? archivedVersion.Diff.ChangedFields.Value : ArtistEditableFields.Nothing);
 			Reason = archivedVersion.Reason;

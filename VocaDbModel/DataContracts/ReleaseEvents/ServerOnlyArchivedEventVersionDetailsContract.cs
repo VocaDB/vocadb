@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Security;
@@ -13,18 +14,18 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		public ServerOnlyArchivedEventVersionDetailsContract() { }
 
 #nullable enable
-		public ServerOnlyArchivedEventVersionDetailsContract(ArchivedReleaseEventVersion archived, ArchivedReleaseEventVersion? comparedVersion, IUserPermissionContext permissionContext)
+		public ServerOnlyArchivedEventVersionDetailsContract(ArchivedReleaseEventVersion archived, ArchivedReleaseEventVersion? comparedVersion, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory)
 		{
 			ParamIs.NotNull(() => archived);
 
-			ArchivedVersion = new ServerOnlyArchivedEventVersionContract(archived);
-			ComparedVersion = comparedVersion != null ? new ServerOnlyArchivedEventVersionContract(comparedVersion) : null;
+			ArchivedVersion = new ServerOnlyArchivedEventVersionContract(archived, userIconFactory);
+			ComparedVersion = comparedVersion != null ? new ServerOnlyArchivedEventVersionContract(comparedVersion, userIconFactory) : null;
 			ReleaseEvent = new ReleaseEventContract(archived.ReleaseEvent, permissionContext.LanguagePreference);
 			Name = ReleaseEvent.Name;
 
 			ComparableVersions = archived.ReleaseEvent.ArchivedVersionsManager
 				.GetPreviousVersions(archived, permissionContext)
-				.Select(a => ServerOnlyArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields.Value, a.CommonEditEvent))
+				.Select(a => ServerOnlyArchivedObjectVersionWithFieldsContract.Create(a, userIconFactory, a.Diff.ChangedFields.Value, a.CommonEditEvent))
 				.ToArray();
 
 			Versions = ComparedEventsContract.Create(archived, comparedVersion);

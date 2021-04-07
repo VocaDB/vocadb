@@ -330,7 +330,7 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var artist = session.Load(id);
 
-				var contract = new ServerOnlyArtistDetailsContract(artist, LanguagePreference, PermissionContext, _imageUrlFactory,
+				var contract = new ServerOnlyArtistDetailsContract(artist, LanguagePreference, PermissionContext, _imageUrlFactory, _userIconFactory,
 					new EntryTypeTags(session).GetTag(EntryType.Artist, artist.ArtistType))
 				{
 					CommentCount = Comments(session).GetCount(id),

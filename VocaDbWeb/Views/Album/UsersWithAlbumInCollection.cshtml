@@ -7,7 +7,7 @@
 
 @{
 	void UserGrid(IEnumerable<ServerOnlyAlbumForUserContract> users) {
-		@Html.Grid(users, 2, u => new HtmlString(Html.Partial("Partials/User/_UserIconLink_UserContract", new UserIconLink_UserContractViewModel(u.User)).ToHtmlString() + " (" + Translate.AlbumMediaTypeNames[u.MediaType] + ")"))
+		@Html.Grid(users, 2, u => new HtmlString(Html.Partial("Partials/User/_UserIconLink_UserForApiContract", new UserIconLink_UserForApiContractViewModel(u.User)).ToHtmlString() + " (" + Translate.AlbumMediaTypeNames[u.MediaType] + ")"))
 	}
 }
 

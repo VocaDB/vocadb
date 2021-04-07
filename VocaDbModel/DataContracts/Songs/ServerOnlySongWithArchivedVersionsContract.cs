@@ -11,18 +11,18 @@ namespace VocaDb.Model.DataContracts.Songs
 	public class ServerOnlySongWithArchivedVersionsContract : SongContract
 	{
 #nullable enable
-		public ServerOnlySongWithArchivedVersionsContract(Song song, ContentLanguagePreference languagePreference)
+		public ServerOnlySongWithArchivedVersionsContract(Song song, ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory)
 			: base(song, languagePreference)
 		{
 			ParamIs.NotNull(() => song);
 
-			ArchivedVersions = song.ArchivedVersionsManager.Versions.Select(a => new ServerOnlyArchivedSongVersionContract(a)).OrderByDescending(v => v.Version).ToArray();
+			ArchivedVersions = song.ArchivedVersionsManager.Versions.Select(a => new ServerOnlyArchivedSongVersionContract(a, userIconFactory)).OrderByDescending(v => v.Version).ToArray();
 			//Author = (ArchivedVersions.Any() && ArchivedVersions.Last().Author != null ? ArchivedVersions.Last().Author : null);
 		}
 #nullable disable
 
 		public ServerOnlyArchivedSongVersionContract[] ArchivedVersions { get; init; }
 
-		//public ServerOnlyUserContract Author { get; init; }
+		//public UserForApiContract Author { get; init; }
 	}
 }

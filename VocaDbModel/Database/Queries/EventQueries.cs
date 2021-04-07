@@ -223,7 +223,7 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(session =>
 			{
 				var releaseEvent = session.Load<ReleaseEvent>(eventId);
-				return new ServerOnlyEntryWithTagUsagesContract(releaseEvent, releaseEvent.Tags.ActiveUsages, LanguagePreference, PermissionContext);
+				return new ServerOnlyEntryWithTagUsagesContract(releaseEvent, releaseEvent.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
 			});
 		}
 
@@ -273,7 +273,7 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var contract = new ServerOnlyArchivedEventSeriesVersionDetailsContract(session.Load<ArchivedReleaseEventSeriesVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventSeriesVersion>(comparedVersionId) : null,
-					PermissionContext);
+					PermissionContext, _userIconFactory);
 
 				if (contract.Hidden)
 				{
@@ -290,7 +290,7 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var contract = new ServerOnlyArchivedEventVersionDetailsContract(session.Load<ArchivedReleaseEventVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedReleaseEventVersion>(comparedVersionId) : null,
-					PermissionContext);
+					PermissionContext, _userIconFactory);
 
 				if (contract.Hidden)
 				{

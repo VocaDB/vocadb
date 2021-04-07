@@ -1,6 +1,7 @@
 #nullable disable
 
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Activityfeed;
 using VocaDb.Model.Domain.Venues;
@@ -11,6 +12,7 @@ namespace VocaDb.Model.DataContracts.Venues
 	{
 		public ServerOnlyArchivedVenueVersionContract() { }
 
-		public ServerOnlyArchivedVenueVersionContract(ArchivedVenueVersion archivedVersion) : base(archivedVersion, archivedVersion.Diff.ChangedFields.Value, archivedVersion.CommonEditEvent) { }
+		public ServerOnlyArchivedVenueVersionContract(ArchivedVenueVersion archivedVersion, IUserIconFactory userIconFactory)
+			: base(archivedVersion, userIconFactory, archivedVersion.Diff.ChangedFields.Value, archivedVersion.CommonEditEvent) { }
 	}
 }

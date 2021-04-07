@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
 
@@ -9,11 +10,11 @@ namespace VocaDb.Model.DataContracts.Songs
 {
 	public class ServerOnlySongListWithArchivedVersionsContract : SongListBaseContract
 	{
-		public ServerOnlySongListWithArchivedVersionsContract(SongList songList, IUserPermissionContext permissionContext)
+		public ServerOnlySongListWithArchivedVersionsContract(SongList songList, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory)
 			: base(songList)
 		{
 			ArchivedVersions = songList.ArchivedVersionsManager.Versions.Select(
-				a => new ServerOnlyArchivedSongListVersionContract(a)).ToArray();
+				a => new ServerOnlyArchivedSongListVersionContract(a, userIconFactory)).ToArray();
 
 			Version = songList.Version;
 		}

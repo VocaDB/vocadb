@@ -19,7 +19,7 @@ namespace VocaDb.Model.DataContracts.Users
 
 			Artist = new ArtistContract(ownedArtistForUser.Artist, languagePreference);
 			Id = ownedArtistForUser.Id;
-			User = new ServerOnlyUserContract(ownedArtistForUser.User);
+			User = new UserForApiContract(ownedArtistForUser.User);
 		}
 #nullable disable
 
@@ -32,6 +32,6 @@ namespace VocaDb.Model.DataContracts.Users
 
 		public int Id { get; init; }
 
-		public ServerOnlyUserContract User { get; init; }
+		public UserForApiContract User { get; init; }
 	}
 }

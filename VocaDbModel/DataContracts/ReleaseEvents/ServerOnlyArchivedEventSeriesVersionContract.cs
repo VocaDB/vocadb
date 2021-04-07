@@ -4,6 +4,7 @@ using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.ReleaseEvents;
 using VocaDb.Model.Domain.Activityfeed;
 using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Users;
 
 namespace VocaDb.Model.DataContracts.ReleaseEvents
 {
@@ -11,7 +12,7 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 	{
 		public ServerOnlyArchivedEventSeriesVersionContract() { }
 
-		public ServerOnlyArchivedEventSeriesVersionContract(ArchivedReleaseEventSeriesVersion archivedVersion)
-			: base(archivedVersion, archivedVersion.Diff.ChangedFields.Value, archivedVersion.CommonEditEvent) { }
+		public ServerOnlyArchivedEventSeriesVersionContract(ArchivedReleaseEventSeriesVersion archivedVersion, IUserIconFactory userIconFactory)
+			: base(archivedVersion, userIconFactory, archivedVersion.Diff.ChangedFields.Value, archivedVersion.CommonEditEvent) { }
 	}
 }

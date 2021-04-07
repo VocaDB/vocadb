@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
@@ -22,6 +23,7 @@ namespace VocaDb.Model.Database.Queries
 	{
 		private readonly IEntryLinkFactory _entryLinkFactory;
 		private readonly IEnumTranslations _enumTranslations;
+		private readonly IUserIconFactory _userIconFactory;
 
 		public VenueQueries(IVenueRepository venueRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext, IEnumTranslations enumTranslations)
 			: base(venueRepository, permissionContext)
@@ -124,7 +126,7 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var contract = new ServerOnlyArchivedVenueVersionDetailsContract(session.Load<ArchivedVenueVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedVenueVersion>(comparedVersionId) : null,
-					PermissionContext);
+					PermissionContext, _userIconFactory);
 
 				if (contract.Hidden)
 				{
@@ -137,7 +139,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public ServerOnlyVenueWithArchivedVersionsContract GetWithArchivedVersions(int id)
 		{
-			return HandleQuery(ctx => new ServerOnlyVenueWithArchivedVersionsContract(ctx.Load(id), LanguagePreference));
+			return HandleQuery(ctx => new ServerOnlyVenueWithArchivedVersionsContract(ctx.Load(id), LanguagePreference, _userIconFactory));
 		}
 
 		public void MoveToTrash(int id, string notes)

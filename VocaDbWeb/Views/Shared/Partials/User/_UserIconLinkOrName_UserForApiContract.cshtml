@@ -1,0 +1,8 @@
+﻿@using VocaDb.Web.Models.Shared.Partials.User
+@model UserIconLinkOrName_UserForApiContractViewModel
+
+@if (Model.User != null) {
+	<partial name="Partials/User/_UserIconLink_UserForApiContract" model="@(new UserIconLink_UserForApiContractViewModel(Model.User, Model.Size))" />
+} else {
+	@Model.Name
+}
