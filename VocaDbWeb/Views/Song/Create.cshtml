@@ -23,10 +23,6 @@
 				<partial name="Partials/Shared/_AjaxLoader" model="@(new AjaxLoaderViewModel("pvLoader"))" />
 			</div>
 
-			<div class="alert alert-danger" data-bind="visible: isDuplicatePV" style="display:none">
-				@Res.DuplicatePV
-			</div>
-
 			<div class="alert alert-info">
 				@Html.Raw(SongRes.NewSongNote)
 			</div>
@@ -46,6 +42,10 @@
 			<fieldset>
 				
 				<legend>@Res.Media</legend>
+
+				<div class="alert alert-danger" data-bind="visible: isDuplicatePV" style="display:none">
+						@Res.DuplicatePV
+				</div>
 
 				<div class="editor-label">
 					@Html.LabelFor(m => m.PVUrl)
