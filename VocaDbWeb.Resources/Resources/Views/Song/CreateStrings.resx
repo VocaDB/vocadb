@@ -166,7 +166,7 @@
     <value>Unable to create song. Please correct the errors and try again.</value>
   </data>
   <data name="AddPVInfo" xml:space="preserve">
-    <value>You will be able to add more PV's later.</value>
+    <value>You will be able to add more PVs later.</value>
   </data>
   <data name="AddArtistInfo" xml:space="preserve">
     <value>Do not include artist names in these fields. Instead, use the "Artists" field below.</value>
