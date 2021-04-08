@@ -130,7 +130,7 @@
     <value>Please write a short description about this artist (optional, but recommended)</value>
   </data>
   <data name="Draft" xml:space="preserve">
-    <value>This entry is a draft.</value>
+    <value>This entry is a draft. (tick if you are missing data or have doubts)</value>
   </data>
   <data name="ExternalLink" xml:space="preserve">
     <value>External link (to artist's website, Hatsune Miku wiki, NND MyList etc.)</value>
