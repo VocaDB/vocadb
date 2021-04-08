@@ -127,7 +127,7 @@
     <value>Artists (need at least one)</value>
   </data>
   <data name="Draft" xml:space="preserve">
-    <value>This entry is a draft</value>
+    <value>This entry is a draft. (tick if you are missing data or have doubts)</value>
   </data>
   <data name="DuplicatePV" xml:space="preserve">
     <value>It seems this PV has already been added to the database.</value>

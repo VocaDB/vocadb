@@ -121,7 +121,7 @@
     <value>added</value>
   </data>
   <data name="DraftIconTitle" xml:space="preserve">
-    <value>This entry is a draft. (tick if you are missing data or have doubts)</value>
+    <value>This entry is a draft.</value>
   </data>
   <data name="DraftMessage" xml:space="preserve">
     <value>This entry is a draft. You can help by editing the entry and adding the missing information.</value>
