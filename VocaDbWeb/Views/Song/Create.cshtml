@@ -65,7 +65,7 @@
 					@Html.ValidationMessageFor(m => m.ReprintPVUrl)
 				</div>
 
-				<div class="alert alert-info" style="float: right; padding-right: 14px; margin-bottom: 10px;">
+				<div class="alert alert-info alert-small">
 					@Html.Raw(Res.AddPVInfo)
 				</div>
 
@@ -199,7 +199,7 @@
 
 				</div>
 
-				<div class="alert alert-info" style="float: right; padding-right: 14px; margin-bottom: 10px;" title="@Res.MissingArtistExplanation">
+				<div class="alert alert-info alert-small" style="text-decoration: underline dashed;" data-toggle="tooltip" title="@Res.MissingArtistExplanation">
 					@Html.Raw(Res.MissingArtistInfo)
 				</div>
 
@@ -248,6 +248,10 @@
 				.ajaxStart(function() { $(this).show(); })
 				.ajaxStop(function () { $(this).hide(); });
 
+		});
+
+		$(document).ready(function () {
+			$('[data-toggle="tooltip"]').tooltip();
 		});
 
 	</script>
