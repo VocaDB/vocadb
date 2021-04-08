@@ -174,4 +174,13 @@
   <data name="MissingArtistExplanation" xml:space="preserve">
     <value>Sie können auf dieser Seite keinen neuen Künstlereintrag erstellen! Sie müssen die Seite "Künstler hinzufügen" verwenden, um einen Eintrag zu erstellen. Sie können dies auch tun, nachdem der Song erstellt wurde.</value>
   </data>
+  <data name="OriginalPVNote" xml:space="preserve">
+    <value>Dies ist sehr wünschenswert zu haben!</value>
+  </data>
+  <data name="NonEnglishNote" xml:space="preserve">
+    <value>Originaler, nicht englischer Name (z.B. Japanisch)</value>
+  </data>
+  <data name="EnglishNote" xml:space="preserve">
+    <value>Originaler englischer Name, oder bekannte Übersetzung</value>
+  </data>
 </root>

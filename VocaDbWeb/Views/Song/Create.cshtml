@@ -52,7 +52,7 @@
 				</div>
 
 				<div class="editor-field">
-					@Html.TextBoxForKnockout(m => m.PVUrl, "value: pv1, event: { change: checkDuplicatesAndPV }", cssClass: "span8 input-field", maxLength: 255, size: 30)
+					@Html.TextBoxForKnockout(m => m.PVUrl, "value: pv1, event: { change: checkDuplicatesAndPV }", cssClass: "span8 input-field", maxLength: 255, size: 30, placeholder: Res.OriginalPVNote)
 					@Html.ValidationMessageFor(m => m.PVUrl)
 				</div>
 
@@ -91,7 +91,7 @@
 							</td>
 							<td class="input-field">
 								<!-- change event is fired when the field is focused out AND content has changed -->
-								@Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameOriginal, event: { change: checkDuplicates }", cssClass: "span12 input-field", maxLength: 255, size: 40)
+								@Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameOriginal, event: { change: checkDuplicates }", cssClass: "span12 input-field", maxLength: 255, size: 40, placeholder: Res.NonEnglishNote)
 							</td>
 						</tr>
 
@@ -115,7 +115,7 @@
 								@Html.LabelFor(m => m.NameEnglish)
 							</td>
 							<td>
-								@Html.TextBoxForKnockout(m => m.NameEnglish, "textInput: nameEnglish, event: { change: checkDuplicates }", cssClass: "span12 input-field", maxLength: 255, size: 40)
+								@Html.TextBoxForKnockout(m => m.NameEnglish, "textInput: nameEnglish, event: { change: checkDuplicates }", cssClass: "span12 input-field", maxLength: 255, size: 40, placeholder: Res.EnglishNote)
 							</td>
 						</tr>
 					</table>

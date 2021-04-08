@@ -180,4 +180,13 @@
   <data name="MissingArtistExplanation" xml:space="preserve">
     <value>You cannot create a new Artist entry in this page! You will need to use the "Add an artist" page to create an entry. You can also do this after the song has been created.</value>
   </data>
+  <data name="OriginalPVNote" xml:space="preserve">
+    <value>This is very desirable to have!</value>
+  </data>
+  <data name="NonEnglishNote" xml:space="preserve">
+    <value>Original, non-English name (e.g, Japanese)</value>
+  </data>
+  <data name="EnglishNote" xml:space="preserve">
+    <value>Original English name, or known translation</value>
+  </data>
 </root>

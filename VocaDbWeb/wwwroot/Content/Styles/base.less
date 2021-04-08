@@ -375,6 +375,32 @@ body .container-fluid {
 	margin-bottom: 10px;
 }
 
+input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: dimgray;
+}
+
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: dimgray;
+	opacity: 1;
+}
+
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: dimgray;
+	opacity: 1;
+}
+
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: dimgray;
+}
+
+input::-ms-input-placeholder { /* Microsoft Edge */
+	color: dimgray;
+}
+
+input::placeholder { /* Most modern browsers */
+	color: dimgray;
+}
+
 // Workarounds
 // Razor sometimes adds extra space which seems to be impossible to fix
 .razor-whitespace-fix {
