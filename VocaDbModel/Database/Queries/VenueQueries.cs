@@ -25,11 +25,12 @@ namespace VocaDb.Model.Database.Queries
 		private readonly IEnumTranslations _enumTranslations;
 		private readonly IUserIconFactory _userIconFactory;
 
-		public VenueQueries(IVenueRepository venueRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext, IEnumTranslations enumTranslations)
+		public VenueQueries(IVenueRepository venueRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext, IEnumTranslations enumTranslations, IUserIconFactory userIconFactory)
 			: base(venueRepository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
 			_enumTranslations = enumTranslations;
+			_userIconFactory = userIconFactory;
 		}
 
 		private ArchivedVenueVersion Archive(IDatabaseContext<Venue> ctx, Venue venue, VenueDiff diff, EntryEditEvent reason, string notes)
