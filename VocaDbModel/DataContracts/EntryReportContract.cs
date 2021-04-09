@@ -1,6 +1,7 @@
 #nullable disable
 
 using System;
+using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Api;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
@@ -24,7 +25,7 @@ namespace VocaDb.Model.DataContracts
 			Notes = report.Notes;
 			ReportTypeName = enumTranslations != null ? report.TranslatedReportTypeName(enumTranslations) : null;
 			User = (report.User != null ? new UserForApiContract(report.User, userIconFactory, UserOptionalFields.MainPicture) : null);
-			Version = (report.VersionBase != null ? new ArchivedObjectVersionContract(report.VersionBase) : null);
+			Version = (report.VersionBase != null ? new ArchivedObjectVersionContract(report.VersionBase, userIconFactory) : null);
 		}
 
 		public UserForApiContract ClosedBy { get; init; }

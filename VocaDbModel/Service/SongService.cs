@@ -39,6 +39,7 @@ namespace VocaDb.Model.Service
 
 		private readonly VdbConfigManager _config;
 		private readonly IEntryUrlParser _entryUrlParser;
+		private readonly IUserIconFactory _userIconFactory;
 
 		private PartialFindResult<Song> Find(ISession session, SongQueryParams queryParams)
 		{
@@ -46,11 +47,12 @@ namespace VocaDb.Model.Service
 		}
 
 		public SongService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IEntryUrlParser entryUrlParser,
-			VdbConfigManager config)
+			VdbConfigManager config, IUserIconFactory userIconFactory)
 			: base(sessionFactory, permissionContext, entryLinkFactory)
 		{
 			_entryUrlParser = entryUrlParser;
 			_config = config;
+			_userIconFactory = userIconFactory;
 		}
 
 		public void AddSongToList(int listId, int songId, string notes)
@@ -223,7 +225,7 @@ namespace VocaDb.Model.Service
 			return HandleQuery(session =>
 			{
 				var song = session.Load<Song>(songId);
-				return new EntryWithTagUsagesContract(song, song.Tags.ActiveUsages, LanguagePreference, PermissionContext);
+				return new EntryWithTagUsagesContract(song, song.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
 			});
 		}
 
@@ -322,7 +324,7 @@ namespace VocaDb.Model.Service
 
 		public SongWithArchivedVersionsContract GetSongWithArchivedVersions(int songId)
 		{
-			return HandleQuery(session => new SongWithArchivedVersionsContract(session.Load<Song>(songId), PermissionContext.LanguagePreference));
+			return HandleQuery(session => new SongWithArchivedVersionsContract(session.Load<Song>(songId), PermissionContext.LanguagePreference, _userIconFactory));
 		}
 
 		public T GetSongWithPV<T>(Func<Song, T> fac, PVService service, string pvId)
@@ -367,7 +369,7 @@ namespace VocaDb.Model.Service
 			{
 				var contract = new ArchivedSongVersionDetailsContract(session.Load<ArchivedSongVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedSongVersion>(comparedVersionId) : null,
-					PermissionContext);
+					PermissionContext, _userIconFactory);
 
 				if (contract.Hidden)
 				{

@@ -387,7 +387,7 @@ namespace VocaDb.Model.Database.Queries
 					var albumForUser = session.Query<AlbumForUser>()
 						.FirstOrDefault(a => a.Album.Id == id && a.User.Id == user.Id);
 
-					contract.AlbumForUser = (albumForUser != null ? new AlbumForUserContract(albumForUser, PermissionContext.LanguagePreference) : null);
+					contract.AlbumForUser = (albumForUser != null ? new AlbumForUserContract(albumForUser, PermissionContext.LanguagePreference, _userIconFactory) : null);
 				}
 
 				contract.LatestComments = session.Query<AlbumComment>()

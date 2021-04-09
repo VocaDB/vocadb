@@ -1,6 +1,8 @@
 #nullable disable
 
 using System;
+using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Versioning;
 using VocaDb.Model.Service.Translations;
 
@@ -15,9 +17,9 @@ namespace VocaDb.Model.DataContracts.Versioning
 
 		public ArchivedObjectVersionWithFieldsContract() { }
 
-		public ArchivedObjectVersionWithFieldsContract(ArchivedObjectVersion archivedVersion,
+		public ArchivedObjectVersionWithFieldsContract(ArchivedObjectVersion archivedVersion, IUserIconFactory userIconFactory,
 			TFields fields, TReason reason)
-			: base(archivedVersion)
+			: base(archivedVersion, userIconFactory)
 		{
 			ChangedFields = fields;
 			Reason = reason;
@@ -46,10 +48,10 @@ namespace VocaDb.Model.DataContracts.Versioning
 	public static class ArchivedObjectVersionWithFieldsContract
 	{
 		public static ArchivedObjectVersionWithFieldsContract<TFields, TReason> Create<TFields, TReason>(
-			ArchivedObjectVersion archivedVersion,
+			ArchivedObjectVersion archivedVersion, IUserIconFactory userIconFactory,
 			TFields fields, TReason reason) where TFields : struct, Enum where TReason : struct, Enum
 		{
-			return new ArchivedObjectVersionWithFieldsContract<TFields, TReason>(archivedVersion, fields, reason);
+			return new ArchivedObjectVersionWithFieldsContract<TFields, TReason>(archivedVersion, userIconFactory, fields, reason);
 		}
 	}
 }

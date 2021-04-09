@@ -15,7 +15,7 @@ namespace VocaDb.Web.Models.User
 			Sort = RatedSongForUserSortRule.Name;
 		}
 
-		public FavoriteSongs(UserContract user, SongVoteRating rating, RatedSongForUserSortRule? sort, bool? groupByRating)
+		public FavoriteSongs(ServerOnlyUserContract user, SongVoteRating rating, RatedSongForUserSortRule? sort, bool? groupByRating)
 			: this()
 		{
 			GroupByRating = groupByRating;
@@ -30,6 +30,6 @@ namespace VocaDb.Web.Models.User
 
 		public RatedSongForUserSortRule? Sort { get; set; }
 
-		public UserContract User { get; set; }
+		public ServerOnlyUserContract User { get; set; }
 	}
 }

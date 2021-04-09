@@ -31,7 +31,7 @@ namespace VocaDb.Tests.DatabaseTests.Queries
 
 		public SongQueriesDatabaseTests()
 		{
-			_userContext = new FakePermissionContext(new UserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
+			_userContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(Db.UserWithEditPermissions, ContentLanguagePreference.Default));
 		}
 
 		private SongQueries Queries(ISongRepository repository)

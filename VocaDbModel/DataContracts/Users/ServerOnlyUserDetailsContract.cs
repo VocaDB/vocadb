@@ -16,11 +16,11 @@ namespace VocaDb.Model.DataContracts.Users
 	/// Data contract for <see cref="User"/>, for details view.
 	/// SECURITY NOTE: take care when sending to client due to the contained sensitive information.
 	/// </summary>
-	public class UserDetailsContract : UserWithPermissionsContract
+	public class ServerOnlyUserDetailsContract : ServerOnlyUserWithPermissionsContract
 	{
-		public UserDetailsContract() { }
+		public ServerOnlyUserDetailsContract() { }
 
-		public UserDetailsContract(User user, IUserPermissionContext permissionContext)
+		public ServerOnlyUserDetailsContract(User user, IUserPermissionContext permissionContext)
 			: base(user, permissionContext.LanguagePreference, getPublicCollection: true)
 		{
 			AboutMe = user.Options.AboutMe;

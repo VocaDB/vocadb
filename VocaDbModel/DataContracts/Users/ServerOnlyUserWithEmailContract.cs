@@ -9,12 +9,12 @@ namespace VocaDb.Model.DataContracts.Users
 	/// Data contract for <see cref="User"/> with email.
 	/// SECURITY NOTE: take care when sending to client due to the contained sensitive information.
 	/// </summary> 
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class UserWithEmailContract : UserBaseContract, IUserWithEmail
+	[DataContract(Namespace = Schemas.VocaDb, Name = "UserWithEmailContract")]
+	public class ServerOnlyUserWithEmailContract : UserBaseContract, IUserWithEmail
 	{
-		public UserWithEmailContract() { }
+		public ServerOnlyUserWithEmailContract() { }
 
-		public UserWithEmailContract(User user)
+		public ServerOnlyUserWithEmailContract(User user)
 			: base(user)
 		{
 			Email = user.Email;

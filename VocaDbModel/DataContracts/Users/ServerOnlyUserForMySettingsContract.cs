@@ -1,20 +1,21 @@
 #nullable disable
 
 using System.Linq;
+using System.Runtime.Serialization;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Security;
 
 namespace VocaDb.Model.DataContracts.Users
 {
-	public class UserForMySettingsContract : UserContract
+	public class ServerOnlyUserForMySettingsContract : ServerOnlyUserContract
 	{
-		public UserForMySettingsContract()
+		public ServerOnlyUserForMySettingsContract()
 		{
 			AboutMe = Location = string.Empty;
 			WebLinks = new WebLinkContract[] { };
 		}
 
-		public UserForMySettingsContract(User user)
+		public ServerOnlyUserForMySettingsContract(User user)
 			: base(user, true)
 		{
 			AboutMe = user.Options.AboutMe;

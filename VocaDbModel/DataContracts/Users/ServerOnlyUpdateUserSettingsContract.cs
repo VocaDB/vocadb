@@ -6,12 +6,12 @@ using VocaDb.Model.Domain.Users;
 
 namespace VocaDb.Model.DataContracts.Users
 {
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class UpdateUserSettingsContract : UserContract
+	[DataContract(Namespace = Schemas.VocaDb, Name = "UpdateUserSettingsContract")]
+	public class ServerOnlyUpdateUserSettingsContract : ServerOnlyUserContract
 	{
-		public UpdateUserSettingsContract() { }
+		public ServerOnlyUpdateUserSettingsContract() { }
 
-		public UpdateUserSettingsContract(User user)
+		public ServerOnlyUpdateUserSettingsContract(User user)
 			: base(user, true)
 		{
 			AboutMe = user.Options.AboutMe;

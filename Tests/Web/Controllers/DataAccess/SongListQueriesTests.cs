@@ -53,7 +53,7 @@ namespace VocaDb.Tests.Web.Controllers.DataAccess
 		{
 			_repository = new FakeSongListRepository();
 			_userWithSongList = new User("User with songlist", "123", "test@test.com", PasswordHashAlgorithms.Default);
-			_permissionContext = new FakePermissionContext(new UserWithPermissionsContract(_userWithSongList, ContentLanguagePreference.Default));
+			_permissionContext = new FakePermissionContext(new ServerOnlyUserWithPermissionsContract(_userWithSongList, ContentLanguagePreference.Default));
 
 			_imagePersister = new InMemoryImagePersister();
 			_queries = new SongListQueries(_repository, _permissionContext, new FakeEntryLinkFactory(), _imagePersister, _imagePersister, new FakeUserIconFactory());

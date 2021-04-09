@@ -114,7 +114,7 @@ namespace VocaDb.Web.Models
 			WebLinks = new List<WebLinkDisplay>();
 		}
 
-		public MySettingsModel(UserForMySettingsContract user)
+		public MySettingsModel(ServerOnlyUserForMySettingsContract user)
 			: this()
 		{
 			ParamIs.NotNull(() => user);
@@ -236,12 +236,12 @@ namespace VocaDb.Web.Models
 		[Range(1, 390)]
 		public int UnreadNotificationsToKeep { get; set; }
 
-		public UpdateUserSettingsContract ToContract()
+		public ServerOnlyUpdateUserSettingsContract ToContract()
 		{
 			if (WebLinks == null)
 				throw new InvalidFormException("Web links list was null");
 
-			return new UpdateUserSettingsContract
+			return new ServerOnlyUpdateUserSettingsContract
 			{
 				AboutMe = AboutMe ?? string.Empty,
 				AnonymousActivity = !ShowActivity,
@@ -277,7 +277,7 @@ namespace VocaDb.Web.Models
 
 		public UserEdit() { }
 
-		public UserEdit(UserWithPermissionsContract contract)
+		public UserEdit(ServerOnlyUserWithPermissionsContract contract)
 			: this()
 		{
 			Active = contract.Active;
@@ -317,9 +317,9 @@ namespace VocaDb.Web.Models
 
 		public bool Supporter { get; set; }
 
-		public UserWithPermissionsContract ToContract()
+		public ServerOnlyUserWithPermissionsContract ToContract()
 		{
-			return new UserWithPermissionsContract
+			return new ServerOnlyUserWithPermissionsContract
 			{
 				Active = Active,
 				Email = Email ?? string.Empty,

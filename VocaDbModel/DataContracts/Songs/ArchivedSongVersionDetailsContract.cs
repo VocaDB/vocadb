@@ -1,6 +1,8 @@
 #nullable disable
 
 using System.Linq;
+using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Songs;
@@ -12,19 +14,19 @@ namespace VocaDb.Model.DataContracts.Songs
 		public ArchivedSongVersionDetailsContract() { }
 
 #nullable enable
-		public ArchivedSongVersionDetailsContract(ArchivedSongVersion archived, ArchivedSongVersion? comparedVersion, IUserPermissionContext permissionContext)
+		public ArchivedSongVersionDetailsContract(ArchivedSongVersion archived, ArchivedSongVersion? comparedVersion, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory)
 		{
 			ParamIs.NotNull(() => archived);
 
-			ArchivedVersion = new ArchivedSongVersionContract(archived);
-			ComparedVersion = comparedVersion != null ? new ArchivedSongVersionContract(comparedVersion) : null;
+			ArchivedVersion = new ArchivedSongVersionContract(archived, userIconFactory);
+			ComparedVersion = comparedVersion != null ? new ArchivedSongVersionContract(comparedVersion, userIconFactory) : null;
 			ComparedVersionId = comparedVersion != null ? comparedVersion.Id : 0;
 			Song = new SongContract(archived.Song, permissionContext.LanguagePreference);
 			Name = Song.Name;
 
 			ComparableVersions = archived.Song.ArchivedVersionsManager
 				.GetPreviousVersions(archived, permissionContext)
-				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields.Value, a.Reason))
+				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, userIconFactory, a.Diff.ChangedFields.Value, a.Reason))
 				.ToArray();
 
 			Versions = ComparedSongsContract.Create(archived, comparedVersion);

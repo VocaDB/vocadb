@@ -2,7 +2,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Tags;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Security;
@@ -14,11 +16,11 @@ namespace VocaDb.Model.DataContracts.UseCases
 	{
 		public EntryWithTagUsagesContract() { }
 
-		public EntryWithTagUsagesContract(IEntryBase entry, IEnumerable<TagUsage> tagUsages, ContentLanguagePreference languagePreference, IUserPermissionContext userContext)
+		public EntryWithTagUsagesContract(IEntryBase entry, IEnumerable<TagUsage> tagUsages, ContentLanguagePreference languagePreference, IUserPermissionContext userContext, IUserIconFactory userIconFactory)
 			: base(entry)
 		{
 			CanRemoveTagUsages = EntryPermissionManager.CanRemoveTagUsages(userContext, entry);
-			TagUsages = tagUsages.Select(u => new TagUsageWithVotesContract(u, languagePreference)).ToArray();
+			TagUsages = tagUsages.Select(u => new TagUsageWithVotesContract(u, languagePreference, userIconFactory)).ToArray();
 		}
 
 		public bool CanRemoveTagUsages { get; init; }

@@ -23,7 +23,7 @@ namespace VocaDb.Model.DataContracts.Artists
 		public ArtistDetailsContract() { }
 
 		public ArtistDetailsContract(Artist artist, ContentLanguagePreference languagePreference, IUserPermissionContext userContext,
-			IAggregatedEntryImageUrlFactory imageStore, Tag artistTypeTag = null)
+			IAggregatedEntryImageUrlFactory imageStore, IUserIconFactory userIconFactory, Tag artistTypeTag = null)
 			: base(artist, languagePreference)
 		{
 			AllNames = string.Join(", ", artist.AllNames.Where(n => n != Name));
@@ -36,7 +36,7 @@ namespace VocaDb.Model.DataContracts.Artists
 			TranslatedName = new TranslatedStringContract(artist.TranslatedName);
 			LatestAlbums = new AlbumForApiContract[] { };
 			LatestSongs = new SongForApiContract[] { };
-			OwnerUsers = artist.OwnerUsers.Select(u => new UserContract(u.User)).ToArray();
+			OwnerUsers = artist.OwnerUsers.Select(u => new UserForApiContract(u.User, userIconFactory, UserOptionalFields.MainPicture)).ToArray();
 			Pictures = artist.Pictures.Select(p => new EntryPictureFileContract(p, imageStore)).ToArray();
 			TopAlbums = new AlbumForApiContract[] { };
 			TopSongs = new SongForApiContract[] { };
@@ -177,7 +177,7 @@ namespace VocaDb.Model.DataContracts.Artists
 		public SongForApiContract[] LatestSongs { get; set; }
 
 		[DataMember]
-		public UserContract[] OwnerUsers { get; init; }
+		public UserForApiContract[] OwnerUsers { get; init; }
 
 		/// <summary>
 		/// Personal stats for the logged in user. 

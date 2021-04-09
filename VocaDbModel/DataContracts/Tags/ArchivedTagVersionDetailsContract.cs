@@ -1,6 +1,8 @@
 #nullable disable
 
 using System.Linq;
+using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Tags;
@@ -12,19 +14,19 @@ namespace VocaDb.Model.DataContracts.Tags
 		public ArchivedTagVersionDetailsContract() { }
 
 #nullable enable
-		public ArchivedTagVersionDetailsContract(ArchivedTagVersion archived, ArchivedTagVersion? comparedVersion, IUserPermissionContext permissionContext)
+		public ArchivedTagVersionDetailsContract(ArchivedTagVersion archived, ArchivedTagVersion? comparedVersion, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory)
 		{
 			ParamIs.NotNull(() => archived);
 
-			ArchivedVersion = new ArchivedTagVersionContract(archived);
-			ComparedVersion = comparedVersion != null ? new ArchivedTagVersionContract(comparedVersion) : null;
+			ArchivedVersion = new ArchivedTagVersionContract(archived, userIconFactory);
+			ComparedVersion = comparedVersion != null ? new ArchivedTagVersionContract(comparedVersion, userIconFactory) : null;
 			ComparedVersionId = comparedVersion != null ? comparedVersion.Id : 0;
 			Tag = new TagContract(archived.Tag, permissionContext.LanguagePreference);
 			Name = Tag.Name;
 
 			ComparableVersions = archived.Tag.ArchivedVersionsManager
 				.GetPreviousVersions(archived, permissionContext)
-				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields.Value, a.CommonEditEvent))
+				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, userIconFactory, a.Diff.ChangedFields.Value, a.CommonEditEvent))
 				.ToArray();
 
 			Versions = ComparedTagsContract.Create(archived, comparedVersion);

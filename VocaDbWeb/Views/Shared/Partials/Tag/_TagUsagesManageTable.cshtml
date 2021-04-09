@@ -33,7 +33,7 @@
 						<td>
 							@foreach (var user in usage.Votes)
 							{
-								<partial name="Partials/User/_UserIconLink_UserContract" model="@(new UserIconLink_UserContractViewModel(user))" /><br />
+								<partial name="Partials/User/_UserIconLink_UserForApiContract" model="@(new UserIconLink_UserForApiContractViewModel(user))" /><br />
 							}
 						</td>
 					}

@@ -219,9 +219,9 @@ namespace VocaDb.Model.Database.Queries
 			await _mailer.SendEmailAsync(message.Receiver.Email, message.Receiver.Name, subject, body);
 		}
 
-		private UserDetailsContract GetUserDetails(IDatabaseContext<User> session, User user)
+		private ServerOnlyUserDetailsContract GetUserDetails(IDatabaseContext<User> session, User user)
 		{
-			var details = new UserDetailsContract(user, PermissionContext);
+			var details = new ServerOnlyUserDetailsContract(user, PermissionContext);
 
 			var cachedStats = GetCachedUserStats(session, user);
 			details.AlbumCollectionCount = cachedStats.AlbumCollectionCount;
@@ -463,7 +463,7 @@ namespace VocaDb.Model.Database.Queries
 				user.UpdateLastLogin(hostname, culture);
 				ctx.Update(user);
 
-				return LoginResult.CreateSuccess(new UserContract(user));
+				return LoginResult.CreateSuccess(new ServerOnlyUserContract(user));
 			});
 		}
 
@@ -655,7 +655,7 @@ namespace VocaDb.Model.Database.Queries
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken.</exception>
 		/// <exception cref="TooFastRegistrationException">If the user registered too fast.</exception>
 		/// <exception cref="RestrictedIPException">User's IP was banned, or determined to be malicious.</exception>
-		public async Task<UserContract> Create(string name, string pass, string email, string hostname,
+		public async Task<ServerOnlyUserContract> Create(string name, string pass, string email, string hostname,
 			string userAgent,
 			string culture,
 			TimeSpan timeSpan,
@@ -721,7 +721,7 @@ namespace VocaDb.Model.Database.Queries
 					await tx.CommitAsync();
 				}
 
-				return new UserContract(user);
+				return new ServerOnlyUserContract(user);
 			});
 		}
 
@@ -772,7 +772,7 @@ namespace VocaDb.Model.Database.Queries
 		/// <exception cref="InvalidEmailFormatException">If the email format was invalid.</exception>
 		/// <exception cref="UserNameAlreadyExistsException">If the user name was already taken.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken.</exception>
-		public UserContract CreateTwitter(string authToken, string name, string email, int twitterId, string twitterName, string hostname, string culture)
+		public ServerOnlyUserContract CreateTwitter(string authToken, string name, string email, int twitterId, string twitterName, string hostname, string culture)
 		{
 			ParamIs.NotNullOrEmpty(() => name);
 			ParamIs.NotNull(() => email);
@@ -805,7 +805,7 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.AuditLogger.AuditLog($"registered from {MakeGeoIpToolLink(hostname)} using Twitter name '{twitterName}'.", user);
 
-				return new UserContract(user);
+				return new ServerOnlyUserContract(user);
 			});
 		}
 
@@ -1165,7 +1165,7 @@ namespace VocaDb.Model.Database.Queries
 			return HandleQuery(ctx => new UserForApiContract(ctx.Load<User>(id), _userIconFactory, fields));
 		}
 
-		public UserDetailsContract GetUserByNameNonSensitive(string name)
+		public ServerOnlyUserDetailsContract GetUserByNameNonSensitive(string name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return null;
@@ -1183,7 +1183,7 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public UserDetailsContract GetUserDetails(int id)
+		public ServerOnlyUserDetailsContract GetUserDetails(int id)
 		{
 			return HandleQuery(ctx => GetUserDetails(ctx, ctx.Load(id)));
 		}
@@ -1302,7 +1302,7 @@ namespace VocaDb.Model.Database.Queries
 			});
 		}
 
-		public UserContract ResetPassword(Guid requestId, string password)
+		public ServerOnlyUserContract ResetPassword(Guid requestId, string password)
 		{
 			ParamIs.NotNullOrEmpty(() => password);
 
@@ -1328,7 +1328,7 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.Delete(request);
 
-				return new UserContract(user);
+				return new ServerOnlyUserContract(user);
 			});
 		}
 
@@ -1486,7 +1486,7 @@ namespace VocaDb.Model.Database.Queries
 		/// <remarks>
 		/// Requires the <see cref="PermissionToken.ManageUserPermissions"/> right.
 		/// </remarks>
-		public void UpdateUser(UserWithPermissionsContract contract)
+		public void UpdateUser(ServerOnlyUserWithPermissionsContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -1677,7 +1677,7 @@ namespace VocaDb.Model.Database.Queries
 		/// <exception cref="UserNameAlreadyExistsException">If the username was already taken by another user.</exception>
 		/// <exception cref="UserNameTooSoonException">If the cooldown for changing username has not expired.</exception>
 		/// <exception cref="UserEmailAlreadyExistsException">If the email address was already taken by another user.</exception>
-		public UserWithPermissionsContract UpdateUserSettings(UpdateUserSettingsContract contract)
+		public ServerOnlyUserWithPermissionsContract UpdateUserSettings(ServerOnlyUpdateUserSettingsContract contract)
 		{
 			ParamIs.NotNull(() => contract);
 
@@ -1752,7 +1752,7 @@ namespace VocaDb.Model.Database.Queries
 
 				ctx.AuditLogger.AuditLog("updated settings");
 
-				return new UserWithPermissionsContract(user, PermissionContext.LanguagePreference);
+				return new ServerOnlyUserWithPermissionsContract(user, PermissionContext.LanguagePreference);
 			});
 		}
 
@@ -1817,7 +1817,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public void PostEditComment(int commentId, CommentForApiContract contract) => HandleTransaction(ctx => Comments(ctx).Update(commentId, contract));
 
-		public bool IsNotification(int messageId, UserWithPermissionsContract user) => HandleQuery(ctx =>
+		public bool IsNotification(int messageId, ServerOnlyUserWithPermissionsContract user) => HandleQuery(ctx =>
 		{
 			return ctx.Query<UserMessage>()
 				.Any(m => m.Id == messageId && m.User.Id == user.Id && m.Inbox == UserInboxType.Notifications);

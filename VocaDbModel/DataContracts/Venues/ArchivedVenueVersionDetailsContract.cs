@@ -1,6 +1,8 @@
 #nullable disable
 
 using System.Linq;
+using System.Runtime.Serialization;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Versioning;
 using VocaDb.Model.Domain.Security;
 using VocaDb.Model.Domain.Venues;
@@ -10,18 +12,18 @@ namespace VocaDb.Model.DataContracts.Venues
 	public class ArchivedVenueVersionDetailsContract
 	{
 #nullable enable
-		public ArchivedVenueVersionDetailsContract(ArchivedVenueVersion archived, ArchivedVenueVersion? comparedVersion, IUserPermissionContext permissionContext)
+		public ArchivedVenueVersionDetailsContract(ArchivedVenueVersion archived, ArchivedVenueVersion? comparedVersion, IUserPermissionContext permissionContext, IUserIconFactory userIconFactory)
 		{
 			ParamIs.NotNull(() => archived);
 
-			ArchivedVersion = new ArchivedVenueVersionContract(archived);
-			ComparedVersion = comparedVersion != null ? new ArchivedVenueVersionContract(comparedVersion) : null;
+			ArchivedVersion = new ArchivedVenueVersionContract(archived, userIconFactory);
+			ComparedVersion = comparedVersion != null ? new ArchivedVenueVersionContract(comparedVersion, userIconFactory) : null;
 			Venue = new VenueContract(archived.Entry, permissionContext.LanguagePreference);
 			Name = Venue.Name;
 
 			ComparableVersions = archived.Entry.ArchivedVersionsManager
 				.GetPreviousVersions(archived, permissionContext)
-				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, a.Diff.ChangedFields.Value, a.CommonEditEvent))
+				.Select(a => ArchivedObjectVersionWithFieldsContract.Create(a, userIconFactory, a.Diff.ChangedFields.Value, a.CommonEditEvent))
 				.ToArray();
 
 			Versions = ComparedVenueContract.Create(archived, comparedVersion);

@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
+using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.DataContracts.Venues;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
@@ -22,12 +23,14 @@ namespace VocaDb.Model.Database.Queries
 	{
 		private readonly IEntryLinkFactory _entryLinkFactory;
 		private readonly IEnumTranslations _enumTranslations;
+		private readonly IUserIconFactory _userIconFactory;
 
-		public VenueQueries(IVenueRepository venueRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext, IEnumTranslations enumTranslations)
+		public VenueQueries(IVenueRepository venueRepository, IEntryLinkFactory entryLinkFactory, IUserPermissionContext permissionContext, IEnumTranslations enumTranslations, IUserIconFactory userIconFactory)
 			: base(venueRepository, permissionContext)
 		{
 			_entryLinkFactory = entryLinkFactory;
 			_enumTranslations = enumTranslations;
+			_userIconFactory = userIconFactory;
 		}
 
 		private ArchivedVenueVersion Archive(IDatabaseContext<Venue> ctx, Venue venue, VenueDiff diff, EntryEditEvent reason, string notes)
@@ -124,7 +127,7 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var contract = new ArchivedVenueVersionDetailsContract(session.Load<ArchivedVenueVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedVenueVersion>(comparedVersionId) : null,
-					PermissionContext);
+					PermissionContext, _userIconFactory);
 
 				if (contract.Hidden)
 				{
@@ -137,7 +140,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public VenueWithArchivedVersionsContract GetWithArchivedVersions(int id)
 		{
-			return HandleQuery(ctx => new VenueWithArchivedVersionsContract(ctx.Load(id), LanguagePreference));
+			return HandleQuery(ctx => new VenueWithArchivedVersionsContract(ctx.Load(id), LanguagePreference, _userIconFactory));
 		}
 
 		public void MoveToTrash(int id, string notes)

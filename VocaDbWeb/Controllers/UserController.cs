@@ -61,7 +61,7 @@ namespace VocaDb.Web.Controllers
 		private readonly IRepository _repository;
 		private UserService Service { get; set; }
 
-		private UserForMySettingsContract GetUserForMySettings()
+		private ServerOnlyUserForMySettingsContract GetUserForMySettings()
 		{
 			return Service.GetUserForMySettings(PermissionContext.LoggedUser.Id);
 		}
@@ -81,7 +81,7 @@ namespace VocaDb.Web.Controllers
 			return HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
 		}
 
-		private async Task<bool> HandleCreateAsync(UserContract user)
+		private async Task<bool> HandleCreateAsync(ServerOnlyUserContract user)
 		{
 			if (user == null)
 			{
@@ -638,7 +638,7 @@ namespace VocaDb.Web.Controllers
 			if (!ModelState.IsValid)
 				return View(new MySettingsModel(GetUserForMySettings()));
 
-			UpdateUserSettingsContract contract;
+			ServerOnlyUpdateUserSettingsContract contract;
 
 			try
 			{
@@ -650,7 +650,7 @@ namespace VocaDb.Web.Controllers
 				return View(model);
 			}
 
-			UserWithPermissionsContract newUser;
+			ServerOnlyUserWithPermissionsContract newUser;
 
 			try
 			{

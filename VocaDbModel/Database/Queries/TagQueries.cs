@@ -551,7 +551,7 @@ namespace VocaDb.Model.Database.Queries
 
 		public TagWithArchivedVersionsContract GetTagWithArchivedVersions(int id)
 		{
-			return LoadTag(id, tag => new TagWithArchivedVersionsContract(tag, LanguagePreference));
+			return LoadTag(id, tag => new TagWithArchivedVersionsContract(tag, LanguagePreference, _userIconFactory));
 		}
 
 		public ArchivedTagVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
@@ -560,7 +560,7 @@ namespace VocaDb.Model.Database.Queries
 			{
 				var contract = new ArchivedTagVersionDetailsContract(session.Load<ArchivedTagVersion>(id),
 					comparedVersionId != 0 ? session.Load<ArchivedTagVersion>(comparedVersionId) : null,
-					PermissionContext);
+					PermissionContext, _userIconFactory);
 
 				if (contract.Hidden)
 				{

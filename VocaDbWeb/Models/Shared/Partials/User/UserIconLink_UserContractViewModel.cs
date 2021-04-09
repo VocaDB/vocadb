@@ -7,7 +7,7 @@ namespace VocaDb.Web.Models.Shared.Partials.User
 {
 	public class UserIconLink_UserContractViewModel
 	{
-		public UserIconLink_UserContractViewModel(UserContract user, int size = ImageHelper.UserTinyThumbSize, bool userInfo = false, bool tooltip = false)
+		public UserIconLink_UserContractViewModel(ServerOnlyUserContract user, int size = ImageHelper.UserTinyThumbSize, bool userInfo = false, bool tooltip = false)
 		{
 			User = user;
 			Size = size;
@@ -15,7 +15,7 @@ namespace VocaDb.Web.Models.Shared.Partials.User
 			Tooltip = tooltip;
 		}
 
-		public UserContract User { get; set; }
+		public ServerOnlyUserContract User { get; set; }
 
 		public int Size { get; set; }
 

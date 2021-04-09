@@ -14,7 +14,7 @@ namespace VocaDb.Model.DataContracts.Users
 
 #nullable enable
 		public AlbumForUserContract(AlbumForUser albumForUser,
-			ContentLanguagePreference languagePreference, bool includeUser = true)
+			ContentLanguagePreference languagePreference, IUserIconFactory userIconFactory, bool includeUser = true)
 		{
 			ParamIs.NotNull(() => albumForUser);
 
@@ -26,7 +26,7 @@ namespace VocaDb.Model.DataContracts.Users
 
 			if (includeUser)
 			{
-				User = new UserContract(albumForUser.User);
+				User = new UserForApiContract(albumForUser.User, userIconFactory, UserOptionalFields.MainPicture);
 			}
 		}
 #nullable disable
@@ -53,6 +53,6 @@ namespace VocaDb.Model.DataContracts.Users
 		/// User who rated the album. Can be null for anonymous ratings.
 		/// </summary>
 		[DataMember]
-		public UserContract User { get; init; }
+		public UserForApiContract User { get; init; }
 	}
 }

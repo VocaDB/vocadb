@@ -31,6 +31,8 @@ namespace VocaDb.Model.Service
 {
 	public class AlbumService : ServiceBase
 	{
+		private readonly IUserIconFactory _userIconFactory;
+
 		// ReSharper disable UnusedMember.Local
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 		// ReSharper restore UnusedMember.Local
@@ -56,8 +58,11 @@ namespace VocaDb.Model.Service
 			return processor.Query(queryPlan, paging, q => AlbumSearchSort.AddOrder(q, sortRule, LanguagePreference));
 		}
 
-		public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory)
-			: base(sessionFactory, permissionContext, entryLinkFactory) { }
+		public AlbumService(ISessionFactory sessionFactory, IUserPermissionContext permissionContext, IEntryLinkFactory entryLinkFactory, IUserIconFactory userIconFactory)
+			: base(sessionFactory, permissionContext, entryLinkFactory)
+		{
+			_userIconFactory = userIconFactory;
+		}
 
 		public ArchivedAlbumVersion Archive(ISession session, Album album, AlbumDiff diff, AlbumArchiveReason reason, string notes = "")
 		{
@@ -217,7 +222,7 @@ namespace VocaDb.Model.Service
 		public AlbumWithArchivedVersionsContract GetAlbumWithArchivedVersions(int albumId)
 		{
 			return HandleQuery(session =>
-				new AlbumWithArchivedVersionsContract(session.Load<Album>(albumId), PermissionContext.LanguagePreference));
+				new AlbumWithArchivedVersionsContract(session.Load<Album>(albumId), PermissionContext.LanguagePreference, _userIconFactory));
 		}
 
 		public EntryForPictureDisplayContract GetArchivedAlbumPicture(int archivedVersionId)
@@ -244,7 +249,7 @@ namespace VocaDb.Model.Service
 			return HandleQuery(session =>
 			{
 				var album = session.Load<Album>(albumId);
-				return new EntryWithTagUsagesContract(album, album.Tags.ActiveUsages, LanguagePreference, PermissionContext);
+				return new EntryWithTagUsagesContract(album, album.Tags.ActiveUsages, LanguagePreference, PermissionContext, _userIconFactory);
 			});
 		}
 
@@ -256,7 +261,7 @@ namespace VocaDb.Model.Service
 					.UserCollections
 					.Where(a => a.PurchaseStatus != PurchaseStatus.Nothing)
 					.OrderBy(u => u.User.Name)
-					.Select(u => new AlbumForUserContract(u, LanguagePreference, includeUser: u.User.Options.PublicAlbumCollection)).ToArray());
+					.Select(u => new AlbumForUserContract(u, LanguagePreference, _userIconFactory, includeUser: u.User.Options.PublicAlbumCollection)).ToArray());
 		}
 
 		public ArchivedAlbumVersionDetailsContract GetVersionDetails(int id, int comparedVersionId)
@@ -264,7 +269,7 @@ namespace VocaDb.Model.Service
 			return HandleQuery(session =>
 			{
 				var contract = new ArchivedAlbumVersionDetailsContract(session.Load<ArchivedAlbumVersion>(id),
-					(comparedVersionId != 0 ? session.Load<ArchivedAlbumVersion>(comparedVersionId) : null), PermissionContext);
+					(comparedVersionId != 0 ? session.Load<ArchivedAlbumVersion>(comparedVersionId) : null), PermissionContext, _userIconFactory);
 
 				if (contract.Hidden)
 				{

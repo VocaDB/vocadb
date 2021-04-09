@@ -182,7 +182,7 @@
 						</td>
 						<td>
 							@foreach (var user in Model.OwnerUsers) {
-								<partial name="Partials/User/_UserIconLink_UserContract" model="@(new UserIconLink_UserContractViewModel(user, tooltip: true))" />
+								<partial name="Partials/User/_UserIconLink_UserForApiContract" model="@(new UserIconLink_UserForApiContractViewModel(user, tooltip: true))" />
 								<br />
 							}
 						</td>

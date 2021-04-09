@@ -12,16 +12,16 @@ namespace VocaDb.Model.DataContracts.Users
 	/// Data contract for <see cref="User"/> with most properties.
 	/// SECURITY NOTE: take care when sending to client due to the contained sensitive information.
 	/// </summary>
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class UserContract : UserWithEmailContract
+	[DataContract(Namespace = Schemas.VocaDb, Name = "UserContract")]
+	public class ServerOnlyUserContract : ServerOnlyUserWithEmailContract
 	{
-		public UserContract()
+		public ServerOnlyUserContract()
 		{
 			Language = string.Empty;
 		}
 
 #nullable enable
-		public UserContract(User user, bool getPublicCollection = false)
+		public ServerOnlyUserContract(User user, bool getPublicCollection = false)
 			: base(user)
 		{
 			ParamIs.NotNull(() => user);

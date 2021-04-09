@@ -31,7 +31,7 @@ namespace VocaDb.Model.Service.Security
 
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
-		private UserWithPermissionsContract _user;
+		private ServerOnlyUserWithPermissionsContract _user;
 
 		private void SetCultureSafe(string name, bool culture, bool uiCulture)
 		{
@@ -62,7 +62,7 @@ namespace VocaDb.Model.Service.Security
 		}
 
 #nullable enable
-		public void SetLoggedUser(UserWithPermissionsContract user)
+		public void SetLoggedUser(ServerOnlyUserWithPermissionsContract user)
 		{
 			ParamIs.NotNull(() => user);
 
@@ -100,7 +100,7 @@ namespace VocaDb.Model.Service.Security
 		/// <summary>
 		/// Currently logged in user. Can be null.
 		/// </summary>
-		public UserWithPermissionsContract LoggedUser
+		public ServerOnlyUserWithPermissionsContract LoggedUser
 		{
 			get
 			{

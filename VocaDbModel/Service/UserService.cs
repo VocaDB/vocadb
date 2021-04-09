@@ -71,7 +71,7 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-		public UserContract CheckAccessWithKey(string name, string accessKey, string hostname, bool delayFailedLogin)
+		public ServerOnlyUserContract CheckAccessWithKey(string name, string accessKey, string hostname, bool delayFailedLogin)
 		{
 			return HandleQuery(session =>
 			{
@@ -102,11 +102,11 @@ namespace VocaDb.Model.Service
 
 				AuditLog($"logged in from {MakeGeoIpToolLink(hostname)} with access key.", session, user);
 
-				return new UserContract(user);
+				return new ServerOnlyUserContract(user);
 			});
 		}
 
-		public UserContract CheckTwitterAuthentication(string accessToken, string hostname, string culture)
+		public ServerOnlyUserContract CheckTwitterAuthentication(string accessToken, string hostname, string culture)
 		{
 			return HandleTransaction(session =>
 			{
@@ -120,7 +120,7 @@ namespace VocaDb.Model.Service
 				user.UpdateLastLogin(hostname, culture);
 				session.Update(user);
 
-				return new UserContract(user);
+				return new ServerOnlyUserContract(user);
 			});
 		}
 
@@ -184,22 +184,22 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-		public UserContract GetUser(int id, bool getPublicCollection = false)
+		public ServerOnlyUserContract GetUser(int id, bool getPublicCollection = false)
 		{
-			return HandleQuery(session => new UserContract(session.Load<User>(id), getPublicCollection));
+			return HandleQuery(session => new ServerOnlyUserContract(session.Load<User>(id), getPublicCollection));
 		}
 
-		public UserForMySettingsContract GetUserForMySettings(int id)
+		public ServerOnlyUserForMySettingsContract GetUserForMySettings(int id)
 		{
-			return HandleQuery(session => new UserForMySettingsContract(session.Load<User>(id)));
+			return HandleQuery(session => new ServerOnlyUserForMySettingsContract(session.Load<User>(id)));
 		}
 
-		public UserWithPermissionsContract GetUserWithPermissions(int id)
+		public ServerOnlyUserWithPermissionsContract GetUserWithPermissions(int id)
 		{
-			return HandleQuery(session => new UserWithPermissionsContract(session.Load<User>(id), LanguagePreference));
+			return HandleQuery(session => new ServerOnlyUserWithPermissionsContract(session.Load<User>(id), LanguagePreference));
 		}
 
-		public UserWithPermissionsContract GetUserByName(string name, bool skipMessages)
+		public ServerOnlyUserWithPermissionsContract GetUserByName(string name, bool skipMessages)
 		{
 			return HandleQuery(session =>
 			{
@@ -208,7 +208,7 @@ namespace VocaDb.Model.Service
 				if (user == null)
 					return null;
 
-				var contract = new UserWithPermissionsContract(user, LanguagePreference);
+				var contract = new ServerOnlyUserWithPermissionsContract(user, LanguagePreference);
 
 				if (!skipMessages)
 					contract.UnreadMessagesCount = session.Query<UserMessage>()
@@ -401,7 +401,7 @@ namespace VocaDb.Model.Service
 			return new LoginResult { Error = error };
 		}
 
-		public static LoginResult CreateSuccess(UserContract user)
+		public static LoginResult CreateSuccess(ServerOnlyUserContract user)
 		{
 			return new LoginResult { User = user, Error = LoginError.Nothing };
 		}
@@ -410,6 +410,6 @@ namespace VocaDb.Model.Service
 
 		public bool IsOk => Error == LoginError.Nothing;
 
-		public UserContract User { get; set; }
+		public ServerOnlyUserContract User { get; set; }
 	}
 }

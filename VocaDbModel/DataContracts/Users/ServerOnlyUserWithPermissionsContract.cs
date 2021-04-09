@@ -13,12 +13,12 @@ namespace VocaDb.Model.DataContracts.Users
 	/// User with additional permission flags and artist ownership permissions.
 	/// Used for user details page as well as checking for permissions of the logged in user.
 	/// </summary>
-	[DataContract(Namespace = Schemas.VocaDb)]
-	public class UserWithPermissionsContract : UserContract
+	[DataContract(Namespace = Schemas.VocaDb, Name = "UserWithPermissionsContract")]
+	public class ServerOnlyUserWithPermissionsContract : ServerOnlyUserContract
 	{
-		public UserWithPermissionsContract() { }
+		public ServerOnlyUserWithPermissionsContract() { }
 
-		public UserWithPermissionsContract(User user, ContentLanguagePreference languagePreference, bool getPublicCollection = false)
+		public ServerOnlyUserWithPermissionsContract(User user, ContentLanguagePreference languagePreference, bool getPublicCollection = false)
 			: base(user, getPublicCollection)
 		{
 			AdditionalPermissions = new HashSet<PermissionToken>(user.AdditionalPermissions.PermissionTokens);

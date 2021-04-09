@@ -15,14 +15,14 @@ namespace VocaDb.Model.Domain.Security
 
 		protected override string RequestParamName => "culture";
 		protected override string SettingName => "Culture";
-		protected override string GetPersistedValue(UserWithPermissionsContract permissionContext) => permissionContext.Culture;
+		protected override string GetPersistedValue(ServerOnlyUserWithPermissionsContract permissionContext) => permissionContext.Culture;
 
 		protected override void SetPersistedValue(User user, string val)
 		{
 			user.Culture = val;
 		}
 
-		protected override void SetPersistedValue(UserWithPermissionsContract user, string val)
+		protected override void SetPersistedValue(ServerOnlyUserWithPermissionsContract user, string val)
 		{
 			user.Culture = val;
 		}
@@ -42,14 +42,14 @@ namespace VocaDb.Model.Domain.Security
 
 		protected override string RequestParamName => "culture";
 		protected override string SettingName => "Language";
-		protected override string GetPersistedValue(UserWithPermissionsContract permissionContext) => permissionContext.Language;
+		protected override string GetPersistedValue(ServerOnlyUserWithPermissionsContract permissionContext) => permissionContext.Language;
 
 		protected override void SetPersistedValue(User user, string val)
 		{
 			user.Language = new OptionalCultureCode(val);
 		}
 
-		protected override void SetPersistedValue(UserWithPermissionsContract user, string val)
+		protected override void SetPersistedValue(ServerOnlyUserWithPermissionsContract user, string val)
 		{
 			user.Language = val;
 		}

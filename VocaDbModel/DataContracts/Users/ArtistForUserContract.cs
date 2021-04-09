@@ -1,5 +1,6 @@
 #nullable disable
 
+using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Artists;
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
@@ -18,7 +19,7 @@ namespace VocaDb.Model.DataContracts.Users
 
 			Artist = new ArtistContract(ownedArtistForUser.Artist, languagePreference);
 			Id = ownedArtistForUser.Id;
-			User = new UserContract(ownedArtistForUser.User);
+			User = new UserForApiContract(ownedArtistForUser.User);
 		}
 #nullable disable
 
@@ -31,6 +32,6 @@ namespace VocaDb.Model.DataContracts.Users
 
 		public int Id { get; init; }
 
-		public UserContract User { get; init; }
+		public UserForApiContract User { get; init; }
 	}
 }

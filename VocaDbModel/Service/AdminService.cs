@@ -256,7 +256,7 @@ namespace VocaDb.Model.Service
 			});
 		}
 
-		public (EntryForApiContract entry, UserContract user, DateTime time)[] GetActiveEditors()
+		public (EntryForApiContract entry, ServerOnlyUserContract user, DateTime time)[] GetActiveEditors()
 		{
 			PermissionContext.VerifyPermission(PermissionToken.Admin);
 
@@ -269,7 +269,7 @@ namespace VocaDb.Model.Service
 				return editors
 					.Select(i =>
 						(EntryForApiContract.Create(entryLoader.Load(i.Key, db), LanguagePreference, null, EntryOptionalFields.None),
-						new UserContract(ctx.Load<User>(i.Value.UserId)),
+						new ServerOnlyUserContract(ctx.Load<User>(i.Value.UserId)),
 						i.Value.Time))
 					.ToArray();
 			});

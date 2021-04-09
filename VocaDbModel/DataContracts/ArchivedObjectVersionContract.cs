@@ -1,6 +1,7 @@
 #nullable disable
 
 using System;
+using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Activityfeed;
@@ -14,12 +15,12 @@ namespace VocaDb.Model.DataContracts
 		public ArchivedObjectVersionContract() { }
 
 #nullable enable
-		public ArchivedObjectVersionContract(ArchivedObjectVersion archivedObjectVersion)
+		public ArchivedObjectVersionContract(ArchivedObjectVersion archivedObjectVersion, IUserIconFactory userIconFactory)
 		{
 			ParamIs.NotNull(() => archivedObjectVersion);
 
 			AgentName = !string.IsNullOrEmpty(archivedObjectVersion.AgentName) || archivedObjectVersion.Author == null ? archivedObjectVersion.AgentName : archivedObjectVersion.Author.Name;
-			Author = (archivedObjectVersion.Author != null ? new UserContract(archivedObjectVersion.Author) : null);
+			Author = (archivedObjectVersion.Author != null ? new UserForApiContract(archivedObjectVersion.Author, userIconFactory, UserOptionalFields.MainPicture) : null);
 			Created = archivedObjectVersion.Created;
 			EditEvent = archivedObjectVersion.EditEvent;
 			Hidden = archivedObjectVersion.Hidden;
@@ -33,7 +34,7 @@ namespace VocaDb.Model.DataContracts
 
 		public string AgentName { get; init; }
 
-		public UserContract Author { get; init; }
+		public UserForApiContract Author { get; init; }
 
 		public DateTime Created { get; init; }
 
