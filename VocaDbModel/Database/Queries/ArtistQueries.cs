@@ -63,7 +63,7 @@ namespace VocaDb.Model.Database.Queries
 		/// </summary>
 		private AdvancedArtistStatsContract GetAdvancedStats(IDatabaseContext<Artist> ctx, Artist artist)
 		{
-			if (artist.ArtistType != ArtistType.Producer)
+			if (artist.ArtistType != ArtistType.Producer && artist.ArtistType != ArtistType.CoverArtist)
 				return null;
 
 			var key = $"ArtistQueries.AdvancedArtistStatsContract.{artist.Id}";
