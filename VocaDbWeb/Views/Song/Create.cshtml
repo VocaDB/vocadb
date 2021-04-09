@@ -14,14 +14,14 @@
 
 <form action="@Url.Action("Create", "Song")" method="POST" data-bind="submit: submit">
 
-	<partial name="Partials/Shared/_ValidationSummaryDiv" model="@(new ValidationSummaryDivViewModel(Res.UnableToCreateSong))" />
-
 	<div class="row-fluid">
 		<div class="span9 well well-transparent">
 
 			<div class="pull-right">
 				<partial name="Partials/Shared/_AjaxLoader" model="@(new AjaxLoaderViewModel("pvLoader"))" />
 			</div>
+
+			<partial name="Partials/Shared/_ValidationSummaryDiv" model="@(new ValidationSummaryDivViewModel(Res.UnableToCreateSong))" />
 
 			<div class="alert alert-info">
 				@Html.Raw(SongRes.NewSongNote)
@@ -32,19 +32,19 @@
 			</div>
 
 			<!--
-				<div class="alert alert-info">
-					<p>@Res.NoArtistsToName</p>
-					<p>@Res.NameHelp</p>
-					<p>@Res.ArtistHelp</p>
-				</div>
+			<div class="alert alert-info">
+				<p>@Res.NoArtistsToName</p>
+				<p>@Res.NameHelp</p>
+				<p>@Res.ArtistHelp</p>
+			</div>
 			-->
 
 			<fieldset>
-				
+
 				<legend>@Res.Media</legend>
 
 				<div class="alert alert-danger" data-bind="visible: isDuplicatePV" style="display:none">
-						@Res.DuplicatePV
+					@Res.DuplicatePV
 				</div>
 
 				<div class="editor-label">
@@ -72,7 +72,7 @@
 			</fieldset>
 
 			<div class="editor-field">
-				
+
 				<fieldset>
 					<legend>
 						@Res.Name
@@ -123,7 +123,7 @@
 			</div>
 
 			<fieldset>
-				
+
 				<legend>
 					@Res.SongType
 				</legend>
@@ -138,13 +138,13 @@
 
 			<!-- ko if: canHaveOriginalVersion -->
 			<fieldset>
-				
+
 				<legend>@ViewRes.Song.EditStrings.BaOriginalVersion</legend>
 				<div class="editor-field">
 					<div style="display: inline-block;" class="input-append">
 						<partial name="Partials/Knockout/_LockingAutoComplete" model="@(new LockingAutoCompleteViewModel("songAutoComplete", "originalVersionSearchParams", textBinding: "originalVersion.name", valBinding: "originalVersion.id"))" />
 					</div>
-					
+
 					<div data-bind="visible: originalVersion.isEmpty() && originalSongSuggestions().length" style="display: none;">
 						<h4>@Res.OriginalSuggestionsTitle</h4>
 						<table data-bind="foreach: originalSongSuggestions">
@@ -162,21 +162,21 @@
 							</tr>
 						</table>
 					</div>
-					
+
 					@Html.HiddenForKnockout(m => m.OriginalVersion, "value: ko.toJSON(originalVersion)")
 				</div>
-				
+
 			</fieldset>
 			<!-- /ko -->
 
 			<fieldset>
-				
+
 				<legend>
 					@Res.ArtistsInfo
 					<partial name="Partials/Shared/_RequiredField" />
 				</legend>
 				<p>@Res.ArtistDesc</p>
-				
+
 				<div class="editor-field">
 					@Html.ValidationMessage("Artists")
 
