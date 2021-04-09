@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.IO;
 using System.Net;
 using NLog;
@@ -19,7 +17,7 @@ namespace VocaDb.Web.Code.Security
 		private const string ApiUrl = "https://www.stopforumspam.com/api?ip={0}&confidence&f=json";
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
-		public async Task<SFSResponseContract> CallApiAsync(string ip)
+		public async Task<SFSResponseContract?> CallApiAsync(string? ip)
 		{
 			if (string.IsNullOrEmpty(ip))
 				return null;

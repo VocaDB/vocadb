@@ -173,11 +173,13 @@ namespace VocaDb.Model.Utils
 			return (SlogansSection)ConfigurationManager.GetSection("vocaDb/slogans");
 		}
 
+#nullable enable
 		/// <summary>
 		/// Host address of the main site, contains full path to the web application's root, including hostname.
 		/// For example https://vocadb.net
 		/// </summary>
 		public static string HostAddress => Val("HostAddress");
+#nullable disable
 
 		public static string LockdownMessage => Val("LockdownMessage");
 
@@ -216,9 +218,11 @@ namespace VocaDb.Model.Utils
 
 		public static string SoundCloudClientId => Val("SoundCloudClientId");
 
+#nullable enable
 		public static string StaticContentPath => Val("StaticContentPath");
 
 		public static string StaticContentHost => Val("StaticContentHost");
+#nullable disable
 
 		public static string TwitterConsumerKey => Val("TwitterConsumerKey");
 

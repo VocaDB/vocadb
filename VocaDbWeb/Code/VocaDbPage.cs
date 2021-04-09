@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Threading;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +36,7 @@ namespace VocaDb.Web.Code
 		/// If the application is installed in the root folder, for example http://vocadb.net/, this will be just "/".
 		/// For http://server.com/vocadb/ this would be "/vocadb/".
 		/// </summary>
-		public string RootPath => Url.Content("~/");
+		public string? RootPath => Url.Content("~/");
 
 		public string DecimalDot(double val)
 		{
@@ -57,12 +55,12 @@ namespace VocaDb.Web.Code
 
 		public string ToJS(int? val)
 		{
-			return val.HasValue ? val.ToString() : "null";
+			return val.HasValue ? val.Value.ToString() : "null";
 		}
 
-		public IHtmlContent ToJS(string str, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(str, lowerCase, dateTimeConverter);
+		public IHtmlContent ToJS(string? str, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(str, lowerCase, dateTimeConverter);
 
-		public IHtmlContent ToJS(object obj, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(obj, lowerCase, dateTimeConverter);
+		public IHtmlContent ToJS(object? obj, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(obj, lowerCase, dateTimeConverter);
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 
@@ -87,7 +85,7 @@ namespace VocaDb.Web.Code
 
 		private IUrlHelper Url => Context.RequestServices.GetRequiredService<IUrlHelper>();
 
-		public string RootPath => Url.Content("~/");
+		public string? RootPath => Url.Content("~/");
 
 		public string ToJS(bool val)
 		{
@@ -101,12 +99,12 @@ namespace VocaDb.Web.Code
 
 		public string ToJS(int? val)
 		{
-			return val.HasValue ? val.ToString() : "null";
+			return val.HasValue ? val.Value.ToString() : "null";
 		}
 
-		public IHtmlContent ToJS(string str, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(str, lowerCase, dateTimeConverter);
+		public IHtmlContent ToJS(string? str, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(str, lowerCase, dateTimeConverter);
 
-		public IHtmlContent ToJS(object obj, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(obj, lowerCase, dateTimeConverter);
+		public IHtmlContent ToJS(object? obj, bool lowerCase = true, bool dateTimeConverter = false) => JsonHelpers.ToJS(obj, lowerCase, dateTimeConverter);
 
 		public VocaUrlMapper UrlMapper => new VocaUrlMapper();
 

@@ -38,7 +38,9 @@ namespace VocaDb.Model.Service.VideoServices
 			return group.Value;
 		}
 
+#nullable enable
 		public bool IsMatch(string url) => _regex.IsMatch(url);
+#nullable disable
 
 		public string MakeLinkFromUrl(string url) => MakeLinkFromId(GetId(url));
 

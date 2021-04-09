@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Globalization;
 
 namespace VocaDb.Web.Helpers

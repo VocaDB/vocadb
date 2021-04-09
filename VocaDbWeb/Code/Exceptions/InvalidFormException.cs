@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Runtime.Serialization;
 
@@ -11,8 +9,8 @@ namespace VocaDb.Web.Code.Exceptions
 	public class InvalidFormException : Exception
 	{
 		public InvalidFormException() { }
-		public InvalidFormException(string message) : base(message) { }
-		public InvalidFormException(string message, Exception innerException) : base(message, innerException) { }
+		public InvalidFormException(string? message) : base(message) { }
+		public InvalidFormException(string? message, Exception? innerException) : base(message, innerException) { }
 		protected InvalidFormException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 	}
 }

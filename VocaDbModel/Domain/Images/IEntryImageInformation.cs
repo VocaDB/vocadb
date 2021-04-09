@@ -47,6 +47,7 @@ namespace VocaDb.Model.Domain.Images
 
 	public static class EntryImageInformationExtensions
 	{
+#nullable enable
 		public static bool PurposeMainOrUnspecified(this IEntryImageInformation image) => image.Purpose == ImagePurpose.Main || image.Purpose == ImagePurpose.Unspesified;
 
 		/// <summary>
@@ -57,9 +58,10 @@ namespace VocaDb.Model.Domain.Images
 		/// </summary>
 		/// <param name="image">Image information.</param>
 		/// <returns>True if image is assumed to exist. Otherwise false.</returns>
-		public static bool ShouldExist(this IEntryImageInformation image)
+		public static bool ShouldExist(this IEntryImageInformation? image)
 		{
 			return image != null && !string.IsNullOrEmpty(image.Mime);
 		}
+#nullable disable
 	}
 }

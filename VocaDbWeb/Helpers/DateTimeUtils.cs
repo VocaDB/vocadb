@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Text.RegularExpressions;
 using VocaDb.Model.Helpers;
@@ -18,7 +16,7 @@ namespace VocaDb.Web.Helpers
 			return DateTimeHelper.FormatMinSec(TimeSpan.FromSeconds(seconds));
 		}
 
-		public static TimeSpan ParseFromSimpleString(string timeSpanStr)
+		public static TimeSpan ParseFromSimpleString(string? timeSpanStr)
 		{
 			if (string.IsNullOrEmpty(timeSpanStr))
 				return TimeSpan.Zero;

@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using Microsoft.AspNetCore.Mvc;
 using VocaDb.Model.Domain;
@@ -19,7 +17,7 @@ namespace VocaDb.Web.Code
 		public VocaDbUrl GetUrl(IEntryImageInformation imageInfo, ImageSize size)
 		{
 			var urlHelper = _urlHelperAccessor.Value;
-			string dynamicUrl = null;
+			string? dynamicUrl = null;
 			if (imageInfo.EntryType == EntryType.Album)
 			{
 				if (size == ImageSize.Original)

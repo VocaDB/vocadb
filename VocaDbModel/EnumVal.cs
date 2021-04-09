@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,8 +74,7 @@ namespace VocaDb.Model
 			return (T)Enum.Parse(typeof(T), value);
 		}
 
-#nullable enable
-		public static T[] ParseAll(string[] values)
+		public static T[] ParseAll(string?[] values)
 		{
 			ParamIs.NotNull(() => values);
 
@@ -91,9 +88,8 @@ namespace VocaDb.Model
 
 			return list.ToArray();
 		}
-#nullable disable
 
-		public static T[] ParseMultiple(string value)
+		public static T[] ParseMultiple(string? value)
 		{
 			if (string.IsNullOrEmpty(value))
 				return new T[0];
@@ -101,7 +97,7 @@ namespace VocaDb.Model
 			return ParseAll(value.Split(','));
 		}
 
-		public static T ParseSafe(string value, T def = default)
+		public static T ParseSafe(string? value, T def = default)
 			=> Enum.TryParse(value, true, out T val) ? val : def;
 
 		/// <summary>
@@ -133,9 +129,9 @@ namespace VocaDb.Model
 
 		public void Clear() => Value = default;
 
-		public override bool Equals(object obj) => Equals(obj as EnumVal<T>);
+		public override bool Equals(object? obj) => Equals(obj as EnumVal<T>);
 
-		public bool Equals(EnumVal<T> other) => other != null && Value.Equals(other.Value);
+		public bool Equals(EnumVal<T>? other) => other != null && Value.Equals(other.Value);
 
 		public bool Equals(T other) => Value.Equals(other);
 

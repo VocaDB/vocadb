@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Linq;
 using VocaDb.Model.Utils;
@@ -19,7 +17,7 @@ namespace VocaDb.Web.Code
 			"Passwords secured with HMIC"
 		};
 
-		private static string[] s_slogans;
+		private static string[]? s_slogans;
 
 		private static string[] GetValues()
 		{

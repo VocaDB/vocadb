@@ -1,6 +1,5 @@
-#nullable disable
-
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace VocaDb.Model.Utils
 {
@@ -32,7 +31,7 @@ namespace VocaDb.Model.Utils
 		/// <returns></returns>
 		public static string AbsoluteFromUnknown(string relativeOrAbsolute, bool preserveAbsolute)
 		{
-			if (Uri.TryCreate(relativeOrAbsolute, UriKind.RelativeOrAbsolute, out Uri uri))
+			if (Uri.TryCreate(relativeOrAbsolute, UriKind.RelativeOrAbsolute, out var uri))
 			{
 				if (uri.IsAbsoluteUri)
 					return preserveAbsolute ? relativeOrAbsolute : Absolute(Relative(relativeOrAbsolute)); // URL is absolute, replace it with main site URL or preserve original.
@@ -48,7 +47,7 @@ namespace VocaDb.Model.Utils
 		/// </summary>
 		/// <param name="relative">Relative address, for example /User/Profile/Test</param>
 		/// <returns>Absolute address, for example https://vocadb.net/User/Profile/Test </returns>
-		public static Uri CreateAbsolute(string relative)
+		public static Uri CreateAbsolute(string? relative)
 		{
 			return new Uri(new Uri(HostAddress), relative);
 		}
@@ -62,7 +61,7 @@ namespace VocaDb.Model.Utils
 		[Obsolete]
 		public static string MakeSSL(string relative) => Absolute(relative);
 
-		private static string MergeUrls_BaseNoTrailingSlash(string baseUrl, string relative)
+		private static string MergeUrls_BaseNoTrailingSlash(string? baseUrl, string relative)
 		{
 			if (relative.StartsWith("/"))
 				return $"{baseUrl}{relative}";
@@ -85,7 +84,8 @@ namespace VocaDb.Model.Utils
 			}
 		}
 
-		public static string RemoveTrailingSlash(string url)
+		[return:NotNullIfNotNull("url"/* TODO: use nameof */)]
+		public static string? RemoveTrailingSlash(string? url)
 		{
 			if (string.IsNullOrEmpty(url))
 				return url;
@@ -101,7 +101,7 @@ namespace VocaDb.Model.Utils
 		/// <returns>Relative portion of the URL, for example /</returns>
 		private static string Relative(string relativeOrAbsolute)
 		{
-			if (Uri.TryCreate(relativeOrAbsolute, UriKind.RelativeOrAbsolute, out Uri uri))
+			if (Uri.TryCreate(relativeOrAbsolute, UriKind.RelativeOrAbsolute, out var uri))
 				return uri.IsAbsoluteUri ? uri.PathAndQuery : relativeOrAbsolute;
 			else
 				return relativeOrAbsolute;

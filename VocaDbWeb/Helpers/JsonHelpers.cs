@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Web;
 using Microsoft.AspNetCore.Html;
 using Newtonsoft.Json;
@@ -10,7 +8,7 @@ namespace VocaDb.Web.Helpers
 {
 	public static class JsonHelpers
 	{
-		public static string Serialize(object value, bool lowerCase = true, bool dateTimeConverter = false)
+		public static string Serialize(object? value, bool lowerCase = true, bool dateTimeConverter = false)
 		{
 			var settings = new JsonSerializerSettings();
 
@@ -26,6 +24,6 @@ namespace VocaDb.Web.Helpers
 		/// <summary>
 		/// <seealso href="https://github.com/VocaDB/vocadb/pull/736"/>
 		/// </summary>
-		public static IHtmlContent ToJS(object value, bool lowerCase = true, bool dateTimeConverter = false) => new HtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(Serialize(value, lowerCase, dateTimeConverter))}"")");
+		public static IHtmlContent ToJS(object? value, bool lowerCase = true, bool dateTimeConverter = false) => new HtmlString($@"JSON.parse(""{HttpUtility.JavaScriptStringEncode(Serialize(value, lowerCase, dateTimeConverter))}"")");
 	}
 }

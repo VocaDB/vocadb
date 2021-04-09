@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.IO;
 using System.Linq;
 using NLog;
@@ -11,7 +9,7 @@ namespace VocaDb.Web.Code.Security
 	{
 		public string GetLatestLogFileContents()
 		{
-			var fileTarget = (FileTarget)LogManager.Configuration.ConfiguredNamedTargets.FirstOrDefault(t => t is FileTarget);
+			var fileTarget = (FileTarget?)LogManager.Configuration.ConfiguredNamedTargets.FirstOrDefault(t => t is FileTarget);
 
 			if (fileTarget == null)
 				return string.Empty;

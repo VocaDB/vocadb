@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 
 namespace VocaDb.Model.Helpers
@@ -27,7 +25,7 @@ namespace VocaDb.Model.Helpers
 			return $"{(int)timeSpan.TotalMinutes}:{(timeSpan.Seconds < 10 ? "0" : "")}{timeSpan.Seconds}";
 		}
 
-		public static DateTime? ParseDateTimeOffsetAsDate(string str)
+		public static DateTime? ParseDateTimeOffsetAsDate(string? str)
 		{
 			if (DateTimeOffset.TryParse(str, out DateTimeOffset date))
 				return date.Date;

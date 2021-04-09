@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Web;
 using VocaDb.Model;
 using VocaDb.Model.Domain;
@@ -13,7 +11,7 @@ namespace VocaDb.Web.Code
 		private readonly string _baseUrl;
 		private readonly string _hostAddress;
 
-		private string CreateAnchor(string href, string text)
+		private string CreateAnchor(string? href, string? text)
 		{
 			return $"<a href=\"{href}\">{HttpUtility.HtmlEncode(text)}</a>";
 		}
@@ -33,7 +31,7 @@ namespace VocaDb.Web.Code
 			_baseUrl = baseUrl;
 		}
 
-		private string GetUrl(string basePart, EntryType entryType, int id, string slug)
+		private string GetUrl(string basePart, EntryType entryType, int id, string? slug)
 		{
 			slug ??= string.Empty;
 
@@ -52,19 +50,19 @@ namespace VocaDb.Web.Code
 			return VocaUriBuilder.MergeUrls(basePart, relative);
 		}
 
-		public string GetFullEntryUrl(EntryType entryType, int id, string slug = null)
+		public string GetFullEntryUrl(EntryType entryType, int id, string? slug = null)
 		{
 			return GetUrl(_hostAddress, entryType, id, slug);
 		}
 
-		public string CreateEntryLink(EntryType entryType, int id, string name, string slug = null)
+		public string CreateEntryLink(EntryType entryType, int id, string? name, string? slug = null)
 		{
 			var url = GetUrl(_baseUrl, entryType, id, slug);
 
 			return CreateAnchor(url, name);
 		}
 
-		public string CreateEntryLink(IEntryBase entry, string slug = null)
+		public string CreateEntryLink(IEntryBase entry, string? slug = null)
 		{
 			return CreateEntryLink(entry.EntryType, entry.Id, entry.DefaultName, slug);
 		}
