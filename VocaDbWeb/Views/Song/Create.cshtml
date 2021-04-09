@@ -84,19 +84,19 @@
 					</div>
 
 					@Html.ValidationMessage("Names")
-					<table>
+					<table style="width: 100%">
 						<tr>
-							<td class="formLabel">
+							<td class="formLabel span2">
 								@Html.LabelFor(m => m.NameOriginal)
 							</td>
-							<td class="input-field">
+							<td class="input-field span10">
 								<!-- change event is fired when the field is focused out AND content has changed -->
 								@Html.TextBoxForKnockout(m => m.NameOriginal, "textInput: nameOriginal, event: { change: checkDuplicates }", cssClass: "span12 input-field", maxLength: 255, size: 40, placeholder: Res.NonEnglishNote)
 							</td>
 						</tr>
 
 						<tr>
-							<td class="formLabel">
+							<td class="formLabel span2">
 								<a style="text-decoration: underline dashed">
 									@Html.LabelFor(m => m.NameRomaji, htmlAttributes: new
 									{
@@ -105,16 +105,16 @@
 									})
 								</a>
 							</td>
-							<td>
+							<td class="span10">
 								@Html.TextBoxForKnockout(m => m.NameRomaji, "textInput: nameRomaji, event: { change: checkDuplicates }", cssClass: "span12 input-field", maxLength: 255, size: 40)
 							</td>
 						</tr>
 
 						<tr>
-							<td class="formLabel">
+							<td class="formLabel span2">
 								@Html.LabelFor(m => m.NameEnglish)
 							</td>
-							<td>
+							<td class="span10">
 								@Html.TextBoxForKnockout(m => m.NameEnglish, "textInput: nameEnglish, event: { change: checkDuplicates }", cssClass: "span12 input-field", maxLength: 255, size: 40, placeholder: Res.EnglishNote)
 							</td>
 						</tr>
