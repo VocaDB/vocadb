@@ -24,14 +24,16 @@ namespace VocaDb.Model.Service
 
 	public static class IEntryLinkFactoryExtensions
 	{
-		public static string GetFullEntryUrl(this IEntryLinkFactory entryLinkFactory, IEntryBase entryBase, string slug = null)
+#nullable enable
+		public static string GetFullEntryUrl(this IEntryLinkFactory entryLinkFactory, IEntryBase entryBase, string? slug = null)
 		{
 			return entryLinkFactory.GetFullEntryUrl(entryBase.EntryType, entryBase.Id, slug);
 		}
 
-		public static string GetFullEntryUrl(this IEntryLinkFactory entryLinkFactory, GlobalEntryId globalId, string slug = null)
+		public static string GetFullEntryUrl(this IEntryLinkFactory entryLinkFactory, GlobalEntryId globalId, string? slug = null)
 		{
 			return entryLinkFactory.GetFullEntryUrl(globalId.EntryType, globalId.Id, slug);
 		}
+#nullable disable
 	}
 }

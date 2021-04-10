@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Linq;
 using VocaDb.Model.Service.VideoServices;
 
@@ -38,7 +36,7 @@ namespace VocaDb.Model.Service.Helpers
 		/// (such as artist name).
 		/// For internal URLs <see cref="EntryUrlParser"/> can be used.
 		/// </remarks>
-		public string GetExternalUrl(string possibleUrl)
+		public string? GetExternalUrl(string? possibleUrl)
 		{
 			if (string.IsNullOrEmpty(possibleUrl))
 				return null;

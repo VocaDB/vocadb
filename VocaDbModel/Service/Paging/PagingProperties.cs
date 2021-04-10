@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Runtime.Serialization;
 using VocaDb.Model.DataContracts;
 

@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +19,7 @@ namespace VocaDb.Model.Service.Helpers
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
 		private string CreateMessageBody(Tag[] followedArtists, User user, IEntryWithNames entry, IEntryLinkFactory entryLinkFactory, bool markdown,
-			string entryTypeName)
+			string? entryTypeName)
 		{
 			var entryName = entry.Names.SortNames[user.DefaultLanguageSelection];
 			var url = entryLinkFactory.GetFullEntryUrl(entry);

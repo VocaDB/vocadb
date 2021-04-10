@@ -1,5 +1,3 @@
-#nullable disable
-
 using NHibernate;
 
 namespace VocaDb.Model.Service.Helpers

@@ -14,7 +14,8 @@ namespace VocaDb.Model.Service.Helpers
 {
 	public static class SessionHelper
 	{
-		public static AgentLoginData CreateAgentLoginData(ISession session, IUserPermissionContext permissionContext, User user = null)
+#nullable enable
+		public static AgentLoginData CreateAgentLoginData(ISession session, IUserPermissionContext permissionContext, User? user = null)
 		{
 			if (user != null)
 				return new AgentLoginData(user);
@@ -29,6 +30,7 @@ namespace VocaDb.Model.Service.Helpers
 				return new AgentLoginData(permissionContext.Name);
 			}
 		}
+#nullable disable
 
 		public static void RestoreObjectRefs<TExisting, TEntry>(ISession session, IList<string> warnings, IEnumerable<TExisting> existing,
 			IEnumerable<ObjectRefContract> objRefs, Func<TExisting, ObjectRefContract, bool> equality,

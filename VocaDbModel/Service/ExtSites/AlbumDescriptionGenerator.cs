@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Globalization;
 using System.Linq;
@@ -13,7 +11,7 @@ namespace VocaDb.Model.Service.ExtSites
 {
 	public class AlbumDescriptionGenerator
 	{
-		private void AddBasicDescription(StringBuilder sb, AlbumContract album, Func<DiscType, string> albumTypeNames)
+		private void AddBasicDescription(StringBuilder sb, AlbumContract album, Func<DiscType, string?> albumTypeNames)
 		{
 			var typeName = albumTypeNames(album.DiscType);
 
@@ -26,7 +24,7 @@ namespace VocaDb.Model.Service.ExtSites
 			}
 		}
 
-		public string GenerateDescription(AlbumContract album, Func<DiscType, string> albumTypeNames)
+		public string GenerateDescription(AlbumContract album, Func<DiscType, string?> albumTypeNames)
 		{
 			var sb = new StringBuilder();
 			AddBasicDescription(sb, album, albumTypeNames);
@@ -34,7 +32,7 @@ namespace VocaDb.Model.Service.ExtSites
 			return sb.ToString();
 		}
 
-		public string GenerateDescription(AlbumDetailsContract album, Func<DiscType, string> albumTypeNames)
+		public string GenerateDescription(AlbumDetailsContract album, Func<DiscType, string?> albumTypeNames)
 		{
 			var sb = new StringBuilder();
 

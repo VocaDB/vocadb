@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using VocaDb.Model.Domain.Globalization;
@@ -11,7 +9,6 @@ namespace VocaDb.Model.Service.EntryValidators
 {
 	public class SongValidator
 	{
-#nullable enable
 		public bool IsValid(Song song, int instrumentalTagId)
 		{
 			ParamIs.NotNull(() => song);
@@ -48,6 +45,5 @@ namespace VocaDb.Model.Service.EntryValidators
 
 			return !errors.Any();
 		}
-#nullable disable
 	}
 }

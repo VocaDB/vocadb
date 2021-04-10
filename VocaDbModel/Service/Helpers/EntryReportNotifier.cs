@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Domain.Versioning;
@@ -11,10 +9,10 @@ namespace VocaDb.Model.Service.Helpers
 	public class EntryReportNotifier
 	{
 		public void SendReportNotification(IDatabaseContext<UserMessage> ctx,
-			ArchivedObjectVersion reportedVersion,
-			string notes,
+			ArchivedObjectVersion? reportedVersion,
+			string? notes,
 			IEntryLinkFactory entryLinkFactory,
-			string reportName)
+			string? reportName)
 		{
 			if (reportedVersion == null)
 				return;
@@ -35,7 +33,7 @@ namespace VocaDb.Model.Service.Helpers
 			}
 
 			// Report type name + notes
-			string notesAndName = notes;
+			string? notesAndName = notes;
 
 			if (!string.IsNullOrEmpty(reportName) && !string.IsNullOrEmpty(notes))
 			{

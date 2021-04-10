@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Linq;
 using System.Text;
 using VocaDb.Model.DataContracts.Artists;
@@ -23,7 +21,7 @@ namespace VocaDb.Model.Service.ExtSites
 			}
 		}
 
-		public string GenerateDescription(ArtistDetailsContract artist, string original, TranslateableEnum<ArtistType> artistTypeNames)
+		public string GenerateDescription(ArtistDetailsContract artist, string? original, TranslateableEnum<ArtistType> artistTypeNames)
 		{
 			var sb = new StringBuilder(original);
 

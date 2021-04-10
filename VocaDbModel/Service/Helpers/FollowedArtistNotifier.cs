@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +50,7 @@ namespace VocaDb.Model.Service.Helpers
 		}
 
 		private string CreateMessageBody(Artist[] followedArtists, User user, IEntryWithNames entry, bool markdown,
-			string entryTypeName)
+			string? entryTypeName)
 		{
 			var entryName = entry.Names.SortNames[user.DefaultLanguageSelection];
 			var url = _entryLinkFactory.GetFullEntryUrl(entry);
@@ -96,7 +94,6 @@ namespace VocaDb.Model.Service.Helpers
 			}
 		}
 
-#nullable enable
 		private async Task<IReadOnlyCollection<User>> DoSendNotificationsAsync(IDatabaseContext ctx, IEntryWithNames entry, IEnumerable<Artist> artists, IUser creator)
 		{
 			ParamIs.NotNull(() => ctx);
@@ -191,6 +188,5 @@ namespace VocaDb.Model.Service.Helpers
 
 			return users;
 		}
-#nullable disable
 	}
 }
