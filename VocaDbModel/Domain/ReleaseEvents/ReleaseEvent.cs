@@ -338,9 +338,8 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 
 			return link;
 		}
-#nullable disable
 
-		public virtual bool Equals(ReleaseEvent another)
+		public virtual bool Equals(ReleaseEvent? another)
 		{
 			if (another == null)
 				return false;
@@ -354,10 +353,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as ReleaseEvent);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

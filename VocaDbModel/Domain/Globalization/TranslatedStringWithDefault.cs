@@ -65,7 +65,8 @@ namespace VocaDb.Model.Domain.Globalization
 			}
 		}
 
-		public bool Equals(TranslatedStringWithDefault other)
+#nullable enable
+		public bool Equals(TranslatedStringWithDefault? other)
 		{
 			if (other == null)
 				return false;
@@ -73,10 +74,11 @@ namespace VocaDb.Model.Domain.Globalization
 			return Default.Equals(other.Default) && English.Equals(other.English) && Japanese.Equals(other.Japanese) && Romaji.Equals(other.Romaji);
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as TranslatedStringWithDefault);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

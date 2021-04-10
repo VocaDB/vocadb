@@ -91,13 +91,15 @@ namespace VocaDb.Model.Helpers
 		public DistinctPropertyEqualityComparer(Func<T, T2> func)
 			: this(func, EqualityComparer<T2>.Default) { }
 
-		public bool Equals(T x, T y)
+#nullable enable
+		public bool Equals(T? x, T? y)
 		{
 			if (ReferenceEquals(x, y))
 				return true;
 
 			return _propertyEquality.Equals(_func(x), _func(y));
 		}
+#nullable disable
 
 		public int GetHashCode(T obj)
 		{

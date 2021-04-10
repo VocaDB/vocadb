@@ -37,7 +37,8 @@ namespace VocaDb.Model.Domain.PVs
 		/// </summary>
 		public virtual int Length { get; set; }
 
-		public virtual bool Equals(GenericPV<TEntry> another)
+#nullable enable
+		public virtual bool Equals(GenericPV<TEntry>? another)
 		{
 			if (another == null)
 				return false;
@@ -51,10 +52,11 @@ namespace VocaDb.Model.Domain.PVs
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as GenericPV<TEntry>);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

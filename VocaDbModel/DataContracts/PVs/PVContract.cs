@@ -113,18 +113,20 @@ namespace VocaDb.Model.DataContracts.PVs
 		[DataMember]
 		public string Url { get; init; }
 
+#nullable enable
 		/// <summary>
 		/// Compares editable properties.
 		/// </summary>
 		/// <param name="pv">Contract to be compared to. Can be null.</param>
 		/// <returns>True if the editable properties of this contract are the same as the one being compared to.</returns>
-		public bool ContentEquals(PVContract pv)
+		public bool ContentEquals(PVContract? pv)
 		{
 			if (pv == null)
 				return false;
 
 			return (Name == pv.Name && Disabled == pv.Disabled);
 		}
+#nullable disable
 
 		public PVContract NullToEmpty()
 		{

@@ -63,10 +63,12 @@ namespace VocaDb.Model.Domain.Songs
 			}
 		}
 
-		public override bool ContentEquals(PVContract pv)
+#nullable enable
+		public override bool ContentEquals(PVContract? pv)
 		{
 			return base.ContentEquals(pv) && Disabled == pv.Disabled;
 		}
+#nullable disable
 
 		public override void CopyMetaFrom(PVContract contract)
 		{
@@ -76,7 +78,8 @@ namespace VocaDb.Model.Domain.Songs
 			ThumbUrl = contract.ThumbUrl;
 		}
 
-		public virtual bool Equals(PVForSong another)
+#nullable enable
+		public virtual bool Equals(PVForSong? another)
 		{
 			if (another == null)
 				return false;
@@ -90,10 +93,11 @@ namespace VocaDb.Model.Domain.Songs
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as PVForSong);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

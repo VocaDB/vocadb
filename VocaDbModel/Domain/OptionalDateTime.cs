@@ -117,6 +117,7 @@ namespace VocaDb.Model.Domain
 			return SortableDateTime.CompareTo(other.SortableDateTime);
 		}
 
+#nullable enable
 		/// <summary>
 		/// Tests this date with equality with another.
 		/// 
@@ -129,7 +130,7 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		/// <param name="another">Another date object. Can be null.</param>
 		/// <returns>True if the dates are considered equal, otherwise false.</returns>
-		public virtual bool Equals(OptionalDateTime another)
+		public virtual bool Equals(OptionalDateTime? another)
 		{
 			if (another == null)
 				return IsEmpty;
@@ -138,13 +139,14 @@ namespace VocaDb.Model.Domain
 				|| (Year == another.Year && Month == another.Month && Day == another.Day));
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (!(obj is OptionalDateTime))
 				return false;
 
 			return Equals((OptionalDateTime)obj);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

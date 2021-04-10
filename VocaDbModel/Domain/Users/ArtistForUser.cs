@@ -67,7 +67,8 @@ namespace VocaDb.Model.Domain.Users
 			Artist.Users.Remove(this);
 		}
 
-		public virtual bool Equals(ArtistForUser another)
+#nullable enable
+		public virtual bool Equals(ArtistForUser? another)
 		{
 			if (another == null)
 				return false;
@@ -81,10 +82,11 @@ namespace VocaDb.Model.Domain.Users
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as ArtistForUser);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

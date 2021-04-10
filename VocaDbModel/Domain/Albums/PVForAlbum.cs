@@ -27,7 +27,8 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
-		public virtual bool Equals(PVForAlbum another)
+#nullable enable
+		public virtual bool Equals(PVForAlbum? another)
 		{
 			if (another == null)
 				return false;
@@ -41,10 +42,11 @@ namespace VocaDb.Model.Domain.Albums
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as PVForAlbum);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

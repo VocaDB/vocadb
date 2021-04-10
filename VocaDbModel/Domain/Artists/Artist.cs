@@ -467,7 +467,8 @@ namespace VocaDb.Model.Domain.Artists
 			Deleted = true;
 		}
 
-		public virtual bool Equals(Artist another)
+#nullable enable
+		public virtual bool Equals(Artist? another)
 		{
 			if (another == null)
 				return false;
@@ -481,10 +482,11 @@ namespace VocaDb.Model.Domain.Artists
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as Artist);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

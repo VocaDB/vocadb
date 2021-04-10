@@ -21,16 +21,18 @@ namespace VocaDb.Model.Domain.Albums
 
 		public int TrackNumber { get; }
 
+#nullable enable
 		public bool Equals(TrackIndex obj)
 		{
 			return DiscNumber == obj.DiscNumber && TrackNumber == obj.TrackNumber;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
 			return obj is TrackIndex && Equals((TrackIndex)obj);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

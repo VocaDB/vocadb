@@ -72,7 +72,8 @@ namespace VocaDb.Model.Domain.Songs
 			}
 		}
 
-		public virtual bool ArtistLinkEquals(ArtistForSong another)
+#nullable enable
+		public virtual bool ArtistLinkEquals(ArtistForSong? another)
 		{
 			if (another == null)
 				return false;
@@ -80,7 +81,7 @@ namespace VocaDb.Model.Domain.Songs
 			return ((Artist != null && Artist.Equals(another.Artist)) || (Artist == null && another.Artist == null && Name == another.Name));
 		}
 
-		public virtual bool ContentEquals(ArtistForSongContract contract)
+		public virtual bool ContentEquals(ArtistForSongContract? contract)
 		{
 			if (contract == null)
 				return false;
@@ -89,6 +90,7 @@ namespace VocaDb.Model.Domain.Songs
 
 			return (IsSupport == contract.IsSupport && Roles == contract.Roles && Name == realNewName);
 		}
+#nullable disable
 
 		public virtual void Delete()
 		{
@@ -99,7 +101,8 @@ namespace VocaDb.Model.Domain.Songs
 			Song.UpdateArtistString();
 		}
 
-		public virtual bool Equals(ArtistForSong another)
+#nullable enable
+		public virtual bool Equals(ArtistForSong? another)
 		{
 			if (another == null)
 				return false;
@@ -113,10 +116,11 @@ namespace VocaDb.Model.Domain.Songs
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as ArtistForSong);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

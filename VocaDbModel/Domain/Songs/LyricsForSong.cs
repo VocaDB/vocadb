@@ -90,7 +90,8 @@ namespace VocaDb.Model.Domain.Songs
 			}
 		}
 
-		public virtual bool ContentEquals(LyricsForSongContract contract)
+#nullable enable
+		public virtual bool ContentEquals(LyricsForSongContract? contract)
 		{
 			if (contract == null)
 				return false;
@@ -102,7 +103,7 @@ namespace VocaDb.Model.Domain.Songs
 				&& Value == contract.Value);
 		}
 
-		public virtual bool Equals(LyricsForSong another)
+		public virtual bool Equals(LyricsForSong? another)
 		{
 			if (another == null)
 				return false;
@@ -116,10 +117,11 @@ namespace VocaDb.Model.Domain.Songs
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as LyricsForSong);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

@@ -37,7 +37,8 @@ namespace VocaDb.Model.Domain.Comments
 
 		public override CommentType CommentType { get; }
 
-		public virtual bool Equals(GenericComment<T> another)
+#nullable enable
+		public virtual bool Equals(GenericComment<T>? another)
 		{
 			if (another == null)
 				return false;
@@ -51,10 +52,11 @@ namespace VocaDb.Model.Domain.Comments
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as GenericComment<T>);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

@@ -636,7 +636,8 @@ namespace VocaDb.Model.Domain.Users
 			return CreateWebLink(new WebLinkContract(url, description, category, disabled));
 		}
 
-		public virtual bool Equals(IUser another)
+#nullable enable
+		public virtual bool Equals(IUser? another)
 		{
 			if (another == null)
 				return false;
@@ -647,10 +648,11 @@ namespace VocaDb.Model.Domain.Users
 			return string.Equals(Name, another.Name, StringComparison.InvariantCultureIgnoreCase);
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as IUser);
 		}
+#nullable disable
 
 		public virtual void GenerateAccessKey()
 		{

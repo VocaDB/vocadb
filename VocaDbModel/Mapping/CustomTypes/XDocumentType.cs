@@ -36,13 +36,15 @@ namespace VocaDb.Model.Mapping.CustomTypes
 		public SqlType[] SqlTypes => new[] { new SqlXmlType() };
 		public Type ReturnedType { get => typeof(XDocument); }
 
-		public new bool Equals(object x, object y)
+#nullable enable
+		public new bool Equals(object? x, object? y)
 		{
 			if (ReferenceEquals(x, y)) return true;
 			if (x == null || y == null) return false;
 
 			return x.Equals(y);
 		}
+#nullable disable
 
 		public object DeepCopy(object value)
 		{

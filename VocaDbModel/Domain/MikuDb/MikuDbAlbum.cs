@@ -64,7 +64,8 @@ namespace VocaDb.Model.Domain.MikuDb
 			set => _title = value;
 		}
 
-		public virtual bool Equals(MikuDbAlbum another)
+#nullable enable
+		public virtual bool Equals(MikuDbAlbum? another)
 		{
 			if (another == null)
 				return false;
@@ -78,10 +79,11 @@ namespace VocaDb.Model.Domain.MikuDb
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as MikuDbAlbum);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

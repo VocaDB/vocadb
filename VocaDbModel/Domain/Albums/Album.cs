@@ -564,7 +564,8 @@ namespace VocaDb.Model.Domain.Albums
 			// Archived versions and comments are cascaded
 		}
 
-		public virtual bool Equals(Album another)
+#nullable enable
+		public virtual bool Equals(Album? another)
 		{
 			if (another == null)
 				return false;
@@ -578,10 +579,11 @@ namespace VocaDb.Model.Domain.Albums
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as Album);
 		}
+#nullable disable
 
 		public virtual ArtistForAlbum GetArtistLink(Artist artist)
 		{

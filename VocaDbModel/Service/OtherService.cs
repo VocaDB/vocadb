@@ -41,10 +41,12 @@ namespace VocaDb.Model.Service
 	{
 		class EntryComparer : IEqualityComparer<IEntryWithNames>
 		{
-			public bool Equals(IEntryWithNames x, IEntryWithNames y)
+#nullable enable
+			public bool Equals(IEntryWithNames? x, IEntryWithNames? y)
 			{
 				return x.EntryType == y.EntryType && x.Id == y.Id;
 			}
+#nullable disable
 
 			public int GetHashCode(IEntryWithNames obj)
 			{

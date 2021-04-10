@@ -32,7 +32,8 @@ namespace VocaDb.Model.Domain.Tags
 			}
 		}
 
-		public virtual bool Equals(TagVote another)
+#nullable enable
+		public virtual bool Equals(TagVote? another)
 		{
 			if (another == null)
 				return false;
@@ -46,7 +47,8 @@ namespace VocaDb.Model.Domain.Tags
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj) => Equals(obj as TagVote);
+		public override bool Equals(object? obj) => Equals(obj as TagVote);
+#nullable disable
 
 		public override int GetHashCode() => Id.GetHashCode();
 

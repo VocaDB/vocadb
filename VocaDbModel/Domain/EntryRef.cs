@@ -28,7 +28,8 @@ namespace VocaDb.Model.Domain
 
 		public int Id { get; set; }
 
-		public bool Equals(EntryRef another)
+#nullable enable
+		public bool Equals(EntryRef? another)
 		{
 			if (another == null)
 				return false;
@@ -36,10 +37,11 @@ namespace VocaDb.Model.Domain
 			return (EntryType == another.EntryType && Id == another.Id);
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as EntryRef);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

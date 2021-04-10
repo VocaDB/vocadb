@@ -42,12 +42,14 @@ namespace VocaDb.Model.Domain.Albums
 
 		public virtual ReleaseEvent ReleaseEvent { get; set; }
 
-		public virtual bool Equals(AlbumRelease another)
+#nullable enable
+		public virtual bool Equals(AlbumRelease? another)
 		{
 			if (another == null)
 				return IsEmpty;
 
 			return Equals(CatNum, another.CatNum) && Equals(ReleaseDate, another.ReleaseDate) && Equals(ReleaseEvent, another.ReleaseEvent);
 		}
+#nullable disable
 	}
 }

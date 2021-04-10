@@ -63,12 +63,14 @@ namespace VocaDb.Model.Domain
 
 		public override string ToString() => Url;
 
-		public bool Equals(VocaDbUrl other)
+#nullable enable
+		public bool Equals(VocaDbUrl? other)
 		{
 			return other != null && other.Domain == Domain && other.Url == Url;
 		}
 
-		public override bool Equals(object obj) => Equals(obj as VocaDbUrl);
+		public override bool Equals(object? obj) => Equals(obj as VocaDbUrl);
+#nullable disable
 
 		public override int GetHashCode()
 		{

@@ -66,6 +66,7 @@ namespace VocaDb.Model.Domain
 			return Nullable.Compare(DateTime, other.DateTime);
 		}
 
+#nullable enable
 		public bool Equals(DateTime? anotherDateTime)
 		{
 			return DateTimeHelper.DateEquals(DateTime, anotherDateTime);
@@ -84,7 +85,7 @@ namespace VocaDb.Model.Domain
 			return DateTimeHelper.DateEquals(DateTime, another.DateTime);
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (obj is DateTime?)
 				return Equals((DateTime?)obj);
@@ -94,6 +95,7 @@ namespace VocaDb.Model.Domain
 
 			return false;
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

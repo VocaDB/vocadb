@@ -25,7 +25,8 @@ namespace VocaDb.Model.Domain.Globalization
 			}
 		}
 
-		public virtual bool Equals(EntryName<TEntry> another)
+#nullable enable
+		public virtual bool Equals(EntryName<TEntry>? another)
 		{
 			if (another == null)
 				return false;
@@ -39,10 +40,11 @@ namespace VocaDb.Model.Domain.Globalization
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as EntryName<TEntry>);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

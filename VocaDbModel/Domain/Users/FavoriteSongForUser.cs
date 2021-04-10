@@ -72,7 +72,8 @@ namespace VocaDb.Model.Domain.Users
 			SetRating(SongVoteRating.Nothing);
 		}
 
-		public virtual bool Equals(FavoriteSongForUser another)
+#nullable enable
+		public virtual bool Equals(FavoriteSongForUser? another)
 		{
 			if (another == null)
 				return false;
@@ -86,10 +87,11 @@ namespace VocaDb.Model.Domain.Users
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as FavoriteSongForUser);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

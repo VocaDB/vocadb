@@ -48,7 +48,8 @@ namespace VocaDb.Model.Domain.Artists
 			Member.AllGroups.Remove(this);
 		}
 
-		public virtual bool Equals(ArtistForArtist another)
+#nullable enable
+		public virtual bool Equals(ArtistForArtist? another)
 		{
 			if (another == null)
 				return false;
@@ -59,10 +60,11 @@ namespace VocaDb.Model.Domain.Artists
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as ArtistForArtist);
 		}
+#nullable disable
 
 		public virtual Artist GetArtist(LinkDirection direction)
 		{

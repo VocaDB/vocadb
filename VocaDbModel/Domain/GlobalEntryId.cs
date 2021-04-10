@@ -28,16 +28,18 @@ namespace VocaDb.Model.Domain
 			return $"{EntryType}.{Id}";
 		}
 
+#nullable enable
 		public bool Equals(GlobalEntryId other)
 		{
 			return EntryType == other.EntryType && Id == other.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (obj is null) return false;
 			return obj is GlobalEntryId && Equals((GlobalEntryId)obj);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

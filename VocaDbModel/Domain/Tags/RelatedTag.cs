@@ -53,18 +53,20 @@ namespace VocaDb.Model.Domain.Tags
 			LinkedTag.RelatedTags.Remove(CreateReversed());
 		}
 
+#nullable enable
 		protected bool Equals(RelatedTag other)
 		{
 			return OwnerTag.Equals(other.OwnerTag) && LinkedTag.Equals(other.LinkedTag);
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
 			if (obj.GetType() != GetType()) return false;
 			return Equals((RelatedTag)obj);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

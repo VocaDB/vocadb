@@ -33,30 +33,32 @@ namespace VocaDb.Model.Domain.Globalization
 			}
 		}
 
-		public virtual bool ContentEquals(ILocalizedString another)
+#nullable enable
+		public virtual bool ContentEquals(ILocalizedString? another)
 		{
 			return (another != null && another.Language == Language && another.Value == Value);
 		}
 
-		public virtual bool ContentEquals(LocalizedString another)
+		public virtual bool ContentEquals(LocalizedString? another)
 		{
 			return (another != null && another.Language == Language && another.Value == Value);
 		}
 
-		public virtual bool ContentEquals(LocalizedStringContract another)
+		public virtual bool ContentEquals(LocalizedStringContract? another)
 		{
 			return (another != null && another.Language == Language && another.Value == Value);
 		}
 
-		public virtual bool Equals(LocalizedString another)
+		public virtual bool Equals(LocalizedString? another)
 		{
 			return ContentEquals(another);
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as LocalizedString);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

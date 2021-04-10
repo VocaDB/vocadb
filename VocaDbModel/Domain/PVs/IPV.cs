@@ -28,6 +28,8 @@ namespace VocaDb.Model.Domain.PVs
 		/// </summary>
 		PVService Service { get; }
 
-		bool ContentEquals(PVContract pv);
+#nullable enable
+		bool ContentEquals(PVContract? pv);
+#nullable disable
 	}
 }

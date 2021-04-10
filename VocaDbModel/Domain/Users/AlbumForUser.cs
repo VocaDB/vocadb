@@ -70,7 +70,8 @@ namespace VocaDb.Model.Domain.Users
 			Album.UpdateRatingTotals();
 		}
 
-		public virtual bool Equals(AlbumForUser another)
+#nullable enable
+		public virtual bool Equals(AlbumForUser? another)
 		{
 			if (another == null)
 				return false;
@@ -81,7 +82,8 @@ namespace VocaDb.Model.Domain.Users
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj) => Equals(obj as AlbumForUser);
+		public override bool Equals(object? obj) => Equals(obj as AlbumForUser);
+#nullable disable
 
 		public override int GetHashCode() => base.GetHashCode();
 

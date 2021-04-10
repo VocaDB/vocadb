@@ -81,7 +81,8 @@ namespace VocaDb.Model.Domain.Tags
 			Tag.UsageCount--;
 		}
 
-		public virtual bool Equals(TagUsage another)
+#nullable enable
+		public virtual bool Equals(TagUsage? another)
 		{
 			if (another == null)
 				return false;
@@ -95,10 +96,11 @@ namespace VocaDb.Model.Domain.Tags
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as TagUsage);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

@@ -33,10 +33,12 @@ namespace VocaDb.Model.Domain.Tags
 
 		public const int MaxDisplayedTags = 4;
 
-		public static bool Equals(ITag left, ITag right)
+#nullable enable
+		public static bool Equals(ITag? left, ITag? right)
 		{
 			return left?.Id == right?.Id;
 		}
+#nullable disable
 
 		private ISet<AlbumTagUsage> _albumTagUsages = new HashSet<AlbumTagUsage>();
 		private ArchivedVersionManager<ArchivedTagVersion, TagEditableFields> _archivedVersions = new();
@@ -340,7 +342,8 @@ namespace VocaDb.Model.Domain.Tags
 			Mappings.Clear();
 		}
 
-		public virtual bool Equals(Tag tag)
+#nullable enable
+		public virtual bool Equals(Tag? tag)
 		{
 			if (tag == null)
 				return false;
@@ -351,10 +354,11 @@ namespace VocaDb.Model.Domain.Tags
 			return Id != 0 && Id == tag.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as Tag);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

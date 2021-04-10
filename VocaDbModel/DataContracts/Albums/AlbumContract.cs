@@ -95,7 +95,8 @@ namespace VocaDb.Model.DataContracts.Albums
 		[DataMember]
 		public int Version { get; init; }
 
-		public bool Equals(AlbumContract another)
+#nullable enable
+		public bool Equals(AlbumContract? another)
 		{
 			if (another == null)
 				return false;
@@ -109,10 +110,11 @@ namespace VocaDb.Model.DataContracts.Albums
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as AlbumContract);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

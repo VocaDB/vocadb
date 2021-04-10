@@ -29,7 +29,8 @@ namespace VocaDb.Model.Service.Search
 
 		public string Value { get; }
 
-		public bool Equals(SearchWord other)
+#nullable enable
+		public bool Equals(SearchWord? other)
 		{
 			if (other == null)
 				return false;
@@ -40,10 +41,11 @@ namespace VocaDb.Model.Service.Search
 			return (PropertyName == other.PropertyName && Value == other.Value);
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as SearchWord);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

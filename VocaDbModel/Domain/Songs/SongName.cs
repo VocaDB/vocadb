@@ -26,7 +26,8 @@ namespace VocaDb.Model.Domain.Songs
 			}
 		}
 
-		public virtual bool Equals(SongName another)
+#nullable enable
+		public virtual bool Equals(SongName? another)
 		{
 			if (another == null)
 				return false;
@@ -40,10 +41,11 @@ namespace VocaDb.Model.Domain.Songs
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as SongName);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

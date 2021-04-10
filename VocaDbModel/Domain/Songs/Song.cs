@@ -612,7 +612,8 @@ namespace VocaDb.Model.Domain.Songs
 			artistForSong.Delete();
 		}
 
-		public virtual bool Equals(Song another)
+#nullable enable
+		public virtual bool Equals(Song? another)
 		{
 			if (another == null)
 				return false;
@@ -626,10 +627,11 @@ namespace VocaDb.Model.Domain.Songs
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as Song);
 		}
+#nullable disable
 
 		public virtual ArtistForSong GetArtistLink(Artist artist)
 		{

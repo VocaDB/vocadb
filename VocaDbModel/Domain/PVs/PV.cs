@@ -97,7 +97,8 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual string Url => GetUrl(Service, PVId, ExtendedMetadata);
 
-		public virtual bool ContentEquals(PVContract pv)
+#nullable enable
+		public virtual bool ContentEquals(PVContract? pv)
 		{
 			if (pv == null)
 				return false;
@@ -105,7 +106,6 @@ namespace VocaDb.Model.Domain.PVs
 			return (Name == pv.Name);
 		}
 
-#nullable enable
 		public virtual void CopyMetaFrom(PVContract contract)
 		{
 			ParamIs.NotNull(() => contract);
@@ -114,9 +114,8 @@ namespace VocaDb.Model.Domain.PVs
 			Name = contract.Name;
 			PVType = contract.PVType;
 		}
-#nullable disable
 
-		public virtual bool Equals(PV another)
+		public virtual bool Equals(PV? another)
 		{
 			if (another == null)
 				return false;
@@ -130,10 +129,11 @@ namespace VocaDb.Model.Domain.PVs
 			return Id == another.Id;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as PV);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

@@ -143,18 +143,20 @@ namespace VocaDb.Model.Domain.Security
 			set => _name = value;
 		}
 
+#nullable enable
 		public bool Equals(PermissionToken token)
 		{
 			return (token.Id == Id);
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (!(obj is PermissionToken))
 				return false;
 
 			return Equals((PermissionToken)obj);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

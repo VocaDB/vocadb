@@ -63,7 +63,8 @@ namespace VocaDb.Model.Domain.Songs
 
 		public virtual int TrackNumber { get; set; }
 
-		public virtual bool Equals(SongInAlbum another)
+#nullable enable
+		public virtual bool Equals(SongInAlbum? another)
 		{
 			if (another == null)
 				return false;
@@ -76,6 +77,7 @@ namespace VocaDb.Model.Domain.Songs
 
 			return Id == another.Id;
 		}
+#nullable disable
 
 		public virtual void Delete()
 		{
@@ -85,10 +87,12 @@ namespace VocaDb.Model.Domain.Songs
 				Song.AllAlbums.Remove(this);
 		}
 
-		public override bool Equals(object obj)
+#nullable enable
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as SongInAlbum);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{

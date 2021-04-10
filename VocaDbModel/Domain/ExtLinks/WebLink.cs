@@ -138,13 +138,15 @@ namespace VocaDb.Model.Domain.ExtLinks
 			}
 		}
 
-		public virtual bool ContentEquals(IWebLink other)
+#nullable enable
+		public virtual bool ContentEquals(IWebLink? other)
 		{
 			if (other == null)
 				return false;
 
 			return Url == other.Url && Description == other.Description && Category == other.Category && Disabled == other.Disabled;
 		}
+#nullable disable
 
 		public override string ToString()
 		{

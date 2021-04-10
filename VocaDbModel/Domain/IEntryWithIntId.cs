@@ -1,5 +1,3 @@
-#nullable disable
-
 namespace VocaDb.Model.Domain
 {
 	/// <summary>
@@ -39,7 +37,7 @@ namespace VocaDb.Model.Domain
 		/// null + 39 == false
 		/// 0 + 39 == false
 		/// </remarks>
-		public static bool NullSafeIdEquals(this IEntryWithIntId left, IEntryWithIntId right)
+		public static bool NullSafeIdEquals(this IEntryWithIntId? left, IEntryWithIntId? right)
 		{
 			return left.IdOrDefault() == right.IdOrDefault();
 		}
@@ -49,12 +47,12 @@ namespace VocaDb.Model.Domain
 			return left.Id == right.Id;
 		}
 
-		public static int IdOrDefault(this IEntryWithIntId entry)
+		public static int IdOrDefault(this IEntryWithIntId? entry)
 		{
 			return entry != null ? entry.Id : 0;
 		}
 
-		public static bool IsNullOrDefault(this IEntryWithIntId entry)
+		public static bool IsNullOrDefault(this IEntryWithIntId? entry)
 		{
 			return entry == null || entry.Id == 0;
 		}

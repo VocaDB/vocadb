@@ -37,9 +37,11 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
+#nullable enable
 		public virtual bool ContentEquals(AlbumIdentifier another)
 		{
 			return string.Equals(Value, another.Value);
 		}
+#nullable disable
 	}
 }

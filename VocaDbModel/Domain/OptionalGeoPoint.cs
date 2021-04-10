@@ -60,17 +60,21 @@ namespace VocaDb.Model.Domain
 
 		public virtual bool IsEmpty => !Latitude.HasValue && !Longitude.HasValue;
 
-		public virtual bool Equals(IOptionalGeoPoint other)
+#nullable enable
+		public virtual bool Equals(IOptionalGeoPoint? other)
 		{
 			if (other == null)
 				return IsEmpty;
 
 			return (Latitude == other.Latitude) && (Longitude == other.Longitude);
 		}
+#nullable disable
 
 		public override int GetHashCode() => ToString().GetHashCode();
 
-		public override bool Equals(object obj) => (obj is OptionalGeoPoint) && Equals((OptionalGeoPoint)obj);
+#nullable enable
+		public override bool Equals(object? obj) => (obj is OptionalGeoPoint) && Equals((OptionalGeoPoint)obj);
+#nullable disable
 
 		public override string ToString() => HasValue ? $"{Latitude}, {Longitude}" : string.Empty;
 	}

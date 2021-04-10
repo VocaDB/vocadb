@@ -68,9 +68,8 @@ namespace VocaDb.Model.Domain.Songs
 			target.ListLinks.Add(this);
 			Song = target;
 		}
-#nullable disable
 
-		public virtual bool Equals(SongInList another)
+		public virtual bool Equals(SongInList? another)
 		{
 			if (another == null)
 				return false;
@@ -83,6 +82,7 @@ namespace VocaDb.Model.Domain.Songs
 
 			return Id == another.Id;
 		}
+#nullable disable
 
 		public virtual void Delete()
 		{
@@ -90,10 +90,12 @@ namespace VocaDb.Model.Domain.Songs
 			Song.ListLinks.Remove(this);
 		}
 
-		public override bool Equals(object obj)
+#nullable enable
+		public override bool Equals(object? obj)
 		{
 			return Equals(obj as SongInList);
 		}
+#nullable disable
 
 		public override int GetHashCode()
 		{
