@@ -212,7 +212,6 @@ namespace VocaDb.Model.Domain.Globalization
 			Japanese = contract.Japanese;
 			Romaji = contract.Romaji;
 		}
-#nullable disable
 
 		public virtual string GetBestMatch(ContentLanguagePreference preference)
 		{
@@ -242,5 +241,6 @@ namespace VocaDb.Model.Domain.Globalization
 
 			return !string.IsNullOrEmpty(val) ? val : All.FirstOrDefault(n => !string.IsNullOrEmpty(n)) ?? string.Empty;
 		}
+#nullable disable
 	}
 }

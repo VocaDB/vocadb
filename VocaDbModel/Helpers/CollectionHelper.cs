@@ -62,11 +62,11 @@ namespace VocaDb.Model.Helpers
 
 			return randomIndices.Select(i => source[i]);    // Take items matching the random indices from the list
 		}
-#nullable disable
 
 		public static IEnumerable<T> MoveToTop<T>(IEnumerable<T> source, T top) => Enumerable.Repeat(top, 1).Concat(source.Except(Enumerable.Repeat(top, 1)));
 
 		public static IEnumerable<T> MoveToTop<T>(IEnumerable<T> source, T[] top) => top.Concat(source.Except(top));
+#nullable disable
 
 		/// <summary>
 		/// Randomly sort a list.

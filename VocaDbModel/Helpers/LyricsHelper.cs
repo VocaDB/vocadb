@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +9,8 @@ namespace VocaDb.Model.Helpers
 {
 	public static class LyricsHelper
 	{
-		public static LyricsForSongContract GetDefaultLyrics(LyricsForSongContract[] lyrics, OptionalCultureCode uiCultureCode,
-			IEnumerable<OptionalCultureCode> userLanguages,
+		public static LyricsForSongContract? GetDefaultLyrics(LyricsForSongContract[] lyrics, OptionalCultureCode uiCultureCode,
+			IEnumerable<OptionalCultureCode>? userLanguages,
 			Lazy<IEnumerable<UserKnownLanguage>> knownLanguages)
 		{
 			if (!lyrics.Any())

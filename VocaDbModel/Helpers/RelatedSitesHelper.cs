@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Text.RegularExpressions;
 
 namespace VocaDb.Model.Helpers
@@ -9,7 +7,7 @@ namespace VocaDb.Model.Helpers
 		private static readonly Regex relatedSiteUrlRegex = new(@"^https?://((utaitedb\.net)|(vocadb\.net)|(touhoudb\.com))\/((Song\/Details)|S)\/\d+",
 			RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
-		public static bool IsRelatedSite(string url)
+		public static bool IsRelatedSite(string? url)
 		{
 			if (string.IsNullOrEmpty(url))
 				return false;

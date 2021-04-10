@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
 namespace VocaDb.Model.Helpers
@@ -12,7 +11,8 @@ namespace VocaDb.Model.Helpers
 		/// </summary>
 		/// <param name="html">Input HTML. Can be null or empty.</param>
 		/// <returns>String with all HTML tags stripped. Can be null or empty.</returns>
-		public static string StripHtml(string html)
+		[return:NotNullIfNotNull("html"/* TODO: use nameof */)]
+		public static string? StripHtml(string? html)
 		{
 			if (string.IsNullOrEmpty(html))
 				return html;

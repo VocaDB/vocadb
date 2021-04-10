@@ -11,10 +11,12 @@ namespace VocaDb.Model.Utils
 {
 	public static class AppConfig
 	{
-		private static DiscType[] s_albumTypes;
-		private static ArtistType[] s_artistTypes;
-		private static ArtistRoles[] s_artistRoles;
-		private static SongType[] s_songTypes;
+#nullable enable
+		private static DiscType[]? s_albumTypes;
+		private static ArtistType[]? s_artistTypes;
+		private static ArtistRoles[]? s_artistRoles;
+		private static SongType[]? s_songTypes;
+#nullable disable
 
 		/// <summary>
 		/// List of roles that can be assigned to artist added to songs and albums.
@@ -82,6 +84,7 @@ namespace VocaDb.Model.Utils
 
 		public static bool AllowCustomArtistName => Val("AllowCustomArtistName", false);
 
+#nullable enable
 		public static DiscType[] AlbumTypes
 		{
 			get
@@ -95,6 +98,7 @@ namespace VocaDb.Model.Utils
 				return s_albumTypes;
 			}
 		}
+#nullable disable
 
 		public static bool AllowCustomTracks => Val("AllowCustomTracks", false);
 
@@ -108,6 +112,7 @@ namespace VocaDb.Model.Utils
 		/// </summary>
 		public static bool AllowRepeatingProducerAsPerformer => Val("AllowRepeatingProducerAsPerformer", false);
 
+#nullable enable
 		public static ArtistType[] ArtistTypes
 		{
 			get
@@ -135,6 +140,7 @@ namespace VocaDb.Model.Utils
 				return s_artistRoles;
 			}
 		}
+#nullable disable
 
 		public static string BilibiliAppKey => Val("BilibiliAppKey");
 
@@ -202,6 +208,7 @@ namespace VocaDb.Model.Utils
 
 		public static SiteSettingsSection SiteSettings => new VdbConfigManager().SiteSettings;
 
+#nullable enable
 		public static SongType[] SongTypes
 		{
 			get
@@ -215,6 +222,7 @@ namespace VocaDb.Model.Utils
 				return s_songTypes;
 			}
 		}
+#nullable disable
 
 		public static string SoundCloudClientId => Val("SoundCloudClientId");
 

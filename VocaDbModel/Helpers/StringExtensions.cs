@@ -1,4 +1,4 @@
-#nullable disable
+using System.Diagnostics.CodeAnalysis;
 
 namespace VocaDb.Model.Helpers
 {
@@ -13,7 +13,7 @@ namespace VocaDb.Model.Helpers
 			return newline != -1 ? str.Substring(0, newline) : str;
 		}*/
 
-		public static string EmptyToNull(this string str)
+		public static string? EmptyToNull(this string str)
 		{
 			return str == string.Empty ? null : str;
 		}
@@ -33,7 +33,8 @@ namespace VocaDb.Model.Helpers
 		/// and more than <paramref name="minLength"/>, 
 		/// assuming <paramref name="str"/> is longer than <paramref name="minLength"/>.
 		/// </returns>
-		public static string Summarize(this string str, int minLength, int maxLength)
+		[return:NotNullIfNotNull("str"/* TODO: use nameof */)]
+		public static string? Summarize(this string? str, int minLength, int maxLength)
 		{
 			if (string.IsNullOrEmpty(str))
 				return str;
@@ -49,7 +50,6 @@ namespace VocaDb.Model.Helpers
 			return TruncateWithEllipsis(str, maxLength);
 		}
 
-#nullable enable
 		public static string Truncate(this string str, int length)
 		{
 			ParamIs.NotNull(() => str);
@@ -69,6 +69,5 @@ namespace VocaDb.Model.Helpers
 
 			return (str.Length > length ? $"{str.Substring(0, length)}..." : str);
 		}
-#nullable disable
 	}
 }

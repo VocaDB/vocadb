@@ -1,17 +1,15 @@
-#nullable disable
-
 using System;
 
 namespace VocaDb.Model.Helpers
 {
 	public static class OtherHelper
 	{
-		public static bool HasCircularReference<T>(T root, Func<T, T> accessor) where T : class
+		public static bool HasCircularReference<T>(T? root, Func<T, T?> accessor) where T : class
 		{
 			return HasObject(root, root, accessor);
 		}
 
-		public static bool HasObject<T>(T root, T needle, Func<T, T> accessor) where T : class
+		public static bool HasObject<T>(T? root, T? needle, Func<T, T?> accessor) where T : class
 		{
 			var current = root;
 			var iterations = 0;

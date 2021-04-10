@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Users;
@@ -16,7 +14,6 @@ namespace VocaDb.Model.Helpers
 			return (int)Math.Log(power, Math.E);
 		}
 
-#nullable enable
 		public static int GetPower(ServerOnlyUserDetailsContract detailsContract, int ownedAlbumCount, int albumRatingCount, int songListCount)
 		{
 			ParamIs.NotNull(() => detailsContract);
@@ -35,7 +32,6 @@ namespace VocaDb.Model.Helpers
 
 			return power;
 		}
-#nullable disable
 
 		public static bool IsVeteran(ServerOnlyUserDetailsContract details)
 		{

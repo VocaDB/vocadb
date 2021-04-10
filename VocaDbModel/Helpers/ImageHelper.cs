@@ -19,6 +19,7 @@ namespace VocaDb.Model.Helpers
 	/// </summary>
 	public static class ImageHelper
 	{
+#nullable enable
 		private static readonly string[] s_allowedExt = { ".bmp", ".gif", ".jpg", ".jpeg", ".png" };
 		public const int DefaultSmallThumbSize = 150;
 		public const int DefaultThumbSize = 250;
@@ -59,7 +60,7 @@ namespace VocaDb.Model.Helpers
 		/// </summary>
 		/// <param name="mime">MIME type. Can be null or empty.</param>
 		/// <returns>File extension, for example ".jpg". Can be null if MIME type is not recognized.</returns>
-		public static string GetExtensionFromMime(string mime) => mime switch
+		public static string GetExtensionFromMime(string? mime) => mime switch
 		{
 			MediaTypeNames.Image.Jpeg => ".jpg",
 			"image/pjpeg" => ".jpg",
@@ -89,6 +90,7 @@ namespace VocaDb.Model.Helpers
 			ImageSize.TinyThumb => UserTinyThumbSize,
 			_ => UserThumbMax,
 		};
+#nullable disable
 
 		public static PictureDataContract GetOriginal(Stream input, int length, string contentType)
 		{
@@ -98,7 +100,8 @@ namespace VocaDb.Model.Helpers
 			return new PictureDataContract(buf, contentType);
 		}
 
-		public static bool IsValidImageExtension(string fileName)
+#nullable enable
+		public static bool IsValidImageExtension(string? fileName)
 		{
 			var ext = Path.GetExtension(fileName);
 
@@ -145,6 +148,7 @@ namespace VocaDb.Model.Helpers
 
 			return bmPhoto;
 		}
+#nullable disable
 	}
 
 	/// <summary>
@@ -152,9 +156,11 @@ namespace VocaDb.Model.Helpers
 	/// </summary>
 	public class InvalidPictureException : Exception
 	{
+#nullable enable
 		public InvalidPictureException() { }
-		public InvalidPictureException(string message) : base(message) { }
-		public InvalidPictureException(string message, Exception innerException) : base(message, innerException) { }
+		public InvalidPictureException(string? message) : base(message) { }
+		public InvalidPictureException(string? message, Exception? innerException) : base(message, innerException) { }
 		protected InvalidPictureException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+#nullable disable
 	}
 }

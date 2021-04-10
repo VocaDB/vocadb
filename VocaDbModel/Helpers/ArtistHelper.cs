@@ -1,7 +1,6 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Artists;
@@ -153,7 +152,8 @@ namespace VocaDb.Model.Helpers
 		/// </summary>
 		/// <param name="name">Artist name that may be canonized or not. Can be null or empty, in which case nothing is done.</param>
 		/// <returns>Canonized artist name.</returns>
-		public static string GetCanonizedName(string name)
+		[return:NotNullIfNotNull("name"/* TODO: use nameof */)]
+		public static string? GetCanonizedName(string? name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return name;
@@ -164,14 +164,12 @@ namespace VocaDb.Model.Helpers
 			return queryWithoutP;
 		}
 
-#nullable enable
 		public static ArtistCategories GetCategories(IArtistLinkWithRoles artist)
 		{
 			ParamIs.NotNull(() => artist);
 
 			return GetCategories(artist.Artist != null ? artist.Artist.ArtistType : ArtistType.Unknown, artist.Roles);
 		}
-#nullable disable
 
 		public static ArtistCategories GetCategories(ArtistType type, ArtistRoles roles)
 		{
@@ -230,7 +228,7 @@ namespace VocaDb.Model.Helpers
 		/// <param name="artists">List of artists. Cannot be null.</param>
 		/// <param name="focus">Determines types of producers to consider.</param>
 		/// <returns>The main circle, or null if there is none.</returns>
-		public static Artist GetMainCircle(IList<IArtistLinkWithRoles> artists, ContentFocus focus)
+		public static Artist? GetMainCircle(IList<IArtistLinkWithRoles> artists, ContentFocus focus)
 		{
 			var producers = GetProducers(artists.Where(a => !a.IsSupport), focus).ToArray();
 

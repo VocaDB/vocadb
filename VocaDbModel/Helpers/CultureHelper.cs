@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Globalization;
 using VocaDb.Model.Domain.Globalization;
 

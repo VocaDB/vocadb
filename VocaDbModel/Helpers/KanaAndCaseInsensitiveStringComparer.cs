@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -15,7 +13,7 @@ namespace VocaDb.Model.Helpers
 		private static readonly CompareInfo s_compareInfo = CompareInfo.GetCompareInfo("en-US");
 		private const CompareOptions Options = CompareOptions.IgnoreKanaType | CompareOptions.IgnoreCase;
 
-		public bool Equals(string x, string y)
+		public bool Equals(string? x, string? y)
 		{
 			return s_compareInfo.Compare(x, y, Options) == 0;
 		}
