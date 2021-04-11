@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,12 +11,12 @@ namespace VocaDb.Model.Service.Translations
 	{
 		private readonly TranslateableEnum<TEnumBase> _baseEnum;
 
-		internal override string GetName(string val, ResourceManager res, CultureInfo cultureInfo)
+		internal override string? GetName(string val, ResourceManager res, CultureInfo? cultureInfo)
 		{
 			return base.GetName(val, res, cultureInfo).EmptyToNull() ?? _baseEnum.GetName(val, _baseEnum.ResourceManager, cultureInfo);
 		}
 
-		internal override string GetName(string val, ResourceManager res)
+		internal override string? GetName(string val, ResourceManager res)
 		{
 			return base.GetName(val, res).EmptyToNull() ?? _baseEnum.GetName(val, _baseEnum.ResourceManager);
 		}

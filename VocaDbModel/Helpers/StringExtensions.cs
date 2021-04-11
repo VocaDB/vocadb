@@ -13,7 +13,7 @@ namespace VocaDb.Model.Helpers
 			return newline != -1 ? str.Substring(0, newline) : str;
 		}*/
 
-		public static string? EmptyToNull(this string str)
+		public static string? EmptyToNull(this string? str)
 		{
 			return str == string.Empty ? null : str;
 		}
