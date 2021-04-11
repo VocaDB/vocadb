@@ -659,10 +659,12 @@ namespace VocaDb.Model.Domain.Users
 			AccessKey = new AlphaPassGenerator(true, true, true).Generate(20);
 		}
 
+#nullable enable
 		public override int GetHashCode()
 		{
 			return NameLC.GetHashCode();
 		}
+#nullable disable
 
 		public virtual (UserMessage Received, UserMessage Sent) SendMessage(User to, string subject, string body, bool highPriority)
 		{

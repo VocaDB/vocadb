@@ -95,14 +95,12 @@ namespace VocaDb.Model.Domain.Songs
 		{
 			return Equals(obj as SongInList);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"{Song} in {List}";

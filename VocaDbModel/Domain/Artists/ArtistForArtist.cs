@@ -71,12 +71,12 @@ namespace VocaDb.Model.Domain.Artists
 			return direction == LinkDirection.ManyToOne ? Parent : Member;
 		}
 
+#nullable enable
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
 
-#nullable enable
 		public virtual void MoveToGroup(Artist target)
 		{
 			ParamIs.NotNull(() => target);

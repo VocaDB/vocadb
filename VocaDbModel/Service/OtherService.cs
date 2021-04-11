@@ -46,12 +46,12 @@ namespace VocaDb.Model.Service
 			{
 				return x.EntryType == y.EntryType && x.Id == y.Id;
 			}
-#nullable disable
 
 			public int GetHashCode(IEntryWithNames obj)
 			{
 				return obj.Id;
 			}
+#nullable disable
 		}
 
 		private readonly ObjectCache _cache;

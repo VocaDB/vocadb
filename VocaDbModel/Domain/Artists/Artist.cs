@@ -486,12 +486,12 @@ namespace VocaDb.Model.Domain.Artists
 		{
 			return Equals(obj as Artist);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
+#nullable disable
 
 		public virtual ArchivedArtistVersion GetLatestVersion()
 		{

@@ -68,11 +68,9 @@ namespace VocaDb.Model.Domain
 
 			return (Latitude == other.Latitude) && (Longitude == other.Longitude);
 		}
-#nullable disable
 
 		public override int GetHashCode() => ToString().GetHashCode();
 
-#nullable enable
 		public override bool Equals(object? obj) => (obj is OptionalGeoPoint) && Equals((OptionalGeoPoint)obj);
 
 		public override string ToString() => HasValue ? $"{Latitude}, {Longitude}" : string.Empty;

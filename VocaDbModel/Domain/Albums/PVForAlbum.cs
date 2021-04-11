@@ -46,12 +46,12 @@ namespace VocaDb.Model.Domain.Albums
 		{
 			return Equals(obj as PVForAlbum);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
+#nullable disable
 
 		public override void OnDelete()
 		{

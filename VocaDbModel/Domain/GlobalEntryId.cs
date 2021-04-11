@@ -39,7 +39,6 @@ namespace VocaDb.Model.Domain
 			if (obj is null) return false;
 			return obj is GlobalEntryId && Equals((GlobalEntryId)obj);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
@@ -48,6 +47,7 @@ namespace VocaDb.Model.Domain
 				return ((int)EntryType * 397) ^ Id;
 			}
 		}
+#nullable disable
 
 		public static bool operator ==(GlobalEntryId left, GlobalEntryId right) => left.Equals(right);
 

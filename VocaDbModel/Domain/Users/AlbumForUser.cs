@@ -83,11 +83,9 @@ namespace VocaDb.Model.Domain.Users
 		}
 
 		public override bool Equals(object? obj) => Equals(obj as AlbumForUser);
-#nullable disable
 
 		public override int GetHashCode() => base.GetHashCode();
 
-#nullable enable
 		public virtual void Move(Album target)
 		{
 			ParamIs.NotNull(() => target);

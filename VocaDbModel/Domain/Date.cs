@@ -95,14 +95,12 @@ namespace VocaDb.Model.Domain
 
 			return false;
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return DateTime.HasValue ? DateTime.Value.GetHashCode() : base.GetHashCode();
 		}
 
-#nullable enable
 		public override string? ToString()
 		{
 			return DateTime.HasValue ? DateTime.Value.ToShortDateString() : base.ToString();

@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -63,14 +61,12 @@ namespace VocaDb.Model.Domain
 
 		public override string ToString() => Url;
 
-#nullable enable
 		public bool Equals(VocaDbUrl? other)
 		{
 			return other != null && other.Domain == Domain && other.Url == Url;
 		}
 
 		public override bool Equals(object? obj) => Equals(obj as VocaDbUrl);
-#nullable disable
 
 		public override int GetHashCode()
 		{

@@ -146,12 +146,12 @@ namespace VocaDb.Model.Domain
 
 			return Equals((OptionalDateTime)obj);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return ToString().GetHashCode();
 		}
+#nullable disable
 
 		public DateTime ToDateTime()
 		{

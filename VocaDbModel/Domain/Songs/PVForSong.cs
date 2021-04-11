@@ -97,12 +97,12 @@ namespace VocaDb.Model.Domain.Songs
 		{
 			return Equals(obj as PVForSong);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
+#nullable disable
 
 		public override void OnDelete()
 		{

@@ -595,10 +595,12 @@ namespace VocaDb.Model.Domain.Albums
 			return Discs.FirstOrDefault(d => d.DiscNumber == discNumber);
 		}
 
+#nullable enable
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
+#nullable disable
 
 		/// <summary>
 		/// Gets the next free track number for a particular disc on this album.

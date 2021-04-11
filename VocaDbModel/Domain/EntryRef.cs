@@ -41,14 +41,12 @@ namespace VocaDb.Model.Domain
 		{
 			return Equals(obj as EntryRef);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return (EntryType.ToString() + "_" + Id).GetHashCode();
 		}
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"entry of type {EntryType}, ID {Id}";

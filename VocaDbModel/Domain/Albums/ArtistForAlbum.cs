@@ -117,14 +117,12 @@ namespace VocaDb.Model.Domain.Albums
 		{
 			return Equals(obj as ArtistForAlbum);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
 
-#nullable enable
 		public virtual void Move(Album target)
 		{
 			ParamIs.NotNull(() => target);

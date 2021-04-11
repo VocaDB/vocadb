@@ -92,14 +92,12 @@ namespace VocaDb.Model.Domain.Songs
 		{
 			return Equals(obj as SongInAlbum);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
 
-#nullable enable
 		public virtual void Move(Album target)
 		{
 			ParamIs.NotNull(() => target);

@@ -638,10 +638,12 @@ namespace VocaDb.Model.Domain.Songs
 			return Artists.FirstOrDefault(a => a.Artist != null && a.Artist.Equals(artist));
 		}
 
+#nullable enable
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
+#nullable disable
 
 		public virtual ArchivedSongVersion GetLatestVersion()
 		{

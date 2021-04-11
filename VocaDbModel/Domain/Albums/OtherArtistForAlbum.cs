@@ -64,11 +64,11 @@ namespace VocaDb.Model.Domain.Albums
 		{
 			return Equals(obj as OtherArtistForAlbum);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
+#nullable disable
 	}
 }

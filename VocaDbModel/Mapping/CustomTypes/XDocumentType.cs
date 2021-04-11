@@ -13,10 +13,12 @@ namespace VocaDb.Model.Mapping.CustomTypes
 {
 	public class XDocumentType : IUserType
 	{
+#nullable enable
 		public int GetHashCode(object x)
 		{
 			return x.GetHashCode();
 		}
+#nullable disable
 
 		public object Replace(object original, object target, object owner)
 		{

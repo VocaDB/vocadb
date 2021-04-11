@@ -229,12 +229,12 @@ namespace VocaDb.Model.Domain.Songs
 		{
 			return Equals(obj as SongList);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
+#nullable disable
 
 		public virtual CollectionDiffWithValue<SongInList, SongInList> SyncSongs(
 			IEnumerable<SongInListEditContract> newTracks, Func<SongInListEditContract, Song> songGetter)

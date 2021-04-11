@@ -86,14 +86,12 @@ namespace VocaDb.Model.Domain.Users
 		{
 			return Equals(obj as ArtistForUser);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
 
-#nullable enable
 		public virtual void Move(Artist target)
 		{
 			ParamIs.NotNull(() => target);

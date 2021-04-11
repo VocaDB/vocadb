@@ -45,7 +45,6 @@ namespace VocaDb.Model.Service.Search
 		{
 			return Equals(obj as SearchWord);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
@@ -54,6 +53,7 @@ namespace VocaDb.Model.Service.Search
 				return ((PropertyName != null ? PropertyName.GetHashCode() : 0) * 397) ^ (Value != null ? Value.GetHashCode() : 0);
 			}
 		}
+#nullable disable
 
 		public override string ToString()
 		{

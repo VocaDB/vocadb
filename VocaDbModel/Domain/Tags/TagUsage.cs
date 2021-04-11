@@ -100,7 +100,6 @@ namespace VocaDb.Model.Domain.Tags
 		{
 			return Equals(obj as TagUsage);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
@@ -108,7 +107,6 @@ namespace VocaDb.Model.Domain.Tags
 			return format.GetHashCode();
 		}
 
-#nullable enable
 		public virtual bool HasVoteByUser(User user)
 		{
 			ParamIs.NotNull(() => user);

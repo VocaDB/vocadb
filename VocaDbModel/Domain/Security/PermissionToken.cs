@@ -156,14 +156,12 @@ namespace VocaDb.Model.Domain.Security
 
 			return Equals((PermissionToken)obj);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
 
-#nullable enable
 		public override string ToString()
 		{
 			return Name;

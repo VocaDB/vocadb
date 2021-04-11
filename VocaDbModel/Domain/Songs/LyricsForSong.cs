@@ -121,11 +121,11 @@ namespace VocaDb.Model.Domain.Songs
 		{
 			return Equals(obj as LyricsForSong);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
+#nullable disable
 	}
 }

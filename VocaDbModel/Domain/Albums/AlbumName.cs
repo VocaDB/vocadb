@@ -42,14 +42,12 @@ namespace VocaDb.Model.Domain.Albums
 		{
 			return Equals(obj as AlbumName);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"name '{Value}' for {Album}";

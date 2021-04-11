@@ -78,12 +78,12 @@ namespace VocaDb.Model.Domain.Globalization
 		{
 			return Equals(obj as TranslatedStringWithDefault);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return (Default + English + Japanese + Romaji).GetHashCode();
 		}
+#nullable disable
 
 		public override string GetBestMatch(ContentLanguagePreference preference)
 		{

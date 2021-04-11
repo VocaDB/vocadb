@@ -48,11 +48,9 @@ namespace VocaDb.Model.Domain.Tags
 		}
 
 		public override bool Equals(object? obj) => Equals(obj as TagVote);
-#nullable disable
 
 		public override int GetHashCode() => Id.GetHashCode();
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"Vote for {UsageBase} by {User}";

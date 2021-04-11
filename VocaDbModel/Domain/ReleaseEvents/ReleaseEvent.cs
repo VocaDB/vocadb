@@ -357,14 +357,12 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		{
 			return Equals(obj as ReleaseEvent);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
 
-#nullable enable
 		private async Task<ArtistForEvent> AddArtist(ArtistForEventContract contract, Func<int, Task<Artist>> artistGetter)
 		{
 			ArtistForEvent link;

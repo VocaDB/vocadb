@@ -204,12 +204,12 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 		{
 			return Equals(obj as ReleaseEventSeries);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
+#nullable disable
 
 		public virtual string GetEventName(int number, string suffix, string name)
 		{

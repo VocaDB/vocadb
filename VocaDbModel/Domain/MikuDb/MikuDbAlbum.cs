@@ -83,14 +83,12 @@ namespace VocaDb.Model.Domain.MikuDb
 		{
 			return Equals(obj as MikuDbAlbum);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"Imported album '{Title}' [{Id}]";

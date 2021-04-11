@@ -32,7 +32,6 @@ namespace VocaDb.Model.Domain.Albums
 			if (ReferenceEquals(null, obj)) return false;
 			return obj is TrackIndex && Equals((TrackIndex)obj);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
@@ -42,7 +41,6 @@ namespace VocaDb.Model.Domain.Albums
 			}
 		}
 
-#nullable enable
 		public override string ToString() => $"{DiscNumber}.{TrackNumber}";
 #nullable disable
 

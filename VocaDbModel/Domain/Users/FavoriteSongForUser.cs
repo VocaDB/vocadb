@@ -91,14 +91,12 @@ namespace VocaDb.Model.Domain.Users
 		{
 			return Equals(obj as FavoriteSongForUser);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
 
-#nullable enable
 		public virtual void Move(Song target)
 		{
 			ParamIs.NotNull(() => target);

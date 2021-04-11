@@ -58,14 +58,12 @@ namespace VocaDb.Model.Domain.ExtLinks
 		{
 			return Equals(obj as GenericWebLink<TEntry>);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"{base.ToString()} for {Entry}";

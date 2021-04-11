@@ -66,7 +66,6 @@ namespace VocaDb.Model.Domain.Tags
 			if (obj.GetType() != GetType()) return false;
 			return Equals((RelatedTag)obj);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
@@ -75,5 +74,6 @@ namespace VocaDb.Model.Domain.Tags
 				return ((OwnerTag != null ? OwnerTag.GetHashCode() : 0) * 397) ^ (LinkedTag != null ? LinkedTag.GetHashCode() : 0);
 			}
 		}
+#nullable disable
 	}
 }

@@ -133,12 +133,12 @@ namespace VocaDb.Model.Domain.PVs
 		{
 			return Equals(obj as PV);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
+#nullable disable
 
 		public virtual void OnDelete() { }
 

@@ -56,14 +56,12 @@ namespace VocaDb.Model.Domain.Comments
 		{
 			return Equals(obj as GenericComment<T>);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
 
-#nullable enable
 		public override string ToString()
 		{
 			return string.Format("comment [{0}] for " + Entry, Id);

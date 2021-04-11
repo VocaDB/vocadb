@@ -114,14 +114,12 @@ namespace VocaDb.Model.DataContracts.Albums
 		{
 			return Equals(obj as AlbumContract);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"album '{Name}' [{Id}]";

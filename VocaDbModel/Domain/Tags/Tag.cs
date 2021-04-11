@@ -358,12 +358,12 @@ namespace VocaDb.Model.Domain.Tags
 		{
 			return Equals(obj as Tag);
 		}
-#nullable disable
 
 		public override int GetHashCode()
 		{
 			return Id.GetHashCode();
 		}
+#nullable disable
 
 		public virtual bool HasAncestorTag(Tag tag)
 		{
