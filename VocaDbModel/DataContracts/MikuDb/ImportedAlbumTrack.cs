@@ -43,9 +43,11 @@ namespace VocaDb.Model.DataContracts.MikuDb
 		[DataMember]
 		public string[] VocalistNames { get; set; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"Imported track {Title} ({ArtistString})";
 		}
+#nullable disable
 	}
 }

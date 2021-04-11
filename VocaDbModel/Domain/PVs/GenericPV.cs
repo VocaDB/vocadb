@@ -63,9 +63,11 @@ namespace VocaDb.Model.Domain.PVs
 			return base.GetHashCode();
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"PV '{PVId}' on {Service} [{Id}] for {Entry}";
 		}
+#nullable disable
 	}
 }

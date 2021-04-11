@@ -20,9 +20,11 @@ namespace VocaDb.Model.DataContracts.Artists
 
 		public BasicNameManager Names { get; init; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"translated artist '{Name}' [{Id}]";
 		}
+#nullable disable
 	}
 }

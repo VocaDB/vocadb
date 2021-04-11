@@ -139,9 +139,11 @@ namespace VocaDb.Model.Domain.Users
 			Rating = newRating;
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"favorited {Song} for {User}";
 		}
+#nullable disable
 	}
 }

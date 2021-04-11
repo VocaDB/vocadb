@@ -111,10 +111,12 @@ namespace VocaDb.Model.Domain
 		/// </summary>
 		public virtual Stream UploadedFile { get; set; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"Picture file {Name} [{Id}]";
 		}
+#nullable disable
 	}
 
 	public interface IEntryPictureFile : IEntryImageInformation

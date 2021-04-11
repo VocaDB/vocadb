@@ -102,9 +102,11 @@ namespace VocaDb.Model.Domain.Songs
 			return base.GetHashCode();
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"{Song} in {List}";
 		}
+#nullable disable
 	}
 }

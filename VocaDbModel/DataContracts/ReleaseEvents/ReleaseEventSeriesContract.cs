@@ -80,9 +80,11 @@ namespace VocaDb.Model.DataContracts.ReleaseEvents
 		[DataMember]
 		public WebLinkContract[] WebLinks { get; init; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"release event series {Name} [{Id}]";
 		}
+#nullable disable
 	}
 }

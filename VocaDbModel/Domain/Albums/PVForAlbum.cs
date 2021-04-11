@@ -58,9 +58,11 @@ namespace VocaDb.Model.Domain.Albums
 			Album.PVs.Remove(this);
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"PV '{PVId}' [{Id}] for {Album}";
 		}
+#nullable disable
 	}
 }

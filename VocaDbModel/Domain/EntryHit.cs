@@ -50,9 +50,11 @@ namespace VocaDb.Model.Domain
 			}
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return "Hit for " + Entry + " by " + Agent;
 		}
+#nullable disable
 	}
 }

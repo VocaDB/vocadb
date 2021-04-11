@@ -101,8 +101,8 @@ namespace VocaDb.Model.Domain.Users
 			target.UserCollections.Add(this);
 			target.UpdateRatingTotals();
 		}
-#nullable disable
 
 		public override string ToString() => $"{Album} for {User}";
+#nullable disable
 	}
 }

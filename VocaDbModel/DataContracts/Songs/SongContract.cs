@@ -101,9 +101,11 @@ namespace VocaDb.Model.DataContracts.Songs
 		[DataMember]
 		public int Version { get; init; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"song '{Name}' [{Id}]";
 		}
+#nullable disable
 	}
 }

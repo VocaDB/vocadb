@@ -67,7 +67,9 @@ namespace VocaDb.Model.Domain.Tags
 			Tag.Mappings.Remove(this);
 		}
 
+#nullable enable
 		public override string ToString() => $"Mapping from '{SourceTag}' to {Tag}";
+#nullable disable
 	}
 
 	public enum TagMappingType

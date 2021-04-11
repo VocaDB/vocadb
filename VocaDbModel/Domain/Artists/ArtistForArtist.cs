@@ -100,11 +100,11 @@ namespace VocaDb.Model.Domain.Artists
 			Member = target;
 			target.AllGroups.Add(this);
 		}
-#nullable disable
 
 		public override string ToString()
 		{
 			return Parent + " for " + Member + " (" + LinkType + ")";
 		}
+#nullable disable
 	}
 }

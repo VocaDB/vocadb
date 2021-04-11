@@ -163,10 +163,12 @@ namespace VocaDb.Model.Domain.Security
 			return Id.GetHashCode();
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return Name;
 		}
+#nullable disable
 	}
 
 	public interface IPermissionToken

@@ -74,8 +74,8 @@ namespace VocaDb.Model.Domain
 
 #nullable enable
 		public override bool Equals(object? obj) => (obj is OptionalGeoPoint) && Equals((OptionalGeoPoint)obj);
-#nullable disable
 
 		public override string ToString() => HasValue ? $"{Latitude}, {Longitude}" : string.Empty;
+#nullable disable
 	}
 }

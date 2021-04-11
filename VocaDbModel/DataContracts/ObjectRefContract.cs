@@ -45,9 +45,11 @@ namespace VocaDb.Model.DataContracts
 		[DataMember]
 		public string NameHint { get; init; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"{NameHint} [{Id}]";
 		}
+#nullable disable
 	}
 }

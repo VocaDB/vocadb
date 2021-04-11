@@ -97,11 +97,11 @@ namespace VocaDb.Model.Domain.Users
 			Artist = target;
 			target.OwnerUsers.Add(this);
 		}
-#nullable disable
 
 		public override string ToString()
 		{
 			return $"Owned {Artist} for {User}";
 		}
+#nullable disable
 	}
 }

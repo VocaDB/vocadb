@@ -581,9 +581,11 @@ namespace VocaDb.Model.Domain.Artists
 			BaseVoicebank = newBaseVoicebank;
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"artist '{DefaultName}' [{Id}]";
 		}
+#nullable disable
 	}
 }

@@ -51,9 +51,11 @@ namespace VocaDb.Model.Domain.Globalization
 			return base.GetHashCode();
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"name '{Value}' for {Entry}";
 		}
+#nullable disable
 	}
 }

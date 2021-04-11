@@ -71,9 +71,11 @@ namespace VocaDb.Model.Domain.Discussions
 		/// </summary>
 		public virtual IEnumerable<DiscussionTopic> Topics => AllTopics.Where(t => !t.Deleted);
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"Discussion folder '{Name}' [{Id}]";
 		}
+#nullable disable
 	}
 }

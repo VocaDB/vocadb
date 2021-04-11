@@ -85,9 +85,11 @@ namespace VocaDb.Model.DataContracts.Artists
 		[DataMember]
 		public int Version { get; init; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"Artist {Name} [{Id}]";
 		}
+#nullable disable
 	}
 }

@@ -130,11 +130,11 @@ namespace VocaDb.Model.Domain.Discussions
 			Folder = targetFolder;
 			Folder.AllTopics.Add(this);
 		}
-#nullable disable
 
 		public override string ToString()
 		{
 			return $"Discussion topic '{Name}' [{Id}]";
 		}
+#nullable disable
 	}
 }

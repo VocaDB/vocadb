@@ -185,6 +185,7 @@ namespace VocaDb.Model.Service.VideoServices
 		/// </summary>
 		public string TrackId { get; set; }
 
+#nullable enable
 		/// <summary>
 		/// Gets the composite ID string with both the relative URL and track Id.
 		/// </summary>
@@ -193,5 +194,6 @@ namespace VocaDb.Model.Service.VideoServices
 		{
 			return $"{TrackId} {SoundCloudUrl}";
 		}
+#nullable disable
 	}
 }

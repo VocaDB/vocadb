@@ -65,10 +65,12 @@ namespace VocaDb.Model.Domain.ExtLinks
 			return Id.GetHashCode();
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"{base.ToString()} for {Entry}";
 		}
+#nullable disable
 	}
 
 	public class AlbumWebLink : GenericWebLink<Album>

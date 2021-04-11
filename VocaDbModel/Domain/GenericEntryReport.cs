@@ -40,10 +40,12 @@ namespace VocaDb.Model.Domain
 			}
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"Entry report '{ReportType}' for {EntryBase} [{Id}]";
 		}
+#nullable disable
 
 		public override string TranslatedReportTypeName(IEnumTranslations enumTranslations)
 		{

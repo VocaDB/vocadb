@@ -149,8 +149,8 @@ namespace VocaDb.Model.Domain.Venues
 
 			return link;
 		}
-#nullable disable
 
 		public override string ToString() => $"venue '{DefaultName}' [{Id}]";
 	}
+#nullable disable
 }

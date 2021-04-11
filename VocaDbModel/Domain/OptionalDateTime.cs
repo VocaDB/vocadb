@@ -158,6 +158,7 @@ namespace VocaDb.Model.Domain
 			return ToDateTime(Year, Month, Day);
 		}
 
+#nullable enable
 		/// <summary>
 		/// Provides a localized string representation of this date.
 		/// </summary>
@@ -171,7 +172,7 @@ namespace VocaDb.Model.Domain
 			return ToString(CultureInfo.CurrentCulture);
 		}
 
-		public string ToString(IFormatProvider formatProvider)
+		public string ToString(IFormatProvider? formatProvider)
 		{
 			if (Year.HasValue)
 			{
@@ -188,5 +189,6 @@ namespace VocaDb.Model.Domain
 			}
 			return string.Empty;
 		}
+#nullable disable
 	}
 }

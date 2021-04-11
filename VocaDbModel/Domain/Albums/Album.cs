@@ -927,10 +927,12 @@ namespace VocaDb.Model.Domain.Albums
 			return new CollectionDiffWithValue<SongInAlbum, SongInAlbum>(created, diff.Removed, diff.Unchanged, edited);
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"album '{DefaultName}' [{Id}]";
 		}
+#nullable disable
 
 		public virtual void UpdateArtistString()
 		{

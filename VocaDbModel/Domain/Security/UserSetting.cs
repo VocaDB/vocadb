@@ -128,10 +128,12 @@ namespace VocaDb.Model.Domain.Security
 
 		protected abstract void SetPersistedValue(ServerOnlyUserWithPermissionsContract user, T val);
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"User setting {SettingName}: {Value}";
 		}
+#nullable disable
 
 		protected abstract bool TryParseValue(string str, out T val);
 

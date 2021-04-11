@@ -95,9 +95,11 @@ namespace VocaDb.Model.Domain.Globalization
 			return GetDefaultOrFirst(ContentLanguageSelection.Unspecified);
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"Default: {Default}, Japanese: {Japanese}, Romaji: {Romaji}, English: {English}";
 		}
+#nullable disable
 	}
 }

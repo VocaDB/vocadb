@@ -59,7 +59,9 @@ namespace VocaDb.Model.Domain.Activityfeed
 
 		public virtual bool IsDuplicate(ActivityEntry entry) => Author.Equals(entry.Author) && EntryBase.Equals(entry.EntryBase);
 
+#nullable enable
 		public override string ToString() => $"activity entry ({EditEvent}) for {EntryBase}";
+#nullable disable
 	}
 
 	/// <summary>

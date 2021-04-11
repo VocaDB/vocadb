@@ -52,9 +52,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public override int GetHashCode() => Id.GetHashCode();
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"Vote for {UsageBase} by {User}";
 		}
+#nullable disable
 	}
 }

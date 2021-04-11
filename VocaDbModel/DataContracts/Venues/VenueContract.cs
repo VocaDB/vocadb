@@ -57,8 +57,8 @@ namespace VocaDb.Model.DataContracts.Venues
 				WebLinks = venue.WebLinks.Links.Select(w => new WebLinkContract(w)).OrderBy(w => w.DescriptionOrUrl).ToArray();
 			}
 		}
-#nullable disable
 
 		public override string ToString() => $"venue '{Name}' [{Id}]";
+#nullable disable
 	}
 }

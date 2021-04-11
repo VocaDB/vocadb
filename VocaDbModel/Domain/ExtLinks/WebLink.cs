@@ -146,12 +146,12 @@ namespace VocaDb.Model.Domain.ExtLinks
 
 			return Url == other.Url && Description == other.Description && Category == other.Category && Disabled == other.Disabled;
 		}
-#nullable disable
 
 		public override string ToString()
 		{
 			return $"web link '{Url}'";
 		}
+#nullable disable
 	}
 
 	public interface IWebLink

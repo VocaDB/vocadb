@@ -80,10 +80,12 @@ namespace VocaDb.Model.DataContracts.Discussions
 		[DataMember]
 		public string Name { get; init; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"{Name} [{Id}] at {Created}";
 		}
+#nullable disable
 	}
 
 	[Flags]

@@ -75,9 +75,11 @@ namespace VocaDb.Model.Domain.Versioning
 		/// </remarks>
 		public virtual int Version { get; protected set; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"archived version {Version} for {EntryBase}";
 		}
+#nullable disable
 	}
 }

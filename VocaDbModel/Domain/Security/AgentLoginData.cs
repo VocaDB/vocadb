@@ -35,9 +35,11 @@ namespace VocaDb.Model.Domain.Security
 
 		public string UserNameOrFallback => User != null ? User.Name : Name;
 
+#nullable enable
 		public override string ToString()
 		{
 			return (User != null ? User.ToString() : Name);
 		}
+#nullable disable
 	}
 }

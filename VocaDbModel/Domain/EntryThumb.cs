@@ -40,10 +40,12 @@ namespace VocaDb.Model.Domain
 
 		public ImagePurpose Purpose { get; set; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"Thumbnail for {Entry}.";
 		}
+#nullable disable
 
 		public int Version => Entry.Version;
 	}

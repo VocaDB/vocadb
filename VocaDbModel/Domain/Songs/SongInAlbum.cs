@@ -138,9 +138,11 @@ namespace VocaDb.Model.Domain.Songs
 			Album.OnSongDeleting(this);
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"({DiscNumber}.{TrackNumber}) {SongToStringOrName} in {Album}";
 		}
+#nullable disable
 	}
 }

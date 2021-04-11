@@ -43,9 +43,11 @@ namespace VocaDb.Model.DataContracts.Users
 		[DataMember]
 		public string Name { get; set; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"User contract '{Name}' [{Id}]";
 		}
+#nullable disable
 	}
 }

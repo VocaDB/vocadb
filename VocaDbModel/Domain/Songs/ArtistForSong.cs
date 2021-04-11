@@ -153,11 +153,11 @@ namespace VocaDb.Model.Domain.Songs
 			Song = target;
 			target.AllArtists.Add(this);
 		}
-#nullable disable
 
 		public override string ToString()
 		{
 			return $"{ArtistToStringOrName} for {Song}";
 		}
+#nullable disable
 	}
 }

@@ -126,9 +126,11 @@ namespace VocaDb.Model.Domain.Songs
 			Length = result.LengthSeconds ?? Length;
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"PV '{PVId}' [{Id}] for {Song}";
 		}
+#nullable disable
 	}
 }

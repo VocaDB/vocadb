@@ -128,11 +128,13 @@ namespace VocaDb.Model.Domain.Users
 		/// </summary>
 		public virtual User User { get; set; }
 
+#nullable enable
 		public override string ToString()
 		{
 			// Note: no message contents in ToString because personal information might be logged
 			return $"User message [{Id}]";
 		}
+#nullable disable
 	}
 
 	public enum UserInboxType

@@ -8,9 +8,11 @@ namespace VocaDb.Model.Domain
 
 		public string Name { get; set; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"{Name} [{Id}]";
 		}
+#nullable disable
 	}
 }

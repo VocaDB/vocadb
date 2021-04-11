@@ -119,9 +119,11 @@ namespace VocaDb.Model.Service.Search
 		/// </summary>
 		public string[] Words => _words ?? (_words = FindHelpers.GetQueryWords(Query));
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"Text filter by '{Query}' ({MatchMode})";
 		}
+#nullable disable
 	}
 }

@@ -194,9 +194,11 @@ namespace VocaDb.Model.Service.AlbumImport
 
 		public string ServiceName => "KarenT";
 
+#nullable enable
 		public override string ToString()
 		{
 			return "Album importer for KarenT";
 		}
+#nullable disable
 	}
 }

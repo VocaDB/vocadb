@@ -43,9 +43,11 @@ namespace VocaDb.Model.Domain.Users
 			}
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"{User} following {Tag}";
 		}
+#nullable disable
 	}
 }

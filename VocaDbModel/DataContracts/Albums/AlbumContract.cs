@@ -121,9 +121,11 @@ namespace VocaDb.Model.DataContracts.Albums
 			return Id.GetHashCode();
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"album '{Name}' [{Id}]";
 		}
+#nullable disable
 	}
 }

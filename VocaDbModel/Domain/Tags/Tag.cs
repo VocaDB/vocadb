@@ -544,10 +544,12 @@ namespace VocaDb.Model.Domain.Tags
 			return diff;
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"tag '{DefaultName}' [{Id}]";
 		}
+#nullable disable
 	}
 
 	public interface ITag

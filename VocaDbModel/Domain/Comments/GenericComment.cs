@@ -63,10 +63,12 @@ namespace VocaDb.Model.Domain.Comments
 			return Id.GetHashCode();
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return string.Format("comment [{0}] for " + Entry, Id);
 		}
+#nullable disable
 	}
 
 	public class AlbumComment : GenericComment<Album>

@@ -46,9 +46,11 @@ namespace VocaDb.Model.DataContracts.Songs
 		[DataMember]
 		public int TrackNumber { get; init; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"({DiscNumber}.{TrackNumber}) {Song} in album";
 		}
+#nullable disable
 	}
 }

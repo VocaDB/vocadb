@@ -896,10 +896,12 @@ namespace VocaDb.Model.Domain.Songs
 			return result;
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"song '{DefaultName}' [{Id}]";
 		}
+#nullable disable
 
 		public virtual void UpdateArtistString()
 		{

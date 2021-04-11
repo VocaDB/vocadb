@@ -90,9 +90,11 @@ namespace VocaDb.Model.Domain.MikuDb
 			return Id.GetHashCode();
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"Imported album '{Title}' [{Id}]";
 		}
+#nullable disable
 	}
 }

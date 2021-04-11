@@ -125,9 +125,11 @@ namespace VocaDb.Model.Domain.Tags
 
 		public abstract TagVote RemoveVote(User user);
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"{Tag} for {EntryBase} [{Id}]";
 		}
+#nullable disable
 	}
 }

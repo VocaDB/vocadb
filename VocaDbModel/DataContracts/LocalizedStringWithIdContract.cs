@@ -19,9 +19,11 @@ namespace VocaDb.Model.DataContracts
 		[DataMember]
 		public int Id { get; init; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"Localized string '{Value}' in {Language} [{Id}]";
 		}
+#nullable disable
 	}
 }

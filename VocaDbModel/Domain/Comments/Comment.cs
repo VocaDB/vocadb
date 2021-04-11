@@ -85,7 +85,9 @@ namespace VocaDb.Model.Domain.Comments
 
 		public virtual void Delete() => Deleted = true;
 
+#nullable enable
 		public override string ToString() => $"comment [{Id}] for {Entry}";
+#nullable disable
 	}
 
 	public interface IComment : IEntryWithIntId

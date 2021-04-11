@@ -23,12 +23,12 @@ namespace VocaDb.Model.Domain
 
 		public bool IsEmpty => Id == 0;
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"{EntryType}.{Id}";
 		}
 
-#nullable enable
 		public bool Equals(GlobalEntryId other)
 		{
 			return EntryType == other.EntryType && Id == other.Id;

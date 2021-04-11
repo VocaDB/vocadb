@@ -105,11 +105,11 @@ namespace VocaDb.Model.Domain.Users
 			Artist = target;
 			target.Users.Add(this);
 		}
-#nullable disable
 
 		public override string ToString()
 		{
 			return $"{User} following {Artist}";
 		}
+#nullable disable
 	}
 }

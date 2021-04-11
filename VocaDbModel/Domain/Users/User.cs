@@ -694,12 +694,12 @@ namespace VocaDb.Model.Domain.Users
 				Options.EmailVerified = false;
 			}
 		}
-#nullable disable
 
 		public override string ToString()
 		{
 			return $"user '{Name}' [{Id}]";
 		}
+#nullable disable
 
 		public virtual void UpdateLastLogin(string host, string culture)
 		{

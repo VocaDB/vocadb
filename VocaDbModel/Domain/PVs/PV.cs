@@ -142,9 +142,11 @@ namespace VocaDb.Model.Domain.PVs
 
 		public virtual void OnDelete() { }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"PV '{PVId}' on {Service} [{Id}]";
 		}
+#nullable disable
 	}
 }

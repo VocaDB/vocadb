@@ -435,12 +435,12 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			var diff = await CollectionHelper.SyncWithContentAsync(AllArtists, newArtists, (a1, a2) => a1.Id == a2.Id, async a => await AddArtist(a, artistGetter), Update, null);
 			return diff;
 		}
-#nullable disable
 
 		public override string ToString()
 		{
 			return $"Release event '{DefaultName}' [{Id}]";
 		}
+#nullable disable
 	}
 
 	public interface IReleaseEvent : IEntryWithIntId

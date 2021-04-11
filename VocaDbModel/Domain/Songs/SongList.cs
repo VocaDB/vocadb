@@ -272,9 +272,11 @@ namespace VocaDb.Model.Domain.Songs
 			return new CollectionDiffWithValue<SongInList, SongInList>(created, diff.Removed, diff.Unchanged, edited);
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"song list '{Name}' [{Id}]";
 		}
+#nullable disable
 	}
 }

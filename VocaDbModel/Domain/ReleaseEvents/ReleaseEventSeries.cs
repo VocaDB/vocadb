@@ -226,9 +226,11 @@ namespace VocaDb.Model.Domain.ReleaseEvents
 			}
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"release event series '{TranslatedName.Default}' [{Id}]";
 		}
+#nullable disable
 	}
 }

@@ -47,9 +47,11 @@ namespace VocaDb.Model.Domain.Security
 			}
 		}
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"IPRule for {Address}, created at {Created}, notes {Notes}";
 		}
+#nullable disable
 	}
 }

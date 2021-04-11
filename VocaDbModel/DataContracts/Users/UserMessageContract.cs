@@ -64,9 +64,11 @@ namespace VocaDb.Model.DataContracts.Users
 		[DataMember]
 		public string Subject { get; init; }
 
+#nullable enable
 		public override string ToString()
 		{
 			return $"Message '{Subject}' to {Receiver} [{Id}]";
 		}
+#nullable disable
 	}
 }
