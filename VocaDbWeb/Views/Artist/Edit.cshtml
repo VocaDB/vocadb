@@ -126,7 +126,7 @@
 									<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel("Illustrator", "Person who illustrated the character design. This is inherited to derived voicebanks."))" />
 								</td>
 								<td>
-									<partial name="Partials/Knockout/_ArtistLockingAutoComplete" model="@(new ArtistLockingAutoCompleteViewModel("illustrator", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual"))" />
+									<partial name="Partials/Knockout/_ArtistLockingAutoComplete" model="@(new ArtistLockingAutoCompleteViewModel("illustrator", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual,CoverArtist"))" />
 								</td>
 								<td></td>
 							</tr>
@@ -135,7 +135,7 @@
 									<partial name="Partials/Shared/_HelpLabel" model="@(new HelpLabelViewModel("Voice provider", "Person who provided their voice for this voicebank. This is inherited to derived voicebanks."))" />
 								</td>
 								<td>
-									<partial name="Partials/Knockout/_ArtistLockingAutoComplete" model="@(new ArtistLockingAutoCompleteViewModel("voiceProvider", "Unknown,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherIndividual"))" />
+									<partial name="Partials/Knockout/_ArtistLockingAutoComplete" model="@(new ArtistLockingAutoCompleteViewModel("voiceProvider", "Unknown,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherIndividual,CoverArtist"))" />
 								</td>
 							</tr>
 							<!-- ko foreach: associatedArtists -->
@@ -156,7 +156,7 @@
 									<partial name="Partials/Knockout/_DropdownList" model="@(new DropdownListViewModel(Model.AssociatedArtistTypes, "newAssociatedArtistType"))" />
 								</td>
 								<td>
-									<partial name="Partials/Knockout/_ArtistLockingAutoComplete" model="@(new ArtistLockingAutoCompleteViewModel("newAssociatedArtist", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual"))" />
+									<partial name="Partials/Knockout/_ArtistLockingAutoComplete" model="@(new ArtistLockingAutoCompleteViewModel("newAssociatedArtist", "Unknown,Circle,Producer,Illustrator,Animator,Lyricist,OtherVocalist,OtherGroup,OtherIndividual,CoverArtist"))" />
 								</td>
 							</tr>
 						</table>
