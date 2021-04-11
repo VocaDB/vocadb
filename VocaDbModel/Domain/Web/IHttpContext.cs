@@ -13,7 +13,9 @@ namespace VocaDb.Model.Domain.Web
 		IServerPathMapper ServerPathMapper { get; }
 		IHttpRequest Request { get; }
 		IHttpResponse Response { get; }
+#nullable enable
 		IPrincipal User { get; set; }
+#nullable disable
 	}
 
 	public interface IServerPathMapper

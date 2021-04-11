@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Threading.Tasks;
 using VocaDb.Model.Domain;
 using VocaDb.Model.Domain.Security;
@@ -15,7 +13,7 @@ namespace VocaDb.Model.Database.Repositories
 		/// This override uses the currently logged in user, if any.
 		/// </summary>
 		/// <param name="doingWhat">What the user was doing.</param>
-		void SysLog(string doingWhat);
+		void SysLog(string? doingWhat);
 
 		/// <summary>
 		/// Logs an action in syslog. 
@@ -23,14 +21,14 @@ namespace VocaDb.Model.Database.Repositories
 		/// </summary>
 		/// <param name="doingWhat">What the user was doing.</param>
 		/// <param name="who">Who made the action.</param>
-		void SysLog(string doingWhat, string who);
+		void SysLog(string? doingWhat, string? who);
 
 		void AuditLog(string doingWhat, AgentLoginData who, AuditLogCategory category = AuditLogCategory.Unspecified);
 
 		void AuditLog(string doingWhat, string who, AuditLogCategory category = AuditLogCategory.Unspecified);
 
-		void AuditLog(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null);
+		void AuditLog(string doingWhat, User? user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null);
 
-		Task AuditLogAsync(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null);
+		Task AuditLogAsync(string doingWhat, User? user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null);
 	}
 }

@@ -1,5 +1,3 @@
-#nullable disable
-
 namespace VocaDb.Model.Database.Repositories
 {
 	/// <summary>
@@ -13,7 +11,7 @@ namespace VocaDb.Model.Database.Repositories
 		/// </summary>
 		/// <param name="id">Entity Id.</param>
 		/// <returns>The loaded entity. Null if not found.</returns>
-		TEntity Get(object id);
+		TEntity? Get(object id);
 
 		/// <summary>
 		/// Loads an entity from the repository, assuming the entity exists.

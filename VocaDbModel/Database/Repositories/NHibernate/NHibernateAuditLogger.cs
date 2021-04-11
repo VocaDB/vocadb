@@ -1,5 +1,3 @@
-#nullable disable
-
 using NLog;
 using System.Threading.Tasks;
 using VocaDb.Model.Domain;
@@ -21,7 +19,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			PermissionContext = permissionContext;
 		}
 
-		private static AgentLoginData CreateAgentLoginData(IDatabaseContext<AuditLogEntry> ctx, IUserPermissionContext permissionContext, User user = null)
+		private static AgentLoginData CreateAgentLoginData(IDatabaseContext<AuditLogEntry> ctx, IUserPermissionContext permissionContext, User? user = null)
 		{
 			if (user != null)
 				return new AgentLoginData(user);
@@ -37,7 +35,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			}
 		}
 
-		private string GetAuditLogMessage(string doingWhat, string who)
+		private string GetAuditLogMessage(string? doingWhat, string? who)
 		{
 			return $"'{who}' {doingWhat}";
 		}
@@ -48,7 +46,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		/// This override uses the currently logged in user, if any.
 		/// </summary>
 		/// <param name="doingWhat">What the user was doing.</param>
-		public void SysLog(string doingWhat)
+		public void SysLog(string? doingWhat)
 		{
 			SysLog(doingWhat, PermissionContext.Name);
 		}
@@ -59,7 +57,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 		/// </summary>
 		/// <param name="doingWhat">What the user was doing.</param>
 		/// <param name="who">Who made the action.</param>
-		public void SysLog(string doingWhat, string who)
+		public void SysLog(string? doingWhat, string? who)
 		{
 			s_log.Info(GetAuditLogMessage(doingWhat, who));
 		}
@@ -85,7 +83,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			Ctx.Save(entry);
 		}
 
-		public void AuditLog(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null)
+		public void AuditLog(string doingWhat, User? user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null)
 		{
 			var agentLoginData = CreateAgentLoginData(Ctx, PermissionContext, user);
 			SysLog(doingWhat, agentLoginData.Name);
@@ -94,7 +92,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 			Ctx.Save(entry);
 		}
 
-		public async Task AuditLogAsync(string doingWhat, User user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null)
+		public async Task AuditLogAsync(string doingWhat, User? user = null, AuditLogCategory category = AuditLogCategory.Unspecified, GlobalEntryId? entryId = null)
 		{
 			var agentLoginData = CreateAgentLoginData(Ctx, PermissionContext, user);
 			SysLog(doingWhat, agentLoginData.Name);

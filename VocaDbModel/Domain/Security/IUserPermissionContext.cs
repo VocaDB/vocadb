@@ -1,5 +1,4 @@
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using VocaDb.Model.DataContracts.Users;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Domain.Users;
@@ -11,6 +10,7 @@ namespace VocaDb.Model.Domain.Security
 	/// </summary>
 	public interface IUserPermissionContext
 	{
+#nullable enable
 		ContentLanguagePreference LanguagePreference { get; }
 
 		UserSettingLanguagePreference LanguagePreferenceSetting { get; }
@@ -18,23 +18,26 @@ namespace VocaDb.Model.Domain.Security
 		/// <summary>
 		/// Whether a user is currently logged in (authenticated).
 		/// </summary>
+		[MemberNotNullWhen(true, nameof(LoggedUser))]
 		bool IsLoggedIn { get; }
 
 		/// <summary>
 		/// Currently logged in user. Can be null.
 		/// </summary>
-		ServerOnlyUserWithPermissionsContract LoggedUser { get; }
+		ServerOnlyUserWithPermissionsContract? LoggedUser { get; }
 
 		/// <summary>
 		/// Id of the logged in user. If not logged in, 0 (InvalidId) will be returned.
 		/// </summary>
 		int LoggedUserId { get; }
+#nullable disable
 
 		/// <summary>
 		/// Name of the currently acting agent. Null if not logged in.
 		/// </summary>
 		string Name { get; }
 
+#nullable enable
 		UserGroupId UserGroupId { get; }
 
 		/// <summary>
@@ -57,5 +60,6 @@ namespace VocaDb.Model.Domain.Security
 		/// <param name="flag">Permission to be tested.</param>
 		/// <exception cref="NotAllowedException">If the user does not have the permission.</exception>
 		void VerifyPermission(PermissionToken flag);
+#nullable disable
 	}
 }

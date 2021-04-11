@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Security.Principal;
 using VocaDb.Model.DataContracts.Users;
 

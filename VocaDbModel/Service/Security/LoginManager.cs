@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Threading;
 using VocaDb.Model.Domain.Web;
 using VocaDb.Model.Utils;
+using System.Diagnostics.CodeAnalysis;
 
 namespace VocaDb.Model.Service.Security
 {
@@ -20,6 +21,7 @@ namespace VocaDb.Model.Service.Security
 	/// </summary>
 	public class LoginManager : IUserPermissionContext
 	{
+#nullable enable
 		public LoginManager(IHttpContext context)
 		{
 			_context = context;
@@ -31,9 +33,9 @@ namespace VocaDb.Model.Service.Security
 
 		private static readonly Logger s_log = LogManager.GetCurrentClassLogger();
 
-		private ServerOnlyUserWithPermissionsContract _user;
+		private ServerOnlyUserWithPermissionsContract? _user;
 
-		private void SetCultureSafe(string name, bool culture, bool uiCulture)
+		private void SetCultureSafe(string? name, bool culture, bool uiCulture)
 		{
 			if (string.IsNullOrEmpty(name))
 				return;
@@ -54,26 +56,24 @@ namespace VocaDb.Model.Service.Security
 			}
 		}
 
-		public static string GetHashedAccessKey(string key)
+		public static string GetHashedAccessKey(string? key)
 		{
 			var salt = ConfigurationManager.AppSettings["AccessKeySalt"] ?? string.Empty;
 
 			return CryptoHelper.HashSHA1(key + salt);
 		}
 
-#nullable enable
 		public void SetLoggedUser(ServerOnlyUserWithPermissionsContract user)
 		{
 			ParamIs.NotNull(() => user);
 
-			if (!_context.User.Identity.IsAuthenticated)
+			if (_context.User.Identity is null || !_context.User.Identity.IsAuthenticated)
 				throw new InvalidOperationException("Must be authenticated");
 
 			_context.User = new VocaDbPrincipal(_context.User.Identity, user);
 		}
-#nullable disable
 
-		protected IPrincipal User => _context?.User;
+		protected IPrincipal User => _context.User;
 
 		public bool HasPermission(PermissionToken token)
 		{
@@ -89,7 +89,8 @@ namespace VocaDb.Model.Service.Security
 			return (LoggedUser.EffectivePermissions.Contains(token));
 		}
 
-		public bool IsLoggedIn => (_context != null && User != null && User.Identity.IsAuthenticated && User is VocaDbPrincipal);
+		[MemberNotNullWhen(true, nameof(LoggedUser))]
+		public bool IsLoggedIn => (_context != null && User != null && User.Identity is not null && User.Identity.IsAuthenticated && User is VocaDbPrincipal);
 
 		public ContentLanguagePreference LanguagePreference => LanguagePreferenceSetting.Value;
 
@@ -100,7 +101,7 @@ namespace VocaDb.Model.Service.Security
 		/// <summary>
 		/// Currently logged in user. Can be null.
 		/// </summary>
-		public ServerOnlyUserWithPermissionsContract LoggedUser
+		public ServerOnlyUserWithPermissionsContract? LoggedUser
 		{
 			get
 			{
@@ -116,9 +117,11 @@ namespace VocaDb.Model.Service.Security
 		/// Logged user Id or InvalidId if no user is logged in.
 		/// </summary>
 		public int LoggedUserId => LoggedUser != null ? LoggedUser.Id : InvalidId;
+#nullable disable
 
 		public string Name => User.Identity.Name;
 
+#nullable enable
 		public UserGroupId UserGroupId
 		{
 			get
@@ -158,5 +161,6 @@ namespace VocaDb.Model.Service.Security
 				throw new NotAllowedException();
 			}
 		}
+#nullable disable
 	}
 }

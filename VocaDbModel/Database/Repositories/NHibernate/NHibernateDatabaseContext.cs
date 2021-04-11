@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -51,7 +49,7 @@ namespace VocaDb.Model.Database.Repositories.NHibernate
 
 		public Task DeleteAsync(T entity) => Session.DeleteAsync(entity);
 
-		public T Get(object id) => Session.Get<T>(id);
+		public T? Get(object id) => Session.Get<T>(id);
 
 		public T Load(object id) => Session.Load<T>(id);
 

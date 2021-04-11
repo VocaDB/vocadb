@@ -28,11 +28,13 @@ namespace VocaDb.Web
 		public IHttpRequest Request => new AspNetCoreHttpRequest(Context.Request);
 		public IHttpResponse Response => new AspNetCoreHttpResponse(Context.Response);
 
+#nullable enable
 		public IPrincipal User
 		{
 			get => Context.User;
-			set => Context.User = value as ClaimsPrincipal;
+			set => Context.User = (ClaimsPrincipal)value;
 		}
+#nullable disable
 
 		public IServerPathMapper ServerPathMapper => this;
 
