@@ -2,6 +2,7 @@ import BasicListEditViewModel from '../BasicListEditViewModel';
 import ContentLanguageSelection from '../../Models/Globalization/ContentLanguageSelection';
 import LyricsForSongContract from '../../DataContracts/Song/LyricsForSongContract';
 import TranslationType from '../../Models/Globalization/TranslationType';
+import WebLinkMatcher from '../../Shared/WebLinkMatcher';
 
 	export default class LyricsForSongEditViewModel {
 
@@ -24,6 +25,20 @@ import TranslationType from '../../Models/Globalization/TranslationType';
 				this.url = ko.observable("");
 				this.value = ko.observable("");
 			}
+
+			this.url.subscribe(url => {
+
+				if (!this.source()) {
+
+					var matcher = WebLinkMatcher.matchWebLink(url);
+				}
+
+				if (matcher) {
+
+					this.source(matcher.desc);
+				}
+
+			});
 
 			this.isNew = contract == null;
 
