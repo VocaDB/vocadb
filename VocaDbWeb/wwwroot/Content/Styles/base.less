@@ -352,16 +352,9 @@ body .container-fluid {
 	align-items: center !important;
 
 	& > .alert {
-		position: fixed;
-		max-width: 25%;
-	}
-
-	& > div {
-		margin-top: 15%;
-	}
-
-	& > :last-child {
-		margin-top: -15%;
+		position: -webkit-sticky;
+		position: sticky;
+		top: 40px;
 	}
 }
 
