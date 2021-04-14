@@ -1,6 +1,6 @@
 window.$ = window.jQuery = require('jquery');
 
-require('bootstrap-sass');
+require('bootstrap');
 
 require('jquery-ui/accordion');
 require('jquery-ui/autocomplete');

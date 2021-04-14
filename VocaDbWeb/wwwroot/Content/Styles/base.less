@@ -57,129 +57,6 @@
 
 }
 
-
-// Layout and Navigation
-body {
-
-	padding-top: 50px;
-
-	@media (max-width: @mobile-breakpoint) {
-		padding-left: 0;
-		padding-right: 0;
-	}
-
-	@media (max-width: @topbar-two-rows-breakpoint) {
-		padding-top: 80px;
-	}
-
-}
-
-body .container-fluid {
-	@media (min-width: @mobile-breakpoint) {
-		padding-right: 10px;
-		padding-left: 10px;
-	}
-}
-
-.row-fluid .rightFrame {
-	@media (min-width: @left-menu-breakpoint) {
-		margin-left: 1%;
-		width: 84%;
-	}
-	@media (max-width: @left-menu-breakpoint) {
-		margin-left: 0;
-		margin-right: 0;
-		width: 100%;
-	}
-}
-
-.navbar .brand {
-	padding-top: 6px;
-}
-
-.vdb .menu {
-	@media (max-width: @left-menu-breakpoint) {
-		display: none;
-	}		
-}
-
-.vdb .navbar-searchBox {
-
-	max-width: 402px;
-	width: calc(100% - 60px);
-
-	@media (max-width: @left-menu-breakpoint) {
-		margin-bottom: 5px;
-	}
-
-	@media (min-width: @left-menu-breakpoint) {
-		margin-right: 30px;
-	}
-}
-
-.vdb .globalSearchBox {
-	max-width: 270px;
-	width: auto;
-
-	@media (max-width: @left-menu-breakpoint) {
-		width: calc(100% - 160px);
-	}
-}
-
-.navbar-search {
-	width: 100%;
-}
-
-.navbar-fixed-top, .navbar-fixed-bottom {
-	@media (max-width: @left-menu-breakpoint) {
-		margin-right: 0;
-		margin-left: 0;
-	}
-}
-
-@navbar-collapse-light: lighten(@navbar-color-light, 25%);
-@navbar-collapse-dark: lighten(@navbar-color-dark, 25%);
-@navbar-collapse-hover-light: lighten(@navbar-color-light, 30%);
-@navbar-collapse-hover-dark: lighten(@navbar-color-dark, 30%);
-
-.vdb .navbar-inverse .btn-navbar {
-
-	margin-top: 1px;
-	margin-left: 10px;
-
-	background-color: @navbar-color-dark;
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@navbar-collapse-light), to(@navbar-collapse-dark));	
-	background-image: -webkit-linear-gradient(top, @navbar-collapse-light, @navbar-collapse-dark);
-	background-image: -o-linear-gradient(top, @navbar-collapse-light, @navbar-collapse-dark);
-	background-image: -moz-linear-gradient(center top, @navbar-collapse-light, @navbar-collapse-dark);
-	background-image: linear-gradient(top, @navbar-collapse-light, @navbar-collapse-dark);
-
-	&:hover {
-		background-color: @navbar-collapse-dark;
-	}
-
-}
-
-.nav-collapse {
-	@media (min-width: @left-menu-breakpoint) {
-		display: none;
-	}
-}
-
-.vdb .page-title {
-	margin-bottom: 10px;
-    font-size: 24px;
-}
-
-.home-title small {
-	display: block;
-}
-
-.pre-line {
-	white-space: pre-line;
-}
-
-
 // Entries
 .entry-field-label-col {
 	min-width: 100px;
@@ -345,9 +222,69 @@ body .container-fluid {
 	}
 }
 
+.vcenter {
+	min-height: 100% !important;
+	min-height: 100vh !important;
+	display: flex !important;
+	align-items: center !important;
+	height: 140vh;
+
+	& > .alert {
+		position: -webkit-sticky;
+		position: sticky;
+		top: 50px;
+	}
+}
+
+@media only screen and (max-width: 767.98px) {
+	.vcenter > .alert {
+		position: static;
+		max-width: 100%;
+	}
+}
+
+.input-field {
+	width: 100% !important;
+}
+
+.alert-small {
+	float: right;
+	padding-right: 14px;
+	margin-bottom: 10px;
+}
+
+input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: dimgray;
+}
+
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: dimgray;
+	opacity: 1;
+}
+
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: dimgray;
+	opacity: 1;
+}
+
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: dimgray;
+}
+
+input::-ms-input-placeholder { /* Microsoft Edge */
+	color: dimgray;
+}
+
+input::placeholder { /* Most modern browsers */
+	color: dimgray;
+}
 
 // Workarounds
 // Razor sometimes adds extra space which seems to be impossible to fix
 .razor-whitespace-fix {
 	margin-left: -3px;
+}
+
+li > h6 {
+	text-align: center;
 }

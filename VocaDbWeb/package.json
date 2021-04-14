@@ -18,7 +18,9 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "bootstrap-sass": "^2.3.2",
+        "@popperjs/core": "^2.9.1",
+        "bootstrap": "^5.0.0-beta3",
+        "bootstrap-icons": "^1.4.1",
         "decimal.js-light": "^2.5.1",
         "jquery": "^2.2.1",
         "jquery-ui": "^1.10.4",
