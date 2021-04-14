@@ -259,7 +259,7 @@ body .rightFrame a.btn-danger:hover {
 	margin-right: auto;
 }
 
-.menu > .well {
+.menu > .card {
 	vertical-align: top;	
 	border: solid #8AD7D8 2px;
 	background-color: rgb(215, 236, 244);
@@ -633,7 +633,7 @@ div.item {
 	margin-left: 50px;
 }
 
-.well-transparent {
+.card-transparent {
 	background-color: white;
 	background-color: rgba(255, 255, 255, 0.60);
 }

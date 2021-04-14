@@ -1,5 +1,23 @@
 @import "variables";
 
+//Bootstrap
+.navbar {
+	background-color: #0D2B35;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#133D4C), to(#081A21));
+	background-image: -webkit-linear-gradient(to bottom, #133D4C, #081A21);
+	background-image: -o-linear-gradient(to bottom, #133D4C, #081A21);
+	background-image: -moz-linear-gradient(center top, #133D4C, #081A21);
+	background-image: linear-gradient(to bottom, #133D4C, #081A21);
+}
+
+#sideNavigation > .list-group-item {
+	background: transparent;
+
+	& .list-group > .list-group-item {
+		background: transparent;
+	}
+}
+
 // qTip
 .qtip {
 	&.tooltip-wide {

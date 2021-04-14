@@ -4,20 +4,22 @@
 @using VocaDb.Web.Helpers
 @inherits VocaDb.Web.Code.MenuPage
 
-<ul class="nav nav-list">
+<ul id="sideNavigation" class="list-unstyled">
 	<li><a asp-action="Index" asp-controller="Home">@(ViewRes._LayoutStrings.Home)</a></li>
 	<li>
 		<a asp-action="Index" asp-controller="Search" asp-route-searchType="@(EntryType.Artist)">@(ViewRes.SharedStrings.Artists)</a>
-		<ul>
-			@if (Login.CanManageDb) {
+		<ul class="ms-3">
+			@if (Login.CanManageDb)
+			{
 				<li><a asp-action="Create" asp-controller="Artist">@(ViewRes._LayoutStrings.AddArtist)</a></li>
 			}
 		</ul>
 	</li>
 	<li>
 		<a asp-action="Index" asp-controller="Search" asp-route-searchType="@(EntryType.Album)">@(ViewRes.SharedStrings.Albums)</a>
-		<ul>
-			@if (Login.CanManageDb) {
+		<ul class="ms-3">
+			@if (Login.CanManageDb)
+			{
 				<li><a asp-action="Create" asp-controller="Album">@(ViewRes._LayoutStrings.AddAlbum)</a></li>
 			}
 			<li>@Html.ActionLink(ViewRes.SharedStrings.TopRatedAlbums, "Index", "Search", new SearchRouteParams { searchType = EntryType.Album, sort = VocaDb.Model.Service.AlbumSortRule.RatingAverage }, null)</li>
@@ -27,8 +29,9 @@
 	</li>
 	<li>
 		@Html.ActionLink(ViewRes.SharedStrings.Songs, "Index", "Search", new SearchRouteParams{ searchType = EntryType.Song }, null)
-		<ul>
-			@if (Login.CanManageDb) {
+		<ul class="ms-3">
+			@if (Login.CanManageDb)
+			{
 				<li><a asp-action="Create" asp-controller="Song">@(ViewRes._LayoutStrings.AddSong)</a></li>
 			}
 			<li><a asp-action="Rankings" asp-controller="Song">@(ViewRes.SharedStrings.TopFavoritedSongs)</a></li>
@@ -37,7 +40,7 @@
 	</li>
 	<li>
 		@Html.ActionLink(ViewRes.SharedStrings.ReleaseEvents, "Index", "Search", new SearchRouteParams{ searchType = EntryType.ReleaseEvent }, null)		
-		<ul>
+		<ul class="ms-3">
 			<li><a asp-action="Index" asp-controller="Event">@(ViewRes._LayoutStrings.UpcomingEvents)</a></li>
 		</ul>
 	</li>
