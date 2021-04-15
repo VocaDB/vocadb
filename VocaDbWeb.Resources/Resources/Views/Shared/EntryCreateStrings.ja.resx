@@ -144,4 +144,7 @@
   <data name="NoArtistsToName" xml:space="preserve">
     <value>名前欄にアーティスト名を記入せず、アーティストリストを使ってください。</value>
   </data>
+  <data name="LearnRomanization" xml:space="preserve">
+    <value>ローマ字化について詳しく</value>
+  </data>
 </root>

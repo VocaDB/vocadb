@@ -127,7 +127,7 @@
     <value>Artists (need at least one)</value>
   </data>
   <data name="Draft" xml:space="preserve">
-    <value>This entry is a draft</value>
+    <value>This entry is a draft. (tick if you are missing data or have doubts)</value>
   </data>
   <data name="DuplicatePV" xml:space="preserve">
     <value>It seems this PV has already been added to the database.</value>
@@ -164,5 +164,29 @@
   </data>
   <data name="UnableToCreateSong" xml:space="preserve">
     <value>Unable to create song. Please correct the errors and try again.</value>
+  </data>
+  <data name="AddPVInfo" xml:space="preserve">
+    <value>You will be able to add more PVs later.</value>
+  </data>
+  <data name="AddArtistInfo" xml:space="preserve">
+    <value>Do not include artist names in these fields. Instead, use the "Artists" field below.</value>
+  </data>
+  <data name="Media" xml:space="preserve">
+    <value>Media</value>
+  </data>
+  <data name="MissingArtistInfo" xml:space="preserve">
+    <value>Can't find the artist?</value>
+  </data>
+  <data name="MissingArtistExplanation" xml:space="preserve">
+    <value>You cannot create a new Artist entry in this page! You will need to use the "Add an artist" page to create an entry. You can also do this after the song has been created.</value>
+  </data>
+  <data name="OriginalPVNote" xml:space="preserve">
+    <value>This is very desirable to have!</value>
+  </data>
+  <data name="NonEnglishNote" xml:space="preserve">
+    <value>Original, non-English name (e.g, Japanese)</value>
+  </data>
+  <data name="EnglishNote" xml:space="preserve">
+    <value>Original English name, or known translation</value>
   </data>
 </root>

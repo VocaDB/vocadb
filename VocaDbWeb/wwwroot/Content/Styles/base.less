@@ -345,6 +345,62 @@ body .container-fluid {
 	}
 }
 
+.vcenter {
+	min-height: 100% !important;
+	min-height: 100vh !important;
+	display: flex !important;
+	align-items: center !important;
+	height: 140vh;
+
+	& > .alert {
+		position: -webkit-sticky;
+		position: sticky;
+		top: 50px;
+	}
+}
+
+@media only screen and (max-width: 767.98px) {
+	.vcenter > .alert {
+		position: static;
+		max-width: 100%;
+	}
+}
+
+.input-field {
+	width: 100% !important;
+}
+
+.alert-small {
+	float: right;
+	padding-right: 14px;
+	margin-bottom: 10px;
+}
+
+input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: dimgray;
+}
+
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: dimgray;
+	opacity: 1;
+}
+
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: dimgray;
+	opacity: 1;
+}
+
+input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: dimgray;
+}
+
+input::-ms-input-placeholder { /* Microsoft Edge */
+	color: dimgray;
+}
+
+input::placeholder { /* Most modern browsers */
+	color: dimgray;
+}
 
 // Workarounds
 // Razor sometimes adds extra space which seems to be impossible to fix
