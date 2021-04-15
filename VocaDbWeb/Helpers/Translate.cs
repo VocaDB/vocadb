@@ -303,5 +303,7 @@ namespace VocaDb.Web.Helpers
 		{
 			return (TranslateableEnum<TEnum>)s_allResourceManagers[typeof(TEnum)];
 		}
+
+		public static string ArtistCategoriesName(ArtistCategories value) => Model.Resources.ArtistCategoriesNames.ResourceManager.GetString(value.ToString());
 	}
 }

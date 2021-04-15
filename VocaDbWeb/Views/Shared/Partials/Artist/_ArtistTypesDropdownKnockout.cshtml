@@ -1,11 +1,17 @@
-﻿@using VocaDb.Model.Utils
+﻿@using VocaDb.Model.Helpers
+@using VocaDb.Model.Utils
 @using VocaDb.Web.Helpers
 @using VocaDb.Web.Models.Shared.Partials.Artist
 @model ArtistTypesDropdownKnockoutViewModel
 
 <select data-bind="value: @(Model.Binding)">
-	@foreach (var artistType in Translate.ArtistTypeNames.GetTranslatedFields(AppConfig.ArtistTypes))
+	@foreach (var group in AppConfig.ArtistTypes.GroupBy(artistType => ArtistHelper.CategoriesForTypes[artistType]).OrderBy(group => group.Key))
 	{
-		<option value="@artistType.Id">@artistType.Name</option>
+		<optgroup label="@Translate.ArtistCategoriesName(group.Key)">
+			@foreach (var artistType in group)
+			{
+				<option value="@artistType">@Translate.ArtistTypeName(artistType)</option>
+			}
+		</optgroup>
 	}
 </select>

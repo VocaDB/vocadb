@@ -1,5 +1,6 @@
 ﻿@using VocaDb.Model.Helpers
 @using VocaDb.Web.Helpers
+@using VocaDb.Web.Models.Shared.Partials.Artist
 @using VocaDb.Web.Models.Shared.Partials.Shared
 @using R = ViewRes.Artist
 @model VocaDb.Web.Models.Artist.Create
@@ -49,7 +50,8 @@
 				@Html.LabelFor(m => m.ArtistType)
 			</div>
 			<div class="editor-field">
-				@Html.DropdownForKnockout(m => m.ArtistType, ViewHelper.CreateArtistTypesList(null), "value: artistType")
+				<partial name="Partials/Artist/_ArtistTypesDropdownKnockout" model="@(new ArtistTypesDropdownKnockoutViewModel("artistType"))" />
+				@Html.HiddenForKnockout(m => m.ArtistType, "value: artistType")
 			</div>
 
 			<div class="editor-label">
