@@ -39,6 +39,8 @@ namespace VocaDb.Model.DataContracts.Api
 			};
 		}
 
+		public EntryForApiContract() { }
+
 		private EntryForApiContract(IEntryWithNames entry, ContentLanguagePreference languagePreference, EntryOptionalFields fields)
 		{
 			EntryType = entry.EntryType;
