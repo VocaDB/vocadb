@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -129,7 +129,6 @@ Please note that a song without Vocaloid vocals is allowed only if it's released
     <value>Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist.</value>
   </data>
   <data name="WithoutVocalNote" xml:space="preserve">
-    <value>Please note that a song without Vocaloid vocals is allowed only if it's released on an album together with Vocaloid songs, or there's multiple Vocaloid covers of that song. UTAU and other v
-oice synthesizers are allowed as well, but human-sung covers are not.</value>
+    <value>Please note that a song without voice synthesizer vocals is allowed only if it's released on an album together with voice synthesizer songs, or there's multiple voice synthesizer covers of that song.</value>
   </data>
 </root>
