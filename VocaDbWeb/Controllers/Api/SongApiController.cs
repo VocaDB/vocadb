@@ -318,7 +318,7 @@ namespace VocaDb.Web.Controllers.Api
 				MinLength = minLength,
 				MaxLength = maxLength,
 			};
-			param.Common.EntryStatus = status;
+			param = param with { Common = param.Common with { EntryStatus = status } };
 
 			var artists = _service.Find(s => new SongForApiContract(s, null, lang, fields), param);
 

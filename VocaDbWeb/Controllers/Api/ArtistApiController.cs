@@ -176,7 +176,7 @@ namespace VocaDb.Web.Controllers.Api
 				AllowBaseVoicebanks = allowBaseVoicebanks,
 				AdvancedFilters = advancedFilters?.Select(advancedFilter => advancedFilter.ToAdvancedSearchFilter()).ToArray(),
 			};
-			param.Common.EntryStatus = status;
+			param = param with { Common = param.Common with { EntryStatus = status } };
 
 			var artists = _service.FindArtists(s => new ArtistForApiContract(s, lang, _thumbPersister, fields), param);
 

@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.Domain.Artists;
 using VocaDb.Model.Domain.Globalization;
 using VocaDb.Model.Service.Paging;
@@ -9,12 +7,10 @@ namespace VocaDb.Model.Service.Search.Artists
 	/// <summary>
 	/// Query parameters for artists
 	/// </summary>
-	public class ArtistQueryParams
+	public sealed record ArtistQueryParams
 	{
 		public ArtistQueryParams()
 		{
-			Common = new CommonSearchParams<ArtistSearchTextQuery>();
-			Paging = new PagingProperties(0, 30, true);
 			ArtistTypes = new ArtistType[] { };
 		}
 
@@ -26,7 +22,7 @@ namespace VocaDb.Model.Service.Search.Artists
 		/// <param name="nameMatchMode">Mode for name maching. Ignored when query string is null or empty.</param>
 		/// <param name="sortRule">Sort rule for results.</param>
 		/// <param name="moveExactToTop">Whether to move exact match to the top of search results.</param>
-		public ArtistQueryParams(ArtistSearchTextQuery textQuery, ArtistType[] songTypes, int start, int maxResults,
+		public ArtistQueryParams(ArtistSearchTextQuery textQuery, ArtistType[]? songTypes, int start, int maxResults,
 			bool getTotalCount, ArtistSortRule sortRule, bool moveExactToTop)
 		{
 			Common = CommonSearchParams.Create(textQuery, true, moveExactToTop);
@@ -36,30 +32,26 @@ namespace VocaDb.Model.Service.Search.Artists
 			SortRule = sortRule;
 		}
 
-#nullable enable
-		public AdvancedSearchFilter[]? AdvancedFilters { get; set; }
-#nullable disable
+		public AdvancedSearchFilter[]? AdvancedFilters { get; init; }
 
-		public bool AllowBaseVoicebanks { get; set; } = true;
+		public bool AllowBaseVoicebanks { get; init; } = true;
 
-		public ArtistType[] ArtistTypes { get; set; }
+		public ArtistType[] ArtistTypes { get; init; }
 
-		public bool ChildTags { get; set; }
+		public bool ChildTags { get; init; }
 
-		public CommonSearchParams<ArtistSearchTextQuery> Common { get; set; }
+		public CommonSearchParams<ArtistSearchTextQuery> Common { get; init; } = CommonSearchParams<ArtistSearchTextQuery>.Default;
 
-		public ContentLanguagePreference LanguagePreference { get; set; }
+		public ContentLanguagePreference LanguagePreference { get; init; }
 
-		public PagingProperties Paging { get; set; }
+		public PagingProperties Paging { get; init; } = PagingProperties.Default;
 
-		public ArtistSortRule SortRule { get; set; }
+		public ArtistSortRule SortRule { get; init; }
 
-#nullable enable
-		public string[]? Tags { get; set; }
+		public string[]? Tags { get; init; }
 
-		public int[]? TagIds { get; set; }
-#nullable disable
+		public int[]? TagIds { get; init; }
 
-		public int UserFollowerId { get; set; }
+		public int UserFollowerId { get; init; }
 	}
 }

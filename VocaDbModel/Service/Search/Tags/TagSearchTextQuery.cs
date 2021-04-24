@@ -1,5 +1,3 @@
-#nullable disable
-
 using VocaDb.Model.Service.Helpers;
 
 namespace VocaDb.Model.Service.Search.Tags
@@ -8,7 +6,7 @@ namespace VocaDb.Model.Service.Search.Tags
 	{
 		public static new TagSearchTextQuery Empty => new TagSearchTextQuery();
 
-		public static new TagSearchTextQuery Create(string query,
+		public static new TagSearchTextQuery Create(string? query,
 			NameMatchMode selectedMode = NameMatchMode.Auto,
 			NameMatchMode defaultMode = NameMatchMode.Words)
 		{
@@ -23,7 +21,7 @@ namespace VocaDb.Model.Service.Search.Tags
 
 		public TagSearchTextQuery() { }
 
-		public TagSearchTextQuery(string query, NameMatchMode matchMode, string originalQuery, string[] words = null)
+		public TagSearchTextQuery(string? query, NameMatchMode matchMode, string? originalQuery, string[]? words = null)
 			: base(query, matchMode, originalQuery, words) { }
 	}
 }

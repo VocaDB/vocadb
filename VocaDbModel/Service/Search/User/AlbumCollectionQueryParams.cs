@@ -1,14 +1,11 @@
-#nullable disable
-
 using VocaDb.Model.Domain.Albums;
 using VocaDb.Model.Domain.Users;
 using VocaDb.Model.Service.Paging;
 
 namespace VocaDb.Model.Service.Search.User
 {
-	public class AlbumCollectionQueryParams
+	public sealed record AlbumCollectionQueryParams
 	{
-#nullable enable
 		public AlbumCollectionQueryParams(int userId, PagingProperties paging)
 		{
 			ParamIs.NotNull(() => paging);
@@ -18,40 +15,34 @@ namespace VocaDb.Model.Service.Search.User
 
 			FilterByStatus = null;
 			Sort = AlbumSortRule.Name;
-			TextQuery = new SearchTextQuery();
 		}
 
-		public AdvancedSearchFilter[]? AdvancedFilters { get; set; }
-#nullable disable
+		public AdvancedSearchFilter[]? AdvancedFilters { get; init; }
 
-		public DiscType AlbumType { get; set; }
+		public DiscType AlbumType { get; init; }
 
-		public int ArtistId { get; set; }
+		public int ArtistId { get; init; }
 
-#nullable enable
-		public PurchaseStatus[]? FilterByStatus { get; set; }
-#nullable disable
+		public PurchaseStatus[]? FilterByStatus { get; init; }
 
-		public SearchTextQuery TextQuery { get; set; }
+		public SearchTextQuery TextQuery { get; init; } = SearchTextQuery.Empty;
 
 		/// <summary>
 		/// Paging properties. Cannot be null.
 		/// </summary>
-		public PagingProperties Paging { get; set; }
+		public PagingProperties Paging { get; init; }
 
-		public int ReleaseEventId { get; set; }
+		public int ReleaseEventId { get; init; }
 
-		public AlbumSortRule Sort { get; set; }
+		public AlbumSortRule Sort { get; init; }
 
-#nullable enable
-		public string? Tag { get; set; }
-#nullable disable
+		public string? Tag { get; init; }
 
-		public int TagId { get; set; }
+		public int TagId { get; init; }
 
 		/// <summary>
 		/// Id of the user whose albums to get.
 		/// </summary>
-		public int UserId { get; set; }
+		public int UserId { get; init; }
 	}
 }

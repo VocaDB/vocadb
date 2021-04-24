@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Linq;
 using VocaDb.Model.Database.Repositories;
 using VocaDb.Model.DataContracts.Api;
@@ -31,8 +29,8 @@ namespace VocaDb.Model.Database.Queries
 
 		public PartialFindResult<EntryForApiContract> GetList(
 			string query,
-			int[] tagIds,
-			string[] tags,
+			int[]? tagIds,
+			string[]? tags,
 			bool childTags,
 			EntryStatus? status,
 			EntryTypes? entryTypes,
@@ -100,7 +98,7 @@ namespace VocaDb.Model.Database.Queries
 					.WhereHasTags(tagIds, childTags)
 					.WhereStatusIs(status) : null;
 
-				var eventNames = searchEvents ? eventQuery
+				var eventNames = searchEvents ? eventQuery!
 					.OrderBy(sort, lang, null)
 					.Take(start + maxResults)
 					.SelectEntryBase(lang, EntryType.ReleaseEvent)
@@ -112,7 +110,7 @@ namespace VocaDb.Model.Database.Queries
 					.WhereHasName(textQuery)
 					.WhereStatusIs(status) : null;
 
-				var tagNames = searchTags ? tagQuery
+				var tagNames = searchTags ? tagQuery!
 					.OrderBy(sort, lang)
 					.Take(start + maxResults)
 					.SelectEntryBase(lang, EntryType.Tag)
@@ -187,10 +185,10 @@ namespace VocaDb.Model.Database.Queries
 						(songNames.Length >= maxResults ? songQuery.Count() : songNames.Length);
 
 					var tagCount =
-						searchTags ? (tagNames.Length >= maxResults ? tagQuery.Count() : tagNames.Length) : 0;
+						searchTags ? (tagNames!.Length >= maxResults ? tagQuery!.Count() : tagNames.Length) : 0;
 
 					var eventCount =
-						searchEvents ? (eventNames.Length >= maxResults ? eventQuery.Count() : eventNames.Length) : 0;
+						searchEvents ? (eventNames!.Length >= maxResults ? eventQuery!.Count() : eventNames.Length) : 0;
 
 					count = artistCount + albumCount + songCount + tagCount + eventCount;
 				}

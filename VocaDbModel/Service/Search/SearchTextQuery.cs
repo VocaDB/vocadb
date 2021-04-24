@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +15,14 @@ namespace VocaDb.Model.Service.Search
 	/// </remarks>
 	public class SearchTextQuery
 	{
-		protected string[] _words;
+		protected string[]? _words;
 		private readonly NameMatchMode _matchMode;
-		private readonly string _originalQuery;
-		private readonly string _query;
+		private readonly string _originalQuery = string.Empty;
+		private readonly string _query = string.Empty;
 
 		public static SearchTextQuery Empty => new SearchTextQuery();
 
-		public static bool IsNullOrEmpty(SearchTextQuery query)
+		public static bool IsNullOrEmpty(SearchTextQuery? query)
 		{
 			return query == null || query.IsEmpty;
 		}
@@ -39,7 +37,7 @@ namespace VocaDb.Model.Service.Search
 		/// <param name="selectedMode">Selected name match mode. If 'Auto', the name match mode will be selected automatically.</param>
 		/// <param name="defaultMode">Default name match mode to be used for normal queries, if no special rules apply and no name match mode is specified.</param>
 		/// <returns>Search text query. Cannot be null.</returns>
-		public static SearchTextQuery Create(string query,
+		public static SearchTextQuery Create(string? query,
 			NameMatchMode selectedMode = NameMatchMode.Auto,
 			NameMatchMode defaultMode = NameMatchMode.Words)
 		{
@@ -47,15 +45,12 @@ namespace VocaDb.Model.Service.Search
 			return new SearchTextQuery(parsedQuery, selectedMode, query);
 		}
 
-		public static IEnumerable<SearchTextQuery> Create(IEnumerable<string> names, NameMatchMode selectedMode = NameMatchMode.Auto, NameMatchMode defaultMode = NameMatchMode.Words)
+		public static IEnumerable<SearchTextQuery> Create(IEnumerable<string?> names, NameMatchMode selectedMode = NameMatchMode.Auto, NameMatchMode defaultMode = NameMatchMode.Words)
 		{
 			return names.Select(n => Create(n, selectedMode, defaultMode));
 		}
 
-		public SearchTextQuery()
-		{
-			_query = string.Empty;
-		}
+		public SearchTextQuery() { }
 
 		/// <summary>
 		/// Initializes a new search text query.
@@ -67,16 +62,16 @@ namespace VocaDb.Model.Service.Search
 		/// <param name="words">
 		/// List of query words, if any. Can be null, in which case the words list will be parsed from <paramref name="query"/>.
 		/// </param>
-		public SearchTextQuery(string query, NameMatchMode matchMode,
-			string originalQuery,
-			string[] words = null)
+		public SearchTextQuery(string? query, NameMatchMode matchMode,
+			string? originalQuery,
+			string[]? words = null)
 		{
 			if (!string.IsNullOrEmpty(query) && matchMode == NameMatchMode.Auto)
 				throw new ArgumentException("'Auto' is not allowed here; specific name match mode is required", nameof(MatchMode));
 
-			_query = query;
+			_query = query ?? string.Empty;
 			_matchMode = matchMode;
-			_originalQuery = originalQuery;
+			_originalQuery = originalQuery ?? string.Empty;
 			_words = words;
 		}
 
@@ -119,11 +114,9 @@ namespace VocaDb.Model.Service.Search
 		/// </summary>
 		public string[] Words => _words ?? (_words = FindHelpers.GetQueryWords(Query));
 
-#nullable enable
 		public override string ToString()
 		{
 			return $"Text filter by '{Query}' ({MatchMode})";
 		}
-#nullable disable
 	}
 }

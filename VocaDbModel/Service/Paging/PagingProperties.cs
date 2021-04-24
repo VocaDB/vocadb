@@ -7,8 +7,10 @@ namespace VocaDb.Model.Service.Paging
 	/// Common query properties for paging.
 	/// </summary>
 	[DataContract(Namespace = Schemas.VocaDb)]
-	public class PagingProperties
+	public sealed record PagingProperties
 	{
+		public static readonly PagingProperties Default = new(start: 0, maxEntries: 30, getTotalCount: true);
+
 		/// <summary>
 		/// Creates paging properties based on a page number (instead of absolute entry index).
 		/// </summary>
@@ -43,18 +45,18 @@ namespace VocaDb.Model.Service.Paging
 		/// Whether to get the total number of entries.
 		/// </summary>
 		[DataMember]
-		public bool GetTotalCount { get; set; }
+		public bool GetTotalCount { get; init; }
 
 		/// <summary>
 		/// Maximum number of entries per page.
 		/// </summary>
 		[DataMember]
-		public int MaxEntries { get; set; }
+		public int MaxEntries { get; init; }
 
 		/// <summary>
 		/// Index of the first entry to be returned, starting from 0.
 		/// </summary>
 		[DataMember]
-		public int Start { get; set; }
+		public int Start { get; init; }
 	}
 }
