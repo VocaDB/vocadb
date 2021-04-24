@@ -31,11 +31,11 @@ import WebLinkMatcher from '../../Shared/WebLinkMatcher';
 				if (!this.source()) {
 
 					var matcher = WebLinkMatcher.matchWebLink(url);
-				}
 
-				if (matcher) {
+					if (matcher) {
 
-					this.source(matcher.desc);
+						this.source(matcher.desc);
+					}
 				}
 
 			});
