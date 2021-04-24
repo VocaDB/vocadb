@@ -38,9 +38,9 @@ namespace VocaDb.Model.DataContracts.MikuDb
 			Created = DateTime.Now;
 			Title = data.Title;
 		}
-#nullable disable
 
-		public PictureDataContract CoverPicture { get; init; }
+		public PictureDataContract? CoverPicture { get; init; }
+#nullable disable
 
 		public DateTime Created { get; init; }
 
@@ -50,7 +50,9 @@ namespace VocaDb.Model.DataContracts.MikuDb
 
 		public bool Selected { get; init; }
 
+#nullable enable
 		public string SourceUrl { get; init; }
+#nullable disable
 
 		public AlbumStatus Status { get; init; }
 

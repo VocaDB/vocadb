@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using VocaDb.Model.Service.VideoServices;
@@ -19,7 +17,6 @@ namespace VocaDb.Model.Service.ExtSites
 		private readonly string _amazonJpAffId;
 		private readonly string _paAffId;
 
-#nullable enable
 		private string AddOrReplaceParam(string url, string? affIdRegex, string? param, string? val)
 		{
 			var paramEq = param + "=";
@@ -61,7 +58,6 @@ namespace VocaDb.Model.Service.ExtSites
 
 			return AddOrReplaceParam(url, @"(\d+)", "affiliate_id", _paAffId);
 		}
-#nullable disable
 
 		public AffiliateLinkGenerator(VdbConfigManager configManager)
 		{
@@ -70,7 +66,6 @@ namespace VocaDb.Model.Service.ExtSites
 			_paAffId = configManager.Affiliates.PlayAsiaAffiliateId;
 		}
 
-#nullable enable
 		[return:NotNullIfNotNull("url"/* TODO: use nameof */)]
 		public string? GenerateAffiliateLink(string? url)
 		{
@@ -87,6 +82,5 @@ namespace VocaDb.Model.Service.ExtSites
 
 			return url;
 		}
-#nullable disable
 	}
 }

@@ -13,7 +13,8 @@ namespace VocaDb.Model.Helpers
 {
 	public static class HtmlRequestHelper
 	{
-		public static HtmlDocument Download(string url, string acceptLanguage = null)
+#nullable enable
+		public static HtmlDocument Download(string url, string? acceptLanguage = null)
 		{
 			var request = WebRequest.Create(url);
 
@@ -40,6 +41,7 @@ namespace VocaDb.Model.Helpers
 				response.Close();
 			}
 		}
+#nullable disable
 
 		public static Task<T> GetStreamAsync<T>(string url, Func<Stream, T> func) => GetStreamAsync(url, func, TimeSpan.FromSeconds(30));
 

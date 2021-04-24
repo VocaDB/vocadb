@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -26,7 +24,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			_pictureDownloader = pictureDownloader;
 		}
 
-		private PictureDataContract DownloadCoverPicture(string url)
+		private PictureDataContract? DownloadCoverPicture(string url)
 		{
 			if (url.Contains("_0280_0280.jpg"))
 			{
@@ -71,7 +69,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			}
 
 			var coverElem = doc.DocumentNode.SelectSingleNode("//div[@id = 'sub_ref']/div[@class = 'artwork']/div/a/img");
-			PictureDataContract coverPic = null;
+			PictureDataContract? coverPic = null;
 
 			if (coverElem != null)
 			{
@@ -81,7 +79,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			return new MikuDbAlbumContract(data) { CoverPicture = coverPic, SourceUrl = url };
 		}
 
-		private string GetVocalistName(string portraitImg) => portraitImg switch
+		private string? GetVocalistName(string? portraitImg) => portraitImg switch
 		{
 			"/modpub/images/ico/ico_cv_1.png" => "Hatsune Miku",
 			"/modpub/images/ico/ico_cv_2.png" => "Kagamine Rin",
@@ -92,7 +90,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			_ => null,
 		};
 
-		private HtmlNode GetInfoElem(HtmlNodeCollection nodes, string title)
+		private HtmlNode? GetInfoElem(HtmlNodeCollection nodes, string? title)
 		{
 			return nodes.FirstOrDefault(n => n.SelectNodes("span[text() = '" + title + "&nbsp;:']") != null);
 		}
@@ -126,7 +124,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			}
 		}
 
-		public ImportedAlbumTrack ParseTrackRow(int trackNum, string songTitle)
+		public ImportedAlbumTrack? ParseTrackRow(int trackNum, string songTitle)
 		{
 			var trackRegex = new Regex(@"\d\d\.\&nbsp\;(.+) (?:(?:\(feat\. (.+)\))|(\-\s?off vocal))"); // 01.&nbsp;Cloud Science (feat. Hatsune Miku)
 
@@ -150,7 +148,7 @@ namespace VocaDb.Model.Service.AlbumImport
 
 			return new ImportedAlbumTrack { TrackNum = trackNum, DiscNum = 1, Title = title, VocalistNames = vocalists };
 		}
-
+		
 		private void ParseTracklist(ImportedAlbumDataContract data, HtmlNode tracklistElem)
 		{
 			var songElems = tracklistElem.SelectNodes("//div[@class = 'song']");
@@ -194,11 +192,9 @@ namespace VocaDb.Model.Service.AlbumImport
 
 		public string ServiceName => "KarenT";
 
-#nullable enable
 		public override string ToString()
 		{
 			return "Album importer for KarenT";
 		}
-#nullable disable
 	}
 }

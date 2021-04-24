@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Linq;
 
 namespace VocaDb.Model.Service.AlbumImport
@@ -16,7 +14,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			_importers = new IAlbumImporter[] { new KarenTAlbumImporter(pictureDownloader) };
 		}
 
-		public IAlbumImporter FindImporter(string url)
+		public IAlbumImporter? FindImporter(string url)
 		{
 			return _importers.FirstOrDefault(i => i.IsValidFor(url));
 		}

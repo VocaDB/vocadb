@@ -1,5 +1,3 @@
-#nullable disable
-
 using System.Net;
 using VocaDb.Model.DataContracts;
 using VocaDb.Model.Helpers;
@@ -8,7 +6,7 @@ namespace VocaDb.Model.Service.AlbumImport
 {
 	public class WebPictureDownloader : IPictureDownloader
 	{
-		public PictureDataContract Create(string url)
+		public PictureDataContract? Create(string url)
 		{
 			var request = WebRequest.Create(url);
 

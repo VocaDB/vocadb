@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +30,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			return (LineMatch(text, "Track list") || LineMatch(text, "Tracks list"));
 		}
 
-		private HtmlNode FindTracklistRow(HtmlDocument doc, HtmlNode row)
+		private HtmlNode? FindTracklistRow(HtmlDocument doc, HtmlNode? row)
 		{
 			// Find the first table row on the page
 			if (row == null)
@@ -67,7 +65,7 @@ namespace VocaDb.Model.Service.AlbumImport
 			return null;
 		}
 
-		private bool LineMatch(string line, string field)
+		private bool LineMatch(string line, string? field)
 		{
 			return line.StartsWith(field + ":") || line.StartsWith(field + " :");
 		}
@@ -176,7 +174,7 @@ namespace VocaDb.Model.Service.AlbumImport
 				title = HtmlEntity.DeEntitize(titleElem.InnerText);
 
 			var coverPicLink = doc.DocumentNode.SelectSingleNode(".//div[@class='postcontent']/table/tr[1]/td[1]/a/img");
-			PictureDataContract coverPicture = null;
+			PictureDataContract? coverPicture = null;
 
 			if (coverPicLink != null)
 			{
@@ -290,14 +288,12 @@ namespace VocaDb.Model.Service.AlbumImport
 			}
 		}
 
-#nullable enable
 		public MikuDbAlbumImporter(IEnumerable<MikuDbAlbumContract> existingUrls)
 		{
 			ParamIs.NotNull(() => existingUrls);
 
 			_existingUrls = new HashSet<string>(existingUrls.Select(a => a.SourceUrl));
 		}
-#nullable disable
 
 		public AlbumImportResult[] ImportNew()
 		{
