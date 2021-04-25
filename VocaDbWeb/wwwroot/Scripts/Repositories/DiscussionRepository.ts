@@ -21,7 +21,7 @@ export default class DiscussionRepository implements ICommentRepository {
     callback: (contract: CommentContract) => void,
   ) => {
     $.postJSON(
-      this.mapUrl('topics/' + topicId + '/comments'),
+      this.mapUrl(`topics/${topicId}/comments`),
       contract,
       callback,
       'json',
@@ -34,7 +34,7 @@ export default class DiscussionRepository implements ICommentRepository {
     callback: (contract: DiscussionTopicContract) => void,
   ) => {
     $.postJSON(
-      this.mapUrl('folders/' + folderId + '/topics'),
+      this.mapUrl(`folders/${folderId}/topics`),
       contract,
       callback,
       'json',
@@ -42,14 +42,14 @@ export default class DiscussionRepository implements ICommentRepository {
   };
 
   public deleteComment = (commentId: number, callback?: () => void) => {
-    $.ajax(this.mapUrl('comments/' + commentId), {
+    $.ajax(this.mapUrl(`comments/${commentId}`), {
       type: 'DELETE',
       success: callback,
     });
   };
 
   public deleteTopic = (topicId: number, callback?: () => void) => {
-    $.ajax(this.mapUrl('topics/' + topicId), {
+    $.ajax(this.mapUrl(`topics/${topicId}`), {
       type: 'DELETE',
       success: callback,
     });
@@ -76,7 +76,7 @@ export default class DiscussionRepository implements ICommentRepository {
     topicId: number,
     callback: (topics: DiscussionTopicContract) => void,
   ) => {
-    $.getJSON(this.mapUrl('topics/' + topicId), { fields: 'All' }, callback);
+    $.getJSON(this.mapUrl(`topics/${topicId}`), { fields: 'All' }, callback);
   };
 
   public getTopics = (
@@ -117,7 +117,7 @@ export default class DiscussionRepository implements ICommentRepository {
     callback?: () => void,
   ) => {
     $.postJSON(
-      this.mapUrl('comments/' + commentId),
+      this.mapUrl(`comments/${commentId}`),
       contract,
       callback,
       'json',
@@ -129,6 +129,6 @@ export default class DiscussionRepository implements ICommentRepository {
     contract: DiscussionTopicContract,
     callback?: () => void,
   ) => {
-    $.postJSON(this.mapUrl('topics/' + topicId), contract, callback, 'json');
+    $.postJSON(this.mapUrl(`topics/${topicId}`), contract, callback, 'json');
   };
 }

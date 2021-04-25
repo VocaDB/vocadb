@@ -23,7 +23,7 @@ import UserMessageSummaryContract from '../DataContracts/User/UserMessageSummary
 export default class UserRepository implements ICommentRepository {
   public addFollowedTag = (tagId: number, callback?: () => void) => {
     $.postJSON(
-      this.urlMapper.mapRelative('/api/users/current/followedTags/' + tagId),
+      this.urlMapper.mapRelative(`/api/users/current/followedTags/${tagId}`),
       callback,
     );
   };
@@ -41,7 +41,7 @@ export default class UserRepository implements ICommentRepository {
     callback: (contract: CommentContract) => void,
   ) => {
     $.postJSON(
-      this.urlMapper.mapRelative('/api/users/' + userId + '/profileComments'),
+      this.urlMapper.mapRelative(`/api/users/${userId}/profileComments`),
       contract,
       callback,
       'json',
@@ -54,7 +54,7 @@ export default class UserRepository implements ICommentRepository {
     callback: (result: UserMessageSummaryContract) => void,
   ) => {
     return $.postJSON(
-      this.urlMapper.mapRelative('/api/users/' + userId + '/messages'),
+      this.urlMapper.mapRelative(`/api/users/${userId}/messages`),
       contract,
       callback,
       'json',
@@ -74,14 +74,14 @@ export default class UserRepository implements ICommentRepository {
 
   public deleteComment = (commentId: number, callback: () => void) => {
     $.ajax(
-      this.urlMapper.mapRelative('/api/users/profileComments/' + commentId),
+      this.urlMapper.mapRelative(`/api/users/profileComments/${commentId}`),
       { type: 'DELETE', success: callback },
     );
   };
 
   public deleteEventForUser = (eventId: number, callback?: () => void) => {
     var url = this.urlMapper.mapRelative(
-      '/api/users/current/events/' + eventId,
+      `/api/users/current/events/${eventId}`,
     );
     return $.ajax(url, {
       type: 'DELETE',
@@ -91,7 +91,7 @@ export default class UserRepository implements ICommentRepository {
 
   public deleteFollowedTag = (tagId: number, callback?: () => void) => {
     $.ajax(
-      this.urlMapper.mapRelative('/api/users/current/followedTags/' + tagId),
+      this.urlMapper.mapRelative(`/api/users/current/followedTags/${tagId}`),
       { type: 'DELETE', success: callback },
     );
   };
@@ -102,7 +102,7 @@ export default class UserRepository implements ICommentRepository {
   };
 
   public deleteMessages = (userId: number, messageIds: number[]) => {
-    var url = this.urlMapper.mapRelative('/api/users/' + userId + '/messages');
+    var url = this.urlMapper.mapRelative(`/api/users/${userId}/messages`);
     AjaxHelper.deleteJSON_Url(url, 'messageId', messageIds);
   };
 
@@ -120,7 +120,7 @@ export default class UserRepository implements ICommentRepository {
     sort: string,
     callback,
   ) => {
-    var url = this.urlMapper.mapRelative('/api/users/' + userId + '/albums');
+    var url = this.urlMapper.mapRelative(`/api/users/${userId}/albums`);
     var data = {
       start: paging.start,
       getTotalCount: paging.getTotalCount,
@@ -143,7 +143,7 @@ export default class UserRepository implements ICommentRepository {
 
   public getComments = (userId: number, callback) => {
     var url = this.urlMapper.mapRelative(
-      '/api/users/' + userId + '/profileComments',
+      `/api/users/${userId}/profileComments`,
     );
     var data = {
       start: 0,
@@ -160,7 +160,7 @@ export default class UserRepository implements ICommentRepository {
     relationshipType: UserEventRelationshipType,
     callback: (result: ReleaseEventContract[]) => void,
   ) => {
-    var url = this.urlMapper.mapRelative('/api/users/' + userId + '/events');
+    var url = this.urlMapper.mapRelative(`/api/users/${userId}/events`);
     $.getJSON(url, { relationshipType: relationshipType }, callback);
   };
 
@@ -173,7 +173,7 @@ export default class UserRepository implements ICommentRepository {
     callback,
   ) => {
     var url = this.urlMapper.mapRelative(
-      '/api/users/' + userId + '/followedArtists',
+      `/api/users/${userId}/followedArtists`,
     );
     var data = {
       start: paging.start,
@@ -224,7 +224,7 @@ export default class UserRepository implements ICommentRepository {
     fields: string,
     callback: (result: UserApiContract) => void,
   ) => {
-    var url = this.urlMapper.mapRelative('/api/users/' + id);
+    var url = this.urlMapper.mapRelative(`/api/users/${id}`);
     $.getJSON(url, { fields: fields || undefined }, callback);
   };
 
@@ -252,7 +252,7 @@ export default class UserRepository implements ICommentRepository {
     messageId: number,
     callback?: (result: UserMessageSummaryContract) => void,
   ) => {
-    var url = this.urlMapper.mapRelative('/api/users/messages/' + messageId);
+    var url = this.urlMapper.mapRelative(`/api/users/messages/${messageId}`);
     $.getJSON(url, callback);
   };
 
@@ -268,7 +268,7 @@ export default class UserRepository implements ICommentRepository {
     ) => void,
   ) => {
     var url = this.urlMapper.mapRelative(
-      '/api/users/' + (userId || this.loggedUserId) + '/messages',
+      `/api/users/${userId || this.loggedUserId}/messages`,
     );
     $.getJSON(
       url,
@@ -303,9 +303,7 @@ export default class UserRepository implements ICommentRepository {
       result: PartialFindResultContract<RatedSongForUserForApiContract>,
     ) => void,
   ) => {
-    var url = this.urlMapper.mapRelative(
-      '/api/users/' + userId + '/ratedSongs',
-    );
+    var url = this.urlMapper.mapRelative(`/api/users/${userId}/ratedSongs`);
     var data = {
       start: paging.start,
       getTotalCount: paging.getTotalCount,
@@ -333,7 +331,7 @@ export default class UserRepository implements ICommentRepository {
     callback: (points: Tuple2<string, number>[]) => void,
   ) => {
     var url = this.urlMapper.mapRelative(
-      '/api/users/' + userId + '/songs-per-genre/',
+      `/api/users/${userId}/songs-per-genre/`,
     );
     $.getJSON(url, (data) => {
       callback(data);
@@ -349,7 +347,7 @@ export default class UserRepository implements ICommentRepository {
     fields: string,
     callback: (result: PartialFindResultContract<SongListContract>) => void,
   ) => {
-    var url = this.urlMapper.mapRelative('/api/users/' + userId + '/songLists');
+    var url = this.urlMapper.mapRelative(`/api/users/${userId}/songLists`);
     $.getJSON(
       url,
       {
@@ -382,7 +380,7 @@ export default class UserRepository implements ICommentRepository {
     }
 
     var url = this.urlMapper.mapRelative(
-      '/api/users/' + userId + '/ratedSongs/' + songId,
+      `/api/users/${userId}/ratedSongs/${songId}`,
     );
     $.getJSON(url, callback);
   };
@@ -392,7 +390,7 @@ export default class UserRepository implements ICommentRepository {
     callback: (tags: TagSelectionContract[]) => void,
   ) => {
     $.getJSON(
-      this.urlMapper.mapRelative('/api/users/current/albumTags/' + albumId),
+      this.urlMapper.mapRelative(`/api/users/current/albumTags/${albumId}`),
       callback,
     );
   };
@@ -402,7 +400,7 @@ export default class UserRepository implements ICommentRepository {
     callback: (tags: TagSelectionContract[]) => void,
   ) => {
     $.getJSON(
-      this.urlMapper.mapRelative('/api/users/current/artistTags/' + artistId),
+      this.urlMapper.mapRelative(`/api/users/current/artistTags/${artistId}`),
       callback,
     );
   };
@@ -412,7 +410,7 @@ export default class UserRepository implements ICommentRepository {
     callback: (tags: TagSelectionContract[]) => void,
   ) => {
     $.getJSON(
-      this.urlMapper.mapRelative('/api/users/current/eventTags/' + eventId),
+      this.urlMapper.mapRelative(`/api/users/current/eventTags/${eventId}`),
       callback,
     );
   };
@@ -423,7 +421,7 @@ export default class UserRepository implements ICommentRepository {
   ) => {
     $.getJSON(
       this.urlMapper.mapRelative(
-        '/api/users/current/eventSeriesTags/' + seriesId,
+        `/api/users/current/eventSeriesTags/${seriesId}`,
       ),
       callback,
     );
@@ -435,7 +433,7 @@ export default class UserRepository implements ICommentRepository {
   ) => {
     $.getJSON(
       this.urlMapper.mapRelative(
-        '/api/users/current/songListTags/' + songListId,
+        `/api/users/current/songListTags/${songListId}`,
       ),
       callback,
     );
@@ -446,7 +444,7 @@ export default class UserRepository implements ICommentRepository {
     callback: (tags: TagSelectionContract[]) => void,
   ) => {
     $.getJSON(
-      this.urlMapper.mapRelative('/api/users/current/songTags/' + songId),
+      this.urlMapper.mapRelative(`/api/users/current/songTags/${songId}`),
       callback,
     );
   };
@@ -454,10 +452,7 @@ export default class UserRepository implements ICommentRepository {
   public refreshEntryEdit = (entryType: EntryType, entryId: number) => {
     $.postJSON(
       this.urlMapper.mapRelative(
-        '/api/users/current/refreshEntryEdit/?entryType=' +
-          EntryType[entryType] +
-          '&entryId=' +
-          entryId,
+        `/api/users/current/refreshEntryEdit/?entryType=${EntryType[entryType]}&entryId=${entryId}`,
       ),
     );
   };
@@ -473,7 +468,7 @@ export default class UserRepository implements ICommentRepository {
     callback: (usages: TagUsageForApiContract[]) => void,
   ) => {
     AjaxHelper.putJSON(
-      this.urlMapper.mapRelative('/api/users/current/albumTags/' + albumId),
+      this.urlMapper.mapRelative(`/api/users/current/albumTags/${albumId}`),
       tags,
       callback,
     );
@@ -498,7 +493,7 @@ export default class UserRepository implements ICommentRepository {
     callback: (usages: TagUsageForApiContract[]) => void,
   ) => {
     AjaxHelper.putJSON(
-      this.urlMapper.mapRelative('/api/users/current/artistTags/' + artistId),
+      this.urlMapper.mapRelative(`/api/users/current/artistTags/${artistId}`),
       tags,
       callback,
     );
@@ -510,7 +505,7 @@ export default class UserRepository implements ICommentRepository {
     callback?: () => void,
   ) => {
     $.postJSON(
-      this.urlMapper.mapRelative('/api/users/profileComments/' + commentId),
+      this.urlMapper.mapRelative(`/api/users/profileComments/${commentId}`),
       contract,
       callback,
       'json',
@@ -523,7 +518,7 @@ export default class UserRepository implements ICommentRepository {
     callback?: () => void,
   ) => {
     var url = this.urlMapper.mapRelative(
-      '/api/users/current/events/' + eventId,
+      `/api/users/current/events/${eventId}`,
     );
     return $.postJSON(
       url,
@@ -538,7 +533,7 @@ export default class UserRepository implements ICommentRepository {
     callback: (usages: TagUsageForApiContract[]) => void,
   ) => {
     AjaxHelper.putJSON(
-      this.urlMapper.mapRelative('/api/users/current/eventTags/' + eventId),
+      this.urlMapper.mapRelative(`/api/users/current/eventTags/${eventId}`),
       tags,
       callback,
     );
@@ -551,7 +546,7 @@ export default class UserRepository implements ICommentRepository {
   ) => {
     AjaxHelper.putJSON(
       this.urlMapper.mapRelative(
-        '/api/users/current/eventSeriesTags/' + seriesId,
+        `/api/users/current/eventSeriesTags/${seriesId}`,
       ),
       tags,
       callback,
@@ -565,7 +560,7 @@ export default class UserRepository implements ICommentRepository {
   ) => {
     AjaxHelper.putJSON(
       this.urlMapper.mapRelative(
-        '/api/users/current/songListTags/' + songListId,
+        `/api/users/current/songListTags/${songListId}`,
       ),
       tags,
       callback,
@@ -581,7 +576,7 @@ export default class UserRepository implements ICommentRepository {
     rating: SongVoteRating,
     callback: () => void,
   ) => {
-    var url = this.urlMapper.mapRelative('/api/songs/' + songId + '/ratings');
+    var url = this.urlMapper.mapRelative(`/api/songs/${songId}/ratings`);
     return $.postJSON(
       url,
       { rating: SongVoteRating[rating] },
@@ -595,7 +590,7 @@ export default class UserRepository implements ICommentRepository {
     callback: (usages: TagUsageForApiContract[]) => void,
   ) => {
     AjaxHelper.putJSON(
-      this.urlMapper.mapRelative('/api/users/current/songTags/' + songId),
+      this.urlMapper.mapRelative(`/api/users/current/songTags/${songId}`),
       tags,
       callback,
     );
@@ -612,10 +607,7 @@ export default class UserRepository implements ICommentRepository {
     callback: () => void,
   ) => {
     var url = this.urlMapper.mapRelative(
-      '/api/users/' +
-        (userId || this.loggedUserId) +
-        '/settings/' +
-        settingName,
+      `/api/users/${userId || this.loggedUserId}/settings/${settingName}`,
     );
     $.postJSON(url, value, callback);
   };
@@ -625,7 +617,7 @@ export default class UserRepository implements ICommentRepository {
 
   constructor(private urlMapper: UrlMapper, private loggedUserId?: number) {
     this.mapUrl = (relative: string) => {
-      return urlMapper.mapRelative('/User') + relative;
+      return `${urlMapper.mapRelative('/User')}${relative}`;
     };
   }
 }

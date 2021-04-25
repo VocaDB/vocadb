@@ -20,12 +20,9 @@ export default class SongListRepository {
   ) => {
     $.ajax(
       this.urlMapper.mapRelative(
-        '/api/songLists/' +
-          id +
-          '?hardDelete=' +
-          hardDelete +
-          '&notes=' +
-          encodeURIComponent(notes),
+        `/api/songLists/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
+          notes,
+        )}`,
       ),
       { type: 'DELETE', success: callback },
     );
@@ -64,7 +61,7 @@ export default class SongListRepository {
     id: number,
     callback: (result: SongListForEditContract) => void,
   ) => {
-    var url = this.urlMapper.mapRelative('/api/songLists/' + id + '/for-edit');
+    var url = this.urlMapper.mapRelative(`/api/songLists/${id}/for-edit`);
     $.getJSON(url, callback);
   };
 
@@ -85,7 +82,7 @@ export default class SongListRepository {
     lang: ContentLanguagePreference,
     callback: (result: PartialFindResultContract<SongInListContract>) => void,
   ) => {
-    var url = this.urlMapper.mapRelative('/api/songLists/' + listId + '/songs');
+    var url = this.urlMapper.mapRelative(`/api/songLists/${listId}/songs`);
     var data = {
       query: query,
       songTypes: songTypes,

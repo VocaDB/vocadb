@@ -54,7 +54,7 @@ export default class SongRepository
     callback: (contract: CommentContract) => void,
   ) => {
     $.postJSON(
-      this.urlMapper.mapRelative('/api/songs/' + songId + '/comments'),
+      this.urlMapper.mapRelative(`/api/songs/${songId}/comments`),
       contract,
       callback,
       'json',
@@ -82,7 +82,7 @@ export default class SongRepository
   };
 
   public deleteComment = (commentId: number, callback?: () => void) => {
-    $.ajax(this.urlMapper.mapRelative('/api/songs/comments/' + commentId), {
+    $.ajax(this.urlMapper.mapRelative(`/api/songs/comments/${commentId}`), {
       type: 'DELETE',
       success: callback,
     });
@@ -123,7 +123,7 @@ export default class SongRepository
     callback: (contract: CommentContract[]) => void,
   ) => {
     $.getJSON(
-      this.urlMapper.mapRelative('/api/songs/' + songId + '/comments'),
+      this.urlMapper.mapRelative(`/api/songs/${songId}/comments`),
       callback,
     );
   };
@@ -132,10 +132,7 @@ export default class SongRepository
     id: number,
     callback: (result: SongForEditContract) => void,
   ) => {
-    var url = functions.mergeUrls(
-      this.baseUrl,
-      '/api/songs/' + id + '/for-edit',
-    );
+    var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}/for-edit`);
     $.getJSON(url, callback);
   };
 
@@ -146,7 +143,7 @@ export default class SongRepository
   ) => {
     $.getJSON(
       this.urlMapper.mapRelative(
-        '/api/songs/lyrics/' + lyricsId + '?v=' + songVersion,
+        `/api/songs/lyrics/${lyricsId}?v=${songVersion}`,
       ),
       callback,
     );
@@ -160,7 +157,7 @@ export default class SongRepository
     languagePreference: string,
     callback?: (result: SongApiContract) => void,
   ) => {
-    var url = functions.mergeUrls(this.baseUrl, '/api/songs/' + id);
+    var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
     $.getJSON(
       url,
       {
@@ -172,7 +169,7 @@ export default class SongRepository
   };
 
   public getOne = (id: number, callback?: (result: SongContract) => void) => {
-    var url = functions.mergeUrls(this.baseUrl, '/api/songs/' + id);
+    var url = functions.mergeUrls(this.baseUrl, `/api/songs/${id}`);
     $.getJSON(
       url,
       { fields: 'AdditionalNames', lang: this.languagePreferenceStr },
@@ -280,7 +277,7 @@ export default class SongRepository
     callback: (pvId: string) => void,
   ) => {
     return $.getJSON(
-      this.urlMapper.mapRelative('/api/songs/' + songId + '/pvs'),
+      this.urlMapper.mapRelative(`/api/songs/${songId}/pvs`),
       { service: PVService[pvService] },
       callback,
     );
@@ -291,7 +288,7 @@ export default class SongRepository
     callback: (ratings: RatedSongForUserForApiContract[]) => void,
   ) => {
     return $.getJSON(
-      this.urlMapper.mapRelative('/api/songs/' + songId + '/ratings'),
+      this.urlMapper.mapRelative(`/api/songs/${songId}/ratings`),
       { userFields: 'MainPicture' },
       callback,
     );
@@ -302,7 +299,7 @@ export default class SongRepository
     callback: (contract: TagUsageForApiContract[]) => void,
   ) => {
     $.getJSON(
-      this.urlMapper.mapRelative('/api/songs/' + songId + '/tagSuggestions'),
+      this.urlMapper.mapRelative(`/api/songs/${songId}/tagSuggestions`),
       callback,
     );
   };
@@ -323,7 +320,7 @@ export default class SongRepository
     params: PVEmbedParams,
     callback: (result: SongWithPVPlayerAndVoteContract) => void,
   ) => {
-    this.getJSON('/PVPlayer/' + songId, params, callback);
+    this.getJSON(`/PVPlayer/${songId}`, params, callback);
   };
 
   public pvPlayerWithRating: (
@@ -349,7 +346,7 @@ export default class SongRepository
     callback?: () => void,
   ) => {
     $.postJSON(
-      this.urlMapper.mapRelative('/api/songs/comments/' + commentId),
+      this.urlMapper.mapRelative(`/api/songs/comments/${commentId}`),
       contract,
       callback,
       'json',
@@ -362,9 +359,7 @@ export default class SongRepository
     author: ArtistContract,
   ) => {
     $.postJSON(
-      this.urlMapper.mapRelative(
-        '/api/songs/' + songId + '/personal-description/',
-      ),
+      this.urlMapper.mapRelative(`/api/songs/${songId}/personal-description/`),
       {
         personalDescriptionText: text,
         personalDescriptionAuthor: author || undefined,
@@ -379,7 +374,7 @@ export default class SongRepository
     rating: SongVoteRating,
     callback: () => void,
   ) => {
-    var url = this.urlMapper.mapRelative('/api/songs/' + songId + '/ratings');
+    var url = this.urlMapper.mapRelative(`/api/songs/${songId}/ratings`);
     $.postJSON(url, { rating: SongVoteRating[rating] }, callback);
   };
 
@@ -402,7 +397,7 @@ export default class SongRepository
     };
 
     this.mapUrl = (relative: string) => {
-      return functions.mergeUrls(baseUrl, '/Song') + relative;
+      return `${functions.mergeUrls(baseUrl, '/Song')}${relative}`;
     };
 
     this.post = (relative, params, callback) => {

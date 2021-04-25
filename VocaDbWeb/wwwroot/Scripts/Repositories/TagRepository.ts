@@ -26,7 +26,7 @@ export default class TagRepository extends BaseRepository {
     name: string,
     callback?: (result: TagBaseContract) => void,
   ) => {
-    var url = functions.mergeUrls(this.baseUrl, '/api/tags?name=' + name);
+    var url = functions.mergeUrls(this.baseUrl, `/api/tags?name=${name}`);
     $.postJSON(url, callback);
   };
 
@@ -39,14 +39,11 @@ export default class TagRepository extends BaseRepository {
   ) => {
     var url = functions.mergeUrls(
       this.baseUrl,
-      '/api/tags/' +
-        tagId +
-        '/reports?' +
-        AjaxHelper.createUrl({
-          reportType: [reportType],
-          notes: [notes],
-          versionNumber: [versionNumber],
-        }),
+      `/api/tags/${tagId}/reports?${AjaxHelper.createUrl({
+        reportType: [reportType],
+        notes: [notes],
+        versionNumber: [versionNumber],
+      })}`,
     );
     $.postJSON(url, callback);
   };
@@ -57,7 +54,7 @@ export default class TagRepository extends BaseRepository {
     lang: string,
     callback?: (result: TagApiContract) => void,
   ) => {
-    var url = functions.mergeUrls(this.baseUrl, '/api/tags/' + id);
+    var url = functions.mergeUrls(this.baseUrl, `/api/tags/${id}`);
     $.getJSON(url, { fields: fields || undefined, lang: lang }, callback);
   };
 
@@ -67,7 +64,7 @@ export default class TagRepository extends BaseRepository {
   public getEntryTypeTag = (entryType: EntryType, subType: string = '') => {
     var url = functions.mergeUrls(
       this.baseUrl,
-      '/api/entry-types/' + EntryType[entryType] + '/' + subType + '/tag',
+      `/api/entry-types/${EntryType[entryType]}/${subType}/tag`,
     );
     return this.getJsonPromise<TagApiContract>(url, {
       fields: 'Description',

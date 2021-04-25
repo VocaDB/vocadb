@@ -22,9 +22,7 @@ export default class CommentRepository
       name: null,
     };
     var url = this.urlMapper.mapRelative(
-      UrlMapper.buildUrl(
-        'api/comments/' + EntryType[this.entryType] + '-comments',
-      ),
+      UrlMapper.buildUrl(`api/comments/${EntryType[this.entryType]}-comments`),
     );
     $.postJSON(url, contract, callback, 'json');
   };
@@ -32,7 +30,7 @@ export default class CommentRepository
   public deleteComment = (commentId: number, callback?: () => void) => {
     var url = this.urlMapper.mapRelative(
       UrlMapper.buildUrl(
-        'api/comments/' + EntryType[this.entryType] + '-comments/',
+        `api/comments/${EntryType[this.entryType]}-comments/`,
         commentId.toString(),
       ),
     );
@@ -44,9 +42,7 @@ export default class CommentRepository
     callback: (contract: CommentContract[]) => void,
   ) => {
     var url = this.urlMapper.mapRelative(
-      UrlMapper.buildUrl(
-        'api/comments/' + EntryType[this.entryType] + '-comments/',
-      ),
+      UrlMapper.buildUrl(`api/comments/${EntryType[this.entryType]}-comments/`),
     );
     $.getJSON(url, { entryId: listId }, (result) => callback(result.items));
   };
@@ -58,7 +54,7 @@ export default class CommentRepository
   ) => {
     var url = this.urlMapper.mapRelative(
       UrlMapper.buildUrl(
-        'api/comments/' + EntryType[this.entryType] + '-comments/',
+        `api/comments/${EntryType[this.entryType]}-comments/`,
         commentId.toString(),
       ),
     );
