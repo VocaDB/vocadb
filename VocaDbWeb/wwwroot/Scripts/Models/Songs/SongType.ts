@@ -3,29 +3,29 @@
 		
 		Unspecified = 0,
 
-		Original = 1,
+		Original = 1 << 0,
 
-		Remaster = 2,
+		Remaster = 1 << 1,
 
-		Remix = 4,
+		Remix = 1 << 2,
 
-		Cover = 8,
+		Cover = 1 << 3,
 
-		Arrangement = 16,
+		Arrangement = 1 << 4,
 
-		Instrumental = 32,
+		Instrumental = 1 << 5,
 
-		Mashup = 64,
+		Mashup = 1 << 6,
 
-		MusicPV = 128,
+		MusicPV = 1 << 7,
 
-		DramaPV = 256,
+		DramaPV = 1 << 8,
 
-		Live = 512,
+		Live = 1 << 9,
 
-		Illustration = 1024,
+		Illustration = 1 << 10,
 
-		Other = 2048
+		Other = 1 << 11,
 
 	}
 

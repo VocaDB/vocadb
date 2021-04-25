@@ -26,13 +26,13 @@
 	export enum SongOptionalField {
 		
 		None = 0,
-		AdditionalNames = 1,
-		Albums = 2,
-		Artists = 4,
-		Names = 8,
-		PVs = 16,
-		Tags = 32,
-		ThumbUrl = 64,
-		WebLinks = 128
+		AdditionalNames = 1 << 0,
+		Albums = 1 << 1,
+		Artists = 1 << 2,
+		Names = 1 << 3,
+		PVs = 1 << 4,
+		Tags = 1 << 5,
+		ThumbUrl = 1 << 6,
+		WebLinks = 1 << 7,
 
 	}
