@@ -1,9 +1,7 @@
 import TagBaseContract from './TagBaseContract';
 
-	export default interface TagSelectionContract {
+export default interface TagSelectionContract {
+  selected?: boolean;
 
-		selected?: boolean;
-
-		tag: TagBaseContract;
-
-	}
+  tag: TagBaseContract;
+}

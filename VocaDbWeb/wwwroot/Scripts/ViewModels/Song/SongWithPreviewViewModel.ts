@@ -3,68 +3,70 @@ import PVService from '../../Models/PVs/PVService';
 import SongRepository from '../../Repositories/SongRepository';
 import UserRepository from '../../Repositories/UserRepository';
 
-    // View model for song with PV preview and rating buttons (for example, on front page and song index page).
-    export default class SongWithPreviewViewModel {
-        
-        // Destroy PV player (clears HTML)
-        public destroyPV: () => void;
+// View model for song with PV preview and rating buttons (for example, on front page and song index page).
+export default class SongWithPreviewViewModel {
+  // Destroy PV player (clears HTML)
+  public destroyPV: () => void;
 
-        // Whether preview mode is active.
-        public preview: KnockoutObservable<boolean> = ko.observable(false);
+  // Whether preview mode is active.
+  public preview: KnockoutObservable<boolean> = ko.observable(false);
 
-        // PV player HTML.
-        public previewHtml: KnockoutObservable<string> = ko.observable(null);
+  // PV player HTML.
+  public previewHtml: KnockoutObservable<string> = ko.observable(null);
 
-		public pvService = ko.observable<string>(null);
+  public pvService = ko.observable<string>(null);
 
-        // View model for rating buttons.
-        public ratingButtons: KnockoutObservable<PVRatingButtonsViewModel> = ko.observable(null);
+  // View model for rating buttons.
+  public ratingButtons: KnockoutObservable<PVRatingButtonsViewModel> = ko.observable(
+    null,
+  );
 
-        // Event handler for the event when the song has been rated.
-        public ratingComplete: () => void;
+  // Event handler for the event when the song has been rated.
+  public ratingComplete: () => void;
 
-		public switchPV: (pvService: string) => void;
+  public switchPV: (pvService: string) => void;
 
-        // Toggle preview status.
-        public togglePreview: () => void;
+  // Toggle preview status.
+  public togglePreview: () => void;
 
-        constructor(repository: SongRepository, userRepository: UserRepository, public songId: number, public pvServices: string) {
-            
-            this.destroyPV = () => {
-                this.previewHtml(null);
-            }
+  constructor(
+    repository: SongRepository,
+    userRepository: UserRepository,
+    public songId: number,
+    public pvServices: string,
+  ) {
+    this.destroyPV = () => {
+      this.previewHtml(null);
+    };
 
-            this.togglePreview = () => {
-                
-                if (this.preview()) {
-                    this.preview(false);
-                    this.ratingButtons(null);
-                    return;
-                }
+    this.togglePreview = () => {
+      if (this.preview()) {
+        this.preview(false);
+        this.ratingButtons(null);
+        return;
+      }
 
-                repository.pvPlayerWithRating(songId, result => {
+      repository.pvPlayerWithRating(songId, (result) => {
+        if (!result) return;
 
-					if (!result)
-						return;
+        this.pvService(result.pvService);
+        this.previewHtml(result.playerHtml);
+        var ratingButtonsViewModel = new PVRatingButtonsViewModel(
+          userRepository,
+          result.song,
+          this.ratingComplete,
+        );
+        this.ratingButtons(ratingButtonsViewModel);
+        this.preview(true);
+      });
+    };
 
-					this.pvService(result.pvService);
-                    this.previewHtml(result.playerHtml);
-                    var ratingButtonsViewModel = new PVRatingButtonsViewModel(userRepository, result.song, this.ratingComplete);
-                    this.ratingButtons(ratingButtonsViewModel);
-                    this.preview(true);
-
-                });
-
-			}
-
-			this.switchPV = (newService: string) => {
-
-				this.pvService(newService);
-				var service: PVService = PVService[newService];
-				repository.pvForSongAndService(songId, service, html => this.previewHtml(html));
-
-			}
-
-        }
-    
-    }
+    this.switchPV = (newService: string) => {
+      this.pvService(newService);
+      var service: PVService = PVService[newService];
+      repository.pvForSongAndService(songId, service, (html) =>
+        this.previewHtml(html),
+      );
+    };
+  }
+}

@@ -1,14 +1,12 @@
-import LocalizedStringWithIdContract from "../Globalization/LocalizedStringWithIdContract";
-import WebLinkContract from "../WebLinkContract";
+import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
+import WebLinkContract from '../WebLinkContract';
 
-	export default interface VenueForApiContract {
+export default interface VenueForApiContract {
+  id: number;
 
-		id: number;
+  name: string;
 
-		name: string;
+  names?: LocalizedStringWithIdContract[];
 
-		names?: LocalizedStringWithIdContract[];
-
-		webLinks: WebLinkContract[];
-
-	}
+  webLinks: WebLinkContract[];
+}

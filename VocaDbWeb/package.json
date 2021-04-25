@@ -11,8 +11,12 @@
     },
     "devDependencies": {
         "cross-env": "^5.1",
+        "eslint": "^7.25.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^3.4.0",
         "less": "^3.10.3",
         "less-loader": "^5.0.0",
+        "prettier": "^2.2.1",
         "ts-loader": "^6.2.2",
         "typescript": "^3.9.9",
         "vue-template-compiler": "^2.6.11"

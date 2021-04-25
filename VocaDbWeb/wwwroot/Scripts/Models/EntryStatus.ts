@@ -1,14 +1,11 @@
+enum EntryStatus {
+  Draft = 0,
 
-	enum EntryStatus {
+  Finished = 1,
 
-		Draft = 0,
+  Approved = 2,
 
-		Finished = 1,
+  Locked = 4,
+}
 
-		Approved = 2,
-
-		Locked = 4
-
-	}
-
-	export default EntryStatus;
+export default EntryStatus;

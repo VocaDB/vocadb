@@ -1,20 +1,16 @@
 import { parseSongVoteRating } from '../../Models/SongVoteRating';
 import SongVoteRating from '../../Models/SongVoteRating';
 
-    QUnit.module("SongVoteRating");
+QUnit.module('SongVoteRating');
 
-    test("parseSongVoteRating nothing", () => {
+test('parseSongVoteRating nothing', () => {
+  var result = parseSongVoteRating('Nothing');
 
-        var result = parseSongVoteRating("Nothing");
+  equal(result, SongVoteRating.Nothing, 'result');
+});
 
-        equal(result, SongVoteRating.Nothing, "result");
+test('parseSongVoteRating like', () => {
+  var result = parseSongVoteRating('Like');
 
-    });
-
-    test("parseSongVoteRating like", () => {
-
-        var result = parseSongVoteRating("Like");
-
-        equal(result, SongVoteRating.Like, "result");
-
-    });
+  equal(result, SongVoteRating.Like, 'result');
+});

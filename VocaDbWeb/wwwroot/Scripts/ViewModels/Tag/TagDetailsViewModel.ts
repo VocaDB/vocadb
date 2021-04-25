@@ -7,55 +7,63 @@ import TagRepository from '../../Repositories/TagRepository';
 import ui from '../../Shared/MessagesTyped';
 import UserRepository from '../../Repositories/UserRepository';
 
-	export default class TagDetailsViewModel {
-		
-		constructor(
-			repo: TagRepository,
-			private userRepo: UserRepository,
-			latestComments: CommentContract[],
-			reportTypes: IEntryReportType[],
-			loggedUserId: number,
-			private tagId: number,
-			canDeleteAllComments: boolean,
-			showTranslatedDescription: boolean,
-			isFollowed: boolean) {
-			
-			this.comments = new EditableCommentsViewModel(repo.getComments(), tagId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
+export default class TagDetailsViewModel {
+  constructor(
+    repo: TagRepository,
+    private userRepo: UserRepository,
+    latestComments: CommentContract[],
+    reportTypes: IEntryReportType[],
+    loggedUserId: number,
+    private tagId: number,
+    canDeleteAllComments: boolean,
+    showTranslatedDescription: boolean,
+    isFollowed: boolean,
+  ) {
+    this.comments = new EditableCommentsViewModel(
+      repo.getComments(),
+      tagId,
+      loggedUserId,
+      canDeleteAllComments,
+      canDeleteAllComments,
+      false,
+      latestComments,
+      true,
+    );
 
-			this.reportViewModel = new ReportEntryViewModel(reportTypes, (reportType, notes) => {
+    this.reportViewModel = new ReportEntryViewModel(
+      reportTypes,
+      (reportType, notes) => {
+        repo.createReport(tagId, reportType, notes, null);
 
-				repo.createReport(tagId, reportType, notes, null);
+        ui.showSuccessMessage(vdb.resources.shared.reportSent);
+      },
+    );
 
-				ui.showSuccessMessage(vdb.resources.shared.reportSent);
+    this.description = new EnglishTranslatedStringViewModel(
+      showTranslatedDescription,
+    );
+    this.isFollowed = ko.observable(isFollowed);
+    this.isLoggedIn = !!loggedUserId;
+  }
 
-			});
+  public comments: EditableCommentsViewModel;
 
-			this.description = new EnglishTranslatedStringViewModel(showTranslatedDescription);
-			this.isFollowed = ko.observable(isFollowed);
-			this.isLoggedIn = !!loggedUserId;
+  public followTag = () => {
+    if (!this.isLoggedIn) return;
+    this.userRepo.addFollowedTag(this.tagId);
+    this.isFollowed(true);
+  };
 
-		}
+  public unfollowTag = () => {
+    this.userRepo.deleteFollowedTag(this.tagId);
+    this.isFollowed(false);
+  };
 
-		public comments: EditableCommentsViewModel;
+  public isFollowed: KnockoutObservable<boolean>;
 
-		public followTag = () => {
-			if (!this.isLoggedIn)
-				return;
-			this.userRepo.addFollowedTag(this.tagId);
-			this.isFollowed(true);
-		}
+  public isLoggedIn: boolean;
 
-		public unfollowTag = () => {
-			this.userRepo.deleteFollowedTag(this.tagId);
-			this.isFollowed(false);			
-		}
+  public reportViewModel: ReportEntryViewModel;
 
-		public isFollowed: KnockoutObservable<boolean>;
-
-		public isLoggedIn: boolean;
-
-		public reportViewModel: ReportEntryViewModel;
-
-		public description: EnglishTranslatedStringViewModel;
-
-	}
+  public description: EnglishTranslatedStringViewModel;
+}

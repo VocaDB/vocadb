@@ -1,13 +1,10 @@
+// C# class: ArchivedObjectVersionForApiContract
+export default interface ArchivedVersionContract {
+  changedFields: string[];
 
-	// C# class: ArchivedObjectVersionForApiContract
-	export default interface ArchivedVersionContract {
-		
-		changedFields: string[];
+  id: number;
 
-		id: number;
+  notes: string;
 
-		notes: string;
-
-		version: number;
-
-	}
+  version: number;
+}

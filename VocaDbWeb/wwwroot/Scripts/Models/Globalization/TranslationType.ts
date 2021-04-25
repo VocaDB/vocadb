@@ -1,8 +1,7 @@
+enum TranslationType {
+  Original,
+  Romanized,
+  Translation,
+}
 
-	enum TranslationType {
-		Original,
-		Romanized,
-		Translation
-	}
-
-	export default TranslationType;
+export default TranslationType;

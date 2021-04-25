@@ -14,80 +14,111 @@ import UserBaseContract from '../../DataContracts/User/UserBaseContract';
 import UserEventRelationshipType from '../../Models/Users/UserEventRelationshipType';
 import UserRepository from '../../Repositories/UserRepository';
 
-	export default class ReleaseEventDetailsViewModel {
+export default class ReleaseEventDetailsViewModel {
+  constructor(
+    urlMapper: UrlMapper,
+    private readonly repo: ReleaseEventRepository,
+    private readonly userRepo: UserRepository,
+    latestComments: CommentContract[],
+    reportTypes: IEntryReportType[],
+    public loggedUserId: number,
+    private readonly eventId: number,
+    eventAssociationType: UserEventRelationshipType,
+    usersAttending: UserBaseContract[],
+    tagUsages: TagUsageForApiContract[],
+    canDeleteAllComments: boolean,
+  ) {
+    const commentRepo = new CommentRepository(
+      urlMapper,
+      EntryType.ReleaseEvent,
+    );
+    this.comments = new EditableCommentsViewModel(
+      commentRepo,
+      eventId,
+      loggedUserId,
+      canDeleteAllComments,
+      canDeleteAllComments,
+      false,
+      latestComments,
+      true,
+    );
+    this.eventAssociationType(eventAssociationType);
+    this.usersAttending = ko.observableArray(usersAttending);
 
-		constructor(
-			urlMapper: UrlMapper,
-			private readonly repo: ReleaseEventRepository,
-			private readonly userRepo: UserRepository,
-			latestComments: CommentContract[],
-			reportTypes: IEntryReportType[],
-			public loggedUserId: number,
-			private readonly eventId: number,
-			eventAssociationType: UserEventRelationshipType,
-			usersAttending: UserBaseContract[],
-			tagUsages: TagUsageForApiContract[],
-			canDeleteAllComments: boolean) {
+    this.reportViewModel = new ReportEntryViewModel(
+      reportTypes,
+      (reportType, notes) => {
+        repo.createReport(eventId, reportType, notes, null);
+        ui.showSuccessMessage(vdb.resources.shared.reportSent);
+      },
+    );
 
-			const commentRepo = new CommentRepository(urlMapper, EntryType.ReleaseEvent);
-			this.comments = new EditableCommentsViewModel(commentRepo, eventId, loggedUserId, canDeleteAllComments, canDeleteAllComments, false, latestComments, true);
-			this.eventAssociationType(eventAssociationType);
-			this.usersAttending = ko.observableArray(usersAttending);
+    this.tagsEditViewModel = new TagsEditViewModel(
+      {
+        getTagSelections: (callback) =>
+          userRepo.getEventTagSelections(this.eventId, callback),
+        saveTagSelections: (tags) =>
+          userRepo.updateEventTags(
+            this.eventId,
+            tags,
+            this.tagUsages.updateTagUsages,
+          ),
+      },
+      EntryType.ReleaseEvent,
+    );
 
-			this.reportViewModel = new ReportEntryViewModel(reportTypes, (reportType, notes) => {
-				repo.createReport(eventId, reportType, notes, null);
-				ui.showSuccessMessage(vdb.resources.shared.reportSent);
-			});
+    this.tagUsages = new TagListViewModel(tagUsages);
+  }
 
-			this.tagsEditViewModel = new TagsEditViewModel({
-				getTagSelections: callback => userRepo.getEventTagSelections(this.eventId, callback),
-				saveTagSelections: tags => userRepo.updateEventTags(this.eventId, tags, this.tagUsages.updateTagUsages)
-			}, EntryType.ReleaseEvent);
+  public comments: EditableCommentsViewModel;
 
-			this.tagUsages = new TagListViewModel(tagUsages);
+  private eventAssociationType = ko.observable<UserEventRelationshipType>(null);
 
-		}
+  public hasEvent = ko.computed(() => {
+    return !!this.eventAssociationType();
+  });
 
-		public comments: EditableCommentsViewModel;
+  public isEventAttending = ko.computed(
+    () => this.eventAssociationType() === UserEventRelationshipType.Attending,
+  );
 
-		private eventAssociationType = ko.observable<UserEventRelationshipType>(null);
+  public isEventInterested = ko.computed(
+    () => this.eventAssociationType() === UserEventRelationshipType.Interested,
+  );
 
-		public hasEvent = ko.computed(() => {
-			return !!this.eventAssociationType();
-		});
+  public removeEvent = () => {
+    this.userRepo.deleteEventForUser(this.eventId);
+    this.eventAssociationType(null);
+    var link = _.find(this.usersAttending(), (u) => u.id === this.loggedUserId);
+    this.usersAttending.remove(link);
+  };
 
-		public isEventAttending = ko.computed(() => this.eventAssociationType() === UserEventRelationshipType.Attending);
+  public reportViewModel: ReportEntryViewModel;
 
-		public isEventInterested = ko.computed(() => this.eventAssociationType() === UserEventRelationshipType.Interested);
+  public setEventAttending = () => {
+    this.userRepo.updateEventForUser(
+      this.eventId,
+      UserEventRelationshipType.Attending,
+    );
+    this.eventAssociationType(UserEventRelationshipType.Attending);
+    this.userRepo.getOne(this.loggedUserId, 'MainPicture', (user) => {
+      this.usersAttending.push(user);
+    });
+  };
 
-		public removeEvent = () => {
-			this.userRepo.deleteEventForUser(this.eventId);
-			this.eventAssociationType(null);
-			var link = _.find(this.usersAttending(), u => u.id === this.loggedUserId);
-			this.usersAttending.remove(link);
-		}
+  public setEventInterested = () => {
+    this.userRepo.updateEventForUser(
+      this.eventId,
+      UserEventRelationshipType.Interested,
+    );
+    this.eventAssociationType(UserEventRelationshipType.Interested);
+    var link = _.find(this.usersAttending(), (u) => u.id === this.loggedUserId);
+    this.usersAttending.remove(link);
+  };
 
-		public reportViewModel: ReportEntryViewModel;
+  public tagsEditViewModel: TagsEditViewModel;
 
-		public setEventAttending = () => {
-			this.userRepo.updateEventForUser(this.eventId, UserEventRelationshipType.Attending);
-			this.eventAssociationType(UserEventRelationshipType.Attending);
-			this.userRepo.getOne(this.loggedUserId, "MainPicture", user => {
-				this.usersAttending.push(user);
-			});
-		}
+  public tagUsages: TagListViewModel;
 
-		public setEventInterested = () => {
-			this.userRepo.updateEventForUser(this.eventId, UserEventRelationshipType.Interested);
-			this.eventAssociationType(UserEventRelationshipType.Interested);
-			var link = _.find(this.usersAttending(), u => u.id === this.loggedUserId);
-			this.usersAttending.remove(link);
-		}
-
-		public tagsEditViewModel: TagsEditViewModel;
-
-		public tagUsages: TagListViewModel;
-
-		public usersAttending: KnockoutObservableArray<UserBaseContract>;
-
-	}
+  public usersAttending: KnockoutObservableArray<UserBaseContract>;
+}

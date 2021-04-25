@@ -1,19 +1,14 @@
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import ArtistRepository from '../../Repositories/ArtistRepository';
 
-    export default class FakeArtistRepository extends ArtistRepository {
+export default class FakeArtistRepository extends ArtistRepository {
+  result: ArtistContract = null;
 
-        result: ArtistContract = null;
+  constructor() {
+    super('');
 
-        constructor() {
-
-            super("");
-
-            this.getOne = (id, callback: (result: ArtistContract) => void) => {
-                if (callback)
-                    callback(this.result);
-            };
-
-        }
-
-    }
+    this.getOne = (id, callback: (result: ArtistContract) => void) => {
+      if (callback) callback(this.result);
+    };
+  }
+}

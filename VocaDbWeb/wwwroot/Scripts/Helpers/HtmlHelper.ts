@@ -1,35 +1,36 @@
+export default class HtmlHelper {
+  // Bolds and HTML encodes a term
+  public static boldAndHtmlEncode(text: string, term: string) {
+    if (!text || !term) return text;
 
-	export default class HtmlHelper {
-		
-		// Bolds and HTML encodes a term
-		public static boldAndHtmlEncode(text: string, term: string) {
+    var index = text.toLowerCase().indexOf(term.toLowerCase());
 
-			if (!text || !term)
-				return text;
+    if (index < 0) return HtmlHelper.htmlEncode(text);
 
-			var index = text.toLowerCase().indexOf(term.toLowerCase());
+    var actualTerm = text.substring(index, index + term.length);
 
-			if (index < 0)
-				return HtmlHelper.htmlEncode(text);
+    // Encode parts before match, the match itself and after match.
+    return (
+      HtmlHelper.htmlEncode(text.substr(0, index)) +
+      '<b>' +
+      HtmlHelper.htmlEncode(actualTerm) +
+      '</b>' +
+      HtmlHelper.htmlEncode(text.substr(index + term.length))
+    );
+  }
 
-			var actualTerm = text.substring(index, index + term.length);
+  public static formatMarkdown(
+    value: string,
+    callback?: (err, content: string) => void,
+  ) {
+    if (!value) callback(null, '');
+    // Using GitHub-flavored markdown with simple line breaks and HTML sanitation.
+    marked(value, { gfm: true, breaks: true, sanitize: true }, callback);
+  }
 
-			// Encode parts before match, the match itself and after match.
-			return HtmlHelper.htmlEncode(text.substr(0, index)) + "<b>" + HtmlHelper.htmlEncode(actualTerm) + "</b>" + HtmlHelper.htmlEncode(text.substr(index + term.length));
-
-		}
-
-		public static formatMarkdown(value: string, callback?: (err, content: string) => void) {
-			if (!value)
-				callback(null, "");
-			// Using GitHub-flavored markdown with simple line breaks and HTML sanitation.
-			marked(value, { gfm: true, breaks: true, sanitize: true }, callback);
-		}
-
-		public static htmlEncode(value: string) {
-			//create a in-memory div, set it's inner text(which jQuery automatically encodes)
-			//then grab the encoded contents back out. The div never exists on the page.
-			return $('<div/>').text(value).html();
-		}
-
-	}
+  public static htmlEncode(value: string) {
+    //create a in-memory div, set it's inner text(which jQuery automatically encodes)
+    //then grab the encoded contents back out. The div never exists on the page.
+    return $('<div/>').text(value).html();
+  }
+}

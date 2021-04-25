@@ -1,7 +1,6 @@
+enum EntryEditEvent {
+  Created = 1,
+  Updated = 2,
+}
 
-	enum EntryEditEvent {
-		Created = 1,
-		Updated = 2
-	}
-
-	export default EntryEditEvent;
+export default EntryEditEvent;

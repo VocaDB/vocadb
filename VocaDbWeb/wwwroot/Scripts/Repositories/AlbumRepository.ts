@@ -16,160 +16,244 @@ import PartialFindResultContract from '../DataContracts/PartialFindResultContrac
 import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
 import UrlMapper from '../Shared/UrlMapper';
 
-    // Repository for managing albums and related objects.
-    // Corresponds to the AlbumController class.
-    export default class AlbumRepository extends BaseRepository {
+// Repository for managing albums and related objects.
+// Corresponds to the AlbumController class.
+export default class AlbumRepository extends BaseRepository {
+  // Maps a relative URL to an absolute one.
+  private mapUrl: (relative: string) => string;
 
-        // Maps a relative URL to an absolute one.
-        private mapUrl: (relative: string) => string;
+  private urlMapper: UrlMapper;
 
-		private urlMapper: UrlMapper;
+  constructor(
+    baseUrl: string,
+    languagePreference = ContentLanguagePreference.Default,
+  ) {
+    super(baseUrl, languagePreference);
 
-		constructor(baseUrl: string, languagePreference = ContentLanguagePreference.Default) {
+    this.urlMapper = new UrlMapper(baseUrl);
 
-			super(baseUrl, languagePreference);
+    this.mapUrl = (relative) => {
+      return functions.mergeUrls(baseUrl, '/Album') + relative;
+    };
+  }
 
-			this.urlMapper = new UrlMapper(baseUrl);
+  public createComment = (
+    albumId: number,
+    contract: CommentContract,
+    callback: (contract: CommentContract) => void,
+  ) => {
+    $.postJSON(
+      this.urlMapper.mapRelative('/api/albums/' + albumId + '/comments'),
+      contract,
+      callback,
+      'json',
+    );
+  };
 
-			this.mapUrl = (relative) => {
-				return functions.mergeUrls(baseUrl, "/Album") + relative;
-            };
+  public createOrUpdateReview(
+    albumId: number,
+    reviewContract: AlbumReviewContract,
+  ) {
+    const url = functions.mergeUrls(
+      this.baseUrl,
+      '/api/albums/' + albumId + '/reviews',
+    );
+    return this.handleJqueryPromise<AlbumReviewContract>(
+      $.postJSON(url, reviewContract, null, 'json'),
+    );
+  }
 
-		}
+  public createReport = (
+    albumId: number,
+    reportType: string,
+    notes: string,
+    versionNumber: number,
+    callback?: () => void,
+  ) => {
+    $.post(
+      this.urlMapper.mapRelative('/Album/CreateReport'),
+      {
+        reportType: reportType,
+        notes: notes,
+        albumId: albumId,
+        versionNumber: versionNumber,
+      },
+      callback,
+      'json',
+    );
+  };
 
-		public createComment = (albumId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
+  public deleteComment = (commentId: number, callback?: () => void) => {
+    $.ajax(this.urlMapper.mapRelative('/api/albums/comments/' + commentId), {
+      type: 'DELETE',
+      success: callback,
+    });
+  };
 
-			$.postJSON(this.urlMapper.mapRelative("/api/albums/" + albumId + "/comments"), contract, callback, 'json');
+  public deleteReview(albumId: number, reviewId: number) {
+    const url = functions.mergeUrls(
+      this.baseUrl,
+      '/api/albums/' + albumId + '/reviews/' + reviewId,
+    );
+    return this.handleJqueryPromise($.ajax(url, { type: 'DELETE' }));
+  }
 
-		}
+  public findDuplicate = (
+    params,
+    callback: (result: DuplicateEntryResultContract[]) => void,
+  ) => {
+    var url = functions.mergeUrls(this.baseUrl, '/Album/FindDuplicate');
+    $.getJSON(url, params, callback);
+  };
 
-		public createOrUpdateReview(albumId: number, reviewContract: AlbumReviewContract) {
+  public getComments = (
+    albumId: number,
+    callback: (contract: CommentContract[]) => void,
+  ) => {
+    $.getJSON(
+      this.urlMapper.mapRelative('/api/albums/' + albumId + '/comments'),
+      callback,
+    );
+  };
 
-			const url = functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews");
-			return this.handleJqueryPromise<AlbumReviewContract>($.postJSON(url, reviewContract, null, 'json'));
+  public getForEdit = (
+    id: number,
+    callback: (result: AlbumForEditContract) => void,
+  ) => {
+    var url = functions.mergeUrls(
+      this.baseUrl,
+      '/api/albums/' + id + '/for-edit',
+    );
+    $.getJSON(url, callback);
+  };
 
-		}
+  public getOne = (id: number, callback: (result: AlbumContract) => void) => {
+    var url = functions.mergeUrls(this.baseUrl, '/api/albums/' + id);
+    $.getJSON(
+      url,
+      { fields: 'AdditionalNames', lang: this.languagePreferenceStr },
+      callback,
+    );
+  };
 
-		public createReport = (albumId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
+  public getOneWithComponents = (
+    id: number,
+    fields: string,
+    languagePreference: string,
+    callback: (result: AlbumForApiContract) => void,
+  ) => {
+    var url = functions.mergeUrls(this.baseUrl, '/api/albums/' + id);
+    $.getJSON(
+      url,
+      { fields: fields, lang: this.languagePreferenceStr },
+      callback,
+    );
+  };
 
-			$.post(this.urlMapper.mapRelative("/Album/CreateReport"),
-				{ reportType: reportType, notes: notes, albumId: albumId, versionNumber: versionNumber }, callback, 'json');
+  getList = (
+    paging: PagingProperties,
+    lang: string,
+    query: string,
+    sort: string,
+    discTypes: string,
+    tags: number[],
+    childTags: boolean,
+    artistIds: number[],
+    artistParticipationStatus: string,
+    childVoicebanks: boolean,
+    includeMembers: boolean,
+    fields: string,
+    status: string,
+    deleted: boolean,
+    advancedFilters: AdvancedSearchFilter[],
+    callback: (result: PartialFindResultContract<AlbumContract>) => void,
+  ) => {
+    var url = functions.mergeUrls(this.baseUrl, '/api/albums');
+    var data = {
+      start: paging.start,
+      getTotalCount: paging.getTotalCount,
+      maxResults: paging.maxEntries,
+      query: query,
+      fields: fields,
+      lang: lang,
+      nameMatchMode: 'Auto',
+      sort: sort,
+      discTypes: discTypes,
+      tagId: tags,
+      childTags: childTags || undefined,
+      artistId: artistIds,
+      artistParticipationStatus: artistParticipationStatus,
+      childVoicebanks: childVoicebanks,
+      includeMembers: includeMembers || undefined,
+      status: status,
+      deleted: deleted,
+      advancedFilters: advancedFilters,
+    };
 
-		}
+    $.getJSON(url, data, callback);
+  };
 
-		public deleteComment = (commentId: number, callback?: () => void) => {
+  public async getReviews(albumId: number) {
+    const url = functions.mergeUrls(
+      this.baseUrl,
+      '/api/albums/' + albumId + '/reviews',
+    );
+    return await this.getJsonPromise<AlbumReviewContract[]>(url);
+  }
 
-			$.ajax(this.urlMapper.mapRelative("/api/albums/comments/" + commentId), { type: 'DELETE', success: callback });
+  public getTagSuggestions = (
+    albumId: number,
+    callback: (contract: TagUsageForApiContract[]) => void,
+  ) => {
+    $.getJSON(
+      this.urlMapper.mapRelative('/api/albums/' + albumId + '/tagSuggestions'),
+      callback,
+    );
+  };
 
-		}
+  public async getUserCollections(albumId: number) {
+    const url = functions.mergeUrls(
+      this.baseUrl,
+      '/api/albums/' + albumId + '/user-collections',
+    );
+    const jqueryPromise = $.getJSON(url);
 
-		public deleteReview(albumId: number, reviewId: number) {
+    const promise = Promise.resolve(jqueryPromise);
+    return promise as Promise<AlbumForUserForApiContract[]>;
+  }
 
-			const url = functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews/" + reviewId);
-			return this.handleJqueryPromise($.ajax(url, { type: 'DELETE' }));
+  public updateComment = (
+    commentId: number,
+    contract: CommentContract,
+    callback?: () => void,
+  ) => {
+    $.postJSON(
+      this.urlMapper.mapRelative('/api/albums/comments/' + commentId),
+      contract,
+      callback,
+      'json',
+    );
+  };
 
-		}
+  public updatePersonalDescription = (
+    albumId: number,
+    text: string,
+    author: ArtistContract,
+  ) => {
+    $.postJSON(
+      this.urlMapper.mapRelative(
+        '/api/albums/' + albumId + '/personal-description/',
+      ),
+      {
+        personalDescriptionText: text,
+        personalDescriptionAuthor: author || undefined,
+      },
+      null,
+      'json',
+    );
+  };
+}
 
-		public findDuplicate = (params, callback: (result: DuplicateEntryResultContract[]) => void) => {
-
-			var url = functions.mergeUrls(this.baseUrl, "/Album/FindDuplicate");
-			$.getJSON(url, params, callback);
-
-		};
-
-		public getComments = (albumId: number, callback: (contract: CommentContract[]) => void) => {
-
-			$.getJSON(this.urlMapper.mapRelative("/api/albums/" + albumId + "/comments"), callback);
-
-		}
-
-		public getForEdit = (id: number, callback: (result: AlbumForEditContract) => void) => {
-
-			var url = functions.mergeUrls(this.baseUrl, "/api/albums/" + id + "/for-edit");
-			$.getJSON(url, callback);
-
-		}
-
-		public getOne = (id: number, callback: (result: AlbumContract) => void) => {
-			var url = functions.mergeUrls(this.baseUrl, "/api/albums/" + id);
-			$.getJSON(url, { fields: 'AdditionalNames', lang: this.languagePreferenceStr }, callback);
-		}
-
-		public getOneWithComponents = (id: number, fields: string, languagePreference: string, callback: (result: AlbumForApiContract) => void) => {
-			var url = functions.mergeUrls(this.baseUrl, "/api/albums/" + id);
-			$.getJSON(url, { fields: fields, lang: this.languagePreferenceStr }, callback);
-		}
-
-		getList = (paging: PagingProperties, lang: string, query: string, sort: string,
-			discTypes: string,
-			tags: number[],
-			childTags: boolean,
-			artistIds: number[], artistParticipationStatus: string,
-			childVoicebanks: boolean,
-			includeMembers: boolean,
-			fields: string,
-			status: string,
-			deleted: boolean,
-			advancedFilters: AdvancedSearchFilter[],
-			callback: (result: PartialFindResultContract<AlbumContract>) => void) => {
-
-			var url = functions.mergeUrls(this.baseUrl, "/api/albums");
-			var data = {
-				start: paging.start, getTotalCount: paging.getTotalCount, maxResults: paging.maxEntries,
-				query: query, fields: fields, lang: lang, nameMatchMode: 'Auto', sort: sort,
-				discTypes: discTypes,
-				tagId: tags,
-				childTags: childTags || undefined,
-				artistId: artistIds,
-				artistParticipationStatus: artistParticipationStatus,
-				childVoicebanks: childVoicebanks,
-				includeMembers: includeMembers || undefined,
-				status: status,
-				deleted: deleted,
-				advancedFilters: advancedFilters
-			};
-
-			$.getJSON(url, data, callback);
-
-		}
-
-		public async getReviews(albumId: number) {
-
-			const url = functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/reviews");
-			return await this.getJsonPromise<AlbumReviewContract[]>(url);
-
-		}
-
-		public getTagSuggestions = (albumId: number, callback: (contract: TagUsageForApiContract[]) => void) => {
-			$.getJSON(this.urlMapper.mapRelative("/api/albums/" + albumId + "/tagSuggestions"), callback);
-		}
-
-		public async getUserCollections(albumId: number) {
-
-			const url = functions.mergeUrls(this.baseUrl, "/api/albums/" + albumId + "/user-collections");
-			const jqueryPromise = $.getJSON(url);
-
-			const promise = Promise.resolve(jqueryPromise);
-			return promise as Promise<AlbumForUserForApiContract[]>;
-
-		}
-
-		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
-
-			$.postJSON(this.urlMapper.mapRelative("/api/albums/comments/" + commentId), contract, callback, 'json');
-
-		}
-
-		public updatePersonalDescription = (albumId: number, text: string, author: ArtistContract) => {
-
-			$.postJSON(this.urlMapper.mapRelative("/api/albums/" + albumId + "/personal-description/"), { personalDescriptionText: text, personalDescriptionAuthor: author || undefined }, null, 'json');
-
-		}
-
-    }
-
-	export interface AlbumQueryParams extends CommonQueryParams {
-
-		discTypes: string;
-
-	}
+export interface AlbumQueryParams extends CommonQueryParams {
+  discTypes: string;
+}

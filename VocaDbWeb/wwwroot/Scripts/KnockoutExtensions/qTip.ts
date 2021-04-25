@@ -1,15 +1,17 @@
-
 interface KnockoutBindingHandlers {
-	// Knockout binding for qTip tooltip.
-	qTip: KnockoutBindingHandler;
+  // Knockout binding for qTip tooltip.
+  qTip: KnockoutBindingHandler;
 }
 
 ko.bindingHandlers.qTip = {
-	init: (element: Element, valueAccessor: () => KnockoutObservable<QTipProperties>) => {
+  init: (
+    element: Element,
+    valueAccessor: () => KnockoutObservable<QTipProperties>,
+  ) => {
+    var params = ko.unwrap(valueAccessor()) || {
+      style: { classes: 'tooltip-wider' },
+    };
 
-		var params = ko.unwrap(valueAccessor()) || { style: { classes: "tooltip-wider" } };
-
-		$(element).qtip(params);
-
-	}
-}
+    $(element).qtip(params);
+  },
+};

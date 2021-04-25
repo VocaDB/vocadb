@@ -8,104 +8,170 @@ import ReleaseEventContract from '../DataContracts/ReleaseEvents/ReleaseEventCon
 import ReleaseEventSeriesForApiContract from '../DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
 import UrlMapper from '../Shared/UrlMapper';
 
-	export default class ReleaseEventRepository extends BaseRepository {
+export default class ReleaseEventRepository extends BaseRepository {
+  constructor(private readonly urlMapper: UrlMapper) {
+    super(urlMapper.baseUrl);
+  }
 
-		constructor(private readonly urlMapper: UrlMapper) {
-			super(urlMapper.baseUrl);
-		}
+  public createReport = (
+    eventId: number,
+    reportType: string,
+    notes: string,
+    versionNumber: number,
+    callback?: () => void,
+  ) => {
+    var url = functions.mergeUrls(
+      this.baseUrl,
+      '/api/releaseEvents/' +
+        eventId +
+        '/reports?' +
+        AjaxHelper.createUrl({
+          reportType: [reportType],
+          notes: [notes],
+          versionNumber: [versionNumber],
+        }),
+    );
+    $.postJSON(url, callback);
+  };
 
-		public createReport = (eventId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
-			var url = functions.mergeUrls(this.baseUrl, "/api/releaseEvents/" + eventId + "/reports?" + AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
-			$.postJSON(url, callback);
-		}
+  public delete = (
+    id: number,
+    notes: string,
+    hardDelete: boolean,
+    callback?: () => void,
+  ) => {
+    $.ajax(
+      this.urlMapper.mapRelative(
+        '/api/releaseEvents/' +
+          id +
+          '?hardDelete=' +
+          hardDelete +
+          '&notes=' +
+          encodeURIComponent(notes),
+      ),
+      { type: 'DELETE', success: callback },
+    );
+  };
 
-		public delete = (id: number, notes: string, hardDelete: boolean, callback?: () => void) => {
-			$.ajax(this.urlMapper.mapRelative("/api/releaseEvents/" + id + "?hardDelete=" + hardDelete + "&notes=" + encodeURIComponent(notes)), { type: 'DELETE', success: callback });
-		}
+  public deleteSeries = (
+    id: number,
+    notes: string,
+    hardDelete: boolean,
+    callback?: () => void,
+  ) => {
+    $.ajax(
+      this.urlMapper.mapRelative(
+        '/api/releaseEventSeries/' +
+          id +
+          '?hardDelete=' +
+          hardDelete +
+          '&notes=' +
+          encodeURIComponent(notes),
+      ),
+      { type: 'DELETE', success: callback },
+    );
+  };
 
-		public deleteSeries = (id: number, notes: string, hardDelete: boolean, callback?: () => void) => {
-			$.ajax(this.urlMapper.mapRelative("/api/releaseEventSeries/" + id + "?hardDelete=" + hardDelete + "&notes=" + encodeURIComponent(notes)), { type: 'DELETE', success: callback });
-		}
+  public getList = (
+    queryParams: EventQueryParams,
+    callback?: (
+      result: PartialFindResultContract<ReleaseEventContract>,
+    ) => void,
+  ) => {
+    var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
 
-		public getList = (queryParams: EventQueryParams,
-			callback?: (result: PartialFindResultContract<ReleaseEventContract>) => void) => {
+    var url = functions.mergeUrls(this.baseUrl, '/api/releaseEvents');
+    var data = {
+      start: queryParams.start,
+      getTotalCount: queryParams.getTotalCount,
+      maxResults: queryParams.maxResults,
+      query: queryParams.query,
+      category: queryParams.category || undefined,
+      tagId: queryParams.tagIds,
+      childTags: queryParams.childTags,
+      fields: queryParams.fields || undefined,
+      userCollectionId: queryParams.userCollectionId || undefined,
+      artistId: queryParams.artistId || undefined,
+      childVoicebanks: queryParams.childVoicebanks || undefined,
+      includeMembers: queryParams.includeMembers || undefined,
+      status: queryParams.status || undefined,
+      afterDate: this.getDate(queryParams.afterDate),
+      beforeDate: this.getDate(queryParams.beforeDate),
+      nameMatchMode: NameMatchMode[nameMatchMode],
+      lang: queryParams.lang,
+      sort: queryParams.sort,
+    };
 
-			var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
+    $.getJSON(url, data, callback);
+  };
 
-			var url = functions.mergeUrls(this.baseUrl, "/api/releaseEvents");
-			var data = {
-				start: queryParams.start, getTotalCount: queryParams.getTotalCount, maxResults: queryParams.maxResults,
-				query: queryParams.query,
-				category: queryParams.category || undefined,
-				tagId: queryParams.tagIds,
-				childTags: queryParams.childTags,
-				fields: queryParams.fields || undefined,
-				userCollectionId: queryParams.userCollectionId || undefined,
-				artistId: queryParams.artistId || undefined,
-				childVoicebanks: queryParams.childVoicebanks || undefined,
-				includeMembers: queryParams.includeMembers || undefined,
-				status: queryParams.status || undefined,
-				afterDate: this.getDate(queryParams.afterDate),
-				beforeDate: this.getDate(queryParams.beforeDate),
-				nameMatchMode: NameMatchMode[nameMatchMode],
-				lang: queryParams.lang,
-				sort: queryParams.sort
-			};
+  public getOne = (
+    id: number,
+    callback?: (result: ReleaseEventContract) => void,
+  ) => {
+    var url = functions.mergeUrls(this.baseUrl, '/api/releaseEvents/' + id);
+    $.getJSON(url, {}, callback);
+  };
 
-			$.getJSON(url, data, callback);
+  public getOneByName = (
+    name: string,
+    callback?: (result: ReleaseEventContract) => void,
+  ) => {
+    var url = functions.mergeUrls(
+      this.baseUrl,
+      '/api/releaseEvents?query=' +
+        encodeURIComponent(name) +
+        '&nameMatchMode=Exact&maxResults=1',
+    );
+    $.getJSON(url, {}, (result) =>
+      callback(
+        result && result.items && result.items.length ? result.items[0] : null,
+      ),
+    );
+  };
 
-		}
+  public getSeriesList = (
+    query: string,
+    nameMatchMode: NameMatchMode,
+    maxResults: number,
+    callback?: (
+      result: PartialFindResultContract<ReleaseEventSeriesForApiContract>,
+    ) => void,
+  ) => {
+    var url = functions.mergeUrls(this.baseUrl, '/api/releaseEventSeries');
+    var data = {
+      query: query,
+      maxResults: maxResults,
+      nameMatchMode: NameMatchMode[nameMatchMode],
+    };
 
-		public getOne = (id: number, callback?: (result: ReleaseEventContract) => void) => {
-			var url = functions.mergeUrls(this.baseUrl, "/api/releaseEvents/" + id);
-			$.getJSON(url, {}, callback);
-		}
+    $.getJSON(url, data, callback);
+  };
+}
 
-		public getOneByName = (name: string, callback?: (result: ReleaseEventContract) => void) => {
-			var url = functions.mergeUrls(this.baseUrl, "/api/releaseEvents?query=" + encodeURIComponent(name) + "&nameMatchMode=Exact&maxResults=1");
-			$.getJSON(url, { }, result => callback(result && result.items && result.items.length ? result.items[0] : null));
-		}
+export interface EventQueryParams extends CommonQueryParams {
+  afterDate?: Date;
 
-		public getSeriesList = (query: string, nameMatchMode: NameMatchMode, maxResults: number, callback?: (result: PartialFindResultContract<ReleaseEventSeriesForApiContract>) => void) => {
+  artistId?: number[];
 
-			var url = functions.mergeUrls(this.baseUrl, "/api/releaseEventSeries");
-			var data = {
-				query: query,
-				maxResults: maxResults,
-				nameMatchMode: NameMatchMode[nameMatchMode]
-			};
+  beforeDate?: Date;
 
-			$.getJSON(url, data, callback);
+  category?: string;
 
-		}
+  childTags: boolean;
 
-	}
+  childVoicebanks?: boolean;
 
-	export interface EventQueryParams extends CommonQueryParams {
+  // Comma-separated list of optional fields
+  fields?: string;
 
-		afterDate?: Date;
+  includeMembers?: boolean;
 
-		artistId?: number[];
+  sort?: string;
 
-		beforeDate?: Date;
+  status?: string;
 
-		category?: string;
+  tagIds: number[];
 
-		childTags: boolean;
-
-		childVoicebanks?: boolean;
-
-		// Comma-separated list of optional fields
-		fields?: string;
-
-		includeMembers?: boolean;
-
-		sort?: string;
-
-		status?: string;
-
-		tagIds: number[];
-
-		userCollectionId?: number;
-
-	}
+  userCollectionId?: number;
+}

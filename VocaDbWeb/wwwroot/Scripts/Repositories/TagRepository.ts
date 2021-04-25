@@ -14,98 +14,141 @@ import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 import TagMappingContract from '../DataContracts/Tag/TagMappingContract';
 import UrlMapper from '../Shared/UrlMapper';
 
-	export default class TagRepository extends BaseRepository {
+export default class TagRepository extends BaseRepository {
+  private readonly urlMapper: UrlMapper;
 
-		private readonly urlMapper: UrlMapper;
+  constructor(baseUrl: string, lang?: ContentLanguagePreference) {
+    super(baseUrl, lang);
+    this.urlMapper = new UrlMapper(baseUrl);
+  }
 
-		constructor(baseUrl: string, lang?: ContentLanguagePreference) {
-			super(baseUrl, lang);
-			this.urlMapper = new UrlMapper(baseUrl);
-		}
+  public create = (
+    name: string,
+    callback?: (result: TagBaseContract) => void,
+  ) => {
+    var url = functions.mergeUrls(this.baseUrl, '/api/tags?name=' + name);
+    $.postJSON(url, callback);
+  };
 
-		public create = (name: string, callback?: (result: TagBaseContract) => void) => {
-			var url = functions.mergeUrls(this.baseUrl, "/api/tags?name=" + name);
-			$.postJSON(url, callback);
-		}
+  public createReport = (
+    tagId: number,
+    reportType: string,
+    notes: string,
+    versionNumber: number,
+    callback?: () => void,
+  ) => {
+    var url = functions.mergeUrls(
+      this.baseUrl,
+      '/api/tags/' +
+        tagId +
+        '/reports?' +
+        AjaxHelper.createUrl({
+          reportType: [reportType],
+          notes: [notes],
+          versionNumber: [versionNumber],
+        }),
+    );
+    $.postJSON(url, callback);
+  };
 
-		public createReport = (tagId: number, reportType: string, notes: string, versionNumber: number, callback?: () => void) => {
+  public getById = (
+    id: number,
+    fields: string,
+    lang: string,
+    callback?: (result: TagApiContract) => void,
+  ) => {
+    var url = functions.mergeUrls(this.baseUrl, '/api/tags/' + id);
+    $.getJSON(url, { fields: fields || undefined, lang: lang }, callback);
+  };
 
-			var url = functions.mergeUrls(this.baseUrl, "/api/tags/" + tagId + "/reports?" + AjaxHelper.createUrl({ reportType: [reportType], notes: [notes], versionNumber: [versionNumber] }));
-			$.postJSON(url, callback);
+  public getComments = () =>
+    new EntryCommentRepository(new UrlMapper(this.baseUrl), '/tags/');
 
-		}
+  public getEntryTypeTag = (entryType: EntryType, subType: string = '') => {
+    var url = functions.mergeUrls(
+      this.baseUrl,
+      '/api/entry-types/' + EntryType[entryType] + '/' + subType + '/tag',
+    );
+    return this.getJsonPromise<TagApiContract>(url, {
+      fields: 'Description',
+      lang: this.languagePreferenceStr,
+    });
+  };
 
-		public getById = (id: number, fields: string, lang: string, callback?: (result: TagApiContract) => void) => {
-			var url = functions.mergeUrls(this.baseUrl, "/api/tags/" + id);
-			$.getJSON(url, { fields: fields || undefined, lang: lang }, callback);
-		}
+  public getList = (
+    queryParams: TagQueryParams,
+    callback?: (result: PartialFindResultContract<TagApiContract>) => void,
+  ) => {
+    var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
 
-		public getComments = () => new EntryCommentRepository(new UrlMapper(this.baseUrl), "/tags/");
+    var url = functions.mergeUrls(this.baseUrl, '/api/tags');
+    var data = {
+      start: queryParams.start,
+      getTotalCount: queryParams.getTotalCount,
+      maxResults: queryParams.maxResults,
+      query: queryParams.query,
+      fields: queryParams.fields || undefined,
+      nameMatchMode: NameMatchMode[nameMatchMode],
+      allowAliases: queryParams.allowAliases,
+      categoryName: queryParams.categoryName,
+      lang: queryParams.lang,
+      sort: queryParams.sort,
+    };
 
-		public getEntryTypeTag = (entryType: EntryType, subType: string = "") => {
-			var url = functions.mergeUrls(this.baseUrl, "/api/entry-types/" + EntryType[entryType] + "/" + subType + "/tag");
-			return this.getJsonPromise<TagApiContract>(url, { fields: "Description", lang: this.languagePreferenceStr });
-		}
+    $.getJSON(url, data, callback);
+  };
 
-		public getList = (queryParams: TagQueryParams,
-			callback?: (result: PartialFindResultContract<TagApiContract>) => void) => {
+  public getEntryTagMappings = (): Promise<EntryTagMappingContract[]> => {
+    return this.getJsonPromise(
+      this.urlMapper.mapRelative('/api/tags/entry-type-mappings'),
+    );
+  };
 
-			var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
+  public getMappings = (
+    paging: PagingProperties,
+  ): Promise<PartialFindResultContract<TagMappingContract>> => {
+    return this.getJsonPromise(
+      this.urlMapper.mapRelative('/api/tags/mappings'),
+      paging,
+    );
+  };
 
-			var url = functions.mergeUrls(this.baseUrl, "/api/tags");
-			var data = {
-				start: queryParams.start, getTotalCount: queryParams.getTotalCount, maxResults: queryParams.maxResults,
-				query: queryParams.query,
-				fields: queryParams.fields || undefined,
-				nameMatchMode: NameMatchMode[nameMatchMode],
-				allowAliases: queryParams.allowAliases,
-				categoryName: queryParams.categoryName,
-				lang: queryParams.lang,
-				sort: queryParams.sort
-			};
+  public getTopTags = (
+    lang: string,
+    categoryName?: string,
+    entryType?: EntryType,
+    callback?: (tags: TagBaseContract[]) => void,
+  ) => {
+    var url = functions.mergeUrls(this.baseUrl, '/api/tags/top');
+    var data = {
+      lang: lang,
+      categoryName: categoryName,
+      entryType: entryType || undefined,
+    };
 
-			$.getJSON(url, data, callback);
+    $.getJSON(url, data, callback);
+  };
 
-		}
+  public saveEntryMappings = (
+    mappings: EntryTagMappingContract[],
+  ): Promise<any> => {
+    var url = this.urlMapper.mapRelative('/api/tags/entry-type-mappings');
+    return Promise.resolve(AjaxHelper.putJSON(url, mappings));
+  };
 
-		public getEntryTagMappings = (): Promise<EntryTagMappingContract[]> => {
-			return this.getJsonPromise(this.urlMapper.mapRelative("/api/tags/entry-type-mappings"));
-		}
+  public saveMappings = (mappings: TagMappingContract[]): Promise<any> => {
+    var url = this.urlMapper.mapRelative('/api/tags/mappings');
+    return Promise.resolve(AjaxHelper.putJSON(url, mappings));
+  };
+}
 
-		public getMappings = (paging: PagingProperties): Promise<PartialFindResultContract<TagMappingContract>> => {
-			return this.getJsonPromise(this.urlMapper.mapRelative("/api/tags/mappings"), paging);
-		}
+export interface TagQueryParams extends CommonQueryParams {
+  allowAliases?: boolean;
 
-		public getTopTags = (lang: string, categoryName?: string, entryType?: EntryType, callback?: (tags: TagBaseContract[]) => void) => {
-			
-			var url = functions.mergeUrls(this.baseUrl, "/api/tags/top");
-			var data = { lang: lang, categoryName: categoryName, entryType: entryType || undefined };
+  categoryName?: string;
 
-			$.getJSON(url, data, callback);
+  // Comma-separated list of optional fields
+  fields?: string;
 
-		}
-
-		public saveEntryMappings = (mappings: EntryTagMappingContract[]): Promise<any> => {
-			var url = this.urlMapper.mapRelative("/api/tags/entry-type-mappings");
-			return Promise.resolve(AjaxHelper.putJSON(url, mappings));
-		}
-
-		public saveMappings = (mappings: TagMappingContract[]): Promise<any> => {
-			var url = this.urlMapper.mapRelative("/api/tags/mappings");
-			return Promise.resolve(AjaxHelper.putJSON(url, mappings));
-		}
-
-	}
-
-	export interface TagQueryParams extends CommonQueryParams {
-		
-		allowAliases?: boolean;
-
-		categoryName?: string;
-
-		// Comma-separated list of optional fields
-		fields?: string;
-
-		sort?: string;
-
-	}
+  sort?: string;
+}

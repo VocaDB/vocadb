@@ -1,10 +1,7 @@
+export default interface OptionalGeoPointContract {
+  formatted?: string;
 
-	export default interface OptionalGeoPointContract {
+  latitude?: number;
 
-		formatted?: string;
-
-		latitude?: number;
-
-		longitude?: number;
-
-	}
+  longitude?: number;
+}

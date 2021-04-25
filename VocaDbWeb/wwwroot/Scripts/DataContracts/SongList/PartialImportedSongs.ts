@@ -1,11 +1,9 @@
 import ImportedSongInListContract from './ImportedSongInListContract';
 
-	export default interface PartialImportedSongs {
+export default interface PartialImportedSongs {
+  items: ImportedSongInListContract[];
 
-		items: ImportedSongInListContract[];
+  nextPageToken: string;
 
-		nextPageToken: string;
-
-		totalCount: number;
-		
-	}
+  totalCount: number;
+}

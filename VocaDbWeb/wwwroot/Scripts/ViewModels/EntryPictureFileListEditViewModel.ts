@@ -1,28 +1,24 @@
 import EntryPictureFileContract from '../DataContracts/EntryPictureFileContract';
 import EntryPictureFileEditViewModel from './EntryPictureFileEditViewModel';
 
-	export default class EntryPictureFileListEditViewModel {
+export default class EntryPictureFileListEditViewModel {
+  constructor(pictures: EntryPictureFileContract[]) {
+    this.pictures = ko.observableArray(
+      _.map(pictures, (picture) => new EntryPictureFileEditViewModel(picture)),
+    );
+  }
 
-		constructor(pictures: EntryPictureFileContract[]) {
+  public add = () => {
+    this.pictures.push(new EntryPictureFileEditViewModel());
+  };
 
-			this.pictures = ko.observableArray(_.map(pictures, picture => new EntryPictureFileEditViewModel(picture)));
+  public pictures: KnockoutObservableArray<EntryPictureFileEditViewModel>;
 
-		}
-		
-		public add = () => {
-			this.pictures.push(new EntryPictureFileEditViewModel());
-		}
+  public remove = (picture: EntryPictureFileEditViewModel) => {
+    this.pictures.remove(picture);
+  };
 
-		public pictures: KnockoutObservableArray<EntryPictureFileEditViewModel>;
-
-		public remove = (picture: EntryPictureFileEditViewModel) => {
-			this.pictures.remove(picture);
-		}
-
-		public toContracts: () => EntryPictureFileContract[] = () => {
-
-			return ko.toJS(this.pictures());
-
-		}
-
-	}
+  public toContracts: () => EntryPictureFileContract[] = () => {
+    return ko.toJS(this.pictures());
+  };
+}

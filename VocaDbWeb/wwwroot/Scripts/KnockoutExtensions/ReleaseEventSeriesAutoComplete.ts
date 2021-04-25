@@ -5,42 +5,47 @@ import IEntryWithIdAndName from '../Models/IEntryWithIdAndName';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
 
 declare global {
-	interface KnockoutBindingHandlers {
-		releaseEventSeriesAutoComplete: KnockoutBindingHandler;
-	}
+  interface KnockoutBindingHandlers {
+    releaseEventSeriesAutoComplete: KnockoutBindingHandler;
+  }
 }
 
 // Release event series autocomplete search box.
 ko.bindingHandlers.releaseEventSeriesAutoComplete = {
-	init: (element: HTMLElement, valueAccessor: () => any, allBindingsAccessor: () => any) => {
+  init: (
+    element: HTMLElement,
+    valueAccessor: () => any,
+    allBindingsAccessor: () => any,
+  ) => {
+    var seriesFilter: (any) => boolean = allBindingsAccessor().tagFilter;
+    var clearValue: boolean = ko.unwrap(allBindingsAccessor().clearValue);
 
-		var seriesFilter: (any) => boolean = allBindingsAccessor().tagFilter;
-		var clearValue: boolean = ko.unwrap(allBindingsAccessor().clearValue);
+    if (clearValue == null) clearValue = true;
 
-		if (clearValue == null)
-			clearValue = true;
+    var queryParams = {
+      nameMatchMode: 'Auto',
+      preferAccurateMatches: true,
+      lang: ContentLanguagePreference[vdb.values.languagePreference],
+      maxResults: 20,
+      sort: 'Name',
+    };
 
-		var queryParams = {
-			nameMatchMode: 'Auto',
-			preferAccurateMatches: true,
-			lang: ContentLanguagePreference[vdb.values.languagePreference],
-			maxResults: 20,
-			sort: 'Name'
-		};
+    var params: EntryAutoCompleteParams<IEntryWithIdAndName> = {
+      acceptSelection: (id, term, itemType, item) => {
+        valueAccessor()(item);
+      },
+      createNewItem: null,
+      createOptionFirstRow: (item) => item.name,
+      createOptionSecondRow: null,
+      extraQueryParams: queryParams,
+      filter: seriesFilter,
+      termParamName: 'query',
+    };
 
-		var params: EntryAutoCompleteParams<IEntryWithIdAndName> = {
-			acceptSelection: (id, term, itemType, item) => {
-				valueAccessor()(item);
-			},
-			createNewItem: null,
-			createOptionFirstRow: (item) => item.name,
-			createOptionSecondRow: null,
-			extraQueryParams: queryParams,
-			filter: seriesFilter,
-			termParamName: 'query'
-		};
-
-		initEntrySearch(element, functions.mapAbsoluteUrl("/api/releaseEventSeries"), params);
-
-	}
-}
+    initEntrySearch(
+      element,
+      functions.mapAbsoluteUrl('/api/releaseEventSeries'),
+      params,
+    );
+  },
+};

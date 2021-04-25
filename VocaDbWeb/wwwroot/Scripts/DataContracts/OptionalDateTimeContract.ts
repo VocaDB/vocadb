@@ -1,12 +1,9 @@
+export default interface OptionalDateTimeContract {
+  day?: number;
 
-	export default interface OptionalDateTimeContract {
+  formatted?: string;
 
-		day?: number;
+  month?: number;
 
-		formatted?: string;
-
-		month?: number;
-
-		year?: number;
-
-	}
+  year?: number;
+}

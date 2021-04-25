@@ -1,45 +1,44 @@
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import NameMatchMode from '../Models/NameMatchMode';
 
-	export default class BaseRepository {
+export default class BaseRepository {
+  protected handleJqueryPromise<T>(jqueryPromise: JQueryXHR) {
+    const promise = Promise.resolve(jqueryPromise);
+    return promise as Promise<T>;
+  }
 
-		protected handleJqueryPromise<T>(jqueryPromise: JQueryXHR) {
-			const promise = Promise.resolve(jqueryPromise);
-			return promise as Promise<T>;
-		}
+  protected getDate(date?: Date) {
+    return date ? date.toISOString() : undefined;
+  }
 
-		protected getDate(date?: Date) {
-			return date ? date.toISOString() : undefined;
-		}
+  protected getJsonPromise<T>(url: string, data?: any) {
+    const jqueryPromise = $.getJSON(url, data);
+    return this.handleJqueryPromise<T>(jqueryPromise);
+  }
 
-		protected getJsonPromise<T>(url: string, data?: any) {
-			const jqueryPromise = $.getJSON(url, data);
-			return this.handleJqueryPromise<T>(jqueryPromise);
-		}
+  // todo: protected
+  public languagePreferenceStr: string;
 
-		// todo: protected
-		public languagePreferenceStr: string;
+  constructor(
+    public baseUrl: string,
+    languagePreference = ContentLanguagePreference.Default,
+  ) {
+    this.languagePreferenceStr = ContentLanguagePreference[languagePreference];
+  }
+}
 
-		constructor(public baseUrl: string, languagePreference = ContentLanguagePreference.Default) {
-			this.languagePreferenceStr = ContentLanguagePreference[languagePreference];
-		}
+// Common parameters for entry queries (listings).
+export interface CommonQueryParams {
+  getTotalCount?: boolean;
 
-	}
+  // Content language preference
+  lang?: ContentLanguagePreference;
 
-	// Common parameters for entry queries (listings).
-	export interface CommonQueryParams {
+  maxResults?: number;
 
-		getTotalCount?: boolean;
+  nameMatchMode?: NameMatchMode;
 
-		// Content language preference
-		lang?: ContentLanguagePreference;
+  start?: number;
 
-		maxResults?: number;
-
-		nameMatchMode?: NameMatchMode;
-
-		start?: number;
-
-		query?: string;
-
-	}
+  query?: string;
+}

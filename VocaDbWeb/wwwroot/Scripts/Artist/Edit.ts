@@ -1,9 +1,6 @@
-
 export function initPage() {
-
-	$("#tabs").tabs();
-	$("#deleteLink").button({ icons: { primary: 'ui-icon-trash'} });
-	$("#restoreLink").button({ icons: { primary: 'ui-icon-trash'} });
-	$("#mergeLink").button();
-
+  $('#tabs').tabs();
+  $('#deleteLink').button({ icons: { primary: 'ui-icon-trash' } });
+  $('#restoreLink').button({ icons: { primary: 'ui-icon-trash' } });
+  $('#mergeLink').button();
 }

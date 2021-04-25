@@ -1,34 +1,32 @@
 import EntryThumbContract from './EntryThumbContract';
 import EntryWithTagUsagesContract from './Base/EntryWithTagUsagesContract';
 
-	// Base data contract for entries from the API.
-	// Corresponds to C# datacontract EntryForApiContract.
-	export default interface EntryContract extends EntryWithTagUsagesContract {
+// Base data contract for entries from the API.
+// Corresponds to C# datacontract EntryForApiContract.
+export default interface EntryContract extends EntryWithTagUsagesContract {
+  additionalNames?: string;
 
-		additionalNames?: string;
+  artistType?: string;
 
-		artistType?: string;
+  discType?: string;
 
-		discType?: string;
+  entryType: string;
 
-		entryType: string;
+  eventCategory?: string;
 
-		eventCategory?: string;
+  id: number;
 
-		id: number;
+  mainPicture?: EntryThumbContract;
 
-		mainPicture?: EntryThumbContract;
+  name: string;
 
-		name: string;
+  releaseEventSeriesName?: string;
 
-		releaseEventSeriesName?: string;
+  songListFeaturedCategory?: string;
 
-		songListFeaturedCategory?: string;
+  songType?: string;
 
-		songType?: string;
+  tagCategoryName?: string;
 
-		tagCategoryName?: string;
-
-		urlSlug?: string;
-
-	}
+  urlSlug?: string;
+}

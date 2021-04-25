@@ -1,11 +1,8 @@
+// Note: matches C# class EntryThumbForApiContract
+export default interface EntryThumbContract {
+  urlSmallThumb?: string;
 
-	// Note: matches C# class EntryThumbForApiContract
-	export default interface EntryThumbContract {
+  urlTinyThumb?: string;
 
-		urlSmallThumb?: string;
-
-		urlTinyThumb?: string;
-
-		urlThumb?: string;
-
-	}
+  urlThumb?: string;
+}

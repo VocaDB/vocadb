@@ -1,17 +1,15 @@
 import ArtistContract from './Artist/ArtistContract';
 
-    export default interface ArtistForAlbumContract {
+export default interface ArtistForAlbumContract {
+  artist: ArtistContract;
 
-        artist: ArtistContract;
+  id?: number;
 
-        id?: number;
+  isCustomName?: boolean;
 
-		isCustomName?: boolean;
+  isSupport?: boolean;
 
-        isSupport?: boolean;
+  name?: string;
 
-        name?: string;
-
-        roles: string;
-
-    }
+  roles: string;
+}

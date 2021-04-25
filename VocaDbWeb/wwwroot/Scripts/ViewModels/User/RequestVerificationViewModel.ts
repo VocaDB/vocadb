@@ -2,29 +2,26 @@ import { ArtistAutoCompleteParams } from '../../KnockoutExtensions/AutoCompleteP
 import ArtistContract from '../../DataContracts/Artist/ArtistContract';
 import ArtistRepository from '../../Repositories/ArtistRepository';
 
-    export default class RequestVerificationViewModel {
-    
-		constructor(
-			private readonly artistRepository: ArtistRepository) { }
+export default class RequestVerificationViewModel {
+  constructor(private readonly artistRepository: ArtistRepository) {}
 
-        public clearArtist = () => {
-            this.selectedArtist(null);
-		}
+  public clearArtist = () => {
+    this.selectedArtist(null);
+  };
 
-		public privateMessage = ko.observable(false);
+  public privateMessage = ko.observable(false);
 
-        public selectedArtist: KnockoutObservable<ArtistContract> = ko.observable(null);
+  public selectedArtist: KnockoutObservable<ArtistContract> = ko.observable(
+    null,
+  );
 
-        public setArtist = (targetArtistId) => {
+  public setArtist = (targetArtistId) => {
+    this.artistRepository.getOne(targetArtistId, (artist) => {
+      this.selectedArtist(artist);
+    });
+  };
 
-            this.artistRepository.getOne(targetArtistId, artist => {
-                this.selectedArtist(artist);
-            });
-
-        }
-
-        public artistSearchParams: ArtistAutoCompleteParams = {
-            acceptSelection: this.setArtist
-        };
-      
-    }
+  public artistSearchParams: ArtistAutoCompleteParams = {
+    acceptSelection: this.setArtist,
+  };
+}

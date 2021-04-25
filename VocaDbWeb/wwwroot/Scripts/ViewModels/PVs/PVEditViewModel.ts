@@ -1,54 +1,50 @@
 import DateTimeHelper from '../../Helpers/DateTimeHelper';
 import PVContract from '../../DataContracts/PVs/PVContract';
 
-	export default class PVEditViewModel {
-		
-		constructor(contract: PVContract, pvType?: string) {
+export default class PVEditViewModel {
+  constructor(contract: PVContract, pvType?: string) {
+    this.author = contract.author;
+    this.createdBy = contract.createdBy;
+    this.disabled = ko.observable(contract.disabled);
+    this.extendedMetadata = contract.extendedMetadata;
+    this.id = contract.id;
+    this.length = contract.length;
+    this.pvId = contract.pvId;
+    this.service = contract.service;
+    this.publishDate = contract.publishDate;
+    this.pvType = pvType || contract.pvType;
+    this.thumbUrl = contract.thumbUrl;
+    this.url = contract.url;
 
-			this.author = contract.author;
-			this.createdBy = contract.createdBy;
-			this.disabled = ko.observable(contract.disabled);
-			this.extendedMetadata = contract.extendedMetadata;
-			this.id = contract.id;
-			this.length = contract.length;
-			this.pvId = contract.pvId;
-			this.service = contract.service;
-			this.publishDate = contract.publishDate;
-			this.pvType = pvType || contract.pvType;
-			this.thumbUrl = contract.thumbUrl;
-			this.url = contract.url;
+    this.name = ko.observable(contract.name);
+    this.lengthFormatted = DateTimeHelper.formatFromSeconds(this.length);
+  }
 
-			this.name = ko.observable(contract.name);
-			this.lengthFormatted = DateTimeHelper.formatFromSeconds(this.length);
+  author: string;
 
-		}
+  createdBy: number;
 
-		author: string;
+  disabled: KnockoutObservable<boolean>;
 
-		createdBy: number;
+  extendedMetadata: string;
 
-		disabled: KnockoutObservable<boolean>;
+  id: number;
 
-		extendedMetadata: string;
+  length: number;
 
-		id: number;
+  lengthFormatted: string;
 
-		length: number;
+  name: KnockoutObservable<string>;
 
-		lengthFormatted: string;
+  pvId: string;
 
-		name: KnockoutObservable<string>;
+  service: string;
 
-		pvId: string;
+  publishDate: string;
 
-		service: string;
+  pvType: string;
 
-		publishDate: string;
+  thumbUrl: string;
 
-		pvType: string;
-
-		thumbUrl: string;
-
-		url: string;
-
-	}
+  url: string;
+}

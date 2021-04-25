@@ -1,16 +1,14 @@
 import AlbumContract from '../Album/AlbumContract';
 import UserApiContract from './UserApiContract';
 
-	export default interface AlbumForUserForApiContract {
+export default interface AlbumForUserForApiContract {
+  album: AlbumContract;
 
-		album: AlbumContract;
+  mediaType: string;
 
-		mediaType: string;
+  purchaseStatus: string;
 
-		purchaseStatus: string;
+  rating: number;
 
-		rating: number;
-
-		user?: UserApiContract;
-
-	}
+  user?: UserApiContract;
+}

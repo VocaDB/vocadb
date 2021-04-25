@@ -8,38 +8,36 @@ import PVContract from '../PVs/PVContract';
 import SongInAlbumEditContract from '../Song/SongInAlbumEditContract';
 import WebLinkContract from '../WebLinkContract';
 
-	export default interface AlbumForEditContract {
+export default interface AlbumForEditContract {
+  artistLinks: ArtistForAlbumContract[];
 
-		artistLinks: ArtistForAlbumContract[];
+  coverPictureMime?: string;
 
-		coverPictureMime?: string;
+  defaultNameLanguage: string;
 
-		defaultNameLanguage: string;
+  description: EnglishTranslatedStringContract;
 
-		description: EnglishTranslatedStringContract;
+  discs: AlbumDiscPropertiesContract[];
 
-		discs: AlbumDiscPropertiesContract[];
+  discType: string;
 
-		discType: string;
+  id: number;
 
-		id: number;
+  identifiers: string[];
 
-		identifiers: string[];
+  names: LocalizedStringWithIdContract[];
 
-		names: LocalizedStringWithIdContract[];
+  originalRelease: AlbumReleaseContract;
 
-		originalRelease: AlbumReleaseContract;
+  pictures: EntryPictureFileContract[];
 
-		pictures: EntryPictureFileContract[];
+  pvs: PVContract[];
 
-		pvs: PVContract[];
+  songs: SongInAlbumEditContract[];
 
-		songs: SongInAlbumEditContract[];
+  status: string;
 
-		status: string;
+  updateNotes?: string;
 
-		updateNotes?: string;
-
-		webLinks: WebLinkContract[];
-
-	}
+  webLinks: WebLinkContract[];
+}

@@ -9,106 +9,139 @@ import UrlMapper from '../Shared/UrlMapper';
 import UserRepository from '../Repositories/UserRepository';
 import WebLinksEditViewModel from './WebLinksEditViewModel';
 
-	export default class TagEditViewModel {
+export default class TagEditViewModel {
+  // Bitmask for all possible entry types (all bits 1)
+  public static readonly allEntryTypes = 1073741823;
 
-		// Bitmask for all possible entry types (all bits 1)
-		public static readonly allEntryTypes = 1073741823;
+  constructor(
+    private readonly urlMapper: UrlMapper,
+    userRepository: UserRepository,
+    contract: TagApiContract,
+  ) {
+    this.categoryName = ko.observable(contract.categoryName);
+    this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
+    this.description = new EnglishTranslatedStringEditViewModel(
+      contract.translatedDescription,
+    );
+    this.id = contract.id;
+    this.names = NamesEditViewModel.fromContracts(contract.names);
+    this.parent = ko.observable(contract.parent);
+    this.relatedTags = ko.observableArray(contract.relatedTags);
+    this.targets = ko.observable(contract.targets);
+    this.webLinks = new WebLinksEditViewModel(contract.webLinks);
 
-		constructor(
-			private readonly urlMapper: UrlMapper,
-			userRepository: UserRepository,
-			contract: TagApiContract) {
+    this.validationError_needDescription = ko.computed(
+      () => !this.description.original() && _.isEmpty(this.webLinks.items()),
+    );
 
-			this.categoryName = ko.observable(contract.categoryName);
-			this.defaultNameLanguage = ko.observable(contract.defaultNameLanguage);
-			this.description = new EnglishTranslatedStringEditViewModel(contract.translatedDescription);
-			this.id = contract.id;
-			this.names = NamesEditViewModel.fromContracts(contract.names);
-			this.parent = ko.observable(contract.parent);
-			this.relatedTags = ko.observableArray(contract.relatedTags);
-			this.targets = ko.observable(contract.targets);
-			this.webLinks = new WebLinksEditViewModel(contract.webLinks);
+    this.parentName = ko.computed(() =>
+      this.parent() ? this.parent().name : null,
+    );
 
-			this.validationError_needDescription = ko.computed(() =>
-				!this.description.original() &&
-				_.isEmpty(this.webLinks.items())
-			);
+    this.hasValidationErrors = ko.computed(() =>
+      this.validationError_needDescription(),
+    );
 
-			this.parentName = ko.computed(() => this.parent() ? this.parent().name : null);
+    window.setInterval(
+      () => userRepository.refreshEntryEdit(EntryType.Tag, contract.id),
+      10000,
+    );
+  }
 
-			this.hasValidationErrors = ko.computed(() =>
-				this.validationError_needDescription()
-			);
+  public categoryName: KnockoutObservable<string>;
+  public defaultNameLanguage: KnockoutObservable<string>;
+  public description: EnglishTranslatedStringEditViewModel;
+  public hasValidationErrors: KnockoutComputed<boolean>;
+  private id: number;
+  public names: NamesEditViewModel;
+  public parent: KnockoutObservable<TagBaseContract>;
+  public parentName: KnockoutComputed<string>;
+  public relatedTags: KnockoutObservableArray<TagBaseContract>;
+  public submitting = ko.observable(false);
+  public targets: KnockoutObservable<EntryType>;
+  public validationExpanded = ko.observable(false);
+  public validationError_needDescription: KnockoutComputed<boolean>;
+  public webLinks: WebLinksEditViewModel;
 
-			window.setInterval(() => userRepository.refreshEntryEdit(EntryType.Tag, contract.id), 10000);
+  public addRelatedTag = (tag: TagBaseContract) => this.relatedTags.push(tag);
 
-		}
+  public allowRelatedTag = (tag: TagBaseContract) =>
+    this.denySelf(tag) && _.every(this.relatedTags(), (t) => t.id !== tag.id);
 
-		public categoryName: KnockoutObservable<string>;
-		public defaultNameLanguage: KnockoutObservable<string>;
-		public description: EnglishTranslatedStringEditViewModel;
-		public hasValidationErrors: KnockoutComputed<boolean>;
-		private id: number;
-		public names: NamesEditViewModel;
-		public parent: KnockoutObservable<TagBaseContract>;
-		public parentName: KnockoutComputed<string>;
-		public relatedTags: KnockoutObservableArray<TagBaseContract>;
-		public submitting = ko.observable(false);
-		public targets: KnockoutObservable<EntryType>;
-		public validationExpanded = ko.observable(false);
-		public validationError_needDescription: KnockoutComputed<boolean>;
-        public webLinks: WebLinksEditViewModel;
+  public deleteViewModel = new DeleteEntryViewModel((notes) => {
+    $.ajax(
+      this.urlMapper.mapRelative(
+        'api/tags/' +
+          this.id +
+          '?hardDelete=false&notes=' +
+          encodeURIComponent(notes),
+      ),
+      {
+        type: 'DELETE',
+        success: () => {
+          window.location.href = EntryUrlMapper.details_tag(this.id);
+        },
+      },
+    );
+  });
 
-		public addRelatedTag = (tag: TagBaseContract) => this.relatedTags.push(tag);		
+  public denySelf = (tag: TagBaseContract) => tag && tag.id !== this.id;
 
-		public allowRelatedTag = (tag: TagBaseContract) => this.denySelf(tag) && _.every(this.relatedTags(), t => t.id !== tag.id);
+  public submit = () => {
+    this.submitting(true);
+    return true;
+  };
 
-		public deleteViewModel = new DeleteEntryViewModel(notes => {
-			$.ajax(this.urlMapper.mapRelative("api/tags/" + this.id + "?hardDelete=false&notes=" + encodeURIComponent(notes)), {
-				type: 'DELETE', success: () => {
-					window.location.href = EntryUrlMapper.details_tag(this.id);
-				}
-			});
-		});
+  public hasTargetType = (target: EntryType) => {
+    const hasFlag = (t) => (this.targets() & t) === t;
+    const checkFlags = () => {
+      const types = [
+        EntryType.Album,
+        EntryType.Artist,
+        EntryType.ReleaseEvent,
+        EntryType.Song,
+      ];
+      if (this.targets() === _.sum(types)) {
+        this.targets(TagEditViewModel.allEntryTypes);
+      } else {
+        this.targets(
+          _.chain(types)
+            .filter((t) => hasFlag(t))
+            .sum()
+            .value(),
+        );
+      }
+    };
+    const addFlag = () => {
+      this.targets(this.targets() | target);
+      checkFlags();
+    };
+    const removeFlag = () => {
+      if (hasFlag(target)) {
+        this.targets(this.targets() - target);
+        checkFlags();
+      }
+    };
+    return ko.computed<boolean>({
+      read: () => hasFlag(target),
+      write: (flag) => (flag ? addFlag() : removeFlag()),
+    });
+  };
 
-		public denySelf = (tag: TagBaseContract) => (tag && tag.id !== this.id);
-
-		public submit = () => {
-			this.submitting(true);
-			return true;
-		}
-
-		public hasTargetType = (target: EntryType) => {		
-			const hasFlag = (t) => (this.targets() & t) === t;
-			const checkFlags = () => {
-				const types = [EntryType.Album, EntryType.Artist, EntryType.ReleaseEvent, EntryType.Song];
-				if (this.targets() === _.sum(types)) {
-					this.targets(TagEditViewModel.allEntryTypes);
-				} else {
-					this.targets(_.chain(types).filter(t => hasFlag(t)).sum().value());
-				}
-			};
-			const addFlag = () => {
-				this.targets(this.targets() | target);
-				checkFlags();
-			};
-			const removeFlag = () => {
-				if (hasFlag(target)) {
-					this.targets(this.targets() - target);
-					checkFlags();
-				}
-			};
-			return ko.computed<boolean>({
-				read: () => hasFlag(target),
-				write: flag => flag ? addFlag() : removeFlag()
-			});
-		}
-
-		public trashViewModel = new DeleteEntryViewModel(notes => {
-			$.ajax(this.urlMapper.mapRelative("api/tags/" + this.id + "?hardDelete=true&notes=" + encodeURIComponent(notes)), {
-				type: 'DELETE', success: () => {
-					window.location.href = this.urlMapper.mapRelative("/Tag");
-				}
-			});
-		});
-	}
+  public trashViewModel = new DeleteEntryViewModel((notes) => {
+    $.ajax(
+      this.urlMapper.mapRelative(
+        'api/tags/' +
+          this.id +
+          '?hardDelete=true&notes=' +
+          encodeURIComponent(notes),
+      ),
+      {
+        type: 'DELETE',
+        success: () => {
+          window.location.href = this.urlMapper.mapRelative('/Tag');
+        },
+      },
+    );
+  });
+}

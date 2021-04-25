@@ -2,40 +2,49 @@ import CommentContract from '../DataContracts/CommentContract';
 import ICommentRepository from './ICommentRepository';
 import UrlMapper from '../Shared/UrlMapper';
 
-	export default class EntryCommentRepository implements ICommentRepository {
+export default class EntryCommentRepository implements ICommentRepository {
+  private baseUrl: string;
 
-		private baseUrl: string;
+  constructor(private urlMapper: UrlMapper, resourcePath: string) {
+    this.baseUrl = UrlMapper.mergeUrls('/api/', resourcePath);
+  }
 
-		constructor(private urlMapper: UrlMapper, resourcePath: string) {
-			this.baseUrl = UrlMapper.mergeUrls("/api/", resourcePath);
-		}
+  public createComment = (
+    entryId: number,
+    contract: CommentContract,
+    callback: (contract: CommentContract) => void,
+  ) => {
+    var url = this.urlMapper.mapRelative(
+      UrlMapper.buildUrl(this.baseUrl, entryId.toString(), '/comments'),
+    );
+    $.postJSON(url, contract, callback, 'json');
+  };
 
-		public createComment = (entryId: number, contract: CommentContract, callback: (contract: CommentContract) => void) => {
+  public deleteComment = (commentId: number, callback?: () => void) => {
+    var url = this.urlMapper.mapRelative(
+      UrlMapper.buildUrl(this.baseUrl, '/comments/', commentId.toString()),
+    );
+    $.ajax(url, { type: 'DELETE', success: callback });
+  };
 
-			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl(this.baseUrl, entryId.toString(), "/comments"));
-			$.postJSON(url, contract, callback, 'json');
+  public getComments = (
+    listId: number,
+    callback: (contract: CommentContract[]) => void,
+  ) => {
+    var url = this.urlMapper.mapRelative(
+      UrlMapper.buildUrl(this.baseUrl, listId.toString(), '/comments/'),
+    );
+    $.getJSON(url, (result) => callback(result.items));
+  };
 
-		}
-
-		public deleteComment = (commentId: number, callback?: () => void) => {
-
-			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl(this.baseUrl, "/comments/", commentId.toString()));
-			$.ajax(url, { type: 'DELETE', success: callback });
-
-		}
-
-		public getComments = (listId: number, callback: (contract: CommentContract[]) => void) => {
-
-			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl(this.baseUrl, listId.toString(), "/comments/"));
-			$.getJSON(url, result => callback(result.items));
-
-		}
-
-		public updateComment = (commentId: number, contract: CommentContract, callback?: () => void) => {
-
-			var url = this.urlMapper.mapRelative(UrlMapper.buildUrl(this.baseUrl, "/comments/", commentId.toString()));
-			$.postJSON(url, contract, callback, 'json');
-
-		}
-
-	}
+  public updateComment = (
+    commentId: number,
+    contract: CommentContract,
+    callback?: () => void,
+  ) => {
+    var url = this.urlMapper.mapRelative(
+      UrlMapper.buildUrl(this.baseUrl, '/comments/', commentId.toString()),
+    );
+    $.postJSON(url, contract, callback, 'json');
+  };
+}

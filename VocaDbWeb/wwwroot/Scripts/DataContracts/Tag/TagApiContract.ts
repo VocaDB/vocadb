@@ -5,38 +5,36 @@ import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithI
 import TagBaseContract from './TagBaseContract';
 import WebLinkContract from '../WebLinkContract';
 
-	export default interface TagApiContract {
+export default interface TagApiContract {
+  additionalNames?: string;
 
-		additionalNames?: string;
+  categoryName: string;
 
-		categoryName: string;
+  defaultNameLanguage: string;
 
-		defaultNameLanguage: string;
+  description: string;
 
-		description: string;
+  id: number;
 
-		id: number;
+  mainPicture: EntryThumbContract;
 
-		mainPicture: EntryThumbContract;
+  name: string;
 
-		name: string;
+  names: LocalizedStringWithIdContract[];
 
-		names: LocalizedStringWithIdContract[];
+  parent: TagBaseContract;
 
-		parent: TagBaseContract;
+  relatedTags?: TagBaseContract[];
 
-		relatedTags?: TagBaseContract[];
+  status: string;
 
-		status: string;
+  targets: EntryType;
 
-		targets: EntryType;
+  translatedDescription?: EnglishTranslatedStringContract;
 
-		translatedDescription?: EnglishTranslatedStringContract;
+  urlSlug?: string;
 
-		urlSlug?: string;
+  usageCount: number;
 
-		usageCount: number;
-
-		webLinks: WebLinkContract[];
-
-	}
+  webLinks: WebLinkContract[];
+}

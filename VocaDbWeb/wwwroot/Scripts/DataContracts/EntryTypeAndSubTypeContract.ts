@@ -1,5 +1,4 @@
-
-	export default interface EntryTypeAndSubTypeContract {
-		entryType: string;
-		subType: string;
-	}
+export default interface EntryTypeAndSubTypeContract {
+  entryType: string;
+  subType: string;
+}

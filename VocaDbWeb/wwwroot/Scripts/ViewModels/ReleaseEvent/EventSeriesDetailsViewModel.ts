@@ -4,25 +4,30 @@ import TagListViewModel from '../Tag/TagListViewModel';
 import TagsEditViewModel from '../Tag/TagsEditViewModel';
 import UserRepository from '../../Repositories/UserRepository';
 
-	export default class EventSeriesDetailsViewModel {
+export default class EventSeriesDetailsViewModel {
+  constructor(
+    private readonly userRepo: UserRepository,
+    private readonly seriesId: number,
+    tagUsages: TagUsageForApiContract[],
+  ) {
+    this.tagsEditViewModel = new TagsEditViewModel(
+      {
+        getTagSelections: (callback) =>
+          userRepo.getEventSeriesTagSelections(this.seriesId, callback),
+        saveTagSelections: (tags) =>
+          userRepo.updateEventSeriesTags(
+            this.seriesId,
+            tags,
+            this.tagUsages.updateTagUsages,
+          ),
+      },
+      EntryType.ReleaseEvent /* Event series use event tags for now */,
+    );
 
-		constructor(
-			private readonly userRepo: UserRepository,
-			private readonly seriesId: number,
-			tagUsages: TagUsageForApiContract[]
-		) {
+    this.tagUsages = new TagListViewModel(tagUsages);
+  }
 
-			this.tagsEditViewModel = new TagsEditViewModel({
-				getTagSelections: callback => userRepo.getEventSeriesTagSelections(this.seriesId, callback),
-				saveTagSelections: tags => userRepo.updateEventSeriesTags(this.seriesId, tags, this.tagUsages.updateTagUsages)
-			}, EntryType.ReleaseEvent /* Event series use event tags for now */);
+  public tagsEditViewModel: TagsEditViewModel;
 
-			this.tagUsages = new TagListViewModel(tagUsages);
-
-		}
-
-		public tagsEditViewModel: TagsEditViewModel;
-
-		public tagUsages: TagListViewModel;
-
-	}
+  public tagUsages: TagListViewModel;
+}

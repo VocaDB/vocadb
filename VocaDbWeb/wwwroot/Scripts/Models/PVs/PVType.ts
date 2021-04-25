@@ -1,12 +1,9 @@
+enum PVType {
+  Original = 1,
 
-	enum PVType {
+  Reprint = 2,
 
-		Original = 1,
+  Other = 4,
+}
 
-		Reprint = 2,
-
-		Other = 4
-
-	}
-
-	export default PVType;
+export default PVType;

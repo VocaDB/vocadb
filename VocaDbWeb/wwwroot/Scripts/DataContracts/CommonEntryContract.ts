@@ -1,12 +1,9 @@
+export default interface CommonEntryContract {
+  createDate?: string;
 
-	export default interface CommonEntryContract {
+  id: number;
 
-		createDate?: string;
-		
-		id: number;
+  name: string;
 
-		name: string;
-
-		status?: string;
-
-	}
+  status?: string;
+}

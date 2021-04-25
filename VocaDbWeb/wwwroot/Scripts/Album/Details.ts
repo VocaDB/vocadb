@@ -3,111 +3,136 @@ import ui from '../Shared/MessagesTyped';
 import UrlMapper from '../Shared/UrlMapper';
 
 export function initAlbumDetailsPage(
-	albumId: number,
-	collectionRating: number,
-	saveStr,
-	urlMapper: UrlMapper,
-	viewModel: AlbumDetailsViewModel) {
+  albumId: number,
+  collectionRating: number,
+  saveStr,
+  urlMapper: UrlMapper,
+  viewModel: AlbumDetailsViewModel,
+) {
+  $('#addAlbumLink').button({
+    disabled: $('#addAlbumLink').hasClass('disabled'),
+    icons: { primary: 'ui-icon-star' },
+  });
+  $('#updateAlbumLink').button({
+    disabled: $('#updateAlbumLink').hasClass('disabled'),
+    icons: { primary: 'ui-icon-wrench' },
+  });
+  $('#editAlbumLink').button({
+    disabled: $('#editAlbumLink').hasClass('disabled'),
+    icons: { primary: 'ui-icon-wrench' },
+  });
+  $('#reportEntryLink').button({ icons: { primary: 'ui-icon-alert' } });
+  $('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
+  $('#downloadTags')
+    .button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } })
+    .next()
+    .button({ text: false, icons: { primary: 'ui-icon-triangle-1-s' } })
+    .parent()
+    .buttonset();
+  $('#manageTags').button({ icons: { primary: 'ui-icon-wrench' } });
+  $('#viewCommentsLink').click(function () {
+    $('#tabs').tabs('option', 'active', 1);
+    return false;
+  });
+  $('#viewReviewsLink').click(function () {
+    $('#tabs').tabs('option', 'active', 2);
+    return false;
+  });
 
-	$("#addAlbumLink").button({ disabled: $("#addAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-star' } });
-	$("#updateAlbumLink").button({ disabled: $("#updateAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench' } });
-	$("#editAlbumLink").button({ disabled: $("#editAlbumLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench' } });
-	$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert' } });
-	$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
-	$("#downloadTags").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } })
-		.next().button({ text: false, icons: { primary: "ui-icon-triangle-1-s" } }).parent().buttonset();
-	$("#manageTags").button({ icons: { primary: 'ui-icon-wrench' } });
-	$("#viewCommentsLink").click(function () {
-		$("#tabs").tabs("option", "active", 1);
-		return false;
-	});
-	$("#viewReviewsLink").click(function () {
-		$("#tabs").tabs("option", "active", 2);
-		return false;
-	});
+  $('#picCarousel').carousel({ interval: false });
 
-	$('#picCarousel').carousel({ interval: false });
+  $('#collectionRating').jqxRating();
 
-	$("#collectionRating").jqxRating();
+  if (collectionRating != 0) {
+    $('#collectionRating').jqxRating({ value: collectionRating });
+  }
 
-	if (collectionRating != 0) {
-		$('#collectionRating').jqxRating({ value: collectionRating });
-	}
+  $('#removeRating').click(function () {
+    $('#collectionRating').jqxRating('setValue', 0);
 
-	$("#removeRating").click(function () {
+    return false;
+  });
 
-		$("#collectionRating").jqxRating('setValue', 0);
+  $('#tabs').tabs({
+    load: function (event, ui) {
+      vdb.functions.disableTabReload(ui.tab);
+    },
+    activate: function (event, ui) {
+      switch (ui.newTab.data('tab')) {
+        case 'Discussion':
+          viewModel.comments.initComments();
+          break;
+        case 'Reviews':
+          viewModel.reviewsViewModel.loadReviews();
+          break;
+      }
+    },
+  });
 
-		return false;
+  $('#editCollectionDialog').dialog({
+    autoOpen: false,
+    width: 320,
+    modal: false,
+    buttons: [
+      {
+        text: saveStr,
+        click: function () {
+          $('#editCollectionDialog').dialog('close');
 
-	});
+          var status = $('#collectionStatusSelect').val();
+          var mediaType = $('#collectionMediaSelect').val();
+          var rating = $('#collectionRating').jqxRating('getValue');
 
-	$("#tabs").tabs({
-		load: function (event, ui) {
-			vdb.functions.disableTabReload(ui.tab);
-		},
-		activate: function (event, ui) {
-			switch (ui.newTab.data('tab')) {
-				case "Discussion":
-					viewModel.comments.initComments();
-					break;
-				case "Reviews":
-					viewModel.reviewsViewModel.loadReviews();
-					break;
-			}
-		}
-	});
+          $.post(
+            urlMapper.mapRelative('/User/UpdateAlbumForUser'),
+            {
+              albumId: albumId,
+              collectionStatus: status,
+              mediaType: mediaType,
+              rating: rating,
+            },
+            null,
+          );
 
-	$("#editCollectionDialog").dialog({
-		autoOpen: false, width: 320, modal: false, buttons: [{
-			text: saveStr, click: function () {
+          if (status == 'Nothing') {
+            $('#updateAlbumLink').hide();
+            $('#addAlbumLink').show();
+          } else {
+            $('#addAlbumLink').hide();
+            $('#updateAlbumLink').show();
+          }
 
-				$("#editCollectionDialog").dialog("close");
+          ui.showSuccessMessage(vdb.resources.album.addedToCollection);
+        },
+      } as JQueryUI.ButtonOptions,
+    ],
+  });
 
-				var status = $("#collectionStatusSelect").val();
-				var mediaType = $("#collectionMediaSelect").val();
-				var rating = $("#collectionRating").jqxRating('getValue');
+  var addAlbumLink;
+  if ($('#addAlbumLink').is(':visible')) addAlbumLink = $('#addAlbumLink');
+  else addAlbumLink = $('#updateAlbumLink');
 
-				$.post(urlMapper.mapRelative("/User/UpdateAlbumForUser"), { albumId: albumId, collectionStatus: status, mediaType: mediaType, rating: rating }, null);
+  $('#editCollectionDialog').dialog('option', 'position', {
+    my: 'left top',
+    at: 'left bottom',
+    of: addAlbumLink,
+  });
 
-				if (status == "Nothing") {
-					$("#updateAlbumLink").hide();
-					$("#addAlbumLink").show();
-				} else {
-					$("#addAlbumLink").hide();
-					$("#updateAlbumLink").show();
-				}
+  $('#addAlbumLink').click(function () {
+    $('#editCollectionDialog').dialog('open');
+    return false;
+  });
 
-				ui.showSuccessMessage(vdb.resources.album.addedToCollection);
+  $('#updateAlbumLink').click(function () {
+    $('#editCollectionDialog').dialog('open');
+    return false;
+  });
 
-			}
-		} as JQueryUI.ButtonOptions]
-	});
+  $('td.artistList a').vdbArtistToolTip();
 
-	var addAlbumLink;
-	if ($("#addAlbumLink").is(":visible"))
-		addAlbumLink = $("#addAlbumLink");
-	else
-		addAlbumLink = $("#updateAlbumLink");
-
-	$("#editCollectionDialog").dialog("option", "position", { my: "left top", at: "left bottom", of: addAlbumLink });
-
-	$("#addAlbumLink").click(function () {
-
-		$("#editCollectionDialog").dialog("open");
-		return false;
-
-	});
-
-	$("#updateAlbumLink").click(function () {
-
-		$("#editCollectionDialog").dialog("open");
-		return false;
-
-	});
-
-	$("td.artistList a").vdbArtistToolTip();
-
-	$("#userCollectionsPopup").dialog({ autoOpen: false, width: 400, position: { my: "left top", at: "left bottom", of: $("#statsLink") } });
-
+  $('#userCollectionsPopup').dialog({
+    autoOpen: false,
+    width: 400,
+    position: { my: 'left top', at: 'left bottom', of: $('#statsLink') },
+  });
 }

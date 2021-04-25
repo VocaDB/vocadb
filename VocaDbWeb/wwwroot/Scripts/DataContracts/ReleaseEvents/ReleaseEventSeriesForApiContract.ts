@@ -1,19 +1,17 @@
-import EntryThumbContract from "../EntryThumbContract";
-import LocalizedStringWithIdContract from "../Globalization/LocalizedStringWithIdContract";
-import WebLinkContract from "../WebLinkContract";
+import EntryThumbContract from '../EntryThumbContract';
+import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
+import WebLinkContract from '../WebLinkContract';
 
-	export default interface ReleaseEventSeriesForApiContract {
+export default interface ReleaseEventSeriesForApiContract {
+  category: string;
 
-		category: string;
+  id: number;
 
-		id: number;
+  mainPicture?: EntryThumbContract;
 
-		mainPicture?: EntryThumbContract;
+  name: string;
 
-		name: string;
+  names?: LocalizedStringWithIdContract[];
 
-		names?: LocalizedStringWithIdContract[];
-
-		webLinks: WebLinkContract[];
-
-	}
+  webLinks: WebLinkContract[];
+}
