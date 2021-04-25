@@ -1,29 +1,29 @@
 
 	enum AlbumType {
 		
-		Unknown		= 0,
+		Unknown = 0,
 
-		Album		= 1,
+		Album = 1 << 0,
 
-		Single		= 2,
+		Single = 1 << 1,
 
-		EP			= 4,
+		EP = 1 << 2,
 
-		SplitAlbum	= 8,
+		SplitAlbum = 1 << 3,
 
-		Compilation	= 16,
+		Compilation = 1 << 4,
 
-		Video 		= 32,
+		Video = 1 << 5,
 
-		Artbook 	= 64,
+		Artbook = 1 << 6,
 
-		Game = 128,
+		Game = 1 << 7,
 
-		Fanmade = 256,
+		Fanmade = 1 << 8,
 
-		Instrumental = 512,
+		Instrumental = 1 << 9,
 
-		Other = 1024
+		Other = 1 << 10,
 
 	}
 

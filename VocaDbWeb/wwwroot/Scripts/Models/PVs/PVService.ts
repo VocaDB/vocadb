@@ -1,25 +1,25 @@
 
 	enum PVService {
 		
-		NicoNicoDouga	= 1,
+		NicoNicoDouga = 1 << 0,
 
-		Youtube			= 2,
+		Youtube = 1 << 1,
 
-		SoundCloud		= 4,
+		SoundCloud = 1 << 2,
 
-		Vimeo			= 8,
+		Vimeo = 1 << 3,
 
-		Piapro			= 16,
+		Piapro = 1 << 4,
 
-		Bilibili		= 32,
+		Bilibili = 1 << 5,
 
-		File			= 64,
+		File = 1 << 6,
 
-		LocalFile		= 128,
+		LocalFile = 1 << 7,
 
-		Creofuga		= 256,
+		Creofuga = 1 << 8,
 
-		Bandcamp		= 512
+		Bandcamp = 1 << 9,
 
 	}
 
