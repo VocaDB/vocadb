@@ -3,56 +3,58 @@ import ArtistContract from '../DataContracts/Artist/ArtistContract';
 import ArtistRepository from '../Repositories/ArtistRepository';
 import BasicEntryLinkViewModel from './BasicEntryLinkViewModel';
 
-	export default class SelfDescriptionViewModel {
+export default class SelfDescriptionViewModel {
+  constructor(
+    author: ArtistApiContract,
+    text: string,
+    artistRepo: ArtistRepository,
+    private getArtists: (callback: (result: ArtistContract[]) => void) => void,
+    private saveFunc: (vm: SelfDescriptionViewModel) => void,
+  ) {
+    this.author = new BasicEntryLinkViewModel<ArtistApiContract>(
+      author,
+      (artistId, callback) => {
+        artistRepo.getOneWithComponents(artistId, 'MainPicture', (artist) => {
+          callback(artist);
+        });
+      },
+    );
+    this.text = ko.observable(text);
+  }
 
-		constructor(author: ArtistApiContract, text: string, artistRepo: ArtistRepository, private getArtists: (callback: (result: ArtistContract[]) => void) => void,
-			private saveFunc: ((vm: SelfDescriptionViewModel) => void)) {
-			
-			this.author = new BasicEntryLinkViewModel<ArtistApiContract>(author, (artistId, callback) => {
-				artistRepo.getOneWithComponents(artistId, 'MainPicture', artist => {
-					callback(artist);
-				});
-			});
-			this.text = ko.observable(text);
+  public artists = ko.observableArray<ArtistContract>();
 
-		}
+  public author: BasicEntryLinkViewModel<ArtistApiContract>;
 
-		public artists = ko.observableArray<ArtistContract>();
+  public beginEdit = () => {
+    this.originalAuthor = this.author.id();
+    this.originalText = this.text();
 
-		public author: BasicEntryLinkViewModel<ArtistApiContract>;
+    if (!this.artists().length) {
+      this.getArtists((artists) => {
+        this.artists(artists);
+        this.editing(true);
+      });
+    } else {
+      this.editing(true);
+    }
+  };
 
-		public beginEdit = () => {
+  public cancelEdit = () => {
+    this.text(this.originalText);
+    this.author.id(this.originalAuthor);
+    this.editing(false);
+  };
 
-			this.originalAuthor = this.author.id();
-			this.originalText = this.text();
+  public editing = ko.observable(false);
 
-			if (!this.artists().length) {
-				this.getArtists(artists => {
-					this.artists(artists);
-					this.editing(true);
-				});
-			} else {
-				this.editing(true);				
-			}
+  private originalAuthor: number;
+  private originalText: string;
 
-		}
+  public save = () => {
+    this.saveFunc(this);
+    this.editing(false);
+  };
 
-		public cancelEdit = () => {
-			this.text(this.originalText);
-			this.author.id(this.originalAuthor);
-			this.editing(false);
-		};
-
-		public editing = ko.observable(false);
-
-		private originalAuthor: number;
-		private originalText: string;
-
-		public save = () => {
-			this.saveFunc(this);
-			this.editing(false);
-		}
-
-		public text: KnockoutObservable<string>;
-
-	}
+  public text: KnockoutObservable<string>;
+}

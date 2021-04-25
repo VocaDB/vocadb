@@ -1,11 +1,9 @@
 import SongWithPVAndVoteContract from './SongWithPVAndVoteContract';
 
-    export default interface SongWithPVPlayerAndVoteContract {
-        
-        playerHtml: string;
+export default interface SongWithPVPlayerAndVoteContract {
+  playerHtml: string;
 
-		pvService: string;
+  pvService: string;
 
-		song: SongWithPVAndVoteContract;
-    
-    }
+  song: SongWithPVAndVoteContract;
+}

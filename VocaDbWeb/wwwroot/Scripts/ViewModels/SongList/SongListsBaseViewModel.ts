@@ -7,80 +7,81 @@ import TagFilter from '../Search/TagFilter';
 import TagFilters from '../Search/TagFilters';
 import TagRepository from '../../Repositories/TagRepository';
 
-	export default class SongListsBaseViewModel extends PagedItemsViewModel<SongListContract> {
+export default class SongListsBaseViewModel extends PagedItemsViewModel<SongListContract> {
+  constructor(
+    resourceRepo: ResourceRepository,
+    tagRepo: TagRepository,
+    languageSelection: string,
+    cultureCode: string,
+    tagIds: number[],
+    public showEventDateSort: boolean,
+  ) {
+    super();
 
-		constructor(resourceRepo: ResourceRepository,
-			tagRepo: TagRepository,
-			languageSelection: string,
-			cultureCode: string,
-			tagIds: number[],
-			public showEventDateSort: boolean) {
+    if (!this.showEventDateSort)
+      this.sort(SongListSortRule[SongListSortRule.Name]);
 
-			super();
+    this.tagFilters = new TagFilters(tagRepo, languageSelection);
 
-			if (!this.showEventDateSort)
-				this.sort(SongListSortRule[SongListSortRule.Name]);
+    if (tagIds) this.tagFilters.addTags(tagIds);
 
-			this.tagFilters = new TagFilters(tagRepo, languageSelection);
+    this.query.subscribe(this.clear);
+    this.showTags.subscribe(this.clear);
+    this.sort.subscribe(this.clear);
+    this.tagFilters.tags.subscribe(this.clear);
 
-			if (tagIds)
-				this.tagFilters.addTags(tagIds);
+    resourceRepo.getList(
+      cultureCode,
+      ['songListSortRuleNames'],
+      (resources) => {
+        this.resources(resources);
+        this.clear();
+      },
+    );
+  }
 
-			this.query.subscribe(this.clear);
-			this.showTags.subscribe(this.clear);
-			this.sort.subscribe(this.clear);
-			this.tagFilters.tags.subscribe(this.clear);
+  public isFirstForYear = (current: SongListContract, index: number) => {
+    if (this.sort() !== SongListSortRule[SongListSortRule.Date]) return false;
 
-			resourceRepo.getList(cultureCode, ['songListSortRuleNames'], resources => {
-				this.resources(resources);
-				this.clear();
-			});
+    if (!current.eventDate) return false;
 
-		}
+    if (index === 0) return true;
 
-		public isFirstForYear = (current: SongListContract, index: number) => {
+    var prev = this.items()[index - 1];
 
-			if (this.sort() !== SongListSortRule[SongListSortRule.Date])
-				return false;
+    if (!prev.eventDate) return false;
 
-			if (!current.eventDate)
-				return false;
+    var currentYear = moment(current.eventDate).year();
+    var prevYear = moment(prev.eventDate).year();
 
-			if (index === 0)
-				return true;
+    return currentYear !== prevYear;
+  };
 
-			var prev = this.items()[index - 1];
+  public query = ko
+    .observable('')
+    .extend({ rateLimit: { timeout: 300, method: 'notifyWhenChangesStop' } });
+  public resources = ko.observable<ResourcesContract>();
 
-			if (!prev.eventDate)
-				return false;
+  public selectTag = (tag: TagBaseContract) => {
+    this.tagFilters.tags([TagFilter.fromContract(tag)]);
+  };
 
-			var currentYear = moment(current.eventDate).year();
-			var prevYear = moment(prev.eventDate).year();
+  public showTags = ko.observable(false);
+  public sort = ko.observable(SongListSortRule[SongListSortRule.Date]);
+  public sortName = ko.computed(() =>
+    this.resources() != null
+      ? this.resources().songListSortRuleNames[this.sort()]
+      : '',
+  );
+  public tagFilters: TagFilters;
 
-			return currentYear !== prevYear;
+  public fields = ko.computed(() => {
+    return 'MainPicture' + (this.showTags() ? ',Tags' : '');
+  });
+}
 
-		}
-
-		public query = ko.observable("").extend({ rateLimit: { timeout: 300, method: "notifyWhenChangesStop" } });
-		public resources = ko.observable<ResourcesContract>();
-
-		public selectTag = (tag: TagBaseContract) => {
-			this.tagFilters.tags([TagFilter.fromContract(tag)]);
-		}
-
-		public showTags = ko.observable(false);
-		public sort = ko.observable(SongListSortRule[SongListSortRule.Date]);
-		public sortName = ko.computed(() => this.resources() != null ? this.resources().songListSortRuleNames[this.sort()] : "");
-		public tagFilters: TagFilters;
-		
-		public fields = ko.computed(() => {
-			return "MainPicture" + (this.showTags() ? ",Tags" : "");
-		});
-
-	}
-
-	enum SongListSortRule {
-		Name,
-		Date,
-		CreateDate
-	}
+enum SongListSortRule {
+  Name,
+  Date,
+  CreateDate,
+}

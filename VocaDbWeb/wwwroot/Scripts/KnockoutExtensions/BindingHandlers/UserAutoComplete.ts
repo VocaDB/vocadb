@@ -4,28 +4,29 @@ import { initEntrySearch } from '../../Shared/EntryAutoComplete';
 import UserApiContract from '../../DataContracts/User/UserApiContract';
 
 declare global {
-	interface KnockoutBindingHandlers {
-		userAutocomplete: KnockoutBindingHandler;
-	}
+  interface KnockoutBindingHandlers {
+    userAutocomplete: KnockoutBindingHandler;
+  }
 }
 
-	export function userAutocomplete(element: HTMLElement, valueAccessor: () => any) {
+export function userAutocomplete(
+  element: HTMLElement,
+  valueAccessor: () => any,
+) {
+  const params: EntryAutoCompleteParams<UserApiContract> = {
+    acceptSelection: (id, term, itemType, item) => {
+      valueAccessor()(item);
+    },
+    createNewItem: null,
+    createOptionFirstRow: (item) => item.name,
+    extraQueryParams: {},
+    termParamName: 'query',
+    singleRow: true,
+  };
 
-		const params: EntryAutoCompleteParams<UserApiContract> = {
-			acceptSelection: (id, term, itemType, item) => {
-				valueAccessor()(item);
-			},
-			createNewItem: null,
-			createOptionFirstRow: (item) => item.name,
-			extraQueryParams: {},
-			termParamName: 'query',
-			singleRow: true
-		};
-
-		initEntrySearch(element, functions.mapAbsoluteUrl("/api/users"), params);
-
-	}
+  initEntrySearch(element, functions.mapAbsoluteUrl('/api/users'), params);
+}
 
 ko.bindingHandlers.userAutocomplete = {
-	init: userAutocomplete
-}
+  init: userAutocomplete,
+};

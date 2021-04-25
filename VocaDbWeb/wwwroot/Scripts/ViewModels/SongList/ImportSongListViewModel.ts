@@ -5,96 +5,98 @@ import PartialImportedSongs from '../../DataContracts/SongList/PartialImportedSo
 import SongListForEditContract from '../../DataContracts/Song/SongListForEditContract';
 import UrlMapper from '../../Shared/UrlMapper';
 
-	export default class ImportSongListViewModel {
-		
-		constructor(private urlMapper: UrlMapper) {}
+export default class ImportSongListViewModel {
+  constructor(private urlMapper: UrlMapper) {}
 
-		public description = ko.observable("");
+  public description = ko.observable('');
 
-		public items = ko.observableArray<ImportedSongInListContract>([]);
+  public items = ko.observableArray<ImportedSongInListContract>([]);
 
-		public loadMore = () => {
-			
-			$.getJSON(this.urlMapper.mapRelative('/api/songLists/import-songs'),
-				{ url: this.url(), pageToken: this.nextPageToken(), parseAll: !this.onlyRanked() },
-				(result: PartialImportedSongs) => {
+  public loadMore = () => {
+    $.getJSON(
+      this.urlMapper.mapRelative('/api/songLists/import-songs'),
+      {
+        url: this.url(),
+        pageToken: this.nextPageToken(),
+        parseAll: !this.onlyRanked(),
+      },
+      (result: PartialImportedSongs) => {
+        this.nextPageToken(result.nextPageToken);
+        ko.utils.arrayPushAll(this.items, result.items);
+      },
+    ).fail((jqXHR: JQueryXHR) => {
+      if (jqXHR.statusText) alert(jqXHR.statusText);
+    });
+  };
 
-				this.nextPageToken(result.nextPageToken);
-				ko.utils.arrayPushAll(this.items, result.items);
+  public missingSongs = ko.computed(() =>
+    _.some(this.items(), (i) => i.matchedSong == null),
+  );
 
-			}).fail((jqXHR: JQueryXHR) => {
+  public name = ko.observable('');
 
-				if (jqXHR.statusText)
-					alert(jqXHR.statusText);
+  public nextPageToken = ko.observable<string>(null);
 
-			});
+  public hasMore = ko.computed(() => this.nextPageToken() != null);
 
-		}
+  public onlyRanked = ko.observable(false);
 
-		public missingSongs = ko.computed(() => _.some(this.items(), i => i.matchedSong == null));
+  public parse = () => {
+    $.getJSON(
+      this.urlMapper.mapRelative('/api/songLists/import'),
+      { url: this.url(), parseAll: !this.onlyRanked() },
+      (songList: ImportedSongListContract) => {
+        this.name(songList.name);
+        this.description(songList.description);
+        this.nextPageToken(songList.songs.nextPageToken);
+        this.items(songList.songs.items);
+        this.totalSongs(songList.songs.totalCount);
+        this.parsed(true);
+      },
+    ).fail((jqXHR: JQueryXHR) => {
+      if (jqXHR.statusText) alert(jqXHR.statusText);
+    });
+  };
 
-		public name = ko.observable("");
+  public parsed = ko.observable(false);
 
-		public nextPageToken = ko.observable<string>(null);
+  public submit = () => {
+    var order = 1;
+    var songs = _.chain(this.items())
+      .filter((i) => i.matchedSong != null)
+      .map((i: ImportedSongInListContract) => {
+        return {
+          order: order++,
+          notes: '',
+          song: i.matchedSong,
+          songInListId: null,
+        };
+      })
+      .value();
 
-		public hasMore = ko.computed(() => this.nextPageToken() != null);
+    var contract: SongListForEditContract = {
+      id: null,
+      author: null,
+      name: this.name(),
+      description: this.description(),
+      featuredCategory: 'Nothing',
+      status: 'Finished',
+      songLinks: songs,
+    };
 
-		public onlyRanked = ko.observable(false);
+    $.postJSON(
+      this.urlMapper.mapRelative('/api/songLists'),
+      contract,
+      (listId: number) => {
+        window.location.href = EntryUrlMapper.details('SongList', listId);
+      },
+      'json',
+    );
+  };
 
-		public parse = () => {
+  public totalSongs = ko.observable(null);
 
-			$.getJSON(this.urlMapper.mapRelative('/api/songLists/import'), { url: this.url(), parseAll: !this.onlyRanked() },(songList: ImportedSongListContract) => {
+  public url = ko.observable('');
 
-				this.name(songList.name);
-				this.description(songList.description);
-				this.nextPageToken(songList.songs.nextPageToken);
-				this.items(songList.songs.items);
-				this.totalSongs(songList.songs.totalCount);
-				this.parsed(true);
-
-			}).fail((jqXHR: JQueryXHR) => {
-
-				if (jqXHR.statusText)
-					alert(jqXHR.statusText);
-
-			});
-
-		}
-
-		public parsed = ko.observable(false);
-
-		public submit = () => {
-
-			var order = 1;
-			var songs = _.chain(this.items()).filter(i => i.matchedSong != null).map((i: ImportedSongInListContract) => {
-				return {
-					order: order++,
-					notes: '',
-					song: i.matchedSong,
-					songInListId: null
-				};
-			}).value();
-
-			var contract: SongListForEditContract = {
-				id: null,
-				author: null,
-				name: this.name(),
-				description: this.description(),
-				featuredCategory: 'Nothing',
-				status: 'Finished',
-				songLinks: songs
-			};
-
-			$.postJSON(this.urlMapper.mapRelative('/api/songLists'), contract, (listId: number) => {
-				window.location.href = EntryUrlMapper.details('SongList', listId);
-			}, 'json');
-
-		}
-
-		public totalSongs = ko.observable(null);
-
-		public url = ko.observable("");
-
-		public wvrNumber = ko.observable(0);
-
-	}
+  public wvrNumber = ko.observable(0);
+}

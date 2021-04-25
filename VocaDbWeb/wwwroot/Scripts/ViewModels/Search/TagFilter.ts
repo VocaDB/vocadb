@@ -1,18 +1,16 @@
 import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 
-	export default class TagFilter {
+export default class TagFilter {
+  public static fromContract = (tag: TagBaseContract) => {
+    return new TagFilter(tag.id, tag.name, tag.urlSlug);
+  };
 
-		public static fromContract = (tag: TagBaseContract) => {
-			return new TagFilter(tag.id, tag.name, tag.urlSlug);
-		}
+  constructor(public id: number, name?: string, urlSlug?: string) {
+    this.name(name);
+    this.urlSlug(urlSlug);
+  }
 
-		constructor(public id: number, name?: string, urlSlug?: string) {
-			this.name(name);
-			this.urlSlug(urlSlug);
-		}
+  public name = ko.observable<string>(null);
 
-		public name = ko.observable<string>(null);
-
-		public urlSlug = ko.observable<string>(null);
-
-	}
+  public urlSlug = ko.observable<string>(null);
+}

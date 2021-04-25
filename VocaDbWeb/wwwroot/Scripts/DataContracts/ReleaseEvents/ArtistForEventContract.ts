@@ -1,13 +1,11 @@
 import ArtistContract from '../Artist/ArtistContract';
 
-	export default interface ArtistForEventContract {
+export default interface ArtistForEventContract {
+  artist?: ArtistContract;
 
-		artist?: ArtistContract;
+  id?: number;
 
-		id?: number;
+  name?: string;
 
-		name?: string;
-
-		roles: string;
-
-	}
+  roles: string;
+}

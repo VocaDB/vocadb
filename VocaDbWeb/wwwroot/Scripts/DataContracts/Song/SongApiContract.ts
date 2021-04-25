@@ -4,15 +4,15 @@ import LocalizedStringContract from '../Globalization/LocalizedStringContract';
 import PVService from '../../Models/PVs/PVService';
 import SongContract from './SongContract';
 
-	export default interface SongApiContract extends SongContract, EntryWithTagUsagesContract {
+export default interface SongApiContract
+  extends SongContract,
+    EntryWithTagUsagesContract {
+  artists?: ArtistForAlbumContract[];
 
-		artists?: ArtistForAlbumContract[];
+  names?: LocalizedStringContract[];
 
-		names?: LocalizedStringContract[];
+  // Not returned from the API, but can be used to cache the list of PV services client side
+  pvServicesArray?: PVService[];
 
-		// Not returned from the API, but can be used to cache the list of PV services client side
-		pvServicesArray?: PVService[];
-
-		urlFriendlyName?: string;
-
-	}
+  urlFriendlyName?: string;
+}

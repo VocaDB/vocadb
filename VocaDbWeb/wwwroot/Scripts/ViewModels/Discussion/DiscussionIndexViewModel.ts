@@ -6,191 +6,177 @@ import DiscussionTopicViewModel from './DiscussionTopicViewModel';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import UrlMapper from '../../Shared/UrlMapper';
 
-	export default class DiscussionIndexViewModel {
-		
-		constructor(private readonly repo: DiscussionRepository,
-			private readonly urlMapper: UrlMapper,
-			private readonly canDeleteAllComments: boolean,
-			private readonly loggedUserId: number) {
-		
-			this.newTopic = ko.observable(new DiscussionTopicEditViewModel(loggedUserId, this.folders()));
+export default class DiscussionIndexViewModel {
+  constructor(
+    private readonly repo: DiscussionRepository,
+    private readonly urlMapper: UrlMapper,
+    private readonly canDeleteAllComments: boolean,
+    private readonly loggedUserId: number,
+  ) {
+    this.newTopic = ko.observable(
+      new DiscussionTopicEditViewModel(loggedUserId, this.folders()),
+    );
 
-			this.mapRoute("folders/:folderId?", context => {
+    this.mapRoute('folders/:folderId?', (context) => {
+      var folderId = parseInt(context.params.folderId);
+      this.selectFolderById(folderId);
+    });
 
-				var folderId = parseInt(context.params.folderId);
-				this.selectFolderById(folderId);
+    this.mapRoute('topics/:topicId?', (context) => {
+      var topicId = parseInt(context.params.topicId);
+      this.selectTopicById(topicId);
+    });
 
-			});
+    this.mapRoute('/', () => {
+      this.selectedFolder(null);
+      this.selectedTopic(null);
+    });
 
-			this.mapRoute("topics/:topicId?", context => {
+    repo.getFolders((folders) => {
+      this.folders(folders);
+      page.start();
+    });
 
-				var topicId = parseInt(context.params.topicId);
-				this.selectTopicById(topicId);
+    repo.getTopics((result) => this.recentTopics(result.items));
 
-			});
+    this.selectedFolder.subscribe((folder) => {
+      this.showCreateNewTopic(false);
+      this.selectedTopic(null);
+      this.paging.goToFirstPage();
 
-			this.mapRoute("/", () => {
+      this.loadTopics(folder);
+    });
 
-				this.selectedFolder(null);
-				this.selectedTopic(null);
+    this.paging.page.subscribe(this.loadTopicsForCurrentFolder);
+    this.paging.pageSize.subscribe(this.loadTopicsForCurrentFolder);
+  }
 
-			});
+  private canDeleteTopic = (topic: DiscussionTopicContract) => {
+    return (
+      this.canDeleteAllComments ||
+      (topic.author && topic.author.id === this.loggedUserId)
+    );
+  };
 
+  private canEditTopic = (topic: DiscussionTopicContract) => {
+    return (
+      this.canDeleteAllComments ||
+      (topic.author && topic.author.id === this.loggedUserId)
+    );
+  };
 
-			repo.getFolders(folders => {
-				this.folders(folders);
-				page.start();
-			});
+  public createNewTopic = () => {
+    var folder = this.selectedFolder();
+    this.repo.createTopic(folder.id, this.newTopic().toContract(), (topic) => {
+      topic.canBeDeleted = false;
+      this.newTopic(
+        new DiscussionTopicEditViewModel(this.loggedUserId, this.folders()),
+      );
+      this.showCreateNewTopic(false);
+      this.topics.unshift(topic);
+      this.selectTopic(topic);
+    });
+  };
 
-			repo.getTopics(result => this.recentTopics(result.items));
-				
-			this.selectedFolder.subscribe(folder => {
+  public deleteTopic = (topic: DiscussionTopicContract) => {
+    this.repo.deleteTopic(topic.id, () => {
+      this.selectTopic(null);
+    });
+  };
 
-				this.showCreateNewTopic(false);
-				this.selectedTopic(null);
-				this.paging.goToFirstPage();
+  public folders = ko.observableArray<DiscussionFolderContract>([]);
 
-				this.loadTopics(folder);
+  private getFolder = (folderId: number) => {
+    return _.find(this.folders(), (f) => f.id === folderId);
+  };
 
-			});
+  private loadTopicsForCurrentFolder = () => {
+    this.loadTopics(this.selectedFolder());
+  };
 
-			this.paging.page.subscribe(this.loadTopicsForCurrentFolder);
-			this.paging.pageSize.subscribe(this.loadTopicsForCurrentFolder);
+  private loadTopics = (
+    folder: DiscussionFolderContract,
+    callback?: () => void,
+  ) => {
+    if (!folder) {
+      this.topics([]);
 
-		}
+      if (callback) callback();
 
-		private canDeleteTopic = (topic: DiscussionTopicContract) => {
-			return (this.canDeleteAllComments || (topic.author && topic.author.id === this.loggedUserId));
-		}
+      return;
+    }
 
-		private canEditTopic = (topic: DiscussionTopicContract) => {
-			return (this.canDeleteAllComments || (topic.author && topic.author.id === this.loggedUserId));
-		}
+    const paging = this.paging.getPagingProperties(true);
+    this.repo.getTopicsForFolder(folder.id, paging, (result) => {
+      this.topics(result.items);
 
-		public createNewTopic = () => {
-			
-			var folder = this.selectedFolder();
-			this.repo.createTopic(folder.id, this.newTopic().toContract(), topic => {
+      if (paging.getTotalCount) this.paging.totalItems(result.totalCount);
 
-				topic.canBeDeleted = false;
-				this.newTopic(new DiscussionTopicEditViewModel(this.loggedUserId, this.folders()));
-				this.showCreateNewTopic(false);
-				this.topics.unshift(topic);
-				this.selectTopic(topic);
+      if (callback) callback();
+    });
+  };
 
-			});
+  private mapRoute = (
+    partialUrl: string,
+    callback: (context: page.PageContext) => void,
+  ) => {
+    page(UrlMapper.mergeUrls('/discussion/', partialUrl), callback);
+  };
 
-		}
+  public newTopic: KnockoutObservable<DiscussionTopicEditViewModel>;
 
-		public deleteTopic = (topic: DiscussionTopicContract) => {
-			
-			this.repo.deleteTopic(topic.id, () => {
-				this.selectTopic(null);				
-			});
+  public paging = new ServerSidePagingViewModel(30); // Paging view model
 
-		}
+  public recentTopics = ko.observableArray<DiscussionTopicContract>([]);
 
-		public folders = ko.observableArray<DiscussionFolderContract>([]);
+  public selectFolder = (folder: DiscussionFolderContract) => {
+    if (!folder) {
+      page('/discussion');
+    } else {
+      page('/discussion/folders/' + folder.id);
+    }
+  };
 
-		private getFolder = (folderId: number) => {
-			return _.find(this.folders(), f => f.id === folderId);
-		}
+  private selectFolderById = (folderId: number) => {
+    this.selectedFolder(this.getFolder(folderId));
+  };
 
-		private loadTopicsForCurrentFolder = () => {
-			this.loadTopics(this.selectedFolder());
-		}
+  public selectTopic = (topic: DiscussionTopicContract) => {
+    if (!topic) {
+      page('/discussion/topics');
+    } else {
+      page('/discussion/topics/' + topic.id);
+    }
+  };
 
-		private loadTopics = (folder: DiscussionFolderContract, callback?: () => void) => {
-		
-			if (!folder) {
+  private selectTopicById = (topicId: number) => {
+    if (!topicId) {
+      this.loadTopics(this.selectedFolder(), () => this.selectedTopic(null));
+      return;
+    }
 
-				this.topics([]);
+    this.repo.getTopic(topicId, (contract) => {
+      contract.canBeDeleted = this.canDeleteTopic(contract);
+      contract.canBeEdited = this.canEditTopic(contract);
 
-				if (callback)
-					callback();
+      this.selectFolderById(contract.folderId);
+      this.selectedTopic(
+        new DiscussionTopicViewModel(
+          this.repo,
+          this.loggedUserId,
+          this.canDeleteAllComments,
+          contract,
+          this.folders(),
+        ),
+      );
+    });
+  };
 
-				return;
+  public selectedFolder = ko.observable<DiscussionFolderContract>(null);
 
-			}
+  public selectedTopic = ko.observable<DiscussionTopicViewModel>(null);
 
-			const paging = this.paging.getPagingProperties(true);
-			this.repo.getTopicsForFolder(folder.id, paging, result => {
+  public showCreateNewTopic = ko.observable(false);
 
-				this.topics(result.items);
-
-				if (paging.getTotalCount)
-					this.paging.totalItems(result.totalCount);
-
-				if (callback)
-					callback();
-
-			});
-
-		}
-
-		private mapRoute = (partialUrl: string, callback: (context: page.PageContext) => void) => {
-			
-			page(UrlMapper.mergeUrls("/discussion/", partialUrl), callback);
-
-		}
-
-		public newTopic: KnockoutObservable<DiscussionTopicEditViewModel>;
-
-		public paging = new ServerSidePagingViewModel(30); // Paging view model
-
-		public recentTopics = ko.observableArray<DiscussionTopicContract>([]);
-
-		public selectFolder = (folder: DiscussionFolderContract) => {
-			
-			if (!folder) {
-				page("/discussion");
-			} else {
-				page("/discussion/folders/" + folder.id);
-			}			
-		
-		}
-
-		private selectFolderById = (folderId: number) => {
-			
-			this.selectedFolder(this.getFolder(folderId));
-
-		}
-
-		public selectTopic = (topic: DiscussionTopicContract) => {
-			
-			if (!topic) {
-				page("/discussion/topics");
-			} else {
-				page("/discussion/topics/" + topic.id);
-			}			
-
-		}
-
-		private selectTopicById = (topicId: number) => {
-
-			if (!topicId) {
-				this.loadTopics(this.selectedFolder(),() => this.selectedTopic(null));
-				return;
-			}
-
-			this.repo.getTopic(topicId, contract => {
-
-				contract.canBeDeleted = this.canDeleteTopic(contract);
-				contract.canBeEdited = this.canEditTopic(contract);
-
-				this.selectFolderById(contract.folderId);
-				this.selectedTopic(new DiscussionTopicViewModel(this.repo, this.loggedUserId, this.canDeleteAllComments, contract, this.folders()));
-
-			});
-
-		}
-
-		public selectedFolder = ko.observable<DiscussionFolderContract>(null);
-
-		public selectedTopic = ko.observable<DiscussionTopicViewModel>(null);
-
-		public showCreateNewTopic = ko.observable(false);
-
-		public topics = ko.observableArray<DiscussionTopicContract>([]);
-
-	}
+  public topics = ko.observableArray<DiscussionTopicContract>([]);
+}

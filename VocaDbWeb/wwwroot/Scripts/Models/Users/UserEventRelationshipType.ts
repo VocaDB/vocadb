@@ -1,7 +1,6 @@
+enum UserEventRelationshipType {
+  Interested = 1,
+  Attending = 2,
+}
 
-	enum UserEventRelationshipType {
-		Interested = 1,
-		Attending = 2
-	}
-
-	export default UserEventRelationshipType;
+export default UserEventRelationshipType;

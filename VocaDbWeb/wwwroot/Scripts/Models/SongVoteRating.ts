@@ -1,20 +1,20 @@
+// Song vote values.
+// Corresponds to the enum SongVoteRating.
+enum SongVoteRating {
+  Nothing = 0,
+  Like = 3,
+  Favorite = 5,
+}
 
-    // Song vote values.
-    // Corresponds to the enum SongVoteRating.
-    enum SongVoteRating {
-        Nothing     = 0,
-        Like        = 3,
-        Favorite    = 5,        
-    }
+export default SongVoteRating;
 
-	export default SongVoteRating;
-
-    export function parseSongVoteRating(rating: string) {
-        
-        switch (rating) {
-            case "Nothing": return SongVoteRating.Nothing;
-            case "Like": return SongVoteRating.Like;
-            case "Favorite": return SongVoteRating.Favorite;
-        }
-    
-    }
+export function parseSongVoteRating(rating: string) {
+  switch (rating) {
+    case 'Nothing':
+      return SongVoteRating.Nothing;
+    case 'Like':
+      return SongVoteRating.Like;
+    case 'Favorite':
+      return SongVoteRating.Favorite;
+  }
+}

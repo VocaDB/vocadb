@@ -2,62 +2,60 @@ import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 import TagFilter from './TagFilter';
 import TagRepository from '../../Repositories/TagRepository';
 
-	// Manages tag filters for search
-	export default class TagFilters {
+// Manages tag filters for search
+export default class TagFilters {
+  constructor(
+    private tagRepo: TagRepository,
+    private languageSelection: string,
+    tags: KnockoutObservableArray<TagFilter> = null,
+  ) {
+    this.tags = tags || ko.observableArray<TagFilter>();
+    this.tagIds = ko.computed(() => _.map(this.tags(), (t) => t.id));
+    this.childTags = ko.observable(false);
 
-		constructor(
-			private tagRepo: TagRepository,
-			private languageSelection: string,
-			tags: KnockoutObservableArray<TagFilter> = null) {
-			
-			this.tags = (tags || ko.observableArray<TagFilter>());
-			this.tagIds = ko.computed(() => _.map(this.tags(), t => t.id));
-			this.childTags = ko.observable(false);
+    this.filters = ko
+      .computed(() => {
+        this.tags();
+        this.childTags();
+      })
+      .extend({ notify: 'always' });
+  }
 
-			this.filters = ko.computed(() => {
-				this.tags();
-				this.childTags();
-			}).extend({ notify: 'always' });
+  public addTag = (tag: TagBaseContract) =>
+    this.tags.push(TagFilter.fromContract(tag));
 
-		}
+  public addTags = (selectedTagIds: number[]) => {
+    if (!selectedTagIds) return;
 
-		public addTag = (tag: TagBaseContract) => this.tags.push(TagFilter.fromContract(tag));
+    var filters = _.map(selectedTagIds, (a) => new TagFilter(a));
+    ko.utils.arrayPushAll(this.tags, filters);
 
-		public addTags = (
-			selectedTagIds: number[]) => {
+    if (!this.tagRepo) return;
 
-			if (!selectedTagIds)
-				return;
+    _.forEach(filters, (newTag) => {
+      var selectedTagId = newTag.id;
 
-			var filters = _.map(selectedTagIds, a => new TagFilter(a));
-			ko.utils.arrayPushAll(this.tags, filters);
+      this.tagRepo.getById(
+        selectedTagId,
+        null,
+        this.languageSelection,
+        (tag) => {
+          newTag.name(tag.name);
+          newTag.urlSlug(tag.urlSlug);
+        },
+      );
+    });
+  };
 
-			if (!this.tagRepo)
-				return;
+  public childTags: KnockoutObservable<boolean>;
 
-			_.forEach(filters, newTag => {
+  // Fired when any of the tag filters is changed
+  public filters: KnockoutComputed<void>;
 
-				var selectedTagId = newTag.id;
+  public selectTag = (tag: TagBaseContract) => {
+    this.tags([TagFilter.fromContract(tag)]);
+  };
 
-				this.tagRepo.getById(selectedTagId, null, this.languageSelection, tag => {
-					newTag.name(tag.name);
-					newTag.urlSlug(tag.urlSlug);
-				});
-
-			});
-
-		};
-
-		public childTags: KnockoutObservable<boolean>;
-
-		// Fired when any of the tag filters is changed
-		public filters: KnockoutComputed<void>;
-
-		public selectTag = (tag: TagBaseContract) => {
-			this.tags([ TagFilter.fromContract(tag) ]);
-		}
-
-		public tags: KnockoutObservableArray<TagFilter>;
-		public tagIds: KnockoutComputed<number[]>;
-
-	}
+  public tags: KnockoutObservableArray<TagFilter>;
+  public tagIds: KnockoutComputed<number[]>;
+}

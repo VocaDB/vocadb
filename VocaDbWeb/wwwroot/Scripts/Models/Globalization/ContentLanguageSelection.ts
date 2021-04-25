@@ -1,14 +1,11 @@
+enum ContentLanguageSelection {
+  Unspecified = 0,
 
-	enum ContentLanguageSelection {
+  Japanese = 1,
 
-		Unspecified	= 0,
+  Romaji = 2,
 
-		Japanese	= 1,
+  English = 4,
+}
 
-		Romaji		= 2,
-
-		English		= 4,
-
-	}
-
-	export default ContentLanguageSelection;
+export default ContentLanguageSelection;

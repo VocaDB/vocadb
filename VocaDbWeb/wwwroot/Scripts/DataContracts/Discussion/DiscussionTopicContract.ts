@@ -1,30 +1,28 @@
 import CommentContract from '../CommentContract';
 import UserApiContract from '../User/UserApiContract';
 
-	export default interface DiscussionTopicContract {
-		
-		author: UserApiContract;
+export default interface DiscussionTopicContract {
+  author: UserApiContract;
 
-		canBeDeleted?: boolean;
+  canBeDeleted?: boolean;
 
-		canBeEdited?: boolean;
+  canBeEdited?: boolean;
 
-		commentCount: number;
+  commentCount: number;
 
-		comments: CommentContract[];
+  comments: CommentContract[];
 
-		content: string;
+  content: string;
 
-		created: Date;
+  created: Date;
 
-		folderId: number;
+  folderId: number;
 
-		id: number;
+  id: number;
 
-		lastCommentDate: Date;
+  lastCommentDate: Date;
 
-		locked: boolean;
+  locked: boolean;
 
-		name: string;
-
-	}
+  name: string;
+}

@@ -1,8 +1,5 @@
+export default interface PartialFindResultContract<T> {
+  items: T[];
 
-	export default interface PartialFindResultContract<T> {
-
-		items: T[];
-
-		totalCount: number;
-
-	}
+  totalCount: number;
+}

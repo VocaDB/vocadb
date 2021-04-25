@@ -5,38 +5,36 @@ import EntryPictureFileContract from '../EntryPictureFileContract';
 import LocalizedStringWithIdContract from '../Globalization/LocalizedStringWithIdContract';
 import WebLinkContract from '../WebLinkContract';
 
-	export default interface ArtistForEditContract {
+export default interface ArtistForEditContract {
+  artistType: string;
 
-		artistType: string;
+  associatedArtists: ArtistForArtistContract[];
 
-		associatedArtists: ArtistForArtistContract[];
+  baseVoicebank: ArtistContract;
 
-		baseVoicebank: ArtistContract;
+  defaultNameLanguage: string;
 
-		defaultNameLanguage: string;
+  description: EnglishTranslatedStringContract;
 
-		description: EnglishTranslatedStringContract;
+  groups: ArtistForArtistContract[];
 
-		groups: ArtistForArtistContract[];
+  id: number;
 
-		id: number;
+  illustrator: ArtistContract;
 
-		illustrator: ArtistContract;
+  names: LocalizedStringWithIdContract[];
 
-		names: LocalizedStringWithIdContract[];
+  pictureMime: string;
 
-		pictureMime: string;
+  pictures: EntryPictureFileContract[];
 
-		pictures: EntryPictureFileContract[];
+  releaseDate?: string;
 
-		releaseDate?: string;
+  status: string;
 
-		status: string;
+  updateNotes: string;
 
-		updateNotes: string;
+  voiceProvider: ArtistContract;
 
-		voiceProvider: ArtistContract;
-
-		webLinks: WebLinkContract[];
-
-	}
+  webLinks: WebLinkContract[];
+}

@@ -7,51 +7,49 @@ import ReleaseEventContract from '../ReleaseEvents/ReleaseEventContract';
 import SongContract from './SongContract';
 import WebLinkContract from '../WebLinkContract';
 
-	export default interface SongForEditContract {
+export default interface SongForEditContract {
+  albumEventId?: number;
 
-		albumEventId?: number;
+  albumReleaseDate?: string;
 
-		albumReleaseDate?: string;
+  artists: ArtistForAlbumContract[];
 
-		artists: ArtistForAlbumContract[];
+  defaultNameLanguage: string;
 
-		defaultNameLanguage: string;
+  deleted: boolean;
 
-		deleted: boolean;
+  hasAlbums: boolean;
 
-		hasAlbums: boolean;
+  id: number;
 
-		id: number;
+  lengthSeconds: number;
 
-		lengthSeconds: number;
+  lyrics: LyricsForSongContract[];
 
-		lyrics: LyricsForSongContract[];
+  names: LocalizedStringWithIdContract[];
 
-		names: LocalizedStringWithIdContract[];
+  notes: EnglishTranslatedStringContract;
 
-		notes: EnglishTranslatedStringContract;
+  originalVersion: SongContract;
 
-		originalVersion: SongContract;
+  // Publish date, should be in ISO format, UTC timezone. Only includes the date component, no time.
+  publishDate?: string;
 
-		// Publish date, should be in ISO format, UTC timezone. Only includes the date component, no time.
-		publishDate?: string;
+  pvs: PVContract[];
 
-		pvs: PVContract[];
+  releaseEvent?: ReleaseEventContract;
 
-		releaseEvent?: ReleaseEventContract;
+  songType: string;
 
-		songType: string;
+  status: string;
 
-		status: string;
+  tags: number[];
 
-		tags: number[];
+  updateNotes?: string;
 
-		updateNotes?: string;
+  webLinks: WebLinkContract[];
 
-		webLinks: WebLinkContract[];
+  minMilliBpm?: number;
 
-		minMilliBpm?: number;
-
-		maxMilliBpm?: number;
-
-	}
+  maxMilliBpm?: number;
+}

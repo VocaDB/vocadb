@@ -4,50 +4,56 @@ import UrlMapper from '../Shared/UrlMapper';
 import UserRepository from '../Repositories/UserRepository';
 
 declare global {
-	interface JQuery {
-		scrollable: (params: any) => void;
-	}
+  interface JQuery {
+    scrollable: (params: any) => void;
+  }
 }
 
 export function initPage() {
+  function initRatingButtons() {
+    const urlMapper = new UrlMapper(vdb.values.baseAddress);
+    const repo = new UserRepository(urlMapper);
+    const ratingBar = $('#rating-bar');
 
-	function initRatingButtons() {
-		const urlMapper = new UrlMapper(vdb.values.baseAddress);
-		const repo = new UserRepository(urlMapper);
-		const ratingBar = $("#rating-bar");
+    if (!ratingBar.length) {
+      return;
+    }
 
-		if (!ratingBar.length) {
-			return;
-		}
+    const songId = ratingBar.data('song-id');
+    const rating = ratingBar.data('rating');
+    const viewModel = new PVRatingButtonsViewModel(
+      repo,
+      { id: songId, vote: rating },
+      () => {
+        ui.showSuccessMessage(vdb.resources.song.thanksForRating);
+      },
+      vdb.values.isLoggedIn,
+    );
+    ko.applyBindings(viewModel, ratingBar[0]);
+  }
 
-		const songId = ratingBar.data('song-id');
-		const rating = ratingBar.data('rating');
-		const viewModel = new PVRatingButtonsViewModel(repo, { id: songId, vote: rating }, () => {
-			ui.showSuccessMessage(vdb.resources.song.thanksForRating);
-		}, vdb.values.isLoggedIn);
-		ko.applyBindings(viewModel, ratingBar[0]);
-	}
+  initRatingButtons();
 
-	initRatingButtons();
+  $('#songs-navi .scrollable-item').click(function (e) {
+    e.preventDefault();
 
-	$('#songs-navi .scrollable-item').click(function (e) {
-		e.preventDefault();
+    $('#songs-navi .scrollable-item').removeClass('active');
+    $(this).addClass('active');
 
-		$("#songs-navi .scrollable-item").removeClass("active");
-		$(this).addClass("active");
+    const songId = $(this).find('.js-songId').val();
+    $.post('../Home/PVContent', { songId: songId }, (content: string) => {
+      $('#songPreview').html(content);
+      initRatingButtons();
+    });
+  });
 
-		const songId = $(this).find(".js-songId").val();
-		$.post("../Home/PVContent", { songId: songId }, (content: string) => {
-			$("#songPreview").html(content);
-			initRatingButtons();
-		});
+  $('#songs-navi .scrollable-item').eq(0).addClass('active');
+  $('.scrollable').scrollable({
+    vertical: true,
+    mousewheel: true,
+    keyboard: false,
+  });
 
-	});
-
-	$("#songs-navi .scrollable-item").eq(0).addClass("active");
-	$(".scrollable").scrollable({ vertical: true, mousewheel: true, keyboard: false });
-
-	$("#newAlbums img").vdbAlbumToolTip();
-	$("#topAlbums img").vdbAlbumToolTip();
-
+  $('#newAlbums img').vdbAlbumToolTip();
+  $('#topAlbums img').vdbAlbumToolTip();
 }

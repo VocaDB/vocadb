@@ -1,30 +1,27 @@
+export default interface PVContract {
+  author?: string;
 
-	export default interface PVContract {
+  createdBy?: number;
 
-		author?: string;
+  disabled?: boolean;
 
-		createdBy?: number;
+  extendedMetadata?: any;
 
-		disabled?: boolean;
+  id?: number;
 
-		extendedMetadata?: any;
+  length?: number;
 
-		id?: number;
+  name?: string;
 
-		length?: number;
+  pvId: string;
 
-		name?: string;
+  service: string;
 
-		pvId: string;
+  publishDate?: string;
 
-		service: string;
+  pvType: string;
 
-		publishDate?: string;
+  thumbUrl?: string;
 
-		pvType: string;
-
-		thumbUrl?: string;
-
-		url?: string;
-
-	}
+  url?: string;
+}

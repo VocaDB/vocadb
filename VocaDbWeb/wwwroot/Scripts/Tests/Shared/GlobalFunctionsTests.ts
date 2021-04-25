@@ -1,35 +1,27 @@
-import functions from "../../Shared/GlobalFunctions";
+import functions from '../../Shared/GlobalFunctions';
 
-    QUnit.module("GlobalFunctions");
+QUnit.module('GlobalFunctions');
 
-    test("mergeUrls bothWithSlash", () => {
+test('mergeUrls bothWithSlash', () => {
+  var result = functions.mergeUrls('/', '/Song');
 
-		var result = functions.mergeUrls("/", "/Song");
+  equal(result, '/Song', 'result');
+});
 
-        equal(result, "/Song", "result")
+test('mergeUrls baseWithSlash', () => {
+  var result = functions.mergeUrls('/', 'Song');
 
-    });
+  equal(result, '/Song', 'result');
+});
 
-    test("mergeUrls baseWithSlash", () => {
+test('mergeUrls relativeWithSlash', () => {
+  var result = functions.mergeUrls('', '/Song');
 
-		var result = functions.mergeUrls("/", "Song");
+  equal(result, '/Song', 'result');
+});
 
-        equal(result, "/Song", "result")
+test('mergeUrls neitherWithSlash', () => {
+  var result = functions.mergeUrls('', 'Song');
 
-    });
-
-    test("mergeUrls relativeWithSlash", () => {
-
-		var result = functions.mergeUrls("", "/Song");
-
-        equal(result, "/Song", "result")
-
-    });
-
-    test("mergeUrls neitherWithSlash", () => {
-
-		var result = functions.mergeUrls("", "Song");
-
-        equal(result, "/Song", "result")
-
-    });
+  equal(result, '/Song', 'result');
+});

@@ -5,44 +5,48 @@ import { UserInboxType } from '../../Repositories/UserRepository';
 import UserMessageSummaryContract from '../../DataContracts/User/UserMessageSummaryContract';
 import UserRepository from '../../Repositories/UserRepository';
 
-    export default class FakeUserRepository extends UserRepository {
+export default class FakeUserRepository extends UserRepository {
+  public message: UserMessageSummaryContract;
+  public messages: UserMessageSummaryContract[];
+  public songId: number;
+  public rating: SongVoteRating;
 
-        public message: UserMessageSummaryContract;
-        public messages: UserMessageSummaryContract[];
-        public songId: number;
-        public rating: SongVoteRating;
+  constructor() {
+    super(new UrlMapper(''));
 
-        constructor() {
+    this.getMessage = (messageId, callback?) => {
+      if (callback) callback(this.message);
+    };
 
-            super(new UrlMapper(""));        
+    this.getMessageSummaries = (
+      userId: number,
+      inbox: UserInboxType,
+      maxCount?,
+      unread?,
+      anotherUserId?,
+      iconSize?,
+      callback?: (
+        result: PartialFindResultContract<UserMessageSummaryContract>,
+      ) => void,
+    ) => {
+      if (callback)
+        callback({
+          items: this.messages,
+          totalCount: this.messages ? this.messages.length : 0,
+        });
+    };
 
-            this.getMessage = (messageId, callback?) => {
+    this.updateSongRating = (
+      songId: number,
+      rating: SongVoteRating,
+      callback: Function,
+    ) => {
+      this.songId = songId;
+      this.rating = rating;
 
-                if (callback)
-                    callback(this.message);
+      if (callback) callback();
 
-            };
-
-            this.getMessageSummaries = (userId: number, inbox: UserInboxType, maxCount?, unread?, anotherUserId?, iconSize?,
-				callback?: (result: PartialFindResultContract<UserMessageSummaryContract>) => void) => {
-
-                if (callback)
-                    callback({ items: this.messages, totalCount: (this.messages ? this.messages.length : 0) });
-
-            };
-
-            this.updateSongRating = (songId: number, rating: SongVoteRating, callback: Function) => {
-
-                this.songId = songId;
-                this.rating = rating;
-
-                if (callback)
-					callback();
-
-				return $.Deferred().resolve();
-
-            };
-
-        }
-    
-    }
+      return $.Deferred().resolve();
+    };
+  }
+}

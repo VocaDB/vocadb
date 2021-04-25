@@ -1,18 +1,15 @@
+export default interface LyricsForSongContract {
+  cultureCode?: string;
 
-	export default interface LyricsForSongContract {
+  id?: number;
 
-		cultureCode?: string;
+  language?: string;
 
-		id?: number;
+  source?: string;
 
-		language?: string;
+  translationType: string;
 
-		source?: string;
+  url?: string;
 
-		translationType: string;
-
-		url?: string;
-
-		value?: string;
-
-	}
+  value?: string;
+}

@@ -1,17 +1,15 @@
 import SongApiContract from '../Song/SongApiContract';
 
-	export default interface ImportedSongInListContract {
+export default interface ImportedSongInListContract {
+  matchedSong: SongApiContract;
 
-		matchedSong: SongApiContract;
+  name: string;
 
-		name: string;
+  pvId: string;
 
-		pvId: string;
+  pvService: string;
 
-		pvService: string;
+  sortIndex: number;
 
-		sortIndex: number;
-
-		url: string;
-		
-	}
+  url: string;
+}

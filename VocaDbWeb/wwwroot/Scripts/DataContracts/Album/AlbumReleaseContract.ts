@@ -1,12 +1,10 @@
 import OptionalDateTimeContract from '../OptionalDateTimeContract';
 import ReleaseEventContract from '../ReleaseEvents/ReleaseEventContract';
 
-	export default interface AlbumReleaseContract {
+export default interface AlbumReleaseContract {
+  catNum: string;
 
-		catNum: string;
+  releaseDate: OptionalDateTimeContract;
 
-		releaseDate: OptionalDateTimeContract;
-
-		releaseEvent?: ReleaseEventContract;
-
-	}
+  releaseEvent?: ReleaseEventContract;
+}

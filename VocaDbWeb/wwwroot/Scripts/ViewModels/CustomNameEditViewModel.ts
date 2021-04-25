@@ -1,30 +1,24 @@
 import ArtistForAlbumEditViewModel from './ArtistForAlbumEditViewModel';
 
-	export default class CustomNameEditViewModel {
+export default class CustomNameEditViewModel {
+  public artistLink = ko.observable<ArtistForAlbumEditViewModel>();
+  public dialogVisible = ko.observable(false);
+  public name = ko.observable<string>(null);
 
-		public artistLink = ko.observable<ArtistForAlbumEditViewModel>();
-		public dialogVisible = ko.observable(false);
-		public name = ko.observable<string>(null);
+  public open = (artist: ArtistForAlbumEditViewModel) => {
+    this.artistLink(artist);
+    this.name(artist.isCustomName ? artist.name() : '');
+    this.dialogVisible(true);
+  };
 
-		public open = (artist: ArtistForAlbumEditViewModel) => {
+  public save = () => {
+    const isCustomName = !!this.name();
 
-			this.artistLink(artist);
-			this.name(artist.isCustomName ? artist.name() : "");
-			this.dialogVisible(true);
+    this.artistLink().isCustomName = isCustomName;
+    this.dialogVisible(false);
 
-		}
-
-		public save = () => {
-
-			const isCustomName = !!this.name();
-
-			this.artistLink().isCustomName = isCustomName;
-			this.dialogVisible(false);
-
-			if (isCustomName) {
-				this.artistLink().name(this.name());
-			}
-
-		}
-
-	}
+    if (isCustomName) {
+      this.artistLink().name(this.name());
+    }
+  };
+}

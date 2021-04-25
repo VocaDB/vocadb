@@ -1,5 +1,4 @@
-
-	export default interface LocalizedStringContract {
-		language: string;
-		value: string;
-	}
+export default interface LocalizedStringContract {
+  language: string;
+  value: string;
+}

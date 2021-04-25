@@ -1,4 +1,3 @@
-
 // ~/bundles/shared/common
 export { setLanguagePreferenceCookie } from './Shared/TopBar';
 export { default as ui } from './Shared/MessagesTyped';
@@ -141,7 +140,7 @@ export { initPage as initMikuDbAlbumPrepareForImportPage } from './MikuDbAlbums/
 
 // ~/bundles/ReleaseEvent/Details
 //export { default as ReleaseEventRepository } from './Repositories/ReleaseEventRepository';
-export { default as ReleaseEventDetailsViewModel } from './ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel'
+export { default as ReleaseEventDetailsViewModel } from './ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel';
 
 // ~/bundles/ReleaseEvent/Edit
 import './KnockoutExtensions/BindingHandlers/DatePicker';
