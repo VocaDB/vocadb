@@ -10,3 +10,7 @@ charset = utf-8
 # https://docs.microsoft.com/en-us/dotnet/api/system.web.configuration.globalizationsection.fileencoding?view=netframework-4.8
 [*.cshtml]
 charset = utf-8-bom
+
+[*.ts]
+indent_style = space
+indent_size = 2
