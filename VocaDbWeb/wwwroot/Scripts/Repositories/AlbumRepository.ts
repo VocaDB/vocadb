@@ -5,7 +5,7 @@ import AlbumForEditContract from '../DataContracts/Album/AlbumForEditContract';
 import AlbumForUserForApiContract from '../DataContracts/User/AlbumForUserForApiContract';
 import AlbumReviewContract from '../DataContracts/Album/AlbumReviewContract';
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
-import BaseRepository from './BaseRepository';
+import BaseRepository, { getJsonPromise } from './BaseRepository';
 import CommentContract from '../DataContracts/CommentContract';
 import { CommonQueryParams } from './BaseRepository';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
@@ -190,13 +190,13 @@ export default class AlbumRepository extends BaseRepository {
     $.getJSON(url, data, callback);
   };
 
-  public async getReviews(albumId: number) {
+  public getReviews = (albumId: number): Promise<AlbumReviewContract[]> => {
     const url = functions.mergeUrls(
       this.baseUrl,
       `/api/albums/${albumId}/reviews`,
     );
-    return await this.getJsonPromise<AlbumReviewContract[]>(url);
-  }
+    return getJsonPromise<AlbumReviewContract[]>(url);
+  };
 
   public getTagSuggestions = (
     albumId: number,

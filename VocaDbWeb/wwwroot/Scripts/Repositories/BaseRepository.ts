@@ -1,5 +1,14 @@
+import axios from 'axios';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import NameMatchMode from '../Models/NameMatchMode';
+
+export const getJsonPromise = async <T>(
+  url: string,
+  data?: any,
+): Promise<T> => {
+  const response = await axios.get<T>(url, { params: data });
+  return response.data;
+};
 
 export default class BaseRepository {
   protected handleJqueryPromise<T>(jqueryPromise: JQueryXHR) {
@@ -9,11 +18,6 @@ export default class BaseRepository {
 
   protected getDate(date?: Date) {
     return date ? date.toISOString() : undefined;
-  }
-
-  protected getJsonPromise<T>(url: string, data?: any) {
-    const jqueryPromise = $.getJSON(url, data);
-    return this.handleJqueryPromise<T>(jqueryPromise);
   }
 
   // todo: protected

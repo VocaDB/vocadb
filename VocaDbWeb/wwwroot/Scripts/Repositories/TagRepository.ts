@@ -1,5 +1,5 @@
 import AjaxHelper from '../Helpers/AjaxHelper';
-import BaseRepository from './BaseRepository';
+import BaseRepository, { getJsonPromise } from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import EntryCommentRepository from './EntryCommentRepository';
@@ -61,12 +61,15 @@ export default class TagRepository extends BaseRepository {
   public getComments = () =>
     new EntryCommentRepository(new UrlMapper(this.baseUrl), '/tags/');
 
-  public getEntryTypeTag = (entryType: EntryType, subType: string = '') => {
+  public getEntryTypeTag = (
+    entryType: EntryType,
+    subType: string = '',
+  ): Promise<TagApiContract> => {
     var url = functions.mergeUrls(
       this.baseUrl,
       `/api/entry-types/${EntryType[entryType]}/${subType}/tag`,
     );
-    return this.getJsonPromise<TagApiContract>(url, {
+    return getJsonPromise<TagApiContract>(url, {
       fields: 'Description',
       lang: this.languagePreferenceStr,
     });
@@ -96,7 +99,7 @@ export default class TagRepository extends BaseRepository {
   };
 
   public getEntryTagMappings = (): Promise<EntryTagMappingContract[]> => {
-    return this.getJsonPromise(
+    return getJsonPromise<EntryTagMappingContract[]>(
       this.urlMapper.mapRelative('/api/tags/entry-type-mappings'),
     );
   };
@@ -104,7 +107,7 @@ export default class TagRepository extends BaseRepository {
   public getMappings = (
     paging: PagingProperties,
   ): Promise<PartialFindResultContract<TagMappingContract>> => {
-    return this.getJsonPromise(
+    return getJsonPromise<PartialFindResultContract<TagMappingContract>>(
       this.urlMapper.mapRelative('/api/tags/mappings'),
       paging,
     );
