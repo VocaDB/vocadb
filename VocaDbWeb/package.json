@@ -21,6 +21,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "axios": "^0.21.1",
         "bootstrap-sass": "^2.3.2",
         "decimal.js-light": "^2.5.1",
         "jquery": "^2.2.1",
