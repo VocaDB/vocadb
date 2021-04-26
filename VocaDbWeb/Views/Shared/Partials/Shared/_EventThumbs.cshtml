@@ -24,6 +24,7 @@
 				<a href="@Url.EntryDetails(ev, ev.UrlSlug)" title="@ev.AdditionalNames">
 					@ev.Name
 				</a>
+				<br />
 				@if (cat != EventCategory.Unspecified && cat != EventCategory.Other)
 				{
 					@:(@Translate.ReleaseEventCategoryNames[cat])

@@ -149,7 +149,7 @@ namespace VocaDb.Model.Service
 
 		private ReleaseEventForApiContract[] GetRecentEvents(ISession session)
 		{
-			var count = 3;
+			var count = 4;
 			var cacheKey = $"OtherService.RecentEvents.{LanguagePreference}";
 			return _cache.GetOrInsert(cacheKey, CachePolicy.AbsoluteExpiration(24), () =>
 			{
