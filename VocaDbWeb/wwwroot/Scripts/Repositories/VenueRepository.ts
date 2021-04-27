@@ -20,14 +20,11 @@ export default class VenueRepository extends BaseRepository {
   ) => {
     var url = functions.mergeUrls(
       this.baseUrl,
-      '/api/venues/' +
-        venueId +
-        '/reports?' +
-        AjaxHelper.createUrl({
-          reportType: [reportType],
-          notes: [notes],
-          versionNumber: [versionNumber],
-        }),
+      `/api/venues/${venueId}/reports?${AjaxHelper.createUrl({
+        reportType: [reportType],
+        notes: [notes],
+        versionNumber: [versionNumber],
+      })}`,
     );
     $.postJSON(url, callback);
   };
@@ -40,12 +37,9 @@ export default class VenueRepository extends BaseRepository {
   ) => {
     $.ajax(
       this.urlMapper.mapRelative(
-        '/api/venues/' +
-          id +
-          '?hardDelete=' +
-          hardDelete +
-          '&notes=' +
-          encodeURIComponent(notes),
+        `/api/venues/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
+          notes,
+        )}`,
       ),
       { type: 'DELETE', success: callback },
     );

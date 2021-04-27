@@ -11,7 +11,7 @@ export default class ResourceRepository {
   ) => {
     var url = functions.mergeUrls(
       this.baseUrl,
-      '/api/resources/' + cultureCode + '/',
+      `/api/resources/${cultureCode}/`,
     );
     $.getJSON(url, { setNames: setNames }, success);
   };

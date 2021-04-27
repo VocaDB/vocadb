@@ -22,14 +22,11 @@ export default class ReleaseEventRepository extends BaseRepository {
   ) => {
     var url = functions.mergeUrls(
       this.baseUrl,
-      '/api/releaseEvents/' +
-        eventId +
-        '/reports?' +
-        AjaxHelper.createUrl({
-          reportType: [reportType],
-          notes: [notes],
-          versionNumber: [versionNumber],
-        }),
+      `/api/releaseEvents/${eventId}/reports?${AjaxHelper.createUrl({
+        reportType: [reportType],
+        notes: [notes],
+        versionNumber: [versionNumber],
+      })}`,
     );
     $.postJSON(url, callback);
   };
@@ -42,12 +39,9 @@ export default class ReleaseEventRepository extends BaseRepository {
   ) => {
     $.ajax(
       this.urlMapper.mapRelative(
-        '/api/releaseEvents/' +
-          id +
-          '?hardDelete=' +
-          hardDelete +
-          '&notes=' +
-          encodeURIComponent(notes),
+        `/api/releaseEvents/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
+          notes,
+        )}`,
       ),
       { type: 'DELETE', success: callback },
     );
@@ -61,12 +55,9 @@ export default class ReleaseEventRepository extends BaseRepository {
   ) => {
     $.ajax(
       this.urlMapper.mapRelative(
-        '/api/releaseEventSeries/' +
-          id +
-          '?hardDelete=' +
-          hardDelete +
-          '&notes=' +
-          encodeURIComponent(notes),
+        `/api/releaseEventSeries/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
+          notes,
+        )}`,
       ),
       { type: 'DELETE', success: callback },
     );
@@ -109,7 +100,7 @@ export default class ReleaseEventRepository extends BaseRepository {
     id: number,
     callback?: (result: ReleaseEventContract) => void,
   ) => {
-    var url = functions.mergeUrls(this.baseUrl, '/api/releaseEvents/' + id);
+    var url = functions.mergeUrls(this.baseUrl, `/api/releaseEvents/${id}`);
     $.getJSON(url, {}, callback);
   };
 
@@ -119,9 +110,9 @@ export default class ReleaseEventRepository extends BaseRepository {
   ) => {
     var url = functions.mergeUrls(
       this.baseUrl,
-      '/api/releaseEvents?query=' +
-        encodeURIComponent(name) +
-        '&nameMatchMode=Exact&maxResults=1',
+      `/api/releaseEvents?query=${encodeURIComponent(
+        name,
+      )}&nameMatchMode=Exact&maxResults=1`,
     );
     $.getJSON(url, {}, (result) =>
       callback(

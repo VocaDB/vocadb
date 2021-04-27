@@ -24,7 +24,7 @@ export default class ArtistRepository
     callback: (contract: CommentContract) => void,
   ) => {
     $.postJSON(
-      this.urlMapper.mapRelative('/api/artists/' + artistId + '/comments'),
+      this.urlMapper.mapRelative(`/api/artists/${artistId}/comments`),
       contract,
       callback,
       'json',
@@ -52,7 +52,7 @@ export default class ArtistRepository
   };
 
   public deleteComment = (commentId: number, callback?: () => void) => {
-    $.ajax(this.urlMapper.mapRelative('/api/artists/comments/' + commentId), {
+    $.ajax(this.urlMapper.mapRelative(`/api/artists/comments/${commentId}`), {
       type: 'DELETE',
       success: callback,
     });
@@ -68,7 +68,7 @@ export default class ArtistRepository
     callback: (contract: CommentContract[]) => void,
   ) => {
     $.getJSON(
-      this.urlMapper.mapRelative('/api/artists/' + artistId + '/comments'),
+      this.urlMapper.mapRelative(`/api/artists/${artistId}/comments`),
       callback,
     );
   };
@@ -77,15 +77,12 @@ export default class ArtistRepository
     id: number,
     callback: (result: ArtistForEditContract) => void,
   ) => {
-    var url = functions.mergeUrls(
-      this.baseUrl,
-      '/api/artists/' + id + '/for-edit',
-    );
+    var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}/for-edit`);
     $.getJSON(url, callback);
   };
 
   public getOne = (id: number, callback: (result: ArtistContract) => void) => {
-    var url = functions.mergeUrls(this.baseUrl, '/api/artists/' + id);
+    var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
     $.getJSON(
       url,
       { fields: 'AdditionalNames', lang: this.languagePreferenceStr },
@@ -98,7 +95,7 @@ export default class ArtistRepository
     fields: string,
     callback: (result: ArtistApiContract) => void,
   ) => {
-    var url = functions.mergeUrls(this.baseUrl, '/api/artists/' + id);
+    var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
     $.getJSON(
       url,
       { fields: fields, lang: this.languagePreferenceStr },
@@ -148,9 +145,7 @@ export default class ArtistRepository
     callback: (contract: TagUsageForApiContract[]) => void,
   ) => {
     $.getJSON(
-      this.urlMapper.mapRelative(
-        '/api/artists/' + artistId + '/tagSuggestions',
-      ),
+      this.urlMapper.mapRelative(`/api/artists/${artistId}/tagSuggestions`),
       callback,
     );
   };
@@ -166,7 +161,7 @@ export default class ArtistRepository
     callback?: () => void,
   ) => {
     $.postJSON(
-      this.urlMapper.mapRelative('/api/artists/comments/' + commentId),
+      this.urlMapper.mapRelative(`/api/artists/comments/${commentId}`),
       contract,
       callback,
       'json',
@@ -179,7 +174,7 @@ export default class ArtistRepository
     this.urlMapper = new UrlMapper(baseUrl);
 
     this.mapUrl = (relative: string) => {
-      return functions.mergeUrls(baseUrl, '/Artist') + relative;
+      return `${functions.mergeUrls(baseUrl, '/Artist')}${relative}`;
     };
 
     this.findDuplicate = (

@@ -33,7 +33,7 @@ export default class AlbumRepository extends BaseRepository {
     this.urlMapper = new UrlMapper(baseUrl);
 
     this.mapUrl = (relative) => {
-      return functions.mergeUrls(baseUrl, '/Album') + relative;
+      return `${functions.mergeUrls(baseUrl, '/Album')}${relative}`;
     };
   }
 
@@ -43,7 +43,7 @@ export default class AlbumRepository extends BaseRepository {
     callback: (contract: CommentContract) => void,
   ) => {
     $.postJSON(
-      this.urlMapper.mapRelative('/api/albums/' + albumId + '/comments'),
+      this.urlMapper.mapRelative(`/api/albums/${albumId}/comments`),
       contract,
       callback,
       'json',
@@ -56,7 +56,7 @@ export default class AlbumRepository extends BaseRepository {
   ) {
     const url = functions.mergeUrls(
       this.baseUrl,
-      '/api/albums/' + albumId + '/reviews',
+      `/api/albums/${albumId}/reviews`,
     );
     return this.handleJqueryPromise<AlbumReviewContract>(
       $.postJSON(url, reviewContract, null, 'json'),
@@ -84,7 +84,7 @@ export default class AlbumRepository extends BaseRepository {
   };
 
   public deleteComment = (commentId: number, callback?: () => void) => {
-    $.ajax(this.urlMapper.mapRelative('/api/albums/comments/' + commentId), {
+    $.ajax(this.urlMapper.mapRelative(`/api/albums/comments/${commentId}`), {
       type: 'DELETE',
       success: callback,
     });
@@ -93,7 +93,7 @@ export default class AlbumRepository extends BaseRepository {
   public deleteReview(albumId: number, reviewId: number) {
     const url = functions.mergeUrls(
       this.baseUrl,
-      '/api/albums/' + albumId + '/reviews/' + reviewId,
+      `/api/albums/${albumId}/reviews/${reviewId}`,
     );
     return this.handleJqueryPromise($.ajax(url, { type: 'DELETE' }));
   }
@@ -111,7 +111,7 @@ export default class AlbumRepository extends BaseRepository {
     callback: (contract: CommentContract[]) => void,
   ) => {
     $.getJSON(
-      this.urlMapper.mapRelative('/api/albums/' + albumId + '/comments'),
+      this.urlMapper.mapRelative(`/api/albums/${albumId}/comments`),
       callback,
     );
   };
@@ -120,15 +120,12 @@ export default class AlbumRepository extends BaseRepository {
     id: number,
     callback: (result: AlbumForEditContract) => void,
   ) => {
-    var url = functions.mergeUrls(
-      this.baseUrl,
-      '/api/albums/' + id + '/for-edit',
-    );
+    var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}/for-edit`);
     $.getJSON(url, callback);
   };
 
   public getOne = (id: number, callback: (result: AlbumContract) => void) => {
-    var url = functions.mergeUrls(this.baseUrl, '/api/albums/' + id);
+    var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
     $.getJSON(
       url,
       { fields: 'AdditionalNames', lang: this.languagePreferenceStr },
@@ -142,7 +139,7 @@ export default class AlbumRepository extends BaseRepository {
     languagePreference: string,
     callback: (result: AlbumForApiContract) => void,
   ) => {
-    var url = functions.mergeUrls(this.baseUrl, '/api/albums/' + id);
+    var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
     $.getJSON(
       url,
       { fields: fields, lang: this.languagePreferenceStr },
@@ -196,7 +193,7 @@ export default class AlbumRepository extends BaseRepository {
   public async getReviews(albumId: number) {
     const url = functions.mergeUrls(
       this.baseUrl,
-      '/api/albums/' + albumId + '/reviews',
+      `/api/albums/${albumId}/reviews`,
     );
     return await this.getJsonPromise<AlbumReviewContract[]>(url);
   }
@@ -206,7 +203,7 @@ export default class AlbumRepository extends BaseRepository {
     callback: (contract: TagUsageForApiContract[]) => void,
   ) => {
     $.getJSON(
-      this.urlMapper.mapRelative('/api/albums/' + albumId + '/tagSuggestions'),
+      this.urlMapper.mapRelative(`/api/albums/${albumId}/tagSuggestions`),
       callback,
     );
   };
@@ -214,7 +211,7 @@ export default class AlbumRepository extends BaseRepository {
   public async getUserCollections(albumId: number) {
     const url = functions.mergeUrls(
       this.baseUrl,
-      '/api/albums/' + albumId + '/user-collections',
+      `/api/albums/${albumId}/user-collections`,
     );
     const jqueryPromise = $.getJSON(url);
 
@@ -228,7 +225,7 @@ export default class AlbumRepository extends BaseRepository {
     callback?: () => void,
   ) => {
     $.postJSON(
-      this.urlMapper.mapRelative('/api/albums/comments/' + commentId),
+      this.urlMapper.mapRelative(`/api/albums/comments/${commentId}`),
       contract,
       callback,
       'json',
@@ -242,7 +239,7 @@ export default class AlbumRepository extends BaseRepository {
   ) => {
     $.postJSON(
       this.urlMapper.mapRelative(
-        '/api/albums/' + albumId + '/personal-description/',
+        `/api/albums/${albumId}/personal-description/`,
       ),
       {
         personalDescriptionText: text,
