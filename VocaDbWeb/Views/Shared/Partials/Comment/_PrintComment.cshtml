@@ -6,17 +6,21 @@
 @using VocaDb.Web.Models.Shared.Partials.User
 @model PrintCommentViewModel
 
-<div class="comment">
-	<h3>
-		<partial name="Partials/User/_UserIconLink_UserForApiContract" model="@(new UserIconLink_UserForApiContractViewModel(Model.Contract.Author, 25))" />
+<div class="row g-0 ps-2 pt-2">
+	<div class="col-8">
+		<h5 class="card-title fw-bold">
+			<partial name="Partials/User/_UserIconLink_UserForApiContract" model="@(new UserIconLink_UserForApiContractViewModel(Model.Contract.Author, 25))" />
 
-		@if (Model.AlwaysAllowDelete || (Model.AllowDelete && Login.CanDeleteComment(Model.Contract)))
-		{
-			<text>-</text> <a href="#" id="deleteComment_@(Model.Contract.Id)" class="deleteComment">@ViewRes.SharedStrings.Delete</a>
-		}
-		<small class="pull-right extraInfo" title="@Model.Contract.Created.ToUniversalTime() UTC">
+			@if (Model.AlwaysAllowDelete || (Model.AllowDelete && Login.CanDeleteComment(Model.Contract)))
+			{
+				<text>-</text> <a href="#" id="deleteComment_@(Model.Contract.Id)" class="deleteComment">@ViewRes.SharedStrings.Delete</a>
+			}
+		</h5>
+	</div>
+	<div class="col-4">
+		<p class="fs-6 d-block pe-2 my-0 text-end" title="@Model.Contract.Created.ToUniversalTime() UTC">
 			@TimeAgoStringBuilder.FormatTimeAgo(Model.Contract.Created)
-		</small>
-	</h3>
+		</p>
+	</div>
 	<partial name="Partials/Html/_FormatMarkdown" model="@(new FormatMarkdownViewModel(Model.Contract.Message.TruncateWithEllipsis(Model.MaxLength)))" />
 </div>

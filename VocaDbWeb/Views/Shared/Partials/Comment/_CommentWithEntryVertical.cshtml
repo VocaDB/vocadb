@@ -1,7 +1,7 @@
 ﻿@using VocaDb.Web.Models.Shared.Partials.Comment
 @model CommentWithEntryVerticalViewModel
 
-<div class="well well-transparent">
+<div class="card card-transparent">
 	<partial name="Partials/Comment/_CommentEntryItem" model="@(new CommentEntryItemViewModel(Model.Entry.Entry))" />
 	@foreach (var comment in Model.Entry.Comments)
 	{

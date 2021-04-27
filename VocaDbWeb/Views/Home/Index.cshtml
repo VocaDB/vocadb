@@ -15,13 +15,15 @@
 	var br = BrandableStrings.Home;
 }
 
-<h1 class="page-title home-title">
+<h3 class="page-title home-title mt-3 fw-bold">
 	@br.Welcome
-	<small>@br.WelcomeSubtitle</small>
-</h1>
+</h3>
+<h5 class="text-muted fw-bold">
+	@br.WelcomeSubtitle
+</h5>
 
 @if (Model.NewSongs.Any()) {
-<h3 class="withMargin">@Res.RecentSongs (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null))</h3>
+<h5 class="withMargin fw-bold mt-3">@Res.RecentSongs (@Html.ActionLink(ViewRes.Home.IndexStrings.ViewMore, "Index", "Search", new SearchRouteParams { searchType = EntryType.Song, sort = VocaDb.Model.Service.SongSortRule.AdditionDate, onlyWithPVs = true }, null))</h5>
     
 <div class="pvPlayer">
 	<div class="scrollable-navi">
@@ -76,9 +78,9 @@
 
 <partial name="Partials/_NewsItems" />
 
-<div class="row-fluid">
-    <div class="span7">
-        <h3 class="withMargin">@Res.RecentActivity (<a asp-action="Index" asp-controller="ActivityEntry">@(Res.ViewMore)</a>)</h3>
+<div class="row mt-3">
+    <div class="col-7">
+        <h5 class="withMargin fw-bold">@Res.RecentActivity (<a asp-action="Index" asp-controller="ActivityEntry">@(Res.ViewMore)</a>)</h5>
 
         @foreach (var entry in Model.ActivityEntries) {
 			<partial name="Partials/Activityfeed/_ActivityEntry" model="@(new ActivityEntryViewModel(entry))" />
@@ -86,8 +88,8 @@
 		
 		<a asp-action="Index" asp-controller="ActivityEntry">@(Res.ViewMore)</a>
     </div>
-    <div class="span5">
-        <h3 class="withMargin">@ViewRes.Comment.IndexStrings.RecentComments (<a asp-action="Index" asp-controller="Comment">@(Res.ViewMore)</a>)</h3>
+    <div class="col-5">
+        <h5 class="fw-bold">@ViewRes.Comment.IndexStrings.RecentComments (<a asp-action="Index" asp-controller="Comment">@(Res.ViewMore)</a>)</h5>
             
         @foreach (var comment in Model.RecentComments) {
 			<partial name="Partials/Comment/_CommentWithEntryVertical" model="@(new CommentWithEntryVerticalViewModel(comment, 400))" />
