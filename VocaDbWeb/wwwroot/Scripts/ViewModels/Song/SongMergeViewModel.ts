@@ -6,7 +6,9 @@ import SongRepository from '../../Repositories/SongRepository';
 
 export default class SongMergeViewModel {
   constructor(songRepo: SongRepository, private base: SongContract) {
-    this.target = new BasicEntryLinkViewModel(null, songRepo.getOne);
+    this.target = new BasicEntryLinkViewModel(null, (entryId, callback) =>
+      songRepo.getOne(entryId).then(callback),
+    );
 
     this.targetSearchParams = {
       acceptSelection: this.target.id,

@@ -52,14 +52,14 @@ export default class SongCreateViewModel {
     var pv2 = this.pv2();
     var artists = this.getArtistIds();
 
-    this.songRepository.findDuplicate(
-      {
+    this.songRepository
+      .findDuplicate({
         term: [term1, term2, term3],
         pv: [pv1, pv2],
         artistIds: artists,
         getPVInfo: getPVInfo,
-      },
-      (result) => {
+      })
+      .then((result) => {
         this.dupeEntries(result.matches);
 
         if (result.title && !this.hasName()) {
@@ -83,8 +83,7 @@ export default class SongCreateViewModel {
             this.artists.push(artist);
           });
         }
-      },
-    );
+      });
 
     if (event) event.preventDefault();
 
@@ -131,9 +130,9 @@ export default class SongCreateViewModel {
   hasName: KnockoutComputed<boolean>;
 
   selectOriginal = (dupe: DuplicateEntryResultContract) => {
-    this.songRepository.getOne(dupe.entry.id, (song) =>
-      this.originalVersion.entry(song),
-    );
+    this.songRepository
+      .getOne(dupe.entry.id)
+      .then((song) => this.originalVersion.entry(song));
   };
 
   public submit = () => {
@@ -162,7 +161,7 @@ export default class SongCreateViewModel {
 
     this.addArtist = (artistId: number) => {
       if (artistId) {
-        artistRepository.getOne(artistId, (artist) => {
+        artistRepository.getOne(artistId).then((artist) => {
           this.artists.push(artist);
           this.checkDuplicates();
         });
@@ -190,7 +189,7 @@ export default class SongCreateViewModel {
 
     this.originalVersion = new BasicEntryLinkViewModel<SongContract>(
       null,
-      songRepository.getOne,
+      (entryId, callback) => songRepository.getOne(entryId).then(callback),
     );
 
     this.originalVersionSearchParams = {

@@ -1,8 +1,12 @@
 import PVContract from '../DataContracts/PVs/PVContract';
+import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 
 export default class PVRepository {
-  constructor(private readonly urlMapper: UrlMapper) {}
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly urlMapper: UrlMapper,
+  ) {}
 
   public getPVByUrl = (
     pvUrl: string,

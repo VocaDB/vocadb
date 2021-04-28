@@ -42,7 +42,7 @@ export default class AlbumEditViewModel {
   // customArtistName: Name of the custom artist being added. Can be null, if existing artist.
   addArtist = (artistId?: number, customArtistName?: string) => {
     if (artistId) {
-      this.artistRepository.getOne(artistId, (artist) => {
+      this.artistRepository.getOne(artistId).then((artist) => {
         var data: ArtistForAlbumContract = {
           artist: artist,
           isSupport: false,
@@ -319,11 +319,9 @@ export default class AlbumEditViewModel {
       itemType?: string,
     ) => {
       if (songId) {
-        songRepository.getOneWithComponents(
-          songId,
-          'AdditionalNames,Artists',
-          null,
-          (song) => {
+        songRepository
+          .getOneWithComponents(songId, 'AdditionalNames,Artists', null)
+          .then((song) => {
             var artists = _.filter(
               _.map(song.artists, (artistLink) => artistLink.artist),
               (artist) => artist != null,
@@ -341,8 +339,7 @@ export default class AlbumEditViewModel {
             });
             track.isNextDisc.subscribe(() => this.updateTrackNumbers());
             this.tracks.push(track);
-          },
-        );
+          });
       } else {
         var track = new SongInAlbumEditViewModel({
           songName: songName,

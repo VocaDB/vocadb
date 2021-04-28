@@ -35,15 +35,12 @@ export default class TagFilters {
     _.forEach(filters, (newTag) => {
       var selectedTagId = newTag.id;
 
-      this.tagRepo.getById(
-        selectedTagId,
-        null,
-        this.languageSelection,
-        (tag) => {
+      this.tagRepo
+        .getById(selectedTagId, null, this.languageSelection)
+        .then((tag) => {
           newTag.name(tag.name);
           newTag.urlSlug(tag.urlSlug);
-        },
-      );
+        });
     });
   };
 

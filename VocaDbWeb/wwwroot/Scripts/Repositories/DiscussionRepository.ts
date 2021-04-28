@@ -5,9 +5,13 @@ import ICommentRepository from './ICommentRepository';
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
 import UrlMapper from '../Shared/UrlMapper';
+import HttpClient from '../Shared/HttpClient';
 
 export default class DiscussionRepository implements ICommentRepository {
-  constructor(private urlMapper: UrlMapper) {}
+  constructor(
+    private readonly httpClient: HttpClient,
+    private urlMapper: UrlMapper,
+  ) {}
 
   private mapUrl = (relative: string) => {
     return this.urlMapper.mapRelative(
@@ -55,60 +59,48 @@ export default class DiscussionRepository implements ICommentRepository {
     });
   };
 
-  public getComments = (
-    topicId: number,
-    callback: (contract: CommentContract[]) => void,
-  ) => {
+  public getComments = (topicId: number): Promise<CommentContract[]> => {
     // Not supported
+    return Promise.resolve<CommentContract[]>([]);
   };
 
-  public getFolders = (
-    callback: (folders: DiscussionFolderContract[]) => void,
-  ) => {
-    $.getJSON(
+  public getFolders = (): Promise<DiscussionFolderContract[]> => {
+    return this.httpClient.get<DiscussionFolderContract[]>(
       this.mapUrl('folders'),
-      { fields: 'LastTopic,TopicCount' },
-      callback,
+      {
+        fields: 'LastTopic,TopicCount',
+      },
     );
   };
 
-  public getTopic = (
-    topicId: number,
-    callback: (topics: DiscussionTopicContract) => void,
-  ) => {
-    $.getJSON(this.mapUrl(`topics/${topicId}`), { fields: 'All' }, callback);
+  public getTopic = (topicId: number): Promise<DiscussionTopicContract> => {
+    return this.httpClient.get<DiscussionTopicContract>(
+      this.mapUrl(`topics/${topicId}`),
+      { fields: 'All' },
+    );
   };
 
-  public getTopics = (
-    callback: (
-      result: PartialFindResultContract<DiscussionTopicContract>,
-    ) => void,
-  ) => {
-    $.getJSON(
-      this.mapUrl('topics'),
-      { fields: 'CommentCount', maxResults: 5 },
-      callback,
-    );
+  public getTopics = (): Promise<
+    PartialFindResultContract<DiscussionTopicContract>
+  > => {
+    return this.httpClient.get<
+      PartialFindResultContract<DiscussionTopicContract>
+    >(this.mapUrl('topics'), { fields: 'CommentCount', maxResults: 5 });
   };
 
   public getTopicsForFolder = (
     folderId: number,
     paging: PagingProperties,
-    callback: (
-      topics: PartialFindResultContract<DiscussionTopicContract>,
-    ) => void,
-  ) => {
-    $.getJSON(
-      this.mapUrl('topics'),
-      {
-        folderId: folderId,
-        fields: 'CommentCount,LastComment',
-        start: paging.start,
-        maxResults: paging.maxEntries,
-        getTotalCount: paging.getTotalCount,
-      },
-      callback,
-    );
+  ): Promise<PartialFindResultContract<DiscussionTopicContract>> => {
+    return this.httpClient.get<
+      PartialFindResultContract<DiscussionTopicContract>
+    >(this.mapUrl('topics'), {
+      folderId: folderId,
+      fields: 'CommentCount,LastComment',
+      start: paging.start,
+      maxResults: paging.maxEntries,
+      getTotalCount: paging.getTotalCount,
+    });
   };
 
   public updateComment = (

@@ -1,9 +1,11 @@
 import TagRepository from '../Repositories/TagRepository';
+import HttpClient from '../Shared/HttpClient';
 import TagCreateViewModel from '../ViewModels/Tag/TagCreateViewModel';
 
 const TagIndex = () => {
   $(function () {
-    var tagRepo = new TagRepository(vdb.values.baseAddress);
+    const httpClient = new HttpClient();
+    var tagRepo = new TagRepository(httpClient, vdb.values.baseAddress);
     var viewModel = new TagCreateViewModel(tagRepo);
     ko.applyBindings(viewModel);
   });

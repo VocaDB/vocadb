@@ -14,9 +14,11 @@ export default class SelfDescriptionViewModel {
     this.author = new BasicEntryLinkViewModel<ArtistApiContract>(
       author,
       (artistId, callback) => {
-        artistRepo.getOneWithComponents(artistId, 'MainPicture', (artist) => {
-          callback(artist);
-        });
+        artistRepo
+          .getOneWithComponents(artistId, 'MainPicture')
+          .then((artist) => {
+            callback(artist);
+          });
       },
     );
     this.text = ko.observable(text);

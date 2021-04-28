@@ -33,7 +33,7 @@ export default class ArtistEditViewModel {
 
   private addGroup = (artistId: number) => {
     if (artistId) {
-      this.artistRepo.getOne(artistId, (artist: ArtistContract) => {
+      this.artistRepo.getOne(artistId).then((artist: ArtistContract) => {
         this.groups.push({ id: 0, parent: artist });
       });
     }
@@ -186,7 +186,7 @@ export default class ArtistEditViewModel {
     );
     this.baseVoicebank = new BasicEntryLinkViewModel(
       data.baseVoicebank,
-      artistRepo.getOne,
+      (entryId, callback) => artistRepo.getOne(entryId).then(callback),
     );
     this.description = new EnglishTranslatedStringEditViewModel(
       data.description,
@@ -196,12 +196,12 @@ export default class ArtistEditViewModel {
     this.id = data.id;
     this.illustrator = new BasicEntryLinkViewModel(
       data.illustrator,
-      artistRepo.getOne,
+      (entryId, callback) => artistRepo.getOne(entryId).then(callback),
     );
     this.names = NamesEditViewModel.fromContracts(data.names);
     this.newAssociatedArtist = new BasicEntryLinkViewModel(
       null,
-      artistRepo.getOne,
+      (entryId, callback) => artistRepo.getOne(entryId).then(callback),
     );
     this.pictures = new EntryPictureFileListEditViewModel(data.pictures);
     this.releaseDate = ko.observable(
@@ -210,7 +210,7 @@ export default class ArtistEditViewModel {
     this.status = ko.observable(data.status);
     this.voiceProvider = new BasicEntryLinkViewModel(
       data.voiceProvider,
-      artistRepo.getOne,
+      (entryId, callback) => artistRepo.getOne(entryId).then(callback),
     );
     this.webLinks = new WebLinksEditViewModel(data.webLinks, webLinkCategories);
 

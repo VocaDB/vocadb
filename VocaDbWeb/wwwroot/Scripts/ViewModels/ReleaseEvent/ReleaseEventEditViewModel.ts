@@ -92,7 +92,7 @@ export default class ReleaseEventEditViewModel {
 
   addArtist = (artistId?: number, customArtistName?: string) => {
     if (artistId) {
-      this.artistRepository.getOne(artistId, (artist) => {
+      this.artistRepository.getOne(artistId).then((artist) => {
         const data: ArtistForEventContract = {
           artist: artist,
           name: artist.name,

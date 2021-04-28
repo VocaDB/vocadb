@@ -2,6 +2,7 @@ import LocalizedStringWithIdContract from '../DataContracts/Globalization/Locali
 import WebLinkContract from '../DataContracts/WebLinkContract';
 import ReleaseEventRepository from '../Repositories/ReleaseEventRepository';
 import UserRepository from '../Repositories/UserRepository';
+import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import ReleaseEventSeriesEditViewModel from '../ViewModels/ReleaseEvent/ReleaseEventSeriesEditViewModel';
 
@@ -18,9 +19,10 @@ const EventEditSeries = (model: {
   webLinks: WebLinkContract[];
 }) => {
   $(function () {
+    const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var eventRepo = new ReleaseEventRepository(urlMapper);
-    var userRepo = new UserRepository(urlMapper);
+    var eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
+    var userRepo = new UserRepository(httpClient, urlMapper);
 
     var vm = new ReleaseEventSeriesEditViewModel(
       eventRepo,

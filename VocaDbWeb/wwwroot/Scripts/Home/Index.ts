@@ -3,6 +3,7 @@ import ui from '../Shared/MessagesTyped';
 import UrlMapper from '../Shared/UrlMapper';
 import UserRepository from '../Repositories/UserRepository';
 import NewsListViewModel from '../ViewModels/NewsListViewModel';
+import HttpClient from '../Shared/HttpClient';
 
 declare global {
   interface JQuery {
@@ -12,8 +13,9 @@ declare global {
 
 function initPage() {
   function initRatingButtons() {
+    const httpClient = new HttpClient();
     const urlMapper = new UrlMapper(vdb.values.baseAddress);
-    const repo = new UserRepository(urlMapper);
+    const repo = new UserRepository(httpClient, urlMapper);
     const ratingBar = $('#rating-bar');
 
     if (!ratingBar.length) {

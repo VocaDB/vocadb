@@ -1,18 +1,21 @@
 import functions from '../Shared/GlobalFunctions';
 import ResourcesContract from '../DataContracts/ResourcesContract';
+import HttpClient from '../Shared/HttpClient';
 
 export default class ResourceRepository {
-  constructor(private baseUrl: string) {}
+  constructor(
+    private readonly httpClient: HttpClient,
+    private baseUrl: string,
+  ) {}
 
   public getList = (
     cultureCode: string,
     setNames: string[],
-    success: (resources: ResourcesContract) => void,
-  ) => {
+  ): Promise<ResourcesContract> => {
     var url = functions.mergeUrls(
       this.baseUrl,
       `/api/resources/${cultureCode}/`,
     );
-    $.getJSON(url, { setNames: setNames }, success);
+    return this.httpClient.get<ResourcesContract>(url, { setNames: setNames });
   };
 }

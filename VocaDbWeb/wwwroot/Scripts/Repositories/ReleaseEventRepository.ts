@@ -7,9 +7,13 @@ import PartialFindResultContract from '../DataContracts/PartialFindResultContrac
 import ReleaseEventContract from '../DataContracts/ReleaseEvents/ReleaseEventContract';
 import ReleaseEventSeriesForApiContract from '../DataContracts/ReleaseEvents/ReleaseEventSeriesForApiContract';
 import UrlMapper from '../Shared/UrlMapper';
+import HttpClient from '../Shared/HttpClient';
 
 export default class ReleaseEventRepository extends BaseRepository {
-  constructor(private readonly urlMapper: UrlMapper) {
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly urlMapper: UrlMapper,
+  ) {
     super(urlMapper.baseUrl);
   }
 
@@ -65,10 +69,7 @@ export default class ReleaseEventRepository extends BaseRepository {
 
   public getList = (
     queryParams: EventQueryParams,
-    callback?: (
-      result: PartialFindResultContract<ReleaseEventContract>,
-    ) => void,
-  ) => {
+  ): Promise<PartialFindResultContract<ReleaseEventContract>> => {
     var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
 
     var url = functions.mergeUrls(this.baseUrl, '/api/releaseEvents');
@@ -93,42 +94,39 @@ export default class ReleaseEventRepository extends BaseRepository {
       sort: queryParams.sort,
     };
 
-    $.getJSON(url, data, callback);
+    return this.httpClient.get<PartialFindResultContract<ReleaseEventContract>>(
+      url,
+      data,
+    );
   };
 
-  public getOne = (
-    id: number,
-    callback?: (result: ReleaseEventContract) => void,
-  ) => {
+  public getOne = (id: number): Promise<ReleaseEventContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/releaseEvents/${id}`);
-    $.getJSON(url, {}, callback);
+    return this.httpClient.get<ReleaseEventContract>(url);
   };
 
-  public getOneByName = (
+  public getOneByName = async (
     name: string,
-    callback?: (result: ReleaseEventContract) => void,
-  ) => {
+  ): Promise<ReleaseEventContract | null> => {
     var url = functions.mergeUrls(
       this.baseUrl,
       `/api/releaseEvents?query=${encodeURIComponent(
         name,
       )}&nameMatchMode=Exact&maxResults=1`,
     );
-    $.getJSON(url, {}, (result) =>
-      callback(
-        result && result.items && result.items.length ? result.items[0] : null,
-      ),
-    );
+    const result = await this.httpClient.get<
+      PartialFindResultContract<ReleaseEventContract>
+    >(url);
+    return result && result.items && result.items.length
+      ? result.items[0]
+      : null;
   };
 
   public getSeriesList = (
     query: string,
     nameMatchMode: NameMatchMode,
     maxResults: number,
-    callback?: (
-      result: PartialFindResultContract<ReleaseEventSeriesForApiContract>,
-    ) => void,
-  ) => {
+  ): Promise<PartialFindResultContract<ReleaseEventSeriesForApiContract>> => {
     var url = functions.mergeUrls(this.baseUrl, '/api/releaseEventSeries');
     var data = {
       query: query,
@@ -136,7 +134,9 @@ export default class ReleaseEventRepository extends BaseRepository {
       nameMatchMode: NameMatchMode[nameMatchMode],
     };
 
-    $.getJSON(url, data, callback);
+    return this.httpClient.get<
+      PartialFindResultContract<ReleaseEventSeriesForApiContract>
+    >(url, data);
   };
 }
 

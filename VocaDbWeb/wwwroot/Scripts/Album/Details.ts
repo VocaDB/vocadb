@@ -5,6 +5,7 @@ import ui from '../Shared/MessagesTyped';
 import UrlMapper from '../Shared/UrlMapper';
 import RepositoryFactory from '../Repositories/RepositoryFactory';
 import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
+import HttpClient from '../Shared/HttpClient';
 
 function initAlbumDetailsPage(
   albumId: number,
@@ -159,8 +160,10 @@ const AlbumDetails = (
     moment.locale(vdb.values.culture);
     ko.punches.enableAll();
 
+    const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
     var repoFactory = new RepositoryFactory(
+      httpClient,
       urlMapper,
       vdb.values.languagePreference,
       vdb.values.loggedUserId,

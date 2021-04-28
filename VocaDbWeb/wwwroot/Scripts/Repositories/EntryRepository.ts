@@ -1,5 +1,8 @@
 import functions from '../Shared/GlobalFunctions';
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
+import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
+import EntryContract from '../DataContracts/EntryContract';
+import HttpClient from '../Shared/HttpClient';
 
 // Repository for finding base class of common entry types.
 // Corresponds to the EntryApiController.
@@ -12,7 +15,10 @@ export default class EntryRepository {
     );
   };
 
-  constructor(private baseUrl: string) {}
+  constructor(
+    private readonly httpClient: HttpClient,
+    private baseUrl: string,
+  ) {}
 
   getList = (
     paging: PagingProperties,
@@ -22,8 +28,7 @@ export default class EntryRepository {
     childTags: boolean,
     fields: string,
     status: string,
-    callback,
-  ) => {
+  ): Promise<PartialFindResultContract<EntryContract>> => {
     var url = this.mapUrl('');
     var data = {
       start: paging.start,
@@ -38,6 +43,9 @@ export default class EntryRepository {
       status: status,
     };
 
-    $.getJSON(url, data, callback);
+    return this.httpClient.get<PartialFindResultContract<EntryContract>>(
+      url,
+      data,
+    );
   };
 }

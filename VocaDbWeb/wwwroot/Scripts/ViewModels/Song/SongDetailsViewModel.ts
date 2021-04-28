@@ -53,9 +53,9 @@ export default class SongDetailsViewModel {
 
     const { siteUrl, id } = match;
 
-    const repo = new SongRepository(siteUrl, this.languagePreference);
+    const repo = this.repository;
     // TODO: this should be cached, but first we need to make sure the other instances are not cached.
-    repo.getOneWithComponents(id, 'None', null, (song) => {
+    repo.getOneWithComponents(id, 'None', null).then((song) => {
       if (song.songType === SongType[SongType.Original])
         this.originalVersion({ entry: song, url: page, domain: siteUrl });
     });
@@ -135,7 +135,7 @@ export default class SongDetailsViewModel {
     );
 
     this.getUsers = () => {
-      repository.getRatings(this.id, (result) => {
+      repository.getRatings(this.id).then((result) => {
         this.ratingsDialogViewModel.ratings(result);
         this.ratingsDialogViewModel.popupVisible(true);
       });
@@ -157,18 +157,19 @@ export default class SongDetailsViewModel {
       data.personalDescriptionText,
       artistRepository,
       (callback) => {
-        repository.getOneWithComponents(
-          this.id,
-          'Artists',
-          ContentLanguagePreference[this.languagePreference],
-          (result) => {
+        repository
+          .getOneWithComponents(
+            this.id,
+            'Artists',
+            ContentLanguagePreference[this.languagePreference],
+          )
+          .then((result) => {
             var artists = _.chain(result.artists)
               .filter(ArtistHelper.isValidForPersonalDescription)
               .map((a) => a.artist)
               .value();
             callback(artists);
-          },
-        );
+          });
       },
       (vm) =>
         repository.updatePersonalDescription(
@@ -197,7 +198,7 @@ export default class SongDetailsViewModel {
     this.tagsEditViewModel = new TagsEditViewModel(
       {
         getTagSelections: (callback) =>
-          userRepository.getSongTagSelections(this.id, callback),
+          userRepository.getSongTagSelections(this.id).then(callback),
         saveTagSelections: (tags) =>
           userRepository.updateSongTags(
             this.id,
@@ -206,7 +207,7 @@ export default class SongDetailsViewModel {
           ),
       },
       EntryType.Song,
-      (callback) => repository.getTagSuggestions(this.id, callback),
+      (callback) => repository.getTagSuggestions(this.id).then(callback),
     );
 
     this.tagUsages = new TagListViewModel(data.tagUsages);
@@ -220,9 +221,9 @@ export default class SongDetailsViewModel {
 
     this.selectedLyricsId.subscribe((id) => {
       this.selectedLyrics(null);
-      repository.getLyrics(id, data.version, (lyrics) =>
-        this.selectedLyrics(lyrics),
-      );
+      repository
+        .getLyrics(id, data.version)
+        .then((lyrics) => this.selectedLyrics(lyrics));
     });
   }
 }

@@ -24,8 +24,8 @@ export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagA
       status,
       callback,
     ) => {
-      this.tagRepo.getList(
-        {
+      this.tagRepo
+        .getList({
           start: pagingProperties.start,
           maxResults: pagingProperties.maxEntries,
           getTotalCount: pagingProperties.getTotalCount,
@@ -35,9 +35,8 @@ export default class TagSearchViewModel extends SearchCategoryBaseViewModel<TagA
           allowAliases: this.allowAliases(),
           categoryName: this.categoryName(),
           fields: 'AdditionalNames,MainPicture',
-        },
-        callback,
-      );
+        })
+        .then(callback);
     };
   }
 

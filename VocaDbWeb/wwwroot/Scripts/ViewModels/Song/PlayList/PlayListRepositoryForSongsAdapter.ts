@@ -44,38 +44,40 @@ export default class PlayListRepositoryForSongsAdapter
     lang: ContentLanguagePreference,
     callback: (result: PartialFindResultContract<ISongForPlayList>) => void,
   ) => {
-    this.songRepo.getList(
-      paging,
-      ContentLanguagePreference[lang],
-      this.query(),
-      this.sort(),
-      this.songType() != SongType[SongType.Unspecified]
-        ? this.songType()
-        : null,
-      this.afterDate(),
-      this.beforeDate(),
-      this.tagIds(),
-      this.childTags(),
-      this.unifyTypesAndTags(),
-      this.artistIds(),
-      this.artistParticipationStatus(),
-      this.childVoicebanks(),
-      this.includeMembers(),
-      this.eventId(),
-      this.onlyWithPvs(),
-      pvServices,
-      this.since(),
-      this.minScore(),
-      this.onlyRatedSongs() ? this.userCollectionId : null,
-      this.parentVersionId(),
-      this.fields(),
-      this.draftsOnly() ? 'Draft' : null,
-      this.advancedFilters ? this.advancedFilters() : null,
-      null,
-      null,
-      null,
-      null,
-      (result: PartialFindResultContract<SongApiContract>) => {
+    this.songRepo
+      .getList(
+        paging,
+        ContentLanguagePreference[lang],
+        this.query(),
+        this.sort(),
+        this.songType() != SongType[SongType.Unspecified]
+          ? this.songType()
+          : null,
+        this.afterDate(),
+        this.beforeDate(),
+        this.tagIds(),
+        this.childTags(),
+        this.unifyTypesAndTags(),
+        this.artistIds(),
+        this.artistParticipationStatus(),
+        this.childVoicebanks(),
+        this.includeMembers(),
+        this.eventId(),
+        this.onlyWithPvs(),
+        pvServices,
+        this.since(),
+        this.minScore(),
+        this.onlyRatedSongs() ? this.userCollectionId : null,
+        this.parentVersionId(),
+        this.fields(),
+        this.draftsOnly() ? 'Draft' : null,
+        this.advancedFilters ? this.advancedFilters() : null,
+        null,
+        null,
+        null,
+        null,
+      )
+      .then((result: PartialFindResultContract<SongApiContract>) => {
         var mapped = _.map(result.items, (song, idx) => {
           return {
             name: song.name,
@@ -85,7 +87,6 @@ export default class PlayListRepositoryForSongsAdapter
         });
 
         callback({ items: mapped, totalCount: result.totalCount });
-      },
-    );
+      });
   };
 }

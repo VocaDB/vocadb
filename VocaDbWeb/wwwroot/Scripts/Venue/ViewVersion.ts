@@ -1,4 +1,5 @@
 import VenueRepository from '../Repositories/VenueRepository';
+import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import ArchivedEntryViewModel from '../ViewModels/ArchivedEntryViewModel';
 
@@ -20,7 +21,11 @@ const VenueViewVersion = (model: {
     $('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
     $('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
-    var rep = new VenueRepository(new UrlMapper(vdb.values.baseAddress));
+    const httpClient = new HttpClient();
+    var rep = new VenueRepository(
+      httpClient,
+      new UrlMapper(vdb.values.baseAddress),
+    );
     var viewModel = new ArchivedEntryViewModel(
       model.entry.venue.id,
       model.entry.archivedVersion.version,

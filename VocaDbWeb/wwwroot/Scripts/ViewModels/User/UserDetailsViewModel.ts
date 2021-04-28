@@ -84,13 +84,11 @@ export default class UserDetailsViewModel {
   };
 
   private loadEvents = () => {
-    this.userRepo.getEvents(
-      this.userId,
-      UserEventRelationshipType[this.eventsType()],
-      (events) => {
+    this.userRepo
+      .getEvents(this.userId, UserEventRelationshipType[this.eventsType()])
+      .then((events) => {
         this.events(events);
-      },
-    );
+      });
   };
 
   private name: string;
@@ -185,13 +183,13 @@ export default class UserDetailsViewModel {
         this.setView(window.location.hash.substr(1));
     };
 
-    userRepo.getRatingsByGenre(userId, (data) => {
+    userRepo.getRatingsByGenre(userId).then((data) => {
       this.ratingsByGenreChart(
         HighchartsHelper.simplePieChart(null, 'Songs', data),
       );
     });
 
-    userRepo.getOne(userId, null, (data) => {
+    userRepo.getOne(userId, null).then((data) => {
       this.name = data.name;
     });
 
@@ -212,14 +210,15 @@ export class UserSongListsViewModel extends SongListsBaseViewModel {
   }
 
   public loadMoreItems = (callback) => {
-    this.userRepo.getSongLists(
-      this.userId,
-      this.query(),
-      { start: this.start, maxEntries: 50, getTotalCount: true },
-      this.tagFilters.tagIds(),
-      this.sort(),
-      this.fields(),
-      callback,
-    );
+    this.userRepo
+      .getSongLists(
+        this.userId,
+        this.query(),
+        { start: this.start, maxEntries: 50, getTotalCount: true },
+        this.tagFilters.tagIds(),
+        this.sort(),
+        this.fields(),
+      )
+      .then(callback);
   };
 }

@@ -6,6 +6,7 @@ import PVPlayersFactory from '../ViewModels/PVs/PVPlayersFactory';
 import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
 import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
 import CommentContract from '../DataContracts/CommentContract';
+import HttpClient from '../Shared/HttpClient';
 
 function initPage(
   artistId: number,
@@ -91,7 +92,9 @@ const ArtistDetails = (
     var loggedUserId = vdb.values.loggedUserId;
     var unknownPictureUrl = urlMapper.mapRelative('/Content/unknown.png');
 
+    const httpClient = new HttpClient();
     var repoFactory = new RepositoryFactory(
+      httpClient,
       urlMapper,
       vdb.values.languagePreference,
       loggedUserId,

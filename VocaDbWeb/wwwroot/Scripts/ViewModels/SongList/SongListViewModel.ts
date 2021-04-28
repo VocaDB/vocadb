@@ -119,7 +119,7 @@ export default class SongListViewModel {
     this.tagsEditViewModel = new TagsEditViewModel(
       {
         getTagSelections: (callback) =>
-          userRepo.getSongListTagSelections(this.listId, callback),
+          userRepo.getSongListTagSelections(this.listId).then(callback),
         saveTagSelections: (tags) =>
           userRepo.updateSongListTags(
             this.listId,
@@ -203,24 +203,26 @@ export default class SongListViewModel {
 
     if (this.showTags()) fields.push(SongOptionalField.Tags);
 
-    this.songListRepo.getSongs(
-      this.listId,
-      this.query(),
-      this.songType() !== SongType[SongType.Unspecified]
-        ? this.songType()
-        : null,
-      this.tagIds(),
-      this.childTags(),
-      this.artistFilters.artistIds(),
-      this.artistFilters.artistParticipationStatus(),
-      this.artistFilters.childVoicebanks(),
-      this.advancedFilters.filters(),
-      null,
-      pagingProperties,
-      new SongOptionalFields(fields),
-      this.sort(),
-      this.languageSelection,
-      (result) => {
+    this.songListRepo
+      .getSongs(
+        this.listId,
+        this.query(),
+        this.songType() !== SongType[SongType.Unspecified]
+          ? this.songType()
+          : null,
+        this.tagIds(),
+        this.childTags(),
+        this.artistFilters.artistIds(),
+        this.artistFilters.artistParticipationStatus(),
+        this.artistFilters.childVoicebanks(),
+        this.advancedFilters.filters(),
+        null,
+        pagingProperties,
+        new SongOptionalFields(fields),
+        this.sort(),
+        this.languageSelection,
+      )
+      .then((result) => {
         _.each(result.items, (item) => {
           var song = item.song;
           var songAny: any = song;
@@ -246,7 +248,6 @@ export default class SongListViewModel {
 
         this.page(result.items);
         this.loading(false);
-      },
-    );
+      });
   };
 }

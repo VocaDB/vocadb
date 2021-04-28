@@ -32,12 +32,12 @@ export default class DiscussionIndexViewModel {
       this.selectedTopic(null);
     });
 
-    repo.getFolders((folders) => {
+    repo.getFolders().then((folders) => {
       this.folders(folders);
       page.start();
     });
 
-    repo.getTopics((result) => this.recentTopics(result.items));
+    repo.getTopics().then((result) => this.recentTopics(result.items));
 
     this.selectedFolder.subscribe((folder) => {
       this.showCreateNewTopic(false);
@@ -107,7 +107,7 @@ export default class DiscussionIndexViewModel {
     }
 
     const paging = this.paging.getPagingProperties(true);
-    this.repo.getTopicsForFolder(folder.id, paging, (result) => {
+    this.repo.getTopicsForFolder(folder.id, paging).then((result) => {
       this.topics(result.items);
 
       if (paging.getTotalCount) this.paging.totalItems(result.totalCount);
@@ -155,7 +155,7 @@ export default class DiscussionIndexViewModel {
       return;
     }
 
-    this.repo.getTopic(topicId, (contract) => {
+    this.repo.getTopic(topicId).then((contract) => {
       contract.canBeDeleted = this.canDeleteTopic(contract);
       contract.canBeEdited = this.canEditTopic(contract);
 

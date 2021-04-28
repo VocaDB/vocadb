@@ -31,24 +31,26 @@ export default class PlayListRepositoryForSongListAdapter
     lang: ContentLanguagePreference,
     callback: (result: PartialFindResultContract<ISongForPlayList>) => void,
   ) => {
-    this.songListRepo.getSongs(
-      this.songListId,
-      this.query(),
-      this.songType() !== SongType[SongType.Unspecified]
-        ? this.songType()
-        : null,
-      this.tagIds(),
-      this.childTags(),
-      this.artistIds(),
-      this.artistParticipationStatus(),
-      this.childVoicebanks(),
-      this.advancedFilters(),
-      pvServices,
-      paging,
-      fields,
-      this.sort(),
-      lang,
-      (result) => {
+    this.songListRepo
+      .getSongs(
+        this.songListId,
+        this.query(),
+        this.songType() !== SongType[SongType.Unspecified]
+          ? this.songType()
+          : null,
+        this.tagIds(),
+        this.childTags(),
+        this.artistIds(),
+        this.artistParticipationStatus(),
+        this.childVoicebanks(),
+        this.advancedFilters(),
+        pvServices,
+        paging,
+        fields,
+        this.sort(),
+        lang,
+      )
+      .then((result) => {
         var mapped = _.map(result.items, (song, idx) => {
           return {
             name:
@@ -62,7 +64,6 @@ export default class PlayListRepositoryForSongListAdapter
         });
 
         callback({ items: mapped, totalCount: result.totalCount });
-      },
-    );
+      });
   };
 }

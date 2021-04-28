@@ -48,7 +48,7 @@ export default class ManageIPRulesViewModel {
       .value();
     this.rules = ko.observableArray(rules);
 
-    repo.getTempBannedIps((result) => this.bannedIPs(result));
+    repo.getTempBannedIps().then((result) => this.bannedIPs(result));
   }
 }
 

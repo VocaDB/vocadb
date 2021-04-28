@@ -1,11 +1,17 @@
 import CommentContract from '../DataContracts/CommentContract';
 import ICommentRepository from './ICommentRepository';
 import UrlMapper from '../Shared/UrlMapper';
+import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
+import HttpClient from '../Shared/HttpClient';
 
 export default class EntryCommentRepository implements ICommentRepository {
   private baseUrl: string;
 
-  constructor(private urlMapper: UrlMapper, resourcePath: string) {
+  constructor(
+    private readonly httpClient: HttpClient,
+    private urlMapper: UrlMapper,
+    resourcePath: string,
+  ) {
     this.baseUrl = UrlMapper.mergeUrls('/api/', resourcePath);
   }
 
@@ -27,14 +33,14 @@ export default class EntryCommentRepository implements ICommentRepository {
     $.ajax(url, { type: 'DELETE', success: callback });
   };
 
-  public getComments = (
-    listId: number,
-    callback: (contract: CommentContract[]) => void,
-  ) => {
+  public getComments = async (listId: number): Promise<CommentContract[]> => {
     var url = this.urlMapper.mapRelative(
       UrlMapper.buildUrl(this.baseUrl, listId.toString(), '/comments/'),
     );
-    $.getJSON(url, (result) => callback(result.items));
+    const result = await this.httpClient.get<
+      PartialFindResultContract<CommentContract>
+    >(url);
+    return result.items;
   };
 
   public updateComment = (

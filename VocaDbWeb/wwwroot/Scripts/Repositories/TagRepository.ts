@@ -1,5 +1,5 @@
 import AjaxHelper from '../Helpers/AjaxHelper';
-import BaseRepository, { getJsonPromise } from './BaseRepository';
+import BaseRepository from './BaseRepository';
 import { CommonQueryParams } from './BaseRepository';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import EntryCommentRepository from './EntryCommentRepository';
@@ -13,11 +13,16 @@ import TagApiContract from '../DataContracts/Tag/TagApiContract';
 import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 import TagMappingContract from '../DataContracts/Tag/TagMappingContract';
 import UrlMapper from '../Shared/UrlMapper';
+import HttpClient from '../Shared/HttpClient';
 
 export default class TagRepository extends BaseRepository {
   private readonly urlMapper: UrlMapper;
 
-  constructor(baseUrl: string, lang?: ContentLanguagePreference) {
+  constructor(
+    private readonly httpClient: HttpClient,
+    baseUrl: string,
+    lang?: ContentLanguagePreference,
+  ) {
     super(baseUrl, lang);
     this.urlMapper = new UrlMapper(baseUrl);
   }
@@ -52,14 +57,20 @@ export default class TagRepository extends BaseRepository {
     id: number,
     fields: string,
     lang: string,
-    callback?: (result: TagApiContract) => void,
-  ) => {
+  ): Promise<TagApiContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/tags/${id}`);
-    $.getJSON(url, { fields: fields || undefined, lang: lang }, callback);
+    return this.httpClient.get<TagApiContract>(url, {
+      fields: fields || undefined,
+      lang: lang,
+    });
   };
 
   public getComments = () =>
-    new EntryCommentRepository(new UrlMapper(this.baseUrl), '/tags/');
+    new EntryCommentRepository(
+      this.httpClient,
+      new UrlMapper(this.baseUrl),
+      '/tags/',
+    );
 
   public getEntryTypeTag = (
     entryType: EntryType,
@@ -69,7 +80,7 @@ export default class TagRepository extends BaseRepository {
       this.baseUrl,
       `/api/entry-types/${EntryType[entryType]}/${subType}/tag`,
     );
-    return getJsonPromise<TagApiContract>(url, {
+    return this.httpClient.get<TagApiContract>(url, {
       fields: 'Description',
       lang: this.languagePreferenceStr,
     });
@@ -77,8 +88,7 @@ export default class TagRepository extends BaseRepository {
 
   public getList = (
     queryParams: TagQueryParams,
-    callback?: (result: PartialFindResultContract<TagApiContract>) => void,
-  ) => {
+  ): Promise<PartialFindResultContract<TagApiContract>> => {
     var nameMatchMode = queryParams.nameMatchMode || NameMatchMode.Auto;
 
     var url = functions.mergeUrls(this.baseUrl, '/api/tags');
@@ -95,11 +105,14 @@ export default class TagRepository extends BaseRepository {
       sort: queryParams.sort,
     };
 
-    $.getJSON(url, data, callback);
+    return this.httpClient.get<PartialFindResultContract<TagApiContract>>(
+      url,
+      data,
+    );
   };
 
   public getEntryTagMappings = (): Promise<EntryTagMappingContract[]> => {
-    return getJsonPromise<EntryTagMappingContract[]>(
+    return this.httpClient.get<EntryTagMappingContract[]>(
       this.urlMapper.mapRelative('/api/tags/entry-type-mappings'),
     );
   };
@@ -107,7 +120,7 @@ export default class TagRepository extends BaseRepository {
   public getMappings = (
     paging: PagingProperties,
   ): Promise<PartialFindResultContract<TagMappingContract>> => {
-    return getJsonPromise<PartialFindResultContract<TagMappingContract>>(
+    return this.httpClient.get<PartialFindResultContract<TagMappingContract>>(
       this.urlMapper.mapRelative('/api/tags/mappings'),
       paging,
     );
@@ -117,8 +130,7 @@ export default class TagRepository extends BaseRepository {
     lang: string,
     categoryName?: string,
     entryType?: EntryType,
-    callback?: (tags: TagBaseContract[]) => void,
-  ) => {
+  ): Promise<TagBaseContract[]> => {
     var url = functions.mergeUrls(this.baseUrl, '/api/tags/top');
     var data = {
       lang: lang,
@@ -126,7 +138,7 @@ export default class TagRepository extends BaseRepository {
       entryType: entryType || undefined,
     };
 
-    $.getJSON(url, data, callback);
+    return this.httpClient.get<TagBaseContract[]>(url, data);
   };
 
   public saveEntryMappings = (

@@ -30,14 +30,12 @@ export default class SongListsBaseViewModel extends PagedItemsViewModel<SongList
     this.sort.subscribe(this.clear);
     this.tagFilters.tags.subscribe(this.clear);
 
-    resourceRepo.getList(
-      cultureCode,
-      ['songListSortRuleNames'],
-      (resources) => {
+    resourceRepo
+      .getList(cultureCode, ['songListSortRuleNames'])
+      .then((resources) => {
         this.resources(resources);
         this.clear();
-      },
-    );
+      });
   }
 
   public isFirstForYear = (current: SongListContract, index: number) => {

@@ -11,6 +11,8 @@ import ResourcesContract from '../../DataContracts/ResourcesContract';
 import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import TagBaseContract from '../../DataContracts/Tag/TagBaseContract';
 import UserRepository from '../../Repositories/UserRepository';
+import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
+import AlbumForUserForApiContract from '../../DataContracts/User/AlbumForUserForApiContract';
 
 export default class AlbumCollectionViewModel {
   constructor(
@@ -49,7 +51,7 @@ export default class AlbumCollectionViewModel {
   public collectionStatus = ko.observable('');
   public isInit = false;
   public loading = ko.observable(true); // Currently loading for data
-  public page = ko.observableArray<RatedSongForUserForApiContract>([]); // Current page of items
+  public page = ko.observableArray<AlbumForUserForApiContract>([]); // Current page of items
   public paging = new ServerSidePagingViewModel(20); // Paging view model
   public pauseNotifications = false;
   public releaseEvent = new BasicEntryLinkViewModel<ReleaseEventContract>(
@@ -84,20 +86,18 @@ export default class AlbumCollectionViewModel {
   public init = () => {
     if (this.isInit) return;
 
-    this.resourceRepo.getList(
-      this.cultureCode,
-      [
+    this.resourceRepo
+      .getList(this.cultureCode, [
         'albumCollectionStatusNames',
         'albumMediaTypeNames',
         'albumSortRuleNames',
         'discTypeNames',
-      ],
-      (resources) => {
+      ])
+      .then((resources) => {
         this.resources(resources);
         this.updateResultsWithTotalCount();
         this.isInit = true;
-      },
-    );
+      });
   };
 
   public ratingStars = (userRating: number) => {
@@ -109,9 +109,9 @@ export default class AlbumCollectionViewModel {
 
   public selectArtist = (selectedArtistId: number) => {
     this.artistId(selectedArtistId);
-    this.artistRepo.getOne(selectedArtistId, (artist) =>
-      this.artistName(artist.name),
-    );
+    this.artistRepo
+      .getOne(selectedArtistId)
+      .then((artist) => this.artistName(artist.name));
   };
 
   public updateResultsWithTotalCount = () => this.updateResults(true);
@@ -128,19 +128,21 @@ export default class AlbumCollectionViewModel {
 
     var pagingProperties = this.paging.getPagingProperties(clearResults);
 
-    this.userRepo.getAlbumCollectionList(
-      this.loggedUserId,
-      pagingProperties,
-      this.languageSelection,
-      this.searchTerm(),
-      this.tagId(),
-      this.albumType(),
-      this.artistId(),
-      this.collectionStatus(),
-      this.releaseEvent.id(),
-      this.advancedFilters.filters(),
-      this.sort(),
-      (result: any) => {
+    this.userRepo
+      .getAlbumCollectionList(
+        this.loggedUserId,
+        pagingProperties,
+        this.languageSelection,
+        this.searchTerm(),
+        this.tagId(),
+        this.albumType(),
+        this.artistId(),
+        this.collectionStatus(),
+        this.releaseEvent.id(),
+        this.advancedFilters.filters(),
+        this.sort(),
+      )
+      .then((result: PartialFindResultContract<AlbumForUserForApiContract>) => {
         this.pauseNotifications = false;
 
         if (pagingProperties.getTotalCount)
@@ -148,7 +150,6 @@ export default class AlbumCollectionViewModel {
 
         this.page(result.items);
         this.loading(false);
-      },
-    );
+      });
   };
 }

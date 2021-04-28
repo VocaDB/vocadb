@@ -10,19 +10,18 @@ export default class TagCreateViewModel {
         return;
       }
 
-      tagRepo.getList(
-        {
+      tagRepo
+        .getList({
           start: 0,
           maxResults: 1,
           getTotalCount: false,
           query: val,
           nameMatchMode: NameMatchMode.Exact,
           allowAliases: true,
-        },
-        (result) => {
+        })
+        .then((result) => {
           this.duplicateName(result.items.length > 0);
-        },
-      );
+        });
     });
   }
 

@@ -10,10 +10,7 @@ export default interface ICommentRepository {
 
   deleteComment(commentId: number, callback?: () => void): void;
 
-  getComments(
-    entryId: number,
-    callback: (contract: CommentContract[]) => void,
-  ): void;
+  getComments(entryId: number): Promise<CommentContract[]>;
 
   updateComment(
     commentId: number,

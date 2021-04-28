@@ -5,7 +5,7 @@ import AlbumForEditContract from '../DataContracts/Album/AlbumForEditContract';
 import AlbumForUserForApiContract from '../DataContracts/User/AlbumForUserForApiContract';
 import AlbumReviewContract from '../DataContracts/Album/AlbumReviewContract';
 import ArtistContract from '../DataContracts/Artist/ArtistContract';
-import BaseRepository, { getJsonPromise } from './BaseRepository';
+import BaseRepository from './BaseRepository';
 import CommentContract from '../DataContracts/CommentContract';
 import { CommonQueryParams } from './BaseRepository';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
@@ -15,16 +15,21 @@ import PagingProperties from '../DataContracts/PagingPropertiesContract';
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
 import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
 import UrlMapper from '../Shared/UrlMapper';
+import ICommentRepository from './ICommentRepository';
+import HttpClient from '../Shared/HttpClient';
 
 // Repository for managing albums and related objects.
 // Corresponds to the AlbumController class.
-export default class AlbumRepository extends BaseRepository {
+export default class AlbumRepository
+  extends BaseRepository
+  implements ICommentRepository {
   // Maps a relative URL to an absolute one.
   private mapUrl: (relative: string) => string;
 
   private urlMapper: UrlMapper;
 
   constructor(
+    private readonly httpClient: HttpClient,
     baseUrl: string,
     languagePreference = ContentLanguagePreference.Default,
   ) {
@@ -98,53 +103,40 @@ export default class AlbumRepository extends BaseRepository {
     return this.handleJqueryPromise($.ajax(url, { type: 'DELETE' }));
   }
 
-  public findDuplicate = (
-    params,
-    callback: (result: DuplicateEntryResultContract[]) => void,
-  ) => {
+  public findDuplicate = (params): Promise<DuplicateEntryResultContract[]> => {
     var url = functions.mergeUrls(this.baseUrl, '/Album/FindDuplicate');
-    $.getJSON(url, params, callback);
+    return this.httpClient.get<DuplicateEntryResultContract[]>(url, params);
   };
 
-  public getComments = (
-    albumId: number,
-    callback: (contract: CommentContract[]) => void,
-  ) => {
-    $.getJSON(
+  public getComments = (albumId: number): Promise<CommentContract[]> => {
+    return this.httpClient.get<CommentContract[]>(
       this.urlMapper.mapRelative(`/api/albums/${albumId}/comments`),
-      callback,
     );
   };
 
-  public getForEdit = (
-    id: number,
-    callback: (result: AlbumForEditContract) => void,
-  ) => {
+  public getForEdit = (id: number): Promise<AlbumForEditContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}/for-edit`);
-    $.getJSON(url, callback);
+    return this.httpClient.get<AlbumForEditContract>(url);
   };
 
-  public getOne = (id: number, callback: (result: AlbumContract) => void) => {
+  public getOne = (id: number): Promise<AlbumContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
-    $.getJSON(
-      url,
-      { fields: 'AdditionalNames', lang: this.languagePreferenceStr },
-      callback,
-    );
+    return this.httpClient.get<AlbumContract>(url, {
+      fields: 'AdditionalNames',
+      lang: this.languagePreferenceStr,
+    });
   };
 
   public getOneWithComponents = (
     id: number,
     fields: string,
     languagePreference: string,
-    callback: (result: AlbumForApiContract) => void,
-  ) => {
+  ): Promise<AlbumForApiContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/albums/${id}`);
-    $.getJSON(
-      url,
-      { fields: fields, lang: this.languagePreferenceStr },
-      callback,
-    );
+    return this.httpClient.get<AlbumForApiContract>(url, {
+      fields: fields,
+      lang: this.languagePreferenceStr,
+    });
   };
 
   getList = (
@@ -163,8 +155,7 @@ export default class AlbumRepository extends BaseRepository {
     status: string,
     deleted: boolean,
     advancedFilters: AdvancedSearchFilter[],
-    callback: (result: PartialFindResultContract<AlbumContract>) => void,
-  ) => {
+  ): Promise<PartialFindResultContract<AlbumContract>> => {
     var url = functions.mergeUrls(this.baseUrl, '/api/albums');
     var data = {
       start: paging.start,
@@ -187,7 +178,10 @@ export default class AlbumRepository extends BaseRepository {
       advancedFilters: advancedFilters,
     };
 
-    $.getJSON(url, data, callback);
+    return this.httpClient.get<PartialFindResultContract<AlbumContract>>(
+      url,
+      data,
+    );
   };
 
   public getReviews = (albumId: number): Promise<AlbumReviewContract[]> => {
@@ -195,28 +189,25 @@ export default class AlbumRepository extends BaseRepository {
       this.baseUrl,
       `/api/albums/${albumId}/reviews`,
     );
-    return getJsonPromise<AlbumReviewContract[]>(url);
+    return this.httpClient.get<AlbumReviewContract[]>(url);
   };
 
   public getTagSuggestions = (
     albumId: number,
-    callback: (contract: TagUsageForApiContract[]) => void,
-  ) => {
-    $.getJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.get<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(`/api/albums/${albumId}/tagSuggestions`),
-      callback,
     );
   };
 
-  public async getUserCollections(albumId: number) {
+  public async getUserCollections(
+    albumId: number,
+  ): Promise<AlbumForUserForApiContract[]> {
     const url = functions.mergeUrls(
       this.baseUrl,
       `/api/albums/${albumId}/user-collections`,
     );
-    const jqueryPromise = $.getJSON(url);
-
-    const promise = Promise.resolve(jqueryPromise);
-    return promise as Promise<AlbumForUserForApiContract[]>;
+    return this.httpClient.get<AlbumForUserForApiContract[]>(url);
   }
 
   public updateComment = (

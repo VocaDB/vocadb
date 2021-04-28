@@ -46,7 +46,7 @@ export default class SongWithPreviewViewModel {
         return;
       }
 
-      repository.pvPlayerWithRating(songId, (result) => {
+      repository.pvPlayerWithRating(songId).then((result) => {
         if (!result) return;
 
         this.pvService(result.pvService);

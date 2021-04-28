@@ -1,11 +1,14 @@
 import RepositoryFactory from '../Repositories/RepositoryFactory';
+import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import AlbumCreateViewModel from '../ViewModels/Album/AlbumCreateViewModel';
 
 const AlbumCreate = () => {
   $(function () {
+    const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
     var repoFactory = new RepositoryFactory(
+      httpClient,
       urlMapper,
       vdb.values.languagePreference,
     );

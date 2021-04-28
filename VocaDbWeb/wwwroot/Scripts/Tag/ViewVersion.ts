@@ -1,4 +1,5 @@
 import TagRepository from '../Repositories/TagRepository';
+import HttpClient from '../Shared/HttpClient';
 import ArchivedEntryViewModel from '../ViewModels/ArchivedEntryViewModel';
 
 const TagViewVersion = (model: {
@@ -19,7 +20,8 @@ const TagViewVersion = (model: {
     $('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
     $('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
-    var rep = new TagRepository(vdb.values.baseAddress);
+    const httpClient = new HttpClient();
+    var rep = new TagRepository(httpClient, vdb.values.baseAddress);
     var viewModel = new ArchivedEntryViewModel(
       model.entry.tag.id,
       model.entry.archivedVersion.version,

@@ -12,6 +12,8 @@ import ICommentRepository from './ICommentRepository';
 import PagingProperties from '../DataContracts/PagingPropertiesContract';
 import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
 import UrlMapper from '../Shared/UrlMapper';
+import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
+import HttpClient from '../Shared/HttpClient';
 
 // Repository for managing artists and related objects.
 // Corresponds to the ArtistController class.
@@ -63,44 +65,34 @@ export default class ArtistRepository
     callback: (result: DuplicateEntryResultContract[]) => void,
   ) => void;
 
-  public getComments = (
-    artistId: number,
-    callback: (contract: CommentContract[]) => void,
-  ) => {
-    $.getJSON(
+  public getComments = (artistId: number): Promise<CommentContract[]> => {
+    return this.httpClient.get<CommentContract[]>(
       this.urlMapper.mapRelative(`/api/artists/${artistId}/comments`),
-      callback,
     );
   };
 
-  public getForEdit = (
-    id: number,
-    callback: (result: ArtistForEditContract) => void,
-  ) => {
+  public getForEdit = (id: number): Promise<ArtistForEditContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}/for-edit`);
-    $.getJSON(url, callback);
+    return this.httpClient.get<ArtistForEditContract>(url);
   };
 
-  public getOne = (id: number, callback: (result: ArtistContract) => void) => {
+  public getOne = (id: number): Promise<ArtistContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
-    $.getJSON(
-      url,
-      { fields: 'AdditionalNames', lang: this.languagePreferenceStr },
-      callback,
-    );
+    return this.httpClient.get<ArtistContract>(url, {
+      fields: 'AdditionalNames',
+      lang: this.languagePreferenceStr,
+    });
   };
 
   public getOneWithComponents = (
     id: number,
     fields: string,
-    callback: (result: ArtistApiContract) => void,
-  ) => {
+  ): Promise<ArtistApiContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/artists/${id}`);
-    $.getJSON(
-      url,
-      { fields: fields, lang: this.languagePreferenceStr },
-      callback,
-    );
+    return this.httpClient.get<ArtistApiContract>(url, {
+      fields: fields,
+      lang: this.languagePreferenceStr,
+    });
   };
 
   public getList = (
@@ -116,8 +108,7 @@ export default class ArtistRepository
     fields: string,
     status: string,
     advancedFilters: AdvancedSearchFilter[],
-    callback,
-  ) => {
+  ): Promise<PartialFindResultContract<ArtistContract>> => {
     var url = functions.mergeUrls(this.baseUrl, '/api/artists');
     var data = {
       start: paging.start,
@@ -137,16 +128,17 @@ export default class ArtistRepository
       advancedFilters: advancedFilters,
     };
 
-    $.getJSON(url, data, callback);
+    return this.httpClient.get<PartialFindResultContract<ArtistContract>>(
+      url,
+      data,
+    );
   };
 
   public getTagSuggestions = (
     artistId: number,
-    callback: (contract: TagUsageForApiContract[]) => void,
-  ) => {
-    $.getJSON(
+  ): Promise<TagUsageForApiContract[]> => {
+    return this.httpClient.get<TagUsageForApiContract[]>(
       this.urlMapper.mapRelative(`/api/artists/${artistId}/tagSuggestions`),
-      callback,
     );
   };
 
@@ -168,7 +160,11 @@ export default class ArtistRepository
     );
   };
 
-  constructor(baseUrl: string, lang?: ContentLanguagePreference) {
+  constructor(
+    private readonly httpClient: HttpClient,
+    baseUrl: string,
+    lang?: ContentLanguagePreference,
+  ) {
     super(baseUrl, lang);
 
     this.urlMapper = new UrlMapper(baseUrl);

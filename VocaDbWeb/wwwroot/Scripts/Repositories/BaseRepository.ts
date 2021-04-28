@@ -1,14 +1,5 @@
-import axios from 'axios';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import NameMatchMode from '../Models/NameMatchMode';
-
-export const getJsonPromise = async <T>(
-  url: string,
-  data?: any,
-): Promise<T> => {
-  const response = await axios.get<T>(url, { params: data });
-  return response.data;
-};
 
 export default class BaseRepository {
   protected handleJqueryPromise<T>(jqueryPromise: JQueryXHR) {

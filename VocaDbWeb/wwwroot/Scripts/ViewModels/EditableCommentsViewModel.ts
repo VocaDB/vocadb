@@ -100,7 +100,7 @@ export default class EditableCommentsViewModel {
   public initComments = () => {
     if (this.commentsLoaded) return;
 
-    this.repo.getComments(this.entryId, (contracts) => {
+    this.repo.getComments(this.entryId).then((contracts) => {
       this.setComments(contracts);
     });
 

@@ -40,7 +40,7 @@ export default class SongListEditViewModel {
   private acceptSongSelection = (songId: number) => {
     if (!songId) return;
 
-    this.songRepo.getOne(songId, (song: SongContract) => {
+    this.songRepo.getOne(songId).then((song: SongContract) => {
       var songInList = new SongInListEditViewModel({
         songInListId: 0,
         order: 0,
@@ -71,7 +71,7 @@ export default class SongListEditViewModel {
 
   public init = (loaded: () => void) => {
     if (this.id) {
-      this.songListRepo.getForEdit(this.id, (data) => {
+      this.songListRepo.getForEdit(this.id).then((data) => {
         this.currentName = data.name;
         this.name = ko.observable(data.name);
         this.description = ko.observable(data.description);

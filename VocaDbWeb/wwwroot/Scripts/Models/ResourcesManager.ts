@@ -19,14 +19,16 @@ export default class ResourcesManager {
 
   public loadResources = (callback?: () => void, ...setNames: string[]) => {
     var setsToLoad = this.setsToLoad(setNames);
-    this.resourcesRepo.getList(this.cultureCode, setsToLoad, (resources) => {
-      _.each(
-        setNames,
-        (setName) => (this.resources()[setName] = resources[setName]),
-      );
-      this.resources.valueHasMutated();
-      if (callback) callback();
-    });
+    this.resourcesRepo
+      .getList(this.cultureCode, setsToLoad)
+      .then((resources) => {
+        _.each(
+          setNames,
+          (setName) => (this.resources()[setName] = resources[setName]),
+        );
+        this.resources.valueHasMutated();
+        if (callback) callback();
+      });
   };
 }
 

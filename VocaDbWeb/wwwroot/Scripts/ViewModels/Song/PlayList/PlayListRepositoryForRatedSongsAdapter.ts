@@ -32,32 +32,35 @@ export default class PlayListRepositoryForRatedSongsAdapter
     lang: ContentLanguagePreference,
     callback: (result: PartialFindResultContract<ISongForPlayList>) => void,
   ) => {
-    this.userRepo.getRatedSongsList(
-      this.userId,
-      paging,
-      ContentLanguagePreference[lang],
-      this.query(),
-      this.tagIds(),
-      this.artistIds(),
-      this.childVoicebanks(),
-      this.rating(),
-      this.songListId(),
-      this.advancedFilters(),
-      this.groupByRating(),
-      pvServices,
-      'ThumbUrl',
-      this.sort(),
-      (result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
-        var mapped = _.map(result.items, (song, idx) => {
-          return {
-            name: song.song.name,
-            song: song.song,
-            indexInPlayList: paging.start + idx,
-          };
-        });
+    this.userRepo
+      .getRatedSongsList(
+        this.userId,
+        paging,
+        ContentLanguagePreference[lang],
+        this.query(),
+        this.tagIds(),
+        this.artistIds(),
+        this.childVoicebanks(),
+        this.rating(),
+        this.songListId(),
+        this.advancedFilters(),
+        this.groupByRating(),
+        pvServices,
+        'ThumbUrl',
+        this.sort(),
+      )
+      .then(
+        (result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
+          var mapped = _.map(result.items, (song, idx) => {
+            return {
+              name: song.song.name,
+              song: song.song,
+              indexInPlayList: paging.start + idx,
+            };
+          });
 
-        callback({ items: mapped, totalCount: result.totalCount });
-      },
-    );
+          callback({ items: mapped, totalCount: result.totalCount });
+        },
+      );
   };
 }

@@ -51,14 +51,11 @@ export default class ReleaseEventSeriesEditViewModel {
       return;
     }
 
-    this.eventRepository.getSeriesList(
-      value,
-      NameMatchMode.Exact,
-      1,
-      (result) => {
+    this.eventRepository
+      .getSeriesList(value, NameMatchMode.Exact, 1)
+      .then((result) => {
         this.duplicateName(result.items.length ? value : null);
-      },
-    );
+      });
   };
 
   public defaultNameLanguage: KnockoutObservable<string>;

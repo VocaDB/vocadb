@@ -65,7 +65,7 @@ export default class VenueEditViewModel {
       return;
     }
 
-    this.repo.getList(value, NameMatchMode.Exact, 1, (result) => {
+    this.repo.getList(value, NameMatchMode.Exact, 1).then((result) => {
       this.duplicateName(result.items.length ? value : null);
     });
   };
