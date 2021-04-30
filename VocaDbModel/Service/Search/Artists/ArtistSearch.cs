@@ -56,7 +56,7 @@ namespace VocaDb.Model.Service.Search.Artists
 
 		private ParsedArtistQuery FindExternalUrl(string trimmed, string trimmedLc)
 		{
-			if (trimmedLc.StartsWith("http") || trimmedLc.StartsWith("mylist/") || trimmedLc.StartsWith("user/"))
+			if (trimmedLc.StartsWith("http") || trimmedLc.StartsWith("mylist/") || trimmedLc.StartsWith("user/") || trimmedLc.StartsWith("t/"))
 			{
 				var extUrl = new ArtistExternalUrlParser().GetExternalUrl(trimmed);
 
