@@ -68,20 +68,9 @@
 
 @section BodyScripts {
 	<script type="text/javascript">
-		$(function () {
-
-			moment.locale('@Culture');
-			ko.punches.enableAll();
-
-			var urlMapper = new app.UrlMapper("@RootPath");
-			var resourceRepo = new app.ResourceRepository('@RootPath');
-			var languageSelection = '@UserContext.LanguagePreference';
-			var cultureCode = '@UICulture';
-			var userId = @Model.Id;
-
-			var vm = new app.CommentListViewModel(urlMapper, resourceRepo, languageSelection, cultureCode, userId);
-			ko.applyBindings(vm);
-
-		});
+		var model = {
+			id: @Model.Id,
+		};
+		app.CommentCommentsByUser(model);
 	</script>
 }

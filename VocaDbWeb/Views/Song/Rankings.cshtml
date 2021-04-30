@@ -114,18 +114,6 @@
 @section BodyScripts {	
 <remikus path="/bundles/Song/TopRated.js" />
 <script type="text/javascript">
-
-	moment.locale('@Culture');
-	ko.punches.enableAll();
-
-	$(function () {
-		var urlMapper = new app.UrlMapper('@RootPath');
-		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
-		var songRepo = repoFactory.songRepository();
-		var userRepo = repoFactory.userRepository();
-		var viewModel = new app.RankingsViewModel(urlMapper, songRepo, userRepo, @LanguagePreferenceInt);
-		ko.applyBindings(viewModel);
-	});
-
+	app.SongRankings();
 </script>		
 }

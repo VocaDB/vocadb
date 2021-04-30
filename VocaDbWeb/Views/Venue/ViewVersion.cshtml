@@ -56,19 +56,16 @@
 	<script src="@Url.Content("~/Scripts/Repositories/VenueRepository.js")"></script>
 	<script src="@Url.Content("~/Scripts/ViewModels/ArchivedEntryViewModel.js")"></script>
 	<script type="text/javascript">
-
-		$(function () {
-
-			$("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
-			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert' } });
-			$("#showLink").button({ icons: { primary: 'ui-icon-unlocked' } });
-			$("#hideLink").button({ icons: { primary: 'ui-icon-locked' } });
-
-			var rep = new app.VenueRepository(new app.UrlMapper('@RootPath'));
-			var viewModel = new app.ArchivedEntryViewModel(@Model.Entry.Venue.Id, @Model.Entry.ArchivedVersion.Version, rep);
-			ko.applyBindings(viewModel);
-
-		});
-
+		var model = {
+			entry: {
+				archivedVersion: {
+					version: @Model.Entry.ArchivedVersion.Version,
+				},
+				venue: {
+					id: @Model.Entry.Venue.Id,
+				}
+			},
+		};
+		app.VenueViewVersion(model);
 	</script>
 }

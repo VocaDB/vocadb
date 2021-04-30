@@ -46,18 +46,9 @@
 	<remikus path="/bundles/shared/edit.js" />
 	<remikus path="/bundles/Album/Merge.js" />
 	<script type="text/javascript">
-
-	    $(function() {
-
-	    	var repo = new app.AlbumRepository('@RootPath', @LanguagePreferenceInt);
-	    	var vm = new app.AlbumMergeViewModel(repo, @Model.Id);
-	    	ko.applyBindings(vm);
-
-	    	$("#mergeBtn").click(function () {
-	    		return confirm("Are you sure you want to merge the albums?");
-	    	});
-
-	    });
-
+		var model = {
+			id: @Model.Id,
+		};
+		app.AlbumMerge(model);
 	</script>
 }

@@ -179,22 +179,8 @@
 	<remikus path="/bundles/shared/edit.js" />
 	<remikus path="/bundles/Song/Create.js" />
 	<script type="text/javascript">
-
-		$(document).ready(function () {
-			ko.punches.enableAll();
-			var repoFactory = new app.RepositoryFactory(new app.UrlMapper('@RootPath'), @LanguagePreferenceInt);
-			var repo = repoFactory.songRepository();
-			var artistRepo = repoFactory.artistRepository();
-			var tagRepo = repoFactory.tagRepository();
-			var json = @ToJS(Model);
-			ko.applyBindings(new app.SongCreateViewModel(repo, artistRepo, tagRepo, json));
-
-			$("#pvLoader")
-				.ajaxStart(function() { $(this).show(); })
-				.ajaxStop(function () { $(this).hide(); });
-
-		});
-
-</script>
+		var model = @ToJS(Model);
+		app.SongCreate(model);
+	</script>
 		
 }

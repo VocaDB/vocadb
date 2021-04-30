@@ -61,18 +61,7 @@
 @section BodyScripts {
 	<script type="text/javascript" src="@Url.Content("~/Scripts/moment-with-locales.js")"></script>
 	<script type="text/javascript">
-	$(function () {
-
-    	moment.locale('@Culture');
-		ko.punches.enableAll();
-
-		var rules = @ToJS(Model, true);
-		var urlMapper = new app.UrlMapper('@RootPath');
-		var repo = new app.AdminRepository(urlMapper);
-
-    	var viewModel = new app.ManageIPRulesViewModel(rules, repo);
-    	ko.applyBindings(viewModel);
-
-	});
+		var model = @ToJS(Model, true);
+		app.AdminManageIPRules(model);
 	</script>
 }

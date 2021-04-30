@@ -62,14 +62,6 @@
 	<remikus path="/bundles/shared/edit.js" />
 	<remikus path="/bundles/Tag/Index.js" />
 	<script type="text/javascript">
-
-		$(function () {
-
-			var tagRepo = new app.TagRepository('@RootPath');
-			var viewModel = new app.TagCreateViewModel(tagRepo);
-			ko.applyBindings(viewModel);
-
-		});
-
+		app.TagIndex();
 	</script>
 }

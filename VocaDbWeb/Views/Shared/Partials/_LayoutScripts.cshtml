@@ -25,7 +25,9 @@
 	vdb.values.baseAddress = baseAddress;
 	vdb.values.languagePreference = @((int)Login.Manager.LanguagePreference);
 	vdb.values.isLoggedIn = @ToJS(UserContext.IsLoggedIn);
-	vdb.values.uiLanguage = @ToJS(UICulture);
+	vdb.values.loggedUserId = @ToJS(UserContext.LoggedUserId);
+	vdb.values.culture = @ToJS(Culture);
+	vdb.values.uiCulture = @ToJS(UICulture);
     vdb.resources = vdb.resources || {};
     var urlMapper = new app.UrlMapper(baseAddress);
 

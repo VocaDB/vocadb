@@ -54,19 +54,16 @@
 
 @section BodyScripts {
 	<script type="text/javascript">
-
-		$(function () {
-
-			$("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
-			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert' } });
-			$("#showLink").button({ icons: { primary: 'ui-icon-unlocked' } });
-			$("#hideLink").button({ icons: { primary: 'ui-icon-locked' } });
-
-			var rep = new app.ReleaseEventRepository(new app.UrlMapper('@RootPath'));
-			var viewModel = new app.ArchivedEntryViewModel(@Model.Entry.ReleaseEventSeries.Id, @Model.Entry.ArchivedVersion.Version, rep);
-			ko.applyBindings(viewModel);
-
-		});
-
+		var model = {
+			entry: {
+				archivedVersion: {
+					version: @Model.Entry.ArchivedVersion.Version,
+				},
+				releaseEventSeries: {
+					id: @Model.Entry.ReleaseEventSeries.Id,
+				},
+			},
+		};
+		app.EventViewSeriesVersion(model);
 	</script>
 }

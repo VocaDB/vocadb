@@ -134,15 +134,7 @@
     <remikus path="/bundles/shared/edit.js" />
     <remikus path="/bundles/Artist/Create.js" />
     <script type="text/javascript">
-
-		$(document).ready(function () {
-			ko.punches.enableAll();
-			var repoFactory = new app.RepositoryFactory(new app.UrlMapper('@RootPath'), @LanguagePreferenceInt);
-			var repo = repoFactory.artistRepository();
-			var tagRepo = repoFactory.tagRepository();
-            var json = @ToJS(Model);
-            ko.applyBindings(new app.ArtistCreateViewModel(repo, tagRepo, json));
-        });
-
+		var model = @ToJS(Model);
+		app.ArtistCreate(model);
     </script>
 }

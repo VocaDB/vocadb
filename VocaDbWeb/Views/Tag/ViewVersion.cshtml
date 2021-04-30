@@ -55,19 +55,16 @@
 
 @section BodyScripts {
 	<script type="text/javascript">
-
-		$(function () {
-
-            $("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
-			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert' } });
-			$("#showLink").button({ icons: { primary: 'ui-icon-unlocked' } });
-			$("#hideLink").button({ icons: { primary: 'ui-icon-locked' } });
-
-			var rep = new app.TagRepository('@RootPath');
-			var viewModel = new app.ArchivedEntryViewModel(@Model.Entry.Tag.Id, @Model.Entry.ArchivedVersion.Version, rep);
-			ko.applyBindings(viewModel);
-
-        });
-
+		var model = {
+			entry: {
+				archivedVersion: {
+					version: @Model.Entry.ArchivedVersion.Version,
+				},
+				tag: {
+					id: @Model.Entry.Tag.Id,
+				},
+			},
+		};
+		app.TagViewVersion(model);
 	</script>
 }

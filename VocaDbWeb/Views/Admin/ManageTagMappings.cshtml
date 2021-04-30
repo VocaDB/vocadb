@@ -93,16 +93,6 @@
 @section BodyScripts {
 	<remikus path="/bundles/shared/edit.js" />
 	<script type="text/javascript">
-		$(function () {
-
-			ko.punches.enableAll();
-
-			var urlMapper = new app.UrlMapper('@RootPath');
-			var tagRepo = new app.TagRepository('@RootPath');
-
-			var viewModel = new app.ManageTagMappingsViewModel(tagRepo);
-			ko.applyBindings(viewModel);
-
-		});
+		app.AdminManageTagMappings();
 	</script>
 }

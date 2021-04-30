@@ -18,31 +18,14 @@
 	<remikus path="/bundles/User/RatedSongs.js" />
 
 	<script type="text/javascript">
-
-		$(function () {
-
-			moment.locale('@Culture');
-			var cultureCode = '@UICulture';
-			var languageSelection = '@UserContext.LanguagePreference';
-			var loggedUserId = @Model.User.Id;
-			var sort = @ToJS(Model.Sort.HasValue ? Model.Sort.ToString() : null);
-			var groupByRating = @ToJS(Model.GroupByRating);
-
-			var rootPath = '@RootPath';
-			var urlMapper = new app.UrlMapper(rootPath);
-			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
-			var userRepo = repoFactory.userRepository();
-			var artistRepo = repoFactory.artistRepository();
-			var songRepo = repoFactory.songRepository();
-			var resourceRepo = repoFactory.resourceRepository();
-			var pvPlayersFactory = new app.PVPlayersFactory($("#pv-player-wrapper"));
-
-			var vm = new app.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, languageSelection, loggedUserId, cultureCode,
-				sort, groupByRating, pvPlayersFactory, true);
-			ko.applyBindings(vm);
-
-		});
-
+		var model = {
+			groupByRating: @ToJS(Model.GroupByRating),
+			sort: @ToJS(Model.Sort.HasValue ? Model.Sort.ToString() : null),
+			user: {
+				id: @Model.User.Id,
+			},
+		};
+		app.UserFavoriteSongs(model);
 	</script>
 
 }

@@ -12,15 +12,7 @@
 @section BodyScripts {
 	
 	<script language="javascript">
-		
-		$(function () {
-
-			var repo = new app.AlbumRepository('@RootPath', @LanguagePreferenceInt);
-			var viewModel = new app.DeletedAlbumsViewModel(repo);
-			ko.applyBindings(viewModel);
-
-		});
-
+		app.AlbumDeleted();
 	</script>
 
 }

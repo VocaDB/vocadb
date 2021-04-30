@@ -47,19 +47,7 @@
 	<remikus path="/bundles/shared/edit.js" />
 	<remikus path="/bundles/Song/Merge.js" />
 	<script type="text/javascript">
-
-		$(function () {
-
-			var repo = new app.SongRepository('@RootPath', @LanguagePreferenceInt);
-			var data = @ToJS(Model);
-			var vm = new app.SongMergeViewModel(repo, data);
-			ko.applyBindings(vm);
-
-			$("#mergeBtn").click(function () {
-				return confirm("Are you sure you want to merge the songs?");
-			});
-
-	    });
-
+		var model = @ToJS(Model);
+		app.SongMerge(model);
 	</script>
 }
