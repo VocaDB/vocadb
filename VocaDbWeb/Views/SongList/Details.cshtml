@@ -263,51 +263,19 @@
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<remikus path="/bundles/SongList/Details.js" />
 	<script type="text/javascript">
-
-		$(function () {
-
-			$("#editListLink").button({ icons: { primary: 'ui-icon-wrench' } });
-			$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
-			$("#export").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
-
-			var languageSelection = '@LanguagePreferenceInt';
-			var listId = @Model.SongList.Id;
-
-			var rootPath = '@RootPath';
-			var urlMapper = new app.UrlMapper(rootPath);
-			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
-			var userRepo = repoFactory.userRepository();
-			var songRepo = repoFactory.songRepository();
-			var artistRepo = repoFactory.artistRepository();
-			var songListRepo = repoFactory.songListRepository();
-			var resourceRepo = repoFactory.resourceRepository();
-			var defaultSortRuleName = @ToJS(Res.DefaultSortRule);
-			var cultureCode = '@UICulture';
-			var pvPlayerElem = $("#pv-player-wrapper")[0];
-			var pvPlayersFactory = new app.PVPlayersFactory(pvPlayerElem);
-			var latestComments = @ToJS(Model.SongList.LatestComments);
-			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-			var tagUsages = @ToJS(Model.SongList.Tags);
-
-			var vm = new app.SongListViewModel(
-				urlMapper,
-				songListRepo,
-				songRepo,
-				userRepo,
-				artistRepo,
-				resourceRepo,
-				defaultSortRuleName,
-				latestComments,
-				@UserContext.LoggedUserId,
-				languageSelection,
-				cultureCode,
-				listId,
-				tagUsages,
-				pvPlayersFactory,
-				canDeleteAllComments);
-			ko.applyBindings(vm);
-
-		});
-
+		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+		var defaultSortRuleName = @ToJS(Res.DefaultSortRule);
+		var model = {
+			songList: {
+				id: @Model.SongList.Id,
+				latestComments: @ToJS(Model.SongList.LatestComments),
+				tags: @ToJS(Model.SongList.Tags),
+			},
+		};
+		app.SongListDetails(
+			canDeleteAllComments,
+			defaultSortRuleName,
+			model,
+		);
 	</script>
 }

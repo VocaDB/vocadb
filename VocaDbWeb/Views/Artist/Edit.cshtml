@@ -264,33 +264,18 @@
 <remikus path="/bundles/Artist/Edit.js" />
 
 <script type="text/javascript">
-
-	$(document).ready(function() {
-
-		vdb.resources.entryEdit = {
-			saveWarning: @ToJS(EditRes.SaveWarning)
-		};
-
-		var urlMapper = new app.UrlMapper('@RootPath');
-		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
-		var artistRepo = repoFactory.artistRepository();
-		var userRepo = repoFactory.userRepository();
-		var editedModel = @ToJS(Model.EditedArtist);
-		var webLinkCategoryJson = @ToJS(Translate.WebLinkCategoryNames.AllFields);
-
-		if (editedModel) {
-			ko.applyBindings(new app.ArtistEditViewModel(artistRepo, userRepo, urlMapper, webLinkCategoryJson, editedModel, new app.DialogService()));
-		} else {
-
-			artistRepo.getForEdit(@Model.Artist.Id, function (model) {
-				ko.applyBindings(new app.ArtistEditViewModel(artistRepo, userRepo, urlMapper, webLinkCategoryJson, model, new app.DialogService()));
-			});
-
-		}
-
-		app.initArtistEditPage();
-
-	});
-
+	var model = {
+		artist: {
+			id: @Model.Artist.Id,
+		},
+		editedArtist: @ToJS(Model.EditedArtist),
+	};
+	var saveWarning = @ToJS(EditRes.SaveWarning);
+	var webLinkCategoryJson = @ToJS(Translate.WebLinkCategoryNames.AllFields);
+	app.ArtistEdit(
+		model,
+		saveWarning,
+		webLinkCategoryJson,
+	);
 </script>
 }

@@ -86,23 +86,10 @@
 @section BodyScripts {
 <remikus path="/bundles/Venue/Details.js" />
 <script type="text/javascript">
-	$(function () {
-
-		$("#editVenueLink").button({ disabled: $("#editVenueLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });
-		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
-		$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
-		$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert' } });
-		
-		var loggedUserId = @UserContext.LoggedUserId;
-		var rootPath = '@RootPath';
-		var urlMapper = new app.UrlMapper(rootPath);
-		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
-		var venueRepo = repoFactory.venueRepository();
-		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.VenueReportTypeNames, VenueReport.ReportTypesWithRequiredNotes));
-
-		var vm = new app.VenueDetailsViewModel(venueRepo, reportTypes, loggedUserId, @Model.Id);
-		ko.applyBindings(vm);
-
-	});
+	var model = {
+		id: @Model.Id,
+	};
+	var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.VenueReportTypeNames, VenueReport.ReportTypesWithRequiredNotes));
+	app.VenueDetails(model, reportTypes);
 </script>
 }

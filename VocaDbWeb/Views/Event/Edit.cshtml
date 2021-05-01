@@ -332,36 +332,20 @@
 <remikus path="/bundles/shared/edit.js" />
 <remikus path="/bundles/ReleaseEvent/Edit.js" />
 <script type="text/javascript">
-	$(function () {
-
-		ko.punches.enableAll();
-
-		var urlMapper = new app.UrlMapper('@RootPath');
-		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
-		var eventRepo = repoFactory.eventRepository();
-		var userRepo = repoFactory.userRepository();
-		var pvRepo = repoFactory.pvRepository();
-		var artistRepo = repoFactory.artistRepository();
-		var artistRoleJson = @ToJS(Translate.ArtistEventRoleNames.ValuesAndNamesStrings, false);
-		var contract = @ToJS(new {
-			Model.Artists,
-			Model.Date,
-			DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
-            Model.EndDate,
-			Model.Id,
-			Model.Names,
-			pvs = Model.PVs,
-			Model.Series,
-			Model.SongList,
-			Model.WebLinks,
-			Model.Venue
-		});
-
-		var vm = new app.ReleaseEventEditViewModel(eventRepo, userRepo, pvRepo, artistRepo, urlMapper, artistRoleJson, contract);
-		ko.applyBindings(vm);
-
-		app.initReleaseEventEditPage();
-
+	var artistRoleJson = @ToJS(Translate.ArtistEventRoleNames.ValuesAndNamesStrings, false);
+	var model = @ToJS(new {
+		Model.Artists,
+		Model.Date,
+		DefaultNameLanguage = Model.DefaultNameLanguage.ToString(),
+		Model.EndDate,
+		Model.Id,
+		Model.Names,
+		pvs = Model.PVs,
+		Model.Series,
+		Model.SongList,
+		Model.WebLinks,
+		Model.Venue
 	});
+	app.EventEdit(artistRoleJson, model);
 </script>
 }

@@ -15,27 +15,13 @@
 <remikus path="/bundles/User/AlbumCollection.js" />
 
 <script type="text/javascript">
-
-	$(document).ready(function () {
-
-		var cultureCode = '@UICulture';
-		var languageSelection = '@UserContext.LanguagePreference';
-		var loggedUserId = @Model.User.Id;
-		var publicCollection = @ToJS(Model.User.PublicAlbumCollection || Model.User.Id == Login.Manager.LoggedUserId);
-
-		var rootPath = '@RootPath';
-		var urlMapper = new app.UrlMapper(rootPath);
-		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
-		var userRepo = repoFactory.userRepository();
-		var artistRepo = repoFactory.artistRepository();
-		var resourceRepo = repoFactory.resourceRepository();
-
-		var vm = new app.AlbumCollectionViewModel(userRepo, artistRepo, resourceRepo, languageSelection, loggedUserId, cultureCode,
-			publicCollection);
-		ko.applyBindings(vm);
-
-	});
-
+	var model = {
+		user: {
+			id: @Model.User.Id,
+		},
+	};
+	var publicCollection = @ToJS(Model.User.PublicAlbumCollection || Model.User.Id == Login.Manager.LoggedUserId);
+	app.UserAlbumCollection(model, publicCollection);
 </script>
 
 }

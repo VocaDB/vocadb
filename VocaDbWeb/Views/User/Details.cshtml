@@ -457,57 +457,24 @@
 	<remikus path="/bundles/User/Details.js" />
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
-
-		ko.punches.enableAll();
-
-		$(function() {
-
-			var cultureCode = '@UICulture';
-
-			moment.locale(@ToJS(Culture));
-
-			var languageSelection = '@UserContext.LanguagePreference';
-			var lastLoginAddress = '@(UserContext.HasPermission(PermissionToken.ManageIPRules) ? Model.LastLoginAddress : "")';
-			var userId = @Model.Id;
-			var canDeleteComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-			var loggedUserId = @ToJS(UserContext.LoggedUserId);
-			var publicCollection = @ToJS(Model.PublicAlbumCollection || Model.Id == UserContext.LoggedUserId);
-			var rootPath = '@RootPath';
-			var urlMapper = new app.UrlMapper(rootPath);
-			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
-			var adminRepo = repoFactory.adminRepository();
-			var userRepo = repoFactory.userRepository();
-			var artistRepo = repoFactory.artistRepository();
-			var resourceRepo = repoFactory.resourceRepository();
-			var songRepo = repoFactory.songRepository();
-			var tagRepo = repoFactory.tagRepository();
-			var pvPlayersFactory = new app.PVPlayersFactory($("#pv-player-wrapper"));
-			var latestComments = @ToJS(Model.LatestComments);
-
-			var artistId = @ToJS((int?)ViewBag.ArtistId);
-			var childVoicebanks = @ToJS((bool?)ViewBag.ChildVoicebanks);
-			var sort = 'RatingDate';
-			var groupByRating = true;
-
-			var followedArtistsViewModel = new app.FollowedArtistsViewModel(userRepo, resourceRepo, tagRepo, languageSelection, userId, cultureCode);
-
-			var albumCollectionViewModel = new app.AlbumCollectionViewModel(userRepo, artistRepo, resourceRepo, languageSelection, userId, cultureCode,
-				publicCollection, false);
-
-			var ratedSongsViewModel = new app.RatedSongsSearchViewModel(urlMapper, userRepo, artistRepo, songRepo, resourceRepo, tagRepo, 
-				languageSelection, userId, cultureCode,
-				sort, groupByRating, pvPlayersFactory, false, artistId, childVoicebanks);
-
-			var viewModel = new app.UserDetailsViewModel(userId, cultureCode, loggedUserId, lastLoginAddress, canDeleteComments, urlMapper, 
-				userRepo, adminRepo, resourceRepo, tagRepo, languageSelection, followedArtistsViewModel, albumCollectionViewModel, ratedSongsViewModel, latestComments);
-			ko.applyBindings(viewModel);
-
-			if (window.location.hash && window.location.hash.length >= 1) {
-				viewModel.setView(window.location.hash.substr(1));
-			}
-
-			app.initUserDetailsPage("@R.ConfirmDisable");
-	});
-
+		var artistId = @ToJS((int?)ViewBag.ArtistId);
+		var canDeleteComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+		var childVoicebanks = @ToJS((bool?)ViewBag.ChildVoicebanks);
+		var confirmDisableStr = '@R.ConfirmDisable';
+		var lastLoginAddress = '@(UserContext.HasPermission(PermissionToken.ManageIPRules) ? Model.LastLoginAddress : "")';
+		var model = {
+			id: @Model.Id,
+			latestComments: @ToJS(Model.LatestComments),
+		};
+		var publicCollection = @ToJS(Model.PublicAlbumCollection || Model.Id == UserContext.LoggedUserId);
+		app.UserDetails(
+			artistId,
+			canDeleteComments,
+			childVoicebanks,
+			confirmDisableStr,
+			lastLoginAddress,
+			model,
+			publicCollection,
+		);
 	</script>
 }

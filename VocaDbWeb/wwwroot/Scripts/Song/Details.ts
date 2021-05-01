@@ -1,6 +1,14 @@
+import RepositoryFactory from '../Repositories/RepositoryFactory';
 import functions from '../Shared/GlobalFunctions';
+import ui from '../Shared/MessagesTyped';
+import UrlMapper from '../Shared/UrlMapper';
+import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
+import SongDetailsViewModel, {
+  SongDetailsAjax,
+  SongDetailsResources,
+} from '../ViewModels/Song/SongDetailsViewModel';
 
-export function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
+function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
   function initMediaPlayer() {
     $('audio').mediaelementplayer({
       pluginPath: 'https://cdnjs.com/libraries/mediaelement/',
@@ -59,3 +67,55 @@ export function initPage(jsonModel, songId, saveStr, urlMapper, viewModel) {
   $('#albumList a').vdbAlbumWithCoverToolTip();
   initMediaPlayer();
 }
+
+const SongDetails = (
+  canDeleteAllComments: boolean,
+  model: {
+    id: number;
+    jsonModel: SongDetailsAjax;
+  },
+  reportTypes: IEntryReportType[],
+  resources: SongDetailsResources,
+  saveStr: string,
+  showTranslatedDescription: boolean,
+) => {
+  $(document).ready(function () {
+    moment.locale(vdb.values.culture);
+
+    vdb.resources.song = resources;
+
+    var jsonModel = model.jsonModel;
+    var rootPath = vdb.values.baseAddress;
+    var urlMapper = new UrlMapper(rootPath);
+    var repoFactory = new RepositoryFactory(
+      urlMapper,
+      vdb.values.languagePreference,
+    );
+    var repo = repoFactory.songRepository();
+    var userRepo = repoFactory.userRepository();
+    var artistRepo = repoFactory.artistRepository();
+
+    var viewModel = new SongDetailsViewModel(
+      repo,
+      userRepo,
+      artistRepo,
+      resources,
+      showTranslatedDescription,
+      jsonModel,
+      reportTypes,
+      vdb.values.loggedUserId,
+      vdb.values.languagePreference,
+      canDeleteAllComments,
+      ui.showThankYouForRatingMessage,
+    );
+    ko.applyBindings(viewModel);
+
+    viewModel.songListDialog.addedToList = function () {
+      ui.showSuccessMessage(resources.addedToList);
+    };
+
+    initPage(jsonModel, model.id, saveStr, urlMapper, viewModel);
+  });
+};
+
+export default SongDetails;

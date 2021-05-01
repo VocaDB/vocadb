@@ -31,20 +31,7 @@
 @section BodyScripts {
 	<remikus path="/bundles/Discussion/Index.js" />
 	<script type="text/javascript">
-
-		$(function () {
-
-			moment.locale('@Culture');
-
-			ko.punches.enableAll();
-
-			var urlMapper = new app.UrlMapper('@RootPath');
-			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
-			var repo = repoFactory.discussionRepository();
-			ko.applyBindings(new app.DiscussionIndexViewModel(repo, urlMapper, canDeleteAllComments, @UserContext.LoggedUserId));
-
-		});
-
+		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+		app.DiscussionIndex(canDeleteAllComments);
 	</script>
 }

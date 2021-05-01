@@ -443,53 +443,28 @@
 	<remikus path="/bundles/Artist/Details.js" />
 	<script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
 	<script type="text/javascript">
-
-		$(function() {
-
-			moment.locale('@Culture');
-
-			var urlMapper = new app.UrlMapper("@Url.Content("~/")");
-
-			var cultureCode = '@UICulture';
-			var loggedUserId = @ToJS(UserContext.LoggedUserId);
-			var unknownPictureUrl = '@Url.Content("~/Content/unknown.png")';
-			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-
-			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt, loggedUserId);
-			var artistRepo = repoFactory.artistRepository();
-			var albumRepository = repoFactory.albumRepository();
-			var songRepo = repoFactory.songRepository();
-			var resourceRepo = repoFactory.resourceRepository();
-			var userRepository = repoFactory.userRepository();
-			var pvPlayerElem = $("#pv-player-wrapper")[0];
-			var pvPlayersFactory = new app.PVPlayersFactory(pvPlayerElem);
-			var tagUsages = @ToJS(Model.Tags);
-			var latestComments = @ToJS(Model.LatestComments);
-
-			var reportTypes = @ToJS(Translate.ArtistReportTypeNames.Where(r => r.Id != ArtistReportType.OwnershipClaim).Select(r => new {
-				r.Id,
-				r.Name,
-				NotesRequired = ArtistReport.ReportTypesWithRequiredNotes.Contains(r.Id)
-			}));
-
-			var viewModel = new app.ArtistDetailsViewModel(artistRepo, @Model.Id,
-				tagUsages,
-				@ToJS(Model.IsAdded),
-				@ToJS(Model.EmailNotifications), @ToJS(Model.SiteNotifications),
-				@ToJS(Model.Description.HasEnglish),
-				unknownPictureUrl,
-				@LanguagePreferenceInt,
-				urlMapper, albumRepository, songRepo, resourceRepo, userRepository, cultureCode,
-				reportTypes,
-				loggedUserId,
-				canDeleteAllComments,
-				pvPlayersFactory,
-				latestComments);
-			ko.applyBindings(viewModel);
-
-			app.initArtistDetailsPage(@Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
-
-		});
-
+		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+		var hasEnglishDescription = @ToJS(Model.Description.HasEnglish);
+		var model = {
+			emailNotifications: @ToJS(Model.EmailNotifications),
+			id: @Model.Id,
+			isAdded: @ToJS(Model.IsAdded),
+			latestComments: @ToJS(Model.LatestComments),
+			siteNotifications: @ToJS(Model.SiteNotifications),
+			tags: @ToJS(Model.Tags),
+		};
+		var reportTypes = @ToJS(Translate.ArtistReportTypeNames.Where(r => r.Id != ArtistReportType.OwnershipClaim).Select(r => new {
+			r.Id,
+			r.Name,
+			NotesRequired = ArtistReport.ReportTypesWithRequiredNotes.Contains(r.Id)
+		}));
+		var saveStr = "@ViewRes.SharedStrings.Save";
+		app.ArtistDetails(
+			canDeleteAllComments,
+			hasEnglishDescription,
+			model,
+			reportTypes,
+			saveStr,
+		);
 	</script>
 }

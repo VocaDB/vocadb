@@ -429,6 +429,8 @@ export interface SongDetailsAjax {
 }
 
 export interface SongDetailsResources {
+  addedToList?: string;
+
   createNewList: string;
 }
 

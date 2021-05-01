@@ -82,7 +82,7 @@ export { default as AlbumDeleted } from './Album/Deleted';
 import './KnockoutExtensions/MomentJsTimeAgo';
 import './KnockoutExtensions/FormatDateFilter';
 export { default as AlbumDetailsViewModel } from './ViewModels/Album/AlbumDetailsViewModel';
-export { initAlbumDetailsPage } from './Album/Details';
+export { default as AlbumDetails } from './Album/Details';
 
 // ~/bundles/Album/Edit
 import './KnockoutExtensions/ParseInteger';
@@ -90,7 +90,7 @@ import './KnockoutExtensions/FormatLengthSecondsFilter';
 import './KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete';
 import './KnockoutExtensions/FormatDateFilter';
 export { default as AlbumEditViewModel } from './ViewModels/Album/AlbumEditViewModel';
-export { initPage as initAlbumEditPage } from './Album/Edit';
+export { default as AlbumEdit } from './Album/Edit';
 
 // ~/bundles/Album/Merge
 import './KnockoutExtensions/AlbumAutoComplete';
@@ -114,12 +114,12 @@ import './KnockoutExtensions/ScrollEnd';
 import './KnockoutExtensions/Highcharts';
 export { default as PVPlayersFactory } from './ViewModels/PVs/PVPlayersFactory';
 export { default as ArtistDetailsViewModel } from './ViewModels/Artist/ArtistDetailsViewModel';
-export { initPage as initArtistDetailsPage } from './Artist/Details';
+export { default as ArtistDetails } from './Artist/Details';
 
 // ~/bundles/Artist/Edit
 import './KnockoutExtensions/BindingHandlers/DatePicker';
 export { default as ArtistEditViewModel } from './ViewModels/Artist/ArtistEditViewModel';
-export { initPage as initArtistEditPage } from './Artist/Edit';
+export { default as ArtistEdit } from './Artist/Edit';
 
 // ~/bundles/Artist/Merge
 import './KnockoutExtensions/ArtistAutoComplete';
@@ -140,6 +140,7 @@ export { default as CommentCommentsByUser } from './Comment/CommentsByUser';
 import './KnockoutExtensions/FormatDateFilter';
 import './KnockoutExtensions/MomentJsTimeAgo';
 export { default as DiscussionIndexViewModel } from './ViewModels/Discussion/DiscussionIndexViewModel';
+export { default as DiscussionIndex } from './Discussion/Index';
 
 // ~/bundles/EventSeries/Details
 export { default as EventSeriesDetailsViewModel } from './ViewModels/ReleaseEvent/EventSeriesDetailsViewModel';
@@ -164,6 +165,7 @@ export { default as MikuDbAlbumPrepareForImport } from './MikuDbAlbum/PrepareFor
 // ~/bundles/ReleaseEvent/Details
 //export { default as ReleaseEventRepository } from './Repositories/ReleaseEventRepository';
 export { default as ReleaseEventDetailsViewModel } from './ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel';
+export { default as EventDetails } from './Event/Details';
 
 // ~/bundles/ReleaseEvent/Edit
 import './KnockoutExtensions/BindingHandlers/DatePicker';
@@ -173,7 +175,7 @@ import './KnockoutExtensions/BindingHandlers/VenueAutoComplete';
 import './KnockoutExtensions/FormatDateFilter';
 import './KnockoutExtensions/FormatLengthSecondsFilter';
 export { default as ReleaseEventEditViewModel } from './ViewModels/ReleaseEvent/ReleaseEventEditViewModel';
-export { initPage as initReleaseEventEditPage } from './Event/Edit';
+export { default as EventEdit } from './Event/Edit';
 
 // ~/bundles/ReleaseEvent/EventsBySeries
 export { default as EventEventsBySeries } from './Event/EventsBySeries';
@@ -210,7 +212,7 @@ export { default as SongCreate } from './Song/Create';
 // ~/bundles/Song/Details
 import './KnockoutExtensions/MomentJsTimeAgo';
 export { default as SongDetailsViewModel } from './ViewModels/Song/SongDetailsViewModel';
-export { initPage as initSongDetailsPage } from './Song/Details';
+export { default as SongDetails } from './Song/Details';
 
 // ~/bundles/Song/Edit
 import './KnockoutExtensions/FormatDateFilter';
@@ -218,7 +220,7 @@ import './KnockoutExtensions/FormatLengthSecondsFilter';
 import './KnockoutExtensions/BindingHandlers/DatePicker';
 import './KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete';
 export { default as SongEditViewModel } from './ViewModels/Song/SongEditViewModel';
-export { initPage as initSongEditPage } from './Song/Edit';
+export { default as SongEdit } from './Song/Edit';
 
 // ~/bundles/Song/Merge
 export { default as SongMergeViewModel } from './ViewModels/Song/SongMergeViewModel';
@@ -240,6 +242,7 @@ import './KnockoutExtensions/ScrollEnd';
 import './KnockoutExtensions/ArtistAutoComplete';
 //export { default as PVPlayersFactory } from './ViewModels/PVs/PVPlayersFactory';
 export { default as SongListViewModel } from './ViewModels/SongList/SongListViewModel';
+export { default as SongListDetails } from './SongList/Details';
 
 // ~/bundles/SongList/Edit
 import './KnockoutExtensions/BindingHandlers/DatePicker';
@@ -249,6 +252,7 @@ export { default as SongListEdit } from './SongList/Edit';
 // ~/bundles/SongList/Featured
 import './KnockoutExtensions/FormatDateFilter';
 export { default as FeaturedSongListsViewModel } from './ViewModels/SongList/FeaturedSongListsViewModel';
+export { default as SongListFeatured } from './SongList/Featured';
 
 // ~/bundles/SongList/Import
 export { default as ImportSongListViewModel } from './ViewModels/SongList/ImportSongListViewModel';
@@ -263,7 +267,7 @@ export { default as StatsIndex } from './Stats/Index';
 import './KnockoutExtensions/MomentJsTimeAgo';
 //export { default as TagRepository } from './Repositories/TagRepository';
 export { default as TagDetailsViewModel } from './ViewModels/Tag/TagDetailsViewModel';
-export { initTagsPage, initChart } from './Tag/Details';
+export { default as TagDetails } from './Tag/Details';
 
 // ~/bundles/Tag/Edit
 import './KnockoutExtensions/Tag/TagCategoryAutoComplete';
@@ -290,6 +294,7 @@ export { default as TagViewVersion } from './Tag/ViewVersion';
 import './KnockoutExtensions/ArtistAutoComplete';
 import './KnockoutExtensions/BindingHandlers/ReleaseEventAutoComplete';
 export { default as AlbumCollectionViewModel } from './ViewModels/User/AlbumCollectionViewModel';
+export { default as UserAlbumCollection } from './User/AlbumCollection';
 
 // ~/bundles/User/Details
 import './KnockoutExtensions/SlideVisible';
@@ -304,10 +309,13 @@ export { default as FollowedArtistsViewModel } from './ViewModels/User/FollowedA
 export { default as RatedSongsSearchViewModel } from './ViewModels/User/RatedSongsSearchViewModel';
 //export { default as AlbumCollectionViewModel } from './ViewModels/User/AlbumCollectionViewModel';
 export { default as UserDetailsViewModel } from './ViewModels/User/UserDetailsViewModel';
-export { initPage as initUserDetailsPage } from './User/Details';
+export { default as UserDetails } from './User/Details';
 
 // ~/bundles/User/Edit
 export { default as UserEdit } from './User/Edit';
+
+// ~/bundles/User/EntryEdits
+export { default as UserEntryEdits } from './User/EntryEdits';
 
 // ~/bundles/User/FavoriteSongs
 export { default as UserFavoriteSongs } from './User/FavoriteSongs';
@@ -319,6 +327,7 @@ export { default as UserIndex } from './User/Index';
 // ~/bundles/User/Messages
 import './KnockoutExtensions/BindingHandlers/UserAutoComplete';
 export { default as UserMessagesViewModel } from './ViewModels/User/UserMessagesViewModel';
+export { default as UserMessages } from './User/Messages';
 
 // ~/bundles/User/MySettings
 export { default as MySettingsViewModel } from './ViewModels/User/MySettingsViewModel';
@@ -335,8 +344,12 @@ import './KnockoutExtensions/ScrollEnd';
 export { default as RequestVerificationViewModel } from './ViewModels/User/RequestVerificationViewModel';
 export { default as UserRequestVerification } from './User/RequestVerification';
 
+// ~/bundles/User/Stats
+export { default as UserStats } from './User/Stats';
+
 // ~/bundles/Venue/Details
 export { default as VenueDetailsViewModel } from './ViewModels/Venue/VenueDetailsViewModel';
+export { default as VenueDetails } from './Venue/Details';
 
 // ~/bundles/Venue/Edit
 export { default as VenueEditViewModel } from './ViewModels/Venue/VenueEditViewModel';
