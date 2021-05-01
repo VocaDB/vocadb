@@ -38,7 +38,7 @@ import './KnockoutExtensions/InitialValue';
 
 // ~/bundles/Home/Index
 export { default as NewsListViewModel } from './ViewModels/NewsListViewModel';
-export { initPage as initHomeIndexPage } from './Home/Index';
+export { default as HomeIndex } from './Home/Index';
 
 // ~/bundles/ActivityEntry/Index
 import './KnockoutExtensions/MomentJsTimeAgo';
@@ -61,6 +61,9 @@ import './KnockoutExtensions/FormatDateFilter';
 export { default as AdminRepository } from './Repositories/AdminRepository';
 export { default as ManageIPRulesViewModel } from './ViewModels/Admin/ManageIPRulesViewModel';
 export { default as AdminManageIPRules } from './Admin/ManageIPRules';
+
+// ~/bundles/Admin/PVsByAuthor
+export { default as AdminPVsByAuthor } from './Admin/PVsByAuthor';
 
 // ~/bundles/Admin/ViewAuditLog
 export { default as ViewAuditLogViewModel } from './ViewModels/Admin/ViewAuditLogViewModel';
@@ -152,8 +155,11 @@ export { default as EventEditSeries } from './Event/EditSeries';
 export { default as ArchivedEntryViewModel } from './ViewModels/ArchivedEntryViewModel';
 export { default as EventViewSeriesVersion } from './Event/ViewSeriesVersion';
 
+// ~/bundles/MikuDbAlbum/Index
+export { default as MikuDbAlbumIndex } from './MikuDbAlbum/Index';
+
 // ~/bundles/MikuDbAlbum/PrepareForImport
-export { initPage as initMikuDbAlbumPrepareForImportPage } from './MikuDbAlbums/PrepareForImport';
+export { default as MikuDbAlbumPrepareForImport } from './MikuDbAlbum/PrepareForImport';
 
 // ~/bundles/ReleaseEvent/Details
 //export { default as ReleaseEventRepository } from './Repositories/ReleaseEventRepository';
@@ -168,6 +174,15 @@ import './KnockoutExtensions/FormatDateFilter';
 import './KnockoutExtensions/FormatLengthSecondsFilter';
 export { default as ReleaseEventEditViewModel } from './ViewModels/ReleaseEvent/ReleaseEventEditViewModel';
 export { initPage as initReleaseEventEditPage } from './Event/Edit';
+
+// ~/bundles/ReleaseEvent/EventsBySeries
+export { default as EventEventsBySeries } from './Event/EventsBySeries';
+
+// ~/bundles/ReleaseEvent/EventsByVenue
+export { default as EventEventsByVenue } from './Event/EventsByVenue';
+
+// ~/bundles/ReleaseEvent/Index
+export { default as EventIndex } from './Event/Index';
 
 // ~/bundles/ReleaseEvent/ViewVersion
 //export { default as ReleaseEventRepository } from './Repositories/ReleaseEventRepository';

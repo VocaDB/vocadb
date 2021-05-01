@@ -112,13 +112,7 @@
 	<remikus path="/bundles/Home/Index.js" />
 
     <script type="text/javascript">
-    	$(function () {
-
-    		var viewModel = new app.NewsListViewModel('@Config.SiteSettings.BlogUrl');
-			ko.applyBindings(viewModel);
-
-			app.initHomeIndexPage();
-
-    	});
+		var blogUrl = '@Config.SiteSettings.BlogUrl';
+		app.HomeIndex(blogUrl);
     </script>
 }

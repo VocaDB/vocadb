@@ -2,6 +2,7 @@ import PVRatingButtonsViewModel from '../ViewModels/PVRatingButtonsViewModel';
 import ui from '../Shared/MessagesTyped';
 import UrlMapper from '../Shared/UrlMapper';
 import UserRepository from '../Repositories/UserRepository';
+import NewsListViewModel from '../ViewModels/NewsListViewModel';
 
 declare global {
   interface JQuery {
@@ -9,7 +10,7 @@ declare global {
   }
 }
 
-export function initPage() {
+function initPage() {
   function initRatingButtons() {
     const urlMapper = new UrlMapper(vdb.values.baseAddress);
     const repo = new UserRepository(urlMapper);
@@ -57,3 +58,14 @@ export function initPage() {
   $('#newAlbums img').vdbAlbumToolTip();
   $('#topAlbums img').vdbAlbumToolTip();
 }
+
+const HomeIndex = (blogUrl: string) => {
+  $(function () {
+    var viewModel = new NewsListViewModel(blogUrl);
+    ko.applyBindings(viewModel);
+
+    initPage();
+  });
+};
+
+export default HomeIndex;

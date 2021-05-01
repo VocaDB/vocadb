@@ -2,7 +2,7 @@ import AlbumContract from '../DataContracts/Album/AlbumContract';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
 
-export function initPage() {
+function initPage() {
   function acceptArtistSelection(albumId) {
     $.get(
       '../../api/albums/' + albumId,
@@ -30,3 +30,11 @@ export function initPage() {
     termParamName: 'query',
   });
 }
+
+const MikuDbAlbumPrepareForImport = () => {
+  $(document).ready(function () {
+    initPage();
+  });
+};
+
+export default MikuDbAlbumPrepareForImport;
