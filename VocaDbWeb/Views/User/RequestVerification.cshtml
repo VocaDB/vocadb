@@ -73,13 +73,7 @@
 
 	<remikus path="/bundles/shared/edit.js" />
 	<script type="text/javascript">
-
-		$(document).ready(function () {
-			var repoFactory = new app.RepositoryFactory(new app.UrlMapper('@RootPath'), @LanguagePreferenceInt);
-			var artistRepo = repoFactory.artistRepository();
-			ko.applyBindings(new app.RequestVerificationViewModel(artistRepo));
-		});
-
+		app.UserRequestVerification();
 	</script>
 		
 }

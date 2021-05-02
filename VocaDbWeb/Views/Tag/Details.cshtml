@@ -51,28 +51,21 @@
 	<script src="https://code.highcharts.com/highcharts.js" type="text/javascript"></script>
 	<remikus path="/bundles/Tag/Details.js" />
 	<script type="text/javascript">
-
-		$(function () {
-
-			var urlMapper = new app.UrlMapper('@RootPath');
-			var jsonModel = @ToJS(Model.JsonModel);
-			var vm;
-
-			app.initChart(urlMapper, jsonModel.name, jsonModel.parent, jsonModel.siblings, jsonModel.children, jsonModel.hasMoreSiblings, jsonModel.hasMoreChildren);
-
-			var repo = new app.TagRepository('@RootPath');
-			var userRepo = new app.UserRepository(urlMapper);
-			var latestComments = @ToJS(Model.LatestComments);
-			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-			var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.TagReportTypeNames, TagReport.ReportTypesWithRequiredNotes));
-
-			vm = new app.TagDetailsViewModel(repo, userRepo, latestComments, reportTypes, @UserContext.LoggedUserId, @Model.Id, canDeleteAllComments,
-				@ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)), @ToJS(Model.IsFollowing));
-			ko.applyBindings(vm);
-			app.initTagsPage(vm);
-
-		});
-
+		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+		var model = {
+			id: @Model.Id,
+			isFollowing: @ToJS(Model.IsFollowing),
+			jsonModel: @ToJS(Model.JsonModel),
+			latestComments: @ToJS(Model.LatestComments),
+		};
+		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.TagReportTypeNames, TagReport.ReportTypesWithRequiredNotes));
+		var showTranslatedDescription = @ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference));
+		app.TagDetails(
+			canDeleteAllComments,
+			model,
+			reportTypes,
+			showTranslatedDescription,
+		);
 	</script>
 }
 

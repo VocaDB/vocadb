@@ -68,55 +68,23 @@
 <remikus path="/bundles/Album/Edit.js" />
 
 <script type="text/javascript">
-	$(function() {
-
-		moment.locale('@Culture');
-		ko.punches.enableAll();
-
-		vdb.resources.entryEdit = {
-			saveWarning: @ToJS(EditRes.SaveWarning)
-		};
-
-		var canBulkDeletePVs = @ToJS(Login.Manager.HasPermission(VocaDb.Model.Domain.Security.PermissionToken.BulkDeletePVs));
-		var rootPath = '@RootPath';
-		var urlMapper = new app.UrlMapper(rootPath);
-
-		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
-		var repo = repoFactory.albumRepository();
-		var songRepo = repoFactory.songRepository();
-		var artistRepo = repoFactory.artistRepository();
-		var pvRepo = repoFactory.pvRepository();
-		var userRepo = repoFactory.userRepository();
-		var eventRepo = repoFactory.eventRepository();
-		var webLinkCategoryJson = @ToJS(Translate.WebLinkCategoryNames.AllFields);
-		var artistRoleJson = @ToJS(Translate.ArtistRoleNames.GetValuesAndNames(AppConfig.ArtistRoles), false);
-		var allowCustomTracks = @ToJS(VocaDb.Model.Utils.AppConfig.AllowCustomTracks);
-		var editedModel = @ToJS(Model.EditedAlbum);
-		var viewModel;
-
-		if (editedModel) {
-
-			viewModel = new app.AlbumEditViewModel(repo, songRepo, artistRepo, pvRepo, userRepo, eventRepo, urlMapper,
-				artistRoleJson, webLinkCategoryJson, editedModel, allowCustomTracks, canBulkDeletePVs, new app.DialogService());
-
-			ko.applyBindings(viewModel);
-
-		} else {
-
-			repo.getForEdit(@Model.Id, function (model) {
-
-				viewModel = new app.AlbumEditViewModel(repo, songRepo, artistRepo, pvRepo, userRepo, eventRepo, urlMapper,
-					artistRoleJson, webLinkCategoryJson, model, allowCustomTracks, canBulkDeletePVs, new app.DialogService());
-
-				ko.applyBindings(viewModel);
-
-			});
-
-		}
-
-		app.initAlbumEditPage();
-
-	});
+	var allowCustomTracks = @ToJS(VocaDb.Model.Utils.AppConfig.AllowCustomTracks);
+	var artistRoleJson = @ToJS(Translate.ArtistRoleNames.GetValuesAndNames(AppConfig.ArtistRoles), false);
+	var canBulkDeletePVs = @ToJS(Login.Manager.HasPermission(VocaDb.Model.Domain.Security.PermissionToken.BulkDeletePVs));
+	var model = {
+		editedAlbum: @ToJS(Model.EditedAlbum),
+		id: @Model.Id,
+	};
+	var saveWarning = @ToJS(EditRes.SaveWarning);
+	var webLinkCategoryJson = @ToJS(Translate.WebLinkCategoryNames.AllFields);
+	app.AlbumEdit(
+		allowCustomTracks,
+		artistRoleJson,
+		canBulkDeletePVs,
+		model,
+		saveWarning,
+		webLinkCategoryJson,
+	);
 </script>
 }
 

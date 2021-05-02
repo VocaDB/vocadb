@@ -102,7 +102,7 @@ ko.bindingHandlers.eventToolTip = {
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<number>,
   ) => {
-    const culture = vdb.values.uiLanguage || undefined;
+    const culture = vdb.values.uiCulture || undefined;
     initToolTip(element, '/Event/PopupContent', ko.unwrap(valueAccessor()), {
       culture: culture,
     });
@@ -131,7 +131,7 @@ ko.bindingHandlers.tagToolTip = {
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<number>,
   ) => {
-    var culture = vdb.values.uiLanguage || undefined;
+    var culture = vdb.values.uiCulture || undefined;
     var lang =
       ContentLanguagePreference[vdb.values.languagePreference] || undefined;
     initToolTip(element, '/Tag/PopupContent', ko.unwrap(valueAccessor()), {
@@ -146,7 +146,7 @@ ko.bindingHandlers.userToolTip = {
     element: HTMLElement,
     valueAccessor: () => KnockoutObservable<number>,
   ) => {
-    var culture = vdb.values.uiLanguage || undefined;
+    var culture = vdb.values.uiCulture || undefined;
     initToolTip(element, '/User/PopupContent', ko.unwrap(valueAccessor()), {
       culture: culture,
     });

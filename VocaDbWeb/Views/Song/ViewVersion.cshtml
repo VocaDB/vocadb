@@ -60,21 +60,14 @@
 
 @section BodyScripts {
     <script type="text/javascript">
-
-		$(function () {
-
-            $("#revertLink").button({ icons: { primary: 'ui-icon-arrowrefresh-1-w'} });
-            $("#downloadXmlLink").button({ icons: { primary: 'ui-icon-arrowthickstop-1-s' } });
-			$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert' } });
-			$("#showLink").button({ icons: { primary: 'ui-icon-unlocked' } });
-			$("#hideLink").button({ icons: { primary: 'ui-icon-locked' } });
-
-            var rep = new app.SongRepository('@RootPath', @LanguagePreferenceInt);
-
-			var viewModel = new app.ArchivedSongViewModel(@Model.Song.Id, @Model.ArchivedVersion.Version, rep);
-			ko.applyBindings(viewModel);
-
-        });
-
+		var model = {
+			archivedVersion: {
+				version: @Model.ArchivedVersion.Version,
+			},
+			song: {
+				id: @Model.Song.Id,
+			},
+		};
+		app.SongViewVersion(model);
     </script>
 }

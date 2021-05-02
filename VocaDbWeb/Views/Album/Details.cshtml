@@ -548,45 +548,31 @@
 	<remikus path="/bundles/Album/Details.js" />
 	<remikus path="/bundles/jqxRating.js" />
 	<script type="text/javascript">
-
-		$(document).ready(function() {
-
-			moment.locale('@Culture');
-			ko.punches.enableAll();
-
-			var urlMapper = new app.UrlMapper("@Url.Content("~/")");
-			var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt, @UserContext.LoggedUserId);
-			var albumRepo = repoFactory.albumRepository();
-			var userRepo = repoFactory.userRepository();
-			var artistRepo = repoFactory.artistRepository();
-
-			vdb.resources.album = {
-				addedToCollection: @ToJS(AjaxRes.AlbumStrings.AddedToCollection)
-				};
-			vdb.resources.albumDetails = @ToJS(new { download = AjaxRes.AlbumStrings.Download });
-
-			var reportTypes = @ToJS(Translate.AlbumReportTypeNames.Select(r => new {
-				r.Id,
-				r.Name,
-				NotesRequired = AlbumReport.ReportTypesWithRequiredNotes.Contains(r.Id)
-			}));
-
-			var jsonModel = @ToJS(Model.JsonModel);
-			var formatString = '@(Login.Manager.IsLoggedIn ? Login.User.AlbumFormatString : "")';
-			var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-			var viewModel = new app.AlbumDetailsViewModel(albumRepo, userRepo,
-				artistRepo,
-				jsonModel,
-				reportTypes,
-				@UserContext.LoggedUserId,
-				@LanguagePreferenceInt,
-				canDeleteAllComments, formatString, @ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference)));
-			ko.applyBindings(viewModel);
-
-			app.initAlbumDetailsPage(@Model.Id, @Model.CollectionRating,
-				"@ViewRes.SharedStrings.Save", urlMapper, viewModel);
-
-		});
-
+		var addedToCollection = @ToJS(AjaxRes.AlbumStrings.AddedToCollection);
+		var albumDetails = @ToJS(new { download = AjaxRes.AlbumStrings.Download });
+		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+		var formatString = '@(Login.Manager.IsLoggedIn ? Login.User.AlbumFormatString : "")';
+		var model = {
+			collectionRating: @Model.CollectionRating,
+			id: @Model.Id,
+			jsonModel: @ToJS(Model.JsonModel),
+		};
+		var reportTypes = @ToJS(Translate.AlbumReportTypeNames.Select(r => new {
+			r.Id,
+			r.Name,
+			NotesRequired = AlbumReport.ReportTypesWithRequiredNotes.Contains(r.Id)
+		}));
+		var saveStr = '@ViewRes.SharedStrings.Save';
+		var showTranslatedDescription = @ToJS(Model.Description.ShowEnglish(UserContext.LanguagePreference));
+		app.AlbumDetails(
+			addedToCollection,
+			albumDetails,
+			canDeleteAllComments,
+			formatString,
+			model,
+			reportTypes,
+			saveStr,
+			showTranslatedDescription,
+		);
 	</script>
 }

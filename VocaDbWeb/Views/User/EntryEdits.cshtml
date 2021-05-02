@@ -52,21 +52,10 @@
 @section BodyScripts {
 	<remikus path="/bundles/ActivityEntry/Index.js" />
 	<script type="text/javascript">
-		$(function () {
-
-			moment.locale('@Culture');
-			ko.punches.enableAll();
-
-			var urlMapper = new app.UrlMapper("@RootPath");
-			var resourceRepo = new app.ResourceRepository('@RootPath');
-			var languageSelection = '@UserContext.LanguagePreference';
-			var cultureCode = '@UICulture';
-			var userId = @Model.Id;
-			var additionsOnly = @ToJS((bool?)ViewBag.AdditionsOnly);
-
-			var vm = new app.ActivityEntryListViewModel(urlMapper, resourceRepo, languageSelection, cultureCode, userId, additionsOnly);
-			ko.applyBindings(vm);
-
-		});
+		var additionsOnly = @ToJS((bool?)ViewBag.AdditionsOnly);
+		var model = {
+			id: @Model.Id,
+		};
+		app.UserEntryEdits(additionsOnly, model);
 	</script>
 }

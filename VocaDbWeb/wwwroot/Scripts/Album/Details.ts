@@ -1,8 +1,12 @@
-import AlbumDetailsViewModel from '../ViewModels/Album/AlbumDetailsViewModel';
+import AlbumDetailsViewModel, {
+  AlbumDetailsAjax,
+} from '../ViewModels/Album/AlbumDetailsViewModel';
 import ui from '../Shared/MessagesTyped';
 import UrlMapper from '../Shared/UrlMapper';
+import RepositoryFactory from '../Repositories/RepositoryFactory';
+import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
 
-export function initAlbumDetailsPage(
+function initAlbumDetailsPage(
   albumId: number,
   collectionRating: number,
   saveStr,
@@ -136,3 +140,63 @@ export function initAlbumDetailsPage(
     position: { my: 'left top', at: 'left bottom', of: $('#statsLink') },
   });
 }
+
+const AlbumDetails = (
+  addedToCollection: string,
+  albumDetails,
+  canDeleteAllComments: boolean,
+  formatString: string,
+  model: {
+    collectionRating: number;
+    id: number;
+    jsonModel: AlbumDetailsAjax;
+  },
+  reportTypes: IEntryReportType[],
+  saveStr: string,
+  showTranslatedDescription: boolean,
+) => {
+  $(document).ready(function () {
+    moment.locale(vdb.values.culture);
+    ko.punches.enableAll();
+
+    var urlMapper = new UrlMapper(vdb.values.baseAddress);
+    var repoFactory = new RepositoryFactory(
+      urlMapper,
+      vdb.values.languagePreference,
+      vdb.values.loggedUserId,
+    );
+    var albumRepo = repoFactory.albumRepository();
+    var userRepo = repoFactory.userRepository();
+    var artistRepo = repoFactory.artistRepository();
+
+    vdb.resources.album = {
+      addedToCollection: addedToCollection,
+    };
+    vdb.resources.albumDetails = albumDetails;
+
+    var jsonModel = model.jsonModel;
+    var viewModel = new AlbumDetailsViewModel(
+      albumRepo,
+      userRepo,
+      artistRepo,
+      jsonModel,
+      reportTypes,
+      vdb.values.loggedUserId,
+      vdb.values.languagePreference,
+      canDeleteAllComments,
+      formatString,
+      showTranslatedDescription,
+    );
+    ko.applyBindings(viewModel);
+
+    initAlbumDetailsPage(
+      model.id,
+      model.collectionRating,
+      saveStr,
+      urlMapper,
+      viewModel,
+    );
+  });
+};
+
+export default AlbumDetails;

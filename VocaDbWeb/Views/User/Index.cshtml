@@ -12,23 +12,8 @@
 	<remikus path="/bundles/User/Index.js" />
 
 	<script type="text/javascript">
-		$(function () {
-
-			var cultureCode = '@Culture';
-			var uiCultureCode = '@UICulture';
-			moment.locale(cultureCode);
-
-			var model = @ToJS(Model);
-			var filter = model.filter;
-			var groupId = model.groupId;
-			var urlMapper = new app.UrlMapper('@RootPath');
-			var repoFactory = new app.RepositoryFactory(urlMapper);
-			var repo = repoFactory.userRepository();
-			var resourceRepo = repoFactory.resourceRepository();
-			var viewModel = new app.ListUsersViewModel(repo, resourceRepo, uiCultureCode, filter, groupId);
-			ko.applyBindings(viewModel);
-
-		});
+		var model = @ToJS(Model);
+		app.UserIndex(model)
 	</script>
 
 }

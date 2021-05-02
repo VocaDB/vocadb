@@ -256,29 +256,20 @@
 @section BodyScripts {
 <remikus path="/bundles/ReleaseEvent/Details.js" />
 <script type="text/javascript">
-	$(function () {
-		$("#editEventLink").button({ disabled: $("#editEventLink").hasClass("disabled"), icons: { primary: 'ui-icon-wrench'} });
-		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
-		$("#reportEntryLink").button({ icons: { primary: 'ui-icon-alert'} });
-		$("#manageTags").button({ icons: { primary: 'ui-icon-wrench' } });
-
-		var loggedUserId = @UserContext.LoggedUserId;
-		var rootPath = '@RootPath';
-		var urlMapper = new app.UrlMapper(rootPath);
-		var eventRepo = new app.ReleaseEventRepository(urlMapper);
-		var userRepo = new app.UserRepository(urlMapper, loggedUserId);
-		var latestComments = @ToJS(Model.LatestComments);
-		var users = @ToJS(Model.UsersAttending);
-		var tags = @ToJS(Model.Tags);
-		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.EventReportTypeNames, EventReport.ReportTypesWithRequiredNotes));
-
-		var vm = new app.ReleaseEventDetailsViewModel(urlMapper, eventRepo, userRepo, latestComments,
-			reportTypes, loggedUserId, @Model.Id, @ToJS((int?)Model.EventAssociationType), users, tags, canDeleteAllComments);
-		ko.applyBindings(vm);
-
-		$(".artistLink").vdbArtistToolTip();
-
-	});
+	var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
+	var eventAssociationType = @ToJS((int?)Model.EventAssociationType);
+	var model = {
+		id: @Model.Id,
+		latestComments: @ToJS(Model.LatestComments),
+		tags: @ToJS(Model.Tags),
+		usersAttending: @ToJS(Model.UsersAttending),
+	};
+	var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.EventReportTypeNames, EventReport.ReportTypesWithRequiredNotes));
+	app.EventDetails(
+		canDeleteAllComments,
+		eventAssociationType,
+		model,
+		reportTypes,
+	);
 </script>
 }

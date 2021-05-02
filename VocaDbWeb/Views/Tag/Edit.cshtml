@@ -27,22 +27,10 @@
 <remikus path="/bundles/shared/edit.js" />
 <remikus path="/bundles/Tag/Edit.js" />
 <script type="text/javascript">
-
-	$(document).ready(function () {
-
-		app.initTagEditPage();
-
-		var urlMapper = new app.UrlMapper('@RootPath');
-		var tagRepo = new app.TagRepository('@RootPath');
-		var userRepo = new app.UserRepository(urlMapper);
-
-		tagRepo.getById('@Model.Id', "AliasedTo,TranslatedDescription,Names,Parent,RelatedTags,WebLinks", '@UserContext.LanguagePreference.ToString()', function (contract) {
-			var viewModel = new app.TagEditViewModel(urlMapper, userRepo, contract);
-			ko.applyBindings(viewModel);
-		});
-
-	});
-
+	var model = {
+		id: @Model.Id,
+	};
+	app.TagEdit(model);
 </script>
 }
 

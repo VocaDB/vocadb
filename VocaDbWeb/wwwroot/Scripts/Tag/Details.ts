@@ -1,31 +1,12 @@
 import TagBaseContract from '../DataContracts/Tag/TagBaseContract';
 import TagDetailsViewModel from '../ViewModels/Tag/TagDetailsViewModel';
 import UrlMapper from '../Shared/UrlMapper';
+import TagRepository from '../Repositories/TagRepository';
+import UserRepository from '../Repositories/UserRepository';
+import CommentContract from '../DataContracts/CommentContract';
+import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
 
-export function initTagsPage(vm: TagDetailsViewModel) {
-  $('#tabs').tabs({
-    activate: (event, ui) => {
-      if (ui.newTab.data('tab') === 'Discussion') {
-        vm.comments.initComments();
-      }
-    },
-  });
-
-  $('#editTagLink').button({
-    disabled: $('#editTagLink').hasClass('disabled'),
-    icons: { primary: 'ui-icon-wrench' },
-  });
-  $('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
-  $('#reportEntryLink').button({ icons: { primary: 'ui-icon-alert' } });
-
-  $('#viewCommentsLink').click(() => {
-    var index = $('#tabs ul [data-tab="Discussion"]').index();
-    $('#tabs').tabs('option', 'active', index);
-    return false;
-  });
-}
-
-export function initChart(
+function initChart(
   urlMapper: UrlMapper,
   thisTag: string,
   parent: TagBaseContract,
@@ -232,3 +213,74 @@ export function initChart(
     },
   });
 }
+
+function initTagsPage(vm: TagDetailsViewModel) {
+  $('#tabs').tabs({
+    activate: (event, ui) => {
+      if (ui.newTab.data('tab') === 'Discussion') {
+        vm.comments.initComments();
+      }
+    },
+  });
+
+  $('#editTagLink').button({
+    disabled: $('#editTagLink').hasClass('disabled'),
+    icons: { primary: 'ui-icon-wrench' },
+  });
+  $('#viewVersions').button({ icons: { primary: 'ui-icon-clock' } });
+  $('#reportEntryLink').button({ icons: { primary: 'ui-icon-alert' } });
+
+  $('#viewCommentsLink').click(() => {
+    var index = $('#tabs ul [data-tab="Discussion"]').index();
+    $('#tabs').tabs('option', 'active', index);
+    return false;
+  });
+}
+
+const TagDetails = (
+  canDeleteAllComments: boolean,
+  model: {
+    id: number;
+    isFollowing: boolean;
+    jsonModel;
+    latestComments: CommentContract[];
+  },
+  reportTypes: IEntryReportType[],
+  showTranslatedDescription: boolean,
+) => {
+  $(function () {
+    var urlMapper = new UrlMapper(vdb.values.baseAddress);
+    var jsonModel = model.jsonModel;
+    var vm;
+
+    initChart(
+      urlMapper,
+      jsonModel.name,
+      jsonModel.parent,
+      jsonModel.siblings,
+      jsonModel.children,
+      jsonModel.hasMoreSiblings,
+      jsonModel.hasMoreChildren,
+    );
+
+    var repo = new TagRepository(vdb.values.baseAddress);
+    var userRepo = new UserRepository(urlMapper);
+    var latestComments = model.latestComments;
+
+    vm = new TagDetailsViewModel(
+      repo,
+      userRepo,
+      latestComments,
+      reportTypes,
+      vdb.values.loggedUserId,
+      model.id,
+      canDeleteAllComments,
+      showTranslatedDescription,
+      model.isFollowing,
+    );
+    ko.applyBindings(vm);
+    initTagsPage(vm);
+  });
+};
+
+export default TagDetails;

@@ -561,42 +561,24 @@
 @section BodyScripts {
 	<remikus path="/bundles/Song/Details.js" />
 	<script type="text/javascript">
-
-	$(document).ready(function() {
-
-		moment.locale('@Culture');
-
-		var resources = @ResourceHelpers.ToJSON(AjaxRes.SongStrings.ResourceManager, true);
-		vdb.resources.song = resources;
-
-		var jsonModel = @ToJS(Model.JsonModel);
-		var rootPath = '@RootPath';
-		var urlMapper = new app.UrlMapper(rootPath);
-		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
-		var repo = repoFactory.songRepository();
-		var userRepo = repoFactory.userRepository();
-		var artistRepo = repoFactory.artistRepository();
 		var canDeleteAllComments = @ToJS(UserContext.HasPermission(PermissionToken.DeleteComments));
-
+		var model = {
+			id: @Model.Id,
+			jsonModel: @ToJS(Model.JsonModel),
+		};
 		var reportTypes = @ToJS(ReportUtils.GetReportTypes(Translate.SongReportTypeNames, SongReport.ReportTypesWithRequiredNotes));
-
-		var viewModel = new app.SongDetailsViewModel(repo, userRepo, 
-			artistRepo,
-			resources,
-			@ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference)),
-			jsonModel,
+		var resources = @ResourceHelpers.ToJSON(AjaxRes.SongStrings.ResourceManager, true);
+		var saveStr = '@ViewRes.SharedStrings.Save';
+		var showTranslatedDescription = @ToJS(Model.Notes.ShowEnglish(UserContext.LanguagePreference));
+		app.SongDetails(
+			canDeleteAllComments,
+			model,
 			reportTypes,
-			@UserContext.LoggedUserId, 
-			@LanguagePreferenceInt, 
-			canDeleteAllComments, app.ui.showThankYouForRatingMessage);
-		ko.applyBindings(viewModel);
-
-		viewModel.songListDialog.addedToList = function() { app.ui.showSuccessMessage(resources.addedToList); };
-
-		app.initSongDetailsPage(jsonModel, @Model.Id, "@ViewRes.SharedStrings.Save", urlMapper, viewModel);
-	});
-
-</script>
+			resources,
+			saveStr,
+			showTranslatedDescription,
+		);
+	</script>
 }
 
 @{

@@ -39,13 +39,10 @@
 <remikus path="/bundles/shared/edit.js" />
 <remikus path="/bundles/SongList/Edit.js" />
 <script type="text/javascript">
-
-	$(document).ready(function () {
-		var urlMapper = new app.UrlMapper('@RootPath');
-		var repoFactory = new app.RepositoryFactory(urlMapper, @LanguagePreferenceInt);
-		app.initSongListEditPage(repoFactory, urlMapper, @Model.Id);
-	});
-
+	var model = {
+		id: @Model.Id,
+	};
+	app.SongListEdit(model);
 </script>
 }
 

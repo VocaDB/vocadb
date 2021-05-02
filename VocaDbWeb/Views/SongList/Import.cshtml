@@ -112,14 +112,6 @@
 	<remikus path="/bundles/shared/edit.js" />
 	<remikus path="/bundles/SongList/Import.js" />
 	<script type="text/javascript">
-
-	ko.punches.enableAll();
-
-	$(function () {
-		var urlMapper = new app.UrlMapper('@RootPath');
-		var viewModel = new app.ImportSongListViewModel(urlMapper);
-		ko.applyBindings(viewModel);
-	});
-
+		app.SongListImport();
 	</script>
 }

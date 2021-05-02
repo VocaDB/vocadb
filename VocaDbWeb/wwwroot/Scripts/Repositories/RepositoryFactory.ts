@@ -17,8 +17,8 @@ import VenueRepository from './VenueRepository';
 export default class RepositoryFactory {
   constructor(
     private readonly urlMapper: UrlMapper,
-    private readonly lang: ContentLanguagePreference,
-    private readonly loggedUserId: number,
+    private readonly lang?: ContentLanguagePreference,
+    private readonly loggedUserId?: number,
   ) {}
 
   public adminRepository = () => {

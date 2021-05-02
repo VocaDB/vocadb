@@ -5,8 +5,12 @@ module vdb.values {
   /** Whether the user is logged in. */
   export var isLoggedIn: boolean;
 
+  export var loggedUserId: number;
+
   export var languagePreference: number;
 
+  export var culture: string;
+
   /** UI language code, for example "en" */
-  export var uiLanguage: string;
+  export var uiCulture: string;
 }

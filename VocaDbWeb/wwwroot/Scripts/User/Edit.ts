@@ -3,7 +3,12 @@ import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePr
 import functions from '../Shared/GlobalFunctions';
 import { initEntrySearch } from '../Shared/EntryAutoComplete';
 
-export function initPage() {
+function initPage() {
+  function artistAdded(row) {
+    var artistsTable = $('#ownedArtistsTableBody');
+    artistsTable.append(row);
+  }
+
   function acceptArtistSelection(artistId, term) {
     if (!functions.isNullOrWhiteSpace(artistId)) {
       $.post(
@@ -12,11 +17,6 @@ export function initPage() {
         artistAdded,
       );
     }
-  }
-
-  function artistAdded(row) {
-    var artistsTable = $('#ownedArtistsTableBody');
-    artistsTable.append(row);
   }
 
   $('#clearRatingsLink').button();
@@ -41,3 +41,11 @@ export function initPage() {
     return false;
   });
 }
+
+const UserEdit = () => {
+  $(document).ready(function () {
+    initPage();
+  });
+};
+
+export default UserEdit;

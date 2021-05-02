@@ -96,20 +96,10 @@
 @section BodyScripts {
 <remikus path="/bundles/EventSeries/Details.js" />
 <script type="text/javascript">
-	$(function () {
-		$("#editEventLink").button({ icons: { primary: 'ui-icon-wrench' } });
-		$("#createEventLink").button({ icons: { primary: 'ui-icon-plus' } });
-		$("#viewVersions").button({ icons: { primary: 'ui-icon-clock' } });
-
-		var loggedUserId = @UserContext.LoggedUserId;
-		var rootPath = '@RootPath';
-		var urlMapper = new app.UrlMapper(rootPath);
-		var userRepo = new app.UserRepository(urlMapper, loggedUserId);
-		var tags = @ToJS(Model.Tags);
-
-		var vm = new app.EventSeriesDetailsViewModel(userRepo, @Model.Id, tags);
-		ko.applyBindings(vm);
-
-	});
+	var model = {
+		id: @Model.Id,
+		tags: @ToJS(Model.Tags),
+	};
+	app.EventSeriesDetails(model);
 </script>
 }

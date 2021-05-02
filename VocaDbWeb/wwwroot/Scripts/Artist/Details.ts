@@ -1,7 +1,13 @@
 import ArtistDetailsViewModel from '../ViewModels/Artist/ArtistDetailsViewModel';
 import SongRepository from '../Repositories/SongRepository';
+import UrlMapper from '../Shared/UrlMapper';
+import RepositoryFactory from '../Repositories/RepositoryFactory';
+import PVPlayersFactory from '../ViewModels/PVs/PVPlayersFactory';
+import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
+import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
+import CommentContract from '../DataContracts/CommentContract';
 
-export function initPage(
+function initPage(
   artistId: number,
   saveStr,
   urlMapper,
@@ -61,3 +67,71 @@ export function initPage(
   $('#groups a').vdbArtistToolTip();
   $('.artistLink').vdbArtistToolTip();
 }
+
+const ArtistDetails = (
+  canDeleteAllComments: boolean,
+  hasEnglishDescription: boolean,
+  model: {
+    emailNotifications: boolean;
+    id: number;
+    isAdded: boolean;
+    latestComments: CommentContract[];
+    siteNotifications: boolean;
+    tags: TagUsageForApiContract[];
+  },
+  reportTypes: IEntryReportType[],
+  saveStr: string,
+) => {
+  $(function () {
+    moment.locale(vdb.values.culture);
+
+    var urlMapper = new UrlMapper(vdb.values.baseAddress);
+
+    var cultureCode = vdb.values.uiCulture;
+    var loggedUserId = vdb.values.loggedUserId;
+    var unknownPictureUrl = urlMapper.mapRelative('/Content/unknown.png');
+
+    var repoFactory = new RepositoryFactory(
+      urlMapper,
+      vdb.values.languagePreference,
+      loggedUserId,
+    );
+    var artistRepo = repoFactory.artistRepository();
+    var albumRepository = repoFactory.albumRepository();
+    var songRepo = repoFactory.songRepository();
+    var resourceRepo = repoFactory.resourceRepository();
+    var userRepository = repoFactory.userRepository();
+    var pvPlayerElem = $('#pv-player-wrapper')[0];
+    var pvPlayersFactory = new PVPlayersFactory(pvPlayerElem);
+    var tagUsages = model.tags;
+    var latestComments = model.latestComments;
+
+    var viewModel = new ArtistDetailsViewModel(
+      artistRepo,
+      model.id,
+      tagUsages,
+      model.isAdded,
+      model.emailNotifications,
+      model.siteNotifications,
+      hasEnglishDescription,
+      unknownPictureUrl,
+      vdb.values.languagePreference,
+      urlMapper,
+      albumRepository,
+      songRepo,
+      resourceRepo,
+      userRepository,
+      cultureCode,
+      reportTypes,
+      loggedUserId,
+      canDeleteAllComments,
+      pvPlayersFactory,
+      latestComments,
+    );
+    ko.applyBindings(viewModel);
+
+    initPage(model.id, saveStr, urlMapper, viewModel, songRepo);
+  });
+};
+
+export default ArtistDetails;

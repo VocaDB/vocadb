@@ -82,31 +82,7 @@
 
 @section BodyScripts {
 <script type="text/javascript">
-
-	$(document).ready(function () {
-
-		var json = @ToJS(Model);
-		var vm = new app.ViewAuditLogViewModel(json);
-		ko.applyBindings(vm);
-		
-		$("#loadMoreLink").click(function () {
-
-			var params = $.extend({ start: $("#start").val() }, json);
-
-			$.post("AuditLogEntries", params, function (result) {
-				$("#logEntries").append(result);
-				$("#start").val(parseInt($("#start").val()) + 200);
-			});
-			return false;
-		});
-
-		@* HACK: replacement for Html.RenderAction. *@
-		@* TODO: replace with view components *@
-		@* Code from: https://stackoverflow.com/questions/41353874/equivalent-of-html-renderaction-in-asp-net-core/45494932#45494932 *@
-		$.get('@Html.Raw(Url.Action("AuditLogEntries", Model))', null, function (content) {
-			$("#logEntries").html(content);
-		});
-	});
-
+	var model = @ToJS(Model);
+	app.AdminViewAuditLog(model);
 </script>
 }
