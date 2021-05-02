@@ -24,10 +24,9 @@ import HttpClient from '../Shared/HttpClient';
 // Repository for managing users and related objects.
 // Corresponds to the UserController class.
 export default class UserRepository implements ICommentRepository {
-  public addFollowedTag = (tagId: number, callback?: () => void) => {
-    $.postJSON(
+  public addFollowedTag = (tagId: number): Promise<void> => {
+    return this.httpClient.post<void>(
       this.urlMapper.mapRelative(`/api/users/current/followedTags/${tagId}`),
-      callback,
     );
   };
 
@@ -41,26 +40,20 @@ export default class UserRepository implements ICommentRepository {
   public createComment = (
     userId: number,
     contract: CommentContract,
-    callback: (contract: CommentContract) => void,
-  ) => {
-    $.postJSON(
+  ): Promise<CommentContract> => {
+    return this.httpClient.post<CommentContract>(
       this.urlMapper.mapRelative(`/api/users/${userId}/profileComments`),
       contract,
-      callback,
-      'json',
     );
   };
 
   public createMessage = (
     userId: number,
     contract: UserApiContract,
-    callback: (result: UserMessageSummaryContract) => void,
-  ) => {
-    return $.postJSON(
+  ): Promise<UserMessageSummaryContract> => {
+    return this.httpClient.post<UserMessageSummaryContract>(
       this.urlMapper.mapRelative(`/api/users/${userId}/messages`),
       contract,
-      callback,
-      'json',
     );
   };
 
@@ -426,8 +419,11 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public refreshEntryEdit = (entryType: EntryType, entryId: number) => {
-    $.postJSON(
+  public refreshEntryEdit = (
+    entryType: EntryType,
+    entryId: number,
+  ): Promise<void> => {
+    return this.httpClient.post<void>(
       this.urlMapper.mapRelative(
         `/api/users/current/refreshEntryEdit/?entryType=${EntryType[entryType]}&entryId=${entryId}`,
       ),
@@ -479,29 +475,23 @@ export default class UserRepository implements ICommentRepository {
   public updateComment = (
     commentId: number,
     contract: CommentContract,
-    callback?: () => void,
-  ) => {
-    $.postJSON(
+  ): Promise<void> => {
+    return this.httpClient.post<void>(
       this.urlMapper.mapRelative(`/api/users/profileComments/${commentId}`),
       contract,
-      callback,
-      'json',
     );
   };
 
   public updateEventForUser = (
     eventId: number,
     associationType: UserEventRelationshipType,
-    callback?: () => void,
-  ) => {
+  ): Promise<void> => {
     var url = this.urlMapper.mapRelative(
       `/api/users/current/events/${eventId}`,
     );
-    return $.postJSON(
-      url,
-      { associationType: UserEventRelationshipType[associationType] },
-      callback,
-    ) as JQueryPromise<{}>;
+    return this.httpClient.post<void>(url, {
+      associationType: UserEventRelationshipType[associationType],
+    });
   };
 
   public updateEventTags = (
@@ -551,14 +541,9 @@ export default class UserRepository implements ICommentRepository {
   public updateSongRating = (
     songId: number,
     rating: SongVoteRating,
-    callback: () => void,
-  ) => {
+  ): Promise<void> => {
     var url = this.urlMapper.mapRelative(`/api/songs/${songId}/ratings`);
-    return $.postJSON(
-      url,
-      { rating: SongVoteRating[rating] },
-      callback,
-    ) as JQueryPromise<any>;
+    return this.httpClient.post<void>(url, { rating: SongVoteRating[rating] });
   };
 
   public updateSongTags = (

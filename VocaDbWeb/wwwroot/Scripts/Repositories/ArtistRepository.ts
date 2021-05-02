@@ -23,13 +23,10 @@ export default class ArtistRepository
   public createComment = (
     artistId: number,
     contract: CommentContract,
-    callback: (contract: CommentContract) => void,
-  ) => {
-    $.postJSON(
+  ): Promise<CommentContract> => {
+    return this.httpClient.post<CommentContract>(
       this.urlMapper.mapRelative(`/api/artists/${artistId}/comments`),
       contract,
-      callback,
-      'json',
     );
   };
 
@@ -150,13 +147,10 @@ export default class ArtistRepository
   public updateComment = (
     commentId: number,
     contract: CommentContract,
-    callback?: () => void,
-  ) => {
-    $.postJSON(
+  ): Promise<void> => {
+    return this.httpClient.post<void>(
       this.urlMapper.mapRelative(`/api/artists/comments/${commentId}`),
       contract,
-      callback,
-      'json',
     );
   };
 

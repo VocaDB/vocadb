@@ -67,15 +67,17 @@ export default class DiscussionIndexViewModel {
 
   public createNewTopic = () => {
     var folder = this.selectedFolder();
-    this.repo.createTopic(folder.id, this.newTopic().toContract(), (topic) => {
-      topic.canBeDeleted = false;
-      this.newTopic(
-        new DiscussionTopicEditViewModel(this.loggedUserId, this.folders()),
-      );
-      this.showCreateNewTopic(false);
-      this.topics.unshift(topic);
-      this.selectTopic(topic);
-    });
+    this.repo
+      .createTopic(folder.id, this.newTopic().toContract())
+      .then((topic) => {
+        topic.canBeDeleted = false;
+        this.newTopic(
+          new DiscussionTopicEditViewModel(this.loggedUserId, this.folders()),
+        );
+        this.showCreateNewTopic(false);
+        this.topics.unshift(topic);
+        this.selectTopic(topic);
+      });
   };
 
   public deleteTopic = (topic: DiscussionTopicContract) => {

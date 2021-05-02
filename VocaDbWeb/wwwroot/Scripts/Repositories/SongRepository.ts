@@ -52,13 +52,10 @@ export default class SongRepository
   public createComment = (
     songId: number,
     contract: CommentContract,
-    callback: (contract: CommentContract) => void,
-  ) => {
-    $.postJSON(
+  ): Promise<CommentContract> => {
+    return this.httpClient.post<CommentContract>(
       this.urlMapper.mapRelative(`/api/songs/${songId}/comments`),
       contract,
-      callback,
-      'json',
     );
   };
 
@@ -316,13 +313,10 @@ export default class SongRepository
   public updateComment = (
     commentId: number,
     contract: CommentContract,
-    callback?: () => void,
-  ) => {
-    $.postJSON(
+  ): Promise<void> => {
+    return this.httpClient.post<void>(
       this.urlMapper.mapRelative(`/api/songs/comments/${commentId}`),
       contract,
-      callback,
-      'json',
     );
   };
 
@@ -330,25 +324,22 @@ export default class SongRepository
     songId: number,
     text: string,
     author: ArtistContract,
-  ) => {
-    $.postJSON(
+  ): Promise<void> => {
+    return this.httpClient.post<void>(
       this.urlMapper.mapRelative(`/api/songs/${songId}/personal-description/`),
       {
         personalDescriptionText: text,
         personalDescriptionAuthor: author || undefined,
       },
-      null,
-      'json',
     );
   };
 
   public updateSongRating = (
     songId: number,
     rating: SongVoteRating,
-    callback: () => void,
-  ) => {
+  ): Promise<void> => {
     var url = this.urlMapper.mapRelative(`/api/songs/${songId}/ratings`);
-    $.postJSON(url, { rating: SongVoteRating[rating] }, callback);
+    return this.httpClient.post<void>(url, { rating: SongVoteRating[rating] });
   };
 
   private urlMapper: UrlMapper;

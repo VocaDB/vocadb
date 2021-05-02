@@ -8,14 +8,10 @@ export default class AdminRepository {
     private urlMapper: UrlMapper,
   ) {}
 
-  public addIpToBanList = (
-    rule: IPRuleContract,
-    callback: (result: boolean) => void,
-  ) => {
-    return $.postJSON(
+  public addIpToBanList = (rule: IPRuleContract): Promise<boolean> => {
+    return this.httpClient.post<boolean>(
       this.urlMapper.mapRelative('/api/ip-rules'),
       rule,
-      callback,
     );
   };
 

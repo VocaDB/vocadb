@@ -19,16 +19,15 @@ export default class UserDetailsViewModel {
   private static overview = 'Overview';
 
   public addBan = () => {
-    this.adminRepo.addIpToBanList(
-      { address: this.lastLoginAddress, notes: this.name },
-      (result) => {
+    this.adminRepo
+      .addIpToBanList({ address: this.lastLoginAddress, notes: this.name })
+      .then((result) => {
         if (result) {
           ui.showSuccessMessage('Added to ban list');
         } else {
           ui.showErrorMessage('Already in the ban list');
         }
-      },
-    );
+      });
   };
 
   public checkSFS = () => {

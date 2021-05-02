@@ -72,7 +72,7 @@ export default class EditableCommentsViewModel {
       message: comment,
     };
 
-    this.repo.createComment(this.entryId, commentContract, (result) => {
+    this.repo.createComment(this.entryId, commentContract).then((result) => {
       var processed = this.processComment(result);
       this.paging.totalItems(this.paging.totalItems() + 1);
 

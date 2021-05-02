@@ -22,8 +22,7 @@ export default class ReleaseEventRepository extends BaseRepository {
     reportType: string,
     notes: string,
     versionNumber: number,
-    callback?: () => void,
-  ) => {
+  ): Promise<void> => {
     var url = functions.mergeUrls(
       this.baseUrl,
       `/api/releaseEvents/${eventId}/reports?${AjaxHelper.createUrl({
@@ -32,7 +31,7 @@ export default class ReleaseEventRepository extends BaseRepository {
         versionNumber: [versionNumber],
       })}`,
     );
-    $.postJSON(url, callback);
+    return this.httpClient.post<void>(url);
   };
 
   public delete = (

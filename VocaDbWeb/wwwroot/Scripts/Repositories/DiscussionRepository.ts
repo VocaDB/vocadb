@@ -22,26 +22,20 @@ export default class DiscussionRepository implements ICommentRepository {
   public createComment = (
     topicId: number,
     contract: CommentContract,
-    callback: (contract: CommentContract) => void,
-  ) => {
-    $.postJSON(
+  ): Promise<CommentContract> => {
+    return this.httpClient.post<CommentContract>(
       this.mapUrl(`topics/${topicId}/comments`),
       contract,
-      callback,
-      'json',
     );
   };
 
   public createTopic = (
     folderId: number,
     contract: DiscussionTopicContract,
-    callback: (contract: DiscussionTopicContract) => void,
-  ) => {
-    $.postJSON(
+  ): Promise<DiscussionTopicContract> => {
+    return this.httpClient.post<DiscussionTopicContract>(
       this.mapUrl(`folders/${folderId}/topics`),
       contract,
-      callback,
-      'json',
     );
   };
 
@@ -106,21 +100,20 @@ export default class DiscussionRepository implements ICommentRepository {
   public updateComment = (
     commentId: number,
     contract: CommentContract,
-    callback?: () => void,
-  ) => {
-    $.postJSON(
+  ): Promise<void> => {
+    return this.httpClient.post<void>(
       this.mapUrl(`comments/${commentId}`),
       contract,
-      callback,
-      'json',
     );
   };
 
   public updateTopic = (
     topicId: number,
     contract: DiscussionTopicContract,
-    callback?: () => void,
-  ) => {
-    $.postJSON(this.mapUrl(`topics/${topicId}`), contract, callback, 'json');
+  ): Promise<void> => {
+    return this.httpClient.post<void>(
+      this.mapUrl(`topics/${topicId}`),
+      contract,
+    );
   };
 }

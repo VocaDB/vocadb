@@ -39,14 +39,11 @@ export default class FakeUserRepository extends UserRepository {
     this.updateSongRating = (
       songId: number,
       rating: SongVoteRating,
-      callback: Function,
-    ) => {
+    ): Promise<void> => {
       this.songId = songId;
       this.rating = rating;
 
-      if (callback) callback();
-
-      return $.Deferred().resolve();
+      return Promise.resolve();
     };
   }
 }

@@ -20,8 +20,7 @@ export default class CommentRepository
   public createComment = (
     entryId: number,
     contract: CommentContract,
-    callback: (contract: CommentContract) => void,
-  ) => {
+  ): Promise<CommentContract> => {
     contract.entry = {
       entryType: EntryType[this.entryType],
       id: entryId,
@@ -30,7 +29,7 @@ export default class CommentRepository
     var url = this.urlMapper.mapRelative(
       UrlMapper.buildUrl(`api/comments/${EntryType[this.entryType]}-comments`),
     );
-    $.postJSON(url, contract, callback, 'json');
+    return this.httpClient.post<CommentContract>(url, contract);
   };
 
   public deleteComment = (commentId: number, callback?: () => void) => {
@@ -56,14 +55,13 @@ export default class CommentRepository
   public updateComment = (
     commentId: number,
     contract: CommentContract,
-    callback?: () => void,
-  ) => {
+  ): Promise<void> => {
     var url = this.urlMapper.mapRelative(
       UrlMapper.buildUrl(
         `api/comments/${EntryType[this.entryType]}-comments/`,
         commentId.toString(),
       ),
     );
-    $.postJSON(url, contract, callback, 'json');
+    return this.httpClient.post<void>(url, contract);
   };
 }

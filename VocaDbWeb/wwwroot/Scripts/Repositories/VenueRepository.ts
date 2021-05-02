@@ -20,8 +20,7 @@ export default class VenueRepository extends BaseRepository {
     reportType: string,
     notes: string,
     versionNumber: number,
-    callback?: () => void,
-  ) => {
+  ): Promise<void> => {
     var url = functions.mergeUrls(
       this.baseUrl,
       `/api/venues/${venueId}/reports?${AjaxHelper.createUrl({
@@ -30,7 +29,7 @@ export default class VenueRepository extends BaseRepository {
         versionNumber: [versionNumber],
       })}`,
     );
-    $.postJSON(url, callback);
+    return this.httpClient.post<void>(url);
   };
 
   public delete = (

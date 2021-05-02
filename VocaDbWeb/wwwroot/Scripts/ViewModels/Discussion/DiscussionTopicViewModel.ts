@@ -52,7 +52,7 @@ export default class DiscussionTopicViewModel {
 
     var editedContract = this.editModel().toContract();
 
-    this.repo.updateTopic(this.contract().id, editedContract, () => {
+    this.repo.updateTopic(this.contract().id, editedContract).then(() => {
       editedContract.id = this.contract().id;
       editedContract.created = this.contract().created;
       editedContract.canBeDeleted = this.contract().canBeDeleted;

@@ -26,10 +26,11 @@ export default class TagCreateViewModel {
   }
 
   public createTag = () => {
-    this.tagRepo.create(
-      this.newTagName(),
-      (t) => (window.location.href = EntryUrlMapper.details_tag_contract(t)),
-    );
+    this.tagRepo
+      .create(this.newTagName())
+      .then(
+        (t) => (window.location.href = EntryUrlMapper.details_tag_contract(t)),
+      );
   };
 
   public dialogVisible = ko.observable(false);

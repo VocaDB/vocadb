@@ -140,13 +140,14 @@ export default class UserMessagesViewModel {
     this.newMessageViewModel.isSending(true);
     var message = this.newMessageViewModel.toContract(this.userId);
     this.userRepository
-      .createMessage(this.userId, message, () => {
+      .createMessage(this.userId, message)
+      .then(() => {
         this.newMessageViewModel.clear();
         this.sentMessages.clear();
         this.selectInbox(UserInboxType.Sent);
         if (this.messageSent) this.messageSent();
       })
-      .always(() => this.newMessageViewModel.isSending(false));
+      .finally(() => this.newMessageViewModel.isSending(false));
   };
 }
 

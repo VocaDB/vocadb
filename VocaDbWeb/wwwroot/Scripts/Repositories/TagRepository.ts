@@ -27,12 +27,9 @@ export default class TagRepository extends BaseRepository {
     this.urlMapper = new UrlMapper(baseUrl);
   }
 
-  public create = (
-    name: string,
-    callback?: (result: TagBaseContract) => void,
-  ) => {
+  public create = (name: string): Promise<TagBaseContract> => {
     var url = functions.mergeUrls(this.baseUrl, `/api/tags?name=${name}`);
-    $.postJSON(url, callback);
+    return this.httpClient.post<TagBaseContract>(url);
   };
 
   public createReport = (
@@ -40,8 +37,7 @@ export default class TagRepository extends BaseRepository {
     reportType: string,
     notes: string,
     versionNumber: number,
-    callback?: () => void,
-  ) => {
+  ): Promise<void> => {
     var url = functions.mergeUrls(
       this.baseUrl,
       `/api/tags/${tagId}/reports?${AjaxHelper.createUrl({
@@ -50,7 +46,7 @@ export default class TagRepository extends BaseRepository {
         versionNumber: [versionNumber],
       })}`,
     );
-    $.postJSON(url, callback);
+    return this.httpClient.post<void>(url);
   };
 
   public getById = (

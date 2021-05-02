@@ -45,27 +45,22 @@ export default class AlbumRepository
   public createComment = (
     albumId: number,
     contract: CommentContract,
-    callback: (contract: CommentContract) => void,
-  ) => {
-    $.postJSON(
+  ): Promise<CommentContract> => {
+    return this.httpClient.post<CommentContract>(
       this.urlMapper.mapRelative(`/api/albums/${albumId}/comments`),
       contract,
-      callback,
-      'json',
     );
   };
 
   public createOrUpdateReview(
     albumId: number,
     reviewContract: AlbumReviewContract,
-  ) {
+  ): Promise<AlbumReviewContract> {
     const url = functions.mergeUrls(
       this.baseUrl,
       `/api/albums/${albumId}/reviews`,
     );
-    return this.handleJqueryPromise<AlbumReviewContract>(
-      $.postJSON(url, reviewContract, null, 'json'),
-    );
+    return this.httpClient.post<AlbumReviewContract>(url, reviewContract);
   }
 
   public createReport = (
@@ -213,13 +208,10 @@ export default class AlbumRepository
   public updateComment = (
     commentId: number,
     contract: CommentContract,
-    callback?: () => void,
-  ) => {
-    $.postJSON(
+  ): Promise<void> => {
+    return this.httpClient.post<void>(
       this.urlMapper.mapRelative(`/api/albums/comments/${commentId}`),
       contract,
-      callback,
-      'json',
     );
   };
 
@@ -227,8 +219,8 @@ export default class AlbumRepository
     albumId: number,
     text: string,
     author: ArtistContract,
-  ) => {
-    $.postJSON(
+  ): Promise<void> => {
+    return this.httpClient.post<void>(
       this.urlMapper.mapRelative(
         `/api/albums/${albumId}/personal-description/`,
       ),
@@ -236,8 +228,6 @@ export default class AlbumRepository
         personalDescriptionText: text,
         personalDescriptionAuthor: author || undefined,
       },
-      null,
-      'json',
     );
   };
 }

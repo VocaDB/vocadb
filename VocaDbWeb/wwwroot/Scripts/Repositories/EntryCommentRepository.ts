@@ -18,12 +18,11 @@ export default class EntryCommentRepository implements ICommentRepository {
   public createComment = (
     entryId: number,
     contract: CommentContract,
-    callback: (contract: CommentContract) => void,
-  ) => {
+  ): Promise<CommentContract> => {
     var url = this.urlMapper.mapRelative(
       UrlMapper.buildUrl(this.baseUrl, entryId.toString(), '/comments'),
     );
-    $.postJSON(url, contract, callback, 'json');
+    return this.httpClient.post<CommentContract>(url, contract);
   };
 
   public deleteComment = (commentId: number, callback?: () => void) => {
@@ -46,11 +45,10 @@ export default class EntryCommentRepository implements ICommentRepository {
   public updateComment = (
     commentId: number,
     contract: CommentContract,
-    callback?: () => void,
-  ) => {
+  ): Promise<void> => {
     var url = this.urlMapper.mapRelative(
       UrlMapper.buildUrl(this.baseUrl, '/comments/', commentId.toString()),
     );
-    $.postJSON(url, contract, callback, 'json');
+    return this.httpClient.post<void>(url, contract);
   };
 }
