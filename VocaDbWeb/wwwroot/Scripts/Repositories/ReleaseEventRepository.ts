@@ -38,15 +38,13 @@ export default class ReleaseEventRepository extends BaseRepository {
     id: number,
     notes: string,
     hardDelete: boolean,
-    callback?: () => void,
-  ) => {
-    $.ajax(
+  ): Promise<void> => {
+    return this.httpClient.delete<void>(
       this.urlMapper.mapRelative(
         `/api/releaseEvents/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
           notes,
         )}`,
       ),
-      { type: 'DELETE', success: callback },
     );
   };
 
@@ -54,15 +52,13 @@ export default class ReleaseEventRepository extends BaseRepository {
     id: number,
     notes: string,
     hardDelete: boolean,
-    callback?: () => void,
-  ) => {
-    $.ajax(
+  ): Promise<void> => {
+    return this.httpClient.delete<void>(
       this.urlMapper.mapRelative(
         `/api/releaseEventSeries/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
           notes,
         )}`,
       ),
-      { type: 'DELETE', success: callback },
     );
   };
 

@@ -20,15 +20,13 @@ export default class SongListRepository {
     id: number,
     notes: string,
     hardDelete: boolean,
-    callback?: () => void,
-  ) => {
-    $.ajax(
+  ): Promise<void> => {
+    return this.httpClient.delete<void>(
       this.urlMapper.mapRelative(
         `/api/songLists/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
           notes,
         )}`,
       ),
-      { type: 'DELETE', success: callback },
     );
   };
 

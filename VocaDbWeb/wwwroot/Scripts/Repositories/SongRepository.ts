@@ -79,11 +79,10 @@ export default class SongRepository
     );
   };
 
-  public deleteComment = (commentId: number, callback?: () => void) => {
-    $.ajax(this.urlMapper.mapRelative(`/api/songs/comments/${commentId}`), {
-      type: 'DELETE',
-      success: callback,
-    });
+  public deleteComment = (commentId: number): Promise<void> => {
+    return this.httpClient.delete<void>(
+      this.urlMapper.mapRelative(`/api/songs/comments/${commentId}`),
+    );
   };
 
   public findDuplicate = (params): Promise<NewSongCheckResultContract> => {

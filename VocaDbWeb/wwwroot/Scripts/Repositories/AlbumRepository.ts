@@ -83,19 +83,18 @@ export default class AlbumRepository
     );
   };
 
-  public deleteComment = (commentId: number, callback?: () => void) => {
-    $.ajax(this.urlMapper.mapRelative(`/api/albums/comments/${commentId}`), {
-      type: 'DELETE',
-      success: callback,
-    });
+  public deleteComment = (commentId: number): Promise<void> => {
+    return this.httpClient.delete<void>(
+      this.urlMapper.mapRelative(`/api/albums/comments/${commentId}`),
+    );
   };
 
-  public deleteReview(albumId: number, reviewId: number) {
+  public deleteReview(albumId: number, reviewId: number): Promise<void> {
     const url = functions.mergeUrls(
       this.baseUrl,
       `/api/albums/${albumId}/reviews/${reviewId}`,
     );
-    return this.handleJqueryPromise($.ajax(url, { type: 'DELETE' }));
+    return this.httpClient.delete(url);
   }
 
   public findDuplicate = (params): Promise<DuplicateEntryResultContract[]> => {

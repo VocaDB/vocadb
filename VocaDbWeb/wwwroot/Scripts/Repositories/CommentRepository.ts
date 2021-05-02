@@ -32,14 +32,14 @@ export default class CommentRepository
     return this.httpClient.post<CommentContract>(url, contract);
   };
 
-  public deleteComment = (commentId: number, callback?: () => void) => {
+  public deleteComment = (commentId: number): Promise<void> => {
     var url = this.urlMapper.mapRelative(
       UrlMapper.buildUrl(
         `api/comments/${EntryType[this.entryType]}-comments/`,
         commentId.toString(),
       ),
     );
-    $.ajax(url, { type: 'DELETE', success: callback });
+    return this.httpClient.delete<void>(url);
   };
 
   public getComments = async (listId: number): Promise<CommentContract[]> => {

@@ -54,7 +54,9 @@ export default class SongListEditViewModel {
   public currentName: string;
 
   public deleteViewModel = new DeleteEntryViewModel((notes) => {
-    this.songListRepo.delete(this.id, notes, false, this.redirectToDetails);
+    this.songListRepo
+      .delete(this.id, notes, false)
+      .then(this.redirectToDetails);
   });
 
   public description: KnockoutObservable<string>;
@@ -135,7 +137,7 @@ export default class SongListEditViewModel {
   public submitting = ko.observable(false);
 
   public trashViewModel = new DeleteEntryViewModel((notes) => {
-    this.songListRepo.delete(this.id, notes, true, this.redirectToRoot);
+    this.songListRepo.delete(this.id, notes, true).then(this.redirectToRoot);
   });
 
   public updateNotes = ko.observable('');

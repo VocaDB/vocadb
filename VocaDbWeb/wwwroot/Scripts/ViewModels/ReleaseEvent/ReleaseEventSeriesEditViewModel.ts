@@ -66,7 +66,7 @@ export default class ReleaseEventSeriesEditViewModel {
   public webLinks: WebLinksEditViewModel;
 
   public deleteViewModel = new DeleteEntryViewModel((notes) => {
-    this.eventRepository.deleteSeries(this.id, notes, false, () => {
+    this.eventRepository.deleteSeries(this.id, notes, false).then(() => {
       window.location.href = this.urlMapper.mapRelative(
         EntryUrlMapper.details(EntryType.ReleaseEventSeries, this.id),
       );
@@ -78,12 +78,9 @@ export default class ReleaseEventSeriesEditViewModel {
   };
 
   public trashViewModel = new DeleteEntryViewModel((notes) => {
-    this.eventRepository.deleteSeries(
-      this.id,
-      notes,
-      true,
-      this.redirectToRoot,
-    );
+    this.eventRepository
+      .deleteSeries(this.id, notes, true)
+      .then(this.redirectToRoot);
   });
 
   private isNew = () => !this.id;

@@ -68,27 +68,22 @@ export default class UserRepository implements ICommentRepository {
     );
   };
 
-  public deleteComment = (commentId: number, callback: () => void) => {
-    $.ajax(
+  public deleteComment = (commentId: number): Promise<void> => {
+    return this.httpClient.delete<void>(
       this.urlMapper.mapRelative(`/api/users/profileComments/${commentId}`),
-      { type: 'DELETE', success: callback },
     );
   };
 
-  public deleteEventForUser = (eventId: number, callback?: () => void) => {
+  public deleteEventForUser = (eventId: number): Promise<void> => {
     var url = this.urlMapper.mapRelative(
       `/api/users/current/events/${eventId}`,
     );
-    return $.ajax(url, {
-      type: 'DELETE',
-      success: callback,
-    }) as JQueryPromise<{}>;
+    return this.httpClient.delete<void>(url);
   };
 
-  public deleteFollowedTag = (tagId: number, callback?: () => void) => {
-    $.ajax(
+  public deleteFollowedTag = (tagId: number): Promise<void> => {
+    return this.httpClient.delete<void>(
       this.urlMapper.mapRelative(`/api/users/current/followedTags/${tagId}`),
-      { type: 'DELETE', success: callback },
     );
   };
 

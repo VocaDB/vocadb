@@ -81,7 +81,7 @@ export default class DiscussionIndexViewModel {
   };
 
   public deleteTopic = (topic: DiscussionTopicContract) => {
-    this.repo.deleteTopic(topic.id, () => {
+    this.repo.deleteTopic(topic.id).then(() => {
       this.selectTopic(null);
     });
   };

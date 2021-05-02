@@ -36,15 +36,13 @@ export default class VenueRepository extends BaseRepository {
     id: number,
     notes: string,
     hardDelete: boolean,
-    callback?: () => void,
-  ) => {
-    $.ajax(
+  ): Promise<void> => {
+    return this.httpClient.delete<void>(
       this.urlMapper.mapRelative(
         `/api/venues/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
           notes,
         )}`,
       ),
-      { type: 'DELETE', success: callback },
     );
   };
 

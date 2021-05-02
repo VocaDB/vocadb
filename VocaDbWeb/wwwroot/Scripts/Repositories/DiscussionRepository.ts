@@ -39,18 +39,12 @@ export default class DiscussionRepository implements ICommentRepository {
     );
   };
 
-  public deleteComment = (commentId: number, callback?: () => void) => {
-    $.ajax(this.mapUrl(`comments/${commentId}`), {
-      type: 'DELETE',
-      success: callback,
-    });
+  public deleteComment = (commentId: number): Promise<void> => {
+    return this.httpClient.delete<void>(this.mapUrl(`comments/${commentId}`));
   };
 
-  public deleteTopic = (topicId: number, callback?: () => void) => {
-    $.ajax(this.mapUrl(`topics/${topicId}`), {
-      type: 'DELETE',
-      success: callback,
-    });
+  public deleteTopic = (topicId: number): Promise<void> => {
+    return this.httpClient.delete<void>(this.mapUrl(`topics/${topicId}`));
   };
 
   public getComments = (topicId: number): Promise<CommentContract[]> => {
