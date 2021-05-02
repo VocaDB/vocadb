@@ -99,6 +99,7 @@ const SongDetails = (
     var artistRepo = repoFactory.artistRepository();
 
     var viewModel = new SongDetailsViewModel(
+      httpClient,
       repo,
       userRepo,
       artistRepo,

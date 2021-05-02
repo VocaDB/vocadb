@@ -23,6 +23,7 @@ import TagsEditViewModel from '../Tag/TagsEditViewModel';
 import ui from '../../Shared/MessagesTyped';
 import UserApiContract from '../../DataContracts/User/UserApiContract';
 import UserRepository from '../../Repositories/UserRepository';
+import HttpClient from '../../Shared/HttpClient';
 
 // View model for the song details view.
 export default class SongDetailsViewModel {
@@ -53,7 +54,11 @@ export default class SongDetailsViewModel {
 
     const { siteUrl, id } = match;
 
-    const repo = this.repository;
+    const repo = new SongRepository(
+      this.httpClient,
+      siteUrl,
+      this.languagePreference,
+    );
     // TODO: this should be cached, but first we need to make sure the other instances are not cached.
     repo.getOneWithComponents(id, 'None', null).then((song) => {
       if (song.songType === SongType[SongType.Original])
@@ -102,6 +107,7 @@ export default class SongDetailsViewModel {
   public userRating: PVRatingButtonsViewModel;
 
   constructor(
+    private readonly httpClient: HttpClient,
     private repository: SongRepository,
     userRepository: UserRepository,
     artistRepository: ArtistRepository,

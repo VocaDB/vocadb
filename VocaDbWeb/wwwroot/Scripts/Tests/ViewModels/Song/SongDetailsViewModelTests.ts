@@ -6,6 +6,7 @@ import { SongDetailsResources } from '../../../ViewModels/Song/SongDetailsViewMo
 import SongDetailsViewModel from '../../../ViewModels/Song/SongDetailsViewModel';
 import { SongListsViewModel } from '../../../ViewModels/Song/SongDetailsViewModel';
 import SongVoteRating from '../../../Models/SongVoteRating';
+import HttpClient from '../../../Shared/HttpClient';
 
 var rep: FakeSongRepository;
 var userRep = new FakeUserRepository();
@@ -32,6 +33,7 @@ QUnit.module('SongDetailsViewModelTests', {
       { id: 3, name: 'Mikupa 2013', featuredCategory: 'Concerts' },
     ];
     target = new SongDetailsViewModel(
+      new HttpClient(),
       rep,
       userRep,
       null,
