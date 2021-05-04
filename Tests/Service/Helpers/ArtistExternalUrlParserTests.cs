@@ -67,7 +67,7 @@ namespace VocaDb.Tests.Service.Helpers
 		[TestMethod]
 		public void Twitter_Shortcut()
 		{
-			TestGetExternalUrl("http://twitter.com/cleantears", "t/cleantears");
+			TestGetExternalUrl("t/cleantears", "http://twitter.com/cleantears");
 		}
 
 		[TestMethod]
