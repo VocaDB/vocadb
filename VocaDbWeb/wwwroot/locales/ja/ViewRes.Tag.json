@@ -1,0 +1,22 @@
+{
+  "Details": {
+    "Aliases": "別名",
+    "AllAlbums": "アルバム",
+    "AllArtists": "アーティスト",
+    "AllEntries": "すべてのエントリ",
+    "AllSongs": "曲",
+    "Category": "カテゴリー",
+    "FollowTag": "タグをフォロー",
+    "MappedTags": "このタグに当たるニコニコ動画用のタグ",
+    "Overview": "概要",
+    "RelatedTags": "関連タグ",
+    "Tag": "タグ",
+    "TagDetails": "タグ詳細",
+    "TopAlbums": "トップアルバム",
+    "TopArtists": "トップアーティスト",
+    "TopSongs": "トップ曲",
+    "Translations": "他言語の名前",
+    "UnfollowTag": "フォローを取り消す",
+    "ValidFor": "対応"
+  }
+}

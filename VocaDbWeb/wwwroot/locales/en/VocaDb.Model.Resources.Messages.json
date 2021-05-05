@@ -1,0 +1,13 @@
+{
+  "EntryReport": {
+    "EntryVersionReportBody": "Entry '{{0}}', which you have edited, was reported with the following message: '{{1}}'. Don't worry, most likely it's nothing serious. Please check the entry, and if there is something to be corrected, please make the necessary changes, unless someone else already took care of it.",
+    "EntryVersionReportTitle": "Entry report for {{0}}"
+  },
+  "UserAccount": {
+    "AccountCreatedSubject": "Welcome to {{0}}, please verify your email.",
+    "PasswordResetBody": "You (or someone who knows your email address) has requested to reset your password on VocaDB.\nYou can perform this action at {{0}} . If the link doesn't work, try copying it to the address bar. If you did not request this action, you can ignore this message.",
+    "PasswordResetSubject": "Password reset requested.",
+    "VerifyEmailBody": "Please click the link below to verify your email at {{0}}.\n{{1}}?token={{2}}",
+    "VerifyEmailSubject": "Verify your email at {{0}}."
+  }
+}

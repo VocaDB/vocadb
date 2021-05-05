@@ -1,0 +1,264 @@
+{
+  "AlbumArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "Auto-importado",
+    "Created": "Criado",
+    "Deleted": "Apagado",
+    "Merged": "Fundido de outra página",
+    "PropertiesUpdated": "Propriedades atualizadas",
+    "Restored": "Restaurado",
+    "Reverted": "Revertido",
+    "Unknown": "Desconhecido"
+  },
+  "AlbumCollectionStatusNames": {
+    "Nothing": "Nada",
+    "Ordered": "Encomendado",
+    "Owned": "Comprado",
+    "Wishlisted": "Lista de desejos"
+  },
+  "AlbumDiscMediaTypeNames": {
+    "Audio": "Audio",
+    "Video": "Vídeo"
+  },
+  "AlbumEditableFieldNames": {
+    "Artists": "Artistas",
+    "Barcode": "Código de barras",
+    "Cover": "Capa",
+    "Description": "Descrição",
+    "Discs": "Discos",
+    "DiscType": "Tipo de álbum",
+    "Identifiers": "Identificadores",
+    "Names": "Nomes",
+    "Nothing": "Nada",
+    "OriginalName": "Nome original",
+    "OriginalRelease": "Lançamento original",
+    "Pictures": "Fotos",
+    "Status": "Estado",
+    "Tracks": "Músicas",
+    "WebLinks": "Links externos"
+  },
+  "AlbumMediaTypeNames": {
+    "DigitalDownload": "Download digital",
+    "Other": "Não especificado",
+    "PhysicalDisc": "Disco em formato físico"
+  },
+  "AlbumSortRuleNames": {
+    "AdditionDate": "Data de adição",
+    "CollectionCount": "Contagem de coleções",
+    "Name": "Nome",
+    "RatingAverage": "Média de classificações",
+    "RatingTotal": "Pontuação total",
+    "ReleaseDate": "Data de lançamento"
+  },
+  "ArtistArchiveReasonNames": {
+    "Created": "Criado",
+    "Deleted": "Apagado",
+    "Merged": "Fundido de outra página",
+    "PropertiesUpdated": "Propriedades atualizadas",
+    "Restored": "Restaurado",
+    "Reverted": "Reverter para uma versão anterior",
+    "Unknown": "Desconhecido"
+  },
+  "ArtistEditableFieldNames": {
+    "Albums": "Álbuns",
+    "ArtistType": "Tipo de artista",
+    "BaseVoicebank": "Banco de voz base",
+    "Description": "Descrição",
+    "Groups": "Grupos",
+    "Names": "Nomes",
+    "Nothing": "Nada",
+    "OriginalName": "Nome original",
+    "Picture": "Foto principal",
+    "Pictures": "Fotos",
+    "Status": "Estado",
+    "WebLinks": "Links externos"
+  },
+  "ArtistRoleNames": {
+    "Animator": "Animador",
+    "Arranger": "Arranjo",
+    "Chorus": "Coro",
+    "Composer": "Compositor",
+    "Default": "Predefinição",
+    "Distributor": "Distribuidor",
+    "Encoder": "Encoder",
+    "Illustrator": "Ilustrador",
+    "Instrumentalist": "Instrumentalista",
+    "Lyricist": "Letra",
+    "Mastering": "Masterização",
+    "Mixer": "Misturador",
+    "Other": "Outros",
+    "Publisher": "Editora",
+    "Vocalist": "Vocalista",
+    "VoiceManipulator": "Editor da voz"
+  },
+  "ArtistSortRuleNames": {
+    "AdditionDate": "Data de adição (descendente)",
+    "AdditionDateAsc": "Data de adição (ascendente)",
+    "FollowerCount": "Número de seguidores",
+    "Name": "Nome",
+    "SongCount": "Número de músicas",
+    "SongRating": "Classificação total da música"
+  },
+  "CommonMessages": {
+    "EntryDeleted": "Esta página foi apagada. Ainda está acessível temporariamente, mas não aparecerá em nenhuma lista.",
+    "EntryMergedTo": "Esta página foi fundida com",
+    "EntryStatusExplanation": "Draft = a página não tem informações cruciais. Significa que devem ser adicionadas mais informações assim que possível.<br />\nAcabado = a página tem todas as informações cruciais, mas ainda não foi aprovada por um utilizador de confiança.<br />\nAprovado = a página foi aprovada foi um utilizador de confiança. Estas páginas só podem ser editadas por esses utilizadores.",
+    "Locked": "Esta página está trancada, ou seja, só a administração a pode editar.",
+    "NameLanguageHelp": "Escolha o idioma deste nome. \"Original\" é o nome na língua não inglesa, por exemplo, Japonês.\nSe a língua original é Inglês, não introduza um nome em língua \"Original\"."
+  },
+  "ContentLanguageSelectionNames": {
+    "Default": "Original",
+    "English": "Inglês",
+    "Japanese": "Não-Inglês",
+    "Romaji": "Romanização",
+    "Unspecified": "Não especificado"
+  },
+  "DiscTypeDescriptions": {
+    "Album": "Álbum que tem maioritariamente de músicas previamente não publicadas.",
+    "Compilation": "Coleção de músicas previamente publicadas, recolhidas de um ou mais álbuns anteriores. Por exemplo, coleções \"best of\".",
+    "EP": "Contém 3-4 músicas. Versões alternativas (instrumentais e remixes) normalmente não contam.",
+    "Other": "Para álbuns que não pertençam a nenhuma categoria acima.",
+    "Single": "Contém uma ou mais músicas individuais. Versões alternativas (instrumentais e remixes) normalmente não contam.",
+    "SplitAlbum": "Colaboração de pelo menos dois artistas, onde todos os artistas têm o mesmo número de músicas.",
+    "Video": "Disco contém principalmente videoclips, normalmente um DVD ou blu-ray."
+  },
+  "EntryEditEventNames": {
+    "Created": "Criado",
+    "Updated": "Atualizado"
+  },
+  "EntryStatusNames": {
+    "Approved": "Aprovado",
+    "Draft": "Draft",
+    "Finished": "Acabado",
+    "Locked": "Trancado"
+  },
+  "PermissionTokenNames": {
+    "AccessManageMenu": "Menu de chave de acesso",
+    "Admin": "Tarefas de administrador da base de dados",
+    "ApproveEntries": "Páginas aprovadas.",
+    "BulkDeletePVs": "Apagar PVs em massa",
+    "CreateComments": "Criar comentários",
+    "DeleteComments": "Apagar comentários",
+    "DeleteEntries": "Apagar páginas",
+    "DesignatedStaff": "Membro da administração designado",
+    "DisableUsers": "Bloquear utilizadores",
+    "EditFeaturedLists": "Gerir lista de músicas destacadas",
+    "EditNews": "Gerir notícias",
+    "EditProfile": "Editar perfil pessoal",
+    "LockEntries": "Trancar páginas",
+    "ManageDatabase": "Gerir base de dados",
+    "ManageEntryReports": "Gerir páginas denunciadas",
+    "ManageEventSeries": "Gerir séries de eventos",
+    "ManageIPRules": "Gerir regras de IP",
+    "ManageUserPermissions": "Gerir permissões de utlizador",
+    "MergeEntries": "Fundir páginas",
+    "MikuDbImport": "Importar álbum",
+    "MoveToTrash": "Mandar para o lixo",
+    "Nothing": "Nada",
+    "ReadRecentComments": "Ler comentários recentes",
+    "RemoveTagUsages": "Apagar tags",
+    "RestoreRevisions": "Restaurar revisões",
+    "ViewAuditLog": "Ver registo de eventos"
+  },
+  "PVTypeDescriptions": {
+    "Original": "Original (oficial/upload autorizado)",
+    "Other": "Outros",
+    "Reprint": "Reprint (copiado de outro site)"
+  },
+  "PVTypeNames": {
+    "Other": "Outros",
+    "Reprint": "Reprint"
+  },
+  "RatedSongForUserSortRuleNames": {
+    "RatingDate": "Data de classificação"
+  },
+  "ReleaseEventEditableFieldNames": {
+    "Date": "Data",
+    "Description": "Descrição",
+    "Name": "Nome",
+    "SeriesNumber": "Número de série",
+    "SeriesSuffix": "Sufixo de série"
+  },
+  "SongArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "Auto-importado",
+    "Created": "Criado",
+    "Deleted": "Apagado",
+    "Merged": "Fundido de outra página",
+    "PropertiesUpdated": "Propriedades atualizadas",
+    "Restored": "Restaurado",
+    "Reverted": "Reverter",
+    "Unknown": "Desconhecido"
+  },
+  "SongEditableFieldNames": {
+    "Artists": "Artistas",
+    "Groups": "Grupos",
+    "Length": "Duração",
+    "Lyrics": "Letra",
+    "Names": "Nomes",
+    "Notes": "Notas",
+    "Nothing": "Nada",
+    "OriginalName": "Nome original",
+    "OriginalVersion": "Versão original",
+    "PublishDate": "Data de publicação",
+    "SongType": "Tipo de música",
+    "Status": "Estado",
+    "WebLinks": "Links externos"
+  },
+  "SongListEditableFieldNames": {
+    "Description": "Descrição",
+    "EventDate": "Data do evento",
+    "FeaturedCategory": "Categoria destacada",
+    "Name": "Nome",
+    "Songs": "Músicas",
+    "Status": "Estado"
+  },
+  "SongListFeaturedCategoryNames": {
+    "Concerts": "Setlists de concertos",
+    "Nothing": "Nada",
+    "Other": "Outros",
+    "Pools": "Pools",
+    "VocaloidRanking": "Classificações Vocaloid"
+  },
+  "SongSortRuleNames": {
+    "AdditionDate": "Data de adição",
+    "FavoritedTimes": "Número de favoritos",
+    "Name": "Nome",
+    "None": "Nada",
+    "PublishDate": "Data de publicação",
+    "RatingScore": "Pontuação de classificação"
+  },
+  "SongVoteRatingNames": {
+    "Favorite": "Favorito",
+    "Like": "Gosto"
+  },
+  "TagEditableFieldNames": {
+    "AliasedTo": "Renomeado para",
+    "CategoryName": "Categoria",
+    "Description": "Descrição",
+    "Names": "Nomes",
+    "OriginalName": "Língua do nome",
+    "Parent": "Principal",
+    "Picture": "Foto",
+    "RelatedTags": "Tags relacionadas",
+    "Status": "Estado",
+    "WebLinks": "Links externos"
+  },
+  "UserEmailOptionsNames": {
+    "NoEmail": "Sem mensagens privadas",
+    "PrivateMessagesFromAdmins": "Mensagens privadas de administradores",
+    "PrivateMessagesFromAll": "Mensagens privadas de todos"
+  },
+  "UserGroupNames": {
+    "Admin": "Administrador",
+    "Limited": "Utilizador limitado",
+    "Moderator": "Moderador",
+    "Nothing": "Nada",
+    "Regular": "Utilizador normal",
+    "Trusted": "Utilizador de confiança"
+  },
+  "WebLinkCategoryNames": {
+    "Commercial": "Comercial",
+    "Official": "Oficial",
+    "Other": "Outros",
+    "Reference": "Referência"
+  }
+}

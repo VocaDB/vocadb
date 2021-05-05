@@ -1,0 +1,41 @@
+{
+  "Create": {
+    "AddArtist": "Lisää artisti",
+    "ArtistInfo": "Varmista ettei artistia ole jo tietokannassa. Sinun täytyy antaa ainakin yksi nimi. Tämän lisäksi sinun on annettava joko kuvaus tai linkki viitteeksi.",
+    "ArtistType": "Artistin tyyppi",
+    "Description": "Kirjoita lyhyt kuvaus artistista (vapaaehtoinen mutta suositeltu)",
+    "Draft": "Tämä merkintä on luonnos.",
+    "ExternalLink": "Ulkoinen linkki (artistin kotisivulle, wikiin tai NND:n MyListiin)",
+    "Name": "Nimi (tarvitaan vähintään yksi)",
+    "NameHelp": "Jos alkuperäinen nimi on kirjoitettu jollain muulla kielellä kuin englanniksi, tai jos kieli on tuntematon, kirjoita se alkuperäiskielisen nimen kenttään. Jos tunnettu, kirjoita myös romanisoitu nimi. Jos alkuperäinen nimi on kirjoitettu englanniksi, tai jos nimelle on tiedossa englanninkielinen käännös, kirjoita tämä nimi englanninkielisen nimen kenttään.",
+    "NeedWebLinkOrDescription": "Sinun täytyy syöttää kuvaus TAI antaa linkki.",
+    "Optional": "(vapaaehtoinen)",
+    "Picture": "Kuva",
+    "UnableToCreateArtist": "Artistin luominen ei onnistu. Tarkista virheet ja yritä uudestaan.",
+    "WebLinkCategory": "Kategoria",
+    "WebLinkDescription": "Kuvaus",
+    "WebLinkURL": "Osoite"
+  },
+  "Details": {
+    "AllAlbums": "Kaikki albumit",
+    "AllSongs": "Kaikki kappaleet",
+    "ArtistDetails": "Artisti",
+    "ArtistPicture": "Artistin kuva",
+    "BaseVoicebank": "Perustuu",
+    "ChildVoicebanks": "Perustuvat tähän",
+    "CollaborationAlbums": "Kokoelmat ja muut",
+    "Customize": "Muokkaa",
+    "Follow": "Seuraa",
+    "FollowCount": "{{0}} käyttäjä(ä) seuraa tätä artistia.",
+    "Groups": "Ryhmät",
+    "GroupsHelp": "Piirit ja levy-yhtiöt",
+    "MainAlbums": "Omat albumit",
+    "Members": "Jäsenet",
+    "RecentAlbums": "Uudet albumit",
+    "RecentSongs": "Uudet kappaleet",
+    "Share": "Jaa",
+    "TopAlbums": "Suositut albumit",
+    "TopSongs": "Suositut kappaleet",
+    "Unfollow": "Lopeta seuraaminen"
+  }
+}

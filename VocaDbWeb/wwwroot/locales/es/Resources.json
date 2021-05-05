@@ -1,0 +1,271 @@
+{
+  "AlbumArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "Importado automaticamente",
+    "Created": "Creado",
+    "Deleted": "Eliminado",
+    "Merged": "Fusionado a partir de otra entrada",
+    "PropertiesUpdated": "Propiedades actualizadas",
+    "Restored": "Restaurada",
+    "Reverted": "Revertida",
+    "Unknown": "Desconocido"
+  },
+  "AlbumCollectionStatusNames": {
+    "Nothing": "Nada",
+    "Ordered": "Ordenado",
+    "Owned": "Adquirido por",
+    "Wishlisted": "Aprobado"
+  },
+  "AlbumDiscMediaTypeNames": {
+    "Audio": "Audio",
+    "Video": "Video"
+  },
+  "AlbumEditableFieldNames": {
+    "Artists": "Artistas",
+    "Cover": "Portada",
+    "Description": "Descripción",
+    "DiscType": "Tipo de album",
+    "Names": "Nombres",
+    "Nothing": "Nada",
+    "OriginalName": "Nombre original",
+    "OriginalRelease": "Lanzamiento original",
+    "Pictures": "Imágenes",
+    "PVs": "PVs",
+    "Status": "Estado",
+    "Tracks": "Pistas",
+    "WebLinks": "Links externos",
+    "Barcode": "Códigos de barras",
+    "Identifiers": "Identificadores",
+    "Discs": "Discos"
+  },
+  "AlbumMediaTypeNames": {
+    "DigitalDownload": "Formato dígital",
+    "Other": "Sin especificar",
+    "PhysicalDisc": "Disco físico"
+  },
+  "AlbumSortRuleNames": {
+    "AdditionDate": "Fecha de adición",
+    "CollectionCount": "Conteo de colección",
+    "Name": "Nombre",
+    "RatingAverage": "Rating promedio",
+    "RatingTotal": "Puntuación de rating total",
+    "ReleaseDate": "Fecha de lanzamiento"
+  },
+  "ArtistArchiveReasonNames": {
+    "Created": "Creado",
+    "Deleted": "Eliminado",
+    "Merged": "Fusionado a partir de otra entrada",
+    "PropertiesUpdated": "Propiedades actualizadas",
+    "Restored": "Restaurado",
+    "Reverted": "Revertido a una versión antigua",
+    "Unknown": "Desconocido"
+  },
+  "ArtistEditableFieldNames": {
+    "Albums": "Albumes",
+    "ArtistType": "Tipo de artista(s)",
+    "BaseVoicebank": "Banco de voz base",
+    "Description": "Descripción",
+    "Groups": "Grupos",
+    "Names": "Nombres",
+    "Nothing": "Nada",
+    "OriginalName": "Nombre original",
+    "Picture": "Imagen principal",
+    "Pictures": "Imágenes",
+    "Status": "Estado",
+    "WebLinks": "Links externos"
+  },
+  "ArtistRoleNames": {
+    "Animator": "Animador",
+    "Arranger": "Arreglista",
+    "Chorus": "Coro",
+    "Composer": "Compositor",
+    "Default": "Por defecto",
+    "Distributor": "Distribuidor",
+    "Encoder": "Codificador",
+    "Illustrator": "Ilustrador",
+    "Instrumentalist": "Instrumentalista",
+    "Lyricist": "Letrista",
+    "Mastering": "Masterizado",
+    "Mixer": "Mezclador",
+    "Other": "Otro",
+    "Publisher": "Publicador",
+    "Vocalist": "Vocalista",
+    "VoiceManipulator": "Manipulador de voz"
+  },
+  "ArtistSortRuleNames": {
+    "AdditionDate": "Fecha de adición (en orden descendente)",
+    "AdditionDateAsc": "Fecha de adición (en orden ascendente)",
+    "FollowerCount": "Numero de seguidores",
+    "Name": "Nombre",
+    "SongCount": "Número de canciones",
+    "SongRating": "Rating total"
+  },
+  "CommonMessages": {
+    "EntryDeleted": "Esta entrada ha sido eliminada, aunque se muestra como temporalmente accesible, no se muestra ningún listado.",
+    "EntryMergedTo": "Esta entrada ha sido fusionada con",
+    "EntryStatusExplanation": "Borrador = A esta entrada le falta información indispensable. Este estado indica que estas solicitando información adicional para ser añadida o corregida.<br />\nTerminada = Esta entrada esta completada integramente con la información fundamental, pero aún no ha sido verificada por una fuente confiable.<br />\nAprobada = Esta entrada ha sido verificada y aprobada por una fuente confiable. Las entradas oficiales solo pueden ser editadas por fuentes oficiales.",
+    "Locked": "Esta entrada esta asegurada, solo moderadores pueden editarla.",
+    "NameLanguageHelp": "Escoge el idioma para este nombre. \"Original\" es el nombre en su idioma nativo (sin considerar al inglés) por ejemplo, en japonés. Si el nombre está originalmente en inglés, deja en blanco la casilla del nombre en idioma original."
+  },
+  "ContentLanguageSelectionNames": {
+    "Default": "Idioma original",
+    "English": "Inglés",
+    "Japanese": "No-inglés",
+    "Romaji": "Romanizado",
+    "Unspecified": "Sin especificar"
+  },
+  "DiscTypeDescriptions": {
+    "Album": "Album que se compone mayoritariamente de canciones sin publicarse previamente (entiendase estas como originales).",
+    "Compilation": "Colección de canciones publicadas previamente, es un recopilado de un album o mas previamente publicado(s). (Ejemplo: colección \"lo mejor de\").",
+    "EP": "Un EP es una extensión de reproducción. Contiene de 3 a 4 pistas individuales. Las versiones alterntivas (instrumentales o remixes) comunmente no son consideradas.",
+    "Other": "Para albumes que no entran en ninguna de las categorías anteriores.",
+    "Single": "Contienen una o dos canciones individuales. Las versiones alternativas (instrumentales o remixes) comunmente no son consideradas.",
+    "SplitAlbum": "Colaboración entre dos o mas artistas, con contribuciones usualmente equivalentes en un solo album.",
+    "Video": "Disco que contiene principal o integramente videos musicales, comunmente en formato DVD o Blue-ray."
+  },
+  "EntryEditEventNames": {
+    "Created": "Creado",
+    "Deleted": "Eliminado",
+    "Updated": "Actualizado"
+  },
+  "EntryStatusNames": {
+    "Approved": "Entrada aprobada",
+    "Draft": "Borrador (entrada sin completar)",
+    "Finished": "Entrada Terminada",
+    "Locked": "Entrada asegurada"
+  },
+  "PermissionTokenNames": {
+    "AccessManageMenu": "Acceso al menú de gestión",
+    "Admin": "Tareas de administración en base de datos",
+    "ApproveEntries": "Aprobar entradas",
+    "BulkDeletePVs": "Abultar PVs eliminados",
+    "CreateComments": "Crear comentarios",
+    "DeleteComments": "Eliminar comentarios",
+    "DeleteEntries": "Borrar entradas",
+    "DesignatedStaff": "Miembro de staff designado",
+    "DisableUsers": "Deshabilitar usuarios",
+    "EditFeaturedLists": "Gestionar listas de canciones implementadas",
+    "EditNews": "Gestionar noticias",
+    "EditProfile": "Editar perfil personal",
+    "LockEntries": "Asegurar entradas",
+    "ManageDatabase": "Gestionar base de datos",
+    "ManageEntryReports": "Gestionar entradas repost",
+    "ManageEventSeries": "Gestionar series de eventos",
+    "ManageIPRules": "Gestionar reglas de IP",
+    "ManageUserPermissions": "Gestionar permisos de usuario",
+    "MergeEntries": "Fusionar entradas",
+    "MikuDbImport": "Importación de album vía MikuDB",
+    "MoveToTrash": "Mover a la basura",
+    "Nothing": "Nada",
+    "ReadRecentComments": "Leer comentarios recientes",
+    "RemoveTagUsages": "Remover usos de etiqueta",
+    "RestoreRevisions": "Restaurar revisiones",
+    "ViewAuditLog": "Ver registro de eventos"
+  },
+  "PVTypeDescriptions": {
+    "Original": "Original (oficial/subida autorizada)",
+    "Other": "Otro",
+    "Reprint": "Reprint (copiado de otra locación)"
+  },
+  "PVTypeNames": {
+    "Original": "Original",
+    "Other": "Otro",
+    "Reprint": "Reprint"
+  },
+  "RatedSongForUserSortRuleNames": {
+    "RatingDate": "Fecha de rating"
+  },
+  "ReleaseEventEditableFieldNames": {
+    "Date": "Fecha",
+    "Description": "Descripción",
+    "Name": "Nombre",
+    "Series": "Serie",
+    "SeriesNumber": "Edición",
+    "SeriesSuffix": "Sufijo de serie"
+  },
+  "SongArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "Importado automaticamente",
+    "Created": "Creado",
+    "Deleted": "Eliminado",
+    "Merged": "Fusionado a partir de otra entrada",
+    "PropertiesUpdated": "Propiedades actualizadas",
+    "Restored": "Restaurada",
+    "Reverted": "Revertida",
+    "Unknown": "Desconocida"
+  },
+  "SongEditableFieldNames": {
+    "Artists": "Artistas",
+    "Groups": "Grupos",
+    "Length": "Duración",
+    "Lyrics": "Letra",
+    "Names": "Nombres",
+    "Notes": "Notas",
+    "Nothing": "Nada",
+    "OriginalName": "Nombre original",
+    "OriginalVersion": "Versión original",
+    "PublishDate": "Fecha de publicación",
+    "PVs": "PVs",
+    "SongType": "Tipo de canción",
+    "Status": "Estado",
+    "WebLinks": "Links externos"
+  },
+  "SongListEditableFieldNames": {
+    "Description": "Descripción",
+    "EventDate": "Fecha de evento",
+    "FeaturedCategory": "Categoría implementada",
+    "Name": "Nombre",
+    "Songs": "Canciones",
+    "Status": "Estado",
+    "Thumbnail": "Miniatura"
+  },
+  "SongListFeaturedCategoryNames": {
+    "Concerts": "Listas de canciones en conciertos",
+    "Nothing": "Nada",
+    "Other": "Otro",
+    "Pools": "Depósitos",
+    "VocaloidRanking": "Rankings Vocaloid"
+  },
+  "SongSortRuleNames": {
+    "AdditionDate": "Fecha de adición",
+    "FavoritedTimes": "Favoritos",
+    "Name": "Nombre",
+    "None": "Nada",
+    "PublishDate": "Fecha de publicación",
+    "RatingScore": "Puntuación de rating"
+  },
+  "SongVoteRatingNames": {
+    "Favorite": "Favorito",
+    "Like": "Me gusta"
+  },
+  "TagEditableFieldNames": {
+    "AliasedTo": "Alias",
+    "CategoryName": "Categoría",
+    "Description": "Descripción",
+    "HideFromSuggestions": "Ocultar de sugerencias",
+    "Names": "Nombres",
+    "OriginalName": "Nombre en su idioma original",
+    "Parent": "Principal",
+    "Picture": "Imagen",
+    "RelatedTags": "Etiquetas relacionadas",
+    "Status": "Estado",
+    "WebLinks": "Links externos"
+  },
+  "UserEmailOptionsNames": {
+    "NoEmail": "Sin mensajes privados",
+    "PrivateMessagesFromAdmins": "Mensajes privados provenientes de administradores",
+    "PrivateMessagesFromAll": "Mensajes privados procedentes de cualquiera"
+  },
+  "UserGroupNames": {
+    "Admin": "Administrador",
+    "Limited": "Usuario limitado",
+    "Moderator": "Moderador",
+    "Nothing": "Nada",
+    "Regular": "Usuario regular",
+    "Trusted": "Usuario verificado como fuente confiable"
+  },
+  "WebLinkCategoryNames": {
+    "Commercial": "Comercial",
+    "Official": "Oficial",
+    "Other": "Otro",
+    "Reference": "Referencia"
+  }
+}

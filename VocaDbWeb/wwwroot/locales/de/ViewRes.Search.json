@@ -1,0 +1,24 @@
+{
+  "Index": {
+    "AlbumType": "Album ",
+    "ArtistType": "Art des Künstlers",
+    "Category": "Kategorie",
+    "EntryType": "Typ",
+    "InMyCollection": "In meiner Sammlung",
+    "ItemsOf": "Einträge von",
+    "ItemsPerPage": "{{0}} Einträge pro Seite",
+    "MoreFilters": "Weitere Filter",
+    "MoreRecentThan": "Nicht älter als",
+    "OnlyWithPVs": "Nur mit PVs",
+    "Preview": "Vorschau",
+    "Rating": "Bewertung",
+    "ReleaseDate": "Erscheinungsdatum",
+    "Showing": "Zeige",
+    "SongType": "Art des Songs",
+    "TagCategory": "Kategorie",
+    "Times": "mal bewertet",
+    "TotalScore": "Insgesamte Bewertung",
+    "TypeSomething": "Schreibe etwas...",
+    "ShowingItemsOf": "Zeige {{0}} von {{1}} Elementen"
+  }
+}

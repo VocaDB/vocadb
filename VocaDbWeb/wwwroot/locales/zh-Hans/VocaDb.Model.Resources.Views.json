@@ -1,0 +1,15 @@
+{
+  "HomeRes": {
+    "Welcome": "欢迎来到Vocaloid Database！",
+    "WelcomeSubtitle": "一个拥有大量Vocaloid艺人、专辑和PV等信息的合作性数据库。"
+  },
+  "LayoutRes": {
+    "Keywords": "Vocaloid, VocaDB, Vocaloid database, Hatsune Miku",
+    "PaypalDonateTitle": "VocaDB是一个非盈利性的网站。所有捐款将用于网站建设、支付服务器费用以及获得程序许可证。",
+    "SiteName": "VocaDB",
+    "SiteTitle": "Vocaloid Database"
+  },
+  "UserRes": {
+    "RequestVerificationInfo": "<p>\n不论您是P主，画师，PV师还是其他VOCALOID相关创作者或社团代表，您都可以通过本界面向VocaDb申请核实您的账号。核实无误后，您的账号名将会展示在“艺术家”总条目中。\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\t您需要证明该条目是您本人，否则申请将不予通过。\n\t\t\t</strong>\n\t\t\t例如，在您的微博贴出VocaDb条目地址，即可证明您的身份。\n\t\t\t<strong>\n\t\t\t\t同时，您的账号条目内需要包含至少一至两首已完成的歌曲（VOCALOID或UTAU）条目，如您有满足条件的作品但本站无该条目，您可自行添加新条目。\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n账号核实后，您可以设置您账号条目的可编辑人员。目前仅有已核实的“艺术家”账号可进行该操作，“歌曲”与“专辑”总条目尚未开通该服务。\n\t\t</p>\n\t\t<p>\nVocaDb有权利不通过您的申请，以上提及的原因均有可能。如有以上未提及的问题，VocaDb的编辑将会联系您，修正申请中的错误。\n\t\t</p>"
+  }
+}

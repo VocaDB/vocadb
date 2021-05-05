@@ -1,0 +1,5 @@
+{
+  "TagController": {
+    "TagNameError": "Tägin nimi voi sisältää vain aakkosia ja alaviivoja, eikä se voi olla tyhjä."
+  }
+}

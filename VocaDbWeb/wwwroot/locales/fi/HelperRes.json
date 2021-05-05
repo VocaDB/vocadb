@@ -1,0 +1,32 @@
+{
+  "ActivityFeedHelper": {
+    "At": "-",
+    "CreatedNew": "loi uuden {{0}}",
+    "EntryAlbum": "albumin",
+    "EntryArtist": "artistin",
+    "EntrySong": "kappaleen",
+    "Someone": "Käyttäjä",
+    "Updated": "päivitti {{0}}"
+  },
+  "AlbumHelpers": {
+    "Released": "Julkaistu"
+  },
+  "Helper": {
+    "Added": "lisätty",
+    "DraftIconTitle": "Tämä merkintä on luonnos.",
+    "DraftMessage": "Tämä merkintä on luonnos. Voit auttaa muokkaamalla merkintää ja lisäämällä puuttuvat tiedot.",
+    "ReturnWithoutSaving": "Palaa tallentamatta",
+    "SaveChanges": "Tallenna muutokset",
+    "SeeGuide": "ohjeesta",
+    "SeeGuidePost": ".",
+    "SeeGuidePre": "Katso lisätietoja",
+    "StatusDescriptionApproved": "Hyväksytyt merkinnät ovat luotetun käyttäjän tarkastamia. Hyväksyttyjen merkintöjen muokkaaminen on mahdollista vain rajoitetusti.",
+    "StatusDescriptionDraft": "Luonnos-tilassa olevista merkinnöistä puuttuu jotain tietoja.",
+    "StatusDescriptionFinished": "Valmis-tilassa olevat merkinnät sisältävät kaikki vaaditut tiedot, mutta niitä ei vielä ole hyväksytty.",
+    "StatusDescriptionLocked": "Lukitut merkinnät ovat vain ylläpidon muokattavissa.",
+    "WebLinkCategoryTitle": "Kategoria",
+    "WebLinkDescriptionTitle": "Kuvaus",
+    "WebLinkNewRow": "Uusi rivi",
+    "WebLinkUrlTitle": "Osoite (vaadittu)"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "AlbumCollectionStatusNames": {
+    "Nothing": "Nothing",
+    "Ordered": "已预订",
+    "Owned": "持有",
+    "Wishlisted": "想要"
+  },
+  "AlbumMediaTypeNames": {
+    "DigitalDownload": "数据下载",
+    "Other": "Unspecified",
+    "PhysicalDisc": "光碟"
+  },
+  "AlbumSortRuleNames": {
+    "AdditionDate": "添加时间",
+    "CollectionCount": "收藏数",
+    "Name": "名字",
+    "RatingAverage": "平均得分",
+    "RatingTotal": "总分",
+    "ReleaseDate": "发布时间"
+  },
+  "ArtistRoleNames": {
+    "Animator": "视频制作人",
+    "Arranger": "编曲",
+    "Chorus": "Chorus",
+    "Composer": "作曲",
+    "Default": "Default",
+    "Distributor": "Distributor",
+    "Encoder": "Encoder",
+    "Illustrator": "画师",
+    "Instrumentalist": "器乐家",
+    "Lyricist": "作词",
+    "Mastering": "母带",
+    "Mixer": "混音",
+    "Other": "其他",
+    "Publisher": "发布者",
+    "Vocalist": "歌手",
+    "VoiceManipulator": "调声"
+  },
+  "CommonMessages": {
+    "EntryStatusExplanation": "草稿：表示词条缺少一些必要的信息或需要被更正。<br />\n已完成：表示词条包含了所有必要的信息，但未经过信任用户的核准。<br />\n已核准：表示词条已经过信任用户的核准。经过核准后的词条只能由信任用户进行编辑。"
+  },
+  "ContentLanguageSelectionNames": {
+    "Default": "原语言",
+    "English": "英文",
+    "Japanese": "非英文",
+    "Romaji": "罗马字",
+    "Unspecified": "未定义"
+  },
+  "EntryStatusNames": {
+    "Approved": "已核准",
+    "Draft": "草稿",
+    "Finished": "已完成",
+    "Locked": "已锁定"
+  },
+  "PVTypeDescriptions": {
+    "Original": "官方上传",
+    "Other": "其他",
+    "Reprint": "转载"
+  },
+  "PVTypeNames": {
+    "Original": "官方上传",
+    "Other": "其他",
+    "Reprint": "转载"
+  },
+  "UserGroupNames": {
+    "Admin": "站长",
+    "Limited": "受限用户",
+    "Moderator": "管理员",
+    "Nothing": "Nothing",
+    "Regular": "普通用户",
+    "Trusted": "信任用户"
+  },
+  "WebLinkCategoryNames": {
+    "Commercial": "商业的",
+    "Official": "官方的",
+    "Other": "其他",
+    "Reference": "参考页"
+  }
+}

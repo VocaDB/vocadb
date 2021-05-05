@@ -1,0 +1,29 @@
+{
+  "Album": {
+    "Download": "ダウンロード",
+    "AddedToCollection": "コレクションに追加されました。",
+    "AddNewSong": "新曲「{{0}}」を追加",
+    "AddToTracks": "トラックに追加",
+    "RemoveFromTracks": "トラックから削除"
+  },
+  "EntryIndex": {
+    "DraftsOnlyFilter": "下書き",
+    "TitleFilter": "タイトル「{{0}}」",
+    "StartsWithTitleFilter": "「{{0}}」で始まるタイトル",
+    "FilterPre": "フィルタ：",
+    "ExactTitleFilter": "完全一致タイトル「{{0}}」"
+  },
+  "Shared": {
+    "ReportSent": "レポートが送信されました。ありがとうございます！",
+    "Save": "セーブ",
+    "ThanksForRating": "評価ありがとうございます！"
+  },
+  "Song": {
+    "ThanksForRating": "評価ありがとうございます！",
+    "SongTypeFilter": "曲タイプ 「{{0}}」",
+    "SinceFilter": "{{0}}より新しい",
+    "OnlyWithPVsFilter": "PVだけ",
+    "ArtistFilter": "アーティスト「{{0}}」",
+    "AddedToList": "リストに追加しました"
+  }
+}

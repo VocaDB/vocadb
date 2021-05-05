@@ -1,0 +1,16 @@
+{
+  "Album": {
+    "AddedToCollection": "Добавлено в коллекцию.",
+    "AddToTracks": "Добавить к трекам",
+    "RemoveFromTracks": "Удалить из треков"
+  },
+  "Shared": {
+    "ReportSent": "Замечание отправлено. Спасибо!",
+    "Save": "Сохранить",
+    "ThanksForRating": "Спасибо за оценку!"
+  },
+  "Song": {
+    "AddedToList": "Добавлено в список",
+    "ThanksForRating": "Спасибо за оценку!"
+  }
+}

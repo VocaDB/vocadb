@@ -1,0 +1,40 @@
+{
+  "ActivityFeedHelper": {
+    "At": "am",
+    "CreatedNew": "erstellte einen neuen {{0}}:",
+    "EntryAlbum": "Album",
+    "EntryArtist": "Künstler",
+    "EntrySong": "Song",
+    "EntrySongList": "Song Liste",
+    "Someone": "Ein Mitwirkender",
+    "Updated": "aktualisierte einen {{0}}:"
+  },
+  "AlbumHelpers": {
+    "Released": "Released"
+  },
+  "Helper": {
+    "UploadPictureInfo": "Erlaubte Dateiendungen: {{0}}. Die maximale Größe liegt bei {{1}} MB. Bitte berücksichtige das Urheberrecht und erwähne, wenn möglich, die Bilderquelle in der Anmerkung/Beschreibung.",
+    "SaveChanges": "Änderungen speichern",
+    "StatusDescriptionApproved": "Genehmigte Einreichungen wurden von einen vertrauenswürdigen Benutzer geprüft. Das Bearbeiten der zugelassenen Einreichungen ist begrenzt.",
+    "WebLinkDescriptionTitle": "Beschreibung",
+    "DraftIconTitle": "Diese Einreichung ist ein Entwurf.",
+    "StatusDescriptionDraft": "Bei den Entwurfseinreichungen fehlen einige benötigte Informationen.",
+    "StatusDescriptionFinished": "Fertige Einreichungen beinhalten alle benötigten Informationen aber sind bislang noch nicht genehmigt worden.",
+    "SeeGuidePost": "für weitere Informationen.",
+    "StatusDescriptionLocked": "Gesperrte Einreichungen können nur von Mitarbeitern bearbeitet werden.",
+    "SeeGuide": "Anleitung",
+    "Added": "hinzugefügt",
+    "WebLinkCategoryTitle": "Kategorie",
+    "NameValueTitle": "Name (erforderlich)",
+    "WebLinkNewRow": "Neue Zeile",
+    "NameNewRow": "Neue Zeile",
+    "ReturnWithoutSaving": "Ohne Speichern zurückkehren",
+    "SeeGuidePre": "See the",
+    "NameLangTitle": "Sprache",
+    "DraftMessage": "Diese Einreichung ist ein Entwurf. Du kannst helfen, indem du die diesen Eintrag bearbeitest und ihn um fehlende Informationen ergänzt.",
+    "WebLinkUrlTitle": "URL"
+  },
+  "SongHelpers": {
+    "FromAlbum": "From album"
+  }
+}

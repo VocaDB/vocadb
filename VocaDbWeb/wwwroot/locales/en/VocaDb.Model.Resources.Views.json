@@ -1,0 +1,28 @@
+{
+  "AlbumRes": {
+    "NewAlbumArtistDesc": "Producers and vocalists associated with this album.",
+    "NewAlbumInfo": "Please note that VocaDB is not UtaiteDB. <strong>The album needs to have at least one track with Vocaloid vocals to be allowed on VocaDB (other voice synthsizers such as UTAU are also allowed, but human-sung covers are not)</strong>. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+  },
+  "ArtistRes": {
+    "AuthoredBy": "VocaDB account",
+    "NewArtistExternalLink": "External link (to artist's website, Hatsune Miku wiki, NND MyList etc.)"
+  },
+  "HomeRes": {
+    "SiteDescription": "VocaDB is a Vocaloid music database with translated artists, albums and songs.",
+    "Welcome": "Welcome to the Vocaloid Database!",
+    "WelcomeSubtitle": "The collaborative database for Vocaloid, UTAU and other singing synthesizers, with artists, discography, PVs and more."
+  },
+  "LayoutRes": {
+    "Keywords": "Vocaloid, VocaDB, Vocaloid database, Hatsune Miku, UTAU",
+    "PaypalDonateTitle": "VocaDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses.",
+    "SiteName": "VocaDB",
+    "SiteTitle": "Vocaloid Database"
+  },
+  "SongRes": {
+    "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.\n\nPlease note that a song without Vocaloid vocals is allowed only if it's released on an album together with Vocaloid songs, or there's multiple Vocaloid covers of that song. UTAU and other voice synthesizers are allowed as well, but human-sung covers are not.",
+    "RankingsTitle": "VocaDB song rankings"
+  },
+  "UserRes": {
+    "RequestVerificationInfo": "<p>\n\t\t\tIf you are a producer, illustrator, animator or any other content creator working with Vocaloid music or videos,\n\t\t\tor a representative of a circle, you may use this form to request your account to be verified by the site staff.\n\t\t\tAfter verification, your account name will be displayed on the artist entry page(s), and vice versa.\n\t\t</p>\n\t\t<p>\n\t\t\t<strong>\n\t\t\t\tYou need to provide some kind of proof that you are the legitimate owner of that entry, otherwise your request will probably be rejected.\n\t\t\t</strong>\n\t\t\tFor example, posting on your Twitter or blog and linking to your VocaDB account is an acceptable way of proving you are the one you say you are.\n\t\t\t<strong>\n\t\t\t\tYou should also have at least one or two accepted and finalized (Vocaloid or UTAU) song entries on the site - you can submit those yourself if others already haven't.\n\t\t\t</strong>\n\t\t</p>\n\t\t<p>\n\t\t\tAfter verification you're able to approve your artist entry, limiting who can edit it.\n\t\t\tAt the moment only the artist entry itself can be \"protected\" in this way - songs and albums are not affected.\n\t\t</p>\n\t\t<p>\n\t\t\tPlease understand that we reserve the right to decline your request. Reasons may include any of the above mentioned.\n\t\t\tUnless the reason for declining the request is obvious, we'll try to contact you, asking you to correct the mistakes so that the request could be approved.\n\t\t</p>"
+  }
+}

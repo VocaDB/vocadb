@@ -1,0 +1,5 @@
+{
+  "TagController": {
+    "TagNameError": "O nome da tag só pode conter caractéres de palavras e não pode estar vazia."
+  }
+}

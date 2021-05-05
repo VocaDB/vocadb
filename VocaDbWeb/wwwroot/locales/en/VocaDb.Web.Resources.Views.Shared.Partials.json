@@ -1,0 +1,13 @@
+{
+  "EnglishTranslatedString": {
+    "Original": "Original",
+    "ShowFullDescription": "Show full description",
+    "Translated": "Translated"
+  },
+  "PlayList": {
+    "Autoplay": "Autoplay",
+    "AutoplayNote": "Autoplay is supported only for YouTube and SoundCloud",
+    "NextSong": "Next song",
+    "Shuffle": "Shuffle"
+  }
+}

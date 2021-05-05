@@ -1,0 +1,12 @@
+{
+  "EntryReport": {
+    "EntryVersionReportBody": "La entrada '{{0}}', la cual habías editado, fue reportada especificando el siguiente mensaje: '{{1}}'. No te preocupes, lo mas probable es que no sea nada grave. Por favor checa la entrada, y si hay algo que deba ser modificado tan solo realiza los cambios pertinentes, a menos que alguien mas ya lo haya hecho.",
+    "EntryVersionReportTitle": "Reporte a la entrada {{0}}"
+  },
+  "UserAccount": {
+    "AccountCreatedSubject": "Bienvenido {{0}}, por favor verifica tu correo electrónico.",
+    "PasswordResetBody": "Tu (o alguien que conoce tu direción de correo electrónico) ha solicitado restablecer la contraseña de tu cuenta en VocaDB.\nPuedes realizar esta acción en {{0}}. Si tu no solicitaste este cambio de contraseña, puedes tan solo ignorar así eliminar este mensaje.",
+    "PasswordResetSubject": "Solicitud para restablecer contraseña.",
+    "VerifyEmailBody": "Haz clic en el link de abajo para verificar tu correo electrónico en {{0}}.\n{{1}}?token={{2}}"
+  }
+}

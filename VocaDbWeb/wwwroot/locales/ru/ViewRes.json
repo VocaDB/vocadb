@@ -1,0 +1,132 @@
+{
+  "ArchivedObjectVersions": {
+    "Author": "Автор",
+    "Changes": "Изменения",
+    "Created": "Добавлено:",
+    "CurrentVersionIs": "Номер данной версии -",
+    "Notes": "Заметки",
+    "Version": "Версия"
+  },
+  "DiscussionContent": {
+    "AddComment": "Добавить комментарий",
+    "NewComment": "Новый комментарий"
+  },
+  "EntryCreate": {
+    "EnglishName": "Название на английском",
+    "FoundPossibleDuplicates": "В базе найдены похожие записи. Пожалуйста, удостоверьтесь, что не добавляете дубликат.",
+    "Name": "Название (нужно хотя бы 1)",
+    "NameHelp": "Тип названия \"Неанглийское\" - для названий (имён) на любом другом языке (японский, русский и т.д.), включая неопознанный пользователем язык. Добавление транслитерации неанглийского названия (имени) на английский (romanized) весьма желательно.",
+    "NeedName": "Нужно указать хотя бы одно название.",
+    "NoArtistsToName": "Не добавляйте артистов в поле названия - для этого есть список артистов.",
+    "NonEnglishName": "Неанглийское название",
+    "PictureInfo": "Допустимые типы: {{0}}. Максимальный размер - {{1}} MB.",
+    "RomajiName": "Транслит."
+  },
+  "EntryDetails": {
+    "AdditionDate": "Дата добавления",
+    "AllPictures": "Все изображения",
+    "BasicInfoTab": "Основная информация",
+    "ConfirmDeleteComment": "Действительно удалить данный комментарий?",
+    "DiscussionTab": "Обсуждение",
+    "EditTags": "Изменить метки",
+    "ExternalLinks": "Внешние ссылки",
+    "Hits": "{{0}} просмотров",
+    "LatestComments": "Последние комментарии",
+    "NoComments": "Пока что ни одного!",
+    "OfficialLinks": "Официальные ссылки",
+    "OtherLinks": "Неофициальные ссылки",
+    "PicturesTab": "Изображения",
+    "ReportAnError": "Сообщить об ошибке",
+    "ReportNotes": "Заметки",
+    "ReportType": "Тип сообщения",
+    "Revisions": "Ревизии",
+    "ShowAllTags": "Показать все",
+    "Stats": "Статистика",
+    "ViewAllComments": "Посмотреть все комментарии",
+    "ViewModifications": "Посмотреть изменения"
+  },
+  "EntryEdit": {
+    "ConcurrentEditWarning": "{{0}} редактировал эту запись всего {{1}} минут(у/ы) назад.",
+    "ConcurrentEditWarningNow": "{{0}} тоже редактирует сейчас эту запись!",
+    "ExternalLinksQuickHelp": "Сторонние ссылки, относящиеся к этой записи. Пожалуйста, не добавляйте ссылки на нелегальные ресурсы и файлы напрямую (DDL)!<br />\n<br />\nСперва введите URL, и если ресурс здесь часто используется, его описание и категория будут автомагически определены.<br />\n<br />\nОфициальная: личный сайт/страница артиста (блог, сайт, страница Facebook и т.д.).<br />\nКоммерческая: ссылка на страницу продажи авторизованного магазина, например, iTunes, Amazon или CDJapan.<br />\nСторонняя: фанатские сайты с полезной информацией (например, wiki).<br />\nПрочая: для ссылок, не подходящих в предыдущие категории.<br />",
+    "Merge": "Объединить",
+    "Restore": "Восстановить",
+    "UpdateNotes": "Описание обновления (необязательное)"
+  },
+  "EntryIndex": {
+    "Drafts": "Данные записи отмечены как \"черновики\", потому что в них не хватает основной информации.",
+    "ManageDeleted": "Управление удалёнными записями",
+    "NoResults": "По запросу ничего не найдено! Попробуйте по-другому или с помощью поиска Google по сайту.",
+    "OnlyDrafts": "Только черновики"
+  },
+  "EntryMerge": {
+    "MergeBtnText": "Объединить",
+    "MergeInfo": "Choose the entry which this one will be merged to. All references will be pointed to that new entry and this entry will be deleted.\nPrefer merging the later entry to the earlier one, unless the new entry is finalized while the older one is draft.",
+    "MergeWarning": "This action cannot be undone! Please make sure the entries really need to be merged before proceeding.",
+    "ValidationErrorTargetIsLessComplete": "The selected entry seems to be draft while the one being merged from is not.\nPrefer merging from the less complete entry to the more complete entry.",
+    "ValidationErrorTargetIsNewer": "The selected entry seems to be newer than the one being merged from.\nPrefer merging from newer entry to the older entry."
+  },
+  "Layout": {
+    "AddAlbum": "Добавить альбом",
+    "AddArtist": "Добавить артиста",
+    "AddSong": "Добавить песню",
+    "FollowUser": "Следить за пользователем",
+    "Help": "Помощь / Справка",
+    "Home": "Главная",
+    "LogIn": "Зайти",
+    "LogOut": "Выйти",
+    "Manage": "Управление",
+    "MikuDbAlbum": "Импорт альбомов",
+    "NewAlbums": "Новые альбомы",
+    "NewPVs": "Недавние PV",
+    "Register": "Зарегистрироваться",
+    "RelatedSites": "Тематические сайты",
+    "Services": "Вспомогательные ресурсы",
+    "SocialSites": "Социальные сайты",
+    "Tags": "Метки / жанры",
+    "UnreadMessages": "У вас есть непрочитанные сообщения",
+    "Welcome": "Привет,"
+  },
+  "Misc": {
+    "AlbumCount": "альбом(ы)",
+    "ArtistCount": "артист(ы)",
+    "EventSeries": "Название серии мероприятий",
+    "FavoritedTimes": "раз(а)",
+    "Search": "Поиск",
+    "SongCount": "песни (песен)"
+  },
+  "Shared": {
+    "Actions": "Действия",
+    "Add": "Добавить",
+    "Albums": "Альбомы",
+    "Apply": "Применить",
+    "ArtistName": "Имя",
+    "Artists": "Артисты",
+    "Delete": "Удалить",
+    "Description": "Описание",
+    "Drafts": "Черновики",
+    "Edit": "Редактировать",
+    "EntriesFound": "Записей найдено: {{0}}",
+    "FeaturedSongLists": "Отмеченные списки песен",
+    "Filter": "Отсеять",
+    "Loading": "Загрузка...",
+    "Media": "Медиа",
+    "Name": "Название",
+    "PVs": "PV",
+    "ReleaseEvents": "Мероприятия",
+    "Remove": "Убрать",
+    "Save": "Сохранить",
+    "Search": "Искать",
+    "Songs": "Песни",
+    "Tags": "Метки",
+    "TopFavoritedSongs": "Наиболее популярные песни",
+    "TopRatedAlbums": "Наиболее популярные альбомы",
+    "Type": "Тип",
+    "Unsorted": "Несортированное",
+    "Users": "Пользователи"
+  },
+  "TagSelections": {
+    "AddTag": "Добавить метку",
+    "Info": "Название метки может содержать только буквы, цифры и символ подчёркивания."
+  }
+}

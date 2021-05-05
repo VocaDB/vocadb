@@ -1,0 +1,49 @@
+{
+  "ActivityFeedHelper": {
+    "At": "at",
+    "CreatedNew": "created a new {{0}}",
+    "EntryAlbum": "album",
+    "EntryArtist": "artist",
+    "EntryReleaseEvent": "event",
+    "EntrySong": "song",
+    "EntrySongList": "song list",
+    "EntryTag": "tag",
+    "EntryVenue": "venue",
+    "Someone": "A contributor",
+    "Updated": "updated {{0}}"
+  },
+  "AlbumHelpers": {
+    "Released": "Released"
+  },
+  "Helper": {
+    "Added": "added",
+    "DraftIconTitle": "This entry is a draft.",
+    "DraftMessage": "This entry is a draft. You can help by editing the entry and adding the missing information.",
+    "EntryIsMissingInformation": "This entry is missing the following information:",
+    "EntryValidationNoErrors": "This entry contains all the required information.",
+    "EntryValidationNoErrorsDraft": "This entry contains all the required information to be marked as finalized (not draft).",
+    "EntryValidationWarningDetails": "Details",
+    "GitHubMarkdown": "GitHub-flavored Markdown",
+    "IsSupportedForFormatting": "is supported for formatting",
+    "NameLangTitle": "Language",
+    "NameNewRow": "New row",
+    "NameValueTitle": "Name (required)",
+    "ReturnWithoutSaving": "Return without saving",
+    "SaveChanges": "Save changes",
+    "SeeGuide": "guide",
+    "SeeGuidePost": "for more information.",
+    "SeeGuidePre": "See the",
+    "StatusDescriptionApproved": "Approved entries have been inspected by a trusted user. Editing of approved entries is limited.",
+    "StatusDescriptionDraft": "Draft entries are missing some required information.",
+    "StatusDescriptionFinished": "Finished entries contain all the required information but haven't been approved yet.",
+    "StatusDescriptionLocked": "Locked entries can only be edited by staff members.",
+    "UploadPictureInfo": "Allowed types: {{0}}. Maximum size is {{1}} MB. Please respect copyrights and mention the image source in notes/description if possible.",
+    "WebLinkCategoryTitle": "Category",
+    "WebLinkDescriptionTitle": "Description",
+    "WebLinkNewRow": "New row",
+    "WebLinkUrlTitle": "URL"
+  },
+  "SongHelpers": {
+    "FromAlbum": "From album"
+  }
+}

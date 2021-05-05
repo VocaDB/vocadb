@@ -1,0 +1,6 @@
+{
+  "EntryReport": {
+    "EntryVersionReportBody": "Merkintä '{{0}}', jota olet muokannut, raportoitiin seuraavalla viestillä: '{{1}}'. Ole hyva ja tarkista merkintä ja tee tarvittavat muutokset mikäli tarpeellista, ellei joku muu ole jo hoitanut asiaa kuntoon.",
+    "EntryVersionReportTitle": "Raportti merkinnästä {{0}}"
+  }
+}

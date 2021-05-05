@@ -1,0 +1,32 @@
+{
+  "Index": {
+    "AlbumDetails": "Details",
+    "AlbumTiles": "Tiles",
+    "AlbumType": "Album type",
+    "ArtistType": "艺术家类别",
+    "Category": "Category",
+    "EntryType": "Type",
+    "IncludeDerivedVoicebanks": "Include derived voicebanks",
+    "InMyCollection": "In my collection",
+    "ItemsPerPage": "每页显示{{0}}项",
+    "MinScore": "Minimum rating score",
+    "MoreFilters": "More filters",
+    "MoreRecentThan": "More recent than",
+    "OnlyMyFollowedArtists": "Only my followed artists",
+    "OnlyWithPVs": "Only with PVs",
+    "Playlist": "Playlist",
+    "Preview": "预览",
+    "Rating": "评分",
+    "ReleaseDate": "发布时间",
+    "ShowingItemsOf": "显示{{1}}项中的{{0}}项",
+    "ShowTags": "Show tags",
+    "SongType": "Song type",
+    "TagCategory": "Category",
+    "TagInformation": "Tag information",
+    "TagUsages": "Usages",
+    "Times": "次评分",
+    "TopGenres": "Top genres",
+    "TotalScore": "total score",
+    "TypeSomething": "请在此输入…"
+  }
+}

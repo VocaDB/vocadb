@@ -1,0 +1,15 @@
+{
+  "Index": {
+    "NewAlbums": "Uudet tai tulevat albumit",
+    "News": "Uutiset",
+    "RecentActivity": "Viimeaikaiset tapahtumat",
+    "RecentSongs": "Suositut videot",
+    "SearchSite": "Hae koko sivustosta käyttäen Googlen kustomoitua hakua",
+    "TopAlbums": "Satunnaisia suosittuja albumeita",
+    "ViewAll": "näytä kaikki",
+    "ViewMore": "näytä lisää",
+    "ViewSongInfo": "Katso kappaleen tiedot",
+    "Welcome": "Tervetuloa Vocaloid-tietokantaan!",
+    "WelcomeSubtitle": "Yhteistyöhön perustuva tietokanta joka käsittelee Vocaloid-artisteja, diskografiaa, videoita ja muuta."
+  }
+}

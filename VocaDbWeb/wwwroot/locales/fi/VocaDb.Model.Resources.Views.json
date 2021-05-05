@@ -1,0 +1,17 @@
+{
+  "AlbumRes": {
+    "NewAlbumArtistDesc": "Albumista vastuussa olevat tuottajat ja laulajat.",
+    "NewAlbumInfo": "Huomaa että VocaDB ei ole UtaiteDB. Albumilla täytyy olla vähintään yksi kappale joka sisältää Vocaloideja (muut äänisyntensaattorit kuten UTAU ovat myös hyväksyttyjä, ihmislaulajat sen sijaan eivät). Epäviralliset fanien tekemät kokoelmat eivät myöskään ole sallittuja. Katso lisätietoja ohjeesta."
+  },
+  "ArtistRes": {
+    "AuthoredBy": "VocaDB-käyttäjä",
+    "NewArtistExternalLink": "Ulkoinen linkki (artistin kotisivulle, wikiin tai NND:n MyListiin)"
+  },
+  "HomeRes": {
+    "Welcome": "Tervetuloa Vocaloid-tietokantaan!",
+    "WelcomeSubtitle": "Yhteistyöhön perustuva tietokanta joka käsittelee Vocaloid-artisteja, diskografiaa, videoita ja muuta."
+  },
+  "SongRes": {
+    "NewSongInfo": "Varmista ettei kappaletta ole jo lisätty tietokantaan. Sinun täytyy antaa vähintään yksi nimi ja artisti. Alkuperäisen videon linkittäminen on suotavaa, mikäli mahdollista."
+  }
+}

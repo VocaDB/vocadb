@@ -1,0 +1,16 @@
+{
+  "SongTypeNames": {
+    "Cover": "カバー曲",
+    "DramaPV": "ドラマ",
+    "Instrumental": "インストゥルメンタル",
+    "Mashup": "マッシュアップ",
+    "MusicPV": "音楽PV",
+    "Original": "オリジナル曲",
+    "Other": "その他",
+    "Remaster": "リマスター",
+    "Remix": "リミックス",
+    "Unspecified": "指定なし",
+    "Live": "ライブ収録",
+    "Arrangement": "編曲"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "ActivityFeedHelper": {
+    "At": "em",
+    "CreatedNew": "criado um novo {{0}}",
+    "EntryAlbum": "álbum",
+    "EntryArtist": "artista",
+    "EntryReleaseEvent": "evento",
+    "EntrySong": "música",
+    "EntrySongList": "lista de músicas",
+    "EntryTag": "tag",
+    "Someone": "Um contribuidor",
+    "Updated": "atualizado {{0}}"
+  },
+  "AlbumHelpers": {
+    "Released": "Lançamento"
+  },
+  "Helper": {
+    "Added": "adicionado",
+    "DraftIconTitle": "Esta página está em construção.",
+    "DraftMessage": "Esta página está em construção. Pode ajudar a completá-la preenchendo os campos em falta.",
+    "EntryIsMissingInformation": "Esta página não contém a seguinte informação:",
+    "EntryValidationNoErrors": "Esta página contém todas as informações necessárias.",
+    "EntryValidationNoErrorsDraft": "Esta página contém todas as informações necessárias para ser marcada como acabada.",
+    "EntryValidationWarningDetails": "Detalhes",
+    "NameLangTitle": "Idioma",
+    "NameNewRow": "Nova linha",
+    "NameValueTitle": "Nome (obrigatório)",
+    "ReturnWithoutSaving": "Voltar sem gravar",
+    "SaveChanges": "Gravar mudanças",
+    "SeeGuide": "guia",
+    "SeeGuidePost": "para mais informações.",
+    "SeeGuidePre": "Veja a",
+    "StatusDescriptionApproved": "Páginas aprovadas foram inspecionadas por um utilizador de confiança. Assim, só alguns utilizadores podem fazer mudanças.",
+    "StatusDescriptionDraft": "Páginas draft não têm algumas informações cruciais.",
+    "StatusDescriptionFinished": "Páginas acabadas contêm todas as informações cruciais mas não foram revistas pela administração.",
+    "StatusDescriptionLocked": "Páginas trancadas só podem ser editadas por membros da administração.",
+    "UploadPictureInfo": "Tipos permitidos: {{0}}. Tamanho máximo é {{1}} MB. Por favor respeito os direitos de autor e mencione a fonte da imagem nas notas, se possível.",
+    "WebLinkCategoryTitle": "Categoria",
+    "WebLinkDescriptionTitle": "Descrição",
+    "WebLinkNewRow": "Nova linha"
+  },
+  "SongHelpers": {
+    "FromAlbum": "Do álbum"
+  }
+}

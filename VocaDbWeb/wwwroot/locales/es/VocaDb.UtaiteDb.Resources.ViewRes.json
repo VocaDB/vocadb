@@ -1,0 +1,25 @@
+{
+  "AlbumRes": {
+    "NewAlbumArtistDesc": "Utaites y otros artistas asociados con este album.",
+    "NewAlbumInfo": "Este album necesita tener al menos una pista con un utaite registrado en UtaiteDB. Compilaciones no oficiales/fan-made (bootlegs) no están permitidas. Para mas información, vease la página de Ayuda."
+  },
+  "ArtistRes": {
+    "AuthoredBy": "Cuenta de UtaiteDB",
+    "NewArtistExternalLink": "Link externo (al sitio web del artista, Utaite wiki, NND MyList, etcétera)."
+  },
+  "HomeRes": {
+    "SiteDescription": "UtaiteDB es una base de datos con información detallada sobre artistas, albumes y canciones.",
+    "Welcome": "¡Bienvenido a la base de datos utaite!",
+    "WelcomeSubtitle": "\\r\\nLa base de datos colaborativa sobre artistas de la escena utaite, discografías, PVs y mas."
+  },
+  "LayoutRes": {
+    "Keywords": "Utaite, UtaiteDB, Base de datos Utaite",
+    "PaypalDonateTitle": "UtaiteDB es un proyecto sin ánimos de lucro. Todo el dinero recaudado mediante donaciones es invertido en el desarrollo a futuro de la plataforma, renta de hosteo web y licencias de software de terceros utilizado en el desarrollo y manejo de la misma.",
+    "SiteName": "UtaiteDB",
+    "SiteTitle": "Base de datos Utaite"
+  },
+  "SongRes": {
+    "NewSongInfo": "Por favor, cersiorate de que la entrada que estas por añadir a la base de datos no ha sido subida anteriormente. Se requiere que especifiques al menos un nombre y artista. Procura incluir un link al PV original.",
+    "RankingsTitle": "Ranking de canciones en UtaiteDB"
+  }
+}

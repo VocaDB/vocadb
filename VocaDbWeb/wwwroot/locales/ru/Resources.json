@@ -1,0 +1,190 @@
+{
+  "AlbumArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "Альбомы, автомагически импортированные из MikuDB",
+    "Created": "Создано",
+    "Merged": "Создано объединением с другой записью",
+    "PropertiesUpdated": "Свойства обновлены",
+    "Unknown": "Неизвестно"
+  },
+  "AlbumCollectionStatusNames": {
+    "Nothing": "Нет",
+    "Ordered": "Заказанный",
+    "Owned": "Купленный",
+    "Wishlisted": "Желаемый"
+  },
+  "AlbumEditableFieldNames": {
+    "Artists": "Артисты",
+    "Cover": "Обложка",
+    "Description": "Описание",
+    "DiscType": "Тип диска",
+    "Names": "Названия",
+    "Nothing": "Прочее",
+    "OriginalName": "Оригинальное название",
+    "OriginalRelease": "Дата первого выпуска",
+    "Pictures": "Изображения",
+    "PVs": "Видео",
+    "Status": "Статус",
+    "Tracks": "Песни",
+    "WebLinks": "Внешние ссылки"
+  },
+  "AlbumMediaTypeNames": {
+    "DigitalDownload": "Цифровая копия",
+    "Other": "Прочее",
+    "PhysicalDisc": "Диск"
+  },
+  "ArtistArchiveReasonNames": {
+    "Created": "Создано",
+    "Merged": "Создано объединением записей",
+    "PropertiesUpdated": "Свойства обновлены",
+    "Reverted": "Откат к более ранней ревизии",
+    "Unknown": "Неизвестно"
+  },
+  "ArtistEditableFieldNames": {
+    "Albums": "Альбомы",
+    "ArtistType": "Тип артиста",
+    "Description": "Описание",
+    "Groups": "Группы",
+    "Names": "Имена",
+    "Nothing": "Прочее",
+    "OriginalName": "Оригинальное имя",
+    "Picture": "Изображение",
+    "Pictures": "Изображения",
+    "Status": "Статус",
+    "WebLinks": "Внешние ссылки"
+  },
+  "ArtistRoleNames": {
+    "Animator": "Аниматор",
+    "Arranger": "Аранжировщик",
+    "Composer": "Композитор",
+    "Default": "По умолчанию",
+    "Distributor": "Распространитель",
+    "Illustrator": "Иллюстратор",
+    "Instrumentalist": "Инструменталист",
+    "Lyricist": "Автор лирики",
+    "Mastering": "Сведение",
+    "Other": "Прочее",
+    "Publisher": "Издатель",
+    "Vocalist": "Вокалист",
+    "VoiceManipulator": "Программист вокала"
+  },
+  "CommonMessages": {
+    "EntryDeleted": "Эта запись удалена. Она временно доступна, но не будет использована где-либо.",
+    "EntryStatusExplanation": "Черновик: отсутствует минимально необходимая информация, которую нужно добавить (или исправить).<br />\nЗавершено: есть вся необходимая информация, но запись ещё не проверена доверенным пользователем.<br />\nОдобрено: проверено доверенным пользователем. Одобренные записи могут быть изменены только доверенными пользователями.",
+    "Locked": "Данная запись заблокирована и может быть изменена только модератором.",
+    "NameLanguageHelp": "Выберите тип названия (имени). \"Оригинальное\" - для любого языка, кроме английского. Если оригинальное название (имя) - на английском, не нужно указывать его в поле \"Оригинального\"."
+  },
+  "ContentLanguageSelectionNames": {
+    "Default": "Оригинальный",
+    "English": "Английский",
+    "Japanese": "Неанглийский",
+    "Romaji": "Транслит.",
+    "Unspecified": "Неопределённый"
+  },
+  "EntryEditEventNames": {
+    "Created": "Создано",
+    "Updated": "Обновлено"
+  },
+  "EntryStatusNames": {
+    "Approved": "Одобрено",
+    "Draft": "Черновик",
+    "Finished": "Завершено",
+    "Locked": "Заблокировано"
+  },
+  "PermissionTokenNames": {
+    "AccessManageMenu": "Меню управления доступом",
+    "Admin": "Администрирование",
+    "ApproveEntries": "Одобрение записей",
+    "CreateComments": "Комментирование",
+    "DeleteComments": "Удаление комментариев",
+    "DeleteEntries": "Удаление записей",
+    "DesignatedStaff": "Назначенный участник команды",
+    "DisableUsers": "Блокирование пользователей",
+    "EditFeaturedLists": "Управление отмеченными списками песен",
+    "EditNews": "Редактирование новостей",
+    "EditProfile": "Редактирование профилей",
+    "LockEntries": "Блокирование записей",
+    "ManageDatabase": "Управление базой данных",
+    "ManageEntryReports": "Управление отчётами о записях",
+    "ManageEventSeries": "Управление сериями мероприятий",
+    "ManageIPRules": "Управление правилами IP",
+    "ManageUserPermissions": "Управление правами пользователей",
+    "MergeEntries": "Объединение записей",
+    "MikuDbImport": "Импорт альбомов",
+    "MoveToTrash": "Отправить в мусор",
+    "Nothing": "Нет",
+    "ReadRecentComments": "Просмотр последних комментариев",
+    "RestoreRevisions": "Откат к предыдущим версиям",
+    "ViewAuditLog": "Просмотр журнала событий"
+  },
+  "PVTypeDescriptions": {
+    "Original": "Оригинал (загруженный автором)",
+    "Other": "Прочее",
+    "Reprint": "Копия (сделанная другим пользователем)"
+  },
+  "PVTypeNames": {
+    "Original": "Оригинал",
+    "Other": "Прочее",
+    "Reprint": "Копия"
+  },
+  "ReleaseEventEditableFieldNames": {
+    "Date": "Дата",
+    "Description": "Описание",
+    "Name": "Название",
+    "SeriesNumber": "Порядковый номер"
+  },
+  "SongArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "Автомагически импортировано из MikuDB",
+    "Created": "Создано",
+    "Merged": "Создано объединением с другой записью",
+    "PropertiesUpdated": "Свойства обновлены",
+    "Unknown": "Неизвестно"
+  },
+  "SongEditableFieldNames": {
+    "Artists": "Артисты",
+    "Groups": "Группы",
+    "Lyrics": "Текст",
+    "Names": "Названия",
+    "Notes": "Заметки",
+    "Nothing": "Ничего",
+    "OriginalName": "Оригинальное название",
+    "OriginalVersion": "Оригинальная версия",
+    "PVs": "PV",
+    "SongType": "Тип песни",
+    "Status": "Статус",
+    "WebLinks": "Внешние ссылки"
+  },
+  "SongListFeaturedCategoryNames": {
+    "Concerts": "Концертные списки песен",
+    "Nothing": "Ничего",
+    "Other": "Прочее",
+    "Pools": "Группы",
+    "VocaloidRanking": "Вокалоидные рейтинги"
+  },
+  "SongVoteRatingNames": {
+    "Favorite": "Любимое",
+    "Like": "Нравится"
+  },
+  "TagEditableFieldNames": {
+    "CategoryName": "Категория",
+    "Description": "Описание"
+  },
+  "UserEmailOptionsNames": {
+    "NoEmail": "Нет личных сообщений",
+    "PrivateMessagesFromAdmins": "Личные собщения от администраторов",
+    "PrivateMessagesFromAll": "Личные сообщения от всех"
+  },
+  "UserGroupNames": {
+    "Admin": "Администратор",
+    "Limited": "Пользователь с ограниченным набором прав",
+    "Moderator": "Модератор",
+    "Nothing": "Ничто",
+    "Regular": "Пользователь",
+    "Trusted": "Доверенный пользователь"
+  },
+  "WebLinkCategoryNames": {
+    "Commercial": "Коммерческая",
+    "Official": "Официальная",
+    "Other": "Прочая",
+    "Reference": "Сторонняя"
+  }
+}
