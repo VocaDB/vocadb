@@ -7,7 +7,7 @@ import TagRepository from '../../Repositories/TagRepository';
 export default class TagMergeViewModel {
   constructor(tagRepo: TagRepository, private base: TagBaseContract) {
     this.target = new BasicEntryLinkViewModel(null, (id, callback) =>
-      tagRepo.getById(id, null, null, callback),
+      tagRepo.getById(id, null, null).then(callback),
     );
 
     ko.computed(() => {

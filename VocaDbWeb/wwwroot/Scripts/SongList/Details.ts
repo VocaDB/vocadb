@@ -1,6 +1,7 @@
 import CommentContract from '../DataContracts/CommentContract';
 import TagUsageForApiContract from '../DataContracts/Tag/TagUsageForApiContract';
 import RepositoryFactory from '../Repositories/RepositoryFactory';
+import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import PVPlayersFactory from '../ViewModels/PVs/PVPlayersFactory';
 import SongListViewModel from '../ViewModels/SongList/SongListViewModel';
@@ -24,9 +25,11 @@ const SongListDetails = (
     var languageSelection = vdb.values.languagePreference;
     var listId = model.songList.id;
 
+    const httpClient = new HttpClient();
     var rootPath = vdb.values.baseAddress;
     var urlMapper = new UrlMapper(rootPath);
     var repoFactory = new RepositoryFactory(
+      httpClient,
       urlMapper,
       vdb.values.languagePreference,
       vdb.values.loggedUserId,

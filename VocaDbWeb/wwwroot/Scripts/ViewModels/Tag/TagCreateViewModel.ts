@@ -10,27 +10,27 @@ export default class TagCreateViewModel {
         return;
       }
 
-      tagRepo.getList(
-        {
+      tagRepo
+        .getList({
           start: 0,
           maxResults: 1,
           getTotalCount: false,
           query: val,
           nameMatchMode: NameMatchMode.Exact,
           allowAliases: true,
-        },
-        (result) => {
+        })
+        .then((result) => {
           this.duplicateName(result.items.length > 0);
-        },
-      );
+        });
     });
   }
 
   public createTag = () => {
-    this.tagRepo.create(
-      this.newTagName(),
-      (t) => (window.location.href = EntryUrlMapper.details_tag_contract(t)),
-    );
+    this.tagRepo
+      .create(this.newTagName())
+      .then(
+        (t) => (window.location.href = EntryUrlMapper.details_tag_contract(t)),
+      );
   };
 
   public dialogVisible = ko.observable(false);

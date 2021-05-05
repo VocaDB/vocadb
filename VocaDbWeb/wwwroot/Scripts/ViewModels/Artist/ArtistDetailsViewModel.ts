@@ -73,7 +73,7 @@ export default class ArtistDetailsViewModel {
     this.tagsEditViewModel = new TagsEditViewModel(
       {
         getTagSelections: (callback) =>
-          userRepository.getArtistTagSelections(artistId, callback),
+          userRepository.getArtistTagSelections(artistId).then(callback),
         saveTagSelections: (tags) =>
           userRepository.updateArtistTags(
             artistId,
@@ -82,7 +82,7 @@ export default class ArtistDetailsViewModel {
           ),
       },
       EntryType.Artist,
-      (callback) => repo.getTagSuggestions(this.artistId, callback),
+      (callback) => repo.getTagSuggestions(this.artistId).then(callback),
     );
 
     this.tagUsages = new TagListViewModel(tagUsages);

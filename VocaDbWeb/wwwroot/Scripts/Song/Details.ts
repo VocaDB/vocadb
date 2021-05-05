@@ -1,5 +1,6 @@
 import RepositoryFactory from '../Repositories/RepositoryFactory';
 import functions from '../Shared/GlobalFunctions';
+import HttpClient from '../Shared/HttpClient';
 import ui from '../Shared/MessagesTyped';
 import UrlMapper from '../Shared/UrlMapper';
 import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
@@ -85,9 +86,11 @@ const SongDetails = (
     vdb.resources.song = resources;
 
     var jsonModel = model.jsonModel;
+    const httpClient = new HttpClient();
     var rootPath = vdb.values.baseAddress;
     var urlMapper = new UrlMapper(rootPath);
     var repoFactory = new RepositoryFactory(
+      httpClient,
       urlMapper,
       vdb.values.languagePreference,
     );
@@ -96,6 +99,7 @@ const SongDetails = (
     var artistRepo = repoFactory.artistRepository();
 
     var viewModel = new SongDetailsViewModel(
+      httpClient,
       repo,
       userRepo,
       artistRepo,

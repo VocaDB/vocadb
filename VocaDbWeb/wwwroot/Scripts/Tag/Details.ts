@@ -5,6 +5,7 @@ import TagRepository from '../Repositories/TagRepository';
 import UserRepository from '../Repositories/UserRepository';
 import CommentContract from '../DataContracts/CommentContract';
 import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
+import HttpClient from '../Shared/HttpClient';
 
 function initChart(
   urlMapper: UrlMapper,
@@ -263,8 +264,9 @@ const TagDetails = (
       jsonModel.hasMoreChildren,
     );
 
-    var repo = new TagRepository(vdb.values.baseAddress);
-    var userRepo = new UserRepository(urlMapper);
+    const httpClient = new HttpClient();
+    var repo = new TagRepository(httpClient, vdb.values.baseAddress);
+    var userRepo = new UserRepository(httpClient, urlMapper);
     var latestComments = model.latestComments;
 
     vm = new TagDetailsViewModel(

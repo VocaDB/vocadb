@@ -1,4 +1,5 @@
 import SongRepository from '../Repositories/SongRepository';
+import HttpClient from '../Shared/HttpClient';
 import ArchivedSongViewModel from '../ViewModels/Song/ArchivedSongViewModel';
 
 const SongViewVersion = (model: {
@@ -18,7 +19,9 @@ const SongViewVersion = (model: {
     $('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
     $('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
+    const httpClient = new HttpClient();
     var rep = new SongRepository(
+      httpClient,
       vdb.values.baseAddress,
       vdb.values.languagePreference,
     );

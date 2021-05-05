@@ -65,7 +65,7 @@ export default class VenueEditViewModel {
       return;
     }
 
-    this.repo.getList(value, NameMatchMode.Exact, 1, (result) => {
+    this.repo.getList(value, NameMatchMode.Exact, 1).then((result) => {
       this.duplicateName(result.items.length ? value : null);
     });
   };
@@ -75,7 +75,7 @@ export default class VenueEditViewModel {
   public defaultNameLanguage: KnockoutObservable<string>;
 
   public deleteViewModel = new DeleteEntryViewModel((notes) => {
-    this.repo.delete(this.id, notes, false, this.redirectToDetails);
+    this.repo.delete(this.id, notes, false).then(this.redirectToDetails);
   });
 
   public description = ko.observable<string>();
@@ -104,6 +104,6 @@ export default class VenueEditViewModel {
   };
 
   public trashViewModel = new DeleteEntryViewModel((notes) => {
-    this.repo.delete(this.id, notes, true, this.redirectToRoot);
+    this.repo.delete(this.id, notes, true).then(this.redirectToRoot);
   });
 }

@@ -68,7 +68,8 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 
     this.releaseEvent = new BasicEntryLinkViewModel<IEntryWithIdAndName>(
       { id: eventId, name: null },
-      this.eventRepo ? this.eventRepo.getOne : null,
+      (entryId, callback) =>
+        this.eventRepo ? this.eventRepo.getOne(entryId).then(callback) : null,
     );
 
     if (eventId) this.releaseEvent.id(eventId);
@@ -89,7 +90,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
 
     this.parentVersion = new BasicEntryLinkViewModel<IEntryWithIdAndName>(
       null,
-      this.songRepo.getOne,
+      (entryId, callback) => this.songRepo.getOne(entryId).then(callback),
     );
 
     this.minMilliBpm = ko
@@ -185,38 +186,40 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
         this.playListViewModel.updateResultsWithTotalCount();
         callback({ items: [], totalCount: 0 });
       } else {
-        this.songRepo.getList(
-          pagingProperties,
-          lang,
-          searchTerm,
-          this.sort(),
-          this.songType() != SongType[SongType.Unspecified]
-            ? this.songType()
-            : null,
-          this.afterDate(),
-          this.beforeDate(),
-          tag,
-          childTags,
-          this.unifyEntryTypesAndTags(),
-          this.artistFilters.artistIds(),
-          this.artistFilters.artistParticipationStatus(),
-          this.artistFilters.childVoicebanks(),
-          this.artistFilters.includeMembers(),
-          this.releaseEvent.id(),
-          this.pvsOnly(),
-          null,
-          this.since(),
-          this.minScore(),
-          this.onlyRatedSongs() ? this.loggedUserId : null,
-          this.parentVersion.id(),
-          this.fields(),
-          status,
-          this.advancedFilters.filters(),
-          this.minMilliBpm(),
-          this.maxMilliBpm(),
-          this.minLength() ? this.minLength() : null,
-          this.maxLength() ? this.maxLength() : null,
-          (result) => {
+        this.songRepo
+          .getList(
+            pagingProperties,
+            lang,
+            searchTerm,
+            this.sort(),
+            this.songType() != SongType[SongType.Unspecified]
+              ? this.songType()
+              : null,
+            this.afterDate(),
+            this.beforeDate(),
+            tag,
+            childTags,
+            this.unifyEntryTypesAndTags(),
+            this.artistFilters.artistIds(),
+            this.artistFilters.artistParticipationStatus(),
+            this.artistFilters.childVoicebanks(),
+            this.artistFilters.includeMembers(),
+            this.releaseEvent.id(),
+            this.pvsOnly(),
+            null,
+            this.since(),
+            this.minScore(),
+            this.onlyRatedSongs() ? this.loggedUserId : null,
+            this.parentVersion.id(),
+            this.fields(),
+            status,
+            this.advancedFilters.filters(),
+            this.minMilliBpm(),
+            this.maxMilliBpm(),
+            this.minLength() ? this.minLength() : null,
+            this.maxLength() ? this.maxLength() : null,
+          )
+          .then((result) => {
             _.each(result.items, (song: ISongSearchItem) => {
               if (song.pvServices && song.pvServices != 'Nothing') {
                 song.previewViewModel = new SongWithPreviewViewModel(
@@ -233,8 +236,7 @@ export default class SongSearchViewModel extends SearchCategoryBaseViewModel<ISo
             });
 
             callback(result);
-          },
-        );
+          });
       }
     };
 

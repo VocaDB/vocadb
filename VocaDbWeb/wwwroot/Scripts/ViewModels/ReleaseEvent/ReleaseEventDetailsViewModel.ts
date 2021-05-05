@@ -13,9 +13,11 @@ import UrlMapper from '../../Shared/UrlMapper';
 import UserBaseContract from '../../DataContracts/User/UserBaseContract';
 import UserEventRelationshipType from '../../Models/Users/UserEventRelationshipType';
 import UserRepository from '../../Repositories/UserRepository';
+import HttpClient from '../../Shared/HttpClient';
 
 export default class ReleaseEventDetailsViewModel {
   constructor(
+    httpClient: HttpClient,
     urlMapper: UrlMapper,
     private readonly repo: ReleaseEventRepository,
     private readonly userRepo: UserRepository,
@@ -29,6 +31,7 @@ export default class ReleaseEventDetailsViewModel {
     canDeleteAllComments: boolean,
   ) {
     const commentRepo = new CommentRepository(
+      httpClient,
       urlMapper,
       EntryType.ReleaseEvent,
     );
@@ -56,7 +59,7 @@ export default class ReleaseEventDetailsViewModel {
     this.tagsEditViewModel = new TagsEditViewModel(
       {
         getTagSelections: (callback) =>
-          userRepo.getEventTagSelections(this.eventId, callback),
+          userRepo.getEventTagSelections(this.eventId).then(callback),
         saveTagSelections: (tags) =>
           userRepo.updateEventTags(
             this.eventId,
@@ -101,7 +104,7 @@ export default class ReleaseEventDetailsViewModel {
       UserEventRelationshipType.Attending,
     );
     this.eventAssociationType(UserEventRelationshipType.Attending);
-    this.userRepo.getOne(this.loggedUserId, 'MainPicture', (user) => {
+    this.userRepo.getOne(this.loggedUserId, 'MainPicture').then((user) => {
       this.usersAttending.push(user);
     });
   };

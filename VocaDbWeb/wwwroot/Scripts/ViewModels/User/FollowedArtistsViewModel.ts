@@ -4,6 +4,8 @@ import ServerSidePagingViewModel from '../ServerSidePagingViewModel';
 import TagFilters from '../Search/TagFilters';
 import TagRepository from '../../Repositories/TagRepository';
 import UserRepository from '../../Repositories/UserRepository';
+import PartialFindResultContract from '../../DataContracts/PartialFindResultContract';
+import ArtistForUserForApiContract from '../../DataContracts/User/ArtistForUserForApiContract';
 
 export default class FollowedArtistsViewModel {
   constructor(
@@ -25,21 +27,19 @@ export default class FollowedArtistsViewModel {
   public init = () => {
     if (this.isInit) return;
 
-    this.resourceRepo.getList(
-      this.cultureCode,
-      ['artistTypeNames'],
-      (resources) => {
+    this.resourceRepo
+      .getList(this.cultureCode, ['artistTypeNames'])
+      .then((resources) => {
         this.resources(resources);
         this.updateResultsWithTotalCount();
         this.isInit = true;
-      },
-    );
+      });
   };
 
   public artistType = ko.observable('Unknown');
   public isInit = false;
   public loading = ko.observable(true); // Currently loading for data
-  public page = ko.observableArray<RatedSongForUserForApiContract>([]); // Current page of items
+  public page = ko.observableArray<ArtistForUserForApiContract>([]); // Current page of items
   public paging = new ServerSidePagingViewModel(20); // Paging view model
   public pauseNotifications = false;
   public resources = ko.observable<any>();
@@ -59,21 +59,24 @@ export default class FollowedArtistsViewModel {
 
     var pagingProperties = this.paging.getPagingProperties(clearResults);
 
-    this.userRepo.getFollowedArtistsList(
-      this.loggedUserId,
-      pagingProperties,
-      this.languageSelection,
-      this.tagFilters.tagIds(),
-      this.artistType(),
-      (result: any) => {
-        this.pauseNotifications = false;
+    this.userRepo
+      .getFollowedArtistsList(
+        this.loggedUserId,
+        pagingProperties,
+        this.languageSelection,
+        this.tagFilters.tagIds(),
+        this.artistType(),
+      )
+      .then(
+        (result: PartialFindResultContract<ArtistForUserForApiContract>) => {
+          this.pauseNotifications = false;
 
-        if (pagingProperties.getTotalCount)
-          this.paging.totalItems(result.totalCount);
+          if (pagingProperties.getTotalCount)
+            this.paging.totalItems(result.totalCount);
 
-        this.page(result.items);
-        this.loading(false);
-      },
-    );
+          this.page(result.items);
+          this.loading(false);
+        },
+      );
   };
 }

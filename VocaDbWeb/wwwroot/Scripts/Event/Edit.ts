@@ -1,5 +1,6 @@
 import ReleaseEventContract from '../DataContracts/ReleaseEvents/ReleaseEventContract';
 import RepositoryFactory from '../Repositories/RepositoryFactory';
+import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import ReleaseEventEditViewModel from '../ViewModels/ReleaseEvent/ReleaseEventEditViewModel';
 
@@ -17,8 +18,10 @@ const EventEdit = (
   $(function () {
     ko.punches.enableAll();
 
+    const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
     var repoFactory = new RepositoryFactory(
+      httpClient,
       urlMapper,
       vdb.values.languagePreference,
     );

@@ -72,14 +72,15 @@ export class FeaturedSongListCategoryViewModel extends SongListsBaseViewModel {
   public loadMoreItems = (
     callback: (result: PartialFindResultContract<SongListContract>) => void,
   ) => {
-    this.listRepo.getFeatured(
-      this.query(),
-      this.category,
-      { start: this.start, maxEntries: 50, getTotalCount: true },
-      this.tagFilters.tagIds(),
-      this.fields(),
-      this.sort(),
-      callback,
-    );
+    this.listRepo
+      .getFeatured(
+        this.query(),
+        this.category,
+        { start: this.start, maxEntries: 50, getTotalCount: true },
+        this.tagFilters.tagIds(),
+        this.fields(),
+        this.sort(),
+      )
+      .then(callback);
   };
 }

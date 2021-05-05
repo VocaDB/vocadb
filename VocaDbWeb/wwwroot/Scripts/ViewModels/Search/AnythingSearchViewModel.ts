@@ -21,16 +21,17 @@ export default class AnythingSearchViewModel extends SearchCategoryBaseViewModel
       status,
       callback,
     ) =>
-      this.entryRepo.getList(
-        pagingProperties,
-        lang,
-        searchTerm,
-        tags,
-        childTags,
-        this.fields(),
-        status,
-        callback,
-      );
+      this.entryRepo
+        .getList(
+          pagingProperties,
+          lang,
+          searchTerm,
+          tags,
+          childTags,
+          this.fields(),
+          status,
+        )
+        .then(callback);
   }
 
   public entryCategoryName = (entry: EntryContract) => {

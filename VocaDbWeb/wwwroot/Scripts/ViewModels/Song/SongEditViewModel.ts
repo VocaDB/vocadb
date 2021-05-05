@@ -76,7 +76,7 @@ export default class SongEditViewModel {
   // customArtistName: Name of the custom artist being added. Can be null, if existing artist.
   addArtist = (artistId?: number, customArtistName?: string) => {
     if (artistId) {
-      this.artistRepository.getOne(artistId, (artist) => {
+      this.artistRepository.getOne(artistId).then((artist) => {
         var data: ArtistForAlbumContract = {
           artist: artist,
           isSupport: false,
@@ -262,7 +262,7 @@ export default class SongEditViewModel {
     this.notes = new EnglishTranslatedStringEditViewModel(data.notes);
     this.originalVersion = new BasicEntryLinkViewModel<SongContract>(
       data.originalVersion,
-      songRepository.getOne,
+      (entryId, callback) => songRepository.getOne(entryId).then(callback),
     );
     this.publishDate = ko.observable(
       data.publishDate ? moment(data.publishDate).toDate() : null,

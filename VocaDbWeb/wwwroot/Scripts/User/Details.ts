@@ -1,6 +1,7 @@
 import CommentContract from '../DataContracts/CommentContract';
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import RepositoryFactory from '../Repositories/RepositoryFactory';
+import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import PVPlayersFactory from '../ViewModels/PVs/PVPlayersFactory';
 import AlbumCollectionViewModel from '../ViewModels/User/AlbumCollectionViewModel';
@@ -51,9 +52,11 @@ const UserDetails = (
       ContentLanguagePreference[vdb.values.languagePreference];
     var userId = model.id;
     var loggedUserId = vdb.values.loggedUserId;
+    const httpClient = new HttpClient();
     var rootPath = vdb.values.baseAddress;
     var urlMapper = new UrlMapper(rootPath);
     var repoFactory = new RepositoryFactory(
+      httpClient,
       urlMapper,
       vdb.values.languagePreference,
       vdb.values.loggedUserId,

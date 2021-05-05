@@ -4,6 +4,8 @@ import UrlMapper from '../../Shared/UrlMapper';
 import { UserInboxType } from '../../Repositories/UserRepository';
 import UserMessageSummaryContract from '../../DataContracts/User/UserMessageSummaryContract';
 import UserRepository from '../../Repositories/UserRepository';
+import FakePromise from './FakePromise';
+import HttpClient from '../../Shared/HttpClient';
 
 export default class FakeUserRepository extends UserRepository {
   public message: UserMessageSummaryContract;
@@ -12,10 +14,10 @@ export default class FakeUserRepository extends UserRepository {
   public rating: SongVoteRating;
 
   constructor() {
-    super(new UrlMapper(''));
+    super(new HttpClient(), new UrlMapper(''));
 
-    this.getMessage = (messageId, callback?) => {
-      if (callback) callback(this.message);
+    this.getMessage = (messageId): Promise<UserMessageSummaryContract> => {
+      return FakePromise.resolve(this.message);
     };
 
     this.getMessageSummaries = (
@@ -25,28 +27,23 @@ export default class FakeUserRepository extends UserRepository {
       unread?,
       anotherUserId?,
       iconSize?,
-      callback?: (
-        result: PartialFindResultContract<UserMessageSummaryContract>,
-      ) => void,
-    ) => {
-      if (callback)
-        callback({
-          items: this.messages,
-          totalCount: this.messages ? this.messages.length : 0,
-        });
+    ): Promise<PartialFindResultContract<UserMessageSummaryContract>> => {
+      return FakePromise.resolve<
+        PartialFindResultContract<UserMessageSummaryContract>
+      >({
+        items: this.messages,
+        totalCount: this.messages ? this.messages.length : 0,
+      });
     };
 
     this.updateSongRating = (
       songId: number,
       rating: SongVoteRating,
-      callback: Function,
-    ) => {
+    ): Promise<void> => {
       this.songId = songId;
       this.rating = rating;
 
-      if (callback) callback();
-
-      return $.Deferred().resolve();
+      return Promise.resolve();
     };
   }
 }

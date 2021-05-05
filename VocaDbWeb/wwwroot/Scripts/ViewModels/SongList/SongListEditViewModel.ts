@@ -40,7 +40,7 @@ export default class SongListEditViewModel {
   private acceptSongSelection = (songId: number) => {
     if (!songId) return;
 
-    this.songRepo.getOne(songId, (song: SongContract) => {
+    this.songRepo.getOne(songId).then((song: SongContract) => {
       var songInList = new SongInListEditViewModel({
         songInListId: 0,
         order: 0,
@@ -54,7 +54,9 @@ export default class SongListEditViewModel {
   public currentName: string;
 
   public deleteViewModel = new DeleteEntryViewModel((notes) => {
-    this.songListRepo.delete(this.id, notes, false, this.redirectToDetails);
+    this.songListRepo
+      .delete(this.id, notes, false)
+      .then(this.redirectToDetails);
   });
 
   public description: KnockoutObservable<string>;
@@ -71,7 +73,7 @@ export default class SongListEditViewModel {
 
   public init = (loaded: () => void) => {
     if (this.id) {
-      this.songListRepo.getForEdit(this.id, (data) => {
+      this.songListRepo.getForEdit(this.id).then((data) => {
         this.currentName = data.name;
         this.name = ko.observable(data.name);
         this.description = ko.observable(data.description);
@@ -135,7 +137,7 @@ export default class SongListEditViewModel {
   public submitting = ko.observable(false);
 
   public trashViewModel = new DeleteEntryViewModel((notes) => {
-    this.songListRepo.delete(this.id, notes, true, this.redirectToRoot);
+    this.songListRepo.delete(this.id, notes, true).then(this.redirectToRoot);
   });
 
   public updateNotes = ko.observable('');

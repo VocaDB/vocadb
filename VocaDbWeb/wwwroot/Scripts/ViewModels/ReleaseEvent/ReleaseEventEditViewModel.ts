@@ -92,7 +92,7 @@ export default class ReleaseEventEditViewModel {
 
   addArtist = (artistId?: number, customArtistName?: string) => {
     if (artistId) {
-      this.artistRepository.getOne(artistId, (artist) => {
+      this.artistRepository.getOne(artistId).then((artist) => {
         const data: ArtistForEventContract = {
           artist: artist,
           name: artist.name,
@@ -138,7 +138,7 @@ export default class ReleaseEventEditViewModel {
   public defaultNameLanguage: KnockoutObservable<string>;
 
   public deleteViewModel = new DeleteEntryViewModel((notes) => {
-    this.repo.delete(this.id, notes, false, this.redirectToDetails);
+    this.repo.delete(this.id, notes, false).then(this.redirectToDetails);
   });
 
   public description = ko.observable<string>();
@@ -190,7 +190,7 @@ export default class ReleaseEventEditViewModel {
   };
 
   public trashViewModel = new DeleteEntryViewModel((notes) => {
-    this.repo.delete(this.id, notes, true, this.redirectToRoot);
+    this.repo.delete(this.id, notes, true).then(this.redirectToRoot);
   });
 
   public venue: BasicEntryLinkViewModel<VenueForApiContract>;

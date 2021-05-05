@@ -6,14 +6,16 @@ import EntryMergeValidationHelper from '../../Helpers/EntryMergeValidationHelper
 
 export default class ArtistMergeViewModel {
   constructor(repo: ArtistRepository, id: number) {
-    this.target = new BasicEntryLinkViewModel(null, repo.getOne);
+    this.target = new BasicEntryLinkViewModel(null, (entryId, callback) =>
+      repo.getOne(entryId).then(callback),
+    );
 
     this.targetSearchParams = {
       acceptSelection: this.target.id,
       ignoreId: id,
     };
 
-    repo.getOne(id, (base) => {
+    repo.getOne(id).then((base) => {
       ko.computed(() => {
         var result = EntryMergeValidationHelper.validateEntry(
           base,

@@ -147,29 +147,28 @@ export default class RatedSongsSearchViewModel {
   public init = () => {
     if (this.isInit) return;
 
-    this.userRepo.getSongLists(
-      this.loggedUserId,
-      null,
-      { start: 0, maxEntries: 50, getTotalCount: false },
-      [],
-      'Name',
-      null,
-      (songLists) => this.songLists(songLists.items),
-    );
+    this.userRepo
+      .getSongLists(
+        this.loggedUserId,
+        null,
+        { start: 0, maxEntries: 50, getTotalCount: false },
+        [],
+        'Name',
+        null,
+      )
+      .then((songLists) => this.songLists(songLists.items));
 
-    this.resourceRepo.getList(
-      this.cultureCode,
-      [
+    this.resourceRepo
+      .getList(this.cultureCode, [
         'songSortRuleNames',
         'user_ratedSongForUserSortRuleNames',
         'songTypeNames',
-      ],
-      (resources) => {
+      ])
+      .then((resources) => {
         this.resources(resources);
         this.updateResultsWithTotalCount();
         this.isInit = true;
-      },
-    );
+      });
   };
 
   public updateResultsWithTotalCount = () => this.updateResults(true);
@@ -194,54 +193,57 @@ export default class RatedSongsSearchViewModel {
       return;
     }
 
-    this.userRepo.getRatedSongsList(
-      this.loggedUserId,
-      pagingProperties,
-      this.languageSelection,
-      this.searchTerm(),
-      this.tagFilters.tagIds(),
-      this.artistFilters.artistIds(),
-      this.artistFilters.childVoicebanks(),
-      this.rating(),
-      this.songListId(),
-      this.advancedFilters.filters(),
-      this.groupByRating(),
-      null,
-      this.fields(),
-      this.sort(),
-      (result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
-        var songs: IRatedSongSearchItem[] = [];
+    this.userRepo
+      .getRatedSongsList(
+        this.loggedUserId,
+        pagingProperties,
+        this.languageSelection,
+        this.searchTerm(),
+        this.tagFilters.tagIds(),
+        this.artistFilters.artistIds(),
+        this.artistFilters.childVoicebanks(),
+        this.rating(),
+        this.songListId(),
+        this.advancedFilters.filters(),
+        this.groupByRating(),
+        null,
+        this.fields(),
+        this.sort(),
+      )
+      .then(
+        (result: PartialFindResultContract<RatedSongForUserForApiContract>) => {
+          var songs: IRatedSongSearchItem[] = [];
 
-        _.each(result.items, (item) => {
-          var song: IRatedSongSearchItem = item.song;
+          _.each(result.items, (item) => {
+            var song: IRatedSongSearchItem = item.song;
 
-          song.rating = item.rating;
+            song.rating = item.rating;
 
-          if (song.pvServices && song.pvServices !== 'Nothing') {
-            song.previewViewModel = new SongWithPreviewViewModel(
-              this.songRepo,
-              this.userRepo,
-              song.id,
-              song.pvServices,
-            );
-            song.previewViewModel.ratingComplete =
-              ui.showThankYouForRatingMessage;
-          } else {
-            song.previewViewModel = null;
-          }
+            if (song.pvServices && song.pvServices !== 'Nothing') {
+              song.previewViewModel = new SongWithPreviewViewModel(
+                this.songRepo,
+                this.userRepo,
+                song.id,
+                song.pvServices,
+              );
+              song.previewViewModel.ratingComplete =
+                ui.showThankYouForRatingMessage;
+            } else {
+              song.previewViewModel = null;
+            }
 
-          songs.push(song);
-        });
+            songs.push(song);
+          });
 
-        this.pauseNotifications = false;
+          this.pauseNotifications = false;
 
-        if (pagingProperties.getTotalCount)
-          this.paging.totalItems(result.totalCount);
+          if (pagingProperties.getTotalCount)
+            this.paging.totalItems(result.totalCount);
 
-        this.page(songs);
-        this.loading(false);
-      },
-    );
+          this.page(songs);
+          this.loading(false);
+        },
+      );
   };
 }
 

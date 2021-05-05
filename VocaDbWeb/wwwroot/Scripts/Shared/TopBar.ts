@@ -1,5 +1,6 @@
 import UrlMapper from '../Shared/UrlMapper';
 import UserRepository from '../Repositories/UserRepository';
+import HttpClient from './HttpClient';
 
 $(() => {
   $('#globalSearchTerm').autocomplete({
@@ -47,7 +48,12 @@ $(() => {
 });
 
 export function setLanguagePreferenceCookie(languagePreference: string) {
-  var userRepo = new UserRepository(new UrlMapper(vdb.values.baseAddress), 0);
+  const httpClient = new HttpClient();
+  var userRepo = new UserRepository(
+    httpClient,
+    new UrlMapper(vdb.values.baseAddress),
+    0,
+  );
   userRepo.updateUserSetting(
     null,
     'languagePreference',

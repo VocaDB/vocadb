@@ -8,18 +8,21 @@ export default class TopBarViewModel {
   public ensureMessagesLoaded = () => {
     if (this.isLoaded()) return;
 
-    this.userRepository.getMessageSummaries(
-      null,
-      null,
-      { maxEntries: 3, start: 0, getTotalCount: false },
-      true,
-      null,
-      40,
-      (messages: PartialFindResultContract<UserMessageSummaryContract>) => {
-        this.unreadMessages(messages.items);
-        this.isLoaded(true);
-      },
-    );
+    this.userRepository
+      .getMessageSummaries(
+        null,
+        null,
+        { maxEntries: 3, start: 0, getTotalCount: false },
+        true,
+        null,
+        40,
+      )
+      .then(
+        (messages: PartialFindResultContract<UserMessageSummaryContract>) => {
+          this.unreadMessages(messages.items);
+          this.isLoaded(true);
+        },
+      );
   };
 
   public entryType: KnockoutObservable<string>;
@@ -67,7 +70,7 @@ export default class TopBarViewModel {
     });
 
     if (getNewReportsCount) {
-      entryReportRepository.getNewReportCount((count) => {
+      entryReportRepository.getNewReportCount().then((count) => {
         this.reportCount(count);
       });
     }

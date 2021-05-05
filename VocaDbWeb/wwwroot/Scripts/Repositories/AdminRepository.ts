@@ -1,17 +1,17 @@
 import { IPRuleContract } from '../ViewModels/Admin/ManageIPRulesViewModel';
 import UrlMapper from '../Shared/UrlMapper';
+import HttpClient from '../Shared/HttpClient';
 
 export default class AdminRepository {
-  constructor(private urlMapper: UrlMapper) {}
+  constructor(
+    private readonly httpClient: HttpClient,
+    private urlMapper: UrlMapper,
+  ) {}
 
-  public addIpToBanList = (
-    rule: IPRuleContract,
-    callback: (result: boolean) => void,
-  ) => {
-    return $.postJSON(
+  public addIpToBanList = (rule: IPRuleContract): Promise<boolean> => {
+    return this.httpClient.post<boolean>(
       this.urlMapper.mapRelative('/api/ip-rules'),
       rule,
-      callback,
     );
   };
 
@@ -23,10 +23,9 @@ export default class AdminRepository {
     );
   };
 
-  public getTempBannedIps = (callback: (ips: string[]) => void) => {
-    return $.getJSON(
+  public getTempBannedIps = (): Promise<string[]> => {
+    return this.httpClient.get<string[]>(
       this.urlMapper.mapRelative('/api/admin/tempBannedIPs'),
-      callback,
     );
   };
 }

@@ -63,24 +63,25 @@ export default class ListUsersViewModel {
     if (clearResults) this.paging.page(1);
 
     var pagingProperties = this.paging.getPagingProperties(clearResults);
-    this.repo.getList(
-      pagingProperties,
-      this.searchTerm(),
-      this.sort(),
-      this.group(),
-      this.disabledUsers(),
-      this.onlyVerifiedArtists(),
-      this.knowsLanguage(),
-      'Auto',
-      'MainPicture',
-      (result) => {
+    this.repo
+      .getList(
+        pagingProperties,
+        this.searchTerm(),
+        this.sort(),
+        this.group(),
+        this.disabledUsers(),
+        this.onlyVerifiedArtists(),
+        this.knowsLanguage(),
+        'Auto',
+        'MainPicture',
+      )
+      .then((result) => {
         this.pauseNotifications = false;
 
         this.page(result.items);
 
         if (pagingProperties.getTotalCount)
           this.paging.totalItems(result.totalCount);
-      },
-    );
+      });
   };
 }

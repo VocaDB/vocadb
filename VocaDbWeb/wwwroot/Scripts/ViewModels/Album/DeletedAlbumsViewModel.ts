@@ -28,28 +28,29 @@ export default class DeletedAlbumsViewModel {
     }
 
     var pagingProperties = this.paging.getPagingProperties(clearResults);
-    this.albumRepo.getList(
-      pagingProperties,
-      this.albumRepo.languagePreferenceStr,
-      this.searchTerm(),
-      'Name',
-      undefined,
-      null,
-      null,
-      null,
-      undefined,
-      undefined,
-      undefined,
-      'AdditionalNames,MainPicture',
-      null,
-      true,
-      null,
-      (result) => {
+    this.albumRepo
+      .getList(
+        pagingProperties,
+        this.albumRepo.languagePreferenceStr,
+        this.searchTerm(),
+        'Name',
+        undefined,
+        null,
+        null,
+        null,
+        undefined,
+        undefined,
+        undefined,
+        'AdditionalNames,MainPicture',
+        null,
+        true,
+        null,
+      )
+      .then((result) => {
         this.page(result.items);
 
         if (pagingProperties.getTotalCount)
           this.paging.totalItems(result.totalCount);
-      },
-    );
+      });
   };
 }

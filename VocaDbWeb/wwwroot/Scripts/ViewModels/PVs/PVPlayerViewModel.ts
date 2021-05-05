@@ -37,7 +37,7 @@ export default class PVPlayerViewModel {
         return;
       }
 
-      userRepo.getSongRating(null, song.song.id, (rating) => {
+      userRepo.getSongRating(null, song.song.id).then((rating) => {
         this.ratingButtonsViewModel(
           new PVRatingButtonsViewModel(
             userRepo,
@@ -69,14 +69,13 @@ export default class PVPlayerViewModel {
           : null;
 
         // Load new player from server and attach it
-        songRepo.pvPlayer(
-          song.song.id,
-          {
+        songRepo
+          .pvPlayer(song.song.id, {
             elementId: pvPlayersFactory.playerElementId,
             enableScriptAccess: true,
             pvServices: services,
-          },
-          (result) => {
+          })
+          .then((result) => {
             this.playerHtml(result.playerHtml);
             this.playerService = PVService[result.pvService];
             this.currentPlayer = this.players[result.pvService];
@@ -86,8 +85,7 @@ export default class PVPlayerViewModel {
                 this.currentPlayer.play();
               });
             }
-          },
-        );
+          });
       }
     });
 
@@ -141,7 +139,7 @@ export default class PVPlayerViewModel {
     songId: number,
     callback: (pvId: string) => void,
   ) => {
-    this.songRepo.getPvId(songId, service, callback);
+    this.songRepo.getPvId(songId, service).then(callback);
   };
 
   private players: { [index: string]: IPVPlayer };

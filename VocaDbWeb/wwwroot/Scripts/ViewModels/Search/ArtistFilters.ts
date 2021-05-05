@@ -63,7 +63,7 @@ export default class ArtistFilters {
     _.forEach(filters, (newArtist) => {
       var selectedArtistId = newArtist.id;
 
-      this.artistRepo.getOne(selectedArtistId, (artist) => {
+      this.artistRepo.getOne(selectedArtistId).then((artist) => {
         newArtist.name(artist.name);
         newArtist.artistType(ArtistType[artist.artistType]);
       });

@@ -12,7 +12,9 @@ export default class AlbumCreateViewModel {
 
   private addArtist = (artistId: number) => {
     if (artistId) {
-      this.artistRepo.getOne(artistId, (artist) => this.artists.push(artist));
+      this.artistRepo
+        .getOne(artistId)
+        .then((artist) => this.artists.push(artist));
     }
   };
 
@@ -27,12 +29,11 @@ export default class AlbumCreateViewModel {
     var term2 = this.nameRomaji();
     var term3 = this.nameEnglish();
 
-    this.albumRepo.findDuplicate(
-      { term1: term1, term2: term2, term3: term3 },
-      (result) => {
+    this.albumRepo
+      .findDuplicate({ term1: term1, term2: term2, term3: term3 })
+      .then((result) => {
         this.dupeEntries(result);
-      },
-    );
+      });
   };
 
   public dupeEntries = ko.observableArray<DuplicateEntryResultContract>([]);

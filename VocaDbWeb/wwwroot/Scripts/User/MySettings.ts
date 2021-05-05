@@ -1,6 +1,7 @@
 import UserKnownLanguageContract from '../DataContracts/User/UserKnownLanguageContract';
 import WebLinkContract from '../DataContracts/WebLinkContract';
 import UserRepository from '../Repositories/UserRepository';
+import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import MySettingsViewModel from '../ViewModels/User/MySettingsViewModel';
 
@@ -14,8 +15,9 @@ const UserMySettings = (model: {
   $(document).ready(function () {
     $('#tabs').tabs();
 
+    const httpClient = new HttpClient();
     var urlMapper = new UrlMapper(vdb.values.baseAddress);
-    var repository = new UserRepository(urlMapper);
+    var repository = new UserRepository(httpClient, urlMapper);
 
     var viewModel = new MySettingsViewModel(
       repository,

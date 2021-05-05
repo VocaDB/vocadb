@@ -5,19 +5,11 @@ export default interface ICommentRepository {
   createComment(
     entryId: number,
     contract: CommentContract,
-    callback: (contract: CommentContract) => void,
-  ): void;
+  ): Promise<CommentContract>;
 
-  deleteComment(commentId: number, callback?: () => void): void;
+  deleteComment(commentId: number): Promise<void>;
 
-  getComments(
-    entryId: number,
-    callback: (contract: CommentContract[]) => void,
-  ): void;
+  getComments(entryId: number): Promise<CommentContract[]>;
 
-  updateComment(
-    commentId: number,
-    contract: CommentContract,
-    callback?: () => void,
-  ): void;
+  updateComment(commentId: number, contract: CommentContract): Promise<void>;
 }

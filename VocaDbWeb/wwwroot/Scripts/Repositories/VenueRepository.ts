@@ -5,9 +5,13 @@ import NameMatchMode from '../Models/NameMatchMode';
 import PartialFindResultContract from '../DataContracts/PartialFindResultContract';
 import UrlMapper from '../Shared/UrlMapper';
 import VenueForApiContract from '../DataContracts/Venue/VenueForApiContract';
+import HttpClient from '../Shared/HttpClient';
 
 export default class VenueRepository extends BaseRepository {
-  constructor(private readonly urlMapper: UrlMapper) {
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly urlMapper: UrlMapper,
+  ) {
     super(urlMapper.baseUrl);
   }
 
@@ -16,8 +20,7 @@ export default class VenueRepository extends BaseRepository {
     reportType: string,
     notes: string,
     versionNumber: number,
-    callback?: () => void,
-  ) => {
+  ): Promise<void> => {
     var url = functions.mergeUrls(
       this.baseUrl,
       `/api/venues/${venueId}/reports?${AjaxHelper.createUrl({
@@ -26,22 +29,20 @@ export default class VenueRepository extends BaseRepository {
         versionNumber: [versionNumber],
       })}`,
     );
-    $.postJSON(url, callback);
+    return this.httpClient.post<void>(url);
   };
 
   public delete = (
     id: number,
     notes: string,
     hardDelete: boolean,
-    callback?: () => void,
-  ) => {
-    $.ajax(
+  ): Promise<void> => {
+    return this.httpClient.delete<void>(
       this.urlMapper.mapRelative(
         `/api/venues/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
           notes,
         )}`,
       ),
-      { type: 'DELETE', success: callback },
     );
   };
 
@@ -49,8 +50,7 @@ export default class VenueRepository extends BaseRepository {
     query: string,
     nameMatchMode: NameMatchMode,
     maxResults: number,
-    callback?: (result: PartialFindResultContract<VenueForApiContract>) => void,
-  ) => {
+  ): Promise<PartialFindResultContract<VenueForApiContract>> => {
     var url = functions.mergeUrls(this.baseUrl, '/api/venues');
     var data = {
       query: query,
@@ -58,6 +58,9 @@ export default class VenueRepository extends BaseRepository {
       nameMatchMode: NameMatchMode[nameMatchMode],
     };
 
-    $.getJSON(url, data, callback);
+    return this.httpClient.get<PartialFindResultContract<VenueForApiContract>>(
+      url,
+      data,
+    );
   };
 }

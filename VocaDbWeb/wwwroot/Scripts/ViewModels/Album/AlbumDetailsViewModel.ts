@@ -87,18 +87,19 @@ export default class AlbumDetailsViewModel {
       data.personalDescriptionText,
       artistRepository,
       (callback) => {
-        repo.getOneWithComponents(
-          this.id,
-          'Artists',
-          ContentLanguagePreference[languagePreference],
-          (result) => {
+        repo
+          .getOneWithComponents(
+            this.id,
+            'Artists',
+            ContentLanguagePreference[languagePreference],
+          )
+          .then((result) => {
             var artists = _.chain(result.artists)
               .filter(ArtistHelper.isValidForPersonalDescription)
               .map((a) => a.artist)
               .value();
             callback(artists);
-          },
-        );
+          });
       },
       (vm) =>
         repo.updatePersonalDescription(this.id, vm.text(), vm.author.entry()),
@@ -107,7 +108,7 @@ export default class AlbumDetailsViewModel {
     this.tagsEditViewModel = new TagsEditViewModel(
       {
         getTagSelections: (callback) =>
-          userRepo.getAlbumTagSelections(this.id, callback),
+          userRepo.getAlbumTagSelections(this.id).then(callback),
         saveTagSelections: (tags) =>
           userRepo.updateAlbumTags(
             this.id,
@@ -116,7 +117,7 @@ export default class AlbumDetailsViewModel {
           ),
       },
       EntryType.Album,
-      (callback) => repo.getTagSuggestions(this.id, callback),
+      (callback) => repo.getTagSuggestions(this.id).then(callback),
     );
 
     this.tagUsages = new TagListViewModel(data.tagUsages);

@@ -47,9 +47,9 @@ export default class UserMessagesViewModel {
     });
 
     if (receiverName) {
-      userRepository.getOneByName(receiverName, (result) =>
-        this.newMessageViewModel.receiver.entry(result),
-      );
+      userRepository
+        .getOneByName(receiverName)
+        .then((result) => this.newMessageViewModel.receiver.entry(result));
     }
   }
 
@@ -109,7 +109,7 @@ export default class UserMessagesViewModel {
   };
 
   selectMessage = (message: UserMessageViewModel) => {
-    this.userRepository.getMessage(message.id, (message) => {
+    this.userRepository.getMessage(message.id).then((message) => {
       this.selectedMessageBody(message.body);
     });
 
@@ -140,13 +140,14 @@ export default class UserMessagesViewModel {
     this.newMessageViewModel.isSending(true);
     var message = this.newMessageViewModel.toContract(this.userId);
     this.userRepository
-      .createMessage(this.userId, message, () => {
+      .createMessage(this.userId, message)
+      .then(() => {
         this.newMessageViewModel.clear();
         this.sentMessages.clear();
         this.selectInbox(UserInboxType.Sent);
         if (this.messageSent) this.messageSent();
       })
-      .always(() => this.newMessageViewModel.isSending(false));
+      .finally(() => this.newMessageViewModel.isSending(false));
   };
 }
 
@@ -166,15 +167,16 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
     });
 
     if (getMessageCount) {
-      this.userRepo.getMessageSummaries(
-        userId,
-        inbox,
-        { start: 0, maxEntries: 0, getTotalCount: true },
-        true,
-        null,
-        null,
-        (result) => this.unreadOnServer(result.totalCount),
-      );
+      this.userRepo
+        .getMessageSummaries(
+          userId,
+          inbox,
+          { start: 0, maxEntries: 0, getTotalCount: true },
+          true,
+          null,
+          null,
+        )
+        .then((result) => this.unreadOnServer(result.totalCount));
     }
 
     this.selectAll.subscribe((selected) => {
@@ -206,21 +208,22 @@ export class UserMessageFolderViewModel extends PagedItemsViewModel<UserMessageV
   };
 
   public loadMoreItems = (callback) => {
-    this.userRepo.getMessageSummaries(
-      this.userId,
-      this.inbox,
-      { start: this.start, maxEntries: 100, getTotalCount: true },
-      false,
-      this.anotherUser.id(),
-      40,
-      (result) => {
+    this.userRepo
+      .getMessageSummaries(
+        this.userId,
+        this.inbox,
+        { start: this.start, maxEntries: 100, getTotalCount: true },
+        false,
+        this.anotherUser.id(),
+        40,
+      )
+      .then((result) => {
         var messageViewModels = _.map(
           result.items,
           (msg) => new UserMessageViewModel(msg),
         );
         callback({ items: messageViewModels, totalCount: result.totalCount });
-      },
-    );
+      });
   };
 
   selectAll = ko.observable(false);

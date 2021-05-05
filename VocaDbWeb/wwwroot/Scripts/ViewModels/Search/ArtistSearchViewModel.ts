@@ -31,23 +31,24 @@ export default class ArtistSearchViewModel extends SearchCategoryBaseViewModel<A
       status,
       callback,
     ) => {
-      this.artistRepo.getList(
-        pagingProperties,
-        lang,
-        searchTerm,
-        this.sort(),
-        this.artistType() != ArtistType[ArtistType.Unknown]
-          ? this.artistType()
-          : null,
-        !this.onlyRootVoicebanks(),
-        tags,
-        childTags,
-        this.onlyFollowedByMe() ? this.loggedUserId : null,
-        this.fields(),
-        status,
-        this.advancedFilters.filters(),
-        callback,
-      );
+      this.artistRepo
+        .getList(
+          pagingProperties,
+          lang,
+          searchTerm,
+          this.sort(),
+          this.artistType() != ArtistType[ArtistType.Unknown]
+            ? this.artistType()
+            : null,
+          !this.onlyRootVoicebanks(),
+          tags,
+          childTags,
+          this.onlyFollowedByMe() ? this.loggedUserId : null,
+          this.fields(),
+          status,
+          this.advancedFilters.filters(),
+        )
+        .then(callback);
     };
   }
 

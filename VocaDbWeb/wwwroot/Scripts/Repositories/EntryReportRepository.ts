@@ -1,10 +1,14 @@
 import UrlMapper from '../Shared/UrlMapper';
+import HttpClient from '../Shared/HttpClient';
 
 export default class EntryReportRepository {
-  public getNewReportCount = (callback: (count) => void) => {
+  public getNewReportCount = (): Promise<number> => {
     var url = this.urlMapper.mapRelative('/entryReports/newReportsCount');
-    $.getJSON(url, null, callback);
+    return this.httpClient.get<number>(url);
   };
 
-  constructor(private urlMapper: UrlMapper) {}
+  constructor(
+    private readonly httpClient: HttpClient,
+    private urlMapper: UrlMapper,
+  ) {}
 }

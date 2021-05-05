@@ -4,6 +4,7 @@ import UserBaseContract from '../DataContracts/User/UserBaseContract';
 import UserEventRelationshipType from '../Models/Users/UserEventRelationshipType';
 import ReleaseEventRepository from '../Repositories/ReleaseEventRepository';
 import UserRepository from '../Repositories/UserRepository';
+import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import ReleaseEventDetailsViewModel from '../ViewModels/ReleaseEvent/ReleaseEventDetailsViewModel';
 import { IEntryReportType } from '../ViewModels/ReportEntryViewModel';
@@ -29,15 +30,17 @@ const EventDetails = (
     $('#manageTags').button({ icons: { primary: 'ui-icon-wrench' } });
 
     var loggedUserId = vdb.values.loggedUserId;
+    const httpClient = new HttpClient();
     var rootPath = vdb.values.baseAddress;
     var urlMapper = new UrlMapper(rootPath);
-    var eventRepo = new ReleaseEventRepository(urlMapper);
-    var userRepo = new UserRepository(urlMapper, loggedUserId);
+    var eventRepo = new ReleaseEventRepository(httpClient, urlMapper);
+    var userRepo = new UserRepository(httpClient, urlMapper, loggedUserId);
     var latestComments = model.latestComments;
     var users = model.usersAttending;
     var tags = model.tags;
 
     var vm = new ReleaseEventDetailsViewModel(
+      httpClient,
       urlMapper,
       eventRepo,
       userRepo,

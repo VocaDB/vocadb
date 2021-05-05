@@ -43,11 +43,12 @@ export default class PVRatingButtonsViewModel {
       this.rating(rating);
 
       repository
-        .updateSongRating(songId, rating, () => {
+        .updateSongRating(songId, rating)
+        .then(() => {
           if (rating !== SongVoteRating.Nothing && ratingCallback)
             ratingCallback();
         })
-        .always(() => this.ratingInProgress(false));
+        .finally(() => this.ratingInProgress(false));
     };
   }
 }

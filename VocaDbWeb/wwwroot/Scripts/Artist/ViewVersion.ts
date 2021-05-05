@@ -1,4 +1,5 @@
 import ArtistRepository from '../Repositories/ArtistRepository';
+import HttpClient from '../Shared/HttpClient';
 import ArchivedArtistViewModel from '../ViewModels/Artist/ArchivedArtistViewModel';
 
 const ArtistViewVersion = (model: {
@@ -18,7 +19,9 @@ const ArtistViewVersion = (model: {
     $('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
     $('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
+    const httpClient = new HttpClient();
     var rep = new ArtistRepository(
+      httpClient,
       vdb.values.baseAddress,
       vdb.values.languagePreference,
     );

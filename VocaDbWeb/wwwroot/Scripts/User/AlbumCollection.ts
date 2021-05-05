@@ -1,5 +1,6 @@
 import ContentLanguagePreference from '../Models/Globalization/ContentLanguagePreference';
 import RepositoryFactory from '../Repositories/RepositoryFactory';
+import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import AlbumCollectionViewModel from '../ViewModels/User/AlbumCollectionViewModel';
 
@@ -17,9 +18,11 @@ const UserAlbumCollection = (
       ContentLanguagePreference[vdb.values.languagePreference];
     var loggedUserId = model.user.id;
 
+    const httpClient = new HttpClient();
     var rootPath = vdb.values.baseAddress;
     var urlMapper = new UrlMapper(rootPath);
     var repoFactory = new RepositoryFactory(
+      httpClient,
       urlMapper,
       vdb.values.languagePreference,
     );

@@ -8,28 +8,30 @@ import SongListContract from '../DataContracts/Song/SongListContract';
 import SongListForEditContract from '../DataContracts/Song/SongListForEditContract';
 import { SongOptionalFields } from '../Models/EntryOptionalFields';
 import UrlMapper from '../Shared/UrlMapper';
+import HttpClient from '../Shared/HttpClient';
 
 export default class SongListRepository {
-  constructor(private readonly urlMapper: UrlMapper) {}
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly urlMapper: UrlMapper,
+  ) {}
 
   public delete = (
     id: number,
     notes: string,
     hardDelete: boolean,
-    callback?: () => void,
-  ) => {
-    $.ajax(
+  ): Promise<void> => {
+    return this.httpClient.delete<void>(
       this.urlMapper.mapRelative(
         `/api/songLists/${id}?hardDelete=${hardDelete}&notes=${encodeURIComponent(
           notes,
         )}`,
       ),
-      { type: 'DELETE', success: callback },
     );
   };
 
   public getComments = () =>
-    new EntryCommentRepository(this.urlMapper, '/songLists/');
+    new EntryCommentRepository(this.httpClient, this.urlMapper, '/songLists/');
 
   public getFeatured = (
     query: string,
@@ -38,10 +40,9 @@ export default class SongListRepository {
     tagIds: number[],
     fields: string,
     sort: string,
-    callback: (result: PartialFindResultContract<SongListContract>) => void,
-  ) => {
+  ): Promise<PartialFindResultContract<SongListContract>> => {
     var url = this.urlMapper.mapRelative('/api/songLists/featured');
-    $.getJSON(
+    return this.httpClient.get<PartialFindResultContract<SongListContract>>(
       url,
       {
         query: query,
@@ -53,16 +54,12 @@ export default class SongListRepository {
         fields: fields,
         sort: sort,
       },
-      callback,
     );
   };
 
-  public getForEdit = (
-    id: number,
-    callback: (result: SongListForEditContract) => void,
-  ) => {
+  public getForEdit = (id: number): Promise<SongListForEditContract> => {
     var url = this.urlMapper.mapRelative(`/api/songLists/${id}/for-edit`);
-    $.getJSON(url, callback);
+    return this.httpClient.get<SongListForEditContract>(url);
   };
 
   public getSongs = (
@@ -80,8 +77,7 @@ export default class SongListRepository {
     fields: SongOptionalFields,
     sort: string,
     lang: ContentLanguagePreference,
-    callback: (result: PartialFindResultContract<SongInListContract>) => void,
-  ) => {
+  ): Promise<PartialFindResultContract<SongInListContract>> => {
     var url = this.urlMapper.mapRelative(`/api/songLists/${listId}/songs`);
     var data = {
       query: query,
@@ -101,6 +97,9 @@ export default class SongListRepository {
       sort: sort,
     };
 
-    $.getJSON(url, data, callback);
+    return this.httpClient.get<PartialFindResultContract<SongInListContract>>(
+      url,
+      data,
+    );
   };
 }

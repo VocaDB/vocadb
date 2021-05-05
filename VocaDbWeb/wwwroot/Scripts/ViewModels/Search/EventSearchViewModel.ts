@@ -41,8 +41,8 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
       status,
       callback,
     ) => {
-      this.eventRepo.getList(
-        {
+      this.eventRepo
+        .getList({
           start: pagingProperties.start,
           maxResults: pagingProperties.maxEntries,
           getTotalCount: pagingProperties.getTotalCount,
@@ -60,9 +60,8 @@ export default class EventSearchViewModel extends SearchCategoryBaseViewModel<Re
           beforeDate: this.beforeDate(),
           status: status,
           fields: this.fields(),
-        },
-        callback,
-      );
+        })
+        .then(callback);
     };
 
     this.sortName = ko.computed(() => {

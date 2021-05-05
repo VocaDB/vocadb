@@ -51,14 +51,11 @@ export default class ReleaseEventSeriesEditViewModel {
       return;
     }
 
-    this.eventRepository.getSeriesList(
-      value,
-      NameMatchMode.Exact,
-      1,
-      (result) => {
+    this.eventRepository
+      .getSeriesList(value, NameMatchMode.Exact, 1)
+      .then((result) => {
         this.duplicateName(result.items.length ? value : null);
-      },
-    );
+      });
   };
 
   public defaultNameLanguage: KnockoutObservable<string>;
@@ -69,7 +66,7 @@ export default class ReleaseEventSeriesEditViewModel {
   public webLinks: WebLinksEditViewModel;
 
   public deleteViewModel = new DeleteEntryViewModel((notes) => {
-    this.eventRepository.deleteSeries(this.id, notes, false, () => {
+    this.eventRepository.deleteSeries(this.id, notes, false).then(() => {
       window.location.href = this.urlMapper.mapRelative(
         EntryUrlMapper.details(EntryType.ReleaseEventSeries, this.id),
       );
@@ -81,12 +78,9 @@ export default class ReleaseEventSeriesEditViewModel {
   };
 
   public trashViewModel = new DeleteEntryViewModel((notes) => {
-    this.eventRepository.deleteSeries(
-      this.id,
-      notes,
-      true,
-      this.redirectToRoot,
-    );
+    this.eventRepository
+      .deleteSeries(this.id, notes, true)
+      .then(this.redirectToRoot);
   });
 
   private isNew = () => !this.id;

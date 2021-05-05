@@ -185,9 +185,8 @@ export default class SearchViewModel {
       this.currentSearchType(val);
     });
 
-    resourceRepo.getList(
-      cultureCode,
-      [
+    resourceRepo
+      .getList(cultureCode, [
         'albumSortRuleNames',
         'artistSortRuleNames',
         'artistTypeNames',
@@ -197,21 +196,17 @@ export default class SearchViewModel {
         'entryTypeNames',
         'songSortRuleNames',
         'songTypeNames',
-      ],
-      (resources) => {
+      ])
+      .then((resources) => {
         this.resources(resources);
         this.updateResults();
-      },
-    );
+      });
 
-    tagRepo.getTopTags(
-      languageSelection,
-      Tag.commonCategory_Genres,
-      null,
-      (result) => {
+    tagRepo
+      .getTopTags(languageSelection, Tag.commonCategory_Genres, null)
+      .then((result) => {
         this.genreTags(result);
-      },
-    );
+      });
   }
 
   public albumSearchViewModel: AlbumSearchViewModel;

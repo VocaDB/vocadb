@@ -32,12 +32,12 @@ export default class DiscussionIndexViewModel {
       this.selectedTopic(null);
     });
 
-    repo.getFolders((folders) => {
+    repo.getFolders().then((folders) => {
       this.folders(folders);
       page.start();
     });
 
-    repo.getTopics((result) => this.recentTopics(result.items));
+    repo.getTopics().then((result) => this.recentTopics(result.items));
 
     this.selectedFolder.subscribe((folder) => {
       this.showCreateNewTopic(false);
@@ -67,19 +67,21 @@ export default class DiscussionIndexViewModel {
 
   public createNewTopic = () => {
     var folder = this.selectedFolder();
-    this.repo.createTopic(folder.id, this.newTopic().toContract(), (topic) => {
-      topic.canBeDeleted = false;
-      this.newTopic(
-        new DiscussionTopicEditViewModel(this.loggedUserId, this.folders()),
-      );
-      this.showCreateNewTopic(false);
-      this.topics.unshift(topic);
-      this.selectTopic(topic);
-    });
+    this.repo
+      .createTopic(folder.id, this.newTopic().toContract())
+      .then((topic) => {
+        topic.canBeDeleted = false;
+        this.newTopic(
+          new DiscussionTopicEditViewModel(this.loggedUserId, this.folders()),
+        );
+        this.showCreateNewTopic(false);
+        this.topics.unshift(topic);
+        this.selectTopic(topic);
+      });
   };
 
   public deleteTopic = (topic: DiscussionTopicContract) => {
-    this.repo.deleteTopic(topic.id, () => {
+    this.repo.deleteTopic(topic.id).then(() => {
       this.selectTopic(null);
     });
   };
@@ -107,7 +109,7 @@ export default class DiscussionIndexViewModel {
     }
 
     const paging = this.paging.getPagingProperties(true);
-    this.repo.getTopicsForFolder(folder.id, paging, (result) => {
+    this.repo.getTopicsForFolder(folder.id, paging).then((result) => {
       this.topics(result.items);
 
       if (paging.getTotalCount) this.paging.totalItems(result.totalCount);
@@ -155,7 +157,7 @@ export default class DiscussionIndexViewModel {
       return;
     }
 
-    this.repo.getTopic(topicId, (contract) => {
+    this.repo.getTopic(topicId).then((contract) => {
       contract.canBeDeleted = this.canDeleteTopic(contract);
       contract.canBeEdited = this.canEditTopic(contract);
 

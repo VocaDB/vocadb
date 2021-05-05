@@ -2,6 +2,8 @@ import NewSongCheckResultContract from '../../DataContracts/NewSongCheckResultCo
 import SongApiContract from '../../DataContracts/Song/SongApiContract';
 import SongListBaseContract from '../../DataContracts/SongListBaseContract';
 import SongRepository from '../../Repositories/SongRepository';
+import HttpClient from '../../Shared/HttpClient';
+import FakePromise from './FakePromise';
 
 export interface SongInList {
   listId: number;
@@ -16,7 +18,7 @@ export default class FakeSongRepository extends SongRepository {
   songsInLists: SongInList[] = [];
 
   constructor() {
-    super('');
+    super(new HttpClient(), '');
 
     this.addSongToList = (listId, songId, notes, newListName, callback?) => {
       if (listId !== 0) {
@@ -39,15 +41,16 @@ export default class FakeSongRepository extends SongRepository {
       if (callback) callback();
     };
 
-    this.findDuplicate = (
-      params,
-      callback: (result: NewSongCheckResultContract) => void,
-    ) => {
-      if (callback) callback(this.results);
+    this.findDuplicate = (params): Promise<NewSongCheckResultContract> => {
+      return FakePromise.resolve(this.results);
     };
 
-    this.getOneWithComponents = (id, fields, languagePreference, callback?) => {
-      if (callback) callback(this.song);
+    this.getOneWithComponents = (
+      id,
+      fields,
+      languagePreference,
+    ): Promise<SongApiContract> => {
+      return FakePromise.resolve(this.song);
     };
 
     this.songListsForSong = (songId, callback) => {

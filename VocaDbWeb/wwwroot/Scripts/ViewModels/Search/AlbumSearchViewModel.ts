@@ -63,24 +63,25 @@ export default class AlbumSearchViewModel extends SearchCategoryBaseViewModel<Al
     ) => {
       var artistIds = this.artistFilters.artistIds();
 
-      this.albumRepo.getList(
-        pagingProperties,
-        lang,
-        searchTerm,
-        this.sort(),
-        this.albumType(),
-        tags,
-        childTags,
-        artistIds,
-        this.artistFilters.artistParticipationStatus(),
-        this.artistFilters.childVoicebanks(),
-        this.artistFilters.includeMembers(),
-        this.fields(),
-        status,
-        false,
-        this.advancedFilters.filters(),
-        callback,
-      );
+      this.albumRepo
+        .getList(
+          pagingProperties,
+          lang,
+          searchTerm,
+          this.sort(),
+          this.albumType(),
+          tags,
+          childTags,
+          artistIds,
+          this.artistFilters.artistParticipationStatus(),
+          this.artistFilters.childVoicebanks(),
+          this.artistFilters.includeMembers(),
+          this.fields(),
+          status,
+          false,
+          this.advancedFilters.filters(),
+        )
+        .then(callback);
     };
   }
 

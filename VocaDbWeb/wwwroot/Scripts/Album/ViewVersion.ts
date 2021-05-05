@@ -1,4 +1,5 @@
 import AlbumRepository from '../Repositories/AlbumRepository';
+import HttpClient from '../Shared/HttpClient';
 import ArchivedAlbumViewModel from '../ViewModels/Album/ArchivedAlbumViewModel';
 
 const AlbumViewVersion = (model: {
@@ -18,7 +19,9 @@ const AlbumViewVersion = (model: {
     $('#showLink').button({ icons: { primary: 'ui-icon-unlocked' } });
     $('#hideLink').button({ icons: { primary: 'ui-icon-locked' } });
 
+    const httpClient = new HttpClient();
     var rep = new AlbumRepository(
+      httpClient,
       vdb.values.baseAddress,
       vdb.values.languagePreference,
     );

@@ -1,11 +1,14 @@
 import RepositoryFactory from '../Repositories/RepositoryFactory';
+import HttpClient from '../Shared/HttpClient';
 import UrlMapper from '../Shared/UrlMapper';
 import ArtistCreateViewModel from '../ViewModels/ArtistCreateViewModel';
 
 const ArtistCreate = (model: ArtistCreateViewModel) => {
   $(document).ready(function () {
     ko.punches.enableAll();
+    const httpClient = new HttpClient();
     var repoFactory = new RepositoryFactory(
+      httpClient,
       new UrlMapper(vdb.values.baseAddress),
       vdb.values.languagePreference,
     );
