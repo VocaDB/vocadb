@@ -209,7 +209,10 @@ mix
 	.styles(
 		['wwwroot/Scripts/jqwidgets27/styles/jqx.base.css'],
 		'wwwroot/Scripts/jqwidgets27/styles/css.css',
-	);
+	)
+
+	.ts('ClientApp/src/index.tsx', 'wwwroot/js')
+	.react();
 
 if (mix.inProduction()) {
 	mix.scripts([], 'wwwroot/bundles/tests.js');

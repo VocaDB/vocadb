@@ -1,0 +1,24 @@
+﻿@using VocaDb.Web.Controllers
+@inherits VocaDbPage
+@addTagHelper *, VocaDb.ReMikus
+@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Vocaloid Database</title>
+	<remikus path="/Content/css.css" />
+</head>
+<body class="vdb">
+	<inertia model="new { Props = new VocaDbPageProps(this, Login) }" />
+
+	<!-- TODO: remove -->
+	<remikus path="/bundles/shared/libs.js" />
+	<remikus path="/bundles/shared/main.js" />
+
+	<remikus path="/js/index.js" />
+</body>
+</html>

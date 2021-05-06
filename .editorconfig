@@ -11,6 +11,6 @@ charset = utf-8
 [*.cshtml]
 charset = utf-8-bom
 
-[*.ts]
+[*.{ts,tsx}]
 indent_style = space
 indent_size = 2
