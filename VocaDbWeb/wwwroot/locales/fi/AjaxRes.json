@@ -1,0 +1,30 @@
+{
+  "Album": {
+    "AddedToCollection": "Lisätty kokoelmaan.",
+    "AddToTracks": "Lisää kappaleisiin",
+    "RemoveFromTracks": "Poista kappaleilta",
+    "AddNewSong": "Lisää uusi kappale nimeltä '{{0}}'",
+    "Download": "Lataa"
+  },
+  "EntryIndex": {
+    "DraftsOnlyFilter": "vain vedokset",
+    "ExactTitleFilter": "tarkalla nimellä '{{0}}'",
+    "FilterPre": "Suodatetaan",
+    "StartsWithTitleFilter": "alkaa nimellä '{{0}}'",
+    "TitleFilter": "nimellä '{{0}}'"
+  },
+  "Shared": {
+    "AddExtraArtist": "Lisää muu artisti nimellä '{{0}}'",
+    "ReportSent": "Raportti lähetetty. Kiitos!",
+    "Save": "Tallenna",
+    "ThanksForRating": "Kiitos arvostelusta!"
+  },
+  "Song": {
+    "AddedToList": "Lisätty listaan",
+    "ArtistFilter": "artistilla '{{0}}'",
+    "OnlyWithPVsFilter": "vain videot",
+    "SinceFilter": "uudempi kuin {{0}}",
+    "SongTypeFilter": "kappaleen tyypillä '{{0}}'",
+    "ThanksForRating": "Kiitos arvostelusta!"
+  }
+}

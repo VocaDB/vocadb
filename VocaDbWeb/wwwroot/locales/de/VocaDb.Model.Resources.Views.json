@@ -1,0 +1,21 @@
+{
+  "AlbumRes": {
+    "NewAlbumArtistDesc": "Produzenten und Sänger in Verbindung mit diesem Album.",
+    "NewAlbumInfo": "Bitte beachte, dass es sich bei VocaDB nicht um UtaiteDB handelt. <strong>Das Album muss mindestens einen Song mit Vocaloid-Stimmen beinhalten um die Zustimmung von VocaDB zu erhalten (andere Sprach-Synthesizer wie UTAU sind ebenfalls erlaubt, aber von Menschen gesungene Cover sind es nicht)</strong>. Inoffizielle Fan-gemachte Kompilationen (Bootlegs) sind auch nicht erlaubt. Für weitere Informationen sieh dir die Hilfe bzw. die Richtlinien an."
+  },
+  "ArtistRes": {
+    "AuthoredBy": "VocaDB Account",
+    "NewArtistExternalLink": "Externer Link (zu einer Künstler-Webseite, Hatsune Miku Wiki, NND MyList etc.)"
+  },
+  "HomeRes": {
+    "Welcome": "Willkommen bei der Vocaloid Database!",
+    "WelcomeSubtitle": "Der kollaborativen Datenbank mit Vocaloid-Künstlern, Diskografie, PVs und mehr."
+  },
+  "LayoutRes": {
+    "SiteName": "VocaDB",
+    "SiteTitle": "Vocaloid Database"
+  },
+  "SongRes": {
+    "NewSongInfo": "Bitte versichere dich, dass der Song den du einreichen willst noch nicht hinzugefügt wurde. Du musst mindestens einen Namen und einen Künstler angeben. Ein Link zu dem originalen PV ist sehr wünschenswert.<br /><br />\nBitte beachte, dass Songs ohne Vocaloid-Stimmen nur genehmigt werden, wenn sie sich auf einem Album mit Vocaloid-Songs befinden. UTAU und andere Sprach-Synthesizer sind auch erlaubt, aber von Menschen gesungene Cover sind es nicht."
+  }
+}

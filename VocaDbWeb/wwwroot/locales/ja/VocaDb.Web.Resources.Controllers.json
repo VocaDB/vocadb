@@ -1,0 +1,5 @@
+{
+  "TagController": {
+    "TagNameError": "タグ名には、英文字のみの入力が必要です。"
+  }
+}

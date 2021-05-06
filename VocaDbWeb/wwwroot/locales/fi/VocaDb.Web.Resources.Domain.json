@@ -1,0 +1,21 @@
+{
+  "EntryReportTypeNames": {
+    "BrokenPV": "Rikkinäinen video",
+    "Duplicate": "Duplikaatti merkintä",
+    "Inappropriate": "Asiaankuulumatonta sisältöä",
+    "InvalidInfo": "Virheellistä tai puuttuvaa tietoa",
+    "MaliciousIP": "Haitallinen IP",
+    "Other": "Muu (määrittele lisätiedoissa)",
+    "OwnershipClaim": "Omistusvaatimus"
+  },
+  "EntryTypeNames": {
+    "Album": "Albumi",
+    "Artist": "Artisti",
+    "ReleaseEvent": "Tapahtuma",
+    "Song": "Kappale",
+    "SongList": "Kappalelista",
+    "Tag": "Tunniste",
+    "Undefined": "Mitä tahansa",
+    "User": "Käyttäjä"
+  }
+}

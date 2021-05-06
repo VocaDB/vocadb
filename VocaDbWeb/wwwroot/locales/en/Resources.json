@@ -1,0 +1,316 @@
+{
+  "ActivityEntrySortRuleNames": {
+    "CreateDate": "Oldest",
+    "CreateDateDescending": "Newest"
+  },
+  "AlbumArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "Auto-imported",
+    "Created": "Created",
+    "Deleted": "Deleted",
+    "Merged": "Merged from another entry",
+    "PropertiesUpdated": "Updated properties",
+    "Restored": "Restored",
+    "Reverted": "Reverted",
+    "Unknown": "Unknown"
+  },
+  "AlbumCollectionStatusNames": {
+    "Nothing": "Nothing",
+    "Ordered": "Ordered",
+    "Owned": "Owned",
+    "Wishlisted": "Wishlisted"
+  },
+  "AlbumDiscMediaTypeNames": {
+    "Audio": "Audio",
+    "Video": "Video"
+  },
+  "AlbumEditableFieldNames": {
+    "Artists": "Artists",
+    "Cover": "Cover",
+    "Description": "Description",
+    "DiscType": "Album type",
+    "Names": "Names",
+    "Nothing": "Nothing",
+    "OriginalName": "Original name",
+    "OriginalRelease": "Original release",
+    "Pictures": "Pictures",
+    "PVs": "PVs",
+    "Status": "Status",
+    "Tracks": "Tracks",
+    "WebLinks": "External links",
+    "Barcode": "Barcode",
+    "Identifiers": "Identifiers",
+    "Discs": "Discs"
+  },
+  "AlbumMediaTypeNames": {
+    "DigitalDownload": "Digital download",
+    "Other": "Unspecified",
+    "PhysicalDisc": "Physical disc"
+  },
+  "AlbumSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "CollectionCount": "Collection count",
+    "Name": "Name",
+    "RatingAverage": "Rating average",
+    "RatingTotal": "Total score",
+    "ReleaseDate": "Release date"
+  },
+  "ArtistArchiveReasonNames": {
+    "Created": "Created",
+    "Deleted": "Deleted",
+    "Merged": "Merged from another entry",
+    "PropertiesUpdated": "Updated properties",
+    "Restored": "Restored",
+    "Reverted": "Reverted to an earlier revision",
+    "Unknown": "Unknown"
+  },
+  "ArtistEditableFieldNames": {
+    "Albums": "Albums",
+    "ArtistType": "Artist type",
+    "BaseVoicebank": "Base voicebank",
+    "Description": "Description",
+    "Groups": "Groups",
+    "Names": "Names",
+    "Nothing": "Nothing",
+    "OriginalName": "Original name",
+    "Picture": "Main picture",
+    "Pictures": "Pictures",
+    "ReleaseDate": "Voicebank release date",
+    "Status": "Status",
+    "WebLinks": "External links"
+  },
+  "ArtistRoleNames": {
+    "Animator": "Animator",
+    "Arranger": "Arranger",
+    "Chorus": "Chorus",
+    "Composer": "Composer",
+    "Default": "Default",
+    "Distributor": "Distributor",
+    "Encoder": "Encoder",
+    "Illustrator": "Illustrator",
+    "Instrumentalist": "Instrumentalist",
+    "Lyricist": "Lyricist",
+    "Mastering": "Mastering",
+    "Mixer": "Mixer",
+    "Other": "Other",
+    "Publisher": "Publisher",
+    "VocalDataProvider": "Vocal data provider",
+    "Vocalist": "Vocalist",
+    "VoiceManipulator": "Voice manipulator"
+  },
+  "ArtistSortRuleNames": {
+    "AdditionDate": "Addition date (descending)",
+    "AdditionDateAsc": "Addition date (ascending)",
+    "FollowerCount": "Number of followers",
+    "Name": "Name",
+    "ReleaseDate": "Voicebank release date",
+    "SongCount": "Number of songs",
+    "SongRating": "Total song rating"
+  },
+  "CommentSortRuleNames": {
+    "CreateDate": "Oldest",
+    "CreateDateDescending": "Newest"
+  },
+  "CommonMessages": {
+    "EntryDeleted": "This entry has been deleted. It is still temporarily accessible, but won't show up in any of the listings.",
+    "EntryMergedTo": "This entry was merged to",
+    "EntryStatusExplanation": "Draft = entry is missing crucial information. This status indicates that you're requesting additional information to be added or corrected.<br />\nFinished = The entry has all the necessary information, but it hasn't been inspected by a trusted user yet.<br />\nApproved = The entry has been inspected and approved by a trusted user. Approved entries can only be edited by trusted users.",
+    "Locked": "This entry is locked, meaning that only moderators are allowed to edit it.",
+    "NameLanguageHelp": "Choose the language for this name. \"Original\" is the name in original language that isn't English, for example Japanese. If the original language is English, do not input a name in the \"Original\" language.",
+    "RevisionHidden": "This page revision has been hidden."
+  },
+  "ContentLanguageSelectionNames": {
+    "Default": "Original",
+    "English": "English",
+    "Japanese": "Non-English",
+    "Romaji": "Romanized",
+    "Unspecified": "Unspecified"
+  },
+  "DiscTypeDescriptions": {
+    "Album": "Album that consists mostly of previously unpublished songs.",
+    "Compilation": "Collection of previously published songs, gathered from one or more earlier albums. For example, \"best of\" collections.",
+    "EP": "Meaning extended play. Contains 3-4 individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
+    "Other": "For albums that don't fit into anything above.",
+    "Single": "Contains one or two individual tracks. Alternate versions (instrumentals and remixes) are usually not counted.",
+    "SplitAlbum": "Collaboration between two or more (but usually just two) equal artists, where all artists have roughly the same number of songs.",
+    "Video": "Disc containing mostly music videos, usually a DVD or blu-ray."
+  },
+  "EntryEditEventNames": {
+    "Created": "Created",
+    "Deleted": "Deleted",
+    "Restored": "Restored",
+    "Updated": "Updated"
+  },
+  "EntryStatusNames": {
+    "Approved": "Approved",
+    "Draft": "Draft",
+    "Finished": "Finished",
+    "Locked": "Locked"
+  },
+  "PermissionTokenNames": {
+    "AccessManageMenu": "Access manage menu",
+    "Admin": "Database admin tasks",
+    "AddRawFileMedia": "Add raw media",
+    "ApplyAnyTag": "Add any tag to entry",
+    "ApproveEntries": "Approve entries",
+    "BulkDeletePVs": "Bulk delete PVs",
+    "CreateComments": "Create comments",
+    "DeleteComments": "Delete comments",
+    "DeleteEntries": "Delete entries",
+    "DesignatedStaff": "Designated staff member",
+    "DisableUsers": "Disable users",
+    "EditAllSongLists": "Edit all song lists",
+    "EditFeaturedLists": "Manage featured songlists",
+    "EditNews": "Manage news",
+    "EditProfile": "Edit personal profile",
+    "EditTags": "Edit tags",
+    "LockEntries": "Lock entries",
+    "ManageDatabase": "Manage database",
+    "ManageEntryReports": "Manage entry reports",
+    "ManageEventSeries": "Manage event series",
+    "ManageIPRules": "Manage IP rules",
+    "ManageUserPermissions": "Manage user permissions",
+    "MergeEntries": "Merge entries",
+    "MikuDbImport": "Album import",
+    "MoveToTrash": "Move to trash",
+    "Nothing": "Nothing",
+    "ReadRecentComments": "Read recent comments",
+    "RemoveEditPermission": "Remove database editing permissions",
+    "RemoveTagUsages": "Remove tag usages",
+    "RestoreRevisions": "Restore revisions",
+    "UploadMedia": "Upload own media",
+    "ViewAuditLog": "View event log",
+    "ViewHiddenRatings": "View hidden ratings",
+    "ViewHiddenRevisions": "View hidden revisions"
+  },
+  "PVTypeDescriptions": {
+    "Original": "Original (official/authorized upload)",
+    "Other": "Other",
+    "Reprint": "Reprint (copied from elsewhere)"
+  },
+  "PVTypeNames": {
+    "Original": "Original",
+    "Other": "Other",
+    "Reprint": "Reprint"
+  },
+  "RatedSongForUserSortRuleNames": {
+    "RatingDate": "Rating date"
+  },
+  "ReleaseEventEditableFieldNames": {
+    "Artists": "Artists",
+    "Category": "Category",
+    "Date": "Date",
+    "Description": "Description",
+    "MainPicture": "Main picture",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "PVs": "PVs",
+    "Series": "Series",
+    "SeriesNumber": "Series number",
+    "SeriesSuffix": "Series suffix",
+    "SongList": "Setlist",
+    "Status": "Status",
+    "Venue": "Venue",
+    "VenueName": "Venue name",
+    "WebLinks": "External links"
+  },
+  "SongArchiveReasonNames": {
+    "AutoImportedFromMikuDb": "Auto-imported",
+    "Created": "Created",
+    "Deleted": "Deleted",
+    "Merged": "Merged from another entry",
+    "PropertiesUpdated": "Updated properties",
+    "Restored": "Restored",
+    "Reverted": "Reverted",
+    "Unknown": "Unknown"
+  },
+  "SongEditableFieldNames": {
+    "Artists": "Artists",
+    "Groups": "Groups",
+    "Length": "Duration",
+    "Lyrics": "Lyrics",
+    "Names": "Names",
+    "Notes": "Description",
+    "Nothing": "Nothing",
+    "OriginalName": "Original name",
+    "OriginalVersion": "Original version",
+    "PublishDate": "Publish date",
+    "PVs": "PVs",
+    "SongType": "Song type",
+    "Status": "Status",
+    "WebLinks": "External links",
+    "ReleaseEvent": "Release event",
+    "Bpm": "BPM"
+  },
+  "SongListEditableFieldNames": {
+    "Description": "Description",
+    "EventDate": "Event date",
+    "FeaturedCategory": "Featured category",
+    "Name": "Name",
+    "Songs": "Songs",
+    "Status": "Status",
+    "Thumbnail": "Thumbnail"
+  },
+  "SongListFeaturedCategoryNames": {
+    "Concerts": "Concert setlists",
+    "Nothing": "Nothing",
+    "Other": "Other",
+    "Pools": "Pools",
+    "VocaloidRanking": "Vocaloid rankings"
+  },
+  "SongSortRuleNames": {
+    "AdditionDate": "Addition date",
+    "FavoritedTimes": "Times favorited",
+    "Name": "Name",
+    "None": "Nothing",
+    "PublishDate": "Publish date",
+    "RatingScore": "Rating score",
+    "TagUsageCount": "Tag usage count"
+  },
+  "SongVoteRatingNames": {
+    "Favorite": "Favorite",
+    "Like": "Like"
+  },
+  "TagEditableFieldNames": {
+    "AliasedTo": "Aliased to",
+    "CategoryName": "Category",
+    "Description": "Description",
+    "HideFromSuggestions": "Hide from suggestions",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "Parent": "Parent",
+    "Picture": "Picture",
+    "RelatedTags": "Related tags",
+    "Status": "Status",
+    "Targets": "Targets",
+    "WebLinks": "External links"
+  },
+  "UserEmailOptionsNames": {
+    "NoEmail": "No private messages",
+    "PrivateMessagesFromAdmins": "Private messages from admins",
+    "PrivateMessagesFromAll": "Private messages from everybody"
+  },
+  "UserGroupNames": {
+    "Admin": "Administrator",
+    "Limited": "Limited user",
+    "Moderator": "Moderator",
+    "Nothing": "Nothing",
+    "Regular": "Regular user",
+    "Trusted": "Trusted user"
+  },
+  "VenueEditableFieldNames": {
+    "Address": "Address",
+    "AddressCountryCode": "Country/Region",
+    "Coordinates": "Coordinates",
+    "Description": "Description",
+    "Names": "Names",
+    "OriginalName": "Default name language",
+    "Status": "Status",
+    "WebLinks": "External links"
+  },
+  "WebLinkCategoryNames": {
+    "Commercial": "Commercial",
+    "Official": "Official",
+    "Other": "Other",
+    "Reference": "Reference"
+  }
+}

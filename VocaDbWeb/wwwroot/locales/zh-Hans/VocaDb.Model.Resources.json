@@ -1,0 +1,30 @@
+{
+  "ArtistTypeNames": {
+    "Animator": "视频制作人",
+    "Band": "Band/unit",
+    "CeVIO": "CeVIO",
+    "Circle": "团体",
+    "Illustrator": "画师",
+    "Label": "企业",
+    "Lyricist": "词人",
+    "OtherGroup": "其他团体",
+    "OtherIndividual": "其他个人",
+    "OtherVocalist": "其他歌手",
+    "OtherVoiceSynthesizer": "其他声音合成软件",
+    "Producer": "音乐制作人",
+    "Unknown": "任意类别",
+    "Utaite": "Utaite",
+    "UTAU": "UTAUloid",
+    "Vocaloid": "Vocaloid"
+  },
+  "SongValidationErrors": {
+    "DuplicateArtist": "The same artist cannot be added twice. Please remove the duplicate and edit the roles accordingly.",
+    "NeedArtist": "缺少艺术家信息。",
+    "NeedOriginal": "除原创曲以外其他类型的歌曲需要注明原版。",
+    "NeedProducer": "缺少歌曲制作人信息。（至少一名作曲，编曲或视频制作人）",
+    "NeedReferences": "Songs needs notes, PVs or links for reference.",
+    "NeedType": "Song type needs to be specified.",
+    "NonInstrumentalSongNeedsVocalists": "缺少歌手信息。如果这首歌曲是原创的纯音乐曲目，请在标签区里添加“Instrumental”标签。如果是伴奏，请将其归为“纯音乐”一类并注明原版。非纯音乐的歌曲必须有至少一名歌手。",
+    "UnspecifiedNames": "Song needs a primary name."
+  }
+}

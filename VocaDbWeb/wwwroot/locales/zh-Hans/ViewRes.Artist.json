@@ -1,0 +1,21 @@
+{
+  "Details": {
+    "AllSongs": "全部歌曲",
+    "AverageAlbumRating": "（专辑平均得分{{0}}。）",
+    "ChildVoicebanks": "衍生音源",
+    "CustomizeSubscriptionTitle": "关注设置",
+    "Follow": "关注",
+    "FollowCount": "被{{0}}位用户关注。",
+    "Groups": "所属团体/公司",
+    "RecentAlbums": "近期专辑",
+    "RecentSongs": "近期歌曲/PV",
+    "Share": "分享",
+    "SubscriptionEmail": "在网站上提醒我并通过电子邮件发送提醒信息",
+    "SubscriptionNoNotification": "不提醒",
+    "SubscriptionOnSite": "在网站上提醒我",
+    "SubscriptionOptions": "请选择是否在新歌曲或专辑发布时接收提醒信息。",
+    "Unfollow": "取消关注",
+    "ViewModeDetails": "详细信息",
+    "ViewModeTiles": "缩略图"
+  }
+}

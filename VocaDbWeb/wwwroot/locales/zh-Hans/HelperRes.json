@@ -1,0 +1,40 @@
+{
+  "ActivityFeedHelper": {
+    "At": "-",
+    "CreatedAlbum": "添加了专辑",
+    "CreatedArtist": "添加了艺术家",
+    "CreatedNew": "created a new {{0}}",
+    "CreatedSong": "添加了一首新歌曲",
+    "EntryAlbum": "album",
+    "EntryArtist": "artist",
+    "EntryReleaseEvent": "event",
+    "EntrySong": "song",
+    "EntrySongList": "song list",
+    "EntryTag": "tag",
+    "Someone": "A contributor",
+    "Updated": "updated {{0}}",
+    "UpdatedAlbum": "更新了专辑",
+    "UpdatedArtist": "更新了艺术家",
+    "UpdatedSong": "更新了歌曲"
+  },
+  "Helper": {
+    "EntryIsMissingInformation": "该词条缺少以下信息：",
+    "EntryValidationNoErrors": "本词条包含了所有必要的信息。",
+    "GitHubMarkdown": "支持用GitHub式Markdown语言进行编辑",
+    "IsSupportedForFormatting": "",
+    "NameNewRow": "添加新的内容",
+    "ReturnWithoutSaving": "不保存修改返回",
+    "SaveChanges": "保存修改",
+    "SeeGuide": "编辑指南",
+    "SeeGuidePost": "。",
+    "SeeGuidePre": "获取更多信息，请参考",
+    "StatusDescriptionApproved": "此词条已经过信任用户的核准，对词条的编辑受到限制。",
+    "StatusDescriptionDraft": "此词条处于草稿状态，有部分信息不全。",
+    "StatusDescriptionFinished": "此词条包含了所有必要的信息，但没有经过核准。",
+    "StatusDescriptionLocked": "Locked entries can only be edited by staff members.",
+    "WebLinkCategoryTitle": "类别",
+    "WebLinkDescriptionTitle": "描述",
+    "WebLinkNewRow": "添加新的内容",
+    "WebLinkUrlTitle": "网址"
+  }
+}

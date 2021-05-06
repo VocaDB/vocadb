@@ -1,0 +1,43 @@
+{
+  "Create": {
+    "AddArtist": "Künstler hinzufügen",
+    "ArtistInfo": "Bitte überprüfe, dass deine Einreichung bislang noch nicht existiert. Du musst mindestens einen Namen eingeben. Gib außerdem eine Beschreibung ODER einen externen Link for reference.",
+    "ArtistType": "Art des Künstlers",
+    "Description": "Bitte schreibe eine kurze Beschreibung über den Künstler (optional, aber empfohlen)",
+    "Draft": "Diese Einreichung ist ein Entwurf.",
+    "ExternalLink": "Externer Link (zu einer Künstlerseite, Hatsune Miku Wiki, NND MyList etc.)",
+    "Name": "Name (mindestens einen)",
+    "NameHelp": "Wenn die Einreichung einen nicht-englischen Namen (zum Beispiel japanisch) hat oder die Sprache des Namens unbekannt ist, füge diesen in das nicht-englische Namensfeld ein. Wenn du auch den romanisierten Namen kennst, kannst du diesen ebenfalls beifügen. Wenn der offizielle Name der Einreichung in der englischen Sprache vorliegt, kannst du diesen in das englische Namensfeld eintragen.",
+    "NeedWebLinkOrDescription": "Du musst eine Beschreibung ODER einen externen Link hinzufügen.",
+    "Optional": "(optional)",
+    "Picture": "Bild",
+    "UnableToCreateArtist": "Künstler konnte nicht erstellt werden. Behebe die Fehler und versuche es erneut.",
+    "WebLinkCategory": "Kategorie",
+    "WebLinkDescription": "Beschreibung",
+    "WebLinkURL": "URL"
+  },
+  "Details": {
+    "AllAlbums": "Alle Alben",
+    "AllSongs": "Alle Songs",
+    "ArtistDetails": "Künstler",
+    "ArtistPicture": "Künstlerbild",
+    "CollaborationAlbums": "Kollaborationen",
+    "Customize": "Anpassen",
+    "Follow": "Folgen",
+    "FollowCount": " {{0}} Benutzer folgen dieser Person",
+    "Groups": "Gruppen und Label",
+    "GroupsHelp": "Personenkreise, Labels und andere Gruppen",
+    "MainAlbums": "Eigene Alben",
+    "Members": "Mitglieder",
+    "RecentAlbums": "Letzte Alben",
+    "RecentSongs": "Letzte Songs / PVs",
+    "ReleaseDate": "Erscheinungsdatum",
+    "Share": "Teilen",
+    "TopAlbums": "Beliebte Alben",
+    "TopSongs": "Beliebte Songs",
+    "Unfollow": "Entfolgen"
+  },
+  "Edit": {
+    "BaArtistType": "Art des Künstlers"
+  }
+}

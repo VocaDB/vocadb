@@ -1,0 +1,11 @@
+{
+  "EnglishTranslatedString": {
+    "ShowFullDescription": "Mostrar la descripción completa"
+  },
+  "PlayList": {
+    "Autoplay": "Auto-reproducir",
+    "AutoplayNote": "La auto-reproducción solo está disponible para YouTube y SoundCloud",
+    "NextSong": "Siguiente canción",
+    "Shuffle": "Aleatorizar"
+  }
+}

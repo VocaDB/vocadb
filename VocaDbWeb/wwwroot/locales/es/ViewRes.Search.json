@@ -1,0 +1,33 @@
+{
+  "Index": {
+    "AlbumDetails": "Detalles",
+    "AlbumTiles": "Títulos",
+    "AlbumType": "Tipo de album",
+    "ArtistType": "Tipo de artista",
+    "Category": "Categoría",
+    "EntryType": "Tipo",
+    "InMyCollection": "En mi colección",
+    "ItemsPerPage": "{{0}} objetos por página",
+    "MoreFilters": "mas filtros",
+    "MoreRecentThan": "Mas reciente que",
+    "OnlyWithPVs": "Solo con PVs",
+    "Preview": "Previsualización",
+    "Rating": "Rating",
+    "ReleaseDate": "Fecha de lanzamiento",
+    "ShowTags": "Mostrar etiquetas",
+    "SongType": "Tipo de canción",
+    "TagCategory": "Categoría",
+    "TagInformation": "Información de la etiqueta",
+    "Times": "veces",
+    "TotalScore": "puntuación total",
+    "TypeSomething": "Escribe algo...",
+    "IncludeDerivedVoicebanks": "Incluir bancos de voz derivados",
+    "MinScore": "puntuación de rating minima",
+    "OnlyMyFollowedArtists": "Solo los artistas que sigo",
+    "Playlist": "Lista de reproducción",
+    "TopGenres": "Top de géneros",
+    "ShowingItemsOf": "Mostrando {{0}} objetos de {{1}}",
+    "TagUsages": "Usos",
+    "ChildTags": "Incluir sub-etiquetas"
+  }
+}

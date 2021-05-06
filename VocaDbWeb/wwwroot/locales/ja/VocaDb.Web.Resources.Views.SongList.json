@@ -1,0 +1,28 @@
+{
+  "Import": {
+    "Accept": "リスト作成",
+    "ItemsLoaded": "ロードされています",
+    "ListDescription": "概要",
+    "ListName": "名",
+    "LoadMoreHelp": "(リストの残りを読み込むには、「もっと見る」をクリック。)",
+    "MylistDescription": "リストのプロパティ",
+    "NicoPV": "インポートしたPV",
+    "OnlyRanked": "ランク付けされた曲だけ含む",
+    "Order": "順序",
+    "Process": "処理",
+    "SongsInList": "リストの曲",
+    "SongsMissingError": "曲の一部はVocaDBに登録されていません。リストに追加する前に、すべての曲を登録してください。",
+    "Title": "ニコニコ動画のマイリストかYouTubeのプレイリストから曲のリストを作る",
+    "TotalSongs": "曲数",
+    "UrlLabel": "プレイリスト/マイリストURL",
+    "VocaDbEntry": "VocaDBのページ",
+    "SongMissing": "未登録",
+    "UnableToParse": "リンクが処理できませんでした。",
+    "InvalidUrlError": "ニコニコマイリス、RSS フィード、Youtube プレイリストのURLを指定してください。"
+  },
+  "SongListSortRuleNames": {
+    "Date": "イベントの日付",
+    "Name": "名前",
+    "CreateDate": "作成日"
+  }
+}

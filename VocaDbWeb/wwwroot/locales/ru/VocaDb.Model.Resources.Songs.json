@@ -1,0 +1,14 @@
+{
+  "SongTypeNames": {
+    "Cover": "Перепевка",
+    "DramaPV": "Драматическое PV",
+    "Instrumental": "Без вокала",
+    "Mashup": "Компиляция (Mashup)",
+    "MusicPV": "Музыкальное видео (PV)",
+    "Original": "Оригинальная песня",
+    "Other": "Прочее",
+    "Remaster": "Новое сведение",
+    "Remix": "Ремикс",
+    "Unspecified": "Не указано"
+  }
+}

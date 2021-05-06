@@ -1,0 +1,32 @@
+{
+  "Index": {
+    "AlbumDetails": "Yksityiskohdat",
+    "AlbumTiles": "Kansikuvat",
+    "AlbumType": "Albumin tyyppi",
+    "ArtistType": "Artistin tyyppi",
+    "Category": "Kategoria",
+    "EntryType": "Tyyppi",
+    "InMyCollection": "Kokoelmassani",
+    "ItemsOf": "kohdetta, yhteensä",
+    "ItemsPerPage": "{{0}} kohdetta per sivu",
+    "MoreFilters": "Lisää hakuehtoja",
+    "MoreRecentThan": "Uudempi kuin",
+    "OnlyWithPVs": "Vain videot",
+    "Preview": "Esikatselu",
+    "Rating": "Arvostelu",
+    "ReleaseDate": "Julkaisupäivä",
+    "Showing": "Näytetään",
+    "ShowTags": "Näytä tägit",
+    "SongType": "Kappaleen tyyppi",
+    "TagCategory": "Kategoria",
+    "TagInformation": "Tägin tiedot",
+    "Times": "kerta(a)",
+    "TotalScore": "yhteensä",
+    "TypeSomething": "Kirjoita jotain...",
+    "IncludeDerivedVoicebanks": "Myös tähän perustuvat äänet",
+    "MinScore": "Pisteet vähintään",
+    "OnlyMyFollowedArtists": "Vain seuraamani artistit",
+    "Playlist": "Soittolista",
+    "TopGenres": "Yleisimmät genret"
+  }
+}

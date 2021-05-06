@@ -1,0 +1,12 @@
+{
+  "EventCategoryNames": {
+    "AlbumRelease": "アルバム発売記念",
+    "Anniversary": "キャラクター発売記念日",
+    "Club": "クラブ",
+    "Concert": "コンサート",
+    "Contest": "コンテスト",
+    "Convention": "集会",
+    "Other": "その他",
+    "Unspecified": "カテゴリー無し"
+  }
+}

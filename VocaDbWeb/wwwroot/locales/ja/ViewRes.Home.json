@@ -1,0 +1,15 @@
+{
+  "Index": {
+    "NewAlbums": "新しいアルバム",
+    "News": "ニュース",
+    "RecentActivity": "最近の活動",
+    "RecentSongs": "最近追加された動画",
+    "SearchSite": "Google Custom SearchでVocaDBを検索する",
+    "TopAlbums": "最も人気のあるアルバム",
+    "ViewAll": "すべてを表示",
+    "ViewMore": "もっと見る",
+    "ViewSongInfo": "曲の情報",
+    "Welcome": "ボカロデータベースへようこそ！",
+    "WelcomeSubtitle": "ボカロアーティスト、ディスコグラフィー、PV情報などの協同データベース"
+  }
+}

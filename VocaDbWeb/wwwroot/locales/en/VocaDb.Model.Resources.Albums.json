@@ -1,0 +1,16 @@
+{
+  "DiscTypeNames": {
+    "Album": "Original album",
+    "Artbook": "Artbook",
+    "Compilation": "Compilation",
+    "EP": "E.P.",
+    "Fanmade": "Fanmade/doujin",
+    "Game": "Game",
+    "Instrumental": "Instrumental",
+    "Other": "Other",
+    "Single": "Single",
+    "SplitAlbum": "Split album",
+    "Unknown": "Not specified",
+    "Video": "Video"
+  }
+}

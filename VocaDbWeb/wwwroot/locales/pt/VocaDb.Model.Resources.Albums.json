@@ -1,0 +1,12 @@
+{
+  "DiscTypeNames": {
+    "Album": "Álbum original.",
+    "Compilation": "Compilação",
+    "EP": "E.P.",
+    "Other": "Outro",
+    "Single": "Single",
+    "SplitAlbum": "Split-Album",
+    "Unknown": "Não especificado",
+    "Video": "Vídeo"
+  }
+}

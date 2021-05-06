@@ -1,0 +1,27 @@
+{
+  "EntryReportTypeNames": {
+    "BrokenPV": "Broken PV",
+    "Duplicate": "Duplicate entry",
+    "Inappropriate": "Inappropriate content",
+    "InvalidInfo": "Invalid or missing information",
+    "MaliciousIP": "Malicious IP",
+    "Other": "Other (specify in notes)",
+    "OwnershipClaim": "Ownership claim",
+    "RemovePermissions": "Restricted editing",
+    "Spamming": "Spamming"
+  },
+  "EntryTypeNames": {
+    "Album": "Album",
+    "Artist": "Artist",
+    "DiscussionTopic": "Topic",
+    "PV": "PV",
+    "ReleaseEvent": "Event",
+    "ReleaseEventSeries": "Event series",
+    "Song": "Song",
+    "SongList": "Song list",
+    "Tag": "Tag",
+    "Undefined": "Anything",
+    "User": "User",
+    "Venue": "Venue"
+  }
+}

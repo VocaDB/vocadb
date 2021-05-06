@@ -1,0 +1,17 @@
+{
+  "ArtistTypeNames": {
+    "Circle": "Doujin-piiri",
+    "Label": "Levy-yhtiö",
+    "OtherGroup": "Muu ryhmä",
+    "OtherVocalist": "Muu laulaja",
+    "Producer": "Musiikintuottaja",
+    "Unknown": "Ei määritelty",
+    "UTAU": "UTAU",
+    "Vocaloid": "Vocaloidi",
+    "Animator": "Animoija",
+    "OtherIndividual": "Muu henkilö",
+    "Illustrator": "Kuvittaja",
+    "Lyricist": "Sanoittaja",
+    "OtherVoiceSynthesizer": "Muu äänisyntensaattori"
+  }
+}

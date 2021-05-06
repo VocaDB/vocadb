@@ -1,0 +1,20 @@
+{
+  "Details": {
+    "Event": "Tapahtuma",
+    "OccurrenceDate": "Päivämäärä",
+    "Series": "Sarja"
+  },
+  "EventsBySeries": {
+    "CreateEvent": "Luo tapahtuma",
+    "CreateSeries": "Luo sarja"
+  },
+  "Find": {
+    "CreateEvent": "Luo tapahtuma",
+    "EventNotFound": "Valitettavasti tällä nimellä ei löytynyt tapahtumaa tietokannasta. Sitä ei ehkä vielä ole lisätty.",
+    "FindEvent": "Etsi tapahtuma",
+    "Number": "numero",
+    "Series": "Sarja",
+    "UngroupedEventNamed": "Ryhmittelemätön tapahtuma nimeltä:",
+    "YouMayAddTheEvent": "Voit lisätä tapahtuman tietokantaan."
+  }
+}

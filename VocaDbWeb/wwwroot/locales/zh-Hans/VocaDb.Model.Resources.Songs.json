@@ -1,0 +1,15 @@
+{
+  "SongTypeNames": {
+    "Cover": "翻唱曲",
+    "DramaPV": "短剧PV",
+    "Instrumental": "纯音乐",
+    "Live": "Live recording",
+    "Mashup": "混搭曲",
+    "MusicPV": "音乐PV",
+    "Original": "原创曲",
+    "Other": "其他",
+    "Remaster": "重调版",
+    "Remix": "Remix",
+    "Unspecified": "未定义"
+  }
+}

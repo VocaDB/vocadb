@@ -1,0 +1,25 @@
+{
+  "AlbumRes": {
+    "NewAlbumArtistDesc": "Utaites and other artists associated with this album.",
+    "NewAlbumInfo": "The album needs to have at least one track with an utaite to be allowed on UtaiteDB. Unofficial fan-made compilations (bootlegs) are also not allowed. For more information, see the Help/Guidelines."
+  },
+  "ArtistRes": {
+    "AuthoredBy": "UtaiteDB account",
+    "NewArtistExternalLink": "External link (to artist's website, Utaite wiki, NND MyList etc.)"
+  },
+  "HomeRes": {
+    "SiteDescription": "UtaiteDB is an utaite music database with detailed information for artists, albums and songs.",
+    "Welcome": "Welcome to the Utaite Database!",
+    "WelcomeSubtitle": "The collaborative database with utaite artists, discography, PVs and more."
+  },
+  "LayoutRes": {
+    "Keywords": "Utaite, UtaiteDB, Utaite database",
+    "PaypalDonateTitle": "UtaiteDB is a non-profit project. All money will be used for further site development, hosting fees and software licenses.",
+    "SiteName": "UtaiteDB",
+    "SiteTitle": "Utaite Database"
+  },
+  "SongRes": {
+    "NewSongInfo": "Please make sure the song you're about to submit hasn't been added before. You need to enter at least one name and artist. Link to the original PV is very desirable.",
+    "RankingsTitle": "UtaiteDB song rankings"
+  }
+}

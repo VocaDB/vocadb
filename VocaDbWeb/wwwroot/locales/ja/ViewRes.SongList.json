@@ -1,0 +1,27 @@
+{
+  "Details": {
+    "Details": "詳細",
+    "Playlist": "プレイリスト",
+    "Preview": "プレビュ",
+    "ShowTags": "タグを表示する",
+    "SongList": "曲目リスト",
+    "Songs": "曲",
+    "Date": "日付：{{0}}",
+    "Export": "エクスポート",
+    "DefaultSortRule": "既定"
+  },
+  "Edit": {
+    "ConfirmDelete": "このリストを本当に削除しますか？",
+    "CreateTitle": "曲リストを作成",
+    "Description": "説明",
+    "EditTitle": "リスト編集　-　{{0}}",
+    "Name": "名前",
+    "TabProperties": "プロパティ",
+    "TabSongs": "曲",
+    "Thumbnail": "サムネール",
+    "FeaturedCategory": "特集カテゴリー",
+    "EventDate": "イベントの日付",
+    "EventDateHelp": "コンサートやランキングのリストに日付を設定することができます。",
+    "Status": "項目ステータス"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "DiscTypeNames": {
+    "Album": "オリジナル・アルバム",
+    "Artbook": "画集",
+    "Compilation": "コンピレーションアルバム",
+    "Instrumental": "インストゥメンタル",
+    "EP": "E.P.",
+    "Other": "その他",
+    "Single": "シングル",
+    "SplitAlbum": "スプリットアルバム",
+    "Unknown": "指定なし",
+    "Video": "ビデオ"
+  }
+}

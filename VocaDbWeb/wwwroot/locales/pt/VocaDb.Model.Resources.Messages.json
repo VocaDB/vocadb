@@ -1,0 +1,12 @@
+{
+  "EntryReport": {
+    "EntryVersionReportBody": "A página {{0}}, que editou, foi reportada com a seguinte mensagem: '{{1}}'. Não se preocupe, provavelmente não é nada grave. Verifique aquilo que editou. Se for preciso fazer algumas mudanças, faça, a não ser que alguém já as tenha feito.",
+    "EntryVersionReportTitle": "Página reportada: {{0}}"
+  },
+  "UserAccount": {
+    "AccountCreatedSubject": "Bem-vindo a {{0}}, por favor verifique o seu email.",
+    "PasswordResetBody": "Você (ou alguém que conhece o seu email) pediu uma mudança de password no VocaDB. Pode fazê-lo em {{0}}. Se não pediu para mudar a password, ignore esta mensagem.",
+    "PasswordResetSubject": "Mudança de password requisitada.",
+    "VerifyEmailBody": "Por favor verifique o seguinte link para validar o seu email, em {{0}}.\n{{1}}?token={{2}}"
+  }
+}

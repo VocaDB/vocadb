@@ -1,0 +1,21 @@
+{
+  "EntryReportTypeNames": {
+    "BrokenPV": "削除されたPV等",
+    "Duplicate": "重複項目",
+    "Inappropriate": "不適切なコンテンツ",
+    "InvalidInfo": "誤り、または足りない情報",
+    "Other": "その他（詳細を下記のノートに記載して下さい）",
+    "MaliciousIP": "悪意のあるIP",
+    "OwnershipClaim": "所有権の主張"
+  },
+  "EntryTypeNames": {
+    "Album": "アルバム",
+    "Artist": "アーティスト",
+    "ReleaseEvent": "イベント",
+    "Song": "曲",
+    "SongList": "曲目リスト",
+    "Tag": "タグ",
+    "Undefined": "すべて",
+    "User": "ユーザー"
+  }
+}

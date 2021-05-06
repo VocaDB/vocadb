@@ -1,0 +1,20 @@
+{
+  "EntryReportTypeNames": {
+    "BrokenPV": "Defekter PV",
+    "Duplicate": "Doppelter Eintrag",
+    "Inappropriate": "Unangebrachter Inhalt",
+    "InvalidInfo": "Falsche oder fehlende Information",
+    "MaliciousIP": "Böswillige IP",
+    "Other": "Anderes (in den Anmerkungen schildern)",
+    "OwnershipClaim": "Besitzanspruch"
+  },
+  "EntryTypeNames": {
+    "Album": "Album",
+    "Artist": "Künstler",
+    "Song": "Song",
+    "SongList": "Songliste",
+    "Tag": "Schlagwort",
+    "Undefined": "Alles",
+    "User": "Benutzer"
+  }
+}
