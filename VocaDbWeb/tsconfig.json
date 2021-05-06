@@ -10,6 +10,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": "./",
 		"paths": {
+			"@Components/*": ["ClientApp/src/Components/*"],
 			"@DataContracts/*": ["wwwroot/Scripts/DataContracts/*"],
 			"@Helpers/*": ["wwwroot/Scripts/Helpers/*"],
 			"@KnockoutExtensions/*": ["wwwroot/Scripts/KnockoutExtensions/*"],
@@ -19,5 +20,5 @@
 			"@ViewModels/*": ["wwwroot/Scripts/ViewModels/*"]
 		}
 	},
-	"include": ["wwwroot/Scripts/**/*", "Scripts/**/*"]
+	"include": ["wwwroot/Scripts/**/*", "Scripts/**/*", "ClientApp/src/**/*"]
 }
