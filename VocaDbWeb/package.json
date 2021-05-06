@@ -10,6 +10,10 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@babel/preset-react": "^7.13.13",
+        "@types/classnames": "^2.3.1",
+        "@types/react": "^17.0.5",
+        "@types/react-dom": "^17.0.3",
         "@typescript-eslint/eslint-plugin": "^4.22.1",
         "@typescript-eslint/parser": "^4.22.1",
         "cross-env": "^5.1",
@@ -31,7 +35,11 @@
     "dependencies": {
         "axios": "^0.21.1",
         "bootstrap-sass": "^2.3.2",
+        "classnames": "^2.3.1",
         "decimal.js-light": "^2.5.1",
+        "i18next": "^20.2.2",
+        "i18next-browser-languagedetector": "^6.1.0",
+        "i18next-http-backend": "^1.2.2",
         "jquery": "^2.2.1",
         "jquery-ui": "^1.10.4",
         "knockout": "^3.5.1",
@@ -39,6 +47,12 @@
         "laravel-mix": "^6.0.11",
         "lodash": "^4.17.19",
         "marked": "^0.3.18",
-        "qtip2": "^3.0.3"
+        "qtip2": "^3.0.3",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-i18next": "^11.8.15",
+        "react-overlays": "^5.0.1",
+        "react-router-dom": "^6.0.0-beta.0",
+        "react-use": "^17.2.4"
     }
 }
