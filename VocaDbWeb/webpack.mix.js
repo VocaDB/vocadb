@@ -25,6 +25,7 @@ mix
 		processCssUrls: false,
 	})
 	.alias({
+		'@Components': path.join(__dirname, 'Scripts/Components'),
 		'@DataContracts': path.join(__dirname, 'Scripts/DataContracts'),
 		'@Helpers': path.join(__dirname, 'Scripts/Helpers'),
 		'@KnockoutExtensions': path.join(__dirname, 'Scripts/KnockoutExtensions'),
@@ -78,7 +79,10 @@ mix
 	.styles(
 		['wwwroot/Scripts/jqwidgets27/styles/jqx.base.css'],
 		'wwwroot/Scripts/jqwidgets27/styles/css.css',
-	);
+	)
+
+	.ts('Scripts/index.tsx', 'wwwroot/bundles')
+	.react();
 
 if (mix.inProduction()) {
 	mix.scripts([], 'wwwroot/bundles/tests.js');

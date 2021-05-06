@@ -1,0 +1,37 @@
+﻿@using VocaDb.Model.Helpers
+@using VocaDb.Web.Controllers
+@inherits VocaDbPage
+@addTagHelper *, VocaDb.ReMikus
+
+@{
+	Layout = null;
+
+	var stylesheet = Login.IsLoggedIn && !string.IsNullOrEmpty(Login.User.Stylesheet) ? Login.User.Stylesheet : Config.SiteSettings.DefaultStylesheet;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Vocaloid Database</title>
+
+	<link rel="shortcut icon" href="@(Config.Assets.FavIconUrl.EmptyToNull() ?? Url.Content("~/Content/favicon.ico"))" type="image/x-icon" />
+	<remikus path="/Content/css.css" />
+	@if (!string.IsNullOrEmpty(stylesheet))
+	{
+		<link href="@Url.Content("~/Content/Styles/" + stylesheet)" rel="stylesheet" type="text/css" />
+	}
+	<link href="@Url.Content("~/Content/Styles/Icons.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.10.1.custom.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Scripts/qTip/jquery.qtip.css")" rel="stylesheet" type="text/css" />
+	<link rel="search" type="application/opensearchdescription+xml" title="@BrandableStrings.SiteName" href="@Config.SiteSettings.OpenSearchPath" />
+</head>
+<body class="vdb">
+	<inertia model="new { Props = new VocaDbPageProps(this, Login) }" />
+
+	<remikus path="/bundles/manifest.js" />
+	<remikus path="/bundles/vendor.js" />
+	<remikus path="/bundles/index.js" />
+</body>
+</html>
